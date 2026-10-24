@@ -50,6 +50,14 @@
  * non-script forms), never by MODULE_EXTENSIONS: no listed module below WALK_ROOTS goes unwalked, no walked module is unlisted,
  * and every listed module outside WALK_ROOTS sits below an unjudged root (UNJUDGED_ROOTS: test, and the repository root's own
  * files); src is held a second time to the root files of the tsconfig.json program. The floors stay as the empty-walk guard.
+ * WHAT THE JUDGES READ (wb-mzoc U1, the judged-reading guard): every judge reads the one judged map liveTree builds from the
+ * walk, so A1 holds that map at the shared site, not the walk list alone: its keys are exactly the walked modules (J-NARROW: a
+ * map narrowed below any walk root reds); each reading records the git blob id of the text it parsed, which must be Git's own
+ * id for the listed file's bytes (HASH_OBJECT; J-READ: a module parsed from any other text reds); and each reading must equal
+ * the compiler's own reading of the listed file - its bytes read again and parsed under its own path with the script kind
+ * TypeScript gives that path - so a reading altered after its parse, or parsed under another kind, reds. The reader itself is
+ * path-blind (every judged module is parsed under the one PARSE_NAME), so it cannot single out a module by its path; three
+ * constructed controls (narrowedMap, otherText, alteredReading) keep each anchor live.
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
  *  A, acceptance (a) and the first posture fact. A1 the readers' identity table: which rf identity names each READER spells
  *    (exactly the measured sets; the filing's "Pi's own render_id / transaction_id / bundle_revision_id reads" among them),
@@ -92,7 +100,8 @@
  * RECORDS: the last case walks the same tree after the rest ran: each roster title once, in order, in run mode, not inverted,
  * ran; every pin's case reached its end (REACHED); every witness compares equal to the roster a second time (MEASURED); and
  * every pin's case compared its witness after its pinned number of assertions (COUNTED, `<pin>:<count>` held to the roster's
- * counted list; wb-mzoc F2), so a case that returns its roster witness without running its judges reds the record (H02).
+ * counted list; wb-mzoc F2), so a case that compares its witness after fewer assertions than pinned reds the record - a case
+ * returning its roster witness without running its judges among them (H02). COUNTED counts assertions, not judge runs.
  * CONTROLS (wb-mzoc F3): before the roster compare each pin's runner reads its witness's controls - a control named a quiet row
  * (QUIET_ROWS, by residual family) or an accepted form (ACCEPTED_FORMS) must read quiet, every other control must fire (a count
  * of 1 or more, a non-empty list, a ratio with a read) - so a positive control zeroed in this file and the roster together
@@ -110,14 +119,19 @@
  * quiet row pins the unseen pins, A1 to D2, beside a liveness reading: removing any row is seen).
  * NOT CLAIMED (coordinated hollows no anchor outside this file and its roster sees): a control changed or reclassed together
  * with its roster value and its quiet-row or accepted-form entry, or a ratio control's compared count changed with its roster
- * value (the control reading checks its read count only); the walk and the Git listing narrowed together below qa or examples
- * (below src the tsconfig.json program still sees the .ts modules), or a root moved from WALK_ROOTS to UNJUDGED_ROOTS with its
- * floor; the judged-set case and the records case dropped from the run together, the records case skipping itself at run
- * time, or the file's describe skipped - nothing in the file then runs to see it (the collector's added-line marker scan
- * refuses the skip-call spelling, not the skipIf or runIf forms).
- * Display paths added: none. Test-only: two spawns - A1's read-only git ls-files listing of the checkout, and A3's hermetic stub
- * rf (tracked scratch, the only PATH entry, an absolute-node shebang), so no installed rf ever runs; src, qa, examples,
- * tsconfig.json and the bead export are only read.
+ * value (the control reading checks its read count only); a positive control deleted from its witness in this file and the
+ * roster together (the control reading reads the controls present, the named quiet rows and the accepted forms); the walk and
+ * the Git listing narrowed together below qa or examples (below src the tsconfig.json program still sees the .ts modules), or a
+ * root moved from WALK_ROOTS to UNJUDGED_ROOTS with its floor; the judged-set case and the records case dropped from the run
+ * together, the records case skipping itself at run time, or the file's describe skipped - nothing in the file then runs to
+ * see it (the collector's added-line marker scan refuses the skip-call spelling, not the skipIf or runIf forms). Also NOT
+ * CLAIMED: a case that returns its roster witness after padding its count with other assertions (COUNTED counts assertions,
+ * not judge runs); and one pin narrowing its own use of the judged map - a filter over the modules or the findings inside a
+ * single pin's case - since the judged-reading guard holds the one shared map every pin reads, not each pin's use of it.
+ * Display paths added: none. Test-only: three spawns - A1's read-only git ls-files listing of the checkout, liveTree's
+ * read-only git hash-object of the walked modules (it hashes, never writes an object), and A3's hermetic stub rf (tracked
+ * scratch, the only PATH entry, an absolute-node shebang), so no installed rf ever runs; src, qa, examples, tsconfig.json and
+ * the bead export are only read.
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
@@ -149,6 +163,11 @@ const MODULE_EXTENSIONS = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs",
 const FLOORS = { src: 100, qa: 55, examples: 5 };
 /** The walk's outside anchor (wb-mzoc F1): Git's own list of the checkout - tracked, and untracked but not ignored. */
 const LISTING = ["ls-files", "-z", "--cached", "--others", "--exclude-standard"];
+/** The parsed texts' outside anchor (wb-mzoc U1): Git's own blob id of each walked module's file, its bytes hashed as they are
+ * on disk (no filter, never written as an object). */
+const HASH_OBJECT = ["hash-object", "--no-filters", "--stdin-paths"];
+/** The one file name every judged module is parsed under (wb-mzoc U1), so the reader never sees a module's path. */
+const PARSE_NAME = "judged-module";
 /** The TypeScript compiler's extension forms (ts.Extension) that name no script. Every other form classes a listed path as a
  * module by the compiler's own vocabulary, so the listing is never classed by MODULE_EXTENSIONS, the walk's own predicate. */
 const NON_SCRIPT_FORMS: readonly string[] = [ts.Extension.Json, ts.Extension.TsBuildInfo];
@@ -639,13 +658,21 @@ interface ModuleReading {
   readonly textReads: readonly TextRead[];
   readonly workspaceIdReads: number;
   readonly nativeEvidenceCalls: number;
+  /** The git blob id of the text this reading parsed (wb-mzoc U1): held to Git's own id for the listed file's bytes. */
+  readonly textBlob: string;
 }
-/** One module, parsed under its own script kind: its identifiers, folded literals and regular expressions (literals and RegExp
- * arguments), the names it reads by property access, literal element access or object binding (each marked when it is an
- * operand of a comparison with null), the member names it declares, its reads of a `text` field, its reads of an rf
- * workspace block's `id` and its calls of nativeEvidence. */
-function readModule(path: string, source: string): ModuleReading {
-  const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
+/** The git blob id of a text: what `git hash-object` prints for a file holding exactly its UTF-8 bytes. */
+const gitBlobOf = (text: string): string => createHash("sha1").update(`blob ${Buffer.byteLength(text, "utf8")}\0`).update(text, "utf8").digest("hex");
+/** One module's text, parsed under a script kind and the one PARSE_NAME: the reader never sees the module's path, so it cannot
+ * single a module out by it (wb-mzoc U1). */
+function readModule(kind: ts.ScriptKind, source: string): ModuleReading {
+  return readSourceFile(ts.createSourceFile(PARSE_NAME, source, ts.ScriptTarget.Latest, true, kind));
+}
+/** A parsed file's reading: its identifiers, folded literals and regular expressions (literals and RegExp arguments), the
+ * names it reads by property access, literal element access or object binding (each marked when it is an operand of a
+ * comparison with null), the member names it declares, its reads of a `text` field, its reads of an rf workspace block's `id`,
+ * its calls of nativeEvidence and the git blob id of the text it parsed. */
+function readSourceFile(file: ts.SourceFile): ModuleReading {
   const identifiers: string[] = [];
   const literals: string[] = [];
   const regexes: string[] = [];
@@ -713,7 +740,7 @@ function readModule(path: string, source: string): ModuleReading {
     ts.forEachChild(node, visit);
   };
   visit(file);
-  return { identifiers, literals, regexes, reads, members, nullTypedMembers, textReads, workspaceIdReads, nativeEvidenceCalls };
+  return { identifiers, literals, regexes, reads, members, nullTypedMembers, textReads, workspaceIdReads, nativeEvidenceCalls, textBlob: gitBlobOf(file.text) };
 }
 
 const isReader = (reading: ModuleReading): boolean => reading.literals.includes(RENDER_COMMAND);
@@ -763,18 +790,49 @@ interface TreeReading {
   readonly listing: string[];
   /** The root files of the tsconfig.json program (programFiles): the second outside listing of src. */
   readonly program: string[];
+  /** Git's own blob id of each walked module's file (gitBlobs): the parsed texts' outside anchor (wb-mzoc U1). */
+  readonly blobs: Map<string, string>;
+}
+/** Git's own blob id of each path's file on disk (HASH_OBJECT: git reads and hashes the files itself), keyed by path. */
+function gitBlobs(paths: readonly string[]): Map<string, string> {
+  const hashed = spawnSync("git", HASH_OBJECT, { cwd: REPO, input: paths.map(path => `${path}\n`).join(""), encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  if (hashed.status !== 0) throw new Error(`git ${HASH_OBJECT.join(" ")} failed: ${hashed.stderr ?? ""}${hashed.error?.message ?? ""}`);
+  const ids = hashed.stdout.split("\n").filter(id => id.length > 0);
+  if (ids.length !== paths.length) throw new Error(`git ${HASH_OBJECT.join(" ")} printed ${ids.length} ids for ${paths.length} paths`);
+  return new Map(paths.map((path, index) => [path, ids[index] ?? ""]));
 }
 let live: TreeReading | undefined;
-/** The repository's own reading, taken once. */
+/** The repository's own reading, taken once. The judged map is built at this one shared site, which A1 holds to the anchored
+ * walk (judgedAnchor). */
 function liveTree(): TreeReading {
   if (live === undefined) {
     const walk = walkRoots();
     const modules = new Map<string, ModuleReading>();
-    for (const path of walk.modules) modules.set(path, readModule(path, readFileSync(join(REPO, path), "utf8")));
+    for (const path of walk.modules) modules.set(path, readModule(scriptKindOf(path), readFileSync(join(REPO, path), "utf8")));
     const readers = [...modules].filter(([, reading]) => isReader(reading)).map(([path]) => path);
-    live = { walk, modules, readers, listing: gitListing(), program: programFiles() };
+    live = { walk, modules, readers, listing: gitListing(), program: programFiles(), blobs: gitBlobs(walk.modules) };
   }
   return live;
+}
+/** The compiler's own reading of a listed module: its bytes read again, parsed under its own path with the script kind
+ * TypeScript gives that path (never scriptKindOf, never PARSE_NAME). */
+const compilerReading = (path: string): ModuleReading => readSourceFile(ts.createSourceFile(path, readFileSync(join(REPO, path), "utf8"), ts.ScriptTarget.Latest, true));
+interface JudgedAnchor {
+  readonly unjudged: string[];
+  readonly misread: string[];
+  readonly reread: string[];
+}
+/** What every judge reads, held to the anchored walk at the shared site (wb-mzoc U1): the walked modules the judged map holds
+ * no reading for (J-NARROW), the judged modules whose reading parsed a text other than the listed file's own bytes - its
+ * text's blob id is not Git's (J-READ) - and the judged modules whose reading is not the compiler's own reading of the
+ * listed file (a reading altered after its parse, or parsed under another script kind). */
+function judgedAnchor(tree: TreeReading): JudgedAnchor {
+  const judged = [...tree.modules];
+  return {
+    unjudged: tree.walk.modules.filter(path => !tree.modules.has(path)),
+    misread: judged.filter(([path, reading]) => reading.textBlob !== tree.blobs.get(path)).map(([path]) => path),
+    reread: judged.filter(([path, reading]) => JSON.stringify(reading) !== JSON.stringify(compilerReading(path))).map(([path]) => path),
+  };
 }
 interface WalkAnchor {
   readonly unwalked: string[];
@@ -807,7 +865,7 @@ const readingOf = (tree: TreeReading, path: string): ModuleReading => {
 };
 /** A snippet read as a READER module: it carries the render command literal the readers check. */
 const asReader = (snippet: string): string => `const COMMAND = "${RENDER_COMMAND}";\n${snippet}`;
-const snippet = (source: string): ModuleReading => readModule("c.ts", source);
+const snippet = (source: string): ModuleReading => readModule(ts.ScriptKind.TS, source);
 
 /** The full-shape fixture with this census's identity values: its operation, workspace, graph digest and bundle. */
 function previewSource(adjust: (result: JsonObject) => void = () => {}, envelope: (source: JsonObject) => void = () => {}, root = ROOT): JsonObject {
@@ -1042,6 +1100,7 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     const tree = liveTree();
     const modulesFloorMet = floorsMet(tree);
     const walk = walkAnchor(tree);
+    const judged = judgedAnchor(tree);
     const table = Object.fromEntries(tree.readers.map(path => [path, spelled(readingOf(tree, path), VOCABULARY.readerTable)]));
     const nullOnly = Object.fromEntries(tree.readers.map(path => [path, nullOnlyReads(readingOf(tree, path))]));
     const nullTyped = Object.fromEntries(tree.readers.map(path => [path, readingOf(tree, path).nullTypedMembers.filter(name => NULL_ONLY.includes(name))]));
@@ -1065,6 +1124,11 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     expect(walk.unlisted, "modules the walk read that Git does not list").toEqual([]);
     expect(walk.outsideRoots, "the roots of the modules Git lists outside the walk roots: the unjudged roots only").toEqual([...UNJUDGED_ROOTS]);
     expect(walk.programUnwalked, `root files of the ${PROGRAM_CONFIG} program the walk did not read`).toEqual([]);
+    // wb-mzoc U1: what every judge reads - the judged map's keys and each module's parsed text, built at liveTree - is held to
+    // the anchored walk at the shared site, not the walk list alone (J-NARROW, J-READ).
+    expect([...tree.modules.keys()], "the judged map's keys: exactly the walked modules, in walk order").toEqual(tree.walk.modules);
+    expect(judged.misread, "judged modules parsed from a text other than the listed file's own bytes (git hash-object)").toEqual([]);
+    expect(judged.reread, "judged modules whose reading is not the compiler's own reading of the listed file").toEqual([]);
     expect(tree.readers, "the judged modules holding the render command literal").toEqual(["src/workbench/native-evidence.ts", "src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"]);
     expect(shippedSpelled, `the filing's shipped reads (${ROSTER.shippedReads.join(", ")}) are spelled by a READER`).toBe(true);
     expect(
@@ -1076,6 +1140,10 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     const of = (source: string): string[] => spelled(snippet(asReader(source)), VOCABULARY.readerTable);
     const ratio = (source: string, name: string): string => nullOnlyReads(snippet(asReader(source)))[name] ?? "";
     const outsideOf = (source: string): number => wholeWordHits("c.ts", snippet(source), VOCABULARY.aFamily, A_WORD).length;
+    // The judged-reading anchor's own controls (wb-mzoc U1): a constructed one-module tree (the runtime module) whose judged map
+    // lacks it, holds a reading of other text, or holds its reading with one field altered.
+    const runtimeReading = readingOf(tree, RUNTIME);
+    const anchorOf = (modules: Map<string, ModuleReading>): JudgedAnchor => judgedAnchor({ ...tree, walk: { ...tree.walk, modules: [RUNTIME] }, modules });
     const controls = {
       propertyRead: ratio("const id = result.render_id;\n", "render_id"),
       nullCompare: ratio("if (result.render_id !== null) throw refused();\n", "render_id"),
@@ -1091,8 +1159,11 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       comment: outsideOf("// result.render_id\nexport {};\n"),
       camelNamesake: outsideOf("const sessionId = frame.sessionId;\nconst operationId = run.operationId;\n"),
       renderPrefix: refPrefixes(snippet(`const ref = \`rf-render:${"$"}{id}\`;\n`)).filter(prefix => IDENTITY_WORDS.test(prefix)),
+      narrowedMap: anchorOf(new Map()).unjudged.length,
+      otherText: anchorOf(new Map([[RUNTIME, readModule(scriptKindOf(RUNTIME), "")]])).misread.length,
+      alteredReading: anchorOf(new Map([[RUNTIME, { ...runtimeReading, identifiers: [] }]])).reread.length,
     };
-    return done("A1", { modulesFloorMet, walk: json(walk), readers: [...tree.readers], table, nullOnly, nullTyped, prefixes, typedPrefixes, outside, shippedSpelled, controls });
+    return done("A1", { modulesFloorMet, walk: json(walk), judged: json(judged), readers: [...tree.readers], table, nullOnly, nullTyped, prefixes, typedPrefixes, outside, shippedSpelled, controls });
   },
   A2: () => {
     const names = ["OPERATION", "WORKSPACE", "GRAPH", "BUNDLE", "ROOT"];
@@ -1441,6 +1512,8 @@ describe("wb-hs2j.7 rf typed identity distinctness census (RF-REACTIVE-CONTEXT-A
         moduleExtensions: MODULE_EXTENSIONS,
         floors: FLOORS,
         listing: LISTING,
+        hashObject: HASH_OBJECT,
+        parseName: PARSE_NAME,
         nonScriptForms: NON_SCRIPT_FORMS,
         unjudgedRoots: UNJUDGED_ROOTS,
         programConfig: PROGRAM_CONFIG,

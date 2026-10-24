@@ -1,5 +1,5 @@
 {
-  "provenance": "wb-hs2j.7 census roster (test/workbench-rf-identity-distinctness-census.test.ts). statement, quote, citation, mergedQuote, mergedCitation, identities, shippedReads and posture are the owner filing's (bead row wb-hs2j.7 in .beads/issues.jsonl: its Full statement line, its Source line and the Merged clause of that line, the parenthesized identity list of the statement, the Shipped sentence of its Gating artifact line and the two facts of its Not P0 line), re-read at ReactiveFiberCLI 6a251bf73af5 with git show on 2026-10-23 (02-swarm-usage-and-command-grammar.md:86, README.md:73, 03-host-conformance-performance-and-acceptance.md:78). producer is MEASURED read-only on 2026-10-23: rfVersion and rfCommit are `rf --json --version` result.version and result.provenance.commit_id of the installed rf (2618c211be0d, a descendant of the program pin by git merge-base --is-ancestor); prefixKinds is domain/ids.py PREFIX_KINDS; grammar holds the packaged schemas/cli/context.render.schema.json patterns ($defs render_id, operation_id, transaction_id, workspace.properties.id and digest; result.session_id; $defs component_id; result.effects items component_instance_id) and domain/ids.py CANDIDATE_KEY_RE (Python named groups, compiled by the census as JavaScript ones); recordFields are the sorted item properties of result.blocks, components, effects and necessity; digests are the sha256 of both files, each byte-identical at the program pin and in the installed rf. The C-08 records the census plants are CONSTRUCTED from recordFields and the grammar, never captured. Every witness is the expected outcome of its pin's case at this cut. wb-mzoc (the R694 follow-up of landing 292) adds scan.listing, nonScriptForms, unjudgedRoots, programConfig, quietRows, acceptedForms and pinHollowMembers, the R-PIN-HOLLOW residual, A1's walk witness (the walked set against Git's own listing and the tsconfig.json program, measured at trunk 44f305c) and counted, each pin's assertion count at its witness compare, measured from a run with counted unfilled.",
+  "provenance": "wb-hs2j.7 census roster (test/workbench-rf-identity-distinctness-census.test.ts). statement, quote, citation, mergedQuote, mergedCitation, identities, shippedReads and posture are the owner filing's (bead row wb-hs2j.7 in .beads/issues.jsonl: its Full statement line, its Source line and the Merged clause of that line, the parenthesized identity list of the statement, the Shipped sentence of its Gating artifact line and the two facts of its Not P0 line), re-read at ReactiveFiberCLI 6a251bf73af5 with git show on 2026-10-23 (02-swarm-usage-and-command-grammar.md:86, README.md:73, 03-host-conformance-performance-and-acceptance.md:78). producer is MEASURED read-only on 2026-10-23: rfVersion and rfCommit are `rf --json --version` result.version and result.provenance.commit_id of the installed rf (2618c211be0d, a descendant of the program pin by git merge-base --is-ancestor); prefixKinds is domain/ids.py PREFIX_KINDS; grammar holds the packaged schemas/cli/context.render.schema.json patterns ($defs render_id, operation_id, transaction_id, workspace.properties.id and digest; result.session_id; $defs component_id; result.effects items component_instance_id) and domain/ids.py CANDIDATE_KEY_RE (Python named groups, compiled by the census as JavaScript ones); recordFields are the sorted item properties of result.blocks, components, effects and necessity; digests are the sha256 of both files, each byte-identical at the program pin and in the installed rf. The C-08 records the census plants are CONSTRUCTED from recordFields and the grammar, never captured. Every witness is the expected outcome of its pin's case at this cut. wb-mzoc (the R694 follow-up of landing 292) adds scan.listing, nonScriptForms, unjudgedRoots, programConfig, quietRows, acceptedForms and pinHollowMembers, the R-PIN-HOLLOW residual, A1's walk witness (the walked set against Git's own listing and the tsconfig.json program, measured at trunk 44f305c) and counted, each pin's assertion count at its witness compare, measured from a run with counted unfilled. wb-mzoc respin #1 (refusal #1 unmet U1, the judged-reading guard) adds scan.hashObject and parseName, A1's judged witness (the judged map's keys, each reading's parsed-text blob id against Git's hash-object of the listed file, and each reading against the compiler's own reading of the file, measured at trunk 63c8a04) and A1's three anchor controls (narrowedMap, otherText, alteredReading); counted is re-measured from a run with counted unfilled.",
   "bead": "wb-hs2j.7",
   "statement": "[RF-REACTIVE-CONTEXT-ASSEMBLY-R8] Pi shall carry rf's typed identity vocabulary distinctly (component_id, component_instance_id, occurrence_id, graph_revision_id, render_id, transaction_id, session_id, workspace_id), with inter-agent handoffs carrying an explicit render_id copied from an rf envelope, and no Pi surface shall collapse one identity into another or reconstruct a render identity from model output text (no gate: the identities are shipped envelope vocabulary) - pin docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:86@6a251bf73af5",
   "quote": "Repeatedly visible IDs are first-class typed objects: `component_id`, `component_instance_id`, `occurrence_id`, `graph_revision_id`, `render_id`, `transaction_id`, `session_id`, `workspace_id`. Do not collapse these.",
@@ -133,6 +133,12 @@
       "--others",
       "--exclude-standard"
     ],
+    "hashObject": [
+      "hash-object",
+      "--no-filters",
+      "--stdin-paths"
+    ],
+    "parseName": "judged-module",
     "nonScriptForms": [
       ".json",
       ".tsbuildinfo"
@@ -310,6 +316,11 @@
               ],
               "programUnwalked": []
             },
+            "judged": {
+              "unjudged": [],
+              "misread": [],
+              "reread": []
+            },
             "readers": [
               "src/workbench/native-evidence.ts",
               "src/workbench/providers/reactivefiber.ts",
@@ -396,7 +407,10 @@
               "camelNamesake": 0,
               "renderPrefix": [
                 "rf-render:"
-              ]
+              ],
+              "narrowedMap": 1,
+              "otherText": 1,
+              "alteredReading": 1
             }
           }
         },
@@ -792,7 +806,7 @@
     "records: every registered test ran once in run mode in roster order and every pin reached its end"
   ],
   "counted": [
-    "A1:14",
+    "A1:17",
     "A2:9",
     "A3:13",
     "A4:8",
