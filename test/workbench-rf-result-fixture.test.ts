@@ -16,11 +16,16 @@
  * wb-91yt: U9 holds every provenance key the builder carries, by name and in emission order, to the emitted listings of
  * receipts/wb-91yt.md (read off each release's own emitter), and U6-U9 bind every raw line of their receipts: a receipt holding
  * an HTML comment opener, raw HTML marked 18 lexes or a link reference definition is refused, never stripped (U10 pins nine such
- * forms), so none of those forms can hide a line these rows bind and an insertion cannot retract one. */
+ * forms), so none of those forms can hide a line these rows bind and an insertion cannot retract one.
+ * wb-xmo2: U11 pins what each of those nine forms puts in the receipt (its lines, written out here and stated as digests in the
+ * receipt), and the reader also refuses every list item but a top-level '- ' item, the only list lines U6-U9 read (U12 pins ten
+ * such forms), so an altered restatement under another list marker, a marker spaced or indented otherwise, or a nested or quoted
+ * item cannot stand beside a bound line unread. Two restatement families stay outside that rule, each a named residual with a
+ * quiet row: R-OUTSIDE-LIST (outside every list item) and R-PATTERN-MISS (a top-level '- ' item a row's pattern skips). */
 import { createHash } from 'node:crypto';
 import { chmodSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, join } from 'node:path';
-import { Lexer, walkTokens } from 'marked';
+import { Lexer, type Token, walkTokens } from 'marked';
 import { afterEach, describe, expect, it } from 'vitest';
 import { CapabilityError, type JsonValue } from '../src/workbench/capability-registry.js';
 import { ObservationProjection, type ObservationScope } from '../src/workbench/observation.js';
@@ -103,6 +108,73 @@ const RECEIPT_HIDING_FORMS = [
 ] as const;
 /** The receipt line that lists those forms, in table order: `- Hiding forms the receipt reader refuses (<count>): <form>, ... <form>.` */
 const HIDING_FORM_LIST = /^- Hiding forms the receipt reader refuses \((\d+)\): ([a-z0-9-]+(?:, [a-z0-9-]+)*)\.$/;
+/* U11 (wb-xmo2, the wb-91yt cut #2 gate's F1): U10 pins each form's name, receipt, edit shape and refusal cause and line, never
+ * what the form puts in the receipt, so an edit swapped for one that hides nothing kept every U10 row green (CT3a:
+ * comment-around-line -> a complete comment above the line, the line, a blank line, the line again; CT3b: html-hidden-div -> a
+ * bold tag around the line). This table writes out, in U10's order, the lines each form's edit puts in place of its target line,
+ * against that line: BOUND is the line itself, a string is a line of its own, and a list of [find, replace] pairs is the line
+ * with each find (occurring in it exactly once) replaced in turn. Read as structure: the comment opens above the target line and
+ * closes below it, then the line is restated with audience renamed; the inline comment encloses the first listed key; the three
+ * empty comments follow the line; the unclosed opener and the comment that only an HTML5 closer ends open above it; the div
+ * carries hidden and encloses it; the style block encloses it; the span carries hidden and encloses the last listed key; and the
+ * definition's quoted title opens above the line and closes below it. U11 holds each form's edit to these lines exactly, and
+ * receipts/wb-91yt.md states the digest of each form's lines, an anchor outside this file. */
+const BOUND = Symbol('the bound line');
+type FormLine = string | typeof BOUND | readonly (readonly [find: string, replace: string])[];
+const RECEIPT_HIDING_FORM_LINES: readonly (readonly [form: string, lines: readonly FormLine[]])[] = [
+  ['comment-around-line', ['<!--', BOUND, '-->', [[', audience, ', ', audience_kind, ']]]],
+  ['comment-inline', [[[': created_at, ', ': <!--created_at, -->']]]],
+  ['comment-empty', [BOUND, '', '<!-->', '<!--->', '<!---->']],
+  ['comment-unclosed', ['<!-- an opener without its close', BOUND]],
+  ['comment-html5-closer', ['<!--', BOUND, '--!>', BOUND]],
+  ['html-hidden-div', ['<div hidden>', BOUND, '</div>', '']],
+  ['html-style-block', ['<style>', BOUND, '</style>']],
+  ['html-inline-tag', [[[' sdk_versions.', ' <span hidden>sdk_versions</span>.']]]],
+  ['link-definition', ['', "[hidden]: /u '", BOUND, "'"]],
+];
+/** The receipt line that states each form's line digest, in table order: `- Hiding form line digests (<count>): <form> <digest>, ...` */
+const HIDING_FORM_DIGEST_LIST = /^- Hiding form line digests \((\d+)\): ([a-z0-9-]+ [0-9a-f]{16}(?:, [a-z0-9-]+ [0-9a-f]{16})*)\.$/;
+/* U12 (wb-xmo2, the wb-91yt cut #2 gate's F2): U6-U9 read only top-level '- ' list lines, so an altered restatement in any other
+ * list item stood beside a bound line with no row reading it (N8b: a '*' item restating the Result keys line with audience
+ * renamed audience_kind, below the Work metrics line; N8c: the same item at the end of the file; each read 0 failed).
+ * receiptText now refuses every list item but a top-level '- ' item: one whose marker is '-' followed by one space and its text,
+ * at the line's start, outside any other list item or block quote. One row each: the form, the receipt, the prefix of the line
+ * it is inserted below, the prefix of the bound line it restates (lines U6-U9 bind and require exactly once), the lines it
+ * inserts, written against that bound line as in U11's table, the edit's shape as git diff --numstat reads it and the cause and
+ * line receiptText refuses it for. Every form only adds lines, so the rule-15 numstat deletion check sees none of them; the first
+ * two are the gate's N8b and N8c. receipts/wb-91yt.md lists the forms in this order with the digest of each form's lines. */
+/** A tab, the separator the tab-item form puts after its dash. */
+const TAB = String.fromCodePoint(9);
+const RECEIPT_LIST_ITEM_FORMS = [
+  ['star-item', ROSTER_KEYS_RECEIPT, '- Work metrics keys (14): ', '- Result keys (24): ', [[['- Result', '* Result'], [', audience, ', ', audience_kind, ']]], '+1/-0', "a list item other than a top-level '- ' item at line 18"],
+  ['star-item-at-end', ROSTER_KEYS_RECEIPT, '- Non-claims: ', '- Result keys (24): ', [[['- Result', '* Result'], [', audience, ', ', audience_kind, ']]], '+1/-0', "a list item other than a top-level '- ' item at line 23"],
+  ['plus-item', ROSTER_KEYS_RECEIPT, '- Roster of record: ', '- Provenance keys (3): ', [[['- Provenance', '+ Provenance'], ['sdk_versions', 'sdk_version']]], '+1/-0', "a list item other than a top-level '- ' item at line 14"],
+  ['ordered-item', PROVENANCE_LISTING_RECEIPT, '- Storage block keys at rf 0.1.784 (2): ', '- Emitted provenance keys at rf 0.1.784 (8): ', [[['- Emitted', '1. Emitted'], ['created_at', 'created_utc']]], '+1/-0', "a list item other than a top-level '- ' item at line 8"],
+  ['ordered-paren-item', PROVENANCE_LISTING_RECEIPT, '- Emitted provenance keys at rf 0.1.768 (7): ', '- Storage block keys at rf 0.1.784 (2): ', [[['- Storage', '1) Storage'], ['engine_version', 'engine']]], '+1/-0', "a list item other than a top-level '- ' item at line 7"],
+  ['two-space-item', ROSTER_RECEIPT, '- Delta read at the installed reactivefibercli ', '- Delta read at the installed reactivefibercli ', [[['- Delta', '-  Delta'], ['(24 keys)', '(25 keys)']]], '+1/-0', "a list item other than a top-level '- ' item at line 13"],
+  ['tab-item', ROSTER_KEYS_RECEIPT, '- Provenance keys (3): ', '- Roster of record: ', [[['- Roster', `-${TAB}Roster`], ['source captured', 'source constructed']]], '+1/-0', "a list item other than a top-level '- ' item at line 16"],
+  ['indented-item', PROVENANCE_LISTING_RECEIPT, '- Source of the three lists: ', '- Emitted provenance keys at rf 0.1.768 (7): ', [[['- Emitted', ' - Emitted'], ['sdk_versions', 'sdk_version']]], '+1/-0', "a list item other than a top-level '- ' item at line 9"],
+  ['nested-item', ROSTER_KEYS_RECEIPT, '- Work keys (6): ', '- Work keys (6): ', [[['- Work keys', '  - Work keys'], ['storage_write_count', 'storage_writes_count']]], '+1/-0', "a list item other than a top-level '- ' item at line 17"],
+  ['quoted-item', PROVENANCE_LISTING_RECEIPT, '- Hiding forms the receipt reader refuses (9): ', '- Source of the three lists: ', [[['- Source', '> - Source'], ['three', 'two']]], '+1/-0', "a list item other than a top-level '- ' item at line 22"],
+] as const;
+/** The receipt line that lists those forms with their line digests, in table order: `- List item forms the receipt reader refuses (<count>): <form> <digest>, ...` */
+const LIST_ITEM_FORM_LIST = /^- List item forms the receipt reader refuses \((\d+)\): ([a-z0-9-]+ [0-9a-f]{16}(?:, [a-z0-9-]+ [0-9a-f]{16})*)\.$/;
+/* The named residuals of U12's rule (wb-xmo2): restatement families it does not reach, one quiet row each, derived like U12's
+ * rows. A quiet row holds its form unrefused and unmatched: receiptText returns it as it is and U7's listing pattern does not
+ * match the line it inserts, so a later reader that refuses the form reds the row (promote the form to U12's table and drop it
+ * here). R-OUTSIDE-LIST: a restatement outside every list item whose line no row's pattern or target prefix reads; here the
+ * Result keys line restated with no marker below the Work metrics line, which marked 18 reads as a lazy continuation of that
+ * item, so it renders inside that item's bullet. R-PATTERN-MISS: a top-level '- ' item whose text no row's line pattern or target
+ * prefix matches; here the Result keys line restated under a respelled label (Result keys, restated). A restatement that keeps a
+ * bound line's prefix is not in either family: U10, U11 and U12 require each target prefix to start exactly one line, and U7 reads
+ * every raw line, a code block's included. receipts/wb-91yt.md lists the families in this order with the digest of each form's
+ * lines. */
+const RECEIPT_RESIDUAL_FORMS = [
+  ['R-OUTSIDE-LIST', ROSTER_KEYS_RECEIPT, '- Work metrics keys (14): ', '- Result keys (24): ', [[['- Result', 'Result'], [', audience, ', ', audience_kind, ']]]],
+  ['R-PATTERN-MISS', ROSTER_KEYS_RECEIPT, '- Work metrics keys (14): ', '- Result keys (24): ', [[['- Result keys (24)', '- Result keys, restated (24)'], [', audience, ', ', audience_kind, ']]]],
+] as const;
+/** The receipt line that lists those families with their line digests, in table order: `- Named residuals of the list item rule (<count>): <id> <digest>, ...` */
+const RESIDUAL_LIST = /^- Named residuals of the list item rule \((\d+)\): ([A-Z0-9-]+ [0-9a-f]{16}(?:, [A-Z0-9-]+ [0-9a-f]{16})*)\.$/;
 
 const roster = readRfResultRoster();
 
@@ -118,31 +190,49 @@ const digestOf = (text: string): string => createHash('sha256').update(text).dig
 
 /** A receipt's committed bytes. */
 const committedReceipt = (path: string): string => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
-/** Every form in `text` that could hide a line from its page, as the cause and the line the first of its kind starts on (empty
- * when none): an HTML comment opener anywhere (complete or not, block or inline, the empty forms and a closer CommonMark does not
- * accept included), raw HTML marked 18 lexes (gfm: block or inline, nested in a list or quote included; a code span is text) and
- * a link reference definition (its title can run over the lines below it). */
+/** `text` as a regular expression that matches it literally. */
+const literally = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+/** Every form in `text` that could hide a line from its page, or restate one where no row reads it, as the cause and the line
+ * the first of its kind starts on (empty when none): an HTML comment opener anywhere (complete or not, block or inline, the empty
+ * forms and a closer CommonMark does not accept included), raw HTML marked 18 lexes (gfm: block or inline, nested in a list or
+ * quote included; a code span is text), a link reference definition (its title can run over the lines below it) and, since
+ * wb-xmo2, a list item other than a top-level '- ' item: another bullet or an ordered marker, a marker spaced or indented
+ * otherwise, or an item nested in a list item or a block quote, each a list line U6-U9 never read. */
 function receiptHidingCauses(text: string): string[] {
   const lineOf = (index: number): number => text.slice(0, index).split('\n').length;
+  const tokens = new Lexer({ gfm: true }).lex(text);
+  const topLevel = new Set<Token>(tokens.flatMap(token => (token.type === 'list' ? token.items : [])));
   const html: string[] = [];
   const definitions: string[] = [];
-  walkTokens(new Lexer({ gfm: true }).lex(text), token => {
+  const items: { first: string; nested: boolean }[] = [];
+  walkTokens(tokens, token => {
     if (token.type === 'html' && !token.raw.trimStart().startsWith('<!--')) html.push(token.raw);
     else if (token.type === 'def') definitions.push(token.raw);
+    else if (token.type === 'list_item' && !(topLevel.has(token) && /^- \S/.test(token.raw))) items.push({ first: token.raw.split('\n')[0] ?? '', nested: !topLevel.has(token) });
   });
+  /* A top-level item's raw opens with its whole first line; a nested item's raw is its text with its container's indentation
+   * or quote markers removed, so its line is the first one that holds that text after such a prefix. */
+  const itemLine = ({ first, nested }: { first: string; nested: boolean }): number => {
+    const found = new RegExp(`^${nested ? '[ \\t>]+' : ''}${literally(first)}$`, 'm').exec(text);
+    return found === null ? 0 : lineOf(found.index);
+  };
   const opener = text.indexOf('<!--');
   return [
     ...(opener < 0 ? [] : [`an HTML comment opener at line ${lineOf(opener)}`]),
     ...html.slice(0, 1).map(raw => `raw HTML at line ${lineOf(text.indexOf(raw))}`),
     ...definitions.slice(0, 1).map(raw => `a link reference definition at line ${lineOf(text.indexOf(raw))}`),
+    ...items.slice(0, 1).map(item => `a list item other than a top-level '- ' item at line ${itemLine(item)}`),
   ];
 }
 /** A receipt U6-U9 bind, as committed (wb-91yt cut #2, the cut #1 gate's F1 and F2): every raw line binds and nothing is
  * stripped, so a receipt holding a hiding form is refused, never read. Cut #1 stripped complete comments before the line
  * filters, so an insertion-only edit could wrap a landed line and restate it altered with no numstat deletion, and a hidden div
  * kept a line the rows bound off the page. Refusing those forms keeps U6's premise true: an insertion cannot retract a bound line
- * (every raw line binds, and a restated copy reds the rows' exact counts), and an in-place edit removes a line, which the rule-15
- * numstat deletion check sees once the receipt has landed. */
+ * (every raw line binds), and an in-place edit removes a line, which the rule-15 numstat deletion check sees once the receipt has
+ * landed. A restated copy reds the rows' exact counts only in the rows' own form, a top-level '- ' line their patterns match
+ * (wb-xmo2, narrowing the cut #2 sentence its gate's BIND B4 named): a list item in any other form is refused (U12), and a
+ * restatement outside every list item, or in a '- ' line a row's pattern skips, is a named residual (R-OUTSIDE-LIST,
+ * R-PATTERN-MISS). */
 function receiptText(path: string, text = committedReceipt(path)): string {
   const causes = receiptHidingCauses(text);
   if (causes.length > 0) throw new Error(`${path} cannot be bound: it holds ${causes.join(' and ')}`);
@@ -156,6 +246,48 @@ function keyLists(lines: readonly string[], pattern: RegExp): { release: string;
     return match === null ? [] : [{ release: match[1] ?? '', stated: Number(match[2]), keys: (match[3] ?? '').split(', ') }];
   });
 }
+/** The index of the one line among `lines` that starts with `prefix`; a prefix that starts no line, or several, reds the row. */
+function onlyLine(lines: readonly string[], prefix: string): number {
+  const at = lines.flatMap((line, index) => (line.startsWith(prefix) ? [index] : []));
+  expect(at).toHaveLength(1);
+  return at[0] ?? -1;
+}
+/** The one line of a committed receipt that starts with `prefix`. */
+function committedLine(path: string, prefix: string): string {
+  const lines = committedReceipt(path).split('\n');
+  return lines[onlyLine(lines, prefix)] ?? '';
+}
+/** The lines `pinned` writes out against `bound` (U11's table): BOUND is `bound`, a string is that line, and a list of
+ * [find, replace] pairs is `bound` with each find replaced in turn, a find that does not occur exactly once being an error. */
+function formLines(pinned: readonly FormLine[], bound: string): string[] {
+  return pinned.map(line => {
+    if (line === BOUND) return bound;
+    if (typeof line === 'string') return line;
+    return line.reduce((text, [find, replace]) => {
+      const parts = text.split(find);
+      if (parts.length !== 2) throw new Error(`${JSON.stringify(find)} occurs ${parts.length - 1} times in ${JSON.stringify(text)}, not once`);
+      return parts.join(replace);
+    }, bound);
+  });
+}
+/** A committed receipt with `pinned`, written against the line starting with `restated`, inserted below the line starting with `after`. */
+function insertedVariant(path: string, after: string, restated: string, pinned: readonly FormLine[]): { inserted: string[]; variant: string } {
+  const lines = committedReceipt(path).split('\n');
+  const inserted = formLines(pinned, lines[onlyLine(lines, restated)] ?? '');
+  const at = onlyLine(lines, after);
+  return { inserted, variant: [...lines.slice(0, at + 1), ...inserted, ...lines.slice(at + 1)].join('\n') };
+}
+/** A form's lines as receipts/wb-91yt.md states them: the first 16 hex digits of the sha256 of their JSON array. */
+const lineDigest = (lines: readonly string[]): string => digestOf(JSON.stringify(lines)).slice(0, 16);
+/** The stated count and the `<name> <digest>` entries of every `pattern` line of receipts/wb-91yt.md, in file order. */
+function statedEntries(pattern: RegExp): { stated: number; entries: string[] }[] {
+  return receiptLines(PROVENANCE_LISTING_RECEIPT).flatMap(line => {
+    const match = pattern.exec(line);
+    return match === null ? [] : [{ stated: Number(match[1]), entries: (match[2] ?? '').split(', ') }];
+  });
+}
+/** U7's listing pattern, read by the residual quiet rows: the key-list lines U7 binds. */
+const ROSTER_KEY_LIST = /^- ([A-Z][a-z]+(?: [a-z]+)*) keys \((\d+)\): ([a-z_]+(?:, [a-z_]+)*)\.$/;
 
 /** The diff a fixture whose result drops `key` must produce: that key, plus every roster key of a subtree it takes with it. */
 function droppedFailures(key: string): string[] {
@@ -373,6 +505,71 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
     for (const path of [ROSTER_RECEIPT, PROVENANCE_LISTING_RECEIPT]) expect(receiptText(path)).toBe(committedReceipt(path));
     const coded = `${committedReceipt(PROVENANCE_LISTING_RECEIPT)}- A code span such as \`<div hidden>\` renders as text.\n`;
     expect(receiptText(PROVENANCE_LISTING_RECEIPT, coded)).toBe(coded);
+  });
+
+  // U11 (wb-xmo2, the wb-91yt cut #2 gate's F1): each U10 form's edit puts exactly the lines U11's table writes out in place of
+  // its target line, so an edit swapped for one that hides nothing (CT3a, CT3b), or for any other lines, is red here even where
+  // its shape and cause still hold. FROZEN SHAPE (rule 16): the table's nine forms in U10's order at their line counts, and the
+  // digest of each form's lines as receipts/wb-91yt.md states it, an anchor outside this file, so editing a form's edit and its
+  // lines in the table together is still red.
+  it("U11: the content table writes out U10's nine forms in its order at their pinned line counts, and the receipt states the digest of each form's lines", () => {
+    expect(RECEIPT_HIDING_FORM_LINES.map(([form, lines]) => `${form} ${lines.length}`)).toStrictEqual([
+      'comment-around-line 4', 'comment-inline 1', 'comment-empty 5', 'comment-unclosed 2', 'comment-html5-closer 4',
+      'html-hidden-div 4', 'html-style-block 3', 'html-inline-tag 1', 'link-definition 4',
+    ]);
+    expect(RECEIPT_HIDING_FORM_LINES.map(([form]) => form)).toStrictEqual(RECEIPT_HIDING_FORMS.map(([form]) => form));
+    const digests = RECEIPT_HIDING_FORMS.map(([form, path, prefix, edit]) => `${form} ${lineDigest(edit(committedLine(path, prefix)))}`);
+    expect(statedEntries(HIDING_FORM_DIGEST_LIST)).toStrictEqual([{ stated: RECEIPT_HIDING_FORMS.length, entries: digests }]);
+  });
+  it.each(RECEIPT_HIDING_FORMS)('U11: the %s form puts exactly its pinned lines in place of its target line', (form, path, prefix, edit) => {
+    const pinned = RECEIPT_HIDING_FORM_LINES.filter(([name]) => name === form);
+    expect(pinned).toHaveLength(1);
+    const target = committedLine(path, prefix);
+    expect(edit(target)).toStrictEqual(formLines(pinned[0]?.[1] ?? [], target));
+  });
+
+  // U12 (wb-xmo2, the wb-91yt cut #2 gate's F2): receiptText refuses every list item but a top-level '- ' item, so a
+  // restatement under another marker, or in a nested or quoted item, is refused, never left standing beside the line U6-U9 bind.
+  // Each form is derived in memory from a committed receipt (nothing on disk is touched) and held to its lines, its edit shape
+  // and the cause and line it is refused for. FROZEN SHAPE (rule 16): ten forms, in the order receipts/wb-91yt.md lists them
+  // with the digest of each form's lines, an anchor outside this file, so dropping a row and its literal element together, or
+  // rewriting a form's lines, is still red.
+  it("U12: the list item table holds ten forms at their pinned line counts, edit shapes and causes, in the order its receipt lists them with the digest of each form's lines", () => {
+    expect(RECEIPT_LIST_ITEM_FORMS.map(([form, path, , , lines, shape, cause]) => `${form} ${basename(path)} ${lines.length} ${shape} ${cause}`)).toStrictEqual([
+      "star-item wb-c7ku.md 1 +1/-0 a list item other than a top-level '- ' item at line 18",
+      "star-item-at-end wb-c7ku.md 1 +1/-0 a list item other than a top-level '- ' item at line 23",
+      "plus-item wb-c7ku.md 1 +1/-0 a list item other than a top-level '- ' item at line 14",
+      "ordered-item wb-91yt.md 1 +1/-0 a list item other than a top-level '- ' item at line 8",
+      "ordered-paren-item wb-91yt.md 1 +1/-0 a list item other than a top-level '- ' item at line 7",
+      "two-space-item wb-c7ku.md 1 +1/-0 a list item other than a top-level '- ' item at line 13",
+      "tab-item wb-c7ku.md 1 +1/-0 a list item other than a top-level '- ' item at line 16",
+      "indented-item wb-91yt.md 1 +1/-0 a list item other than a top-level '- ' item at line 9",
+      "nested-item wb-c7ku.md 1 +1/-0 a list item other than a top-level '- ' item at line 17",
+      "quoted-item wb-91yt.md 1 +1/-0 a list item other than a top-level '- ' item at line 22",
+    ]);
+    const digests = RECEIPT_LIST_ITEM_FORMS.map(([form, path, after, restated, lines]) => `${form} ${lineDigest(insertedVariant(path, after, restated, lines).inserted)}`);
+    expect(statedEntries(LIST_ITEM_FORM_LIST)).toStrictEqual([{ stated: RECEIPT_LIST_ITEM_FORMS.length, entries: digests }]);
+  });
+  it.each(RECEIPT_LIST_ITEM_FORMS)('U12: receiptText refuses the %s form of a committed receipt, for its cause at its line', (_form, path, after, restated, lines, shape, cause) => {
+    const { inserted, variant } = insertedVariant(path, after, restated, lines);
+    expect(`+${inserted.length}/-0`).toBe(shape);
+    expect(thrownBy(() => receiptText(path, variant))).toMatchObject({ message: `${path} cannot be bound: it holds ${cause}` });
+  });
+
+  // The named residuals of U12's rule (wb-xmo2): each family's form, derived in memory from a committed receipt like U12's rows,
+  // reads quiet: receiptText returns it unrefused and U7's listing pattern does not match the line it inserts, so a reader that
+  // starts refusing the form reds its row (promote the form to U12's table). FROZEN SHAPE (rule 16): two families, in the order
+  // receipts/wb-91yt.md lists them with the digest of each form's lines, an anchor outside this file.
+  it("U12: the residual table names two families with quiet rows, in the order its receipt lists them with the digest of each form's lines", () => {
+    expect(RECEIPT_RESIDUAL_FORMS.map(([id, path, , , lines]) => `${id} ${basename(path)} ${lines.length}`)).toStrictEqual(['R-OUTSIDE-LIST wb-c7ku.md 1', 'R-PATTERN-MISS wb-c7ku.md 1']);
+    const digests = RECEIPT_RESIDUAL_FORMS.map(([id, path, after, restated, lines]) => `${id} ${lineDigest(insertedVariant(path, after, restated, lines).inserted)}`);
+    expect(statedEntries(RESIDUAL_LIST)).toStrictEqual([{ stated: RECEIPT_RESIDUAL_FORMS.length, entries: digests }]);
+  });
+  it.each(RECEIPT_RESIDUAL_FORMS)('U12 residual %s: its form of a committed receipt reads quiet, returned unrefused and unmatched by U7', (_id, path, after, restated, lines) => {
+    const { inserted, variant } = insertedVariant(path, after, restated, lines);
+    expect(variant).not.toBe(committedReceipt(path));
+    expect(receiptText(path, variant)).toBe(variant);
+    expect(inserted.filter(line => ROSTER_KEY_LIST.test(line))).toStrictEqual([]);
   });
 
   // Acceptance 1 (census-grade): the fixture's result keys are a superset of the frozen roster, provenance carries the three

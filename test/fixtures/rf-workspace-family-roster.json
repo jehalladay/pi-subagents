@@ -1,5 +1,5 @@
 {
-  "comment": "wb-o4h0.3 (RF-FEDERATED-WORKSPACES-R4; the hk9l/5jha/1xvp.4 roster pattern): the OUT-OF-FILE anchor of test/workbench-rf-workspace-family-census.test.ts. rows: every judged row of test/helpers/rf-workspace-family.ts in census order (LEAVES, SOURCES, LAUNCHES, ENVELOPES) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and its expected reading) and the registered test. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its registered tests (vitest task tree, run modes) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here.",
+  "comment": "wb-o4h0.3 (RF-FEDERATED-WORKSPACES-R4; the hk9l/5jha/1xvp.4 roster pattern): the OUT-OF-FILE anchor of test/workbench-rf-workspace-family-census.test.ts. rows: every judged row of test/helpers/rf-workspace-family.ts in census order (LEAVES, SOURCES, LAUNCHES, ENVELOPES) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and its expected reading) and the registered test. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its registered tests (vitest task tree, run modes) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. The family list is the exception: the census's anchor row reads it from the owner filing's title in the tracked bead export (.beads/issues.jsonl, row wb-o4h0.3), so a hollow that drops a leaf from the census and regenerates this file still reds (wb-dbpa, landing-265 gate F3).",
   "rows": [
     {
       "table": "LEAVES",
@@ -356,8 +356,9 @@
     "live (b): no registered native capability descriptor names the family",
     "live (b): no file under test/ or qa/ fabricates a family success envelope; the walk reads every .json and module file there",
     "live (b): the rf wrapper maps an exit-2 pending-leaf refusal to typed unavailable and the captured unknown-leaf refusal to typed transport, each in one spawn naming no family leaf",
-    "live (c)/(d): no src rf launch sets detached: true and no rf child is unref'd; the walk reaches the preview's launch",
+    "live (c)/(d): no src rf launch sets detached: true and no rf child is unref'd; the walk is every regular file under src/ and reaches the preview's launch",
     "live (c): the rf child of a settled read is gone: its pid answers ESRCH once the read settles",
+    "anchor: the family is the list the owner filing names, read from its row in the tracked bead export (.beads/issues.jsonl, wb-o4h0.3)",
     "rule 16: every judged row is frozen at its measured shape",
     "roster: the judged rows, the registered tests and the residual families equal test/fixtures/rf-workspace-family-roster.json, in order and both ways"
   ],
