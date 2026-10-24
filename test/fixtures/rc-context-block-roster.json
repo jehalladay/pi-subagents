@@ -1,0 +1,1191 @@
+{
+ "bead": "wb-5ltg.1",
+ "quotePin": "docs/programs/native-interface-component-contract-2026-10-21/README.md:8@640a3b579a95",
+ "quote": "**Do not create a second general UI IR** or reinterpret model-context blocks as browser/TUI controls.",
+ "carrier": "rf@0.1.784:reactive-fiber.cli/v1 context.render --no-commit",
+ "constants": {
+  "needles": [
+   {
+    "id": "sdk",
+    "words": 2,
+    "separator": "[\\s_.-]*",
+    "digest": "9595ccd33df9ba23"
+   },
+   {
+    "id": "element",
+    "words": 3,
+    "separator": "[\\s_.-]*",
+    "digest": "98859796b9dbbf64"
+   },
+   {
+    "id": "document",
+    "words": 2,
+    "separator": "_?",
+    "digest": "404520c0a2a3ae5f"
+   }
+  ],
+  "echoKinds": [
+   "sdk_versions-key",
+   "sdk_versions-sibling",
+   "sdk_versions-path",
+   "sdk_contract-distribution"
+  ],
+  "excluded": {
+   ".beads/": ".beads/issues.jsonl",
+   "test/": "test/helpers/rf-release-drift.ts"
+  },
+  "controlFields": {
+   "action_ids": [
+    "rcx-sentinel-action-open",
+    "rcx-sentinel-action-close"
+   ],
+   "actions": [
+    {
+     "id": "rcx-sentinel-action-submit",
+     "label": "rcx-sentinel-label-submit",
+     "handler": "rcx-sentinel-handler-submit"
+    }
+   ],
+   "handler": "rcx-sentinel-handler-render",
+   "on_click": "rcx-sentinel-handler-click",
+   "control": {
+    "kind": "rcx-sentinel-control-kind",
+    "label": "rcx-sentinel-control-label"
+   },
+   "callback": "rcx-sentinel-callback",
+   "props": {
+    "variant": "rcx-sentinel-prop-variant"
+   },
+   "resource_bindings": [
+    {
+     "resource": "rcx-sentinel-binding-resource"
+    }
+   ]
+  },
+  "placements": [
+   {
+    "id": "block",
+    "path": [
+     "blocks",
+     "0"
+    ],
+    "seed": null
+   },
+   {
+    "id": "block-metadata",
+    "path": [
+     "blocks",
+     "0",
+     "metadata"
+    ],
+    "seed": {}
+   },
+   {
+    "id": "component",
+    "path": [
+     "components",
+     "0"
+    ],
+    "seed": {
+     "component_id": "fixture.component"
+    }
+   },
+   {
+    "id": "observation",
+    "path": [
+     "observations",
+     "0"
+    ],
+    "seed": {
+     "status": "observed",
+     "freshness": "captured_at_render",
+     "replayed": false
+    }
+   },
+   {
+    "id": "necessity",
+    "path": [
+     "necessity",
+     "0"
+    ],
+    "seed": null
+   },
+   {
+    "id": "output",
+    "path": [
+     "output"
+    ],
+    "seed": null
+   },
+   {
+    "id": "result-key",
+    "path": [
+     "interface"
+    ],
+    "seed": {}
+   }
+  ],
+  "controlWords": [
+   "action",
+   "actions",
+   "handler",
+   "handlers",
+   "callback",
+   "callbacks",
+   "control",
+   "controls",
+   "button",
+   "buttons",
+   "widget",
+   "widgets",
+   "click",
+   "clickable",
+   "interactive",
+   "props",
+   "binding",
+   "bindings",
+   "submit",
+   "ui"
+  ],
+  "snapshotKeys": [
+   "source",
+   "scope",
+   "capturedAt",
+   "observedAt",
+   "coverage",
+   "node",
+   "kind",
+   "evidenceRefs",
+   "sourceVersion",
+   "sourceRevision",
+   "nativePayloadRef",
+   "trace"
+  ],
+  "nodeKeys": [
+   "title",
+   "type",
+   "statusText",
+   "statusTone"
+  ],
+  "metadataKeys": [
+   "provider",
+   "nativeId",
+   "domainStatus",
+   "evidenceRefs",
+   "sourceBasis",
+   "producerRelease"
+  ],
+  "refKinds": [
+   "rf-bundle",
+   "rf-cli",
+   "rf-engine",
+   "rf-engine-spawns",
+   "rf-graph",
+   "rf-workspace"
+  ],
+  "fixtures": [
+   {
+    "name": "validRf",
+    "file": "test/workbench-provider-envelope-audit.test.ts",
+    "declarations": [
+     "id",
+     "digest",
+     "validRf"
+    ]
+   },
+   {
+    "name": "result",
+    "file": "test/workbench-reactivefiber-observer.test.ts",
+    "declarations": [
+     "WS",
+     "OPERATION",
+     "WORKSPACE_ID",
+     "GRAPH",
+     "TEXT",
+     "work",
+     "formula",
+     "result"
+    ]
+   }
+  ],
+  "driftExports": [
+   "RF_LIVE_DRIFT_TITLE",
+   "RF_LIVE_DRIFT_SHAPE_SUITE",
+   "recordedRfRelease",
+   "parseInstalledRfVersion",
+   "RfReleaseDrift",
+   "judgeRfReleaseDrift"
+  ],
+  "readers": [
+   "src/workbench/native-evidence.ts",
+   "src/workbench/providers/reactivefiber.ts",
+   "src/workbench/reactivefiber-observer.ts"
+  ],
+  "surfacePins": {
+   "Pi type": "C2",
+   "UI handler": "C3",
+   "bead": "C4",
+   "docs/workbench sentence": "C5"
+  },
+  "anchors": [
+   {
+    "id": "N1",
+    "source": "\\bcontext[\\s_-]+blocks?\\b|\\bmodel[\\s_-]+context\\b",
+    "spellings": [
+     "context block",
+     "context-blocks",
+     "model-context"
+    ]
+   },
+   {
+    "id": "N2",
+    "source": "\\bcontext[\\s_-]+documents?\\b|\\brendered[\\s_-]+context\\b|\\brf[\\s_-]+rendered\\b",
+    "spellings": [
+     "context document",
+     "rendered context",
+     "rf-rendered"
+    ]
+   },
+   {
+    "id": "N3",
+    "source": "\\bresult\\.(?:output|blocks|observations|components)\\b|\\boutput\\.text\\b",
+    "spellings": [
+     "result.output",
+     "result.blocks",
+     "result.observations",
+     "result.components",
+     "output.text"
+    ]
+   },
+   {
+    "id": "N4",
+    "source": "\\bcontext[\\s.-]+render\\b|\\brender[\\s_-]+preview\\b",
+    "spellings": [
+     "context.render",
+     "context render",
+     "render preview"
+    ]
+   }
+  ],
+  "controls": [
+   {
+    "id": "K1",
+    "source": "\\b(?:ui|tui|browser|interactive|interface|form)[\\s/_-]*(?:controls?|widgets?|elements?|buttons?)\\b",
+    "spellings": [
+     "UI control",
+     "TUI controls",
+     "browser/TUI controls",
+     "interactive control",
+     "interface widget",
+     "form elements",
+     "UI button"
+    ]
+   },
+   {
+    "id": "K2",
+    "source": "\\b(?:buttons?|widgets?|clickable)\\b",
+    "spellings": [
+     "button",
+     "widgets",
+     "clickable"
+    ]
+   },
+   {
+    "id": "K3",
+    "source": "\\b(?:click|event|action|input|submit)?[\\s_-]*handlers?\\b|\\bcallbacks?\\b",
+    "spellings": [
+     "handler",
+     "click handler",
+     "event-handlers",
+     "action handler",
+     "callback"
+    ]
+   },
+   {
+    "id": "K4",
+    "source": "\\baction[\\s_-]*ids?\\b|\\bon[_-]?(?:click|submit)\\b",
+    "spellings": [
+     "action ids",
+     "action_id",
+     "onClick",
+     "on_submit"
+    ]
+   },
+   {
+    "id": "K5",
+    "source": "\\bui[\\s_-]+ir\\b|\\binteractive\\b",
+    "spellings": [
+     "UI IR",
+     "interactive"
+    ]
+   }
+  ],
+  "markers": [
+   "no",
+   "not",
+   "never",
+   "nor",
+   "none",
+   "neither",
+   "without",
+   "cannot",
+   "unchanged",
+   "intact",
+   "fail",
+   "fails",
+   "failed",
+   "refuse",
+   "refuses",
+   "refused",
+   "reject",
+   "rejects",
+   "rejected"
+  ],
+  "changes": [
+   "change",
+   "changes",
+   "changed",
+   "changing",
+   "new",
+   "replace",
+   "replaces",
+   "replaced",
+   "redefine",
+   "redefines",
+   "redefined",
+   "extend",
+   "extends",
+   "extended",
+   "amend",
+   "amends",
+   "amended",
+   "modify",
+   "modifies",
+   "modified",
+   "bump",
+   "bumps",
+   "bumped",
+   "migrate",
+   "migrates",
+   "migrated",
+   "migration",
+   "revise",
+   "revises",
+   "revised",
+   "revision",
+   "alter",
+   "alters",
+   "altered",
+   "break",
+   "breaks",
+   "breaking",
+   "v2"
+  ],
+  "mutants": [
+   "ref of a new kind",
+   "ref of a known kind",
+   "note naming an action",
+   "note without a sentinel",
+   "status suffix",
+   "title rewritten",
+   "node member",
+   "node type",
+   "snapshot member",
+   "second snapshot",
+   "relation",
+   "payload ref replaced",
+   "context text copied",
+   "metadata member",
+   "metadata ref"
+  ]
+ },
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) hermetic: the preview projection derives only evidence refs, a nativePayloadRef digest, notes, counts and status words; any action/handler/control field from a context block fails",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "block": {
+       "native": "verbatim",
+       "injected": "verbatim",
+       "spawns": 1,
+       "calls": 1
+      },
+      "block-metadata": {
+       "native": "verbatim",
+       "injected": "verbatim",
+       "spawns": 1,
+       "calls": 1
+      },
+      "component": {
+       "native": "verbatim",
+       "injected": "verbatim",
+       "spawns": 1,
+       "calls": 1
+      },
+      "observation": {
+       "native": "verbatim",
+       "injected": "verbatim",
+       "spawns": 1,
+       "calls": 1
+      },
+      "necessity": {
+       "native": "verbatim",
+       "injected": "verbatim",
+       "spawns": 1,
+       "calls": 1
+      },
+      "output": {
+       "native": "verbatim",
+       "injected": "verbatim",
+       "spawns": 1,
+       "calls": 1
+      },
+      "result-key": {
+       "native": "verbatim",
+       "injected": "verbatim",
+       "spawns": 1,
+       "calls": 1
+      },
+      "text": {
+       "native": "verbatim",
+       "injected": "verbatim",
+       "spawns": 1,
+       "calls": 1
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "block": "identical to its bare twin",
+      "block-metadata": "identical to its bare twin",
+      "component": "identical to its bare twin",
+      "observation": "identical to its bare twin",
+      "necessity": "identical to its bare twin",
+      "output": "identical to its bare twin",
+      "result-key": "identical to its bare twin",
+      "text": "payload digest only"
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "snapshotKeys": [
+       "source",
+       "scope",
+       "capturedAt",
+       "observedAt",
+       "coverage",
+       "node",
+       "kind",
+       "evidenceRefs",
+       "sourceVersion",
+       "sourceRevision",
+       "nativePayloadRef"
+      ],
+      "nodeKeys": [
+       "title",
+       "type",
+       "statusText",
+       "statusTone"
+      ],
+      "refKinds": [
+       "rf-bundle",
+       "rf-cli",
+       "rf-graph",
+       "rf-workspace"
+      ],
+      "sourceKinds": [
+       "rf-bundle",
+       "rf-cli",
+       "rf-engine",
+       "rf-engine-spawns",
+       "rf-graph",
+       "rf-output",
+       "rf-workspace"
+      ],
+      "metadataKeys": [
+       "provider",
+       "nativeId",
+       "sourceBasis",
+       "producerRelease"
+      ],
+      "shape": [],
+      "tokens": []
+     }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "quiet": 21,
+      "findings": {
+       "ref of a new kind": [
+        "changed:$.snapshots[0].evidenceRefs",
+        "kind:rf-action",
+        "sentinel:rcx-sentinel-action-submit"
+       ],
+       "ref of a known kind": [
+        "changed:$.snapshots[0].evidenceRefs",
+        "sentinel:rcx-sentinel-handler-render"
+       ],
+       "note naming an action": [
+        "changed:$.diagnostics",
+        "sentinel:rcx-sentinel-action-open"
+       ],
+       "note without a sentinel": [
+        "changed:$.diagnostics"
+       ],
+       "status suffix": [
+        "changed:$.snapshots[0].node.statusText"
+       ],
+       "title rewritten": [
+        "changed:$.snapshots[0].node.title",
+        "sentinel:rcx-sentinel-control-label"
+       ],
+       "node member": [
+        "changed:$.snapshots[0].node.actions",
+        "shape:$.snapshots[0].node",
+        "sentinel:rcx-sentinel-action-submit",
+        "sentinel:rcx-sentinel-label-submit",
+        "sentinel:rcx-sentinel-handler-submit"
+       ],
+       "node type": [
+        "changed:$.snapshots[0].node.type"
+       ],
+       "snapshot member": [
+        "changed:$.snapshots[0].controls",
+        "shape:$.snapshots[0].controls",
+        "sentinel:rcx-sentinel-control-kind",
+        "sentinel:rcx-sentinel-control-label"
+       ],
+       "second snapshot": [
+        "changed:$.snapshots",
+        "shape:$.snapshots.length=2"
+       ],
+       "relation": [
+        "changed:$.relations",
+        "shape:$.relations"
+       ],
+       "payload ref replaced": [
+        "changed:$.snapshots[0].nativePayloadRef",
+        "shape:$.snapshots[0].nativePayloadRef",
+        "sentinel:rcx-sentinel-callback"
+       ],
+       "context text copied": [
+        "changed:$.diagnostics"
+       ],
+       "metadata member": [
+        "changed:$.actions",
+        "shape:$.actions",
+        "sentinel:rcx-sentinel-action-open",
+        "sentinel:rcx-sentinel-action-close"
+       ],
+       "metadata ref": [
+        "changed:$.evidenceRefs",
+        "kind:rf-action",
+        "sentinel:rcx-sentinel-handler-submit"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) hermetic rf fixtures (validRf/result) stay byte-identical; rf-release-drift.ts and the contractSource carrier record nothing from this program",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "fixtures": {
+       "validRf": {
+        "declarations": [
+         "id",
+         "digest",
+         "validRf"
+        ],
+        "sha256": "e7005b92cd8b8f3547901a76c15d156328e673995c068865958deff27a14a3be"
+       },
+       "result": {
+        "declarations": [
+         "WS",
+         "OPERATION",
+         "WORKSPACE_ID",
+         "GRAPH",
+         "TEXT",
+         "work",
+         "formula",
+         "result"
+        ],
+        "sha256": "f6effc03ab5dec5df0af9f56964a5a3b2ae946d5f4ef2722f20ec83406dcc9a9"
+       }
+      },
+      "helperRows": "8ce10a2069207fcbb512161d3363e8381f6f13bed5db0d7f282e7539f2ffdd08"
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "tokens": [],
+      "exported": [
+       "RF_LIVE_DRIFT_TITLE",
+       "RF_LIVE_DRIFT_SHAPE_SUITE",
+       "recordedRfRelease",
+       "parseInstalledRfVersion",
+       "RfReleaseDrift",
+       "judgeRfReleaseDrift"
+      ],
+      "release": "0.1.784",
+      "plain": {
+       "ok": true,
+       "failures": []
+      },
+      "echoed": {
+       "ok": false,
+       "failures": [
+        "installed rf --version result.version drifted: recorded 0.1.784 vs installed 0.1.1"
+       ]
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "carrier": "rf@0.1.784:reactive-fiber.cli/v1 context.render --no-commit",
+      "descriptors": [
+       {
+        "id": "reactivefiber.render.preview",
+        "version": "1.0.0",
+        "effectClass": "read",
+        "permissions": [
+         "reactivefiber:render"
+        ],
+        "supportedModes": [
+         "invoke"
+        ],
+        "contractSource": "rf@0.1.784:reactive-fiber.cli/v1 context.render --no-commit"
+       },
+       {
+        "id": "reactivefiber.render.preview",
+        "version": "1.0.0",
+        "effectClass": "read",
+        "permissions": [
+         "reactivefiber:render"
+        ],
+        "supportedModes": [
+         "invoke"
+        ],
+        "contractSource": "rf@0.1.784:reactive-fiber.cli/v1 context.render --no-commit"
+       }
+      ],
+      "reconcile": [
+       "reactivefiber.render.preview"
+      ],
+      "tokens": []
+     }
+    },
+    {
+     "id": "B4",
+     "witness": {
+      "keys": [
+       "schema",
+       "ok",
+       "command",
+       "operation_id",
+       "workspace",
+       "transaction_id",
+       "result",
+       "diagnostics"
+      ],
+      "count": 8,
+      "schema": "reactive-fiber.cli/v1",
+      "native": "transport: RF preview returned an unrecognized native envelope.",
+      "observed": "validation: ReactiveFiber topology refused: source must be the strict eight-key rf envelope."
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) census: no Pi type, UI handler, bead or docs/workbench sentence models an rf context block as an interactive control or attributes an Element/<DOCUMENT>/envelope change to this program (<SDK>|<ELEMENT>|<DOCUMENT> census = 0 beyond the sdk_versions echo)",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "floorMet": true,
+      "excluded": [
+       ".beads/",
+       "test/"
+      ],
+      "findings": [],
+      "echoKinds": [
+       "sdk_versions-key"
+      ],
+      "echoFloorMet": true
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "readers": [
+       "src/workbench/native-evidence.ts",
+       "src/workbench/providers/reactivefiber.ts",
+       "src/workbench/reactivefiber-observer.ts"
+      ],
+      "words": {
+       "src/workbench/native-evidence.ts": [],
+       "src/workbench/providers/reactivefiber.ts": [],
+       "src/workbench/reactivefiber-observer.ts": []
+      },
+      "blockFields": [
+       "candidate_key",
+       "component_id",
+       "failure_mode",
+       "fallback_used",
+       "final_index",
+       "judge_id",
+       "judge_kind",
+       "necessity_class",
+       "token_cost",
+       "token_cost_kind"
+      ],
+      "members": [],
+      "typeNames": [],
+      "srcFloorMet": true
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "rfModules": [
+       "src/workbench/native-evidence.ts",
+       "src/workbench/providers/reactivefiber.ts",
+       "src/workbench/reactivefiber-observer.ts",
+       "src/workbench/hosts/local-detached.ts",
+       "src/workbench/native-modules.ts"
+      ],
+      "loads": [],
+      "vocabulary": [],
+      "reactivefiberLoader": false,
+      "uiFloorMet": true
+     }
+    },
+    {
+     "id": "C4",
+     "witness": {
+      "children": [
+       "wb-5ltg.1",
+       "wb-5ltg.2",
+       "wb-5ltg.3"
+      ],
+      "stated": 3,
+      "rows": {
+       "wb-5ltg": {
+        "markedModels": 0,
+        "markedAttributions": 0
+       },
+       "wb-5ltg.1": {
+        "markedModels": 6,
+        "markedAttributions": 2
+       },
+       "wb-5ltg.2": {
+        "markedModels": 0,
+        "markedAttributions": 0
+       },
+       "wb-5ltg.3": {
+        "markedModels": 0,
+        "markedAttributions": 0
+       }
+      },
+      "findings": []
+     }
+    },
+    {
+     "id": "C5",
+     "witness": {
+      "floorMet": true,
+      "findings": [],
+      "live": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "M",
+   "label": "the instruments rows A-C read judge their pinned inputs member by member: the needles and classifiers, the word splitter and control words, the sentence cutter and rules",
+   "pins": [
+    {
+     "id": "M1",
+     "witness": {
+      "spellings": {
+       "sdk": {
+        "exact": [
+         "sdk:exact"
+        ],
+        "snake": [
+         "sdk:finding"
+        ],
+        "upperKebab": [
+         "sdk:finding"
+        ],
+        "dotted": [
+         "sdk:finding"
+        ],
+        "spaced": [
+         "sdk:finding"
+        ],
+        "camel": [
+         "sdk:finding"
+        ],
+        "invisible": [
+         "sdk:exact"
+        ],
+        "fullwidth": [
+         "sdk:exact"
+        ]
+       },
+       "element": {
+        "exact": [
+         "element:exact"
+        ],
+        "snake": [
+         "element:finding"
+        ],
+        "upperKebab": [
+         "element:finding"
+        ],
+        "dotted": [
+         "element:finding"
+        ],
+        "spaced": [
+         "element:finding"
+        ],
+        "camel": [
+         "element:finding"
+        ],
+        "invisible": [
+         "element:exact"
+        ],
+        "fullwidth": [
+         "element:exact"
+        ]
+       },
+       "document": {
+        "exact": [
+         "document:exact"
+        ],
+        "snake": [
+         "document:finding"
+        ],
+        "upperKebab": [],
+        "dotted": [],
+        "spaced": [],
+        "camel": [
+         "document:finding"
+        ],
+        "invisible": [
+         "document:exact"
+        ],
+        "fullwidth": [
+         "document:exact"
+        ]
+       }
+      },
+      "echo": {
+       "jsonKey": [
+        "sdk:echo:sdk_versions-key"
+       ],
+       "tsKey": [
+        "sdk:echo:sdk_versions-key"
+       ],
+       "siblingBlock": [
+        "sdk:echo:sdk_versions-sibling"
+       ],
+       "loneSibling": [
+        "sdk:finding"
+       ],
+       "path": [
+        "sdk:echo:sdk_versions-path"
+       ],
+       "distribution": [
+        "sdk:echo:sdk_contract-distribution"
+       ],
+       "otherObject": [
+        "sdk:finding"
+       ],
+       "specifier": [
+        "sdk:finding"
+       ],
+       "otherCase": [
+        "sdk:finding"
+       ]
+      },
+      "screaming": [
+       "document:finding"
+      ],
+      "misses": {
+       "singular": [],
+       "proseDocument": [],
+       "elementAlone": [],
+       "partial": []
+      }
+     }
+    },
+    {
+     "id": "M2",
+     "witness": {
+      "read": {
+       "onClick": [
+        "click"
+       ],
+       "on_submit": [
+        "submit"
+       ],
+       "actionIds": [
+        "action"
+       ],
+       "action_ids": [
+        "action"
+       ],
+       "submitHandler": [
+        "submit",
+        "handler"
+       ],
+       "eventHandlers": [
+        "handlers"
+       ],
+       "UiControls": [
+        "ui",
+        "controls"
+       ],
+       "renderButton": [
+        "button"
+       ],
+       "widgetKind": [
+        "widget"
+       ],
+       "isClickable": [
+        "clickable"
+       ],
+       "interactiveRows": [
+        "interactive"
+       ],
+       "props": [
+        "props"
+       ],
+       "resource_bindings": [
+        "bindings"
+       ],
+       "callback": [
+        "callback"
+       ],
+       "transaction_id": [],
+       "addEventListener": [],
+       "inputSchema": [],
+       "component_render_count": [],
+       "hasExactKeys": [],
+       "build": []
+      },
+      "fieldWords": {
+       "action_ids": [
+        "action"
+       ],
+       "actions": [
+        "actions"
+       ],
+       "handler": [
+        "handler"
+       ],
+       "on_click": [
+        "click"
+       ],
+       "control": [
+        "control"
+       ],
+       "callback": [
+        "callback"
+       ],
+       "props": [
+        "props"
+       ],
+       "resource_bindings": [
+        "bindings"
+       ]
+      },
+      "clauseWords": [
+       "action",
+       "handler",
+       "control"
+      ]
+     }
+    },
+    {
+     "id": "M3",
+     "witness": {
+      "cut": [
+       "1:One.",
+       "1:Two;",
+       "1:three!",
+       "1:four?",
+       "3:five",
+       "5:| a | b |",
+       "6:- item one",
+       "7:1.",
+       "7:item two six.seven"
+      ],
+      "families": {
+       "N1": [
+        true,
+        true,
+        true
+       ],
+       "N2": [
+        true,
+        true,
+        true
+       ],
+       "N3": [
+        true,
+        true,
+        true,
+        true,
+        true
+       ],
+       "N4": [
+        true,
+        true,
+        true
+       ],
+       "K1": [
+        true,
+        true,
+        true,
+        true,
+        true,
+        true,
+        true
+       ],
+       "K2": [
+        true,
+        true,
+        true
+       ],
+       "K3": [
+        true,
+        true,
+        true,
+        true,
+        true
+       ],
+       "K4": [
+        true,
+        true,
+        true,
+        true
+       ],
+       "K5": [
+        true,
+        true
+       ]
+      },
+      "rules": {
+       "model": [
+        "control-model"
+       ],
+       "modelContraction": [],
+       "anchorAlone": [],
+       "controlAlone": [],
+       "attribution": [
+        "attribution"
+       ],
+       "attributionImplied": [
+        "attribution"
+       ],
+       "attributionUnnamed": [],
+       "attributionUnchanged": [],
+       "attributionNoChange": [],
+       "tagged": [
+        "attribution"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "R",
+   "label": "the residuals: each named family reads quiet on its pinned row",
+   "pins": [
+    {
+     "id": "R1",
+     "witness": {
+      "R-STATUS-WORD": true,
+      "R-PRODUCER-IDENTITY": true,
+      "R-PROSE-NAME": true,
+      "R-COMPOSED": true,
+      "R-ENCODED": true,
+      "R-LOOKALIKE": true,
+      "R-OTHER-ROWS": true,
+      "R-NON-PROSE": true,
+      "R-MARKER-ANYWHERE": true,
+      "R-VOCABULARY": true,
+      "R-PARAPHRASE": true,
+      "R-SPLIT": true,
+      "R-COMPUTED-IMPORT": true,
+      "R-OUTSIDE-READERS": true,
+      "R-IGNORED": true,
+      "R-UNANCHORED": true,
+      "R-COMMENT": true,
+      "R-TRANSITIVE": true,
+      "R-BEAD-EXPORT": true,
+      "R-UNPLACED": true,
+      "R-TEST-TREE": true
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the bead export's acceptance clauses and the cases agree",
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "B1",
+  "B2",
+  "B3",
+  "B4",
+  "C1",
+  "C2",
+  "C3",
+  "C4",
+  "C5",
+  "M1",
+  "M2",
+  "M3",
+  "R1",
+  "the record: every registered test is in run mode and ran, and every pin reached its end with its pinned assertion count"
+ ],
+ "reached": [
+  "A1:58",
+  "A2:29",
+  "A3:37",
+  "A4:4",
+  "B1:7",
+  "B2:7",
+  "B3:9",
+  "B4:9",
+  "C1:9",
+  "C2:6",
+  "C3:6",
+  "C4:6",
+  "C5:5",
+  "M1:6",
+  "M2:5",
+  "M3:6",
+  "R1:3"
+ ]
+}
