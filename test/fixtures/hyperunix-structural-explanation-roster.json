@@ -1,0 +1,1102 @@
+{
+ "provenance": "wb-x0xu.1 HX structural-explanation census roster. Producer facts MEASURED read-only by the cutting seat ws-03 (run g10-work-s59, 2026-10-23) by git show at the HyperUnix-CLI program pin 0091719d02887910fa0c2fb6693a32723e243600 and from Pi's vendored @hyperunix/sdk 0.1.0 tarball at Pi trunk feebb63b9113d4b4b2046bcbe81b2679e7e0fdf7. Every explanation text, class spelling, carrier key and fixture is CONSTRUCTED by this census (the program is design-only; the producer mints none of them). Witnesses were first held null (every pin red at its witness compare), then filled from the measured cases and reviewed reading by reading.",
+ "bead": "wb-x0xu.1",
+ "programPin": "0091719d02887910fa0c2fb6693a32723e243600",
+ "producer": {
+  "repository": "HyperUnix-CLI",
+  "program": "docs/programs/structural-information-optimization-2026-10-17",
+  "boundary": {
+   "file": "03-architecture.md",
+   "blob": "4256fcf6725e7f631b31558297e05794e9febdd2",
+   "line": 55,
+   "text": "6. HXS/ledger/LX: explain accepted and rejected structural assumptions; make unfinished work, Unknown and budget stops visible."
+  },
+  "status": {
+   "file": "README.md",
+   "blob": "67824fe386198161024e24ec58aa289ccba9d777",
+   "line": 3,
+   "quote": "**Status:** DESIGN ONLY; no new optimizer feature implemented, measured or default-enabled by these documents."
+  },
+  "authority": [
+   {
+    "file": "05-physical-provider-lld.md",
+    "blob": "135bed1d3e1a1efb27193c3f90e856a04b783353",
+    "line": 33,
+    "quote": "Cost fallbacks and explainable refusal use existing diagnostic grammar."
+   },
+   {
+    "file": "02-vision-decisions.md",
+    "blob": "7eb826b2526670454f0421df032cf60cc9904060",
+    "line": 30,
+    "quote": "A result may be useful as an explainability diagnostic without becoming an execution kernel."
+   }
+  ],
+  "sdkAtPin": {
+   "package": {
+    "file": "sdk/typescript/package.json",
+    "blob": "8f023818ac242f9bb2668d26ddb9e65c31676c78",
+    "name": "@hyperunix/sdk",
+    "version": "0.1.0"
+   },
+   "result": {
+    "file": "sdk/typescript/src/result.ts",
+    "blob": "f38ab9c704a64544b31be6d123036d926c2d71ba",
+    "stemLines": []
+   },
+   "namesakes": [
+    {
+     "file": "sdk/typescript/src/client.ts",
+     "blob": "98fbeed8bd4438385cf613e0ebb12a378d44827e",
+     "lines": [
+      547,
+      548,
+      636,
+      637,
+      802,
+      803
+     ],
+     "what": "the explain and explainQuery read verbs; the results-mode result/explanation record kinds"
+    },
+    {
+     "file": "sdk/typescript/src/protocol.ts",
+     "blob": "a1b3f00c01d384e0b9863e91b59babf72fc0530f",
+     "lines": [
+      177
+     ],
+     "what": "the hx.config-explain stream kind in a comment"
+    },
+    {
+     "file": "sdk/typescript/src/protocol/decoder.ts",
+     "blob": "7563ba0f1e0b546bb1388997e799db445894ef86",
+     "lines": [
+      184
+     ],
+     "what": "frame routing: explanation only on results streams, execution-explanation only on execution-trace streams"
+    },
+    {
+     "file": "sdk/typescript/src/provider.ts",
+     "blob": "35c524698d075586a8307cfebcd17f63df28e5b1",
+     "lines": [
+      55,
+      64,
+      70,
+      76
+     ],
+     "what": "sourceRootAssumption of the observer-inspect declaration"
+    },
+    {
+     "file": "sdk/typescript/src/transport/cli.ts",
+     "blob": "63fd553f8587055c6f1451e55283a24ae66d98ed",
+     "lines": [
+      47,
+      59
+     ],
+     "what": "the config-explain operation"
+    },
+    {
+     "file": "sdk/typescript/src/workspace.ts",
+     "blob": "9713f9e377d82af1b0f7a2c447aa687a8c0c8ae7",
+     "lines": [
+      35,
+      106,
+      107
+     ],
+     "what": "the explain verb argv and the results-mode explanation frames"
+    }
+   ]
+  },
+  "vendored": {
+   "tarball": "vendor/hyperunix-sdk-0.1.0.tgz",
+   "package": {
+    "name": "@hyperunix/sdk",
+    "version": "0.1.0"
+   },
+   "frameRouting": {
+    "file": "package/dist/protocol/decoder.js",
+    "line": 204,
+    "text": "[\"explanation\", only(\"results\")], [\"execution-explanation\", only(\"execution-trace\")]"
+   },
+   "representation": "package/dist/result.js resultToJson (:459-516) emits the QueryResult members only; ReadResult.results (workspace.d.ts:114) has no member in it"
+  },
+  "piBase": "feebb63b9113d4b4b2046bcbe81b2679e7e0fdf7"
+ },
+ "constants": {
+  "vendoredTarball": "vendor/hyperunix-sdk-0.1.0.tgz",
+  "judgedFiles": [
+   "node_modules/@hyperunix/sdk/dist/result.d.ts",
+   "src/workbench/hyperunix-observer.ts"
+  ],
+  "stems": [
+   "assumption",
+   "explain",
+   "explanat"
+  ],
+  "classes": [
+   "accepted-assumption",
+   "rejected-assumption",
+   "unfinished-work",
+   "unknown",
+   "budget-stop"
+  ],
+  "markers": [
+   "rejected-assumption",
+   "unfinished-work",
+   "unknown",
+   "budget-stop"
+  ],
+  "explanations": [
+   {
+    "class": "accepted-assumption",
+    "text": "accepted structural assumption: src holds no symlink cycle (HXS-X1)"
+   },
+   {
+    "class": "rejected-assumption",
+    "text": "rejected structural assumption: the provider index covers every file (HXS-X2)"
+   },
+   {
+    "class": "unfinished-work",
+    "text": "unfinished work: 3 directories left unexpanded at the stop (HXS-X3)"
+   },
+   {
+    "class": "unknown",
+    "text": "Unknown: membership below src/vendor is not established (HXS-X4)"
+   },
+   {
+    "class": "budget-stop",
+    "text": "budget stop: the wall budget of 30s was reached (HXS-X5)"
+   }
+  ],
+  "member": "hxs_explanations",
+  "carrier": "hx.structural-explanations",
+  "facetLimit": 200,
+  "flaggedControls": [
+   "readonly explanations: readonly string[];",
+   "structuralAssumption",
+   "STRUCTURAL_ASSUMPTION",
+   "structural-assumptions",
+   "Explain why",
+   "explainability",
+   "explanatory note"
+  ],
+  "quietControls": [
+   "readonly budgetDimension: string | null;",
+   "diagnostics",
+   "unfinished work",
+   "Unknown",
+   "budget stop"
+  ],
+  "fixtures": [
+   {
+    "name": "none",
+    "kind": "incomplete",
+    "licensed": false,
+    "classes": []
+   },
+   {
+    "name": "accepted",
+    "kind": "incomplete",
+    "licensed": false,
+    "classes": [
+     "accepted-assumption"
+    ]
+   },
+   {
+    "name": "accepted-complete-unlicensed",
+    "kind": "complete",
+    "licensed": false,
+    "classes": [
+     "accepted-assumption"
+    ]
+   },
+   {
+    "name": "rejected",
+    "kind": "incomplete",
+    "licensed": false,
+    "classes": [
+     "rejected-assumption"
+    ]
+   },
+   {
+    "name": "rejected-licensed",
+    "kind": "incomplete",
+    "licensed": true,
+    "classes": [
+     "rejected-assumption"
+    ]
+   },
+   {
+    "name": "unfinished",
+    "kind": "incomplete",
+    "licensed": false,
+    "classes": [
+     "unfinished-work"
+    ]
+   },
+   {
+    "name": "unknown",
+    "kind": "incomplete",
+    "licensed": false,
+    "classes": [
+     "unknown"
+    ]
+   },
+   {
+    "name": "budget-stop",
+    "kind": "incomplete",
+    "licensed": false,
+    "classes": [
+     "budget-stop"
+    ]
+   },
+   {
+    "name": "all",
+    "kind": "incomplete",
+    "licensed": false,
+    "classes": [
+     "accepted-assumption",
+     "rejected-assumption",
+     "unfinished-work",
+     "unknown",
+     "budget-stop"
+    ]
+   },
+   {
+    "name": "repeated",
+    "kind": "incomplete",
+    "licensed": false,
+    "classes": [
+     "rejected-assumption",
+     "rejected-assumption"
+    ]
+   }
+  ],
+  "checks": [
+   "refused",
+   "byte-identical",
+   "unchanged",
+   "raised",
+   "absence",
+   "verbatim",
+   "own-facet",
+   "synthesized"
+  ],
+  "readers": [
+   "honest",
+   "raiseOnAccepted",
+   "knownEmptyOnMarker",
+   "successOnBudgetStop",
+   "completeOnUnfinished",
+   "mergeFacets",
+   "dedupeFacets",
+   "paraphrase",
+   "truncate",
+   "dropRejected",
+   "reclassRejected",
+   "evidenceRef",
+   "answerText",
+   "facetForNone",
+   "refuseExplained"
+  ],
+  "residuals": {
+   "R-VOCABULARY": [
+    "Q1"
+   ],
+   "R-COMPOSED": [
+    "Q2"
+   ],
+   "R-NAMESAKE": [
+    "Q3"
+   ],
+   "R-RAW-READING": [
+    "Q4"
+   ],
+   "R-INTERRUPTED": [
+    "Q5"
+   ],
+   "R-SCOPE": [
+    "Q6"
+   ]
+  }
+ },
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the bead's acceptance text and the cases agree",
+  "A1",
+  "A2",
+  "B1",
+  "B2",
+  "C1",
+  "C2",
+  "C3",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "the registered tests and the reached pins equal the roster, in order and both ways"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) today: a test asserts those two files name no assumption/explanation field and a 'budget-exhausted' fixture projects coverage 'partial', statusTone 'unknown', statusText containing 'absence not licensed'",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "tarball": "655e08b09febcad67732d6e25d6de4bd8e4a683f594c1d5d3d6ff24ff70b107b",
+      "resultDeclaration": "0d3385dbf761b1d425ff5710dd2ae9042b74684ef0b5d64867fbd8b78638aa6f",
+      "files": [
+       {
+        "path": "node_modules/@hyperunix/sdk/dist/result.d.ts",
+        "hits": 0
+       },
+       {
+        "path": "src/workbench/hyperunix-observer.ts",
+        "hits": 0
+       }
+      ],
+      "queryResultMembers": [
+       "operation",
+       "rows",
+       "rowsRetained",
+       "coverage",
+       "coverageSummary",
+       "status",
+       "terminal",
+       "truth",
+       "diagnostics",
+       "view",
+       "evidence",
+       "queryDigest",
+       "digestSource",
+       "executionId",
+       "actualCost",
+       "budgetDimension",
+       "extensions",
+       "transport",
+       "workspaceRoot",
+       "streams"
+      ],
+      "citedLines": {
+       "115": "readonly diagnostics: readonly Diagnostic[];",
+       "124": "readonly budgetDimension: string | null;",
+       "140": "readonly diagnostics: readonly Diagnostic[];"
+      },
+      "controls": {
+       "flagged": 7,
+       "quiet": 5
+      },
+      "bound": []
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "table": [
+       [
+        "direct",
+        false,
+        false,
+        "partial",
+        "unknown",
+        "budget-exhausted · rows 0 · absence not licensed"
+       ],
+       [
+        "direct",
+        true,
+        false,
+        "partial",
+        "unknown",
+        "budget-exhausted · rows 0 · absence not licensed"
+       ],
+       [
+        "provider",
+        false,
+        false,
+        "partial",
+        "unknown",
+        "budget-exhausted · rows 0 · absence not licensed"
+       ],
+       [
+        "provider",
+        false,
+        true,
+        "partial",
+        "unknown",
+        "budget-exhausted · rows 0 · absence not licensed"
+       ],
+       [
+        "provider",
+        true,
+        false,
+        "partial",
+        "unknown",
+        "budget-exhausted · rows 0 · absence not licensed"
+       ],
+       [
+        "provider",
+        true,
+        true,
+        "partial",
+        "unknown",
+        "budget-exhausted · rows 0 · absence not licensed"
+       ]
+      ],
+      "carried": {
+       "executionStatus": {
+        "kind": "budget-exhausted",
+        "diagnostic_code": "HX-BUDGET-EXHAUSTED",
+        "dimension": "wall"
+       },
+       "budgetDimension": "wall",
+       "terminal": "budget_exhausted"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) today: an explanation-shaped unknown field reaches no output field, projection strictEqual",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "positions": [
+       "$",
+       "$.source",
+       "$.source.rows[0]",
+       "$.source.coverage[0]",
+       "$.source.coverage[0].cause",
+       "$.source.coverage[0].scope",
+       "$.source.coverage[0].target",
+       "$.source.coverage[0].body",
+       "$.source.status",
+       "$.source.status.streams[0]",
+       "$.source.execution_status",
+       "$.source.diagnostics[0]",
+       "$.source.diagnostics[0].details",
+       "$.source.diagnostics[0].extra",
+       "$.source.cost",
+       "$.source.transport",
+       "$.source.coverage_summary",
+       "$.source.coverage_summary.incomplete_regions[0]",
+       "$.source.coverage_summary.result_coverage",
+       "$.source.evidence",
+       "$.source.evidence.provider_versions",
+       "$.source.extensions",
+       "$.runtime"
+      ],
+      "unchanged": 23,
+      "control": {
+       "unchanged": false,
+       "leaked": [
+        "HXS-X1",
+        "assumption"
+       ]
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "survives": {
+       "$": false,
+       "$.rows[0]": true,
+       "$.coverage[0]": false,
+       "$.coverage[0].cause": true,
+       "$.coverage[0].scope": true,
+       "$.coverage[0].target": true,
+       "$.coverage[0].body": true,
+       "$.status": false,
+       "$.status.streams[0]": false,
+       "$.execution_status": false,
+       "$.diagnostics[0]": false,
+       "$.diagnostics[0].details": true,
+       "$.diagnostics[0].extra": true,
+       "$.cost": true,
+       "$.transport": false,
+       "$.coverage_summary": false,
+       "$.coverage_summary.incomplete_regions[0]": true,
+       "$.coverage_summary.result_coverage": true,
+       "$.evidence": false,
+       "$.evidence.provider_versions": false,
+       "$.extensions": true,
+       "$.diagnostics[+] (diagnostic grammar)": true
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) on landing: each assumption explanation projects verbatim as its own facet with coverage, statusTone, evidenceRefs and answer text unchanged, and a rejected-assumption, unfinished-work or budget-stop marker with rows [] and kind 'incomplete' is never 'known-empty' nor statusTone 'success'",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "fixtures": [
+       "none",
+       "accepted",
+       "accepted-complete-unlicensed",
+       "rejected",
+       "rejected-licensed",
+       "unfinished",
+       "unknown",
+       "budget-stop",
+       "all",
+       "repeated"
+      ],
+      "deltas": {
+       "none": [],
+       "accepted": [
+        "$.source.extensions[\"hx.structural-explanations\"]"
+       ],
+       "accepted-complete-unlicensed": [
+        "$.source.extensions[\"hx.structural-explanations\"]"
+       ],
+       "rejected": [
+        "$.source.extensions[\"hx.structural-explanations\"]"
+       ],
+       "rejected-licensed": [
+        "$.source.extensions[\"hx.structural-explanations\"]"
+       ],
+       "unfinished": [
+        "$.source.extensions[\"hx.structural-explanations\"]"
+       ],
+       "unknown": [
+        "$.source.extensions[\"hx.structural-explanations\"]"
+       ],
+       "budget-stop": [
+        "$.source.extensions[\"hx.structural-explanations\"]"
+       ],
+       "all": [
+        "$.source.extensions[\"hx.structural-explanations\"]"
+       ],
+       "repeated": [
+        "$.source.extensions[\"hx.structural-explanations\"]"
+       ]
+      },
+      "projections": {
+       "none": [
+        "incomplete",
+        false,
+        "partial",
+        "unknown",
+        "incomplete · rows 0 · absence not licensed"
+       ],
+       "accepted": [
+        "incomplete",
+        false,
+        "partial",
+        "unknown",
+        "incomplete · rows 0 · absence not licensed"
+       ],
+       "accepted-complete-unlicensed": [
+        "complete",
+        false,
+        "partial",
+        "unknown",
+        "complete · rows 0 · absence not licensed"
+       ],
+       "rejected": [
+        "incomplete",
+        false,
+        "partial",
+        "unknown",
+        "incomplete · rows 0 · absence not licensed"
+       ],
+       "rejected-licensed": [
+        "incomplete",
+        true,
+        "partial",
+        "unknown",
+        "incomplete · rows 0 · absence not licensed"
+       ],
+       "unfinished": [
+        "incomplete",
+        false,
+        "partial",
+        "unknown",
+        "incomplete · rows 0 · absence not licensed"
+       ],
+       "unknown": [
+        "incomplete",
+        false,
+        "partial",
+        "unknown",
+        "incomplete · rows 0 · absence not licensed"
+       ],
+       "budget-stop": [
+        "incomplete",
+        false,
+        "partial",
+        "unknown",
+        "incomplete · rows 0 · absence not licensed"
+       ],
+       "all": [
+        "incomplete",
+        false,
+        "partial",
+        "unknown",
+        "incomplete · rows 0 · absence not licensed"
+       ],
+       "repeated": [
+        "incomplete",
+        false,
+        "partial",
+        "unknown",
+        "incomplete · rows 0 · absence not licensed"
+       ]
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "honest": {},
+      "raiseOnAccepted": {
+       "accepted": [
+        "unchanged",
+        "raised"
+       ],
+       "accepted-complete-unlicensed": [
+        "unchanged",
+        "raised"
+       ],
+       "all": [
+        "unchanged",
+        "raised",
+        "absence"
+       ]
+      },
+      "knownEmptyOnMarker": {
+       "rejected": [
+        "unchanged",
+        "absence"
+       ],
+       "rejected-licensed": [
+        "unchanged",
+        "absence"
+       ],
+       "unfinished": [
+        "unchanged",
+        "absence"
+       ],
+       "unknown": [
+        "unchanged",
+        "absence"
+       ],
+       "budget-stop": [
+        "unchanged",
+        "absence"
+       ],
+       "all": [
+        "unchanged",
+        "absence"
+       ],
+       "repeated": [
+        "unchanged",
+        "absence"
+       ]
+      },
+      "successOnBudgetStop": {
+       "budget-stop": [
+        "unchanged",
+        "absence"
+       ],
+       "all": [
+        "unchanged",
+        "raised",
+        "absence"
+       ]
+      },
+      "completeOnUnfinished": {
+       "unfinished": [
+        "unchanged",
+        "absence"
+       ],
+       "all": [
+        "unchanged",
+        "raised",
+        "absence"
+       ]
+      },
+      "mergeFacets": {
+       "all": [
+        "verbatim",
+        "own-facet",
+        "synthesized"
+       ],
+       "repeated": [
+        "verbatim",
+        "own-facet",
+        "synthesized"
+       ]
+      },
+      "dedupeFacets": {
+       "repeated": [
+        "own-facet"
+       ]
+      },
+      "paraphrase": {
+       "accepted": [
+        "verbatim",
+        "synthesized"
+       ],
+       "accepted-complete-unlicensed": [
+        "verbatim",
+        "synthesized"
+       ],
+       "rejected": [
+        "verbatim",
+        "synthesized"
+       ],
+       "rejected-licensed": [
+        "verbatim",
+        "synthesized"
+       ],
+       "unfinished": [
+        "verbatim",
+        "synthesized"
+       ],
+       "unknown": [
+        "verbatim",
+        "synthesized"
+       ],
+       "budget-stop": [
+        "verbatim",
+        "synthesized"
+       ],
+       "all": [
+        "verbatim",
+        "synthesized"
+       ],
+       "repeated": [
+        "verbatim",
+        "synthesized"
+       ]
+      },
+      "truncate": {
+       "accepted": [
+        "verbatim",
+        "synthesized"
+       ],
+       "accepted-complete-unlicensed": [
+        "verbatim",
+        "synthesized"
+       ],
+       "rejected": [
+        "verbatim",
+        "synthesized"
+       ],
+       "rejected-licensed": [
+        "verbatim",
+        "synthesized"
+       ],
+       "unfinished": [
+        "verbatim",
+        "synthesized"
+       ],
+       "unknown": [
+        "verbatim",
+        "synthesized"
+       ],
+       "budget-stop": [
+        "verbatim",
+        "synthesized"
+       ],
+       "all": [
+        "verbatim",
+        "synthesized"
+       ],
+       "repeated": [
+        "verbatim",
+        "synthesized"
+       ]
+      },
+      "dropRejected": {
+       "rejected": [
+        "verbatim",
+        "own-facet"
+       ],
+       "rejected-licensed": [
+        "verbatim",
+        "own-facet"
+       ],
+       "all": [
+        "verbatim",
+        "own-facet"
+       ],
+       "repeated": [
+        "verbatim",
+        "own-facet"
+       ]
+      },
+      "reclassRejected": {
+       "rejected": [
+        "verbatim",
+        "synthesized"
+       ],
+       "rejected-licensed": [
+        "verbatim",
+        "synthesized"
+       ],
+       "all": [
+        "verbatim",
+        "synthesized"
+       ],
+       "repeated": [
+        "verbatim",
+        "synthesized"
+       ]
+      },
+      "evidenceRef": {
+       "accepted": [
+        "unchanged"
+       ],
+       "accepted-complete-unlicensed": [
+        "unchanged"
+       ],
+       "rejected": [
+        "unchanged"
+       ],
+       "rejected-licensed": [
+        "unchanged"
+       ],
+       "unfinished": [
+        "unchanged"
+       ],
+       "unknown": [
+        "unchanged"
+       ],
+       "budget-stop": [
+        "unchanged"
+       ],
+       "all": [
+        "unchanged"
+       ],
+       "repeated": [
+        "unchanged"
+       ]
+      },
+      "answerText": {
+       "accepted": [
+        "unchanged"
+       ],
+       "accepted-complete-unlicensed": [
+        "unchanged"
+       ],
+       "rejected": [
+        "unchanged"
+       ],
+       "rejected-licensed": [
+        "unchanged"
+       ],
+       "unfinished": [
+        "unchanged"
+       ],
+       "unknown": [
+        "unchanged"
+       ],
+       "budget-stop": [
+        "unchanged"
+       ],
+       "all": [
+        "unchanged"
+       ],
+       "repeated": [
+        "unchanged"
+       ]
+      },
+      "facetForNone": {
+       "none": [
+        "byte-identical",
+        "own-facet",
+        "synthesized"
+       ]
+      },
+      "refuseExplained": {
+       "accepted": [
+        "refused"
+       ],
+       "accepted-complete-unlicensed": [
+        "refused"
+       ],
+       "rejected": [
+        "refused"
+       ],
+       "rejected-licensed": [
+        "refused"
+       ],
+       "unfinished": [
+        "refused"
+       ],
+       "unknown": [
+        "refused"
+       ],
+       "budget-stop": [
+        "refused"
+       ],
+       "all": [
+        "refused"
+       ],
+       "repeated": [
+        "refused"
+       ]
+      }
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "bound": [],
+      "violations": {},
+      "controls": {
+       "honestOnly": {},
+       "withMutant": {
+        "synthetic/raise-on-accepted": {
+         "accepted": [
+          "unchanged",
+          "raised"
+         ],
+         "accepted-complete-unlicensed": [
+          "unchanged",
+          "raised"
+         ],
+         "all": [
+          "unchanged",
+          "raised",
+          "absence"
+         ]
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals: each named family pinned by its quiet row",
+   "pins": [
+    {
+     "id": "Q1",
+     "witness": {
+      "genericKeyHits": [
+       0,
+       0,
+       0,
+       0,
+       0,
+       0
+      ],
+      "withheld": [
+       {
+        "unchanged": true,
+        "leaked": []
+       },
+       {
+        "unchanged": true,
+        "leaked": []
+       },
+       {
+        "unchanged": true,
+        "leaked": []
+       },
+       {
+        "unchanged": true,
+        "leaked": []
+       },
+       {
+        "unchanged": true,
+        "leaked": []
+       },
+       {
+        "unchanged": true,
+        "leaked": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "Q2",
+     "witness": {
+      "hits": 0,
+      "composedKeys": [
+       "explanation",
+       "assumption"
+      ]
+     }
+    },
+    {
+     "id": "Q3",
+     "witness": {
+      "declarations": 27,
+      "namesakes": {
+       "package/dist/client.d.ts": [
+        149,
+        150,
+        202,
+        203
+       ],
+       "package/dist/provider.d.ts": [
+        19,
+        28
+       ],
+       "package/dist/transport/cli.d.ts": [
+        31
+       ],
+       "package/dist/workspace.d.ts": [
+        45,
+        46,
+        109,
+        110
+       ]
+      }
+     }
+    },
+    {
+     "id": "Q4",
+     "witness": {
+      "carriedVerbatim": [
+       "$.rows[0]",
+       "$.coverage[0].cause",
+       "$.coverage[0].scope",
+       "$.coverage[0].target",
+       "$.coverage[0].body",
+       "$.diagnostics[0].details",
+       "$.diagnostics[0].extra",
+       "$.cost",
+       "$.coverage_summary.incomplete_regions[0]",
+       "$.coverage_summary.result_coverage",
+       "$.extensions"
+      ]
+     }
+    },
+    {
+     "id": "Q5",
+     "witness": {
+      "split": 0,
+      "lookalike": []
+     }
+    },
+    {
+     "id": "Q6",
+     "witness": {
+      "judged": [
+       "node_modules/@hyperunix/sdk/dist/result.d.ts",
+       "src/workbench/hyperunix-observer.ts"
+      ],
+      "hxModules": [
+       "src/workbench/hosts/local-detached.ts",
+       "src/workbench/native-modules.ts",
+       "src/workbench/providers/hyperunix.ts"
+      ],
+      "adapterImporters": []
+     }
+    }
+   ]
+  }
+ ]
+}
