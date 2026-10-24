@@ -65,20 +65,31 @@
  *    below test spells none of the vocabulary, these two files included (each holds all nine fixture placeholders); D3 no
  *    dependency, descriptor or rf roster entry names an RI seam or the vocabulary, and the capability declaration rides verbatim
  *    through both seams and never surfaces; D4 the gate is measured unshipped (the roster's producer facts at both commits, the bead
- *    row's own gating and "Shipped: no" sentences); D5 the matchers' flagged, quiet and residual controls.
+ *    row's own gating and "Shipped: no" sentences, both read from the filing's first gating line alone, and its quoted line read from
+ *    the filing: six variants of the real row, each editing the filing while the appended notes still repeat the shipped sentence,
+ *    read false on the fact they edit, the whole-notes reading the bound replaced kept as their positive control, and a vocable the
+ *    filing no longer grounds reads ungrounded though an appended note spells it; wb-jpwj); D5 the matchers' flagged, quiet and
+ *    residual controls.
  * THE JUDGE compares an echo with the producer record: the carried record must be the record (classes by position: relabeled,
  *    upgraded to the full-distribution or calibrated label, values rewritten, added, dropped; the verbal string; the ranking pair:
  *    swapped, renamed, rewritten; the carried calibration metadata), no number may sit at a path the record holds none, and the
  *    calibration reading must be the reference rule's (surfaced verbatim exactly when complete, else the typed note).
- * OUTSIDE ANCHORS: the bead's row in the tracked export (.beads/issues.jsonl): every acceptance clause sits verbatim in exactly one
- * row label, the pins' atoms of rows A-C tile their clauses, the six class phrases of its quoted sentence are the fixture's class
- * words in order and their count is clause (a)'s "six", clause (b)'s four part names are the calibration parts, clause (c)'s quoted
- * phrase is the verbal string, clause (a)'s ranking pair is <PS> and <PP> and its "verbal-confidence string" is <VC>'s words, and
- * its gating sentence names RI-DEC-08 beside "Shipped: no"; clause (b)'s "calibration claim", clause (c)'s "full distribution" and
- * the title's "confidence evidence" and "score-provenance" each compose a site; and every site vocable is grounded in that row, a
- * producer line the roster quotes at the pin or a measured RI-I2 relative. Not claimed: a D pin removed from ROWS, the literal, IMPL
- * and the roster together (clause (d) has one atom); a site vocable removed together with every grounding and witness of it where
- * the filing does not parse it (the five RI-I2 relatives and the calibration metadata line: measured producer facts the roster holds).
+ * OUTSIDE ANCHORS: the FILING in the bead's row of the tracked export (.beads/issues.jsonl), its notes through the first "Not P0"
+ * line. D4's gate facts and the grounding check read the filing alone, never a note appended after it (the cut's DELIVERED note
+ * repeats the shipped sentence twice; wb-jpwj); the acceptance and class-sentence parses take the first occurrence in the notes, the
+ * filing's own (no appended note repeats either sentence at this cut's base, and the quoted line moved after the filing reds D4's
+ * quote read). Every acceptance clause sits verbatim in exactly one row label, the pins' atoms of rows A-C tile their clauses, the six
+ * class phrases of its quoted sentence are the fixture's class words in order and their count is clause (a)'s "six", clause (b)'s four
+ * part names are the calibration parts, clause (c)'s quoted phrase is the verbal string, clause (a)'s ranking pair is <PS> and <PP>
+ * and its "verbal-confidence string" is <VC>'s words, and its first gating line names RI-DEC-08 beside "Shipped: no" (the word no
+ * whole); clause (b)'s "calibration claim", clause (c)'s "full distribution" and the title's "confidence evidence" and
+ * "score-provenance" each compose a site; and every site vocable is grounded in the title or the filing, a producer line the roster
+ * quotes at the pin or a measured RI-I2 relative. Not claimed: the filing's gating line reworded so that it keeps "Shipped: no" whole
+ * while saying otherwise (the filing is the owner's text, read by its sentence form); the filing bound reverted together with D4's
+ * variant expectations and the roster's variant witness (a reader property: on the unedited row both readings agree, so no outside
+ * anchor holds it); a D pin removed from ROWS, the literal, IMPL and the roster together (clause (d) has one atom); a site vocable
+ * removed together with every grounding and witness of it where the filing does not parse it (the five RI-I2 relatives and the
+ * calibration metadata line: measured producer facts the roster holds).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row, pin, atom and witness, the
  * vocabularies, the template and its digest, the roots, the placements and the registered tests are held to the out-of-file roster
  * test/fixtures/ri-confidence-evidence-roster.json, and the last case walks this file's vitest task tree against it.
@@ -570,6 +581,106 @@ function quotedClassWords(notes: string): string[][] {
   return quoted[1].split(/, (?:and )?/).map(phrase => phrase.toLowerCase().split(/[\s-]+/));
 }
 const NUMBER_WORDS: Readonly<Record<string, number>> = { four: 4, five: 5, six: 6, seven: 7 };
+/**
+ * The filing itself (wb-jpwj): the row's notes through the end of its first "Not P0" line. A note appended after it (the cut's
+ * own DELIVERED note, which repeats the shipped sentence twice, among them) is never read as the filing.
+ */
+function filingOf(notes: string): string {
+  const close = notes.indexOf("\nNot P0");
+  if (close < 0) throw new Error("the bead row states no filing close (its Not P0 line)");
+  const end = notes.indexOf("\n", close + 1);
+  return end < 0 ? notes : notes.slice(0, end);
+}
+/** The filing's first gating line: the one line D4 reads the gate and the shipped status from. */
+function gatingLineOf(notes: string): string {
+  return filingOf(notes).split("\n").find(line => line.startsWith("Gating: ")) ?? "";
+}
+/** The shipped sentence the gating line must carry, the word no whole: "not yet" or "now" never reads as no. */
+const SHIPPED_NO = /\bShipped: no\b/;
+type GateFacts = { titlePin: boolean; gatingNamesGate: boolean; shippedNo: boolean; quoteInLine: boolean };
+/** The filing's quoted contract sentence: the first quote before a docs/programs ref. */
+const QUOTED = /'([^']+?)' docs\/programs\//;
+/** Whether a quoted sentence sits verbatim in the roster's 01-contracts.md:17 line at the pin. */
+function quoteInRoster(quoted: string | undefined): boolean {
+  const quoteLine = ROSTER.quotes.find(quote => quote.ref.endsWith(`01-contracts.md:17@${RI_PIN}`));
+  return quoted !== undefined && quoteLine?.text.includes(quoted) === true;
+}
+/**
+ * The row's gate facts, each read from the filing alone: the title pin, the gating sentence and its shipped sentence (both on the
+ * filing's first gating line) and the quoted contract line.
+ */
+function filingGateFacts(title: string, notes: string): GateFacts {
+  const line = gatingLineOf(notes);
+  return {
+    titlePin: title.includes(`01-contracts.md:17@${RI_PIN}`),
+    gatingNamesGate: (/^Gating: ([^.]+)\./.exec(line)?.[1] ?? "").includes(GATE),
+    shippedNo: SHIPPED_NO.test(line),
+    quoteInLine: quoteInRoster(QUOTED.exec(filingOf(notes))?.[1]),
+  };
+}
+/**
+ * The whole-notes reading D4 made before wb-jpwj, kept as the variants' positive control: a variant it still reads as gated,
+ * shipped-no and quoted is a live escape that only the filing bound closes.
+ */
+function wholeNotesReading(title: string, notes: string): GateFacts {
+  return {
+    titlePin: title.includes(`01-contracts.md:17@${RI_PIN}`),
+    gatingNamesGate: (/Gating: ([^.]+)\./.exec(notes)?.[1] ?? "").includes(GATE),
+    shippedNo: notes.includes("Shipped: no"),
+    quoteInLine: quoteInRoster(QUOTED.exec(notes)?.[1]),
+  };
+}
+/** The filing's own shipped sentence as it reads at the pin: the anchor the shipped variants edit (the gate's L2-bead-shipped-first-yes). */
+const FILING_SHIPPED = `Shipped: no - at ${RI_PIN}`;
+/** Replaces the one occurrence of an anchor, refusing an anchor that is absent or repeated, so no variant edits nothing. */
+function replaceOnce(text: string, anchor: string, replacement: string): string {
+  const parts = text.split(anchor);
+  if (parts.length !== 2) throw new Error(`a variant anchor must occur once, found ${parts.length - 1}`);
+  return `${parts[0]}${replacement}${parts[1]}`;
+}
+/** The filing's gating line and its quoted contract line, each found by a parse of its own, independent of the reader the variants judge. */
+const GATING_LINE = /^Gating: .*$/m;
+const QUOTED_LINE = /^'.*' docs\/programs\/.*$/m;
+function filingLine(filing: string, pattern: RegExp, what: string): string {
+  const found = pattern.exec(filing)?.[0];
+  if (found === undefined) throw new Error(`the filing holds no ${what} line`);
+  return found;
+}
+/** The notes with one filing line moved after the appended notes. */
+function movedAfter(filing: string, appended: string, line: string): string {
+  return `${replaceOnce(filing, `${line}\n`, "")}${appended}\n${line}`;
+}
+interface FilingVariant {
+  readonly id: string;
+  /** The variant's notes: the filing edited, the notes appended after it carried unchanged. */
+  readonly notes: (filing: string, appended: string) => string;
+}
+/**
+ * Six variants of the real row. Each edits the filing alone and carries the appended notes unchanged, so the whole-notes reading
+ * stays shipped-no for every one: the filing's sentence flipped to yes (the gate's L2-bead-shipped-first-yes) or to "not yet", the
+ * sentence moved off the gating line onto a line of its own, the gating line dropped, the gating line moved after the filing, and
+ * the quoted contract line moved after the filing.
+ */
+const FILING_VARIANTS: readonly FilingVariant[] = [
+  { id: "shipped-yes", notes: (filing, appended) => `${replaceOnce(filing, FILING_SHIPPED, FILING_SHIPPED.replace(": no", ": yes"))}${appended}` },
+  { id: "shipped-not-yet", notes: (filing, appended) => `${replaceOnce(filing, FILING_SHIPPED, FILING_SHIPPED.replace(": no", ": not yet"))}${appended}` },
+  { id: "shipped-off-line", notes: (filing, appended) => `${replaceOnce(filing, ` ${FILING_SHIPPED}`, `\n${FILING_SHIPPED}`)}${appended}` },
+  { id: "gating-dropped", notes: (filing, appended) => `${replaceOnce(filing, `${filingLine(filing, GATING_LINE, "gating")}\n`, "")}${appended}` },
+  { id: "gating-after-filing", notes: (filing, appended) => movedAfter(filing, appended, filingLine(filing, GATING_LINE, "gating")) },
+  { id: "quote-after-filing", notes: (filing, appended) => movedAfter(filing, appended, filingLine(filing, QUOTED_LINE, "quoted")) },
+];
+/** The site vocable grounded by the filing and an appended note alone (neither the title, a roster quote nor a relative): the grounding variant's subject. */
+const GROUNDING_VOCABLE = "<S8>";
+/** A vocable's grounding pattern: its words apart by a space, an underscore or a hyphen. */
+function groundPattern(vocable: Vocable, flags = ""): RegExp {
+  return new RegExp(vocable.words.join("[ _-]"), flags);
+}
+/** The site vocables no ground holds: the row's title and filing (never a note appended after it), a producer line the roster quotes at the pin, or a measured RI-I2 relative. */
+function ungroundedVocables(title: string, notes: string): string[] {
+  const relativeWords = arrayOf(ROSTER.producerFacts.relatives, "relatives").map((entry, index) => strings(objectOf(entry, `relative ${index}`).words, "relative words").join(" "));
+  const grounds = [`${title}\n${filingOf(notes)}`.toLowerCase(), ...ROSTER.quotes.map(quote => quote.text.toLowerCase()), ...relativeWords];
+  return SITE_WORDS.filter(vocable => !grounds.some(ground => groundPattern(vocable).test(ground))).map(vocable => vocable.placeholder);
+}
 
 /** The calibration reading the reference rule makes: the claim verbatim when every part is a named value, else the typed note. */
 function presentVerbatim(value: JsonValue | undefined): boolean {
@@ -1263,9 +1374,26 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const zeroRows = commits.map(commit => Object.values(objectOf(commit.rows, "rows")).every(count => count === 0));
     const relatives = arrayOf(facts.relatives, "relatives").map((entry, index) => objectOf(entry, `relative ${index}`));
     const relativeSites = relatives.map(entry => spellingSites("relative", spelled(strings(entry.words, "relative words"), "snake")).length > 0);
-    const quoteLine = ROSTER.quotes.find(quote => quote.ref.endsWith(`01-contracts.md:17@${RI_PIN}`));
-    const quoted = /'([^']+?)' docs\/programs\//.exec(notes)?.[1];
-    const gating = /Gating: ([^.]+)\./.exec(notes)?.[1] ?? "";
+    // The bead row's gate facts are the filing's alone (wb-jpwj), read and held first, so a flipped filing reds here, at its own
+    // fact. Then six variants of the real row, each editing the filing while the appended notes still repeat the shipped sentence,
+    // read false on the fact they edit, and the grounding variant leaves its vocable ungrounded though an appended note spells it.
+    const bead = filingGateFacts(title, notes);
+    expect(bead, "the filing's own gate facts").toStrictEqual({ titlePin: true, gatingNamesGate: true, shippedNo: true, quoteInLine: true });
+    const filing = filingOf(notes);
+    const appended = notes.slice(filing.length);
+    const factsOf = ({ gatingNamesGate, shippedNo, quoteInLine }: GateFacts) => ({ gatingNamesGate, shippedNo, quoteInLine });
+    const variants = FILING_VARIANTS.map(variant => {
+      const text = variant.notes(filing, appended);
+      return { id: variant.id, bounded: factsOf(filingGateFacts(title, text)), wholeNotes: factsOf(wholeNotesReading(title, text)) };
+    });
+    const vocable = vocableOf(SITE_WORDS, GROUNDING_VOCABLE);
+    const renamed = filing.replace(groundPattern(vocable, "gi"), ["whole", ...vocable.words.slice(1)].join(" "));
+    const grounding = {
+      vocable: GROUNDING_VOCABLE,
+      filingGrounds: groundPattern(vocable).test(filing.toLowerCase()),
+      appendedGrounds: groundPattern(vocable).test(appended.toLowerCase()),
+      ungrounded: ungroundedVocables(title, `${renamed}${appended}`),
+    };
     const witness: JsonObject = {
       gate: unified.gate ?? null,
       commits: commits.map(commit => commit.commit ?? null),
@@ -1273,15 +1401,36 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       exportsUnchanged: unified.sameExportsAtProbe ?? null,
       relatives: relatives.map(entry => entry.placeholder ?? null),
       relativeSites,
-      bead: {
-        titlePin: title.includes(`01-contracts.md:17@${RI_PIN}`),
-        gatingNamesGate: gating.includes(GATE),
-        shippedNo: notes.includes("Shipped: no"),
-        quoteInLine: quoted !== undefined && quoteLine?.text.includes(quoted) === true,
-      },
+      bead,
+      filingBound: { appendedRepeats: SHIPPED_NO.test(appended), variants, grounding },
       quotesHashed: ROSTER.quotes.every(quote => sha256(quote.text) === quote.sha256),
     };
-    expect(witness.bead).toStrictEqual({ titlePin: true, gatingNamesGate: true, shippedNo: true, quoteInLine: true });
+    const cells = (id: string, facts: ReturnType<typeof factsOf>): (string | boolean)[] => [id, facts.gatingNamesGate, facts.shippedNo, facts.quoteInLine];
+    expect(variants.map(({ id, bounded }) => cells(id, bounded)), "each variant of the filing reads false on the fact it edits").toStrictEqual([
+      ["shipped-yes", true, false, true],
+      ["shipped-not-yet", true, false, true],
+      ["shipped-off-line", true, false, true],
+      ["gating-dropped", false, false, true],
+      ["gating-after-filing", false, false, true],
+      ["quote-after-filing", true, true, false],
+    ]);
+    expect([SHIPPED_NO.test(appended), variants.map(({ id, wholeNotes }) => cells(id, wholeNotes))], "the appended notes keep a whole-notes read fooled by every variant").toStrictEqual([
+      true,
+      [
+        ["shipped-yes", true, true, true],
+        ["shipped-not-yet", true, true, true],
+        ["shipped-off-line", true, true, true],
+        ["gating-dropped", false, true, true],
+        ["gating-after-filing", true, true, true],
+        ["quote-after-filing", true, true, true],
+      ],
+    ]);
+    expect(grounding, "only an appended note grounds the renamed vocable, and the filing bound reads it ungrounded").toStrictEqual({
+      vocable: GROUNDING_VOCABLE,
+      filingGrounds: true,
+      appendedGrounds: true,
+      ungrounded: [GROUNDING_VOCABLE],
+    });
     expect([unified.gate, zeroRows, unified.sameExportsAtProbe, witness.quotesHashed]).toStrictEqual([GATE, [true, true], true, true]);
     expect(relativeSites).toEqual(relatives.map(() => true));
     return witness;
@@ -1376,11 +1525,10 @@ describe("wb-tz4r.4 RI confidence evidence census (RI-UNIFIED-DECISION-INFERENCE
       gatedPair === null ? undefined : `${gatedPair[1]} ${gatedPair[2]}`,
     ];
     expect(filingPhrases.map(phrase => phrase !== undefined && spellingSites("filing", spelled(phrase.split(" "), "snake")).length > 0), JSON.stringify(filingPhrases)).toEqual([true, true, true, true]);
-    // Every site vocable is grounded outside this file: in the filing's row, a producer line at the pin or a measured relative.
-    const relativeWords = arrayOf(ROSTER.producerFacts.relatives, "relatives").map((entry, index) => strings(objectOf(entry, `relative ${index}`).words, "relative words").join(" "));
-    const grounds = [`${beadRow().title}\n${notes}`.toLowerCase(), ...ROSTER.quotes.map(quote => quote.text.toLowerCase()), ...relativeWords];
+    // Every site vocable is grounded outside this file: in the filing (never a note appended after it), a producer line at the pin or a
+    // measured relative.
     expect(SITE_WORDS.every(vocable => vocable.words.every(word => /^[a-z]+$/.test(word)))).toBe(true);
-    expect(SITE_WORDS.filter(vocable => !grounds.some(ground => new RegExp(vocable.words.join("[ _-]")).test(ground))).map(vocable => vocable.placeholder), "an ungrounded site vocable").toEqual([]);
+    expect(ungroundedVocables(title, notes), "an ungrounded site vocable").toEqual([]);
   });
 
   for (const row of ROWS) {
