@@ -1,5 +1,5 @@
 {
-  "comment": "wb-tz4r.8 (RI-UNIFIED-DECISION-INFERENCE-R8): the judged set of test/workbench-ri-decision-seed-claim-census.test.ts. Labels write the three alternatives of acceptance (c)'s grep as the placeholders <DE>, <NDB> and <DI>; this file never spells one (constants.needles holds the sha256 of each composed alternative). Every pin's witness is the census case's own return value, so a pin deleted, relabelled, swapped or removed from every literal of the census still reds against this file; tests lists the registered test titles in run order.",
+  "comment": "wb-tz4r.8 (RI-UNIFIED-DECISION-INFERENCE-R8): the judged set of test/workbench-ri-decision-seed-claim-census.test.ts. Labels write the three alternatives of acceptance (c)'s grep as the placeholders <DE>, <NDB> and <DI>; this file never spells one (constants.needles holds the sha256 of each composed alternative). Every pin's witness is the census case's own return value, so a pin deleted, relabelled, swapped or removed from every literal of the census still reds against this file; tests lists the registered test titles in run order. constants.quotedSites pins the R-SIBLING-QUOTE residual's four exempt sites of wb-tz4r.5's landed census and roster, each quote written with its placeholder.",
   "bead": "wb-tz4r.8",
   "constants": {
     "riPin": "485f3615db1e",
@@ -80,7 +80,39 @@
     ],
     "echoKey": "reactive_inference",
     "echoFixture": "test/helpers/rf-render-fixture.ts",
-    "version": "^\\d+(?:\\.\\d+){2,3}$"
+    "version": "^\\d+(?:\\.\\d+){2,3}$",
+    "quoteSource": "wb-tz4r.5",
+    "quotedSites": [
+      {
+        "path": "test/fixtures/ri-observation-authority-roster.json",
+        "line": 222,
+        "placeholder": "<DI>",
+        "quote": "(b) adoption: every observation source and effect reaching the <DI> is enumerated in a Pi-owned authorization record before the call, an unlisted source is refused with a typed reason",
+        "filed": "notes"
+      },
+      {
+        "path": "test/workbench-ri-observation-authority-census.test.ts",
+        "line": 3,
+        "placeholder": "<DI>",
+        "quote": "ReactiveInference <DI> over read-only observations (gated: RI read-only observation port + ReactiveAgentsSDK effect",
+        "filed": "title"
+      },
+      {
+        "path": "test/workbench-ri-observation-authority-census.test.ts",
+        "line": 9,
+        "placeholder": "<DI>",
+        "quote": "every observation source and effect reaching the <DI> is enumerated in a Pi-owned authorization record before the",
+        "filed": "notes"
+      },
+      {
+        "path": "test/workbench-ri-observation-authority-census.test.ts",
+        "line": 614,
+        "placeholder": "<DI>",
+        "quote": "(b) adoption: every observation source and effect reaching the <DI> is enumerated in a Pi-owned authorization record before the call, an unlisted source is refused with a typed reason",
+        "filed": "notes"
+      }
+    ],
+    "quoteFrame": "^[^A-Za-z0-9]*(?:label[^A-Za-z0-9]*)?$"
   },
   "rows": [
     {
@@ -217,7 +249,13 @@
               "docs/workbench": true
             },
             "symlinks": [],
-            "sites": [],
+            "grep": [
+              "test/fixtures/ri-observation-authority-roster.json:222 <DI>",
+              "test/workbench-ri-observation-authority-census.test.ts:3 <DI>",
+              "test/workbench-ri-observation-authority-census.test.ts:9 <DI>",
+              "test/workbench-ri-observation-authority-census.test.ts:614 <DI>"
+            ],
+            "outside": [],
             "self": [
               {
                 "path": "test/workbench-ri-decision-seed-claim-census.test.ts",
@@ -286,7 +324,7 @@
     },
     {
       "id": "M",
-      "label": "the mention, marker, pin, window, export, receipt-citation and echo matchers judge their pinned inputs in order",
+      "label": "the mention, marker, pin, window, export, receipt-citation, echo, needle, descriptor and quote matchers judge their pinned inputs in order",
       "pins": [
         {
           "id": "MM1",
@@ -409,12 +447,60 @@
               "3:0.1.17"
             ]
           }
+        },
+        {
+          "id": "MN1",
+          "witness": {
+            "digest": "a44be8114436985c",
+            "outcome": [
+              "x.ts:1 <DE>",
+              "x.ts:2 <NDB>",
+              "x.ts:3 <DI>",
+              "mentions:M1,M2,M3"
+            ]
+          }
+        },
+        {
+          "id": "MD1",
+          "witness": {
+            "digest": "bf9023b543dbddcf",
+            "hits": [
+              "census.work-package",
+              "census.schema-key"
+            ]
+          }
+        },
+        {
+          "id": "MQ1",
+          "witness": {
+            "digest": "bc066d47ed93743a",
+            "outside": [
+              "p.ts:1 <DI>",
+              "q.ts:3 <DE>",
+              "q.ts:2 <DI>",
+              "q.ts:4 <DI>"
+            ],
+            "quoted": [
+              "q.ts:1 <DI>",
+              "q.ts:2 <DI>"
+            ],
+            "absent": [
+              "q.ts:3 <DI>"
+            ],
+            "verbatim": [
+              "q.ts:1 <DI>: carried, title",
+              "q.ts:2 <DI>: carried, notes",
+              "q.ts:3 <DI>: carried, notes",
+              "q.ts:4 <DI>: not carried, notes",
+              "p.ts:1 <DI>: carried, unfiled"
+            ]
+          }
         }
       ]
     },
     {
       "id": "R",
-      "label": "the named residuals R-LINE, R-FIELD, R-PROGRAM, R-VOCABULARY, R-INTERRUPTED, R-CASE, R-COMPOSED, R-RECEIPT-TEXT and R-SCOPE stay pinned quiet",
+      "label": "the named residuals R-LINE, R-FIELD, R-PROGRAM, R-VOCABULARY, R-INTERRUPTED, R-CASE, R-COMPOSED, R-RECEIPT-TEXT, R-SCOPE and R-SIBLING-QUOTE stay pinned quiet",
       "pins": [
         {
           "id": "R1",
@@ -486,6 +572,24 @@
               "mentions:M2,M4"
             ]
           }
+        },
+        {
+          "id": "R10",
+          "witness": {
+            "quoted": [
+              "test/fixtures/ri-observation-authority-roster.json:222 <DI>",
+              "test/workbench-ri-observation-authority-census.test.ts:3 <DI>",
+              "test/workbench-ri-observation-authority-census.test.ts:9 <DI>",
+              "test/workbench-ri-observation-authority-census.test.ts:614 <DI>"
+            ],
+            "absent": [],
+            "verbatim": [
+              "test/fixtures/ri-observation-authority-roster.json:222 <DI>: carried, notes",
+              "test/workbench-ri-observation-authority-census.test.ts:3 <DI>: carried, title",
+              "test/workbench-ri-observation-authority-census.test.ts:9 <DI>: carried, notes",
+              "test/workbench-ri-observation-authority-census.test.ts:614 <DI>: carried, notes"
+            ]
+          }
         }
       ]
     }
@@ -499,7 +603,8 @@
     "R-CASE",
     "R-COMPOSED",
     "R-RECEIPT-TEXT",
-    "R-SCOPE"
+    "R-SCOPE",
+    "R-SIBLING-QUOTE"
   ],
   "tests": [
     "the judged set: the frozen shape, the out-of-file roster and the constants agree",
@@ -527,6 +632,9 @@
     "MF1",
     "MR1",
     "MV1",
+    "MN1",
+    "MD1",
+    "MQ1",
     "R1",
     "R2",
     "R3",
@@ -536,6 +644,7 @@
     "R7",
     "R8",
     "R9",
+    "R10",
     "records: every registered test ran once in run mode in roster order, every pin reached its end, and no title spells a needle"
   ]
 }

@@ -27,13 +27,17 @@
  * export the seven request and plan names, none defining a function whose name begins run, execute, infer, call, invoke or
  * finalize; <NDB> is spelled in no src file (one program-document row). The seed posture holds: RI-DEC-01/03/06-10 are unshipped.
  *
- * MEASURED AT BASE c6369e0 (landing 293): acceptance (c)'s grep has 0 sites below the four roots; outside .beads/ no tracked file
- * spells a MENTIONS family in any case; `reactive_inference` occurs only as the sdk_versions version echo (three receipts,
- * test/helpers/rf-render-fixture.ts, at :83 since the filing read :63, and rf fixtures and their censuses) and once in an rf
- * diagnostic hint of a test roster. The tracked bead export (712 rows) names a family in seven rows, the owner filings
- * wb-tz4r.1-.6 and wb-tz4r.8 (FILING_ROWS), and every string value that names one carries a marker and the pin; the epic
- * wb-tz4r, wb-tz4r.7 and the residuals bead wb-nzdh name the program only (R-PROGRAM). The live store read the same, with the
- * delivery notes the next export carries.
+ * MEASURED AT BASE c6369e0 (landing 293, cut #1) and AGAIN AT 187591e (landing 319, the merged trunk of cut #2): outside the
+ * R-SIBLING-QUOTE residual's four pinned quotes, acceptance (c)'s grep has 0 sites below the four roots, and at 187591e its
+ * literal reading is exactly those four lines (0 at c6369e0): wb-tz4r.5's landed census (:3, :9, :614) and roster (:222)
+ * quoting that bead's own filing. Outside .beads/, a MENTIONS family occurs only in test files: the landed sibling censuses of
+ * wb-tz4r.3, .5 and .6, their rosters and this file (M4 texts, plus tz4r.5's four M1 quotes), which rows A and B never read
+ * (R-SCOPE). `reactive_inference` occurs as the sdk_versions version echo (three receipts, test/helpers/rf-render-fixture.ts,
+ * at :83 since the filing read :63) and in rf, h2 and ri test censuses, their rosters and fixtures. The tracked bead export
+ * (712 rows at c6369e0, 739 at 187591e) names a family in seven rows, the owner filings wb-tz4r.1-.6 and wb-tz4r.8
+ * (FILING_ROWS), and every string value that names one carries a marker and the pin; the epic wb-tz4r, wb-tz4r.7 and the
+ * residuals bead wb-nzdh name the program only (R-PROGRAM). The live store read the same, with the delivery notes the next
+ * export carries.
  *
  * READINGS
  * - MENTIONS, matched in any case: M1 <DI>, its two words joined directly or by any run of white space, "_", "." or "-", except
@@ -58,18 +62,24 @@
  *    is the measurement, so row A alone judges its own lines. B1 the real docs and receipts; B2-B7 constructed docs lines, B4
  *    against a real receipt.
  *  C, acceptance (c). C1 the grep: every regular file below src, test, qa and docs/workbench (symlinks recorded, never followed),
- *    read as UTF-8, holds no occurrence of a NEEDLE (case-sensitive, as grep reads it), with floors, and this file and its roster
- *    are walked and carry all three placeholders; C2 the version echo: the fixture the clause names and the receipts carry the
- *    sdk_versions reactive_inference entry as a version string, read by no NEEDLE and no MENTIONS family on its lines (the
- *    exclusion holds by the rule, never by a path).
+ *    read as UTF-8, gives one site per occurrence of a NEEDLE (case-sensitive, as grep reads it) with its line; the grep's whole
+ *    reading is the R-SIBLING-QUOTE residual's four pinned sites and no site falls outside an admitted quote, with floors, and
+ *    this file and its roster are walked and carry all three placeholders; C2 the version echo: the fixture the clause names and
+ *    the receipts carry the sdk_versions reactive_inference entry as a version string, read by no NEEDLE and no MENTIONS family
+ *    on its lines (the exclusion holds by the rule, never by a path).
  *  F, outside anchor. F1 the owner filing row of wb-tz4r.8 in the tracked bead export: its Acceptance paragraph cut at its clause
  *    marks gives exactly (a)-(c), each equal to its row's label with the placeholders composed back; its grep spells exactly
- *    NEEDLES, in order; its quote, citation and title tail equal the roster's; it names both DOC_ANCHORS pages.
- *  M, the matchers' controls on constructed texts; R, the residuals' pinned quiet rows.
+ *    NEEDLES, in order; its quote, citation and title tail equal the roster's; it names both DOC_ANCHORS pages; and the census
+ *    judges one row per clause, counted from the filing, so a judged row removed from the census and its roster at once reds.
+ *  M, the matchers' controls on constructed inputs, each the very function its row reads: MM1-MV1 the mention, marker, pin,
+ *    window, export, citation and echo readers; MN1 the needle detector C1, C2 and records share finds each NEEDLE once; MD1
+ *    A4's descriptor scan finds a family in a description and in a schema key; MQ1 the quote partition and verbatim reading on
+ *    a constructed tree and filing. R, the residuals' pinned quiet rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every row's id, label and pins, every pin's
  * witness, the constants and the registered test titles are held to the out-of-file roster
  * test/fixtures/ri-decision-seed-claim-roster.json, and the records case walks this file's vitest task tree against it, so a pin
- * deleted, relabelled, swapped or removed from every literal of this file at once still reds there or against the filing.
+ * deleted, relabelled, swapped or removed from every literal of this file at once still reds there or against the filing (F1
+ * counts the filing's clauses against the judged rows, so a judged row hollowed from both files at once reds too).
  * RESIDUALS (named families, each a pinned quiet row in row R; the escape stays uncaught and the row reds when that changes):
  * R-LINE a marker and the pin anywhere on a docs mention's lines admit it, whatever they qualify; R-FIELD the same for a whole
  * bead string value; R-PROGRAM the words right after "unified" are read as the program's name, never a mention; R-VOCABULARY a
@@ -78,7 +88,12 @@
  * else, so a capitalized, hyphenated or double-spaced spelling is no C site (rows A and B read docs in any case); R-COMPOSED a
  * needle assembled at runtime, this file's own mechanism, is invisible to a text scan; R-RECEIPT-TEXT the receipt rule reads
  * text, so a receipt quoting a measurement it never ran passes; R-SCOPE a code-root mention outside the three needles (a
- * work-package id in a test, the module's words spaced) is judged by no row.
+ * work-package id in a test, the module's words spaced) is judged by no row; R-SIBLING-QUOTE a sibling owner filing's landed
+ * census or roster that quotes its own bead text verbatim spells <DI> inside the quote - wb-tz4r.5's census at :3 (its quoted
+ * title), :9 (its quoted acceptance (b)) and :614 (row B's label) and its roster at :222 (the same label) - and C1 admits exactly
+ * those four sites (path, line and needle, one occurrence each) only while each line is its quote and a frame (a comment marker
+ * or a label key, nothing else) and the quote is verbatim in that bead's title or notes in the tracked export, so any other,
+ * additional, moved or reworded site reds C1, and R10 pins the four exempt, carried and filed.
  * SCOPE: the producer facts are read at the shas named and the census is hermetic (Pi vendors no RI source); a later cut that
  * names the capability in docs brings its receipt and its markers, and one that ships an RI consumer re-cuts row C.
  *
@@ -200,7 +215,52 @@ const ECHO = new RegExp(
 );
 const RESIDUALS: readonly string[] = [
   "R-LINE", "R-FIELD", "R-PROGRAM", "R-VOCABULARY", "R-INTERRUPTED", "R-CASE", "R-COMPOSED", "R-RECEIPT-TEXT", "R-SCOPE",
+  "R-SIBLING-QUOTE",
 ];
+/** The bead whose filing the R-SIBLING-QUOTE sites quote. */
+const QUOTE_SOURCE = "wb-tz4r.5";
+interface QuoteSite {
+  readonly path: string;
+  readonly line: number;
+  readonly placeholder: string;
+  readonly quote: string;
+}
+interface QuotedSite extends QuoteSite {
+  readonly filed: "title" | "notes";
+}
+/** R-SIBLING-QUOTE (header, RESIDUALS): the four needle sites of wb-tz4r.5's landed census and roster, in walk order. */
+const QUOTED_SITES: readonly QuotedSite[] = [
+  {
+    path: "test/fixtures/ri-observation-authority-roster.json",
+    line: 222,
+    placeholder: "<DI>",
+    quote: "(b) adoption: every observation source and effect reaching the <DI> is enumerated in a Pi-owned authorization record before the call, an unlisted source is refused with a typed reason",
+    filed: "notes",
+  },
+  {
+    path: "test/workbench-ri-observation-authority-census.test.ts",
+    line: 3,
+    placeholder: "<DI>",
+    quote: "ReactiveInference <DI> over read-only observations (gated: RI read-only observation port + ReactiveAgentsSDK effect",
+    filed: "title",
+  },
+  {
+    path: "test/workbench-ri-observation-authority-census.test.ts",
+    line: 9,
+    placeholder: "<DI>",
+    quote: "every observation source and effect reaching the <DI> is enumerated in a Pi-owned authorization record before the",
+    filed: "notes",
+  },
+  {
+    path: "test/workbench-ri-observation-authority-census.test.ts",
+    line: 614,
+    placeholder: "<DI>",
+    quote: "(b) adoption: every observation source and effect reaching the <DI> is enumerated in a Pi-owned authorization record before the call, an unlisted source is refused with a typed reason",
+    filed: "notes",
+  },
+];
+/** What a quoted line may carry beside its quote: punctuation and white space, and at most a label key. */
+const QUOTE_FRAME = /^[^A-Za-z0-9]*(?:label[^A-Za-z0-9]*)?$/;
 
 interface Row {
   readonly id: string;
@@ -231,13 +291,13 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "M",
-    label: "the mention, marker, pin, window, export, receipt-citation and echo matchers judge their pinned inputs in order",
-    pins: ["MM1", "MM2", "MM3", "MM4", "MK1", "MP1", "MW1", "MF1", "MR1", "MV1"],
+    label: "the mention, marker, pin, window, export, receipt-citation, echo, needle, descriptor and quote matchers judge their pinned inputs in order",
+    pins: ["MM1", "MM2", "MM3", "MM4", "MK1", "MP1", "MW1", "MF1", "MR1", "MV1", "MN1", "MD1", "MQ1"],
   },
   {
     id: "R",
-    label: "the named residuals R-LINE, R-FIELD, R-PROGRAM, R-VOCABULARY, R-INTERRUPTED, R-CASE, R-COMPOSED, R-RECEIPT-TEXT and R-SCOPE stay pinned quiet",
-    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9"],
+    label: "the named residuals R-LINE, R-FIELD, R-PROGRAM, R-VOCABULARY, R-INTERRUPTED, R-CASE, R-COMPOSED, R-RECEIPT-TEXT, R-SCOPE and R-SIBLING-QUOTE stay pinned quiet",
+    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10"],
   },
 ];
 
@@ -318,6 +378,9 @@ function constants(): Json {
     echoKey: ECHO_KEY,
     echoFixture: ECHO_FIXTURE,
     version: VERSION.source,
+    quoteSource: QUOTE_SOURCE,
+    quotedSites: asJson(QUOTED_SITES),
+    quoteFrame: QUOTE_FRAME.source,
   };
 }
 
@@ -531,12 +594,20 @@ function injectedDescriptors(): CapabilityDescriptor[] {
   return registry.catalogSnapshot().map(entry => entry.descriptor);
 }
 
-/** Every occurrence of each NEEDLE in a text, case-sensitive, as one site per needle with its count. */
+/** A4's scan: the ids of the descriptors whose JSON spells a MENTIONS family (MD1 is its control). */
+const descriptorHits = (descriptors: readonly CapabilityDescriptor[]): string[] =>
+  descriptors.filter(descriptor => mentionsOf(JSON.stringify(descriptor)).length > 0).map(descriptor => descriptor.id);
+
+/** Every occurrence of each NEEDLE in a text, case-sensitive: one site per occurrence, `${path}:${line} ${placeholder}`. */
 function needleSites(path: string, text: string): string[] {
+  let starts: number[] | undefined;
   return NEEDLES.flatMap((needle, index) => {
-    let count = 0;
-    for (let at = text.indexOf(needle); at !== -1; at = text.indexOf(needle, at + needle.length)) count += 1;
-    return count === 0 ? [] : [`${path}: ${PLACEHOLDERS[index] ?? "?"} x${count}`];
+    const sites: string[] = [];
+    for (let at = text.indexOf(needle); at !== -1; at = text.indexOf(needle, at + needle.length)) {
+      starts ??= lineStarts(text);
+      sites.push(`${path}:${lineAt(starts, at) + 1} ${PLACEHOLDERS[index] ?? "?"}`);
+    }
+    return sites;
   });
 }
 interface TreeReading {
@@ -565,6 +636,60 @@ function tree(): TreeReading {
     treeCache = { files, symlinks, sites, walked };
   }
   return treeCache;
+}
+
+const siteKey = (site: QuoteSite): string => `${site.path}:${site.line} ${site.placeholder}`;
+interface Filing {
+  readonly title: string;
+  readonly notes: string;
+}
+interface QuoteReading {
+  readonly outside: string[];
+  readonly quoted: string[];
+  readonly absent: string[];
+  readonly verbatim: string[];
+}
+/**
+ * R-SIBLING-QUOTE's reading. A pinned site is admitted only when its line is its quote and a frame (QUOTE_FRAME) and the quote
+ * is verbatim in the filing's title or notes; each admitted site exempts ONE needle site of its key (path, line and needle), so a
+ * second occurrence, another line, another needle or another file stays outside; absent lists the admitted sites no needle met.
+ */
+function quoteReading(sites: readonly string[], pinned: readonly QuoteSite[], lineOf: (site: QuoteSite) => string, filing: Filing): QuoteReading {
+  const verdicts = pinned.map(site => {
+    const quote = expand(site.quote);
+    const line = lineOf(site);
+    const carried = line.includes(quote) && QUOTE_FRAME.test(line.split(quote).join(""));
+    const filed = filing.title.includes(quote) ? "title" : filing.notes.includes(quote) ? "notes" : "unfiled";
+    return { key: siteKey(site), carried, filed };
+  });
+  const open = verdicts.filter(verdict => verdict.carried && verdict.filed !== "unfiled").map(verdict => verdict.key);
+  const outside: string[] = [];
+  const quoted: string[] = [];
+  for (const site of sites) {
+    const at = open.indexOf(site);
+    if (at === -1) outside.push(site);
+    else {
+      open.splice(at, 1);
+      quoted.push(site);
+    }
+  }
+  return {
+    outside,
+    quoted,
+    absent: open,
+    verbatim: verdicts.map(verdict => `${verdict.key}: ${verdict.carried ? "carried" : "not carried"}, ${verdict.filed}`),
+  };
+}
+let quoteCache: QuoteReading | undefined;
+/** The real reading: C1's needle sites against QUOTED_SITES and the quoted bead's row in the tracked export. */
+function treeQuotes(): QuoteReading {
+  quoteCache ??= quoteReading(
+    tree().sites,
+    QUOTED_SITES,
+    site => textOf(join(REPO, site.path)).split("\n")[site.line - 1] ?? "",
+    beadRow(QUOTE_SOURCE),
+  );
+  return quoteCache;
 }
 
 interface Echo {
@@ -703,6 +828,7 @@ const CASES: readonly Case[] = [
     ],
     outcome: ["1:0.2.60.20261018120223", "2:0.2.55", "3:0.1.17"],
   },
+  { pin: "MN1", kind: "needle", texts: [[DE, NDB, DI].join("\n")], outcome: ["x.ts:1 <DE>", "x.ts:2 <NDB>", "x.ts:3 <DI>", "mentions:M1,M2,M3"] },
   { pin: "R1", kind: "mention", texts: [`${caps(DI)} serves Pi today; the seed only preflight at ${RI_PIN} is older.`], outcome: ["M1:1:admitted"] },
   {
     pin: "R2",
@@ -755,6 +881,34 @@ function outcomeOf(kind: CaseKind, texts: readonly string[]): string[] {
 }
 const digestOf = (texts: readonly string[]): string => sha256(JSON.stringify(texts)).slice(0, 16);
 
+/** MD1's descriptors: one quiet, one naming a work package once in its description, one naming the module in a schema key. */
+const CONSTRUCTED_DESCRIPTORS: readonly CapabilityDescriptor[] = [
+  { id: "census.quiet", version: "0.0.0", description: "Reads a gate status.", inputSchema: {}, effectClass: "read", permissions: [], supportedModes: ["inspect"] },
+  { id: "census.work-package", version: "0.0.0", description: "Serves RI-DEC-06 to Pi.", inputSchema: {}, effectClass: "read", permissions: [], supportedModes: ["invoke"] },
+  {
+    id: "census.schema-key",
+    version: "0.0.0",
+    description: "Reads a plan.",
+    inputSchema: { properties: { [DE]: { type: "string" } } },
+    effectClass: "read",
+    permissions: [],
+    supportedModes: ["invoke"],
+  },
+];
+/** MQ1's tree (walk order), filing and pinned sites: admitted, doubled, wrong-needle, framed-by-words and unfiled quotes. */
+const QUOTE_CONTROL_FILES: readonly (readonly [string, string])[] = [
+  ["p.ts", ` * an unfiled ${DI} quote`],
+  ["q.ts", [` * a ${DI} quote`, `label: "${DI} and ${DI}",`, ` * the ${DE} quote`, ` * one more word: ${DI} serves Pi`].join("\n")],
+];
+const QUOTE_CONTROL_FILING: Filing = { title: `T: a ${DI} quote`, notes: `N: ${DI} and ${DI}; the ${DE} quote; ${DI} serves Pi.` };
+const QUOTE_CONTROL_PINNED: readonly QuoteSite[] = [
+  { path: "q.ts", line: 1, placeholder: "<DI>", quote: "a <DI> quote" },
+  { path: "q.ts", line: 2, placeholder: "<DI>", quote: "<DI> and <DI>" },
+  { path: "q.ts", line: 3, placeholder: "<DI>", quote: "the <DE> quote" },
+  { path: "q.ts", line: 4, placeholder: "<DI>", quote: "<DI> serves Pi" },
+  { path: "p.ts", line: 1, placeholder: "<DI>", quote: "an unfiled <DI> quote" },
+];
+
 /** The pins whose case reached its end, in the order they ran. */
 const REACHED: string[] = [];
 const done = (pin: string, witness: Json): Json => {
@@ -803,9 +957,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   },
   A4: async () => {
     const descriptors = [...(await nativeDescriptors()), ...injectedDescriptors()];
-    const hits = descriptors
-      .filter(descriptor => mentionsOf(JSON.stringify(descriptor)).length > 0)
-      .map(descriptor => descriptor.id);
+    const hits = descriptorHits(descriptors);
     const reading = { descriptorsFloorMet: descriptors.length >= 8, hits };
     expect(reading, `descriptors: ${descriptors.map(descriptor => descriptor.id).join(", ")}`).toStrictEqual({ descriptorsFloorMet: true, hits: [] });
     return done("A4", reading);
@@ -831,11 +983,12 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       const text = textOf(join(REPO, path));
       return { path, walked: reading.walked.has(path), placeholders: PLACEHOLDERS.filter(placeholder => text.includes(placeholder)) };
     });
-    const witness = { floors, symlinks: reading.symlinks, sites: reading.sites, self };
+    const witness = { floors, symlinks: reading.symlinks, grep: reading.sites, outside: treeQuotes().outside, self };
     expect(witness, `files walked: ${JSON.stringify(Object.fromEntries(reading.files))}`).toStrictEqual({
       floors: Object.fromEntries(SCAN_ROOTS.map(root => [root, true])),
       symlinks: [],
-      sites: [],
+      grep: QUOTED_SITES.map(siteKey),
+      outside: [],
       self: [SELF, ROSTER_FILE].map(path => ({ path, walked: true, placeholders: [...PLACEHOLDERS] })),
     });
     return done("C1", witness);
@@ -865,6 +1018,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const acceptance = /^Acceptance: (.*)$/m.exec(row.notes)?.[1] ?? "";
     const clauses = acceptance.split(/;\s+(?=\([a-z]\) )/).map(clause => clause.replace(/\.$/, ""));
     const judged = ROWS.filter(entry => /^\([a-z]\) /.test(entry.label));
+    expect(judged.length, "one judged row per clause of the filing's Acceptance, counted from the filing").toBe(clauses.length);
     const labelsEqual = judged.filter((entry, index) => clauses[index] === expand(entry.label)).map(entry => entry.id);
     const grep = /^\(c\) pin: grep (.+?) over Pi /.exec(clauses[2] ?? "")?.[1]?.split("|") ?? [];
     const quoted = /^'(.+)' (\S+)\.$/m.exec(row.notes);
@@ -888,6 +1042,40 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     });
     return done("F1", reading);
   },
+  MD1: async () => {
+    const hits = descriptorHits(CONSTRUCTED_DESCRIPTORS);
+    expect(hits, "the descriptor scan finds a family in any field, a single mention included").toStrictEqual(["census.work-package", "census.schema-key"]);
+    return done("MD1", { digest: digestOf(CONSTRUCTED_DESCRIPTORS.map(descriptor => JSON.stringify(descriptor))), hits });
+  },
+  MQ1: async () => {
+    const files = new Map(QUOTE_CONTROL_FILES);
+    const sites = QUOTE_CONTROL_FILES.flatMap(([path, text]) => needleSites(path, text));
+    const reading = quoteReading(sites, QUOTE_CONTROL_PINNED, site => (files.get(site.path) ?? "").split("\n")[site.line - 1] ?? "", QUOTE_CONTROL_FILING);
+    expect(reading, "the partition is per path, line, needle and occurrence; a quote is admitted only framed and filed").toStrictEqual({
+      outside: ["p.ts:1 <DI>", "q.ts:3 <DE>", "q.ts:2 <DI>", "q.ts:4 <DI>"],
+      quoted: ["q.ts:1 <DI>", "q.ts:2 <DI>"],
+      absent: ["q.ts:3 <DI>"],
+      verbatim: [
+        "q.ts:1 <DI>: carried, title",
+        "q.ts:2 <DI>: carried, notes",
+        "q.ts:3 <DI>: carried, notes",
+        "q.ts:4 <DI>: not carried, notes",
+        "p.ts:1 <DI>: carried, unfiled",
+      ],
+    });
+    const inputs = [...QUOTE_CONTROL_FILES.flat(), QUOTE_CONTROL_FILING.title, QUOTE_CONTROL_FILING.notes, ...QUOTE_CONTROL_PINNED.map(site => `${siteKey(site)} ${site.quote}`)];
+    return done("MQ1", { digest: digestOf(inputs), ...reading });
+  },
+  R10: async () => {
+    const { quoted, absent, verbatim } = treeQuotes();
+    const reading = { quoted, absent, verbatim };
+    expect(reading, `R-SIBLING-QUOTE: ${QUOTE_SOURCE}'s four pinned quotes stay exempt, carried on their lines and filed`).toStrictEqual({
+      quoted: QUOTED_SITES.map(siteKey),
+      absent: [],
+      verbatim: QUOTED_SITES.map(site => `${siteKey(site)}: carried, ${site.filed}`),
+    });
+    return done("R10", reading);
+  },
   ...Object.fromEntries(
     CASES.map(entry => [
       entry.pin,
@@ -905,7 +1093,7 @@ const titleOf = (row: Row): string => `${row.id} ${row.label}`;
 
 describe("wb-tz4r.8 ReactiveInference seed-only claim census (program-triage-2026-10-22 R8, standing posture)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the constants agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:7", "C:2", "F:1", "M:10", "R:9"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:7", "C:2", "F:1", "M:13", "R:10"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
