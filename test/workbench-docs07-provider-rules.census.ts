@@ -3,9 +3,9 @@
  * tier (vitest.census.config.ts, include test/**\/*.census.ts) judged in wb-u62 REPORT MODE. It is the 20th member of the
  * sequenced census class (owner ruling on the held R1, 2026-10-18: adopt the gate default, the wb-cax.24 precedent).
  *
- * The Forge, Furnace, HyperUnix, ReactiveFiberCLI and Beads provider sections and "Shared integration requirements" state
- * adapter rules in single paragraphs. This leg binds each falsifiable sentence (rows F1-F4, U1-U6, H1-H2, R1-R4, B1-B2,
- * S1-S2, plus the DELTA-B-AMEND note rows U7 and U8) to existing cases by file, verbatim title and tier, or records it as
+ * The Forge, Furnace, HyperUnix, ReactiveFiberCLI, Beads and Agent provider sections and "Shared integration requirements"
+ * state adapter rules in single paragraphs. This leg binds each falsifiable sentence (rows F1-F4, U1-U6, H1-H3, R1-R4,
+ * B1-B2, A1, S1-S2, plus the DELTA-B-AMEND note rows U7 and U8) to existing cases by file, verbatim title and tier, or records it as
  * unpinned with a reason. It executes no pinned case and no test run: judge() from the shared helper
  * test/helpers/census.ts reads vitest's own JSON report of the default gate's test step (DEFAULT_TIER_REPORT, written by
  * `npm run test` before the census step runs), so a pinned case counts only when the gate's own run collected it exactly
@@ -27,11 +27,11 @@
  * and the FORGE ANCHOR reads the live Forge paragraph: every sentence of it is one Forge row's quote or one of the three named
  * unbound sentences, so a row removed from every literal of this file (CT5/CT6) is still red against the docs.
  *
- * The docs pin reads the RENDERED view through the helper's docsSection / sectionMatches: each of the six sections, under
+ * The docs pin reads the RENDERED view through the helper's docsSection / sectionMatches: each of the seven sections, under
  * its unique level-2 heading of the level-1 parent heading and bounded at the next level-1/2 heading or EOF, must render
  * as exactly its frozen paragraph. A dropped or reworded clause names its row. The docs drift falsifiers run over a
  * SYNTHETIC document built from the frozen section bodies, never over the live docs/07 text, so a legitimate edit of an
- * unpinned section (RCP provider, Agent provider, the vertical journey) can never redden a falsifier row.
+ * unpinned section (RCP provider, the vertical journey) can never redden a falsifier row.
  *
  * Tiers: a row's tier names the report that vouches for it. The default report vouches for the default gate's test tier
  * only; judge() refuses a pin of any other tier (tier-mismatch, R2 = (i)), so this leg never reports a live or native
@@ -69,8 +69,15 @@
  * without its cases: over the gate's own report with those cases removed, every R4 pin reads absent and the leg is red,
  * naming the row, while the docs still state the sentence. Row R4's quote and binding are frozen as literals (rule 16).
  *
+ * Rows H3 and A1 (wb-kku9.1, MW-CAC-WORKFLOW-COMPOSITION-R1 (d)) bind the two observation-class sentences: the HyperUnix
+ * provider's last sentence (an HX answer is an observation only) and the Agent provider's last sentence (a Claude call's
+ * completion, transcript and session reference are observations only), one half per clause, to the cases of
+ * test/workbench-observation-class-census.test.ts by file and verbatim title. "Agent provider" joined the frozen sections with
+ * that sentence. Both rows' identities are frozen as literals (rule 16), and that census reads both sentences back from this
+ * file and from the live docs/07 (its D1-D3), so a row removed from TABLE and from every literal here still reds there.
+ *
  * Non-scope (no falsifiable adapter sentence, or covered by the docs/14 matrix): "MechanicalWorkflows is an ordinary
- * function library", "RCP provider", "Agent provider", "First realistic vertical journey".
+ * function library", "RCP provider", "First realistic vertical journey".
  */
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -157,24 +164,35 @@ const WORKSPACE_ROOT_SENTENCE =
 const LOCATORS_SENTENCE = "RF_WORKSPACE and SWARM_RF_WORKSPACE are the allowlisted operational names a hosted agent learns the swarm workspace from, identical on the embedded and the detached host.";
 const LEGACY_ARGV_SENTENCE = "The legacy {model, task} argv is frozen byte for byte (SCG-R025).";
 
-/** The six frozen docs/07 section paragraphs, as the markdown source says them. */
+/**
+ * wb-kku9.1 (MW-CAC-WORKFLOW-COMPOSITION-R1 (d)): the two observation-class sentences, the last of the HyperUnix and Agent
+ * provider paragraphs. Rows H3 and A1 quote them whole; FROZEN_H3 and FROZEN_A1 repeat each row's identity as a literal.
+ */
+const HX_OBSERVATION_SENTENCE =
+  "An HX answer is an observation only: the hyperunix.find reader adapter projects one hyperunix.query.snapshot whose evidence references are hx-binary and hx-coverage references only and no Beads, Forge, Furnace or Git kind or reference, and its one possible edge is the display grouping from the invoking operation the host names, so an HX answer never closes Beads work, passes a Forge gate or stands for a Furnace state or a Git basis.";
+const AGENT_OBSERVATION_SENTENCE =
+  "A Claude agent() call's completion, its transcript and its session reference are observations only: the Claude topology adapter projects claude.call, claude.session and claude.tool-use snapshots with partial or unknown coverage and no Forge, Furnace, Beads or Git snapshot, edge or reference, and a claude-message evidence read carries no status or verdict, so a failed Forge gate stays failed and an open Beads item stays open whatever the transcript says.";
+/** The wb-kku9.1 census whose cases rows H3 and A1 bind (test/workbench-observation-class-census.test.ts). */
+const OBSERVATION_CENSUS = "observation-class-census";
+
+/** The seven frozen docs/07 section paragraphs, as the markdown source says them. */
 const SECTION_MARKDOWN: Readonly<Record<string, string>> = {
   "Forge provider":
     `Use public Forge TypeScript App Server/facade or other current SDK. Initial functions: build/verification, affected/incremental selection, inspect artifact and operation. Preserve actual source basis, full verdict axes, reason codes, reuse/cache evidence and partial/unknown states. ${BASIS_SENTENCE} A successful RPC or shell exit does **not** equal verified Forge PASS. ${SELECTION_SENTENCE} Prefer Forge first for gates, test, build and packaging. Workspace Families and global cache designs must be probed for actual shipped availability before calling child creation or cache APIs.`,
   "Furnace provider":
     "Use public TypeScript client for runs.start/get/status/events/pause/stop as verified. Native Run/Work/Attempt and supervision semantics remain Furnace's. Future idempotent ensure/reconcile and convenience wait methods are upstream targets, not an assumed API. Ambiguous runs.start timeout -> uncertain/reconcile; do not issue second start blindly. A Furnace host may use ExecutorApp over the per-Attempt embedded bridge to call a MechanicalWorkflows function, with the application outcome mapped explicitly to the four-word Furnace execution result (only status is read; failure_class and data are not); failure and indeterminate park the Run rather than retrying, cancellation is a cooperative AbortSignal, and transport success is never domain verification.",
-  "HyperUnix provider":
-    'Use typed TS HX SDK/HXQ builder/results; preserve source basis, coverage classification, bounds, known-empty vs incomplete/unknown and evidence. Incomplete query cannot silently authorize "nothing to do" or produce false success. Graph query as observation enhancement is optional; HX is not mandatory UI event storage.',
+  "HyperUnix provider": `Use typed TS HX SDK/HXQ builder/results; preserve source basis, coverage classification, bounds, known-empty vs incomplete/unknown and evidence. Incomplete query cannot silently authorize "nothing to do" or produce false success. Graph query as observation enhancement is optional; HX is not mandatory UI event storage. ${HX_OBSERVATION_SENTENCE}`,
   "ReactiveFiberCLI provider":
     `Use actual public render/context APIs; present Python/CLI interop honestly if no production TypeScript SDK exists at selected revision. Do not declare a typed TS context-render client exists without code evidence. Return actual context text, producer/render reference, model/input/source basis, necessity/budget result and partial/refused status. ${INPUT_ARMS_SENTENCE} ${WORKSPACE_ROOT_SENTENCE} ${LOCATORS_SENTENCE} ${LEGACY_ARGV_SENTENCE} For the shared "SDK package + revision" record, the RF adapter records the producer release that provenance.cli_version states as one rf-cli evidence reference, never as sourceVersion, and the TSX engine identity that provenance.sdk_versions.tsx_runtime/tsx_sdk state as one rf-engine evidence reference per entry. ${CONTRACT_SOURCE_SENTENCE} Fixture text is never reported as real generated context.`,
   "Beads provider":
     "Beads retains readiness, formulas and logical task dependencies. Workbench may inspect supported scopes and surface linked work; it does not store an authoritative second readiness DAG. No assumed stable Beads SDK if only other integration contracts are available.",
+  "Agent provider": `Use Claude Agent SDK for workflow agent(). Role-specific tool catalogs may include restricted Forge/HX/Furnace/RF actions through the provider edges, not a universal all-tools conversion. Native Claude SDK hooks/session records remain first-class. ${AGENT_OBSERVATION_SENTENCE}`,
   "Shared integration requirements":
     "Every live adapter records: SDK package + revision, native operation IDs, owner/basis, observed evidence, error taxonomy, trace correlation, cancellation/timeout semantics, and cleanup ownership. For a missing API, produce upstream feedback with smallest reproducer, accepted behavior, and explicit blocker. Avoid quietly writing a private reimplementation of an upstream feature.",
 };
 /** What a reader sees of each paragraph: the markdown source without its emphasis markers. */
 const renderedOf = (markdown: string): string => markdown.replaceAll("**", "");
-const SECTION_ORDER: readonly string[] = ["Forge provider", "Furnace provider", "HyperUnix provider", "ReactiveFiberCLI provider", "Beads provider", "Shared integration requirements"];
+const SECTION_ORDER: readonly string[] = ["Forge provider", "Furnace provider", "HyperUnix provider", "ReactiveFiberCLI provider", "Beads provider", "Agent provider", "Shared integration requirements"];
 const sectionBlocks = (heading: string): readonly RenderedBlock[] => {
   const markdown = SECTION_MARKDOWN[heading] ?? "";
   return [{ kind: "paragraph", text: renderedOf(markdown), markdown }];
@@ -417,6 +435,18 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
     ]),
   },
   {
+    row: "H3",
+    section: "HyperUnix provider",
+    source: "docs",
+    quote: HX_OBSERVATION_SENTENCE,
+    // wb-kku9.1: one half per clause, in the sentence's order, bound to the observation-class census (its rows B, R and C).
+    halves: [
+      gate("no-authority-kind-or-reference", [pin(OBSERVATION_CENSUS, "B1: hyperunixTopology over hyperunix.find/v1 readings of every read kind, whose rows name tracker, gate, run and repository paths, carries no beads, forge, furnace or git kind, reference or edge")]),
+      gate("host-grouping-only", [pin(OBSERVATION_CENSUS, "R1 R-HOST-OPERATION: the HX adapter echoes the operation the host names as its display grouping, and no src module calls either topology adapter")]),
+      gate("never-an-authority", [pin(OBSERVATION_CENSUS, "C1: the module graph: the observation class, the authority modules and the five holders are the measured rosters and no edge joins the first two outside the holders")]),
+    ],
+  },
+  {
     row: "R1",
     section: "ReactiveFiberCLI provider",
     source: "docs",
@@ -579,6 +609,19 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
     ]),
   },
   {
+    row: "A1",
+    section: "Agent provider",
+    source: "docs",
+    quote: AGENT_OBSERVATION_SENTENCE,
+    // wb-kku9.1: one half per clause, in the sentence's order, bound to the observation-class census (its row A).
+    halves: [
+      gate("claude-snapshots-only", [pin(OBSERVATION_CENSUS, "A1: a succeeded Claude SDK run whose transcript says fixed and PASS settles ok and projects only claude.* snapshots, each with partial or unknown coverage")]),
+      gate("no-authority-snapshot-edge-or-reference", [pin(OBSERVATION_CENSUS, "A2: that projection names no forge, furnace, beads or git provider in any snapshot, edge or evidence reference, and no transcript claim reaches it")]),
+      gate("evidence-without-verdict", [pin(OBSERVATION_CENSUS, "A4: the transcript message the session lists reads as a claude-message preview with no status, verdict or authority field, whatever the message claims")]),
+      gate("authority-unchanged", [pin(OBSERVATION_CENSUS, "A3: applying that projection beside a failed Forge gate and an open bd item leaves both nodes and their edges exactly as they were")]),
+    ],
+  },
+  {
     row: "S1",
     section: "Shared integration requirements",
     source: "docs",
@@ -621,7 +664,7 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
   },
 ]);
 
-const ROW_IDS: readonly string[] = ["F1", "F2", "F3", "F4", "F5", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "B1", "B2", "S1", "S2"];
+const ROW_IDS: readonly string[] = ["F1", "F2", "F3", "F4", "F5", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "H3", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "B1", "B2", "A1", "S1", "S2"];
 /** Every half that has no landed case, as "row/half"; a seat that lands a case flips the half consciously and edits this list. */
 const UNPINNED_HALVES: readonly string[] = ["F3/whole", "U7/events", "U8/negative-verbs", "R3/whole", "S1/owner-basis", "S1/observed-evidence", "S1/trace-correlation-recorded"];
 
@@ -695,6 +738,9 @@ const FROZEN_JUDGED_SHAPE: readonly string[] = [
   "U7/pause-stop:1",
   "H1/whole:3",
   "H2/whole:2",
+  "H3/no-authority-kind-or-reference:1",
+  "H3/host-grouping-only:1",
+  "H3/never-an-authority:1",
   "R1/whole:2",
   "R2/observer:3",
   "R4/producer-release:2",
@@ -714,6 +760,10 @@ const FROZEN_JUDGED_SHAPE: readonly string[] = [
   "R9/whole:1",
   "B1/whole:2",
   "B2/whole:2",
+  "A1/claude-snapshots-only:1",
+  "A1/no-authority-snapshot-edge-or-reference:1",
+  "A1/evidence-without-verdict:1",
+  "A1/authority-unchanged:1",
   "S1/sdk-revision:1",
   "S1/native-operation-ids:1",
   "S1/error-taxonomy:1",
@@ -748,6 +798,20 @@ const identityOf = (row: Row): string[] => [
   `quote | ${row.quote}`,
   ...row.halves.flatMap(half => half.pins.map(entry => `${half.id} | ${entry.file} | ${entry.title}${entry.each === undefined ? "" : ` | each >= ${entry.each}`}`)),
 ];
+/** wb-kku9.1 (standing rule 16): rows H3 and A1 in FROZEN_F4's form, never derived from TABLE or the sentence constants. */
+const FROZEN_H3: readonly string[] = [
+  "quote | An HX answer is an observation only: the hyperunix.find reader adapter projects one hyperunix.query.snapshot whose evidence references are hx-binary and hx-coverage references only and no Beads, Forge, Furnace or Git kind or reference, and its one possible edge is the display grouping from the invoking operation the host names, so an HX answer never closes Beads work, passes a Forge gate or stands for a Furnace state or a Git basis.",
+  "no-authority-kind-or-reference | test/workbench-observation-class-census.test.ts | B1: hyperunixTopology over hyperunix.find/v1 readings of every read kind, whose rows name tracker, gate, run and repository paths, carries no beads, forge, furnace or git kind, reference or edge",
+  "host-grouping-only | test/workbench-observation-class-census.test.ts | R1 R-HOST-OPERATION: the HX adapter echoes the operation the host names as its display grouping, and no src module calls either topology adapter",
+  "never-an-authority | test/workbench-observation-class-census.test.ts | C1: the module graph: the observation class, the authority modules and the five holders are the measured rosters and no edge joins the first two outside the holders",
+];
+const FROZEN_A1: readonly string[] = [
+  "quote | A Claude agent() call's completion, its transcript and its session reference are observations only: the Claude topology adapter projects claude.call, claude.session and claude.tool-use snapshots with partial or unknown coverage and no Forge, Furnace, Beads or Git snapshot, edge or reference, and a claude-message evidence read carries no status or verdict, so a failed Forge gate stays failed and an open Beads item stays open whatever the transcript says.",
+  "claude-snapshots-only | test/workbench-observation-class-census.test.ts | A1: a succeeded Claude SDK run whose transcript says fixed and PASS settles ok and projects only claude.* snapshots, each with partial or unknown coverage",
+  "no-authority-snapshot-edge-or-reference | test/workbench-observation-class-census.test.ts | A2: that projection names no forge, furnace, beads or git provider in any snapshot, edge or evidence reference, and no transcript claim reaches it",
+  "evidence-without-verdict | test/workbench-observation-class-census.test.ts | A4: the transcript message the session lists reads as a claude-message preview with no status, verdict or authority field, whatever the message claims",
+  "authority-unchanged | test/workbench-observation-class-census.test.ts | A3: applying that projection beside a failed Forge gate and an open bd item leaves both nodes and their edges exactly as they were",
+];
 
 const named = (lines: readonly string[]): string[] => lines.filter(line => line.startsWith("row ")).map(line => line.slice(0, line.indexOf(":")));
 
@@ -770,15 +834,15 @@ const RF_UNBOUND_SENTENCES: readonly string[] = ["Use actual public render/conte
 const sentencesOf = (text: string): string[] => text.split(/(?<=\.) (?=[A-Z])/u);
 
 describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () => {
-  it("AC1: the table holds the twenty-eight frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
+  it("AC1: the table holds the thirty frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
     expect(isDeepFrozen(TABLE)).toBe(true);
     expect(TABLE.map(row => row.row)).toEqual(ROW_IDS);
-    expect(TABLE).toHaveLength(28);
+    expect(TABLE).toHaveLength(30);
     expect(JUDGED.map(({ row, half }) => `${row.row}/${half.id}:${half.pins.length}`)).toEqual(FROZEN_JUDGED_SHAPE);
     expect(docsFailures(readRepo(DOCS_FILE))).toEqual([]);
   });
 
-  it("AC1: the six sections are the six the table names, and the frozen bodies render exactly (HTML-free, whole-section equality)", () => {
+  it("AC1: the seven sections are the seven the table names, and the frozen bodies render exactly (HTML-free, whole-section equality)", () => {
     expect(new Set(TABLE.map(row => row.section))).toEqual(new Set(SECTION_ORDER));
     expect(Object.keys(SECTION_MARKDOWN)).toEqual(SECTION_ORDER);
     for (const heading of SECTION_ORDER) {
@@ -823,6 +887,22 @@ describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () =
     expect(row.quote).toBe(FROZEN_R5_QUOTE);
     expect(row.halves.map(half => `${half.id}:${half.tier}:${half.reason ?? "pinned"}`)).toEqual(["recorded-release:default-gate:pinned", "drift-wiring:default-gate:pinned", "drift-native:native-read:pinned"]);
     expect(row.halves.flatMap(half => half.pins.map(entry => [half.id, tierCommand(half.tier), entry.file, (entry.suite ?? []).join(" > "), entry.title].join(" | ")))).toEqual(FROZEN_R5_BINDING);
+  });
+
+  it("AC1 (wb-kku9.1): rows H3 and A1 quote the observation-class sentences whole, each its paragraph's last sentence, and bind every clause to the observation-class census by file and verbatim title, frozen as literals", () => {
+    let checked = 0;
+    for (const [id, frozen, section] of [["H3", FROZEN_H3, "HyperUnix provider"], ["A1", FROZEN_A1, "Agent provider"]] as const) {
+      const row = TABLE.find(candidate => candidate.row === id);
+      expect(row, id).toBeDefined();
+      if (row === undefined) continue;
+      expect(row.section).toBe(section);
+      expect(row.source).toBe("docs");
+      expect(identityOf(row)).toEqual(frozen);
+      expect(row.halves.every(half => half.tier === "default-gate" && half.reason === undefined && half.pins.every(entry => entry.file === T(OBSERVATION_CENSUS)))).toBe(true);
+      expect((SECTION_MARKDOWN[section] ?? "").endsWith(` ${row.quote}`), `${id} closes the ${section} paragraph`).toBe(true);
+      checked += 1;
+    }
+    expect(checked).toBe(2);
   });
 
   it("RF anchor (wb-973.17, rule 16): every sentence of the LIVE ReactiveFiberCLI paragraph is one RF row's quote or the one named unbound sentence, read from the document, never from SECTION_MARKDOWN", () => {
@@ -935,6 +1015,27 @@ describe("wb-6hb.11 liveness: the adopted judge is not accept-all (the real repo
     }
   });
 
+  it("M5 (wb-kku9.1): every row-H3 and row-A1 pin renamed by one character is absent from the report and red, naming its row, its half, the file and the title", () => {
+    let checked = 0;
+    for (const id of ["H3", "A1"]) {
+      const row = TABLE.find(candidate => candidate.row === id);
+      if (row === undefined) continue;
+      for (const half of row.halves) {
+        for (const entry of half.pins) {
+          const wrong = { ...entry, title: `${entry.title}.` };
+          const verdicts = judge(REPORT, [casePin(half, wrong)]);
+          expect(verdicts[0]?.code, wrong.title).toBe("absent");
+          const [line] = failures(row, half, verdicts);
+          expect(line, wrong.title).toContain(`row ${id}/${half.id}`);
+          expect(line, wrong.title).toContain(entry.file);
+          expect(line, wrong.title).toContain(wrong.title);
+          checked += 1;
+        }
+      }
+    }
+    expect(checked).toBe(7);
+  });
+
   it("M2: a row removed from the table fails the row-set pin (the frozen ids no longer match)", () => {
     expect(TABLE.filter(row => row.row !== "B1").map(row => row.row)).not.toEqual(ROW_IDS);
   });
@@ -971,7 +1072,7 @@ describe("wb-6hb.11 liveness: the adopted judge is not accept-all (the real repo
 describe("wb-6hb.11 docs drift names the row or the section (synthetic document, rendered view)", () => {
   const edit = (heading: string, from: string, to: string) => (section: string, body: string): string => (section === heading ? body.replace(from, to) : body);
 
-  it("accepts the six sections exactly as written, at EOF and bounded by a following level-2 heading", () => {
+  it("accepts the seven sections exactly as written, at EOF and bounded by a following level-2 heading", () => {
     expect(docsFailures(synthetic())).toEqual([]);
     expect(docsFailures(synthetic(undefined, "\n## Next\n\nOther text.\n"))).toEqual([]);
   });
@@ -996,6 +1097,18 @@ describe("wb-6hb.11 docs drift names the row or the section (synthetic document,
     const lines = docsFailures(synthetic(edit("Forge provider", "neither ever renders success", "either may render success")));
     expect(named(lines)).toEqual(["row F5"]);
     expect(lines.some(line => line.includes("Forge provider is not exactly its frozen paragraph"))).toBe(true);
+  });
+
+  it("K5 (wb-kku9.1) names row H3 (and only it) when the HX answer sentence lets an answer close Beads work", () => {
+    const lines = docsFailures(synthetic(edit("HyperUnix provider", "so an HX answer never closes Beads work", "so an HX answer may close Beads work")));
+    expect(named(lines)).toEqual(["row H3"]);
+    expect(lines.some(line => line.includes("HyperUnix provider is not exactly its frozen paragraph"))).toBe(true);
+  });
+
+  it("K6 (wb-kku9.1) names row A1 (and only it) when the Agent sentence lets the transcript pass a failed gate", () => {
+    const lines = docsFailures(synthetic(edit("Agent provider", "so a failed Forge gate stays failed", "so a failed Forge gate may pass")));
+    expect(named(lines)).toEqual(["row A1"]);
+    expect(lines.some(line => line.includes("Agent provider is not exactly its frozen paragraph"))).toBe(true);
   });
 
   it("K3 names row B1 (and only it) when the Beads clause is reworded", () => {
