@@ -28,7 +28,15 @@
  * acceptance cell of the beads the filing or a case names, each packet's key and gate column and each adopted id, every record
  * beside the sha256 of its verbatim producer row. Pi's side: its one Beads module (src/workbench/beads-observer.ts) is a reader whose injected seam offers `show` alone
  * and which reads a closed status as tone unknown ("Closure is a readiness fact, not a verified outcome"); no file under the
- * executable roots launches a bead close.
+ * executable roots launches a bead close. wb-zoq7 (the R694 follow-up from landing 308; its notes in the tracker export carry the
+ * gate's F1 and F2 verbatim) re-measured A3's vocabulary against the installed bd 1.1.0-rc.1 (a7903cb34; `bd <command> --help`
+ * read from an empty directory outside any store, no store opened). Its close paths: bd close and its alias bd done, bd epic
+ * close-eligible, bd todo done, bd duplicate --of, bd supersede --with, bd import (an upsert: a status-closed row rewrites the issue
+ * it names), bd gate resolve, bd gate check, bd orphans --fix, bd mol squash (the digest's and the molecule root's close reason),
+ * bd duplicates --auto-merge (derived: the help names the merged-away issue's closure), bd update to a closing status (the --status
+ * flag or a status=<value> pair) and a bd batch close or closing-update op, written before or after the bd word. The roster carries
+ * each help line verbatim. The executable surfaces beside SCAN_ROOTS: the repository root's own files (forge.toml's legs,
+ * package.json's scripts, the vitest configs) and the tracker's git hooks (.beads/hooks, now a scanned root).
  *
  * THE CLOSE RULE, ARMED. No Pi closer exists, so the rule is armed on a reference: CLOSE_CASES states each clause of the acceptance
  * as a store state (closed ids, leg runs, landings, recorded verdict texts, ruling texts, the closing-gate receipt) over a program
@@ -42,9 +50,11 @@
  *    docs-only landing each leave it open; PERF-F's three-file leg (rftsx-j83yd) likewise. A2 the leg is the acceptance field's own:
  *    legOf reads the test files and forge legs a child's acceptance names, measured over every child of both programs; a child whose
  *    acceptance names none never closes by this rule; no title names one; over the pinned graph (no receipt, the leg ABSENT) nothing
- *    closes. A3 the trigger: no file under SCAN_ROOTS launches a bead close (the bd word with a close verb, or an update to status
- *    closed or done, within CLOSE_WINDOW words), with floors, anchors and controls; the Beads seam offers show alone and its module
- *    exports no writer; a module A3 flags must be bound in BEAD_CLOSERS and every binding must name one (empty both ways today).
+ *    closes. A3 the trigger: no file under SCAN_ROOTS or ROOT_FILES launches a bead close (the bd word followed within CLOSE_WINDOW
+ *    words by every word of a CLOSE_COMMANDS entry or by an update to status closed or done, or a bd batch with a close or closing-
+ *    update op within CLOSE_WINDOW words on either side), with floors, anchors and controls, and every gate plant P06-P13 (wb-zoq7's
+ *    notes, verbatim) flagged; the Beads seam offers show alone and its module exports no writer; a module A3 flags must be bound in
+ *    BEAD_CLOSERS and every binding must name one (empty both ways today).
  *  B, the epic close, (b). B1 the epic cases: every ungated child closed, a verdict recorded on every gate bead ("ruled ADOPT",
  *    "ruled DEFER" or "ruled REJECT") and a full forge build green on main at a named sha close the epic; rftsx-auqdi open, no
  *    verdict text (a closed gate bead included: closure is never a verdict), text without a verdict, no receipt, a leg receipt, a
@@ -61,21 +71,26 @@
  * beads, beads (`${id}:${milestone}:${kind}`), gated packets and adopted beads as a literal held to the graph parsed from the
  * producer rows the roster carries; the whole judged set - every row's id, label and pins, every pin's witness, the constants and
  * every registered test title - is held to the out-of-file roster, and the labels of rows A to C and the carried PERF-F ids to the
- * bead's own notes in the tracker export (.beads/issues.jsonl). The last case reads the vitest task tree (every registered test, in
+ * bead's own notes in the tracker export (.beads/issues.jsonl); A3's vocabulary rides the roster's bd help lines (an entry, the
+ * batch op and the status update each, both ways) and the gate's plants P06-P13 ride wb-zoq7's notes in that same export, each
+ * flagged by A3. The last case reads the vitest task tree (every registered test, in
  * roster order, in run mode, ran before it) and the set of pins that reached their witness. Not claimed: an edit of this file and
  * the roster together.
  * RESIDUALS (named, each with its pinned quiet row): R-ARGV a close verb more than CLOSE_WINDOW words after the bd word, or held in a
- * variable, escapes A3 (Q1); R-COMPOSED a bd word assembled at runtime escapes A3 (Q2); R-PARAPHRASE a close stated without the bd
- * word - prose, or a status payload for another client - escapes A3 (Q3); R-INSTRUCTION AGENTS.md, .agents/skills/beads/SKILL.md and
+ * variable, and batch ops read from a file (bd batch -f) or piped from a stream composed elsewhere escape A3 (Q1); R-COMPOSED a bd
+ * word assembled at runtime escapes A3 (Q2); R-PARAPHRASE a close stated without the bd word - prose, or a status payload for another
+ * client - escapes A3 (Q3); R-INSTRUCTION AGENTS.md, .agents/skills/beads/SKILL.md and
  * .beads/README.md teach a generic bd close or done-status update for this repository's own store and name no rftsx bead: instruction
  * text outside A3's executable roots (Q4); R-CONTROLLER a Furnace Run closes its own Work by Furnace's authority on an Attempt's
  * outcome, and Pi's Furnace host spells no bd word: a bead run under Furnace closes outside this census (Q5); R-STORE a direct write
  * of a bead store bypasses bd; the one store write under the executable roots is the VC-4 tier's bd init of a disposable fx store
  * (Q6); R-EVIDENCE the rule judges the evidence a closer states, never its truth: a well-formed green for the leg ABSENT at the pin
  * closes the child under honest too - green is the leg's own exit, echoed, and its truth is the producer's (Q7); R-SCOPE test/ and
- * the tracker export lie outside every scanned root, and both spell the close vocabulary (Q8); R-UNCARRIED five PERF-F children
+ * the tracker export lie outside every scanned root and ROOT_FILES, and both spell the close vocabulary (Q8); R-UNCARRIED five PERF-F children
  * (rftsx-abin9, rftsx-irbta, rftsx-bh3x7, rftsx-zblcp, rftsx-nwut7) ride without their acceptance cell, so the census reads no leg of
- * theirs: an uncarried acceptance names no leg here and the bead never closes by the child rule (Q9).
+ * theirs: an uncarried acceptance names no leg here and the bead never closes by the child rule (Q9); R-SYNC a sync or merge from
+ * another store (bd federation sync, bd vc merge, bd dolt pull, a tracker integration's sync such as bd jira sync --pull) carries
+ * that store's closed statuses in by the other store's authority, and A3 reads none of them as a close (Q10).
  * SCOPE: PERF-F rides as cells because queued program censuses (wb-csbt.1, wb-csbt.2, wb-if7q.1) read every file below test/ and
  * police that program's own vocabulary: a verbatim PERF-F row in a fixture reads to them as a Pi sentence about the program
  * (measured by overlaying every queued entry beside this cut). The acceptance one-liners are the BEADS snapshot's cells (some cut by the producer with "..."); a closer reads each field
@@ -84,8 +99,9 @@
  * recorded on each of its gate beads (PF:76's gate-bead column; the merged R10 draft: "a verdict token in the gate beads' notes"), a
  * conservative reading. The verdict words are the producer's own ("ruled (ADOPT/DEFER/REJECT)", H2:19); the exact verdict reader is
  * wb-4nut.4's duty and is not re-pinned here. A3 reads no grammar: prose naming the bd word and a close word within the window reds
- * it (OVER-READ, disclosed: no executable root spells one today). The producer facts are measured at the pin; Pi vendors no producer
- * file, so a producer change is seen only when the roster is re-measured.
+ * it, and so does a preview (bd epic close-eligible --dry-run, bd import --dry-run) (OVER-READ, disclosed: no executable root or root
+ * file spells one today). The producer facts are measured at the pin; Pi vendors no producer file, so a producer change is seen only
+ * when the roster is re-measured; likewise the close vocabulary is the installed bd's, re-measured on a bd upgrade.
  *
  * Display paths added: none. Test-only: src, qa, docs and .beads are only read; nothing is written and no scratch is allocated.
  */
@@ -131,7 +147,7 @@ const ROWS: readonly Row[] = [
   {
     id: "Q",
     label: "residuals: each named family with its pinned quiet row",
-    pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9"],
+    pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10"],
   },
 ];
 
@@ -193,12 +209,35 @@ const DISPATCH_CLAUSES: readonly string[] = [
 const CARRIED: readonly string[] = [
   "rftsx-sbyih", "TSX-PF-03", "rftsx-bge18", "rftsx-7sy4c", "rftsx-w9akc", "not machine/flywheel/<id>", "never by implication",
 ];
-/** A3's window: a close verb counts when it follows the bd word within this many words. */
+/** A3's window: a close command counts when all of its words follow the bd word within this many words; a batch op counts within
+ * this many words on either side of it. */
 const CLOSE_WINDOW = 8;
 /** The status values an update closes with. */
 const CLOSING_STATUS: readonly string[] = ["closed", "done"];
 /** The instruction documents that teach a generic close for this repository's own store (R-INSTRUCTION). */
 const INSTRUCTION_FILES: readonly string[] = ["AGENTS.md", ".agents/skills/beads/SKILL.md", ".beads/README.md"];
+/** The follow-up bead whose notes carry the gate's plants (R694 follow-up from wb-4nut.6 landing 308: F1 the vocabulary, F2 the roots). */
+const FOLLOW_UP = "wb-zoq7";
+/** A3's close vocabulary (wb-zoq7 F1), read from the installed bd 1.1.0-rc.1's own help, each entry beside its help line in the roster:
+ * a launch is the bd word followed within CLOSE_WINDOW words by every word of one entry, folded as wordsOf folds them (close and its
+ * alias done, which also covers todo done; epic close-eligible; duplicate --of; supersede --with; import; gate resolve; gate check;
+ * orphans --fix; mol squash; duplicates --auto-merge). */
+const CLOSE_COMMANDS: readonly (readonly string[])[] = [
+  ["close"], ["done"], ["closeeligible"], ["duplicate"], ["supersede"], ["import"], ["gate", "resolve"], ["gate", "check"],
+  ["orphans", "fix"], ["mol", "squash"], ["duplicates", "automerge"],
+];
+/** The gate's plants that stayed green at landing 308, each verbatim from wb-zoq7's notes: F1's six src plants (P06-P11; an argv
+ * list rides spawnSync("bd", ...) as the gate planted it) and F2's two root configs (P12 a forge.toml leg, P13 an npm script). */
+const FINDING_PLANTS: Readonly<Record<string, string>> = {
+  P06: 'spawnSync("bd", ["epic", "close-eligible"])',
+  P07: '["todo", "done", id]',
+  P08: '["duplicate", id, "--of", of]',
+  P09: '["supersede", id, "--with", next]',
+  P10: `execSync(\`printf 'close \${id} leg green\\n' | bd batch\`)`,
+  P11: '["import", "-i", rowsFile]',
+  P12: 'command = "bd close rftsx-auqdi"',
+  P13: '"zz-close": "bd close rftsx-auqdi"',
+};
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-ARGV": ["Q1"],
   "R-COMPOSED": ["Q2"],
@@ -209,6 +248,7 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-EVIDENCE": ["Q7"],
   "R-SCOPE": ["Q8"],
   "R-UNCARRIED": ["Q9"],
+  "R-SYNC": ["Q10"],
 };
 
 interface ScanRoot {
@@ -217,8 +257,9 @@ interface ScanRoot {
   readonly anchorFile: string;
   readonly anchorToken: string;
 }
-/** The executable surfaces A3 reads; each floor sits below the count measured at base edccd80 (src 115, qa 67, examples 7, .pi 1,
- * .codex 2, .github 2 files). Each anchor is read and quiet; the src, qa and .codex anchors spell the bd word itself. */
+/** The executable surfaces A3 reads; each floor sits at or below the count measured at base edccd80 (src 115, qa 67, examples 7,
+ * .pi 1, .codex 2, .github 2 files) and, for the tracker's git hooks (wb-zoq7), at base 9f6b726 (.beads/hooks 5). Each anchor is read
+ * and quiet; the src, qa, .codex and .beads/hooks anchors spell the bd word itself. */
 const SCAN_ROOTS: readonly ScanRoot[] = [
   { root: "src", floor: 100, anchorFile: "src/workbench/beads-observer.ts", anchorToken: "bd show" },
   { root: "qa", floor: 50, anchorFile: "qa/workbench/live-furnace-vc4-launch.mjs", anchorToken: "spawnSync('bd', ['init'" },
@@ -226,7 +267,20 @@ const SCAN_ROOTS: readonly ScanRoot[] = [
   { root: ".pi", floor: 1, anchorFile: ".pi/agents/auditor.md", anchorToken: "max_turns" },
   { root: ".codex", floor: 2, anchorFile: ".codex/hooks.json", anchorToken: "bd codex-hook" },
   { root: ".github", floor: 2, anchorFile: ".github/workflows/ci.yml", anchorToken: "setup-node" },
+  { root: ".beads/hooks", floor: 5, anchorFile: ".beads/hooks/pre-commit", anchorToken: "bd hooks run pre-commit" },
 ];
+interface RootScan {
+  readonly floor: number;
+  readonly anchors: readonly { readonly file: string; readonly token: string }[];
+}
+/** The repository root's own files A3 also reads (wb-zoq7 F2): forge.toml's legs and package.json's scripts run commands and the
+ * vitest configs are executed modules, so every regular file at the root is judged but its .md pages (instruction text; AGENTS.md is
+ * R-INSTRUCTION's) and git's own .git pointer (a file in a worktree). The floor sits below the 22 files measured at base 9f6b726;
+ * each anchor is read and quiet. */
+const ROOT_FILES: RootScan = {
+  floor: 20,
+  anchors: [{ file: "forge.toml", token: "[build.commands." }, { file: "package.json", token: '"scripts": {' }],
+};
 
 interface RosterPin {
   readonly id: string;
@@ -244,6 +298,8 @@ interface Roster {
   readonly constants: { [key: string]: JsonValue };
   readonly tests: readonly string[];
   readonly rows: readonly RosterRow[];
+  /** The installed bd's version and the help lines A3's vocabulary is read from (wb-zoq7). */
+  readonly bd: { [key: string]: JsonValue };
 }
 
 function isObject(value: unknown): value is { [key: string]: unknown } {
@@ -289,6 +345,7 @@ function readRoster(): Roster {
     constants: objectOf(raw.constants, "roster constants"),
     tests: strings(raw.tests, "roster tests"),
     rows,
+    bd: objectOf(raw.bd, "roster bd"),
   };
 }
 
@@ -729,20 +786,44 @@ function filesBelow(directory: string): string[] {
   }
   return files;
 }
+/** The regular files at the repository root A3 reads (ROOT_FILES): all but the .md pages and git's .git pointer. */
+function rootFiles(): string[] {
+  let entries: Dirent[];
+  try {
+    entries = readdirSync(REPO, { withFileTypes: true });
+  } catch {
+    return [];
+  }
+  return entries
+    .sort(byName)
+    .filter(entry => entry.isFile() && entry.name !== ".git" && !entry.name.endsWith(".md"))
+    .map(entry => join(REPO, entry.name));
+}
+/** Every file A3 judges: the files below each scanned root, then the root's own files. */
+function executableFiles(): string[] {
+  return [...SCAN_ROOTS.flatMap(scan => filesBelow(join(REPO, scan.root))), ...rootFiles()];
+}
 /** The words a text spells, folded (lowercased; "_", "-" and "$" dropped, so flags, snake, kebab and camel forms agree). */
 function wordsOf(text: string): string[] {
   return (text.match(/[A-Za-z0-9_$-]+/g) ?? []).map(word => word.toLowerCase().replace(/[_$-]/g, ""));
 }
-/** A3's judge: each bd word followed within CLOSE_WINDOW words by a close verb, or by an update whose status flag names a closing
- * status, with the window it read. */
+/** Whether words hold an update whose status flag or key names a closing status (--status closed, -s done, status=closed). */
+function statusWriteIn(words: readonly string[]): boolean {
+  return words.includes("update") && words.some((item, at) => (item === "status" || item === "s") && CLOSING_STATUS.includes(words[at + 1] ?? ""));
+}
+/** A3's judge: each bd word followed within CLOSE_WINDOW words by every word of a CLOSE_COMMANDS entry or by a closing status update,
+ * or naming a batch whose close or closing-update op sits within CLOSE_WINDOW words on either side (bd batch reads its ops from stdin,
+ * so a piped op precedes the bd word); each with the window it read after the bd word. */
 function closeLaunchesIn(text: string): string[] {
   const words = wordsOf(text);
   const found: string[] = [];
   words.forEach((word, index) => {
     if (word !== "bd") return;
     const window = words.slice(index + 1, index + 1 + CLOSE_WINDOW);
-    const statusWrite = window.includes("update") && window.some((item, at) => (item === "status" || item === "s") && CLOSING_STATUS.includes(window[at + 1] ?? ""));
-    if (window.includes("close") || statusWrite) found.push(["bd", ...window].join(" "));
+    const before = words.slice(Math.max(0, index - CLOSE_WINDOW), index);
+    const command = CLOSE_COMMANDS.some(entry => entry.every(member => window.includes(member)));
+    const batch = window.includes("batch") && (before.includes("close") || statusWriteIn(before));
+    if (command || statusWriteIn(window) || batch) found.push(["bd", ...window].join(" "));
   });
   return found;
 }
@@ -757,15 +838,17 @@ function seamMembers(): string[] {
   return [...body.matchAll(/^\s*(\w+)\s*[(:]/gm)].map(match => match[1] ?? "").sort();
 }
 
-/** The bead's own notes in the tracker export, the acceptance text rows A to C quote. */
-function beadNotes(): string {
+/** A bead's own notes in the tracker export: wb-4nut.6's carry the acceptance text rows A to C quote, wb-zoq7's the gate's plants. */
+function notesOf(id: string): string {
   for (const line of textOf(join(REPO, ".beads", "issues.jsonl")).split("\n")) {
-    if (!line.includes(`"id":"${BEAD}"`)) continue;
+    if (!line.includes(`"id":"${id}"`)) continue;
     const row: unknown = JSON.parse(line);
-    if (isObject(row) && row.id === BEAD && typeof row.notes === "string") return row.notes;
+    if (isObject(row) && row.id === id && typeof row.notes === "string") return row.notes;
   }
   return "";
 }
+/** A plant as the gate planted it: an argv list rides spawnSync("bd", ...), any other plant stands as written. */
+const launchOf = (plant: string): string => (plant.startsWith("[") ? `spawnSync("bd", ${plant})` : plant);
 /** A row label's quoted acceptance text: the label without its leading clause tag. */
 function quoteOf(label: string): string {
   return label.replace(/^\([^)]*\) /, "");
@@ -831,7 +914,18 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       expect(anchorRead, `${scan.root}: the anchor ${scan.anchorFile} was read and is quiet`).toBe(true);
       return { root: scan.root, floor: files.length >= scan.floor, anchor: anchorRead, files };
     });
-    const launched = roots.flatMap(scan => scan.files.flatMap(file => closeLaunchesIn(textOf(file)).map(found => `${relative(REPO, file)}: ${found}`)));
+    const top = rootFiles();
+    const root = {
+      floor: top.length >= ROOT_FILES.floor,
+      anchors: ROOT_FILES.anchors.map(anchor => {
+        const path = join(REPO, anchor.file);
+        return top.includes(path) && textOf(path).includes(anchor.token) && closeLaunchesIn(textOf(path)).length === 0;
+      }),
+    };
+    expect(root.floor, `the root: ${top.length} files read, floor ${ROOT_FILES.floor}`).toBe(true);
+    expect(root.anchors, "the root: each anchor was read and is quiet").toEqual(ROOT_FILES.anchors.map(() => true));
+    const judged = [...roots.flatMap(scan => scan.files), ...top];
+    const launched = judged.flatMap(file => closeLaunchesIn(textOf(file)).map(found => `${relative(REPO, file)}: ${found}`));
     const launchingModules = [...new Set(launched.map(entry => entry.slice(0, entry.indexOf(":"))))];
     const bound = BEAD_CLOSERS.map(binding => binding.module);
     const controls = {
@@ -844,6 +938,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         'execSync("bd close " + id)',
         "BEADS_ACTOR=machine bd close rftsx-bhmrd",
         "bd update rftsx-auqdi --status=done",
+        'spawnSync("bd", ["done", id])',
+        "bd gate resolve rftsx-rupqh --reason ruled",
+        "bd gate check",
+        "bd orphans --fix",
+        "bd mol squash rftsx-bhmrd",
+        "bd duplicates --auto-merge",
+        "printf 'update rftsx-auqdi status=closed\\n' | bd batch",
+        "bd batch <<EOF\nclose rftsx-auqdi green\nEOF",
       ].map(text => closeLaunchesIn(text).length),
       quiet: [
         "bd show rftsx-auqdi --json",
@@ -853,15 +955,31 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         "socket.close()",
         "bd ready --json",
         "bd dep list rftsx-bhmrd",
+        "bd epic status rftsx-bhmrd",
+        "bd todo list",
+        "bd gate list --all",
+        "bd mol show rftsx-bhmrd",
+        "bd duplicates --dry-run",
+        "bd orphans",
+        "printf 'create task 2 probe\\n' | bd batch",
+        "bd hooks run pre-commit",
       ].map(text => closeLaunchesIn(text).length),
     };
+    const followUp = notesOf(FOLLOW_UP);
+    const plants = Object.fromEntries(
+      Object.entries(FINDING_PLANTS).map(([id, plant]) => [id, { carried: followUp.includes(plant), launches: closeLaunchesIn(launchOf(plant)).length }]),
+    );
     const exports = Object.keys(beadsObserver).sort();
-    expect(launched, "a file under the executable roots launching a bead close").toEqual([]);
+    expect(launched, "a file under the executable roots or at the root launching a bead close").toEqual([]);
     expect(launchingModules.filter(module => !bound.includes(module)), "a launching module not bound in BEAD_CLOSERS").toEqual([]);
     expect(bound.filter(module => !launchingModules.includes(module)), "a binding naming no launching module").toEqual([]);
     expect(controls.flagged.every(count => count > 0) && controls.quiet.every(count => count === 0), "the judge's controls").toBe(true);
+    expect(
+      Object.entries(plants).filter(([, entry]) => !entry.carried || entry.launches === 0).map(([id]) => id),
+      `a gate plant ${FOLLOW_UP}'s notes do not carry or A3 misses`,
+    ).toEqual([]);
     expect(seamMembers(), "the Beads seam offers show alone").toEqual(["show"]);
-    return json({ roots: roots.map(({ root, floor, anchor }) => ({ root, floor, anchor })), launched, bound, controls, seam: seamMembers(), exports });
+    return json({ roots: roots.map(({ root, floor, anchor }) => ({ root, floor, anchor })), root, launched, bound, controls, plants, seam: seamMembers(), exports });
   },
   B1: async () => clauseWitness("b"),
   B2: async () => {
@@ -924,7 +1042,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const held = 'const verb = "close"; spawnSync("bd", [verb, id]);';
     const far = "bd -C /work/repo --db /work/repo/.beads --actor machine --quiet --no-daemon close rftsx-auqdi";
     const edge = `bd ${"x ".repeat(CLOSE_WINDOW - 1)}close`;
-    return json({ held: closeLaunchesIn(held).length, far: closeLaunchesIn(far).length, edge: closeLaunchesIn(edge).length });
+    const fromFile = 'spawnSync("bd", ["batch", "-f", opsFile]);';
+    const piped = "cat ops.txt | bd batch";
+    return json({
+      held: closeLaunchesIn(held).length, far: closeLaunchesIn(far).length, edge: closeLaunchesIn(edge).length,
+      fromFile: closeLaunchesIn(fromFile).length, piped: closeLaunchesIn(piped).length,
+    });
   },
   Q2: async () => {
     const joined = 'spawnSync(["b", "d"].join(""), ["close", id]);';
@@ -943,7 +1066,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         return [file, { read: text.length > 0, launches: closeLaunchesIn(text).length > 0, namesRftsx: /rftsx-/.test(text) }];
       }),
     );
-    const scanned = INSTRUCTION_FILES.filter(file => SCAN_ROOTS.some(scan => file.startsWith(`${scan.root}/`)));
+    const judged = executableFiles();
+    const scanned = INSTRUCTION_FILES.filter(file => judged.includes(join(REPO, file)));
     return json({ files, scanned });
   },
   Q5: async () => {
@@ -954,7 +1078,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const launcher = textOf(join(REPO, "qa", "workbench", "live-furnace-vc4-launch.mjs"));
     const bdArgv = [...launcher.matchAll(/spawnSync\('bd', \[([^\]]*)\]/g)].map(match => (match[1] ?? "").split(", ").map(item => item.replace(/^'|'$/g, "")));
     const storeJoins = [...launcher.matchAll(/join\(root, '\.beads', '([^']+)'/g)].map(match => match[1] ?? "");
-    const exportReaders = SCAN_ROOTS.flatMap(scan => filesBelow(join(REPO, scan.root)).filter(file => textOf(file).includes("issues.jsonl")).map(file => relative(REPO, file)));
+    const exportReaders = executableFiles().filter(file => textOf(file).includes("issues.jsonl")).map(file => relative(REPO, file));
     return json({ bdArgv, storeJoins, exportReaders });
   },
   Q7: async () => {
@@ -964,7 +1088,13 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   Q8: async () => {
     const census = textOf(fileURLToPath(import.meta.url));
     const exported = textOf(join(REPO, ".beads", "issues.jsonl"));
-    return json({ scanned: SCAN_ROOTS.map(scan => scan.root), testSpells: closeLaunchesIn(census).length > 0, exportSpells: closeLaunchesIn(exported).length > 0 });
+    const judged = executableFiles().map(file => relative(REPO, file));
+    return json({
+      scanned: SCAN_ROOTS.map(scan => scan.root),
+      reads: { test: judged.some(file => file.startsWith("test/")), export: judged.includes(".beads/issues.jsonl") },
+      testSpells: closeLaunchesIn(census).length > 0,
+      exportSpells: closeLaunchesIn(exported).length > 0,
+    });
   },
   Q9: async () => {
     const uncarried = (Object.keys(PROGRAMS) as ProgramKey[]).flatMap(key => PROGRAMS[key].beads.filter(bead => !bead.carried).map(bead => `${key}:${bead.id}`));
@@ -973,11 +1103,20 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       .flatMap(bead => honest(stateOf(PERF_F, { runs: { [bead.id]: greenRun(bead.id, [LEG_H2]) }, landings: { [bead.id]: landingOf(bead.id) } })));
     return json({ uncarried, closes });
   },
+  Q10: async () => {
+    const syncs: Readonly<Record<string, string>> = {
+      federation: "bd federation sync --strategy theirs",
+      merge: "bd vc merge main --strategy theirs",
+      pull: "bd dolt pull",
+      tracker: "bd jira sync --pull --state closed",
+    };
+    return json(Object.fromEntries(Object.entries(syncs).map(([name, text]) => [name, closeLaunchesIn(text).length])));
+  },
 };
 
 describe("wb-4nut.6 H2 close-condition census (TSX-HARNESS2-REACTIVE-EVOLUTION-R6)", () => {
   it("the judged set: the frozen shape, the out-of-file roster, the producer rows, the bead's notes and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:3", "C:2", "Q:9"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:3", "C:2", "Q:10"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -986,9 +1125,20 @@ describe("wb-4nut.6 H2 close-condition census (TSX-HARNESS2-REACTIVE-EVOLUTION-R
     expect(textField(ROSTER.producer, "pin", "producer"), "the producer facts were read at the program pin").toBe(PROGRAM_PIN);
     expect({
       programShape: PROGRAM_SHAPE, leg: LEG_H2, dispatchClauses: DISPATCH_CLAUSES, carried: CARRIED, closeWindow: CLOSE_WINDOW,
-      closingStatus: CLOSING_STATUS, instructionFiles: INSTRUCTION_FILES, scanRoots: SCAN_ROOTS, residuals: RESIDUALS,
+      closingStatus: CLOSING_STATUS, closeCommands: CLOSE_COMMANDS, instructionFiles: INSTRUCTION_FILES, scanRoots: SCAN_ROOTS,
+      rootFiles: ROOT_FILES, followUp: FOLLOW_UP, findingPlants: FINDING_PLANTS, residuals: RESIDUALS,
       cases: CLOSE_CASES.map(entry => `${entry.clause}:${entry.expect.join(",")}`), mutants: Object.keys(MUTANTS),
     }).toStrictEqual(ROSTER.constants);
+    // A3's vocabulary is the installed bd's: every entry, the batch op and the status update ride help lines, one naming the close.
+    expect(textField(ROSTER.bd, "version", "roster bd"), "the help was read from the installed bd 1.1.0-rc.1").toMatch(/^bd version 1\.1\.0-rc\.1 /);
+    const help = objectOf(ROSTER.bd.help, "roster bd.help");
+    expect(Object.keys(help).sort(), "a help entry for every vocabulary entry, the batch op and the status update").toEqual(
+      [...CLOSE_COMMANDS.map(entry => entry.join(" ")), "batch", "update"].sort(),
+    );
+    for (const [key, entry] of Object.entries(help)) {
+      const lines = strings(objectOf(entry, `roster bd.help.${key}`).lines, `roster bd.help.${key}.lines`);
+      expect(lines.some(line => /\bclos/i.test(line)), `a help line of ${key} names the close`).toBe(true);
+    }
     // Each program's graph, parsed from the producer's own rows, equals its frozen literal.
     for (const key of Object.keys(PROGRAMS) as ProgramKey[]) expect(shapeOf(PROGRAMS[key]), `${key}'s graph`).toStrictEqual(PROGRAM_SHAPE[key]);
     const named: Record<string, ProgramKey> = { [AUQDI]: "h2", [RUPQH]: "h2", [R05]: "h2", [J83YD]: "perfF", [M69SF]: "perfF", [IT5RY]: "perfF", [W9AKC]: "perfF", [BGE18]: "perfF" };
@@ -999,7 +1149,7 @@ describe("wb-4nut.6 H2 close-condition census (TSX-HARNESS2-REACTIVE-EVOLUTION-R
     const statement = textField(producerPart("statement"), "text", "producer.statement");
     for (const clause of DISPATCH_CLAUSES) expect(`${deposits[0]} ${statement}`, "a dispatch clause the producer states").toContain(clause);
     for (const members of Object.values(RESIDUALS)) for (const member of members) expect(ROWS.flatMap(row => row.pins), `${member} is a judged pin`).toContain(member);
-    const notes = beadNotes();
+    const notes = notesOf(BEAD);
     expect(notes.length, `${BEAD}'s notes were read from the tracker export`).toBeGreaterThan(0);
     for (const row of ROWS.filter(entry => entry.id !== "Q")) expect(notes, `row ${row.id} quotes the bead's acceptance`).toContain(quoteOf(row.label));
     for (const carried of CARRIED) expect(notes, `the bead's notes carry ${carried}`).toContain(carried);

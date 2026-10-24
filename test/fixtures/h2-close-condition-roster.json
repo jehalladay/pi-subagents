@@ -1,5 +1,5 @@
 {
- "provenance": "wb-4nut.6 census roster, cut by ws-02 (run g10-work-s47) on trunk edccd80289349182284b65d296aee98742c11b34 (landing 287 hop). Producer facts: read-only git show and git cat-file -e at the pins named below (H2 rows verbatim; PERF-F rows as measured cells, each beside the sha256 of its verbatim row); pin witnesses: measured by test/workbench-h2-close-condition-census.test.ts on edccd80 plus the cut, each reviewed against the bead's acceptance before it was written here.",
+ "provenance": "wb-4nut.6 census roster, cut by ws-02 (run g10-work-s47) on trunk edccd80289349182284b65d296aee98742c11b34 (landing 287 hop). Producer facts: read-only git show and git cat-file -e at the pins named below (H2 rows verbatim; PERF-F rows as measured cells, each beside the sha256 of its verbatim row); pin witnesses: measured by test/workbench-h2-close-condition-census.test.ts on edccd80 plus the cut, each reviewed against the bead's acceptance before it was written here. Re-measured for wb-zoq7 (the R694 follow-up from landing 308) by ws-03 (run g10-work-s80) on trunk 9f6b726eb7abcb0525b862ece779ab54b17df96e: the A3, Q1 and Q8 witnesses, the new Q10 witness, the constants closeCommands, rootFiles, followUp and findingPlants, the .beads/hooks scan root, R-SYNC, and the bd section (the installed bd 1.1.0-rc.1's help lines, verbatim); every other witness and constant is unchanged.",
  "bead": "wb-4nut.6",
  "programPin": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
  "producer": {
@@ -374,6 +374,46 @@
    "closed",
    "done"
   ],
+  "closeCommands": [
+   [
+    "close"
+   ],
+   [
+    "done"
+   ],
+   [
+    "closeeligible"
+   ],
+   [
+    "duplicate"
+   ],
+   [
+    "supersede"
+   ],
+   [
+    "import"
+   ],
+   [
+    "gate",
+    "resolve"
+   ],
+   [
+    "gate",
+    "check"
+   ],
+   [
+    "orphans",
+    "fix"
+   ],
+   [
+    "mol",
+    "squash"
+   ],
+   [
+    "duplicates",
+    "automerge"
+   ]
+  ],
   "instructionFiles": [
    "AGENTS.md",
    ".agents/skills/beads/SKILL.md",
@@ -415,8 +455,38 @@
     "floor": 2,
     "anchorFile": ".github/workflows/ci.yml",
     "anchorToken": "setup-node"
+   },
+   {
+    "root": ".beads/hooks",
+    "floor": 5,
+    "anchorFile": ".beads/hooks/pre-commit",
+    "anchorToken": "bd hooks run pre-commit"
    }
   ],
+  "rootFiles": {
+   "floor": 20,
+   "anchors": [
+    {
+     "file": "forge.toml",
+     "token": "[build.commands."
+    },
+    {
+     "file": "package.json",
+     "token": "\"scripts\": {"
+    }
+   ]
+  },
+  "followUp": "wb-zoq7",
+  "findingPlants": {
+   "P06": "spawnSync(\"bd\", [\"epic\", \"close-eligible\"])",
+   "P07": "[\"todo\", \"done\", id]",
+   "P08": "[\"duplicate\", id, \"--of\", of]",
+   "P09": "[\"supersede\", id, \"--with\", next]",
+   "P10": "execSync(`printf 'close ${id} leg green\\n' | bd batch`)",
+   "P11": "[\"import\", \"-i\", rowsFile]",
+   "P12": "command = \"bd close rftsx-auqdi\"",
+   "P13": "\"zz-close\": \"bd close rftsx-auqdi\""
+  },
   "residuals": {
    "R-ARGV": [
     "Q1"
@@ -444,6 +514,9 @@
    ],
    "R-UNCARRIED": [
     "Q9"
+   ],
+   "R-SYNC": [
+    "Q10"
    ]
   },
   "cases": [
@@ -532,6 +605,7 @@
   "Q7",
   "Q8",
   "Q9",
+  "Q10",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ],
  "rows": [
@@ -713,12 +787,32 @@
         "root": ".github",
         "floor": true,
         "anchor": true
+       },
+       {
+        "root": ".beads/hooks",
+        "floor": true,
+        "anchor": true
        }
       ],
+      "root": {
+       "floor": true,
+       "anchors": [
+        true,
+        true
+       ]
+      },
       "launched": [],
       "bound": [],
       "controls": {
        "flagged": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
         1,
         1,
         1,
@@ -735,8 +829,50 @@
         0,
         0,
         0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
         0
        ]
+      },
+      "plants": {
+       "P06": {
+        "carried": true,
+        "launches": 1
+       },
+       "P07": {
+        "carried": true,
+        "launches": 1
+       },
+       "P08": {
+        "carried": true,
+        "launches": 1
+       },
+       "P09": {
+        "carried": true,
+        "launches": 1
+       },
+       "P10": {
+        "carried": true,
+        "launches": 1
+       },
+       "P11": {
+        "carried": true,
+        "launches": 1
+       },
+       "P12": {
+        "carried": true,
+        "launches": 1
+       },
+       "P13": {
+        "carried": true,
+        "launches": 1
+       }
       },
       "seam": [
        "show"
@@ -991,7 +1127,9 @@
      "witness": {
       "held": 0,
       "far": 0,
-      "edge": 1
+      "edge": 1,
+      "fromFile": 0,
+      "piped": 0
      }
     },
     {
@@ -1077,8 +1215,13 @@
        "examples",
        ".pi",
        ".codex",
-       ".github"
+       ".github",
+       ".beads/hooks"
       ],
+      "reads": {
+       "test": false,
+       "export": false
+      },
       "testSpells": true,
       "exportSpells": true
      }
@@ -1095,8 +1238,109 @@
       ],
       "closes": []
      }
+    },
+    {
+     "id": "Q10",
+     "witness": {
+      "federation": 0,
+      "merge": 0,
+      "pull": 0,
+      "tracker": 0
+     }
     }
    ]
   }
- ]
+ ],
+ "bd": {
+  "version": "bd version 1.1.0-rc.1 (a7903cb34) db-schema-max=v59",
+  "measuredBy": "bd --version and bd <command> --help for each entry below, run by the wb-zoq7 cutting seat (ws-03, run g10-work-s80, 2026-10-24) from an empty scratch directory outside any repository, no store opened; every line verbatim, leading spaces kept",
+  "help": {
+   "close": {
+    "command": "bd close --help",
+    "lines": [
+     "Close one or more issues."
+    ]
+   },
+   "done": {
+    "command": "bd close --help; bd todo --help",
+    "lines": [
+     "  close, done",
+     "  bd todo done <id>      -> bd close <id>"
+    ]
+   },
+   "closeeligible": {
+    "command": "bd epic close-eligible --help",
+    "lines": [
+     "Close epics where all children are complete"
+    ]
+   },
+   "duplicate": {
+    "command": "bd duplicate --help",
+    "lines": [
+     "The duplicate issue is automatically closed with a reference to the canonical."
+    ]
+   },
+   "supersede": {
+    "command": "bd supersede --help",
+    "lines": [
+     "The superseded issue is automatically closed with a reference to the replacement."
+    ]
+   },
+   "import": {
+    "command": "bd import --help",
+    "lines": [
+     "'bd export': new issues are created and existing issues are updated (upsert",
+     "  status                 open | in_progress | blocked | closed | ..."
+    ]
+   },
+   "gate resolve": {
+    "command": "bd gate resolve --help",
+    "lines": [
+     "Close a gate issue to unblock the step waiting on it.",
+     "This is equivalent to 'bd close <gate-id>' but with a more explicit name."
+    ]
+   },
+   "gate check": {
+    "command": "bd gate check --help",
+    "lines": [
+     "Evaluate gate conditions and automatically close resolved gates."
+    ]
+   },
+   "orphans fix": {
+    "command": "bd orphans --help",
+    "lines": [
+     "  -f, --fix                 Close orphaned issues with confirmation"
+    ]
+   },
+   "mol squash": {
+    "command": "bd mol squash --help",
+    "lines": [
+     "step count is then recorded in the digest's close reason AND the molecule root's,"
+    ]
+   },
+   "duplicates automerge": {
+    "command": "bd duplicates --help",
+    "lines": [
+     "   children orphans them while a depends-on link survives closure.",
+     "      --auto-merge   Automatically merge all duplicates"
+    ]
+   },
+   "batch": {
+    "command": "bd batch --help",
+    "lines": [
+     "  close <id> [reason...]",
+     "  update <id> <key>=<value> [<key>=<value> ...]",
+     "Supported 'update' keys: status, priority, title, assignee",
+     "  printf 'close bd-1 done\\nupdate bd-2 status=in_progress\\n' | bd batch"
+    ]
+   },
+   "update": {
+    "command": "bd update --help",
+    "lines": [
+     "  -s, --status string                New status",
+     "      --force                        Override close-time integrity guards when setting --status closed (blocked-by-open, epic-with-open-children); mirrors 'bd close --force'"
+    ]
+   }
+  }
+ }
 }
