@@ -283,3 +283,244 @@ describe("the live observer over the issuing connection", () => {
     }
   });
 });
+
+/**
+ * wb-6ps1.2 (R2 (a)): no Pi surface equates a forge observation with the native verifier receipt - a
+ * selected or partial run is never a full-gate PASS, and the selected-versus-complete universe travels with the verdict as
+ * its own facet whenever the producer publishes it. The three `data` blocks below were MEASURED on 2026-10-23 with the
+ * installed forge 0.2.1 (rev bd7d9f8e68ad) over a scratch package whose gate is alpha, beta, gamma: `forge gate --json`
+ * (status success, gate_verdict PASS), `forge gate --json --only alpha` (status partial, gate_verdict COULD_NOT_JUDGE) and
+ * `forge gate --json -- --extra-arg` (status success, gate_verdict null, gate_passed false). The served gate.run reply is that
+ * same serialized envelope with the operation fields beside it (Forge src/forge/application/gate_methods.py run_gate_method).
+ */
+const MEASURED_FULL = {
+  gate_verdict: "PASS",
+  selection: null,
+  selection_accounting: {
+    counts: { declared: 3, executed: 3, explicitly_narrowed: 0, not_run: 0, replayed: null, resume_attested: 0, resume_unattested: 0, selected: 3, unaffected: 0, unknown: 0 },
+    not_applicable: ["replayed"], policy: "impacted/v2", selected_steps_passed: true, unit: "step",
+    units: [
+      { basis: { globs: [], kind: "selection-not-requested", paths: [], via: [] }, outcome: "executed", ref: "alpha", selection: "selected" },
+      { basis: { globs: [], kind: "selection-not-requested", paths: [], via: [] }, outcome: "executed", ref: "beta", selection: "selected" },
+      { basis: { globs: [], kind: "selection-not-requested", paths: [], via: [] }, outcome: "executed", ref: "gamma", selection: "selected" },
+    ],
+  },
+};
+const MEASURED_ONLY_ALPHA = {
+  gate_verdict: "COULD_NOT_JUDGE",
+  selection: null,
+  selection_accounting: {
+    counts: { declared: 3, executed: 1, explicitly_narrowed: 2, not_run: 0, replayed: null, resume_attested: 0, resume_unattested: 0, selected: 1, unaffected: 0, unknown: 0 },
+    not_applicable: ["replayed"], policy: "impacted/v2", selected_steps_passed: true, unit: "step",
+    units: [
+      { basis: { globs: [], kind: "selection-not-requested", paths: [], via: [] }, outcome: "executed", ref: "alpha", selection: "selected" },
+      { basis: { globs: [], kind: "explicitly-narrowed", paths: [], via: [] }, outcome: null, ref: "beta", selection: "explicitly_narrowed" },
+      { basis: { globs: [], kind: "explicitly-narrowed", paths: [], via: [] }, outcome: null, ref: "gamma", selection: "explicitly_narrowed" },
+    ],
+  },
+};
+const MEASURED_ARGS = {
+  gate_verdict: null,
+  selection: { denominator_complete: false, narrowed: true, requested: ["--extra-arg"], requested_distinct: null, scope_applied: null, selected_by: "cli-args", tests_collected: null, tests_deselected: null },
+  selection_accounting: MEASURED_FULL.selection_accounting,
+};
+/**
+ * NOT measured: the documented member arm ("a fan-out whose every member skipped as unaffected exits 0", Forge
+ * docs/agent-interface.md § data.selection_accounting), built from that section's wire form.
+ */
+const DOCUMENTED_MEMBERS_UNAFFECTED = {
+  gate_verdict: null,
+  selection_accounting: {
+    counts: { declared: 2, executed: 0, explicitly_narrowed: 0, not_run: 0, replayed: null, resume_attested: 0, resume_unattested: 0, selected: 0, unaffected: 2, unknown: 0 },
+    not_applicable: ["replayed"], policy: "affected/v1", selected_steps_passed: null, unit: "member",
+    units: [
+      { basis: { globs: [], kind: "changed-paths", paths: [], via: [] }, outcome: null, ref: "code:one", selection: "unaffected" },
+      { basis: { globs: [], kind: "changed-paths", paths: [], via: [] }, outcome: null, ref: "code:two", selection: "unaffected" },
+    ],
+  },
+};
+const settledReply = (status: string, data?: unknown, disposition = "completed"): Record<string, unknown> =>
+  ({ operation_id: OP, status, terminal_disposition: disposition, lifecycle_state: "TERMINAL", ...(data !== undefined ? { data } : {}) });
+const terminalOf = (reply: unknown) => {
+  const terminal = decodeForgeOperationTerminal(reply, OP, T2);
+  if (terminal === undefined) throw new Error("the reply names no terminal for the operation");
+  return forgeOperationTerminalSnapshot(terminal, options);
+};
+const withUnits = (change: Record<string, unknown>) => ({ ...MEASURED_FULL, selection_accounting: { ...MEASURED_FULL.selection_accounting, ...change } });
+const [ROW_ALPHA, ROW_BETA, ROW_GAMMA] = MEASURED_FULL.selection_accounting.units;
+
+describe("wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict", () => {
+  it("wb-6ps1.2 (a): the measured complete selection (3 of 3 steps) travels with the verdict as its own facet, complete coverage, and the command status keeps its tone", () => {
+    expect(decodeForgeOperationTerminal(settledReply("success", MEASURED_FULL), OP, T2)).toStrictEqual({
+      operationId: OP, status: "success", terminalDisposition: "completed", observedAt: T2, selection: { units: { unit: "step", selected: 3, declared: 3 } },
+    });
+    const snapshot = terminalOf(settledReply("success", MEASURED_FULL));
+    expect(snapshot.node).toStrictEqual({ title: `Forge operation ${OP}`, type: "workflow", statusText: "completed · selection complete: 3 of 3 steps selected", statusTone: "success" });
+    expect(snapshot.coverage).toBe("complete");
+    expect(snapshot.evidenceRefs).toStrictEqual([`forge-operation:${OP}:terminal_disposition=completed`]);
+    const single = terminalOf(settledReply("success", withUnits({ units: [ROW_ALPHA], counts: { ...MEASURED_FULL.selection_accounting.counts, declared: 1, selected: 1, executed: 1 } })));
+    expect(single.node.statusText).toBe("completed · selection complete: 1 of 1 step selected");
+    expect(single.node.statusTone).toBe("success");
+  });
+
+  it("wb-6ps1.2 (a): the measured --only selection (1 of 3 steps) renders partial with its own facet and never success, whatever command status the reply states", () => {
+    for (const [status, tone] of [["partial", "unknown"], ["success", "unknown"], ["error", "failure"]] as const) {
+      const snapshot = terminalOf(settledReply(status, MEASURED_ONLY_ALPHA));
+      expect(snapshot.node.statusText, status).toBe("completed · selection partial: 1 of 3 steps selected");
+      expect(snapshot.node.statusTone, status).toBe(tone);
+      expect(snapshot.coverage, status).toBe("partial");
+    }
+  });
+
+  it("wb-6ps1.2 (a): a selection short of complete by any unselected state - unaffected, explicitly_narrowed or unknown - renders partial, never success", () => {
+    for (const state of ["unaffected", "explicitly_narrowed", "unknown"] as const) {
+      const units = [ROW_ALPHA, ROW_BETA, { ...ROW_GAMMA, selection: state, outcome: null }];
+      const snapshot = terminalOf(settledReply("success", withUnits({ units, counts: { ...MEASURED_FULL.selection_accounting.counts, selected: 2, [state]: 1, executed: 2 } })));
+      expect(snapshot.node.statusText, state).toBe("completed · selection partial: 2 of 3 steps selected");
+      expect(snapshot.node.statusTone, state).toBe("unknown");
+      expect(snapshot.coverage, state).toBe("partial");
+    }
+  });
+
+  it("wb-6ps1.2 (a): the documented member fan-out whose every member skipped as unaffected (0 of 2 members, exit 0) renders partial, never success", () => {
+    const snapshot = terminalOf(settledReply("success", DOCUMENTED_MEMBERS_UNAFFECTED));
+    expect(snapshot.node.statusText).toBe("completed · selection partial: 0 of 2 members selected");
+    expect(snapshot.node.statusTone).toBe("unknown");
+    expect(snapshot.coverage).toBe("partial");
+  });
+
+  it("wb-6ps1.2 (a): the measured -- <args> run (status success, gate_verdict null, data.selection narrowed) renders partial with a tests facet beside the complete step facet, never success", () => {
+    expect(decodeForgeOperationTerminal(settledReply("success", MEASURED_ARGS), OP, T2)?.selection).toStrictEqual({
+      units: { unit: "step", selected: 3, declared: 3 }, tests: { narrowed: true },
+    });
+    const snapshot = terminalOf(settledReply("success", MEASURED_ARGS));
+    expect(snapshot.node.statusText).toBe("completed · selection complete: 3 of 3 steps selected · tests narrowed");
+    expect(snapshot.node.statusTone).toBe("unknown");
+    expect(snapshot.coverage).toBe("partial");
+    // denominator_complete false alone is a narrowed test universe as well.
+    const incomplete = terminalOf(settledReply("success", { ...MEASURED_ARGS, selection: { ...MEASURED_ARGS.selection, narrowed: false } }));
+    expect(incomplete.node.statusText).toBe("completed · selection complete: 3 of 3 steps selected · tests narrowed");
+    expect(incomplete.node.statusTone).toBe("unknown");
+    const unnarrowed = terminalOf(settledReply("success", { ...MEASURED_ARGS, selection: { ...MEASURED_ARGS.selection, narrowed: false, denominator_complete: null } }));
+    expect(unnarrowed.node.statusText).toBe("completed · selection complete: 3 of 3 steps selected · tests not narrowed");
+    expect(unnarrowed.node.statusTone).toBe("success");
+    expect(unnarrowed.coverage).toBe("complete");
+  });
+
+  const malformedUnits: [string, unknown][] = [
+    ["a null block", null],
+    ["a block that is not an object", "complete"],
+    ["an array block", [MEASURED_FULL.selection_accounting]],
+    ["a unit outside step and member", { ...MEASURED_FULL.selection_accounting, unit: "package" }],
+    ["units that are not an array", { ...MEASURED_FULL.selection_accounting, units: { alpha: "selected" } }],
+    ["a row that is not an object", { ...MEASURED_FULL.selection_accounting, units: [ROW_ALPHA, ROW_BETA, "gamma"] }],
+    // Counts agree with the rows here (two selected), so only the closed selection axis can withhold the block.
+    ["a row selection outside the closed set", { ...MEASURED_FULL.selection_accounting, units: [ROW_ALPHA, ROW_BETA, { ...ROW_GAMMA, selection: "chosen" }], counts: { ...MEASURED_FULL.selection_accounting.counts, selected: 2 } }],
+    ["missing counts", { ...MEASURED_FULL.selection_accounting, counts: undefined }],
+    ["counts.declared disagreeing with the rows", { ...MEASURED_FULL.selection_accounting, counts: { ...MEASURED_FULL.selection_accounting.counts, declared: 4 } }],
+    ["counts.selected disagreeing with the rows", { ...MEASURED_FULL.selection_accounting, counts: { ...MEASURED_FULL.selection_accounting.counts, selected: 2 } }],
+    ["a string count", { ...MEASURED_FULL.selection_accounting, counts: { ...MEASURED_FULL.selection_accounting.counts, declared: "3" } }],
+  ];
+  it.each(malformedUnits)("wb-6ps1.2 (a): %s is withheld as selection UNKNOWN, unknown coverage, and never lets a success tone stand", (_label, block) => {
+    const snapshot = terminalOf(settledReply("success", { ...MEASURED_FULL, selection_accounting: block }));
+    expect(snapshot.node.statusText).toBe("completed · selection UNKNOWN");
+    expect(snapshot.node.statusTone).toBe("unknown");
+    expect(snapshot.coverage).toBe("unknown");
+    expect(terminalOf(settledReply("error", { ...MEASURED_FULL, selection_accounting: block })).node.statusTone).toBe("failure");
+  });
+
+  it("wb-6ps1.2 (a): a malformed test-selection block is withheld as tests UNKNOWN and never lets a success tone stand", () => {
+    for (const selection of [{ narrowed: "yes" }, { narrowed: false, denominator_complete: "no" }, "narrowed", []]) {
+      const snapshot = terminalOf(settledReply("success", { ...MEASURED_FULL, selection }));
+      expect(snapshot.node.statusText, JSON.stringify(selection)).toBe("completed · selection complete: 3 of 3 steps selected · tests UNKNOWN");
+      expect(snapshot.node.statusTone, JSON.stringify(selection)).toBe("unknown");
+      expect(snapshot.coverage, JSON.stringify(selection)).toBe("unknown");
+    }
+  });
+
+  it("wb-6ps1.2 (a): an empty declared universe (0 of 0 steps) judges nothing, so it is never complete and never success", () => {
+    const snapshot = terminalOf(settledReply("success", withUnits({ units: [], counts: { ...MEASURED_FULL.selection_accounting.counts, declared: 0, selected: 0, executed: 0 } })));
+    expect(snapshot.node.statusText).toBe("completed · selection partial: 0 of 0 steps selected");
+    expect(snapshot.node.statusTone).toBe("unknown");
+    expect(snapshot.coverage).toBe("partial");
+  });
+
+  it("wb-6ps1.2 (a): a test facet with no published unit universe never claims complete coverage or lets a success tone stand", () => {
+    const snapshot = terminalOf(settledReply("success", { gate_verdict: "PASS", selection: { narrowed: false, denominator_complete: null } }));
+    expect(snapshot.node.statusText).toBe("completed · tests not narrowed");
+    expect(snapshot.node.statusTone).toBe("unknown");
+    expect(snapshot.coverage).toBe("unknown");
+  });
+
+  it("wb-6ps1.2 (a): a reply that publishes no selection block keeps the a3s reading - no facet, no coverage, the command status's tone", () => {
+    for (const data of [undefined, null, "data", { gate_verdict: "PASS" }, { selection: null }]) {
+      const reply = settledReply("success", data);
+      expect(decodeForgeOperationTerminal(reply, OP, T2), JSON.stringify(data)).toStrictEqual({ operationId: OP, status: "success", terminalDisposition: "completed", observedAt: T2 });
+      const snapshot = terminalOf(reply);
+      expect(snapshot.node, JSON.stringify(data)).toStrictEqual({ title: `Forge operation ${OP}`, type: "workflow", statusText: "completed", statusTone: "success" });
+      expect("coverage" in snapshot, JSON.stringify(data)).toBe(false);
+    }
+  });
+
+  it("wb-6ps1.2 (a): an inherited field is never read as a producer statement - inherited data publishes no selection, and an inherited row selection or narrowed flag withholds its block", () => {
+    const inheritedData = Object.assign(Object.create({ data: MEASURED_ONLY_ALPHA }) as Record<string, unknown>, settledReply("success"));
+    expect(decodeForgeOperationTerminal(inheritedData, OP, T2)).toStrictEqual({ operationId: OP, status: "success", terminalDisposition: "completed", observedAt: T2 });
+    const inheritedRow = Object.assign(Object.create({ selection: "selected" }) as Record<string, unknown>, { ref: "gamma", outcome: "executed", basis: ROW_GAMMA.basis });
+    const rows = terminalOf(settledReply("success", withUnits({ units: [ROW_ALPHA, ROW_BETA, inheritedRow] })));
+    expect(rows.node.statusText).toBe("completed · selection UNKNOWN");
+    expect(rows.node.statusTone).toBe("unknown");
+    const inheritedFlag = Object.assign(Object.create({ narrowed: false }) as Record<string, unknown>, { denominator_complete: null });
+    const tests = terminalOf(settledReply("success", { ...MEASURED_FULL, selection: inheritedFlag }));
+    expect(tests.node.statusText).toBe("completed · selection complete: 3 of 3 steps selected · tests UNKNOWN");
+    expect(tests.node.statusTone).toBe("unknown");
+  });
+
+  it("wb-6ps1.2 (a): the facet sits after the echoed disposition, which routes through the shared label layout (a bidi override or a line break displays as a space)", () => {
+    const disposition = `cancelled${String.fromCodePoint(0x202e)}established${String.fromCodePoint(0x0a)}late`;
+    const snapshot = terminalOf(settledReply("partial", MEASURED_ONLY_ALPHA, disposition));
+    expect(snapshot.node.statusText).toBe("cancelled established late · selection partial: 1 of 3 steps selected");
+    expect(snapshot.evidenceRefs).toStrictEqual([`forge-operation:${OP}:terminal_disposition=${disposition}`]);
+    const invisible = terminalOf(settledReply("success", MEASURED_FULL, String.fromCodePoint(0x200b)));
+    expect(invisible.node.statusText).toBe("unprintable terminal_disposition · selection complete: 3 of 3 steps selected");
+  });
+
+  it("wb-6ps1.2 (a): through the live observer the measured --only reply settles the operation node partial with its facet, and a gate-step node never carries the workspace verdict", async () => {
+    const projection = new ObservationProjection();
+    const fake = fakeConnection();
+    const pending = observeForgeGateRun(fake.connection, deps(projection).deps);
+    fake.frame("operation.started", { operation_id: OP, request_id: "2" });
+    const observer = await pending;
+    fake.frame("gate.step_started", { operation_id: OP, seq: 1, step: "alpha" });
+    fake.frame("gate.step_finished", { operation_id: OP, seq: 2, step: "alpha", outcome: "passed", exit_code: 0 });
+    const stepBefore = projection.query({ scope: SCOPE, ref: forgeGateStepRef(OP, "alpha"), limit: 1 }).nodes[0];
+    fake.reply(settledReply("partial", MEASURED_ONLY_ALPHA));
+    expect(await observer.settled).toBe("settled");
+    const node = projection.query({ scope: SCOPE, ref: target(), limit: 1 }).nodes[0];
+    expect(node?.presentation).toStrictEqual({ title: `Forge operation ${OP}`, type: "workflow", statusText: "completed · selection partial: 1 of 3 steps selected", statusTone: "unknown" });
+    expect(node?.completeness).toBe("partial");
+    // The step node keeps its own outcome word and tone: neither the disposition, nor a selection facet, nor the verdict's tone reaches it.
+    const step = projection.query({ scope: SCOPE, ref: forgeGateStepRef(OP, "alpha"), limit: 1 }).nodes[0];
+    expect(step?.presentation).toStrictEqual({ title: "Forge gate step alpha", type: "sdk-operation", statusText: "passed", statusTone: "success" });
+    expect(step?.presentation).toStrictEqual(stepBefore?.presentation);
+    expect(step?.completeness).toBe(stepBefore?.completeness);
+    expect(projection.query({ scope: SCOPE, limit: 10 }).nodes.filter(entry => entry.presentation.statusText.includes("selection"))).toHaveLength(1);
+  });
+
+  it("wb-6ps1.2 (a): a gate-step node never carries the workspace verdict - a failed step stays failed under a complete success reply, and a passed step stays passed under a failure reply", async () => {
+    for (const [outcome, status, stepTone, operationTone] of [["failed", "success", "failure", "success"], ["passed", "error", "success", "failure"]] as const) {
+      const projection = new ObservationProjection();
+      const fake = fakeConnection();
+      const pending = observeForgeGateRun(fake.connection, deps(projection).deps);
+      fake.frame("operation.started", { operation_id: OP, request_id: "2" });
+      const observer = await pending;
+      fake.frame("gate.step_finished", { operation_id: OP, seq: 1, step: "beta", outcome, exit_code: outcome === "failed" ? 1 : 0 });
+      fake.reply(settledReply(status, MEASURED_FULL));
+      expect(await observer.settled).toBe("settled");
+      const step = projection.query({ scope: SCOPE, ref: forgeGateStepRef(OP, "beta"), limit: 1 }).nodes[0];
+      expect(step?.presentation, `${outcome}/${status}`).toStrictEqual({ title: "Forge gate step beta", type: "sdk-operation", statusText: outcome, statusTone: stepTone });
+      const node = projection.query({ scope: SCOPE, ref: target(), limit: 1 }).nodes[0];
+      expect(node?.presentation.statusTone, `${outcome}/${status}`).toBe(operationTone);
+      expect(node?.presentation.statusText, `${outcome}/${status}`).toBe("completed · selection complete: 3 of 3 steps selected");
+    }
+  });
+});
