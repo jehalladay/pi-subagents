@@ -586,6 +586,40 @@
       "storedPayload": "rf-output:sha256:7777777777777777777777777777777777777777777777777777777777777777",
       "samePayloadEntries": 2
      }
+    },
+    {
+     "id": "B8",
+     "witness": {
+      "payloadEqual": true,
+      "refreshed": [
+       "applied",
+       "applied"
+      ],
+      "identities": [
+       "rfo_aaaaaaaaaaaaaaaaaaaaaa",
+       "rfo_bbbbbbbbbbbbbbbbbbbbbb"
+      ],
+      "stored": 2,
+      "window": {
+       "rows": [
+        "rfo_aaaaaaaaaaaaaaaaaaaaaa",
+        "rfo_bbbbbbbbbbbbbbbbbbbbbb"
+       ],
+       "total": 2
+      },
+      "byScope": [
+       "rfo_aaaaaaaaaaaaaaaaaaaaaa",
+       "rfo_bbbbbbbbbbbbbbbbbbbbbb"
+      ],
+      "byInvocation": [
+       "rfo_aaaaaaaaaaaaaaaaaaaaaa",
+       "rfo_bbbbbbbbbbbbbbbbbbbbbb"
+      ],
+      "view": [
+       "rfo_aaaaaaaaaaaaaaaaaaaaaa",
+       "rfo_bbbbbbbbbbbbbbbbbbbbbb"
+      ]
+     }
     }
    ]
   },
@@ -629,7 +663,8 @@
        "tsx_runtime",
        "tsx_sdk"
       ],
-      "workKeys": 6
+      "workKeys": 6,
+      "anchoredSlices": 29
      }
     },
     {
