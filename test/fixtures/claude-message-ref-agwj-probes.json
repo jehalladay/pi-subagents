@@ -1,0 +1,786 @@
+[
+ {
+  "id": "GE5-LOGICAL-NESTED",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "logical",
+  "emitter": "Object.assign(emitNumbers.size < 0 || (emitNumbers.size >= 0 && Object.prototype), JSON.parse('{\"benign\":1}'));",
+  "note": "nested logical operands"
+ },
+ {
+  "id": "GE5-LOGICAL-ASSIGN-OR",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "logical",
+  "emitter": "let prototypeTarget: object | undefined; Object.assign((prototypeTarget ||= Object.prototype), JSON.parse('{\"benign\":1}'));",
+  "note": "logical-or assignment expression as the target"
+ },
+ {
+  "id": "GE5-LOGICAL-ASSIGN-NULLISH",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "logical",
+  "emitter": "let prototypeTarget: object | undefined; Object.assign((prototypeTarget ??= Object.prototype), JSON.parse('{\"benign\":1}'));",
+  "note": "nullish assignment expression as the target"
+ },
+ {
+  "id": "GE5-LOGICAL-ASSIGN-AND",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "logical",
+  "emitter": "let prototypeTarget: object = emitNumbers; Object.assign((prototypeTarget &&= Object.prototype), JSON.parse('{\"benign\":1}'));",
+  "note": "logical-and assignment expression as the target"
+ },
+ {
+  "id": "GE4-LOGICAL-NESTED",
+  "pin": "P4",
+  "expect": "refuse",
+  "rule": "logical",
+  "beforeDerive": "Object.assign(live && (snapshot || {}), JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "nested logical operands"
+ },
+ {
+  "id": "GE4-LOGICAL-ASSIGN-NULLISH",
+  "pin": "P4",
+  "expect": "explore",
+  "rule": "logical",
+  "beforeDerive": "let snapshotTarget: typeof snapshot | undefined; Object.assign((snapshotTarget ??= snapshot), JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "nullish assignment expression as the target"
+ },
+ {
+  "id": "GE5-ASSIGN-CHAIN",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "assign",
+  "emitter": "let first: object; let second: object; Object.assign((first = second = Object.prototype), JSON.parse('{\"benign\":1}'));",
+  "note": "chained assignment"
+ },
+ {
+  "id": "GE5-ASSIGN-MEMBER",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "assign",
+  "emitter": "const box: { target?: object } = {}; Object.assign((box.target = Object.prototype), JSON.parse('{\"benign\":1}'));",
+  "note": "member assignment expression"
+ },
+ {
+  "id": "GE4-ASSIGN-CHAIN",
+  "pin": "P4",
+  "expect": "refuse",
+  "rule": "assign",
+  "beforeDerive": "let first: object; let second: object; Object.assign((first = second = snapshot), JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "chained assignment"
+ },
+ {
+  "id": "GE5-ELEMENT-STRING-INDEX",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "array-element",
+  "emitter": "Object.assign([Object.prototype][\"0\"], JSON.parse('{\"benign\":1}'));",
+  "note": "string-literal index into an array literal"
+ },
+ {
+  "id": "GE5-ELEMENT-CONST-ARRAY",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "array-element",
+  "emitter": "const list = [Object.prototype]; Object.assign(list[0], JSON.parse('{\"benign\":1}'));",
+  "note": "numeric element of a const array alias"
+ },
+ {
+  "id": "GE5-ELEMENT-NESTED",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "array-element",
+  "emitter": "Object.assign([[Object.prototype]][0][0], JSON.parse('{\"benign\":1}'));",
+  "note": "nested numeric elements"
+ },
+ {
+  "id": "GE5-ELEMENT-AFTER-SPREAD",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "array-element",
+  "emitter": "Object.assign([...[emitNumbers], Object.prototype][1], JSON.parse('{\"benign\":1}'));",
+  "note": "element after an expanded literal spread"
+ },
+ {
+  "id": "GE5-ELEMENT-AT",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "array-element",
+  "emitter": "Object.assign([Object.prototype].at(0) ?? {}, JSON.parse('{\"benign\":1}'));",
+  "note": "Array.prototype.at on a literal"
+ },
+ {
+  "id": "GE4-ELEMENT-STRING-INDEX",
+  "pin": "P4",
+  "expect": "explore",
+  "rule": "array-element",
+  "beforeDerive": "Object.assign([snapshot][\"0\"], JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "string-literal index into an array literal"
+ },
+ {
+  "id": "GE4-ELEMENT-CONST-ARRAY",
+  "pin": "P4",
+  "expect": "refuse",
+  "rule": "array-element",
+  "beforeDerive": "const list = [snapshot]; Object.assign(list[0], JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "numeric element of a const array alias"
+ },
+ {
+  "id": "GE5-PROPERTY-SHORTHAND",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "object-property",
+  "emitter": "const target = Object.prototype; const holder = { target }; Object.assign(holder.target, JSON.parse('{\"benign\":1}'));",
+  "note": "shorthand property of a const object literal"
+ },
+ {
+  "id": "GE5-PROPERTY-COMPUTED",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "object-property",
+  "emitter": "const holder = { [\"target\"]: Object.prototype }; Object.assign(holder.target, JSON.parse('{\"benign\":1}'));",
+  "note": "computed literal key"
+ },
+ {
+  "id": "GE5-PROPERTY-ELEMENT-ACCESS",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "object-property",
+  "emitter": "const holder = { target: Object.prototype }; Object.assign(holder[\"target\"], JSON.parse('{\"benign\":1}'));",
+  "note": "element access with a literal key"
+ },
+ {
+  "id": "GE5-PROPERTY-NESTED",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "object-property",
+  "emitter": "const holder = { inner: { target: Object.prototype } }; Object.assign(holder.inner.target, JSON.parse('{\"benign\":1}'));",
+  "note": "nested object literal"
+ },
+ {
+  "id": "GE5-PROPERTY-SPREAD",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "object-property",
+  "emitter": "const holder = { ...{ target: Object.prototype } }; Object.assign(holder.target, JSON.parse('{\"benign\":1}'));",
+  "note": "property carried in through an object spread"
+ },
+ {
+  "id": "GE5-PROPERTY-INLINE",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "object-property",
+  "emitter": "Object.assign({ target: Object.prototype }.target, JSON.parse('{\"benign\":1}'));",
+  "note": "property of an inline object literal"
+ },
+ {
+  "id": "GE5-PROPERTY-GETTER",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "object-property",
+  "emitter": "const holder = { get target(): object { return Object.prototype; } }; Object.assign(holder.target, JSON.parse('{\"benign\":1}'));",
+  "note": "getter returning the prototype"
+ },
+ {
+  "id": "GE4-PROPERTY-SHORTHAND",
+  "pin": "P4",
+  "expect": "explore",
+  "rule": "object-property",
+  "beforeDerive": "const target = snapshot; const holder = { target }; Object.assign(holder.target, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "shorthand property of a const object literal"
+ },
+ {
+  "id": "GE4-PROPERTY-INLINE",
+  "pin": "P4",
+  "expect": "refuse",
+  "rule": "object-property",
+  "beforeDerive": "Object.assign({ target: snapshot }.target, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "property of an inline object literal"
+ },
+ {
+  "id": "GE5-DESTRUCT-NESTED",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "array-binding",
+  "emitter": "const [[prototypeTarget]] = [[Object.prototype]]; Object.assign(prototypeTarget, JSON.parse('{\"benign\":1}'));",
+  "note": "nested array-binding pattern"
+ },
+ {
+  "id": "GE5-DESTRUCT-HOLE",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "array-binding",
+  "emitter": "const [, prototypeTarget] = [emitNumbers, Object.prototype]; Object.assign(prototypeTarget, JSON.parse('{\"benign\":1}'));",
+  "note": "array-binding element after a hole"
+ },
+ {
+  "id": "GE5-DESTRUCT-REST",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "array-binding",
+  "emitter": "const [...rest] = [Object.prototype]; Object.assign(rest[0], JSON.parse('{\"benign\":1}'));",
+  "note": "rest element of an array-binding pattern"
+ },
+ {
+  "id": "GE5-DESTRUCT-OBJECT-IN-ARRAY",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "array-binding",
+  "emitter": "const [{ prototype: prototypeTarget }] = [Object]; Object.assign(prototypeTarget, JSON.parse('{\"benign\":1}'));",
+  "note": "object pattern nested in an array pattern"
+ },
+ {
+  "id": "GE5-DESTRUCT-DEFAULT",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "array-binding",
+  "emitter": "const [prototypeTarget = Object.prototype] = []; Object.assign(prototypeTarget, JSON.parse('{\"benign\":1}'));",
+  "note": "array-binding default"
+ },
+ {
+  "id": "GE5-DESTRUCT-LET-ASSIGN",
+  "pin": "P5",
+  "expect": "bound",
+  "rule": "array-binding",
+  "emitter": "let prototypeTarget: object = emitNumbers; [prototypeTarget] = [Object.prototype]; Object.assign(prototypeTarget, JSON.parse('{\"benign\":1}'));",
+  "note": "let destructuring assignment (a let alias, outside the bound)"
+ },
+ {
+  "id": "GE4-DESTRUCT-HOLE",
+  "pin": "P4",
+  "expect": "refuse",
+  "rule": "array-binding",
+  "beforeDerive": "const [, snapshotTarget] = [{}, snapshot]; Object.assign(snapshotTarget, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "array-binding element after a hole"
+ },
+ {
+  "id": "GE5-FOROF-CONST-ALIAS",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "for-of",
+  "emitter": "const list = [Object.prototype]; for (const prototypeTarget of list) Object.assign(prototypeTarget, JSON.parse('{\"benign\":1}'));",
+  "note": "for-of over a const array alias"
+ },
+ {
+  "id": "GE5-FOROF-DESTRUCT",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "for-of",
+  "emitter": "for (const [prototypeTarget] of [[Object.prototype]]) Object.assign(prototypeTarget, JSON.parse('{\"benign\":1}'));",
+  "note": "array pattern as the for-of variable"
+ },
+ {
+  "id": "GE5-FOROF-LET",
+  "pin": "P5",
+  "expect": "bound",
+  "rule": "for-of",
+  "emitter": "for (let prototypeTarget of [Object.prototype]) Object.assign(prototypeTarget, JSON.parse('{\"benign\":1}'));",
+  "note": "let for-of variable (outside the bound)"
+ },
+ {
+  "id": "GE5-FOROF-ENTRIES",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "for-of",
+  "emitter": "for (const [, prototypeTarget] of Object.entries({ held: Object.prototype })) Object.assign(prototypeTarget, JSON.parse('{\"benign\":1}'));",
+  "note": "for-of over Object.entries"
+ },
+ {
+  "id": "GE5-FOROF-ARRAY-OF",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "for-of",
+  "emitter": "for (const prototypeTarget of Array.of<object>(Object.prototype)) Object.assign(prototypeTarget, JSON.parse('{\"benign\":1}'));",
+  "note": "for-of over Array.of"
+ },
+ {
+  "id": "GE4-FOROF-CONST-ALIAS",
+  "pin": "P4",
+  "expect": "refuse",
+  "rule": "for-of",
+  "beforeDerive": "const list = [snapshot]; for (const snapshotTarget of list) Object.assign(snapshotTarget, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "for-of over a const array alias"
+ },
+ {
+  "id": "GE4-FOROF-ARRAY-OF",
+  "pin": "P4",
+  "expect": "explore",
+  "rule": "for-of",
+  "beforeDerive": "for (const snapshotTarget of Array.of(snapshot)) Object.assign(snapshotTarget, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "for-of over Array.of"
+ },
+ {
+  "id": "GE5-WRAP-NEW",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "object-wrap",
+  "emitter": "Object.assign(new Object(Object.prototype), JSON.parse('{\"benign\":1}'));",
+  "note": "new Object(x)"
+ },
+ {
+  "id": "GE5-WRAP-GLOBAL",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "object-wrap",
+  "emitter": "Object.assign(globalThis.Object(Object.prototype), JSON.parse('{\"benign\":1}'));",
+  "note": "Object(x) owned through globalThis"
+ },
+ {
+  "id": "GE5-WRAP-NESTED",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "object-wrap",
+  "emitter": "Object.assign(Object(Object(Object.prototype)), JSON.parse('{\"benign\":1}'));",
+  "note": "Object(Object(x))"
+ },
+ {
+  "id": "GE5-WRAP-CALL",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "object-wrap",
+  "emitter": "Object.assign(Object.call(undefined, Object.prototype), JSON.parse('{\"benign\":1}'));",
+  "note": "Object called through .call"
+ },
+ {
+  "id": "GE4-WRAP-NEW",
+  "pin": "P4",
+  "expect": "explore",
+  "rule": "object-wrap",
+  "beforeDerive": "Object.assign(new Object(snapshot), JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "new Object(x)"
+ },
+ {
+  "id": "GE4-DEFINEPROPERTIES-RETURN",
+  "pin": "P4",
+  "expect": "explore",
+  "rule": "defineproperty-return",
+  "beforeDerive": "Object.assign(Object.defineProperties(snapshot, {}), JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "the target Object.defineProperties returns"
+ },
+ {
+  "id": "GE4-SETPROTOTYPEOF-RETURN",
+  "pin": "P4",
+  "expect": "explore",
+  "rule": "defineproperty-return",
+  "beforeDerive": "Object.assign(Object.setPrototypeOf(snapshot, Object.prototype), JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "the target Object.setPrototypeOf returns"
+ },
+ {
+  "id": "GE4-SEAL-RETURN",
+  "pin": "P4",
+  "expect": "explore",
+  "rule": "defineproperty-return",
+  "beforeDerive": "Object.assign(Object.seal(snapshot), JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "the target Object.seal returns"
+ },
+ {
+  "id": "GE4-DEFINEPROPERTY-CHAIN",
+  "pin": "P4",
+  "expect": "refuse",
+  "rule": "defineproperty-return",
+  "beforeDerive": "Object.assign(Object.defineProperty(Object.defineProperty(snapshot, \"one\", { value: 1 }), \"two\", { value: 2 }), JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "nested defineProperty returns"
+ },
+ {
+  "id": "GE4-DEFINEPROPERTY-GLOBAL",
+  "pin": "P4",
+  "expect": "refuse",
+  "rule": "defineproperty-return",
+  "beforeDerive": "Object.assign(global.Object.defineProperty(snapshot, \"benign\", { value: 1 }), JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "defineProperty owned through global"
+ },
+ {
+  "id": "GE5-GLOBAL-WINDOW",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "global-owner",
+  "emitter": "window.Object.prototype.benign = 1;",
+  "note": "window as a global-object owner"
+ },
+ {
+  "id": "GE5-GLOBAL-SELF",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "global-owner",
+  "emitter": "self.Object.prototype.benign = 1;",
+  "note": "self as a global-object owner"
+ },
+ {
+  "id": "GE5-GLOBAL-ELEMENT",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "global-owner",
+  "emitter": "global[\"Object\"].prototype.benign = 1;",
+  "note": "global with a literal element key"
+ },
+ {
+  "id": "GE5-GLOBAL-REFLECT",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "global-owner",
+  "emitter": "global.Reflect.set(Object.prototype, \"benign\", 1);",
+  "note": "Reflect owned through global"
+ },
+ {
+  "id": "GE5-GLOBAL-NESTED",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "global-owner",
+  "emitter": "globalThis.global.Object.prototype.benign = 1;",
+  "note": "global reached through globalThis"
+ },
+ {
+  "id": "GE4-GLOBAL-WINDOW",
+  "pin": "P4",
+  "expect": "explore",
+  "rule": "global-owner",
+  "beforeDerive": "window.Object.assign(snapshot, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "window as a global-object owner"
+ },
+ {
+  "id": "GE5-APPLY-CALL",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "call-call",
+  "emitter": "Function.prototype.apply.call(Object.assign, Object, [Object.prototype, JSON.parse('{\"benign\":1}')]);",
+  "note": "apply reached through call"
+ },
+ {
+  "id": "GE5-CALL-APPLY",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "call-call",
+  "emitter": "Function.prototype.call.apply(Object.assign, [Object, Object.prototype, JSON.parse('{\"benign\":1}')]);",
+  "note": "call reached through apply"
+ },
+ {
+  "id": "GE5-CALL-CALL-CALL",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "call-call",
+  "emitter": "Function.prototype.call.call.call(Object.assign, Object, Object.prototype, JSON.parse('{\"benign\":1}'));",
+  "note": "call.call.call"
+ },
+ {
+  "id": "GE5-REFLECT-APPLY-CALL",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "call-call",
+  "emitter": "Reflect.apply(Function.prototype.call, Object.assign, [Object, Object.prototype, JSON.parse('{\"benign\":1}')]);",
+  "note": "Reflect.apply of Function.prototype.call"
+ },
+ {
+  "id": "GE5-BIND-CALL",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "call-call",
+  "emitter": "Function.prototype.call.bind(Object.assign)(Object, Object.prototype, JSON.parse('{\"benign\":1}'));",
+  "note": "call bound to the writer"
+ },
+ {
+  "id": "GE4-APPLY-CALL",
+  "pin": "P4",
+  "expect": "explore",
+  "rule": "call-call",
+  "beforeDerive": "Function.prototype.apply.call(Object.assign, Object, [snapshot, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}')]);",
+  "note": "apply reached through call"
+ },
+ {
+  "id": "GE4-CALL-CALL-ALIAS",
+  "pin": "P4",
+  "expect": "refuse",
+  "rule": "call-call",
+  "beforeDerive": "const invoke = Function.prototype.call; invoke.call(Object.assign, Object, snapshot, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "const alias of Function.prototype.call"
+ },
+ {
+  "id": "GE5-ARRAY-FROM-SPREAD",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "array-of",
+  "emitter": "Object.assign(...Array.from([Object.prototype, JSON.parse('{\"benign\":1}')]));",
+  "note": "spread of Array.from"
+ },
+ {
+  "id": "GE5-ARRAY-OF-CONST",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "array-of",
+  "emitter": "const list = Array.of<object>(Object.prototype, JSON.parse('{\"benign\":1}')); Object.assign(...list);",
+  "note": "spread of a const Array.of alias"
+ },
+ {
+  "id": "GE5-ARRAY-CALL-SPREAD",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "array-of",
+  "emitter": "Object.assign(...Array<object>(Object.prototype, JSON.parse('{\"benign\":1}')));",
+  "note": "spread of Array(...)"
+ },
+ {
+  "id": "GE5-ARRAY-OF-GLOBAL",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "array-of",
+  "emitter": "Object.assign(...globalThis.Array.of<object>(Object.prototype, JSON.parse('{\"benign\":1}')));",
+  "note": "Array.of owned through globalThis"
+ },
+ {
+  "id": "GE5-ARRAY-CONCAT-SPREAD",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "array-of",
+  "emitter": "Object.assign(...[Object.prototype].concat([JSON.parse('{\"benign\":1}')]));",
+  "note": "spread of a concat"
+ },
+ {
+  "id": "GE4-ARRAY-FROM-SPREAD",
+  "pin": "P4",
+  "expect": "explore",
+  "rule": "array-of",
+  "beforeDerive": "Object.assign(...Array.from([snapshot, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}')]));",
+  "note": "spread of Array.from"
+ },
+ {
+  "id": "GE5-DEFINE-SETTER-APPLY",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "accessor-call",
+  "emitter": "Object.prototype.__defineSetter__.apply(Object.prototype, [\"benign\", () => undefined]);",
+  "note": "__defineSetter__ through .apply"
+ },
+ {
+  "id": "GE5-DEFINE-GETTER-REFLECT-APPLY",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "accessor-call",
+  "emitter": "Reflect.apply(Object.prototype.__defineGetter__, Object.prototype, [\"benign\", () => 1]);",
+  "note": "__defineGetter__ through Reflect.apply"
+ },
+ {
+  "id": "GE5-DEFINE-GETTER-BIND",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "accessor-call",
+  "emitter": "Object.prototype.__defineGetter__.bind(Object.prototype)(\"benign\", () => 1);",
+  "note": "__defineGetter__ bound to the prototype"
+ },
+ {
+  "id": "GE5-DEFINE-GETTER-ALIAS-CALL",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "accessor-call",
+  "emitter": "const define = Object.prototype.__defineGetter__; define.call(Object.prototype, \"benign\", () => 1);",
+  "note": "const alias of __defineGetter__ through .call"
+ },
+ {
+  "id": "GE5-DEFINE-GETTER-DUNDER-CALL",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "accessor-call",
+  "emitter": "({}).__defineGetter__.call(({}).__proto__, \"benign\", () => 1);",
+  "note": "receiver spelled through __proto__"
+ },
+ {
+  "id": "GE5-ENTRIES-MAP",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "entries",
+  "emitter": "Object.assign(Object, Object.fromEntries(new Map([[\"prototype\", { benign: 1 }]])));",
+  "note": "fromEntries over a Map"
+ },
+ {
+  "id": "GE5-ENTRIES-CONST",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "entries",
+  "emitter": "const pairs = Object.entries({ prototype: { benign: 1 } }); Object.assign(Object, Object.fromEntries(pairs));",
+  "note": "const alias of the entries"
+ },
+ {
+  "id": "GE5-ENTRIES-MAPPED",
+  "pin": "P5",
+  "expect": "explore",
+  "rule": "entries",
+  "emitter": "Object.assign(Object, Object.fromEntries(Object.entries({ prototype: { benign: 1 } }).map(entry => entry)));",
+  "note": "entries mapped before fromEntries"
+ },
+ {
+  "id": "GE5-ENTRIES-COMPUTED-KEY",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "entries",
+  "emitter": "Object.assign(Object, Object.fromEntries(Object.entries({ [\"proto\" + \"type\"]: { benign: 1 } })));",
+  "note": "computed folded key"
+ },
+ {
+  "id": "GE5-ENTRIES-DEFINEPROPERTIES",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "entries",
+  "emitter": "Object.defineProperties(Object, Object.fromEntries(Object.entries({ prototype: { value: {} } })));",
+  "note": "defineProperties over fromEntries"
+ },
+ {
+  "id": "GE5-COMBO-LOGICAL-ELEMENT",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "combo",
+  "emitter": "Object.assign((emitNumbers.size < 0 && emitNumbers) || [Object.prototype][0], JSON.parse('{\"benign\":1}'));",
+  "note": "logical operand holding an array element"
+ },
+ {
+  "id": "GE5-COMBO-PROPERTY-WRAP",
+  "pin": "P5",
+  "expect": "refuse",
+  "rule": "combo",
+  "emitter": "const holder = { target: Object(Object.prototype) }; Object.assign(holder.target, JSON.parse('{\"benign\":1}'));",
+  "note": "object property holding Object(x)"
+ },
+ {
+  "id": "GE4-COMBO-FOROF-PROPERTY",
+  "pin": "P4",
+  "expect": "refuse",
+  "rule": "combo",
+  "beforeDerive": "for (const holder of [{ target: snapshot }]) Object.assign(holder.target, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "for-of variable's property"
+ },
+ {
+  "id": "GE4-COMBO-DESTRUCT-WRAP",
+  "pin": "P4",
+  "expect": "refuse",
+  "rule": "combo",
+  "beforeDerive": "const [snapshotTarget] = [Object(snapshot)]; Object.assign(snapshotTarget, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "array binding of Object(x)"
+ },
+ {
+  "id": "GEQ5-ELEMENT-OUT-OF-RANGE",
+  "pin": "P5",
+  "expect": "quiet",
+  "rule": "array-element",
+  "emitter": "Object.assign([emitNumbers][1] ?? {}, JSON.parse('{\"benign\":1}'));",
+  "note": "an absent element of a literal"
+ },
+ {
+  "id": "GEQ5-PROPERTY-OTHER-KEY",
+  "pin": "P5",
+  "expect": "quiet",
+  "rule": "object-property",
+  "emitter": "const holder = { target: emitNumbers, prototype: emitNumbers }; Object.assign(holder.target, JSON.parse('{\"benign\":1}'));",
+  "note": "a property keyed prototype beside the written one"
+ },
+ {
+  "id": "GEQ5-LOGICAL-READ",
+  "pin": "P5",
+  "expect": "quiet",
+  "rule": "logical",
+  "emitter": "const seen = Object.prototype || {}; void Object.keys(seen);",
+  "note": "the prototype read through a logical operand"
+ },
+ {
+  "id": "GEQ5-FOROF-READ",
+  "pin": "P5",
+  "expect": "quiet",
+  "rule": "for-of",
+  "emitter": "for (const prototypeTarget of [Object.prototype]) void Object.keys(prototypeTarget);",
+  "note": "a for-of variable over the prototype, only read"
+ },
+ {
+  "id": "GEQ5-WRAP-READ",
+  "pin": "P5",
+  "expect": "quiet",
+  "rule": "object-wrap",
+  "emitter": "void Object.keys(Object(Object.prototype));",
+  "note": "Object(x) of the prototype, only read"
+ },
+ {
+  "id": "GEQ5-DEFINEPROPERTY-FRESH",
+  "pin": "P5",
+  "expect": "quiet",
+  "rule": "defineproperty-return",
+  "emitter": "Object.assign(Object.defineProperty({}, \"benign\", { value: 1 }), JSON.parse('{\"benign\":1}'));",
+  "note": "a fresh target defineProperty returns"
+ },
+ {
+  "id": "GEQ5-GLOBAL-READ",
+  "pin": "P5",
+  "expect": "quiet",
+  "rule": "global-owner",
+  "emitter": "void global.Object.prototype.toString;",
+  "note": "the prototype spelled through global, only read"
+ },
+ {
+  "id": "GEQ5-ARRAY-OF-READ",
+  "pin": "P5",
+  "expect": "quiet",
+  "rule": "array-of",
+  "emitter": "void Array.of<object>(Object.prototype).length;",
+  "note": "Array.of holding the prototype, only read"
+ },
+ {
+  "id": "GEQ5-CALL-CALL-COPY",
+  "pin": "P5",
+  "expect": "quiet",
+  "rule": "call-call",
+  "emitter": "Function.prototype.call.call(Object.assign, Object, {}, Object.prototype);",
+  "note": "call.call copying the prototype into a fresh target"
+ },
+ {
+  "id": "GEQ5-ENTRIES-READ",
+  "pin": "P5",
+  "expect": "quiet",
+  "rule": "entries",
+  "emitter": "void Object.fromEntries(Object.entries({ prototype: { benign: 1 } }));",
+  "note": "fromEntries over a prototype-keyed literal, not assigned"
+ },
+ {
+  "id": "GEQ5-ACCESSOR-CALL-FRESH",
+  "pin": "P5",
+  "expect": "quiet",
+  "rule": "accessor-call",
+  "emitter": "Object.prototype.__defineGetter__.call({}, \"benign\", () => 1);",
+  "note": "__defineGetter__ through .call on a fresh receiver"
+ },
+ {
+  "id": "GEQ4-LOGICAL-READ",
+  "pin": "P4",
+  "expect": "quiet",
+  "rule": "logical",
+  "beforeDerive": "const seen = snapshot || {}; void Object.keys(seen);",
+  "note": "snapshot read through a logical operand"
+ },
+ {
+  "id": "GEQ4-WRAP-SOURCE",
+  "pin": "P4",
+  "expect": "quiet",
+  "rule": "object-wrap",
+  "beforeDerive": "Object.assign(Object({}), snapshot);",
+  "note": "snapshot as a source into a wrapped fresh target"
+ },
+ {
+  "id": "GEQ4-DEFINEPROPERTY-READ",
+  "pin": "P4",
+  "expect": "quiet",
+  "rule": "defineproperty-return",
+  "beforeDerive": "void Object.defineProperty({}, \"copy\", { value: snapshot.lastMessageId });",
+  "note": "snapshot read into a fresh defineProperty"
+ },
+ {
+  "id": "GEQ4-FOROF-COPY",
+  "pin": "P4",
+  "expect": "quiet",
+  "rule": "for-of",
+  "beforeDerive": "for (const snapshotTarget of [snapshot]) Object.assign({}, snapshotTarget, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+  "note": "a for-of variable over snapshot as a source"
+ },
+ {
+  "id": "GEQ4-ASSIGN-READ",
+  "pin": "P4",
+  "expect": "quiet",
+  "rule": "assign",
+  "beforeDerive": "let seen: object; void Object.keys((seen = snapshot));",
+  "note": "an assignment expression of snapshot, only read"
+ }
+]
