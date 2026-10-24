@@ -37,7 +37,10 @@
  * whose value is the field, or a ref `<kind>:<field>`), no entry carries two fields, and once those entries are removed the rest is
  * byte-identical to today's projection of the carrier - so a default for an absent field reads changed whatever literal it holds.
  *  A, the trigger. A1 no package.json dependency and no src file (bytes, comments included) spells the RI module root in any
- *    spelling, with a floor, an anchor and controls; A2 the rf roster stays the preview alone (native and injected registrations,
+ *    spelling, and no src file spells a field of the native result as a reader writes it - model revision or sampling policy as
+ *    one identifier (joined or with one underscore, dot or dash) or native_evidence (wb-3xmr F3: the wb-tz4r.3 gate's G13, a src
+ *    module reading resources[0].model_revision behind a default and spelling no root, stayed green) - with a floor, an anchor
+ *    and controls; A2 the rf roster stays the preview alone (native and injected registrations,
  *    RECONCILE_EVIDENCE_READS.reactivefiber), the only path an RI result could arrive by; A3 the gating envelope is measured
  *    unshipped: the roster's producer facts, the bead row's "Shipped: no" sentence and its gating artifacts.
  *  B, acceptance (a). B1 the adoption fixture; B2 both seams carry each placed variant byte for byte (one spawn of the --no-commit
@@ -55,20 +58,41 @@
  *    primitive the carrier states, at the adoption's slot on both surfaces; D2 the absent sampling policy likewise, with every
  *    object the carrier states; D3 a default anywhere else and every verbatim rewrite or merge are refused; D4 the quiet controls
  *    and the residuals' quiet rows.
- * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row, every pin's witness, the
- * constants, the carrier, the native result, the placements, the probes, the registered test titles and each pin's assertion
- * count are held to the out-of-file roster (test/fixtures/ri-decision-provenance-echo-roster.json). OUTSIDE ANCHOR: the owner
- * filing's row in the tracked bead export (.beads/issues.jsonl, row wb-tz4r.3): each acceptance clause is exactly one row label,
- * the trigger sits in row A's, and the quote pin, the quote and the gating artifacts are in its notes.
+ * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (each pin with its quote),
+ * every pin's witness, the constants, the carrier, the native result, the placements, the probes, the registered test titles and
+ * each pin's assertion count are held to the out-of-file roster (test/fixtures/ri-decision-provenance-echo-roster.json). OUTSIDE
+ * ANCHOR: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-tz4r.3): each acceptance clause is
+ * exactly one row label, the trigger sits in row A's, and the quote pin, the quote and the gating artifacts are in its notes.
+ * PIN ANCHOR (wb-3xmr F1): each row's pin quotes, in pin order, tile its owner text with separator-only gaps (the wb-if7q.2 and
+ * wb-z3ft.2 form) - row A's the title's condition (after its tag, up to the parenthesis that closes before ", Pi shall"), rows
+ * B-D's their clauses - so a pin removed from ROWS, the frozen literal, IMPL and the roster together leaves its part of the
+ * owner's words untiled and the judged set reds (the wb-tz4r.3 gate's G1, D3 removed so, stayed 17/17 on the first cut); the
+ * judged set also drops each quote in turn and finds its row untiled.
+ * SELF-READ (wb-3xmr F2): the judged set parses this file's source (the TypeScript AST). Outside the describe block, whose cases
+ * compare the witnesses: every IMPL case names one of READERS; rosterWitness, MEASURED and REACHED are named only where declared,
+ * ROSTER_PATH only in readRoster and readRoster only for ROSTER; a roster pin's witness member is read only in readRoster and
+ * rosterWitness; and ROSTER is read only through its subject members (its rows only in rosterWitness). So a case that hands back
+ * its own roster witness through any of those names reds, whether directly (the wb-tz4r.3 gate's G3 and G3b, which kept their
+ * pinned assertion counts and stayed 18/18), through a helper or after measuring; four planted cases pin each refusal. A case that
+ * reaches it without naming them is R-UNMEASURED.
  * RECORDS: the last case walks this file's registered tests: each roster title once, in order, in run mode, not inverted, ran;
- * every pin's witness again; every pin reached its end with its pinned assertion count.
+ * every pin's witness again, no two pins sharing one (so a case moved under another pin's id, its roster witness rewritten to
+ * match, reds); every pin reached its end with its pinned assertion count.
  * NOT CLAIMED: the three placements, the probe lists and the reference adoption's kinds and member names are this fixture's
  * choices (no producer placement, default or slot exists), so a placement or probe removed from the roster and from every
  * witness together is anchored by nothing outside these two files; the four fields are anchored (the quote's words, clause (a)).
- * RESIDUALS (named families, each with a pinned quiet row in D4): R-COINCIDENT a "default" that restates the value today's
- * projection already holds at that path is no change and reads quiet; R-KIND the judge binds a field to its value, never to a
- * ref kind or member name (those are the adopter's to choose), so two fields filed under each other's kinds read quiet; R-ORDER
- * where an adopted entry sits among the refs is not pinned.
+ * RESIDUALS (named families, each with a pinned quiet row: D4's for the first five, A1's for R-READ-SITE): R-COINCIDENT a
+ * "default" that restates the value today's projection already holds at that path is no change and reads quiet; R-KIND the
+ * judge binds a field to its value, never to a ref kind or member name (those are the adopter's to choose), so two fields filed
+ * under each other's kinds read quiet; R-ORDER where an adopted entry sits among the refs is not pinned; R-REBIND a pin removed
+ * from every literal while a neighbour's quote is widened over its part tiles the owner text again - the anchor reads that every
+ * word has a pin, not which pin proves it (D4: D3 dropped and D4's quote widened over D3's part, clause (c) reads tiled);
+ * R-UNMEASURED a case that names a reader yet hands back a value it did not measure - a literal standing in for its witness, or a
+ * witness reached, in the case or a helper it calls, without naming its member (the roster file parsed afresh and read by
+ * position, a member name composed at run time) - is beyond the SELF-READ (D4: a planted constant case naming BASE reads clean); R-READ-SITE a src reader that reaches a
+ * native result only through spellings A1 does not read - the endpoint key (src spells the word for graph edges), the fields in
+ * spaced prose, Pi's own native-evidence spellings, a computed key - and feeds neither projection is invisible to row A (A1: an
+ * endpoint-only reader, prose naming the model revision and Pi's own nativeEvidence import read quiet).
  * SCOPE: the RI facts are read at their pins and Pi vendors no RI source, so a producer change is seen only when a re-probe re-reads
  * them; when RI ships the envelope (RI-DEC-06/08) and rf surfaces it, the adopter's projection replaces the reference adoption and
  * B4 reds by its findings alone, the cue to re-cut this census to the shipped shape. No reader is added or faked here.
@@ -79,6 +103,7 @@ import { createHash } from "node:crypto";
 import { chmodSync, type Dirent, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
 import { CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import { nativeEvidence } from "../src/workbench/native-evidence.js";
@@ -100,6 +125,8 @@ type Path = readonly (string | number)[];
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
 const ROSTER_PATH = join(HERE, "fixtures", "ri-decision-provenance-echo-roster.json");
+/** This file's own source text, read for the SELF-READ. */
+const SELF_TEXT = readFileSync(fileURLToPath(import.meta.url), "utf8");
 const EXPORT_PATH = join(REPO, ".beads", "issues.jsonl");
 const ROOT = process.cwd();
 const BEAD = "wb-tz4r.3";
@@ -131,6 +158,13 @@ const MEMBER: Readonly<Record<Field, string>> = {
 };
 /** The RI module root in any spelling a consumer would write: joined, separated, or spaced. */
 const RI_ROOT = /reactive[\s_.-]?inference/i;
+/**
+ * The native result's fields as a src reader would write them (wb-3xmr F3): model revision and sampling policy as one identifier,
+ * joined or with one underscore, dot or dash (prose with a space is not read), and native evidence as native_evidence only (its
+ * spaced, dashed and camel forms are Pi's own: native-evidence.ts and nativeEvidence()). endpoint is not read: src spells it for
+ * graph edges (R-READ-SITE).
+ */
+const FIELD_SPELLINGS: readonly RegExp[] = [/model[_.-]?revision/i, /sampling[_.-]?policy/i, /native_evidence/i];
 /** A bare ref kind: what may precede a verbatim field value in an evidence ref. */
 const REF_PREFIX = /^[a-z][a-z0-9-]*:$/;
 const SEAMS = ["rf-cli", "injected-fixture"] as const;
@@ -138,33 +172,63 @@ type Seam = (typeof SEAMS)[number];
 const JUDGED_TITLE = "the judged set: the frozen shape, the out-of-file roster, the bead export's acceptance clauses and the cases agree";
 const RECORD_TITLE = "the record: every registered test is in run mode and ran, and every pin reached its end with its pinned assertion count";
 
+interface Pin {
+  readonly id: string;
+  /** The part of its row's owner text this pin proves: row A's the title's condition, rows B-D's their acceptance clauses. */
+  readonly quote: string;
+}
 interface Row {
   readonly id: string;
   readonly label: string;
-  readonly pins: readonly string[];
+  readonly pins: readonly Pin[];
 }
 
-/** The judged rows; their shape is pinned below and held to the roster and to the bead export. */
+/**
+ * The judged rows; their shape is pinned below and held to the roster and to the bead export. Each pin's quote is the part of its
+ * row's owner text it proves; in pin order the quotes tile that text with separator-only gaps (the PIN ANCHOR). B5, the landed
+ * wb-2j3.1 carrier, owns "when present" (C4 is its absent twin); D3 owns "to any literal", carrying the default to every other
+ * slot and form; D4 owns "fails", since a refusal reads as one only beside the quiet twins D4 pins.
+ */
 const ROWS: readonly Row[] = [
   {
     id: "A",
-    label: `(trigger, absent today) ${TRIGGER}: no package.json dependency, src file or rf roster entry reads a ReactiveInference native result, and its gating envelope (RI-DEC-06/08) is measured unshipped at the pin and at the probe`,
-    pins: ["A1", "A2", "A3"],
+    label: `(trigger, absent today) ${TRIGGER}: no package.json dependency or src file spells the ReactiveInference module root, no src file spells model revision or sampling policy as one identifier (joined or with one underscore, dot or dash) or native_evidence, the rf roster is the preview alone, and its gating envelope (RI-DEC-06/08) is measured unshipped at the pin and at the probe`,
+    pins: [
+      { id: "A1", quote: "If Pi ever echoes a native decision result" },
+      { id: "A2", quote: "(gated: RI native decision envelope" },
+      { id: "A3", quote: "carrying endpoint/model revision, sampling policy and native evidence, RI-DEC-06/08; unshipped at 485f3615db1e)" },
+    ],
   },
   {
     id: "B",
     label: "(a) adoption fixture: endpoint/model revision, sampling policy and native evidence travel verbatim as distinct evidence refs/metadata when present",
-    pins: ["B1", "B2", "B3", "B4", "B5"],
+    pins: [
+      { id: "B1", quote: "adoption fixture: endpoint/model revision, sampling policy and native evidence" },
+      { id: "B2", quote: "travel verbatim" },
+      { id: "B3", quote: "as distinct" },
+      { id: "B4", quote: "evidence refs/metadata" },
+      { id: "B5", quote: "when present" },
+    ],
   },
   {
     id: "C",
     label: "(b) absent-field fixture: projection byte-identical to today's, no carrier default substitutes (wb-2j3.2 pattern)",
-    pins: ["C1", "C2", "C3", "C4"],
+    pins: [
+      { id: "C1", quote: "absent-field fixture" },
+      { id: "C2", quote: "projection byte-identical to today's" },
+      { id: "C3", quote: "no carrier default substitutes" },
+      { id: "C4", quote: "(wb-2j3.2 pattern)" },
+    ],
   },
   {
     id: "D",
     label: "(c) mutant: defaulting an absent model revision (or policy) to any literal fails",
-    pins: ["D1", "D2", "D3", "D4"],
+    pins: [
+      { id: "D1", quote: "mutant: defaulting an absent model revision" },
+      { id: "D2", quote: "(or policy)" },
+      { id: "D3", quote: "to any literal" },
+      { id: "D4", quote: "fails" },
+    ],
   },
 ];
 
@@ -180,6 +244,7 @@ interface Envelope {
 }
 interface RosterPin {
   readonly id: string;
+  readonly quote: string;
   readonly witness: JsonValue;
 }
 interface RosterRow {
@@ -266,8 +331,10 @@ function readRoster(): Roster {
       throw new Error(`roster rows[${index}] needs an id, a label and a pins list`);
     }
     const pins = row.pins.map((pin: unknown, at: number): RosterPin => {
-      if (!isObject(pin) || typeof pin.id !== "string" || !Object.hasOwn(pin, "witness")) throw new Error(`roster rows[${index}].pins[${at}] needs an id and a witness`);
-      return { id: pin.id, witness: json(pin.witness) };
+      if (!isObject(pin) || typeof pin.id !== "string" || typeof pin.quote !== "string" || !Object.hasOwn(pin, "witness")) {
+        throw new Error(`roster rows[${index}].pins[${at}] needs an id, a quote and a witness`);
+      }
+      return { id: pin.id, quote: pin.quote, witness: json(pin.witness) };
     });
     return { id: row.id, label: row.label, pins };
   });
@@ -336,6 +403,31 @@ function acceptanceClauses(notes: string): Record<string, string> {
     clauses[mark[1] ?? ""] = body.slice(start, end).trim().replace(/[;.]$/, "");
   });
   return clauses;
+}
+/** The title's condition: after its program tag, up to the parenthesis that closes before ", Pi shall". */
+function conditionOf(title: string): string {
+  return /^\[[^\]]+\] (If .+?\)), Pi shall /.exec(title)?.[1] ?? "";
+}
+/** A row's owner text: an acceptance row's clause (its label's letter), the trigger row's the title's condition. */
+function ownerTextOf(row: Row, title: string, clauses: Readonly<Record<string, string>>): string {
+  const letter = /^\(([a-d])\) /.exec(row.label)?.[1];
+  return letter === undefined ? conditionOf(title) : (clauses[letter] ?? "");
+}
+/** A gap between two quotes that names nothing: separators and at most one joining or/and (the wb-if7q.2 and wb-z3ft.2 form). */
+const SEPARATOR = /^[\s,;:]*(?:(?:or|and)[\s,;:]+)?$/;
+/** Whether the quotes, in order, tile the text: each found after the previous one, every gap a separator; the gaps that are not. */
+function tiles(body: string, quotes: readonly string[]): { covered: boolean; untiled: string[] } {
+  let at = 0;
+  const gaps: string[] = [];
+  for (const quote of quotes) {
+    const found = body.indexOf(quote, at);
+    if (found < 0) return { covered: false, untiled: [...gaps.filter(gap => !SEPARATOR.test(gap)), `<missing ${quote}>`] };
+    gaps.push(body.slice(at, found));
+    at = found + quote.length;
+  }
+  gaps.push(body.slice(at));
+  const untiled = gaps.filter(gap => !SEPARATOR.test(gap));
+  return { covered: untiled.length === 0, untiled };
 }
 
 /** A field's verbatim token: a string field is itself, a structured one its JSON text as the producer serialized it. */
@@ -734,6 +826,98 @@ function nativeDescriptorIds(): Promise<string[]> {
   return nativeIds;
 }
 
+/**
+ * The functions and constants a case reads its subject through: the src tree and package.json, the registrations, the tracked
+ * export, a seam, today's projections and the default sweeps over them (SELF-READ: every IMPL case names at least one).
+ */
+const READERS: readonly string[] = ["filesBelow", "dependencyNames", "registerReactiveFiberRender", "nativeDescriptorIds", "exportRow", "carriedVerbatim", "projections", "BASE", "probeTable", "sweep"];
+/** The roster members read outside the describe block: the subject the cases measure. Its rows (pins, quotes, witnesses) only in rosterWitness. */
+const SUBJECT_MEMBERS: readonly string[] = ["carrier", "native", "placements", "producer", "rfVersion", "revisionProbes", "policyProbes"];
+/** Names that outside the describe block occur only at their declarations, or inside the declarations listed beside them. */
+const CONFINED: readonly { readonly name: string; readonly within: readonly string[] }[] = [
+  { name: "rosterWitness", within: [] },
+  { name: "MEASURED", within: [] },
+  { name: "REACHED", within: [] },
+  { name: "ROSTER_PATH", within: ["readRoster"] },
+  { name: "readRoster", within: ["ROSTER"] },
+];
+/** The declarations outside the describe block that may read a roster pin's witness member. */
+const WITNESS_READERS: readonly string[] = ["readRoster", "rosterWitness"];
+const WITNESS_MEMBER = "witness";
+/** R-UNMEASURED's quiet row: a case that names a reader and returns a literal standing in for its roster witness. */
+const UNMEASURED_CASE = 'const IMPL = {\n  D3: async () => {\n    expect(BASE).toBeDefined();\n    return { pasted: "a literal equal to the roster witness" };\n  },\n};\n';
+
+/** Whether an identifier is the name its own declaration binds (a function, a variable). */
+function declares(node: ts.Identifier): boolean {
+  const parent = node.parent;
+  return (ts.isFunctionDeclaration(parent) || ts.isVariableDeclaration(parent)) && parent.name === node;
+}
+/** Whether a node reads a witness member: `x.witness`, `x["witness"]` or a `witness` binding. */
+function readsWitness(node: ts.Node): boolean {
+  if (ts.isPropertyAccessExpression(node)) return node.name.text === WITNESS_MEMBER;
+  if (ts.isElementAccessExpression(node)) return ts.isStringLiteralLike(node.argumentExpression) && node.argumentExpression.text === WITNESS_MEMBER;
+  if (ts.isBindingElement(node)) return [node.propertyName, node.name].some(name => name !== undefined && ts.isIdentifier(name) && name.text === WITNESS_MEMBER);
+  return false;
+}
+/** The names a top-level statement declares, joined (its owner in the findings). */
+function ownerOf(statement: ts.Statement): string {
+  if (ts.isFunctionDeclaration(statement)) return statement.name?.text ?? "<function>";
+  if (ts.isVariableStatement(statement)) return statement.declarationList.declarations.map(entry => (ts.isIdentifier(entry.name) ? entry.name.text : "<binding>")).join(",");
+  return "<statement>";
+}
+/** The reads one declaration's subtree makes that the SELF-READ refuses. */
+function refusedReads(owner: string, root: ts.Node): string[] {
+  const found: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && !declares(node)) {
+      const confined = CONFINED.find(entry => entry.name === node.text);
+      if (confined !== undefined && !confined.within.includes(owner)) found.push(`${owner} names ${node.text}`);
+      if (node.text === "ROSTER") {
+        const parent = node.parent;
+        const member = ts.isPropertyAccessExpression(parent) && parent.expression === node ? parent.name.text : undefined;
+        const allowed = member !== undefined && (SUBJECT_MEMBERS.includes(member) || (owner === "rosterWitness" && member === "rows"));
+        if (!allowed) found.push(`${owner} reads ROSTER${member === undefined ? "" : `.${member}`}`);
+      }
+    }
+    if (readsWitness(node) && !WITNESS_READERS.includes(owner)) found.push(`${owner} reads a ${WITNESS_MEMBER}`);
+    ts.forEachChild(node, visit);
+  };
+  visit(root);
+  return found;
+}
+/**
+ * THE SELF-READ (wb-3xmr F2) over a source text, this file's or a planted one. Outside the describe block (whose cases compare the
+ * witnesses): every IMPL case names one of READERS; rosterWitness, MEASURED and REACHED are named only where declared, ROSTER_PATH
+ * only in readRoster and readRoster only for ROSTER; a witness member is read only in readRoster and rosterWitness; and ROSTER is read
+ * only through SUBJECT_MEMBERS (its rows in rosterWitness alone). Returns the refused reads, by declaration (an IMPL case as IMPL.<pin>).
+ */
+function selfRead(text: string): string[] {
+  const file = ts.createSourceFile("self-read.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const found: string[] = [];
+  for (const statement of file.statements) {
+    if (ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement) || ts.isImportDeclaration(statement)) continue;
+    const call = ts.isExpressionStatement(statement) && ts.isCallExpression(statement.expression) ? statement.expression : undefined;
+    if (call !== undefined && ts.isIdentifier(call.expression) && call.expression.text === "describe") continue;
+    const impl = ts.isVariableStatement(statement) ? statement.declarationList.declarations.find(entry => ts.isIdentifier(entry.name) && entry.name.text === "IMPL") : undefined;
+    if (impl?.initializer === undefined || !ts.isObjectLiteralExpression(impl.initializer)) {
+      found.push(...refusedReads(ownerOf(statement), statement));
+      continue;
+    }
+    for (const property of impl.initializer.properties) {
+      const pin = property.name !== undefined && (ts.isIdentifier(property.name) || ts.isStringLiteral(property.name)) ? property.name.text : "<entry>";
+      const named = new Set<string>();
+      const collect = (node: ts.Node): void => {
+        if (ts.isIdentifier(node)) named.add(node.text);
+        ts.forEachChild(node, collect);
+      };
+      collect(property);
+      if (!READERS.some(reader => named.has(reader))) found.push(`IMPL.${pin} names no reader`);
+      found.push(...refusedReads(`IMPL.${pin}`, property));
+    }
+  }
+  return found;
+}
+
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
@@ -748,6 +932,20 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(anchorRead, "the anchor reactivefiber-observer.ts was not read with result.provenance.sdk_versions").toBe(true);
     const dependencyHits = dependencies.filter(name => RI_ROOT.test(name));
     expect({ dependencyHits, sites }, "a ReactiveInference consumer in Pi needs RI-DEC-06/08").toStrictEqual({ dependencyHits: [], sites: [] });
+    // The read site the wb-tz4r.3 gate's G13 planted (resources[0].model_revision behind a default, no RI root, read by neither
+    // projection) spells a field of the native result as a reader writes it (wb-3xmr F3).
+    const fieldRead = (text: string): boolean => FIELD_SPELLINGS.some(pattern => pattern.test(text));
+    const fieldSites = files.filter(file => fieldRead(textOf(file))).map(file => relative(REPO, file));
+    expect(fieldSites, "a src read site of a native result field needs RI-DEC-06/08").toStrictEqual([]);
+    const fieldControls = {
+      snake: fieldRead('return reading.source.result.resources?.[0]?.model_revision ?? "unknown";'),
+      camel: fieldRead("const policy = native.samplingPolicy;"),
+      evidence: fieldRead("const evidence = native.native_evidence;"),
+      quietProse: fieldRead("// carries the model revision verbatim"),
+      quietOwnEvidence: fieldRead('import { nativeEvidence } from "./native-evidence.js";'),
+      quietEndpoint: fieldRead('const endpoint = reading.source.result.resources?.[0]?.endpoint ?? "unknown";'),
+    };
+    expect(fieldControls).toStrictEqual({ snake: true, camel: true, evidence: true, quietProse: false, quietOwnEvidence: false, quietEndpoint: false });
     const flagged = (text: string): boolean => RI_ROOT.test(text);
     const controls = {
       joined: flagged('import { plan } from "reactive_inference";'),
@@ -757,7 +955,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       spaced: flagged("// reads reactive inference results"),
       quiet: flagged("const lens = reactiveLens(inference);"),
     };
-    return { floorMet, anchorRead, dependencyCount: dependencies.length, dependencyHits, sites, controls };
+    return { floorMet, anchorRead, dependencyCount: dependencies.length, dependencyHits, sites, controls, fieldSites, fieldControls };
   },
   A2: async () => {
     const injected = new CapabilityRegistry();
@@ -1014,14 +1212,23 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     }
     const revision = String(all.model_revision);
     const endpoint = String(all.endpoint);
+    // R-REBIND: D3 dropped and D4's quote widened over D3's part tiles clause (c) again (the anchor reads every word has a pin).
+    const rowD = ROWS.find(row => row.id === "D")?.pins ?? [];
+    const quoteOf = (pin: string): string => rowD.find(entry => entry.id === pin)?.quote ?? "";
+    const clause = acceptanceClauses(exportRow().notes).c ?? "";
+    const from = clause.indexOf(quoteOf("D3"));
+    const widened = clause.slice(from, clause.indexOf(quoteOf("D4"), from) + quoteOf("D4").length);
+    const rebind = rowD.filter(pin => pin.id !== "D3").map(pin => (pin.id === "D4" ? widened : pin.quote));
     const residuals = {
       "R-COINCIDENT": judge(BASE["rf-cli"], all, withSnapshot(adopt("rf-cli", all), "sourceVersion", current => current ?? null)),
       "R-KIND": judge(BASE["rf-cli"], all, mapRefs(adopt("rf-cli", all), refs => refs.map(ref => (ref === `${REF_KIND.endpoint}:${endpoint}` ? `${REF_KIND.model_revision}:${endpoint}` : ref === `${REF_KIND.model_revision}:${revision}` ? `${REF_KIND.endpoint}:${revision}` : ref)))),
       "R-ORDER": judge(BASE["rf-cli"], all, mapRefs(adopt("rf-cli", all), refs => [...refs.slice(-FIELDS.length), ...refs.slice(0, -FIELDS.length)])),
+      "R-REBIND": tiles(clause, rebind).untiled,
+      "R-UNMEASURED": selfRead(UNMEASURED_CASE),
     };
     expect(Object.values(quiet).every(found => JSON.stringify(found) === "[]")).toBe(true);
-    expect(residuals).toStrictEqual({ "R-COINCIDENT": [], "R-KIND": [], "R-ORDER": [] });
-    return { quiet, residuals };
+    expect(residuals).toStrictEqual({ "R-COINCIDENT": [], "R-KIND": [], "R-ORDER": [], "R-REBIND": [], "R-UNMEASURED": [] });
+    return { quiet, residuals, rebind };
   },
 };
 
@@ -1033,10 +1240,10 @@ const REACHED: string[] = [];
 describe("wb-tz4r.3 RI native result provenance echo census (RI-UNIFIED-DECISION-INFERENCE-R3, absent-today leg)", () => {
   it(JUDGED_TITLE, () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:5", "C:4", "D:4"]);
-    expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
-      ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
+    expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => ({ id: pin.id, quote: pin.quote })) }))).toStrictEqual(
+      ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => ({ id: pin.id, quote: pin.quote })) })),
     );
-    expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
+    expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins.map(pin => pin.id)).sort());
     expect({
       bead: BEAD, quotePin: QUOTE_PIN, quote: QUOTE, gatingArtifacts: GATING_ARTIFACTS, fields: FIELDS, refKinds: REF_KIND, members: MEMBER, invocation: INVOCATION,
     }).toStrictEqual({
@@ -1060,11 +1267,33 @@ describe("wb-tz4r.3 RI native result provenance echo census (RI-UNIFIED-DECISION
     const inQuote = words.map(word => QUOTE.indexOf(word));
     expect(inQuote.every((at, index) => at >= 0 && (index === 0 || at > (inQuote[index - 1] ?? -1)))).toBe(true);
     expect(GATING_ARTIFACTS.filter(artifact => !notes.includes(artifact))).toStrictEqual([]);
+    // THE PIN ANCHOR (wb-3xmr F1): each row's pin quotes, in pin order, tile its owner text - row A's the title's condition, rows
+    // B-D's their clauses - with separator-only gaps, and dropping any one quote leaves its row's owner text untiled.
+    const owner = ROWS.map(row => ownerTextOf(row, title, clauses));
+    expect(owner.map(entry => entry.length > 0), "every row has its owner text").toEqual(ROWS.map(() => true));
+    expect(ROWS.flatMap(row => row.pins).filter(pin => SEPARATOR.test(pin.quote)).map(pin => pin.id), "every quote names something").toEqual([]);
+    expect(ROWS.map((row, index) => tiles(owner[index] ?? "", row.pins.map(pin => pin.quote)).untiled), "each row's quotes tile its owner text").toEqual(ROWS.map(() => []));
+    const droppable = ROWS.flatMap((row, index) => row.pins.filter(pin => tiles(owner[index] ?? "", row.pins.filter(other => other !== pin).map(other => other.quote)).covered).map(pin => pin.id));
+    expect(droppable, "a pin whose quote drops with its row's owner text still tiled").toEqual([]);
+    // THE SELF-READ (wb-3xmr F2) over this file, and planted cases that show each refusal.
+    expect(selfRead(SELF_TEXT), "this file's SELF-READ").toEqual([]);
+    const planted: Record<string, string> = {
+      "a trivial expect returning its roster witness (G3, G3b)": 'const IMPL = {\n  D3: async () => {\n    expect(true).toBe(true);\n    return rosterWitness("D3");\n  },\n};\n',
+      "the witness through a helper": 'function handed(): unknown {\n  return rosterWitness("D3");\n}\nconst IMPL = {\n  D3: async () => {\n    expect(BASE).toBeDefined();\n    return handed();\n  },\n};\n',
+      "the witness read after measuring": 'const IMPL = {\n  D3: async () => {\n    projections(CARRIER);\n    return ROSTER.rows[3]?.pins[2]?.witness;\n  },\n};\n',
+      "a constant naming no reader": 'const IMPL = {\n  D3: async () => {\n    return { pasted: true };\n  },\n};\n',
+    };
+    expect(Object.fromEntries(Object.entries(planted).map(([name, source]) => [name, selfRead(source)]))).toStrictEqual({
+      "a trivial expect returning its roster witness (G3, G3b)": ["IMPL.D3 names no reader", "IMPL.D3 names rosterWitness"],
+      "the witness through a helper": ["handed names rosterWitness"],
+      "the witness read after measuring": ["IMPL.D3 reads a witness", "IMPL.D3 reads ROSTER.rows"],
+      "a constant naming no reader": ["IMPL.D3 names no reader"],
+    });
   });
 
   for (const row of ROWS) {
     describe(`${row.id} ${row.label}`, () => {
-      for (const pin of row.pins) {
+      for (const { id: pin } of row.pins) {
         it(pin, { timeout: 60_000 }, async () => {
           const impl = IMPL[pin];
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
@@ -1088,7 +1317,7 @@ describe("wb-tz4r.3 RI native result provenance echo census (RI-UNIFIED-DECISION
     walk(task.file.tasks);
     const titles = walked.map(entry => entry.name);
     expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
-    expect(titles, "the judged title, one test per pin in row order, then this record").toEqual([JUDGED_TITLE, ...ROWS.flatMap(entry => entry.pins), RECORD_TITLE]);
+    expect(titles, "the judged title, one test per pin in row order, then this record").toEqual([JUDGED_TITLE, ...ROWS.flatMap(entry => entry.pins.map(pin => pin.id)), RECORD_TITLE]);
     const here = walked.findIndex(entry => entry.self);
     expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
     const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
@@ -1096,6 +1325,9 @@ describe("wb-tz4r.3 RI native result provenance echo census (RI-UNIFIED-DECISION
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
     const rosterWitnesses = Object.fromEntries(ROSTER.rows.flatMap(entry => entry.pins.map(pin => [pin.id, pin.witness])));
     expect(MEASURED, "every pin's witness, compared against the roster a second time").toStrictEqual(rosterWitnesses);
+    const texts = Object.entries(MEASURED).map(([pin, value]) => [pin, JSON.stringify(value)] as const);
+    const shared = texts.filter(([pin, value]) => texts.some(([other, again]) => other !== pin && again === value)).map(([pin]) => pin);
+    expect(shared, "no two pins share one witness (a case moved under another pin's id, its witness rewritten to match)").toEqual([]);
     expect(REACHED, "every pin reached its end, in row order, with its pinned assertion count").toEqual([...ROSTER.reached]);
   });
 });
