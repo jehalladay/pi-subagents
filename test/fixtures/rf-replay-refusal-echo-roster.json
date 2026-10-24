@@ -1,5 +1,5 @@
 {
-  "provenance": "wb-a9l2.4 census roster (test/workbench-rf-replay-refusal-echo-census.test.ts). envelopes.blob and envelopes.reconstruction are MEASURED: the stdout of `rf context replay RENDER --json` (exit 8) from the installed rf 0.1.832 on 2026-10-22, in a scratch workspace after a committed render lost its evidence (blob: a literal source's capture blob deleted; reconstruction: a git source's recorded commit gone from the repository); only the scratch workspace root was rewritten to /fixture/rf-workspace. envelopes.retention is CONSTRUCTED from the producer's application/replay.py retention_removed builder (message, hint and metadata as it writes them; segment names as the scratch workspace's journal names its files), because rf storage compact --apply removes nothing in that build. rows freeze the judged set: each pin's witness is what its case measures.",
+  "provenance": "wb-a9l2.4 census roster (test/workbench-rf-replay-refusal-echo-census.test.ts). envelopes.blob and envelopes.reconstruction are MEASURED: the stdout of `rf context replay RENDER --json` (exit 8) from the installed rf 0.1.832 on 2026-10-22, in a scratch workspace after a committed render lost its evidence (blob: a literal source's capture blob deleted; reconstruction: a git source's recorded commit gone from the repository); only the scratch workspace root was rewritten to /fixture/rf-workspace. envelopes.retention is CONSTRUCTED from the producer's application/replay.py retention_removed builder (message, hint and metadata as it writes them; segment names as the scratch workspace's journal names its files), because rf storage compact --apply removes nothing in that build. rows freeze the judged set: each pin's witness is what its case measures. wb-1s7l (the R694 follow-up of landing 257, 2026-10-23) re-measured every witness at trunk 893fe06 after hardening A1 (call-composed argv), A2 (the rf roster by id prefix, grant and contract carrier), B2/B3/C2 (fresh-copy readings held to a fresh roster read), B6 (binding-aware launchers, network names and literals, non-literal loaders), and adding B7 (the injected seam's 0 production call sites), D3/D4 (the measured refusal shape with its workspace kept), residuals (the named families and their quiet-row pins) and tests (every registered test title, in order); the envelopes are unchanged.",
   "rfVersion": "0.1.832",
   "replayExit": 8,
   "codes": [
@@ -16,6 +16,52 @@
   "gatingArtifacts": [
     "rfc-0txnl.25",
     "rfc-bak67.12"
+  ],
+  "residuals": {
+    "R-WITHHELD": [
+      "B4",
+      "B5"
+    ],
+    "R-RENDER-ONLY": [
+      "A3",
+      "A4"
+    ],
+    "R-COMPOSED-ARGV": [
+      "A1"
+    ],
+    "R-COMPOSED-NAME": [
+      "B6",
+      "B7"
+    ],
+    "R-UNLISTED": [
+      "B6"
+    ],
+    "R-UNMARKED-READER": [
+      "A2"
+    ]
+  },
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "B6",
+    "B7",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "the registered tests and the reached pins equal the roster, in order and both ways"
   ],
   "envelopes": {
     "blob": {
@@ -116,7 +162,12 @@
               "spaced": 1,
               "dotted": 1,
               "template": 1,
-              "composedArgv": 0
+              "composedArgv": 0,
+              "concat": 1,
+              "pushed": 1,
+              "flagBetween": 1,
+              "spread": 1,
+              "concatComposed": 0
             }
           }
         },
@@ -131,7 +182,20 @@
             ],
             "reconcile": [
               "reactivefiber.render.preview"
-            ]
+            ],
+            "markers": {
+              "prefix": true,
+              "grants": [
+                "reactivefiber:render"
+              ],
+              "carrier": true
+            },
+            "controls": {
+              "prefix": 1,
+              "grant": 1,
+              "carrier": 1,
+              "unmarked": 0
+            }
           }
         },
         {
@@ -266,6 +330,7 @@
             "unresolved": [],
             "network": [],
             "globals": [],
+            "dynamic": [],
             "launches": [
               "rf"
             ],
@@ -273,31 +338,37 @@
               "http": {
                 "network": 1,
                 "globals": 0,
+                "dynamic": 0,
                 "launches": []
               },
               "undici": {
                 "network": 1,
-                "globals": 0,
+                "globals": 1,
+                "dynamic": 0,
                 "launches": []
               },
               "fetch": {
                 "network": 0,
                 "globals": 1,
+                "dynamic": 0,
                 "launches": []
               },
               "globalFetch": {
                 "network": 0,
                 "globals": 1,
+                "dynamic": 0,
                 "launches": []
               },
               "socket": {
                 "network": 0,
                 "globals": 1,
+                "dynamic": 0,
                 "launches": []
               },
               "curl": {
                 "network": 0,
                 "globals": 0,
+                "dynamic": 0,
                 "launches": [
                   "curl"
                 ]
@@ -305,10 +376,126 @@
               "composed": {
                 "network": 0,
                 "globals": 0,
+                "dynamic": 0,
                 "launches": [
                   "<composed>"
                 ]
+              },
+              "namespaceLauncher": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "aliasedLauncher": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "defaultLauncher": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "requiredLauncher": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "requiredSpace": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "importEquals": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "dynamicLauncher": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "constLauncher": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "fetchElement": {
+                "network": 0,
+                "globals": 1,
+                "dynamic": 0,
+                "launches": []
+              },
+              "fetchAlias": {
+                "network": 0,
+                "globals": 1,
+                "dynamic": 0,
+                "launches": []
+              },
+              "composedImport": {
+                "network": 1,
+                "globals": 0,
+                "dynamic": 1,
+                "launches": []
+              },
+              "splitName": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "wrappedLauncher": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "unlisted": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
               }
+            }
+          }
+        },
+        {
+          "id": "B7",
+          "witness": {
+            "srcFloorMet": true,
+            "servedAnchorRead": true,
+            "definedInProvider": true,
+            "seamSites": [],
+            "controls": {
+              "call": 1,
+              "aliased": 1,
+              "element": 1,
+              "splitName": 0
             }
           }
         }
@@ -404,6 +591,36 @@
             "coverage": "unknown",
             "statusTone": "failure",
             "carriesValue": false
+          }
+        },
+        {
+          "id": "D3",
+          "witness": {
+            "category": "unavailable",
+            "message": "RF render refused: RF_REPLAY_SOURCE_SNAPSHOT_MISSING",
+            "reading": false,
+            "spawns": 1,
+            "fetches": 0,
+            "workspace": {
+              "id": "rfw_t7dcyljy27327knroylyym7m2q",
+              "root": "/fixture/rf-workspace"
+            },
+            "snapshots": 1,
+            "statusTone": "failure",
+            "liveLegs": {
+              "outputDigest": null,
+              "graphRevision": null,
+              "bundle": null
+            }
+          }
+        },
+        {
+          "id": "D4",
+          "witness": {
+            "evidenceRefs": [
+              "rf-workspace:rfw_t7dcyljy27327knroylyym7m2q"
+            ],
+            "sourceId": "rfo_rxpudy5cuqizxyktrbxawwk3ji"
           }
         }
       ]
