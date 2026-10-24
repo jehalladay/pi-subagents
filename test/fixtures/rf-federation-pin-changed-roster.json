@@ -114,31 +114,106 @@
         "render": 1,
         "uncommitted": 1,
         "flags": 0,
-        "composed": 0
+        "composed": 0,
+        "launches": 1
        },
        "noCommitArgv": {
         "render": 1,
         "uncommitted": 0,
         "flags": 0,
-        "composed": 0
+        "composed": 0,
+        "launches": 1
        },
        "spacedLiteral": {
         "render": 0,
         "uncommitted": 1,
         "flags": 0,
-        "composed": 0
+        "composed": 0,
+        "launches": 0
        },
        "idempotencyFlag": {
         "render": 1,
         "uncommitted": 0,
         "flags": 1,
-        "composed": 0
+        "composed": 0,
+        "launches": 1
        },
        "composedArgv": {
         "render": 0,
         "uncommitted": 0,
         "flags": 0,
-        "composed": 1
+        "composed": 1,
+        "launches": 1
+       },
+       "memberConcat": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "aliasInterleaved": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "variableAlias": {
+        "render": 1,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "destructuredAlias": {
+        "render": 1,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "elementSpread": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "piExec": {
+        "render": 1,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "shellString": {
+        "render": 0,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "plusLiteral": {
+        "render": 0,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "wrappedLaunch": {
+        "render": 1,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "constantProgram": {
+        "render": 1,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
        }
       }
      }
@@ -213,7 +288,14 @@
       ],
       "reconcile": [
        "reactivefiber.render.preview"
-      ]
+      ],
+      "controls": {
+       "otherIdRfRelease": true,
+       "otherIdSchemaOnly": true,
+       "otherIdPermissionOnly": true,
+       "prefixOnly": true,
+       "forgeQuiet": false
+      }
      }
     },
     {
@@ -328,6 +410,7 @@
       "coverage": "unknown",
       "statusTone": "failure",
       "statusText": "refused \u00b7 RF_FEDERATION_PIN_CHANGED",
+      "title": "RF context preview rfo_pinchangedrefusalfixture0a",
       "evidenceRefs": [
        "rf-workspace:rfw_aaaaaaaaaaaaaaaaaaaaaa"
       ],
@@ -350,7 +433,9 @@
       "byteIdentical": true,
       "code": "RF_FEDERATION_PIN_CHANGED",
       "ok": false,
-      "calls": 1
+      "calls": 1,
+      "answerAliased": false,
+      "aliasControl": true
      }
     },
     {
@@ -536,16 +621,27 @@
        "committedAbort",
        "adapterAbort",
        "nativeReadingParts",
-       "injectedReadingParts"
+       "injectedReadingParts",
+       "injectedRefusalParts"
       ],
       "everySurfaceRead": true,
       "labelled": [],
+      "added": {
+       "nativeProbeSource": [],
+       "injectedProbeSource": [],
+       "injectedRefusalSource": []
+      },
+      "addedControl": [
+       "freshness",
+       "current"
+      ],
       "probe": {
        "coverage": "complete",
        "statusTone": "success",
        "namesPinned": false,
        "namesAccepted": false
       },
+      "seamLabel": "noncommitted preview (rf-cli)",
       "controls": {
        "fresh": true,
        "current": true,
@@ -560,7 +656,7 @@
   },
   {
    "id": "M",
-   "label": "the pin-change vocabulary matcher A4 reads: the spellings it catches (M1-M8) and the pinned quiet rows of its named residuals (Q1 R-INTERRUPTED, Q2 R-HOMOGLYPH, Q3 R-COMPOSED)",
+   "label": "the pin-change vocabulary matcher A4 reads, raw and with escape sequences decoded: the spellings it catches (M1-M15) and the pinned quiet rows of its named residuals (Q1 R-INTERRUPTED, Q2 R-HOMOGLYPH, Q3 R-COMPOSED)",
    "pins": [
     {
      "id": "M1",
@@ -619,9 +715,58 @@
      }
     },
     {
-     "id": "Q1",
+     "id": "M9",
+     "witness": {
+      "form": "export const CODE = \"RF_FEDERATION_PIN\\u005fCHANGED\";",
+      "hit": true
+     }
+    },
+    {
+     "id": "M10",
+     "witness": {
+      "form": "export const CODE = \"RF_FEDERATION_PIN\\u{5f}CHANGED\";",
+      "hit": true
+     }
+    },
+    {
+     "id": "M11",
+     "witness": {
+      "form": "export const CODE = \"RF_FEDERATION_PIN\\x5fCHANGED\";",
+      "hit": true
+     }
+    },
+    {
+     "id": "M12",
+     "witness": {
+      "form": "export const CODE = \"RF_FEDERATION_PIN\\_CHANGED\";",
+      "hit": true
+     }
+    },
+    {
+     "id": "M13",
+     "witness": {
+      "form": "if (primary.code.endsWith(\"_PIN_CHANGED\")) return;",
+      "hit": true
+     }
+    },
+    {
+     "id": "M14",
+     "witness": {
+      "form": "const code = \"RF_FEDERATION_\" + \"PIN_CHANGED\";",
+      "hit": true
+     }
+    },
+    {
+     "id": "M15",
      "witness": {
       "form": "RF_FEDERATION<U+200B>_PIN_CHANGED",
+      "hit": true
+     }
+    },
+    {
+     "id": "Q1",
+     "witness": {
+      "form": "RF_FEDERATION_PIN<U+200B>_CHANGED",
       "hit": false
      }
     },
@@ -635,11 +780,366 @@
     {
      "id": "Q3",
      "witness": {
-      "form": "const code = \"RF_FEDERATION_\" + \"PIN_CHANGED\";",
+      "form": "const code = [\"RF\", \"FEDERATION\", \"PIN\", \"CHANGED\"].join(\"_\");",
       "hit": false
      }
     }
    ]
+  },
+  {
+   "id": "L",
+   "label": "the freshness matcher D4 reads: the inflections and synonyms it catches (L1-L12) and the pinned quiet rows of its named residuals (LQ1 R-FRESH-PARAPHRASE, LQ2 R-FRESH-HOMOGLYPH, LQ3 R-FRESH-INTERRUPTED)",
+   "pins": [
+    {
+     "id": "L1",
+     "witness": {
+      "form": "freshly rendered at the accepted receipt",
+      "hit": true
+     }
+    },
+    {
+     "id": "L2",
+     "witness": {
+      "form": "the refreshed render",
+      "hit": true
+     }
+    },
+    {
+     "id": "L3",
+     "witness": {
+      "form": "currently pinned output",
+      "hit": true
+     }
+    },
+    {
+     "id": "L4",
+     "witness": {
+      "form": "live preview (rf-cli)",
+      "hit": true
+     }
+    },
+    {
+     "id": "L5",
+     "witness": {
+      "form": "a real-time render",
+      "hit": true
+     }
+    },
+    {
+     "id": "L6",
+     "witness": {
+      "form": "new output",
+      "hit": true
+     }
+    },
+    {
+     "id": "L7",
+     "witness": {
+      "form": "a newer receipt was accepted",
+      "hit": true
+     }
+    },
+    {
+     "id": "L8",
+     "witness": {
+      "form": "newly published",
+      "hit": true
+     }
+    },
+    {
+     "id": "L9",
+     "witness": {
+      "form": "the renewed preview",
+      "hit": true
+     }
+    },
+    {
+     "id": "L10",
+     "witness": {
+      "form": "a recent render",
+      "hit": true
+     }
+    },
+    {
+     "id": "L11",
+     "witness": {
+      "form": "recently rendered",
+      "hit": true
+     }
+    },
+    {
+     "id": "L12",
+     "witness": {
+      "form": "freshness",
+      "hit": true
+     }
+    },
+    {
+     "id": "LQ1",
+     "witness": {
+      "form": "rendered as of now",
+      "hit": false
+     }
+    },
+    {
+     "id": "LQ2",
+     "witness": {
+      "form": "fr<U+0435>sh output",
+      "hit": false
+     }
+    },
+    {
+     "id": "LQ3",
+     "witness": {
+      "form": "fre<U+200B>sh output",
+      "hit": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "N",
+   "label": "the receipt-naming matcher C2, C3, D1 and D4 read: a receipt named in full or by an 8-hex prefix of its digest, the record id and the producer message (N1-N5, each a positive control) and the pinned quiet rows (NQ1 a digest that is no receipt, NQ2 R-SHORT-PREFIX)",
+   "pins": [
+    {
+     "id": "N1",
+     "witness": {
+      "form": "sha256:1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f",
+      "namesPinned": true,
+      "namesAccepted": false,
+      "namesRecord": false,
+      "namesMessage": false
+     }
+    },
+    {
+     "id": "N2",
+     "witness": {
+      "form": "RF context preview rfo_pinchangedrefusalfixture0a @sha256:2e2e2e2e2e2e",
+      "namesPinned": false,
+      "namesAccepted": true,
+      "namesRecord": false,
+      "namesMessage": false
+     }
+    },
+    {
+     "id": "N3",
+     "witness": {
+      "form": "receipt 2E2E2E2E",
+      "namesPinned": false,
+      "namesAccepted": true,
+      "namesRecord": false,
+      "namesMessage": false
+     }
+    },
+    {
+     "id": "N4",
+     "witness": {
+      "form": "record peer-b:orders",
+      "namesPinned": false,
+      "namesAccepted": false,
+      "namesRecord": true,
+      "namesMessage": false
+     }
+    },
+    {
+     "id": "N5",
+     "witness": {
+      "form": "federation_receipt 'peer-b:orders' changed during the render: pinned sha256:1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f1f, now sha256:2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e",
+      "namesPinned": true,
+      "namesAccepted": true,
+      "namesRecord": true,
+      "namesMessage": true
+     }
+    },
+    {
+     "id": "NQ1",
+     "witness": {
+      "form": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "namesPinned": false,
+      "namesAccepted": false,
+      "namesRecord": false,
+      "namesMessage": false
+     }
+    },
+    {
+     "id": "NQ2",
+     "witness": {
+      "form": "@sha256:2e2e2e",
+      "namesPinned": false,
+      "namesAccepted": false,
+      "namesRecord": false,
+      "namesMessage": false
+     }
+    }
+   ]
   }
- ]
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "B1",
+  "B2",
+  "B3",
+  "B4",
+  "B5",
+  "B6",
+  "B7",
+  "B8",
+  "B9",
+  "C1",
+  "C2",
+  "C3",
+  "D1",
+  "D2",
+  "D3",
+  "D4",
+  "M1",
+  "M2",
+  "M3",
+  "M4",
+  "M5",
+  "M6",
+  "M7",
+  "M8",
+  "M9",
+  "M10",
+  "M11",
+  "M12",
+  "M13",
+  "M14",
+  "M15",
+  "Q1",
+  "Q2",
+  "Q3",
+  "L1",
+  "L2",
+  "L3",
+  "L4",
+  "L5",
+  "L6",
+  "L7",
+  "L8",
+  "L9",
+  "L10",
+  "L11",
+  "L12",
+  "LQ1",
+  "LQ2",
+  "LQ3",
+  "N1",
+  "N2",
+  "N3",
+  "N4",
+  "N5",
+  "NQ1",
+  "NQ2",
+  "the registered tests and the reached pins equal the roster, in order and both ways"
+ ],
+ "reached": [
+  "A1:3",
+  "A2:12",
+  "A3:4",
+  "A4:6",
+  "B1:7",
+  "B2:5",
+  "B3:7",
+  "B4:3",
+  "B5:4",
+  "B6:5",
+  "B7:2",
+  "B8:7",
+  "B9:5",
+  "C1:3",
+  "C2:1",
+  "C3:2",
+  "D1:4",
+  "D2:1",
+  "D3:9",
+  "D4:7",
+  "M1:1",
+  "M2:1",
+  "M3:1",
+  "M4:1",
+  "M5:1",
+  "M6:1",
+  "M7:1",
+  "M8:1",
+  "M9:1",
+  "M10:1",
+  "M11:1",
+  "M12:1",
+  "M13:1",
+  "M14:1",
+  "M15:1",
+  "Q1:1",
+  "Q2:1",
+  "Q3:1",
+  "L1:1",
+  "L2:1",
+  "L3:1",
+  "L4:1",
+  "L5:1",
+  "L6:1",
+  "L7:1",
+  "L8:1",
+  "L9:1",
+  "L10:1",
+  "L11:1",
+  "L12:1",
+  "LQ1:1",
+  "LQ2:1",
+  "LQ3:1",
+  "N1:1",
+  "N2:1",
+  "N3:1",
+  "N4:1",
+  "N5:1",
+  "NQ1:1",
+  "NQ2:1"
+ ],
+ "residuals": {
+  "R-WITHHELD": [
+   "C2",
+   "C3"
+  ],
+  "R-EXIT-UNREAD": [
+   "B3"
+  ],
+  "R-RESUME-REREAD": [
+   "B9"
+  ],
+  "R-RECORD-UNREAD": [
+   "D4"
+  ],
+  "R-INTERRUPTED": [
+   "Q1"
+  ],
+  "R-HOMOGLYPH": [
+   "Q2"
+  ],
+  "R-COMPOSED": [
+   "Q3"
+  ],
+  "R-COMPOSED-ARGV": [
+   "A1"
+  ],
+  "R-WRAPPED-LAUNCH": [
+   "A1"
+  ],
+  "R-FRESH-PARAPHRASE": [
+   "LQ1"
+  ],
+  "R-FRESH-HOMOGLYPH": [
+   "LQ2"
+  ],
+  "R-FRESH-INTERRUPTED": [
+   "LQ3"
+  ],
+  "R-SHORT-PREFIX": [
+   "NQ2"
+  ]
+ }
 }
