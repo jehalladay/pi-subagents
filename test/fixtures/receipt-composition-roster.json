@@ -1,0 +1,486 @@
+{
+ "bead": "wb-kku9.4",
+ "vocabulary": {
+  "reducers": [
+   "every",
+   "some",
+   "reduce",
+   "reduceRight",
+   "filter",
+   "find",
+   "findLast",
+   "findIndex",
+   "findLastIndex"
+  ],
+  "statusFields": [
+   "statusTone",
+   "tone",
+   "status",
+   "state",
+   "lastResult",
+   "last_result",
+   "verdict",
+   "result",
+   "outcome",
+   "conclusion",
+   "domainStatus",
+   "exitCode",
+   "exit_code",
+   "ok",
+   "passed",
+   "succeeded",
+   "success"
+  ],
+  "verdictWords": [
+   "success",
+   "succeeded",
+   "successful",
+   "verified",
+   "integrated",
+   "pass",
+   "passed",
+   "green"
+  ],
+  "synthesized": [
+   "verified",
+   "integrated"
+  ],
+  "producers": {
+   "forge": [
+    "forge"
+   ],
+   "furnace": [
+    "furnace"
+   ],
+   "beads": [
+    "beads",
+    "bd"
+   ],
+   "git": [
+    "git"
+   ],
+   "claude": [
+    "claude"
+   ],
+   "hyperunix": [
+    "hyperunix",
+    "hx"
+   ],
+   "reactivefiber": [
+    "reactivefiber",
+    "rf"
+   ],
+   "graphpolicy": [
+    "graphpolicy",
+    "gp"
+   ]
+  }
+ },
+ "constants": {
+  "filingRead": "d75b68d10a1a",
+  "moduleFloor": 115,
+  "doc": "docs/workbench/03-architecture-and-ownership.md",
+  "docParent": "03 — High-level architecture, module ownership and dataflow",
+  "docHeading": "Design constraints",
+  "exempt": [
+   "src/workbench/forge-observer.ts#forgeGateTopology#reducer:every#packages#lastResult",
+   "src/workbench/forge-observer.ts#forgeGateTopology#reducer:some#packages#lastResult"
+  ]
+ },
+ "docSentence": "Per-step receipts never compose into a global verdict in Pi: each receipt (a Forge gate status, a Furnace attempt, Beads readiness, a Git revision) is projected with its own producer-stated status, and no src module reduces receipts of more than one producer into a success tone or a verified, integrated or PASS word while no bridge invariant or certificate exists (wb-kku9.4, judged by test/workbench-receipt-composition-census.test.ts over every src module, which exempts only the Forge reader's reduction over the package rows of one gate.status envelope).",
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) vitest: topology-slice / EvidenceLoader over two success receipts from different producers yields two nodes with their own tones and no synthesized aggregate node/edge/evidence ref of kind 'verified'/'integrated'",
+   "pins": [
+    {
+     "id": "A1",
+     "quote": "vitest: topology-slice / EvidenceLoader over two success receipts from different producers",
+     "witness": {
+      "forge": [
+       {
+        "ref": "forge:gate-status:workspace",
+        "kind": "forge.gate.status.snapshot",
+        "tone": "success",
+        "text": "success · FORGE_OK · current gate passed"
+       },
+       {
+        "ref": "forge:gate-status:code:pi-subagents",
+        "kind": "forge.gate.status.package.snapshot",
+        "tone": "success",
+        "text": "success (current)"
+       }
+      ],
+      "furnace": [
+       {
+        "ref": "furnace:run:frn-run-kku9",
+        "kind": "furnace.run.snapshot",
+        "tone": "success",
+        "text": "completed"
+       },
+       {
+        "ref": "furnace:attempt:frn-atm-kku9-1",
+        "kind": "furnace.attempt.snapshot",
+        "tone": "success",
+        "text": "succeeded (success)"
+       }
+      ],
+      "producers": [
+       "forge",
+       "furnace"
+      ],
+      "refreshed": [
+       "applied",
+       "applied",
+       "applied",
+       "applied"
+      ],
+      "surfaces": [
+       true,
+       true
+      ]
+     }
+    },
+    {
+     "id": "A2",
+     "quote": "yields two nodes with their own tones",
+     "witness": {
+      "nodes": 4,
+      "roots": [
+       {
+        "ref": "forge:gate-status:workspace",
+        "tone": "success",
+        "text": "success · FORGE_OK · current gate passed",
+        "ownTone": true
+       },
+       {
+        "ref": "furnace:run:frn-run-kku9",
+        "tone": "success",
+        "text": "completed",
+        "ownTone": true
+       }
+      ],
+      "slices": {
+       "forge:gate-status:workspace": {
+        "upstream": [],
+        "downstream": [
+         "grouping:forge:gate-status:code:pi-subagents:forge-observer"
+        ],
+        "references": 0,
+        "trace": "observed"
+       },
+       "furnace:run:frn-run-kku9": {
+        "upstream": [],
+        "downstream": [
+         "lifecycle-ownership:furnace:attempt:frn-atm-kku9-1:furnace"
+        ],
+        "references": 0,
+        "trace": "observed"
+       }
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "quote": "and no synthesized aggregate node/edge/evidence ref of kind 'verified'/'integrated'",
+     "witness": {
+      "live": {
+       "extraNodes": [],
+       "wordNodes": [],
+       "extraEdges": [],
+       "crossEdges": [],
+       "wordEdges": [],
+       "foreignRefs": [],
+       "wordRefs": []
+      },
+      "loads": {
+       "forge:gate-status:workspace forge:gate.status:FORGE_OK": {
+        "state": "unavailable",
+        "reason": "no-loader"
+       },
+       "forge:gate-status:workspace forge-operation:op_kku9a1": {
+        "state": "loaded",
+        "provider": "forge",
+        "kind": "forge-operation",
+        "synthesized": false
+       },
+       "furnace:run:frn-run-kku9 frn-atm-kku9-1": {
+        "state": "loaded",
+        "provider": "furnace",
+        "kind": "furnace-attempt-log",
+        "synthesized": false
+       }
+      },
+      "crossed": {
+       "forge:gate-status:workspace frn-atm-kku9-1": "unavailable:no-loader",
+       "furnace:run:frn-run-kku9 forge:gate.status:FORGE_OK": "unavailable:no-loader"
+      },
+      "rollup": {
+       "parentTone": "waiting",
+       "keys": [
+        "basis",
+        "criticalPath",
+        "descendants",
+        "direct",
+        "intervals",
+        "key",
+        "revision",
+        "topologyRevision",
+        "trace"
+       ],
+       "direct": {
+        "children": 2,
+        "settled": 2,
+        "byTone": {
+         "active": 0,
+         "success": 2,
+         "failure": 0,
+         "waiting": 0,
+         "unknown": 0
+        }
+       },
+       "basis": "observed-grouping-ownership",
+       "criticalPath": "unestablished"
+      },
+      "control": {
+       "extraNodes": [
+        "workbench:verdict:kku9-composed"
+       ],
+       "wordNodes": [
+        "workbench:verdict:kku9-composed"
+       ],
+       "extraEdges": [
+        "workbench:verdict:kku9-composed>forge:gate-status:workspace:grouping:verified-composer",
+        "workbench:verdict:kku9-composed>furnace:run:frn-run-kku9:grouping:verified-composer"
+       ],
+       "crossEdges": [
+        "workbench:verdict:kku9-composed>forge:gate-status:workspace:grouping:verified-composer",
+        "workbench:verdict:kku9-composed>furnace:run:frn-run-kku9:grouping:verified-composer"
+       ],
+       "wordEdges": [
+        "workbench:verdict:kku9-composed>forge:gate-status:workspace:grouping:verified-composer",
+        "workbench:verdict:kku9-composed>furnace:run:frn-run-kku9:grouping:verified-composer"
+       ],
+       "foreignRefs": [
+        "workbench:verdict:kku9-composed integrated:forge+furnace"
+       ],
+       "wordRefs": [
+        "workbench:verdict:kku9-composed integrated:forge+furnace"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) census scoped to cross-producer composition: no src module computes a tone or verdict word by reducing over receipts of more than one producer (all-success mutant fails); exempt forge-observer.ts:125-129, which reduces per-package rows of ONE gate.status envelope to 'current gate passed' (wb-6hb.2), else the census is red today",
+   "pins": [
+    {
+     "id": "B1",
+     "quote": "census scoped to cross-producer composition",
+     "witness": {
+      "atLeastFloor": true,
+      "gitEqualsWalk": true,
+      "links": [],
+      "forms": [
+       "comparisons",
+       "loop",
+       "reducer"
+      ],
+      "judgedOf": [
+       "src/workbench/plant.ts"
+      ]
+     }
+    },
+    {
+     "id": "B2",
+     "quote": "no src module computes a tone or verdict word by reducing over receipts of more than one producer",
+     "witness": {
+      "findings": [],
+      "sites": [
+       "src/workbench/forge-observer.ts#forgeGateTopology#reducer:every#packages#lastResult",
+       "src/workbench/forge-observer.ts#forgeGateTopology#reducer:some#packages#lastResult"
+      ],
+      "producers": [
+       "forge"
+      ]
+     }
+    },
+    {
+     "id": "B3",
+     "quote": "(all-success mutant fails)",
+     "witness": {
+      "mutants": {
+       "every-verified": [
+        "src/workbench/receipt-composition-plant.ts#composed#reducer:every#nodes#statusTone yields verified (producers: none named)"
+       ],
+       "two-receipts-integrated": [
+        "src/workbench/receipt-composition-plant.ts#both#reducer:every#receipts#statusTone yields integrated (producers: none named)"
+       ],
+       "reduce-pass": [
+        "src/workbench/receipt-composition-plant.ts#verdict#reducer:reduce#receipts#status yields pass (producers: none named)"
+       ],
+       "filter-length": [
+        "src/workbench/receipt-composition-plant.ts#verdict#reducer:filter#rs#tone yields verified (producers: none named)"
+       ],
+       "loop": [
+        "src/workbench/receipt-composition-plant.ts#verdict#loop:ForOfStatement#rs#statusTone yields verified (producers: none named)"
+       ],
+       "conjunction": [
+        "src/workbench/receipt-composition-plant.ts#verdict#comparisons:==#forge,furnace#statusTone yields integrated (producers: none named)"
+       ],
+       "nested-conditions": [
+        "src/workbench/receipt-composition-plant.ts#verdict#comparisons:==#forge,furnace#statusTone yields verified (producers: none named)"
+       ],
+       "bound-conjunction": [
+        "src/workbench/receipt-composition-plant.ts#verdict#comparisons:==#forge,git#state+status yields integrated (producers: none named)"
+       ],
+       "aggregated-tone": [
+        "src/workbench/receipt-composition-plant.ts#tone#reducer:some#nodes#statusTone yields success (producers: none named)"
+       ],
+       "boolean-field": [
+        "src/workbench/receipt-composition-plant.ts#verdict#reducer:every#rs#outcome yields verified (producers: none named)"
+       ],
+       "named-binding": [
+        "src/workbench/receipt-composition-plant.ts#verdict#reducer:every#rs#result yields passed (producers: none named)"
+       ]
+      },
+      "quiet": {
+       "non-verdict-word": 0,
+       "per-receipt-map": 0,
+       "count-only": 0
+      },
+      "residuals": {
+       "R-HELPER-SPLIT": 0,
+       "R-NAMED-CALLBACK": 0,
+       "R-COMPUTED-WORD": 0,
+       "R-FAILURE-SIDE": 0,
+       "R-SET-SHAPE": 0
+      }
+     }
+    },
+    {
+     "id": "B4",
+     "quote": "exempt forge-observer.ts:125-129, which reduces per-package rows of ONE gate.status envelope to 'current gate passed' (wb-6hb.2)",
+     "witness": {
+      "citedFile": true,
+      "head": [
+       {
+        "key": "src/workbench/forge-observer.ts#forgeGateTopology#reducer:every#packages#lastResult",
+        "words": [
+         "passed",
+         "success"
+        ],
+        "producers": [
+         "forge"
+        ],
+        "exempt": true
+       },
+       {
+        "key": "src/workbench/forge-observer.ts#forgeGateTopology#reducer:some#packages#lastResult",
+        "words": [
+         "passed",
+         "success"
+        ],
+        "producers": [
+         "forge"
+        ],
+        "exempt": true
+       }
+      ],
+      "filing": {
+       "keys": [
+        "src/workbench/forge-observer.ts#forgeGateTopology#reducer:every#packages#lastResult",
+        "src/workbench/forge-observer.ts#forgeGateTopology#reducer:some#packages#lastResult"
+       ],
+       "withinCitation": true,
+       "lines": [
+        125,
+        128
+       ]
+      },
+      "qualifier": true,
+      "moved": 2,
+      "twoProducers": 2
+     }
+    },
+    {
+     "id": "B5",
+     "quote": "else the census is red today",
+     "witness": {
+      "unexempted": [
+       "src/workbench/forge-observer.ts#forgeGateTopology#reducer:every#packages#lastResult yields passed+success (producers: forge)",
+       "src/workbench/forge-observer.ts#forgeGateTopology#reducer:some#packages#lastResult yields passed+success (producers: forge)"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) docs/workbench gains one census-bound sentence that per-step receipts never compose into a global verdict in Pi",
+   "pins": [
+    {
+     "id": "C1",
+     "quote": "docs/workbench gains one census-bound sentence",
+     "witness": {
+      "clause": true,
+      "head": [
+       "docs/workbench/03-architecture-and-ownership.md"
+      ],
+      "filing": 0,
+      "bound": [
+       [
+        true,
+        true
+       ]
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "quote": "that per-step receipts never compose into a global verdict in Pi",
+     "witness": {
+      "section": true,
+      "holders": 1,
+      "exact": true,
+      "startsWithClause": true,
+      "producersNamed": [
+       true,
+       true,
+       true,
+       true
+      ]
+     }
+    }
+   ]
+  }
+ ],
+ "residuals": [
+  {
+   "id": "R-HELPER-SPLIT",
+   "quietPin": "B3"
+  },
+  {
+   "id": "R-NAMED-CALLBACK",
+   "quietPin": "B3"
+  },
+  {
+   "id": "R-COMPUTED-WORD",
+   "quietPin": "B3"
+  },
+  {
+   "id": "R-FAILURE-SIDE",
+   "quietPin": "B3"
+  },
+  {
+   "id": "R-SET-SHAPE",
+   "quietPin": "B3"
+  },
+  {
+   "id": "R-OUTSIDE-SRC",
+   "quietPin": "B1"
+  }
+ ]
+}
