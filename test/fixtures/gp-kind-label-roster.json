@@ -1,0 +1,830 @@
+{
+  "bead": "wb-gxd7.4",
+  "statement": "[GPC-FEEDBACK-CONTRACT-AUDIT-R4] When Pi's GraphDataIR exporter or FunctionIR program for gp carries source kind labels like `ready-work` (gating artifact: the D-NAMES-1 ruling, open at the pin, plus the Pi exporter of wb-0lf.2, none exists), it shall never silently rename or normalize them to satisfy `IDENTIFIER_PATTERN`; any mapping is bijective over the admitted set, refuses collisions and retains the source label, and a `GF_IDENTIFIER_INVALID` from `gp build` is a typed refusal, never a silent fix \u2014 docs/programs/feedback-contract-audit-2026-10-21/02-contract-audit.md:100@0107c72992f3",
+  "quote": "Never silently rename types or introduce collisions; diagnostics must show the actual accepted grammar and path.",
+  "citation": "docs/programs/feedback-contract-audit-2026-10-21/02-contract-audit.md:100@0107c72992f3",
+  "authority": [
+    {
+      "ref": "03:58",
+      "quote": "If mapping is used, make it bijective over the admitted input set or reject collisions; retain the source label for observability."
+    },
+    {
+      "ref": "04:98",
+      "quote": "Do not loosen the grammar until ruled."
+    }
+  ],
+  "piPosture": "Pi does not choose alternative (a) or (b) of D-NAMES-1 and never auto-repairs a producer identifier refusal.",
+  "posture": "no Pi exporter exists (0 GraphDataIR hits at d75b68d1)",
+  "codeFacts": [
+    "ts/src/function-ir/catalogue.ts:405-406",
+    "IDENTIFIER_PATTERN /^[A-Za-z_][A-Za-z0-9_]{0,63}$/",
+    "PROGRAM_ID_PATTERN /^[a-z0-9][a-z0-9-]{0,63}$/",
+    "F11 is unswept (01:19)",
+    "the wb-0lf.2 exporter does not exist at d75b68d1"
+  ],
+  "scan": {
+    "pin": "0107c72992f3",
+    "fixtureKinds": [
+      "ready-work",
+      "ready_work"
+    ],
+    "refusalCode": "GF_IDENTIFIER_INVALID",
+    "envelopeCode": "GP_CLI_PROGRAM_INVALID",
+    "cliSchema": "graphpolicy.cli.v1",
+    "postureWords": [
+      "GraphDataIR",
+      "FunctionIR"
+    ],
+    "walkRoots": [
+      "src",
+      "qa",
+      "examples"
+    ],
+    "moduleExtensions": [
+      ".ts",
+      ".mts",
+      ".cts",
+      ".tsx",
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".jsx"
+    ],
+    "floors": {
+      "src": 100,
+      "qa": 55,
+      "examples": 5
+    },
+    "transformMethods": [
+      "toLowerCase",
+      "toLocaleLowerCase",
+      "toUpperCase",
+      "toLocaleUpperCase",
+      "normalize",
+      "replace",
+      "replaceAll",
+      "split"
+    ],
+    "transformFloor": 150,
+    "iterationMethods": [
+      "map",
+      "flatMap",
+      "forEach",
+      "filter",
+      "find",
+      "findIndex",
+      "some",
+      "every"
+    ],
+    "reduceMethods": [
+      "reduce",
+      "reduceRight"
+    ],
+    "kindFamilies": [
+      "candidate-type",
+      "entity-kind",
+      "relation-kind"
+    ],
+    "vocabulary": {
+      "maps": [
+        "candidate_types",
+        "entity_kinds",
+        "relation_kinds"
+      ],
+      "references": [
+        "candidate",
+        "kind",
+        "of"
+      ],
+      "blocks": [
+        "graph_schema"
+      ],
+      "dataMaps": [
+        "candidateTypes",
+        "entityKinds",
+        "relationKinds"
+      ],
+      "dataReferences": [
+        "participantKinds",
+        "relationKind"
+      ],
+      "words": [
+        "candidateTypes",
+        "candidate_types",
+        "entityKinds",
+        "entity_kinds",
+        "graph_schema",
+        "participantKinds",
+        "relationKind",
+        "relationKinds",
+        "relation_kinds"
+      ],
+      "excluded": [
+        "candidate",
+        "kind",
+        "of"
+      ]
+    },
+    "documentIds": [
+      "graphpolicy.function.v1",
+      "graphpolicy.data.v1"
+    ],
+    "surfaceText": "(?<![A-Za-z0-9_])(?:candidateTypes|candidate_types|entityKinds|entity_kinds|graph_schema|participantKinds|relationKind|relationKinds|relation_kinds|graphpolicy\\.function\\.v1|graphpolicy\\.data\\.v1|GP_CLI_PROGRAM_INVALID|GF_IDENTIFIER_INVALID)(?![A-Za-z0-9_])/",
+    "postureText": "GraphDataIR|FunctionIR/",
+    "tableCases": [
+      "T-EMPTY",
+      "T-ESCAPE",
+      "T-CHAIN",
+      "T-COLLAPSE",
+      "T-NON-INJECTIVE",
+      "T-ABSENT-PARTNER",
+      "T-DUPLICATE-SOURCE"
+    ],
+    "singles": [
+      "ready-work",
+      "ready_work",
+      "Ready_Work",
+      "_ready",
+      "2ready",
+      "r\u00e9ady",
+      "ready.work",
+      "abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+      "assignments",
+      "ready-bead",
+      "can-execute",
+      " ready_work",
+      "\ufb01le_kind"
+    ],
+    "recorderCases": [
+      "ready-work",
+      "ready_work",
+      "Ready_Work",
+      "_ready",
+      "2ready",
+      "unicode",
+      "ready.work",
+      "len64",
+      "len65",
+      "id-ready-rank",
+      "id-ready_rank",
+      "original-build",
+      "entity-ready-bead",
+      "relation-can-execute",
+      "ready-work@head",
+      "2ready@head",
+      "unicode@head",
+      "ready.work@head",
+      "len65@head",
+      "id-ready_rank@head",
+      "entity-ready-bead@head",
+      "relation-can-execute@head"
+    ],
+    "controls": [
+      "F-ENTRIES-REPLACE",
+      "F-DESTRUCTURED-REPLACEALL",
+      "F-KEYS-LOWER",
+      "F-BLOCK-LOCALE-UPPER",
+      "F-ALIAS-SPLIT",
+      "F-RELATIONS-UPPER",
+      "F-ENTITIES-NORMALIZE",
+      "F-PARTICIPANTS-LOCALE-LOWER",
+      "F-ASSIGNED-LOWER",
+      "F-REDUCE-UPPER",
+      "F-FOR-IN-SPLIT",
+      "F-REFERENCE-REPLACE",
+      "F-CODE-LITERAL",
+      "F-DOCUMENT-LITERAL",
+      "F-RAW-COMMENT",
+      "Q-OWN-LOWER",
+      "Q-OWN-DASH",
+      "Q-CLI-SCHEMA",
+      "Q-TABLE",
+      "Q-BYTE-EQUAL",
+      "R-UNTYPED-FLOW",
+      "R-UNTYPED-FLOW-FROM",
+      "R-COMPUTED",
+      "R-OTHER-METHOD",
+      "R-COMMENT",
+      "R-NAMESAKE",
+      "R-LITERAL"
+    ],
+    "mappingMutants": [
+      "M-NORMALIZE-MERGE",
+      "M-LAST-WINS",
+      "M-DROP-SOURCE",
+      "M-THROW-COLLISION",
+      "M-UNNAMED-COLLISION",
+      "M-SUFFIX-DEDUPE",
+      "M-TABLE-IGNORED",
+      "M-NO-BIJECTION-CHECK",
+      "M-INPUT-COLLISION"
+    ],
+    "transformMutants": [
+      "M-LOWER",
+      "M-DASH-UNDERSCORE",
+      "M-DASH-STRIP",
+      "M-NFKC",
+      "M-TRIM",
+      "M-TRUNCATE",
+      "M-LEADING-DIGIT",
+      "M-GRAMMAR-FORCE"
+    ],
+    "recorderMutants": [
+      "M-AUTO-REPAIR",
+      "M-REPAIR-NOTE",
+      "M-PATH-NORMALIZE",
+      "M-PATH-DROP",
+      "M-FIRST-ONLY",
+      "M-DEDUPE-MESSAGE",
+      "M-MESSAGE-TYPED",
+      "M-MESSAGE-TRIM",
+      "M-PATH-FROM-MESSAGE",
+      "M-UNTYPED",
+      "M-OK-COERCE"
+    ]
+  },
+  "residuals": [
+    "R-UNTYPED-FLOW",
+    "R-COMPUTED",
+    "R-OTHER-METHOD",
+    "R-COMMENT",
+    "R-NAMESAKE",
+    "R-LITERAL",
+    "R-OUTSIDE"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) an exporter fixture with kinds `ready-work` and `ready_work` yields two distinct FunctionIR names or a typed collision refusal, never one merged name, with the source label kept verbatim beside the mapped identifier: the two grammars read from the pin's lines decide every measured gp build as the installed gp did and the data layer admits both kinds as distinct schemas; the reference exporter carries each source label verbatim beside its identifier, passes both kinds through as two distinct names without a table, refuses a recorded table that collapses one onto the other as a typed collision naming both sources, refuses a table that is no bijection, and every merging, source-dropping or untyped mapping of the mutant table is refused by its rules",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "pin": "A1",
+            "grammar": {
+              "identifier": "^[A-Za-z_][A-Za-z0-9_]{0,63}$",
+              "programId": "^[a-z0-9][a-z0-9-]{0,63}$"
+            },
+            "installed": {
+              "sourceSha": "3f7d52cd1739",
+              "entrySha256": "0ad799c31da1dcd3",
+              "cleanTree": true
+            },
+            "verdicts": [
+              "ready-work rc 2 pattern refuses",
+              "ready_work rc 0 pattern admits",
+              "Ready_Work rc 0 pattern admits",
+              "_ready rc 0 pattern admits",
+              "2ready rc 2 pattern refuses",
+              "unicode rc 2 pattern refuses",
+              "ready.work rc 2 pattern refuses",
+              "len64 rc 0 pattern admits",
+              "len65 rc 2 pattern refuses",
+              "original-build rc 0 pattern admits"
+            ],
+            "programIds": [
+              "id-ready-rank rc 0",
+              "id-ready_rank rc 2"
+            ],
+            "checks": [
+              "check-ready-work rc 0 4d1af816",
+              "check-ready_work rc 0 54adf01c",
+              "check-original rc 0 47a0a22c"
+            ],
+            "f11": {
+              "dashedSchema": "7d714d1af816",
+              "underscoreProgram": "512fd0e49d74"
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "pin": "A2",
+            "fixture": [
+              "ready-work",
+              "ready_work"
+            ],
+            "outcomes": {
+              "T-EMPTY": "names ready-work=>ready-work ready_work=>ready_work",
+              "T-ESCAPE": "names ready-work=>ready_x2d_work ready_work=>ready_work",
+              "T-CHAIN": "names ready-work=>ready_work ready_work=>ready_work_u",
+              "T-COLLAPSE": "collision ready_work <- ready-work ready_work",
+              "T-NON-INJECTIVE": "table identifier-repeated",
+              "T-ABSENT-PARTNER": "table identifier-repeated",
+              "T-DUPLICATE-SOURCE": "table source-repeated"
+            },
+            "singles": 14,
+            "reference": []
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "pin": "A3",
+            "reference": [],
+            "mutants": {
+              "M-NORMALIZE-MERGE": [
+                "J-COLLISION",
+                "J-MERGE",
+                "J-TABLE",
+                "J-TABLE-BIJECTION",
+                "J-VERBATIM"
+              ],
+              "M-LAST-WINS": [
+                "J-COLLISION",
+                "J-SOURCE",
+                "J-TABLE-BIJECTION"
+              ],
+              "M-DROP-SOURCE": [
+                "J-SOURCE",
+                "J-TABLE"
+              ],
+              "M-THROW-COLLISION": [
+                "J-THROW"
+              ],
+              "M-UNNAMED-COLLISION": [
+                "J-COLLISION-TYPED"
+              ],
+              "M-SUFFIX-DEDUPE": [
+                "J-COLLISION",
+                "J-TABLE",
+                "J-TABLE-BIJECTION",
+                "J-VERBATIM"
+              ],
+              "M-TABLE-IGNORED": [
+                "J-COLLISION",
+                "J-TABLE",
+                "J-TABLE-BIJECTION"
+              ],
+              "M-NO-BIJECTION-CHECK": [
+                "J-TABLE-BIJECTION"
+              ],
+              "M-INPUT-COLLISION": [
+                "J-REFUSED-VALID"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) a fixture GF_IDENTIFIER_INVALID build refusal is recorded as a typed refusal carrying the producer's path string, not auto-repaired: the installed gp refused the dashed candidate type with exit 2, GP_CLI_PROGRAM_INVALID, no program identity and three GF_IDENTIFIER_INVALID rejections whose JSON pointers name the label in the presented program, as the pin's F11 record shows; the reference records every rejection's code, path and message verbatim in producer order, keyed by code and path so the head's changed message moves nothing else, and every repairing, path-rewriting, rejection-dropping or untyped recorder is refused",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "pin": "B1",
+            "exit": 2,
+            "envelope": "GP_CLI_PROGRAM_INVALID",
+            "identities": {},
+            "rejections": [
+              "GF_IDENTIFIER_INVALID@/graph_schema/candidate_types/ready-work",
+              "GF_IDENTIFIER_INVALID@/nodes/2/candidate",
+              "GF_IDENTIFIER_INVALID@/outputs/assign/of"
+            ],
+            "families": [
+              "candidate-type ready-work: /graph_schema/candidate_types/ready-work /nodes/2/candidate /outputs/assign/of",
+              "candidate-type 2ready: /graph_schema/candidate_types/2ready /nodes/2/candidate /outputs/assign/of",
+              "candidate-type unicode: /graph_schema/candidate_types/r\u00e9ady /nodes/2/candidate /outputs/assign/of",
+              "candidate-type ready.work: /graph_schema/candidate_types/ready.work /nodes/2/candidate /outputs/assign/of",
+              "candidate-type len65: /graph_schema/candidate_types/abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb /nodes/2/candidate /outputs/assign/of",
+              "entity-kind entity-ready-bead: /graph_schema/entity_kinds/ready-bead /graph_schema/relation_kinds/can_execute/roles/work/kind /graph_schema/relation_kinds/needs/roles/consumer/kind",
+              "relation-kind relation-can-execute: /graph_schema/relation_kinds/can-execute /graph_schema/candidate_types/assignments/of /inputs/aff/kind"
+            ],
+            "headMessage": "\"ready-work\" is not a valid identifier: schema element names, node ids, inputs, cells and outputs must match ^[A-Za-z_][A-Za-z0-9_]{0,63}$"
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "pin": "B2",
+            "cases": 22,
+            "outcomes": {
+              "ready-work": "refusal GP_CLI_PROGRAM_INVALID exit 2 GF_IDENTIFIER_INVALID@/graph_schema/candidate_types/ready-work GF_IDENTIFIER_INVALID@/nodes/2/candidate GF_IDENTIFIER_INVALID@/outputs/assign/of",
+              "ready_work": "accepted exit 0 graphpolicy.program.c1:1cebff456",
+              "Ready_Work": "accepted exit 0 graphpolicy.program.c1:f0f1bb9f9",
+              "_ready": "accepted exit 0 graphpolicy.program.c1:0cf780363",
+              "2ready": "refusal GP_CLI_PROGRAM_INVALID exit 2 GF_IDENTIFIER_INVALID@/graph_schema/candidate_types/2ready GF_IDENTIFIER_INVALID@/nodes/2/candidate GF_IDENTIFIER_INVALID@/outputs/assign/of",
+              "unicode": "refusal GP_CLI_PROGRAM_INVALID exit 2 GF_IDENTIFIER_INVALID@/graph_schema/candidate_types/r\u00e9ady GF_IDENTIFIER_INVALID@/nodes/2/candidate GF_IDENTIFIER_INVALID@/outputs/assign/of",
+              "ready.work": "refusal GP_CLI_PROGRAM_INVALID exit 2 GF_IDENTIFIER_INVALID@/graph_schema/candidate_types/ready.work GF_IDENTIFIER_INVALID@/nodes/2/candidate GF_IDENTIFIER_INVALID@/outputs/assign/of",
+              "len64": "accepted exit 0 graphpolicy.program.c1:761708c08",
+              "len65": "refusal GP_CLI_PROGRAM_INVALID exit 2 GF_IDENTIFIER_INVALID@/graph_schema/candidate_types/abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb GF_IDENTIFIER_INVALID@/nodes/2/candidate GF_IDENTIFIER_INVALID@/outputs/assign/of",
+              "id-ready-rank": "accepted exit 0 graphpolicy.program.c1:1fd397a6c",
+              "id-ready_rank": "refusal GP_CLI_PROGRAM_INVALID exit 2 GF_IDENTIFIER_INVALID@/id",
+              "original-build": "accepted exit 0 graphpolicy.program.c1:5a3bbd259",
+              "entity-ready-bead": "refusal GP_CLI_PROGRAM_INVALID exit 2 GF_IDENTIFIER_INVALID@/graph_schema/entity_kinds/ready-bead GF_IDENTIFIER_INVALID@/graph_schema/relation_kinds/can_execute/roles/work/kind GF_IDENTIFIER_INVALID@/graph_schema/relation_kinds/needs/roles/consumer/kind",
+              "relation-can-execute": "refusal GP_CLI_PROGRAM_INVALID exit 2 GF_IDENTIFIER_INVALID@/graph_schema/relation_kinds/can-execute GF_IDENTIFIER_INVALID@/graph_schema/candidate_types/assignments/of GF_IDENTIFIER_INVALID@/inputs/aff/kind",
+              "ready-work@head": "refusal GP_CLI_PROGRAM_INVALID exit 2 GF_IDENTIFIER_INVALID@/graph_schema/candidate_types/ready-work GF_IDENTIFIER_INVALID@/nodes/2/candidate GF_IDENTIFIER_INVALID@/outputs/assign/of",
+              "2ready@head": "refusal GP_CLI_PROGRAM_INVALID exit 2 GF_IDENTIFIER_INVALID@/graph_schema/candidate_types/2ready GF_IDENTIFIER_INVALID@/nodes/2/candidate GF_IDENTIFIER_INVALID@/outputs/assign/of",
+              "unicode@head": "refusal GP_CLI_PROGRAM_INVALID exit 2 GF_IDENTIFIER_INVALID@/graph_schema/candidate_types/r\u00e9ady GF_IDENTIFIER_INVALID@/nodes/2/candidate GF_IDENTIFIER_INVALID@/outputs/assign/of",
+              "ready.work@head": "refusal GP_CLI_PROGRAM_INVALID exit 2 GF_IDENTIFIER_INVALID@/graph_schema/candidate_types/ready.work GF_IDENTIFIER_INVALID@/nodes/2/candidate GF_IDENTIFIER_INVALID@/outputs/assign/of",
+              "len65@head": "refusal GP_CLI_PROGRAM_INVALID exit 2 GF_IDENTIFIER_INVALID@/graph_schema/candidate_types/abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb GF_IDENTIFIER_INVALID@/nodes/2/candidate GF_IDENTIFIER_INVALID@/outputs/assign/of",
+              "id-ready_rank@head": "refusal GP_CLI_PROGRAM_INVALID exit 2 GF_IDENTIFIER_INVALID@/id",
+              "entity-ready-bead@head": "refusal GP_CLI_PROGRAM_INVALID exit 2 GF_IDENTIFIER_INVALID@/graph_schema/entity_kinds/ready-bead GF_IDENTIFIER_INVALID@/graph_schema/relation_kinds/can_execute/roles/work/kind GF_IDENTIFIER_INVALID@/graph_schema/relation_kinds/needs/roles/consumer/kind",
+              "relation-can-execute@head": "refusal GP_CLI_PROGRAM_INVALID exit 2 GF_IDENTIFIER_INVALID@/graph_schema/relation_kinds/can-execute GF_IDENTIFIER_INVALID@/graph_schema/candidate_types/assignments/of GF_IDENTIFIER_INVALID@/inputs/aff/kind"
+            },
+            "reference": [],
+            "mutants": {
+              "M-AUTO-REPAIR": [
+                "K-NO-REPAIR"
+              ],
+              "M-REPAIR-NOTE": [
+                "K-NO-REPAIR"
+              ],
+              "M-PATH-NORMALIZE": [
+                "K-PATH"
+              ],
+              "M-PATH-DROP": [
+                "K-PATH"
+              ],
+              "M-FIRST-ONLY": [
+                "K-ALL"
+              ],
+              "M-DEDUPE-MESSAGE": [
+                "K-ALL"
+              ],
+              "M-MESSAGE-TYPED": [
+                "K-HEAD-STABLE",
+                "K-TYPED"
+              ],
+              "M-MESSAGE-TRIM": [
+                "K-MESSAGE"
+              ],
+              "M-PATH-FROM-MESSAGE": [
+                "K-PATH"
+              ],
+              "M-UNTYPED": [
+                "K-TYPED"
+              ],
+              "M-OK-COERCE": [
+                "K-ACCEPTED",
+                "K-NO-REPAIR"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) census: no exporter code path lowercases or replaces '-' in a kind label outside a recorded bijection table: today no Pi exporter exists (0 GraphDataIR hits at d75b68d1) - no module below src, qa or examples names a FunctionIR or GraphDataIR kind field, document id or producer code, no case fold, normalization, replacement or split runs over a kind label, and no file below them names GraphDataIR or FunctionIR; the reference renames a label only through its recorded table and every transforming exporter is refused",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "pin": "C1",
+            "roots": [
+              "src",
+              "qa",
+              "examples"
+            ],
+            "floors": {
+              "src": 100,
+              "qa": 55,
+              "examples": 5
+            },
+            "floorsMet": true,
+            "transformFloor": 150,
+            "transformFloorMet": true,
+            "spellings": [],
+            "transforms": [],
+            "raw": [],
+            "otherHits": [],
+            "symlinks": [],
+            "unreadable": [],
+            "controls": [
+              "F-ENTRIES-REPLACE flagged posture=true transform=true raw=false",
+              "F-DESTRUCTURED-REPLACEALL flagged posture=true transform=true raw=false",
+              "F-KEYS-LOWER flagged posture=true transform=true raw=false",
+              "F-BLOCK-LOCALE-UPPER flagged posture=true transform=true raw=false",
+              "F-ALIAS-SPLIT flagged posture=true transform=true raw=false",
+              "F-RELATIONS-UPPER flagged posture=true transform=true raw=false",
+              "F-ENTITIES-NORMALIZE flagged posture=true transform=true raw=false",
+              "F-PARTICIPANTS-LOCALE-LOWER flagged posture=true transform=true raw=false",
+              "F-ASSIGNED-LOWER flagged posture=true transform=true raw=false",
+              "F-REDUCE-UPPER flagged posture=true transform=true raw=false",
+              "F-FOR-IN-SPLIT flagged posture=true transform=true raw=false",
+              "F-REFERENCE-REPLACE flagged posture=true transform=true raw=false",
+              "F-CODE-LITERAL flagged posture=true transform=false raw=false",
+              "F-DOCUMENT-LITERAL flagged posture=true transform=false raw=false",
+              "F-RAW-COMMENT flagged posture=false transform=false raw=true",
+              "Q-OWN-LOWER quiet posture=false transform=false raw=false",
+              "Q-OWN-DASH quiet posture=false transform=false raw=false",
+              "Q-CLI-SCHEMA quiet posture=false transform=false raw=false",
+              "Q-TABLE quiet posture=true transform=false raw=false",
+              "Q-BYTE-EQUAL quiet posture=true transform=false raw=false",
+              "R-UNTYPED-FLOW residual posture=true transform=false raw=false",
+              "R-UNTYPED-FLOW-FROM residual posture=true transform=false raw=false",
+              "R-COMPUTED residual posture=false transform=false raw=false",
+              "R-OTHER-METHOD residual posture=true transform=false raw=false",
+              "R-COMMENT residual posture=false transform=false raw=false",
+              "R-NAMESAKE residual posture=false transform=false raw=false",
+              "R-LITERAL residual posture=false transform=false raw=false"
+            ],
+            "outside": {
+              "judged": true,
+              "unjudged": false
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "pin": "C2",
+            "singles": 14,
+            "honoured": "names ready-work=>ready_x2d_work ready-bead=>ready-bead",
+            "mutants": {
+              "M-LOWER": [
+                "J-VERBATIM"
+              ],
+              "M-DASH-UNDERSCORE": [
+                "J-REFUSED-VALID",
+                "J-VERBATIM"
+              ],
+              "M-DASH-STRIP": [
+                "J-VERBATIM"
+              ],
+              "M-NFKC": [
+                "J-VERBATIM"
+              ],
+              "M-TRIM": [
+                "J-VERBATIM"
+              ],
+              "M-TRUNCATE": [
+                "J-VERBATIM"
+              ],
+              "M-LEADING-DIGIT": [
+                "J-VERBATIM"
+              ],
+              "M-GRAMMAR-FORCE": [
+                "J-REFUSED-VALID",
+                "J-VERBATIM"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+    "A1",
+    "A2",
+    "A3",
+    "B1",
+    "B2",
+    "C1",
+    "C2",
+    "records: every registered test ran once in run mode in roster order and every pin reached its end"
+  ],
+  "producer": {
+    "pin": "0107c72992f35cf6832a37615a25c7df45747ebc",
+    "installed": {
+      "sourceSha": "3f7d52cd17397d8ed22e2c768714a057fe098b62",
+      "entry": "ts/dist/main.js",
+      "entrySha256": "0ad799c31da1dcd3ea3abf78bb099a407072c11ce63a76c2c6a1dd6b9ba52bd4",
+      "cleanTree": true,
+      "capturedUtc": [
+        "2026-10-23T15:42:42Z",
+        "2026-10-23T15:49:46Z"
+      ]
+    },
+    "head": "b361dacbe40a7eca8fd991a082746ff44e6baa72",
+    "lines": {
+      "02-contract-audit.md:100": "**Decision D-NAMES-1 (open):** `IDENTIFIER_PATTERN` for FunctionIR names (`[A-Za-z_][A-Za-z0-9_]{0,63}`) differs from `PROGRAM_ID_PATTERN` slug IDs (`[a-z0-9][a-z0-9-]{0,63}`) and permissive source GraphDataIR kind labels. A `ready-work` source candidate type can therefore pass graph check but fail build. Decide to (a) keep the strict grammar and specify a lossless, collision-detecting external-to-FunctionIR mapping, or (b) amend FunctionIR grammar with compatibility/version rules. Never silently rename types or introduce collisions; diagnostics must show the actual accepted grammar and path.",
+      "03-developer-workplan.md:58": "4. Decide D-NAMES-1 on source kind names vs FunctionIR identifiers. Test `ready-work`, `ready_bead`, a program ID containing dash vs underscore, Unicode, leading digit, max length, and normalization collisions. If mapping is used, make it bijective over the admitted input set or reject collisions; retain the source label for observability.",
+      "04-verification-playbook.md:98": "Run `gp graph check` and `gp build` with schema-derived candidate and entity kind `ready-work`; compare `ready_work`, plus program ID `ready-rank` vs `ready_rank`. Capture the exact `GF_IDENTIFIER_INVALID` paths and compare to `IDENTIFIER_PATTERN` and `PROGRAM_ID_PATTERN`. Test mapping collisions if any adapter/name-map proposal is accepted. Do not loosen the grammar until ruled.",
+      "04-verification-playbook.md:125": "| Naming grammar and mapping | Yes | Build/check pair | FunctionIR reader | Dash/underscore/collision | Adapter can represent source names |",
+      "01-finding-inventory.md:19": "| F11 | [dashed source identifiers accepted in data, rejected in program](../../../new-feedback/2026-10-21-program-identifiers-admit-no-dash-so-ready-work-passes-gp-graph-check-and-fails-gp-build-while-the-program-id-takes-the-opposite-rule.md) | Not in ledger; `IDENTIFIER_PATTERN` vs `PROGRAM_ID_PATTERN` differ by design; disposition needs ruling | RC-NAMES |",
+      "ts/src/function-ir/catalogue.ts:405": "export const IDENTIFIER_PATTERN = /^[A-Za-z_][A-Za-z0-9_]{0,63}$/;",
+      "ts/src/function-ir/catalogue.ts:406": "export const PROGRAM_ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,63}$/;",
+      "ts/src/function-ir/structure.ts:257": "    this.sink.add(\"GF_IDENTIFIER_INVALID\", this.at(key), `\"${v}\" is not a valid identifier`);",
+      "new-feedback/2026-10-21-program-identifiers-admit-no-dash-so-ready-work-passes-gp-graph-check-and-fails-gp-build-while-the-program-id-takes-the-opposite-rule.md:37": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":false,\"error\":{\"code\":\"GP_CLI_PROGRAM_INVALID\",\"category\":\"invalid-input\",\"retryable\":false,\"details\":{\"rejections\":[{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/graph_schema/candidate_types/ready-work\",\"message\":\"\\\"ready-work\\\" is not a valid identifier\"},{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/nodes/2/candidate\",\"message\":\"\\\"ready-work\\\" is not a valid identifier\"},{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/outputs/assign/of\",\"message\":\"\\\"ready-work\\\" is not a valid identifier\"}]}},\"identities\":{},\"capabilities\":{\u2026}}",
+      "new-feedback/2026-10-21-program-identifiers-admit-no-dash-so-ready-work-passes-gp-graph-check-and-fails-gp-build-while-the-program-id-takes-the-opposite-rule.md:41": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":true,\"result\":{\"backend\":{\"name\":\"reference\",\u2026},\u2026,\"program\":\"graphpolicy.program.c1:1cebff456d7a225e0f25786e9800c42e16e572c78d4db9eb1b0a512fd0e49d74\",\u2026",
+      "new-feedback/2026-10-21-program-identifiers-admit-no-dash-so-ready-work-passes-gp-graph-check-and-fails-gp-build-while-the-program-id-takes-the-opposite-rule.md:53": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":true,\"result\":{\"valid\":true,\u2026},\"identities\":{\"schema\":\"graphpolicy.schema.c1:33f61045ac97894f5892841237394b8ae26555e23182bb2de8027d714d1af816\",\"graph\":\"graphpolicy.snapshot.c1:69ce84735635f9c2c96a8bc0f05fa7f407fc73d89b76b5d1163cace3a364266a\"},\u2026}   (exit 0)"
+    },
+    "installedLines": {
+      "docs/dev/RULINGS.md:778": "| GP-FCA/D-NAMES-1 | RULED-OTHER | Two identifier grammars are ratified; mapping or broadening changes literal bindings | Retain both; put exact grammar in GF messages and a layer-legal function_ir_names graph-check advisory; no silent rename | 2026-10-22 |",
+      "docs/dev/RULINGS.md:800": "**GP-FCA/D-NAMES-1 \u2014 RULED-OTHER.** **Observed:** `ready-work` is a valid data schema candidate label but fails FunctionIR at three GF_IDENTIFIER_INVALID sites; `ready_work` builds (`verifier-d-names-1/evidence.json`; `ts/src/function-ir/catalogue.ts:405-406`; `ts/src/data-ir/validate.ts:535-559`). **Normed:** IMPL-1304 fixes FunctionIR's `^[A-Za-z_][A-Za-z0-9_]{0,63}$` and program-id's `^[a-z0-9][a-z0-9-]{0,63}$` (`docs/dev/DECISIONS.md:295-303`; ratification `docs/dev/RULINGS.md:54`); data identifiers remain literal/opaque (`requirements/ATOMIC-REQUIREMENTS.md:68-69,135`). **Ruled:** preserve both grammars, no GP-generated mapping and no FunctionIR grammar widening; error messages state the exact grammar; data-ir enumerates six declaration families **without importing function-ir**, function-ir filters with its own single regex, CLI graph check exposes additive `function_ir_names {grammar,unmirrorable}`. **Proven:** round-2 verifier confirms the layering repair (`verifier-d-names-1/r2-verify-kRafE9/evidence.json`; `docs/dev/ORGANIZATION.md:144-146`). **Compatibility:** data digests and accepted names unchanged; valid dashed labels remain valid graphs with an advisory, not silently renamed or rejected. A later grammar change needs the ADR-GP-015-style change process (`docs/program/15-adrs.md:39`), with schema-major **or** documented compatible extension as decided then.",
+      "docs/dev/RULINGS.md:810": "7. **D-NAMES-1 \u00d7 D-EVAL-1/2:** graph-check advisory is a result key, not FunctionIR admission and not a new RPC `validateGraph` contract. FunctionIR's GF_IDENTIFIER_INVALID message may change without changing code/path; D-EVAL-1's plural RPC rejections may carry messages, but do not use that to alter accepted grammar (`docs/dev/DECISIONS.md:283-303`; `docs/program/10-cli-sdk.md:21,30`).",
+      "ts/src/function-ir/catalogue.ts:405": "export const IDENTIFIER_PATTERN = /^[A-Za-z_][A-Za-z0-9_]{0,63}$/;",
+      "ts/src/function-ir/catalogue.ts:406": "export const PROGRAM_ID_PATTERN = /^[a-z0-9][a-z0-9-]{0,63}$/;",
+      "ts/src/function-ir/structure.ts:257": "    this.sink.add(\"GF_IDENTIFIER_INVALID\", this.at(key), `\"${v}\" is not a valid identifier`);"
+    },
+    "headLines": {
+      "docs/dev/DECISIONS.md:5394": "- **Decision.** Every non-program-id GF_IDENTIFIER_INVALID message is exactly `\"<name>\" is not a valid identifier: schema element names, node ids, inputs, cells and outputs must match ^[A-Za-z_][A-Za-z0-9_]{0,63}$`. The grammar text is DERIVED from the one regex literal: TS `IDENTIFIER_GRAMMAR = IDENTIFIER_PATTERN.source`, Python `IDENTIFIER_GRAMMAR = f\"^{IDENTIFIER_PATTERN.pattern}$\"` (the Python pattern stays unanchored for `fullmatch`, IMPL-1304's newline note), and one helper per runtime (`invalidIdentifierMessage` / `invalid_identifier_message`, `function-ir/catalogue`) serves the four sites of each runtime (TS `structure.ts` dimension map, identifier entries, `identifier()`, tuple members; Python `reader.py` x3, `structure_schema.py` tuple members). The program-id message, every code, path and the collect-all order are unchanged; RPC surfaces stay code/path-only (RULINGS \u00a79 consistency item 7).",
+      "ts/src/function-ir/catalogue.ts:405": "export const IDENTIFIER_PATTERN = /^[A-Za-z_][A-Za-z0-9_]{0,63}$/;",
+      "ts/src/function-ir/catalogue.ts:411": "  return `\"${name}\" is not a valid identifier: schema element names, node ids, inputs, cells and outputs must match ${IDENTIFIER_GRAMMAR}`;",
+      "ts/src/function-ir/structure.ts:254": "    this.sink.add(\"GF_IDENTIFIER_INVALID\", this.at(key), invalidIdentifierMessage(v));"
+    },
+    "program": {
+      "path": "fixtures/conformance/host-adapter/program.json",
+      "blob": "ef964ee6237e1d365425ab464eb33e2eb06b6d3c",
+      "sha256": "676a5063dc3ac5cc40854be724e91e0865c953dfa65ba1b45aa2687b7fc206fa",
+      "bytes": "{\n  \"schema\": \"graphpolicy.function.v1\",\n  \"id\": \"host-adapter-assign\",\n  \"canonicalization\": \"graphpolicy.c1\",\n  \"numerical_profile\": \"graphpolicy.numeric.binary32.v1\",\n  \"max_rounds\": 1,\n  \"backend_features\": [\n    \"reference\"\n  ],\n  \"graph_schema\": {\n    \"digest\": \"sha256:f43017c2b463a5de92800ca1f50951b99ef1ca7b83edc7dde9baf7f54e9a55ce\",\n    \"entity_kinds\": {\n      \"agent\": {\n        \"features\": {\n          \"capacity\": 1\n        }\n      },\n      \"task\": {\n        \"features\": {\n          \"priority\": 1\n        }\n      },\n      \"resource\": {\n        \"features\": {\n          \"units\": 1\n        }\n      }\n    },\n    \"relation_kinds\": {\n      \"can_execute\": {\n        \"roles\": {\n          \"worker\": {\n            \"kind\": \"agent\",\n            \"ordered\": false\n          },\n          \"work\": {\n            \"kind\": \"task\",\n            \"ordered\": false\n          }\n        },\n        \"features\": {\n          \"affinity\": 1\n        },\n        \"incidence_features\": {}\n      },\n      \"needs\": {\n        \"roles\": {\n          \"consumer\": {\n            \"kind\": \"task\",\n            \"ordered\": false\n          },\n          \"supply\": {\n            \"kind\": \"resource\",\n            \"ordered\": false\n          }\n        },\n        \"features\": {},\n        \"incidence_features\": {}\n      }\n    },\n    \"global_features\": {},\n    \"candidate_types\": {\n      \"assignments\": {\n        \"kind\": \"relation\",\n        \"of\": \"can_execute\"\n      }\n    }\n  },\n  \"budget\": {\n    \"max_entities\": 64,\n    \"max_relations\": 256,\n    \"max_incidences\": 512,\n    \"max_candidates\": 8,\n    \"max_depth\": 16,\n    \"max_activation_bytes\": 262144\n  },\n  \"inputs\": {\n    \"aff\": {\n      \"of\": \"relation\",\n      \"kind\": \"can_execute\",\n      \"slot\": \"affinity\",\n      \"missing\": \"mask\"\n    }\n  },\n  \"parameters\": {\n    \"Ws\": {\n      \"shape\": [\n        2,\n        1\n      ],\n      \"dtype\": \"binary32\"\n    }\n  },\n  \"nodes\": [\n    {\n      \"id\": \"x\",\n      \"op\": \"feature.read\",\n      \"input\": \"aff\"\n    },\n    {\n      \"id\": \"xc\",\n      \"op\": \"concat\",\n      \"inputs\": [\n        {\n          \"node\": \"x\",\n          \"port\": \"value\"\n        },\n        {\n          \"node\": \"x\",\n          \"port\": \"mask\"\n        }\n      ]\n    },\n    {\n      \"id\": \"cg\",\n      \"op\": \"candidate.gather\",\n      \"input\": {\n        \"node\": \"xc\",\n        \"port\": \"out\"\n      },\n      \"candidate\": \"assignments\"\n    },\n    {\n      \"id\": \"sc\",\n      \"op\": \"score\",\n      \"input\": {\n        \"node\": \"cg\",\n        \"port\": \"out\"\n      },\n      \"weight\": \"Ws\"\n    }\n  ],\n  \"outputs\": {\n    \"assign\": {\n      \"kind\": \"candidate\",\n      \"of\": \"assignments\",\n      \"source\": {\n        \"node\": \"sc\",\n        \"port\": \"out\"\n      },\n      \"dim\": 1\n    }\n  }\n}\n"
+    },
+    "schema": {
+      "path": "fixtures/conformance/host-adapter/schema.json",
+      "blob": "1abcb7277bf898f5d308c525eba6b9eec3d7da04",
+      "sha256": "36fc58bd31edca6d71dd5af499bc94a80204385250db91eff05cf1ae20c7ed85",
+      "bytes": "{\n  \"schema\": \"graphpolicy.data.v1\",\n  \"version\": \"1.0.0\",\n  \"digest\": \"sha256:f43017c2b463a5de92800ca1f50951b99ef1ca7b83edc7dde9baf7f54e9a55ce\",\n  \"entityKinds\": {\n    \"agent\": {\n      \"features\": {\n        \"capacity\": {\n          \"kind\": \"scalar\",\n          \"dimension\": 1,\n          \"representation\": \"binary32\",\n          \"statuses\": [\n            \"known\",\n            \"unknown\"\n          ]\n        }\n      }\n    },\n    \"task\": {\n      \"features\": {\n        \"priority\": {\n          \"kind\": \"scalar\",\n          \"dimension\": 1,\n          \"representation\": \"binary32\",\n          \"statuses\": [\n            \"known\",\n            \"unknown\"\n          ]\n        }\n      }\n    },\n    \"resource\": {\n      \"features\": {\n        \"units\": {\n          \"kind\": \"scalar\",\n          \"dimension\": 1,\n          \"representation\": \"binary32\",\n          \"statuses\": [\n            \"known\"\n          ]\n        }\n      }\n    }\n  },\n  \"relationKinds\": {\n    \"can_execute\": {\n      \"features\": {\n        \"affinity\": {\n          \"kind\": \"scalar\",\n          \"dimension\": 1,\n          \"representation\": \"binary32\",\n          \"statuses\": [\n            \"known\",\n            \"unknown\"\n          ]\n        }\n      },\n      \"roles\": {\n        \"worker\": {\n          \"participantKinds\": [\n            \"agent\"\n          ],\n          \"min\": 1,\n          \"max\": 1\n        },\n        \"work\": {\n          \"participantKinds\": [\n            \"task\"\n          ],\n          \"min\": 1,\n          \"max\": 1\n        }\n      }\n    },\n    \"needs\": {\n      \"features\": {},\n      \"roles\": {\n        \"consumer\": {\n          \"participantKinds\": [\n            \"task\"\n          ],\n          \"min\": 1,\n          \"max\": 1\n        },\n        \"supply\": {\n          \"participantKinds\": [\n            \"resource\"\n          ],\n          \"min\": 1,\n          \"max\": 1\n        }\n      }\n    }\n  },\n  \"candidateTypes\": {\n    \"assignments\": {\n      \"kind\": \"relation-set\",\n      \"relationKind\": \"can_execute\"\n    }\n  }\n}\n"
+    },
+    "snapshot": {
+      "path": "fixtures/conformance/host-adapter/snapshot.json",
+      "blob": "127c80eb0f6cd8ff393d3e373a692eac3ad0fd17",
+      "sha256": "06d3bcbb80f339636874630a8ae6c259ad14fb2251d485b72b4e28b62022fa2d"
+    },
+    "runs": [
+      {
+        "id": "ready-work",
+        "verb": "build",
+        "family": "candidate-type",
+        "from": "assignments",
+        "label": "ready-work",
+        "presentedSha256": "6fa9851557c828b18a027b68ab3ceb18aa2726605edd0f6db718ddfe9d1333f9",
+        "rc": 2,
+        "stderr": "",
+        "stdout": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":false,\"error\":{\"code\":\"GP_CLI_PROGRAM_INVALID\",\"category\":\"invalid-input\",\"retryable\":false,\"details\":{\"rejections\":[{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/graph_schema/candidate_types/ready-work\",\"message\":\"\\\"ready-work\\\" is not a valid identifier\"},{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/nodes/2/candidate\",\"message\":\"\\\"ready-work\\\" is not a valid identifier\"},{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/outputs/assign/of\",\"message\":\"\\\"ready-work\\\" is not a valid identifier\"}]}},\"identities\":{},\"capabilities\":{\"surface\":[\"init\",\"graph check\",\"check\",\"build\",\"inspect\",\"eval\",\"sample\",\"train\",\"test\",\"benchmark\",\"feedback add\",\"promote\",\"rpc\"],\"volatileFields\":[],\"maxInputBytes\":16777216,\"backends\":[{\"name\":\"pyg\",\"against\":\"reference\",\"parity\":\"undeclared\"}],\"commands\":[\"graph check\",\"build\",\"init\",\"check\",\"test\",\"compose build\",\"compose bind\",\"inspect errors\",\"inspect checkpoint\",\"inspect limits\",\"inspect program\",\"eval\",\"sample\",\"promote\",\"inspect artifact\",\"inspect decision\",\"inspect run\",\"feedback add\",\"journal append\",\"rpc --stdio\",\"skill install\",\"skill provenance\",\"skill plugin install\",\"store policy\",\"store put\",\"store export\",\"store sweep\",\"store pack\",\"store unpack\",\"store declare\"]}}\n"
+      },
+      {
+        "id": "ready_work",
+        "verb": "build",
+        "family": "candidate-type",
+        "from": "assignments",
+        "label": "ready_work",
+        "presentedSha256": "6b0031babbddd67a8a32785de6e01cbe001b9cbf6a5a4ead128b9e85ee459f28",
+        "rc": 0,
+        "stderr": "",
+        "stdout": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":true,\"result\":{\"backend\":{\"name\":\"reference\",\"version\":\"0.1.0\",\"pin\":\"sha256:677770ec634d68f675499c5f3860119b9a26b17fb4374ab36162541cbb0e254a\"},\"effects\":{\"observed\":\"none\",\"harness\":\"graphpolicy.harness.noeffect.v1\",\"covered_paths\":[\"program_load\",\"checkpoint_load\",\"transport_parse\",\"rpc_parse\"]},\"artifact\":{\"bytes\":1541},\"program\":\"graphpolicy.program.c1:1cebff456d7a225e0f25786e9800c42e16e572c78d4db9eb1b0a512fd0e49d74\",\"static_bound\":{\"activation_bytes\":4192},\"receipt\":{\"cache_status\":{\"program\":\"disabled\"},\"backend_profile\":{\"backend\":\"reference\",\"backend_version\":\"0.1.0\",\"numerical_profile\":\"graphpolicy.numeric.binary32.v1\"},\"plan_digest\":\"graphpolicy.program.c1:1cebff456d7a225e0f25786e9800c42e16e572c78d4db9eb1b0a512fd0e49d74\",\"portability\":\"portable\"}},\"identities\":{\"program\":\"graphpolicy.program.c1:1cebff456d7a225e0f25786e9800c42e16e572c78d4db9eb1b0a512fd0e49d74\"},\"capabilities\":{\"surface\":[\"init\",\"graph check\",\"check\",\"build\",\"inspect\",\"eval\",\"sample\",\"train\",\"test\",\"benchmark\",\"feedback add\",\"promote\",\"rpc\"],\"volatileFields\":[],\"maxInputBytes\":16777216,\"backends\":[{\"name\":\"pyg\",\"against\":\"reference\",\"parity\":\"undeclared\"}],\"commands\":[\"graph check\",\"build\",\"init\",\"check\",\"test\",\"compose build\",\"compose bind\",\"inspect errors\",\"inspect checkpoint\",\"inspect limits\",\"inspect program\",\"eval\",\"sample\",\"promote\",\"inspect artifact\",\"inspect decision\",\"inspect run\",\"feedback add\",\"journal append\",\"rpc --stdio\",\"skill install\",\"skill provenance\",\"skill plugin install\",\"store policy\",\"store put\",\"store export\",\"store sweep\",\"store pack\",\"store unpack\",\"store declare\"]}}\n"
+      },
+      {
+        "id": "Ready_Work",
+        "verb": "build",
+        "family": "candidate-type",
+        "from": "assignments",
+        "label": "Ready_Work",
+        "presentedSha256": "34b66fb02a3ca5a9372b1623498a0a2aa5a6aeeaefc5914074928a9f01ecf1c8",
+        "rc": 0,
+        "stderr": "",
+        "stdout": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":true,\"result\":{\"backend\":{\"name\":\"reference\",\"version\":\"0.1.0\",\"pin\":\"sha256:677770ec634d68f675499c5f3860119b9a26b17fb4374ab36162541cbb0e254a\"},\"effects\":{\"observed\":\"none\",\"harness\":\"graphpolicy.harness.noeffect.v1\",\"covered_paths\":[\"program_load\",\"checkpoint_load\",\"transport_parse\",\"rpc_parse\"]},\"artifact\":{\"bytes\":1541},\"program\":\"graphpolicy.program.c1:f0f1bb9f927107bd76d3c4383602bb8cfeee1820675f72400a6282064b7aeb3d\",\"static_bound\":{\"activation_bytes\":4192},\"receipt\":{\"cache_status\":{\"program\":\"disabled\"},\"backend_profile\":{\"backend\":\"reference\",\"backend_version\":\"0.1.0\",\"numerical_profile\":\"graphpolicy.numeric.binary32.v1\"},\"plan_digest\":\"graphpolicy.program.c1:f0f1bb9f927107bd76d3c4383602bb8cfeee1820675f72400a6282064b7aeb3d\",\"portability\":\"portable\"}},\"identities\":{\"program\":\"graphpolicy.program.c1:f0f1bb9f927107bd76d3c4383602bb8cfeee1820675f72400a6282064b7aeb3d\"},\"capabilities\":{\"surface\":[\"init\",\"graph check\",\"check\",\"build\",\"inspect\",\"eval\",\"sample\",\"train\",\"test\",\"benchmark\",\"feedback add\",\"promote\",\"rpc\"],\"volatileFields\":[],\"maxInputBytes\":16777216,\"backends\":[{\"name\":\"pyg\",\"against\":\"reference\",\"parity\":\"undeclared\"}],\"commands\":[\"graph check\",\"build\",\"init\",\"check\",\"test\",\"compose build\",\"compose bind\",\"inspect errors\",\"inspect checkpoint\",\"inspect limits\",\"inspect program\",\"eval\",\"sample\",\"promote\",\"inspect artifact\",\"inspect decision\",\"inspect run\",\"feedback add\",\"journal append\",\"rpc --stdio\",\"skill install\",\"skill provenance\",\"skill plugin install\",\"store policy\",\"store put\",\"store export\",\"store sweep\",\"store pack\",\"store unpack\",\"store declare\"]}}\n"
+      },
+      {
+        "id": "_ready",
+        "verb": "build",
+        "family": "candidate-type",
+        "from": "assignments",
+        "label": "_ready",
+        "presentedSha256": "ba61844c1c512525b5ad272a78fde4ecd4d0b4e25eab6a394144ee68f56426d3",
+        "rc": 0,
+        "stderr": "",
+        "stdout": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":true,\"result\":{\"backend\":{\"name\":\"reference\",\"version\":\"0.1.0\",\"pin\":\"sha256:677770ec634d68f675499c5f3860119b9a26b17fb4374ab36162541cbb0e254a\"},\"effects\":{\"observed\":\"none\",\"harness\":\"graphpolicy.harness.noeffect.v1\",\"covered_paths\":[\"program_load\",\"checkpoint_load\",\"transport_parse\",\"rpc_parse\"]},\"artifact\":{\"bytes\":1529},\"program\":\"graphpolicy.program.c1:0cf780363779b36244e58d0bff1420080214aca984451c025b1a057533362da8\",\"static_bound\":{\"activation_bytes\":4192},\"receipt\":{\"cache_status\":{\"program\":\"disabled\"},\"backend_profile\":{\"backend\":\"reference\",\"backend_version\":\"0.1.0\",\"numerical_profile\":\"graphpolicy.numeric.binary32.v1\"},\"plan_digest\":\"graphpolicy.program.c1:0cf780363779b36244e58d0bff1420080214aca984451c025b1a057533362da8\",\"portability\":\"portable\"}},\"identities\":{\"program\":\"graphpolicy.program.c1:0cf780363779b36244e58d0bff1420080214aca984451c025b1a057533362da8\"},\"capabilities\":{\"surface\":[\"init\",\"graph check\",\"check\",\"build\",\"inspect\",\"eval\",\"sample\",\"train\",\"test\",\"benchmark\",\"feedback add\",\"promote\",\"rpc\"],\"volatileFields\":[],\"maxInputBytes\":16777216,\"backends\":[{\"name\":\"pyg\",\"against\":\"reference\",\"parity\":\"undeclared\"}],\"commands\":[\"graph check\",\"build\",\"init\",\"check\",\"test\",\"compose build\",\"compose bind\",\"inspect errors\",\"inspect checkpoint\",\"inspect limits\",\"inspect program\",\"eval\",\"sample\",\"promote\",\"inspect artifact\",\"inspect decision\",\"inspect run\",\"feedback add\",\"journal append\",\"rpc --stdio\",\"skill install\",\"skill provenance\",\"skill plugin install\",\"store policy\",\"store put\",\"store export\",\"store sweep\",\"store pack\",\"store unpack\",\"store declare\"]}}\n"
+      },
+      {
+        "id": "2ready",
+        "verb": "build",
+        "family": "candidate-type",
+        "from": "assignments",
+        "label": "2ready",
+        "presentedSha256": "d048390c972100b46240ed5f25847e6a0be8d12e008987329e1e5f0c9e623caa",
+        "rc": 2,
+        "stderr": "",
+        "stdout": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":false,\"error\":{\"code\":\"GP_CLI_PROGRAM_INVALID\",\"category\":\"invalid-input\",\"retryable\":false,\"details\":{\"rejections\":[{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/graph_schema/candidate_types/2ready\",\"message\":\"\\\"2ready\\\" is not a valid identifier\"},{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/nodes/2/candidate\",\"message\":\"\\\"2ready\\\" is not a valid identifier\"},{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/outputs/assign/of\",\"message\":\"\\\"2ready\\\" is not a valid identifier\"}]}},\"identities\":{},\"capabilities\":{\"surface\":[\"init\",\"graph check\",\"check\",\"build\",\"inspect\",\"eval\",\"sample\",\"train\",\"test\",\"benchmark\",\"feedback add\",\"promote\",\"rpc\"],\"volatileFields\":[],\"maxInputBytes\":16777216,\"backends\":[{\"name\":\"pyg\",\"against\":\"reference\",\"parity\":\"undeclared\"}],\"commands\":[\"graph check\",\"build\",\"init\",\"check\",\"test\",\"compose build\",\"compose bind\",\"inspect errors\",\"inspect checkpoint\",\"inspect limits\",\"inspect program\",\"eval\",\"sample\",\"promote\",\"inspect artifact\",\"inspect decision\",\"inspect run\",\"feedback add\",\"journal append\",\"rpc --stdio\",\"skill install\",\"skill provenance\",\"skill plugin install\",\"store policy\",\"store put\",\"store export\",\"store sweep\",\"store pack\",\"store unpack\",\"store declare\"]}}\n"
+      },
+      {
+        "id": "unicode",
+        "verb": "build",
+        "family": "candidate-type",
+        "from": "assignments",
+        "label": "r\u00e9ady",
+        "presentedSha256": "8bc0db6f808581f5ab012f059c5e1c7731bf746cc520914a19041ba0a5522910",
+        "rc": 2,
+        "stderr": "",
+        "stdout": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":false,\"error\":{\"code\":\"GP_CLI_PROGRAM_INVALID\",\"category\":\"invalid-input\",\"retryable\":false,\"details\":{\"rejections\":[{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/graph_schema/candidate_types/r\u00e9ady\",\"message\":\"\\\"r\u00e9ady\\\" is not a valid identifier\"},{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/nodes/2/candidate\",\"message\":\"\\\"r\u00e9ady\\\" is not a valid identifier\"},{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/outputs/assign/of\",\"message\":\"\\\"r\u00e9ady\\\" is not a valid identifier\"}]}},\"identities\":{},\"capabilities\":{\"surface\":[\"init\",\"graph check\",\"check\",\"build\",\"inspect\",\"eval\",\"sample\",\"train\",\"test\",\"benchmark\",\"feedback add\",\"promote\",\"rpc\"],\"volatileFields\":[],\"maxInputBytes\":16777216,\"backends\":[{\"name\":\"pyg\",\"against\":\"reference\",\"parity\":\"undeclared\"}],\"commands\":[\"graph check\",\"build\",\"init\",\"check\",\"test\",\"compose build\",\"compose bind\",\"inspect errors\",\"inspect checkpoint\",\"inspect limits\",\"inspect program\",\"eval\",\"sample\",\"promote\",\"inspect artifact\",\"inspect decision\",\"inspect run\",\"feedback add\",\"journal append\",\"rpc --stdio\",\"skill install\",\"skill provenance\",\"skill plugin install\",\"store policy\",\"store put\",\"store export\",\"store sweep\",\"store pack\",\"store unpack\",\"store declare\"]}}\n"
+      },
+      {
+        "id": "ready.work",
+        "verb": "build",
+        "family": "candidate-type",
+        "from": "assignments",
+        "label": "ready.work",
+        "presentedSha256": "45a06c87e69e5cf8d486b8e28b4cd5612a3b1a8abbc8110a57fd797e0c1c0793",
+        "rc": 2,
+        "stderr": "",
+        "stdout": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":false,\"error\":{\"code\":\"GP_CLI_PROGRAM_INVALID\",\"category\":\"invalid-input\",\"retryable\":false,\"details\":{\"rejections\":[{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/graph_schema/candidate_types/ready.work\",\"message\":\"\\\"ready.work\\\" is not a valid identifier\"},{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/nodes/2/candidate\",\"message\":\"\\\"ready.work\\\" is not a valid identifier\"},{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/outputs/assign/of\",\"message\":\"\\\"ready.work\\\" is not a valid identifier\"}]}},\"identities\":{},\"capabilities\":{\"surface\":[\"init\",\"graph check\",\"check\",\"build\",\"inspect\",\"eval\",\"sample\",\"train\",\"test\",\"benchmark\",\"feedback add\",\"promote\",\"rpc\"],\"volatileFields\":[],\"maxInputBytes\":16777216,\"backends\":[{\"name\":\"pyg\",\"against\":\"reference\",\"parity\":\"undeclared\"}],\"commands\":[\"graph check\",\"build\",\"init\",\"check\",\"test\",\"compose build\",\"compose bind\",\"inspect errors\",\"inspect checkpoint\",\"inspect limits\",\"inspect program\",\"eval\",\"sample\",\"promote\",\"inspect artifact\",\"inspect decision\",\"inspect run\",\"feedback add\",\"journal append\",\"rpc --stdio\",\"skill install\",\"skill provenance\",\"skill plugin install\",\"store policy\",\"store put\",\"store export\",\"store sweep\",\"store pack\",\"store unpack\",\"store declare\"]}}\n"
+      },
+      {
+        "id": "len64",
+        "verb": "build",
+        "family": "candidate-type",
+        "from": "assignments",
+        "label": "abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "presentedSha256": "bdb4b64bdd9140fb22ff46bab2a6c8f8e2709121e214f7054a0bf6f8ca81d7fd",
+        "rc": 0,
+        "stderr": "",
+        "stdout": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":true,\"result\":{\"backend\":{\"name\":\"reference\",\"version\":\"0.1.0\",\"pin\":\"sha256:677770ec634d68f675499c5f3860119b9a26b17fb4374ab36162541cbb0e254a\"},\"effects\":{\"observed\":\"none\",\"harness\":\"graphpolicy.harness.noeffect.v1\",\"covered_paths\":[\"program_load\",\"checkpoint_load\",\"transport_parse\",\"rpc_parse\"]},\"artifact\":{\"bytes\":1703},\"program\":\"graphpolicy.program.c1:761708c088374ab5f10f14b5bf1c6b83e74670afdafaed8ee6525fb4a8a54efc\",\"static_bound\":{\"activation_bytes\":4192},\"receipt\":{\"cache_status\":{\"program\":\"disabled\"},\"backend_profile\":{\"backend\":\"reference\",\"backend_version\":\"0.1.0\",\"numerical_profile\":\"graphpolicy.numeric.binary32.v1\"},\"plan_digest\":\"graphpolicy.program.c1:761708c088374ab5f10f14b5bf1c6b83e74670afdafaed8ee6525fb4a8a54efc\",\"portability\":\"portable\"}},\"identities\":{\"program\":\"graphpolicy.program.c1:761708c088374ab5f10f14b5bf1c6b83e74670afdafaed8ee6525fb4a8a54efc\"},\"capabilities\":{\"surface\":[\"init\",\"graph check\",\"check\",\"build\",\"inspect\",\"eval\",\"sample\",\"train\",\"test\",\"benchmark\",\"feedback add\",\"promote\",\"rpc\"],\"volatileFields\":[],\"maxInputBytes\":16777216,\"backends\":[{\"name\":\"pyg\",\"against\":\"reference\",\"parity\":\"undeclared\"}],\"commands\":[\"graph check\",\"build\",\"init\",\"check\",\"test\",\"compose build\",\"compose bind\",\"inspect errors\",\"inspect checkpoint\",\"inspect limits\",\"inspect program\",\"eval\",\"sample\",\"promote\",\"inspect artifact\",\"inspect decision\",\"inspect run\",\"feedback add\",\"journal append\",\"rpc --stdio\",\"skill install\",\"skill provenance\",\"skill plugin install\",\"store policy\",\"store put\",\"store export\",\"store sweep\",\"store pack\",\"store unpack\",\"store declare\"]}}\n"
+      },
+      {
+        "id": "len65",
+        "verb": "build",
+        "family": "candidate-type",
+        "from": "assignments",
+        "label": "abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "presentedSha256": "44516520ab26a98eb1546a3877f8d52d5d83ef7a651172f382fff72928fff66a",
+        "rc": 2,
+        "stderr": "",
+        "stdout": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":false,\"error\":{\"code\":\"GP_CLI_PROGRAM_INVALID\",\"category\":\"invalid-input\",\"retryable\":false,\"details\":{\"rejections\":[{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/graph_schema/candidate_types/abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\",\"message\":\"\\\"abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\\\" is not a valid identifier\"},{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/nodes/2/candidate\",\"message\":\"\\\"abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\\\" is not a valid identifier\"},{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/outputs/assign/of\",\"message\":\"\\\"abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb\\\" is not a valid identifier\"}]}},\"identities\":{},\"capabilities\":{\"surface\":[\"init\",\"graph check\",\"check\",\"build\",\"inspect\",\"eval\",\"sample\",\"train\",\"test\",\"benchmark\",\"feedback add\",\"promote\",\"rpc\"],\"volatileFields\":[],\"maxInputBytes\":16777216,\"backends\":[{\"name\":\"pyg\",\"against\":\"reference\",\"parity\":\"undeclared\"}],\"commands\":[\"graph check\",\"build\",\"init\",\"check\",\"test\",\"compose build\",\"compose bind\",\"inspect errors\",\"inspect checkpoint\",\"inspect limits\",\"inspect program\",\"eval\",\"sample\",\"promote\",\"inspect artifact\",\"inspect decision\",\"inspect run\",\"feedback add\",\"journal append\",\"rpc --stdio\",\"skill install\",\"skill provenance\",\"skill plugin install\",\"store policy\",\"store put\",\"store export\",\"store sweep\",\"store pack\",\"store unpack\",\"store declare\"]}}\n"
+      },
+      {
+        "id": "id-ready-rank",
+        "verb": "build",
+        "family": "program-id",
+        "from": "host-adapter-assign",
+        "label": "ready-rank",
+        "presentedSha256": "571bbfc42a4a4344c0fa7b988715e72b18ae55d420a9df076118f1e28ae70266",
+        "rc": 0,
+        "stderr": "",
+        "stdout": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":true,\"result\":{\"backend\":{\"name\":\"reference\",\"version\":\"0.1.0\",\"pin\":\"sha256:677770ec634d68f675499c5f3860119b9a26b17fb4374ab36162541cbb0e254a\"},\"effects\":{\"observed\":\"none\",\"harness\":\"graphpolicy.harness.noeffect.v1\",\"covered_paths\":[\"program_load\",\"checkpoint_load\",\"transport_parse\",\"rpc_parse\"]},\"artifact\":{\"bytes\":1535},\"program\":\"graphpolicy.program.c1:1fd397a6cba13705066fe7feba6a43604d43c3583d891bb6a7fce9571d73bc22\",\"static_bound\":{\"activation_bytes\":4192},\"receipt\":{\"cache_status\":{\"program\":\"disabled\"},\"backend_profile\":{\"backend\":\"reference\",\"backend_version\":\"0.1.0\",\"numerical_profile\":\"graphpolicy.numeric.binary32.v1\"},\"plan_digest\":\"graphpolicy.program.c1:1fd397a6cba13705066fe7feba6a43604d43c3583d891bb6a7fce9571d73bc22\",\"portability\":\"portable\"}},\"identities\":{\"program\":\"graphpolicy.program.c1:1fd397a6cba13705066fe7feba6a43604d43c3583d891bb6a7fce9571d73bc22\"},\"capabilities\":{\"surface\":[\"init\",\"graph check\",\"check\",\"build\",\"inspect\",\"eval\",\"sample\",\"train\",\"test\",\"benchmark\",\"feedback add\",\"promote\",\"rpc\"],\"volatileFields\":[],\"maxInputBytes\":16777216,\"backends\":[{\"name\":\"pyg\",\"against\":\"reference\",\"parity\":\"undeclared\"}],\"commands\":[\"graph check\",\"build\",\"init\",\"check\",\"test\",\"compose build\",\"compose bind\",\"inspect errors\",\"inspect checkpoint\",\"inspect limits\",\"inspect program\",\"eval\",\"sample\",\"promote\",\"inspect artifact\",\"inspect decision\",\"inspect run\",\"feedback add\",\"journal append\",\"rpc --stdio\",\"skill install\",\"skill provenance\",\"skill plugin install\",\"store policy\",\"store put\",\"store export\",\"store sweep\",\"store pack\",\"store unpack\",\"store declare\"]}}\n"
+      },
+      {
+        "id": "id-ready_rank",
+        "verb": "build",
+        "family": "program-id",
+        "from": "host-adapter-assign",
+        "label": "ready_rank",
+        "presentedSha256": "084afffe2a96dd7f009669ef3b8423fce903d26f374016d57d646d2402052ef2",
+        "rc": 2,
+        "stderr": "",
+        "stdout": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":false,\"error\":{\"code\":\"GP_CLI_PROGRAM_INVALID\",\"category\":\"invalid-input\",\"retryable\":false,\"details\":{\"rejections\":[{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/id\",\"message\":\"program id must match ^[a-z0-9][a-z0-9-]{0,63}$\"}]}},\"identities\":{},\"capabilities\":{\"surface\":[\"init\",\"graph check\",\"check\",\"build\",\"inspect\",\"eval\",\"sample\",\"train\",\"test\",\"benchmark\",\"feedback add\",\"promote\",\"rpc\"],\"volatileFields\":[],\"maxInputBytes\":16777216,\"backends\":[{\"name\":\"pyg\",\"against\":\"reference\",\"parity\":\"undeclared\"}],\"commands\":[\"graph check\",\"build\",\"init\",\"check\",\"test\",\"compose build\",\"compose bind\",\"inspect errors\",\"inspect checkpoint\",\"inspect limits\",\"inspect program\",\"eval\",\"sample\",\"promote\",\"inspect artifact\",\"inspect decision\",\"inspect run\",\"feedback add\",\"journal append\",\"rpc --stdio\",\"skill install\",\"skill provenance\",\"skill plugin install\",\"store policy\",\"store put\",\"store export\",\"store sweep\",\"store pack\",\"store unpack\",\"store declare\"]}}\n"
+      },
+      {
+        "id": "check-ready-work",
+        "verb": "graph check",
+        "family": "candidate-type",
+        "from": "assignments",
+        "label": "ready-work",
+        "presentedSha256": "67e7a83cadee0b37749a51ccfe1b75b712b81e0a7de39bbc652184288151931c",
+        "rc": 0,
+        "stderr": "",
+        "stdout": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":true,\"result\":{\"valid\":true,\"components\":{\"V\":6,\"E\":7,\"I\":14,\"tauV\":3,\"tauE\":2,\"rho\":4,\"o\":0,\"X\":10,\"M\":10,\"P\":1,\"S\":1,\"b\":1},\"incidence_count\":14,\"order_declared\":false,\"ordered_roles\":[],\"digest_checks\":{\"canonical\":\"verified\",\"source\":\"carried-unverified\",\"source_digest_verified\":false,\"source_digest_verifier\":null}},\"identities\":{\"schema\":\"graphpolicy.schema.c1:33f61045ac97894f5892841237394b8ae26555e23182bb2de8027d714d1af816\",\"graph\":\"graphpolicy.snapshot.c1:69ce84735635f9c2c96a8bc0f05fa7f407fc73d89b76b5d1163cace3a364266a\"},\"capabilities\":{\"surface\":[\"init\",\"graph check\",\"check\",\"build\",\"inspect\",\"eval\",\"sample\",\"train\",\"test\",\"benchmark\",\"feedback add\",\"promote\",\"rpc\"],\"volatileFields\":[],\"maxInputBytes\":16777216,\"backends\":[{\"name\":\"pyg\",\"against\":\"reference\",\"parity\":\"undeclared\"}],\"commands\":[\"graph check\",\"build\",\"init\",\"check\",\"test\",\"compose build\",\"compose bind\",\"inspect errors\",\"inspect checkpoint\",\"inspect limits\",\"inspect program\",\"eval\",\"sample\",\"promote\",\"inspect artifact\",\"inspect decision\",\"inspect run\",\"feedback add\",\"journal append\",\"rpc --stdio\",\"skill install\",\"skill provenance\",\"skill plugin install\",\"store policy\",\"store put\",\"store export\",\"store sweep\",\"store pack\",\"store unpack\",\"store declare\"]}}\n"
+      },
+      {
+        "id": "check-ready_work",
+        "verb": "graph check",
+        "family": "candidate-type",
+        "from": "assignments",
+        "label": "ready_work",
+        "presentedSha256": "c0a8366c1b72dd78ce281a42139d7bbfffb158d2c7e4c3471bdeeba1859260a6",
+        "rc": 0,
+        "stderr": "",
+        "stdout": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":true,\"result\":{\"valid\":true,\"components\":{\"V\":6,\"E\":7,\"I\":14,\"tauV\":3,\"tauE\":2,\"rho\":4,\"o\":0,\"X\":10,\"M\":10,\"P\":1,\"S\":1,\"b\":1},\"incidence_count\":14,\"order_declared\":false,\"ordered_roles\":[],\"digest_checks\":{\"canonical\":\"verified\",\"source\":\"carried-unverified\",\"source_digest_verified\":false,\"source_digest_verifier\":null}},\"identities\":{\"schema\":\"graphpolicy.schema.c1:96fc49f9dd0946638b5f3db0080eaa7cdd6adc4b2524fcdae19bdf4d54adf01c\",\"graph\":\"graphpolicy.snapshot.c1:69ce84735635f9c2c96a8bc0f05fa7f407fc73d89b76b5d1163cace3a364266a\"},\"capabilities\":{\"surface\":[\"init\",\"graph check\",\"check\",\"build\",\"inspect\",\"eval\",\"sample\",\"train\",\"test\",\"benchmark\",\"feedback add\",\"promote\",\"rpc\"],\"volatileFields\":[],\"maxInputBytes\":16777216,\"backends\":[{\"name\":\"pyg\",\"against\":\"reference\",\"parity\":\"undeclared\"}],\"commands\":[\"graph check\",\"build\",\"init\",\"check\",\"test\",\"compose build\",\"compose bind\",\"inspect errors\",\"inspect checkpoint\",\"inspect limits\",\"inspect program\",\"eval\",\"sample\",\"promote\",\"inspect artifact\",\"inspect decision\",\"inspect run\",\"feedback add\",\"journal append\",\"rpc --stdio\",\"skill install\",\"skill provenance\",\"skill plugin install\",\"store policy\",\"store put\",\"store export\",\"store sweep\",\"store pack\",\"store unpack\",\"store declare\"]}}\n"
+      },
+      {
+        "id": "check-original",
+        "verb": "graph check",
+        "family": "candidate-type",
+        "from": "assignments",
+        "label": "assignments",
+        "presentedSha256": "36fc58bd31edca6d71dd5af499bc94a80204385250db91eff05cf1ae20c7ed85",
+        "rc": 0,
+        "stderr": "",
+        "stdout": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":true,\"result\":{\"valid\":true,\"components\":{\"V\":6,\"E\":7,\"I\":14,\"tauV\":3,\"tauE\":2,\"rho\":4,\"o\":0,\"X\":10,\"M\":10,\"P\":1,\"S\":1,\"b\":1},\"incidence_count\":14,\"order_declared\":false,\"ordered_roles\":[],\"digest_checks\":{\"canonical\":\"verified\",\"source\":\"carried-unverified\",\"source_digest_verified\":false,\"source_digest_verifier\":null}},\"identities\":{\"schema\":\"graphpolicy.schema.c1:3e444e78e3f757c43b801e7b4abb939ad12055faf78c9a3843c111da47a0a22c\",\"graph\":\"graphpolicy.snapshot.c1:69ce84735635f9c2c96a8bc0f05fa7f407fc73d89b76b5d1163cace3a364266a\"},\"capabilities\":{\"surface\":[\"init\",\"graph check\",\"check\",\"build\",\"inspect\",\"eval\",\"sample\",\"train\",\"test\",\"benchmark\",\"feedback add\",\"promote\",\"rpc\"],\"volatileFields\":[],\"maxInputBytes\":16777216,\"backends\":[{\"name\":\"pyg\",\"against\":\"reference\",\"parity\":\"undeclared\"}],\"commands\":[\"graph check\",\"build\",\"init\",\"check\",\"test\",\"compose build\",\"compose bind\",\"inspect errors\",\"inspect checkpoint\",\"inspect limits\",\"inspect program\",\"eval\",\"sample\",\"promote\",\"inspect artifact\",\"inspect decision\",\"inspect run\",\"feedback add\",\"journal append\",\"rpc --stdio\",\"skill install\",\"skill provenance\",\"skill plugin install\",\"store policy\",\"store put\",\"store export\",\"store sweep\",\"store pack\",\"store unpack\",\"store declare\"]}}\n"
+      },
+      {
+        "id": "original-build",
+        "verb": "build",
+        "family": "candidate-type",
+        "from": "assignments",
+        "label": "assignments",
+        "presentedSha256": "676a5063dc3ac5cc40854be724e91e0865c953dfa65ba1b45aa2687b7fc206fa",
+        "rc": 0,
+        "stderr": "",
+        "stdout": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":true,\"result\":{\"backend\":{\"name\":\"reference\",\"version\":\"0.1.0\",\"pin\":\"sha256:677770ec634d68f675499c5f3860119b9a26b17fb4374ab36162541cbb0e254a\"},\"effects\":{\"observed\":\"none\",\"harness\":\"graphpolicy.harness.noeffect.v1\",\"covered_paths\":[\"program_load\",\"checkpoint_load\",\"transport_parse\",\"rpc_parse\"]},\"artifact\":{\"bytes\":1544},\"program\":\"graphpolicy.program.c1:5a3bbd259e9bf3f2fe9014f444ebe758e8d2009a04d182068e6e2c1c77609afa\",\"static_bound\":{\"activation_bytes\":4192},\"receipt\":{\"cache_status\":{\"program\":\"disabled\"},\"backend_profile\":{\"backend\":\"reference\",\"backend_version\":\"0.1.0\",\"numerical_profile\":\"graphpolicy.numeric.binary32.v1\"},\"plan_digest\":\"graphpolicy.program.c1:5a3bbd259e9bf3f2fe9014f444ebe758e8d2009a04d182068e6e2c1c77609afa\",\"portability\":\"portable\"}},\"identities\":{\"program\":\"graphpolicy.program.c1:5a3bbd259e9bf3f2fe9014f444ebe758e8d2009a04d182068e6e2c1c77609afa\"},\"capabilities\":{\"surface\":[\"init\",\"graph check\",\"check\",\"build\",\"inspect\",\"eval\",\"sample\",\"train\",\"test\",\"benchmark\",\"feedback add\",\"promote\",\"rpc\"],\"volatileFields\":[],\"maxInputBytes\":16777216,\"backends\":[{\"name\":\"pyg\",\"against\":\"reference\",\"parity\":\"undeclared\"}],\"commands\":[\"graph check\",\"build\",\"init\",\"check\",\"test\",\"compose build\",\"compose bind\",\"inspect errors\",\"inspect checkpoint\",\"inspect limits\",\"inspect program\",\"eval\",\"sample\",\"promote\",\"inspect artifact\",\"inspect decision\",\"inspect run\",\"feedback add\",\"journal append\",\"rpc --stdio\",\"skill install\",\"skill provenance\",\"skill plugin install\",\"store policy\",\"store put\",\"store export\",\"store sweep\",\"store pack\",\"store unpack\",\"store declare\"]}}\n"
+      },
+      {
+        "id": "entity-ready-bead",
+        "verb": "build",
+        "family": "entity-kind",
+        "from": "task",
+        "label": "ready-bead",
+        "presentedSha256": "6db9e3bd714820d895299db43ed6bd68bc978c5bfb1f82e34cec9411bb386b70",
+        "rc": 2,
+        "stderr": "",
+        "stdout": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":false,\"error\":{\"code\":\"GP_CLI_PROGRAM_INVALID\",\"category\":\"invalid-input\",\"retryable\":false,\"details\":{\"rejections\":[{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/graph_schema/entity_kinds/ready-bead\",\"message\":\"\\\"ready-bead\\\" is not a valid identifier\"},{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/graph_schema/relation_kinds/can_execute/roles/work/kind\",\"message\":\"\\\"ready-bead\\\" is not a valid identifier\"},{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/graph_schema/relation_kinds/needs/roles/consumer/kind\",\"message\":\"\\\"ready-bead\\\" is not a valid identifier\"}]}},\"identities\":{},\"capabilities\":{\"surface\":[\"init\",\"graph check\",\"check\",\"build\",\"inspect\",\"eval\",\"sample\",\"train\",\"test\",\"benchmark\",\"feedback add\",\"promote\",\"rpc\"],\"volatileFields\":[],\"maxInputBytes\":16777216,\"backends\":[{\"name\":\"pyg\",\"against\":\"reference\",\"parity\":\"undeclared\"}],\"commands\":[\"graph check\",\"build\",\"init\",\"check\",\"test\",\"compose build\",\"compose bind\",\"inspect errors\",\"inspect checkpoint\",\"inspect limits\",\"inspect program\",\"eval\",\"sample\",\"promote\",\"inspect artifact\",\"inspect decision\",\"inspect run\",\"feedback add\",\"journal append\",\"rpc --stdio\",\"skill install\",\"skill provenance\",\"skill plugin install\",\"store policy\",\"store put\",\"store export\",\"store sweep\",\"store pack\",\"store unpack\",\"store declare\"]}}\n"
+      },
+      {
+        "id": "relation-can-execute",
+        "verb": "build",
+        "family": "relation-kind",
+        "from": "can_execute",
+        "label": "can-execute",
+        "presentedSha256": "fe4a6704b9abe1c38e62168b9ab9dfdf822fe374d3328be109a9c14778b78d6a",
+        "rc": 2,
+        "stderr": "",
+        "stdout": "{\"schema\":\"graphpolicy.cli.v1\",\"ok\":false,\"error\":{\"code\":\"GP_CLI_PROGRAM_INVALID\",\"category\":\"invalid-input\",\"retryable\":false,\"details\":{\"rejections\":[{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/graph_schema/relation_kinds/can-execute\",\"message\":\"\\\"can-execute\\\" is not a valid identifier\"},{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/graph_schema/candidate_types/assignments/of\",\"message\":\"\\\"can-execute\\\" is not a valid identifier\"},{\"code\":\"GF_IDENTIFIER_INVALID\",\"path\":\"/inputs/aff/kind\",\"message\":\"\\\"can-execute\\\" is not a valid identifier\"}]}},\"identities\":{},\"capabilities\":{\"surface\":[\"init\",\"graph check\",\"check\",\"build\",\"inspect\",\"eval\",\"sample\",\"train\",\"test\",\"benchmark\",\"feedback add\",\"promote\",\"rpc\"],\"volatileFields\":[],\"maxInputBytes\":16777216,\"backends\":[{\"name\":\"pyg\",\"against\":\"reference\",\"parity\":\"undeclared\"}],\"commands\":[\"graph check\",\"build\",\"init\",\"check\",\"test\",\"compose build\",\"compose bind\",\"inspect errors\",\"inspect checkpoint\",\"inspect limits\",\"inspect program\",\"eval\",\"sample\",\"promote\",\"inspect artifact\",\"inspect decision\",\"inspect run\",\"feedback add\",\"journal append\",\"rpc --stdio\",\"skill install\",\"skill provenance\",\"skill plugin install\",\"store policy\",\"store put\",\"store export\",\"store sweep\",\"store pack\",\"store unpack\",\"store declare\"]}}\n"
+      }
+    ]
+  }
+}

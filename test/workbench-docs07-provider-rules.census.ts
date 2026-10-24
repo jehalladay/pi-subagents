@@ -20,6 +20,13 @@
  * cases, so its derived-basis-echoed half reads red (absent) on every tree that does not carry them: the row lands after
  * wb-4ap.1.
  *
+ * Row F5 (wb-6ps1.2, R2 (a)) is the Forge provider's gate.run selection sentence: the producer's selected-versus-complete
+ * universe travels beside the verdict as its own facet, a short or narrowed run renders partial, a malformed selection
+ * unknown, neither success, and a gate-step node never carries the workspace verdict. Each clause binds to the wb-6ps1.2 cases
+ * of test/workbench-forge-operation-observer.test.ts under their describe path. Its identity is frozen as a literal (rule 16),
+ * and the FORGE ANCHOR reads the live Forge paragraph: every sentence of it is one Forge row's quote or one of the three named
+ * unbound sentences, so a row removed from every literal of this file (CT5/CT6) is still red against the docs.
+ *
  * The docs pin reads the RENDERED view through the helper's docsSection / sectionMatches: each of the six sections, under
  * its unique level-2 heading of the level-1 parent heading and bounded at the next level-1/2 heading or EOF, must render
  * as exactly its frozen paragraph. A dropped or reworded clause names its row. The docs drift falsifiers run over a
@@ -127,6 +134,13 @@ const BASIS_SENTENCE =
   "The gate.status reader echoes the producer's per-package derived-verdict basis (last_result_state.invalidation_basis.derived_from) as the package snapshot basis, distinct from the workspace basis of WB-025 (02-atomic-requirements.md), and quotes the producer's freshness word verbatim; it never recomputes freshness, never fabricates a basis when the descriptor is absent or malformed, and freshness never confers current authority (authoritative_current alone does).";
 
 /**
+ * wb-6ps1.2 (R2 (a)): the Forge provider paragraph's sentence on the gate.run reader's selected-versus-complete facet. Row F5
+ * quotes it whole; FROZEN_F5 repeats it as a literal and the FORGE ANCHOR reads it from the live paragraph.
+ */
+const SELECTION_SENTENCE =
+  "The gate.run reader carries the producer's selected-versus-complete universe (data.selection_accounting for the declared steps or members, data.selection for the tests) beside the operation's verdict as its own facet; a run that selected fewer units than it declared or narrowed its tests renders partial, a selection that is not well formed renders unknown, neither ever renders success, and a gate-step node carries only its own step's outcome, never the workspace verdict.";
+
+/**
  * wb-973.17 (SWARM-CONTEXT-GRAPH-R17 (c)): the RF paragraph's sentence on the contractSource release and the live drift
  * guard. Row R5 quotes it whole; FROZEN_R5_QUOTE repeats it as a literal.
  */
@@ -146,7 +160,7 @@ const LEGACY_ARGV_SENTENCE = "The legacy {model, task} argv is frozen byte for b
 /** The six frozen docs/07 section paragraphs, as the markdown source says them. */
 const SECTION_MARKDOWN: Readonly<Record<string, string>> = {
   "Forge provider":
-    `Use public Forge TypeScript App Server/facade or other current SDK. Initial functions: build/verification, affected/incremental selection, inspect artifact and operation. Preserve actual source basis, full verdict axes, reason codes, reuse/cache evidence and partial/unknown states. ${BASIS_SENTENCE} A successful RPC or shell exit does **not** equal verified Forge PASS. Prefer Forge first for gates, test, build and packaging. Workspace Families and global cache designs must be probed for actual shipped availability before calling child creation or cache APIs.`,
+    `Use public Forge TypeScript App Server/facade or other current SDK. Initial functions: build/verification, affected/incremental selection, inspect artifact and operation. Preserve actual source basis, full verdict axes, reason codes, reuse/cache evidence and partial/unknown states. ${BASIS_SENTENCE} A successful RPC or shell exit does **not** equal verified Forge PASS. ${SELECTION_SENTENCE} Prefer Forge first for gates, test, build and packaging. Workspace Families and global cache designs must be probed for actual shipped availability before calling child creation or cache APIs.`,
   "Furnace provider":
     "Use public TypeScript client for runs.start/get/status/events/pause/stop as verified. Native Run/Work/Attempt and supervision semantics remain Furnace's. Future idempotent ensure/reconcile and convenience wait methods are upstream targets, not an assumed API. Ambiguous runs.start timeout -> uncertain/reconcile; do not issue second start blindly. A Furnace host may use ExecutorApp over the per-Attempt embedded bridge to call a MechanicalWorkflows function, with the application outcome mapped explicitly to the four-word Furnace execution result (only status is read; failure_class and data are not); failure and indeterminate park the Run rather than retrying, cancellation is a cooperative AbortSignal, and transport success is never domain verification.",
   "HyperUnix provider":
@@ -167,6 +181,8 @@ const sectionBlocks = (heading: string): readonly RenderedBlock[] => {
 };
 
 const CAPABILITY_SUITE = "no native cancel: the typed capability-unavailable refusal quotes the measured surface, never a shell-out or a minted verb";
+/** wb-6ps1.2: the describe path holding the gate.run selection cases row F5 binds (its pins bind the describe as well as the case). */
+const SELECTION_SUITE = "wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict";
 /** wb-693.9: the describe paths holding the R1/R4 cases row R4 binds (its pins bind the describe as well as the case). */
 const RELEASE_SUITE = "producer release from result.provenance.cli_version (wb-2j3.1 reader, wb-2j3.2 no-synthesis guard)";
 const ENGINE_SUITE = "engine identity from result.provenance.sdk_versions (wb-693.1 R1, wb-693.2 R2, wb-693.3 R3)";
@@ -266,6 +282,35 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
       ]),
       gate("no-current-authority", [
         pin("forge-observer", "F13 (wb-4ap.5): withPackages(current) keeps unknown tone, partial coverage, the historical label and the workspace literal"),
+      ]),
+    ],
+  },
+  {
+    row: "F5",
+    section: "Forge provider",
+    source: "docs",
+    quote: SELECTION_SENTENCE,
+    // One half per clause, in the sentence's order. Every pin is a wb-6ps1.2 case of the forge-operation observer test under
+    // its describe path, so a same-titled case anywhere else never counts; a renamed, deleted or skipped pin reads red.
+    halves: [
+      gate("facet-travels", [
+        pin("forge-operation-observer", "wb-6ps1.2 (a): the measured complete selection (3 of 3 steps) travels with the verdict as its own facet, complete coverage, and the command status keeps its tone", [SELECTION_SUITE]),
+        pin("forge-operation-observer", "wb-6ps1.2 (a): the facet sits after the echoed disposition, which routes through the shared label layout (a bidi override or a line break displays as a space)", [SELECTION_SUITE]),
+        pin("forge-operation-observer", "wb-6ps1.2 (a): a reply that publishes no selection block keeps the a3s reading - no facet, no coverage, the command status's tone", [SELECTION_SUITE]),
+      ]),
+      gate("short-renders-partial", [
+        pin("forge-operation-observer", "wb-6ps1.2 (a): the measured --only selection (1 of 3 steps) renders partial with its own facet and never success, whatever command status the reply states", [SELECTION_SUITE]),
+        pin("forge-operation-observer", "wb-6ps1.2 (a): a selection short of complete by any unselected state - unaffected, explicitly_narrowed or unknown - renders partial, never success", [SELECTION_SUITE]),
+        pin("forge-operation-observer", "wb-6ps1.2 (a): the documented member fan-out whose every member skipped as unaffected (0 of 2 members, exit 0) renders partial, never success", [SELECTION_SUITE]),
+        pin("forge-operation-observer", "wb-6ps1.2 (a): the measured -- <args> run (status success, gate_verdict null, data.selection narrowed) renders partial with a tests facet beside the complete step facet, never success", [SELECTION_SUITE]),
+      ]),
+      gate("malformed-renders-unknown", [
+        eachPinIn("forge-operation-observer", "wb-6ps1.2 (a): %s is withheld as selection UNKNOWN, unknown coverage, and never lets a success tone stand", 11, [SELECTION_SUITE]),
+        pin("forge-operation-observer", "wb-6ps1.2 (a): a malformed test-selection block is withheld as tests UNKNOWN and never lets a success tone stand", [SELECTION_SUITE]),
+      ]),
+      gate("step-never-verdict", [
+        pin("forge-operation-observer", "wb-6ps1.2 (a): through the live observer the measured --only reply settles the operation node partial with its facet, and a gate-step node never carries the workspace verdict", [SELECTION_SUITE]),
+        pin("forge-operation-observer", "wb-6ps1.2 (a): a gate-step node never carries the workspace verdict - a failed step stays failed under a complete success reply, and a passed step stays passed under a failure reply", [SELECTION_SUITE]),
       ]),
     ],
   },
@@ -576,7 +621,7 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
   },
 ]);
 
-const ROW_IDS: readonly string[] = ["F1", "F2", "F3", "F4", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "B1", "B2", "S1", "S2"];
+const ROW_IDS: readonly string[] = ["F1", "F2", "F3", "F4", "F5", "U1", "U2", "U3", "U4", "U5", "U6", "U7", "U8", "H1", "H2", "R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "B1", "B2", "S1", "S2"];
 /** Every half that has no landed case, as "row/half"; a seat that lands a case flips the half consciously and edits this list. */
 const UNPINNED_HALVES: readonly string[] = ["F3/whole", "U7/events", "U8/negative-verbs", "R3/whole", "S1/owner-basis", "S1/observed-evidence", "S1/trace-correlation-recorded"];
 
@@ -635,6 +680,10 @@ const FROZEN_JUDGED_SHAPE: readonly string[] = [
   "F4/absent-no-basis:1",
   "F4/malformed-no-basis:2",
   "F4/no-current-authority:1",
+  "F5/facet-travels:3",
+  "F5/short-renders-partial:4",
+  "F5/malformed-renders-unknown:2",
+  "F5/step-never-verdict:2",
   "U1/whole:2",
   "U2/whole:2",
   "U3/whole:1",
@@ -721,10 +770,10 @@ const RF_UNBOUND_SENTENCES: readonly string[] = ["Use actual public render/conte
 const sentencesOf = (text: string): string[] => text.split(/(?<=\.) (?=[A-Z])/u);
 
 describe("wb-6hb.11 docs/workbench/07 provider-rules census (report mode)", () => {
-  it("AC1: the table holds the twenty-seven frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
+  it("AC1: the table holds the twenty-eight frozen rows in order, deeply frozen, each quote verbatim in its section's source", () => {
     expect(isDeepFrozen(TABLE)).toBe(true);
     expect(TABLE.map(row => row.row)).toEqual(ROW_IDS);
-    expect(TABLE).toHaveLength(27);
+    expect(TABLE).toHaveLength(28);
     expect(JUDGED.map(({ row, half }) => `${row.row}/${half.id}:${half.pins.length}`)).toEqual(FROZEN_JUDGED_SHAPE);
     expect(docsFailures(readRepo(DOCS_FILE))).toEqual([]);
   });
@@ -940,6 +989,12 @@ describe("wb-6hb.11 docs drift names the row or the section (synthetic document,
   it("K4 (wb-4ap.10) names row F4 (and only it) when the basis sentence lets the reader fabricate a basis", () => {
     const lines = docsFailures(synthetic(edit("Forge provider", "never fabricates a basis when", "may fabricate a basis when")));
     expect(named(lines)).toEqual(["row F4"]);
+    expect(lines.some(line => line.includes("Forge provider is not exactly its frozen paragraph"))).toBe(true);
+  });
+
+  it("K9 (wb-6ps1.2) names row F5 (and only it) when the selection sentence lets a short or narrowed run render success", () => {
+    const lines = docsFailures(synthetic(edit("Forge provider", "neither ever renders success", "either may render success")));
+    expect(named(lines)).toEqual(["row F5"]);
     expect(lines.some(line => line.includes("Forge provider is not exactly its frozen paragraph"))).toBe(true);
   });
 
@@ -2613,6 +2668,69 @@ describe("wb-lybr every read of EXPECTATION resolves to the literal identifier (
     expect(READ_ROSTER).toEqual(tables.readRoster);
     expect(LYBR_READS).toEqual(tables.readerRows);
     expect(LYBR_RESIDUALS).toEqual(tables.readerResiduals);
+  });
+});
+
+/**
+ * wb-6ps1.2 (rule 16): row F5's quote and binding as literals, never derived from TABLE - the sentence whole, then every pin as
+ * "half | tier | file | describe path | title" (an it.each pin adds its table-row floor) - so a shortened sentence, a dropped,
+ * swapped or re-homed pin or a relabelled tier reads red.
+ */
+const FROZEN_F5_QUOTE =
+  "The gate.run reader carries the producer's selected-versus-complete universe (data.selection_accounting for the declared steps or members, data.selection for the tests) beside the operation's verdict as its own facet; a run that selected fewer units than it declared or narrowed its tests renders partial, a selection that is not well formed renders unknown, neither ever renders success, and a gate-step node carries only its own step's outcome, never the workspace verdict.";
+const FROZEN_F5_BINDING: readonly string[] = [
+  "facet-travels | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): the measured complete selection (3 of 3 steps) travels with the verdict as its own facet, complete coverage, and the command status keeps its tone",
+  "facet-travels | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): the facet sits after the echoed disposition, which routes through the shared label layout (a bidi override or a line break displays as a space)",
+  "facet-travels | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): a reply that publishes no selection block keeps the a3s reading - no facet, no coverage, the command status's tone",
+  "short-renders-partial | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): the measured --only selection (1 of 3 steps) renders partial with its own facet and never success, whatever command status the reply states",
+  "short-renders-partial | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): a selection short of complete by any unselected state - unaffected, explicitly_narrowed or unknown - renders partial, never success",
+  "short-renders-partial | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): the documented member fan-out whose every member skipped as unaffected (0 of 2 members, exit 0) renders partial, never success",
+  "short-renders-partial | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): the measured -- <args> run (status success, gate_verdict null, data.selection narrowed) renders partial with a tests facet beside the complete step facet, never success",
+  "malformed-renders-unknown | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): %s is withheld as selection UNKNOWN, unknown coverage, and never lets a success tone stand | each >= 11",
+  "malformed-renders-unknown | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): a malformed test-selection block is withheld as tests UNKNOWN and never lets a success tone stand",
+  "step-never-verdict | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): through the live observer the measured --only reply settles the operation node partial with its facet, and a gate-step node never carries the workspace verdict",
+  "step-never-verdict | test | test/workbench-forge-operation-observer.test.ts | wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict | wb-6ps1.2 (a): a gate-step node never carries the workspace verdict - a failed step stays failed under a complete success reply, and a passed step stays passed under a failure reply",
+];
+/**
+ * wb-6ps1.2 (rule 16 anchor): the three sentences of the live Forge paragraph no row binds - posture and scope sentences (use
+ * the public SDK, the initial function list, prefer Forge first) that state no adapter rule a case can falsify. Every other
+ * sentence of the live paragraph must be one Forge row's quote.
+ */
+const FORGE_UNBOUND_SENTENCES: readonly string[] = [
+  "Use public Forge TypeScript App Server/facade or other current SDK.",
+  "Initial functions: build/verification, affected/incremental selection, inspect artifact and operation.",
+  "Prefer Forge first for gates, test, build and packaging.",
+];
+
+describe("wb-6ps1.2 docs/workbench/07 row F5: the gate.run selection sentence and the Forge anchor", () => {
+  it("AC1 (wb-6ps1.2): row F5 quotes the whole gate.run selection sentence and binds every clause to the wb-6ps1.2 observer cases by file, describe path, verbatim title and tier, frozen as literals", () => {
+    const row = TABLE.find(candidate => candidate.row === "F5");
+    expect(row).toBeDefined();
+    if (row === undefined) return;
+    expect(row.section).toBe("Forge provider");
+    expect(row.source).toBe("docs");
+    expect(row.quote).toBe(FROZEN_F5_QUOTE);
+    expect(row.halves.map(half => `${half.id}:${half.tier}:${half.reason ?? "pinned"}`)).toEqual([
+      "facet-travels:default-gate:pinned",
+      "short-renders-partial:default-gate:pinned",
+      "malformed-renders-unknown:default-gate:pinned",
+      "step-never-verdict:default-gate:pinned",
+    ]);
+    expect(bindingOf(row)).toEqual(FROZEN_F5_BINDING);
+    // The sentence is the paragraph's own: one whole sentence of the Forge provider source, after the F1 sentence and before the posture sentence.
+    const markdown = SECTION_MARKDOWN["Forge provider"] ?? "";
+    expect(markdown.split(`verified Forge PASS. ${row.quote} Prefer Forge first`)).toHaveLength(2);
+  });
+
+  it("Forge anchor (wb-6ps1.2, rule 16): every sentence of the LIVE Forge provider paragraph is one Forge row's quote or one of the three named unbound sentences, read from the document, never from SECTION_MARKDOWN", () => {
+    const section = docsSection(readRepo(DOCS_FILE), "Forge provider", 2, [DOCS_PARENT]);
+    expect(section.ok, section.why).toBe(true);
+    const sentences = sentencesOf(section.blocks.map(block => (block.kind === "paragraph" ? block.text : "")).join(" "));
+    const quotes = TABLE.filter(row => row.section === "Forge provider" && row.source === "docs").map(row => renderedOf(row.quote));
+    expect(sentences.filter(sentence => !quotes.includes(sentence) && !FORGE_UNBOUND_SENTENCES.includes(sentence))).toEqual([]);
+    for (const quote of quotes) expect(sentences.filter(sentence => sentence === quote), quote).toHaveLength(1);
+    for (const unbound of FORGE_UNBOUND_SENTENCES) expect(sentences.filter(sentence => sentence === unbound), unbound).toHaveLength(1);
+    expect(sentences).toHaveLength(quotes.length + FORGE_UNBOUND_SENTENCES.length);
   });
 });
 

@@ -68,6 +68,7 @@ Embedded: Pi process owns interpreter, Claude SDK clients, SDK dependencies; Pi 
 - Source analysis must not execute untrusted workflow JavaScript to discover metadata.
 - An observation is a read, not a claim to cancel/control; explicit auth scope required for mutations.
 - Execute only pinned code/dependencies for reproducible experiments; propagate workspace basis through results and links.
+- Per-step receipts never compose into a global verdict in Pi: each receipt (a Forge gate status, a Furnace attempt, Beads readiness, a Git revision) is projected with its own producer-stated status, and no src module reduces receipts of more than one producer into a success tone or a verified, integrated or PASS word while no bridge invariant or certificate exists (wb-kku9.4, judged by test/workbench-receipt-composition-census.test.ts over every src module, which exempts only the Forge reader's reduction over the package rows of one gate.status envelope).
 
 ## GraphPolicyCLI boundary
 

@@ -1,0 +1,566 @@
+{
+  "comment": "wb-gxd7.5 out-of-file roster (the CT5/CT6 anchor, the hk9l/5jha/1xvp.4 roster pattern): every judged row of test/helpers/gp-provenance-census.ts with the SHA-256 of each pin, every registered test title of test/workbench-gp-provenance-census.test.ts in order, the named residual families and the known ungrounded docs lines. Regenerated only together with a deliberate census change.",
+  "rows": [
+    {
+      "table": "PROVENANCE",
+      "id": "P-ACCEPT",
+      "label": "a record carrying the full 40-hex checkout sha and the 64-hex built-entry sha256 is a provenance; the version line beside them stays an opaque producer string",
+      "pins": [
+        "981471f2e997e63219e0973c8830b79508c2bbdce13e92d6817b2da7f69959ca",
+        "b63e86f629baa8fda9a7af9af3aa1ee258480737c5b0c9ea97899e95ea2404f3",
+        "79de0ab939dd4c7f69a2546dab4c0aa1aedf18600ef595f6da28fb6b0cbe6376"
+      ],
+      "test": "PROVENANCE P-ACCEPT"
+    },
+    {
+      "table": "PROVENANCE",
+      "id": "P-VERSION-LINE",
+      "label": "the gp --version line, or a gp version number, in a revision field is refused as a revision",
+      "pins": [
+        "1ca7a65891de8e45fc8a980382b8221131700f61a6fc3b07a241bade18462c86",
+        "4d03c3716386fdd6a444dc08fc15ea2450de633bb1c41951e2b934d94a101c96",
+        "84463661e440fbdb4216196aa543ddafdc39e69e280eb80ff4e0ca98f56b1978",
+        "61182a4cba5b4ca6c8264d5bfe0257ec88b618e294635ea3e737dca0a5d2f8c1"
+      ],
+      "test": "PROVENANCE P-VERSION-LINE"
+    },
+    {
+      "table": "PROVENANCE",
+      "id": "P-SOURCE-SHA",
+      "label": "a checkout sha that is not the full 40 lowercase hex is refused: an abbreviated, upper-case, padded or 39-digit sha",
+      "pins": [
+        "64dbc7915a115fd7cb991ce59a3da7a292b2de529eea146701d584b878a1c01d",
+        "e75103567a25e459ecfa315740d12ff41852869a09ccd03015deaa54e187b6ad",
+        "a5cc80193da6d6f54b7cc32bdc34c0a65c8a75f2eb04231283a5dd44a62e26c3",
+        "549e03b202e47a228c71e4b46df29aa14ae5c8af7c673e24ecec7064287fd902",
+        "1ffd83c06f761f3c8b1eaa29bf7cddd50a7806145e4290aad346f68cd5c61137"
+      ],
+      "test": "PROVENANCE P-SOURCE-SHA"
+    },
+    {
+      "table": "PROVENANCE",
+      "id": "P-ENTRY-SHA256",
+      "label": "a built-entry digest that is not 64 lowercase hex is refused: absent, qualified, a git sha, or the two identities swapped",
+      "pins": [
+        "40ee0c0e07e2cd71141debfdefa67443b0debda59872bcef24386d2054926e03",
+        "e045c66edd3ef2a2e70570d8546557714966d600a9adca9426d83fea33dba7e5",
+        "725741347d0bce61a88b8fe983fa26c6279517f53f8a757e330e82d0ff9ba260",
+        "613e849b0446b0fb61622c85e8e89a14a6654e234c76a5dd0eacafdce54a3fc3"
+      ],
+      "test": "PROVENANCE P-ENTRY-SHA256"
+    },
+    {
+      "table": "PROVENANCE",
+      "id": "P-NOT-A-RECORD",
+      "label": "a version line alone, or any non-object, is no provenance record; a record holding only the version line is refused on both identities",
+      "pins": [
+        "28744b3cb8757d668318e684b00749b259f79dab4a610bd9876d4738b6d498cc",
+        "ac5e9c781e654f14545eccaa48b48da8d9b3c9590696e4ce04408f113e384640",
+        "db02351c0ae11f70b029920be6a172e53201c06509a45422609d342888d3aa05",
+        "312480d1015f58bc0c7196bc8a00f8281f3490dc659e5186ee510964f2b48f54"
+      ],
+      "test": "PROVENANCE P-NOT-A-RECORD"
+    },
+    {
+      "table": "CAPABILITY",
+      "id": "B-SERVED",
+      "label": "every op the captured hello negotiated is served at the captured sha, read from the hello",
+      "pins": [
+        "8e22f6069fbd087738e28292d3604276ad550d96e22ce1fe6e82c48f55231175",
+        "6e1491c66c297a1d26673dd3f1748b07b082f870202a138debb98a7c5da22b3e",
+        "47421f50327039883ba44e5157c0428fc02bdd4555b19cf4b11a61b8e25e6627",
+        "10c9617efaa360ad990f76da824942ea1140ef445485f6e88ccd4d5b92867399",
+        "793b195be531d0d22fa398cd7ff404a38545c08f0c7c8f839ca8f4af4988d26a"
+      ],
+      "test": "CAPABILITY B-SERVED"
+    },
+    {
+      "table": "CAPABILITY",
+      "id": "B-REFUSED",
+      "label": "every op the captured hello refused is refused at the captured sha with the producer's refusal code",
+      "pins": [
+        "1c5d486351a183f55c801228a7d3772fc938d86287bd91da9c545b3aafb1f117",
+        "2cd46f0d2bc8d0243f807aa35d101319025ea9cc7862c0b13182ae70589bfd32",
+        "0d8568b49e3b6e7a48c6dc1d9cd497762202f89053ecfb18fe6fb70bc3c63ba5",
+        "caa7663975bf132ca7a38c5ab6e9e4e345b7ff50f109e165cfd2722c08cb98ed"
+      ],
+      "test": "CAPABILITY B-REFUSED"
+    },
+    {
+      "table": "CAPABILITY",
+      "id": "B-LISTED",
+      "label": "a cli verb the captured --help lists is listed at the captured sha, never claimed served from the listing",
+      "pins": [
+        "7c7de854cd5d53cea708a07ccec3d79a598179ee0156f91a095cf1c6c5e28370",
+        "814d1cc585ca7031decc262db3d01e3699219d91869faf65d4c2fb3c5db2db83",
+        "f97aa2a3edeafe30525399f2404fbb332b1014bc8a4c34a904345741565edfa7",
+        "61a421c622e2a125876777ec7343d0dbc7240413c03fe00f93453bb84adfa4e1",
+        "0d6ed53c82cab0930fdf6afa1f19e2d039820ce662e3ede0196d3ccd451a71d7",
+        "c69695c21b1833ebf56b5f39d354766511d4f5792975e526479a7a69c8cf36d9",
+        "be85eea929fa3befacb07001f0991f7b0bb06cbfeec7a3fd9dd71a6f2f6c49f9",
+        "8718044542d66d651d18e64bd2ee03974271efa2c141dcf2e65e47da74d9e242",
+        "1fe92e7b0cb8bc5e35355342898fbf739ca4e77cba148e90fa7a5d222370a28d",
+        "21c6142a18191ab0646cfff44e09bb7caa70ba375c936dc4ab9fe62cc76a1121",
+        "fbf987001db9d5e6e9e4c4ca79594e5cbf35111dedc572ab0c066641c36c126b",
+        "56f4885e61a3e23cc00af333fffe7b5a7cd145df34686816fe82bd4017751f90",
+        "63cc6b164f085a74964cdff4614a90ff0d4ba804434e4f5d5b9d818825cdefb5",
+        "75005c7edce45e2f90a80680658e7be4535fd48de1330155e057fc3a6ddd393e",
+        "557a9a1b8296a5434cf4b5efecea3841331c64a7127187156d86f650b95032ad",
+        "f887dedb1c9b5042947289048b3d19a10b5fa289e1db29500e18794b6d1bf46e",
+        "fc63e1fbbc30b37de2074c6f008c332b3c916bade93a80b1d2eb0ddaa6efee6c"
+      ],
+      "test": "CAPABILITY B-LISTED"
+    },
+    {
+      "table": "CAPABILITY",
+      "id": "B-UNLISTED",
+      "label": "a verb outside the captured roster is unlisted at the captured sha, never not-implemented",
+      "pins": [
+        "7b33ffa37299d76614cda888f4608036f001380ce6da3c03f0dcd09c4aed6b48",
+        "7e6ea969aad1456630eaff3da69304d25cc1882338be1912bc4170e9880a8791",
+        "7f5bc72858dd410ebf490e7603d0c32b62a75abc30a9f05e26370bd1c5e243ff"
+      ],
+      "test": "CAPABILITY B-UNLISTED"
+    },
+    {
+      "table": "CAPABILITY",
+      "id": "B-PREREQUISITE",
+      "label": "a missing capture or a missing binary is prerequisite-missing naming what is missing, never not-implemented",
+      "pins": [
+        "ff9f4dc84ff8002dd00ca5138d5acee5d64f9e450e7e3f5925760be374132099",
+        "e6097da687b0b83b5f69409424f91f00f8d96e269d437a41b40bf2dd1fa43b1d",
+        "50e86ea69f7f578c2f4c47b957d6e2ea11e7a56621d93679fdec015bc3da997f"
+      ],
+      "test": "CAPABILITY B-PREREQUISITE"
+    },
+    {
+      "table": "CAPABILITY",
+      "id": "B-PROSE-READER",
+      "label": "a reader that takes capability from the pin's SKILL.md prose claims not-implemented and is refused on every rule",
+      "pins": [
+        "c85fd6298d2e6eb4bab7f2a6b4993dcf1e42e3dc729549cff96c8f8bb8a0a7ef",
+        "2b8d2980b913cc9db5d94fb51fe3c026662e623e0ab4080cb25ddc7e9d3721f9",
+        "4b2659c742b1e3b951c4113fc9ed773667e6ad7d22c79a54f44e705cafd892df"
+      ],
+      "test": "CAPABILITY B-PROSE-READER"
+    },
+    {
+      "table": "CAPABILITY",
+      "id": "B-VERSION-READER",
+      "label": "a reader that takes capability from the --version shortlist misreads the roster and is refused",
+      "pins": [
+        "1ff4a218a3940fbb4bdcb980a4b8f2b97b8c09738d0a0024a2c0d4de5723974b",
+        "8805b34d135b9ba43f4c9ad7e0d2a10c0e3b5a1c85b06458e8e858a6365daab6",
+        "891fadc4203c84c9a4a5f2abb4393e5fe6be777bbd06d1f28a35a5443e94aea2"
+      ],
+      "test": "CAPABILITY B-VERSION-READER"
+    },
+    {
+      "table": "DOC_LINES",
+      "id": "D-C1-VERSION",
+      "label": "a line naming gp by its version number or its --version output cites a revision via --version",
+      "pins": [
+        "c93f7a459d2bcb78fb650405127fefdedfe4bbea5431eac99d4cee052506ece3",
+        "37de0eb92d0362bc7e078eeb06a32e71407dd008bf8c108f74ee66e00edd69d4",
+        "8de1a2a6f4e9d3e66ec9c3817c8e1511347956a9f9aab757d5fae3b7bfcc8b43",
+        "98d3d265995902a9ad19493a5d802cd30bbc3315e4b8c2005251a458064db133",
+        "a1bdbbf2277daf8633c9bbff5f703af20dec55364f2cf9a0b48fbf366d129dd5",
+        "7d5da8d1f2ab9b78131b8e6be20aa8cd848ff9cb5eb179a455606a6e13fce14e",
+        "8f9def0090dd03d50d0f9d40a9bf86c18f1a5b2b32e1cf856de824ab798bb655"
+      ],
+      "test": "DOC_LINES D-C1-VERSION"
+    },
+    {
+      "table": "DOC_LINES",
+      "id": "D-C2-VERB",
+      "label": "a line asserting a gp verb or capability served or unserved, without a roster at a sha",
+      "pins": [
+        "de06cca71b6010e3e5388c821bfddb160d7923cfb828d380668686ba5ef140ed",
+        "fa8e8a5c8fbf8f9cb496cf66744551354c2cfa18fe71bd4e0496728a7b6fd8a8",
+        "2f6daadd859531b525744fc750d403e76ab036e15a408c9536dc07fa4461502e",
+        "33dac675de9ab2c9bc6f06a0cfbeb44740ff06bb27beb4417e0791a3a5baf519",
+        "1cdd4d6c7210ee7dd2f82a5991e5ad44ab01bd541db48d0cb2bd0cebcc444a13"
+      ],
+      "test": "DOC_LINES D-C2-VERB"
+    },
+    {
+      "table": "DOC_LINES",
+      "id": "D-GROUNDED",
+      "label": "the same claims carrying the build they mean (the 40-hex sha plus the entry sha256, or the captured roster) are grounded",
+      "pins": [
+        "2a374649c62d7a11f6822e522d9c2f26c7bb6979ddd12a67ddd3c797dc7dcdc1",
+        "67c4c88a5485da29ff1cdeae2571f2ba9bd8298f2a95b8f18d8f88fa2271dfb4",
+        "6193ca0d35b41d705d4e2c18614b7269363f64e0ab45138f1d745f86b5920afd"
+      ],
+      "test": "DOC_LINES D-GROUNDED"
+    },
+    {
+      "table": "DOC_LINES",
+      "id": "D-QUIET",
+      "label": "gp text that cites no revision and asserts no verb verdict, and version text that names no gp, stays quiet",
+      "pins": [
+        "6139d7938ce8d49b0c4b2024a4d0179be169c09f6bb4d3efb23c8243c278aa2a",
+        "9180c94ad20b0e2ed4711b95eb38abff0d2ff1cb6db7325a02f6e0660760f0c4",
+        "73c62afb0bcf0a971cd9839169d4267bed48d96fccbbabb30d0414b6798ebfa1",
+        "7e02b40cfddb3d2fa14e7f88965ff3243bda1f59f0488f075295f11a16c8d753",
+        "f02a33651debcee352f86c74de95d85afcd1111f88fdad4145854670101ab767"
+      ],
+      "test": "DOC_LINES D-QUIET"
+    },
+    {
+      "table": "RECEIPT_MUTANTS",
+      "id": "M-PIN-RECEIPT",
+      "label": "the receipt the pin committed: the same receipt without probability_exactness (gp inspect decision refuses it, exit 2)",
+      "pins": [
+        "ceedcf4f91a8013aeefbb7dcf4fce479bfd55683c4e6bb47b07558d8100190e6"
+      ],
+      "test": "RECEIPT_MUTANTS M-PIN-RECEIPT"
+    },
+    {
+      "table": "RECEIPT_MUTANTS",
+      "id": "M-EMPTY-EXACTNESS",
+      "label": "an empty probability_exactness label",
+      "pins": [
+        "276bb00725cfc3862f51a3f3bb631d764f6469cda02b836bdafe085f886bc5fd"
+      ],
+      "test": "RECEIPT_MUTANTS M-EMPTY-EXACTNESS"
+    },
+    {
+      "table": "RECEIPT_MUTANTS",
+      "id": "M-NO-ARGV",
+      "label": "no generator argv",
+      "pins": [
+        "23a6fd1ec8a8ea670e343d67dadbc6469634f439782bbbd649c3cfdea4424b68"
+      ],
+      "test": "RECEIPT_MUTANTS M-NO-ARGV"
+    },
+    {
+      "table": "RECEIPT_MUTANTS",
+      "id": "M-HAND-WRITTEN",
+      "label": "a generator that is not gp sample (a hand-written receipt)",
+      "pins": [
+        "ec71d28de416e12f3bb8226521b9a4480b51d42781ee05debdb9045afb96e6b3"
+      ],
+      "test": "RECEIPT_MUTANTS M-HAND-WRITTEN"
+    },
+    {
+      "table": "RECEIPT_MUTANTS",
+      "id": "M-NO-SEED",
+      "label": "gp sample argv without its --seed",
+      "pins": [
+        "d7c5c02bc782512a3f0740c13b8119a5b9f2cf7e66efc298824531e7c87c728e"
+      ],
+      "test": "RECEIPT_MUTANTS M-NO-SEED"
+    },
+    {
+      "table": "RECEIPT_MUTANTS",
+      "id": "M-VERSION-SHA",
+      "label": "the generator's sha given as the --version line",
+      "pins": [
+        "7432c96b276037e5a22f163f4f6b5924288d1171a096c6d9a4e99d9b4900ccc9"
+      ],
+      "test": "RECEIPT_MUTANTS M-VERSION-SHA"
+    },
+    {
+      "table": "RECEIPT_MUTANTS",
+      "id": "M-SHORT-SHA",
+      "label": "the generator's sha abbreviated",
+      "pins": [
+        "24a15b608e3355699de6f6b3356fb37a2c0c24e0528c248d55d3b2b4189a019e"
+      ],
+      "test": "RECEIPT_MUTANTS M-SHORT-SHA"
+    },
+    {
+      "table": "RECEIPT_MUTANTS",
+      "id": "M-OTHER-ENTRY",
+      "label": "a built entry other than the captured one",
+      "pins": [
+        "bd58e5cd7a62647ff9e16550cbeeb2cfe1c5249598f44df26bb1ae72cd896d86"
+      ],
+      "test": "RECEIPT_MUTANTS M-OTHER-ENTRY"
+    },
+    {
+      "table": "RECEIPT_MUTANTS",
+      "id": "M-EXTRA-FIELD",
+      "label": "a receipt carrying an admission field (a receipt is never an admission)",
+      "pins": [
+        "5a44fb6490761d0af12577f5f40e1b15a1654e697b1898960b3639f24d0bbc27"
+      ],
+      "test": "RECEIPT_MUTANTS M-EXTRA-FIELD"
+    },
+    {
+      "table": "RECEIPT_MUTANTS",
+      "id": "M-SCHEMA",
+      "label": "a receipt relabelled to another schema",
+      "pins": [
+        "c41b65e06b139b81eae25943fb72e8e8f2232c42820e8f13a4fc7a237f95fc3e"
+      ],
+      "test": "RECEIPT_MUTANTS M-SCHEMA"
+    },
+    {
+      "table": "RECEIPT_MUTANTS",
+      "id": "M-NOT-VALIDATED",
+      "label": "no recorded gp inspect decision acceptance",
+      "pins": [
+        "9d35712d3959227e3390a2aa22d7c2d8f83623426d1db9d36c740336998a4a74"
+      ],
+      "test": "RECEIPT_MUTANTS M-NOT-VALIDATED"
+    },
+    {
+      "table": "RECEIPT_MUTANTS",
+      "id": "M-REFUSED",
+      "label": "a recorded inspect refusal (exit 2) in place of the acceptance",
+      "pins": [
+        "22bd2257e26446e10f3744b57f6b6a92a0740aadb33b7b478967721b294425f0"
+      ],
+      "test": "RECEIPT_MUTANTS M-REFUSED"
+    },
+    {
+      "table": "RESOLVE",
+      "id": "L-PINNED",
+      "label": "the first gp on PATH whose entry hashes to the pinned sha256 is the pinned build",
+      "pins": [
+        "e78d6d28f57788bf7d43096af90bfcb253d166d7cfa080b90cf7e228d83ed066"
+      ],
+      "test": "RESOLVE L-PINNED"
+    },
+    {
+      "table": "RESOLVE",
+      "id": "L-OTHER-BUILD",
+      "label": "a gp whose entry hashes otherwise is a missing pinned build, with the observed digest",
+      "pins": [
+        "5a2d6720435c9d686a16df4901a7ce666d3a7cc6cae5bd11fe6cf16b34ce6905"
+      ],
+      "test": "RESOLVE L-OTHER-BUILD"
+    },
+    {
+      "table": "RESOLVE",
+      "id": "L-FIRST-WINS",
+      "label": "the first gp on PATH decides, as the shell's lookup does, even when a later one is pinned",
+      "pins": [
+        "1e4fb65b6ef597c59fb28e7348ac925ae9e726c04a0d411b8ece610063fb9568"
+      ],
+      "test": "RESOLVE L-FIRST-WINS"
+    },
+    {
+      "table": "RESOLVE",
+      "id": "L-NO-BINARY",
+      "label": "no gp on PATH is a missing binary",
+      "pins": [
+        "35562f4cf46c7cb1b0a4fe5b378defff9abab6541f16cc3fa2185465be5ac448"
+      ],
+      "test": "RESOLVE L-NO-BINARY"
+    },
+    {
+      "table": "RESOLVE",
+      "id": "L-NO-PATH",
+      "label": "an absent or empty PATH is a missing binary",
+      "pins": [
+        "576bb39cd9381f95415828d19be1805c333a2ba888a01f8c89198000f91bd314"
+      ],
+      "test": "RESOLVE L-NO-PATH"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-SPLIT-LINE",
+      "label": "a revision or verdict whose gp subject sits on another line than its version token or verb",
+      "pins": [
+        "bd5c128b17f4f3a222883b7ccc251ea924271d791d49e4db26246bb22ce9b209",
+        "102aeadcab1c38d5b7d3c4815793eef4e81085945aefa24b876502794606299a"
+      ],
+      "test": "RESIDUALS R-SPLIT-LINE"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-ENCODED",
+      "label": "a version token or verdict hidden by an HTML entity or a markdown escape",
+      "pins": [
+        "303a9378220201239c996d4cb05c0a20f65a5b3847fd9ffbb4be2d21f16d4509",
+        "7068368e9a0e14250936a2849f38971c92500f54f81adb6df3291bed9ad90805"
+      ],
+      "test": "RESIDUALS R-ENCODED"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-PARAPHRASE",
+      "label": "a revision or capability named outside the closed token, verb and noun lists",
+      "pins": [
+        "02723adf015d2d9abf6f12544aa7f6a4b1cb6ceea2d4d7921089b63a533adc74",
+        "07298e46def43b9c7af25d8fc348b8803354c585249c72825857953c05f50699"
+      ],
+      "test": "RESIDUALS R-PARAPHRASE"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-NON-MARKDOWN",
+      "label": "text outside a markdown file (a test comment, a JSON fixture): the docs census reads .md files only",
+      "pins": [
+        "4d2c1d1175243b82607e3c7babd7be4f8bc4bffd3655e8d32bee5a65a5871b72"
+      ],
+      "test": "RESIDUALS R-NON-MARKDOWN"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-SHAPE-ONLY",
+      "label": "a well-formed but fabricated identity: the record judge proves shape, and only the live leg binds an entry to bytes",
+      "pins": [
+        "442d72034dab6fe4c1304bc5547d230275dd489338738a582f4532eb1e07a84d"
+      ],
+      "test": "RESIDUALS R-SHAPE-ONLY"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-LISTED-NOT-SERVED",
+      "label": "a cli verb's service: --help lists init while its own Not implemented paragraph names it, so a listing claims no service",
+      "pins": [
+        "9e6c759e6903cfb4b1e6a76c53110fd8f8863b96ce7a8e7df5e4e562f578f2e0",
+        "43723e79821794bf96eab94f8099839bc82f7e95f6cf8e671b1dc5b272f6b2bf",
+        "dad0a1cc4462d3bceb27d3dc55016e9728be7aa91a80c390347601132f77550c"
+      ],
+      "test": "RESIDUALS R-LISTED-NOT-SERVED"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-STATIC-RECEIPT",
+      "label": "a receipt's numbers and the generator's replay: the static judge reads provenance and fields, gp inspect alone judges the values",
+      "pins": [
+        "09b38a71741845e72546952fd970a2c102c56e8c89cc923187d4a2a2d2173a46",
+        "ed207403b15f67ca3b86f1ab9bdb3b5e1b8167def0c73473744f45069cffbece"
+      ],
+      "test": "RESIDUALS R-STATIC-RECEIPT"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-CAPTURE-REPLAY",
+      "label": "the capture's bytes: off the pinned build only the live leg's replay binds help, hello and version to gp, and the static rows read the capture as recorded",
+      "pins": [
+        "83d79830f1d522a1e68bcb43d6e7eca538df89242b5cc1e578864b020411c8ad",
+        "51d1ee7d84656564618cc690b74b19b6952731ea103fc246809509a3f530fb86"
+      ],
+      "test": "RESIDUALS R-CAPTURE-REPLAY"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-LEXICAL-GROUNDING",
+      "label": "a docs citation grounded by any 40-hex and 64-hex tokens on its line: the docs census checks the build's shape, never that it is the captured build",
+      "pins": [
+        "ed32c736dc88a7ee35d09b8d285cc281674f83cd788468d7de45907e3797767e"
+      ],
+      "test": "RESIDUALS R-LEXICAL-GROUNDING"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-JSONL",
+      "label": "a receipt inside a JSON-lines file or a string: the vendored-receipt walk parses .json files and reads objects only",
+      "pins": [
+        "60f8fceeae2bbe050070b148c6edbf7746862e9e88a065318b015b85d110c243"
+      ],
+      "test": "RESIDUALS R-JSONL"
+    }
+  ],
+  "tests": [
+    "PROVENANCE P-ACCEPT",
+    "PROVENANCE P-VERSION-LINE",
+    "PROVENANCE P-SOURCE-SHA",
+    "PROVENANCE P-ENTRY-SHA256",
+    "PROVENANCE P-NOT-A-RECORD",
+    "CAPABILITY B-SERVED",
+    "CAPABILITY B-REFUSED",
+    "CAPABILITY B-LISTED",
+    "CAPABILITY B-UNLISTED",
+    "CAPABILITY B-PREREQUISITE",
+    "CAPABILITY B-PROSE-READER",
+    "CAPABILITY B-VERSION-READER",
+    "DOC_LINES D-C1-VERSION",
+    "DOC_LINES D-C2-VERB",
+    "DOC_LINES D-GROUNDED",
+    "DOC_LINES D-QUIET",
+    "RECEIPT_MUTANTS M-PIN-RECEIPT",
+    "RECEIPT_MUTANTS M-EMPTY-EXACTNESS",
+    "RECEIPT_MUTANTS M-NO-ARGV",
+    "RECEIPT_MUTANTS M-HAND-WRITTEN",
+    "RECEIPT_MUTANTS M-NO-SEED",
+    "RECEIPT_MUTANTS M-VERSION-SHA",
+    "RECEIPT_MUTANTS M-SHORT-SHA",
+    "RECEIPT_MUTANTS M-OTHER-ENTRY",
+    "RECEIPT_MUTANTS M-EXTRA-FIELD",
+    "RECEIPT_MUTANTS M-SCHEMA",
+    "RECEIPT_MUTANTS M-NOT-VALIDATED",
+    "RECEIPT_MUTANTS M-REFUSED",
+    "RESOLVE L-PINNED",
+    "RESOLVE L-OTHER-BUILD",
+    "RESOLVE L-FIRST-WINS",
+    "RESOLVE L-NO-BINARY",
+    "RESOLVE L-NO-PATH",
+    "RESIDUALS R-SPLIT-LINE",
+    "RESIDUALS R-ENCODED",
+    "RESIDUALS R-PARAPHRASE",
+    "RESIDUALS R-NON-MARKDOWN",
+    "RESIDUALS R-SHAPE-ONLY",
+    "RESIDUALS R-LISTED-NOT-SERVED",
+    "RESIDUALS R-STATIC-RECEIPT",
+    "RESIDUALS R-CAPTURE-REPLAY",
+    "RESIDUALS R-LEXICAL-GROUNDING",
+    "RESIDUALS R-JSONL",
+    "bead: the four acceptance clauses this census arms are the bead's own words, each judged by its tables",
+    "live (a): the captured build is a provenance, five revisions print its one --version line, and that line is no revision",
+    "live (b): the capture is one build's roster - help commands, hello methods and the producing sha - and every captured op and word is judged",
+    "live (c): every markdown file below the root is read, and its ungrounded gp citations are exactly the known three",
+    "live (d): every JSON file below the root is read, and its one gp decision receipt is the vendored fixture, generated and accepted",
+    "live leg: the installed gp, when it is the pinned build, replays the capture and accepts the vendored receipt; any other host records a typed prerequisite-missing receipt",
+    "rule 16: every judged table, the residual families, the known set and the clause map are frozen at their measured shape",
+    "roster: the judged rows, the registered tests, the residual families and the known set equal test/fixtures/gp-provenance-roster.json, in order and both ways"
+  ],
+  "residuals": {
+    "R-SPLIT-LINE": [
+      "RESIDUALS R-SPLIT-LINE"
+    ],
+    "R-ENCODED": [
+      "RESIDUALS R-ENCODED"
+    ],
+    "R-PARAPHRASE": [
+      "RESIDUALS R-PARAPHRASE"
+    ],
+    "R-NON-MARKDOWN": [
+      "RESIDUALS R-NON-MARKDOWN"
+    ],
+    "R-SHAPE-ONLY": [
+      "RESIDUALS R-SHAPE-ONLY"
+    ],
+    "R-LISTED-NOT-SERVED": [
+      "RESIDUALS R-LISTED-NOT-SERVED"
+    ],
+    "R-STATIC-RECEIPT": [
+      "RESIDUALS R-STATIC-RECEIPT"
+    ],
+    "R-CAPTURE-REPLAY": [
+      "RESIDUALS R-CAPTURE-REPLAY"
+    ],
+    "R-LEXICAL-GROUNDING": [
+      "RESIDUALS R-LEXICAL-GROUNDING"
+    ],
+    "R-JSONL": [
+      "RESIDUALS R-JSONL"
+    ]
+  },
+  "known": [
+    {
+      "file": "docs/workbench/receipts/wb-1xvp.3.md",
+      "line": 15,
+      "cls": "C1",
+      "sha256": "d75da3c9edeca8bcf35528e5e267a4869d31ac1b74bef8a64549ed2ca81de03b"
+    },
+    {
+      "file": "docs/workbench/receipts/wb-1xvp.3.md",
+      "line": 18,
+      "cls": "C1",
+      "sha256": "941936513c835eb86d85d6ede3e2c030071ec7a5ea68319119880fdce892184d"
+    },
+    {
+      "file": "docs/workbench/receipts/wb-1xvp.5.md",
+      "line": 11,
+      "cls": "C1",
+      "sha256": "8d57e1b9c6a1f6e2d66e0f1dd39eaba01d88a5a1917d761647722d88795c70df"
+    }
+  ]
+}
