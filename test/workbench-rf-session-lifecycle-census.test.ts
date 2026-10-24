@@ -14,9 +14,9 @@
  * (a) and the recovery paths of (c) and (d) do not exist yet (the future committing path is wb-jwc.5's), and the census pins that
  * state, the measured producer behaviour each clause depends on, and every surface the obligation already reaches:
  *  A, acceptance (a). A1 the src launch inventory: every child_process launcher call in a src module, through a named, aliased,
- *    namespace or default import, a require binding (destructured or whole) or a launcher called on a require of child_process,
- *    with its command folded from literals; exactly one
- *    launch names rf (the provider) and the one launch whose command is not a literal is the detached host's process.execPath.
+ *    namespace or default import, an import-equals, a require or dynamic import binding (destructured or whole, the import
+ *    awaited) or a launcher called on a require or a dynamic import of child_process, with its command folded from literals; exactly
+ *    one launch names rf (the provider) and the one launch whose command is not a literal is the detached host's process.execPath.
  *    A2 N ticks of the registered native preview (three legacy, three view) against a stand-in rf: N spawns, each argv carrying
  *    --no-commit and no --session or --commit word, N readings admitted, each stating result.session_id null; the measured legacy
  *    argv of A4 is that argv. A3 the rf roster, selected by a reactivefiber: permission or an rf@ contractSource (never by id
@@ -26,7 +26,9 @@
  *    committed tick minted its own session (the 95-open mechanism of the quote), the ticks under one pinned --session kept the
  *    count constant and reported that id; the zero-mint journey of rfc-s24ro.7 is absent at the pin and at origin/main, as the
  *    bead row's "Shipped: no." states, so a re-measure that finds it flips A4 red until the committed loop lands with (a).
- *  B, acceptance (b). B1 the whole walked tree read as UTF-8 text: no judged file holds a sentence in which a session word sits
+ *  B, acceptance (b). B1 the whole walked tree read as UTF-8 text, each text judged as written and as rendered (compatibility
+ *    forms folded by NFKC, default-ignorable code points such as a zero-width space or a soft hyphen removed, intraword emphasis
+ *    asterisks dropped): no judged file holds a sentence in which a session word sits
  *    within WINDOWS.rf words of an rf word and within WINDOWS.expiry words of an expiry term, unless a negator appears in that
  *    sentence before the later of the session word and the expiry term; the walk meets no symlink (refused, never followed) and
  *    no unreadable entry. B2 the rf reader closure (the src import closure of the provider and its adapter) holds no session state: no
@@ -48,6 +50,18 @@
  * /fixture/rf-workspace. The pin and origin/main facts are `git cat-file -e` / `git show` in a ReactiveFiberCLI clone. D1 answers
  * Pi's own argv (which carries no --session) with that measured refusal: it reads the reader's handling of the code, not a Pi
  * recovery path, since none exists.
+ * LISTING ANCHORS (wb-khhg F1): each walk is held to a listing it does not compute, read from the judge's own record (the file
+ * each scan judged, recorded by the scan; each file B1's judge read, recorded after the judgement), never to a count floor
+ * alone: B1 judges every file git lists (`git ls-files --cached --others --exclude-standard`) but the bead export (.beads, the
+ * one skipped root git lists) and the exempt pair; A1 and C1 scan every file git lists below src/; B2 scans exactly the closure
+ * TypeScript resolves (each module's ts.preProcessFile imports resolved by ts.resolveModuleName under tsconfig.json's options);
+ * C1 reads exactly the descriptors a second native registration lists. The listing is itself checked sound (it meets the files
+ * floor and names every walk anchor and reader module), so no anchor passes on an empty listing; the FLOORS stay beside them.
+ * PATH CANARIES (wb-khhg F1): a judge that drops its judgement by path keeps its reach, so each judge also meets a canary in every
+ * directory: B1 plants an expiry sentence (DIRECTORY_PLANT) in every directory git lists and reads that tree through the same
+ * readTree; A1 and C1 scan an in-memory canary module (CANARY_MODULE: an rf launch, a session verb) in every src directory git
+ * lists, and B2 a session-state canary in every directory of the closure. Not claimed: a finding or hit a case drops by path after
+ * its judge returned (a filter on the list the case asserts); the anchors and canaries bind the judges' reach and judgement.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (id, label, pins), every pin's
  * witness, the scan constants, the residual families and the registered test titles are held to the out-of-file roster
  * (test/fixtures/rf-session-lifecycle-roster.json). OUTSIDE ANCHOR: the owner filing's row in the tracked bead export
@@ -57,17 +71,22 @@
  * IMPL and the roster together (the bead row anchors rows and clauses, not pins).
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
  * not inverted, ran; every pin's case reached its end (REACHED); every registered test and suite title reads quiet to B1's judge.
+ * A skipped case cannot see its own skip, so the judged-set case, which runs first, reads the records case's registration: the
+ * last registered test, in run mode, not inverted (wb-khhg F4).
  * RESIDUALS (named families, each with a pinned quiet row in a control): R-SPLIT an assumption spread over two sentences or past the
  * word windows (B1 split); R-PARAPHRASE an expiry stated without the vocabulary (B1 paraphrase); R-NEGATED a negator earlier in the
  * sentence quiets a later expiry term (B1 negatedEarlier); R-ENCODED text outside UTF-8 or written with escapes (B1 utf16, escaped;
- * the planted notes/le.txt); R-OUTSIDE a file below a skipped root entry (B1 planted node_modules/, .beads/, dist/); R-COMPOSED a
- * session argv or field built from non-literal parts (C1 composedArgv, B2 composedField); R-INDIRECT-LAUNCH a launcher reached
- * through a variable or an element access (A1 indirect, elementAccess); R-SESSION-ECHO the preview reader admits a --no-commit
- * envelope stating a session id, taking the producer's "--no-commit persists none" on its word (A2 sessionEcho); R-UNLABELED an rf
- * capability registered under neither a reactivefiber: permission nor an rf@ contractSource is not selected (A3 unlabeled).
+ * the planted notes/le.txt); R-RENDERED a word split by markup the rendered reading keeps, an inline HTML tag, an HTML entity or a
+ * code span (B1 htmlTag, htmlEntity, codeSpan); R-OUTSIDE a file below a skipped root entry (B1 planted node_modules/, .beads/,
+ * dist/); R-COMPOSED a session argv or field built from non-literal parts (C1 composedArgv, B2 composedField); R-INDIRECT-LAUNCH a
+ * launcher reached through a variable, an element access or the callback of a dynamic import's then (A1 indirect, elementAccess,
+ * dynamicThen); R-SESSION-ECHO the preview reader admits a --no-commit envelope stating a session id, taking the producer's
+ * "--no-commit persists none" on its word (A2 sessionEcho); R-UNLABELED an rf capability registered under neither a
+ * reactivefiber: permission nor an rf@ contractSource is not selected (A3 unlabeled).
  * Display paths added: none. Test-only: the stand-in rf and the planted trees live in makeScratch scratch; src is only read.
  */
-import { chmodSync, type Dirent, existsSync, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
+import { spawnSync } from "node:child_process";
+import { chmodSync, type Dirent, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -159,6 +178,17 @@ const SKIPPED_ROOTS = [".git", ".beads", "node_modules", "dist", "build", "cover
 const EXEMPT = [SELF, ROSTER_FILE];
 /** Each floor sits below the count measured at base 436e6db (808 walked files; 115 src modules; a 7-module reader closure). */
 const FLOORS = { files: 700, srcModules: 100, closure: 5 };
+/** The listing the walks are held to: git's own file list of the checkout, tracked and untracked but not ignored. */
+const GIT_LISTING = ["ls-files", "-z", "--cached", "--others", "--exclude-standard"];
+/** The listed roots no walk judges: the bead export, which the judged-set case, A4 and C2 read as the outside anchor. */
+const LISTED_UNJUDGED = [".beads"];
+/** B1's rendered reading: default-ignorable code points (a zero-width space, a soft hyphen) and intraword emphasis asterisks. */
+const DEFAULT_IGNORABLE = /\p{Default_Ignorable_Code_Point}/gu;
+const INTRAWORD_EMPHASIS = /(?<=[\p{L}\p{N}])\*+(?=[\p{L}\p{N}])/gu;
+/** The path canaries' file names: a planted expiry note in every listed directory (B1), an in-memory module in every src or closure
+ * directory (A1, C1, B2). */
+const DIRECTORY_PLANT = "zz-census-plant.md";
+const CANARY_MODULE = "zz-census-canary.ts";
 /** Files the walk must reach, each with a token its bytes carry: a root page, a src module, a qa script, an example and a binary. */
 const WALK_ANCHORS: readonly (readonly [string, string])[] = [
   ["README.md", "pi-subagents"],
@@ -169,7 +199,7 @@ const WALK_ANCHORS: readonly (readonly [string, string])[] = [
 ];
 /** The reader modules: the provider and its adapter; B2 walks their src import closure. */
 const READER_MODULES = ["src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"];
-const RESIDUAL_FAMILIES = ["R-SPLIT", "R-PARAPHRASE", "R-NEGATED", "R-ENCODED", "R-OUTSIDE", "R-COMPOSED", "R-INDIRECT-LAUNCH", "R-SESSION-ECHO", "R-UNLABELED"];
+const RESIDUAL_FAMILIES = ["R-SPLIT", "R-PARAPHRASE", "R-NEGATED", "R-ENCODED", "R-RENDERED", "R-OUTSIDE", "R-COMPOSED", "R-INDIRECT-LAUNCH", "R-SESSION-ECHO", "R-UNLABELED"];
 
 interface Row {
   readonly id: string;
@@ -448,9 +478,9 @@ function expiryAt(words: readonly string[], at: number): boolean {
   const next = words[at + 1] ?? "";
   return EXPIRY_WORDS.includes(word) || EXPIRY_PAIRS.includes(`${word} ${next}`) || (AUTO_WORDS.includes(word) && END_WORDS.includes(next)) || (END_WORDS.includes(word) && AUTO_WORDS.includes(next));
 }
-/** B1's judge: the sentences of `value` in which a session word has an rf word within WINDOWS.rf words and an expiry term within
- * WINDOWS.expiry words, with no negator from the sentence's start through that term. */
-function expiryFindings(value: string): string[] {
+/** One reading's findings: the sentences of `value` in which a session word has an rf word within WINDOWS.rf words and an expiry
+ * term within WINDOWS.expiry words, with no negator from the sentence's start through that term. */
+function sentenceFindings(value: string): string[] {
   const found: string[] = [];
   for (const sentence of value.split(SENTENCE_BREAK)) {
     const words = wordsOf(sentence);
@@ -467,6 +497,15 @@ function expiryFindings(value: string): string[] {
     if (asserted) found.push(sentence.replace(/\s+/g, " ").trim().slice(0, 160));
   }
   return found;
+}
+/** The text as a reader sees it (wb-khhg F2): compatibility forms folded, default-ignorable code points removed and intraword
+ * emphasis asterisks dropped, so ex**pire**, a zero-width split and a soft-hyphen split read as the word they render. */
+const rendered = (value: string): string => value.normalize("NFKC").replace(DEFAULT_IGNORABLE, "").replace(INTRAWORD_EMPHASIS, "");
+/** B1's judge: the findings of the text as written and as rendered, so neither reading hides an assumption the other shows. */
+function expiryFindings(value: string): string[] {
+  const shown = rendered(value);
+  const found = sentenceFindings(value);
+  return shown === value ? found : [...new Set([...found, ...sentenceFindings(shown)])];
 }
 const asserts = (value: string): boolean => expiryFindings(value).length > 0;
 
@@ -504,6 +543,8 @@ function walkTree(root: string): Walk {
 interface TreeReading {
   readonly walk: Walk;
   readonly judged: string[];
+  /** The files B1's judge ran on, each recorded after its judgement: the record the listing anchor reads. */
+  readonly read: string[];
   readonly findings: string[];
   readonly anchorsWalked: boolean;
 }
@@ -511,6 +552,7 @@ interface TreeReading {
 function readTree(root: string): TreeReading {
   const walk = walkTree(root);
   const judged = walk.files.filter(file => !EXEMPT.includes(file));
+  const read: string[] = [];
   const findings: string[] = [];
   const anchors = new Map<string, boolean>();
   for (const file of judged) {
@@ -523,17 +565,55 @@ function readTree(root: string): TreeReading {
       continue;
     }
     findings.push(...expiryFindings(buffer.toString("utf8")).map(sentence => `${file}: ${sentence}`));
+    read.push(file);
     const anchor = WALK_ANCHORS.find(([path]) => path === file);
     if (anchor !== undefined) anchors.set(file, buffer.includes(anchor[1]));
   }
-  return { walk, judged, findings, anchorsWalked: WALK_ANCHORS.every(([path]) => anchors.get(path) === true) };
+  return { walk, judged, read, findings, anchorsWalked: WALK_ANCHORS.every(([path]) => anchors.get(path) === true) };
 }
 let live: TreeReading | undefined;
-/** The repository's own reading, taken once. */
+/** The repository's own reading, taken once, after git's listing (so a file the listing names and a concurrent run removes before
+ * the walk is absent at the anchor's check, never a false gap). */
 function liveTree(): TreeReading {
-  live ??= readTree(REPO);
+  if (live === undefined) {
+    gitListing();
+    live = readTree(REPO);
+  }
   return live;
 }
+/** Whether a path exists, a symlink included (never followed). */
+function present(path: string): boolean {
+  try {
+    lstatSync(path);
+    return true;
+  } catch {
+    return false;
+  }
+}
+let listing: readonly string[] | undefined;
+/** Git's own file list of the checkout (GIT_LISTING: root-relative, "/"-separated, sorted), taken once: the listing every walk is
+ * held to. */
+function gitListing(): readonly string[] {
+  if (listing === undefined) {
+    const run = spawnSync("git", GIT_LISTING, { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+    if (run.status !== 0) throw new Error(`git ${GIT_LISTING.join(" ")} failed: ${run.stderr}`);
+    listing = [...new Set(run.stdout.split("\0").filter(name => name.length > 0))].sort();
+  }
+  return listing;
+}
+const rootOf = (file: string): string => file.split("/")[0] ?? "";
+/** The listed files B1's judge owes a reading: present on disk, outside LISTED_UNJUDGED and the exempt pair. */
+const listedJudgeable = (): string[] => gitListing().filter(file => !LISTED_UNJUDGED.includes(rootOf(file)) && !EXEMPT.includes(file) && present(join(REPO, file)));
+/** The listed src files A1 and C1 owe a scan: every listed file below src/ that is present on disk. */
+const listedSrc = (): string[] => gitListing().filter(file => file.startsWith("src/") && present(join(REPO, file)));
+/** The listing is no empty or truncated reading: it meets the files floor and names every walk anchor and reader module, so no
+ * anchor that reads it passes vacuously. */
+const listingSound = (): boolean =>
+  gitListing().length >= FLOORS.files && [...WALK_ANCHORS.map(([path]) => path), ...READER_MODULES].every(path => gitListing().includes(path));
+/** The distinct directories of some files, "/"-separated and sorted ("." for the root). */
+const directoriesOf = (files: readonly string[]): string[] => [...new Set(files.map(file => posix(dirname(file))))].sort();
+/** A canary's path in a directory. */
+const inDirectory = (directory: string, name: string): string => (directory === "." ? name : `${directory}/${name}`);
 /** Plants `files` in a fresh scratch root (a null content is a symlink to the root's first file) and reads that tree. */
 function plantedTree(files: Readonly<Record<string, string | Buffer | null>>): TreeReading {
   const root = makeScratch("rf-session-lifecycle-tree-");
@@ -599,14 +679,16 @@ function fold(node: ts.Node | undefined): string | undefined {
 const parse = (fileName: string, source: string): ts.SourceFile => ts.createSourceFile(fileName, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
 
 interface LaunchScan {
+  readonly file: string;
   readonly rf: string[];
   readonly composed: string[];
   readonly unbound: string[];
   readonly commands: string[];
 }
-/** One module's child_process launches: calls through a named, aliased, namespace or default import of child_process, a require
- * binding of it (destructured or whole) or a launcher called on a require of it directly, each command folded from literals (its
- * basename read for rf); a bare call to a launcher name the module never bound is listed apart. */
+/** One module's child_process launches: calls through a named, aliased, namespace or default import of child_process, an
+ * import-equals of it, a require or dynamic import binding of it (destructured or whole, the import awaited) or a launcher called on
+ * a require or a dynamic import of it directly, each command folded from literals (its basename read for rf); a bare call to a
+ * launcher name the module never bound is listed apart. */
 function launchesOf(fileName: string, source: string): LaunchScan {
   const file = parse(fileName, source);
   const bound = new Map<string, string>();
@@ -614,6 +696,18 @@ function launchesOf(fileName: string, source: string): LaunchScan {
   const isChildProcess = (node: ts.Node | undefined): boolean => node !== undefined && ts.isStringLiteralLike(node) && CHILD_PROCESS.test(node.text);
   const requiresChildProcess = (node: ts.Node | undefined): boolean =>
     node !== undefined && ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "require" && isChildProcess(node.arguments[0]);
+  /** The expression under its parentheses and an await. */
+  const bare = (node: ts.Node | undefined): ts.Node | undefined => {
+    let current = node;
+    while (current !== undefined && (ts.isParenthesizedExpression(current) || ts.isAwaitExpression(current))) current = current.expression;
+    return current;
+  };
+  const importsChildProcess = (node: ts.Node | undefined): boolean => {
+    const call = bare(node);
+    return call !== undefined && ts.isCallExpression(call) && call.expression.kind === ts.SyntaxKind.ImportKeyword && isChildProcess(call.arguments[0]);
+  };
+  /** A require or a dynamic import of child_process (wb-khhg F3: the dynamic import was the escaping form G20). */
+  const loadsChildProcess = (node: ts.Node | undefined): boolean => requiresChildProcess(bare(node)) || importsChildProcess(node);
   const bind = (node: ts.Node): void => {
     if (ts.isImportDeclaration(node) && isChildProcess(node.moduleSpecifier) && node.importClause !== undefined) {
       const clause = node.importClause;
@@ -627,7 +721,8 @@ function launchesOf(fileName: string, source: string): LaunchScan {
         }
       }
     }
-    if (ts.isVariableDeclaration(node) && requiresChildProcess(node.initializer)) {
+    if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference) && isChildProcess(node.moduleReference.expression)) namespaces.add(node.name.text);
+    if (ts.isVariableDeclaration(node) && loadsChildProcess(node.initializer)) {
       if (ts.isIdentifier(node.name)) namespaces.add(node.name.text);
       else if (ts.isObjectBindingPattern(node.name)) {
         for (const element of node.name.elements) {
@@ -651,7 +746,7 @@ function launchesOf(fileName: string, source: string): LaunchScan {
       let launcher: string | undefined;
       if (ts.isIdentifier(callee) && bound.has(callee.text)) launcher = bound.get(callee.text);
       else if (ts.isPropertyAccessExpression(callee) && ts.isIdentifier(callee.expression) && namespaces.has(callee.expression.text) && LAUNCHERS.includes(callee.name.text)) launcher = callee.name.text;
-      else if (ts.isPropertyAccessExpression(callee) && requiresChildProcess(callee.expression) && LAUNCHERS.includes(callee.name.text)) launcher = callee.name.text;
+      else if (ts.isPropertyAccessExpression(callee) && loadsChildProcess(callee.expression) && LAUNCHERS.includes(callee.name.text)) launcher = callee.name.text;
       else if (ts.isIdentifier(callee) && LAUNCHERS.includes(callee.text)) unbound.push(`${fileName}:${callee.text}`);
       if (launcher !== undefined) {
         const first = node.arguments[0];
@@ -666,10 +761,11 @@ function launchesOf(fileName: string, source: string): LaunchScan {
     ts.forEachChild(node, visit);
   };
   visit(file);
-  return { rf, composed, unbound, commands };
+  return { file: fileName, rf, composed, unbound, commands };
 }
 
 interface VerbScan {
+  readonly file: string;
   readonly argv: string[];
   readonly flags: string[];
   readonly literals: string[];
@@ -707,10 +803,11 @@ function sessionVerbsOf(fileName: string, source: string): VerbScan {
     ts.forEachChild(node, visit);
   };
   visit(file);
-  return { argv, flags, literals, renderArgv, composedArgv };
+  return { file: fileName, argv, flags, literals, renderArgv, composedArgv };
 }
 
 interface StateScan {
+  readonly file: string;
   readonly identifiers: string[];
   readonly literals: string[];
 }
@@ -731,7 +828,7 @@ function sessionStateOf(fileName: string, source: string): StateScan {
     ts.forEachChild(node, visit);
   };
   visit(file);
-  return { identifiers, literals };
+  return { file: fileName, identifiers, literals };
 }
 
 /** The reader modules' transitive src import closure (static imports and re-exports of relative specifiers). */
@@ -751,6 +848,32 @@ function readerClosure(): { modules: string[]; unresolved: string[] } {
       const target = join(dirname(path), specifier.text.replace(/\.js$/, ".ts"));
       if (existsSync(target)) queue.push(target);
       else unresolved.push(`${posix(relative(REPO, path))}: ${specifier.text}`);
+    }
+  }
+  return { modules: [...seen].map(path => posix(relative(REPO, path))).sort(), unresolved };
+}
+
+/** TypeScript's own reading of the reader closure, the listing B2 is held to: each module's imports as ts.preProcessFile lists them
+ * (static, type-only and dynamic), resolved by ts.resolveModuleName under tsconfig.json's options; a relative specifier it cannot
+ * resolve is listed apart. */
+function resolvedClosure(): { modules: string[]; unresolved: string[] } {
+  const config = ts.readConfigFile(join(REPO, "tsconfig.json"), ts.sys.readFile);
+  if (config.error !== undefined) throw new Error("tsconfig.json does not parse");
+  const { options } = ts.parseJsonConfigFileContent(config.config, ts.sys, REPO);
+  const seen = new Set<string>();
+  const unresolved: string[] = [];
+  const queue = READER_MODULES.map(module => join(REPO, module));
+  while (queue.length > 0) {
+    const path = queue.shift();
+    if (path === undefined || seen.has(path)) continue;
+    seen.add(path);
+    for (const { fileName: specifier } of ts.preProcessFile(textOf(path), true, true).importedFiles) {
+      const target = ts.resolveModuleName(specifier, path, options, ts.sys).resolvedModule;
+      if (target === undefined) {
+        if (specifier.startsWith(".")) unresolved.push(`${posix(relative(REPO, path))}: ${specifier}`);
+        continue;
+      }
+      if (target.isExternalLibraryImport !== true && posix(relative(REPO, target.resolvedFileName)).startsWith("src/")) queue.push(target.resolvedFileName);
     }
   }
   return { modules: [...seen].map(path => posix(relative(REPO, path))).sort(), unresolved };
@@ -849,6 +972,16 @@ function nativeCatalog(): Promise<CapabilityDescriptor[]> {
   });
   return nativeDescriptors;
 }
+/** The native registration's descriptor ids read through a second registry, apart from nativeCatalog's cached load: the listing C1's
+ * descriptor reading is held to. */
+async function nativeIdsAfresh(): Promise<string[]> {
+  const registry = new CapabilityRegistry();
+  (await loadWorkbenchNative()).registerNativeProviders(registry, ROOT);
+  return registry
+    .catalogSnapshot()
+    .map(entry => entry.descriptor.id)
+    .sort();
+}
 /** The rf roster of a catalog: descriptors holding a reactivefiber: permission or an rf@ contractSource. */
 const rfRoster = (descriptors: readonly CapabilityDescriptor[]): CapabilityDescriptor[] =>
   descriptors.filter(descriptor => descriptor.permissions.some(permission => permission.startsWith(RF_PERMISSION_PREFIX)) || descriptor.contractSource?.startsWith("rf@") === true);
@@ -890,7 +1023,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const composed = scans.flatMap(scan => scan.composed).sort();
     const unbound = scans.flatMap(scan => scan.unbound).sort();
     const srcFloorMet = modules.length >= FLOORS.srcModules;
+    // The listing anchor (wb-khhg F1): every file git lists below src/ is one these scans judged, read from the scans' own record.
+    const scanned = new Set(scans.map(scan => scan.file));
+    const unscanned = listedSrc().filter(file => !scanned.has(file));
     expect(srcFloorMet, `src modules walked: ${modules.length}`).toBe(true);
+    expect(listingSound(), "git's listing meets the files floor and names every walk anchor and reader module").toBe(true);
+    expect(unscanned, `src files git lists that A1 did not scan (${scanned.size} scanned)`).toEqual([]);
     expect({ rf, composed, unbound }, "Pi's rf launches: the provider alone, the detached host's process.execPath the one composed command").toStrictEqual({
       rf: ["src/workbench/providers/reactivefiber.ts:spawn"],
       composed: ["src/workbench/hosts/local-detached.ts:spawn(process.execPath)"],
@@ -915,8 +1053,18 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       unboundName: control('function spawn(command: string): string { return command; }\nspawn("rf");'),
       indirect: control('import * as cp from "node:child_process";\nconst run = cp.spawn;\nrun("rf", argv);'),
       elementAccess: control('import * as cp from "node:child_process";\ncp["spawn"]("rf", argv);'),
+      // wb-khhg F3: the dynamic import (the gate's G20) and the import-equals (G21) forms.
+      dynamicImport: control('const cp = await import("node:child_process");\ncp.spawn("rf", argv);'),
+      dynamicDestructured: control('const { execFile: run } = await import("child_process");\nrun("rf", argv);'),
+      dynamicDirect: control('(await import("node:child_process")).spawnSync("rf", argv);'),
+      importEquals: control('import cp = require("node:child_process");\ncp.spawn("rf", argv);'),
+      // R-INDIRECT-LAUNCH: the launcher reached through the callback of the dynamic import's then (the quiet row).
+      dynamicThen: control('import("node:child_process").then(cp => cp.spawn("rf", argv));'),
     };
-    return done("A1", { srcFloorMet, rf, composed, unbound, controls });
+    // The path canaries (wb-khhg F1): the scan finds an rf launch in a canary module of every src directory git lists.
+    const canariesMissed = directoriesOf(listedSrc()).filter(directory => launchesOf(inDirectory(directory, CANARY_MODULE), 'import { spawn } from "node:child_process";\nspawn("rf", argv);').rf.length !== 1);
+    expect(canariesMissed, "src directories whose canary launch A1's scan missed").toEqual([]);
+    return done("A1", { srcFloorMet, listingSound: listingSound(), unscanned, rf, composed, unbound, controls, canariesMissed });
   },
   A2: async () => {
     const outcome = await nativeTicks(TICK_INPUTS, [{ stdout: json(fullShapeRf(ROOT)), exit: 0 }]);
@@ -1014,7 +1162,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   B1: async () => {
     const tree = liveTree();
     const filesFloorMet = tree.walk.files.length >= FLOORS.files;
+    // The listing anchor (wb-khhg F1): every file git lists is one the judge read, the bead export and the exempt pair aside, and of
+    // the skipped roots git lists files only in the bead export.
+    const read = new Set(tree.read);
+    const unread = listedJudgeable().filter(file => !read.has(file));
+    const listedRoots = new Set(gitListing().map(rootOf));
+    const listedSkipped = SKIPPED_ROOTS.filter(root => listedRoots.has(root));
     expect(filesFloorMet, `files walked: ${tree.walk.files.length}`).toBe(true);
+    expect(listingSound(), "git's listing meets the files floor and names every walk anchor and reader module").toBe(true);
+    expect(unread, `files git lists that B1's judge did not read (${read.size} read)`).toEqual([]);
+    expect(listedSkipped, "the skipped roots git lists files in").toStrictEqual(LISTED_UNJUDGED);
     expect(tree.anchorsWalked, "every walk anchor was reached with its token").toBe(true);
     expect({ findings: tree.findings, symlinks: tree.walk.symlinks, unreadable: tree.walk.unreadable }, "sentences assuming an rf session expires").toStrictEqual({
       findings: [],
@@ -1022,6 +1179,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       unreadable: [],
     });
     const expiring = "rf sessions expire after 30 minutes of inactivity.";
+    const zeroWidth = String.fromCodePoint(0x200b);
+    const softHyphen = String.fromCodePoint(0xad);
+    const fullwidth = (word: string): string => String.fromCodePoint(...[...word].map(letter => (letter.codePointAt(0) ?? 0) + 0xfee0));
     const controls = {
       plain: asserts(expiring),
       timesOut: asserts("The rf session times out, so the dashboard re-renders without one."),
@@ -1043,10 +1203,23 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       negatedEarlier: asserts("An rf session is not closed by hand, it expires at midnight."),
       utf16: asserts(Buffer.from(expiring, "utf16le").toString("utf8")),
       escaped: asserts("rf sessions \\u0065xpire after an hour"),
+      // wb-khhg F2: the rendered reading - intraword emphasis (the gate's G17), a zero-width split (G18), a soft-hyphen split (G18b)
+      // and a compatibility form - and the written reading kept beside it (rawJoin: the rendered reading joins rf and sessions).
+      emphasis: asserts("Pi relies on rf sessions that ex**pire** after an hour of inactivity."),
+      zeroWidth: asserts(`Pi relies on rf sessions that ex${zeroWidth}pire after an hour of inactivity.`),
+      softHyphen: asserts(`Pi relies on rf sessions that ex${softHyphen}pire after an hour of inactivity.`),
+      compatibility: asserts(`Pi relies on rf sessions that ${fullwidth("expire")} after an hour of inactivity.`),
+      rawJoin: asserts(`Pi relies on rf${zeroWidth}sessions that expire after an hour of inactivity.`),
+      // R-RENDERED: a split the rendered reading keeps (the quiet rows).
+      htmlTag: asserts("Pi relies on rf sessions that ex<b>pire</b> after an hour of inactivity."),
+      htmlEntity: asserts("Pi relies on rf sessions that ex&shy;pire after an hour of inactivity."),
+      codeSpan: asserts("Pi relies on rf sessions that ex`pire` after an hour of inactivity."),
     };
     const planted = plantedTree({
       "docs/expiry.md": `${expiring}\n`,
       "src/ttl.ts": "export const rfSessionTtlMs = 3_600_000;\n",
+      "test/fixtures/expiry-note.md": `${expiring}\n`,
+      "docs/rendered.md": "Pi relies on rf sessions that ex**pire** after an hour of inactivity.\n",
       "notes/never.md": "rf sessions never expire.\n",
       "notes/le.txt": Buffer.from(expiring, "utf16le"),
       "notes/link.md": null,
@@ -1054,11 +1227,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       ".beads/issues.jsonl": `{"title":"${expiring}"}\n`,
       "dist/notes.md": `${expiring}\n`,
     });
+    // The path canaries (wb-khhg F1): an expiry note in every directory git lists, read through the same readTree, is flagged.
+    const plantPaths = directoriesOf(listedJudgeable()).map(directory => inDirectory(directory, DIRECTORY_PLANT));
+    const directoryTree = plantedTree(Object.fromEntries(plantPaths.map(path => [path, `${expiring}\n`])));
+    const directoryPlantsMissed = plantPaths.filter(path => !directoryTree.findings.some(finding => finding.startsWith(`${path}: `)));
+    expect(directoryPlantsMissed, `directory plants B1's judge did not flag (${plantPaths.length} planted)`).toEqual([]);
     const flagged = (path: string): boolean => planted.findings.some(finding => finding.startsWith(`${path}: `)) || planted.walk.symlinks.includes(path);
     const plants = Object.fromEntries(
-      ["docs/expiry.md", "src/ttl.ts", "notes/never.md", "notes/le.txt", "notes/link.md", "node_modules/pkg/notes.md", ".beads/issues.jsonl", "dist/notes.md"].map(path => [path, flagged(path)]),
+      ["docs/expiry.md", "src/ttl.ts", "test/fixtures/expiry-note.md", "docs/rendered.md", "notes/never.md", "notes/le.txt", "notes/link.md", "node_modules/pkg/notes.md", ".beads/issues.jsonl", "dist/notes.md"].map(path => [path, flagged(path)]),
     );
-    return done("B1", { filesFloorMet, anchorsWalked: tree.anchorsWalked, findings: tree.findings, symlinks: tree.walk.symlinks, unreadable: tree.walk.unreadable, controls, plants });
+    return done("B1", { filesFloorMet, listingSound: listingSound(), unread, listedSkipped, directoryPlantsMissed, anchorsWalked: tree.anchorsWalked, findings: tree.findings, symlinks: tree.walk.symlinks, unreadable: tree.walk.unreadable, controls, plants });
   },
   B2: async () => {
     const { modules, unresolved } = readerClosure();
@@ -1070,6 +1248,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(closureFloorMet, `closure modules: ${modules.join(", ")}`).toBe(true);
     expect(anchorsRead, "the closure reaches the provider, the adapter, the registry and the redaction module").toBe(true);
     expect(unresolved).toEqual([]);
+    // The listing anchor (wb-khhg F1): the modules these scans judged are exactly the closure TypeScript resolves.
+    const resolved = resolvedClosure();
+    const judged = scans.map(scan => scan.file).sort();
+    const unscanned = resolved.modules.filter(module => !judged.includes(module));
+    expect(resolved.unresolved, "relative imports TypeScript cannot resolve in the closure").toEqual([]);
+    expect(judged, "B2 scans exactly the closure TypeScript resolves").toStrictEqual(resolved.modules);
     expect({ identifiers, literals }, "rf session state in the reader closure").toStrictEqual({ identifiers: [], literals: [] });
     const control = (source: string): JsonValue => {
       const scan = sessionStateOf("control.ts", source);
@@ -1089,7 +1273,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       deadline: control("const deadlineMs = 60_000;"),
       composedField: control('const head = "session";\nconst key = head + suffix;'),
     };
-    return done("B2", { closureFloorMet, anchorsRead, unresolved, identifiers, literals, controls });
+    // The path canaries (wb-khhg F1): the scan finds session state in a canary module of every directory of the closure.
+    const canariesMissed = directoriesOf(judged).filter(directory => sessionStateOf(inDirectory(directory, CANARY_MODULE), "let session: string | undefined;").identifiers.length !== 1);
+    expect(canariesMissed, "closure directories whose canary B2's scan missed").toEqual([]);
+    return done("B2", { closureFloorMet, anchorsRead, unresolved, unscanned, identifiers, literals, controls, canariesMissed });
   },
   B3: async () => {
     const tree = liveTree();
@@ -1109,10 +1296,26 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const composedArgv = scans.reduce((sum, scan) => sum + scan.composedArgv, 0);
     const descriptors = await nativeCatalog();
     const descriptorFloorMet = descriptors.length >= 4;
-    const descriptorHits = descriptors.filter(descriptor => SESSION_VERB_TEXT.test(JSON.stringify(descriptor)) || SESSION_FLAG_TEXT.test(JSON.stringify(descriptor))).map(descriptor => descriptor.id);
+    const descriptorsRead: string[] = [];
+    const descriptorHits = descriptors
+      .filter(descriptor => {
+        descriptorsRead.push(descriptor.id);
+        return SESSION_VERB_TEXT.test(JSON.stringify(descriptor)) || SESSION_FLAG_TEXT.test(JSON.stringify(descriptor));
+      })
+      .map(descriptor => descriptor.id);
     const srcFloorMet = modules.length >= FLOORS.srcModules;
+    // The listing anchors (wb-khhg F1): every file git lists below src/ is one these scans judged, and every descriptor a second
+    // native registration lists is one the descriptor judge read.
+    const scanned = new Set(scans.map(scan => scan.file));
+    const unscanned = listedSrc().filter(file => !scanned.has(file));
+    const freshIds = await nativeIdsAfresh();
+    const descriptorsUnread = freshIds.filter(id => !descriptorsRead.includes(id));
     expect(srcFloorMet, `src modules walked: ${modules.length}`).toBe(true);
+    expect(unscanned, `src files git lists that C1 did not scan (${scanned.size} scanned)`).toEqual([]);
     expect(descriptorFloorMet, `native descriptors read: ${descriptors.length}`).toBe(true);
+    expect(descriptorsUnread, `native descriptors C1 did not read (${descriptorsRead.length} read)`).toEqual([]);
+    expect([...descriptorsRead].sort(), "C1 read exactly the descriptors a second native registration lists").toStrictEqual(freshIds);
+    expect(listingSound(), "git's listing meets the files floor and names every walk anchor and reader module").toBe(true);
     expect(renderArgvSeen, "the reader reads the provider's context render argv").toBe(true);
     expect({ argv, flags, literals, descriptorHits }, "an rf session recovery path needs (c) and (d) with it (wb-hs2j.3)").toStrictEqual({ argv: [], flags: [], literals: [], descriptorHits: [] });
     const control = (source: string): JsonValue => {
@@ -1131,7 +1334,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       previewArgv: control('spawn("rf", ["--workspace", w, "context", "render", "--model", m, "--task", t, "--no-commit", "--no-input", "--json"]);'),
       composedArgv: control('const verb = "show";\nspawn("rf", ["session", verb]);'),
     };
-    return done("C1", { srcFloorMet, descriptorFloorMet, renderArgvSeen, argv, flags, literals, descriptorHits, composedArgv, controls });
+    // The path canaries (wb-khhg F1): the scan finds a dotted session leaf in a canary module of every src directory git lists.
+    const canariesMissed = directoriesOf(listedSrc()).filter(directory => sessionVerbsOf(inDirectory(directory, CANARY_MODULE), 'const leaf = "session.recover";').literals.length !== 1);
+    expect(canariesMissed, "src directories whose canary C1's scan missed").toEqual([]);
+    return done("C1", { srcFloorMet, listingSound: listingSound(), unscanned, descriptorFloorMet, descriptorsUnread, renderArgvSeen, argv, flags, literals, descriptorHits, composedArgv, controls, canariesMissed });
   },
   C2: async () => {
     const { leafPaths, sessionLeaves, help, record, duplicateNames } = ROSTER.producer;
@@ -1216,8 +1422,18 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 const titleOf = (row: Row): string => `${row.id} ${row.label}`;
 
 describe("wb-hs2j.3 rf session lifecycle census (RF-REACTIVE-CONTEXT-ASSEMBLY-R3, absent-today leg)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster and the bead row agree", { timeout: 60_000 }, () => {
+  it("the judged set: the frozen shape, the out-of-file roster and the bead row agree", { timeout: 60_000 }, ({ task }) => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:3", "C:2", "D:3"]);
+    // The records case cannot see its own skip (wb-khhg F4): this case, which runs first, reads its registration.
+    const registered: { readonly name: string; readonly mode: string; readonly fails: boolean }[] = [];
+    const collect = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") registered.push({ name: child.name, mode: child.mode, fails: child.fails === true });
+        else if (child.type === "suite") collect(child.tasks);
+      }
+    };
+    collect(task.file.tasks);
+    expect(registered.at(-1), "the records case is registered last, in run mode and not inverted").toStrictEqual({ name: ROSTER.tests.at(-1), mode: "run", fails: false });
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect({
@@ -1241,6 +1457,12 @@ describe("wb-hs2j.3 rf session lifecycle census (RF-REACTIVE-CONTEXT-ASSEMBLY-R3
         skippedRoots: SKIPPED_ROOTS,
         exempt: EXEMPT,
         floors: FLOORS,
+        gitListing: GIT_LISTING,
+        listedUnjudged: LISTED_UNJUDGED,
+        defaultIgnorable: `${DEFAULT_IGNORABLE.source}/${DEFAULT_IGNORABLE.flags}`,
+        intrawordEmphasis: `${INTRAWORD_EMPHASIS.source}/${INTRAWORD_EMPHASIS.flags}`,
+        directoryPlant: DIRECTORY_PLANT,
+        canaryModule: CANARY_MODULE,
         walkAnchors: WALK_ANCHORS.map(([path, token]) => `${path}:${token}`),
         readerModules: READER_MODULES,
         fixtureRoot: FIXTURE_ROOT,

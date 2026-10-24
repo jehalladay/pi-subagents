@@ -1,5 +1,5 @@
 {
- "provenance": "wb-hs2j.3 census roster (test/workbench-rf-session-lifecycle-census.test.ts). quote, citation and merged are the owner filing's (bead row wb-hs2j.3), re-read at ReactiveFiberCLI 6a251bf73af57c3a703caf6892dfe3015e06a481 with git show on 2026-10-23: 02-swarm-usage-and-command-grammar.md:42 is the quote verbatim; merged.path :72 is merged.heading and :73 is merged.line, which holds merged.quote; in merged.line <W1> <W2> stands for the two words before graph/definition basis, elided because wb-a9l2.5's landed whole-tree census (test/workbench-rf-federated-cut-claim-census.test.ts) forbids any test file to spell them joined. producer is MEASURED read-only on 2026-10-23 against the installed rf in a scratch jsonl workspace (rf init --backend jsonl): rfVersion is `rf --json --version` result.version, leafPaths its result.leaves paths in order and sessionLeaves its session.* rows (path, served); help holds the `rf context render --help`, `rf session open --help`, `rf session show --help`, `rf session close --help` and `rf session list --help` option lines whitespace-normalised; record is the result of `rf session open --json` (keys sorted, name as stated) and the status `rf session close` and `rf session show` stated after it; ticks are three measured tick forms, each argv with the scratch root, model and task replaced by placeholders (model and task fields hold the values used), openBefore and openAfter the `rf session list --status open --limit 500 --json` result.sessions counts around them, sessionIds each tick's result.session_id in order (preview: 5 --no-commit renders; sessionless: 2 committed renders without --session; pinned: 3 committed renders with --session <session>, the id `rf session open --json` minted, so its openBefore counts that open); closedRefusal.envelope is the stdout of a committed render with --session <the pinned id> after `rf session close` (exit commitExit), the scratch root rewritten to /fixture/rf-workspace, and the same render with --no-commit answered exit noCommitExit with code noCommitCode; zeroMint is the BEADS-2026-10-21.md:19 row of rfc-s24ro.7 at the program pin, journey the acceptance journey it names, presentAtPin and presentAtMain `git cat-file -e <sha>:<journey>` at programPin.sha and at mainPin.sha (origin/main of the clone, fetched 2026-10-23T02:45Z); duplicateNames is the BEADS-2026-10-21.md:90 row of rca-C055. Every witness is the expected outcome of its pin's case at this cut.",
+ "provenance": "wb-hs2j.3 census roster (test/workbench-rf-session-lifecycle-census.test.ts). quote, citation and merged are the owner filing's (bead row wb-hs2j.3), re-read at ReactiveFiberCLI 6a251bf73af57c3a703caf6892dfe3015e06a481 with git show on 2026-10-23: 02-swarm-usage-and-command-grammar.md:42 is the quote verbatim; merged.path :72 is merged.heading and :73 is merged.line, which holds merged.quote; in merged.line <W1> <W2> stands for the two words before graph/definition basis, elided because wb-a9l2.5's landed whole-tree census (test/workbench-rf-federated-cut-claim-census.test.ts) forbids any test file to spell them joined. producer is MEASURED read-only on 2026-10-23 against the installed rf in a scratch jsonl workspace (rf init --backend jsonl): rfVersion is `rf --json --version` result.version, leafPaths its result.leaves paths in order and sessionLeaves its session.* rows (path, served); help holds the `rf context render --help`, `rf session open --help`, `rf session show --help`, `rf session close --help` and `rf session list --help` option lines whitespace-normalised; record is the result of `rf session open --json` (keys sorted, name as stated) and the status `rf session close` and `rf session show` stated after it; ticks are three measured tick forms, each argv with the scratch root, model and task replaced by placeholders (model and task fields hold the values used), openBefore and openAfter the open-session counts `rf session list --status open --limit 500 --json` reported around them (its result carries the sessions as result.items, beside result.counts; result.sessions, which this provenance first named, is no field of it - wb-khhg F6, the gate's reading at rf 0.1.832, re-measured read-only at rf 0.1.836 on 2026-10-24, whose session list result keys are counts, cursor, has_more, items, limit, next_cursor, ordering and status), sessionIds each tick's result.session_id in order (preview: 5 --no-commit renders; sessionless: 2 committed renders without --session; pinned: 3 committed renders with --session <session>, the id `rf session open --json` minted, so its openBefore counts that open); closedRefusal.envelope is the stdout of a committed render with --session <the pinned id> after `rf session close` (exit commitExit), the scratch root rewritten to /fixture/rf-workspace, and the same render with --no-commit answered exit noCommitExit with code noCommitCode; zeroMint is the BEADS-2026-10-21.md:19 row of rfc-s24ro.7 at the program pin, journey the acceptance journey it names, presentAtPin and presentAtMain `git cat-file -e <sha>:<journey>` at programPin.sha and at mainPin.sha (origin/main of the clone, fetched 2026-10-23T02:45Z); duplicateNames is the BEADS-2026-10-21.md:90 row of rca-C055. wb-khhg (the R694 follow-up of landing 289) adds scan.gitListing, scan.listedUnjudged, scan.defaultIgnorable and scan.intrawordEmphasis (the listing anchors and B1's rendered reading), scan.directoryPlant and scan.canaryModule (the path canaries), the residual R-RENDERED, the witness fields A1, B1 and C1 listingSound, A1, C1 and B2 unscanned and canariesMissed, B1 unread, listedSkipped and directoryPlantsMissed and C1 descriptorsUnread, the A1 launch-form controls, the B1 rendered controls with the R-RENDERED quiet rows, and the B1 plants test/fixtures/expiry-note.md and docs/rendered.md. Every witness is the expected outcome of its pin's case at this cut.",
  "bead": "wb-hs2j.3",
  "quote": "Render-without-session created open sessions per tick, reaching **95 open/0 closed** in the consumer evidence before it explicitly passed a session; a later shared workspace snapshot showed 306 open/0 closed over 836 renders. Proposed lifecycle: an explicit long-lived dashboard session, idempotent recovery and explicit close/expiry semantics. No automatic expiry exists by implication.",
  "citation": "docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:42@6a251bf73af5",
@@ -142,7 +142,21 @@
    "src/workbench/reactivefiber-observer.ts"
   ],
   "fixtureRoot": "/fixture/rf-workspace",
-  "closedCode": "RF_SESSION_CLOSED"
+  "closedCode": "RF_SESSION_CLOSED",
+  "gitListing": [
+   "ls-files",
+   "-z",
+   "--cached",
+   "--others",
+   "--exclude-standard"
+  ],
+  "listedUnjudged": [
+   ".beads"
+  ],
+  "defaultIgnorable": "\\p{Default_Ignorable_Code_Point}/gu",
+  "intrawordEmphasis": "(?<=[\\p{L}\\p{N}])\\*+(?=[\\p{L}\\p{N}])/gu",
+  "directoryPlant": "zz-census-plant.md",
+  "canaryModule": "zz-census-canary.ts"
  },
  "producer": {
   "rfVersion": "0.1.832",
@@ -402,6 +416,7 @@
   "R-PARAPHRASE",
   "R-NEGATED",
   "R-ENCODED",
+  "R-RENDERED",
   "R-OUTSIDE",
   "R-COMPOSED",
   "R-INDIRECT-LAUNCH",
@@ -495,8 +510,36 @@
         "rf": 1,
         "composed": 0,
         "unbound": 0
+       },
+       "dynamicImport": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "dynamicDestructured": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "dynamicDirect": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "importEquals": {
+        "rf": 1,
+        "composed": 0,
+        "unbound": 0
+       },
+       "dynamicThen": {
+        "rf": 0,
+        "composed": 0,
+        "unbound": 0
        }
-      }
+      },
+      "unscanned": [],
+      "canariesMissed": [],
+      "listingSound": true
      }
     },
     {
@@ -638,7 +681,15 @@
        "paraphrase": false,
        "negatedEarlier": false,
        "utf16": false,
-       "escaped": false
+       "escaped": false,
+       "emphasis": true,
+       "zeroWidth": true,
+       "softHyphen": true,
+       "compatibility": true,
+       "rawJoin": true,
+       "htmlTag": false,
+       "htmlEntity": false,
+       "codeSpan": false
       },
       "plants": {
        "docs/expiry.md": true,
@@ -648,8 +699,16 @@
        "notes/link.md": true,
        "node_modules/pkg/notes.md": false,
        ".beads/issues.jsonl": false,
-       "dist/notes.md": false
-      }
+       "dist/notes.md": false,
+       "test/fixtures/expiry-note.md": true,
+       "docs/rendered.md": true
+      },
+      "unread": [],
+      "listedSkipped": [
+       ".beads"
+      ],
+      "directoryPlantsMissed": [],
+      "listingSound": true
      }
     },
     {
@@ -674,7 +733,9 @@
        "deadline": 0,
        "composedField": 0,
        "templateFlag": 1
-      }
+      },
+      "unscanned": [],
+      "canariesMissed": []
      }
     },
     {
@@ -749,7 +810,11 @@
         "hits": 0,
         "composed": 1
        }
-      }
+      },
+      "unscanned": [],
+      "descriptorsUnread": [],
+      "canariesMissed": [],
+      "listingSound": true
      }
     },
     {
