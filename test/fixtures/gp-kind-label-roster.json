@@ -242,6 +242,46 @@
       "M-PATH-FROM-MESSAGE",
       "M-UNTYPED",
       "M-OK-COERCE"
+    ],
+    "covers": {
+      "A1": [
+        "an exporter fixture with kinds `ready-work` and `ready_work`"
+      ],
+      "A2": [
+        "yields two distinct FunctionIR names or a typed collision refusal",
+        "with the source label kept verbatim beside the mapped identifier"
+      ],
+      "A3": [
+        "never one merged name"
+      ],
+      "B1": [
+        "a fixture GF_IDENTIFIER_INVALID build refusal"
+      ],
+      "B2": [
+        "is recorded as a typed refusal carrying the producer's path string, not auto-repaired"
+      ],
+      "C1": [
+        "census: no exporter code path lowercases or replaces '-' in a kind label",
+        "no Pi exporter exists (0 GraphDataIR hits at d75b68d1)"
+      ],
+      "C2": [
+        "outside a recorded bijection table"
+      ]
+    },
+    "coverStop": [
+      "a",
+      "an",
+      "and",
+      "as",
+      "from",
+      "or",
+      "the",
+      "this",
+      "to"
+    ],
+    "followUp": "wb-hzwr",
+    "livePins": [
+      "C1"
     ]
   },
   "residuals": [
@@ -579,6 +619,16 @@
     "C1",
     "C2",
     "records: every registered test ran once in run mode in roster order and every pin reached its end"
+  ],
+  "assertions": [
+    "judged:43",
+    "A1:44",
+    "A2:18",
+    "A3:4",
+    "B1:29",
+    "B2:7",
+    "C1:38",
+    "C2:7"
   ],
   "producer": {
     "pin": "0107c72992f35cf6832a37615a25c7df45747ebc",
