@@ -216,6 +216,10 @@
               "json": true
             },
             "anchorsWalked": true,
+            "walk": {
+              "symlinks": [],
+              "unreadable": []
+            },
             "spelledStates": [
               "complete",
               "validated",
@@ -273,6 +277,20 @@
               "build/blocks.ts": false,
               "coverage/blocks.ts": false,
               "src/link.ts": true
+            },
+            "unjudgedControls": {
+              "scripts/stream.sh": "walked:quiet",
+              "config/stream.toml": "walked:quiet",
+              "config/stream.yml": "walked:quiet",
+              "config/stream.yaml": "walked:quiet",
+              "data/blocks.jsonl": "walked:quiet",
+              "notes/STATE": "walked:quiet"
+            },
+            "judgingControls": {
+              "quiet": "quiet",
+              "exactSpelling": "inventory:named",
+              "proseSpelling": "derivation:named",
+              "unspelledState": "derivation:named"
             }
           }
         },
@@ -467,7 +485,14 @@
             "streamEntries": [],
             "distributionPinned": true,
             "sameBlockParser": true,
-            "beadSaysUnshipped": true
+            "beadSaysUnshipped": true,
+            "controls": {
+              "filing": true,
+              "quotedLater": false,
+              "secondGatingLine": false,
+              "continuedLine": false,
+              "otherPin": false
+            }
           }
         },
         {
@@ -505,5 +530,16 @@
     "C1",
     "C2",
     "records: every registered test ran once in run mode in roster order, every pin reached its end, and no title spells a judged family"
+  ],
+  "reached": [
+    "A1:13",
+    "A2:2",
+    "A3:2",
+    "A4:2",
+    "B1:3",
+    "B2:2",
+    "B3:3",
+    "C1:5",
+    "C2:4"
   ]
 }
