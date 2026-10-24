@@ -21,15 +21,20 @@
  * must not expose more source content than the consumer is entitled to."; BEADS-2026-10-21.md:18 maps rfc-s24ro.6 ("context show
  * --detail receipt projects a transferable render receipt with no block content") and :66 rfc-mq7k6.15 ("the receipt read leaf
  * rf operation show"), both open at that map.
- * MEASURED ON THE INSTALLED rf (0.1.832 by `rf --json --version`, 2026-10-23; roster `producer.installed`): 79 leaves, none
+ * MEASURED ON THE INSTALLED rf (0.1.832 by `rf --json --version`, 2026-10-23; roster `producer`): 79 leaves, none
  * naming a receipt; `rf context show --help` offers --detail {compact,full} only, so rfc-s24ro.6's receipt projection is not
  * served; `operation.show` IS served (availability served_reachable): its help reads "Read the durable receipt of an invocation
  * from the journal by its rfo_ operation id: committed with the render_id and transaction_id it produced". That leaf is an
  * invocation receipt, not the C3 context receipt (issuer/workspace/build, observer scope, document digest, replay
  * classification), which no leaf serves. Seven served leaves read a recorded render or operation (roster
- * `producer.installed.dereferenceLeaves`: context.show, context.replay, context.diff, context.explain and context.plan take
+ * `producer.dereferenceLeaves`: context.show, context.replay, context.diff, context.explain and context.plan take
  * render ids, context.history lists recorded renders, operation.show takes an rfo_ id). Pi launches none of them (row C).
- * MEASURED AT BASE (2a26385, landing 272): src is 115 .ts files; its one rf launch is spawn("rf", argv) in
+ * The roster's version and leaf list are those of the landed capture test/fixtures/rf-version-leaves.json (wb-o4h0.3: the same
+ * rf 0.1.832 registry, 79 leaf paths in this order, all seven dereference leaves served), and C1 holds them to it; the census
+ * never reads the live rf. Re-measured 2026-10-24 by the wb-sbtv seat: the installed rf now reads 0.1.836 (commit
+ * b3494ab13397) with the same 79 leaf paths in the same order and the seven dereference leaves served_reachable.
+ * MEASURED AT BASE (2a26385, landing 272; re-measured at f8e3a48 for wb-sbtv): src is 115 .ts files, the same 115 that
+ * `git ls-files -z --cached --others -- src` lists (no untracked, ignored or symlinked entry); its one rf launch is spawn("rf", argv) in
  * nativeReactiveFiberRender (providers/reactivefiber.ts) with argv from renderArgv (`context render ... --no-commit --no-input
  * --json`); the rf descriptor (native and injected) admits only the {model, task} or {view, taskId, model?} input arm, declares
  * supportedModes ["invoke"] (no inspect, the registry's ref-dereference mode), and both readers require result.render_id null
@@ -39,13 +44,16 @@
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id and the exported acceptance part it covers; in every row pin n
  * covers part n of its clause, the clause split before ", " and before " and no "):
- *  A, acceptance (a). A1 "a Pi consumer holding only a render ID projects no source content": six render-id or receipt
- *    inputs are refused at input validation with 0 provider calls (injected) and 0 rf spawns (native, a stand-in rf on PATH);
+ *  A, acceptance (a). A1 "a Pi consumer holding only a render ID projects no source content": nine render-id or receipt
+ *    inputs - exactly every input key the filing names ((a)'s render ID as the rf envelope's render_id field and its camelCase
+ *    renderId, (c)'s receipt) on the bare input and on each input arm the registered descriptor declares, a set derived outside
+ *    this file - are refused at input validation with 0 provider calls (injected) and 0 rf spawns (native, a stand-in rf on PATH);
  *    a render ID typed where Pi admits text rides only as that flag's value in the one `context render ... --no-commit` spawn,
  *    a fresh scoped read whose reading states render_id null; a reading naming a committed render (render_id, commit_seq or
  *    transaction_id set) is refused by the native provider (transport) and by the reader (validation) before anything is
  *    projected; an admitted reading's projection carries the context text only as Pi's sha256 digest; and src reads a
- *    render_id only to require null (an AST scan with five controls and one quiet row). A2 "no replay promise beyond what a
+ *    render_id only to require null (an AST scan whose walk equals git's own listing of src, with five controls and one quiet
+ *    row). A2 "no replay promise beyond what a
  *    scoped authorized read returns": a reading carrying producer replay, receipt and federation-authority claims in additive
  *    keys projects exactly what the bare reading projects and surfaces none of them; replayed observation rows demote to
  *    partial and only an all-fresh set reads complete; the record is dated by the host's read clock, never the producer's
@@ -62,10 +70,12 @@
  *    and scope claims naming the observer's own root, a malformed source, an inner root equal to the observer's); only the
  *    host-bound authorizedRfRoot ever names another root, and once set it alone does.
  *  C, acceptance (c), absent today and gated. C1 "a receipt dereference checks issuer/workspace/build and declared observer scope
- *    before any projection": an AST scan of every regular file below src (a floor, an anchor token and a planted positive-control
- *    tree) finds one rf launch site, no argv or literal rf dereference verb, no context/render receipt spelling and no rfr_ id;
- *    no registered descriptor spells one; through the native registration both input arms spawn exactly the --no-commit render
- *    argv; every measured dereference leaf of the installed rf is one the matcher catches, and no measured leaf serves a receipt.
+ *    before any projection": an AST scan of every regular file below src (a floor, an anchor token, git's own listing of src the
+ *    walk must equal, and a planted positive-control tree) finds one rf launch site, no argv or literal rf dereference verb, no
+ *    context/render receipt spelling and no rfr_ id; no registered descriptor spells one; through the native registration both
+ *    input arms spawn exactly the --no-commit render argv; every measured dereference leaf of the installed rf is one the matcher
+ *    catches, and no measured leaf serves a receipt; the roster's rf version and leaf list are the landed capture's, and every
+ *    dereference leaf and every nearest leaf marked served is served there.
  *    C2 "digest mismatch refuses": Pi adopts no producer-stated digest (a reading whose stated output digest disagrees with its
  *    text projects Pi's own digest and never surfaces the stated one), and malformed graph and bundle revision digests are
  *    refused by both readers, never rewritten.
@@ -80,6 +90,19 @@
  * each row label must open with its clause verbatim, each row must carry one pin per exported part, the parts the roster names
  * must equal the exported ones, and its Source and Gating artifact lines must equal the roster's quote, citations and nearest
  * leaves; a row or a pin removed from every literal of this file and the roster together still reds there.
+ * FURTHER ANCHORS OUTSIDE THIS FILE (wb-sbtv, the R694 follow-up of landing 290: PREP F1 survivors G06, G07, G08, G13 and F2):
+ * the src walk of A1 and C1 must equal git's own listing of src (G07/G08: a walk that skips src/workbench/hosts, with or without
+ * a plant there, reds even while the floor and the anchor token hold); A1's render-id inputs must be exactly the key x arm set
+ * derived from the export's (a) and (c) clauses, the rf envelope's render_id field (test/helpers/rf-render-fixture.ts) and the
+ * registered descriptor's oneOf arms (G06: one input removed from the list, the roster constant and the A1 witness together reds
+ * there); C1 holds the roster's producer version and leaf list to the landed capture test/fixtures/rf-version-leaves.json (F2);
+ * the judged set walks the registered tests (vitest's task tree, collected before any case runs) and holds them to the roster's
+ * titles, and those to the ROWS-derived titles plus the records title, every one in run mode and not inverted (G13: deleting or
+ * skipping only the records case reds the judged set). Each new judge carries a planted positive control: the input coverage
+ * reports a list missing the bare camelCase input and an input with a key no anchor requires; the git comparison reports the walk
+ * minus the anchor module's directory and the walk plus a path git does not list; the capture comparison reports a producer
+ * reading that departs from the capture in every judged way; the task-tree walker returns exactly the pin cases from the row
+ * suites alone.
  * RESIDUALS (named families, each with a pinned quiet row in a witness): R-COMPOSED-ARGV a dereference argv built from non-literal
  * parts (C1 composedArgv); R-INDIRECT-LAUNCH an rf launch whose binary is not the literal "rf" (C1 indirectLaunch); R-INTERRUPTED a
  * receipt spelling split by a zero-width code point (C1 interrupted); R-UNNAMED a receipt surface that never spells context or
@@ -89,20 +112,25 @@
  * rather than refuses, a producer output digest that disagrees with the text (C2 statedDigestIgnored: it is admitted, and Pi's
  * own digest is what the record carries).
  * NOT CLAIMED: a coordinated removal of one residual family (its RESIDUALS entry, its quiet row and the roster's copies) has no
- * anchor outside this census; the dereference checks themselves (issuer, workspace, build, observer scope, document digest)
- * arm with C3 and are not implemented, and no Pi receipt verb or record is added.
- * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
- * not inverted, ran; every pin's case reached its end (REACHED).
+ * anchor outside this census; a coordinated edit of a judge, its planted control and what it judges inside this file (the src
+ * walk and its git anchor; the coverage judge and RENDER_ID_INPUTS; the task-tree walker beside a deleted case) has none either;
+ * the roster's help-text readings of the installed rf (contextShowDetail, the choice of the seven dereference leaves,
+ * rfc-s24ro.6's unserved --detail receipt) have no landed capture and are held to the roster only; the dereference checks
+ * themselves (issuer, workspace, build, observer scope, document digest) arm with C3 and are not implemented, and no Pi receipt
+ * verb or record is added.
+ * RECORDS: the judged set walks this file's registered tests at collection (each roster title once, in order, in run mode, not
+ * inverted); the last case walks them again after the pins: each ran, and every pin's case reached its end (REACHED).
  *
  * Display paths added: none. Test-only: the stand-in rf and the planted trees live in makeScratch scratch; src, the bead export
  * and the roster are only read.
  */
+import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { chmodSync, type Dirent, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, type Dirent, lstatSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, extname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
-import { afterAll, afterEach, describe, expect, it } from "vitest";
+import { afterAll, afterEach, describe, expect, it, type RunnerTask } from "vitest";
 import { type CapabilityDescriptor, CapabilityError, CapabilityRegistry, type InvocationContext, type JsonValue } from "../src/workbench/capability-registry.js";
 import { type ClaudeQuery, createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
@@ -140,7 +168,8 @@ const CAPTURED_AT = "2026-10-23T03:00:00Z";
 const OBSERVED_AT = "2026-10-23T03:00:01Z";
 const HEAD = 'export const meta = { name: "render-id-authority", description: "wb-hs2j.4 census probe" };\n';
 
-/** Inputs that carry a render id or a receipt; the preview descriptor admits none of them. */
+/** Inputs that carry a render id or a receipt; the preview descriptor admits none of them. A1 holds this list to the set
+ * derived outside this file (inputCoverage): each input key the filing names, alone and on each declared input arm. */
 const RENDER_ID_INPUTS: readonly JsonObject[] = [
   { render_id: RENDER_ID },
   { renderId: RENDER_ID },
@@ -148,7 +177,17 @@ const RENDER_ID_INPUTS: readonly JsonObject[] = [
   { view: "v", taskId: "t", render_id: RENDER_ID },
   { receipt: { render_id: RENDER_ID, workspace_id: RF_FIXTURE_WORKSPACE_ID } },
   { model: "m", task: "t", receipt: { render_id: RENDER_ID } },
+  { model: "m", task: "t", renderId: RENDER_ID },
+  { view: "v", taskId: "t", renderId: RENDER_ID },
+  { view: "v", taskId: "t", receipt: { render_id: RENDER_ID } },
 ];
+/** The tokens the exported acceptance names: the one clause (a)'s consumer holds and the one clause (c) dereferences. */
+const HELD_TOKEN = /holding only an? (.+?) projects\b/;
+const DEREFERENCED_TOKEN = /^\(c\) an? (\S+) dereference\b/;
+/** The landed capture of the installed rf's registry (`rf --json --version`, wb-o4h0.3), the roster's producer anchor. */
+const CAPTURE = "test/fixtures/rf-version-leaves.json";
+const JUDGED_TITLE = "the judged set: the frozen shape, the out-of-file roster, the bead export and the cases agree";
+const RECORDS_TITLE = "records: every registered test ran once in run mode in roster order, and every pin reached its end";
 /** A render id typed where Pi admits text: each arm is admitted, and the id rides only as that flag's value. */
 const TEXT_ARMS: readonly JsonObject[] = [
   { model: "m", task: RENDER_ID },
@@ -196,7 +235,8 @@ const MODULE_KINDS: Readonly<Record<string, ts.ScriptKind>> = {
   ".cjs": ts.ScriptKind.JS,
   ".jsx": ts.ScriptKind.JSX,
 };
-/** Sits below the 115 src files measured at base 2a26385; the anchor is a token the provider's bytes carry. */
+/** Sits below the 115 src files measured at base 2a26385 (115 again at f8e3a48); the anchor is a token the provider's bytes
+ * carry. The floor guards an empty or misdirected walk; git's own listing of src (gitListed) is what the walk must equal. */
 const SRC_FLOOR = 100;
 const SRC_ANCHOR = ["workbench/providers/reactivefiber.ts", "RF render refused"] as const;
 /** The bead export's Acceptance line splits into clauses before "; (x) " and each clause into parts before ", " or " and no ". */
@@ -373,6 +413,9 @@ function constantsOf(): Json {
     srcAnchor: SRC_ANCHOR,
     clauseSplit: `${CLAUSE_SPLIT.source}/${CLAUSE_SPLIT.flags}`,
     partSplit: `${PART_SPLIT.source}/${PART_SPLIT.flags}`,
+    heldToken: `${HELD_TOKEN.source}/${HELD_TOKEN.flags}`,
+    dereferencedToken: `${DEREFERENCED_TOKEN.source}/${DEREFERENCED_TOKEN.flags}`,
+    capture: CAPTURE,
   });
 }
 
@@ -380,8 +423,14 @@ interface BeadRow {
   readonly title: string;
   readonly notes: string;
 }
-/** The owner filing's row in the tracked bead export, found by id on a line that parses. */
+/** The export is read once per run (no case writes it): the judged set and A1's input coverage share the row. */
+let beadRowRead: BeadRow | undefined;
 function readBeadRow(): BeadRow {
+  beadRowRead ??= scanBeadExport();
+  return beadRowRead;
+}
+/** The owner filing's row in the tracked bead export, found by id on a line that parses. */
+function scanBeadExport(): BeadRow {
   for (const line of readFileSync(BEAD_EXPORT, "utf8").split("\n")) {
     if (!line.includes(BEAD)) continue;
     const row: unknown = JSON.parse(line);
@@ -406,6 +455,41 @@ function exportedClauses(notes: string): Clause[] {
     .replace(/\.$/, "")
     .split(CLAUSE_SPLIT)
     .map(clause => ({ letter: clause.slice(1, 2), text: clause, parts: clause.slice(4).split(PART_SPLIT) }));
+}
+
+interface Capture {
+  readonly version: string;
+  readonly paths: readonly string[];
+  readonly served: readonly string[];
+}
+/** The landed capture of the installed rf's registry, read strictly: its result version, its leaf paths in order, the served ones. */
+function readCapture(): Capture {
+  const raw: unknown = JSON.parse(readFileSync(join(REPO, CAPTURE), "utf8"));
+  const result = isObject(raw) && isObject(raw.envelope) && isObject(raw.envelope.result) ? raw.envelope.result : undefined;
+  if (result === undefined || typeof result.version !== "string" || !Array.isArray(result.leaves)) throw new Error(`${CAPTURE} must carry envelope.result.version and leaves`);
+  const leaves = result.leaves.map((leaf: unknown, index: number): { path: string; served: boolean } => {
+    if (!isObject(leaf) || typeof leaf.path !== "string" || typeof leaf.served !== "boolean") throw new Error(`${CAPTURE} leaves[${index}] is malformed`);
+    return { path: leaf.path, served: leaf.served };
+  });
+  return { version: result.version, paths: leaves.map(leaf => leaf.path), served: leaves.filter(leaf => leaf.served).map(leaf => leaf.path) };
+}
+interface CaptureReading {
+  readonly versionEqual: boolean;
+  readonly leavesEqual: boolean;
+  readonly dereferenceLeavesUnserved: readonly string[];
+  readonly nearestUnlisted: readonly string[];
+  readonly nearestServedUnserved: readonly string[];
+}
+/** Producer facts against the capture: version and leaf list equal its own, every dereference leaf served there, every nearest
+ * leaf listed there, and every nearest leaf marked served at the installed rf served there. */
+function againstCapture(facts: Pick<Producer, "installedVersion" | "leaves" | "dereferenceLeaves" | "nearestLeaves">, capture: Capture): CaptureReading {
+  return {
+    versionEqual: facts.installedVersion === capture.version,
+    leavesEqual: JSON.stringify(facts.leaves) === JSON.stringify(capture.paths),
+    dereferenceLeavesUnserved: facts.dereferenceLeaves.filter(leaf => !capture.served.includes(leaf)),
+    nearestUnlisted: facts.nearestLeaves.filter(leaf => !capture.paths.includes(leaf.leaf)).map(leaf => leaf.id),
+    nearestServedUnserved: facts.nearestLeaves.filter(leaf => leaf.servedAtInstalled && !capture.served.includes(leaf.leaf)).map(leaf => leaf.id),
+  };
 }
 
 /* ---------------------------------------------------------------------------------------------------------------------------
@@ -511,6 +595,54 @@ function previewDescriptor(registry: CapabilityRegistry): CapabilityDescriptor {
   return descriptor;
 }
 
+const wordsOf = (token: string): string[] => token.trim().split(/\s+/).map(word => word.toLowerCase());
+const snakeOf = (token: string): string => wordsOf(token).join("_");
+const camelOf = (token: string): string => wordsOf(token).map((word, index) => (index === 0 ? word : `${word.slice(0, 1).toUpperCase()}${word.slice(1)}`)).join("");
+/** The input arms the registered preview descriptor declares (each oneOf arm's required keys), after the bare input. */
+function inputArms(descriptor: CapabilityDescriptor): string[][] {
+  const oneOf: unknown = descriptor.inputSchema.oneOf;
+  if (!Array.isArray(oneOf)) throw new Error("the preview input schema declares no oneOf arms");
+  const arms = oneOf.map((arm: unknown, index: number): string[] => {
+    const required = isObject(arm) ? arm.required : undefined;
+    if (!Array.isArray(required) || !required.every((key: unknown) => typeof key === "string")) throw new Error(`the preview input arm ${index} declares no required keys`);
+    return required.map(String);
+  });
+  return [[], ...arms];
+}
+interface InputCoverage {
+  readonly held: string;
+  readonly dereferenced: string;
+  readonly heldIsEnvelopeField: boolean;
+  readonly keys: readonly string[];
+  readonly arms: readonly (readonly string[])[];
+  readonly uncovered: readonly (readonly string[])[];
+  readonly extra: readonly (readonly string[])[];
+}
+/** The render-id and receipt inputs required by anchors outside this file: the tokens the exported (a) and (c) clauses name,
+ * each as an input key in snake_case and camelCase ((a)'s snake form must be a field of the rf envelope the shared fixture
+ * carries), alone and on each input arm of the registered descriptor; RENDER_ID_INPUTS must hold exactly that set of key sets. */
+function inputCoverage(inputs: readonly JsonObject[] = RENDER_ID_INPUTS): InputCoverage {
+  const clauses = exportedClauses(readBeadRow().notes);
+  const clauseText = (letter: string): string => clauses.find(clause => clause.letter === letter)?.text ?? "";
+  const held = HELD_TOKEN.exec(clauseText("a"))?.[1] ?? "";
+  const dereferenced = DEREFERENCED_TOKEN.exec(clauseText("c"))?.[1] ?? "";
+  const envelopeFields = Object.keys(objectOf(objectOf(jsonCopy(fullShapeRf(ROOT)), "fullShapeRf").result, "fullShapeRf result"));
+  const keys = [...new Set([held, dereferenced].filter(token => token.length > 0).flatMap(token => [snakeOf(token), camelOf(token)]))];
+  const arms = inputArms(previewDescriptor(injectedPreview().registry));
+  const keySet = (names: readonly string[]): string => JSON.stringify([...names].sort());
+  const required = keys.flatMap(key => arms.map(arm => [...arm, key]));
+  const present = inputs.map(input => Object.keys(input));
+  return {
+    held,
+    dereferenced,
+    heldIsEnvelopeField: held.length > 0 && envelopeFields.includes(snakeOf(held)),
+    keys,
+    arms,
+    uncovered: required.filter(shape => !present.some(names => keySet(names) === keySet(shape))),
+    extra: present.filter(names => !required.some(shape => keySet(shape) === keySet(names))),
+  };
+}
+
 const oldPath = process.env.PATH;
 const scratches: string[] = [];
 afterEach(() => {
@@ -573,6 +705,29 @@ function filesBelow(directory: string): string[] {
   return files.sort();
 }
 const posix = (path: string): string => path.split(sep).join("/");
+/** Git's own listing of a root below the repo (tracked and untracked, ignored files included so a local ignored file cannot
+ * split the walk from its anchor), regular files only, repo-relative and sorted: the walk's anchor outside filesBelow, so a walk
+ * that skips a directory or a file reds even while the floor and the anchor token hold. Undefined when git cannot list it. */
+function gitListed(root: string): string[] | undefined {
+  const listing = spawnSync("git", ["ls-files", "-z", "--cached", "--others", "--", posix(relative(REPO, root))], { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  if (listing.status !== 0) return undefined;
+  const regular = (path: string): boolean => {
+    try {
+      return lstatSync(join(REPO, path)).isFile();
+    } catch {
+      return false;
+    }
+  };
+  return [...new Set(listing.stdout.split("\0").filter(path => path.length > 0))].filter(regular).sort();
+}
+/** A walk's files (repo-relative) against git's own listing of the same root: whether they agree, and what each lacks. */
+function againstGit(root: string, walked: readonly string[]): { agrees: boolean; unwalked: string[]; unlisted: string[] } {
+  const listed = gitListed(root);
+  if (listed === undefined) return { agrees: false, unwalked: ["<git ls-files failed>"], unlisted: [] };
+  const unwalked = listed.filter(path => !walked.includes(path));
+  const unlisted = walked.filter(path => !listed.includes(path));
+  return { agrees: unwalked.length === 0 && unlisted.length === 0 && listed.length === walked.length, unwalked, unlisted };
+}
 
 interface Scan {
   readonly rfLaunches: string[];
@@ -690,11 +845,12 @@ function scanFile(path: string, base: string): Scan {
   const source = readFileSync(path, "utf8");
   return extname(path) in MODULE_KINDS ? scanModule(name, source) : scanText(name, source);
 }
-/** Every regular file below `root`, scanned; the walk reports its file count and whether it read the anchor token. */
-function scanTree(root: string, base: string, anchor?: readonly [string, string]): { files: number; anchored: boolean; scan: Scan } {
+/** Every regular file below `root`, scanned; the walk reports its file count, the files it read (relative to `base`) and
+ * whether it read the anchor token. */
+function scanTree(root: string, base: string, anchor?: readonly [string, string]): { files: number; walked: string[]; anchored: boolean; scan: Scan } {
   const files = filesBelow(root);
   const anchored = anchor === undefined || files.some(file => posix(relative(root, file)) === anchor[0] && readFileSync(file, "utf8").includes(anchor[1]));
-  return { files: files.length, anchored, scan: merged(files.map(file => scanFile(file, base))) };
+  return { files: files.length, walked: files.map(file => posix(relative(base, file))).sort(), anchored, scan: merged(files.map(file => scanFile(file, base))) };
 }
 /** The scan of one planted text, as a module named `name`. */
 const scanned = (text: string, name = "control.ts"): Scan => scanModule(name, text);
@@ -713,7 +869,17 @@ function done(pin: string, witness: { [key: string]: unknown }): Json {
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   A1: async () => {
-    // (i) a render id or a receipt is no input: refused at input validation, before any reader call or rf spawn.
+    // (i) a render id or a receipt is no input: refused at input validation, before any reader call or rf spawn. The inputs are
+    // exactly the set the anchors outside this file require: each token the export's (a) and (c) name, as a key, on each arm.
+    const coverage = inputCoverage();
+    expect({ held: coverage.held, dereferenced: coverage.dereferenced, heldIsEnvelopeField: coverage.heldIsEnvelopeField }, "the tokens the exported (a) and (c) clauses name").toStrictEqual({ held: "render ID", dereferenced: "receipt", heldIsEnvelopeField: true });
+    expect({ uncovered: coverage.uncovered, extra: coverage.extra }, "the render-id inputs against the key x arm set derived from the export, the rf envelope and the descriptor").toStrictEqual({ uncovered: [], extra: [] });
+    // The coverage judge is live: a list missing the bare camelCase input, or carrying an input the anchors do not require, is reported.
+    const coverageControls = {
+      droppedBareCamelCase: inputCoverage(RENDER_ID_INPUTS.filter(input => JSON.stringify(Object.keys(input)) !== JSON.stringify([camelOf(coverage.held)]))).uncovered,
+      unrequiredKey: inputCoverage([...RENDER_ID_INPUTS, { model: "m", task: "t", token: RENDER_ID }]).extra,
+    };
+    expect(coverageControls).toStrictEqual({ droppedBareCamelCase: [["renderId"]], unrequiredKey: [["model", "task", "token"]] });
     const inputs = [];
     for (const input of RENDER_ID_INPUTS) {
       const injected = injectedPreview();
@@ -784,15 +950,18 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       nullCheck: scanned("if (result.render_id !== null) throw refusal;").nullChecks.length,
       composedKey: scanned('const id = result[["render", "id"].join("_")];').renderIdReads.length,
     };
+    const git = againstGit(SRC, tree.walked);
     expect(tree.files).toBeGreaterThanOrEqual(SRC_FLOOR);
     expect(tree.anchored).toBe(true);
+    expect({ unwalked: git.unwalked, unlisted: git.unlisted }, "the src walk against git's own listing of src").toStrictEqual({ unwalked: [], unlisted: [] });
+    expect(git.agrees).toBe(true);
     expect(tree.scan.renderIdReads).toEqual([]);
     expect(tree.scan.renderIdBindings).toEqual([]);
     expect(controls).toStrictEqual({ read: 1, elementRead: 1, destructured: 1, camelRead: 1, binding: 1, nullCheck: 1, composedKey: 0 });
     return done("A1", {
-      inputs, textArms, committed,
+      coverage, coverageControls, inputs, textArms, committed,
       projection: { sentinelProjected: serialized.includes(SENTINEL), payloadRef, evidence: prefixes(snapshotOf(topology).evidenceRefs) },
-      renderIdUse: { nullChecks: [...tree.scan.nullChecks].sort(), reads: tree.scan.renderIdReads, bindings: tree.scan.renderIdBindings, controls },
+      renderIdUse: { walkAgreesWithGit: git.agrees, nullChecks: [...tree.scan.nullChecks].sort(), reads: tree.scan.renderIdReads, bindings: tree.scan.renderIdBindings, controls },
     });
   },
   A2: async () => {
@@ -930,10 +1099,14 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     return done("B3", { gate, authorizedRoot });
   },
   C1: async () => {
-    // (i)-(iii) every regular file below src, scanned: one rf launch, no dereference verb, no receipt spelling, no rfr_ id.
+    // (i)-(iii) every regular file below src, scanned: one rf launch, no dereference verb, no receipt spelling, no rfr_ id. The walk
+    // reads exactly what git's own listing of src holds, so a narrowed walk cannot hide a module.
     const tree = scanTree(SRC, REPO, SRC_ANCHOR);
+    const git = againstGit(SRC, tree.walked);
     expect(tree.files).toBeGreaterThanOrEqual(SRC_FLOOR);
     expect(tree.anchored).toBe(true);
+    expect({ unwalked: git.unwalked, unlisted: git.unlisted }, "the src walk against git's own listing of src").toStrictEqual({ unwalked: [], unlisted: [] });
+    expect(git.agrees).toBe(true);
     expect(tree.scan.rfLaunches).toEqual(["src/workbench/providers/reactivefiber.ts:nativeReactiveFiberRender:spawn"]);
     expect(tree.scan.renderArgv).toBeGreaterThanOrEqual(1);
     expect({ dereferences: tree.scan.dereferences, receipts: tree.scan.receipts, renderIdLiterals: tree.scan.renderIdLiterals }).toStrictEqual({ dereferences: [], receipts: [], renderIdLiterals: [] });
@@ -962,6 +1135,17 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     });
     const empty = scanTree(scratch("rf-render-id-authority-empty-"), REPO);
     expect(empty.files >= SRC_FLOOR).toBe(false);
+    // The git anchor is live: the src walk minus the anchor module's directory, or plus a path git does not list, disagrees.
+    const skippedDirectory = `${posix(join("src", dirname(SRC_ANCHOR[0])))}/`;
+    const narrowed = againstGit(SRC, tree.walked.filter(path => !path.startsWith(skippedDirectory)));
+    const widened = againstGit(SRC, [...tree.walked, "src/zz-census-unlisted.ts"]);
+    const gitControls = {
+      narrowedAgrees: narrowed.agrees,
+      narrowedUnwalkedAreTheSkipped: narrowed.unwalked.length > 0 && narrowed.unwalked.every(path => path.startsWith(skippedDirectory)),
+      widenedAgrees: widened.agrees,
+      widenedUnlisted: widened.unlisted,
+    };
+    expect(gitControls).toStrictEqual({ narrowedAgrees: false, narrowedUnwalkedAreTheSkipped: true, widenedAgrees: false, widenedUnlisted: ["src/zz-census-unlisted.ts"] });
     const controls = {
       argv: scanned('run(["context", "show", id]);').dereferences.length,
       dotted: scanned('const leaf = "context.replay";').dereferences.length,
@@ -1005,10 +1189,33 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect({ uncaught, unlisted, receiptLeaves }).toStrictEqual({ uncaught: [], unlisted: [], receiptLeaves: [] });
     expect(producer.contextShowDetail.includes("receipt")).toBe(false);
     const nearest = producer.nearestLeaves.map(leaf => ({ id: leaf.id, leaf: leaf.leaf, listed: producer.leaves.includes(leaf.leaf), servedAtInstalled: leaf.servedAtInstalled }));
+    // The roster's producer facts against the landed capture of the installed rf's registry, an anchor outside this census.
+    const capture = readCapture();
+    const captured = againstCapture(producer, capture);
+    expect(captured, `the roster's rf version, leaves, dereference leaves and nearest leaves against the landed capture ${CAPTURE}`).toStrictEqual({
+      versionEqual: true,
+      leavesEqual: true,
+      dereferenceLeavesUnserved: [],
+      nearestUnlisted: [],
+      nearestServedUnserved: [],
+    });
+    // The capture judge is live: a planted producer reading that departs from the capture in every judged way is reported.
+    const unservedLeaf = capture.paths.find(path => !capture.served.includes(path)) ?? "<none>";
+    const captureControl = againstCapture({
+      installedVersion: `${producer.installedVersion}-control`,
+      leaves: producer.leaves.slice(1),
+      dereferenceLeaves: [...producer.dereferenceLeaves, unservedLeaf],
+      nearestLeaves: [
+        { id: "control-unlisted", at: "-", surface: "-", leaf: "census.control-unlisted", servedAtInstalled: false },
+        { id: "control-unserved", at: "-", surface: "-", leaf: unservedLeaf, servedAtInstalled: true },
+      ],
+    }, capture);
+    expect(captureControl).toStrictEqual({ versionEqual: false, leavesEqual: false, dereferenceLeavesUnserved: [unservedLeaf], nearestUnlisted: ["control-unlisted"], nearestServedUnserved: ["control-unserved"] });
     return done("C1", {
-      src: { floorMet: tree.files >= SRC_FLOOR, anchored: tree.anchored, rfLaunches: tree.scan.rfLaunches, renderArgvSeen: tree.scan.renderArgv >= 1, dereferences: tree.scan.dereferences, receipts: tree.scan.receipts, renderIdLiterals: tree.scan.renderIdLiterals },
-      positive, emptyTreeMeetsFloor: empty.files >= SRC_FLOOR, controls, descriptors: descriptors.map(descriptor => descriptor.id).sort(), descriptorHits, served,
+      src: { floorMet: tree.files >= SRC_FLOOR, anchored: tree.anchored, walkAgreesWithGit: git.agrees, rfLaunches: tree.scan.rfLaunches, renderArgvSeen: tree.scan.renderArgv >= 1, dereferences: tree.scan.dereferences, receipts: tree.scan.receipts, renderIdLiterals: tree.scan.renderIdLiterals },
+      positive, emptyTreeMeetsFloor: empty.files >= SRC_FLOOR, gitControls, controls, descriptors: descriptors.map(descriptor => descriptor.id).sort(), descriptorHits, served,
       producer: { installedVersion: producer.installedVersion, leaves: producer.leaves.length, dereferenceLeaves: producer.dereferenceLeaves, uncaught, receiptLeaves, contextShowDetail: producer.contextShowDetail, nearest },
+      capture: { path: CAPTURE, version: capture.version, leaves: capture.paths.length, ...captured, control: captureControl },
     });
   },
   C2: async () => {
@@ -1087,8 +1294,22 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   },
 };
 
+interface Registered {
+  readonly name: string;
+  readonly mode: string;
+  readonly fails: boolean;
+}
+/** This file's registered tests from vitest's task tree (collected before any case runs), in registration order. */
+function registeredTests(tasks: readonly RunnerTask[]): Registered[] {
+  return tasks.flatMap((child): Registered[] => {
+    if (child.type === "test") return [{ name: child.name, mode: child.mode, fails: child.fails === true }];
+    if (child.type === "suite") return registeredTests(child.tasks);
+    return [];
+  });
+}
+
 describe("wb-hs2j.4 render-id authority census (RF-REACTIVE-CONTEXT-ASSEMBLY-R4, absent-today leg)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster, the bead export and the cases agree", () => {
+  it(JUDGED_TITLE, ({ task }) => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:3", "C:2", "D:1"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
@@ -1119,6 +1340,19 @@ describe("wb-hs2j.4 render-id authority census (RF-REACTIVE-CONTEXT-ASSEMBLY-R4,
     expect(ROSTER.producer.nearestLeaves.map(leaf => leaf.at.replace(/^BEADS-2026-10-21\.md:/, ":")).join(",")).toBe(/BEADS-2026-10-21\.md(:\d+,:\d+)/.exec(gating)?.[1]);
     expect(ROSTER.citation.endsWith(`@${ROSTER.producer.programPin.slice(0, 12)}`), "the citation pins the program sha the roster measured").toBe(true);
     expect(ROSTER.merged.citation.endsWith(`@${ROSTER.producer.programPin.slice(0, 12)}`), "the merged citation pins the same sha").toBe(true);
+    // The registered tests (vitest's task tree, collected before any case runs) against the roster's titles, and those against the
+    // ROWS-derived titles plus the records title: deleting or skipping only the records case reds here.
+    const registered = registeredTests(task.file.tasks);
+    expect(registered.map(entry => entry.name), "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
+    expect([...ROSTER.tests], "the roster's titles: the judged set, each pin by its exported part in row order, the records case").toEqual([
+      JUDGED_TITLE,
+      ...ROWS.flatMap(row => row.pins.map(pin => `${pin} ${rosterPin(pin).part}`)),
+      RECORDS_TITLE,
+    ]);
+    expect(registered.filter(entry => entry.mode !== "run" || entry.fails).map(entry => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""}`), "every registered test is in run mode and not inverted").toEqual([]);
+    // The walker is live: the row suites alone (this case's siblings that are suites) hold exactly the pin cases.
+    const rowSuites = (task.suite?.tasks ?? []).filter(child => child.type === "suite");
+    expect(registeredTests(rowSuites).map(entry => entry.name), "the row suites hold exactly the pin cases").toEqual(ROWS.flatMap(row => row.pins.map(pin => `${pin} ${rosterPin(pin).part}`)));
   });
 
   for (const row of ROWS) {
@@ -1134,7 +1368,7 @@ describe("wb-hs2j.4 render-id authority census (RF-REACTIVE-CONTEXT-ASSEMBLY-R4,
     });
   }
 
-  it("records: every registered test ran once in run mode in roster order, and every pin reached its end", ({ task }) => {
+  it(RECORDS_TITLE, ({ task }) => {
     const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
     const visit = (tasks: typeof task.file.tasks): void => {
       for (const child of tasks) {
