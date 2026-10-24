@@ -11,17 +11,30 @@
  * exact on checksum match fails; (c) Pi never synthesizes a replay status word; an unknown word stays unknown (wb-973.10, wb-2j3.2
  * never-synthesize rule)."
  *
- * MEASURED (read-only, by the cutting seat, 2026-10-23; every producer fact rides the roster with its blob id): at the program pin
- * the producer (@reactive-fiber/tsx 0.1.668) closes the replay status words at REPLAY_STATUSES = matched | mismatched | failed
- * (src/replay/report.ts:39), the ReplayReport schema (tests/fixtures/docs/replay-report.schema.json) requires fourteen keys, admits
- * no other and closes status to the same three words, and the codes table (src/diagnostics/codes.ts, 199 rows, set-equal to the
- * frozen list tests/golden/diagnostic-codes.json) carries eight REPLAY rows (:1681-1745) and no RFTSX_REPLAY_VERSION_DRIFT; `git
- * grep` of the code and of replayable_exact over src/ and python/ matches no file. The TSX distribution the installed rf runs (rf
- * 0.1.832, integrations/tsx/runtime-lock.json: @reactive-fiber/tsx 0.1.649 from ReactiveFiberTSXSDK 5da03a7d49f4, an ancestor of
- * the pin) has the same eight rows and three words and no drift code either, and the installed rf package spells no RFTSX_REPLAY
- * code and no rftsx.replay-report or rftsx.render-capture name anywhere. replayable_exact is rf's replayability classification word
- * (the enum replayable_exact | replayable_with_captured_external_inputs | replayable_with_declared_variance | not_replayable of its
- * cli schemas); rf's context.render schema carries no replayability member, so the one rf envelope Pi reads cannot carry it.
+ * FOLLOW-UP wb-fgjz (R694, from the landing-301 gate verdict, cmd_64e5122a4201): F1 the A1 and B2 walk and application loops are
+ * bound by evidence outside the loops - B2 records every root it walks and each root's walk reads a planted control after its
+ * real files, and each A1 application reads a planted control beside its real inputs, so the gate's single-file hollows P28 (B2
+ * walks only its first root), P29 (B2's label application deleted), P30 (A1's descriptor application emptied) and P31 (A1's
+ * roster application emptied) red; F2 A2 pins the reading's source byte for byte at both placements, so P05b (the provider
+ * rewrites the provenance placement's status word) reds; F3 the coordinated census+roster probes P25 (a residual hollowed from
+ * both files), P26 (a pin re-pointed at another pin's case, its witness copied) and P27 (a vocabulary word dropped from both) red
+ * through anchors outside the two files (FROZEN SHAPE below); F4 C1's count of schema-valid fixtures is corrected to six and
+ * pinned.
+ *
+ * MEASURED (read-only, by the cutting seat, 2026-10-23; every producer fact rides the roster with its blob id): at the program
+ * pin the producer (@reactive-fiber/tsx 0.1.668) closes the replay status words at REPLAY_STATUSES = matched | mismatched |
+ * failed (src/replay/report.ts:39), the ReplayReport schema (tests/fixtures/docs/replay-report.schema.json) requires fourteen
+ * keys, admits no other and closes status to the same three words, the two schema names are REPLAY_REPORT_SCHEMA =
+ * "rftsx.replay-report" (src/replay/report.ts:35) and RENDER_CAPTURE_SCHEMA = "rftsx.render-capture" (src/replay/replay.ts:83;
+ * both re-read by the wb-fgjz seat, 2026-10-24, with their blob ids in the roster), and the codes table
+ * (src/diagnostics/codes.ts, 199 rows, set-equal to the frozen list tests/golden/diagnostic-codes.json) carries eight REPLAY rows
+ * (:1681-1745) and no RFTSX_REPLAY_VERSION_DRIFT; `git grep` of the code and of replayable_exact over src/ and python/ matches no
+ * file. The TSX distribution the installed rf runs (rf 0.1.832, integrations/tsx/runtime-lock.json: @reactive-fiber/tsx 0.1.649
+ * from ReactiveFiberTSXSDK 5da03a7d49f4, an ancestor of the pin) has the same eight rows and three words and no drift code
+ * either, and the installed rf package spells no RFTSX_REPLAY code and no rftsx.replay-report or rftsx.render-capture name
+ * anywhere. replayable_exact is rf's replayability classification word (the enum replayable_exact |
+ * replayable_with_captured_external_inputs | replayable_with_declared_variance | not_replayable of its cli schemas); rf's
+ * context.render schema carries no replayability member, so the one rf envelope Pi reads cannot carry it.
  * THE FIXTURES (the roster's fixtures): base is the producer's own example report, verbatim from docs/guides/replay.md:160 at the
  * pin (the `json rftsx.replay-report` fence). Every other fixture is CONSTRUCTED from base by the delta the roster names: drift
  * follows the gating row's acceptance (BEADS-2026-10-21.md:29: "capture versions.package 0.1.600 replayed at 0.1.649 -> status
@@ -46,18 +59,26 @@
  *    every key and value of rf's frozen render result roster (test/fixtures/rf-result-keys.json) alike, with a floor, the nearest
  *    TSX reader as the anchor (src/workbench/reactivefiber-observer.ts reads only the TSX engine identity and worker counters,
  *    quiet), and controls; a module that spells one must be bound in TSX_REPLAY_READERS and every binding must name such a module
- *    (empty both ways today). A2 the native reader against a stand-in rf: a bare report on stdout is the transport refusal of an
- *    unrecognized envelope, never a reading; a report riding an otherwise valid render, as a result member (result.replay) or
- *    inside a member the adapter reads (result.provenance.replay), is admitted with the reading's source byte for byte, and the
- *    reader adapter's projection is byte-identical to the same render without it and surfaces none of the report's strings: Pi
- *    neither echoes nor labels it on any display path.
+ *    (empty both ways today). Each application also reads a PLANTED control beside its real inputs (wb-fgjz): a scratch module
+ *    spelling a vocabulary word and the specifier, a descriptor spelling a vocabulary word, one spelling the specifier, a roster
+ *    entry spelling a vocabulary word and a binding naming no module; the planted controls are the only hits, the planted module
+ *    the only unbound speller and the planted binding the only stale one, the planted roster entry is the only entry that spells
+ *    a word (read entry by entry, so no real hit hides behind the planted word), and the real module, descriptor and roster entry
+ *    counts each have a floor of their own. A2 the native reader against a stand-in rf: a bare report on stdout is the transport
+ *    refusal of an unrecognized envelope, never a reading; a report riding an otherwise valid render, as a result member
+ *    (result.replay) or inside a member the adapter reads (result.provenance.replay), is admitted with the reading's source byte
+ *    for byte (pinned at both placements), and the reader adapter's projection is byte-identical to the same render without it
+ *    and surfaces none of the report's strings: Pi neither echoes nor labels it on any display path.
  *  B, the guard, (a). B1 the pinned codes table: the drift code is absent from the REPLAY family, from the whole 199-code table and
  *    from the distribution's family, the family is the table's RFTSX_REPLAY_ prefix set, and the status words agree with the
  *    schema enum; B2 no file of src, docs, qa or the front matter spells an RFTSX code, an rftsx schema name or the exact label, and
  *    no unit (line, table cell or sentence) couples a TSX mention with a replay or capture word and an exactness word, with the
- *    judges read on controls.
- *  C, armed on landing, (b). C1 the fixture oracle: each fixture is base plus exactly its delta, and the four valid ones meet the
- *    pin's schema facts (key set, status enum, matched iff status matched, mode replay); C2 the armed check (violationsOf) on
+ *    judges read on controls; B2 records each root it walks (all four, in order), and each root's walk reads a planted scratch
+ *    control after its real files - one line per judge (an RFTSX code, an rftsx schema name, the exact label, a coupled claim) -
+ *    so each judge's application is read on each root and the planted controls are the only hits (wb-fgjz).
+ *  C, armed on landing, (b). C1 the fixture oracle: each fixture is base plus exactly its delta, and the six valid ones (base,
+ *    drift, equal, opaque, mismatched, failed) meet the pin's schema facts (key set, status enum, matched iff status matched, mode
+ *    replay, package and protocol versions), a list C1 pins; C2 the armed check (violationsOf) on
  *    synthetic readers: the honest echo passes every fixture, and the mutant that upgrades to exact on checksum match fails (it is
  *    honest when the checksums are not verified), as do the opaque-state exact label, the dropped, reworded or swapped drift
  *    diagnostic, a drift synthesized for equal versions, a re-labelled status word and a mismatched or failed report read as
@@ -71,11 +92,20 @@
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the whole judged set - every row's id, label and
  * pins, every pin's witness, the constants, the vocabulary, the residual families and every registered test title - is held to the
- * out-of-file roster, whose producer facts (the codes table, the schema, the status words, the guide's report) anchor the
- * constants outside this file, and the labels of rows A to D are held to the bead's own acceptance text in the tracker export
- * (.beads/issues.jsonl). The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran before
- * it) and the set of pins that reached their witness. Not claimed: an edit of this file and the roster together - the bead text
- * anchors only the labels of rows A to D, so a pin removed from both stays green.
+ * out-of-file roster, whose producer facts (the codes table, the schema, the status words, the guide's report, the two schema
+ * names) anchor the constants outside this file, and the labels of rows A to D are held to the bead's own acceptance text in the
+ * tracker export (.beads/issues.jsonl). OUTSIDE BOTH FILES (wb-fgjz, the coordinated census+roster class): the delivered entry of
+ * the bead's notes in the same export (append-only; its "WHAT IS PINNED" block) states the frozen shape, the pins each row's line
+ * names and the residual families with their quiet rows, and the judged set holds this file to it - each delivered row keeps at
+ * least its delivered pins, each delivered pin stays judged in its row and each delivered family keeps its quiet row - so a pin,
+ * a row or a residual removed from this file and the roster together reds; VOCABULARY equals what the producer facts derive
+ * (each schema name's prefix and name, every required report key outside GENERIC_REPORT_KEYS, the drift code's tail and rf's
+ * exact classification word), so a word dropped from this file and the roster's constants together reds; and no two pins share a
+ * roster witness, so a pin re-pointed at another pin's case with that witness copied reds. The last case reads the vitest task
+ * tree (every registered test, in roster order, in run mode, ran before it) and the set of pins that reached their witness. NOT
+ * CLAIMED: an edit of this file and the roster that also rewrites the roster's producer facts, or that moves a key between
+ * VOCABULARY and GENERIC_REPORT_KEYS in both; and a pin's case rewritten together with its roster witness to a new value of its
+ * own (the delivered entry names pins, not witnesses).
  * RESIDUALS (named, each with its pinned quiet row): R-VOCABULARY a reader reading only the generic keys (status, matched,
  * diagnostics, code, metadata) spells no vocabulary token and is invisible to A1 (Q1); R-PARAPHRASE a reworded exactness claim
  * (identical, byte for byte) is not caught by B2 or by the armed check's exact judge (Q2); R-COMPOSED a token or label assembled at
@@ -138,8 +168,9 @@ const REPLAY_CODES = [
 /** The program's words for a cross-runtime mismatch (RFCLI-INTEROP.md:33); no producer status word at the pin. */
 const FUTURE_WORDS = ["incompatible", "unsupported"];
 /** The TSX capture/replay vocabulary: the producer's schema-name prefix, its distinctive report and capture names, the drift
- * code's tail and rf's exact classification word; no src module spells one at base 6653728. The generic keys (status, matched,
- * diagnostics, code, metadata, resources, effects, commits, mode) are left out and named under R-VOCABULARY. */
+ * code's tail and rf's exact classification word; no src module spells one at base 6653728. The report's generic keys
+ * (GENERIC_REPORT_KEYS) and the diagnostic's code and metadata are left out and named under R-VOCABULARY; the judged set derives
+ * the list from the roster's producer facts (derivedVocabulary). */
 const VOCABULARY = [
   "rftsx",
   "replay-report",
@@ -150,6 +181,9 @@ const VOCABULARY = [
   "replayable_exact",
   "version-drift",
 ];
+/** The required keys of the producer's ReplayReport schema that VOCABULARY leaves out as generic (R-VOCABULARY): every other
+ * required key is a vocabulary member, so the split is a partition of the schema's key list (wb-fgjz). */
+const GENERIC_REPORT_KEYS = ["schema", "schemaVersion", "status", "matched", "resources", "effects", "commits", "nodeRef", "transactionRef", "mode", "diagnostics"];
 /** The producer's package spelling in any separator form (@reactive-fiber/tsx, reactive_fiber_tsx, ReactiveFiberTSX). */
 const SPECIFIER = /reactive[\s_.:/@-]*fiber[\s_.:/@-]*tsx/gi;
 /** Each residual family and the quiet row that pins it. */
@@ -352,6 +386,8 @@ const SURFACE_ROOTS: readonly ScanRoot[] = [
   { root: "qa", floor: 50, anchorFile: "qa/workbench/receipts-index.mjs", anchorToken: "docs/workbench/receipts", files: () => filesBelow(join(REPO, "qa")) },
   { root: "front matter (root *.md, examples/)", floor: 10, anchorFile: "README.md", anchorToken: "@tintinweb/pi-subagents", files: frontMatter },
 ];
+/** The src modules A1 judges: a floor below the 115 measured at trunk f2e138e, so an emptied module filter reds (wb-fgjz). */
+const MODULE_FLOOR = 100;
 function walkRoot(scan: ScanRoot): { files: string[]; floorMet: boolean; anchorRead: boolean } {
   const files = scan.files();
   const floorMet = files.length >= scan.floor;
@@ -683,6 +719,50 @@ function spawnsOf(log: string): string[][] {
     .filter(Boolean)
     .map(line => JSON.parse(line) as string[]);
 }
+/** The prefix of every planted control's name: no repository path starts with it, so a planted hit never reads as a real one. */
+const PLANTED = "planted:";
+/** The planted control files written so far, by path: the name each judge reports for one. */
+const PLANTED_NAMES = new Map<string, string>();
+/** The name a judge reports for a walked file: the planted control's name, else the repository path. */
+function nameOf(file: string): string {
+  return PLANTED_NAMES.get(file) ?? relative(REPO, file);
+}
+/** Writes one planted control file into fresh makeScratch scratch (removed after the case) and returns its path. */
+function plantedFile(name: string, fileName: string, text: string): string {
+  const folder = makeScratch("tsx-replay-status-planted-");
+  scratches.push(folder);
+  const file = join(folder, fileName);
+  writeFileSync(file, text);
+  PLANTED_NAMES.set(file, `${PLANTED}${name}`);
+  return file;
+}
+/** The producer package spelling, composed at runtime (no source line of this file spells it whole). */
+const PLANTED_SPECIFIER = ["@reactive-fiber", "tsx"].join("/");
+/** The claim unit every planted surface control carries: a TSX mention, a replay word and an exactness word in one sentence. */
+const SURFACE_CLAIM = compose("The", "TSX", "replay", "is", "exact.");
+/** B2's planted control for one surface root (wb-fgjz): one line per judge - an RFTSX code, an rftsx schema name, the exact label
+ * and the coupled claim unit - read after the root's real files, so every judge's application is read on every root's walk. */
+function plantSurfaceControl(root: string): string {
+  const text = [["RFTSX", "REPLAY", "VERSION", "DRIFT"].join("_"), ["rftsx", "replay-report"].join("."), ["replayable", "exact"].join("_"), SURFACE_CLAIM];
+  return plantedFile(root, "control.md", `${text.join("\n")}\n`);
+}
+/** A1's planted controls (wb-fgjz), one per application: a module spelling a vocabulary word and the specifier, a descriptor
+ * spelling a vocabulary word, a descriptor spelling the specifier, a roster entry spelling a vocabulary word and a binding naming
+ * no module. Each rides the real inputs of its application, so the planted controls are the only hits. */
+function plantTriggerControls(): { module: string; descriptorIds: string[]; descriptorTexts: string[]; rosterEntry: string; binding: string } {
+  const module = plantedFile("trigger module", "control.ts", `${compose("export const KEYS = [", JSON.stringify(["first", "MismatchPath"].join("")), "]; //", PLANTED_SPECIFIER)}\n`);
+  const descriptors = [
+    { id: `${PLANTED}vocabulary descriptor`, description: compose("reads", ["capture", "Versions"].join("")) },
+    { id: `${PLANTED}specifier descriptor`, description: compose("loads", PLANTED_SPECIFIER) },
+  ];
+  return {
+    module,
+    descriptorIds: descriptors.map(entry => entry.id),
+    descriptorTexts: descriptors.map(entry => JSON.stringify(entry)),
+    rosterEntry: ["reinitialized", "RuntimeOnlySlots"].join(""),
+    binding: `${PLANTED}stale binding`,
+  };
+}
 function invocationContext(): { grants: string[]; signal: AbortSignal } {
   return { grants: [...GRANTS], signal: new AbortController().signal };
 }
@@ -804,6 +884,40 @@ function beadNotes(): string {
 function quoteOf(label: string): string {
   return label.replace(/^\([^)]*\) /, "");
 }
+/** What the delivered entry of the bead's notes pinned (wb-fb2z.4 DELIVERED, append-only in the tracker export): the frozen shape,
+ * the pin ids each row's line names and the residual families with their quiet rows - this file's anchor outside itself and the
+ * roster (wb-fgjz). */
+function deliveredEntry(notes: string): { shape: string[]; pins: Record<string, string[]>; residuals: string[] } {
+  const start = notes.indexOf("WHAT IS PINNED. Rows (frozen ");
+  const end = start < 0 ? -1 : notes.indexOf("\n\n", start);
+  const block = start < 0 ? "" : notes.slice(start, end < 0 ? undefined : end);
+  const shape = (/^WHAT IS PINNED\. Rows \(frozen ((?:[A-Z]:\d+ ?)+);/.exec(block)?.[1] ?? "").trim().split(" ").filter(Boolean);
+  const lines = block.split("\n");
+  const lineOf = (id: string): string => lines.find(line => line.startsWith(`- ${id} `)) ?? "";
+  const pins = Object.fromEntries(shape.map(entry => entry.split(":")[0] ?? "").map(id => [id, [...new Set(lineOf(id).match(new RegExp(`\\b${id}\\d+\\b`, "g")) ?? [])]]));
+  const residuals = [...lineOf("Q").matchAll(/\b(R-[A-Z][A-Z-]*[A-Z]) (Q\d+)\b/g)].map(match => `${match[1]} ${match[2]}`);
+  return { shape, pins, residuals };
+}
+/** VOCABULARY as the roster's producer facts derive it, folded and sorted (wb-fgjz): each producer schema name's prefix and name,
+ * every required report key outside GENERIC_REPORT_KEYS, the drift code's tail and rf's exact classification word. */
+function derivedVocabulary(): string[] {
+  const schemaNames = Object.values(producerPart("schemaNames")).map(entry => String(objectOf(entry, "schemaNames entry").name));
+  const required = strings(producerPart("schema").required, "schema required");
+  const exact = strings(producerPart("rfClassification").words, "rfClassification words").filter(word => /exact/.test(word));
+  const words = [...schemaNames.flatMap(name => name.split(".")), ...required.filter(key => !GENERIC_REPORT_KEYS.includes(key)), DRIFT_CODE.replace(/^RFTSX_REPLAY_/, ""), ...exact];
+  return [...new Set(words.map(fold))].sort();
+}
+/** A JSON value's text with every object's keys sorted, so two equal witnesses compare equal whatever their key order. */
+function canonical(value: JsonValue): string {
+  if (Array.isArray(value)) return `[${value.map(canonical).join(",")}]`;
+  if (value !== null && typeof value === "object") {
+    return `{${Object.keys(value)
+      .sort()
+      .map(key => `${JSON.stringify(key)}:${canonical(value[key] ?? null)}`)
+      .join(",")}}`;
+  }
+  return JSON.stringify(value);
+}
 
 /** The pins that reached their witness compare, in run order; the last case holds it to every pin. */
 const REACHED: string[] = [];
@@ -814,23 +928,40 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const scan = SURFACE_ROOTS[0];
     if (scan === undefined) throw new Error("no src root");
     const { files, floorMet, anchorRead } = walkRoot(scan);
-    const modules = files.filter(file => file.endsWith(".ts"));
+    const planted = plantTriggerControls();
+    const realModules = files.filter(file => file.endsWith(".ts"));
+    const modules = [...realModules, planted.module];
     const spelling = modules
-      .map(file => ({ module: relative(REPO, file), words: vocabularyIn(textOf(file)), specifiers: specifiersIn(textOf(file)) }))
+      .map(file => ({ module: nameOf(file), words: vocabularyIn(textOf(file)), specifiers: specifiersIn(textOf(file)) }))
       .filter(entry => entry.words.length > 0 || entry.specifiers.length > 0);
     const nearest = textOf(join(REPO, scan.anchorFile));
-    const { ids, texts } = await nativeDescriptors();
+    const native = await nativeDescriptors();
+    const ids = [...native.ids, ...planted.descriptorIds];
+    const texts = [...native.texts, ...planted.descriptorTexts];
     const descriptorHits = ids.filter((_, index) => vocabularyIn(texts[index] ?? "").length > 0 || specifiersIn(texts[index] ?? "").length > 0);
-    const resultRoster = keysAndStrings(JSON.parse(textOf(join(HERE, "fixtures", "rf-result-keys.json")))).join("\n");
-    const bound = Object.keys(TSX_REPLAY_READERS).sort();
+    const realEntries = keysAndStrings(JSON.parse(textOf(join(HERE, "fixtures", "rf-result-keys.json"))));
+    const rosterEntries = [...realEntries, planted.rosterEntry];
+    const resultRoster = rosterEntries.join("\n");
+    const bound = [...Object.keys(TSX_REPLAY_READERS), planted.binding].sort();
     const unbound = spelling.map(entry => entry.module).filter(module => !bound.includes(module));
     const stale = bound.filter(module => !spelling.some(entry => entry.module === module));
-    expect(ids.length, "native descriptors registered").toBeGreaterThan(0);
-    expect(resultRoster.length, "rf's frozen render result roster was read").toBeGreaterThan(0);
+    expect(realModules.length, `src modules judged, floor ${MODULE_FLOOR}`).toBeGreaterThanOrEqual(MODULE_FLOOR);
+    expect(native.ids.length, "native descriptors registered").toBeGreaterThan(0);
+    expect(realEntries.length, "rf's frozen render result roster was read").toBeGreaterThan(0);
     expect(
       { spelling, descriptorHits, resultKeys: vocabularyIn(resultRoster), unbound, stale },
-      "a TSX replay reader binds itself in TSX_REPLAY_READERS",
-    ).toStrictEqual({ spelling: [], descriptorHits: [], resultKeys: [], unbound: [], stale: [] });
+      "a TSX replay reader binds itself in TSX_REPLAY_READERS; the planted controls are the only hits",
+    ).toStrictEqual({
+      spelling: [{ module: `${PLANTED}trigger module`, words: ["firstmismatchpath"], specifiers: ["reactive-fiber/tsx"] }],
+      descriptorHits: [`${PLANTED}vocabulary descriptor`, `${PLANTED}specifier descriptor`],
+      resultKeys: ["reinitializedruntimeonlyslots"],
+      unbound: [`${PLANTED}trigger module`],
+      stale: [`${PLANTED}stale binding`],
+    });
+    const rosterHits = rosterEntries.filter(entry => vocabularyIn(entry).length > 0);
+    expect(rosterHits, "the planted entry is the only roster entry that spells the vocabulary (no real hit hides behind its word)").toStrictEqual([
+      planted.rosterEntry,
+    ]);
     const controls = {
       snake: vocabularyIn("const slots = report.reinitialized_runtime_only_slots;"),
       camel: vocabularyIn("const { captureVersions } = report;"),
@@ -846,12 +977,15 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     };
     return {
       srcFloorMet: floorMet,
+      modulesFloorMet: realModules.length >= MODULE_FLOOR,
       anchorRead,
       nearestQuiet: vocabularyIn(nearest).length === 0 && specifiersIn(nearest).length === 0,
-      descriptorsRead: ids.length > 0,
+      descriptorsRead: native.ids.length > 0,
+      rosterRead: realEntries.length > 0,
       spelling,
       descriptorHits,
       resultKeys: vocabularyIn(resultRoster),
+      rosterHits,
       bound,
       unbound,
       stale,
@@ -867,10 +1001,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const embeddedWitness: Record<string, JsonValue> = {};
     for (const placement of PLACEMENTS) {
       const outcome = await embeddedOutcome(placement);
+      expect(outcome.sourceVerbatim, `the reading's source is the render byte for byte (${placement})`).toBe(true);
       expect(outcome.projectionUnchanged, `the adapter's projection ignores the report (${placement})`).toBe(true);
       expect(outcome.shown, `no display string carries the report (${placement})`).toStrictEqual([]);
       embeddedWitness[placement] = {
         admitted: outcome.admitted,
+        sourceVerbatim: outcome.sourceVerbatim,
         projectionUnchanged: outcome.projectionUnchanged,
         shown: [...outcome.shown],
         spawns: outcome.spawns,
@@ -912,25 +1048,34 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
   B2: async () => {
     const found = { codes: [] as string[], schemas: [] as string[], labels: [] as string[], claims: [] as string[] };
+    const walked: string[] = [];
     for (const scan of SURFACE_ROOTS) {
       const { files } = walkRoot(scan);
-      for (const file of files) {
+      walked.push(scan.root);
+      for (const file of [...files, plantSurfaceControl(scan.root)]) {
         const text = textOf(file);
-        const name = relative(REPO, file);
+        const name = nameOf(file);
         if (CODE_SPELLING.test(text)) found.codes.push(name);
         if (SCHEMA_SPELLING.test(text)) found.schemas.push(name);
         if (LABEL_SPELLING.test(text)) found.labels.push(name);
         for (const unit of claimUnitsIn(text)) found.claims.push(`${name}: ${unit}`);
       }
     }
-    expect(found, "no Pi surface spells a TSX replay code, schema name or exact label").toStrictEqual({ codes: [], schemas: [], labels: [], claims: [] });
+    const planted = SURFACE_ROOTS.map(scan => `${PLANTED}${scan.root}`);
+    expect(walked, "B2 walks every surface root, in order").toStrictEqual(SURFACE_ROOTS.map(scan => scan.root));
+    expect(found, "no Pi surface spells a TSX replay code, schema name or exact label: each root's planted control is the only hit").toStrictEqual({
+      codes: planted,
+      schemas: planted,
+      labels: planted,
+      claims: planted.map(name => `${name}: ${SURFACE_CLAIM}`),
+    });
     const controls = {
       code: CODE_SPELLING.test(`see ${["RFTSX", "REPLAY", "VERSION", "DRIFT"].join("_")}`),
       schema: SCHEMA_SPELLING.test(`a ${["rftsx", "replay-report"].join(".")} document`),
       label: LABEL_SPELLING.test(compose("labelled", ["replayable", "exact"].join("_"))),
       claim: claimUnitsIn(compose("The", "TSX", "replay", "is", "exact.")).length,
     };
-    return { ...found, controls };
+    return { ...found, walked, controls };
   },
   C1: async () => {
     const rebuiltEqual = Object.fromEntries(FIXTURE_NAMES.map(name => [name, JSON.stringify(rebuilt(name)) === JSON.stringify(FIXTURES[name])]));
@@ -938,11 +1083,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const drift = driftsOf(FIXTURES.drift);
     expect(rebuiltEqual, "every fixture is base plus exactly its delta").toStrictEqual(Object.fromEntries(FIXTURE_NAMES.map(name => [name, true])));
     expect(FIXTURES.drift.status, "the drift leaves the status unchanged").toBe(FIXTURES.base.status);
+    const schemaValid = FIXTURE_NAMES.filter(name => Object.values(schemaFacts(FIXTURES[name])).every(Boolean));
+    expect(schemaValid, "base and the five constructed forms the pin's schema admits meet every schema fact").toStrictEqual(["base", ...VALID_FIXTURES]);
     return {
       baseStatus: FIXTURES.base.status ?? null,
       drift: { status: FIXTURES.drift.status ?? null, code: DRIFT_CODE, pairs: drift },
       rebuilt: rebuiltEqual,
       facts,
+      schemaValid,
     };
   },
   C2: async () => {
@@ -1049,6 +1197,7 @@ describe("wb-fb2z.4 TSX replay status census (TSX-COMPONENT-ASSEMBLY-R4)", () =>
       vocabulary: VOCABULARY,
       specifier: SPECIFIER.source,
       residuals: RESIDUALS,
+      genericReportKeys: GENERIC_REPORT_KEYS,
     }).toStrictEqual({ programPin: ROSTER.programPin, ...ROSTER.constants });
     expect(strings(producerPart("statusWords").words, "statusWords"), "the status words are the producer's").toStrictEqual(STATUS_WORDS);
     expect(strings(producerPart("codesTable").replayFamily, "replayFamily"), "the REPLAY codes are the producer's").toStrictEqual(REPLAY_CODES);
@@ -1056,6 +1205,31 @@ describe("wb-fb2z.4 TSX replay status census (TSX-COMPONENT-ASSEMBLY-R4)", () =>
     const notes = beadNotes();
     expect(notes.length, `${BEAD}'s notes were read from the tracker export`).toBeGreaterThan(0);
     for (const row of ROWS.filter(entry => entry.id !== "Q")) expect(notes, `row ${row.id} quotes the bead's acceptance`).toContain(quoteOf(row.label));
+    const delivered = deliveredEntry(notes);
+    expect(delivered.shape.length, `${BEAD}'s delivered entry states the frozen shape`).toBeGreaterThan(0);
+    expect(Object.values(delivered.pins).flat().length, "the delivered row lines name every delivered pin").toBe(
+      delivered.shape.reduce((sum, entry) => sum + Number(entry.split(":")[1]), 0),
+    );
+    for (const entry of delivered.shape) {
+      const [id = "", count = "0"] = entry.split(":");
+      const pins = ROWS.find(row => row.id === id)?.pins ?? [];
+      expect(pins.length, `row ${id} keeps at least its ${count} delivered pins`).toBeGreaterThanOrEqual(Number(count));
+      for (const pin of delivered.pins[id] ?? []) expect(pins, `the delivered pin ${pin} stays judged in row ${id}`).toContain(pin);
+    }
+    expect(delivered.residuals.length, "the delivered entry names a family for every delivered quiet row").toBe(delivered.pins.Q?.length ?? -1);
+    for (const pair of delivered.residuals) {
+      const [family = "", quiet = ""] = pair.split(" ");
+      expect(RESIDUALS[family] ?? [], `the delivered residual ${family} keeps its quiet row ${quiet}`).toContain(quiet);
+    }
+    const required = strings(producerPart("schema").required, "schema required");
+    expect(GENERIC_REPORT_KEYS.filter(key => !required.includes(key)), "every generic key is a required report key").toEqual([]);
+    expect(derivedVocabulary(), "VOCABULARY is what the producer facts derive").toStrictEqual([...new Set(FOLDED_VOCABULARY)].sort());
+    expect(FIXTURES.base.schema, "the guide's report carries the producer's report schema name").toBe(objectOf(producerPart("schemaNames").replayReport, "replayReport").name);
+    const witnesses = ROSTER.rows.flatMap(row => row.pins.map(pin => ({ id: pin.id, text: canonical(pin.witness) })));
+    expect(
+      witnesses.filter((entry, index) => witnesses.findIndex(other => other.text === entry.text) !== index).map(entry => entry.id),
+      "no pin shares another pin's roster witness",
+    ).toEqual([]);
   });
 
   for (const row of ROWS) {
