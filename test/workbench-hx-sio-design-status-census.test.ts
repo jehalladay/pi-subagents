@@ -15,28 +15,54 @@
  * (the factorized evidence and rational exchange proof cut, :50; TI-23 at :47-48), :58-61 (the repair ledger) and :66-72 (TI-31 to
  * TI-52, :72); hx.optim.spoke.exchange.v1 is the law_id (:27) of CSO README.md:23-39 "## Proposed law record (versioned envelope;
  * data model, not existing API)" (the heading at :23, its fenced record :25-39), whose certificate_refs (:35) is ["TI-23"]; CSO
- * README.md:83 "All law admissions remain blocked.". Measured on trunk feebb63 and again on 7acbcaf: no tracked Pi text file outside
- * .beads/ and this cut's three files names HXSI-, TI- or hx.optim. (any case), so every judged sentence that names one today is the
- * dossier's.
+ * README.md:83 "All law admissions remain blocked.". Measured at trunk 883804e (landing 352, respin 2; rider F8 of refusal #2 re-dated the
+ * feebb63/7acbcaf measurement): outside .beads/ and this cut's three files, the tracked text files naming HXSI-, TI- or hx.optim. (any case)
+ * are landing 332's test/fixtures/hx-cost-certificate-roster.json and test/workbench-hx-cost-certificate-census.test.ts, both under test/,
+ * outside the judged surfaces (R8), so every judged sentence that names one today is the dossier's.
  * THIS GROUP'S DOSSIER: Pi holds no dossier of the program-triage-2026-10-22 groups (the owner's triage journal lives in the owner
  * session), and a census can read only what the repository carries, so this census carries the group's dossier at DOSSIER: the two
- * status rows verbatim, the named-ID table (one row per program block at the pin, each status cell quoting the block's own words)
- * and the posture Pi states. It is a judged surface, never exempt (row A3), and it is FROZEN (row C3): its bytes are
+ * status rows verbatim, the named-ID table (one row per program block at the pin as the seats measured it, each status cell quoting the
+ * block's own words) and the posture Pi states. It is a judged surface, never exempt (row A3), and it is FROZEN (row C3): its bytes are
  * composedDossier(), the composition of DOSSIER_INTRO, STATUS_LINES, ID_ROWS and DOSSIER_POSTURE, and its sha-256 is in the roster.
  *
- * READINGS
+ * READINGS (class-level guard bound by refusal #2, rule 19(d): every docs-reading leg of this census judges what a reader sees)
  * - (a) JUDGED: SURFACES, the acceptance's five (the three pages, every regular file of docs/workbench/receipts, the dossier), and
- *   WIDE_ROOTS plus the repository root's .md pages: the statement's surfaces (docs, the adapter in src, the skill text Pi serves
- *   in .agents and .pi) with qa and examples. Read as UTF-8; a hidden entry is read like any other; a symlink is refused, never
- *   followed (row A1 pins both on a synthetic tree).
+ *   WIDE_ROOTS plus the repository root's pages: the statement's surfaces (docs, the adapter in src, the skill text Pi serves in .agents
+ *   and .pi) with qa and examples. Read as UTF-8; a hidden entry is read like any other; a symlink is refused, never followed (row A1
+ *   pins both on a synthetic tree). A PAGE is a Markdown file (.md, .markdown or .mdx, in any case) or an HTML file (.html, .htm); a
+ *   root page is a page at the root. Every judged file is read by the RAW LEG; a page is read by the RENDERED and HTML LEGS too, and a
+ *   sentence any leg refuses is a finding (the landed wb-973.5 two-leg form, test/workbench-docs-shared-filesystem-census.test.ts).
+ * - RAW LEG (every file; what a reader served the file's source sees, the skill text Pi serves among them): the source cut into
+ *   sentences, a qualifier read where the sentence's source holds it. On a page it is additional strictness only, so a claim hidden from
+ *   the rendered page (an HTML comment, a link target) still reds.
+ * - RENDERED LEG (pages; what a reader of the rendered page sees): marked 18.0.11, the lexer test/helpers/census.ts uses, lexes the page
+ *   once. A unit is a paragraph, a heading, the blocks of a list item or block quote, a table row (its cells joined by " | "), a code
+ *   block, an HTML block, and a link's or an image's title (a tooltip, read on its own). A unit renders its text with backslash escapes
+ *   and code spans as written; emphasis, strikethrough and link text flattened; a link destination, a reference definition and a task
+ *   checkbox render nothing; an inline HTML token (a comment or a tag) renders nothing, and a tag that opens or closes a block-level
+ *   element (BLOCK_TAGS) breaks the sentence (a br tag the line); an HTML block (and an HTML page) renders its source with comments and
+ *   tags removed. Character references are decoded as marked passes them on (with their ";": decimal of 1-7 digits, hex of 1-6, a name):
+ *   a numeric one as its code point, a NAMED_REFERENCES name as its characters, any other name as one BLANK; never inside code, which
+ *   shows them as written. A default-ignorable code point and a control other than tab and line feed render nothing; a bidirectional
+ *   control renders nothing but may reorder: each outermost right-to-left override span (to its closer, or the unit's end) is read in
+ *   reverse, as a reader sees it, and a unit holding any bidirectional control reads no qualifier. What a reader may
+ *   see or hear (struck text, an image's alt text, an HTML block's text) is read for names and claims; a QUALIFIER counts only where a
+ *   reader plainly sees it - never in struck text, alt text or an HTML block, and never in a sentence that holds an inline HTML token,
+ *   since a page may hide what an element holds.
+ * - HTML LEG (pages): the source of every HTML token at any depth, comments and attributes included, cut into sentences; a name beside a
+ *   claim is a finding whatever qualifies it (a title or alt attribute, or a comment, is read by some readers on its own).
  * - SENTENCE: a text cut at a run of white space after ".", "!", "?" or ";" (never after a list number or a dotted name prefix,
- *   so "hx.optim." stays inside its sentence), at a blank line and before a table row; a .md text is also cut before a heading,
- *   a list item and a block quote line. A code comment's wrapped lines stay one sentence.
+ *   so "hx.optim." stays inside its sentence), at a blank line and before a table row; a raw Markdown text is also cut before a heading,
+ *   a list item and a block quote line, and a rendered unit at each block-level break. A code comment's wrapped lines stay one sentence.
  * - MENTION: a sentence carrying a NAMES prefix that touches no letter or digit on its left, any case. CLAIM: a CLAIMS form, a
  *   whole word, any case. QUALIFIER: a QUALIFIERS phrase, the programs' own status words, any case and any of "-", "_" or white
- *   space between its words. Claims and qualifiers are read with every name token blanked, so a word inside a name never counts.
- * - FINDING: a mention carrying a claim and no qualifier, reported `<path>:<line> <names>: unqualified-<claim>` for the first
- *   CLAIMS member it carries. A negated claim ("is not registered") is a finding too: Pi echoes the programs' words, never its own.
+ *   space between its words. Claims and qualifiers are read with every name token and file path blanked (BLANK, so no word is read
+ *   inside one and no two words join across one: "DESIGN HXSI-02 ONLY" holds no qualifier).
+ * - FINDING: a mention carrying a claim and no qualifier, reported `<path>:<line> <names>: <leg>unqualified-<claim>` for the first
+ *   CLAIMS member it carries, the leg "" (raw), "rendered-" or "html-". A negated claim ("is not registered") is a finding too: Pi echoes
+ *   the programs' words, never its own.
+ * - ANCHORS: a surface's or root's anchor token is read from the file's source bytes; it proves the walk reached the real file (walk
+ *   liveness) and is no docs-truth reading - the docs-truth readings are rows A2-A7 and C.
  * - (b) READER LEG: law_id 'hx.optim.spoke.exchange.v1' and certificate_refs ['TI-23'] planted at every site of a provider
  *   reading (SITES: every object two keys deep, read from the reading itself) over every base reading (BASES: each kind of the
  *   adapter's exported HYPERUNIX_EXECUTION_KINDS, unlicensed and runtime-licensed) reach no field of the reader adapter's outcome
@@ -61,15 +87,22 @@
  *   and S10-S14 (one per check no probe isolates: a paragraph inside a pinned section, a re-split row and a bolded cell that render
  *   the same, a line above the title, an extra section), plus coordinated hollows that edit a pin and the dossier together (CH1-CH4,
  *   one per row rule, and CH5, HTML carried in a pin; a status line rewritten with its pin, refused by the sha-256 measured at the
- *   pin). The table count is implied by the block match and only guards the grid read.
+ *   pin). The table count is implied by the block match and only guards the grid read. The source checks beside the rendered view (a
+ *   status line's source once, the bytes, the title line) only add strictness.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
  *  A, acceptance (a). A1 the walk of the five surfaces (floors, anchors, no symlink) and the walker's own controls (a synthetic
  *    tree with hidden entries and a symlink, entryOf's kinds, the live lister seeing hidden entries); A2 the live census over them
- *    returns no finding; A3 the dossier is judged and names every family beside its claims, each claim qualified; A4 a claim
- *    planted in each surface reads exactly its finding and its qualified twin stays quiet; A5 the statement's wider surfaces walk
- *    and stay quiet; A6 a claim planted in a .ts, a .yaml and a .mjs file of the wider surfaces reads exactly its finding and its
- *    qualified twin stays quiet, so the judge reads every kind of file it walks.
+ *    returns no finding in any leg; A3 the dossier is judged in the raw and rendered legs and names every family beside its claims, each
+ *    claim qualified, and carries no HTML for the HTML leg; A4 a claim planted in each surface reads exactly its raw and rendered
+ *    findings and its qualified twin stays quiet; A5 the statement's wider surfaces walk and stay quiet, and the root page kinds are read
+ *    by extension in any case; A6 a claim planted in a .ts, a .yaml and a .mjs file of the wider surfaces reads exactly its finding and its
+ *    qualified twin stays quiet, so the judge reads every kind of file it walks; A7 the rendered-view plants VIEW_PLANTS (refusal #2's
+ *    GA1-GA11, GA1r and GA2r byte for byte, and the seat's RV1-RV24) each read exactly their findings on the live tree, and the probes
+ *    refusal #2 orders pinned red, its two controls and the probe texts its findings quote are read from the bead export (an outside
+ *    anchor), each carried by a plant that reads it so, so a probe removed from every literal here and the roster still reds. A4, A6 and A7
+ *    compare the findings a plant ADDS (the live findings, moved by the plant's lines, taken out), so a live finding reds A2 or A5 by
+ *    name and never reads as a plant mismatch (rider F5).
  *  B, acceptance (b). B1 the reader adapter; B2 the registered provider and the SDK sites; B3 the native-evidence projection; B4
  *    the live verdict; B5 the landing tripwire over the declarations, with its bare-mention and comment controls.
  *  C, acceptance (c). C1 the two status rows verbatim, as a reader sees them; C2 the named-ID rows and their status words, from the
@@ -83,26 +116,43 @@
  *    anchored); clause (b) holds LAW_ID, CERTIFICATE_REFS and TOKENS; clause (c) cites exactly the STATUS_LINES
  *    cites; the note's CSO README.md:3 quote equals that status row, and wb-x0xu.1's SIO README.md:3 quote sits inside the SIO
  *    row; the statement's pin is PIN. So removing a surface, a name, a claim, a qualifier or a status row from every literal of
- *    this file and the roster still reds. Row C3 reads the same export for the dossier's posture.
+ *    this file and the roster still reds. Row C3 reads the same export for the dossier's posture. The export is a JSON string, not a
+ *    rendered page, so F1 and C3 read the filing's notes as written.
  *  M, the instruments rows A-C read, each pinned member by member: MS1-MS4 the sentence cutter, MN1-MN3 every spelling and near
  *    miss of every name, MC every claim form (the negated form included), MQ every qualifier form, MF the finding format, MK the
- *    name mask.
+ *    name and path mask (no qualifier assembled across a blanked token), all four in the raw leg; MR1 the rendered leg's inline
+ *    reading (comments, tags, link targets and titles, alt and struck text, escapes, character references, code spans, invisibles,
+ *    bidirectional overrides, breaks), MR2 its blocks and their source lines, MR3 the whole judge's legs on single pages (the cured R4 and R5 members among them).
  *  R, the residuals' pinned quiet rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the judged set - every row's id, label and
- * pins, every pin's witness and the vocabularies, the frozen dossier's text and sha-256 - is held to the out-of-file roster
- * (ROSTER_FILE). A last case reads that every pin's case ran to its end. Not claimed: a single pin removed from ROWS, the literal,
- * IMPL and the roster together (F1 anchors each acceptance clause to its row, and the vocabularies, not each pin); a WIDE_ROOTS root
- * beyond the statement's four items (qa, examples, .pi) or a single inflection form of a claim removed from every literal and the
- * roster together (F1 anchors each statement item to one judged root and each claim through its filed word, not every root or
- * form); a named-ID row's line range, removed or narrowed in the dossier, ID_ROWS and the roster together (C2 holds every family to
- * a row and C3 the posture to the filing, but the ranges are the seats' measurements at the pin, as STATUS_LINES are).
+ * pins, every pin's witness and the vocabularies, the rendering's tables, the frozen dossier's text and sha-256 - is held to the
+ * out-of-file roster (ROSTER_FILE). A last case reads that every pin's case ran to its end. Not claimed: a single pin removed from ROWS,
+ * the literal, IMPL and the roster together (F1 anchors each acceptance clause to its row, and the vocabularies, not each pin); a
+ * WIDE_ROOTS root beyond the statement's four items (qa, examples, .pi) or a single inflection form of a claim removed from every literal
+ * and the roster together (F1 anchors each statement item to one judged root and each claim through its filed word, not every root or
+ * form); a named-ID row's line range, removed or narrowed in the dossier, ID_ROWS and the roster together, and a whole named-ID row (a
+ * program block) removed from the dossier, ID_ROWS and the roster together with the dossier sha-256 re-pinned (rider F4: C2 holds every
+ * family to a row and C3 the posture to the filing, but nothing outside the census counts the SIO 08 blocks - the ranges and the block
+ * list are the seats' measurements at the pin, as STATUS_LINES are); the SIO status line beyond wb-x0xu.1's quoted span ("**Status:**
+ * DESIGN ONLY; no new optimizer feature implemented"), changed in STATUS_LINES, the dossier and the roster together with both sha-256
+ * values re-pinned (rider F3: the census is hermetic and no Pi file outside it carries the whole line; the CSO line is anchored whole
+ * through the filing's quote); NAMED_REFERENCES beyond the HTML5 table measured at the cut (python3 html.entities.html5, 2231 names; the
+ * census does not re-read the HTML5 table); a page in another markup (reStructuredText, AsciiDoc: none on a judged root at the cut),
+ * read by the raw leg only; styling applied from outside the page, or a renderer other than marked; a numeric reference from 128 to 159,
+ * which browsers read as Windows-1252 and this census as a control (it renders nothing, so it can only join a name or a word - an
+ * over-read); an HTML block's text, read with its tags removed, not laid out; the Unicode bidirectional algorithm beyond reversing each
+ * outermost right-to-left override span (an override nested in another, or the reordering an isolate or an embedding gives mixed-direction
+ * text), where no qualifier counts in any case.
  * RESIDUALS (named; each has a pinned quiet row in row R): R1 R-QUALIFIER-ANYWHERE a qualifier anywhere in the sentence admits
- *   it, whatever it qualifies; R2 R-SPLIT a claim carried by another sentence (a pronoun, or a cut after an abbreviation such as
- *   "e.g."); R3 R-PARAPHRASE a claim outside CLAIMS (ships, runs, is the runtime law); R4 R-LOOKALIKE a look-alike letter, a
- *   look-alike hyphen (U+2010, U+2011, U+2013, U+2212) or an inserted invisible inside a name; R5 R-ENCODED an HTML reference or a
- *   JS escape inside a name; R6 R-COMPOSED a name assembled from literal parts; R7 R-CODE-LIST a list inside a code comment is one
- *   sentence, so one item's qualifier covers another; R8 R-OUTSIDE-ROOTS a file outside the judged surfaces (test/, vendor/,
- *   node_modules/, .beads/, new-feedback/, media/, dist/, .codex/, .github/ and the root's non-.md files such as forge.toml,
+ *   it, whatever it qualifies - a sentence as the census cuts it, so a sentence end of another script (an ideographic or fullwidth full
+ *   stop) joins two sentences a reader sees apart; R2 R-SPLIT a claim carried by another sentence (a pronoun, or a cut after an abbreviation such as
+ *   "e.g."); R3 R-PARAPHRASE a claim outside CLAIMS (ships, runs, is the runtime law); R4 R-LOOKALIKE a look-alike letter, a look-alike
+ *   hyphen (U+2010, U+2011, U+2013, U+2212) or a look-alike dot (U+2024) inside a name, in any file (the rendered leg folds no
+ *   look-alike), and an inserted invisible inside a name in a file that is not a page (a page's rendered leg drops it: MR3); R5 R-ENCODED a
+ *   JS escape inside a name, in any file (a page shows it as written), and an HTML reference inside a name in a file that is not a page (a
+ *   page's rendered leg decodes it: MR3); R6 R-COMPOSED a name assembled from literal parts; R7 R-CODE-LIST a list inside a code comment is
+ *   one sentence, so one item's qualifier covers another; R8 R-OUTSIDE-ROOTS a file outside the judged surfaces (test/, vendor/,
+ *   node_modules/, .beads/, new-feedback/, media/, dist/, .codex/, .github/ and the root's files that are not pages, such as forge.toml,
  *   package.json, biome.json, tsconfig*.json, vitest*.ts, LICENSE and .gitignore) - the bead export is the requirement's own text
  *   and carries findings when judged; R9 R-TRIPWIRE-SPELLING a successor law field spelled outside LAW_FIELDS (lawRecord,
  *   certificates_ref) leaves row B5 quiet; R10 R-PATH-MASK a claim or status word inside a file path never counts (the mask that
@@ -114,6 +164,17 @@
  *   cured: F3 (row A6), F4 (row A1's walker controls), F5 (row B5 reads parsed code, with bare-mention and comment controls), F6
  *   (one named-ID row per program block, its own words quoted), F7 and F8 (R4 and R8 name the families with pinned quiet rows),
  *   F12 (CSO README.md:23-39).
+ * RESPIN 2 (gate g10-gate-s78 refusal #2 of cut 8579f9eb): U1 RENDERED-TEXT DOCS TRUTH cured at class level - rows A2-A7 judge every
+ *   page in the rendered and HTML legs beside the raw leg, so a qualifier held only by an HTML comment (GA1, GA1r), a link target (GA2), a
+ *   link title (GA7) or a tag attribute (GA8) never qualifies, and GA1, GA1r, GA2, GA7 and GA8 are pinned red in A7 beside the controls
+ *   GA10 (red) and GA11 (quiet); the seat's members of the same class (an image's alt text or title, a reference definition's title,
+ *   struck text, a hidden element, an HTML block, a block-level tag, a claim in a title, an attribute or a comment beside a visible
+ *   qualifier, a right-to-left override, a direction mark) are pinned in A7 as RV1-RV24. Riders cured: F2 (GA3-GA6, the reverse
+ *   direction - a name or claim a reader sees whole that the source splits - red in A7 through the rendered leg, as are references,
+ *   invisibles, overrides and block structure), F3 and F4 (named under
+ *   NOT CLAIMED above), F5 (A4, A6 and A7 compare the plant delta), F7 (a root page is read by its extension in any case; .MD, .markdown,
+ *   .mdx and HTML pages are pages), F8 (the measurement above re-dated). Seat-found: the mask blanked with white space, so a qualifier
+ *   could be assembled across a blanked name or path; it blanks with BLANK now (MK).
  * SCOPE: the vocabularies are this cut's reading of the filing; the program lines are measured at the pin and not re-read here
  * (the census is hermetic), so a program change is seen only when a cut re-measures STATUS_LINES and ID_ROWS.
  *
@@ -125,7 +186,7 @@ import { type Dirent, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { resultFromJson } from "@hyperunix/sdk";
-import { marked, type Tokens } from "marked";
+import { marked, type Token, type Tokens } from "marked";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
@@ -328,7 +389,7 @@ const ROWS: readonly Row[] = [
   {
     id: "A",
     label: "(a) a census over docs/workbench/07-native-integrations.md, 14-qa-and-benchmarks.md, TRACEABILITY.md, receipts/ and this group's dossier asserts no sentence names HXSI-, TI- or hx.optim. as admitted/registered/verified/graduated/benchmarked without the programs' qualifier",
-    pins: ["A1", "A2", "A3", "A4", "A5", "A6"],
+    pins: ["A1", "A2", "A3", "A4", "A5", "A6", "A7"],
   },
   {
     id: "B",
@@ -347,8 +408,8 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "M",
-    label: "the sentence cutter, the name, claim and qualifier matchers, the finding format and the name mask judge their pinned inputs in order",
-    pins: ["MS1", "MS2", "MS3", "MS4", "MN1", "MN2", "MN3", "MC", "MQ", "MF", "MK"],
+    label: "the sentence cutter, the name, claim and qualifier matchers, the finding format, the name mask and the rendered reading judge their pinned inputs in order",
+    pins: ["MS1", "MS2", "MS3", "MS4", "MN1", "MN2", "MN3", "MC", "MQ", "MF", "MK", "MR1", "MR2", "MR3"],
   },
   {
     id: "R",
@@ -422,12 +483,33 @@ function constants(): unknown {
     sdkDeclarationsFloor: SDK_DECLARATIONS_FLOOR,
     hxModules: HX_MODULES,
     dossierText: { title: DOSSIER_TITLE, sections: [STATUS_HEADING, IDS_HEADING, POSTURE_HEADING], intro: DOSSIER_INTRO, idHeader: ID_HEADER, idRows: ID_ROWS, posture: DOSSIER_POSTURE, sha256: DOSSIER_SHA256 },
+    rendering: {
+      markdown: MARKDOWN.source,
+      htmlPage: HTML_PAGE.source,
+      reference: REFERENCE.source,
+      namedReferences: [...NAMED_REFERENCES].map(([name, value]) => [name, [...value].map(point => point.codePointAt(0) ?? 0)]),
+      blockTags: [...BLOCK_TAGS],
+      htmlMarkup: HTML_MARKUP.source,
+      unseen: UNSEEN.source,
+      bidi: BIDI.source,
+    },
   };
 }
 
 const textOf = (path: string): string => readFileSync(join(REPO, path), "utf8");
 const sha256 = (text: string): string => createHash("sha256").update(text).digest("hex");
 const escapeRegExp = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+/** Code points by number, so no invisible or look-alike is ever written raw in this file (standing rule 5). */
+const cp = (...codes: number[]): string => String.fromCodePoint(...codes);
+/** What a blanked character leaves (a masked name or path, or a rendered character a reader may not plainly see): a code point that is no
+ * letter, digit, white space, separator or sentence end, so no word is read inside it and no two words join across it (respin 2). */
+const BLANK = cp(0xfffc);
+/** A Markdown page by its extension, in any case (.md, .markdown, .mdx): its raw text is cut as Markdown, and it carries the rendered and HTML
+ * legs (respin 2, rider F7: an upper-case .MD root page is a page). */
+const MARKDOWN = /\.(?:md|markdown|mdx)$/i;
+const isMarkdown = (path: string): boolean => MARKDOWN.test(path);
+/** An HTML page by its extension, in any case: its whole text is one HTML block (no qualifier counts in it). */
+const HTML_PAGE = /\.html?$/i;
 /** A vocabulary form as a pattern: whole words, any case, any of "-", "_" or white space between its words. */
 const formPattern = (form: string): RegExp => new RegExp(`(?<![\\p{L}\\p{N}])${form.split(" ").map(escapeRegExp).join("[-_\\s]+")}(?![\\p{L}\\p{N}])`, "iu");
 /** A name token: its prefix touching no letter or digit on the left, then the ID characters that follow it. */
@@ -535,11 +617,12 @@ function sentencesOf(text: string, markdown: boolean): Sentence[] {
 const namesIn = (text: string): string[] => NAMES.filter(name => new RegExp(nameSource(name), "iu").test(text)).map(name => name.id);
 /** A file path token (a name ending in a known extension, with its optional line reference). */
 const PATH_TOKEN = /\S*\.(?:md|jsonl?|[cm]?[jt]s|py|toml|ya?ml)(?![\p{L}\p{N}])(?::[\d,:-]+)?/giu;
-/** A text with every name token and every file path blanked, so a claim or status word inside either is never read. */
+/** A text with every name token and every file path blanked (BLANK, never white space), so a claim or status word inside either is never read
+ * and no qualifier is assembled from the words on either side of one ("DESIGN HXSI-02 ONLY" holds no "design only"; respin 2, control MK). */
 function masked(text: string): string {
   let rest = text;
-  for (const name of NAMES) rest = rest.replace(new RegExp(nameSource(name), "giu"), match => " ".repeat(match.length));
-  return rest.replace(PATH_TOKEN, match => " ".repeat(match.length));
+  for (const name of NAMES) rest = rest.replace(new RegExp(nameSource(name), "giu"), match => BLANK.repeat(match.length));
+  return rest.replace(PATH_TOKEN, match => BLANK.repeat(match.length));
 }
 const vocabularyIn = (vocabulary: readonly Vocabulary[], text: string): string[] =>
   vocabulary.filter(entry => entry.forms.some(form => formPattern(form).test(text))).map(entry => entry.id);
@@ -554,9 +637,14 @@ interface Reading {
   readonly names: string[];
   readonly findings: string[];
 }
-/** One text's reading (header, READINGS FINDING). */
-function readingOf(path: string, text: string): Reading {
-  const sentences = sentencesOf(text, path.endsWith(".md"));
+/** A sentence as a leg judges it: its line, the text its names and claims are read in, and the text its qualifiers are read in (null: none counts). */
+interface Judged {
+  readonly line: number;
+  readonly text: string;
+  readonly qualifying: string | null;
+}
+/** One leg's reading of a text's sentences (header, READINGS FINDING); `leg` prefixes the finding ("" raw, "rendered-", "html-"). */
+function legReading(path: string, sentences: readonly Judged[], leg: string): Reading {
   const names = new Set<string>();
   let mentions = 0;
   let claimed = 0;
@@ -570,12 +658,355 @@ function readingOf(path: string, text: string): Reading {
     const claim = claimIn(sentence.text);
     if (claim === null) continue;
     claimed++;
-    if (qualifiersIn(sentence.text).length > 0) qualified++;
-    else findings.push(`${path}:${sentence.line} ${named.join("+")}: unqualified-${claim}`);
+    if (sentence.qualifying !== null && qualifiersIn(sentence.qualifying).length > 0) qualified++;
+    else findings.push(`${path}:${sentence.line} ${named.join("+")}: ${leg}unqualified-${claim}`);
   }
   return { sentences: sentences.length, mentions, claimed, qualified, names: NAMES.map(name => name.id).filter(id => names.has(id)), findings };
 }
-const findingsOf = (path: string, text: string): string[] => readingOf(path, text).findings;
+/** One text's raw reading (header, READINGS RAW LEG): its source sentences, a qualifier read where the sentence's source holds it. */
+const readingOf = (path: string, text: string): Reading => legReading(path, sentencesOf(text, isMarkdown(path)).map(sentence => ({ ...sentence, qualifying: sentence.text })), "");
+
+/** The sentence break the rendering writes where an HTML tag opens or closes a block-level element (never a source character). */
+const BREAK = cp(0x2029);
+/** A code point that renders nothing: a default-ignorable one (the zero-width characters, the soft hyphen, the word joiner, the invisible
+ * operators, the bidirectional controls, the variation selectors, the byte-order mark) or a control other than tab and line feed. */
+const UNSEEN = /[\p{Default_Ignorable_Code_Point}\p{Cc}]/u;
+const renders = (point: string): boolean => point === "\t" || point === "\n" || !UNSEEN.test(point);
+/** A bidirectional control (the embeddings, overrides and isolates, their closers and the direction marks): it renders nothing itself but can
+ * reorder what a reader sees, so a unit holding one reads no qualifier. */
+const BIDI = /\p{Bidi_Control}/u;
+/** The openers a pop-directional-formatting closes (left-to-right and right-to-left embedding and override), and the right-to-left override,
+ * whose span a reader sees in reverse. */
+const OPENERS: readonly string[] = [cp(0x202a), cp(0x202b), cp(0x202d), cp(0x202e)];
+const RLO = cp(0x202e);
+const PDF = cp(0x202c);
+/** The named character references the rendered leg decodes (written with their ";"): every HTML5 name whose characters a census pattern can
+ * read - an ASCII letter, white space, "!", "*", ".", ";", "?", "_" or a default-ignorable code point (42 names, measured on the 2231-name
+ * HTML5 table at the cut) - then the markup characters and the look-alike dashes. Every other HTML5 name renders only characters no census
+ * pattern reads (a look-alike letter is R4's), so the rendered leg reads any other name as one BLANK: no word, no white space and no
+ * sentence end (a name no browser knows shows as written, ";" and all, which the raw leg reads). */
+const NAMED_REFERENCES: ReadonlyMap<string, string> = new Map([
+  ["Tab", cp(0x09)],
+  ["NewLine", cp(0x0a)],
+  ["excl", "!"],
+  ["ast", "*"],
+  ["midast", "*"],
+  ["period", "."],
+  ["semi", ";"],
+  ["quest", "?"],
+  ["lowbar", "_"],
+  ["UnderBar", "_"],
+  ["fjlig", "fj"],
+  ["nbsp", cp(0xa0)],
+  ["NonBreakingSpace", cp(0xa0)],
+  ["shy", cp(0xad)],
+  ["ensp", cp(0x2002)],
+  ["emsp", cp(0x2003)],
+  ["emsp13", cp(0x2004)],
+  ["emsp14", cp(0x2005)],
+  ["numsp", cp(0x2007)],
+  ["puncsp", cp(0x2008)],
+  ["thinsp", cp(0x2009)],
+  ["ThinSpace", cp(0x2009)],
+  ["hairsp", cp(0x200a)],
+  ["VeryThinSpace", cp(0x200a)],
+  ["ZeroWidthSpace", cp(0x200b)],
+  ["NegativeVeryThinSpace", cp(0x200b)],
+  ["NegativeThinSpace", cp(0x200b)],
+  ["NegativeMediumSpace", cp(0x200b)],
+  ["NegativeThickSpace", cp(0x200b)],
+  ["zwnj", cp(0x200c)],
+  ["zwj", cp(0x200d)],
+  ["lrm", cp(0x200e)],
+  ["rlm", cp(0x200f)],
+  ["MediumSpace", cp(0x205f)],
+  ["ThickSpace", cp(0x205f, 0x200a)],
+  ["NoBreak", cp(0x2060)],
+  ["af", cp(0x2061)],
+  ["ApplyFunction", cp(0x2061)],
+  ["it", cp(0x2062)],
+  ["InvisibleTimes", cp(0x2062)],
+  ["ic", cp(0x2063)],
+  ["InvisibleComma", cp(0x2063)],
+  ["amp", "&"],
+  ["AMP", "&"],
+  ["lt", "<"],
+  ["LT", "<"],
+  ["gt", ">"],
+  ["GT", ">"],
+  ["quot", '"'],
+  ["QUOT", '"'],
+  ["apos", "'"],
+  ["hyphen", cp(0x2010)],
+  ["dash", cp(0x2010)],
+  ["ndash", cp(0x2013)],
+  ["mdash", cp(0x2014)],
+  ["horbar", cp(0x2015)],
+  ["minus", cp(0x2212)],
+]);
+/** A character reference as marked passes it to the page: with its ";", a decimal one of 1-7 digits, a hex one of 1-6 digits or a name.
+ * marked escapes the "&" of every other form (a legacy name without its ";", an eighth digit), which then shows as written. */
+const REFERENCE = /&(?:#(\d{1,7})|#[xX]([0-9a-fA-F]{1,6})|(\w+));/g;
+/** `text` with every reference decoded as a reader sees it: a numeric one as its code point (U+FFFD for none), a NAMED_REFERENCES name as its
+ * characters, any other name as one BLANK. */
+const decoded = (text: string): string =>
+  text.replace(REFERENCE, (_whole: string, decimal: string | undefined, hex: string | undefined, name: string | undefined) => {
+    if (name !== undefined) return NAMED_REFERENCES.get(name) ?? BLANK;
+    const code = decimal === undefined ? Number.parseInt(hex ?? "", 16) : Number.parseInt(decimal, 10);
+    return cp(code === 0 || code > 0x10ffff || (code >= 0xd800 && code <= 0xdfff) ? 0xfffd : code);
+  });
+/** The element names whose tag opens or closes a block: marked's HTML-block names, the raw-text ones and source. */
+const BLOCK_TAGS: ReadonlySet<string> = new Set(
+  "address article aside base basefont blockquote body caption center col colgroup dd details dialog dir div dl dt fieldset figcaption figure footer form frame frameset h1 h2 h3 h4 h5 h6 head header hr html iframe legend li link main menu menuitem meta nav noframes ol optgroup option p param pre script search section source style summary table tbody td textarea tfoot th thead title tr track ul".split(
+    " ",
+  ),
+);
+/** An HTML comment (an unclosed one runs to the end) or a tag, with the tag's name. */
+const HTML_MARKUP = /<!--[\s\S]*?(?:-->|$)|<\/?([A-Za-z][A-Za-z0-9-]*)(?:\s[^>]*)?\/?>/g;
+
+/** A rendered unit (a paragraph, a heading, a list item's block, a table row, a code block, an HTML block, a link's or an image's title): what a
+ * reader may see or hear (text: names and claims are read here), the same text position for position with BLANK for every character a reader
+ * may not plainly see (plain: qualifiers are read here), each position's source line, and where an inline HTML token rendered nothing. */
+interface Unit {
+  text: string;
+  plain: string;
+  readonly lines: number[];
+  readonly html: number[];
+  line: number;
+  /** A bidirectional control was read; the open embeddings and overrides (with where they opened); the spans a reader sees reversed. */
+  bidi: boolean;
+  readonly open: [string, number][];
+  readonly reversed: [number, number][];
+}
+interface HtmlSource {
+  readonly line: number;
+  readonly source: string;
+}
+/** A page as the rendered and HTML legs read it: its units in page order, and the source of every HTML token at any depth. */
+interface Rendering {
+  readonly units: Unit[];
+  readonly sources: HtmlSource[];
+}
+const unitAt = (line: number): Unit => ({ text: "", plain: "", lines: [], html: [], line, bidi: false, open: [], reversed: [] });
+/** Closes an embedding or override; an outermost right-to-left override's span is one a reader sees in reverse. */
+function closed(unit: Unit, entry: [string, number] | undefined): void {
+  if (entry !== undefined && entry[0] === RLO && !unit.open.some(([kind]) => kind === RLO)) unit.reversed.push([entry[1], unit.text.length]);
+}
+/** A bidirectional control renders nothing: it marks the unit, and opens or closes an embedding or override. */
+function bidiControl(unit: Unit, point: string): void {
+  unit.bidi = true;
+  if (OPENERS.includes(point)) unit.open.push([point, unit.text.length]);
+  else if (point === PDF) closed(unit, unit.open.pop());
+}
+/** A finished unit as a reader sees it: every override still open closes at its end, each right-to-left override span is read in reverse
+ * (text, plain text and lines), and a unit holding a bidirectional control reads no qualifier. */
+function finished(unit: Unit): Unit {
+  while (unit.open.length > 0) closed(unit, unit.open.pop());
+  for (const [from, to] of unit.reversed) {
+    const flip = (text: string): string => `${text.slice(0, from)}${[...text.slice(from, to)].reverse().join("")}${text.slice(to)}`;
+    unit.text = flip(unit.text);
+    unit.plain = flip(unit.plain);
+    unit.lines.splice(from, to - from, ...unit.lines.slice(from, to).reverse());
+  }
+  if (unit.bidi) unit.plain = BLANK.repeat(unit.plain.length);
+  return unit;
+}
+const newlines = (text: string): number => text.split("\n").length - 1;
+/** Appends `chars` at the unit's line; `plainly` false writes BLANK in their place in the plain text. */
+function put(unit: Unit, chars: string, plainly: boolean): void {
+  unit.text += chars;
+  unit.plain += plainly ? chars : BLANK.repeat(chars.length);
+  for (let index = 0; index < chars.length; index++) unit.lines.push(unit.line);
+}
+/** Appends what a reader sees of a source chunk: its references decoded (never in code, which shows them as written), each code point that
+ * renders nothing dropped, and each source line break kept, moving the unit to the next line. */
+function emit(unit: Unit, chunk: string, plainly: boolean, code = false): void {
+  for (const [index, piece] of chunk.split("\n").entries()) {
+    if (index > 0) {
+      put(unit, "\n", plainly);
+      unit.line += 1;
+    }
+    for (const point of code ? piece : decoded(piece)) {
+      if (BIDI.test(point)) bidiControl(unit, point);
+      else if (renders(point)) put(unit, point, plainly);
+    }
+  }
+}
+const tokenText = (token: Token): string => {
+  const value: unknown = (token as { text?: unknown }).text;
+  return typeof value === "string" ? value : "";
+};
+const tokenTitle = (token: Token): string => {
+  const value: unknown = (token as { title?: unknown }).title;
+  return typeof value === "string" ? value : "";
+};
+const tokenChildren = (token: Token): readonly Token[] => {
+  const value: unknown = (token as { tokens?: unknown }).tokens;
+  return Array.isArray(value) ? (value as Token[]) : [];
+};
+/** A link's or an image's title, which a reader sees on its own (a tooltip): a unit of its own. */
+function titled(title: string, line: number, page: Rendering): void {
+  if (title === "") return;
+  const unit = unitAt(line);
+  page.units.push(unit);
+  emit(unit, title, true);
+}
+/** An inline HTML token renders nothing: its place is marked (a sentence holding it reads no qualifier), its source joins the HTML leg, and a
+ * tag that opens or closes a block-level element breaks the sentence (a br tag breaks the line). */
+function inlineHtml(unit: Unit, raw: string, page: Rendering): void {
+  unit.html.push(unit.text.length);
+  page.sources.push({ line: unit.line, source: raw });
+  const name = (/^<\/?([A-Za-z][A-Za-z0-9-]*)/.exec(raw)?.[1] ?? "").toLowerCase();
+  if (name === "br") put(unit, "\n", true);
+  else if (BLOCK_TAGS.has(name)) put(unit, BREAK, true);
+}
+/** What a reader sees of inline tokens, appended to `unit` (header, READINGS RENDERED LEG); `plainly` false for struck and alt text. */
+function inline(unit: Unit, tokens: readonly Token[], plainly: boolean, page: Rendering): void {
+  for (const token of tokens) {
+    const end = unit.line + newlines(token.raw);
+    if (token.type === "html") inlineHtml(unit, token.raw, page);
+    else if (token.type === "br") put(unit, "\n", plainly);
+    else if (token.type === "codespan" || token.type === "escape") emit(unit, tokenText(token), plainly, true);
+    else if (token.type === "del") inline(unit, tokenChildren(token), false, page);
+    else if (token.type === "image" || token.type === "link") {
+      const line = unit.line;
+      const alt = token.type === "image";
+      if (tokenChildren(token).length > 0) inline(unit, tokenChildren(token), plainly && !alt, page);
+      else emit(unit, tokenText(token), plainly && !alt);
+      titled(tokenTitle(token), line, page);
+    } else if (token.type !== "checkbox") {
+      if (tokenChildren(token).length > 0) inline(unit, tokenChildren(token), plainly, page);
+      else emit(unit, tokenText(token), plainly);
+    }
+    unit.line = end;
+  }
+}
+/** The block tokens lexed from `source` (its first character on `line`), each read at the line its source starts on. */
+function blocks(tokens: readonly Token[], source: string, line: number, page: Rendering): void {
+  let cursor = 0;
+  for (const token of tokens) {
+    const at = source.indexOf(token.raw, cursor);
+    const start = at < 0 ? cursor : at;
+    if (at >= 0) cursor = at + token.raw.length;
+    block(token, line + newlines(source.slice(0, start)), page);
+  }
+}
+/** An HTML block's text as a reader may see it: comments and tags render nothing, a block-level tag breaks the sentence; none of it is plain. */
+function htmlBlock(unit: Unit, raw: string): void {
+  let at = 0;
+  for (const match of raw.matchAll(HTML_MARKUP)) {
+    const index = match.index ?? 0;
+    emit(unit, raw.slice(at, index), false);
+    if (BLOCK_TAGS.has((match[1] ?? "").toLowerCase())) put(unit, BREAK, false);
+    unit.line += newlines(match[0]);
+    at = index + match[0].length;
+  }
+  emit(unit, raw.slice(at), false);
+}
+/** One block token's units (header, READINGS RENDERED LEG). */
+function block(token: Token, line: number, page: Rendering): void {
+  if (token.type === "space" || token.type === "hr" || token.type === "def") return;
+  if (token.type === "list") {
+    const list = token as Tokens.List;
+    let cursor = 0;
+    for (const item of list.items) {
+      const at = list.raw.indexOf(item.raw, cursor);
+      const start = at < 0 ? cursor : at;
+      if (at >= 0) cursor = at + item.raw.length;
+      blocks(item.tokens, item.text, line + newlines(list.raw.slice(0, start)), page);
+    }
+    return;
+  }
+  if (token.type === "blockquote") {
+    blocks(tokenChildren(token), tokenText(token), line, page);
+    return;
+  }
+  if (token.type === "table") {
+    const table = token as Tokens.Table;
+    for (const [index, cells] of [table.header, ...table.rows].entries()) {
+      const unit = unitAt(line + (index === 0 ? 0 : index + 1));
+      page.units.push(unit);
+      for (const [at, cell] of cells.entries()) {
+        if (at > 0) put(unit, " | ", true);
+        inline(unit, cell.tokens, true, page);
+      }
+    }
+    return;
+  }
+  const unit = unitAt(token.type === "code" && (token as Tokens.Code).codeBlockStyle !== "indented" ? line + 1 : line);
+  page.units.push(unit);
+  if (token.type === "code") emit(unit, tokenText(token), true, true);
+  else if (token.type === "html") {
+    page.sources.push({ line, source: token.raw });
+    htmlBlock(unit, token.raw);
+  } else if (tokenChildren(token).length > 0) inline(unit, tokenChildren(token), true, page);
+  else emit(unit, tokenText(token), true);
+}
+const RENDERINGS = new Map<string, Rendering>();
+/** A page as a reader sees it, lexed once by marked (the lexer test/helpers/census.ts uses): a Markdown page block by block; an HTML page as one
+ * HTML block. */
+function rendering(text: string, html = false): Rendering {
+  const known = RENDERINGS.get(`${html}:${text}`);
+  if (known !== undefined) return known;
+  const page: Rendering = { units: [], sources: [] };
+  if (html) {
+    const unit = unitAt(1);
+    page.units.push(unit);
+    page.sources.push({ line: 1, source: text });
+    htmlBlock(unit, text);
+  } else blocks(marked.lexer(text), text, 1, page);
+  for (const unit of page.units) finished(unit);
+  RENDERINGS.set(`${html}:${text}`, page);
+  return page;
+}
+/** A rendered unit cut into sentences (header, READINGS SENTENCE): at a sentence end, a blank line and a BREAK. */
+const CUT_RENDERED = new RegExp(`(?<=[.!?;])${KEEP}\\s+|\\n[ \\t]*\\n|${BREAK}`, "giu");
+interface RenderedSentence {
+  readonly line: number;
+  readonly text: string;
+  readonly plain: string;
+  readonly html: boolean;
+}
+function renderedSentencesOf(unit: Unit): RenderedSentence[] {
+  const sentences: RenderedSentence[] = [];
+  let from = 0;
+  const take = (to: number): void => {
+    const body = unit.text.slice(from, to);
+    const text = body.trim();
+    if (text === "") return;
+    const start = from + body.length - body.trimStart().length;
+    sentences.push({ line: unit.lines[start] ?? unit.line, text, plain: unit.plain.slice(start, start + text.length), html: unit.html.some(at => at >= from && at <= to) });
+  };
+  for (const match of unit.text.matchAll(CUT_RENDERED)) {
+    const at = match.index ?? 0;
+    take(at);
+    from = at + match[0].length;
+  }
+  take(unit.text.length);
+  return sentences;
+}
+const renderedSentences = (text: string, html = false): RenderedSentence[] => rendering(text, html).units.flatMap(renderedSentencesOf);
+/** A page's rendered reading (header, READINGS RENDERED LEG): a qualifier counts only in plain text, in a sentence that holds no HTML. */
+const renderedReadingOf = (path: string, text: string): Reading =>
+  legReading(path, renderedSentences(text, HTML_PAGE.test(path)).map(sentence => ({ line: sentence.line, text: sentence.text, qualifying: sentence.html ? null : sentence.plain })), "rendered-");
+/** A page's HTML reading (header, READINGS HTML LEG): each HTML token's source, comments and attributes included, cut into sentences; no
+ * qualifier ever counts in it. */
+const htmlReadingOf = (path: string, text: string): Reading =>
+  legReading(
+    path,
+    rendering(text, HTML_PAGE.test(path)).sources.flatMap(({ line, source }) => sentencesOf(source, false).map(sentence => ({ line: line + sentence.line - 1, text: sentence.text, qualifying: null }))),
+    "html-",
+  );
+const READS = new Map<string, Map<string, readonly string[]>>();
+/** Every finding of one file (header, READINGS): its raw reading's, and a page's rendered and HTML readings' too. */
+function findingsOf(path: string, text: string): string[] {
+  const byText = READS.get(path) ?? new Map<string, readonly string[]>();
+  READS.set(path, byText);
+  const page = isMarkdown(path) || HTML_PAGE.test(path);
+  const known = byText.get(text) ?? [...readingOf(path, text).findings, ...(page ? [...renderedReadingOf(path, text).findings, ...htmlReadingOf(path, text).findings] : [])];
+  byText.set(text, known);
+  return [...known];
+}
 type Tree = ReadonlyMap<string, string>;
 const judge = (tree: Tree): string[] => [...tree].flatMap(([path, text]) => findingsOf(path, text));
 
@@ -598,8 +1029,10 @@ function namedTree(): Tree {
   namedCache ??= new Map(surfaceReads().flatMap(read => read.files).map(file => [file, textOf(file)] as const));
   return namedCache;
 }
-/** Whether a repository path sits on the statement's wider surfaces (a WIDE_ROOTS root or a root .md page). */
-const onWide = (path: string): boolean => WIDE_ROOTS.some(root => path.startsWith(`${root.root}/`)) || (!path.includes("/") && path.endsWith(".md"));
+/** A root page: a Markdown or HTML page at the repository root, its extension in any case (respin 2, rider F7). */
+const isPage = (name: string): boolean => isMarkdown(name) || HTML_PAGE.test(name);
+/** Whether a repository path sits on the statement's wider surfaces (a WIDE_ROOTS root or a root page). */
+const onWide = (path: string): boolean => WIDE_ROOTS.some(root => path.startsWith(`${root.root}/`)) || (!path.includes("/") && isPage(path));
 interface WideRead {
   readonly counts: { [root: string]: number };
   readonly pages: string[];
@@ -618,23 +1051,56 @@ function wideRead(): WideRead {
     files.push(...found.files);
     symlinks.push(...found.symlinks);
   }
-  const top = readdirSync(REPO, { withFileTypes: true }).filter(entry => entry.name.endsWith(".md"));
+  const top = readdirSync(REPO, { withFileTypes: true }).filter(entry => isPage(entry.name));
   for (const entry of top) if (entry.isSymbolicLink()) symlinks.push(entry.name);
   const pages = top.filter(entry => entry.isFile()).map(entry => entry.name).sort();
   wideCache = { counts, pages, symlinks, tree: new Map([...files, ...pages].filter(onWide).map(file => [file, textOf(file)] as const)) };
   return wideCache;
 }
 
-/** A4's plants, one per surface of acceptance (a): [path, claim, its qualified twin, expected finding]; a claim opens its file. */
-const MUTANTS: readonly (readonly [string, string, string, string])[] = [
-  ["docs/workbench/07-native-integrations.md", "HXSI-01 is a registered runtime law in hx.", "HXSI-01 is DESIGN ONLY and never a registered runtime law in hx.", "docs/workbench/07-native-integrations.md:1 HXSI: unqualified-registered"],
-  ["docs/workbench/14-qa-and-benchmarks.md", "TI-23 is benchmarked by the hx gate.", "TI-23 is a human proof and never benchmarked by the hx gate.", "docs/workbench/14-qa-and-benchmarks.md:1 TI: unqualified-benchmarked"],
-  ["docs/workbench/TRACEABILITY.md", "The hx.optim.spoke.exchange.v1 law is admitted.", "The hx.optim.spoke.exchange.v1 law is DESIGN ONLY: no runtime law admitted.", "docs/workbench/TRACEABILITY.md:1 HXOPTIM: unqualified-admitted"],
-  ["docs/workbench/receipts/wb-plant.md", "TI-24 is verified in Lean.", "TI-24 is verified only as a human proof; Lean source authored only.", "docs/workbench/receipts/wb-plant.md:3 TI: unqualified-verified"],
-  [DOSSIER, "HXSI-06 graduated to the hx planner.", "HXSI-06 never graduated: not implemented.", `${DOSSIER}:1 HXSI: unqualified-graduated`],
+/** A4's plants, one per surface of acceptance (a): [path, claim, its qualified twin, expected findings - every surface is a Markdown page, so
+ * the raw and the rendered legs each read the claim]; a claim opens its file. */
+const MUTANTS: readonly (readonly [string, string, string, readonly string[]])[] = [
+  [
+    "docs/workbench/07-native-integrations.md",
+    "HXSI-01 is a registered runtime law in hx.",
+    "HXSI-01 is DESIGN ONLY and never a registered runtime law in hx.",
+    ["docs/workbench/07-native-integrations.md:1 HXSI: unqualified-registered", "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"],
+  ],
+  [
+    "docs/workbench/14-qa-and-benchmarks.md",
+    "TI-23 is benchmarked by the hx gate.",
+    "TI-23 is a human proof and never benchmarked by the hx gate.",
+    ["docs/workbench/14-qa-and-benchmarks.md:1 TI: unqualified-benchmarked", "docs/workbench/14-qa-and-benchmarks.md:1 TI: rendered-unqualified-benchmarked"],
+  ],
+  [
+    "docs/workbench/TRACEABILITY.md",
+    "The hx.optim.spoke.exchange.v1 law is admitted.",
+    "The hx.optim.spoke.exchange.v1 law is DESIGN ONLY: no runtime law admitted.",
+    ["docs/workbench/TRACEABILITY.md:1 HXOPTIM: unqualified-admitted", "docs/workbench/TRACEABILITY.md:1 HXOPTIM: rendered-unqualified-admitted"],
+  ],
+  [
+    "docs/workbench/receipts/wb-plant.md",
+    "TI-24 is verified in Lean.",
+    "TI-24 is verified only as a human proof; Lean source authored only.",
+    ["docs/workbench/receipts/wb-plant.md:3 TI: unqualified-verified", "docs/workbench/receipts/wb-plant.md:3 TI: rendered-unqualified-verified"],
+  ],
+  [DOSSIER, "HXSI-06 graduated to the hx planner.", "HXSI-06 never graduated: not implemented.", [`${DOSSIER}:1 HXSI: unqualified-graduated`, `${DOSSIER}:1 HXSI: rendered-unqualified-graduated`]],
 ];
+/** The findings a planted tree adds to the live tree's: `planted` minus every live finding, each moved down by the lines its file's plant adds
+ * (respin 2, rider F5: a live finding reds A2 or A5 by name and never reads here as a plant mismatch). */
+function added(planted: readonly string[], live: readonly string[], shift: (path: string) => number): string[] {
+  const rest = [...planted];
+  for (const finding of live) {
+    const at = /^([^:]*):(\d+) /.exec(finding);
+    const moved = at === null ? finding : `${at[1]}:${Number(at[2]) + shift(at[1] ?? "")} ${finding.slice(at[0].length)}`;
+    const index = rest.indexOf(moved);
+    if (index >= 0) rest.splice(index, 1);
+  }
+  return rest;
+}
 /** The live tree with each plant's text opening its file (a new receipt carries its own title line first). */
-function plantedTree(pick: (mutant: readonly [string, string, string, string]) => string): Tree {
+function plantedTree(pick: (mutant: readonly [string, string, string, readonly string[]]) => string): Tree {
   const tree = new Map(namedTree());
   for (const mutant of MUTANTS) {
     const [path] = mutant;
@@ -662,6 +1128,74 @@ function plantedWideTree(pick: (mutant: readonly [string, string, string, string
   }
   return tree;
 }
+
+const D07 = "docs/workbench/07-native-integrations.md";
+/** Refusal #2's receipt plant (gate g10-gate-s78, GA1r and GA2r): a new receipt, its title line first. */
+const RECEIPT_PLANT = "docs/workbench/receipts/wb-gp2-plant.md";
+const RECEIPT_TITLE = "# wb-gp2-plant: plant\n\n";
+/** A finding row A7 expects: `line` of `path`, the names, the leg ("" raw, "rendered-", "html-") and the claim. */
+const found = (path: string, line: number, names: string, leg: string, claim: string): string => `${path}:${line} ${names}: ${leg}unqualified-${claim}`;
+/** Row A7's plants (respin 2, U1 at class level): [id, shape, path, text, expected findings], each prepended to its page (or a new receipt).
+ * GA1-GA11, GA1r and GA2r are refusal #2's probes byte for byte (gate g10-gate-s78 LEG 2); RV1-RV24 are the seat's members of the same
+ * class, each a place where what a reader sees differs from the source: a qualifier the reader never plainly sees, a name or claim the
+ * source splits, or a claim a reader sees outside the paragraph that qualifies it. */
+const VIEW_PLANTS: readonly (readonly [id: string, shape: string, path: string, text: string, findings: readonly string[]])[] = [
+  ["GA1", "a qualifier held only by an HTML comment", D07, "HXSI-01 is a registered runtime law <!-- DESIGN ONLY -->.", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  [
+    "GA1r",
+    "a new receipt whose qualifier is held only by an HTML comment",
+    RECEIPT_PLANT,
+    `${RECEIPT_TITLE}TI-24 is verified in Lean <!-- human proof; Lean source authored only -->.\n`,
+    [found(RECEIPT_PLANT, 3, "TI", "rendered-", "verified")],
+  ],
+  ["GA2", "a qualifier held only by a link target", D07, "HXSI-01 is a [registered runtime law](https://example.invalid/design-only).", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  [
+    "GA2r",
+    "a new receipt whose reference definition cannot interrupt its paragraph",
+    RECEIPT_PLANT,
+    `${RECEIPT_TITLE}TI-24 is [verified in Lean][x].\n[x]: https://example.invalid/design-only\n`,
+    [found(RECEIPT_PLANT, 3, "TI", "", "verified"), found(RECEIPT_PLANT, 3, "TI", "rendered-", "verified")],
+  ],
+  ["GA3", "a name split by emphasis", D07, "**HXSI**-01 is a registered runtime law.", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["GA4", "a name written with a backslash escape", D07, "HXSI\\-01 is a registered runtime law.", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["GA5", "a name split by an HTML comment", D07, "HX<!-- -->SI-01 is a registered runtime law.", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["GA6", "a claim split by emphasis", D07, "HXSI-01 is a reg*ist*ered runtime law.", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["GA7", "a qualifier held only by a link title", D07, 'HXSI-01 is a [registered runtime law](https://example.invalid/x "design only").', [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["GA8", "a qualifier held only by a tag attribute", D07, 'HXSI-01 is a registered runtime law <span title="design only"></span>.', [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  [
+    "GA9",
+    "a claim inside an HTML comment (the raw and HTML legs read it; the rendered page shows nothing)",
+    D07,
+    "<!-- HXSI-01 is a registered runtime law. -->",
+    [found(D07, 1, "HXSI", "", "registered"), found(D07, 1, "HXSI", "html-", "registered")],
+  ],
+  ["GA10", "a plain claim (control)", D07, "HXSI-01 is a registered runtime law.", [found(D07, 1, "HXSI", "", "registered"), found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["GA11", "a visible qualifier (control)", D07, "HXSI-01 is a registered runtime law, DESIGN ONLY.", []],
+  ["RV1", "a qualifier held only by an image's alt text", D07, "![DESIGN ONLY](x.png) HXSI-01 is a registered runtime law.", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["RV2", "a qualifier held only by an image's title", D07, 'HXSI-01 is a registered runtime law ![x](x.png "DESIGN ONLY").', [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["RV3", "a qualifier held only by a reference definition's title", D07, '[d]: https://example.invalid "DESIGN ONLY"\nHXSI-01 is a [registered runtime law][d].', [found(D07, 2, "HXSI", "rendered-", "registered")]],
+  ["RV4", "a qualifier struck through", D07, "HXSI-01 is a registered runtime law, ~~DESIGN ONLY~~.", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["RV5", "a qualifier inside an element a page may hide", D07, "HXSI-01 is a registered runtime law<span hidden>, DESIGN ONLY</span>.", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["RV6", "a claim held by a tag attribute beside a visible qualifier", D07, 'HXSI-01 is DESIGN ONLY <abbr title="TI-23 is a registered runtime law">here</abbr>.', [found(D07, 1, "TI", "html-", "registered")]],
+  ["RV7", "a claim held by an HTML comment beside a visible qualifier", D07, "HXSI-01 is DESIGN ONLY <!-- TI-23 is a registered runtime law -->.", [found(D07, 1, "TI", "html-", "registered")]],
+  ["RV8", "an HTML block's text naming a tag-split name", D07, "<div>HX<b></b>SI-01 is a registered runtime law.</div>", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["RV9", "a block-level tag inside a paragraph, splitting a sentence off its qualifier", D07, "DESIGN ONLY: x<p>HXSI-01 is a registered runtime law.", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["RV10", "a name written with a numeric character reference", D07, "HXSI&#45;01 is a registered runtime law.", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["RV11", "a name written with a named character reference", D07, "hx&period;optim.spoke.exchange.v1 is admitted.", [found(D07, 1, "HXOPTIM", "rendered-", "admitted")]],
+  ["RV12", "a claim written with a soft-hyphen reference", D07, "HXSI-01 is a regis&shy;tered runtime law.", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["RV13", "an invisible inside a name", D07, `HXSI${cp(0x200b)}-01 is a registered runtime law.`, [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["RV14", "a two-word claim joined by a no-break-space reference", D07, "HXSI-01 is a selected hx plan&nbsp;route.", [found(D07, 1, "HXSI", "rendered-", "plan-route")]],
+  ["RV15", "a name and a claim in two cells of one table row", D07, "| **HXSI**-01 | a registered runtime law |\n| --- | --- |", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["RV16", "a list item", D07, "- **HXSI**-01 is a registered runtime law.", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["RV17", "a block quote", D07, "> **HXSI**-01 is a registered runtime law.", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["RV18", "a heading", D07, "## **HXSI**-01 is a registered runtime law", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["RV19", "a claim held by a link title beside a visible qualifier", D07, 'DESIGN ONLY: see [here](https://example.invalid "HXSI-01 is a registered runtime law").', [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["RV20", "a reference inside a code span shows as written (control)", D07, "`HXSI&#45;01` is a registered runtime law.", []],
+  ["RV21", "a claim held by an image's alt text beside a visible qualifier (control)", D07, "![HXSI-01 is a registered runtime law](x.png) DESIGN ONLY.", []],
+  ["RV22", "a claim a right-to-left override shows in reverse", D07, `HXSI-01 is a ${RLO}wal emitnur deretsiger${PDF}.`, [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["RV23", "a name a right-to-left override shows in reverse (open to the end of its paragraph)", D07, `${RLO}10-ISXH${PDF} is a registered runtime law.`, [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["RV24", "a qualifier beside a direction mark (no qualifier counts in a unit holding a bidirectional control)", D07, `HXSI-01 is a registered runtime law, DESIGN ONLY${cp(0x200e)}.`, [found(D07, 1, "HXSI", "rendered-", "registered")]],
+];
 
 const WS = "/workspace/hx-sio-design-status-census";
 const BINARY = "cd".repeat(32);
@@ -1051,15 +1585,18 @@ function between(text: string, from: string, to: string): string {
   return text.slice(start + from.length, end);
 }
 
-type CaseKind = "md" | "ts" | "cut" | "cutMarkdown" | "names" | "fields";
+/** How a case text is read: "raw" the raw leg of x.md, "md" the whole judge of x.md (raw, rendered and HTML legs), "html" the whole judge of
+ * the HTML page x.html, "ts" the judge of x.ts, "rendered" the rendered leg's sentences of x.md, and the instruments' own outputs. */
+type CaseKind = "raw" | "md" | "html" | "ts" | "rendered" | "cut" | "cutMarkdown" | "names" | "fields";
 interface Case {
   readonly pin: string;
   readonly kind: CaseKind;
+  /** A kind per text, overriding `kind` (R4 and R5 pin their families in a Markdown page and in code). */
+  readonly kinds?: readonly CaseKind[];
   readonly texts: readonly string[];
   readonly outcome: readonly (readonly string[])[];
 }
-const cp = (...codes: number[]): string => String.fromCodePoint(...codes);
-/** Rows M and R: each text judged by its kind, with its expected outcome in order. */
+/** Rows M and R: each text judged by its kind (a per-text kind in `kinds`), with its expected outcome in order. */
 const CASES: readonly Case[] = [
   { pin: "MS1", kind: "cut", texts: ["One names a. Two names b! Three? Four; five"], outcome: [["One names a.", "Two names b!", "Three?", "Four;", "five"]] },
   { pin: "MS2", kind: "cut", texts: ["para one\n\npara two\n| a | b |\n| c | d |"], outcome: [["para one", "para two", "| a | b |", "| c | d |"]] },
@@ -1085,7 +1622,7 @@ const CASES: readonly Case[] = [
   },
   {
     pin: "MC",
-    kind: "md",
+    kind: "raw",
     texts: [
       ...CLAIMS.flatMap(claim => claim.forms.map(form => `HXSI-01 ${form} here.`)),
       "HXSI-01 is not registered.",
@@ -1095,7 +1632,7 @@ const CASES: readonly Case[] = [
   },
   {
     pin: "MQ",
-    kind: "md",
+    kind: "raw",
     texts: [
       ...QUALIFIERS.flatMap(qualifier => qualifier.forms.map(form => `TI-23 is registered, ${form}.`)),
       "TI-23 is registered, design-only.",
@@ -1119,43 +1656,189 @@ const CASES: readonly Case[] = [
   },
   {
     pin: "MF",
-    kind: "md",
+    kind: "raw",
     texts: ["intro line\n\nThe second paragraph names TI-23 as benchmarked.\n", "HXSI-01 and TI-23 are registered.", "TI-23 is benchmarked and admitted.", "HXSI-01 is registered.\n\nTI-24 is verified.\n"],
     outcome: [["x.md:3 TI: unqualified-benchmarked"], ["x.md:1 HXSI+TI: unqualified-registered"], ["x.md:1 TI: unqualified-admitted"], ["x.md:1 HXSI: unqualified-registered", "x.md:3 TI: unqualified-verified"]],
   },
   {
     pin: "MK",
-    kind: "md",
-    texts: ["hx.optim.verified.v1 ships.", "hx.optim.verified.v1 is verified.", "HXSI-01 per 04-admission-and-semantics.md:22.", "HXSI-01 is registered per design-only.md."],
-    outcome: [[], ["x.md:1 HXOPTIM: unqualified-verified"], [], ["x.md:1 HXSI: unqualified-registered"]],
+    kind: "raw",
+    texts: [
+      "hx.optim.verified.v1 ships.",
+      "hx.optim.verified.v1 is verified.",
+      "HXSI-01 per 04-admission-and-semantics.md:22.",
+      "HXSI-01 is registered per design-only.md.",
+      "TI-23 is registered, DESIGN HXSI-02 ONLY.",
+      "TI-23 is registered, design a.md only.",
+    ],
+    outcome: [[], ["x.md:1 HXOPTIM: unqualified-verified"], [], ["x.md:1 HXSI: unqualified-registered"], ["x.md:1 HXSI+TI: unqualified-registered"], ["x.md:1 TI: unqualified-registered"]],
   },
-  { pin: "R1", kind: "md", texts: ["HXSI-01 is a registered runtime law and the TI rows elsewhere are DESIGN ONLY."], outcome: [[]] },
+  {
+    pin: "MR1",
+    kind: "rendered",
+    texts: [
+      "HXSI-01 is a registered runtime law <!-- DESIGN ONLY -->.",
+      "HX<!-- -->SI-01 is a reg*ist*ered runtime law.",
+      '**HXSI**\\-01 is a [registered runtime law](https://example.invalid/design-only "a design only title").',
+      '![DESIGN ONLY](x.png "an image title") HXSI-01 is ~~DESIGN ONLY~~ registered.',
+      "HXSI-01 is a registered runtime law<span hidden>, DESIGN ONLY</span>.",
+      "HXSI&#45;01 &#x48;XSI-02 hx&period;optim.x regis&shy;tered plan&nbsp;route &rarr; &#00000045; &shy &foo; &#0; &amp;lt;",
+      `\`HXSI&#45;01\` and \`HXSI${cp(0x200b)}-01\` code`,
+      `HXSI${cp(0x200b)}-01 regis${cp(0xad)}tered x${cp(0xfe0f)}y${cp(0x07)}z`,
+      "line one  \nline two\\\nthree.",
+      "DESIGN ONLY: x<p>HXSI-01 is registered.</p> plan<br>route",
+      "\\<!-- design only --> stays visible.",
+      '[d]: https://example.invalid "a reference title"\nHXSI-01 is [registered][d].',
+      `HXSI-01 is a ${RLO}deretsiger${PDF} law, ${RLO}YLNO NGISED${PDF}.`,
+      `${RLO}10-ISXH is registered`,
+      `x ${cp(0x202d)}a ${RLO}cb${PDF} d${PDF} y${cp(0x2067)} z${cp(0x2069)}.`,
+    ],
+    outcome: [
+      ["1 HXSI-01 is a registered runtime law . | html"],
+      ["1 HXSI-01 is a registered runtime law. | html"],
+      ["1 HXSI-01 is a registered runtime law.", "1 a design only title"],
+      ["1 DESIGN ONLY HXSI-01 is DESIGN ONLY registered. | plain ########### HXSI-01 is ########### registered.", "1 an image title"],
+      ["1 HXSI-01 is a registered runtime law, DESIGN ONLY. | html"],
+      ["1 HXSI-01 HXSI-02 hx.optim.x registered plan<U+00A0>route # &#00000045;", `1 &shy # ${cp(0xfffd)} &lt;`],
+      ["1 HXSI&#45;01 and HXSI-01 code"],
+      ["1 HXSI-01 registered xyz"],
+      ["1 line one\nline two\nthree."],
+      ["1 DESIGN ONLY: x | html", "1 HXSI-01 is registered. | html", "1 plan\nroute | html"],
+      ["1 <!-- design only --> stays visible."],
+      ["2 HXSI-01 is registered.", "2 a reference title"],
+      ["1 HXSI-01 is a registered law, DESIGN ONLY. | plain #########################################"],
+      ["1 deretsiger si HXSI-01 | plain #####################"],
+      ["1 x a bc d y z. | plain #############"],
+    ],
+  },
+  {
+    pin: "MR2",
+    kind: "rendered",
+    texts: [
+      [
+        "# Title HXSI-01",
+        "",
+        "para one",
+        "wrapped. Second sentence.",
+        "",
+        "- item **one**",
+        "- item two",
+        "  - nested three",
+        "",
+        "> quote four",
+        "> five",
+        "",
+        "| h1 | h2 |",
+        "| --- | --- |",
+        "| c1 | c2 |",
+        "| c3 | c4 |",
+        "",
+        "```",
+        "code six",
+        "```",
+        "",
+        "    indented seven",
+        "",
+        "<div>",
+        "block <b>eight</b> HX<i></i>SI-02",
+        "</div>",
+        "",
+        '[d]: https://example.invalid "t"',
+        "",
+        "---",
+        "",
+        "Setext nine",
+        "===",
+        "",
+        "1. ordered ten",
+        "2. ordered eleven",
+        "",
+      ].join("\n"),
+    ],
+    outcome: [
+      ["1 Title HXSI-01", "3 para one\nwrapped.", "4 Second sentence.", "6 item one", "7 item two", "8 nested three", "10 quote four\nfive", "13 h1 | h2", "15 c1 | c2", "16 c3 | c4", "19 code six", "22 indented seven", "25 block eight HXSI-02 | plain ###################", "32 Setext nine", "35 ordered ten", "36 ordered eleven"],
+    ],
+  },
+  {
+    pin: "MR3",
+    kind: "md",
+    kinds: ["md", "md", "md", "md", "md", "md", "md", "md", "md", "md", "html", "html"],
+    texts: [
+      "HXSI-01 is registered.",
+      "HXSI-01 is registered <!-- DESIGN ONLY -->.",
+      "<!-- HXSI-01 is registered. -->",
+      '<abbr title="TI-23 is registered">x</abbr> DESIGN ONLY.',
+      `HXSI${cp(0x200b)}-01 is registered.`,
+      "HXSI&#45;01 is registered.",
+      "hx&#46;optim.spoke is admitted.",
+      "HXSI-01 is registered, DESIGN ONLY.",
+      "intro\n\nHXSI-01 is\nregistered.",
+      "TI-23 is registered, ~~design only~~ and DESIGN ONLY.",
+      "<p>HXSI-01 is registered, DESIGN ONLY.</p>",
+      "<p>Nothing here names a law.</p>",
+    ],
+    outcome: [
+      ["x.md:1 HXSI: unqualified-registered", "x.md:1 HXSI: rendered-unqualified-registered"],
+      ["x.md:1 HXSI: rendered-unqualified-registered"],
+      ["x.md:1 HXSI: unqualified-registered", "x.md:1 HXSI: html-unqualified-registered"],
+      ["x.md:1 TI: html-unqualified-registered"],
+      ["x.md:1 HXSI: rendered-unqualified-registered"],
+      ["x.md:1 HXSI: rendered-unqualified-registered"],
+      ["x.md:1 HXOPTIM: rendered-unqualified-admitted"],
+      [],
+      ["x.md:3 HXSI: unqualified-registered", "x.md:3 HXSI: rendered-unqualified-registered"],
+      [],
+      ["x.html:1 HXSI: rendered-unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      [],
+    ],
+  },
+  {
+    pin: "R1",
+    kind: "md",
+    texts: [
+      "HXSI-01 is a registered runtime law and the TI rows elsewhere are DESIGN ONLY.",
+      `HXSI-01 is a registered runtime law${cp(0x3002)} The programs call the TI rows DESIGN ONLY.`,
+      `HXSI-01 is a registered runtime law${cp(0xff0e)} The programs call the TI rows DESIGN ONLY.`,
+    ],
+    outcome: [[], [], []],
+  },
   { pin: "R2", kind: "md", texts: ["HXSI-01 is an interval law. It is registered.", "HXSI-01 (e.g. the interval law) is registered."], outcome: [[], []] },
   { pin: "R3", kind: "md", texts: ["HXSI-01 ships as a runtime law and hx plans with it.", "The hx.optim.spoke.exchange.v1 law is live."], outcome: [[], []] },
   {
     pin: "R4",
     kind: "md",
+    kinds: ["md", "md", "md", "md", "md", "md", "md", "ts"],
     texts: [
       `HXS${cp(0x0399)}-01 is registered.`,
-      `HXSI${cp(0x200b)}-01 is registered.`,
       `T${cp(0x0399)}-23 is benchmarked.`,
       `hx${cp(0x2024)}optim.spoke is admitted.`,
       `HXSI${cp(0x2010)}01 is registered.`,
       `HXSI${cp(0x2011)}01 is registered.`,
       `TI${cp(0x2013)}23 is benchmarked.`,
       `TI${cp(0x2212)}23 is benchmarked.`,
+      `// HXSI${cp(0x200b)}-01 is registered.\n`,
     ],
     outcome: [[], [], [], [], [], [], [], []],
   },
-  { pin: "R5", kind: "md", texts: ["HXSI&#45;01 is registered.", "TI\\u002d23 is benchmarked.", "hx&#46;optim.spoke is admitted."], outcome: [[], [], []] },
+  { pin: "R5", kind: "md", kinds: ["md", "ts", "ts"], texts: ["TI\\u002d23 is benchmarked.", "// HXSI&#45;01 is registered.\n", "// hx&#46;optim.spoke is admitted.\n"], outcome: [[], [], []] },
   { pin: "R6", kind: "ts", texts: ['const law = "hx." + "optim.spoke"; // registered\n', 'const id = ["HXSI", "01"].join("-"); // registered\n'], outcome: [[], []] },
   { pin: "R7", kind: "ts", texts: ["/**\n * - HXSI-01 is registered\n * - TI-24 is DESIGN ONLY\n */\n"], outcome: [[]] },
   { pin: "R10", kind: "md", texts: ["HXSI-01 is listed in docs/registered-laws.md.", "TI-23 sits in hx/verified.json:3."], outcome: [[], []] },
   { pin: "R9", kind: "fields", texts: ["readonly lawRecord: string;\nreadonly certificates_ref: readonly string[];\nreadonly law: string;\n"], outcome: [[]] },
 ];
+/** A rendered sentence as row M pins it: its line and text, then its plain text where a reader may not plainly see part of it, and "html" where
+ * it holds an HTML token; each BLANK is written "#", and white space other than a space or a line break as its code point. */
+const shown = (sentence: RenderedSentence): string =>
+  [`${sentence.line} ${sentence.text}`, ...(sentence.plain === sentence.text ? [] : [`plain ${sentence.plain}`]), ...(sentence.html ? ["html"] : [])]
+    .join(" | ")
+    .replaceAll(BLANK, "#")
+    .replace(/[^\S \n]/gu, space => `<U+${(space.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}>`);
 function outcomeOf(kind: CaseKind, text: string): string[] {
+  if (kind === "raw") return readingOf("x.md", text).findings;
   if (kind === "md") return findingsOf("x.md", text);
+  if (kind === "html") return findingsOf("x.html", text);
   if (kind === "ts") return findingsOf("x.ts", text);
+  if (kind === "rendered") return renderedSentences(text).map(shown);
   if (kind === "cut" || kind === "cutMarkdown") return sentencesOf(text, kind === "cutMarkdown").map(sentence => sentence.text);
   if (kind === "names") return namesIn(text);
   return lawFieldsIn(text);
@@ -1195,17 +1878,24 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
     return { findings, judged };
   },
   A3: async () => {
-    const dossier = readingOf(DOSSIER, textOf(DOSSIER));
-    expect(dossier.findings).toEqual([]);
-    expect(dossier.names, "the dossier names every family").toEqual(NAMES.map(name => name.id));
-    expect(dossier.qualified, "every dossier claim beside a name carries a qualifier").toBe(dossier.claimed);
-    expect(dossier.claimed, "the qualifier rule judged at least one live dossier claim").toBeGreaterThan(0);
-    return dossier;
+    const text = textOf(DOSSIER);
+    const legs = { raw: readingOf(DOSSIER, text), rendered: renderedReadingOf(DOSSIER, text) };
+    for (const [leg, dossier] of Object.entries(legs)) {
+      expect(dossier.findings, `${leg}: the dossier's findings`).toEqual([]);
+      expect(dossier.names, `${leg}: the dossier names every family`).toEqual(NAMES.map(name => name.id));
+      expect(dossier.qualified, `${leg}: every dossier claim beside a name carries a qualifier`).toBe(dossier.claimed);
+      expect(dossier.claimed, `${leg}: the qualifier rule judged at least one live dossier claim`).toBeGreaterThan(0);
+    }
+    const html = htmlReadingOf(DOSSIER, text);
+    expect(html.sentences, "the dossier carries no HTML for the HTML leg to read").toBe(0);
+    return { ...legs, html };
   },
   A4: async () => {
-    const planted = judge(plantedTree(([, claim]) => claim)).sort();
-    const quiet = judge(plantedTree(([, , twin]) => twin));
-    expect({ planted, quiet }).toStrictEqual({ planted: MUTANTS.map(([, , , finding]) => finding).sort(), quiet: [] });
+    const live = judge(namedTree());
+    const shift = (path: string): number => (namedTree().has(path) && MUTANTS.some(([at]) => at === path) ? 2 : 0);
+    const planted = added(judge(plantedTree(([, claim]) => claim)), live, shift).sort();
+    const quiet = added(judge(plantedTree(([, , twin]) => twin)), live, shift);
+    expect({ planted, quiet }).toStrictEqual({ planted: MUTANTS.flatMap(([, , , findings]) => findings).sort(), quiet: [] });
     return { planted, quiet };
   },
   A5: async () => {
@@ -1217,25 +1907,83 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
     }));
     const pages = { floorMet: wide.pages.length >= PAGES_FLOOR, anchorRead: wide.pages.includes(PAGE_ANCHOR.file) && textOf(PAGE_ANCHOR.file).includes(PAGE_ANCHOR.token) };
     const findings = judge(wide.tree);
-    const witness = { roots, pages, symlinks: wide.symlinks, findings };
+    const pageNames = ["X.MD", "x.Markdown", "x.mdx", "x.HTML", "x.htm", "x.md.txt", "x.rst", "LICENSE"].map(name => [name, onWide(name)]);
+    const witness = { roots, pages, symlinks: wide.symlinks, findings, pageNames };
     expect(witness, `walked: ${JSON.stringify(wide.counts)}, pages ${wide.pages.join(", ")}`).toStrictEqual({
       roots: WIDE_ROOTS.map(root => ({ root: root.root, floorMet: true, anchorRead: true })),
       pages: { floorMet: true, anchorRead: true },
       symlinks: [],
       findings: [],
+      pageNames: [
+        ["X.MD", true],
+        ["x.Markdown", true],
+        ["x.mdx", true],
+        ["x.HTML", true],
+        ["x.htm", true],
+        ["x.md.txt", false],
+        ["x.rst", false],
+        ["LICENSE", false],
+      ],
     });
     return witness;
   },
   A6: async () => {
     const kinds = WIDE_MUTANTS.map(([path]) => path.slice(path.lastIndexOf(".")));
-    const planted = judge(plantedWideTree(([, claim]) => claim)).sort();
-    const quiet = judge(plantedWideTree(([, , twin]) => twin));
+    const live = judge(wideRead().tree);
+    const shift = (path: string): number => (WIDE_MUTANTS.some(([at]) => at === path) ? 1 : 0);
+    const planted = added(judge(plantedWideTree(([, claim]) => claim)), live, shift).sort();
+    const quiet = added(judge(plantedWideTree(([, , twin]) => twin)), live, shift);
     expect({ kinds, planted, quiet }, "a claim planted in a .ts, a .yaml and a .mjs file of the wider surfaces").toStrictEqual({
       kinds: [".ts", ".yaml", ".mjs"],
       planted: WIDE_MUTANTS.map(([, , , finding]) => finding).sort(),
       quiet: [],
     });
     return { kinds, planted, quiet };
+  },
+  A7: async () => {
+    const tree = namedTree();
+    const live = judge(tree);
+    const plants = VIEW_PLANTS.map(([id, , path, text]) => {
+      const existing = tree.get(path);
+      const planted = new Map(tree);
+      planted.set(path, existing === undefined ? text : `${text}\n\n${existing}`);
+      const shift = existing === undefined ? 0 : newlines(text) + 2;
+      return { id, findings: added(judge(planted), live, file => (file === path ? shift : 0)).sort() };
+    });
+    expect(plants, "each plant reads exactly its findings: the rendered page is judged as a reader sees it").toStrictEqual(VIEW_PLANTS.map(([id, , , , findings]) => ({ id, findings: [...findings].sort() })));
+    expect(new Set(VIEW_PLANTS.map(([id]) => id)).size, "the plant ids are distinct").toBe(VIEW_PLANTS.length);
+    // The outside anchor (refusal #2's own record in the tracked bead export): the probes it orders pinned red and its two controls, and the
+    // probe texts its findings quote, each carried by a plant that reads it so - so a probe removed from every literal here still reds.
+    const notes = exportRow(BEAD).notes;
+    const order = notes.indexOf(" as red controls; keep ");
+    const red = notes.slice(notes.lastIndexOf("Pin ", order) + "Pin ".length, order).split(/, | and /);
+    const keep = between(notes, " as red controls; keep ", " as controls.");
+    const quoted: readonly (readonly [string, string])[] = [
+      ["GA1", between(notes, "Survivors: GA1 '", "' and GA2 '")],
+      ["GA2", between(notes, "' and GA2 '", "' in docs07")],
+      ["GA1r", between(notes, "; GA1r '", "' in a new receipt")],
+      ["GA7", between(notes, "GA7 link title '", "'")],
+      ["GA8", between(notes, "; GA8 ", ". All 38/38")],
+      ["GA3", between(notes, "GA3 '", "', GA5 '")],
+      ["GA5", between(notes, "GA5 '", " ...'")],
+      ["GA6", between(notes, "GA6 '", "'")],
+      ["GA4", between(notes, "GA4 '", "'")],
+    ];
+    const findingsFor = (id: string): readonly string[] => plants.find(plant => plant.id === id)?.findings ?? [];
+    const textFor = (id: string): string => VIEW_PLANTS.find(([at]) => at === id)?.[3] ?? "";
+    const anchors = {
+      red,
+      redRead: red.map(id => findingsFor(id).length > 0),
+      controls: [keep, findingsFor("GA10").length > 0, VIEW_PLANTS.some(([id]) => id === "GA11") && findingsFor("GA11").length === 0],
+      quoted: quoted.map(([id, quote]) => [id, quote.length > 0 && textFor(id).includes(quote) && findingsFor(id).length > 0]),
+    };
+    expect(anchors, "refusal #2's probes, read from the bead export, are each planted and read").toStrictEqual({
+      red: ["GA1", "GA1r", "GA2", "GA7", "GA8"],
+      redRead: red.map(() => true),
+      controls: ["GA10 (plain claim, red) and GA11 (visible qualifier, quiet)", true, true],
+      quoted: quoted.map(([id]) => [id, true]),
+    });
+    return { plants, anchors };
   },
   B1: async () => {
     const rows = BASES.map(([kind, licensed, base]) => {
@@ -1500,9 +2248,10 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
     CASES.map(entry => [
       entry.pin,
       async (): Promise<unknown> => {
-        const outcome = entry.texts.map(text => outcomeOf(entry.kind, text));
+        const kinds = entry.texts.map((_, index) => entry.kinds?.[index] ?? entry.kind);
+        const outcome = entry.texts.map((text, index) => outcomeOf(kinds[index] ?? entry.kind, text));
         expect(outcome).toStrictEqual(entry.outcome.map(expected => [...expected]));
-        return { kind: entry.kind, outcome };
+        return entry.kinds === undefined ? { kind: entry.kind, outcome } : { kind: entry.kind, kinds, outcome };
       },
     ]),
   ),
@@ -1510,7 +2259,7 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
 
 describe("wb-x0xu.2 HX design-status census (HX-STRUCTURAL-INFORMATION-OPTIMIZATION-R2, posture)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:6", "B:5", "C:3", "F:1", "M:11", "R:10"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:7", "B:5", "C:3", "F:1", "M:14", "R:10"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect(ROSTER.bead).toBe(BEAD);

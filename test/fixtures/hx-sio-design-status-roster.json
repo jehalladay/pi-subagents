@@ -368,6 +368,430 @@
     "If an HX result ever carries law_id or certificate_refs, Pi echoes them byte for byte and mints no admission or verification status. Today the vendored @hyperunix/sdk 0.1.0 keeps them only in its extensions sidecar, which the hyperunix.find provider output echoes verbatim and the reader adapter never reads."
    ],
    "sha256": "8de32dcbdf46459ce6282c8cdd2ecc171aa34dd287936e11eb3ddeb0b7e1d98f"
+  },
+  "rendering": {
+   "markdown": "\\.(?:md|markdown|mdx)$",
+   "htmlPage": "\\.html?$",
+   "reference": "&(?:#(\\d{1,7})|#[xX]([0-9a-fA-F]{1,6})|(\\w+));",
+   "namedReferences": [
+    [
+     "Tab",
+     [
+      9
+     ]
+    ],
+    [
+     "NewLine",
+     [
+      10
+     ]
+    ],
+    [
+     "excl",
+     [
+      33
+     ]
+    ],
+    [
+     "ast",
+     [
+      42
+     ]
+    ],
+    [
+     "midast",
+     [
+      42
+     ]
+    ],
+    [
+     "period",
+     [
+      46
+     ]
+    ],
+    [
+     "semi",
+     [
+      59
+     ]
+    ],
+    [
+     "quest",
+     [
+      63
+     ]
+    ],
+    [
+     "lowbar",
+     [
+      95
+     ]
+    ],
+    [
+     "UnderBar",
+     [
+      95
+     ]
+    ],
+    [
+     "fjlig",
+     [
+      102,
+      106
+     ]
+    ],
+    [
+     "nbsp",
+     [
+      160
+     ]
+    ],
+    [
+     "NonBreakingSpace",
+     [
+      160
+     ]
+    ],
+    [
+     "shy",
+     [
+      173
+     ]
+    ],
+    [
+     "ensp",
+     [
+      8194
+     ]
+    ],
+    [
+     "emsp",
+     [
+      8195
+     ]
+    ],
+    [
+     "emsp13",
+     [
+      8196
+     ]
+    ],
+    [
+     "emsp14",
+     [
+      8197
+     ]
+    ],
+    [
+     "numsp",
+     [
+      8199
+     ]
+    ],
+    [
+     "puncsp",
+     [
+      8200
+     ]
+    ],
+    [
+     "thinsp",
+     [
+      8201
+     ]
+    ],
+    [
+     "ThinSpace",
+     [
+      8201
+     ]
+    ],
+    [
+     "hairsp",
+     [
+      8202
+     ]
+    ],
+    [
+     "VeryThinSpace",
+     [
+      8202
+     ]
+    ],
+    [
+     "ZeroWidthSpace",
+     [
+      8203
+     ]
+    ],
+    [
+     "NegativeVeryThinSpace",
+     [
+      8203
+     ]
+    ],
+    [
+     "NegativeThinSpace",
+     [
+      8203
+     ]
+    ],
+    [
+     "NegativeMediumSpace",
+     [
+      8203
+     ]
+    ],
+    [
+     "NegativeThickSpace",
+     [
+      8203
+     ]
+    ],
+    [
+     "zwnj",
+     [
+      8204
+     ]
+    ],
+    [
+     "zwj",
+     [
+      8205
+     ]
+    ],
+    [
+     "lrm",
+     [
+      8206
+     ]
+    ],
+    [
+     "rlm",
+     [
+      8207
+     ]
+    ],
+    [
+     "MediumSpace",
+     [
+      8287
+     ]
+    ],
+    [
+     "ThickSpace",
+     [
+      8287,
+      8202
+     ]
+    ],
+    [
+     "NoBreak",
+     [
+      8288
+     ]
+    ],
+    [
+     "af",
+     [
+      8289
+     ]
+    ],
+    [
+     "ApplyFunction",
+     [
+      8289
+     ]
+    ],
+    [
+     "it",
+     [
+      8290
+     ]
+    ],
+    [
+     "InvisibleTimes",
+     [
+      8290
+     ]
+    ],
+    [
+     "ic",
+     [
+      8291
+     ]
+    ],
+    [
+     "InvisibleComma",
+     [
+      8291
+     ]
+    ],
+    [
+     "amp",
+     [
+      38
+     ]
+    ],
+    [
+     "AMP",
+     [
+      38
+     ]
+    ],
+    [
+     "lt",
+     [
+      60
+     ]
+    ],
+    [
+     "LT",
+     [
+      60
+     ]
+    ],
+    [
+     "gt",
+     [
+      62
+     ]
+    ],
+    [
+     "GT",
+     [
+      62
+     ]
+    ],
+    [
+     "quot",
+     [
+      34
+     ]
+    ],
+    [
+     "QUOT",
+     [
+      34
+     ]
+    ],
+    [
+     "apos",
+     [
+      39
+     ]
+    ],
+    [
+     "hyphen",
+     [
+      8208
+     ]
+    ],
+    [
+     "dash",
+     [
+      8208
+     ]
+    ],
+    [
+     "ndash",
+     [
+      8211
+     ]
+    ],
+    [
+     "mdash",
+     [
+      8212
+     ]
+    ],
+    [
+     "horbar",
+     [
+      8213
+     ]
+    ],
+    [
+     "minus",
+     [
+      8722
+     ]
+    ]
+   ],
+   "blockTags": [
+    "address",
+    "article",
+    "aside",
+    "base",
+    "basefont",
+    "blockquote",
+    "body",
+    "caption",
+    "center",
+    "col",
+    "colgroup",
+    "dd",
+    "details",
+    "dialog",
+    "dir",
+    "div",
+    "dl",
+    "dt",
+    "fieldset",
+    "figcaption",
+    "figure",
+    "footer",
+    "form",
+    "frame",
+    "frameset",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "head",
+    "header",
+    "hr",
+    "html",
+    "iframe",
+    "legend",
+    "li",
+    "link",
+    "main",
+    "menu",
+    "menuitem",
+    "meta",
+    "nav",
+    "noframes",
+    "ol",
+    "optgroup",
+    "option",
+    "p",
+    "param",
+    "pre",
+    "script",
+    "search",
+    "section",
+    "source",
+    "style",
+    "summary",
+    "table",
+    "tbody",
+    "td",
+    "textarea",
+    "tfoot",
+    "th",
+    "thead",
+    "title",
+    "tr",
+    "track",
+    "ul"
+   ],
+   "htmlMarkup": "<!--[\\s\\S]*?(?:-->|$)|<\\/?([A-Za-z][A-Za-z0-9-]*)(?:\\s[^>]*)?\\/?>",
+   "unseen": "[\\p{Default_Ignorable_Code_Point}\\p{Cc}]",
+   "bidi": "\\p{Bidi_Control}"
   }
  },
  "rows": [
@@ -462,26 +886,53 @@
     {
      "id": "A3",
      "witness": {
-      "sentences": 34,
-      "mentions": 9,
-      "claimed": 5,
-      "qualified": 5,
-      "names": [
-       "HXSI",
-       "TI",
-       "HXOPTIM"
-      ],
-      "findings": []
+      "raw": {
+       "sentences": 34,
+       "mentions": 9,
+       "claimed": 5,
+       "qualified": 5,
+       "names": [
+        "HXSI",
+        "TI",
+        "HXOPTIM"
+       ],
+       "findings": []
+      },
+      "rendered": {
+       "sentences": 33,
+       "mentions": 9,
+       "claimed": 5,
+       "qualified": 5,
+       "names": [
+        "HXSI",
+        "TI",
+        "HXOPTIM"
+       ],
+       "findings": []
+      },
+      "html": {
+       "sentences": 0,
+       "mentions": 0,
+       "claimed": 0,
+       "qualified": 0,
+       "names": [],
+       "findings": []
+      }
      }
     },
     {
      "id": "A4",
      "witness": {
       "planted": [
+       "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered",
        "docs/workbench/07-native-integrations.md:1 HXSI: unqualified-registered",
+       "docs/workbench/14-qa-and-benchmarks.md:1 TI: rendered-unqualified-benchmarked",
        "docs/workbench/14-qa-and-benchmarks.md:1 TI: unqualified-benchmarked",
+       "docs/workbench/TRACEABILITY.md:1 HXOPTIM: rendered-unqualified-admitted",
        "docs/workbench/TRACEABILITY.md:1 HXOPTIM: unqualified-admitted",
+       "docs/workbench/receipts/wb-plant.md:3 TI: rendered-unqualified-verified",
        "docs/workbench/receipts/wb-plant.md:3 TI: unqualified-verified",
+       "test/fixtures/hx-sio-design-status-dossier.md:1 HXSI: rendered-unqualified-graduated",
        "test/fixtures/hx-sio-design-status-dossier.md:1 HXSI: unqualified-graduated"
       ],
       "quiet": []
@@ -527,7 +978,41 @@
        "anchorRead": true
       },
       "symlinks": [],
-      "findings": []
+      "findings": [],
+      "pageNames": [
+       [
+        "X.MD",
+        true
+       ],
+       [
+        "x.Markdown",
+        true
+       ],
+       [
+        "x.mdx",
+        true
+       ],
+       [
+        "x.HTML",
+        true
+       ],
+       [
+        "x.htm",
+        true
+       ],
+       [
+        "x.md.txt",
+        false
+       ],
+       [
+        "x.rst",
+        false
+       ],
+       [
+        "LICENSE",
+        false
+       ]
+      ]
      }
     },
     {
@@ -544,6 +1029,291 @@
        "src/workbench/providers/hyperunix.ts:1 HXSI: unqualified-registered"
       ],
       "quiet": []
+     }
+    },
+    {
+     "id": "A7",
+     "witness": {
+      "plants": [
+       {
+        "id": "GA1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA1r",
+        "findings": [
+         "docs/workbench/receipts/wb-gp2-plant.md:3 TI: rendered-unqualified-verified"
+        ]
+       },
+       {
+        "id": "GA2",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA2r",
+        "findings": [
+         "docs/workbench/receipts/wb-gp2-plant.md:3 TI: rendered-unqualified-verified",
+         "docs/workbench/receipts/wb-gp2-plant.md:3 TI: unqualified-verified"
+        ]
+       },
+       {
+        "id": "GA3",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA4",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA5",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA6",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA7",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA8",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA9",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: html-unqualified-registered",
+         "docs/workbench/07-native-integrations.md:1 HXSI: unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA10",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered",
+         "docs/workbench/07-native-integrations.md:1 HXSI: unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA11",
+        "findings": []
+       },
+       {
+        "id": "RV1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV2",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV3",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:2 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV4",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV5",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV6",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 TI: html-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV7",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 TI: html-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV8",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV9",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV10",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV11",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXOPTIM: rendered-unqualified-admitted"
+        ]
+       },
+       {
+        "id": "RV12",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV13",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV14",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-plan-route"
+        ]
+       },
+       {
+        "id": "RV15",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV16",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV17",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV18",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV19",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV20",
+        "findings": []
+       },
+       {
+        "id": "RV21",
+        "findings": []
+       },
+       {
+        "id": "RV22",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV23",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV24",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       }
+      ],
+      "anchors": {
+       "red": [
+        "GA1",
+        "GA1r",
+        "GA2",
+        "GA7",
+        "GA8"
+       ],
+       "redRead": [
+        true,
+        true,
+        true,
+        true,
+        true
+       ],
+       "controls": [
+        "GA10 (plain claim, red) and GA11 (visible qualifier, quiet)",
+        true,
+        true
+       ],
+       "quoted": [
+        [
+         "GA1",
+         true
+        ],
+        [
+         "GA2",
+         true
+        ],
+        [
+         "GA1r",
+         true
+        ],
+        [
+         "GA7",
+         true
+        ],
+        [
+         "GA8",
+         true
+        ],
+        [
+         "GA3",
+         true
+        ],
+        [
+         "GA5",
+         true
+        ],
+        [
+         "GA6",
+         true
+        ],
+        [
+         "GA4",
+         true
+        ]
+       ]
+      }
      }
     }
    ]
@@ -2069,7 +2839,7 @@
   },
   {
    "id": "M",
-   "label": "the sentence cutter, the name, claim and qualifier matchers, the finding format and the name mask judge their pinned inputs in order",
+   "label": "the sentence cutter, the name, claim and qualifier matchers, the finding format, the name mask and the rendered reading judge their pinned inputs in order",
    "pins": [
     {
      "id": "MS1",
@@ -2214,7 +2984,7 @@
     {
      "id": "MC",
      "witness": {
-      "kind": "md",
+      "kind": "raw",
       "outcome": [
        [
         "x.md:1 HXSI: unqualified-admitted"
@@ -2322,7 +3092,7 @@
     {
      "id": "MQ",
      "witness": {
-      "kind": "md",
+      "kind": "raw",
       "outcome": [
        [],
        [],
@@ -2352,7 +3122,7 @@
     {
      "id": "MF",
      "witness": {
-      "kind": "md",
+      "kind": "raw",
       "outcome": [
        [
         "x.md:3 TI: unqualified-benchmarked"
@@ -2373,7 +3143,7 @@
     {
      "id": "MK",
      "witness": {
-      "kind": "md",
+      "kind": "raw",
       "outcome": [
        [],
        [
@@ -2382,7 +3152,154 @@
        [],
        [
         "x.md:1 HXSI: unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI+TI: unqualified-registered"
+       ],
+       [
+        "x.md:1 TI: unqualified-registered"
        ]
+      ]
+     }
+    },
+    {
+     "id": "MR1",
+     "witness": {
+      "kind": "rendered",
+      "outcome": [
+       [
+        "1 HXSI-01 is a registered runtime law . | html"
+       ],
+       [
+        "1 HXSI-01 is a registered runtime law. | html"
+       ],
+       [
+        "1 HXSI-01 is a registered runtime law.",
+        "1 a design only title"
+       ],
+       [
+        "1 DESIGN ONLY HXSI-01 is DESIGN ONLY registered. | plain ########### HXSI-01 is ########### registered.",
+        "1 an image title"
+       ],
+       [
+        "1 HXSI-01 is a registered runtime law, DESIGN ONLY. | html"
+       ],
+       [
+        "1 HXSI-01 HXSI-02 hx.optim.x registered plan<U+00A0>route # &#00000045;",
+        "1 &shy # \ufffd &lt;"
+       ],
+       [
+        "1 HXSI&#45;01 and HXSI-01 code"
+       ],
+       [
+        "1 HXSI-01 registered xyz"
+       ],
+       [
+        "1 line one\nline two\nthree."
+       ],
+       [
+        "1 DESIGN ONLY: x | html",
+        "1 HXSI-01 is registered. | html",
+        "1 plan\nroute | html"
+       ],
+       [
+        "1 <!-- design only --> stays visible."
+       ],
+       [
+        "2 HXSI-01 is registered.",
+        "2 a reference title"
+       ],
+       [
+        "1 HXSI-01 is a registered law, DESIGN ONLY. | plain #########################################"
+       ],
+       [
+        "1 deretsiger si HXSI-01 | plain #####################"
+       ],
+       [
+        "1 x a bc d y z. | plain #############"
+       ]
+      ]
+     }
+    },
+    {
+     "id": "MR2",
+     "witness": {
+      "kind": "rendered",
+      "outcome": [
+       [
+        "1 Title HXSI-01",
+        "3 para one\nwrapped.",
+        "4 Second sentence.",
+        "6 item one",
+        "7 item two",
+        "8 nested three",
+        "10 quote four\nfive",
+        "13 h1 | h2",
+        "15 c1 | c2",
+        "16 c3 | c4",
+        "19 code six",
+        "22 indented seven",
+        "25 block eight HXSI-02 | plain ###################",
+        "32 Setext nine",
+        "35 ordered ten",
+        "36 ordered eleven"
+       ]
+      ]
+     }
+    },
+    {
+     "id": "MR3",
+     "witness": {
+      "kind": "md",
+      "kinds": [
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "html",
+       "html"
+      ],
+      "outcome": [
+       [
+        "x.md:1 HXSI: unqualified-registered",
+        "x.md:1 HXSI: rendered-unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI: rendered-unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-registered",
+        "x.md:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.md:1 TI: html-unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI: rendered-unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI: rendered-unqualified-registered"
+       ],
+       [
+        "x.md:1 HXOPTIM: rendered-unqualified-admitted"
+       ],
+       [],
+       [
+        "x.md:3 HXSI: unqualified-registered",
+        "x.md:3 HXSI: rendered-unqualified-registered"
+       ],
+       [],
+       [
+        "x.html:1 HXSI: rendered-unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       []
       ]
      }
     }
@@ -2397,6 +3314,8 @@
      "witness": {
       "kind": "md",
       "outcome": [
+       [],
+       [],
        []
       ]
      }
@@ -2425,6 +3344,16 @@
      "id": "R4",
      "witness": {
       "kind": "md",
+      "kinds": [
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "ts"
+      ],
       "outcome": [
        [],
        [],
@@ -2441,6 +3370,11 @@
      "id": "R5",
      "witness": {
       "kind": "md",
+      "kinds": [
+       "md",
+       "ts",
+       "ts"
+      ],
       "outcome": [
        [],
        [],
