@@ -44,6 +44,12 @@
  *
  * THE WALK: every module below WALK_ROOTS (src, qa, examples, at any depth), parsed by the TypeScript compiler; comments are not
  * read. A judged module holding the literal "context.render" is an rf READER (measured: the three modules above).
+ * OUTSIDE ANCHORS OF THE WALK (wb-mzoc F1: count floors alone let a narrowed walk pass, H05+P05): A1 holds the walked set to
+ * Git's own list of the checkout (LISTING: tracked, and untracked but not ignored; a path missing on disk or no regular file is
+ * left out), each listed path classed a module by the TypeScript compiler's own extension forms (ts.Extension minus its two
+ * non-script forms), never by MODULE_EXTENSIONS: no listed module below WALK_ROOTS goes unwalked, no walked module is unlisted,
+ * and every listed module outside WALK_ROOTS sits below an unjudged root (UNJUDGED_ROOTS: test, and the repository root's own
+ * files); src is held a second time to the root files of the tsconfig.json program. The floors stay as the empty-walk guard.
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
  *  A, acceptance (a) and the first posture fact. A1 the readers' identity table: which rf identity names each READER spells
  *    (exactly the measured sets; the filing's "Pi's own render_id / transaction_id / bundle_revision_id reads" among them),
@@ -78,27 +84,48 @@
  * owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-hs2j.7): each acceptance clause and each posture
  * fact sit verbatim in exactly one row label, every row carries one of them, the statement's eight identity names equal both
  * the quote's and FAMILY_OF's, and its statement, quotes, citations and shipped-reads list equal the roster's, so a row removed
- * from every literal of this file and the roster still reds. Not claimed: a pin removed from ROWS, the literal, IMPL and the
- * roster together (the bead row anchors rows, clauses and identity names, not pins).
- * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
- * not inverted, ran; every pin's case reached its end (REACHED).
- * RESIDUALS (named families, each with pinned quiet rows in the controls): R-COMPOSED a name, prefix or pattern composed at run
- * time (A1 composedName, B1 composedField, D1 composedPrefix); R-COMMENT a comment naming one (A1, B1, D1 comment); R-ALIAS
- * document text read through an alias of the output object outside the READERS (D1 aliasOutsideReaders); R-GENERIC-WORD the
- * bare word occurrence outside the READERS (B1 occurrenceOutsideReaders); R-NAMESAKE session_id outside the READERS and the
- * camelCase sessionId, workspaceId and operationId, Pi's own names for its own and other producers' ids (A4
- * sessionOutsideReaders, A1 camelNamesake); R-RENAMED a member or field holding an identity under another name (C1
- * renamedMember, B1 renamedField); R-OUTSIDE a module outside WALK_ROOTS - test helpers and fixtures plant rf envelopes - is not
- * judged (B1 outsideRoots).
- * Display paths added: none. Test-only: the one spawn is A3's hermetic stub rf (tracked scratch, the only PATH entry, an
- * absolute-node shebang), so no installed rf ever runs; src, qa, examples and the bead export are only read.
+ * from every literal of this file and the roster still reds. The bead row anchors rows, clauses and identity names, not pins:
+ * see R-PIN-HOLLOW below.
+ * REGISTRATION (wb-mzoc F4): the judged-set case runs first and reads this file's registered tests (vitest's task tree) as
+ * collected - each roster title once, in roster order, itself first, every one (the records case included) in run mode and
+ * not inverted - so a records case skipped, set to todo, inverted or deleted reds it before the records case could run.
+ * RECORDS: the last case walks the same tree after the rest ran: each roster title once, in order, in run mode, not inverted,
+ * ran; every pin's case reached its end (REACHED); every witness compares equal to the roster a second time (MEASURED); and
+ * every pin's case compared its witness after its pinned number of assertions (COUNTED, `<pin>:<count>` held to the roster's
+ * counted list; wb-mzoc F2), so a case that returns its roster witness without running its judges reds the record (H02).
+ * CONTROLS (wb-mzoc F3): before the roster compare each pin's runner reads its witness's controls - a control named a quiet row
+ * (QUIET_ROWS, by residual family) or an accepted form (ACCEPTED_FORMS) must read quiet, every other control must fire (a count
+ * of 1 or more, a non-empty list, a ratio with a read) - so a positive control zeroed in this file and the roster together
+ * still reds (X-WITNESS).
+ * RESIDUALS (named families, each with pinned quiet rows: QUIET_ROWS for the controls, the judged-set case for R-PIN-HOLLOW):
+ * R-COMPOSED a name, prefix or pattern composed at run time (A1 composedName, B1 composedField, D1 composedPrefix); R-COMMENT a
+ * comment naming one (A1, B1, D1 comment); R-ALIAS document text read through an alias of the output object outside the
+ * READERS (D1 aliasOutsideReaders); R-GENERIC-WORD the bare word occurrence outside the READERS (B1 occurrenceOutsideReaders);
+ * R-NAMESAKE session_id outside the READERS and the camelCase sessionId, workspaceId and operationId, Pi's own names for its own
+ * and other producers' ids (A4 sessionOutsideReaders, A1 camelNamesake); R-RENAMED a member or field holding an identity under
+ * another name (C1 renamedMember, B1 renamedField); R-OUTSIDE a module below an unjudged root - test, whose helpers and
+ * fixtures plant rf envelopes, and the repository root's own config modules - is not judged (B1 outsideRoots), while a module
+ * below any other top-level root reds A1; R-PIN-HOLLOW a pin removed from ROWS, the frozen literal, IMPL and the roster
+ * together (its counted entry and PIN_HOLLOW_MEMBERS included): the bead-row anchor reads row labels, so it cannot see one (its
+ * quiet row pins the unseen pins, A1 to D2, beside a liveness reading: removing any row is seen).
+ * NOT CLAIMED (coordinated hollows no anchor outside this file and its roster sees): a control changed or reclassed together
+ * with its roster value and its quiet-row or accepted-form entry, or a ratio control's compared count changed with its roster
+ * value (the control reading checks its read count only); the walk and the Git listing narrowed together below qa or examples
+ * (below src the tsconfig.json program still sees the .ts modules), or a root moved from WALK_ROOTS to UNJUDGED_ROOTS with its
+ * floor; the judged-set case and the records case dropped from the run together, the records case skipping itself at run
+ * time, or the file's describe skipped - nothing in the file then runs to see it (the collector's added-line marker scan
+ * refuses the skip-call spelling, not the skipIf or runIf forms).
+ * Display paths added: none. Test-only: two spawns - A1's read-only git ls-files listing of the checkout, and A3's hermetic stub
+ * rf (tracked scratch, the only PATH entry, an absolute-node shebang), so no installed rf ever runs; src, qa, examples,
+ * tsconfig.json and the bead export are only read.
  */
+import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { chmodSync, type Dirent, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, type Dirent, lstatSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, type RunnerTask, type RunnerTestCase } from "vitest";
 import { CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
 import { nativeEvidence, nativeRefOf } from "../src/workbench/native-evidence.js";
 import { ObservationProjection } from "../src/workbench/observation.js";
@@ -117,8 +144,19 @@ const BEAD = "wb-hs2j.7";
 /** The Pi code paths judged: product sources, QA scripts and shipped examples (every module below them, at any depth). */
 const WALK_ROOTS = ["src", "qa", "examples"];
 const MODULE_EXTENSIONS = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx"];
-/** Each floor sits below the module count measured at base bf06b20 (src 115, qa 62, examples 6). */
+/** Each floor sits below the module count measured at base bf06b20 (src 115, qa 62, examples 6). The floors are the empty-walk
+ * guard only; the walked set itself is held to the outside listings below (wb-mzoc F1). */
 const FLOORS = { src: 100, qa: 55, examples: 5 };
+/** The walk's outside anchor (wb-mzoc F1): Git's own list of the checkout - tracked, and untracked but not ignored. */
+const LISTING = ["ls-files", "-z", "--cached", "--others", "--exclude-standard"];
+/** The TypeScript compiler's extension forms (ts.Extension) that name no script. Every other form classes a listed path as a
+ * module by the compiler's own vocabulary, so the listing is never classed by MODULE_EXTENSIONS, the walk's own predicate. */
+const NON_SCRIPT_FORMS: readonly string[] = [ts.Extension.Json, ts.Extension.TsBuildInfo];
+/** The top-level roots whose modules Git lists but the census does not judge: test (its helpers and fixtures plant rf
+ * envelopes) and "." (the repository root's own files, the vitest configs). A listed module below any other root reds A1. */
+const UNJUDGED_ROOTS = [".", "test"];
+/** The TypeScript program whose root files are a second outside listing of src (its include is src). */
+const PROGRAM_CONFIG = "tsconfig.json";
 /** The command every Pi rf envelope reader checks: a judged module holding it as a folded literal is an rf READER. */
 const RENDER_COMMAND = "context.render";
 const CAPABILITY = "reactivefiber.render.preview";
@@ -156,7 +194,23 @@ const RENDER_PREFIX = "rfr_";
 const CLAUDE_ANCHOR = "src/workbench/claude-host.ts";
 /** The evidence call the workflow runtime builds its node records from. */
 const RUNTIME = "src/workflow/runtime.ts";
-const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-COMMENT", "R-ALIAS", "R-GENERIC-WORD", "R-NAMESAKE", "R-RENAMED", "R-OUTSIDE"];
+/** The residual families the controls pin, each with its quiet rows (`<pin>.<control>`): a control named here must read quiet,
+ * since its residual form escapes the judge; every other control of a witness must fire (wb-mzoc F3). */
+const QUIET_ROWS: Readonly<Record<string, readonly string[]>> = {
+  "R-COMPOSED": ["A1.composedName", "B1.composedField", "D1.composedPrefix"],
+  "R-COMMENT": ["A1.comment", "B1.comment", "D1.comment"],
+  "R-ALIAS": ["D1.aliasOutsideReaders"],
+  "R-GENERIC-WORD": ["B1.occurrenceOutsideReaders"],
+  "R-NAMESAKE": ["A4.sessionOutsideReaders", "A1.camelNamesake"],
+  "R-RENAMED": ["C1.renamedMember", "B1.renamedField"],
+  "R-OUTSIDE": ["B1.outsideRoots"],
+};
+/** The one quiet control that is no residual: a form the judge accepts (D1's sha256 digest of the document text). */
+const ACCEPTED_FORMS = ["D1.textDigest"];
+/** R-PIN-HOLLOW: the pins whose removal from every literal (ROWS, the frozen literal, IMPL, the roster) the bead-row anchor
+ * cannot see - its quiet row in the judged-set case recomputes them. */
+const PIN_HOLLOW_MEMBERS = ["A1", "A2", "A3", "A4", "B1", "B2", "C1", "C2", "D1", "D2"];
+const RESIDUAL_FAMILIES = [...Object.keys(QUIET_ROWS), "R-PIN-HOLLOW"];
 /** Names a member holding a render id would carry: the producer's spelling, its camelCase and the reference forms. */
 const RENDER_MEMBERS = ["render_id", "renderId", "renderID", "render_ref", "renderRef"];
 
@@ -281,6 +335,8 @@ interface Roster {
   readonly residuals: readonly string[];
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
+  /** Each pin's assertion count when its case compared its witness, in row order: `<pin>:<count>` (wb-mzoc F2). */
+  readonly counted: readonly string[];
 }
 
 function isObject(value: unknown): value is { [key: string]: unknown } {
@@ -344,6 +400,7 @@ function readRoster(): Roster {
     residuals: strings(raw.residuals, "residuals"),
     rows,
     tests: strings(raw.tests, "tests"),
+    counted: strings(raw.counted, "counted"),
   };
 }
 
@@ -460,6 +517,35 @@ function walkRoots(): Walk {
   };
   for (const root of WALK_ROOTS) visit(join(REPO, root));
   return { modules, symlinks, unreadable };
+}
+
+const regularFile = (path: string): boolean => {
+  try {
+    return lstatSync(path).isFile();
+  } catch {
+    return false;
+  }
+};
+/** Git's own list of the checkout's files (LISTING), repository-relative with "/" separators, in name order; a listed path that
+ * is missing on disk or is no regular file (a symlink, a submodule) is left out. */
+function gitListing(): string[] {
+  const listing = spawnSync("git", LISTING, { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  if (listing.status !== 0) throw new Error(`git ${LISTING.join(" ")} failed: ${listing.stderr ?? ""}${listing.error?.message ?? ""}`);
+  return [...new Set(listing.stdout.split("\0"))].filter(path => path.length > 0 && regularFile(join(REPO, path))).sort();
+}
+/** The script forms of the TypeScript compiler's extension vocabulary; a path ending in one is a module by the compiler. */
+const COMPILER_FORMS: readonly string[] = Object.values(ts.Extension).filter(form => !NON_SCRIPT_FORMS.includes(form));
+const compilerModule = (path: string): boolean => COMPILER_FORMS.some(form => path.toLowerCase().endsWith(form));
+/** A path's top-level root: its first segment, or "." for a file at the repository root. */
+const rootOf = (path: string): string => (path.includes("/") ? path.slice(0, path.indexOf("/")) : ".");
+/** The root files of the TypeScript program PROGRAM_CONFIG defines, repository-relative, in name order. */
+function programFiles(): string[] {
+  const config = ts.readConfigFile(join(REPO, PROGRAM_CONFIG), ts.sys.readFile);
+  if (config.error !== undefined) throw new Error(`${PROGRAM_CONFIG} does not parse`);
+  return ts
+    .parseJsonConfigFileContent(config.config, ts.sys, REPO)
+    .fileNames.map(path => posix(relative(REPO, path)))
+    .sort();
 }
 
 function scriptKindOf(path: string): ts.ScriptKind {
@@ -673,6 +759,10 @@ interface TreeReading {
   readonly walk: Walk;
   readonly modules: Map<string, ModuleReading>;
   readonly readers: string[];
+  /** Git's own list of the checkout's files (gitListing): the walk's outside anchor. */
+  readonly listing: string[];
+  /** The root files of the tsconfig.json program (programFiles): the second outside listing of src. */
+  readonly program: string[];
 }
 let live: TreeReading | undefined;
 /** The repository's own reading, taken once. */
@@ -682,9 +772,31 @@ function liveTree(): TreeReading {
     const modules = new Map<string, ModuleReading>();
     for (const path of walk.modules) modules.set(path, readModule(path, readFileSync(join(REPO, path), "utf8")));
     const readers = [...modules].filter(([, reading]) => isReader(reading)).map(([path]) => path);
-    live = { walk, modules, readers };
+    live = { walk, modules, readers, listing: gitListing(), program: programFiles() };
   }
   return live;
+}
+interface WalkAnchor {
+  readonly unwalked: string[];
+  readonly unlisted: string[];
+  readonly outsideRoots: string[];
+  readonly programUnwalked: string[];
+}
+/** The walk held to its outside listings (wb-mzoc F1): the modules Git lists below WALK_ROOTS that the walk did not read, the
+ * modules the walk read that Git does not list, the roots of the modules Git lists outside WALK_ROOTS, and the root files of
+ * the tsconfig.json program the walk did not read. A listed path is a module by the compiler's forms, never by the walk's own
+ * predicate, and its root is its first segment, never a prefix test the walk shares. */
+function walkAnchor(tree: TreeReading): WalkAnchor {
+  const walked = new Set(tree.walk.modules);
+  const listed = tree.listing.filter(compilerModule);
+  const listedSet = new Set(listed);
+  const inRoots = (path: string): boolean => WALK_ROOTS.includes(rootOf(path));
+  return {
+    unwalked: listed.filter(path => inRoots(path) && !walked.has(path)),
+    unlisted: tree.walk.modules.filter(path => !listedSet.has(path)),
+    outsideRoots: [...new Set(listed.filter(path => !inRoots(path)).map(rootOf))].sort(),
+    programUnwalked: tree.program.filter(path => !walked.has(path)),
+  };
 }
 const below = (tree: TreeReading, root: string): number => tree.walk.modules.filter(path => path.startsWith(`${root}/`)).length;
 const floorsMet = (tree: TreeReading): boolean => below(tree, "src") >= FLOORS.src && below(tree, "qa") >= FLOORS.qa && below(tree, "examples") >= FLOORS.examples;
@@ -875,12 +987,61 @@ function done(pin: string, witness: JsonObject): Json {
   REACHED.push(pin);
   return { pin, ...witness };
 }
+/** Each pin's witness as its case returned it; the record compares the whole set against the roster a second time. */
+const MEASURED: { [pin: string]: Json } = {};
+/** Each pin's assertion count when its case compared its witness (its own judges, its control readings and the compare
+ * included), in run order: `<pin>:<count>` (wb-mzoc F2). A case that returns its roster witness without running its judges
+ * counts fewer, and the record reds. */
+const COUNTED: string[] = [];
+
+/** A control fires when it counts a hit: a count of 1 or more, a non-empty list, a ratio with at least one read. */
+function fires(value: Json): boolean {
+  if (typeof value === "number") return value >= 1;
+  if (Array.isArray(value)) return value.length > 0;
+  if (typeof value === "string" && /^\d+\/\d+$/.test(value)) return Number(value.slice(value.indexOf("/") + 1)) >= 1;
+  throw new Error(`a control reads ${JSON.stringify(value)}: neither a count, a list nor a ratio`);
+}
+/** Each control of a pin's witness read as fires, quiet or absent, beside its classification (wb-mzoc F3): quiet for the pin's
+ * named quiet rows (QUIET_ROWS) and accepted forms (ACCEPTED_FORMS), each of which must be present, fires for every other
+ * control - so a positive control zeroed in this file and the roster together still reds. */
+function controlReadings(pin: string, witness: Json): { read: { [name: string]: string }; expected: { [name: string]: string } } {
+  const controls: JsonObject = isObject(witness) && isObject(witness.controls) ? (witness.controls as JsonObject) : {};
+  const quiet = [...Object.values(QUIET_ROWS).flat(), ...ACCEPTED_FORMS].filter(entry => entry.startsWith(`${pin}.`)).map(entry => entry.slice(pin.length + 1));
+  const names = [...new Set([...Object.keys(controls), ...quiet])].sort();
+  const reading = (name: string): string => (!Object.hasOwn(controls, name) ? "absent" : fires(controls[name] ?? null) ? "fires" : "quiet");
+  return {
+    read: Object.fromEntries(names.map(name => [name, reading(name)])),
+    expected: Object.fromEntries(names.map(name => [name, quiet.includes(name) ? "quiet" : "fires"])),
+  };
+}
+
+interface Registered {
+  readonly name: string;
+  readonly mode: string;
+  readonly fails: boolean;
+  readonly state: string | undefined;
+  readonly self: boolean;
+}
+/** Every registered test of this file (vitest's task tree), in registration order: its title, collected mode, inversion and
+ * state, and whether it is the case reading the tree. */
+function registeredTests(current: Readonly<RunnerTestCase>): Registered[] {
+  const walked: Registered[] = [];
+  const visit = (tasks: readonly RunnerTask[]): void => {
+    for (const child of tasks) {
+      if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === current });
+      else if (child.type === "suite") visit(child.tasks);
+    }
+  };
+  visit(current.file.tasks);
+  return walked;
+}
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
   A1: () => {
     const tree = liveTree();
     const modulesFloorMet = floorsMet(tree);
+    const walk = walkAnchor(tree);
     const table = Object.fromEntries(tree.readers.map(path => [path, spelled(readingOf(tree, path), VOCABULARY.readerTable)]));
     const nullOnly = Object.fromEntries(tree.readers.map(path => [path, nullOnlyReads(readingOf(tree, path))]));
     const nullTyped = Object.fromEntries(tree.readers.map(path => [path, readingOf(tree, path).nullTypedMembers.filter(name => NULL_ONLY.includes(name))]));
@@ -899,6 +1060,11 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     const shippedSpelled = ROSTER.shippedReads.every(name => tree.readers.some(path => (table[path] ?? []).includes(name)));
     expect(modulesFloorMet, `modules: src ${below(tree, "src")}, qa ${below(tree, "qa")}, examples ${below(tree, "examples")}`).toBe(true);
     expect({ symlinks: tree.walk.symlinks, unreadable: tree.walk.unreadable }, "the walk meets no symlink and no unreadable directory").toStrictEqual({ symlinks: [], unreadable: [] });
+    // wb-mzoc F1: the walked set is held to listings outside this census, not to count floors alone (H05+P05).
+    expect(walk.unwalked, "modules Git lists below the walk roots that the walk did not read").toEqual([]);
+    expect(walk.unlisted, "modules the walk read that Git does not list").toEqual([]);
+    expect(walk.outsideRoots, "the roots of the modules Git lists outside the walk roots: the unjudged roots only").toEqual([...UNJUDGED_ROOTS]);
+    expect(walk.programUnwalked, `root files of the ${PROGRAM_CONFIG} program the walk did not read`).toEqual([]);
     expect(tree.readers, "the judged modules holding the render command literal").toEqual(["src/workbench/native-evidence.ts", "src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"]);
     expect(shippedSpelled, `the filing's shipped reads (${ROSTER.shippedReads.join(", ")}) are spelled by a READER`).toBe(true);
     expect(
@@ -926,7 +1092,7 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       camelNamesake: outsideOf("const sessionId = frame.sessionId;\nconst operationId = run.operationId;\n"),
       renderPrefix: refPrefixes(snippet(`const ref = \`rf-render:${"$"}{id}\`;\n`)).filter(prefix => IDENTITY_WORDS.test(prefix)),
     };
-    return done("A1", { modulesFloorMet, readers: [...tree.readers], table, nullOnly, nullTyped, prefixes, typedPrefixes, outside, shippedSpelled, controls });
+    return done("A1", { modulesFloorMet, walk: json(walk), readers: [...tree.readers], table, nullOnly, nullTyped, prefixes, typedPrefixes, outside, shippedSpelled, controls });
   },
   A2: () => {
     const names = ["OPERATION", "WORKSPACE", "GRAPH", "BUNDLE", "ROOT"];
@@ -1249,16 +1415,38 @@ describe("wb-hs2j.7 rf typed identity distinctness census (RF-REACTIVE-CONTEXT-A
     removeScratch(...stubs.splice(0));
   });
 
-  it("the judged set: the frozen shape, the out-of-file roster and the bead row agree", { timeout: 60_000 }, () => {
+  it("the judged set: the frozen shape, the out-of-file roster and the bead row agree", { timeout: 60_000 }, ({ task }) => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:2", "C:2", "D:2"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
+    // wb-mzoc F4: this case runs first and reads the task tree as collected, so a records case skipped, set to todo,
+    // inverted or deleted reds here, before the records case could have run.
+    const registered = registeredTests(task);
+    expect(
+      registered.map(entry => entry.name),
+      "every registered test of this file (vitest task tree), exactly and in roster order, read first",
+    ).toEqual([...ROSTER.tests]);
+    expect(
+      registered.findIndex(entry => entry.self),
+      "this case finds itself by task identity, registered first",
+    ).toBe(0);
+    expect(
+      registered.filter(entry => entry.mode !== "run" || entry.fails).map(entry => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""}`),
+      "every registered test, the records case included, is collected in run mode and not inverted",
+    ).toEqual([]);
     expect({
       bead: BEAD,
       scan: {
         walkRoots: WALK_ROOTS,
         moduleExtensions: MODULE_EXTENSIONS,
         floors: FLOORS,
+        listing: LISTING,
+        nonScriptForms: NON_SCRIPT_FORMS,
+        unjudgedRoots: UNJUDGED_ROOTS,
+        programConfig: PROGRAM_CONFIG,
+        quietRows: QUIET_ROWS,
+        acceptedForms: ACCEPTED_FORMS,
+        pinHollowMembers: PIN_HOLLOW_MEMBERS,
         renderCommand: RENDER_COMMAND,
         capability: CAPABILITY,
         familyOf: FAMILY_OF,
@@ -1293,10 +1481,20 @@ describe("wb-hs2j.7 rf typed identity distinctness census (RF-REACTIVE-CONTEXT-A
     const named = /typed identity vocabulary distinctly \(([^)]+)\)/.exec(ROSTER.statement);
     expect(clauses.map(clause => clause.slice(0, 4)), "the filing lists acceptance (a), (b), (c) and (d)").toEqual(["(a) ", "(b) ", "(c) ", "(d) "]);
     expect([posture?.[1], posture?.[2]], "the filing's two posture facts are the roster's").toEqual([...ROSTER.posture]);
-    const coverage = [...clauses, ...ROSTER.posture].map(clause => ROWS.filter(row => clause.length > 0 && row.label.includes(clause)).map(row => row.id));
+    const coverageOf = (rows: readonly Row[]): string[][] => [...clauses, ...ROSTER.posture].map(clause => rows.filter(row => clause.length > 0 && row.label.includes(clause)).map(row => row.id));
+    const coverage = coverageOf(ROWS);
     expect(coverage.every(ids => ids.length === 1), "every acceptance clause and posture fact sits verbatim in exactly one row label").toBe(true);
     expect(ROWS.every(row => coverage.some(ids => ids.includes(row.id))), "every row carries a clause of the filing").toBe(true);
     expect(coverage).toEqual([["A"], ["B"], ["C"], ["D"], ["A"], ["C"]]);
+    // R-PIN-HOLLOW quiet row: the anchor reads row labels only, so one pin removed from every literal leaves its coverage
+    // unchanged, while a row removed from every literal changes it (the reading is live).
+    const withoutPin = (pin: string): Row[] => ROWS.map(row => ({ ...row, pins: row.pins.filter(item => item !== pin) }));
+    const unseen = ROWS.flatMap(row => row.pins).filter(pin => JSON.stringify(coverageOf(withoutPin(pin))) === JSON.stringify(coverage));
+    expect(unseen, "R-PIN-HOLLOW: the pins whose removal from every literal the bead-row anchor cannot see").toEqual([...PIN_HOLLOW_MEMBERS]);
+    expect(
+      ROWS.filter(row => JSON.stringify(coverageOf(ROWS.filter(other => other.id !== row.id))) === JSON.stringify(coverage)).map(row => row.id),
+      "rows whose removal from every literal the bead-row anchor cannot see",
+    ).toEqual([]);
     expect(bead.notes, "the filing states the roster's statement").toContain(`Full statement (title trimmed to bd's 500-character limit): ${ROSTER.statement}`);
     expect({ citation: source?.[1], quote: source?.[2], mergedCitation: merged?.[1], mergedQuote: merged?.[2] }).toStrictEqual({
       citation: ROSTER.citation,
@@ -1312,6 +1510,18 @@ describe("wb-hs2j.7 rf typed identity distinctness census (RF-REACTIVE-CONTEXT-A
     expect(bead.title.endsWith(ROSTER.citation), "the title cites the roster's citation").toBe(true);
     expect(ROSTER.citation.endsWith(`@${ROSTER.producer.programPin.sha.slice(0, 12)}`), "the citation pins the program sha the roster measured").toBe(true);
     expect(ROSTER.producer.occurrenceCitation.endsWith(`@${ROSTER.producer.programPin.sha.slice(0, 12)}`), "the occurrence citation pins the same sha").toBe(true);
+    // The residual families' quiet rows (wb-mzoc F3), read after the outside anchor: every control family names one or more,
+    // and each names a control of a pin of ROWS.
+    expect(
+      Object.entries(QUIET_ROWS)
+        .filter(([, rows]) => rows.length === 0)
+        .map(([family]) => family),
+      "a control residual family without a pinned quiet row",
+    ).toEqual([]);
+    expect(
+      [...Object.values(QUIET_ROWS).flat(), ...ACCEPTED_FORMS].filter(entry => !ROWS.some(row => row.pins.includes(entry.slice(0, entry.indexOf("."))))),
+      "a quiet row or accepted form naming no pin of ROWS",
+    ).toEqual([]);
   });
 
   for (const row of ROWS) {
@@ -1321,21 +1531,18 @@ describe("wb-hs2j.7 rf typed identity distinctness census (RF-REACTIVE-CONTEXT-A
           const impl = IMPL[pin];
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : await impl();
+          MEASURED[pin] = witness;
+          const controls = controlReadings(pin, witness);
+          expect(controls.read, `${pin}: every positive control fires, every quiet row and accepted form stays quiet`).toStrictEqual(controls.expected);
           expect(witness).toStrictEqual(rosterWitness(pin));
+          COUNTED.push(`${pin}:${expect.getState().assertionCalls}`);
         });
       }
     });
   }
 
   it("records: every registered test ran once in run mode in roster order and every pin reached its end", { timeout: 60_000 }, ({ task }) => {
-    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
-    const visit = (tasks: typeof task.file.tasks): void => {
-      for (const child of tasks) {
-        if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
-        else if (child.type === "suite") visit(child.tasks);
-      }
-    };
-    visit(task.file.tasks);
+    const walked = registeredTests(task);
     const titles = walked.map(entry => entry.name);
     expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual(ROSTER.tests);
     expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice").toEqual([]);
@@ -1345,5 +1552,8 @@ describe("wb-hs2j.7 rf typed identity distinctness census (RF-REACTIVE-CONTEXT-A
     const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
     expect(REACHED, "every pin's case reached its end, in row order").toEqual(ROWS.flatMap(row => row.pins));
+    const rosterWitnesses = Object.fromEntries(ROSTER.rows.flatMap(row => row.pins.map(pin => [pin.id, pin.witness])));
+    expect(MEASURED, "every pin's witness, compared against the roster a second time").toStrictEqual(rosterWitnesses);
+    expect(COUNTED, "every pin's case compared its witness after its pinned number of assertions, in row order").toEqual([...ROSTER.counted]);
   });
 });
