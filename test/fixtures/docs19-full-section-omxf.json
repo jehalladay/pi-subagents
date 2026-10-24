@@ -1,5 +1,5 @@
 {
-  "source": "wb-omxf R677 claim-base d75b68d10a1a3a183d6fb7a55088f38f86c018a2; full docs19 section and wb-1z3u falsifier tables; R695 Q2 cut #2: the R677 F1 survivors judged on disk, the provenance falsifiers with the kinds the judge draws, and the R695 (d) budgeted report rows; R696 cut #3: the literal-shape rows (PIN, the committed source, and the falsifiers: EXPECTATION property, replacement, findings) and the named residual R-COORDINATED-LITERAL-AND-ANCHOR (id, family, form, reading, runtime); wb-lybr (R699 Q3, the landing-247 F1 follow-up): the reads of EXPECTATION - the roster (site, readers in source order), the READS rows (id, AST-located edits of the census source, the lines the reads pin must draw) and the named residual R-COORDINATED-READER-ROSTER (id, family, form, reading, runtime)",
+  "source": "wb-omxf R677 claim-base d75b68d10a1a3a183d6fb7a55088f38f86c018a2; full docs19 section and wb-1z3u falsifier tables; R695 Q2 cut #2: the R677 F1 survivors judged on disk, the provenance falsifiers with the kinds the judge draws, and the R695 (d) budgeted report rows; R696 cut #3: the literal-shape rows (PIN, the committed source, and the falsifiers: EXPECTATION property, replacement, findings) and the named residual R-COORDINATED-LITERAL-AND-ANCHOR (id, family, form, reading, runtime); wb-lybr (R699 Q3, the landing-247 F1 follow-up): the reads of EXPECTATION - the roster (site, readers in source order), the READS rows (id, AST-located edits of the census source, the lines the reads pin must draw) and the named residual R-COORDINATED-READER-ROSTER (id, family, form, reading, runtime); wb-ur08 (R694, the landing-251 PREP F1 READER-CONSEQUENCE follow-up): the consequences of EXPECTATION's reads - the consequence roster (read key, kind), the CONSEQUENCE rows (id, AST-located edits of the census source, the lines the consequence pin must draw) and the named residuals R-COORDINATED-CONSEQUENCE-ROSTER and R-COORDINATED-READS-TABLE (id, family, table, form, reading, runtime)",
   "sectionMarkdown": "## Measured experimental read example\n\nUnlike the proposed `hyperunix.query` example above, the registered operation is currently `hyperunix.find`. In `.pi/subagents.json`, explicitly select the Claude workflow backend and grant only `hyperunix:read`.\n\n```javascript\nexport const meta = {name: \"inspect-source\", description: \"Read native coverage\"};\nconst found = await node(\"hyperunix.find\", {kind: \"hx.fs/regular-file\", root: \"src\"});\nreturn {coverage: found.source.coverage_summary, runtime: found.runtime};\n```\n\nThe native result can be incomplete even when files are returned. `licenses_absence: false` does not establish that a missing file or symbol is absent. This query is a filesystem read, not a task-scoped semantic dependency analysis.\n\n`furnace.run.inspect` accepts an existing `runId` under the authorized Pi workspace with explicit `furnace:inspect`. `reactivefiber.render.preview` accepts exactly one of two input arms under explicit `reactivefiber:render`: `model` and `task`, or `view` and `taskId` with an optional `model`, never both; its workspace must already be initialized. It uses a noncommitted render and must not be advertised as a durable RF artifact.\n",
   "d19": [
     [
@@ -561,6 +561,341 @@
       "form": "STANDIN",
       "reading": "quiet: the reads pin draws no line over the page's source against the page's roster (every read left resolves to the literal, none is carried, the roster names exactly the reads left), and the literal-shape pin reads the moved literal as it reads the pinned one",
       "runtime": "quiet: with a reader re-pointed, the roster, its frozen shape and the fixture's readRoster edited alike and the EXPECTATION sha256 literal moved, the whole census reads green (ANCHOR, ROSTER, every READS row, LIVE, every PROVENANCE check and the LITERAL rows); no reading in this file tells a reviewed re-point from a hollowing one, so the edit is the review: its diff drops the read from the fixture's readRoster and moves the literal"
+    }
+  ],
+  "consequenceRoster": [
+    [
+      "function expectationFailures | expectation.provenance.path !== EXPECTATION.path",
+      "push"
+    ],
+    [
+      "function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256",
+      "push"
+    ],
+    [
+      "it LIVE (R695 (a)) | expect(expectation.provenance).toEqual(EXPECTATION)",
+      "assertion"
+    ],
+    [
+      "it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") })",
+      "assertion"
+    ],
+    [
+      "it ON-DISK %s | expect(expectation.provenance).toEqual(EXPECTATION)",
+      "assertion"
+    ],
+    [
+      "it LITERAL %s (R696 (1)) | expect(reading.pin, `...`).toEqual(edit === null ? EXPECTATION : undefined)",
+      "assertion"
+    ],
+    [
+      "it RESIDUAL R-COORDINATED-LITERAL-AND-ANCHOR quiet row (R696 (3), the named residual above the literal pin) | expect(page.expectation.provenance.sha256, \"the fixture carries the edit\").not.toBe(EXPECTATION.sha256)",
+      "assertion"
+    ],
+    [
+      "it RESIDUAL R-COORDINATED-LITERAL-AND-ANCHOR quiet row (R696 (3), the named residual above the literal pin) | expect(moved, \"the page moves the literal\").not.toBe(EXPECTATION.sha256)",
+      "assertion"
+    ],
+    [
+      "it RESIDUAL R-COORDINATED-LITERAL-AND-ANCHOR quiet row (R696 (3), the named residual above the literal pin) | expect(expectationLiteral(page.source)).toEqual({ findings: [], pin: { path: EXPECTATION.path, sha256: moved } })",
+      "assertion"
+    ]
+  ],
+  "consequenceRows": [
+    [
+      "CONSEQUENCES",
+      null,
+      []
+    ],
+    [
+      "G4",
+      [
+        {
+          "op": "guard",
+          "read": "function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256",
+          "nested": "if (expectation.provenance.sha256 !== sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))))"
+        },
+        {
+          "op": "wrap-if",
+          "read": "it LIVE (R695 (a)) | expect(expectation.provenance).toEqual(EXPECTATION)",
+          "condition": "expectation.text.length < 0"
+        },
+        {
+          "op": "wrap-if",
+          "read": "it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") })",
+          "condition": "expectation.text.length < 0"
+        },
+        {
+          "op": "wrap-if",
+          "read": "it ON-DISK %s | expect(expectation.provenance).toEqual(EXPECTATION)",
+          "condition": "expectation.text.length < 0"
+        }
+      ],
+      [
+        "push-consequence: function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256 -> a nested if",
+        "guarded: it LIVE (R695 (a)) | expect(expectation.provenance).toEqual(EXPECTATION) -> its statement sits inside an if",
+        "guarded: it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") }) -> its statement sits inside an if",
+        "guarded: it ON-DISK %s | expect(expectation.provenance).toEqual(EXPECTATION) -> its statement sits inside an if"
+      ]
+    ],
+    [
+      "GUARD-EXEMPT",
+      [
+        {
+          "op": "guard",
+          "read": "function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256",
+          "nested": "if (expectation.provenance.sha256 !== sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))))"
+        }
+      ],
+      [
+        "push-consequence: function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256 -> a nested if"
+      ]
+    ],
+    [
+      "WRAP-LIVE-PIN",
+      [
+        {
+          "op": "wrap-if",
+          "read": "it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") })",
+          "condition": "expectation.text.length < 0"
+        }
+      ],
+      [
+        "guarded: it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") }) -> its statement sits inside an if"
+      ]
+    ],
+    [
+      "WRAP-LIVE-EQUAL",
+      [
+        {
+          "op": "wrap-if",
+          "read": "it LIVE (R695 (a)) | expect(expectation.provenance).toEqual(EXPECTATION)",
+          "condition": "expectation.text.length < 0"
+        }
+      ],
+      [
+        "guarded: it LIVE (R695 (a)) | expect(expectation.provenance).toEqual(EXPECTATION) -> its statement sits inside an if"
+      ]
+    ],
+    [
+      "WRAP-ON-DISK",
+      [
+        {
+          "op": "wrap-if",
+          "read": "it ON-DISK %s | expect(expectation.provenance).toEqual(EXPECTATION)",
+          "condition": "expectation.text.length < 0"
+        }
+      ],
+      [
+        "guarded: it ON-DISK %s | expect(expectation.provenance).toEqual(EXPECTATION) -> its statement sits inside an if"
+      ]
+    ],
+    [
+      "WRAP-TRY",
+      [
+        {
+          "op": "wrap-try",
+          "read": "it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") })",
+          "rethrow": false
+        }
+      ],
+      [
+        "guarded: it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") }) -> its statement sits inside a try"
+      ]
+    ],
+    [
+      "WRAP-TRY-RETHROW",
+      [
+        {
+          "op": "wrap-try",
+          "read": "it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") })",
+          "rethrow": true
+        }
+      ],
+      [
+        "guarded: it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") }) -> its statement sits inside a try"
+      ]
+    ],
+    [
+      "WRAP-WHILE",
+      [
+        {
+          "op": "wrap-while",
+          "read": "it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") })",
+          "condition": "expectation.text.length < 0"
+        }
+      ],
+      [
+        "guarded: it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") }) -> its statement sits inside a while"
+      ]
+    ],
+    [
+      "WRAP-CLOSURE",
+      [
+        {
+          "op": "wrap-closure",
+          "read": "it ON-DISK %s | expect(expectation.provenance).toEqual(EXPECTATION)"
+        }
+      ],
+      [
+        "guarded: it ON-DISK %s | expect(expectation.provenance).toEqual(EXPECTATION) -> its statement sits inside a closure"
+      ]
+    ],
+    [
+      "WRAP-LABEL",
+      [
+        {
+          "op": "wrap-label",
+          "read": "it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") })",
+          "exit": "OMXF_WHERE.length > 0"
+        }
+      ],
+      [
+        "guarded: it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") }) -> its statement sits inside a label"
+      ]
+    ],
+    [
+      "COND-EXPECTATION",
+      [
+        {
+          "op": "wrap-if",
+          "read": "it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") })",
+          "condition": "EXPECTATION !== undefined"
+        }
+      ],
+      [
+        "guarded: it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") }) -> its statement sits inside an if",
+        "cond-expectation: it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") }) -> the guard condition names EXPECTATION"
+      ]
+    ],
+    [
+      "COND-OUTER",
+      [
+        {
+          "op": "wrap-if",
+          "read": "it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") })",
+          "condition": "EXPECTATION !== undefined"
+        },
+        {
+          "op": "wrap-try",
+          "read": "it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") })",
+          "rethrow": true
+        }
+      ],
+      [
+        "guarded: it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") }) -> its statement sits inside a try",
+        "cond-expectation: it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") }) -> the guard condition names EXPECTATION"
+      ]
+    ],
+    [
+      "EXIT-RETURN",
+      [
+        {
+          "op": "prepend",
+          "site": "it LIVE (R695 (a))",
+          "text": "if (OMXF_WHERE.length > 0) return;"
+        }
+      ],
+      [
+        "early-exit: it LIVE (R695 (a)) | expect(expectation.provenance).toEqual(EXPECTATION) -> a return precedes its statement",
+        "early-exit: it LIVE (R695 (a)) | expect(EXPECTATION).toEqual({ path: \"test/fixtures/docs19-full-section-omxf.json\", sha256: createHash(\"sha256\").update(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))).digest(\"hex\") }) -> a return precedes its statement"
+      ]
+    ],
+    [
+      "PUSH-SPREAD",
+      [
+        {
+          "op": "push-spread",
+          "read": "function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256",
+          "condition": "expectation.provenance.sha256 === sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE)))"
+        }
+      ],
+      [
+        "push-consequence: function expectationFailures | expectation.provenance.sha256 !== EXPECTATION.sha256 -> the push argument is not one template literal"
+      ]
+    ],
+    [
+      "SINK-ASSIGN",
+      [
+        {
+          "op": "fn-before-return",
+          "fn": "expectationFailures",
+          "text": "out.length = 0;"
+        }
+      ],
+      [
+        "sink: out.length = 0;"
+      ]
+    ],
+    [
+      "SINK-METHOD",
+      [
+        {
+          "op": "fn-before-return",
+          "fn": "expectationFailures",
+          "text": "out.pop();"
+        }
+      ],
+      [
+        "sink: out.pop();"
+      ]
+    ],
+    [
+      "SINK-UPDATE",
+      [
+        {
+          "op": "fn-before-return",
+          "fn": "expectationFailures",
+          "text": "out.length--;"
+        }
+      ],
+      [
+        "sink: out.length--;"
+      ]
+    ],
+    [
+      "ASSERT-EXTEND",
+      [
+        {
+          "op": "prepend",
+          "site": "it LIVE (R695 (a))",
+          "text": "expect.extend({ toEqual: () => ({ pass: true, message: () => \"\" }) });"
+        }
+      ],
+      [
+        "assert: expect.extend({ toEqual: () => ({ pass: true, message: () => \"\" }) });"
+      ]
+    ],
+    [
+      "ASSERT-ALIAS",
+      [
+        {
+          "op": "prepend",
+          "site": "it LIVE (R695 (a))",
+          "text": "const verdictOf = expect;"
+        }
+      ],
+      [
+        "assert: const verdictOf = expect;"
+      ]
+    ]
+  ],
+  "consequenceResiduals": [
+    {
+      "id": "R-COORDINATED-CONSEQUENCE-ROSTER",
+      "family": "a CONSEQUENCE row removed from the census's consequence table, its frozen-shape element and the fixture's consequenceRows together (any row keyed on it rewritten alike), the EXPECTATION sha256 literal moved to the edited fixture's bytes",
+      "table": "UR08_CONSEQUENCE",
+      "form": "G4",
+      "reading": "quiet: the page's table holds every row but the form row, its frozen shape lacks the element, the consequence judgment and the reads pin draw no line over the page's source (the removal touches no read), and the literal-shape pin reads the moved literal as it reads the pinned one",
+      "runtime": "quiet for every member but its own form: with a CONSEQUENCE row other than G4 removed from the census table (measured: WRAP-CLOSURE), its frozen-shape element and the fixture's consequenceRows edited alike and the EXPECTATION sha256 literal moved, the whole census reads green; removing the form row G4 itself reds this quiet row and CONSEQUENCE FROZEN SHAPE (the page's witness is gone); no reading in this file tells a reviewed row removal from a hollowing one, so the edit is the review: its diff drops the row from the fixture's consequenceRows and moves the literal"
+    },
+    {
+      "id": "R-COORDINATED-READS-TABLE",
+      "family": "a lybr READS row removed from LYBR_READS, its frozen-shape element and the fixture's readerRows together (the lybr PREP F5 generic coordinated anchor edit, its CT6-COORD form), the EXPECTATION sha256 literal moved to the edited fixture's bytes",
+      "table": "LYBR_READS",
+      "form": "ALIAS-SPREAD",
+      "reading": "quiet: the page's READS table holds every row but the form row, its frozen shape lacks the element, the consequence judgment and the reads pin draw no line over the page's source (the removal touches no read), and the literal-shape pin reads the moved literal as it reads the pinned one",
+      "runtime": "quiet for every member but its own form: with a READS row other than ALIAS-SPREAD removed from LYBR_READS (measured: ALIAS-CONST), its frozen-shape element and the fixture's readerRows edited alike and the EXPECTATION sha256 literal moved, the whole census reads green; removing the form row ALIAS-SPREAD itself reds this quiet row and CONSEQUENCE FROZEN SHAPE (the page's witness is gone); no reading in this file tells a reviewed row removal from a hollowing one, so the edit is the review: its diff drops the row from the fixture's readerRows and moves the literal"
     }
   ]
 }

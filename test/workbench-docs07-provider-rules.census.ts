@@ -1694,7 +1694,7 @@ interface Sourced {
  * The frozen EXPECTATION's provenance, pinned as source-level string literals (R696 (1), read back by the LITERAL PIN row from
  * this file's AST): the fixture path and the SHA-256 of its committed bytes (sha256sum), written out and never computed here.
  */
-const EXPECTATION: Provenance = { path: "test/fixtures/docs19-full-section-omxf.json", sha256: "6f0d6217045be897e9121b5489a3be53164b24cef062c2cb1bbb42b30a824cf2" };
+const EXPECTATION: Provenance = { path: "test/fixtures/docs19-full-section-omxf.json", sha256: "593cd1bf32274e360d66c05aeb2645161d357c7f5b3386eaa88be10990b67f28" };
 const sha256Hex = (bytes: string | Buffer): string => createHash("sha256").update(bytes).digest("hex");
 /** A file under a repo root with the digest of exactly its bytes: the one read every full-slice row judges. */
 function readWithProvenance(root: string, path: string): Sourced {
@@ -2613,5 +2613,431 @@ describe("wb-lybr every read of EXPECTATION resolves to the literal identifier (
     expect(READ_ROSTER).toEqual(tables.readRoster);
     expect(LYBR_READS).toEqual(tables.readerRows);
     expect(LYBR_RESIDUALS).toEqual(tables.readerResiduals);
+  });
+});
+
+/**
+ * wb-ur08 (R694 follow-up of the landing-251 PREP F1 MEDIUM, the READER-CONSEQUENCE G4 survivor; EXPECTATION-chain hop 2):
+ * every consequence of an EXPECTATION read runs whenever its site runs and lands where it is judged. The lybr pin binds
+ * each read's identifier, site and reader TEXT; this pin binds what the reader's statement does, by this file's own AST
+ * and checker (the lybr program of this one source: parsed and bound, never run). The consequence readers are
+ * CONSEQUENCE_ROSTER, the READ_ROSTER readers minus the two failure-message templates (payload pushed after a decision,
+ * never a decision). Claiming exactly this pinned set and no more:
+ * (1) GUARDED - no consequence reader's statement sits under an if, try, loop, switch, label or closure (a nested
+ * function) between the statement and its site's own function (line "guarded", naming the nearest guard).
+ * (2) CONDITION - no if around a consequence reader's statement, nearest or outer, names EXPECTATION in its condition
+ * (line "cond-expectation": a guard that consults the literal vouches itself).
+ * (3) RETURN AHEAD - no return outside a nested function precedes a consequence reader's statement in any enclosing block
+ * of its site's function (line "early-exit": a return first is a read that never runs; a throw is loud and not counted).
+ * (4) PUSH - each provenance check's consequence is exactly if (<the check>) out.push(<one template literal>), with no
+ * else and no nested guard (line "push-consequence").
+ * (5) SINK - every reference to a findings sink named out in this file is its declaration, out.push(...) or return out
+ * (line "sink", the statement that uses it otherwise): no assignment, update, other method, element access or alias.
+ * (6) ASSERT - every reference to expect in this file is its import or the matcher head expect(...) (line "assert"): no
+ * overridden matcher, alias or re-bound expect stands between a consequence reader and its verdict.
+ * The roster, the CONSEQUENCE table and the residuals are frozen here and anchored out of file in the fixture
+ * (consequenceRoster, consequenceRows, consequenceResiduals), read behind the pinned provenance.
+ * The finding of record (the gate's s24 G4 spec, verbatim in the seat's red-first archive): a nested consequence guard on
+ * the digest check exempting the on-disk fixture's current digest, plus never-true if (expectation.text.length < 0)
+ * wraps around LIVE's two and ON-DISK's one EXPECTATION statements - every roster key byte-identical, every read still
+ * bound to the literal - read 0 failed | 175 passed under the coordinated docs/19 + fixture rewrite the landed cut reds 32
+ * (each part necessary: 32/2/7). Row G4 applies the gate's guard verbatim and its wraps as single-statement wraps of the
+ * same condition; every other row isolates one mechanism.
+ * NOT CLAIMED, each with the channel that reads it or none: an expression-level guard or sibling inside a reader's
+ * statement (&&, ||, ??, ?:, ?. or a comma) re-keys the reader TEXT, read by the lybr reads roster; a whole it/describe
+ * registration suppressed is read by the frozen judged lists and the gate's census-total reconciliation; the eval family
+ * (lybr F2) is killed out of band by biome noGlobalEval; a consequence discarded downstream of its reader (a caller
+ * dropping a pushed line) and an override of the runtime the readers call (a builtin, the hash, the file read) are not
+ * read here. No other escape is claimed absent.
+ * NAMED RESIDUALS (each with its pinned quiet row below): R-COORDINATED-CONSEQUENCE-ROSTER, a CONSEQUENCE row removed from
+ * the table, its frozen-shape element and the fixture's consequenceRows together, the EXPECTATION sha256 literal moved to
+ * the edited fixture's bytes; R-COORDINATED-READS-TABLE, the same coordinated removal of a lybr READS row (the lybr PREP F5
+ * generic coordinated anchor edit, its CT6-COORD form) from LYBR_READS, its frozen element and the fixture's readerRows.
+ */
+/** The consequence class a rostered reader stands for: a provenance check's push, or an assertion. */
+type ConsequenceKind = "push" | "assertion";
+/** One AST-located consequence edit of this file's source, applied in memory to a page that is parsed and bound, never run. */
+type ConsequenceEdit =
+  | { readonly op: "guard"; readonly read: string; readonly nested: string }
+  | { readonly op: "wrap-if"; readonly read: string; readonly condition: string }
+  | { readonly op: "wrap-try"; readonly read: string; readonly rethrow: boolean }
+  | { readonly op: "wrap-while"; readonly read: string; readonly condition: string }
+  | { readonly op: "wrap-closure"; readonly read: string }
+  | { readonly op: "wrap-label"; readonly read: string; readonly exit: string }
+  | { readonly op: "push-spread"; readonly read: string; readonly condition: string }
+  | { readonly op: "fn-before-return"; readonly fn: string; readonly text: string }
+  | { readonly op: "prepend"; readonly site: string; readonly text: string };
+/** A CONSEQUENCE row: [id, the edits of this file's source it reads (null: the committed source), the lines the pin must draw]. */
+type ConsequenceRow = readonly [string, readonly ConsequenceEdit[] | null, readonly string[]];
+/** The rostered consequence readers: [read key, its kind] - the READ_ROSTER readers minus the two failure-message templates. */
+const CONSEQUENCE_ROSTER: readonly (readonly [string, ConsequenceKind])[] = [
+  [readKey(READ_SITE_FAILURES, "expectation.provenance.path !== EXPECTATION.path"), "push"],
+  [readKey(READ_SITE_FAILURES, READ_DIGEST_CHECK), "push"],
+  [readKey(READ_SITE_LIVE, READ_PROVENANCE_EQUAL), "assertion"],
+  [readKey(READ_SITE_LIVE, READ_LIVE_PIN), "assertion"],
+  [readKey(READ_SITE_ON_DISK, READ_PROVENANCE_EQUAL), "assertion"],
+  [readKey(READ_SITE_LITERAL, "expect(reading.pin, `...`).toEqual(edit === null ? EXPECTATION : undefined)"), "assertion"],
+  [readKey(READ_SITE_RESIDUAL, 'expect(page.expectation.provenance.sha256, "the fixture carries the edit").not.toBe(EXPECTATION.sha256)'), "assertion"],
+  [readKey(READ_SITE_RESIDUAL, 'expect(moved, "the page moves the literal").not.toBe(EXPECTATION.sha256)'), "assertion"],
+  [readKey(READ_SITE_RESIDUAL, "expect(expectationLiteral(page.source)).toEqual({ findings: [], pin: { path: EXPECTATION.path, sha256: moved } })"), "assertion"],
+];
+/** The gate's s24 G4 guard, verbatim: it exempts the on-disk fixture's current digest. */
+const G4_GUARD = "if (expectation.provenance.sha256 !== sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE))))";
+/** The gate's s24 G4 never-true wrap condition, verbatim. */
+const G4_WRAP = "expectation.text.length < 0";
+/** The exemption G4's guard draws, as a condition: the expectation's digest is the on-disk fixture's current digest. */
+const G4_EXEMPT = "expectation.provenance.sha256 === sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE)))";
+/** An always-true condition that names no read: the head of a silent early return or break. */
+const ALWAYS = "OMXF_WHERE.length > 0";
+const DIGEST_READ = readKey(READ_SITE_FAILURES, READ_DIGEST_CHECK);
+const LIVE_EQUAL_READ = readKey(READ_SITE_LIVE, READ_PROVENANCE_EQUAL);
+const LIVE_PIN_READ = readKey(READ_SITE_LIVE, READ_LIVE_PIN);
+const ON_DISK_READ = readKey(READ_SITE_ON_DISK, READ_PROVENANCE_EQUAL);
+/**
+ * wb-ur08: row CONSEQUENCES reads the committed source, quiet; each falsifier edits it in memory by AST position and must
+ * draw exactly its lines. G4 is the finding of record; GUARD-EXEMPT isolates its guard and the WRAP rows its wraps and
+ * every other wrapper kind (claim (1)); the COND rows a guard that consults the literal, nearest and outer (2);
+ * EXIT-RETURN a silent return ahead of LIVE's readers (3); PUSH-SPREAD a push that spreads an exempted empty list (4); the
+ * SINK rows a findings sink emptied or shortened before its return (5); the ASSERT rows an overridden and an aliased
+ * matcher head (6).
+ */
+const UR08_CONSEQUENCE: readonly ConsequenceRow[] = [
+  ["CONSEQUENCES", null, []],
+  [
+    "G4",
+    [
+      { op: "guard", read: DIGEST_READ, nested: G4_GUARD },
+      { op: "wrap-if", read: LIVE_EQUAL_READ, condition: G4_WRAP },
+      { op: "wrap-if", read: LIVE_PIN_READ, condition: G4_WRAP },
+      { op: "wrap-if", read: ON_DISK_READ, condition: G4_WRAP },
+    ],
+    [
+      `push-consequence: ${DIGEST_READ} -> a nested if`,
+      `guarded: ${LIVE_EQUAL_READ} -> its statement sits inside an if`,
+      `guarded: ${LIVE_PIN_READ} -> its statement sits inside an if`,
+      `guarded: ${ON_DISK_READ} -> its statement sits inside an if`,
+    ],
+  ],
+  ["GUARD-EXEMPT", [{ op: "guard", read: DIGEST_READ, nested: G4_GUARD }], [`push-consequence: ${DIGEST_READ} -> a nested if`]],
+  ["WRAP-LIVE-PIN", [{ op: "wrap-if", read: LIVE_PIN_READ, condition: G4_WRAP }], [`guarded: ${LIVE_PIN_READ} -> its statement sits inside an if`]],
+  ["WRAP-LIVE-EQUAL", [{ op: "wrap-if", read: LIVE_EQUAL_READ, condition: G4_WRAP }], [`guarded: ${LIVE_EQUAL_READ} -> its statement sits inside an if`]],
+  ["WRAP-ON-DISK", [{ op: "wrap-if", read: ON_DISK_READ, condition: G4_WRAP }], [`guarded: ${ON_DISK_READ} -> its statement sits inside an if`]],
+  ["WRAP-TRY", [{ op: "wrap-try", read: LIVE_PIN_READ, rethrow: false }], [`guarded: ${LIVE_PIN_READ} -> its statement sits inside a try`]],
+  ["WRAP-TRY-RETHROW", [{ op: "wrap-try", read: LIVE_PIN_READ, rethrow: true }], [`guarded: ${LIVE_PIN_READ} -> its statement sits inside a try`]],
+  ["WRAP-WHILE", [{ op: "wrap-while", read: LIVE_PIN_READ, condition: G4_WRAP }], [`guarded: ${LIVE_PIN_READ} -> its statement sits inside a while`]],
+  ["WRAP-CLOSURE", [{ op: "wrap-closure", read: ON_DISK_READ }], [`guarded: ${ON_DISK_READ} -> its statement sits inside a closure`]],
+  ["WRAP-LABEL", [{ op: "wrap-label", read: LIVE_PIN_READ, exit: ALWAYS }], [`guarded: ${LIVE_PIN_READ} -> its statement sits inside a label`]],
+  [
+    "COND-EXPECTATION",
+    [{ op: "wrap-if", read: LIVE_PIN_READ, condition: "EXPECTATION !== undefined" }],
+    [`guarded: ${LIVE_PIN_READ} -> its statement sits inside an if`, `cond-expectation: ${LIVE_PIN_READ} -> the guard condition names EXPECTATION`],
+  ],
+  [
+    "COND-OUTER",
+    [
+      { op: "wrap-if", read: LIVE_PIN_READ, condition: "EXPECTATION !== undefined" },
+      { op: "wrap-try", read: LIVE_PIN_READ, rethrow: true },
+    ],
+    [`guarded: ${LIVE_PIN_READ} -> its statement sits inside a try`, `cond-expectation: ${LIVE_PIN_READ} -> the guard condition names EXPECTATION`],
+  ],
+  ["EXIT-RETURN", [{ op: "prepend", site: READ_SITE_LIVE, text: `if (${ALWAYS}) return;` }], [`early-exit: ${LIVE_EQUAL_READ} -> a return precedes its statement`, `early-exit: ${LIVE_PIN_READ} -> a return precedes its statement`]],
+  ["PUSH-SPREAD", [{ op: "push-spread", read: DIGEST_READ, condition: G4_EXEMPT }], [`push-consequence: ${DIGEST_READ} -> the push argument is not one template literal`]],
+  ["SINK-ASSIGN", [{ op: "fn-before-return", fn: "expectationFailures", text: "out.length = 0;" }], ["sink: out.length = 0;"]],
+  ["SINK-METHOD", [{ op: "fn-before-return", fn: "expectationFailures", text: "out.pop();" }], ["sink: out.pop();"]],
+  ["SINK-UPDATE", [{ op: "fn-before-return", fn: "expectationFailures", text: "out.length--;" }], ["sink: out.length--;"]],
+  ["ASSERT-EXTEND", [{ op: "prepend", site: READ_SITE_LIVE, text: 'expect.extend({ toEqual: () => ({ pass: true, message: () => "" }) });' }], ['assert: expect.extend({ toEqual: () => ({ pass: true, message: () => "" }) });']],
+  ["ASSERT-ALIAS", [{ op: "prepend", site: READ_SITE_LIVE, text: "const verdictOf = expect;" }], ["assert: const verdictOf = expect;"]],
+];
+/** A named residual of the consequence pin: its family, the judged table and row its page removes, and its quiet and runtime readings. */
+interface ConsequenceResidual {
+  readonly id: string;
+  readonly family: string;
+  /** The judged table the page removes a row from: this pin's CONSEQUENCE table or the lybr READS table. */
+  readonly table: "UR08_CONSEQUENCE" | "LYBR_READS";
+  /** The id of the row the page removes. */
+  readonly form: string;
+  /** What this file reads on the family's page. */
+  readonly reading: string;
+  /** What the whole census reads, run under the family's edit. */
+  readonly runtime: string;
+}
+const UR08_RESIDUALS: readonly ConsequenceResidual[] = [
+  {
+    id: "R-COORDINATED-CONSEQUENCE-ROSTER",
+    family:
+      "a CONSEQUENCE row removed from the census's consequence table, its frozen-shape element and the fixture's consequenceRows together (any row keyed on it rewritten alike), the EXPECTATION sha256 literal moved to the edited fixture's bytes",
+    table: "UR08_CONSEQUENCE",
+    form: "G4",
+    reading:
+      "quiet: the page's table holds every row but the form row, its frozen shape lacks the element, the consequence judgment and the reads pin draw no line over the page's source (the removal touches no read), and the literal-shape pin reads the moved literal as it reads the pinned one",
+    runtime:
+      "quiet for every member but its own form: with a CONSEQUENCE row other than G4 removed from the census table (measured: WRAP-CLOSURE), its frozen-shape element and the fixture's consequenceRows edited alike and the EXPECTATION sha256 literal moved, the whole census reads green; removing the form row G4 itself reds this quiet row and CONSEQUENCE FROZEN SHAPE (the page's witness is gone); no reading in this file tells a reviewed row removal from a hollowing one, so the edit is the review: its diff drops the row from the fixture's consequenceRows and moves the literal",
+  },
+  {
+    id: "R-COORDINATED-READS-TABLE",
+    family:
+      "a lybr READS row removed from LYBR_READS, its frozen-shape element and the fixture's readerRows together (the lybr PREP F5 generic coordinated anchor edit, its CT6-COORD form), the EXPECTATION sha256 literal moved to the edited fixture's bytes",
+    table: "LYBR_READS",
+    form: "ALIAS-SPREAD",
+    reading:
+      "quiet: the page's READS table holds every row but the form row, its frozen shape lacks the element, the consequence judgment and the reads pin draw no line over the page's source (the removal touches no read), and the literal-shape pin reads the moved literal as it reads the pinned one",
+    runtime:
+      "quiet for every member but its own form: with a READS row other than ALIAS-SPREAD removed from LYBR_READS (measured: ALIAS-CONST), its frozen-shape element and the fixture's readerRows edited alike and the EXPECTATION sha256 literal moved, the whole census reads green; removing the form row ALIAS-SPREAD itself reds this quiet row and CONSEQUENCE FROZEN SHAPE (the page's witness is gone); no reading in this file tells a reviewed row removal from a hollowing one, so the edit is the review: its diff drops the row from the fixture's readerRows and moves the literal",
+  },
+];
+interface ConsequenceAnchor {
+  readonly consequenceRoster: readonly (readonly [string, ConsequenceKind])[];
+  readonly consequenceRows: readonly ConsequenceRow[];
+  readonly consequenceResiduals: readonly ConsequenceResidual[];
+}
+/** The consequence tables out of file: the fixture's own, read behind its pinned provenance (expectedTables refuses any other read). */
+function consequenceAnchor(expectation: Sourced): ConsequenceAnchor {
+  const tables: unknown = expectedTables(expectation);
+  if (!isRecord(tables) || ![tables.consequenceRoster, tables.consequenceRows, tables.consequenceResiduals].every(Array.isArray)) throw new Error(`${OMXF_ANCHOR_FILE}: missing the consequence roster, consequence row or consequence residual anchor`);
+  return tables as unknown as ConsequenceAnchor;
+}
+const UR08_JUDGED: string[] = [];
+/** The innermost statement containing a node (an EXPECTATION read's access); throws when there is none. */
+function closestStatement(node: ts.Node): ts.Statement {
+  let at = node;
+  while (!ts.isStatement(at)) {
+    if (at.parent === undefined || ts.isSourceFile(at.parent)) throw new Error(`${SELF}: an EXPECTATION read outside every statement`);
+    at = at.parent;
+  }
+  return at;
+}
+/** The function a site names: a function declaration, or the callback of it(...), test(...) or describe(...). */
+const isSiteFunction = (node: ts.Node): boolean => ts.isFunctionDeclaration(node) || registrationSite(node) !== undefined;
+/** Every guard between a statement and its site's own function, nearest first; none when the statement runs whenever its site does. */
+function guardsOf(statement: ts.Statement): { readonly kind: string; readonly condition: ts.Expression | undefined }[] {
+  const guards: { readonly kind: string; readonly condition: ts.Expression | undefined }[] = [];
+  for (let at: ts.Node = statement.parent; !ts.isSourceFile(at) && !isSiteFunction(at); at = at.parent) {
+    if (ts.isIfStatement(at)) guards.push({ kind: "an if", condition: at.expression });
+    else if (ts.isTryStatement(at)) guards.push({ kind: "a try", condition: undefined });
+    else if (ts.isForStatement(at) || ts.isForInStatement(at) || ts.isForOfStatement(at)) guards.push({ kind: "a for", condition: undefined });
+    else if (ts.isWhileStatement(at)) guards.push({ kind: "a while", condition: undefined });
+    else if (ts.isDoStatement(at)) guards.push({ kind: "a do", condition: undefined });
+    else if (ts.isSwitchStatement(at)) guards.push({ kind: "a switch", condition: undefined });
+    else if (ts.isLabeledStatement(at)) guards.push({ kind: "a label", condition: undefined });
+    else if (ts.isFunctionLike(at)) guards.push({ kind: "a closure", condition: undefined });
+  }
+  return guards;
+}
+/** Whether a node names EXPECTATION anywhere in it (a guard that consults the literal vouches itself). */
+function namesExpectation(node: ts.Node): boolean {
+  if (ts.isIdentifier(node) && node.text === "EXPECTATION") return true;
+  return ts.forEachChild(node, namesExpectation) ?? false;
+}
+/** Whether a node holds a return statement outside every nested function. */
+function holdsReturn(node: ts.Node): boolean {
+  if (ts.isReturnStatement(node)) return true;
+  if (ts.isFunctionLike(node)) return false;
+  return ts.forEachChild(node, holdsReturn) ?? false;
+}
+/** Whether a return outside a nested function precedes a statement in any enclosing block of its site's own function. */
+function returnAhead(statement: ts.Statement): boolean {
+  for (let at: ts.Node = statement; !ts.isSourceFile(at) && !isSiteFunction(at); at = at.parent) {
+    const parent = at.parent;
+    if (ts.isBlock(parent) || ts.isCaseClause(parent) || ts.isDefaultClause(parent)) {
+      for (const member of parent.statements) {
+        if (member === at) break;
+        if (holdsReturn(member)) return true;
+      }
+    }
+  }
+  return false;
+}
+/** Why a provenance check's statement is not exactly if (<the check>) out.push(<one template literal>), or undefined when it is. */
+function pushShapeWhy(statement: ts.Statement, file: ts.SourceFile): string | undefined {
+  if (!ts.isIfStatement(statement)) return "its statement is not an if";
+  if (statement.elseStatement !== undefined) return "an else";
+  const then = statement.thenStatement;
+  if (ts.isIfStatement(then)) return "a nested if";
+  if (ts.isBlock(then)) return "a block then";
+  if (!ts.isExpressionStatement(then)) return "the then is not an expression statement";
+  const call = then.expression;
+  if (!ts.isCallExpression(call) || !ts.isPropertyAccessExpression(call.expression) || call.expression.expression.getText(file) !== "out" || call.expression.name.text !== "push") return "the then is not exactly out.push";
+  if (call.arguments.length !== 1 || !(ts.isTemplateExpression(call.arguments[0]) || ts.isNoSubstitutionTemplateLiteral(call.arguments[0]))) return "the push argument is not one template literal";
+  return undefined;
+}
+/** Whether an identifier named out is a sanctioned use of a findings sink: its declaration, a member name, out.push(...), or return out. */
+function sanctionedSinkUse(identifier: ts.Identifier): boolean {
+  const parent = identifier.parent;
+  if (ts.isVariableDeclaration(parent) && parent.name === identifier) return true;
+  if (ts.isPropertyAccessExpression(parent) && parent.name === identifier) return true;
+  if (ts.isPropertyAccessExpression(parent) && parent.name.text === "push" && ts.isCallExpression(parent.parent) && parent.parent.expression === parent) return true;
+  return ts.isReturnStatement(parent) && parent.expression === identifier;
+}
+/** wb-ur08 (5): every reference to a findings sink named out is its declaration, out.push(...) or return out (one line per other use). */
+function sinkLines(file: ts.SourceFile): string[] {
+  const lines: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && node.text === "out" && !sanctionedSinkUse(node)) lines.push(`sink: ${readerTextOf(closestStatement(node), file)}`);
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return lines;
+}
+/** wb-ur08 (6): every reference to expect is its import or the matcher head expect(...) itself (one line per other use). */
+function assertLines(file: ts.SourceFile): string[] {
+  const lines: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && node.text === "expect" && !ts.isImportSpecifier(node.parent) && !(ts.isCallExpression(node.parent) && node.parent.expression === node)) lines.push(`assert: ${readerTextOf(closestStatement(node), file)}`);
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return lines;
+}
+/** wb-ur08 (1)-(6): the consequence lines a source of this file draws - per roster reader in roster order, then the sink and assert lines in source order. */
+function consequenceJudgment(source: string): readonly string[] {
+  const { file, checker } = boundSource(source);
+  const reads = locateReads(file, checker);
+  const lines: string[] = [];
+  for (const [key, kind] of CONSEQUENCE_ROSTER) {
+    const read = reads.find(entry => readKey(entry.site, entry.reader) === key);
+    if (read === undefined) throw new Error(`${SELF}: no read of EXPECTATION is keyed ${key}`);
+    const statement = closestStatement(read.access);
+    const guards = guardsOf(statement);
+    if (guards.length > 0) lines.push(`guarded: ${key} -> its statement sits inside ${guards[0].kind}`);
+    if (guards.some(guard => guard.condition !== undefined && namesExpectation(guard.condition))) lines.push(`cond-expectation: ${key} -> the guard condition names EXPECTATION`);
+    if (returnAhead(statement)) lines.push(`early-exit: ${key} -> a return precedes its statement`);
+    if (kind === "push") {
+      const why = pushShapeWhy(statement, file);
+      if (why !== undefined) lines.push(`push-consequence: ${key} -> ${why}`);
+    }
+  }
+  return [...lines, ...sinkLines(file), ...assertLines(file)];
+}
+/** A source text of this file with one consequence edit applied by AST position (a page, parsed and bound, never run); an absent anchor throws. */
+function withConsequenceEdit(source: string, edit: ConsequenceEdit): string {
+  if (edit.op === "prepend") return withReadsEdit(source, edit);
+  if (edit.op === "fn-before-return") {
+    const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    const declared = file.statements.find((entry): entry is ts.FunctionDeclaration => ts.isFunctionDeclaration(entry) && entry.name?.text === edit.fn);
+    const last = declared?.body?.statements.at(-1);
+    if (last === undefined || !ts.isReturnStatement(last)) throw new Error(`${SELF}: no function ${edit.fn} ending in a return`);
+    const at = last.getStart(file);
+    return `${source.slice(0, at)}${edit.text}\n  ${source.slice(at)}`;
+  }
+  const { file, checker } = boundSource(source);
+  const read = locateReads(file, checker).find(entry => readKey(entry.site, entry.reader) === edit.read);
+  if (read === undefined) throw new Error(`${SELF}: no read of EXPECTATION is keyed ${edit.read}`);
+  const statement = closestStatement(read.access);
+  const start = statement.getStart(file);
+  const end = statement.getEnd();
+  const wrapped = (head: string, tail: string): string => `${source.slice(0, start)}${head}\n    ${source.slice(start, end)}\n    ${tail}${source.slice(end)}`;
+  if (edit.op === "guard" || edit.op === "push-spread") {
+    if (!ts.isIfStatement(statement) || pushShapeWhy(statement, file) !== undefined) throw new Error(`${SELF}: the read at ${edit.read} is not if (<the check>) out.push(<one template literal>)`);
+    if (edit.op === "guard") {
+      const thenStart = statement.thenStatement.getStart(file);
+      return `${source.slice(0, thenStart)}${edit.nested} ${source.slice(thenStart)}`;
+    }
+    const call = statement.thenStatement;
+    if (!ts.isExpressionStatement(call) || !ts.isCallExpression(call.expression)) throw new Error(`${SELF}: the read at ${edit.read} has no push call`);
+    const [argument] = call.expression.arguments;
+    return `${source.slice(0, argument.getStart(file))}...(${edit.condition} ? [] : [${argument.getText(file)}])${source.slice(argument.getEnd())}`;
+  }
+  if (edit.op === "wrap-if") return wrapped(`if (${edit.condition}) {`, "}");
+  if (edit.op === "wrap-while") return wrapped(`while (${edit.condition}) {`, "}");
+  if (edit.op === "wrap-closure") return wrapped("(() => {", "});");
+  if (edit.op === "wrap-label") return wrapped(`exit: {\n    if (${edit.exit}) break exit;`, "}");
+  return wrapped("try {", edit.rethrow ? "} catch (error) {\n      throw error;\n    }" : "} catch {\n    }");
+}
+/** A judged table's module-scope array literal in a source of this file, read by its AST (never evaluated). */
+function tableRows(file: ts.SourceFile, table: string): ts.NodeArray<ts.Expression> {
+  const statement = file.statements.find((entry): entry is ts.VariableStatement => ts.isVariableStatement(entry) && entry.declarationList.declarations.some(declaration => ts.isIdentifier(declaration.name) && declaration.name.text === table));
+  const initializer = statement?.declarationList.declarations[0].initializer;
+  if (initializer === undefined || !ts.isArrayLiteralExpression(initializer)) throw new Error(`${SELF}: ${table} is not a module-scope array literal`);
+  return initializer.elements;
+}
+/** The id of a judged table row ([id, edits, lines]); throws on any other shape. */
+function rowIdOf(element: ts.Expression): string {
+  if (!ts.isArrayLiteralExpression(element) || element.elements.length !== 3 || !ts.isStringLiteral(element.elements[0])) throw new Error(`${SELF}: a judged table row is not an [id, edits, lines] triple`);
+  return element.elements[0].text;
+}
+/** The row ids of a judged table in a source of this file, in source order. */
+const tableRowIds = (source: string, table: string): string[] => tableRows(ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS), table).map(rowIdOf);
+/** A source text of this file with one judged table row removed by AST position, its whole lines included (a page, never run); an absent id throws. */
+function withoutTableRow(source: string, table: string, id: string): string {
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const element = tableRows(file, table).find(candidate => rowIdOf(candidate) === id);
+  if (element === undefined) throw new Error(`${SELF}: ${table} has no row ${id}`);
+  const start = source.lastIndexOf("\n", element.getStart(file)) + 1;
+  let end = element.getEnd();
+  if (source[end] === ",") end += 1;
+  if (source[end] === "\n") end += 1;
+  return `${source.slice(0, start)}${source.slice(end)}`;
+}
+/** A frozen-shape element of a judged table row: id, edit count (or "-") and line count. */
+const frozenOf = (row: readonly [string, readonly unknown[] | null, readonly string[]]): string => `${row[0]}:${row[1]?.length ?? "-"}:${row[2].length}`;
+/** A source text of this file with one frozen-shape element and one adjacent separator removed (a page, never run); the element must occur exactly once. */
+function withoutFrozenElement(source: string, element: string): string {
+  const literal = JSON.stringify(element);
+  if (source.split(literal).length !== 2) throw new Error(`${SELF}: the frozen element ${element} does not occur exactly once`);
+  return source.includes(`${literal}, `) ? source.replace(`${literal}, `, () => "") : source.replace(`, ${literal}`, () => "");
+}
+
+describe("wb-ur08 every EXPECTATION consequence runs and lands where it is judged (this file's own AST and checker; the s24 READER-CONSEQUENCE G4 red-first)", () => {
+  it("ANCHOR (wb-ur08): the committed source draws no consequence line, and the roster, the consequence table and the residuals equal their out-of-file anchor (the fixture's consequenceRoster/consequenceRows/consequenceResiduals, read behind the pinned provenance)", () => {
+    const tables = consequenceAnchor(readPair(ROOT).expectation);
+    expect(consequenceJudgment(readRepo(SELF)), "the committed source draws no consequence line").toEqual([]);
+    expect(CONSEQUENCE_ROSTER).toEqual(tables.consequenceRoster);
+    expect(UR08_CONSEQUENCE).toEqual(tables.consequenceRows);
+    expect(UR08_RESIDUALS).toEqual(tables.consequenceResiduals);
+    UR08_JUDGED.push("ANCHOR");
+  });
+
+  it.each(UR08_CONSEQUENCE)("CONSEQUENCE %s (wb-ur08): this file's own AST and checker judge every consequence of an EXPECTATION read - CONSEQUENCES, the committed source, quiet; a falsifier, its edits applied in memory by AST position (parsed and bound, never run): exactly its lines", (id, edits, lines) => {
+    const own = readRepo(SELF);
+    const page = edits === null ? own : edits.reduce((source, edit) => withConsequenceEdit(source, edit), own);
+    expect(page === own, `${id}: only CONSEQUENCES reads the committed source unedited`).toBe(edits === null);
+    const reading = consequenceJudgment(page);
+    expect(reading, `${id}: ${reading.join(" | ")}`).toEqual(lines);
+    UR08_JUDGED.push(`CONSEQUENCE ${id}`);
+  });
+
+  it.each(UR08_RESIDUALS)("RESIDUAL $id quiet row (wb-ur08, a named residual above the consequence pin): the form row dropped from its table and its frozen element, with the literal moved, reads quiet here, and the row reds when its page stops carrying any part of that edit", residual => {
+    const rows: readonly (readonly [string, readonly unknown[] | null, readonly string[]])[] = residual.table === "UR08_CONSEQUENCE" ? UR08_CONSEQUENCE : LYBR_READS;
+    const row = rows.find(([id]) => id === residual.form);
+    if (row === undefined) throw new Error(`${residual.id}: ${residual.form} is not a ${residual.table} row`);
+    const own = readRepo(SELF);
+    const pinned = expectationLiteral(own).pin;
+    const literal = "e".repeat(64);
+    const page = withExpectationProperty(withoutFrozenElement(withoutTableRow(own, residual.table, residual.form), frozenOf(row)), "sha256", JSON.stringify(literal));
+    // Liveness: the page carries the family's whole edit - the row dropped, its frozen element dropped, the literal moved.
+    expect(tableRowIds(own, residual.table), "the committed table holds the form row").toEqual(rows.map(([id]) => id));
+    expect(tableRowIds(page, residual.table), "the page's table drops exactly the form row").toEqual(rows.map(([id]) => id).filter(id => id !== residual.form));
+    expect(own.split(JSON.stringify(frozenOf(row))).length, "the committed frozen shape holds the element once").toBe(2);
+    expect(page.includes(JSON.stringify(frozenOf(row))), "the page's frozen shape drops the element").toBe(false);
+    expect(literal, "the page moves the literal").not.toBe(pinned?.sha256);
+    // The quiet reading: no consequence or reads line over the page's source, and the moved literal read as the pinned one is.
+    expect(consequenceJudgment(page)).toEqual([]);
+    expect(expectationReads(page, READ_ROSTER).lines).toEqual([]);
+    expect(expectationLiteral(page)).toEqual({ findings: [], pin: { path: pinned?.path, sha256: literal } });
+    UR08_JUDGED.push(`RESIDUAL ${residual.id}`);
+  });
+
+  it("CONSEQUENCE FROZEN SHAPE (wb-ur08): every judged member reaches its last assertion; the roster derives from READ_ROSTER minus the templates, and the roster, the consequence table and the residuals are frozen here and equal to their out-of-file anchors", () => {
+    expect(CONSEQUENCE_ROSTER.map(([key]) => key)).toEqual(READ_ROSTER.flatMap(([site, readers]) => readers.filter(reader => !reader.startsWith("template ")).map(reader => readKey(site, reader))));
+    expect(CONSEQUENCE_ROSTER.map(([key, kind]) => `${key.slice(0, key.indexOf(" | "))}:${kind}`)).toEqual([
+      "function expectationFailures:push",
+      "function expectationFailures:push",
+      "it LIVE (R695 (a)):assertion",
+      "it LIVE (R695 (a)):assertion",
+      "it ON-DISK %s:assertion",
+      "it LITERAL %s (R696 (1)):assertion",
+      "it RESIDUAL R-COORDINATED-LITERAL-AND-ANCHOR quiet row (R696 (3), the named residual above the literal pin):assertion",
+      "it RESIDUAL R-COORDINATED-LITERAL-AND-ANCHOR quiet row (R696 (3), the named residual above the literal pin):assertion",
+      "it RESIDUAL R-COORDINATED-LITERAL-AND-ANCHOR quiet row (R696 (3), the named residual above the literal pin):assertion",
+    ]);
+    expect(UR08_CONSEQUENCE.map(frozenOf)).toEqual([
+      "CONSEQUENCES:-:0", "G4:4:4", "GUARD-EXEMPT:1:1", "WRAP-LIVE-PIN:1:1", "WRAP-LIVE-EQUAL:1:1", "WRAP-ON-DISK:1:1", "WRAP-TRY:1:1", "WRAP-TRY-RETHROW:1:1", "WRAP-WHILE:1:1", "WRAP-CLOSURE:1:1", "WRAP-LABEL:1:1", "COND-EXPECTATION:1:2", "COND-OUTER:2:2", "EXIT-RETURN:1:2", "PUSH-SPREAD:1:1", "SINK-ASSIGN:1:1", "SINK-METHOD:1:1", "SINK-UPDATE:1:1", "ASSERT-EXTEND:1:1", "ASSERT-ALIAS:1:1",
+    ]);
+    expect(UR08_RESIDUALS.map(residual => `${residual.id}:${residual.table}:${residual.form}`)).toEqual(["R-COORDINATED-CONSEQUENCE-ROSTER:UR08_CONSEQUENCE:G4", "R-COORDINATED-READS-TABLE:LYBR_READS:ALIAS-SPREAD"]);
+    expect(UR08_JUDGED).toEqual(["ANCHOR", ...UR08_CONSEQUENCE.map(([id]) => `CONSEQUENCE ${id}`), ...UR08_RESIDUALS.map(({ id }) => `RESIDUAL ${id}`)]);
+    const tables = consequenceAnchor(readPair(ROOT).expectation);
+    expect(CONSEQUENCE_ROSTER).toEqual(tables.consequenceRoster);
+    expect(UR08_CONSEQUENCE).toEqual(tables.consequenceRows);
+    expect(UR08_RESIDUALS).toEqual(tables.consequenceResiduals);
   });
 });
