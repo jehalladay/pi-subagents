@@ -40,9 +40,11 @@
  *  A, the trigger, absent today. A1 an AST scan of every src module and every native descriptor for an rf workspace verb (an argv
  *    "workspace" followed by a WORKSPACE_VERBS word, or a literal spelling one), a committed-record verb (an argv "context"
  *    followed by a RECORD_VERBS word, or a literal spelling one) or an RF_FED_ code - a spelling joins its two words by any run of
- *    whitespace, ".", "_", "-", ":" or "/", or by none - with a floor, a non-vacuity reading of the real render argv and controls;
- *    A2 the rf roster stays the preview alone, selected by id, rf permission or rf contractSource, in the native and the injected
- *    registration and RECONCILE_EVIDENCE_READS.reactivefiber, and the injected reader seam has 0 src call sites; A3 the native
+ *    whitespace, ".", "_", "-", ":" or "/", or by none, and a '+' chain of string literals is folded into one spelling - with a
+ *    non-vacuity reading of the real render argv and controls, its scanned modules held to the src WALK (below); A2 the rf roster
+ *    stays the preview alone, selected by id, rf permission or rf contractSource, in the native and the injected registration and
+ *    RECONCILE_EVIDENCE_READS.reactivefiber, and the injected reader seam has 0 src call sites, read by a walk held to the src WALK
+ *    whose anchor token is the seam's own declaration (src/workbench/providers/reactivefiber.ts); A3 the native
  *    reader refuses rf's measured answer to `rf workspace read` and a constructed workspace.read refusal (`federationRefusal`, ok
  *    false, RF_FED_RESOURCE_UNAVAILABLE from 04-cli-api.md:104), each in one spawn of the render argv (the same diagnostic on a
  *    context.render failure reads as the render refusal it would be, so the command is what is refused); A4 the reader adapter
@@ -59,8 +61,10 @@
  *    adapter's present-day stamps: sourceRevision is the stated graph_revision_id, sourceVersion the stated bundle_revision_id and
  *    absent when it is unstated (never filled from the graph revision), a render carrying the stamps projects the same two, and an
  *    absent or malformed graph revision is refused; C3 no Pi path computes either stamp: no src or qa file spells the stamp
- *    vocabulary, the reader closure's one digest call (createHash, createHmac, hash or WebCrypto subtle) is the output-text
- *    digest, and nativePayloadRef is exactly that digest and nothing else.
+ *    vocabulary (each root's walk held to its floor, its anchor file and node's recursive listing of the root, src's to the src
+ *    WALK too; seven PLANTED files in scratch, one per stamp alternative and each spelling only its own, plus a quiet file, go
+ *    through the same scan and each plant is a hit), the reader closure's one digest call (createHash, createHmac, hash or WebCrypto
+ *    subtle) is the output-text digest, and nativePayloadRef is exactly that digest and nothing else.
  *  D, acceptance (c). D1 the measured missing-blob diagnostic on a render refusal is the native typed refusal `RF render refused:
  *    RF_REPLAY_SOURCE_SNAPSHOT_MISSING` (category unavailable), one spawn, no reading, fetch 0; D2 the adapter projects it under
  *    both seams as a failure of unknown coverage carrying the code verbatim and no revision, version or payload reference; D3
@@ -74,35 +78,51 @@
  *    namespace) a literal "rf".
  * The render-command refusal D1, D2 and E1 read is CONSTRUCTED: the measured diagnostic placed on a context.render failure
  * envelope (with the measured operation and workspace ids), since the render plane never emits a replay code.
+ * THE src WALK (wb-vu3i, the o4h0.5 gate's F1/F2: one edit narrowing or emptying a walk stayed green): every src walk (A1's, A2's and
+ * C3's src root) reads off its own scans the files it scanned and holds them to an EXACT SET - node's recursive readdir of src, an
+ * independent listing (the module walks: its .ts modules) - to the src floor (100, below the 115 measured at base 3c9c7ac) and to one
+ * anchor file per part of src (its root files, ui, workbench, workflow), each holding its token; each walk's reading rides its pin's
+ * witness, so the roster holds it too. A walk narrowed with its listing in step still reds when it drops a whole part.
+ * THE RUN PIN (wb-vu3i, the o4h0.5 gate's F3: the record skipped, G01, or returning early after its title checks, G02, stayed green):
+ * test/workbench-rf-census-run-pins.census.ts judges this file's 18 titles in the census tier from the gate's own test report -
+ * collected once, passed, asserting - with the titles frozen there; the record reads the task tree inline (no task handed to a call or
+ * placed in a literal, which that judge cannot follow) and asserts ONCE, as its last statement, so an exit anywhere before that
+ * assertion leaves the case without one (--expect.requireAssertions here, no-assertion there). Each outside anchor is read from its
+ * own line of the owner filing (wb-vu3i B3): the clauses from its Acceptance line, the quote pin from its Full statement and Quote
+ * lines, the gating ids from its Gating line.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the whole judged set - every row's id, label and
  * pins, every pin's witness (compared in its own case and again by the record), every registered test and every pin's assertion
  * count at its end - is held to the out-of-file roster; each acceptance row's label is its clause in the tracked bead export,
  * verbatim, and the four clauses are covered by exactly the four acceptance rows. LIMIT (measured): the export anchors rows, not
- * pins, so a pin removed from this file and from the roster together reds no case; a whole row removed from both still reds.
+ * pins, so a pin removed from this file and from the roster together reds no case HERE; the run pin's titles, frozen in the census
+ * tier outside this file and its roster, red on it there (absent from the report); a whole row removed from both still reds here.
  * RESIDUALS (named, each with a pinned quiet row): R-COMPOSED-ARGV an argv whose verb word is a non-literal is not read as a hit
  * by A1 (A1's composedArgv control: 0 hits); A1 pins the count of that shape at base (1: src/workbench/observation.ts:615, the
  * ["workspace", scope.workspace] name/value pair), so a new one reds by count while one that replaces the counted site does not;
- * R-CALL-COMPOSED an argv assembled by calls (push, concat) is invisible to A1 (A1's callComposed control: 0 hits); R-UNTAGGED a
+ * R-CALL-COMPOSED an argv assembled by calls (push, concat) is invisible to A1 (A1's callComposed control: 0 hits); R-CALL-SPELLED
+ * a spelling assembled by a method call on literals (concat, join) is not folded by A1, which folds only '+' chains (A1's callSpelled
+ * control: 0 hits); R-UNTAGGED a
  * registration with neither a reactivefiber id, an rf permission nor an rf contractSource is not selected by A2 (A2's untagged
  * control: false); R-HOST-ALIAS a network global reached through a host object other than globalThis (self, window) is invisible
  * to E2 (E2's hostAlias control: 0 findings); R-HAND-ROLLED a stamp computed by hand-written arithmetic rather than a digest API
  * is invisible to C3's digest census (C3's handRolled control: no site), the stamp-vocabulary scan staying its backstop for a
  * named field; R-SUCCESS-UNTESTED a reader that admits a workspace-family command only on a success envelope meets no dynamic row,
- * since this census fabricates no federation success envelope (R4), with A1's src scan its backstop (A3's successes quiet row:
- * none fabricated); R-WITHHELD the adapter reads no imported_source key, so the stamps surface verbatim in the reading only, never
+ * since this census fabricates no federation success envelope (R4), with A1's src scan its backstop, a '+' chain of literals included
+ * (A3's successes quiet row: none fabricated); R-WITHHELD the adapter reads no imported_source key, so the stamps surface verbatim in the reading only, never
  * in the projection (B3's projectedStamps quiet row: none of their text values).
  * SCOPE: the verbs, codes, fields and the two measured envelopes are producer facts at the pin and at the installed rf; Pi vendors
  * no rf schema. The armed half (a reader that reads a federation envelope or FW-10c record and projects both stamps) waits for
  * rfc-0txnl.20 and rfc-0txnl.24, and the federated replay for rfc-0txnl.25: no reader is added or faked here.
  *
- * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, qa and the bead export are only read.
+ * Display paths added: none. Test-only: the stand-in rf and C3's planted files live in makeScratch scratch; src, qa and the bead
+ * export are only read.
  */
 import { createHash } from "node:crypto";
-import { chmodSync, type Dirent, existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, type Dirent, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
-import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
 import {
@@ -116,7 +136,8 @@ import { RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
 import { fullShapeRf } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
-installScratchLeakGuard(afterAll);
+// The guard registers through the helper's own afterAll: the census tier's judge refuses a vitest hook handed to a call (wb-vu3i).
+installScratchLeakGuard();
 
 type JsonObject = { [key: string]: JsonValue };
 
@@ -144,8 +165,31 @@ const WORKSPACE_VERB = new RegExp(`\\bworkspace[\\s._:/-]*(?:${WORKSPACE_VERBS.j
 const RECORD_VERB = new RegExp(`\\bcontext[\\s._:/-]*(?:${RECORD_VERBS.join("|")})\\b`, "i");
 /** The proposed federation diagnostic family (04-cli-api.md:104). */
 const FEDERATION_CODE = /\bRF_FED_[A-Z0-9_]+/;
-/** The stamp vocabulary a Pi table or computed field would need: none may appear in src or qa. */
-const STAMP_FAMILY = /accepted[\s_.-]*(?:snapshot|commit|into)|local[\s_.-]*accepted|produced[\s_.-]*at[\s_.-]*(?:b|source|origin)\b/i;
+/** The stamp vocabulary a Pi table or computed field would need, one alternative per spelling family (wb-vu3i F5): none may appear in
+ * src or qa. STAMP_FAMILY is their union; C3 plants one file per alternative, so dropping any one alternative reds on its plant. */
+const STAMP_ALTERNATIVES: readonly (readonly [string, string])[] = [
+  ["accepted-snapshot", "accepted[\\s_.-]*snapshot"],
+  ["accepted-commit", "accepted[\\s_.-]*commit"],
+  ["accepted-into", "accepted[\\s_.-]*into"],
+  ["local-accepted", "local[\\s_.-]*accepted"],
+  ["produced-at-b", "produced[\\s_.-]*at[\\s_.-]*b\\b"],
+  ["produced-at-source", "produced[\\s_.-]*at[\\s_.-]*source\\b"],
+  ["produced-at-origin", "produced[\\s_.-]*at[\\s_.-]*origin\\b"],
+];
+const STAMP_FAMILY = new RegExp(STAMP_ALTERNATIVES.map(([, source]) => source).join("|"), "i");
+/** C3's planted positives (wb-vu3i F1/F5): one file per alternative, spelling that alternative and no other, read through scanStamps
+ * exactly as src and qa are; the quiet file spells none and anchors the planted root. */
+const STAMP_PLANTS: readonly (readonly [string, string])[] = [
+  ["accepted-snapshot", "const acceptedSnapshot = 1;"],
+  ["accepted-commit", "const accepted_commit = 1;"],
+  ["accepted-into", "// accepted into A"],
+  ["local-accepted", "const localAccepted = 1;"],
+  ["produced-at-b", "// produced at B"],
+  ["produced-at-source", "const produced_at_source = 1;"],
+  ["produced-at-origin", "const producedAtOrigin = 1;"],
+];
+const STAMP_QUIET = "const accepted = true;";
+const PLANT_ROOT = "plants";
 /** The additive result key the constructed stamps ride on a render preview, and the two stamp groups with their fields. */
 const IMPORTED = "imported_source";
 const ORIGIN = "origin";
@@ -189,6 +233,20 @@ const NETWORK_GLOBALS = new Set(["globalThis", "fetch", "WebSocket", "EventSourc
 const DIGEST_APIS = new Set(["createHash", "createHmac", "hash"]);
 /** The reader modules: the provider and its adapter; E2 and C3 walk their src import closure. */
 const READER_MODULES = ["src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"];
+/** The src floor every src walk meets: below the 115 .ts modules measured at base 3c9c7ac, so an emptied walk reds and an additive
+ * change does not. */
+const SRC_FLOOR = 100;
+/** One anchor file per top-level part of src (its root files, ui, workbench, workflow) with a token its text holds: every src walk reads
+ * all four (wb-vu3i F2), so a walk narrowed together with its exact-set listing still reds when it drops a whole part. */
+const SRC_ANCHORS: readonly (readonly [string, string])[] = [
+  ["src/index.ts", "export default function"],
+  ["src/ui/fleet-list.ts", "export function formatFleetElapsed"],
+  ["src/workbench/reactivefiber-observer.ts", "rf-output:sha256:"],
+  ["src/workflow/reconcile.ts", "export const RECONCILE_EVIDENCE_READS"],
+];
+/** The injected reader seam and its one declaration: A2's anchor token, read by the same walk that counts its call sites (wb-vu3i F1). */
+const SEAM = "registerReactiveFiberRender";
+const SEAM_DECLARATION = `src/workbench/providers/reactivefiber.ts: ${SEAM}`;
 
 interface Row {
   readonly id: string;
@@ -382,6 +440,13 @@ function acceptanceClauses(notes: string): Record<string, string> {
   });
   return clauses;
 }
+/** The first line of the export row's notes that starts with `marker`: each outside anchor is read from its own line of the owner
+ * filing (wb-vu3i B3), never from anywhere in the accumulating notes, so hollowing that line reds even while a later note repeats it. */
+function noteLine(notes: string, marker: string): string {
+  const line = notes.split("\n").find(entry => entry.startsWith(marker));
+  if (line === undefined) throw new Error(`the ${BEAD} export row states no ${marker.trim()} line`);
+  return line;
+}
 /** The parenthesized term list after `head` in a clause, split on ", ". */
 function termsAfter(clause: string, head: string): string[] {
   const at = clause.indexOf(`${head} (`);
@@ -498,6 +563,31 @@ function textOf(path: string): string {
   } catch {
     return "";
   }
+}
+/** The files below `root` (relative to `base`) as node's own recursive readdir lists them, sorted: the independent listing every walk
+ * is held to as an exact set (wb-vu3i F2), so a walk that drops a directory or a file reds by name. */
+function listedBelow(base: string, root: string): string[] {
+  return readdirSync(join(base, root), { recursive: true, withFileTypes: true })
+    .filter(entry => entry.isFile())
+    .map(entry => relative(base, join(entry.parentPath, entry.name)))
+    .sort();
+}
+/** What a walk's read list missed and added against the independent listing: both empty for an exact set. */
+function againstListing(read: readonly string[], listed: readonly string[]): { missed: string[]; extra: string[] } {
+  return { missed: listed.filter(path => !read.includes(path)), extra: read.filter(path => !listed.includes(path)) };
+}
+/** One src walk's reading, from the list of files it read (repository-relative): the floor, the part anchors it read with their tokens,
+ * and the exact set against node's recursive listing of src (its .ts modules for a module walk). Asserted here and returned into the
+ * pin's witness, so the roster holds it too. */
+function srcWalk(read: readonly string[], modulesOnly: boolean): JsonObject {
+  const listed = listedBelow(REPO, "src").filter(path => !modulesOnly || path.endsWith(".ts"));
+  const floorMet = read.length >= SRC_FLOOR;
+  const anchors = SRC_ANCHORS.filter(([file, token]) => read.includes(file) && textOf(join(REPO, file)).includes(token)).map(([file]) => file);
+  const listing = againstListing(read, listed);
+  expect(floorMet, `src: ${read.length} files read, floor ${SRC_FLOOR}`).toBe(true);
+  expect(anchors, "src: the walk read every part's anchor file, holding its token").toEqual(SRC_ANCHORS.map(([file]) => file));
+  expect(listing, "src: the walk read exactly the files node's recursive listing holds").toStrictEqual({ missed: [], extra: [] });
+  return { floorMet, anchors, listing };
 }
 
 const oldPath = process.env.PATH;
@@ -640,29 +730,46 @@ function rfSelected(descriptor: DescriptorLike): boolean {
     (descriptor.contractSource ?? "").startsWith("rf@");
 }
 
-/** Every call of the injected reader seam (registerReactiveFiberRender, named or as a member) in one module. */
-function seamCallSites(fileName: string, text: string): string[] {
+/** One module's reads of the injected reader seam: every call of it (named or as a member) and every declaration of it - the
+ * declaration is A2's anchor token, so a walk that misses the provider, or a scan that reads nothing, reds (wb-vu3i F1). */
+function seamScan(fileName: string, text: string): { file: string; calls: string[]; declared: string[] } {
   const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-  const sites: string[] = [];
+  const calls: string[] = [];
+  const declared: string[] = [];
   const visit = (node: ts.Node): void => {
     if (ts.isCallExpression(node)) {
       const callee = node.expression;
       const name = ts.isIdentifier(callee) ? callee.text : ts.isPropertyAccessExpression(callee) ? callee.name.text : "";
-      if (name === "registerReactiveFiberRender") sites.push(`${fileName}:${source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1}`);
+      if (name === SEAM) calls.push(`${fileName}:${source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1}`);
     }
+    if (ts.isFunctionDeclaration(node) && node.name?.text === SEAM) declared.push(`${fileName}: ${SEAM}`);
     ts.forEachChild(node, visit);
   };
   visit(source);
-  return sites;
+  return { file: fileName, calls, declared };
 }
 
 interface VerbScan {
+  readonly file: string;
   readonly argv: string[];
   readonly literals: string[];
   readonly renderArgv: number;
   readonly composedArgv: number;
 }
-/** One module's rf workspace and record verbs: an argv word pair, or a string or template literal spelling one or an RF_FED_ code. */
+/** The operands of a '+' chain, left to right: a string literal's text, or null for any other operand (wb-vu3i F4). */
+function plusParts(node: ts.Expression): (string | null)[] {
+  const inner = ts.isParenthesizedExpression(node) ? node.expression : node;
+  if (ts.isBinaryExpression(inner) && inner.operatorToken.kind === ts.SyntaxKind.PlusToken) return [...plusParts(inner.left), ...plusParts(inner.right)];
+  return [ts.isStringLiteralLike(inner) ? inner.text : null];
+}
+/** Whether a '+' expression is an operand of an enclosing '+' chain: only the outermost chain is folded. */
+function inPlusChain(node: ts.Node): boolean {
+  let parent = node.parent;
+  while (ts.isParenthesizedExpression(parent)) parent = parent.parent;
+  return ts.isBinaryExpression(parent) && parent.operatorToken.kind === ts.SyntaxKind.PlusToken;
+}
+/** One module's rf workspace and record verbs: an argv word pair, or a string or template literal, or a '+' chain of string literals
+ * folded into one spelling (a non-literal operand reads as a space, as a template's expression does), spelling one or an RF_FED_ code. */
 function scanVerbs(fileName: string, text: string): VerbScan {
   const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const argv: string[] = [];
@@ -687,10 +794,18 @@ function scanVerbs(fileName: string, text: string): VerbScan {
       const parts = [node.head.text, ...node.templateSpans.map(span => span.literal.text)];
       if (spelled(parts.join(" "))) literals.push(`${fileName}: ${parts.join("<expr>")}`);
     }
+    if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken && !inPlusChain(node)) {
+      const parts = plusParts(node);
+      const words = parts.filter((part): part is string => part !== null);
+      // A literal that spells a verb alone is already a hit above; the chain is a hit of its own only when its fold spells one.
+      if (words.length > 0 && !words.some(spelled) && spelled(parts.map(part => part ?? " ").join(""))) {
+        literals.push(`${fileName}: ${parts.map(part => part ?? "<expr>").join("")}`);
+      }
+    }
     ts.forEachChild(node, visit);
   };
   visit(source);
-  return { argv, literals, renderArgv, composedArgv };
+  return { file: fileName, argv, literals, renderArgv, composedArgv };
 }
 
 interface PortScan {
@@ -829,17 +944,38 @@ const STAMP_ROOTS: readonly ScanRoot[] = [
   { root: "src", floor: 100, anchorFile: "workbench/reactivefiber-observer.ts", anchorToken: "rf-output:sha256:" },
   { root: "qa", floor: 50, anchorFile: "workbench/receipts-index.mjs", anchorToken: "docs/workbench/receipts" },
 ];
-function scanStamps(scan: ScanRoot): JsonValue {
-  const base = join(REPO, scan.root);
-  const files = filesBelow(base);
+/** One root's stamp scan below `base` (the repository, or C3's planted scratch): the files below the root, held to its floor, its anchor
+ * file and node's recursive listing of the root (an exact set), and the files whose text spells the stamp vocabulary (sorted). The real
+ * roots and the planted positives go through this one scan, so a walk, a listing or a hit predicate hollowed here reds on the plants. */
+function scanStamps(base: string, scan: ScanRoot): { reading: JsonObject; read: string[]; hits: string[] } {
+  const dir = join(base, scan.root);
+  const files = filesBelow(dir);
+  const read = files.map(file => relative(base, file));
   const floorMet = files.length >= scan.floor;
-  const anchor = join(base, scan.anchorFile);
+  const anchor = join(dir, scan.anchorFile);
   const anchorRead = files.includes(anchor) && textOf(anchor).includes(scan.anchorToken);
-  const hits = files.filter(file => STAMP_FAMILY.test(textOf(file))).map(file => relative(REPO, file));
+  const listing = againstListing(read, listedBelow(base, scan.root));
+  const hits = files.filter(file => STAMP_FAMILY.test(textOf(file))).map(file => relative(base, file)).sort();
   expect(floorMet, `${scan.root}: ${files.length} files walked, floor ${scan.floor}`).toBe(true);
   expect(anchorRead, `${scan.root}: the anchor ${scan.anchorFile} was not read with ${scan.anchorToken}`).toBe(true);
-  expect(hits, `files spelling the stamp vocabulary under ${scan.root}`).toEqual([]);
-  return { root: scan.root, floor: scan.floor, floorMet, anchorRead, hits };
+  expect(listing, `${scan.root}: the walk read exactly the files node's recursive listing holds`).toStrictEqual({ missed: [], extra: [] });
+  return { reading: { root: scan.root, floor: scan.floor, floorMet, anchorRead, listing, hits }, read, hits };
+}
+/** C3's planted root (wb-vu3i F1/F5): one file per stamp alternative and the quiet file in scratch, read through scanStamps; every plant
+ * is a hit, the quiet file is not, and each plant spells its own alternative and no other. */
+function plantedStamps(): JsonValue {
+  const folder = makeScratch("rf-federation-stamps-plants-");
+  scratches.push(folder);
+  mkdirSync(join(folder, PLANT_ROOT));
+  for (const [name, text] of STAMP_PLANTS) writeFileSync(join(folder, PLANT_ROOT, `${name}.ts`), `${text}\n`);
+  writeFileSync(join(folder, PLANT_ROOT, "quiet.ts"), `${STAMP_QUIET}\n`);
+  const { reading, hits } = scanStamps(folder, { root: PLANT_ROOT, floor: STAMP_PLANTS.length + 1, anchorFile: "quiet.ts", anchorToken: STAMP_QUIET });
+  const alternatives = Object.fromEntries(
+    STAMP_PLANTS.map(([name, text]) => [name, STAMP_ALTERNATIVES.filter(([, source]) => new RegExp(source, "i").test(text)).map(([alternative]) => alternative)]),
+  );
+  expect(hits, "every planted file is a hit through the same scan, the quiet file is not").toEqual(STAMP_PLANTS.map(([name]) => `${PLANT_ROOT}/${name}.ts`).sort());
+  expect(alternatives, "each plant spells its own alternative and no other").toStrictEqual(Object.fromEntries(STAMP_PLANTS.map(([name]) => [name, [name]])));
+  return { reading, alternatives };
 }
 
 /** The NATIVE reader's reading of the preview carrying `stamps` (a stand-in rf answers it, exit 0), held byte for byte to the same
@@ -871,6 +1007,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
     const files = filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts"));
     const found = files.map(file => scanVerbs(relative(REPO, file), textOf(file)));
+    // The modules A1 scanned, read off its own scans: held to the src floor, the part anchors and node's recursive listing (wb-vu3i F2).
+    const walk = srcWalk(found.map(result => result.file), true);
     const argv = found.flatMap(result => result.argv);
     const literals = found.flatMap(result => result.literals);
     const renderArgvSeen = found.reduce((sum, result) => sum + result.renderArgv, 0) >= 1;
@@ -902,8 +1040,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       camel: control('const verb = "workspaceSubscribe";'),
       composedArgv: control('const verb = "read"; spawn("rf", ["workspace", verb]);'),
       callComposed: control('const argv = ["workspace"]; argv.push("read"); spawn("rf", argv.concat(["--json"]));'),
+      // wb-vu3i F4: a '+' chain of literals is folded, so a spelling split across concatenated literals is a hit.
+      concat: control('const command = "workspace" + "." + "read";'),
+      concatRecord: control('if (envelope.ok === true && envelope.command === "context" + "." + "history") admit(envelope);'),
+      concatComposed: control('const command = "workspace." + verb;'),
+      // R-CALL-SPELLED (named residual, this quiet row): a spelling assembled by a method call on literals is not folded.
+      callSpelled: control('const command = "workspace".concat(".", "read");'),
     };
-    return { srcFloorMet, renderArgvSeen, argv, literals, descriptorHits, composedArgv, controls };
+    return { srcFloorMet, walk, renderArgvSeen, argv, literals, descriptorHits, composedArgv, controls };
   },
   A2: async () => {
     const injected = new CapabilityRegistry();
@@ -911,8 +1055,13 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const native = (await nativeDescriptors()).descriptors.filter(rfSelected).map(descriptor => descriptor.id);
     const injectedIds = injected.catalogSnapshot().map(entry => entry.descriptor).filter(rfSelected).map(descriptor => descriptor.id);
     const reconcile = [...(RECONCILE_EVIDENCE_READS.reactivefiber ?? [])];
-    const seamCalls = filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts")).flatMap(file => seamCallSites(relative(REPO, file), textOf(file)));
+    const seams = filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts")).map(file => seamScan(relative(REPO, file), textOf(file)));
+    // The modules the seam walk scanned, held to the src floor, the part anchors and node's recursive listing (wb-vu3i F1/F2).
+    const walk = srcWalk(seams.map(scan => scan.file), true);
+    const declared = seams.flatMap(scan => scan.declared);
+    const seamCalls = seams.flatMap(scan => scan.calls);
     expect(native).toStrictEqual([PREVIEW_ID]);
+    expect(declared, "A2's anchor token: the seam's one declaration, read by the walk that counts its call sites").toEqual([SEAM_DECLARATION]);
     expect(seamCalls, "the injected reader seam stays test-reachable only (R-SEAM)").toEqual([]);
     expect(injectedIds).toStrictEqual([PREVIEW_ID]);
     expect(reconcile).toStrictEqual([PREVIEW_ID]);
@@ -921,8 +1070,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       byPermission: rfSelected({ id: "rf.context.reread", permissions: ["reactivefiber:render"] }),
       byContract: rfSelected({ id: "federation.reread", permissions: [], contractSource: "rf@0.1.832:reactive-fiber.cli/v1 workspace.read" }),
       untagged: rfSelected({ id: "federation.reread", permissions: ["federation:read"] }),
+      seamCall: seamScan("control.ts", "registerReactiveFiberRender(registry, read, root);").calls.length,
+      seamMember: seamScan("control.ts", "providers.registerReactiveFiberRender(registry, read, root);").calls.length,
     };
-    return { native, injected: injectedIds, reconcile, seamCalls, controls };
+    return { native, injected: injectedIds, reconcile, walk, declared, seamCalls, controls };
   },
   A3: async () => {
     const measured = ROSTER.unknownCommand;
@@ -1095,7 +1246,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     return readings;
   },
   C3: async () => {
-    const roots = STAMP_ROOTS.map(scanStamps);
+    const scanned = STAMP_ROOTS.map(scan => scanStamps(REPO, scan));
+    for (const root of scanned) expect(root.hits, `files spelling the stamp vocabulary under ${String(root.reading.root)}`).toEqual([]);
+    const roots = scanned.map(root => root.reading);
+    // The src root's read list held to the part anchors and the src floor too (wb-vu3i F2), and the planted root (F1/F5).
+    const srcParts = srcWalk(scanned[0]?.read ?? [], false);
+    const planted = plantedStamps();
     const { modules, ports } = readerClosure();
     const base = fullShapeRf(ROOT) as JsonObject;
     const result = objectOf(base.result, "result");
@@ -1125,7 +1281,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       subtle: digestControl('await globalThis.crypto.subtle.digest("SHA-256", bytes);'),
       handRolled: digestControl('let stamp = 0; for (const unit of revision) stamp = (stamp * 31 + unit.charCodeAt(0)) | 0;'),
     };
-    return { roots, closureModules: modules.length, digests: ports.digests, nativePayloadRef: snapshot.nativePayloadRef ?? null, carriers, controls };
+    return { roots, srcParts, planted, closureModules: modules.length, digests: ports.digests, nativePayloadRef: snapshot.nativePayloadRef ?? null, carriers, controls };
   },
   D1: async () => {
     const measured: unknown = JSON.parse(readFileSync(MEASURED_PATH, "utf8"));
@@ -1276,8 +1432,9 @@ describe("wb-o4h0.5 rf federation stamps census (RF-FEDERATED-WORKSPACES-R7, abs
     expect(acceptanceRows.map(row => row.label)).toEqual(Object.entries(clauses).map(([letter, clause]) => `(${letter}) ${clause}`));
     expect(title.startsWith(`[RF-FEDERATED-WORKSPACES-R7] ${TRIGGER}`)).toBe(true);
     expect(ROWS[0]?.label.includes(TRIGGER)).toBe(true);
-    expect(GATING_ARTIFACTS.filter(artifact => !notes.includes(artifact))).toEqual([]);
-    expect(notes.includes(QUOTE_PIN)).toBe(true);
+    // Each outside anchor is read from its own line of the owner filing (wb-vu3i B3), never anywhere in the accumulating notes.
+    expect(GATING_ARTIFACTS.filter(artifact => !noteLine(notes, "Gating: ").includes(artifact)), "every gating id on the filing's Gating line").toEqual([]);
+    expect(["Full statement ", "Quote: "].filter(marker => !noteLine(notes, marker).includes(QUOTE_PIN)), "the quote pin on the filing's statement and quote lines").toEqual([]);
   });
 
   for (const row of ROWS) {
@@ -1296,24 +1453,45 @@ describe("wb-o4h0.5 rf federation stamps census (RF-FEDERATED-WORKSPACES-R7, abs
   }
 
   it(RECORD_TITLE, ({ task }) => {
-    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
-    const walk = (tasks: typeof task.file.tasks): void => {
-      for (const child of tasks) {
-        if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
-        else if (child.type === "suite") walk(child.tasks);
+    // The file's registrations read INLINE (wb-vu3i F3), so the census tier's judge can follow the test context: no task is handed to a
+    // call or placed in a literal, each is read into primitives, at the three levels this file nests (its describe, a row's describe and
+    // that row's pins). A suite nested deeper is recorded by its name, so the title reads below red on it rather than miss what it holds.
+    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string; readonly self: boolean }[] = [];
+    for (const top of task.file.tasks) {
+      if (top.type !== "suite") {
+        walked.push({ name: `${top.name}`, mode: `${top.mode}`, fails: top.fails === true, state: `${top.result?.state ?? "no result"}`, self: top.id === task.id });
+        continue;
       }
-    };
-    walk(task.file.tasks);
+      for (const middle of top.tasks) {
+        if (middle.type !== "suite") {
+          walked.push({ name: `${middle.name}`, mode: `${middle.mode}`, fails: middle.fails === true, state: `${middle.result?.state ?? "no result"}`, self: middle.id === task.id });
+          continue;
+        }
+        for (const leaf of middle.tasks) {
+          walked.push({
+            name: leaf.type === "suite" ? `suite ${leaf.name}` : `${leaf.name}`, mode: `${leaf.mode}`, fails: leaf.type === "suite" ? false : leaf.fails === true,
+            state: `${leaf.result?.state ?? "no result"}`, self: leaf.id === task.id,
+          });
+        }
+      }
+    }
     const titles = walked.map(entry => entry.name);
-    expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
-    expect(titles, "the judged title, one test per pin in row order, then this record").toEqual([JUDGED_TITLE, ...ROWS.flatMap(entry => entry.pins), RECORD_TITLE]);
     const here = walked.findIndex(entry => entry.self);
-    expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
-    const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
-    const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
-    expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
+    const ran = (state: string): boolean => state === "pass" || state === "fail";
+    const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : entry.state}`;
     const rosterWitnesses = Object.fromEntries(ROSTER.rows.flatMap(entry => entry.pins.map(pin => [pin.id, pin.witness])));
-    expect(MEASURED, "every pin's witness, compared against the roster a second time").toStrictEqual(rosterWitnesses);
-    expect(REACHED, "every pin reached its end, in row order, with its pinned assertion count").toEqual([...ROSTER.reached]);
+    // ONE assertion, this case's last statement (wb-vu3i, the G02 class): an exit anywhere before it leaves the case without an
+    // assertion, which --expect.requireAssertions fails in this tier and the census tier's judge reads as no-assertion.
+    expect(
+      {
+        rosterOrder: titles, frozenOrder: titles, here,
+        irregular: walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read),
+        measured: MEASURED, reached: REACHED,
+      },
+      "the record: every registered test of this file (vitest task tree) exactly in roster order and in frozen order (the judged title, one test per pin in row order, then this record), this case found by task identity and registered last, every other test in run mode, not inverted and run before it, every pin's witness compared against the roster a second time, and every pin reached its end, in row order, with its pinned assertion count",
+    ).toStrictEqual({
+      rosterOrder: [...ROSTER.tests], frozenOrder: [JUDGED_TITLE, ...ROWS.flatMap(entry => entry.pins), RECORD_TITLE], here: walked.length - 1, irregular: [],
+      measured: rosterWitnesses, reached: [...ROSTER.reached],
+    });
   });
 });
