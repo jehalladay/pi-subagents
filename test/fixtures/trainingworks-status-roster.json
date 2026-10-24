@@ -181,8 +181,80 @@
    "\\b(?:never|not|no|cannot|can't|isn't|aren't|doesn't|don't|won't|nor|neither|without|distinguish\\w*)\\b",
    "^\\s*(?:not|never|no|distinct|different|separate|unlike|apart)\\b",
    "[,;:(—]",
-   "(?<=[.!?])\\s+|\\n\\s*\\n|\\n(?=\\s*(?:[-*+]|\\d+\\.|#+)\\s)|\\|"
+   "(?<=[.!?])\\s+|\\|"
   ],
+  "rendered": {
+   "namedReferences": {
+    "Tab": "\t",
+    "NewLine": "\n",
+    "excl": "!",
+    "quot": "\"",
+    "QUOT": "\"",
+    "num": "#",
+    "dollar": "$",
+    "percnt": "%",
+    "amp": "&",
+    "AMP": "&",
+    "apos": "'",
+    "lpar": "(",
+    "rpar": ")",
+    "ast": "*",
+    "midast": "*",
+    "plus": "+",
+    "comma": ",",
+    "period": ".",
+    "sol": "/",
+    "colon": ":",
+    "semi": ";",
+    "lt": "<",
+    "LT": "<",
+    "equals": "=",
+    "gt": ">",
+    "GT": ">",
+    "quest": "?",
+    "commat": "@",
+    "lsqb": "[",
+    "lbrack": "[",
+    "bsol": "\\",
+    "rsqb": "]",
+    "rbrack": "]",
+    "Hat": "^",
+    "lowbar": "_",
+    "UnderBar": "_",
+    "grave": "`",
+    "DiacriticalGrave": "`",
+    "lcub": "{",
+    "lbrace": "{",
+    "verbar": "|",
+    "vert": "|",
+    "VerticalLine": "|",
+    "rcub": "}",
+    "rbrace": "}",
+    "fjlig": "fj",
+    "nbsp": "\u00a0",
+    "NonBreakingSpace": "\u00a0",
+    "times": "×",
+    "ndash": "–",
+    "mdash": "—",
+    "lsquo": "‘",
+    "rsquo": "’",
+    "ldquo": "“",
+    "rdquo": "”",
+    "hellip": "…"
+   },
+   "reference": "&(?:#(\\d{1,7})|#[xX]([0-9A-Fa-f]{1,6})|([A-Za-z][A-Za-z0-9]{1,31}));",
+   "hiddenHtml": "<!--(?:-?>|[\\s\\S]*?(?:-->|$))|<[!?][^>]*(?:>|$)|<\\/?[A-Za-z][^<>]*>",
+   "format": "\\p{Cf}",
+   "phraseSpace": "[^\\S\\n]+"
+  },
+  "legend": {
+   "heading": "Status legend",
+   "parents": [
+    "Workbench release feature matrix"
+   ],
+   "lead": "Status vocabulary (exactly one per row):",
+   "item": "^([a-z-]+): (.*)$"
+  },
   "residuals": {
    "R-ATTRIBUTED-FILE": [
     "Q1"
@@ -207,6 +279,15 @@
    ],
    "R-STATUS-WORD": [
     "Q8"
+   ],
+   "R-ENCODED": [
+    "Q9"
+   ],
+   "R-LINK-TARGET": [
+    "Q10"
+   ],
+   "R-HIDDEN-HTML": [
+    "Q11"
    ]
   }
  },
@@ -217,6 +298,7 @@
   "A2",
   "B1",
   "B2",
+  "B3",
   "C1",
   "C2",
   "Q1",
@@ -227,6 +309,9 @@
   "Q6",
   "Q7",
   "Q8",
+  "Q9",
+  "Q10",
+  "Q11",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ],
  "rows": [
@@ -320,7 +405,152 @@
        {
         "id": "unattributed-beside-phrase",
         "findings": []
+       },
+       {
+        "id": "seven-hex-pin-beside-beads-phrase",
+        "findings": [
+         "trainingworks:forge"
+        ]
+       },
+       {
+        "id": "hx-gp-mark-on-an-attributed-page",
+        "findings": [
+         "hx-gp:hx-gp"
+        ]
+       },
+       {
+        "id": "phrase-400-away-filled",
+        "findings": []
+       },
+       {
+        "id": "RT1-phrase-only-in-a-comment",
+        "findings": [
+         "trainingworks:forge"
+        ]
+       },
+       {
+        "id": "RT3-attribution-only-in-a-comment",
+        "findings": [
+         "unattributed:hx+forge+furnace+mw+beads+rfcli+hx-gp"
+        ]
+       },
+       {
+        "id": "RT4-mention-only-in-a-comment",
+        "findings": []
+       },
+       {
+        "id": "name-split-by-a-comment",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "name-split-by-a-tag",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "name-split-by-emphasis",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "name-spelled-by-a-reference",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "name-split-by-an-invisible",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "phrase-in-an-unterminated-comment",
+        "findings": [
+         "trainingworks:forge"
+        ]
+       },
+       {
+        "id": "unterminated-comment-holding-a-bracket",
+        "findings": [
+         "trainingworks:forge"
+        ]
+       },
+       {
+        "id": "html-block-text-after-a-comment",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "inline-unterminated-comment-is-text",
+        "findings": []
+       },
+       {
+        "id": "phrase-split-across-list-items",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "mention-in-code",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "phrase-in-code",
+        "findings": []
+       },
+       {
+        "id": "mention-in-a-blockquote",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "mention-in-a-table-header",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "phrase-in-a-cdata-section",
+        "findings": [
+         "trainingworks:forge"
+        ]
+       },
+       {
+        "id": "phrase-in-a-processing-instruction",
+        "findings": [
+         "trainingworks:forge"
+        ]
+       },
+       {
+        "id": "phrase-in-a-declaration",
+        "findings": [
+         "trainingworks:forge"
+        ]
+       },
+       {
+        "id": "text-after-an-empty-comment",
+        "findings": [
+         "trainingworks:hx+forge+furnace+mw+beads+rfcli"
+        ]
+       },
+       {
+        "id": "title-with-a-named-reference",
+        "findings": [
+         "hx-gp:hx-gp"
+        ]
        }
+      ],
+      "findingLine": [
+       6
       ]
      }
     }
@@ -394,6 +624,136 @@
        {
         "id": "hx-without-speed-or-gp",
         "findings": 0
+       },
+       {
+        "id": "hx-speedup-bare-cmd",
+        "findings": 1
+       },
+       {
+        "id": "hx-speedup-short-cmd",
+        "findings": 1
+       },
+       {
+        "id": "subject-split-by-a-comment",
+        "findings": 1
+       },
+       {
+        "id": "status-in-emphasis",
+        "findings": 1
+       },
+       {
+        "id": "receipt-only-in-a-comment",
+        "findings": 1
+       },
+       {
+        "id": "claim-word-only-in-a-comment",
+        "findings": 0
+       },
+       {
+        "id": "row-only-in-a-comment",
+        "findings": 0
+       },
+       {
+        "id": "row-only-in-code",
+        "findings": 0
+       }
+      ],
+      "hiddenRowCounts": [
+       [
+        1,
+        1
+       ],
+       [
+        1,
+        1
+       ]
+      ]
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "controls": [
+       {
+        "id": "real-legend",
+        "ok": true,
+        "claims": [
+         "landed-gated",
+         "partial"
+        ]
+       },
+       {
+        "id": "HU1c-changed-definition",
+        "ok": true,
+        "claims": [
+         "landed-gated",
+         "partial",
+         "in-progress"
+        ]
+       },
+       {
+        "id": "HU1-commented-copy-before-the-heading",
+        "ok": true,
+        "claims": [
+         "landed-gated",
+         "partial",
+         "in-progress"
+        ]
+       },
+       {
+        "id": "HU2-fenced-copy-before-the-heading",
+        "ok": true,
+        "claims": [
+         "landed-gated",
+         "partial",
+         "in-progress"
+        ]
+       },
+       {
+        "id": "commented-copy-inside-the-section",
+        "ok": true,
+        "claims": [
+         "landed-gated",
+         "partial",
+         "in-progress"
+        ]
+       },
+       {
+        "id": "fenced-copy-inside-the-section",
+        "ok": true,
+        "claims": [
+         "landed-gated",
+         "partial",
+         "in-progress"
+        ]
+       },
+       {
+        "id": "second-rendered-heading",
+        "ok": false,
+        "claims": []
+       },
+       {
+        "id": "second-vocabulary-line",
+        "ok": false,
+        "claims": []
+       },
+       {
+        "id": "renamed-heading",
+        "ok": false,
+        "claims": []
+       },
+       {
+        "id": "comment-between-the-line-and-the-list",
+        "ok": true,
+        "claims": [
+         "landed-gated",
+         "partial"
+        ]
+       },
+       {
+        "id": "malformed-legend-item",
+        "ok": false,
+        "claims": []
        }
       ]
      }
@@ -519,6 +879,50 @@
        {
         "id": "table-cells",
         "findings": 0
+       },
+       {
+        "id": "two-adjacent-list-items",
+        "findings": 0
+       },
+       {
+        "id": "heading-then-a-line",
+        "findings": 0
+       },
+       {
+        "id": "RT2-negation-only-in-a-comment",
+        "findings": 1
+       },
+       {
+        "id": "predicate-split-by-a-comment",
+        "findings": 1
+       },
+       {
+        "id": "word-split-by-emphasis",
+        "findings": 1
+       },
+       {
+        "id": "word-spelled-by-a-reference",
+        "findings": 1
+       },
+       {
+        "id": "word-split-by-an-invisible",
+        "findings": 1
+       },
+       {
+        "id": "equation-in-an-unterminated-comment",
+        "findings": 0
+       },
+       {
+        "id": "html-block-text",
+        "findings": 1
+       },
+       {
+        "id": "equation-in-code",
+        "findings": 1
+       },
+       {
+        "id": "equation-in-a-blockquote",
+        "findings": 1
        }
       ]
      }
@@ -587,6 +991,27 @@
      "id": "Q8",
      "witness": {
       "status": "landed",
+      "findings": 0
+     }
+    },
+    {
+     "id": "Q9",
+     "witness": {
+      "lookalike": 0,
+      "unlisted": 0
+     }
+    },
+    {
+     "id": "Q10",
+     "witness": {
+      "citations": 1,
+      "findings": 0
+     }
+    },
+    {
+     "id": "Q11",
+     "witness": {
+      "citations": 1,
       "findings": 0
      }
     }
