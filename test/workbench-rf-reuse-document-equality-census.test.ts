@@ -7,6 +7,12 @@
  * Acceptance (owner filing, verbatim): "(a) fixture: a plan or render with reuse rows and no digest-equality field yields no
  * 'unchanged document' / 'identical context' claim; (b) any Pi equality claim names a producer digest field (final_document_digest
  * or a context.diff result) verbatim; (c) docs census: no sentence equates component reuse with document equality."
+ * wb-9cyp (the R694 follow-up of landing 279, gate record cmd_4a534700d31e / cmd_798b49233291) cures F1 (native-evidence named and
+ * exercised, A6; the observation-row reuse count Pi does read pinned by its twin, A7; the trigger narrowed to work_metrics), F2 (the
+ * docs leg reads rendered markdown, the reading takes hyphenated and cached reuse, a producer field admits only as a whole token, and
+ * each family's remainder is a named residual with a quiet row), F3 (the docs roots take .agents/, .beads/, .pi/ and vendor/, and no
+ * other top-level directory may hold markdown) and F6 (B3's whole-file tripwire keeps its conservative reading and gains a code-token
+ * reading beside it, so a comment-only spelling is told from a code read).
  *
  * MEASURED BY THE CUTTING SEAT (2026-10-23, installed rf 0.1.832 by `rf --json --version` result.version; a scratch workspace outside
  * every repository; only the scratch root is rewritten to /fixture/rf-workspace in the roster): `rf init`; two pure declarative
@@ -26,28 +32,40 @@
  * imply final document equality if budget selection or order depends on other changed components."
  * CONSTRUCTED here from the measured envelopes, never from memory: PLAN_REUSE (the measured plan with alpha's row decided reuse, the
  * decision the plan schema's closed enum admits, summary moved to match), OBSERVED_REUSE (REUSE carrying two result.observations rows
- * in the pinned row shape, freshness reused and replayed true) and each preview's zero-reuse twin.
+ * in the pinned row shape, freshness reused and replayed true), each preview's zero-reuse twin and its fresh-observation twin (every
+ * result.observations row captured at render, replayed false).
  *
- * Pi's rf readers are the reactivefiber.render.preview provider (providers/reactivefiber.ts: it spawns only `rf ... context render
- * --no-commit` and admits only context.render envelopes; its registered reading wraps the envelope verbatim) and the reader adapter
- * (reactivefiber-observer.ts). Neither reads result.work_metrics, result.components or result.output.digest; the adapter references
- * the context text by its own sha256 of output.text (nativePayloadRef rf-output:sha256:<hex>), a plain-text digest that the measured
- * renders show is never the producer's canonical digest. Pi reads no context.plan, context.replay or context.diff envelope today.
+ * Pi's rf readers are the three src modules that guard on the rf envelope schema (A6 pins the set by their code tokens): the
+ * reactivefiber.render.preview provider (providers/reactivefiber.ts: it spawns only `rf ... context render --no-commit` and admits only
+ * context.render envelopes; its registered reading wraps the envelope verbatim), the reader adapter (reactivefiber-observer.ts) and the
+ * native-evidence projection (native-evidence.ts nativeEvidence, case reactivefiber.render.preview: the operation id, the bundle or
+ * graph basis and the stated cli release, which the workflow runtime spreads into its node rows, runtime.ts, and the reconcile
+ * evidence receipt binds, reconcile-decision.ts). None reads result.work_metrics, result.components or result.output.digest; the
+ * adapter references the context text by its own sha256 of output.text (nativePayloadRef rf-output:sha256:<hex>), a plain-text digest
+ * that the measured renders show is never the producer's canonical digest. The one reuse count Pi reads is the adapter's count of
+ * result.observations rows replayed from an earlier render (freshness reused): it demotes the preview to partial with a note naming
+ * the count, a freshness reading that states no equality (A7). Pi reads no context.plan, context.replay or context.diff envelope today.
  *
  * THE CLAIM READING (one reading for the three legs; its vocabularies are held to the roster):
  * - FOLDED TEXT: n't spelled " not", NFKC, lower case, every run of characters outside [a-z0-9] one space.
  * - EQUALITY CLAIM: an EQUALITY_WORDS word and a DOCUMENT_NOUNS word, both whole folded words, at most WINDOW words apart in either
  *   order; the claim's window is the folded words from one before the first to one after the last.
- * - ADMITTED: the unit names a PRODUCER_FIELDS spelling verbatim (raw text) or carries a DENIALS phrase (folded, whole words).
+ * - ADMITTED: the unit names a PRODUCER_FIELDS spelling verbatim as a whole token (raw text, no letter, digit or underscore on either
+ *   side, so 'rf context differs' names no field: B1 and C2 fieldPrefix) or carries a DENIALS phrase (folded, whole words).
  *   The reading does not tell an assertion from a negation worded otherwise: such a unit is refused (the conservative direction,
  *   C2 negationOtherWording), and is restated with a DENIALS phrase or a producer field.
- * - (a) every string Pi adds to a reading and every string the adapter surfaces carries no equality claim at all (no admission).
+ * - (a) every string Pi adds to a reading, every string the adapter surfaces and every string native-evidence projects carries no
+ *   equality claim at all (no admission).
  * - (b) every string literal, no-substitution template and template expression (its literal parts joined by a space) of every .ts,
  *   .mjs and .js file under src/ and qa/: an equality claim that is not admitted is a finding unless the roster exempts its file and
  *   window (each exemption carries its reason; the live scan reports every exemption it applied).
- * - (c) every .md file under docs/, examples/ and new-feedback/ and at the repository root: blocks are maximal runs of non-blank
- *   lines, a block's lines are joined by a space and split after ., ! or ? followed by white space; a sentence carrying a REUSE_TERMS
- *   term and an equality claim that is not admitted is a finding.
+ * - (c) every .md file under DOC_ROOTS (docs/, examples/, new-feedback/, .agents/, .beads/, .pi/, vendor/) and at the repository
+ *   root, and no other top-level directory (dot directories aside) outside test/, dist/ and node_modules/ holds one (C1): blocks
+ *   are maximal runs of non-blank lines, a block's lines are joined by a space and read RENDERED (an HTML comment renders nothing,
+ *   an inline link or image and a reference link render their text alone, emphasis and code-span markers render no letter, a
+ *   decimal, hexadecimal or named (&amp; &lt; &gt; &quot; &apos; &nbsp;) character reference renders its character), then split
+ *   after ., ! or ? followed by white space; a sentence carrying a REUSE_TERMS term and an equality claim that is not admitted is a
+ *   finding.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}`; the whole judged set (every row's id, label and pins, every pin's
  * witness, the reading's vocabularies, the exemptions and the residuals) is held to the out-of-file roster
  * test/fixtures/rf-reuse-document-equality-roster.json, whose measured envelopes anchor the fixture facts outside this file. The
@@ -60,16 +78,25 @@
  * invisible; fullwidth letters fold to ASCII and are read, C2 fullwidth); R-SPLIT a reuse term and an equality claim in different
  * sentences are never paired (C2 split); R-ADMIT-ANYWHERE a denial or a producer field anywhere in the unit admits it, whatever it
  * qualifies (C2 denialElsewhere and fieldElsewhere); R-COMPOSED a src or qa claim assembled at runtime from non-literal parts is
- * invisible to the literal scan (B1 composed; A3 still reads the composed text the adapter surfaces); R-TREES files outside the
- * scanned trees (test/, .beads/, dist/) and files of other extensions (qa's four .sh and one .json, any .cjs or .tsx) are not judged
- * (C1 and B1 name their roots); R-TEXT-REF the adapter's rf-output reference is a plain-text digest, so two equal references are
- * equal text only, the strictly weaker equality of README.md:51 - no Pi surface compares two references today and the lexical legs
- * would not see a comparison that states no equality word (A4).
- * THE TRIGGER, ABSENT TODAY: Pi reads no component-reuse counter, no plan, no replay and no diff (A3's zero-reuse twins project
- * identically; A5 and B3 refuse the other envelopes; B3 finds neither producer field spelled in src or qa). A cut that starts reading
- * one of them re-judges this census rather than editing a witness. Not claimed: an edit of this file and the roster together.
+ * invisible to the literal scan (B1 composed; A3 and A6 still read the composed text the adapter and native-evidence surface);
+ * R-TREES files outside the scanned trees (test/, dist/, node_modules/ and every dot directory but .agents/, .beads/ and .pi/:
+ * .github/, .codex/, tool state such as .forge/) and files of other extensions (qa's four .sh and one .json, any .cjs or .tsx) are
+ * not judged (C1 and B1 name their roots); R-TEXT-REF the adapter's rf-output reference is a plain-text digest, so two equal
+ * references are equal text only, the strictly weaker equality of README.md:51 - no Pi surface compares two references today and the
+ * lexical legs would not see a comparison that states no equality word (A4); R-MARKUP markup the rendered reading does not resolve
+ * (an inline HTML tag inside a word, un<b>changed</b>; a named character reference outside the six, docu&shy;ment) splits or hides a
+ * word (C2 htmlTag and softHyphen); R-REUSE-VOCABULARY a reuse synonym outside REUSE_TERMS (memoized, served from the cache, carried
+ * over) leaves the sentence out of (c) (C2 memoized); R-READER-GUARD a module that reads an rf envelope without spelling the schema
+ * guard in code (the REACTIVE_FIBER_CLI_SCHEMA constant or its value), checking only the context.render command for instance, is
+ * outside A6's reader set (A6 commandOnly).
+ * THE TRIGGER, ABSENT TODAY: Pi reads no result.work_metrics counter, reused_component_count among them (A3's and A6's zero-reuse
+ * twins project identically; A7 finds neither work_metrics nor reused_component_count spelled in src or qa), no plan, no replay and no
+ * diff (A5 and B3 refuse the other envelopes; B3 finds neither producer field spelled in src or qa, by its whole-file tripwire or its
+ * code-token reading). A cut that starts reading one of them re-judges this census rather than editing a witness. Not claimed: an
+ * edit of this file and the roster together.
  *
- * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, qa, docs and the bead export are only read.
+ * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, qa, the markdown trees and the bead export
+ * are only read.
  */
 import { createHash } from "node:crypto";
 import { chmodSync, type Dirent, readdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -78,6 +105,7 @@ import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
 import { CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
+import { nativeEvidence } from "../src/workbench/native-evidence.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
 import {
   REACTIVEFIBER_RENDER_PREVIEW_CONTRACT,
@@ -111,7 +139,7 @@ const PRODUCER_FIELDS = ["final_document_digest", "context.diff", "rf context di
 const EQUALITY_WORDS = ["unchanged", "unmodified", "unaltered", "identical", "identically", "equal", "equals", "equality", "same", "equivalent", "equivalence", "equivalently"];
 const DOCUMENT_NOUNS = ["document", "documents", "context", "contexts"];
 const WINDOW = 3;
-const REUSE_TERMS = ["reuse", "reused", "reuses", "reusing", "cache hit", "cache hits"];
+const REUSE_TERMS = ["reuse", "reused", "reuses", "reusing", "cache hit", "cache hits", "cached", "re use", "re used", "re uses", "re using"];
 const DENIALS = [
   "not imply", "not implies", "never imply", "never implies", "not mean", "not means", "never mean", "never means", "not infer", "never infer", "never infers",
   "not prove", "never prove", "never proves", "not establish", "never establish", "never establishes",
@@ -130,7 +158,7 @@ const ROWS: readonly Row[] = [
   {
     id: "A",
     label: "(a) fixture: a plan or render with reuse rows and no digest-equality field yields no 'unchanged document' / 'identical context' claim",
-    pins: ["A1", "A2", "A3", "A4", "A5"],
+    pins: ["A1", "A2", "A3", "A4", "A5", "A6", "A7"],
   },
   {
     id: "B",
@@ -345,6 +373,13 @@ function zeroReuse(envelope: Envelope): Envelope {
     metrics.reused_component_count = 0;
   });
 }
+/** A preview's fresh-observation twin: every result.observations row captured at render instead of replayed (the pinned pair). */
+function freshObservations(envelope: Envelope): Envelope {
+  return variant(envelope, result => {
+    const rows = Array.isArray(result.observations) ? result.observations : [];
+    result.observations = rows.map((row, index) => ({ ...objectOf(row, `observation row ${index}`), freshness: "captured_at_render", replayed: false }));
+  });
+}
 const PREVIEWS: readonly (readonly [string, Envelope])[] = [["reuse", REUSE], ["full", FULL], ["observedReuse", OBSERVED_REUSE]];
 const PLANS: readonly (readonly [string, Envelope])[] = [["plan", PLAN], ["planReuse", PLAN_REUSE]];
 
@@ -373,9 +408,18 @@ function equalityClaims(value: string): string[] {
   });
   return claims;
 }
+/** A character that continues a token: a producer field followed or preceded by one names a longer word, not the field. */
+const TOKEN_CHARACTER = /[A-Za-z0-9_]/;
+/** Whether `value` spells `field` as a whole token: no letter, digit or underscore on either side ('rf context differs' names none). */
+function namesField(value: string, field: string): boolean {
+  for (let at = value.indexOf(field); at >= 0; at = value.indexOf(field, at + 1)) {
+    if (!TOKEN_CHARACTER.test(value.charAt(at - 1)) && !TOKEN_CHARACTER.test(value.charAt(at + field.length))) return true;
+  }
+  return false;
+}
 function admitted(value: string): boolean {
   const folded = fold(value);
-  return PRODUCER_FIELDS.some(field => value.includes(field)) || DENIALS.some(denial => hasPhrase(folded, denial));
+  return PRODUCER_FIELDS.some(field => namesField(value, field)) || DENIALS.some(denial => hasPhrase(folded, denial));
 }
 function reuseTerm(value: string): boolean {
   const folded = fold(value);
@@ -535,6 +579,56 @@ function nativeDescriptors(): Promise<{ ids: string[]; texts: string[] }> {
   return nativeDescriptorTexts;
 }
 
+/** Every code token of a module, comments excluded: each identifier, the text of each string, template and regular-expression
+ * literal, and each property-access chain with its white space removed. */
+function codeTokens(fileName: string, source: string): string[] {
+  const kind = extname(fileName) === ".ts" ? ts.ScriptKind.TS : ts.ScriptKind.JS;
+  const tree = ts.createSourceFile(fileName, source, ts.ScriptTarget.Latest, true, kind);
+  const tokens: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) tokens.push(node.text);
+    else if (ts.isStringLiteralLike(node) || ts.isRegularExpressionLiteral(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) {
+      tokens.push(node.text);
+    }
+    if (ts.isPropertyAccessExpression(node)) tokens.push(node.getText(tree).replace(/\s+/g, ""));
+    ts.forEachChild(node, visit);
+  };
+  visit(tree);
+  return tokens;
+}
+interface CodeModule {
+  readonly name: string;
+  readonly text: string;
+  readonly tokens: readonly string[];
+}
+let codeModuleIndex: CodeModule[] | undefined;
+/** Every .ts, .mjs and .js module under the code roots, read and tokenized once. */
+function codeModules(): CodeModule[] {
+  codeModuleIndex ??= CODE_ROOTS.flatMap(scan => filesBelow(join(REPO, scan.root)).filter(file => /\.(?:ts|mjs|js)$/.test(file))).map(file => {
+    const name = relative(REPO, file);
+    const text = textOf(file);
+    return { name, text, tokens: codeTokens(name, text) };
+  });
+  return codeModuleIndex;
+}
+/** One control module, tokenized like the walked ones. */
+function probeModule(source: string): CodeModule {
+  return { name: "control.ts", text: source, tokens: codeTokens("control.ts", source) };
+}
+/** The modules whose code tokens spell one of `spellings` (a token containing it), and those whose raw text does (comments too). */
+function spellersOf(modules: readonly CodeModule[], spellings: readonly string[]): { code: string[]; wholeFile: string[] } {
+  return {
+    code: modules.filter(entry => entry.tokens.some(token => spellings.some(spelling => token.includes(spelling)))).map(entry => entry.name).sort(),
+    wholeFile: modules.filter(entry => spellings.some(spelling => entry.text.includes(spelling))).map(entry => entry.name).sort(),
+  };
+}
+/** The spellings every rf envelope reader guards on: the schema constant and its value. */
+const SCHEMA_GUARD = ["REACTIVE_FIBER_CLI_SCHEMA", "reactive-fiber.cli/v1"];
+/** Pi's rf readers: the provider, the reader adapter and the native-evidence projection. */
+const RF_READERS = ["src/workbench/native-evidence.ts", "src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"];
+/** The component-reuse counter the trigger names, and the object that carries it. */
+const REUSE_COUNTER = ["work_metrics", "reused_component_count"];
+
 interface LiteralScan {
   readonly literals: number;
   readonly findings: string[];
@@ -599,13 +693,30 @@ interface SentenceScan {
   readonly reuseSentences: number;
   readonly findings: string[];
 }
+/** The named character references the rendered reading resolves, beside every decimal and hexadecimal one. */
+const NAMED_REFERENCES: Readonly<Record<string, string>> = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " " };
+function referenced(codePoint: number): string {
+  return Number.isSafeInteger(codePoint) && codePoint >= 0 && codePoint <= 0x10ffff ? String.fromCodePoint(codePoint) : " ";
+}
+/** A markdown block as its rendered view reads: an HTML comment renders nothing, an inline link or image and a reference link render
+ * their text alone, emphasis and code-span markers render no letter, and a character reference renders its character. */
+function rendered(block: string): string {
+  return block
+    .replace(/<!--[\s\S]*?-->/g, " ")
+    .replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1")
+    .replace(/\[([^\]]*)\]\[[^\]]*\]/g, "$1")
+    .replace(/[*`]/g, "")
+    .replace(/&#x([0-9a-f]{1,6});/gi, (_, hex: string) => referenced(Number.parseInt(hex, 16)))
+    .replace(/&#([0-9]{1,7});/g, (_, decimal: string) => referenced(Number.parseInt(decimal, 10)))
+    .replace(/&(amp|lt|gt|quot|apos|nbsp);/g, (_, name: string) => NAMED_REFERENCES[name] ?? " ");
+}
 /** One markdown text's sentences judged by (c): a sentence with a reuse term and an unadmitted equality claim is a finding. */
 function scanSentences(fileName: string, source: string): SentenceScan {
   const findings: string[] = [];
   let sentences = 0;
   let reuseSentences = 0;
   for (const block of source.split(/\n[ \t]*\n/)) {
-    const joined = block.split("\n").map(line => line.trim()).join(" ");
+    const joined = rendered(block.split("\n").map(line => line.trim()).join(" "));
     for (const sentence of joined.split(/(?<=[.!?])\s+/)) {
       if (sentence.trim() === "") continue;
       sentences += 1;
@@ -617,12 +728,23 @@ function scanSentences(fileName: string, source: string): SentenceScan {
   }
   return { sentences, reuseSentences, findings };
 }
-/** The markdown the docs census reads: every .md below docs/, examples/ and new-feedback/, and every .md at the repository root.
- * C1's floors sit below the counts measured at base 2390203 (89 files, 7542 sentences, 40 reuse sentences). */
-const DOC_ROOTS = ["docs", "examples", "new-feedback"];
+/** The markdown the docs census reads: every .md below DOC_ROOTS and every .md at the repository root. C1's floors sit below the
+ * counts measured at base 2390203 (89 files, 7542 sentences, 40 reuse sentences); wb-9cyp added the agent, bead-store, Pi agent and
+ * vendor trees (3 files at base 27ae04e, 0 reuse sentences). */
+const DOC_ROOTS = ["docs", "examples", "new-feedback", ".agents", ".beads", ".pi", "vendor"];
+/** Top-level directories that never hold a judged document: the census's own tree, build output and installed packages. */
+const UNJUDGED_DIRECTORIES = ["test", "dist", "node_modules"];
 function docFiles(): string[] {
   const rootLevel = readdirSync(REPO, { withFileTypes: true }).filter(entry => entry.isFile() && entry.name.endsWith(".md")).map(entry => join(REPO, entry.name));
   return [...DOC_ROOTS.flatMap(root => filesBelow(join(REPO, root))).filter(file => file.endsWith(".md")), ...rootLevel].sort();
+}
+/** Every top-level directory (dot directories aside, as the walk skips them) outside DOC_ROOTS that holds a .md file. */
+function unscannedMarkdownDirectories(): string[] {
+  return readdirSync(REPO, { withFileTypes: true })
+    .filter(entry => entry.isDirectory() && !entry.name.startsWith(".") && !DOC_ROOTS.includes(entry.name) && !UNJUDGED_DIRECTORIES.includes(entry.name))
+    .filter(entry => filesBelow(join(REPO, entry.name)).some(file => file.endsWith(".md")))
+    .map(entry => entry.name)
+    .sort();
 }
 
 /** The tracked bead export's row for this bead, parsed. */
@@ -737,6 +859,54 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(claims).toEqual([]);
     return { outcomes, claims };
   },
+  A6: async () => {
+    // The third reader (wb-9cyp, gate F1): nativeEvidence projects the preview reading for the workflow runtime's node rows and the
+    // reconcile evidence receipt. It reads no reuse count: neither twin moves it, and nothing it projects states equality.
+    const evidenceOf = (envelope: Envelope): JsonValue => json(nativeEvidence(PREVIEW_ID, readingOf(json(envelope))));
+    const evidence: JsonObject = {};
+    const reuseMovesNothing: JsonObject = {};
+    for (const [name, envelope] of PREVIEWS) {
+      const projected = evidenceOf(envelope);
+      evidence[name] = projected;
+      reuseMovesNothing[name] = [zeroReuse(envelope), freshObservations(envelope)].every(twin => JSON.stringify(evidenceOf(twin)) === JSON.stringify(projected));
+    }
+    const claims = stringLeaves(evidence).flatMap(equalityClaims);
+    const readers = spellersOf(codeModules(), SCHEMA_GUARD).code;
+    // The reader set's reach: a code spelling of the guard makes a reader, a comment does not, and a command-only check is R-READER-GUARD.
+    const guard = (source: string): number => spellersOf([probeModule(source)], SCHEMA_GUARD).code.length;
+    const guardControls = {
+      schemaConstant: guard('import { REACTIVE_FIBER_CLI_SCHEMA } from "./providers/reactivefiber.js";\nexport const isRf = (value: { schema: string }) => value.schema === REACTIVE_FIBER_CLI_SCHEMA;'),
+      schemaValue: guard('export const isRf = (value: { schema: string }) => value.schema === "reactive-fiber.cli/v1";'),
+      commentOnly: guard("// reads a reactive-fiber.cli/v1 envelope\nexport const none = 0;"),
+      commandOnly: guard('export const isRender = (value: { command: string }) => value.command === "context.render";'),
+    };
+    expect(readers).toStrictEqual(RF_READERS);
+    expect(claims).toEqual([]);
+    expect(Object.values(reuseMovesNothing).every(Boolean)).toBe(true);
+    return { readers, guardControls, evidence, reuseMovesNothing, claims };
+  },
+  A7: async () => {
+    // The reuse count Pi does read (wb-9cyp, gate F1): the adapter counts result.observations rows replayed from an earlier render, and
+    // that count moves the projection (a partial demotion naming the count) where work_metrics.reused_component_count moves nothing (A3).
+    const fresh = freshObservations(OBSERVED_REUSE);
+    const surfaced: JsonObject = {};
+    const observationReuseMovesProjection: JsonObject = {};
+    const claims: string[] = [];
+    for (const seam of SEAMS) {
+      for (const [name, envelope] of [["observedReuse", OBSERVED_REUSE], ["observedFresh", fresh]] as const) {
+        const topology = projectionOf(envelope, seam);
+        const snapshot = topology.snapshots[0];
+        claims.push(...stringLeaves(json(topology)).flatMap(equalityClaims));
+        surfaced[`${name}/${seam}`] = { coverage: snapshot?.coverage ?? null, statusTone: snapshot?.node.statusTone ?? null, diagnostics: [...topology.diagnostics] };
+      }
+      observationReuseMovesProjection[seam] = JSON.stringify(json(projectionOf(OBSERVED_REUSE, seam))) !== JSON.stringify(json(projectionOf(fresh, seam)));
+    }
+    const counter = spellersOf(codeModules(), REUSE_COUNTER);
+    expect(claims).toEqual([]);
+    expect(Object.values(observationReuseMovesProjection).every(Boolean)).toBe(true);
+    expect(counter).toStrictEqual({ code: [], wholeFile: [] });
+    return { surfaced, observationReuseMovesProjection, claims, counterSpellers: counter };
+  },
   B1: async () => {
     const roots = CODE_ROOTS.map(scanCodeRoot);
     const control = (fileName: string, source: string): number => scanLiterals(fileName, source).findings.length;
@@ -753,6 +923,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       exemptElsewhere: control("control.ts", exemptLiteral),
       composed: control("control.ts", 'const state = "unchanged"; const note = "the document " + state;'),
       noun: control("control.ts", 'const note = "reuse keeps the rendered text identical";'),
+      fieldPrefix: control("control.ts", 'const note = "rf context differs: reused, the document is unchanged";'),
     };
     return { roots, controls };
   },
@@ -782,16 +953,29 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       expect(native.spawns).toHaveLength(1);
       refusals[name] = { native: native.refusal, adapter: adapterRefusal(envelope) };
     }
-    const spellers = CODE_ROOTS.flatMap(scan => filesBelow(join(REPO, scan.root)).filter(file => /\.(?:ts|mjs|js)$/.test(file)))
-      .filter(file => ["final_document_digest", "context.diff"].some(field => textOf(file).includes(field))).map(file => relative(REPO, file));
+    const fields = PRODUCER_FIELDS.slice(0, 2);
+    const modules = codeModules();
+    const spellers = spellersOf(modules, fields);
+    const walkFloor = CODE_ROOTS.reduce((sum, scan) => sum + scan.fileFloor, 0);
+    const control = (source: string): { code: number; wholeFile: number } => {
+      const found = spellersOf([probeModule(source)], fields);
+      return { code: found.code.length, wholeFile: found.wholeFile.length };
+    };
+    const controls = {
+      propertyRead: control("export const digest = (result: { final_document_digest: string }) => result.final_document_digest;"),
+      literalRead: control('export const command = "context.diff";'),
+      commentOnly: control("// final_document_digest is the producer's digest; Pi reads none.\nexport const none = 0;"),
+    };
     expect([REPLAY.command, DIFF.command]).toEqual(["context.replay", "context.diff"]);
     expect(replay.outcome).toBe("reproduced");
     expect(replay.final_document_digest).toBe(measured("R2").digest);
     expect(classes).toContain("unchanged");
-    expect(spellers).toEqual([]);
+    expect(modules.length, `${modules.length} code modules walked, floor ${walkFloor}`).toBeGreaterThanOrEqual(walkFloor);
+    expect(spellers.wholeFile).toEqual([]);
+    expect(spellers.code).toEqual([]);
     return {
       commands: [REPLAY.command, DIFF.command], replayOutcome: replay.outcome ?? null, replayDigestIsR2Digest: replay.final_document_digest === measured("R2").digest,
-      diffClasses: classes, refusals, srcAndQaSpellers: spellers,
+      diffClasses: classes, refusals, srcAndQaSpellers: spellers.wholeFile, codeSpellers: spellers.code, walkFloorMet: true, controls,
     };
   },
   C1: async () => {
@@ -801,12 +985,19 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const reuseSentences = results.reduce((sum, result) => sum + result.reuseSentences, 0);
     const anchor = results.find(result => result.name === "docs/workbench/07-native-integrations.md");
     const findings = results.flatMap(result => result.findings);
+    const unread = DOC_ROOTS.filter(root => !results.some(result => result.name.startsWith(`${root}/`)));
+    const unscanned = unscannedMarkdownDirectories();
+    expect(unread, "doc roots that yielded no markdown file").toEqual([]);
+    expect(unscanned, "top-level directories holding markdown outside DOC_ROOTS").toEqual([]);
     expect(files.length, `${files.length} markdown files read`).toBeGreaterThanOrEqual(80);
     expect(sentences, `${sentences} sentences read`).toBeGreaterThanOrEqual(7000);
     expect(reuseSentences, `${reuseSentences} reuse sentences read`).toBeGreaterThanOrEqual(10);
     expect(anchor?.reuseSentences ?? 0, "docs/workbench/07-native-integrations.md carries the reuse/cache evidence sentence").toBeGreaterThanOrEqual(1);
     expect(findings, "sentences equating component reuse with document equality").toEqual([]);
-    return { roots: [...DOC_ROOTS, "<repository root>"], fileFloorMet: true, sentenceFloorMet: true, reuseSentenceFloorMet: true, anchorRead: true, findings };
+    return {
+      roots: [...DOC_ROOTS, "<repository root>"], everyRootRead: unread.length === 0, unscannedMarkdownDirectories: unscanned, fileFloorMet: true,
+      sentenceFloorMet: true, reuseSentenceFloorMet: true, anchorRead: true, findings,
+    };
   },
   C2: async () => {
     const control = (source: string): number => scanSentences("control.md", source).findings.length;
@@ -833,6 +1024,17 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       fullwidth: control(`Reuse means the document is ${fullwidth("unchanged")}.`),
       lookalike: control(`Reuse means the document is ${lookalike}.`),
       invisible: control(`Reuse means the ${invisible} is unchanged.`),
+      emphasis: control("Reuse means the document is un*changed*."),
+      characterReference: control("Reuse means the document is &#117;nchanged."),
+      linkTarget: control("Reuse leaves the document [as measured](docs/workbench/07-native-integrations.md) unchanged."),
+      referenceLink: control("Reuse leaves the document [as measured][measured-at-the-pin] unchanged."),
+      comment: control("Reuse leaves the document <!-- measured at the pin by the cutting seat --> unchanged."),
+      cached: control("A cached component leaves the document unchanged."),
+      hyphenated: control("Re-used components leave the document unchanged."),
+      fieldPrefix: control("The rf context differs, so reuse leaves the document unchanged."),
+      htmlTag: control("Reuse means the document is un<b>changed</b>."),
+      softHyphen: control("Reuse means the docu&shy;ment is unchanged."),
+      memoized: control("A memoized component leaves the document unchanged."),
     };
   },
   C3: async () => {
@@ -848,7 +1050,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 
 describe("wb-pfxo.4 rf reuse is never document equality census (RF-COMPOSITIONAL-ASSEMBLY-R5)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:3", "C:3"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:7", "B:3", "C:3"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -861,7 +1063,10 @@ describe("wb-pfxo.4 rf reuse is never document equality census (RF-COMPOSITIONAL
     });
     expect(ROSTER.exemptions.map(exemption => `${exemption.file}: ${exemption.window}`)).toEqual(["src/workflow/worker-source.ts: this same vm context which"]);
     const pins = ROWS.flatMap(row => row.pins);
-    expect(ROSTER.residuals.map(residual => residual.id)).toEqual(["R-NOUN", "R-WINDOW", "R-VOCABULARY", "R-LOOKALIKE", "R-SPLIT", "R-ADMIT-ANYWHERE", "R-COMPOSED", "R-TREES", "R-TEXT-REF"]);
+    expect(ROSTER.residuals.map(residual => residual.id)).toEqual([
+      "R-NOUN", "R-WINDOW", "R-VOCABULARY", "R-LOOKALIKE", "R-SPLIT", "R-ADMIT-ANYWHERE", "R-COMPOSED", "R-TREES", "R-TEXT-REF", "R-MARKUP", "R-REUSE-VOCABULARY",
+      "R-READER-GUARD",
+    ]);
     expect(ROSTER.residuals.every(residual => residual.quietPins.length > 0 && residual.quietPins.every(pin => pins.includes(pin)))).toBe(true);
   });
 

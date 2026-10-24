@@ -15,13 +15,19 @@
  * fired, (a) holds by absence, and (b) and (c) wait for the contract. The census pins that state:
  *  A, the trigger's inventory, empty today. A1 no walked file has a .tsx or .jsx extension (any letter case) and no walked
  *    module holds a JSX element, self-closing element or fragment; A2 no module loads the TSX SDK (@reactive-fiber/tsx: bare,
- *    a subpath, an npm:, jsr: or URL specifier, a JS-escaped or constant-folded literal) through an import or export
- *    declaration, an import-equals require, an import type, a @jsxImportSource pragma, or as the first argument of any call or
- *    new expression (a dynamic import, require, require.resolve, an aliased or created require, new URL), and no manifest
- *    (MANIFEST: package.json, package-lock.json, npm-shrinkwrap.json, deno.json[c], an import map, a tsconfig or jsconfig)
- *    names it anywhere in its text; A3 the planted TSX fixtures are read: the module string literals (cooked or folded) naming
- *    a .tsx or .jsx module file are collected from the modules B1 and B2 judge, the oracle's planted names among them (at
- *    least four, the non-vacuity anchor), so a census planting TSX control texts is judged, not refused.
+ *    a subpath, an npm:, jsr: or URL specifier, a JS-escaped, type-asserted or constant-folded literal, a comma sequence's
+ *    last operand included) through an import or export
+ *    declaration, an import-equals require, an import type in code, a triple-slash types, path or amd-dependency directive,
+ *    a @jsxImportSource pragma, a JSDoc import type or @import tag in a JS-family module (JSDOC_EXTENSIONS: the program reads
+ *    types from a JS module's JSDoc; to TypeScript a TS module's JSDoc is a comment), as the first argument of any call or new
+ *    expression (a dynamic import, require, require.resolve, an aliased or created require, new URL: any literal there that
+ *    names it), or as a later argument or an element of an array or spread argument whose folded value is one specifier
+ *    token (SPECIFIER_SHAPE: a require's call(thisArg, specifier) or apply(thisArg, [specifier]), Reflect.apply; a source text
+ *    a census plants as a later argument is no specifier), and no manifest (MANIFEST: package.json, package-lock.json,
+ *    npm-shrinkwrap.json, deno.json[c], an import map, a tsconfig or jsconfig) names it anywhere in its text; A3 the planted
+ *    TSX fixtures are read: the module string literals (cooked or folded) naming a .tsx or .jsx module file are collected
+ *    from the modules B1 and B2 judge, the oracle's planted names among them (at least four, the non-vacuity anchor), so a
+ *    census planting TSX control texts is judged, not refused.
  *  B, acceptance (a). B1 no judged module (every module the walk reaches but the two exemptions), parsed by the TypeScript
  *    compiler under its own script kind, spells the hook (HOOK_FAMILY) in an identifier (escapes decoded by the compiler), a
  *    string or template literal (cooked), JSX text, a regular expression or a constant-folded `+` concatenation or template of
@@ -32,11 +38,17 @@
  *    spell the hook, so lifting either reds B1 or B2.
  *  C, acceptance (b) and (c), gated. C1 the measured contract is unshipped: the roster's producer facts state no exported hook
  *    in the family, no admitted resource kind beyond lens and provider, hook sites at both pins under docs/ only and none under
- *    a file the SDK package ships, as the bead row states ("Shipped: no"); a re-measure that ships the hook flips C1 red until
- *    (b) and (c) land with it. C2 the rf-tsx tier (the files vitest.rf-tsx.config.ts includes, run by forge.toml's
- *    rf-preview-tsx command) registers exactly its two R9 rows, and no literal in it names a federated import, the hook,
- *    network, a read-set, a resolved revision or an imported dependency (CLAIM_FAMILY), so no tier row claims (b) or (c)
- *    before the contract ships.
+ *    a file the SDK package ships, as the bead row states ("Shipped: no", and no Shipped: in its notes reads otherwise:
+ *    SHIPPED_OTHERWISE, so a note appended beside the owner's sentence is read); a re-measure that ships the hook flips C1 red
+ *    until (b) and (c) land with it. C2 the rf-tsx tier (the files vitest.rf-tsx.config.ts includes, run by forge.toml's
+ *    rf-preview-tsx command) registers exactly its two R9 rows: every reference to a row registrar (ROW_REGISTRARS, by name,
+ *    by a renamed vitest import or as a vitest namespace member) is read through its whole head - a modifier member
+ *    (concurrent, fails, sequential and the rest, by property or by element access) or a condition's call registers one row,
+ *    a table factory (TABLE_FACTORIES) one per entry and an API factory (API_FACTORIES) a further registrar - and a one-row
+ *    head is a row only where it runs once, in the file body or in the body of a one-row suite (SUITE_REGISTRARS); every
+ *    other reference (a table or API factory, an alias, an argument, a row in a loop, a branch, a table suite or another
+ *    function) is unaccounted, a finding. And no literal in it names a federated import, the hook, network, a read-set, a
+ *    resolved revision or an imported dependency (CLAIM_FAMILY), so no tier row claims (b) or (c) before the contract ships.
  * THE WALK: every regular file below the repository root, at any depth, in name order. The root entries SKIPPED_ROOTS (git's
  * data, the tracker export - bead rows quote the statement -, installed dependencies, build, coverage and Forge outputs) are
  * skipped at the root only; the two EXEMPT files are walked but not judged. It reads the working tree, so an untracked plant
@@ -57,17 +69,27 @@
  * tracked bead export (.beads/issues.jsonl, row wb-o4h0.4): every acceptance clause it lists sits verbatim in exactly one row
  * label, its trigger phrase in row A's, every row carries one of them, its quote and citation equal the roster's, and its
  * "Shipped: no" sentence is read by C1, so a row removed from every literal of this file and the roster still reds. Not
- * claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the bead row anchors rows and clauses, not pins).
+ * claimed: a pin, a control (a quiet row included) or a residual family removed from every literal of this file and of the
+ * roster together (ROWS, the literal, IMPL, RESIDUAL_FAMILIES and the roster's rows, witnesses and residuals) - the bead row
+ * anchors rows and clauses only, and nothing outside the two files names a pin, a control or a residual.
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run
  * mode, not inverted, ran; every pin's case reached its end (REACHED); no registered test or suite title spells the hook, so a
  * passing run's report written into the tree stays quiet.
- * RESIDUALS (named families, each with pinned quiet rows in the controls): R-COMPOSED a hook name or SDK specifier assembled at
- * runtime from a variable, a call or an array join (B1 composedVariable, composedJoin; A2 composedSpecifier); R-ENCODED an
- * encoding outside the decoded set - ROT13, base-N, UTF-32, a misaligned UTF-16 run (B1 rot13; B2 notes/rot13.txt);
+ * RESIDUALS (named families, each with pinned quiet rows in the controls): R-COMPOSED a hook name or SDK specifier assembled
+ * or chosen at runtime (from a variable, a call, an array join, a conditional or a logical operator) or carried to its load
+ * through a binding, a callback or an object field (B1 composedVariable, composedJoin; A2 composedSpecifier, boundSpecifier,
+ * callbackSpecifier, fieldSpecifier, chosenSpecifier, logicalSpecifier); R-ENCODED an encoding outside the decoded set - ROT13, base-N, UTF-32 (B1 rot13; B2
+ * notes/rot13.txt; a UTF-16 run at an odd byte offset is no residual: B2 reads it in the other byte order, fixtures/odd-le.txt);
  * R-LOOKALIKE a non-ASCII look-alike letter or an inserted invisible, which names a different identifier than the SDK would
  * export (B1 lookalike, invisible; B2 notes/lookalike.txt); R-PROSE the three words spaced apart, which no specifier or
  * identifier can be (B2 notes/near.txt); R-OUTSIDE a file below a skipped root entry (B2 dist/, node_modules/, .beads/,
- * .forge/, build/ and coverage/ plants). Comments are B2's ground, never B1's (B1 comment false, B2 fixtures/comment.ts true).
+ * .forge/, build/ and coverage/ plants); R-HELPER a tier row registered by a module the tier imports, or through a registrar
+ * the tier binds otherwise than by name, a static vitest import or a vitest namespace (a helper's registrar, a dynamic
+ * import's binding), since C2 reads the tier's own text (C2 helperModule, helperRegistrar, dynamicBinding). Comments are B2's
+ * ground, never B1's (B1 comment false, B2 fixtures/comment.ts true).
+ * wb-ucav (the R694 follow-up of landing 271: gate finding F1 with riders F2-F5) added A2's later-argument, directive and JSDoc
+ * positions, C2's head, placement and closure reading, C1's SHIPPED_OTHERWISE leg, B2's odd-offset row, R-HELPER, row A's
+ * load wording and the Not-claimed scope.
  * Display paths added: none. Test-only: it spawns nothing; the controls plant files in makeScratch scratch only.
  */
 import { type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -102,6 +124,12 @@ const CLAIM_FAMILY = /federat|use[_.-]*remote[_.-]*resources?|network|read[\s_-]
 const TSX_NAME = /[\w-]\.(?:tsx|jsx)$/i;
 const MODULE_EXTENSIONS = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx"];
 const TSX_EXTENSIONS = [".tsx", ".jsx"];
+/** A module specifier: one token, with no whitespace, quote, semicolon, bracket, brace or angle bracket in it (the shape the
+ * landed test/workbench-tsx-action-reference-census.test.ts reads). A2 reads a later argument, or an element of an array or
+ * spread argument, as a load only in this shape, so a source text a census plants there is never read as a load. */
+const SPECIFIER_SHAPE = /^[^\s"'`;(){}[\]<>]+$/;
+/** The JS-family modules whose JSDoc the TypeScript program reads types from; to TypeScript a TS module's JSDoc is a comment. */
+const JSDOC_EXTENSIONS = [".js", ".mjs", ".cjs", ".jsx"];
 const MANIFEST = /(?:^|\/)(?:package(?:-lock)?\.json|npm-shrinkwrap\.json|deno\.jsonc?|import[-_]map\.json|[tj]sconfig[^/]*\.json)$/i;
 const SKIPPED_ROOTS = [".git", ".beads", "node_modules", "dist", "build", "coverage", ".forge"];
 const EXEMPT = [SELF, ROSTER_FILE];
@@ -117,7 +145,16 @@ const WALK_ANCHORS: readonly (readonly [string, string])[] = [
 ];
 const ORACLE = "test/workbench-unsafe-display-oracle.test.ts";
 const TIER_COMMAND = "rf-preview-tsx";
-const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-ENCODED", "R-LOOKALIKE", "R-PROSE", "R-OUTSIDE"];
+/** C2's registrars: vitest's row registrars and its suite registrars (a suite body runs once unless a table repeats it). On a
+ * registrar's head a table factory registers one row per table entry and an API factory returns a further registrar; every
+ * other member is a modifier (concurrent, fails, sequential and the rest) or a condition, whose call returns the registrar. */
+const ROW_REGISTRARS = ["it", "test"];
+const SUITE_REGISTRARS = ["describe", "suite"];
+const TABLE_FACTORIES = ["each", "for"];
+const API_FACTORIES = ["extend", "scoped"];
+/** A Shipped: in the bead row's notes that reads other than no (any letter case). */
+const SHIPPED_OTHERWISE = /\bshipped:(?!\s*no\b)\s*\S*/gi;
+const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-ENCODED", "R-LOOKALIKE", "R-PROSE", "R-OUTSIDE", "R-HELPER"];
 const CYRILLIC_IE = String.fromCodePoint(0x0435);
 const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
 
@@ -132,7 +169,7 @@ const ROWS: readonly Row[] = [
   {
     id: "A",
     label:
-      "(trigger, absent today) If Pi ever authors TSX components over federated imports: no TSX or JSX module exists in the walked tree, no module or manifest names the TSX SDK, and every TSX module text Pi plants (the unsafe-display oracle's among them) sits in a module B judges",
+      "(trigger, absent today) If Pi ever authors TSX components over federated imports: no TSX or JSX module exists in the walked tree, no module loads the TSX SDK and no manifest names it, and every TSX module text Pi plants (the unsafe-display oracle's among them) sits in a module B judges",
     pins: ["A1", "A2", "A3"],
   },
   {
@@ -368,10 +405,14 @@ function scriptKindOf(path: string): ts.ScriptKind {
   if (extension === ".ts" || extension === ".mts" || extension === ".cts") return ts.ScriptKind.TS;
   return ts.ScriptKind.JSX;
 }
-/** A string literal, a parenthesized one, a `+` concatenation of foldable parts or a template whose every span folds. */
+/** A string literal; a parenthesized or type-asserted one (as, satisfies, a non-null or an angle-bracket assertion) or a comma
+ * sequence's last operand; a `+` concatenation of foldable parts or a template whose every span folds. */
 function fold(node: ts.Node): string | undefined {
   if (ts.isStringLiteralLike(node)) return node.text;
-  if (ts.isParenthesizedExpression(node)) return fold(node.expression);
+  if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isNonNullExpression(node) || ts.isTypeAssertionExpression(node)) {
+    return fold(node.expression);
+  }
+  if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.CommaToken) return fold(node.right);
   if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken) {
     const left = fold(node.left);
     const right = fold(node.right);
@@ -397,11 +438,15 @@ interface ModuleReading {
   readonly identifiers: Set<string>;
   readonly jsxElements: number;
 }
-/** One module, parsed under its own script kind: its JSX elements (A1), its module specifiers and the literal first argument
- * of every call or new expression, and the SDK loads among them (A2), the TSX or JSX module names its literals carry (A3) and
- * its hook spellings (B1). */
+/** One module, parsed under its own script kind: its JSX elements (A1), its module specifiers - its declarations' and import
+ * types', the literal first argument of every call or new expression, every later argument and every element of an array or
+ * spread argument in specifier shape, its triple-slash directives and, in a JS-family module, its JSDoc import types and its
+ * JSDoc import tags - and the SDK loads among them (A2), the TSX or JSX module names its literals carry (A3) and its hook
+ * spellings (B1). */
 function readModule(path: string, source: string): ModuleReading {
   const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
+  const readsJsdoc = JSDOC_EXTENSIONS.includes(extensionOf(path));
+  const docs = new Set<ts.JSDoc>();
   const spellings: string[] = [];
   const specifiers: string[] = [];
   const tsxNames: string[] = [];
@@ -418,6 +463,15 @@ function readModule(path: string, source: string): ModuleReading {
   const load = (node: ts.Node | undefined): void => {
     const value = node === undefined ? undefined : fold(node);
     if (value !== undefined) specifiers.push(value);
+  };
+  /** A later argument, or an element of an array or spread argument (at any depth): a load when it folds to one specifier token. */
+  const loadShaped = (node: ts.Node): void => {
+    if (ts.isSpreadElement(node)) loadShaped(node.expression);
+    else if (ts.isArrayLiteralExpression(node)) for (const element of node.elements) loadShaped(element);
+    else {
+      const value = fold(node);
+      if (value !== undefined && SPECIFIER_SHAPE.test(value)) specifiers.push(value);
+    }
   };
   const visit = (node: ts.Node): void => {
     if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) {
@@ -438,11 +492,30 @@ function readModule(path: string, source: string): ModuleReading {
     if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) load(node.moduleSpecifier);
     if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference)) load(node.moduleReference.expression);
     if (ts.isImportTypeNode(node) && ts.isLiteralTypeNode(node.argument)) load(node.argument.literal);
-    // Any call or new expression's first argument: a dynamic import, require, require.resolve, an aliased or created require, new URL.
-    if (ts.isCallExpression(node) || ts.isNewExpression(node)) load(node.arguments?.[0]);
+    // Any call or new expression's first argument (a dynamic import, require, require.resolve, an aliased or created require,
+    // new URL), any literal there; every later argument and every element of an array or spread argument in specifier shape
+    // (a require's call(thisArg, specifier) or apply(thisArg, [specifier]), Reflect.apply).
+    if (ts.isCallExpression(node) || ts.isNewExpression(node)) {
+      const args = node.arguments ?? [];
+      load(args[0]);
+      args.forEach((argument, index) => {
+        if (index > 0 || ts.isArrayLiteralExpression(argument) || ts.isSpreadElement(argument)) loadShaped(argument);
+      });
+    }
+    if (readsJsdoc) for (const doc of ts.getJSDocCommentsAndTags(node)) if (ts.isJSDoc(doc)) docs.add(doc);
     ts.forEachChild(node, visit);
   };
   visit(file);
+  // A JS-family module's JSDoc: the types the program reads from it, so its import types and @import tags are loads.
+  const visitDoc = (node: ts.Node): void => {
+    if (ts.isImportTypeNode(node) && ts.isLiteralTypeNode(node.argument)) load(node.argument.literal);
+    else if (ts.isJSDocImportTag(node)) load(node.moduleSpecifier);
+    ts.forEachChild(node, visitDoc);
+  };
+  for (const doc of docs) visitDoc(doc);
+  // Triple-slash directives: a types or path reference and an amd-dependency.
+  for (const reference of [...file.typeReferenceDirectives, ...file.referencedFiles]) specifiers.push(reference.fileName);
+  for (const dependency of file.amdDependencies) specifiers.push(dependency.path);
   for (const match of source.matchAll(/@jsxImportSource\s+([^\s*]+)/g)) specifiers.push(match[1] ?? "");
   const sdkImports = specifiers.filter(namesSdk).map(specifier => `${path}: ${specifier}`);
   return { spellings, specifiers, sdkImports, tsxNames, identifiers, jsxElements };
@@ -521,16 +594,180 @@ function utf16be(value: string): Buffer {
 /** The module judges over one snippet read as `path`: does it spell the hook (B1), does it import the SDK (A2)? */
 const spelledIn = (path: string, source: string): boolean => readModule(path, source).spellings.length > 0;
 const importsSdk = (path: string, source: string): boolean => readModule(path, source).sdkImports.length > 0;
-/** The tier's registered rows (it/test calls with a literal title) and the literals in it that name a claim of (b) or (c). */
-function tierReading(path: string): { titles: string[]; claims: string[] } {
-  const source = readFileSync(join(REPO, path), "utf8");
+interface TierReading {
+  /** The one-row registrations, by title (a title that does not fold reads as COMPUTED). */
+  readonly titles: string[];
+  /** Every other reference to a row registrar, with why it is no one-row registration: each is a finding. */
+  readonly unaccounted: string[];
+  /** The literals that name a claim of (b) or (c). */
+  readonly claims: string[];
+}
+/** A title or member key that does not fold to a literal. */
+const COMPUTED = "<computed>";
+type HeadStep = { readonly member: string } | { readonly call: ts.CallExpression };
+/** The head a registrar reference starts: each member access it is the object of (a property, or an element whose key folds)
+ * and each call it is the callee of, in order, seen through parentheses and type assertions. */
+function headOf(reference: ts.Expression): HeadStep[] {
+  const steps: HeadStep[] = [];
+  let current = reference;
+  for (;;) {
+    const parent = current.parent;
+    if ((ts.isParenthesizedExpression(parent) || ts.isNonNullExpression(parent) || ts.isAsExpression(parent) || ts.isSatisfiesExpression(parent) || ts.isTypeAssertionExpression(parent)) && parent.expression === current) {
+      current = parent;
+    } else if (ts.isPropertyAccessExpression(parent) && parent.expression === current) {
+      steps.push({ member: parent.name.text });
+      current = parent;
+    } else if (ts.isElementAccessExpression(parent) && parent.expression === current) {
+      steps.push({ member: fold(parent.argumentExpression) ?? COMPUTED });
+      current = parent;
+    } else if (ts.isCallExpression(parent) && parent.expression === current) {
+      steps.push({ call: parent });
+      current = parent;
+    } else return steps;
+  }
+}
+/** A head's reading: the call that registers one row (the head's last step, every earlier call a condition's), or why the
+ * head is no one-row registration. */
+function headReading(steps: readonly HeadStep[]): { readonly call: ts.CallExpression } | { readonly reason: string } {
+  const last = steps.at(-1);
+  if (last === undefined || !("call" in last)) return { reason: "a registrar referenced outside a call (an alias, an argument, an export)" };
+  for (const [index, step] of steps.entries()) {
+    if ("member" in step) {
+      if (step.member === COMPUTED) return { reason: "a computed member" };
+      if (TABLE_FACTORIES.includes(step.member)) return { reason: `a table factory (${step.member}: one row per entry)` };
+      if (API_FACTORIES.includes(step.member)) return { reason: `an API factory (${step.member}: a further registrar)` };
+    } else if (index < steps.length - 1) {
+      // An earlier call is a condition's only when a member names it; a call of a call's result registers nothing known.
+      const before = index > 0 ? steps[index - 1] : undefined;
+      if (before === undefined || !("member" in before)) return { reason: "a call of a registration's result" };
+    }
+  }
+  return { call: last.call };
+}
+interface RegistrarBindings {
+  readonly rows: ReadonlySet<string>;
+  readonly suites: ReadonlySet<string>;
+  readonly namespaces: ReadonlySet<string>;
+}
+/** The names a module binds to vitest's registrars: each registrar's own name (a global or a plain import), a renamed import
+ * from vitest, and a vitest namespace import (whose registrar members are read). */
+function registrarBindings(file: ts.SourceFile): RegistrarBindings {
+  const rows = new Set(ROW_REGISTRARS);
+  const suites = new Set(SUITE_REGISTRARS);
+  const namespaces = new Set<string>();
+  for (const statement of file.statements) {
+    if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier) || statement.moduleSpecifier.text !== "vitest") continue;
+    const bindings = statement.importClause?.namedBindings;
+    if (bindings !== undefined && ts.isNamespaceImport(bindings)) namespaces.add(bindings.name.text);
+    else if (bindings !== undefined) {
+      for (const element of bindings.elements) {
+        const imported = (element.propertyName ?? element.name).text;
+        if (ROW_REGISTRARS.includes(imported)) rows.add(element.name.text);
+        if (SUITE_REGISTRARS.includes(imported)) suites.add(element.name.text);
+      }
+    }
+  }
+  return { rows, suites, namespaces };
+}
+/** Is the identifier a reference to a binding (not a member or key name, an import binding's own name, or a label)? */
+function isReference(node: ts.Identifier): boolean {
+  const parent = node.parent;
+  if (ts.isPropertyAccessExpression(parent)) return parent.name !== node;
+  if (ts.isQualifiedName(parent)) return parent.right !== node;
+  if (ts.isImportSpecifier(parent) || ts.isImportClause(parent) || ts.isNamespaceImport(parent) || ts.isImportEqualsDeclaration(parent)) return false;
+  if (ts.isBindingElement(parent)) return parent.propertyName !== node;
+  if (ts.isLabeledStatement(parent) || ts.isBreakOrContinueStatement(parent)) return parent.label !== node;
+  if (
+    ts.isPropertyAssignment(parent) ||
+    ts.isPropertyDeclaration(parent) ||
+    ts.isPropertySignature(parent) ||
+    ts.isMethodDeclaration(parent) ||
+    ts.isMethodSignature(parent) ||
+    ts.isGetAccessorDeclaration(parent) ||
+    ts.isSetAccessorDeclaration(parent) ||
+    ts.isEnumMember(parent) ||
+    ts.isJsxAttribute(parent)
+  ) {
+    return parent.name !== node;
+  }
+  return true;
+}
+/** A vitest namespace reference's member access and the member's name, if the reference is the object of one. */
+function memberOf(node: ts.Identifier): { readonly access: ts.Expression; readonly name: string } | undefined {
+  const parent = node.parent;
+  if (ts.isPropertyAccessExpression(parent) && parent.expression === node) return { access: parent, name: parent.name.text };
+  if (ts.isElementAccessExpression(parent) && parent.expression === node) return { access: parent, name: fold(parent.argumentExpression) ?? COMPUTED };
+  return undefined;
+}
+/** The suite registrar a callee descends to (a suite binding, or a vitest namespace's suite member), if any. */
+function suiteReference(callee: ts.Expression, bindings: RegistrarBindings): ts.Expression | undefined {
+  let current = callee;
+  for (;;) {
+    if (ts.isIdentifier(current)) return bindings.suites.has(current.text) ? current : undefined;
+    if ((ts.isPropertyAccessExpression(current) || ts.isElementAccessExpression(current)) && ts.isIdentifier(current.expression) && bindings.namespaces.has(current.expression.text)) {
+      const member = memberOf(current.expression);
+      return member !== undefined && SUITE_REGISTRARS.includes(member.name) ? current : undefined;
+    }
+    if (
+      ts.isPropertyAccessExpression(current) ||
+      ts.isElementAccessExpression(current) ||
+      ts.isCallExpression(current) ||
+      ts.isParenthesizedExpression(current) ||
+      ts.isNonNullExpression(current) ||
+      ts.isAsExpression(current) ||
+      ts.isSatisfiesExpression(current) ||
+      ts.isTypeAssertionExpression(current)
+    ) {
+      current = current.expression;
+    } else return undefined;
+  }
+}
+/** Is the call the one-row registration of a suite registrar's head (its body then runs once per run of the suite call)? */
+function isOneRowSuite(call: ts.CallExpression, bindings: RegistrarBindings): boolean {
+  const reference = suiteReference(call.expression, bindings);
+  if (reference === undefined) return false;
+  const reading = headReading(headOf(reference));
+  return "call" in reading && reading.call === call;
+}
+/** Does a registration call run once: in the file body, or in the body of a one-row suite that itself runs once? */
+function runsOnce(call: ts.CallExpression, bindings: RegistrarBindings): boolean {
+  let node: ts.Node = call;
+  for (;;) {
+    const parent = node.parent;
+    if (ts.isSourceFile(parent)) return true;
+    if (ts.isExpressionStatement(parent) || ts.isBlock(parent)) node = parent;
+    else if ((ts.isArrowFunction(parent) || ts.isFunctionExpression(parent)) && ts.isCallExpression(parent.parent) && parent.parent.arguments.some(argument => argument === parent) && isOneRowSuite(parent.parent, bindings)) {
+      node = parent.parent;
+    } else return false;
+  }
+}
+/** A tier text's registered rows and the literals in it that name a claim of (b) or (c): every reference to a row registrar
+ * (by name, by a renamed vitest import, or as a vitest namespace member) is read through its whole head, a one-row head that
+ * runs once is a row, and every other reference is unaccounted. */
+function tierReadingOf(path: string, source: string): TierReading {
   const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
+  const bindings = registrarBindings(file);
   const titles: string[] = [];
+  const unaccounted: string[] = [];
   const claims: string[] = [];
+  const line = (node: ts.Node): number => file.getLineAndCharacterOfPosition(node.getStart(file)).line + 1;
+  const row = (reference: ts.Expression): void => {
+    const reading = headReading(headOf(reference));
+    if ("reason" in reading) unaccounted.push(`${path}:${line(reference)} ${reading.reason}`);
+    else if (!runsOnce(reading.call, bindings)) unaccounted.push(`${path}:${line(reference)} a row in a loop, a branch, a table suite or another function`);
+    else {
+      const title = reading.call.arguments[0];
+      titles.push((title === undefined ? undefined : fold(title)) ?? COMPUTED);
+    }
+  };
   const visit = (node: ts.Node): void => {
-    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && ["it", "test"].includes(node.expression.text)) {
-      const title = node.arguments[0] === undefined ? undefined : fold(node.arguments[0]);
-      if (title !== undefined) titles.push(title);
+    if (ts.isIdentifier(node) && isReference(node)) {
+      if (bindings.rows.has(node.text)) row(node);
+      else if (bindings.namespaces.has(node.text)) {
+        const member = memberOf(node);
+        if (member === undefined) unaccounted.push(`${path}:${line(node)} a vitest namespace referenced whole`);
+        else if (ROW_REGISTRARS.includes(member.name)) row(member.access);
+      }
     }
     if (ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) {
       if (CLAIM_FAMILY.test(node.text)) claims.push(`${path}: ${node.text}`);
@@ -538,7 +775,14 @@ function tierReading(path: string): { titles: string[]; claims: string[] } {
     ts.forEachChild(node, visit);
   };
   visit(file);
-  return { titles, claims };
+  return { titles, unaccounted, claims };
+}
+/** The tier file's reading, from the working tree. */
+const tierReading = (path: string): TierReading => tierReadingOf(path, readFileSync(join(REPO, path), "utf8"));
+
+/** Every Shipped: in a bead row's notes that reads other than no, so a note appended beside the owner's sentence is read. */
+function shippedOtherwise(notes: string): string[] {
+  return [...notes.matchAll(SHIPPED_OTHERWISE)].map(match => match[0]);
 }
 
 const REACHED: string[] = [];
@@ -609,6 +853,31 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       otherPackage: importsSdk("c.ts", `import { x } from "${SDK}-tools";\n`),
       composedSpecifier: importsSdk("c.mjs", `const name = "tsx";\nconst sdk = await import(\`@reactive-fiber/${"$"}{name}\`);\n`),
       mentionOnly: importsSdk("c.ts", `const label = "${SDK}";\n`),
+      // Later arguments and array or spread elements, read in specifier shape (gate F1 G11, G12).
+      callArgument: importsSdk("c.mjs", `const sdk = createRequire(import.meta.url).call(null, "${SDK}");\n`),
+      applyArray: importsSdk("c.cjs", `const sdk = require.apply(null, ["${SDK}"]);\n`),
+      reflectApply: importsSdk("c.cjs", `const sdk = Reflect.apply(require, null, ["${SDK}/jsx-runtime"]);\n`),
+      spreadArgument: importsSdk("c.cjs", `const sdk = require(...["${SDK}"]);\n`),
+      arrayArgument: importsSdk("c.mjs", `const sdks = await loadAll([import.meta.url, "npm:${SDK}@0.1.649"]);\n`),
+      // Triple-slash directives and a JS-family module's JSDoc (gate F1 G32, G33).
+      typesDirective: importsSdk("c.ts", `/// <reference types="${SDK}" />\nexport {};\n`),
+      pathDirective: importsSdk("c.ts", `/// <reference path="../node_modules/${SDK}/dist/index.d.ts" />\nexport {};\n`),
+      amdDirective: importsSdk("c.ts", `/// <amd-dependency path="${SDK}" />\nexport {};\n`),
+      jsdocImportType: importsSdk("c.js", `/** @type {import("${SDK}").Component} */\nexport let view;\n`),
+      jsdocImportTag: importsSdk("c.mjs", `/** @import { Component } from "${SDK}" */\nexport let view;\n`),
+      // No load: a TS module's JSDoc, a line comment, and a source text a census plants as a later argument.
+      jsdocInTs: importsSdk("c.ts", `/** @type {import("${SDK}").Component} */\nexport const view = null;\n`),
+      lineComment: importsSdk("c.js", `// const sdk = require("${SDK}");\nexport {};\n`),
+      plantedSource: importsSdk("c.test.ts", `plant("c.ts", 'import { useLens } from "${SDK}";');\n`),
+      // R-COMPOSED: a specifier carried to its load through a binding, a callback or an object field, or chosen at runtime.
+      boundSpecifier: importsSdk("c.cjs", `const name = "${SDK}";\nconst sdk = require(name);\n`),
+      callbackSpecifier: importsSdk("c.cjs", `const sdks = ["${SDK}"].map(require);\n`),
+      fieldSpecifier: importsSdk("c.mjs", `const sdk = await load({ specifier: "${SDK}" });\n`),
+      chosenSpecifier: importsSdk("c.cjs", `const sdk = require(process.env.TSX ? "${SDK}" : "./local.cjs");\n`),
+      logicalSpecifier: importsSdk("c.cjs", `const sdk = require(process.env.TSX_SDK || "${SDK}");\n`),
+      // A type-asserted literal and a comma sequence's last operand fold like a bare literal.
+      assertedSpecifier: importsSdk("c.ts", `const sdk = require("${SDK}" as string);\n`),
+      sequencedSpecifier: importsSdk("c.cjs", `const sdk = require((0, "${SDK}"));\n`),
       manifestDependency: namesSdk(`{"dependencies":{"${SDK}":"0.1.649"}}`),
       manifestAlias: namesSdk(`{"dependencies":{"tsx-sdk":"npm:${SDK}@0.1.649"}}`),
       manifestPaths: ["package.json", "examples/app/package-lock.json", "npm-shrinkwrap.json", "deno.jsonc", "import_map.json", "tsconfig.base.json", "jsconfig.json", "notes.json", "package.json.md"].filter(path => MANIFEST.test(path)),
@@ -678,6 +947,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "notes/url.txt": `https://example.invalid/%75${HOOK.slice(1)}\n`,
       "fixtures/le.txt": Buffer.from(plain, "utf16le"),
       "fixtures/be.txt": utf16be(plain),
+      "fixtures/odd-le.txt": Buffer.concat([Buffer.from(" "), Buffer.from(plain, "utf16le")]),
       "fixtures/use-remote-resource/index.ts": "export {};\n",
       "test/fixtures/build/hook.ts": plain,
       "fixtures/link.txt": null,
@@ -701,6 +971,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         "notes/url.txt",
         "fixtures/le.txt",
         "fixtures/be.txt",
+        "fixtures/odd-le.txt",
         "fixtures/use-remote-resource/index.ts",
         "test/fixtures/build/hook.ts",
         "fixtures/link.txt",
@@ -739,9 +1010,12 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const remoteKinds = producer.admittedResourceKinds.filter(kind => !["lens", "provider"].includes(kind));
     // The SDK's own hook sites, against what its package ships: a site under a shipped entry would ship the hook's text.
     const sitesShipped = producer.sdkPin.hookSites.filter(site => producer.distribution.files.some(entry => site === entry || site.startsWith(`${entry}/`)));
-    const beadSaysUnshipped = readBeadRow().notes.includes(`Shipped: no — git grep ${HOOK} at the pin matches only docs.`);
+    const notes = readBeadRow().notes;
+    const beadSaysUnshipped = notes.includes(`Shipped: no — git grep ${HOOK} at the pin matches only docs.`);
+    const saysOtherwise = shippedOtherwise(notes);
     const contractShipped = shippedFamily.length > 0 || !docsOnly || remoteKinds.length > 0 || sitesShipped.length > 0;
     expect(beadSaysUnshipped, `the bead row ${BEAD} states the gating artifact unshipped`).toBe(true);
+    expect(saysOtherwise, `a Shipped: in the bead row ${BEAD} that reads other than no`).toEqual([]);
     expect(contractShipped, "the contract shipped: (b) and (c) are owed in the rf-tsx tier with this re-measure (wb-o4h0.4)").toBe(false);
     return done("C1", {
       contractShipped,
@@ -752,6 +1026,9 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       remoteKinds,
       sdkMapped: producer.importMap[SDK] === `npm:${SDK}@${producer.distribution.version}`,
       beadSaysUnshipped,
+      shippedOtherwise: saysOtherwise,
+      // A note appended beside the owner's sentence is read, not only the sentence itself.
+      controls: { appendedShippedYes: shippedOtherwise(`${notes}\nShipped: yes, the hook is exported`).length },
     });
   },
   C2: () => {
@@ -759,10 +1036,55 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const command = new RegExp(`^\\[build\\.commands\\.${TIER_COMMAND}\\]\\ncommand = "[^"\\n]*--config vitest\\.rf-tsx\\.config\\.ts[^"\\n]*"$`, "m").test(readFileSync(join(REPO, "forge.toml"), "utf8"));
     const readings = include.map(tierReading);
     const titles = readings.flatMap(reading => reading.titles);
+    const unaccounted = readings.flatMap(reading => reading.unaccounted);
     const claims = readings.flatMap(reading => reading.claims);
     expect(command, `forge.toml runs the tier through ${TIER_COMMAND} with vitest.rf-tsx.config.ts`).toBe(true);
+    expect({ rows: titles.length, unaccounted }, "the tier registers exactly its two R9 rows, every registrar reference read").toStrictEqual({ rows: 2, unaccounted: [] });
     expect(claims, "tier literals claiming (b) or (c) before the contract ships").toEqual([]);
-    return done("C2", { tierFiles: [...include], command, titles, claims });
+    const rowsIn = (source: string): { rows: number; unaccounted: number } => {
+      const reading = tierReadingOf("t.test.ts", source);
+      return { rows: reading.titles.length, unaccounted: reading.unaccounted.length };
+    };
+    // Heads are joined at run time, so no line of this file spells a focus, skip or condition marker (standing rule 10).
+    const chain = (...links: string[]): string => links.join(".");
+    const vitest = 'import { describe, it, test } from "vitest";\n';
+    const controls = {
+      bareIt: rowsIn(`${vitest}describe("s", () => {\n  it("r1", () => {});\n});\n`),
+      bareTest: rowsIn(`${vitest}test("r1", () => {});\n`),
+      concurrent: rowsIn(`${vitest}${chain("it", "concurrent")}("r1", () => {});\n`),
+      focused: rowsIn(`${vitest}${chain("it", "only")}("r1", () => {});\n`),
+      skipped: rowsIn(`${vitest}${chain("test", "skip")}("r1", () => {});\n`),
+      todo: rowsIn(`${vitest}${chain("it", "todo")}("r1");\n`),
+      fails: rowsIn(`${vitest}${chain("it", "fails")}("r1", () => {});\n`),
+      chainedModifiers: rowsIn(`${vitest}${chain("it", "concurrent", "skip")}("r1", () => {});\n`),
+      elementModifier: rowsIn(`${vitest}it["concurrent"]("r1", () => {});\n`),
+      condition: rowsIn(`${vitest}${chain("it", ["run", "If"].join(""))}(true)("r1", () => {});\n`),
+      renamedImport: rowsIn('import { it as row } from "vitest";\nrow("r1", () => {});\n'),
+      namespaceImport: rowsIn('import * as vt from "vitest";\nvt.describe("s", () => {\n  vt.it("r1", () => {});\n});\n'),
+      nestedSuites: rowsIn(`${vitest}describe("a", () => {\n  ${chain("describe", "concurrent")}("b", () => {\n    it("r1", () => {});\n  });\n});\n`),
+      table: rowsIn(`${vitest}${chain("it", "each")}([1, 2])("r %s", () => {});\n`),
+      forTable: rowsIn(`${vitest}${chain("test", "for")}([1, 2])("r %s", () => {});\n`),
+      tableSuite: rowsIn(`${vitest}${chain("describe", "each")}([1, 2])("s %s", () => {\n  it("r1", () => {});\n});\n`),
+      extendApi: rowsIn(`${vitest}const row = ${chain("test", "extend")}({});\nrow("r1", () => {});\n`),
+      extendCalled: rowsIn(`${vitest}${chain("test", "extend")}({})("r1", () => {});\n`),
+      alias: rowsIn(`${vitest}const row = it;\nrow("r1", () => {});\n`),
+      registrarArgument: rowsIn(`${vitest}register(it);\n`),
+      loop: rowsIn(`${vitest}for (const title of ["r1", "r2"]) it(title, () => {});\n`),
+      branch: rowsIn(`${vitest}if (process.env.ROW) it("r1", () => {});\n`),
+      helperFunction: rowsIn(`${vitest}function row(title: string): void {\n  it(title, () => {});\n}\nrow("r1");\nrow("r2");\n`),
+      callbackRows: rowsIn(`${vitest}["r1", "r2"].forEach(title => it(title, () => {}));\n`),
+      suiteInLoop: rowsIn(`${vitest}for (const title of ["s1", "s2"]) describe(title, () => {\n  it("r1", () => {});\n});\n`),
+      callOfResult: rowsIn(`${vitest}it("r1", () => {})("r2");\n`),
+      computedMember: rowsIn(`${vitest}const modifier = process.env.MODIFIER ?? "concurrent";\nit[modifier]("r1", () => {});\n`),
+      namespaceWhole: rowsIn('import * as vt from "vitest";\nconst api = vt;\napi.it("r1", () => {});\n'),
+      computedTitle: rowsIn(`${vitest}const title = process.env.TITLE ?? "r1";\nit(title, () => {});\n`),
+      otherMember: rowsIn('const pattern = /r1/;\npattern.test("r1");\n'),
+      // R-HELPER: a row a helper module registers, or one through a registrar the tier does not bind from vitest.
+      helperModule: rowsIn('import { registerRows } from "./helpers/rows.js";\nregisterRows();\n'),
+      helperRegistrar: rowsIn('import { row } from "./helpers/rows.js";\nrow("r1", () => {});\n'),
+      dynamicBinding: rowsIn('const { it: row } = await import("vitest");\nrow("r1", () => {});\n'),
+    };
+    return done("C2", { tierFiles: [...include], command, titles, unaccounted, claims, controls });
   },
 };
 
@@ -792,6 +1114,13 @@ describe("wb-o4h0.4 rf TSX remote-resource hook census (RF-FEDERATED-WORKSPACES-
         walkAnchors: WALK_ANCHORS.map(([path, token]) => `${path}:${token}`),
         oracle: ORACLE,
         tierCommand: TIER_COMMAND,
+        specifierShape: `${SPECIFIER_SHAPE.source}/${SPECIFIER_SHAPE.flags}`,
+        jsdocExtensions: JSDOC_EXTENSIONS,
+        rowRegistrars: ROW_REGISTRARS,
+        suiteRegistrars: SUITE_REGISTRARS,
+        tableFactories: TABLE_FACTORIES,
+        apiFactories: API_FACTORIES,
+        shippedOtherwise: `${SHIPPED_OTHERWISE.source}/${SHIPPED_OTHERWISE.flags}`,
       },
       residuals: RESIDUAL_FAMILIES,
     }).toStrictEqual({ bead: ROSTER.bead, hook: ROSTER.hook, sdk: ROSTER.sdk, scan: ROSTER.scan, residuals: [...ROSTER.residuals] });
