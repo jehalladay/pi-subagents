@@ -21,6 +21,10 @@
  *   direct graph write would need.
  * - The render result's effects ledger holds only denied or not_executed rows in rf v1; "executed" is minted only by a
  *   post-commit executor rf does not ship (schemas/cli/context.render.schema.json, result.effects.items.status).
+ * - (wb-pdee) src/reactive_fiber_cli/cli/parser.py:251-260 GLOBAL_OPTIONS, the eight CLI-A25 globals "accepted before and
+ *   after the subcommand", and :277 VERBOSE_FLAGS (-v, --verbose) are added to every group parser (_add_globals at :3458),
+ *   so a global may stand between a leaf's words; :286 RF_VALUE_OPTIONS (--workspace, --actor, --color) take a value, apart
+ *   or after "=".
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
  *  A, acceptance (a). A1 every child-process call in src whose binary is a string literal naming rf: exactly one site,
@@ -60,11 +64,42 @@
  *    anchor listing together reads clean (a landed receipt is append-only under R539, so the gate's numstat check, never
  *    this census, refuses the receipt half); Q6 R-EFFECT-LEDGER the preview reads rf's effect ledger and dry-run plan as
  *    data: an executed ledger row or would_commit true on a --no-commit reading is admitted (rf v1 mints no executed row).
+ * FOLLOW-UP ROWS (wb-pdee, the R694 follow-up of landing 263, gate of record cmd_5f0f6e9c5468; F1 leads, F2 rides):
+ *  S, F1's cure. C1-C3 read the argv recorder right after each call, so a child that a descriptor or inspection call starts
+ *    without awaiting it goes unseen: the gate's CB1 (an unawaited rf spawn in CapabilityRegistry.inspect()) kept the census
+ *    green, and CB3 (the same in discover()) left C1 green. S1-S4 repeat the C1, C2, C3 and C7 calls, then settle before they
+ *    read: SETTLE_WINDOW_MS for deferred work, then until no child process the worker started is still running (its
+ *    ProcessWrap handles in process.getActiveResourcesInfo, bounded by SETTLE_DRAIN_MS). S1-S3 read zero spawns and S4 the
+ *    one render spawn. S5 is the settle's positive control: a planted unawaited stand-in spawn is running right after the
+ *    call, is unseen by an immediate read, and is recorded after the settle. S6 pins the recorder's isolation: every pin
+ *    starts with PATH on one empty scratch directory (beforeEach), and PATH names that removed directory between pins, so a
+ *    stray spawn finds no binary. (Before this guard, a fire-and-forget spawn planted in catalogSnapshot was called from A4,
+ *    B1 and C9 with the host PATH, on which an rf is installed.)
+ *  I, F2 (i). A2 also reads each literal in its optionElided form, with every option token, the value a value option takes
+ *    and every runtime token removed. I1 covers every MUTATING leaf with each of 16 array spellings of a global between its
+ *    words, plus the gate's P07 and P07b. I2 covers the shell-line and template spellings. I3 keeps the read leaves, a
+ *    non-global option, a value option that takes the verb, and the near misses clean.
+ *  K, F2 (ii). A1 reads a callee through childProcessAliases (renamed named imports, destructured require() and import()) and
+ *    through a literal element-access key. K1 covers the renamed bindings and the gate's P03 and P07b. K2 covers element
+ *    access, with P04 beside P04b. K3 keeps clean an alias from another module, a key that names no child-process function
+ *    and a renamed non-call export; it reads an aliased call that names another binary as one (otherBinaryCalls).
+ *  D, F2 (iii). B2 also reads an array's elements and a call's arguments as one path joined by "/", and a backslash as "/".
+ *    D1 covers path-join calls and the gate's P11b. D2 covers array joins, backslash literals and templates, and P11c. D3
+ *    keeps the near misses clean.
+ *  N, the follow-up's named residuals, each a pinned quiet row:
+ *    Q7 R-LATE-SPAWN: a spawn deferred past the window goes unseen (the row clears its timer after the read).
+ *    Q8 R-UNREF-CHILD: an unref'd child holds no ProcessWrap handle, so only the window covers it.
+ *    Q9 R-REBOUND-CALLEE: a child-process function re-bound through a variable, a promisify() wrapper, call/apply or a
+ *    computed key is no site to A1.
+ *    Q10 R-COMPOSED-PATH: a document path built from non-literal segments escapes B2.
+ *    Q11 R-SHELL-QUOTED: a quoted option value that holds a space splits apart in a shell line and hides the leaf from A2.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` and RF_GRAPH_LEAVES pins `${leaf}:${flag}` as literals.
  * Every pin's case returns a witness held to WITNESS under its own pin, so a case swapped for another passing one reds.
  * OUTSIDE ANCHORS: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-a9l2.8) states the
  * acceptance clauses (a), (b) and (c), and rows A, B and C hold their labels to them verbatim; the receipt
- * docs/workbench/receipts/wb-a9l2.8.md carries the anchor listing every row, pin, leaf and residual is held to, in order;
+ * docs/workbench/receipts/wb-a9l2.8.md carries the anchor listing every row, pin, leaf and residual is held to, in order (its
+ * 2026-10-24 entry continues the listing with rows S, I, K, D and N and residuals Q7-Q11); the wb-pdee row of the same
+ * export states F1's cure and F2's families (i), (ii) and (iii), and rows S, I, K and D hold their labels to them verbatim;
  * C9 reads the src registry and the src tool roster. A member removed from every literal of this file still reds there.
  * Not claimed: this file's judged-set case deleted together with a hollow (census-code self-hollowing); a re-pin, a
  * compaction of the export row, or a reworded owner filing re-states the anchors in the same cut.
@@ -72,13 +107,14 @@
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, the receipt and the export are
  * only read.
  */
+import { type ChildProcess, spawn } from "node:child_process";
 import { chmodSync, type Dirent, existsSync, readdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
-import { basename, dirname, join, relative } from "node:path";
+import { basename, delimiter, dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import ts from "typescript";
-import { afterAll, afterEach, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeEach, describe, expect, it } from "vitest";
 import { CapabilityError, CapabilityRegistry } from "../src/workbench/capability-registry.js";
 import { CLAUDE_CAPABILITY_TOOL_NAMES, createCuratedTools } from "../src/workbench/claude-capability-tools.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
@@ -102,6 +138,8 @@ const RECEIPT_PATH = join(REPO, "docs", "workbench", "receipts", `${BEAD}.md`);
 const EXPORT_PATH = join(REPO, ".beads", "issues.jsonl");
 const PREVIEW_ID = "reactivefiber.render.preview";
 const RF_PREFIX = "reactivefiber.";
+/** The R694 follow-up of landing 263 that adds rows S, I, K, D and N; its row of the tracked bead export anchors their labels. */
+const FOLLOW_UP = "wb-pdee";
 
 interface Leaf {
   readonly leaf: string;
@@ -170,9 +208,38 @@ const ROWS: readonly Row[] = [
     label: "the named residuals, each a pinned quiet row that reds when its escape stops being quiet",
     pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6"],
   },
+  {
+    id: "S",
+    label: "settle-window rows against CB1 and CB3",
+    pins: ["S1", "S2", "S3", "S4", "S5", "S6"],
+  },
+  {
+    id: "I",
+    label: "the interleaved global option, spawn('rf',['graph','--workspace',root,'publish'])",
+    pins: ["I1", "I2", "I3"],
+  },
+  {
+    id: "K",
+    label: "aliased-import and element-access callees",
+    pins: ["K1", "K2", "K3"],
+  },
+  {
+    id: "D",
+    label: "document path segments, join(dir,'graphs','context.toml') and the array join",
+    pins: ["D1", "D2", "D3"],
+  },
+  {
+    id: "N",
+    label: "the follow-up's named residuals, each a pinned quiet row that reds when its escape stops being quiet",
+    pins: ["Q7", "Q8", "Q9", "Q10", "Q11"],
+  },
 ];
 /** The acceptance rows, in the order the owner filing states its clauses. */
 const ACCEPTANCE_ROWS = ["A", "B", "C"];
+/** The follow-up rows, in the order the wb-pdee filing states F1's cure and F2's families (i), (ii) and (iii). */
+const FOLLOW_UP_ROWS = ["S", "I", "K", "D"];
+/** The rows whose pins are named residuals. */
+const RESIDUAL_ROWS = ["R", "N"];
 const RESIDUALS: Readonly<Record<string, string>> = {
   Q1: "R-COMPOSED",
   Q2: "R-INDIRECT-BINARY",
@@ -180,6 +247,11 @@ const RESIDUALS: Readonly<Record<string, string>> = {
   Q4: "R-DECLARED-ROUTE",
   Q5: "R-COORDINATED",
   Q6: "R-EFFECT-LEDGER",
+  Q7: "R-LATE-SPAWN",
+  Q8: "R-UNREF-CHILD",
+  Q9: "R-REBOUND-CALLEE",
+  Q10: "R-COMPOSED-PATH",
+  Q11: "R-SHELL-QUOTED",
 };
 
 function isObject(value: unknown): value is { [key: string]: unknown } {
@@ -212,12 +284,26 @@ function exportClauses(text: string): string[] {
   throw new Error(`the tracked bead export holds no ${BEAD} row`);
 }
 
+/** The follow-up filing's cure phrases, read from the wb-pdee row of the tracked bead export: F1's cure and F2's three families. */
+function followUpClauses(text: string): string[] {
+  for (const line of text.split("\n")) {
+    if (!line.includes(`"id":"${FOLLOW_UP}"`)) continue;
+    const row: unknown = JSON.parse(line);
+    if (!isObject(row) || row.id !== FOLLOW_UP || typeof row.notes !== "string") continue;
+    const cure = /- F1 [^\n]*? Cure: (.+?)\.\n/.exec(row.notes);
+    const families = /- F2 [^\n]*? - \(i\) (.+?) \([^()]*\); \(ii\) (.+?) \([^()]*\); \(iii\) (.+?) \([^()]*\)\. /.exec(row.notes);
+    if (cure === null || families === null) throw new Error(`the ${FOLLOW_UP} export row carries no F1 cure or no F2 (i)/(ii)/(iii) sentence`);
+    return [cure[1] ?? "", families[1] ?? "", families[2] ?? "", families[3] ?? ""];
+  }
+  throw new Error(`the tracked bead export holds no ${FOLLOW_UP} row`);
+}
+
 const ROW_LINE = /^- Row ([A-Z]) \(pins ([A-Z0-9]+(?:, [A-Z0-9]+)*)\): (.+)$/;
 const LEAF_LINE = /^- Leaf (graph\.[a-z.-]+): (mutates|reads) \(registry\.py:(\d+)\)$/;
 const RESIDUAL_LINE = /^- Residual (Q\d+): (R-[A-Z-]+)$/;
 
 /** Every disagreement between the census literals, the receipt's anchor listing and the export's acceptance clauses. */
-function anchorFindings(rows: readonly Row[], leaves: readonly Leaf[], residuals: Readonly<Record<string, string>>, receipt: string, clauses: readonly string[]): string[] {
+function anchorFindings(rows: readonly Row[], leaves: readonly Leaf[], residuals: Readonly<Record<string, string>>, receipt: string, clauses: readonly string[], followUp: readonly string[]): string[] {
   const lines = receipt.split("\n");
   const listedRows = lines.flatMap(line => {
     const match = ROW_LINE.exec(line);
@@ -237,6 +323,8 @@ function anchorFindings(rows: readonly Row[], leaves: readonly Leaf[], residuals
   if (JSON.stringify(listedResiduals) !== JSON.stringify(residuals)) findings.push("receipt residuals differ");
   const labels = ACCEPTANCE_ROWS.map(id => rows.find(row => row.id === id)?.label ?? "");
   if (JSON.stringify(labels) !== JSON.stringify(clauses)) findings.push("acceptance labels differ from the export");
+  const followUpLabels = FOLLOW_UP_ROWS.map(id => rows.find(row => row.id === id)?.label ?? "");
+  if (JSON.stringify(followUpLabels) !== JSON.stringify(followUp)) findings.push("follow-up labels differ from the export");
   return findings;
 }
 
@@ -274,8 +362,21 @@ function leavesIn(text: string, leaves: readonly string[]): string[] {
   return leaves.filter(leaf => leafPattern(leaf).test(text));
 }
 function documentIn(text: string): boolean {
-  const folded = text.toLowerCase();
+  const folded = text.toLowerCase().replaceAll("\\", "/");
   return GRAPH_DOCUMENT.some(part => folded.includes(part));
+}
+/** rf's value-taking globals at the pin (parser.py:286 RF_VALUE_OPTIONS): spelled apart, each consumes the next token. */
+const RF_VALUE_OPTIONS = ["--workspace", "--actor", "--color"];
+/** A token run as rf's group parsers read it: rf accepts its CLI-A25 globals at every group level (parser.py:251-260 and :3458),
+ * so every option token, the value a value option consumes and every runtime token (EXPR) is elided between a leaf's words. */
+function optionElided(tokens: readonly string[]): string {
+  const kept: string[] = [];
+  for (let index = 0; index < tokens.length; index += 1) {
+    const token = tokens[index] ?? "";
+    if (RF_VALUE_OPTIONS.includes(token)) index += 1;
+    else if (!token.startsWith("-") && token !== EXPR) kept.push(token);
+  }
+  return kept.join(" ");
 }
 
 const EXPR = "<expr>";
@@ -285,22 +386,30 @@ interface LiteralScan {
   readonly renderArgv: number;
 }
 /** One module's string and template literals and argv arrays (non-literal elements read as EXPR) against MUTATING and
- * GRAPH_DOCUMENT; renderArgv counts the arrays holding "context" then "render". */
+ * GRAPH_DOCUMENT; renderArgv counts the arrays holding "context" then "render". A literal names a leaf as spelled or in its
+ * optionElided reading (strings and templates split at white space, an array element by element), once per leaf; an array's
+ * elements and a call's arguments are also read as one path joined by "/". */
 function scanLiterals(fileName: string, text: string): LiteralScan {
   const leafHits: string[] = [];
   const documentHits: string[] = [];
   let renderArgv = 0;
-  const judge = (form: string, spelled: string): void => {
-    for (const leaf of leavesIn(spelled, MUTATING)) leafHits.push(`${fileName} ${form} ${leaf}`);
-    if (documentIn(spelled)) documentHits.push(`${fileName} ${form}`);
+  const judge = (form: string, spelled: string, tokens: readonly string[], paths: readonly string[]): void => {
+    const elided = optionElided(tokens);
+    for (const leaf of MUTATING) if (leafPattern(leaf).test(spelled) || leafPattern(leaf).test(elided)) leafHits.push(`${fileName} ${form} ${leaf}`);
+    if ([spelled, ...paths].some(documentIn)) documentHits.push(`${fileName} ${form}`);
   };
   const visit = (node: ts.Node): void => {
-    if (ts.isStringLiteralLike(node)) judge("literal", node.text);
-    else if (ts.isTemplateExpression(node)) judge("template", [node.head.text, ...node.templateSpans.map(span => span.literal.text)].join(EXPR));
-    else if (ts.isArrayLiteralExpression(node)) {
+    if (ts.isStringLiteralLike(node)) judge("literal", node.text, node.text.split(/\s+/), []);
+    else if (ts.isTemplateExpression(node)) {
+      const spelled = [node.head.text, ...node.templateSpans.map(span => span.literal.text)].join(EXPR);
+      judge("template", spelled, spelled.split(/\s+/), []);
+    } else if (ts.isArrayLiteralExpression(node)) {
       const words = node.elements.map(element => (ts.isStringLiteralLike(element) ? element.text : EXPR));
-      judge("argv", words.join(" "));
+      judge("argv", words.join(" "), words, [words.join("/")]);
       if (words.some((word, index) => word === "context" && words[index + 1] === "render")) renderArgv += 1;
+    } else if (ts.isCallExpression(node)) {
+      const segments = node.arguments.map(argument => (ts.isStringLiteralLike(argument) ? argument.text : EXPR));
+      if (documentIn(segments.join("/"))) documentHits.push(`${fileName} call`);
     }
     ts.forEachChild(node, visit);
   };
@@ -327,16 +436,54 @@ function scopeName(node: ts.Node, within: string): string {
   if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && (ts.isArrowFunction(node.initializer) || ts.isFunctionExpression(node.initializer))) return node.name.text;
   return within;
 }
+const CHILD_PROCESS_MODULE = /^(?:node:)?child_process$/;
+/** Whether a node spells the child_process module specifier anywhere below it (a require() or import() argument). */
+function loadsChildProcess(node: ts.Node): boolean {
+  if (ts.isStringLiteralLike(node) && CHILD_PROCESS_MODULE.test(node.text)) return true;
+  return ts.forEachChild(node, loadsChildProcess) === true;
+}
+/** The local names one module binds to CHILD_PROCESS_CALLS members of child_process: named imports, renamed or not, and
+ * destructured require() and import() bindings. */
+function childProcessAliases(source: ts.SourceFile): Map<string, string> {
+  const aliases = new Map<string, string>();
+  const bind = (original: string, local: string): void => {
+    if (CHILD_PROCESS_CALLS.has(original)) aliases.set(local, original);
+  };
+  const visit = (node: ts.Node): void => {
+    if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier) && CHILD_PROCESS_MODULE.test(node.moduleSpecifier.text)) {
+      const bindings = node.importClause?.namedBindings;
+      if (bindings !== undefined && ts.isNamedImports(bindings)) for (const element of bindings.elements) bind((element.propertyName ?? element.name).text, element.name.text);
+    }
+    if (ts.isVariableDeclaration(node) && ts.isObjectBindingPattern(node.name) && node.initializer !== undefined && loadsChildProcess(node.initializer)) {
+      for (const element of node.name.elements) {
+        const property = element.propertyName ?? element.name;
+        if (ts.isIdentifier(property) && ts.isIdentifier(element.name)) bind(property.text, element.name.text);
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return aliases;
+}
+/** A call's child-process function: an identifier read through its child_process alias, a property name, or a literal
+ * element-access key. */
+function calleeOf(expression: ts.Expression, aliases: ReadonlyMap<string, string>): string {
+  if (ts.isIdentifier(expression)) return aliases.get(expression.text) ?? expression.text;
+  if (ts.isPropertyAccessExpression(expression)) return expression.name.text;
+  if (ts.isElementAccessExpression(expression) && ts.isStringLiteralLike(expression.argumentExpression)) return expression.argumentExpression.text;
+  return "";
+}
 /** Child-process calls whose first argument is a string literal: those naming rf (the bare name, a path ending in /rf, or
- * a shell line whose first word is one) are the module's rf spawn sites. */
+ * a shell line whose first word is one) are the module's rf spawn sites. A callee is read through calleeOf. */
 function scanSpawns(fileName: string, text: string): SpawnScan {
   const source = parse(fileName, text);
+  const aliases = childProcessAliases(source);
   const sites: SpawnSite[] = [];
   let otherBinaryCalls = 0;
   const visit = (node: ts.Node, within: string): void => {
     const scope = scopeName(node, within);
     if (ts.isCallExpression(node)) {
-      const callee = ts.isIdentifier(node.expression) ? node.expression.text : ts.isPropertyAccessExpression(node.expression) ? node.expression.name.text : "";
+      const callee = calleeOf(node.expression, aliases);
       const first = node.arguments[0];
       if (CHILD_PROCESS_CALLS.has(callee) && first !== undefined && ts.isStringLiteralLike(first)) {
         if (basename(first.text.trim().split(/\s+/)[0] ?? "") === "rf") sites.push({ file: fileName, within: scope, callee, argv: node.arguments[1]?.getText(source) ?? "" });
@@ -471,10 +618,21 @@ const invokeContext = () => ({ grants: ["reactivefiber:render"], signal: new Abo
 const oldPath = process.env.PATH;
 const scratches: string[] = [];
 const closers: Array<() => Promise<void>> = [];
+/** The PATH every pin starts on (S6): one fresh, empty scratch directory, which recorder() replaces. Between pins PATH names
+ * that directory after its removal, so a stray rf spawn (a pin with no recorder, or a timer that fires after its pin ends)
+ * finds no binary and never the host's rf. */
+let isolatedPath = "";
+beforeEach(() => {
+  isolatedPath = scratchDir("rf-graph-mutation-path-");
+  process.env.PATH = isolatedPath;
+});
 afterEach(async () => {
   for (const close of closers.splice(0)) await close();
-  process.env.PATH = oldPath;
+  process.env.PATH = isolatedPath;
   removeScratch(...scratches.splice(0));
+});
+afterAll(() => {
+  process.env.PATH = oldPath;
 });
 function scratchDir(prefix: string): string {
   const dir = makeScratch(prefix);
@@ -529,6 +687,36 @@ async function caught(run: () => Promise<unknown>): Promise<unknown> {
     return error;
   }
   throw new Error("expected a refusal");
+}
+
+// ---------------------------------------------------------------- the settle window (row S)
+
+/** The settle window: work a call deferred (a microtask, an immediate, a timer shorter than the window) runs before the read. */
+const SETTLE_WINDOW_MS = 3_000;
+/** The bound on the wait, after the window, for the children this worker still runs. */
+const SETTLE_DRAIN_MS = 30_000;
+const pause = (ms: number): Promise<void> => new Promise(resolve => setTimeout(resolve, ms));
+/** The child processes this worker runs now: its event loop's ProcessWrap handles (an unref'd child holds none, residual Q8). */
+function runningChildren(): number {
+  return process.getActiveResourcesInfo().filter(resource => resource === "ProcessWrap").length;
+}
+interface Settled {
+  readonly window: number;
+  readonly running: number;
+  readonly spawns: number;
+}
+/** Waits the window, then until no child started since `baseline` still runs (bounded), then reads the argv recorder. */
+async function settle(record: Recorder, baseline: number): Promise<Settled> {
+  await pause(SETTLE_WINDOW_MS);
+  const deadline = Date.now() + SETTLE_DRAIN_MS;
+  while (runningChildren() > baseline && Date.now() < deadline) await pause(25);
+  return { window: SETTLE_WINDOW_MS, running: Math.max(0, runningChildren() - baseline), spawns: spawnsOf(record).length };
+}
+/** Waits until a child has exited (an exit code or a signal is set), bounded by SETTLE_DRAIN_MS. */
+async function exited(child: ChildProcess): Promise<boolean> {
+  const deadline = Date.now() + SETTLE_DRAIN_MS;
+  while (child.exitCode === null && child.signalCode === null && Date.now() < deadline) await pause(25);
+  return child.exitCode !== null || child.signalCode !== null;
 }
 
 interface ToolReply {
@@ -629,6 +817,52 @@ const words = (leaf: string): string[] => leaf.split(".");
 /** A tab joint, built rather than typed (standing rule 5). */
 const TAB = String.fromCodePoint(9);
 const quoted = (items: readonly string[]): string => items.map(item => JSON.stringify(item)).join(", ");
+function documentsOf(text: string): number {
+  return scanLiterals("sample.ts", text).documentHits.length;
+}
+function sitesOf(text: string): number {
+  return scanSpawns("sample.ts", text).sites.length;
+}
+/** rf's CLI-A25 globals at the pin as array elements, one spelling each: GLOBAL_OPTIONS (parser.py:251-260) and VERBOSE_FLAGS
+ * (:277), accepted at every group level (:3458), the RF_VALUE_OPTIONS (:286) with their value apart or after "=", then a
+ * spread and a runtime word. */
+const GLOBAL_ELEMENTS: readonly string[] = [
+  '"--workspace", root',
+  '"--workspace", "/srv/ws"',
+  '"--workspace=/srv/ws"',
+  '"--actor", "seat-1"',
+  '"--json"',
+  '"--no-input"',
+  '"--yes"',
+  '"--debug"',
+  '"--color", "never"',
+  '"--color=always"',
+  '"--no-retry"',
+  '"-v"',
+  '"-vv"',
+  '"--verbose"',
+  "...globals",
+  "flag",
+];
+/** A leaf's words as array elements with one global spelling after every word but the last. */
+const interleaved = (leaf: string, global: string): string => words(leaf).map(word => JSON.stringify(word)).join(`, ${global}, `);
+/** The shell-line joints I2 puts between a leaf's words. */
+const SHELL_JOINTS: readonly string[] = [" --json ", " --workspace /srv/ws ", " --color=never -v ", " --actor seat-1 --no-input "];
+/** The gate's LEG-2 probe sources (cmd_5f0f6e9c5468 PREP), each a whole module. */
+const GATE_PROBES: Readonly<Record<string, string>> = {
+  P03: 'import { spawn as launch } from "node:child_process";\nexport function fwGateProbe(): void { launch("rf", ["graph", "show", "--json"]); }\n',
+  P04: 'import * as cp from "node:child_process";\nexport function fwGateProbe(): void { cp["spawn"]("rf", ["graph", "show"]); }\n',
+  P04b: 'import * as cp from "node:child_process";\nexport function fwGateProbe(): void { cp.spawn("rf", ["graph", "show"]); }\n',
+  P07: 'import { spawn } from "node:child_process";\nexport function fwGateProbe(root: string): void { spawn("rf", ["graph", "--workspace", root, "publish"]); }\n',
+  P07b: 'import { spawn as launch } from "node:child_process";\nexport function fwGateProbe(): void { launch("rf", ["graph", "--json", "publish"]); }\n',
+  P11b: 'import { join } from "node:path";\nexport const fwGateProbe = (workspaceDir: string): string => join(workspaceDir, "graphs", "context.toml");\n',
+  P11c: 'export const fwGateProbe = (): string => ["graphs", "context.toml"].join("/");\n',
+};
+function probe(id: string): string {
+  const source = GATE_PROBES[id];
+  if (source === undefined) throw new Error(`no gate probe ${id}`);
+  return source;
+}
 
 // ---------------------------------------------------------------- the cases
 
@@ -848,14 +1082,16 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   },
   Q5: async () => {
     const receipt = readFileSync(RECEIPT_PATH, "utf8");
-    const clauses = exportClauses(readFileSync(EXPORT_PATH, "utf8"));
+    const exported = readFileSync(EXPORT_PATH, "utf8");
+    const clauses = exportClauses(exported);
+    const followUp = followUpClauses(exported);
     const lessRows = ROWS.filter(row => row.id !== "R");
     const lessReceipt = receipt
       .split("\n")
       .filter(line => !line.startsWith("- Row R "))
       .join("\n");
-    const coordinated = anchorFindings(lessRows, RF_GRAPH_LEAVES, RESIDUALS, lessReceipt, clauses);
-    const censusOnly = anchorFindings(lessRows, RF_GRAPH_LEAVES, RESIDUALS, receipt, clauses);
+    const coordinated = anchorFindings(lessRows, RF_GRAPH_LEAVES, RESIDUALS, lessReceipt, clauses, followUp);
+    const censusOnly = anchorFindings(lessRows, RF_GRAPH_LEAVES, RESIDUALS, receipt, clauses, followUp);
     expect(coordinated).toEqual([]);
     expect(censusOnly).toEqual(["receipt rows differ"]);
     return { residual: RESIDUALS.Q5 ?? "", coordinated, censusOnly };
@@ -875,6 +1111,212 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const admitted = { effectStatus: objectOf(effects[0], "effects[0]").status ?? null, wouldCommit: objectOf(result.plan, "plan").would_commit ?? null };
     expect(admitted).toEqual({ effectStatus: "executed", wouldCommit: true });
     return { residual: RESIDUALS.Q6 ?? "", admitted, spawns: spawnsOf(record).length };
+  },
+  S1: async () => {
+    const baseline = runningChildren();
+    const record = recorder(root => fullShapeRf(root));
+    const registry = await nativeRegistry(record.root);
+    const ids = registry.catalogSnapshot().map(entry => entry.descriptor.id);
+    const discovered = registry.discover({ grants: ids.map(id => `discover:${id}`) }).map(descriptor => descriptor.id);
+    const effectClass = registry.effectClassOf(PREVIEW_ID) ?? "unregistered";
+    const settled = await settle(record, baseline);
+    expect(settled.spawns).toBe(0);
+    return { discovered: discovered.filter(id => id.startsWith(RF_PREFIX)), effectClass, settled: { ...settled } };
+  },
+  S2: async () => {
+    const baseline = runningChildren();
+    const record = recorder(root => fullShapeRf(root));
+    const error = await caught(() => boundRegistry(record.root).inspect(PREVIEW_ID, { ref: "inspect-fixture" }, { grants: [`inspect:${PREVIEW_ID}`], signal: new AbortController().signal }));
+    const settled = await settle(record, baseline);
+    expect(settled.spawns).toBe(0);
+    return { ...refusalOf(error), settled: { ...settled } };
+  },
+  S3: async () => {
+    const baseline = runningChildren();
+    const record = recorder(root => fullShapeRf(root));
+    const call = await curated(boundRegistry(record.root), record.root);
+    const replies = [
+      replyKind(await call("capability_discover", {})),
+      replyKind(await call("capability_contract", { capabilityId: PREVIEW_ID })),
+      replyKind(await call("capability_contract", { capabilityId: PREVIEW_ID, mode: "inspect", capabilityVersion: "1.0.0", ref: "inspect-fixture" })),
+    ];
+    const settled = await settle(record, baseline);
+    expect(settled.spawns).toBe(0);
+    return { replies, settled: { ...settled } };
+  },
+  S4: async () => {
+    const baseline = runningChildren();
+    const record = recorder(root => fullShapeRf(root));
+    const call = await curated(boundRegistry(record.root), record.root);
+    const reply = await call("capability_invoke", { capabilityId: PREVIEW_ID, capabilityVersion: "1.0.0", input: armInput("C4") });
+    const settled = await settle(record, baseline);
+    expect(settled.spawns).toBe(1);
+    expect(mutatingWords(record)).toEqual([]);
+    return { reply: replyKind(reply), settled: { ...settled }, argv: argvWitness(record) };
+  },
+  S5: async () => {
+    const baseline = runningChildren();
+    const record = recorder(root => fullShapeRf(root));
+    spawn("rf", ["settle-control"], { stdio: "ignore" }).on("error", () => {});
+    const running = runningChildren() - baseline;
+    const immediate = spawnsOf(record).length;
+    const settled = await settle(record, baseline);
+    expect([running, immediate, settled.spawns]).toEqual([1, 0, 1]);
+    return { running, immediate, settled: { ...settled }, argv: argvWitness(record) };
+  },
+  S6: async () => {
+    const entries = (process.env.PATH ?? "").split(delimiter);
+    const dir = entries[0] ?? "";
+    const isolated = entries.length === 1 && basename(dir).startsWith("rf-graph-mutation-path-") && readdirSync(dir).length === 0;
+    expect(isolated, `PATH must be one empty scratch directory, read ${process.env.PATH ?? "<unset>"}`).toBe(true);
+    return { entries: entries.length, isolated, rfOnPath: existsSync(join(dir, "rf")) };
+  },
+  I1: async () => {
+    const argv = MUTATING.map(leaf => GLOBAL_ELEMENTS.map(global => hitsOf(`spawn("rf", [${interleaved(leaf, global)}]);`)));
+    const gate = { P07: hitsOf(probe("P07")), P07b: hitsOf(probe("P07b")) };
+    expect(argv.flat().every(count => count === 1)).toBe(true);
+    expect(gate).toEqual({ P07: 1, P07b: 1 });
+    return { argv, gate };
+  },
+  I2: async () => {
+    const shell = MUTATING.map(leaf => SHELL_JOINTS.map(joint => hitsOf(`const cmd = ${JSON.stringify(`rf ${words(leaf).join(joint)}`)};`)));
+    const template = MUTATING.map(leaf => hitsOf(["const cmd = `rf ", words(leaf).join(" --workspace $" + "{root} "), "`;"].join("")));
+    const quotedValue = MUTATING.map(leaf => hitsOf(["const cmd = `rf ", words(leaf).join(' --actor "$' + '{actor}" '), "`;"].join("")));
+    expect([...shell.flat(), ...template, ...quotedValue].every(count => count === 1)).toBe(true);
+    return { shell, template, quotedValue };
+  },
+  I3: async () => {
+    const readLeaves = READING.map(leaf => hitsOf(`spawn("rf", [${interleaved(leaf, '"--json"')}]);`));
+    const nearMisses = [
+      'spawn("rf", ["--workspace", w, "context", "render", "--model", m, "--task", t, "--no-commit", "--no-input", "--json"]);',
+      'spawn("rf", ["graph", "--candidate", "c1", "publish"]);',
+      'spawn("rf", ["graph", "--workspace", "publish"]);',
+      'const cmd = "rf graph --json show publish";',
+      'const cmd = "rf subgraph --json publish";',
+    ].map(hitsOf);
+    expect([...readLeaves, ...nearMisses].every(count => count === 0)).toBe(true);
+    return { readLeaves, nearMisses };
+  },
+  K1: async () => {
+    const forms = [
+      'import { spawn as launch } from "node:child_process";\nlaunch("rf", ["graph", "show"]);',
+      'import { execFile as run } from "child_process";\nrun("rf", ["graph", "show"]);',
+      'import { spawnSync as runSync, fork as start } from "node:child_process";\nrunSync("rf", []);\nstart("rf", []);',
+      'const { spawn: launch } = require("node:child_process");\nlaunch("rf", argv);',
+      'const { execFileSync: run } = await import("node:child_process");\nrun("rf", argv);',
+    ].map(sitesOf);
+    const gate = { P03: sitesOf(probe("P03")), P07b: sitesOf(probe("P07b")) };
+    expect(forms).toEqual([1, 1, 2, 1, 1]);
+    expect(gate).toEqual({ P03: 1, P07b: 1 });
+    return { forms, gate, callees: scanSpawns("sample.ts", probe("P03")).sites.map(site => site.callee) };
+  },
+  K2: async () => {
+    const forms = [
+      'import * as cp from "node:child_process";\ncp["execFileSync"]("rf", argv);',
+      'require("node:child_process")["spawn"]("rf", argv);',
+      "import * as cp from \"node:child_process\";\ncp[`exec`](\"rf context render\");",
+    ].map(sitesOf);
+    const gate = { P04: sitesOf(probe("P04")), P04b: sitesOf(probe("P04b")) };
+    expect(forms).toEqual([1, 1, 1]);
+    expect(gate).toEqual({ P04: 1, P04b: 1 });
+    return { forms, gate, callees: scanSpawns("sample.ts", probe("P04")).sites.map(site => site.callee) };
+  },
+  K3: async () => {
+    const nearMisses = [
+      'import { spawn as launch } from "./launcher.js";\nlaunch("rf", argv);',
+      'import * as cp from "node:child_process";\ncp["toString"]("rf");',
+      'import { ChildProcess as Proc } from "node:child_process";\nProc("rf");',
+    ].map(sitesOf);
+    const otherBinary = scanSpawns("sample.ts", 'import { spawn as launch } from "node:child_process";\nlaunch("git", ["status"]);');
+    expect(nearMisses).toEqual([0, 0, 0]);
+    expect(otherBinary.otherBinaryCalls).toBe(1);
+    return { nearMisses, otherBinary: { sites: otherBinary.sites.length, otherBinaryCalls: otherBinary.otherBinaryCalls } };
+  },
+  D1: async () => {
+    const forms = [
+      'import { join } from "node:path";\njoin(dir, "graphs", "context.toml");',
+      'import path from "node:path";\npath.join(workspace, "graphs", "context.toml");',
+      'import { resolve } from "node:path";\nresolve(root, "graphs", "context.toml");',
+      'import { win32 } from "node:path";\nwin32.join(dir, "graphs", "context.toml");',
+      'import { join } from "node:path";\njoin("graphs", "context.toml");',
+    ].map(documentsOf);
+    const gate = { P11b: documentsOf(probe("P11b")) };
+    expect(forms.every(count => count >= 1)).toBe(true);
+    expect(gate.P11b).toBeGreaterThanOrEqual(1);
+    return { forms, gate };
+  },
+  D2: async () => {
+    const forms = [
+      'const p = [dir, "graphs", "context.toml"].join(sep);',
+      'const p = ["graphs", "context.toml"].join("\\\\");',
+      'const p = "graphs\\\\context.toml";',
+      ["const p = `$", "{root}\\\\graphs\\\\context.toml`;"].join(""),
+    ].map(documentsOf);
+    const gate = { P11c: documentsOf(probe("P11c")) };
+    expect(forms.every(count => count >= 1)).toBe(true);
+    expect(gate.P11c).toBeGreaterThanOrEqual(1);
+    return { forms, gate };
+  },
+  D3: async () => {
+    const nearMisses = [
+      'import { join } from "node:path";\njoin(dir, "graphs");',
+      'import { join } from "node:path";\njoin(dir, "context.toml");',
+      'const p = ["graphs", "lens.toml"].join("/");',
+      'const p = ["graph", "context.toml"].join("/");',
+      'import { join } from "node:path";\njoin(dir, "graphs", "views", "context.toml");',
+    ].map(documentsOf);
+    expect(nearMisses).toEqual([0, 0, 0, 0, 0]);
+    return { nearMisses };
+  },
+  Q7: async () => {
+    const baseline = runningChildren();
+    const record = recorder(root => fullShapeRf(root));
+    const deferredMs = 2 * SETTLE_WINDOW_MS;
+    const late = setTimeout(() => {
+      spawn("rf", ["late-spawn"], { stdio: "ignore" }).on("error", () => {});
+    }, deferredMs);
+    const settled = await settle(record, baseline);
+    clearTimeout(late);
+    expect(settled.spawns).toBe(0);
+    return { residual: RESIDUALS.Q7 ?? "", deferredMs, settled: { ...settled } };
+  },
+  Q8: async () => {
+    const baseline = runningChildren();
+    const child = spawn(process.execPath, ["-e", "setTimeout(() => {}, 60000)"], { detached: true, stdio: "ignore" });
+    child.unref();
+    const unseen = runningChildren() - baseline;
+    const alive = child.exitCode === null && child.signalCode === null;
+    child.kill("SIGKILL");
+    const reaped = await exited(child);
+    expect([unseen, alive, reaped]).toEqual([0, true, true]);
+    return { residual: RESIDUALS.Q8 ?? "", unseen, alive, reaped };
+  },
+  Q9: async () => {
+    const rebound = [
+      'import { spawn } from "node:child_process";\nconst launch = spawn;\nlaunch("rf", ["graph", "show"]);',
+      'import { execFile } from "node:child_process";\nimport { promisify } from "node:util";\nconst run = promisify(execFile);\nrun("rf", ["graph", "show"]);',
+      'import { spawn } from "node:child_process";\nspawn.call(undefined, "rf", ["graph", "show"]);',
+      'import * as cp from "node:child_process";\nconst name = "spawn";\ncp[name]("rf", ["graph", "show"]);',
+    ].map(sitesOf);
+    const literal = sitesOf('import { spawn } from "node:child_process";\nspawn("rf", ["graph", "show"]);');
+    expect([rebound, literal]).toEqual([[0, 0, 0, 0], 1]);
+    return { residual: RESIDUALS.Q9 ?? "", rebound, literal };
+  },
+  Q10: async () => {
+    const composed = [
+      'import { join } from "node:path";\nconst GRAPHS = "graphs";\njoin(dir, GRAPHS, "context.toml");',
+      'const p = "graphs" + "/context.toml";',
+      ['import { join } from "node:path";\njoin(dir, "graphs", `$', '{name}.toml`);'].join(""),
+    ].map(documentsOf);
+    const literal = documentsOf('import { join } from "node:path";\njoin(dir, "graphs", "context.toml");');
+    expect([composed, literal]).toEqual([[0, 0, 0], 1]);
+    return { residual: RESIDUALS.Q10 ?? "", composed, literal };
+  },
+  Q11: async () => {
+    const quotedValues = ["const cmd = \"rf graph --workspace '/srv/my ws' publish\";", 'const cmd = "rf graph --workspace \\"/srv/my ws\\" publish";'].map(hitsOf);
+    const unquoted = hitsOf('const cmd = "rf graph --workspace /srv/ws publish";');
+    expect([quotedValues, unquoted]).toEqual([[0, 0], 1]);
+    return { residual: RESIDUALS.Q11 ?? "", quotedValues, unquoted };
   },
 };
 
@@ -1099,11 +1541,72 @@ const WITNESS: Readonly<Record<string, Json>> = {
   Q4: { residual: "R-DECLARED-ROUTE", misdeclared: [] },
   Q5: { residual: "R-COORDINATED", coordinated: [], censusOnly: ["receipt rows differ"] },
   Q6: { residual: "R-EFFECT-LEDGER", admitted: { effectStatus: "executed", wouldCommit: true }, spawns: 1 },
+  S1: { discovered: ["reactivefiber.render.preview"], effectClass: "read", settled: { window: 3000, running: 0, spawns: 0 } },
+  S2: { category: "unavailable", message: "Capability reactivefiber.render.preview does not support inspect.", settled: { window: 3000, running: 0, spawns: 0 } },
+  S3: {
+    replies: [
+      { isError: false, kind: "discovered" },
+      { isError: false, kind: "contract" },
+      { isError: true, kind: "rejected", category: "unavailable" },
+    ],
+    settled: { window: 3000, running: 0, spawns: 0 },
+  },
+  S4: {
+    reply: { isError: false, kind: "returned" },
+    settled: { window: 3000, running: 0, spawns: 1 },
+    argv: [
+      [
+        "--workspace",
+        "<root>",
+        "context",
+        "render",
+        "--model",
+        "model-fixture",
+        "--task",
+        "task-fixture",
+        "--no-commit",
+        "--no-input",
+        "--json",
+      ],
+    ],
+  },
+  S5: { running: 1, immediate: 0, settled: { window: 3000, running: 0, spawns: 1 }, argv: [["settle-control"]] },
+  S6: { entries: 1, isolated: true, rfOnPath: false },
+  I1: {
+    argv: [
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+    ],
+    gate: { P07: 1, P07b: 1 },
+  },
+  I2: {
+    shell: [[1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1], [1, 1, 1, 1]],
+    template: [1, 1, 1, 1, 1, 1, 1, 1],
+    quotedValue: [1, 1, 1, 1, 1, 1, 1, 1],
+  },
+  I3: { readLeaves: [0, 0, 0, 0, 0, 0, 0, 0], nearMisses: [0, 0, 0, 0, 0] },
+  K1: { forms: [1, 1, 2, 1, 1], gate: { P03: 1, P07b: 1 }, callees: ["spawn"] },
+  K2: { forms: [1, 1, 1], gate: { P04: 1, P04b: 1 }, callees: ["spawn"] },
+  K3: { nearMisses: [0, 0, 0], otherBinary: { sites: 0, otherBinaryCalls: 1 } },
+  D1: { forms: [1, 1, 1, 1, 1], gate: { P11b: 1 } },
+  D2: { forms: [1, 1, 1, 1], gate: { P11c: 1 } },
+  D3: { nearMisses: [0, 0, 0, 0, 0] },
+  Q7: { residual: "R-LATE-SPAWN", deferredMs: 6000, settled: { window: 3000, running: 0, spawns: 0 } },
+  Q8: { residual: "R-UNREF-CHILD", unseen: 0, alive: true, reaped: true },
+  Q9: { residual: "R-REBOUND-CALLEE", rebound: [0, 0, 0, 0], literal: 1 },
+  Q10: { residual: "R-COMPOSED-PATH", composed: [0, 0, 0], literal: 1 },
+  Q11: { residual: "R-SHELL-QUOTED", quotedValues: [0, 0], unquoted: 1 },
 };
 
 describe("wb-a9l2.8 rf graph mutation census (RF-HARNESS2-FEDERATED-PEER-R8)", () => {
   it("the judged set: the frozen shape, the owner's acceptance in the tracked export, the receipt anchor listing and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:6", "C:9", "M:5", "R:6"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:6", "C:9", "M:5", "R:6", "S:6", "I:3", "K:3", "D:3", "N:5"]);
     expect(RF_GRAPH_LEAVES.map(leaf => `${leaf.leaf}:${leaf.mutates ? "mutates" : "reads"}`)).toEqual([
       "graph.show:reads",
       "graph.validate:reads",
@@ -1122,12 +1625,12 @@ describe("wb-a9l2.8 rf graph mutation census (RF-HARNESS2-FEDERATED-PEER-R8)", (
       "graph.history:reads",
       "graph.rollback:mutates",
     ]);
-    const clauses = exportClauses(readFileSync(EXPORT_PATH, "utf8"));
-    expect(anchorFindings(ROWS, RF_GRAPH_LEAVES, RESIDUALS, readFileSync(RECEIPT_PATH, "utf8"), clauses)).toEqual([]);
+    const exported = readFileSync(EXPORT_PATH, "utf8");
+    expect(anchorFindings(ROWS, RF_GRAPH_LEAVES, RESIDUALS, readFileSync(RECEIPT_PATH, "utf8"), exportClauses(exported), followUpClauses(exported))).toEqual([]);
     const pins = ROWS.flatMap(row => row.pins).sort();
     expect(Object.keys(IMPL).sort()).toEqual(pins);
     expect(Object.keys(WITNESS).sort()).toEqual(pins);
-    expect(Object.keys(RESIDUALS).sort()).toEqual([...(ROWS.find(row => row.id === "R")?.pins ?? [])].sort());
+    expect(Object.keys(RESIDUALS).sort()).toEqual(ROWS.filter(row => RESIDUAL_ROWS.includes(row.id)).flatMap(row => row.pins).sort());
   });
 
   for (const row of ROWS) {
