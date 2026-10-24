@@ -8,22 +8,27 @@
  * Acceptance (owner filing, verbatim; the labels of rows A, B and C): see ROWS. Gating artifact: none (posture).
  *
  * THE SOURCE AT THE PIN (HyperUnix-CLI 0091719d02887910fa0c2fb6693a32723e243600, read with read-only git show by the cutting
- * seat, 2026-10-23): CSO = docs/programs/certified-structural-optimization-2026-10-18, SIO = docs/programs/structural-information-
- * optimization-2026-10-17. CSO README.md:3 and SIO README.md:3 are STATUS_LINES (sha-256 of each line measured at the pin, blobs
- * 874f5b11f517 and 67824fe38619); HXSI-01..06 are SIO 04-admission-and-semantics.md:22-32 ("## Applicable laws"); the TI rows are
- * SIO 08-theorem-crosswalk.md:7-18, :32, :47-48 and :58-61 (TI-23 at :47-48, the 'human proof; Lean ... source-authored only'
- * evidence column at :56-61); hx.optim.spoke.exchange.v1 is the law_id of CSO README.md:22-37 "## Proposed law record (versioned
- * envelope; data model, not existing API)", whose certificate_refs is ["TI-23"]; CSO README.md:83 "All law admissions remain
- * blocked.". Measured on trunk feebb63: no tracked Pi file outside .beads/ names HXSI-, TI- or hx.optim. (any case), so every
- * judged sentence that names one today is the dossier's.
+ * seats, 2026-10-23 and 2026-10-24): CSO = docs/programs/certified-structural-optimization-2026-10-18, SIO = docs/programs/structural-
+ * information-optimization-2026-10-17. CSO README.md:3 and SIO README.md:3 are STATUS_LINES (sha-256 of each line measured at the
+ * pin, blobs 874f5b11f517 and 67824fe38619); HXSI-01..06 are SIO 04-admission-and-semantics.md:22-32 ("## Applicable laws"); the TI
+ * rows are SIO 08-theorem-crosswalk.md:7-18 (status legend :20), :30-32 (the 2026-10-18 proof-source update, :26 and :36), :44-48
+ * (the factorized evidence and rational exchange proof cut, :50; TI-23 at :47-48), :58-61 (the repair ledger) and :66-72 (TI-31 to
+ * TI-52, :72); hx.optim.spoke.exchange.v1 is the law_id (:27) of CSO README.md:23-39 "## Proposed law record (versioned envelope;
+ * data model, not existing API)" (the heading at :23, its fenced record :25-39), whose certificate_refs (:35) is ["TI-23"]; CSO
+ * README.md:83 "All law admissions remain blocked.". Measured on trunk feebb63 and again on 7acbcaf: no tracked Pi text file outside
+ * .beads/ and this cut's three files names HXSI-, TI- or hx.optim. (any case), so every judged sentence that names one today is the
+ * dossier's.
  * THIS GROUP'S DOSSIER: Pi holds no dossier of the program-triage-2026-10-22 groups (the owner's triage journal lives in the owner
- * session), and a census can read only what the repository carries, so this cut adds the group's dossier at DOSSIER: the two
- * status rows verbatim and the named-ID table with the status words Pi echoes. It is a judged surface, never exempt (row A3).
+ * session), and a census can read only what the repository carries, so this census carries the group's dossier at DOSSIER: the two
+ * status rows verbatim, the named-ID table (one row per program block at the pin, each status cell quoting the block's own words)
+ * and the posture Pi states. It is a judged surface, never exempt (row A3), and it is FROZEN (row C3): its bytes are
+ * composedDossier(), the composition of DOSSIER_INTRO, STATUS_LINES, ID_ROWS and DOSSIER_POSTURE, and its sha-256 is in the roster.
  *
  * READINGS
  * - (a) JUDGED: SURFACES, the acceptance's five (the three pages, every regular file of docs/workbench/receipts, the dossier), and
  *   WIDE_ROOTS plus the repository root's .md pages: the statement's surfaces (docs, the adapter in src, the skill text Pi serves
- *   in .agents and .pi) with qa and examples. Read as UTF-8; a symlink is refused, never followed.
+ *   in .agents and .pi) with qa and examples. Read as UTF-8; a hidden entry is read like any other; a symlink is refused, never
+ *   followed (row A1 pins both on a synthetic tree).
  * - SENTENCE: a text cut at a run of white space after ".", "!", "?" or ";" (never after a list number or a dotted name prefix,
  *   so "hx.optim." stays inside its sentence), at a blank line and before a table row; a .md text is also cut before a heading,
  *   a list item and a block quote line. A code comment's wrapped lines stay one sentence.
@@ -40,18 +45,35 @@
  *   provider (SDK_SITES: every object of the SDK document one key deep) the vendored SDK keeps the pair only in its lossless
  *   extensions sidecar, which the provider output echoes byte for byte and nothing reads; every other SDK site drops it. No
  *   output gains an admitted, registered, verified or checked token (the surfacing and token readers carry positive controls).
- *   On landing: the vendored SDK's declarations and the HX modules name no law field today (LAW_FIELDS, with controls); a
- *   successor that names one flips row B5, and the cut that lands it owes the verbatim facet the statement asks for.
- * - (c) STATUS ROWS: the dossier's "### <cite>" sections each hold the program path line and the program line as one "> " quote,
- *   byte for byte, with its measured sha-256 and read again from the raw text; both dossier readers carry controls.
+ *   On landing: the vendored SDK's declarations and the HX modules name no law field today (LAW_FIELDS read from the parsed
+ *   source - an identifier or a string literal, never a comment - with declaration and bare-mention controls); a successor that
+ *   names one flips row B5, and the cut that lands it owes the verbatim facet the statement asks for.
+ * - (c) THE DOSSIER AS A READER SEES IT: every dossier section is read through the shared rendered view of test/helpers/census.ts
+ *   (docsSection / sectionTables / sectionMatches: marked's lexer; the heading exactly once in the rendered view, under its exact
+ *   parent heading path; the section running to the next heading of level 1-2, or of its own deeper level, so a "####" belongs to
+ *   a "###" status section and a "###" to "## Named IDs"; an HTML comment or code fence spanning a heading refused; the whole
+ *   rendered block list compared, HTML-free). Each "### <cite>" status section is exactly its path paragraph and its one quote,
+ *   whose source line is the program line byte for byte, once in the dossier, with its measured sha-256 (C1); the named-ID rows
+ *   are read from the "## Named IDs" section's OWN table through the same binding, each naming one family, citing its program rows
+ *   and echoing a status word (C2); the four sections render exactly the composed blocks and the headings in order, the posture
+ *   carries the filing's claim span, status words and law pair read from the bead export, and the bytes are frozen (C3). Every
+ *   reader carries red controls, each applied to the live bytes and refused by code: SHAPES S1-S9 (the refusal's dossier probes)
+ *   and S10-S14 (one per check no probe isolates: a paragraph inside a pinned section, a re-split row and a bolded cell that render
+ *   the same, a line above the title, an extra section), plus coordinated hollows that edit a pin and the dossier together (CH1-CH4,
+ *   one per row rule, and CH5, HTML carried in a pin; a status line rewritten with its pin, refused by the sha-256 measured at the
+ *   pin). The table count is implied by the block match and only guards the grid read.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
- *  A, acceptance (a). A1 the walk of the five surfaces (floors, anchors, no symlink); A2 the live census over them returns no
- *    finding; A3 the dossier is judged and names every family beside its claims, each claim qualified; A4 a claim planted in each
- *    surface reads exactly its finding and its qualified twin stays quiet; A5 the statement's wider surfaces walk and stay quiet.
+ *  A, acceptance (a). A1 the walk of the five surfaces (floors, anchors, no symlink) and the walker's own controls (a synthetic
+ *    tree with hidden entries and a symlink, entryOf's kinds, the live lister seeing hidden entries); A2 the live census over them
+ *    returns no finding; A3 the dossier is judged and names every family beside its claims, each claim qualified; A4 a claim
+ *    planted in each surface reads exactly its finding and its qualified twin stays quiet; A5 the statement's wider surfaces walk
+ *    and stay quiet; A6 a claim planted in a .ts, a .yaml and a .mjs file of the wider surfaces reads exactly its finding and its
+ *    qualified twin stays quiet, so the judge reads every kind of file it walks.
  *  B, acceptance (b). B1 the reader adapter; B2 the registered provider and the SDK sites; B3 the native-evidence projection; B4
- *    the live verdict; B5 the landing tripwire over the declarations.
- *  C, acceptance (c). C1 the two status rows verbatim; C2 the named-ID rows and their status words.
+ *    the live verdict; B5 the landing tripwire over the declarations, with its bare-mention and comment controls.
+ *  C, acceptance (c). C1 the two status rows verbatim, as a reader sees them; C2 the named-ID rows and their status words, from the
+ *    section's own table; C3 the whole dossier as a reader sees it, anchored to the filing, its bytes frozen.
  *  F, the outside anchor. F1: the owner filing row of wb-x0xu.2 in the tracked bead export (.beads/issues.jsonl) states each of
  *    its acceptance clauses exactly as the label of rows A, B and C (whole clause, so a shortened label reds); clause (a) lists exactly SURFACES (in order) and exactly the NAMES prefixes; the statement's
  *    surface list (adapter, docs, triage output, skill text Pi serves) reads onto judged paths (STATEMENT_SURFACES); every claim word of
@@ -61,42 +83,56 @@
  *    anchored); clause (b) holds LAW_ID, CERTIFICATE_REFS and TOKENS; clause (c) cites exactly the STATUS_LINES
  *    cites; the note's CSO README.md:3 quote equals that status row, and wb-x0xu.1's SIO README.md:3 quote sits inside the SIO
  *    row; the statement's pin is PIN. So removing a surface, a name, a claim, a qualifier or a status row from every literal of
- *    this file and the roster still reds.
+ *    this file and the roster still reds. Row C3 reads the same export for the dossier's posture.
  *  M, the instruments rows A-C read, each pinned member by member: MS1-MS4 the sentence cutter, MN1-MN3 every spelling and near
  *    miss of every name, MC every claim form (the negated form included), MQ every qualifier form, MF the finding format, MK the
  *    name mask.
  *  R, the residuals' pinned quiet rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the judged set - every row's id, label and
- * pins, every pin's witness and the vocabularies - is held to the out-of-file roster (ROSTER_FILE). A last case reads that every
- * pin's case ran to its end. Not claimed: a pin of rows M or R removed from ROWS, the literal, IMPL and the roster together (F1
- * anchors clauses and vocabularies, not those pins); a WIDE_ROOTS root beyond the statement's four items (qa, examples, .pi) or
- * a single inflection form of a claim removed from every literal and the roster together (F1 anchors each statement item to
- * one judged root and each claim through its filed word, not every root or form).
+ * pins, every pin's witness and the vocabularies, the frozen dossier's text and sha-256 - is held to the out-of-file roster
+ * (ROSTER_FILE). A last case reads that every pin's case ran to its end. Not claimed: a single pin removed from ROWS, the literal,
+ * IMPL and the roster together (F1 anchors each acceptance clause to its row, and the vocabularies, not each pin); a WIDE_ROOTS root
+ * beyond the statement's four items (qa, examples, .pi) or a single inflection form of a claim removed from every literal and the
+ * roster together (F1 anchors each statement item to one judged root and each claim through its filed word, not every root or
+ * form); a named-ID row's line range, removed or narrowed in the dossier, ID_ROWS and the roster together (C2 holds every family to
+ * a row and C3 the posture to the filing, but the ranges are the seats' measurements at the pin, as STATUS_LINES are).
  * RESIDUALS (named; each has a pinned quiet row in row R): R1 R-QUALIFIER-ANYWHERE a qualifier anywhere in the sentence admits
  *   it, whatever it qualifies; R2 R-SPLIT a claim carried by another sentence (a pronoun, or a cut after an abbreviation such as
- *   "e.g."); R3 R-PARAPHRASE a claim outside CLAIMS (ships, runs, is the runtime law); R4 R-LOOKALIKE a look-alike letter or an
- *   inserted invisible inside a name; R5 R-ENCODED an HTML reference or a JS escape inside a name; R6 R-COMPOSED a name
- *   assembled from literal parts; R7 R-CODE-LIST a list inside a code comment is one sentence, so one item's qualifier covers
- *   another; R8 R-OUTSIDE-ROOTS a file outside the judged surfaces (test/, vendor/, node_modules/, .beads/, new-feedback/,
- *   media/, dist/) - the bead export is the requirement's own text and carries findings when judged; R9 R-TRIPWIRE-SPELLING a
- *   successor law field spelled outside LAW_FIELDS (lawRecord, certificates_ref) leaves row B5 quiet; R10 R-PATH-MASK a claim or
- *   status word inside a file path never counts (the mask that keeps "04-admission-and-semantics.md" from reading as a claim).
+ *   "e.g."); R3 R-PARAPHRASE a claim outside CLAIMS (ships, runs, is the runtime law); R4 R-LOOKALIKE a look-alike letter, a
+ *   look-alike hyphen (U+2010, U+2011, U+2013, U+2212) or an inserted invisible inside a name; R5 R-ENCODED an HTML reference or a
+ *   JS escape inside a name; R6 R-COMPOSED a name assembled from literal parts; R7 R-CODE-LIST a list inside a code comment is one
+ *   sentence, so one item's qualifier covers another; R8 R-OUTSIDE-ROOTS a file outside the judged surfaces (test/, vendor/,
+ *   node_modules/, .beads/, new-feedback/, media/, dist/, .codex/, .github/ and the root's non-.md files such as forge.toml,
+ *   package.json, biome.json, tsconfig*.json, vitest*.ts, LICENSE and .gitignore) - the bead export is the requirement's own text
+ *   and carries findings when judged; R9 R-TRIPWIRE-SPELLING a successor law field spelled outside LAW_FIELDS (lawRecord,
+ *   certificates_ref) leaves row B5 quiet; R10 R-PATH-MASK a claim or status word inside a file path never counts (the mask that
+ *   keeps "04-admission-and-semantics.md" from reading as a claim).
+ * RESPIN 1 (gate g10-gate-s73 refusal #1 of cut cb229d8e): U1 RENDERED-TEXT DOCS TRUTH cured - C1 and C2 read the dossier through the
+ *   shared rendered view, so a section hidden in an HTML comment is refused (S8, S9); U2 DOCS SECTION BOUND + HEADING-UNIQUENESS +
+ *   SAME-VIEW cured - C1's sections run to the next heading of level 1-3, "## Named IDs" binds once in the rendered view and its rows
+ *   come from its own table, and the dossier is frozen with its posture pinned (S1-S7); S1-S9 are pinned as red controls. Riders
+ *   cured: F3 (row A6), F4 (row A1's walker controls), F5 (row B5 reads parsed code, with bare-mention and comment controls), F6
+ *   (one named-ID row per program block, its own words quoted), F7 and F8 (R4 and R8 name the families with pinned quiet rows),
+ *   F12 (CSO README.md:23-39).
  * SCOPE: the vocabularies are this cut's reading of the filing; the program lines are measured at the pin and not re-read here
- * (the census is hermetic), so a program change is seen only when a cut re-measures STATUS_LINES.
+ * (the census is hermetic), so a program change is seen only when a cut re-measures STATUS_LINES and ID_ROWS.
  *
- * Display paths added: none. Test-only: spawns nothing and writes nothing; the planted trees are in-memory maps; the pages, the
- * receipts, the dossier, the wider surfaces, the vendored SDK declarations and the bead export are only read.
+ * Display paths added: none. Test-only: spawns nothing and writes nothing; the planted trees and the dossier shapes are in-memory;
+ * the pages, the receipts, the dossier, the wider surfaces, the vendored SDK declarations and the bead export are only read.
  */
 import { createHash } from "node:crypto";
 import { type Dirent, readdirSync, readFileSync } from "node:fs";
-import { dirname, join, relative, sep } from "node:path";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { resultFromJson } from "@hyperunix/sdk";
+import { marked, type Tokens } from "marked";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import { HYPERUNIX_EXECUTION_KINDS, type HyperUnixTopologyContext, hxLiveInvariant, hyperunixTopology } from "../src/workbench/hyperunix-observer.js";
 import { nativeEvidence, nativeRefOf } from "../src/workbench/native-evidence.js";
 import { type HyperUnixReader, registerHyperUnixFind } from "../src/workbench/providers/hyperunix.js";
+import { docsSection, type RenderedBlock, sectionMatches, sectionTables } from "./helpers/census.js";
 
 type Json = { [key: string]: JsonValue };
 
@@ -161,7 +197,7 @@ interface Name {
 /** The statement's named IDs, as acceptance (a) spells their prefixes. */
 const NAMES: readonly Name[] = [
   { id: "HXSI", prefix: "HXSI-", source: "HXSI-01..06, SIO 04-admission-and-semantics.md:22-32" },
-  { id: "TI", prefix: "TI-", source: "TI-*, SIO 08-theorem-crosswalk.md:7-18, :32, :47-48, :58-61" },
+  { id: "TI", prefix: "TI-", source: "TI-*, SIO 08-theorem-crosswalk.md:7-18, :30-32, :44-48, :58-61, :66-72" },
   { id: "HXOPTIM", prefix: "hx.optim.", source: "the proposed hx.optim.spoke.exchange.v1 law, CSO README.md:27" },
 ];
 interface Vocabulary {
@@ -221,6 +257,66 @@ const LAW_FIELDS: readonly string[] = ["law_id", "lawId", "certificate_refs", "c
 const SDK_DIST = "node_modules/@hyperunix/sdk/dist";
 const SDK_DECLARATIONS_FLOOR = 10;
 const HX_MODULES: readonly string[] = ["src/workbench/providers/hyperunix.ts", "src/workbench/hyperunix-observer.ts", "src/workbench/native-evidence.ts"];
+/** B5's bare-mention controls: a law field named in code (a property access, a string key, a destructured name, an argument) is a hit;
+ * a comment naming one is not (wb-x0xu.2 respin 1, rider F5: the comment false-red). */
+const LAW_MENTIONS: readonly (readonly [string, readonly string[]])[] = [
+  ["const refs = result.certificate_refs;\n", ["certificate_refs"]],
+  ['const id = value["law_id"];\n', ["law_id"]],
+  ["const { lawId } = result;\n", ["lawId"]],
+  ["consume(result.certificateRefs);\n", ["certificateRefs"]],
+  ["// never projects certificate_refs\n/* law_id and lawId */\n/** certificateRefs */\nconst kept = 1;\n", []],
+];
+
+/** The dossier's rendered title (its one level-1 heading) and the three level-2 sections under it, in document order. */
+const DOSSIER_TITLE = "wb-x0xu.2 dossier: hx-sio-cso-design-status-words-never-relabelled";
+const STATUS_HEADING = "Status rows";
+const IDS_HEADING = "Named IDs";
+const POSTURE_HEADING = "What Pi says about them";
+/** The dossier's intro paragraphs, under its title. */
+const DOSSIER_INTRO: readonly string[] = [
+  "The Pi-side dossier of the program-triage-2026-10-22 group behind wb-x0xu.2 (HX-STRUCTURAL-INFORMATION-OPTIMIZATION-R2), from the owner filing on that bead. It records the status words of two HyperUnix-CLI design programs at the filing's pin, HyperUnix-CLI commit 0091719d02887910fa0c2fb6693a32723e243600, read with read-only git show. CSO is docs/programs/certified-structural-optimization-2026-10-18 and SIO is docs/programs/structural-information-optimization-2026-10-17.",
+  "test/workbench-hx-sio-design-status-census.test.ts judges every sentence here beside the pages it judges, and holds each status row to its program line byte for byte.",
+];
+/** The named-ID table: its header and one row per program block at the pin, each cell as its markdown source (marked's cell text);
+ * a status cell quotes the block's own words where the block states them (rider F6). */
+const ID_HEADER: readonly string[] = ["Named IDs", "Program rows at the pin", "Status words Pi echoes"];
+const ID_ROWS: readonly (readonly string[])[] = [
+  ["HXSI-01 to HXSI-06", "SIO 04-admission-and-semantics.md:22-32, the applicable laws", "DESIGN ONLY; not implemented (SIO README.md:3)"],
+  [
+    "TI-01 to TI-12",
+    "SIO 08-theorem-crosswalk.md:7-18, the runtime-opportunity matrix",
+    'DESIGN ONLY (SIO README.md:3): "conditional human derivations, externally stated paper theorems and open Lean/semantics bridges" (SIO 08-theorem-crosswalk.md:20)',
+  ],
+  [
+    "TI-18 to TI-20",
+    "SIO 08-theorem-crosswalk.md:30-32, the 2026-10-18 proof-source update",
+    'DESIGN ONLY (SIO README.md:3): "source-authored, not Lean-elaborated" theorem terms (SIO 08-theorem-crosswalk.md:26), "No physical law was registered" (SIO 08-theorem-crosswalk.md:36), and for TI-20 "Positive-rational global sorting remains a human proof awaiting Lean elaboration" (SIO 08-theorem-crosswalk.md:32)',
+  ],
+  [
+    "TI-21 to TI-23",
+    "SIO 08-theorem-crosswalk.md:44-48, the factorized evidence and rational exchange proof cut",
+    'DESIGN ONLY (SIO README.md:3): "source-authored conditional Lean theorem terms, not compiler elaboration receipts" (SIO 08-theorem-crosswalk.md:50), and for TI-23 global sorting "Full unconditional rank normalization **not yet proved in Lean**" (SIO 08-theorem-crosswalk.md:48)',
+  ],
+  [
+    "TI-24, TI-29 and TI-30",
+    "SIO 08-theorem-crosswalk.md:58-61, the 2026-10-18 repair ledger",
+    'DESIGN ONLY (SIO README.md:3): for TI-24 global finite spoke ordering "Human proof" and Lean "source-authored only" (SIO 08-theorem-crosswalk.md:58), for the TI-24 pairwise total-preorder "Refuted by zero-cost rational counterexample" (SIO 08-theorem-crosswalk.md:59), for TI-29 "Lean source authored only" (SIO 08-theorem-crosswalk.md:60) and for TI-30 "Human theorem" and "Lean source authored only" (SIO 08-theorem-crosswalk.md:61)',
+  ],
+  [
+    "TI-31 to TI-52",
+    "SIO 08-theorem-crosswalk.md:66-72, the next theorem results and admissibility limits",
+    'DESIGN ONLY (SIO README.md:3): "Do not relabel these newly human-proved results as verified Lean modules" (SIO 08-theorem-crosswalk.md:72)',
+  ],
+  ["hx.optim.spoke.exchange.v1", "CSO README.md:23-39, the proposed law record: a data model, not existing API", "DESIGN ONLY; no runtime law admitted (CSO README.md:3)"],
+];
+/** The posture Pi states about the named IDs (row C3 holds its claim span, status words and law pair to the filing). */
+const DOSSIER_POSTURE: readonly string[] = [
+  "Pi never presents HXSI-01 to HXSI-06, a TI- row or hx.optim.spoke.exchange.v1 as a registered or admitted runtime law, a selected hx plan route, Lean-elaborated or benchmarked: the programs call them DESIGN ONLY, not implemented, human proof and Lean source authored only.",
+  "The proposed hx.optim.spoke.exchange.v1 record names certificate_refs TI-23, and CSO README.md:83 reads that all law admissions remain blocked.",
+  "If an HX result ever carries law_id or certificate_refs, Pi echoes them byte for byte and mints no admission or verification status. Today the vendored @hyperunix/sdk 0.1.0 keeps them only in its extensions sidecar, which the hyperunix.find provider output echoes verbatim and the reader adapter never reads.",
+];
+/** The sha-256 of the dossier's bytes (they equal composedDossier()), measured at the cut. */
+const DOSSIER_SHA256 = "8de32dcbdf46459ce6282c8cdd2ecc171aa34dd287936e11eb3ddeb0b7e1d98f";
 
 interface Row {
   readonly id: string;
@@ -232,7 +328,7 @@ const ROWS: readonly Row[] = [
   {
     id: "A",
     label: "(a) a census over docs/workbench/07-native-integrations.md, 14-qa-and-benchmarks.md, TRACEABILITY.md, receipts/ and this group's dossier asserts no sentence names HXSI-, TI- or hx.optim. as admitted/registered/verified/graduated/benchmarked without the programs' qualifier",
-    pins: ["A1", "A2", "A3", "A4", "A5"],
+    pins: ["A1", "A2", "A3", "A4", "A5", "A6"],
   },
   {
     id: "B",
@@ -242,7 +338,7 @@ const ROWS: readonly Row[] = [
   {
     id: "C",
     label: "(c) the dossier rows carry CSO README.md:3 and SIO README.md:3 verbatim",
-    pins: ["C1", "C2"],
+    pins: ["C1", "C2", "C3"],
   },
   {
     id: "F",
@@ -325,10 +421,10 @@ function constants(): unknown {
     lawFields: LAW_FIELDS,
     sdkDeclarationsFloor: SDK_DECLARATIONS_FLOOR,
     hxModules: HX_MODULES,
+    dossierText: { title: DOSSIER_TITLE, sections: [STATUS_HEADING, IDS_HEADING, POSTURE_HEADING], intro: DOSSIER_INTRO, idHeader: ID_HEADER, idRows: ID_ROWS, posture: DOSSIER_POSTURE, sha256: DOSSIER_SHA256 },
   };
 }
 
-const posix = (path: string): string => path.split(sep).join("/");
 const textOf = (path: string): string => readFileSync(join(REPO, path), "utf8");
 const sha256 = (text: string): string => createHash("sha256").update(text).digest("hex");
 const escapeRegExp = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -341,23 +437,56 @@ interface Walk {
   readonly files: string[];
   readonly symlinks: string[];
 }
-/** Every regular file below the repository path `start`, repository-relative, in name order; symlinks are refused. */
-function walk(start: string): Walk {
+interface Entry {
+  readonly name: string;
+  readonly kind: "file" | "directory" | "symlink" | "other";
+}
+/** A directory entry as the walker reads it: a symlink first (lstat semantics), never followed. */
+const entryOf = (entry: Pick<Dirent, "name" | "isSymbolicLink" | "isDirectory" | "isFile">): Entry => ({
+  name: entry.name,
+  kind: entry.isSymbolicLink() ? "symlink" : entry.isDirectory() ? "directory" : entry.isFile() ? "file" : "other",
+});
+/** The repository directory's entries, every one of them (hidden entries included). */
+const listed = (directory: string): Entry[] => readdirSync(join(REPO, directory), { withFileTypes: true }).map(entryOf);
+/** Every regular file below `start` as `list` reports the tree, `start`-prefixed, in name order: a hidden entry is read like any other,
+ * a symlink is refused and never followed (row A1 pins both on a synthetic tree, rider F4). */
+function walkWith(start: string, list: (directory: string) => readonly Entry[]): Walk {
   const files: string[] = [];
   const symlinks: string[] = [];
   const visit = (directory: string): void => {
-    const entries: Dirent[] = readdirSync(directory, { withFileTypes: true });
-    entries.sort((left, right) => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0));
+    const entries = [...list(directory)].sort((left, right) => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0));
     for (const entry of entries) {
-      const path = join(directory, entry.name);
-      if (entry.isSymbolicLink()) symlinks.push(posix(relative(REPO, path)));
-      else if (entry.isDirectory()) visit(path);
-      else if (entry.isFile()) files.push(posix(relative(REPO, path)));
+      const path = `${directory}/${entry.name}`;
+      if (entry.kind === "symlink") symlinks.push(path);
+      else if (entry.kind === "directory") visit(path);
+      else if (entry.kind === "file") files.push(path);
     }
   };
-  visit(join(REPO, start));
+  visit(start);
   return { files, symlinks };
 }
+/** Every regular file below the repository path `start`, repository-relative, in name order; symlinks are refused. */
+const walk = (start: string): Walk => walkWith(start, listed);
+/** A1's synthetic tree: a hidden file and a hidden directory, a symlink, a nested directory and a non-regular entry. */
+const SYNTHETIC: Readonly<Record<string, readonly Entry[]>> = {
+  r: [
+    { name: "b.md", kind: "file" },
+    { name: ".hidden.md", kind: "file" },
+    { name: "link.md", kind: "symlink" },
+    { name: "sub", kind: "directory" },
+    { name: ".dot", kind: "directory" },
+    { name: "pipe", kind: "other" },
+  ],
+  "r/sub": [{ name: "c.md", kind: "file" }],
+  "r/.dot": [{ name: "d.md", kind: "file" }],
+};
+/** A fake directory entry of one kind, for entryOf's own control. */
+const fakeEntry = (name: string, kind: Entry["kind"]): Pick<Dirent, "name" | "isSymbolicLink" | "isDirectory" | "isFile"> => ({
+  name,
+  isSymbolicLink: () => kind === "symlink",
+  isDirectory: () => kind === "directory",
+  isFile: () => kind === "file",
+});
 
 function lineStarts(text: string): number[] {
   const starts = [0];
@@ -515,6 +644,25 @@ function plantedTree(pick: (mutant: readonly [string, string, string, string]) =
   return tree;
 }
 
+/** A6's plants (rider F3), one per non-.md kind the wider surfaces carry - the adapter's .ts, the served skill text's .yaml, qa's .mjs:
+ * [path, claim, its qualified twin, expected finding]; a claim opens its file. */
+const WIDE_MUTANTS: readonly (readonly [string, string, string, string])[] = [
+  ["src/workbench/providers/hyperunix.ts", "// HXSI-01 is a registered runtime law.", "// HXSI-01 is DESIGN ONLY and never a registered runtime law.", "src/workbench/providers/hyperunix.ts:1 HXSI: unqualified-registered"],
+  [".agents/skills/beads/agents/openai.yaml", "# TI-23 is benchmarked by the hx gate.", "# TI-23 is a human proof and never benchmarked by the hx gate.", ".agents/skills/beads/agents/openai.yaml:1 TI: unqualified-benchmarked"],
+  ["qa/workbench/boot-import-census.mjs", "// The hx.optim.spoke.exchange.v1 law is admitted.", "// The hx.optim.spoke.exchange.v1 law is DESIGN ONLY: no runtime law admitted.", "qa/workbench/boot-import-census.mjs:1 HXOPTIM: unqualified-admitted"],
+];
+/** The live wider tree with each A6 plant opening its file; a plant's file must be one the wider walk judges. */
+function plantedWideTree(pick: (mutant: readonly [string, string, string, string]) => string): Tree {
+  const tree = new Map(wideRead().tree);
+  for (const mutant of WIDE_MUTANTS) {
+    const [path] = mutant;
+    const existing = tree.get(path);
+    if (existing === undefined) throw new Error(`the wider walk judges no ${path}`);
+    tree.set(path, `${pick(mutant)}\n${existing}`);
+  }
+  return tree;
+}
+
 const WS = "/workspace/hx-sio-design-status-census";
 const BINARY = "cd".repeat(32);
 const CONTEXT: HyperUnixTopologyContext = {
@@ -651,41 +799,235 @@ async function providerOutput(document: Json, served: string[]): Promise<JsonVal
   registerHyperUnixFind(registry, reader, WS);
   return registry.invoke("hyperunix.find", INPUT, { grants: GRANTS, signal: new AbortController().signal });
 }
-/** The LAW_FIELDS a text names as whole identifiers. */
-const lawFieldsIn = (text: string): string[] => LAW_FIELDS.filter(field => new RegExp(`(?<![\\w$])${field}(?![\\w$])`).test(text));
+/** The LAW_FIELDS a TypeScript text names in code: an identifier (a declaration, a property access, a destructured or private name) or a
+ * string literal spelling one, read from the parsed source, so a comment never counts (rider F5) and an escaped spelling does. */
+function lawFieldsIn(text: string): string[] {
+  const source = ts.createSourceFile("fields.ts", text, ts.ScriptTarget.Latest, false, ts.ScriptKind.TS);
+  const named = new Set<string>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) || ts.isStringLiteralLike(node)) named.add(node.text);
+    else if (ts.isPrivateIdentifier(node)) named.add(node.text.slice(1));
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return LAW_FIELDS.filter(field => named.has(field));
+}
 
-interface Section {
+/** A reader's refusal: a short code naming the check that failed, and the detail a red reads. */
+type Failure = readonly [code: string, detail: string];
+const failIf = (bad: boolean, code: string, detail: string): Failure[] => (bad ? [[code, detail]] : []);
+/** A markdown table: the header, its delimiter row and the body rows, one line each. */
+const tableOf = (header: readonly string[], rows: readonly (readonly string[])[]): string => [header, header.map(() => "---"), ...rows].map(cells => `| ${cells.join(" | ")} |`).join("\n");
+/** A status section's body: the program path line, then the program line as one "> " quote. */
+const statusBody = (line: StatusLine): string => `${line.path}\n\n> ${line.text}`;
+interface DossierSection {
   readonly heading: string;
-  readonly lines: string[];
+  readonly depth: number;
+  readonly parents: readonly string[];
+  readonly body: string;
 }
-/** A markdown text's sections: each heading line with the non-blank lines up to the next heading. */
-function sectionsOf(text: string): Section[] {
-  const sections: Section[] = [];
-  for (const line of text.split("\n")) {
-    if (/^#{1,6} /.test(line)) sections.push({ heading: line, lines: [] });
-    else if (line.trim() !== "") sections.at(-1)?.lines.push(line);
+/** The dossier's sections in document order - the title's own (the intro) and the three under it - each with its markdown body. */
+function dossierSections(): DossierSection[] {
+  return [
+    { heading: DOSSIER_TITLE, depth: 1, parents: [], body: DOSSIER_INTRO.join("\n\n") },
+    { heading: STATUS_HEADING, depth: 2, parents: [DOSSIER_TITLE], body: STATUS_LINES.map(line => `### ${line.cite}\n\n${statusBody(line)}`).join("\n\n") },
+    { heading: IDS_HEADING, depth: 2, parents: [DOSSIER_TITLE], body: tableOf(ID_HEADER, ID_ROWS) },
+    { heading: POSTURE_HEADING, depth: 2, parents: [DOSSIER_TITLE], body: DOSSIER_POSTURE.join("\n\n") },
+  ];
+}
+/** The dossier's bytes as the census composes them: each section's heading and body, one blank line between blocks, one final newline. */
+const composedDossier = (): string => `${dossierSections().map(section => `${"#".repeat(section.depth)} ${section.heading}\n\n${section.body}`).join("\n\n")}\n`;
+const FRAME = "census frame";
+/** What a reader sees of a markdown fragment: its blocks in the shared rendered view (docsSection, under a synthetic title). HTML in a
+ * pinned fragment needs no guard here: sectionMatches refuses any dossier section that carries HTML (control CH5). */
+function rendered(markdown: string): readonly RenderedBlock[] {
+  const section = docsSection(`# ${FRAME}\n\n${markdown}\n`, FRAME, 1, []);
+  if (!section.ok) throw new Error(`the census's own markdown does not render as a section: ${section.why}`);
+  return section.blocks;
+}
+/** The top-level headings marked renders, in order, as "<level> <text>". */
+const headingsOf = (markdown: string): string[] =>
+  marked
+    .lexer(markdown)
+    .filter((token): token is Tokens.Heading => token.type === "heading")
+    .map(token => `${token.depth} ${token.text}`);
+/** Acceptance (c)'s status rows as a reader sees them (respin 1, U1/U2): each "### <cite>" section binds once in the rendered view under
+ * the title and "Status rows", runs to the next heading of level 1-3 (a "####" belongs to it), is HTML-free and is exactly its path
+ * paragraph and its one quote; the quote's source line is the program line byte for byte, once in the whole dossier, with the sha-256
+ * measured at the pin. */
+function statusFailures(markdown: string, pinned: readonly StatusLine[] = STATUS_LINES): Failure[] {
+  const lines = markdown.split("\n");
+  return pinned.flatMap(line => {
+    const where = `${DOSSIER} "${line.cite}"`;
+    const match = sectionMatches(docsSection(markdown, line.cite, 3, [DOSSIER_TITLE, STATUS_HEADING]), rendered(statusBody(line)));
+    const verbatim = lines.filter(source => source === `> ${line.text}`).length;
+    return [
+      ...failIf(!match.ok, "section", `${where}: ${match.why}`),
+      ...failIf(verbatim !== 1, "verbatim", `${where}: the program line's source occurs ${verbatim} times in the dossier, never exactly once`),
+      ...failIf(sha256(line.text) !== line.sha256, "sha256", `${where}: the pinned line is not the line measured at the pin`),
+    ];
+  });
+}
+/** A named-ID table's program-row cell: a program, a file and its line or line range first. */
+const PROGRAM_ROW = /^(?:SIO|CSO) \S+\.md:\d+(?:-\d+)?(?:, |$)/;
+/** Acceptance (c)'s named-ID rows as a reader sees them (respin 1, U1/U2): "## Named IDs" binds once in the rendered view under the
+ * title, runs to the next level-1/2 heading (a "###" belongs to it), is HTML-free and is exactly the one table of ID_ROWS; the rows are
+ * read from that section's OWN table (sectionTables, the same binding), and each names one family, cites its program rows and echoes
+ * a status word, the rows naming every family in NAMES order. */
+function idFailures(markdown: string, pinned: readonly (readonly string[])[] = ID_ROWS): Failure[] {
+  const where = `${DOSSIER} "${IDS_HEADING}"`;
+  const section = docsSection(markdown, IDS_HEADING, 2, [DOSSIER_TITLE]);
+  if (!section.ok) return [["section", `${where}: ${section.why}`]];
+  const match = sectionMatches(section, rendered(tableOf(ID_HEADER, pinned)));
+  const grids = sectionTables(markdown, IDS_HEADING, 2, [DOSSIER_TITLE]).grids;
+  const out: Failure[] = failIf(!match.ok, "blocks", `${where}: ${match.why}`);
+  if (grids.length !== 1) return [...out, ["tables", `${where}: the section holds ${grids.length} tables, never exactly the named-ID table`]];
+  const [header = [], ...rows] = grids[0] ?? [];
+  out.push(...failIf(JSON.stringify(header) !== JSON.stringify(ID_HEADER), "header", `${where}: the table's header reads ${JSON.stringify(header)}`));
+  out.push(...failIf(JSON.stringify(rows) !== JSON.stringify(pinned), "rows", `${where}: the table's rows are not the census's: ${JSON.stringify(rows)}`));
+  for (const [index, cells] of rows.entries()) {
+    const [ids = "", at = "", words = ""] = cells;
+    const row = `${where} row ${index + 1}`;
+    out.push(...failIf(cells.length !== 3 || namesIn(ids).length !== 1, "row-family", `${row}: names ${JSON.stringify(namesIn(ids))} in ${cells.length} cells, never one family in three`));
+    out.push(...failIf(!PROGRAM_ROW.test(at), "row-cite", `${row}: cites no program row: ${at}`));
+    out.push(...failIf(qualifiersIn(words).length === 0, "row-status", `${row}: echoes none of the programs' status words: ${words}`));
   }
-  return sections;
+  const families = [...new Set(rows.flatMap(cells => namesIn(cells[0] ?? "")))];
+  out.push(...failIf(JSON.stringify(families) !== JSON.stringify(NAMES.map(name => name.id)), "families", `${where}: the rows name the families ${JSON.stringify(families)}`));
+  return out;
 }
-/** The dossier's status rows: each "### <cite>" section's one path line and its one "> " quote line. */
-function statusRowsOf(text: string): { cite: string; path: string; text: string }[] {
-  return sectionsOf(text)
-    .filter(section => section.heading.startsWith("### "))
-    .map(section => {
-      const quotes = section.lines.filter(line => line.startsWith("> "));
-      const paths = section.lines.filter(line => !line.startsWith("> "));
-      return {
-        cite: section.heading.slice(4),
-        path: paths.length === 1 ? (paths[0] ?? "") : `${paths.length} path lines`,
-        text: quotes.length === 1 ? (quotes[0] ?? "").slice(2) : `${quotes.length} quote lines`,
-      };
-    });
+/** The dossier as a reader sees it (respin 1, U2; row C3): it opens with its title, renders exactly the composed headings in order, and
+ * each of its four sections binds once in the rendered view under its parent, HTML-free, its blocks exactly the composed section's. */
+function dossierFailures(markdown: string): Failure[] {
+  const headings = headingsOf(markdown);
+  const expected = headingsOf(composedDossier());
+  return [
+    ...failIf(!markdown.startsWith(`# ${DOSSIER_TITLE}\n`), "title", `${DOSSIER}: the file does not open with its title`),
+    ...failIf(JSON.stringify(headings) !== JSON.stringify(expected), "headings", `${DOSSIER}: renders the headings ${JSON.stringify(headings)}, never ${JSON.stringify(expected)}`),
+    ...dossierSections().flatMap(section => {
+      const match = sectionMatches(docsSection(markdown, section.heading, section.depth, section.parents), rendered(section.body));
+      return failIf(!match.ok, `section:${section.heading}`, `${DOSSIER} "${section.heading}": ${match.why}`);
+    }),
+  ];
 }
-/** The dossier's named-ID table: the body rows of the table under "## Named IDs", as cells. */
-function idRowsOf(text: string): string[][] {
-  const section = sectionsOf(text).find(part => part.heading === "## Named IDs");
-  const rows = (section?.lines ?? []).filter(line => line.startsWith("|")).map(line => line.split("|").slice(1, -1).map(cell => cell.trim()));
-  return rows.slice(2);
+/** A shape's edit: `from` (present exactly once) becomes `to`; an empty `from` appends `to`. */
+type Edit = readonly [from: string, to: string];
+function edited(text: string, edits: readonly Edit[]): string {
+  let out = text;
+  for (const [from, to] of edits) {
+    if (from === "") {
+      out += to;
+      continue;
+    }
+    const at = out.indexOf(from);
+    if (at < 0 || out.indexOf(from, at + 1) >= 0) throw new Error(`a dossier shape's anchor is not in the dossier exactly once: ${from.slice(0, 60)}`);
+    out = out.slice(0, at) + to + out.slice(at + from.length);
+  }
+  return out;
+}
+/** The end of the CSO status quote, the anchor of the shapes that edit acceptance (c)'s first row. */
+const CSO_TAIL = "benchmark result claimed.**";
+/** The refusal's dossier probes (gate g10-gate-s73, U1/U2), re-anchored on this dossier: each one a reader must refuse. */
+const SHAPES: readonly (readonly [id: string, shape: string, edits: () => readonly Edit[]])[] = [
+  ["S1", "a second '## Named IDs' at EOF whose row echoes no status word", () => [["", `\n## ${IDS_HEADING}\n\n${tableOf(ID_HEADER, [["HXSI-07", "SIO 04-admission-and-semantics.md:33", "see the program"]])}\n`]]],
+  [
+    "S2",
+    "a '### Pending' subsection inside '## Named IDs' adding a TI-31 row with no status word",
+    () => [[`\n\n## ${POSTURE_HEADING}\n`, `\n\n### Pending\n\n${tableOf(ID_HEADER, [["TI-31", "SIO 08-theorem-crosswalk.md:62", "open"]])}\n\n## ${POSTURE_HEADING}\n`]],
+  ],
+  [
+    "S3",
+    "a '## Notes' section above '## Named IDs' holding the real table in an HTML comment, the real status cells weakened to '-'",
+    () => [
+      [
+        `## ${IDS_HEADING}\n\n${tableOf(ID_HEADER, ID_ROWS)}`,
+        `## Notes\n\n<!--\n## ${IDS_HEADING}\n\n${tableOf(ID_HEADER, ID_ROWS)}\n-->\n\n## ${IDS_HEADING}\n\n${tableOf(
+          ID_HEADER,
+          ID_ROWS.map(([ids = "", at = ""]) => [ids, at, "-"]),
+        )}`,
+      ],
+    ],
+  ],
+  ["S4", "a '#### Note' inside '### CSO README.md:3' quoting a superseding status", () => [[CSO_TAIL, `${CSO_TAIL}\n\n#### Note\n\n> Superseded: this status no longer applies.`]]],
+  [
+    "S5",
+    "a hidden '### CSO README.md:3' copy inside an HTML comment at EOF",
+    () => [["", `\n<!--\n### ${STATUS_LINES[0]?.cite}\n\n${STATUS_LINES[0] === undefined ? "" : statusBody(STATUS_LINES[0])}\n-->\n`]],
+  ],
+  [
+    "S6",
+    "a count-preserving rewrite: the second intro paragraph and the first two posture paragraphs dropped, a duplicate '## Named IDs' appended",
+    () => [
+      [`${DOSSIER_INTRO[1]}\n\n`, ""],
+      [`${DOSSIER_POSTURE[0]}\n\n${DOSSIER_POSTURE[1]}\n\n`, ""],
+      ["", `\n## ${IDS_HEADING}\n\n| HXSI-07 | registered, design-only |\n| TI-31 | admitted, not implemented |\n`],
+    ],
+  ],
+  [
+    "S7",
+    "a count-preserving section-bound rewrite: two intro sentences dropped, a '#### Note' with a superseding quote inside '### CSO README.md:3'",
+    () => [
+      [`${DOSSIER_INTRO[1]}\n\n`, ""],
+      [" CSO is docs/programs/certified-structural-optimization-2026-10-18 and SIO is docs/programs/structural-information-optimization-2026-10-17.", ""],
+      [CSO_TAIL, `${CSO_TAIL}\n\n#### Note\n\n> Superseded: this status no longer applies.`],
+    ],
+  ],
+  [
+    "S8",
+    "the whole '## Named IDs' table wrapped in one HTML comment, no other edit",
+    () => [
+      [`## ${IDS_HEADING}\n\n| ${ID_HEADER[0]} |`, `## ${IDS_HEADING}\n<!--\n| ${ID_HEADER[0]} |`],
+      [`| ${(ID_ROWS.at(-1) ?? []).join(" | ")} |\n`, `| ${(ID_ROWS.at(-1) ?? []).join(" | ")} |-->\n`],
+    ],
+  ],
+  ["S9", "the CSO status quote wrapped in an HTML comment", () => [["\n\n> **2026-10-18. DESIGN ONLY.", "\n<!--\n> **2026-10-18. DESIGN ONLY."], [CSO_TAIL, `${CSO_TAIL} -->`]]],
+  ["S10", "a superseding paragraph inside '## Named IDs' above its table, the table untouched", () => [[`## ${IDS_HEADING}\n\n`, `## ${IDS_HEADING}\n\nThese rows are superseded.\n\n`]]],
+  [
+    "S11",
+    "a named-ID row re-split across its cells, its rendered text unchanged (the same-view class)",
+    () => [["| HXSI-01 to HXSI-06 | SIO 04-admission-and-semantics.md:22-32,", "| HXSI-01 to | HXSI-06 SIO 04-admission-and-semantics.md:22-32,"]],
+  ],
+  ["S12", "a status cell's words bolded, its rendered text unchanged", () => [['| DESIGN ONLY (SIO README.md:3): "conditional human derivations', '| **DESIGN ONLY** (SIO README.md:3): "conditional human derivations']]],
+  ["S13", "a line above the dossier's title", () => [[`# ${DOSSIER_TITLE}\n`, `Draft.\n\n# ${DOSSIER_TITLE}\n`]]],
+  ["S14", "a '## Notes' section between '## Status rows' and '## Named IDs', every pinned section untouched", () => [[`\n\n## ${IDS_HEADING}\n`, `\n\n## Notes\n\nSee the program.\n\n## ${IDS_HEADING}\n`]]],
+];
+/** C2's coordinated hollows: ID_ROWS and the dossier's table edited together, so the table matches its pin and only a row rule refuses it. */
+const ROW_HOLLOWS: readonly (readonly [id: string, shape: string, rows: () => readonly (readonly string[])[]])[] = [
+  ["CH1", "a status cell emptied of the programs' words", () => ID_ROWS.map((cells, index) => (index === 0 ? [cells[0] ?? "", cells[1] ?? "", "-"] : cells))],
+  ["CH2", "a program-row cell stripped of its cite", () => ID_ROWS.map((cells, index) => (index === 0 ? [cells[0] ?? "", "the applicable laws", cells[2] ?? ""] : cells))],
+  ["CH3", "a row naming two families", () => ID_ROWS.map((cells, index) => (index === 0 ? ["HXSI-01 to HXSI-06 and TI-23", cells[1] ?? "", cells[2] ?? ""] : cells))],
+  ["CH4", "the hx.optim.spoke.exchange.v1 row removed", () => ID_ROWS.slice(0, -1)],
+  ["CH5", "a status cell carrying an HTML comment", () => ID_ROWS.map((cells, index) => (index === 0 ? [cells[0] ?? "", cells[1] ?? "", `${cells[2] ?? ""} <!-- superseded -->`] : cells))],
+];
+/** Each coordinated row hollow, read against its own hollowed rows: every one is refused, by code. */
+function rowHollows(): { id: string; codes: string[] }[] {
+  const live = textOf(DOSSIER);
+  return ROW_HOLLOWS.map(([id, shape, rows]) => {
+    const hollow = rows();
+    const codes = idFailures(edited(live, [[tableOf(ID_HEADER, ID_ROWS), tableOf(ID_HEADER, hollow)]]), hollow).map(([code]) => code);
+    expect(codes.length, `${id} (${shape}) is refused`).toBeGreaterThan(0);
+    return { id, codes };
+  });
+}
+/** C1's coordinated hollow: the CSO status line rewritten in the dossier and in its pin together, the sha-256 measured at the pin kept. */
+function lineHollow(): string[] {
+  const [first, ...rest] = STATUS_LINES;
+  if (first === undefined) throw new Error("the census pins no status line");
+  const text = first.text.replace(" DESIGN ONLY.", "");
+  return statusFailures(edited(textOf(DOSSIER), [[first.text, text]]), [{ ...first, text }, ...rest]).map(([code]) => code);
+}
+/** Each named shape applied to the live dossier and read by `reader`: every one changes the bytes and is refused, by code. */
+function controlsOf(ids: readonly string[], reader: (markdown: string) => Failure[]): { id: string; codes: string[] }[] {
+  const live = textOf(DOSSIER);
+  return ids.map(id => {
+    const shape = SHAPES.find(([name]) => name === id);
+    if (shape === undefined) throw new Error(`no dossier shape ${id}`);
+    const mutant = edited(live, shape[2]());
+    expect(mutant === live, `${id} changes the dossier`).toBe(false);
+    const codes = reader(mutant).map(([code]) => code);
+    expect(codes.length, `${id} (${shape[1]}) is refused`).toBeGreaterThan(0);
+    return { id, codes };
+  });
 }
 
 interface ExportRow {
@@ -790,7 +1132,21 @@ const CASES: readonly Case[] = [
   { pin: "R1", kind: "md", texts: ["HXSI-01 is a registered runtime law and the TI rows elsewhere are DESIGN ONLY."], outcome: [[]] },
   { pin: "R2", kind: "md", texts: ["HXSI-01 is an interval law. It is registered.", "HXSI-01 (e.g. the interval law) is registered."], outcome: [[], []] },
   { pin: "R3", kind: "md", texts: ["HXSI-01 ships as a runtime law and hx plans with it.", "The hx.optim.spoke.exchange.v1 law is live."], outcome: [[], []] },
-  { pin: "R4", kind: "md", texts: [`HXS${cp(0x0399)}-01 is registered.`, `HXSI${cp(0x200b)}-01 is registered.`, `T${cp(0x0399)}-23 is benchmarked.`, `hx${cp(0x2024)}optim.spoke is admitted.`], outcome: [[], [], [], []] },
+  {
+    pin: "R4",
+    kind: "md",
+    texts: [
+      `HXS${cp(0x0399)}-01 is registered.`,
+      `HXSI${cp(0x200b)}-01 is registered.`,
+      `T${cp(0x0399)}-23 is benchmarked.`,
+      `hx${cp(0x2024)}optim.spoke is admitted.`,
+      `HXSI${cp(0x2010)}01 is registered.`,
+      `HXSI${cp(0x2011)}01 is registered.`,
+      `TI${cp(0x2013)}23 is benchmarked.`,
+      `TI${cp(0x2212)}23 is benchmarked.`,
+    ],
+    outcome: [[], [], [], [], [], [], [], []],
+  },
   { pin: "R5", kind: "md", texts: ["HXSI&#45;01 is registered.", "TI\\u002d23 is benchmarked.", "hx&#46;optim.spoke is admitted."], outcome: [[], [], []] },
   { pin: "R6", kind: "ts", texts: ['const law = "hx." + "optim.spoke"; // registered\n', 'const id = ["HXSI", "01"].join("-"); // registered\n'], outcome: [[], []] },
   { pin: "R7", kind: "ts", texts: ["/**\n * - HXSI-01 is registered\n * - TI-24 is DESIGN ONLY\n */\n"], outcome: [[]] },
@@ -819,7 +1175,16 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
       walked: SURFACES.map(surface => ({ id: surface.id, floorMet: true, anchorRead: true })),
       symlinks: [],
     });
-    return { walked, symlinks };
+    const synthetic = walkWith("r", directory => SYNTHETIC[directory] ?? []);
+    const kinds = (["file", "directory", "symlink", "other"] as const).map(kind => entryOf(fakeEntry(kind, kind)).kind);
+    const hiddenListed = listed(".").filter(entry => entry.name === ".gitignore" || entry.name === ".agents").map(entry => `${entry.name}:${entry.kind}`);
+    const walker = { synthetic, kinds, hiddenListed };
+    expect(walker, "the walker reads hidden entries and refuses symlinks").toStrictEqual({
+      synthetic: { files: ["r/.dot/d.md", "r/.hidden.md", "r/b.md", "r/sub/c.md"], symlinks: ["r/link.md"] },
+      kinds: ["file", "directory", "symlink", "other"],
+      hiddenListed: [".agents:directory", ".gitignore:file"],
+    });
+    return { walked, symlinks, walker };
   },
   A2: async () => {
     const tree = namedTree();
@@ -860,6 +1225,17 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
       findings: [],
     });
     return witness;
+  },
+  A6: async () => {
+    const kinds = WIDE_MUTANTS.map(([path]) => path.slice(path.lastIndexOf(".")));
+    const planted = judge(plantedWideTree(([, claim]) => claim)).sort();
+    const quiet = judge(plantedWideTree(([, , twin]) => twin));
+    expect({ kinds, planted, quiet }, "a claim planted in a .ts, a .yaml and a .mjs file of the wider surfaces").toStrictEqual({
+      kinds: [".ts", ".yaml", ".mjs"],
+      planted: WIDE_MUTANTS.map(([, , , finding]) => finding).sort(),
+      quiet: [],
+    });
+    return { kinds, planted, quiet };
   },
   B1: async () => {
     const rows = BASES.map(([kind, licensed, base]) => {
@@ -969,43 +1345,51 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
     const hits = [...declarations.map(name => `${SDK_DIST}/${name}`), ...HX_MODULES].flatMap(file => lawFieldsIn(textOf(file)).map(field => `${file}: ${field}`));
     const sidecarDeclared = textOf(`${SDK_DIST}/result.d.ts`).includes("readonly extensions: Readonly<Record<string, JsonValue>>;");
     const controls = LAW_FIELDS.map(field => lawFieldsIn(`  readonly ${field}: string;\n`));
-    const witness = { sdkVersion, declarationsFloorMet: declarations.length >= SDK_DECLARATIONS_FLOOR, sidecarDeclared, hits, controls };
+    const mentions = LAW_MENTIONS.map(([text]) => lawFieldsIn(text));
+    const witness = { sdkVersion, declarationsFloorMet: declarations.length >= SDK_DECLARATIONS_FLOOR, sidecarDeclared, hits, controls, mentions };
     expect(witness, "a law field named by the vendored SDK or an HX module: the on-landing verbatim facet is owed").toStrictEqual({
       sdkVersion: "0.1.0",
       declarationsFloorMet: true,
       sidecarDeclared: true,
       hits: [],
       controls: LAW_FIELDS.map(field => [field]),
+      mentions: LAW_MENTIONS.map(([, expected]) => [...expected]),
     });
     return witness;
   },
   C1: async () => {
     const dossier = textOf(DOSSIER);
-    const rows = statusRowsOf(dossier);
-    expect(rows).toStrictEqual(STATUS_LINES.map(({ cite, path, text }) => ({ cite, path, text })));
-    const digests = rows.map(row => ({ cite: row.cite, sha256: sha256(row.text), raw: dossier.includes(`\n> ${row.text}\n`) }));
-    expect(digests).toStrictEqual(STATUS_LINES.map(line => ({ cite: line.cite, sha256: line.sha256, raw: true })));
-    const control = statusRowsOf("# t\n\n### X\n\np\n\n> a\n> b\n\n### Y\n\n> c\n");
-    expect(control, "the status-row reader reads its control").toStrictEqual([
-      { cite: "X", path: "p", text: "2 quote lines" },
-      { cite: "Y", path: "0 path lines", text: "c" },
-    ]);
-    return { rows: digests.map(row => ({ cite: row.cite, sha256: row.sha256.slice(0, 12), raw: row.raw })), control };
+    expect(statusFailures(dossier).map(([, detail]) => detail), "the status rows as a reader sees them").toEqual([]);
+    const rows = STATUS_LINES.map(line => ({ cite: line.cite, path: line.path, sha256: sha256(line.text).slice(0, 12) }));
+    const hollow = lineHollow();
+    expect(hollow, "a status line rewritten with its pin is refused by the sha-256 measured at the pin").toEqual(["sha256"]);
+    return { rows, controls: controlsOf(["S4", "S5", "S7", "S9"], markdown => statusFailures(markdown)), hollow };
   },
   C2: async () => {
-    const rows = idRowsOf(textOf(DOSSIER)).map(cells => {
-      const [ids = "", at = "", words = ""] = cells;
-      return { names: namesIn(ids), cells: cells.length, pinned: at.includes("SIO ") || at.includes("CSO "), qualifiers: qualifiersIn(words) };
-    });
-    expect(rows.map(row => row.names)).toEqual(NAMES.map(name => [name.id]));
-    for (const row of rows) {
-      expect(row.cells).toBe(3);
-      expect(row.pinned).toBe(true);
-      expect(row.qualifiers.length).toBeGreaterThan(0);
-    }
-    const control = idRowsOf("## Other\n\n| a | b |\n| - | - |\n| x | y |\n\n## Named IDs\n\n| h | i | j |\n| - | - | - |\n| HXSI-09 | SIO x | DESIGN ONLY |\n");
-    expect(control, "the named-ID reader reads its control").toStrictEqual([["HXSI-09", "SIO x", "DESIGN ONLY"]]);
-    return { rows, control };
+    const dossier = textOf(DOSSIER);
+    expect(idFailures(dossier).map(([, detail]) => detail), "the named-ID rows as a reader sees them").toEqual([]);
+    const [, ...grid] = sectionTables(dossier, IDS_HEADING, 2, [DOSSIER_TITLE]).grids[0] ?? [];
+    const rows = grid.map(cells => ({ names: namesIn(cells[0] ?? ""), cited: PROGRAM_ROW.test(cells[1] ?? ""), qualifiers: qualifiersIn(cells[2] ?? "") }));
+    return { rows, controls: controlsOf(["S1", "S2", "S3", "S6", "S8", "S10", "S11", "S12"], markdown => idFailures(markdown)), hollows: rowHollows() };
+  },
+  C3: async () => {
+    const dossier = textOf(DOSSIER);
+    const bytes = { composed: dossier === composedDossier(), sha256: sha256(dossier) === DOSSIER_SHA256 };
+    expect(bytes, "the dossier's bytes are the census's composition, with the sha-256 the roster pins").toStrictEqual({ composed: true, sha256: true });
+    expect(dossierFailures(dossier).map(([, detail]) => detail), "the dossier as a reader sees it").toEqual([]);
+    const notes = exportRow(BEAD).notes;
+    const [posture = "", , landing = ""] = DOSSIER_POSTURE;
+    const anchors = {
+      claimSpan: posture.includes(` as ${between(notes, "law as ", "; Pi echoes")}:`),
+      statusWords: between(notes, "Pi echoes the programs' own status words (", ")")
+        .split(/; | \/ /)
+        .map(words => posture.includes(words)),
+      lawPair: landing.includes(between(notes, "and, if ", ", echoes them")),
+      minted: landing.includes(`mints no ${between(notes, "without minting an ", ".")}`),
+      pin: (DOSSIER_INTRO[0] ?? "").includes(PIN_COMMIT) && STATUS_LINES.every(line => (DOSSIER_INTRO[0] ?? "").includes(line.path.slice(0, line.path.lastIndexOf("/")))),
+    };
+    expect(anchors, "the posture and the intro carry the filing's words, read from the bead export").toStrictEqual({ claimSpan: true, statusWords: [true, true, true, true], lawPair: true, minted: true, pin: true });
+    return { sha256: DOSSIER_SHA256.slice(0, 12), headings: headingsOf(dossier), anchors, controls: controlsOf(["S1", "S2", "S3", "S4", "S5", "S6", "S7", "S8", "S9", "S10", "S13", "S14"], dossierFailures) };
   },
   F1: async () => {
     const notes = exportRow(BEAD).notes;
@@ -1088,11 +1472,29 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
     return witness;
   },
   R8: async () => {
-    const outside = ["test/x.md", "vendor/x.md", "node_modules/x/README.md", ".beads/issues.jsonl", "new-feedback/x.md", "media/x.md", "dist/x.js", "docs.md.d/x.md"];
+    const outside = [
+      "test/x.md",
+      "vendor/x.md",
+      "node_modules/x/README.md",
+      ".beads/issues.jsonl",
+      "new-feedback/x.md",
+      "media/x.md",
+      "dist/x.js",
+      "docs.md.d/x.md",
+      ".codex/config.toml",
+      ".github/workflows/ci.yml",
+      "forge.toml",
+      "package.json",
+      "biome.json",
+      "tsconfig.json",
+      "vitest.config.ts",
+      "LICENSE",
+      ".gitignore",
+    ];
     const judged = outside.filter(onWide);
     const exportFindings = findingsOf(BEAD_EXPORT, exportRow(BEAD).notes).length > 0;
     expect({ judged, exportFindings }).toStrictEqual({ judged: [], exportFindings: true });
-    return { judged, exportFindings };
+    return { outside, judged, exportFindings };
   },
   ...Object.fromEntries(
     CASES.map(entry => [
@@ -1108,7 +1510,7 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
 
 describe("wb-x0xu.2 HX design-status census (HX-STRUCTURAL-INFORMATION-OPTIMIZATION-R2, posture)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:5", "C:2", "F:1", "M:11", "R:10"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:6", "B:5", "C:3", "F:1", "M:11", "R:10"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect(ROSTER.bead).toBe(BEAD);
