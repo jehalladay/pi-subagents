@@ -1,0 +1,942 @@
+{
+  "bead": "wb-tz4r.1",
+  "rfVersion": "0.1.836",
+  "riPin": "485f3615db1e",
+  "riProbe": "075ac589d64d",
+  "tsxPin": "76bbbffd9d4a",
+  "identifiers": [
+    {
+      "placeholder": "<IR>",
+      "words": [
+        "Inference",
+        "Response"
+      ],
+      "canonical": "pascal",
+      "sha256": "b862ddac5c885bf2c23bbbd5a1b58250f4989c3a9ea7926b159a62cc4ecc3191"
+    },
+    {
+      "placeholder": "<DE>",
+      "words": [
+        "decision",
+        "engine"
+      ],
+      "canonical": "snake",
+      "sha256": "bb1d5600e229324b489dce8de8dd834a5b2d11494c40ce17b0b65aebe44e9b42"
+    },
+    {
+      "placeholder": "<NDB>",
+      "words": [
+        "Native",
+        "Decision",
+        "Backend"
+      ],
+      "canonical": "pascal",
+      "sha256": "b503de985d54f88a96ad1af21353b468b7aa0288a1afa78a89791d44e5729c53"
+    },
+    {
+      "placeholder": "<GDF>",
+      "words": [
+        "Generative",
+        "Decision",
+        "Finalizer"
+      ],
+      "canonical": "pascal",
+      "sha256": "6d18badf0bf85b57a60985a0fc50d05b61d1bab8542a21937ad8c23fb9b1238f"
+    }
+  ],
+  "generativeKeys": [
+    "model_id",
+    "output",
+    "usage",
+    "stop_reason",
+    "provider_metadata",
+    "chunks",
+    "tool_calls",
+    "reasoning",
+    "provider_blocks"
+  ],
+  "generativeSources": [
+    "ReactiveFiberTSXSDK src/resources/inference.ts:78-88@76bbbffd9d4a (<IR>Json)",
+    "ReactiveInferenceSDK src/reactive_inference/contracts.py:1747-1755@485f3615db1e (<IR>.to_dict)"
+  ],
+  "scanRoots": [
+    "src",
+    "test",
+    "qa",
+    "docs/workbench"
+  ],
+  "placements": [
+    {
+      "id": "top",
+      "path": [
+        "result",
+        "resources"
+      ]
+    },
+    {
+      "id": "component",
+      "path": [
+        "result",
+        "components",
+        "0",
+        "resources"
+      ]
+    },
+    {
+      "id": "block",
+      "path": [
+        "result",
+        "blocks",
+        "0",
+        "resources"
+      ]
+    }
+  ],
+  "resource": {
+    "tag": "ri.decision-result/constructed-0",
+    "schema_version": "ri-decision-envelope/constructed-0",
+    "question_id": "q-route-7d1",
+    "outcome": {
+      "kind": "choice",
+      "candidate_id": "cand-7d1b"
+    }
+  },
+  "quotes": [
+    {
+      "ref": "ReactiveInferenceSDK docs/programs/unified-decision-inference-2026-10-21/01-contracts.md:4@485f3615db1e",
+      "text": "Never synthesize an `<IR>` to misrepresent a native decision head."
+    },
+    {
+      "ref": "ReactiveInferenceSDK docs/programs/unified-decision-inference-2026-10-21/01-contracts.md:14@485f3615db1e",
+      "text": "`<NDB>`: typed predictions, candidate score vectors, multi-head/joint inference, no requirement to generate text. `<GDF>`: uses existing provider-neutral inference runner and validates actual forced tool/structured output."
+    },
+    {
+      "ref": "ReactiveInferenceSDK docs/programs/unified-decision-inference-2026-10-21/01-contracts.md:23@485f3615db1e",
+      "text": "Current `<IR>` JSON and `InferenceRunner` APIs remain unchanged. Native decision results use a new typed envelope and may be surfaced as a separately tagged Reactive Fiber resource."
+    },
+    {
+      "ref": "ReactiveInferenceSDK docs/programs/unified-decision-inference-2026-10-21/02-implementation.md:13@485f3615db1e",
+      "text": "RI-DEC-06: native decision backend protocol and adapters, plus generative runner finalization without envelope conflation."
+    },
+    {
+      "ref": "ReactiveInferenceSDK docs/programs/unified-decision-inference-2026-10-21/02-implementation.md:15@485f3615db1e",
+      "text": "RI-DEC-07: strict result validator, abstention, atomic/partial batch semantics, retry/cancellation, transient errors and snapshot freshness."
+    },
+    {
+      "ref": "ReactiveInferenceSDK docs/programs/unified-decision-inference-2026-10-21/02-implementation.md:23@485f3615db1e",
+      "text": "Current implementation: RI-DEC-02/04/05 **initial restricted seed only**, with choice questions and pure preflight, NOT provider execution or advanced output support."
+    },
+    {
+      "ref": "ReactiveFiberTSXSDK docs/programs/native-interfaces-and-portable-tsx-2026-10-21/02-implementation.md:16@76bbbffd9d4a (two of its sentences)",
+      "text": "A native `DecisionEnvelope` is not coerced to `<IR>`. `useDecision` and `useInference` are snapshot **reads**, not implicit provider calls."
+    }
+  ],
+  "producerProbes": {
+    "riGate": {
+      "pin": "485f3615db1e",
+      "probe": "075ac589d64d",
+      "probeCommitted": "2026-10-23T02:36:04-07:00",
+      "commitsPastPin": 10,
+      "backendClassRowsOutsideDocs": {
+        "pin": 0,
+        "probe": 0
+      },
+      "decisionPackageExports": [
+        "ChoiceBackendCapabilities",
+        "ChoiceExecutionGroup",
+        "ChoiceExecutionPlan",
+        "ChoiceQuestion",
+        "DecisionBatchMode",
+        "DecisionChoiceRequest",
+        "plan_choices"
+      ],
+      "sameExportsAtProbe": true
+    },
+    "tsxGate": {
+      "pin": "76bbbffd9d4a",
+      "fetchedOriginMain": "76bbbffd9d4a",
+      "decisionResourceRowsInSrcAndPython": 0
+    },
+    "carriedPins": {
+      "source": "TSX-NATIVE-INTERFACES-AND-PORTABLE-TSX-R5 (merged into this bead)",
+      "clauses": [
+        "keep <IR>Json/validate<IR> for generative responses only",
+        "echo the result and its schema version verbatim",
+        "or a TSX host"
+      ],
+      "verbatimRowsInTsxProgramDir": 0,
+      "boundAt": [
+        "A",
+        "B2",
+        "B4"
+      ]
+    }
+  },
+  "measured": [
+    "rf --json --version -> 0 (result.version 0.1.836)",
+    "rf init --backend jsonl --no-input --json -> 0",
+    "rf component create demo.notes --kind declarative --json -> 0; its one always text node set to a fixed sentence",
+    "rf component add <manifest> --json -> 0 and rf component activate demo.notes --json -> 0 (graphs/context.toml: source task -> component notes.task)",
+    "rf graph validate --json -> 0 (valid, diagnostics [])",
+    "rf --workspace <root> context render --model claude-opus-5 --task \"summarise the notes\" --no-commit --no-input --json -> 0 (the fixture; root rewritten to /fixture/rf-workspace)"
+  ],
+  "exit": 0,
+  "envelope": {
+    "schema": "reactive-fiber.cli/v1",
+    "ok": true,
+    "command": "context.render",
+    "operation_id": "rfo_bw5oovk3uxotl7kbpe6r72qhau",
+    "workspace": {
+      "id": "rfw_lu5kd43e73quooynhy6n6675by",
+      "root": "/fixture/rf-workspace"
+    },
+    "transaction_id": null,
+    "result": {
+      "output": {
+        "text": "Decision results ride as their own tagged resource.\n",
+        "size_bytes": 52,
+        "digest": "sha256:89e26b4f093a2fc748fd78cac2aa14f20be18bf1d2b9500c90ad6e3bb0595b92",
+        "path": null
+      },
+      "budget": {
+        "schema": "reactive-fiber.budget/v1",
+        "requested_model_id": "claude-opus-5",
+        "resolved_model_id": null,
+        "formula_terms": {
+          "context_window": 1000000,
+          "max_output_tokens": 128000,
+          "output_reserve": 8192,
+          "occupied_tokens": 0,
+          "overhead": 0,
+          "safety_margin": 2048,
+          "available_context_tokens": 989760
+        },
+        "capability_snapshot": {
+          "model_id": "claude-opus-5",
+          "context_window": 1000000,
+          "max_output_tokens": 128000,
+          "supports_thinking": true,
+          "supports_reasoning": true,
+          "supports_streaming": true,
+          "supports_vision": true,
+          "thinking_budget": null,
+          "cache_prefix": null,
+          "reasoning": {
+            "reasoning_control": "adaptive_effort",
+            "budget_tokens_status": "rejected",
+            "effort_levels": [],
+            "interleaved": true,
+            "display_default": "omitted",
+            "always_on": false,
+            "always_on_verified": true,
+            "verified": false,
+            "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 — verified=False per honesty rule D until a live sweep covers them"
+          },
+          "can_count_tokens": false,
+          "verified": true,
+          "source": null,
+          "known_policy_gates": [],
+          "decision": {
+            "supports_forced_tool": true,
+            "supports_structured_output": false,
+            "supports_span_output": true,
+            "supports_forced_tool_with_thinking": false,
+            "probability_support": "none",
+            "modalities": [
+              "image",
+              "text"
+            ],
+            "media_budget": {
+              "max_blocks": 20,
+              "max_bytes_per_block": 3750000
+            },
+            "verified": false,
+            "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D"
+          }
+        },
+        "capability_verified": true,
+        "capability_source": null,
+        "token_count_method": "estimated",
+        "estimator_id": "rf.utf8-bytes-div4.v1",
+        "counts": {
+          "candidate": 1,
+          "admitted_before_budget": 1,
+          "final_included": 1,
+          "withheld_necessity": 0,
+          "withheld_truncated": 0
+        },
+        "reconciliation_attempts": [],
+        "observability": {
+          "token_cost_unknown": 0,
+          "token_estimator_failed": 0,
+          "reconciliation_attempts": 0
+        },
+        "included_tokens": 13,
+        "truncated_tokens": 0,
+        "truncated_count": 0,
+        "overflow_pinned_count": 0,
+        "hidden_count": 0,
+        "audience_excluded_count": 0,
+        "unknown_cost_count": 0,
+        "token_accounting": {
+          "kind": "estimated",
+          "estimator_id": "rf.utf8-bytes-div4.v1",
+          "included_tokens": 13
+        },
+        "truncated_keys": []
+      },
+      "diagnostics_summary": {
+        "errors": 0,
+        "warnings": 0,
+        "has_errors": false,
+        "has_warnings": false
+      },
+      "blocks": [
+        {
+          "final_index": 0,
+          "candidate_key": "demo.notes:notes::placeholder",
+          "component_id": "demo.notes",
+          "token_cost": {
+            "kind": "estimated",
+            "tokens": 13
+          },
+          "token_cost_kind": "estimated"
+        }
+      ],
+      "components": [
+        {
+          "component_instance_id": "demo.notes:notes",
+          "component_id": "demo.notes",
+          "component_revision_id": "sha256:795d292bfefc3f809c15da2a564aa127fe52a9d4a51c23db06b6b27431467309",
+          "status": "ok",
+          "source_unavailable": []
+        }
+      ],
+      "provenance": {
+        "created_at": "2026-10-23T11:35:25.287355Z",
+        "graph_revision_id": "sha256:8521e42c51f39bcce4879b80e4dd0511d004369ef2351e6b52d947fbfc7a9b8f",
+        "necessity_policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+        "workspace_schema_version": "reactive-fiber.workspace/v1",
+        "cli_version": "0.1.836",
+        "storage_backend": "jsonl",
+        "sdk_versions": {
+          "fiber_optics": {
+            "distribution_version": "0.1.0.20261014202847",
+            "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42"
+          },
+          "reactive_lenses": {
+            "distribution_version": "0.1.1.20261018.6",
+            "contract_fingerprint": "sha256:0931bf8cfdc86b26edf9bdd4a3813dec4b6c894b3434f6039924df07234b8ea8"
+          },
+          "reactive_components": {
+            "distribution_version": "0.1.1.20261018121500",
+            "contract_fingerprint": "sha256:d12211ca722f4e778c1009989745bdc7e4e2297a308cf5601ed2c7e0ffbe7d37"
+          },
+          "reactive_inference": {
+            "distribution_version": "0.2.60.20261018120223",
+            "contract_fingerprint": "sha256:b075fe443fe70a87b10a0fa429cdc298a5af9b9bc5b1dc8d8b62a9f04454380b"
+          },
+          "fiber_optics_wire_format": "2"
+        },
+        "storage": {
+          "backend": "jsonl",
+          "engine_version": null
+        }
+      },
+      "work_metrics": {
+        "source_capture_count": 1,
+        "fiber_signal_count": 2,
+        "fiber_transaction_count": 1,
+        "invalidated_component_count": 1,
+        "rendered_component_count": 1,
+        "state_read_count": 0,
+        "state_write_count": 0,
+        "journal_records_scanned": 48,
+        "blob_bytes_written": 0,
+        "history_rows_materialized": 0,
+        "reused_component_count": 0,
+        "observation_executed_count": 0,
+        "observation_reused_count": 0,
+        "publish_conflict_count": 0
+      },
+      "work": {
+        "source_capture_count": 1,
+        "fiber_signal_count": 2,
+        "component_render_count": 1,
+        "lens_resolution_count": 0,
+        "necessity_eval_count": 1,
+        "storage_write_count": 0
+      },
+      "engine_metrics": {
+        "tsx_worker_spawns": 0,
+        "tsx_resource_rounds": 0
+      },
+      "scope": null,
+      "audience": "model",
+      "bundle_revision_id": "sha256:99c181fd08fc156a4890775addf8509bbc885033ea699a6576905b7e303505a0",
+      "observations": [],
+      "necessity": [
+        {
+          "render_id": "rfr_qtw67nwoxqbyplkmmnhneqvf2q",
+          "candidate_key": "demo.notes:notes::placeholder",
+          "necessity_class": "always",
+          "include": true,
+          "reason": "always_floor",
+          "estimated_tokens": 13,
+          "metadata": {
+            "evidence_keys": [
+              "necessity_class"
+            ],
+            "explicit_request": false
+          },
+          "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+          "judge_id": "rf.necessity.default-host.v1",
+          "judge_kind": "host_default",
+          "necessity_class_raw": "always",
+          "fallback_used": false,
+          "failure_mode": "fail"
+        }
+      ],
+      "judge_context": {
+        "task_digest": "sha256:1bdd58e00da2e3b75bd8c80dafc33d29dfc85f0638a5427e96cabed3e013fad9",
+        "task_tags": [],
+        "agent_id": null,
+        "agent_role": null,
+        "session_id": "rfs_thmftk4ofbu44dvsvoyomggx4q",
+        "explicit_requests": [],
+        "workspace_facts": {
+          "session.active": true
+        }
+      },
+      "judge_context_layers": {
+        "task.tags": "defaults",
+        "agent.role": "defaults"
+      },
+      "attempts": 1,
+      "superseded_transaction_ids": [],
+      "retry_work": {
+        "superseded_attempts": [],
+        "wasted_source_capture_count": 0,
+        "wasted_fiber_signal_count": 0,
+        "wasted_fiber_transaction_count": 0,
+        "wasted_invalidated_component_count": 0,
+        "wasted_rendered_component_count": 0,
+        "wasted_state_read_count": 0,
+        "wasted_state_write_count": 0,
+        "wasted_journal_records_scanned": 0,
+        "wasted_blob_bytes_written": 0,
+        "wasted_history_rows_materialized": 0,
+        "wasted_reused_component_count": 0,
+        "wasted_observation_executed_count": 0,
+        "wasted_observation_reused_count": 0,
+        "wasted_publish_conflict_count": 0
+      },
+      "fiber_transaction_refs": [
+        "rfr_qtw67nwoxqbyplkmmnhneqvf2q/tx_1"
+      ],
+      "render_id": null,
+      "ephemeral": true,
+      "commit_seq": null,
+      "effects": [],
+      "plan": {
+        "operations": [],
+        "would_commit": false
+      },
+      "session_id": null
+    },
+    "diagnostics": []
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) today: src/test/qa/docs/workbench census = 0 <IR>|<DE>|<NDB>|<GDF> identifiers (0 now; sdk_versions.reactive_inference version echoes excluded)",
+      "until": null,
+      "pins": [
+        {
+          "id": "A1",
+          "covers": [
+            "src",
+            "census = 0",
+            "0 now"
+          ],
+          "witness": {
+            "files": {
+              "floor": true,
+              "allTs": true
+            },
+            "walk": {
+              "walkOnly": [],
+              "gitOnly": []
+            },
+            "anchors": {
+              "decision": true,
+              "engine": true,
+              "response": true,
+              "backend": true,
+              "Native": true
+            },
+            "sites": []
+          }
+        },
+        {
+          "id": "A2",
+          "covers": [
+            "test/qa",
+            "census = 0",
+            "0 now"
+          ],
+          "witness": {
+            "files": {
+              "test": true,
+              "qa": true
+            },
+            "walks": {
+              "test": {
+                "walkOnly": [],
+                "gitOnly": []
+              },
+              "qa": {
+                "walkOnly": [],
+                "gitOnly": []
+              }
+            },
+            "own": {
+              "census": {
+                "walked": true,
+                "sites": 0,
+                "placeholders": 4
+              },
+              "roster": {
+                "walked": true,
+                "sites": 0,
+                "placeholders": 4
+              }
+            },
+            "sites": []
+          }
+        },
+        {
+          "id": "A3",
+          "covers": [
+            "docs/workbench",
+            "census = 0",
+            "0 now"
+          ],
+          "witness": {
+            "files": {
+              "floor": true,
+              "allMarkdown": true
+            },
+            "walk": {
+              "walkOnly": [],
+              "gitOnly": []
+            },
+            "sites": []
+          }
+        },
+        {
+          "id": "A4",
+          "covers": [
+            "sdk_versions.reactive_inference version echoes excluded"
+          ],
+          "witness": {
+            "echoFloor": true,
+            "rosterWalked": true,
+            "fixtureEcho": "0.2.60.20261018120223",
+            "echoSites": [],
+            "inEchoKey": []
+          }
+        },
+        {
+          "id": "A5",
+          "covers": [
+            "<IR>|<DE>|<NDB>|<GDF> identifiers"
+          ],
+          "witness": {
+            "flagged": {
+              "generativeType": 1,
+              "instanceVariable": 1,
+              "snakeKey": 1,
+              "tsxValidator": 1,
+              "tsxJsonType": 1,
+              "plural": 1,
+              "pythonModule": 1,
+              "moduleCamel": 1,
+              "moduleClass": 1,
+              "backendNew": 1,
+              "backendCamel": 1,
+              "backendSnake": 1,
+              "finalizerClass": 1,
+              "finalizerCamel": 1,
+              "finalizerSnake": 1,
+              "docsSentence": 1
+            },
+            "quiet": {
+              "versionEcho": 0,
+              "tsxHook": 0,
+              "partWords": 0,
+              "wordsApart": 0,
+              "resourceKind": 0,
+              "constructedTag": 0
+            },
+            "residuals": {
+              "R-OTHER-CASE": 0,
+              "R-SPACED": 0,
+              "R-COMPOSED": 0,
+              "R-INTERRUPTED": 0,
+              "R-HOMOGLYPH": 0
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) adoption: a decision-tagged resource in a preview envelope projects exactly one evidence ref labelled with the producer's tag verbatim and populates no output/text or generative field; tag absent = byte-identical projection",
+      "until": "until then, 0 evidence refs name the resource and each projection stays byte-identical, as B1-B3 pin; the one-ref half waits on the title's (gated: RI typed decision envelope + its Reactive Fiber resource tag, RI-DEC-06/07, unshipped at 485f3615db1e)",
+      "pins": [
+        {
+          "id": "B1",
+          "covers": [
+            "tag absent = byte-identical projection"
+          ],
+          "witness": {
+            "native": {
+              "spawns": 1,
+              "verb": [
+                "context",
+                "render"
+              ],
+              "noCommit": true,
+              "verbatim": true,
+              "readingKeys": [
+                "contract",
+                "source",
+                "workspaceRoot"
+              ]
+            },
+            "injected": {
+              "calls": 1,
+              "verbatim": true,
+              "readingKeys": [
+                "contract",
+                "source",
+                "workspaceRoot"
+              ]
+            },
+            "projection": {
+              "rf-cli": {
+                "kinds": [
+                  "rf-graph",
+                  "rf-workspace",
+                  "rf-bundle",
+                  "rf-cli"
+                ],
+                "payloadRef": true,
+                "echo": 0,
+                "violations": []
+              },
+              "injected-fixture": {
+                "kinds": [
+                  "rf-graph",
+                  "rf-workspace",
+                  "rf-bundle",
+                  "rf-cli"
+                ],
+                "payloadRef": true,
+                "echo": 0,
+                "violations": []
+              }
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "covers": [
+            "a decision-tagged resource",
+            "populates no output/text or generative field"
+          ],
+          "witness": {
+            "top": {
+              "diff": [
+                "result.resources"
+              ],
+              "baseUntouched": true,
+              "native": {
+                "spawns": 1,
+                "verbatim": true,
+                "resource": "verbatim",
+                "tagKept": true,
+                "schemaKept": true,
+                "added": [],
+                "textKept": true
+              },
+              "injected": {
+                "calls": 1,
+                "verbatim": true,
+                "resource": "verbatim",
+                "tagKept": true,
+                "schemaKept": true,
+                "added": [],
+                "textKept": true
+              }
+            },
+            "component": {
+              "diff": [
+                "result.components.0.resources"
+              ],
+              "baseUntouched": true,
+              "native": {
+                "spawns": 1,
+                "verbatim": true,
+                "resource": "verbatim",
+                "tagKept": true,
+                "schemaKept": true,
+                "added": [],
+                "textKept": true
+              },
+              "injected": {
+                "calls": 1,
+                "verbatim": true,
+                "resource": "verbatim",
+                "tagKept": true,
+                "schemaKept": true,
+                "added": [],
+                "textKept": true
+              }
+            },
+            "block": {
+              "diff": [
+                "result.blocks.0.resources"
+              ],
+              "baseUntouched": true,
+              "native": {
+                "spawns": 1,
+                "verbatim": true,
+                "resource": "verbatim",
+                "tagKept": true,
+                "schemaKept": true,
+                "added": [],
+                "textKept": true
+              },
+              "injected": {
+                "calls": 1,
+                "verbatim": true,
+                "resource": "verbatim",
+                "tagKept": true,
+                "schemaKept": true,
+                "added": [],
+                "textKept": true
+              }
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "covers": [
+            "projects exactly one evidence ref labelled with the producer's tag verbatim"
+          ],
+          "witness": {
+            "top": {
+              "rf-cli": {
+                "identical": true,
+                "namingRefs": 0,
+                "surfaced": [],
+                "violations": []
+              },
+              "injected-fixture": {
+                "identical": true,
+                "namingRefs": 0,
+                "surfaced": [],
+                "violations": []
+              }
+            },
+            "component": {
+              "rf-cli": {
+                "identical": true,
+                "namingRefs": 0,
+                "surfaced": [],
+                "violations": []
+              },
+              "injected-fixture": {
+                "identical": true,
+                "namingRefs": 0,
+                "surfaced": [],
+                "violations": []
+              }
+            },
+            "block": {
+              "rf-cli": {
+                "identical": true,
+                "namingRefs": 0,
+                "surfaced": [],
+                "violations": []
+              },
+              "injected-fixture": {
+                "identical": true,
+                "namingRefs": 0,
+                "surfaced": [],
+                "violations": []
+              }
+            }
+          }
+        },
+        {
+          "id": "B4",
+          "covers": [
+            "in a preview envelope"
+          ],
+          "witness": {
+            "catalogRead": true,
+            "native": [
+              "reactivefiber.render.preview"
+            ],
+            "injected": [
+              "reactivefiber.render.preview"
+            ],
+            "reconcile": [
+              "reactivefiber.render.preview"
+            ],
+            "descriptorSites": [],
+            "tsxDescriptors": [],
+            "dependenciesRead": true,
+            "sdkSeams": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) mutant: folding the resource into output/text, re-tagging it, or synthesizing a generative result from a decision envelope fails",
+      "until": null,
+      "pins": [
+        {
+          "id": "C1",
+          "covers": [
+            "folding the resource into output/text"
+          ],
+          "witness": {
+            "top": {
+              "foldText": [
+                "fold:output.text",
+                "fold:payload-ref"
+              ],
+              "foldNote": [
+                "surfaced"
+              ]
+            },
+            "component": {
+              "foldText": [
+                "fold:output.text",
+                "fold:payload-ref"
+              ],
+              "foldNote": [
+                "surfaced"
+              ]
+            },
+            "block": {
+              "foldText": [
+                "fold:output.text",
+                "fold:payload-ref"
+              ],
+              "foldNote": [
+                "surfaced"
+              ]
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "covers": [
+            "re-tagging it"
+          ],
+          "witness": {
+            "resource": {
+              "inference": [
+                "retag:resource"
+              ],
+              "previewContract": [
+                "retag:resource"
+              ],
+              "caseVariant": [
+                "retag:resource"
+              ]
+            },
+            "ref": [
+              "ref-count",
+              "retag:ref"
+            ],
+            "adoption": [
+              "ref-count"
+            ]
+          }
+        },
+        {
+          "id": "C3",
+          "covers": [
+            "synthesizing a generative result from a decision envelope"
+          ],
+          "witness": {
+            "inResult": [
+              "generative"
+            ],
+            "readingKey": [
+              "generative"
+            ],
+            "projection": [
+              "generative",
+              "surfaced"
+            ],
+            "typedModule": 1
+          }
+        },
+        {
+          "id": "C4",
+          "covers": [
+            "fails"
+          ],
+          "witness": {
+            "copy": [],
+            "keyOrder": [],
+            "secondPlacement": [],
+            "unrelatedNote": [],
+            "tagAbsent": []
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "the outside anchor: the bead's export row holds the clauses, the four names, every pin's words and the until-then gate",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
+  ],
+  "reached": [
+    "A1:7",
+    "A2:6",
+    "A3:6",
+    "A4:7",
+    "A5:5",
+    "B1:16",
+    "B2:29",
+    "B3:8",
+    "B4:7",
+    "C1:8",
+    "C2:5",
+    "C3:4",
+    "C4:3"
+  ]
+}
