@@ -122,10 +122,64 @@
     "working",
     "stalled"
   ],
+  "residuals": [
+    {
+      "family": "R-DISPLAY-FOLD",
+      "pin": "Q1"
+    },
+    {
+      "family": "R-TEXT-BOUND",
+      "pin": "Q2"
+    },
+    {
+      "family": "R-FREE-TEXT",
+      "pin": "Q3"
+    },
+    {
+      "family": "R-ADDITIVE-UNREAD",
+      "pin": "Q4"
+    },
+    {
+      "family": "R-COMPUTED-ACCESS",
+      "pin": "Q5"
+    },
+    {
+      "family": "R-SYNONYM-VOCABULARY",
+      "pin": "Q6"
+    },
+    {
+      "family": "R-FREE-TEXT-SHAPE",
+      "pin": "Q7"
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster, the quoted excerpt, the bead export, the registration and the cases agree",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "C4",
+    "C5",
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "records: every registered test ran once in run mode in roster order, every pin reached its end, and the pins' coverage meets the outside obligations"
+  ],
   "rows": [
     {
       "id": "A",
-      "label": "(a) a Pi projection of rf-captured Forge/Beads data preserves the producer's verdict and status bytes: the injected and native readings, the shared display and the hosted Claude relay change no captured field, and no `.text` read of the rendered document in src does more than type-check or digest it",
+      "label": "(a) a Pi projection of rf-captured Forge/Beads data preserves the producer's verdict/status bytes - no Pi code path rewrites them: the injected and native readings change no captured byte, the shared display and the hosted Claude relay change no verdict or status span and no field of the fixture records (free text: R-FREE-TEXT, R-FREE-TEXT-SHAPE), and no `.text` read of the rendered document in src does more than type-check or digest it",
       "pins": [
         {
           "id": "A1",
@@ -210,7 +264,7 @@
     },
     {
       "id": "B",
-      "label": "(b) round-tripping an rf capture through Pi surfaces leaves the external-authority fields byte-identical: both records parse back unchanged from every leg, typed fields on an additive key included, a second hop and a second display pass change nothing, and the payload digest tracks the exact bytes",
+      "label": "(b) round-tripping an rf capture through Pi surfaces leaves external-authority fields byte-identical: both fixture records parse back unchanged from every leg (free text: R-FREE-TEXT, R-FREE-TEXT-SHAPE), typed fields on an additive key included, a second hop and a second display pass change nothing, and the payload digest tracks the exact bytes",
       "pins": [
         {
           "id": "B1",
@@ -344,7 +398,7 @@
     },
     {
       "id": "Q",
-      "label": "the named residuals stay pinned quiet: display line-break fold, display text bound, free-text strip, additive key unread, computed document access, synonym vocabulary",
+      "label": "the named residuals stay pinned quiet: display line-break fold, display text bound, free-text strip, additive key unread, computed document access, synonym vocabulary, free-text shape rewrite",
       "pins": [
         {
           "id": "Q1",
@@ -408,6 +462,23 @@
             "inside": [
               "passed"
             ]
+          }
+        },
+        {
+          "id": "Q7",
+          "witness": {
+            "readingKeepsTitle": true,
+            "displayTitle": [
+              {
+                "id": "fx-0001",
+                "title": "[REDACTED] task",
+                "status": "in_progress",
+                "priority": 2,
+                "issue_type": "task"
+              }
+            ],
+            "hostedSame": true,
+            "closedSpansKept": true
           }
         }
       ]
