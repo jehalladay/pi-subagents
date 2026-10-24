@@ -27,6 +27,31 @@
               "expected": [
                 "GP-1/a1 src/workbench/providers/graphpolicy.ts client-reaches-gp-through-no-real-interface"
               ]
+            },
+            {
+              "name": "the registered client imports a GraphPolicyCLI fork",
+              "expected": [
+                "GP-1/a1 src/workbench/providers/graphpolicy.ts client-imports-graphpolicy-fork",
+                "GP-3/c1 src/workbench/providers/graphpolicy.ts imports-graphpolicy-fork"
+              ]
+            },
+            {
+              "name": "an unregistered module imports the GraphPolicyCLI package",
+              "expected": [
+                "GP-1/a1 src/workbench/gp-sdk.ts gp-package-outside-client"
+              ]
+            },
+            {
+              "name": "an unregistered module imports GraphPolicyCLI types only",
+              "expected": [
+                "GP-1/a1 src/workbench/gp-types.ts gp-package-outside-client"
+              ]
+            },
+            {
+              "name": "a registered client names a module the tree does not hold",
+              "expected": [
+                "GP-1/a1 src/workbench/gp-retired.ts registered-seam-missing"
+              ]
             }
           ]
         },
@@ -57,6 +82,12 @@
               "expected": [
                 "GP-1/a3 src/workbench/gp-admission.ts admission-imports-training-writer"
               ]
+            },
+            {
+              "name": "the admission seam builds a train argv itself",
+              "expected": [
+                "GP-1/a3 src/workbench/gp-admission.ts admission-imports-training-writer"
+              ]
             }
           ]
         },
@@ -68,6 +99,13 @@
               "name": "the decision module launches a workflow host",
               "expected": [
                 "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client"
+              ]
+            },
+            {
+              "name": "the registered client is itself an execution seam",
+              "expected": [
+                "GP-1/a4 src/workbench/providers/graphpolicy.ts gp-client-is-execution-seam",
+                "GP-4/d1 src/workbench/providers/graphpolicy.ts process-kill"
               ]
             }
           ]
@@ -222,6 +260,20 @@
                 "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client",
                 "GP-4/d2 src/workbench/gp-decision.ts bd-write"
               ]
+            },
+            {
+              "name": "the decision module claims a bead through bd ready --claim",
+              "expected": [
+                "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client",
+                "GP-4/d2 src/workbench/gp-decision.ts bd-write"
+              ]
+            },
+            {
+              "name": "the decision module repairs the store through bd doctor --fix",
+              "expected": [
+                "GP-1/a4 src/workbench/gp-decision.ts execution-imports-gp-client",
+                "GP-4/d2 src/workbench/gp-decision.ts bd-write"
+              ]
             }
           ]
         },
@@ -294,6 +346,18 @@
     {
       "id": "FOREIGN-LAUNCHER",
       "family": "a launch through a package launcher outside the child_process roster, such as execa"
+    },
+    {
+      "id": "QUOTED-SUBSTITUTION",
+      "family": "a command substitution inside double quotes, which the census reads as quoted text"
+    },
+    {
+      "id": "COMPUTED-BD-FLAG",
+      "family": "a bd writing flag that is not a literal, such as the flag of a read verb passed in a parameter"
+    },
+    {
+      "id": "SHELL-BUILTIN-WRAPPER",
+      "family": "a command run through a shell builtin or env option the census does not unwrap, such as eval, command, builtin or env -S"
     }
   ],
   "detectors": [
@@ -369,7 +433,7 @@
     },
     {
       "key": "bd-read-verbs",
-      "member": "every bd read verb reads: show, list, ready, blocked, search, stats, status, count, info, where, version, help, graph, doctor",
+      "member": "every bd read verb reads when it carries no writing flag: show, list, ready, blocked, search, stats, status, count, info, where, version, help, graph, doctor",
       "probe": "9243acf0016f5bd720021fad0772f1d7052c2443c3cf47a97ac7bdba129ce8b5"
     },
     {
@@ -421,6 +485,71 @@
       "key": "gp-family",
       "member": "a GraphPolicyCLI family name in a module specifier and in an identifier",
       "probe": "fbfc0899f384442b96d36df00dbdc50f114f2be0cf9c2106ec704574d6e4b103"
+    },
+    {
+      "key": "bd-writing-flags",
+      "member": "a bd read verb with a writing flag writes (bd 1.1.0-rc.1 help): ready --claim, doctor --fix, doctor --fix-child-parent and doctor --clean, bare or in --flag=value form, anywhere in the argv; a word that only begins with one (--claimed, --fixes, --cleanup) is not one",
+      "probe": "b3eae41cf34fe4b4bc9b4d5ba67d4c783bb8d2fb446ec18eb0fa5cb9bb3cfb6b"
+    },
+    {
+      "key": "bd-verb-after-flags",
+      "member": "a bd launch's verb is its first lowercase word, so leading flags are skipped: bd --json show reads, bd -q close writes",
+      "probe": "93619727b561bc25234764382c77cbc917b064ef582e648df9e7b84693f38032"
+    },
+    {
+      "key": "shell-groupings",
+      "member": "a command in a subshell ( ), a $( ) or a backtick command substitution, outside quotes, is a simple command of its own; parentheses inside quotes stay text",
+      "probe": "474095d9e98baa42b957045f6fad47818f0def1b5c0d4b24ebb45d6aa2d78b25"
+    },
+    {
+      "key": "shell-reserved-words",
+      "member": "a command a shell reserved word opens (!, {, if, then, elif, else, do, while, until) with the word skipped, the closing }, fi, done and esac running nothing, and a reserved word after a command's first word kept as an argument",
+      "probe": "acc24008529f58bee25f1abaa531837bacd1de98ab545ad242446bb7ba256b04"
+    },
+    {
+      "key": "shell-exec",
+      "member": "a command behind the exec builtin, with exec's options skipped: -c, -l and -a with its name",
+      "probe": "431694d4c19f3c024310d36aab766f1123ad6447575b4c32da91d33dddedf8cf"
+    },
+    {
+      "key": "shell-env-options",
+      "member": "env, bare or by path, with its options before the command: a flag such as -i, - or --ignore-environment, -u, -C, --unset and --chdir with their value or in --option=value form, then NAME=value assignments",
+      "probe": "0afb8396413b57bb751f49f6e3824bab6712a84c2c5f29cc20c1877c7be7f57e"
+    },
+    {
+      "key": "binary-suffixes",
+      "member": "a roster binary named with a .exe or .cmd suffix, bare or by path: bd.exe, furnace.cmd, pkill.exe, a shell (bash.exe) whose -c script is followed, and an argv array headed by one",
+      "probe": "df9ac9d1c993b010b2c9712697323d7f59111d11b3e1ebd14f54a09a4c372af0"
+    },
+    {
+      "key": "unwrap-forms",
+      "member": "process read through each wrapper the census unwraps beside parentheses and as: satisfies, an angle-bracket assertion and a non-null assertion, on a member read and on a variable initializer",
+      "probe": "5cd11f664bee1e0fe2dfa70e55bb25ed05334edb550bff96458b5010e48c2cff"
+    },
+    {
+      "key": "exec-template-head",
+      "member": "exec, like execSync, runs a templated command line read by its static head",
+      "probe": "da4f64d95f0ea66ab7955114dc1905b05fa26240d2cc0642351401d5087a97e8"
+    },
+    {
+      "key": "script-depth",
+      "member": "a shell's -c script followed four shells deep: sh runs bash, bash runs zsh, zsh runs dash and dash runs the command",
+      "probe": "15db2131fd460c6d8fc23e3415e9c73be7712262cb725bfe579edaa705c90c16"
+    },
+    {
+      "key": "private-names",
+      "member": "a GraphPolicyCLI family name and gp wire vocabulary in a private class member name (#graphPolicy, #GraphDataIR)",
+      "probe": "c58930c6e28521223eb599954d0a26a4a6e65c681a8599c7d4588d3b4335a991"
+    },
+    {
+      "key": "template-parts",
+      "member": "the train word in a template literal's static head, middle and tail",
+      "probe": "3e3604ad582ffdccc4efafacb61e76ccaa75352d350a5274fcd2fbf3e0dd8f93"
+    },
+    {
+      "key": "type-only-launcher",
+      "member": "a launcher name imported type-only (import { type spawnSync as run }) binds no launcher, so a call through that name records no launch",
+      "probe": "8489d7af627496394c29303d14f4def0f4739eb7a3510a97c37f377fe9f2c90a"
     }
   ],
   "registered": [
@@ -433,7 +562,9 @@
     "D: docs/03 renders the GraphPolicyCLI boundary section exactly as the census pins it - its level-2 heading once, under the page title, HTML-free, block for block: the definitions, the four rules clause for clause, the residual line (the anchor outside this census)",
     "D: docs/03 names every residual this census pins quiet, family for family, in the rendered section",
     "D: the docs/03 ownership table names GraphPolicyCLI in exactly the pinned row, read from that section's own table, and the boundary section's definitions cite the bead, its source line and this census",
+    "D: the docs/03 ownership table gives the GraphPolicyCLI concern exactly one row - no second row names any of its terms, so none re-assigns it (wb-1ho6 F3, gate LDG4)",
     "F: a compliant gp integration judges clean - the rules admit a real-interface seam rather than banning gp",
+    "F: a compliant gp integration through the GraphPolicyCLI package judges clean - a client that imports graph-policy-cli and never launches gp reaches gp through a real interface (GP-1/a1, wb-1ho6 F2 gate DMG38)",
     "F: comments are not code - every detector reads the same census with gp, train, shell and effect words added in comments",
     "F: the detectors are precise - near-miss tokens report nothing, module specifiers included",
     "M: the manifest check reads every dependency section, for training frameworks and GraphPolicyCLI forks alike",
@@ -441,10 +572,16 @@
     "F: GP-1/a1 an unregistered module launches gp is named by exactly the expected pin(s)",
     "F: GP-1/a1 an unregistered module runs the GraphPolicyCLI package through npx is named by exactly the expected pin(s)",
     "F: GP-1/a1 a registered client reaches gp through no real interface is named by exactly the expected pin(s)",
+    "F: GP-1/a1 the registered client imports a GraphPolicyCLI fork is named by exactly the expected pin(s)",
+    "F: GP-1/a1 an unregistered module imports the GraphPolicyCLI package is named by exactly the expected pin(s)",
+    "F: GP-1/a1 an unregistered module imports GraphPolicyCLI types only is named by exactly the expected pin(s)",
+    "F: GP-1/a1 a registered client names a module the tree does not hold is named by exactly the expected pin(s)",
     "F: GP-1/a2 the client's gp argv carries train is named by exactly the expected pin(s)",
     "F: GP-1/a3 the admission seam imports the telemetry writer is named by exactly the expected pin(s)",
     "F: GP-1/a3 the admission seam imports a training framework is named by exactly the expected pin(s)",
+    "F: GP-1/a3 the admission seam builds a train argv itself is named by exactly the expected pin(s)",
     "F: GP-1/a4 the decision module launches a workflow host is named by exactly the expected pin(s)",
+    "F: GP-1/a4 the registered client is itself an execution seam is named by exactly the expected pin(s)",
     "F: GP-2/b1 an unregistered module scores a GraphDataIR document is named by exactly the expected pin(s)",
     "F: GP-2/b2 the client drops its unknown-command mapping is named by exactly the expected pin(s)",
     "F: GP-3/c1 the client imports an unrelated package is named by exactly the expected pin(s)",
@@ -460,6 +597,8 @@
     "F: GP-4/d2 the decision module closes a bead through a shell command is named by exactly the expected pin(s)",
     "F: GP-4/d2 the decision module closes a bead behind an environment assignment is named by exactly the expected pin(s)",
     "F: GP-4/d2 the decision module closes a bead through sh -c is named by exactly the expected pin(s)",
+    "F: GP-4/d2 the decision module claims a bead through bd ready --claim is named by exactly the expected pin(s)",
+    "F: GP-4/d2 the decision module repairs the store through bd doctor --fix is named by exactly the expected pin(s)",
     "F: GP-4/d3 the decision module stops an Attempt itself is named by exactly the expected pin(s)",
     "F: GP-4/d3 the decision module stops a Run through its handle is named by exactly the expected pin(s)",
     "F: GP-4/d3 the decision module stops a Run by element access is named by exactly the expected pin(s)",
@@ -472,6 +611,9 @@
     "Q: named residual TRAINING-FRAMEWORK-ROSTER stays quiet (the pinned blind spot of a token census)",
     "Q: named residual WRAPPED-COMMAND stays quiet (the pinned blind spot of a token census)",
     "Q: named residual FOREIGN-LAUNCHER stays quiet (the pinned blind spot of a token census)",
+    "Q: named residual QUOTED-SUBSTITUTION stays quiet (the pinned blind spot of a token census)",
+    "Q: named residual COMPUTED-BD-FLAG stays quiet (the pinned blind spot of a token census)",
+    "Q: named residual SHELL-BUILTIN-WRAPPER stays quiet (the pinned blind spot of a token census)",
     "DT: detector specifiers is live on its probe (the exact census signature)",
     "DT: detector launchers is live on its probe (the exact census signature)",
     "DT: detector launcher-bindings is live on its probe (the exact census signature)",
@@ -497,6 +639,19 @@
     "DT: detector train-word is live on its probe (the exact census signature)",
     "DT: detector dynamic-load is live on its probe (the exact census signature)",
     "DT: detector gp-family is live on its probe (the exact census signature)",
+    "DT: detector bd-writing-flags is live on its probe (the exact census signature)",
+    "DT: detector bd-verb-after-flags is live on its probe (the exact census signature)",
+    "DT: detector shell-groupings is live on its probe (the exact census signature)",
+    "DT: detector shell-reserved-words is live on its probe (the exact census signature)",
+    "DT: detector shell-exec is live on its probe (the exact census signature)",
+    "DT: detector shell-env-options is live on its probe (the exact census signature)",
+    "DT: detector binary-suffixes is live on its probe (the exact census signature)",
+    "DT: detector unwrap-forms is live on its probe (the exact census signature)",
+    "DT: detector exec-template-head is live on its probe (the exact census signature)",
+    "DT: detector script-depth is live on its probe (the exact census signature)",
+    "DT: detector private-names is live on its probe (the exact census signature)",
+    "DT: detector template-parts is live on its probe (the exact census signature)",
+    "DT: detector type-only-launcher is live on its probe (the exact census signature)",
     "L: each-liveness (rule 16, U5) - every case of this file is set to run, the case count is frozen, each case is registered as the out-of-file roster lists it, each it.each registers exactly its frozen keys, every registered case reached its last assertion, and this tally is the file's last case"
   ]
 }

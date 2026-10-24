@@ -1,7 +1,7 @@
 {
   "bead": "wb-o4h0.6",
   "pin": "6a251bf73af5",
-  "basis": "The out-of-file roster of test/workbench-rf-sensitivity-echo-census.test.ts (standing rule 16): every judged row's id, label, parts and pins, every pin's witness and the vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. excerpts vendors seven producer excerpts verbatim from ReactiveFiberCLI 6a251bf73af57c3a703caf6892dfe3015e06a481 (read-only git show; the census holds each to its sha256), and levels, rowClasses, linkSchema and linkFields are derived from them: levels from src/reactive_fiber_cli/domain/trust.py:553-554, rowClasses from the result.observations sensitivity property of src/reactive_fiber_cli/schemas/cli/context.render.schema.json:1529-1536, linkSchema and linkFields from federated-workspaces-2026-10-18/03-protocol-and-storage.md:10. gatingArtifacts are the bead's (FW-08 rfc-0txnl.17, FW-04 rfc-0txnl.10, FW-04b-2 rfc-0txnl.20). Rows A-D carry the bead's four acceptance clauses verbatim (the census holds them to the tracked bead export).",
+  "basis": "The out-of-file roster of test/workbench-rf-sensitivity-echo-census.test.ts (standing rule 16): every judged row's id, label, parts and pins, every pin's witness and the vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. excerpts vendors seven producer excerpts verbatim from ReactiveFiberCLI 6a251bf73af57c3a703caf6892dfe3015e06a481 (read-only git show; the census holds each to its sha256), and levels, rowClasses, linkSchema and linkFields are derived from them: levels from src/reactive_fiber_cli/domain/trust.py:553-554, rowClasses from the result.observations sensitivity property of src/reactive_fiber_cli/schemas/cli/context.render.schema.json:1529-1536, linkSchema and linkFields from federated-workspaces-2026-10-18/03-protocol-and-storage.md:10. gatingArtifacts are the bead's (FW-08 rfc-0txnl.17, FW-04 rfc-0txnl.10, FW-04b-2 rfc-0txnl.20). Rows A-D carry the bead's four acceptance clauses verbatim (the census holds them to the tracked bead export). Follow-up wb-ox13 (R694 from landing 268) adds row MD and the pins B5, MA13-MA18, QA4-QA5, MC8-MC9 and QC3, and narrows the MA and MC labels to the enumerated shapes; the census holds every row's pin count to the first cut's landed shape (its delivery note in the bead export) plus those additions.",
   "excerpts": {
     "docs/programs/federated-workspaces-2026-10-18/05-authority-consistency.md:25": "No alternate implementation may downgrade B sensitive/secret outputs by relabeling them internal or public. Read scopes and redaction follow strictest applicable owner and consumer policies. No secrets in committed link aliases.",
     "docs/programs/federated-workspaces-2026-10-18/03-protocol-and-storage.md:10": "- reactive-fiber.federation-link/v1: A local aliases, {alias,locator,expected_workspace_id,expected_backend_instance_id?,pin_policy,capability_ref?}. Transport credentials/capability secrets are never committed as ordinary shared manifest content.",
@@ -177,7 +177,8 @@
             "B1",
             "B2",
             "B3",
-            "B4"
+            "B4",
+            "B5"
           ]
         }
       ],
@@ -253,6 +254,18 @@
             "payloadRef": "rf-output:sha256:26a287255ec8bf2a8b9e746a9cd80437bf18e14f5ff8c7de227759a78d501d8e",
             "payloadRefIsOwnerBytes": true,
             "ownerTextShown": []
+          }
+        },
+        {
+          "id": "B5",
+          "witness": {
+            "surfaced": "{\"capture_id\":\"fixture.block.one\",\"redacted\":true,\"redacted_without_digest\":true} {\"digest\":\"sha256:4444444444444444444444444444444444444444444444444444444444444444\",\"redacted\":true,\"size_bytes\":42} lens fixture.lens2: password=[REDACTED] plain context line",
+            "singleLine": true,
+            "consumerRedactions": 1,
+            "fakeValueShown": false,
+            "ownerMarkersKept": 2,
+            "labelsVerbatim": true,
+            "sameAsMultiLine": true
           }
         }
       ]
@@ -437,7 +450,7 @@
     },
     {
       "id": "MA",
-      "label": "row A6's write matcher catches every sensitivity-field write shape, and its named residuals stay pinned quiet",
+      "label": "row A6's write matcher counts each enumerated sensitivity-field write shape, and its named residuals stay pinned quiet",
       "parts": [],
       "pins": [
         {
@@ -525,6 +538,48 @@
           }
         },
         {
+          "id": "MA13",
+          "witness": {
+            "digest": "eebb8b76a9236491",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA14",
+          "witness": {
+            "digest": "28e42dcf3c1cde18",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA15",
+          "witness": {
+            "digest": "a9107cf4d196eb9c",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MA16",
+          "witness": {
+            "digest": "a52c278f351d1cdb",
+            "hits": 2
+          }
+        },
+        {
+          "id": "MA17",
+          "witness": {
+            "digest": "cfb81d0361924603",
+            "hits": 2
+          }
+        },
+        {
+          "id": "MA18",
+          "witness": {
+            "digest": "3b49bffeef774e93",
+            "hits": 2
+          }
+        },
+        {
           "id": "QA1",
           "witness": {
             "digest": "e218cc3d626e5479",
@@ -546,6 +601,20 @@
           }
         },
         {
+          "id": "QA4",
+          "witness": {
+            "digest": "5b5c949054b10f38",
+            "hits": 0
+          }
+        },
+        {
+          "id": "QA5",
+          "witness": {
+            "digest": "dc20408961b3cf1c",
+            "hits": 0
+          }
+        },
+        {
           "id": "QS1",
           "witness": {
             "scanned": [
@@ -562,7 +631,7 @@
     },
     {
       "id": "MC",
-      "label": "row C1's link-family matcher catches every separator and case spelling of the link record, and its named residuals stay pinned quiet",
+      "label": "row C1's link-family matcher and schema reader catch each enumerated spelling and declaration of the link record, and their named residuals stay pinned quiet",
       "parts": [],
       "pins": [
         {
@@ -615,6 +684,20 @@
           }
         },
         {
+          "id": "MC8",
+          "witness": {
+            "digest": "3bc5ea2ffdb3ec03",
+            "hit": true
+          }
+        },
+        {
+          "id": "MC9",
+          "witness": {
+            "digest": "162b819cda4211d4",
+            "read": 2
+          }
+        },
+        {
           "id": "QC1",
           "witness": {
             "digest": "fea99f7af2239f8e",
@@ -626,6 +709,41 @@
           "witness": {
             "digest": "e8e9348c733e67c5",
             "hit": false
+          }
+        },
+        {
+          "id": "QC3",
+          "witness": {
+            "digest": "ac6c7f140934c7e8",
+            "read": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "MD",
+      "label": "row D3's verb matcher counts each enumerated argv and command-string spelling of an rf workspace link verb, and its named residual stays pinned quiet",
+      "parts": [],
+      "pins": [
+        {
+          "id": "MD1",
+          "witness": {
+            "digest": "76c7214e056ba212",
+            "hits": 1
+          }
+        },
+        {
+          "id": "MD2",
+          "witness": {
+            "digest": "bc97920d9c26ef0a",
+            "hits": 1
+          }
+        },
+        {
+          "id": "QD1",
+          "witness": {
+            "digest": "6d033cf66291346f",
+            "hits": 0
           }
         }
       ]

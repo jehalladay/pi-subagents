@@ -5,7 +5,9 @@
  * carried verbatim under its producer field name with its profile or form tagged (`identities.graph`, `canonical_digest`,
  * `receipt.input_snapshot`/`graph_digest`, checkpoint), compared only byte-equal within one profile/form, and old interpretations
  * are kept until GP publishes a migration (D-IDENT-1 descriptor unshipped, gated)" - GraphPolicyCLI
- * docs/programs/feedback-contract-audit-2026-10-21/README.md:42 at 0107c72992f3, merged with 02-contract-audit.md:25,42 and
+ * docs/programs/feedback-contract-audit-2026-10-21/README.md:42 at 0107c72992f3 (program status at 0107c72992f3:
+ * "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics"), merged with
+ * 02-contract-audit.md:25,42 and
  * 03-developer-workplan.md:112. Acceptance (the owner filing's; each clause sits verbatim in exactly one row label below): "(a)
  * sameGpIdentity(a,b) holds only for byte-equal strings with the same profile/form tag; prefix/suffix-sharing pairs and the
  * ledger's three digests of one snapshot compare false; (b) the checkpoint field carries a form tag in {program-bound,
@@ -21,9 +23,12 @@
  * `canonical_digest` and the declared `digests.canonical` (the projection under DATA_DIGEST_PROFILE, "DataIR projection digest",
  * sharing the `graphpolicy.snapshot.c1:` prefix with a different preimage) and `gp eval` `receipt.input_snapshot`, `gp sample` and
  * the decision journal (SHA-256 of the exact presented bytes, "Byte-exact invocation/journal join key"); :30 and :42 are D-IDENT-1
- * and D-IDENT-3 (open); :38-40 is the checkpoint ledger - the program-bound logical identity the CLI's `--checkpoint` names, the
+ * and D-IDENT-3 (open, program status at 0107c72992f3:
+ * "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics"); :38-40 is the checkpoint
+ * ledger - the program-bound logical identity the CLI's `--checkpoint` names, the
  * library evaluator's theta-words `checkpointIdentity(theta)` and the CAS `put("checkpoint", bytes)` blob address; :52 is
- * D-STORE-1 (equate a logical digest and a CAS blob hash only on a proven preimage theorem); 03-developer-workplan.md:112 is the
+ * D-STORE-1 (equate a logical digest and a CAS blob hash only on a proven preimage theorem, program status at 0107c72992f3:
+ * "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics"); 03-developer-workplan.md:112 is the
  * stop condition on prefix-only equivalence; 01-finding-inventory.md:9-10 are F01 (one snapshot, three graph digests) and F02 (one
  * theta, two checkpoint identities), CONFIRMED-OPEN at 61fda0c. The field names behind the ledger rows are read from the pin's
  * code (eval-run.ts:476 `identities.checkpoint` = `receipt.checkpoint_digest`, inspect-decision.ts:161 `graph_digest`,
@@ -32,7 +37,9 @@
  * `digest`), and the filing's code facts hold (digests.ts:23,100; graph-check.ts:143; evaluate.ts:150; rpc-sample.ts:178).
  * AT gp main 0fdf395 (a descendant): docs/dev/IDENTITIES.md catalogues thirteen identity rows (I01-I13) and records the
  * host-adapter fixture's values, one theta's three checkpoint forms among them (program-bound c463f169, theta-words 81efdbef,
- * cas-blob f832aae7, all under `graphpolicy.checkpoint.c1:`); D-IDENT-1 is RULED-A, CONTESTED and registered as GPR-1607 (a
+ * cas-blob f832aae7, all under `graphpolicy.checkpoint.c1:`); D-IDENT-1 (program status at 0107c72992f3:
+ * "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics") is RULED-A, CONTESTED and
+ * registered as GPR-1607 (a
  * seven-key `graphpolicy.identity.v1` record: schema, domain, algorithm, profile `graphpolicy.c1` or null, payload, value byte for
  * byte, hex) with no product change; 0 product files (ts/src, python/src) spell `graphpolicy.identity.v1` at the pin or at 0fdf395
  * and the installed bundle holds 0, so the gate is CLOSED. The producer's WP0-IDENT evidence (gpc-1ly.12.1) records the eval and
@@ -462,7 +469,8 @@ function carrier(id: string): Carrier {
 // The reference an adopting Pi consumer owes, and its judges.
 
 /** A gp identity as Pi must carry it: the value and its producer surface and field verbatim, the ledger row's form, and the
- * profile a D-IDENT-1 descriptor gives (else UNKNOWN_PROFILE). */
+ * profile a D-IDENT-1 descriptor (program status at 0107c72992f3:
+ * "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics") gives (else UNKNOWN_PROFILE). */
 interface GpIdentity {
   readonly surface: string;
   readonly field: string;
@@ -1163,6 +1171,8 @@ describe("wb-gxd7.1 gp identity census (GPC-FEEDBACK-CONTRACT-AUDIT-R1)", () => 
     expect(/no (\S+) over gp identity strings/.exec(clauses[2] ?? "")?.[1]?.split("/"), "clause (c)'s methods are CALL_METHODS").toEqual([...CALL_METHODS]);
     expect(/else '([^']+)'/.exec(clauses[2] ?? "")?.[1], "clause (c)'s profile word is UNKNOWN_PROFILE").toBe(UNKNOWN_PROFILE);
     expect(/^\(a\) (\w+)\(a,b\)/.exec(clauses[0] ?? "")?.[1], "clause (a)'s comparator is the reference's").toBe(sameGpIdentity.name);
+    // The filing's D-IDENT-1 gate is a GP-FCA-2026-10-21 decision label (program status at 0107c72992f3:
+    // "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics")
     expect(bead.notes, "the filing gates on the unshipped descriptor").toContain("D-IDENT-1 descriptor unshipped, gated");
     expect(ROSTER.codeFacts.filter(fact => !bead.notes.includes(fact)), "the filing names every code fact the roster holds").toEqual([]);
     expect(ROSTER.codeFacts.length).toBe(4);
