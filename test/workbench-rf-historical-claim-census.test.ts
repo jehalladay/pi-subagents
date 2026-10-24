@@ -8,14 +8,21 @@
  * "No benchmarks inferred from historical feedback should be called new measurements." (README.md:84) and "Treat feedback
  * filenames/reports as clustered incidents, not independent experiments." (README.md:5). Gating artifact: none (posture).
  *
+ * FORM (wb-dl6t cut #3, rule 19(c), the rule 14 shape): this header claims exactly the pinned set below. Every mode the census
+ * is known not to pin is a member of a named residual (row R), and each residual is a named family plus a pinned quiet row; a
+ * newly found member of a named family is a residual addition, not a change of claim.
+ *
  * THE READING. A claim line is one line of a doc root (DOC_ROOTS: the root pages README.md, CHANGELOG.md, AGENTS.md,
  * CONTRIBUTING.md and SECURITY.md, beside any other doc page at the root; every file of any extension under docs/ and
  * new-feedback/, the WHOLE_ROOTS; the doc pages under vendor/, .agents/ and .pi/agents/) that names rf standalone
  * (SUBJECT: rf, RFCLI, ReactiveFiber, ReactiveFiberCLI, reactivefibercli, Reactive Fiber; never a compound such as
  * rf-preview, reactivefiber-observer or the dotted reactivefiber.render.preview) beside a word of a claim family
  * (FAMILIES) or a feedback-file citation (a new-feedback/ path or a dated YYYY-MM-DD-<claim>.md name). A doc page
- * (DOC_PAGE, wb-dl6t U2 and F5) is a markdown page in any extension spelling and any case (.md, .MD, .markdown, .mdown,
- * .mdwn, .mkd, .mkdn, .mkdown, .mdx) or a plain-text page (.txt).
+ * (DOC_PAGE, wb-dl6t U2 and F5) is a file whose name, in any case, ends in an extension GitHub Linguist gives a language it
+ * edits in markdown mode (ace_mode markdown in its languages.yml, the outside anchor, read at sha256
+ * 0c82627ad17a5901c36453aa068330f062668e156bbffc181c1d89ecb1e1e761): Markdown (.md .livemd .markdown .mdown .mdwn .mkd .mkdn
+ * .mkdown .ronn .scd .workbook, and the file name contents.lr), MDX (.mdx), RMarkdown (.qmd .rmd), mdsvex (.svx) and API
+ * Blueprint (.apib); or in .txt, the plain-text extension. No other name is a doc page (R-SCOPE names the rest).
  * verdictA judges a claim line: a line citing a feedback file must be marked historical and carry a build (a 0.1.NNN release
  * token, bare or v-prefixed, or a 7-40 hex sha); any other claim line must carry a build or a receipt-backed measurement (a
  * forge cmd_ id or a receipts/wb-*.md path). Lines are read raw, so a claim inside a comment or a code fence is judged too.
@@ -26,27 +33,38 @@
  * coverage below, and Q7 each list for themselves, so a listing narrowed at any two is read by the third). The walk reads from
  * disk, so a doc page added at the repository root is read beside the five named pages, listed or not; a doc page added under
  * a directory root no row reads (a new top-level directory, .github/, another .pi/ subdirectory, src/ or qa/) reds six tests
- * until a cut reads it or names it: A1 and Q7 through the listing, and A2, C2, C3 and D1 through their coverage. Each pin
- * that reads the tree (A2, A4, B1, C2, C3, D1, D2) returns that coverage: the listed paths it left unread, and whether it
- * read every line of the files it read.
+ * until a cut reads it or names it: A1 and Q7 through the listing, and A2, C2, C3 and D1 through their coverage. The doc-page
+ * test (docPagesOf) judges constructed paths - every DOC_PAGE spelling, in mixed cases and depths, and five paths that are no
+ * doc page - in its own loop in the walk and in A1's listing, and the R-SCOPE formats in Q7's (docAnchor reuses it with no
+ * controls).
  *
- * ONE LOOP PER JUDGE (wb-dl6t U1, the each-liveness guard). Every tree judging site (A2, A3, A4, B1, C1, C2, C3, D1, D2)
- * judges its constructed controls in the same loop and through the same judge call as the tree it reads (linePass at line
- * grain, textPass at text grain; passOver, filerPass and restatements compose them), then judges a long twin of its first
- * control, padded past the longest line or text the tree holds (wb-dl6t F3); the doc-page test (docPagesOf) judges
- * constructed paths in its own loop in the walk, in A1's listing and in Q7 (docAnchor reuses it with no controls). Every
- * control's verdict is in a witness, so a judge forced constant, cut short, narrowed to .md or made to skip long lines reds,
- * while an additive file does not.
+ * ONE LOOP PER SITE (wb-dl6t U1, the each-liveness guard, at judge and at reduction level). Every tree judging site - A2, A3
+ * (the frozen record's pass and the receipt's reading), A4, B1 (its line loop and its script loop), C1, C2, C3, D1 and D2 -
+ * reads in ONE loop (lineLoop at line grain, textPass at text grain): the first constructed control's units, then the tree's
+ * (each line of each file, or each text), then the other controls', then a long twin of the first control. Each unit goes
+ * through the same judge call and then the same pick call, and the pick builds, in that loop, the payload the site asserts
+ * (findings, rfReports, the filing sites, corrected, the re-delivery readings, and the restatements C2 reduces to altered
+ * and C3 to restamped), each unit labelled file:line, by its path or row, or "control <n>". The witness pins the WHOLE
+ * payload, or for C2 and C3 its reductions and its control part, so the control part is pinned beside the tree's part
+ * (empty, or the frozen record's one line, the receipt and the export row). Hence a judge or a pick forced constant or
+ * emptied, a payload emptied or cut short at either end, or the loop cut short at either end reds every site: a control
+ * leads each loop and the rest close it, and a line loop's twin stands after as many blank lines as the longest tree text
+ * holds and past its longest line (lineTwinned), a text loop's after a padding line longer than the longest tree text
+ * (textTwinned), so a loop that skips long or late units skips the twin's control too (wb-dl6t F3, K6). A loop that drops a
+ * file or a text reds the site's read list (unread against git's listing, scriptsRead, or the payload's tree entry), and
+ * one that drops lines of a file reds its everyLine, counted as the lines are judged. Not claimed: a hollow that tells the
+ * controls from the tree by their text, their label or their position, or one edited in two or more places together
+ * (R-COORDINATED, with its quiet rows).
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
  *  A, acceptance (a). A1 the roots exist, the walk holds git's listing and the reading is not blind (floors, the subject
  *    read on three named docs, and the doc-page verdicts on the constructed paths in the walk and in the listing); A2 every
  *    claim line outside the frozen record is admitted; A3 the frozen record docs/workbench/TRACEABILITY.md (byte frozen,
- *    rule 13) holds exactly one refused line, :140 in section "Feedback delivery status", and this cut's receipt carries
- *    its correction entry (docs/15 "Delivery receipts": a correction names the corrected row, never edits it), a historical
- *    line with a build (correctsFrozenRow, judged on the receipt and on constructed entries in one loop); A4 no file under
- *    Pi's new-feedback/ is an rf report (isRfReport, judged on the files and on constructed texts in one loop; the
- *    Pi-authored rf reports live upstream: R-UPSTREAM); A5 verdictA on constructed lines, each refusal and each admission.
+ *    rule 13) holds exactly one refused line, :140 in section "Feedback delivery status", read whole, and this cut's receipt
+ *    carries its correction entry (docs/15 "Delivery receipts": a correction names the corrected row, never edits it), a
+ *    historical line with a build (correctsFrozenRow, judged on the receipt and on constructed entries in one loop); A4 no
+ *    file under Pi's new-feedback/ is an rf report (isRfReport, judged on the files and on constructed texts in one loop;
+ *    the Pi-authored rf reports live upstream: R-UPSTREAM); A5 verdictA on constructed lines, each refusal and admission.
  *  B, acceptance (b). Pi ships no rf feedback filer: B1 no src/**.ts line, no qa/ line and no package.json script spells a
  *    new-feedback path (a filing site), while the same line loop finds the path in a constructed line and in
  *    test/workbench-receipts-convention.test.ts, the same script loop finds it in a constructed script (controls), and the
@@ -71,19 +89,44 @@
  *    roots; D2 every line of src/**.ts and qa/; D3 verdictD on constructed lines.
  *  M, the matchers: M1 the subject, M2 every word of every family and the compound near misses, M3 the identity forms, M4
  *    the feedback citation, the historical marker, the measured words, the negators and the figure reading.
- *  R, the named residuals, each a pinned quiet row (the escape stays uncaught; the row reds when that changes):
- *    Q1 R-LINE one identity anywhere on a line admits every claim on it; Q2 R-VOCABULARY a defect worded outside the
- *    families (hangs, misbehaves) is not a claim line, and a quantity worded outside the number words (several, a few) is
- *    not a figure; Q3 R-SUBJECT an rf subject that is a compound, a dotted id or on another line is not read; Q4 R-UPSTREAM
- *    the Pi-authored rf reports live in ReactiveFiberCLI new-feedback/ and no root reads outside this repository (the
- *    receipt records their read-only measurement); Q5 R-NEGATION a negator in the four words before a measured word quiets
- *    row D even when it negates another verb; Q6 R-OTHER-TOOL a line citing another tool's feedback without naming rf is
- *    outside rows A and D; Q7 R-SCOPE what no row reads: test/, examples/ and .beads/ (this file's own D3 fixtures are
- *    refused lines), exactly the roots of the doc pages git lists that the walk leaves unread, and a page in another format
- *    (reStructuredText, AsciiDoc, HTML, or a page with no extension such as LICENSE), which is no doc page and is read only
- *    under docs/ and new-feedback/; Q8
- *    R-COORDINATED an edit of the census and the receipt anchor listing together reads clean (a landed receipt is
- *    append-only under R539, so the gate's numstat check refuses the receipt half).
+ *  R, the named residuals, each a family the census does not catch plus a pinned quiet row (the escape stays uncaught; the
+ *    row reds when that changes):
+ *    Q1 R-LINE: the unit is the line, so one identity anywhere on a line admits every claim on it. Quiet row: a line with a
+ *    build and a second, unbuilt claim is admitted.
+ *    Q2 R-VOCABULARY: the census reads closed vocabularies. A defect worded outside the families (hangs, misbehaves) is not a
+ *    claim line, a quantity worded outside the number words (several, a few) is not a figure, and a filing site is the
+ *    literal path new-feedback, so a path joined from pieces is no site. Quiet row: those three readings, beside a line inside
+ *    the families that is read.
+ *    Q3 R-SUBJECT: an rf subject that is a compound, a dotted id or on another line is not read. Quiet row: four lines.
+ *    Q4 R-UPSTREAM: the Pi-authored rf reports live in ReactiveFiberCLI new-feedback/ and no root reads outside this
+ *    repository (the receipt records their read-only measurement). Quiet row: no root outside; an upstream citation admitted.
+ *    Q5 R-NEGATION: a negator in the four words before a measured word quiets row D even when it negates another verb. Quiet
+ *    row: a negated stall before an unbacked measured figure reads unjudged.
+ *    Q6 R-OTHER-TOOL: a line citing another tool's feedback without naming rf is outside rows A and D. Quiet row: a Forge
+ *    line with a measured figure reads unjudged in both rows.
+ *    Q7 R-SCOPE: what no row reads. (i) The roots test/, examples/ and .beads/ (this file's own D3 fixtures are refused
+ *    lines): the doc pages git lists that the walk leaves unread lie exactly under them. (ii) A page DOC_PAGE does not match
+ *    is no doc page: it is read only under docs/ and new-feedback/ (read whole, and listed whole by A1 and docAnchor), never
+ *    at the root or under vendor/, .agents/ or .pi/agents/, and outside those two roots no listing counts it (A1's, docAnchor
+ *    and Q7's list doc pages only). Named members: reStructuredText (.rst), AsciiDoc
+ *    (.adoc), HTML (.html), the markdown derivatives no markdown-mode Linguist language claims (a Cursor rule .mdc, .mdtxt,
+ *    .mdtext, .text; wb-dl6t refusal #2 F3), Linguist Text's other names (read.me, NEWS, LICENSE) and any other
+ *    extensionless page (NOTES). Quiet row: unwalkedRoots exactly the R-SCOPE roots, and the formats row (one doc page, so
+ *    the page test is live, then each named member read as no page), which reds when DOC_PAGE widens to a member.
+ *    Q8 R-COORDINATED: a hollow edited in two or more places together, or one that tells the constructed controls from the
+ *    tree, reads clean: the constructed controls are finite, so a hollow fitted to them passes them. Members: (i) the census
+ *    and the receipt anchor listing edited together (a landed receipt is append-only under R539, so the gate's numstat check
+ *    refuses the receipt half); (ii) a judge that tells units apart by their text, such as the real verdict only on a line
+ *    that starts with a control's text (wb-dl6t F4, K5, the twin included) or a forced verdict on a line holding a chosen
+ *    word; (iii) a pick or a payload step that tells entries apart by their label, such as keeping only the controls' or
+ *    dropping one path's; (iv) a pick or a payload step that tells entries apart by their position, such as keeping only
+ *    the control positions (the first, and the last k, k the number of closing control entries) or dropping one tree entry
+ *    by its index; and any other edit made in two or more places together, such as a reading cut short with its own
+ *    coverage comparison forced, or A1's listing, docAnchor and Q7's listing narrowed at once. Quiet rows: (i) the
+ *    coordinated edit reads [] while the census-only edit reads "receipt rows differ"; (ii)-(iv) on a constructed tree
+ *    holding one refused line, the real loop's payload carries the line between its control entries, while the hollow that
+ *    keeps the real verdict only on a control's text, the one that keeps only the controls' labels and the one that keeps
+ *    only the control positions each yield exactly the control part, so no control witness tells them apart.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}`, FAMILIES `${id}:${words.length}` and REDELIVERY its
  * ids as literals. Every pin's case returns a witness held to WITNESS under its own pin, so a case swapped for another
  * passing one reds.
@@ -91,8 +134,9 @@
  * acceptance clauses (a)-(d) and rows A-D hold their labels to them verbatim; its wb-jwc.2 row holds REDELIVERY; the
  * receipt docs/workbench/receipts/wb-pfxo.1.md carries the anchor listing every row, pin, family word, identity and
  * residual is held to, in order. A member removed from every literal of this file still reds there. Git's listing anchors
- * every reading of the tree (above).
- * Not claimed: the judging of sentences (the unit is the line, R-LINE); the upstream rf reports themselves (R-UPSTREAM).
+ * every reading of the tree (above), and Linguist's languages.yml anchors DOC_PAGE.
+ * Not claimed: the judging of sentences (the unit is the line, R-LINE); the upstream rf reports themselves (R-UPSTREAM);
+ * the hollows R-COORDINATED names.
  *
  * Display paths added: none. Test-only: the docs, src, qa, the receipt and the export are only read, and git's listing is
  * read with git ls-files; no scratch is made.
@@ -131,10 +175,11 @@ function filesBelow(dir: string): string[] {
 const DOC_ROOTS = ["README.md", "CHANGELOG.md", "AGENTS.md", "CONTRIBUTING.md", "SECURITY.md", "docs/", "new-feedback/", "vendor/", ".agents/", ".pi/agents/"];
 /** The directory roots read whole: every file below them, of any extension (wb-dl6t F3, X5). */
 const WHOLE_ROOTS = ["docs/", "new-feedback/"];
-/** A doc page (wb-dl6t U2, F5): a markdown page in any extension spelling and any case, or a plain-text page. */
-const DOC_PAGE = /\.(?:md|markdown|mdown|mdwn|mkd|mkdn|mkdown|mdx|txt)$/i;
-/** The constructed paths the walk and the listing each judge in their own loop: eight doc pages in other spellings and cases,
- * then four paths that are no doc page. */
+/** A doc page (wb-dl6t U2, F5): in any case, an extension of a language Linguist edits in markdown mode (Markdown, with the
+ * file name contents.lr; MDX; RMarkdown; mdsvex; API Blueprint), or the plain-text .txt. */
+const DOC_PAGE = /(?:\.(?:md|livemd|markdown|mdown|mdwn|mkd|mkdn|mkdown|ronn|scd|workbook|mdx|qmd|rmd|svx|apib|txt)|(?:^|\/)contents\.lr)$/i;
+/** The constructed paths the walk and the listing each judge in their own loop: one doc page per DOC_PAGE spelling, in mixed
+ * cases and depths, then five paths that are no doc page (a near miss of the file name contents.lr among them). */
 const PAGE_CONTROLS: readonly string[] = [
   "vendor/GP4-PROBE.MD",
   "GP4-NOTES.markdown",
@@ -144,13 +189,27 @@ const PAGE_CONTROLS: readonly string[] = [
   "notes.mdx",
   "gp4-notes.txt",
   "NOTES.TXT",
+  "vendor/GP20-NOTES.livemd",
+  "vendor/gp20.1.ronn",
+  "gp20-notes.workbook",
+  "gp20-notes.scd",
+  "contents.lr",
+  ".pi/agents/CONTENTS.LR",
+  "notes.mdwn",
+  "notes.MKDN",
+  "notes.mkdown",
+  "gp20-notes.qmd",
+  "gp20-notes.Rmd",
+  "notes.svx",
+  "api.apib",
   "notes.rst",
   "LICENSE",
   "package.json",
   "vendor/sdk-0.1.0.tgz",
+  "mycontents.lr",
 ];
 /** The doc pages among paths, and the verdict the same DOC_PAGE call gives each constructed control path after them: a page
- * test narrowed (case-sensitive, .md only) or forced constant changes the control verdicts. */
+ * test narrowed (case-sensitive, one spelling fewer) or forced constant changes the control verdicts. */
 function docPagesOf(paths: readonly string[], controls: readonly string[]): { readonly pages: string[]; readonly controls: boolean[] } {
   const pages: string[] = [];
   const verdicts: boolean[] = [];
@@ -200,7 +259,8 @@ function unreadOf(readFiles: readonly string[], anchor: readonly string[]): stri
   const readSet = new Set(readFiles);
   return anchor.filter(path => !readSet.has(path));
 }
-/** A reading's coverage against its anchor: the listed paths it left unread, and whether it read every line of what it read. */
+/** A reading's coverage against its anchor: the listed paths it left unread, and whether the lines it judged are every line
+ * of what it read. */
 function coverageOf(readFiles: readonly string[], lines: number, anchor: readonly string[]): { readonly unread: string[]; readonly everyLine: boolean } {
   return { unread: unreadOf(readFiles, anchor), everyLine: lines === readFiles.reduce((sum, file) => sum + linesOf(read(file)).length, 0) };
 }
@@ -309,89 +369,104 @@ function findingsIn(file: string, text: string, judge: (line: string) => string)
     return verdict === "unjudged" || verdict === "admitted" ? [] : [{ at: `${file}:${index + 1}`, verdict }];
   });
 }
-interface Pass {
-  readonly findings: Finding[];
-  readonly read: readonly string[];
-  readonly lines: number;
-  readonly controls: readonly string[];
+
+// ---------------------------------------------------------------- the judging loops (wb-dl6t U1)
+
+/** A tree source a loop reads: a file (its path) or a text (its path or row). */
+interface Source {
+  readonly at: string;
+  readonly text: string;
 }
-/** The controls a judging loop reads, then a long twin of the first: the first control padded with " x" until it is longer
- * than every unit (line or text) the tree holds, so a judge that skips long units skips the twin too (wb-dl6t F3, K6). The
- * padding changes no reading, so the twin reads as the first control does. */
-function withTwin(controls: readonly string[], units: readonly string[]): string[] {
+/** One unit a loop judged, with the judge's output: a tree line (file:line), a tree text (its path or row), or a unit of a
+ * constructed control ("control <n>", n counting the controls and then the long twin). */
+interface Unit<T> {
+  readonly at: string;
+  readonly out: T;
+}
+/** What one judging loop returns: the payload its pick built from every unit in order (the first control's, the tree's, the
+ * other controls', then the long twin's), the tree sources it read, and the tree lines it judged (0 at text grain). */
+interface Loop<P> {
+  readonly payload: P[];
+  readonly read: string[];
+  readonly lines: number;
+}
+const controlAt = (index: number): string => `control ${index + 1}`;
+/** Whether a payload label is a control's: the case messages and the not-blind tree checks read the tree's part with it. */
+const isControl = (at: string): boolean => at.startsWith("control ");
+const maxOf = (values: readonly number[]): number => values.reduce((max, value) => Math.max(max, value), 0);
+const filesAsSources = (files: readonly string[]): Source[] => files.map(file => ({ at: file, text: read(file) }));
+
+/** The controls a line loop judges, then a long twin of the first (wb-dl6t F3, K6): the first control placed after as many blank
+ * lines as the longest tree text holds and padded with " x" past the longest tree line, so a judge or a pick that skips long
+ * lines, or the late lines of a text, skips the twin's control line too. The blank lines and the padding change no reading,
+ * so the twin reads as the first control does. */
+function lineTwinned(controls: readonly string[], tree: readonly Source[]): string[] {
   const first = controls[0];
   if (first === undefined) return [...controls];
-  const longest = units.reduce((max, unit) => Math.max(max, unit.length), 0);
-  const twin = `${first}${" x".repeat(Math.max(1, Math.ceil((longest + 1 - first.length) / 2)))}`;
-  if (twin.length <= longest) throw new Error(`the long twin (${twin.length} chars) does not cover the longest unit (${longest} chars)`);
+  const texts = tree.map(({ text }) => linesOf(text));
+  const late = maxOf(texts.map(lines => lines.length));
+  const longest = maxOf(texts.map(lines => maxOf(lines.map(line => line.length))));
+  const line = `${first}${" x".repeat(Math.max(1, Math.ceil((longest + 1 - first.length) / 2)))}`;
+  const twin = `${"\n".repeat(late)}${line}`;
+  const twinLines = linesOf(twin);
+  if (twinLines.length <= late || (twinLines[twinLines.length - 1] ?? "").length <= longest) {
+    throw new Error(`the long twin does not cover the tree (${twinLines.length} lines against ${late}, ${line.length} chars against ${longest})`);
+  }
   return [...controls, twin];
 }
-interface LineReading<T> {
-  /** Every line of the files, as file:line, with the judge's output. */
-  readonly tree: readonly { readonly at: string; readonly out: T }[];
-  readonly read: readonly string[];
-  readonly lines: number;
-  /** The judge's outputs on each control, then on the long twin, line by line. */
-  readonly controls: readonly (readonly T[])[];
+/** The controls a text loop judges, then a long twin of the first: the first control placed after a padding line longer than
+ * the longest tree text, so a judge that reads only the head of a text skips the twin's control too; the padding line
+ * changes no reading. */
+function textTwinned(controls: readonly string[], tree: readonly Source[]): string[] {
+  const first = controls[0];
+  if (first === undefined) return [...controls];
+  const longest = maxOf(tree.map(({ text }) => text.length));
+  const twin = `${" x".repeat(Math.max(1, Math.ceil((longest + 1) / 2)))}\n${first}`;
+  if (twin.length - first.length <= longest) throw new Error(`the long twin's control starts at ${twin.length - first.length}, inside the longest tree text (${longest} chars)`);
+  return [...controls, twin];
 }
-/** One judging loop at line grain (wb-dl6t U1, the each-liveness guard): every line of the files, then every line of each
- * constructed control and of the long twin, goes through the same judge call, so a judge forced constant, cut short or made
- * to skip long lines changes the control outputs as well as the tree's. */
-function linePass<T>(files: readonly string[], controls: readonly string[], judge: (line: string) => T): LineReading<T> {
-  const texts = files.map(file => ({ at: file, text: read(file) }));
-  const twinned = withTwin(
-    controls,
-    texts.flatMap(({ text }) => linesOf(text)),
-  );
-  const sources: readonly { readonly at: string | null; readonly text: string }[] = [...texts, ...twinned.map(text => ({ at: null, text }))];
-  const tree: { readonly at: string; readonly out: T }[] = [];
-  const readFiles: string[] = [];
-  const controlOuts: T[][] = [];
+/** One judging loop at line grain (wb-dl6t U1, at judge and at reduction level): every line of the first control, then of the
+ * tree's texts, then of the other controls and of the long twin, goes through the same judge call and then the same pick
+ * call, and the pick builds the site's payload in that loop, a control at each end; the loop counts each tree line as it
+ * judges it. */
+function lineLoop<T, P>(tree: readonly Source[], controls: readonly string[], judge: (line: string) => T, pick: (unit: Unit<T>) => readonly P[]): Loop<P> {
+  const controlSources = lineTwinned(controls, tree).map((text, index) => ({ at: controlAt(index), text, control: true }));
+  const sources = [...controlSources.slice(0, 1), ...tree.map(source => ({ ...source, control: false })), ...controlSources.slice(1)];
+  const payload: P[] = [];
+  const readSources: string[] = [];
   let lines = 0;
   for (const source of sources) {
-    const outs = linesOf(source.text).map(judge);
-    const at = source.at;
-    if (at === null) {
-      controlOuts.push(outs);
-      continue;
-    }
-    readFiles.push(at);
-    lines += outs.length;
-    outs.forEach((out, index) => {
-      tree.push({ at: `${at}:${index + 1}`, out });
+    if (!source.control) readSources.push(source.at);
+    linesOf(source.text).forEach((line, index) => {
+      if (!source.control) lines += 1;
+      payload.push(...pick({ at: source.control ? source.at : `${source.at}:${index + 1}`, out: judge(line) }));
     });
   }
-  return { tree, read: readFiles, lines, controls: controlOuts };
+  return { payload, read: readSources, lines };
 }
-/** One judging loop at text grain (wb-dl6t U1): each tree text, then each constructed control and the long twin, goes through
- * the same judge call. */
-function textPass<T>(
-  tree: readonly { readonly at: string; readonly text: string }[],
-  controls: readonly string[],
-  judge: (text: string) => T,
-): { readonly tree: { readonly at: string; readonly out: T }[]; readonly controls: T[] } {
-  const twinned = withTwin(
-    controls,
-    tree.map(({ text }) => text),
-  );
-  const sources: readonly { readonly at: string | null; readonly text: string }[] = [...tree, ...twinned.map(text => ({ at: null, text }))];
-  const treeOuts: { readonly at: string; readonly out: T }[] = [];
-  const controlOuts: T[] = [];
+const linePass = <T, P>(files: readonly string[], controls: readonly string[], judge: (line: string) => T, pick: (unit: Unit<T>) => readonly P[]): Loop<P> =>
+  lineLoop(filesAsSources(files), controls, judge, pick);
+/** One judging loop at text grain (wb-dl6t U1): the first control, then each tree text, then the other controls and the long
+ * twin, goes through the same judge call and then the same pick call, which builds the site's payload in that loop, a control
+ * at each end. */
+function textPass<T, P>(tree: readonly Source[], controls: readonly string[], judge: (text: string) => T, pick: (unit: Unit<T>) => readonly P[]): Loop<P> {
+  const controlSources = textTwinned(controls, tree).map((text, index) => ({ at: controlAt(index), text, control: true }));
+  const sources = [...controlSources.slice(0, 1), ...tree.map(source => ({ ...source, control: false })), ...controlSources.slice(1)];
+  const payload: P[] = [];
+  const readSources: string[] = [];
   for (const source of sources) {
-    const out = judge(source.text);
-    const at = source.at;
-    if (at === null) controlOuts.push(out);
-    else treeOuts.push({ at, out });
+    if (!source.control) readSources.push(source.at);
+    payload.push(...pick({ at: source.at, out: judge(source.text) }));
   }
-  return { tree: treeOuts, controls: controlOuts };
+  return { payload, read: readSources, lines: 0 };
 }
-/** One judging pass over the tree with a verdict judge (rows A and D): the findings are the tree lines whose verdict is
- * neither unjudged nor admitted, as file:line; the controls are the verdicts of the control lines, the long twin's last. */
-function passOver(files: readonly string[], judge: (line: string) => string, controls: readonly string[]): Pass {
-  const reading = linePass(files, controls, judge);
-  const findings = reading.tree.filter(({ out }) => out !== "unjudged" && out !== "admitted").map(({ at, out }) => ({ at, verdict: out }));
-  return { findings, read: reading.read, lines: reading.lines, controls: reading.controls.flat() };
-}
+/** A verdict unit's finding (rows A and D): a unit whose verdict is neither unjudged nor admitted. */
+const findingOf = ({ at, out }: Unit<string>): Finding[] => (out === "unjudged" || out === "admitted" ? [] : [{ at, verdict: out }]);
+/** One judging pass over files with a verdict judge: the payload is the findings of every unit, in the loop's order. */
+const passOver = (files: readonly string[], judge: (line: string) => string, controls: readonly string[]): Loop<Finding> => linePass(files, controls, judge, findingOf);
+/** A judged unit's label when the judge read true (rows A3, A4 and B1). */
+const labelIfTrue = ({ at, out }: Unit<boolean>): string[] => (out ? [at] : []);
+const findingsCopy = (findings: readonly Finding[]): { at: string; verdict: string }[] => findings.map(finding => ({ ...finding }));
 /** The src .ts and qa files rows B and D read, and whether both floors are met by that same list. */
 function codeFiles(): { readonly files: string[]; readonly floorsMet: boolean } {
   const files = [...srcFiles(), ...qaFiles()];
@@ -405,38 +480,25 @@ const judgedCount = (files: readonly string[]): number => files.reduce((sum, fil
 const FILER_SITE = /new-feedback/;
 /** The scripts of a package manifest, as name and value. */
 const scriptsOf = (manifest: unknown): [string, unknown][] => Object.entries(isObject(manifest) && isObject(manifest.scripts) ? manifest.scripts : {});
-/** The filer reader: the filing sites among every line of the files, then among the manifest's scripts, with the files, the
- * line count and the script count it read. Each loop judges its constructed controls through the same call (wb-dl6t U1): the
- * control texts through the line loop and the control script values through the script loop; a control reads true when the
- * judge finds a site in it. */
+/** The filer reader (wb-dl6t U1): one line loop over the files, then the line controls and the long twin, and one script loop
+ * over the manifest's scripts, then the script controls and the long twin. Each loop's pick keeps the units where the judge
+ * finds a filing site, so each payload carries the controls' sites beside the tree's; a control text reads as one label
+ * however many of its lines name the path. */
 function filerPass(
   files: readonly string[],
   lineControls: readonly string[],
   manifest: unknown,
   scriptControls: readonly string[],
-): {
-  readonly sites: string[];
-  readonly read: readonly string[];
-  readonly lines: number;
-  readonly scripts: number;
-  readonly lineControls: boolean[];
-  readonly scriptControls: boolean[];
-} {
+): { readonly lineSites: string[]; readonly scriptSites: string[]; readonly read: readonly string[]; readonly lines: number; readonly scripts: readonly string[] } {
   const isSite = (text: string): boolean => FILER_SITE.test(text);
-  const lines = linePass(files, lineControls, isSite);
+  const lines = linePass(files, lineControls, isSite, labelIfTrue);
   const scripts = textPass(
     scriptsOf(manifest).flatMap(([name, value]) => (typeof value === "string" ? [{ at: `package.json scripts.${name}`, text: value }] : [])),
     scriptControls,
     isSite,
+    labelIfTrue,
   );
-  return {
-    sites: [...lines.tree.filter(({ out }) => out).map(({ at }) => at), ...scripts.tree.filter(({ out }) => out).map(({ at }) => at)],
-    read: lines.read,
-    lines: lines.lines,
-    scripts: scripts.tree.length,
-    lineControls: lines.controls.map(outs => outs.some(Boolean)),
-    scriptControls: [...scripts.controls],
-  };
+  return { lineSites: [...new Set(lines.payload)], scriptSites: scripts.payload, read: lines.read, lines: lines.lines, scripts: scripts.read };
 }
 const RECHECK_GRADE = /(?<![A-Za-z0-9])(?:CORROBORATION|CHANGED|FIXED)(?![A-Za-z0-9])/;
 /** The rule a filer applies: a re-check is refused without an installed build and a head sha it was measured at. */
@@ -489,22 +551,14 @@ interface Restatement {
   readonly builds: number;
 }
 const restatementOf = (line: string): Restatement => ({ named: namedIn(line), altered: alteredIn(line), restamped: restampedIn(line), builds: versionsIn(line).length });
-/** The doc lines naming a report identity, unaltered or altered, with what each says, the files and the line count the reading
- * read, and what the same judge call read on each constructed control line and on the long twin (wb-dl6t U1). */
-function restatements(controls: readonly string[]): {
-  readonly found: { readonly at: string; readonly out: Restatement }[];
-  readonly read: readonly string[];
-  readonly lines: number;
-  readonly controls: Restatement[];
-} {
-  const reading = linePass(docFiles(), controls, restatementOf);
-  return {
-    found: reading.tree.filter(({ out }) => out.named.length > 0 || out.altered.length > 0),
-    read: reading.read,
-    lines: reading.lines,
-    controls: reading.controls.flat(),
-  };
+interface Restated extends Restatement {
+  readonly at: string;
 }
+/** The restatement reader's pick: every unit naming a report identity, unaltered or altered, with what the unit says. */
+const restatedOf = ({ at, out }: Unit<Restatement>): Restated[] => (out.named.length > 0 || out.altered.length > 0 ? [{ at, ...out }] : []);
+/** The restatement reader (rows C2 and C3, wb-dl6t U1): one line loop over the doc files, then the constructed lines and the
+ * long twin, so its payload carries the controls' restatements beside the tree's. */
+const restatements = (controls: readonly string[]): Loop<Restated> => linePass(docFiles(), controls, restatementOf, restatedOf);
 const GRADES = /(?<![A-Za-z0-9-])(?:FIXED|CHANGED|STILL-TRUE|NEVER-TRUE)(?![A-Za-z0-9-])/g;
 /** A re-delivery keeps every build and sha of the original and adds none, and introduces no grade. */
 function redeliveryFindings(original: string, redelivered: string): string[] {
@@ -658,8 +712,24 @@ const FILER_CONTROL_FILE = "test/workbench-receipts-convention.test.ts";
 const FILER_SCRIPT_CONTROLS: readonly string[] = ["node qa/file.mjs --into new-feedback/", "tsc"];
 /** A row C1 control: a same-blob statement naming another pair (and none of the REDELIVERY identities). */
 const OTHER_BLOB = "The re-delivered report blob is byte-identical to 1a2b3c4d5's. Landed as 6e7f8a9b0c1d.";
-/** The page-test controls Q7 judges in its own loop: one doc page (the test is live), then the formats R-SCOPE names. */
-const R_SCOPE_FORMATS: readonly string[] = ["GP4-NOTES.MARKDOWN", "notes.rst", "notes.adoc", "notes.html", "NOTES", "LICENSE"];
+/** The page-test controls Q7 judges in its own loop (R-SCOPE (ii)): one doc page (the test is live), then each named member of
+ * the pages DOC_PAGE does not match. */
+const R_SCOPE_FORMATS: readonly string[] = [
+  "GP4-NOTES.MARKDOWN",
+  "notes.rst",
+  "notes.adoc",
+  "notes.html",
+  "NOTES",
+  "LICENSE",
+  "rule.mdc",
+  "notes.mdtxt",
+  "notes.mdtext",
+  "notes.text",
+  "read.me",
+  "NEWS",
+];
+/** Row Q8's constructed tree (R-COORDINATED (ii)-(iv)): one refused claim line. */
+const COORDINATED_TREE: readonly Source[] = [{ at: "constructed.md", text: "rf regressed the replay envelope at the current build." }];
 const A3_RECEIPTS: readonly string[] = [
   `- Correction: ${FROZEN_RECORD}:140, section "Feedback delivery status", is historical, written in commit 43ad58b5dc2a.`,
   `- Correction: ${FROZEN_RECORD}:140, section "Feedback delivery status", is historical; no build named.`,
@@ -741,37 +811,37 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       verdictA,
       A_CONTROLS,
     );
-    expect(pass.findings, "an rf claim line carries no build, receipt-backed measurement or historical marking").toEqual([]);
+    expect(
+      pass.payload.filter(({ at }) => !isControl(at)),
+      "an rf claim line carries no build, receipt-backed measurement or historical marking",
+    ).toEqual([]);
     const coverage = coverageOf(
       pass.read,
       pass.lines,
       docAnchor().filter(file => file !== FROZEN_RECORD),
     );
-    return { findings: pass.findings.map(finding => ({ ...finding })), ...coverage, controls: [...pass.controls] };
+    return { findings: findingsCopy(pass.payload), ...coverage };
   },
   A3: () => {
     const frozen = passOver([FROZEN_RECORD], verdictA, A_CONTROLS);
-    const receipt = textPass([{ at: RECEIPT, text: read(RECEIPT) }], A3_RECEIPTS, correctsFrozenRow);
-    const corrected = receipt.tree.length === 1 && receipt.tree.every(({ out }) => out);
-    expect(frozen.findings).toEqual([{ at: `${FROZEN_RECORD}:140`, verdict: "unidentified" }]);
-    expect(corrected, "the receipt carries no historical correction entry, with a build, naming the frozen row and its section").toBe(true);
-    return { frozen: frozen.findings.map(finding => ({ ...finding })), frozenControls: [...frozen.controls], corrected, constructed: [...receipt.controls] };
+    const receipt = textPass([{ at: RECEIPT, text: read(RECEIPT) }], A3_RECEIPTS, correctsFrozenRow, labelIfTrue);
+    expect(frozen.payload.filter(({ at }) => !isControl(at))).toEqual([{ at: `${FROZEN_RECORD}:140`, verdict: "unidentified" }]);
+    expect(
+      receipt.payload.filter(at => !isControl(at)),
+      "the receipt carries no historical correction entry, with a build, naming the frozen row and its section",
+    ).toEqual([RECEIPT]);
+    return { frozen: findingsCopy(frozen.payload), ...coverageOf(frozen.read, frozen.lines, [FROZEN_RECORD]), corrected: receipt.payload };
   },
   A4: () => {
     const files = filesBelow("new-feedback");
-    const reading = textPass(
-      files.map(file => ({ at: file, text: read(file) })),
-      A4_TEXTS,
-      isRfReport,
-    );
-    const rfReports = reading.tree.filter(({ out }) => out).map(({ at }) => at);
-    const unread = unreadOf(
-      reading.tree.map(({ at }) => at),
-      gitListed("new-feedback"),
-    );
+    const reading = textPass(filesAsSources(files), A4_TEXTS, isRfReport, labelIfTrue);
+    const unread = unreadOf(reading.read, gitListed("new-feedback"));
     expect(files.length).toBeGreaterThanOrEqual(10);
-    expect(rfReports).toEqual([]);
-    return { floorMet: files.length >= 10, rfReports, unread, constructed: [...reading.controls] };
+    expect(
+      reading.payload.filter(at => !isControl(at)),
+      "a file under Pi's new-feedback/ is an rf report",
+    ).toEqual([]);
+    return { floorMet: files.length >= 10, rfReports: reading.payload, unread };
   },
   A5: () => {
     const verdicts = A5_LINES.map(verdictA);
@@ -784,20 +854,20 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const { files, floorsMet } = codeFiles();
     const manifest: unknown = JSON.parse(read("package.json"));
     const pass = filerPass(files, [...FILER_LINE_CONTROLS, read(FILER_CONTROL_FILE)], manifest, FILER_SCRIPT_CONTROLS);
-    const controlMet = pass.lineControls[FILER_LINE_CONTROLS.length] === true;
-    expect(floorsMet).toBe(true);
-    expect(controlMet, "the filer reader finds no new-feedback path even in a test that names one").toBe(true);
-    expect(pass.sites, "a feedback filing site landed: bind it to recheckFindings through a registered case (wb-pfxo.1 clause b)").toEqual([]);
     const listedScripts = scriptsOf(manifest).length;
+    expect(floorsMet).toBe(true);
+    expect(pass.lineSites.includes(controlAt(FILER_LINE_CONTROLS.length)), "the filer reader finds no new-feedback path even in a test that names one").toBe(true);
+    expect(
+      [...pass.lineSites, ...pass.scriptSites].filter(at => !isControl(at)),
+      "a feedback filing site landed: bind it to recheckFindings through a registered case (wb-pfxo.1 clause b)",
+    ).toEqual([]);
     const coverage = coverageOf(pass.read, pass.lines, codeAnchor());
     return {
-      sites: pass.sites,
+      lineSites: pass.lineSites,
+      scriptSites: pass.scriptSites,
       floorsMet,
-      controlMet,
-      lineControls: pass.lineControls,
-      scriptControls: pass.scriptControls,
       ...coverage,
-      scriptsRead: listedScripts > 0 && pass.scripts === listedScripts,
+      scriptsRead: listedScripts > 0 && pass.scripts.length === listedScripts,
     };
   },
   B2: () => {
@@ -809,37 +879,53 @@ const IMPL: Readonly<Record<string, () => Json>> = {
   C1: () => {
     const row = exportRow(REDELIVERY_BEAD);
     const text = `${typeof row.description === "string" ? row.description : ""}\n${typeof row.close_reason === "string" ? row.close_reason : ""}`;
-    const reading = textPass([{ at: `${EXPORT} ${REDELIVERY_BEAD}`, text }], [text.split(tokenOf("checkout")).join("5edd4c6"), OTHER_BLOB], redeliveryOf);
-    const read0 = reading.tree[0]?.out ?? { missing: ["(no export text read)"], blob: [] };
-    expect(reading.tree.length).toBe(1);
+    const reading = textPass(
+      [{ at: `${EXPORT} ${REDELIVERY_BEAD}`, text }],
+      [text.split(tokenOf("checkout")).join("5edd4c6"), OTHER_BLOB],
+      redeliveryOf,
+      ({ at, out }) => [{ at, missing: out.missing, blob: out.blob }],
+    );
+    const read0 = reading.payload.find(({ at }) => !isControl(at)) ?? { at: "(no export text read)", missing: ["(no export text read)"], blob: [] };
+    expect(reading.read).toEqual([`${EXPORT} ${REDELIVERY_BEAD}`]);
     expect(read0.missing, `identities absent from the ${REDELIVERY_BEAD} export row`).toEqual([]);
     expect(read0.blob).toEqual([tokenOf("report"), tokenOf("redelivered-report")]);
-    return {
-      missing: read0.missing,
-      original: read0.blob[0] ?? null,
-      redelivered: read0.blob[1] ?? null,
-      constructed: reading.controls.map(({ missing, blob }) => ({ missing, blob })),
-    };
+    return { read: reading.read, redelivery: reading.payload.map(({ at, missing, blob }) => ({ at, missing, blob })) };
   },
   C2: () => {
     const reading = restatements(C2_LINES);
-    const found = reading.found;
-    const altered = found.flatMap(({ at, out }) => out.altered.map(token => `${at} ${token}`));
-    const frozenRecord = found.some(({ at, out }) => at === `${FROZEN_RECORD}:227` && out.named.length === REPORT_SHAS.length);
+    const found = reading.payload;
+    const altered = found.flatMap(({ at, altered: tokens }) => tokens.map(token => `${at} ${token}`));
+    const frozenRecord = found.some(({ at, named }) => at === `${FROZEN_RECORD}:227` && named.length === REPORT_SHAS.length);
+    const restated = found.filter(({ at }) => !isControl(at)).length >= 2;
     expect(frozenRecord, "the frozen record's ReactiveFiber delivery row no longer names the four shas").toBe(true);
-    expect(found.length).toBeGreaterThanOrEqual(2);
-    const constructed = reading.controls.map(({ named, altered: tokens }) => ({ named, altered: tokens }));
-    expect(altered).toEqual([]);
-    return { frozenRecord, restatements: found.length >= 2, altered, constructed, ...coverageOf(reading.read, reading.lines, docAnchor()) };
+    expect(restated).toBe(true);
+    expect(
+      altered.filter(entry => !isControl(entry)),
+      "a doc line spells a report identity altered",
+    ).toEqual([]);
+    return {
+      frozenRecord,
+      restatements: restated,
+      altered,
+      constructed: found.filter(({ at }) => isControl(at)).map(({ at, named, altered: tokens }) => ({ at, named, altered: tokens })),
+      ...coverageOf(reading.read, reading.lines, docAnchor()),
+    };
   },
   C3: () => {
     const reading = restatements(C3_LINES);
-    const found = reading.found;
-    const restamped = found.flatMap(({ at, out }) => out.restamped.map(version => `${at} ${version}`));
-    const builds = found.filter(({ out }) => out.builds > 0).length;
-    const constructed = reading.controls.map(({ restamped: versions, builds: count }) => ({ restamped: versions, builds: count }));
-    expect(restamped, "a line naming the re-delivered report names a build that is not the report's own").toEqual([]);
-    return { restamped, buildsRead: builds >= 1, constructed, ...coverageOf(reading.read, reading.lines, docAnchor()) };
+    const found = reading.payload;
+    const restamped = found.flatMap(({ at, restamped: versions }) => versions.map(version => `${at} ${version}`));
+    const buildsRead = found.filter(({ at, builds }) => !isControl(at) && builds > 0).length >= 1;
+    expect(
+      restamped.filter(entry => !isControl(entry)),
+      "a line naming the re-delivered report names a build that is not the report's own",
+    ).toEqual([]);
+    return {
+      restamped,
+      buildsRead,
+      constructed: found.filter(({ at }) => isControl(at)).map(({ at, restamped: versions, builds }) => ({ at, restamped: versions, builds })),
+      ...coverageOf(reading.read, reading.lines, docAnchor()),
+    };
   },
   C4: () => {
     const findings = C4_TEXTS.map(text => redeliveryFindings(ORIGINAL, text));
@@ -851,17 +937,20 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const pass = passOver(docFiles(), verdictD, D_CONTROLS);
     const citationControl = linesOf(read(FROZEN_RECORD)).some(line => FEEDBACK_CITATION.test(line));
     expect(citationControl, "the citation reader finds no feedback file in the frozen record's delivery receipts").toBe(true);
-    expect(pass.findings, "a line calls a figure from a feedback file measured without a receipt").toEqual([]);
+    expect(
+      pass.payload.filter(({ at }) => !isControl(at)),
+      "a line calls a figure from a feedback file measured without a receipt",
+    ).toEqual([]);
     const coverage = coverageOf(pass.read, pass.lines, docAnchor());
-    return { findings: pass.findings.map(finding => ({ ...finding })), citationControl, ...coverage, controls: [...pass.controls] };
+    return { findings: findingsCopy(pass.payload), citationControl, ...coverage };
   },
   D2: () => {
     const { files, floorsMet } = codeFiles();
     const pass = passOver(files, verdictD, D_CONTROLS);
     expect(floorsMet).toBe(true);
-    expect(pass.findings).toEqual([]);
+    expect(pass.payload.filter(({ at }) => !isControl(at))).toEqual([]);
     const coverage = coverageOf(pass.read, pass.lines, codeAnchor());
-    return { findings: pass.findings.map(finding => ({ ...finding })), floorsMet, ...coverage, controls: [...pass.controls] };
+    return { findings: findingsCopy(pass.payload), floorsMet, ...coverage };
   },
   D3: () => {
     const verdicts = D3_LINES.map(verdictD);
@@ -913,8 +1002,10 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const outside = verdictA("rf hangs on every render and misbehaves under load.");
     const inside = verdictA("rf hangs on every render and took 3 s.");
     const quantity = verdictD("rf measured several refused statuses per call (new-feedback/2026-10-21-x.md).");
+    const joinedPath = FILER_SITE.test('const into = ["new", "feedback"].join("-");');
     expect([outside, inside, quantity]).toEqual(["unjudged", "unidentified", "unjudged"]);
-    return { residual: RESIDUALS.Q2 ?? "", outside, inside, quantity };
+    expect(joinedPath).toBe(false);
+    return { residual: RESIDUALS.Q2 ?? "", outside, inside, quantity, joinedPath };
   },
   Q3: () => {
     const verdicts = ["The rf-preview tier regressed.", "reactivefiber.render.preview regressed.", "The context producer, rf:", "regressed the render envelope."].map(verdictA);
@@ -958,26 +1049,72 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       .join("\n");
     const coordinated = anchorFindings(lessRows, FAMILIES, REDELIVERY, RESIDUALS, lessReceipt, clauses);
     const censusOnly = anchorFindings(lessRows, FAMILIES, REDELIVERY, RESIDUALS, receipt, clauses);
+    // (ii)-(iv): a hollow that tells the controls from the tree leaves exactly the control part of the real payload.
+    const real = lineLoop(COORDINATED_TREE, A_CONTROLS, verdictA, findingOf).payload;
+    const awareJudge = lineLoop(
+      COORDINATED_TREE,
+      A_CONTROLS,
+      (line: string) => (A_CONTROLS.some(control => line.startsWith(control)) ? verdictA(line) : "unjudged"),
+      findingOf,
+    ).payload;
+    const awarePick = lineLoop(COORDINATED_TREE, A_CONTROLS, verdictA, (unit: Unit<string>) => (isControl(unit.at) ? findingOf(unit) : [])).payload;
+    const controlPart = real.filter(({ at }) => isControl(at));
+    const byPosition = [...real.slice(0, 1), ...real.slice(real.length - (controlPart.length - 1))];
+    const quiet = [awareJudge, awarePick, byPosition].map(hollow => JSON.stringify(hollow) === JSON.stringify(controlPart));
     expect(coordinated).toEqual([]);
     expect(censusOnly).toEqual(["receipt rows differ"]);
-    return { residual: RESIDUALS.Q8 ?? "", coordinated, censusOnly };
+    expect(quiet, "a hollow that tells the controls from the tree no longer reads clean: move it out of R-COORDINATED").toEqual([true, true, true]);
+    return {
+      residual: RESIDUALS.Q8 ?? "",
+      coordinated,
+      censusOnly,
+      real: findingsCopy(real),
+      awareJudge: findingsCopy(awareJudge),
+      awarePick: findingsCopy(awarePick),
+      byPosition: findingsCopy(byPosition),
+      quiet,
+    };
   },
 };
 
 /** The doc roots the walk reads (A1, Q4). */
 const ROOTS_READ: Json = ["README.md", "CHANGELOG.md", "AGENTS.md", "CONTRIBUTING.md", "SECURITY.md", "docs/", "new-feedback/", "vendor/", ".agents/", ".pi/agents/"];
+/** The refused verdicts of a row A or row D loop's controls: its first control (which leads the loop) and the long twin (control
+ * 3, which ends it). */
+const A_CONTROL_FINDINGS: Json[] = [
+  { at: "control 1", verdict: "unidentified" },
+  { at: "control 3", verdict: "unidentified" },
+];
+const D_CONTROL_FINDINGS: Json[] = [
+  { at: "control 1", verdict: "unbacked" },
+  { at: "control 3", verdict: "unbacked" },
+];
 /** Each pin's witness, measured at base df64ad0; the coverage, control, figure and v-prefix fields (wb-dl6t) at base 27ae04e;
- * the in-loop control, long-twin and doc-page fields (wb-dl6t respin #1, U1 U2 F3 F5 F6) at base c057d89. */
+ * the in-loop control, long-twin and doc-page fields (wb-dl6t respin #1, U1 U2 F3 F5 F6) at base c057d89; the payloads that
+ * carry their control part, the frozen pass's coverage, the widened page controls, the R-SCOPE members and the R-COORDINATED
+ * quiet rows (wb-dl6t cut #3) at base cc0d27e. */
 const WITNESS: Readonly<Record<string, Json>> = {
-  A1: { roots: ROOTS_READ, rootsExist: true, floorsMet: true, controls: [true, true, true], unread: [], walkPages: [true, true, true, true, true, true, true, true, false, false, false, false], listedPages: [true, true, true, true, true, true, true, true, false, false, false, false] },
-  A2: { findings: [], unread: [], everyLine: true, controls: ["unidentified", "admitted", "unidentified"] },
-  A3: {
-    frozen: [{ at: "docs/workbench/TRACEABILITY.md:140", verdict: "unidentified" }],
-    frozenControls: ["unidentified", "admitted", "unidentified"],
-    corrected: true,
-    constructed: [true, false, false, false, true],
+  A1: {
+    roots: ROOTS_READ,
+    rootsExist: true,
+    floorsMet: true,
+    controls: [true, true, true],
+    unread: [],
+    walkPages: [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false],
+    listedPages: [true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, true, false, false, false, false, false],
   },
-  A4: { floorMet: true, rfReports: [], unread: [], constructed: [true, false, false, true] },
+  A2: { findings: A_CONTROL_FINDINGS, unread: [], everyLine: true },
+  A3: {
+    frozen: [
+      { at: "control 1", verdict: "unidentified" },
+      { at: "docs/workbench/TRACEABILITY.md:140", verdict: "unidentified" },
+      { at: "control 3", verdict: "unidentified" },
+    ],
+    unread: [],
+    everyLine: true,
+    corrected: ["control 1", "docs/workbench/receipts/wb-pfxo.1.md", "control 5"],
+  },
+  A4: { floorMet: true, rfReports: ["control 1", "control 4"], unread: [] },
   A5: {
     verdicts: ["unidentified", "admitted", "admitted", "admitted", "admitted", "unmarked", "no-build", "admitted", "no-build", "unjudged", "admitted"],
     findings: [
@@ -988,55 +1125,51 @@ const WITNESS: Readonly<Record<string, Json>> = {
     ],
   },
   B1: {
-    sites: [],
+    lineSites: ["control 1", "control 3", "control 4"],
+    scriptSites: ["control 1", "control 3"],
     floorsMet: true,
-    controlMet: true,
-    lineControls: [true, false, true, true],
-    scriptControls: [true, false, true],
     unread: [],
     everyLine: true,
     scriptsRead: true,
   },
   B2: [[], ["head"], ["installed"], ["installed", "head"], ["installed", "head"], [], [], ["installed"], [], ["head"]],
   C1: {
-    missing: [],
-    original: "0e6e88345",
-    redelivered: "0c7fc5e7cbadebb1110ad6220b752c29db4077c6",
-    constructed: [
-      { missing: ["checkout"], blob: ["0e6e88345", "0c7fc5e7cbadebb1110ad6220b752c29db4077c6"] },
-      { missing: ["report", "row", "redelivered-report", "redelivered-row", "installed", "checkout", "checkout-version"], blob: ["1a2b3c4d5", "6e7f8a9b0c1d"] },
-      { missing: ["checkout"], blob: ["0e6e88345", "0c7fc5e7cbadebb1110ad6220b752c29db4077c6"] },
+    read: [".beads/issues.jsonl wb-jwc.2"],
+    redelivery: [
+      { at: "control 1", missing: ["checkout"], blob: ["0e6e88345", "0c7fc5e7cbadebb1110ad6220b752c29db4077c6"] },
+      { at: ".beads/issues.jsonl wb-jwc.2", missing: [], blob: ["0e6e88345", "0c7fc5e7cbadebb1110ad6220b752c29db4077c6"] },
+      { at: "control 2", missing: ["report", "row", "redelivered-report", "redelivered-row", "installed", "checkout", "checkout-version"], blob: ["1a2b3c4d5", "6e7f8a9b0c1d"] },
+      { at: "control 3", missing: ["checkout"], blob: ["0e6e88345", "0c7fc5e7cbadebb1110ad6220b752c29db4077c6"] },
     ],
   },
   C2: {
     frozenRecord: true,
     restatements: true,
-    altered: [],
+    altered: ["control 2 0c7fc5e7cbadebb1110ad6220b752c29db4077c7", "control 3 0e6e8834f"],
     constructed: [
-      { named: ["report", "row"], altered: [] },
-      { named: [], altered: ["0c7fc5e7cbadebb1110ad6220b752c29db4077c7"] },
-      { named: [], altered: ["0e6e8834f"] },
-      { named: [], altered: [] },
-      { named: ["report", "row"], altered: [] },
+      { at: "control 1", named: ["report", "row"], altered: [] },
+      { at: "control 2", named: [], altered: ["0c7fc5e7cbadebb1110ad6220b752c29db4077c7"] },
+      { at: "control 3", named: [], altered: ["0e6e8834f"] },
+      { at: "control 5", named: ["report", "row"], altered: [] },
     ],
     unread: [],
     everyLine: true,
   },
   C3: {
-    restamped: [],
+    restamped: ["control 1 0.1.768", "control 4 0.1.768"],
     buildsRead: true,
     constructed: [
-      { restamped: ["0.1.768"], builds: 1 },
-      { restamped: [], builds: 2 },
-      { restamped: [], builds: 1 },
-      { restamped: ["0.1.768"], builds: 1 },
+      { at: "control 1", restamped: ["0.1.768"], builds: 1 },
+      { at: "control 2", restamped: [], builds: 2 },
+      { at: "control 3", restamped: [], builds: 1 },
+      { at: "control 4", restamped: ["0.1.768"], builds: 1 },
     ],
     unread: [],
     everyLine: true,
   },
   C4: [[], [], ["altered 5edd4c6fc"], ["dropped 0.1.583", "added 0.1.768"], ["re-graded FIXED"]],
-  D1: { findings: [], citationControl: true, unread: [], everyLine: true, controls: ["unbacked", "admitted", "unbacked"] },
-  D2: { findings: [], floorsMet: true, unread: [], everyLine: true, controls: ["unbacked", "admitted", "unbacked"] },
+  D1: { findings: D_CONTROL_FINDINGS, citationControl: true, unread: [], everyLine: true },
+  D2: { findings: D_CONTROL_FINDINGS, floorsMet: true, unread: [], everyLine: true },
   D3: ["unbacked", "unbacked", "unbacked", "unbacked", "unjudged", "admitted", "unjudged", "unjudged", "unbacked"],
   M1: { caught: [true, true, true, true, true, true, true, true, true], clean: [false, false, false, false, false, false, false, false] },
   M2: { perFamily: [true, true, true, true, true, true, true], nearMisses: [[], [], [], [], [], [], [], []] },
@@ -1049,13 +1182,32 @@ const WITNESS: Readonly<Record<string, Json>> = {
     figures: [true, true, true, true, true, true, false, false, false, false, false, false, false, false],
   },
   Q1: { residual: "R-LINE", verdict: "admitted" },
-  Q2: { residual: "R-VOCABULARY", outside: "unjudged", inside: "unidentified", quantity: "unjudged" },
+  Q2: { residual: "R-VOCABULARY", outside: "unjudged", inside: "unidentified", quantity: "unjudged", joinedPath: false },
   Q3: { residual: "R-SUBJECT", verdicts: ["unjudged", "unjudged", "unjudged", "unjudged"] },
   Q4: { residual: "R-UPSTREAM", roots: ROOTS_READ, outside: 0, upstream: "admitted" },
   Q5: { residual: "R-NEGATION", verdict: "unjudged" },
   Q6: { residual: "R-OTHER-TOOL", verdicts: ["unjudged", "unjudged"] },
-  Q7: { residual: "R-SCOPE", refusedHere: true, readByNoRow: true, unwalkedRoots: [".beads/", "examples/", "test/"], formats: [true, false, false, false, false, false] },
-  Q8: { residual: "R-COORDINATED", coordinated: [], censusOnly: ["receipt rows differ"] },
+  Q7: {
+    residual: "R-SCOPE",
+    refusedHere: true,
+    readByNoRow: true,
+    unwalkedRoots: [".beads/", "examples/", "test/"],
+    formats: [true, false, false, false, false, false, false, false, false, false, false, false],
+  },
+  Q8: {
+    residual: "R-COORDINATED",
+    coordinated: [],
+    censusOnly: ["receipt rows differ"],
+    real: [
+      { at: "control 1", verdict: "unidentified" },
+      { at: "constructed.md:1", verdict: "unidentified" },
+      { at: "control 3", verdict: "unidentified" },
+    ],
+    awareJudge: A_CONTROL_FINDINGS,
+    awarePick: A_CONTROL_FINDINGS,
+    byPosition: A_CONTROL_FINDINGS,
+    quiet: [true, true, true],
+  },
 };
 
 describe("wb-pfxo.1 rf historical claim census (RF-COMPOSITIONAL-ASSEMBLY-R1)", () => {
