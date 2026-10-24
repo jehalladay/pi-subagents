@@ -1,0 +1,778 @@
+{
+  "bead": "wb-ojm5.1",
+  "citation": "docs/programs/graph-native-llm-rlp-2026-10-18/09-decision-conditioned-graph-interfaces.md:54@0107c72992f3",
+  "producer": {
+    "repo": "GraphPolicyCLI",
+    "pin": "0107c72992f35cf6832a37615a25c7df45747ebc",
+    "excerpts": [
+      {
+        "site": "docs/programs/graph-native-llm-rlp-2026-10-18/09-decision-conditioned-graph-interfaces.md:54",
+        "textBase64": "Ni4gQW55IGNoYW5nZSB0byBncmFwaHBvbGljeS5kYXRhLnYxIG9yIGdyYXBocG9saWN5LmZ1bmN0aW9uLnYxIG5lZWRzIGEgc2VwYXJhdGVseSByZXZpZXdlZCB2ZXJzaW9uZWQgbWlncmF0aW9uOyB0aGlzIHByb2dyYW0gZG9lcyBub3QgYXV0aG9yaXplIG9uZS4=",
+        "sha256": "6f46223bcac2be1674f4c01121057c8a2d5fb5d8b310987930b82fa84fb689b2"
+      },
+      {
+        "site": "docs/programs/graph-native-llm-rlp-2026-10-18/07-roadmap-examples.md:23",
+        "textBase64": "PiAqKkFubm90YXRpb24gUDEgKEdQUi0xNTk2KS4qKiBSZWFkIGdyYXBocG9saWN5LmRhdGEudjEgKDA0OjMpLiBUaGUgdG9rZW4gZ3JhcGguZGF0YS52MSBpbiB0aGUgZXhhbXBsZSBjb21tZW50IGFib3ZlIGlzIGEgcmV0aXJlZCBzcGVsbGluZzogYGdwIGdyYXBoIGNoZWNrYCByZWplY3RzIGl0IHdpdGggYEdQX0RBVEFfU0NIRU1BX05BTUVTUEFDRV9NSVNNQVRDSGAu",
+        "sha256": "db73b0d59471e1a8ac916d6c1ddefa7eb390f6f101ed5fb5e497e99e9330500d"
+      },
+      {
+        "site": "docs/programs/graph-native-llm-rlp-2026-10-18/10-certified-factorized-decision-interfaces.md:16",
+        "textBase64": "QWRkIGEgKnByb3Bvc2VkIGFkZGl0aXZlKiBmYWN0b3ItaGVhZCBvdXRwdXQgZmFtaWx5IGRlY2lzaW9uLmZhY3Rvci52MTogdHlwZWQgc2NvcGUgSURzLCBncmFwaCBhbmQgb3JhY2xlIHZlcnNpb25zLCB0YXNrIGhvcml6b24sIGxlZ2FsIGNvbnN0cmFpbnRzLCBvYnNlcnZlZCBpbmZvcm1hdGlvbiBjdXQsIHNjb3JlIHVuaXRzLCBjaGVja3BvaW50IGlkZW50aXR5LCBmYWN0b3IgY29uZmlkZW5jZS9zdXAtZXJyb3Igd2l0bmVzcyBhbmQgcmVzaWR1YWwtZmFjdG9yIGJvdW5kLiBTb3VyY2UgcHJvdmlkZXJzIHJldGFpbiBlZmZlY3QgYXV0aG9yaXR5Lg==",
+        "sha256": "e8e35a0c7dcec63e830b465bcac8fb4d1c3ed21bbdfae856fa199d70bb06559c"
+      },
+      {
+        "site": "docs/programs/graph-native-llm-rlp-2026-10-18/10-certified-factorized-decision-interfaces.md:18",
+        "textBase64": "PiAqKlRyaWFnZSBhbm5vdGF0aW9uIChncGMtOWFtLCBncGMtMWx5LjExLjI3IC8gR1BSLTE2MDAgLyBHUFItMTYwMykqKjogUjM6IGBkZWNpc2lvbi5mYWN0b3IudjFgIGlzIGEgcHJvcG9zYWwsIG5vdCBhbiBhY2NlcHRlZCBzY2hlbWE6IHRoZSBpZCBpcyBvdXRzaWRlIGdyYXBocG9saWN5LiogYW5kIHVucmVnaXN0ZXJlZCwgYW5kIGRvY3MvcHJvZ3JhbXMgYXJlIG5vbi1ub3JtYXRpdmUuIFRoZSByZWdyZXQgYm91bmQgYXNzdW1lcyBvbmUgaG9yaXpvbiBhbmQgYW4gYWRkaXRpdmUgZmFjdG9yaXphdGlvbiwgYW5kIHRoZSBEUCBib3VuZCBhc3N1bWVzIHdpZHRoID0gbWF4IGJhZyBzaXplIC0gMSB3aXRoIGVhY2ggZmFjdG9yIGFzc2lnbmVkIHRvIG9uZSBiYWcu",
+        "sha256": "07c7f18784d6119221dfafb13245bac5b2c8b04fbeabfc6a394d1a18a773da4f"
+      },
+      {
+        "site": "docs/programs/graph-native-llm-rlp-2026-10-18/10-certified-factorized-decision-interfaces.md:23",
+        "textBase64": "RXhoYXVzdGl2ZWx5IHZlcmlmeSBqb2ludCBCZWxsbWFuIFEgb24gc21hbGwgZW52aXJvbm1lbnRzLCBjb21wYXJlIHRydWUvcHJlZGljdGVkIGZhY3RvciB0ZXJtcyBhbmQgcmVzaWR1YWxzLCBwcmVzZXJ2ZSBjb21wbGV0ZSBzb3VyY2UgbGVnYWxpdHksIGFuZCB0ZXN0IHJhbmsvdGVtcGVyYXR1cmUsIG1pc3NpbmcgY2FuZGlkYXRlcywgbXVsdGktY29ycmVjdCBhbnN3ZXIgbWFza2luZywgcGFydGlhbC1vYnNlcnZhdGlvbiBhbGlhcywgam9pbnQgY29ycmVsYXRlZCBrZXJuZWxzLCB0cmVld2lkdGgsIHNvbHZlci1nYXAgY2VydGlmaWNhdGVzLCB1bnNlZW4gZ2VuZXJhdG9yIGZhbWlsaWVzIGFuZCBzdGF0ZS1lbmNvZGVyIGNvbGxpc2lvbi4gTmV2ZXIgbXV0YXRlIGdyYXBocG9saWN5LmRhdGEudjEgb3IgZ3JhcGhwb2xpY3kuZnVuY3Rpb24udjEgd2l0aG91dCBhIHNlcGFyYXRlbHkgdmVyc2lvbmVkIG1pZ3JhdGlvbi4=",
+        "sha256": "45e2f9ae613e80d4ef3b523762bf3e7b0c36b18536e22f46c4f1b36166a4f735"
+      },
+      {
+        "site": "ts/src/schema-ids.ts:51",
+        "textBase64": "ZXhwb3J0IGNvbnN0IERBVEFfU0NIRU1BX0lEID0gImdyYXBocG9saWN5LmRhdGEudjEiOw==",
+        "sha256": "33cf53fdcb1c1ec3ba214394371e098a409f279a937e9ea7fc6fbf73723c5fe4"
+      },
+      {
+        "site": "ts/src/schema-ids.ts:52",
+        "textBase64": "ZXhwb3J0IGNvbnN0IEZVTkNUSU9OX1NDSEVNQV9JRCA9ICJncmFwaHBvbGljeS5mdW5jdGlvbi52MSI7",
+        "sha256": "20976ca6be1001fc3adc6d7a2ed6947315ef49dcd3416084ec28230d9a3e1213"
+      },
+      {
+        "site": "ts/src/data-ir/codes.ts:17",
+        "textBase64": "ICAiR1BfREFUQV9TQ0hFTUFfTkFNRVNQQUNFX01JU01BVENIIiw=",
+        "sha256": "1307f0600bd122b5bc21afd7fcb40fcfcfeae61322131efb4aadab08f3744ba7"
+      },
+      {
+        "site": "python/src/graphpolicy/data_ir/validate.py:498",
+        "textBase64": "ICAgICAgICAgICAgICAgICJHUF9EQVRBX1NDSEVNQV9OQU1FU1BBQ0VfTUlTTUFUQ0giLA==",
+        "sha256": "d6618428a976a5d866e25de228ac177359a21d478d23dcf1487e45dea782f665"
+      },
+      {
+        "site": "requirements/ATOMIC-REQUIREMENTS.md:617",
+        "textBase64": "fCBHUFItMTYwMCB8IGRlY2lzaW9ucy1yZXNlYXJjaC1nYXRpbmcgfCBYLXJlc2VhcmNoIHwgTkVHQVRJVkVfUkVHUkVTU0lPTiB8IE5PUk1BVElWRV9ERUNJU0lPTiB8IDAwMSwgMDMxIHwgYGRlY2lzaW9uLmZhY3Rvci52MWAgYW5kIGFueSBDUlBUIGhlYWQtdGFyZ2V0IG5hbWVzcGFjZSBwcm9wb3NlZCBpbiBSTFAgMDlSLzEwUiBNVVNUIE5PVCBhcHBlYXIgYXMgYW4gZW1pdHRlZCwgYWNjZXB0ZWQgb3IgZml4dHVyZS1waW5uZWQgc2NoZW1hIGlkIGluIHRzLywgcHl0aG9uLyBvciBmaXh0dXJlcy8gdW50aWwgYW4gYWNjZXB0ZWQgQURSIHLigKYgfA==",
+        "sha256": "bc1b20b06c643be79b722842a858e38c522b4371583d61988b60475bca71954d"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) a census greps src, test, docs/workbench and qa for {RETIRED} and {PROPOSED} and asserts 0 hits (0 at Pi d75b68d10a1a)",
+      "pins": [
+        {
+          "id": "A1",
+          "quote": "a census greps src, test, docs/workbench and qa",
+          "witness": {
+            "roots": [
+              "src",
+              "test",
+              "docs/workbench",
+              "qa"
+            ],
+            "unreadTracked": [],
+            "rootsRead": [
+              true,
+              true,
+              true,
+              true
+            ],
+            "anchors": [
+              "src/index.ts",
+              "test/workbench-gp-schema-identity-census.test.ts",
+              "docs/workbench/03-architecture-and-ownership.md",
+              "qa/workbench/dependency-census.mjs"
+            ],
+            "anchorsRead": [
+              true,
+              true,
+              true,
+              true
+            ],
+            "planted": [
+              "docs/workbench/zz-plant.md",
+              "qa/zz-plant.json",
+              "src/deep/er/zz-plant.ts",
+              "src/zz-plant.ts",
+              "test/zz-plant.md"
+            ]
+          }
+        },
+        {
+          "id": "A2",
+          "quote": "for {RETIRED} and {PROPOSED}",
+          "witness": {
+            "anchors": {
+              "beadNamesBoth": true,
+              "beadIds": 4,
+              "canaryReads": [
+                true,
+                true,
+                true,
+                true
+              ],
+              "canaryNeedles": [
+                true,
+                true
+              ],
+              "retiredRejected": true,
+              "proposedAdditive": true,
+              "proposedUnregistered": true,
+              "gpr1600": true
+            },
+            "raw": [
+              true,
+              true
+            ],
+            "controls": [
+              [
+                "retired upper case",
+                "text:data@graph"
+              ],
+              [
+                "retired joiner",
+                "text:data@graph"
+              ],
+              [
+                "retired fullwidth stop",
+                "text:data@graph"
+              ],
+              [
+                "retired hyphens",
+                "text:data@graph"
+              ],
+              [
+                "retired emphasis",
+                "text:data@graph"
+              ],
+              [
+                "retired concatenation",
+                "cooked:data@graph"
+              ],
+              [
+                "retired template",
+                "cooked:data@graph"
+              ],
+              [
+                "retired escape",
+                "cooked:data@graph"
+              ],
+              [
+                "retired json escape",
+                "decoded:data@graph"
+              ],
+              [
+                "proposed upper case",
+                "text:factor@decision"
+              ],
+              [
+                "proposed bare namespace",
+                "text:factor@decision"
+              ],
+              [
+                "proposed concatenation",
+                "cooked:factor@decision"
+              ]
+            ],
+            "quiet": {
+              "R-COMPUTED": 0,
+              "R-ENCODED": 0,
+              "R-CONFUSABLE": 0,
+              "R-MARKUP": 0,
+              "R-LINE-BREAK": 0
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "quote": "and asserts 0 hits (0 at Pi d75b68d10a1a)",
+          "witness": {
+            "needleHits": [],
+            "foldedHits": [],
+            "base": {
+              "resolved": true,
+              "status": 1,
+              "hits": "",
+              "control": [
+                "src/workbench/providers/reactivefiber.ts"
+              ]
+            },
+            "planted": {
+              "needleHits": [
+                "src/deep/er/zz-plant.ts: PROPOSED x1",
+                "test/zz-plant.md: RETIRED x1"
+              ],
+              "foldedHits": [
+                "docs/workbench/zz-plant.md:1 text factor@decision#1",
+                "src/deep/er/zz-plant.ts:1 text factor@decision#1",
+                "src/zz-plant.ts:2 cooked data@graph#1",
+                "test/zz-plant.md:1 text data@graph#1"
+              ],
+              "canary": [
+                ".beads/issues.jsonl: RETIRED x1",
+                ".beads/issues.jsonl: PROPOSED x1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) any Pi text or fixture naming a GP schema id spells exactly {DATA} or {FUNCTION} through one carrier (wb-cax.8 pattern)",
+      "pins": [
+        {
+          "id": "B1",
+          "quote": "any Pi text or fixture naming a GP schema id",
+          "witness": {
+            "excluded": [
+              ".beads/"
+            ],
+            "storeSpells": {
+              "retired": true,
+              "proposed": true,
+              "data": true,
+              "function": true
+            },
+            "anchors": [
+              "docs/workbench/receipts/wb-1xvp.5.md text DATA",
+              "docs/workbench/receipts/wb-1xvp.5.md text FUNCTION",
+              "test/workbench-gp-schema-identity-census.test.ts text DATA",
+              "test/workbench-gp-schema-identity-census.test.ts text FUNCTION"
+            ],
+            "anchorsRead": [
+              true,
+              true,
+              true,
+              true
+            ],
+            "controls": [
+              [
+                "markdown",
+                "text:data@graphpolicy"
+              ],
+              [
+                "json string",
+                "text:function@graphpolicy"
+              ],
+              [
+                "json escape",
+                "decoded:function@graphpolicy"
+              ],
+              [
+                "ts literal",
+                "text:data@graphpolicy"
+              ],
+              [
+                "ts concatenation",
+                "cooked:data@graphpolicy"
+              ]
+            ],
+            "quiet": {
+              "R-ENVELOPE": 0,
+              "R-NAMESPACE-ONLY": 0
+            },
+            "planted": {
+              "universe": [
+                "README.md",
+                "docs/workbench/zz-plant.md",
+                "media/zz-plant.bin",
+                "qa/zz-plant.json",
+                "src/deep/er/zz-plant.ts",
+                "src/zz-plant.ts",
+                "test/zz-plant.md"
+              ],
+              "binary": [
+                "media/zz-plant.bin"
+              ],
+              "exact": [
+                "README.md text DATA x1",
+                "qa/zz-plant.json decoded FUNCTION x1",
+                "src/zz-plant.ts text DATA x1"
+              ]
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "quote": "spells exactly {DATA} or {FUNCTION}",
+          "witness": {
+            "findings": [],
+            "controls": [
+              [
+                "exact data",
+                "exact"
+              ],
+              [
+                "exact function",
+                "exact"
+              ],
+              [
+                "major 2",
+                "major"
+              ],
+              [
+                "major 0",
+                "major"
+              ],
+              [
+                "major 01",
+                "major"
+              ],
+              [
+                "major tail",
+                "major"
+              ],
+              [
+                "invisible joiner",
+                "invisible"
+              ],
+              [
+                "invisible soft hyphen",
+                "invisible"
+              ],
+              [
+                "compatibility stop",
+                "compatibility"
+              ],
+              [
+                "upper case",
+                "case"
+              ],
+              [
+                "title case",
+                "case"
+              ],
+              [
+                "hyphen namespace",
+                "namespace"
+              ],
+              [
+                "underscore namespace",
+                "namespace"
+              ],
+              [
+                "dotted namespace",
+                "namespace"
+              ],
+              [
+                "slash separators",
+                "separator"
+              ],
+              [
+                "hyphen version",
+                "separator"
+              ],
+              [
+                "space separators",
+                "separator"
+              ],
+              [
+                "retired function",
+                "retired"
+              ],
+              [
+                "proposed major 2",
+                "proposed"
+              ]
+            ],
+            "planted": [
+              "README.md:1 text proposed",
+              "docs/workbench/zz-plant.md:1 text proposed",
+              "qa/zz-plant.json:1 text major",
+              "src/deep/er/zz-plant.ts:1 text proposed",
+              "src/zz-plant.ts:2 cooked retired",
+              "test/zz-plant.md:1 text retired"
+            ]
+          }
+        },
+        {
+          "id": "B3",
+          "quote": "through one carrier (wb-cax.8 pattern)",
+          "witness": {
+            "srcReadings": 0,
+            "carriers": [],
+            "live": [],
+            "selfCarrier": {
+              "spelled": [
+                "DATA x1",
+                "FUNCTION x1"
+              ],
+              "findings": [],
+              "rosterReadings": 0
+            },
+            "producerCarrier": [
+              true,
+              true
+            ],
+            "cases": [
+              [
+                "one carrier per id",
+                []
+              ],
+              [
+                "unregistered spelling",
+                [
+                  "src/gp/adapter.ts:1: DATA spelled outside its carrier (none registered)"
+                ]
+              ],
+              [
+                "second site",
+                [
+                  "src/gp/adapter.ts:1: DATA spelled outside its carrier (src/gp/schema-ids.ts)"
+                ]
+              ],
+              [
+                "duplicate in carrier",
+                [
+                  "src/gp/schema-ids.ts: FUNCTION spelled 2 times, a carrier defines it once"
+                ]
+              ],
+              [
+                "stale carrier",
+                [
+                  "src/gp/schema-ids.ts: a stale carrier, DATA is not spelled there"
+                ]
+              ]
+            ],
+            "planted": {
+              "readings": [
+                "src/deep/er/zz-plant.ts:1 text factor@decision#1",
+                "src/zz-plant.ts:1 text data@graphpolicy#1",
+                "src/zz-plant.ts:2 cooked data@graph#1"
+              ],
+              "findings": [
+                "src/zz-plant.ts:1: DATA spelled outside its carrier (none registered)"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) a Pi GP adapter, if any, refuses a non-pinned schema id with a typed refusal naming the id and surfaces a producer GP_DATA_SCHEMA_NAMESPACE_MISMATCH verbatim, never retrying under an altered namespace",
+      "pins": [
+        {
+          "id": "C1",
+          "quote": "a Pi GP adapter, if any",
+          "witness": {
+            "adapters": [],
+            "bindings": 0,
+            "live": [],
+            "detection": [
+              [
+                "schema literal",
+                true
+              ],
+              [
+                "producer code",
+                true
+              ],
+              [
+                "module specifier",
+                true
+              ],
+              [
+                "client identifier",
+                true
+              ],
+              [
+                "comment only",
+                false
+              ],
+              [
+                "near names",
+                false
+              ]
+            ],
+            "cases": [
+              [
+                "bound to three registered cases",
+                []
+              ],
+              [
+                "unbound adapter",
+                [
+                  "src/workbench/providers/graphpolicy.ts: a GP adapter lands unbound (wb-ojm5.1 (c)): bind it in GP_SCHEMA_ADAPTERS"
+                ]
+              ],
+              [
+                "stale binding",
+                [
+                  "src/workbench/providers/graphpolicy.ts: a stale binding, the file is no GP adapter"
+                ]
+              ],
+              [
+                "absent proof file",
+                [
+                  "src/workbench/providers/graphpolicy.ts: refusal case \"refuses a non-pinned schema id\" is in an absent file",
+                  "src/workbench/providers/graphpolicy.ts: verbatim case \"surfaces the producer namespace refusal verbatim\" is in an absent file",
+                  "src/workbench/providers/graphpolicy.ts: noRetry case \"never retries under an altered namespace\" is in an absent file"
+                ]
+              ],
+              [
+                "absent title",
+                [
+                  "src/workbench/providers/graphpolicy.ts: noRetry case \"an unregistered title\" is absent"
+                ]
+              ],
+              [
+                "held by skip",
+                [
+                  "src/workbench/providers/graphpolicy.ts: verbatim case \"surfaces the producer namespace refusal verbatim\" is held"
+                ]
+              ],
+              [
+                "held by todo",
+                [
+                  "src/workbench/providers/graphpolicy.ts: verbatim case \"surfaces the producer namespace refusal verbatim\" is held"
+                ]
+              ],
+              [
+                "held by only",
+                [
+                  "src/workbench/providers/graphpolicy.ts: verbatim case \"surfaces the producer namespace refusal verbatim\" is held"
+                ]
+              ],
+              [
+                "held by skipIf",
+                [
+                  "src/workbench/providers/graphpolicy.ts: verbatim case \"surfaces the producer namespace refusal verbatim\" is held"
+                ]
+              ],
+              [
+                "held by runIf",
+                [
+                  "src/workbench/providers/graphpolicy.ts: verbatim case \"surfaces the producer namespace refusal verbatim\" is held"
+                ]
+              ],
+              [
+                "held by fails",
+                [
+                  "src/workbench/providers/graphpolicy.ts: verbatim case \"surfaces the producer namespace refusal verbatim\" is held"
+                ]
+              ],
+              [
+                "held suite",
+                [
+                  "src/workbench/providers/graphpolicy.ts: refusal case \"refuses a non-pinned schema id\" is held",
+                  "src/workbench/providers/graphpolicy.ts: verbatim case \"surfaces the producer namespace refusal verbatim\" is held",
+                  "src/workbench/providers/graphpolicy.ts: noRetry case \"never retries under an altered namespace\" is held"
+                ]
+              ]
+            ],
+            "quiet": {
+              "R-BOUND-CASE": 0
+            },
+            "planted": [
+              "src/zz-plant.ts"
+            ]
+          }
+        },
+        {
+          "id": "C2",
+          "quote": "refuses a non-pinned schema id with a typed refusal naming the id",
+          "witness": [
+            [
+              "pinned id admitted",
+              []
+            ],
+            [
+              "retired id refused before any request",
+              []
+            ],
+            [
+              "proposed id refused before any request",
+              []
+            ],
+            [
+              "proposed id admitted",
+              [
+                "admitted-non-pinned"
+              ]
+            ],
+            [
+              "another major admitted",
+              [
+                "admitted-non-pinned"
+              ]
+            ],
+            [
+              "untyped refusal",
+              [
+                "untyped-refusal"
+              ]
+            ],
+            [
+              "empty refusal code",
+              [
+                "untyped-refusal"
+              ]
+            ],
+            [
+              "refusal naming no id",
+              [
+                "refusal-names-no-id"
+              ]
+            ],
+            [
+              "refusal naming the corrected id",
+              [
+                "refusal-names-another-id"
+              ]
+            ],
+            [
+              "refusal naming a case-folded id",
+              [
+                "refusal-names-another-id"
+              ]
+            ]
+          ]
+        },
+        {
+          "id": "C3",
+          "quote": "and surfaces a producer GP_DATA_SCHEMA_NAMESPACE_MISMATCH verbatim",
+          "witness": {
+            "anchors": [
+              true,
+              true,
+              true
+            ],
+            "exchanges": [
+              [
+                "producer refusal surfaced verbatim",
+                []
+              ],
+              [
+                "code rewritten",
+                [
+                  "producer-code-rewritten"
+                ]
+              ],
+              [
+                "code case-folded",
+                [
+                  "producer-code-rewritten"
+                ]
+              ],
+              [
+                "message paraphrased",
+                [
+                  "producer-message-altered"
+                ]
+              ],
+              [
+                "message truncated",
+                [
+                  "producer-message-altered"
+                ]
+              ],
+              [
+                "message rewritten to the corrected id",
+                [
+                  "producer-message-altered"
+                ]
+              ],
+              [
+                "refusal dropped",
+                [
+                  "producer-refusal-dropped"
+                ]
+              ],
+              [
+                "admitted after the refusal",
+                [
+                  "admitted-non-pinned",
+                  "producer-refusal-dropped"
+                ]
+              ]
+            ]
+          }
+        },
+        {
+          "id": "C4",
+          "quote": "never retrying under an altered namespace",
+          "witness": [
+            [
+              "one request under the inbound id",
+              []
+            ],
+            [
+              "repeated under the inbound id",
+              []
+            ],
+            [
+              "retried under the pinned id",
+              [
+                "altered-namespace-request"
+              ]
+            ],
+            [
+              "corrected before the first request",
+              [
+                "altered-namespace-request"
+              ]
+            ],
+            [
+              "retried under the pinned major",
+              [
+                "altered-namespace-request"
+              ]
+            ],
+            [
+              "retried under a case-folded id",
+              [
+                "altered-namespace-request"
+              ]
+            ]
+          ]
+        }
+      ]
+    }
+  ],
+  "residuals": [
+    {
+      "id": "R-COMPUTED",
+      "quietPin": "A2",
+      "family": "a spelling assembled at run time (an array join, a non-constant template, a value from settings or the environment) is no text and no cooked constant; this census's own needles are of this form"
+    },
+    {
+      "id": "R-ENCODED",
+      "quietPin": "A2",
+      "family": "an encoded spelling (base64, percent-encoding, an HTML entity) and every archive or media payload are not decoded; the roster's vendored excerpts are base64"
+    },
+    {
+      "id": "R-CONFUSABLE",
+      "quietPin": "A2",
+      "family": "a homoglyph or combining-mark spelling (a Cyrillic letter for a Latin one) is not folded to Latin"
+    },
+    {
+      "id": "R-MARKUP",
+      "quietPin": "A2",
+      "family": "an HTML tag splitting the spelling is read as raw text, never rendered; emphasis, code and strike marks are separators"
+    },
+    {
+      "id": "R-LINE-BREAK",
+      "quietPin": "A2",
+      "family": "a line break ends every reading, so a spelling broken across two lines reads nothing"
+    },
+    {
+      "id": "R-ENVELOPE",
+      "quietPin": "B1",
+      "family": "GraphPolicyCLI envelope and registry ids (graphpolicy.rpc, cli, journal, limits, error, project and the rest of the producer's schema-ids registry) are outside R1's identity pair and read nothing"
+    },
+    {
+      "id": "R-NAMESPACE-ONLY",
+      "quietPin": "B1",
+      "family": "a GraphPolicyCLI namespace without a major names no schema id and reads nothing"
+    },
+    {
+      "id": "R-BOUND-CASE",
+      "quietPin": "C1",
+      "family": "a bound case is found in its test source, never in vitest's report, so a registered case that asserts nothing still binds"
+    }
+  ]
+}

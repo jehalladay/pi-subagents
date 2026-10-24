@@ -10,6 +10,10 @@
  * (docs/workbench/08 § "Cancellation and ownership": ownership is stated by the producer, never inferred); the end of the
  * operation is the `gate.run` reply (`operation_id`, `status`, `terminal_disposition`), never a notification. Nothing is
  * minted: an id is used verbatim or the frame is ignored, a disposition is echoed as text and mapped to a tone only.
+ * The reply's own selected-versus-complete universe (wb-6ps1.2: `data.selection_accounting` for the declared steps or
+ * members, `data.selection` for the tests) travels beside the disposition as its own facet whenever the reply publishes it,
+ * and a published selection short of complete, or one that is not well formed, never settles with a success tone: a selected
+ * or partial run is never a full-gate PASS. A gate-step node carries only its own step's outcome, never the operation's verdict.
  *
  * Retention: the started operation's connection is handed to the caller's `retain` seam (the wb-cra.1 registry), re-stated
  * on every frame of the operation so an active operation keeps its cancel offer past the registry TTL, and released on the
@@ -21,6 +25,7 @@
 import { CapabilityError } from "./capability-registry.js";
 import type { ForgeCancelOperations, ForgeCapabilitySource } from "./forge-control.js";
 import type { NativeRef, NativeSnapshot, ObservationProjection, ObservationScope, Presentation } from "./observation.js";
+import { sanitizeWorkbenchText } from "./redaction.js";
 
 export const FORGE_OPERATION_KIND = "forge.operation.snapshot";
 export const FORGE_GATE_STEP_KIND = "forge.gate-step.snapshot";
@@ -30,8 +35,14 @@ export const FORGE_GATE_STEP_FINISHED_METHOD = "gate.step_finished";
 export const FORGE_GATE_RUN_METHOD = "gate.run";
 /** The reply field the SDK's delivery policy reads as the end of an operation (event_delivery_policy.d.ts TERMINAL_DISPOSITION_FIELD). */
 export const FORGE_TERMINAL_DISPOSITION_FIELD = "terminal_disposition";
+/** The reply `data` key of the declared-versus-selected unit universe (Forge docs/agent-interface.md § data.selection_accounting). */
+export const FORGE_SELECTION_ACCOUNTING_FIELD = "selection_accounting";
+/** The reply `data` key of the test universe a narrowed run selected from (Forge docs/cli-reference.md, "Explicit narrowing"). */
+export const FORGE_TEST_SELECTION_FIELD = "selection";
 /** Native identifiers are used verbatim within the projection's text bound; longer or empty values are not repaired. */
 const NATIVE_TEXT_BYTES = 256;
+/** The closed selection axis of a selection_accounting row; a row outside it withholds the whole block. */
+const SELECTION_STATES: ReadonlySet<string> = new Set(["selected", "unaffected", "explicitly_narrowed", "unknown"]);
 
 /** One notification as the connection delivers it; a real SDK Notification satisfies it unchanged. */
 export interface ForgeOperationFrame {
@@ -65,11 +76,31 @@ export interface ForgeGateStep {
   /** Present on a finished frame only: the server's own outcome word, echoed. */
   readonly outcome?: string;
 }
+/** A reply's unit universe as published: what the gate declared (steps, or members of a fan-out) and how many it selected. */
+export interface ForgeUnitSelection {
+  readonly unit: "step" | "member";
+  readonly selected: number;
+  readonly declared: number;
+}
+/** A reply's test universe as published: whether the run narrowed the tests it ran. */
+export interface ForgeTestSelection {
+  readonly narrowed: boolean;
+}
+/**
+ * The selected-versus-complete universe a gate.run reply publishes beside its verdict (wb-6ps1.2). Each half is present only
+ * when the reply published its block, and reads "withheld" when the block is published but not well formed.
+ */
+export interface ForgeRunSelection {
+  readonly units?: ForgeUnitSelection | "withheld";
+  readonly tests?: ForgeTestSelection | "withheld";
+}
 export interface ForgeOperationTerminal {
   readonly operationId: string;
   readonly status: string;
   readonly terminalDisposition: string;
   readonly observedAt: string;
+  /** Present only when the reply published a selection block. */
+  readonly selection?: ForgeRunSelection;
 }
 export interface ForgeObservedRelation {
   readonly scope: ObservationScope;
@@ -100,6 +131,13 @@ function nativeText(value: unknown): string | undefined {
 }
 function record(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+/** An own data field only: an inherited value is never read as a producer statement. */
+function own(value: Record<string, unknown>, key: string): unknown {
+  return Object.hasOwn(value, key) ? value[key] : undefined;
+}
+function list(value: unknown): readonly unknown[] | undefined {
+  return Array.isArray(value) ? value : undefined;
 }
 function trace(options: ForgeTopologyOptions, correlationIds?: Readonly<Record<string, string>>): NativeSnapshot["trace"] {
   if (options.invocationId === undefined && correlationIds === undefined) return undefined;
@@ -150,20 +188,54 @@ export function forgeGateStepTopology(step: ForgeGateStep, options: ForgeTopolog
 
 const TERMINAL_TONES: Readonly<Record<string, Presentation["statusTone"]>> = Object.freeze({ success: "success", error: "failure", usage_error: "failure" });
 
-/** The operation's end as its own reply states it: the disposition echoed as text, the command status mapped to a tone only. */
+/** An empty declared universe judges nothing, so it is never complete. */
+const unitsComplete = (units: ForgeUnitSelection): boolean => units.declared > 0 && units.selected === units.declared;
+/** A unit universe's own facet: fixed words and the producer's counts, never producer text. */
+function unitFacet(units: ForgeUnitSelection | "withheld"): string {
+  if (units === "withheld") return "selection UNKNOWN";
+  const noun = units.declared === 1 ? units.unit : `${units.unit}s`;
+  return `selection ${unitsComplete(units) ? "complete" : "partial"}: ${units.selected} of ${units.declared} ${noun} selected`;
+}
+function testFacet(tests: ForgeTestSelection | "withheld"): string {
+  return tests === "withheld" ? "tests UNKNOWN" : tests.narrowed ? "tests narrowed" : "tests not narrowed";
+}
+/**
+ * A published selection's coverage: partial when either universe is short of complete; complete only on a complete unit
+ * universe whose test universe is unnarrowed or unpublished; otherwise (a withheld block, or no unit universe) unknown.
+ */
+function selectionCoverage(selection: ForgeRunSelection): "complete" | "partial" | "unknown" {
+  const { units, tests } = selection;
+  if ((typeof units === "object" && !unitsComplete(units)) || (typeof tests === "object" && tests.narrowed)) return "partial";
+  return typeof units === "object" && tests !== "withheld" ? "complete" : "unknown";
+}
+
+/**
+ * The operation's end as its own reply states it: the disposition echoed as text through the shared label layout, the command
+ * status mapped to a tone, and a published selection carried after the disposition as its own facet with the coverage it
+ * states. Success needs a complete published universe: a selection short of complete, or one that is not well formed, turns a
+ * success tone to unknown (a failure stays a failure), while a reply that publishes no selection keeps the command's tone.
+ */
 export function forgeOperationTerminalSnapshot(terminal: ForgeOperationTerminal, options: ForgeTopologyOptions): NativeSnapshot {
   const operationId = nativeText(terminal.operationId);
   const disposition = nativeText(terminal.terminalDisposition);
   if (operationId === undefined || disposition === undefined) {
     throw new CapabilityError("validation", "Forge reply names no usable operation and disposition; nothing is settled in its place.");
   }
+  const selection = terminal.selection;
+  const coverage = selection === undefined ? undefined : selectionCoverage(selection);
+  const commandTone: Presentation["statusTone"] = Object.hasOwn(TERMINAL_TONES, terminal.status) ? TERMINAL_TONES[terminal.status] : "unknown";
+  const statusTone: Presentation["statusTone"] = commandTone === "success" && coverage !== undefined && coverage !== "complete" ? "unknown" : commandTone;
+  // A disposition is at most NATIVE_TEXT_BYTES bytes, so the label bound never truncates it; one that displays as nothing is named.
+  const shown = sanitizeWorkbenchText(disposition, NATIVE_TEXT_BYTES, "label") || "unprintable terminal_disposition";
+  const facets = selection === undefined ? [] : [
+    ...(selection.units !== undefined ? [unitFacet(selection.units)] : []),
+    ...(selection.tests !== undefined ? [testFacet(selection.tests)] : []),
+  ];
   return withTrace({
     source: forgeOperationRef(operationId), scope: { ...options.scope }, capturedAt: terminal.observedAt, observedAt: terminal.observedAt,
     sequence: Number.MAX_SAFE_INTEGER, kind: FORGE_OPERATION_KIND, evidenceRefs: [`forge-operation:${operationId}:${FORGE_TERMINAL_DISPOSITION_FIELD}=${disposition}`],
-    node: {
-      title: `Forge operation ${operationId}`, type: "workflow", statusText: disposition,
-      statusTone: Object.hasOwn(TERMINAL_TONES, terminal.status) ? TERMINAL_TONES[terminal.status] : "unknown",
-    },
+    ...(coverage !== undefined ? { coverage } : {}),
+    node: { title: `Forge operation ${operationId}`, type: "workflow", statusText: [shown, ...facets].join(" · "), statusTone },
   }, trace(options));
 }
 
@@ -185,13 +257,59 @@ export function decodeForgeOperationFrame(frame: ForgeOperationFrame, observedAt
   return { kind: "step", step: { operationId, step, seq, observedAt, ...(outcome !== undefined ? { outcome } : {}) } };
 }
 
+/**
+ * A published selection_accounting block read for its unit universe only. The unit kind and every row's selection come from
+ * closed sets, and the producer's own count identities are re-checked rather than trusted: counts.declared is the row count and
+ * counts.selected the number of selected rows. Anything else is not well formed and the whole block is withheld.
+ */
+function decodeUnitSelection(block: unknown): ForgeUnitSelection | "withheld" {
+  if (!record(block)) return "withheld";
+  const unit = own(block, "unit");
+  const rows = list(own(block, "units"));
+  const counts = own(block, "counts");
+  if ((unit !== "step" && unit !== "member") || rows === undefined || !record(counts)) return "withheld";
+  let selected = 0;
+  for (const row of rows) {
+    const state = record(row) ? own(row, "selection") : undefined;
+    if (typeof state !== "string" || !SELECTION_STATES.has(state)) return "withheld";
+    if (state === "selected") selected += 1;
+  }
+  if (own(counts, "declared") !== rows.length || own(counts, "selected") !== selected) return "withheld";
+  return { unit, selected, declared: rows.length };
+}
+
+/** A published data.selection block read for one fact: whether the run narrowed its tests (narrowed, or an incomplete denominator). */
+function decodeTestSelection(block: unknown): ForgeTestSelection | "withheld" {
+  if (!record(block)) return "withheld";
+  const narrowed = own(block, "narrowed");
+  const complete = own(block, "denominator_complete");
+  if (typeof narrowed !== "boolean" || (complete !== undefined && complete !== null && typeof complete !== "boolean")) return "withheld";
+  return { narrowed: narrowed || complete === false };
+}
+
+/**
+ * The selection blocks a reply's data publishes, or undefined when it publishes neither (a reply with no data block included).
+ * `selection: null` is the producer's own value on an unnarrowed run (measured, forge 0.2.1), so it publishes no test universe.
+ */
+function decodeForgeRunSelection(data: unknown): ForgeRunSelection | undefined {
+  if (!record(data)) return undefined;
+  const accounting = own(data, FORGE_SELECTION_ACCOUNTING_FIELD);
+  const tests = own(data, FORGE_TEST_SELECTION_FIELD);
+  if (accounting === undefined && (tests === undefined || tests === null)) return undefined;
+  return {
+    ...(accounting !== undefined ? { units: decodeUnitSelection(accounting) } : {}),
+    ...(tests !== undefined && tests !== null ? { tests: decodeTestSelection(tests) } : {}),
+  };
+}
+
 /** The reply's own terminal statement for the operation, or undefined when it echoes a different operation or no disposition. */
 export function decodeForgeOperationTerminal(reply: unknown, operationId: string, observedAt: string): ForgeOperationTerminal | undefined {
   if (!record(reply) || reply.operation_id !== operationId) return undefined;
   const disposition = nativeText(reply[FORGE_TERMINAL_DISPOSITION_FIELD]);
   const status = nativeText(reply.status);
   if (disposition === undefined || status === undefined) return undefined;
-  return { operationId, status, terminalDisposition: disposition, observedAt };
+  const selection = decodeForgeRunSelection(own(reply, "data"));
+  return { operationId, status, terminalDisposition: disposition, observedAt, ...(selection !== undefined ? { selection } : {}) };
 }
 
 export interface ForgeOperationObserverDeps {

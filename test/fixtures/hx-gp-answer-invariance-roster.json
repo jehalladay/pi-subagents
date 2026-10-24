@@ -1,0 +1,2561 @@
+{
+ "bead": "wb-kjg9.1",
+ "constants": {
+  "bead": "wb-kjg9.1",
+  "pin": "0091719d0288",
+  "pinCommit": "0091719d02887910fa0c2fb6693a32723e243600",
+  "measuredAt": "d75b68d10a1a",
+  "contract": "hyperunix.find/v1",
+  "shipped": false,
+  "readmeLines": [
+   {
+    "cite": "README.md:7",
+    "line": 7,
+    "sha256": "11bbe91bf4d0c897ddcd8abf82bb39134b02cc127d39207b8df85c53cc42eef0"
+   },
+   {
+    "cite": "README.md:11",
+    "line": 11,
+    "sha256": "abfa7fad217662ef3201d2323f2a16c7d295c94abe98acc6bf2b03f9cb353785"
+   },
+   {
+    "cite": "README.md:13",
+    "line": 13,
+    "sha256": "a5df4a19175b5b0445fec1624663693fefbbc708173bebdc6351b7812d094c81"
+   },
+   {
+    "cite": "README.md:23",
+    "line": 23,
+    "sha256": "714baa935b44a02bfc13b390beeeb0db1790cd934ed0d78566ca34d1eb1bbeb1"
+   }
+  ],
+  "gpKeys": [
+   "plan_cost_estimate",
+   "exploration_priority",
+   "gp_receipt",
+   "covered",
+   "uncovered"
+  ],
+  "gpMark": "gp-census-",
+  "gpPayload": {
+   "plan_cost_estimate": {
+    "plan": "complete",
+    "cost": "cheap",
+    "estimate": 0,
+    "uncertainty": 0,
+    "licenses_absence": true,
+    "program": "gp-census-program"
+   },
+   "exploration_priority": 1,
+   "gp_receipt": {
+    "program": "gp-census-program",
+    "checkpoint": "gp-census-checkpoint",
+    "verdict": "complete",
+    "coverage": "complete",
+    "licenses_absence": true
+   },
+   "covered": {
+    "label": "covered",
+    "observations": [
+     "gp-census-observation-1"
+    ],
+    "completeness": "complete"
+   },
+   "uncovered": {
+    "label": "uncovered",
+    "observations": [
+     "gp-census-observation-2"
+    ],
+    "absent": true
+   }
+  },
+  "projected": [
+   "coverage",
+   "statusTone",
+   "absenceLicensed"
+  ],
+  "cited": [
+   {
+    "line": 129,
+    "text": "const kind = record(source?.execution_status)?.kind;"
+   },
+   {
+    "line": 130,
+    "text": "const licensed = record(source?.coverage_summary)?.licenses_absence;"
+   },
+   {
+    "line": 216,
+    "text": "// Absence is established only by the runtime's licence on a complete kind; transport success and a 0-row answer establish nothing."
+   },
+   {
+    "line": 217,
+    "text": "const absence = reads === 'complete' && licensed;"
+   },
+   {
+    "line": 218,
+    "text": "const coverage: NonNullable<NativeSnapshot['coverage']> = absence ? 'complete' : reads === 'failure' ? 'unknown' : 'partial';"
+   },
+   {
+    "line": 219,
+    "text": "const statusTone: Presentation['statusTone'] = absence ? 'success' : reads === 'failure' ? 'failure' : 'unknown';"
+   }
+  ],
+  "needles": [
+   {
+    "id": "GraphDataIR",
+    "members": [
+     {
+      "id": "graphdatair",
+      "source": "graph[-_. ]?data[-_. ]?ir"
+     }
+    ]
+   },
+   {
+    "id": "graphpolicy",
+    "members": [
+     {
+      "id": "graphpolicy",
+      "source": "graph[-_. ]?policy"
+     }
+    ]
+   },
+   {
+    "id": "GP",
+    "members": [
+     {
+      "id": "gp-rpc-schema",
+      "source": "gp\\.rpc\\."
+     },
+     {
+      "id": "gp-code-family",
+      "source": "(?<![\\p{L}\\p{N}])gp_(?:cli|rpc|e)_"
+     },
+     {
+      "id": "plan_cost_estimate",
+      "source": "plan[-_]?cost[-_]?estimate"
+     },
+     {
+      "id": "exploration_priority",
+      "source": "exploration[-_]?priority"
+     },
+     {
+      "id": "gp_receipt",
+      "source": "gp[-_]?receipt"
+     }
+    ]
+   }
+  ],
+  "uncovered": "uncovered",
+  "gpRoots": [
+   "src",
+   "test",
+   "docs",
+   "qa"
+  ],
+  "uncoveredRoots": [
+   "src",
+   "docs/workbench",
+   "qa"
+  ],
+  "reading": "partial",
+  "walks": [
+   {
+    "root": "src",
+    "floor": 100,
+    "anchor": {
+     "file": "src/workbench/hyperunix-observer.ts",
+     "token": "HyperUnix hyperunix.find reader adapter"
+    }
+   },
+   {
+    "root": "test",
+    "floor": 450,
+    "anchor": {
+     "file": "test/workbench-hx-gp-answer-invariance-census.test.ts",
+     "token": "wb-kjg9.1 (HX-GRAPH-POLICY-OPTIMIZATION-R1"
+    }
+   },
+   {
+    "root": "docs",
+    "floor": 60,
+    "anchor": {
+     "file": "docs/workbench/03-architecture-and-ownership.md",
+     "token": "Pi carries no GraphPolicyCLI (gp) integration today."
+    }
+   },
+   {
+    "root": "qa",
+    "floor": 50,
+    "anchor": {
+     "file": "qa/workbench/dependency-census.mjs",
+     "token": "measured dependency and SDK version census"
+    }
+   }
+  ],
+  "productRoots": [
+   "src",
+   "qa"
+  ],
+  "testHolders": [
+   {
+    "id": "census-module",
+    "source": "^test\\/[^/]+(?:-census\\.test|\\.census)\\.ts$"
+   },
+   {
+    "id": "census-roster",
+    "source": "^test\\/fixtures\\/[^/]+-roster\\.json$"
+   },
+   {
+    "id": "gp-family",
+    "source": "^test\\/(?:(?:helpers|fixtures)\\/)?(?:workbench-)?gp-[^/]+$"
+   }
+  ],
+  "ratifiedRoster": "test/fixtures/rf-tsx-worker-lifecycle-roster.json",
+  "docs": {
+   "page": "docs/workbench/03-architecture-and-ownership.md",
+   "title": "03 — High-level architecture, module ownership and dataflow",
+   "boundary": "GraphPolicyCLI boundary",
+   "ownership": "Ownership boundaries",
+   "owner": "GraphPolicyCLI",
+   "piCell": "nothing today",
+   "receipts": "docs/workbench/receipts",
+   "tag": "GRAPH-POLICY",
+   "wireReceipt": "docs/workbench/receipts/wb-1xvp.3.md"
+  },
+  "claiming": [
+   [
+    "complete-plan",
+    {
+     "plan_cost_estimate": {
+      "plan": "complete",
+      "completeness": "complete",
+      "licenses_absence": true
+     }
+    }
+   ],
+   [
+    "cheap-plan",
+    {
+     "plan_cost_estimate": {
+      "cost": "cheap",
+      "estimate": 0,
+      "uncertainty": 0
+     }
+    }
+   ],
+   [
+    "top-priority",
+    {
+     "exploration_priority": 1
+    }
+   ],
+   [
+    "receipt-complete",
+    {
+     "gp_receipt": {
+      "verdict": "complete",
+      "coverage": "complete",
+      "licenses_absence": true
+     }
+    }
+   ],
+   [
+    "covered-complete",
+    {
+     "covered": {
+      "label": "covered",
+      "completeness": "complete"
+     }
+    }
+   ]
+  ],
+  "uncoveredLabels": [
+   [
+    "label-key",
+    {
+     "uncovered": {
+      "label": "uncovered",
+      "observations": [
+       "gp-census-observation-2"
+      ],
+      "absent": true
+     }
+    }
+   ],
+   [
+    "label-value",
+    {
+     "label": "uncovered"
+    }
+   ]
+  ],
+  "sdkDist": "node_modules/@hyperunix/sdk/dist",
+  "sdkDeclarationsFloor": 10,
+  "hxModules": [
+   "src/workbench/providers/hyperunix.ts",
+   "src/workbench/hyperunix-observer.ts",
+   "src/workbench/native-evidence.ts"
+  ]
+ },
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) a hyperunix.find/v1 fixture with GP-shaped keys (plan_cost_estimate, exploration_priority, gp_receipt, covered/uncovered labels) projects coverage, statusTone and absenceLicensed byte-identical to the key-less result (hyperunix-observer.ts:129-130, :216-219)",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "sites": [
+       "top",
+       "source",
+       "source.execution_status",
+       "source.coverage_summary",
+       "source.coverage[0]",
+       "source.evidence",
+       "source.extensions",
+       "runtime"
+      ],
+      "rows": [
+       {
+        "kind": "complete",
+        "licensed": false,
+        "reading": "partial/unknown/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "complete",
+        "licensed": true,
+        "reading": "complete/success/true",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "complete-empty",
+        "licensed": false,
+        "reading": "partial/unknown/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "complete-empty",
+        "licensed": true,
+        "reading": "complete/success/true",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "incomplete",
+        "licensed": false,
+        "reading": "partial/unknown/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "incomplete",
+        "licensed": true,
+        "reading": "partial/unknown/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "budget-exhausted",
+        "licensed": false,
+        "reading": "partial/unknown/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "budget-exhausted",
+        "licensed": true,
+        "reading": "partial/unknown/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "cancelled",
+        "licensed": false,
+        "reading": "partial/unknown/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "cancelled",
+        "licensed": true,
+        "reading": "partial/unknown/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "view-invalidated",
+        "licensed": false,
+        "reading": "partial/unknown/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "view-invalidated",
+        "licensed": true,
+        "reading": "partial/unknown/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "provider-failed",
+        "licensed": false,
+        "reading": "unknown/failure/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "provider-failed",
+        "licensed": true,
+        "reading": "unknown/failure/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "schema-failed",
+        "licensed": false,
+        "reading": "unknown/failure/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "schema-failed",
+        "licensed": true,
+        "reading": "unknown/failure/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "internal-failed",
+        "licensed": false,
+        "reading": "unknown/failure/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "internal-failed",
+        "licensed": true,
+        "reading": "unknown/failure/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "protocol-failed",
+        "licensed": false,
+        "reading": "unknown/failure/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "protocol-failed",
+        "licensed": true,
+        "reading": "unknown/failure/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "usage-error",
+        "licensed": false,
+        "reading": "unknown/failure/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "usage-error",
+        "licensed": true,
+        "reading": "unknown/failure/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "mutation-rejected",
+        "licensed": false,
+        "reading": "refused:validation/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "mutation-rejected",
+        "licensed": true,
+        "reading": "refused:validation/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "mutation-partial",
+        "licensed": false,
+        "reading": "refused:validation/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "mutation-partial",
+        "licensed": true,
+        "reading": "refused:validation/false",
+        "baseSurfaced": false,
+        "fresh": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       }
+      ],
+      "controls": {
+       "surfaced": true,
+       "keys": [
+        "plan_cost_estimate",
+        "exploration_priority",
+        "gp_receipt",
+        "covered",
+        "uncovered"
+       ]
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "sites": [
+       "top",
+       "coverage[0]",
+       "status",
+       "execution_status",
+       "transport",
+       "coverage_summary",
+       "evidence",
+       "extensions"
+      ],
+      "documents": [
+       {
+        "id": "incomplete-unlicensed",
+        "reading": "partial/unknown/false",
+        "baseSurfaced": false,
+        "sites": [
+         {
+          "site": "top",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "sidecar": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[0]",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "sidecar": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "status",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "sidecar": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "execution_status",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "sidecar": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "transport",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "sidecar": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage_summary",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "sidecar": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "evidence",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "sidecar": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "extensions",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "sidecar": "echoed",
+          "identical": true,
+          "surfaced": false
+         }
+        ]
+       },
+       {
+        "id": "complete-empty-licensed",
+        "reading": "complete/success/true",
+        "baseSurfaced": false,
+        "sites": [
+         {
+          "site": "top",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "sidecar": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[0]",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "sidecar": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "status",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "sidecar": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "execution_status",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "sidecar": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "transport",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "sidecar": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage_summary",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "sidecar": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "evidence",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "sidecar": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "extensions",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "sidecar": "echoed",
+          "identical": true,
+          "surfaced": false
+         }
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "rows": [
+       {
+        "kind": "complete",
+        "licensed": false,
+        "domainStatus": "complete",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "complete",
+        "licensed": true,
+        "domainStatus": "complete",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "complete-empty",
+        "licensed": false,
+        "domainStatus": "complete-empty",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "complete-empty",
+        "licensed": true,
+        "domainStatus": "complete-empty",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "incomplete",
+        "licensed": false,
+        "domainStatus": "incomplete",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "incomplete",
+        "licensed": true,
+        "domainStatus": "incomplete",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "budget-exhausted",
+        "licensed": false,
+        "domainStatus": "budget-exhausted",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "budget-exhausted",
+        "licensed": true,
+        "domainStatus": "budget-exhausted",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "cancelled",
+        "licensed": false,
+        "domainStatus": "cancelled",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "cancelled",
+        "licensed": true,
+        "domainStatus": "cancelled",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "view-invalidated",
+        "licensed": false,
+        "domainStatus": "view-invalidated",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "view-invalidated",
+        "licensed": true,
+        "domainStatus": "view-invalidated",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "provider-failed",
+        "licensed": false,
+        "domainStatus": "provider-failed",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "provider-failed",
+        "licensed": true,
+        "domainStatus": "provider-failed",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "schema-failed",
+        "licensed": false,
+        "domainStatus": "schema-failed",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "schema-failed",
+        "licensed": true,
+        "domainStatus": "schema-failed",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "internal-failed",
+        "licensed": false,
+        "domainStatus": "internal-failed",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "internal-failed",
+        "licensed": true,
+        "domainStatus": "internal-failed",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "protocol-failed",
+        "licensed": false,
+        "domainStatus": "protocol-failed",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "protocol-failed",
+        "licensed": true,
+        "domainStatus": "protocol-failed",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "usage-error",
+        "licensed": false,
+        "domainStatus": "usage-error",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "usage-error",
+        "licensed": true,
+        "domainStatus": "usage-error",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "mutation-rejected",
+        "licensed": false,
+        "domainStatus": "mutation-rejected",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "mutation-rejected",
+        "licensed": true,
+        "domainStatus": "mutation-rejected",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "mutation-partial",
+        "licensed": false,
+        "domainStatus": "mutation-partial",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "mutation-partial",
+        "licensed": true,
+        "domainStatus": "mutation-partial",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "identical": 8,
+        "surfaced": 0
+       }
+      ]
+     }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "rows": [
+       {
+        "kind": "complete",
+        "licensed": false,
+        "holds": true,
+        "violations": [],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "complete",
+        "licensed": true,
+        "holds": true,
+        "violations": [],
+        "absenceLicensed": true,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "complete-empty",
+        "licensed": false,
+        "holds": true,
+        "violations": [],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "complete-empty",
+        "licensed": true,
+        "holds": true,
+        "violations": [],
+        "absenceLicensed": true,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "incomplete",
+        "licensed": false,
+        "holds": true,
+        "violations": [],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "incomplete",
+        "licensed": true,
+        "holds": false,
+        "violations": [
+         "licence-without-complete-kind"
+        ],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "budget-exhausted",
+        "licensed": false,
+        "holds": true,
+        "violations": [],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "budget-exhausted",
+        "licensed": true,
+        "holds": false,
+        "violations": [
+         "licence-without-complete-kind"
+        ],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "cancelled",
+        "licensed": false,
+        "holds": true,
+        "violations": [],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "cancelled",
+        "licensed": true,
+        "holds": false,
+        "violations": [
+         "licence-without-complete-kind"
+        ],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "view-invalidated",
+        "licensed": false,
+        "holds": true,
+        "violations": [],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "view-invalidated",
+        "licensed": true,
+        "holds": false,
+        "violations": [
+         "licence-without-complete-kind"
+        ],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "provider-failed",
+        "licensed": false,
+        "holds": true,
+        "violations": [],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "provider-failed",
+        "licensed": true,
+        "holds": false,
+        "violations": [
+         "licence-without-complete-kind"
+        ],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "schema-failed",
+        "licensed": false,
+        "holds": true,
+        "violations": [],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "schema-failed",
+        "licensed": true,
+        "holds": false,
+        "violations": [
+         "licence-without-complete-kind"
+        ],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "internal-failed",
+        "licensed": false,
+        "holds": true,
+        "violations": [],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "internal-failed",
+        "licensed": true,
+        "holds": false,
+        "violations": [
+         "licence-without-complete-kind"
+        ],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "protocol-failed",
+        "licensed": false,
+        "holds": true,
+        "violations": [],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "protocol-failed",
+        "licensed": true,
+        "holds": false,
+        "violations": [
+         "licence-without-complete-kind"
+        ],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "usage-error",
+        "licensed": false,
+        "holds": true,
+        "violations": [],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "usage-error",
+        "licensed": true,
+        "holds": false,
+        "violations": [
+         "licence-without-complete-kind"
+        ],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "mutation-rejected",
+        "licensed": false,
+        "holds": false,
+        "violations": [
+         "read-outcome"
+        ],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "mutation-rejected",
+        "licensed": true,
+        "holds": false,
+        "violations": [
+         "read-outcome",
+         "licence-without-complete-kind"
+        ],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "mutation-partial",
+        "licensed": false,
+        "holds": false,
+        "violations": [
+         "read-outcome"
+        ],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "mutation-partial",
+        "licensed": true,
+        "holds": false,
+        "violations": [
+         "read-outcome",
+         "licence-without-complete-kind"
+        ],
+        "absenceLicensed": false,
+        "identical": 8,
+        "surfaced": 0
+       }
+      ]
+     }
+    },
+    {
+     "id": "A5",
+     "witness": {
+      "cited": [
+       {
+        "line": 129,
+        "holds": true
+       },
+       {
+        "line": 130,
+        "holds": true
+       },
+       {
+        "line": 216,
+        "holds": true
+       },
+       {
+        "line": 217,
+        "holds": true
+       },
+       {
+        "line": 218,
+        "holds": true
+       },
+       {
+        "line": 219,
+        "holds": true
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) census at d75b68d10a1a: 0 GraphDataIR/graphpolicy/GP identifiers in src, test, docs, qa and 0 'uncovered' in src, docs/workbench, qa (test excluded)",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "walked": [
+       {
+        "root": "src",
+        "floorMet": true,
+        "anchorRead": true
+       },
+       {
+        "root": "qa",
+        "floorMet": true,
+        "anchorRead": true
+       }
+      ],
+      "symlinks": [],
+      "findings": [],
+      "controls": [
+       "src/workbench/plant.ts:1 GraphDataIR",
+       "src/workbench/plant.ts:2 GP",
+       "qa/workbench/plant.mjs:1 uncovered",
+       "qa/workbench/plant.mjs:2 graphpolicy"
+      ]
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "walked": [
+       {
+        "root": "docs",
+        "floorMet": true,
+        "anchorRead": true
+       }
+      ],
+      "symlinks": [],
+      "findings": [],
+      "regions": [
+       "boundary-section",
+       "ownership-row"
+      ],
+      "receiptHeld": true,
+      "controls": {
+       "findings": [
+        "docs/workbench/03-architecture-and-ownership.md:8 graphpolicy,GP: outside-holder",
+        "docs/workbench/03-architecture-and-ownership.md:16 graphpolicy: outside-holder",
+        "docs/workbench/09-plant.md:1 GraphDataIR: outside-holder",
+        "docs/workbench/label-plant.md:1 uncovered: outside-holder",
+        "docs/workbench/receipts/wb-plant.2.md:3 graphpolicy: outside-holder",
+        "docs/workbench/receipts/wb-plant.3.md:1 graphpolicy: outside-holder",
+        "docs/workbench/receipts/wb-plant.3.md:3 GP: outside-holder",
+        "docs/programs/plant.md:1 GP: outside-holder"
+       ],
+       "held": [
+        "docs/workbench/03-architecture-and-ownership.md:7",
+        "docs/workbench/03-architecture-and-ownership.md:10",
+        "docs/workbench/03-architecture-and-ownership.md:12",
+        "docs/workbench/receipts/wb-plant.1.md:1",
+        "docs/workbench/receipts/wb-plant.1.md:3"
+       ]
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "walked": [
+       {
+        "root": "test",
+        "floorMet": true,
+        "anchorRead": true
+       }
+      ],
+      "symlinks": [],
+      "findings": [],
+      "self": [
+       {
+        "file": "test/workbench-hx-gp-answer-invariance-census.test.ts",
+        "walked": true,
+        "families": [
+         "GraphDataIR",
+         "graphpolicy",
+         "GP"
+        ],
+        "holder": "census-module"
+       },
+       {
+        "file": "test/fixtures/hx-gp-answer-invariance-roster.json",
+        "walked": true,
+        "families": [
+         "GraphDataIR",
+         "graphpolicy",
+         "GP"
+        ],
+        "holder": "census-roster"
+       }
+      ],
+      "familyHeld": true,
+      "controls": {
+       "findings": [
+        "test/workbench-plant.test.ts GP: outside-holder",
+        "test/helpers/plant.ts GraphDataIR: outside-holder",
+        "test/fixtures/plant.json graphpolicy: outside-holder"
+       ],
+       "held": [
+        "test/workbench-plant-census.test.ts census-module",
+        "test/fixtures/plant-roster.json census-roster",
+        "test/helpers/gp-plant.ts gp-family"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) when shipped: GP fields claiming a complete or cheap plan with licenses_absence false still read 'partial'; an uncovered label projects 'partial' plus the word verbatim as its own facet; a label-less result projects byte-identically.",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "claims": [
+       "complete-plan",
+       "cheap-plan",
+       "top-priority",
+       "receipt-complete",
+       "covered-complete"
+      ],
+      "rows": [
+       {
+        "kind": "complete",
+        "reading": "partial/unknown/false",
+        "plants": 40,
+        "identical": 40,
+        "surfaced": 0
+       },
+       {
+        "kind": "complete-empty",
+        "reading": "partial/unknown/false",
+        "plants": 40,
+        "identical": 40,
+        "surfaced": 0
+       },
+       {
+        "kind": "incomplete",
+        "reading": "partial/unknown/false",
+        "plants": 40,
+        "identical": 40,
+        "surfaced": 0
+       },
+       {
+        "kind": "budget-exhausted",
+        "reading": "partial/unknown/false",
+        "plants": 40,
+        "identical": 40,
+        "surfaced": 0
+       },
+       {
+        "kind": "cancelled",
+        "reading": "partial/unknown/false",
+        "plants": 40,
+        "identical": 40,
+        "surfaced": 0
+       },
+       {
+        "kind": "view-invalidated",
+        "reading": "partial/unknown/false",
+        "plants": 40,
+        "identical": 40,
+        "surfaced": 0
+       },
+       {
+        "kind": "provider-failed",
+        "reading": "unknown/failure/false",
+        "plants": 40,
+        "identical": 40,
+        "surfaced": 0
+       },
+       {
+        "kind": "schema-failed",
+        "reading": "unknown/failure/false",
+        "plants": 40,
+        "identical": 40,
+        "surfaced": 0
+       },
+       {
+        "kind": "internal-failed",
+        "reading": "unknown/failure/false",
+        "plants": 40,
+        "identical": 40,
+        "surfaced": 0
+       },
+       {
+        "kind": "protocol-failed",
+        "reading": "unknown/failure/false",
+        "plants": 40,
+        "identical": 40,
+        "surfaced": 0
+       },
+       {
+        "kind": "usage-error",
+        "reading": "unknown/failure/false",
+        "plants": 40,
+        "identical": 40,
+        "surfaced": 0
+       },
+       {
+        "kind": "mutation-rejected",
+        "reading": "refused:validation/false",
+        "plants": 40,
+        "identical": 40,
+        "surfaced": 0
+       },
+       {
+        "kind": "mutation-partial",
+        "reading": "refused:validation/false",
+        "plants": 40,
+        "identical": 40,
+        "surfaced": 0
+       }
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "labels": [
+       "label-key",
+       "label-value"
+      ],
+      "rows": [
+       {
+        "kind": "complete",
+        "licensed": false,
+        "reading": "partial/unknown/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "complete",
+        "licensed": true,
+        "reading": "complete/success/true",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "complete-empty",
+        "licensed": false,
+        "reading": "partial/unknown/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "complete-empty",
+        "licensed": true,
+        "reading": "complete/success/true",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "incomplete",
+        "licensed": false,
+        "reading": "partial/unknown/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "incomplete",
+        "licensed": true,
+        "reading": "partial/unknown/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "budget-exhausted",
+        "licensed": false,
+        "reading": "partial/unknown/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "budget-exhausted",
+        "licensed": true,
+        "reading": "partial/unknown/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "cancelled",
+        "licensed": false,
+        "reading": "partial/unknown/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "cancelled",
+        "licensed": true,
+        "reading": "partial/unknown/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "view-invalidated",
+        "licensed": false,
+        "reading": "partial/unknown/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "view-invalidated",
+        "licensed": true,
+        "reading": "partial/unknown/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "provider-failed",
+        "licensed": false,
+        "reading": "unknown/failure/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "provider-failed",
+        "licensed": true,
+        "reading": "unknown/failure/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "schema-failed",
+        "licensed": false,
+        "reading": "unknown/failure/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "schema-failed",
+        "licensed": true,
+        "reading": "unknown/failure/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "internal-failed",
+        "licensed": false,
+        "reading": "unknown/failure/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "internal-failed",
+        "licensed": true,
+        "reading": "unknown/failure/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "protocol-failed",
+        "licensed": false,
+        "reading": "unknown/failure/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "protocol-failed",
+        "licensed": true,
+        "reading": "unknown/failure/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "usage-error",
+        "licensed": false,
+        "reading": "unknown/failure/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "usage-error",
+        "licensed": true,
+        "reading": "unknown/failure/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "mutation-rejected",
+        "licensed": false,
+        "reading": "refused:validation/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "mutation-rejected",
+        "licensed": true,
+        "reading": "refused:validation/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "mutation-partial",
+        "licensed": false,
+        "reading": "refused:validation/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       },
+       {
+        "kind": "mutation-partial",
+        "licensed": true,
+        "reading": "refused:validation/false",
+        "plants": 16,
+        "identical": 16,
+        "worded": 0
+       }
+      ],
+      "facetToday": "absent"
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "rows": [
+       {
+        "kind": "complete",
+        "licensed": false,
+        "reading": "partial/unknown/false",
+        "topology": "bd1dab39a93621b2",
+        "evidence": "52dcffe4b4b69736",
+        "verdict": "73f41f26f21dcab5"
+       },
+       {
+        "kind": "complete",
+        "licensed": true,
+        "reading": "complete/success/true",
+        "topology": "7928684a6cf1f66b",
+        "evidence": "52dcffe4b4b69736",
+        "verdict": "fdd4a7c1493bddcf"
+       },
+       {
+        "kind": "complete-empty",
+        "licensed": false,
+        "reading": "partial/unknown/false",
+        "topology": "85c408c7c6450bef",
+        "evidence": "c105144b1f66a3d9",
+        "verdict": "73f41f26f21dcab5"
+       },
+       {
+        "kind": "complete-empty",
+        "licensed": true,
+        "reading": "complete/success/true",
+        "topology": "7c5a5ace171a4cfa",
+        "evidence": "c105144b1f66a3d9",
+        "verdict": "fdd4a7c1493bddcf"
+       },
+       {
+        "kind": "incomplete",
+        "licensed": false,
+        "reading": "partial/unknown/false",
+        "topology": "3c41c91116282fc4",
+        "evidence": "d595ae46ec10533b",
+        "verdict": "73f41f26f21dcab5"
+       },
+       {
+        "kind": "incomplete",
+        "licensed": true,
+        "reading": "partial/unknown/false",
+        "topology": "5e2811181de162d0",
+        "evidence": "d595ae46ec10533b",
+        "verdict": "433d1a26dfd9b41b"
+       },
+       {
+        "kind": "budget-exhausted",
+        "licensed": false,
+        "reading": "partial/unknown/false",
+        "topology": "c84f805af5d874d7",
+        "evidence": "78e3a60ceaea223c",
+        "verdict": "73f41f26f21dcab5"
+       },
+       {
+        "kind": "budget-exhausted",
+        "licensed": true,
+        "reading": "partial/unknown/false",
+        "topology": "867b55bdc6cb73dc",
+        "evidence": "78e3a60ceaea223c",
+        "verdict": "433d1a26dfd9b41b"
+       },
+       {
+        "kind": "cancelled",
+        "licensed": false,
+        "reading": "partial/unknown/false",
+        "topology": "02264d2ff27573fa",
+        "evidence": "f582b093616706e9",
+        "verdict": "73f41f26f21dcab5"
+       },
+       {
+        "kind": "cancelled",
+        "licensed": true,
+        "reading": "partial/unknown/false",
+        "topology": "17e49e8173cfd1eb",
+        "evidence": "f582b093616706e9",
+        "verdict": "433d1a26dfd9b41b"
+       },
+       {
+        "kind": "view-invalidated",
+        "licensed": false,
+        "reading": "partial/unknown/false",
+        "topology": "e12cdcb7dee99f5c",
+        "evidence": "50082d63280d6518",
+        "verdict": "73f41f26f21dcab5"
+       },
+       {
+        "kind": "view-invalidated",
+        "licensed": true,
+        "reading": "partial/unknown/false",
+        "topology": "98ce9026b24ee6a8",
+        "evidence": "50082d63280d6518",
+        "verdict": "433d1a26dfd9b41b"
+       },
+       {
+        "kind": "provider-failed",
+        "licensed": false,
+        "reading": "unknown/failure/false",
+        "topology": "4184f81fbe76ef27",
+        "evidence": "db38b138fca20283",
+        "verdict": "73f41f26f21dcab5"
+       },
+       {
+        "kind": "provider-failed",
+        "licensed": true,
+        "reading": "unknown/failure/false",
+        "topology": "03e9b52f9f1dd89a",
+        "evidence": "db38b138fca20283",
+        "verdict": "433d1a26dfd9b41b"
+       },
+       {
+        "kind": "schema-failed",
+        "licensed": false,
+        "reading": "unknown/failure/false",
+        "topology": "2f6518f456ed8cc3",
+        "evidence": "ae6df77fe054082f",
+        "verdict": "73f41f26f21dcab5"
+       },
+       {
+        "kind": "schema-failed",
+        "licensed": true,
+        "reading": "unknown/failure/false",
+        "topology": "baf85c599ca1715b",
+        "evidence": "ae6df77fe054082f",
+        "verdict": "433d1a26dfd9b41b"
+       },
+       {
+        "kind": "internal-failed",
+        "licensed": false,
+        "reading": "unknown/failure/false",
+        "topology": "a0a1a17d88e53680",
+        "evidence": "ec517d2d3189e143",
+        "verdict": "73f41f26f21dcab5"
+       },
+       {
+        "kind": "internal-failed",
+        "licensed": true,
+        "reading": "unknown/failure/false",
+        "topology": "2431596369e48895",
+        "evidence": "ec517d2d3189e143",
+        "verdict": "433d1a26dfd9b41b"
+       },
+       {
+        "kind": "protocol-failed",
+        "licensed": false,
+        "reading": "unknown/failure/false",
+        "topology": "72a9d79bfdbfdc75",
+        "evidence": "38e5b70c5625e5ee",
+        "verdict": "73f41f26f21dcab5"
+       },
+       {
+        "kind": "protocol-failed",
+        "licensed": true,
+        "reading": "unknown/failure/false",
+        "topology": "4d21b76c13886489",
+        "evidence": "38e5b70c5625e5ee",
+        "verdict": "433d1a26dfd9b41b"
+       },
+       {
+        "kind": "usage-error",
+        "licensed": false,
+        "reading": "unknown/failure/false",
+        "topology": "45d67091242f905f",
+        "evidence": "88fcb83a4270a24b",
+        "verdict": "73f41f26f21dcab5"
+       },
+       {
+        "kind": "usage-error",
+        "licensed": true,
+        "reading": "unknown/failure/false",
+        "topology": "63de92297cb8a996",
+        "evidence": "88fcb83a4270a24b",
+        "verdict": "433d1a26dfd9b41b"
+       },
+       {
+        "kind": "mutation-rejected",
+        "licensed": false,
+        "reading": "refused:validation/false",
+        "topology": "f7dee8ffe77dc6bc",
+        "evidence": "0776e47158cb3b4a",
+        "verdict": "17b6e6564b454a56"
+       },
+       {
+        "kind": "mutation-rejected",
+        "licensed": true,
+        "reading": "refused:validation/false",
+        "topology": "f7dee8ffe77dc6bc",
+        "evidence": "0776e47158cb3b4a",
+        "verdict": "018fe9ad5b3886da"
+       },
+       {
+        "kind": "mutation-partial",
+        "licensed": false,
+        "reading": "refused:validation/false",
+        "topology": "a2db550030d586fd",
+        "evidence": "3d382c1ea18f4d64",
+        "verdict": "17b6e6564b454a56"
+       },
+       {
+        "kind": "mutation-partial",
+        "licensed": true,
+        "reading": "refused:validation/false",
+        "topology": "a2db550030d586fd",
+        "evidence": "3d382c1ea18f4d64",
+        "verdict": "018fe9ad5b3886da"
+       }
+      ]
+     }
+    },
+    {
+     "id": "C4",
+     "witness": {
+      "sdkVersion": "0.1.0",
+      "declarationsFloorMet": true,
+      "sidecarDeclared": true,
+      "shipped": false,
+      "hits": [],
+      "controls": [
+       [
+        "GP"
+       ],
+       [
+        "GP"
+       ],
+       [
+        "GP"
+       ],
+       [
+        "GraphDataIR"
+       ],
+       [
+        "uncovered"
+       ]
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "F",
+   "label": "the owner filing row of wb-kjg9.1 in the tracked bead export and the landed receipt, roster and docs binding anchor every clause, key, field, cite, needle member, root, holder pattern and claim plant the census reads",
+   "pins": [
+    {
+     "id": "F1",
+     "witness": {
+      "clauses": [
+       {
+        "clause": "(a)",
+        "equalsLabel": true
+       },
+       {
+        "clause": "(b)",
+        "equalsLabel": true
+       },
+       {
+        "clause": "(c)",
+        "equalsLabel": true
+       }
+      ],
+      "keys": [
+       "plan_cost_estimate",
+       "exploration_priority",
+       "gp_receipt",
+       "covered",
+       "uncovered"
+      ],
+      "keyMembers": [
+       [
+        "plan_cost_estimate",
+        [
+         "plan_cost_estimate"
+        ]
+       ],
+       [
+        "exploration_priority",
+        [
+         "exploration_priority"
+        ]
+       ],
+       [
+        "gp_receipt",
+        [
+         "gp_receipt"
+        ]
+       ],
+       [
+        "covered",
+        []
+       ],
+       [
+        "uncovered",
+        []
+       ]
+      ],
+      "projected": [
+       "coverage",
+       "statusTone",
+       "absenceLicensed"
+      ],
+      "contract": "hyperunix.find/v1",
+      "cited": [
+       129,
+       130,
+       216,
+       217,
+       218,
+       219
+      ],
+      "measuredAt": "d75b68d10a1a",
+      "needleNames": [
+       "GraphDataIR",
+       "graphpolicy",
+       "GP"
+      ],
+      "gpRoots": [
+       "src",
+       "test",
+       "docs",
+       "qa"
+      ],
+      "word": "uncovered",
+      "uncoveredRoots": [
+       "src",
+       "docs/workbench",
+       "qa"
+      ],
+      "reading": "partial",
+      "labelReading": "partial",
+      "claimPlants": [
+       [
+        "complete",
+        true
+       ],
+       [
+        "cheap",
+        true
+       ]
+      ],
+      "quoteAtPin": true,
+      "statementFamilies": [
+       "graphpolicy"
+      ],
+      "gatingFamilies": [
+       "GraphDataIR",
+       "graphpolicy"
+      ],
+      "gatingCites": [
+       [
+        "README.md:7",
+        true
+       ],
+       [
+        "README.md:11",
+        true
+       ],
+       [
+        "README.md:13",
+        true
+       ],
+       [
+        "README.md:23",
+        true
+       ]
+      ],
+      "shipped": false,
+      "readmeLines": [
+       [
+        "README.md:7",
+        true
+       ],
+       [
+        "README.md:11",
+        true
+       ],
+       [
+        "README.md:13",
+        true
+       ],
+       [
+        "README.md:23",
+        true
+       ]
+      ],
+      "labelsAtPin": true,
+      "pin": true
+     }
+    },
+    {
+     "id": "F2",
+     "witness": {
+      "wire": [
+       [
+        "graphpolicy.cli.v1",
+        [
+         "graphpolicy"
+        ]
+       ],
+       [
+        "graphpolicy.rpc.v1",
+        [
+         "graphpolicy"
+        ]
+       ],
+       [
+        "gp.rpc.reply/v1",
+        [
+         "gp-rpc-schema"
+        ]
+       ],
+       [
+        "gp.rpc.error/v1",
+        [
+         "gp-rpc-schema"
+        ]
+       ],
+       [
+        "GP_CLI_",
+        [
+         "gp-code-family"
+        ]
+       ],
+       [
+        "GP_RPC_",
+        [
+         "gp-code-family"
+        ]
+       ],
+       [
+        "GP_E_",
+        [
+         "gp-code-family"
+        ]
+       ]
+      ],
+      "spellings": [
+       [
+        "graph-policy",
+        [
+         "graphpolicy"
+        ]
+       ],
+       [
+        "graph_policy",
+        [
+         "graphpolicy"
+        ]
+       ],
+       [
+        "graph.policy",
+        [
+         "graphpolicy"
+        ]
+       ],
+       [
+        "graph policy",
+        [
+         "graphpolicy"
+        ]
+       ]
+      ],
+      "ratifiedHolders": [
+       "^test\\/[^/]+(?:-census\\.test|\\.census)\\.ts$",
+       "^test\\/fixtures\\/[^/]+-roster\\.json$"
+      ],
+      "sectionBinds": true,
+      "tablesBind": true,
+      "ownerRows": [
+       true
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "M",
+   "label": "the needle members, the uncovered matcher, the holder classifiers and the planter, site lists and surfacing reader judge their pinned inputs in order",
+   "pins": [
+    {
+     "id": "MN",
+     "witness": {
+      "outcome": [
+       [
+        "graphdatair"
+       ],
+       [
+        "graphdatair"
+       ],
+       [
+        "graphdatair"
+       ],
+       [
+        "graphdatair"
+       ],
+       [],
+       [
+        "graphpolicy"
+       ],
+       [
+        "graphpolicy"
+       ],
+       [
+        "graphpolicy"
+       ],
+       [
+        "graphpolicy"
+       ],
+       [],
+       [
+        "gp-rpc-schema"
+       ],
+       [],
+       [
+        "gp-code-family"
+       ],
+       [
+        "gp-code-family"
+       ],
+       [
+        "gp-code-family"
+       ],
+       [],
+       [],
+       [
+        "plan_cost_estimate"
+       ],
+       [
+        "plan_cost_estimate"
+       ],
+       [
+        "plan_cost_estimate"
+       ],
+       [],
+       [
+        "exploration_priority"
+       ],
+       [
+        "exploration_priority"
+       ],
+       [],
+       [
+        "gp_receipt"
+       ],
+       [
+        "gp_receipt"
+       ],
+       [],
+       []
+      ]
+     }
+    },
+    {
+     "id": "MU",
+     "witness": {
+      "outcome": [
+       true,
+       true,
+       true,
+       true,
+       false,
+       false,
+       false,
+       false
+      ]
+     }
+    },
+    {
+     "id": "MH",
+     "witness": {
+      "classes": [
+       "census-module",
+       "census-module",
+       "census-roster",
+       "gp-family",
+       "gp-family",
+       "gp-family",
+       null,
+       null,
+       null,
+       null,
+       null,
+       null
+      ],
+      "docs": {
+       "page": {
+        "lines": [
+         7,
+         10,
+         11,
+         12,
+         13
+        ],
+        "regions": [
+         "boundary-section",
+         "ownership-row"
+        ]
+       },
+       "twoHeadings": {
+        "lines": [
+         7
+        ],
+        "regions": [
+         "ownership-row"
+        ]
+       },
+       "otherPage": {
+        "lines": [],
+        "regions": []
+       },
+       "receipt": {
+        "lines": [
+         1,
+         2,
+         3
+        ],
+        "regions": [
+         "gp-receipt"
+        ]
+       },
+       "bareTag": {
+        "lines": [
+         1,
+         2,
+         3
+        ],
+        "regions": [
+         "gp-receipt"
+        ]
+       },
+       "otherTag": {
+        "lines": [],
+        "regions": []
+       },
+       "otherBead": {
+        "lines": [],
+        "regions": []
+       },
+       "nested": {
+        "lines": [],
+        "regions": []
+       },
+       "notReceipts": {
+        "lines": [],
+        "regions": []
+       }
+      }
+     }
+    },
+    {
+     "id": "MS",
+     "witness": {
+      "sites": [
+       "top",
+       "source",
+       "source.execution_status",
+       "source.coverage_summary",
+       "source.coverage[0]",
+       "source.evidence",
+       "source.extensions",
+       "runtime"
+      ],
+      "sdkSites": [
+       "top",
+       "coverage[0]",
+       "status",
+       "execution_status",
+       "transport",
+       "coverage_summary",
+       "evidence",
+       "extensions"
+      ],
+      "freshEverywhere": {
+       "keys": true,
+       "claims": true,
+       "labels": true,
+       "sdk": true
+      },
+      "plantsRead": true,
+      "untouched": true,
+      "controls": [
+       true,
+       true,
+       true,
+       true,
+       false
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "R",
+   "label": "the named residuals R1-R8 stay pinned quiet",
+   "pins": [
+    {
+     "id": "R1",
+     "witness": {
+      "outcome": []
+     }
+    },
+    {
+     "id": "R2",
+     "witness": {
+      "outcome": []
+     }
+    },
+    {
+     "id": "R3",
+     "witness": {
+      "texts": 6,
+      "outcome": []
+     }
+    },
+    {
+     "id": "R4",
+     "witness": {
+      "outcome": []
+     }
+    },
+    {
+     "id": "R5",
+     "witness": {
+      "outcome": []
+     }
+    },
+    {
+     "id": "R6",
+     "witness": {
+      "outcome": []
+     }
+    },
+    {
+     "id": "R7",
+     "witness": {
+      "outcome": []
+     }
+    },
+    {
+     "id": "R8",
+     "witness": {
+      "outcome": [
+       {
+        "kind": "complete",
+        "reading": "complete/success/true",
+        "identical": true
+       },
+       {
+        "kind": "complete-empty",
+        "reading": "complete/success/true",
+        "identical": true
+       }
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}
