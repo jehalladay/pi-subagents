@@ -8,6 +8,9 @@
  * RF_REPLAY_SOURCE_SNAPSHOT_MISSING envelope surfaces the code and its five fields verbatim while a counting fake producer/network
  * port stays at 0 calls; (b) Pi never rewrites one code into the other; (c) the missing-blob replay yields the refusal, never a
  * fresh live value."
+ * wb-1s7l (the R694 follow-up of landing 257, gate cmd_9623f3438e45) hardens the instruments below against the gate's survivors:
+ * F1 B6's port scan, F2 the verbatim readings, F3 A1's call-composed argv, F4 A2's roster selector, F5 the registration and reached
+ * records, F6 the nulled workspace (D3, D4), and the F7 seam disclosure (B7).
  *
  * MEASURED AT THE INSTALLED rf (0.1.832 by `rf --json --version` result.version, 2026-10-22; producer rows read from its installed
  * package, read-only): domain/diagnostics.py spells RF_REPLAY_RECONSTRUCTION_UNAVAILABLE (:1023) and
@@ -27,35 +30,64 @@
  * Pi's one rf reader is the reactivefiber.render.preview provider (providers/reactivefiber.ts). It spawns only `rf ... context
  * render --no-commit` and admits only context.render envelopes, so today Pi drives and reads no rf replay: the statement's trigger
  * has not fired. The census pins that absence and every surface the obligation already reaches:
- *  A, the trigger, absent today. A1 an AST scan of every src module and every native descriptor for an rf replay verb (an argv
- *    "context" followed by "replay", or a string or template literal spelling one), with a floor, a non-vacuity reading of the real
- *    render argv and five controls; A2 the rf roster stays the preview alone (native and injected registrations,
- *    RECONCILE_EVIDENCE_READS.reactivefiber at src/workflow/reconcile.ts:67); A3 the native reader refuses the measured replay
- *    envelope as an unrecognized envelope in one spawn of the render argv; A4 the reader adapter refuses a reading carrying it.
+ *  A, the trigger, absent today. A1 an AST scan of every src module and every native descriptor for an rf replay verb: a list with
+ *    "context" before "replay" (any words between) - an array literal (an array-literal spread read in place), an argument list (a
+ *    push or any call) or a concat chain of literal lists - or a string or template literal spelling one, with a floor, a
+ *    non-vacuity reading of the real render argv and controls for argv, spaced, dotted, template, concat, pushed, flag-between and
+ *    spread spellings; A2 the rf roster stays the preview alone: every native and injected descriptor carrying an rf marker - the
+ *    reactivefiber. id prefix, a reactivefiber: grant or a contract carrier of the rf@ family REACTIVE_FIBER_CONTRACT_SOURCE belongs
+ *    to - is the preview, the preview carries all three, RECONCILE_EVIDENCE_READS.reactivefiber (src/workflow/reconcile.ts:67) names
+ *    only it, and a control per marker selects a planted descriptor; A3 the native reader refuses the measured replay envelope as an
+ *    unrecognized envelope in one spawn of the render argv; A4 the reader adapter refuses a reading carrying it.
  *  B, acceptance (a). B1 the fixture itself: both envelopes carry the code, the measured exit 8 rides the roster, and their two
- *    metadata shapes together are exactly the five fields, each field in one shape; B2 and B3 the registered reading of each
- *    envelope (registerReactiveFiberRender, the registry's injected-reader seam) carries it byte for byte - the code and every field
- *    verbatim, nothing added inside it - while the counting fake producer port (a fail-closed globalThis.fetch) stays at 0 and the
- *    injected reader is called once; B4 the native typed refusal names the code verbatim and no field value, in one spawn, fetch 0;
- *    B5 the reader adapter's projection names the code and no field value; B6 the static port census: the reader modules'
- *    transitive src import closure imports no network module, calls no fetch, WebSocket or EventSource, and launches only "rf".
+ *    metadata shapes together are exactly the five fields, each field in one shape; B2 and B3 the registered reading
+ *    (registerReactiveFiberRender, the registry's injected-reader seam) of a FRESH copy of each envelope equals a fresh roster read
+ *    and the bytes taken before the invocation - the code and every field verbatim, nothing added inside it, nothing edited in place
+ *    - while the counting fake producer port (a fail-closed globalThis.fetch) stays at 0, the injected reader is called once and the
+ *    module's roster copy is untouched; B4 the native typed refusal names the code verbatim and no field value, in one spawn, fetch
+ *    0; B5 the reader adapter's projection names the code and no field value; B6 the static port census of the reader modules'
+ *    transitive src import closure: no network global as an identifier (a property name included) or an exact string literal, no
+ *    network module as an exact string literal (a static, dynamic or required specifier, or a part of a concatenation that keeps
+ *    the module name whole), no import() or require() of a non-literal specifier, and child_process launchers, however bound (named,
+ *    aliased, namespace, default, required, import-equals or dynamically imported; a module-local const program resolved), launch
+ *    only "rf"; B7 the seam B2 and B3 read is test-reachable only: no src module but the provider spells registerReactiveFiberRender
+ *    (as an identifier, a property name included, or a string literal), while the served registration
+ *    registerNativeReactiveFiberRender is spelled outside it (native-modules.ts).
  *  C, acceptance (b). C1 the native typed refusal of each code is that code (both producer shapes of one code, and the other code);
- *    C2 the registered reading of the measured reconstruction envelope carries its code and field verbatim; C3 the reader adapter
- *    projects each code as itself; C4 no src or qa file spells either code (the bead's own baseline: 0 files at d75b68d1), so no
- *    Pi table can map one onto the other.
+ *    C2 the registered reading of a fresh copy of the measured reconstruction envelope carries its code and field verbatim; C3 the
+ *    reader adapter projects each code as itself; C4 no src or qa file spells either code (the bead's own baseline: 0 files at
+ *    d75b68d1), so no Pi table can map one onto the other.
  *  D, acceptance (c). D1 a stand-in rf that refuses the first spawn and would answer any second spawn with a full-shape live render
- *    still yields the refusal, no reading and exactly one spawn; D2 the adapter reads the refusal as a failure carrying no value
- *    (no output digest, no graph revision, no evidence reference).
+ *    still yields the refusal, no reading and exactly one spawn; D2 the adapter reads the constructed refusal (its workspace nulled)
+ *    as a failure carrying no value (no output digest, no graph revision, no evidence reference); D3 the measured refusal shape, its
+ *    workspace kept verbatim and read at its own root (/fixture/rf-workspace): the native reader still refuses with the code alone
+ *    in one spawn (a later spawn would answer a full-shape live render), fetch 0, and the adapter's one failure snapshot carries no
+ *    live-value leg (no output digest, graph revision or bundle); D4 the quiet row of that snapshot's one evidence reference: the
+ *    producer's workspace id, verbatim, beside the producer's operation id as its source id - identities the refusal carries, not
+ *    values.
  * The render-command refusals B4, B5, C1, C3, D1 and D2 read are CONSTRUCTED: the measured diagnostic placed on a context.render
- * failure envelope, since the render plane never emits a replay code.
+ * failure envelope, since the render plane never emits a replay code. renderRefusal nulls the workspace every measured refusal
+ * carries (both readers accept a null workspace on a failure), so D2's "no evidence reference" is a reading of that construction;
+ * D3 and D4 keep the measured workspace.
+ * SEAM (F7, disclosed): acceptance (a) is met at the test-reachable seam registerReactiveFiberRender, which has 0 production call
+ * sites (B7). The owner question rides verbatim: 'should a future replay reader's typed refusal carry the five fields (it would
+ * need a CapabilityError detail channel the registry currently drops on rewrap, capability-registry.ts:436)?'
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id, label
- * and pins, every pin's witness, the codes, fields, exit and gating artifacts - is held to the out-of-file roster, whose measured
- * envelopes anchor the field set and the codes outside this file.
+ * and pins, every pin's witness, the codes, fields, exit and gating artifacts, the residual families and every registered test
+ * title - is held to the out-of-file roster, whose measured envelopes anchor the field set and the codes outside this file. The
+ * last case walks the vitest task tree: every judged pin registers once, runs in run mode, is not inverted and reaches its
+ * witness compare. Not claimed: an edit of this file and the roster together.
  * RESIDUALS (named, each with a pinned quiet row): R-WITHHELD the native typed refusal and the adapter's projection carry the code
  * but withhold the five fields (the swarm X1 no-path posture; the adapter's "metadata withheld" note), so the fields ride only the
  * registered reading (quiet rows B4, B5); R-RENDER-ONLY no Pi reader reads a context.replay envelope, so the code a replay refuses
  * with is not echoed today - the replay envelope is refused as unrecognized (quiet rows A3, A4); R-COMPOSED-ARGV a replay argv
- * built from non-literal parts is invisible to A1 (A1's composedArgv control stays 0).
+ * whose words come from a non-literal part - a variable, a call, a template substitution, including a push or a concat of one - is
+ * invisible to A1 (A1's composedArgv and concatComposed controls stay 0); R-COMPOSED-NAME a port, launcher or seam name assembled
+ * at runtime (a concatenation splitting the word across literals, a launcher read into a variable or reached through a wrapper)
+ * is invisible to B6 and B7 (their splitName and wrappedLauncher controls stay quiet); R-UNLISTED a port outside the listed
+ * network globals, network modules and child_process launchers (a worker, a native addon, process.binding) is not read by B6 (its
+ * unlisted control stays quiet); R-UNMARKED-READER an rf reader registered with none of A2's three markers is invisible to A2 (its
+ * unmarked control stays 0).
  * SCOPE: the codes, fields and shapes are producer facts at the installed rf; Pi vendors no rf schema, so a producer-side change is
  * seen only when a fixture re-measure re-reads them. The armed half (a replay reader echoing the five fields) waits for
  * rfc-0txnl.25 and rfc-bak67.12: no reader is added or faked here.
@@ -70,6 +102,7 @@ import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
 import { CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
 import {
+  REACTIVE_FIBER_CONTRACT_SOURCE,
   REACTIVEFIBER_RENDER_PREVIEW_CONTRACT,
   registerNativeReactiveFiberRender,
   registerReactiveFiberRender,
@@ -103,10 +136,24 @@ const REPLAY_COMMAND = "context.replay";
 const REPLAY_VERB = /\bcontext[\s._-]+replay\b/i;
 /** The module families a network contact would need: none may appear in the reader closure. */
 const NETWORK_MODULE = /^(?:node:)?(?:net|http|https|http2|dns|tls|dgram)(?:\/|$)|^(?:undici|ws)(?:\/|$)/;
-const NETWORK_GLOBALS = ["fetch", "WebSocket", "EventSource"];
+const NETWORK_GLOBALS = ["fetch", "WebSocket", "EventSource", "XMLHttpRequest"];
+const CHILD_PROCESS = /^(?:node:)?child_process$/;
 const LAUNCHERS = ["spawn", "spawnSync", "exec", "execSync", "execFile", "execFileSync", "fork"];
 /** The reader modules: the provider and its adapter; B6 walks their src import closure. */
 const READER_MODULES = ["src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"];
+const PROVIDER_MODULE = "src/workbench/providers/reactivefiber.ts";
+/** The three rf markers A2 selects a descriptor by: the id prefix, the grant namespace and the contract carrier's family. */
+const RF_ID_PREFIX = "reactivefiber.";
+const RF_GRANT_PREFIX = "reactivefiber:";
+const RF_CARRIER = /^rf@/;
+/** B7: the injected-reader seam B2 and B3 read, and the served registration whose spelling outside the provider anchors the walk. */
+const SEAM = "registerReactiveFiberRender";
+const SERVED = "registerNativeReactiveFiberRender";
+const SERVED_ANCHOR = "src/workbench/native-modules.ts";
+/** Each floor sits below the count measured at base 893fe06 (src 115 .ts modules, reader closure 7), so an emptied or misdirected
+ * walk reds and an additive change does not. */
+const SRC_FLOOR = 100;
+const CLOSURE_FLOOR = 5;
 
 interface Row {
   readonly id: string;
@@ -124,7 +171,7 @@ const ROWS: readonly Row[] = [
   {
     id: "B",
     label: "(a) a fixture exit-8 RF_REPLAY_SOURCE_SNAPSHOT_MISSING envelope surfaces the code and its five fields verbatim while a counting fake producer/network port stays at 0 calls",
-    pins: ["B1", "B2", "B3", "B4", "B5", "B6"],
+    pins: ["B1", "B2", "B3", "B4", "B5", "B6", "B7"],
   },
   {
     id: "C",
@@ -134,9 +181,19 @@ const ROWS: readonly Row[] = [
   {
     id: "D",
     label: "(c) the missing-blob replay yields the refusal, never a fresh live value: one spawn, no reading, and a failure projection that carries no value",
-    pins: ["D1", "D2"],
+    pins: ["D1", "D2", "D3", "D4"],
   },
 ];
+
+/** The named residual families and the judged pins carrying each one's quiet row. */
+const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
+  "R-WITHHELD": ["B4", "B5"],
+  "R-RENDER-ONLY": ["A3", "A4"],
+  "R-COMPOSED-ARGV": ["A1"],
+  "R-COMPOSED-NAME": ["B6", "B7"],
+  "R-UNLISTED": ["B6"],
+  "R-UNMARKED-READER": ["A2"],
+};
 
 interface Envelope {
   schema: string;
@@ -157,13 +214,16 @@ interface RosterRow {
   readonly label: string;
   readonly pins: readonly RosterPin[];
 }
+type EnvelopeName = "blob" | "reconstruction" | "retention";
 interface Roster {
   readonly rfVersion: string;
   readonly replayExit: number;
   readonly codes: readonly string[];
   readonly fields: readonly string[];
   readonly gatingArtifacts: readonly string[];
-  readonly envelopes: { readonly blob: Envelope; readonly reconstruction: Envelope; readonly retention: Envelope };
+  readonly residuals: Readonly<Record<string, readonly string[]>>;
+  readonly tests: readonly string[];
+  readonly envelopes: Readonly<Record<EnvelopeName, Envelope>>;
   readonly rows: readonly RosterRow[];
 }
 
@@ -200,7 +260,9 @@ function envelopeOf(value: unknown, name: string): Envelope {
 /** Parses the roster, refusing any field of the wrong shape by name, so no case can read a malformed roster. */
 function readRoster(): Roster {
   const raw: unknown = JSON.parse(readFileSync(ROSTER_PATH, "utf8"));
-  if (!isObject(raw) || !Array.isArray(raw.rows) || !isObject(raw.envelopes)) throw new Error("roster must be an object with rows and envelopes");
+  if (!isObject(raw) || !Array.isArray(raw.rows) || !isObject(raw.envelopes) || !isObject(raw.residuals)) {
+    throw new Error("roster must be an object with rows, envelopes and residuals");
+  }
   const rows = raw.rows.map((row: unknown, index: number): RosterRow => {
     if (!isObject(row) || typeof row.id !== "string" || typeof row.label !== "string" || !Array.isArray(row.pins)) {
       throw new Error(`roster rows[${index}] needs an id, a label and a pins list`);
@@ -212,12 +274,15 @@ function readRoster(): Roster {
     return { id: row.id, label: row.label, pins };
   });
   if (typeof raw.rfVersion !== "string" || typeof raw.replayExit !== "number") throw new Error("roster needs rfVersion and replayExit");
+  const residuals = Object.fromEntries(Object.entries(raw.residuals).map(([family, members]) => [family, strings(members, `residuals.${family}`)]));
   return {
     rfVersion: raw.rfVersion,
     replayExit: raw.replayExit,
     codes: strings(raw.codes, "codes"),
     fields: strings(raw.fields, "fields"),
     gatingArtifacts: strings(raw.gatingArtifacts, "gatingArtifacts"),
+    residuals,
+    tests: strings(raw.tests, "tests"),
     envelopes: {
       blob: envelopeOf(raw.envelopes.blob, "blob"),
       reconstruction: envelopeOf(raw.envelopes.reconstruction, "reconstruction"),
@@ -229,6 +294,8 @@ function readRoster(): Roster {
 
 const ROSTER = readRoster();
 const { blob: BLOB, reconstruction: RECONSTRUCTION, retention: RETENTION } = ROSTER.envelopes;
+/** The measured workspace root every roster envelope carries (the rewritten scratch root). */
+const FIXTURE_ROOT = BLOB.workspace.root;
 
 function rosterWitness(pin: string): JsonValue {
   const found = ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === pin);
@@ -257,12 +324,17 @@ function stringLeaves(value: unknown): string[] {
 function fieldValues(envelope: Envelope): string[] {
   return stringLeaves(metadataOf(envelope));
 }
-/** The constructed render-command refusal: the measured diagnostics on a context.render failure envelope. */
+/** The constructed render-command refusal: the measured diagnostics (a copy) on a context.render failure envelope, workspace
+ * nulled. */
 function renderRefusal(envelope: Envelope): JsonObject {
   return {
     schema: envelope.schema, ok: false, command: "context.render", operation_id: envelope.operation_id, workspace: null,
-    transaction_id: null, result: null, diagnostics: envelope.diagnostics,
+    transaction_id: null, result: null, diagnostics: envelope.diagnostics.map(json),
   };
+}
+/** The measured refusal shape on the render plane: the constructed refusal with the measured workspace kept, verbatim. */
+function measuredRefusal(envelope: Envelope): JsonObject {
+  return { ...renderRefusal(envelope), workspace: { id: envelope.workspace.id, root: envelope.workspace.root } };
 }
 
 /** Every regular file below a root (symlinks are not followed); a path that vanishes mid-walk holds nothing tracked. */
@@ -287,6 +359,31 @@ function textOf(path: string): string {
   } catch {
     return "";
   }
+}
+/** Every src .ts module, repo-relative. */
+function srcModules(): string[] {
+  return filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts")).map(file => relative(REPO, file));
+}
+function sourceOf(fileName: string, text: string): ts.SourceFile {
+  return ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+}
+/** A module's const string bindings: every `const NAME = "literal"` declaration, at any depth. */
+function constStrings(source: ts.SourceFile): Map<string, string> {
+  const bindings = new Map<string, string>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && ts.isStringLiteralLike(node.initializer) &&
+      ts.isVariableDeclarationList(node.parent) && (node.parent.flags & ts.NodeFlags.Const) !== 0) bindings.set(node.name.text, node.initializer.text);
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return bindings;
+}
+/** The literal an expression spells: a string or no-substitution template literal, or an identifier a const binds to one. */
+function literalOf(node: ts.Node | undefined, bindings: ReadonlyMap<string, string>): string | null {
+  if (node === undefined) return null;
+  if (ts.isStringLiteralLike(node)) return node.text;
+  if (ts.isIdentifier(node)) return bindings.get(node.text) ?? null;
+  return null;
 }
 
 const oldPath = process.env.PATH;
@@ -372,14 +469,14 @@ async function nativeOutcome(first: JsonValue, exit: number, later?: JsonValue):
   return { refusal, reading, spawns: spawnsOf(log) };
 }
 
-/** One registry invocation of the INJECTED preview (registerReactiveFiberRender) whose reader answers `envelope`. */
-async function injectedReading(envelope: Envelope): Promise<{ reading: JsonValue; calls: number }> {
+/** One registry invocation of the INJECTED preview (registerReactiveFiberRender) whose reader answers `answer()`. */
+async function injectedReading(answer: () => Envelope): Promise<{ reading: JsonValue; calls: number }> {
   countFetches();
   let calls = 0;
   const registry = new CapabilityRegistry();
   registerReactiveFiberRender(registry, async () => {
     calls += 1;
-    return envelope;
+    return answer();
   }, ROOT);
   const reading = await registry.invoke(PREVIEW_ID, { model: "m", task: "t" }, invocationContext());
   return { reading, calls };
@@ -389,8 +486,13 @@ const OBSERVER_CONTEXT: ReactiveFiberTopologyContext = {
   scope: { workspace: ROOT, principal: "local-operator:tester" }, seam: "injected-fixture",
   capturedAt: "2026-10-22T00:00:00Z", observedAt: "2026-10-22T00:00:01Z",
 };
+/** The observer scoped to the measured workspace root, so the adapter reads a refusal that keeps its measured workspace. */
+const FIXTURE_CONTEXT: ReactiveFiberTopologyContext = { ...OBSERVER_CONTEXT, scope: { workspace: FIXTURE_ROOT, principal: "local-operator:tester" } };
+function readingAt(workspaceRoot: string, source: JsonValue): JsonValue {
+  return { contract: REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, workspaceRoot, source };
+}
 function readingOf(source: JsonValue): JsonValue {
-  return { contract: REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, workspaceRoot: ROOT, source };
+  return readingAt(ROOT, source);
 }
 /** The adapter's projection of a render-command refusal: the snapshot's display fields and the surfaced diagnostics. */
 function projectionOf(envelope: Envelope): { topology: ReturnType<typeof reactivefiberTopology>; shown: string[] } {
@@ -398,16 +500,28 @@ function projectionOf(envelope: Envelope): { topology: ReturnType<typeof reactiv
   return { topology, shown: stringLeaves(json(topology)) };
 }
 
-let nativeIds: Promise<{ ids: string[]; texts: string[] }> | undefined;
-/** The native registration's descriptors, loaded once: the ids and each descriptor's JSON text. */
-function nativeDescriptors(): Promise<{ ids: string[]; texts: string[] }> {
+interface MarkedDescriptor {
+  readonly id: string;
+  readonly permissions: readonly string[];
+  readonly contractSource?: string;
+}
+let nativeIds: Promise<{ ids: string[]; texts: string[]; descriptors: MarkedDescriptor[] }> | undefined;
+/** The native registration's descriptors, loaded once: the ids, each descriptor's JSON text and its rf markers. */
+function nativeDescriptors(): Promise<{ ids: string[]; texts: string[]; descriptors: MarkedDescriptor[] }> {
   nativeIds ??= loadWorkbenchNative().then(native => {
     const registry = new CapabilityRegistry();
     native.registerNativeProviders(registry, ROOT);
     const descriptors = registry.catalogSnapshot().map(entry => entry.descriptor);
-    return { ids: descriptors.map(descriptor => descriptor.id), texts: descriptors.map(descriptor => JSON.stringify(descriptor)) };
+    return { ids: descriptors.map(descriptor => descriptor.id), texts: descriptors.map(descriptor => JSON.stringify(descriptor)), descriptors };
   });
   return nativeIds;
+}
+/** The rf roster of a descriptor list: every descriptor carrying any rf marker (the id prefix, an rf grant, an rf@ carrier). */
+function rfRoster(descriptors: readonly MarkedDescriptor[]): string[] {
+  return descriptors
+    .filter(descriptor => descriptor.id.startsWith(RF_ID_PREFIX) || descriptor.permissions.some(grant => grant.startsWith(RF_GRANT_PREFIX)) ||
+      RF_CARRIER.test(descriptor.contractSource ?? ""))
+    .map(descriptor => descriptor.id);
 }
 
 interface VerbScan {
@@ -416,23 +530,48 @@ interface VerbScan {
   readonly renderArgv: number;
   readonly composedArgv: number;
 }
-/** One module's rf replay verbs: an argv array with "context" followed by "replay", or a string or template literal spelling one. */
+/** The words of a list: each string literal's text, an array-literal spread's words in place, null for any other element. */
+function wordsOf(items: readonly ts.Expression[]): (string | null)[] {
+  return items.flatMap(item => {
+    if (ts.isStringLiteralLike(item)) return [item.text];
+    if (ts.isSpreadElement(item) && ts.isArrayLiteralExpression(item.expression)) return wordsOf(item.expression.elements);
+    return [null];
+  });
+}
+/** The words a concat chain composes: its receiver (an array literal or an inner concat) and each argument (a list's words, a
+ * literal's text, null otherwise), in order; null when the call is not a concat. */
+function concatWords(call: ts.CallExpression): (string | null)[] | null {
+  const callee = call.expression;
+  if (!ts.isPropertyAccessExpression(callee) || callee.name.text !== "concat") return null;
+  const receiver = callee.expression;
+  const head = ts.isArrayLiteralExpression(receiver) ? wordsOf(receiver.elements) : ts.isCallExpression(receiver) ? (concatWords(receiver) ?? [null]) : [null];
+  return [...head, ...call.arguments.flatMap(argument => (ts.isArrayLiteralExpression(argument) ? wordsOf(argument.elements) : wordsOf([argument])))];
+}
+/** One module's rf replay verbs: a list (an array literal, an argument list or a concat chain) with "context" before "replay", or a
+ * string or template literal spelling one. */
 function scanReplayVerbs(fileName: string, text: string): VerbScan {
-  const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const source = sourceOf(fileName, text);
   const argv: string[] = [];
   const literals: string[] = [];
   let renderArgv = 0;
   let composedArgv = 0;
+  const sequence = (words: readonly (string | null)[]): void => {
+    let replay = false;
+    words.forEach((word, index) => {
+      if (word !== "context" || index + 1 >= words.length) return;
+      const later = words.slice(index + 1);
+      if (later.some(item => item !== null && item.toLowerCase() === "replay")) replay = true;
+      else if (later[0] === "render") renderArgv += 1;
+      else if (later[0] === null) composedArgv += 1;
+    });
+    if (replay) argv.push(`${fileName}: [${words.filter(item => item !== null).join(", ")}]`);
+  };
   const visit = (node: ts.Node): void => {
-    if (ts.isArrayLiteralExpression(node)) {
-      const words = node.elements.map(element => (ts.isStringLiteralLike(element) ? element.text : null));
-      words.forEach((word, index) => {
-        if (word !== "context" || index + 1 >= words.length) return;
-        const next = words[index + 1];
-        if (next === "replay") argv.push(`${fileName}: [${words.filter(item => item !== null).join(", ")}]`);
-        else if (next === "render") renderArgv += 1;
-        else if (next === null) composedArgv += 1;
-      });
+    if (ts.isArrayLiteralExpression(node)) sequence(wordsOf(node.elements));
+    if (ts.isCallExpression(node)) {
+      sequence(wordsOf(node.arguments));
+      const chained = concatWords(node);
+      if (chained !== null) sequence(chained);
     }
     if (ts.isStringLiteralLike(node) && REPLAY_VERB.test(node.text)) literals.push(`${fileName}: ${node.text}`);
     if (ts.isTemplateExpression(node)) {
@@ -446,55 +585,106 @@ function scanReplayVerbs(fileName: string, text: string): VerbScan {
 }
 
 interface PortScan {
-  readonly externals: string[];
   readonly network: string[];
   readonly globals: string[];
+  readonly dynamic: string[];
   readonly launches: string[];
   readonly local: string[];
 }
-/** One module's ports: its module specifiers (static, re-export, dynamic import and require), network globals it calls or
- * constructs, and the first argument of every child-process launcher it calls ("<composed>" when not a literal). */
+/** True for an import() or a require() call. */
+function isLoader(call: ts.CallExpression): boolean {
+  return call.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(call.expression) && call.expression.text === "require");
+}
+/** True for `require("node:child_process")` and `[await] import("node:child_process")`. */
+function loadsChildProcess(node: ts.Expression): boolean {
+  const call = ts.isAwaitExpression(node) ? node.expression : node;
+  if (!ts.isCallExpression(call) || !isLoader(call)) return false;
+  const first = call.arguments[0];
+  return first !== undefined && ts.isStringLiteralLike(first) && CHILD_PROCESS.test(first.text);
+}
+/** One module's ports: every identifier (a property name included) or exact string literal naming a network global; every exact
+ * string literal naming a network module; every import() or require() of a non-literal specifier; the program of every
+ * child_process launcher call however the launcher is bound (named, aliased, namespace, default, required, import-equals or
+ * dynamically imported; a module-local const program resolved, "<composed>" otherwise); and its relative module specifiers. */
 function scanPorts(fileName: string, text: string): PortScan {
-  const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-  const specifiers: string[] = [];
+  const source = sourceOf(fileName, text);
+  const network: string[] = [];
   const globals: string[] = [];
+  const dynamic: string[] = [];
   const launches: string[] = [];
+  const local: string[] = [];
+  const bound = new Map<string, string>();
+  const spaces = new Set<string>();
+  const bindings = constStrings(source);
+  const bind = (node: ts.Node): void => {
+    if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference) && ts.isStringLiteralLike(node.moduleReference.expression) &&
+      CHILD_PROCESS.test(node.moduleReference.expression.text)) spaces.add(node.name.text);
+    if (ts.isImportDeclaration(node) && ts.isStringLiteralLike(node.moduleSpecifier) && CHILD_PROCESS.test(node.moduleSpecifier.text)) {
+      const clause = node.importClause;
+      if (clause?.name !== undefined) spaces.add(clause.name.text);
+      const named = clause?.namedBindings;
+      if (named !== undefined && ts.isNamespaceImport(named)) spaces.add(named.name.text);
+      if (named !== undefined && ts.isNamedImports(named)) for (const element of named.elements) bound.set(element.name.text, (element.propertyName ?? element.name).text);
+    }
+    if (ts.isVariableDeclaration(node) && node.initializer !== undefined && loadsChildProcess(node.initializer)) {
+      if (ts.isIdentifier(node.name)) spaces.add(node.name.text);
+      if (ts.isObjectBindingPattern(node.name)) {
+        for (const element of node.name.elements) {
+          if (!ts.isIdentifier(element.name)) continue;
+          const property = element.propertyName !== undefined && ts.isIdentifier(element.propertyName) ? element.propertyName.text : element.name.text;
+          bound.set(element.name.text, property);
+        }
+      }
+    }
+    ts.forEachChild(node, bind);
+  };
+  bind(source);
+  const launcherOf = (callee: ts.Expression): string | undefined => {
+    if (ts.isIdentifier(callee)) {
+      const name = bound.get(callee.text) ?? callee.text;
+      return LAUNCHERS.includes(name) ? name : undefined;
+    }
+    if (ts.isPropertyAccessExpression(callee) && ts.isIdentifier(callee.expression) && spaces.has(callee.expression.text)) {
+      return LAUNCHERS.includes(callee.name.text) ? callee.name.text : undefined;
+    }
+    return undefined;
+  };
   const visit = (node: ts.Node): void => {
-    if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier !== undefined && ts.isStringLiteralLike(node.moduleSpecifier)) {
-      specifiers.push(node.moduleSpecifier.text);
+    if (ts.isIdentifier(node) && NETWORK_GLOBALS.includes(node.text)) globals.push(`${fileName}: ${node.text}`);
+    if (ts.isStringLiteralLike(node)) {
+      if (NETWORK_GLOBALS.includes(node.text)) globals.push(`${fileName}: "${node.text}"`);
+      if (NETWORK_MODULE.test(node.text)) network.push(`${fileName}: ${node.text}`);
     }
+    if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier !== undefined && ts.isStringLiteralLike(node.moduleSpecifier) &&
+      node.moduleSpecifier.text.startsWith(".")) local.push(node.moduleSpecifier.text);
     if (ts.isCallExpression(node)) {
-      const callee = node.expression;
       const first = node.arguments[0];
-      const dynamic = callee.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(callee) && callee.text === "require");
-      if (dynamic && first !== undefined && ts.isStringLiteralLike(first)) specifiers.push(first.text);
-      const name = ts.isIdentifier(callee) ? callee.text : ts.isPropertyAccessExpression(callee) && ts.isIdentifier(callee.expression) && callee.expression.text === "globalThis" ? callee.name.text : "";
-      if (NETWORK_GLOBALS.includes(name)) globals.push(`${fileName}: ${name}`);
-      if (ts.isIdentifier(callee) && LAUNCHERS.includes(callee.text)) launches.push(first !== undefined && ts.isStringLiteralLike(first) ? first.text : "<composed>");
+      if (isLoader(node)) {
+        if (first === undefined || !ts.isStringLiteralLike(first)) dynamic.push(`${fileName}: ${node.getText(source)}`);
+        else if (first.text.startsWith(".")) local.push(first.text);
+      }
+      if (launcherOf(node.expression) !== undefined) launches.push(literalOf(first, bindings) ?? "<composed>");
     }
-    if (ts.isNewExpression(node) && ts.isIdentifier(node.expression) && NETWORK_GLOBALS.includes(node.expression.text)) globals.push(`${fileName}: new ${node.expression.text}`);
     ts.forEachChild(node, visit);
   };
   visit(source);
-  const local = specifiers.filter(specifier => specifier.startsWith("."));
-  const externals = specifiers.filter(specifier => !specifier.startsWith("."));
-  return { externals, network: externals.filter(specifier => NETWORK_MODULE.test(specifier)), globals, launches, local };
+  return { network, globals, dynamic, launches, local };
 }
 
 /** The reader modules' transitive src import closure, each module's ports merged. */
 function readerClosure(): { modules: string[]; unresolved: string[]; ports: PortScan } {
   const seen = new Set<string>();
   const unresolved: string[] = [];
-  const merged: PortScan = { externals: [], network: [], globals: [], launches: [], local: [] };
+  const merged: PortScan = { network: [], globals: [], dynamic: [], launches: [], local: [] };
   const queue = READER_MODULES.map(module => join(REPO, module));
   while (queue.length > 0) {
     const file = queue.shift();
     if (file === undefined || seen.has(file)) continue;
     seen.add(file);
     const scan = scanPorts(relative(REPO, file), textOf(file));
-    merged.externals.push(...scan.externals);
     merged.network.push(...scan.network);
     merged.globals.push(...scan.globals);
+    merged.dynamic.push(...scan.dynamic);
     merged.launches.push(...scan.launches);
     for (const specifier of scan.local) {
       const target = join(dirname(file), specifier.replace(/\.js$/, ".ts"));
@@ -503,6 +693,18 @@ function readerClosure(): { modules: string[]; unresolved: string[]; ports: Port
     }
   }
   return { modules: [...seen].map(file => relative(REPO, file)).sort(), unresolved, ports: merged };
+}
+
+/** One module's spellings of a name: every identifier (a property name included) or exact string literal spelling it. */
+function spellingsOf(fileName: string, text: string, name: string): number {
+  const source = sourceOf(fileName, text);
+  let count = 0;
+  const visit = (node: ts.Node): void => {
+    if ((ts.isIdentifier(node) || ts.isStringLiteralLike(node)) && node.text === name) count += 1;
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return count;
 }
 
 interface ScanRoot {
@@ -530,15 +732,22 @@ function scanCodes(scan: ScanRoot): JsonValue {
   return { root: scan.root, floor: scan.floor, floorMet, anchorRead, hits };
 }
 
-/** A registered reading of `envelope`: byte for byte, its code and metadata verbatim, the injected reader called once, fetch 0. */
-async function verbatimReading(envelope: Envelope): Promise<JsonValue> {
-  const { reading, calls } = await injectedReading(envelope);
-  expect(reading).toStrictEqual({ contract: REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, workspaceRoot: ROOT, source: envelope });
+/** A registered reading of the roster envelope `name` through the injected seam: the reader answers a FRESH copy, and the
+ * reading's source must equal a fresh roster read and serialize to the bytes taken before the invocation, so neither an added key
+ * nor an in-place edit can pass; the module's roster copy stays untouched; the injected reader is called once, fetch 0. */
+async function verbatimReading(name: EnvelopeName): Promise<JsonValue> {
+  const envelope = ROSTER.envelopes[name];
+  const before = JSON.stringify(envelope);
+  const fresh = readRoster().envelopes[name];
+  const { reading, calls } = await injectedReading(() => envelopeOf(JSON.parse(before), `the reader's fresh copy of ${name}`));
+  expect(reading).toStrictEqual({ contract: REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, workspaceRoot: ROOT, source: fresh });
   const source = objectOf(objectOf(reading, "reading").source, "reading source");
   const primary = objectOf(Array.isArray(source.diagnostics) ? source.diagnostics[0] : undefined, "reading diagnostics[0]");
-  expect(primary).toStrictEqual(primaryOf(envelope));
-  // Byte for byte: the reading's source serializes to exactly the roster envelope's bytes, key order included.
-  expect(JSON.stringify(source)).toBe(JSON.stringify(envelope));
+  expect(primary).toStrictEqual(primaryOf(fresh));
+  // Byte for byte: the reading's source serializes to exactly a fresh roster read's bytes, key order included.
+  expect(JSON.stringify(source)).toBe(JSON.stringify(fresh));
+  expect(JSON.stringify(source)).toBe(before);
+  expect(JSON.stringify(envelope), "the roster copy is untouched").toBe(before);
   expect(calls).toBe(1);
   expect(fetches).toBe(0);
   return {
@@ -546,6 +755,9 @@ async function verbatimReading(envelope: Envelope): Promise<JsonValue> {
     readingKeys: Object.keys(objectOf(reading, "reading")).sort(), calls, fetches,
   };
 }
+
+/** The pins that reached their witness compare, in run order; the last case holds it to every pin. */
+const REACHED: string[] = [];
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
@@ -558,7 +770,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const composedArgv = found.reduce((sum, result) => sum + result.composedArgv, 0);
     const { ids, texts } = await nativeDescriptors();
     const descriptorHits = ids.filter((id, index) => REPLAY_VERB.test(texts[index] ?? "") || /replay/i.test(id));
-    const srcFloorMet = files.length >= 100;
+    const srcFloorMet = files.length >= SRC_FLOOR;
     expect(srcFloorMet, `src modules walked: ${files.length}`).toBe(true);
     expect(renderArgvSeen).toBe(true);
     expect({ argv, literals, descriptorHits }, "an rf replay verb needs rfc-0txnl.25 and rfc-bak67.12").toStrictEqual({ argv: [], literals: [], descriptorHits: [] });
@@ -572,19 +784,40 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       dotted: control(`const id = "${REPLAY_COMMAND}";`),
       template: control(["const cmd = `rf context  replay $", "{render}`;"].join("")),
       composedArgv: control('const verb = "replay"; spawn("rf", ["context", verb]);'),
+      concat: control('spawn("rf", ["--workspace", w, "context"].concat(["replay", render, "--json"]));'),
+      pushed: control('const argv = ["--workspace", w]; argv.push("context", "replay", render);'),
+      flagBetween: control('spawn("rf", ["--workspace", w, "context", "--quiet", "replay", render]);'),
+      spread: control('spawn("rf", [...["--workspace", w, "context"], "replay", render]);'),
+      concatComposed: control('spawn("rf", ["--workspace", w, "context"].concat(rest));'),
     };
     return { srcFloorMet, renderArgvSeen, argv, literals, descriptorHits, composedArgv, controls };
   },
   A2: async () => {
     const injected = new CapabilityRegistry();
     registerReactiveFiberRender(injected, () => Promise.reject(new Error("the injected reader is never invoked here")), ROOT);
-    const native = (await nativeDescriptors()).ids.filter(id => id.startsWith("reactivefiber."));
-    const injectedIds = injected.catalogSnapshot().map(entry => entry.descriptor.id).filter(id => id.startsWith("reactivefiber."));
+    const injectedDescriptors = injected.catalogSnapshot().map(entry => entry.descriptor);
+    const native = rfRoster((await nativeDescriptors()).descriptors);
+    const injectedIds = rfRoster(injectedDescriptors);
     const reconcile = [...(RECONCILE_EVIDENCE_READS.reactivefiber ?? [])];
     expect(native).toStrictEqual([PREVIEW_ID]);
     expect(injectedIds).toStrictEqual([PREVIEW_ID]);
     expect(reconcile).toStrictEqual([PREVIEW_ID]);
-    return { native, injected: injectedIds, reconcile };
+    // Non-vacuity: the preview itself carries all three markers, its carrier read from the provider's own export.
+    const preview = injectedDescriptors.find(descriptor => descriptor.id === PREVIEW_ID);
+    const markers = {
+      prefix: preview?.id.startsWith(RF_ID_PREFIX) ?? false,
+      grants: (preview?.permissions ?? []).filter(grant => grant.startsWith(RF_GRANT_PREFIX)),
+      carrier: preview?.contractSource === REACTIVE_FIBER_CONTRACT_SOURCE && RF_CARRIER.test(REACTIVE_FIBER_CONTRACT_SOURCE),
+    };
+    expect(markers).toStrictEqual({ prefix: true, grants: GRANTS, carrier: true });
+    const control = (descriptor: MarkedDescriptor): number => rfRoster([descriptor]).length;
+    const controls = {
+      prefix: control({ id: "reactivefiber.replay.preview", permissions: ["planted:read"], contractSource: "planted@1:read" }),
+      grant: control({ id: "rf.context.reread", permissions: ["reactivefiber:render"], contractSource: "planted@1:read" }),
+      carrier: control({ id: "rf.context.reread", permissions: ["planted:read"], contractSource: REACTIVE_FIBER_CONTRACT_SOURCE }),
+      unmarked: control({ id: "rf.context.reread", permissions: ["planted:read"], contractSource: "planted@1:read" }),
+    };
+    return { native, injected: injectedIds, reconcile, markers, controls };
   },
   A3: async () => {
     const outcome = await nativeOutcome(json(BLOB), REPLAY_EXIT);
@@ -616,8 +849,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(shapes.flat().sort()).toStrictEqual([...FIELDS].sort());
     return { codes, commands, failures, exit: ROSTER.replayExit, shapes, fields: FIELDS.filter(field => shapes.some(shape => shape.includes(field))) };
   },
-  B2: async () => verbatimReading(BLOB),
-  B3: async () => verbatimReading(RETENTION),
+  B2: async () => verbatimReading("blob"),
+  B3: async () => verbatimReading("retention"),
   B4: async () => {
     const outcome = await nativeOutcome(renderRefusal(BLOB), REPLAY_EXIT);
     const message = outcome.refusal?.message ?? "";
@@ -643,15 +876,15 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   B6: async () => {
     const { modules, unresolved, ports } = readerClosure();
     const anchorsRead = READER_MODULES.every(module => modules.includes(module)) && modules.includes("src/workbench/capability-registry.ts");
-    const closureFloorMet = modules.length >= 5;
+    const closureFloorMet = modules.length >= CLOSURE_FLOOR;
     const launches = [...new Set(ports.launches)].sort();
     expect(closureFloorMet, `closure modules: ${modules.join(", ")}`).toBe(true);
     expect(anchorsRead).toBe(true);
     expect(unresolved).toEqual([]);
-    expect({ network: ports.network, globals: ports.globals, launches }).toStrictEqual({ network: [], globals: [], launches: ["rf"] });
+    expect({ network: ports.network, globals: ports.globals, dynamic: ports.dynamic, launches }).toStrictEqual({ network: [], globals: [], dynamic: [], launches: ["rf"] });
     const control = (text: string): JsonValue => {
       const scan = scanPorts("control.ts", text);
-      return { network: scan.network.length, globals: scan.globals.length, launches: scan.launches };
+      return { network: scan.network.length, globals: scan.globals.length, dynamic: scan.dynamic.length, launches: scan.launches };
     };
     const controls = {
       http: control('import { request } from "node:http";'),
@@ -661,8 +894,43 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       socket: control("const socket = new WebSocket(producer);"),
       curl: control('spawn("curl", [producer]);'),
       composed: control("spawn(command, []);"),
+      namespaceLauncher: control('import * as cp from "node:child_process"; cp.execFile("curl", [producer]);'),
+      aliasedLauncher: control('import { spawn as run } from "node:child_process"; run("curl", [producer]);'),
+      defaultLauncher: control('import cp from "node:child_process"; cp.spawn("curl", []);'),
+      requiredLauncher: control('const { spawn: go } = require("node:child_process"); go("curl", []);'),
+      requiredSpace: control('const cp = require("child_process"); cp.fork("curl");'),
+      importEquals: control('import cp = require("node:child_process"); cp.spawn("curl", []);'),
+      dynamicLauncher: control('const cp = await import("node:child_process"); cp.execFile("curl", []);'),
+      constLauncher: control('import { spawn } from "node:child_process"; const tool = "curl"; spawn(tool, []);'),
+      fetchElement: control('await globalThis["fetch"](producer);'),
+      fetchAlias: control("const get = globalThis.fetch; await get(producer);"),
+      composedImport: control('const name = "node:" + "https"; await import(name);'),
+      splitName: control('await globalThis["fe" + "tch"](producer);'),
+      wrappedLauncher: control('import * as cp from "node:child_process"; const run = cp.spawn; run("curl", []);'),
+      unlisted: control('process.binding("tcp_wrap");'),
     };
-    return { closureFloorMet, anchorsRead, unresolved, network: ports.network, globals: ports.globals, launches, controls };
+    return { closureFloorMet, anchorsRead, unresolved, network: ports.network, globals: ports.globals, dynamic: ports.dynamic, launches, controls };
+  },
+  B7: async () => {
+    const files = srcModules();
+    const sites = (name: string): string[] => files.filter(file => file !== PROVIDER_MODULE && spellingsOf(file, textOf(join(REPO, file)), name) > 0).sort();
+    const seamSites = sites(SEAM);
+    const servedSites = sites(SERVED);
+    const srcFloorMet = files.length >= SRC_FLOOR;
+    const servedAnchorRead = servedSites.includes(SERVED_ANCHOR);
+    const definedInProvider = spellingsOf(PROVIDER_MODULE, textOf(join(REPO, PROVIDER_MODULE)), SEAM) >= 1;
+    expect(srcFloorMet, `src modules walked: ${files.length}`).toBe(true);
+    expect(servedAnchorRead, `modules spelling ${SERVED}: ${servedSites.join(", ")}`).toBe(true);
+    expect(definedInProvider).toBe(true);
+    expect(seamSites, "src modules reaching the injected seam (acceptance (a) is met there, at 0 production call sites)").toEqual([]);
+    const control = (text: string): number => spellingsOf("control.ts", text, SEAM);
+    const controls = {
+      call: control("registerReactiveFiberRender(registry, read, root);"),
+      aliased: control('import { registerReactiveFiberRender as wire } from "./providers/reactivefiber.js"; wire(registry, read, root);'),
+      element: control('provider["registerReactiveFiberRender"](registry, read, root);'),
+      splitName: control('provider["register" + "ReactiveFiberRender"](registry, read, root);'),
+    };
+    return { srcFloorMet, servedAnchorRead, definedInProvider, seamSites, controls };
   },
   C1: async () => {
     const messages: JsonObject = {};
@@ -676,7 +944,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(messages.blob).not.toBe(messages.reconstruction);
     return { messages, spawns };
   },
-  C2: async () => verbatimReading(RECONSTRUCTION),
+  C2: async () => verbatimReading("reconstruction"),
   C3: async () => {
     const shown: JsonObject = {};
     for (const [name, envelope] of [["blob", BLOB], ["retention", RETENTION], ["reconstruction", RECONSTRUCTION]] as const) {
@@ -708,18 +976,47 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(carriesValue).toBe(false);
     return { snapshots: topology.snapshots.length, coverage: snapshot?.coverage ?? null, statusTone: snapshot?.node.statusTone ?? null, carriesValue };
   },
+  D3: async () => {
+    const refusal = measuredRefusal(BLOB);
+    const outcome = await nativeOutcome(refusal, REPLAY_EXIT, fullShapeRf(ROOT));
+    expect(outcome.refusal).toStrictEqual({ category: "unavailable", message: `RF render refused: ${SNAPSHOT_MISSING}` });
+    expect(outcome.reading).toBeNull();
+    expect(outcome.spawns).toHaveLength(1);
+    expect(fetches).toBe(0);
+    const topology = reactivefiberTopology(readingAt(FIXTURE_ROOT, refusal), FIXTURE_CONTEXT);
+    const snapshot = topology.snapshots[0];
+    const liveLegs = { outputDigest: snapshot?.nativePayloadRef ?? null, graphRevision: snapshot?.sourceRevision ?? null, bundle: snapshot?.sourceVersion ?? null };
+    expect(refusal.workspace).toStrictEqual(BLOB.workspace);
+    expect(topology.snapshots).toHaveLength(1);
+    expect(snapshot?.node.statusTone).toBe("failure");
+    expect(liveLegs).toStrictEqual({ outputDigest: null, graphRevision: null, bundle: null });
+    return {
+      ...outcome.refusal, reading: outcome.reading !== null, spawns: outcome.spawns.length, fetches, workspace: refusal.workspace,
+      snapshots: topology.snapshots.length, statusTone: snapshot?.node.statusTone ?? null, liveLegs,
+    };
+  },
+  D4: async () => {
+    const topology = reactivefiberTopology(readingAt(FIXTURE_ROOT, measuredRefusal(BLOB)), FIXTURE_CONTEXT);
+    const snapshot = topology.snapshots[0];
+    const evidenceRefs = [...(snapshot?.evidenceRefs ?? [])];
+    const sourceId = snapshot?.source.id ?? null;
+    expect(evidenceRefs, "the one reference a workspace-bearing refusal carries is its own workspace").toStrictEqual([`rf-workspace:${BLOB.workspace.id}`]);
+    expect(sourceId).toBe(BLOB.operation_id);
+    return { evidenceRefs, sourceId };
+  },
 };
 
 describe("wb-a9l2.4 rf replay refusal echo census (RF-HARNESS2-FEDERATED-PEER-R4, absent-today leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:6", "C:4", "D:2"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:7", "C:4", "D:4"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
-    expect({ codes: [SNAPSHOT_MISSING, RECONSTRUCTION_UNAVAILABLE], fields: FIELDS, replayExit: REPLAY_EXIT, gatingArtifacts: GATING_ARTIFACTS }).toStrictEqual({
-      codes: [...ROSTER.codes], fields: [...ROSTER.fields], replayExit: ROSTER.replayExit, gatingArtifacts: [...ROSTER.gatingArtifacts],
+    expect({ codes: [SNAPSHOT_MISSING, RECONSTRUCTION_UNAVAILABLE], fields: FIELDS, replayExit: REPLAY_EXIT, gatingArtifacts: GATING_ARTIFACTS, residuals: RESIDUALS }).toStrictEqual({
+      codes: [...ROSTER.codes], fields: [...ROSTER.fields], replayExit: ROSTER.replayExit, gatingArtifacts: [...ROSTER.gatingArtifacts], residuals: ROSTER.residuals,
     });
+    for (const members of Object.values(RESIDUALS)) for (const member of members) expect(ROWS.flatMap(row => row.pins), `${member} is a judged pin`).toContain(member);
   });
 
   for (const row of ROWS) {
@@ -730,8 +1027,29 @@ describe("wb-a9l2.4 rf replay refusal echo census (RF-HARNESS2-FEDERATED-PEER-R4
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : await impl();
           expect(witness).toStrictEqual(rosterWitness(pin));
+          REACHED.push(pin);
         });
       }
     });
   }
+
+  it("the registered tests and the reached pins equal the roster, in order and both ways", ({ task }) => {
+    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    const titles = walked.map(entry => entry.name);
+    expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
+    expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice (an alias or a decoy)").toEqual([]);
+    const here = walked.findIndex(entry => entry.self);
+    expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
+    const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
+    const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
+    expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
+    expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
+  });
 });
