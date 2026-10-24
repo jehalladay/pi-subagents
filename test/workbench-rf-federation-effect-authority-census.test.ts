@@ -33,49 +33,80 @@
  * Claude host binds node grants from its config (claude-host.ts callNode, `grants: config.grants`), never from a reading; a
  * resume refuses a journaled non-read node with uncertain-effect (runtime.ts node admission).
  *
+ * RE-MEASURED AT BASE 92e5ae2 (landing 324) for wb-10fd, the R694 follow-up of landing 269 (gate of record cmd_405f66df13b1,
+ * findings F1-F7; F1 leads): src is 115 files, every one a .ts module, and no string literal, template part or identifier spells
+ * the stem decoded; src's register calls and `.register` references are the 8 inline read literals in providers/*.ts plus the
+ * local-detached operator-module bridge (hosts/local-detached.ts registryFor: the typeof check, module.register(registry), the
+ * re-bound registry.register and its register(provider) call); src's effectClass string literals are those 8 "read", runtime.ts's
+ * read replay row "read" and journal-compat.ts's field description; CapabilityDescriptor declares effectClass
+ * "read" | "write" | "external" | "unknown" among its 9 members and InvocationContext has 6; no src module calls import() or
+ * require() on a non-literal specifier or references fetch, WebSocket or EventSource at all.
+ *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
  *  A, acceptance (a). A stand-in future rf federation effect (EFFECT_ID, effectClass external; test-only, never in src) sits
  *    beside the injected preview. A1 under READ_ADMISSION (every grant the read surface carries) the effect is refused
  *    authorization with 0 provider calls, and it runs once when its own permission is added; A2 the same for a stand-in that
  *    declares no permission (the invoke:<id> branch); A3 registration refuses each read-admission grant spelling as an
  *    invocation permission; A4 Pi's Claude workflow host under READ_ADMISSION runs a script that reads the preview (its reading
- *    carries grant-shaped text) and hands the reading to the effect: the run fails authorization and the effect never runs.
+ *    carries grant-shaped text) and hands the reading to the effect: the run fails authorization and the effect never runs;
+ *    A5 the A4 twin on the no-permission branch: the same host run of a stand-in that declares no permission (its reading carries
+ *    the very invoke:<id> that would admit it) fails authorization with 0 effect calls, and runs the effect once when the host is
+ *    granted that invoke:<id> itself.
  *  B, acceptance (b). B1 no registered descriptor (native or injected) is in the federation-effect family (isFederationEffect:
  *    the stem or a workspace invoke/evaluate verb anywhere in its JSON); B2 the admission rule a future registration must meet - a
  *    non-read class, a permission of its own that no read descriptor carries, and a docs/workbench/receipts file naming its id,
- *    both GATING_ARTIFACTS and both ADMISSION_TERMS - holds vacuously on the real registrations (no family member), and seven
- *    synthetic registrations exercise each clause; B3 the landed never-retry posture a non-read effect inherits: a started
- *    external stand-in that fails surfaces uncertain-effect ("Reconcile with the producer before retrying") after exactly one
- *    provider call, while its read twin surfaces transport; B4 no idempotency key or effect receipt surface exists today: no src
- *    file spells either, and no CapabilityDescriptor or InvocationContext member names one.
- *  C, acceptance (c). C1 every src file read as UTF-8: none spells FEDERATION (a floor on the files walked and an anchor token, so
- *    an emptied or misdirected walk reds); C2 no registered descriptor's JSON spells it (the served half); C3 every registered
- *    descriptor declares effectClass read, held to the source: src's register descriptor literals are the 8 in providers/*.ts,
- *    each "read", and providers/*.ts carry no effectClass property outside them.
+ *    both GATING_ARTIFACTS and both ADMISSION_TERMS - holds vacuously on the real registrations (no family member), and ten
+ *    synthetic registrations exercise each clause; the receipt clause reads a receipt's rendered text (HTML comments stripped)
+ *    one `## ` section at a time and drops every sentence that carries a negation word, so a receipt that names the id under a
+ *    negation, splits the terms across sections or hides them in a comment registers nothing; B3 the landed never-retry posture a
+ *    non-read effect inherits: a started external stand-in that fails surfaces uncertain-effect ("Reconcile with the producer
+ *    before retrying") after exactly one provider call, while its read twin surfaces transport; B4 no idempotency key or effect
+ *    receipt surface exists today: no src file spells either, no CapabilityDescriptor or InvocationContext member names one, and
+ *    both member sets are pinned exactly, so a key or receipt member under any other name reds it; B5 B3's posture for every
+ *    non-read class the source declares (the effectClass union, read from capability-registry.ts): each started stand-in that
+ *    fails surfaces uncertain-effect after exactly one provider call.
+ *  C, acceptance (c). C1 every src file read as UTF-8, and every src module's string literals, template parts and identifiers
+ *    read decoded: none spells FEDERATION (a floor on the files walked, an anchor token, every src file a .ts module, and a control
+ *    showing the decoded reading catches an escaped spelling the raw text hides); C2 no registered descriptor's JSON spells it
+ *    (the served half); C3 every registered descriptor declares effectClass read, held to the source: src's register descriptor
+ *    literals are the 8 in providers/*.ts, each "read", providers/*.ts carry no effectClass property outside them, every other src
+ *    register call, `.register` reference, destructured register binding or ["register"] access is the local-detached
+ *    operator-module bridge, and src's effectClass string literals outside the providers are runtime.ts's read replay row and
+ *    journal-compat.ts's field description; controls show the inventory sees each registration shape.
  *  D, the R10 call-site pins. D1 an AST scan of every src module and every registered descriptor for an rf workspace
- *    invoke/evaluate verb (an argv "workspace" followed by invoke or evaluate, or a string or template literal spelling one),
- *    with a floor, a non-vacuity reading of the real render argv and five controls; D2 src's one rf launch site is inside
- *    nativeReactiveFiberRender, the descriptor reaching it is read, and through the native registration under the preview's own
- *    grant a stand-in rf observes one `context render ... --no-commit` spawn per invoke, for both input arms, naming no
- *    workspace, invoke or evaluate word; D3 invalidation launches nothing (I07): the src import closure of observation.ts and
- *    graph-view.ts imports no process or network module and calls no launch or network API, the rf reading observer's closure
- *    reaches the provider module only through string-constant bindings, and five controls show the scan reports each shape;
- *    D4 a journaled run of the external stand-in, resumed through the Claude host, fails uncertain-effect naming its producer,
- *    with 0 provider calls on resume (09-froe20-26:19, I05).
+ *    invoke/evaluate verb (an argv "workspace" followed anywhere later in the same literal by invoke or evaluate, or a string or
+ *    template literal spelling one, joined by any run of whitespace, ".", "_" or "-", or by none), with a floor, a non-vacuity
+ *    reading of the real render argv and eight controls; D2 src's one rf launch site (the binary a string literal or a const bound
+ *    to one in the same module) is inside nativeReactiveFiberRender, the descriptor reaching it is read, and through the native
+ *    registration under the preview's own grant a stand-in rf observes one `context render ... --no-commit` spawn per invoke, for
+ *    both input arms, naming no workspace, invoke or evaluate word; D3 invalidation launches nothing (I07): the src import closure
+ *    of observation.ts and graph-view.ts imports no process or network module, imports nothing through a non-literal specifier,
+ *    calls no launch API and references no network global at all (called, constructed, aliased or keyed), the rf reading
+ *    observer's closure reaches the provider module only through string-constant bindings, and nine controls show the scan
+ *    reports each shape; D4 a journaled run of the external stand-in, resumed through the Claude host, fails uncertain-effect
+ *    naming its producer, with 0 provider calls on resume (09-froe20-26:19, I05); D5 D4 for every non-read class the source
+ *    declares: each journaled run, resumed through the Claude host, fails uncertain-effect naming its producer, with 0 provider
+ *    calls on resume.
  *  M, the matcher rows C1 and C2 read: M1-M8 the spellings FEDERATION must catch; Q1-Q4 the pinned quiet rows of its residuals.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id,
  * label and pins, every pin's witness and the four vocabularies (READ_ADMISSION, READ_GRANT_PREFIXES, GATING_ARTIFACTS,
  * ADMISSION_TERMS) - is held to the out-of-file roster test/fixtures/rf-federation-effect-authority-roster.json. A pin deleted,
  * relabelled, swapped for another passing case, or removed from every literal here at once still reds against the roster, and
  * every pin's witness is measured by its own case; B1, C3 and D2 are also anchored in src itself (the registrations, the
- * register literals and the launch sites).
+ * register sites and the launch sites), and B5 and D5 in the effectClass union capability-registry.ts declares.
  * RESIDUALS (named, each with a pinned quiet row): R-INTERRUPTED the stem split by a zero-width code point (Q1); R-HOMOGLYPH one
  * letter swapped for a look-alike from another script (Q2); R-COMPOSED a spelling assembled at runtime from parts is invisible
  * to a text scan (Q3), and C2 is the runtime backstop for served descriptor text only; R-UNNAMED an effect surface that never
- * spells the stem (Q4), whose backstop is C3: any registered non-read descriptor reds it whatever its name; R-COMPOSED-ARGV an
- * invoke argv built from non-literal parts is invisible to D1 (D1's composedArgv control stays 0).
+ * spells the stem (Q4), whose backstop is C3: a non-read descriptor that any src registration ships - native, injected, an inline
+ * literal, or a descriptor variable at a new register site - reds it whatever its name, while the operator-reviewed local
+ * provider the detached host loads through its pinned bridge (local.* ids only, from a module outside src) is outside C3's claim
+ * (A1-A3 still hold for it: the registry checks grants for every registrant); R-COMPUTED-REGISTER a register function reached
+ * through a computed key is invisible to C3's inventory (C3's computedRegister control stays 0); R-COMPOSED-ARGV an invoke argv
+ * built from non-literal parts is invisible to D1 (D1's composedArgv control stays 0); R-OPAQUE-BINARY an rf launch whose binary
+ * is neither a literal nor a same-module const (an environment value, a parameter, an import) is invisible to D2 (D2's opaque
+ * control stays 0).
  * SCOPE: the quotes, the ADR absence and the planned verb are producer facts at 6a251bf73af5; Pi vendors no rf source, so a
- * producer-side change is seen only when an rf pin-bump re-reads them. A1-A3 hold for every descriptor the registry admits,
+ * producer-side change is seen only when an rf pin-bump re-reads them. A1-A3 and A5 hold for every descriptor the registry admits,
  * whoever registers it (the detached host's operator-reviewed local provider registers through the same CapabilityRegistry).
  * The armed half - a federation effect that carries an idempotency key and cites the producer's effect receipt - waits for
  * FW-CFRR-08 and rfc-bak67.6: no effect capability is added to src, and the stand-ins live in this file only.
@@ -141,11 +172,17 @@ const GATING_ARTIFACTS = ["FW-CFRR-08", "rfc-bak67.6"];
 const ADMISSION_TERMS = ["idempotency key", "effect receipt"];
 /** Rows C1, C2 and B1's matcher: the federation stem in any case (federation, federated, federate). */
 const FEDERATION = /federat/i;
-/** Row D1's matcher: an rf workspace invoke or evaluate verb, joined by any run of whitespace, ".", "_" or "-". */
-const INVOKE_VERB = /\bworkspace[\s._-]+(?:invoke|evaluate)\b/i;
+/** Row D1's matcher: an rf workspace invoke or evaluate verb, joined by any run of whitespace, ".", "_" or "-", or by none (camelCase). */
+const INVOKE_VERB = /\bworkspace[\s._-]*(?:invoke|evaluate)\b/i;
 const VERB_WORDS = ["invoke", "evaluate"];
 const EFFECT_RECEIPT = /effect[\s_-]*receipt/i;
 const IDEMPOTENCY_KEY = /idempotency[\s_-]*key/i;
+/** A negation word (not inside a flag such as --no-commit) or an n't contraction: a sentence carrying one registers nothing. */
+const NEGATION = /(?<![\w-])(?:no|not|never|none|without|cannot)(?![\w-])|n't\b/i;
+/** The one src effectClass string literal that is not a descriptor class: journal-compat.ts's table of field descriptions. */
+const FIELD_DESCRIPTION_LITERAL = "src/workflow/journal-compat.ts:a string when present";
+/** The local-detached operator-module bridge: the only src register surface outside the inline provider literals (R-UNNAMED). */
+const OPERATOR_BRIDGE = "src/workbench/hosts/local-detached.ts:registryFor:";
 const HEAD = 'export const meta = { name: "federation-effect-authority", description: "wb-tnz5.1 census probe" };\n';
 
 interface Row {
@@ -159,12 +196,12 @@ const ROWS: readonly Row[] = [
   {
     id: "A",
     label: "(a) no Pi path issues a B evaluate/effect on read-admission evidence alone; the attempt is refused inside Pi",
-    pins: ["A1", "A2", "A3", "A4"],
+    pins: ["A1", "A2", "A3", "A4", "A5"],
   },
   {
     id: "B",
     label: "(b) a future Pi federation-effect capability registers a non-read effectClass, a stable idempotency key and the producer's effect receipt (wb-jwc.5 posture)",
-    pins: ["B1", "B2", "B3", "B4"],
+    pins: ["B1", "B2", "B3", "B4", "B5"],
   },
   {
     id: "C",
@@ -174,7 +211,7 @@ const ROWS: readonly Row[] = [
   {
     id: "D",
     label: "R10 call-site pins: no rf workspace invoke under a read capability, no remote evaluation launched from render or invalidation paths (I07), and replay never silently re-invokes remote effects (09-froe20-26:19)",
-    pins: ["D1", "D2", "D3", "D4"],
+    pins: ["D1", "D2", "D3", "D4", "D5"],
   },
   {
     id: "M",
@@ -305,6 +342,25 @@ function isFederationEffect(descriptor: CapabilityDescriptor): boolean {
   return FEDERATION.test(text) || INVOKE_VERB.test(text);
 }
 
+/** A receipt's rendered text (HTML comments stripped), cut into its `## ` entry sections (the title section first). */
+function receiptSections(text: string): string[] {
+  return text.replace(/<!--[\s\S]*?-->/g, " ").split(/^(?=## )/m);
+}
+/** One section's affirmed text: its sentences (a terminator, a paragraph break or a list item ends one) minus every negated one. */
+function affirmedText(section: string): string {
+  return section
+    .split(/(?<=[.;!?])\s+|\n\s*\n|\n(?=\s*(?:[-*+]|\d+\.)\s)/)
+    .filter(sentence => !NEGATION.test(sentence))
+    .join(" ");
+}
+/** A registering receipt: one section whose affirmed text names the id, both gating artifacts and both admission terms. */
+function registersInReceipt(text: string, id: string): boolean {
+  return receiptSections(text).some(section => {
+    const affirmed = affirmedText(section);
+    return affirmed.includes(id) && GATING_ARTIFACTS.every(artifact => affirmed.includes(artifact)) && ADMISSION_TERMS.every(term => affirmed.toLowerCase().includes(term));
+  });
+}
+
 /**
  * The admission rule a federation-effect registration must meet (README.md:34; 02-concrete-contract-and-verification-gates.md:31):
  * a non-read effect class, a permission of its own that no read descriptor carries, and a registering receipt naming its id,
@@ -319,10 +375,9 @@ function admissionViolations(descriptors: readonly CapabilityDescriptor[], recei
     for (const permission of descriptor.permissions) {
       if (readPermissions.has(permission)) violations.push(`${descriptor.id}: shares the read permission ${permission}`);
     }
-    const receipted = receipts.some(
-      text => text.includes(descriptor.id) && GATING_ARTIFACTS.every(artifact => text.includes(artifact)) && ADMISSION_TERMS.every(term => text.toLowerCase().includes(term)),
-    );
-    if (!receipted) violations.push(`${descriptor.id}: no registering receipt names it with ${GATING_ARTIFACTS.join(" and ")}, an ${ADMISSION_TERMS.join(" and an ")}`);
+    if (!receipts.some(text => registersInReceipt(text, descriptor.id))) {
+      violations.push(`${descriptor.id}: no registering receipt names it with ${GATING_ARTIFACTS.join(" and ")}, an ${ADMISSION_TERMS.join(" and an ")}`);
+    }
     return violations;
   });
 }
@@ -383,6 +438,13 @@ function federationRegistry(permissions: readonly string[], answer?: (input: Jso
   registry.register(effectProvider({ permissions, calls, ...(answer === undefined ? {} : { answer }) }));
   return { registry, calls };
 }
+/** A registry holding only a stand-in of one effect class (rows B5 and D5). */
+function classRegistry(effectClass: CapabilityDescriptor["effectClass"], answer?: (input: JsonValue) => JsonValue): { registry: CapabilityRegistry; calls: Calls } {
+  const calls: Calls = { read: 0, effect: 0 };
+  const registry = new CapabilityRegistry();
+  registry.register(effectProvider({ effectClass, permissions: [EFFECT_PERMISSION], calls, ...(answer === undefined ? {} : { answer }) }));
+  return { registry, calls };
+}
 function contextOf(grants: readonly string[]): InvocationContext {
   return { grants: [...grants], signal: new AbortController().signal };
 }
@@ -399,6 +461,10 @@ const NEVER_QUERY: ClaudeQuery = () => {
 function claudeHost(registry: CapabilityRegistry, grants: readonly string[]): WorkflowHost {
   return createClaudeWorkflowHost({ cwd: ROOT, query: NEVER_QUERY, capabilities: registry, grants: [...grants] });
 }
+/** A script that reads the preview and hands the reading to the effect (rows A4 and A5). */
+const READ_THEN_EFFECT = `${HEAD}const reading = await node(${JSON.stringify(PREVIEW_ID)}, { model: "m", task: "t" });\nreturn await node(${JSON.stringify(EFFECT_ID)}, { admission: reading });`;
+/** A script that invokes the effect once (rows D4 and D5). */
+const EFFECT_ONLY = `${HEAD}return await node(${JSON.stringify(EFFECT_ID)}, ${JSON.stringify(EFFECT_INPUT_VALUE)});`;
 
 /* ---------------------------------------------------------------------------------------------------------------------------
  * The stand-in rf (row D2): first on PATH, it logs one JSON argv line per spawn and prints the full-shape render envelope.
@@ -437,6 +503,12 @@ function parse(fileName: string, text: string): ts.SourceFile {
 function stringLiteralOf(node: ts.Expression | undefined): string | undefined {
   return node !== undefined && ts.isStringLiteralLike(node) ? node.text : undefined;
 }
+/** The expression under `as`, `satisfies`, `<T>`, `!` and parentheses. */
+function unwrapped(node: ts.Expression): ts.Expression {
+  let at = node;
+  while (ts.isAsExpression(at) || ts.isSatisfiesExpression(at) || ts.isTypeAssertionExpression(at) || ts.isNonNullExpression(at) || ts.isParenthesizedExpression(at)) at = at.expression;
+  return at;
+}
 function propertyOf(literal: ts.ObjectLiteralExpression, name: string): ts.Expression | undefined {
   for (const property of literal.properties) {
     if (ts.isPropertyAssignment(property) && ts.isIdentifier(property.name) && property.name.text === name) return property.initializer;
@@ -449,24 +521,75 @@ function calleeName(call: ts.CallExpression): string | undefined {
   if (ts.isPropertyAccessExpression(callee)) return callee.name.text;
   return undefined;
 }
+/** The name of the function declaration enclosing a node, or <module>. */
+function enclosingFunction(node: ts.Node): string {
+  for (let at: ts.Node | undefined = node.parent; at !== undefined; at = at.parent) {
+    if (ts.isFunctionDeclaration(at) && at.name !== undefined) return at.name.text;
+  }
+  return "<module>";
+}
 
-/** Every `<x>.register({ descriptor: { ... } })` descriptor literal in one module, plus the count of effectClass properties anywhere in it. */
-function registerLiterals(fileName: string, text: string): { literals: string[]; effectClassProperties: number } {
+/** One module's spellings as the runtime reads them: every string literal, template part and identifier that spells the stem decoded. */
+function decodedStemHits(fileName: string, text: string): string[] {
+  const hits: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if ((ts.isStringLiteralLike(node) || ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) && FEDERATION.test(node.text)) hits.push(`${fileName}: ${node.text}`);
+    if (ts.isTemplateExpression(node)) {
+      const parts = [node.head.text, ...node.templateSpans.map(span => span.literal.text)];
+      if (parts.some(part => FEDERATION.test(part)) || FEDERATION.test(parts.join(""))) hits.push(`${fileName}: ${parts.join("<expr>")}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(parse(fileName, text));
+  return hits;
+}
+
+interface RegisterSurface {
+  readonly literals: string[];
+  readonly effectClassProperties: number;
+  readonly opaque: string[];
+  readonly effectClassLiterals: string[];
+}
+/**
+ * One module's registration surface: every `<x>.register({ descriptor: { ... } })` descriptor literal; every other register call,
+ * `.register` reference, destructured register binding or ["register"] access (a descriptor variable, a re-bound or aliased register
+ * function, a module handed the registry), named by its enclosing function and its own text; the count of effectClass properties
+ * anywhere in it; and every effectClass property whose value is a string literal (through `as`, `satisfies`, `!` or parentheses).
+ */
+function registerSurface(fileName: string, text: string): RegisterSurface {
+  const source = parse(fileName, text);
   const literals: string[] = [];
+  const opaque: string[] = [];
+  const effectClassLiterals: string[] = [];
   let effectClassProperties = 0;
   const visit = (node: ts.Node): void => {
-    if (ts.isPropertyAssignment(node) && ts.isIdentifier(node.name) && node.name.text === "effectClass") effectClassProperties += 1;
+    if (ts.isPropertyAssignment(node) && ts.isIdentifier(node.name) && node.name.text === "effectClass") {
+      effectClassProperties += 1;
+      const value = unwrapped(node.initializer);
+      if (ts.isStringLiteralLike(value)) effectClassLiterals.push(`${fileName}:${value.text}`);
+    }
     if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression) && node.expression.name.text === "register") {
       const argument = node.arguments[0];
       const descriptor = argument !== undefined && ts.isObjectLiteralExpression(argument) ? propertyOf(argument, "descriptor") : undefined;
       if (descriptor !== undefined && ts.isObjectLiteralExpression(descriptor)) {
         literals.push(`${fileName}:${stringLiteralOf(propertyOf(descriptor, "id")) ?? "?"}:${stringLiteralOf(propertyOf(descriptor, "effectClass")) ?? "?"}`);
+      } else {
+        opaque.push(`${fileName}:${enclosingFunction(node)}:${node.expression.getText(source)}(...)`);
       }
     }
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "register") opaque.push(`${fileName}:${enclosingFunction(node)}:register(...)`);
+    if (ts.isPropertyAccessExpression(node) && node.name.text === "register" && !(ts.isCallExpression(node.parent) && node.parent.expression === node)) {
+      opaque.push(`${fileName}:${enclosingFunction(node)}:${node.getText(source)}`);
+    }
+    if (ts.isBindingElement(node)) {
+      const bound = node.propertyName ?? node.name;
+      if ((ts.isIdentifier(bound) || ts.isStringLiteral(bound)) && bound.text === "register") opaque.push(`${fileName}:${enclosingFunction(node)}:{ register }`);
+    }
+    if (ts.isElementAccessExpression(node) && stringLiteralOf(node.argumentExpression) === "register") opaque.push(`${fileName}:${enclosingFunction(node)}:${node.getText(source)}`);
     ts.forEachChild(node, visit);
   };
-  visit(parse(fileName, text));
-  return { literals, effectClassProperties };
+  visit(source);
+  return { literals, effectClassProperties, opaque, effectClassLiterals };
 }
 
 interface VerbScan {
@@ -474,7 +597,7 @@ interface VerbScan {
   readonly verbLiterals: string[];
   readonly renderArgv: number;
 }
-/** One module's rf workspace invoke/evaluate verbs: an argv array with "workspace" then a verb word, or a string or template literal spelling one. */
+/** One module's rf workspace invoke/evaluate verbs: an argv array with "workspace" then, anywhere later, a verb word, or a string or template literal spelling one. */
 function scanVerbs(fileName: string, text: string): VerbScan {
   const verbArgv: string[] = [];
   const verbLiterals: string[] = [];
@@ -482,7 +605,7 @@ function scanVerbs(fileName: string, text: string): VerbScan {
   const visit = (node: ts.Node): void => {
     if (ts.isArrayLiteralExpression(node)) {
       const elements = node.elements.map(element => (ts.isStringLiteralLike(element) ? element.text : ""));
-      if (elements.some((element, index) => element === "workspace" && VERB_WORDS.includes(elements[index + 1] ?? ""))) {
+      if (elements.some((element, index) => element === "workspace" && elements.slice(index + 1).some(later => VERB_WORDS.includes(later)))) {
         verbArgv.push(`${fileName}: [${elements.filter(Boolean).join(", ")}]`);
       }
       if (elements.some((element, index) => element === "context" && elements[index + 1] === "render")) renderArgv += 1;
@@ -499,23 +622,39 @@ function scanVerbs(fileName: string, text: string): VerbScan {
 }
 
 const LAUNCH_NAMES = ["spawn", "spawnSync", "execFile", "execFileSync", "execSync", "fork"];
-/** One module's process launches of the literal binary "rf" (any launch name, exec included), each named by its enclosing function. */
-function rfLaunchSites(fileName: string, text: string): string[] {
-  const sites: string[] = [];
-  const enclosing = (node: ts.Node): string => {
-    for (let at: ts.Node | undefined = node.parent; at !== undefined; at = at.parent) {
-      if (ts.isFunctionDeclaration(at) && at.name !== undefined) return at.name.text;
-    }
-    return "<module>";
-  };
+/** One module's const bindings to a string literal, by name (any scope: a shadowing binding can only over-report a site). */
+function constStrings(source: ts.SourceFile): Map<string, string> {
+  const constants = new Map<string, string>();
   const visit = (node: ts.Node): void => {
-    if (ts.isCallExpression(node)) {
-      const name = calleeName(node);
-      if (name !== undefined && [...LAUNCH_NAMES, "exec"].includes(name) && stringLiteralOf(node.arguments[0]) === "rf") sites.push(`${fileName}:${enclosing(node)}:${name}`);
+    if (ts.isVariableDeclarationList(node) && (node.flags & ts.NodeFlags.Const) !== 0) {
+      for (const declaration of node.declarations) {
+        const value = declaration.initializer === undefined ? undefined : stringLiteralOf(unwrapped(declaration.initializer));
+        if (ts.isIdentifier(declaration.name) && value !== undefined) constants.set(declaration.name.text, value);
+      }
     }
     ts.forEachChild(node, visit);
   };
-  visit(parse(fileName, text));
+  visit(source);
+  return constants;
+}
+/** One module's process launches of the binary "rf" (a string literal, or a const bound to one), any launch name, exec included, each named by its enclosing function. */
+function rfLaunchSites(fileName: string, text: string): string[] {
+  const source = parse(fileName, text);
+  const constants = constStrings(source);
+  const binaryOf = (node: ts.Expression | undefined): string | undefined => {
+    if (node === undefined) return undefined;
+    const value = unwrapped(node);
+    return stringLiteralOf(value) ?? (ts.isIdentifier(value) ? constants.get(value.text) : undefined);
+  };
+  const sites: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node)) {
+      const name = calleeName(node);
+      if (name !== undefined && [...LAUNCH_NAMES, "exec"].includes(name) && binaryOf(node.arguments[0]) === "rf") sites.push(`${fileName}:${enclosingFunction(node)}:${name}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
   return sites;
 }
 
@@ -526,16 +665,28 @@ interface ModuleFacts {
   readonly specifiers: string[];
   readonly networkCalls: string[];
   readonly launchCalls: string[];
+  readonly opaqueImports: string[];
+  readonly networkRefs: string[];
+}
+/** True when a network-name identifier is the callee networkCalls already counts: called by name, called as a property, or constructed by name. */
+function countedAsNetworkCall(node: ts.Identifier): boolean {
+  const parent = node.parent;
+  if ((ts.isCallExpression(parent) || ts.isNewExpression(parent)) && parent.expression === node) return true;
+  return ts.isPropertyAccessExpression(parent) && parent.name === node && ts.isCallExpression(parent.parent) && parent.parent.expression === parent;
 }
 /**
- * One module's static and dynamic import specifiers, its network calls (fetch, WebSocket, EventSource; called or constructed)
- * and its launch calls (LAUNCH_NAMES). `exec` is left out of the launch names because RegExp.prototype.exec shares it; a
- * child_process exec still needs a LAUNCH_MODULE import, which the specifiers carry.
+ * One module's static and dynamic import specifiers, its import()/require() calls on a non-literal specifier (an edge the closure
+ * walk cannot follow), its network calls (fetch, WebSocket, EventSource; called or constructed), every other reference to a
+ * network name (aliased, passed, keyed) and its launch calls (LAUNCH_NAMES). `exec` is left out of the launch names because
+ * RegExp.prototype.exec shares it; a child_process exec still needs a LAUNCH_MODULE import, which the specifiers carry.
  */
 function moduleFacts(fileName: string, text: string): ModuleFacts {
+  const source = parse(fileName, text);
   const specifiers: string[] = [];
   const networkCalls: string[] = [];
   const launchCalls: string[] = [];
+  const opaqueImports: string[] = [];
+  const networkRefs: string[] = [];
   const visit = (node: ts.Node): void => {
     if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier !== undefined && ts.isStringLiteral(node.moduleSpecifier)) {
       specifiers.push(node.moduleSpecifier.text);
@@ -544,6 +695,7 @@ function moduleFacts(fileName: string, text: string): ModuleFacts {
       const first = stringLiteralOf(node.arguments[0]);
       const dynamic = node.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(node.expression) && node.expression.text === "require");
       if (dynamic && first !== undefined) specifiers.push(first);
+      if (dynamic && first === undefined) opaqueImports.push(`${fileName}: ${node.getText(source)}`);
       const name = calleeName(node);
       if (name !== undefined && NETWORK_NAMES.includes(name)) networkCalls.push(`${fileName}: ${name}()`);
       if (name !== undefined && LAUNCH_NAMES.includes(name)) launchCalls.push(`${fileName}: ${name}()`);
@@ -551,10 +703,12 @@ function moduleFacts(fileName: string, text: string): ModuleFacts {
     if (ts.isNewExpression(node) && ts.isIdentifier(node.expression) && NETWORK_NAMES.includes(node.expression.text)) {
       networkCalls.push(`${fileName}: new ${node.expression.text}()`);
     }
+    if (ts.isIdentifier(node) && NETWORK_NAMES.includes(node.text) && !countedAsNetworkCall(node)) networkRefs.push(`${fileName}: ${node.parent.getText(source)}`);
+    if (ts.isElementAccessExpression(node) && NETWORK_NAMES.includes(stringLiteralOf(node.argumentExpression) ?? "")) networkRefs.push(`${fileName}: ${node.getText(source)}`);
     ts.forEachChild(node, visit);
   };
-  visit(parse(fileName, text));
-  return { specifiers, networkCalls, launchCalls };
+  visit(source);
+  return { specifiers, networkCalls, launchCalls, opaqueImports, networkRefs };
 }
 function resolveRelative(from: string, specifier: string): string {
   return join(dirname(from), specifier.replace(/\.js$/, ".ts"));
@@ -614,6 +768,31 @@ function interfaceMembers(fileName: string, text: string, names: readonly string
     members[statement.name.text] = statement.members.flatMap(member => (member.name !== undefined && ts.isIdentifier(member.name) ? [member.name.text] : []));
   }
   return members;
+}
+/** The effect classes CapabilityDescriptor declares: the string literals of its effectClass union in capability-registry.ts. */
+function declaredEffectClasses(): string[] {
+  for (const statement of parse("capability-registry.ts", readFileSync(REGISTRY_SOURCE, "utf8")).statements) {
+    if (!ts.isInterfaceDeclaration(statement) || statement.name.text !== "CapabilityDescriptor") continue;
+    for (const member of statement.members) {
+      if (!ts.isPropertySignature(member) || !ts.isIdentifier(member.name) || member.name.text !== "effectClass" || member.type === undefined) continue;
+      return ts.isUnionTypeNode(member.type) ? member.type.types.flatMap(type => (ts.isLiteralTypeNode(type) && ts.isStringLiteral(type.literal) ? [type.literal.text] : [])) : [];
+    }
+  }
+  return [];
+}
+/** A declared class this census can stand in for; a class the source adds later maps to undefined and reds B5 and D5 by name. */
+function effectClassOf(name: string): CapabilityDescriptor["effectClass"] | undefined {
+  return name === "read" || name === "write" || name === "external" || name === "unknown" ? name : undefined;
+}
+/** The declared non-read classes, each checked against the stand-in's own classes. */
+function nonReadClasses(): { names: string[]; classes: CapabilityDescriptor["effectClass"][] } {
+  const names = declaredEffectClasses().filter(name => name !== "read");
+  const classes = names.flatMap(name => {
+    const effectClass = effectClassOf(name);
+    return effectClass === undefined ? [] : [effectClass];
+  });
+  expect(classes, `declared non-read classes the census stands in for: ${names.join(", ")}`).toHaveLength(names.length);
+  return { names, classes };
 }
 
 interface Spelling {
@@ -680,10 +859,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const readingCarriesGrants = GRANT_SHAPED.every(grant => reading.includes(grant));
     expect(readingCarriesGrants).toBe(true);
     const { registry, calls } = federationRegistry([EFFECT_PERMISSION]);
-    const result = await runWorkflow({
-      script: `${HEAD}const reading = await node(${JSON.stringify(PREVIEW_ID)}, { model: "m", task: "t" });\nreturn await node(${JSON.stringify(EFFECT_ID)}, { admission: reading });`,
-      host: claudeHost(registry, READ_ADMISSION),
-    });
+    const result = await runWorkflow({ script: READ_THEN_EFFECT, host: claudeHost(registry, READ_ADMISSION) });
     expect(result.status).toBe("failed");
     expect(result.capabilityError?.category).toBe("authorization");
     expect(calls).toStrictEqual({ read: 1, effect: 0 });
@@ -692,6 +868,28 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       readingCarriesGrants, status: result.status,
       capabilityError: diagnostic === undefined ? null : { name: diagnostic.name, category: diagnostic.category, message: diagnostic.message },
       calls: { ...calls },
+    };
+  },
+  A5: async () => {
+    const probe = federationRegistry([]);
+    const reading = JSON.stringify(await probe.registry.invoke(PREVIEW_ID, { model: "m", task: "t" }, contextOf(READ_ADMISSION)));
+    const readingCarriesInvokeGrant = reading.includes(`invoke:${EFFECT_ID}`);
+    expect(readingCarriesInvokeGrant).toBe(true);
+    const refusedRun = federationRegistry([]);
+    const refused = await runWorkflow({ script: READ_THEN_EFFECT, host: claudeHost(refusedRun.registry, READ_ADMISSION) });
+    expect(refused.status).toBe("failed");
+    expect(refused.capabilityError?.category).toBe("authorization");
+    expect(refusedRun.calls).toStrictEqual({ read: 1, effect: 0 });
+    const admittedRun = federationRegistry([]);
+    const admitted = await runWorkflow({ script: READ_THEN_EFFECT, host: claudeHost(admittedRun.registry, [...READ_ADMISSION, `invoke:${EFFECT_ID}`]) });
+    expect(admitted.status).toBe("completed");
+    expect(admittedRun.calls).toStrictEqual({ read: 1, effect: 1 });
+    const diagnostic = refused.capabilityError;
+    return {
+      readingCarriesInvokeGrant, status: refused.status,
+      capabilityError: diagnostic === undefined ? null : { name: diagnostic.name, category: diagnostic.category, message: diagnostic.message },
+      calls: { ...refusedRun.calls },
+      admitted: { status: admitted.status, calls: { ...admittedRun.calls } },
     };
   },
   B1: async () => {
@@ -713,7 +911,9 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const base = effectProvider({ permissions: [EFFECT_PERMISSION], calls: { read: 0, effect: 0 } }).descriptor;
     const judge = (variant: Partial<CapabilityDescriptor>, receipt: string | undefined): string[] =>
       admissionViolations([...(preview === undefined ? [] : [preview]), { ...base, ...variant }], receipt === undefined ? [] : [receipt]);
-    const full = `# wb-x: registers ${EFFECT_ID} under ${GATING_ARTIFACTS.join(" and ")}, with a stable idempotency key and the producer's effect receipt`;
+    const artifacts = GATING_ARTIFACTS.join(" and ");
+    const terms = "a stable idempotency key and the producer's effect receipt";
+    const full = `# wb-x: registers ${EFFECT_ID} under ${artifacts}, with ${terms}`;
     const synthetic = {
       complete: judge({}, full),
       readClass: judge({ effectClass: "read" }, full),
@@ -721,7 +921,10 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       sharedPermission: judge({ permissions: [PREVIEW_PERMISSION] }, full),
       noReceipt: judge({}, undefined),
       oneArtifact: judge({}, full.replace(` and ${GATING_ARTIFACTS[1]}`, "")),
-      noTerms: judge({}, `# wb-x: registers ${EFFECT_ID} under ${GATING_ARTIFACTS.join(" and ")}`),
+      noTerms: judge({}, `# wb-x: registers ${EFFECT_ID} under ${artifacts}`),
+      negated: judge({}, `# wb-x: ${EFFECT_ID} is not registered under ${artifacts}: it carries no idempotency key and no effect receipt`),
+      splitSections: judge({}, `# wb-x: receipt\n\n## 2026-10-24 registration\n\nRegisters ${EFFECT_ID} under ${artifacts}.\n\n## 2026-10-24 terms\n\nCarries ${terms}.\n`),
+      commented: judge({}, `# wb-x: registers ${EFFECT_ID} under ${artifacts} <!-- with ${terms} -->`),
     };
     expect(synthetic.complete).toEqual([]);
     expect(Object.entries(synthetic).filter(([name, found]) => name !== "complete" && found.length !== 1).map(([name]) => name)).toEqual([]);
@@ -749,14 +952,34 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const receiptHits = files.filter(file => EFFECT_RECEIPT.test(textOf(file))).map(repoPath);
     const keyHits = files.filter(file => IDEMPOTENCY_KEY.test(textOf(file))).map(repoPath);
     const members = interfaceMembers("capability-registry.ts", readFileSync(REGISTRY_SOURCE, "utf8"), ["CapabilityDescriptor", "InvocationContext"]);
-    const descriptorMembers = members.CapabilityDescriptor ?? [];
-    const contextMembers = members.InvocationContext ?? [];
+    const descriptorMembers = [...(members.CapabilityDescriptor ?? [])].sort();
+    const contextMembers = [...(members.InvocationContext ?? [])].sort();
     const membersRead = descriptorMembers.includes("effectClass") && descriptorMembers.includes("permissions") && contextMembers.includes("grants");
     const keyOrReceiptMembers = [...descriptorMembers, ...contextMembers].filter(name => /idempoten|receipt/i.test(name));
     expect(files.length, `src files walked: ${files.length}`).toBeGreaterThanOrEqual(SRC_FLOOR);
     expect(membersRead).toBe(true);
     expect({ receiptHits, keyHits, keyOrReceiptMembers }).toStrictEqual({ receiptHits: [], keyHits: [], keyOrReceiptMembers: [] });
-    return { srcFloorMet: files.length >= SRC_FLOOR, membersRead, receiptHits, keyHits, keyOrReceiptMembers };
+    // Both member sets are judged exactly against the roster: a key or receipt member under any other name reds this pin.
+    return { srcFloorMet: files.length >= SRC_FLOOR, membersRead, receiptHits, keyHits, keyOrReceiptMembers, descriptorMembers, contextMembers };
+  },
+  B5: async () => {
+    const declared = declaredEffectClasses();
+    const { names, classes } = nonReadClasses();
+    expect(declared).toContain("read");
+    expect(names.length).toBeGreaterThanOrEqual(1);
+    const failure = "stand-in producer stream closed after dispatch";
+    const refusals: { effectClass: string; category: string; message: string; calls: number }[] = [];
+    for (const effectClass of classes) {
+      const { registry, calls } = classRegistry(effectClass, () => {
+        throw new Error(failure);
+      });
+      const refusal = await refusalFrom(registry.invoke(EFFECT_ID, EFFECT_INPUT_VALUE, contextOf([EFFECT_PERMISSION])));
+      refusals.push({ effectClass, ...refusal, calls: calls.effect });
+    }
+    expect(refusals.map(refusal => refusal.category)).toEqual(names.map(() => "uncertain-effect"));
+    expect(refusals.filter(refusal => !refusal.message.includes("Reconcile with the producer before retrying")).map(refusal => refusal.effectClass)).toEqual([]);
+    expect(refusals.map(refusal => refusal.calls)).toEqual(names.map(() => 1));
+    return { declared, refusals };
   },
   C1: async () => {
     const files = filesBelow(SRC);
@@ -766,10 +989,17 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const floorMet = files.length >= SRC_FLOOR;
     const anchorRead = files.includes(anchor) && textOf(anchor).includes(anchorToken);
     const hits = files.filter(file => FEDERATION.test(textOf(file))).map(repoPath);
+    const nonTsFiles = files.filter(file => !file.endsWith(".ts")).map(repoPath);
+    const decodedHits = srcModules().flatMap(file => decodedStemHits(repoPath(file), textOf(file)));
+    const escaped = 'export const PEER_KIND = "f\\u0065derated";';
+    const decodedControl = { raw: FEDERATION.test(escaped), decoded: decodedStemHits("control.ts", escaped).length };
     expect(floorMet, `src: ${files.length} files walked, floor ${SRC_FLOOR}`).toBe(true);
     expect(anchorRead, `src: the anchor ${anchorFile} was not read with ${anchorToken}`).toBe(true);
     expect(hits, "src files spelling the federation stem").toEqual([]);
-    return { root: "src", floor: SRC_FLOOR, anchorFile, anchorToken, floorMet, anchorRead, hits };
+    expect(nonTsFiles, "src files the decoded reading cannot parse").toEqual([]);
+    expect(decodedHits, "src string literals, template parts or identifiers spelling the stem decoded").toEqual([]);
+    expect(decodedControl).toStrictEqual({ raw: false, decoded: 1 });
+    return { root: "src", floor: SRC_FLOOR, anchorFile, anchorToken, floorMet, anchorRead, hits, nonTsFiles, decodedHits, decodedControl };
   },
   C2: async () => {
     const descriptors = [...(await nativeDescriptors()), ...injectedDescriptors()];
@@ -781,18 +1011,38 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   C3: async () => {
     const native = await nativeDescriptors();
     const injected = injectedDescriptors();
-    const scans = srcModules().map(file => ({ file, ...registerLiterals(repoPath(file), textOf(file)) }));
+    const scans = srcModules().map(file => ({ file, ...registerSurface(repoPath(file), textOf(file)) }));
     const literals = scans.flatMap(scan => scan.literals).sort();
     const providerEffectClassProperties = scans
       .filter(scan => repoPath(scan.file).startsWith("src/workbench/providers/"))
       .reduce((sum, scan) => sum + scan.effectClassProperties, 0);
+    const opaque = scans.flatMap(scan => scan.opaque).sort();
+    const effectClassLiterals = scans.flatMap(scan => scan.effectClassLiterals).sort();
     const nonRead = [...native, ...injected].filter(descriptor => descriptor.effectClass !== "read").map(descriptor => descriptor.id);
     expect(nonRead, "registered descriptors whose effect class is not read").toEqual([]);
     expect(literals.length).toBeGreaterThanOrEqual(8);
     expect(literals.filter(literal => !literal.startsWith("src/workbench/providers/") || !literal.endsWith(":read"))).toEqual([]);
     // No effectClass property sits outside a register literal in providers/*.ts, so none can escape the literal scan.
     expect(providerEffectClassProperties).toBe(literals.length);
-    return { native: classesOf(native), injected: classesOf(injected), literals, providerEffectClassProperties };
+    // Every other src register surface is the operator-module bridge, outside the claim; a descriptor variable anywhere else reds here.
+    expect(opaque.length).toBeGreaterThanOrEqual(1);
+    expect(opaque.filter(site => !site.startsWith(OPERATOR_BRIDGE))).toEqual([]);
+    // Outside the providers, src's effectClass string literals are read or the journal-compat field description.
+    expect(effectClassLiterals.filter(literal => !literal.endsWith(":read"))).toEqual([FIELD_DESCRIPTION_LITERAL]);
+    const control = (text: string): number => {
+      const surface = registerSurface("control.ts", text);
+      return surface.opaque.length + surface.effectClassLiterals.filter(literal => !literal.endsWith(":read")).length;
+    };
+    const controls = {
+      variableDescriptor: control('const d = { id: "peer.workspace.call", effectClass: "external" as const }; registry.register({ descriptor: d, async invoke() { return null; } });'),
+      boundRegister: control("const add = registry.register.bind(registry); add(provider);"),
+      destructured: control("const { register: add } = registry; add(provider);"),
+      elementAccess: control('registry["register"](provider);'),
+      computedRegister: control('const key = ["regi", "ster"].join(""); registry[key](provider);'),
+      inlineRead: control('registry.register({ descriptor: { id: "peer.workspace.read", effectClass: "read" }, async invoke() { return null; } });'),
+    };
+    expect(controls).toStrictEqual({ variableDescriptor: 2, boundRegister: 1, destructured: 1, elementAccess: 1, computedRegister: 0, inlineRead: 0 });
+    return { native: classesOf(native), injected: classesOf(injected), literals, providerEffectClassProperties, opaque, effectClassLiterals, controls };
   },
   D1: async () => {
     const files = srcModules();
@@ -815,9 +1065,12 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       spaced: control('const cmd = "rf workspace invoke knowledge:view:architecture --json";'),
       dotted: control('const id = "workspace.evaluate";'),
       template: control(["const cmd = `rf workspace  invoke $", "{view}`;"].join("")),
+      camel: control('const verb = "rf.workspaceInvoke";'),
+      interleaved: control('spawn("rf", ["workspace", "--json", "invoke", "knowledge:view:architecture"]);'),
+      pastTense: control('const note = "the workspace invoked nothing";'),
       composedArgv: control('const verb = "invoke"; spawn("rf", ["workspace", verb]);'),
     };
-    expect(controls).toStrictEqual({ argv: 1, spaced: 1, dotted: 1, template: 1, composedArgv: 0 });
+    expect(controls).toStrictEqual({ argv: 1, spaced: 1, dotted: 1, template: 1, camel: 1, interleaved: 1, pastTense: 0, composedArgv: 0 });
     return { srcFloorMet, renderArgvSeen, verbArgv, verbLiterals, descriptorVerbs, controls };
   },
   D2: async () => {
@@ -826,6 +1079,13 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const preview = native.find(descriptor => descriptor.id === PREVIEW_ID);
     expect(sites).toEqual(["src/workbench/providers/reactivefiber.ts:nativeReactiveFiberRender:spawn"]);
     expect(preview?.effectClass).toBe("read");
+    const control = (text: string): number => rfLaunchSites("control.ts", text).length;
+    const controls = {
+      literal: control('spawn("rf", ["context", "render"]);'),
+      constBound: control('const RF_BIN = "rf"; execFileSync(RF_BIN, ["--json"]);'),
+      opaque: control('spawn(process.env.RF_BIN ?? "rf", []);'),
+    };
+    expect(controls).toStrictEqual({ literal: 1, constBound: 1, opaque: 0 });
     const loaded = await loadWorkbenchNative();
     const arms: string[][] = [];
     for (const input of [{ model: "m", task: "t" }, { view: "v", taskId: "t", model: "m" }]) {
@@ -842,7 +1102,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       expect(argv).toContain("--no-commit");
       expect(argv.filter(item => item === "workspace" || VERB_WORDS.includes(item))).toEqual([]);
     }
-    return { sites, preview: { effectClass: preview?.effectClass ?? null, permissions: [...(preview?.permissions ?? [])] }, argv: arms };
+    return { sites, preview: { effectClass: preview?.effectClass ?? null, permissions: [...(preview?.permissions ?? [])] }, argv: arms, controls };
   },
   D3: async () => {
     const invalidation = importClosure([join(SRC, "workbench", "observation.ts"), join(SRC, "workbench", "graph-view.ts")]);
@@ -850,8 +1110,10 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const launchImports = facts.flatMap(fact => fact.specifiers.filter(specifier => LAUNCH_MODULE.test(specifier)));
     const networkCalls = facts.flatMap(fact => fact.networkCalls);
     const launchCalls = facts.flatMap(fact => fact.launchCalls);
+    const opaqueImports = facts.flatMap(fact => fact.opaqueImports);
+    const networkRefs = facts.flatMap(fact => fact.networkRefs);
     expect(invalidation.modules).toContain("src/workbench/capability-registry.ts");
-    expect({ launchImports, networkCalls, launchCalls }).toStrictEqual({ launchImports: [], networkCalls: [], launchCalls: [] });
+    expect({ launchImports, networkCalls, launchCalls, opaqueImports, networkRefs }).toStrictEqual({ launchImports: [], networkCalls: [], launchCalls: [], opaqueImports: [], networkRefs: [] });
     // The rf reading observer reaches the provider module, whose render spawns rf, only through string constants.
     const observerClosure = importClosure([join(SRC, "workbench", "reactivefiber-observer.ts")]);
     const outsideProvider = [...observerClosure.facts.entries()].filter(([file]) => file !== PROVIDER_SOURCE).map(([, fact]) => fact);
@@ -865,13 +1127,15 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       launchImports: outsideProvider.flatMap(fact => fact.specifiers.filter(specifier => LAUNCH_MODULE.test(specifier))),
       networkCalls: outsideProvider.flatMap(fact => fact.networkCalls),
       launchCalls: outsideProvider.flatMap(fact => fact.launchCalls),
+      opaqueImports: outsideProvider.flatMap(fact => fact.opaqueImports),
+      networkRefs: outsideProvider.flatMap(fact => fact.networkRefs),
     };
     expect(observerClosure.modules).toContain(repoPath(PROVIDER_SOURCE));
     expect(constantsOnly).toBe(true);
-    expect(observerLaunch).toStrictEqual({ launchImports: [], networkCalls: [], launchCalls: [] });
+    expect(observerLaunch).toStrictEqual({ launchImports: [], networkCalls: [], launchCalls: [], opaqueImports: [], networkRefs: [] });
     const control = (text: string): number => {
       const fact = moduleFacts("control.ts", text);
-      return fact.specifiers.filter(specifier => LAUNCH_MODULE.test(specifier)).length + fact.networkCalls.length + fact.launchCalls.length;
+      return fact.specifiers.filter(specifier => LAUNCH_MODULE.test(specifier)).length + fact.networkCalls.length + fact.launchCalls.length + fact.opaqueImports.length + fact.networkRefs.length;
     };
     const controls = {
       childProcess: control('import { spawn } from "node:child_process";'),
@@ -879,25 +1143,28 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       fetchCall: control('await globalThis.fetch("https://peer.invalid/effects");'),
       socket: control('const socket = new WebSocket("wss://peer.invalid");'),
       regexpExec: control("const match = /x/.exec(text);"),
+      nonLiteralImport: control('const LAUNCHER = "node:child_process"; const cp = await import(LAUNCHER);'),
+      nonLiteralRequire: control("const cp = require(LAUNCHER_NAME);"),
+      aliasedFetch: control('const peerFetch = globalThis.fetch; await peerFetch("https://peer.invalid/effects");'),
+      keyedFetch: control('await globalThis["fetch"]("https://peer.invalid/effects");'),
     };
-    expect(controls).toStrictEqual({ childProcess: 1, dynamicImport: 1, fetchCall: 1, socket: 1, regexpExec: 0 });
+    expect(controls).toStrictEqual({ childProcess: 1, dynamicImport: 1, fetchCall: 1, socket: 1, regexpExec: 0, nonLiteralImport: 1, nonLiteralRequire: 1, aliasedFetch: 1, keyedFetch: 1 });
     return {
-      invalidation: { modules: invalidation.modules, externals: invalidation.externals, launchImports, networkCalls, launchCalls },
+      invalidation: { modules: invalidation.modules, externals: invalidation.externals, launchImports, networkCalls, launchCalls, opaqueImports, networkRefs },
       observer: { modules: observerClosure.modules, viaProvider, constantsOnly, ...observerLaunch },
       controls,
     };
   },
   D4: async () => {
-    const script = `${HEAD}return await node(${JSON.stringify(EFFECT_ID)}, ${JSON.stringify(EFFECT_INPUT_VALUE)});`;
     const first = federationRegistry([EFFECT_PERMISSION]);
     const entries: WorkflowJournalEntry[] = [];
-    const recorded = await runWorkflow({ script, host: claudeHost(first.registry, [EFFECT_PERMISSION]), journal: { append: entry => {
+    const recorded = await runWorkflow({ script: EFFECT_ONLY, host: claudeHost(first.registry, [EFFECT_PERMISSION]), journal: { append: entry => {
       entries.push(entry);
     } } });
     expect(recorded.status).toBe("completed");
     expect(first.calls.effect).toBe(1);
     const second = federationRegistry([EFFECT_PERMISSION]);
-    const resumed = await runWorkflow({ script, host: claudeHost(second.registry, [EFFECT_PERMISSION]), journal: { entries } });
+    const resumed = await runWorkflow({ script: EFFECT_ONLY, host: claudeHost(second.registry, [EFFECT_PERMISSION]), journal: { entries } });
     const error = resumed.error ?? "";
     expect(resumed.status).toBe("failed");
     expect(resumed.capabilityError?.category).toBe("uncertain-effect");
@@ -906,6 +1173,32 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       recorded: { status: recorded.status, effectCalls: first.calls.effect, nodeRows: entries.filter(entry => entry.kind === "node").map(entry => ({ effectClass: entry.effectClass ?? null, dispatched: entry.dispatched === true })) },
       resumed: { status: resumed.status, category: resumed.capabilityError?.category ?? null, namesProducer: error.includes('producer "reactivefiber"'), namesWayOut: error.includes("resumeFromRunId"), effectCalls: second.calls.effect },
     };
+  },
+  D5: async () => {
+    const { names, classes } = nonReadClasses();
+    expect(names.length).toBeGreaterThanOrEqual(1);
+    const runs: Json[] = [];
+    const outcomes: { category: string | null; recordedCalls: number; resumedCalls: number }[] = [];
+    for (const effectClass of classes) {
+      const first = classRegistry(effectClass);
+      const entries: WorkflowJournalEntry[] = [];
+      const recorded = await runWorkflow({ script: EFFECT_ONLY, host: claudeHost(first.registry, [EFFECT_PERMISSION]), journal: { append: entry => {
+        entries.push(entry);
+      } } });
+      const second = classRegistry(effectClass);
+      const resumed = await runWorkflow({ script: EFFECT_ONLY, host: claudeHost(second.registry, [EFFECT_PERMISSION]), journal: { entries } });
+      const error = resumed.error ?? "";
+      const category = resumed.capabilityError?.category ?? null;
+      outcomes.push({ category, recordedCalls: first.calls.effect, resumedCalls: second.calls.effect });
+      runs.push({
+        effectClass,
+        recorded: { status: recorded.status, effectCalls: first.calls.effect, nodeRows: entries.filter(entry => entry.kind === "node").map(entry => ({ effectClass: entry.effectClass ?? null, dispatched: entry.dispatched === true })) },
+        resumed: { status: resumed.status, category, namesProducer: error.includes('producer "reactivefiber"'), namesWayOut: error.includes("resumeFromRunId"), effectCalls: second.calls.effect },
+      });
+    }
+    expect(outcomes.map(outcome => outcome.category)).toEqual(names.map(() => "uncertain-effect"));
+    expect(outcomes.map(outcome => [outcome.recordedCalls, outcome.resumedCalls])).toEqual(names.map(() => [1, 0]));
+    return { classes: names, runs };
   },
   ...Object.fromEntries(
     SPELLINGS.map(spelling => [
@@ -921,7 +1214,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
 
 describe("wb-tnz5.1 federation effect authority census (RF-CERTIFIED-FEDERATED-REACTIVE-REFINEMENT-R1, absent-today leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:4", "C:3", "D:4", "M:12"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:5", "C:3", "D:5", "M:12"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
