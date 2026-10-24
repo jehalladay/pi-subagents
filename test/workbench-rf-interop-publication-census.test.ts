@@ -28,16 +28,27 @@
  * every other pin's live witness (9 x 8 ordered pairs, none accepted), so a case swap X := Y with X's roster witness rewritten to
  * match reds at X's claims, at claims bound and at records.
  * OWNER SUBJECTS (wb-jint F2, G-VOCDEEP): A1 reads the absent subjects of the owner's clause (a) from the bead export (the span
- * between "has no" and "at the pinned version", split on " or ") and requires a scanner hit on each, so dropping an owner-named
- * word from VOCABULARY, A1's controlHits expectation and the roster together reds A1.
- * FROZEN SHAPE: A:2 B:3 C:4; claims (facts per term) A1:5+2 A2:5 B1:2 B2:2+2 B3:4 C1:1+3 C2:4 C3:2+2 C4:1+1; roster pins
+ * between "has no" and "at the pinned version", split on " or ") and requires a scanner hit on each.
+ * OWNER WORDS (wb-jint refusal #1 U1, L2-NARROW-PUB/L2-NARROW-INTEROP): the words A1 holds are each subject's first word (split on
+ * a space or hyphen: interop, publication). Spelled from the bead export in seven forms that cover every scanner path (a property
+ * read, a destructured name, a literal key, a parenthesized concatenated key, a plain template key, a template key with a constant
+ * span, an import specifier), each must scan as exactly that word, and every VOCABULARY word an owner subject contains must be
+ * one of them. So dropping an owner word, or replacing it with any other word (narrower, as 'publicationconsumer' or
+ * 'interoprecord', broader or substituted), in VOCABULARY, A1's controlHits expectation and the roster together reds A1, beside
+ * any src reader of the owner word; A1 also judges a constructed narrowing (each owner word replaced by its whole folded subject)
+ * through the same judge and requires every form to miss while the subject hit still passes.
+ * The subjects' other words (record, reader, consumer) are not held: none is a VOCABULARY word, and a reader named by one alone
+ * falls under R-PARAPHRASE (A1's ownerWords fact shows each quiet).
+ * FROZEN SHAPE: A:2 B:3 C:4; claims (facts per term) A1:6+2 A2:5 B1:2 B2:2+2 B3:4 C1:1+3 C2:4 C3:2+2 C4:1+1; roster pins
  * labels/quotes/witnesses/claims, constants and every registered test's reached record.
  * RESIDUALS, with quiet pins: R-COMPUTED, R-PARAPHRASE and R-SYNONYM (A1), R-STATUS-PROJECTION (B2), R-OPAQUE (C4), R-REAUTHORED
  * (claims bound). R-SYNONYM: a VOCABULARY word that no owner-named subject contains (A1's synonyms fact lists them) is held by this
- * file alone; one dropped from VOCABULARY, A1's controlHits and that list together, census and roster, stays green.
+ * file alone; one dropped, or replaced by another word no owner subject contains (the substitution form on a synonym), in
+ * VOCABULARY, A1's controlHits and that list together, census and roster, stays green.
  * R-REAUTHORED: a pin's case, claims and roster witness rewritten together, in whole or in part, are held by no anchor beyond the
  * term tiling; the quiet row re-authors C3 as one fact under one claim, which shows that claim and no registered pin's claims accept.
- * NOT CLAIMED: a case returning its roster witness unmeasured, and an edit of a judge (claimMisses, absentSubjects) with the roster.
+ * NOT CLAIMED: a case returning its roster witness unmeasured, and an edit of a judge (claimMisses, absentSubjects, ownerSpellings,
+ * ownerWordMisses) with the roster.
  * ARMED HALF PENDING: a future native publication reader's null/absence projection, completeness status and receipt admission
  * (acceptance b/c) remain gated TSX-IO-ADR/01/03b; the present carrier is not such a reader. No fake future adapter is tested.
  * Display paths added: none. Test only; every stand-in process lives in makeScratch scratch, with its leak guard installed.
@@ -221,12 +232,12 @@ function constant(node: ts.Node): string | undefined {
   }
   return undefined;
 }
-function scan(text: string, path = "fixture.ts"): string[] {
+function scan(text: string, path = "fixture.ts", vocabulary: readonly string[] = VOCABULARY): string[] {
   const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const hits = new Set<string>();
   const visit = (node: ts.Node): void => {
     const value = ts.isIdentifier(node) ? node.text : constant(node);
-    if (value !== undefined) for (const word of VOCABULARY) if (fold(value).includes(word)) hits.add(word);
+    if (value !== undefined) for (const word of vocabulary) if (fold(value).includes(word)) hits.add(word);
     ts.forEachChild(node, visit);
   };
   visit(source); return [...hits].sort();
@@ -264,9 +275,23 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const subjects = absentSubjects(); const subjectHits = subjects.map(subject => scan(JSON.stringify(subject)));
     expect(subjects.length).toBeGreaterThan(0); expect(subjects.filter((_, index) => (subjectHits[index] ?? []).length === 0)).toEqual([]);
     const ownerSubjects: JsonValue = subjects.map((subject, index) => [subject, subjectHits[index] ?? []]);
+    // Refusal #1 U1 (F2 class): each subject's first word is itself held in seven forms, and no other owner-contained word is scanned.
+    const words = subjects.map(subject => subject.split(/[\s-]/)[0] ?? "");
+    expect(ownerWordMisses(words, VOCABULARY)).toEqual([]);
+    expect(VOCABULARY.filter(word => subjects.some(subject => fold(subject).includes(word))).sort()).toEqual(words.map(fold).sort());
+    const owners = subjects.map((subject, index) => {
+      const word = words[index] ?? ""; const narrowed = VOCABULARY.map(entry => entry === fold(word) ? fold(subject) : entry);
+      // R-PARAPHRASE, quiet: the subject's other words are not VOCABULARY words, so a reader named by one alone escapes the scan.
+      const tails = subject.split(/[\s-]/).slice(1).map((tail): [string, string[]] => [tail, scan(`return source.${tail}.value;`)]);
+      // Liveness: the same judge refuses the owner word narrowed to its whole folded subject, which the subject hit alone accepts.
+      return { word, hits: ownerSpellings(word).map(text => scan(text)), narrower: fold(subject), misses: ownerWordMisses([word], narrowed).length, subjectStillHit: scan(JSON.stringify(subject), "fixture.ts", narrowed).length > 0, tails };
+    });
+    expect(owners.map(owner => owner.misses === ownerSpellings(owner.word).length && owner.subjectStillHit)).toEqual(subjects.map(() => true));
+    expect(owners.flatMap(owner => owner.tails.filter(([, hits]) => hits.length > 0))).toEqual([]);
+    const ownerWords: JsonValue = owners;
     // R-SYNONYM, quiet: the VOCABULARY words that no owner-named subject contains are held by this file alone.
     const synonyms = VOCABULARY.filter(word => !subjects.some(subject => fold(subject).includes(word)));
-    return { floorMet: true, pathsAgree: true, findings, controlHits, quiet, ownerSubjects, synonyms };
+    return { floorMet: true, pathsAgree: true, findings, controlHits, quiet, ownerSubjects, synonyms, ownerWords };
   },
   A2: async () => {
     const loaded = await loadWorkbenchNative(); const registry = new CapabilityRegistry(); loaded.registerNativeProviders(registry, ROOT);
@@ -383,6 +408,17 @@ function absentSubjects(): string[] {
   const span = /\bhas no (.+?) at the pinned version\b/.exec(acceptanceClauses()[0] ?? "")?.[1] ?? "";
   return span.split(" or ").filter(subject => subject.length > 0);
 }
+/** Refusal #1 U1: an owner word in seven forms that cover every scanner path (property read, destructured name, literal key,
+ * parenthesized concatenated key, plain template key, template key with a constant span, import specifier), built from the
+ * bead-export word, never from a census literal. */
+function ownerSpellings(word: string): string[] {
+  const cut = Math.ceil(word.length / 2); const head = JSON.stringify(word.slice(0, cut)); const tail = word.slice(cut);
+  return [`return source.${word}.value;`, `const { ${word} } = source;`, `source[${JSON.stringify(word)}]`, `source[(${head}) + ${JSON.stringify(tail)}]`, `source[\`${word}\`]`, `source[\`\${${head}}${tail}\`]`, `import x from ${JSON.stringify(`${word}/x`)};`];
+}
+/** Why the scanner, judging by a vocabulary, does not hold each owner word itself: every form that scans as anything but exactly that word. */
+function ownerWordMisses(words: readonly string[], vocabulary: readonly string[]): string[] {
+  return words.flatMap(word => ownerSpellings(word).filter(text => JSON.stringify(scan(text, "fixture.ts", vocabulary)) !== JSON.stringify([fold(word)])).map(text => `${word}: ${text}`));
+}
 /** F1 (G-SWAPW): why a witness fails to show a pin's claims - terms must tile the quote, each naming facts, the facts partitioning its keys. */
 function claimMisses(quote: string, claims: readonly Claim[], witness: JsonValue): string[] {
   const misses = tiled(quote, claims.map(claim => claim.term)) ? [] : ["tiling"];
@@ -410,7 +446,7 @@ describe("wb-fb2z.2 absent interop publication census (TSX-COMPONENT-ASSEMBLY-R2
     expect(ROSTER.residuals.map(item => item.id)).toEqual(["R-OPAQUE", "R-COMPUTED", "R-PARAPHRASE", "R-STATUS-PROJECTION", "R-SYNONYM", "R-REAUTHORED"]);
     expect(ROSTER.residuals.every(item => [...pins, CLAIMS_BOUND].includes(item.quietPin))).toBe(true);
     const held = ROSTER.rows.flatMap(row => row.pins);
-    expect(held.map(pin => `${pin.id}:${pin.claims.map(claim => claim.facts.length).join("+")}`)).toEqual(["A1:5+2", "A2:5", "B1:2", "B2:2+2", "B3:4", "C1:1+3", "C2:4", "C3:2+2", "C4:1+1"]);
+    expect(held.map(pin => `${pin.id}:${pin.claims.map(claim => claim.facts.length).join("+")}`)).toEqual(["A1:6+2", "A2:5", "B1:2", "B2:2+2", "B3:4", "C1:1+3", "C2:4", "C3:2+2", "C4:1+1"]);
     expect(held.filter(pin => !tiled(pin.quote, pin.claims.map(claim => claim.term))).map(pin => pin.id)).toEqual([]);
   });
   for (const row of ROWS) describe(`${row.id} ${row.label}`, () => { for (const pin of row.pins) it(pin.id, { timeout: 180_000 }, async () => {

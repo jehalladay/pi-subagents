@@ -83,7 +83,8 @@
                 "controlHits",
                 "quiet",
                 "ownerSubjects",
-                "synonyms"
+                "synonyms",
+                "ownerWords"
               ]
             },
             {
@@ -144,6 +145,82 @@
               "rftsx",
               "graphv2",
               "componentproduceroverview"
+            ],
+            "ownerWords": [
+              {
+                "word": "interop",
+                "hits": [
+                  [
+                    "interop"
+                  ],
+                  [
+                    "interop"
+                  ],
+                  [
+                    "interop"
+                  ],
+                  [
+                    "interop"
+                  ],
+                  [
+                    "interop"
+                  ],
+                  [
+                    "interop"
+                  ],
+                  [
+                    "interop"
+                  ]
+                ],
+                "narrower": "interoprecordreader",
+                "misses": 7,
+                "subjectStillHit": true,
+                "tails": [
+                  [
+                    "record",
+                    []
+                  ],
+                  [
+                    "reader",
+                    []
+                  ]
+                ]
+              },
+              {
+                "word": "publication",
+                "hits": [
+                  [
+                    "publication"
+                  ],
+                  [
+                    "publication"
+                  ],
+                  [
+                    "publication"
+                  ],
+                  [
+                    "publication"
+                  ],
+                  [
+                    "publication"
+                  ],
+                  [
+                    "publication"
+                  ],
+                  [
+                    "publication"
+                  ]
+                ],
+                "narrower": "publicationconsumer",
+                "misses": 7,
+                "subjectStillHit": true,
+                "tails": [
+                  [
+                    "consumer",
+                    []
+                  ]
+                ]
+              }
             ]
           }
         },
@@ -546,7 +623,7 @@
     {
       "id": "R-PARAPHRASE",
       "quietPin": "A1",
-      "family": "A novel value-reader name outside the pinned vocabulary escapes the scan."
+      "family": "A novel value-reader name outside the pinned vocabulary escapes the scan, including one named only by an owner subject's other words (record, reader, consumer), which A1's ownerWords fact shows quiet."
     },
     {
       "id": "R-STATUS-PROJECTION",
@@ -556,7 +633,7 @@
     {
       "id": "R-SYNONYM",
       "quietPin": "A1",
-      "family": "A VOCABULARY word that no absent subject of the owner's clause (a) contains (A1's synonyms fact lists them) is held by this census alone; dropped from VOCABULARY, A1's controlHits and that list together, in the census and the roster, the census stays green."
+      "family": "A VOCABULARY word that no absent subject of the owner's clause (a) contains (A1's synonyms fact lists them) is held by this census alone; dropped, or replaced by another word no owner subject contains (the substitution form on a synonym), in VOCABULARY, A1's controlHits and that list together, in the census and the roster, the census stays green."
     },
     {
       "id": "R-REAUTHORED",
