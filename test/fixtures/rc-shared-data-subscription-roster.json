@@ -2,6 +2,10 @@
   "bead": "wb-5ltg.2",
   "quote": "Keep explicitly named typed data-output ports, source digest/revision, audience, producer identity, freshness and diagnostics. UI surfaces subscribe to authorized materialized values, not to arbitrary Python closures.",
   "citation": "docs/programs/native-interface-component-contract-2026-10-21/README.md:12@640a3b579a95",
+  "filing": {
+    "length": 2437,
+    "sha256": "9a4eb5419cdc529e36f23ab21fa425c00774cd7371aa31ce338413cda7418d5e"
+  },
   "scan": {
     "nouns": [
       {

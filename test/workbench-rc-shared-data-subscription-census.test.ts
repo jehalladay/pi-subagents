@@ -69,13 +69,19 @@
  *    (one spawn); and the reverse: the preview's grant lists nothing and inspects nothing, while the viewing grants do (the
  *    preview supports no inspect, so that one reads unavailable); the injected seam reads the same.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (id, label, pins), every pin's
- * witness, the scan constants, the producer facts, the residual families, the registered test titles and each pin's assertion
- * count are held to the out-of-file roster (test/fixtures/rc-shared-data-subscription-roster.json).
- * OUTSIDE ANCHOR: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-5ltg.2): each acceptance clause
- * sits verbatim in exactly one row label and the trigger in row A's, every row carries one of them, the quote and citation equal
- * the roster's, every noun member but CS reads a phrase of the filing (CS reads the measured producer signature), B1 reads the
- * filing's "Shipped: no" sentence and C1 its merged pin and authority line, so a row removed from every literal of this file and
- * the roster still reds. The walk is anchored by the compiler's project, the launch by the landed scanRfLaunches, the registry by
+ * witness, the scan constants, the producer facts, the owner block's length and digest, the residual families, the registered test
+ * titles and each pin's assertion count are held to the out-of-file roster (test/fixtures/rc-shared-data-subscription-roster.json).
+ * OUTSIDE ANCHOR: the owner filing in the tracked bead export (.beads/issues.jsonl, row wb-5ltg.2), read as filed: the row's
+ * title and its owner block, the byte-exact prefix of its notes the roster measures by length and sha256 (the first 2437
+ * characters, lines 1-9, the whole notes at base fa62b12). bd appends every later note after that block (this bead's delivery
+ * note, its gate verdicts, landed notes) and every ledger hop exports them, so no reading of the filing sees one: read whole, the
+ * appended delivery note spelled CS and flipped its anchor (refusal #1, U1). A block edited in place or cut short is refused,
+ * never read through an appended copy, and the judged set pins the quiet row: a note appended after the block, spelling every
+ * noun member (CS included) with its own acceptance, quote, Shipped, merged and authority lines, changes no reading. From the
+ * block: each acceptance clause sits verbatim in exactly one row label and the trigger in row A's, every row carries one of them,
+ * the quote and citation equal the roster's, every noun member but CS reads a phrase of the filing (CS reads the measured
+ * producer signature), B1 reads the filing's "Shipped: no" sentence and C1 its merged pin and authority line, so a row removed
+ * from every literal of this file and the roster still reds. The walk is anchored by the compiler's project, the launch by the landed scanRfLaunches, the registry by
  * the native registration itself, the eight envelope keys by the shared full-shape fixture (fullShapeRf).
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
  * not inverted, ran; every pin's case reached its end with its pinned assertion count; no registered title or describe title
@@ -96,6 +102,7 @@
  *
  * Display paths added: none. Test-only: the stand-in rf and the planted trees live in makeScratch scratch; src is only read.
  */
+import { createHash } from "node:crypto";
 import { chmodSync, type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -342,10 +349,16 @@ interface Producer {
   readonly pins: readonly ProducerPin[];
   readonly rf: { readonly version: string; readonly commit: string; readonly leaves: number };
 }
+/** The owner block of the filing's notes as the cutting seat measured it: its length in characters and the sha256 of its UTF-8. */
+interface FilingBound {
+  readonly length: number;
+  readonly sha256: string;
+}
 interface Roster {
   readonly bead: string;
   readonly quote: string;
   readonly citation: string;
+  readonly filing: FilingBound;
   readonly scan: JsonValue;
   readonly producer: Producer;
   readonly residuals: readonly string[];
@@ -428,7 +441,11 @@ function producerOf(value: unknown): Producer {
 function readRoster(): Roster {
   const raw: unknown = JSON.parse(readFileSync(join(REPO, ROSTER_FILE), "utf8"));
   if (!isObject(raw) || !Array.isArray(raw.rows)) throw new Error("roster needs rows");
-  exactKeys(raw, ["bead", "quote", "citation", "scan", "producer", "residuals", "rows", "tests", "reached"], "top level");
+  exactKeys(raw, ["bead", "quote", "citation", "filing", "scan", "producer", "residuals", "rows", "tests", "reached"], "top level");
+  const filing = objectOf(raw.filing, "filing");
+  exactKeys(filing, ["length", "sha256"], "filing");
+  const sha256 = text(filing.sha256, "filing.sha256");
+  if (!/^[0-9a-f]{64}$/.test(sha256)) throw new Error("roster filing.sha256 must be a sha256 hex digest");
   const rows = raw.rows.map((row: unknown, index: number): RosterRow => {
     if (!isObject(row) || typeof row.id !== "string" || typeof row.label !== "string" || !Array.isArray(row.pins)) throw new Error(`roster rows[${index}] needs an id, a label and pins`);
     const pins = row.pins.map((pin: unknown, at: number): RosterPin => {
@@ -441,6 +458,7 @@ function readRoster(): Roster {
     bead: text(raw.bead, "bead"),
     quote: text(raw.quote, "quote"),
     citation: text(raw.citation, "citation"),
+    filing: { length: count(filing.length, "filing.length"), sha256 },
     scan: json(raw.scan),
     producer: producerOf(raw.producer),
     residuals: strings(raw.residuals, "residuals"),
@@ -489,6 +507,79 @@ function acceptanceClauses(notes: string): string[] {
 function quoteOf(notes: string): { quote: string | undefined; citation: string | undefined } {
   const match = /^'(.+)' (\S+)\. Merged: /m.exec(notes);
   return { quote: match?.[1], citation: match?.[2] };
+}
+/** The trigger the title states, the producer's name masked. */
+function triggerOf(title: string): string {
+  return masked(/^\[[^\]]+\] (If Pi ever [^,(]+?) \(/.exec(title)?.[1] ?? "");
+}
+/** The lines of the filing B1 and C1 read: its Shipped sentence, its merged pin and its authority line. */
+const SHIPPED_LINE = `Shipped: no - at ${PROGRAM_PIN} src/${SDK_MODULE} has no interface-subscriber materialization or publication-authorization surface (hosting.py:756 subscribe, directive_transport.py:670 materialize_directives are internal).`;
+const MERGED_LINE = `Merged: rc-interface-viewing-not-context-disclosure-permission (README.md:12@${PROGRAM_PIN}).`;
+const AUTHORITY_LINE = "independently authorize publication.' (README.md:22)";
+/** Each noun member's anchor outside this file: every member but CS reads a phrase of the filing; CS reads the measured producer
+ * signature (the filing names no change sink). */
+const ANCHORS: Readonly<Record<string, string>> = { MV: "filing", IS: "filing", DP: "filing", RS: "filing", PA: "filing", CS: "producer", RM: "filing", IV: "filing", CD: "filing" };
+/** Each noun member's anchor over a title and a text: "filing" when their words spell it, else "producer" when the measured
+ * producer signatures do, else "none". */
+function anchorsOf(title: string, text: string): Record<string, string> {
+  const filing = wordsOf(`${title}\n${text}`);
+  const producerText = wordsOf(ROSTER.producer.sites.map(site => site.signature).join("\n"));
+  return Object.fromEntries(
+    NOUNS.map(noun => [noun.id, NOUN_PATTERNS.get(noun.id)?.test(filing) === true ? "filing" : NOUN_PATTERNS.get(noun.id)?.test(producerText) === true ? "producer" : "none"]),
+  );
+}
+interface Filing {
+  readonly title: string;
+  /** The owner block: the notes as the owner filed them. */
+  readonly block: string;
+}
+/** The owner filing of a row: its title and the owner block, the byte-exact prefix of its notes the roster measured (its length
+ * and sha256). bd appends every later note (a delivery, a gate verdict, a landed note) after that block, so no reading of the
+ * filing sees one; a block edited in place or cut short is refused, never read through an appended copy. */
+function filingOf(row: BeadRow): Filing {
+  const { length, sha256 } = ROSTER.filing;
+  const block = row.notes.slice(0, length);
+  const digest = createHash("sha256").update(block, "utf8").digest("hex");
+  if (block.length !== length || digest !== sha256) {
+    throw new Error(`${BEAD}'s owner filing block changed: the first ${length} characters of its notes digest ${digest.slice(0, 16)}, the roster measured ${sha256.slice(0, 16)}`);
+  }
+  return { title: row.title, block };
+}
+const liveFiling = (): Filing => filingOf(readBeadRow());
+interface FilingReadings {
+  readonly clauses: readonly string[];
+  readonly trigger: string;
+  readonly quote: { readonly quote: string | undefined; readonly citation: string | undefined };
+  readonly anchors: Readonly<Record<string, string>>;
+  readonly unshipped: boolean;
+  readonly merged: boolean;
+  readonly authority: boolean;
+}
+/** Every reading this census takes of the filing, each from the owner block (the title for the trigger). */
+function readingsOf(filing: Filing): FilingReadings {
+  return {
+    clauses: acceptanceClauses(filing.block),
+    trigger: triggerOf(filing.title),
+    quote: quoteOf(filing.block),
+    anchors: anchorsOf(filing.title, filing.block),
+    unshipped: filing.block.includes(SHIPPED_LINE),
+    merged: filing.block.includes(MERGED_LINE),
+    authority: filing.block.includes(AUTHORITY_LINE),
+  };
+}
+/** A note as a ledger hop exports one after the owner block (bd joins an appended note with a newline): it spells every noun
+ * member, CS included, and carries its own acceptance, quote, Shipped, merged and authority lines. */
+function appendedNote(): string {
+  const spelled = NOUNS.map(noun => noun.words.join(" ")).join(", ");
+  return [
+    "",
+    `GATE VERDICT (BIND) ${BEAD}: the delivery note spells ${spelled}.`,
+    "Acceptance: (a) an appended clause; (b) an appended clause; (c) an appended clause.",
+    `'An appended quote.' docs/appended.md:1@${PROGRAM_PIN}. Merged: an appended pin.`,
+    SHIPPED_LINE,
+    MERGED_LINE,
+    AUTHORITY_LINE,
+  ].join("\n");
 }
 
 const posix = (path: string): string => path.split(sep).join("/");
@@ -1177,10 +1268,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     const probe = producerPin("probe");
     const distribution = producerPin("distribution");
     const spelled = producer.pins.flatMap(pin => UNSHIPPED_A.filter(id => (pin.nouns[id] ?? 0) > 0).map(id => `${pin.label}:${id}`));
-    const notes = readBeadRow().notes;
-    const beadSaysUnshipped = notes.includes(
-      `Shipped: no - at ${PROGRAM_PIN} src/${SDK_MODULE} has no interface-subscriber materialization or publication-authorization surface (hosting.py:756 subscribe, directive_transport.py:670 materialize_directives are internal).`,
-    );
+    const beadSaysUnshipped = readingsOf(liveFiling()).unshipped;
     const sitesCited = ["hosting.py:756", "directive_transport.py:670"].every(site => producer.sites.some(entry => entry.site === site));
     const readmeSame = program.readmeBlob === producer.readme.blob && probe.readmeBlob === producer.readme.blob && distribution.readmeBlob === null;
     const quoteIsLine12 = producer.readme.line12.startsWith(ROSTER.quote);
@@ -1235,9 +1323,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
   C1: () => {
     const { producer } = ROSTER;
     const spelled = producer.pins.flatMap(pin => UNSHIPPED_B.filter(id => (pin.nouns[id] ?? 0) > 0).map(id => `${pin.label}:${id}`));
-    const notes = readBeadRow().notes;
-    const merged = notes.includes(`Merged: rc-interface-viewing-not-context-disclosure-permission (README.md:12@${PROGRAM_PIN}).`);
-    const authority = notes.includes("independently authorize publication.' (README.md:22)");
+    const { merged, authority } = readingsOf(liveFiling());
     const sentence = producer.readme.line12.includes("interface viewing is not automatically permission to disclose context material or vice versa");
     const line22 = producer.readme.line22.startsWith("RC-IF-02:") && producer.readme.line22.endsWith("independently authorize publication.");
     const shipped = spelled.length > 0;
@@ -1317,26 +1403,30 @@ describe("wb-5ltg.2 shared reactive data subscription census (RC-NATIVE-INTERFAC
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect({ bead: BEAD, scan: json(SCAN), residuals: RESIDUAL_FAMILIES }).toStrictEqual({ bead: ROSTER.bead, scan: ROSTER.scan, residuals: [...ROSTER.residuals] });
-    // The outside anchor: the owner filing's row in the tracked bead export.
-    const bead = readBeadRow();
-    const clauses = acceptanceClauses(bead.notes);
-    const trigger = masked(/^\[[^\]]+\] (If Pi ever [^,(]+?) \(/.exec(bead.title)?.[1] ?? "");
-    expect(clauses.map(clause => clause.slice(0, 4)), "the filing lists acceptance (a), (b) and (c)").toEqual(["(a) ", "(b) ", "(c) "]);
-    expect(trigger, "the trigger names the producer").toContain("<SDK>");
-    const coverage = [...clauses, trigger].map(clause => ROWS.filter(row => clause.length > 0 && row.label.includes(clause)).map(row => row.id));
+    // The outside anchor: the owner filing in the tracked bead export, read as filed (the owner block, never an appended note).
+    const exported = readBeadRow();
+    const filing = filingOf(exported);
+    const readings = readingsOf(filing);
+    expect(readings.clauses.map(clause => clause.slice(0, 4)), "the filing lists acceptance (a), (b) and (c)").toEqual(["(a) ", "(b) ", "(c) "]);
+    expect(readings.trigger, "the trigger names the producer").toContain("<SDK>");
+    const coverage = [...readings.clauses, readings.trigger].map(clause => ROWS.filter(row => clause.length > 0 && row.label.includes(clause)).map(row => row.id));
     expect(coverage.every(ids => ids.length === 1), "every acceptance clause and the trigger sit verbatim in exactly one row label").toBe(true);
     expect(ROWS.every(row => coverage.some(ids => ids.includes(row.id))), "every row carries a clause of the filing").toBe(true);
     expect(coverage).toEqual([["B"], ["C"], ["A"], ["A"]]);
-    expect(quoteOf(bead.notes), "the filing's quote and citation").toStrictEqual({ quote: ROSTER.quote, citation: ROSTER.citation });
-    expect(bead.title.endsWith(ROSTER.citation), "the title cites the roster's citation").toBe(true);
+    expect(readings.quote, "the filing's quote and citation").toStrictEqual({ quote: ROSTER.quote, citation: ROSTER.citation });
+    expect(filing.title.endsWith(ROSTER.citation), "the title cites the roster's citation").toBe(true);
     expect(ROSTER.citation.endsWith(`@${PROGRAM_PIN}`) && producerPin("program").ref.startsWith(PROGRAM_PIN), "the citation pins the program ref the roster measured").toBe(true);
-    // Every noun member reads a phrase of the filing; CS reads the measured producer signature (the filing names no change sink).
-    const filing = wordsOf(`${bead.title}\n${bead.notes}`);
-    const producerText = wordsOf(ROSTER.producer.sites.map(site => site.signature).join("\n"));
-    const anchors = Object.fromEntries(
-      NOUNS.map(noun => [noun.id, NOUN_PATTERNS.get(noun.id)?.test(filing) === true ? "filing" : NOUN_PATTERNS.get(noun.id)?.test(producerText) === true ? "producer" : "none"]),
-    );
-    expect(anchors, "each noun member's anchor outside this file").toStrictEqual({ MV: "filing", IS: "filing", DP: "filing", RS: "filing", PA: "filing", CS: "producer", RM: "filing", IV: "filing", CD: "filing" });
+    expect(readings.anchors, "each noun member's anchor outside this file").toStrictEqual(ANCHORS);
+    // The quiet row (U1 of refusal #1): a note appended after the owner block, spelling every noun member (CS included) and
+    // carrying its own acceptance, quote, Shipped, merged and authority lines, changes no reading of the filing.
+    const appended: BeadRow = { title: exported.title, notes: `${exported.notes}${appendedNote()}` };
+    expect(readingsOf(filingOf(appended)), "an appended note changes no reading of the filing").toStrictEqual(readings);
+    // Non-vacuity: read past the owner block, the same note would flip every anchor to the filing, CS included.
+    const pastBlock = anchorsOf(filing.title, `${filing.block}${appendedNote()}`);
+    expect(pastBlock, "the appended note spells every noun member").toStrictEqual(Object.fromEntries(NOUNS.map(noun => [noun.id, "filing"])));
+    // An owner block edited in place is refused, never read through the appended note's copy of the edited line.
+    const edited: BeadRow = { title: exported.title, notes: `${filing.block.replace(SHIPPED_LINE, "Shipped: yes.")}${appendedNote()}` };
+    expect(() => filingOf(edited), "an owner block edited in place").toThrow(/owner filing block changed/);
   });
 
   for (const row of ROWS) {
