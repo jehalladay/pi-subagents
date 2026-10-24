@@ -174,7 +174,7 @@
     "Q5",
     "Q6",
     "Q7",
-    "records: every registered test ran once in run mode in roster order, every pin reached its end, and the pins' coverage meets the outside obligations"
+    "records: every registered test ran once in run mode in roster order, every case reached its end, and the pins' coverage meets the outside obligations"
   ],
   "rows": [
     {
@@ -215,6 +215,7 @@
           "id": "A3",
           "witness": {
             "floorMet": true,
+            "walkIsProgram": true,
             "anchorRead": true,
             "reads": [
               "workbench/providers/reactivefiber.ts:typeof",

@@ -36,7 +36,8 @@
  * which encodes the value through that display form). No live violation exists, and the census pins the posture on every leg:
  *  A, acceptance (a). A1 the injected registered reading of a capture render is byte for byte the serialization taken before the
  *    call (the reader is handed a fresh copy); A2 the native reading of it, in one --no-commit spawn of a stand-in rf; A3 an AST
- *    census of every src module: the rendered document (`.text` read on an `output` object) is read exactly three times - two
+ *    census of every src module (the walked set is the src program's root files: tsconfig.json's include, as TypeScript itself
+ *    resolves it): the rendered document (`.text` read on an `output` object) is read exactly three times - two
  *    typeof guards and the adapter's sha256 update - so no read of that form transforms, parses or re-labels it (R-COMPUTED-ACCESS
  *    names the reads this census cannot see); A4 the hosted Claude relay
  *    replies with exactly the shared display form of the reading, and in both every Forge and bd field span (the key and value
@@ -75,18 +76,29 @@
  * lines 43 and 45; its Authority restrictions sentence ends excerpt line 78. Pins: the records case derives one obligation set from
  * sources outside this file and the roster and requires the coverage the pins measured to equal it: every descriptor of a fresh
  * native registration (src native-modules.ts registerNativeProviders) as reader:<id>, covered by C5, and every one carrying the
- * provider's own contract source (REACTIVE_FIBER_CONTRACT_SOURCE) as native:<id>, covered by A2; every rendered-document read the
- * A3 walk finds in src as read:<module>:<use>, covered by A3; the filing's Authority restrictions sentence as authority:<sentence>,
+ * provider's own contract source (REACTIVE_FIBER_CONTRACT_SOURCE) as native:<id>, covered by A2; every rendered-document read in
+ * the src program's root modules (tsconfig.json's include, as TypeScript resolves it) as read:<module>:<use>, covered by A3; the
+ * filing's Authority restrictions sentence as authority:<sentence>,
  * covered by C5; every status word the export's issue rows carry as status:<word>, covered by C2; and the src display and adapter
  * measured on the shared fixture - the document changed by the display, the WORKBENCH_TEXT_LIMIT bound, an unsafe unit stripped, a
  * credential shape rewritten, an additive key unread - as display:document, display:bound:<limit>, display:unit, display:shape and
  * adapter:additive, covered by Q1, Q2, Q3, Q7 and Q4. So a row, or one of those pins, removed from every literal of this file and
  * the roster together still reds.
- * RECORDS (wb-45bx, the gate's F1): the judged set walks the registration (vitest's task tree) at collection - every roster title
- * once, in order, in run mode, not inverted; the last case walks it again after the run - every other title ran - and requires
- * every pin to have reached its end (REACHED: a case returns its witness only through done()) and the coverage above; an afterAll
- * backstop reds a run whose judged set ran but whose records case neither reached its end nor failed (a run-time skip, an early
- * return, no registration), so a failed records case is reported once, by its own assertion.
+ * RECORDS (wb-45bx: the wb-hs2j.9 gate's F1; respin #1 for the wb-45bx refusal's U1 and U2): the two judges - the judged set,
+ * registered first, and the records case, registered last - sit at FILE SCOPE, outside every suite, around the census suite that
+ * holds the rows, so no single suite modifier (skip, skipIf, runIf, todo or a skip option) reaches either. Every case records its
+ * end as its last statement, with the count of assertions it made (ENDED: the judged set, each pin's case after its roster
+ * witness, the records case), and each judge declares its own count (expect.assertions), so a judge that stops early - an early
+ * return anywhere in its body, or its end record copied ahead of its checks - is caught. The judged set walks the registration
+ * (vitest's task tree) at collection - every roster title once, in order, in run mode, not inverted, and the file's own
+ * registrations exactly the two judges around the census suite; the records case walks it again after the run - every other
+ * title ran - and requires every other case's end in registration order (the judged set's at its declared count), every pin's
+ * end inside its own body (REACHED: a case returns its witness only through done()), every returned witness equal to the
+ * roster's, and the coverage above. A file-level afterAll backstop reads the file task from the census suite's collector, so it
+ * needs no case to have run: every registered test ran in run mode, uninverted, to a pass or a fail (a hook that skips or masks a
+ * case at run time, before or after it, reds here), and unless a case failed, every case's end is recorded in registration
+ * order, the records case's at its declared count. A failed case is reported by its own assertion; the backstop names only a
+ * quiet miss.
  * RESIDUALS (named, each with a pinned quiet row): R-DISPLAY-FOLD the shared display layout folds every run of line breaks to one
  * space, so a multi-line capture (bd's indented JSON) reaches the display and the hosted relay with its bytes between fields
  * changed: the document differs from the producer's and the bd record's bytes are absent, while every field span stays verbatim and
@@ -105,8 +117,12 @@
  * NOT CLAIMED: a pin with no outside obligation (A1, A4, B1-B4, C1, C3, C4, and Q5 and Q6, whose residuals describe this file's own
  * detectors) removed from every literal of this file and the roster together keeps the roster as its only anchor outside the file;
  * a coordinated edit of a judge with what it judges (an obligation's derivation with the pin that covers it, a task-tree walk with
- * the case it judges, documentReads with A3); a case returning the roster's own witness through done() (the witness-roster class,
- * the gate's F4 - its exact form, a case returning rosterWitness(pin) without reaching its end, reds the records case).
+ * the case it judges, documentReads with A3, the src walk with A3's program comparison, a judge's assertions with its declared
+ * count); a case returning the roster's own witness through done() (the witness-roster class, the gate's F4 - its exact form, a
+ * case returning rosterWitness(pin) without reaching its end, reds the records case), and its judge-feeding forms: an end record
+ * forged with a literal count, and a hook, listener or case that rewrites a task's mode or result (runner tampering); a skip of
+ * every task at collection, which takes an edit at each of the three file-scope registrations and silences the file's hooks with
+ * it (vitest runs no hook once every task is skipped at collection, the wb-45bx refusal's G24).
  * SCOPE: the vocabularies are producer facts at the measured releases; Pi vendors no rf, Forge or bd source, so a producer change
  * is seen only when a re-measure re-reads them. The armed half, a reader of the typed assembly descriptor, waits for the descriptor
  * (04-target section 3): no reader is added or faked here.
@@ -223,9 +239,14 @@ const RESIDUALS: readonly { readonly family: string; readonly pin: string }[] = 
   { family: "R-SYNONYM-VOCABULARY", pin: "Q6" },
   { family: "R-FREE-TEXT-SHAPE", pin: "Q7" },
 ];
-/** The first and the last registered test: the judged set and the records case. */
+/** The first and the last registered test, both at file scope: the judged set and the records case. */
 const JUDGED_TITLE = "the judged set: the frozen shape, the out-of-file roster, the quoted excerpt, the bead export, the registration and the cases agree";
-const RECORDS_TITLE = "records: every registered test ran once in run mode in roster order, every pin reached its end, and the pins' coverage meets the outside obligations";
+const RECORDS_TITLE = "records: every registered test ran once in run mode in roster order, every case reached its end, and the pins' coverage meets the outside obligations";
+/** The census suite the two judges sit around: it holds the rows. */
+const CENSUS_TITLE = "wb-hs2j.9 rf external-authority echo census (RF-REACTIVE-CONTEXT-ASSEMBLY-R10, echo-only posture)";
+/** The assertions each judge makes on its way to its end: it declares the count (expect.assertions) and records it at its end. */
+const JUDGED_ASSERTIONS = 13;
+const RECORDS_ASSERTIONS = 11;
 
 interface Row {
   readonly id: string;
@@ -768,6 +789,17 @@ const SRC = join(REPO, "src");
 /** The src walk's floor (measured at base 0d7e911 and at dae1788: 115 .ts modules) and the module whose digest read must be found. */
 const SRC_FLOOR = 100;
 const ANCHOR_MODULE = "workbench/reactivefiber-observer.ts";
+/** The src program's root modules relative to src, as TypeScript itself resolves tsconfig.json's include: the anchor of the src
+ * walk outside this file's walker (wb-45bx, the refusal's F11). */
+function programModules(): string[] {
+  const config = ts.readConfigFile(join(REPO, "tsconfig.json"), ts.sys.readFile);
+  if (config.error !== undefined) throw new Error("tsconfig.json does not parse");
+  return ts
+    .parseJsonConfigFileContent(config.config, ts.sys, REPO)
+    .fileNames.filter(file => file.endsWith(".ts"))
+    .map(file => relative(SRC, file))
+    .sort();
+}
 
 const unwrapped = (node: ts.Expression): ts.Expression =>
   ts.isParenthesizedExpression(node) || ts.isNonNullExpression(node) ? unwrapped(node.expression) : node;
@@ -809,13 +841,26 @@ function documentReads(path: string, source: string): string[] {
   return reads;
 }
 
-/** The pins that reached their end, in run order, and what each measured covering of the outside obligations. */
+/** One case's end: its title and the assertions it made on the way (vitest's count for the running test). */
+interface End {
+  readonly title: string;
+  readonly assertions: number;
+}
+/** Every case's end, in run order: a case records it as its last statement, so a case that stops early records none. */
+const ENDED: End[] = [];
+function ended(title: string): void {
+  ENDED.push({ title, assertions: expect.getState().assertionCalls });
+}
+/** The pins that reached their end inside their own body, in run order, what each measured covering of the outside obligations,
+ * and the witness each returned (the records case holds them to the roster again). */
 const REACHED: string[] = [];
 const COVERED = new Map<string, readonly string[]>();
+const WITNESSES = new Map<string, JsonValue>();
 /** A pin's witness, recorded as reached with what it measured covering: only a case that ran to its end returns through here. */
 function done(pin: string, witness: JsonValue, covers: readonly string[] = []): JsonValue {
   REACHED.push(pin);
   COVERED.set(pin, [...covers]);
+  WITNESSES.set(pin, json(witness));
   return witness;
 }
 
@@ -845,13 +890,17 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
   A3: async () => {
     const modules = filesBelow(SRC).filter(file => file.endsWith(".ts"));
+    const walked = modules.map(file => relative(SRC, file)).sort();
+    const program = programModules();
     const reads = modules.flatMap(file => documentReads(file, readFileSync(file, "utf8")).map(use => `${relative(SRC, file)}:${use}`)).sort();
     const floorMet = modules.length >= SRC_FLOOR;
+    const walkIsProgram = JSON.stringify(walked) === JSON.stringify(program);
     const anchorRead = reads.includes(`${ANCHOR_MODULE}:digest`);
     expect(floorMet, `src: ${modules.length} modules walked, floor ${SRC_FLOOR}`).toBe(true);
+    expect(walked, "the src walk against the src program's root files (tsconfig.json's include, as TypeScript resolves it)").toEqual(program);
     expect(anchorRead, `the walk found no digest read in ${ANCHOR_MODULE}`).toBe(true);
     expect(reads.filter(read => read.includes(":other:")), "a src code path uses the rendered document beyond a typeof guard or a digest").toEqual([]);
-    return done("A3", { floorMet, anchorRead, reads }, reads.map(read => `read:${read}`));
+    return done("A3", { floorMet, walkIsProgram, anchorRead, reads }, reads.map(read => `read:${read}`));
   },
   A4: async () => {
     const envelope = captureRender(BASE);
@@ -1147,13 +1196,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 };
 
 /** The obligations the pins' measured coverage must equal, each derived from a source outside this file and its roster: a fresh
- * native registration, the rendered-document reads in src, the owner filing and the status words in the tracked bead export, and
- * the src display and adapter measured on the shared fixture. */
+ * native registration, the rendered-document reads in the src program's root modules, the owner filing and the status words in the
+ * tracked bead export, and the src display and adapter measured on the shared fixture. */
 async function obligations(): Promise<string[]> {
   const catalog = await nativeCatalog();
-  const reads = filesBelow(SRC)
-    .filter(file => file.endsWith(".ts"))
-    .flatMap(file => documentReads(file, readFileSync(file, "utf8")).map(use => `read:${relative(SRC, file)}:${use}`));
+  const reads = programModules().flatMap(module => documentReads(module, readFileSync(join(SRC, module), "utf8")).map(use => `read:${module}:${use}`));
   const changes = (text: string): boolean => sanitizeWorkbenchJson(text) !== text;
   const plain = project((await injectedReading(captureRender(BASE))).reading);
   const varied = project((await injectedReading(captureRender(BASE, typedRecord({ verdict: "FAIL", status: "closed" })))).reading);
@@ -1188,7 +1235,7 @@ interface Registered {
   readonly self: boolean;
 }
 /** Every test this file registered, suites walked in order, with its mode, its inversion, its result state and whether it is `self`. */
-function registered(tasks: readonly TaskNode[], self: TaskNode): Registered[] {
+function registered(tasks: readonly TaskNode[], self?: TaskNode): Registered[] {
   return tasks.flatMap((child): Registered[] =>
     child.type === "test"
       ? [{ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === self }]
@@ -1197,75 +1244,74 @@ function registered(tasks: readonly TaskNode[], self: TaskNode): Registered[] {
 }
 const shownTask = (entry: Registered): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${entry.state ?? "no result"}`;
 
-/** The file task the judged set walked (set when it runs), and whether the records case reached its end. */
-let judgedFile: TaskNode | undefined;
-let recordsDone = false;
-afterAll(() => {
-  // The backstop no test modifier reaches: once the judged set has run, the records case must have reached its end. A records case
-  // that failed already reds the run, so the backstop names only a quiet one (a run-time skip, an early return, no registration).
-  if (judgedFile === undefined || recordsDone) return;
-  const records = registered(judgedFile.tasks ?? [], judgedFile).find(entry => entry.name === RECORDS_TITLE);
-  if (records?.state !== "fail") throw new Error("the judged set ran but the records case never reached its end");
+/** The file's own registrations as the judges require them: the two judges at file scope around the census suite. */
+const FILE_SCOPE: readonly string[] = [`test:${JUDGED_TITLE}`, `suite:${CENSUS_TITLE}`, `test:${RECORDS_TITLE}`];
+
+it(JUDGED_TITLE, { timeout: 60_000 }, ({ task }) => {
+  expect.assertions(JUDGED_ASSERTIONS);
+  expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:4", "C:5", "Q:7"]);
+  expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
+    ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
+  );
+  expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
+  expect({ pin: PIN, excerpt: excerptSha256(ROSTER.excerpt), synonyms: [...SYNONYMS] }).toStrictEqual({
+    pin: ROSTER.pin,
+    excerpt: EXCERPT_SHA256,
+    synonyms: [...ROSTER.synonyms],
+  });
+  expect({ bead: BEAD, residuals: RESIDUALS.map(entry => ({ ...entry })) }).toStrictEqual({
+    bead: ROSTER.bead,
+    residuals: ROSTER.residuals.map(entry => ({ ...entry })),
+  });
+  expect(
+    RESIDUALS.map(entry => entry.pin),
+    "every residual family's quiet row, in row Q's order",
+  ).toEqual(ROWS.find(row => row.id === "Q")?.pins ?? []);
+  expect([...ROSTER.tests], "the roster's registered titles: the judged set, every pin in row order, the records case").toEqual([
+    JUDGED_TITLE,
+    ...ROWS.flatMap(row => row.pins),
+    RECORDS_TITLE,
+  ]);
+  // The registration at collection (vitest's task tree): every roster title once, in order, in run mode, not inverted, and the
+  // two judges registered at file scope, outside every suite, around the census suite.
+  const walked = registered(task.file.tasks, task);
+  expect(
+    walked.map(entry => entry.name),
+    "every registered test of this file, exactly and in roster order",
+  ).toEqual([...ROSTER.tests]);
+  expect(
+    walked.filter(entry => entry.mode !== "run" || entry.fails).map(shownTask),
+    "every test is registered in run mode and not inverted",
+  ).toEqual([]);
+  expect(
+    task.file.tasks.map(child => `${child.type}:${child.name}`),
+    "the file's own registrations: the two judges at file scope around the census suite",
+  ).toEqual([...FILE_SCOPE]);
+  // The outside anchor of the rows: the owner filing's row in the tracked bead export.
+  const bead = readBeadRow();
+  const clauses = acceptanceClauses(bead.notes);
+  expect(
+    clauses.map(clause => clause.slice(0, 4)),
+    "the filing lists acceptance (a), (b) and (c)",
+  ).toEqual(["(a) ", "(b) ", "(c) "]);
+  expect(
+    clauses.map(clause => ROWS.filter(row => row.label.includes(clause)).map(row => row.id)),
+    "each acceptance clause sits verbatim in exactly one row label",
+  ).toEqual([["A"], ["B"], ["C"]]);
+  const source = sourceOf(bead.notes);
+  const citation = `${ROSTER.sourcePath}:78@${PIN.slice(0, 12)}`;
+  expect({
+    citation: source.citation,
+    titleCites: bead.title.endsWith(citation),
+    quoteEndsLine78: ROSTER.excerpt[2]?.endsWith(source.quote) ?? false,
+    authorityEndsLine78: ROSTER.excerpt[2]?.endsWith(authorityOf(bead.notes)) ?? false,
+    cf: source.cf,
+  }).toStrictEqual({ citation, titleCites: true, quoteEndsLine78: true, authorityEndsLine78: true, cf: [ROSTER.excerpt[0], ROSTER.excerpt[1]] });
+  ended(JUDGED_TITLE);
 });
 
-describe("wb-hs2j.9 rf external-authority echo census (RF-REACTIVE-CONTEXT-ASSEMBLY-R10, echo-only posture)", () => {
-  it(JUDGED_TITLE, { timeout: 60_000 }, ({ task }) => {
-    judgedFile = task.file;
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:4", "C:5", "Q:7"]);
-    expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
-      ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
-    );
-    expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
-    expect({ pin: PIN, excerpt: excerptSha256(ROSTER.excerpt), synonyms: [...SYNONYMS] }).toStrictEqual({
-      pin: ROSTER.pin,
-      excerpt: EXCERPT_SHA256,
-      synonyms: [...ROSTER.synonyms],
-    });
-    expect({ bead: BEAD, residuals: RESIDUALS.map(entry => ({ ...entry })) }).toStrictEqual({
-      bead: ROSTER.bead,
-      residuals: ROSTER.residuals.map(entry => ({ ...entry })),
-    });
-    expect(
-      RESIDUALS.map(entry => entry.pin),
-      "every residual family's quiet row, in row Q's order",
-    ).toEqual(ROWS.find(row => row.id === "Q")?.pins ?? []);
-    expect([...ROSTER.tests], "the roster's registered titles: the judged set, every pin in row order, the records case").toEqual([
-      JUDGED_TITLE,
-      ...ROWS.flatMap(row => row.pins),
-      RECORDS_TITLE,
-    ]);
-    // The registration at collection (vitest's task tree): every roster title once, in order, in run mode, not inverted.
-    const walked = registered(task.file.tasks, task);
-    expect(
-      walked.map(entry => entry.name),
-      "every registered test of this file, exactly and in roster order",
-    ).toEqual([...ROSTER.tests]);
-    expect(
-      walked.filter(entry => entry.mode !== "run" || entry.fails).map(shownTask),
-      "every test is registered in run mode and not inverted",
-    ).toEqual([]);
-    // The outside anchor of the rows: the owner filing's row in the tracked bead export.
-    const bead = readBeadRow();
-    const clauses = acceptanceClauses(bead.notes);
-    expect(
-      clauses.map(clause => clause.slice(0, 4)),
-      "the filing lists acceptance (a), (b) and (c)",
-    ).toEqual(["(a) ", "(b) ", "(c) "]);
-    expect(
-      clauses.map(clause => ROWS.filter(row => row.label.includes(clause)).map(row => row.id)),
-      "each acceptance clause sits verbatim in exactly one row label",
-    ).toEqual([["A"], ["B"], ["C"]]);
-    const source = sourceOf(bead.notes);
-    const citation = `${ROSTER.sourcePath}:78@${PIN.slice(0, 12)}`;
-    expect({
-      citation: source.citation,
-      titleCites: bead.title.endsWith(citation),
-      quoteEndsLine78: ROSTER.excerpt[2]?.endsWith(source.quote) ?? false,
-      authorityEndsLine78: ROSTER.excerpt[2]?.endsWith(authorityOf(bead.notes)) ?? false,
-      cf: source.cf,
-    }).toStrictEqual({ citation, titleCites: true, quoteEndsLine78: true, authorityEndsLine78: true, cf: [ROSTER.excerpt[0], ROSTER.excerpt[1]] });
-  });
-
+/** The census suite: the rows, each pin's case. Its collector carries the file task, which the backstop below reads. */
+const CENSUS = describe(CENSUS_TITLE, () => {
   for (const row of ROWS) {
     describe(`${row.id} ${row.label}`, () => {
       for (const pin of row.pins) {
@@ -1274,28 +1320,61 @@ describe("wb-hs2j.9 rf external-authority echo census (RF-REACTIVE-CONTEXT-ASSEM
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : await impl();
           expect(witness).toStrictEqual(rosterWitness(pin));
+          ended(pin);
         });
       }
     });
   }
+});
 
-  it(RECORDS_TITLE, { timeout: 120_000 }, async ({ task }) => {
-    const walked = registered(task.file.tasks, task);
-    const titles = walked.map(entry => entry.name);
-    expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
-    expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice").toEqual([]);
-    const here = walked.findIndex(entry => entry.self);
-    expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
-    const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
-    expect(
-      walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(shownTask),
-      "every other test is in run mode, not inverted, and ran before this case",
-    ).toEqual([]);
-    expect(REACHED, "every pin's case reached its end, in row order").toEqual(ROWS.flatMap(row => row.pins));
-    const required = [...new Set(await obligations())].sort();
-    const covered = [...new Set([...COVERED.values()].flat())].sort();
-    expect(required.filter(entry => !covered.includes(entry)), "outside obligations no pin that reached its end covers").toEqual([]);
-    expect(covered.filter(entry => !required.includes(entry)), "coverage no outside obligation asks for").toEqual([]);
-    recordsDone = true;
-  });
+it(RECORDS_TITLE, { timeout: 120_000 }, async ({ task }) => {
+  expect.assertions(RECORDS_ASSERTIONS);
+  const walked = registered(task.file.tasks, task);
+  const titles = walked.map(entry => entry.name);
+  expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
+  expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice").toEqual([]);
+  const here = walked.findIndex(entry => entry.self);
+  expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
+  expect(
+    task.file.tasks.map(child => `${child.type}:${child.name}`),
+    "the file's own registrations: the two judges at file scope around the census suite",
+  ).toEqual([...FILE_SCOPE]);
+  const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
+  expect(
+    walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(shownTask),
+    "every other test is in run mode, not inverted, and ran before this case",
+  ).toEqual([]);
+  expect(
+    ENDED.map(end => end.title),
+    "every other case reached its end, in registration order",
+  ).toEqual(titles.filter((_, index) => index !== here));
+  expect(ENDED.find(end => end.title === JUDGED_TITLE)?.assertions, "the judged set's assertions on the way to its end").toBe(JUDGED_ASSERTIONS);
+  expect(REACHED, "every pin's case reached its end inside its own body, in row order").toEqual(ROWS.flatMap(row => row.pins));
+  const pins = ROWS.flatMap(row => row.pins);
+  expect(
+    pins.map(pin => WITNESSES.get(pin) ?? null),
+    "every pin's returned witness against the roster's",
+  ).toStrictEqual(pins.map(pin => rosterWitness(pin)));
+  const required = [...new Set(await obligations())].sort();
+  const covered = [...new Set([...COVERED.values()].flat())].sort();
+  expect(required.filter(entry => !covered.includes(entry)), "outside obligations no pin that reached its end covers").toEqual([]);
+  expect(covered.filter(entry => !required.includes(entry)), "coverage no outside obligation asks for").toEqual([]);
+  ended(RECORDS_TITLE);
+});
+
+// The backstop no single test, suite or hook modifier reaches: it reads the file task from the census suite's collector, so it
+// needs no case to have run, and vitest runs the file's hooks unless every task is skipped at collection (an edit at each of the
+// three file-scope registrations). Every registered test ran in run mode, uninverted, to a pass or a fail; unless one failed, every
+// case's end is recorded in registration order, the records case's at its declared count. A failed case already reds the run, so
+// the backstop names only a quiet miss (a run-time skip, an early return, a missing registration).
+afterAll(() => {
+  const walked = registered(CENSUS.file.tasks);
+  const quiet = walked.filter(entry => entry.mode !== "run" || entry.fails || (entry.state !== "pass" && entry.state !== "fail")).map(shownTask);
+  if (quiet.length > 0) throw new Error(`a registered test did not run to a pass or a fail: ${quiet.join("; ")}`);
+  if (walked.some(entry => entry.state === "fail")) return;
+  const ends = ENDED.map(end => end.title);
+  const records = ENDED.find(end => end.title === RECORDS_TITLE)?.assertions;
+  if (JSON.stringify(ends) !== JSON.stringify(walked.map(entry => entry.name)) || records !== RECORDS_ASSERTIONS) {
+    throw new Error(`a case passed without reaching its end: ${ends.length} of ${walked.length} ends recorded, the records case's after ${records ?? "no"} of its ${RECORDS_ASSERTIONS} assertions`);
+  }
 });
