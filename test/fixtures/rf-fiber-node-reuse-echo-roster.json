@@ -125,7 +125,36 @@
       },
       "keyHits": [],
       "labelHits": [],
-      "unscanned": []
+      "unscanned": [],
+      "liveness": {
+       "strict": {
+        "whole": true,
+        "empty": true,
+        "blank": false,
+        "oneShort": false,
+        "cutShort": false,
+        "cutWithReplacement": false,
+        "substituted": false,
+        "decidedLossy": false,
+        "carryingWhole": true,
+        "carryingDecidedLossy": false
+       },
+       "lossy": {
+        "whole": true,
+        "blank": false,
+        "cutShort": false,
+        "cutWithReplacement": false,
+        "decidedLossy": true
+       },
+       "disk": {
+        "lossyFile": {
+         "lossy": true,
+         "whole": true
+        },
+        "keyPlant": 1,
+        "labelPlant": 1
+       }
+      }
      }
     },
     {
@@ -789,6 +818,18 @@
   "stale": [],
   "reached": [
    {
+    "pin": "T1",
+    "symbols": [
+     "components key"
+    ]
+   },
+   {
+    "pin": "T2",
+    "symbols": [
+     "rf envelope"
+    ]
+   },
+   {
     "pin": "B1",
     "symbols": [
      "registerReactiveFiberRender"
@@ -819,7 +860,119 @@
      "nativeEvidence"
     ]
    }
-  ]
+  ],
+  "controls": {
+   "registerLiteral": [
+    "#registerProbe"
+   ],
+   "registerModuleConst": [
+    "#registerProbe"
+   ],
+   "registerHeldDescriptor": [
+    "#registerProbe"
+   ],
+   "registerShorthand": [
+    "#registerProbe"
+   ],
+   "registerComputedName": [
+    "#registerProbe"
+   ],
+   "registerArrow": [
+    "#registerProbe"
+   ],
+   "registerListed": [
+    "#registerProbe"
+   ],
+   "registerInModule": [
+    "#(module)"
+   ],
+   "registerComposedId": [],
+   "registerImportedId": [],
+   "toolNamed": [
+    "#probe_invoke"
+   ],
+   "toolAliased": [
+    "#probe_invoke"
+   ],
+   "toolNamespace": [
+    "#probe_invoke"
+   ],
+   "toolDefaultImport": [
+    "#probe_invoke"
+   ],
+   "toolRebound": [
+    "#probe_invoke"
+   ],
+   "toolDestructured": [
+    "#probe_invoke"
+   ],
+   "toolNamespaceElement": [
+    "#probe_invoke"
+   ],
+   "toolHandlerReference": [
+    "#probe_invoke"
+   ],
+   "toolHandlerFunction": [
+    "#probe_invoke"
+   ],
+   "toolHandlerIndirect": [
+    "#probe_invoke"
+   ],
+   "toolHandlerMember": [
+    "#probe_invoke"
+   ],
+   "toolNameConst": [
+    "#probe_invoke"
+   ],
+   "toolNameComposed": [
+    "#(unnamed)"
+   ],
+   "toolInvokeElement": [
+    "#probe_invoke"
+   ],
+   "toolInvokeBinding": [
+    "#probe_invoke"
+   ],
+   "toolInspectOnly": [],
+   "toolPiDefineTool": [],
+   "toolSdkReexport": [],
+   "toolDynamicImport": [],
+   "toolImportedHandler": [],
+   "toolInvokeComposed": [],
+   "projectModifier": [
+    "#project"
+   ],
+   "projectConstValue": [
+    "#project"
+   ],
+   "projectListed": [
+    "#project"
+   ],
+   "projectListedAlias": [
+    "#projectAlias"
+   ],
+   "projectDefault": [
+    "#default"
+   ],
+   "projectDefaultValue": [
+    "#default"
+   ],
+   "projectRebound": [
+    "#used"
+   ],
+   "projectImportAlias": [
+    "#project"
+   ],
+   "projectTypeAlias": [
+    "#project"
+   ],
+   "projectUnexported": [],
+   "projectScalar": [],
+   "projectOptionalReading": [],
+   "projectMember": [],
+   "projectReexport": [],
+   "projectSchemaLiteral": []
+  }
  },
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster, the owner's acceptance clauses and the cases agree",

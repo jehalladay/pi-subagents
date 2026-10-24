@@ -64,8 +64,13 @@
  *  A1 every regular file below src/ and test/ (this file and its roster included; dot directories followed) reads no KEY pair and
  *    no LABEL, with floors (100 src and 450 test files), the four test extensions read, a depth-four path read, and the precision
  *    files read (the adapter spells the bare third segment; the fixture helper spells rf's own counters); and the readings ran over
- *    each file's own bytes: every file reaches the end of the scan with a text whose UTF-8 length is its size on disk (a lossy
- *    decode, which carries the replacement character, counts when the text is not empty), so a blanked or cut-short read reds;
+ *    each file's whole content (scannedWhole, wb-5618 respin #1): the file's bytes, read again from disk, decide lossiness (a strict
+ *    UTF-8 decode fails), never the scanned text; a file that decodes strictly counts only when the scanned text's UTF-8 length is
+ *    its size on disk and the text is that decode, a lossy file only when the text is the lossy decode of the whole file - so a
+ *    blanked, cut-short or substituted read reds, whatever character it carries; the predicate's own controls (a strict and a lossy
+ *    sample, each whole, blank and cut short, with and without the replacement character, the strict one also substituted at its
+ *    own length) and, in makeScratch scratch, a lossy file and two end-of-file plants read through scanFile (the walk's own
+ *    per-file reading) are pinned;
  *  A2 the outside anchors agree with the readings: the export title's backticked path is SEGMENTS joined by dots, the backticked
  *    targets of clause (a) are the two KEY pairs, KEY reads each target and not the bare word clause (a) names, LABEL reads clause
  *    (a)'s phrase, the title's phrase and the quoted program line, the title ends with the citation, and the captured rf roster
@@ -96,27 +101,42 @@
  * and the src readers themselves. The last case walks this file's vitest task tree against the roster, so a member removed from
  * every literal of this file still reds there; a member removed from every literal of this file and of the roster together reds
  * at the bound case, whose anchors lie outside both.
- * BOUND (wb-5618, the R694 follow-up of the wb-csbt.2 gate's F1): every pin of rows T and B is bound, one pin each, to an anchor
- * outside this file and its roster (BINDINGS). T's pins hold the terms of the export title's absent-today note, the parenthetical
- * split at its semicolon: T1 "Pi's rf reader reads no components key", T2 "whether the field reaches the rf envelope is unknown
- * today" (the one rf envelope Pi reads is the preview's). B's pins hold the reading surfaces src derives (surfaceDerivation), never
- * restated: (i) every capability descriptor of the preview id in a Pi rf reader - any object property id naming the preview id,
- * spelled as the literal or as a const of the module and wherever the object sits (inline in a register call, behind a type
- * assertion or in a variable) - keyed by its enclosing exported function (B1 the injected registerReactiveFiberRender, B2 the
- * native registerNativeReactiveFiberRender); (ii) every tool of the curated agent server - a src module importing tool from the
- * agent SDK - whose handler invokes the registry (B3 capability_invoke); (iii) every exported function of an ENVELOPE READER - a
- * Pi rf reader whose syntax names the rf envelope schema constant, so it reads the envelope itself - declared as a function or as
- * an exported const function value, that declares a parameter typed JsonValue (B4 reactivefiberTopology, B5 nativeEvidence).
- * The bound witness holds T1's reader floor, not an exact reader count, so a new rf reader adding no surface stays green as it
- * does at T1. Each B binding is also proven as the case runs: reach() records the src
- * function the case called, by that function's own name, or the agent tool it called, and the bound case requires each B pin to
- * have reached the surface it is bound to, so a swap of two B bindings, roster included, reds. A coordinated hollow of a T or B
- * pin, or of row T, through this file and the roster leaves a term or a surface unjudged and reds the bound case; a term the title
- * gains or a surface src gains reds it too, so a new Pi surface of either kind re-judges this census.
+ * BOUND (wb-5618, the R694 follow-up of the wb-csbt.2 gate's F1; respin #1 cures the wb-5618 gate's U2 and carries its riders
+ * R1-R3): every pin of rows T and B is bound, one pin each, to an anchor outside this file and its roster (BINDINGS), and the
+ * judged set holds rows T and B to as many pins as those anchors name. T's pins hold the terms of the export title's absent-today
+ * note, the parenthetical split at its semicolon: T1 "Pi's rf reader reads no components key", T2 "whether the field reaches the
+ * rf envelope is unknown today" (the one rf envelope Pi reads is the preview's). B's pins hold the reading surfaces src derives,
+ * never restated (surfaceDerivation, one module at a time through moduleSurfaces), each keyed <module>#<name> by the name the
+ * module exports it under. A name resolves as TypeScript resolves it inside the module (a one-file program: the module's own
+ * scopes, its imports unresolved). The derivations read exactly these spellings, each with a positive row in DERIVATION_CONTROLS:
+ * (i) in a Pi rf reader, every property id - a plain, string or computed-literal name, or a shorthand - whose value is the preview
+ *   id (the literal, or a const of the module holding it), wherever the object sits (inline in a register call, behind a type
+ *   assertion or in a variable), keyed by the exported function it lies in - a function declaration, or a variable or export
+ *   default holding a function value, exported by a modifier, an export list or export default - else (module) (B1 the injected
+ *   registerReactiveFiberRender, B2 the native registerNativeReactiveFiberRender);
+ * (ii) in a src module naming the agent SDK, every call of the SDK's tool helper - imported by name (aliases included), a member
+ *   (by name or by a string element access) of a namespace or default import of the SDK, or a variable of the module bound to
+ *   either (assigned or destructured) - whose
+ *   arguments, or the declarations of the module any name in them resolves to (followed transitively), call a member or a binding
+ *   named invoke, keyed by the tool's name (a literal or a const of the module, else (unnamed)) (B3 capability_invoke);
+ * (iii) in an ENVELOPE READER - a Pi rf reader whose syntax names the rf envelope schema constant, so it reads the envelope itself -
+ *   every export (by a modifier, an export list with its aliases, or export default) of a function declaration or of a function
+ *   value, held directly or through a name of the module, that declares a parameter typed JsonValue - named directly, through an
+ *   import alias of it, or through a type alias of the module naming it (B4 reactivefiberTopology, B5 nativeEvidence).
+ * The bound witness holds T1's reader floor, not an exact reader count, so a new rf reader adding no surface stays green as it does
+ * at T1. Each binding is also proven as its case runs: reach() records the src function a B case called, by that function's own
+ * name, or the agent tool it called, and the term a T case judged (T1 the components key it reads every rf reader for, T2 the rf
+ * envelope whose capability roster it reads); the bound case requires each B pin to have reached the surface it is bound to and
+ * each T pin's bound term to name what its case judged, so a swap of two B or two T bindings, roster included, reds. A coordinated
+ * hollow of a T or B pin, or of row T, through this file and the roster leaves a term or a surface unjudged and reds the bound case
+ * and the judged set; a term the title gains, or a surface src gains in a spelling (i)-(iii) read, reds them too, so such a new Pi
+ * surface re-judges this census. A spelling (i)-(iii) do not read is not claimed: each one known is a named residual of the
+ * derivations below, with its quiet row in DERIVATION_CONTROLS; the bound case is itself required by the registration case.
  * NOT CLAIMED (scope of BOUND): the src routes that invoke the registry outside (i)-(iii) are not derived as surfaces - workflow
- * callNode in claude-host.ts and hosts/local-detached.ts, reconcile-tool.ts's evidence read (its reply carries the read value as
- * its snapshot), evidence-wiring.ts's forge read and the registry's own dispatch. They receive the registered reading B1 and B2
- * pin byte for byte; what they add of their own is not judged here.
+ * callNode in claude-host.ts and hosts/local-detached.ts, reconcile-tool.ts's workflow_reconcile (a Pi tool defined through
+ * defineTool, which (ii) does not read - R-PI-TOOL; its evidence reply carries the read value as its snapshot), evidence-wiring.ts's
+ * forge read and the registry's own dispatch. They receive the registered reading B1 and B2 pin byte for byte; what they add of
+ * their own is not judged here.
  * RESIDUALS (named, each with a pinned quiet row in A3's QUIET_CONTROLS unless named otherwise): R-FEATURE-WORDS skip, skips and
  * skipping beside the nouns are not read - they name ADR-0032's deferred skip feature (the wb-csbt.1 posture's subject), not a
  * figure Pi states as done (featureSkipping, featureSkipPredicate, featureWholeSubtree); R-VOCABULARY a synonym outside SKIP_WORDS
@@ -136,6 +156,23 @@
  * the second segment in any rf reader, and B1-B5 and C1-C3 read what each reached surface carries; R-SYMLINK (wb-5618, the gate's
  * L10) the walker does not follow a symbolic link, as git tracks the link and not its target: a link below src/ or test/ to a
  * file elsewhere is not read through, while the target is read wherever it lies inside the trees (A3's walker row).
+ * RESIDUALS OF THE DERIVATIONS (wb-5618 respin #1; each with a pinned quiet row in DERIVATION_CONTROLS, named in parentheses):
+ * R-COMPOSED-ID (the wb-5618 gate's P10, rider R2) a preview id composed at run time - joined, concatenated or templated with a
+ * substitution - is not read by (i) (registerComposedId); R-IMPORTED-ID a preview id held by a const imported from another module
+ * is not read by (i) (registerImportedId); R-OPTIONAL-READING (the gate's P08, rider R2) a reading parameter whose type
+ * composes JsonValue rather than naming it - JsonValue | undefined or any other union, an intersection, an array or a generic
+ * wrapper - is not read by (iii), the boundary that keeps native-evidence.ts's scalar helper reportedRelease outside the surfaces
+ * (projectOptionalReading); R-MEMBER-PROJECTION a projection that is a method or a property of an exported
+ * object or class is not read by (iii) (projectMember); R-REEXPORT a projection an envelope reader re-exports from another module
+ * is read only where it is declared, and only when that module is an envelope reader itself (projectReexport); R-ENVELOPE-NAMING a
+ * module that spells the envelope schema's literal rather than naming the constant is no envelope reader (projectSchemaLiteral);
+ * R-PI-TOOL (rider R3) a tool defined through a helper other than the agent SDK's - Pi's own defineTool, as reconcile-tool.ts's
+ * workflow_reconcile is - is not read by (ii) and stays NOT CLAIMED (toolPiDefineTool); R-SDK-REEXPORT the agent SDK's tool helper
+ * reached through a module of Pi's that re-exports it, or through a dynamic import of the SDK, is not read by (ii)
+ * (toolSdkReexport, toolDynamicImport); R-IMPORTED-HANDLER a handler, or anything it calls, imported from another module is not
+ * followed by (ii), the module's imports staying unresolved (toolImportedHandler); R-INVOKE-SPELLING a handler that reaches the
+ * registry other than by calling a member or a binding named invoke - through a member name composed at run time, or through
+ * call, apply, bind or Reflect on the method - is not read by (ii) (toolInvokeComposed).
  * PRECISION (not escapes): the bare third segment is never a needle - the adapter's observation-freshness note ("observations: <n>
  * rows, <r> ...", wb-973.9) and rf's own counters (reused_component_count, observation_reused_count) read quiet (bareWord,
  * rfInstanceCounter, rfObservationCounter), and A1 reads the adapter and the fixture helper that spell them.
@@ -159,6 +196,7 @@ import { createCuratedTools } from "../src/workbench/claude-capability-tools.js"
 import { nativeEvidence } from "../src/workbench/native-evidence.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
 import {
+  REACTIVE_FIBER_CLI_SCHEMA,
   REACTIVE_FIBER_CONTRACT_SOURCE,
   REACTIVEFIBER_RENDER_PREVIEW_CONTRACT,
   registerNativeReactiveFiberRender,
@@ -504,6 +542,36 @@ function textOf(path: string): string {
 }
 /** The character a lossy UTF-8 decode puts in place of bytes it cannot read (A1's liveness, wb-5618). */
 const REPLACEMENT = String.fromCodePoint(0xfffd);
+/** A file's bytes as read from disk, or none when it cannot be read (A1's liveness, wb-5618 respin #1). */
+function bytesOf(path: string): Uint8Array {
+  try {
+    return readFileSync(path);
+  } catch {
+    return new Uint8Array(0);
+  }
+}
+/** The strict UTF-8 decode of a file's bytes, a byte order mark kept as readFileSync keeps it, or undefined when the bytes are not
+ * valid UTF-8: lossiness is decided from the file's own bytes, never from the scanned text (respin #1, the gate's U1). */
+function strictDecode(bytes: Uint8Array): string | undefined {
+  try {
+    return new TextDecoder("utf-8", { fatal: true, ignoreBOM: true }).decode(bytes);
+  } catch {
+    return undefined;
+  }
+}
+/** A1's liveness: whether a scanned text is a file's whole content. A file whose bytes decode strictly counts only when the text's
+ * UTF-8 length is the file's size on disk and the text is that decode; a lossy file only when the text is the lossy decode of the
+ * whole file - so no blanked, cut-short or substituted text counts, whatever character it carries. */
+function scannedWhole(content: string, bytes: Uint8Array, size: number): { lossy: boolean; whole: boolean } {
+  const strict = strictDecode(bytes);
+  if (strict !== undefined) return { lossy: false, whole: bytes.length === size && Buffer.byteLength(content) === size && content === strict };
+  return { lossy: true, whole: bytes.length === size && content === new TextDecoder("utf-8", { ignoreBOM: true }).decode(bytes) };
+}
+/** A1's reading of one file, the walk's own: its KEY pairs and LABELs, and whether the text they ran over is its whole content. */
+function scanFile(path: string): { keyPairs: string[]; labels: string[]; lossy: boolean; whole: boolean } {
+  const content = textOf(path);
+  return { keyPairs: keyPairsOf(content), labels: labelsOf(content), ...scannedWhole(content, bytesOf(path), statSync(path).size) };
+}
 /** The bead's row of the tracked bead export: its title and its notes. */
 function exportRow(): { title: string; notes: string } {
   const rows: unknown[] = textOf(EXPORT_PATH)
@@ -692,12 +760,16 @@ function lexiconOf(fileName: string, source: string): ReaderLexicon {
 }
 const READER_SPECIFIER = /(?:^|\/)(?:providers\/reactivefiber|reactivefiber-observer)\.js$/;
 let readerCache: ReaderLexicon[] | undefined;
+/** Whether a module's lexicon makes it a Pi rf reader: it imports the provider or the adapter, or spells the capability id whole. */
+function isRfReader(lexicon: ReaderLexicon): boolean {
+  return lexicon.specifiers.some(specifier => READER_SPECIFIER.test(specifier)) || lexicon.literals.includes(PREVIEW_ID);
+}
 /** Pi's rf readers: every src .ts module importing the provider or the adapter, or spelling the capability id as a whole literal. */
 function rfReaders(): ReaderLexicon[] {
   readerCache ??= filesBelow(join(REPO, "src"))
     .filter(file => file.endsWith(".ts"))
     .map(file => lexiconOf(repoPath(file), textOf(file)))
-    .filter(lexicon => lexicon.specifiers.some(specifier => READER_SPECIFIER.test(specifier)) || lexicon.literals.includes(PREVIEW_ID));
+    .filter(isRfReader);
   return readerCache;
 }
 /** A key naming the first segment (either spelling) or the second, in any case. */
@@ -711,10 +783,6 @@ function namesObjectLiteral(literal: string): boolean {
   return words.includes(SECOND) || words.some((word, at) => word === head && words[at + 1] === tail);
 }
 
-/** The parsed syntax of a src module, by its repository path. */
-function syntaxOf(file: string): ts.SourceFile {
-  return ts.createSourceFile(file, textOf(join(REPO, file)), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-}
 /** Every node of a tree, depth first. */
 function nodesOf(root: ts.Node): ts.Node[] {
   const found: ts.Node[] = [];
@@ -725,48 +793,236 @@ function nodesOf(root: ts.Node): ts.Node[] {
   visit(root);
   return found;
 }
-function isExported(node: ts.Node): boolean {
-  return ts.canHaveModifiers(node) && (ts.getModifiers(node) ?? []).some(modifier => modifier.kind === ts.SyntaxKind.ExportKeyword);
-}
-/** The exported function a node lies inside, or "(module)" when it lies inside none. */
-function enclosingExport(node: ts.Node): string {
-  for (let at: ts.Node | undefined = node.parent; at !== undefined; at = at.parent) {
-    if (ts.isFunctionDeclaration(at) && isExported(at) && at.name !== undefined) return at.name.text;
-  }
-  return "(module)";
-}
-/** A call of `<anything>.<name>(...)`. */
-function callsMethod(node: ts.Node, name: string): boolean {
-  return ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression) && node.expression.name.text === name;
-}
 /** An expression with its parentheses, type assertions, satisfies clauses and non-null assertions taken off. */
 function unwrapped(expression: ts.Expression): ts.Expression {
   let at = expression;
   while (ts.isParenthesizedExpression(at) || ts.isAsExpression(at) || ts.isSatisfiesExpression(at) || ts.isTypeAssertionExpression(at) || ts.isNonNullExpression(at)) at = at.expression;
   return at;
 }
-/** Whether a module's syntax states the preview id: the literal itself, or a const of this module initialized to it. */
-function previewIdReader(nodes: readonly ts.Node[]): (expression: ts.Expression) => boolean {
-  const constants = new Set(
-    nodes.flatMap(node => {
-      if (!ts.isVariableDeclaration(node) || !ts.isIdentifier(node.name) || node.initializer === undefined) return [];
-      const value = unwrapped(node.initializer);
-      return ts.isStringLiteralLike(value) && value.text === PREVIEW_ID && (ts.getCombinedNodeFlags(node) & ts.NodeFlags.Const) !== 0 ? [node.name.text] : [];
-    }),
-  );
-  return expression => {
-    const value = unwrapped(expression);
-    return (ts.isStringLiteralLike(value) && value.text === PREVIEW_ID) || (ts.isIdentifier(value) && constants.has(value.text));
-  };
+/** A src module's syntax with the checker of a one-file program over it (BOUND, respin #1): a name resolves to its declarations the
+ * way TypeScript resolves it inside the module - its own scopes, no lib, its imports unresolved, so an imported binding resolves
+ * to its import declaration. */
+interface ModuleSyntax {
+  readonly file: string;
+  readonly tree: ts.SourceFile;
+  readonly checker: ts.TypeChecker;
+  readonly nodes: readonly ts.Node[];
 }
-/** Whether a parameter list declares a parameter typed JsonValue (a reading). */
-function takesReading(parameters: ts.NodeArray<ts.ParameterDeclaration>): boolean {
-  return parameters.some(parameter => parameter.type !== undefined && ts.isTypeReferenceNode(parameter.type) && ts.isIdentifier(parameter.type.typeName) && parameter.type.typeName.text === "JsonValue");
+function moduleSyntax(file: string, source: string): ModuleSyntax {
+  const name = `/${file}`;
+  const tree = ts.createSourceFile(name, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const options: ts.CompilerOptions = { noLib: true, noResolve: true, types: [], target: ts.ScriptTarget.Latest, module: ts.ModuleKind.ESNext };
+  const host: ts.CompilerHost = {
+    fileExists: path => path === name,
+    readFile: path => (path === name ? source : undefined),
+    getSourceFile: path => (path === name ? tree : undefined),
+    getDefaultLibFileName: () => "/lib.d.ts",
+    writeFile: () => undefined,
+    getCurrentDirectory: () => "/",
+    getCanonicalFileName: path => path,
+    useCaseSensitiveFileNames: () => true,
+    getNewLine: () => "\n",
+  };
+  const checker = ts.createProgram({ rootNames: [name], options, host }).getTypeChecker();
+  return { file, tree, checker, nodes: nodesOf(tree) };
+}
+/** The declarations of this module a name resolves to, a shorthand property's value included. */
+function declarationsOf(syntax: ModuleSyntax, name: ts.Identifier): ts.Declaration[] {
+  const symbol = ts.isShorthandPropertyAssignment(name.parent) && name.parent.name === name ? syntax.checker.getShorthandAssignmentValueSymbol(name.parent) : syntax.checker.getSymbolAtLocation(name);
+  return (symbol?.declarations ?? []).filter(declaration => declaration.getSourceFile() === syntax.tree);
+}
+/** The module an import binding is imported from, or undefined for any other node. */
+function importedFrom(node: ts.Node): string | undefined {
+  for (let at: ts.Node | undefined = node; at !== undefined; at = at.parent) {
+    if (ts.isImportDeclaration(at)) return ts.isStringLiteralLike(at.moduleSpecifier) ? at.moduleSpecifier.text : undefined;
+  }
+  return undefined;
+}
+interface ModuleExport {
+  readonly name: string;
+  readonly declarations: readonly ts.Node[];
+}
+/** Every name the module exports, with the declarations of this module it exports - by an export modifier, an export list (its
+ * aliases included) or export default; a re-export from another module exports no declaration of this one. */
+function exportsOf(syntax: ModuleSyntax): ModuleExport[] {
+  const module = syntax.checker.getSymbolAtLocation(syntax.tree);
+  if (module === undefined) return [];
+  return syntax.checker.getExportsOfModule(module).map(symbol => {
+    const target = (symbol.flags & ts.SymbolFlags.Alias) !== 0 ? syntax.checker.getAliasedSymbol(symbol) : symbol;
+    const own = (symbol.declarations ?? []).filter(declaration => ts.isExportAssignment(declaration));
+    return { name: symbol.name, declarations: [...new Set([...own, ...(target.declarations ?? [])])].filter(declaration => declaration.getSourceFile() === syntax.tree) };
+  });
+}
+/** The function a declaration states: a function declaration, or a variable or export default holding a function value (directly,
+ * or through a name of the module bound to one). */
+function functionOf(syntax: ModuleSyntax, declaration: ts.Node, seen: Set<ts.Node> = new Set()): ts.FunctionDeclaration | ts.ArrowFunction | ts.FunctionExpression | undefined {
+  if (seen.has(declaration)) return undefined;
+  seen.add(declaration);
+  if (ts.isFunctionDeclaration(declaration)) return declaration;
+  const value = ts.isVariableDeclaration(declaration) ? declaration.initializer : ts.isExportAssignment(declaration) ? declaration.expression : undefined;
+  const held = value === undefined ? undefined : unwrapped(value);
+  if (held === undefined) return undefined;
+  if (ts.isArrowFunction(held) || ts.isFunctionExpression(held)) return held;
+  if (!ts.isIdentifier(held)) return undefined;
+  for (const bound of declarationsOf(syntax, held)) {
+    const found = functionOf(syntax, bound, seen);
+    if (found !== undefined) return found;
+  }
+  return undefined;
+}
+/** The node a function value is held by: the variable or export default holding it, or the function itself. */
+function holderOf(fn: ts.Node): ts.Node {
+  let at = fn;
+  while (at.parent !== undefined && (ts.isParenthesizedExpression(at.parent) || ts.isAsExpression(at.parent) || ts.isSatisfiesExpression(at.parent) || ts.isTypeAssertionExpression(at.parent) || ts.isNonNullExpression(at.parent))) at = at.parent;
+  return at.parent !== undefined && (ts.isVariableDeclaration(at.parent) || ts.isExportAssignment(at.parent)) ? at.parent : fn;
+}
+/** The names the exported function a node lies in is exported under, or (module) when it lies in none. */
+function enclosingExport(exported: readonly ModuleExport[], node: ts.Node): string {
+  for (let at: ts.Node | undefined = node.parent; at !== undefined; at = at.parent) {
+    if (!ts.isFunctionDeclaration(at) && !ts.isArrowFunction(at) && !ts.isFunctionExpression(at)) continue;
+    const holder = holderOf(at);
+    const names = exported.filter(entry => entry.declarations.includes(holder)).map(entry => entry.name);
+    if (names.length > 0) return names.sort().join(",");
+  }
+  return "(module)";
+}
+/** Whether a type names JsonValue: directly, through an import alias of it, or through a type alias of the module naming it. */
+function namesJsonValue(syntax: ModuleSyntax, type: ts.TypeNode | undefined, seen: Set<ts.Node> = new Set()): boolean {
+  if (type === undefined || !ts.isTypeReferenceNode(type) || !ts.isIdentifier(type.typeName)) return false;
+  if (type.typeName.text === "JsonValue") return true;
+  return declarationsOf(syntax, type.typeName).some(declaration => {
+    if (seen.has(declaration)) return false;
+    seen.add(declaration);
+    if (ts.isImportSpecifier(declaration)) return (declaration.propertyName ?? declaration.name).text === "JsonValue";
+    return ts.isTypeAliasDeclaration(declaration) && namesJsonValue(syntax, declaration.type, seen);
+  });
+}
+/** A property's name as text: a plain or string name, or a computed name that is a string literal. */
+function propertyNameText(name: ts.PropertyName): string | undefined {
+  if (ts.isIdentifier(name) || ts.isStringLiteralLike(name)) return name.text;
+  const computed = ts.isComputedPropertyName(name) ? unwrapped(name.expression) : undefined;
+  return computed !== undefined && ts.isStringLiteralLike(computed) ? computed.text : undefined;
+}
+/** A string an expression states: a literal, or a const of the module holding one. */
+function stringOf(syntax: ModuleSyntax, expression: ts.Expression): string | undefined {
+  const value = unwrapped(expression);
+  if (ts.isStringLiteralLike(value)) return value.text;
+  if (!ts.isIdentifier(value)) return undefined;
+  for (const declaration of declarationsOf(syntax, value)) {
+    if (!ts.isVariableDeclaration(declaration) || declaration.initializer === undefined || (ts.getCombinedNodeFlags(declaration) & ts.NodeFlags.Const) === 0) continue;
+    const held = unwrapped(declaration.initializer);
+    if (ts.isStringLiteralLike(held)) return held.text;
+  }
+  return undefined;
+}
+/** (i) A Pi rf reader's preview-id properties, keyed by the exported function each lies in. */
+function registrationsOf(syntax: ModuleSyntax, exported: readonly ModuleExport[]): string[] {
+  const found: string[] = [];
+  for (const node of syntax.nodes) {
+    const value = ts.isPropertyAssignment(node) && propertyNameText(node.name) === "id" ? node.initializer : ts.isShorthandPropertyAssignment(node) && node.name.text === "id" ? node.name : undefined;
+    if (value === undefined || stringOf(syntax, value) !== PREVIEW_ID) continue;
+    const key = `${syntax.file}#${enclosingExport(exported, node)}`;
+    if (!found.includes(key)) found.push(key);
+  }
+  return found;
+}
+/** The member name an access spells: a property name, or an element access by a string literal. */
+function memberName(access: ts.PropertyAccessExpression | ts.ElementAccessExpression): string | undefined {
+  if (ts.isPropertyAccessExpression(access)) return access.name.text;
+  const key = unwrapped(access.argumentExpression);
+  return ts.isStringLiteralLike(key) ? key.text : undefined;
+}
+/** Whether a callee calls a member or a binding named invoke. */
+function callsInvoke(expression: ts.Expression): boolean {
+  const callee = unwrapped(expression);
+  if (ts.isPropertyAccessExpression(callee) || ts.isElementAccessExpression(callee)) return memberName(callee) === "invoke";
+  return ts.isIdentifier(callee) && callee.text === "invoke";
+}
+/** Whether nodes, or the declarations of the module any name in them resolves to (followed transitively), call invoke. */
+function reachesInvoke(syntax: ModuleSyntax, roots: readonly ts.Node[]): boolean {
+  const seen = new Set<ts.Node>();
+  const pending = [...roots];
+  for (let root = pending.pop(); root !== undefined; root = pending.pop()) {
+    if (seen.has(root)) continue;
+    seen.add(root);
+    for (const node of nodesOf(root)) {
+      if (ts.isCallExpression(node) && callsInvoke(node.expression)) return true;
+      if (ts.isIdentifier(node)) pending.push(...declarationsOf(syntax, node).filter(declaration => !seen.has(declaration)));
+    }
+  }
+  return false;
+}
+/** Whether a declaration binds the agent SDK module itself: a namespace or default import of it. */
+function bindsAgentSdk(declaration: ts.Node): boolean {
+  return (ts.isNamespaceImport(declaration) || ts.isImportClause(declaration)) && importedFrom(declaration) === AGENT_SDK;
+}
+/** Whether a callee is the agent SDK's tool helper: imported by name (aliases included), a member (by name or by a string element
+ * access) of a namespace or default import of the SDK, or a variable of the module bound to either (assigned or destructured). */
+function isToolHelper(syntax: ModuleSyntax, expression: ts.Expression, seen: Set<ts.Node> = new Set()): boolean {
+  const callee = unwrapped(expression);
+  if (ts.isPropertyAccessExpression(callee) || ts.isElementAccessExpression(callee)) {
+    const owner = unwrapped(callee.expression);
+    return memberName(callee) === "tool" && ts.isIdentifier(owner) && declarationsOf(syntax, owner).some(bindsAgentSdk);
+  }
+  if (!ts.isIdentifier(callee)) return false;
+  return declarationsOf(syntax, callee).some(declaration => {
+    if (seen.has(declaration)) return false;
+    seen.add(declaration);
+    if (ts.isImportSpecifier(declaration)) return importedFrom(declaration) === AGENT_SDK && (declaration.propertyName ?? declaration.name).text === "tool";
+    if (ts.isVariableDeclaration(declaration)) return declaration.initializer !== undefined && isToolHelper(syntax, declaration.initializer, seen);
+    if (!ts.isBindingElement(declaration) || !ts.isObjectBindingPattern(declaration.parent) || !ts.isVariableDeclaration(declaration.parent.parent)) return false;
+    const key = declaration.propertyName ?? declaration.name;
+    const source = declaration.parent.parent.initializer === undefined ? undefined : unwrapped(declaration.parent.parent.initializer);
+    return !ts.isObjectBindingPattern(key) && !ts.isArrayBindingPattern(key) && propertyNameText(key) === "tool" && source !== undefined && ts.isIdentifier(source) && declarationsOf(syntax, source).some(bindsAgentSdk);
+  });
+}
+/** (ii) A module's agent-SDK tools whose handler invokes the registry, keyed by the tool's name (else (unnamed)). */
+function toolsOf(syntax: ModuleSyntax): string[] {
+  const found: string[] = [];
+  for (const node of syntax.nodes) {
+    if (!ts.isCallExpression(node) || !isToolHelper(syntax, node.expression)) continue;
+    const [name, ...rest] = node.arguments;
+    if (!reachesInvoke(syntax, rest)) continue;
+    found.push(`${syntax.file}#${(name === undefined ? undefined : stringOf(syntax, name)) ?? "(unnamed)"}`);
+  }
+  return found;
+}
+/** (iii) An envelope reader's exports that are reading functions, keyed by the name each is exported under. */
+function projectionsOf(syntax: ModuleSyntax, exported: readonly ModuleExport[]): string[] {
+  return exported
+    .filter(entry => entry.declarations.some(declaration => (functionOf(syntax, declaration)?.parameters ?? []).some(parameter => namesJsonValue(syntax, parameter.type))))
+    .map(entry => `${syntax.file}#${entry.name}`);
 }
 /** The rf envelope's schema constant: a Pi rf reader whose syntax names it reads the envelope itself (an ENVELOPE READER). */
 const ENVELOPE_SCHEMA_CONSTANT = "REACTIVE_FIBER_CLI_SCHEMA";
 /** The agent SDK whose tool helper defines the curated agent server's tools. */
 const AGENT_SDK = "@anthropic-ai/claude-agent-sdk";
+interface ModuleSurfaces {
+  readonly file: string;
+  readonly reader: boolean;
+  readonly envelopeReader: boolean;
+  readonly registrations: readonly string[];
+  readonly tools: readonly string[];
+  readonly projections: readonly string[];
+}
+/** BOUND: the reading surfaces one src module states, read from its own source - (i) if it is a Pi rf reader, (iii) if it is an
+ * envelope reader, (ii) if it names the agent SDK. */
+function moduleSurfaces(file: string, source: string): ModuleSurfaces {
+  const reader = isRfReader(lexiconOf(file, source));
+  const namesAgentSdk = source.includes(AGENT_SDK);
+  if (!reader && !namesAgentSdk) return { file, reader, envelopeReader: false, registrations: [], tools: [], projections: [] };
+  const syntax = moduleSyntax(file, source);
+  const exported = exportsOf(syntax);
+  const envelopeReader = reader && syntax.nodes.some(node => ts.isIdentifier(node) && node.text === ENVELOPE_SCHEMA_CONSTANT);
+  return {
+    file,
+    reader,
+    envelopeReader,
+    registrations: reader ? registrationsOf(syntax, exported) : [],
+    tools: namesAgentSdk ? toolsOf(syntax) : [],
+    projections: envelopeReader ? projectionsOf(syntax, exported) : [],
+  };
+}
 interface SurfaceDerivation {
   readonly readers: number;
   readonly envelopeReaders: readonly string[];
@@ -775,54 +1031,99 @@ interface SurfaceDerivation {
   readonly projections: readonly string[];
 }
 let derivationCache: SurfaceDerivation | undefined;
-/** BOUND (wb-5618): the reading surfaces src states, derived and never restated, each keyed `<module>#<symbol>` - (i) every object
- * property id naming the preview id (the literal or a const of the module) in a Pi rf reader, by its enclosing exported function;
- * (ii) every tool of a src module importing tool from the agent SDK whose handler invokes the registry, by the tool's name; (iii)
- * every exported function or exported const function value of an envelope reader that declares a parameter typed JsonValue. */
+/** BOUND (wb-5618): the reading surfaces src states, derived one module at a time and never restated, each keyed
+ * `<module>#<name>` - (i) registrations, (ii) tools, (iii) projections, in the spellings the header lists. */
 function surfaceDerivation(): SurfaceDerivation {
   if (derivationCache !== undefined) return derivationCache;
-  const readers = rfReaders().map(reader => reader.file);
-  const registrations: string[] = [];
-  const envelopeReaders: string[] = [];
-  const projections: string[] = [];
-  for (const file of readers) {
-    const nodes = nodesOf(syntaxOf(file));
-    const namesPreview = previewIdReader(nodes);
-    for (const node of nodes) {
-      if (!ts.isPropertyAssignment(node) || !(ts.isIdentifier(node.name) || ts.isStringLiteralLike(node.name)) || node.name.text !== "id" || !namesPreview(node.initializer)) continue;
-      const key = `${file}#${enclosingExport(node)}`;
-      if (!registrations.includes(key)) registrations.push(key);
-    }
-    if (!nodes.some(node => ts.isIdentifier(node) && node.text === ENVELOPE_SCHEMA_CONSTANT)) continue;
-    envelopeReaders.push(file);
-    for (const node of nodes) {
-      if (ts.isFunctionDeclaration(node) && isExported(node) && node.name !== undefined && takesReading(node.parameters)) projections.push(`${file}#${node.name.text}`);
-      if (!ts.isVariableStatement(node) || !isExported(node)) continue;
-      for (const declaration of node.declarationList.declarations) {
-        const value = declaration.initializer === undefined ? undefined : unwrapped(declaration.initializer);
-        if (ts.isIdentifier(declaration.name) && value !== undefined && (ts.isArrowFunction(value) || ts.isFunctionExpression(value)) && takesReading(value.parameters)) {
-          projections.push(`${file}#${declaration.name.text}`);
-        }
-      }
-    }
-  }
-  const tools: string[] = [];
-  for (const path of filesBelow(join(REPO, "src")).filter(entry => entry.endsWith(".ts") && textOf(entry).includes(AGENT_SDK))) {
-    const file = repoPath(path);
-    const tree = syntaxOf(file);
-    const helpers = tree.statements.flatMap(statement => {
-      if (!ts.isImportDeclaration(statement) || !ts.isStringLiteralLike(statement.moduleSpecifier) || statement.moduleSpecifier.text !== AGENT_SDK) return [];
-      const bindings = statement.importClause?.namedBindings;
-      return bindings !== undefined && ts.isNamedImports(bindings) ? bindings.elements.filter(element => (element.propertyName ?? element.name).text === "tool").map(element => element.name.text) : [];
-    });
-    for (const node of nodesOf(tree)) {
-      if (!ts.isCallExpression(node) || !ts.isIdentifier(node.expression) || !helpers.includes(node.expression.text)) continue;
-      const [name, ...rest] = node.arguments;
-      if (name !== undefined && ts.isStringLiteralLike(name) && rest.some(argument => nodesOf(argument).some(inner => callsMethod(inner, "invoke")))) tools.push(`${file}#${name.text}`);
-    }
-  }
-  derivationCache = { readers: readers.length, envelopeReaders, registrations: registrations.sort(), tools: tools.sort(), projections: projections.sort() };
+  const modules = filesBelow(join(REPO, "src"))
+    .filter(entry => entry.endsWith(".ts"))
+    .map(path => moduleSurfaces(repoPath(path), textOf(path)));
+  derivationCache = {
+    readers: modules.filter(entry => entry.reader).length,
+    envelopeReaders: modules.filter(entry => entry.envelopeReader).map(entry => entry.file),
+    registrations: modules.flatMap(entry => entry.registrations).sort(),
+    tools: modules.flatMap(entry => entry.tools).sort(),
+    projections: modules.flatMap(entry => entry.projections).sort(),
+  };
   return derivationCache;
+}
+/** Every reading surface src derives, sorted. */
+function derivedSurfaces(): string[] {
+  const derivation = surfaceDerivation();
+  return [...derivation.registrations, ...derivation.tools, ...derivation.projections].sort();
+}
+/** The module path the derivation controls are read as (no such src module exists). */
+const CONTROL_MODULE = "src/workbench/derivation-control.ts";
+const REGISTRAR = 'import type { CapabilityRegistry } from "./capability-registry.js";\nimport { REACTIVE_FIBER_CONTRACT_SOURCE } from "./providers/reactivefiber.js";\n';
+const registers = (id: string): string => `registry.register({ descriptor: { id: ${id}, contractSource: REACTIVE_FIBER_CONTRACT_SOURCE } } as never);`;
+const PREVIEW = JSON.stringify(PREVIEW_ID);
+const toolModule = (helper: string, body: string): string =>
+  `${helper}\nimport type { CapabilityRegistry } from "./capability-registry.js";\nexport function probeTools(registry: CapabilityRegistry) {\n${body}\n}\n`;
+const NAMED_TOOL = `import { tool } from "${AGENT_SDK}";`;
+const INVOKING = 'async () => registry.invoke("x", {}, {} as never)';
+const READER_HEAD = `import type { JsonValue } from "./capability-registry.js";\nimport { ${ENVELOPE_SCHEMA_CONSTANT} } from "./providers/reactivefiber.js";\nexport const schema = ${ENVELOPE_SCHEMA_CONSTANT};\n`;
+const PROJECTING = "{\n  return JSON.stringify(value);\n}";
+/** BOUND (respin #1): the derivation's own controls, each a module source read through moduleSurfaces as CONTROL_MODULE - a
+ * positive row for every spelling (i)-(iii) read, precision rows for what they must not read, and one quiet row per named residual
+ * of the derivations (registerComposedId, registerImportedId, toolPiDefineTool, toolSdkReexport, toolDynamicImport,
+ * toolImportedHandler, toolInvokeComposed, projectOptionalReading, projectMember, projectReexport, projectSchemaLiteral). The
+ * bound witness holds what each derives. */
+const DERIVATION_CONTROLS: Readonly<Record<string, string>> = {
+  registerLiteral: `${REGISTRAR}export function registerProbe(registry: CapabilityRegistry): void {\n  ${registers(PREVIEW)}\n}\n`,
+  registerModuleConst: `${REGISTRAR}const PREVIEW = ${PREVIEW};\nexport function registerProbe(registry: CapabilityRegistry): void {\n  ${registers("PREVIEW")}\n}\n`,
+  registerHeldDescriptor: `${REGISTRAR}export function registerProbe(registry: CapabilityRegistry): void {\n  const descriptor = { id: ${PREVIEW} } as const;\n  registry.register({ descriptor } as never);\n}\n`,
+  registerShorthand: `${REGISTRAR}const id = ${PREVIEW};\nexport function registerProbe(registry: CapabilityRegistry): void {\n  registry.register({ descriptor: { id } } as never);\n}\n`,
+  registerComputedName: `${REGISTRAR}export function registerProbe(registry: CapabilityRegistry): void {\n  registry.register({ descriptor: { ["id"]: ${PREVIEW} } } as never);\n}\n`,
+  registerArrow: `${REGISTRAR}export const registerProbe = (registry: CapabilityRegistry): void => {\n  ${registers(PREVIEW)}\n};\n`,
+  registerListed: `${REGISTRAR}function register(registry: CapabilityRegistry): void {\n  ${registers(PREVIEW)}\n}\nexport { register as registerProbe };\n`,
+  registerInModule: `${REGISTRAR}function register(registry: CapabilityRegistry): void {\n  ${registers(PREVIEW)}\n}\nexport const registered = register.name;\n`,
+  registerComposedId: `${REGISTRAR}export function registerProbe(registry: CapabilityRegistry): void {\n  ${registers(`${JSON.stringify(PREVIEW_ID.split("."))}.join(".")`)}\n}\n`,
+  registerImportedId: `${REGISTRAR}import { PREVIEW } from "./preview-id.js";\nexport function registerProbe(registry: CapabilityRegistry): void {\n  ${registers("PREVIEW")}\n}\n`,
+  toolNamed: toolModule(NAMED_TOOL, `  return [tool("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolAliased: toolModule(`import { tool as defineTool } from "${AGENT_SDK}";`, `  return [defineTool("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolNamespace: toolModule(`import * as sdk from "${AGENT_SDK}";`, `  return [sdk.tool("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolDefaultImport: toolModule(`import sdk from "${AGENT_SDK}";`, `  return [sdk.tool("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolRebound: toolModule(NAMED_TOOL, `  const make = tool;\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolDestructured: toolModule(`import * as sdk from "${AGENT_SDK}";`, `  const { tool: make } = sdk;\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolNamespaceElement: toolModule(`import * as sdk from "${AGENT_SDK}";`, `  return [sdk["tool"]("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolHandlerReference: toolModule(NAMED_TOOL, `  const handler = ${INVOKING};\n  return [tool("probe_invoke", "probe", {}, handler as never)];`),
+  toolHandlerFunction: toolModule(NAMED_TOOL, '  async function handler() {\n    return registry.invoke("x", {}, {} as never);\n  }\n  return [tool("probe_invoke", "probe", {}, handler)];'),
+  toolHandlerIndirect: toolModule(NAMED_TOOL, `  const read = ${INVOKING};\n  const handler = async () => read();\n  return [tool("probe_invoke", "probe", {}, handler)];`),
+  toolHandlerMember: toolModule(NAMED_TOOL, `  const handlers = { read: ${INVOKING} };\n  return [tool("probe_invoke", "probe", {}, handlers.read)];`),
+  toolNameConst: toolModule(NAMED_TOOL, `  const name = "probe_invoke";\n  return [tool(name, "probe", {}, ${INVOKING})];`),
+  toolNameComposed: toolModule(NAMED_TOOL, `  return [tool(["probe", "invoke"].join("_"), "probe", {}, ${INVOKING})];`),
+  toolInvokeElement: toolModule(NAMED_TOOL, '  return [tool("probe_invoke", "probe", {}, async () => registry["invoke"]("x", {}, {} as never))];'),
+  toolInvokeBinding: toolModule(NAMED_TOOL, '  const { invoke } = registry;\n  return [tool("probe_invoke", "probe", {}, async () => invoke("x", {}, {} as never))];'),
+  toolInspectOnly: toolModule(NAMED_TOOL, '  return [tool("probe_inspect", "probe", {}, async () => registry.inspect("x", {}, {} as never))];'),
+  toolPiDefineTool: toolModule('import { defineTool } from "@earendil-works/pi-coding-agent";', `  return defineTool({ name: "probe_invoke", execute: ${INVOKING} } as never);`),
+  toolSdkReexport: toolModule('import { tool } from "./agent-sdk.js";', `  return [tool("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolDynamicImport: toolModule("", `  return import("${AGENT_SDK}").then(sdk => [sdk.tool("probe_invoke", "probe", {}, ${INVOKING})]);`),
+  toolImportedHandler: toolModule(`${NAMED_TOOL}\nimport { handler } from "./probe-handlers.js";`, '  return [tool("probe_invoke", "probe", {}, handler)];'),
+  toolInvokeComposed: toolModule(NAMED_TOOL, '  return [tool("probe_invoke", "probe", {}, async () => registry[["inv", "oke"].join("") as "invoke"]("x", {}, {} as never))];'),
+  projectModifier: `${READER_HEAD}export function project(value: JsonValue): string ${PROJECTING}\n`,
+  projectConstValue: `${READER_HEAD}export const project = (value: JsonValue): string => JSON.stringify(value);\n`,
+  projectListed: `${READER_HEAD}function project(value: JsonValue): string ${PROJECTING}\nexport { project };\n`,
+  projectListedAlias: `${READER_HEAD}function project(value: JsonValue): string ${PROJECTING}\nexport { project as projectAlias };\n`,
+  projectDefault: `${READER_HEAD}export default function project(value: JsonValue): string ${PROJECTING}\n`,
+  projectDefaultValue: `${READER_HEAD}const project = (value: JsonValue): string => JSON.stringify(value);\nexport default project;\n`,
+  projectRebound: `${READER_HEAD}function project(value: JsonValue): string ${PROJECTING}\nexport const used = project;\n`,
+  projectImportAlias: `import type { JsonValue as Reading } from "./capability-registry.js";\nimport { ${ENVELOPE_SCHEMA_CONSTANT} } from "./providers/reactivefiber.js";\nexport const schema = ${ENVELOPE_SCHEMA_CONSTANT};\nexport function project(value: Reading): string ${PROJECTING}\n`,
+  projectTypeAlias: `${READER_HEAD}type Reading = JsonValue;\nexport function project(value: Reading): string ${PROJECTING}\n`,
+  projectUnexported: `${READER_HEAD}function project(value: JsonValue): string ${PROJECTING}\nexport const projected = project({});\n`,
+  projectScalar: `${READER_HEAD}export function project(value: string): string ${PROJECTING}\n`,
+  projectOptionalReading: `${READER_HEAD}export function project(value: JsonValue | undefined): string ${PROJECTING}\n`,
+  projectMember: `${READER_HEAD}export const projections = {\n  project(value: JsonValue): string ${PROJECTING},\n};\n`,
+  projectReexport: `${READER_HEAD}export { project } from "./projections.js";\n`,
+  projectSchemaLiteral: `import type { JsonValue } from "./capability-registry.js";\nimport { REACTIVEFIBER_RENDER_PREVIEW_CONTRACT } from "./providers/reactivefiber.js";\nexport const contract = REACTIVEFIBER_RENDER_PREVIEW_CONTRACT;\nexport const schema = ${JSON.stringify(REACTIVE_FIBER_CLI_SCHEMA)};\nexport function project(value: JsonValue): string ${PROJECTING}\n`,
+};
+/** What each derivation control derives, its surfaces keyed `#<name>` (the control module's path taken off). */
+function derivationControls(): Record<string, string[]> {
+  return Object.fromEntries(
+    Object.entries(DERIVATION_CONTROLS).map(([name, source]) => {
+      const surfaces = moduleSurfaces(CONTROL_MODULE, source);
+      return [name, [...surfaces.registrations, ...surfaces.tools, ...surfaces.projections].map(key => key.slice(CONTROL_MODULE.length)).sort()];
+    }),
+  );
 }
 
 const oldPath = process.env.PATH;
@@ -986,6 +1287,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const names = readers.map(reader => reader.file).sort();
     const floor = { core: CORE_READERS.every(file => names.includes(file)), count: names.length >= READER_FLOOR };
     const keyHits = readers.flatMap(reader => reader.keys.filter(namesObjectKey).map(key => `${reader.file}: ${key}`));
+    // BOUND (respin #1, rider R1): the term this case judges, recorded as it runs - the components key it reads every rf reader for.
+    reach(`${SECOND} key`);
     const literalHits = readers.flatMap(reader => reader.literals.filter(namesObjectLiteral).map(literal => `${reader.file}: ${literal.slice(0, 120)}`));
     const controls = {
       adapterReadsObservations: readers.some(reader => reader.file === "src/workbench/reactivefiber-observer.ts" && reader.keys.includes("observations")),
@@ -1003,6 +1306,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     registerReactiveFiberRender(injected, () => Promise.reject(new Error("the injected reader is never invoked here")), ROOT);
     const native = rfDescriptors(await nativeDescriptors()).map(descriptor => descriptor.id);
     const injectedIds = rfDescriptors(injected.catalogSnapshot().map(entry => entry.descriptor)).map(descriptor => descriptor.id);
+    // BOUND (respin #1, rider R1): the term this case judges, recorded as it runs - the rf envelope whose capability roster it reads.
+    reach("rf envelope");
     const carriers = [...rfDescriptors(await nativeDescriptors()), ...rfDescriptors(injected.catalogSnapshot().map(entry => entry.descriptor))].map(
       descriptor => descriptor.contractSource === REACTIVE_FIBER_CONTRACT_SOURCE,
     );
@@ -1021,13 +1326,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const labelHits: string[] = [];
     const scanned = new Set<string>();
     files.forEach((file, index) => {
-      const content = textOf(file);
-      for (const pair of keyPairsOf(content)) keyHits.push(`${paths[index]}: ${pair}`);
-      for (const label of labelsOf(content)) labelHits.push(`${paths[index]}: ${label}`);
-      // Liveness (wb-5618, the gate's F2): the readings above ran over the file's own bytes - the scanned text's UTF-8 length is the
-      // file's size on disk, or the text is not empty and carries the replacement character of a lossy decode.
-      const size = statSync(file).size;
-      if (Buffer.byteLength(content) === size || (size > 0 && content.length > 0 && content.includes(REPLACEMENT))) scanned.add(file);
+      const scan = scanFile(file);
+      for (const pair of scan.keyPairs) keyHits.push(`${paths[index]}: ${pair}`);
+      for (const label of scan.labels) labelHits.push(`${paths[index]}: ${label}`);
+      // Liveness (wb-5618, the gate's F2; respin #1, the gate's U1): the readings ran over the file's whole content, judged against
+      // the file's own bytes read again from disk (scannedWhole).
+      if (scan.whole) scanned.add(file);
     });
     const unscanned = files.filter(file => !scanned.has(file)).map(repoPath);
     const testExtensions = new Set(paths.filter(path => path.startsWith("test/")).map(path => extname(path)));
@@ -1043,11 +1347,69 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       depthFour: paths.some(path => path.split("/").length >= 5),
       testExtensions: [".json", ".md", ".mjs", ".ts"].every(extension => testExtensions.has(extension)),
     };
+    // The liveness predicate's own controls (respin #1): each way a scanned text can fall short of a file, for a sample that decodes
+    // strictly and for a lossy one; and, in makeScratch scratch, a lossy file and two end-of-file plants read through scanFile, the
+    // walk's own per-file reading.
+    const sample = `export const pad = ${JSON.stringify("x".repeat(96))};\n`;
+    const strictBytes = Buffer.from(sample);
+    const lossyBytes = Buffer.concat([strictBytes, Buffer.from([0xff, 0xfe]), strictBytes]);
+    const lossyText = new TextDecoder("utf-8", { ignoreBOM: true }).decode(lossyBytes);
+    // A strict file may carry the replacement character itself (valid UTF-8): its lossiness is still read from its bytes.
+    const carrying = `${sample.slice(0, 64)}${REPLACEMENT}`;
+    const carryingBytes = Buffer.from(carrying);
+    const whole = (content: string, bytes: Uint8Array): boolean => scannedWhole(content, bytes, bytes.length).whole;
+    const folder = makeScratch("rf-fiber-node-reuse-echo-scan-");
+    scratches.push(folder);
+    const lossyFile = join(folder, "lossy.bin");
+    writeFileSync(lossyFile, lossyBytes);
+    const keyPlant = join(folder, "key-plant.ts");
+    writeFileSync(keyPlant, `${sample}// ${KEY_CONTROLS.innerPair ?? ""}\n`);
+    const labelPlant = join(folder, "label-plant.ts");
+    writeFileSync(labelPlant, `${sample}// ${LABEL_CONTROLS.ownerPhrase ?? ""}\n`);
+    const onDisk = scanFile(lossyFile);
+    const liveness = {
+      strict: {
+        whole: whole(sample, strictBytes),
+        empty: whole("", new Uint8Array(0)),
+        blank: whole("", strictBytes),
+        oneShort: whole(sample.slice(0, -1), strictBytes),
+        cutShort: whole(sample.slice(0, 64), strictBytes),
+        cutWithReplacement: whole(`${sample.slice(0, 64)}${REPLACEMENT}`, strictBytes),
+        substituted: whole("y".repeat(strictBytes.length), strictBytes),
+        decidedLossy: scannedWhole(sample, strictBytes, strictBytes.length).lossy,
+        carryingWhole: whole(carrying, carryingBytes),
+        carryingDecidedLossy: scannedWhole(carrying, carryingBytes, carryingBytes.length).lossy,
+      },
+      lossy: {
+        whole: whole(lossyText, lossyBytes),
+        blank: whole("", lossyBytes),
+        cutShort: whole(lossyText.slice(0, 64), lossyBytes),
+        cutWithReplacement: whole(`${lossyText.slice(0, 64)}${REPLACEMENT}`, lossyBytes),
+        decidedLossy: scannedWhole(lossyText, lossyBytes, lossyBytes.length).lossy,
+      },
+      disk: { lossyFile: { lossy: onDisk.lossy, whole: onDisk.whole }, keyPlant: scanFile(keyPlant).keyPairs.length, labelPlant: scanFile(labelPlant).labels.length },
+    };
     expect(floors, `src and test files read: ${paths.length}`).toStrictEqual({ src: true, test: true });
     expect(reads).toStrictEqual({ self: true, roster: true, adapterBareWord: true, helperCounters: true, dotDirectory: true, depthFour: true, testExtensions: true });
     expect({ keyHits, labelHits }, "a KEY pair or a LABEL below src/ or test/").toStrictEqual({ keyHits: [], labelHits: [] });
     expect(unscanned.slice(0, 10), `files the readings did not scan as read from disk (${unscanned.length} of ${files.length})`).toEqual([]);
-    return { roots, floors, reads, keyHits, labelHits, unscanned };
+    expect(liveness, "A1's liveness predicate and the walk's own reading, on their controls").toStrictEqual({
+      strict: {
+        whole: true,
+        empty: true,
+        blank: false,
+        oneShort: false,
+        cutShort: false,
+        cutWithReplacement: false,
+        substituted: false,
+        decidedLossy: false,
+        carryingWhole: true,
+        carryingDecidedLossy: false,
+      },
+      lossy: { whole: true, blank: false, cutShort: false, cutWithReplacement: false, decidedLossy: true },
+      disk: { lossyFile: { lossy: true, whole: true }, keyPlant: 1, labelPlant: 1 },
+    });
+    return { roots, floors, reads, keyHits, labelHits, unscanned, liveness };
   },
   A2: async () => {
     const { title } = exportRow();
@@ -1278,13 +1640,19 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
 };
 
+/** The bound case's title: the roster's tests must register it (respin #1), so the bound case cannot leave with its roster entry. */
+const BOUND_TITLE = "bound: every pin of rows T and B holds one term of the export title's absent-today note or one reading surface src derives";
+
 describe("wb-csbt.2 rf render-report component-reuse echo census (TSX-RESOURCE-EFFICIENCY-FRONTIER-R2)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster, the owner's acceptance clauses and the cases agree", () => {
+  it("the judged set: the frozen shape, the out-of-file roster, the owner's acceptance clauses and the cases agree", { timeout: 120_000 }, () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:2", "A:3", "B:5", "C:3"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, labelDigest: digestOf(label), pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, labelDigest, pins }) => ({ id, labelDigest, pins: pins.map(pin => pin.id) })),
     );
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
+    // BOUND (respin #1): rows T and B hold as many pins as their outside anchors name - the export title's absent-today terms and
+    // the reading surfaces src derives - so a pin hollowed through this file and the roster together reds here too.
+    expect(ROWS.filter(row => row.id === "T" || row.id === "B").map(row => `${row.id}:${row.pins.length}`)).toEqual([`T:${exportTrigger().terms.length}`, `B:${derivedSurfaces().length}`]);
     // The owner's acceptance clauses in the tracked bead export are exactly the labels of rows A, B and C, in order.
     expect(ownerClauses()).toEqual(ROWS.filter(row => row.id !== "T").map(row => row.label));
     // And row T's label is the export title's trigger (wb-5618): every judged label is held to the export, the trigger first.
@@ -1324,6 +1692,8 @@ describe("wb-csbt.2 rf render-report component-reuse echo census (TSX-RESOURCE-E
       Object.keys(LABEL_CONTROLS),
       Object.keys(QUIET_CONTROLS),
     ]);
+    // And the derivation controls are the ones the roster's bound witness names (respin #1).
+    expect(Object.keys(objectOf(objectOf(ROSTER.bound, "roster bound").controls, "roster bound controls"))).toStrictEqual(Object.keys(DERIVATION_CONTROLS));
   });
 
   for (const row of ROWS) {
@@ -1339,10 +1709,10 @@ describe("wb-csbt.2 rf render-report component-reuse echo census (TSX-RESOURCE-E
     });
   }
 
-  it("bound: every pin of rows T and B holds one term of the export title's absent-today note or one reading surface src derives", { timeout: 120_000 }, () => {
+  it(BOUND_TITLE, { timeout: 120_000 }, () => {
     const trigger = exportTrigger();
     const derivation = surfaceDerivation();
-    const surfaces = [...derivation.registrations, ...derivation.tools, ...derivation.projections].sort();
+    const surfaces = derivedSurfaces();
     const pinsOf = (id: string): string[] => [...(ROWS.find(row => row.id === id)?.pins ?? [])];
     const tPins = pinsOf("T");
     const bPins = pinsOf("B");
@@ -1358,13 +1728,19 @@ describe("wb-csbt.2 rf render-report component-reuse echo census (TSX-RESOURCE-E
       },
       unbound: [...tPins.filter(pin => !trigger.terms.includes(BINDINGS[pin] ?? "")), ...bPins.filter(pin => !surfaces.includes(BINDINGS[pin] ?? ""))],
       stale: Object.keys(BINDINGS).filter(pin => !tPins.includes(pin) && !bPins.includes(pin)),
-      // Each B case ran before this one (the registration case holds the order): what it reached, recorded by reach().
-      reached: bPins.map(pin => ({ pin, symbols: [...(REACHED.get(pin) ?? [])].sort() })),
+      // Each T and B case ran before this one (the registration case holds the order): what it reached, recorded by reach().
+      reached: [...tPins, ...bPins].map(pin => ({ pin, symbols: [...(REACHED.get(pin) ?? [])].sort() })),
+      // The derivation's own controls (respin #1): what each control module derives.
+      controls: derivationControls(),
     };
     const symbolOf = (binding: string): string => binding.slice(binding.indexOf("#") + 1);
     expect(
       bPins.filter(pin => !(REACHED.get(pin)?.has(symbolOf(BINDINGS[pin] ?? "")) ?? false)),
       "a B pin whose case did not reach, as it ran, the surface it is bound to",
+    ).toEqual([]);
+    expect(
+      tPins.filter(pin => ![...(REACHED.get(pin) ?? [])].some(term => (BINDINGS[pin] ?? "").includes(term))),
+      "a T pin whose bound term does not name what its case judged, as it ran",
     ).toEqual([]);
     expect(witness.trigger.map(({ pins }) => pins.length), "each term of the export title's absent-today note is held by exactly one T pin").toEqual(trigger.terms.map(() => 1));
     expect(witness.surfaces.map(({ pins }) => pins.length), "each reading surface src derives is held by exactly one B pin").toEqual(surfaces.map(() => 1));
@@ -1384,6 +1760,7 @@ describe("wb-csbt.2 rf render-report component-reuse echo census (TSX-RESOURCE-E
     walk(task.file.tasks);
     const titles = walked.map(entry => entry.name);
     expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
+    expect(titles, "the bound case is registered (its witness is the roster's bound record)").toContain(BOUND_TITLE);
     expect(
       titles.filter((name, index) => titles.indexOf(name) !== index),
       "titles registered twice (an alias or a decoy)",
