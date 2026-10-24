@@ -575,6 +575,7 @@
                 "/fixture/rf-workspace"
               ],
               "piBasis": [],
+              "evidence": {},
               "surfaced": null
             },
             "planAfter": {
@@ -590,6 +591,7 @@
                 "/fixture/rf-workspace"
               ],
               "piBasis": [],
+              "evidence": {},
               "surfaced": null
             }
           }
@@ -622,7 +624,46 @@
             "reconcile": [
               "reactivefiber.render.preview"
             ],
-            "planSpelling": []
+            "planSpelling": [],
+            "registrations": {
+              "native": [
+                "reactivefiber.render.preview"
+              ],
+              "injected": [
+                "reactivefiber.render.preview"
+              ]
+            },
+            "binary": {
+              "src/workbench/providers/reactivefiber.ts": 1
+            },
+            "readers": [
+              "src/workbench/native-evidence.ts",
+              "src/workbench/providers/reactivefiber.ts",
+              "src/workbench/reactivefiber-observer.ts"
+            ],
+            "importers": {
+              "src/workbench/hosts/local-detached.ts": [
+                "registerNativeReactiveFiberRender"
+              ],
+              "src/workbench/native-evidence.ts": [
+                "REACTIVE_FIBER_CLI_SCHEMA"
+              ],
+              "src/workbench/native-modules.ts": [
+                "dynamic-import",
+                "registerNativeReactiveFiberRender"
+              ],
+              "src/workbench/reactivefiber-observer.ts": [
+                "REACTIVEFIBER_RENDER_PREVIEW_CONTRACT",
+                "REACTIVE_FIBER_CLI_SCHEMA"
+              ]
+            },
+            "residuals": {
+              "R-UNNAMED-RF": {
+                "binary": 0,
+                "schema": 0,
+                "providerNames": 0
+              }
+            }
           }
         }
       ]
@@ -691,6 +732,7 @@
                 "/fixture/rf-workspace"
               ],
               "piBasis": [],
+              "evidence": {},
               "surfaced": "conservative"
             },
             "observed": {
@@ -706,6 +748,7 @@
                 "/fixture/rf-workspace"
               ],
               "piBasis": [],
+              "evidence": {},
               "surfaced": "observed"
             }
           }
@@ -726,6 +769,7 @@
                 "/fixture/rf-workspace"
               ],
               "piBasis": [],
+              "evidence": {},
               "surfaced": "speculative",
               "mapped": false
             },
@@ -742,6 +786,7 @@
                 "/fixture/rf-workspace"
               ],
               "piBasis": [],
+              "evidence": {},
               "surfaced": "snapshot_exact",
               "mapped": false
             },
@@ -758,6 +803,7 @@
                 "/fixture/rf-workspace"
               ],
               "piBasis": [],
+              "evidence": {},
               "surfaced": "Conservative",
               "mapped": false
             }
@@ -930,6 +976,10 @@
             "refusedBy": [],
             "residuals": {
               "R-INLINE-FIXTURE": 0
+            },
+            "walk": {
+              "filesFloorMet": true,
+              "unwalked": []
             }
           }
         }
@@ -944,8 +994,10 @@
           "witness": {
             "floors": {
               "modules": true,
+              "listed": true,
               "literals": true,
               "identifiers": true,
+              "patterns": true,
               "basisSites": true
             },
             "anchors": {
@@ -953,6 +1005,7 @@
               "observer": true
             },
             "unparsed": [],
+            "unwalked": [],
             "planFields": [],
             "derivations": []
           }
@@ -1000,6 +1053,30 @@
               "predictionFallback": {
                 "derivations": 1,
                 "planFields": 2
+              },
+              "regexField": {
+                "derivations": 1,
+                "planFields": 1
+              },
+              "wordList": {
+                "derivations": 1,
+                "planFields": 1
+              },
+              "separatorTransform": {
+                "derivations": 1,
+                "planFields": 1
+              },
+              "spacedWhole": {
+                "derivations": 1,
+                "planFields": 1
+              },
+              "camelSuffix": {
+                "derivations": 1,
+                "planFields": 2
+              },
+              "caseVariant": {
+                "derivations": 1,
+                "planFields": 1
               }
             },
             "quiet": {
@@ -1018,6 +1095,10 @@
               "countsVerbatim": {
                 "derivations": 0,
                 "planFields": 2
+              },
+              "prose": {
+                "derivations": 0,
+                "planFields": 0
               }
             },
             "residuals": {
@@ -1040,6 +1121,10 @@
               "R-CROSS-MODULE": {
                 "derivations": 0,
                 "planFields": 0
+              },
+              "R-PROSE": {
+                "derivations": 0,
+                "planFields": 0
               }
             }
           }
@@ -1048,7 +1133,7 @@
     }
   ],
   "tests": [
-    "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "the judged set: the frozen shape, the out-of-file roster, the owner's acceptance clauses and the cases agree",
     "A1",
     "A2",
     "A3",
@@ -1062,6 +1147,7 @@
     "C2",
     "D1",
     "D2",
+    "reach: rows A and B reached every rf surface src holds, for every measured plan and every word, and every passing pin reached its witness comparison",
     "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
   ]
 }
