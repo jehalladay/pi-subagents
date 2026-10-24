@@ -79,16 +79,20 @@
     ]
   },
   "federationMatchers": [
-    "\\bpublication[\\s_-]?state\\b",
-    "\\bpublic[\\s_-]?state\\b",
-    "\\bwitness[\\s_-]?digest\\b",
-    "\\bcompleteness[\\s_-]?reason\\b",
-    "\\bmatched[\\s_-]?count\\b",
-    "\\bspec[\\s_-]?digest\\b",
-    "\\bresource[\\s_-]?revision\\b",
-    "\\bevidence[\\s_-]?digest\\b",
-    "\\bprovenance[\\s_-]?digest\\b",
-    "\\bquery[\\s_-]?views?\\b",
+    "\\bpublication[\\s_.-]?state\\b",
+    "\\bpublic[\\s_.-]?state\\b",
+    "\\bwitness[\\s_.-]?digest\\b",
+    "\\bmanifest[\\s_.-]?digest\\b",
+    "\\bcompleteness[\\s_.-]?reason\\b",
+    "\\bmatched[\\s_.-]?count\\b",
+    "\\bspec[\\s_.-]?digest\\b",
+    "\\bresource[\\s_.-]?revision\\b",
+    "\\bevidence[\\s_.-]?digest\\b",
+    "\\bprovenance[\\s_.-]?digest\\b",
+    "\\bpublic[\\s_.-]?port\\b",
+    "\\bbackend[\\s_.-]?instance[\\s_.-]?id\\b",
+    "\\bquery[\\s_.-]?views?\\b",
+    "\\bowner[\\s_.-]?boundary\\b",
     "\\bfederat"
   ],
   "absenceAllowlist": [
@@ -99,31 +103,132 @@
     "necessity evals 0",
     "no native interval supplied"
   ],
+  "absenceWords": {
+    "surfaced": [
+      "none",
+      "no",
+      "nothing",
+      "absent",
+      "empty",
+      "zero",
+      "unavailable",
+      "lacking",
+      "lacks",
+      "without",
+      "nil",
+      "void",
+      "blank",
+      "unrecorded",
+      "unobserved"
+    ],
+    "literalBefore": [
+      "no",
+      "zero",
+      "without",
+      "nothing"
+    ],
+    "literalAfter": [
+      "none",
+      "absent",
+      "empty",
+      "unavailable",
+      "lacking",
+      "nil",
+      "zero",
+      "unrecorded",
+      "unobserved"
+    ]
+  },
   "residuals": {
     "R-UNLISTED": "Q1",
     "R-TONE-CLASS": "Q2",
     "R-NULL-AS-VALUE": "Q3",
     "R-ADDITIVE-UNREAD": "Q4",
-    "R-COMPOSED-FIELD": "A1"
+    "R-COMPOSED-FIELD": "A1",
+    "R-ABSENCE-VOCABULARY": "Q5",
+    "R-UNENUMERATED-FIELD": "Q6"
   },
   "rows": [
     {
       "id": "A",
-      "label": "(trigger, absent today) Pi reads no rf federation status record: no src module spells a federation boundary or query-view field, the rf roster stays reactivefiber.render.preview alone, and both readers refuse a federation record as an envelope",
+      "label": "(trigger, absent today) Pi reads no rf federation status record: no src module's code (identifiers, plain name chains and literals; comments are never read) spells a federation boundary or query-view field or record name FEDERATION_MATCHERS enumerates, the rf roster stays reactivefiber.render.preview alone, and both readers refuse a federation record as an envelope",
       "pins": [
         {
           "id": "A1",
           "witness": {
             "floorMet": true,
+            "unitsFloorMet": true,
             "anchorRead": true,
             "hits": [],
             "controls": {
+              "members": {
+                "publication_state": [
+                  "\\bpublication[\\s_.-]?state\\b"
+                ],
+                "PublicState": [
+                  "\\bpublic[\\s_.-]?state\\b"
+                ],
+                "witness_digest": [
+                  "\\bwitness[\\s_.-]?digest\\b"
+                ],
+                "manifest_digest": [
+                  "\\bmanifest[\\s_.-]?digest\\b"
+                ],
+                "completeness_reason": [
+                  "\\bcompleteness[\\s_.-]?reason\\b"
+                ],
+                "matched_count": [
+                  "\\bmatched[\\s_.-]?count\\b"
+                ],
+                "spec_digest": [
+                  "\\bspec[\\s_.-]?digest\\b"
+                ],
+                "resource_revision": [
+                  "\\bresource[\\s_.-]?revision\\b"
+                ],
+                "evidence_digest": [
+                  "\\bevidence[\\s_.-]?digest\\b"
+                ],
+                "provenance_digest": [
+                  "\\bprovenance[\\s_.-]?digest\\b"
+                ],
+                "public_port": [
+                  "\\bpublic[\\s_.-]?port\\b"
+                ],
+                "backend_instance_id": [
+                  "\\bbackend[\\s_.-]?instance[\\s_.-]?id\\b"
+                ],
+                "QueryViewRef": [
+                  "\\bquery[\\s_.-]?views?\\b"
+                ],
+                "OwnerBoundary": [
+                  "\\bowner[\\s_.-]?boundary\\b"
+                ],
+                "federated": [
+                  "\\bfederat"
+                ]
+              },
               "snake": 1,
               "camel": 1,
               "quoted": 1,
               "destructured": 1,
-              "prose": 2,
+              "recordName": 1,
+              "camelRecord": 1,
+              "boundaryName": 1,
+              "witnessField": 1,
+              "escaped": 1,
+              "escapedName": 1,
+              "dotted": 1,
+              "chain": 1,
+              "prefixed": 1,
+              "pattern": 1,
+              "prose": 0,
+              "commentOnly": 0,
               "composed": 0
+            },
+            "measuredWitnessFields": {
+              "witness_digest": 1,
+              "manifest_digest": 1
             }
           }
         },
@@ -500,20 +605,57 @@
     },
     {
       "id": "D",
-      "label": "(c) and (d) zero rows without a coverage witness never render an absence claim: an empty or absent observation list adds no note, a constructed query view's UNKNOWN, witnessed FALSE and PENDING ride every reading verbatim, and no surfaced string asserts absence beyond the producer-backed counts",
+      "label": "(c) and (d) zero rows without a coverage witness never render an absence claim: an empty or absent observation list adds no note and projects exactly its held projection, a constructed query view's UNKNOWN, witnessed FALSE and PENDING ride every reading verbatim, and no surfaced string or src literal asserts absence in the enumerated absence words beyond the producer-backed counts",
       "pins": [
         {
           "id": "D1",
           "witness": {
             "notes": [],
             "identical": true,
-            "shape": {
-              "coverage": "complete",
-              "tone": "success",
-              "notes": []
-            },
             "residue": [],
-            "readingRows": 0
+            "readingRows": 0,
+            "projection": {
+              "snapshots": [
+                {
+                  "source": {
+                    "provider": "reactivefiber",
+                    "type": "context-preview",
+                    "id": "rfo_aaaaaaaaaaaaaaaaaaaaaa",
+                    "scope": "<root>"
+                  },
+                  "scope": {
+                    "workspace": "<root>",
+                    "principal": "local-operator:tester"
+                  },
+                  "capturedAt": "2026-10-22T00:00:00Z",
+                  "observedAt": "2026-10-22T00:00:01Z",
+                  "coverage": "complete",
+                  "node": {
+                    "title": "RF context preview rfo_aaaaaaaaaaaaaaaaaaaaaa",
+                    "type": "sdk-operation",
+                    "statusText": "noncommitted preview (rf-cli) · 989760 of 1000000 context tokens available · necessity evals 0 · 0 errors, 0 warnings",
+                    "statusTone": "success"
+                  },
+                  "kind": "reactivefiber.render.preview.snapshot",
+                  "evidenceRefs": [
+                    "rf-graph:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "rf-workspace:rfw_aaaaaaaaaaaaaaaaaaaaaa",
+                    "rf-bundle:sha256:2222222222222222222222222222222222222222222222222222222222222222",
+                    "rf-cli:0.1.784"
+                  ],
+                  "sourceVersion": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
+                  "sourceRevision": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "nativePayloadRef": "rf-output:sha256:ea7792a26f405e2ae9c6f49ca93bbe6076ceac0a1fc53d83426c7d7f2d9377e4"
+                }
+              ],
+              "relations": [],
+              "diagnostics": [
+                "ephemeral noncommitted preview: render_id null, transaction_id null, 0 authoritative storage writes (envelope storage_write_count)",
+                "context text withheld: referenced by sha256 digest",
+                "producer release from result.provenance.cli_version: rf@0.1.784",
+                "no native interval supplied"
+              ]
+            }
           }
         },
         {
@@ -555,8 +697,29 @@
               "noRows": true,
               "nothing": true,
               "empty": true,
-              "absent": true
-            }
+              "absent": true,
+              "unavailable": true,
+              "without": true,
+              "lacking": true,
+              "unrecorded": true
+            },
+            "words": [
+              "none",
+              "no",
+              "nothing",
+              "absent",
+              "empty",
+              "zero",
+              "unavailable",
+              "lacking",
+              "lacks",
+              "without",
+              "nil",
+              "void",
+              "blank",
+              "unrecorded",
+              "unobserved"
+            ]
           }
         },
         {
@@ -606,7 +769,29 @@
               "noObservations": true,
               "none": true,
               "empty": true,
-              "comment": 0
+              "comment": 0,
+              "zero": true,
+              "unavailable": true,
+              "without": true
+            },
+            "words": {
+              "before": [
+                "no",
+                "zero",
+                "without",
+                "nothing"
+              ],
+              "after": [
+                "none",
+                "absent",
+                "empty",
+                "unavailable",
+                "lacking",
+                "nil",
+                "zero",
+                "unrecorded",
+                "unobserved"
+              ]
             }
           }
         }
@@ -614,7 +799,7 @@
     },
     {
       "id": "Q",
-      "label": "residuals, each a pinned quiet row: R-UNLISTED (a fifth distinct word is unnamed), R-TONE-CLASS (demoting words share the node's partial class), R-NULL-AS-VALUE (a null value projects as a value) and R-ADDITIVE-UNREAD (a federation record on an additive key projects nothing)",
+      "label": "residuals, each a pinned quiet row: R-UNLISTED (a fifth distinct word is unnamed), R-TONE-CLASS (demoting words share the node's partial class), R-NULL-AS-VALUE (a null value projects as a value), R-ADDITIVE-UNREAD (a federation record on an additive key projects nothing), R-ABSENCE-VOCABULARY (an absence wording outside the enumerated words reads quiet) and R-UNENUMERATED-FIELD (a record field no matcher enumerates is unseen by A1)",
       "pins": [
         {
           "id": "Q1",
@@ -682,12 +867,91 @@
             "views": true,
             "boundary": true
           }
+        },
+        {
+          "id": "Q5",
+          "witness": {
+            "wordings": [
+              "observations: not recorded",
+              "the observation list was not supplied"
+            ],
+            "planted": [
+              0,
+              0
+            ],
+            "literal": [
+              false,
+              false
+            ]
+          }
+        },
+        {
+          "id": "Q6",
+          "witness": {
+            "matched": {
+              "backend_instance_id": [
+                "\\bbackend[\\s_.-]?instance[\\s_.-]?id\\b"
+              ],
+              "completeness_reason": [
+                "\\bcompleteness[\\s_.-]?reason\\b"
+              ],
+              "evidence_digest": [
+                "\\bevidence[\\s_.-]?digest\\b"
+              ],
+              "manifest_digest": [
+                "\\bmanifest[\\s_.-]?digest\\b"
+              ],
+              "matched_count": [
+                "\\bmatched[\\s_.-]?count\\b"
+              ],
+              "provenance_digest": [
+                "\\bprovenance[\\s_.-]?digest\\b"
+              ],
+              "public_port": [
+                "\\bpublic[\\s_.-]?port\\b"
+              ],
+              "publication_state": [
+                "\\bpublication[\\s_.-]?state\\b"
+              ],
+              "resource_revision": [
+                "\\bresource[\\s_.-]?revision\\b"
+              ],
+              "spec_digest": [
+                "\\bspec[\\s_.-]?digest\\b"
+              ]
+            },
+            "unenumerated": [
+              "availability",
+              "complete",
+              "contract_digest",
+              "coverage",
+              "cursor",
+              "definition_digest",
+              "epoch",
+              "failure_code",
+              "generation",
+              "position",
+              "query_id",
+              "resource",
+              "resource_name",
+              "schema",
+              "schema_digest",
+              "scope",
+              "sensitivity",
+              "sources",
+              "stream_id",
+              "value",
+              "verdict",
+              "view_revision",
+              "workspace_id"
+            ]
+          }
         }
       ]
     }
   ],
   "tests": [
-    "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "the judged set: the frozen shape, the out-of-file roster, the receipt's tables and the cases agree",
     "A1",
     "A2",
     "A3",
@@ -710,6 +974,8 @@
     "Q2",
     "Q3",
     "Q4",
+    "Q5",
+    "Q6",
     "roster: every registered test, its run mode and every pin's reached record equal the roster, in order"
   ]
 }
