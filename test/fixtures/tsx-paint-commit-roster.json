@@ -98,7 +98,15 @@
       "src/index.ts:./ui/conversation-viewer.js",
       "test/agent-mention-wiring.test.ts:../src/agent-runner.js"
     ],
-    "titleAnchor": "test/workbench-native-rf-tsx-preview.test.ts:success row: an ephemeral TSX-era preview with a worker spawn and engine identity"
+    "titleAnchor": "test/workbench-native-rf-tsx-preview.test.ts:success row: an ephemeral TSX-era preview with a worker spawn and engine identity",
+    "negativeControls": [
+      "A1:nearMiss",
+      "A2:otherPackage",
+      "B1:measured",
+      "B1:docsSiteAdded",
+      "B2:measured",
+      "B2:docsSiteAdded"
+    ]
   },
   "residuals": [
     "R-NEEDLE",
@@ -327,6 +335,7 @@
               "qa/host.mjs": true,
               "nested/dist/host.ts": true,
               "link.ts": true,
+              "host.ts": true,
               "docs/host.md": false,
               "fixtures/host.json": false,
               "node_modules/pkg/host.ts": false,
@@ -451,6 +460,9 @@
               "mappedEntry": true,
               "srcPythonFile": true,
               "mappedSite": true,
+              "publishedDocsSite": true,
+              "mappedKey": true,
+              "mappedValue": true,
               "titles": [
                 "t1",
                 "t2",
@@ -474,6 +486,9 @@
               "purityClause": true,
               "frameCallback": true,
               "componentInvocation": true,
+              "paintCallback": true,
+              "mountedFixtureTree": true,
+              "incidentalRenderEffect": true,
               "ownFrame": false,
               "ownPaint": false,
               "ownWidget": false
@@ -511,9 +526,17 @@
               "mappedEntry": true,
               "srcPythonFile": true,
               "mappedSite": true,
+              "publishedDocsSite": true,
+              "mappedKey": true,
+              "mappedValue": true,
               "atomicityClause": true,
               "stagedMutation": true,
               "evaluationGeneration": true,
+              "evaluationGenerationOnly": true,
+              "stagedCommit": true,
+              "preEvaluation": true,
+              "acceptedEvaluation": true,
+              "midEvaluation": true,
               "ownAtomicWrite": false,
               "ownGeneration": false
             }
