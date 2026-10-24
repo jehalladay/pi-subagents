@@ -1,0 +1,1782 @@
+{
+  "provenance": "wb-z3ft.3 census roster: the judged rows and every pin's witness, measured by the cutting seat (ws-03, g10-work-s59) on trunk 4435e2e + the cut; producer facts read-only at the program pin by git show in the local HyperUnix-CLI checkout",
+  "bead": "wb-z3ft.3",
+  "programPin": "0091719d02887910fa0c2fb6693a32723e243600",
+  "producer": {
+    "repository": "HyperUnix-CLI",
+    "program": "docs/programs/certified-structural-optimization-2026-10-18",
+    "status": {
+      "file": "README.md",
+      "blob": "874f5b11f517f5a2e88708006ab747ce6f21e1ca",
+      "line": 3,
+      "quote": "**2026-10-18. DESIGN ONLY. No runtime law admitted, native Lean elaboration, or benchmark result claimed.**"
+    },
+    "vc1": {
+      "file": "README.md",
+      "blob": "874f5b11f517f5a2e88708006ab747ce6f21e1ca",
+      "line": 69,
+      "quote": "**VC1 (immediate):** observation-profile vocabulary, explain-only rejected/accepted admission reason codes and negative fixtures, without changing execution. Acceptance: every law proposal explains exactly which profile and provider facts were checked; no user-visible query semantic change."
+    },
+    "authority": {
+      "file": "README.md",
+      "blob": "874f5b11f517f5a2e88708006ab747ce6f21e1ca",
+      "line": 79,
+      "quote": "Per-law tracing must record reject reasons and assumptions without exposing sensitive provider evidence."
+    },
+    "blocked": {
+      "file": "README.md",
+      "blob": "874f5b11f517f5a2e88708006ab747ce6f21e1ca",
+      "line": 83,
+      "quote": "All law admissions remain blocked."
+    },
+    "crosswalk": {
+      "file": "01-mathematical-contracts-and-architecture-crosswalk.md",
+      "blob": "6027767a03204b6e390b545263641124ab25819a",
+      "line": 10,
+      "quote": "| `src/hx_planner/law_admission.mli` | `admit`, `recheck`, `witness`, `reason`, with certificate target/scope/mode, admissible evidence classes, token validity, context digest and registry adoption status |"
+    },
+    "planner": {
+      "file": "src/hx_planner/law_admission.mli",
+      "blob": "38c7af2771a5446bf7f5f06351714c979266d56a",
+      "lines": {
+        "113": "type reason =",
+        "144": "type verdict = Admitted of witness | Withheld of reason"
+      },
+      "reasonConstructors": [
+        "No_certificate",
+        "Scope_not_subsumed",
+        "Coverage_below",
+        "Watch_derived",
+        "Dependency_invalid",
+        "Dependency_unknown",
+        "Inadmissible_evidence",
+        "Context_changed",
+        "Unregistered_law",
+        "Law_not_adopted"
+      ],
+      "what": "HX's internal planner admission; no wire format Pi reads carries it"
+    },
+    "sdkAtPin": {
+      "package": {
+        "file": "sdk/typescript/package.json",
+        "blob": "8f023818ac242f9bb2668d26ddb9e65c31676c78",
+        "name": "@hyperunix/sdk",
+        "version": "0.1.0"
+      },
+      "result": {
+        "file": "sdk/typescript/src/result.ts",
+        "blob": "f38ab9c704a64544b31be6d123036d926c2d71ba",
+        "stemLines": [
+          478,
+          584,
+          585
+        ],
+        "what": "implementation-only reason strings (the native Empty_input reason of SDK_PROTOCOL_NO_FRAMES; requireComplete's IncompleteResultError reason); the shipped declaration carries none"
+      }
+    }
+  },
+  "constants": {
+    "vendoredTarball": "vendor/hyperunix-sdk-0.1.0.tgz",
+    "judgedFiles": [
+      "node_modules/@hyperunix/sdk/dist/result.d.ts",
+      "src/workbench/hyperunix-observer.ts"
+    ],
+    "stems": [
+      "admission",
+      "reason_code",
+      "law_admission",
+      "reason"
+    ],
+    "declarations": [
+      "QueryResult",
+      "CoverageSummary",
+      "Coverage",
+      "EvidenceSummary",
+      "StatusBase",
+      "ClassificationInput"
+    ],
+    "flaggedControls": [
+      "readonly reasonCode: string;",
+      "readonly lawAdmission: LawAdmission;",
+      "ADMISSION_REASON_CODES",
+      "a reason-code field",
+      "Withheld of reason",
+      "readonly law_admission: string;",
+      "admission_reason_codes"
+    ],
+    "quietControls": [
+      "readonly diagnosticCode: string | null;",
+      "readonly licensesAbsence: boolean;",
+      "mutation-rejected",
+      "verdict",
+      "checked profile and provider facts",
+      "withheld from evidence references"
+    ],
+    "unchangedFields": [
+      "coverage",
+      "statusTone",
+      "statusText",
+      "evidenceRefs"
+    ],
+    "never": {
+      "statusTone": "failure",
+      "coverage": "complete",
+      "answer": "known-empty"
+    },
+    "admissions": {
+      "accepted": {
+        "law": "hx.law/scoped-anti-join",
+        "verdict": "accepted",
+        "code": "admitted",
+        "profile": [
+          "observation profile hx.fs/v1: derivation identities are not observed (CSO-1)"
+        ],
+        "provider": [
+          "hx.fs/builtin: certificate mode complete-within-scope over the src subtree (CSO-2)"
+        ]
+      },
+      "rejected": {
+        "law": "hx.law/laminar-cover-dp",
+        "verdict": "rejected",
+        "code": "coverage-below",
+        "profile": [
+          "observation profile hx.fs/v1: multiplicity is observed (CSO-3)"
+        ],
+        "provider": [
+          "hx.fs/builtin: certificate mode opportunistic over the src subtree (CSO-4)"
+        ]
+      },
+      "unadopted": {
+        "law": "hx.law/typed-incidence-semijoin",
+        "verdict": "rejected",
+        "code": "law-not-adopted",
+        "profile": [
+          "observation profile hx.fs/v1: ordinal use is excluded (CSO-5)",
+          "projection: incidence roles are observed (CSO-6)"
+        ],
+        "provider": [
+          "hx.fs/builtin: the law registry reads proposal (CSO-7)"
+        ]
+      }
+    },
+    "trace": {
+      "law": "hx.law/laminar-cover-dp",
+      "reasons": [
+        "coverage-below: the certificate for relation-expansion is opportunistic (CSO-8)"
+      ],
+      "assumptions": [
+        "the snapshot generation did not move while planning (CSO-9)"
+      ],
+      "provider_evidence": {
+        "support": "PROVIDER-EVIDENCE-SENTINEL-41d7",
+        "rows": [
+          {
+            "path": "src/provider-evidence-sentinel.ts"
+          }
+        ]
+      }
+    },
+    "member": "law_admissions",
+    "diagnosticCode": "HX-LAW-ADMISSION",
+    "carrier": "hx.law-admissions",
+    "traceCarrier": "hx.law-traces",
+    "facetLimit": 200,
+    "fixtures": [
+      {
+        "name": "none",
+        "kind": "incomplete",
+        "licensed": false,
+        "admissions": [],
+        "traced": false
+      },
+      {
+        "name": "accepted",
+        "kind": "incomplete",
+        "licensed": false,
+        "admissions": [
+          "accepted"
+        ],
+        "traced": false
+      },
+      {
+        "name": "accepted-known-empty",
+        "kind": "complete-empty",
+        "licensed": true,
+        "admissions": [
+          "accepted"
+        ],
+        "traced": false
+      },
+      {
+        "name": "rejected",
+        "kind": "incomplete",
+        "licensed": false,
+        "admissions": [
+          "rejected"
+        ],
+        "traced": false
+      },
+      {
+        "name": "rejected-licensed-incomplete",
+        "kind": "incomplete",
+        "licensed": true,
+        "admissions": [
+          "rejected"
+        ],
+        "traced": false
+      },
+      {
+        "name": "rejected-complete-unlicensed",
+        "kind": "complete",
+        "licensed": false,
+        "admissions": [
+          "rejected"
+        ],
+        "traced": false
+      },
+      {
+        "name": "rejected-complete-empty-unlicensed",
+        "kind": "complete-empty",
+        "licensed": false,
+        "admissions": [
+          "rejected"
+        ],
+        "traced": false
+      },
+      {
+        "name": "mixed",
+        "kind": "incomplete",
+        "licensed": false,
+        "admissions": [
+          "accepted",
+          "rejected",
+          "unadopted"
+        ],
+        "traced": false
+      },
+      {
+        "name": "repeated",
+        "kind": "incomplete",
+        "licensed": false,
+        "admissions": [
+          "rejected",
+          "rejected"
+        ],
+        "traced": false
+      },
+      {
+        "name": "traced",
+        "kind": "incomplete",
+        "licensed": false,
+        "admissions": [
+          "rejected"
+        ],
+        "traced": true
+      },
+      {
+        "name": "trace-only",
+        "kind": "incomplete",
+        "licensed": false,
+        "admissions": [],
+        "traced": true
+      }
+    ],
+    "checks": [
+      "refused",
+      "byte-identical",
+      "unchanged",
+      "verbatim",
+      "own-facet",
+      "synthesized",
+      "failure",
+      "absence",
+      "evidence"
+    ],
+    "readers": [
+      "honest",
+      "raiseOnAccepted",
+      "evidenceRef",
+      "answerText",
+      "codeOnly",
+      "paraphrase",
+      "truncate",
+      "mergeFacets",
+      "dedupeFacets",
+      "dropRejected",
+      "reclassRejected",
+      "facetForNone",
+      "refuseAdmissions",
+      "failureOnRejected",
+      "completeOnRejected",
+      "knownEmptyOnRejected",
+      "traceEcho",
+      "traceInDiagnostics"
+    ],
+    "rejectedMutants": {
+      "failureOnRejected": "failure",
+      "completeOnRejected": "absence",
+      "knownEmptyOnRejected": "absence"
+    },
+    "traceMutants": [
+      "traceEcho",
+      "traceInDiagnostics"
+    ],
+    "temptations": [
+      "rows-not-retained",
+      "three-rows",
+      "completeness-complete",
+      "certificates-license-absence",
+      "answer-count-zero",
+      "truth-known-absent",
+      "terminal-established-empty",
+      "exit-class-one",
+      "complete-within-scope-certificate",
+      "no-certificates",
+      "accepted-admission",
+      "rejected-admission",
+      "admission-diagnostics"
+    ],
+    "residuals": {
+      "R-VOCABULARY": [
+        "Q1"
+      ],
+      "R-COMPOSED": [
+        "Q2"
+      ],
+      "R-NAMESAKE": [
+        "Q3"
+      ],
+      "R-RAW-READING": [
+        "Q4"
+      ],
+      "R-INTERRUPTED": [
+        "Q5"
+      ],
+      "R-SCOPE": [
+        "Q6"
+      ],
+      "R-EMBEDDED": [
+        "Q7"
+      ]
+    }
+  },
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "the outside anchors: the bead's own row binds the row labels, the judged files, the stems, the unchanged members and the forbidden readings",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "B1",
+    "B2",
+    "C1",
+    "C2",
+    "C3",
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "the registered tests and the reached pins equal the roster, in order and both ways"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) today: a test asserts those two files carry no admission or reason-code field, kind and licence alone decide absence (observer.ts:217), diagnostics never surface",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "tarball": "655e08b09febcad67732d6e25d6de4bd8e4a683f594c1d5d3d6ff24ff70b107b",
+            "resultDeclaration": "0d3385dbf761b1d425ff5710dd2ae9042b74684ef0b5d64867fbd8b78638aa6f",
+            "files": [
+              {
+                "path": "node_modules/@hyperunix/sdk/dist/result.d.ts",
+                "hits": 0
+              },
+              {
+                "path": "src/workbench/hyperunix-observer.ts",
+                "hits": 0
+              }
+            ],
+            "members": {
+              "QueryResult": [
+                "operation",
+                "rows",
+                "rowsRetained",
+                "coverage",
+                "coverageSummary",
+                "status",
+                "terminal",
+                "truth",
+                "diagnostics",
+                "view",
+                "evidence",
+                "queryDigest",
+                "digestSource",
+                "executionId",
+                "actualCost",
+                "budgetDimension",
+                "extensions",
+                "transport",
+                "workspaceRoot",
+                "streams"
+              ],
+              "CoverageSummary": [
+                "certificates",
+                "modes",
+                "completeness",
+                "licensesAbsence",
+                "certificatesLicenseAbsence",
+                "incompleteRegions",
+                "resultCoverage",
+                "answerCount"
+              ],
+              "Coverage": [
+                "mode",
+                "cause",
+                "scope",
+                "target",
+                "provider",
+                "stream",
+                "batchId",
+                "body"
+              ],
+              "EvidenceSummary": [
+                "supportIds",
+                "evidenceClasses",
+                "derivationHandles",
+                "providers",
+                "providerVersions"
+              ],
+              "StatusBase": [
+                "exitCode",
+                "signal",
+                "terminalReached",
+                "framesTotal",
+                "diagnosticCode"
+              ],
+              "ClassificationInput": [
+                "exitCode",
+                "signal",
+                "terminalReached",
+                "framesTotal",
+                "diagnostics",
+                "completeness",
+                "rowCount"
+              ],
+              "ExecutionStatus": [
+                "kind",
+                "dimension"
+              ]
+            },
+            "controls": {
+              "flagged": 7,
+              "quiet": 6
+            },
+            "filing": {
+              "pattern": "admission|reason_code|law_admission",
+              "hitsAsWritten": [
+                0,
+                0
+              ],
+              "misses": [
+                "readonly reasonCode: string;",
+                "readonly lawAdmission: LawAdmission;",
+                "ADMISSION_REASON_CODES",
+                "a reason-code field",
+                "Withheld of reason"
+              ]
+            },
+            "bound": []
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "table": [
+              [
+                "complete",
+                false,
+                {
+                  "projected": [
+                    "partial",
+                    "unknown",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "complete",
+                true,
+                {
+                  "projected": [
+                    "complete",
+                    "success",
+                    false
+                  ],
+                  "absenceLicensed": true
+                }
+              ],
+              [
+                "complete-empty",
+                false,
+                {
+                  "projected": [
+                    "partial",
+                    "unknown",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "complete-empty",
+                true,
+                {
+                  "projected": [
+                    "complete",
+                    "success",
+                    true
+                  ],
+                  "absenceLicensed": true
+                }
+              ],
+              [
+                "incomplete",
+                false,
+                {
+                  "projected": [
+                    "partial",
+                    "unknown",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "incomplete",
+                true,
+                {
+                  "projected": [
+                    "partial",
+                    "unknown",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "budget-exhausted",
+                false,
+                {
+                  "projected": [
+                    "partial",
+                    "unknown",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "budget-exhausted",
+                true,
+                {
+                  "projected": [
+                    "partial",
+                    "unknown",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "cancelled",
+                false,
+                {
+                  "projected": [
+                    "partial",
+                    "unknown",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "cancelled",
+                true,
+                {
+                  "projected": [
+                    "partial",
+                    "unknown",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "view-invalidated",
+                false,
+                {
+                  "projected": [
+                    "partial",
+                    "unknown",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "view-invalidated",
+                true,
+                {
+                  "projected": [
+                    "partial",
+                    "unknown",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "provider-failed",
+                false,
+                {
+                  "projected": [
+                    "unknown",
+                    "failure",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "provider-failed",
+                true,
+                {
+                  "projected": [
+                    "unknown",
+                    "failure",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "schema-failed",
+                false,
+                {
+                  "projected": [
+                    "unknown",
+                    "failure",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "schema-failed",
+                true,
+                {
+                  "projected": [
+                    "unknown",
+                    "failure",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "internal-failed",
+                false,
+                {
+                  "projected": [
+                    "unknown",
+                    "failure",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "internal-failed",
+                true,
+                {
+                  "projected": [
+                    "unknown",
+                    "failure",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "protocol-failed",
+                false,
+                {
+                  "projected": [
+                    "unknown",
+                    "failure",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "protocol-failed",
+                true,
+                {
+                  "projected": [
+                    "unknown",
+                    "failure",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "usage-error",
+                false,
+                {
+                  "projected": [
+                    "unknown",
+                    "failure",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "usage-error",
+                true,
+                {
+                  "projected": [
+                    "unknown",
+                    "failure",
+                    false
+                  ],
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "mutation-rejected",
+                false,
+                {
+                  "projected": "refused:validation",
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "mutation-rejected",
+                true,
+                {
+                  "projected": "refused:validation",
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "mutation-partial",
+                false,
+                {
+                  "projected": "refused:validation",
+                  "absenceLicensed": false
+                }
+              ],
+              [
+                "mutation-partial",
+                true,
+                {
+                  "projected": "refused:validation",
+                  "absenceLicensed": false
+                }
+              ]
+            ],
+            "leaves": [
+              "$.operation",
+              "$.rows_retained",
+              "$.view",
+              "$.workspace_root",
+              "$.terminal",
+              "$.truth",
+              "$.digest",
+              "$.digest_source",
+              "$.local_digest",
+              "$.structural_digest",
+              "$.execution_id",
+              "$.budget_dimension",
+              "$.coverage[0].mode",
+              "$.coverage[0].provider",
+              "$.coverage[0].stream",
+              "$.coverage[0].batch_id",
+              "$.coverage[0].cause.cause",
+              "$.coverage[0].cause.detail",
+              "$.coverage[0].scope.scope",
+              "$.coverage[0].target.target",
+              "$.coverage[0].body.mode",
+              "$.status.exit_code",
+              "$.status.signal",
+              "$.status.terminal_reached",
+              "$.status.frames_total",
+              "$.status.streams[0].name",
+              "$.status.streams[0].frames",
+              "$.status.streams[0].ended",
+              "$.status.streams[0].mode",
+              "$.execution_status.diagnostic_code",
+              "$.diagnostics[0].code",
+              "$.diagnostics[0].severity",
+              "$.diagnostics[0].message",
+              "$.diagnostics[0].remediation",
+              "$.diagnostics[0].request",
+              "$.diagnostics[0].origin",
+              "$.diagnostics[0].stream",
+              "$.diagnostics[0].details.region",
+              "$.diagnostics[0].extra.note",
+              "$.cost.provider_calls",
+              "$.transport.started_at",
+              "$.transport.startup_latency_s",
+              "$.transport.process_duration_s",
+              "$.transport.stdout_bytes",
+              "$.transport.stderr_bytes",
+              "$.transport.stderr_bytes_retained",
+              "$.transport.frames",
+              "$.coverage_summary.modes[0]",
+              "$.coverage_summary.completeness",
+              "$.coverage_summary.certificates_license_absence",
+              "$.coverage_summary.answer_count",
+              "$.coverage_summary.incomplete_regions[0].scope",
+              "$.coverage_summary.incomplete_regions[0].target",
+              "$.coverage_summary.result_coverage.count",
+              "$.evidence.provider_versions[\"hx.fs\"]"
+            ],
+            "temptations": [
+              "rows-not-retained",
+              "three-rows",
+              "completeness-complete",
+              "certificates-license-absence",
+              "answer-count-zero",
+              "truth-known-absent",
+              "terminal-established-empty",
+              "exit-class-one",
+              "complete-within-scope-certificate",
+              "no-certificates",
+              "accepted-admission",
+              "rejected-admission",
+              "admission-diagnostics"
+            ],
+            "refusals": [
+              "three-rows@complete-empty/false",
+              "three-rows@complete-empty/true"
+            ]
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "diagnostics": [
+              "query id is a derived digest, not a native identifier: HX find hx.fs/regular-file src",
+              "no native interval supplied"
+            ],
+            "grammarEntries": 3,
+            "positions": [
+              "$",
+              "$.source",
+              "$.source.rows[0]",
+              "$.source.coverage[0]",
+              "$.source.coverage[0].cause",
+              "$.source.coverage[0].scope",
+              "$.source.coverage[0].target",
+              "$.source.coverage[0].body",
+              "$.source.status",
+              "$.source.status.streams[0]",
+              "$.source.execution_status",
+              "$.source.diagnostics[0]",
+              "$.source.diagnostics[0].details",
+              "$.source.diagnostics[0].extra",
+              "$.source.cost",
+              "$.source.transport",
+              "$.source.coverage_summary",
+              "$.source.coverage_summary.incomplete_regions[0]",
+              "$.source.coverage_summary.result_coverage",
+              "$.source.evidence",
+              "$.source.evidence.provider_versions",
+              "$.source.extensions",
+              "$.runtime"
+            ],
+            "control": {
+              "unchanged": false,
+              "leaked": [
+                "admission",
+                "cso-4",
+                "law_admission"
+              ]
+            }
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "survives": {
+              "$": false,
+              "$.rows[0]": true,
+              "$.coverage[0]": false,
+              "$.coverage[0].cause": true,
+              "$.coverage[0].scope": true,
+              "$.coverage[0].target": true,
+              "$.coverage[0].body": true,
+              "$.status": false,
+              "$.status.streams[0]": false,
+              "$.execution_status": false,
+              "$.diagnostics[0]": false,
+              "$.diagnostics[0].details": true,
+              "$.diagnostics[0].extra": true,
+              "$.cost": true,
+              "$.transport": false,
+              "$.coverage_summary": false,
+              "$.coverage_summary.incomplete_regions[0]": true,
+              "$.coverage_summary.result_coverage": true,
+              "$.evidence": false,
+              "$.evidence.provider_versions": false,
+              "$.extensions": true,
+              "$.diagnostics[+] and $.execution_status.diagnostic_code (diagnostic grammar)": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) on landing: each admission reason code and the checked profile/provider facts project verbatim as explain facets; coverage, statusTone, statusText and evidenceRefs unchanged",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "fixtures": [
+              "none",
+              "accepted",
+              "accepted-known-empty",
+              "rejected",
+              "rejected-licensed-incomplete",
+              "rejected-complete-unlicensed",
+              "rejected-complete-empty-unlicensed",
+              "mixed",
+              "repeated",
+              "traced",
+              "trace-only"
+            ],
+            "deltas": {
+              "none": [],
+              "accepted": [
+                "$.source.extensions[\"hx.law-admissions\"]"
+              ],
+              "accepted-known-empty": [
+                "$.source.extensions[\"hx.law-admissions\"]"
+              ],
+              "rejected": [
+                "$.source.extensions[\"hx.law-admissions\"]"
+              ],
+              "rejected-licensed-incomplete": [
+                "$.source.extensions[\"hx.law-admissions\"]"
+              ],
+              "rejected-complete-unlicensed": [
+                "$.source.extensions[\"hx.law-admissions\"]"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "$.source.extensions[\"hx.law-admissions\"]"
+              ],
+              "mixed": [
+                "$.source.extensions[\"hx.law-admissions\"]"
+              ],
+              "repeated": [
+                "$.source.extensions[\"hx.law-admissions\"]"
+              ],
+              "traced": [
+                "$.source.extensions[\"hx.law-admissions\"]",
+                "$.source.extensions[\"hx.law-traces\"]"
+              ],
+              "trace-only": [
+                "$.source.extensions[\"hx.law-traces\"]"
+              ]
+            },
+            "projections": {
+              "none": [
+                "incomplete",
+                false,
+                "partial",
+                "unknown",
+                "incomplete · rows 0 · absence not licensed"
+              ],
+              "accepted": [
+                "incomplete",
+                false,
+                "partial",
+                "unknown",
+                "incomplete · rows 0 · absence not licensed"
+              ],
+              "accepted-known-empty": [
+                "complete-empty",
+                true,
+                "complete",
+                "success",
+                "known-empty (runtime-licensed) · rows 0"
+              ],
+              "rejected": [
+                "incomplete",
+                false,
+                "partial",
+                "unknown",
+                "incomplete · rows 0 · absence not licensed"
+              ],
+              "rejected-licensed-incomplete": [
+                "incomplete",
+                true,
+                "partial",
+                "unknown",
+                "incomplete · rows 0 · absence not licensed"
+              ],
+              "rejected-complete-unlicensed": [
+                "complete",
+                false,
+                "partial",
+                "unknown",
+                "complete · rows 0 · absence not licensed"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "complete-empty",
+                false,
+                "partial",
+                "unknown",
+                "complete-empty · rows 0 · absence not licensed"
+              ],
+              "mixed": [
+                "incomplete",
+                false,
+                "partial",
+                "unknown",
+                "incomplete · rows 0 · absence not licensed"
+              ],
+              "repeated": [
+                "incomplete",
+                false,
+                "partial",
+                "unknown",
+                "incomplete · rows 0 · absence not licensed"
+              ],
+              "traced": [
+                "incomplete",
+                false,
+                "partial",
+                "unknown",
+                "incomplete · rows 0 · absence not licensed"
+              ],
+              "trace-only": [
+                "incomplete",
+                false,
+                "partial",
+                "unknown",
+                "incomplete · rows 0 · absence not licensed"
+              ]
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "honest": {},
+            "raiseOnAccepted": {
+              "accepted": [
+                "unchanged"
+              ],
+              "mixed": [
+                "unchanged",
+                "absence"
+              ]
+            },
+            "evidenceRef": {
+              "accepted": [
+                "unchanged"
+              ],
+              "accepted-known-empty": [
+                "unchanged"
+              ],
+              "rejected": [
+                "unchanged"
+              ],
+              "rejected-licensed-incomplete": [
+                "unchanged"
+              ],
+              "rejected-complete-unlicensed": [
+                "unchanged"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "unchanged"
+              ],
+              "mixed": [
+                "unchanged"
+              ],
+              "repeated": [
+                "unchanged"
+              ],
+              "traced": [
+                "unchanged"
+              ]
+            },
+            "answerText": {
+              "accepted": [
+                "unchanged"
+              ],
+              "accepted-known-empty": [
+                "unchanged"
+              ],
+              "rejected": [
+                "unchanged"
+              ],
+              "rejected-licensed-incomplete": [
+                "unchanged"
+              ],
+              "rejected-complete-unlicensed": [
+                "unchanged"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "unchanged"
+              ],
+              "mixed": [
+                "unchanged"
+              ],
+              "repeated": [
+                "unchanged"
+              ],
+              "traced": [
+                "unchanged"
+              ]
+            },
+            "codeOnly": {
+              "accepted": [
+                "verbatim",
+                "synthesized"
+              ],
+              "accepted-known-empty": [
+                "verbatim",
+                "synthesized"
+              ],
+              "rejected": [
+                "verbatim",
+                "synthesized"
+              ],
+              "rejected-licensed-incomplete": [
+                "verbatim",
+                "synthesized"
+              ],
+              "rejected-complete-unlicensed": [
+                "verbatim",
+                "synthesized"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "verbatim",
+                "synthesized"
+              ],
+              "mixed": [
+                "verbatim",
+                "synthesized"
+              ],
+              "repeated": [
+                "verbatim",
+                "synthesized"
+              ],
+              "traced": [
+                "verbatim",
+                "synthesized"
+              ]
+            },
+            "paraphrase": {
+              "accepted": [
+                "verbatim",
+                "synthesized"
+              ],
+              "accepted-known-empty": [
+                "verbatim",
+                "synthesized"
+              ],
+              "rejected": [
+                "verbatim",
+                "synthesized"
+              ],
+              "rejected-licensed-incomplete": [
+                "verbatim",
+                "synthesized"
+              ],
+              "rejected-complete-unlicensed": [
+                "verbatim",
+                "synthesized"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "verbatim",
+                "synthesized"
+              ],
+              "mixed": [
+                "verbatim",
+                "synthesized"
+              ],
+              "repeated": [
+                "verbatim",
+                "synthesized"
+              ],
+              "traced": [
+                "verbatim",
+                "synthesized"
+              ]
+            },
+            "truncate": {
+              "accepted": [
+                "verbatim",
+                "synthesized"
+              ],
+              "accepted-known-empty": [
+                "verbatim",
+                "synthesized"
+              ],
+              "rejected": [
+                "verbatim",
+                "synthesized"
+              ],
+              "rejected-licensed-incomplete": [
+                "verbatim",
+                "synthesized"
+              ],
+              "rejected-complete-unlicensed": [
+                "verbatim",
+                "synthesized"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "verbatim",
+                "synthesized"
+              ],
+              "mixed": [
+                "verbatim",
+                "synthesized"
+              ],
+              "repeated": [
+                "verbatim",
+                "synthesized"
+              ],
+              "traced": [
+                "verbatim",
+                "synthesized"
+              ]
+            },
+            "mergeFacets": {
+              "mixed": [
+                "verbatim",
+                "own-facet",
+                "synthesized"
+              ],
+              "repeated": [
+                "verbatim",
+                "own-facet",
+                "synthesized"
+              ]
+            },
+            "dedupeFacets": {
+              "repeated": [
+                "own-facet"
+              ]
+            },
+            "dropRejected": {
+              "rejected": [
+                "verbatim",
+                "own-facet"
+              ],
+              "rejected-licensed-incomplete": [
+                "verbatim",
+                "own-facet"
+              ],
+              "rejected-complete-unlicensed": [
+                "verbatim",
+                "own-facet"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "verbatim",
+                "own-facet"
+              ],
+              "mixed": [
+                "verbatim",
+                "own-facet"
+              ],
+              "repeated": [
+                "verbatim",
+                "own-facet"
+              ],
+              "traced": [
+                "verbatim",
+                "own-facet"
+              ]
+            },
+            "reclassRejected": {
+              "rejected": [
+                "verbatim",
+                "synthesized"
+              ],
+              "rejected-licensed-incomplete": [
+                "verbatim",
+                "synthesized"
+              ],
+              "rejected-complete-unlicensed": [
+                "verbatim",
+                "synthesized"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "verbatim",
+                "synthesized"
+              ],
+              "mixed": [
+                "verbatim",
+                "synthesized"
+              ],
+              "repeated": [
+                "verbatim",
+                "synthesized"
+              ],
+              "traced": [
+                "verbatim",
+                "synthesized"
+              ]
+            },
+            "facetForNone": {
+              "none": [
+                "byte-identical",
+                "own-facet",
+                "synthesized"
+              ],
+              "trace-only": [
+                "own-facet",
+                "synthesized"
+              ]
+            },
+            "refuseAdmissions": {
+              "accepted": [
+                "refused"
+              ],
+              "accepted-known-empty": [
+                "refused"
+              ],
+              "rejected": [
+                "refused"
+              ],
+              "rejected-licensed-incomplete": [
+                "refused"
+              ],
+              "rejected-complete-unlicensed": [
+                "refused"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "refused"
+              ],
+              "mixed": [
+                "refused"
+              ],
+              "repeated": [
+                "refused"
+              ],
+              "traced": [
+                "refused"
+              ]
+            },
+            "failureOnRejected": {
+              "rejected": [
+                "unchanged",
+                "failure"
+              ],
+              "rejected-licensed-incomplete": [
+                "unchanged",
+                "failure"
+              ],
+              "rejected-complete-unlicensed": [
+                "unchanged",
+                "failure"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "unchanged",
+                "failure"
+              ],
+              "mixed": [
+                "unchanged",
+                "failure"
+              ],
+              "repeated": [
+                "unchanged",
+                "failure"
+              ],
+              "traced": [
+                "unchanged",
+                "failure"
+              ]
+            },
+            "completeOnRejected": {
+              "rejected": [
+                "unchanged",
+                "absence"
+              ],
+              "rejected-licensed-incomplete": [
+                "unchanged",
+                "absence"
+              ],
+              "rejected-complete-unlicensed": [
+                "unchanged",
+                "absence"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "unchanged",
+                "absence"
+              ],
+              "mixed": [
+                "unchanged",
+                "absence"
+              ],
+              "repeated": [
+                "unchanged",
+                "absence"
+              ],
+              "traced": [
+                "unchanged",
+                "absence"
+              ]
+            },
+            "knownEmptyOnRejected": {
+              "rejected": [
+                "unchanged",
+                "absence"
+              ],
+              "rejected-licensed-incomplete": [
+                "unchanged",
+                "absence"
+              ],
+              "rejected-complete-unlicensed": [
+                "unchanged",
+                "absence"
+              ],
+              "rejected-complete-empty-unlicensed": [
+                "unchanged",
+                "absence"
+              ],
+              "mixed": [
+                "unchanged",
+                "absence"
+              ],
+              "repeated": [
+                "unchanged",
+                "absence"
+              ],
+              "traced": [
+                "unchanged",
+                "absence"
+              ]
+            },
+            "traceEcho": {
+              "traced": [
+                "own-facet",
+                "synthesized",
+                "evidence"
+              ],
+              "trace-only": [
+                "own-facet",
+                "synthesized",
+                "evidence"
+              ]
+            },
+            "traceInDiagnostics": {
+              "traced": [
+                "evidence"
+              ],
+              "trace-only": [
+                "evidence"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) on landing: a rejected-admission code never yields statusTone 'failure', coverage 'complete' or 'known-empty', and a per-law trace fixture carrying a provider-evidence sentinel yields no output field containing it",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "rejected": [
+              "rejected",
+              "rejected-licensed-incomplete",
+              "rejected-complete-unlicensed",
+              "rejected-complete-empty-unlicensed",
+              "mixed",
+              "repeated",
+              "traced"
+            ],
+            "table": {
+              "failureOnRejected": [
+                "mixed",
+                "rejected",
+                "rejected-complete-empty-unlicensed",
+                "rejected-complete-unlicensed",
+                "rejected-licensed-incomplete",
+                "repeated",
+                "traced"
+              ],
+              "completeOnRejected": [
+                "mixed",
+                "rejected",
+                "rejected-complete-empty-unlicensed",
+                "rejected-complete-unlicensed",
+                "rejected-licensed-incomplete",
+                "repeated",
+                "traced"
+              ],
+              "knownEmptyOnRejected": [
+                "mixed",
+                "rejected",
+                "rejected-complete-empty-unlicensed",
+                "rejected-complete-unlicensed",
+                "rejected-licensed-incomplete",
+                "repeated",
+                "traced"
+              ]
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "traced": [
+              "traced",
+              "trace-only"
+            ],
+            "table": {
+              "traceEcho": {
+                "traced": [
+                  "own-facet",
+                  "synthesized",
+                  "evidence"
+                ],
+                "trace-only": [
+                  "own-facet",
+                  "synthesized",
+                  "evidence"
+                ]
+              },
+              "traceInDiagnostics": {
+                "traced": [
+                  "evidence"
+                ],
+                "trace-only": [
+                  "evidence"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "bound": [],
+            "violations": {},
+            "controls": {
+              "honestOnly": {},
+              "withMutant": {
+                "synthetic/failure-on-rejected": {
+                  "rejected": [
+                    "unchanged",
+                    "failure"
+                  ],
+                  "rejected-licensed-incomplete": [
+                    "unchanged",
+                    "failure"
+                  ],
+                  "rejected-complete-unlicensed": [
+                    "unchanged",
+                    "failure"
+                  ],
+                  "rejected-complete-empty-unlicensed": [
+                    "unchanged",
+                    "failure"
+                  ],
+                  "mixed": [
+                    "unchanged",
+                    "failure"
+                  ],
+                  "repeated": [
+                    "unchanged",
+                    "failure"
+                  ],
+                  "traced": [
+                    "unchanged",
+                    "failure"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the residuals: each named family pinned by its quiet row",
+      "pins": [
+        {
+          "id": "Q1",
+          "witness": {
+            "genericKeyHits": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "producerVerdictHits": 0,
+            "withheld": [
+              {
+                "unchanged": true,
+                "leaked": []
+              },
+              {
+                "unchanged": true,
+                "leaked": []
+              },
+              {
+                "unchanged": true,
+                "leaked": []
+              },
+              {
+                "unchanged": true,
+                "leaked": []
+              },
+              {
+                "unchanged": true,
+                "leaked": []
+              },
+              {
+                "unchanged": true,
+                "leaked": []
+              },
+              {
+                "unchanged": true,
+                "leaked": []
+              },
+              {
+                "unchanged": true,
+                "leaked": []
+              },
+              {
+                "unchanged": true,
+                "leaked": []
+              },
+              {
+                "unchanged": true,
+                "leaked": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "Q2",
+          "witness": {
+            "hits": 0,
+            "composedKeys": [
+              "reason",
+              "admission"
+            ]
+          }
+        },
+        {
+          "id": "Q3",
+          "witness": {
+            "declarations": 27,
+            "namesakes": {
+              "package/dist/errors.d.ts": [
+                22,
+                88,
+                90
+              ],
+              "package/dist/plan-stream.d.ts": [
+                90
+              ],
+              "package/dist/plan.d.ts": [
+                11,
+                15,
+                28,
+                119
+              ],
+              "package/dist/protocol/mutation.d.ts": [
+                69
+              ],
+              "package/dist/provider.d.ts": [
+                1,
+                41
+              ],
+              "package/dist/schema.d.ts": [
+                22
+              ]
+            }
+          }
+        },
+        {
+          "id": "Q4",
+          "witness": {
+            "carriedVerbatim": [
+              "$.rows[0]",
+              "$.coverage[0].cause",
+              "$.coverage[0].scope",
+              "$.coverage[0].target",
+              "$.coverage[0].body",
+              "$.diagnostics[0].details",
+              "$.diagnostics[0].extra",
+              "$.cost",
+              "$.coverage_summary.incomplete_regions[0]",
+              "$.coverage_summary.result_coverage",
+              "$.extensions"
+            ],
+            "carriers": {
+              "hx.law-admissions": true,
+              "hx.law-traces": true
+            }
+          }
+        },
+        {
+          "id": "Q5",
+          "witness": {
+            "split": 0,
+            "lookalike": []
+          }
+        },
+        {
+          "id": "Q6",
+          "witness": {
+            "judged": [
+              "node_modules/@hyperunix/sdk/dist/result.d.ts",
+              "src/workbench/hyperunix-observer.ts"
+            ],
+            "hxModules": [
+              "src/workbench/hosts/local-detached.ts",
+              "src/workbench/native-modules.ts",
+              "src/workbench/providers/hyperunix.ts"
+            ],
+            "adapterImporters": []
+          }
+        },
+        {
+          "id": "Q7",
+          "witness": {
+            "facetCarriesSentinel": true,
+            "violations": []
+          }
+        }
+      ]
+    }
+  ]
+}

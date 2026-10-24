@@ -1,0 +1,992 @@
+{
+  "provenance": "wb-kku9.3 census roster, cut by ws-03 (run g10-work-s64) on trunk caad9514303e63d9bd771bcc2462e12ad39adb2d (the landing-310 ledger hop). Producer facts: read-only git show at the pins named below - the MechanicalWorkflows line verbatim, and two verbatim excerpts of the flywheel work-lane generation (generations/g10-work.js blob 21587f9b, the generationBlob of the dispatch args), each beside its sha256. Pin witnesses: measured by test/workbench-beads-claim-recheck-census.test.ts on caad951 plus the cut, each reviewed against the bead's acceptance before it was written here. A literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here.",
+  "bead": "wb-kku9.3",
+  "programPin": "5ce2a07f891f5b165125d26739ec79720c295dd1",
+  "producer": {
+    "program": {
+      "repo": "MechanicalWorkflows",
+      "citation": "MechanicalWorkflows docs/programs/cac-workflow-composition-2026-10-18/01-composition-contracts.md:13 at 5ce2a07f891f5b165125d26739ec79720c295dd1, a design-only program: \"Design-only as of 2026-10-18 (19ca8d4): the two program documents are the only artifacts\" (its README.md:3 at the pin, blob 8724bfbef6638e8efa371e78a7c026c28ca2dc62)",
+      "blob": "5e6c16c0c0415f1df837671a949ee9f2c6a5fed2",
+      "line": 13,
+      "text": "5. A Beads claimed task may be no longer ready at execution; source-native task state is checked."
+    },
+    "generation": {
+      "repo": "the flywheel machine repository (OrchestrationEngineer/machines/flywheel), outside this repository",
+      "path": "generations/g10-work.js",
+      "blob": "21587f9b3690da49a2dc445afb0851c120072d06",
+      "readAtCommit": "13fd4bfb0c6053a51da454edee7a4f9d5f660db0",
+      "claimStep": {
+        "line": 102,
+        "text": "(1) CLAIM: re-read the BOUNDARY tail; bd -C ${STORE} show <bead> --json and REQUIRE status open (an OPEN bead whose assignee is flywheel is a REOPENED RESPIN staged for the machine and IS claimable — the claim-lock decides; an in_progress bead is TAKEN even if the assignee is flywheel: return {delivered:false,claimFailed:true,bead}); refuse any bead under a live-tier hold unless this seat's credentials were verified by preflight, any owner-reserved bead, and any bead whose declared files intersect the hot set (return {delivered:false,blocked:true,reason}). Then FW_RUN=${RUN_ID} FW_GEN=${GEN} ${LEDGER} claim-lock --bead <bead> --seat ${seat} (exit 3 = another seat holds it: return claimFailed); BEADS_ACTOR=flywheel bd -C ${STORE} update <bead> --claim; verify with bd show; ${LEDGER} metrics --kind claim --bead <bead> --seat ${seat} --tier <haiku|sonnet, your model tier> --source <seed-queue|store|seed-args|resume> --pickTier ${PICK_TIER} ${PICK_ORDER_FLAGS(item)} (tier is REQUIRED on claim rows; source and pickTier are g9 R-T1 fields; pickOrder and pickOrderReason are g10 T6 fields - record the order the pick actually used, never omit them). (2) WORKTREE:",
+        "sha256": "797750486c268e7884a6d5ed45a78ed4423153e2d9bad2ae859c2911b85b319d"
+      },
+      "resume": {
+        "line": 161,
+        "text": "This is a RESUME: skip the claim-lock and claim steps (the bead is already in_progress for flywheel); re-read BOUNDARY and the bead notes, then continue in ${item.worktree}.",
+        "sha256": "0e7b0f0049893e2ba1a3530a297144dfdd54a60aa77d7d0cda0998b42dd4d7aa"
+      }
+    }
+  },
+  "constants": {
+    "refusalCodes": [
+      "closed",
+      "blocked",
+      "status",
+      "partial",
+      "unreadable"
+    ],
+    "claimWindow": 8,
+    "readVerbs": [
+      "show",
+      "ready",
+      "list",
+      "blocked",
+      "query",
+      "search",
+      "export"
+    ],
+    "scanRoots": [
+      {
+        "root": "src",
+        "floor": 100,
+        "anchorFile": "src/workbench/beads-observer.ts",
+        "anchorToken": "bd show"
+      },
+      {
+        "root": "qa",
+        "floor": 50,
+        "anchorFile": "qa/workbench/live-furnace-vc4-launch.mjs",
+        "anchorToken": "spawnSync('bd', ['init'"
+      },
+      {
+        "root": "examples",
+        "floor": 5,
+        "anchorFile": "examples/workflows/gated-fix.js",
+        "anchorToken": "gate"
+      },
+      {
+        "root": ".pi",
+        "floor": 1,
+        "anchorFile": ".pi/agents/auditor.md",
+        "anchorToken": "max_turns"
+      },
+      {
+        "root": ".codex",
+        "floor": 2,
+        "anchorFile": ".codex/hooks.json",
+        "anchorToken": "bd codex-hook"
+      },
+      {
+        "root": ".github",
+        "floor": 2,
+        "anchorFile": ".github/workflows/ci.yml",
+        "anchorToken": "setup-node"
+      }
+    ],
+    "importRoots": [
+      "src",
+      "qa",
+      "examples"
+    ],
+    "readerModule": "src/workbench/beads-observer.ts",
+    "instructionFiles": [
+      "AGENTS.md",
+      ".agents/skills/beads/SKILL.md",
+      ".beads/README.md"
+    ],
+    "vc4Launcher": "qa/workbench/live-furnace-vc4-launch.mjs",
+    "residuals": {
+      "R-RESUME": [
+        "Q1"
+      ],
+      "R-ASSIGNEE": [
+        "Q2"
+      ],
+      "R-WINDOW": [
+        "Q3"
+      ],
+      "R-COMPOSED": [
+        "Q4"
+      ],
+      "R-INSTRUCTION": [
+        "Q5"
+      ],
+      "R-CONTROLLER": [
+        "Q6"
+      ],
+      "R-ALIAS": [
+        "Q7"
+      ],
+      "R-REMEASURE": [
+        "Q8"
+      ]
+    },
+    "cases": [
+      "A1:closed with a close reason:refused closed:closed",
+      "A1:closed without a close reason:refused closed:closed",
+      "A2:a new open blocker:refused blocked:fx-dep.1",
+      "A2:a closed blocker reopened:refused blocked:fx-dep.1",
+      "A2:a blocker in progress beside a closed one:refused blocked:fx-dep.2",
+      "A3:still ready with no dependency:executed",
+      "A3:still ready beside non-blocking entries:executed",
+      "A3:unblocked since the claim:executed",
+      "A4:the claim released:refused status:open",
+      "A4:a blocked status:refused status:blocked",
+      "A4:a deferred status:refused status:deferred",
+      "A4:an unknown status word:refused status:hooked",
+      "A4:a cut dependency page:refused partial:8/9",
+      "A4:a nonzero exit:refused unreadable:unavailable",
+      "A4:a non-JSON body:refused unreadable:unavailable",
+      "A4:another work id:refused unreadable:unavailable",
+      "A4:a throwing seam:refused unreadable:unavailable"
+    ],
+    "mutants": [
+      "STALE-CLAIM:A1,A2",
+      "NO-READ:A3",
+      "READ-IGNORED:A1",
+      "STATUS-ONLY:A2",
+      "BLOCKERS-ONLY:A1",
+      "PARTIAL-TRUSTED:A4",
+      "EXECUTE-FIRST:A3",
+      "UNREADABLE-FALLBACK:A4",
+      "UNCOUNTED:A1"
+    ],
+    "executors": [],
+    "generationDigests": {
+      "claimStep": "797750486c268e7884a6d5ed45a78ed4423153e2d9bad2ae859c2911b85b319d",
+      "resume": "0e7b0f0049893e2ba1a3530a297144dfdd54a60aa77d7d0cda0998b42dd4d7aa"
+    },
+    "contract": "beads.work.readiness/v1"
+  },
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster, the producer texts, the bead's notes and the cases agree",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "C1",
+    "C2",
+    "C3",
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8",
+    "the registered tests and the reached pins equal the roster, in order and both ways"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) hermetic vitest over the bd show fake: a task re-read after the claim as closed, or blocked by an open dependency, makes the execution path refuse with a typed diagnostic and invoke no native verb",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "records": [
+              {
+                "case": "closed with a close reason",
+                "digest": "ca0e61f6a94f3090873a6cbfc781d2747af07befae62c3b5458fc583aca02557",
+                "summary": "refused closed:closed",
+                "outcome": {
+                  "kind": "refused",
+                  "workId": "fx-run.1",
+                  "code": "closed",
+                  "detail": "closed"
+                },
+                "log": [
+                  "show fx-run.1 @root 1000ms",
+                  "claim fx-run.1",
+                  "show fx-run.1 @root 1000ms"
+                ],
+                "native": 0,
+                "refusals": 1
+              },
+              {
+                "case": "closed without a close reason",
+                "digest": "e93739f8634e338b6c863194adb079e2667ee6db0a00f75dc92e9fe9cb99452b",
+                "summary": "refused closed:closed",
+                "outcome": {
+                  "kind": "refused",
+                  "workId": "fx-run.1",
+                  "code": "closed",
+                  "detail": "closed"
+                },
+                "log": [
+                  "show fx-run.1 @root 1000ms",
+                  "claim fx-run.1",
+                  "show fx-run.1 @root 1000ms"
+                ],
+                "native": 0,
+                "refusals": 1
+              }
+            ],
+            "typedControls": [
+              true,
+              false,
+              false,
+              false
+            ]
+          }
+        },
+        {
+          "id": "A2",
+          "witness": [
+            {
+              "case": "a new open blocker",
+              "digest": "3cc67fcd7c3f4f59ce8daa0f11275570cdd3475bbc0cfcf607c7a4e0df5beb9b",
+              "summary": "refused blocked:fx-dep.1",
+              "outcome": {
+                "kind": "refused",
+                "workId": "fx-run.1",
+                "code": "blocked",
+                "detail": "fx-dep.1"
+              },
+              "log": [
+                "show fx-run.1 @root 1000ms",
+                "claim fx-run.1",
+                "show fx-run.1 @root 1000ms"
+              ],
+              "native": 0,
+              "refusals": 1
+            },
+            {
+              "case": "a closed blocker reopened",
+              "digest": "d915f96b1f5187f23528df076d964b90fcf8e5ee840cd07cd4f8e280baa12844",
+              "summary": "refused blocked:fx-dep.1",
+              "outcome": {
+                "kind": "refused",
+                "workId": "fx-run.1",
+                "code": "blocked",
+                "detail": "fx-dep.1"
+              },
+              "log": [
+                "show fx-run.1 @root 1000ms",
+                "claim fx-run.1",
+                "show fx-run.1 @root 1000ms"
+              ],
+              "native": 0,
+              "refusals": 1
+            },
+            {
+              "case": "a blocker in progress beside a closed one",
+              "digest": "c80413b327b8ed3e43ca1e3b47a86e05c51e95fe36e8656b58bdfd5b371d0dc0",
+              "summary": "refused blocked:fx-dep.2",
+              "outcome": {
+                "kind": "refused",
+                "workId": "fx-run.1",
+                "code": "blocked",
+                "detail": "fx-dep.2"
+              },
+              "log": [
+                "show fx-run.1 @root 1000ms",
+                "claim fx-run.1",
+                "show fx-run.1 @root 1000ms"
+              ],
+              "native": 0,
+              "refusals": 1
+            }
+          ]
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "ready": [
+              {
+                "case": "still ready with no dependency",
+                "digest": "b70f80862f07ab7321dca99dbff79906a74e34041fe47498c6698ccbf495024a",
+                "summary": "executed",
+                "outcome": {
+                  "kind": "executed",
+                  "workId": "fx-run.1"
+                },
+                "log": [
+                  "show fx-run.1 @root 1000ms",
+                  "claim fx-run.1",
+                  "show fx-run.1 @root 1000ms",
+                  "native fx-run.1"
+                ],
+                "native": 1,
+                "refusals": 0
+              },
+              {
+                "case": "still ready beside non-blocking entries",
+                "digest": "0a86cc42d2d8506f65f2d307e455b731f248ce0a7c08604eca2856eca0ae4b43",
+                "summary": "executed",
+                "outcome": {
+                  "kind": "executed",
+                  "workId": "fx-run.1"
+                },
+                "log": [
+                  "show fx-run.1 @root 1000ms",
+                  "claim fx-run.1",
+                  "show fx-run.1 @root 1000ms",
+                  "native fx-run.1"
+                ],
+                "native": 1,
+                "refusals": 0
+              },
+              {
+                "case": "unblocked since the claim",
+                "digest": "78910a3f15a9cd4225bdb0d157048d50895733a17392a6bc91e8a0c4f90ab796",
+                "summary": "executed",
+                "outcome": {
+                  "kind": "executed",
+                  "workId": "fx-run.1"
+                },
+                "log": [
+                  "show fx-run.1 @root 1000ms",
+                  "claim fx-run.1",
+                  "show fx-run.1 @root 1000ms",
+                  "native fx-run.1"
+                ],
+                "native": 1,
+                "refusals": 0
+              }
+            ],
+            "freshShowsPerCase": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ]
+          }
+        },
+        {
+          "id": "A4",
+          "witness": [
+            {
+              "case": "the claim released",
+              "digest": "383367668518070a50448a606300957e8ed8f04ee4d9d6da8831c2eba6d204f7",
+              "summary": "refused status:open",
+              "outcome": {
+                "kind": "refused",
+                "workId": "fx-run.1",
+                "code": "status",
+                "detail": "open"
+              },
+              "log": [
+                "show fx-run.1 @root 1000ms",
+                "claim fx-run.1",
+                "show fx-run.1 @root 1000ms"
+              ],
+              "native": 0,
+              "refusals": 1
+            },
+            {
+              "case": "a blocked status",
+              "digest": "bdd15a69046310c2cecd682da8ef4113b079b30c03251442ad23eb713fb116b7",
+              "summary": "refused status:blocked",
+              "outcome": {
+                "kind": "refused",
+                "workId": "fx-run.1",
+                "code": "status",
+                "detail": "blocked"
+              },
+              "log": [
+                "show fx-run.1 @root 1000ms",
+                "claim fx-run.1",
+                "show fx-run.1 @root 1000ms"
+              ],
+              "native": 0,
+              "refusals": 1
+            },
+            {
+              "case": "a deferred status",
+              "digest": "c5fd83fe4c499093038b89515285e9eeaa3f3cc017d24417513d0b759a8d8010",
+              "summary": "refused status:deferred",
+              "outcome": {
+                "kind": "refused",
+                "workId": "fx-run.1",
+                "code": "status",
+                "detail": "deferred"
+              },
+              "log": [
+                "show fx-run.1 @root 1000ms",
+                "claim fx-run.1",
+                "show fx-run.1 @root 1000ms"
+              ],
+              "native": 0,
+              "refusals": 1
+            },
+            {
+              "case": "an unknown status word",
+              "digest": "b466fb6160cb5b4606742688f94dc65d6f2c61bebaeac7dece4e21d1179f5919",
+              "summary": "refused status:hooked",
+              "outcome": {
+                "kind": "refused",
+                "workId": "fx-run.1",
+                "code": "status",
+                "detail": "hooked"
+              },
+              "log": [
+                "show fx-run.1 @root 1000ms",
+                "claim fx-run.1",
+                "show fx-run.1 @root 1000ms"
+              ],
+              "native": 0,
+              "refusals": 1
+            },
+            {
+              "case": "a cut dependency page",
+              "digest": "56ab562c883ea4c47c63e3062b198a826c278a73d97ded0d62cf4247a903b51d",
+              "summary": "refused partial:8/9",
+              "outcome": {
+                "kind": "refused",
+                "workId": "fx-run.1",
+                "code": "partial",
+                "detail": "8/9"
+              },
+              "log": [
+                "show fx-run.1 @root 1000ms",
+                "claim fx-run.1",
+                "show fx-run.1 @root 1000ms"
+              ],
+              "native": 0,
+              "refusals": 1
+            },
+            {
+              "case": "a nonzero exit",
+              "digest": "cbc60c356124cd2996d657fc9bfc3253f7c7144b75da0e857225e910625f9a88",
+              "summary": "refused unreadable:unavailable",
+              "outcome": {
+                "kind": "refused",
+                "workId": "fx-run.1",
+                "code": "unreadable",
+                "detail": "unavailable"
+              },
+              "log": [
+                "show fx-run.1 @root 1000ms",
+                "claim fx-run.1",
+                "show fx-run.1 @root 1000ms"
+              ],
+              "native": 0,
+              "refusals": 1
+            },
+            {
+              "case": "a non-JSON body",
+              "digest": "bad9cdae2010ad2f646b123381a93717c3782ec1e63aae843b48145bc0cbe843",
+              "summary": "refused unreadable:unavailable",
+              "outcome": {
+                "kind": "refused",
+                "workId": "fx-run.1",
+                "code": "unreadable",
+                "detail": "unavailable"
+              },
+              "log": [
+                "show fx-run.1 @root 1000ms",
+                "claim fx-run.1",
+                "show fx-run.1 @root 1000ms"
+              ],
+              "native": 0,
+              "refusals": 1
+            },
+            {
+              "case": "another work id",
+              "digest": "11b034f163dc22be36234f7c29d7a637b173bb0106bf63c9bc43162ce93bd819",
+              "summary": "refused unreadable:unavailable",
+              "outcome": {
+                "kind": "refused",
+                "workId": "fx-run.1",
+                "code": "unreadable",
+                "detail": "unavailable"
+              },
+              "log": [
+                "show fx-run.1 @root 1000ms",
+                "claim fx-run.1",
+                "show fx-run.1 @root 1000ms"
+              ],
+              "native": 0,
+              "refusals": 1
+            },
+            {
+              "case": "a throwing seam",
+              "digest": "08731c3c7eaf465fc51aae6f9e80901a7258d4b92c5e4ce8e3e1fb1463566c21",
+              "summary": "refused unreadable:unavailable",
+              "outcome": {
+                "kind": "refused",
+                "workId": "fx-run.1",
+                "code": "unreadable",
+                "detail": "unavailable"
+              },
+              "log": [
+                "show fx-run.1 @root 1000ms",
+                "claim fx-run.1",
+                "show fx-run.1 @root 1000ms"
+              ],
+              "native": 0,
+              "refusals": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) static census: no module caches readiness across the claim-to-execute boundary without a fresh bd show read, and the bead-machine generations call bd show (read verb) before executing a claimed seat",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "roots": [
+              {
+                "root": "src",
+                "floor": true,
+                "anchor": true
+              },
+              {
+                "root": "qa",
+                "floor": true,
+                "anchor": true
+              },
+              {
+                "root": "examples",
+                "floor": true,
+                "anchor": true
+              },
+              {
+                "root": ".pi",
+                "floor": true,
+                "anchor": true
+              },
+              {
+                "root": ".codex",
+                "floor": true,
+                "anchor": true
+              },
+              {
+                "root": ".github",
+                "floor": true,
+                "anchor": true
+              }
+            ],
+            "launched": [],
+            "bound": [],
+            "controls": {
+              "flagged": [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "quiet": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "seam": [
+              "show"
+            ],
+            "seamControl": [
+              "claim",
+              "show"
+            ],
+            "exports": [
+              "BEADS_WORK_CONTRACT",
+              "projectBeadsWork",
+              "readBeadsWork"
+            ]
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "reader": {
+              "lets": [],
+              "containers": [
+                "STATUS_TONES"
+              ],
+              "writes": []
+            },
+            "controls": {
+              "flagged": [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "quiet": [
+                0,
+                0,
+                0
+              ]
+            },
+            "dynamic": {
+              "shows": 2,
+              "statuses": [
+                "in_progress",
+                "closed"
+              ],
+              "observedAt": [
+                "2026-10-23T20:00:01.000Z",
+                "2026-10-23T20:00:02.000Z"
+              ],
+              "freshness": [
+                "current",
+                "current"
+              ]
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "importers": [],
+            "bound": [],
+            "readerImportsRedaction": true,
+            "controls": {
+              "flagged": [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "quiet": [
+                0,
+                0,
+                0,
+                0
+              ]
+            },
+            "bypass": [],
+            "seamReads": true,
+            "readControls": {
+              "flagged": [
+                1,
+                1,
+                1,
+                1
+              ],
+              "quiet": [
+                0,
+                0,
+                0
+              ]
+            }
+          }
+        },
+        {
+          "id": "B4",
+          "witness": {
+            "step": {
+              "segments": 9,
+              "reads": [
+                1,
+                5
+              ],
+              "requires": [
+                1
+              ],
+              "claimLocks": [
+                3
+              ],
+              "claimWrites": [
+                4
+              ],
+              "closes": [],
+              "execution": 8,
+              "skipsClaim": false
+            },
+            "controls": {
+              "droppedReread": false,
+              "droppedFirstRead": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) mutant: an implementation executing on the stale claim fails (a)",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "executedNoLongerReady": [
+              "closed with a close reason",
+              "closed without a close reason",
+              "a new open blocker",
+              "a closed blocker reopened",
+              "a blocker in progress beside a closed one"
+            ],
+            "freshShows": [
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "summaries": [
+              "executed",
+              "executed",
+              "executed",
+              "executed",
+              "executed"
+            ]
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "honest": [],
+            "brokenBy": {
+              "STALE-CLAIM": [
+                "closed with a close reason: executed / native / counted 0",
+                "closed without a close reason: executed / native / counted 0",
+                "a new open blocker: executed / native / counted 0",
+                "a closed blocker reopened: executed / native / counted 0",
+                "a blocker in progress beside a closed one: executed / native / counted 0",
+                "still ready with no dependency: executed / native / counted 0",
+                "still ready beside non-blocking entries: executed / native / counted 0",
+                "unblocked since the claim: refused blocked:fx-dep.1 / nothing / counted 1",
+                "the claim released: executed / native / counted 0",
+                "a blocked status: executed / native / counted 0",
+                "a deferred status: executed / native / counted 0",
+                "an unknown status word: executed / native / counted 0",
+                "a cut dependency page: executed / native / counted 0",
+                "a nonzero exit: executed / native / counted 0",
+                "a non-JSON body: executed / native / counted 0",
+                "another work id: executed / native / counted 0",
+                "a throwing seam: executed / native / counted 0"
+              ],
+              "NO-READ": [
+                "closed with a close reason: executed / native / counted 0",
+                "closed without a close reason: executed / native / counted 0",
+                "a new open blocker: executed / native / counted 0",
+                "a closed blocker reopened: executed / native / counted 0",
+                "a blocker in progress beside a closed one: executed / native / counted 0",
+                "still ready with no dependency: executed / native / counted 0",
+                "still ready beside non-blocking entries: executed / native / counted 0",
+                "unblocked since the claim: executed / native / counted 0",
+                "the claim released: executed / native / counted 0",
+                "a blocked status: executed / native / counted 0",
+                "a deferred status: executed / native / counted 0",
+                "an unknown status word: executed / native / counted 0",
+                "a cut dependency page: executed / native / counted 0",
+                "a nonzero exit: executed / native / counted 0",
+                "a non-JSON body: executed / native / counted 0",
+                "another work id: executed / native / counted 0",
+                "a throwing seam: executed / native / counted 0"
+              ],
+              "READ-IGNORED": [
+                "closed with a close reason: executed / show,native / counted 0",
+                "closed without a close reason: executed / show,native / counted 0",
+                "a new open blocker: executed / show,native / counted 0",
+                "a closed blocker reopened: executed / show,native / counted 0",
+                "a blocker in progress beside a closed one: executed / show,native / counted 0",
+                "unblocked since the claim: refused blocked:fx-dep.1 / show / counted 1",
+                "the claim released: executed / show,native / counted 0",
+                "a blocked status: executed / show,native / counted 0",
+                "a deferred status: executed / show,native / counted 0",
+                "an unknown status word: executed / show,native / counted 0",
+                "a cut dependency page: executed / show,native / counted 0",
+                "a nonzero exit: executed / show,native / counted 0",
+                "a non-JSON body: executed / show,native / counted 0",
+                "another work id: executed / show,native / counted 0",
+                "a throwing seam: executed / show,native / counted 0"
+              ],
+              "STATUS-ONLY": [
+                "a new open blocker: executed / show,native / counted 0",
+                "a closed blocker reopened: executed / show,native / counted 0",
+                "a blocker in progress beside a closed one: executed / show,native / counted 0"
+              ],
+              "BLOCKERS-ONLY": [
+                "closed with a close reason: executed / show,native / counted 0",
+                "closed without a close reason: executed / show,native / counted 0",
+                "the claim released: executed / show,native / counted 0",
+                "a blocked status: executed / show,native / counted 0",
+                "a deferred status: executed / show,native / counted 0",
+                "an unknown status word: executed / show,native / counted 0"
+              ],
+              "PARTIAL-TRUSTED": [
+                "a cut dependency page: executed / show,native / counted 0"
+              ],
+              "EXECUTE-FIRST": [
+                "closed with a close reason: refused closed:closed / native,show / counted 1",
+                "closed without a close reason: refused closed:closed / native,show / counted 1",
+                "a new open blocker: refused blocked:fx-dep.1 / native,show / counted 1",
+                "a closed blocker reopened: refused blocked:fx-dep.1 / native,show / counted 1",
+                "a blocker in progress beside a closed one: refused blocked:fx-dep.2 / native,show / counted 1",
+                "still ready with no dependency: executed / native,show / counted 0",
+                "still ready beside non-blocking entries: executed / native,show / counted 0",
+                "unblocked since the claim: executed / native,show / counted 0",
+                "the claim released: refused status:open / native,show / counted 1",
+                "a blocked status: refused status:blocked / native,show / counted 1",
+                "a deferred status: refused status:deferred / native,show / counted 1",
+                "an unknown status word: refused status:hooked / native,show / counted 1",
+                "a cut dependency page: refused partial:8/9 / native,show / counted 1",
+                "a nonzero exit: refused unreadable:unavailable / native,show / counted 1",
+                "a non-JSON body: refused unreadable:unavailable / native,show / counted 1",
+                "another work id: refused unreadable:unavailable / native,show / counted 1",
+                "a throwing seam: refused unreadable:unavailable / native,show / counted 1"
+              ],
+              "UNREADABLE-FALLBACK": [
+                "a nonzero exit: executed / show,native / counted 0",
+                "a non-JSON body: executed / show,native / counted 0",
+                "another work id: executed / show,native / counted 0",
+                "a throwing seam: executed / show,native / counted 0"
+              ],
+              "UNCOUNTED": [
+                "closed with a close reason: refused closed:closed / show / counted 0",
+                "closed without a close reason: refused closed:closed / show / counted 0",
+                "a new open blocker: refused blocked:fx-dep.1 / show / counted 0",
+                "a closed blocker reopened: refused blocked:fx-dep.1 / show / counted 0",
+                "a blocker in progress beside a closed one: refused blocked:fx-dep.2 / show / counted 0",
+                "the claim released: refused status:open / show / counted 0",
+                "a blocked status: refused status:blocked / show / counted 0",
+                "a deferred status: refused status:deferred / show / counted 0",
+                "an unknown status word: refused status:hooked / show / counted 0",
+                "a cut dependency page: refused partial:8/9 / show / counted 0",
+                "a nonzero exit: refused unreadable:unavailable / show / counted 0",
+                "a non-JSON body: refused unreadable:unavailable / show / counted 0",
+                "another work id: refused unreadable:unavailable / show / counted 0",
+                "a throwing seam: refused unreadable:unavailable / show / counted 0"
+              ]
+            }
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "bound": {},
+            "control": {
+              "honest": true,
+              "staleClaim": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "residuals: each named family with its pinned quiet row",
+      "pins": [
+        {
+          "id": "Q1",
+          "witness": {
+            "reads": 0,
+            "requires": 0,
+            "skipsClaim": true,
+            "claimStepReads": 2,
+            "claimStepRequires": 1
+          }
+        },
+        {
+          "id": "Q2",
+          "witness": {
+            "summary": "executed",
+            "native": 1,
+            "workFields": [
+              "closeReasonPresent",
+              "issueType",
+              "priority",
+              "status",
+              "title"
+            ],
+            "holderSeen": false
+          }
+        },
+        {
+          "id": "Q3",
+          "witness": {
+            "summary": "executed",
+            "shows": 2,
+            "storeAtNative": "closed",
+            "refusals": 0
+          }
+        },
+        {
+          "id": "Q4",
+          "witness": {
+            "quiet": [
+              0,
+              0,
+              0
+            ],
+            "edge": 1,
+            "composedControl": 1
+          }
+        },
+        {
+          "id": "Q5",
+          "witness": [
+            {
+              "file": "AGENTS.md",
+              "claims": true,
+              "scanned": false
+            },
+            {
+              "file": ".agents/skills/beads/SKILL.md",
+              "claims": true,
+              "scanned": false
+            },
+            {
+              "file": ".beads/README.md",
+              "claims": true,
+              "scanned": false
+            }
+          ]
+        },
+        {
+          "id": "Q6",
+          "witness": {
+            "underRoot": true,
+            "claims": 0,
+            "startsRun": true,
+            "initsStore": true
+          }
+        },
+        {
+          "id": "Q7",
+          "witness": {
+            "aliasWrites": 0,
+            "directWrites": 1
+          }
+        },
+        {
+          "id": "Q8",
+          "witness": {
+            "liveGenerationFiles": 0,
+            "claimStepDigest": true,
+            "resumeDigest": true,
+            "carriedJudged": true,
+            "path": "generations/g10-work.js",
+            "blob": "21587f9b3690da49a2dc445afb0851c120072d06"
+          }
+        }
+      ]
+    }
+  ]
+}

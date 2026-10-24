@@ -3370,3 +3370,428 @@ describe("wb-e3eh R697 PREP F1: each wb-561n F1 form pinned refused, or named wi
     expect(E3EH_REACHED).toEqual(expected.map(row => row.name));
   });
 });
+
+/**
+ * wb-agwj, the wb-e3eh landing-249 follow-up (R694 PREP F1 on gate cmd_ed834748f060), cut in the TERMINAL
+ * enumerate-the-resolvable form the owner ruling on wb-e3eh F7 binds (rule 14 / 19(c) shape): it resolves the quiet spellings
+ * that gate measured, names the channel that produced them, and claims nothing past that.
+ * PROBE SOURCE: AGWJ_PROBES is the gate's LEG-2 probe file, gp1e-probes.json from the gate-prep-1 g10-gate-s22 PREP archive
+ * (scripts/), committed byte for byte. Its sha256 (AGWJ_PROBE_SHA256, the sha the ruling names) is pinned here and in AGWJ_ROSTER
+ * and checked against the committed bytes, and every residual placement below is checked against its probe's own text, so the
+ * resolved set is anchored outside this file's literals and outside the roster.
+ * RESOLVED SET, and no broader claim: exactly the 39 probes the gate wrote as exploratory (expect "explore"), each read quiet by
+ * E3EH_STRICT at S1 and S2 while every landed pin held (the F1 measurement): 26 in the eleven families (a)-(k) the PREP named
+ * outside every named family, and 13 members of the named bound's call-value family (cv). Each is resolved by residual-pin: a
+ * NAMED quiet residual of its family (AGWJ_RESIDUALS, with its group and pin) and a pinned quiet row at both sites. This cut adds
+ * no reading rule and no refusal: E3EH_STRICT is the reading, unchanged, and a reading that starts refusing a residual reds that
+ * residual's quiet row, so the list moves with the reading or not at all.
+ * THE CALL-VALUE CLAUSE, as E3EH_STRICT implements it (PREP F3): a call's value is followed for Object.assign,
+ * Object.defineProperty and Object(x); beside those, the spread of Array.of(...) is expanded and Object.fromEntries over
+ * Object.entries of an object literal is read (the e3eh rules for both); every other call's value is a call-value member (cv).
+ * CHANNEL RESIDUAL (the ruling's (2)): R-AGWJ-SPELLING-CHANNEL names the spelling-generation channel itself - any spelling of a
+ * prototype or snapshot write that is neither a pinned refusal nor a named residual of this file (E3EH_ROWS, E3EH_QUIET and every
+ * quiet row it re-reads, AGWJ_RESIDUALS). Its id-asserted quiet row places two spellings no probe of the battery wrote, one per
+ * pin, and pins that both read quiet; its runtime reading is stated beside it (unobserved: placements are parsed, never run).
+ * Under the ruling's terminal clause (4) a future new-spelling finding is a sighting of this family, a record row, never a
+ * follow-up bead.
+ * RIDERS: F5 - AGWJ_TWINS keep a non-Object owner's prototype member and a non-global owner's Object and Reflect members quiet,
+ * so reading any member named prototype as a prototype, or any owner's Object or Reflect member as the global one, reds a twin
+ * at the wb-561n reading and the wb-e3eh reading alike. F6 - the call-value clause is pinned through cv rows of its own: a
+ * reading that follows any other call's first argument reds the cv rows whose call returns or lists that argument.
+ * Every placement is parsed, never executed; every credential-shaped value is an obviously fake fixture.
+ */
+const AGWJ_PROBES = "test/fixtures/claude-message-ref-agwj-probes.json";
+/** The sha256 of the gate's probe file, the sha the ruling names: the committed copy must hash to it. */
+const AGWJ_PROBE_SHA256 = "2f73a997d78f3a4cfd296f6976334f2fa8702a92c909496ff11e64a4a0cde9d1";
+const AGWJ_ROSTER = "test/fixtures/claude-message-ref-agwj.json";
+/** The gate's probe count (PREP F1: "39 of the 98 gate-authored probes"). */
+const AGWJ_PROBE_COUNT = 98;
+/** The gate's exploratory probes, in its probe order: every one read quiet at S1 and S2 (PREP F1). */
+const AGWJ_F1: readonly string[] = [
+  "GE5-LOGICAL-ASSIGN-OR",
+  "GE5-LOGICAL-ASSIGN-NULLISH",
+  "GE5-LOGICAL-ASSIGN-AND",
+  "GE4-LOGICAL-ASSIGN-NULLISH",
+  "GE5-ELEMENT-STRING-INDEX",
+  "GE5-ELEMENT-AT",
+  "GE4-ELEMENT-STRING-INDEX",
+  "GE5-PROPERTY-SHORTHAND",
+  "GE5-PROPERTY-SPREAD",
+  "GE5-PROPERTY-GETTER",
+  "GE4-PROPERTY-SHORTHAND",
+  "GE5-DESTRUCT-REST",
+  "GE5-FOROF-ENTRIES",
+  "GE5-FOROF-ARRAY-OF",
+  "GE4-FOROF-ARRAY-OF",
+  "GE5-WRAP-NEW",
+  "GE5-WRAP-CALL",
+  "GE4-WRAP-NEW",
+  "GE4-DEFINEPROPERTIES-RETURN",
+  "GE4-SETPROTOTYPEOF-RETURN",
+  "GE4-SEAL-RETURN",
+  "GE5-GLOBAL-WINDOW",
+  "GE5-GLOBAL-SELF",
+  "GE5-GLOBAL-NESTED",
+  "GE4-GLOBAL-WINDOW",
+  "GE5-APPLY-CALL",
+  "GE5-CALL-APPLY",
+  "GE5-REFLECT-APPLY-CALL",
+  "GE5-BIND-CALL",
+  "GE4-APPLY-CALL",
+  "GE5-ARRAY-FROM-SPREAD",
+  "GE5-ARRAY-CALL-SPREAD",
+  "GE5-ARRAY-OF-GLOBAL",
+  "GE5-ARRAY-CONCAT-SPREAD",
+  "GE4-ARRAY-FROM-SPREAD",
+  "GE5-DEFINE-GETTER-REFLECT-APPLY",
+  "GE5-DEFINE-GETTER-BIND",
+  "GE5-ENTRIES-MAP",
+  "GE5-ENTRIES-MAPPED",
+];
+type AgwjGroup = "a" | "b" | "c" | "d" | "e" | "f" | "g" | "h" | "i" | "j" | "k" | "cv";
+/** The PREP's families for F1, in its order: (a)-(k) outside every named family, then the named bound's call-value family. */
+const AGWJ_GROUPS: readonly { readonly id: AgwjGroup; readonly label: string }[] = [
+  { id: "a", label: "(a) a logical-assignment target" },
+  { id: "b", label: "(b) a string-literal index into an array literal" },
+  { id: "c", label: "(c) a shorthand property of a const object literal" },
+  { id: "d", label: "(d) a property carried in through an object spread" },
+  { id: "e", label: "(e) an array-binding rest element" },
+  { id: "f", label: "(f) new Object(x), or Object reached through .call" },
+  { id: "g", label: "(g) window, self or globalThis.global as the global-object owner" },
+  { id: "h", label: "(h) the writer reached through apply.call, call.apply, Reflect.apply of call, or call.bind" },
+  { id: "i", label: "(i) Array.of owned through globalThis, in a spread" },
+  { id: "j", label: "(j) __defineGetter__ reached through Reflect.apply or .bind" },
+  { id: "k", label: "(k) Object.fromEntries over a Map" },
+  { id: "cv", label: "(cv) the named bound's call-value family, a call's value the reading never follows" },
+];
+/** A named quiet residual of one PREP family: the family it belongs to beside its own phrase. */
+interface AgwjResidual extends Residual {
+  readonly group: AgwjGroup;
+}
+/** Each F1 form as a named quiet residual of its family, in the gate's probe order; every placement is the probe's own text. */
+const AGWJ_RESIDUALS: readonly AgwjResidual[] = [
+  { id: "R-GE5-LOGICAL-ASSIGN-OR", pin: "P5", group: "a", family: "(a) a logical-assignment target: a logical-or assignment that evaluates to Object.prototype is the bulk-write target", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "let prototypeTarget: object | undefined; Object.assign((prototypeTarget ||= Object.prototype), JSON.parse('{\"benign\":1}'));" },
+  { id: "R-GE5-LOGICAL-ASSIGN-NULLISH", pin: "P5", group: "a", family: "(a) a logical-assignment target: a nullish assignment that evaluates to Object.prototype is the bulk-write target", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "let prototypeTarget: object | undefined; Object.assign((prototypeTarget ??= Object.prototype), JSON.parse('{\"benign\":1}'));" },
+  { id: "R-GE5-LOGICAL-ASSIGN-AND", pin: "P5", group: "a", family: "(a) a logical-assignment target: a logical-and assignment that evaluates to Object.prototype is the bulk-write target", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "let prototypeTarget: object = emitNumbers; Object.assign((prototypeTarget &&= Object.prototype), JSON.parse('{\"benign\":1}'));" },
+  { id: "R-GE4-LOGICAL-ASSIGN-NULLISH", pin: "P4", group: "a", family: "(a) a logical-assignment target: a nullish assignment that evaluates to snapshot receives parsed data", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: "let snapshotTarget: typeof snapshot | undefined; Object.assign((snapshotTarget ??= snapshot), JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));" },
+  { id: "R-GE5-ELEMENT-STRING-INDEX", pin: "P5", group: "b", family: "(b) a string-literal index into an array literal: the element a string-literal index names in an array literal holding the prototype receives a parsed bulk write", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Object.assign([Object.prototype][\"0\"], JSON.parse('{\"benign\":1}'));" },
+  { id: "R-GE5-ELEMENT-AT", pin: "P5", group: "cv", family: "(cv) the named bound's call-value family, a call's value the reading never follows: the prototype Array.prototype.at returns from an array literal receives a parsed bulk write", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Object.assign([Object.prototype].at(0) ?? {}, JSON.parse('{\"benign\":1}'));" },
+  { id: "R-GE4-ELEMENT-STRING-INDEX", pin: "P4", group: "b", family: "(b) a string-literal index into an array literal: the element a string-literal index names in an array literal holding snapshot receives parsed data", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: "Object.assign([snapshot][\"0\"], JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));" },
+  { id: "R-GE5-PROPERTY-SHORTHAND", pin: "P5", group: "c", family: "(c) a shorthand property of a const object literal: a shorthand property over a const alias of Object.prototype receives a parsed bulk write", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "const target = Object.prototype; const holder = { target }; Object.assign(holder.target, JSON.parse('{\"benign\":1}'));" },
+  { id: "R-GE5-PROPERTY-SPREAD", pin: "P5", group: "d", family: "(d) a property carried in through an object spread: a property spread into a const object literal from a literal holding the prototype receives a parsed bulk write", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "const holder = { ...{ target: Object.prototype } }; Object.assign(holder.target, JSON.parse('{\"benign\":1}'));" },
+  { id: "R-GE5-PROPERTY-GETTER", pin: "P5", group: "cv", family: "(cv) the named bound's call-value family, a call's value the reading never follows: the prototype a getter of a const object literal returns receives a parsed bulk write", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "const holder = { get target(): object { return Object.prototype; } }; Object.assign(holder.target, JSON.parse('{\"benign\":1}'));" },
+  { id: "R-GE4-PROPERTY-SHORTHAND", pin: "P4", group: "c", family: "(c) a shorthand property of a const object literal: a shorthand property over a const alias of snapshot receives parsed data", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: "const target = snapshot; const holder = { target }; Object.assign(holder.target, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));" },
+  { id: "R-GE5-DESTRUCT-REST", pin: "P5", group: "e", family: "(e) an array-binding rest element: an element of the rest binding over an array literal holding the prototype receives a parsed bulk write", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "const [...rest] = [Object.prototype]; Object.assign(rest[0], JSON.parse('{\"benign\":1}'));" },
+  { id: "R-GE5-FOROF-ENTRIES", pin: "P5", group: "cv", family: "(cv) the named bound's call-value family, a call's value the reading never follows: a const for-of value over Object.entries of a literal holding the prototype receives a parsed bulk write", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "for (const [, prototypeTarget] of Object.entries({ held: Object.prototype })) Object.assign(prototypeTarget, JSON.parse('{\"benign\":1}'));" },
+  { id: "R-GE5-FOROF-ARRAY-OF", pin: "P5", group: "cv", family: "(cv) the named bound's call-value family, a call's value the reading never follows: a const for-of variable over Array.of(...) holding the prototype receives a parsed bulk write", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "for (const prototypeTarget of Array.of<object>(Object.prototype)) Object.assign(prototypeTarget, JSON.parse('{\"benign\":1}'));" },
+  { id: "R-GE4-FOROF-ARRAY-OF", pin: "P4", group: "cv", family: "(cv) the named bound's call-value family, a call's value the reading never follows: a const for-of variable over Array.of(...) holding snapshot receives parsed data", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: "for (const snapshotTarget of Array.of(snapshot)) Object.assign(snapshotTarget, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));" },
+  { id: "R-GE5-WRAP-NEW", pin: "P5", group: "f", family: "(f) new Object(x), or Object reached through .call: the prototype passed through new Object(...) receives a parsed bulk write", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Object.assign(new Object(Object.prototype), JSON.parse('{\"benign\":1}'));" },
+  { id: "R-GE5-WRAP-CALL", pin: "P5", group: "f", family: "(f) new Object(x), or Object reached through .call: the prototype passed through Object.call(undefined, ...) receives a parsed bulk write", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Object.assign(Object.call(undefined, Object.prototype), JSON.parse('{\"benign\":1}'));" },
+  { id: "R-GE4-WRAP-NEW", pin: "P4", group: "f", family: "(f) new Object(x), or Object reached through .call: snapshot passed through new Object(...) receives parsed data", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: "Object.assign(new Object(snapshot), JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));" },
+  { id: "R-GE4-DEFINEPROPERTIES-RETURN", pin: "P4", group: "cv", family: "(cv) the named bound's call-value family, a call's value the reading never follows: the snapshot Object.defineProperties returns receives parsed data", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: "Object.assign(Object.defineProperties(snapshot, {}), JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));" },
+  { id: "R-GE4-SETPROTOTYPEOF-RETURN", pin: "P4", group: "cv", family: "(cv) the named bound's call-value family, a call's value the reading never follows: the snapshot Object.setPrototypeOf returns receives parsed data", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: "Object.assign(Object.setPrototypeOf(snapshot, Object.prototype), JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));" },
+  { id: "R-GE4-SEAL-RETURN", pin: "P4", group: "cv", family: "(cv) the named bound's call-value family, a call's value the reading never follows: the snapshot Object.seal returns receives parsed data", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: "Object.assign(Object.seal(snapshot), JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));" },
+  { id: "R-GE5-GLOBAL-WINDOW", pin: "P5", group: "g", family: "(g) window, self or globalThis.global as the global-object owner: a member of the prototype spelled through window is assigned", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "window.Object.prototype.benign = 1;" },
+  { id: "R-GE5-GLOBAL-SELF", pin: "P5", group: "g", family: "(g) window, self or globalThis.global as the global-object owner: a member of the prototype spelled through self is assigned", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "self.Object.prototype.benign = 1;" },
+  { id: "R-GE5-GLOBAL-NESTED", pin: "P5", group: "g", family: "(g) window, self or globalThis.global as the global-object owner: a member of the prototype spelled through globalThis.global is assigned", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "globalThis.global.Object.prototype.benign = 1;" },
+  { id: "R-GE4-GLOBAL-WINDOW", pin: "P4", group: "g", family: "(g) window, self or globalThis.global as the global-object owner: Object.assign owned through window writes parsed data into snapshot", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: "window.Object.assign(snapshot, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));" },
+  { id: "R-GE5-APPLY-CALL", pin: "P5", group: "h", family: "(h) the writer reached through apply.call, call.apply, Reflect.apply of call, or call.bind: Object.assign reached through Function.prototype.apply.call bulk-writes the prototype", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Function.prototype.apply.call(Object.assign, Object, [Object.prototype, JSON.parse('{\"benign\":1}')]);" },
+  { id: "R-GE5-CALL-APPLY", pin: "P5", group: "h", family: "(h) the writer reached through apply.call, call.apply, Reflect.apply of call, or call.bind: Object.assign reached through Function.prototype.call.apply bulk-writes the prototype", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Function.prototype.call.apply(Object.assign, [Object, Object.prototype, JSON.parse('{\"benign\":1}')]);" },
+  { id: "R-GE5-REFLECT-APPLY-CALL", pin: "P5", group: "h", family: "(h) the writer reached through apply.call, call.apply, Reflect.apply of call, or call.bind: Object.assign reached through Reflect.apply of Function.prototype.call bulk-writes the prototype", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Reflect.apply(Function.prototype.call, Object.assign, [Object, Object.prototype, JSON.parse('{\"benign\":1}')]);" },
+  { id: "R-GE5-BIND-CALL", pin: "P5", group: "h", family: "(h) the writer reached through apply.call, call.apply, Reflect.apply of call, or call.bind: Object.assign reached through Function.prototype.call.bind bulk-writes the prototype", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Function.prototype.call.bind(Object.assign)(Object, Object.prototype, JSON.parse('{\"benign\":1}'));" },
+  { id: "R-GE4-APPLY-CALL", pin: "P4", group: "h", family: "(h) the writer reached through apply.call, call.apply, Reflect.apply of call, or call.bind: Object.assign reached through Function.prototype.apply.call writes parsed data into snapshot", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: "Function.prototype.apply.call(Object.assign, Object, [snapshot, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}')]);" },
+  { id: "R-GE5-ARRAY-FROM-SPREAD", pin: "P5", group: "cv", family: "(cv) the named bound's call-value family, a call's value the reading never follows: the spread of Array.from(...) carries the prototype and parsed data into Object.assign", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Object.assign(...Array.from([Object.prototype, JSON.parse('{\"benign\":1}')]));" },
+  { id: "R-GE5-ARRAY-CALL-SPREAD", pin: "P5", group: "cv", family: "(cv) the named bound's call-value family, a call's value the reading never follows: the spread of Array(...) carries the prototype and parsed data into Object.assign", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Object.assign(...Array<object>(Object.prototype, JSON.parse('{\"benign\":1}')));" },
+  { id: "R-GE5-ARRAY-OF-GLOBAL", pin: "P5", group: "i", family: "(i) Array.of owned through globalThis, in a spread: the spread of globalThis.Array.of(...) carries the prototype and parsed data into Object.assign", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Object.assign(...globalThis.Array.of<object>(Object.prototype, JSON.parse('{\"benign\":1}')));" },
+  { id: "R-GE5-ARRAY-CONCAT-SPREAD", pin: "P5", group: "cv", family: "(cv) the named bound's call-value family, a call's value the reading never follows: the spread of an array literal's concat(...) carries the prototype and parsed data into Object.assign", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Object.assign(...[Object.prototype].concat([JSON.parse('{\"benign\":1}')]));" },
+  { id: "R-GE4-ARRAY-FROM-SPREAD", pin: "P4", group: "cv", family: "(cv) the named bound's call-value family, a call's value the reading never follows: the spread of Array.from(...) carries snapshot and parsed data into Object.assign", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: "Object.assign(...Array.from([snapshot, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}')]));" },
+  { id: "R-GE5-DEFINE-GETTER-REFLECT-APPLY", pin: "P5", group: "j", family: "(j) __defineGetter__ reached through Reflect.apply or .bind: the legacy __defineGetter__, reached through Reflect.apply, defines a prototype member", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Reflect.apply(Object.prototype.__defineGetter__, Object.prototype, [\"benign\", () => 1]);" },
+  { id: "R-GE5-DEFINE-GETTER-BIND", pin: "P5", group: "j", family: "(j) __defineGetter__ reached through Reflect.apply or .bind: the legacy __defineGetter__, bound to the prototype through .bind, defines a prototype member", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Object.prototype.__defineGetter__.bind(Object.prototype)(\"benign\", () => 1);" },
+  { id: "R-GE5-ENTRIES-MAP", pin: "P5", group: "k", family: "(k) Object.fromEntries over a Map: Object.fromEntries over a Map carries the Object prototype slot into Object.assign", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Object.assign(Object, Object.fromEntries(new Map([[\"prototype\", { benign: 1 }]])));" },
+  { id: "R-GE5-ENTRIES-MAPPED", pin: "P5", group: "cv", family: "(cv) the named bound's call-value family, a call's value the reading never follows: Object.fromEntries over Object.entries(...).map(...) carries the Object prototype slot into Object.assign", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "Object.assign(Object, Object.fromEntries(Object.entries({ prototype: { benign: 1 } }).map(entry => entry)));" },
+];
+/** The one named residual of the spelling-generation channel: its static reading and its runtime reading, stated together. */
+interface AgwjChannel extends Placement {
+  readonly id: string;
+  readonly family: string;
+  readonly sites: readonly string[];
+  /** The frozen reading of its quiet row. */
+  readonly reading: string;
+  /** What the channel's spellings do at runtime, which no static reading observes. */
+  readonly runtime: string;
+}
+const agwjChannelDigest = (row: AgwjChannel): string =>
+  digest16([row.id, row.family, row.sites.join(","), row.reading, row.runtime, row.prelude ?? "", row.emitter ?? "", row.afterSpread ?? "", row.beforeDerive ?? ""]);
+const AGWJ_CHANNEL: AgwjChannel = {
+  id: "R-AGWJ-SPELLING-CHANNEL",
+  family: "the spelling-generation channel: any spelling of a prototype or snapshot write outside the resolved set; this row places one at each pin, a rest binding read through a string index (P5) and the P4 sibling of GE5-ELEMENT-AT (P4), neither a probe of the gate's battery",
+  sites: ["S1", "S2"],
+  reading: "quiet",
+  runtime: "unobserved: the census parses the observer sites and never runs them, so a write spelled through the channel would execute with no census signal",
+  emitter: "const [...rest] = [Object.prototype]; Object.assign(rest[\"0\"], JSON.parse('{\"benign\":1}'));",
+  beforeDerive: "Object.assign([snapshot].at(0) ?? {}, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));",
+};
+/** F5: a non-Object owner's prototype member and a non-global owner's Object and Reflect members read quiet at both readings. */
+const AGWJ_TWINS: readonly Twin[] = [
+  { id: "T-F5-CLASS-PROTOTYPE", pin: "P5", form: "the prototype member of a local class, an owner other than Object, receives a parsed bulk write", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "class LocalHolder {} Object.assign(LocalHolder.prototype, JSON.parse('{\"benign\":1}'));" },
+  { id: "T-F5-LOCAL-OBJECT-OWNER", pin: "P5", form: "a member reached through the Object member of a local object, not a global-object owner, is assigned", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "const local = { Object: { prototype: { benign: 0 } } }; local.Object.prototype.benign = 1;" },
+  { id: "T-F5-LOCAL-REFLECT-OWNER", pin: "P5", form: "the set member of the Reflect member of a local object, not a global-object owner, is handed Object.prototype", sites: ["S1", "S2"], reading: "quiet",
+    emitter: "const local = { Reflect: { set: (..._args: unknown[]): boolean => true } }; local.Reflect.set(Object.prototype, \"benign\", 1);" },
+  { id: "T-F5-LOCAL-OBJECT-ASSIGN", pin: "P4", form: "the assign member of the Object member of a local object, not a global-object owner, is handed snapshot and parsed data", sites: ["S1", "S2"], reading: "quiet",
+    beforeDerive: "const local = { Object: { assign: (..._args: unknown[]): object => ({}) } }; local.Object.assign(snapshot, JSON.parse('{\"lastMessageId\":\"FAKE-FIXTURE-ID\"}'));" },
+];
+
+/** One probe of the gate's battery, as the committed probe file carries it. */
+interface AgwjProbe {
+  readonly id: string;
+  readonly pin: string;
+  readonly expect: string;
+  readonly emitter?: string;
+  readonly beforeDerive?: string;
+}
+/** The committed probe file, parsed and shape-checked: a malformed probe is an error, never a skipped one. */
+function agwjProbes(): AgwjProbe[] {
+  const raw: unknown = JSON.parse(readRepo(AGWJ_PROBES));
+  if (!Array.isArray(raw)) throw new Error(`${AGWJ_PROBES}: not a list`);
+  return raw.map((entry: unknown, at: number): AgwjProbe => {
+    if (!isRecord(entry)) throw new Error(`${AGWJ_PROBES}: probe ${at} is not an object`);
+    const text = (field: string): string | undefined => {
+      const value = entry[field];
+      if (value !== undefined && typeof value !== "string") throw new Error(`${AGWJ_PROBES}: probe ${at} ${field} is not a string`);
+      return value;
+    };
+    const id = text("id");
+    const pin = text("pin");
+    const expectation = text("expect");
+    if (id === undefined || pin === undefined || expectation === undefined) throw new Error(`${AGWJ_PROBES}: probe ${at} lacks an id, pin or expect`);
+    const emitter = text("emitter");
+    const beforeDerive = text("beforeDerive");
+    return { id, pin, expect: expectation, ...(emitter === undefined ? {} : { emitter }), ...(beforeDerive === undefined ? {} : { beforeDerive }) };
+  });
+}
+/** The out-of-file roster, shape-checked. */
+function agwjRoster(): Record<string, unknown> {
+  const raw: unknown = JSON.parse(readRepo(AGWJ_ROSTER));
+  if (!isRecord(raw)) throw new Error(`${AGWJ_ROSTER}: not an object`);
+  return raw;
+}
+/** A roster member that must be an object: anything else is a malformed roster. */
+function agwjRecord(row: Record<string, unknown>, field: string): Record<string, unknown> {
+  const value = row[field];
+  if (!isRecord(value)) throw new Error(`${AGWJ_ROSTER}: ${field} is not an object`);
+  return value;
+}
+/** Every placement text a set of rows carries. */
+const agwjSpellings = (rows: readonly Placement[]): string[] =>
+  rows.flatMap(row => [row.prelude, row.emitter, row.afterSpread, row.beforeDerive].filter((text): text is string => text !== undefined));
+
+const AGWJ_REACHED: string[] = [];
+
+describe("wb-agwj R694 PREP F1, terminal form: every quiet spelling the wb-e3eh gate measured named with a pinned quiet row, and the spelling channel named once", () => {
+  for (const residual of AGWJ_RESIDUALS) {
+    for (const key of residual.sites) {
+      it(`wb-agwj quiet ${residual.id} ${key}: ${residual.family}`, () => {
+        const site = siteNamed(key);
+        const { text, anchors } = placed(site, residual);
+        expect(anchors.every(anchor => anchor.count === 1), "every insertion anchor applies once").toBe(true);
+        const reading = readSite(site.file, text);
+        expect(PINS.filter(pin => !JUDGES[pin.id](site, reading)).map(pin => pin.id), "landed pins stay quiet").toEqual([]);
+        expect(E3EH_STRICT.P4(reading), "no snapshot write is read").toEqual([]);
+        expect(E3EH_STRICT.P5(reading), "no prototype write is read").toEqual([]);
+        AGWJ_REACHED.push(`wb-agwj quiet ${residual.id} ${key}`);
+      });
+    }
+  }
+  for (const key of AGWJ_CHANNEL.sites) {
+    it(`wb-agwj channel ${AGWJ_CHANNEL.id} ${key}: ${AGWJ_CHANNEL.family}`, () => {
+      expect(AGWJ_CHANNEL.id, "this quiet row judges the channel family, never another row").toBe("R-AGWJ-SPELLING-CHANNEL");
+      const site = siteNamed(key);
+      const { text, anchors } = placed(site, AGWJ_CHANNEL);
+      expect(anchors.map(anchor => `${anchor.name}:${anchor.count}`), "both spellings apply, once each").toEqual(["emitter head:1", "derive line:1"]);
+      const reading = readSite(site.file, text);
+      expect(PINS.filter(pin => !JUDGES[pin.id](site, reading)).map(pin => pin.id), "landed pins stay quiet").toEqual([]);
+      expect(E3EH_STRICT.P4(reading), "the P4 spelling reads no snapshot write").toEqual([]);
+      expect(E3EH_STRICT.P5(reading), "the P5 spelling reads no prototype write").toEqual([]);
+      AGWJ_REACHED.push(`wb-agwj channel ${AGWJ_CHANNEL.id} ${key}`);
+    });
+  }
+  for (const twin of AGWJ_TWINS) {
+    for (const key of twin.sites) {
+      it(`wb-agwj twin ${twin.id} ${key}: ${twin.form}`, () => {
+        const site = siteNamed(key);
+        const { text, anchors } = placed(site, twin);
+        expect(anchors.every(anchor => anchor.count === 1), "every insertion anchor applies once").toBe(true);
+        const reading = readSite(site.file, text);
+        expect(PINS.filter(pin => !JUDGES[pin.id](site, reading)).map(pin => pin.id), "landed pins stay quiet").toEqual([]);
+        expect(E3EH_STRICT[OTHER_PIN[twin.pin]](reading), "the other strict reading stays quiet").toEqual([]);
+        expect(E3EH_STRICT[twin.pin](reading), "its own pin reads only its frozen reading").toEqual(twinCauses(twin.reading));
+        AGWJ_REACHED.push(`wb-agwj twin ${twin.id} ${key}`);
+      });
+    }
+  }
+  it("wb-agwj PROBE SOURCE: the committed probe file is the gate's, byte for byte, and every residual carries its probe's own pin and placement", () => {
+    const source = agwjRecord(agwjRoster(), "probeSource");
+    expect(createHash("sha256").update(readFileSync(join(ROOT, AGWJ_PROBES))).digest("hex"), "the committed bytes hash to the ruling's sha").toBe(AGWJ_PROBE_SHA256);
+    expect([rosterText(source, "file"), rosterText(source, "sha256")], "the roster names the same file and sha").toEqual([AGWJ_PROBES, AGWJ_PROBE_SHA256]);
+    const probes = agwjProbes();
+    expect(probes.length, "the gate's probe count").toBe(AGWJ_PROBE_COUNT);
+    expect(new Set(probes.map(probe => probe.id)).size, "every probe id is unique").toBe(probes.length);
+    const strays = AGWJ_RESIDUALS.filter(row => {
+      const probe = probes.find(candidate => `R-${candidate.id}` === row.id);
+      return probe === undefined || probe.pin !== row.pin || probe.emitter !== row.emitter || probe.beforeDerive !== row.beforeDerive ||
+        row.prelude !== undefined || row.afterSpread !== undefined;
+    });
+    expect(strays.map(row => row.id), "every residual is its probe's own pin and placement, byte for byte").toEqual([]);
+  });
+  it("wb-agwj ACCOUNTING (F1): each of the 39 exploratory probes is exactly one named residual of its family, on its own pin, and the channel's spellings lie outside the resolved set", () => {
+    const raw = agwjRoster();
+    const probes = agwjProbes();
+    expect(AGWJ_F1, "the gate's exploratory probes, read from the committed probe file, in its order").toEqual(probes.filter(probe => probe.expect === "explore").map(probe => probe.id));
+    expect(AGWJ_F1, "the gate's list, out of file").toEqual(rosterTexts(raw, "f1Escapes"));
+    expect(AGWJ_F1.length, "the gate's measured form count").toBe(raw.requiredF1);
+    expect(AGWJ_RESIDUALS.map(row => row.id), "each F1 form once, named, in the gate's order").toEqual(AGWJ_F1.map(id => `R-${id}`));
+    expect(AGWJ_RESIDUALS.filter(row => !row.id.startsWith(`R-GE${row.pin.slice(1)}-`)).map(row => row.id), "each residual on its form's pin").toEqual([]);
+    expect(AGWJ_RESIDUALS.filter(row => !row.family.startsWith(`${AGWJ_GROUPS.find(group => group.id === row.group)?.label ?? "<no group>"}: `)).map(row => row.id),
+      "each family phrase opens with its group's name").toEqual([]);
+    expect(AGWJ_GROUPS.map(group => `${group.id}:${AGWJ_RESIDUALS.filter(row => row.group === group.id).length}`), "the PREP's family sizes").toEqual(["a:4", "b:2", "c:2", "d:1", "e:1", "f:3", "g:4", "h:5", "i:1", "j:2", "k:1", "cv:13"]);
+    expect([AGWJ_RESIDUALS.filter(row => row.group !== "cv").length, AGWJ_RESIDUALS.filter(row => row.group === "cv").length], "26 outside every named family, 13 call-value members").toEqual([26, 13]);
+    expect(AGWJ_GROUPS.map(group => `${group.id}|${group.label}`), "the families, out of file").toEqual(
+      rosterRows(raw, "groups").map(row => `${rosterText(row, "id")}|${rosterText(row, "label")}`));
+    const resolved = new Set([...agwjSpellings(probes), ...agwjSpellings(AGWJ_RESIDUALS), ...agwjSpellings(E3EH_ROWS), ...agwjSpellings(E3EH_QUIET), ...agwjSpellings(E3EH_TWIN_ROWS), ...agwjSpellings(AGWJ_TWINS)]);
+    expect(agwjSpellings([AGWJ_CHANNEL]).length, "the channel row places one spelling per pin").toBe(2);
+    expect(agwjSpellings([AGWJ_CHANNEL]).filter(text => resolved.has(text)).length, "no probe, residual, refusal, quiet row or twin carries a channel spelling").toBe(0);
+    expect(AGWJ_F1.includes(AGWJ_CHANNEL.id.slice("R-".length)), "the channel is no F1 form").toBe(false);
+  });
+  it("wb-agwj FROZEN SHAPE (standing rule 16): the residual, channel and twin tables keep their frozen ids, pins, groups, sites and readings", () => {
+    expect(AGWJ_RESIDUALS.map(row => `${row.id}:${row.pin}:${row.group}:${row.sites.join(",")}:${row.reading}`)).toEqual([
+      "R-GE5-LOGICAL-ASSIGN-OR:P5:a:S1,S2:quiet",
+      "R-GE5-LOGICAL-ASSIGN-NULLISH:P5:a:S1,S2:quiet",
+      "R-GE5-LOGICAL-ASSIGN-AND:P5:a:S1,S2:quiet",
+      "R-GE4-LOGICAL-ASSIGN-NULLISH:P4:a:S1,S2:quiet",
+      "R-GE5-ELEMENT-STRING-INDEX:P5:b:S1,S2:quiet",
+      "R-GE5-ELEMENT-AT:P5:cv:S1,S2:quiet",
+      "R-GE4-ELEMENT-STRING-INDEX:P4:b:S1,S2:quiet",
+      "R-GE5-PROPERTY-SHORTHAND:P5:c:S1,S2:quiet",
+      "R-GE5-PROPERTY-SPREAD:P5:d:S1,S2:quiet",
+      "R-GE5-PROPERTY-GETTER:P5:cv:S1,S2:quiet",
+      "R-GE4-PROPERTY-SHORTHAND:P4:c:S1,S2:quiet",
+      "R-GE5-DESTRUCT-REST:P5:e:S1,S2:quiet",
+      "R-GE5-FOROF-ENTRIES:P5:cv:S1,S2:quiet",
+      "R-GE5-FOROF-ARRAY-OF:P5:cv:S1,S2:quiet",
+      "R-GE4-FOROF-ARRAY-OF:P4:cv:S1,S2:quiet",
+      "R-GE5-WRAP-NEW:P5:f:S1,S2:quiet",
+      "R-GE5-WRAP-CALL:P5:f:S1,S2:quiet",
+      "R-GE4-WRAP-NEW:P4:f:S1,S2:quiet",
+      "R-GE4-DEFINEPROPERTIES-RETURN:P4:cv:S1,S2:quiet",
+      "R-GE4-SETPROTOTYPEOF-RETURN:P4:cv:S1,S2:quiet",
+      "R-GE4-SEAL-RETURN:P4:cv:S1,S2:quiet",
+      "R-GE5-GLOBAL-WINDOW:P5:g:S1,S2:quiet",
+      "R-GE5-GLOBAL-SELF:P5:g:S1,S2:quiet",
+      "R-GE5-GLOBAL-NESTED:P5:g:S1,S2:quiet",
+      "R-GE4-GLOBAL-WINDOW:P4:g:S1,S2:quiet",
+      "R-GE5-APPLY-CALL:P5:h:S1,S2:quiet",
+      "R-GE5-CALL-APPLY:P5:h:S1,S2:quiet",
+      "R-GE5-REFLECT-APPLY-CALL:P5:h:S1,S2:quiet",
+      "R-GE5-BIND-CALL:P5:h:S1,S2:quiet",
+      "R-GE4-APPLY-CALL:P4:h:S1,S2:quiet",
+      "R-GE5-ARRAY-FROM-SPREAD:P5:cv:S1,S2:quiet",
+      "R-GE5-ARRAY-CALL-SPREAD:P5:cv:S1,S2:quiet",
+      "R-GE5-ARRAY-OF-GLOBAL:P5:i:S1,S2:quiet",
+      "R-GE5-ARRAY-CONCAT-SPREAD:P5:cv:S1,S2:quiet",
+      "R-GE4-ARRAY-FROM-SPREAD:P4:cv:S1,S2:quiet",
+      "R-GE5-DEFINE-GETTER-REFLECT-APPLY:P5:j:S1,S2:quiet",
+      "R-GE5-DEFINE-GETTER-BIND:P5:j:S1,S2:quiet",
+      "R-GE5-ENTRIES-MAP:P5:k:S1,S2:quiet",
+      "R-GE5-ENTRIES-MAPPED:P5:cv:S1,S2:quiet",
+    ]);
+    expect([AGWJ_CHANNEL].map(row => `${row.id}:${row.sites.join(",")}:${row.reading}:${row.runtime}`)).toEqual([
+      "R-AGWJ-SPELLING-CHANNEL:S1,S2:quiet:unobserved: the census parses the observer sites and never runs them, so a write spelled through the channel would execute with no census signal",
+    ]);
+    expect(AGWJ_TWINS.map(row => `${row.id}:${row.pin}:${row.sites.join(",")}:${row.reading}`)).toEqual([
+      "T-F5-CLASS-PROTOTYPE:P5:S1,S2:quiet",
+      "T-F5-LOCAL-OBJECT-OWNER:P5:S1,S2:quiet",
+      "T-F5-LOCAL-REFLECT-OWNER:P5:S1,S2:quiet",
+      "T-F5-LOCAL-OBJECT-ASSIGN:P4:S1,S2:quiet",
+    ]);
+    expect(AGWJ_GROUPS.map(group => group.id)).toEqual(["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "cv"]);
+  });
+  it("wb-agwj ROSTER: the sites and every residual, the channel and every twin by full phrase, reading and placement digest equal the out-of-file roster, in order", () => {
+    const raw = agwjRoster();
+    expect(AGWJ_RESIDUALS.length, "external required quiet count").toBe(raw.requiredQuietRows);
+    expect(AGWJ_TWINS.length, "external required twin count").toBe(raw.requiredTwinRows);
+    expect(SITES.map(site => site.key)).toEqual(rosterTexts(raw, "sites"));
+    expect(AGWJ_RESIDUALS.map(row => `${row.id}|${row.pin}|${row.group}|${row.family}|${row.sites.join(",")}|${row.reading}|${residualDigest(row)}`)).toEqual(
+      rosterRows(raw, "residuals").map(row =>
+        `${rosterText(row, "id")}|${rosterText(row, "pin")}|${rosterText(row, "group")}|${rosterText(row, "family")}|${rosterTexts(row, "sites").join(",")}|${rosterText(row, "reading")}|${rosterText(row, "digest")}`),
+    );
+    const channel = agwjRecord(raw, "channel");
+    expect(`${AGWJ_CHANNEL.id}|${AGWJ_CHANNEL.family}|${AGWJ_CHANNEL.sites.join(",")}|${AGWJ_CHANNEL.reading}|${AGWJ_CHANNEL.runtime}|${agwjChannelDigest(AGWJ_CHANNEL)}`).toBe(
+      `${rosterText(channel, "id")}|${rosterText(channel, "family")}|${rosterTexts(channel, "sites").join(",")}|${rosterText(channel, "reading")}|${rosterText(channel, "runtime")}|${rosterText(channel, "digest")}`,
+    );
+    expect(AGWJ_TWINS.map(row => `${row.id}|${row.pin}|${row.form}|${row.sites.join(",")}|${row.reading}|${twinDigest(row)}`)).toEqual(
+      rosterRows(raw, "twins").map(row =>
+        `${rosterText(row, "id")}|${rosterText(row, "pin")}|${rosterText(row, "form")}|${rosterTexts(row, "sites").join(",")}|${rosterText(row, "reading")}|${rosterText(row, "digest")}`),
+    );
+  });
+  it("wb-agwj REGISTRATION: every roster row is registered in run mode and ran through its last assertion", ({ task }) => {
+    const raw = agwjRoster();
+    const registered: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") registered.push(`${child.name}|${child.mode}`);
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    const named = (rows: Record<string, unknown>[], prefix: string, label: string): { readonly name: string; readonly label: string }[] =>
+      rows.flatMap(row => rosterTexts(row, "sites").map(site => ({ name: `wb-agwj ${prefix}${rosterText(row, "id")} ${site}`, label: rosterText(row, label) })));
+    const expected = [
+      ...named(rosterRows(raw, "residuals"), "quiet ", "family"),
+      ...named([agwjRecord(raw, "channel")], "channel ", "family"),
+      ...named(rosterRows(raw, "twins"), "twin ", "form"),
+    ];
+    expect(registered.filter(row => /^wb-agwj (?:quiet |channel |twin )/.test(row))).toEqual(expected.map(row => `${row.name}: ${row.label}|run`));
+    expect(AGWJ_REACHED).toEqual(expected.map(row => row.name));
+  });
+});

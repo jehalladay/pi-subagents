@@ -1,0 +1,1233 @@
+{
+ "bead": "wb-tz4r.3",
+ "quotePin": "docs/programs/unified-decision-inference-2026-10-21/01-contracts.md:14@485f3615db1e",
+ "quote": "Preserve endpoint/model revision, sampling policy and complete native evidence where available.",
+ "gatingArtifacts": [
+  "RI-DEC-06",
+  "RI-DEC-08"
+ ],
+ "producer": {
+  "repository": "ReactiveInferenceSDK",
+  "pin": "485f3615db1e",
+  "probe": "075ac589d64d",
+  "probeCommitted": "2026-10-23T02:36:04-07:00",
+  "commitsPastPin": 10,
+  "engineChangesPastPin": "refactors only (a MIN_CANDIDATES constant, an export reorder, line wraps)",
+  "engineExports": [
+   "ChoiceQuestion",
+   "DecisionBatchMode",
+   "DecisionChoiceRequest",
+   "ChoiceBackendCapabilities",
+   "ChoiceExecutionPlan",
+   "ChoiceExecutionGroup",
+   "plan_choices"
+  ],
+  "resultEnvelopeAtPin": false,
+  "resultEnvelopeAtProbe": false,
+  "shippedFields": [],
+  "backendIdentity": [
+   "ChoiceBackendCapabilities.deployment_id (src/reactive_inference/<ENGINE>/preflight.py:17)",
+   "ChoiceExecutionPlan.deployment_id (preflight.py:55)"
+  ],
+  "fieldRowsInSrc": {
+   "terms": [
+    "model_revision",
+    "sampling_policy",
+    "native_evidence"
+   ],
+   "pin": 0,
+   "probe": 0,
+   "grepRc": 1
+  },
+  "how": "read-only git show and git grep -i in the local ReactiveInferenceSDK checkout, no fetch, 2026-10-23"
+ },
+ "rfVersion": "0.1.836",
+ "measured": [
+  "rf --json --version -> 0 (result.version 0.1.836)",
+  "rf init --backend jsonl --no-input --json -> 0",
+  "rf component create demo.notes --kind declarative --json -> 0; its one always text node set to a fixed sentence",
+  "rf component add .reactive-fiber/components/manifests/demo.notes.toml --json -> 0 and rf component activate demo.notes --json -> 0 (graphs/context.toml grown: source task -> component notes.task)",
+  "rf graph validate --json -> 0 (valid, diagnostics [])",
+  "rf --workspace <root> context render --model claude-opus-5 --task \"summarise the notes\" --no-commit --no-input --json -> 0 (the carrier; root rewritten to /fixture/rf-workspace)"
+ ],
+ "fields": [
+  "endpoint",
+  "model_revision",
+  "sampling_policy",
+  "native_evidence"
+ ],
+ "refKinds": {
+  "endpoint": "ri-endpoint",
+  "model_revision": "ri-model-revision",
+  "sampling_policy": "ri-sampling-policy",
+  "native_evidence": "ri-native-evidence"
+ },
+ "members": {
+  "endpoint": "riEndpoint",
+  "model_revision": "riModelRevision",
+  "sampling_policy": "riSamplingPolicy",
+  "native_evidence": "riNativeEvidence"
+ },
+ "invocation": {
+  "model": "pi-invocation-model-9d2",
+  "task": "summarise the notes"
+ },
+ "carrier": {
+  "schema": "reactive-fiber.cli/v1",
+  "ok": true,
+  "command": "context.render",
+  "operation_id": "rfo_iwukb7nzmo5rx7w2xc575pfjwm",
+  "workspace": {
+   "id": "rfw_uhl2c4neyz2wozhmxkdwm3emsa",
+   "root": "/fixture/rf-workspace"
+  },
+  "transaction_id": null,
+  "result": {
+   "output": {
+    "text": "Release notes are kept in the team log.\n",
+    "size_bytes": 40,
+    "digest": "sha256:b794f23cd426442b64708ed84b3673f03d5130c6fe6422c0be4e9ec570984084",
+    "path": null
+   },
+   "budget": {
+    "schema": "reactive-fiber.budget/v1",
+    "requested_model_id": "claude-opus-5",
+    "resolved_model_id": null,
+    "formula_terms": {
+     "context_window": 1000000,
+     "max_output_tokens": 128000,
+     "output_reserve": 8192,
+     "occupied_tokens": 0,
+     "overhead": 0,
+     "safety_margin": 2048,
+     "available_context_tokens": 989760
+    },
+    "capability_snapshot": {
+     "model_id": "claude-opus-5",
+     "context_window": 1000000,
+     "max_output_tokens": 128000,
+     "supports_thinking": true,
+     "supports_reasoning": true,
+     "supports_streaming": true,
+     "supports_vision": true,
+     "thinking_budget": null,
+     "cache_prefix": null,
+     "reasoning": {
+      "reasoning_control": "adaptive_effort",
+      "budget_tokens_status": "rejected",
+      "effort_levels": [],
+      "interleaved": true,
+      "display_default": "omitted",
+      "always_on": false,
+      "always_on_verified": true,
+      "verified": false,
+      "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 \u2014 verified=False per honesty rule D until a live sweep covers them"
+     },
+     "can_count_tokens": false,
+     "verified": true,
+     "source": null,
+     "known_policy_gates": [],
+     "decision": {
+      "supports_forced_tool": true,
+      "supports_structured_output": false,
+      "supports_span_output": true,
+      "supports_forced_tool_with_thinking": false,
+      "probability_support": "none",
+      "modalities": [
+       "image",
+       "text"
+      ],
+      "media_budget": {
+       "max_blocks": 20,
+       "max_bytes_per_block": 3750000
+      },
+      "verified": false,
+      "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D"
+     }
+    },
+    "capability_verified": true,
+    "capability_source": null,
+    "token_count_method": "estimated",
+    "estimator_id": "rf.utf8-bytes-div4.v1",
+    "counts": {
+     "candidate": 1,
+     "admitted_before_budget": 1,
+     "final_included": 1,
+     "withheld_necessity": 0,
+     "withheld_truncated": 0
+    },
+    "reconciliation_attempts": [],
+    "observability": {
+     "token_cost_unknown": 0,
+     "token_estimator_failed": 0,
+     "reconciliation_attempts": 0
+    },
+    "included_tokens": 10,
+    "truncated_tokens": 0,
+    "truncated_count": 0,
+    "overflow_pinned_count": 0,
+    "hidden_count": 0,
+    "audience_excluded_count": 0,
+    "unknown_cost_count": 0,
+    "token_accounting": {
+     "kind": "estimated",
+     "estimator_id": "rf.utf8-bytes-div4.v1",
+     "included_tokens": 10
+    },
+    "truncated_keys": []
+   },
+   "diagnostics_summary": {
+    "errors": 0,
+    "warnings": 0,
+    "has_errors": false,
+    "has_warnings": false
+   },
+   "blocks": [
+    {
+     "final_index": 0,
+     "candidate_key": "demo.notes:notes::placeholder",
+     "component_id": "demo.notes",
+     "token_cost": {
+      "kind": "estimated",
+      "tokens": 10
+     },
+     "token_cost_kind": "estimated"
+    }
+   ],
+   "components": [
+    {
+     "component_instance_id": "demo.notes:notes",
+     "component_id": "demo.notes",
+     "component_revision_id": "sha256:f72816d24cf720d639ef20c68f2d1cd8878373cd94df1d651e818b2492db9e8a",
+     "status": "ok",
+     "source_unavailable": []
+    }
+   ],
+   "provenance": {
+    "created_at": "2026-10-23T12:09:58.730627Z",
+    "graph_revision_id": "sha256:8521e42c51f39bcce4879b80e4dd0511d004369ef2351e6b52d947fbfc7a9b8f",
+    "necessity_policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "workspace_schema_version": "reactive-fiber.workspace/v1",
+    "cli_version": "0.1.836",
+    "storage_backend": "jsonl",
+    "sdk_versions": {
+     "fiber_optics": {
+      "distribution_version": "0.1.0.20261014202847",
+      "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42"
+     },
+     "reactive_lenses": {
+      "distribution_version": "0.1.1.20261018.6",
+      "contract_fingerprint": "sha256:0931bf8cfdc86b26edf9bdd4a3813dec4b6c894b3434f6039924df07234b8ea8"
+     },
+     "reactive_components": {
+      "distribution_version": "0.1.1.20261018121500",
+      "contract_fingerprint": "sha256:d12211ca722f4e778c1009989745bdc7e4e2297a308cf5601ed2c7e0ffbe7d37"
+     },
+     "reactive_inference": {
+      "distribution_version": "0.2.60.20261018120223",
+      "contract_fingerprint": "sha256:b075fe443fe70a87b10a0fa429cdc298a5af9b9bc5b1dc8d8b62a9f04454380b"
+     },
+     "fiber_optics_wire_format": "2"
+    },
+    "storage": {
+     "backend": "jsonl",
+     "engine_version": null
+    }
+   },
+   "work_metrics": {
+    "source_capture_count": 1,
+    "fiber_signal_count": 2,
+    "fiber_transaction_count": 1,
+    "invalidated_component_count": 1,
+    "rendered_component_count": 1,
+    "state_read_count": 0,
+    "state_write_count": 0,
+    "journal_records_scanned": 48,
+    "blob_bytes_written": 0,
+    "history_rows_materialized": 0,
+    "reused_component_count": 0,
+    "observation_executed_count": 0,
+    "observation_reused_count": 0,
+    "publish_conflict_count": 0
+   },
+   "work": {
+    "source_capture_count": 1,
+    "fiber_signal_count": 2,
+    "component_render_count": 1,
+    "lens_resolution_count": 0,
+    "necessity_eval_count": 1,
+    "storage_write_count": 0
+   },
+   "engine_metrics": {
+    "tsx_worker_spawns": 0,
+    "tsx_resource_rounds": 0
+   },
+   "scope": null,
+   "audience": "model",
+   "bundle_revision_id": "sha256:ef79ad940eb0bc3f196532055b6cdc049eb5240c6e21ca503e00f9b8ca572b57",
+   "observations": [],
+   "necessity": [
+    {
+     "render_id": "rfr_2p4z3tonosbl6glcnno5l3ikrm",
+     "candidate_key": "demo.notes:notes::placeholder",
+     "necessity_class": "always",
+     "include": true,
+     "reason": "always_floor",
+     "estimated_tokens": 10,
+     "metadata": {
+      "evidence_keys": [
+       "necessity_class"
+      ],
+      "explicit_request": false
+     },
+     "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+     "judge_id": "rf.necessity.default-host.v1",
+     "judge_kind": "host_default",
+     "necessity_class_raw": "always",
+     "fallback_used": false,
+     "failure_mode": "fail"
+    }
+   ],
+   "judge_context": {
+    "task_digest": "sha256:1bdd58e00da2e3b75bd8c80dafc33d29dfc85f0638a5427e96cabed3e013fad9",
+    "task_tags": [],
+    "agent_id": null,
+    "agent_role": null,
+    "session_id": "rfs_ixtoqttl6q4uzex47oqcxctnii",
+    "explicit_requests": [],
+    "workspace_facts": {
+     "session.active": true
+    }
+   },
+   "judge_context_layers": {
+    "task.tags": "defaults",
+    "agent.role": "defaults"
+   },
+   "attempts": 1,
+   "superseded_transaction_ids": [],
+   "retry_work": {
+    "superseded_attempts": [],
+    "wasted_source_capture_count": 0,
+    "wasted_fiber_signal_count": 0,
+    "wasted_fiber_transaction_count": 0,
+    "wasted_invalidated_component_count": 0,
+    "wasted_rendered_component_count": 0,
+    "wasted_state_read_count": 0,
+    "wasted_state_write_count": 0,
+    "wasted_journal_records_scanned": 0,
+    "wasted_blob_bytes_written": 0,
+    "wasted_history_rows_materialized": 0,
+    "wasted_reused_component_count": 0,
+    "wasted_observation_executed_count": 0,
+    "wasted_observation_reused_count": 0,
+    "wasted_publish_conflict_count": 0
+   },
+   "fiber_transaction_refs": [
+    "rfr_2p4z3tonosbl6glcnno5l3ikrm/tx_1"
+   ],
+   "render_id": null,
+   "ephemeral": true,
+   "commit_seq": null,
+   "effects": [],
+   "plan": {
+    "operations": [],
+    "would_commit": false
+   },
+   "session_id": null
+  },
+  "diagnostics": []
+ },
+ "native": {
+  "tag": "ri.native-head/constructed-0",
+  "schema_version": "ri-native-envelope/constructed-0",
+  "question_id": "q-route-4f8",
+  "endpoint": "fixture-endpoint-4f8.example",
+  "model_revision": "nh-4f8-rev-0017",
+  "sampling_policy": {
+   "policy_id": "fixture-policy-4f8",
+   "mode": "sampled",
+   "temperature": 0.25,
+   "top_k": 3,
+   "seed": 1729
+  },
+  "native_evidence": {
+   "form": "candidate-score-vector",
+   "complete": true,
+   "scores": [
+    {
+     "candidate_id": "cand-4f8a",
+     "score": 1.5
+    },
+    {
+     "candidate_id": "cand-4f8b",
+     "score": -0.25
+    }
+   ]
+  }
+ },
+ "placements": [
+  {
+   "id": "top",
+   "path": [
+    "result",
+    "resources"
+   ]
+  },
+  {
+   "id": "component",
+   "path": [
+    "result",
+    "components",
+    "0",
+    "resources"
+   ]
+  },
+  {
+   "id": "block",
+   "path": [
+    "result",
+    "blocks",
+    "0",
+    "resources"
+   ]
+  }
+ ],
+ "revisionProbes": [
+  "unknown",
+  "",
+  "default",
+  "latest",
+  "none",
+  "n/a",
+  "0",
+  null,
+  0,
+  false,
+  "pi-invocation-model-9d2",
+  "zq-probe-71c4"
+ ],
+ "policyProbes": [
+  {},
+  null,
+  "default",
+  "greedy",
+  {
+   "mode": "greedy"
+  },
+  {
+   "temperature": 0
+  },
+  {
+   "temperature": 1,
+   "top_p": 1
+  },
+  "zq-probe-71c4"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(trigger, absent today) Pi carries no decision envelope today (census 0): no package.json dependency, src file or rf roster entry reads a ReactiveInference native result, and its gating envelope (RI-DEC-06/08) is measured unshipped at the pin and at the probe",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "floorMet": true,
+      "anchorRead": true,
+      "dependencyCount": 21,
+      "dependencyHits": [],
+      "sites": [],
+      "controls": {
+       "joined": true,
+       "scoped": true,
+       "pascal": true,
+       "dotted": true,
+       "spaced": true,
+       "quiet": false
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "native": [
+       "reactivefiber.render.preview"
+      ],
+      "injected": [
+       "reactivefiber.render.preview"
+      ],
+      "reconcile": [
+       "reactivefiber.render.preview"
+      ],
+      "riIds": []
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "shippedNo": true,
+      "noEnvelope": true,
+      "gatingAbsent": [],
+      "producer": {
+       "repository": "ReactiveInferenceSDK",
+       "pin": "485f3615db1e",
+       "probe": "075ac589d64d",
+       "probeCommitted": "2026-10-23T02:36:04-07:00",
+       "commitsPastPin": 10,
+       "engineChangesPastPin": "refactors only (a MIN_CANDIDATES constant, an export reorder, line wraps)",
+       "engineExports": [
+        "ChoiceQuestion",
+        "DecisionBatchMode",
+        "DecisionChoiceRequest",
+        "ChoiceBackendCapabilities",
+        "ChoiceExecutionPlan",
+        "ChoiceExecutionGroup",
+        "plan_choices"
+       ],
+       "resultEnvelopeAtPin": false,
+       "resultEnvelopeAtProbe": false,
+       "shippedFields": [],
+       "backendIdentity": [
+        "ChoiceBackendCapabilities.deployment_id (src/reactive_inference/<ENGINE>/preflight.py:17)",
+        "ChoiceExecutionPlan.deployment_id (preflight.py:55)"
+       ],
+       "fieldRowsInSrc": {
+        "terms": [
+         "model_revision",
+         "sampling_policy",
+         "native_evidence"
+        ],
+        "pin": 0,
+        "probe": 0,
+        "grepRc": 1
+       },
+       "how": "read-only git show and git grep -i in the local ReactiveInferenceSDK checkout, no fetch, 2026-10-23"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(a) adoption fixture: endpoint/model revision, sampling policy and native evidence travel verbatim as distinct evidence refs/metadata when present",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "fields": [
+       "endpoint",
+       "model_revision",
+       "sampling_policy",
+       "native_evidence"
+      ],
+      "distinct": true,
+      "mentions": 0,
+      "structured": [
+       "sampling_policy",
+       "native_evidence"
+      ],
+      "tag": "ri.native-head/constructed-0",
+      "schemaVersion": "ri-native-envelope/constructed-0",
+      "placed": {
+       "top": [
+        "$.result.resources"
+       ],
+       "component": [
+        "$.result.components[0].resources"
+       ],
+       "block": [
+        "$.result.blocks[0].resources"
+       ]
+      },
+      "carrierRoot": "/fixture/rf-workspace"
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "top/rf-cli": {
+       "verbatim": true,
+       "at": "$.source.result.resources",
+       "keys": [
+        "tag",
+        "schema_version",
+        "question_id",
+        "endpoint",
+        "model_revision",
+        "sampling_policy",
+        "native_evidence"
+       ]
+      },
+      "top/injected-fixture": {
+       "verbatim": true,
+       "at": "$.source.result.resources",
+       "keys": [
+        "tag",
+        "schema_version",
+        "question_id",
+        "endpoint",
+        "model_revision",
+        "sampling_policy",
+        "native_evidence"
+       ]
+      },
+      "component/rf-cli": {
+       "verbatim": true,
+       "at": "$.source.result.components[0].resources",
+       "keys": [
+        "tag",
+        "schema_version",
+        "question_id",
+        "endpoint",
+        "model_revision",
+        "sampling_policy",
+        "native_evidence"
+       ]
+      },
+      "component/injected-fixture": {
+       "verbatim": true,
+       "at": "$.source.result.components[0].resources",
+       "keys": [
+        "tag",
+        "schema_version",
+        "question_id",
+        "endpoint",
+        "model_revision",
+        "sampling_policy",
+        "native_evidence"
+       ]
+      },
+      "block/rf-cli": {
+       "verbatim": true,
+       "at": "$.source.result.blocks[0].resources",
+       "keys": [
+        "tag",
+        "schema_version",
+        "question_id",
+        "endpoint",
+        "model_revision",
+        "sampling_policy",
+        "native_evidence"
+       ]
+      },
+      "block/injected-fixture": {
+       "verbatim": true,
+       "at": "$.source.result.blocks[0].resources",
+       "keys": [
+        "tag",
+        "schema_version",
+        "question_id",
+        "endpoint",
+        "model_revision",
+        "sampling_policy",
+        "native_evidence"
+       ]
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "adopted": {
+       "rf-cli": {
+        "added": [
+         "$.snapshots[0].evidenceRefs"
+        ],
+        "findings": []
+       },
+       "injected-fixture": {
+        "added": [
+         "$.snapshots[0].evidenceRefs"
+        ],
+        "findings": []
+       },
+       "metadata": {
+        "added": [
+         "$.riEndpoint",
+         "$.riModelRevision",
+         "$.riSamplingPolicy",
+         "$.riNativeEvidence"
+        ],
+        "findings": []
+       }
+      },
+      "refs": [
+       "ri-endpoint:fixture-endpoint-4f8.example",
+       "ri-model-revision:nh-4f8-rev-0017",
+       "ri-sampling-policy:{\"policy_id\":\"fixture-policy-4f8\",\"mode\":\"sampled\",\"temperature\":0.25,\"top_k\":3,\"seed\":1729}",
+       "ri-native-evidence:{\"form\":\"candidate-score-vector\",\"complete\":true,\"scores\":[{\"candidate_id\":\"cand-4f8a\",\"score\":1.5},{\"candidate_id\":\"cand-4f8b\",\"score\":-0.25}]}"
+      ],
+      "members": [
+       true,
+       true,
+       true,
+       true
+      ]
+     }
+    },
+    {
+     "id": "B4",
+     "witness": {
+      "base": {
+       "rf-cli": "cd2642b941ecc4d0",
+       "injected-fixture": "f7e92390f5b765e5",
+       "metadata": "184a94e865c64d04"
+      },
+      "today": {
+       "top/rf-cli": [
+        "missing:endpoint",
+        "missing:model_revision",
+        "missing:sampling_policy",
+        "missing:native_evidence"
+       ],
+       "top/injected-fixture": [
+        "missing:endpoint",
+        "missing:model_revision",
+        "missing:sampling_policy",
+        "missing:native_evidence"
+       ],
+       "top/metadata": [
+        "missing:endpoint",
+        "missing:model_revision",
+        "missing:sampling_policy",
+        "missing:native_evidence"
+       ],
+       "component/rf-cli": [
+        "missing:endpoint",
+        "missing:model_revision",
+        "missing:sampling_policy",
+        "missing:native_evidence"
+       ],
+       "component/injected-fixture": [
+        "missing:endpoint",
+        "missing:model_revision",
+        "missing:sampling_policy",
+        "missing:native_evidence"
+       ],
+       "component/metadata": [
+        "missing:endpoint",
+        "missing:model_revision",
+        "missing:sampling_policy",
+        "missing:native_evidence"
+       ],
+       "block/rf-cli": [
+        "missing:endpoint",
+        "missing:model_revision",
+        "missing:sampling_policy",
+        "missing:native_evidence"
+       ],
+       "block/injected-fixture": [
+        "missing:endpoint",
+        "missing:model_revision",
+        "missing:sampling_policy",
+        "missing:native_evidence"
+       ],
+       "block/metadata": [
+        "missing:endpoint",
+        "missing:model_revision",
+        "missing:sampling_policy",
+        "missing:native_evidence"
+       ]
+      }
+     }
+    },
+    {
+     "id": "B5",
+     "witness": {
+      "release": "0.1.836",
+      "ref": [
+       "rf-cli:0.1.836"
+      ],
+      "note": [
+       "producer release from result.provenance.cli_version: rf@0.1.836"
+      ],
+      "producerRelease": "0.1.836",
+      "refs": [
+       "rf-graph:sha256:8521e42c51f39bcce4879b80e4dd0511d004369ef2351e6b52d947fbfc7a9b8f",
+       "rf-workspace:rfw_uhl2c4neyz2wozhmxkdwm3emsa",
+       "rf-bundle:sha256:ef79ad940eb0bc3f196532055b6cdc049eb5240c6e21ca503e00f9b8ca572b57",
+       "rf-cli:0.1.836"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(b) absent-field fixture: projection byte-identical to today's, no carrier default substitutes (wb-2j3.2 pattern)",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "endpoint absent": {
+       "keys": [
+        "tag",
+        "schema_version",
+        "question_id",
+        "model_revision",
+        "sampling_policy",
+        "native_evidence"
+       ],
+       "identical": [
+        true,
+        true,
+        true
+       ]
+      },
+      "model_revision absent": {
+       "keys": [
+        "tag",
+        "schema_version",
+        "question_id",
+        "endpoint",
+        "sampling_policy",
+        "native_evidence"
+       ],
+       "identical": [
+        true,
+        true,
+        true
+       ]
+      },
+      "sampling_policy absent": {
+       "keys": [
+        "tag",
+        "schema_version",
+        "question_id",
+        "endpoint",
+        "model_revision",
+        "native_evidence"
+       ],
+       "identical": [
+        true,
+        true,
+        true
+       ]
+      },
+      "native_evidence absent": {
+       "keys": [
+        "tag",
+        "schema_version",
+        "question_id",
+        "endpoint",
+        "model_revision",
+        "sampling_policy"
+       ],
+       "identical": [
+        true,
+        true,
+        true
+       ]
+      },
+      "all four absent": {
+       "keys": [
+        "tag",
+        "schema_version",
+        "question_id"
+       ],
+       "identical": [
+        true,
+        true,
+        true
+       ]
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "fixtures": {
+       "endpoint absent": {
+        "rf-cli": {
+         "kinds": [
+          "ri-model-revision",
+          "ri-sampling-policy",
+          "ri-native-evidence"
+         ],
+         "findings": []
+        },
+        "injected-fixture": {
+         "kinds": [
+          "ri-model-revision",
+          "ri-sampling-policy",
+          "ri-native-evidence"
+         ],
+         "findings": []
+        },
+        "metadata": {
+         "kinds": [
+          "riModelRevision",
+          "riSamplingPolicy",
+          "riNativeEvidence"
+         ],
+         "findings": []
+        }
+       },
+       "model_revision absent": {
+        "rf-cli": {
+         "kinds": [
+          "ri-endpoint",
+          "ri-sampling-policy",
+          "ri-native-evidence"
+         ],
+         "findings": []
+        },
+        "injected-fixture": {
+         "kinds": [
+          "ri-endpoint",
+          "ri-sampling-policy",
+          "ri-native-evidence"
+         ],
+         "findings": []
+        },
+        "metadata": {
+         "kinds": [
+          "riEndpoint",
+          "riSamplingPolicy",
+          "riNativeEvidence"
+         ],
+         "findings": []
+        }
+       },
+       "sampling_policy absent": {
+        "rf-cli": {
+         "kinds": [
+          "ri-endpoint",
+          "ri-model-revision",
+          "ri-native-evidence"
+         ],
+         "findings": []
+        },
+        "injected-fixture": {
+         "kinds": [
+          "ri-endpoint",
+          "ri-model-revision",
+          "ri-native-evidence"
+         ],
+         "findings": []
+        },
+        "metadata": {
+         "kinds": [
+          "riEndpoint",
+          "riModelRevision",
+          "riNativeEvidence"
+         ],
+         "findings": []
+        }
+       },
+       "native_evidence absent": {
+        "rf-cli": {
+         "kinds": [
+          "ri-endpoint",
+          "ri-model-revision",
+          "ri-sampling-policy"
+         ],
+         "findings": []
+        },
+        "injected-fixture": {
+         "kinds": [
+          "ri-endpoint",
+          "ri-model-revision",
+          "ri-sampling-policy"
+         ],
+         "findings": []
+        },
+        "metadata": {
+         "kinds": [
+          "riEndpoint",
+          "riModelRevision",
+          "riSamplingPolicy"
+         ],
+         "findings": []
+        }
+       },
+       "all four absent": {
+        "rf-cli": {
+         "kinds": [],
+         "findings": []
+        },
+        "injected-fixture": {
+         "kinds": [],
+         "findings": []
+        },
+        "metadata": {
+         "kinds": [],
+         "findings": []
+        }
+       }
+      },
+      "allAbsentIdentical": [
+       true,
+       true,
+       true
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "counts": {
+       "budget.requested_model_id": {
+        "inCarrier": 3,
+        "onSurfaces": 0
+       },
+       "budget.capability_snapshot.model_id": {
+        "inCarrier": 3,
+        "onSurfaces": 0
+       },
+       "invocation.model": {
+        "inCarrier": 0,
+        "onSurfaces": 0
+       },
+       "sdk_versions.reactive_inference.distribution_version": {
+        "inCarrier": 1,
+        "onSurfaces": 0
+       },
+       "sdk_versions.reactive_inference.contract_fingerprint": {
+        "inCarrier": 1,
+        "onSurfaces": 0
+       }
+      },
+      "resolvedModelId": {
+       "stated": true,
+       "value": null
+      },
+      "envelopes": 9
+     }
+    },
+    {
+     "id": "C4",
+     "witness": {
+      "removedRefs": [
+       "rf-cli:0.1.836"
+      ],
+      "removedNotes": [
+       "producer release from result.provenance.cli_version: rf@0.1.836"
+      ],
+      "removedMembers": [
+       "producerRelease"
+      ],
+      "changed": {
+       "rf-cli": [
+        "$.snapshots[0].evidenceRefs",
+        "$.diagnostics"
+       ],
+       "injected-fixture": [
+        "$.snapshots[0].evidenceRefs",
+        "$.diagnostics"
+       ],
+       "metadata": [
+        "$.producerRelease"
+       ]
+      },
+      "nothingElse": [
+       true,
+       true,
+       true
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "(c) mutant: defaulting an absent model revision (or policy) to any literal fails",
+   "pins": [
+    {
+     "id": "D1",
+     "witness": {
+      "probes": [
+       "\"unknown\" -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riModelRevision",
+       "\"\" -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riModelRevision",
+       "\"default\" -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riModelRevision",
+       "\"latest\" -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riModelRevision",
+       "\"none\" -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riModelRevision",
+       "\"n/a\" -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riModelRevision",
+       "\"0\" -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riModelRevision",
+       "null -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riModelRevision",
+       "0 -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riModelRevision",
+       "false -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riModelRevision",
+       "\"pi-invocation-model-9d2\" -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riModelRevision",
+       "\"zq-probe-71c4\" -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riModelRevision"
+      ],
+      "carrierLiterals": 68,
+      "refused": {
+       "rf-cli": 68,
+       "injected-fixture": 68,
+       "metadata": 68
+      },
+      "quiet": []
+     }
+    },
+    {
+     "id": "D2",
+     "witness": {
+      "probes": [
+       "{} -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riSamplingPolicy",
+       "null -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riSamplingPolicy",
+       "\"default\" -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riSamplingPolicy",
+       "\"greedy\" -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riSamplingPolicy",
+       "{\"mode\":\"greedy\"} -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riSamplingPolicy",
+       "{\"temperature\":0} -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riSamplingPolicy",
+       "{\"temperature\":1,\"top_p\":1} -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riSamplingPolicy",
+       "\"zq-probe-71c4\" -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riSamplingPolicy"
+      ],
+      "carrierObjects": 34,
+      "refused": {
+       "rf-cli": 34,
+       "injected-fixture": 34,
+       "metadata": 34
+      },
+      "quiet": []
+     }
+    },
+    {
+     "id": "D3",
+     "witness": {
+      "revision absent, note states a default": [
+       "changed:$.diagnostics"
+      ],
+      "revision absent, status text states a default": [
+       "changed:$.snapshots[0].node.statusText"
+      ],
+      "revision absent, sourceVersion defaulted": [
+       "changed:$.snapshots[0].sourceVersion"
+      ],
+      "revision absent, member under another name": [
+       "changed:$.modelRevision"
+      ],
+      "revision absent, ref of another kind": [
+       "changed:$.snapshots[0].evidenceRefs"
+      ],
+      "revision absent, endpoint borrowed": [
+       "duplicated:endpoint"
+      ],
+      "policy absent, note states a default": [
+       "changed:$.diagnostics"
+      ],
+      "policy absent, member under another name": [
+       "changed:$.samplingPolicy"
+      ],
+      "revision upper-cased": [
+       "missing:model_revision",
+       "changed:$.snapshots[0].evidenceRefs"
+      ],
+      "endpoint truncated": [
+       "missing:endpoint",
+       "changed:$.snapshots[0].evidenceRefs"
+      ],
+      "policy keys re-sorted": [
+       "missing:sampling_policy",
+       "changed:$.riSamplingPolicy"
+      ],
+      "policy number as text": [
+       "missing:sampling_policy",
+       "changed:$.riSamplingPolicy"
+      ],
+      "evidence truncated to one score": [
+       "missing:native_evidence",
+       "changed:$.riNativeEvidence"
+      ],
+      "endpoint and revision merged": [
+       "missing:endpoint",
+       "missing:model_revision",
+       "merged:endpoint+model_revision",
+       "changed:$.snapshots[0].evidenceRefs"
+      ],
+      "evidence dropped": [
+       "missing:native_evidence"
+      ],
+      "revision stated twice": [
+       "duplicated:model_revision"
+      ]
+     }
+    },
+    {
+     "id": "D4",
+     "witness": {
+      "quiet": {
+       "base/rf-cli": [],
+       "adoption/rf-cli": [],
+       "adoption endpoint absent/rf-cli": [],
+       "today endpoint absent/rf-cli": [],
+       "adoption model_revision absent/rf-cli": [],
+       "today model_revision absent/rf-cli": [],
+       "adoption sampling_policy absent/rf-cli": [],
+       "today sampling_policy absent/rf-cli": [],
+       "adoption native_evidence absent/rf-cli": [],
+       "today native_evidence absent/rf-cli": [],
+       "adoption all four absent/rf-cli": [],
+       "today all four absent/rf-cli": [],
+       "base/injected-fixture": [],
+       "adoption/injected-fixture": [],
+       "adoption endpoint absent/injected-fixture": [],
+       "today endpoint absent/injected-fixture": [],
+       "adoption model_revision absent/injected-fixture": [],
+       "today model_revision absent/injected-fixture": [],
+       "adoption sampling_policy absent/injected-fixture": [],
+       "today sampling_policy absent/injected-fixture": [],
+       "adoption native_evidence absent/injected-fixture": [],
+       "today native_evidence absent/injected-fixture": [],
+       "adoption all four absent/injected-fixture": [],
+       "today all four absent/injected-fixture": [],
+       "base/metadata": [],
+       "adoption/metadata": [],
+       "adoption endpoint absent/metadata": [],
+       "today endpoint absent/metadata": [],
+       "adoption model_revision absent/metadata": [],
+       "today model_revision absent/metadata": [],
+       "adoption sampling_policy absent/metadata": [],
+       "today sampling_policy absent/metadata": [],
+       "adoption native_evidence absent/metadata": [],
+       "today native_evidence absent/metadata": [],
+       "adoption all four absent/metadata": [],
+       "today all four absent/metadata": []
+      },
+      "residuals": {
+       "R-COINCIDENT": [],
+       "R-KIND": [],
+       "R-ORDER": []
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the bead export's acceptance clauses and the cases agree",
+  "A1",
+  "A2",
+  "A3",
+  "B1",
+  "B2",
+  "B3",
+  "B4",
+  "B5",
+  "C1",
+  "C2",
+  "C3",
+  "C4",
+  "D1",
+  "D2",
+  "D3",
+  "D4",
+  "the record: every registered test is in run mode and ran, and every pin reached its end with its pinned assertion count"
+ ],
+ "reached": [
+  "A1:5",
+  "A2:6",
+  "A3:8",
+  "B1:8",
+  "B2:29",
+  "B3:7",
+  "B4:12",
+  "B5:6",
+  "C1:52",
+  "C2:18",
+  "C3:5",
+  "C4:6",
+  "D1:5",
+  "D2:5",
+  "D3:3",
+  "D4:4"
+ ]
+}

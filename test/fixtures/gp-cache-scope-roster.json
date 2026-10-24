@@ -1,0 +1,837 @@
+{
+  "provenance": "wb-ojm5.2 GP cache scope census roster (test/workbench-gp-cache-scope-census.test.ts). Producer lines MEASURED read-only by the cutting seat ws-01 (run g10-work-s58, 2026-10-23) with git show and git grep in the local GraphPolicyCLI checkout at the program pin, no fetch: each line's text is the file's line verbatim and its blob is git rev-parse <pin>:<path>; sourceInvalidate is `git grep -l SOURCE_INVALIDATE <pin>` (matches) and the same grep under ts, python and fixtures (underCode). title is the bead's title in the tracker export (.beads/issues.jsonl at Pi base feebb63). Every witness was written as the cut's specification before the census first ran against it.",
+  "bead": "wb-ojm5.2",
+  "programPin": "0107c72992f35cf6832a37615a25c7df45747ebc",
+  "title": "[GPC-GRAPH-NATIVE-LLM-RLP-R2] No Pi surface shall reuse cached GP scores, embeddings or posteriors across a source scope boundary, and Pi shall invalidate any such cache on graph/source revision change or permission change/revocation, carrying provenance and tenant scope in every cached object (posture; no gating artifact, no GP cache exists in Pi today) - docs/programs/graph-native-llm-rlp-2026-10-18/14-sparse-query-design-and-bayesian-certification.md:13@0107c72992f3",
+  "quote": "The host executes effects, checks current permissions and invalidates stale posteriors/embeddings.",
+  "producer": {
+    "repository": "GraphPolicyCLI",
+    "directory": "docs/programs/graph-native-llm-rlp-2026-10-18",
+    "lines": [
+      {
+        "id": "quote",
+        "file": "14-sparse-query-design-and-bayesian-certification.md",
+        "blob": "1037b1cca8f49c282c9d6a7c4003620e9f046fbd",
+        "line": 13,
+        "text": "5. **Native execution coupling:** scorer-predicted action distribution and actual actor/host action support, revision and result receipt. The host executes effects, checks current permissions and invalidates stale posteriors/embeddings."
+      },
+      {
+        "id": "GLLM-104",
+        "file": "01-requirements-decisions.md",
+        "blob": "407b1ae4b96e4ef10a60762eb7e8b20fd5b675ee",
+        "line": 16,
+        "text": "GLLM-104: no embedding cache reuse across source scope boundary; cache invalidation on graph revision or permission changes."
+      },
+      {
+        "id": "tenant-scope",
+        "file": "06-qa-security.md",
+        "blob": "8ba5208e0f7f6a40c2be3bc7604457e2555f07a0",
+        "line": 21,
+        "text": "Host permission/scope enforcement before extraction and again before effect; inference produces only typed proposals. No source-authoritative graph mutation, dynamic arbitrary callbacks, shell or provider access in GP function runtime. Carry provenance and tenant scope in every cached object. Explicit allowlist on requested output ports and max graph token count."
+      },
+      {
+        "id": "cross-scope-rejection",
+        "file": "06-qa-security.md",
+        "blob": "8ba5208e0f7f6a40c2be3bc7604457e2555f07a0",
+        "line": 12,
+        "text": "- Snapshot/checkpoint mismatch, missing source-scope permission, stale temporal memory, redaction/embedding cache cross-scope rejection."
+      },
+      {
+        "id": "revocation-invalidates-scores",
+        "file": "13-compositional-factor-neural-proof-contracts.md",
+        "blob": "4f8bc38dc0f9fcdf2e41da21331dabb640b45b16",
+        "line": 20,
+        "text": "**Version and geometric transfer (CRPT-36/40):** per-step revision reward and TV drift, action mask compatibility; source permission revocation must invalidate cached scores. Optional target generalization risk estimates use either qualified occupancy density bound, semantically valid Q-value/critic Lipschitz plus Wasserstein shift, or total-variation shift. Learned embedding distances alone are not certificate data."
+      },
+      {
+        "id": "revoked-permission-version",
+        "file": "12-neural-structural-critic-and-imitation-contracts.md",
+        "blob": "b38bc22457925dabf9128fe658ebd8ded815e652",
+        "line": 24,
+        "text": "No opacity shortcuts through graph IDs. Test 6-cycle vs 2 triangles, far-away marked reachability, role swaps, unknown vs absent graph edges, source permission drift, graph revision invalidation, correlated joint hyperedges and unseen large-degree graphs. Report exact solver, typed MLP, typed local MPNN and recurrent/global processor at matched compute. Cache stable E0 outputs by tokenizer/projector/model/source scope hash; do not cache across revoked permission/version without invalidation."
+      },
+      {
+        "id": "e0-scope-revision",
+        "file": "10-adaptive-meta-critic-and-primitive-interfaces.md",
+        "blob": "3ff7124c653f35818af83c21bb121effe26a4a6f",
+        "line": 21,
+        "text": "Compare tabular joint-code lookup head, supervised typed sparse GNN, recurrent/global graph solver, exact symbolic oracle and simple value heuristics. Bounded local message-passing depth does not solve arbitrary-size reachability. Avoid dynamic re-embedding every text node when E0 and source revision are stable; cache by content/model/scope hash, invalidate at source revision or permission changes. Distinguish cheap feedback decision code from predictive state and operational state. All side effects/queries are host-executed with explicit receipts, never by the graph head itself."
+      },
+      {
+        "id": "e0-source-revision",
+        "file": "11-option-value-information-and-stopping-heads.md",
+        "blob": "ef103ae46483dc523de4b542b6d00386ba9a4fb4",
+        "line": 20,
+        "text": "Build exact finite tabular meta-Q/option kernel first. Graph head can approximate them with measured sup/occupancy errors, applying CRPT-19 critic regret and CRPT-22 interval rules only after independent certification. Cache E0 embeddings by content, tokenizer, model, scope and source revision; account for compute, latency, graph updates, host queries, option startup and switching in meta utility. Test XOR complementarity, information loss, invalid confidence bounds, correlated outcomes and shared-resource constraints as negative controls."
+      },
+      {
+        "id": "source-invalidate",
+        "file": "15-corpus-eos-decision-graph-and-neural-ports.md",
+        "blob": "82021495b4e95bbe7f3f84cea6599e089d2b5f20",
+        "line": 18,
+        "text": "Versioned typed possible messages: GRAPH_OBSERVE, GRAPH_QUERY, GRAPH_RESULT, GRAPH_PROPOSAL, VERIFY_REQUEST, MUTATION_PROPOSAL, COMMIT_REQUEST, SOURCE_INVALIDATE. Every message contains identity, sender/target scope, source revision, input cut token index/timestamp, hash/schema of payload, readiness time, source authority class, max node budget and resource cost. External host decides effects; neural output can **propose** mutation but cannot assert COMMIT success or create a verifier receipt."
+      }
+    ],
+    "sourceInvalidate": {
+      "matches": [
+        "docs/programs/graph-native-llm-rlp-2026-10-18/15-corpus-eos-decision-graph-and-neural-ports.md"
+      ],
+      "underCode": 0
+    }
+  },
+  "constants": {
+    "kinds": [
+      "score",
+      "embedding",
+      "posterior"
+    ],
+    "keyParts": [
+      "source scope",
+      "source revision",
+      "permission basis"
+    ],
+    "objectParts": [
+      "provenance",
+      "tenant scope"
+    ],
+    "changes": [
+      "permission revocation",
+      "source revision bump"
+    ],
+    "provenanceFields": [
+      "producer",
+      "checkpoint",
+      "receipt"
+    ],
+    "rules": [
+      {
+        "id": "A-KEY-SCOPE",
+        "clause": "a",
+        "term": "source scope"
+      },
+      {
+        "id": "A-KEY-REVISION",
+        "clause": "a",
+        "term": "source revision"
+      },
+      {
+        "id": "A-KEY-BASIS",
+        "clause": "a",
+        "term": "permission basis"
+      },
+      {
+        "id": "A-KEY-FORGED",
+        "clause": "a",
+        "term": "cannot be constructed"
+      },
+      {
+        "id": "A-PROVENANCE",
+        "clause": "a",
+        "term": "provenance"
+      },
+      {
+        "id": "A-TENANT",
+        "clause": "a",
+        "term": "tenant scope"
+      },
+      {
+        "id": "A-CARRIED",
+        "clause": "a",
+        "term": "every cached object carries"
+      },
+      {
+        "id": "B-REVISION",
+        "clause": "b",
+        "term": "source revision bump"
+      },
+      {
+        "id": "B-REVISION-LATE",
+        "clause": "b",
+        "term": "source revision bump"
+      },
+      {
+        "id": "B-PERMISSION",
+        "clause": "b",
+        "term": "permission revocation"
+      },
+      {
+        "id": "B-PERMISSION-LATE",
+        "clause": "b",
+        "term": "permission revocation"
+      },
+      {
+        "id": "C-OTHER-SCOPE",
+        "clause": "c",
+        "term": "another scope"
+      },
+      {
+        "id": "C-FOREIGN-REQUESTER",
+        "clause": "c",
+        "term": "a lookup from another scope"
+      },
+      {
+        "id": "C-JOINED-SCOPE",
+        "clause": "c",
+        "term": "another scope"
+      },
+      {
+        "id": "H-AFTER",
+        "clause": "control",
+        "term": null
+      }
+    ],
+    "defects": [
+      "key-scope-unchecked",
+      "key-revision-unchecked",
+      "key-basis-unchecked",
+      "key-forgeable",
+      "provenance-unchecked",
+      "tenant-unchecked",
+      "tenant-foreign",
+      "stored-by-reference",
+      "revision-ignored",
+      "revision-unpurged",
+      "revision-forgotten",
+      "revision-skips-scores",
+      "permission-ignored",
+      "permission-unpurged",
+      "permission-forgotten",
+      "permission-skips-embeddings",
+      "stale-lookup-throws",
+      "slot-without-principal",
+      "slot-joined",
+      "requester-ignored",
+      "never-hit",
+      "disabled-after-change"
+    ],
+    "walkRoots": [
+      "src",
+      "qa",
+      "examples"
+    ],
+    "moduleExtensions": [
+      ".ts",
+      ".mts",
+      ".cts",
+      ".tsx",
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".jsx"
+    ],
+    "floors": {
+      "qa": 55,
+      "examples": 5
+    },
+    "cacheFloor": 50,
+    "anchor": "src/workbench/evidence-loader.ts",
+    "cacheName": "cach(?:e|ed|es|ing)|memoi[sz]|lru",
+    "cacheConstructors": [
+      "Map",
+      "WeakMap"
+    ],
+    "residuals": {
+      "R-VOCABULARY": [
+        "Q1"
+      ],
+      "R-COMPOSED": [
+        "Q2"
+      ],
+      "R-INDIRECT": [
+        "Q3"
+      ],
+      "R-SHAPE": [
+        "Q4"
+      ],
+      "R-OUTSIDE": [
+        "Q5"
+      ],
+      "R-GENERIC-CACHE": [
+        "Q6"
+      ],
+      "R-INTERRUPTED": [
+        "Q7"
+      ],
+      "R-NON-MODULE": [
+        "Q8"
+      ]
+    }
+  },
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the bead's acceptance text agree",
+    "A1",
+    "A2",
+    "A3",
+    "B1",
+    "B2",
+    "B3",
+    "C1",
+    "C2",
+    "D1",
+    "D2",
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8",
+    "the registered tests and the reached pins equal the roster, in order and both ways"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) a GP cache key omitting source scope, source revision or permission basis cannot be constructed, and every cached object carries provenance and tenant scope",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "refusals": {
+              "source scope": {
+                "scope absent": "missing:scope",
+                "scope a string": "missing:scope",
+                "workspace absent": "missing:scope.workspace",
+                "workspace empty": "missing:scope.workspace",
+                "principal absent": "missing:scope.principal",
+                "principal empty": "missing:scope.principal"
+              },
+              "source revision": {
+                "revision absent": "missing:sourceRevision",
+                "revision empty": "missing:sourceRevision",
+                "revision a number": "missing:sourceRevision"
+              },
+              "permission basis": {
+                "basis absent": "missing:permissionBasis",
+                "basis empty": "missing:permissionBasis",
+                "basis null": "missing:permissionBasis"
+              }
+            },
+            "minted": {
+              "parts": {
+                "scope": {
+                  "workspace": "tenant-a",
+                  "principal": "alice"
+                },
+                "sourceRevision": "rev-1",
+                "permissionBasis": "grant-1",
+                "kind": "score",
+                "subject": "node-7"
+              },
+              "frozen": true,
+              "own": "hit"
+            },
+            "forged": {
+              "no source scope": {
+                "put": "unminted:key",
+                "get": "unminted:key"
+              },
+              "no source revision": {
+                "put": "unminted:key",
+                "get": "unminted:key"
+              },
+              "no permission basis": {
+                "put": "unminted:key",
+                "get": "unminted:key"
+              },
+              "complete copy": {
+                "put": "unminted:key",
+                "get": "unminted:key"
+              }
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "refusals": {
+              "provenance absent": "missing:provenance",
+              "producer absent": "missing:provenance.producer",
+              "checkpoint absent": "missing:provenance.checkpoint",
+              "receipt empty": "missing:provenance.receipt",
+              "tenant scope absent": "missing:tenantScope",
+              "tenant principal absent": "missing:tenantScope",
+              "tenant scope foreign": "foreign:tenantScope",
+              "kind mismatch": "mismatch:kind"
+            },
+            "afterRefusals": "miss",
+            "carried": {
+              "object": {
+                "kind": "score",
+                "value": 0.75,
+                "provenance": {
+                  "producer": "graph-policy fixture build",
+                  "checkpoint": "checkpoint-fixture-1",
+                  "receipt": "receipt-fixture-1"
+                },
+                "tenantScope": {
+                  "workspace": "tenant-a",
+                  "principal": "alice"
+                }
+              },
+              "original": true,
+              "frozen": true
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "reference": [],
+            "mutants": {
+              "key-scope-unchecked": [
+                "A-KEY-SCOPE"
+              ],
+              "key-revision-unchecked": [
+                "A-KEY-REVISION"
+              ],
+              "key-basis-unchecked": [
+                "A-KEY-BASIS"
+              ],
+              "key-forgeable": [
+                "A-KEY-FORGED"
+              ],
+              "provenance-unchecked": [
+                "A-PROVENANCE"
+              ],
+              "tenant-unchecked": [
+                "A-TENANT"
+              ],
+              "tenant-foreign": [
+                "A-TENANT"
+              ],
+              "stored-by-reference": [
+                "A-CARRIED"
+              ],
+              "never-hit": [
+                "A-CARRIED"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) after a permission revocation or source revision bump a lookup under the prior key returns miss/invalidated, never the old score, embedding or posterior",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "score": {
+              "prior": "invalidated:sourceRevision",
+              "reminted": "invalidated:sourceRevision",
+              "latePut": "stale:sourceRevision",
+              "afterLate": "invalidated:sourceRevision",
+              "newRevision": "hit",
+              "otherScope": "hit"
+            },
+            "embedding": {
+              "prior": "invalidated:sourceRevision",
+              "reminted": "invalidated:sourceRevision",
+              "latePut": "stale:sourceRevision",
+              "afterLate": "invalidated:sourceRevision",
+              "newRevision": "hit",
+              "otherScope": "hit"
+            },
+            "posterior": {
+              "prior": "invalidated:sourceRevision",
+              "reminted": "invalidated:sourceRevision",
+              "latePut": "stale:sourceRevision",
+              "afterLate": "invalidated:sourceRevision",
+              "newRevision": "hit",
+              "otherScope": "hit"
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "score": {
+              "prior": "invalidated:permissionBasis",
+              "reminted": "invalidated:permissionBasis",
+              "latePut": "revoked:permissionBasis",
+              "afterLate": "invalidated:permissionBasis",
+              "otherBasis": "hit",
+              "otherScope": "hit"
+            },
+            "embedding": {
+              "prior": "invalidated:permissionBasis",
+              "reminted": "invalidated:permissionBasis",
+              "latePut": "revoked:permissionBasis",
+              "afterLate": "invalidated:permissionBasis",
+              "otherBasis": "hit",
+              "otherScope": "hit"
+            },
+            "posterior": {
+              "prior": "invalidated:permissionBasis",
+              "reminted": "invalidated:permissionBasis",
+              "latePut": "revoked:permissionBasis",
+              "afterLate": "invalidated:permissionBasis",
+              "otherBasis": "hit",
+              "otherScope": "hit"
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "reference": [],
+            "mutants": {
+              "revision-ignored": [
+                "B-REVISION",
+                "B-REVISION-LATE"
+              ],
+              "revision-unpurged": [
+                "B-REVISION"
+              ],
+              "revision-forgotten": [
+                "B-REVISION-LATE"
+              ],
+              "revision-skips-scores": [
+                "B-REVISION"
+              ],
+              "permission-ignored": [
+                "B-PERMISSION",
+                "B-PERMISSION-LATE"
+              ],
+              "permission-unpurged": [
+                "B-PERMISSION"
+              ],
+              "permission-forgotten": [
+                "B-PERMISSION-LATE"
+              ],
+              "permission-skips-embeddings": [
+                "B-PERMISSION"
+              ],
+              "stale-lookup-throws": [
+                "B-REVISION",
+                "B-REVISION-LATE",
+                "B-PERMISSION",
+                "B-PERMISSION-LATE"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) a lookup from another scope never returns a cached GP object",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "own": "hit",
+            "otherKey": {
+              "principal differs": "miss",
+              "workspace differs": "miss",
+              "both differ": "miss"
+            },
+            "foreignRequester": {
+              "principal differs": "miss",
+              "workspace differs": "miss",
+              "both differ": "miss"
+            },
+            "joined": "miss",
+            "joinedOwn": "hit"
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "reference": [],
+            "mutants": {
+              "slot-without-principal": [
+                "C-OTHER-SCOPE"
+              ],
+              "slot-joined": [
+                "C-JOINED-SCOPE"
+              ],
+              "requester-ignored": [
+                "C-FOREIGN-REQUESTER"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(posture) no such cache exists, nothing is live-false; the pin binds the first GP cache",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "srcIsProgram": true,
+            "floorsMet": {
+              "qa": true,
+              "examples": true
+            },
+            "cacheFloorMet": true,
+            "anchor": {
+              "reach": false,
+              "output": [],
+              "cache": true,
+              "cacheKeyScoped": true
+            },
+            "flagged": [],
+            "unbound": [],
+            "stale": [],
+            "controls": {
+              "gp package specifier beside a Map": {
+                "reach": true,
+                "output": [],
+                "cache": true,
+                "flagged": true
+              },
+              "gp command beside a cache name": {
+                "reach": true,
+                "output": [],
+                "cache": true,
+                "flagged": true
+              },
+              "wire code beside a WeakMap": {
+                "reach": true,
+                "output": [],
+                "cache": true,
+                "flagged": true
+              },
+              "GraphPolicy identifier beside a Map": {
+                "reach": true,
+                "output": [],
+                "cache": true,
+                "flagged": true
+              },
+              "posterior identifier beside a cache name": {
+                "reach": false,
+                "output": [
+                  "posterior"
+                ],
+                "cache": true,
+                "flagged": true
+              },
+              "embeddings literal beside a Map": {
+                "reach": false,
+                "output": [
+                  "embedding"
+                ],
+                "cache": true,
+                "flagged": true
+              },
+              "score literal beside a globalThis.Map": {
+                "reach": false,
+                "output": [
+                  "score"
+                ],
+                "cache": true,
+                "flagged": true
+              },
+              "score identifier beside a Map": {
+                "reach": false,
+                "output": [
+                  "score"
+                ],
+                "cache": true,
+                "flagged": true
+              },
+              "a cache with no GP word": {
+                "reach": false,
+                "output": [],
+                "cache": true,
+                "flagged": false
+              },
+              "GP words with no cache shape": {
+                "reach": true,
+                "output": [
+                  "score",
+                  "posterior"
+                ],
+                "cache": false,
+                "flagged": false
+              },
+              "GP words and a cache in comments only": {
+                "reach": false,
+                "output": [],
+                "cache": false,
+                "flagged": false
+              },
+              "isCoreMintedDecision beside a Map": {
+                "reach": false,
+                "output": [],
+                "cache": true,
+                "flagged": false
+              },
+              "paragraphPolicy beside a Map": {
+                "reach": false,
+                "output": [],
+                "cache": true,
+                "flagged": false
+              }
+            }
+          }
+        },
+        {
+          "id": "D2",
+          "witness": {
+            "bound": {},
+            "reference": [],
+            "liveness": {
+              "never-hit": [
+                "H-AFTER"
+              ],
+              "disabled-after-change": [
+                "H-AFTER"
+              ]
+            },
+            "unrefused": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the residuals: each named family pinned by its quiet row",
+      "pins": [
+        {
+          "id": "Q1",
+          "witness": {
+            "sample": {
+              "file": "src/q1.ts",
+              "reach": false,
+              "output": [],
+              "cache": true,
+              "flagged": false
+            },
+            "twin": {
+              "file": "src/q1.ts",
+              "reach": false,
+              "output": [
+                "score"
+              ],
+              "cache": true,
+              "flagged": true
+            }
+          }
+        },
+        {
+          "id": "Q2",
+          "witness": {
+            "sample": {
+              "file": "src/q2.ts",
+              "reach": false,
+              "output": [],
+              "cache": true,
+              "flagged": false
+            },
+            "twin": {
+              "file": "src/q2.ts",
+              "reach": true,
+              "output": [],
+              "cache": true,
+              "flagged": true
+            }
+          }
+        },
+        {
+          "id": "Q3",
+          "witness": {
+            "sample": {
+              "file": "src/q3.ts",
+              "reach": false,
+              "output": [],
+              "cache": true,
+              "flagged": false
+            },
+            "twin": {
+              "file": "src/q3.ts",
+              "reach": true,
+              "output": [],
+              "cache": true,
+              "flagged": true
+            }
+          }
+        },
+        {
+          "id": "Q4",
+          "witness": {
+            "sample": {
+              "file": "src/q4.ts",
+              "reach": true,
+              "output": [],
+              "cache": false,
+              "flagged": false
+            },
+            "twin": {
+              "file": "src/q4.ts",
+              "reach": true,
+              "output": [],
+              "cache": true,
+              "flagged": true
+            }
+          }
+        },
+        {
+          "id": "Q5",
+          "witness": {
+            "testWalked": false,
+            "censusFlagged": true
+          }
+        },
+        {
+          "id": "Q6",
+          "witness": {
+            "sample": {
+              "file": "src/workbench/evidence-loader.ts",
+              "reach": false,
+              "output": [],
+              "cache": true,
+              "flagged": false
+            },
+            "twin": {
+              "file": "src/workbench/evidence-loader.ts",
+              "reach": true,
+              "output": [],
+              "cache": true,
+              "flagged": true
+            }
+          }
+        },
+        {
+          "id": "Q7",
+          "witness": {
+            "sample": {
+              "file": "src/q7.ts",
+              "reach": false,
+              "output": [],
+              "cache": true,
+              "flagged": false
+            },
+            "twin": {
+              "file": "src/q7.ts",
+              "reach": true,
+              "output": [],
+              "cache": true,
+              "flagged": true
+            },
+            "zeroWidth": {
+              "file": "src/q7.ts",
+              "reach": true,
+              "output": [],
+              "cache": true,
+              "flagged": true
+            }
+          }
+        },
+        {
+          "id": "Q8",
+          "witness": {
+            "judged": false,
+            "twin": true,
+            "listed": true
+          }
+        }
+      ]
+    }
+  ]
+}
