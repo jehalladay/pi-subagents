@@ -75,6 +75,25 @@
         {
           "id": "A1",
           "quote": "absence pin: Pi has no interop-record reader or publication consumer at the pinned version (wb-pyel.1)",
+          "claims": [
+            {
+              "term": "absence pin: Pi has no interop-record reader or publication consumer",
+              "facts": [
+                "findings",
+                "controlHits",
+                "quiet",
+                "ownerSubjects",
+                "synonyms"
+              ]
+            },
+            {
+              "term": "at the pinned version (wb-pyel.1)",
+              "facts": [
+                "floorMet",
+                "pathsAgree"
+              ]
+            }
+          ],
           "witness": {
             "floorMet": true,
             "pathsAgree": true,
@@ -101,12 +120,48 @@
             "quiet": [
               [],
               []
+            ],
+            "ownerSubjects": [
+              [
+                "interop-record reader",
+                [
+                  "interop"
+                ]
+              ],
+              [
+                "publication consumer",
+                [
+                  "publication"
+                ]
+              ]
+            ],
+            "synonyms": [
+              "declaredoutput",
+              "declareddataoutput",
+              "dataoutput",
+              "outputport",
+              "valueedge",
+              "rftsx",
+              "graphv2",
+              "componentproduceroverview"
             ]
           }
         },
         {
           "id": "A2",
           "quote": "absent stays absent (wb-2j3.2)",
+          "claims": [
+            {
+              "term": "absent stays absent (wb-2j3.2)",
+              "facts": [
+                "roster",
+                "readOnly",
+                "names",
+                "absent",
+                "synthesizedRelease"
+              ]
+            }
+          ],
           "witness": {
             "roster": [
               "reactivefiber.render.preview"
@@ -163,6 +218,15 @@
         {
           "id": "B1",
           "quote": "armed: {field: null} and {} project distinct states",
+          "claims": [
+            {
+              "term": "armed: {field: null} and {} project distinct states",
+              "facts": [
+                "states",
+                "opaqueProjectionEqual"
+              ]
+            }
+          ],
           "witness": {
             "states": [
               [
@@ -216,6 +280,22 @@
         {
           "id": "B2",
           "quote": "completeness/unknown echoes as a status word never success",
+          "claims": [
+            {
+              "term": "completeness/unknown echoes",
+              "facts": [
+                "words",
+                "carriedWords"
+              ]
+            },
+            {
+              "term": "as a status word never success",
+              "facts": [
+                "observationWords",
+                "opaqueProjectionEqual"
+              ]
+            }
+          ],
           "witness": {
             "words": [
               "UNKNOWN",
@@ -271,6 +351,17 @@
         {
           "id": "B3",
           "quote": "a mutant filling an absent field fails",
+          "claims": [
+            {
+              "term": "a mutant filling an absent field fails",
+              "facts": [
+                "carrierDifferences",
+                "mutants",
+                "dropped",
+                "changed"
+              ]
+            }
+          ],
           "witness": {
             "carrierDifferences": [],
             "mutants": [
@@ -310,6 +401,22 @@
         {
           "id": "C1",
           "quote": "armed: a publication {value, producer digest, source provenance, error, sensitivity} round-trips byte-identical",
+          "claims": [
+            {
+              "term": "armed: a publication {value, producer digest, source provenance, error, sensitivity}",
+              "facts": [
+                "fields"
+              ]
+            },
+            {
+              "term": "round-trips byte-identical",
+              "facts": [
+                "names",
+                "byteIdentical",
+                "opaqueProjectionEqual"
+              ]
+            }
+          ],
           "witness": {
             "fields": [
               "value",
@@ -338,6 +445,17 @@
         {
           "id": "C2",
           "quote": "an error never becomes a value",
+          "claims": [
+            {
+              "term": "an error never becomes a value",
+              "facts": [
+                "noValues",
+                "opaqueProjectionEqual",
+                "evidenceEqual",
+                "errorTextSurfaced"
+              ]
+            }
+          ],
           "witness": {
             "noValues": [
               true,
@@ -354,6 +472,22 @@
         {
           "id": "C3",
           "quote": "blocks-only input yields no value",
+          "claims": [
+            {
+              "term": "blocks-only input",
+              "facts": [
+                "publicationAbsent",
+                "blocksAreOpaque"
+              ]
+            },
+            {
+              "term": "yields no value",
+              "facts": [
+                "blockTextSurfaced",
+                "nativeEvidenceHasValue"
+              ]
+            }
+          ],
           "witness": {
             "publicationAbsent": [
               true,
@@ -370,6 +504,20 @@
         {
           "id": "C4",
           "quote": "a value without receipt is refused",
+          "claims": [
+            {
+              "term": "a value without receipt",
+              "facts": [
+                "additiveOpaque"
+              ]
+            },
+            {
+              "term": "is refused",
+              "facts": [
+                "standalone"
+              ]
+            }
+          ],
           "witness": {
             "standalone": {
               "nativeCategory": "transport",
@@ -404,8 +552,27 @@
       "id": "R-STATUS-PROJECTION",
       "quietPin": "B2",
       "family": "Constructed completeness on an additive result key is opaque; the topology is invariant and never interprets it as publication success."
+    },
+    {
+      "id": "R-SYNONYM",
+      "quietPin": "A1",
+      "family": "A VOCABULARY word that no absent subject of the owner's clause (a) contains (A1's synonyms fact lists them) is held by this census alone; dropped from VOCABULARY, A1's controlHits and that list together, in the census and the roster, the census stays green."
+    },
+    {
+      "id": "R-REAUTHORED",
+      "quietPin": "claims bound",
+      "family": "A pin's case, claims and roster witness rewritten together, in whole or in part, are held by no anchor beyond the term tiling; the claims bound quiet row re-authors C3 as one fact under one claim, which shows that claim and is accepted by no registered pin's claims."
     }
   ],
+  "claimsBound": {
+    "pairs": 72,
+    "accepted": [],
+    "reauthored": {
+      "fact": "publicationAbsent",
+      "shows": [],
+      "acceptedBy": []
+    }
+  },
   "vocabulary": [
     "interop",
     "publication",
