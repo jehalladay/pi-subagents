@@ -22,7 +22,9 @@
   "pool",
   "pools",
   "resident",
+  "residents",
   "admission",
+  "admissions",
   "admit",
   "admits"
  ],
@@ -241,6 +243,12 @@
         "admissions": 0,
         "launches": [],
         "unresolved": 0
+       },
+       "admissionProperty": {
+        "spellings": 0,
+        "admissions": 0,
+        "launches": [],
+        "unresolved": 0
        }
       }
      }
@@ -429,16 +437,38 @@
      "witness": {
       "hits": [
        "plant:workerCount",
-       "plant:poolSize"
+       "plant:poolSize",
+       "plant:tsxRuntime",
+       "plant:admissionLimit",
+       "plant:admitLimit",
+       "plant:admitsMax",
+       "plant:denoHome",
+       "plant:workersMax",
+       "plant:poolsMax",
+       "plant:residentsMax",
+       "plant:admissionsLimit",
+       "plant:workerLimit",
+       "plant:denoFlag",
+       "plant:poolFlag",
+       "plant:admitFlag",
+       "plant:tsxLimit",
+       "plant:poolLimit",
+       "plant:residentLimit",
+       "plant:tsxFlag",
+       "plant:admitTsx",
+       "plant:residentMode"
       ],
-      "followed": [
-       "src/types.ts:JoinMode",
-       "src/settings.ts:ToolDescriptionMode",
-       "src/types.ts:AgentMentionMode",
-       "src/types.ts:WidgetMode",
-       "src/types.ts:ViewerMarkdownMode",
-       "plant:src/settings.ts:RuntimeOptions",
-       "plant:src/sizing-options.ts:SizingOptions"
+      "declaring": [
+       "src/settings.ts",
+       "plant:src/admission-knobs.ts",
+       "plant:src/admit-knobs.ts",
+       "plant:src/augment.ts",
+       "plant:src/class-knobs.ts",
+       "plant:src/deno-knobs.ts",
+       "plant:src/settings.ts",
+       "plant:src/sizing-options.ts",
+       "plant:src/star-knobs.ts",
+       "plant:src/tsx-knobs.ts"
       ],
       "sanitizeMatchesWorkbench": true,
       "memberFloor": true,
@@ -455,12 +485,16 @@
        "poolSize:true",
        "poolsMax:true",
        "residentMode:true",
+       "residentsMax:true",
        "admissionLimit:true",
+       "admissionsLimit:true",
        "admitLimit:true",
        "admitsMax:true",
        "reactivefiberWorkspaceRoot:false",
        "maxConcurrent:false",
-       "workspace:false"
+       "workspace:false",
+       "poolingMode:false",
+       "threadCount:false"
       ]
      }
     },

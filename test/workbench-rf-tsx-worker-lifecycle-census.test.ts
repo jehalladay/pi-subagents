@@ -59,12 +59,18 @@
  *    resolution that misses the tripwire is never executed, so no host deno ever runs; the control runs the tripwire by its absolute
  *    scratch path, a computed command A2's literal launch read does not judge); B4 no pool and nothing resident: three
  *    sequential and three concurrent renders each spawn their own rf (distinct pids), none alive once its render settles.
- *  C, acceptance (c). C1 the settings surface read from src/settings.ts (every member of SubagentsSettings and WorkbenchSettings, nested
- *    type literals included, every interface or type alias a member's type names, followed transitively through src/settings.ts and
- *    its relative imports (wb-jdpn F7), and sanitize()'s workbench key set, which equals the WorkbenchSettings members): no name holds a
- *    FAMILY word; planted settings modules ride the same reading (a local and an imported named type, each reached only by following)
- *    and one single-word control per FAMILY word (wb-jdpn F4) reads as designed; C2 loadSettings over a hermetic project file drops
- *    every family-named top-level key and refuses each under workbench by name; C3 every capability registerNativeProviders registers
+ *  C, acceptance (c). C1 the settings surface read through the TypeScript checker over the src program (tsconfig.json's compiler
+ *    options and root files, as parseJsonConfigFileContent resolves them; wb-jdpn F7, U2): every property of SubagentsSettings and
+ *    WorkbenchSettings and, transitively, of every object type a property's type resolves to, however the type is referenced (a local
+ *    or imported name, a namespace-qualified name, a re-export or star re-export, a default import, an import type, a class, merged and
+ *    augmented declarations, typeof a value, mapped and conditional types, type arguments, index signatures (a template-literal key's
+ *    literal text read as a name), array and tuple elements, call- and construct-signature returns), except a property every
+ *    declaration of which sits in a TypeScript lib file; and sanitize()'s workbench
+ *    key set, which equals the checker's WorkbenchSettings properties: no name holds a FAMILY word and every live name is declared in
+ *    src/settings.ts (declaring); a planted settings program rides the same reading (one member per reference form, each reaching a
+ *    FAMILY-named property only through that form) and one single-word control per FAMILY word (wb-jdpn F4) reads as designed;
+ *    C2 loadSettings over a hermetic project file drops every family-named top-level key and refuses each under workbench by name;
+ *    C3 every capability registerNativeProviders registers
  *    (each provider module holds one input-schema constant that its native and injected registrations share): no inputSchema property
  *    or required name holds a FAMILY word, and the rf descriptor's input names are exactly model, task, taskId and view; C4 what Pi
  *    hands rf configures no worker: with the Deno directory variable, three more DENO_ operator names and two RF_-prefixed stand-in
@@ -74,12 +80,17 @@
  *    whole name set is host-dependent, since the node launcher may add its own (this host's process.execPath is a bash wrapper that
  *    sets LD_LIBRARY_PATH, and bash adds PWD and SHLVL, measured), so the allowlist-only projection stays the pin of record of
  *    test/workbench-env-scrub-census.test.ts (its W19 rf CLI child seam), which this cut does not restate.
- * FAMILY (property and argv words, after camelCase and separator splitting): deno, tsx, worker(s), pool(s), resident, admission,
- * admit(s). OUTSIDE ANCHOR (wb-jdpn F4): every FAMILY word is a word of the owner filing (its title, clauses or quote) or the plural or
- * third person of one, and the filing's knob phrases (knobPhrases: the title's "TSX Deno workers", directory variable and "admit TSX
- * starts", clause (b)'s "worker pool", clause (c)'s Deno worker count, directory-variable path, "TSX admission policy" and "default
- * resident worker") split exactly into FAMILY and GENERIC (count, default, dir, path, policy, starts), so a FAMILY word removed from
- * this file and the roster together reds the judged set. ADMISSION (B1, wb-jdpn F8) holds the words of the title's "admit TSX starts"
+ * FAMILY (property and argv words, after camelCase and separator splitting): deno, tsx, worker(s), pool(s), resident(s),
+ * admission(s), admit(s). OUTSIDE ANCHOR (wb-jdpn F4, U3): FAMILY is derived from the owner filing (familyOf) - the words of its knob
+ * phrases (knobPhrases: the title's "TSX Deno workers", directory variable and "admit TSX starts", clause (b)'s "worker pool", clause
+ * (c)'s Deno worker count, directory-variable path, "TSX admission policy" and "default resident worker") outside GENERIC (count,
+ * default, dir, path, policy, starts), and the -s plural or third person of each word the phrases only ever spell in lower case
+ * (worker, pool, resident, admission, admit: common words; Deno, TSX and the directory variable are spelled capitalized, names that
+ * take no inflection). The judged set holds this file's FAMILY to that derivation and the closing case holds the roster's family to
+ * it, each reading the filing itself, so a FAMILY word removed from this file, the roster and C1's control witness together - an
+ * inflection included (pools, admits) - reds both judges; every FAMILY word is also a word of the filing or the plural or third
+ * person of one, the knob phrases split exactly into FAMILY and GENERIC, and every FAMILY word has its single-word name control.
+ * ADMISSION (B1, wb-jdpn F8) holds the words of the title's "admit TSX starts"
  * duty with their inflections. PRECISION: "workspace" is not "worker" (C1/C3 controls); the src word "admission" belongs to the
  * registry and the workflow launch admission, so it is a family word only in a settings, input or argv name, never in src prose.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal. OUTSIDE ANCHORS: the owner filing's row of wb-csbt.3 in
@@ -95,14 +106,30 @@
  * expected value and records the pin as it is evaluated (COMPARED), and the pin's measured witness is recorded after its compare passes
  * (REACHED); the closing case asserts both equal the roster's pins, in roster order and each once, and re-compares every recorded
  * witness to the roster, so a compare removed, guarded away (an early return) or swapped for a matcher that takes no expected value
- * (toBeDefined) reds the closing case; the judged set, which runs first, holds the closing case to run mode, so a skip on it reds the
- * judged set (a skip on both together is left to the delivered-file marker scan). Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the bead row
- * anchors rows and clauses, not pins); a FAMILY word moved to GENERIC with the roster's family and witnesses regenerated together; a
- * judged list replaced by its whole expected witness (planted entries included), a live input dropped from a reading while its planted
- * controls stay, or a shared reader (clauseHits, readModule, settingsSurface) hollowed for live paths only (wb-jdpn F5 bounds the
- * constant-substitution class at the constant each pin reads today); a compare swapped for a weaker matcher that still takes
- * rosterWitness as its expected value (toEqual is equivalent over JSON witnesses), or a harness hollow that also evaluates rosterWitness
- * apart from the compare and records the roster's own witness.
+ * (toBeDefined) reds the closing case.
+ * ENDS (wb-jdpn U1, the same class outside the pin compares): the two judges - the judged set, registered first, and the closing
+ * case, registered last - sit at FILE SCOPE, outside every suite, around the census suite that holds rows A-C, so no single suite
+ * modifier (skip, skipIf, runIf, todo, a skip option) reaches either. Every case records its end as its last statement, with the
+ * count of assertions it made on the way (ENDED: the judged set, each pin's case after REACHED, the closing case), and each judge
+ * declares its own count (expect.assertions), so a judge that stops early - an early return anywhere in its body, or its end record
+ * moved ahead of its checks - fails its declared count, and its missing end reds the other judge or the backstop. The judged set walks
+ * the registration at collection: every roster title once, in order, in run mode, not inverted, and the file's own registrations
+ * exactly the two judges around the census suite. The closing case walks it again after the run (every other test ran), requires every
+ * other case's end in registration order and the judged set's at its declared count, and re-judges the outside anchor itself against
+ * the roster - the owner filing's title, clauses, quote and citation, clause (a)'s pattern and pathspecs and the FAMILY derivation -
+ * so no single matcher swap in either judge hides a divergence of the bead export. A file-level afterAll backstop walks the file task
+ * the first case to run hands over (fileTask), so it needs neither judge to have run: no case running at all reds it, every registered
+ * test ran in run mode, not inverted, to a pass or a fail (a hook that skips a case at run time reds here), and unless a case failed,
+ * every case's end is recorded in registration order, the closing case's at its declared count; a failed case reds the run by itself,
+ * so the backstop names only a quiet miss. Not claimed:
+ * every task skipped at collection (an edit at each of the three file-scope registrations; vitest then runs no hook of this file); a
+ * pin removed from ROWS, the literal, IMPL and the roster together (the bead row anchors rows and clauses, not pins); a FAMILY word
+ * moved to GENERIC with its inflection, the roster's family and the witnesses regenerated together; a judged list replaced by its
+ * whole expected witness (planted entries included), a live input dropped from a reading while its planted controls stay, or a shared
+ * reader (clauseHits, readModule, settingsSurface, ownerFiling, knobPhrases, familyOf) hollowed for live paths only (wb-jdpn F5 bounds
+ * the constant-substitution class at the constant each pin reads today; familyOf also carries a control); a compare swapped for a
+ * weaker matcher that still takes rosterWitness as its expected value (toEqual is equivalent over JSON witnesses), or a harness hollow
+ * that also evaluates rosterWitness apart from the compare and records the roster's own witness; a hook that rewrites a task's result.
  * RESIDUALS (named families, each with a pinned quiet row in the controls): R-SPELLING a needle in another letter case, spacing or
  * separator ("Deno run", two spaces) escapes the clause's case-sensitive pattern in A1/A2 (quiet rows quiet-case, quiet-spacing); in
  * src, B1's case-insensitive word read still sees deno. R-COMPOSED a needle or a deno command assembled at runtime (a join, a
@@ -120,12 +147,18 @@
  * deno command there is caught as a spelling, never as a launch (quiet row requireLaunch: one spelling, no launch). R-NAMES C1 and C3
  * read names, not values: a worker knob passed as a value under a neutral key is invisible to them (quiet row: SCHEMA_CONTROL's
  * "options" property, whose enum value names a resident worker pool, reads options:false); C4's argv and env reading is the backstop
- * for what reaches rf. R-ADMISSION-NAMES (wb-jdpn F8) a TSX start limiter named without the word tsx or an ADMISSION word (a render
- * slot count, a concurrency cap) escapes B1's admission read (quiet row admissionQuiet: rf's own tsx counters and a renderSlots
- * constant read 0 admissions); B4's three concurrent renders, each spawning its own rf, are the runtime backstop for a cap below three.
- * R-TYPE-FLOW (wb-jdpn F7) C1 follows named type references only: a member typed by an inferred or computed type (typeof a value, a
- * mapped or conditional type, a package's type) is not followed (quiet row: the planted settings module's `inferred` member, whose
- * typeof-typed object names a resident mode, reads no hit).
+ * for what reaches rf. R-ADMISSION-NAMES (wb-jdpn F8) a TSX start limiter named without the word tsx beside an ADMISSION word in
+ * one name or literal (a render slot count, a concurrency cap, or tsx and starts in two names across a property access, tsx.starts)
+ * escapes B1's admission read (quiet rows admissionQuiet: rf's own tsx counters and a renderSlots constant, and admissionProperty: a tsx
+ * object's starts and limit, each read 0 admissions); B4's three concurrent renders, each spawning its own rf, are the runtime
+ * backstop for a cap below three.
+ * R-TYPE-FLOW (wb-jdpn F7, U2) C1's checker reading loads src/ files and TypeScript's lib, nothing else, and reads names, not signature
+ * parameters: a member typed by a package's type (or one declared outside src/) is not followed (quiet row: the planted program's `packaged` member, whose package type declares a worker
+ * pool in a declaration file the reading never loads, reads no hit), and a property every declaration of which sits in a lib file is
+ * no settings name (an Array's or a String's own members; quiet row: the planted `browser` member, typed by the lib's Navigator, whose
+ * serviceWorker names a worker, reads no hit). R-VOCABULARY (wb-jdpn U3) FAMILY holds each knob word and its -s form only:
+ * another inflection or a synonym (pooling, a thread count) escapes the C1, C3 and C4 name reads (quiet rows: NAME_CONTROLS's
+ * poolingMode and threadCount read false).
  * Display paths added: none. Test-only: the stand-in rf and the tripwire live in makeScratch scratch; src, the roster and the bead
  * export are only read; hermeticDir (makeScratch-backed) holds the settings files.
  */
@@ -134,7 +167,7 @@ import { accessSync, chmodSync, constants, existsSync, lstatSync, mkdirSync, rea
 import { basename, delimiter, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
-import { afterAll, afterEach, describe, expect, it } from "vitest";
+import { afterAll, afterEach, describe, expect, it, type RunnerTask, type RunnerTestFile } from "vitest";
 import { loadSettings } from "../src/settings.js";
 import { CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
@@ -197,10 +230,11 @@ function moduleKind(file: string): ts.ScriptKind | undefined {
 function denoLaunch(entry: string): boolean {
   return DENO_WORD.test(entry.slice(entry.indexOf(" ") + 1));
 }
-/** The words a worker knob's name would hold. */
-const FAMILY = ["deno", "tsx", "worker", "workers", "pool", "pools", "resident", "admission", "admit", "admits"];
-/** The words of the filing's knob phrases that name a count, a place or a policy rather than the worker family (wb-jdpn F4): FAMILY and
- * GENERIC partition the words of knobPhrases, so a FAMILY word dropped from this file and the roster together reds the judged set. */
+/** The words a worker knob's name would hold, derived from the owner filing (wb-jdpn U3, familyOf): the knob-phrase words outside
+ * GENERIC and the -s form of each the phrases only ever spell in lower case; the judged set holds this list to that derivation. */
+const FAMILY = ["deno", "tsx", "worker", "workers", "pool", "pools", "resident", "residents", "admission", "admissions", "admit", "admits"];
+/** The words of the filing's knob phrases that name a count, a place or a policy rather than the worker family (wb-jdpn F4): FAMILY's
+ * roots and GENERIC partition the words of knobPhrases. */
 const GENERIC = ["count", "default", "dir", "path", "policy", "starts"];
 /** The title's "admit TSX starts" duty (wb-jdpn F8): the word tsx beside one of these in one src name or literal admits TSX starts. */
 const ADMISSION = ["admit", "admits", "admitted", "admission", "admissions", "start", "starts", "started"];
@@ -230,26 +264,73 @@ const SETTINGS_KNOBS = ["denoWorkerCount", DIR_VARIABLE, "tsxAdmissionPolicy", "
 /** C4's positive control (wb-jdpn F5): an allowlisted ambient name set beside the knobs, which does reach rf (a locale value every
  * host accepts), so the reached list is exactly this name today. */
 const REACHING_CONTROL: Readonly<Record<string, string>> = { LC_CTYPE: "C" };
-/** C1's planted settings modules (wb-jdpn F7): a local and an imported named type, each reached only by following a member's type,
- * and the R-TYPE-FLOW quiet row (a typeof-typed member, never followed). */
+/** C1's planted settings program (wb-jdpn F7, U2), read through the same checker reading as src: one neutral member per reference
+ * form, each reaching a FAMILY-named property only through that form (a local and an imported interface, a namespace-qualified name, a
+ * re-export, a default import, a star re-export, an import type, a class, merged declarations, typeof a value, a mapped type, an index
+ * signature, an array and a tuple element, a lib generic's type argument (a Map's value type, reached only as a type argument), a
+ * conditional type, an intersection, a call- and a construct-signature return, a template-literal index key, and an augmentation from
+ * another module), and the R-TYPE-FLOW quiet rows: a package's type, declared in a file the reading never loads (it serves src/ paths
+ * only), and the lib's Navigator, whose serviceWorker property names a worker but is declared only in a lib file. */
 const SETTINGS_CONTROLS: Readonly<Record<string, string>> = {
   "src/settings.ts": [
+    'import type { AdmissionKnobs } from "./knob-index.js";',
+    'import type AdmitKnobs from "./admit-knobs.js";',
+    'import type { ClassKnobs } from "./class-knobs.js";',
+    'import type { PackageKnobs } from "census-absent-package";',
     'import type { SizingOptions } from "./sizing-options.js";',
+    'import type { StarKnobs } from "./star-index.js";',
+    'import type * as Knobs from "./tsx-knobs.js";',
     "export interface SubagentsSettings {",
     "  workbench?: WorkbenchSettings;",
     "}",
     "export interface WorkbenchSettings {",
     "  runtime?: RuntimeOptions;",
     "  sizing?: SizingOptions;",
+    "  qualified?: Knobs.TsxKnobs;",
+    "  reexported?: AdmissionKnobs;",
+    "  defaulted?: AdmitKnobs;",
+    "  starred?: StarKnobs;",
+    '  imported?: import("./deno-knobs.js").DenoKnobs;',
+    "  classed?: ClassKnobs;",
+    "  merged?: MergedKnobs;",
     "  inferred?: typeof INFERRED;",
+    '  mapped?: Record<"admissionsLimit", number>;',
+    "  indexed?: { [name: string]: { workerLimit?: number } };",
+    "  listed?: { denoFlag?: boolean }[];",
+    "  keyed?: Map<string, { poolFlag?: boolean }>;",
+    "  tupled?: [{ admitFlag?: boolean }];",
+    "  conditional?: true extends true ? { tsxLimit?: number } : never;",
+    "  joined?: { poolLimit?: number } & { note?: string };",
+    "  factory?: () => { residentLimit?: number };",
+    "  constructed?: new () => { tsxFlag?: boolean };",
+    // a template-literal key type, its placeholder split across two literals so no plain string spells one
+    "  patterned?: { [knob: `admitTsx$" + "{string}`]: number };",
+    "  packaged?: PackageKnobs;",
+    "  browser?: Navigator;",
     "}",
     "interface RuntimeOptions {",
     "  workerCount?: number;",
     "}",
-    "const INFERRED = { residentMode: true };",
+    "interface MergedKnobs {",
+    "  label?: string;",
+    "}",
+    "interface MergedKnobs {",
+    "  poolsMax?: number;",
+    "}",
+    "const INFERRED = { residentsMax: 1 };",
     "",
   ].join("\n"),
   "src/sizing-options.ts": "export interface SizingOptions {\n  poolSize?: number;\n}\n",
+  "src/tsx-knobs.ts": "export interface TsxKnobs {\n  tsxRuntime?: string;\n}\n",
+  "src/knob-index.ts": 'export type { AdmissionKnobs } from "./admission-knobs.js";\n',
+  "src/admission-knobs.ts": "export interface AdmissionKnobs {\n  admissionLimit?: number;\n}\n",
+  "src/admit-knobs.ts": "export default interface AdmitKnobs {\n  admitLimit?: number;\n}\n",
+  "src/star-index.ts": 'export * from "./star-knobs.js";\n',
+  "src/star-knobs.ts": "export interface StarKnobs {\n  admitsMax?: number;\n}\n",
+  "src/deno-knobs.ts": "export interface DenoKnobs {\n  denoHome?: string;\n}\n",
+  "src/class-knobs.ts": "export class ClassKnobs {\n  workersMax?: number;\n}\n",
+  "src/augment.ts": 'declare module "./settings.js" {\n  interface WorkbenchSettings {\n    residentMode?: boolean;\n  }\n}\nexport {};\n',
+  "node_modules/census-absent-package/index.d.ts": "export interface PackageKnobs {\n  workerPool?: number;\n}\n",
 };
 
 interface Row {
@@ -346,6 +427,49 @@ function rosterWitness(pin: string): JsonValue {
   return found.witness;
 }
 
+/** wb-jdpn U1: the assertions the judged set and the closing case make on their way to their end; each declares its count
+ * (expect.assertions) and records the count it reached at its end, which the closing case and the backstop read. */
+const JUDGED_ASSERTIONS = 24;
+const CLOSING_ASSERTIONS = 23;
+interface End {
+  readonly title: string;
+  readonly assertions: number;
+}
+/** Every case's end, in run order (wb-jdpn U1): a case records it as its last statement, with the assertions it made, so a case that
+ * stops early records none. */
+const ENDED: End[] = [];
+function ended(title: string): void {
+  ENDED.push({ title, assertions: expect.getState().assertionCalls });
+}
+interface Registered {
+  readonly name: string;
+  readonly mode: string;
+  readonly fails: boolean;
+  readonly state: string | undefined;
+  readonly self: boolean;
+}
+/** Every test registered below `tasks` in vitest's task tree, in registration order; `self` marks the walking case by task identity. */
+function registered(tasks: readonly RunnerTask[], self?: RunnerTask): Registered[] {
+  const walked: Registered[] = [];
+  const visit = (children: readonly RunnerTask[]): void => {
+    for (const child of children) {
+      if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === self });
+      else if (child.type === "suite") visit(child.tasks);
+    }
+  };
+  visit(tasks);
+  return walked;
+}
+function shown(entry: Registered): string {
+  return `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${entry.state ?? "no result"}`;
+}
+/** The file task, handed over by the first case that runs (wb-jdpn U1; vitest hands a hook no task in a form this file can take): the
+ * backstop walks it, so it needs neither judge to have run, and no case running at all is itself a quiet miss. */
+let fileTask: RunnerTestFile | undefined;
+function running(task: { readonly file: RunnerTestFile }): void {
+  fileTask ??= task.file;
+}
+
 interface OwnerFiling {
   readonly title: string;
   readonly clauses: string[];
@@ -398,6 +522,21 @@ function knobPhrases(filing: OwnerFiling): { duty: string; phrases: string[] } {
   };
 }
 
+/** FAMILY as the owner filing's knob phrases derive it (wb-jdpn U3): every word outside GENERIC, and the -s plural or third person of
+ * each word the phrases only ever spell in lower case (a common word: worker, pool, admit); a word spelled capitalized anywhere in them
+ * (Deno, TSX, the directory variable) is a name and takes no inflection, nor does a word already ending in s. Sorted. */
+function familyOf(phrases: readonly string[]): string[] {
+  const spellings = new Map<string, string[]>();
+  for (const token of phrases.flatMap(tokens)) spellings.set(token.toLowerCase(), [...(spellings.get(token.toLowerCase()) ?? []), token]);
+  const family = new Set<string>();
+  for (const [word, spelled] of spellings) {
+    if (GENERIC.includes(word)) continue;
+    family.add(word);
+    if (spelled.every(token => token === word) && !word.endsWith("s")) family.add(`${word}s`);
+  }
+  return [...family].sort();
+}
+
 interface Walk {
   readonly files: string[];
   readonly symlinks: string[];
@@ -430,9 +569,13 @@ function clauseHits(root: string, files: readonly string[]): Hit[] {
   );
 }
 
-/** The words of a name: camelCase humps and the runs between non-alphanumerics, lower-cased. */
+/** The tokens of a name as spelled: camelCase humps and the runs between non-alphanumerics. */
+function tokens(name: string): string[] {
+  return name.replace(/([a-z0-9])([A-Z])/g, "$1 $2").replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2").split(/[^A-Za-z0-9]+/).filter(Boolean);
+}
+/** The words of a name: its tokens, lower-cased. */
 function words(name: string): string[] {
-  return name.replace(/([a-z0-9])([A-Z])/g, "$1 $2").replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2").split(/[^A-Za-z0-9]+/).filter(Boolean).map(word => word.toLowerCase());
+  return tokens(name).map(word => word.toLowerCase());
 }
 function familyName(name: string): boolean {
   return words(name).some(word => FAMILY.includes(word));
@@ -599,61 +742,83 @@ function schemaNames(schema: unknown): string[] {
   return names;
 }
 
-type NamedType = ts.InterfaceDeclaration | ts.TypeAliasDeclaration;
-/** The settings surface: every property name declared inside SubagentsSettings and WorkbenchSettings (nested type literals included)
- * and inside every interface or type alias a member's type names (a type reference, or an interface's extends clause), followed
- * transitively through the module that declares it - src/settings.ts, or a module it imports by a relative specifier - each type
- * once (wb-jdpn F7; `followed` lists them), and the string members of the key set sanitize() checks workbench keys against. `read`
- * returns a module's text by repository path (undefined when absent), so the planted settings modules ride the same reading. */
-function settingsSurface(read: (path: string) => string | undefined): { members: string[]; workbenchMembers: string[]; sanitizeKeys: string[]; followed: string[] } {
+/** The src program's compiler options and root files (tsconfig.json, as parseJsonConfigFileContent resolves it; wb-jdpn U2), the roots
+ * repository-relative. */
+function srcProgram(): { options: ts.CompilerOptions; roots: string[] } {
+  const config = ts.readConfigFile(join(REPO, "tsconfig.json"), ts.sys.readFile);
+  if (config.error !== undefined) throw new Error("tsconfig.json does not parse");
+  const parsed = ts.parseJsonConfigFileContent(config.config, ts.sys, REPO);
+  return { options: { ...parsed.options, noEmit: true, types: [] }, roots: parsed.fileNames.map(file => file.slice(REPO.length + 1)) };
+}
+/** The settings surface (wb-jdpn F7, U2), read through the TypeScript checker over a program of `roots` (repository paths) with the src
+ * program's options, its files read only through `read` (the src tree, or the planted settings program); TypeScript's own lib files
+ * load from the compiler and nothing else loads (no package), so a package's type resolves to nothing. members: every property name
+ * of SubagentsSettings and WorkbenchSettings and, transitively, of every object type a property's type resolves to (union and
+ * intersection members, type arguments, index signatures and call- and construct-signature returns included, a template-literal
+ * index key's literal text read as a name), however the type is referenced,
+ * except a property every declaration of which sits in a lib file; declaring: the files that declare them; workbenchMembers: the
+ * checker's WorkbenchSettings properties; sanitizeKeys: the string members of the key set sanitize() checks workbench keys against. */
+function settingsSurface(read: (path: string) => string | undefined, roots: readonly string[]): { members: string[]; workbenchMembers: string[]; sanitizeKeys: string[]; declaring: string[] } {
+  const { options } = srcProgram();
+  const libDir = dirname(ts.getDefaultLibFilePath(options));
+  const lib = (file: string): boolean => dirname(file) === libDir;
+  const repoPath = (file: string): string | undefined => (file.startsWith(`${REPO}/`) ? file.slice(REPO.length + 1) : undefined);
+  const text = (file: string): string | undefined => {
+    if (lib(file)) return ts.sys.readFile(file);
+    const path = repoPath(file);
+    return path === undefined ? undefined : read(path);
+  };
+  const host = ts.createCompilerHost(options, true);
+  host.fileExists = file => text(file) !== undefined;
+  host.readFile = text;
+  host.getSourceFile = (file, language) => {
+    const content = text(file);
+    return content === undefined ? undefined : ts.createSourceFile(file, content, language, true);
+  };
+  host.directoryExists = directory => directory === libDir || directory === `${REPO}/src` || directory.startsWith(`${REPO}/src/`);
+  host.getDirectories = () => [];
+  host.realpath = file => file;
+  const program = ts.createProgram(roots.map(path => join(REPO, path)), options, host);
+  const checker = program.getTypeChecker();
   const file = "src/settings.ts";
-  const parsed = new Map<string, ts.SourceFile | null>();
-  const parse = (path: string): ts.SourceFile | null => {
-    if (!parsed.has(path)) {
-      const text = read(path);
-      parsed.set(path, text === undefined ? null : ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS));
-    }
-    return parsed.get(path) ?? null;
-  };
-  const source = parse(file);
-  if (source === null) throw new Error(`the settings surface reads no ${file}`);
+  const source = program.getSourceFile(join(REPO, file));
+  if (source === undefined) throw new Error(`the settings surface reads no ${file}`);
   const members: string[] = [];
-  const workbenchMembers: string[] = [];
-  const followed: string[] = [];
-  const seen = new Set<string>([`${file}:SubagentsSettings`, `${file}:WorkbenchSettings`]);
+  const declaring = new Set<string>();
+  const seen = new Set<ts.Type>();
+  const visit = (type: ts.Type): void => {
+    if (seen.has(type)) return;
+    seen.add(type);
+    if (type.isUnionOrIntersection()) {
+      for (const part of type.types) visit(part);
+      return;
+    }
+    if ((type.flags & ts.TypeFlags.Object) === 0) return;
+    if (((type as ts.ObjectType).objectFlags & ts.ObjectFlags.Reference) !== 0) for (const argument of checker.getTypeArguments(type as ts.TypeReference)) visit(argument);
+    for (const kind of [ts.SignatureKind.Call, ts.SignatureKind.Construct]) for (const signature of checker.getSignaturesOfType(type, kind)) visit(checker.getReturnTypeOfSignature(signature));
+    for (const property of checker.getPropertiesOfType(type)) {
+      const files = (property.declarations ?? []).map(declaration => declaration.getSourceFile().fileName);
+      if (files.length > 0 && files.every(lib)) continue;
+      members.push(property.name);
+      for (const declared of files) declaring.add(repoPath(declared) ?? declared);
+      visit(checker.getTypeOfSymbol(property));
+    }
+    for (const info of checker.getIndexInfosOfType(type)) {
+      // A template-literal key (`pool${string}`) admits every key it spells: its literal text is read as a name.
+      for (const key of info.keyType.isUnion() ? info.keyType.types : [info.keyType]) {
+        if ((key.flags & ts.TypeFlags.TemplateLiteral) !== 0) members.push(...(key as ts.TemplateLiteralType).texts.filter(part => part !== ""));
+      }
+      visit(info.type);
+    }
+  };
+  const declared = (name: string): ts.Type | undefined => {
+    const statement = source.statements.find((entry): entry is ts.InterfaceDeclaration | ts.TypeAliasDeclaration => (ts.isInterfaceDeclaration(entry) || ts.isTypeAliasDeclaration(entry)) && entry.name.text === name);
+    return statement === undefined ? undefined : checker.getTypeAtLocation(statement.name);
+  };
+  const workbench = declared("WorkbenchSettings");
+  for (const type of [declared("SubagentsSettings"), workbench]) if (type !== undefined) visit(type);
   let sanitizeKeys: string[] = [];
-  /** The interface or type alias `name` names inside module `path`: declared there, or imported there from a relative module. */
-  const resolve = (path: string, name: string): { path: string; declaration: NamedType } | undefined => {
-    const module = parse(path);
-    if (module === null) return undefined;
-    for (const statement of module.statements) {
-      if ((ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement)) && statement.name.text === name) return { path, declaration: statement };
-    }
-    for (const statement of module.statements) {
-      if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier) || !statement.moduleSpecifier.text.startsWith(".")) continue;
-      const bindings = statement.importClause?.namedBindings;
-      const element = bindings !== undefined && ts.isNamedImports(bindings) ? bindings.elements.find(entry => entry.name.text === name) : undefined;
-      if (element !== undefined) return resolve(join(dirname(path), statement.moduleSpecifier.text).replace(/\.js$/, ".ts"), (element.propertyName ?? element.name).text);
-    }
-    return undefined;
-  };
-  const collect = (node: ts.Node, into: string[], path: string): void => {
-    if (ts.isPropertySignature(node) && (ts.isIdentifier(node.name) || ts.isStringLiteral(node.name))) into.push(node.name.text);
-    const named = ts.isTypeReferenceNode(node) && ts.isIdentifier(node.typeName) ? node.typeName.text
-      : ts.isExpressionWithTypeArguments(node) && ts.isIdentifier(node.expression) ? node.expression.text : undefined;
-    const target = named === undefined ? undefined : resolve(path, named);
-    if (target !== undefined && !seen.has(`${target.path}:${target.declaration.name.text}`)) {
-      seen.add(`${target.path}:${target.declaration.name.text}`);
-      followed.push(`${target.path}:${target.declaration.name.text}`);
-      collect(target.declaration, into, target.path);
-    }
-    ts.forEachChild(node, child => collect(child, into, path));
-  };
   for (const statement of source.statements) {
-    if (ts.isInterfaceDeclaration(statement) && (statement.name.text === "SubagentsSettings" || statement.name.text === "WorkbenchSettings")) {
-      collect(statement, members, file);
-      if (statement.name.text === "WorkbenchSettings") for (const member of statement.members) if (ts.isPropertySignature(member) && ts.isIdentifier(member.name)) workbenchMembers.push(member.name.text);
-    }
     if (ts.isFunctionDeclaration(statement) && statement.name?.text === "sanitize") {
       const find = (node: ts.Node): void => {
         if (ts.isNewExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "Set") {
@@ -665,7 +830,8 @@ function settingsSurface(read: (path: string) => string | undefined): { members:
       find(statement);
     }
   }
-  return { members, workbenchMembers, sanitizeKeys, followed };
+  const workbenchMembers = workbench === undefined ? [] : checker.getPropertiesOfType(workbench).map(property => property.name);
+  return { members, workbenchMembers, sanitizeKeys, declaring: [...declaring].sort() };
 }
 
 const oldPath = process.env.PATH;
@@ -839,7 +1005,7 @@ const A2_CONTROLS: Readonly<Record<string, string>> = {
 };
 /** The module texts B1 reads beside src: launches and spellings it must see, the precision row, the R-COMPOSED / R-COMMENT /
  * R-UNBOUND-LAUNCH quiet rows, the capitalized literal (wb-jdpn F6), the provider-shaped control read with the provider (wb-jdpn F5)
- * and the TSX admission controls with the R-ADMISSION-NAMES quiet row (wb-jdpn F8). */
+ * and the TSX admission controls with the R-ADMISSION-NAMES quiet rows (wb-jdpn F8; admissionProperty is the gate's N31 shape). */
 const B1_CONTROLS: Readonly<Record<string, string>> = {
   literalCommand: `import { spawn } from "node:child_process";\nspawn("${DENO}", ["--version"]);\n`,
   aliasedUnresolved: 'import { spawn as launch } from "node:child_process";\nconst bin = pick();\nlaunch(bin, []);\n',
@@ -855,21 +1021,79 @@ const B1_CONTROLS: Readonly<Record<string, string>> = {
   admissionIdentifier: "let tsxStarts = 0;\nconst TSX_START_LIMIT = 4;\n",
   admissionLiteral: 'throw new Error("TSX start not admitted.");\n',
   admissionQuiet: 'const counters = ["tsx_worker_spawns", "tsx_resource_rounds"];\nconst renderSlots = 4;\n',
+  admissionProperty: 'const tsx = { starts: 0, limit: 1000 };\nif (tsx.starts >= tsx.limit) throw new Error("refused");\n',
 };
 /** The provider-shaped control's planted path: B1 reads it with the provider, so the provider's launch, binding and kill lists hold it. */
 const PROVIDER_SHAPE = `${PLANTED}providerShape.ts`;
 /** The schemas and names C1/C3 read: family names they must see, one single-word control per FAMILY word (each holds that word and
- * no other, wb-jdpn F4), the precision rows and the R-NAMES quiet row. */
+ * no other, wb-jdpn F4 and U3), the precision rows, the R-NAMES quiet row and the R-VOCABULARY quiet rows (wb-jdpn U3). */
 const NAME_CONTROLS: readonly string[] = [
   "denoWorkerCount", "tsxAdmissionPolicy", "residentWorker", "workerPool", DIR_VARIABLE,
-  "denoHome", "tsxRuntime", "workerCount", "workersMax", "poolSize", "poolsMax", "residentMode", "admissionLimit", "admitLimit", "admitsMax",
-  "reactivefiberWorkspaceRoot", "maxConcurrent", "workspace",
+  "denoHome", "tsxRuntime", "workerCount", "workersMax", "poolSize", "poolsMax", "residentMode", "residentsMax", "admissionLimit", "admissionsLimit", "admitLimit", "admitsMax",
+  "reactivefiberWorkspaceRoot", "maxConcurrent", "workspace", "poolingMode", "threadCount",
 ];
 const SCHEMA_CONTROL = {
   type: "object",
   properties: { workspaceRoot: { type: "string" }, options: { type: "string", enum: ["resident worker pool"] }, nested: { type: "object", properties: { tsxAdmission: { type: "string" } } } },
   oneOf: [{ required: ["residentWorker"] }],
 };
+
+// wb-jdpn U1: the judged set, registered first and at file scope, outside every suite. It declares its assertion count and records its
+// end as its last statement, so an early return anywhere in it fails its count and leaves no end for the closing case.
+it("the judged set: the frozen shape, the out-of-file roster, the owner's filing and the cases agree", { timeout: 60_000 }, ({ task }) => {
+  running(task);
+  expect.assertions(JUDGED_ASSERTIONS);
+  expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:4", "C:4"]);
+  expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
+    ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
+  );
+  expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
+  // Every case, as written, reads the subject through a named reader and never names the roster it is judged against.
+  const reads = implReads();
+  expect(Object.keys(reads).sort(), "IMPL as written in this file").toEqual(ROWS.flatMap(row => row.pins).sort());
+  expect(Object.entries(reads).filter(([, read]) => read.readers.length === 0 || read.roster.length > 0).map(([pin]) => pin), "cases that read no subject or name the roster").toEqual([]);
+  const filing = ownerFiling();
+  // The owner's acceptance clauses in the tracked bead export are exactly the labels of rows A, B and C, in order.
+  expect(filing.clauses).toEqual(ROWS.map(row => row.label));
+  // Clause (a)'s quoted pattern and pathspecs are the ones A1-A3 read.
+  const clauseA = filing.clauses[0] ?? "";
+  expect(clauseA.slice(clauseA.indexOf("-E '") + 4, clauseA.indexOf("' --"))).toBe(CLAUSE_PATTERN);
+  expect(clauseA.slice(clauseA.indexOf("' -- ") + 5, clauseA.indexOf(" in Pi-subagents")).split(" ")).toEqual(SCOPE);
+  expect({ title: filing.title, quote: filing.quote, citation: filing.citation }).toStrictEqual({ title: ROSTER.title, quote: ROSTER.quote, citation: ROSTER.citation });
+  expect(ROSTER.citation.endsWith(`@${PIN}`)).toBe(true);
+  expect({ bead: BEAD, pin: PIN, pattern: CLAUSE_PATTERN, scope: SCOPE, holders: HOLDERS.map(pattern => pattern.source), family: FAMILY }).toStrictEqual({
+    bead: ROSTER.bead, pin: ROSTER.pin, pattern: ROSTER.pattern, scope: [...ROSTER.scope], holders: [...ROSTER.holders], family: [...ROSTER.family],
+  });
+  // wb-jdpn F5 (H22): ROSTER_NAMES is held to this file's own reach of the parsed roster, and no READER is a roster handle.
+  const handles = rosterHandles();
+  expect(handles, "this file's top-level names that reach the parsed roster").toEqual([...ROSTER_NAMES].sort());
+  expect(READERS.filter(name => handles.includes(name)), "READERS that reach the parsed roster").toEqual([]);
+  // wb-jdpn F4: FAMILY is held outside itself - each word is a word of the owner's filing or its plural or third person, and the
+  // filing's knob phrases split exactly into FAMILY and GENERIC.
+  const filingWords = new Set(words([filing.title, ...filing.clauses, filing.quote].join(" ")));
+  expect(FAMILY.filter(word => !filingWords.has(word) && !filingWords.has(word.replace(/s$/, ""))), "FAMILY words the owner's filing never uses").toEqual([]);
+  const knobs = knobPhrases(filing);
+  const knobWords = [...new Set(knobs.phrases.flatMap(words))].sort();
+  expect(knobWords.filter(word => !FAMILY.includes(word) && !GENERIC.includes(word)), "knob-phrase words neither FAMILY nor GENERIC").toEqual([]);
+  expect(GENERIC.filter(word => FAMILY.includes(word) || !knobWords.includes(word)), "GENERIC words that are FAMILY or no knob-phrase word").toEqual([]);
+  // wb-jdpn U3: FAMILY is exactly its derivation from the filing's knob phrases (an inflection included), the derivation carries a
+  // control, and every FAMILY word has its single-word name control in C1.
+  expect([...FAMILY].sort(), "FAMILY against its derivation from the owner's knob phrases").toEqual(familyOf(knobs.phrases));
+  expect(familyOf(["Deno worker pool", "TSX starts"]), "familyOf's control: a capitalized name takes no -s, a common word does, GENERIC drops").toEqual(["deno", "pool", "pools", "tsx", "worker", "workers"]);
+  expect(FAMILY.filter(word => !NAME_CONTROLS.some(name => words(name).filter(part => FAMILY.includes(part)).join(" ") === word)), "FAMILY words with no single-word name control").toEqual([]);
+  // wb-jdpn F8: the title's duty phrase names TSX beside ADMISSION words only.
+  expect(words(knobs.duty).filter(word => word !== "tsx" && !ADMISSION.includes(word)), `the title duty "${knobs.duty}" outside ADMISSION`).toEqual([]);
+  expect(words(knobs.duty).includes("tsx"), "the title duty names TSX").toBe(true);
+  // wb-jdpn U1: the registration at collection (vitest's task tree) - every roster title once, in order, in run mode, not inverted, and
+  // the file's own registrations exactly the two judges at file scope around the census suite.
+  const walked = registered(task.file.tasks, task);
+  expect(walked.map(entry => entry.name), "every registered test of this file, exactly and in roster order").toEqual([...ROSTER.tests]);
+  expect(walked.filter(entry => entry.mode !== "run" || entry.fails).map(shown), "every test is registered in run mode and not inverted").toEqual([]);
+  expect(task.file.tasks.map(child => (child.type === "suite" ? "suite" : `${child.type}:${child.name}`)), "the file's own registrations: the two judges around the census suite").toEqual([
+    `test:${task.name}`, "suite", `test:${ROSTER.tests.at(-1) ?? ""}`,
+  ]);
+  ended(task.name);
+});
 
 const IMPL: Record<string, () => JsonValue | Promise<JsonValue>> = {
   A1: () => {
@@ -1017,13 +1241,14 @@ const IMPL: Record<string, () => JsonValue | Promise<JsonValue>> = {
     };
   },
   C1: () => {
-    const surface = settingsSurface(path => (existsSync(join(REPO, path)) ? readFileSync(join(REPO, path), "utf8") : undefined));
-    // wb-jdpn F7: the planted settings modules ride the same reading, so the judged hits and followed types hold exactly theirs today.
-    const planted = settingsSurface(path => SETTINGS_CONTROLS[path]);
+    const surface = settingsSurface(path => (path.startsWith("src/") && existsSync(join(REPO, path)) ? readFileSync(join(REPO, path), "utf8") : undefined), srcProgram().roots);
+    // wb-jdpn F7, U2: the planted settings program rides the same checker reading, so the judged hits and declaring files hold exactly
+    // theirs beside the live ones today (the reading serves src/ paths only, so the planted package declaration is never loaded).
+    const planted = settingsSurface(path => (path.startsWith("src/") ? SETTINGS_CONTROLS[path] : undefined), Object.keys(SETTINGS_CONTROLS).filter(path => path.startsWith("src/")));
     const names = [...surface.members, ...surface.sanitizeKeys, ...planted.members.map(name => `${PLANTED}${name}`)];
     return {
       hits: names.filter(name => familyName(pathOf(name))),
-      followed: [...surface.followed, ...planted.followed.map(entry => `${PLANTED}${entry}`)],
+      declaring: [...surface.declaring, ...planted.declaring.map(entry => `${PLANTED}${entry}`)],
       sanitizeMatchesWorkbench: JSON.stringify([...surface.sanitizeKeys].sort()) === JSON.stringify([...surface.workbenchMembers].sort()),
       memberFloor: surface.members.length >= FLOORS.settings,
       controls: NAME_CONTROLS.map(name => `${name}:${familyName(name)}`),
@@ -1099,85 +1324,76 @@ const IMPL: Record<string, () => JsonValue | Promise<JsonValue>> = {
 };
 
 describe("wb-csbt.3 rf TSX worker lifecycle census (TSX-RESOURCE-EFFICIENCY-FRONTIER-R3, standing posture pin)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster, the owner's filing and the cases agree", ({ task }) => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:4", "C:4"]);
-    expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
-      ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
-    );
-    expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
-    // Every case, as written, reads the subject through a named reader and never names the roster it is judged against.
-    const reads = implReads();
-    expect(Object.keys(reads).sort(), "IMPL as written in this file").toEqual(ROWS.flatMap(row => row.pins).sort());
-    expect(Object.entries(reads).filter(([, read]) => read.readers.length === 0 || read.roster.length > 0).map(([pin]) => pin), "cases that read no subject or name the roster").toEqual([]);
-    const filing = ownerFiling();
-    // The owner's acceptance clauses in the tracked bead export are exactly the labels of rows A, B and C, in order.
-    expect(filing.clauses).toEqual(ROWS.map(row => row.label));
-    // Clause (a)'s quoted pattern and pathspecs are the ones A1-A3 read.
-    const clauseA = filing.clauses[0] ?? "";
-    expect(clauseA.slice(clauseA.indexOf("-E '") + 4, clauseA.indexOf("' --"))).toBe(CLAUSE_PATTERN);
-    expect(clauseA.slice(clauseA.indexOf("' -- ") + 5, clauseA.indexOf(" in Pi-subagents")).split(" ")).toEqual(SCOPE);
-    expect({ title: filing.title, quote: filing.quote, citation: filing.citation }).toStrictEqual({ title: ROSTER.title, quote: ROSTER.quote, citation: ROSTER.citation });
-    expect(ROSTER.citation.endsWith(`@${PIN}`)).toBe(true);
-    expect({ bead: BEAD, pin: PIN, pattern: CLAUSE_PATTERN, scope: SCOPE, holders: HOLDERS.map(pattern => pattern.source), family: FAMILY }).toStrictEqual({
-      bead: ROSTER.bead, pin: ROSTER.pin, pattern: ROSTER.pattern, scope: [...ROSTER.scope], holders: [...ROSTER.holders], family: [...ROSTER.family],
-    });
-    // wb-jdpn F5 (H22): ROSTER_NAMES is held to this file's own reach of the parsed roster, and no READER is a roster handle.
-    const handles = rosterHandles();
-    expect(handles, "this file's top-level names that reach the parsed roster").toEqual([...ROSTER_NAMES].sort());
-    expect(READERS.filter(name => handles.includes(name)), "READERS that reach the parsed roster").toEqual([]);
-    // wb-jdpn F4: FAMILY is held outside itself - each word is a word of the owner's filing or its plural or third person, and the
-    // filing's knob phrases split exactly into FAMILY and GENERIC.
-    const filingWords = new Set(words([filing.title, ...filing.clauses, filing.quote].join(" ")));
-    expect(FAMILY.filter(word => !filingWords.has(word) && !filingWords.has(word.replace(/s$/, ""))), "FAMILY words the owner's filing never uses").toEqual([]);
-    const knobs = knobPhrases(filing);
-    const knobWords = [...new Set(knobs.phrases.flatMap(words))].sort();
-    expect(knobWords.filter(word => !FAMILY.includes(word) && !GENERIC.includes(word)), "knob-phrase words neither FAMILY nor GENERIC").toEqual([]);
-    expect(GENERIC.filter(word => FAMILY.includes(word) || !knobWords.includes(word)), "GENERIC words that are FAMILY or no knob-phrase word").toEqual([]);
-    // wb-jdpn F2: the closing case, which reads COMPARED and REACHED, is collected in run mode (it cannot see its own skip).
-    const [top] = task.file.tasks;
-    const closing = top?.type === "suite" ? top.tasks[top.tasks.length - 1] : undefined;
-    expect(closing === undefined ? null : `${closing.type} | ${closing.name} | ${closing.mode}`, "the closing case, last in this file, collected in run mode").toBe(`test | ${ROSTER.tests[ROSTER.tests.length - 1] ?? ""} | run`);
-    // wb-jdpn F8: the title's duty phrase names TSX beside ADMISSION words only.
-    expect(words(knobs.duty).filter(word => word !== "tsx" && !ADMISSION.includes(word)), `the title duty "${knobs.duty}" outside ADMISSION`).toEqual([]);
-    expect(words(knobs.duty).includes("tsx"), "the title duty names TSX").toBe(true);
-  });
-
   for (const row of ROWS) {
     describe(`${row.id} ${row.label}`, () => {
       for (const pin of row.pins) {
-        it(pin, { timeout: 120_000 }, async () => {
+        it(pin, { timeout: 120_000 }, async ({ task }) => {
+          running(task);
           const impl = IMPL[pin];
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : json(await impl());
           expect(witness).toStrictEqual(rosterWitness(pin));
           REACHED.set(pin, witness);
+          ended(pin);
         });
       }
     });
   }
+});
 
-  it("registration: every case of this file is registered once, in roster order, in run mode, ran before this one and reached its witness compare", ({ task }) => {
-    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
-    const visit = (tasks: typeof task.file.tasks): void => {
-      for (const child of tasks) {
-        if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
-        else if (child.type === "suite") visit(child.tasks);
-      }
-    };
-    visit(task.file.tasks);
-    const titles = walked.map(entry => entry.name);
-    expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
-    expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice (an alias or a decoy)").toEqual([]);
-    const here = walked.findIndex(entry => entry.self);
-    expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
-    const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
-    const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
-    expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
-    // wb-jdpn F2: every pin's case reached its witness compare (rosterWitness evaluated as its expected value) and passed it.
-    const pins = ROSTER.rows.flatMap(row => row.pins.map(entry => entry.id));
-    expect(COMPARED, "pins whose witness compare ran, in roster order, each once").toEqual(pins);
-    expect([...REACHED.keys()], "pins that passed their witness compare, in roster order").toEqual(pins);
-    const expected = new Map(ROSTER.rows.flatMap(row => row.pins.map(entry => [entry.id, entry.witness] as const)));
-    for (const pin of pins) expect(REACHED.get(pin), `${pin}'s recorded witness against the roster`).toStrictEqual(expected.get(pin));
+// wb-jdpn U1: the closing case, registered last and at file scope, outside every suite; it declares its assertion count and records its
+// end, which the backstop reads.
+it("registration: every case of this file is registered once, in roster order, in run mode, ran before this one and reached its witness compare", { timeout: 60_000 }, ({ task }) => {
+  running(task);
+  expect.assertions(CLOSING_ASSERTIONS);
+  const walked = registered(task.file.tasks, task);
+  const titles = walked.map(entry => entry.name);
+  expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
+  expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice (an alias or a decoy)").toEqual([]);
+  const here = walked.findIndex(entry => entry.self);
+  expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
+  expect(task.file.tasks.map(child => (child.type === "suite" ? "suite" : `${child.type}:${child.name}`)), "the file's own registrations: the two judges around the census suite").toEqual([
+    `test:${ROSTER.tests[0] ?? ""}`, "suite", `test:${task.name}`,
+  ]);
+  const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
+  expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(shown), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
+  // wb-jdpn U1: every other case reached its end, in registration order, and the judged set after its declared count.
+  expect(ENDED.map(end => end.title), "every other case reached its end, in registration order").toEqual(titles.slice(0, here));
+  expect(ENDED.find(end => end.title === titles[0])?.assertions, "the judged set's assertions on the way to its end").toBe(JUDGED_ASSERTIONS);
+  // wb-jdpn F2: every pin's case reached its witness compare (rosterWitness evaluated as its expected value) and passed it.
+  const pins = ROSTER.rows.flatMap(row => row.pins.map(entry => entry.id));
+  expect(COMPARED, "pins whose witness compare ran, in roster order, each once").toEqual(pins);
+  expect([...REACHED.keys()], "pins that passed their witness compare, in roster order").toEqual(pins);
+  const expected = new Map(ROSTER.rows.flatMap(row => row.pins.map(entry => [entry.id, entry.witness] as const)));
+  for (const pin of pins) expect(REACHED.get(pin), `${pin}'s recorded witness against the roster`).toStrictEqual(expected.get(pin));
+  // wb-jdpn U1 (M04K): the outside anchor re-judged here, from the bead export against the roster, so a matcher swapped in the judged
+  // set cannot hide a divergence of the owner's filing (nor one swapped here, which the judged set's compares still see).
+  const filing = ownerFiling();
+  expect({ title: filing.title, clauses: filing.clauses, quote: filing.quote, citation: filing.citation }, "the owner's filing against the roster").toStrictEqual({
+    title: ROSTER.title, clauses: ROSTER.rows.map(row => row.label), quote: ROSTER.quote, citation: ROSTER.citation,
   });
+  const clauseA = filing.clauses[0] ?? "";
+  expect({ pattern: clauseA.slice(clauseA.indexOf("-E '") + 4, clauseA.indexOf("' --")), scope: clauseA.slice(clauseA.indexOf("' -- ") + 5, clauseA.indexOf(" in Pi-subagents")).split(" ") }, "clause (a)'s pattern and pathspecs against the roster").toStrictEqual({
+    pattern: ROSTER.pattern, scope: [...ROSTER.scope],
+  });
+  expect(familyOf(knobPhrases(filing).phrases), "the roster's family against its derivation from the owner's knob phrases").toEqual([...ROSTER.family].sort());
+  ended(task.name);
+});
+
+// wb-jdpn U1: the backstop no single test, suite or hook modifier reaches. It walks the file task the first case to run handed over, so
+// it needs neither judge to have run, and vitest runs this file's hooks unless every task is skipped at collection (an edit at each of
+// the three file-scope registrations). No case running at all, or a registered test not run in run mode, not inverted, to a pass or a
+// fail, reds here; unless a case failed, every case's end is recorded in registration order, the closing case's after its declared
+// count. A failed case already reds the run, so the backstop names only a quiet miss (a run-time skip, an early return).
+afterAll(() => {
+  if (fileTask === undefined) throw new Error("wb-jdpn backstop: no case of this file ran");
+  const walked = registered(fileTask.tasks);
+  const quiet = walked.filter(entry => entry.mode !== "run" || entry.fails || (entry.state !== "pass" && entry.state !== "fail")).map(shown);
+  if (quiet.length > 0) throw new Error(`wb-jdpn backstop: a registered test did not run to a pass or a fail: ${quiet.join("; ")}`);
+  if (walked.some(entry => entry.state === "fail")) return;
+  const ends = ENDED.map(end => end.title);
+  const closing = ENDED.find(end => end.title === walked.at(-1)?.name)?.assertions;
+  if (JSON.stringify(ends) !== JSON.stringify(walked.map(entry => entry.name)) || closing !== CLOSING_ASSERTIONS) {
+    throw new Error(`wb-jdpn backstop: a case passed without reaching its end: ${ends.length} of ${walked.length} ends recorded, the closing case's after ${closing ?? "no"} of its ${CLOSING_ASSERTIONS} assertions`);
+  }
 });
