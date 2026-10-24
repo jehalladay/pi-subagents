@@ -264,13 +264,17 @@ export const namesGp = (line: string): boolean => NAMES_GP.test(line);
 /** C1 identity tokens: a "gp 0.1.0"- or "graph-policy-cli@0.1.0"-shaped version (also GraphPolicyCLI), or the --version flag. */
 const VERSION_TOKEN = /(?:^|[^A-Za-z0-9_$.-])(?:gp|graph-policy-cli|GraphPolicyCLI)(?:\s+|@)v?\d+\.\d+\.\d+/i;
 const VERSION_FLAG = /--version(?![A-Za-z0-9_-])/;
-/** C2 verdict words (word-bounded, never the tail of a hyphenated word such as re-implemented) and the refusal codes. */
-const VERDICT = /(?:^|[^A-Za-z0-9_-])(?:not\s+implemented|unimplemented|implemented|unserved|not\s+served|served|serves|unsupported|not\s+supported|supported|unavailable|available)(?![A-Za-z0-9])|NOT_IMPLEMENTED|UNSUPPORTED/i;
+const escapeRegex = (word: string): string => word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+/** C2 verdict words, read word-bounded (never the tail of a hyphenated word such as re-implemented); a space reads any white space run. */
+export const VERDICT_WORDS: readonly string[] = ["not implemented", "unimplemented", "implemented", "unserved", "not served", "served", "serves", "unsupported", "not supported", "supported", "unavailable", "available"];
+/** C2 refusal codes, read anywhere and in any case (GP_CLI_NOT_IMPLEMENTED, GP_RPC_METHOD_UNSUPPORTED). */
+export const VERDICT_CODES: readonly string[] = ["NOT_IMPLEMENTED", "UNSUPPORTED"];
+/** The C2 verdict, built from its two vocabularies (wb-atq9: the receipt's ledger holds every member). */
+const VERDICT = new RegExp(`(?:^|[^A-Za-z0-9_-])(?:${VERDICT_WORDS.map((word) => word.split(" ").map(escapeRegex).join("\\s+")).join("|")})(?![A-Za-z0-9])|${VERDICT_CODES.map(escapeRegex).join("|")}`, "i");
 /** C2 capability nouns (the skill-prose form of a verb). */
-const NOUNS = ["compilation", "evaluation", "sampling", "training"];
+export const NOUNS: readonly string[] = ["compilation", "evaluation", "sampling", "training"];
 const HEX40 = /(?:^|[^0-9a-f])[0-9a-f]{40}(?![0-9a-f])/;
 const HEX64 = /(?:^|[^0-9a-f])[0-9a-f]{64}(?![0-9a-f])/;
-const escapeRegex = (word: string): string => word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 
 export type DocClass = "C1" | "C2";
 
@@ -813,3 +817,216 @@ export const ROWS: readonly JudgedRow[] = [
   ...RESOLVE.map((entry) => row("RESOLVE", entry.id, entry.label, [JSON.stringify({ path: entry.path ?? null, files: entry.files, links: entry.links, expect: entry.expect })])),
   ...RESIDUALS.map((entry) => row("RESIDUALS", entry.id, entry.label, entry.pins.map((pin) => `${entry.probe}:${pin}${JSON.stringify(residualEdits(entry.probe, pin))}`))),
 ];
+
+// ---- the outside anchors (wb-atq9, the wb-gxd7.5 gate's F1 and F2) ------------------------------------------------------
+
+/**
+ * The census's closed vocabularies, each the list its judge reads, in the judge's order. The append-only receipt's ledger
+ * holds every member; the three gp names of the C1 tokens are held there through their D-C1 and D-QUIET pins.
+ */
+export const VOCABULARIES: Readonly<Record<string, readonly string[]>> = {
+  "verdict words": VERDICT_WORDS,
+  "verdict codes": VERDICT_CODES,
+  "capability nouns": NOUNS,
+  "revision keys": REVISION_KEYS,
+  "claim statuses": CLAIM_STATUSES,
+  "missing prerequisites": MISSING,
+  "receipt fields": RECEIPT_FIELDS,
+  "walk exclusions": SKIP_DIRS,
+};
+
+/** The follow-up bead whose append-only receipt anchors the judged set, and that receipt. */
+export const FOLLOW_UP = "wb-atq9";
+export const RECEIPT_DOC = `docs/workbench/receipts/${FOLLOW_UP}.md`;
+
+/** The opening of the owner filing (the notes' second paragraph) and of its acceptance sentence. */
+export const FILING_HEAD = "Owner filing (";
+export const ACCEPTANCE_HEAD = "Acceptance: ";
+
+/**
+ * The owner filing of a bead's notes: their second blank-line paragraph when it opens with FILING_HEAD, else "". bd appends
+ * every later note behind a blank line and never rewrites the first two paragraphs, so the filing stays byte-stable.
+ */
+export function ownerFiling(notes: string): string {
+  const filing = notes.split("\n\n")[1] ?? "";
+  return filing.startsWith(FILING_HEAD) ? filing : "";
+}
+
+/**
+ * The filing's acceptance clauses, each whole: the span after its one ACCEPTANCE_HEAD up to the end of that sentence (the
+ * first "." followed by a space or the paragraph's end), cut before each "; (<letter>) " marker. The clauses open (a), (b),
+ * ... in order; an absent or repeated head, or clauses out of order, read as [] (no reading).
+ */
+export function filingClauses(filing: string): string[] {
+  const start = filing.indexOf(ACCEPTANCE_HEAD);
+  if (start < 0 || filing.indexOf(ACCEPTANCE_HEAD, start + 1) >= 0) return [];
+  const tail = filing.slice(start + ACCEPTANCE_HEAD.length);
+  const stop = /\.(?: |$)/.exec(tail);
+  const clauses = (stop === null ? tail : tail.slice(0, stop.index)).split(/; (?=\([a-z]\) )/);
+  return clauses.every((clause, index) => clause.startsWith(`(${String.fromCharCode(97 + index)}) `)) ? clauses : [];
+}
+
+/** The opening of the landed delivery paragraph the orchestrator appended to the notes, and of its residual line. */
+export const DELIVERED_HEAD = "DELIVERED by the orchestrator collect step (";
+export const DELIVERED_RESIDUALS_HEAD = "RESIDUALS (named families, each with a pinned quiet row;";
+
+/**
+ * The residual families the landed delivery named: in the first paragraph opening DELIVERED_HEAD, its first line opening
+ * DELIVERED_RESIDUALS_HEAD, every R- name after that line's "): ". Written once at delivery, never rewritten.
+ */
+export function deliveredResiduals(notes: string): string[] {
+  const paragraph = notes.split("\n\n").find((item) => item.startsWith(DELIVERED_HEAD)) ?? "";
+  const line = paragraph.split("\n").find((item) => item.startsWith(DELIVERED_RESIDUALS_HEAD)) ?? "";
+  const at = line.indexOf("): ");
+  return at < 0 ? [] : [...line.slice(at + 3).matchAll(/\bR-[A-Z]+(?:-[A-Z]+)*/g)].map((match) => match[0]);
+}
+
+/** The receipt's ledger families: two that add members, two that remove them (applied in this order within a cut). */
+export type LedgerFamily = "Judged rows" | "Vocabularies" | "Removed rows" | "Removed vocabulary members";
+export const LEDGER_FAMILIES: readonly LedgerFamily[] = ["Judged rows", "Vocabularies", "Removed rows", "Removed vocabulary members"];
+export const LEDGER_HEADERS: Readonly<Record<LedgerFamily, readonly string[]>> = {
+  "Judged rows": ["Row", "Label", "Pins"],
+  Vocabularies: ["Vocabulary", "Members"],
+  "Removed rows": ["Row", "Label", "Pins"],
+  "Removed vocabulary members": ["Vocabulary", "Members"],
+};
+
+/** A ledger section's heading: "<family>, wb-atq9 cut <n>" (n from 1, no leading zero), else undefined. */
+export function ledgerHeading(heading: string): { readonly family: LedgerFamily; readonly cut: number } | undefined {
+  const match = /^(.+), (wb-[a-z0-9.]+) cut ([1-9][0-9]*)$/.exec(heading);
+  const family = LEDGER_FAMILIES.find((name) => name === match?.[1]);
+  if (match === null || family === undefined || match[2] !== FOLLOW_UP) return undefined;
+  return { family, cut: Number(match[3]) };
+}
+
+export interface LedgerSection {
+  readonly family: LedgerFamily;
+  readonly cut: number;
+  /** The table's body rows, each its cells' source texts. */
+  readonly rows: readonly (readonly string[])[];
+}
+export interface LedgerRow {
+  readonly labels: readonly string[];
+  readonly pins: readonly string[];
+}
+/** A judged set as members: each row (TABLE/ID) with its label and pin digests, each vocabulary with its member digests; sorted. */
+export interface Ledger {
+  readonly rows: Readonly<Record<string, LedgerRow>>;
+  readonly vocabularies: Readonly<Record<string, readonly string[]>>;
+}
+export type LedgerReading = { readonly ok: true; readonly ledger: Ledger } | { readonly ok: false; readonly why: string };
+
+/** A member's ledger digest: the first 16 hex digits of its sha256 (a vocabulary member's too, so no docs page spells a judged word). */
+export const digest16 = (sha: string): string => sha.slice(0, 16);
+const HEX16 = /^[0-9a-f]{16}$/;
+const ROW_KEY = /^[A-Z_]+\/[A-Z0-9-]+$/;
+const sortedOf = (values: Iterable<string>): string[] => [...values].sort();
+const cellItems = (cell: string, separator: string): string[] => (cell.trim() === "" ? [] : cell.split(separator).map((item) => item.trim()));
+interface OpenRow {
+  readonly labels: Set<string>;
+  readonly pins: Set<string>;
+}
+
+/** Applies one table row of a ledger section to the standing members; returns why it cannot apply, else "". */
+function applyLedgerRow(family: LedgerFamily, cells: readonly string[], rows: Map<string, OpenRow>, vocabularies: Map<string, Set<string>>): string {
+  if (cells.length !== LEDGER_HEADERS[family].length) return `a row has ${cells.length} cells`;
+  if (family === "Judged rows" || family === "Removed rows") {
+    const [key = "", labelCell = "", pinsCell = ""] = cells;
+    const labels = cellItems(labelCell, " ");
+    const pins = cellItems(pinsCell, " ");
+    if (!ROW_KEY.test(key)) return `row key ${JSON.stringify(key)} is not TABLE/ID`;
+    if ([...labels, ...pins].some((item) => !HEX16.test(item))) return `row ${key} carries a digest that is not 16 hex digits`;
+    if (new Set(pins).size !== pins.length) return `row ${key} lists a pin twice`;
+    if (family === "Judged rows") {
+      if (labels.length !== 1 || pins.length === 0) return `row ${key} states ${labels.length} labels and ${pins.length} pins`;
+      const open = rows.get(key) ?? { labels: new Set<string>(), pins: new Set<string>() };
+      for (const label of labels) open.labels.add(label);
+      for (const pin of pins) open.pins.add(pin);
+      rows.set(key, open);
+      return "";
+    }
+    const open = rows.get(key);
+    if (open === undefined) return `the removal names row ${key}, which no cut added`;
+    if (labels.length + pins.length === 0) return `the removal of row ${key} names no member`;
+    for (const label of labels) {
+      if (!open.labels.delete(label)) return `the removal names label ${label} of row ${key}, which does not stand`;
+    }
+    for (const pin of pins) {
+      if (!open.pins.delete(pin)) return `the removal names pin ${pin} of row ${key}, which does not stand`;
+    }
+    if (open.labels.size === 0 && open.pins.size === 0) rows.delete(key);
+    return "";
+  }
+  const [name = "", membersCell = ""] = cells;
+  const members = cellItems(membersCell, " ");
+  if (name.trim() === "" || members.length === 0) return `vocabulary ${JSON.stringify(name)} lists no member`;
+  if (members.some((member) => !HEX16.test(member))) return `vocabulary ${name} carries a digest that is not 16 hex digits`;
+  if (new Set(members).size !== members.length) return `vocabulary ${name} lists a member twice`;
+  if (family === "Vocabularies") {
+    const open = vocabularies.get(name) ?? new Set<string>();
+    for (const member of members) open.add(member);
+    vocabularies.set(name, open);
+    return "";
+  }
+  const open = vocabularies.get(name);
+  if (open === undefined) return `the removal names vocabulary ${name}, which no cut added`;
+  for (const member of members) {
+    if (!open.delete(member)) return `the removal names member ${member} of ${name}, which does not stand`;
+  }
+  if (open.size === 0) vocabularies.delete(name);
+  return "";
+}
+
+/**
+ * The ledger the receipt's sections state, read cut by cut: the cut numbers run 1..k with no gap and cut 1 states the
+ * judged rows and the vocabularies; within a cut its additions apply first, then its removals. A member (a row's label, a
+ * row's pin, a vocabulary's member) stands once any cut adds it and leaves only when a Removed table of a cut names it, so
+ * a table that restates the set without a member removes nothing. A removal must name a standing member, and every
+ * standing row ends with exactly one label and at least one pin; any other shape is no reading.
+ */
+export function foldLedger(sections: readonly LedgerSection[]): LedgerReading {
+  const refuse = (why: string): LedgerReading => ({ ok: false, why });
+  const cuts = [...new Set(sections.map((section) => section.cut))].sort((left, right) => left - right);
+  if (cuts.length === 0 || cuts.some((cut, index) => cut !== index + 1)) return refuse(`the ledger's cuts are [${cuts.join(", ")}], not 1..k without a gap`);
+  const first = sections.filter((section) => section.cut === 1).map((section) => section.family);
+  if (!first.includes("Judged rows") || !first.includes("Vocabularies")) return refuse("cut 1 states no judged rows or no vocabularies");
+  const rows = new Map<string, OpenRow>();
+  const vocabularies = new Map<string, Set<string>>();
+  for (const cut of cuts) {
+    for (const family of LEDGER_FAMILIES) {
+      for (const section of sections.filter((item) => item.cut === cut && item.family === family)) {
+        for (const cells of section.rows) {
+          const why = applyLedgerRow(family, cells, rows, vocabularies);
+          if (why !== "") return refuse(`cut ${cut} ${family}: ${why}`);
+        }
+      }
+    }
+  }
+  for (const [key, open] of rows) {
+    if (open.labels.size !== 1 || open.pins.size === 0) return refuse(`row ${key} stands with ${open.labels.size} labels and ${open.pins.size} pins`);
+  }
+  return {
+    ok: true,
+    ledger: {
+      rows: Object.fromEntries([...rows].map(([key, open]) => [key, { labels: sortedOf(open.labels), pins: sortedOf(open.pins) }])),
+      vocabularies: Object.fromEntries([...vocabularies].map(([name, members]) => [name, sortedOf(members)])),
+    },
+  };
+}
+
+/** The census's own judged set as a ledger: each row's label and pins and each vocabulary's members, as digest16 of their sha256. */
+export function judgedLedger(): Ledger {
+  return {
+    rows: Object.fromEntries(ROWS.map((entry) => [`${entry.table}/${entry.id}`, { labels: [digest16(sha256(entry.label))], pins: sortedOf(entry.pins.map(digest16)) }])),
+    vocabularies: Object.fromEntries(Object.entries(VOCABULARIES).map(([name, members]) => [name, sortedOf(members.map((member) => digest16(sha256(member))))])),
+  };
+}
+
+/** The two ledger tables a receipt cut states for the census as it stands, in the census's own order. */
+export function ledgerEntryTables(cut: number): string {
+  const table = (family: LedgerFamily, lines: readonly string[]): string =>
+    [`### ${family}, ${FOLLOW_UP} cut ${cut}`, "", `| ${LEDGER_HEADERS[family].join(" | ")} |`, `| ${LEDGER_HEADERS[family].map(() => "---").join(" | ")} |`, ...lines].join("\n");
+  const rows = ROWS.map((entry) => `| ${entry.table}/${entry.id} | ${digest16(sha256(entry.label))} | ${entry.pins.map(digest16).join(" ")} |`);
+  const vocabularies = Object.entries(VOCABULARIES).map(([name, members]) => `| ${name} | ${members.map((member) => digest16(sha256(member))).join(" ")} |`);
+  return `${table("Judged rows", rows)}\n\n${table("Vocabularies", vocabularies)}\n`;
+}

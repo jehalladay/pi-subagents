@@ -1,5 +1,5 @@
 {
-  "comment": "wb-gxd7.5 out-of-file roster (the CT5/CT6 anchor, the hk9l/5jha/1xvp.4 roster pattern): every judged row of test/helpers/gp-provenance-census.ts with the SHA-256 of each pin, every registered test title of test/workbench-gp-provenance-census.test.ts in order, the named residual families and the known ungrounded docs lines. Regenerated only together with a deliberate census change.",
+  "comment": "wb-gxd7.5 out-of-file roster (the CT5/CT6 anchor, the hk9l/5jha/1xvp.4 roster pattern): every judged row of test/helpers/gp-provenance-census.ts with the SHA-256 of each pin, every registered test title of test/workbench-gp-provenance-census.test.ts in order, the named residual families and the known ungrounded docs lines; since wb-atq9 also the SHA-256 of each acceptance clause and the census vocabularies, each in its judge order. Regenerated only together with a deliberate census change; the append-only receipt docs/workbench/receipts/wb-atq9.md and the wb-gxd7.5 export row anchor it from outside.",
   "rows": [
     {
       "table": "PROVENANCE",
@@ -503,11 +503,14 @@
     "RESIDUALS R-LEXICAL-GROUNDING",
     "RESIDUALS R-JSONL",
     "bead: the four acceptance clauses this census arms are the bead's own words, each judged by its tables",
+    "landed note: every residual family the landed wb-gxd7.5 delivery named stays a named residual here, read from its append-only delivered paragraph",
     "live (a): the captured build is a provenance, five revisions print its one --version line, and that line is no revision",
     "live (b): the capture is one build's roster - help commands, hello methods and the producing sha - and every captured op and word is judged",
     "live (c): every markdown file below the root is read, and its ungrounded gp citations are exactly the known three",
     "live (d): every JSON file below the root is read, and its one gp decision receipt is the vendored fixture, generated and accepted",
     "live leg: the installed gp, when it is the pinned build, replays the capture and accepts the vendored receipt; any other host records a typed prerequisite-missing receipt",
+    "vocabularies: every verdict word and code, capability noun, revision key, claim status and missing prerequisite is read by its judge, and the same reading without one is not",
+    "receipt ledger: every judged row (its label and each pin) and every vocabulary member stands in the append-only receipt docs/workbench/receipts/wb-atq9.md, read through every cut's tables, so a member leaves only by a named removal",
     "rule 16: every judged table, the residual families, the known set and the clause map are frozen at their measured shape",
     "roster: the judged rows, the registered tests, the residual families and the known set equal test/fixtures/gp-provenance-roster.json, in order and both ways"
   ],
@@ -562,5 +565,83 @@
       "cls": "C1",
       "sha256": "8d57e1b9c6a1f6e2d66e0f1dd39eaba01d88a5a1917d761647722d88795c70df"
     }
-  ]
+  ],
+  "clauses": [
+    "6476c2c1db10e8aa275a1842e3020027cc43266d78fc25305b31fd6e150f5831",
+    "7c9cc2614fdea7ecdfecdff41c4e7d92c3203b1edf11590431ff78e7b3ffc81f",
+    "d8d6f8f8caa92395f0ded213433a76d661bd8ee3f928c3b9fe60f051b22710f2",
+    "1a57e334fb9685e537a636a5820bda73296b32257dde2638115c382039bd2603"
+  ],
+  "vocabularies": {
+    "verdict words": [
+      "not implemented",
+      "unimplemented",
+      "implemented",
+      "unserved",
+      "not served",
+      "served",
+      "serves",
+      "unsupported",
+      "not supported",
+      "supported",
+      "unavailable",
+      "available"
+    ],
+    "verdict codes": [
+      "NOT_IMPLEMENTED",
+      "UNSUPPORTED"
+    ],
+    "capability nouns": [
+      "compilation",
+      "evaluation",
+      "sampling",
+      "training"
+    ],
+    "revision keys": [
+      "sourceSha",
+      "entrySha256",
+      "revision",
+      "version",
+      "sourceRevision",
+      "commit"
+    ],
+    "claim statuses": [
+      "listed",
+      "unlisted",
+      "served",
+      "refused",
+      "prerequisite-missing"
+    ],
+    "missing prerequisites": [
+      "capture",
+      "binary"
+    ],
+    "receipt fields": [
+      "backend_id",
+      "candidates",
+      "checkpoint_digest",
+      "exp_log_provider",
+      "graph_digest",
+      "kind",
+      "log_probabilities",
+      "numerical_profile",
+      "probabilities",
+      "probability_exactness",
+      "program_digest",
+      "runtime_budget",
+      "sample",
+      "schema",
+      "scores",
+      "support_order",
+      "temperature"
+    ],
+    "walk exclusions": [
+      ".git",
+      "node_modules",
+      "dist",
+      "build",
+      "coverage",
+      ".forge"
+    ]
+  }
 }
