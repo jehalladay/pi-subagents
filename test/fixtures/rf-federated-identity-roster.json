@@ -26,6 +26,84 @@
     "rfc-0txnl.2",
     "rfc-0txnl.10"
   ],
+  "locatorWords": [
+    "root",
+    "roots",
+    "path",
+    "paths",
+    "pathname",
+    "filepath",
+    "filename",
+    "file",
+    "files",
+    "dir",
+    "dirs",
+    "dirname",
+    "workdir",
+    "cwd",
+    "locator",
+    "locators",
+    "loc",
+    "alias",
+    "aliases",
+    "location",
+    "folder",
+    "mount",
+    "mountpoint",
+    "url",
+    "uri",
+    "href",
+    "endpoint",
+    "address",
+    "addr",
+    "hostname",
+    "socket",
+    "realpath"
+  ],
+  "revisionWords": [
+    "revision",
+    "revisions",
+    "rev",
+    "sequence",
+    "seq",
+    "epoch",
+    "cursor",
+    "counter"
+  ],
+  "keyNames": [
+    "id",
+    "scope",
+    "key",
+    "ref",
+    "identity",
+    "digest",
+    "cursor",
+    "sequence",
+    "workspace_id",
+    "backend_instance_id",
+    "resource_kind",
+    "resource_id",
+    "definition_digest",
+    "workspaceId",
+    "backendInstanceId",
+    "resourceKind",
+    "resourceId",
+    "definitionDigest"
+  ],
+  "keySuffixes": [
+    "Id",
+    "Key",
+    "Ref",
+    "Refs",
+    "Digest"
+  ],
+  "collectionMethods": [
+    "set",
+    "get",
+    "has",
+    "delete",
+    "add"
+  ],
   "records": {
     "sameWorkspace": [
       {
@@ -194,6 +272,14 @@
             ],
             "nodes": 1,
             "stateUnchanged": true,
+            "state": {
+              "key": "[\"/workspace/pi\",\"local-operator:tester\",\"reactivefiber\",\"federated-import\",\"\",\"[\\\"rfw_alphaeeeeeeeeeeeeeeeeeeeee\\\",\\\"rfi_alphafffffffffffffffffffff\\\",\\\"view\\\",\\\"summary.daily\\\",\\\"sha256:1111111111111111111111111111111111111111111111111111111111111111\\\"]\"]",
+              "definitionDigest": "sha256:1111111111111111111111111111111111111111111111111111111111111111",
+              "sourceVersion": "[\"rfw_alphaeeeeeeeeeeeeeeeeeeeee\",\"rfi_alphafffffffffffffffffffff\",\"1\",\"4\"]",
+              "evidenceRefs": [
+                "rf-authority:[\"rfw_alphaeeeeeeeeeeeeeeeeeeeee\",\"rfi_alphafffffffffffffffffffff\"]"
+              ]
+            },
             "aliasKeyedNodes": 2,
             "locatorKeyedNodes": 2
           }
@@ -377,7 +463,7 @@
     },
     {
       "id": "MA",
-      "label": "row A5's locator matcher catches every locator-named rf ref interpolation, key-like property, Map key and rf-tag join, and its named residuals stay pinned quiet",
+      "label": "row A5's locator matcher catches every locator-named rf ref interpolation, key-like property, Map or Set key, rf-tag join, computed key, Map pair and element access, and its named residuals stay pinned quiet",
       "pins": [
         {
           "id": "MA1",
@@ -436,6 +522,34 @@
           }
         },
         {
+          "id": "MA9",
+          "witness": {
+            "digest": "f929ed9487c5efb7",
+            "hit": true
+          }
+        },
+        {
+          "id": "MA10",
+          "witness": {
+            "digest": "f034bcc3a35c62c4",
+            "hit": true
+          }
+        },
+        {
+          "id": "MA11",
+          "witness": {
+            "digest": "19837c19711b295b",
+            "hit": true
+          }
+        },
+        {
+          "id": "MA12",
+          "witness": {
+            "digest": "ba090b73fe0cc679",
+            "hit": true
+          }
+        },
+        {
           "id": "QA1",
           "witness": {
             "digest": "a0fa707738d3d88b",
@@ -446,6 +560,20 @@
           "id": "QA2",
           "witness": {
             "digest": "da7b492779a68d17",
+            "hit": false
+          }
+        },
+        {
+          "id": "QA3",
+          "witness": {
+            "digest": "ccf69b858e8e4c2f",
+            "hit": false
+          }
+        },
+        {
+          "id": "QA4",
+          "witness": {
+            "digest": "9367654195002c1c",
             "hit": false
           }
         },
@@ -462,7 +590,7 @@
     },
     {
       "id": "MC",
-      "label": "row C5's revision-join matcher catches every revision-named interpolation pair and plus-join, and its named residuals stay pinned quiet",
+      "label": "row C5's revision-join matcher catches every revision-named interpolation pair, plus-join and scaled plus-join, and its named residuals stay pinned quiet",
       "pins": [
         {
           "id": "MC1",
@@ -507,6 +635,20 @@
           }
         },
         {
+          "id": "MC7",
+          "witness": {
+            "digest": "476a93287b55c2c7",
+            "hit": true
+          }
+        },
+        {
+          "id": "MC8",
+          "witness": {
+            "digest": "a53f38f4e23e3d6c",
+            "hit": true
+          }
+        },
+        {
           "id": "QC1",
           "witness": {
             "digest": "13c392fe96ea5a84",
@@ -532,6 +674,149 @@
           "witness": {
             "digest": "274d01803776eef8",
             "hit": false
+          }
+        },
+        {
+          "id": "QC5",
+          "witness": {
+            "digest": "13e10655c2927eb8",
+            "hit": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "MV",
+      "label": "rows A5's and C5's matchers read every vocabulary word, key-like property name, key suffix and collection method on its own, in every form, and each list is the roster's",
+      "pins": [
+        {
+          "id": "KP1",
+          "witness": {
+            "names": 18,
+            "missed": []
+          }
+        },
+        {
+          "id": "KP2",
+          "witness": {
+            "suffixes": 5,
+            "missed": []
+          }
+        },
+        {
+          "id": "MK1",
+          "witness": {
+            "methods": 5,
+            "missed": []
+          }
+        },
+        {
+          "id": "LW1",
+          "witness": {
+            "words": 32,
+            "forms": [
+              "template",
+              "key",
+              "map",
+              "plus",
+              "computed",
+              "pair",
+              "index"
+            ],
+            "missed": []
+          }
+        },
+        {
+          "id": "RW1",
+          "witness": {
+            "words": 8,
+            "forms": [
+              "interpolation",
+              "plus",
+              "scaled"
+            ],
+            "missed": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "PC",
+      "label": "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and the A5 and C5 src scans",
+      "pins": [
+        {
+          "id": "PC1",
+          "witness": {
+            "planted": [
+              "key",
+              "definitionDigest",
+              "sourceVersion",
+              "evidenceRefs"
+            ],
+            "moved": [
+              [
+                "key"
+              ],
+              [
+                "definitionDigest"
+              ],
+              [
+                "sourceVersion"
+              ],
+              [
+                "evidenceRefs"
+              ]
+            ]
+          }
+        },
+        {
+          "id": "PC2",
+          "witness": {
+            "fields": [
+              "source.provider",
+              "source.type",
+              "source.id",
+              "source.scope",
+              "evidenceRefs",
+              "sourceRevision",
+              "sourceVersion",
+              "nativePayloadRef",
+              "definitionDigest",
+              "cursor",
+              "sequence"
+            ],
+            "clean": true,
+            "unseen": []
+          }
+        },
+        {
+          "id": "PC3",
+          "witness": {
+            "floorMet": true,
+            "scopedFloorMet": true,
+            "anchorRead": true,
+            "hits": [
+              "src/workbench/rf-federated-census-plant.ts: template link.locator",
+              "src/workbench/rf-federated-census-plant.ts: key link.path",
+              "src/workbench/rf-federated-census-plant.ts: map link.alias",
+              "src/workbench/rf-federated-census-plant.ts: plus workspace.root",
+              "src/workbench/rf-federated-census-plant.ts: computed link.url",
+              "src/workbench/rf-federated-census-plant.ts: pair link.href",
+              "src/workbench/rf-federated-census-plant.ts: index link.uri"
+            ]
+          }
+        },
+        {
+          "id": "PC4",
+          "witness": {
+            "floorMet": true,
+            "scopedFloorMet": true,
+            "anchorRead": true,
+            "hits": [
+              "src/workbench/rf-federated-census-plant.ts: point.workspaceId | point.revision",
+              "src/workbench/rf-federated-census-plant.ts: point.workspaceId + point.epoch",
+              "src/workbench/rf-federated-census-plant.ts: point.epoch * 1000000 + point.revision"
+            ]
           }
         }
       ]
