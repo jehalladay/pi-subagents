@@ -60,8 +60,10 @@
  * witness, the scan constants, the residual families and the registered test titles are held to the out-of-file roster
  * test/fixtures/rf-shadow-test-validity-roster.json.
  * OUTSIDE ANCHORS. Rows: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-hs2j.5) - each acceptance
- * clause sits verbatim in exactly one row label and the statement in row A's, its quote and citation equal the roster's, and B1,
- * B3, C1 and C2 read their facts from it - so a row removed from every literal of this file and the roster still reds. Pins: the records case
+ * clause equals a bounded claim of exactly one row label and the statement one of row A's, and the labels claim nothing else
+ * (claimsOf: a label's text before its first ": ", split as the filing's clauses are; equality, never containment, since wb-ykl9), its quote and
+ * citation equal the roster's, and B1, B3, C1 and C2 read their facts from it - so a row removed from every literal of this file
+ * and the roster still reds, and so does a clause or the statement truncated in the bead row. Pins: the records case
  * derives one obligation set from outside sources (the repository's top-level listing, a fresh native registration, the src
  * modules holding the context.render literal, and the bead row's pair, verdict fields, code and Shipped sentence) and requires each
  * pin's measured coverage to meet it exactly, so a pin removed from ROWS, the literal, IMPL and the roster together leaves its
@@ -141,6 +143,8 @@ const PREVIEW_MODULE = "src/workbench/providers/reactivefiber.ts";
 /** The rf readers B2 judges, by module. */
 const READERS = ["src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts", "src/workbench/native-evidence.ts"];
 const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-ENCODED", "R-LOOKALIKE", "R-OUTSIDE"];
+/** The tag row A's label opens its statement claim with. */
+const STATEMENT_TAG = "(statement, absent today) ";
 const CYRILLIC_A = String.fromCodePoint(0x0430);
 const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
 
@@ -404,6 +408,17 @@ function acceptanceClauses(notes: string): string[] {
 /** The prohibition of the filing's full statement: from "no Pi surface shall" to the " - pin" that cites the source. */
 function statementOf(notes: string): string {
   return /, (no Pi surface shall .+?) - pin /.exec(notes)?.[1] ?? "";
+}
+/**
+ * A row label's claims, bounded on both sides (wb-ykl9): the label's text before its first ": " (the measured reading follows
+ * it), split where acceptanceClauses splits the filing (a "; " before a "(x) "), with STATEMENT_TAG dropped from the claim it
+ * opens. A bead-row clause binds a row only by equalling one of these whole, so a clause or statement truncated in the bead row,
+ * or a label claim extended, prefixed or added, no longer binds.
+ */
+function claimsOf(label: string): string[] {
+  const reading = label.indexOf(": ");
+  const head = reading < 0 ? label : label.slice(0, reading);
+  return head.split(/; (?=\([a-z]\) )/).map(claim => (claim.startsWith(STATEMENT_TAG) ? claim.slice(STATEMENT_TAG.length) : claim));
 }
 /** The filing's "Shipped:" sentence on its Gating artifact line. */
 function shippedOf(notes: string): string {
@@ -987,8 +1002,12 @@ describe("wb-hs2j.5 rf shadow-test validity census (RF-REACTIVE-CONTEXT-ASSEMBLY
     const quote = /^Source: ReactiveFiberCLI (\S+) '(.+?)' \(/m.exec(bead.notes);
     expect(clauses.map(clause => clause.slice(0, 4)), "the filing lists acceptance (a), (b) and (c)").toEqual(["(a) ", "(b) ", "(c) "]);
     expect(statement.startsWith("no Pi surface shall accept graph test valid:true"), "the filing states the prohibition").toBe(true);
-    const coverage = [...clauses, statement].map(clause => ROWS.filter(row => clause.length > 0 && row.label.includes(clause)).map(row => row.id));
-    expect(coverage, "each acceptance clause sits verbatim in exactly one row label, and the statement in row A's").toEqual([["A"], ["B"], ["C"], ["A"]]);
+    const coverage = [...clauses, statement].map(clause => ROWS.filter(row => clause.length > 0 && claimsOf(row.label).includes(clause)).map(row => row.id));
+    expect(coverage, "each acceptance clause equals a bounded claim of exactly one row label, and the statement one of row A's").toEqual([["A"], ["B"], ["C"], ["A"]]);
+    expect(
+      ROWS.map(row => claimsOf(row.label)),
+      "every row label claims exactly its bead-row text, bounded on both sides: no claim truncated, extended, prefixed or added",
+    ).toEqual([[statement, clauses[0]], [clauses[1]], [clauses[2]]]);
     expect({ quote: quote?.[2], citation: quote?.[1] }).toStrictEqual({ quote: ROSTER.quote, citation: ROSTER.citation });
     expect(bead.title.endsWith(ROSTER.citation), "the title cites the roster's citation").toBe(true);
     expect(ROSTER.citation.endsWith(`@${ROSTER.producer.programPin.slice(0, 12)}`), "the citation pins the program sha the roster measured").toBe(true);
