@@ -48,6 +48,11 @@
       }
     ],
     "pagesFloor": 4,
+    "skillsRoot": {
+      "word": "skills",
+      "directory": ".agents/skills",
+      "member": "SKILL.md"
+    },
     "families": [
       {
         "id": "N1",
@@ -1031,6 +1036,10 @@
           "id": "C1",
           "witness": {
             "site": "src/workflow/reconcile.ts:67",
+            "siteLine": {
+              "text": "reactivefiber: Object.freeze([\"reactivefiber.render.preview\"]),",
+              "inLiteral": true
+            },
             "reactivefiber": [
               "reactivefiber.render.preview"
             ],
@@ -1130,7 +1139,7 @@
     },
     {
       "id": "F",
-      "label": "the owner filing row of wb-if7q.1 in the tracked bead export names exactly the clauses rows A-C cover, states each of their labels as its clause, and carries every proposal, claim word and producer constant the census reads",
+      "label": "the owner filing row of wb-if7q.1 in the tracked bead export names exactly the clauses rows A-C cover, states each of their labels as its clause, names only roots row A walks, and carries every proposal, claim word and producer constant the census reads",
       "pins": [
         {
           "id": "F1",
@@ -1201,6 +1210,58 @@
               "76bbbffd9d4a",
               "d75b68d10a1a"
             ],
+            "roots": [
+              {
+                "word": "docs",
+                "directory": "docs",
+                "held": true,
+                "scannedBy": "docs"
+              },
+              {
+                "word": "src",
+                "directory": "src",
+                "held": true,
+                "scannedBy": "src"
+              },
+              {
+                "word": "skills",
+                "directory": ".agents/skills",
+                "held": true,
+                "scannedBy": ".agents"
+              },
+              {
+                "word": "qa",
+                "directory": "qa",
+                "held": true,
+                "scannedBy": "qa"
+              },
+              {
+                "word": "test",
+                "directory": "test",
+                "held": true,
+                "scannedBy": "test"
+              }
+            ],
+            "rootControls": {
+              "unscanned": {
+                "word": "outside",
+                "directory": "outside",
+                "held": true,
+                "scannedBy": null
+              },
+              "missing": {
+                "word": "docs",
+                "directory": "docs",
+                "held": false,
+                "scannedBy": "docs"
+              },
+              "kind": {
+                "word": "skills",
+                "directory": ".agents/skills",
+                "held": false,
+                "scannedBy": ".agents"
+              }
+            },
             "controls": {
               "unknown": [
                 "quantum",
@@ -1832,7 +1893,7 @@
     },
     {
       "id": "R",
-      "label": "the named residuals R1-R14 stay pinned quiet",
+      "label": "the named residuals R1-R15 stay pinned quiet",
       "pins": [
         {
           "id": "R1",
@@ -1948,6 +2009,13 @@
           "id": "R14",
           "witness": {
             "kind": "specifiers",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R15",
+          "witness": {
+            "kind": "markdown",
             "outcome": []
           }
         }

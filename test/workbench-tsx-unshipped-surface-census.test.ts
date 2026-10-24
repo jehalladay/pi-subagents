@@ -33,7 +33,10 @@
  * READINGS
  * - (a) SCANNED: every regular file below docs/, src/, .agents/ (Pi's installed skills), qa/, test/ and examples/, and the
  *   repository root's .md pages, read as UTF-8; a symlink is refused, never followed. That is the filing's five trees plus two
- *   more Pi surfaces (the root pages, examples/). This file and its roster are EXEMPT: walked, never judged (row A3).
+ *   more Pi surfaces (the root pages, examples/). This file and its roster are EXEMPT: walked, never judged (row A3). The
+ *   five trees are bound to the filing (F1): every root its clause (a) names ("docs/src/skills/qa/test") is a directory of
+ *   the live tree, holding files, that a SCAN_ROOTS root covers - a root word read as the directory of that name, skills as
+ *   Pi's installed skills (SKILLS_ROOT: .agents/skills, which must hold a SKILL.md).
  * - SENTENCE: a file's text cut at a run of white space after ".", "!", "?" or ";", at a blank line and before a line opening a
  *   table row ("|"); a .md file is also cut before a line opening a list item ("-", "+", "*", "1." or "1)" then a space). A code
  *   comment's wrapped lines stay one sentence.
@@ -56,7 +59,8 @@
  *   (its package.json export map, the program docs' symbol lines, the src/index.ts and python package heads at the pin, the
  *   81-entry docs/adr listing and the measured neighbours of the TSX-IO paths), so it is hermetic.
  * - (c) RF SURFACE: Pi's rf reader stays the rf CLI envelope - RECONCILE_EVIDENCE_READS.reactivefiber
- *   (src/workflow/reconcile.ts:67) and both registrations hold the read preview only; a stand-in rf on PATH sees one
+ *   (src/workflow/reconcile.ts:67, ROSTER_SITE: that line is read from the file and must declare the entry inside the
+ *   RECONCILE_EVIDENCE_READS literal) and both registrations hold the read preview only; a stand-in rf on PATH sees one
  *   `context render ... --json` spawn per input arm; no src module loads an RF, TSX or Fiber SDK (RF_SDK against every import,
  *   export, import-equals, import type and the literal first argument of any call or new expression, constant-folded) and no
  *   package.json dependency names one. The kind=tsx receipt rows are the two R9 rows of the rf-tsx tier (TIER, the one file
@@ -87,12 +91,15 @@
  * aside), so a family or one of its alternatives removed from every literal of this file and the roster still reds (the
  * coverage reader carries its own positive controls); each claim word of the statement and clause (a) diagnoses as itself;
  * its gating sentence's symbols, exports, file count, ADR slug and version are held by SYMBOLS, GATED_EXPORTS, TSX_IO_FILES,
- * ADR_SLUG and the roster's producer version.
+ * ADR_SLUG and the roster's producer version; and every root its clause (a) names is walked (READINGS (a); the root reader
+ * carries its own controls), so a filing root removed from SCAN_ROOTS, A4's plants and the roster together still reds.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the judged set - every row's id, label
  * and pins, every pin's witness, the vocabularies and the probe constants - is held to the out-of-file roster
  * (test/fixtures/tsx-unshipped-surface-roster.json). A last case reads that every pin's case ran to its end. Not claimed: a
- * pin of rows M or R removed from ROWS, the literal, IMPL and the roster together (F1 anchors clauses and vocabulary, not
- * those pins).
+ * pin of rows M or R removed from ROWS, the literal, IMPL and the roster together (F1 anchors clauses, roots and
+ * vocabulary, not those pins); examples/ or the root pages - the two surfaces beyond the filing's roots, which nothing
+ * outside this file names - removed from the walk, A4's plants and the roster together; SKILLS_ROOT moved, in this file and
+ * the roster together, to another covered directory that holds a SKILL.md.
  * RESIDUALS (named; each has a pinned quiet row in row R): R1 R-MARKER-ANYWHERE a marker anywhere in a sentence (a table row
  *   included) admits it, whatever the marker qualifies; R2 R-UNANCHORED a CONTEXT word in a sentence without the anchor (Pi
  *   says parity, data output and dogfood in other senses); R3 R-SPLIT a claim carried by a later sentence that names no
@@ -103,10 +110,16 @@
  *   R-OUTSIDE-SRC a declaration outside src/ and python/ (another package's src, a test); R11 R-WILDCARD an entry reached
  *   only through a "./*" pattern export; R12 R-ADR-GRAMMAR an ADR whose name breaks the <digits>-<slug>.md grammar; R13
  *   R-MOVED a TSX-IO acceptance file landed at another path; R14 R-RUNTIME-COMPOSED a specifier or tier label assembled at
- *   runtime (an array join) escapes C3's and C4's literal reads.
+ *   runtime (an array join) escapes C3's and C4's literal reads; R15 R-MARKUP markup inside a name - markdown emphasis
+ *   delimiters (Reactive**Web**InterfaceSDK, Reactive *Web* Interface SDK) or an inline HTML tag (Interface<b>Host</b>) -
+ *   renders as the name, but the census reads the raw text, where the markup splits it.
  * SCOPE: the vocabularies are this cut's reading of the filing; the producer facts are measured at the pin and not re-read
  * here (the census is hermetic), so a producer change is seen only when a cut re-measures the roster. A later census that
  * needs these names as needles adds its own file to EXEMPT in its cut, beside an A3-style reading.
+ *
+ * wb-5uq7 (R694 follow-up of landing 293, gate cmd_85b0111446dc): F1 binds row A's walk to the filing's clause (a) roots
+ * (the L2-09 survivor), C1 reads its ROSTER_SITE line from the file (F5) and R15 names the markup-inside-a-name escape
+ * (L2-14, F2).
  *
  * Display paths added: none. Test-only: the stand-in rf, the scanned trees and the pin replicas live in makeScratch scratch;
  * src, docs, qa, the skills, the receipts directory and the bead export are only read.
@@ -161,6 +174,13 @@ const SCAN_ROOTS: readonly ScanRoot[] = [
 /** The root's .md pages: five at base dae1788. */
 const PAGES_FLOOR = 4;
 const PAGE_ANCHOR = { file: "README.md", token: "pi-subagents" };
+interface SkillsRoot {
+  readonly word: string;
+  readonly directory: string;
+  readonly member: string;
+}
+/** F1: the directory clause (a)'s "skills" names - Pi's installed skills, which must hold a SKILL.md (A1's anchor is one). */
+const SKILLS_ROOT: SkillsRoot = { word: "skills", directory: ".agents/skills", member: "SKILL.md" };
 
 /** The separator class between two words of a name: any run of white space, "_" or "-". */
 const SEP = "[\\s_-]*";
@@ -290,7 +310,7 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "F",
-    label: "the owner filing row of wb-if7q.1 in the tracked bead export names exactly the clauses rows A-C cover, states each of their labels as its clause, and carries every proposal, claim word and producer constant the census reads",
+    label: "the owner filing row of wb-if7q.1 in the tracked bead export names exactly the clauses rows A-C cover, states each of their labels as its clause, names only roots row A walks, and carries every proposal, claim word and producer constant the census reads",
     pins: ["F1"],
   },
   {
@@ -300,8 +320,8 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "R",
-    label: "the named residuals R1-R14 stay pinned quiet",
-    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14"],
+    label: "the named residuals R1-R15 stay pinned quiet",
+    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15"],
   },
 ];
 
@@ -404,6 +424,7 @@ function constants(): Json {
     exempt: [...EXEMPT],
     scanRoots: SCAN_ROOTS.map(({ root, floor, anchor, token }) => ({ root, floor, anchor, token })),
     pagesFloor: PAGES_FLOOR,
+    skillsRoot: { ...SKILLS_ROOT },
     families: FAMILIES.map(({ id, context, source, spellings }) => ({ id, context, source, spellings: [...spellings] })),
     anchor: `${ANCHOR.source}/${ANCHOR.flags}`,
     markers: [...MARKERS],
@@ -799,6 +820,15 @@ function registeredTitles(path: string, text: string): string[] {
   visit(file);
   return titles;
 }
+/** (c): the line ROSTER_SITE names, read from the file (F5), and whether it sits inside the RECONCILE_EVIDENCE_READS literal. */
+function siteReading(site: string): { text: string; inLiteral: boolean } {
+  const [file = "", at = ""] = site.split(":");
+  const line = Number(at) - 1;
+  const lines = textOf(join(REPO, file)).split("\n");
+  const open = lines.findIndex(text => text.startsWith("export const RECONCILE_EVIDENCE_READS"));
+  const close = open < 0 ? -1 : lines.findIndex((text, index) => index > open && text.startsWith("});"));
+  return { text: (lines[line] ?? "").trim(), inLiteral: open >= 0 && open < line && line < close };
+}
 /** Whether a text matches a RECEIPT_CLAIM family (any sentence; no anchor needed). */
 const receiptClaim = (text: string): boolean => RECEIPT_CLAIM_FAMILIES.some(id => FAMILY_PATTERNS.get(id)?.test(text) === true);
 
@@ -887,6 +917,23 @@ function uncoveredWords(item: string): string[] {
   return uncovered;
 }
 
+/** A type alias, not an interface, so a reading stays assignable to the Json witness. */
+type RootReading = {
+  readonly word: string;
+  readonly directory: string;
+  readonly held: boolean;
+  readonly scannedBy: string | null;
+};
+/** F1: one clause (a) root word read in `tree`: its directory (skills through SKILLS_ROOT), whether that directory holds a
+ * regular file (for skills, a SKILL.md) and the SCAN_ROOTS root that covers it (null when none does). */
+function rootReading(tree: string, word: string): RootReading {
+  const directory = word === SKILLS_ROOT.word ? SKILLS_ROOT.directory : word;
+  const files = walk(tree, directory).files;
+  const held = word === SKILLS_ROOT.word ? files.some(file => file.endsWith(`/${SKILLS_ROOT.member}`)) : files.length > 0;
+  const scannedBy = SCAN_ROOTS.find(scan => directory === scan.root || directory.startsWith(`${scan.root}/`))?.root ?? null;
+  return { word, directory, held, scannedBy };
+}
+
 type CaseKind = "file" | "markdown" | "cut" | "cutMarkdown" | "names" | "python" | "specifiers" | "words";
 interface Case {
   readonly pin: string;
@@ -895,7 +942,7 @@ interface Case {
   readonly outcome: readonly string[];
 }
 const cp = (...codes: number[]): string => String.fromCodePoint(...codes);
-/** The quiet rows of R1-R8 and R14 (R9-R13 build trees); MS1-MS4 the cutter. */
+/** The quiet rows of R1-R8, R14 and R15 (R9-R13 build trees); MS1-MS4 the cutter. */
 const CASES: readonly Case[] = [
   { pin: "MS1", kind: "cut", text: "One names a. Two names b! Three? Four; five", outcome: ["One names a.", "Two names b!", "Three?", "Four;", "five"] },
   { pin: "MS2", kind: "cut", text: "para one\n\npara two\n| a | b |\n| c | d |", outcome: ["para one", "para two", "| a | b |", "| c | d |"] },
@@ -910,6 +957,7 @@ const CASES: readonly Case[] = [
   { pin: "R7", kind: "file", text: "// Pi ships the new web interface package and the terminal UI kit.\n", outcome: [] },
   { pin: "R8", kind: "file", text: "/**\n * - ReactiveWebInterfaceSDK ships\n * - graph/v2 is gated\n */\n", outcome: [] },
   { pin: "R14", kind: "specifiers", text: 'const sdk = ["@reactive-fiber", "tsx"].join("/");\nawait import(sdk);\nit(["R9 success:", "par" + "", "ity"].join(" "), () => {});\n', outcome: [] },
+  { pin: "R15", kind: "markdown", text: "Pi ships Reactive**Web**InterfaceSDK today.\n\nPi ships Reactive *Web* Interface SDK today.\n\nPi ships Interface<b>Host</b> today.\n", outcome: [] },
 ];
 function outcomeOf(kind: CaseKind, text: string): string[] {
   if (kind === "file") return findingsOf("x.ts", text);
@@ -1048,7 +1096,9 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const injected = rf(injectedDescriptors());
     const pinned = [{ id: PREVIEW_ID, effectClass: "read" }];
     expect({ reactivefiber, native, injected }).toStrictEqual({ reactivefiber: [PREVIEW_ID], native: pinned, injected: pinned });
-    return { site: ROSTER_SITE, reactivefiber, native, injected };
+    const siteLine = siteReading(ROSTER_SITE);
+    expect(siteLine, `the ${ROSTER_SITE} line declares the reactivefiber entry`).toStrictEqual({ text: `reactivefiber: Object.freeze(["${PREVIEW_ID}"]),`, inLiteral: true });
+    return { site: ROSTER_SITE, siteLine, reactivefiber, native, injected };
   },
   C2: async () => {
     const legacy = await spawnedArgv({ model: "m", task: "t" });
@@ -1138,6 +1188,9 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       .filter(Boolean);
     const claimsRead = [...new Set(claimWords)].map(word => ({ word, diagnosis: findingsOf("x.ts", `// ReactiveWebInterfaceSDK ${word}.\n`)[0] ?? "" }));
     const gating = /^Gating: (.*)$/m.exec(notes)?.[1] ?? "";
+    const filingRoots = (/\bcensus over Pi (\S+) \(/.exec(acceptance)?.[1] ?? "").split("/").filter(Boolean);
+    const controlTree = scratch("tsx-unshipped-roots-");
+    writeTree(controlTree, { "outside/x.md": "x\n", ".agents/skills/plain/README.md": "x\n" });
     const filingSymbols = between(gating, `at ${PIN} `, " hit 0").split("/").filter(Boolean);
     const filingExports = [...between(gating, "exports no ", ",").matchAll(/\.\/\w+/g)].map(match => match[0]);
     const reading = {
@@ -1152,6 +1205,9 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       adrSlug: /the ([a-z0-9-]+) ADR\b/.exec(gating)?.[1] === ADR_SLUG,
       version: gating.includes(`${TSX_VERSION} exports`) && ROSTER.producer.version === TSX_VERSION,
       pins: [PIN, FILING_READ].filter(token => notes.includes(token)),
+      roots: filingRoots.map(word => rootReading(REPO, word)),
+      // The root reader's positive controls: an unscanned directory, a covered but empty one and skills without a SKILL.md.
+      rootControls: { unscanned: rootReading(controlTree, "outside"), missing: rootReading(controlTree, "docs"), kind: rootReading(controlTree, "skills") },
       // The coverage reader's positive controls: an unknown word stays uncovered, a STOP word and a claim word never count.
       controls: { unknown: uncoveredWords("quantum widget"), stopAndClaim: uncoveredWords("the shipped row"), covered: uncoveredWords("hosts.rfcli row") },
     };
@@ -1163,6 +1219,12 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect(reading.exportsHeld).toEqual(filingExports);
     expect({ sixFiles: reading.sixFiles, adrSlug: reading.adrSlug, version: reading.version, pins: reading.pins }).toStrictEqual({ sixFiles: true, adrSlug: true, version: true, pins: [PIN, FILING_READ] });
     expect(reading.controls).toStrictEqual({ unknown: ["quantum", "widget"], stopAndClaim: [], covered: [] });
+    expect(reading.roots.filter(root => !root.held || root.scannedBy === null).map(root => root.word), "clause (a) roots row A does not walk").toEqual([]);
+    expect(reading.rootControls).toStrictEqual({
+      unscanned: { word: "outside", directory: "outside", held: true, scannedBy: null },
+      missing: { word: "docs", directory: "docs", held: false, scannedBy: "docs" },
+      kind: { word: "skills", directory: ".agents/skills", held: false, scannedBy: ".agents" },
+    });
     return reading;
   },
   ...Object.fromEntries(
@@ -1289,7 +1351,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
 
 describe("wb-if7q.1 unshipped TSX surface census (TSX-NATIVE-INTERFACES-AND-PORTABLE-TSX-R1, absent-today leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:5", "C:4", "F:1", "M:18", "R:14"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:5", "C:4", "F:1", "M:18", "R:15"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect(constants()).toStrictEqual(ROSTER.constants);
