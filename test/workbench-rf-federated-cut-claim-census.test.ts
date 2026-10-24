@@ -23,6 +23,9 @@
  * FW-CFRR-02c rfc-bak67.4 ("notify 1 then 3: state.delivered_fence == 1, state.notified_position == 3, state.gap is True;
  * notify 1, 2, 3: state.gap is False.", certified-federated-reactive-refinement-2026-10-18/BEADS-2026-10-21.md:21).
  * Pi at base 0b2a80f: no file outside .beads/ spells a guarded phrase, and no src module spells a word of either vocabulary.
+ * Re-measured at base 187591e (wb-1ded, the R-VOCABULARY follow-up): no src module reads an armed key shape of B4 or C3
+ * either; eight spell a single position key, and none of those eight spells a second record key, a revision, a federation
+ * word or a max() over a position.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
  *  A, acceptance (a). A1-A5 read every file of src, test, docs, qa and the front matter (the root *.md files and examples/)
@@ -38,30 +41,46 @@
  *    carries a stand-in rf's envelope with the fixture byte for byte: no position inserted, no label minted, no value
  *    added. B3 the reader adapter projects none of it: its topology equals the one of the same envelope without the
  *    fixture, and no topology string carries a guarded phrase, a resync word or a fixture value. B4 the armed half: every
- *    src module that spells NOTIFICATION_WORDS must be bound in NOTIFICATION_READERS, and every bound reader must render
- *    gapped with a resync-required word and never a guarded phrase or the accepted value. No module spells one and the
- *    table is empty, so the real reading is empty; three synthetic readers exercise the checker.
+ *    src module that spells NOTIFICATION_WORDS, reads two or more of the record's own keys (RECORD_KEYS: epoch, stream_id,
+ *    position, the fixture's record shape) or folds a position with max() (the producer's watermark, federation_boundary.py
+ *    :191) must be bound in NOTIFICATION_READERS, and every bound reader must render gapped with a resync-required word and
+ *    never a guarded phrase or the accepted value. No module does any of the three and the table is empty, so the real
+ *    reading is empty; three synthetic readers exercise the checker, and twelve controls pin the armed reading: snake and
+ *    camel (the vocabulary), recordShape, recordRead, recordQuoted, recordDestructured and recordCamel (one key spelling
+ *    each: declared, read, quoted, destructured, camelCase), watermarkFold and watermarkFoldReversed (max() before or after
+ *    the position) read as sites; bareWord, singleKey and comparisonFold do not (R-VOCABULARY).
  *  C, acceptance (c). C1 the provider carries accepted's resource_revision and cursor as two fields, verbatim; C2 the reader
  *    adapter takes neither as its sourceRevision or sourceVersion (those stay the graph and bundle digests) and its
- *    topology equals the one without the fixture; C3 every src module that spells CURSOR_WORDS must be bound in
+ *    topology equals the one without the fixture; C3 every src module that spells CURSOR_WORDS or holds a position key
+ *    beside a revision (the two counts federation_boundary.py:9-10 says must never be equated) must be bound in
  *    CURSOR_PROJECTIONS, and every bound projection must echo the fixture's resource revision and cursor position, never
- *    one in place of the other. Empty today; three synthetic projections exercise the checker.
+ *    one in place of the other. Empty today; three synthetic projections exercise the checker, and six controls pin the
+ *    armed reading: snake, camel and positionBesideRevision read as sites, bareWords, renamedKey and versionField do not
+ *    (R-VOCABULARY).
  *  M, the matcher row A reads: M1-M11 the spellings CLAIMS must catch; Q1-Q5 the pinned quiet rows of the residuals.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id,
- * label and pins, every pin's witness, both vocabularies and the producer acceptance positions - is held to the out-of-file
- * roster, whose fixture is held back to PRODUCER_ACCEPTANCE here. A pin deleted, relabelled, swapped for another passing
- * case, or removed from every literal here at once still reds against the roster, and every pin's witness is measured by
- * its own case. Not claimed: an edit of this file and the roster together.
+ * label and pins, every pin's witness, both vocabularies, the record keys and the producer acceptance positions - is held
+ * to the out-of-file roster, whose fixture is held back to PRODUCER_ACCEPTANCE here and whose records all carry exactly
+ * RECORD_KEYS. A pin deleted, relabelled, swapped for another passing case, or removed from every literal here at once
+ * still reds against the roster, and every pin's witness is measured by its own case. Not claimed: an edit of this file
+ * and the roster together (that coordinated hollow, gate probe GL2-28 at wb-a9l2.5, stays green because the roster is
+ * the only out-of-file anchor; disclosed and ridden at wb-1ded as its F3).
  * RESIDUALS (named, each with a pinned quiet row): R-INTERRUPTED a phrase split by a character outside the separator class,
  * a zero-width code point (Q1) or a homoglyph letter (Q2), is not caught; R-COMPOSED a phrase assembled at runtime, this
  * file's own mechanism, is invisible to any text scan (Q3); R-PARAPHRASE a reworded claim (a cut closed under causality,
  * the newest accepted value) is not caught (Q4); R-SCOPE a spelling outside the scanned roots is not read: the bead-store
  * export .beads/ spells the phrases (the owner filings quote the producer) and no scanned root reads it (Q5); new-feedback/,
- * vendor/, media/ and the other dot-directories are outside every root the same way.
+ * vendor/, media/ and the other dot-directories are outside every root the same way. R-VOCABULARY the armed half (B4, C3)
+ * sees a src module only through its vocabulary or its armed key shape: a single record key read without a max() fold
+ * (B4 control singleKey; eight src modules spell one position key today and none spells a federation word, so a one-key
+ * arm would bind modules that read no rf stream), a fold written as a comparison rather than max() (comparisonFold), a
+ * notification word outside NOTIFICATION_WORDS (bareWord), a revision beside no position key (C3 control bareWords), a
+ * renamed record key (renamedKey) or a position projected into a version field (versionField) is not seen; each is
+ * pinned false in its row's witness, so an arm widened to catch one reds that pin until this residual is re-read.
  * SCOPE: the phrase guard does not judge negation: any spelling reds, a sentence stating the prohibition included. Both
- * vocabularies and the fixture shapes are producer facts at 6a251bf73af5; Pi vendors no rf schema, so a producer-side
- * change is seen only when an rf pin-bump re-reads them. The armed half (render resync-required) waits for the gating
- * artifacts: no reader is added or faked here, and a reader's cut binds itself in the table it needs.
+ * vocabularies, the record keys and the fixture shapes are producer facts at 6a251bf73af5; Pi vendors no rf schema, so a
+ * producer-side change is seen only when an rf pin-bump re-reads them. The armed half (render resync-required) waits for
+ * the gating artifacts: no reader is added or faked here, and a reader's cut binds itself in the table it needs.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; the scanned roots are only read.
  */
@@ -114,6 +133,27 @@ const CURSOR_WORDS = ["resource revision", "stream cursor"];
 const vocabulary = (words: readonly string[]): RegExp => new RegExp(words.map(word => word.split(" ").join(SEP)).join("|"), "i");
 const NOTIFICATION_VOCABULARY = vocabulary(NOTIFICATION_WORDS);
 const CURSOR_VOCABULARY = vocabulary(CURSOR_WORDS);
+/** The notification record's own keys (OwnerStreamCursor(epoch, stream_id, position), federation_boundary.py:61-67): the
+ * roster's fixture records carry exactly these, and B4 reads them as code spells a key. */
+const RECORD_KEYS = ["epoch", "stream_id", "position"];
+/** A record key as code spells one: a property read (.key, ?.key), a declared or literal key (key:, key?:), a quoted key or a
+ * destructured one, each in its snake_case and its camelCase spelling. */
+function recordKey(key: string): RegExp {
+  const spelled = [...new Set([key, key.replace(/_([a-z])/g, (_, letter: string) => letter.toUpperCase())])].join("|");
+  return new RegExp(`\\.\\s*(?:${spelled})\\b|\\b(?:${spelled})\\s*\\??\\s*:|["'\`](?:${spelled})["'\`]|[{,]\\s*(?:${spelled})\\s*[,}=]`);
+}
+const RECORD_KEY_PATTERNS = RECORD_KEYS.map(recordKey);
+const POSITION_KEY = recordKey("position");
+/** The producer's watermark fold (federation_boundary.py:191, a max() over the notified position): a max( and a position in
+ * one expression, in either order. */
+const WATERMARK_FOLD = /\bmax\s*\([^;{}]*?\bpositions?\b|\bpositions?\b[^;{}]*?\bmax\s*\(/i;
+const REVISION = /revision/i;
+/** B4's armed reading of a src module: it spells NOTIFICATION_WORDS, reads two or more RECORD_KEYS or folds a position with
+ * max(). */
+const notificationSite = (source: string): boolean =>
+  NOTIFICATION_VOCABULARY.test(source) || RECORD_KEY_PATTERNS.filter(pattern => pattern.test(source)).length >= 2 || WATERMARK_FOLD.test(source);
+/** C3's armed reading of a src module: it spells CURSOR_WORDS, or it holds a position key beside a revision. */
+const cursorSite = (source: string): boolean => CURSOR_VOCABULARY.test(source) || (POSITION_KEY.test(source) && REVISION.test(source));
 /** The positions of rfc-bak67.4's acceptance text ("notify 1 then 3" / "notify 1, 2, 3"); the roster's fixture is held to them. */
 const PRODUCER_ACCEPTANCE = { gapped: [1, 3], contiguous: [1, 2, 3] };
 const RESYNC_REQUIRED = new RegExp(`resync${SEP}required`, "i");
@@ -182,6 +222,7 @@ interface RosterRow {
 interface Roster {
   readonly notificationWords: readonly string[];
   readonly cursorWords: readonly string[];
+  readonly recordKeys: readonly string[];
   readonly producerAcceptance: { readonly gapped: readonly number[]; readonly contiguous: readonly number[] };
   readonly fixture: Fixture;
   readonly rows: readonly RosterRow[];
@@ -241,6 +282,7 @@ function readRoster(): Roster {
   return {
     notificationWords: strings(raw.notificationWords, "notificationWords"),
     cursorWords: strings(raw.cursorWords, "cursorWords"),
+    recordKeys: strings(raw.recordKeys, "recordKeys"),
     producerAcceptance: {
       gapped: positions(raw.producerAcceptance.gapped, "producerAcceptance.gapped"),
       contiguous: positions(raw.producerAcceptance.contiguous, "producerAcceptance.contiguous"),
@@ -475,10 +517,10 @@ function projectionViolations(project: (boundary: Boundary) => Json): string[] {
   return violations;
 }
 
-/** The src modules a vocabulary finds, the bindings it needs and the bindings no module explains. */
-function vocabularyCensus(pattern: RegExp, bound: readonly string[]): { srcFloorMet: boolean; sites: string[]; unbound: string[]; stale: string[] } {
+/** The src modules an armed reading finds, the bindings it needs and the bindings no module explains. */
+function siteCensus(isSite: (source: string) => boolean, bound: readonly string[]): { srcFloorMet: boolean; sites: string[]; unbound: string[]; stale: string[] } {
   const files = filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts"));
-  const sites = files.filter(file => pattern.test(textOf(file))).map(file => relative(REPO, file));
+  const sites = files.filter(file => isSite(textOf(file))).map(file => relative(REPO, file));
   return { srcFloorMet: files.length >= 100, sites, unbound: sites.filter(site => !bound.includes(site)), stale: bound.filter(module => !sites.includes(module)) };
 }
 
@@ -559,7 +601,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     return { snapshots: withFixture.snapshots.length, equalsWithout, stringsRead, surfaced };
   },
   B4: async () => {
-    const census = vocabularyCensus(NOTIFICATION_VOCABULARY, NOTIFICATION_READERS.map(binding => binding.module));
+    const census = siteCensus(notificationSite, NOTIFICATION_READERS.map(binding => binding.module));
     const bound = NOTIFICATION_READERS.map(binding => ({ module: binding.module, violations: readerViolations(binding.render) }));
     expect(census.srcFloorMet).toBe(true);
     expect(census.unbound, "a src module reading a notification stream must be bound in NOTIFICATION_READERS").toEqual([]);
@@ -571,9 +613,18 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       freshValue: readerViolations(fixture => ["resync-required", fixture.accepted.value]),
     };
     const controls = {
-      snake: NOTIFICATION_VOCABULARY.test('const key = "notified_position";'),
-      camel: NOTIFICATION_VOCABULARY.test("state.deliveredFence += 1;"),
-      bareWord: NOTIFICATION_VOCABULARY.test('pi.events.emit("notification:shown", { cursor: 0, epoch: 1 });'),
+      snake: notificationSite('const key = "notified_position";'),
+      camel: notificationSite("state.deliveredFence += 1;"),
+      bareWord: notificationSite('pi.events.emit("notification:shown", { cursor: 0, epoch: 1 });'),
+      recordShape: notificationSite("const shown = (record: { epoch: string; stream_id: string; position: number }) => String(record.position);"),
+      recordRead: notificationSite("const shown = (record: Notification) => [record.epoch, record.position];"),
+      recordQuoted: notificationSite('const shown = (record: Notification) => [record["epoch"], record["position"]];'),
+      recordDestructured: notificationSite("const shown = ({ epoch, position }: Notification) => [epoch, position];"),
+      recordCamel: notificationSite("const shown = (record: Notification) => [record.epoch, record.streamId];"),
+      watermarkFold: notificationSite("const lastSeen = (stream: { position: number }[]) => Math.max(0, ...stream.map(item => item.position));"),
+      watermarkFoldReversed: notificationSite("const lastSeen = (positions: number[]) => positions.reduce((last, next) => Math.max(last, next), 0);"),
+      singleKey: notificationSite("const at = (item: { position: number }) => item.position;"),
+      comparisonFold: notificationSite("const lastSeen = (stream: { position: number }[]) => stream.reduce((last, item) => (item.position > last ? item.position : last), 0);"),
     };
     return { srcFloorMet: census.srcFloorMet, sites: census.sites, bound, stale: census.stale, synthetic, controls };
   },
@@ -601,7 +652,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     return witness;
   },
   C3: async () => {
-    const census = vocabularyCensus(CURSOR_VOCABULARY, CURSOR_PROJECTIONS.map(binding => binding.module));
+    const census = siteCensus(cursorSite, CURSOR_PROJECTIONS.map(binding => binding.module));
     const bound = CURSOR_PROJECTIONS.map(binding => ({ module: binding.module, violations: projectionViolations(binding.project) }));
     expect(census.srcFloorMet).toBe(true);
     expect(census.unbound, "a src module projecting a boundary cursor or revision must be bound in CURSOR_PROJECTIONS").toEqual([]);
@@ -613,9 +664,12 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       positionFromRevision: projectionViolations(boundary => ({ revision: boundary.resource_revision, position: boundary.resource_revision })),
     };
     const controls = {
-      snake: CURSOR_VOCABULARY.test("row.resource_revision"),
-      camel: CURSOR_VOCABULARY.test("new OwnerStreamCursor()"),
-      bareWords: CURSOR_VOCABULARY.test('const cursorRow = 0; const revision = "r";'),
+      snake: cursorSite("row.resource_revision"),
+      camel: cursorSite("new OwnerStreamCursor()"),
+      bareWords: cursorSite('const cursorRow = 0; const revision = "r";'),
+      positionBesideRevision: cursorSite("const project = (boundary: { revision: string; position: number }) => ({ revision: String(boundary.position) });"),
+      renamedKey: cursorSite("const project = (boundary: { revision: string; seq: number }) => ({ revision: String(boundary.seq) });"),
+      versionField: cursorSite("const project = (cursor: { position: number }) => ({ version: String(cursor.position) });"),
     };
     return { srcFloorMet: census.srcFloorMet, sites: census.sites, bound, stale: census.stale, synthetic, controls };
   },
@@ -645,10 +699,13 @@ describe("wb-a9l2.5 federated cut claim census (RF-HARNESS2-FEDERATED-PEER-R5, p
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
-    expect({ notificationWords: NOTIFICATION_WORDS, cursorWords: CURSOR_WORDS, producerAcceptance: PRODUCER_ACCEPTANCE }).toStrictEqual({
-      notificationWords: [...ROSTER.notificationWords], cursorWords: [...ROSTER.cursorWords],
+    expect({ notificationWords: NOTIFICATION_WORDS, cursorWords: CURSOR_WORDS, recordKeys: RECORD_KEYS, producerAcceptance: PRODUCER_ACCEPTANCE }).toStrictEqual({
+      notificationWords: [...ROSTER.notificationWords], cursorWords: [...ROSTER.cursorWords], recordKeys: [...ROSTER.recordKeys],
       producerAcceptance: { gapped: [...ROSTER.producerAcceptance.gapped], contiguous: [...ROSTER.producerAcceptance.contiguous] },
     });
+    // B4's record shape is the fixture's: every notification and the accepted cursor carry exactly RECORD_KEYS.
+    const recordShapes = [...FIXTURE.gapped, ...FIXTURE.contiguous, FIXTURE.accepted.cursor].map(record => Object.keys(record).join(","));
+    expect([...new Set(recordShapes)]).toEqual([RECORD_KEYS.join(",")]);
   });
 
   for (const row of ROWS) {
