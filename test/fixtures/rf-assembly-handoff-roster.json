@@ -1,7 +1,7 @@
 {
   "bead": "wb-pfxo.3",
   "pin": "6a251bf73af5",
-  "basis": "The out-of-file roster of test/workbench-rf-assembly-handoff-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness and the pinned constants, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Witnesses were measured by the cutting seat on trunk 051d37e; fixture identities appear by placeholder (<graph>, <bundle>, <operation>, <workspace>, <release>, <root>).",
+  "basis": "The out-of-file roster of test/workbench-rf-assembly-handoff-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness and the pinned constants, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Witnesses were measured by the cutting seat on trunk 051d37e; fixture identities appear by placeholder (<graph>, <bundle>, <operation>, <workspace>, <release>, <root>). The wb-dm26 follow-up (R694, F1 of the landing-277 gate) re-measured the T1, T2, D1, A1-A3, B4 and D4 witnesses, added R10 and the walk constants on trunk 7bfe51b.",
   "constants": {
     "pinnedRoster": [
       "reactivefiber.render.preview"
@@ -73,6 +73,20 @@
       "not served",
       "gated",
       "pi-assembled"
+    ],
+    "srcFloor": 100,
+    "docsFloor": 50,
+    "pageRoots": [
+      "",
+      "examples",
+      "vendor"
+    ],
+    "unwalkedPageRoots": [
+      ".agents",
+      ".beads",
+      ".pi",
+      "new-feedback",
+      "test"
     ]
   },
   "rows": [
@@ -80,8 +94,8 @@
       "id": "T",
       "label": "(trigger, absent today) Pi hands no rf assembly across processes or agents: no src identifier or literal spells a handoff, only the pinned reader modules spell an rf receipt field, the rf roster stays reactivefiber.render.preview only and every rf spawn is a --no-commit render",
       "pins": [
-        {"id": "T1", "witness": {"srcFloorMet": true, "renderArgvSeen": true, "hits": []}},
-        {"id": "T2", "witness": {"srcFloorMet": true, "renderArgvSeen": true, "readerSet": {"render_id": ["src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"], "graph_revision_id": ["src/workbench/native-evidence.ts", "src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"], "cli_version": ["src/workbench/native-evidence.ts", "src/workbench/reactivefiber-observer.ts"], "sdk_versions": ["src/workbench/reactivefiber-observer.ts"], "bundle_revision_id": ["src/workbench/native-evidence.ts", "src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"]}}},
+        {"id": "T1", "witness": {"srcFloorMet": true, "srcUnwalked": [], "renderArgvSeen": true, "hits": []}},
+        {"id": "T2", "witness": {"srcFloorMet": true, "srcUnwalked": [], "renderArgvSeen": true, "readerSet": {"render_id": ["src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"], "graph_revision_id": ["src/workbench/native-evidence.ts", "src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"], "cli_version": ["src/workbench/native-evidence.ts", "src/workbench/reactivefiber-observer.ts"], "sdk_versions": ["src/workbench/reactivefiber-observer.ts"], "bundle_revision_id": ["src/workbench/native-evidence.ts", "src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"]}}},
         {"id": "T3", "witness": {"site": "src/workflow/reconcile.ts:67", "reactivefiber": ["reactivefiber.render.preview"], "native": [{"id": "reactivefiber.render.preview", "effectClass": "read"}], "injected": [{"id": "reactivefiber.render.preview", "effectClass": "read"}], "descriptorHandoff": []}},
         {"id": "T4", "witness": {"legacy": [["--workspace", "<root>", "context", "render", "--model", "m", "--task", "t", "--no-commit", "--no-input", "--json"]], "view": [["--workspace", "<root>", "context", "render", "--view", "v", "--task-id", "t", "--model", "m", "--no-commit", "--no-input", "--json"]]}}
       ]
@@ -90,9 +104,9 @@
       "id": "A",
       "label": "(a) any Pi cross-agent handoff of rf context carries render_id and graph_revision_id (plus bundle_revision_id when present) and zero bytes of rendered document or block content",
       "pins": [
-        {"id": "A1", "witness": {"sourceRevision": "<graph>", "sourceVersion": "<bundle>", "identityRefs": ["rf-graph:<graph>", "rf-bundle:<bundle>"], "documentBytes": 0, "blockBytes": 0, "renderIds": 0}},
-        {"id": "A2", "witness": {"sourceRevision": "<graph>", "hasSourceVersion": false, "identityRefs": ["rf-graph:<graph>"], "bundleNamed": 0, "documentBytes": 0, "blockBytes": 0}},
-        {"id": "A3", "witness": {"withBundle": {"provider": "reactivefiber", "nativeId": "<operation>", "sourceBasis": "<bundle>", "producerRelease": "<release>"}, "withoutBundle": {"provider": "reactivefiber", "nativeId": "<operation>", "sourceBasis": "<graph>", "producerRelease": "<release>"}, "documentBytes": 0, "blockBytes": 0}},
+        {"id": "A1", "witness": {"sourceRevision": "<graph>", "sourceVersion": "<bundle>", "identityRefs": ["rf-graph:<graph>", "rf-bundle:<bundle>"], "documentBytes": 0, "blockBytes": 0, "renderIds": 0, "dependence": {"twinDisjoint": true, "inputDependent": ["$.source.result.blocks.0.content", "$.source.result.output.text"], "dependent": ["$.0.snapshots.0.nativePayloadRef", "$.1.snapshots.0.nativePayloadRef"]}}},
+        {"id": "A2", "witness": {"sourceRevision": "<graph>", "hasSourceVersion": false, "identityRefs": ["rf-graph:<graph>"], "bundleNamed": 0, "documentBytes": 0, "blockBytes": 0, "dependence": {"twinDisjoint": true, "inputDependent": ["$.source.result.blocks.0.content", "$.source.result.output.text"], "dependent": ["$.0.snapshots.0.nativePayloadRef", "$.1.snapshots.0.nativePayloadRef"]}}},
+        {"id": "A3", "witness": {"withBundle": {"provider": "reactivefiber", "nativeId": "<operation>", "sourceBasis": "<bundle>", "producerRelease": "<release>"}, "withoutBundle": {"provider": "reactivefiber", "nativeId": "<operation>", "sourceBasis": "<graph>", "producerRelease": "<release>"}, "documentBytes": 0, "blockBytes": 0, "dependence": {"withBundle": {"twinDisjoint": true, "inputDependent": ["$.source.result.blocks.0.content", "$.source.result.output.text"], "dependent": []}, "withoutBundle": {"twinDisjoint": true, "inputDependent": ["$.source.result.blocks.0.content", "$.source.result.output.text"], "dependent": []}}}},
         {"id": "A4", "witness": {"renderId": null, "ephemeral": true, "transactionId": null, "spawns": 1}}
       ]
     },
@@ -103,7 +117,7 @@
         {"id": "B1", "witness": {"refusal": {"category": "transport", "message": "RF preview returned an unrecognized or contradictory envelope."}, "reading": null, "spawns": 1, "verb": ["context", "render"]}},
         {"id": "B2", "witness": {"refusal": {"category": "validation", "message": "ReactiveFiber topology refused: source.transaction_id must be null: a noncommitted read opens no transaction."}}},
         {"id": "B3", "witness": {"variants": [{"variant": "untransacted", "native": "RF preview returned an unrecognized or contradictory envelope.", "adapter": "ReactiveFiber topology refused: result.ephemeral must be true."}, {"variant": "id-beside-ephemeral", "native": "RF preview returned an unrecognized or contradictory envelope.", "adapter": "ReactiveFiber topology refused: result.render_id must be null: a committed render is not a preview."}, {"variant": "seq-beside-null-id", "native": "RF preview returned an unrecognized or contradictory envelope.", "adapter": "ReactiveFiber topology refused: result.commit_seq must be absent or null."}]}},
-        {"id": "B4", "witness": {"evidence": {"provider": "reactivefiber", "nativeId": "<operation>", "sourceBasis": "<bundle>", "producerRelease": "<release>"}, "renderIds": 0, "documentBytes": 0, "blockBytes": 0}}
+        {"id": "B4", "witness": {"evidence": {"provider": "reactivefiber", "nativeId": "<operation>", "sourceBasis": "<bundle>", "producerRelease": "<release>"}, "renderIds": 0, "documentBytes": 0, "blockBytes": 0, "dependence": {"twinDisjoint": true, "inputDependent": ["$.source.result.blocks.0.content", "$.source.result.output.text"], "dependent": []}}}
       ]
     },
     {
@@ -120,10 +134,10 @@
       "id": "D",
       "label": "(d) until a shipped rf handoff receipt exists Pi labels any such artifact as Pi-assembled from envelope identifiers, never as an rf receipt",
       "pins": [
-        {"id": "D1", "witness": {"srcFloorMet": true, "renderArgvSeen": true, "families": ["H", "L"], "hits": []}},
+        {"id": "D1", "witness": {"srcFloorMet": true, "srcUnwalked": [], "renderArgvSeen": true, "families": ["H", "L"], "hits": []}},
         {"id": "D2", "witness": {"descriptorFloorMet": true, "hits": [], "rfCarriers": [true, true]}},
         {"id": "D3", "witness": {"projections": 10, "receiptWords": 0, "kinds": ["reactivefiber.render.preview.snapshot"], "seamLabels": ["fixture seam (not a real render)", "noncommitted preview (rf-cli)", "refused"]}},
-        {"id": "D4", "witness": {"floorMet": true, "anchorRead": true, "markers": 11, "findings": []}}
+        {"id": "D4", "witness": {"floorMet": true, "unwalked": [], "anchorRead": true, "pageAnchorRead": true, "markers": 11, "findings": []}}
       ]
     },
     {
@@ -156,7 +170,7 @@
     },
     {
       "id": "R",
-      "label": "the named residuals R1-R9 stay pinned quiet",
+      "label": "the named residuals R1-R10 stay pinned quiet",
       "pins": [
         {"id": "R1", "witness": {"status": "completed", "nodeRows": 1, "effectClass": "read", "textCarriesDocument": true, "textCarriesBlockContent": true, "textIsReading": true}},
         {"id": "R2", "witness": {"status": "completed", "agentPrompts": 1, "promptCarriesDocument": true, "promptNamesReceipt": false}},
@@ -166,7 +180,8 @@
         {"id": "R6", "witness": {"digest": "737542494c208715", "outcome": []}},
         {"id": "R7", "witness": {"digest": "b5b982f522501883", "outcome": ["H:marked"]}},
         {"id": "R8", "witness": {"digest": "5292923f2fb36c36", "outcome": []}},
-        {"id": "R9", "witness": {"isError": false, "kind": "returned", "replyCarriesDocument": true, "replyCarriesBlockContent": true, "replyNamesReceipt": false}}
+        {"id": "R9", "witness": {"isError": false, "kind": "returned", "replyCarriesDocument": true, "replyCarriesBlockContent": true, "replyNamesReceipt": false}},
+        {"id": "R10", "witness": {"roots": [".agents", ".beads", ".pi", "new-feedback", "test"], "planted": ["L:shipped"]}}
       ]
     }
   ]

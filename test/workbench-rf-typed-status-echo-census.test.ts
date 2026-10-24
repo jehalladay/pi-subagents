@@ -29,8 +29,12 @@
  * the registered reading (the injected-reader seam), the native reading (a stand-in rf first on PATH), the shared display form
  * every registered tool output routes through (sanitizeWorkbenchJson, src/workbench/redaction.ts) and the adapter's projection
  * (the snapshot node and its notes).
- *  A, the trigger, absent today. A1 a text scan of every src module for the federation boundary and query-view field names
- *    (FEDERATION_MATCHERS), with a floor, an anchor and six controls; A2 the rf roster, selected by id prefix, reactivefiber:
+ *  A, the trigger, absent today. A1 a TypeScript AST scan of every src module's code units - identifiers and private names, plain
+ *    name chains (record.publication.state) and string, template and regular-expression literal texts, escapes decoded; comments
+ *    are never units (wb-d8io, the gate's F3) - each unit read as spelled and as its words (camel humps and separators split), for
+ *    the federation boundary and query-view field and record names (FEDERATION_MATCHERS), with a floor, a units floor, an anchor,
+ *    one positive control per matcher and the spelling, comment and composed controls (wb-d8io, the gate's F1(ii): QueryViewRef,
+ *    OwnerBoundary, manifest_digest, escaped and dotted spellings); A2 the rf roster, selected by id prefix, reactivefiber:
  *    permission or rf@ contractSource, stays the preview alone (native and injected registrations, RECONCILE_EVIDENCE_READS);
  *    A3 the native provider refuses a federation record printed by rf as an unrecognized envelope, in one spawn of the render argv;
  *    A4 the adapter refuses a reading carrying one.
@@ -47,16 +51,20 @@
  *    named, while the values alone stay clean; C3 an rf refusal coded RF_OBSERVATION_DENIED stays a typed refusal naming the code
  *    (no reading, one spawn) and projects a failure carrying no value; C4 an unshipped word ('revoked') and an emptied one ('') are
  *    admitted, counted as not observed and echoed, never read as a value or dropped.
- *  D, acceptance (c) and (d). D1 an empty and an absent observation list add no note: the two projections are identical and the
- *    reading carries [] verbatim (a render's own list is rf's record of that render, "[] when the render's layers carry no command
- *    binding" in the row schema, not a federated query: Pi states nothing about it, neither 'none' nor UNKNOWN, and the render keeps
- *    the coverage its other legs give it); D2 three constructed query views (READY UNKNOWN with no witness, READY FALSE with one,
- *    PENDING), the federated-query half of (c), ride the registered, native and sanitized readings byte for byte, the UNKNOWN verdict
- *    never rewritten and the witnessed verdict unchanged; D3 the absence census: across the whole battery, every
- *    surfaced string's absence wording (ABSENCE) is one of the producer-backed phrases (ABSENCE_ALLOWLIST), with six controls;
- *    D4 the src string literals stating an absence of observations are exactly two: the inspector's empty-page line, which reads
- *    Pi's own projection page (page.total===0), and the projection's thrown refusal of an empty text field; every battery reading
- *    projects exactly one snapshot, so no rf result empties that page.
+ *  D, acceptance (c) and (d). D1 an empty and an absent observation list add no note: the two projections are identical, the
+ *    projection is held whole to the roster (every field, the workspace root normalized), so a word an empty or absent list adds
+ *    anywhere in it reds whatever its wording (wb-d8io, the gate's F1(i): its G9 statusText and G10 note), and the reading carries
+ *    [] verbatim (a render's own list is rf's record of that render, "[] when the render's layers carry no command binding" in the
+ *    row schema, not a federated query: Pi states nothing about it, neither 'none' nor UNKNOWN, and the render keeps the coverage
+ *    its other legs give it); D2 three constructed query views (READY UNKNOWN with no witness, READY FALSE with one, PENDING), the
+ *    federated-query half of (c), ride the registered, native and sanitized readings byte for byte, the UNKNOWN verdict never
+ *    rewritten and the witnessed verdict unchanged; D3 the absence census: across the whole battery, every surfaced string's
+ *    absence wording (ABSENCE, built from ABSENCE_WORDS) is one of the producer-backed phrases (ABSENCE_ALLOWLIST), with ten
+ *    controls and one per word; D4 the src string literals stating an absence of observations (OBSERVATION_ABSENCE, built from its
+ *    word lists before and after the noun) are exactly two: the inspector's empty-page line, which reads Pi's own projection page
+ *    (page.total===0), and the projection's thrown refusal of an empty text field, with seven controls and one per word; every
+ *    battery reading projects exactly one snapshot, so no rf result empties that page. wb-d8io widened both word lists (the gate's
+ *    G9, G10 and D4a wordings), measured quiet on the battery and on src at trunk 92e5ae2.
  *  Q, the residuals' quiet rows (below).
  * FIXTURES: the vocabularies are MEASURED; every envelope is CONSTRUCTED on the full-shape render fixture
  * (test/helpers/rf-render-fixture.ts): the rows follow the producer's row schema and cross-field rules, the federation words ride
@@ -65,22 +73,32 @@
  * additive result key (the provider admits additive keys), and the refusal puts the registry's RF_OBSERVATION_DENIED (error,
  * exit 5) on a context.render failure envelope that keeps its workspace. Projections use the rf-cli seam label the native readings
  * come through: the fixture-seam label holds every render partial (wb-973.2 R2), which would hide the value/failure split.
- * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id, label
- * and pins, every pin's witness, the vocabularies, matchers, allowlist and residual map - is held to the out-of-file roster
- * test/fixtures/rf-typed-status-echo-roster.json, whose measured vocabularies drive the per-status cases; the last case holds
- * every registered test title, its run mode and every pin's reached record to the roster.
+ * FROZEN SHAPE (standing rule 16) AND OUTSIDE ANCHOR: ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set -
+ * every row's id, label and pins, every pin's witness, the vocabularies, matchers, absence words, allowlist and residual map - is
+ * held to the out-of-file roster test/fixtures/rf-typed-status-echo-roster.json, whose measured vocabularies drive the per-status
+ * cases. The pins row by row, the residual map, the matchers and the absence words are also held to the four tables of the
+ * append-only receipt docs/workbench/receipts/wb-d8io.md (wb-d8io, the gate's F2: a pin or a residual removed from every literal
+ * of this file and from the roster together still stands there, and a receipt sheds no line, standing rule 15). The last case
+ * holds every registered test title, its run mode and every pin's reached record to the roster, and records its own end; a
+ * file-level hook reds a run in which every pin case reached its witness while the judge neither finished nor failed (wb-d8io,
+ * the gate's F4: a skip modifier, a todo, an early return or a deleted judge).
  * RESIDUALS (named, each with a pinned quiet row): R-UNLISTED the note names at most four distinct not-observed words, so a fifth
  * one and beyond is the marker … and two renders differing only there share a note, while the count and every reading still
  * carry each row (Q1); R-TONE-CLASS the snapshot node's coverage, tone and statusText are Pi presentation classes, so PENDING and
  * UNKNOWN (or suppressed and denied) rows yield the same node and differ only in the note and the readings (Q2); R-NULL-AS-VALUE
  * rf's null status is a value, so a null-only and an observed-only render project identically (Q3), distinct from every failure
  * state (B5); R-ADDITIVE-UNREAD a federation record on an additive result key rides the readings verbatim but the adapter projects
- * none of it (Q4); R-COMPOSED-FIELD a field name assembled at runtime is invisible to A1's text scan (A1's composed control stays 0).
+ * none of it (Q4); R-COMPOSED-FIELD a field name assembled at runtime is invisible to A1's scan (A1's composed control stays 0);
+ * R-ABSENCE-VOCABULARY an absence wording outside the enumerated words (ABSENCE_WORDS on a surfaced string, the OBSERVATION_ABSENCE
+ * word lists on a src literal) reads quiet to D3 and D4, while D1 holds the empty and absent renders whole (Q5); R-UNENUMERATED-FIELD
+ * a federation record read only through a field FEDERATION_MATCHERS does not enumerate - a generic word, or a name Pi already
+ * spells for its own records (definition_digest, contract_digest, query_id, failure_code) - is invisible to A1; the constructed
+ * records' fields are partitioned between the matchers and UNENUMERATED_FIELDS (Q6).
  * SCOPE: the vocabularies are producer facts at the installed rf; Pi vendors no rf schema, so a producer change is seen only when a
  * re-measure re-reads them. The armed half (a federation reader echoing PublicState, availability, verdict and the coverage witness)
  * waits for the FW envelopes and FW-18 (rfc-0txnl.22): no reader is added or faked here.
  *
- * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src is only read.
+ * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src and the receipt are only read.
  */
 import { chmodSync, type Dirent, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
@@ -101,6 +119,7 @@ import {
 } from "../src/workbench/reactivefiber-observer.js";
 import { sanitizeWorkbenchJson } from "../src/workbench/redaction.js";
 import { RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
+import { docsSection, sectionTables } from "./helpers/census.js";
 import { fullShapeRf } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
@@ -111,6 +130,17 @@ type JsonObject = { [key: string]: JsonValue };
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
 const ROSTER_PATH = join(HERE, "fixtures", "rf-typed-status-echo-roster.json");
+/** wb-d8io (the o4h0.7 gate's F2): the append-only receipt whose four tables anchor this census's judged set from outside it. */
+const RECEIPT_PATH = join(REPO, "docs", "workbench", "receipts", "wb-d8io.md");
+/** The receipt's entry heading the four table sections sit under (the receipt's title, its first line, sits above it). */
+const RECEIPT_ENTRY = "2026-10-24 the typed-status echo census judged set, anchored outside the census (wb-o4h0.7 gate F1-F4)";
+/** The four table sections and the header row each must keep. */
+const RECEIPT_TABLES = {
+  pins: { heading: "Judged pins, wb-d8io cut 1", header: ["Row", "Pin"] },
+  residuals: { heading: "Residuals, wb-d8io cut 1", header: ["Residual", "Quiet row"] },
+  matchers: { heading: "Federation matchers, wb-d8io cut 1", header: ["Matcher"] },
+  words: { heading: "Absence words, wb-d8io cut 1", header: ["Vocabulary", "Word"] },
+} as const;
 const ROOT = process.cwd();
 const PREVIEW_ID = "reactivefiber.render.preview";
 const GRANTS = ["reactivefiber:render"];
@@ -148,22 +178,75 @@ const ROW_KEYS: readonly string[] = ["observation_id", "lens_key", "value_digest
 /** The federation spellings B6 places on rows: the shipped PENDING (PublicState and Availability), UNKNOWN (Verdict), SUPPRESSED
  * and FAILED (PublicState); four, the most a note names (R-UNLISTED). */
 const FEDERATION_WORDS: readonly string[] = ["PENDING", "UNKNOWN", "SUPPRESSED", "FAILED"];
-/** The federation boundary and query-view record field names, and the two record names, no src module may spell today (A1). */
+/** The federation boundary and query-view record field names and the two record names (QueryViewRef, OwnerBoundary) no src
+ * module's code may spell today (A1), each read in a code unit as spelled and in its words (wordsOf). */
 const FEDERATION_MATCHERS: readonly RegExp[] = [
-  /\bpublication[\s_-]?state\b/i,
-  /\bpublic[\s_-]?state\b/i,
-  /\bwitness[\s_-]?digest\b/i,
-  /\bcompleteness[\s_-]?reason\b/i,
-  /\bmatched[\s_-]?count\b/i,
-  /\bspec[\s_-]?digest\b/i,
-  /\bresource[\s_-]?revision\b/i,
-  /\bevidence[\s_-]?digest\b/i,
-  /\bprovenance[\s_-]?digest\b/i,
-  /\bquery[\s_-]?views?\b/i,
+  /\bpublication[\s_.-]?state\b/i,
+  /\bpublic[\s_.-]?state\b/i,
+  /\bwitness[\s_.-]?digest\b/i,
+  /\bmanifest[\s_.-]?digest\b/i,
+  /\bcompleteness[\s_.-]?reason\b/i,
+  /\bmatched[\s_.-]?count\b/i,
+  /\bspec[\s_.-]?digest\b/i,
+  /\bresource[\s_.-]?revision\b/i,
+  /\bevidence[\s_.-]?digest\b/i,
+  /\bprovenance[\s_.-]?digest\b/i,
+  /\bpublic[\s_.-]?port\b/i,
+  /\bbackend[\s_.-]?instance[\s_.-]?id\b/i,
+  /\bquery[\s_.-]?views?\b/i,
+  /\bowner[\s_.-]?boundary\b/i,
   /\bfederat/i,
 ];
+/** One spelling per matcher, in matcher order, that it alone catches: A1's positive control for each member. */
+const FEDERATION_SPELLINGS: readonly string[] = [
+  "publication_state",
+  "PublicState",
+  "witness_digest",
+  "manifest_digest",
+  "completeness_reason",
+  "matched_count",
+  "spec_digest",
+  "resource_revision",
+  "evidence_digest",
+  "provenance_digest",
+  "public_port",
+  "backend_instance_id",
+  "QueryViewRef",
+  "OwnerBoundary",
+  "federated",
+];
+/** The constructed federation records' fields no matcher catches (R-UNENUMERATED-FIELD, Q6): generic words, and names Pi already
+ * spells for its own records (definition_digest, contract_digest, query_id, failure_code: measured in src at trunk 92e5ae2). */
+const UNENUMERATED_FIELDS: readonly string[] = [
+  "availability",
+  "complete",
+  "contract_digest",
+  "coverage",
+  "cursor",
+  "definition_digest",
+  "epoch",
+  "failure_code",
+  "generation",
+  "position",
+  "query_id",
+  "resource",
+  "resource_name",
+  "schema",
+  "schema_digest",
+  "scope",
+  "sensitivity",
+  "sources",
+  "stream_id",
+  "value",
+  "verdict",
+  "view_revision",
+  "workspace_id",
+];
+/** The absence words D3 reads in a surfaced string; wb-d8io added unavailable through unobserved (the gate's G9/G10 wording class),
+ * measured quiet on the battery at trunk 92e5ae2. */
+const ABSENCE_WORDS: readonly string[] = ["none", "no", "nothing", "absent", "empty", "zero", "unavailable", "lacking", "lacks", "without", "nil", "void", "blank", "unrecorded", "unobserved"];
 /** Absence wording in a surfaced string (D3): an absence word, or a standalone 0 (never the 0 of a dotted release or a digit run). */
-const ABSENCE = /\b(?:none|no|nothing|absent|empty|zero)\b|(?<![\w.])0(?![\w.])/i;
+const ABSENCE = new RegExp(`\\b(?:${ABSENCE_WORDS.join("|")})\\b|(?<![\\w.])0(?![\\w.])`, "i");
 /** The absence wording a surfaced string may carry, each backed by a producer field or naming the host's own input. */
 const ABSENCE_ALLOWLIST: readonly string[] = [
   "0 authoritative storage writes (envelope storage_write_count)",
@@ -177,8 +260,15 @@ const ABSENCE_ALLOWLIST: readonly string[] = [
 const INSPECTOR_EMPTY = "No source observations for this invocation; no graph or timeline is inferred.";
 /** The projection's refusal of an empty text field (src/workbench/observation.ts), the one other such literal: a thrown error. */
 const PROJECTION_REFUSAL = "Observation <expr> is empty, unsafe or exceeds payload limit.";
+/** The words D4 reads before and after the noun in a src literal; wb-d8io added zero, without and nothing before it and unavailable
+ * through unobserved after it (the gate's D4a wording class), measured: still exactly the two literals at trunk 92e5ae2. */
+const OBSERVATION_ABSENCE_BEFORE: readonly string[] = ["no", "zero", "without", "nothing"];
+const OBSERVATION_ABSENCE_AFTER: readonly string[] = ["none", "absent", "empty", "unavailable", "lacking", "nil", "zero", "unrecorded", "unobserved"];
 /** A src literal stating an absence of observations (D4). */
-const OBSERVATION_ABSENCE = /\bno\b[^.;]{0,40}\bobservations?\b|\bobservations?\b[^.;]{0,20}\b(?:none|absent|empty)\b/i;
+const OBSERVATION_ABSENCE = new RegExp(
+  `\\b(?:${OBSERVATION_ABSENCE_BEFORE.join("|")})\\b[^.;]{0,40}\\bobservations?\\b|\\bobservations?\\b[^.;]{0,20}\\b(?:${OBSERVATION_ABSENCE_AFTER.join("|")})\\b`,
+  "i",
+);
 /** Each residual and its pinned quiet row. */
 const RESIDUALS: Readonly<Record<string, string>> = {
   "R-UNLISTED": "Q1",
@@ -186,6 +276,8 @@ const RESIDUALS: Readonly<Record<string, string>> = {
   "R-NULL-AS-VALUE": "Q3",
   "R-ADDITIVE-UNREAD": "Q4",
   "R-COMPOSED-FIELD": "A1",
+  "R-ABSENCE-VOCABULARY": "Q5",
+  "R-UNENUMERATED-FIELD": "Q6",
 };
 
 interface Row {
@@ -198,7 +290,8 @@ interface Row {
 const ROWS: readonly Row[] = [
   {
     id: "A",
-    label: "(trigger, absent today) Pi reads no rf federation status record: no src module spells a federation boundary or query-view field, the rf roster stays reactivefiber.render.preview alone, and both readers refuse a federation record as an envelope",
+    label:
+      "(trigger, absent today) Pi reads no rf federation status record: no src module's code (identifiers, plain name chains and literals; comments are never read) spells a federation boundary or query-view field or record name FEDERATION_MATCHERS enumerates, the rf roster stays reactivefiber.render.preview alone, and both readers refuse a federation record as an envelope",
     pins: ["A1", "A2", "A3", "A4"],
   },
   {
@@ -213,13 +306,15 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "D",
-    label: "(c) and (d) zero rows without a coverage witness never render an absence claim: an empty or absent observation list adds no note, a constructed query view's UNKNOWN, witnessed FALSE and PENDING ride every reading verbatim, and no surfaced string asserts absence beyond the producer-backed counts",
+    label:
+      "(c) and (d) zero rows without a coverage witness never render an absence claim: an empty or absent observation list adds no note and projects exactly its held projection, a constructed query view's UNKNOWN, witnessed FALSE and PENDING ride every reading verbatim, and no surfaced string or src literal asserts absence in the enumerated absence words beyond the producer-backed counts",
     pins: ["D1", "D2", "D3", "D4"],
   },
   {
     id: "Q",
-    label: "residuals, each a pinned quiet row: R-UNLISTED (a fifth distinct word is unnamed), R-TONE-CLASS (demoting words share the node's partial class), R-NULL-AS-VALUE (a null value projects as a value) and R-ADDITIVE-UNREAD (a federation record on an additive key projects nothing)",
-    pins: ["Q1", "Q2", "Q3", "Q4"],
+    label:
+      "residuals, each a pinned quiet row: R-UNLISTED (a fifth distinct word is unnamed), R-TONE-CLASS (demoting words share the node's partial class), R-NULL-AS-VALUE (a null value projects as a value), R-ADDITIVE-UNREAD (a federation record on an additive key projects nothing), R-ABSENCE-VOCABULARY (an absence wording outside the enumerated words reads quiet) and R-UNENUMERATED-FIELD (a record field no matcher enumerates is unseen by A1)",
+    pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6"],
   },
 ];
 
@@ -243,11 +338,17 @@ interface Vocabularies {
   readonly availabilities: readonly string[];
   readonly witnessFields: readonly string[];
 }
+interface AbsenceWords {
+  readonly surfaced: readonly string[];
+  readonly literalBefore: readonly string[];
+  readonly literalAfter: readonly string[];
+}
 interface Roster {
   readonly rfVersion: string;
   readonly vocabularies: Vocabularies;
   readonly federationMatchers: readonly string[];
   readonly absenceAllowlist: readonly string[];
+  readonly absenceWords: AbsenceWords;
   readonly residuals: Readonly<Record<string, string>>;
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
@@ -288,6 +389,8 @@ function readRoster(): Roster {
   });
   const vocabulary = raw.vocabularies;
   if (typeof raw.rfVersion !== "string") throw new Error("roster needs rfVersion");
+  const absence = raw.absenceWords;
+  if (!isObject(absence)) throw new Error("roster needs absenceWords");
   return {
     rfVersion: raw.rfVersion,
     vocabularies: {
@@ -303,6 +406,11 @@ function readRoster(): Roster {
     },
     federationMatchers: strings(raw.federationMatchers, "federationMatchers"),
     absenceAllowlist: strings(raw.absenceAllowlist, "absenceAllowlist"),
+    absenceWords: {
+      surfaced: strings(absence.surfaced, "absenceWords.surfaced"),
+      literalBefore: strings(absence.literalBefore, "absenceWords.literalBefore"),
+      literalAfter: strings(absence.literalAfter, "absenceWords.literalAfter"),
+    },
     residuals: Object.fromEntries(Object.entries(stringMap(raw.residuals, "residuals", false)).map(([key, item]) => [key, String(item)])),
     rows,
     tests: strings(raw.tests, "tests"),
@@ -644,6 +752,84 @@ function literalTexts(fileName: string, text: string): string[] {
   return found;
 }
 
+/** A code unit's words: camel humps and every non-alphanumeric run split to single spaces, lower-cased, so QueryViewRef,
+ * readPublicationState, publication.state and PUBLICATION_STATE read as the field's own words. */
+function wordsOf(unit: string): string {
+  return unit
+    .replace(/([a-z\d])([A-Z])/g, "$1 $2")
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
+    .replace(/[^A-Za-z\d]+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+/** The names of a property-access chain whose every link is a plain name (record.publication.state); a chain on any other
+ * expression (a call, a literal, an element access) has none and reads only through its own units. */
+function nameChain(node: ts.Expression): string[] | undefined {
+  if (ts.isIdentifier(node)) return [node.text];
+  if (node.kind === ts.SyntaxKind.ThisKeyword) return ["this"];
+  if (!ts.isPropertyAccessExpression(node)) return undefined;
+  const head = nameChain(node.expression);
+  return head === undefined ? undefined : [...head, node.name.text];
+}
+/** The code units of one module by its TypeScript AST (A1): every identifier and private name, every string, template and
+ * regular-expression literal text (escapes decoded by the parser) and every plain-name property chain joined by dots. Comments
+ * are trivia, never units (wb-d8io, the gate's F3: a comment reads no field). */
+function codeUnits(fileName: string, text: string): string[] {
+  const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, false, ts.ScriptKind.TS);
+  const units: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node) || ts.isStringLiteralLike(node) || ts.isRegularExpressionLiteral(node)) units.push(node.text);
+    else if (ts.isTemplateExpression(node)) units.push([node.head.text, ...node.templateSpans.map(span => span.literal.text)].join("<expr>"));
+    if (ts.isPropertyAccessExpression(node)) {
+      const chain = nameChain(node);
+      if (chain !== undefined) units.push(chain.join("."));
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return units;
+}
+/** The FEDERATION_MATCHERS a module's code units spell, by source in matcher order: in a unit as spelled or in its words. */
+function matcherHits(units: readonly string[]): string[] {
+  const spelled = [...units, ...units.map(wordsOf)];
+  return FEDERATION_MATCHERS.filter(matcher => spelled.some(unit => matcher.test(unit))).map(matcher => matcher.source);
+}
+/** The FEDERATION_MATCHERS one module's code spells: A1's controls and Q6 read planted modules through it. */
+function federationHits(fileName: string, text: string): string[] {
+  return matcherHits(codeUnits(fileName, text));
+}
+/** Every key of a JSON object, nested objects included (Q6 reads the constructed federation records' fields). */
+function fieldNames(value: unknown): string[] {
+  return isObject(value) ? Object.entries(value).flatMap(([key, item]) => [key, ...fieldNames(item)]) : [];
+}
+/** A JSON value with the workspace root normalized to <root> in every string: the one host-dependent value a projection carries. */
+function rootless(value: JsonValue): JsonValue {
+  if (typeof value === "string") return value.split(ROOT).join("<root>");
+  if (Array.isArray(value)) return value.map(rootless);
+  if (value !== null && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, rootless(item)]));
+  return value;
+}
+
+/**
+ * The body rows of one table section of the receipt, read through the shared docs reader (test/helpers/census.ts): the section
+ * must render exactly one table and nothing else, carry no HTML (a comment or a tag) and keep its header, so a line added to the
+ * append-only receipt can neither hide a row (a comment, an HTML block, a code fence) nor split the table and restate it. A cell
+ * is the table's source text. The title heading the entry sits under is the receipt's own first line.
+ */
+function receiptTable(table: { readonly heading: string; readonly header: readonly string[] }): string[][] {
+  const markdown = readFileSync(RECEIPT_PATH, "utf8");
+  const parents = [(markdown.split("\n")[0] ?? "").replace(/^# /, ""), RECEIPT_ENTRY];
+  const where = `docs/workbench/receipts/wb-d8io.md section "${table.heading}"`;
+  const section = docsSection(markdown, table.heading, 3, parents);
+  if (!section.ok) throw new Error(`${where}: ${section.why}`);
+  if (section.hasHtml) throw new Error(`${where} carries HTML, which can hide a row of its table`);
+  const kinds = section.blocks.map(block => (block.kind === "other" ? `other:${block.type}` : block.kind));
+  if (JSON.stringify(kinds) !== JSON.stringify(["other:table"])) throw new Error(`${where} must render exactly one table and nothing else; it renders [${kinds.join(", ")}]`);
+  const [head, ...rows] = sectionTables(markdown, table.heading, 3, parents).grids[0] ?? [];
+  if (JSON.stringify(head ?? null) !== JSON.stringify(table.header)) throw new Error(`${where}: its header row is ${JSON.stringify(head ?? null)}; the census binds ${JSON.stringify(table.header)}`);
+  return rows.map(row => [...row]);
+}
+
 /** Every absence wording left in a string once the allowlisted phrases are cut out of it. */
 function absenceResidue(texts: readonly string[]): { phrases: string[]; residue: string[] } {
   const phrases = new Set<string>();
@@ -686,24 +872,53 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
     const files = srcModules();
     const anchor = join(REPO, "src", "workbench", "providers", "reactivefiber.ts");
-    const anchorRead = files.includes(anchor) && textOf(anchor).includes('"context","render"');
+    const anchorUnits = files.includes(anchor) ? codeUnits(relative(REPO, anchor), textOf(anchor)) : [];
+    // The anchor is read twice over: its text carries the render argv and its code units carry both verb words.
+    const anchorRead = textOf(anchor).includes('"context","render"') && anchorUnits.includes("context") && anchorUnits.includes("render");
     const floorMet = files.length >= 100;
-    const hits = files.flatMap(file => FEDERATION_MATCHERS.filter(matcher => matcher.test(textOf(file))).map(matcher => `${relative(REPO, file)}: ${matcher.source}`));
+    let units = 0;
+    const hits: string[] = [];
+    for (const file of files) {
+      const fileUnits = codeUnits(relative(REPO, file), textOf(file));
+      units += fileUnits.length;
+      for (const source of matcherHits(fileUnits)) hits.push(`${relative(REPO, file)}: ${source}`);
+    }
+    const unitsFloorMet = units >= 50_000;
     expect(floorMet, `src modules walked: ${files.length}`).toBe(true);
+    expect(unitsFloorMet, `src code units read: ${units}`).toBe(true);
     expect(anchorRead, "the anchor providers/reactivefiber.ts was not read with its render argv").toBe(true);
-    expect(hits, "a federation field in src needs the FW envelopes and FW-18 (rfc-0txnl.22)").toEqual([]);
-    const control = (text: string): number => FEDERATION_MATCHERS.filter(matcher => matcher.test(text)).length;
+    expect(hits, "a federation field in src code needs the FW envelopes and FW-18 (rfc-0txnl.22)").toEqual([]);
+    const control = (text: string): number => federationHits("control.ts", text).length;
+    // Each matcher's own positive control: its spelling is caught by it alone.
+    const members = Object.fromEntries(FEDERATION_SPELLINGS.map(spelling => [spelling, federationHits("control.ts", `const key = "${spelling}";`)]));
+    expect(Object.values(members)).toStrictEqual(FEDERATION_MATCHERS.map(matcher => [matcher.source]));
     const controls = {
+      members,
       snake: control("const state = record.publication_state;"),
       camel: control("const state = record.publicationState;"),
       quoted: control('const key = "matched_count";'),
       destructured: control("const { witness_digest: witness } = coverage;"),
+      recordName: control("interface QueryViewRef { availability: string; verdict: string }"),
+      camelRecord: control("const ref = queryViewRef;"),
+      boundaryName: control("type Boundary = OwnerBoundary;"),
+      witnessField: control('const key = "manifest_digest";'),
+      escaped: control('const key = "publication\\u005fstate";'),
+      escapedName: control("const publication\\u005fstate = 1;"),
+      dotted: control('const path = "publication.state";'),
+      chain: control("const value = record.publication.state;"),
+      prefixed: control("const value = readPublicationState(record);"),
+      pattern: control("const reads = /witness_digest/;"),
       prose: control("// reads a federated query view"),
+      commentOnly: control("/** the federated query view of an OwnerBoundary */\nexport const x = 1;"),
       composed: control('const key = ["publication", "state"].join("_");'),
     };
-    // R-COMPOSED-FIELD's quiet row: a spelling assembled from parts stays invisible to the text scan.
-    expect(controls.composed).toBe(0);
-    return { floorMet, anchorRead, hits, controls };
+    // The gate's F3: a comment reads no field, so a comment-only mention is no hit. R-COMPOSED-FIELD's quiet row: a spelling
+    // assembled from parts stays invisible to the scan.
+    expect({ prose: controls.prose, commentOnly: controls.commentOnly, composed: controls.composed }).toStrictEqual({ prose: 0, commentOnly: 0, composed: 0 });
+    // The measured coverage witness fields (query_view.py:181, the roster's vocabulary) are each caught.
+    const measuredWitnessFields = Object.fromEntries(MEASURED.witnessFields.map(field => [field, control(`const key = "${field}";`)]));
+    expect(Object.values(measuredWitnessFields).every(count => count === 1)).toBe(true);
+    return { floorMet, unitsFloorMet, anchorRead, hits, controls, measuredWitnessFields };
   },
   A2: async () => {
     const injected = new CapabilityRegistry();
@@ -898,7 +1113,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const { reading, before } = await injectedReading(rendered([]));
     expect(JSON.stringify(sourceOf(reading))).toBe(before);
     expect(resultRows(sourceOf(reading))).toEqual([]);
-    return { notes: observationNotes(empty), identical: JSON.stringify(empty) === JSON.stringify(absent), shape: shapeJson(shapeOf(empty)), residue, readingRows: 0 };
+    // wb-d8io (the gate's F1(i)): the whole projection is the witness, so wording an empty or absent list adds anywhere in it - the
+    // node, a note outside the observations family, an evidence reference - moves it, in any vocabulary.
+    return { notes: observationNotes(empty), identical: JSON.stringify(empty) === JSON.stringify(absent), residue, readingRows: 0, projection: rootless(json(empty)) };
   },
   D2: async () => {
     const envelope = renderWith({ query_views: [...VIEWS] });
@@ -928,9 +1145,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       nothing: caught("nothing observed"),
       empty: caught("empty result"),
       absent: caught("value absent"),
+      unavailable: caught("observations unavailable"),
+      without: caught("a render without observations"),
+      lacking: caught("observations lacking"),
+      unrecorded: caught("observations unrecorded"),
     };
     expect(Object.values(controls).every(Boolean)).toBe(true);
-    return { strings: texts.length >= 40, phrases, residue, controls };
+    // One control per word, read from the roster's list (an anchor outside this file's literals).
+    const words = ROSTER.absenceWords.surfaced.filter(word => caught(`observations: ${word}`));
+    expect(words).toStrictEqual([...ROSTER.absenceWords.surfaced]);
+    return { strings: texts.length >= 40, phrases, residue, controls, words };
   },
   D4: async () => {
     const files = srcModules();
@@ -950,9 +1174,18 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       none: control("observations: none"),
       empty: control("observations empty"),
       comment: literalTexts("c.ts", "// no observations here").length,
+      zero: control("zero observations recorded"),
+      unavailable: control("observations unavailable for this render"),
+      without: control("a render without observations"),
     };
-    expect(controls).toStrictEqual({ noObservations: true, none: true, empty: true, comment: 0 });
-    return { hits, keyedOnPage, thrown, snapshots, controls };
+    expect(controls).toStrictEqual({ noObservations: true, none: true, empty: true, comment: 0, zero: true, unavailable: true, without: true });
+    // One control per word on each side of the noun, read from the roster's lists.
+    const words = {
+      before: ROSTER.absenceWords.literalBefore.filter(word => control(`${word} observations recorded`)),
+      after: ROSTER.absenceWords.literalAfter.filter(word => control(`observations ${word}`)),
+    };
+    expect(words).toStrictEqual({ before: [...ROSTER.absenceWords.literalBefore], after: [...ROSTER.absenceWords.literalAfter] });
+    return { hits, keyedOnPage, thrown, snapshots, controls, words };
   },
   Q1: async () => {
     const first = ["missing", "suppressed", "invalid", "timeout", "denied"];
@@ -994,14 +1227,51 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(withBoundary).toBe(bare);
     return { views: withViews === bare, boundary: withBoundary === bare };
   },
+  Q5: async () => {
+    // R-ABSENCE-VOCABULARY's quiet row: two absence wordings outside every enumerated word read quiet - to D3's residue on a
+    // projection carrying one as a note, and to D4's literal matcher - so a claim worded so is seen only on the empty and absent
+    // renders, which D1 holds whole.
+    const wordings = ["observations: not recorded", "the observation list was not supplied"];
+    const topology = project(rendered([rowOf("observed")]));
+    const planted = wordings.map(text => absenceResidue(surfacedStrings(json({ ...topology, diagnostics: [...topology.diagnostics, text] }))).residue.length);
+    const literal = wordings.map(text => OBSERVATION_ABSENCE.test(text));
+    expect(planted).toStrictEqual([0, 0]);
+    expect(literal).toStrictEqual([false, false]);
+    return { wordings, planted, literal };
+  },
+  Q6: async () => {
+    // R-UNENUMERATED-FIELD's quiet row: every field of the constructed federation records (the query views and the boundary
+    // record, nested fields included) is caught by exactly one matcher or listed in UNENUMERATED_FIELDS, and a read of a listed
+    // field in code is no A1 hit.
+    const fields = [...new Set([...VIEWS, BOUNDARY_FAILED].flatMap(fieldNames))].sort();
+    const reads = new Map<string, string[]>(fields.map(field => [field, federationHits("q6.ts", `const value = record.${field};`)]));
+    const matched = Object.fromEntries([...reads].filter(([, hits]) => hits.length > 0));
+    const unenumerated = [...reads].filter(([, hits]) => hits.length === 0).map(([field]) => field);
+    expect(Object.values(matched).every(hits => hits.length === 1), "a field caught by two matchers").toBe(true);
+    expect(unenumerated).toStrictEqual([...UNENUMERATED_FIELDS]);
+    return { matched, unenumerated };
+  },
 };
 
 /** The pins whose case ran to its witness comparison and past it, in run order (the reached record). */
 const REACHED: string[] = [];
+/** The roster judge's run record (wb-d8io, the gate's F4): failed by its onTestFailed hook, finished as its last statement. */
+const JUDGE = { failed: false, finished: false };
 
 describe("wb-o4h0.7 rf typed-status echo census (RF-FEDERATED-WORKSPACES-R9, standing echo posture)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:6", "C:4", "D:4", "Q:4"]);
+  it("the judged set: the frozen shape, the out-of-file roster, the receipt's tables and the cases agree", () => {
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:6", "C:4", "D:4", "Q:6"]);
+    // wb-d8io (the gate's F2): the pins row by row, the residual map, the matchers and the absence words stand in the append-only
+    // receipt's tables, outside this file and its roster.
+    expect(ROWS.flatMap(row => row.pins.map(pin => [row.id, pin])), "the pins stand in the receipt's judged-pin table").toStrictEqual(receiptTable(RECEIPT_TABLES.pins));
+    expect(Object.entries(RESIDUALS), "the residual map stands in the receipt's residual table").toStrictEqual(receiptTable(RECEIPT_TABLES.residuals));
+    expect(FEDERATION_MATCHERS.map(matcher => [`\`${matcher.source}\``]), "the matchers stand in the receipt's matcher table").toStrictEqual(receiptTable(RECEIPT_TABLES.matchers));
+    const words = [
+      ...ABSENCE_WORDS.map(word => ["surfaced", word]),
+      ...OBSERVATION_ABSENCE_BEFORE.map(word => ["literal-before", word]),
+      ...OBSERVATION_ABSENCE_AFTER.map(word => ["literal-after", word]),
+    ];
+    expect(words, "the absence words stand in the receipt's word table").toStrictEqual(receiptTable(RECEIPT_TABLES.words));
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -1019,6 +1289,7 @@ describe("wb-o4h0.7 rf typed-status echo census (RF-FEDERATED-WORKSPACES-R9, sta
     }).toStrictEqual(ROSTER.vocabularies);
     expect(FEDERATION_MATCHERS.map(matcher => matcher.source)).toStrictEqual([...ROSTER.federationMatchers]);
     expect([...ABSENCE_ALLOWLIST]).toStrictEqual([...ROSTER.absenceAllowlist]);
+    expect({ surfaced: [...ABSENCE_WORDS], literalBefore: [...OBSERVATION_ABSENCE_BEFORE], literalAfter: [...OBSERVATION_ABSENCE_AFTER] }).toStrictEqual(ROSTER.absenceWords);
     expect(RESIDUALS).toStrictEqual(ROSTER.residuals);
     for (const pin of Object.values(RESIDUALS)) expect(ROWS.some(row => row.pins.includes(pin)), `${pin} is a judged pin`).toBe(true);
     expect(PUBLIC_STATES.filter(state => FEDERATION_WORDS.includes(state))).toStrictEqual(["PENDING", "SUPPRESSED", "FAILED"]);
@@ -1039,7 +1310,10 @@ describe("wb-o4h0.7 rf typed-status echo census (RF-FEDERATED-WORKSPACES-R9, sta
     });
   }
 
-  it("roster: every registered test, its run mode and every pin's reached record equal the roster, in order", ({ task }) => {
+  it("roster: every registered test, its run mode and every pin's reached record equal the roster, in order", ({ task, onTestFailed }) => {
+    onTestFailed(() => {
+      JUDGE.failed = true;
+    });
     const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {
       for (const child of tasks) {
@@ -1057,5 +1331,15 @@ describe("wb-o4h0.7 rf typed-status echo census (RF-FEDERATED-WORKSPACES-R9, sta
     const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran first").toEqual([]);
     expect(REACHED, "every pin's case reached past its witness comparison, in row order").toStrictEqual(ROWS.flatMap(row => row.pins));
+    JUDGE.finished = true;
   });
+});
+
+// wb-d8io (the o4h0.7 gate's F4): a skip modifier, a todo, an early return or a deleted judge leaves the judge's run record
+// unfinished; when every pin case reached past its witness comparison (an unfiltered run), that reds the file here, outside it.
+afterAll(() => {
+  const ran = ROWS.flatMap(row => row.pins).every(pin => REACHED.includes(pin));
+  if (ran && !JUDGE.finished && !JUDGE.failed) {
+    throw new Error("the roster judge did not run to its end while every pin case reached its witness: the registration judge is skipped, emptied or gone");
+  }
 });
