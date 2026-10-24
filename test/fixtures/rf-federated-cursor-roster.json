@@ -231,6 +231,11 @@
   "naiveRenders": [
    "accepted-as-current",
    "accepted-as-owner-latest"
+  ],
+  "misEchoes": [
+   "accepted-cursor-misechoed",
+   "notified-cursor-misechoed",
+   "dirty-flag-misechoed"
   ]
  },
  "records": {
@@ -693,6 +698,18 @@
         "accepted-as-owner-latest": 275
        }
       },
+      "echoControl": {
+       "misEchoed": 42,
+       "misEchoes": {
+        "accepted-cursor-misechoed": 42,
+        "notified-cursor-misechoed": 42,
+        "dirty-flag-misechoed": 42
+       },
+       "unparsed": {
+        "accepted-as-current": 600,
+        "accepted-as-owner-latest": 600
+       }
+      },
       "hazard": {
        "outcome": "applied",
        "nodes": 1,
@@ -748,6 +765,56 @@
        "hits": [
         "src/workbench/federation-import.ts: latest",
         "src/workbench/peer-watermark.ts: current"
+       ]
+      },
+      "walk": {
+       "files": [
+        "src/plain.ts",
+        "src/workbench/federation-notes.md",
+        "src/workbench/hosts/federation/peer.ts",
+        "src/workflow/peers/archive/2026/q4/watermark-log.json"
+       ],
+       "scan": {
+        "scoped": [
+         "src/workbench/federation-notes.md",
+         "src/workbench/hosts/federation/peer.ts",
+         "src/workflow/peers/archive/2026/q4/watermark-log.json"
+        ],
+        "hits": [
+         "src/workbench/federation-notes.md: current",
+         "src/workbench/hosts/federation/peer.ts: current",
+         "src/workflow/peers/archive/2026/q4/watermark-log.json: latest"
+        ]
+       }
+      },
+      "floorControl": {
+       "atFloor": [
+        "src:true",
+        "src/ui:true",
+        "src/workbench:true",
+        "src/workbench/hosts:true",
+        "src/workbench/providers:true",
+        "src/workflow:true"
+       ],
+       "oneShort": [
+        [
+         "src:false"
+        ],
+        [
+         "src/ui:false"
+        ],
+        [
+         "src/workbench:false"
+        ],
+        [
+         "src/workbench/hosts:false"
+        ],
+        [
+         "src/workbench/providers:false"
+        ],
+        [
+         "src/workflow:false"
+        ]
        ]
       }
      }
