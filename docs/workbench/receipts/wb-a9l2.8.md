@@ -46,3 +46,49 @@ Results, measured by the cutting seat on trunk f88044c with this cut (the witnes
 - The census reads 32 of 32 green. Before its receipt existed, its judged-set case and Q5 were red on the missing file.
 - Red-first on the subject: nine planted acceptance violations in src, each red and then restored: an argv spawning graph publish (7 red: A2, A3, C4-C8); the native descriptor declaring effectClass write (4: A4, A5, C1, C8); a second rf capability naming graph.publish (5: A2, A4, A5, B1, C1); renderArgv without --no-commit (5: A3, C4-C7); a second rf spawn site (2: A1, A2); a src path into rf's graph document (1: B2); the carrier naming a committing render (3: A4, B1, Q4); a third input form on the view arm (1: C9); an rf graph read added to the reconcile roster (2: A2, A4).
 - CT-BATTERY v2: CT1 red=2; CT1b red=2; CT2 red=2; CT3 red=1; CT4 red=2; CT5 red=2; CT6 red=3. CT5 is killed only by the anchor listing above; CT6 (C6 removed from every literal) by the listing and by C9's src input forms; CT2 with the listing shortened in step is still red through the export row's clause (a).
+
+## 2026-10-24 follow-up receipt (wb-pdee): settle-window rows and the three unnamed static spelling families (trunk 92e5ae2)
+
+- Bead: wb-pdee, the R694 follow-up of landing 263 (gate of record cmd_5f0f6e9c5468; F1 leads, F2 rides). This entry adds rows to the census that this receipt records and continues its anchor listing. No line above is changed.
+- F1, cured by row S. C1-C3 read the argv recorder right after each call, so the census never saw a child that a descriptor or inspection call starts without awaiting it. S1-S4 repeat the C1, C2, C3 and C7 calls, then settle before they read. The settle first waits a 3 s window for deferred work, then waits until no child process the test worker started is still running (its ProcessWrap handles in process.getActiveResourcesInfo, bounded at 30 s). S1-S3 then read zero spawns and S4 the one render spawn.
+- Row S also carries two support pins. S5 is the settle's positive control: a planted unawaited spawn of the stand-in is running right after the call, an immediate read misses it, and the settle records it. S6 pins the recorder's isolation: every pin starts with PATH on one empty scratch directory, and between pins PATH names that removed directory, so a stray spawn finds no binary.
+- F2 (i), cured by row I. rf adds its CLI-A25 global options to every group parser, so a global can stand between a leaf's words (ReactiveFiberCLI 6a251bf73af5, src/reactive_fiber_cli/cli/parser.py:251-260 GLOBAL_OPTIONS, :277 VERBOSE_FLAGS, _add_globals on each group parser at :3458). Line :286 lists the three that take a value. A2 now also reads each literal with every option token, the value a value option takes and every runtime token removed. I1 covers the eight mutating leaves with 16 array spellings of a global, I2 covers shell lines and templates, and I3 keeps the read leaves and the near misses clean.
+- F2 (ii), cured by row K. A1 now reads a child_process function imported under another name (named imports, destructured require() and import()) and a callee written as an element access with a literal key.
+- F2 (iii), cured by row D. B2 now also reads the literal arguments of a call and the elements of an array as one path joined by "/", and it reads a backslash as "/".
+- Residuals that this entry names (row N), each a pinned quiet row:
+  - Q7 R-LATE-SPAWN: a spawn deferred past the window goes unseen by its own row.
+  - Q8 R-UNREF-CHILD: an unref'd child holds no ProcessWrap handle, so only the window covers it.
+  - Q9 R-REBOUND-CALLEE: a child_process function re-bound through a variable, a promisify() wrapper, call or apply, or a computed key is no site to A1.
+  - Q10 R-COMPOSED-PATH: a document path built from non-literal segments escapes B2.
+  - Q11 R-SHELL-QUOTED: in a shell line, a quoted option value that holds a space splits apart and hides the leaf from A2.
+- Owner anchor: the wb-pdee row of the tracked bead export (.beads/issues.jsonl) states F1's cure and F2's families (i), (ii) and (iii), and rows S, I, K and D hold their labels to them verbatim.
+- Anchor listing, continued. The census reads every listing line of this file in order, so the rows below follow row R.
+
+- Row S (pins S1, S2, S3, S4, S5, S6): settle-window rows against CB1 and CB3
+- Row I (pins I1, I2, I3): the interleaved global option, spawn('rf',['graph','--workspace',root,'publish'])
+- Row K (pins K1, K2, K3): aliased-import and element-access callees
+- Row D (pins D1, D2, D3): document path segments, join(dir,'graphs','context.toml') and the array join
+- Row N (pins Q7, Q8, Q9, Q10, Q11): the follow-up's named residuals, each a pinned quiet row that reds when its escape stops being quiet
+- Residual Q7: R-LATE-SPAWN
+- Residual Q8: R-UNREF-CHILD
+- Residual Q9: R-REBOUND-CALLEE
+- Residual Q10: R-COMPOSED-PATH
+- Residual Q11: R-SHELL-QUOTED
+
+Results, measured by the cutting seat on trunk 92e5ae2 with this cut. Each planted edit was applied in place and restored byte-identical (sha256 checked):
+
+- The census reads 52 of 52 green. Written before any matcher change, the new rows read 9 failed of 51: I1, I2, K1, K2, K3, D1, D2, and the literal controls of Q10 and Q11. S6 was added after that run.
+- Against the landed census and receipt (c27bd4b), the gate's probes survive as the gate measured. CB1, P03, P04, P07b, P11b and P11c each read 32 of 32, and P07 reds A1 only.
+- Against this cut, each runtime edit planted in src/workbench/capability-registry.ts is red. Each listed edit is an unawaited stand-in spawn unless it says otherwise:
+  - CB1, in inspect: S2, S3.
+  - CB2, the same spawn awaited: C2, C3, S2, S3.
+  - CB3, in discover: C3, C7, S1, S3, S4.
+  - Deferred by a microtask: S2, S3. By an immediate: C4, S2, S3. By a 1 s timer: S2, S3. Detached and unref'd: S2, S3.
+  - In catalogSnapshot: S1. In effectClassOf: S1. After the invoke dispatch: S4.
+  - Deferred by a 6 s timer: S2, S3, S4. Each late spawn lands in a later pin's window.
+- Each static probe planted as a new src module is red. These were measured on the cut before S6 was added, and S6 changes no matcher:
+  - P03: A1. P03b: A1, A2. P04: A1. P04b: A1. P07: A1, A2. P07b: A1, A2. P11b: B2. P11c: B2.
+  - A shell line with globals between a leaf's words: A2. A template with an interleaved value: A2. A renamed destructured require(): A1. A document path written with a backslash: B2.
+  - The probes of Q9, Q10 and Q11 stay quiet, as the residuals state.
+- CT-BATTERY v2: CT1 red=2; CT1b red=2; CT2 red=2; CT3 red=1; CT4 red=2; CT5 red=2; CT6 red=2. CT5 dies through this listing and the wb-pdee export row, CT6 (S3 removed from every literal) through this listing, and CT2 through both. Two extra probes also die through this listing: the same coordinated hollow of residual Q9, and CT5 on the landed row M.
+- Before S6, the catalogSnapshot edit was called from A4, B1 and C9 with the host PATH, on which an rf is installed. The installed rf (0.1.836) gives that leaf two required options, the edit candidate and the expected head (cli/parser.py:2116), so a bare invocation is refused while its arguments are parsed. No file under graphs/ or state/ of either ancestor rf workspace changed. Whether that rf ran is not verified.
