@@ -72,11 +72,20 @@
  *    mint one for every dirty state; through Pi's real projection and its workflow_observe reply builder (observeInvocation) the
  *    receipt as a refresh is minted freshness "current" and the summary "all returned nodes current" (the hazard), while the
  *    receipt as an event is "unknown", its summary mints nothing and its status text is renderAccepted's, dirty and clean alike.
+ *    The echo instrument's own positive control (wb-zg8m F2): each MIS_ECHOES render mis-echoes exactly one producer field (c,
+ *    h or the dirty flag) on the seeded states at accepted cursor MIS_ECHO_AT only, and the instrument counts exactly those
+ *    states for each field; a render it cannot parse (each NAIVE_RENDERS member) fails every state.
  *  C2 "a grep guard pins no minted 'latest'/'current' (0 federation hits in Pi src)": every src directory is walked at its floor
  *    (FLOORS, two below the direct-file counts at e8850da, 35/11/49/2/4/14, never under 1), the anchor (observation.ts, the
  *    refresh mint) is read and the mint matcher catches its "current"; no src file is federation-scoped (a file is scoped when its
  *    path or its text carries a FEDERATION_WORDS run) and none mints; the same scanner reports a planted set's two federation
- *    mints (one scoped by its path alone, one by its text alone, in a comment) and holds an unscoped mint out.
+ *    mints (one scoped by its path alone, one by its text alone, in a comment) and holds an unscoped mint out. The walk's own
+ *    positive controls (wb-zg8m F1): WALK_PLANT is written under a makeScratch root and read back through the same walk
+ *    (srcFilesOf, filesBelow), which returns every planted regular file - a non-.ts file, a .ts file one level below the
+ *    deepest FLOORS directory and a non-.ts file three levels deeper than it included - and the scanner reports their three
+ *    federation mints and holds the unscoped one out; the floors compare (floorReadings) reads a list holding each FLOORS
+ *    directory's floor exactly as every directory at its floor, and that list one direct file short in each directory in turn
+ *    as exactly that directory below its floor.
  *  M, the matchers C2 reads: MS1-MS4 one pin per FEDERATION_WORDS member, MM1-MM2 one per MINT_WORDS member; each spelling is
  *    caught by its own member only, and each mint pin pins its misses (currently, concurrent, currency and two non-words).
  *  R, the named residuals of C2, each a pinned quiet row: R1 R-VOCABULARY (a mint in a file whose path and text spell no scope
@@ -87,23 +96,32 @@
  * ANCHORS OUTSIDE THE CENSUS (rule 16 CT5/CT6): the tracked bead export (ACCEPTANCE is held to its Acceptance line, each row A-C
  * label to its clause, each clause's part count to its row's pin count; the scope words it names, "federation" and "watermark",
  * and the producer's watermark field and accepted class name must each be caught by exactly one FEDERATION_WORDS member and every
- * member must catch one; its quoted labels are MINT_WORDS) and the producer lines (IDENTIFIER_PHRASES, the fields and the
- * classes). FROZEN SHAPE: ROWS pins `${id}:${pins.length}` as a literal, and the judged set (rows, labels, pins, every pin's
- * witness and every census constant) is held to the out-of-file roster test/fixtures/rf-federated-cursor-roster.json.
- * NOT CLAIMED: a coordinated edit of this file and the roster that removes one R pin together with its RESIDUALS entry (the
- * residual list has no anchor outside the census).
+ * member must catch one; its quoted labels are MINT_WORDS; RESIDUALS, pin and name in order, is the residual list the first
+ * cut's delivery note declares in the same row, its "RESIDUALS (first cut; ...)" line, wb-zg8m F3) and the producer lines
+ * (IDENTIFIER_PHRASES, the fields and the classes). FROZEN SHAPE: ROWS pins `${id}:${pins.length}` as a literal, and the judged
+ * set (rows, labels, pins, every pin's witness and every census constant) is held to the out-of-file roster
+ * test/fixtures/rf-federated-cursor-roster.json.
+ * NOT CLAIMED: an edit of the tracked bead export itself (it is machine-written at each ledger hop; a coordinated edit of this
+ * file and the roster that removes one R pin together with its RESIDUALS entry reds through the export's RESIDUALS line); a
+ * positive control removed or bypassed together with the instrument it controls (WALK_PLANT and the floors list beside
+ * filesBelow and floorReadings, MIS_ECHOES beside echoFailuresOf: each control lives in this file).
  * SCOPE: the guard does not judge negation or context: a federation-scoped file spelling a mint word anywhere reds, a comment
  * stating the prohibition included. The excerpts are producer facts at 6a251bf73af5; Pi vendors no rf source, so a producer-side
  * change is seen only when an rf pin-bump re-reads them. The live legs are A1's rf reader, A2, B1, B2 and C1 (Pi's real
  * projection, and observeInvocation in C1) and C2 (the src tree); the rest hold the reference rule itself.
  *
- * Display paths added: none. Test-only: nothing is spawned or written; src, the bead export and this roster are only read.
+ * FOLLOW-UP wb-zg8m (R694 from landing 272; gate of record cmd_0ccc268a98b6 composing machine gate cmd_be9ca893214a): F1 the
+ * walk and floors positive controls in C2, F2 the echo instrument's per-field control in C1, F3 the residual list's outside
+ * anchor in the judged set; the ROWS shape is unchanged.
+ *
+ * Display paths added: none. Test-only: nothing is spawned; C2 writes WALK_PLANT under one makeScratch root (leak guard
+ * installed) and removes it in the same case; src, the bead export and this roster are only read.
  */
 import { createHash } from "node:crypto";
-import { type Dirent, readdirSync, readFileSync } from "node:fs";
+import { type Dirent, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import { describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "vitest";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
 import {
   type NativeRef,
@@ -117,6 +135,9 @@ import { observeInvocation } from "../src/workbench/observe-query.js";
 import { REACTIVEFIBER_RENDER_PREVIEW_CONTRACT } from "../src/workbench/providers/reactivefiber.js";
 import { type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
 import { fullShapeRf, RF_FIXTURE_GRAPH_REVISION } from "./helpers/rf-render-fixture.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard(afterAll);
 
 type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
 
@@ -403,17 +424,25 @@ function enumerated(line: string): string[] {
 /** The first double-quoted text of a line, or "". */
 const quoted = (line: string): string => /"([^"]+)"/.exec(line)?.[1] ?? "";
 
-/** The Acceptance line of this bead's notes in the tracked bead export. */
-function exportedAcceptance(): string {
+/** The first capture of a notes-line pattern in this bead's row of the tracked bead export; `what` names the line. */
+function exportedNotesLine(pattern: RegExp, what: string): string {
   const marker = `"id":"${BEAD}"`;
   for (const line of readFileSync(BEADS_EXPORT, "utf8").split("\n")) {
     if (!line.includes(marker)) continue;
     const parsed: unknown = JSON.parse(line);
     if (!isObject(parsed) || parsed.id !== BEAD || typeof parsed.notes !== "string") continue;
-    const match = /^Acceptance: (.*)$/m.exec(parsed.notes);
+    const match = pattern.exec(parsed.notes);
     if (match?.[1] !== undefined) return match[1];
   }
-  throw new Error(`the bead export holds no Acceptance line for ${BEAD}`);
+  throw new Error(`the bead export holds no ${what} line for ${BEAD}`);
+}
+/** The Acceptance line of this bead's notes in the tracked bead export. */
+const exportedAcceptance = (): string => exportedNotesLine(/^Acceptance: (.*)$/m, "Acceptance");
+/** The residual list the first cut's delivery note declares in this bead's row of the tracked bead export (wb-zg8m F3): its
+ * "RESIDUALS (first cut; ...): R1 R-..., ..." line, each pin and residual name in order. */
+function exportedResiduals(): { pin: string; name: string }[] {
+  const line = exportedNotesLine(/^RESIDUALS \(first cut; each a named family with a pinned quiet row\): (.*)$/m, "first-cut RESIDUALS");
+  return [...line.matchAll(/\b(R\d+) (R(?:-[A-Z]+)+)\b/g)].map(match => ({ pin: match[1] ?? "", name: match[2] ?? "" }));
 }
 /** The clauses of an Acceptance line: "(x) part; part; (y) ...", the closing period dropped. */
 function clausesOf(acceptance: string): Clause[] {
@@ -682,6 +711,29 @@ const NAIVE_RENDERS: readonly { readonly name: string; readonly render: Render }
   { name: "accepted-as-current", render: state => `rf accepted cursor ${state.accepted_position}: current` },
   { name: "accepted-as-owner-latest", render: state => `owner latest at cursor ${state.accepted_position}` },
 ];
+/** The states a render does not echo exactly: its text does not parse as RENDERED, or it parses with a c, an h or a dirty flag
+ * other than the producer's. */
+function echoFailuresOf(render: Render, states: readonly AcceptedState[]): number {
+  return states.filter(state => {
+    const parsed = RENDERED.exec(render(state));
+    return parsed?.[1] !== String(state.accepted_position) || parsed[2] !== String(state.notified_position) || (parsed[3] === "dirty") !== state.source_dirty;
+  }).length;
+}
+/** The accepted cursor at which each MIS_ECHOES render mis-echoes: a state-dependent mis-echo, never the whole seeded set. */
+const MIS_ECHO_AT = 0;
+/** The echo instrument's positive control (wb-zg8m F2): each render mis-echoes exactly one producer field on the states at
+ * MIS_ECHO_AT and renders every other state as renderAccepted does. */
+const MIS_ECHOES: readonly { readonly name: string; readonly render: Render }[] = [
+  {
+    name: "accepted-cursor-misechoed",
+    render: state => renderAccepted(state.accepted_position === MIS_ECHO_AT ? { ...state, accepted_position: state.accepted_position + 1 } : state),
+  },
+  {
+    name: "notified-cursor-misechoed",
+    render: state => renderAccepted(state.accepted_position === MIS_ECHO_AT ? { ...state, notified_position: state.notified_position + 1 } : state),
+  },
+  { name: "dirty-flag-misechoed", render: state => renderAccepted(state.accepted_position === MIS_ECHO_AT ? { ...state, source_dirty: !state.source_dirty } : state) },
+];
 /** Seeded (c, h) states, each source_dirty by the producer's own rule (federation_boundary.py:170). */
 function acceptedStates(): AcceptedState[] {
   const random = mulberry32(PROPERTY_SEED + 1);
@@ -774,7 +826,40 @@ function textOf(path: string): string {
     return "";
   }
 }
-const srcFiles = (): SourceFile[] => filesBelow(join(REPO, "src")).map(file => ({ path: relative(REPO, file), text: textOf(file) }));
+/** The walk C2 reads: every regular file below <root>/src, each path relative to the root, with its text. */
+const srcFilesOf = (root: string): SourceFile[] => filesBelow(join(root, "src")).map(file => ({ path: relative(root, file), text: textOf(file) }));
+const srcFiles = (): SourceFile[] => srcFilesOf(REPO);
+/** Sorted by path, plain code-point compare. */
+const byPath = (files: readonly SourceFile[]): SourceFile[] => [...files].sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
+/** Each FLOORS directory's reading over a file list: `<directory>:<its direct files reach its floor>`. */
+const floorReadings = (files: readonly SourceFile[]): string[] =>
+  Object.entries(FLOORS).map(([directory, floor]) => `${directory}:${files.filter(file => dirname(file.path) === directory).length >= floor}`);
+/** The floors compare's positive control (wb-zg8m F1): a list holding exactly each FLOORS directory's floor of direct files. */
+const atFloors = (): SourceFile[] =>
+  Object.entries(FLOORS).flatMap(([directory, floor]) => Array.from({ length: floor }, (_, at): SourceFile => ({ path: `${directory}/floor-${at}.ts`, text: "" })));
+/** The walk's positive control (wb-zg8m F1), written under a scratch root and read back through srcFilesOf: an unscoped mint at
+ * the src root, a federation mint in a non-.ts file, one in a .ts file a level below the deepest FLOORS directory, and one in a
+ * non-.ts file three levels deeper than that directory. */
+const WALK_PLANT: readonly SourceFile[] = [
+  { path: "src/plain.ts", text: 'export const freshness = "current";\n' },
+  { path: "src/workbench/federation-notes.md", text: "The peer view is current.\n" },
+  { path: "src/workbench/hosts/federation/peer.ts", text: 'export const label = "current";\n' },
+  { path: "src/workflow/peers/archive/2026/q4/watermark-log.json", text: '{ "label": "latest" }\n' },
+];
+/** Writes a plant under a fresh makeScratch root, reads the root back through srcFilesOf (sorted by path) and removes it. */
+function walkPlanted(plant: readonly SourceFile[]): SourceFile[] {
+  const root = makeScratch("rf-federated-cursor-walk-");
+  try {
+    for (const file of plant) {
+      const target = join(root, file.path);
+      mkdirSync(dirname(target), { recursive: true });
+      writeFileSync(target, file.text);
+    }
+    return byPath(srcFilesOf(root));
+  } finally {
+    removeScratch(root);
+  }
+}
 /** C2's positive control: a federation mint scoped by its path alone, one scoped by its text alone (in a comment), and an
  * unscoped mint. */
 const PLANTED: readonly SourceFile[] = [
@@ -812,6 +897,7 @@ const constantsOf = (): Json => ({
   residuals: RESIDUALS.map(residual => ({ pin: residual.pin, name: residual.name })),
   naiveImports: NAIVE_IMPORTS.map(naive => naive.name),
   naiveRenders: NAIVE_RENDERS.map(naive => naive.name),
+  misEchoes: MIS_ECHOES.map(misEcho => misEcho.name),
 });
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
@@ -1096,10 +1182,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect([dirty.source_dirty, clean.source_dirty]).toStrictEqual([true, false]);
     const states = acceptedStates();
     const dirtyStates = states.filter(state => state.source_dirty).length;
-    const echoFailures = states.filter(state => {
-      const parsed = RENDERED.exec(renderAccepted(state));
-      return parsed?.[1] !== String(state.accepted_position) || parsed[2] !== String(state.notified_position) || (parsed[3] === "dirty") !== state.source_dirty;
-    }).length;
+    const echoFailures = echoFailuresOf(renderAccepted, states);
     const mintsFor = (render: Render): number => states.filter(state => state.source_dirty && mintsOf(render(state)).length > 0).length;
     const property = {
       cases: states.length,
@@ -1111,6 +1194,15 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(dirtyStates >= 100 && dirtyStates < states.length, "the generator under-reached the dirty or the clean states").toBe(true);
     expect([property.referenceMints, property.echoFailures], "renderAccepted minted a label or did not echo the producer state").toStrictEqual([0, 0]);
     expect(Object.values(property.naive), "a naive render did not mint a label for every dirty state").toStrictEqual(NAIVE_RENDERS.map(() => dirtyStates));
+    const misEchoed = states.filter(state => state.accepted_position === MIS_ECHO_AT).length;
+    const echoControl = {
+      misEchoed,
+      misEchoes: Object.fromEntries(MIS_ECHOES.map(({ name, render }) => [name, echoFailuresOf(render, states)])),
+      unparsed: Object.fromEntries(NAIVE_RENDERS.map(({ name, render }) => [name, echoFailuresOf(render, states)])),
+    };
+    expect(misEchoed > 0 && misEchoed < states.length, "the generator reached no state, or only states, at the mis-echo cursor").toBe(true);
+    expect(Object.values(echoControl.misEchoes), "the echo instrument missed a state-dependent mis-echo of one producer field").toStrictEqual(MIS_ECHOES.map(() => misEchoed));
+    expect(Object.values(echoControl.unparsed), "the echo instrument passed a render it cannot parse").toStrictEqual(NAIVE_RENDERS.map(() => states.length));
     const hazardProjection = new ObservationProjection();
     const hazardOutcome = hazardProjection.refresh(snapshotOf(atCursor(ROSTER.base, { position: dirty.accepted_position }), STAMPS[0], undefined, undefined, renderAccepted(dirty)));
     const hazard = { outcome: hazardOutcome, ...observed(hazardProjection) };
@@ -1132,11 +1224,11 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     );
     const hazardMints = mintsOf([hazard.freshness, hazard.summary].join(" "));
     expect(hazardMints, "the mint instrument missed the refresh route's label").toStrictEqual(["current"]);
-    return { phrases, property, hazard: { ...hazard, mints: hazardMints }, reference };
+    return { phrases, property, echoControl, hazard: { ...hazard, mints: hazardMints }, reference };
   },
   C2: () => {
     const files = srcFiles();
-    const directories = Object.entries(FLOORS).map(([directory, floor]) => `${directory}:${files.filter(file => dirname(file.path) === directory).length >= floor}`);
+    const directories = floorReadings(files);
     const anchor = files.find(file => file.path === ANCHOR);
     const anchorRead = anchor?.text.includes(ANCHOR_TOKEN) === true;
     const anchorMinted = anchor === undefined ? false : mintsOf(anchor.text).includes("current");
@@ -1153,7 +1245,22 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       scoped: ["src/workbench/federation-import.ts", "src/workbench/peer-watermark.ts"],
       hits: ["src/workbench/federation-import.ts: latest", "src/workbench/peer-watermark.ts: current"],
     });
-    return { directories, anchorRead, anchorMinted, real, planted };
+    const walked = walkPlanted(WALK_PLANT);
+    expect(walked, "the walk missed a planted regular file: a non-.ts file or one below the deepest FLOORS directory").toStrictEqual(byPath(WALK_PLANT));
+    const walkScan = scanFiles(walked);
+    expect(walkScan, "the guard missed a walked federation mint or scoped the walked unscoped one").toStrictEqual({
+      scoped: ["src/workbench/federation-notes.md", "src/workbench/hosts/federation/peer.ts", "src/workflow/peers/archive/2026/q4/watermark-log.json"],
+      hits: ["src/workbench/federation-notes.md: current", "src/workbench/hosts/federation/peer.ts: current", "src/workflow/peers/archive/2026/q4/watermark-log.json: latest"],
+    });
+    const full = atFloors();
+    const atFloor = floorReadings(full);
+    const oneShort = Object.keys(FLOORS).map(directory => {
+      const dropped = full.findIndex(file => dirname(file.path) === directory);
+      return floorReadings(full.filter((_, at) => at !== dropped)).filter(entry => entry.endsWith(":false"));
+    });
+    expect(atFloor, "a directory holding exactly its floor read below it").toStrictEqual(Object.keys(FLOORS).map(directory => `${directory}:true`));
+    expect(oneShort, "a directory one direct file short of its floor read at it, or another directory moved").toStrictEqual(Object.keys(FLOORS).map(directory => [`${directory}:false`]));
+    return { directories, anchorRead, anchorMinted, real, planted, walk: { files: walked.map(file => file.path), scan: walkScan }, floorControl: { atFloor, oneShort } };
   },
   ...Object.fromEntries(
     FEDERATION_WORDS.map((run, member) => [
@@ -1254,6 +1361,10 @@ describe("wb-tnz5.2 federated cursor census (RF-CERTIFIED-FEDERATED-REACTIVE-REF
     const pinsOf = (id: string): string[] => [...(ROWS.find(row => row.id === id)?.pins ?? [])];
     expect(pinsOf("M"), "row M: one pin per vocabulary member").toEqual([...FEDERATION_WORDS.map((_, index) => `MS${index + 1}`), ...MINT_WORDS.map((_, index) => `MM${index + 1}`)]);
     expect(pinsOf("R"), "row R: one pin per named residual").toEqual(RESIDUALS.map(residual => residual.pin));
+    expect(
+      RESIDUALS.map(({ pin, name }) => ({ pin, name })),
+      "RESIDUALS against the first cut's declared residual list in the tracked bead export",
+    ).toStrictEqual(exportedResiduals());
   });
 
   for (const row of ROWS) {

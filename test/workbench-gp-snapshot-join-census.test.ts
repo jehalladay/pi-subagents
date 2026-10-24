@@ -5,7 +5,9 @@
  * `receipt.input_snapshot` or `graph_digest` ..., it shall hash exactly the bytes it presented — compact
  * `JSON.stringify(graph)` for RPC, the file bytes for CLI — and shall never substitute `identities.graph` or
  * `canonical_digest` for that join key". Source: GraphPolicyCLI docs/programs/feedback-contract-audit-2026-10-21/
- * 02-contract-audit.md:26@0107c72992f3, "SHA-256 of the exact presented graph bytes (for RPC sample, compact
+ * 02-contract-audit.md:26@0107c72992f3 (program status at 0107c72992f3:
+ * "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics"), "SHA-256 of the exact
+ * presented graph bytes (for RPC sample, compact
  * `JSON.stringify(graph)` bytes) | Byte-exact invocation/journal join key | Whitespace and serialization affect the hash. Do
  * not substitute a canonical document/projection hash into an existing journal link", and :32 "An object passed to RPC is not
  * the bytes of a pretty-printed CLI file; equality of keys without equality of preimages is insufficient." That program states
