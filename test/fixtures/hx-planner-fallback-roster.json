@@ -1,0 +1,837 @@
+{
+ "bead": "wb-z3ft.1",
+ "quote": "7. **Fallback.** If a proof cannot be established, a resource cap is reached, or the snapshot changes, retain the original plan and emit a typed reason. Never interpret planner failure as an absent graph fact.",
+ "citation": "02-precedence-and-effect-admission.md:30@0091719d0288",
+ "causes": [
+  [
+   "proof-not-established",
+   "a proof cannot be established"
+  ],
+  [
+   "resource-cap-reached",
+   "a resource cap is reached"
+  ],
+  [
+   "snapshot-changed",
+   "the snapshot changes"
+  ]
+ ],
+ "scan": {
+  "reasonFamily": "fallback|reason/i",
+  "completes": [
+   "complete",
+   "complete-empty"
+  ],
+  "mutations": [
+   "mutation-rejected",
+   "mutation-partial"
+  ],
+  "licences": [
+   false,
+   true
+  ],
+  "sdk": "@hyperunix/sdk",
+  "tarball": "vendor/hyperunix-sdk-0.1.0.tgz",
+  "installed": "node_modules/@hyperunix/sdk/dist/result.d.ts",
+  "declarationEntry": "package/dist/result.d.ts",
+  "grammarEntry": "package/dist/protocol/query.d.ts",
+  "observer": "src/workbench/hyperunix-observer.ts",
+  "certificate": {
+   "mode": "opportunistic",
+   "cause": {
+    "cause": "other",
+    "detail": "No_change_exclusion"
+   },
+   "scope": {
+    "path": [],
+    "scope": "fs-subtree"
+   },
+   "target": {
+    "target": "relation-expansion"
+   },
+   "provider": "hx.fs/builtin",
+   "stream": "hx-fs",
+   "batch_id": "b1",
+   "body": {}
+  },
+  "stopFacts": {
+   "budget-exhausted": {
+    "execution_status": {
+     "kind": "budget-exhausted",
+     "diagnostic_code": "HX-BUDGET-EXHAUSTED",
+     "dimension": "wall"
+    },
+    "budget_dimension": "wall",
+    "diagnostics": [
+     {
+      "code": "HX-BUDGET-EXHAUSTED",
+      "severity": "error",
+      "message": "budget exhausted",
+      "details": {
+       "dimension": "wall"
+      },
+      "remediation": null,
+      "request": null
+     }
+    ]
+   },
+   "view-invalidated": {
+    "view": "hx-view:census-1"
+   }
+  },
+  "unregisteredKind": "planner-failed",
+  "placements": [
+   "source",
+   "execution_status",
+   "coverage_summary",
+   "reading",
+   "runtime",
+   "certificate"
+  ],
+  "shapes": [
+   "record",
+   "string"
+  ],
+  "drops": [
+   "source",
+   "execution_status",
+   "coverage_summary",
+   "evidence",
+   "status",
+   "transport",
+   "certificate",
+   "diagnostic"
+  ],
+  "carriers": [
+   "diagnostic:diagnostics",
+   "diagnostic-extra:extra",
+   "status-diagnostic-code:diagnostic_code",
+   "extension:extensions",
+   "certificate-cause:cause",
+   "certificate-body:body",
+   "incomplete-region:incomplete_regions",
+   "result-coverage:result_coverage",
+   "cost:cost",
+   "execution-id:execution_id",
+   "support-id:support_ids"
+  ],
+  "stopFactSlots": [
+   "budget_dimension",
+   "dimension",
+   "view"
+  ],
+  "projectedKeys": [
+   "batch_id",
+   "binarySha256",
+   "contract",
+   "coverage",
+   "coverage_summary",
+   "execution_status",
+   "kind",
+   "licenses_absence",
+   "operation",
+   "representation",
+   "rows",
+   "rows_retained",
+   "runtime",
+   "source",
+   "version",
+   "workspaceRoot"
+  ],
+  "controls": {
+   "renamedDeclaration": "    readonly plannerCause: string | null;\n",
+   "renamedRead": "const why = source.planner_cause;\n",
+   "dynamicRead": "const all = {...source};\nconst keys = Object.keys(source);\nconst slot = source[name];\n",
+   "homonymRead": "const named = source.digest;\nconst region = record(item)?.scope;\n"
+  },
+  "pinHollowMembers": [
+   "A1",
+   "A2",
+   "A3",
+   "B1",
+   "B2",
+   "C1",
+   "C2"
+  ]
+ },
+ "residuals": [
+  "R-GRAMMAR",
+  "R-RENAMED",
+  "R-DYNAMIC",
+  "R-HOMONYM",
+  "R-PIN-HOLLOW"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) today: every stop kind (incomplete/budget-exhausted/cancelled/view-invalidated -> partial; provider-/schema-/internal-/protocol-failed, usage-error -> failure; observer.ts:81-86) projects coverage partial or unknown, never statusTone 'success' or 'known-empty' (H2 observer.test.ts:210) - nor any planner failure, resource-cap or snapshot-change stop: the vendored declaration's stops are exactly the filing's nine, each reads so under either licence with rows [] on the adapter and through the registered provider, the resource-cap stop keeping its budget dimension and the snapshot-change stop its view, and a kind the SDK does not register decodes to a failure",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "pin": "A1",
+      "declared": [
+       "complete",
+       "complete-empty",
+       "incomplete",
+       "budget-exhausted",
+       "cancelled",
+       "view-invalidated",
+       "provider-failed",
+       "schema-failed",
+       "internal-failed",
+       "protocol-failed",
+       "usage-error",
+       "mutation-rejected",
+       "mutation-partial"
+      ],
+      "notStops": [
+       "complete",
+       "complete-empty",
+       "mutation-rejected",
+       "mutation-partial"
+      ],
+      "stops": {
+       "partial": [
+        "incomplete",
+        "budget-exhausted",
+        "cancelled",
+        "view-invalidated"
+       ],
+       "failure": [
+        "provider-failed",
+        "schema-failed",
+        "internal-failed",
+        "protocol-failed",
+        "usage-error"
+       ]
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "pin": "A2",
+      "readings": [
+       [
+        "incomplete",
+        false,
+        "partial",
+        "unknown",
+        "incomplete \u00b7 rows 0 \u00b7 absence not licensed"
+       ],
+       [
+        "incomplete",
+        true,
+        "partial",
+        "unknown",
+        "incomplete \u00b7 rows 0 \u00b7 absence not licensed"
+       ],
+       [
+        "budget-exhausted",
+        false,
+        "partial",
+        "unknown",
+        "budget-exhausted \u00b7 rows 0 \u00b7 absence not licensed"
+       ],
+       [
+        "budget-exhausted",
+        true,
+        "partial",
+        "unknown",
+        "budget-exhausted \u00b7 rows 0 \u00b7 absence not licensed"
+       ],
+       [
+        "cancelled",
+        false,
+        "partial",
+        "unknown",
+        "cancelled \u00b7 rows 0 \u00b7 absence not licensed"
+       ],
+       [
+        "cancelled",
+        true,
+        "partial",
+        "unknown",
+        "cancelled \u00b7 rows 0 \u00b7 absence not licensed"
+       ],
+       [
+        "view-invalidated",
+        false,
+        "partial",
+        "unknown",
+        "view-invalidated \u00b7 rows 0 \u00b7 absence not licensed"
+       ],
+       [
+        "view-invalidated",
+        true,
+        "partial",
+        "unknown",
+        "view-invalidated \u00b7 rows 0 \u00b7 absence not licensed"
+       ],
+       [
+        "provider-failed",
+        false,
+        "unknown",
+        "failure",
+        "provider-failed"
+       ],
+       [
+        "provider-failed",
+        true,
+        "unknown",
+        "failure",
+        "provider-failed"
+       ],
+       [
+        "schema-failed",
+        false,
+        "unknown",
+        "failure",
+        "schema-failed"
+       ],
+       [
+        "schema-failed",
+        true,
+        "unknown",
+        "failure",
+        "schema-failed"
+       ],
+       [
+        "internal-failed",
+        false,
+        "unknown",
+        "failure",
+        "internal-failed"
+       ],
+       [
+        "internal-failed",
+        true,
+        "unknown",
+        "failure",
+        "internal-failed"
+       ],
+       [
+        "protocol-failed",
+        false,
+        "unknown",
+        "failure",
+        "protocol-failed"
+       ],
+       [
+        "protocol-failed",
+        true,
+        "unknown",
+        "failure",
+        "protocol-failed"
+       ],
+       [
+        "usage-error",
+        false,
+        "unknown",
+        "failure",
+        "usage-error"
+       ],
+       [
+        "usage-error",
+        true,
+        "unknown",
+        "failure",
+        "usage-error"
+       ]
+      ]
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "pin": "A3",
+      "readings": [
+       [
+        "incomplete",
+        false,
+        "partial",
+        "unknown",
+        "incomplete \u00b7 rows 0 \u00b7 absence not licensed"
+       ],
+       [
+        "incomplete",
+        true,
+        "partial",
+        "unknown",
+        "incomplete \u00b7 rows 0 \u00b7 absence not licensed"
+       ],
+       [
+        "budget-exhausted",
+        false,
+        "partial",
+        "unknown",
+        "budget-exhausted \u00b7 rows 0 \u00b7 absence not licensed"
+       ],
+       [
+        "budget-exhausted",
+        true,
+        "partial",
+        "unknown",
+        "budget-exhausted \u00b7 rows 0 \u00b7 absence not licensed"
+       ],
+       [
+        "cancelled",
+        false,
+        "partial",
+        "unknown",
+        "cancelled \u00b7 rows 0 \u00b7 absence not licensed"
+       ],
+       [
+        "cancelled",
+        true,
+        "partial",
+        "unknown",
+        "cancelled \u00b7 rows 0 \u00b7 absence not licensed"
+       ],
+       [
+        "view-invalidated",
+        false,
+        "partial",
+        "unknown",
+        "view-invalidated \u00b7 rows 0 \u00b7 absence not licensed"
+       ],
+       [
+        "view-invalidated",
+        true,
+        "partial",
+        "unknown",
+        "view-invalidated \u00b7 rows 0 \u00b7 absence not licensed"
+       ],
+       [
+        "provider-failed",
+        false,
+        "unknown",
+        "failure",
+        "provider-failed"
+       ],
+       [
+        "provider-failed",
+        true,
+        "unknown",
+        "failure",
+        "provider-failed"
+       ],
+       [
+        "schema-failed",
+        false,
+        "unknown",
+        "failure",
+        "schema-failed"
+       ],
+       [
+        "schema-failed",
+        true,
+        "unknown",
+        "failure",
+        "schema-failed"
+       ],
+       [
+        "internal-failed",
+        false,
+        "unknown",
+        "failure",
+        "internal-failed"
+       ],
+       [
+        "internal-failed",
+        true,
+        "unknown",
+        "failure",
+        "internal-failed"
+       ],
+       [
+        "protocol-failed",
+        false,
+        "unknown",
+        "failure",
+        "protocol-failed"
+       ],
+       [
+        "protocol-failed",
+        true,
+        "unknown",
+        "failure",
+        "protocol-failed"
+       ],
+       [
+        "usage-error",
+        false,
+        "unknown",
+        "failure",
+        "usage-error"
+       ],
+       [
+        "usage-error",
+        true,
+        "unknown",
+        "failure",
+        "usage-error"
+       ]
+      ],
+      "facts": {
+       "budget-exhausted": [
+        "budget_dimension:wall",
+        "execution_status.dimension:wall"
+       ],
+       "view-invalidated": [
+        "view:hx-view:census-1"
+       ]
+      },
+      "unregistered": {
+       "kind": "planner-failed",
+       "decoded": "protocol-failed",
+       "reading": [
+        "protocol-failed",
+        false,
+        "unknown",
+        "failure",
+        "protocol-failed"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) today: a fallback-reason-shaped unknown field reaches no output field, projection strictEqual (H5 :453): a typed reason for each of the program's three causes, under unread keys at six positions of a reading and in the eleven measured free-form slots that survive the SDK decoder, leaves the projection of every readable kind under either licence strictEqual and is spelled nowhere in it",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "pin": "B1",
+      "kinds": [
+       "complete",
+       "complete-empty",
+       "incomplete",
+       "budget-exhausted",
+       "cancelled",
+       "view-invalidated",
+       "provider-failed",
+       "schema-failed",
+       "internal-failed",
+       "protocol-failed",
+       "usage-error"
+      ],
+      "runs": 792,
+      "unequal": [],
+      "leaked": []
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "pin": "B2",
+      "kinds": [
+       "complete",
+       "complete-empty",
+       "incomplete",
+       "budget-exhausted",
+       "cancelled",
+       "view-invalidated",
+       "provider-failed",
+       "schema-failed",
+       "internal-failed",
+       "protocol-failed",
+       "usage-error"
+      ],
+      "runs": 1254,
+      "dropped": {
+       "source": [],
+       "execution_status": [],
+       "coverage_summary": [],
+       "evidence": [],
+       "status": [],
+       "transport": [],
+       "certificate": [],
+       "diagnostic": []
+      },
+      "carried": {
+       "diagnostic": [
+        "reading.source.diagnostics.0.code",
+        "reading.source.diagnostics.0.details.fallback",
+        "reading.source.diagnostics.0.details.fallback.kind",
+        "reading.source.diagnostics.0.details.fallback.reason",
+        "reading.source.diagnostics.0.message",
+        "reading.source.diagnostics.0.remediation.fallback",
+        "reading.source.diagnostics.0.remediation.fallback.kind",
+        "reading.source.diagnostics.0.remediation.fallback.reason"
+       ],
+       "diagnostic-extra": [
+        "reading.source.diagnostics.0.extra.fallback",
+        "reading.source.diagnostics.0.extra.fallback.kind",
+        "reading.source.diagnostics.0.extra.fallback.reason"
+       ],
+       "status-diagnostic-code": [
+        "reading.source.execution_status.diagnostic_code"
+       ],
+       "extension": [
+        "reading.source.extensions.hx.planner.fallback",
+        "reading.source.extensions.hx.planner.fallback.kind",
+        "reading.source.extensions.hx.planner.fallback.reason"
+       ],
+       "certificate-cause": [
+        "reading.source.coverage.0.cause.cause",
+        "reading.source.coverage.0.cause.fallback",
+        "reading.source.coverage.0.cause.fallback.kind",
+        "reading.source.coverage.0.cause.fallback.reason"
+       ],
+       "certificate-body": [
+        "reading.source.coverage.0.body.fallback",
+        "reading.source.coverage.0.body.fallback.kind",
+        "reading.source.coverage.0.body.fallback.reason"
+       ],
+       "incomplete-region": [
+        "reading.source.coverage_summary.incomplete_regions.0.fallback",
+        "reading.source.coverage_summary.incomplete_regions.0.fallback.kind",
+        "reading.source.coverage_summary.incomplete_regions.0.fallback.reason"
+       ],
+       "result-coverage": [
+        "reading.source.coverage_summary.result_coverage.fallback",
+        "reading.source.coverage_summary.result_coverage.fallback.kind",
+        "reading.source.coverage_summary.result_coverage.fallback.reason"
+       ],
+       "cost": [
+        "reading.source.cost.fallback",
+        "reading.source.cost.fallback.kind",
+        "reading.source.cost.fallback.reason"
+       ],
+       "execution-id": [
+        "reading.source.execution_id"
+       ],
+       "support-id": [
+        "reading.source.evidence.support_ids.0"
+       ]
+      },
+      "unequal": [],
+      "leaked": []
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) on landing: a typed reason with rows [] and kind 'incomplete' surfaces verbatim as its own facet, statusText still 'absence not licensed', and changing only the reason text leaves coverage, statusTone and evidenceRefs byte-identical: gated - If an HX result Pi consumes ever carries the program's typed planner-fallback reason: the vendored SDK's declarations spell no reason outside the recorded other-sense sites and the adapter's read set holds none of the carrier slots",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "pin": "C1",
+      "spec": "file:vendor/hyperunix-sdk-0.1.0.tgz",
+      "installedVersion": "0.1.0",
+      "installedEqual": true,
+      "filingGrep": "fallback|reason",
+      "filingHits": {
+       "declaration": 0,
+       "observer": 0
+      },
+      "declarationFiles": 27,
+      "otherSense": {
+       "package/dist/errors.d.ts": [
+        "constructor(path: string, reason: string);",
+        "readonly reason: string;",
+        "constructor(terminal: string, reason: string, result: unknown);"
+       ],
+       "package/dist/plan-stream.d.ts": [
+        "readonly reason: string;"
+       ],
+       "package/dist/plan.d.ts": [
+        "* `unknown` with the runtime's reason, or absent (the member is undefined and serializes as an absent member). Cost",
+        "* missing capability yields `status: \"unavailable\"` with a reason -- never an empty successful Plan.",
+        "readonly reason: string;",
+        "readonly reason: string;"
+       ],
+       "package/dist/schema.d.ts": [
+        "readonly reason: string;"
+       ]
+      },
+      "controls": {
+       "grammar": {
+        "keys": [
+         "code",
+         "severity",
+         "message",
+         "details",
+         "remediation",
+         "request",
+         "origin",
+         "stream",
+         "extra"
+        ],
+        "familyLines": 0
+       },
+       "renamed": 0
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "pin": "C2",
+      "keys": [
+       "answer_count",
+       "batch_id",
+       "binarySha256",
+       "body",
+       "budget_dimension",
+       "cause",
+       "certificates_license_absence",
+       "code",
+       "completeness",
+       "contract",
+       "cost",
+       "coverage",
+       "coverage_summary",
+       "derivation_handles",
+       "detail",
+       "details",
+       "diagnostic_code",
+       "diagnostics",
+       "digest",
+       "digest_source",
+       "dimension",
+       "ended",
+       "evidence",
+       "evidence_classes",
+       "execution_id",
+       "execution_status",
+       "exit_code",
+       "extensions",
+       "extra",
+       "frames",
+       "frames_total",
+       "incomplete_regions",
+       "kind",
+       "licenses_absence",
+       "local_digest",
+       "message",
+       "mode",
+       "modes",
+       "name",
+       "operation",
+       "origin",
+       "path",
+       "process_duration_s",
+       "provider",
+       "provider_versions",
+       "providers",
+       "remediation",
+       "representation",
+       "request",
+       "result_coverage",
+       "rows",
+       "rows_retained",
+       "runtime",
+       "scope",
+       "severity",
+       "signal",
+       "source",
+       "started_at",
+       "startup_latency_s",
+       "status",
+       "stderr_bytes",
+       "stderr_bytes_retained",
+       "stdout_bytes",
+       "stream",
+       "streams",
+       "structural_digest",
+       "support_ids",
+       "target",
+       "terminal",
+       "terminal_reached",
+       "transport",
+       "truth",
+       "version",
+       "view",
+       "workspaceRoot",
+       "workspace_root"
+      ],
+      "reads": [
+       "batch_id",
+       "binarySha256",
+       "contract",
+       "coverage",
+       "coverage_summary",
+       "digest",
+       "execution_status",
+       "kind",
+       "licenses_absence",
+       "operation",
+       "provider",
+       "representation",
+       "rows",
+       "rows_retained",
+       "runtime",
+       "scope",
+       "source",
+       "target",
+       "version",
+       "workspaceRoot"
+      ],
+      "slots": [
+       "body",
+       "budget_dimension",
+       "cause",
+       "cost",
+       "diagnostic_code",
+       "diagnostics",
+       "dimension",
+       "execution_id",
+       "extensions",
+       "extra",
+       "incomplete_regions",
+       "result_coverage",
+       "support_ids",
+       "view"
+      ],
+      "carriersRead": [],
+      "familyRead": [],
+      "projectedMissing": [],
+      "controls": {
+       "renamed": {
+        "names": [
+         "planner_cause"
+        ],
+        "added": [],
+        "flagged": []
+       },
+       "dynamic": {
+        "names": [
+         "keys"
+        ],
+        "added": [],
+        "flagged": []
+       },
+       "homonym": {
+        "names": [
+         "digest",
+         "scope"
+        ],
+        "added": [],
+        "flagged": []
+       }
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape and the out-of-file roster agree",
+  "the outside anchor: the bead row's clauses, trigger and stop phrase sit in the row labels, its quote holds the causes",
+  "A1",
+  "A2",
+  "A3",
+  "B1",
+  "B2",
+  "C1",
+  "C2",
+  "records: every registered test ran once in run mode in roster order and every pin reached its end"
+ ]
+}
