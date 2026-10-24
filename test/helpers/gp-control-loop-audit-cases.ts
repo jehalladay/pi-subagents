@@ -74,6 +74,15 @@ export const RESIDUALS: readonly Quiet[] = [
   ["RES-2 a binary name built by concatenation", 'spawn("g" + "p", ["rpc", "--stdio"]);'],
   ["RES-3 the caller of a local gp wrapper", 'import { evaluate } from "./gp-adapter.js";\nevaluate(graph);'],
   ["RES-4 a gp name the shell assembles from quoted or escaped parts", "exec('\"g\"\"p\" rpc --stdio');"],
+  // wb-66f7 (wb-1xvp.3 cut #2 gate F2): shell grammar outside the enumerated boundary sets, each its gate probe verbatim.
+  ["RES-5 gp as the default value of a shell parameter expansion (gate E11)", `exec("${slot("GP_BIN:-gp")} rpc --stdio");`],
+  ["RES-6 gp as the assigned default of a shell parameter expansion (gate E12)", `exec("${slot("GP_BIN:=gp")} rpc --stdio");`],
+  ["RES-7 gp right after a case pattern's closing parenthesis (gate E13)", 'exec("case $1 in rpc)gp rpc --stdio;; esac");'],
+  ["RES-8 gp joined to its arguments by an IFS expansion (gate E14)", `exec("gp${slot("IFS")}rpc");`],
+  ["RES-9 gp opening a brace expansion (gate E15)", 'exec("{gp,rpc} --stdio");'],
+  ["RES-10 gp opening a PowerShell script block (gate E16)", 'spawn("pwsh", ["-Command", "& {gp rpc --stdio}"]);'],
+  ["RES-11 gp behind the caret escape of cmd.exe (gate E17)", 'exec("cmd /c ^gp rpc");'],
+  ["RES-12 a gp shim whose extension is not .exe, .cmd or .ps1, such as gp.bat (gate E18)", 'spawn("gp.bat", []);'],
 ];
 
 // ---- each gp call site names its audited decision point ----
@@ -98,6 +107,17 @@ export const UNANNOTATED: readonly Quiet[] = [
   ["a marker inside a nested block, annotating another call (gate A01)", 'run(\n  () => {\n    // gp-decision-point: DP-01\n    prepare();\n  },\n  "gp",\n);'],
   ["a marker trailing a later statement on the literal's line (gate A02)", 'spawn("gp", []); next(); // gp-decision-point: DP-01'],
   ["a marker on the enclosing function (gate A03)", '// gp-decision-point: DP-01\nfunction pick() {\n  spawn("gp", []);\n}'],
+];
+
+/**
+ * The named attribution residuals (wb-66f7, wb-1xvp.3 cut #2 gate F3): a marker that annotates another expression inside
+ * the call site's statement, which the attachment rule credits to the call site. Each pins today's credited reading, so
+ * a cut that changes the rule reds the row and retires the residual in the open.
+ */
+export const MISATTRIBUTED: ReadonlyArray<readonly [string, string, readonly (readonly string[])[]]> = [
+  ["RES-13 a marker inside an expression-bodied arrow, annotating its body, is credited to a gp literal later in the same call (gate B01)", 'run(\n  () =>\n    // gp-decision-point: DP-01\n    prepare(),\n  "gp",\n);', [["DP-01"]]],
+  ["RES-14 a marker inside a nested call's argument list is credited to a gp literal later in the outer call (gate B02)", 'run(\n  prepare(\n    // gp-decision-point: DP-01\n    x,\n  ),\n  "gp",\n);', [["DP-01"]]],
+  ["RES-15 a marker on a ternary's first branch is credited to a gp literal in its second branch (gate B03)", 'const bin = cond\n  // gp-decision-point: DP-01\n  ? prepare()\n  : "gp";', [["DP-01"]]],
 ];
 
 // ---- the synthetic gp-wired module and its audit document ----
@@ -194,6 +214,10 @@ export interface Fixture {
 
 /** The judge's reason for a section that carries HTML, written out here (never read from the judge). */
 const HTML = "carries HTML, a comment or a tag, which can hide its source from the rendered view";
+/** A link reference definition: reference-style links anywhere in the document resolve through it (gate K01-K12). */
+const REFERENCE_DEFINITION = "[r]: https://example.invalid/r";
+/** The audit document with REFERENCE_DEFINITION under its title, outside every section (the gate K01-K12 placement). */
+const defined = (doc: string): string => doc.replace("# Pi control-loop audit\n", `# Pi control-loop audit\n\n${REFERENCE_DEFINITION}\n`);
 const unannotated = SOURCE.replace("// gp-decision-point: DP-02", "// picks the next bead");
 const cites99 = SOURCE.replace("gp-decision-point: DP-02", "gp-decision-point: DP-99");
 
@@ -261,6 +285,20 @@ export const FALSIFIERS: ReadonlyArray<readonly [string, Fixture, readonly strin
   ["rendered view: an authority field holding only an out-of-range reference reads empty", { doc: withRows("Decision points", replaceRow(3, ["DP-03", "3", "p", "i", "&#x110000;", "o", "r"])) }, ["decision-point-invalid: DP-03 (empty authority)", "stage-uncovered: 3 Assignment or claiming of tasks."]],
   ["rendered view: a header written with inline markup and capitals is read as it renders", { doc: renderDoc({ header: ["Fallback", ["**Call site**", "`fallback function`"]] }) }, []],
   ["rendered view: a field holding only punctuation or only a symbol renders, so it is filled", { doc: withRows("Decision points", replaceRow(11, ["DP-11", "11", "p", "i", String.fromCodePoint(0x2014), String.fromCodePoint(0x2192), "r"])) }, []],
+  // wb-66f7 (wb-1xvp.3 cut #2 gate F1): a field is empty when it renders empty in the document, its reference-style links
+  // resolved through the document's link reference definitions, as the census binding's own lex renders the cell.
+  ["rendered view: a policy field holding only an empty reference-style link and a blank code span is empty (gate K01)", { doc: defined(withRows("Decision points", replaceRow(6, ["DP-06", "6", "[][r] ` `", "i", "a", "o", "r"]))) }, ["decision-point-invalid: DP-06 (empty policy)", "stage-uncovered: 6 Concurrent worker scheduling and resource allocation."]],
+  ["rendered view: an authority field holding only a reference-style link whose text is a space is empty (gate K02)", { doc: defined(withRows("Decision points", replaceRow(7, ["DP-07", "7", "p", "i", "[ ][r]", "o", "r"]))) }, ["decision-point-invalid: DP-07 (empty authority)", "stage-uncovered: 7 Progress observation and result collection."]],
+  ["rendered view: an outcomes field holding only a reference-style link around a zero-width space reference is empty (gate K03)", { doc: defined(withRows("Decision points", replaceRow(10, ["DP-10", "10", "p", "i", "a", "[&#8203;][r]", "r"]))) }, ["decision-point-invalid: DP-10 (empty outcomes)", "stage-uncovered: 10 Failure recovery, retries, and relaunch."]],
+  ["rendered view: a current fixed rule holding only a reference-style link around a Hangul filler is empty (gate K04)", { doc: defined(withRows("Decision points", replaceRow(9, ["DP-09", "9", "p", "i", "a", "o", `[${String.fromCodePoint(0x3164)}][r]`]))) }, ["decision-point-invalid: DP-09 (empty current fixed rule)", "stage-uncovered: 9 Integration, landing, and task completion."]],
+  ["rendered view: an inputs field holding only a reference-style image with no alt text is empty (review P2)", { doc: defined(withRows("Decision points", replaceRow(8, ["DP-08", "8", "p", "![][r]", "a", "o", "r"]))) }, ["decision-point-invalid: DP-08 (empty inputs)", "stage-uncovered: 8 Verification, review, and correction."]],
+  ["rendered view: a link reference definition at the end of the document defines its label for every section, so an empty reference-style link is empty", { doc: renderDoc({ override: ["Decision points", replaceRow(4, ["DP-04", "4", "p", "[][r]", "a", "o", "r"])], append: REFERENCE_DEFINITION }) }, ["decision-point-invalid: DP-04 (empty inputs)", "stage-uncovered: 4 Worker and model selection."]],
+  ["rendered view: a reference-style link with text is filled", { doc: defined(withRows("Decision points", replaceRow(6, ["DP-06", "6", "[the priority rule][r]", "i", "a", "o", "r"]))) }, []],
+  ["rendered view: a reference-style link with no definition renders its brackets, so it is filled (gate K05)", { doc: withRows("Decision points", replaceRow(8, ["DP-08", "8", "p", "[][]", "a", "o", "r"])) }, []],
+  // The value side stays fail-closed: a cell's value is read as the cell renders on its own, where a reference-style link
+  // (its definition lies outside the cell) reads as its source and so matches no status or function name.
+  ["fail-closed: an inventory status written as a reference-style link reads as its source and is invalid (gate K06)", { doc: defined(withRows("Inventory", [["dependency-aware task selection", "[implemented][r]"], ["adaptive concurrency", "proposed"]])) }, ["inventory-status-invalid: dependency-aware task selection -> [implemented][r]"]],
+  ["fail-closed: a fallback function written as a reference-style link reads as its source and names no function (gate K12)", { doc: defined(withRows("Fallback", [[`\`${MODULE}#DP-02\``, "[selectWorkByPriority][r]"]])) }, [`fallback-missing: ${MODULE}#DP-02`]],
 ];
 
 /** README.md:89-99@6a251bf73af5: the line, the stage number and the stage, verbatim. */
@@ -299,6 +337,7 @@ export const ROWS: readonly JudgedRow[] = [
   ...judged("RESIDUALS", RESIDUALS),
   ...judged("ANNOTATED", ANNOTATED),
   ...judged("UNANNOTATED", UNANNOTATED),
+  ...judged("MISATTRIBUTED", MISATTRIBUTED),
   ...judged("FALSIFIERS", FALSIFIERS),
   ...judged(
     "STAGES",

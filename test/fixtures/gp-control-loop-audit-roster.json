@@ -1,5 +1,5 @@
 {
-  "comment": "wb-1xvp.3 (RF-GRAPH-POLICY-MACHINE-CONTROL-R2; the hk9l/5jha roster pattern, as wb-1xvp.4 uses it): the OUT-OF-FILE anchor of test/workbench-gp-control-loop-audit.test.ts. rows: every judged row of test/helpers/gp-control-loop-audit-cases.ts in table order (CALL_SITES, NOT_CALL_SITES, RESIDUALS, ANNOTATED, UNANNOTATED, FALSIFIERS, STAGES) - table, positional id, label and the SHA-256 of each pin as written (each input and each expectation). residuals: the named residual families, each a pinned quiet row. tests: every test the suite registers, in order. Written from the rows and the registered tests as measured at the cut; the suite judges its tables, its residual families and its registered tests (vitest task tree, run modes) against this file at test time, in order and both ways.",
+  "comment": "wb-1xvp.3 (RF-GRAPH-POLICY-MACHINE-CONTROL-R2; the hk9l/5jha roster pattern, as wb-1xvp.4 uses it; extended by wb-66f7): the OUT-OF-FILE anchor of test/workbench-gp-control-loop-audit.test.ts. rows: every judged row of test/helpers/gp-control-loop-audit-cases.ts in table order (CALL_SITES, NOT_CALL_SITES, RESIDUALS, ANNOTATED, UNANNOTATED, MISATTRIBUTED, FALSIFIERS, STAGES) - table, positional id, label and the SHA-256 of each pin as written (each input and each expectation). residuals: the named residual families, each pinned by its row (the RESIDUALS quiet rows, then the MISATTRIBUTED rows that read today's credit). tests: every test the suite registers, in order. Written from the rows and the registered tests as measured at the cut; the suite judges its tables, its residual families and its registered tests (vitest task tree, run modes) against this file at test time, in order and both ways.",
   "rows": [
     {
       "table": "CALL_SITES",
@@ -404,6 +404,70 @@
       ]
     },
     {
+      "table": "RESIDUALS",
+      "id": "RESIDUALS-05",
+      "label": "RES-5 gp as the default value of a shell parameter expansion (gate E11)",
+      "pins": [
+        "a91670ab2bf2773edfa4c1404504072f970b930c6651974db532f24639cc9172"
+      ]
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "RESIDUALS-06",
+      "label": "RES-6 gp as the assigned default of a shell parameter expansion (gate E12)",
+      "pins": [
+        "525757cb54f8c4e81a1c22fa2266fe812eafed4377db496d5114c35688b08b69"
+      ]
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "RESIDUALS-07",
+      "label": "RES-7 gp right after a case pattern's closing parenthesis (gate E13)",
+      "pins": [
+        "82f49737de0fe29d9621e39ffbe95603407b246c6ebc99ee2579cc12d088866a"
+      ]
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "RESIDUALS-08",
+      "label": "RES-8 gp joined to its arguments by an IFS expansion (gate E14)",
+      "pins": [
+        "8db639e9f4dbb51a8a8c0229e45fde89b41dcf556373ce052d11ffa629b9bba5"
+      ]
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "RESIDUALS-09",
+      "label": "RES-9 gp opening a brace expansion (gate E15)",
+      "pins": [
+        "8e8f652a972708e093345c026e1288d537a6283b8cca0424bd27b5032b61ca2e"
+      ]
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "RESIDUALS-10",
+      "label": "RES-10 gp opening a PowerShell script block (gate E16)",
+      "pins": [
+        "dc8d9968752061d7cd4877e3dbf1ce82beeb0bf5ce27690eaf89aed25c53bcc9"
+      ]
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "RESIDUALS-11",
+      "label": "RES-11 gp behind the caret escape of cmd.exe (gate E17)",
+      "pins": [
+        "e14be4f86dcbea0cb1141431f93a86a820e73b6bb29422e00b11d028a39ddf77"
+      ]
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "RESIDUALS-12",
+      "label": "RES-12 a gp shim whose extension is not .exe, .cmd or .ps1, such as gp.bat (gate E18)",
+      "pins": [
+        "d0563500aad40dc362ef1c983c555f2fb4317acd4523d95d6ef03b96786ce224"
+      ]
+    },
+    {
       "table": "ANNOTATED",
       "id": "ANNOTATED-01",
       "label": "a comment on the line above",
@@ -528,6 +592,33 @@
       "label": "a marker on the enclosing function (gate A03)",
       "pins": [
         "d817f2af3f63cc2f94ffc3f20f4863dda7d49beda786a9516e2cb6b73de429be"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-01",
+      "label": "RES-13 a marker inside an expression-bodied arrow, annotating its body, is credited to a gp literal later in the same call (gate B01)",
+      "pins": [
+        "605f941df2d39b28d76035bef17a5002818c8118a19e8f8cf5534dc764f9edff",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-02",
+      "label": "RES-14 a marker inside a nested call's argument list is credited to a gp literal later in the outer call (gate B02)",
+      "pins": [
+        "5311de578e46a3aa384f3710acc3dd5f19688071ccc11c6b9cce4636a58f8734",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-03",
+      "label": "RES-15 a marker on a ternary's first branch is credited to a gp literal in its second branch (gate B03)",
+      "pins": [
+        "9bb4910b7ec2be6d8de110d9ff8a2bd31243f4b283ecb62152896b5349a89bea",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
       ]
     },
     {
@@ -949,6 +1040,100 @@
       ]
     },
     {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-46",
+      "label": "rendered view: a policy field holding only an empty reference-style link and a blank code span is empty (gate K01)",
+      "pins": [
+        "860466e7970acc8d48fb6e77a87812dbf49beadbea8a248e0f1b21f5bb864fb2",
+        "c2204a5a403d49130286b4a89c3aa2d49109e2e35bf39a0888528ad227a51d4f",
+        "164eda5450ab76281299313680748daeb413ac8f2d6fb00522d722c79166397a"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-47",
+      "label": "rendered view: an authority field holding only a reference-style link whose text is a space is empty (gate K02)",
+      "pins": [
+        "d7e6d7b35365961fe5c71aceac3f583a3b7c9c4e8ea185417d58169c0a0dfeea",
+        "b0ff3f90b2d1aa89e1ff8f91d84b689ae9664f5272edf75e3ada1c0588b416df",
+        "10f7daf0507f2f1961cc5bc580b6dd458e3b6cfc214c453693e709060c94bc39"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-48",
+      "label": "rendered view: an outcomes field holding only a reference-style link around a zero-width space reference is empty (gate K03)",
+      "pins": [
+        "2a931ff80a8fdfce42560b14d5ad918c70e1488f060c9607c411fa75eb498d3e",
+        "3542b6aa069d2916f28aea1f7ea002a9b6caf6a4d939776c649af0f315db45da",
+        "b85e298a574ec5bcf6a266ae9e04bd7b001b169d5213d97e676ef905fed65aaa"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-49",
+      "label": "rendered view: a current fixed rule holding only a reference-style link around a Hangul filler is empty (gate K04)",
+      "pins": [
+        "eb6f87aad4a26360462dbb4aaaddbcff67d7b1e3a13ff8b6c1721a14c83af2f2",
+        "1993caef20c46498215e2fc948e7604a521d585af1a98960b693ef9649142b23",
+        "73accd446941166f2ea54ac13c36672221e2a30f5d612fa05f875fce25e472ca"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-50",
+      "label": "rendered view: an inputs field holding only a reference-style image with no alt text is empty (review P2)",
+      "pins": [
+        "6f8083529372bca3221e9e798ce04881e63749da4c8d07acb0ca03f8319c3038",
+        "49f28c03eab7ae3b84890238541f398478fb6cabb6b40805b40da99139e520b6",
+        "fb4452b8e98d01301bba9bc375018dea87f6ddf074fc57a46ebbd265273df939"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-51",
+      "label": "rendered view: a link reference definition at the end of the document defines its label for every section, so an empty reference-style link is empty",
+      "pins": [
+        "4af6d115f64cd9c335d44f9b338c5da6872d75767898b1224f1f56f7617c4d5a",
+        "7388c094ae3d2e8ce0eb2d395484154bd78033d1c1ff70cd6d87fc7b6d6a9fd2",
+        "f7e07a1acf520158c6408a091eaf1a87da3580ba27a256113bc9c80f1649783b"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-52",
+      "label": "rendered view: a reference-style link with text is filled",
+      "pins": [
+        "4ac67263cd78cc60b8f8fcae2ff83fbf7b50ce2eb29a09333e020c3ae5b5a0a7"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-53",
+      "label": "rendered view: a reference-style link with no definition renders its brackets, so it is filled (gate K05)",
+      "pins": [
+        "b797c97e08dc536b96a28e88f2e54efebfe1616ce3250a8208b87ef083065695"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-54",
+      "label": "fail-closed: an inventory status written as a reference-style link reads as its source and is invalid (gate K06)",
+      "pins": [
+        "9655a91e50650991718c037ad2a2e7d983c4b8a2401b87bb793d6c7b1b70e665",
+        "fe3b119e47a5872aaeb432c2590f93dd78145240754cc95b8209cc95a5bb0763"
+      ]
+    },
+    {
+      "table": "FALSIFIERS",
+      "id": "FALSIFIERS-55",
+      "label": "fail-closed: a fallback function written as a reference-style link reads as its source and names no function (gate K12)",
+      "pins": [
+        "a304a98c3f4b1fb2c1d2f30327898df2b2230bd6aa59e9817ff3c7c607dd4bba",
+        "e8c9af0b2f52d721271a901f34ba2297e96a73ec0695b91c61ff05d81f73423b"
+      ]
+    },
+    {
       "table": "STAGES",
       "id": "STAGES-01",
       "label": "README.md:89 stage 1",
@@ -1041,7 +1226,18 @@
     "RES-1 a binary named by configuration or environment",
     "RES-2 a binary name built by concatenation",
     "RES-3 the caller of a local gp wrapper",
-    "RES-4 a gp name the shell assembles from quoted or escaped parts"
+    "RES-4 a gp name the shell assembles from quoted or escaped parts",
+    "RES-5 gp as the default value of a shell parameter expansion (gate E11)",
+    "RES-6 gp as the assigned default of a shell parameter expansion (gate E12)",
+    "RES-7 gp right after a case pattern's closing parenthesis (gate E13)",
+    "RES-8 gp joined to its arguments by an IFS expansion (gate E14)",
+    "RES-9 gp opening a brace expansion (gate E15)",
+    "RES-10 gp opening a PowerShell script block (gate E16)",
+    "RES-11 gp behind the caret escape of cmd.exe (gate E17)",
+    "RES-12 a gp shim whose extension is not .exe, .cmd or .ps1, such as gp.bat (gate E18)",
+    "RES-13 a marker inside an expression-bodied arrow, annotating its body, is credited to a gp literal later in the same call (gate B01)",
+    "RES-14 a marker inside a nested call's argument list is credited to a gp literal later in the outer call (gate B02)",
+    "RES-15 a marker on a ternary's first branch is credited to a gp literal in its second branch (gate B03)"
   ],
   "tests": [
     "src/ carries no gp call site: the census over every src module is empty",
@@ -1094,6 +1290,14 @@
     "residual RES-2 a binary name built by concatenation stays quiet (named, not detected)",
     "residual RES-3 the caller of a local gp wrapper stays quiet (named, not detected)",
     "residual RES-4 a gp name the shell assembles from quoted or escaped parts stays quiet (named, not detected)",
+    "residual RES-5 gp as the default value of a shell parameter expansion (gate E11) stays quiet (named, not detected)",
+    "residual RES-6 gp as the assigned default of a shell parameter expansion (gate E12) stays quiet (named, not detected)",
+    "residual RES-7 gp right after a case pattern's closing parenthesis (gate E13) stays quiet (named, not detected)",
+    "residual RES-8 gp joined to its arguments by an IFS expansion (gate E14) stays quiet (named, not detected)",
+    "residual RES-9 gp opening a brace expansion (gate E15) stays quiet (named, not detected)",
+    "residual RES-10 gp opening a PowerShell script block (gate E16) stays quiet (named, not detected)",
+    "residual RES-11 gp behind the caret escape of cmd.exe (gate E17) stays quiet (named, not detected)",
+    "residual RES-12 a gp shim whose extension is not .exe, .cmd or .ps1, such as gp.bat (gate E18) stays quiet (named, not detected)",
     "orders sites by file, then line, keys each by its path, and reads .tsx modules as TSX (JSX text with an apostrophe is no string)",
     "a comment on the line above names it",
     "a trailing comment on the same line names it",
@@ -1110,6 +1314,9 @@
     "a marker inside a nested block, annotating another call (gate A01) does not name one",
     "a marker trailing a later statement on the literal's line (gate A02) does not name one",
     "a marker on the enclosing function (gate A03) does not name one",
+    "residual RES-13 a marker inside an expression-bodied arrow, annotating its body, is credited to a gp literal later in the same call (gate B01) (named, not cured: today's credit is pinned)",
+    "residual RES-14 a marker inside a nested call's argument list is credited to a gp literal later in the outer call (gate B02) (named, not cured: today's credit is pinned)",
+    "residual RES-15 a marker on a ternary's first branch is credited to a gp literal in its second branch (gate B03) (named, not cured: today's credit is pinned)",
     "control: an audit covering all eleven stages, with an annotated call site, an exported entrypoint, the measured gp version, the schema's keys, a fallback and a two-status inventory, reads no finding",
     "an audit beside a tree with no call site is still judged: the control reads clean, and a defect in it is a finding before any wiring",
     "with no audit document and no call site there is nothing to read: no finding, and neither gp nor the settings schema is read",
@@ -1158,6 +1365,16 @@
     "rendered view: an authority field holding only an out-of-range reference reads empty",
     "rendered view: a header written with inline markup and capitals is read as it renders",
     "rendered view: a field holding only punctuation or only a symbol renders, so it is filled",
+    "rendered view: a policy field holding only an empty reference-style link and a blank code span is empty (gate K01)",
+    "rendered view: an authority field holding only a reference-style link whose text is a space is empty (gate K02)",
+    "rendered view: an outcomes field holding only a reference-style link around a zero-width space reference is empty (gate K03)",
+    "rendered view: a current fixed rule holding only a reference-style link around a Hangul filler is empty (gate K04)",
+    "rendered view: an inputs field holding only a reference-style image with no alt text is empty (review P2)",
+    "rendered view: a link reference definition at the end of the document defines its label for every section, so an empty reference-style link is empty",
+    "rendered view: a reference-style link with text is filled",
+    "rendered view: a reference-style link with no definition renders its brackets, so it is filled (gate K05)",
+    "fail-closed: an inventory status written as a reference-style link reads as its source and is invalid (gate K06)",
+    "fail-closed: a fallback function written as a reference-style link reads as its source and names no function (gate K12)",
     "the falsifiers cover every finding class the judge declares, and every finding they read is of a declared class",
     "README.md:89 stage 1 (Observation of ready, blocked, active, deferred, and completed beads.) uncovered is a finding",
     "README.md:90 stage 2 (Discovery of candidate work.) uncovered is a finding",
