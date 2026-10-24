@@ -62,17 +62,27 @@
  * last fetch, 15 commits past the pin). Pi vendors none of these; a producer change is seen only when a cut re-measures the
  * roster.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (id, label, pins), every
- * pin's witness (each carries its pin id), the scan constants, the residual families and the registered test titles are held
- * to the out-of-file roster (test/fixtures/h2-lens-notification-roster.json). OUTSIDE ANCHOR: the owner filing's row in the
- * tracked bead export (.beads/issues.jsonl, row wb-4nut.8): its acceptance clauses sit verbatim in exactly one row label each
- * and its trigger in row A's, every row carries one of them, its statement lists the BATTERY words and the guarded outcome
- * words, its gating sentence fences the freshness pair E1 holds and names the gating packages A3 reads absent, and its quote
- * and citation equal the roster's, so a row, a battery word or a pair member removed from every literal of this file and the
- * roster still reds. Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the bead row anchors
- * rows, clauses and words, not pins).
- * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run
- * mode, not inverted, ran; every pin's case reached its end (REACHED).
- * RESIDUALS (named families, each with a pinned quiet row in the controls): R-COMPOSED a vocabulary term assembled at runtime
+ * pin's witness (each carries its pin id), the scan constants, the residual families with their quiet rows (RESIDUAL_ROWS) and
+ * the registered test titles are held to the out-of-file roster (test/fixtures/h2-lens-notification-roster.json). OUTSIDE
+ * ANCHOR: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-4nut.8): its acceptance clauses sit
+ * verbatim in exactly one row label each and its trigger in row A's, every row carries one of them, its statement lists the
+ * BATTERY words and the guarded outcome words, its gating sentence fences the freshness pair E1 holds and names the gating
+ * packages A3 reads absent, its quote and citation equal the roster's, and the census's delivered residual statement in the
+ * same row (the first notes line beginning "RESIDUALS (named, each with a pinned quiet row in a pin's controls): ", appended at
+ * landing 315) names every residual family with its pin and quiet rows, equal to RESIDUAL_ROWS, so a row, a battery word, a
+ * pair member, a residual family or a quiet row removed from every literal of this file and the roster still reds. Not
+ * claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the bead row anchors rows, clauses and words,
+ * not pins).
+ * RECORDS (wb-aff9 F1: the records case could not see its own skip): the judged set, which runs first, holds the collected task
+ * tree (vitest's) to the roster's titles - each once, in roster order, set to run and not inverted, itself first - so the
+ * records case, or any case, deleted, renamed, set to skip or todo by a modifier or an option, or inverted reds before it would
+ * have run. The last case, the records case, walks the same tree after the others: each ran, the judged set and every pin's
+ * case reached its end (REACHED), and then it records its own end. A file-end judge (afterAll) holds REACHED to the cases
+ * selected to run, read once from the collected tree before the first case runs (beforeEach), so a records case that skips
+ * itself at run time or returns early reds after it has run; in a run where a case failed, that failure is the red and the
+ * judge adds none, and a test-name filter's deselected cases are not held.
+ * RESIDUALS (named families; each one's pinned quiet rows are named in RESIDUAL_ROWS, sit in its pin's controls and read quiet
+ * there - A1 finds no vocabulary term, B1 reads the step READY): R-COMPOSED a vocabulary term assembled at runtime
  * (A1 composed); R-ENCODED a term spelled through an escape the walk does not decode (A1 escaped); R-GENERIC a reader keyed
  * only on the generic state words or on the plain reactive_lenses key, which Pi prose and rf provenance also spell (A1
  * genericWords, provenanceKey); R-OUTSIDE a reader below test/ or docs/, outside the judged roots (A1 testRoot, docsRoot);
@@ -81,13 +91,17 @@
  * counter continues, reads current until a gap (B1 orderedSequence, orderedCursor); R-REFRESH the projection trusts refresh
  * as the accepted read, so a snapshot a reader builds from a notification reads current (B1 refreshTrusted).
  * NOT CLAIMED: an owner restart or epoch (README.md:45) - the projection keys order on sequence and cursor only; Pi carries a
- * producer's RESYNC_REQUIRED word (row D) and detects no restart itself.
+ * producer's RESYNC_REQUIRED word (row D) and detects no restart itself. Every case of this file skipped at once (a skip on the
+ * outer describe, or on every case): vitest then marks the file skipped and runs none of its cases or hooks, so no judge here
+ * exists. The judged set and the records case both skipped or deselected: the pins read no registration (a filtered pin run
+ * stays green by design), so such a run is held only to its own selection. A guard removed together with the escape only it
+ * sees (the judged set's collected-tree reading, the records case's end, the file-end judge or the selection it reads).
  * Display paths added: none. Test-only: it spawns only the stand-in rf below makeScratch scratch and plants control files there.
  */
 import { chmodSync, type Dirent, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { afterAll, afterEach, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeEach, describe, expect, it, type RunnerTask } from "vitest";
 import { CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
 import { type NativeRef, type NativeSnapshot, type ObservationEvent, ObservationProjection, type ObservationScope, type Presentation } from "../src/workbench/observation.js";
@@ -134,6 +148,26 @@ const ANCHORS: Readonly<Record<string, { readonly file: string; readonly token: 
   examples: { file: "examples/agent-tool-description.md", token: "{{typeList}}" },
 };
 const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-ENCODED", "R-GENERIC", "R-OUTSIDE", "R-ORDERED", "R-REFRESH"];
+interface ResidualRows {
+  readonly pin: string;
+  readonly controls: readonly string[];
+}
+/** Each residual family's pinned quiet rows: the pin whose witness controls hold them, and their control keys (wb-aff9 F2). */
+const RESIDUAL_ROWS: Readonly<Record<string, ResidualRows>> = {
+  "R-COMPOSED": { pin: "A1", controls: ["composed"] },
+  "R-ENCODED": { pin: "A1", controls: ["escaped"] },
+  "R-GENERIC": { pin: "A1", controls: ["genericWords", "provenanceKey"] },
+  "R-OUTSIDE": { pin: "A1", controls: ["testRoot", "docsRoot"] },
+  "R-ORDERED": { pin: "B1", controls: ["orderedSequence", "orderedCursor"] },
+  "R-REFRESH": { pin: "B1", controls: ["refreshTrusted"] },
+};
+/** How a quiet row reads on its pin: A1's scan finds no vocabulary term in it, B1's projection reads its step READY. */
+const QUIET_READINGS: Readonly<Record<string, (value: unknown) => boolean>> = {
+  A1: value => Array.isArray(value) && value.length === 0,
+  B1: value => isObject(value) && value.freshness === "current" && value.completeness === "complete",
+};
+/** The opening of the census's delivered residual statement in the bead row's notes (appended at landing 315). */
+const DELIVERED_RESIDUALS = "RESIDUALS (named, each with a pinned quiet row in a pin's controls): ";
 /** The typed refusal of a row freshness outside the pinned pair, as the reader adapter states it. */
 const FRESHNESS_REFUSAL = "validation: ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused.";
 /** Every scan constant, as the roster holds it. */
@@ -220,6 +254,7 @@ interface Roster {
   readonly scan: JsonObject;
   readonly producer: Producer;
   readonly residuals: readonly string[];
+  readonly residualRows: Readonly<Record<string, ResidualRows>>;
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
 }
@@ -245,6 +280,15 @@ function strings(value: unknown, field: string): string[] {
 function fileLists(value: unknown, field: string): Record<string, string[]> {
   if (!isObject(value)) throw new Error(`roster ${field} must be an object`);
   return Object.fromEntries(Object.entries(value).map(([name, files]) => [name, strings(files, `${field}.${name}`)]));
+}
+function residualRowsOf(value: unknown, field: string): Record<string, ResidualRows> {
+  if (!isObject(value)) throw new Error(`roster ${field} must be an object`);
+  return Object.fromEntries(
+    Object.entries(value).map(([family, rows]) => {
+      if (!isObject(rows)) throw new Error(`roster ${field}.${family} must be an object`);
+      return [family, { pin: text(rows.pin, `${field}.${family}.pin`), controls: strings(rows.controls, `${field}.${family}.controls`) }];
+    }),
+  );
 }
 
 /** Parses the roster, refusing any field of the wrong shape by name, so no case can read a malformed roster. */
@@ -284,6 +328,7 @@ function readRoster(): Roster {
       srcFilesAtTip: fileLists(producer.srcFilesAtTip, "producer.srcFilesAtTip"),
     },
     residuals: strings(raw.residuals, "residuals"),
+    residualRows: residualRowsOf(raw.residualRows, "residualRows"),
     rows,
     tests: strings(raw.tests, "tests"),
   };
@@ -337,13 +382,50 @@ function statementWords(notes: string): { carried: string[]; outcomes: string[] 
 }
 /** The single-quoted fragments of a note line, in order. */
 const quotedFragments = (line: string): string[] => [...line.matchAll(/'([^']+)'/g)].map(found => found[1] ?? "");
+/** The census's delivered residual statement: each "R-NAME (PIN control, control[: gloss])" entry before its NOT CLAIMED part. */
+function deliveredResiduals(notes: string): JsonValue {
+  const listed = noteLine(notes, DELIVERED_RESIDUALS).slice(DELIVERED_RESIDUALS.length).split(". NOT CLAIMED: ")[0] ?? "";
+  const entries = [...listed.matchAll(/(R-[A-Z-]+) \(([A-Z]\d) ([^):]+)(?::[^)]*)?\)/g)];
+  return json(Object.fromEntries(entries.map(found => [found[1] ?? "", { pin: found[2] ?? "", controls: (found[3] ?? "").split(", ") }])));
+}
 
+/** The ends this file's cases reached, in run order: the judged set's title, each pin, then the records case's title. */
 const REACHED: string[] = [];
 /** A pin's witness, recorded as reached: only a case that ran to its end returns through here (as JSON, so the roster can hold it). */
 function done(pin: string, witness: { readonly [key: string]: unknown }): JsonValue {
   REACHED.push(pin);
   return json({ pin, ...witness });
 }
+
+// ---- The registration (the judged set, the records case and the file-end judge) ----
+
+const JUDGED_TITLE = "the judged set: the frozen shape, the out-of-file roster and the bead row agree";
+const RECORDS_TITLE = "records: every registered test ran once in run mode in roster order and every pin reached its end";
+interface Registered {
+  readonly name: string;
+  readonly mode: string;
+  readonly inverted: boolean;
+  readonly state: string | undefined;
+  readonly self: boolean;
+}
+/** Every test a collected task tree holds, in registration order; `self` marks the case doing the reading. */
+function registered(tasks: readonly RunnerTask[], self?: RunnerTask): Registered[] {
+  const walked: Registered[] = [];
+  const visit = (children: readonly RunnerTask[]): void => {
+    for (const child of children) {
+      if (child.type === "test") walked.push({ name: child.name, mode: child.mode, inverted: child.fails === true, state: child.result?.state, self: child === self });
+      else if (child.type === "suite") visit(child.tasks);
+    }
+  };
+  visit(tasks);
+  return walked;
+}
+/** A registered test's title with its collected mode, "+fails" marking an inverted one. */
+const modeLine = (entry: Registered): string => `${entry.name} | ${entry.mode}${entry.inverted ? "+fails" : ""}`;
+/** The titles selected to run, in registration order, read from the collected tree once, before the first case runs. */
+const SELECTED: string[] = [];
+/** The tree's tests, kept from that reading for the file-end judge (the same task objects, so their results are live). */
+const FILE_TASKS: RunnerTask[] = [];
 
 // ---- The walk (row A) ----
 
@@ -822,13 +904,50 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
 const titleOf = (entry: Row): string => `${entry.id} ${entry.label}`;
 
 describe("wb-4nut.8 Lenses notification and owner-state census (TSX-HARNESS2-REACTIVE-EVOLUTION-R8, absent-today leg and measured clauses)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster and the bead row agree", { timeout: 60_000 }, () => {
+  // The selection, read once from the collected tree before the first case runs: no case has run yet, so every mode is the
+  // collected one (vitest sets a case that skips itself at run time to skip afterwards).
+  beforeEach(({ task }) => {
+    if (FILE_TASKS.length > 0) return;
+    FILE_TASKS.push(...task.file.tasks);
+    SELECTED.push(...registered(FILE_TASKS).filter(entry => entry.mode === "run").map(entry => entry.name));
+  });
+  // The file-end judge: every case selected to run reached its end, in run order, the records case last - no case runs after
+  // it to see it skip itself or return early. In a run where a case failed, that failure is the red and the judge adds none.
+  afterAll(() => {
+    if (registered(FILE_TASKS).some(entry => entry.state === "fail")) return;
+    expect(REACHED, "every case selected to run reached its end, in run order, the records case last").toEqual(SELECTED);
+  });
+
+  it(JUDGED_TITLE, { timeout: 60_000 }, ({ task }) => {
+    // The collected tree, read before any other case runs: the records case, which cannot see its own skip (wb-aff9 F1), or any
+    // other case deleted, renamed, set to skip or todo by a modifier or an option, or inverted reds here.
+    const collected = registered(task.file.tasks, task);
+    expect(collected.map(entry => entry.name), "every registered test of this file (vitest task tree), exactly and in roster order").toEqual(ROSTER.tests);
+    expect(collected.findIndex(entry => entry.self), "this case finds itself by task identity, registered first").toBe(0);
+    expect(collected.filter(entry => entry.mode !== "run" || entry.inverted).map(modeLine), "every registered test, the records case included, is set to run and not inverted").toEqual([]);
     expect(ROWS.map(entry => `${entry.id}:${entry.pins.length}`)).toEqual(["A:3", "B:2", "C:2", "D:2", "E:2"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(entry => entry.pins).sort());
-    expect({ bead: BEAD, scan: json(SCAN), residuals: RESIDUAL_FAMILIES }).toStrictEqual({ bead: ROSTER.bead, scan: ROSTER.scan, residuals: [...ROSTER.residuals] });
+    expect({ bead: BEAD, scan: json(SCAN), residuals: RESIDUAL_FAMILIES, residualRows: json(RESIDUAL_ROWS) }).toStrictEqual({
+      bead: ROSTER.bead,
+      scan: ROSTER.scan,
+      residuals: [...ROSTER.residuals],
+      residualRows: json(ROSTER.residualRows),
+    });
+    // Each residual family's quiet rows sit in its pin's roster witness and read quiet there (wb-aff9 F2: the witness alone held
+    // them, so a quiet row removed from the controls and the witness together stayed green).
+    expect(Object.keys(RESIDUAL_ROWS), "every residual family names its quiet rows").toEqual([...RESIDUAL_FAMILIES]);
+    const loud = Object.entries(RESIDUAL_ROWS).flatMap(([family, rows]) => {
+      if (rows.controls.length === 0) return [`${family}: no quiet row`];
+      const witness = rosterWitness(rows.pin);
+      const controls = isObject(witness) && isObject(witness.controls) ? witness.controls : {};
+      const quiet = QUIET_READINGS[rows.pin];
+      return rows.controls.filter(control => quiet === undefined || !Object.hasOwn(controls, control) || !quiet(controls[control])).map(control => `${family}: ${rows.pin} ${control}`);
+    });
+    expect(loud, "every residual family's quiet rows sit in its pin's roster witness and read quiet there").toEqual([]);
     // The outside anchor: the owner filing's row in the tracked bead export.
     const bead = readBeadRow();
+    expect(deliveredResiduals(bead.notes), "the census's delivered residual statement names every family with its pin and quiet rows").toStrictEqual(json(RESIDUAL_ROWS));
     const clauses = acceptanceClauses(bead.notes);
     const trigger = /^\[[^\]]+\] (If Pi ever .+?) \(gated /.exec(bead.title)?.[1] ?? "";
     const quote = /^Quote: '(.+)' RL (\S+)\. Merged: /m.exec(bead.notes);
@@ -851,6 +970,7 @@ describe("wb-4nut.8 Lenses notification and owner-state census (TSX-HARNESS2-REA
     const [dirty, unreachable, restart] = quotedFragments(authority);
     expect([dirty, unreachable, restart].map(fragment => fragment !== undefined && fragment.length > 0), "the authority line quotes three fragments").toEqual([true, true, true]);
     expect([producerLine(25).includes(dirty ?? "-"), producerLine(25).includes(unreachable ?? "-"), producerLine(51).includes(restart ?? "-")], "the quoted fragments sit in README.md:25 and :51").toEqual([true, true, true]);
+    REACHED.push(JUDGED_TITLE);
   });
 
   for (const entry of ROWS) {
@@ -866,23 +986,17 @@ describe("wb-4nut.8 Lenses notification and owner-state census (TSX-HARNESS2-REA
     });
   }
 
-  it("records: every registered test ran once in run mode in roster order and every pin reached its end", { timeout: 60_000 }, ({ task }) => {
-    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
-    const visit = (tasks: typeof task.file.tasks): void => {
-      for (const child of tasks) {
-        if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
-        else if (child.type === "suite") visit(child.tasks);
-      }
-    };
-    visit(task.file.tasks);
+  it(RECORDS_TITLE, { timeout: 60_000 }, ({ task }) => {
+    const walked = registered(task.file.tasks, task);
     const titles = walked.map(entry => entry.name);
     expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual(ROSTER.tests);
     expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice").toEqual([]);
     const here = walked.findIndex(entry => entry.self);
     expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
     const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
-    const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
-    expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
-    expect(REACHED, "every pin's case reached its end, in row order").toEqual(ROWS.flatMap(entry => entry.pins));
+    const read = (entry: Registered): string => `${modeLine(entry)} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
+    expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.inverted || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
+    expect(REACHED, "the judged set and every pin's case reached its end, in run order").toEqual([JUDGED_TITLE, ...ROWS.flatMap(entry => entry.pins)]);
+    REACHED.push(RECORDS_TITLE);
   });
 });

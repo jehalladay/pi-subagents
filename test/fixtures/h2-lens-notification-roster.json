@@ -138,6 +138,47 @@
     "R-ORDERED",
     "R-REFRESH"
   ],
+  "residualRows": {
+    "R-COMPOSED": {
+      "pin": "A1",
+      "controls": [
+        "composed"
+      ]
+    },
+    "R-ENCODED": {
+      "pin": "A1",
+      "controls": [
+        "escaped"
+      ]
+    },
+    "R-GENERIC": {
+      "pin": "A1",
+      "controls": [
+        "genericWords",
+        "provenanceKey"
+      ]
+    },
+    "R-OUTSIDE": {
+      "pin": "A1",
+      "controls": [
+        "testRoot",
+        "docsRoot"
+      ]
+    },
+    "R-ORDERED": {
+      "pin": "B1",
+      "controls": [
+        "orderedSequence",
+        "orderedCursor"
+      ]
+    },
+    "R-REFRESH": {
+      "pin": "B1",
+      "controls": [
+        "refreshTrusted"
+      ]
+    }
+  },
   "rows": [
     {
       "id": "A",
