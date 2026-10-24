@@ -154,7 +154,21 @@
               "template": 1,
               "path": 1,
               "constProgram": 1,
-              "composed": 0
+              "composed": 0,
+              "shell": 1,
+              "shellConcat": 1,
+              "shellTemplate": 1,
+              "shellEnv": 1,
+              "fallback": 1,
+              "conditional": 1,
+              "asserted": 1,
+              "wrappedShell": 0,
+              "wrappedEnv": 0,
+              "chained": 0,
+              "composedConcat": 0,
+              "composedTemplate": 0,
+              "composedProperty": 0,
+              "composedImport": 0
             }
           }
         },
@@ -179,7 +193,13 @@
               "concat": 1,
               "constArgv": 1,
               "flagBetween": 1,
-              "composed": 0
+              "composed": 0,
+              "literalSpan": 1,
+              "constSpan": 1,
+              "composedConcat": 0,
+              "composedTemplate": 0,
+              "composedProperty": 0,
+              "composedImport": 0
             }
           }
         }
@@ -361,7 +381,103 @@
                 "names": 0,
                 "modules": 0,
                 "launches": []
+              },
+              "composedCall": {
+                "names": 0,
+                "modules": 0,
+                "launches": []
+              },
+              "composedTemplate": {
+                "names": 0,
+                "modules": 0,
+                "launches": []
+              },
+              "composedProperty": {
+                "names": 0,
+                "modules": 0,
+                "launches": []
+              },
+              "composedImport": {
+                "names": 0,
+                "modules": 0,
+                "launches": []
+              },
+              "worker": {
+                "names": 0,
+                "modules": 0,
+                "launches": []
+              },
+              "addon": {
+                "names": 0,
+                "modules": 0,
+                "launches": []
               }
+            },
+            "opaque": [],
+            "edges": {
+              "staticImport": {
+                "followed": [
+                  "./static.js"
+                ],
+                "refused": 0
+              },
+              "dynamicImport": {
+                "followed": [
+                  "./lazy.js"
+                ],
+                "refused": 0
+              },
+              "required": {
+                "followed": [
+                  "./lazy.js"
+                ],
+                "refused": 0
+              },
+              "importEquals": {
+                "followed": [
+                  "./lazy.js"
+                ],
+                "refused": 0
+              },
+              "constSpecifier": {
+                "followed": [
+                  "./lazy.js"
+                ],
+                "refused": 0
+              },
+              "computed": {
+                "followed": [],
+                "refused": 1
+              },
+              "concatenated": {
+                "followed": [],
+                "refused": 1
+              },
+              "templated": {
+                "followed": [],
+                "refused": 1
+              },
+              "aliasedLoader": {
+                "followed": [],
+                "refused": 0
+              },
+              "moduleRequire": {
+                "followed": [],
+                "refused": 0
+              }
+            },
+            "walk": {
+              "modules": [
+                "lazy.ts",
+                "reader.ts"
+              ],
+              "unresolved": [],
+              "names": [
+                "lazy.ts: fetch"
+              ],
+              "opaque": [
+                "reader.ts: import(name)"
+              ]
             }
           }
         }
@@ -444,7 +560,19 @@
               "template": 1,
               "hyphenated": 1,
               "cased": 1,
-              "composed": 0
+              "composed": 0,
+              "newest": 1,
+              "asOfNow": 1,
+              "freshly": 1,
+              "mostRecent": 1,
+              "rightNow": 1,
+              "toTheMinute": 1,
+              "foldedSpan": 1,
+              "outside": 0,
+              "composedCall": 0,
+              "composedTemplate": 0,
+              "composedProperty": 0,
+              "composedImport": 0
             }
           }
         },
