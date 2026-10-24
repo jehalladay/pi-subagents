@@ -45,3 +45,109 @@
 - Seat probes beyond the battery, each killed: a whitespace-only word split (2 red), a case-sensitive namespace marker (2), a held case read as registered (1), a held suite read as registered (1), any cited receipt accepted (6), no self-evidence (1), the subject narrowed to the bare word (3), a substring binary match (2), the stale-binding check removed (1).
 - Contacts: a probe commit of this cut was merged with merge-tree against each gate-queue entry (wb-1xvp.4 81723fc, wb-a9l2.2 fc616bd, wb-ouo3 e555304), and each returned rc 0. No entry touches src/, docs/, README.md or CHANGELOG.md, the files this guard reads. The wb-1xvp.4 census reads src/ only.
 - Non-claims: no gp process ran in Pi and no decision cost was measured; this entry states no latency figure. A later binding is held here by registered titles only (R-REPORT); whether those cases run, pass and assert is the census tier's judgment.
+
+## 2026-10-23 receipt: the follow-up wb-mqm6 anchors every table and its row content outside the guard
+
+- Follow-up of record: wb-mqm6, filed at fold 254 under R694 for the PREP findings F1-F7 of the wb-1xvp.5 gate cmd_65cb850d9d24 (seat gate-prep-5, run g10-gate-s29). Base: trunk b3670d6, where every edit was made and every count below was measured (the bead was claimed at 61f6412). Trunk was merged into the branch again after the last edit as it moved, each merge with no shared path and adding no file the guard reads; the guard, the docs readers and the contact check re-ran green at each later base, and the hand-off base is named in the delivery note. Scope: this guard and this receipt; no src file, dependency or settings key changes.
+- F1 (CT6 survived on four tables): the quiet rows, the claim-quiet rows, the binding cases and the evidence cases are listed below line by line, so a row removed from every literal of the guard reads red against this file.
+- F2 (content swaps survived): the listing ends in a sha256 digest of each fixture-bearing table's row content, so a fixture swapped for another passing one reads red here. Each residual's reading is data read by one shared reader beside a paired control one change away, so a reading hollowed to an empty result reads red.
+- F3 (a source locator below the census floor): each hold member (skip, todo, only, skipIf, runIf, fails) has its own binding row, and G2 admits a binding only beside a census-tier leg, a test/*.census.ts file that imports judge from test/helpers/census.ts and names each bound case's file and title. The locator's remaining blind spots are the residual R-LOCATOR.
+- F4 (an inserted first entry bypassed the anchor): the guard pins this file's entry headings in order and reads the listing from the last entry, so an entry inserted anywhere reads red.
+- F5 (eleven escaped denials): the bottleneck family reads each of the ten measured phrasings, and every docs line is also read as its reader sees it through marked's inline lexer, with emphasis, code span and link text kept and HTML dropped. What that lexer leaves as written is the residual R-MARKUP.
+- F5, the eleventh escape: the claim subject also reads the spelling graph_policy.
+- F6 (a forward claim in present tense): R-REPORT now states what the guard does; the obligation it named is the judge leg of F3.
+- F7 (four binary spellings escaped): the binary marker reads a path under either separator, a gp.cmd or gp.exe launcher and gp with an @ version suffix as npx spells it.
+- Anchor listing. The guard's anchor row holds its tables to the lines below, in order, read from this entry, the last one. Each line is plain text.
+
+- Clause a: each gp call and observation records latency, subprocess count, beads_calls (= fake seam invocations), latency_ms and serialized_bytes; a receipt missing them is refused.
+- Clause b: read budget N -> the fake bd seam sees at most N calls and the receipt marks completeness 'partial'; an over-budget telemetry cycle is cut and marked partial; budgets are declared settings.
+- Clause c: fake rpc seam: N decisions in one run open one session, not N processes; a verb rpc refuses (unsupported-method) is recorded transport='cli', never relabelled.
+- Clause d: an evaluation receipt aggregates p50/p95/p99 from recorded per-call values, instrumentation overhead apart from inference.
+- Marker binary: a word of a string token whose command name is gp: the bare name, a path ending in gp under either separator, a gp.cmd or gp.exe launcher, gp with an @ version suffix as npx spells it, an argv word, or a word of a shell line.
+- Marker namespace: a string token naming the producer: the graph-policy-cli package, a graphpolicy envelope schema such as graphpolicy.rpc.v1, or GraphDataIR.
+- Marker identifier: an identifier naming GraphPolicy or GraphDataIR, such as a client class, a binding or a type.
+- Claim family bottleneck: a bottleneck denied, read before the word bottleneck or bottlenecks: no, without or nor with up to two words between, or not, never, cannot or n't with an optional be, become or becomes, then a, an or the and an optional word between, such as no bottleneck, no-bottleneck, without a new bottleneck, isn't the bottleneck and will not become a bottleneck.
+- Claim family percentile: a p50, p95 or p99 figure: the percentile, then a number and a time unit within forty characters.
+- Claim family negligible: a cost called negligible, cheap, zero or low: negligible, cheap, zero-cost, low-latency, low-overhead.
+- Figure p50: p50, the median decision latency.
+- Figure p95: p95, the 95th percentile decision latency.
+- Figure p99: p99, the 99th percentile decision latency.
+- Figure inference: inference, the time spent in gp inference.
+- Figure instrumentation-overhead: instrumentation overhead, the instrumentation cost, apart from inference.
+- Residual R-RUNTIME: a binary name built at run time or read from settings or the environment is no string token, so its spawn is no site.
+- Residual R-SCOPE: only the .ts files under src/ are read; qa/, examples/ and test/ hold tooling and evaluation, never the machine's decision loop.
+- Residual R-REPORT: a bound case is located in its test source, never judged in vitest's report, so a case that fails, never collects or asserts nothing passes this locator; the judge leg G2 requires is located the same way, by its import of judge and the case's file and title as string tokens, never by reading its judge call or the verdict that call returns.
+- Residual R-LINE: a cost claim whose subject is named on another line is not read as a gp claim.
+- Residual R-FIGURES: an evaluation receipt is admitted by the shape of its figures, never by recomputing them from per-call records.
+- Residual R-LOCATOR: the binding locator reads a registration's call chain and its enclosing suites only, so an options object such as { skip: true }, { todo: true }, { only: true } or { fails: true } on a case or a suite, a skip called through the test context, an empty each table, a shadowed it, a registration in a function never called or under if (false), a hollow body and an unrelated title each read as registered; G2 therefore never admits a binding on this locator alone.
+- Residual R-MARKUP: a claim spelled through markup that marked's inline lexer leaves as written, such as a character reference or an undefined reference-style link between its words, is read as its raw text.
+- Hold skip: the case or the suite never runs.
+- Hold todo: the case is recorded as todo and never runs.
+- Hold only: the case is focused, which the gate refuses with allowOnly false.
+- Hold skipIf: the case runs only while its condition is false.
+- Hold runIf: the case runs only while its condition is true.
+- Hold fails: the case passes only when its body fails.
+- Quiet general-purpose: the src/agent-types.ts binding gp names the general-purpose agent, an identifier and never a string token.
+- Quiet other-binaries: gpg, rf and git are other binaries.
+- Quiet word-parts: gpu, gpt, gp2 and gp-agent are other words.
+- Quiet comment: a comment is prose and never a site, even when it names the binary and GraphPolicyCLI.
+- Quiet other-extensions: a module gp.js and a gpx.exe launcher name no gp binary, since only an @ version and a .cmd or .exe extension are dropped.
+- Claim quiet no-subject: a percentile figure beside no gp subject, the docs/10 navigation line.
+- Claim quiet no-claim: GraphPolicyCLI named beside no cost word.
+- Claim quiet directive: the program's directive not to make inference a new bottleneck denies nothing.
+- Claim quiet requirement: the requirement to measure the percentiles states no figure.
+- Claim quiet must-not: a requirement that a call must not create one denies nothing.
+- Claim quiet affirmed: a bottleneck affirmed is no denial.
+- Binding case 1: a bound site whose four clauses each name a registered case is accepted.
+- Binding case 2: an unbound site refuses, naming the file, the line and the marker.
+- Binding case 3: a binding for a file with no site is stale.
+- Binding case 4: a clause that binds no case refuses, naming the clause.
+- Binding case 5: a case in an absent test file refuses.
+- Binding case 6: an unregistered title refuses.
+- Binding case 7: a held case refuses.
+- Binding case 8: a case of a held suite refuses.
+- Binding case 9: a case held by skip refuses.
+- Binding case 10: a case held by todo refuses.
+- Binding case 11: a case held by only refuses.
+- Binding case 12: a case held by runIf refuses.
+- Binding case 13: a case held by fails refuses.
+- Judge case 1: a binding whose every case a census-tier leg names beside an imported judge is judged.
+- Judge case 2: an aliased judge import is a leg.
+- Judge case 3: a binding with no census-tier leg refuses every bound case.
+- Judge case 4: a leg that names the cases but imports no judge is no leg.
+- Judge case 5: a judge imported from another module is no leg.
+- Judge case 6: a leg that names another test file leaves every bound case unjudged.
+- Judge case 7: a leg that names another title leaves the bound case unjudged.
+- Judge case 8: a title the leg names only in a comment is not named.
+- Judge case 9: an import type statement is no leg.
+- Judge case 10: a type-only judge specifier is no leg.
+- Judge case 11: an empty table owes no leg.
+- Evidence case 1: a claim citing an evaluation receipt is evidenced.
+- Evidence case 2: a claim inside an evaluation receipt is its own evidence.
+- Evidence case 3: a claim citing no receipt refuses.
+- Evidence case 4: a claim citing an absent receipt refuses.
+- Evidence case 5: a receipt without the p50 figure is no evaluation receipt.
+- Evidence case 6: a receipt without the p95 figure is no evaluation receipt.
+- Evidence case 7: a receipt without the p99 figure is no evaluation receipt.
+- Evidence case 8: a receipt without the inference figure is no evaluation receipt.
+- Evidence case 9: a receipt without the instrumentation overhead figure is no evaluation receipt.
+- Digest markers: cfc55906d15a592b.
+- Digest quiet: f392056f43631231.
+- Digest claim-families: 1961edbb21232d43.
+- Digest claim-quiet: 028f12f1bc249cb3.
+- Digest bindings: cf1cbc40e31a2ff3.
+- Digest judge-leg: d99b1576692f9ffc.
+- Digest evidence: 7c95de466e169be5.
+- Digest residuals: c92d453bebe0aa85.
+
+- Red first, phase 1: the new acceptance rows added to the landed guard with every reader unchanged read 16 failed | 60 passed (76). The red rows were the four binary spellings and the per-marker positivity row (F7) and the eleven bottleneck rows (F5). The five hold rows passed there: they exist to kill the hold-deletion mutants, which read 0 red on the landed guard.
+- Red first, anchor: the final guard with this entry absent (the receipt as trunk holds it) reads 1 failed | 102 passed (103), the anchor row.
+- Green: 103 of 103 (`vitest run test/workbench-gp-decision-cost.test.ts`); the slowest case took 1038 ms at load1 near 200.
+- Gate survivors replayed on the final bytes, each on a throwaway copy of the guard removed after its run; each read 0 red on the landed guard: L2-Q1 1 red; L2-Q2 1; L2-B1 1; L2-E1 1; L2-F1 1; L2-F1x 3; L2-C1 1; L2-C1x 5; L2-B2x 1; L2-R1a, the residual bindings reader hollowed, 2; L2-R1b, the R-REPORT input swapped, 1; L2-NP-skip 2; L2-NP-todo 2; L2-NP-runIf 2; L2-NP-fails 2; L2-A1, an inserted first entry, 1. Each CT6-class edit also rewrote the guard's own digest literal, so its red is the anchor row against this file.
+- CT battery (standing rule 16, v2), each member on a throwaway copy of the guard, removed after its run: CT-BATTERY v2: CT1 red=2; CT1b red=2; CT2 red=2; CT3 red=2; CT4 red=2; CT5 red=1; CT6 red=1.
+  - CT1 deletes the binary path fixture and CT1b the bottleneck measurable fixture; CT2 shortens clause b; CT3 swaps the quiet comment snippet for one with no site; CT4 deletes judge case 5. Each reads the frozen-shape and anchor rows red.
+  - CT5 deletes the quiet other-extensions row with its frozen element, and CT6 removes the residual R-MARKUP from every literal; both also rewrite the guard's digest literal, and each reads the anchor row alone red.
+- Seat probes beyond the battery, each killed: the command name split on / only (2 red), keeping an @ version (2), keeping a .cmd or .exe extension (3), dropping any extension (1); the subject without the underscore spelling (3); the reader text as the raw line (6), keeping HTML (1), not recursing (1), dropping link text (1); each pattern alternative removed: no (18), without (3), nor (3), the window narrowed to one word (4) or removed (6), the hyphen (3), never (4), cannot (3), n't (3), be (3), become (3), becomes (3), a (8), an (3), the (4), the optional word (4), the plural (3); caseState ignoring fails (1); the judge leg without its file check (1), reading the local import name (1), accepting any import (4), admitting an import type statement (1) or a type-only specifier (1), hollowed (8); censusTier never reading (1) or reading the default tier (1); the scope reader returning its quiet constant (1); the claims reader hollowed (2); an entry appended below the last (1); an anchor-shaped line inserted into this entry (1).
+- Readers run on the final bytes (default tier, direct vitest, 4 workers): over trunk b3670d6, 63 files that read docs/ or its receipts, 2308 of 2308 passed, among them receipts-shape, receipts-convention, traceability-freeze, traceability-feedback-receipts, both W10 guards, unsafe-display-oracle, source-hygiene, the docs census of storage claims and every whole-tree rf, tsx and h2 docs census of the landing registry. The same set, with each docs census landed since, re-ran green at every later base.
+- Contacts: a ref-less probe commit of this cut on trunk b3670d6 was merged with merge-tree against each of the 37 gate-queue entries, and each returned rc 0; the check re-ran at every later base with rc 0 each time. Four entries touch the guard's read set (wb-4nut.5 and wb-6ps1.2 in src/; wb-6ps1.2, wb-kku9.1 and wb-kku9.4 in docs/), and their files read no site and no unbacked claim under the guard's own readers. Ten queued censuses that walk the docs ran against this receipt, each green; the gp-provenance census of wb-gxd7.5 first read two new version-token lines here, and both were reworded before this entry was final.
+- Non-claims: no gp process ran in Pi and no decision cost was measured; this entry states no latency figure. The judge leg is located by an import and string tokens (R-REPORT); whether a future leg's judge call reads the bound cases is that leg's own judgment. The seat ran no complete gate and no census tier, and the composed trees of the queued entries were not run whole.
