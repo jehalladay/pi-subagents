@@ -53,6 +53,19 @@
  * roster row holds the tables to it and the closing tally holds vitest's registrations to it, so removing a member from
  * every literal of this file still reds through the roster (docs/03 is the second outside anchor, for rules and residuals).
  *
+ * THE wb-1ho6 FOLLOW-UP (R694 of landing 267; gate of record cmd_18b21dfd4dbc composing machine gate cmd_6276bcef3f4a,
+ * PREP findings F1-F5). F1: a bd read verb is judged with its flags in view. BD_WRITING_FLAGS lists the flags with which
+ * bd 1.1.0-rc.1's own help says a read verb writes (ready --claim claims; doctor --fix and --fix-child-parent repair;
+ * doctor --clean deletes), so gate escapes G1 (bd ready --claim) and G2 (bd doctor --fix --yes) are bd writes (DT
+ * bd-writing-flags and two d2 F rows); a flag that is not a literal stays a read (residual COMPUTED-BD-FLAG). F2: one F
+ * row per judge arm the gate found unfalsified - DMG38 (a client reaching gp through the package alone, a fixed F row),
+ * DMG39-DMG41 and DMG43 (a1 and a4 arms) and DMG42 (the a3 train-token arm). F3: the ownership table gives the
+ * GraphPolicyCLI concern exactly one row - a second row naming any of its terms reds (gate LDG4). F4: the shell grammar
+ * the gate escaped through is read - subshells and $( ) or backtick substitutions (G3, G6), reserved words (G4), the exec
+ * builtin (G5), env with options (G7) and .exe or .cmd binaries (G8) - and the adjacent shapes measured quiet are named
+ * residuals (QUOTED-SUBSTITUTION, SHELL-BUILTIN-WRAPPER). F5: a DT probe for each detector arm the gate found unprobed
+ * (DMG1-DMG4, DMG8, DMG15, DMG16, DMG25, DMG49), and DMG50, a judge arm, by an a1 F row.
+ *
  * Display paths added: none. No scratch directory is allocated: the synthetic trees live in memory.
  */
 import { createHash } from "node:crypto";
@@ -79,6 +92,8 @@ const OWNERSHIP_CELLS: readonly string[] = [
   "GraphPolicyCLI",
   "nothing today (no gp seam is registered); a future seam reaches gp only through its CLI, SDK or `gp rpc --stdio`, under the GraphPolicyCLI boundary below",
 ];
+/** The pinned concern's own terms: a table row naming any of them speaks for that concern, so only the pinned row may (wb-1ho6 F3). */
+const CONCERN_TERMS: readonly string[] = ["graph-function representation", "numerical evaluation", "learned score", "embedding", "prediction", "policy distribution"];
 /** A table cell naming GraphPolicyCLI or gp: exactly one ownership row may carry one, the pinned row. */
 const NAMES_GP = /GraphPolicyCLI|graph[-_ ]?policy|\bgp\b/i;
 /** The boundary section's definitions paragraph, verbatim (it carries the bead, its source line and this census's path). */
@@ -114,8 +129,22 @@ const SHELLS = new Set(["sh", "bash", "zsh", "dash", "ksh"]);
 /** Binaries an argv array may name first when it is handed to an injected launch seam. */
 const ARGV_BINARIES = new Set(["gp", "bd", "furnace", "kill", "pkill", "killall", ...SHELLS]);
 const KILL_BINARIES = new Set(["kill", "pkill", "killall"]);
-/** bd verbs that only read; any other bd launch is a write, a launch whose verb is not a literal included. */
+/**
+ * bd verbs that read unless a writing flag (BD_WRITING_FLAGS) is given; any other bd launch is a write, a launch whose
+ * verb is not a literal included. The verb is the launch's first lowercase word, so leading flags are skipped.
+ */
 const BD_READ_VERBS = new Set(["show", "list", "ready", "blocked", "search", "stats", "status", "count", "info", "where", "version", "help", "graph", "doctor"]);
+/**
+ * The flags with which a bd read verb writes, read from bd 1.1.0-rc.1's own help (wb-1ho6 F1): ready --claim ("Atomically
+ * claim the first ready issue matching the filters"), doctor --fix ("Automatically fix issues where possible"), doctor
+ * --fix-child-parent (it removes child-to-parent dependencies) and doctor --clean ("For pollution check: delete detected
+ * test issues"). Each counts bare or in --flag=value form, anywhere in the argv; no other read verb's help lists a flag
+ * that writes.
+ */
+const BD_WRITING_FLAGS: ReadonlyMap<string, readonly string[]> = new Map([
+  ["ready", ["--claim"]],
+  ["doctor", ["--fix", "--fix-child-parent", "--clean"]],
+]);
 /** The modules whose bindings name the process object (a default or namespace import, import-equals, require). */
 const PROCESS_MODULES = new Set(["process", "node:process"]);
 const CHILD_PROCESS_MODULES = new Set(["child_process", "node:child_process"]);
@@ -145,8 +174,14 @@ const BUILTINS: ReadonlySet<string> = new Set(builtinModules);
 const ASSIGNMENT = /^[A-Za-z_][A-Za-z0-9_]*=/;
 /** A shell's -c flag, alone or in a cluster (-c, -lc, -ec): the next argument is the script the shell runs. */
 const SHELL_C = /^-[A-Za-z]*c[A-Za-z]*$/;
-/** Characters that end a simple command outside quotes: ; & | and newline (so && and || too). */
-const COMMAND_ENDS = new Set([";", "&", "|", "\n"]);
+/** Characters that end a simple command outside quotes: ; & | ( ) ` and newline (so && and ||, a subshell and a $( ) or backtick substitution too). */
+const COMMAND_ENDS = new Set([";", "&", "|", "\n", "(", ")", "`"]);
+/** Shell reserved words that open a command (if bd show ...; then bd close ...), skipped before it; the closing words run nothing. */
+const RESERVED_WORDS = new Set(["!", "{", "}", "if", "then", "elif", "else", "fi", "do", "done", "while", "until", "esac"]);
+/** env options that take the next word as their value (env -u NAME, env -C DIR); any other word starting with - is a flag. */
+const ENV_VALUE_OPTIONS = new Set(["-u", "-C", "--unset", "--chdir"]);
+/** The exec builtin's option that takes the next word as its value (exec -a NAME); -c and -l are flags. */
+const EXEC_VALUE_OPTIONS = new Set(["-a"]);
 /** How deep a shell's -c script is followed into a further shell's -c script. */
 const SCRIPT_DEPTH = 4;
 
@@ -194,6 +229,8 @@ interface ModuleCensus {
 }
 
 const basenameOf = (path: string): string => path.split(/[/\\]/).pop() ?? path;
+/** A launched binary's command name: its basename without a Windows .exe or .cmd suffix, so bd.exe runs bd (as GP_BINARY reads gp.exe). */
+const commandName = (binary: string): string => basenameOf(binary).replace(/\.(?:exe|cmd)$/, "");
 
 function scriptKind(file: string): ts.ScriptKind {
   if (file.endsWith(".tsx")) return ts.ScriptKind.TSX;
@@ -218,10 +255,25 @@ function unwrap(node: ts.Expression): ts.Expression {
   return current;
 }
 
+/** A command's words after its leading options: each word starting with -, and the next word too for a value option. */
+function skipOptions(words: readonly string[], valueOptions: ReadonlySet<string>): readonly string[] {
+  let rest = words;
+  let word = rest[0];
+  while (word?.startsWith("-")) {
+    rest = rest.slice(valueOptions.has(word) ? 2 : 1);
+    word = rest[0];
+  }
+  return rest;
+}
+
 /**
- * A shell command line as the simple commands a shell runs: split at unquoted ; & | and newlines, single and double
- * quotes removed, then per command the leading NAME=value assignments and an env prefix (with its own assignments)
- * skipped. Nothing else a shell does is read (expansions, redirections, other wrappers: residual WRAPPED-COMMAND).
+ * A shell command line as the simple commands a shell runs: split at unquoted ; & | ( ) ` and newlines (a subshell and a
+ * $( ) or backtick substitution are commands of their own), single and double quotes removed, then per command its
+ * leading prefix words skipped, to a fixpoint: NAME=value assignments, the reserved words that open a command, env (bare
+ * or by path) with its options, and the exec builtin with its options. Nothing else a shell does is read: a substitution
+ * inside double quotes stays quoted text (residual QUOTED-SUBSTITUTION), eval, command, builtin and env -S are not
+ * unwrapped (residual SHELL-BUILTIN-WRAPPER), a wrapper program such as timeout is not unwrapped (residual
+ * WRAPPED-COMMAND), and expansions and redirections are read as plain words.
  */
 function shellCommands(line: string): Command[] {
   const commands: string[][] = [[]];
@@ -249,14 +301,12 @@ function shellCommands(line: string): Command[] {
   }
   endWord();
   return commands.flatMap(words => {
-    let rest = words;
-    const skipAssignments = (): void => {
-      while (rest[0] !== undefined && ASSIGNMENT.test(rest[0])) rest = rest.slice(1);
-    };
-    skipAssignments();
-    if (rest[0] === "env") {
-      rest = rest.slice(1);
-      skipAssignments();
+    let rest: readonly string[] = words;
+    for (let before = -1; before !== rest.length; ) {
+      before = rest.length;
+      while (rest[0] !== undefined && (ASSIGNMENT.test(rest[0]) || RESERVED_WORDS.has(rest[0]))) rest = rest.slice(1);
+      if (rest[0] !== undefined && commandName(rest[0]) === "env") rest = skipOptions(rest.slice(1), ENV_VALUE_OPTIONS);
+      else if (rest[0] === "exec") rest = skipOptions(rest.slice(1), EXEC_VALUE_OPTIONS);
     }
     const [binary, ...argv] = rest;
     return binary === undefined ? [] : [{ binary, argv }];
@@ -265,7 +315,7 @@ function shellCommands(line: string): Command[] {
 
 /** A command and, when it is a shell running a -c script, the simple commands of that script, to SCRIPT_DEPTH. */
 function withScripts(command: Command, depth = 0): Command[] {
-  if (depth >= SCRIPT_DEPTH || !SHELLS.has(basenameOf(command.binary))) return [command];
+  if (depth >= SCRIPT_DEPTH || !SHELLS.has(commandName(command.binary))) return [command];
   const flag = command.argv.findIndex(arg => SHELL_C.test(arg));
   const script = flag < 0 ? undefined : command.argv[flag + 1];
   return script === undefined ? [command] : [command, ...shellCommands(script).flatMap(inner => withScripts(inner, depth + 1))];
@@ -443,7 +493,7 @@ function moduleCensus(file: string, text: string): ModuleCensus {
     }
     if (ts.isArrayLiteralExpression(node)) {
       const head = literalValue(node.elements[0]);
-      if (head !== undefined && ARGV_BINARIES.has(basenameOf(head))) record(node, [{ binary: head, argv: argvOf(node.elements.slice(1)) }]);
+      if (head !== undefined && ARGV_BINARIES.has(commandName(head))) record(node, [{ binary: head, argv: argvOf(node.elements.slice(1)) }]);
     }
     if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) {
       const member = ts.isPropertyAccessExpression(node) ? node.name.text : literalText(node.argumentExpression);
@@ -467,16 +517,18 @@ function moduleCensus(file: string, text: string): ModuleCensus {
     .filter(launch => GP_BINARY.test(basenameOf(launch.binary)) || launch.argv.some(arg => GP_FAMILY.test(arg)))
     .map(launch => ({ line: launch.line, text: `${launch.binary} ${launch.argv.join(" ")}`.trim() }));
   for (const launch of launches) {
-    const base = basenameOf(launch.binary);
+    const name = commandName(launch.binary);
     if (launch.binary === "<process.execPath>") hostLaunch.push({ line: launch.line, text: launch.binary });
-    if (KILL_BINARIES.has(base)) processKill.push({ line: launch.line, text: base });
-    if (base === "furnace" && launch.argv.includes("stop")) furnaceStop.push({ line: launch.line, text: `furnace ${launch.argv.join(" ")}` });
+    if (KILL_BINARIES.has(name)) processKill.push({ line: launch.line, text: name });
+    if (name === "furnace" && launch.argv.includes("stop")) furnaceStop.push({ line: launch.line, text: `furnace ${launch.argv.join(" ")}` });
   }
   const bdWrite = launches
-    .filter(launch => basenameOf(launch.binary) === "bd")
+    .filter(launch => commandName(launch.binary) === "bd")
     .filter(launch => {
       const verb = launch.argv.find(arg => /^[a-z][a-z-]*$/.test(arg));
-      return verb === undefined || !BD_READ_VERBS.has(verb);
+      if (verb === undefined || !BD_READ_VERBS.has(verb)) return true;
+      const flags = BD_WRITING_FLAGS.get(verb) ?? [];
+      return launch.argv.some(arg => flags.some(flag => arg === flag || arg.startsWith(`${flag}=`)));
     })
     .map(launch => ({ line: launch.line, text: `bd ${launch.argv.join(" ")}` }));
   return { file, specifiers, runtimeImports, launches, gpBinary, gpLaunches, dynamicLoads, gpVocabulary, gpFamily, trainTokens, namesUnknownCommand, processKill, furnaceStop, bdWrite, agentSession, hostLaunch };
@@ -667,6 +719,20 @@ const CLEAN: Fixture = {
   ],
 };
 
+/** CLEAN with its client reaching gp through the GraphPolicyCLI package instead of the gp binary: every rule still holds (wb-1ho6 F2, gate DMG38). */
+const SDK_CLEAN: Fixture = withModule(
+  CLEAN,
+  CLIENT,
+  [
+    'import { evaluate } from "graph-policy-cli";',
+    'import { scrubbedEnvironment } from "../process-env.js";',
+    REFUSAL_LINES,
+    "export function gpEval(program: string): unknown {",
+    "  return evaluate({ program, env: scrubbedEnvironment(process.env) });",
+    "}",
+  ].join("\n"),
+);
+
 type Check = (ctx: JudgeContext) => readonly Finding[];
 
 /** One single-clause mutation of CLEAN and the exact findings the census must report for it. */
@@ -739,6 +805,26 @@ const ROWS: readonly Row[] = [
             apply: fixture => editModule(fixture, CLIENT, text => text.replace(EVAL_CALL, "{ program, env: scrubbedEnvironment(process.env) }")),
             expected: ["GP-1/a1 src/workbench/providers/graphpolicy.ts client-reaches-gp-through-no-real-interface"],
           },
+          {
+            name: "the registered client imports a GraphPolicyCLI fork",
+            apply: fixture => editModule(fixture, CLIENT, text => `import { evaluate } from "graphpolicy-fork";\n${text}\nexport const forked = (): unknown => evaluate;`),
+            expected: ["GP-1/a1 src/workbench/providers/graphpolicy.ts client-imports-graphpolicy-fork", "GP-3/c1 src/workbench/providers/graphpolicy.ts imports-graphpolicy-fork"],
+          },
+          {
+            name: "an unregistered module imports the GraphPolicyCLI package",
+            apply: fixture => withModule(fixture, "src/workbench/gp-sdk.ts", 'import { evaluate } from "graph-policy-cli";\nexport const evaluateNow = (): unknown => evaluate;'),
+            expected: ["GP-1/a1 src/workbench/gp-sdk.ts gp-package-outside-client"],
+          },
+          {
+            name: "an unregistered module imports GraphPolicyCLI types only",
+            apply: fixture => withModule(fixture, "src/workbench/gp-types.ts", 'import type { Program } from "graph-policy-cli";\nexport type Programs = readonly Program[];'),
+            expected: ["GP-1/a1 src/workbench/gp-types.ts gp-package-outside-client"],
+          },
+          {
+            name: "a registered client names a module the tree does not hold",
+            apply: fixture => ({ ...fixture, seams: [...fixture.seams, { file: "src/workbench/gp-retired.ts", role: "client" }] }),
+            expected: ["GP-1/a1 src/workbench/gp-retired.ts registered-seam-missing"],
+          },
         ],
       },
       {
@@ -777,6 +863,11 @@ const ROWS: readonly Row[] = [
             apply: fixture => editModule(fixture, ADMISSION, text => `import { fit } from "@tensorflow/tfjs-node";\n${text}`),
             expected: ["GP-1/a3 src/workbench/gp-admission.ts admission-imports-training-writer"],
           },
+          {
+            name: "the admission seam builds a train argv itself",
+            apply: fixture => editModule(fixture, ADMISSION, text => `${text}\nexport const retrainArgv = (program: string): readonly string[] => ["train", "--program", program];`),
+            expected: ["GP-1/a3 src/workbench/gp-admission.ts admission-imports-training-writer"],
+          },
         ],
       },
       {
@@ -793,6 +884,11 @@ const ROWS: readonly Row[] = [
             apply: fixture =>
               editModule(fixture, DECISION, text => `import { Worker } from "node:worker_threads";\n${text}\nexport const host = new Worker("./host.js");`),
             expected: [DECISION_SEAM],
+          },
+          {
+            name: "the registered client is itself an execution seam",
+            apply: fixture => editModule(fixture, CLIENT, text => `${text}\nexport const stopWorker = (pid: number): boolean => process.kill(pid);`),
+            expected: ["GP-1/a4 src/workbench/providers/graphpolicy.ts gp-client-is-execution-seam", "GP-4/d1 src/workbench/providers/graphpolicy.ts process-kill"],
           },
         ],
       },
@@ -950,6 +1046,17 @@ const ROWS: readonly Row[] = [
               editModule(fixture, DECISION, text => `import { spawnSync } from "node:child_process";\n${text}\nexport const closeBead = () => spawnSync("sh", ["-c", "bd close wb-example"]);`),
             expected: [DECISION_SEAM, "GP-4/d2 src/workbench/gp-decision.ts bd-write"],
           },
+          {
+            name: "the decision module claims a bead through bd ready --claim",
+            apply: fixture =>
+              editModule(fixture, DECISION, text => `import { spawnSync } from "node:child_process";\n${text}\nexport const claimNext = () => spawnSync("bd", ["ready", "--claim", "--json"]);`),
+            expected: [DECISION_SEAM, "GP-4/d2 src/workbench/gp-decision.ts bd-write"],
+          },
+          {
+            name: "the decision module repairs the store through bd doctor --fix",
+            apply: fixture => editModule(fixture, DECISION, text => `import { spawnSync } from "node:child_process";\n${text}\nexport const repair = () => spawnSync("bd", ["doctor", "--fix", "--yes"]);`),
+            expected: [DECISION_SEAM, "GP-4/d2 src/workbench/gp-decision.ts bd-write"],
+          },
         ],
       },
       {
@@ -1075,6 +1182,23 @@ const RESIDUALS: readonly Residual[] = [
     id: "FOREIGN-LAUNCHER",
     family: "a launch through a package launcher outside the child_process roster, such as execa",
     apply: fixture => editModule(fixture, DECISION, text => `import { execa } from "execa";\n${text}\nexport const closeBead = (id: string): unknown => execa("bd", ["close", id]);`),
+  },
+  {
+    id: "QUOTED-SUBSTITUTION",
+    family: "a command substitution inside double quotes, which the census reads as quoted text",
+    apply: fixture =>
+      editModule(fixture, DECISION, text => `import { execSync } from "node:child_process";\n${text}\nexport const closeBead = (): Buffer => execSync('echo "$(bd close wb-example)"');`),
+  },
+  {
+    id: "COMPUTED-BD-FLAG",
+    family: "a bd writing flag that is not a literal, such as the flag of a read verb passed in a parameter",
+    apply: fixture => editModule(fixture, DECISION, text => `import { spawnSync } from "node:child_process";\n${text}\nexport const takeNext = (flag: string) => spawnSync("bd", ["ready", flag]);`),
+  },
+  {
+    id: "SHELL-BUILTIN-WRAPPER",
+    family: "a command run through a shell builtin or env option the census does not unwrap, such as eval, command, builtin or env -S",
+    apply: fixture =>
+      editModule(fixture, DECISION, text => `import { execSync } from "node:child_process";\n${text}\nexport const closeBead = (): Buffer => execSync('eval "bd close wb-example"');`),
   },
 ];
 
@@ -1425,7 +1549,7 @@ const DETECTORS: readonly DetectorProbe[] = [
   },
   {
     key: "bd-read-verbs",
-    member: "every bd read verb reads: show, list, ready, blocked, search, stats, status, count, info, where, version, help, graph, doctor",
+    member: "every bd read verb reads when it carries no writing flag: show, list, ready, blocked, search, stats, status, count, info, where, version, help, graph, doctor",
     source: BD_READ_PROBES.map(verb => `spawnSync("bd", ["${verb}"]);`),
     signature: BD_READ_PROBES.map(verb => `launch bd ${verb}`),
   },
@@ -1517,6 +1641,186 @@ const DETECTORS: readonly DetectorProbe[] = [
     source: ['import { client } from "@acme/graph_policy";', "export const graphPolicyClient = client;"],
     signature: ["specifier @acme/graph_policy", "runtime-import @acme/graph_policy", "gp-family @acme/graph_policy", "gp-family graphPolicyClient"],
   },
+  {
+    key: "bd-writing-flags",
+    member: "a bd read verb with a writing flag writes (bd 1.1.0-rc.1 help): ready --claim, doctor --fix, doctor --fix-child-parent and doctor --clean, bare or in --flag=value form, anywhere in the argv; a word that only begins with one (--claimed, --fixes, --cleanup) is not one",
+    source: [
+      'spawnSync("bd", ["ready", "--claim", "--json"]);',
+      'spawnSync("bd", ["ready", "--claim=true"]);',
+      'spawnSync("bd", ["doctor", "--fix", "--yes"]);',
+      'spawnSync("bd", ["doctor", "--fix=true"]);',
+      'spawnSync("bd", ["doctor", "--fix-child-parent"]);',
+      'spawnSync("bd", ["doctor", "--check=pollution", "--clean"]);',
+      'spawnSync("bd", ["ready", "--json"]);',
+      'spawnSync("bd", ["doctor", "--dry-run", "--check=validate"]);',
+      'spawnSync("bd", ["ready", "--claimed"]);',
+      'spawnSync("bd", ["doctor", "--fixes", "--cleanup"]);',
+    ],
+    signature: [
+      "launch bd ready --claim --json",
+      "launch bd ready --claim=true",
+      "launch bd doctor --fix --yes",
+      "launch bd doctor --fix=true",
+      "launch bd doctor --fix-child-parent",
+      "launch bd doctor --check=pollution --clean",
+      "launch bd ready --json",
+      "launch bd doctor --dry-run --check=validate",
+      "launch bd ready --claimed",
+      "launch bd doctor --fixes --cleanup",
+      "bd-write bd ready --claim --json",
+      "bd-write bd ready --claim=true",
+      "bd-write bd doctor --fix --yes",
+      "bd-write bd doctor --fix=true",
+      "bd-write bd doctor --fix-child-parent",
+      "bd-write bd doctor --check=pollution --clean",
+    ],
+  },
+  {
+    key: "bd-verb-after-flags",
+    member: "a bd launch's verb is its first lowercase word, so leading flags are skipped: bd --json show reads, bd -q close writes",
+    source: ['spawnSync("bd", ["--json", "show", "wb-a"]);', 'spawnSync("bd", ["-q", "close", "wb-b"]);'],
+    signature: ["launch bd --json show wb-a", "launch bd -q close wb-b", "bd-write bd -q close wb-b"],
+  },
+  {
+    key: "shell-groupings",
+    member: "a command in a subshell ( ), a $( ) or a backtick command substitution, outside quotes, is a simple command of its own; parentheses inside quotes stay text",
+    source: ['execSync("(bd close wb-a)");', 'execSync("echo $(bd update wb-b)");', 'execSync("echo `bd delete wb-c`");', "execSync(\"bd show '(wb-d)'\");"],
+    signature: [
+      "launch bd close wb-a",
+      "launch echo $",
+      "launch bd update wb-b",
+      "launch echo",
+      "launch bd delete wb-c",
+      "launch bd show (wb-d)",
+      "bd-write bd close wb-a",
+      "bd-write bd update wb-b",
+      "bd-write bd delete wb-c",
+    ],
+  },
+  {
+    key: "shell-reserved-words",
+    member: "a command a shell reserved word opens (!, {, if, then, elif, else, do, while, until) with the word skipped, the closing }, fi, done and esac running nothing, and a reserved word after a command's first word kept as an argument",
+    source: [
+      'execSync("if bd show wb-a; then bd close wb-b; elif true; then bd update wb-c; else bd delete wb-d; fi");',
+      'execSync("while true; do bd reopen wb-e; done; until false; do bd label wb-f; done");',
+      'execSync("! bd edit wb-g; { bd comment wb-h; }");',
+      'execSync("case x in a) bd close wb-i;; esac");',
+      'execSync("echo then bd close wb-z");',
+    ],
+    signature: [
+      "launch bd show wb-a",
+      "launch bd close wb-b",
+      "launch true",
+      "launch bd update wb-c",
+      "launch bd delete wb-d",
+      "launch true",
+      "launch bd reopen wb-e",
+      "launch false",
+      "launch bd label wb-f",
+      "launch bd edit wb-g",
+      "launch bd comment wb-h",
+      "launch case x in a",
+      "launch bd close wb-i",
+      "launch echo then bd close wb-z",
+      "bd-write bd close wb-b",
+      "bd-write bd update wb-c",
+      "bd-write bd delete wb-d",
+      "bd-write bd reopen wb-e",
+      "bd-write bd label wb-f",
+      "bd-write bd edit wb-g",
+      "bd-write bd comment wb-h",
+      "bd-write bd close wb-i",
+    ],
+  },
+  {
+    key: "shell-exec",
+    member: "a command behind the exec builtin, with exec's options skipped: -c, -l and -a with its name",
+    source: ['execSync("exec bd close wb-a");', 'execSync("exec -a closer bd update wb-b");', 'execSync("exec -cl bd delete wb-c");'],
+    signature: ["launch bd close wb-a", "launch bd update wb-b", "launch bd delete wb-c", "bd-write bd close wb-a", "bd-write bd update wb-b", "bd-write bd delete wb-c"],
+  },
+  {
+    key: "shell-env-options",
+    member: "env, bare or by path, with its options before the command: a flag such as -i, - or --ignore-environment, -u, -C, --unset and --chdir with their value or in --option=value form, then NAME=value assignments",
+    source: [
+      'execSync("env -u CLAUDECODE bd close wb-a");',
+      'execSync("env -i PATH=/usr/bin bd update wb-b");',
+      'execSync("env --unset CLAUDECODE --chdir /repo bd delete wb-c");',
+      'execSync("env --unset=CLAUDECODE -C /repo bd label wb-d");',
+      'execSync("/usr/bin/env - BEADS_ACTOR=machine bd reopen wb-e");',
+    ],
+    signature: [
+      "launch bd close wb-a",
+      "launch bd update wb-b",
+      "launch bd delete wb-c",
+      "launch bd label wb-d",
+      "launch bd reopen wb-e",
+      "bd-write bd close wb-a",
+      "bd-write bd update wb-b",
+      "bd-write bd delete wb-c",
+      "bd-write bd label wb-d",
+      "bd-write bd reopen wb-e",
+    ],
+  },
+  {
+    key: "binary-suffixes",
+    member: "a roster binary named with a .exe or .cmd suffix, bare or by path: bd.exe, furnace.cmd, pkill.exe, a shell (bash.exe) whose -c script is followed, and an argv array headed by one",
+    source: [
+      'spawnSync("bd.exe", ["close", "wb-a"]);',
+      'spawnSync("tools/furnace.cmd", ["run", "stop", "frn-run-a"]);',
+      'spawnSync("pkill.exe", ["w"]);',
+      'spawnSync("bash.exe", ["-c", "bd update wb-b"]);',
+      'export const argv = ["bd.exe", "delete", "wb-c"];',
+    ],
+    signature: [
+      "launch bd.exe close wb-a",
+      "launch tools/furnace.cmd run stop frn-run-a",
+      "launch pkill.exe w",
+      "launch bash.exe -c bd update wb-b",
+      "launch bd update wb-b",
+      "launch bd.exe delete wb-c",
+      "process-kill pkill",
+      "furnace-stop furnace run stop frn-run-a",
+      "bd-write bd close wb-a",
+      "bd-write bd update wb-b",
+      "bd-write bd delete wb-c",
+    ],
+  },
+  {
+    key: "unwrap-forms",
+    member: "process read through each wrapper the census unwraps beside parentheses and as: satisfies, an angle-bracket assertion and a non-null assertion, on a member read and on a variable initializer",
+    source: ["(process satisfies NodeJS.Process).kill(1);", "(<NodeJS.Process>process).kill(2);", "process!.kill(3);", "const proc = process!;", "proc.kill(4);"],
+    signature: ["process-kill (process satisfies NodeJS.Process).kill", "process-kill (<NodeJS.Process>process).kill", "process-kill process!.kill", "process-kill proc.kill"],
+  },
+  {
+    key: "exec-template-head",
+    member: "exec, like execSync, runs a templated command line read by its static head",
+    source: ["declare const id: string;", `exec(\`bd close \${id}\`);`],
+    signature: ["launch bd close", "bd-write bd close"],
+  },
+  {
+    key: "script-depth",
+    member: "a shell's -c script followed four shells deep: sh runs bash, bash runs zsh, zsh runs dash and dash runs the command",
+    source: [`spawnSync("sh", ["-c", "bash -c 'zsh -c \\"dash -c pkill\\"'"]);`],
+    signature: ["launch sh -c bash -c 'zsh -c \"dash -c pkill\"'", 'launch bash -c zsh -c "dash -c pkill"', "launch zsh -c dash -c pkill", "launch dash -c pkill", "launch pkill", "process-kill pkill"],
+  },
+  {
+    key: "private-names",
+    member: "a GraphPolicyCLI family name and gp wire vocabulary in a private class member name (#graphPolicy, #GraphDataIR)",
+    source: ["export class Holder {", "  #graphPolicy = 1;", "  #GraphDataIR = 2;", "}"],
+    signature: ["gp-vocabulary #GraphDataIR", "gp-family #graphPolicy"],
+  },
+  {
+    key: "template-parts",
+    member: "the train word in a template literal's static head, middle and tail",
+    source: ["declare const program: string;", `export const head = \`gp train --program=\${program}\`;`, `export const middle = \`\${program}/train/\${program}\`;`, `export const tail = \`\${program}/train\`;`],
+    signature: ["train gp train --program=", "train /train/", "train /train"],
+  },
+  {
+    key: "type-only-launcher",
+    member: "a launcher name imported type-only (import { type spawnSync as run }) binds no launcher, so a call through that name records no launch",
+    source: ['import { type spawnSync as run } from "node:child_process";', 'run("bd", ["close", "wb-a"]);'],
+    signature: ["specifier node:child_process", "runtime-import node:child_process"],
+  },
 ];
 
 /** One probe name per member of the TRAINING_FRAMEWORKS deny roster, in roster order, and names one character off it. */
@@ -1556,10 +1860,16 @@ const REGISTERED = {
     "GP-1/a1 an unregistered module launches gp",
     "GP-1/a1 an unregistered module runs the GraphPolicyCLI package through npx",
     "GP-1/a1 a registered client reaches gp through no real interface",
+    "GP-1/a1 the registered client imports a GraphPolicyCLI fork",
+    "GP-1/a1 an unregistered module imports the GraphPolicyCLI package",
+    "GP-1/a1 an unregistered module imports GraphPolicyCLI types only",
+    "GP-1/a1 a registered client names a module the tree does not hold",
     "GP-1/a2 the client's gp argv carries train",
     "GP-1/a3 the admission seam imports the telemetry writer",
     "GP-1/a3 the admission seam imports a training framework",
+    "GP-1/a3 the admission seam builds a train argv itself",
     "GP-1/a4 the decision module launches a workflow host",
+    "GP-1/a4 the registered client is itself an execution seam",
     "GP-2/b1 an unregistered module scores a GraphDataIR document",
     "GP-2/b2 the client drops its unknown-command mapping",
     "GP-3/c1 the client imports an unrelated package",
@@ -1575,12 +1885,26 @@ const REGISTERED = {
     "GP-4/d2 the decision module closes a bead through a shell command",
     "GP-4/d2 the decision module closes a bead behind an environment assignment",
     "GP-4/d2 the decision module closes a bead through sh -c",
+    "GP-4/d2 the decision module claims a bead through bd ready --claim",
+    "GP-4/d2 the decision module repairs the store through bd doctor --fix",
     "GP-4/d3 the decision module stops an Attempt itself",
     "GP-4/d3 the decision module stops a Run through its handle",
     "GP-4/d3 the decision module stops a Run by element access",
     "GP-4/d3 the decision module stops a Run through a bound stop owner",
   ],
-  Q: ["UNNAMED-NUMERICS", "LOCAL-SUBSTITUTE", "COMPUTED-BINARY", "DYNAMIC-ARGV", "ALIASED-EFFECT", "TRAINING-FRAMEWORK-ROSTER", "WRAPPED-COMMAND", "FOREIGN-LAUNCHER"],
+  Q: [
+    "UNNAMED-NUMERICS",
+    "LOCAL-SUBSTITUTE",
+    "COMPUTED-BINARY",
+    "DYNAMIC-ARGV",
+    "ALIASED-EFFECT",
+    "TRAINING-FRAMEWORK-ROSTER",
+    "WRAPPED-COMMAND",
+    "FOREIGN-LAUNCHER",
+    "QUOTED-SUBSTITUTION",
+    "COMPUTED-BD-FLAG",
+    "SHELL-BUILTIN-WRAPPER",
+  ],
   DT: [
     "specifiers",
     "launchers",
@@ -1607,10 +1931,23 @@ const REGISTERED = {
     "train-word",
     "dynamic-load",
     "gp-family",
+    "bd-writing-flags",
+    "bd-verb-after-flags",
+    "shell-groupings",
+    "shell-reserved-words",
+    "shell-exec",
+    "shell-env-options",
+    "binary-suffixes",
+    "unwrap-forms",
+    "exec-template-head",
+    "script-depth",
+    "private-names",
+    "template-parts",
+    "type-only-launcher",
   ],
 } as const satisfies Readonly<Record<"F" | "Q" | "DT", readonly string[]>>;
-/** Every case this file registers: 14 fixed cases, the three it.each tables and the closing tally. */
-const FILE_CASES = 74;
+/** Every case this file registers: 16 fixed cases, the three it.each tables and the closing tally. */
+const FILE_CASES = 100;
 /** What this run's it.each cases did, recorded by each case at its last line; the closing tally pins every list. */
 const RAN: Record<"F" | "Q" | "DT", string[]> = { F: [], Q: [], DT: [] };
 
@@ -1749,10 +2086,10 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
 
   it("S: the census tables keep their frozen shape - rule rows, pins and falsifier counts, residual ids, detector keys, and every pin has a falsifier (rule 16)", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.map(pin => `${pin.id}x${pin.falsifiers.length}`).join(",")}`)).toEqual([
-      "GP-1:a1x3,a2x1,a3x2,a4x1",
+      "GP-1:a1x7,a2x1,a3x3,a4x2",
       "GP-2:b1x1,b2x1",
       "GP-3:c1x2,c2x2",
-      "GP-4:d1x4,d2x5,d3x4",
+      "GP-4:d1x4,d2x7,d3x4",
     ]);
     expect(RESIDUALS.map(residual => residual.id)).toEqual(REGISTERED.Q);
     expect(DETECTORS.map(probe => probe.key)).toEqual(REGISTERED.DT);
@@ -1794,6 +2131,15 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
     for (const citation of CITATIONS) expect(text, citation).toContain(citation);
   });
 
+  it("D: the docs/03 ownership table gives the GraphPolicyCLI concern exactly one row - no second row names any of its terms, so none re-assigns it (wb-1ho6 F3, gate LDG4)", () => {
+    const tables = sectionTables(readRepo(DOCS_03), OWNERSHIP_HEADING, 2, [PAGE_TITLE]);
+    expect(tables.why).toBe("");
+    const concern = (OWNERSHIP_CELLS[0] ?? "").toLowerCase();
+    for (const term of CONCERN_TERMS) expect(concern, term).toContain(term);
+    const concernRows = tables.grids.flatMap(grid => grid.slice(1).filter(row => row.some(cell => CONCERN_TERMS.some(term => cell.toLowerCase().includes(term)))));
+    expect(concernRows).toEqual([OWNERSHIP_CELLS]);
+  });
+
   it("F: a compliant gp integration judges clean - the rules admit a real-interface seam rather than banning gp", () => {
     expect(judge(treeOf(CLEAN), CLEAN.seams)).toEqual([]);
     const ctx = contextOf(treeOf(CLEAN), CLEAN.seams);
@@ -1802,6 +2148,13 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
     expect(ctx.executionSeams).toEqual([LIFECYCLE]);
     expect(ctx.census.get(CLIENT)?.launches.map(launch => `${launch.binary} ${launch.argv.join(" ")}`)).toEqual(["gp eval --program --json"]);
     expect(ctx.census.get(CLIENT)?.namesUnknownCommand).toBe(true);
+  });
+
+  it("F: a compliant gp integration through the GraphPolicyCLI package judges clean - a client that imports graph-policy-cli and never launches gp reaches gp through a real interface (GP-1/a1, wb-1ho6 F2 gate DMG38)", () => {
+    expect(judge(treeOf(SDK_CLEAN), SDK_CLEAN.seams)).toEqual([]);
+    const client = contextOf(treeOf(SDK_CLEAN), SDK_CLEAN.seams).census.get(CLIENT);
+    expect([client?.gpBinary, client?.gpLaunches], "the client launches no gp binary").toEqual([[], []]);
+    expect(client?.runtimeImports).toContain(GP_PACKAGE);
   });
 
   it("F: comments are not code - every detector reads the same census with gp, train, shell and effect words added in comments", () => {
