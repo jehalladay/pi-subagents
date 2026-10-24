@@ -1,0 +1,834 @@
+{
+  "bead": "wb-fb2z.1",
+  "pin": "76bbbffd9d4a",
+  "basis": "The out-of-file roster of test/workbench-rf-render-parity-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness and the pinned constants, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Witnesses were measured by the cutting seat on trunk fc1534f; fixture identities are named by placeholder (<root>, <graph>, <bundle>, <operation>, <workspace>, <release>), and every producer verdict and variant here is CONSTRUCTED (rf ships no parity verdict at the pin).",
+  "constants": {
+    "pinnedRoster": [
+      "reactivefiber.render.preview"
+    ],
+    "rosterSite": "src/workflow/reconcile.ts:67",
+    "programPin": "76bbbffd9d4a",
+    "filingMentions": 6,
+    "filingConstants": [
+      "RFCLI-INTEROP.md:20@76bbbffd9d4a",
+      "TSX-IO-02",
+      "rftsx-o78c7",
+      "occurrence identifiers",
+      "observer class",
+      "wb-973.9",
+      "wb-jwc.2",
+      "today the 6 parity/equivalent mentions in src are comments"
+    ],
+    "parityWord": "parity|equivalen",
+    "classWord": "(?:observer|consumer)[\\s_-]*class",
+    "verdictWord": "verdict",
+    "renderWord": "\\b(?:tsx|python|render(?:s|er|ers|ed|ing)?)\\b",
+    "docMarkers": [
+      "text-only",
+      "producer-declared",
+      "observer class",
+      "never",
+      "not shipped",
+      "unshipped",
+      "proposed",
+      "gated"
+    ],
+    "rootDocs": [
+      "AGENTS.md",
+      "CHANGELOG.md",
+      "CONTRIBUTING.md",
+      "README.md",
+      "SECURITY.md"
+    ],
+    "textOnly": "\\btext[\\s_-]*only\\b",
+    "payloadFields": [
+      "nativePayloadRef",
+      "payloadRef"
+    ],
+    "comparingCalls": [
+      "is",
+      "isDeepStrictEqual",
+      "deepStrictEqual",
+      "deepEqual",
+      "strictEqual",
+      "equal",
+      "notStrictEqual",
+      "notEqual",
+      "notDeepStrictEqual",
+      "has",
+      "get",
+      "set",
+      "add",
+      "delete",
+      "includes",
+      "indexOf",
+      "lastIndexOf"
+    ],
+    "commentSet": {
+      "src/mention.ts": 1,
+      "src/ui/workflow-dialog.ts": 1,
+      "src/workbench/claude-host.ts": 1,
+      "src/workflow/progress.ts": 1,
+      "src/workflow/tool-description.ts": 1,
+      "src/worktree.ts": 1
+    },
+    "siteSet": {
+      "src/workbench/observation.ts": [
+        "nativePayloadRef:read",
+        "payloadRef:read"
+      ],
+      "src/workbench/providers/reactivefiber.ts": [
+        "output.text:type-guard"
+      ],
+      "src/workbench/reactivefiber-observer.ts": [
+        "nativePayloadRef:presence",
+        "nativePayloadRef:read",
+        "output.text:digest",
+        "output.text:type-guard"
+      ]
+    },
+    "verdictKeys": [
+      "parity",
+      "parity_verdict",
+      "equivalence"
+    ],
+    "declared": {
+      "verdict": "equivalent",
+      "observer_class": "explain-capable",
+      "projection": [
+        "visible_content",
+        "occurrence_identifiers",
+        "ordering",
+        "inclusion_suppression",
+        "provenance",
+        "status_diagnostics",
+        "exposed_publications"
+      ],
+      "scenario": "TSX-IO-02"
+    },
+    "textEqual": {
+      "verdict": "text-equal",
+      "observer_class": "text-only",
+      "projection": [
+        "visible_content"
+      ],
+      "scenario": "TSX-IO-02"
+    },
+    "unnamed": {
+      "verdict": "equivalent",
+      "projection": [
+        "visible_content",
+        "occurrence_identifiers",
+        "ordering",
+        "inclusion_suppression",
+        "provenance",
+        "status_diagnostics",
+        "exposed_publications"
+      ]
+    }
+  },
+  "rows": [
+    {
+      "id": "T",
+      "label": "(trigger, absent today) Pi reads no producer parity verdict: no src code spells an observer class, the rf roster stays reactivefiber.render.preview only, no docs sentence asserts TSX/Python render parity and the captured rf result roster states no verdict key",
+      "pins": [
+        {
+          "id": "T1",
+          "witness": {
+            "srcFloorMet": true,
+            "hits": []
+          }
+        },
+        {
+          "id": "T2",
+          "witness": {
+            "site": "src/workflow/reconcile.ts:67",
+            "reactivefiber": [
+              "reactivefiber.render.preview"
+            ],
+            "native": [
+              {
+                "id": "reactivefiber.render.preview",
+                "effectClass": "read"
+              }
+            ],
+            "injected": [
+              {
+                "id": "reactivefiber.render.preview",
+                "effectClass": "read"
+              }
+            ],
+            "spelling": []
+          }
+        },
+        {
+          "id": "T3",
+          "witness": {
+            "floorMet": true,
+            "rootRead": true,
+            "anchorRead": true,
+            "findings": []
+          }
+        },
+        {
+          "id": "T4",
+          "witness": {
+            "source": "captured",
+            "outputRead": true,
+            "spelling": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "A",
+      "label": "(a) no Pi code compares two rf/TSX documents by text equality to emit 'equivalent' or 'parity': a census over src finds zero such comparisons (today the 6 parity/equivalent mentions in src are comments) or every one labelled text-only",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "srcFloorMet": true,
+            "hits": []
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "srcFloorMet": true,
+            "comments": {
+              "src/mention.ts": 1,
+              "src/ui/workflow-dialog.ts": 1,
+              "src/workbench/claude-host.ts": 1,
+              "src/workflow/progress.ts": 1,
+              "src/workflow/tool-description.ts": 1,
+              "src/worktree.ts": 1
+            },
+            "total": 6
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "srcFloorMet": true,
+            "sites": {
+              "src/workbench/observation.ts": [
+                "nativePayloadRef:read",
+                "payloadRef:read"
+              ],
+              "src/workbench/providers/reactivefiber.ts": [
+                "output.text:type-guard"
+              ],
+              "src/workbench/reactivefiber-observer.ts": [
+                "nativePayloadRef:presence",
+                "nativePayloadRef:read",
+                "output.text:digest",
+                "output.text:type-guard"
+              ]
+            },
+            "unlabelled": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) a surfaced producer parity verdict is echoed with its observer-class name and Pi never relabels text-equal as equivalent (wb-973.9 / wb-jwc.2 no-relabel rule)",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": [
+            {
+              "key": "parity",
+              "refusal": null,
+              "spawns": 1,
+              "verbatim": true,
+              "verdict": "equivalent",
+              "observerClass": "explain-capable"
+            },
+            {
+              "key": "parity_verdict",
+              "refusal": null,
+              "spawns": 1,
+              "verbatim": true,
+              "verdict": "equivalent",
+              "observerClass": "explain-capable"
+            },
+            {
+              "key": "equivalence",
+              "refusal": null,
+              "spawns": 1,
+              "verbatim": true,
+              "verdict": "equivalent",
+              "observerClass": "explain-capable"
+            }
+          ]
+        },
+        {
+          "id": "B2",
+          "witness": [
+            {
+              "key": "parity",
+              "injectedVerbatim": true,
+              "replyIsError": false,
+              "replyKind": "returned",
+              "replyVerdict": {
+                "verdict": "equivalent",
+                "observer_class": "explain-capable",
+                "projection": [
+                  "visible_content",
+                  "occurrence_identifiers",
+                  "ordering",
+                  "inclusion_suppression",
+                  "provenance",
+                  "status_diagnostics",
+                  "exposed_publications"
+                ],
+                "scenario": "TSX-IO-02"
+              }
+            },
+            {
+              "key": "parity_verdict",
+              "injectedVerbatim": true,
+              "replyIsError": false,
+              "replyKind": "returned",
+              "replyVerdict": {
+                "verdict": "equivalent",
+                "observer_class": "explain-capable",
+                "projection": [
+                  "visible_content",
+                  "occurrence_identifiers",
+                  "ordering",
+                  "inclusion_suppression",
+                  "provenance",
+                  "status_diagnostics",
+                  "exposed_publications"
+                ],
+                "scenario": "TSX-IO-02"
+              }
+            },
+            {
+              "key": "equivalence",
+              "injectedVerbatim": true,
+              "replyIsError": false,
+              "replyKind": "returned",
+              "replyVerdict": {
+                "verdict": "equivalent",
+                "observer_class": "explain-capable",
+                "projection": [
+                  "visible_content",
+                  "occurrence_identifiers",
+                  "ordering",
+                  "inclusion_suppression",
+                  "provenance",
+                  "status_diagnostics",
+                  "exposed_publications"
+                ],
+                "scenario": "TSX-IO-02"
+              }
+            }
+          ]
+        },
+        {
+          "id": "B3",
+          "witness": [
+            {
+              "key": "parity",
+              "projectionUnchanged": true,
+              "evidenceUnchanged": true,
+              "observerClassNamed": 0,
+              "parityWords": 0
+            },
+            {
+              "key": "parity_verdict",
+              "projectionUnchanged": true,
+              "evidenceUnchanged": true,
+              "observerClassNamed": 0,
+              "parityWords": 0
+            },
+            {
+              "key": "equivalence",
+              "projectionUnchanged": true,
+              "evidenceUnchanged": true,
+              "observerClassNamed": 0,
+              "parityWords": 0
+            }
+          ]
+        },
+        {
+          "id": "B4",
+          "witness": [
+            {
+              "key": "parity",
+              "composedParityWords": 0,
+              "readingAdded": 0,
+              "replyAdded": 0,
+              "readingVerdict": "text-equal",
+              "replyVerdict": "text-equal"
+            },
+            {
+              "key": "parity_verdict",
+              "composedParityWords": 0,
+              "readingAdded": 0,
+              "replyAdded": 0,
+              "readingVerdict": "text-equal",
+              "replyVerdict": "text-equal"
+            },
+            {
+              "key": "equivalence",
+              "composedParityWords": 0,
+              "readingAdded": 0,
+              "replyAdded": 0,
+              "readingVerdict": "text-equal",
+              "replyVerdict": "text-equal"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) fixture: two documents with identical text but different occurrence ids or provenance produce no parity claim",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "renders": [
+              "<operation>",
+              "rfo_bbbbbbbbbbbbbbbbbbbbbb",
+              "rfo_cccccccccccccccccccccc"
+            ],
+            "parityWords": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "base": {
+              "sourceRevision": "<graph>",
+              "sourceVersion": "<bundle>",
+              "refs": [
+                "rf-graph:<graph>",
+                "rf-workspace:<workspace>",
+                "rf-bundle:<bundle>",
+                "rf-cli:<release>"
+              ]
+            },
+            "tsx": {
+              "sourceRevision": "sha256:3333333333333333333333333333333333333333333333333333333333333333",
+              "sourceVersion": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+              "refs": [
+                "rf-graph:sha256:3333333333333333333333333333333333333333333333333333333333333333",
+                "rf-workspace:<workspace>",
+                "rf-bundle:sha256:4444444444444444444444444444444444444444444444444444444444444444",
+                "rf-cli:0.1.785",
+                "rf-engine:tsx_runtime:2.4.1:unknown",
+                "rf-engine:tsx_sdk:0.3.2:unknown",
+                "rf-engine-spawns:1"
+              ]
+            },
+            "shared": [
+              "rf-workspace:<workspace>"
+            ]
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "rows": [
+              {
+                "variant": "base",
+                "refusal": null,
+                "verbatim": true,
+                "evidence": {
+                  "provider": "reactivefiber",
+                  "nativeId": "<operation>",
+                  "sourceBasis": "<bundle>",
+                  "producerRelease": "<release>"
+                }
+              },
+              {
+                "variant": "occurrence",
+                "refusal": null,
+                "verbatim": true,
+                "evidence": {
+                  "provider": "reactivefiber",
+                  "nativeId": "rfo_bbbbbbbbbbbbbbbbbbbbbb",
+                  "sourceBasis": "<bundle>",
+                  "producerRelease": "<release>"
+                }
+              },
+              {
+                "variant": "provenance",
+                "refusal": null,
+                "verbatim": true,
+                "evidence": {
+                  "provider": "reactivefiber",
+                  "nativeId": "rfo_cccccccccccccccccccccc",
+                  "sourceBasis": "sha256:4444444444444444444444444444444444444444444444444444444444444444",
+                  "producerRelease": "0.1.785"
+                }
+              }
+            ],
+            "parityWords": 0
+          }
+        },
+        {
+          "id": "C4",
+          "witness": {
+            "refreshed": [
+              "applied",
+              "applied",
+              "applied"
+            ],
+            "entries": 3,
+            "storedPerRender": [
+              1,
+              1,
+              1
+            ],
+            "payloadRefs": 1,
+            "parityWords": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "label": "the owner filing row of wb-fb2z.1 in the tracked bead export carries every pinned constant, names exactly the clauses rows A-C cover and states each of their labels as its clause",
+      "pins": [
+        {
+          "id": "F1",
+          "witness": {
+            "clauses": [
+              "a",
+              "b",
+              "c"
+            ],
+            "labelsEqual": [
+              "A",
+              "B",
+              "C"
+            ],
+            "constantsQuoted": [
+              "RFCLI-INTEROP.md:20@76bbbffd9d4a",
+              "TSX-IO-02",
+              "rftsx-o78c7",
+              "occurrence identifiers",
+              "observer class",
+              "wb-973.9",
+              "wb-jwc.2",
+              "today the 6 parity/equivalent mentions in src are comments"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "M",
+      "label": "the matchers rows T1, T3, A1, A2 and A3 read judge their pinned inputs in order",
+      "pins": [
+        {
+          "id": "MA1",
+          "witness": {
+            "digest": "0fd4c506c854a350",
+            "outcome": [
+              "control.ts: identifier isEquivalentRender"
+            ]
+          }
+        },
+        {
+          "id": "MA2",
+          "witness": {
+            "digest": "f38cd2b71675fdfe",
+            "outcome": [
+              "control.ts: literal render parity"
+            ]
+          }
+        },
+        {
+          "id": "MA3",
+          "witness": {
+            "digest": "7ed741bafaf56f09",
+            "outcome": [
+              "control.ts: template <expr> equivalent to <expr>"
+            ]
+          }
+        },
+        {
+          "id": "MA4",
+          "witness": {
+            "digest": "54bab10ff19a0e82",
+            "outcome": [
+              "control.ts: identifier parityVerdict"
+            ]
+          }
+        },
+        {
+          "id": "MA5",
+          "witness": {
+            "digest": "1f53354aa5dbb2d2",
+            "outcome": [
+              "comments:1"
+            ]
+          }
+        },
+        {
+          "id": "MA6",
+          "witness": {
+            "digest": "9f4c7795e166fea5",
+            "outcome": [
+              "control.ts: regex /equivalence/"
+            ]
+          }
+        },
+        {
+          "id": "MO1",
+          "witness": {
+            "digest": "621b850e315619b2",
+            "outcome": [
+              "control.ts: identifier observerClass"
+            ]
+          }
+        },
+        {
+          "id": "MO2",
+          "witness": {
+            "digest": "314dba41c89b6bb9",
+            "outcome": [
+              "control.ts: literal observer_class"
+            ]
+          }
+        },
+        {
+          "id": "MO3",
+          "witness": {
+            "digest": "e16e6802ec7ada9f",
+            "outcome": [
+              "control.ts: literal declared consumer class"
+            ]
+          }
+        },
+        {
+          "id": "MC1",
+          "witness": {
+            "digest": "338974d24a686d67",
+            "outcome": [
+              "site:output.text:comparison",
+              "site:output.text:comparison"
+            ]
+          }
+        },
+        {
+          "id": "MC2",
+          "witness": {
+            "digest": "c987ef258e007fc4",
+            "outcome": [
+              "site:output.text:type-guard"
+            ]
+          }
+        },
+        {
+          "id": "MC3",
+          "witness": {
+            "digest": "88b2aa50c46fa1fd",
+            "outcome": [
+              "site:output.text:digest"
+            ]
+          }
+        },
+        {
+          "id": "MC4",
+          "witness": {
+            "digest": "7417a4ee3d4e5d8c",
+            "outcome": [
+              "site:nativePayloadRef:comparison",
+              "site:payloadRef:comparison"
+            ]
+          }
+        },
+        {
+          "id": "MC5",
+          "witness": {
+            "digest": "cdf5ed75045289ee",
+            "outcome": [
+              "site:output.text:comparison"
+            ]
+          }
+        },
+        {
+          "id": "MC6",
+          "witness": {
+            "digest": "b000f77bc4abc3d2",
+            "outcome": [
+              "site:output.text:comparison",
+              "site:output.text:comparison"
+            ]
+          }
+        },
+        {
+          "id": "MC7",
+          "witness": {
+            "digest": "f3097b6499573792",
+            "outcome": [
+              "site:output.text:comparison-labelled",
+              "site:output.text:comparison-labelled",
+              "comments:1"
+            ]
+          }
+        },
+        {
+          "id": "MC8",
+          "witness": {
+            "digest": "49dc4a3bf916d8f3",
+            "outcome": [
+              "site:nativePayloadRef:presence"
+            ]
+          }
+        },
+        {
+          "id": "MC9",
+          "witness": {
+            "digest": "c6b775492f24979d",
+            "outcome": [
+              "site:output.text:comparison",
+              "site:output.text:comparison"
+            ]
+          }
+        },
+        {
+          "id": "MC10",
+          "witness": {
+            "digest": "0fe1f7ab28417abc",
+            "outcome": [
+              "site:output.text:comparison"
+            ]
+          }
+        },
+        {
+          "id": "MC11",
+          "witness": {
+            "digest": "ad4015ee82c304be",
+            "outcome": [
+              "site:output.text:comparison"
+            ]
+          }
+        },
+        {
+          "id": "MD1",
+          "witness": {
+            "digest": "62648f467153215c",
+            "outcome": [
+              "asserted"
+            ]
+          }
+        },
+        {
+          "id": "MD2",
+          "witness": {
+            "digest": "b5e55626cb960e09",
+            "outcome": [
+              "marked"
+            ]
+          }
+        },
+        {
+          "id": "MD3",
+          "witness": {
+            "digest": "27ac46f849f81770",
+            "outcome": [
+              "marked"
+            ]
+          }
+        },
+        {
+          "id": "MD4",
+          "witness": {
+            "digest": "3261cf46c8e567d5",
+            "outcome": [
+              "asserted"
+            ]
+          }
+        },
+        {
+          "id": "MD5",
+          "witness": {
+            "digest": "dc4d6fed7279f10b",
+            "outcome": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "R",
+      "label": "the named residuals R1-R8 stay pinned quiet",
+      "pins": [
+        {
+          "id": "R1",
+          "witness": {
+            "distinct": 1,
+            "isTextDigest": true
+          }
+        },
+        {
+          "id": "R2",
+          "witness": {
+            "equalButRender": true,
+            "occurrenceNamed": 0
+          }
+        },
+        {
+          "id": "R3",
+          "witness": {
+            "digest": "bacce0d500d141bb",
+            "outcome": [
+              "comments:1"
+            ]
+          }
+        },
+        {
+          "id": "R4",
+          "witness": {
+            "digest": "04642fa971983489",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R5",
+          "witness": {
+            "digest": "5bd5cb660109b2b6",
+            "outcome": []
+          }
+        },
+        {
+          "id": "R6",
+          "witness": {
+            "status": "completed",
+            "value": "equivalent",
+            "nodes": 2
+          }
+        },
+        {
+          "id": "R7",
+          "witness": {
+            "refusal": null,
+            "verbatim": true,
+            "projectionUnchanged": true
+          }
+        },
+        {
+          "id": "R8",
+          "witness": {
+            "digest": "0bf12b4d889af18b",
+            "outcome": [
+              "marked"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,709 @@
+{
+ "bead": "wb-csbt.2",
+ "statement": "TSX-RESOURCE-EFFICIENCY-FRONTIER-R2",
+ "pin": "76bbbffd9d4a",
+ "rfVersion": "0.1.832",
+ "citation": "docs/programs/resource-efficiency-frontier-2026-10-17/02-INCREMENTAL-ASSEMBLY-AND-REUSE.md:18@76bbbffd9d4a",
+ "basis": "MEASURED by the cutting seat (ws-03, g10-work-s47, 2026-10-23), every read read-only and none re-read by the census. ReactiveFiberTSXSDK at 76bbbffd9d4a419f972d6fefc8b7f9dc524df8df (git show on the local checkout): docs/programs/resource-efficiency-frontier-2026-10-17/02-INCREMENTAL-ASSEMBLY-AND-REUSE.md:18 blob deb9b06987d28c2624e6691ac9ac2a95663cc958 (the quote the bead export carries), 01-COST-MODEL-AND-INSTRUMENTATION.md:6 blob fc91bbebc73e9ba113ebe37049ded0496584aa6c, README.md:8 blob 841e6d04bd9a00579d898eba249c35602809a089, docs/adr/0032-component-skip-and-assembly-cache-deferred.md blob e4aa31390a41f8ccf127714b2f98cde899ea15a4 (title: the counter = Fiber node not re-rendered), src/render/report.ts blob 58f4afa4e481aba231a6f4799a8c817fd4f354b9 (:347 the optional counter inside the report's component counts; :260 COMPONENT_SKIP_ENABLED = false; :608-610 and :543 the counter reported as 0). The installed rf 0.1.832 (rf --json --version): 231 JSON schemas under reactive_fiber_cli/schemas, none declaring a property of the counter's name or of either render-report spelling; context.render.schema.json sha256 06ac92079d3912f63e20abf9dea73b29a4b62d099772103eb04860ed122404c2 leaves result open and closes each result row of the component list to component_id, component_instance_id, component_revision_id, source_unavailable and status; rf's own instance counter result.work_metrics.reused_component_count counts component instances served from rf's component-output cache (integrations/fiber.py:2820, PMO-07d). The captured rf roster test/fixtures/rf-result-keys.json (rf 0.1.784, receipt cmd_ab79e0c5d689) lists the component list key and no render-report key. Every carrying fixture is therefore CONSTRUCTED from test/helpers/rf-render-fixture.ts fullShapeRf.",
+ "vocabulary": {
+  "segments": [
+   [
+    "render",
+    "Report"
+   ],
+   [
+    "components"
+   ],
+   [
+    "re",
+    "used"
+   ]
+  ],
+  "placements": [
+   "renderReport",
+   "render_report"
+  ],
+  "values": [
+   0,
+   3
+  ],
+  "separator": 6,
+  "skipWords": [
+   "skipped"
+  ],
+  "labelNouns": [
+   "subtree",
+   "subtrees",
+   "component",
+   "components"
+  ],
+  "window": 3,
+  "unitBreaks": ",;:\"'`()[]{}<>=|",
+  "figureWords": [
+   "reuse",
+   "reused",
+   "reuses",
+   "reusing",
+   "skip",
+   "skips",
+   "skipped",
+   "skipping"
+  ],
+  "coreReaders": [
+   "src/workbench/native-evidence.ts",
+   "src/workbench/providers/reactivefiber.ts",
+   "src/workbench/reactivefiber-observer.ts"
+  ],
+  "readerFloor": 6
+ },
+ "rows": [
+  {
+   "id": "T",
+   "labelDigest": "f7761e692012ecc59a86fa79a03a3c0876fbbef619741bb1f0ac6ddd1fc1a735",
+   "pins": [
+    {
+     "id": "T1",
+     "witness": {
+      "floor": {
+       "core": true,
+       "count": true
+      },
+      "controls": {
+       "adapterReadsObservations": true,
+       "providerNamesEngineMetrics": true,
+       "keyRuleReadsSecond": true,
+       "literalRuleReadsSpaced": true
+      },
+      "keyHits": [],
+      "literalHits": []
+     }
+    },
+    {
+     "id": "T2",
+     "witness": {
+      "native": [
+       "reactivefiber.render.preview"
+      ],
+      "injected": [
+       "reactivefiber.render.preview"
+      ],
+      "reconcile": [
+       "reactivefiber.render.preview"
+      ],
+      "carriers": [
+       true,
+       true
+      ],
+      "verb": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "A",
+   "labelDigest": "bf445c2bff359462511702f2c31c2bcd88d37699eeee41fa6b98fa9c28d1cd08",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "roots": [
+       "src",
+       "test"
+      ],
+      "floors": {
+       "src": true,
+       "test": true
+      },
+      "reads": {
+       "self": true,
+       "roster": true,
+       "adapterBareWord": true,
+       "helperCounters": true,
+       "dotDirectory": true,
+       "depthFour": true,
+       "testExtensions": true
+      },
+      "keyHits": [],
+      "labelHits": []
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "titlePath": 1,
+      "targets": 2,
+      "targetsAreThePairs": true,
+      "keyReadsEachTarget": [
+       1,
+       1
+      ],
+      "keyReadsTheQuote": 2,
+      "bareWordQuiet": true,
+      "labelReadsPhrase": 1,
+      "labelReadsTitle": 1,
+      "labelReadsQuote": 1,
+      "citation": true,
+      "rfRosterListsSecond": true,
+      "rfRosterFirstKeys": 0
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "key": {
+       "dotPath": true,
+       "optionalChain": true,
+       "bracketPath": true,
+       "innerPair": true,
+       "outerPair": true,
+       "snakeOuter": true,
+       "jsonCompact": true,
+       "jsonPretty": true,
+       "upperSnake": true,
+       "joinedCamel": true,
+       "proseSpace": true,
+       "anyOneCharacter": true
+      },
+      "label": {
+       "ownerPhrase": true,
+       "titlePhrase": true,
+       "countFirst": true,
+       "skipFirst": true,
+       "camelKey": true,
+       "snakeKey": true,
+       "kebabKey": true,
+       "upperKey": true,
+       "windowThree": true,
+       "fullwidth": true
+      },
+      "quiet": {
+       "bareWord": 0,
+       "rfInstanceCounter": 0,
+       "rfObservationCounter": 0,
+       "secondAlone": 0,
+       "firstAlone": 0,
+       "featureSkipping": 0,
+       "featureSkipPredicate": 0,
+       "featureWholeSubtree": 0,
+       "vocabularyBypassed": 0,
+       "vocabularyElided": 0,
+       "vocabularyOmitted": 0,
+       "windowFour": 0,
+       "splitLine": 0,
+       "splitJsonKey": 0,
+       "gradeList": 0,
+       "composedParts": 0,
+       "aliasRead": 0,
+       "longSeparator": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "labelDigest": "e65235d43b1db996db6e427b519aee7bab4fabecf868d55f29d1251dea77c250",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "fixtures": 4,
+      "rows": [
+       {
+        "kind": "sdk",
+        "value": 0,
+        "verbatim": true,
+        "calls": 1,
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ],
+        "piNumbers": [],
+        "piLabels": [],
+        "piKeyPairs": 0
+       },
+       {
+        "kind": "sdk",
+        "value": 3,
+        "verbatim": true,
+        "calls": 1,
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ],
+        "piNumbers": [],
+        "piLabels": [],
+        "piKeyPairs": 0
+       },
+       {
+        "kind": "rf",
+        "value": 0,
+        "verbatim": true,
+        "calls": 1,
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ],
+        "piNumbers": [],
+        "piLabels": [],
+        "piKeyPairs": 0
+       },
+       {
+        "kind": "rf",
+        "value": 3,
+        "verbatim": true,
+        "calls": 1,
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ],
+        "piNumbers": [],
+        "piLabels": [],
+        "piKeyPairs": 0
+       }
+      ]
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "fixtures": 4,
+      "rows": [
+       {
+        "kind": "sdk",
+        "value": 0,
+        "verbatim": true,
+        "piKeys": [
+         "contract",
+         "source",
+         "workspaceRoot"
+        ],
+        "contract": true,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "tail": [
+         "--no-commit",
+         "--no-input",
+         "--json"
+        ]
+       },
+       {
+        "kind": "sdk",
+        "value": 3,
+        "verbatim": true,
+        "piKeys": [
+         "contract",
+         "source",
+         "workspaceRoot"
+        ],
+        "contract": true,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "tail": [
+         "--no-commit",
+         "--no-input",
+         "--json"
+        ]
+       },
+       {
+        "kind": "rf",
+        "value": 0,
+        "verbatim": true,
+        "piKeys": [
+         "contract",
+         "source",
+         "workspaceRoot"
+        ],
+        "contract": true,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "tail": [
+         "--no-commit",
+         "--no-input",
+         "--json"
+        ]
+       },
+       {
+        "kind": "rf",
+        "value": 3,
+        "verbatim": true,
+        "piKeys": [
+         "contract",
+         "source",
+         "workspaceRoot"
+        ],
+        "contract": true,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "tail": [
+         "--no-commit",
+         "--no-input",
+         "--json"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "fixtures": 4,
+      "rows": [
+       {
+        "kind": "sdk",
+        "isError": false,
+        "replyKind": "returned",
+        "verbatim": true,
+        "keySpelledVerbatim": true,
+        "piStrings": [
+         "returned",
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ],
+        "piLabels": [],
+        "replyLabels": 0
+       },
+       {
+        "kind": "sdk",
+        "isError": false,
+        "replyKind": "returned",
+        "verbatim": true,
+        "keySpelledVerbatim": true,
+        "piStrings": [
+         "returned",
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ],
+        "piLabels": [],
+        "replyLabels": 0
+       },
+       {
+        "kind": "rf",
+        "isError": false,
+        "replyKind": "returned",
+        "verbatim": true,
+        "keySpelledVerbatim": true,
+        "piStrings": [
+         "returned",
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ],
+        "piLabels": [],
+        "replyLabels": 0
+       },
+       {
+        "kind": "rf",
+        "isError": false,
+        "replyKind": "returned",
+        "verbatim": true,
+        "keySpelledVerbatim": true,
+        "piStrings": [
+         "returned",
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ],
+        "piLabels": [],
+        "replyLabels": 0
+       }
+      ]
+     }
+    },
+    {
+     "id": "B4",
+     "witness": {
+      "cases": 8,
+      "rows": [
+       {
+        "kind": "sdk",
+        "value": 0,
+        "seam": "rf-cli",
+        "blind": true,
+        "coverage": "complete",
+        "labels": [],
+        "keyPairs": 0,
+        "figureWords": []
+       },
+       {
+        "kind": "sdk",
+        "value": 0,
+        "seam": "injected-fixture",
+        "blind": true,
+        "coverage": "partial",
+        "labels": [],
+        "keyPairs": 0,
+        "figureWords": []
+       },
+       {
+        "kind": "sdk",
+        "value": 3,
+        "seam": "rf-cli",
+        "blind": true,
+        "coverage": "complete",
+        "labels": [],
+        "keyPairs": 0,
+        "figureWords": []
+       },
+       {
+        "kind": "sdk",
+        "value": 3,
+        "seam": "injected-fixture",
+        "blind": true,
+        "coverage": "partial",
+        "labels": [],
+        "keyPairs": 0,
+        "figureWords": []
+       },
+       {
+        "kind": "rf",
+        "value": 0,
+        "seam": "rf-cli",
+        "blind": true,
+        "coverage": "complete",
+        "labels": [],
+        "keyPairs": 0,
+        "figureWords": []
+       },
+       {
+        "kind": "rf",
+        "value": 0,
+        "seam": "injected-fixture",
+        "blind": true,
+        "coverage": "partial",
+        "labels": [],
+        "keyPairs": 0,
+        "figureWords": []
+       },
+       {
+        "kind": "rf",
+        "value": 3,
+        "seam": "rf-cli",
+        "blind": true,
+        "coverage": "complete",
+        "labels": [],
+        "keyPairs": 0,
+        "figureWords": []
+       },
+       {
+        "kind": "rf",
+        "value": 3,
+        "seam": "injected-fixture",
+        "blind": true,
+        "coverage": "partial",
+        "labels": [],
+        "keyPairs": 0,
+        "figureWords": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "B5",
+     "witness": {
+      "cases": 4,
+      "rows": [
+       {
+        "kind": "sdk",
+        "value": 0,
+        "blind": true,
+        "keys": [
+         "nativeId",
+         "producerRelease",
+         "provider",
+         "sourceBasis"
+        ],
+        "labels": [],
+        "keyPairs": 0,
+        "figureWords": []
+       },
+       {
+        "kind": "sdk",
+        "value": 3,
+        "blind": true,
+        "keys": [
+         "nativeId",
+         "producerRelease",
+         "provider",
+         "sourceBasis"
+        ],
+        "labels": [],
+        "keyPairs": 0,
+        "figureWords": []
+       },
+       {
+        "kind": "rf",
+        "value": 0,
+        "blind": true,
+        "keys": [
+         "nativeId",
+         "producerRelease",
+         "provider",
+         "sourceBasis"
+        ],
+        "labels": [],
+        "keyPairs": 0,
+        "figureWords": []
+       },
+       {
+        "kind": "rf",
+        "value": 3,
+        "blind": true,
+        "keys": [
+         "nativeId",
+         "producerRelease",
+         "provider",
+         "sourceBasis"
+        ],
+        "labels": [],
+        "keyPairs": 0,
+        "figureWords": []
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "labelDigest": "266f539986b6fdde1735dcdbaf6a3a6fd8b083c34d34942d2654779d0f869f7c",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "registered": {
+       "firstKeys": 0,
+       "verbatim": true,
+       "keyPairs": 0
+      },
+      "native": {
+       "firstKeys": 0,
+       "verbatim": true,
+       "spawns": 1
+      },
+      "reply": {
+       "firstKeys": 0,
+       "keyPairs": 0,
+       "isError": false
+      },
+      "topology": [
+       {
+        "seam": "rf-cli",
+        "labels": [],
+        "keyPairs": 0,
+        "figureWords": []
+       },
+       {
+        "seam": "injected-fixture",
+        "labels": [],
+        "keyPairs": 0,
+        "figureWords": []
+       }
+      ],
+      "evidence": {
+       "labels": [],
+       "keyPairs": 0,
+       "figureWords": []
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "topology": [
+       {
+        "seam": "rf-cli",
+        "blind": true,
+        "labels": [],
+        "keyPairs": 0,
+        "figureWords": []
+       },
+       {
+        "seam": "injected-fixture",
+        "blind": true,
+        "labels": [],
+        "keyPairs": 0,
+        "figureWords": []
+       }
+      ],
+      "evidence": {
+       "blind": true,
+       "labels": [],
+       "keyPairs": 0,
+       "figureWords": []
+      },
+      "registered": {
+       "counter": 3,
+       "firstKeys": 0,
+       "verbatim": true
+      },
+      "reply": {
+       "counter": 3,
+       "firstKeys": 0,
+       "keyPairs": 0
+      }
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "seams": [
+       {
+        "seam": "rf-cli",
+        "coverage": "partial",
+        "reuseStrings": [
+         "observations: 2 rows, 2 reused: partial"
+        ],
+        "nounsInReuseStrings": 0,
+        "skipWords": 0,
+        "labels": []
+       },
+       {
+        "seam": "injected-fixture",
+        "coverage": "partial",
+        "reuseStrings": [
+         "observations: 2 rows, 2 reused: partial"
+        ],
+        "nounsInReuseStrings": 0,
+        "skipWords": 0,
+        "labels": []
+       }
+      ],
+      "evidence": {
+       "labels": [],
+       "keyPairs": 0,
+       "figureWords": []
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the owner's acceptance clauses and the cases agree",
+  "T1",
+  "T2",
+  "A1",
+  "A2",
+  "A3",
+  "B1",
+  "B2",
+  "B3",
+  "B4",
+  "B5",
+  "C1",
+  "C2",
+  "C3",
+  "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
+ ]
+}
