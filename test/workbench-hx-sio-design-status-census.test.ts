@@ -25,7 +25,9 @@
  * block's own words) and the posture Pi states. It is a judged surface, never exempt (row A3), and it is FROZEN (row C3): its bytes are
  * composedDossier(), the composition of DOSSIER_INTRO, STATUS_LINES, ID_ROWS and DOSSIER_POSTURE, and its sha-256 is in the roster.
  *
- * READINGS (class-level guard bound by refusal #2, rule 19(d): every docs-reading leg of this census judges what a reader sees)
+ * READINGS (class-level guard bound by refusal #2, rule 19(d): every docs-reading leg of this census judges what a reader sees; in the
+ *   terminal form of cut #4 the readings below describe how each leg reads, and that the reading is what a reader sees is claimed for exactly
+ *   the ENUMERATION's pinned set, every known departure a named residual)
  * - (a) JUDGED: SURFACES, the acceptance's five (the three pages, every regular file of docs/workbench/receipts, the dossier), and
  *   WIDE_ROOTS plus the repository root's pages: the statement's surfaces (docs, the adapter in src, the skill text Pi serves in .agents
  *   and .pi) with qa and examples. Read as UTF-8; a hidden entry is read like any other; a symlink is refused, never followed (row A1
@@ -39,11 +41,21 @@
  *   once. A unit is a paragraph, a heading, the blocks of a list item or block quote, a table row (its cells joined by " | "), a code
  *   block, an HTML block, and a link's or an image's title (a tooltip, read on its own). A unit renders its text with backslash escapes
  *   and code spans as written; emphasis, strikethrough and link text flattened; a link destination, a reference definition and a task
- *   checkbox render nothing; an inline HTML token (a comment or a tag) renders nothing, and a tag that opens or closes a block-level
- *   element (BLOCK_TAGS) breaks the sentence (a br tag the line); an HTML block (and an HTML page) renders its source with comments and
- *   tags removed. Character references are decoded as marked passes them on (with their ";": decimal of 1-7 digits, hex of 1-6, a name):
- *   a numeric one as its code point, a NAMED_REFERENCES name as its characters, any other name as one BLANK; never inside code, which
- *   shows them as written. A default-ignorable code point and a control other than tab and line feed render nothing; a bidirectional
+ *   checkbox render nothing. HTML - an HTML block, an HTML page and an inline HTML token - renders as the HTML standard's tokenizer reads
+ *   it, in exactly the forms HTML_MARKUP names and MR4 pins one by one (cut #4, refusal #3's family 1): a comment renders nothing and closes
+ *   at once when written "<!-->" or "<!--->", any other at its first "-->" or "--!>", or at the end; "<?", "<!" that opens no comment (a
+ *   declaration, a CDATA section in HTML content) and "</" followed by anything but a letter open a bogus comment that renders nothing to
+ *   the first ">" ("</>" alone drops); a start or end tag renders nothing from its "<" through its name (any characters up to white space,
+ *   "/" or ">") and its attributes to the first ">" outside a quoted value (tagEnd; a tag the input ends inside drops, with the rest); the
+ *   text of a textarea or title element (RCDATA) renders as written to its end tag, its references decoded and its comments and tags shown
+ *   as text; the text of a script, style, xmp, iframe, noembed, noframes or noscript element renders as written to its end tag, and a
+ *   plaintext element's to the end, references not decoded (a page shows only the xmp's and the plaintext's, so the others are an
+ *   over-read); a tag that opens or closes a block-level element (BLOCK_TAGS) breaks the sentence (in an inline token a br tag breaks the
+ *   line). So an inline HTML token renders nothing of a tag, and the text after a comment or a bogus comment that the standard closes
+ *   before marked's token ends (IC1, PI1, CD1). Character references are decoded as marked passes them on (with their ";": decimal of 1-7
+ *   digits, hex of 1-6, a name): a numeric one as its code point, a NAMED_REFERENCES name as its characters, any other name as one BLANK
+ *   (R11 names where a browser reads them otherwise); never inside code or raw text, which show them as written. A default-ignorable code
+ *   point and a control other than tab and line feed render nothing (an UNREAD one is never judged as read: UNREAD below); a bidirectional
  *   control renders nothing but may reorder: each outermost right-to-left override span (to its closer, or the unit's end) is read in
  *   reverse, as a reader sees it, and a unit holding any bidirectional control reads no qualifier. What a reader may
  *   see or hear (struck text, an image's alt text, an HTML block's text) is read for names and claims; a QUALIFIER counts only where a
@@ -51,6 +63,11 @@
  *   since a page may hide what an element holds.
  * - HTML LEG (pages): the source of every HTML token at any depth, comments and attributes included, cut into sentences; a name beside a
  *   claim is a finding whatever qualifies it (a title or alt attribute, or a comment, is read by some readers on its own).
+ * - UNREAD (every judged file; cut #4, refusal #3's family 2): the code points no leg reads - the four Hangul fillers U+115F, U+1160, U+3164
+ *   and U+FFA0 (exactly the Default_Ignorable_Code_Point letters, which HarfBuzz 7.0.0, the shaper of Chromium and Firefox, draws as a
+ *   spacing glyph, so neither the rendered leg's "render nothing" nor the raw leg's "a letter" is what a reader sees), every control but
+ *   tab, line feed and carriage return (a browser shows a form feed as white space and the others as a box), and the census's own markers
+ *   BREAK (U+2029) and BLANK (U+FFFC). Each line of a judged file that holds one is a finding, whatever the line says (UNREAD_POINTS; MU).
  * - SENTENCE: a text cut at a run of white space after ".", "!", "?" or ";" (never after a list number or a dotted name prefix,
  *   so "hx.optim." stays inside its sentence), at a blank line and before a table row; a raw Markdown text is also cut before a heading,
  *   a list item and a block quote line, and a rendered unit at each block-level break. A code comment's wrapped lines stay one sentence.
@@ -60,7 +77,8 @@
  *   inside one and no two words join across one: "DESIGN HXSI-02 ONLY" holds no qualifier).
  * - FINDING: a mention carrying a claim and no qualifier, reported `<path>:<line> <names>: <leg>unqualified-<claim>` for the first
  *   CLAIMS member it carries, the leg "" (raw), "rendered-" or "html-". A negated claim ("is not registered") is a finding too: Pi echoes
- *   the programs' words, never its own.
+ *   the programs' words, never its own. A line holding an UNREAD code point is reported `<path>:<line> <code points>: unread-code-point`,
+ *   each code point written "U+XXXX" and joined by "+" in the order they first appear on the line.
  * - ANCHORS: a surface's or root's anchor token is read from the file's source bytes; it proves the walk reached the real file (walk
  *   liveness) and is no docs-truth reading - the docs-truth readings are rows A2-A7 and C.
  * - (b) READER LEG: law_id 'hx.optim.spoke.exchange.v1' and certificate_refs ['TI-23'] planted at every site of a provider
@@ -100,9 +118,13 @@
  *    qualified twin stays quiet, so the judge reads every kind of file it walks; A7 the rendered-view plants VIEW_PLANTS (refusal #2's
  *    GA1-GA11, GA1r and GA2r byte for byte, and the seat's RV1-RV24) each read exactly their findings on the live tree, and the probes
  *    refusal #2 orders pinned red, its two controls and the probe texts its findings quote are read from the bead export (an outside
- *    anchor), each carried by a plant that reads it so, so a probe removed from every literal here and the roster still reds. A4, A6 and A7
- *    compare the findings a plant ADDS (the live findings, moved by the plant's lines, taken out), so a live finding reds A2 or A5 by
- *    name and never reads as a plant mismatch (rider F5).
+ *    anchor), each carried by a plant that reads it so, so a probe removed from every literal here and the roster still reds; A8 refusal
+ *    #3's plants REFUSAL3_PLANTS (its 18 survivors HB1-HB5r, HB7, HB8, TA1, IC1, PI1, CD1, HF1-HF6r and HF7ts and its controls HBC1, HBC2,
+ *    HC2 and HC3, byte for byte, with its F3 over-refusal HO1) each read exactly their findings on the live tree (the named surfaces and the
+ *    wider walk, so HF7ts reads in the adapter), and the survivors refusal #3 grades, the probes it orders pinned red, its controls and the
+ *    probe texts it quotes are read from its record in the bead export (an outside anchor), each carried by a plant that reads it so. A4,
+ *    A6, A7 and A8 compare the findings a plant ADDS (the live findings, moved by the plant's lines, taken out), so a live finding reds A2
+ *    or A5 by name and never reads as a plant mismatch (rider F5).
  *  B, acceptance (b). B1 the reader adapter; B2 the registered provider and the SDK sites; B3 the native-evidence projection; B4
  *    the live verdict; B5 the landing tripwire over the declarations, with its bare-mention and comment controls.
  *  C, acceptance (c). C1 the two status rows verbatim, as a reader sees them; C2 the named-ID rows and their status words, from the
@@ -122,8 +144,17 @@
  *    miss of every name, MC every claim form (the negated form included), MQ every qualifier form, MF the finding format, MK the
  *    name and path mask (no qualifier assembled across a blanked token), all four in the raw leg; MR1 the rendered leg's inline
  *    reading (comments, tags, link targets and titles, alt and struck text, escapes, character references, code spans, invisibles,
- *    bidirectional overrides, breaks), MR2 its blocks and their source lines, MR3 the whole judge's legs on single pages (the cured R4 and R5 members among them).
- *  R, the residuals' pinned quiet rows.
+ *    bidirectional overrides, breaks), MR2 its blocks and their source lines, MR3 the whole judge's legs on single pages (the cured R4 and R5 members among them),
+ *    MR4 the HTML_MARKUP forms one by one (each comment close, each bogus comment, a tag's name and quoted attributes, a tag the input
+ *    ends inside, the RCDATA and raw-text elements, the inline tokens the standard closes early, and an inline tag), MU the UNREAD code
+ *    points (each filler, controls, the markers, in a page and in code) beside the code points that stay read.
+ *  R, the residuals' pinned quiet rows (R1-R11).
+ * ENUMERATION (cut #4; rule 19(c) engaged at refusal #3; the owner's reading of 2026-10-24: the R739 terminal enumerate-the-resolvable
+ * form, the chain capped at this cut): for U1 RENDERED-TEXT DOCS TRUTH the census claims exactly its pinned set - refusal #2's members and
+ * the seat's (A7: GA1-GA11, GA1r, GA2r, RV1-RV24), refusal #3's survivors, controls and over-refusal (A8), and the instrument members of
+ * rows M (MR1-MR4, MU) - and nothing beyond it: every known departure of a leg from what a reader sees is a NAMED RESIDUAL with a pinned
+ * quiet row (R1-R11), and NOT CLAIMED bounds the rest. An escape found outside the pinned set is a residual-list addition for the owner (a
+ * FORM question), not a claim this census makes.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the judged set - every row's id, label and
  * pins, every pin's witness and the vocabularies, the rendering's tables, the frozen dossier's text and sha-256 - is held to the
  * out-of-file roster (ROSTER_FILE). A last case reads that every pin's case ran to its end. Not claimed: a single pin removed from ROWS,
@@ -140,12 +171,17 @@
  * census does not re-read the HTML5 table); a page in another markup (reStructuredText, AsciiDoc: none on a judged root at the cut),
  * read by the raw leg only; styling applied from outside the page, or a renderer other than marked; a numeric reference from 128 to 159,
  * which browsers read as Windows-1252 and this census as a control (it renders nothing, so it can only join a name or a word - an
- * over-read); an HTML block's text, read with its tags removed, not laid out; the Unicode bidirectional algorithm beyond reversing each
+ * over-read); an HTML block's text, read with its tags removed, not laid out; the HTML standard's tokenizer state carried from one block or
+ * inline token into the next (an element, a comment or an attribute value that marked's block or token leaves open), each read on its own;
+ * a script element's escape states (its text runs to the first "</script"); an svg or math element's content (foreign content), read as
+ * HTML content, where a CDATA section is text (shown undecoded, as the raw leg reads it) and a title or style is no RCDATA or raw-text
+ * element; the Unicode bidirectional algorithm beyond reversing each
  * outermost right-to-left override span (an override nested in another, or the reordering an isolate or an embedding gives mixed-direction
  * text), where no qualifier counts in any case.
  * RESIDUALS (named; each has a pinned quiet row in row R): R1 R-QUALIFIER-ANYWHERE a qualifier anywhere in the sentence admits
  *   it, whatever it qualifies - a sentence as the census cuts it, so a sentence end of another script (an ideographic or fullwidth full
- *   stop) joins two sentences a reader sees apart; R2 R-SPLIT a claim carried by another sentence (a pronoun, or a cut after an abbreviation such as
+ *   stop) joins two sentences a reader sees apart, as do a hard line break and a sentence end followed by a closing quote or parenthesis
+ *   (refusal #3 F4); R2 R-SPLIT a claim carried by another sentence (a pronoun, or a cut after an abbreviation such as
  *   "e.g."); R3 R-PARAPHRASE a claim outside CLAIMS (ships, runs, is the runtime law); R4 R-LOOKALIKE a look-alike letter, a look-alike
  *   hyphen (U+2010, U+2011, U+2013, U+2212) or a look-alike dot (U+2024) inside a name, in any file (the rendered leg folds no
  *   look-alike), and an inserted invisible inside a name in a file that is not a page (a page's rendered leg drops it: MR3); R5 R-ENCODED a
@@ -156,7 +192,13 @@
  *   package.json, biome.json, tsconfig*.json, vitest*.ts, LICENSE and .gitignore) - the bead export is the requirement's own text
  *   and carries findings when judged; R9 R-TRIPWIRE-SPELLING a successor law field spelled outside LAW_FIELDS (lawRecord,
  *   certificates_ref) leaves row B5 quiet; R10 R-PATH-MASK a claim or status word inside a file path never counts (the mask that
- *   keeps "04-admission-and-semantics.md" from reading as a claim).
+ *   keeps "04-admission-and-semantics.md" from reading as a claim); R11 R-REFERENCE the reference model beside a browser's (cut #4,
+ *   seat-found; each member pinned quiet with its name written as a reference, so the raw leg cannot read it either): (a) a name outside
+ *   the HTML5 table that begins with a legacy name, which a browser decodes as that name and the rest as written ("&notregistered;" shows
+ *   a not sign, then "registered;"); (b) in HTML content a reference without its ";" (a legacy name, or a numeric one) or a numeric one of more digits,
+ *   which a browser decodes; (c) a reference to a line break, which cuts a rendered sentence a reader sees whole; (d) a reference in an
+ *   attribute value (a title a reader sees as a tooltip), which the HTML leg reads as written; (e) a numeric reference to an UNREAD code
+ *   point, which the rendered leg drops.
  * RESPIN 1 (gate g10-gate-s73 refusal #1 of cut cb229d8e): U1 RENDERED-TEXT DOCS TRUTH cured - C1 and C2 read the dossier through the
  *   shared rendered view, so a section hidden in an HTML comment is refused (S8, S9); U2 DOCS SECTION BOUND + HEADING-UNIQUENESS +
  *   SAME-VIEW cured - C1's sections run to the next heading of level 1-3, "## Named IDs" binds once in the rendered view and its rows
@@ -175,6 +217,16 @@
  *   NOT CLAIMED above), F5 (A4, A6 and A7 compare the plant delta), F7 (a root page is read by its extension in any case; .MD, .markdown,
  *   .mdx and HTML pages are pages), F8 (the measurement above re-dated). Seat-found: the mask blanked with white space, so a qualifier
  *   could be assembled across a blanked name or path; it blanks with BLANK now (MK).
+ * RESPIN 3 (gate g10-gate-s79 refusal #3 of cut d1635425; rule 19(c) engaged; cut #4 in the terminal form, ENUMERATION): U1 RENDERED-TEXT
+ *   DOCS TRUTH cured for the pinned set and enumerated beyond it. Family (1), the markup model: HTML_MARKUP takes the HTML standard's
+ *   comment closes ("<!-->", "<!--->", "--!>"), bogus comments, tags read to their end (tagEnd) and RCDATA and raw-text elements, in an
+ *   HTML block, an HTML page and an inline token, so HB1-HB5r, HB7, HB8, TA1, IC1, PI1 and CD1 (HB7 and CD1, PLAUSIBLE at the gate, are
+ *   reached by the same forms) are pinned red in A8 beside the controls HBC1 and HBC2. Family (2), the code-point model: UNREAD refuses
+ *   the four Hangul fillers, so HF1-HF6r and rider F2's HF7ts are pinned red, with F3's over-refusal HO1. HC2 (red) and HC3 (quiet) are
+ *   kept. The two model claims the gate falsified ("an HTML block renders its source with comments and tags removed"; "a default-ignorable
+ *   code point renders nothing") now hold for the pinned set (READINGS RENDERED LEG and UNREAD). F4's two members are pinned quiet in R1;
+ *   the reference-model departures the seat found are named R11 with pinned quiet rows. A8 reads refusal #3's record from the bead export
+ *   by first occurrence, as A7 reads refusal #2's.
  * SCOPE: the vocabularies are this cut's reading of the filing; the program lines are measured at the pin and not re-read here
  * (the census is hermetic), so a program change is seen only when a cut re-measures STATUS_LINES and ID_ROWS.
  *
@@ -389,7 +441,7 @@ const ROWS: readonly Row[] = [
   {
     id: "A",
     label: "(a) a census over docs/workbench/07-native-integrations.md, 14-qa-and-benchmarks.md, TRACEABILITY.md, receipts/ and this group's dossier asserts no sentence names HXSI-, TI- or hx.optim. as admitted/registered/verified/graduated/benchmarked without the programs' qualifier",
-    pins: ["A1", "A2", "A3", "A4", "A5", "A6", "A7"],
+    pins: ["A1", "A2", "A3", "A4", "A5", "A6", "A7", "A8"],
   },
   {
     id: "B",
@@ -408,13 +460,13 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "M",
-    label: "the sentence cutter, the name, claim and qualifier matchers, the finding format, the name mask and the rendered reading judge their pinned inputs in order",
-    pins: ["MS1", "MS2", "MS3", "MS4", "MN1", "MN2", "MN3", "MC", "MQ", "MF", "MK", "MR1", "MR2", "MR3"],
+    label: "the sentence cutter, the name, claim and qualifier matchers, the finding format, the name mask, the rendered reading, its HTML markup forms and the unread code points judge their pinned inputs in order",
+    pins: ["MS1", "MS2", "MS3", "MS4", "MN1", "MN2", "MN3", "MC", "MQ", "MF", "MK", "MR1", "MR2", "MR3", "MR4", "MU"],
   },
   {
     id: "R",
-    label: "the named residuals R1-R10 stay pinned quiet",
-    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10"],
+    label: "the named residuals R1-R11 stay pinned quiet",
+    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11"],
   },
 ];
 
@@ -490,7 +542,10 @@ function constants(): unknown {
       namedReferences: [...NAMED_REFERENCES].map(([name, value]) => [name, [...value].map(point => point.codePointAt(0) ?? 0)]),
       blockTags: [...BLOCK_TAGS],
       htmlMarkup: HTML_MARKUP.source,
+      rcdata: [...RCDATA],
+      rawText: [...RAW_TEXT],
       unseen: UNSEEN.source,
+      unread: UNREAD.source,
       bidi: BIDI.source,
     },
   };
@@ -672,6 +727,20 @@ const BREAK = cp(0x2029);
  * operators, the bidirectional controls, the variation selectors, the byte-order mark) or a control other than tab and line feed. */
 const UNSEEN = /[\p{Default_Ignorable_Code_Point}\p{Cc}]/u;
 const renders = (point: string): boolean => point === "\t" || point === "\n" || !UNSEEN.test(point);
+/** The code points no leg reads (header, READINGS UNREAD; pinned in MU, cut #4): the four Hangul fillers U+115F, U+1160, U+3164 and U+FFA0
+ * (the Default_Ignorable_Code_Point letters, which a shaper draws as a spacing glyph: refusal #3, HarfBuzz 7.0.0), the census's own markers
+ * BREAK and BLANK, and every control but tab, line feed and carriage return (a browser shows a form feed as white space and the others as a
+ * box). A judged file holding one is refused at each line that holds one, whatever the line says. */
+const UNREAD_POINTS: readonly number[] = [0x115f, 0x1160, 0x3164, 0xffa0, BREAK.codePointAt(0) ?? 0, BLANK.codePointAt(0) ?? 0];
+const UNREAD = new RegExp(`[${UNREAD_POINTS.map(point => `\\u{${point.toString(16)}}`).join("")}]|[^\\P{Cc}\\t\\n\\r]`, "gu");
+/** A judged file's UNREAD findings: one per line holding an UNREAD code point, `<path>:<line> <code points>: unread-code-point`, the code
+ * points in the order they first appear. */
+function unreadOf(path: string, text: string): string[] {
+  return text.split("\n").flatMap((line, index) => {
+    const points = [...new Set(line.match(UNREAD) ?? [])].map(point => `U+${(point.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}`);
+    return points.length === 0 ? [] : [`${path}:${index + 1} ${points.join("+")}: unread-code-point`];
+  });
+}
 /** A bidirectional control (the embeddings, overrides and isolates, their closers and the direction marks): it renders nothing itself but can
  * reorder what a reader sees, so a unit holding one reads no qualifier. */
 const BIDI = /\p{Bidi_Control}/u;
@@ -761,8 +830,60 @@ const BLOCK_TAGS: ReadonlySet<string> = new Set(
     " ",
   ),
 );
-/** An HTML comment (an unclosed one runs to the end) or a tag, with the tag's name. */
-const HTML_MARKUP = /<!--[\s\S]*?(?:-->|$)|<\/?([A-Za-z][A-Za-z0-9-]*)(?:\s[^>]*)?\/?>/g;
+/** The HTML standard's markup forms as its tokenizer reads them (header, READINGS RENDERED LEG; each pinned in MR4, cut #4): a comment, which
+ * "<!-->" and "<!--->" close at once and any other at its first "-->" or "--!>" (an unclosed one runs to the end); a bogus comment, to the
+ * first ">" or the end - "<?", "<!" opening no comment (a declaration, or a CDATA section in HTML content) and "</" followed by anything but
+ * a letter ("</>" alone is dropped); and the opening of a start or end tag with its name (any characters up to white space, "/" or ">"),
+ * whose end tagEnd reads. */
+const HTML_MARKUP = /<!--(?:-?>|[\s\S]*?(?:--!?>|$))|<[!?][^>]*(?:>|$)|<\/(?:>|[^A-Za-z>][^>]*(?:>|$))|<(\/?)([A-Za-z][^\t\n\f\r />]*)/g;
+/** The elements whose text the standard reads as written to their end tag: RCDATA (references decoded) and raw text (references kept);
+ * a plaintext element's text runs to the end. */
+const RCDATA: ReadonlySet<string> = new Set(["textarea", "title"]);
+const RAW_TEXT: ReadonlySet<string> = new Set(["script", "style", "xmp", "iframe", "noembed", "noframes", "noscript", "plaintext"]);
+type TagState = "attributes" | "name" | "afterName" | "beforeValue" | "double" | "single" | "unquoted" | "afterQuoted" | "selfClosing";
+/** The tag state white space leaves each tag state in (the standard's: a name ends, an unquoted value ends, a quoted value or a solidus
+ * gives way to the next attribute; inside a quoted value and before a value it changes nothing). */
+const AFTER_SPACE: Readonly<Record<TagState, TagState>> = {
+  attributes: "attributes",
+  name: "afterName",
+  afterName: "afterName",
+  beforeValue: "beforeValue",
+  double: "double",
+  single: "single",
+  unquoted: "attributes",
+  afterQuoted: "attributes",
+  selfClosing: "attributes",
+};
+/** Where a tag whose name ends at `from` ends (the index after its ">"), as the standard's tokenizer reads its attributes: a ">" inside a
+ * quoted value does not end it, and "=" opening an attribute starts its name; -1 when the input ends first (the tag is dropped). */
+function tagEnd(raw: string, from: number): number {
+  let state: TagState = "attributes";
+  for (let at = from; at < raw.length; at++) {
+    const char = raw[at] ?? "";
+    const space = char === " " || char === "\t" || char === "\n" || char === "\f" || char === "\r";
+    if (char === ">" && state !== "double" && state !== "single") return at + 1;
+    if (state === "double" || state === "single") {
+      if (char === (state === "double" ? '"' : "'")) state = "afterQuoted";
+    } else if (state === "unquoted") {
+      if (space) state = "attributes";
+    } else if (state === "beforeValue") {
+      if (char === '"') state = "double";
+      else if (char === "'") state = "single";
+      else if (!space) state = "unquoted";
+    } else if (char === "/") state = "selfClosing";
+    else if (space) state = AFTER_SPACE[state];
+    else if (char === "=" && (state === "name" || state === "afterName")) state = "beforeValue";
+    else state = "name";
+  }
+  return -1;
+}
+/** Where an RCDATA or raw-text element's text ends: at its end tag ("</" and its name in any case, then white space, "/" or ">"), or the end. */
+function closingTag(raw: string, from: number, name: string): number {
+  if (name === "plaintext") return raw.length;
+  const close = new RegExp(`</${escapeRegExp(name)}(?=[\\t\\n\\f\\r />])`, "gi");
+  close.lastIndex = from;
+  return close.exec(raw)?.index ?? raw.length;
+}
 
 /** A rendered unit (a paragraph, a heading, a list item's block, a table row, a code block, an HTML block, a link's or an image's title): what a
  * reader may see or hear (text: names and claims are read here), the same text position for position with BLANK for every character a reader
@@ -851,14 +972,39 @@ function titled(title: string, line: number, page: Rendering): void {
   page.units.push(unit);
   emit(unit, title, true);
 }
-/** An inline HTML token renders nothing: its place is marked (a sentence holding it reads no qualifier), its source joins the HTML leg, and a
- * tag that opens or closes a block-level element breaks the sentence (a br tag breaks the line). */
+/** What a reader sees of HTML source, read through the HTML_MARKUP forms (header, READINGS RENDERED LEG; MR4): its text, references decoded;
+ * nothing of a comment, a bogus comment or a tag (a tag the input ends inside is dropped with the rest); a tag opening or closing a block-level
+ * element breaks the sentence (in an inline token a br tag breaks the line); an RCDATA element's text as written with its references decoded,
+ * and a raw-text element's as written, to its end tag. None of the text is plain. */
+function htmlContent(unit: Unit, raw: string, inline: boolean): void {
+  const markup = new RegExp(HTML_MARKUP.source, "g");
+  let at = 0;
+  for (let match = markup.exec(raw); match !== null; match = markup.exec(raw)) {
+    emit(unit, raw.slice(at, match.index), false);
+    const name = (match[2] ?? "").toLowerCase();
+    const end = match[2] === undefined ? match.index + match[0].length : tagEnd(raw, match.index + match[0].length);
+    if (end < 0) {
+      unit.line += newlines(raw.slice(match.index));
+      return;
+    }
+    if (inline && name === "br") put(unit, "\n", true);
+    else if (BLOCK_TAGS.has(name)) put(unit, BREAK, inline);
+    unit.line += newlines(raw.slice(match.index, end));
+    at = end;
+    if (match[1] === "" && (RCDATA.has(name) || RAW_TEXT.has(name))) {
+      at = closingTag(raw, end, name);
+      emit(unit, raw.slice(end, at), false, !RCDATA.has(name));
+    }
+    markup.lastIndex = at;
+  }
+  emit(unit, raw.slice(at), false);
+}
+/** An inline HTML token renders what the standard shows of it (htmlContent: nothing of a tag, the text after a comment or a bogus comment the
+ * standard closes before marked does): its place is marked (a sentence holding it reads no qualifier) and its source joins the HTML leg. */
 function inlineHtml(unit: Unit, raw: string, page: Rendering): void {
   unit.html.push(unit.text.length);
   page.sources.push({ line: unit.line, source: raw });
-  const name = (/^<\/?([A-Za-z][A-Za-z0-9-]*)/.exec(raw)?.[1] ?? "").toLowerCase();
-  if (name === "br") put(unit, "\n", true);
-  else if (BLOCK_TAGS.has(name)) put(unit, BREAK, true);
+  htmlContent(unit, raw, true);
 }
 /** What a reader sees of inline tokens, appended to `unit` (header, READINGS RENDERED LEG); `plainly` false for struck and alt text. */
 function inline(unit: Unit, tokens: readonly Token[], plainly: boolean, page: Rendering): void {
@@ -890,18 +1036,6 @@ function blocks(tokens: readonly Token[], source: string, line: number, page: Re
     if (at >= 0) cursor = at + token.raw.length;
     block(token, line + newlines(source.slice(0, start)), page);
   }
-}
-/** An HTML block's text as a reader may see it: comments and tags render nothing, a block-level tag breaks the sentence; none of it is plain. */
-function htmlBlock(unit: Unit, raw: string): void {
-  let at = 0;
-  for (const match of raw.matchAll(HTML_MARKUP)) {
-    const index = match.index ?? 0;
-    emit(unit, raw.slice(at, index), false);
-    if (BLOCK_TAGS.has((match[1] ?? "").toLowerCase())) put(unit, BREAK, false);
-    unit.line += newlines(match[0]);
-    at = index + match[0].length;
-  }
-  emit(unit, raw.slice(at), false);
 }
 /** One block token's units (header, READINGS RENDERED LEG). */
 function block(token: Token, line: number, page: Rendering): void {
@@ -938,7 +1072,7 @@ function block(token: Token, line: number, page: Rendering): void {
   if (token.type === "code") emit(unit, tokenText(token), true, true);
   else if (token.type === "html") {
     page.sources.push({ line, source: token.raw });
-    htmlBlock(unit, token.raw);
+    htmlContent(unit, token.raw, false);
   } else if (tokenChildren(token).length > 0) inline(unit, tokenChildren(token), true, page);
   else emit(unit, tokenText(token), true);
 }
@@ -953,7 +1087,7 @@ function rendering(text: string, html = false): Rendering {
     const unit = unitAt(1);
     page.units.push(unit);
     page.sources.push({ line: 1, source: text });
-    htmlBlock(unit, text);
+    htmlContent(unit, text, false);
   } else blocks(marked.lexer(text), text, 1, page);
   for (const unit of page.units) finished(unit);
   RENDERINGS.set(`${html}:${text}`, page);
@@ -998,12 +1132,13 @@ const htmlReadingOf = (path: string, text: string): Reading =>
     "html-",
   );
 const READS = new Map<string, Map<string, readonly string[]>>();
-/** Every finding of one file (header, READINGS): its raw reading's, and a page's rendered and HTML readings' too. */
+/** Every finding of one file (header, READINGS): its raw reading's, a page's rendered and HTML readings' too, and its UNREAD lines. */
 function findingsOf(path: string, text: string): string[] {
   const byText = READS.get(path) ?? new Map<string, readonly string[]>();
   READS.set(path, byText);
   const page = isMarkdown(path) || HTML_PAGE.test(path);
-  const known = byText.get(text) ?? [...readingOf(path, text).findings, ...(page ? [...renderedReadingOf(path, text).findings, ...htmlReadingOf(path, text).findings] : [])];
+  const known =
+    byText.get(text) ?? [...readingOf(path, text).findings, ...(page ? [...renderedReadingOf(path, text).findings, ...htmlReadingOf(path, text).findings] : []), ...unreadOf(path, text)];
   byText.set(text, known);
   return [...known];
 }
@@ -1195,6 +1330,55 @@ const VIEW_PLANTS: readonly (readonly [id: string, shape: string, path: string, 
   ["RV22", "a claim a right-to-left override shows in reverse", D07, `HXSI-01 is a ${RLO}wal emitnur deretsiger${PDF}.`, [found(D07, 1, "HXSI", "rendered-", "registered")]],
   ["RV23", "a name a right-to-left override shows in reverse (open to the end of its paragraph)", D07, `${RLO}10-ISXH${PDF} is a registered runtime law.`, [found(D07, 1, "HXSI", "rendered-", "registered")]],
   ["RV24", "a qualifier beside a direction mark (no qualifier counts in a unit holding a bidirectional control)", D07, `HXSI-01 is a registered runtime law, DESIGN ONLY${cp(0x200e)}.`, [found(D07, 1, "HXSI", "rendered-", "registered")]],
+];
+
+/** Refusal #3's receipt plant (gate g10-gate-s79, HB5r and HF6r): a new receipt, its title line first. */
+const RECEIPT_PLANT3 = "docs/workbench/receipts/wb-gate19-plant.md";
+const RECEIPT_TITLE3 = "# wb-gate19-plant: plant\n\n";
+/** The adapter source refusal #3's rider F2 (HF7ts) plants into, a file of the wider surfaces. */
+const HX_ADAPTER = "src/workbench/providers/hyperunix.ts";
+/** A finding row A8 expects for a line holding an UNREAD code point. */
+const unread = (path: string, line: number, points: string): string => `${path}:${line} ${points}: unread-code-point`;
+/** Row A8's plants (cut #4, refusal #3's U1 families in the terminal enumerate-the-resolvable form): [id, shape, path, text, expected
+ * findings], each prepended to its file (or a new receipt) on the live tree. The 18 survivors refusal #3 grades (HB1-HB5r, HB7, HB8, TA1,
+ * IC1, PI1, CD1, HF1-HF6r and HF7ts) and its controls HBC1, HBC2, HC2 and HC3 are the gate's probe texts byte for byte (the survivors'
+ * texts are read back from the bead export below); HO1 is its F3 fail-closed over-refusal, refused whatever it says. */
+const REFUSAL3_PLANTS: readonly (readonly [id: string, shape: string, path: string, text: string, findings: readonly string[]])[] = [
+  ["HB1", "an HTML block opened by the empty comment '<!-->'", D07, "<!-->HXSI&#45;01 is a registered runtime law.", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["HB2", "an HTML block opened by the empty comment '<!--->'", D07, "<!--->HXSI&#45;01 is a registered runtime law.", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["HB3", "a comment the standard closes at '--!>' in an HTML block", D07, "<div><!-- x --!>HXSI&#45;01 is a registered runtime law.</div>", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["HB4", "an empty comment before a claim spelled with a reference", D07, "<!-->HXSI-01 is a regis&#116;ered runtime law.", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["HB5r", "a new receipt whose HTML block opens with an empty comment", RECEIPT_PLANT3, `${RECEIPT_TITLE3}<!-->TI&#45;24 is verified in Lean.\n`, [found(RECEIPT_PLANT3, 3, "TI", "rendered-", "verified")]],
+  ["HB7", "an empty comment, then a name split by a closed comment", D07, "<!-->HX<!-- -->SI-01 is a registered runtime law.", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["HB8", "an empty comment, then a claim split by tags", D07, "<!-->HXSI-01 is a reg<b></b>istered runtime law.", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["TA1", "a comment opener inside a textarea, whose text a page shows as written (RCDATA)", D07, "<textarea><!-- x HXSI&#45;01 is a registered runtime law.</textarea>", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["IC1", "an inline comment the standard closes at '--!>', before marked's '-->'", D07, "Note <!-- x --!> HXSI&#45;01 is a registered runtime law. -->", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["PI1", "an inline processing instruction, a bogus comment to the first '>'", D07, "Note <?x > HXSI&#45;01 is a registered runtime law. ?>", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["CD1", "an inline CDATA section in HTML content, a bogus comment to the first '>'", D07, "Note <![CDATA[ x > HXSI&#45;01 is a registered runtime law. ]]>", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["HF1", "a Hangul filler between a claim and the next word", D07, `HXSI-01 is a registered${cp(0x3164)}runtime law.`, [unread(D07, 1, "U+3164")]],
+  ["HF2", "a Hangul filler before a claim", D07, `HXSI-01 is a${cp(0x3164)}registered runtime law.`, [unread(D07, 1, "U+3164")]],
+  ["HF3", "a halfwidth Hangul filler after a claim", D07, `TI-23 is benchmarked${cp(0xffa0)}by the hx gate.`, [unread(D07, 1, "U+FFA0")]],
+  ["HF4", "a Hangul choseong filler joining a two-word claim", D07, `HXSI-01 is a selected hx plan${cp(0x115f)}route.`, [unread(D07, 1, "U+115F")]],
+  ["HF5", "a Hangul jungseong filler before a claim", D07, `The hx.optim.spoke.exchange.v1 law is${cp(0x1160)}admitted.`, [unread(D07, 1, "U+1160")]],
+  ["HF6r", "a new receipt with a Hangul filler after its claim", RECEIPT_PLANT3, `${RECEIPT_TITLE3}TI-24 is verified${cp(0x3164)}in Lean.\n`, [unread(RECEIPT_PLANT3, 3, "U+3164")]],
+  ["HF7ts", "a Hangul filler after a claim in a code comment of the adapter (rider F2)", HX_ADAPTER, `// HXSI-01 is a registered${cp(0x3164)}runtime law.`, [unread(HX_ADAPTER, 1, "U+3164")]],
+  ["HBC1", "the HB3 claim behind a normally closed comment (control)", D07, "<div><!-- x -->HXSI&#45;01 is a registered runtime law.</div>", [found(D07, 1, "HXSI", "rendered-", "registered")]],
+  [
+    "HBC2",
+    "the HB1 claim with a plain name (control)",
+    D07,
+    "<!-->HXSI-01 is a registered runtime law.",
+    [found(D07, 1, "HXSI", "", "registered"), found(D07, 1, "HXSI", "rendered-", "registered"), found(D07, 1, "HXSI", "html-", "registered")],
+  ],
+  ["HC2", "a plain claim (control)", D07, "HXSI-01 is a registered runtime law.", [found(D07, 1, "HXSI", "", "registered"), found(D07, 1, "HXSI", "rendered-", "registered")]],
+  ["HC3", "a visible qualifier (control)", D07, "HXSI-01 is a registered runtime law, DESIGN ONLY.", []],
+  [
+    "HO1",
+    "a Hangul filler inside a visible qualifier (refusal #3 F3: refused whatever the line says)",
+    D07,
+    `HXSI-01 is a registered runtime law, DESIGN${cp(0x3164)}ONLY.`,
+    [found(D07, 1, "HXSI", "", "registered"), found(D07, 1, "HXSI", "rendered-", "registered"), unread(D07, 1, "U+3164")],
+  ],
 ];
 
 const WS = "/workspace/hx-sio-design-status-census";
@@ -1793,14 +1977,106 @@ const CASES: readonly Case[] = [
     ],
   },
   {
+    pin: "MR4",
+    kind: "rendered",
+    texts: [
+      "<!-->one HXSI-01 two.",
+      "<!--->two",
+      "<div><!-- a --!>three</div>",
+      "<div><!-- a --!x four --></div>",
+      "<div><!---->five</div>",
+      "<div><?pi > six ?></div>",
+      "<div><!DOCTYPE x> seven</div>",
+      "<div><![CDATA[ a > eight ]]></div>",
+      "<div></ x > nine</> ten</div>",
+      '<div>reg<b.x></b.x>istered <span title="a>b">eleven</span> <i x=a>twelve</i></div>',
+      "<textarea><!-- a --> <b>thirteen</b> &#45;</textarea>",
+      "<title>fourteen <i>x</i></title>",
+      "<script>// <!-- a --> fifteen &#45;</script>",
+      "<xmp>\n<b>sixteen</b>\n</xmp>",
+      "<plaintext>\n<b>x</b> seventeen",
+      '<div>eighteen <span title="x',
+      "Note <!-- a --!> nineteen -->",
+      "Note <?x > twenty ?>",
+      "Note <![CDATA[ a > twentyone ]]>",
+      'Note <span title="a>b">twentytwo</span>',
+      "<div>twenty<p.x>three</div>",
+      "<textarea>a</textareax> b</textarea>",
+      "<TITLE>twentyfour</Title> twentyfive",
+      '<div><a ="x>twentysix">y</a></div>',
+      '<div><i x=a b="c>d">twentyseven</i></div>',
+      '<div><a b = "x>y">twentyeight</a></div>',
+    ],
+    outcome: [
+      [`1 one HXSI-01 two. | plain ${"#".repeat(16)}`],
+      [`1 two | plain ${"#".repeat(3)}`],
+      [`1 three | plain ${"#".repeat(5)}`],
+      [],
+      [`1 five | plain ${"#".repeat(4)}`],
+      [`1 six ?> | plain ${"#".repeat(6)}`],
+      [`1 seven | plain ${"#".repeat(5)}`],
+      [`1 eight ]]> | plain ${"#".repeat(9)}`],
+      [`1 nine ten | plain ${"#".repeat(8)}`],
+      [`1 registered eleven twelve | plain ${"#".repeat(24)}`],
+      [`1 <!-- a --> <b>thirteen</b> - | plain ${"#".repeat(28)}`],
+      [`1 fourteen <i>x</i> | plain ${"#".repeat(17)}`],
+      [`1 // <!-- a --> fifteen &#45; | plain ${"#".repeat(27)}`],
+      [`2 <b>sixteen</b> | plain ${"#".repeat(14)}`],
+      [`2 <b>x</b> seventeen | plain ${"#".repeat(18)}`],
+      [`1 eighteen | plain ${"#".repeat(8)}`],
+      [`1 Note  nineteen --> | plain Note ${"#".repeat(13)} | html`],
+      [`1 Note  twenty ?> | plain Note ${"#".repeat(10)} | html`],
+      [`1 Note  twentyone ]]> | plain Note ${"#".repeat(14)} | html`],
+      ["1 Note twentytwo | html"],
+      [`1 twentythree | plain ${"#".repeat(11)}`],
+      [`1 a</textareax> b | plain ${"#".repeat(15)}`],
+      [`1 twentyfour | plain ${"#".repeat(10)}`, `1 twentyfive | plain ${"#".repeat(10)}`],
+      [`1 twentysix">y | plain ${"#".repeat(12)}`],
+      [`1 twentyseven | plain ${"#".repeat(11)}`],
+      [`1 twentyeight | plain ${"#".repeat(11)}`],
+    ],
+  },
+  {
+    pin: "MU",
+    kind: "md",
+    kinds: ["md", "md", "md", "md", "md", "md", "md", "md", "md", "ts"],
+    texts: [
+      `x${cp(0x115f)}y`,
+      `x${cp(0x1160)}y`,
+      `x${cp(0x3164)}y`,
+      `x${cp(0xffa0)}y`,
+      `a\n\nb${cp(0x0c)}c${cp(0x07)}d${cp(0x0c)}`,
+      `${cp(0x7f)} and ${cp(0x85)} and ${cp(0x1b)}`,
+      `${cp(0x2029)} and ${cp(0xfffc)}`,
+      "tab\there\r\nline two\n",
+      `zero${cp(0x200b)}width${cp(0xad)}soft${cp(0xfeff)}mark${cp(0x2060)}joiner${cp(0x2028)}line`,
+      `// x${cp(0x3164)}\n`,
+    ],
+    outcome: [
+      ["x.md:1 U+115F: unread-code-point"],
+      ["x.md:1 U+1160: unread-code-point"],
+      ["x.md:1 U+3164: unread-code-point"],
+      ["x.md:1 U+FFA0: unread-code-point"],
+      ["x.md:3 U+000C+U+0007: unread-code-point"],
+      ["x.md:1 U+007F+U+0085+U+001B: unread-code-point"],
+      ["x.md:1 U+2029+U+FFFC: unread-code-point"],
+      [],
+      [],
+      ["x.ts:1 U+3164: unread-code-point"],
+    ],
+  },
+  {
     pin: "R1",
     kind: "md",
     texts: [
       "HXSI-01 is a registered runtime law and the TI rows elsewhere are DESIGN ONLY.",
       `HXSI-01 is a registered runtime law${cp(0x3002)} The programs call the TI rows DESIGN ONLY.`,
       `HXSI-01 is a registered runtime law${cp(0xff0e)} The programs call the TI rows DESIGN ONLY.`,
+      "HXSI-01 is a registered runtime law  \nDESIGN ONLY.",
+      'He wrote "HXSI-01 is a registered runtime law." The TI rows are DESIGN ONLY.',
+      "(HXSI-01 is a registered runtime law.) The TI rows are DESIGN ONLY.",
     ],
-    outcome: [[], [], []],
+    outcome: [[], [], [], [], [], []],
   },
   { pin: "R2", kind: "md", texts: ["HXSI-01 is an interval law. It is registered.", "HXSI-01 (e.g. the interval law) is registered."], outcome: [[], []] },
   { pin: "R3", kind: "md", texts: ["HXSI-01 ships as a runtime law and hx plans with it.", "The hx.optim.spoke.exchange.v1 law is live."], outcome: [[], []] },
@@ -1825,6 +2101,21 @@ const CASES: readonly Case[] = [
   { pin: "R7", kind: "ts", texts: ["/**\n * - HXSI-01 is registered\n * - TI-24 is DESIGN ONLY\n */\n"], outcome: [[]] },
   { pin: "R10", kind: "md", texts: ["HXSI-01 is listed in docs/registered-laws.md.", "TI-23 sits in hx/verified.json:3."], outcome: [[], []] },
   { pin: "R9", kind: "fields", texts: ["readonly lawRecord: string;\nreadonly certificates_ref: readonly string[];\nreadonly law: string;\n"], outcome: [[]] },
+  {
+    pin: "R11",
+    kind: "md",
+    texts: [
+      "HXSI&#45;01 is a &notregistered; runtime law.",
+      "<div>HXSI&#45;01 is a regis&shytered runtime law.</div>",
+      "<div>HXSI&#45;01 is a regis&#116ered runtime law.</div>",
+      "<div>HXSI&#00000045;01 is a registered runtime law.</div>",
+      "HXSI&#45;01&NewLine;&NewLine;is a registered runtime law.",
+      '<abbr title="TI&#45;23 is a registered runtime law">x</abbr> DESIGN ONLY.',
+      "HXSI&#45;01 is a registered&#7;runtime law.",
+      "HXSI&#45;01 is a registered&#12644;runtime law.",
+    ],
+    outcome: [[], [], [], [], [], [], [], []],
+  },
 ];
 /** A rendered sentence as row M pins it: its line and text, then its plain text where a reader may not plainly see part of it, and "html" where
  * it holds an HTML token; each BLANK is written "#", and white space other than a space or a line break as its code point. */
@@ -1982,6 +2273,64 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
       redRead: red.map(() => true),
       controls: ["GA10 (plain claim, red) and GA11 (visible qualifier, quiet)", true, true],
       quoted: quoted.map(([id]) => [id, true]),
+    });
+    return { plants, anchors };
+  },
+  A8: async () => {
+    const tree = new Map([...wideRead().tree, ...namedTree()]);
+    const live = judge(tree);
+    const plants = REFUSAL3_PLANTS.map(([id, , path, text]) => {
+      const existing = tree.get(path);
+      const planted = new Map(tree);
+      planted.set(path, existing === undefined ? text : `${text}\n\n${existing}`);
+      const shift = existing === undefined ? 0 : newlines(text) + 2;
+      return { id, findings: added(judge(planted), live, file => (file === path ? shift : 0)).sort() };
+    });
+    expect(plants, "each of refusal #3's plants reads exactly its findings on the live tree").toStrictEqual(REFUSAL3_PLANTS.map(([id, , , , findings]) => ({ id, findings: [...findings].sort() })));
+    expect(new Set(REFUSAL3_PLANTS.map(([id]) => id)).size, "the plant ids are distinct").toBe(REFUSAL3_PLANTS.length);
+    // The outside anchor (refusal #3's own record in the tracked bead export): the survivors it grades, the probes it orders pinned red, its
+    // controls and the probe texts it quotes, each carried by a plant that reads it so - so a member removed from every literal here still reds.
+    const record = between(exportRow(BEAD).notes, "Refusal #3 of cut #3", "OWNER READING (2026-10-24");
+    const count = Number(between(record, "F1 MEDIUM LEADS: equals U1. ", " real-tree survivors"));
+    const graded = `${between(record, "real-tree survivors: 16 CONFIRMED (", ") and 2 PLAUSIBLE (")}, ${between(record, ") and 2 PLAUSIBLE (", ")")}`;
+    const survivors = (graded.match(/\b[A-Z]{2}\d+[a-z]*(?:-[A-Z]{2}\d+)?/g) ?? []).flatMap(token => {
+      const range = /^([A-Z]{2})(\d+)-\1(\d+)$/.exec(token);
+      if (range === null) return [token];
+      const [, family = "", from = "0", to = "0"] = range;
+      return Array.from({ length: Number(to) - Number(from) + 1 }, (_, index) => `${family}${Number(from) + index}`);
+    });
+    const order = record.indexOf(" as red controls with the ");
+    const red = record.slice(record.lastIndexOf("Pin ", order) + "Pin ".length, order).split(/, | and /);
+    const controls = between(record, " as red controls with the ", " controls").split("/");
+    const keep = [...between(record, " controls; keep ", " as controls.").matchAll(/(\w+) \((red|quiet)\)/g)].map(([, id = "", expected = ""]) => [id, expected] as const);
+    const leads: Readonly<Record<string, string>> = { HB5r: `HB5r, a new receipt ${RECEIPT_PLANT3} whose title line is followed by '`, HF6r: "HF6r, a new receipt with '", HF7ts: "HF7ts, '" };
+    const quoteOf = (id: string): string => between(record, leads[id] ?? `${id} '`, "'").replace(/<U\+([0-9A-F]{4,6})>/g, (_whole: string, hex: string) => cp(Number.parseInt(hex, 16)));
+    const findingsFor = (id: string): readonly string[] => plants.find(plant => plant.id === id)?.findings ?? [];
+    const textFor = (id: string): string => REFUSAL3_PLANTS.find(([at]) => at === id)?.[3] ?? "";
+    expect({ survivors, red, controls, keep }, "refusal #3's lists, as the census reads them from the bead export").toStrictEqual({
+      survivors: ["HB1", "HB2", "HB3", "HB4", "HB5r", "HB8", "TA1", "IC1", "PI1", "HF1", "HF2", "HF3", "HF4", "HF5", "HF6r", "HF7ts", "CD1", "HB7"],
+      red: ["HB1", "HB2", "HB3", "HB8", "TA1", "IC1", "PI1", "HF1"],
+      controls: ["HBC1", "HBC2"],
+      keep: [
+        ["HC2", "red"],
+        ["HC3", "quiet"],
+      ],
+    });
+    const anchors = {
+      survivors: survivors.length,
+      graded: survivors.map(id => [id, findingsFor(id).length > 0, textFor(id) !== "" && textFor(id).includes(quoteOf(id))]),
+      red: red.map(id => [id, survivors.includes(id) && findingsFor(id).length > 0]),
+      controls: controls.map(id => [id, findingsFor(id).length > 0]),
+      keep: keep.map(([id, expected]) => [id, expected, REFUSAL3_PLANTS.some(([at]) => at === id) && (findingsFor(id).length > 0) === (expected === "red")]),
+      adapter: record.includes(`' prepended to ${HX_ADAPTER}`),
+    };
+    expect(anchors, "refusal #3's members, read from the bead export, are each planted byte for byte and read").toStrictEqual({
+      survivors: count,
+      graded: survivors.map(id => [id, true, true]),
+      red: red.map(id => [id, true]),
+      controls: controls.map(id => [id, true]),
+      keep: keep.map(([id, expected]) => [id, expected, true]),
+      adapter: true,
     });
     return { plants, anchors };
   },
@@ -2259,7 +2608,7 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
 
 describe("wb-x0xu.2 HX design-status census (HX-STRUCTURAL-INFORMATION-OPTIMIZATION-R2, posture)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:7", "B:5", "C:3", "F:1", "M:14", "R:10"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:8", "B:5", "C:3", "F:1", "M:16", "R:11"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect(ROSTER.bead).toBe(BEAD);

@@ -789,8 +789,23 @@
     "track",
     "ul"
    ],
-   "htmlMarkup": "<!--[\\s\\S]*?(?:-->|$)|<\\/?([A-Za-z][A-Za-z0-9-]*)(?:\\s[^>]*)?\\/?>",
+   "htmlMarkup": "<!--(?:-?>|[\\s\\S]*?(?:--!?>|$))|<[!?][^>]*(?:>|$)|<\\/(?:>|[^A-Za-z>][^>]*(?:>|$))|<(\\/?)([A-Za-z][^\\t\\n\\f\\r />]*)",
+   "rcdata": [
+    "textarea",
+    "title"
+   ],
+   "rawText": [
+    "script",
+    "style",
+    "xmp",
+    "iframe",
+    "noembed",
+    "noframes",
+    "noscript",
+    "plaintext"
+   ],
    "unseen": "[\\p{Default_Ignorable_Code_Point}\\p{Cc}]",
+   "unread": "[\\u{115f}\\u{1160}\\u{3164}\\u{ffa0}\\u{2029}\\u{fffc}]|[^\\P{Cc}\\t\\n\\r]",
    "bidi": "\\p{Bidi_Control}"
   }
  },
@@ -1313,6 +1328,306 @@
          true
         ]
        ]
+      }
+     }
+    },
+    {
+     "id": "A8",
+     "witness": {
+      "plants": [
+       {
+        "id": "HB1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "HB2",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "HB3",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "HB4",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "HB5r",
+        "findings": [
+         "docs/workbench/receipts/wb-gate19-plant.md:3 TI: rendered-unqualified-verified"
+        ]
+       },
+       {
+        "id": "HB7",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "HB8",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "TA1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "IC1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "PI1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "CD1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "HF1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 U+3164: unread-code-point"
+        ]
+       },
+       {
+        "id": "HF2",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 U+3164: unread-code-point"
+        ]
+       },
+       {
+        "id": "HF3",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 U+FFA0: unread-code-point"
+        ]
+       },
+       {
+        "id": "HF4",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 U+115F: unread-code-point"
+        ]
+       },
+       {
+        "id": "HF5",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 U+1160: unread-code-point"
+        ]
+       },
+       {
+        "id": "HF6r",
+        "findings": [
+         "docs/workbench/receipts/wb-gate19-plant.md:3 U+3164: unread-code-point"
+        ]
+       },
+       {
+        "id": "HF7ts",
+        "findings": [
+         "src/workbench/providers/hyperunix.ts:1 U+3164: unread-code-point"
+        ]
+       },
+       {
+        "id": "HBC1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "HBC2",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: html-unqualified-registered",
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered",
+         "docs/workbench/07-native-integrations.md:1 HXSI: unqualified-registered"
+        ]
+       },
+       {
+        "id": "HC2",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered",
+         "docs/workbench/07-native-integrations.md:1 HXSI: unqualified-registered"
+        ]
+       },
+       {
+        "id": "HC3",
+        "findings": []
+       },
+       {
+        "id": "HO1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered",
+         "docs/workbench/07-native-integrations.md:1 HXSI: unqualified-registered",
+         "docs/workbench/07-native-integrations.md:1 U+3164: unread-code-point"
+        ]
+       }
+      ],
+      "anchors": {
+       "survivors": 18,
+       "graded": [
+        [
+         "HB1",
+         true,
+         true
+        ],
+        [
+         "HB2",
+         true,
+         true
+        ],
+        [
+         "HB3",
+         true,
+         true
+        ],
+        [
+         "HB4",
+         true,
+         true
+        ],
+        [
+         "HB5r",
+         true,
+         true
+        ],
+        [
+         "HB8",
+         true,
+         true
+        ],
+        [
+         "TA1",
+         true,
+         true
+        ],
+        [
+         "IC1",
+         true,
+         true
+        ],
+        [
+         "PI1",
+         true,
+         true
+        ],
+        [
+         "HF1",
+         true,
+         true
+        ],
+        [
+         "HF2",
+         true,
+         true
+        ],
+        [
+         "HF3",
+         true,
+         true
+        ],
+        [
+         "HF4",
+         true,
+         true
+        ],
+        [
+         "HF5",
+         true,
+         true
+        ],
+        [
+         "HF6r",
+         true,
+         true
+        ],
+        [
+         "HF7ts",
+         true,
+         true
+        ],
+        [
+         "CD1",
+         true,
+         true
+        ],
+        [
+         "HB7",
+         true,
+         true
+        ]
+       ],
+       "red": [
+        [
+         "HB1",
+         true
+        ],
+        [
+         "HB2",
+         true
+        ],
+        [
+         "HB3",
+         true
+        ],
+        [
+         "HB8",
+         true
+        ],
+        [
+         "TA1",
+         true
+        ],
+        [
+         "IC1",
+         true
+        ],
+        [
+         "PI1",
+         true
+        ],
+        [
+         "HF1",
+         true
+        ]
+       ],
+       "controls": [
+        [
+         "HBC1",
+         true
+        ],
+        [
+         "HBC2",
+         true
+        ]
+       ],
+       "keep": [
+        [
+         "HC2",
+         "red",
+         true
+        ],
+        [
+         "HC3",
+         "quiet",
+         true
+        ]
+       ],
+       "adapter": true
       }
      }
     }
@@ -2839,7 +3154,7 @@
   },
   {
    "id": "M",
-   "label": "the sentence cutter, the name, claim and qualifier matchers, the finding format, the name mask and the rendered reading judge their pinned inputs in order",
+   "label": "the sentence cutter, the name, claim and qualifier matchers, the finding format, the name mask, the rendered reading, its HTML markup forms and the unread code points judge their pinned inputs in order",
    "pins": [
     {
      "id": "MS1",
@@ -3302,18 +3617,152 @@
        []
       ]
      }
+    },
+    {
+     "id": "MR4",
+     "witness": {
+      "kind": "rendered",
+      "outcome": [
+       [
+        "1 one HXSI-01 two. | plain ################"
+       ],
+       [
+        "1 two | plain ###"
+       ],
+       [
+        "1 three | plain #####"
+       ],
+       [],
+       [
+        "1 five | plain ####"
+       ],
+       [
+        "1 six ?> | plain ######"
+       ],
+       [
+        "1 seven | plain #####"
+       ],
+       [
+        "1 eight ]]> | plain #########"
+       ],
+       [
+        "1 nine ten | plain ########"
+       ],
+       [
+        "1 registered eleven twelve | plain ########################"
+       ],
+       [
+        "1 <!-- a --> <b>thirteen</b> - | plain ############################"
+       ],
+       [
+        "1 fourteen <i>x</i> | plain #################"
+       ],
+       [
+        "1 // <!-- a --> fifteen &#45; | plain ###########################"
+       ],
+       [
+        "2 <b>sixteen</b> | plain ##############"
+       ],
+       [
+        "2 <b>x</b> seventeen | plain ##################"
+       ],
+       [
+        "1 eighteen | plain ########"
+       ],
+       [
+        "1 Note  nineteen --> | plain Note ############# | html"
+       ],
+       [
+        "1 Note  twenty ?> | plain Note ########## | html"
+       ],
+       [
+        "1 Note  twentyone ]]> | plain Note ############## | html"
+       ],
+       [
+        "1 Note twentytwo | html"
+       ],
+       [
+        "1 twentythree | plain ###########"
+       ],
+       [
+        "1 a</textareax> b | plain ###############"
+       ],
+       [
+        "1 twentyfour | plain ##########",
+        "1 twentyfive | plain ##########"
+       ],
+       [
+        "1 twentysix\">y | plain ############"
+       ],
+       [
+        "1 twentyseven | plain ###########"
+       ],
+       [
+        "1 twentyeight | plain ###########"
+       ]
+      ]
+     }
+    },
+    {
+     "id": "MU",
+     "witness": {
+      "kind": "md",
+      "kinds": [
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "ts"
+      ],
+      "outcome": [
+       [
+        "x.md:1 U+115F: unread-code-point"
+       ],
+       [
+        "x.md:1 U+1160: unread-code-point"
+       ],
+       [
+        "x.md:1 U+3164: unread-code-point"
+       ],
+       [
+        "x.md:1 U+FFA0: unread-code-point"
+       ],
+       [
+        "x.md:3 U+000C+U+0007: unread-code-point"
+       ],
+       [
+        "x.md:1 U+007F+U+0085+U+001B: unread-code-point"
+       ],
+       [
+        "x.md:1 U+2029+U+FFFC: unread-code-point"
+       ],
+       [],
+       [],
+       [
+        "x.ts:1 U+3164: unread-code-point"
+       ]
+      ]
+     }
     }
    ]
   },
   {
    "id": "R",
-   "label": "the named residuals R1-R10 stay pinned quiet",
+   "label": "the named residuals R1-R11 stay pinned quiet",
    "pins": [
     {
      "id": "R1",
      "witness": {
       "kind": "md",
       "outcome": [
+       [],
+       [],
+       [],
        [],
        [],
        []
@@ -3441,6 +3890,22 @@
      "witness": {
       "kind": "md",
       "outcome": [
+       [],
+       []
+      ]
+     }
+    },
+    {
+     "id": "R11",
+     "witness": {
+      "kind": "md",
+      "outcome": [
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
        [],
        []
       ]
