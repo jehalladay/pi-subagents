@@ -1,0 +1,421 @@
+{
+  "bead": "wb-fb2z.2",
+  "citation": "docs/programs/component-assembly-2026-10-18/RFCLI-INTEROP.md:25@76bbbffd9d4a",
+  "producer": {
+    "pin": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+    "packageVersion": "0.1.668",
+    "gate": "ABSENT",
+    "adrCount": 80,
+    "latestAdr": "0082-incremental-performance-program-positions.md",
+    "fieldCensusPath": "tests/audit/interop-field-census.test.ts",
+    "fieldCensusExists": false,
+    "excerpts": [
+      {
+        "site": "docs/programs/component-assembly-2026-10-18/RFCLI-INTEROP.md:12@76bbbffd9d4a",
+        "sha256": "bd674dfa56b465b2e49420f00c6d5845324d80064fd0595f655830ae9a4a2141",
+        "textBase64": "LSBpbnB1dCBzbmFwc2hvdHMgaW5jbHVkaW5nIHN0YXR1cywgZXhwbGljaXQgbnVsbCB2cyBhYnNlbmNlLCBwcm92ZW5hbmNlLCBzZW5zaXRpdml0eSBhbmQgc291cmNlIHJldmlzaW9uOw=="
+      },
+      {
+        "site": "docs/programs/component-assembly-2026-10-18/RFCLI-INTEROP.md:14@76bbbffd9d4a",
+        "sha256": "4bc55a25c35c54723b174af4b81acc2473243489422be4ac8cc9e324d2f5b688",
+        "textBase64": "LSBvcHRpb25hbCAqKmRlY2xhcmVkKiogb3V0cHV0IHB1YmxpY2F0aW9ucyBjYXJyeWluZyBkYXRhIHNjaGVtYXMgYW5kIHZhbHVlL2Vycm9yIHRhZ2dlZCBvYnNlcnZhdGlvbnMsIG5vdCBpbXBsaWNpdGx5IGRlcml2ZWQgZnJvbSBibG9jayB0ZXh0Ow=="
+      },
+      {
+        "site": "docs/programs/component-assembly-2026-10-18/RFCLI-INTEROP.md:15@76bbbffd9d4a",
+        "sha256": "96dba59ce675c570e473626c42df546a9c70ba42a3ac95b2b1a28a1dd28239cc",
+        "textBase64": "LSByZWFkIGRlcGVuZGVuY3kvZWZmZWN0L3N0YXRlLWNoYW5nZSByZWNlaXB0LCBpbmNsdWRpbmcgY29tcGxldGVuZXNzL3Vua25vd24gc3RhdHVzLg=="
+      },
+      {
+        "site": "docs/programs/component-assembly-2026-10-18/RFCLI-INTEROP.md:17@76bbbffd9d4a",
+        "sha256": "2ad232cbaf5c4fe81c5185236f10d5a84ade3b674c64c327155e1468206aac1c",
+        "textBase64": "VGhlIFRTWCBTREsgb3ducyBUU1ggcmVuZGVyZXIgY29uc3RydWN0aW9uLCBzZXJpYWxpemF0aW9uIGFuZCB0aGUgSlMvVFMgY29tcG9uZW50IGF1dGhvcmluZyBzdXJmYWNlLiBGaWJlck9wdGljc1NESyBvd25zIHR5cGVkIGRhdGEgcHVibGljYXRpb24vc2NoZWR1bGluZy4gUmVhY3RpdmVDb21wb25lbnRzU0RLIG93bnMgYmxvY2svbmVjZXNzaXR5IGFuZCBuZXN0ZWQgcmVuZGVyIHNlbWFudGljcy4gUkZDTEkgb3ducyBkdXJhYmxlIHZlcnNpb25lZCB3b3Jrc3BhY2VzLCB0cnVzdC9wb2xpY3ksIHNvdXJjZSBhZG1pc3Npb24sIGNvbnRleHQgYXNzZW1ibHkgYW5kIHJlY2VpcHRzLiBUaGUgUHl0aG9uIGhvc3QgYnJpZGdlIG1hcHMgdGhlIFRTWCByZWNvcmQgdG8gdGhlIFNESy1vd25lZCBzZW1hbnRpY3Mgd2l0aG91dCBncmFudGluZyBhbiBleHRyYSBhdXRob3JpdHku"
+      },
+      {
+        "site": "docs/programs/component-assembly-2026-10-18/RFCLI-INTEROP.md:25@76bbbffd9d4a",
+        "sha256": "13e7d6ea3f54e217a0b534acaa7492e1992cdc94b3fedfcae7f75f94d8b3ebca",
+        "textBase64": "QSBwcm9wb3NlZCBtaW5pbWFsIHZlcnRpY2FsIGN1dCBpczogZGVjbGFyZWQgVFNYIHByb2R1Y2VyIHB1Ymxpc2hlcyBzY2hlbWEtdHlwZWQgYG92ZXJ2aWV3YDsgZGVjbGFyYXRpdmUvUHl0aG9uIGRvd25zdHJlYW0gY29uc3VtZXIgcmVjZWl2ZXMgYGNvbXBvbmVudDpwcm9kdWNlci5vdmVydmlld2AgdmlhIGEgdmFsdWUgZWRnZTsgZmlsZSBpbnB1dCBjaGFuZ2UgcmVwdWJsaXNoZWQgb25seSB0aGlzIG91dHB1dCwgaW52YWxpZGF0ZWQgdGhlIGRlcGVuZGVudCBhbmQgbGVmdCBpbmRlcGVuZGVudCBjb21wb25lbnRzIHJldXNlZC4gVGhlIFNESyBhbmQgUkZDTEkgYWRhcHRlcnMgbXVzdCBwcmVzZXJ2ZSB2YWx1ZSwgcHJvZHVjZXIgZGlnZXN0LCBzb3VyY2UgcHJvdmVuYW5jZSwgZXJyb3IgYW5kIHNlbnNpdGl2aXR5LiBTQ0ctQTQncyBjdXJyZW50IGdhdGUgcmVtYWlucyBpbiBwbGFjZSB1bnRpbCBhbiBpbnN0YWxsZWQgam91cm5leSwgY3Jvc3MtU0RLIGNvbXBhdGliaWxpdHkgYW5kIGZhaWx1cmUgbWF0cml4IHBhc3Mu"
+      },
+      {
+        "site": "docs/programs/component-first-context-assembly-2026-10-18/README.md:16@76bbbffd9d4a",
+        "sha256": "ff8e837f66bdb0454b72341208cbf79996bad6b301c621d5d6051836ea6640f5",
+        "textBase64": "VGhlIGRhdGEtb3V0cHV0IHBhdGggaXMgc2VwYXJhdGUgZnJvbSB0aGUgVFNYIGVsZW1lbnQgdHJlZS4gQSBjb21wb25lbnQgbWF5IGNyZWF0ZSBtdWx0aXBsZSByZW5kZXJlZCBibG9ja3MgYnV0IHB1Ymxpc2ggb25lIHR5cGVkIEpTT04gb2JqZWN0IHRvIGEgZGVjbGFyZWQgb3V0cHV0LiBUaGUgY29uc3VtZXIgcmVjZWl2ZXMgdGhlIHB1Ymxpc2hlZCB2YWx1ZSBhbmQgcHVibGljYXRpb24gcmVjZWlwdCwgbm90IHRoZSByYXcgdXBzdHJlYW0gaW5wdXQgYW5kIG5vdCBhbiBhcmJpdHJhcnkgdGV4dCByZW5kZXJpbmcgb2YgdGhlIHByb2R1Y2VyLg=="
+      },
+      {
+        "site": "docs/programs/component-assembly-2026-10-18/BEADS-2026-10-21.md:31@76bbbffd9d4a",
+        "sha256": "9c2fdf61d5cf75c3116cbde1a08e40bf7bbf9ac8de20672698f31af5893bb2bf",
+        "textBase64": "fCByZnRzeC1wZ29iMCB8IFRTWC1JTy1BRFIgfCBbSU5URVJPUF0gQURSOiBUU1ggZGVjbGFyZWQgZGF0YS1vdXRwdXQgc3VyZmFjZSwgc2NoZW1hIGJpbmRpbmcsIHdpcmUgc2hhcGUsIG93bmVyIHNwbGl0IChGaWJlciwgUkZDTEkpIHwgUDIgfCA5MCB8IFJVTC1SMDEsIHJmdHN4LWtveTljLjE5IHwgQURSIGZpbGUgZG9jcy9hZHIvTk5OTi10c3gtZGVjbGFyZWQtZGF0YS1vdXRwdXQubWQgKE5OTk4gPSBuZXh0IGZyZWUgbnVtYmVyIGF0IGNyZWF0aW9uOyAwMDgyLWluY3JlbWVudGFsLXBlcmZvcm1hbmNlLXByb2dyYW0tcG9zaXRpb25zLm1kIGlzIHRoZSBsYXRlc3Qgb2YgODAgYXQgZGI3NTU4NTUyOyBncmFtbWFyIG93bmVyIHRlc3RzL2ZpeHR1cmVzL2Fkci1maWxlLWdyYW1tYS4uLiB8IEVBVC1SMDc0LCBFQVQtUjA3NSwgRUFULVIwNzYsIEVBVC1SMDk2IHwgcHJvZ3JhbTpjb21wb25lbnQtYXNzZW1ibHktMjAyNi0xMC0xOCwgcHJvZ3JhbTpjb21wb25lbnQtZmlyc3QtY29udGV4dC1hc3NlbWJseS0yMDI2LTEwLTE4LCB3cDpUU1gtSU8tQURSLCB0cmlhZ2U6MjAyNi0xMC0yMSwga2luZDphZHIsIGNyb3NzLXJlcG86cmZjbGksIGZhbWlseTpJTlRFUk9QIHw="
+      },
+      {
+        "site": "docs/programs/component-assembly-2026-10-18/BEADS-2026-10-21.md:38@76bbbffd9d4a",
+        "sha256": "02ce2404a85d20ae82ee67236dd20709852683f3e6689f63c44545f90e712a77",
+        "textBase64": "fCByZnRzeC1kNDZjeiB8IFRTWC1JTy0wMSB8IFtJTlRFUk9QXSBGaWVsZCBjZW5zdXMgbWFwcyBlYWNoIGludGVyb3AgcmVjb3JkIGZpZWxkIHRvIHRoZSBob3N0LWV2YWx1YXRpb24gd2lyZSBzY2hlbWEgb3IgbWFya3MgaXQgYWJzZW50IHwgUDEgfCA5MCB8IFRTWC1JTy1BRFIsIHJmdHN4LWtveTljLjIyIHwgdGVzdHMvYXVkaXQvaW50ZXJvcC1maWVsZC1jZW5zdXMudGVzdC50cyBncmVlbiAodml0ZXN0IGF1ZGl0IHByb2plY3QsIGZvcmdlIHN0ZXAgYXVkaXRfdGVzdCk6ID49IDYgZ3JvdXBzLCA+PSAyMCByb3dzLCBldmVyeSBwcmVzZW50IHJvdyByZXNvbHZlcyB0byBhIEpTT04gcG9pbnRlciBpbiBkb2NzL3Byb3RvY29sL3NjaGVtYXMgKDQ0IGZpbGVzIGF0IGRiNzU1ODU1Mikgb3IgZC4uLiB8IEVBVC1SMDY4LCBFQVQtUjA2OSwgRUFULVIwNzAgfCBwcm9ncmFtOmNvbXBvbmVudC1hc3NlbWJseS0yMDI2LTEwLTE4LCBwcm9ncmFtOmNvbXBvbmVudC1maXJzdC1jb250ZXh0LWFzc2VtYmx5LTIwMjYtMTAtMTgsIHdwOlRTWC1JTy0wMSwgdHJpYWdlOjIwMjYtMTAtMjEsIGtpbmQ6YXVkaXQsIGZhbWlseTpJTlRFUk9QIHw="
+      },
+      {
+        "site": "docs/programs/component-assembly-2026-10-18/BEADS-2026-10-21.md:67@76bbbffd9d4a",
+        "sha256": "d63e7425b3689e8ac2345c08262b7b9d4de33271b1ca1952208479adbb557dec",
+        "textBase64": "IyMgR2F0ZWQgd29yayBwYWNrYWdlcyAoMTsgbm90IGNyZWF0ZWQsIHBlciBSLTA4KQ=="
+      },
+      {
+        "site": "docs/programs/component-assembly-2026-10-18/BEADS-2026-10-21.md:69@76bbbffd9d4a",
+        "sha256": "fe397b2590ba6a3f2f9de3e91b5cc1b056c4d723fb758d895ad39abf6b8508d4",
+        "textBase64": "QSBnYXRlZCBwYWNrZXQgaXMgY3JlYXRlZCB1bmRlciB0aGUgZXBpYywgd2l0aCBgcmVsYXRlZGAgZWRnZXMgb25seSwgd2hlbiBpdHMgZ2F0ZSBiZWFkIHJlY29yZHMgdGhlIHZlcmRpY3QgQURPUFQgKGAtLWFwcGVuZC1ub3Rlc2ApOyBERUZFUiBvciBSRUpFQ1QgYXJjaGl2ZXMgdGhlIHBhY2tldCBpbiB0aGUgY29tcGlsZSBsZWRnZXIu"
+      },
+      {
+        "site": "docs/programs/component-assembly-2026-10-18/BEADS-2026-10-21.md:73@76bbbffd9d4a",
+        "sha256": "419d52f0c0e58dc0e23e6b628f4cb21fda28a8e97bda7ba5410959a57c784235",
+        "textBase64": "fCBUU1gtSU8tMDNiIHwgW0lOVEVST1BdIEEgVFNYIHByb2R1Y2VyIGRlY2xhcmVzIG9uZSB0eXBlZCBkYXRhIG91dHB1dCBhbmQgdGhlIHJlc3VsdCBjYXJyaWVzIGl0cyB0YWdnZWQgcHVibGljYXRpb24gfCBmZWF0dXJlIHwgUDMgfCAxODAgfCBUU1gtSU8tQURSIChyZnRzeC1wZ29iMCkgfCBwcm9ncmFtLWludGVybmFsIChkcDAwNCBUMzogb25seSBhZnRlciBjb25maXJtaW5nIHRoZSBicmlkZ2UncyB0eXBlZC1vdXRwdXQgaW50ZXJmYWNlKSB8"
+      }
+    ]
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) absence pin: Pi has no interop-record reader or publication consumer at the pinned version (wb-pyel.1); absent stays absent (wb-2j3.2)",
+      "pins": [
+        {
+          "id": "A1",
+          "quote": "absence pin: Pi has no interop-record reader or publication consumer at the pinned version (wb-pyel.1)",
+          "witness": {
+            "floorMet": true,
+            "pathsAgree": true,
+            "findings": [],
+            "controlHits": [
+              [
+                "publication"
+              ],
+              [
+                "interop"
+              ],
+              [
+                "dataoutput",
+                "declareddataoutput"
+              ],
+              [
+                "valueedge"
+              ],
+              [
+                "interop",
+                "rftsx"
+              ]
+            ],
+            "quiet": [
+              [],
+              []
+            ]
+          }
+        },
+        {
+          "id": "A2",
+          "quote": "absent stays absent (wb-2j3.2)",
+          "witness": {
+            "roster": [
+              "reactivefiber.render.preview"
+            ],
+            "readOnly": true,
+            "names": [
+              "native",
+              "injected",
+              "curated-MCP",
+              "shared-JSON",
+              "shared-JSON-text"
+            ],
+            "absent": [
+              [
+                false,
+                false,
+                false,
+                false
+              ],
+              [
+                false,
+                false,
+                false,
+                false
+              ],
+              [
+                false,
+                false,
+                false,
+                false
+              ],
+              [
+                false,
+                false,
+                false,
+                false
+              ],
+              [
+                false,
+                false,
+                false,
+                false
+              ]
+            ],
+            "synthesizedRelease": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) armed: {field: null} and {} project distinct states, completeness/unknown echoes as a status word never success, a mutant filling an absent field fails",
+      "pins": [
+        {
+          "id": "B1",
+          "quote": "armed: {field: null} and {} project distinct states",
+          "witness": {
+            "states": [
+              [
+                {
+                  "present": false,
+                  "serialized": "{}"
+                },
+                {
+                  "present": false,
+                  "serialized": "{}"
+                },
+                {
+                  "present": false,
+                  "serialized": "{}"
+                },
+                {
+                  "present": false,
+                  "serialized": "{}"
+                },
+                {
+                  "present": false,
+                  "serialized": "{}"
+                }
+              ],
+              [
+                {
+                  "present": true,
+                  "serialized": "{\"field\":null}"
+                },
+                {
+                  "present": true,
+                  "serialized": "{\"field\":null}"
+                },
+                {
+                  "present": true,
+                  "serialized": "{\"field\":null}"
+                },
+                {
+                  "present": true,
+                  "serialized": "{\"field\":null}"
+                },
+                {
+                  "present": true,
+                  "serialized": "{\"field\":null}"
+                }
+              ]
+            ],
+            "opaqueProjectionEqual": true
+          }
+        },
+        {
+          "id": "B2",
+          "quote": "completeness/unknown echoes as a status word never success",
+          "witness": {
+            "words": [
+              "UNKNOWN",
+              "PENDING",
+              "FAILED"
+            ],
+            "carriedWords": [
+              [
+                "UNKNOWN",
+                "UNKNOWN",
+                "UNKNOWN",
+                "UNKNOWN",
+                "UNKNOWN"
+              ],
+              [
+                "PENDING",
+                "PENDING",
+                "PENDING",
+                "PENDING",
+                "PENDING"
+              ],
+              [
+                "FAILED",
+                "FAILED",
+                "FAILED",
+                "FAILED",
+                "FAILED"
+              ]
+            ],
+            "observationWords": [
+              {
+                "word": "UNKNOWN",
+                "coverage": "partial",
+                "tone": "unknown",
+                "note": "observations: 1 row, 1 not observed (unknown): partial"
+              },
+              {
+                "word": "PENDING",
+                "coverage": "partial",
+                "tone": "unknown",
+                "note": "observations: 1 row, 1 not observed (pending): partial"
+              },
+              {
+                "word": "FAILED",
+                "coverage": "partial",
+                "tone": "unknown",
+                "note": "observations: 1 row, 1 not observed (failed): partial"
+              }
+            ],
+            "opaqueProjectionEqual": true
+          }
+        },
+        {
+          "id": "B3",
+          "quote": "a mutant filling an absent field fails",
+          "witness": {
+            "carrierDifferences": [],
+            "mutants": [
+              [
+                "$.result.interop_record.value: filled"
+              ],
+              [
+                "$.result.interop_record.producer_digest: filled"
+              ],
+              [
+                "$.result.interop_record.source_provenance: filled"
+              ],
+              [
+                "$.result.interop_record.error: filled"
+              ],
+              [
+                "$.result.interop_record.sensitivity: filled"
+              ],
+              [
+                "$.result.interop_record.completeness: filled"
+              ]
+            ],
+            "dropped": [
+              "$.result.interop_record.field: dropped"
+            ],
+            "changed": [
+              "$.result.interop_record.field: changed"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) armed: a publication {value, producer digest, source provenance, error, sensitivity} round-trips byte-identical, an error never becomes a value, blocks-only input yields no value, a value without receipt is refused",
+      "pins": [
+        {
+          "id": "C1",
+          "quote": "armed: a publication {value, producer digest, source provenance, error, sensitivity} round-trips byte-identical",
+          "witness": {
+            "fields": [
+              "value",
+              "producer_digest",
+              "source_provenance",
+              "error",
+              "sensitivity"
+            ],
+            "names": [
+              "native",
+              "injected",
+              "curated-MCP",
+              "shared-JSON",
+              "shared-JSON-text"
+            ],
+            "byteIdentical": [
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "opaqueProjectionEqual": true
+          }
+        },
+        {
+          "id": "C2",
+          "quote": "an error never becomes a value",
+          "witness": {
+            "noValues": [
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "opaqueProjectionEqual": true,
+            "evidenceEqual": true,
+            "errorTextSurfaced": false
+          }
+        },
+        {
+          "id": "C3",
+          "quote": "blocks-only input yields no value",
+          "witness": {
+            "publicationAbsent": [
+              true,
+              true,
+              true,
+              true,
+              true
+            ],
+            "blockTextSurfaced": false,
+            "nativeEvidenceHasValue": false,
+            "blocksAreOpaque": true
+          }
+        },
+        {
+          "id": "C4",
+          "quote": "a value without receipt is refused",
+          "witness": {
+            "standalone": {
+              "nativeCategory": "transport",
+              "adapterCategory": "validation",
+              "isError": true,
+              "kind": "rejected",
+              "valueAbsent": true
+            },
+            "additiveOpaque": true
+          }
+        }
+      ]
+    }
+  ],
+  "residuals": [
+    {
+      "id": "R-OPAQUE",
+      "quietPin": "C4",
+      "family": "An additive, constructed publication with no receipt rides the render carrier verbatim but is not consumed; the future reader is gated."
+    },
+    {
+      "id": "R-COMPUTED",
+      "quietPin": "A1",
+      "family": "A name composed from runtime inputs rather than constant literals escapes the vocabulary scan."
+    },
+    {
+      "id": "R-PARAPHRASE",
+      "quietPin": "A1",
+      "family": "A novel value-reader name outside the pinned vocabulary escapes the scan."
+    },
+    {
+      "id": "R-STATUS-PROJECTION",
+      "quietPin": "B2",
+      "family": "Constructed completeness on an additive result key is opaque; the topology is invariant and never interprets it as publication success."
+    }
+  ],
+  "vocabulary": [
+    "interop",
+    "publication",
+    "declaredoutput",
+    "declareddataoutput",
+    "dataoutput",
+    "outputport",
+    "valueedge",
+    "rftsx",
+    "graphv2",
+    "componentproduceroverview"
+  ]
+}

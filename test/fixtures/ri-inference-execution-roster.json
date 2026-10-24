@@ -1,0 +1,491 @@
+{
+ "bead": "wb-tz4r.7",
+ "riPin": "485f3615db1e",
+ "riProbe": "9454d8ce1504",
+ "rcPin": "640a3b579a95",
+ "rfVersion": "0.1.836",
+ "actionTextSha256": "12bcfce06c3ff735a7db76bd5b3d915d626acf8415ff395faaffaac5beeb6508",
+ "readers": [
+  "src/workbench/providers/reactivefiber.ts",
+  "src/workbench/reactivefiber-observer.ts",
+  "src/workbench/native-evidence.ts"
+ ],
+ "authorityCalls": [
+  "decideControl",
+  "isCoreMintedDecision",
+  "acknowledge",
+  "settle",
+  "decideExecute",
+  "decideReconcile",
+  "mintEvidenceReceipt",
+  "executeClaudeControl",
+  "executeFurnaceControl",
+  "executeForgeControl",
+  "executeDetachedControl",
+  "settleClaudeInterrupt",
+  "settleForgeControl",
+  "createCuratedTools",
+  "createWorkflowControlTool",
+  "createWorkflowExecuteTool",
+  "createWorkflowReconcileTool",
+  "createRetainedForgeControlExecutor",
+  "createClaudeWorkflowHost",
+  "runWorkflow"
+ ],
+ "authorityMembers": [
+  "invoke",
+  "inspect",
+  "requestControl",
+  "callTool",
+  "callNode"
+ ],
+ "sinks": [
+  {
+   "id": "census.sink.write",
+   "effectClass": "write",
+   "permission": "census:sink-write"
+  },
+  {
+   "id": "census.sink.external",
+   "effectClass": "external",
+   "permission": "census:sink-external"
+  },
+  {
+   "id": "census.sink.unknown",
+   "effectClass": "unknown",
+   "permission": "census:sink-unknown"
+  }
+ ],
+ "verbs": [
+  "stop",
+  "interrupt",
+  "cancel",
+  "shutdown",
+  "kill",
+  "delete"
+ ],
+ "toolNames": [
+  "capability_discover",
+  "capability_contract",
+  "capability_invoke",
+  "workflow_control"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) hermetic census: no Pi effect/action execution path takes an inference result (reactivefiber.render.preview output or any inference output) as its trigger or authorization (mirrors wb-021.5)",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "closure": [
+       "src/workbench/capability-registry.ts",
+       "src/workbench/native-evidence.ts",
+       "src/workbench/process-env.ts",
+       "src/workbench/providers/reactivefiber.ts",
+       "src/workbench/reactivefiber-observer.ts",
+       "src/workbench/redaction.ts"
+      ],
+      "packages": [
+       "node:child_process",
+       "node:crypto",
+       "typebox/value"
+      ],
+      "imported": [
+       "node:child_process:spawn",
+       "node:crypto:createHash",
+       "src/workbench/capability-registry.ts:CapabilityError",
+       "src/workbench/native-evidence.ts:reportedRelease",
+       "src/workbench/process-env.ts:RF_CHILD_ENV_ALLOWLIST",
+       "src/workbench/process-env.ts:scrubbedEnvironment",
+       "src/workbench/providers/reactivefiber.ts:REACTIVEFIBER_RENDER_PREVIEW_CONTRACT",
+       "src/workbench/providers/reactivefiber.ts:REACTIVE_FIBER_CLI_SCHEMA",
+       "src/workbench/redaction.ts:redactWorkbenchText",
+       "src/workbench/redaction.ts:sanitizeWorkbenchText",
+       "src/workbench/redaction.ts:stripUnsafeText",
+       "typebox/value:Check"
+      ],
+      "elsewhere": {
+       "src/workbench/capability-registry.ts": [
+        ".invoke"
+       ]
+      },
+      "ui": [
+       "src/ui/workflow-inspector.ts",
+       "src/ui/workflow-menu.ts"
+      ],
+      "consumers": [],
+      "anchored": [
+       "src/workbench/hosts/local-detached.ts",
+       "src/workbench/native-evidence.ts",
+       "src/workbench/providers/reactivefiber.ts",
+       "src/workflow/reconcile.ts"
+      ],
+      "controls": {
+       "direct": 1,
+       "alias": 1,
+       "member": 1,
+       "composed": 0,
+       "propertyName": 0,
+       "consumerLeaf": 1,
+       "consumerCli": 1,
+       "consumerProse": 0,
+       "exported": 1,
+       "local": 0
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "producers": [
+       "furnace",
+       "claude-agent-sdk",
+       "forge",
+       "local-detached"
+      ],
+      "executors": [
+       "claude-agent-sdk",
+       "furnace",
+       "local-detached",
+       "forge"
+      ],
+      "preview": {
+       "provider": "reactivefiber",
+       "type": "context-preview"
+      },
+      "verdicts": [
+       "stop: unknown-action",
+       "interrupt: unknown-action",
+       "cancel: unknown-action",
+       "shutdown: unknown-action",
+       "kill: unknown-action",
+       "delete: unknown-action"
+      ]
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "relationKinds": [
+       "grouping"
+      ],
+      "relationProvenance": [
+       {
+        "source": "reactivefiber",
+        "observedAt": "2026-10-23T12:00:00Z"
+       }
+      ],
+      "fromRun": true,
+      "withoutOwnership": "no-confirmed-ownership",
+      "withOwnership": "permitted",
+      "withOwnershipAndPreview": "permitted",
+      "sameReceipt": true
+     }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "descriptors": {
+       "injected": {
+        "effectClass": "read",
+        "permissions": [
+         "reactivefiber:render"
+        ],
+        "supportedModes": [
+         "invoke"
+        ]
+       },
+       "native": {
+        "effectClass": "read",
+        "permissions": [
+         "reactivefiber:render"
+        ],
+        "supportedModes": [
+         "invoke"
+        ]
+       }
+      },
+      "refusals": {
+       "census.sink.write": [
+        "authorization",
+        "authorization",
+        "authorization",
+        "authorization",
+        "authorization",
+        "authorization"
+       ],
+       "census.sink.external": [
+        "authorization",
+        "authorization",
+        "authorization",
+        "authorization",
+        "authorization",
+        "authorization"
+       ],
+       "census.sink.unknown": [
+        "authorization",
+        "authorization",
+        "authorization",
+        "authorization",
+        "authorization",
+        "authorization"
+       ]
+      },
+      "granted": {
+       "census.sink.write": 1,
+       "census.sink.external": 1,
+       "census.sink.unknown": 1
+      },
+      "scriptRefused": {
+       "status": "failed",
+       "category": "authorization",
+       "preview": 1,
+       "sink": 0
+      },
+      "scriptGranted": {
+       "status": "completed",
+       "preview": 1,
+       "sink": 1
+      }
+     }
+    },
+    {
+     "id": "A5",
+     "witness": {
+      "listing": [
+       "reactivefiber"
+      ],
+      "previewRead": "malformed-request",
+      "furnaceRead": "evidence",
+      "rfReceipt": {
+       "producer": "reactivefiber",
+       "binding": "unbound",
+       "domainStatus": null,
+       "evidenceRefs": []
+      },
+      "rfConfirms": "evidence-producer-mismatch",
+      "furnaceConfirms": "acknowledge"
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) fixture: re-projecting an inference result issues no capability_invoke, no decideControl permit and no tool call",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "applied": 3,
+      "providerCalls": {
+       "preview": 0,
+       "sinks": 0
+      },
+      "toolCalls": 0,
+      "permits": 0,
+      "sweepBefore": [
+       "furnace/attempt cancel: unknown-action",
+       "furnace/attempt delete: unknown-action",
+       "furnace/attempt interrupt: unknown-action",
+       "furnace/attempt kill: unknown-action",
+       "furnace/attempt shutdown: unknown-action",
+       "furnace/attempt stop: no-confirmed-ownership",
+       "furnace/run cancel: unknown-action",
+       "furnace/run delete: unknown-action",
+       "furnace/run interrupt: unknown-action",
+       "furnace/run kill: unknown-action",
+       "furnace/run shutdown: unknown-action",
+       "furnace/run stop: permitted"
+      ],
+      "sweepAfter": [
+       "furnace/attempt cancel: unknown-action",
+       "furnace/attempt delete: unknown-action",
+       "furnace/attempt interrupt: unknown-action",
+       "furnace/attempt kill: unknown-action",
+       "furnace/attempt shutdown: unknown-action",
+       "furnace/attempt stop: no-confirmed-ownership",
+       "furnace/run cancel: unknown-action",
+       "furnace/run delete: unknown-action",
+       "furnace/run interrupt: unknown-action",
+       "furnace/run kill: unknown-action",
+       "furnace/run shutdown: unknown-action",
+       "furnace/run stop: permitted",
+       "reactivefiber/context-preview cancel: unknown-action",
+       "reactivefiber/context-preview delete: unknown-action",
+       "reactivefiber/context-preview interrupt: unknown-action",
+       "reactivefiber/context-preview kill: unknown-action",
+       "reactivefiber/context-preview shutdown: unknown-action",
+       "reactivefiber/context-preview stop: unknown-action"
+      ],
+      "othersChanged": false,
+      "stable": true,
+      "surfaced": [],
+      "violations": []
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "kind": "returned",
+      "verbatim": true,
+      "textCarried": true,
+      "afterCall": {
+       "dispatched": 1,
+       "preview": 1,
+       "sinks": 0
+      },
+      "afterReprojection": {
+       "dispatched": 1,
+       "preview": 1,
+       "sinks": 0
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "run": {
+       "status": "completed",
+       "textReturned": true,
+       "preview": 1,
+       "sinks": 0
+      },
+      "nodeRows": [
+       {
+        "capabilityId": "reactivefiber.render.preview",
+        "effectClass": "read"
+       }
+      ],
+      "resume": {
+       "status": "completed",
+       "textReturned": true,
+       "replayedNodeCount": 1,
+       "preview": 0,
+       "sinks": 0,
+       "freshness": [
+        "stale"
+       ]
+      }
+     }
+    },
+    {
+     "id": "B4",
+     "witness": {
+      "bySeam": [
+       {
+        "seam": "rf-cli",
+        "topologyDiff": [
+         "snapshots.0.nativePayloadRef"
+        ],
+        "evidenceDiff": [],
+        "statusTone": "success",
+        "marks": []
+       },
+       {
+        "seam": "injected-fixture",
+        "topologyDiff": [
+         "snapshots.0.nativePayloadRef"
+        ],
+        "evidenceDiff": [],
+        "statusTone": "unknown",
+        "marks": []
+       }
+      ],
+      "evidenceKeys": [
+       "nativeId",
+       "producerRelease",
+       "provider",
+       "sourceBasis"
+      ],
+      "domainStatus": null
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) mutant: an adapter that invokes an action because an inference result names one fails",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "invokesNamedSink": [
+       "invoke"
+      ],
+      "sinkCalls": 9,
+      "rereadsPreview": [
+       "invoke"
+      ],
+      "previewCalls": 3
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "violations": [
+       "permit"
+      ],
+      "permits": 1
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "violations": [
+       "invoke",
+       "tool-call"
+      ],
+      "toolCalls": 1,
+      "sinkCalls": 1
+     }
+    },
+    {
+     "id": "C4",
+     "witness": {
+      "recordsExecuted": [
+       "executed"
+      ],
+      "notesClaim": [
+       "surfaced"
+      ],
+      "statusClaim": [
+       "surfaced"
+      ],
+      "restamps": [
+       "unstable"
+      ]
+     }
+    },
+    {
+     "id": "C5",
+     "witness": {
+      "fivePasses": [],
+      "plainReading": [],
+      "copies": [],
+      "readsOnly": [],
+      "decidesDirectly": []
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "A5",
+  "B1",
+  "B2",
+  "B3",
+  "B4",
+  "C1",
+  "C2",
+  "C3",
+  "C4",
+  "C5",
+  "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
+ ]
+}

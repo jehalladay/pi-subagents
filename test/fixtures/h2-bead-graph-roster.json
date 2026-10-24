@@ -1,0 +1,1338 @@
+{
+ "constants": {
+  "gatedLabels": [
+   "wp:tsx-h2-01",
+   "wp:tsx-h2-02",
+   "wp:tsx-h2-03",
+   "wp:tsx-h2-04",
+   "wp:tsx-h2-05"
+  ],
+  "markers": [
+   "ruled ADOPT",
+   "ruled REJECT"
+  ],
+  "textFields": [
+   "title",
+   "description",
+   "notes"
+  ],
+  "archiveVerdicts": [
+   "DEFER",
+   "REJECT"
+  ],
+  "writeVerbs": [
+   "create",
+   "q",
+   "update",
+   "close",
+   "reopen",
+   "delete",
+   "dep",
+   "label",
+   "comment",
+   "comments",
+   "edit",
+   "import",
+   "init",
+   "mol",
+   "cook",
+   "duplicate",
+   "supersede",
+   "merge",
+   "restore",
+   "prune",
+   "purge",
+   "flatten",
+   "sync",
+   "dolt",
+   "defer",
+   "undefer",
+   "promote",
+   "set-state"
+  ],
+  "writeFlags": [
+   "--claim",
+   "--append-notes",
+   "--append-notes-file",
+   "--notes",
+   "--fix"
+  ],
+  "writeRoster": [
+   ".gitignore init x1",
+   "qa/workbench/live-furnace-vc4-launch.mjs init x4"
+  ],
+  "exportFloor": 600,
+  "excerptSha256": {
+   "storeRead": "6caa3b6c1b914cacb0ba4e723baf081fd3702565fa6b5a3971b10a1eaceec746",
+   "family": "f00d329427a88b5f865085278195c8dd989cdef4186712b38950c34d2490e45d",
+   "charter": "f0804ac7d86516ef08eb0a593437265eadb9311ebc9627487673ea7bb3802993",
+   "ready": "223d0250521fa87512c4a48ed1de1967480ef29cbedfab589ef91ffba67eb432",
+   "gated": "10e5249d5cd7de4d729fc68458d7f156cd9b5b81c060ac6c4af511f66c0864e1",
+   "dispatch": "75f0bd46e27a736c9acf6df7831cef72ef669ccedc0cbd009d3d24a9ec80c804",
+   "checker": "fd84826b02a6f6526e8d9cb094164772813a8ab723f65853a51f01ce628d99b1",
+   "r575Statement": "b72798e55e76eed293aa1bf9bcfff03ebc3fea8fa998014b5e7a1777f039bc26",
+   "r575Acceptance": "a5ca0fa367221dad2899cbe926e9da0beae12d9923e56e20002a401f7403043d",
+   "r576Statement": "6b6199c8b7760b5ea9955243032f83a80fe3ed792cdf9fd1a74ffb4b3f6da79a",
+   "r576Acceptance": "bf0807e20db575527f7b4691d562034cfc23c230f36960b82578d7698b22effa"
+  },
+  "programScans": [
+   {
+    "pin": "T1",
+    "root": "src",
+    "floor": 100,
+    "anchorFile": "workbench/beads-observer.ts",
+    "anchorToken": "BeadsReadClient",
+    "omit": []
+   },
+   {
+    "pin": "T1",
+    "root": "qa",
+    "floor": 50,
+    "anchorFile": "workbench/live-furnace-vc4-launch.mjs",
+    "anchorToken": "'init'",
+    "omit": []
+   },
+   {
+    "pin": "T1",
+    "root": "examples",
+    "floor": 5,
+    "anchorFile": "workflows/compose.js",
+    "anchorToken": "count-child",
+    "omit": []
+   },
+   {
+    "pin": "T1",
+    "root": ".agents",
+    "floor": 2,
+    "anchorFile": "skills/beads/SKILL.md",
+    "anchorToken": "bd create",
+    "omit": []
+   },
+   {
+    "pin": "T1",
+    "root": ".pi",
+    "floor": 1,
+    "anchorFile": "agents/auditor.md",
+    "anchorToken": "tools:",
+    "omit": []
+   },
+   {
+    "pin": "T1",
+    "root": ".github",
+    "floor": 2,
+    "anchorFile": "workflows/ci.yml",
+    "anchorToken": "runs-on",
+    "omit": []
+   },
+   {
+    "pin": "T1",
+    "root": ".codex",
+    "floor": 2,
+    "anchorFile": "hooks.json",
+    "anchorToken": "bd codex-hook",
+    "omit": []
+   },
+   {
+    "pin": "T1",
+    "root": ".beads/hooks",
+    "floor": 5,
+    "anchorFile": "pre-commit",
+    "anchorToken": "bd hooks run",
+    "omit": []
+   },
+   {
+    "pin": "T1",
+    "root": ".",
+    "floor": 20,
+    "anchorFile": "package.json",
+    "anchorToken": "\"extensions\"",
+    "omit": []
+   }
+  ],
+  "execScans": [
+   {
+    "pin": "T2",
+    "root": "src",
+    "floor": 100,
+    "anchorFile": "workbench/beads-observer.ts",
+    "anchorToken": "BeadsReadClient",
+    "omit": []
+   },
+   {
+    "pin": "T2",
+    "root": "qa",
+    "floor": 50,
+    "anchorFile": "workbench/live-furnace-vc4-launch.mjs",
+    "anchorToken": "'init'",
+    "omit": []
+   },
+   {
+    "pin": "T2",
+    "root": "examples",
+    "floor": 5,
+    "anchorFile": "workflows/compose.js",
+    "anchorToken": "count-child",
+    "omit": []
+   },
+   {
+    "pin": "T2",
+    "root": ".github",
+    "floor": 2,
+    "anchorFile": "workflows/ci.yml",
+    "anchorToken": "runs-on",
+    "omit": []
+   },
+   {
+    "pin": "T2",
+    "root": ".codex",
+    "floor": 2,
+    "anchorFile": "hooks.json",
+    "anchorToken": "bd codex-hook",
+    "omit": []
+   },
+   {
+    "pin": "T2",
+    "root": ".beads/hooks",
+    "floor": 5,
+    "anchorFile": "pre-commit",
+    "anchorToken": "bd hooks run",
+    "omit": []
+   },
+   {
+    "pin": "T2",
+    "root": ".",
+    "floor": 15,
+    "anchorFile": "package.json",
+    "anchorToken": "\"extensions\"",
+    "omit": []
+   }
+  ],
+  "gatedScans": [
+   {
+    "pin": "G1",
+    "root": "src",
+    "floor": 100,
+    "anchorFile": "workbench/beads-observer.ts",
+    "anchorToken": "BeadsReadClient",
+    "omit": []
+   },
+   {
+    "pin": "G1",
+    "root": "qa",
+    "floor": 50,
+    "anchorFile": "workbench/live-furnace-vc4-launch.mjs",
+    "anchorToken": "'init'",
+    "omit": []
+   },
+   {
+    "pin": "G1",
+    "root": "docs",
+    "floor": 20,
+    "anchorFile": "workbench/09-observation-and-provenance.md",
+    "anchorToken": "bead machines",
+    "omit": [
+     "workbench/receipts"
+    ]
+   },
+   {
+    "pin": "G1",
+    "root": "examples",
+    "floor": 5,
+    "anchorFile": "workflows/compose.js",
+    "anchorToken": "count-child",
+    "omit": []
+   },
+   {
+    "pin": "G1",
+    "root": ".agents",
+    "floor": 2,
+    "anchorFile": "skills/beads/SKILL.md",
+    "anchorToken": "bd create",
+    "omit": []
+   },
+   {
+    "pin": "G1",
+    "root": ".pi",
+    "floor": 1,
+    "anchorFile": "agents/auditor.md",
+    "anchorToken": "tools:",
+    "omit": []
+   },
+   {
+    "pin": "G1",
+    "root": ".",
+    "floor": 20,
+    "anchorFile": "package.json",
+    "anchorToken": "\"extensions\"",
+    "omit": []
+   }
+  ],
+  "families": {
+   "h2": "harness2-reactive-evolution|tsx-h2-(?:0[0-5]|adr)(?![\\w])|rftsx-(?:bhmrd|7sy4c|8er6b|e9a5e|auqdi|rupqh)(?![\\w])",
+   "prerequisites": "API-PIN|TSX-FED-01|harness2-api-pin",
+   "marker": "(?<![\\w-])ruled (ADOPT|REJECT)(?![\\w-])(?![\\s()\\[\\],;:/|'\"`]*(?:(?:or|and|nor)(?![\\w-])[\\s()\\[\\],;:/|'\"`]*)?(?:ADOPT|REJECT|DEFER)(?![\\w-]))"
+  }
+ },
+ "rows": [
+  {
+   "id": "T",
+   "label": "(trigger, absent today) no Pi surface grows the H2 bead graph or reads its gate: no walked root names the program, a work package or an H2 bead, the only bd write spelled in Pi's scripts is the live tier's scratch-store init, and Pi's one beads reader calls show alone and keeps no text a ruling could be read from but the title",
+   "pins": [
+    {
+     "id": "T1",
+     "witness": [
+      {
+       "root": "src",
+       "floorMet": true,
+       "anchorRead": true,
+       "hits": []
+      },
+      {
+       "root": "qa",
+       "floorMet": true,
+       "anchorRead": true,
+       "hits": []
+      },
+      {
+       "root": "examples",
+       "floorMet": true,
+       "anchorRead": true,
+       "hits": []
+      },
+      {
+       "root": ".agents",
+       "floorMet": true,
+       "anchorRead": true,
+       "hits": []
+      },
+      {
+       "root": ".pi",
+       "floorMet": true,
+       "anchorRead": true,
+       "hits": []
+      },
+      {
+       "root": ".github",
+       "floorMet": true,
+       "anchorRead": true,
+       "hits": []
+      },
+      {
+       "root": ".codex",
+       "floorMet": true,
+       "anchorRead": true,
+       "hits": []
+      },
+      {
+       "root": ".beads/hooks",
+       "floorMet": true,
+       "anchorRead": true,
+       "hits": []
+      },
+      {
+       "root": ".",
+       "floorMet": true,
+       "anchorRead": true,
+       "hits": []
+      }
+     ]
+    },
+    {
+     "id": "T2",
+     "witness": {
+      "roots": [
+       {
+        "root": "src",
+        "floorMet": true,
+        "anchorRead": true
+       },
+       {
+        "root": "qa",
+        "floorMet": true,
+        "anchorRead": true
+       },
+       {
+        "root": "examples",
+        "floorMet": true,
+        "anchorRead": true
+       },
+       {
+        "root": ".github",
+        "floorMet": true,
+        "anchorRead": true
+       },
+       {
+        "root": ".codex",
+        "floorMet": true,
+        "anchorRead": true
+       },
+       {
+        "root": ".beads/hooks",
+        "floorMet": true,
+        "anchorRead": true
+       },
+       {
+        "root": ".",
+        "floorMet": true,
+        "anchorRead": true
+       }
+      ],
+      "spellings": [
+       ".gitignore init x1",
+       "qa/workbench/live-furnace-vc4-launch.mjs init x4"
+      ],
+      "srcSpellings": []
+     }
+    },
+    {
+     "id": "T3",
+     "witness": {
+      "accessed": [
+       "show"
+      ],
+      "titleKept": true,
+      "bodyKept": false,
+      "notesKept": false,
+      "closeReasonKept": false,
+      "labelsKept": false,
+      "closure": {
+       "status": "closed",
+       "closeReasonPresent": true,
+       "closedAt": true
+      },
+      "verdictFromReading": {
+       "verdict": "no-verdict",
+       "markers": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "A",
+   "label": "(a) `bd -q list --json -s all --limit 5000` shows 0 wp:tsx-h2-01..05 beads while rftsx-rupqh has no 'ruled ADOPT' text",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "floorMet": true,
+      "anchorRead": true,
+      "gatedLabelRows": [],
+      "wpH2Rows": [],
+      "rftsxRows": [],
+      "violations": []
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "storeHoldsGate": false,
+      "producerTitle": "[H2-ADR] ADR: candidate and public-port work proceeds only after the API pin and the FED mapping (ruled ADOPT or REJECT)",
+      "producerReading": {
+       "verdict": "no-verdict",
+       "markers": 0
+      },
+      "substringCount": "ADOPT"
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "producerMap": [],
+      "packetUngated": [
+       "a:rftsx-new01 wp:tsx-h2-01"
+      ],
+      "packetAfterAdopt": [],
+      "packetGateClosed": [
+       "a:rftsx-new01 wp:tsx-h2-01"
+      ],
+      "packetGateRejected": [
+       "a:rftsx-new01 wp:tsx-h2-01"
+      ],
+      "packetNoGateRow": [
+       "a:rftsx-new01 wp:tsx-h2-01"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) verdict reader: exactly one marker reads that verdict verbatim; zero/two markers or a closed bead with none read no-verdict; a closure-derived ADOPT fails",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "notesAdopt": {
+       "verdict": "ADOPT",
+       "markers": 1,
+       "marker": "ruled ADOPT",
+       "field": "notes"
+      },
+      "notesReject": {
+       "verdict": "REJECT",
+       "markers": 1,
+       "marker": "ruled REJECT",
+       "field": "notes"
+      },
+      "titleReject": {
+       "verdict": "REJECT",
+       "markers": 1,
+       "marker": "ruled REJECT",
+       "field": "title"
+      },
+      "bodyAdopt": {
+       "verdict": "ADOPT",
+       "markers": 1,
+       "marker": "ruled ADOPT",
+       "field": "description"
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "none": {
+       "verdict": "no-verdict",
+       "markers": 0
+      },
+      "twoAdopt": {
+       "verdict": "no-verdict",
+       "markers": 2
+      },
+      "adoptAndReject": {
+       "verdict": "no-verdict",
+       "markers": 2
+      },
+      "titleAndNotes": {
+       "verdict": "no-verdict",
+       "markers": 2
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "closedStatus": "no-verdict",
+      "closedReason": "no-verdict",
+      "closedLabels": "no-verdict",
+      "prototype": "no-verdict",
+      "adopted": "no-verdict",
+      "bareWord": "no-verdict",
+      "overruled": "no-verdict",
+      "twoSpaces": "no-verdict"
+     }
+    },
+    {
+     "id": "B4",
+     "witness": {
+      "reference": [],
+      "closure": [
+       "closed-none",
+       "closed-labels"
+      ],
+      "labels": [
+       "closed-labels"
+      ],
+      "closeReason": [
+       "closed-none"
+      ],
+      "substringCount": [
+       "creation-title"
+      ],
+      "firstOfMany": [
+       "two-adopt",
+       "adopt-and-reject"
+      ],
+      "caseFolded": [
+       "lowercase"
+      ]
+     }
+    },
+    {
+     "id": "B5",
+     "witness": [
+      {
+       "reference": "no-verdict",
+       "substringCount": "ADOPT"
+      },
+      {
+       "reference": "no-verdict",
+       "substringCount": "ADOPT"
+      },
+      {
+       "reference": "no-verdict",
+       "substringCount": "ADOPT"
+      },
+      {
+       "reference": "no-verdict",
+       "substringCount": "ADOPT"
+      },
+      {
+       "reference": "no-verdict",
+       "substringCount": "ADOPT"
+      },
+      {
+       "reference": "no-verdict",
+       "substringCount": "no-verdict"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) a DEFER/REJECT gate creates no bead and writes the packet to the compile ledger; created packets carry only `related` edges",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "reject": {
+       "created": [],
+       "archived": [
+        {
+         "key": "TSX-H2-01",
+         "verdict": "REJECT"
+        },
+        {
+         "key": "TSX-H2-02",
+         "verdict": "REJECT"
+        },
+        {
+         "key": "TSX-H2-03",
+         "verdict": "REJECT"
+        },
+        {
+         "key": "TSX-H2-04",
+         "verdict": "REJECT"
+        },
+        {
+         "key": "TSX-H2-05",
+         "verdict": "REJECT"
+        }
+       ]
+      },
+      "defer": {
+       "created": [],
+       "archived": [
+        {
+         "key": "TSX-H2-01",
+         "verdict": "DEFER"
+        },
+        {
+         "key": "TSX-H2-02",
+         "verdict": "DEFER"
+        },
+        {
+         "key": "TSX-H2-03",
+         "verdict": "DEFER"
+        },
+        {
+         "key": "TSX-H2-04",
+         "verdict": "DEFER"
+        },
+        {
+         "key": "TSX-H2-05",
+         "verdict": "DEFER"
+        }
+       ]
+      },
+      "judged": [
+       [],
+       []
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "compiled": {
+       "created": [
+        {
+         "key": "TSX-H2-01",
+         "parent": "rftsx-bhmrd",
+         "labels": [
+          "program:harness2-reactive-evolution-2026-10-20",
+          "wp:tsx-h2-01"
+         ],
+         "edges": [
+          {
+           "type": "related",
+           "to": "rftsx-rupqh"
+          }
+         ]
+        },
+        {
+         "key": "TSX-H2-02",
+         "parent": "rftsx-bhmrd",
+         "labels": [
+          "program:harness2-reactive-evolution-2026-10-20",
+          "wp:tsx-h2-02"
+         ],
+         "edges": [
+          {
+           "type": "related",
+           "to": "rftsx-rupqh"
+          }
+         ]
+        },
+        {
+         "key": "TSX-H2-03",
+         "parent": "rftsx-bhmrd",
+         "labels": [
+          "program:harness2-reactive-evolution-2026-10-20",
+          "wp:tsx-h2-03"
+         ],
+         "edges": [
+          {
+           "type": "related",
+           "to": "rftsx-rupqh"
+          }
+         ]
+        },
+        {
+         "key": "TSX-H2-04",
+         "parent": "rftsx-bhmrd",
+         "labels": [
+          "program:harness2-reactive-evolution-2026-10-20",
+          "wp:tsx-h2-04"
+         ],
+         "edges": [
+          {
+           "type": "related",
+           "to": "rftsx-rupqh"
+          }
+         ]
+        },
+        {
+         "key": "TSX-H2-05",
+         "parent": "rftsx-bhmrd",
+         "labels": [
+          "program:harness2-reactive-evolution-2026-10-20",
+          "wp:tsx-h2-05"
+         ],
+         "edges": [
+          {
+           "type": "related",
+           "to": "rftsx-rupqh"
+          }
+         ]
+        }
+       ],
+       "archived": []
+      },
+      "judged": [],
+      "edgeTypes": [
+       "related"
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "noVerdict": {
+       "created": [],
+       "archived": []
+      },
+      "titleOnly": {
+       "created": [],
+       "archived": []
+      }
+     }
+    },
+    {
+     "id": "C4",
+     "witness": {
+      "createOnReject": [
+       "c:created-without-adopt"
+      ],
+      "skipArchive": [
+       "c:archive-missing"
+      ],
+      "archiveUngated": [
+       "c:archive-without-verdict"
+      ],
+      "blocksEdge": [
+       "c:edge-type"
+      ],
+      "outsideEpic": [
+       "c:parent"
+      ],
+      "familyLabel": [
+       "d:family"
+      ],
+      "dropPacket": [
+       "c:packets"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "(d) no program:harness2-reactive-evolution-2026-10-20 bead carries a family: label while rftsx-auqdi is open",
+   "pins": [
+    {
+     "id": "D1",
+     "witness": {
+      "storeProgramRows": [],
+      "storeFamilyRows": [],
+      "storeViolations": [],
+      "mapProgramRows": [
+       "rftsx-bhmrd",
+       "rftsx-7sy4c",
+       "rftsx-8er6b",
+       "rftsx-e9a5e",
+       "rftsx-auqdi",
+       "rftsx-rupqh"
+      ],
+      "mapFamilyRows": [],
+      "apiPinStatusAtRead": "open",
+      "mapViolations": []
+     }
+    },
+    {
+     "id": "D2",
+     "witness": {
+      "epicFamilyWhileOpen": [
+       "d:rftsx-bhmrd family:perf"
+      ],
+      "epicFamilyAfterLanding": [],
+      "familyOutsideProgram": [],
+      "adoptedDrafts": [],
+      "apiPinUnseen": [
+       "d:rftsx-bhmrd family:h2"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "G",
+   "label": "the gate's prerequisites stay unshipped in every Pi claim: no src, qa, docs (its receipts aside), examples, .agents, .pi or root file names API-PIN.md, TSX-FED-01 or the API pin's audit test",
+   "pins": [
+    {
+     "id": "G1",
+     "witness": [
+      {
+       "root": "src",
+       "floorMet": true,
+       "anchorRead": true,
+       "hits": []
+      },
+      {
+       "root": "qa",
+       "floorMet": true,
+       "anchorRead": true,
+       "hits": []
+      },
+      {
+       "root": "docs",
+       "floorMet": true,
+       "anchorRead": true,
+       "hits": []
+      },
+      {
+       "root": "examples",
+       "floorMet": true,
+       "anchorRead": true,
+       "hits": []
+      },
+      {
+       "root": ".agents",
+       "floorMet": true,
+       "anchorRead": true,
+       "hits": []
+      },
+      {
+       "root": ".pi",
+       "floorMet": true,
+       "anchorRead": true,
+       "hits": []
+      },
+      {
+       "root": ".",
+       "floorMet": true,
+       "anchorRead": true,
+       "hits": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "P",
+   "label": "the producer's map at the pin: every vendored block equals its sha256, the gated list is TSX-H2-01..05 behind rftsx-rupqh, no row carries a family: or gated wp label and the ruling form is EAT-R575's",
+   "pins": [
+    {
+     "id": "P1",
+     "witness": [
+      "charter",
+      "checker",
+      "dispatch",
+      "family",
+      "gated",
+      "r575Acceptance",
+      "r575Statement",
+      "r576Acceptance",
+      "r576Statement",
+      "ready",
+      "storeRead"
+     ]
+    },
+    {
+     "id": "P2",
+     "witness": {
+      "keys": [
+       "TSX-H2-01",
+       "TSX-H2-02",
+       "TSX-H2-03",
+       "TSX-H2-04",
+       "TSX-H2-05"
+      ],
+      "gates": [
+       "TSX-H2-ADR (rftsx-rupqh)"
+      ],
+      "rules": [
+       "R-08"
+      ],
+      "ruleClauses": 3
+     }
+    },
+    {
+     "id": "P3",
+     "witness": {
+      "ids": [
+       "rftsx-bhmrd",
+       "rftsx-7sy4c",
+       "rftsx-8er6b",
+       "rftsx-e9a5e",
+       "rftsx-auqdi",
+       "rftsx-rupqh"
+      ],
+      "wpLabels": [
+       "wp:tsx-h2-00",
+       "wp:tsx-h2-adr"
+      ],
+      "familyLabels": [],
+      "checkerNoFamily": [
+       "rftsx-7sy4c",
+       "rftsx-8er6b",
+       "rftsx-auqdi",
+       "rftsx-bhmrd",
+       "rftsx-e9a5e",
+       "rftsx-rupqh"
+      ],
+      "everyOpenAtRead": true,
+      "familyRuling": true
+     }
+    },
+    {
+     "id": "P4",
+     "witness": {
+      "form": true,
+      "titleOrBody": true,
+      "noAdoptStatus": true,
+      "exactlyOne": true,
+      "gatedLabelsNamed": true,
+      "listCommand": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "F",
+   "label": "the owner filing row of wb-4nut.4 in the tracked bead export carries every pinned constant and names exactly the clauses rows A-D cover, each label equal to its clause",
+   "pins": [
+    {
+     "id": "F1",
+     "witness": {
+      "clauses": [
+       "a",
+       "b",
+       "c",
+       "d"
+      ],
+      "labelsEqual": [
+       "A",
+       "B",
+       "C",
+       "D"
+      ],
+      "constantsQuoted": 13
+     }
+    }
+   ]
+  },
+  {
+   "id": "M",
+   "label": "the H2 family, the bd write family and the prerequisite family judge their pinned spellings as hits",
+   "pins": [
+    {
+     "id": "MH1",
+     "witness": {
+      "family": "h2",
+      "digest": "371ed0c086850dc1",
+      "hit": true
+     }
+    },
+    {
+     "id": "MH2",
+     "witness": {
+      "family": "h2",
+      "digest": "bf53729508c2c028",
+      "hit": true
+     }
+    },
+    {
+     "id": "MH3",
+     "witness": {
+      "family": "h2",
+      "digest": "7358389afb7386b4",
+      "hit": true
+     }
+    },
+    {
+     "id": "MH4",
+     "witness": {
+      "family": "h2",
+      "digest": "afa0bd81d41066a8",
+      "hit": true
+     }
+    },
+    {
+     "id": "MH5",
+     "witness": {
+      "family": "h2",
+      "digest": "6f92ca7b881ee035",
+      "hit": true
+     }
+    },
+    {
+     "id": "MH6",
+     "witness": {
+      "family": "h2",
+      "digest": "28ed1cdd0e9e6dd5",
+      "hit": true
+     }
+    },
+    {
+     "id": "MW1",
+     "witness": {
+      "family": "write",
+      "digest": "837445cd7be01dab",
+      "hit": true
+     }
+    },
+    {
+     "id": "MW2",
+     "witness": {
+      "family": "write",
+      "digest": "b189de5f783acb76",
+      "hit": true
+     }
+    },
+    {
+     "id": "MW3",
+     "witness": {
+      "family": "write",
+      "digest": "a08e7bb67986d377",
+      "hit": true
+     }
+    },
+    {
+     "id": "MW4",
+     "witness": {
+      "family": "write",
+      "digest": "a45730b3f1183f4d",
+      "hit": true
+     }
+    },
+    {
+     "id": "MW5",
+     "witness": {
+      "family": "write",
+      "digest": "6bae251b0478ee72",
+      "hit": true
+     }
+    },
+    {
+     "id": "MW6",
+     "witness": {
+      "family": "write",
+      "digest": "360343b511894497",
+      "hit": true
+     }
+    },
+    {
+     "id": "MW7",
+     "witness": {
+      "family": "write",
+      "digest": "78893357119db616",
+      "hit": true
+     }
+    },
+    {
+     "id": "MW8",
+     "witness": {
+      "family": "write",
+      "digest": "b5bba7ccd2c3646f",
+      "hit": true
+     }
+    },
+    {
+     "id": "MW9",
+     "witness": {
+      "family": "write",
+      "digest": "be7ece00bdaf5b67",
+      "hit": true
+     }
+    },
+    {
+     "id": "MG1",
+     "witness": {
+      "family": "prerequisite",
+      "digest": "f0f43e00ee474b86",
+      "hit": true
+     }
+    },
+    {
+     "id": "MG2",
+     "witness": {
+      "family": "prerequisite",
+      "digest": "0ca04d6a9328cf3a",
+      "hit": true
+     }
+    },
+    {
+     "id": "MG3",
+     "witness": {
+      "family": "prerequisite",
+      "digest": "f35d956e916e14f8",
+      "hit": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "R",
+   "label": "the named residuals R1-R12 stay pinned quiet",
+   "pins": [
+    {
+     "id": "R1",
+     "witness": [
+      {
+       "family": "h2",
+       "digest": "384b0415d4e1e01b",
+       "hit": false
+      },
+      {
+       "family": "write",
+       "digest": "1041ce40b8a62649",
+       "hit": false
+      }
+     ]
+    },
+    {
+     "id": "R2",
+     "witness": [
+      {
+       "family": "write",
+       "digest": "b49898ff014d92a7",
+       "hit": false
+      }
+     ]
+    },
+    {
+     "id": "R3",
+     "witness": {
+      "testWalked": false,
+      "testNamesProgram": true,
+      "testSpellsWrites": true
+     }
+    },
+    {
+     "id": "R4",
+     "witness": {
+      "trackerDataWalked": false,
+      "exportNamesProgram": true,
+      "floorMet": true
+     }
+    },
+    {
+     "id": "R5",
+     "witness": [
+      "no-verdict",
+      "no-verdict",
+      "no-verdict",
+      "no-verdict"
+     ]
+    },
+    {
+     "id": "R6",
+     "witness": [
+      "ADOPT",
+      "ADOPT"
+     ]
+    },
+    {
+     "id": "R7",
+     "witness": {
+      "verdict": "no-verdict",
+      "compiled": {
+       "created": [],
+       "archived": []
+      }
+     }
+    },
+    {
+     "id": "R8",
+     "witness": [
+      "no-verdict",
+      "no-verdict",
+      "no-verdict"
+     ]
+    },
+    {
+     "id": "R9",
+     "witness": [
+      "node:crypto",
+      "node:fs",
+      "node:path",
+      "node:url",
+      "vitest",
+      "../src/workbench/beads-observer.js"
+     ]
+    },
+    {
+     "id": "R10",
+     "witness": [
+      "wb"
+     ]
+    },
+    {
+     "id": "R11",
+     "witness": [
+      {
+       "family": "write",
+       "digest": "a58530bfba06ddbc",
+       "hit": false
+      },
+      {
+       "family": "write",
+       "digest": "9a7d01e2dd5c1ecc",
+       "hit": false
+      }
+     ]
+    },
+    {
+     "id": "R12",
+     "witness": {
+      "proseWalkedByT1": false,
+      "g1OmitsReceipts": true,
+      "receiptsReadByG1": 0,
+      "receiptsQuoteTitles": true
+     }
+    }
+   ]
+  }
+ ],
+ "excerpts": {
+  "storeRead": {
+   "path": "docs/programs/harness2-reactive-evolution-2026-10-20/BEADS-2026-10-21.md@76bbbffd9d4a",
+   "lines": "3",
+   "text": [
+    "Status: records only. Source of truth for ids, statuses and edges is the shared bead store; this file is a reader snapshot written 2026-10-21T11:10:38Z from the creation receipts of the 2026-10-21 program triage (`created.json`, `created.log`, the checker file `check-2026-10-21T054500Z.txt`) and one `bd -q list --json -s all --limit 5000` read at 2026-10-21T10:47:28Z. At that read every bead below was `open` and unassigned (live counts: {'open': 6})."
+   ]
+  },
+  "family": {
+   "path": "docs/programs/harness2-reactive-evolution-2026-10-20/BEADS-2026-10-21.md@76bbbffd9d4a",
+   "lines": "5",
+   "text": [
+    "Program: `harness2-reactive-evolution-2026-10-20/README.md` (blob `32fff5555`), `harness2-reactive-evolution-2026-10-20/DEVELOPER.md` (blob `900035f29`) at origin/main `db7558552` (`db7558552d00b6d67d4ba0c6f1751eaee90a8649`), pinned copy `.swarm/triage/_input/docs-programs-db7558552/` of the swarm workspace. Epic: `rftsx-bhmrd` ([H2] TSX Context Candidates, Public-Port Hooks and Visual Identity Witnesses (docs/programs/harness2-reactive-evolution-2026-10-20/)). Requirement family (R-05): none until TSX-H2-00 (R-05). Triage lane: `a7`; audit verdict (EPISTEMIC-AUDIT.md): ACCEPT_AFTER_FIX."
+   ]
+  },
+  "charter": {
+   "path": "docs/programs/harness2-reactive-evolution-2026-10-20/BEADS-2026-10-21.md@76bbbffd9d4a",
+   "lines": "19-22",
+   "text": [
+    "| rftsx-bhmrd | EPIC-H2 | [H2] TSX Context Candidates, Public-Port Hooks and Visual Identity Witnesses (docs/programs/harness2-reactive-evolution-2026-10-20/) | P2 | 30 | rftsx-9ofwd, rftsx-9q9l, rftsx-flynt, rftsx-koy9c.4 | Every ungated child closed on its public acceptance with the named gate green on main; the gated list ruled (ADOPT/DEFER/REJECT) in the family's ruling bead; one shared closing-gate receipt (full forge build on main)... | EAT-R565, EAT-R566, EAT-R567, EAT-R568, EAT-R569, EAT-R570, EAT-R571, EAT-R572, EAT-R573, EAT-R574, EAT-R575, EAT-R576, EAT-R577 | epic, program:harness2-reactive-evolution-2026-10-20, triage:2026-10-21, kind:epic |",
+    "| rftsx-7sy4c | RULING-R-05-FAMILIES-W2 | [RULING] R-05: requirement families for the w2 programs - ADAPT (adaptive + evidence-directed), TARGET (universal rendering), PERF existing (frontier), none for harness2 until TSX-H2-00 | P3 | 30 | EPIC-ADAPT, EPIC-EVID, EPIC-H2, EPIC-PERF-F, EPIC-TARGET | The bead body carries the ruling text and the claim ids; the application listed under 'How w2 applied it' is observable in the created graph (labels, parents, gated.json) by check_created.py. | N/A | program:adaptive-computation-and-control-2026-10-17, program:evidence-directed-computation-2026-10-18, program:universal-reactive-rendering, program:resource-efficiency-frontier-2026-10-17, program:harness2-reactive-evolution-2026-10-20, decision, kind:decision, triage:2026-10-21, ruling:r-05 |",
+    "| rftsx-8er6b | RULING-R-08-GATING-W2 | [RULING] R-08: gating for the w2 families - adaptive hooks beyond T0, universal WPs beyond TSX-UI-01 and harness2 WPs beyond TSX-H2-00 are not created until their ruling reads ADOPT | P2 | 30 | EPIC-ADAPT, EPIC-H2, EPIC-TARGET, TSX-ADAPT-ADR, TSX-H2-ADR, TSX-UI-ADOPT | The bead body carries the ruling text and the claim ids; the application listed under 'How w2 applied it' is observable in the created graph (labels, parents, gated.json) by check_created.py. | N/A | program:adaptive-computation-and-control-2026-10-17, program:universal-reactive-rendering, program:harness2-reactive-evolution-2026-10-20, decision, kind:decision, triage:2026-10-21, ruling:r-08 |",
+    "| rftsx-e9a5e | RULING-R-10-H2-SHAS | [RULING] R-10: harness2 was deposited as two commits with one subject (5cca9177e, db7558552) - both shas pinned on the epic, no rewrite of landed history | P3 | 30 | - | The bead body carries the ruling text and the claim ids; the application listed under 'How w2 applied it' is observable in the created graph (labels, parents, gated.json) by check_created.py. | N/A | program:harness2-reactive-evolution-2026-10-20, decision, kind:decision, triage:2026-10-21, ruling:r-10 |"
+   ]
+  },
+  "ready": {
+   "path": "docs/programs/harness2-reactive-evolution-2026-10-20/BEADS-2026-10-21.md@76bbbffd9d4a",
+   "lines": "28-29",
+   "text": [
+    "| rftsx-auqdi | tsx-h2-00 | [H2] API pin: installed host/render resource symbols and their Python ContextBlock twins named at one sha | P1 | 120 | TSX-EVID-PIN | `mise exec -- pnpm exec vitest run --project audit tests/audit/harness2-api-pin.test.ts` passes: RESOURCE_KINDS equals the six literals of src/resources/types.ts:40-47, RESOURCE_ENTRY_STATUSES equals its literals, rea... | EAT-R565, EAT-R566, EAT-R567, EAT-R568, EAT-R569, EAT-R570 | program:harness2-reactive-evolution-2026-10-20, wp:tsx-h2-00, triage:2026-10-21, kind:audit |",
+    "| rftsx-rupqh | tsx-h2-adr | [H2-ADR] ADR: candidate and public-port work proceeds only after the API pin and the FED mapping (ruled ADOPT or REJECT) | P2 | 60 | TSX-ADAPT-ADR | Decision bead whose body records: (a) 'candidate' in H2 = a candidate-definition artifact distinct from the assembly candidate block (budget.ts:8,22; host-evaluation.ts:10); | EAT-R571, EAT-R572, EAT-R573, EAT-R574, EAT-R575, EAT-R576 | program:harness2-reactive-evolution-2026-10-20, wp:tsx-h2-adr, triage:2026-10-21, decision, kind:decision |"
+   ]
+  },
+  "gated": {
+   "path": "docs/programs/harness2-reactive-evolution-2026-10-20/BEADS-2026-10-21.md@76bbbffd9d4a",
+   "lines": "42-50",
+   "text": [
+    "A gated packet is created under the epic, with `related` edges only, when its gate bead records the verdict ADOPT (`--append-notes`); DEFER or REJECT archives the packet in the compile ledger.",
+    "",
+    "| WP key | title | type | priority | estimate (min) | gate bead | rule |",
+    "|---|---|---|---|---|---|---|",
+    "| TSX-H2-01 | [H2] Versioned candidate-definition artifact/port schema with cross-runtime codec goldens | feature | P3 | 180 | TSX-H2-ADR (rftsx-rupqh) | R-08 |",
+    "| TSX-H2-02 | [H2] Public-port resource hook adapter lowers to readResource with no new network or cache path | feature | P3 | 180 | TSX-H2-ADR (rftsx-rupqh) | R-08 |",
+    "| TSX-H2-03 | [H2] Opt-in UI witness: explicit, revisioned Fiber public ref with renderer revision and source cut | feature | P3 | 180 | TSX-H2-ADR (rftsx-rupqh) | R-08 |",
+    "| TSX-H2-04 | [H2] Bounded render report additive fields for DevTools visual/source correlation and trace gaps | feature | P3 | 150 | TSX-H2-ADR (rftsx-rupqh) | R-08 |",
+    "| TSX-H2-05 | [H2] Negative battery: contexts, compaction, state migration and visual annotation refuse, never PASS | task | P3 | 180 | TSX-H2-ADR (rftsx-rupqh) | R-08 |"
+   ]
+  },
+  "dispatch": {
+   "path": "docs/programs/harness2-reactive-evolution-2026-10-20/BEADS-2026-10-21.md@76bbbffd9d4a",
+   "lines": "54-56",
+   "text": [
+    "Bead machines take ready children in dependency order: a child is ready when every `related` premise of it inside this program has closed or is a ruling/ADR record whose text has landed, and when its gate (if any) reads ADOPT. A child closes only on its public acceptance: the forge leg or test file its `acceptance` field names runs green at one sha on a branch `bead/<id>/ws-NN`, and the landing carries `Bead: <id>` in its message. Epics close when every ungated child has closed and the gate ruling has recorded a verdict. Ruling rows (M0) are decision beads: they close when their ADR or ruling text lands, never by implication.",
+    "",
+    "Ready at creation (M1): TSX-H2-00 (`rftsx-auqdi`), TSX-H2-ADR (`rftsx-rupqh`)."
+   ]
+  },
+  "checker": {
+   "path": "docs/programs/harness2-reactive-evolution-2026-10-20/BEADS-2026-10-21.md@76bbbffd9d4a",
+   "lines": "60-65",
+   "text": [
+    "- `rftsx-7sy4c` OK*: NOTE: R-05 twin of rftsx-gx29e (w2 leg: ADAPT/TARGET/PERF/H2); no parent (cross-epic, related to 5 epics), no family: label; est 30",
+    "- `rftsx-8er6b` OK*: NOTE: R-08 twin of rftsx-wz1c1 (w2 leg); no parent (cross-epic, related to 6 beads), no family: label; est 30",
+    "- `rftsx-auqdi` OK*: no family: label by R-05 (none for harness2 until TSX-H2-00)",
+    "- `rftsx-bhmrd` OK*: no family: label by R-05 (none for harness2 until TSX-H2-00); NOTE (g): estimate 30 outside 60-180 (epic convention)",
+    "- `rftsx-e9a5e` OK*: no family: label by R-05 (none for harness2 until TSX-H2-00); NOTE (g): estimate 30 outside 60-180 (decision convention)",
+    "- `rftsx-rupqh` OK*: no family: label by R-05 (none for harness2 until TSX-H2-00)"
+   ]
+  },
+  "r575Statement": {
+   "path": "docs/triage/programs-2026-10-21/requirements/ATOMIC-REQUIREMENTS.md@76bbbffd9d4a",
+   "lines": "1373",
+   "text": [
+    "- Statement: The ruling bead MUST state the gate predicate - ADOPT only after API-PIN.md has landed and TSX-FED-01's mapping exists - MUST name both deposit shas 5cca9177e/db7558552, and MUST carry the ruling in its title or body as 'ruled ADOPT' or 'ruled REJECT' (bd has no ADOPT status; pattern rftsx-atcqf.42), closing when ruled."
+   ]
+  },
+  "r575Acceptance": {
+   "path": "docs/triage/programs-2026-10-21/requirements/ATOMIC-REQUIREMENTS.md@76bbbffd9d4a",
+   "lines": "1384",
+   "text": [
+    "  - Assert the title or body contains exactly one of 'ruled ADOPT' / 'ruled REJECT' once the orchestrator rules, and the bead is closed at that moment."
+   ]
+  },
+  "r576Statement": {
+   "path": "docs/triage/programs-2026-10-21/requirements/ATOMIC-REQUIREMENTS.md@76bbbffd9d4a",
+   "lines": "1392",
+   "text": [
+    "- Statement: No bead labelled wp:tsx-h2-01 through wp:tsx-h2-05 MUST exist while the ruling does not read ADOPT (R-08), and no H2 bead MUST carry a family: label until TSX-H2-00 has landed (R-05)."
+   ]
+  },
+  "r576Acceptance": {
+   "path": "docs/triage/programs-2026-10-21/requirements/ATOMIC-REQUIREMENTS.md@76bbbffd9d4a",
+   "lines": "1400",
+   "text": [
+    "  - check_created extension: `bd -q list --json -s all --limit 5000` filtered by the five wp labels returns 0 rows while the ruling is open; every program:harness2-reactive-evolution-2026-10-20 bead has no family: label."
+   ]
+  }
+ }
+}

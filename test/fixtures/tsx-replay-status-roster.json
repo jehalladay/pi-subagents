@@ -1,0 +1,1315 @@
+{
+ "provenance": "wb-fb2z.4 TSX replay status census roster. Producer facts MEASURED read-only by the cutting seat ws-02 (run g10-work-s44) at ReactiveFiberTSXSDK program pin 76bbbffd9d4a419f972d6fefc8b7f9dc524df8df (git show), and at the TSX distribution the installed rf 0.1.832 runs (integrations/tsx/runtime-lock.json: @reactive-fiber/tsx 0.1.649 from 5da03a7d49f42a9be7612d34f73d7d9ef950c52c, an ancestor of the pin). fixtures.base is the producer's example ReplayReport verbatim (docs/guides/replay.md:160 fence at the pin); every other fixture is CONSTRUCTED as base plus the named delta (drift per the gating row BEADS-2026-10-21.md:29, rftsx-3ajfy TSX-IO-04, its severity and message the census's since the producer mints neither yet; mismatched per src/replay/replay.ts:652-666 over the guide's branch example; failed per replay.ts:514-523 and the empty fill :367-377). ajv 2020-12 against the pin's replay-report schema: base, drift, equal, opaque, mismatched and failed 0 errors; incompatible and unsupported refused at the status enum; absent refused at the required status. Witnesses are the census's own measured outcomes at base 6653728.",
+ "bead": "wb-fb2z.4",
+ "programPin": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+ "producer": {
+  "repository": "ReactiveFiberTSXSDK",
+  "package": {
+   "name": "@reactive-fiber/tsx",
+   "version": "0.1.668"
+  },
+  "statusWords": {
+   "file": "src/replay/report.ts",
+   "blob": "a340c13661ab623574b68e1027996a56a758550f",
+   "line": 39,
+   "words": [
+    "matched",
+    "mismatched",
+    "failed"
+   ]
+  },
+  "schema": {
+   "file": "tests/fixtures/docs/replay-report.schema.json",
+   "blob": "0eb6ffee558f811b42057620bb361d4b5086a032",
+   "required": [
+    "schema",
+    "schemaVersion",
+    "status",
+    "matched",
+    "firstMismatchPath",
+    "resources",
+    "effects",
+    "commits",
+    "reinitializedRuntimeOnlySlots",
+    "nodeRef",
+    "transactionRef",
+    "mode",
+    "captureVersions",
+    "diagnostics"
+   ],
+   "statusEnum": [
+    "matched",
+    "mismatched",
+    "failed"
+   ],
+   "additionalProperties": false
+  },
+  "codesTable": {
+   "file": "src/diagnostics/codes.ts",
+   "blob": "c2f5da9ce54bf14e8495d6365ffe5470bafd3dff",
+   "rows": 199,
+   "replayLines": "1681-1745",
+   "replayFamily": [
+    "RFTSX_REPLAY_VERSION_INVALID",
+    "RFTSX_REPLAY_REDACTED_CAPTURE",
+    "RFTSX_REPLAY_RENDERER_MISSING",
+    "RFTSX_REPLAY_RESOURCE_MISSING",
+    "RFTSX_REPLAY_MISMATCH",
+    "RFTSX_REPLAY_LIVE_PATH_BLOCKED",
+    "RFTSX_REPLAY_UNRECORDED_REQUEST",
+    "RFTSX_REPLAY_CAPTURE_INCONSISTENT"
+   ]
+  },
+  "golden": {
+   "file": "tests/golden/diagnostic-codes.json",
+   "blob": "5c39ec5ff1be0733d838e8fb93443c1b65ed2dd9",
+   "codes": [
+    "RFTSX_ASSEMBLY_BOTH_SIZE_LIMITS",
+    "RFTSX_ASSEMBLY_ESTIMATOR_FAILED",
+    "RFTSX_ASSEMBLY_INVALID_BUDGET",
+    "RFTSX_ASSEMBLY_INVALID_CONTROL_METADATA",
+    "RFTSX_ASSEMBLY_INVALID_OPTION",
+    "RFTSX_ASSEMBLY_INVALID_REASON_CODE",
+    "RFTSX_ASSEMBLY_INVALID_VERDICT",
+    "RFTSX_ASSEMBLY_JUDGE_FAILED",
+    "RFTSX_ASSEMBLY_NEGATIVE_ESTIMATE",
+    "RFTSX_ASSEMBLY_NO_JUDGE_DEFAULT",
+    "RFTSX_ASSEMBLY_PINNED_OVERFLOW",
+    "RFTSX_ASSEMBLY_SIZE_UNENFORCED",
+    "RFTSX_ASSEMBLY_UNKNOWN_NECESSITY",
+    "RFTSX_COMPONENT_BOUNDARY_FALLBACK_FAILED",
+    "RFTSX_COMPONENT_DUPLICATE",
+    "RFTSX_COMPONENT_INVALID_ID",
+    "RFTSX_COMPONENT_INVALID_METADATA",
+    "RFTSX_COMPONENT_NONDETERMINISTIC",
+    "RFTSX_COMPONENT_PROPS_SCHEMA_INVALID",
+    "RFTSX_COMPONENT_RENDER_FAILED",
+    "RFTSX_COMPONENT_THREW",
+    "RFTSX_COMPONENT_UNKNOWN",
+    "RFTSX_COMPONENT_UNSTABLE_TYPE_ID",
+    "RFTSX_ELEMENT_DEPTH_EXCEEDED",
+    "RFTSX_ELEMENT_INVALID_CHILDREN",
+    "RFTSX_ELEMENT_INVALID_KEY",
+    "RFTSX_ELEMENT_INVALID_METADATA",
+    "RFTSX_ELEMENT_INVALID_PROPS",
+    "RFTSX_ELEMENT_INVALID_TYPE",
+    "RFTSX_ELEMENT_NOT_OBJECT",
+    "RFTSX_ELEMENT_UNKNOWN_FIELD",
+    "RFTSX_ELEMENT_VERSION_INVALID",
+    "RFTSX_FIBER_GATE_VIOLATION",
+    "RFTSX_FIBER_INVALID_COMMIT",
+    "RFTSX_FIBER_INVALID_EFFECT",
+    "RFTSX_FIBER_INVALID_LANE",
+    "RFTSX_FIBER_INVALID_REF",
+    "RFTSX_FIBER_INVALID_RESULT",
+    "RFTSX_FIBER_INVALID_STATUS",
+    "RFTSX_FIBER_PEER_FAILED",
+    "RFTSX_FIBER_RECOVERED_UNSUPPORTED",
+    "RFTSX_FIBER_WAKE_NO_SUBSCRIBER",
+    "RFTSX_FIBER_WAKE_PARTIAL",
+    "RFTSX_GATE_DIVERGENCE_VANISHED",
+    "RFTSX_GATE_INVALID_FAKE",
+    "RFTSX_GATE_NOT_JUDGEABLE",
+    "RFTSX_GATE_SUITE_MISSING",
+    "RFTSX_GATE_UNDOCUMENTED_DIVERGENCE",
+    "RFTSX_GATE_ZERO_TESTS_COLLECTED",
+    "RFTSX_HOOK_CONTEXT_MISSING",
+    "RFTSX_HOOK_ORDER_CHANGED",
+    "RFTSX_HOOK_OUTSIDE_RENDER",
+    "RFTSX_HOOK_STALE_SETTER",
+    "RFTSX_HOOK_STATE_CORRUPT",
+    "RFTSX_HOOK_STATE_NOT_SERIALIZABLE",
+    "RFTSX_HOOK_STATE_RESTORE_INCOMPATIBLE",
+    "RFTSX_HOOK_STATE_SIZE_EXCEEDED",
+    "RFTSX_HOOK_STATE_STORE_BOUND",
+    "RFTSX_HOOK_STATE_UNCONSUMED",
+    "RFTSX_HOOK_STATE_VERSION_INVALID",
+    "RFTSX_HOOK_WRITE_AFTER_UNMOUNT",
+    "RFTSX_HOOK_WRITE_DURING_RENDER",
+    "RFTSX_HOST_BINDING_STALE",
+    "RFTSX_HOST_COMMIT_NO_SINK",
+    "RFTSX_HOST_CREDENTIAL_PASSTHROUGH",
+    "RFTSX_HOST_EFFECT_NO_RUNNER",
+    "RFTSX_HOST_EVALUATION_TIMEOUT",
+    "RFTSX_HOST_EXITED",
+    "RFTSX_HOST_FATAL",
+    "RFTSX_HOST_INVALID_OPTIONS",
+    "RFTSX_HOST_KILL_FAILED",
+    "RFTSX_HOST_NOT_READY",
+    "RFTSX_HOST_PEER_ALREADY_BOUND",
+    "RFTSX_HOST_PYTHON_MISSING",
+    "RFTSX_HOST_PYTHON_VERSION_UNSUPPORTED",
+    "RFTSX_HOST_RENDERER_DUPLICATE",
+    "RFTSX_HOST_RENDERER_UNKNOWN",
+    "RFTSX_HOST_SDK_IMPORT_FAILED",
+    "RFTSX_HOST_SDK_VERSION_INCOMPATIBLE",
+    "RFTSX_HOST_SDK_VERSION_MISMATCH",
+    "RFTSX_HOST_SDK_VERSION_UNRESOLVED",
+    "RFTSX_HOST_SHUTDOWN_TIMEOUT",
+    "RFTSX_HOST_STARTUP_TIMEOUT",
+    "RFTSX_HOST_UNDECLARED_PLATFORM",
+    "RFTSX_HOST_UNSAFE_CONFIG",
+    "RFTSX_HOST_WRONG_LOOP",
+    "RFTSX_INFERENCE_CANCEL_UNSUPPORTED",
+    "RFTSX_INFERENCE_CAPABILITY_UNKNOWN",
+    "RFTSX_INFERENCE_INVALID_REQUEST",
+    "RFTSX_INFERENCE_KEY_REUSE",
+    "RFTSX_INFERENCE_LATE_RESULT_DISCARDED",
+    "RFTSX_INFERENCE_LIVE_DISABLED",
+    "RFTSX_INFERENCE_MEDIA_UNSUPPORTED",
+    "RFTSX_INFERENCE_PROVIDER_FAILED",
+    "RFTSX_INFERENCE_REQUEST_KEYS_DROPPED",
+    "RFTSX_INFERENCE_RESOURCE_ID_MISMATCH",
+    "RFTSX_INFERENCE_RESPONSE_INVALID",
+    "RFTSX_INFERENCE_STOP_REASON_ABNORMAL",
+    "RFTSX_JSON_CYCLE",
+    "RFTSX_JSON_DEPTH_EXCEEDED",
+    "RFTSX_JSON_DIGITS_EXCEEDED",
+    "RFTSX_JSON_LONE_SURROGATE",
+    "RFTSX_JSON_NONFINITE",
+    "RFTSX_JSON_NONSTRING_KEY",
+    "RFTSX_JSON_PARSE_ERROR",
+    "RFTSX_JSON_SCHEMA_VIOLATION",
+    "RFTSX_JSON_UNSAFE_INTEGER",
+    "RFTSX_JSON_UNSUPPORTED_TYPE",
+    "RFTSX_JSX_ASYNC_COMPONENT_UNSUPPORTED",
+    "RFTSX_JSX_CYCLIC_CHILDREN",
+    "RFTSX_JSX_INVALID_CHILD",
+    "RFTSX_JSX_INVALID_ELEMENT_TYPE",
+    "RFTSX_JSX_INVALID_FRAGMENT_PROPS",
+    "RFTSX_JSX_INVALID_KEY",
+    "RFTSX_JSX_NONFINITE_CHILD",
+    "RFTSX_LENS_CONFIG_INVALID",
+    "RFTSX_LENS_DISABLED",
+    "RFTSX_LENS_ENVIRONMENT_DIAGNOSTIC",
+    "RFTSX_LENS_FAILED",
+    "RFTSX_LENS_KEY_INVALID",
+    "RFTSX_LENS_MISSING",
+    "RFTSX_LENS_NOT_CONFIGURED",
+    "RFTSX_LENS_WAKE_DEFERRED",
+    "RFTSX_OUTPUT_CARRIER_INVALID",
+    "RFTSX_OUTPUT_COORDINATION_DIGEST_MISMATCH",
+    "RFTSX_OUTPUT_COORDINATION_DUPLICATE_LINEAGE",
+    "RFTSX_OUTPUT_DOCUMENT_METADATA_UNCARRIED",
+    "RFTSX_OUTPUT_DUPLICATE_BLOCK_KEY",
+    "RFTSX_OUTPUT_INVALID_BLOCKS",
+    "RFTSX_OUTPUT_INVALID_CONTENT",
+    "RFTSX_OUTPUT_INVALID_DIAGNOSTICS",
+    "RFTSX_OUTPUT_INVALID_DIAGNOSTIC_SEVERITY",
+    "RFTSX_OUTPUT_INVALID_KEY",
+    "RFTSX_OUTPUT_INVALID_KIND",
+    "RFTSX_OUTPUT_INVALID_METADATA",
+    "RFTSX_OUTPUT_INVALID_PROVENANCE",
+    "RFTSX_OUTPUT_INVALID_VISIBILITY",
+    "RFTSX_OUTPUT_LAYOUT_DUPLICATE_ORDER_KEY",
+    "RFTSX_OUTPUT_LAYOUT_UNMATCHED_ORDER_KEY",
+    "RFTSX_OUTPUT_NOT_OBJECT",
+    "RFTSX_OUTPUT_SIZE_EXCEEDED",
+    "RFTSX_OUTPUT_UNKNOWN_FIELD",
+    "RFTSX_OUTPUT_UNSUPPORTED_NODE",
+    "RFTSX_PROTOCOL_APPLICATION_ERROR",
+    "RFTSX_PROTOCOL_CAPABILITY_MISSING",
+    "RFTSX_PROTOCOL_CLOSED",
+    "RFTSX_PROTOCOL_DEPTH_EXCEEDED",
+    "RFTSX_PROTOCOL_DUPLICATE_REQUEST_ID",
+    "RFTSX_PROTOCOL_DUPLICATE_RESPONSE",
+    "RFTSX_PROTOCOL_EOF",
+    "RFTSX_PROTOCOL_FRAME_TOO_LARGE",
+    "RFTSX_PROTOCOL_INTERNAL_ERROR",
+    "RFTSX_PROTOCOL_INVALID_ENVELOPE",
+    "RFTSX_PROTOCOL_INVALID_ID",
+    "RFTSX_PROTOCOL_INVALID_LIMITS",
+    "RFTSX_PROTOCOL_INVALID_PARAMS",
+    "RFTSX_PROTOCOL_INVALID_UTF8",
+    "RFTSX_PROTOCOL_METHOD_NOT_FOUND",
+    "RFTSX_PROTOCOL_PARSE_ERROR",
+    "RFTSX_PROTOCOL_QUEUE_FULL",
+    "RFTSX_PROTOCOL_REQUEST_ABORTED",
+    "RFTSX_PROTOCOL_RESULT_INVALID",
+    "RFTSX_PROTOCOL_TIMEOUT",
+    "RFTSX_PROTOCOL_TOO_MANY_REQUESTS",
+    "RFTSX_PROTOCOL_TRANSPORT_AUTH_REQUIRED",
+    "RFTSX_PROTOCOL_UNAUTHENTICATED_TRANSPORT",
+    "RFTSX_PROTOCOL_UNKNOWN_CAPABILITY",
+    "RFTSX_PROTOCOL_UNKNOWN_RESPONSE_ID",
+    "RFTSX_PROTOCOL_VERSION_INCOMPATIBLE",
+    "RFTSX_PROTOCOL_WRONG_LOOP",
+    "RFTSX_RECON_DEPTH_EXCEEDED",
+    "RFTSX_RECON_DUPLICATE_KEY",
+    "RFTSX_RECON_INVALID_INPUT",
+    "RFTSX_RECON_UNKEYED_LIST",
+    "RFTSX_REPLAY_CAPTURE_INCONSISTENT",
+    "RFTSX_REPLAY_LIVE_PATH_BLOCKED",
+    "RFTSX_REPLAY_MISMATCH",
+    "RFTSX_REPLAY_REDACTED_CAPTURE",
+    "RFTSX_REPLAY_RENDERER_MISSING",
+    "RFTSX_REPLAY_RESOURCE_MISSING",
+    "RFTSX_REPLAY_UNRECORDED_REQUEST",
+    "RFTSX_REPLAY_VERSION_INVALID",
+    "RFTSX_REPORT_INVARIANT",
+    "RFTSX_REPORT_TRUNCATED",
+    "RFTSX_RESOURCE_FAILED",
+    "RFTSX_RESOURCE_INVALID_REF",
+    "RFTSX_RESOURCE_INVALID_REQUEST",
+    "RFTSX_RESOURCE_MISSING",
+    "RFTSX_RESOURCE_QUEUE_FULL",
+    "RFTSX_RESOURCE_REQUESTS_EXCEEDED",
+    "RFTSX_RESOURCE_RESERVED_PREFIX",
+    "RFTSX_RESOURCE_ROUNDS_EXCEEDED",
+    "RFTSX_RESOURCE_SCOPE_INVALID",
+    "RFTSX_RESOURCE_SUSPEND_SWALLOWED",
+    "RFTSX_RESOURCE_SUSPEND_UNBOUNDED",
+    "RFTSX_RESOURCE_TIMEOUT",
+    "RFTSX_RESOURCE_UNKNOWN_KIND",
+    "RFTSX_RESOURCE_UNKNOWN_PROVIDER",
+    "RFTSX_RESOURCE_WAKE_BUDGET_EXCEEDED"
+   ]
+  },
+  "distribution": {
+   "lock": "reactive_fiber_cli/integrations/tsx/runtime-lock.json",
+   "rf": "0.1.832",
+   "name": "@reactive-fiber/tsx",
+   "version": "0.1.649",
+   "commit": "5da03a7d49f42a9be7612d34f73d7d9ef950c52c",
+   "ancestorOfPin": true,
+   "codesBlob": "2b32c5ec907b7250993396484745a1786baf1e7f",
+   "rows": 197,
+   "replayFamily": [
+    "RFTSX_REPLAY_VERSION_INVALID",
+    "RFTSX_REPLAY_REDACTED_CAPTURE",
+    "RFTSX_REPLAY_RENDERER_MISSING",
+    "RFTSX_REPLAY_RESOURCE_MISSING",
+    "RFTSX_REPLAY_MISMATCH",
+    "RFTSX_REPLAY_LIVE_PATH_BLOCKED",
+    "RFTSX_REPLAY_UNRECORDED_REQUEST",
+    "RFTSX_REPLAY_CAPTURE_INCONSISTENT"
+   ],
+   "statusWords": [
+    "matched",
+    "mismatched",
+    "failed"
+   ]
+  },
+  "guide": {
+   "file": "docs/guides/replay.md",
+   "blob": "42b5604dfee6d4a726200601f68a2aa7d1a4f960",
+   "fenceLine": 160
+  },
+  "program": {
+   "file": "docs/programs/component-assembly-2026-10-18/RFCLI-INTEROP.md",
+   "blob": "aa0f2142632ffc15b1af0bcd87f0643ee0777f00",
+   "statementLine": 33,
+   "restrictionLine": 22
+  },
+  "componentFirst": {
+   "file": "docs/programs/component-first-context-assembly-2026-10-18/README.md",
+   "blob": "bb0034556f38ec7448d7d169b411a2de2d11ee28",
+   "line": 20
+  },
+  "gatingRow": {
+   "file": "docs/programs/component-assembly-2026-10-18/BEADS-2026-10-21.md",
+   "blob": "cd19abd9e318a54f51415344d55269dda401c157",
+   "line": 29,
+   "bead": "rftsx-3ajfy",
+   "workPackage": "TSX-IO-04"
+  },
+  "rfClassification": {
+   "rf": "0.1.832",
+   "words": [
+    "replayable_exact",
+    "replayable_with_captured_external_inputs",
+    "replayable_with_declared_variance",
+    "not_replayable"
+   ]
+  }
+ },
+ "constants": {
+  "driftCode": "RFTSX_REPLAY_VERSION_DRIFT",
+  "statusWords": [
+   "matched",
+   "mismatched",
+   "failed"
+  ],
+  "replayCodes": [
+   "RFTSX_REPLAY_VERSION_INVALID",
+   "RFTSX_REPLAY_REDACTED_CAPTURE",
+   "RFTSX_REPLAY_RENDERER_MISSING",
+   "RFTSX_REPLAY_RESOURCE_MISSING",
+   "RFTSX_REPLAY_MISMATCH",
+   "RFTSX_REPLAY_LIVE_PATH_BLOCKED",
+   "RFTSX_REPLAY_UNRECORDED_REQUEST",
+   "RFTSX_REPLAY_CAPTURE_INCONSISTENT"
+  ],
+  "futureWords": [
+   "incompatible",
+   "unsupported"
+  ],
+  "vocabulary": [
+   "rftsx",
+   "replay-report",
+   "render-capture",
+   "captureVersions",
+   "firstMismatchPath",
+   "reinitializedRuntimeOnlySlots",
+   "replayable_exact",
+   "version-drift"
+  ],
+  "specifier": "reactive[\\s_.:/@-]*fiber[\\s_.:/@-]*tsx",
+  "residuals": {
+   "R-VOCABULARY": [
+    "Q1"
+   ],
+   "R-PARAPHRASE": [
+    "Q2"
+   ],
+   "R-COMPOSED": [
+    "Q3"
+   ],
+   "R-SCOPE": [
+    "Q4"
+   ],
+   "R-INTERRUPTED": [
+    "Q5"
+   ],
+   "R-RAW-READING": [
+    "Q6"
+   ],
+   "R-UNIT": [
+    "Q7"
+   ]
+  }
+ },
+ "delta": {
+  "captured": "0.1.600",
+  "current": "0.1.649",
+  "diagnostic": {
+   "code": "RFTSX_REPLAY_VERSION_DRIFT",
+   "severity": "warning",
+   "message": "capture versions.package differs from the replaying package",
+   "metadata": {
+    "captured": "0.1.600",
+    "current": "0.1.649"
+   }
+  },
+  "slot": "t=guide.counter;k=;o=0#1",
+  "mismatch": {
+   "path": "/output/blocks/0/content",
+   "diagnostic": {
+    "code": "RFTSX_REPLAY_MISMATCH",
+    "severity": "error",
+    "message": "replay(): the replayed render differs from the capture at /output/blocks/0/content",
+    "metadata": {
+     "firstMismatchPath": "/output/blocks/0/content",
+     "expected": "branch main",
+     "actual": "branch dev"
+    }
+   }
+  },
+  "failure": {
+   "diagnostic": {
+    "code": "RFTSX_REPLAY_RENDERER_MISSING",
+    "severity": "error",
+    "message": "replay(): componentId guide.branch-banner is not registered locally",
+    "metadata": {
+     "rendererId": null,
+     "componentId": "guide.branch-banner"
+    }
+   }
+  }
+ },
+ "fixtures": {
+  "base": {
+   "schema": "rftsx.replay-report",
+   "schemaVersion": 1,
+   "status": "matched",
+   "matched": true,
+   "firstMismatchPath": null,
+   "resources": [
+    {
+     "resourceId": "lens:git.branch",
+     "kind": "lens",
+     "source": "recording"
+    }
+   ],
+   "effects": [],
+   "commits": [],
+   "reinitializedRuntimeOnlySlots": [],
+   "nodeRef": null,
+   "transactionRef": null,
+   "mode": "replay",
+   "captureVersions": {
+    "package": {
+     "name": "@reactive-fiber/tsx",
+     "version": "0.1.224"
+    },
+    "protocol": "1.0",
+    "node": "v22.12.0",
+    "python": null,
+    "hostMode": "none"
+   },
+   "diagnostics": []
+  },
+  "drift": {
+   "schema": "rftsx.replay-report",
+   "schemaVersion": 1,
+   "status": "matched",
+   "matched": true,
+   "firstMismatchPath": null,
+   "resources": [
+    {
+     "resourceId": "lens:git.branch",
+     "kind": "lens",
+     "source": "recording"
+    }
+   ],
+   "effects": [],
+   "commits": [],
+   "reinitializedRuntimeOnlySlots": [],
+   "nodeRef": null,
+   "transactionRef": null,
+   "mode": "replay",
+   "captureVersions": {
+    "package": {
+     "name": "@reactive-fiber/tsx",
+     "version": "0.1.600"
+    },
+    "protocol": "1.0",
+    "node": "v22.12.0",
+    "python": null,
+    "hostMode": "none"
+   },
+   "diagnostics": [
+    {
+     "code": "RFTSX_REPLAY_VERSION_DRIFT",
+     "severity": "warning",
+     "message": "capture versions.package differs from the replaying package",
+     "metadata": {
+      "captured": "0.1.600",
+      "current": "0.1.649"
+     }
+    }
+   ]
+  },
+  "equal": {
+   "schema": "rftsx.replay-report",
+   "schemaVersion": 1,
+   "status": "matched",
+   "matched": true,
+   "firstMismatchPath": null,
+   "resources": [
+    {
+     "resourceId": "lens:git.branch",
+     "kind": "lens",
+     "source": "recording"
+    }
+   ],
+   "effects": [],
+   "commits": [],
+   "reinitializedRuntimeOnlySlots": [],
+   "nodeRef": null,
+   "transactionRef": null,
+   "mode": "replay",
+   "captureVersions": {
+    "package": {
+     "name": "@reactive-fiber/tsx",
+     "version": "0.1.649"
+    },
+    "protocol": "1.0",
+    "node": "v22.12.0",
+    "python": null,
+    "hostMode": "none"
+   },
+   "diagnostics": []
+  },
+  "opaque": {
+   "schema": "rftsx.replay-report",
+   "schemaVersion": 1,
+   "status": "matched",
+   "matched": true,
+   "firstMismatchPath": null,
+   "resources": [
+    {
+     "resourceId": "lens:git.branch",
+     "kind": "lens",
+     "source": "recording"
+    }
+   ],
+   "effects": [],
+   "commits": [],
+   "reinitializedRuntimeOnlySlots": [
+    "t=guide.counter;k=;o=0#1"
+   ],
+   "nodeRef": null,
+   "transactionRef": null,
+   "mode": "replay",
+   "captureVersions": {
+    "package": {
+     "name": "@reactive-fiber/tsx",
+     "version": "0.1.224"
+    },
+    "protocol": "1.0",
+    "node": "v22.12.0",
+    "python": null,
+    "hostMode": "none"
+   },
+   "diagnostics": []
+  },
+  "mismatched": {
+   "schema": "rftsx.replay-report",
+   "schemaVersion": 1,
+   "status": "mismatched",
+   "matched": false,
+   "firstMismatchPath": "/output/blocks/0/content",
+   "resources": [
+    {
+     "resourceId": "lens:git.branch",
+     "kind": "lens",
+     "source": "recording"
+    }
+   ],
+   "effects": [],
+   "commits": [],
+   "reinitializedRuntimeOnlySlots": [],
+   "nodeRef": null,
+   "transactionRef": null,
+   "mode": "replay",
+   "captureVersions": {
+    "package": {
+     "name": "@reactive-fiber/tsx",
+     "version": "0.1.224"
+    },
+    "protocol": "1.0",
+    "node": "v22.12.0",
+    "python": null,
+    "hostMode": "none"
+   },
+   "diagnostics": [
+    {
+     "code": "RFTSX_REPLAY_MISMATCH",
+     "severity": "error",
+     "message": "replay(): the replayed render differs from the capture at /output/blocks/0/content",
+     "metadata": {
+      "firstMismatchPath": "/output/blocks/0/content",
+      "expected": "branch main",
+      "actual": "branch dev"
+     }
+    }
+   ]
+  },
+  "failed": {
+   "schema": "rftsx.replay-report",
+   "schemaVersion": 1,
+   "status": "failed",
+   "matched": false,
+   "firstMismatchPath": null,
+   "resources": [],
+   "effects": [],
+   "commits": [],
+   "reinitializedRuntimeOnlySlots": [],
+   "nodeRef": null,
+   "transactionRef": null,
+   "mode": "replay",
+   "captureVersions": {
+    "package": {
+     "name": "@reactive-fiber/tsx",
+     "version": "0.1.224"
+    },
+    "protocol": "1.0",
+    "node": "v22.12.0",
+    "python": null,
+    "hostMode": "none"
+   },
+   "diagnostics": [
+    {
+     "code": "RFTSX_REPLAY_RENDERER_MISSING",
+     "severity": "error",
+     "message": "replay(): componentId guide.branch-banner is not registered locally",
+     "metadata": {
+      "rendererId": null,
+      "componentId": "guide.branch-banner"
+     }
+    }
+   ]
+  },
+  "incompatible": {
+   "schema": "rftsx.replay-report",
+   "schemaVersion": 1,
+   "status": "incompatible",
+   "matched": false,
+   "firstMismatchPath": null,
+   "resources": [
+    {
+     "resourceId": "lens:git.branch",
+     "kind": "lens",
+     "source": "recording"
+    }
+   ],
+   "effects": [],
+   "commits": [],
+   "reinitializedRuntimeOnlySlots": [],
+   "nodeRef": null,
+   "transactionRef": null,
+   "mode": "replay",
+   "captureVersions": {
+    "package": {
+     "name": "@reactive-fiber/tsx",
+     "version": "0.1.224"
+    },
+    "protocol": "1.0",
+    "node": "v22.12.0",
+    "python": null,
+    "hostMode": "none"
+   },
+   "diagnostics": []
+  },
+  "unsupported": {
+   "schema": "rftsx.replay-report",
+   "schemaVersion": 1,
+   "status": "unsupported",
+   "matched": false,
+   "firstMismatchPath": null,
+   "resources": [
+    {
+     "resourceId": "lens:git.branch",
+     "kind": "lens",
+     "source": "recording"
+    }
+   ],
+   "effects": [],
+   "commits": [],
+   "reinitializedRuntimeOnlySlots": [],
+   "nodeRef": null,
+   "transactionRef": null,
+   "mode": "replay",
+   "captureVersions": {
+    "package": {
+     "name": "@reactive-fiber/tsx",
+     "version": "0.1.224"
+    },
+    "protocol": "1.0",
+    "node": "v22.12.0",
+    "python": null,
+    "hostMode": "none"
+   },
+   "diagnostics": []
+  },
+  "absent": {
+   "schema": "rftsx.replay-report",
+   "schemaVersion": 1,
+   "matched": false,
+   "firstMismatchPath": null,
+   "resources": [
+    {
+     "resourceId": "lens:git.branch",
+     "kind": "lens",
+     "source": "recording"
+    }
+   ],
+   "effects": [],
+   "commits": [],
+   "reinitializedRuntimeOnlySlots": [],
+   "nodeRef": null,
+   "transactionRef": null,
+   "mode": "replay",
+   "captureVersions": {
+    "package": {
+     "name": "@reactive-fiber/tsx",
+     "version": "0.1.224"
+    },
+    "protocol": "1.0",
+    "node": "v22.12.0",
+    "python": null,
+    "hostMode": "none"
+   },
+   "diagnostics": []
+  }
+ },
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the bead's acceptance text and the cases agree",
+  "A1",
+  "A2",
+  "B1",
+  "B2",
+  "C1",
+  "C2",
+  "C3",
+  "D1",
+  "D2",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "Q7",
+  "the registered tests and the reached pins equal the roster, in order and both ways"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a, the trigger) Pi reads no TSX capture/replay classification today",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "srcFloorMet": true,
+      "anchorRead": true,
+      "nearestQuiet": true,
+      "descriptorsRead": true,
+      "spelling": [],
+      "descriptorHits": [],
+      "resultKeys": [],
+      "bound": [],
+      "unbound": [],
+      "stale": [],
+      "controls": {
+       "snake": [
+        "reinitializedruntimeonlyslots"
+       ],
+       "camel": [
+        "captureversions"
+       ],
+       "constant": [
+        "rftsx"
+       ],
+       "kebab": [
+        "replayreport",
+        "rftsx"
+       ],
+       "label": [
+        "replayableexact"
+       ],
+       "drift": [
+        "versiondrift"
+       ],
+       "embedded": [
+        "firstmismatchpath"
+       ],
+       "specifier": [
+        "reactive-fiber/tsx"
+       ],
+       "unrelated": []
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "bare": {
+       "category": "transport",
+       "message": "RF preview returned an unrecognized native envelope.",
+       "reading": false,
+       "spawns": 1,
+       "verb": [
+        "context",
+        "render"
+       ],
+       "fetches": 0
+      },
+      "embedded": {
+       "result": {
+        "admitted": true,
+        "projectionUnchanged": true,
+        "shown": [],
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "fetches": 0
+       },
+       "provenance": {
+        "admitted": true,
+        "projectionUnchanged": true,
+        "shown": [],
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "fetches": 0
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(a, the guard) a guard asserts the code is absent from the pinned codes table and Pi surfaces nothing",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "pin": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+      "tableRows": 199,
+      "goldenCodes": 199,
+      "family": 8,
+      "driftInFamily": false,
+      "driftInTable": false,
+      "driftAtDistribution": false,
+      "familyIsTablePrefixSet": true,
+      "distributionFamilyAgrees": true,
+      "statusWordsAgreeWithSchema": true
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "codes": [],
+      "schemas": [],
+      "labels": [],
+      "claims": [],
+      "controls": {
+       "code": true,
+       "schema": true,
+       "label": true,
+       "claim": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(b) armed on landing: a replay fixture with versions.package drift surfaces the producer's unchanged status plus the drift diagnostic verbatim, and a mutant upgrading to exact on checksum match fails",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "baseStatus": "matched",
+      "drift": {
+       "status": "matched",
+       "code": "RFTSX_REPLAY_VERSION_DRIFT",
+       "pairs": [
+        {
+         "captured": "0.1.600",
+         "current": "0.1.649"
+        }
+       ]
+      },
+      "rebuilt": {
+       "base": true,
+       "drift": true,
+       "equal": true,
+       "opaque": true,
+       "mismatched": true,
+       "failed": true,
+       "incompatible": true,
+       "unsupported": true,
+       "absent": true
+      },
+      "facts": {
+       "base": {
+        "keys": true,
+        "status": true,
+        "matched": true,
+        "mode": true,
+        "versions": true
+       },
+       "drift": {
+        "keys": true,
+        "status": true,
+        "matched": true,
+        "mode": true,
+        "versions": true
+       },
+       "equal": {
+        "keys": true,
+        "status": true,
+        "matched": true,
+        "mode": true,
+        "versions": true
+       },
+       "opaque": {
+        "keys": true,
+        "status": true,
+        "matched": true,
+        "mode": true,
+        "versions": true
+       },
+       "mismatched": {
+        "keys": true,
+        "status": true,
+        "matched": true,
+        "mode": true,
+        "versions": true
+       },
+       "failed": {
+        "keys": true,
+        "status": true,
+        "matched": true,
+        "mode": true,
+        "versions": true
+       },
+       "incompatible": {
+        "keys": true,
+        "status": false,
+        "matched": true,
+        "mode": true,
+        "versions": true
+       },
+       "unsupported": {
+        "keys": true,
+        "status": false,
+        "matched": true,
+        "mode": true,
+        "versions": true
+       },
+       "absent": {
+        "keys": false,
+        "status": false,
+        "matched": true,
+        "mode": true,
+        "versions": true
+       }
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "matrix": {
+       "honest": {
+        "drift": [],
+        "equal": [],
+        "opaque": [],
+        "mismatched": [],
+        "failed": []
+       },
+       "exactOnChecksum": {
+        "drift": [
+         "status",
+         "exact"
+        ],
+        "equal": [
+         "status",
+         "exact"
+        ],
+        "opaque": [
+         "status",
+         "exact"
+        ],
+        "mismatched": [
+         "status",
+         "exact"
+        ],
+        "failed": [
+         "status",
+         "exact"
+        ]
+       },
+       "exactOnOpaque": {
+        "drift": [],
+        "equal": [],
+        "opaque": [
+         "exact"
+        ],
+        "mismatched": [],
+        "failed": []
+       },
+       "dropDrift": {
+        "drift": [
+         "drift"
+        ],
+        "equal": [],
+        "opaque": [],
+        "mismatched": [],
+        "failed": []
+       },
+       "rewordDrift": {
+        "drift": [
+         "drift"
+        ],
+        "equal": [],
+        "opaque": [],
+        "mismatched": [],
+        "failed": []
+       },
+       "swapDrift": {
+        "drift": [
+         "drift"
+        ],
+        "equal": [],
+        "opaque": [],
+        "mismatched": [],
+        "failed": []
+       },
+       "synthDrift": {
+        "drift": [],
+        "equal": [
+         "synthesized-drift"
+        ],
+        "opaque": [
+         "synthesized-drift"
+        ],
+        "mismatched": [
+         "synthesized-drift"
+        ],
+        "failed": [
+         "synthesized-drift"
+        ]
+       },
+       "relabelStatus": {
+        "drift": [
+         "status"
+        ],
+        "equal": [
+         "status"
+        ],
+        "opaque": [
+         "status"
+        ],
+        "mismatched": [
+         "status"
+        ],
+        "failed": [
+         "status"
+        ]
+       },
+       "upgradeMismatch": {
+        "drift": [],
+        "equal": [],
+        "opaque": [],
+        "mismatched": [
+         "status"
+        ],
+        "failed": [
+         "status"
+        ]
+       }
+      },
+      "exactOnChecksumUnverified": {
+       "drift": [],
+       "equal": [],
+       "opaque": [],
+       "mismatched": [],
+       "failed": []
+      }
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "bound": [],
+      "violations": {},
+      "controls": {
+       "honestOnly": {},
+       "withMutant": {
+        "synthetic/exact-on-checksum": {
+         "drift": [
+          "status",
+          "exact"
+         ],
+         "equal": [
+          "status",
+          "exact"
+         ],
+         "opaque": [
+          "status",
+          "exact"
+         ],
+         "mismatched": [
+          "status",
+          "exact"
+         ],
+         "failed": [
+          "status",
+          "exact"
+         ],
+         "incompatible": [
+          "status",
+          "unknown",
+          "exact"
+         ],
+         "unsupported": [
+          "status",
+          "unknown",
+          "exact"
+         ],
+         "absent": [
+          "unknown",
+          "synthesized-status",
+          "exact"
+         ]
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "(c) Pi never synthesizes a replay status word; an unknown word stays unknown (wb-973.10, wb-2j3.2 never-synthesize rule)",
+   "pins": [
+    {
+     "id": "D1",
+     "witness": {
+      "futureWords": [
+       "incompatible",
+       "unsupported"
+      ],
+      "honestEcho": [
+       {
+        "statusWord": "incompatible",
+        "tone": "unknown"
+       },
+       {
+        "statusWord": "unsupported",
+        "tone": "unknown"
+       },
+       {
+        "statusWord": null,
+        "tone": "unknown"
+       }
+      ],
+      "matrix": {
+       "honest": {
+        "incompatible": [],
+        "unsupported": [],
+        "absent": []
+       },
+       "mapUnknown": {
+        "incompatible": [
+         "status",
+         "unknown"
+        ],
+        "unsupported": [
+         "status",
+         "unknown"
+        ],
+        "absent": []
+       },
+       "successForUnknown": {
+        "incompatible": [
+         "unknown"
+        ],
+        "unsupported": [
+         "unknown"
+        ],
+        "absent": []
+       },
+       "refuseUnknown": {
+        "incompatible": [
+         "refused"
+        ],
+        "unsupported": [
+         "refused"
+        ],
+        "absent": []
+       },
+       "synthAbsent": {
+        "incompatible": [],
+        "unsupported": [],
+        "absent": [
+         "unknown",
+         "synthesized-status"
+        ]
+       },
+       "exactOnChecksum": {
+        "incompatible": [
+         "status",
+         "unknown",
+         "exact"
+        ],
+        "unsupported": [
+         "status",
+         "unknown",
+         "exact"
+        ],
+        "absent": [
+         "unknown",
+         "synthesized-status",
+         "exact"
+        ]
+       }
+      }
+     }
+    },
+    {
+     "id": "D2",
+     "witness": [
+      {
+       "suite": "producer release from result.provenance.cli_version (wb-2j3.1 reader, wb-2j3.2 no-synthesis guard)",
+       "describes": 1,
+       "test": "R3: the R1 no-cli_version fixture synthesizes no producer-release facet, note or metadata field: the projection is byte-identical to today",
+       "registered": true
+      },
+      {
+       "suite": "observation rows from result.observations (wb-973.10 SCG-R10)",
+       "describes": 1,
+       "test": "SCG-R10 (c): an unknown status word reads as not observed: partial and never success, and never a refusal",
+       "registered": true
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals: each named family pinned by its quiet row",
+   "pins": [
+    {
+     "id": "Q1",
+     "witness": {
+      "words": [],
+      "specifiers": []
+     }
+    },
+    {
+     "id": "Q2",
+     "witness": {
+      "b2Units": 0,
+      "armedCheck": []
+     }
+    },
+    {
+     "id": "Q3",
+     "witness": {
+      "words": [],
+      "label": false,
+      "code": false
+     }
+    },
+    {
+     "id": "Q4",
+     "witness": {
+      "roots": [
+       "src",
+       "docs",
+       "qa",
+       "front matter (root *.md, examples/)"
+      ],
+      "beadsSpellDrift": true,
+      "beadsSpellLabel": true
+     }
+    },
+    {
+     "id": "Q5",
+     "witness": {
+      "words": [],
+      "label": false,
+      "units": 0
+     }
+    },
+    {
+     "id": "Q6",
+     "witness": {
+      "admitted": true,
+      "sourceVerbatim": true,
+      "projectionUnchanged": true
+     }
+    },
+    {
+     "id": "Q7",
+     "witness": {
+      "sentences": 0,
+      "heading": 0,
+      "oneUnit": 1
+     }
+    }
+   ]
+  }
+ ]
+}

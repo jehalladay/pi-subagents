@@ -1,0 +1,1762 @@
+{
+ "bead": "wb-tz4r.4",
+ "rfVersion": "0.1.836",
+ "riPin": "485f3615db1e",
+ "riProbe": "075ac589d64d",
+ "gate": "RI-DEC-08",
+ "siteWords": [
+  {
+   "placeholder": "<S1>",
+   "words": [
+    "sampling",
+    "evidence"
+   ]
+  },
+  {
+   "placeholder": "<S2>",
+   "words": [
+    "choice",
+    "logprob"
+   ]
+  },
+  {
+   "placeholder": "<S3>",
+   "words": [
+    "option",
+    "logprob"
+   ]
+  },
+  {
+   "placeholder": "<S4>",
+   "words": [
+    "option",
+    "distribution"
+   ]
+  },
+  {
+   "placeholder": "<S5>",
+   "words": [
+    "incomplete",
+    "distribution"
+   ]
+  },
+  {
+   "placeholder": "<S6>",
+   "words": [
+    "option",
+    "entropy"
+   ]
+  },
+  {
+   "placeholder": "<S7>",
+   "words": [
+    "candidate",
+    "distribution"
+   ]
+  },
+  {
+   "placeholder": "<S8>",
+   "words": [
+    "full",
+    "distribution"
+   ]
+  },
+  {
+   "placeholder": "<S9>",
+   "words": [
+    "token",
+    "coverage"
+   ]
+  },
+  {
+   "placeholder": "<S10>",
+   "words": [
+    "unnormalized",
+    "score"
+   ]
+  },
+  {
+   "placeholder": "<S11>",
+   "words": [
+    "empirical",
+    "sampling"
+   ]
+  },
+  {
+   "placeholder": "<S12>",
+   "words": [
+    "calibrated",
+    "probabilit"
+   ]
+  },
+  {
+   "placeholder": "<S13>",
+   "words": [
+    "verbal",
+    "confidence"
+   ]
+  },
+  {
+   "placeholder": "<S14>",
+   "words": [
+    "pairwise",
+    "score"
+   ]
+  },
+  {
+   "placeholder": "<S15>",
+   "words": [
+    "permutation",
+    "probabilit"
+   ]
+  },
+  {
+   "placeholder": "<S16>",
+   "words": [
+    "calibration",
+    "claim"
+   ]
+  },
+  {
+   "placeholder": "<S17>",
+   "words": [
+    "calibration",
+    "metadata"
+   ]
+  },
+  {
+   "placeholder": "<S18>",
+   "words": [
+    "score",
+    "provenance"
+   ]
+  },
+  {
+   "placeholder": "<S19>",
+   "words": [
+    "confidence",
+    "evidence"
+   ]
+  }
+ ],
+ "fixtureWords": [
+  {
+   "placeholder": "<C1>",
+   "words": [
+    "native",
+    "full",
+    "candidate",
+    "distribution"
+   ]
+  },
+  {
+   "placeholder": "<C2>",
+   "words": [
+    "chosen",
+    "option",
+    "logprob"
+   ]
+  },
+  {
+   "placeholder": "<C3>",
+   "words": [
+    "incomplete",
+    "token",
+    "coverage"
+   ]
+  },
+  {
+   "placeholder": "<C4>",
+   "words": [
+    "unnormalized",
+    "scores"
+   ]
+  },
+  {
+   "placeholder": "<C5>",
+   "words": [
+    "empirical",
+    "sampling"
+   ]
+  },
+  {
+   "placeholder": "<C6>",
+   "words": [
+    "calibrated",
+    "probabilities"
+   ]
+  },
+  {
+   "placeholder": "<VC>",
+   "words": [
+    "verbal",
+    "confidence"
+   ]
+  },
+  {
+   "placeholder": "<PS>",
+   "words": [
+    "pairwise",
+    "score"
+   ]
+  },
+  {
+   "placeholder": "<PP>",
+   "words": [
+    "permutation",
+    "probability"
+   ]
+  }
+ ],
+ "classField": "evidence_class",
+ "calibrationParts": [
+  "population",
+  "evaluation",
+  "method",
+  "provenance"
+ ],
+ "calibrationNoteCode": "calibration-incomplete",
+ "verbal": "high confidence",
+ "stems": [
+  "logprob",
+  "probabilit",
+  "calibrat",
+  "verbal"
+ ],
+ "surfaceRoots": [
+  "src",
+  "qa",
+  "docs",
+  "examples",
+  ".agents",
+  ".codex",
+  ".github"
+ ],
+ "surfaceFiles": [
+  "AGENTS.md",
+  "CHANGELOG.md",
+  "CONTRIBUTING.md",
+  "README.md",
+  "SECURITY.md",
+  "package.json",
+  "forge.toml"
+ ],
+ "testRoot": "test",
+ "floors": {
+  "src": 105,
+  "qa": 60,
+  "docs": 64,
+  "examples": 6,
+  ".agents": 2,
+  ".codex": 2,
+  ".github": 2,
+  "test": 480
+ },
+ "notWalked": [
+  {
+   "root": ".beads",
+   "reason": "the bead store export: the filing itself, the outside anchor the judged set reads"
+  },
+  {
+   "root": "new-feedback",
+   "reason": "tool feedback addressed to other repositories, not a Pi surface"
+  },
+  {
+   "root": "media",
+   "reason": "binary demo assets"
+  },
+  {
+   "root": "vendor",
+   "reason": "vendored producer SDK tarballs and their lock, not Pi's own text"
+  }
+ ],
+ "placements": [
+  {
+   "id": "resource",
+   "path": [
+    "result",
+    "resources"
+   ],
+   "list": true
+  },
+  {
+   "id": "capability",
+   "path": [
+    "result",
+    "budget",
+    "capability_snapshot",
+    "decision",
+    "evidence"
+   ],
+   "list": false
+  },
+  {
+   "id": "necessity",
+   "path": [
+    "result",
+    "necessity",
+    "0",
+    "metadata",
+    "evidence"
+   ],
+   "list": false
+  }
+ ],
+ "quotes": [
+  {
+   "ref": "ReactiveInferenceSDK docs/programs/unified-decision-inference-2026-10-21/01-contracts.md:17@485f3615db1e",
+   "text": "Native full candidate distribution, chosen-option logprob, incomplete token coverage, unnormalized scores, empirical sampling, and calibrated probabilities are different evidence classes. Verbal confidence never becomes probability. For ranking, do not confuse pairwise score and permutation probability. Calibration claims require named population, evaluation, method and provenance.",
+   "sha256": "f715d9a420e1104d4bcafa17a594dc7c617e41c6b24518bed0ccb202260642b3"
+  },
+  {
+   "ref": "ReactiveInferenceSDK docs/programs/unified-decision-inference-2026-10-21/02-implementation.md:17@485f3615db1e",
+   "text": "RI-DEC-08: score provenance, native distributions/logprob contracts, calibration metadata, sampling and policy identity.",
+   "sha256": "519dc80231a45556901289f3e0236553b80dfeca731551b420e47bffac6eec04"
+  },
+  {
+   "ref": "ReactiveInferenceSDK docs/programs/unified-decision-inference-2026-10-21/02-implementation.md:23@485f3615db1e",
+   "text": "Current implementation: RI-DEC-02/04/05 **initial restricted seed only**, with choice questions and pure preflight, NOT provider execution or advanced output support.",
+   "sha256": "4c3cda11be6fa5634131a00e6916df1fa9cdbb568c9a82a46ee7da7e7ddba8f6"
+  },
+  {
+   "ref": "ReactiveInferenceSDK docs/programs/unified-decision-inference-2026-10-21/03-conformance.md:8@485f3615db1e",
+   "text": "- Required complete candidate distribution cannot be weakened to partial provider logprobs.",
+   "sha256": "216cd22a88c669a7d1f46225443efa7b7cafb0ea3dca238c92eec6fe110bc025"
+  },
+  {
+   "ref": "ReactiveInferenceSDK src/reactive_inference/<DE>/preflight.py:76@485f3615db1e",
+   "text": "            design_intent=\"Partial token logprobs or verbal estimates are not a complete decision distribution.\",",
+   "sha256": "611dc8d0ba1b80d02b096d4c27f7cec20aaa78d2bb5b95a28a998b9915d88a9b"
+  },
+  {
+   "ref": "ReactiveInferenceSDK src/reactive_inference/<DE>/contracts.py:62@485f3615db1e",
+   "text": "    require_complete_distribution: bool = False",
+   "sha256": "d3e11ef7371a92f925a505a958791fd82ce5fb3f92bdb8fc627f31dd444269e7"
+  },
+  {
+   "ref": "ReactiveInferenceSDK src/reactive_inference/<DE>/preflight.py:19@485f3615db1e",
+   "text": "    supports_complete_distribution: bool",
+   "sha256": "20c95b5ab0768028c5ac990f9de5a65be9b1b80d4df39d1ec9fd0b869c0f28ea"
+  }
+ ],
+ "producerFacts": {
+  "unified": {
+   "gate": "RI-DEC-08",
+   "sameExportsAtProbe": true,
+   "pin": {
+    "commit": "485f3615db1e",
+    "committed": "2026-10-21T02:38:38-07:00",
+    "exports": [
+     "ChoiceQuestion",
+     "DecisionBatchMode",
+     "DecisionChoiceRequest",
+     "ChoiceBackendCapabilities",
+     "ChoiceExecutionPlan",
+     "ChoiceExecutionGroup",
+     "plan_choices"
+    ],
+    "rows": {
+     "calibrat": 0,
+     "permutation": 0,
+     "empirical": 0,
+     "unnormali": 0,
+     "token coverage": 0,
+     "evidence class": 0
+    }
+   },
+   "probe": {
+    "commit": "075ac589d64d",
+    "committed": "2026-10-23T02:36:04-07:00",
+    "commitsPastPin": 10,
+    "descendant": true,
+    "rows": {
+     "calibrat": 0,
+     "permutation": 0,
+     "empirical": 0,
+     "unnormali": 0,
+     "token coverage": 0,
+     "evidence class": 0
+    }
+   },
+   "method": "git grep -l -i -F <word> <commit> -- src in the local ReactiveInferenceSDK checkout, no fetch; the module's export list read with git show"
+  },
+  "relatives": [
+   {
+    "placeholder": "<S1>",
+    "words": [
+     "sampling",
+     "evidence"
+    ],
+    "ref": "ReactiveInferenceSDK src/reactive_inference/<S1>.py:254@485f3615db1e (the RI-I2 record class)"
+   },
+   {
+    "placeholder": "<S2>",
+    "words": [
+     "choice",
+     "logprob"
+    ],
+    "ref": "ReactiveInferenceSDK src/reactive_inference/<S1>.py:348@485f3615db1e (a to_dict key)"
+   },
+   {
+    "placeholder": "<S3>",
+    "words": [
+     "option",
+     "logprobs"
+    ],
+    "ref": "ReactiveInferenceSDK src/reactive_inference/<S1>.py:349@485f3615db1e (a to_dict key)"
+   },
+   {
+    "placeholder": "<S2>",
+    "words": [
+     "sampled",
+     "choice",
+     "logprob"
+    ],
+    "ref": "ReactiveInferenceSDK src/reactive_inference/decision_capabilities.py:128@485f3615db1e (a probability support value)"
+   },
+   {
+    "placeholder": "<S4>",
+    "words": [
+     "option",
+     "distribution"
+    ],
+    "ref": "ReactiveInferenceSDK src/reactive_inference/decision_capabilities.py:129@485f3615db1e (a probability support value)"
+   },
+   {
+    "placeholder": "<S5>",
+    "words": [
+     "incomplete",
+     "distribution"
+    ],
+    "ref": "ReactiveInferenceSDK src/reactive_inference/<S1>.py:119@485f3615db1e (an invalid reason)"
+   },
+   {
+    "placeholder": "<S6>",
+    "words": [
+     "option",
+     "entropy"
+    ],
+    "ref": "ReactiveInferenceSDK src/reactive_inference/<S1>.py:850@485f3615db1e (the entropy function, available records only)"
+   }
+  ]
+ },
+ "evidence": {
+  "tag": "ri.decision-confidence/constructed-0",
+  "schema_version": "ri-decision-confidence/constructed-0",
+  "question_id": "q-route-3c9",
+  "candidates": [
+   "route-a",
+   "route-b",
+   "route-c"
+  ],
+  "chosen": "route-b",
+  "evidence": [
+   {
+    "evidence_class": "<C1>",
+    "values": {
+     "route-a": 0.07,
+     "route-b": 0.86,
+     "route-c": 0.07
+    }
+   },
+   {
+    "evidence_class": "<C2>",
+    "values": {
+     "route-b": -0.151
+    }
+   },
+   {
+    "evidence_class": "<C3>",
+    "values": {
+     "route-b": -0.094
+    },
+    "covered_tokens": 1,
+    "choice_tokens": 2
+   },
+   {
+    "evidence_class": "<C4>",
+    "values": {
+     "route-a": 1.4,
+     "route-b": 3.9,
+     "route-c": 1.2
+    }
+   },
+   {
+    "evidence_class": "<C5>",
+    "values": {
+     "route-a": 2,
+     "route-b": 17,
+     "route-c": 1
+    },
+    "samples": 20
+   },
+   {
+    "evidence_class": "<C6>",
+    "values": {
+     "route-a": 0.05,
+     "route-b": 0.9,
+     "route-c": 0.05
+    }
+   }
+  ],
+  "<VC>": "high confidence",
+  "ranking": {
+   "<PS>": {
+    "route-b>route-a": 0.81,
+    "route-b>route-c": 0.77,
+    "route-a>route-c": 0.52
+   },
+   "<PP>": {
+    "route-b,route-a,route-c": 0.43,
+    "route-b,route-c,route-a": 0.31,
+    "route-a,route-b,route-c": 0.12
+   }
+  },
+  "calibration": {
+   "population": "constructed-0 routing questions",
+   "evaluation": "constructed-0 held-out split",
+   "method": "constructed-0 temperature scaling",
+   "provenance": "ri.calibration-run/constructed-0"
+  }
+ },
+ "otherCalibration": {
+  "population": "constructed-1 support tickets",
+  "evaluation": "constructed-1 weekly audit",
+  "method": "constructed-1 isotonic regression",
+  "provenance": "ri.calibration-run/constructed-1"
+ },
+ "evidenceSha256": "97c1c48917bafd874041583ad4eeabf312fe465ebc427d882c13cb125b7cb326",
+ "measured": [
+  "rf --json --version -> 0 (result.version 0.1.836)",
+  "rf init --backend jsonl --no-input --json -> 0",
+  "rf component create demo.notes --kind declarative --json -> 0; its one always text node set to \"Route B, with high confidence.\"",
+  "rf component add <manifest> --json -> 0 and rf component activate demo.notes --json -> 0 (graphs/context.toml: source task -> component notes.task)",
+  "rf graph validate --json -> 0 (valid, diagnostics [])",
+  "rf --workspace <root> context render --model claude-opus-5 --task \"summarise the notes\" --no-commit --no-input --json -> 0 (the fixture; root rewritten to /fixture/rf-workspace)"
+ ],
+ "exit": 0,
+ "envelope": {
+  "schema": "reactive-fiber.cli/v1",
+  "ok": true,
+  "command": "context.render",
+  "operation_id": "rfo_sh7iul64fam2cypuunog4gmq3i",
+  "workspace": {
+   "id": "rfw_yvhhmmanbog3f4rxv3hotrcdr4",
+   "root": "/fixture/rf-workspace"
+  },
+  "transaction_id": null,
+  "result": {
+   "output": {
+    "text": "Route B, with high confidence.\n",
+    "size_bytes": 31,
+    "digest": "sha256:b9cd597d0149daa01d6bb7e3d9acaf77d5d18d7002b26ed8e5b02d2a790ca539",
+    "path": null
+   },
+   "budget": {
+    "schema": "reactive-fiber.budget/v1",
+    "requested_model_id": "claude-opus-5",
+    "resolved_model_id": null,
+    "formula_terms": {
+     "context_window": 1000000,
+     "max_output_tokens": 128000,
+     "output_reserve": 8192,
+     "occupied_tokens": 0,
+     "overhead": 0,
+     "safety_margin": 2048,
+     "available_context_tokens": 989760
+    },
+    "capability_snapshot": {
+     "model_id": "claude-opus-5",
+     "context_window": 1000000,
+     "max_output_tokens": 128000,
+     "supports_thinking": true,
+     "supports_reasoning": true,
+     "supports_streaming": true,
+     "supports_vision": true,
+     "thinking_budget": null,
+     "cache_prefix": null,
+     "reasoning": {
+      "reasoning_control": "adaptive_effort",
+      "budget_tokens_status": "rejected",
+      "effort_levels": [],
+      "interleaved": true,
+      "display_default": "omitted",
+      "always_on": false,
+      "always_on_verified": true,
+      "verified": false,
+      "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 — verified=False per honesty rule D until a live sweep covers them"
+     },
+     "can_count_tokens": false,
+     "verified": true,
+     "source": null,
+     "known_policy_gates": [],
+     "decision": {
+      "supports_forced_tool": true,
+      "supports_structured_output": false,
+      "supports_span_output": true,
+      "supports_forced_tool_with_thinking": false,
+      "probability_support": "none",
+      "modalities": [
+       "image",
+       "text"
+      ],
+      "media_budget": {
+       "max_blocks": 20,
+       "max_bytes_per_block": 3750000
+      },
+      "verified": false,
+      "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D"
+     }
+    },
+    "capability_verified": true,
+    "capability_source": null,
+    "token_count_method": "estimated",
+    "estimator_id": "rf.utf8-bytes-div4.v1",
+    "counts": {
+     "candidate": 1,
+     "admitted_before_budget": 1,
+     "final_included": 1,
+     "withheld_necessity": 0,
+     "withheld_truncated": 0
+    },
+    "reconciliation_attempts": [],
+    "observability": {
+     "token_cost_unknown": 0,
+     "token_estimator_failed": 0,
+     "reconciliation_attempts": 0
+    },
+    "included_tokens": 8,
+    "truncated_tokens": 0,
+    "truncated_count": 0,
+    "overflow_pinned_count": 0,
+    "hidden_count": 0,
+    "audience_excluded_count": 0,
+    "unknown_cost_count": 0,
+    "token_accounting": {
+     "kind": "estimated",
+     "estimator_id": "rf.utf8-bytes-div4.v1",
+     "included_tokens": 8
+    },
+    "truncated_keys": []
+   },
+   "diagnostics_summary": {
+    "errors": 0,
+    "warnings": 0,
+    "has_errors": false,
+    "has_warnings": false
+   },
+   "blocks": [
+    {
+     "final_index": 0,
+     "candidate_key": "demo.notes:notes::placeholder",
+     "component_id": "demo.notes",
+     "token_cost": {
+      "kind": "estimated",
+      "tokens": 8
+     },
+     "token_cost_kind": "estimated"
+    }
+   ],
+   "components": [
+    {
+     "component_instance_id": "demo.notes:notes",
+     "component_id": "demo.notes",
+     "component_revision_id": "sha256:88e5fc99bd6a489f2ac4afd51b65eb82dfef7e951d6ae0bc83295c0ab5050d64",
+     "status": "ok",
+     "source_unavailable": []
+    }
+   ],
+   "provenance": {
+    "created_at": "2026-10-23T12:48:42.825758Z",
+    "graph_revision_id": "sha256:8521e42c51f39bcce4879b80e4dd0511d004369ef2351e6b52d947fbfc7a9b8f",
+    "necessity_policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+    "workspace_schema_version": "reactive-fiber.workspace/v1",
+    "cli_version": "0.1.836",
+    "storage_backend": "jsonl",
+    "sdk_versions": {
+     "fiber_optics": {
+      "distribution_version": "0.1.0.20261014202847",
+      "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42"
+     },
+     "reactive_lenses": {
+      "distribution_version": "0.1.1.20261018.6",
+      "contract_fingerprint": "sha256:0931bf8cfdc86b26edf9bdd4a3813dec4b6c894b3434f6039924df07234b8ea8"
+     },
+     "reactive_components": {
+      "distribution_version": "0.1.1.20261018121500",
+      "contract_fingerprint": "sha256:d12211ca722f4e778c1009989745bdc7e4e2297a308cf5601ed2c7e0ffbe7d37"
+     },
+     "reactive_inference": {
+      "distribution_version": "0.2.60.20261018120223",
+      "contract_fingerprint": "sha256:b075fe443fe70a87b10a0fa429cdc298a5af9b9bc5b1dc8d8b62a9f04454380b"
+     },
+     "fiber_optics_wire_format": "2"
+    },
+    "storage": {
+     "backend": "jsonl",
+     "engine_version": null
+    }
+   },
+   "work_metrics": {
+    "source_capture_count": 1,
+    "fiber_signal_count": 2,
+    "fiber_transaction_count": 1,
+    "invalidated_component_count": 1,
+    "rendered_component_count": 1,
+    "state_read_count": 0,
+    "state_write_count": 0,
+    "journal_records_scanned": 48,
+    "blob_bytes_written": 0,
+    "history_rows_materialized": 0,
+    "reused_component_count": 0,
+    "observation_executed_count": 0,
+    "observation_reused_count": 0,
+    "publish_conflict_count": 0
+   },
+   "work": {
+    "source_capture_count": 1,
+    "fiber_signal_count": 2,
+    "component_render_count": 1,
+    "lens_resolution_count": 0,
+    "necessity_eval_count": 1,
+    "storage_write_count": 0
+   },
+   "engine_metrics": {
+    "tsx_worker_spawns": 0,
+    "tsx_resource_rounds": 0
+   },
+   "scope": null,
+   "audience": "model",
+   "bundle_revision_id": "sha256:03915ed3f3e5558803c6423333e81a9cb1657f04d1bf74843ceb535bc82082b4",
+   "observations": [],
+   "necessity": [
+    {
+     "render_id": "rfr_r2ytpwaixoq4ohrdlxs7yonfi4",
+     "candidate_key": "demo.notes:notes::placeholder",
+     "necessity_class": "always",
+     "include": true,
+     "reason": "always_floor",
+     "estimated_tokens": 8,
+     "metadata": {
+      "evidence_keys": [
+       "necessity_class"
+      ],
+      "explicit_request": false
+     },
+     "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+     "judge_id": "rf.necessity.default-host.v1",
+     "judge_kind": "host_default",
+     "necessity_class_raw": "always",
+     "fallback_used": false,
+     "failure_mode": "fail"
+    }
+   ],
+   "judge_context": {
+    "task_digest": "sha256:1bdd58e00da2e3b75bd8c80dafc33d29dfc85f0638a5427e96cabed3e013fad9",
+    "task_tags": [],
+    "agent_id": null,
+    "agent_role": null,
+    "session_id": "rfs_p6yqrwdh66syhaommmgmexpqfa",
+    "explicit_requests": [],
+    "workspace_facts": {
+     "session.active": true
+    }
+   },
+   "judge_context_layers": {
+    "task.tags": "defaults",
+    "agent.role": "defaults"
+   },
+   "attempts": 1,
+   "superseded_transaction_ids": [],
+   "retry_work": {
+    "superseded_attempts": [],
+    "wasted_source_capture_count": 0,
+    "wasted_fiber_signal_count": 0,
+    "wasted_fiber_transaction_count": 0,
+    "wasted_invalidated_component_count": 0,
+    "wasted_rendered_component_count": 0,
+    "wasted_state_read_count": 0,
+    "wasted_state_write_count": 0,
+    "wasted_journal_records_scanned": 0,
+    "wasted_blob_bytes_written": 0,
+    "wasted_history_rows_materialized": 0,
+    "wasted_reused_component_count": 0,
+    "wasted_observation_executed_count": 0,
+    "wasted_observation_reused_count": 0,
+    "wasted_publish_conflict_count": 0
+   },
+   "fiber_transaction_refs": [
+    "rfr_r2ytpwaixoq4ohrdlxs7yonfi4/tx_1"
+   ],
+   "render_id": null,
+   "ephemeral": true,
+   "commit_seq": null,
+   "effects": [],
+   "plan": {
+    "operations": [],
+    "would_commit": false
+   },
+   "session_id": null
+  },
+  "diagnostics": []
+ },
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) adoption fixture: each of the six class labels is carried verbatim as the producer's field; a verbal-confidence string yields no numeric probability; pairwise score and permutation probability travel under their producer field names",
+   "pins": [
+    {
+     "id": "A1",
+     "atom": "each of the six class labels is carried verbatim as the producer's field",
+     "witness": {
+      "classes": 6,
+      "reference": {
+       "labels": [
+        "<C1>",
+        "<C2>",
+        "<C3>",
+        "<C4>",
+        "<C5>",
+        "<C6>"
+       ],
+       "field": true,
+       "violations": []
+      },
+      "refusals": {
+       "upperCase": [
+        "class:relabeled"
+       ],
+       "swapped": [
+        "class:relabeled",
+        "class:upgraded"
+       ],
+       "otherField": [
+        "class:relabeled",
+        "class:rewritten"
+       ],
+       "dropped": [
+        "class:dropped"
+       ]
+      },
+      "placements": {
+       "resource": {
+        "native": {
+         "verbatim": true,
+         "carried": [
+          "<C1>",
+          "<C2>",
+          "<C3>",
+          "<C4>",
+          "<C5>",
+          "<C6>"
+         ],
+         "posture": []
+        },
+        "injected": {
+         "verbatim": true,
+         "carried": [
+          "<C1>",
+          "<C2>",
+          "<C3>",
+          "<C4>",
+          "<C5>",
+          "<C6>"
+         ],
+         "posture": []
+        }
+       },
+       "capability": {
+        "native": {
+         "verbatim": true,
+         "carried": [
+          "<C1>",
+          "<C2>",
+          "<C3>",
+          "<C4>",
+          "<C5>",
+          "<C6>"
+         ],
+         "posture": []
+        },
+        "injected": {
+         "verbatim": true,
+         "carried": [
+          "<C1>",
+          "<C2>",
+          "<C3>",
+          "<C4>",
+          "<C5>",
+          "<C6>"
+         ],
+         "posture": []
+        }
+       },
+       "necessity": {
+        "native": {
+         "verbatim": true,
+         "carried": [
+          "<C1>",
+          "<C2>",
+          "<C3>",
+          "<C4>",
+          "<C5>",
+          "<C6>"
+         ],
+         "posture": []
+        },
+        "injected": {
+         "verbatim": true,
+         "carried": [
+          "<C1>",
+          "<C2>",
+          "<C3>",
+          "<C4>",
+          "<C5>",
+          "<C6>"
+         ],
+         "posture": []
+        }
+       }
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "atom": "a verbal-confidence string yields no numeric probability",
+     "witness": {
+      "reference": {
+       "verbal": true,
+       "numbers": {
+        "record": 23,
+        "echo": 23,
+        "added": 0
+       },
+       "violations": []
+      },
+      "measuredText": {
+       "native": {
+        "holdsPhrase": true,
+        "diff": [
+         "snapshots.0.nativePayloadRef"
+        ],
+        "numbersEqual": true
+       },
+       "injected": {
+        "holdsPhrase": true,
+        "diff": [
+         "snapshots.0.nativePayloadRef"
+        ],
+        "numbersEqual": true
+       }
+      },
+      "placements": {
+       "resource": {
+        "native": {
+         "verbatim": true,
+         "carried": {
+          "verbal": true,
+          "numbers": 23
+         },
+         "posture": []
+        },
+        "injected": {
+         "verbatim": true,
+         "carried": {
+          "verbal": true,
+          "numbers": 23
+         },
+         "posture": []
+        }
+       },
+       "capability": {
+        "native": {
+         "verbatim": true,
+         "carried": {
+          "verbal": true,
+          "numbers": 23
+         },
+         "posture": []
+        },
+        "injected": {
+         "verbatim": true,
+         "carried": {
+          "verbal": true,
+          "numbers": 23
+         },
+         "posture": []
+        }
+       },
+       "necessity": {
+        "native": {
+         "verbatim": true,
+         "carried": {
+          "verbal": true,
+          "numbers": 23
+         },
+         "posture": []
+        },
+        "injected": {
+         "verbatim": true,
+         "carried": {
+          "verbal": true,
+          "numbers": 23
+         },
+         "posture": []
+        }
+       }
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "atom": "pairwise score and permutation probability travel under their producer field names",
+     "witness": {
+      "reference": {
+       "fields": [
+        "<PS>",
+        "<PP>"
+       ],
+       "verbatim": [
+        true,
+        true
+       ],
+       "violations": []
+      },
+      "refusals": {
+       "swapped": [
+        "number:added",
+        "ranking:swapped"
+       ],
+       "renamed": [
+        "number:added",
+        "ranking:renamed"
+       ],
+       "merged": [
+        "number:added",
+        "ranking:renamed"
+       ]
+      },
+      "placements": {
+       "resource": {
+        "native": {
+         "verbatim": true,
+         "carried": {
+          "fields": [
+           "<PS>",
+           "<PP>"
+          ],
+          "verbatim": [
+           true,
+           true
+          ]
+         },
+         "posture": []
+        },
+        "injected": {
+         "verbatim": true,
+         "carried": {
+          "fields": [
+           "<PS>",
+           "<PP>"
+          ],
+          "verbatim": [
+           true,
+           true
+          ]
+         },
+         "posture": []
+        }
+       },
+       "capability": {
+        "native": {
+         "verbatim": true,
+         "carried": {
+          "fields": [
+           "<PS>",
+           "<PP>"
+          ],
+          "verbatim": [
+           true,
+           true
+          ]
+         },
+         "posture": []
+        },
+        "injected": {
+         "verbatim": true,
+         "carried": {
+          "fields": [
+           "<PS>",
+           "<PP>"
+          ],
+          "verbatim": [
+           true,
+           true
+          ]
+         },
+         "posture": []
+        }
+       },
+       "necessity": {
+        "native": {
+         "verbatim": true,
+         "carried": {
+          "fields": [
+           "<PS>",
+           "<PP>"
+          ],
+          "verbatim": [
+           true,
+           true
+          ]
+         },
+         "posture": []
+        },
+        "injected": {
+         "verbatim": true,
+         "carried": {
+          "fields": [
+           "<PS>",
+           "<PP>"
+          ],
+          "verbatim": [
+           true,
+           true
+          ]
+         },
+         "posture": []
+        }
+       }
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) a calibration claim surfaces only when population, evaluation, method and provenance are all present verbatim, else suppressed with a typed note",
+   "pins": [
+    {
+     "id": "B1",
+     "atom": "a calibration claim surfaces only when population, evaluation, method and provenance are all present verbatim",
+     "witness": {
+      "subsets": 16,
+      "surfaced": [
+       "population+evaluation+method+provenance"
+      ],
+      "verbatim": true,
+      "judgedQuiet": 16,
+      "placements": {
+       "resource": {
+        "native": {
+         "verbatim": true,
+         "carried": [
+          true,
+          true,
+          true,
+          true
+         ],
+         "posture": []
+        },
+        "injected": {
+         "verbatim": true,
+         "carried": [
+          true,
+          true,
+          true,
+          true
+         ],
+         "posture": []
+        }
+       },
+       "capability": {
+        "native": {
+         "verbatim": true,
+         "carried": [
+          true,
+          true,
+          true,
+          true
+         ],
+         "posture": []
+        },
+        "injected": {
+         "verbatim": true,
+         "carried": [
+          true,
+          true,
+          true,
+          true
+         ],
+         "posture": []
+        }
+       },
+       "necessity": {
+        "native": {
+         "verbatim": true,
+         "carried": [
+          true,
+          true,
+          true,
+          true
+         ],
+         "posture": []
+        },
+        "injected": {
+         "verbatim": true,
+         "carried": [
+          true,
+          true,
+          true,
+          true
+         ],
+         "posture": []
+        }
+       }
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "atom": "suppressed with a typed note",
+     "witness": {
+      "incomplete": 15,
+      "typed": 15,
+      "byMissing": {
+       "1": 4,
+       "2": 6,
+       "3": 4,
+       "4": 1
+      },
+      "valuesInNotes": 0,
+      "edges": {
+       "absent": [
+        "method"
+       ],
+       "empty": [
+        "method"
+       ],
+       "blank": [
+        "method"
+       ],
+       "nullValue": [
+        "method"
+       ],
+       "numeric": [
+        "method"
+       ],
+       "object": [
+        "method"
+       ],
+       "renamed": [
+        "method"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) mutant: 'high confidence' parsed into a number, partial logprobs relabeled as a full distribution, or a defaulted calibration field fails",
+   "pins": [
+    {
+     "id": "C1",
+     "atom": "'high confidence' parsed into a number",
+     "witness": {
+      "reference": {
+       "probabilityKey": [
+        "carried:rewritten",
+        "number:added"
+       ],
+       "verbalReplaced": [
+        "number:added",
+        "verbal:rewritten"
+       ],
+       "echoKey": [
+        "echo:extra-key",
+        "number:added"
+       ],
+       "faithful": []
+      },
+      "real": {
+       "projectionNumber": [
+        "projection:moved",
+        "number:added"
+       ],
+       "readingNumber": [
+        "rewrite:evidence"
+       ],
+       "measured": []
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "atom": "partial logprobs relabeled as a full distribution",
+     "witness": {
+      "reference": {
+       "chosenAsFull": [
+        "class:relabeled",
+        "class:upgraded"
+       ],
+       "coverageAsFull": [
+        "class:relabeled",
+        "class:upgraded"
+       ],
+       "renormalized": [
+        "values:rewritten"
+       ],
+       "synthesized": [
+        "class:added",
+        "number:added"
+       ],
+       "scoresAsCalibrated": [
+        "class:relabeled",
+        "class:upgraded"
+       ],
+       "keyOrder": [],
+       "faithful": []
+      },
+      "real": {
+       "readingRelabel": [
+        "rewrite:evidence"
+       ],
+       "faithful": []
+      },
+      "authority": [
+       "ReactiveInferenceSDK docs/programs/unified-decision-inference-2026-10-21/03-conformance.md:8@485f3615db1e",
+       "ReactiveInferenceSDK src/reactive_inference/<DE>/preflight.py:76@485f3615db1e"
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "atom": "a defaulted calibration field",
+     "witness": {
+      "population": {
+       "unknown": [
+        "calibration:defaulted",
+        "calibration:surfaced-incomplete"
+       ],
+       "empty": [
+        "calibration:defaulted",
+        "calibration:surfaced-incomplete"
+       ],
+       "borrowed": [
+        "calibration:defaulted",
+        "calibration:surfaced-incomplete"
+       ],
+       "carriedDefault": [
+        "calibration:rewritten"
+       ],
+       "faithful": []
+      },
+      "evaluation": {
+       "unknown": [
+        "calibration:defaulted",
+        "calibration:surfaced-incomplete"
+       ],
+       "empty": [
+        "calibration:defaulted",
+        "calibration:surfaced-incomplete"
+       ],
+       "borrowed": [
+        "calibration:defaulted",
+        "calibration:surfaced-incomplete"
+       ],
+       "carriedDefault": [
+        "calibration:rewritten"
+       ],
+       "faithful": []
+      },
+      "method": {
+       "unknown": [
+        "calibration:defaulted",
+        "calibration:surfaced-incomplete"
+       ],
+       "empty": [
+        "calibration:defaulted",
+        "calibration:surfaced-incomplete"
+       ],
+       "borrowed": [
+        "calibration:defaulted",
+        "calibration:surfaced-incomplete"
+       ],
+       "carriedDefault": [
+        "calibration:rewritten"
+       ],
+       "faithful": []
+      },
+      "provenance": {
+       "unknown": [
+        "calibration:defaulted",
+        "calibration:surfaced-incomplete"
+       ],
+       "empty": [
+        "calibration:defaulted",
+        "calibration:surfaced-incomplete"
+       ],
+       "borrowed": [
+        "calibration:defaulted",
+        "calibration:surfaced-incomplete"
+       ],
+       "carriedDefault": [
+        "calibration:rewritten"
+       ],
+       "faithful": []
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "(d) today: 0 sites",
+   "pins": [
+    {
+     "id": "D1",
+     "atom": null,
+     "witness": {
+      "roots": {
+       "src": true,
+       "qa": true,
+       "docs": true,
+       "examples": true,
+       ".agents": true,
+       ".codex": true,
+       ".github": true
+      },
+      "pages": {
+       "AGENTS.md": true,
+       "CHANGELOG.md": true,
+       "CONTRIBUTING.md": true,
+       "README.md": true,
+       "SECURITY.md": true,
+       "package.json": true,
+       "forge.toml": true
+      },
+      "anchors": {
+       "src/workbench/attention.ts:Pairwise": true,
+       "src/status-note.ts:confidence": true,
+       "src/workbench/executable-identity.ts:unnormalized": true,
+       "src/workflow/reconcile.ts:EvidenceClass": true,
+       "docs/workbench/11-designer-and-operator.md:confidence": true
+      },
+      "sites": []
+     }
+    },
+    {
+     "id": "D2",
+     "atom": null,
+     "witness": {
+      "floor": true,
+      "own": {
+       "census": {
+        "walked": true,
+        "sites": 0,
+        "placeholders": 9
+       },
+       "roster": {
+        "walked": true,
+        "sites": 0,
+        "placeholders": 9
+       }
+      },
+      "anchors": {
+       "test/fixtures/rf-plan-prediction-roster.json:probability_support": true,
+       "test/fixtures/rf-source-change-block-claim-roster.json:probability_support": true,
+       "test/workbench-hx-evidence-standing.test.ts:evidence_class": true
+      },
+      "sites": []
+     }
+    },
+    {
+     "id": "D3",
+     "atom": null,
+     "witness": {
+      "catalogRead": true,
+      "dependenciesRead": true,
+      "riDependencies": [],
+      "descriptorSites": [],
+      "rfRoster": [
+       "reactivefiber.render.preview"
+      ],
+      "declaration": {
+       "fixture": "none",
+       "native": "none",
+       "injected": "none",
+       "surfaced": 0
+      }
+     }
+    },
+    {
+     "id": "D4",
+     "atom": null,
+     "witness": {
+      "gate": "RI-DEC-08",
+      "commits": [
+       "485f3615db1e",
+       "075ac589d64d"
+      ],
+      "zeroRows": [
+       true,
+       true
+      ],
+      "exportsUnchanged": true,
+      "relatives": [
+       "<S1>",
+       "<S2>",
+       "<S3>",
+       "<S2>",
+       "<S4>",
+       "<S5>",
+       "<S6>"
+      ],
+      "relativeSites": [
+       true,
+       true,
+       true,
+       true,
+       true,
+       true,
+       true
+      ],
+      "bead": {
+       "titlePin": true,
+       "gatingNamesGate": true,
+       "shippedNo": true,
+       "quoteInLine": true
+      },
+      "quotesHashed": true
+     }
+    },
+    {
+     "id": "D5",
+     "atom": null,
+     "witness": {
+      "flagged": {
+       "<S1>": [
+        1,
+        0
+       ],
+       "<S2>": [
+        1,
+        1
+       ],
+       "<S3>": [
+        1,
+        1
+       ],
+       "<S4>": [
+        1,
+        0
+       ],
+       "<S5>": [
+        1,
+        0
+       ],
+       "<S6>": [
+        1,
+        0
+       ],
+       "<S7>": [
+        1,
+        0
+       ],
+       "<S8>": [
+        1,
+        0
+       ],
+       "<S9>": [
+        1,
+        0
+       ],
+       "<S10>": [
+        1,
+        0
+       ],
+       "<S11>": [
+        1,
+        0
+       ],
+       "<S12>": [
+        1,
+        2
+       ],
+       "<S13>": [
+        1,
+        1
+       ],
+       "<S14>": [
+        1,
+        0
+       ],
+       "<S15>": [
+        1,
+        1
+       ],
+       "<S16>": [
+        1,
+        1
+       ],
+       "<S17>": [
+        1,
+        1
+       ],
+       "<S18>": [
+        1,
+        0
+       ],
+       "<S19>": [
+        1,
+        0
+       ]
+      },
+      "fixtureNames": {
+       "<C1>": [
+        1,
+        0
+       ],
+       "<C2>": [
+        1,
+        1
+       ],
+       "<C3>": [
+        1,
+        0
+       ],
+       "<C4>": [
+        1,
+        0
+       ],
+       "<C5>": [
+        1,
+        0
+       ],
+       "<C6>": [
+        1,
+        2
+       ],
+       "<VC>": [
+        1,
+        1
+       ],
+       "<PS>": [
+        1,
+        0
+       ],
+       "<PP>": [
+        1,
+        1
+       ]
+      },
+      "stems": {
+       "lowerStem": [
+        0,
+        1
+       ],
+       "titleStem": [
+        0,
+        1
+       ],
+       "upperStem": [
+        0,
+        1
+       ],
+       "proseStem": [
+        0,
+        1
+       ]
+      },
+      "quiet": {
+       "piEvidenceClass": [
+        0,
+        0
+       ],
+       "capabilityDeclaration": [
+        0,
+        1
+       ],
+       "requestFlag": [
+        0,
+        0
+       ],
+       "backendFlag": [
+        0,
+        0
+       ],
+       "generativeOption": [
+        0,
+        1
+       ],
+       "contractProse": [
+        0,
+        3
+       ],
+       "beadClause": [
+        0,
+        2
+       ],
+       "partWords": [
+        0,
+        0
+       ],
+       "otherSense": [
+        0,
+        0
+       ]
+      },
+      "residuals": {
+       "R-OTHER-CASE": [
+        0,
+        1
+       ],
+       "R-SPACED": [
+        0,
+        1
+       ],
+       "R-COMPOSED": [
+        0,
+        1
+       ],
+       "R-INTERRUPTED": [
+        0,
+        1
+       ],
+       "R-HOMOGLYPH": [
+        0,
+        1
+       ],
+       "R-OTHER-NAME": [
+        0,
+        2
+       ],
+       "R-BARE-WORD": [
+        0,
+        0
+       ]
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the bead export row and the cases agree",
+  "A1",
+  "A2",
+  "A3",
+  "B1",
+  "B2",
+  "C1",
+  "C2",
+  "C3",
+  "D1",
+  "D2",
+  "D3",
+  "D4",
+  "D5",
+  "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
+ ]
+}

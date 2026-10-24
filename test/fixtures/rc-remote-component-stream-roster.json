@@ -1,0 +1,606 @@
+{
+  "bead": "wb-5ltg.3",
+  "quote": "The consuming UI host resolves registered known component identities and actions separately.",
+  "citation": "docs/programs/native-interface-component-contract-2026-10-21/README.md:15@640a3b579a95",
+  "scan": {
+    "remoteFamily": "\\b(?:remote (?:components?|elements?|producers?|streams?)|components? streams?|rftsx elements?|crosswalks?|callback seriali[sz]ations?)\\b/",
+    "rcFamily": "(?<![\\w-])(?:vibranium-reactive-components|reactive[_-]components)(?![\\w-])/i",
+    "rcDistribution": "vibranium-reactive-components",
+    "rcModule": "reactive_components",
+    "censusInstrument": "^test\\/(?:[^/]+-census\\.test\\.ts|fixtures\\/[^/]+-roster\\.json)$/",
+    "manifest": "(?:^|\\/)(?:package(?:-lock)?\\.json|npm-shrinkwrap\\.json|deno\\.jsonc?|import[-_]map\\.json|[tj]sconfig[^/]*\\.json|pyproject\\.toml|requirements[^/]*\\.txt)$/i",
+    "moduleExtensions": [
+      ".ts",
+      ".mts",
+      ".cts",
+      ".tsx",
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".jsx"
+    ],
+    "jsonExtensions": [
+      ".json"
+    ],
+    "skippedRoots": [
+      ".git",
+      ".beads",
+      "node_modules",
+      "dist",
+      "build",
+      "coverage",
+      ".forge"
+    ],
+    "floors": {
+      "files": 760,
+      "modules": {
+        "src": 100,
+        "test": 400,
+        "qa": 55
+      },
+      "json": 55,
+      "manifests": 4
+    },
+    "walkAnchors": [
+      "README.md:pi-subagents",
+      "src/workbench/capability-registry.ts:CapabilityRegistry",
+      "qa/workbench/receipts-index.mjs:marked",
+      "package.json:@tintinweb/pi-subagents",
+      "media/screenshot.png:PNG"
+    ],
+    "nearestReaders": [
+      "src/workbench/capability-registry.ts:CapabilityRegistry",
+      "src/workbench/providers/reactivefiber.ts:REACTIVE_FIBER_CONTRACT_SOURCE",
+      "src/workbench/reactivefiber-observer.ts:reactivefiberTopology",
+      "src/ui/workflow-card.ts:UNICODE_GLYPHS"
+    ],
+    "acceptedSchemaVersion": 1,
+    "frameFields": [
+      "schema_version",
+      "component",
+      "key",
+      "props",
+      "actions",
+      "bindings"
+    ],
+    "knownComponents": [
+      "fixture.card",
+      "fixture.list"
+    ],
+    "knownActions": [
+      "fixture.select",
+      "fixture.open"
+    ],
+    "mutants": [
+      "M-RENDER-UNKNOWN",
+      "M-STREAM-RESOLVER",
+      "M-EXECUTE-ACTION",
+      "M-UNTYPED",
+      "M-FORWARD-UNDECLARED",
+      "M-FUNCTION-PASS",
+      "M-CALLBACK-REVIVE",
+      "M-ANY-VERSION",
+      "M-NULL-COERCE",
+      "M-SORTED-KEYS"
+    ],
+    "mutantsByPin": {
+      "B2": [
+        "M-RENDER-UNKNOWN",
+        "M-STREAM-RESOLVER",
+        "M-EXECUTE-ACTION",
+        "M-UNTYPED"
+      ],
+      "C2": [
+        "M-FORWARD-UNDECLARED",
+        "M-FUNCTION-PASS",
+        "M-CALLBACK-REVIVE"
+      ],
+      "D2": [
+        "M-ANY-VERSION",
+        "M-NULL-COERCE",
+        "M-CALLBACK-REVIVE",
+        "M-SORTED-KEYS"
+      ]
+    },
+    "beadMutants": {
+      "accepting an unknown schema version": "M-ANY-VERSION",
+      "coercing null": "M-NULL-COERCE",
+      "deserializing a callback": "M-CALLBACK-REVIVE"
+    }
+  },
+  "producer": {
+    "repo": "ReactiveComponentsSDK",
+    "measuredUtc": "2026-10-23T13:57:03Z",
+    "measure": "read-only git show, ls-tree and grep -l -i -E over src/ at each sha of the local ReactiveComponentsSDK checkout (no fetch): absent counts files per absentPatterns entry; otherSense lists the files spelling callback, resolver and crosswalk and the schema_version sites; the checkout's HEAD cf1f09d (2026-10-15) is an ancestor of the program pin, which origin/master 01187eb (2026-10-23) contains",
+    "readme": {
+      "path": "docs/programs/native-interface-component-contract-2026-10-21/README.md",
+      "blob": "ea960adb38e0",
+      "lines": {
+        "8": "Existing `Element`/`ContextDocument` contracts remain intact. A TSX component and Python component may share source fact identities and typed data ports, but are not required to emit identical output trees. The TSX interface host uses the existing `RftsxElement` identity and a separate interactive rendering projection. **Do not create a second general UI IR** or reinterpret model-context blocks as browser/TUI controls.",
+        "15": "Optional producer mode: a Python component can emit its validated element or semantic output into an authorized remote stream. The consuming UI host resolves registered known component identities and actions separately. No executable callback serializes to the browser or terminal. Cross-language serialization crosswalk requires strict schema-version checks, `null` semantics, key ordering and error cases. Treat Reactivity as source dependencies, not mandatory server-rendered UI trees.",
+        "18": "Portable component shape includes stable ID, typed props, key, declared action IDs and resource bindings; runtime-local action handler registration occurs in TSX interface host, not this Python package. Terminal art styles and browser CSS remain entirely owned by their interface packages.",
+        "21": "RC-IF-01: exhaustive Python `Element` versus TSX `RftsxElement` crosswalk; differences and explicit refusal behavior.",
+        "24": "RC-IF-04: Python-defined remote component producer opt-in and resolver validation, only once actual Web/TUI hosts are installed consumers.",
+        "29": "Current context outputs and recovery/visibility goldens must remain stable. Test source revisions, keyed moves, missing pending resources, denied audience, remote element unsupported IDs, effect declarations during failed render, streamed provisional text and malformed action references. No Github CI; use Forge and package-local installed consumer tests on default branch master."
+      }
+    },
+    "absentPatterns": {
+      "remote-stream": "remote[ _-]?stream",
+      "RemoteComponent": "remote[ _-]?component",
+      "crosswalk": "crosswalk",
+      "RftsxElement": "rftsx[ _-]?element",
+      "callback-serialization": "callback[ _-]?seriali[sz]|seriali[sz][a-z]*[ _-]?callbacks?"
+    },
+    "hostCheckouts": {
+      "absent": [
+        "ReactiveWebInterfaceSDK",
+        "ReactiveTUIInterfaceSDK"
+      ],
+      "present": []
+    },
+    "pins": [
+      {
+        "label": "program",
+        "sha": "640a3b579a955f84388d7bacd385d13b232a3116",
+        "distribution": "vibranium-reactive-components",
+        "srcFiles": 56,
+        "absent": {
+          "remote-stream": 0,
+          "RemoteComponent": 0,
+          "crosswalk": 0,
+          "RftsxElement": 0,
+          "callback-serialization": 0
+        },
+        "otherSense": {
+          "callback": [
+            "src/reactive_components/data_output.py",
+            "src/reactive_components/render_context.py"
+          ],
+          "resolver": [
+            "src/reactive_components/fakes.py",
+            "src/reactive_components/renderer_conformance.py",
+            "src/reactive_components/snapshot_identity.py"
+          ],
+          "schemaVersion": [
+            "src/reactive_components/assembly.py:273"
+          ],
+          "crosswalk": []
+        },
+        "crosswalkSchema": null
+      },
+      {
+        "label": "origin-master",
+        "sha": "01187eb645a5e834144ae967de4c12ba0c9c6fdd",
+        "distribution": "vibranium-reactive-components",
+        "srcFiles": 65,
+        "absent": {
+          "remote-stream": 0,
+          "RemoteComponent": 0,
+          "crosswalk": 3,
+          "RftsxElement": 0,
+          "callback-serialization": 0
+        },
+        "otherSense": {
+          "callback": [
+            "src/reactive_components/data_output.py",
+            "src/reactive_components/render_context.py"
+          ],
+          "resolver": [
+            "src/reactive_components/fakes.py",
+            "src/reactive_components/renderer_conformance.py",
+            "src/reactive_components/snapshot_identity.py"
+          ],
+          "schemaVersion": [
+            "src/reactive_components/assembly.py:281"
+          ],
+          "crosswalk": [
+            "src/reactive_components/__init__.py",
+            "src/reactive_components/__version__.py",
+            "src/reactive_components/portable_block.py"
+          ]
+        },
+        "crosswalkSchema": "reactive-components/portable-block/v1"
+      }
+    ]
+  },
+  "residuals": [
+    "R-COMPOSED",
+    "R-RENAMED",
+    "R-PROSE",
+    "R-INSTRUMENT",
+    "R-OUTSIDE",
+    "R-LOOKALIKE",
+    "R-COMMAND-STRING"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(trigger, absent today) If Pi ever consumes a remote component stream: no judged module or JSON file names the remote-output family, nothing loads or runs the ReactiveComponents distribution, the nearest readers are reached and quiet, the instrument rule is load-bearing and the gating artifact is measured unshipped, so (d) today: zero remote-stream consumer sites in Pi",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "pin": "A1",
+            "floors": {
+              "files": true,
+              "src": true,
+              "test": true,
+              "qa": true,
+              "json": true,
+              "manifests": true
+            },
+            "anchorsWalked": true,
+            "names": [],
+            "controls": {
+              "typeName": true,
+              "camelIdentifier": true,
+              "snakeLiteral": true,
+              "kebabLiteral": true,
+              "componentStream": true,
+              "elementType": true,
+              "crosswalk": true,
+              "callbackSerialization": true,
+              "folded": true,
+              "regex": true,
+              "escaped": true,
+              "invisible": true,
+              "jsxText": true,
+              "jsonKey": true,
+              "jsonValue": true,
+              "jsonUnparsed": true,
+              "comment": false,
+              "proseLiteral": false,
+              "jsonProse": false,
+              "composed": false,
+              "renamed": false,
+              "lookalike": false,
+              "gitRemote": false,
+              "fileStream": false,
+              "registryComponent": false
+            },
+            "planted": {
+              "names": [
+                "src/consumer.ts:1 identifier: RemoteComponent",
+                "test/x.test.ts:1 identifier: RemoteComponent"
+              ],
+              "instrumentNames": [
+                "test/fixtures/x-roster.json: key: remoteStream",
+                "test/x-census.test.ts:1 identifier: RemoteComponent"
+              ],
+              "symlinks": [
+                "src/link.ts"
+              ],
+              "files": [
+                "docs/notes.md",
+                "src/consumer.ts",
+                "test/fixtures/x-roster.json",
+                "test/x-census.test.ts",
+                "test/x.test.ts"
+              ]
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "pin": "A2",
+            "loads": [],
+            "manifestHits": [],
+            "manifests": [
+              "package-lock.json",
+              "package.json",
+              "tsconfig.json",
+              "tsconfig.test.json"
+            ],
+            "controls": {
+              "importDistribution": true,
+              "importModule": true,
+              "subpath": true,
+              "dynamicImport": true,
+              "require": true,
+              "importEquals": true,
+              "importType": true,
+              "npmSpecifier": true,
+              "folded": true,
+              "commandFirst": true,
+              "pythonModule": true,
+              "moduleSubpath": true,
+              "packageJson": true,
+              "pyproject": true,
+              "nearMiss": false,
+              "sdkVersionsEcho": false,
+              "mentionOnly": false,
+              "composedSpecifier": false,
+              "shellArgument": false,
+              "otherModule": false,
+              "proseManifest": false
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "pin": "A3",
+            "readers": [
+              {
+                "path": "src/workbench/capability-registry.ts",
+                "reached": true,
+                "quiet": true
+              },
+              {
+                "path": "src/workbench/providers/reactivefiber.ts",
+                "reached": true,
+                "quiet": true
+              },
+              {
+                "path": "src/workbench/reactivefiber-observer.ts",
+                "reached": true,
+                "quiet": true
+              },
+              {
+                "path": "src/ui/workflow-card.ts",
+                "reached": true,
+                "quiet": true
+              }
+            ],
+            "own": [
+              {
+                "path": "test/workbench-rc-remote-component-stream-census.test.ts",
+                "instrument": true,
+                "walked": true,
+                "spellsFamily": true
+              },
+              {
+                "path": "test/fixtures/rc-remote-component-stream-roster.json",
+                "instrument": true,
+                "walked": true,
+                "spellsFamily": true
+              }
+            ],
+            "instrumentsOnly": true
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "pin": "A4",
+            "beadNamesMeasured": true,
+            "beadShaIsProgramPin": true,
+            "programAbsent": true,
+            "schemaSiteAgrees": true,
+            "hostConditionQuoted": true,
+            "authorityQuoted": true,
+            "quoteOnItsLine": true,
+            "remoteProducerShipped": false,
+            "elementCrosswalkShipped": false,
+            "crosswalkDrift": [
+              "origin-master:3:reactive-components/portable-block/v1"
+            ],
+            "sameDistribution": true,
+            "interfaceHostsInstalled": false,
+            "masterIsLater": true
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(a) adoption fixture: an unknown component or action id is refused, never rendered or executed; resolution reads only Pi's registry, never a stream-supplied resolver: armed on a reference adoption over Pi's two registries, whose judge fails each resolution mutant",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "pin": "B1",
+            "outcomes": {
+              "K1": "admitted",
+              "K2": "admitted",
+              "K3": "admitted",
+              "U1": "refused unavailable component",
+              "U2": "refused unavailable actions[1]",
+              "U3": "refused validation resolver",
+              "U4": "refused unavailable component",
+              "U5": "refused unavailable actions[0]"
+            },
+            "rendered": {
+              "K1": 1,
+              "K2": 1,
+              "K3": 1,
+              "U1": 0,
+              "U2": 0,
+              "U3": 0,
+              "U4": 0,
+              "U5": 0
+            },
+            "executed": 0,
+            "registryRefusal": {
+              "category": "unavailable",
+              "message": "Unknown or unavailable capability: fixture.banner."
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "pin": "B2",
+            "reference": [],
+            "mutants": {
+              "M-RENDER-UNKNOWN": [
+                "U1:admitted",
+                "U1:rendered-refused",
+                "U1:resolved-unknown-component",
+                "U4:admitted",
+                "U4:rendered-refused",
+                "U4:resolved-unknown-component"
+              ],
+              "M-STREAM-RESOLVER": [
+                "U3:admitted",
+                "U3:rendered-refused",
+                "U3:forwarded-undeclared",
+                "U3:resolved-unknown-component",
+                "U3:resolved-through-stream"
+              ],
+              "M-EXECUTE-ACTION": [
+                "K1:executed-action",
+                "K2:executed-action"
+              ],
+              "M-UNTYPED": [
+                "U1:untyped-refusal",
+                "U2:untyped-refusal",
+                "U4:untyped-refusal",
+                "U5:untyped-refusal"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(b) an executable/callback field is refused typed, nothing evaluated, forwarded or rendered: armed through Pi's JSON boundary and the strict frame and prop fields, whose judge fails each callback mutant",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "pin": "C1",
+            "outcomes": {
+              "F1": "refused validation frame",
+              "F2": "refused validation onSelect",
+              "F3": "refused validation props.onSelect",
+              "F4": "refused validation props.title"
+            },
+            "calls": 0,
+            "rendered": 0,
+            "admitted": 0,
+            "boundary": "Cannot pass function across the capability JSON boundary at frame."
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "pin": "C2",
+            "reference": [],
+            "mutants": {
+              "M-FORWARD-UNDECLARED": [
+                "U3:wrong-refusal",
+                "F2:admitted",
+                "F2:rendered-refused",
+                "F2:forwarded-undeclared",
+                "F3:admitted",
+                "F3:rendered-refused",
+                "F3:forwarded-undeclared"
+              ],
+              "M-FUNCTION-PASS": [
+                "F1:wrong-refusal"
+              ],
+              "M-CALLBACK-REVIVE": [
+                "F3:admitted",
+                "F3:rendered-refused",
+                "F3:deserialized-callback",
+                "F3:forwarded-undeclared",
+                "F4:admitted",
+                "F4:rendered-refused",
+                "F4:deserialized-callback"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "(c) unknown/mismatched schema version refused typed, null kept as null, key order kept on round-trip; mutants accepting an unknown schema version, coercing null, or deserializing a callback fail: armed on the same judge, integer-like keys refused because a JS object cannot keep their order",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "pin": "D1",
+            "outcomes": {
+              "S1": "refused validation schema_version",
+              "S2": "refused validation schema_version",
+              "S3": "refused validation schema_version",
+              "S4": "refused validation schema_version",
+              "N1": "refused validation props.count",
+              "O1": "refused validation props.2",
+              "E1": "refused validation $"
+            },
+            "roundTrip": {
+              "K1": true,
+              "K2": true,
+              "K3": true
+            },
+            "nullKept": true,
+            "boundaryOrder": [
+              "2",
+              "title"
+            ],
+            "parseOrder": [
+              "2",
+              "title"
+            ]
+          }
+        },
+        {
+          "id": "D2",
+          "witness": {
+            "pin": "D2",
+            "phrases": [
+              "accepting an unknown schema version",
+              "coercing null",
+              "deserializing a callback"
+            ],
+            "reference": [],
+            "mutants": {
+              "M-ANY-VERSION": [
+                "S1:admitted",
+                "S1:rendered-refused",
+                "S1:accepted-unknown-schema-version",
+                "S2:admitted",
+                "S2:rendered-refused",
+                "S2:accepted-unknown-schema-version",
+                "S4:admitted",
+                "S4:rendered-refused",
+                "S4:accepted-unknown-schema-version"
+              ],
+              "M-NULL-COERCE": [
+                "K2:coerced-null",
+                "K2:round-trip-changed",
+                "K2:rendered-mismatch",
+                "N1:admitted",
+                "N1:rendered-refused",
+                "N1:coerced-null"
+              ],
+              "M-CALLBACK-REVIVE": [
+                "F3:admitted",
+                "F3:rendered-refused",
+                "F3:deserialized-callback",
+                "F3:forwarded-undeclared",
+                "F4:admitted",
+                "F4:rendered-refused",
+                "F4:deserialized-callback"
+              ],
+              "M-SORTED-KEYS": [
+                "K1:round-trip-changed",
+                "K2:round-trip-changed",
+                "K3:round-trip-changed"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "B1",
+    "B2",
+    "C1",
+    "C2",
+    "D1",
+    "D2",
+    "records: every registered test ran once in run mode in roster order, every pin reached its end, and no title spells the judged family"
+  ]
+}
