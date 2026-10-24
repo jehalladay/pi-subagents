@@ -1,0 +1,2438 @@
+{
+ "bead": "wb-4nut.7",
+ "rfVersion": "0.1.832",
+ "rfCommit": "2618c211be0dbbb74ba10e965e2d3d1f0fb5903e",
+ "pin": "6a251bf73af5",
+ "definition": "demo.card",
+ "kinds": {
+  "cost": [
+   "measured",
+   "estimated",
+   "unknown"
+  ],
+  "method": [
+   "measured",
+   "estimated"
+  ]
+ },
+ "schemas": [
+  {
+   "path": "src/reactive_fiber_cli/schemas/cli/context.render.schema.json",
+   "blob": "bb19feb806d5bf9216eda1dee299e31d7c05831e",
+   "sha256": "06ac92079d3912f63e20abf9dea73b29a4b62d099772103eb04860ed122404c2",
+   "installedIdentical": true
+  },
+  {
+   "path": "src/reactive_fiber_cli/schemas/workspace/budget.schema.json",
+   "blob": "7c9c30b7677c95826c7214ee9930174885152191",
+   "sha256": "17b15c6a582cfd6191a594c7fe7055f6090865eabcd352628d11a4722c8d9804",
+   "installedIdentical": true
+  },
+  {
+   "path": "src/reactive_fiber_cli/schemas/workspace/candidate-block.schema.json",
+   "blob": "e1237fd4d099d0f4fa10da5c6ca85e61d1bb86de",
+   "sha256": "33e14f753bc8b6992b5f8b1b1d81f250ab1d71e0b9f1b67cfdfe7b2c2bbc5409",
+   "installedIdentical": true
+  }
+ ],
+ "citations": [
+  {
+   "repo": "ReactiveComponentsSDK",
+   "sha": "640a3b579a955f84388d7bacd385d13b232a3116",
+   "path": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md",
+   "line": 26,
+   "blob": "87ef3d4c397cd7e6aeb745eda703e3c3722ce0b9",
+   "text": "2. ContextDocument composition preserves block order, inclusion and exclusion reason, occurrence identity, necessity, visibility, source basis, redaction and token-budget provenance. Duplicate *occurrences* are priced separately even if they share one definition."
+  },
+  {
+   "repo": "ReactiveComponentsSDK",
+   "sha": "640a3b579a955f84388d7bacd385d13b232a3116",
+   "path": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md",
+   "line": 45,
+   "blob": "87ef3d4c397cd7e6aeb745eda703e3c3722ce0b9",
+   "text": "1. One component appears twice in one context: both occurrences count toward the budget."
+  },
+  {
+   "repo": "ReactiveInferenceSDK",
+   "sha": "485f3615db1e8703d6ce1093713fe595e46f42a0",
+   "path": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md",
+   "line": 21,
+   "blob": "aae0e893dc2b4c2a21a31dad2e03d7bd3e43f8eb",
+   "text": "2. Distinguish exact counted prompt tokens, tokenizer estimate, model-reported usage and prompt-cache usage. Unsupported counts remain UNKNOWN, not fabricated exact values."
+  },
+  {
+   "repo": "ReactiveInferenceSDK",
+   "sha": "485f3615db1e8703d6ce1093713fe595e46f42a0",
+   "path": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md",
+   "line": 41,
+   "blob": "aae0e893dc2b4c2a21a31dad2e03d7bd3e43f8eb",
+   "text": "1. Tokenizer unavailable => no exact token count claim."
+  },
+  {
+   "repo": "ReactiveFiberTSXSDK",
+   "sha": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+   "path": "docs/programs/harness2-reactive-evolution-2026-10-20/README.md",
+   "line": 46,
+   "blob": "32fff555591b99dfc806518b694c1faf50e83fb3",
+   "text": "3. Repeated occurrences account budgets twice while sharing one immutable definition."
+  }
+ ],
+ "vocabulary": {
+  "receipt": [
+   "context projections?",
+   "budget receipts?",
+   "usage receipts?",
+   "capability snapshots?",
+   "render reports?",
+   "cache prefix(?:es)?",
+   "prompt cache",
+   "model reported",
+   "tokeni[sz]ers?",
+   "token estimates?",
+   "estimated tokens?",
+   "exact (?:token )?counts?",
+   "(?:rc|tsx|ri) h2 0[0-9]"
+  ],
+  "pricing": [
+   "token costs?",
+   "token cost kind",
+   "included tokens",
+   "truncated tokens",
+   "unknown cost count",
+   "token accounting",
+   "token count method",
+   "estimator id",
+   "utf8 bytes div4",
+   "(?:estimate|count) tokens"
+  ],
+  "usageKeys": [
+   "usage",
+   "input_tokens",
+   "output_tokens",
+   "prompt_tokens",
+   "completion_tokens",
+   "cache_read_input_tokens",
+   "cache_creation_input_tokens",
+   "cacheRead",
+   "cacheWrite",
+   "cached_tokens"
+  ]
+ },
+ "measured": [
+  "rf --json --version -> 0 (result.version 0.1.832, provenance.commit_id 2618c211be0dbbb74ba10e965e2d3d1f0fb5903e)",
+  "workspace one: rf init --backend jsonl --no-input --json -> 0",
+  "rf component create demo.card --kind declarative --json -> 0 (its default body: one text block, key placeholder, necessity always)",
+  "rf component add .reactive-fiber/components/manifests/demo.card.toml --json -> 0 (graph instance card, edge fiber:source:task.value->component:card.task) and rf component activate demo.card --json -> 0",
+  "rf context render --model claude-opus-5 --task \"summarise the card\" --no-commit --no-input --json -> 0 (oneOccurrence)",
+  "graphs/context.toml: a second [[component]] row (instance card2, component_id demo.card) and its [[fiber]] from source:task.value to component:card2.task; rf graph validate --json -> 0",
+  "rf context render --model claude-opus-5 --task \"summarise the card\" --no-commit --no-input --json -> 0 (twoOccurrences)",
+  "workspace withheld: rf init --backend jsonl --no-input --json -> 0; rf component create demo.card and demo.extra --kind declarative --json -> 0 each; demo.extra's text block edited necessity always -> task_conditional",
+  "rf component add + rf component activate, demo.card then demo.extra -> 0 each (instances card and extra)",
+  "rf context render --model claude-opus-5 --task \"summarise the card\" --no-commit --no-input --json -> 0 (oneWithheld: demo.extra withheld, task_conditional_no_match)",
+  "graphs/context.toml: the same second demo.card row (instance card2) and its fiber; rf graph validate --json -> 0",
+  "rf context render --model claude-opus-5 --task \"summarise the card\" --no-commit --no-input --json -> 0 (twoWithheld)",
+  "each envelope kept as printed, its workspace.root (the scratch root) rewritten to /fixture/rf-workspace; no other string named the scratch root"
+ ],
+ "fixtures": [
+  "oneOccurrence",
+  "twoOccurrences",
+  "oneWithheld",
+  "twoWithheld"
+ ],
+ "exits": {
+  "oneOccurrence": 0,
+  "twoOccurrences": 0,
+  "oneWithheld": 0,
+  "twoWithheld": 0
+ },
+ "envelopes": {
+  "oneOccurrence": {
+   "schema": "reactive-fiber.cli/v1",
+   "ok": true,
+   "command": "context.render",
+   "operation_id": "rfo_q5mmc4fyrb3kuua7naek4rrvoy",
+   "workspace": {
+    "id": "rfw_5ac2b4ctac7v25ckwjsymdmrqi",
+    "root": "/fixture/rf-workspace"
+   },
+   "transaction_id": null,
+   "result": {
+    "output": {
+     "text": "demo.card has no content yet.\n",
+     "size_bytes": 30,
+     "digest": "sha256:0b55ce256d1de5961089ea515468fe024bc191d592a6572e93bfab76b535c136",
+     "path": null
+    },
+    "budget": {
+     "schema": "reactive-fiber.budget/v1",
+     "requested_model_id": "claude-opus-5",
+     "resolved_model_id": null,
+     "formula_terms": {
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "output_reserve": 8192,
+      "occupied_tokens": 0,
+      "overhead": 0,
+      "safety_margin": 2048,
+      "available_context_tokens": 989760
+     },
+     "capability_snapshot": {
+      "model_id": "claude-opus-5",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "supports_thinking": true,
+      "supports_reasoning": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "thinking_budget": null,
+      "cache_prefix": null,
+      "reasoning": {
+       "reasoning_control": "adaptive_effort",
+       "budget_tokens_status": "rejected",
+       "effort_levels": [],
+       "interleaved": true,
+       "display_default": "omitted",
+       "always_on": false,
+       "always_on_verified": true,
+       "verified": false,
+       "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 — verified=False per honesty rule D until a live sweep covers them"
+      },
+      "can_count_tokens": false,
+      "verified": true,
+      "source": null,
+      "known_policy_gates": [],
+      "decision": {
+       "supports_forced_tool": true,
+       "supports_structured_output": false,
+       "supports_span_output": true,
+       "supports_forced_tool_with_thinking": false,
+       "probability_support": "none",
+       "modalities": [
+        "image",
+        "text"
+       ],
+       "media_budget": {
+        "max_blocks": 20,
+        "max_bytes_per_block": 3750000
+       },
+       "verified": false,
+       "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D"
+      }
+     },
+     "capability_verified": true,
+     "capability_source": null,
+     "token_count_method": "estimated",
+     "estimator_id": "rf.utf8-bytes-div4.v1",
+     "counts": {
+      "candidate": 1,
+      "admitted_before_budget": 1,
+      "final_included": 1,
+      "withheld_necessity": 0,
+      "withheld_truncated": 0
+     },
+     "reconciliation_attempts": [],
+     "observability": {
+      "token_cost_unknown": 0,
+      "token_estimator_failed": 0,
+      "reconciliation_attempts": 0
+     },
+     "included_tokens": 8,
+     "truncated_tokens": 0,
+     "truncated_count": 0,
+     "overflow_pinned_count": 0,
+     "hidden_count": 0,
+     "audience_excluded_count": 0,
+     "unknown_cost_count": 0,
+     "token_accounting": {
+      "kind": "estimated",
+      "estimator_id": "rf.utf8-bytes-div4.v1",
+      "included_tokens": 8
+     },
+     "truncated_keys": []
+    },
+    "diagnostics_summary": {
+     "errors": 0,
+     "warnings": 0,
+     "has_errors": false,
+     "has_warnings": false
+    },
+    "blocks": [
+     {
+      "final_index": 0,
+      "candidate_key": "demo.card:card::placeholder",
+      "component_id": "demo.card",
+      "token_cost": {
+       "kind": "estimated",
+       "tokens": 8
+      },
+      "token_cost_kind": "estimated"
+     }
+    ],
+    "components": [
+     {
+      "component_instance_id": "demo.card:card",
+      "component_id": "demo.card",
+      "component_revision_id": "sha256:10d77b1cf2d9a327d1d29b86c7a111f249fe65a345e3281bd917dcfb78380617",
+      "status": "ok",
+      "source_unavailable": []
+     }
+    ],
+    "provenance": {
+     "created_at": "2026-10-23T10:31:17.441889Z",
+     "graph_revision_id": "sha256:fe7e3ad66ce716d6baf244a9dc3f1a20a98b99ba75a4f8f3560194a0d401d325",
+     "necessity_policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+     "workspace_schema_version": "reactive-fiber.workspace/v1",
+     "cli_version": "0.1.832",
+     "storage_backend": "jsonl",
+     "sdk_versions": {
+      "fiber_optics": {
+       "distribution_version": "0.1.0.20261014202847",
+       "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42"
+      },
+      "reactive_lenses": {
+       "distribution_version": "0.1.1.20261018.6",
+       "contract_fingerprint": "sha256:0931bf8cfdc86b26edf9bdd4a3813dec4b6c894b3434f6039924df07234b8ea8"
+      },
+      "reactive_components": {
+       "distribution_version": "0.1.1.20261018121500",
+       "contract_fingerprint": "sha256:d12211ca722f4e778c1009989745bdc7e4e2297a308cf5601ed2c7e0ffbe7d37"
+      },
+      "reactive_inference": {
+       "distribution_version": "0.2.60.20261018120223",
+       "contract_fingerprint": "sha256:b075fe443fe70a87b10a0fa429cdc298a5af9b9bc5b1dc8d8b62a9f04454380b"
+      },
+      "fiber_optics_wire_format": "2"
+     },
+     "storage": {
+      "backend": "jsonl",
+      "engine_version": null
+     }
+    },
+    "work_metrics": {
+     "source_capture_count": 1,
+     "fiber_signal_count": 2,
+     "fiber_transaction_count": 1,
+     "invalidated_component_count": 1,
+     "rendered_component_count": 1,
+     "state_read_count": 0,
+     "state_write_count": 0,
+     "journal_records_scanned": 48,
+     "blob_bytes_written": 0,
+     "history_rows_materialized": 0,
+     "reused_component_count": 0,
+     "observation_executed_count": 0,
+     "observation_reused_count": 0,
+     "publish_conflict_count": 0
+    },
+    "work": {
+     "source_capture_count": 1,
+     "fiber_signal_count": 2,
+     "component_render_count": 1,
+     "lens_resolution_count": 0,
+     "necessity_eval_count": 1,
+     "storage_write_count": 0
+    },
+    "engine_metrics": {
+     "tsx_worker_spawns": 0,
+     "tsx_resource_rounds": 0
+    },
+    "scope": null,
+    "audience": "model",
+    "bundle_revision_id": "sha256:d3b5bf0f4587f225d2c694bc8bf9fd3fb6c272da45d61cf178e46dc4ff3a7334",
+    "observations": [],
+    "necessity": [
+     {
+      "render_id": "rfr_yo632rereq6e2ckvnbbutlasmq",
+      "candidate_key": "demo.card:card::placeholder",
+      "necessity_class": "always",
+      "include": true,
+      "reason": "always_floor",
+      "estimated_tokens": 8,
+      "metadata": {
+       "evidence_keys": [
+        "necessity_class"
+       ],
+       "explicit_request": false
+      },
+      "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "judge_id": "rf.necessity.default-host.v1",
+      "judge_kind": "host_default",
+      "necessity_class_raw": "always",
+      "fallback_used": false,
+      "failure_mode": "fail"
+     }
+    ],
+    "judge_context": {
+     "task_digest": "sha256:8afa434be1b980aea53c8936c4f32145d7505b219054048cb3bcde2a987f14b8",
+     "task_tags": [],
+     "agent_id": null,
+     "agent_role": null,
+     "session_id": "rfs_2tzhnia5urbyoslixt24j5smju",
+     "explicit_requests": [],
+     "workspace_facts": {
+      "session.active": true
+     }
+    },
+    "judge_context_layers": {
+     "task.tags": "defaults",
+     "agent.role": "defaults"
+    },
+    "attempts": 1,
+    "superseded_transaction_ids": [],
+    "retry_work": {
+     "superseded_attempts": [],
+     "wasted_source_capture_count": 0,
+     "wasted_fiber_signal_count": 0,
+     "wasted_fiber_transaction_count": 0,
+     "wasted_invalidated_component_count": 0,
+     "wasted_rendered_component_count": 0,
+     "wasted_state_read_count": 0,
+     "wasted_state_write_count": 0,
+     "wasted_journal_records_scanned": 0,
+     "wasted_blob_bytes_written": 0,
+     "wasted_history_rows_materialized": 0,
+     "wasted_reused_component_count": 0,
+     "wasted_observation_executed_count": 0,
+     "wasted_observation_reused_count": 0,
+     "wasted_publish_conflict_count": 0
+    },
+    "fiber_transaction_refs": [
+     "rfr_yo632rereq6e2ckvnbbutlasmq/tx_1"
+    ],
+    "render_id": null,
+    "ephemeral": true,
+    "commit_seq": null,
+    "effects": [],
+    "plan": {
+     "operations": [],
+     "would_commit": false
+    },
+    "session_id": null
+   },
+   "diagnostics": []
+  },
+  "twoOccurrences": {
+   "schema": "reactive-fiber.cli/v1",
+   "ok": true,
+   "command": "context.render",
+   "operation_id": "rfo_xrb2pau4ynx444n4ijgvu7fx3a",
+   "workspace": {
+    "id": "rfw_5ac2b4ctac7v25ckwjsymdmrqi",
+    "root": "/fixture/rf-workspace"
+   },
+   "transaction_id": null,
+   "result": {
+    "output": {
+     "text": "demo.card has no content yet.\ndemo.card has no content yet.\n",
+     "size_bytes": 60,
+     "digest": "sha256:48caf3765fb4b22aeaad1a0d630f3f48565b6866b12d2da6a7a6cbf51837c1b5",
+     "path": null
+    },
+    "budget": {
+     "schema": "reactive-fiber.budget/v1",
+     "requested_model_id": "claude-opus-5",
+     "resolved_model_id": null,
+     "formula_terms": {
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "output_reserve": 8192,
+      "occupied_tokens": 0,
+      "overhead": 0,
+      "safety_margin": 2048,
+      "available_context_tokens": 989760
+     },
+     "capability_snapshot": {
+      "model_id": "claude-opus-5",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "supports_thinking": true,
+      "supports_reasoning": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "thinking_budget": null,
+      "cache_prefix": null,
+      "reasoning": {
+       "reasoning_control": "adaptive_effort",
+       "budget_tokens_status": "rejected",
+       "effort_levels": [],
+       "interleaved": true,
+       "display_default": "omitted",
+       "always_on": false,
+       "always_on_verified": true,
+       "verified": false,
+       "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 — verified=False per honesty rule D until a live sweep covers them"
+      },
+      "can_count_tokens": false,
+      "verified": true,
+      "source": null,
+      "known_policy_gates": [],
+      "decision": {
+       "supports_forced_tool": true,
+       "supports_structured_output": false,
+       "supports_span_output": true,
+       "supports_forced_tool_with_thinking": false,
+       "probability_support": "none",
+       "modalities": [
+        "image",
+        "text"
+       ],
+       "media_budget": {
+        "max_blocks": 20,
+        "max_bytes_per_block": 3750000
+       },
+       "verified": false,
+       "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D"
+      }
+     },
+     "capability_verified": true,
+     "capability_source": null,
+     "token_count_method": "estimated",
+     "estimator_id": "rf.utf8-bytes-div4.v1",
+     "counts": {
+      "candidate": 2,
+      "admitted_before_budget": 2,
+      "final_included": 2,
+      "withheld_necessity": 0,
+      "withheld_truncated": 0
+     },
+     "reconciliation_attempts": [],
+     "observability": {
+      "token_cost_unknown": 0,
+      "token_estimator_failed": 0,
+      "reconciliation_attempts": 0
+     },
+     "included_tokens": 16,
+     "truncated_tokens": 0,
+     "truncated_count": 0,
+     "overflow_pinned_count": 0,
+     "hidden_count": 0,
+     "audience_excluded_count": 0,
+     "unknown_cost_count": 0,
+     "token_accounting": {
+      "kind": "estimated",
+      "estimator_id": "rf.utf8-bytes-div4.v1",
+      "included_tokens": 16
+     },
+     "truncated_keys": []
+    },
+    "diagnostics_summary": {
+     "errors": 0,
+     "warnings": 0,
+     "has_errors": false,
+     "has_warnings": false
+    },
+    "blocks": [
+     {
+      "final_index": 0,
+      "candidate_key": "demo.card:card::placeholder",
+      "component_id": "demo.card",
+      "token_cost": {
+       "kind": "estimated",
+       "tokens": 8
+      },
+      "token_cost_kind": "estimated"
+     },
+     {
+      "final_index": 1,
+      "candidate_key": "demo.card:card2::placeholder",
+      "component_id": "demo.card",
+      "token_cost": {
+       "kind": "estimated",
+       "tokens": 8
+      },
+      "token_cost_kind": "estimated"
+     }
+    ],
+    "components": [
+     {
+      "component_instance_id": "demo.card:card",
+      "component_id": "demo.card",
+      "component_revision_id": "sha256:10d77b1cf2d9a327d1d29b86c7a111f249fe65a345e3281bd917dcfb78380617",
+      "status": "ok",
+      "source_unavailable": []
+     },
+     {
+      "component_instance_id": "demo.card:card2",
+      "component_id": "demo.card",
+      "component_revision_id": "sha256:10d77b1cf2d9a327d1d29b86c7a111f249fe65a345e3281bd917dcfb78380617",
+      "status": "ok",
+      "source_unavailable": []
+     }
+    ],
+    "provenance": {
+     "created_at": "2026-10-23T10:31:30.922790Z",
+     "graph_revision_id": "sha256:4dcda281857e4d9b7a12ced3d62c4aae4ba271f21cfa56f63f1c9b1b83b59074",
+     "necessity_policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+     "workspace_schema_version": "reactive-fiber.workspace/v1",
+     "cli_version": "0.1.832",
+     "storage_backend": "jsonl",
+     "sdk_versions": {
+      "fiber_optics": {
+       "distribution_version": "0.1.0.20261014202847",
+       "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42"
+      },
+      "reactive_lenses": {
+       "distribution_version": "0.1.1.20261018.6",
+       "contract_fingerprint": "sha256:0931bf8cfdc86b26edf9bdd4a3813dec4b6c894b3434f6039924df07234b8ea8"
+      },
+      "reactive_components": {
+       "distribution_version": "0.1.1.20261018121500",
+       "contract_fingerprint": "sha256:d12211ca722f4e778c1009989745bdc7e4e2297a308cf5601ed2c7e0ffbe7d37"
+      },
+      "reactive_inference": {
+       "distribution_version": "0.2.60.20261018120223",
+       "contract_fingerprint": "sha256:b075fe443fe70a87b10a0fa429cdc298a5af9b9bc5b1dc8d8b62a9f04454380b"
+      },
+      "fiber_optics_wire_format": "2"
+     },
+     "storage": {
+      "backend": "jsonl",
+      "engine_version": null
+     }
+    },
+    "work_metrics": {
+     "source_capture_count": 1,
+     "fiber_signal_count": 3,
+     "fiber_transaction_count": 1,
+     "invalidated_component_count": 2,
+     "rendered_component_count": 2,
+     "state_read_count": 0,
+     "state_write_count": 0,
+     "journal_records_scanned": 48,
+     "blob_bytes_written": 0,
+     "history_rows_materialized": 0,
+     "reused_component_count": 0,
+     "observation_executed_count": 0,
+     "observation_reused_count": 0,
+     "publish_conflict_count": 0
+    },
+    "work": {
+     "source_capture_count": 1,
+     "fiber_signal_count": 3,
+     "component_render_count": 2,
+     "lens_resolution_count": 0,
+     "necessity_eval_count": 2,
+     "storage_write_count": 0
+    },
+    "engine_metrics": {
+     "tsx_worker_spawns": 0,
+     "tsx_resource_rounds": 0
+    },
+    "scope": null,
+    "audience": "model",
+    "bundle_revision_id": "sha256:121bb23ebd5aa27b0039f77a782fdfd7349b48830a188654936ab7f823388f68",
+    "observations": [],
+    "necessity": [
+     {
+      "render_id": "rfr_662u4a2c2xnzuxccntrgq6ejt4",
+      "candidate_key": "demo.card:card::placeholder",
+      "necessity_class": "always",
+      "include": true,
+      "reason": "always_floor",
+      "estimated_tokens": 8,
+      "metadata": {
+       "evidence_keys": [
+        "necessity_class"
+       ],
+       "explicit_request": false
+      },
+      "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "judge_id": "rf.necessity.default-host.v1",
+      "judge_kind": "host_default",
+      "necessity_class_raw": "always",
+      "fallback_used": false,
+      "failure_mode": "fail"
+     },
+     {
+      "render_id": "rfr_662u4a2c2xnzuxccntrgq6ejt4",
+      "candidate_key": "demo.card:card2::placeholder",
+      "necessity_class": "always",
+      "include": true,
+      "reason": "always_floor",
+      "estimated_tokens": 8,
+      "metadata": {
+       "evidence_keys": [
+        "necessity_class"
+       ],
+       "explicit_request": false
+      },
+      "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "judge_id": "rf.necessity.default-host.v1",
+      "judge_kind": "host_default",
+      "necessity_class_raw": "always",
+      "fallback_used": false,
+      "failure_mode": "fail"
+     }
+    ],
+    "judge_context": {
+     "task_digest": "sha256:8afa434be1b980aea53c8936c4f32145d7505b219054048cb3bcde2a987f14b8",
+     "task_tags": [],
+     "agent_id": null,
+     "agent_role": null,
+     "session_id": "rfs_w6xcectoky27tssp7zbudozpiy",
+     "explicit_requests": [],
+     "workspace_facts": {
+      "session.active": true
+     }
+    },
+    "judge_context_layers": {
+     "task.tags": "defaults",
+     "agent.role": "defaults"
+    },
+    "attempts": 1,
+    "superseded_transaction_ids": [],
+    "retry_work": {
+     "superseded_attempts": [],
+     "wasted_source_capture_count": 0,
+     "wasted_fiber_signal_count": 0,
+     "wasted_fiber_transaction_count": 0,
+     "wasted_invalidated_component_count": 0,
+     "wasted_rendered_component_count": 0,
+     "wasted_state_read_count": 0,
+     "wasted_state_write_count": 0,
+     "wasted_journal_records_scanned": 0,
+     "wasted_blob_bytes_written": 0,
+     "wasted_history_rows_materialized": 0,
+     "wasted_reused_component_count": 0,
+     "wasted_observation_executed_count": 0,
+     "wasted_observation_reused_count": 0,
+     "wasted_publish_conflict_count": 0
+    },
+    "fiber_transaction_refs": [
+     "rfr_662u4a2c2xnzuxccntrgq6ejt4/tx_1"
+    ],
+    "render_id": null,
+    "ephemeral": true,
+    "commit_seq": null,
+    "effects": [],
+    "plan": {
+     "operations": [],
+     "would_commit": false
+    },
+    "session_id": null
+   },
+   "diagnostics": []
+  },
+  "oneWithheld": {
+   "schema": "reactive-fiber.cli/v1",
+   "ok": true,
+   "command": "context.render",
+   "operation_id": "rfo_t2hrq7ypq3wmkh3j2xpa3qxuei",
+   "workspace": {
+    "id": "rfw_jgnzdjkrhd4tapnbbkzuzbxgha",
+    "root": "/fixture/rf-workspace"
+   },
+   "transaction_id": null,
+   "result": {
+    "output": {
+     "text": "demo.card has no content yet.\n",
+     "size_bytes": 30,
+     "digest": "sha256:0b55ce256d1de5961089ea515468fe024bc191d592a6572e93bfab76b535c136",
+     "path": null
+    },
+    "budget": {
+     "schema": "reactive-fiber.budget/v1",
+     "requested_model_id": "claude-opus-5",
+     "resolved_model_id": null,
+     "formula_terms": {
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "output_reserve": 8192,
+      "occupied_tokens": 0,
+      "overhead": 0,
+      "safety_margin": 2048,
+      "available_context_tokens": 989760
+     },
+     "capability_snapshot": {
+      "model_id": "claude-opus-5",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "supports_thinking": true,
+      "supports_reasoning": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "thinking_budget": null,
+      "cache_prefix": null,
+      "reasoning": {
+       "reasoning_control": "adaptive_effort",
+       "budget_tokens_status": "rejected",
+       "effort_levels": [],
+       "interleaved": true,
+       "display_default": "omitted",
+       "always_on": false,
+       "always_on_verified": true,
+       "verified": false,
+       "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 — verified=False per honesty rule D until a live sweep covers them"
+      },
+      "can_count_tokens": false,
+      "verified": true,
+      "source": null,
+      "known_policy_gates": [],
+      "decision": {
+       "supports_forced_tool": true,
+       "supports_structured_output": false,
+       "supports_span_output": true,
+       "supports_forced_tool_with_thinking": false,
+       "probability_support": "none",
+       "modalities": [
+        "image",
+        "text"
+       ],
+       "media_budget": {
+        "max_blocks": 20,
+        "max_bytes_per_block": 3750000
+       },
+       "verified": false,
+       "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D"
+      }
+     },
+     "capability_verified": true,
+     "capability_source": null,
+     "token_count_method": "estimated",
+     "estimator_id": "rf.utf8-bytes-div4.v1",
+     "counts": {
+      "candidate": 2,
+      "admitted_before_budget": 1,
+      "final_included": 1,
+      "withheld_necessity": 1,
+      "withheld_truncated": 0
+     },
+     "reconciliation_attempts": [],
+     "observability": {
+      "token_cost_unknown": 0,
+      "token_estimator_failed": 0,
+      "reconciliation_attempts": 0
+     },
+     "included_tokens": 8,
+     "truncated_tokens": 0,
+     "truncated_count": 0,
+     "overflow_pinned_count": 0,
+     "hidden_count": 0,
+     "audience_excluded_count": 0,
+     "unknown_cost_count": 0,
+     "token_accounting": {
+      "kind": "estimated",
+      "estimator_id": "rf.utf8-bytes-div4.v1",
+      "included_tokens": 8
+     },
+     "truncated_keys": []
+    },
+    "diagnostics_summary": {
+     "errors": 0,
+     "warnings": 0,
+     "has_errors": false,
+     "has_warnings": false
+    },
+    "blocks": [
+     {
+      "final_index": 0,
+      "candidate_key": "demo.card:card::placeholder",
+      "component_id": "demo.card",
+      "token_cost": {
+       "kind": "estimated",
+       "tokens": 8
+      },
+      "token_cost_kind": "estimated"
+     }
+    ],
+    "components": [
+     {
+      "component_instance_id": "demo.card:card",
+      "component_id": "demo.card",
+      "component_revision_id": "sha256:10d77b1cf2d9a327d1d29b86c7a111f249fe65a345e3281bd917dcfb78380617",
+      "status": "ok",
+      "source_unavailable": []
+     },
+     {
+      "component_instance_id": "demo.extra:extra",
+      "component_id": "demo.extra",
+      "component_revision_id": "sha256:7a6fb17e20c369b0b514a1cb17c565ce98b6f0c3909f31f6470435a07d7fbd61",
+      "status": "ok",
+      "source_unavailable": []
+     }
+    ],
+    "provenance": {
+     "created_at": "2026-10-23T10:40:04.705224Z",
+     "graph_revision_id": "sha256:202af5a3929b3cfeec8eef3632b9ecee5ae9f186b5e4c51317c33a1fec32ef6a",
+     "necessity_policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+     "workspace_schema_version": "reactive-fiber.workspace/v1",
+     "cli_version": "0.1.836",
+     "storage_backend": "jsonl",
+     "sdk_versions": {
+      "fiber_optics": {
+       "distribution_version": "0.1.0.20261014202847",
+       "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42"
+      },
+      "reactive_lenses": {
+       "distribution_version": "0.1.1.20261018.6",
+       "contract_fingerprint": "sha256:0931bf8cfdc86b26edf9bdd4a3813dec4b6c894b3434f6039924df07234b8ea8"
+      },
+      "reactive_components": {
+       "distribution_version": "0.1.1.20261018121500",
+       "contract_fingerprint": "sha256:d12211ca722f4e778c1009989745bdc7e4e2297a308cf5601ed2c7e0ffbe7d37"
+      },
+      "reactive_inference": {
+       "distribution_version": "0.2.60.20261018120223",
+       "contract_fingerprint": "sha256:b075fe443fe70a87b10a0fa429cdc298a5af9b9bc5b1dc8d8b62a9f04454380b"
+      },
+      "fiber_optics_wire_format": "2"
+     },
+     "storage": {
+      "backend": "jsonl",
+      "engine_version": null
+     }
+    },
+    "work_metrics": {
+     "source_capture_count": 1,
+     "fiber_signal_count": 3,
+     "fiber_transaction_count": 1,
+     "invalidated_component_count": 2,
+     "rendered_component_count": 2,
+     "state_read_count": 0,
+     "state_write_count": 0,
+     "journal_records_scanned": 58,
+     "blob_bytes_written": 0,
+     "history_rows_materialized": 0,
+     "reused_component_count": 0,
+     "observation_executed_count": 0,
+     "observation_reused_count": 0,
+     "publish_conflict_count": 0
+    },
+    "work": {
+     "source_capture_count": 1,
+     "fiber_signal_count": 3,
+     "component_render_count": 2,
+     "lens_resolution_count": 0,
+     "necessity_eval_count": 2,
+     "storage_write_count": 0
+    },
+    "engine_metrics": {
+     "tsx_worker_spawns": 0,
+     "tsx_resource_rounds": 0
+    },
+    "scope": null,
+    "audience": "model",
+    "bundle_revision_id": "sha256:04d8fe87ef225593bd6c0aed8f49aba104002c92c95d7ac3e36225d852b1ebe1",
+    "observations": [],
+    "necessity": [
+     {
+      "render_id": "rfr_al3ngm2t3pgqn7xcuhhkiwepvi",
+      "candidate_key": "demo.card:card::placeholder",
+      "necessity_class": "always",
+      "include": true,
+      "reason": "always_floor",
+      "estimated_tokens": 8,
+      "metadata": {
+       "evidence_keys": [
+        "necessity_class"
+       ],
+       "explicit_request": false
+      },
+      "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "judge_id": "rf.necessity.default-host.v1",
+      "judge_kind": "host_default",
+      "necessity_class_raw": "always",
+      "fallback_used": false,
+      "failure_mode": "fail"
+     },
+     {
+      "render_id": "rfr_al3ngm2t3pgqn7xcuhhkiwepvi",
+      "candidate_key": "demo.extra:extra::placeholder",
+      "necessity_class": "task_conditional",
+      "include": false,
+      "reason": "task_conditional_no_match",
+      "estimated_tokens": 8,
+      "metadata": {
+       "rule_id": null,
+       "default": "default_task_conditional",
+       "explicit_request": false
+      },
+      "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "judge_id": "rf.necessity.default-host.v1",
+      "judge_kind": "host_default",
+      "necessity_class_raw": "task_conditional",
+      "fallback_used": false,
+      "failure_mode": "fail"
+     }
+    ],
+    "judge_context": {
+     "task_digest": "sha256:8afa434be1b980aea53c8936c4f32145d7505b219054048cb3bcde2a987f14b8",
+     "task_tags": [],
+     "agent_id": null,
+     "agent_role": null,
+     "session_id": "rfs_u4imyhokqgbk436y5jw4zkbg5m",
+     "explicit_requests": [],
+     "workspace_facts": {
+      "session.active": true
+     }
+    },
+    "judge_context_layers": {
+     "task.tags": "defaults",
+     "agent.role": "defaults"
+    },
+    "attempts": 1,
+    "superseded_transaction_ids": [],
+    "retry_work": {
+     "superseded_attempts": [],
+     "wasted_source_capture_count": 0,
+     "wasted_fiber_signal_count": 0,
+     "wasted_fiber_transaction_count": 0,
+     "wasted_invalidated_component_count": 0,
+     "wasted_rendered_component_count": 0,
+     "wasted_state_read_count": 0,
+     "wasted_state_write_count": 0,
+     "wasted_journal_records_scanned": 0,
+     "wasted_blob_bytes_written": 0,
+     "wasted_history_rows_materialized": 0,
+     "wasted_reused_component_count": 0,
+     "wasted_observation_executed_count": 0,
+     "wasted_observation_reused_count": 0,
+     "wasted_publish_conflict_count": 0
+    },
+    "fiber_transaction_refs": [
+     "rfr_al3ngm2t3pgqn7xcuhhkiwepvi/tx_1"
+    ],
+    "render_id": null,
+    "ephemeral": true,
+    "commit_seq": null,
+    "effects": [],
+    "plan": {
+     "operations": [],
+     "would_commit": false
+    },
+    "session_id": null
+   },
+   "diagnostics": []
+  },
+  "twoWithheld": {
+   "schema": "reactive-fiber.cli/v1",
+   "ok": true,
+   "command": "context.render",
+   "operation_id": "rfo_slmwq5zg2yxgpilnbjslfuztk4",
+   "workspace": {
+    "id": "rfw_jgnzdjkrhd4tapnbbkzuzbxgha",
+    "root": "/fixture/rf-workspace"
+   },
+   "transaction_id": null,
+   "result": {
+    "output": {
+     "text": "demo.card has no content yet.\ndemo.card has no content yet.\n",
+     "size_bytes": 60,
+     "digest": "sha256:48caf3765fb4b22aeaad1a0d630f3f48565b6866b12d2da6a7a6cbf51837c1b5",
+     "path": null
+    },
+    "budget": {
+     "schema": "reactive-fiber.budget/v1",
+     "requested_model_id": "claude-opus-5",
+     "resolved_model_id": null,
+     "formula_terms": {
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "output_reserve": 8192,
+      "occupied_tokens": 0,
+      "overhead": 0,
+      "safety_margin": 2048,
+      "available_context_tokens": 989760
+     },
+     "capability_snapshot": {
+      "model_id": "claude-opus-5",
+      "context_window": 1000000,
+      "max_output_tokens": 128000,
+      "supports_thinking": true,
+      "supports_reasoning": true,
+      "supports_streaming": true,
+      "supports_vision": true,
+      "thinking_budget": null,
+      "cache_prefix": null,
+      "reasoning": {
+       "reasoning_control": "adaptive_effort",
+       "budget_tokens_status": "rejected",
+       "effort_levels": [],
+       "interleaved": true,
+       "display_default": "omitted",
+       "always_on": false,
+       "always_on_verified": true,
+       "verified": false,
+       "source": "hq-4j88mn: reasoning CONTROL CLASS live-confirmed (the bare {'thinking':{'type':'adaptive'}} shape this profile emits returns HTTP 200 on us.anthropic.claude-opus-5), but the finer cells were NOT swept for opus-5 — verified=False per honesty rule D until a live sweep covers them"
+      },
+      "can_count_tokens": false,
+      "verified": true,
+      "source": null,
+      "known_policy_gates": [],
+      "decision": {
+       "supports_forced_tool": true,
+       "supports_structured_output": false,
+       "supports_span_output": true,
+       "supports_forced_tool_with_thinking": false,
+       "probability_support": "none",
+       "modalities": [
+        "image",
+        "text"
+       ],
+       "media_budget": {
+        "max_blocks": 20,
+        "max_bytes_per_block": 3750000
+       },
+       "verified": false,
+       "source": "RI-I0-a seed read from the Bedrock Converse API reference, not a live probe: toolChoice tool/any forces a tool call (forced tool True); Converse carries no JSON-schema response format (structured output False, fail closed); a span rides the forced tool, its offset fidelity unmeasured (span True); Anthropic rejects a forced tool_choice while thinking is on (forced tool with thinking False); no logprobs on the Converse plane (probability none); image quota 20 blocks of 3.75 MB each, published and not re-measured in this clone. verified=False per honesty rule D"
+      }
+     },
+     "capability_verified": true,
+     "capability_source": null,
+     "token_count_method": "estimated",
+     "estimator_id": "rf.utf8-bytes-div4.v1",
+     "counts": {
+      "candidate": 3,
+      "admitted_before_budget": 2,
+      "final_included": 2,
+      "withheld_necessity": 1,
+      "withheld_truncated": 0
+     },
+     "reconciliation_attempts": [],
+     "observability": {
+      "token_cost_unknown": 0,
+      "token_estimator_failed": 0,
+      "reconciliation_attempts": 0
+     },
+     "included_tokens": 16,
+     "truncated_tokens": 0,
+     "truncated_count": 0,
+     "overflow_pinned_count": 0,
+     "hidden_count": 0,
+     "audience_excluded_count": 0,
+     "unknown_cost_count": 0,
+     "token_accounting": {
+      "kind": "estimated",
+      "estimator_id": "rf.utf8-bytes-div4.v1",
+      "included_tokens": 16
+     },
+     "truncated_keys": []
+    },
+    "diagnostics_summary": {
+     "errors": 0,
+     "warnings": 0,
+     "has_errors": false,
+     "has_warnings": false
+    },
+    "blocks": [
+     {
+      "final_index": 0,
+      "candidate_key": "demo.card:card::placeholder",
+      "component_id": "demo.card",
+      "token_cost": {
+       "kind": "estimated",
+       "tokens": 8
+      },
+      "token_cost_kind": "estimated"
+     },
+     {
+      "final_index": 1,
+      "candidate_key": "demo.card:card2::placeholder",
+      "component_id": "demo.card",
+      "token_cost": {
+       "kind": "estimated",
+       "tokens": 8
+      },
+      "token_cost_kind": "estimated"
+     }
+    ],
+    "components": [
+     {
+      "component_instance_id": "demo.card:card",
+      "component_id": "demo.card",
+      "component_revision_id": "sha256:10d77b1cf2d9a327d1d29b86c7a111f249fe65a345e3281bd917dcfb78380617",
+      "status": "ok",
+      "source_unavailable": []
+     },
+     {
+      "component_instance_id": "demo.card:card2",
+      "component_id": "demo.card",
+      "component_revision_id": "sha256:10d77b1cf2d9a327d1d29b86c7a111f249fe65a345e3281bd917dcfb78380617",
+      "status": "ok",
+      "source_unavailable": []
+     },
+     {
+      "component_instance_id": "demo.extra:extra",
+      "component_id": "demo.extra",
+      "component_revision_id": "sha256:7a6fb17e20c369b0b514a1cb17c565ce98b6f0c3909f31f6470435a07d7fbd61",
+      "status": "ok",
+      "source_unavailable": []
+     }
+    ],
+    "provenance": {
+     "created_at": "2026-10-23T10:40:09.879461Z",
+     "graph_revision_id": "sha256:b4c3337afa85442e412c6acc8c00eb7e514e981b3393e97ad7b6b55757cc1040",
+     "necessity_policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+     "workspace_schema_version": "reactive-fiber.workspace/v1",
+     "cli_version": "0.1.836",
+     "storage_backend": "jsonl",
+     "sdk_versions": {
+      "fiber_optics": {
+       "distribution_version": "0.1.0.20261014202847",
+       "contract_fingerprint": "sha256:b5cf6605d95cb4cd71bc93508cf0e17e347a1abd092e247220a5dd4fcb5fdd42"
+      },
+      "reactive_lenses": {
+       "distribution_version": "0.1.1.20261018.6",
+       "contract_fingerprint": "sha256:0931bf8cfdc86b26edf9bdd4a3813dec4b6c894b3434f6039924df07234b8ea8"
+      },
+      "reactive_components": {
+       "distribution_version": "0.1.1.20261018121500",
+       "contract_fingerprint": "sha256:d12211ca722f4e778c1009989745bdc7e4e2297a308cf5601ed2c7e0ffbe7d37"
+      },
+      "reactive_inference": {
+       "distribution_version": "0.2.60.20261018120223",
+       "contract_fingerprint": "sha256:b075fe443fe70a87b10a0fa429cdc298a5af9b9bc5b1dc8d8b62a9f04454380b"
+      },
+      "fiber_optics_wire_format": "2"
+     },
+     "storage": {
+      "backend": "jsonl",
+      "engine_version": null
+     }
+    },
+    "work_metrics": {
+     "source_capture_count": 1,
+     "fiber_signal_count": 4,
+     "fiber_transaction_count": 1,
+     "invalidated_component_count": 3,
+     "rendered_component_count": 3,
+     "state_read_count": 0,
+     "state_write_count": 0,
+     "journal_records_scanned": 58,
+     "blob_bytes_written": 0,
+     "history_rows_materialized": 0,
+     "reused_component_count": 0,
+     "observation_executed_count": 0,
+     "observation_reused_count": 0,
+     "publish_conflict_count": 0
+    },
+    "work": {
+     "source_capture_count": 1,
+     "fiber_signal_count": 4,
+     "component_render_count": 3,
+     "lens_resolution_count": 0,
+     "necessity_eval_count": 3,
+     "storage_write_count": 0
+    },
+    "engine_metrics": {
+     "tsx_worker_spawns": 0,
+     "tsx_resource_rounds": 0
+    },
+    "scope": null,
+    "audience": "model",
+    "bundle_revision_id": "sha256:987fd23c6b04d0e7908f138e0b355d5a43f96c2de3e1e6e7ea8ff16c06ed2d5e",
+    "observations": [],
+    "necessity": [
+     {
+      "render_id": "rfr_ofw4bp3oyvzckwlucg5fe43ghu",
+      "candidate_key": "demo.card:card::placeholder",
+      "necessity_class": "always",
+      "include": true,
+      "reason": "always_floor",
+      "estimated_tokens": 8,
+      "metadata": {
+       "evidence_keys": [
+        "necessity_class"
+       ],
+       "explicit_request": false
+      },
+      "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "judge_id": "rf.necessity.default-host.v1",
+      "judge_kind": "host_default",
+      "necessity_class_raw": "always",
+      "fallback_used": false,
+      "failure_mode": "fail"
+     },
+     {
+      "render_id": "rfr_ofw4bp3oyvzckwlucg5fe43ghu",
+      "candidate_key": "demo.card:card2::placeholder",
+      "necessity_class": "always",
+      "include": true,
+      "reason": "always_floor",
+      "estimated_tokens": 8,
+      "metadata": {
+       "evidence_keys": [
+        "necessity_class"
+       ],
+       "explicit_request": false
+      },
+      "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "judge_id": "rf.necessity.default-host.v1",
+      "judge_kind": "host_default",
+      "necessity_class_raw": "always",
+      "fallback_used": false,
+      "failure_mode": "fail"
+     },
+     {
+      "render_id": "rfr_ofw4bp3oyvzckwlucg5fe43ghu",
+      "candidate_key": "demo.extra:extra::placeholder",
+      "necessity_class": "task_conditional",
+      "include": false,
+      "reason": "task_conditional_no_match",
+      "estimated_tokens": 8,
+      "metadata": {
+       "rule_id": null,
+       "default": "default_task_conditional",
+       "explicit_request": false
+      },
+      "policy_revision_id": "sha256:44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "judge_id": "rf.necessity.default-host.v1",
+      "judge_kind": "host_default",
+      "necessity_class_raw": "task_conditional",
+      "fallback_used": false,
+      "failure_mode": "fail"
+     }
+    ],
+    "judge_context": {
+     "task_digest": "sha256:8afa434be1b980aea53c8936c4f32145d7505b219054048cb3bcde2a987f14b8",
+     "task_tags": [],
+     "agent_id": null,
+     "agent_role": null,
+     "session_id": "rfs_ety3vk6tvzflghhw5ceo2i2vfu",
+     "explicit_requests": [],
+     "workspace_facts": {
+      "session.active": true
+     }
+    },
+    "judge_context_layers": {
+     "task.tags": "defaults",
+     "agent.role": "defaults"
+    },
+    "attempts": 1,
+    "superseded_transaction_ids": [],
+    "retry_work": {
+     "superseded_attempts": [],
+     "wasted_source_capture_count": 0,
+     "wasted_fiber_signal_count": 0,
+     "wasted_fiber_transaction_count": 0,
+     "wasted_invalidated_component_count": 0,
+     "wasted_rendered_component_count": 0,
+     "wasted_state_read_count": 0,
+     "wasted_state_write_count": 0,
+     "wasted_journal_records_scanned": 0,
+     "wasted_blob_bytes_written": 0,
+     "wasted_history_rows_materialized": 0,
+     "wasted_reused_component_count": 0,
+     "wasted_observation_executed_count": 0,
+     "wasted_observation_reused_count": 0,
+     "wasted_publish_conflict_count": 0
+    },
+    "fiber_transaction_refs": [
+     "rfr_ofw4bp3oyvzckwlucg5fe43ghu/tx_1"
+    ],
+    "render_id": null,
+    "ephemeral": true,
+    "commit_seq": null,
+    "effects": [],
+    "plan": {
+     "operations": [],
+     "would_commit": false
+    },
+    "session_id": null
+   },
+   "diagnostics": []
+  }
+ },
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) one definition, two occurrences makes Pi's budget display count both; a de-duplicating implementation fails",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "oneOccurrence": {
+       "definitions": [
+        "demo.card"
+       ],
+       "keys": [
+        "demo.card:card::placeholder"
+       ],
+       "instances": [
+        "demo.card:card"
+       ],
+       "costs": [
+        8
+       ],
+       "included": 8,
+       "accounted": 8,
+       "finalIncluded": 1,
+       "judged": 1,
+       "necessityEvals": 1,
+       "renders": 1
+      },
+      "twoOccurrences": {
+       "definitions": [
+        "demo.card"
+       ],
+       "keys": [
+        "demo.card:card::placeholder",
+        "demo.card:card2::placeholder"
+       ],
+       "instances": [
+        "demo.card:card",
+        "demo.card:card2"
+       ],
+       "costs": [
+        8,
+        8
+       ],
+       "included": 16,
+       "accounted": 16,
+       "finalIncluded": 2,
+       "judged": 2,
+       "necessityEvals": 2,
+       "renders": 2
+      },
+      "oneWithheld": {
+       "definitions": [
+        "demo.card"
+       ],
+       "keys": [
+        "demo.card:card::placeholder"
+       ],
+       "instances": [
+        "demo.card:card"
+       ],
+       "costs": [
+        8
+       ],
+       "included": 8,
+       "accounted": 8,
+       "finalIncluded": 1,
+       "judged": 2,
+       "necessityEvals": 2,
+       "renders": 2
+      },
+      "twoWithheld": {
+       "definitions": [
+        "demo.card"
+       ],
+       "keys": [
+        "demo.card:card::placeholder",
+        "demo.card:card2::placeholder"
+       ],
+       "instances": [
+        "demo.card:card",
+        "demo.card:card2"
+       ],
+       "costs": [
+        8,
+        8
+       ],
+       "included": 16,
+       "accounted": 16,
+       "finalIncluded": 2,
+       "judged": 3,
+       "necessityEvals": 3,
+       "renders": 3
+      },
+      "sameHeadroom": true,
+      "formula": {
+       "context_window": 1000000,
+       "max_output_tokens": 128000,
+       "output_reserve": 8192,
+       "occupied_tokens": 0,
+       "overhead": 0,
+       "safety_margin": 2048,
+       "available_context_tokens": 989760
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "oneOccurrence": {
+       "native": {
+        "verbatim": true,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "injected": {
+        "verbatim": true,
+        "calls": 1,
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "blocks": 1,
+       "included": 8
+      },
+      "twoOccurrences": {
+       "native": {
+        "verbatim": true,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "injected": {
+        "verbatim": true,
+        "calls": 1,
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "blocks": 2,
+       "included": 16
+      },
+      "oneWithheld": {
+       "native": {
+        "verbatim": true,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "injected": {
+        "verbatim": true,
+        "calls": 1,
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "blocks": 1,
+       "included": 8
+      },
+      "twoWithheld": {
+       "native": {
+        "verbatim": true,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "injected": {
+        "verbatim": true,
+        "calls": 1,
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "blocks": 2,
+       "included": 16
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "statusText": {
+       "oneOccurrence": "fixture seam (not a real render) · 989760 of 1000000 context tokens available · necessity evals 1 · 0 errors, 0 warnings",
+       "twoOccurrences": "fixture seam (not a real render) · 989760 of 1000000 context tokens available · necessity evals 2 · 0 errors, 0 warnings"
+      },
+      "evals": [
+       1,
+       2,
+       2,
+       3
+      ],
+      "inclusion": [
+       null,
+       null,
+       {
+        "blocks": 1,
+        "withheld": 1,
+        "judged": 2
+       },
+       {
+        "blocks": 2,
+        "withheld": 1,
+        "judged": 3
+       }
+      ],
+      "budgets": [
+       {
+        "available": 989760,
+        "window": 1000000
+       },
+       {
+        "available": 989760,
+        "window": 1000000
+       },
+       {
+        "available": 989760,
+        "window": 1000000
+       },
+       {
+        "available": 989760,
+        "window": 1000000
+       }
+      ],
+      "quiet": true
+     }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "twoOccurrences": {
+       "pi": {
+        "blocks": 2,
+        "included": 16,
+        "necessityEvals": 2,
+        "inclusionBlocks": null
+       },
+       "dedup": {
+        "blocks": 1,
+        "included": 8,
+        "necessityEvals": 1,
+        "inclusionBlocks": null
+       },
+       "piFailures": [],
+       "dedupFailures": [
+        "blocks 1 of 2",
+        "included 8 of 16",
+        "necessity evals 1 of 2"
+       ]
+      },
+      "twoWithheld": {
+       "pi": {
+        "blocks": 2,
+        "included": 16,
+        "necessityEvals": 3,
+        "inclusionBlocks": 2
+       },
+       "dedup": {
+        "blocks": 1,
+        "included": 8,
+        "necessityEvals": 2,
+        "inclusionBlocks": 1
+       },
+       "piFailures": [],
+       "dedupFailures": [
+        "blocks 1 of 2",
+        "included 8 of 16",
+        "necessity evals 2 of 3",
+        "inclusion blocks 1 of 2"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) Pi carries result.budget / budget receipts verbatim and never recomputes token totals from rendered text",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "oneOccurrence": {
+       "native": {
+        "verbatim": true,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "injected": {
+        "verbatim": true,
+        "calls": 1,
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "budgetVerbatim": true,
+       "budgetKeys": 21,
+       "shown": {
+        "available": 989760,
+        "window": 1000000
+       },
+       "failures": []
+      },
+      "twoOccurrences": {
+       "native": {
+        "verbatim": true,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "injected": {
+        "verbatim": true,
+        "calls": 1,
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "budgetVerbatim": true,
+       "budgetKeys": 21,
+       "shown": {
+        "available": 989760,
+        "window": 1000000
+       },
+       "failures": []
+      },
+      "oneWithheld": {
+       "native": {
+        "verbatim": true,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "injected": {
+        "verbatim": true,
+        "calls": 1,
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "budgetVerbatim": true,
+       "budgetKeys": 21,
+       "shown": {
+        "available": 989760,
+        "window": 1000000
+       },
+       "failures": []
+      },
+      "twoWithheld": {
+       "native": {
+        "verbatim": true,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "injected": {
+        "verbatim": true,
+        "calls": 1,
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "budgetVerbatim": true,
+       "budgetKeys": 21,
+       "shown": {
+        "available": 989760,
+        "window": 1000000
+       },
+       "failures": []
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "variants": {
+       "short": {
+        "paths": [
+         "result.output.text"
+        ],
+        "same": true,
+        "payloadMoved": true,
+        "piFailures": [],
+        "recomputed": {
+         "available": 989759,
+         "window": 1000000
+        },
+        "recomputedFailures": [
+         "shown 989759 of 1000000 where the producer stated 989760 of 1000000"
+        ]
+       },
+       "short+size": {
+        "paths": [
+         "result.output.size_bytes",
+         "result.output.text"
+        ],
+        "same": true,
+        "payloadMoved": true,
+        "piFailures": [],
+        "recomputed": {
+         "available": 989759,
+         "window": 1000000
+        },
+        "recomputedFailures": [
+         "shown 989759 of 1000000 where the producer stated 989760 of 1000000"
+        ]
+       },
+       "long": {
+        "paths": [
+         "result.output.text"
+        ],
+        "same": true,
+        "payloadMoved": true,
+        "piFailures": [],
+        "recomputed": {
+         "available": 989460,
+         "window": 1000000
+        },
+        "recomputedFailures": [
+         "shown 989460 of 1000000 where the producer stated 989760 of 1000000"
+        ]
+       },
+       "long+size": {
+        "paths": [
+         "result.output.size_bytes",
+         "result.output.text"
+        ],
+        "same": true,
+        "payloadMoved": true,
+        "piFailures": [],
+        "recomputed": {
+         "available": 989460,
+         "window": 1000000
+        },
+        "recomputedFailures": [
+         "shown 989460 of 1000000 where the producer stated 989760 of 1000000"
+        ]
+       },
+       "multibyte": {
+        "paths": [
+         "result.output.text"
+        ],
+        "same": true,
+        "payloadMoved": true,
+        "piFailures": [],
+        "recomputed": {
+         "available": 989700,
+         "window": 1000000
+        },
+        "recomputedFailures": [
+         "shown 989700 of 1000000 where the producer stated 989760 of 1000000"
+        ]
+       },
+       "multibyte+size": {
+        "paths": [
+         "result.output.size_bytes",
+         "result.output.text"
+        ],
+        "same": true,
+        "payloadMoved": true,
+        "piFailures": [],
+        "recomputed": {
+         "available": 989700,
+         "window": 1000000
+        },
+        "recomputedFailures": [
+         "shown 989700 of 1000000 where the producer stated 989760 of 1000000"
+        ]
+       }
+      },
+      "baseUntouched": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) a receipt with count UNKNOWN keeps the Pi field UNKNOWN; defaulting to 0 or an estimate fails",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "oneUnknown": {
+       "native": {
+        "verbatim": true,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "injected": {
+        "verbatim": true,
+        "calls": 1,
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "carried": {
+        "result.blocks.1.token_cost.kind": "unknown",
+        "result.blocks.1.token_cost.tokens": null,
+        "result.blocks.1.token_cost_kind": "unknown"
+       },
+       "sameDisplay": true
+      },
+      "nothingPriced": {
+       "native": {
+        "verbatim": true,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "injected": {
+        "verbatim": true,
+        "calls": 1,
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "carried": {
+        "result.blocks.0.token_cost.tokens": null,
+        "result.blocks.1.token_cost.tokens": null,
+        "result.blocks.0.token_cost_kind": "unknown",
+        "result.blocks.1.token_cost_kind": "unknown",
+        "result.budget.token_accounting.kind": "unknown",
+        "result.budget.token_accounting.estimator_id": null,
+        "result.budget.token_accounting.included_tokens": null
+       },
+       "sameDisplay": true
+      },
+      "truncatedUnknown": {
+       "native": {
+        "verbatim": true,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "injected": {
+        "verbatim": true,
+        "calls": 1,
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ]
+       },
+       "carried": {
+        "result.budget.truncated_tokens": null
+       },
+       "sameDisplay": true
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "availableNull": {
+       "native": {
+        "refusal": {
+         "category": "transport",
+         "message": "RF preview returned an unrecognized or contradictory envelope."
+        },
+        "spawns": 1
+       },
+       "adapter": {
+        "category": "validation",
+        "message": "ReactiveFiber topology refused: result.budget.formula_terms needs non-negative integer terms and an integer available_context_tokens."
+       },
+       "injectedCarried": true,
+       "piFailures": [],
+       "defaulted": [
+        "shown 0 of 1000000 where the producer stated null of 1000000"
+       ],
+       "estimated": [
+        "shown 989760 of 1000000 where the producer stated null of 1000000"
+       ]
+      },
+      "windowNull": {
+       "native": {
+        "refusal": {
+         "category": "transport",
+         "message": "RF preview returned an unrecognized or contradictory envelope."
+        },
+        "spawns": 1
+       },
+       "adapter": {
+        "category": "validation",
+        "message": "ReactiveFiber topology refused: result.budget.formula_terms needs non-negative integer terms and an integer available_context_tokens."
+       },
+       "injectedCarried": true,
+       "piFailures": [],
+       "defaulted": [
+        "shown 989760 of 0 where the producer stated 989760 of null"
+       ],
+       "estimated": [
+        "shown 989760 of 1000000 where the producer stated 989760 of null"
+       ]
+      },
+      "availableAbsent": {
+       "native": {
+        "refusal": {
+         "category": "transport",
+         "message": "RF preview returned an unrecognized or contradictory envelope."
+        },
+        "spawns": 1
+       },
+       "adapter": {
+        "category": "validation",
+        "message": "ReactiveFiber topology refused: result.budget.formula_terms needs non-negative integer terms and an integer available_context_tokens."
+       },
+       "injectedCarried": true,
+       "piFailures": [],
+       "defaulted": [
+        "shown 0 of 1000000 where the producer stated absent of 1000000"
+       ],
+       "estimated": [
+        "shown 989760 of 1000000 where the producer stated absent of 1000000"
+       ]
+      },
+      "availableWord": {
+       "native": {
+        "refusal": {
+         "category": "transport",
+         "message": "RF preview returned an unrecognized or contradictory envelope."
+        },
+        "spawns": 1
+       },
+       "adapter": {
+        "category": "validation",
+        "message": "ReactiveFiber topology refused: result.budget.formula_terms needs non-negative integer terms and an integer available_context_tokens."
+       },
+       "injectedCarried": true,
+       "piFailures": [],
+       "defaulted": [
+        "shown 0 of 1000000 where the producer stated \"UNKNOWN\" of 1000000"
+       ],
+       "estimated": [
+        "shown 989760 of 1000000 where the producer stated \"UNKNOWN\" of 1000000"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "(d) each of the four count kinds appears under its own label and none is summed into another",
+   "pins": [
+    {
+     "id": "D1",
+     "witness": {
+      "oneOccurrence": {
+       "method": "estimated",
+       "accounting": "estimated",
+       "blocks": [
+        {
+         "kind": "estimated",
+         "label": "estimated"
+        }
+       ],
+       "canCountTokens": false,
+       "cachePrefix": null,
+       "usageKeys": []
+      },
+      "twoOccurrences": {
+       "method": "estimated",
+       "accounting": "estimated",
+       "blocks": [
+        {
+         "kind": "estimated",
+         "label": "estimated"
+        },
+        {
+         "kind": "estimated",
+         "label": "estimated"
+        }
+       ],
+       "canCountTokens": false,
+       "cachePrefix": null,
+       "usageKeys": []
+      },
+      "oneWithheld": {
+       "method": "estimated",
+       "accounting": "estimated",
+       "blocks": [
+        {
+         "kind": "estimated",
+         "label": "estimated"
+        }
+       ],
+       "canCountTokens": false,
+       "cachePrefix": null,
+       "usageKeys": []
+      },
+      "twoWithheld": {
+       "method": "estimated",
+       "accounting": "estimated",
+       "blocks": [
+        {
+         "kind": "estimated",
+         "label": "estimated"
+        },
+        {
+         "kind": "estimated",
+         "label": "estimated"
+        }
+       ],
+       "canCountTokens": false,
+       "cachePrefix": null,
+       "usageKeys": []
+      }
+     }
+    },
+    {
+     "id": "D2",
+     "witness": {
+      "oneOccurrence": {
+       "phrases": [
+        "989760 of 1000000 context tokens available"
+       ],
+       "piFailures": [],
+       "summedFailures": [
+        "kind word \"estimated\" in a surfaced string",
+        "token phrases [\"989760 of 1000000 context tokens available\",\"8 tokens included (estimated)\"]"
+       ]
+      },
+      "twoOccurrences": {
+       "phrases": [
+        "989760 of 1000000 context tokens available"
+       ],
+       "piFailures": [],
+       "summedFailures": [
+        "kind word \"estimated\" in a surfaced string",
+        "token phrases [\"989760 of 1000000 context tokens available\",\"16 tokens included (estimated)\"]"
+       ]
+      },
+      "oneWithheld": {
+       "phrases": [
+        "989760 of 1000000 context tokens available"
+       ],
+       "piFailures": [],
+       "summedFailures": [
+        "kind word \"estimated\" in a surfaced string",
+        "token phrases [\"989760 of 1000000 context tokens available\",\"8 tokens included (estimated)\"]"
+       ]
+      },
+      "twoWithheld": {
+       "phrases": [
+        "989760 of 1000000 context tokens available"
+       ],
+       "piFailures": [],
+       "summedFailures": [
+        "kind word \"estimated\" in a surfaced string",
+        "token phrases [\"989760 of 1000000 context tokens available\",\"16 tokens included (estimated)\"]"
+       ]
+      },
+      "oneUnknown": {
+       "phrases": [
+        "989760 of 1000000 context tokens available"
+       ],
+       "piFailures": [],
+       "summedFailures": [
+        "kind word \"estimated\" in a surfaced string",
+        "token phrases [\"989760 of 1000000 context tokens available\",\"8 tokens included (estimated + unknown)\"]"
+       ]
+      },
+      "nothingPriced": {
+       "phrases": [
+        "989760 of 1000000 context tokens available"
+       ],
+       "piFailures": [],
+       "summedFailures": [
+        "kind word \"unknown\" in a surfaced string",
+        "token phrases [\"989760 of 1000000 context tokens available\",\"0 tokens included (unknown)\"]"
+       ]
+      },
+      "truncatedUnknown": {
+       "phrases": [
+        "989760 of 1000000 context tokens available"
+       ],
+       "piFailures": [],
+       "summedFailures": [
+        "kind word \"estimated\" in a surfaced string",
+        "token phrases [\"989760 of 1000000 context tokens available\",\"8 tokens included (estimated)\"]"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "E",
+   "label": "Not P0: rf's result.budget is echoed, not recomputed, and no H2 receipt is readable today; gating guard.",
+   "pins": [
+    {
+     "id": "E1",
+     "witness": {
+      "floors": {
+       "declared": true,
+       "installed": true,
+       "specifiers": true
+      },
+      "bundledRead": true,
+      "patternRead": true,
+      "ownRf": false,
+      "declaredH2": [],
+      "installedH2": [],
+      "importedH2": []
+     }
+    },
+    {
+     "id": "E2",
+     "witness": {
+      "catalogRead": true,
+      "native": [
+       "reactivefiber.render.preview"
+      ],
+      "injected": [
+       "reactivefiber.render.preview"
+      ],
+      "reconcile": [
+       "reactivefiber.render.preview"
+      ],
+      "spelling": []
+     }
+    },
+    {
+     "id": "E3",
+     "witness": {
+      "floors": {
+       "modules": true,
+       "literals": true,
+       "identifiers": true
+      },
+      "anchors": {
+       "observer": true,
+       "provider": true,
+       "usage": true
+      },
+      "unparsed": [],
+      "receipt": [],
+      "pricing": []
+     }
+    },
+    {
+     "id": "E4",
+     "witness": {
+      "flagged": {
+       "projectionExport": {
+        "receipt": 1,
+        "pricing": 0
+       },
+       "budgetReceipt": {
+        "receipt": 1,
+        "pricing": 0
+       },
+       "usageReceipt": {
+        "receipt": 2,
+        "pricing": 0
+       },
+       "capabilitySnapshot": {
+        "receipt": 1,
+        "pricing": 0
+       },
+       "renderReport": {
+        "receipt": 1,
+        "pricing": 0
+       },
+       "cachePrefix": {
+        "receipt": 1,
+        "pricing": 0
+       },
+       "promptCacheLabel": {
+        "receipt": 1,
+        "pricing": 0
+       },
+       "modelReported": {
+        "receipt": 1,
+        "pricing": 0
+       },
+       "tokenizer": {
+        "receipt": 1,
+        "pricing": 0
+       },
+       "packetId": {
+        "receipt": 1,
+        "pricing": 0
+       },
+       "dottedCapability": {
+        "receipt": 1,
+        "pricing": 0
+       },
+       "includedTokens": {
+        "receipt": 0,
+        "pricing": 1
+       },
+       "tokenCostKind": {
+        "receipt": 0,
+        "pricing": 1
+       },
+       "accountingElement": {
+        "receipt": 0,
+        "pricing": 1
+       },
+       "methodDestructured": {
+        "receipt": 0,
+        "pricing": 1
+       },
+       "estimatorTemplate": {
+        "receipt": 0,
+        "pricing": 2
+       },
+       "estimatorRule": {
+        "receipt": 0,
+        "pricing": 1
+       },
+       "countTokens": {
+        "receipt": 0,
+        "pricing": 1
+       },
+       "tokenEstimate": {
+        "receipt": 1,
+        "pricing": 0
+       },
+       "estimatedTokens": {
+        "receipt": 1,
+        "pricing": 0
+       },
+       "exactCount": {
+        "receipt": 1,
+        "pricing": 0
+       },
+       "truncatedTokens": {
+        "receipt": 0,
+        "pricing": 1
+       },
+       "unknownCostCount": {
+        "receipt": 0,
+        "pricing": 1
+       },
+       "tokenCost": {
+        "receipt": 0,
+        "pricing": 1
+       }
+      },
+      "perTerm": {
+       "context projections?": 2,
+       "budget receipts?": 1,
+       "usage receipts?": 1,
+       "capability snapshots?": 1,
+       "render reports?": 1,
+       "cache prefix(?:es)?": 1,
+       "prompt cache": 1,
+       "model reported": 1,
+       "tokeni[sz]ers?": 1,
+       "token estimates?": 1,
+       "estimated tokens?": 1,
+       "exact (?:token )?counts?": 1,
+       "(?:rc|tsx|ri) h2 0[0-9]": 1,
+       "token costs?": 2,
+       "token cost kind": 1,
+       "included tokens": 1,
+       "truncated tokens": 1,
+       "unknown cost count": 1,
+       "token accounting": 1,
+       "token count method": 1,
+       "estimator id": 1,
+       "utf8 bytes div4": 1,
+       "(?:estimate|count) tokens": 1
+      },
+      "quiet": {
+       "formulaReader": {
+        "receipt": 0,
+        "pricing": 0
+       },
+       "budgetPhrase": {
+        "receipt": 0,
+        "pricing": 0
+       },
+       "inclusionCount": {
+        "receipt": 0,
+        "pricing": 0
+       },
+       "piTokensFormat": {
+        "receipt": 0,
+        "pricing": 0
+       },
+       "cachePlane": {
+        "receipt": 0,
+        "pricing": 0
+       }
+      },
+      "residuals": {
+       "R-COMPOSED": {
+        "receipt": 0,
+        "pricing": 0
+       },
+       "R-GENERIC-WALK": {
+        "receipt": 0,
+        "pricing": 0
+       },
+       "R-PI-USAGE": {
+        "receipt": 0,
+        "pricing": 0
+       }
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the cases and the bead's own notes agree",
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "B1",
+  "B2",
+  "C1",
+  "C2",
+  "D1",
+  "D2",
+  "E1",
+  "E2",
+  "E3",
+  "E4",
+  "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
+ ]
+}

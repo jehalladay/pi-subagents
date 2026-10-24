@@ -1,0 +1,144 @@
+{
+  "comment": "wb-gxd7.5 (GPC-FEEDBACK-CONTRACT-AUDIT-R5): the captured gp roster at one built revision. version, help and hello were produced by the installed gp run by absolute entry path (node ts/dist/main.js, never the shell word gp), cwd /tmp, at build.capturedUtc; source facts are read-only git reads of the same checkout. The build is identified by checkout sha plus built-entry sha256, never by its --version line. Read by test/workbench-gp-provenance-census.test.ts.",
+  "build": {
+    "sourceSha": "3f7d52cd17397d8ed22e2c768714a057fe098b62",
+    "entry": "ts/dist/main.js",
+    "entrySha256": "0ad799c31da1dcd3ea3abf78bb099a407072c11ce63a76c2c6a1dd6b9ba52bd4",
+    "checkoutClean": true,
+    "programPin": "0107c72992f35cf6832a37615a25c7df45747ebc",
+    "programPinIsAncestor": true,
+    "node": "v24.20.0",
+    "capturedUtc": "2026-10-23T15:53:42Z"
+  },
+  "version": {
+    "argv": [
+      "node",
+      "ts/dist/main.js",
+      "--version"
+    ],
+    "exit": 0,
+    "stdout": "gp 0.1.0 (commands: graph check, inspect errors, rpc --stdio, skill install, skill provenance, skill plugin install; protocol: graphpolicy.rpc.v1)\n",
+    "stderr": ""
+  },
+  "help": {
+    "argv": [
+      "node",
+      "ts/dist/main.js",
+      "--help"
+    ],
+    "exit": 0,
+    "stdoutBytes": 26373,
+    "stdoutSha256": "407c43bff57f1138e587739a23f334bb82a647ab47a1f065bd5475c269b87025",
+    "stderr": "",
+    "commands": [
+      "Commands (doc 10, docs/program/10-cli-sdk.md):",
+      "  gp init <path> --template node-scorer|pair-scorer|graph-regressor|policy --language ts|python",
+      "  gp graph check --schema FILE --graph FILE [--json]",
+      "  gp check [project] [--json]",
+      "  gp build [project] --backend reference [--json]",
+      "  gp inspect <program|checkpoint|graph|decision|run> --id VALUE [--json]",
+      "  gp eval <program> --graph @FILE --checkpoint ID [--json]",
+      "  gp sample <program> --graph @FILE --candidates @FILE --seed N [--json]",
+      "  gp train <program> --plan FILE [--json]",
+      "  gp test <program> --suite FILE [--json]",
+      "  gp benchmark <program> --suite FILE [--json]",
+      "  gp feedback add --decision ID --evidence @FILE [--json]",
+      "  gp promote <program> --checkpoint ID --expected-active ID [--json]",
+      "  gp rpc --stdio"
+    ],
+    "extensions": [
+      "Extensions (outside doc 10; each required by its own row):",
+      "  compose \u2014 GPR-1150/1152/1157 typed composition (IMPL-2607)",
+      "  store \u2014 GPR-1331..1338 default local store (IMPL-3340)",
+      "  profile show \u2014 GPR-1083 numerical-profile artifact",
+      "  conformance \u2014 GPR-1093/1094/1097 per-opcode backend conformance matrix (IMPL-5200)",
+      "  state promote \u2014 GPR-1056 the one s* commit path",
+      "  promote --expect --to --actor \u2014 GPR-1586 explicit actor CAS promotion (IMPL-1586)",
+      "  eval --evaluator --trainer --eval-split --dataset --criterion --verdict-out \u2014 GPR-1226/GPR-1227 registered independent evaluator verdict leg of gp eval explicit-file (IMPL-6481)",
+      "  feedback add --supersedes \u2014 GPR-1189 append-only feedback correction (IMPL-1189)",
+      "  journal append \u2014 GPR-1173/GPR-1458 host-side observation, host-admission and effect-outcome-reference writers (IMPL-10211)",
+      "  skill \u2014 IMPL-907..912 agent skill bundle",
+      "  inspect errors|limits|artifact \u2014 GPR-1428, GPR-1400/1406, GPR-1313 registry listings",
+      "  inspect journal --file \u2014 GPR-1316/1318/1319 read-only journal integrity report (IMPL-1318)",
+      "  inspect behavior --file \u2014 GPR-1259 complete behavior record validation (IMPL-1259)",
+      "  inspect decision --journal \u2014 GPR-1176 admission projection from host-admission records (IMPL-1176)",
+      "  inspect decision --recompute-logprob \u2014 GPR-1170 log p(a) recomputed from the receipt, labelled by exactness (IMPL-1170)",
+      "  rpc --stdio --journal|--aliases \u2014 GPR-1355/1357/1387/1356 the worker's sample, journal-backed feedback/acknowledgeState and promote (IMPL-3387)"
+    ],
+    "notImplemented": [
+      "Not implemented (refused with exit 2 GP_CLI_NOT_IMPLEMENTED until their beads land):",
+      "  init, check, eval/sample over a project manifest, test, promote without",
+      "  --expected-active or --expect (the project form). Any other first word (including the RL ch.07 forms",
+      "  `validate` and `infer`) exits 2 with GP_CLI_UNKNOWN_COMMAND."
+    ]
+  },
+  "hello": {
+    "argv": [
+      "node",
+      "ts/dist/main.js",
+      "rpc",
+      "--stdio"
+    ],
+    "exit": 0,
+    "requests": [
+      "{\"id\":\"h-all\",\"method\":\"hello\",\"params\":{\"protocol\":\"graphpolicy.rpc.v1\",\"dataSchemaMajors\":[1],\"functionSchemaMajors\":[1],\"numericalProfiles\":[\"graphpolicy.numeric.binary32.v1\"],\"maxMessageBytes\":1048576,\"backends\":[\"reference\"],\"ops\":[\"validateGraph\",\"compile\",\"evaluate\",\"sample\",\"inspect\",\"train\",\"feedback\",\"promote\",\"acknowledgeState\"]}}",
+      "{\"id\":\"h-served\",\"method\":\"hello\",\"params\":{\"protocol\":\"graphpolicy.rpc.v1\",\"dataSchemaMajors\":[1],\"functionSchemaMajors\":[1],\"numericalProfiles\":[\"graphpolicy.numeric.binary32.v1\"],\"maxMessageBytes\":1048576,\"backends\":[\"reference\"],\"ops\":[\"compile\",\"evaluate\",\"inspect\",\"sample\",\"validateGraph\"]}}",
+      "{\"id\":\"c-1\",\"method\":\"close\",\"params\":{}}"
+    ],
+    "replies": [
+      "{\"schema\":\"gp.rpc.reply/v1\",\"id\":\"h-all\",\"ok\":false,\"error\":{\"schema\":\"gp.rpc.error/v1\",\"code\":\"GP_RPC_HELLO_OP_NOT_ALLOWED\",\"category\":\"security\",\"retryable\":false,\"details\":{\"ops\":[\"train\",\"feedback\",\"promote\",\"acknowledgeState\"]}}}",
+      "{\"schema\":\"gp.rpc.reply/v1\",\"id\":\"h-served\",\"ok\":true,\"result\":{\"protocol\":\"graphpolicy.rpc.v1\",\"dataSchemaMajors\":[1],\"functionSchemaMajors\":[1],\"numericalProfile\":\"graphpolicy.numeric.binary32.v1\",\"maxMessageBytes\":1048576,\"maxQueue\":64,\"backend\":\"reference\",\"ops\":[\"compile\",\"evaluate\",\"inspect\",\"sample\",\"validateGraph\"],\"ordering\":\"correlated\",\"capabilities\":{\"timeout\":false,\"cancellation\":false,\"maxQueue\":64},\"backendFeatures\":[\"reference\"],\"limits\":{\"maxMessageBytes\":1048576,\"maxGraphBytes\":1048576,\"maxIncidences\":100000,\"maxActivationBytes\":67108864,\"maxQueue\":64}}}",
+      "{\"schema\":\"gp.rpc.reply/v1\",\"id\":\"c-1\",\"ok\":true,\"result\":{\"closed\":true}}"
+    ],
+    "stderr": ""
+  },
+  "versionSource": {
+    "file": "ts/src/version.ts",
+    "constLine": 10,
+    "constText": "export const VERSION = \"0.1.0\";",
+    "line": 14,
+    "text": "  return `gp ${VERSION} (commands: graph check, inspect errors, rpc --stdio, skill install, skill provenance, skill plugin install; protocol: ${protocolId})`;",
+    "revisions": [
+      {
+        "sha": "b68b777362f20b54c8c8ded1cc543b8567874fa1",
+        "versionTsBlob": "6e9450105725604d9416b00d811c04212db77512",
+        "rpcSchemaId": "export const RPC_SCHEMA_ID = \"graphpolicy.rpc.v1\";"
+      },
+      {
+        "sha": "a173f61113713059d798ac64f39dba963c6fe470",
+        "versionTsBlob": "6e9450105725604d9416b00d811c04212db77512",
+        "rpcSchemaId": "export const RPC_SCHEMA_ID = \"graphpolicy.rpc.v1\";"
+      },
+      {
+        "sha": "22f978a6ee9fdf23864d0327d9f5ea474edd6005",
+        "versionTsBlob": "6e9450105725604d9416b00d811c04212db77512",
+        "rpcSchemaId": "export const RPC_SCHEMA_ID = \"graphpolicy.rpc.v1\";"
+      },
+      {
+        "sha": "0107c72992f35cf6832a37615a25c7df45747ebc",
+        "versionTsBlob": "6e9450105725604d9416b00d811c04212db77512",
+        "rpcSchemaId": "export const RPC_SCHEMA_ID = \"graphpolicy.rpc.v1\";"
+      },
+      {
+        "sha": "3f7d52cd17397d8ed22e2c768714a057fe098b62",
+        "versionTsBlob": "6e9450105725604d9416b00d811c04212db77512",
+        "rpcSchemaId": "export const RPC_SCHEMA_ID = \"graphpolicy.rpc.v1\";"
+      }
+    ]
+  },
+  "skillProse": {
+    "file": "ts/skills/gp/SKILL.md",
+    "lines": [
+      13,
+      14
+    ],
+    "atPin": [
+      "GraphDataIR graphs (validation today; compilation, evaluation, sampling and training are",
+      "designed but NOT implemented). It ships as a Node ESM tree, not a global install: from the"
+    ],
+    "atSource": [
+      "GraphDataIR graphs (validation, compilation, evaluation, seeded sampling, train steps, the",
+      "journal and the artifact store are implemented; the live capture below is the roster). It ships as a Node ESM tree, not a global install: from the"
+    ]
+  }
+}

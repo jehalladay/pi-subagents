@@ -1,0 +1,633 @@
+{
+  "comment": "wb-agwj roster (R694 PREP F1 on the wb-e3eh gate cmd_ed834748f060, terminal enumerate-the-resolvable form bound by the owner ruling on wb-e3eh F7): the OUT-OF-FILE anchor of the wb-agwj section of test/workbench-claude-message-ref.test.ts. probeSource names the gate's LEG-2 probe file, committed byte for byte with its sha256; f1Escapes are the gate's 39 exploratory probes in its probe order, every one read quiet by E3EH_STRICT at S1 and S2; groups are the PREP's families (a)-(k) and the named bound's call-value family (cv); residuals resolve each F1 form as a named quiet residual of its family; channel is the one named residual of the spelling-generation channel with its runtime reading; twins are the F5 rider twins. Each row carries the placement digest the census recomputes.",
+  "probeSource": {
+    "file": "test/fixtures/claude-message-ref-agwj-probes.json",
+    "sha256": "2f73a997d78f3a4cfd296f6976334f2fa8702a92c909496ff11e64a4a0cde9d1",
+    "origin": "gp1e-probes.json, gate-prep-1 g10-gate-s22 PREP archive scripts/ (wb-e3eh gate cmd_ed834748f060)"
+  },
+  "sites": [
+    "S1",
+    "S2"
+  ],
+  "f1Escapes": [
+    "GE5-LOGICAL-ASSIGN-OR",
+    "GE5-LOGICAL-ASSIGN-NULLISH",
+    "GE5-LOGICAL-ASSIGN-AND",
+    "GE4-LOGICAL-ASSIGN-NULLISH",
+    "GE5-ELEMENT-STRING-INDEX",
+    "GE5-ELEMENT-AT",
+    "GE4-ELEMENT-STRING-INDEX",
+    "GE5-PROPERTY-SHORTHAND",
+    "GE5-PROPERTY-SPREAD",
+    "GE5-PROPERTY-GETTER",
+    "GE4-PROPERTY-SHORTHAND",
+    "GE5-DESTRUCT-REST",
+    "GE5-FOROF-ENTRIES",
+    "GE5-FOROF-ARRAY-OF",
+    "GE4-FOROF-ARRAY-OF",
+    "GE5-WRAP-NEW",
+    "GE5-WRAP-CALL",
+    "GE4-WRAP-NEW",
+    "GE4-DEFINEPROPERTIES-RETURN",
+    "GE4-SETPROTOTYPEOF-RETURN",
+    "GE4-SEAL-RETURN",
+    "GE5-GLOBAL-WINDOW",
+    "GE5-GLOBAL-SELF",
+    "GE5-GLOBAL-NESTED",
+    "GE4-GLOBAL-WINDOW",
+    "GE5-APPLY-CALL",
+    "GE5-CALL-APPLY",
+    "GE5-REFLECT-APPLY-CALL",
+    "GE5-BIND-CALL",
+    "GE4-APPLY-CALL",
+    "GE5-ARRAY-FROM-SPREAD",
+    "GE5-ARRAY-CALL-SPREAD",
+    "GE5-ARRAY-OF-GLOBAL",
+    "GE5-ARRAY-CONCAT-SPREAD",
+    "GE4-ARRAY-FROM-SPREAD",
+    "GE5-DEFINE-GETTER-REFLECT-APPLY",
+    "GE5-DEFINE-GETTER-BIND",
+    "GE5-ENTRIES-MAP",
+    "GE5-ENTRIES-MAPPED"
+  ],
+  "requiredF1": 39,
+  "groups": [
+    {
+      "id": "a",
+      "label": "(a) a logical-assignment target"
+    },
+    {
+      "id": "b",
+      "label": "(b) a string-literal index into an array literal"
+    },
+    {
+      "id": "c",
+      "label": "(c) a shorthand property of a const object literal"
+    },
+    {
+      "id": "d",
+      "label": "(d) a property carried in through an object spread"
+    },
+    {
+      "id": "e",
+      "label": "(e) an array-binding rest element"
+    },
+    {
+      "id": "f",
+      "label": "(f) new Object(x), or Object reached through .call"
+    },
+    {
+      "id": "g",
+      "label": "(g) window, self or globalThis.global as the global-object owner"
+    },
+    {
+      "id": "h",
+      "label": "(h) the writer reached through apply.call, call.apply, Reflect.apply of call, or call.bind"
+    },
+    {
+      "id": "i",
+      "label": "(i) Array.of owned through globalThis, in a spread"
+    },
+    {
+      "id": "j",
+      "label": "(j) __defineGetter__ reached through Reflect.apply or .bind"
+    },
+    {
+      "id": "k",
+      "label": "(k) Object.fromEntries over a Map"
+    },
+    {
+      "id": "cv",
+      "label": "(cv) the named bound's call-value family, a call's value the reading never follows"
+    }
+  ],
+  "residuals": [
+    {
+      "id": "R-GE5-LOGICAL-ASSIGN-OR",
+      "pin": "P5",
+      "group": "a",
+      "family": "(a) a logical-assignment target: a logical-or assignment that evaluates to Object.prototype is the bulk-write target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "d13c50d727207147"
+    },
+    {
+      "id": "R-GE5-LOGICAL-ASSIGN-NULLISH",
+      "pin": "P5",
+      "group": "a",
+      "family": "(a) a logical-assignment target: a nullish assignment that evaluates to Object.prototype is the bulk-write target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "31eaf027ba1e0c8a"
+    },
+    {
+      "id": "R-GE5-LOGICAL-ASSIGN-AND",
+      "pin": "P5",
+      "group": "a",
+      "family": "(a) a logical-assignment target: a logical-and assignment that evaluates to Object.prototype is the bulk-write target",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "20f610b6d21842bb"
+    },
+    {
+      "id": "R-GE4-LOGICAL-ASSIGN-NULLISH",
+      "pin": "P4",
+      "group": "a",
+      "family": "(a) a logical-assignment target: a nullish assignment that evaluates to snapshot receives parsed data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "bf52cff3a785323f"
+    },
+    {
+      "id": "R-GE5-ELEMENT-STRING-INDEX",
+      "pin": "P5",
+      "group": "b",
+      "family": "(b) a string-literal index into an array literal: the element a string-literal index names in an array literal holding the prototype receives a parsed bulk write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "46a5793e1897b61c"
+    },
+    {
+      "id": "R-GE5-ELEMENT-AT",
+      "pin": "P5",
+      "group": "cv",
+      "family": "(cv) the named bound's call-value family, a call's value the reading never follows: the prototype Array.prototype.at returns from an array literal receives a parsed bulk write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "4dae1b867a8ea28b"
+    },
+    {
+      "id": "R-GE4-ELEMENT-STRING-INDEX",
+      "pin": "P4",
+      "group": "b",
+      "family": "(b) a string-literal index into an array literal: the element a string-literal index names in an array literal holding snapshot receives parsed data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "9d0bdd0b9edc6e45"
+    },
+    {
+      "id": "R-GE5-PROPERTY-SHORTHAND",
+      "pin": "P5",
+      "group": "c",
+      "family": "(c) a shorthand property of a const object literal: a shorthand property over a const alias of Object.prototype receives a parsed bulk write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "6d34c94526dd325c"
+    },
+    {
+      "id": "R-GE5-PROPERTY-SPREAD",
+      "pin": "P5",
+      "group": "d",
+      "family": "(d) a property carried in through an object spread: a property spread into a const object literal from a literal holding the prototype receives a parsed bulk write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "33afd84e031f0ffc"
+    },
+    {
+      "id": "R-GE5-PROPERTY-GETTER",
+      "pin": "P5",
+      "group": "cv",
+      "family": "(cv) the named bound's call-value family, a call's value the reading never follows: the prototype a getter of a const object literal returns receives a parsed bulk write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "99b689a3391a3af0"
+    },
+    {
+      "id": "R-GE4-PROPERTY-SHORTHAND",
+      "pin": "P4",
+      "group": "c",
+      "family": "(c) a shorthand property of a const object literal: a shorthand property over a const alias of snapshot receives parsed data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "e29c199f1798f693"
+    },
+    {
+      "id": "R-GE5-DESTRUCT-REST",
+      "pin": "P5",
+      "group": "e",
+      "family": "(e) an array-binding rest element: an element of the rest binding over an array literal holding the prototype receives a parsed bulk write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "3f5a1d99e6073b9a"
+    },
+    {
+      "id": "R-GE5-FOROF-ENTRIES",
+      "pin": "P5",
+      "group": "cv",
+      "family": "(cv) the named bound's call-value family, a call's value the reading never follows: a const for-of value over Object.entries of a literal holding the prototype receives a parsed bulk write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "624bced26758b9e4"
+    },
+    {
+      "id": "R-GE5-FOROF-ARRAY-OF",
+      "pin": "P5",
+      "group": "cv",
+      "family": "(cv) the named bound's call-value family, a call's value the reading never follows: a const for-of variable over Array.of(...) holding the prototype receives a parsed bulk write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "936585b68ba921e5"
+    },
+    {
+      "id": "R-GE4-FOROF-ARRAY-OF",
+      "pin": "P4",
+      "group": "cv",
+      "family": "(cv) the named bound's call-value family, a call's value the reading never follows: a const for-of variable over Array.of(...) holding snapshot receives parsed data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "b37a1ae0191e6cab"
+    },
+    {
+      "id": "R-GE5-WRAP-NEW",
+      "pin": "P5",
+      "group": "f",
+      "family": "(f) new Object(x), or Object reached through .call: the prototype passed through new Object(...) receives a parsed bulk write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "06e2a98fafc6ffc1"
+    },
+    {
+      "id": "R-GE5-WRAP-CALL",
+      "pin": "P5",
+      "group": "f",
+      "family": "(f) new Object(x), or Object reached through .call: the prototype passed through Object.call(undefined, ...) receives a parsed bulk write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "0ae3110ed20f7431"
+    },
+    {
+      "id": "R-GE4-WRAP-NEW",
+      "pin": "P4",
+      "group": "f",
+      "family": "(f) new Object(x), or Object reached through .call: snapshot passed through new Object(...) receives parsed data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "e2aeeff035d1aa0e"
+    },
+    {
+      "id": "R-GE4-DEFINEPROPERTIES-RETURN",
+      "pin": "P4",
+      "group": "cv",
+      "family": "(cv) the named bound's call-value family, a call's value the reading never follows: the snapshot Object.defineProperties returns receives parsed data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "0cfb341d04bcca68"
+    },
+    {
+      "id": "R-GE4-SETPROTOTYPEOF-RETURN",
+      "pin": "P4",
+      "group": "cv",
+      "family": "(cv) the named bound's call-value family, a call's value the reading never follows: the snapshot Object.setPrototypeOf returns receives parsed data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "e18ddeeeda6b9330"
+    },
+    {
+      "id": "R-GE4-SEAL-RETURN",
+      "pin": "P4",
+      "group": "cv",
+      "family": "(cv) the named bound's call-value family, a call's value the reading never follows: the snapshot Object.seal returns receives parsed data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "4ec3cc00410acc23"
+    },
+    {
+      "id": "R-GE5-GLOBAL-WINDOW",
+      "pin": "P5",
+      "group": "g",
+      "family": "(g) window, self or globalThis.global as the global-object owner: a member of the prototype spelled through window is assigned",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "0180216345d99d2b"
+    },
+    {
+      "id": "R-GE5-GLOBAL-SELF",
+      "pin": "P5",
+      "group": "g",
+      "family": "(g) window, self or globalThis.global as the global-object owner: a member of the prototype spelled through self is assigned",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "c06c5b8458aec084"
+    },
+    {
+      "id": "R-GE5-GLOBAL-NESTED",
+      "pin": "P5",
+      "group": "g",
+      "family": "(g) window, self or globalThis.global as the global-object owner: a member of the prototype spelled through globalThis.global is assigned",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "4ff32c163e0dac01"
+    },
+    {
+      "id": "R-GE4-GLOBAL-WINDOW",
+      "pin": "P4",
+      "group": "g",
+      "family": "(g) window, self or globalThis.global as the global-object owner: Object.assign owned through window writes parsed data into snapshot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "37e1259d5d4a549c"
+    },
+    {
+      "id": "R-GE5-APPLY-CALL",
+      "pin": "P5",
+      "group": "h",
+      "family": "(h) the writer reached through apply.call, call.apply, Reflect.apply of call, or call.bind: Object.assign reached through Function.prototype.apply.call bulk-writes the prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "d25043b8a8c65d3e"
+    },
+    {
+      "id": "R-GE5-CALL-APPLY",
+      "pin": "P5",
+      "group": "h",
+      "family": "(h) the writer reached through apply.call, call.apply, Reflect.apply of call, or call.bind: Object.assign reached through Function.prototype.call.apply bulk-writes the prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "de1be428785e15e2"
+    },
+    {
+      "id": "R-GE5-REFLECT-APPLY-CALL",
+      "pin": "P5",
+      "group": "h",
+      "family": "(h) the writer reached through apply.call, call.apply, Reflect.apply of call, or call.bind: Object.assign reached through Reflect.apply of Function.prototype.call bulk-writes the prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "28229f496f2cc541"
+    },
+    {
+      "id": "R-GE5-BIND-CALL",
+      "pin": "P5",
+      "group": "h",
+      "family": "(h) the writer reached through apply.call, call.apply, Reflect.apply of call, or call.bind: Object.assign reached through Function.prototype.call.bind bulk-writes the prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "50ce82c2bb38116c"
+    },
+    {
+      "id": "R-GE4-APPLY-CALL",
+      "pin": "P4",
+      "group": "h",
+      "family": "(h) the writer reached through apply.call, call.apply, Reflect.apply of call, or call.bind: Object.assign reached through Function.prototype.apply.call writes parsed data into snapshot",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "5b5f8b4d0798aae1"
+    },
+    {
+      "id": "R-GE5-ARRAY-FROM-SPREAD",
+      "pin": "P5",
+      "group": "cv",
+      "family": "(cv) the named bound's call-value family, a call's value the reading never follows: the spread of Array.from(...) carries the prototype and parsed data into Object.assign",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "daac85d3c7318b42"
+    },
+    {
+      "id": "R-GE5-ARRAY-CALL-SPREAD",
+      "pin": "P5",
+      "group": "cv",
+      "family": "(cv) the named bound's call-value family, a call's value the reading never follows: the spread of Array(...) carries the prototype and parsed data into Object.assign",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "40d9a3694fa788c0"
+    },
+    {
+      "id": "R-GE5-ARRAY-OF-GLOBAL",
+      "pin": "P5",
+      "group": "i",
+      "family": "(i) Array.of owned through globalThis, in a spread: the spread of globalThis.Array.of(...) carries the prototype and parsed data into Object.assign",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "ebfe48f04cdbfce9"
+    },
+    {
+      "id": "R-GE5-ARRAY-CONCAT-SPREAD",
+      "pin": "P5",
+      "group": "cv",
+      "family": "(cv) the named bound's call-value family, a call's value the reading never follows: the spread of an array literal's concat(...) carries the prototype and parsed data into Object.assign",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "9a88f1d27c5d9e3a"
+    },
+    {
+      "id": "R-GE4-ARRAY-FROM-SPREAD",
+      "pin": "P4",
+      "group": "cv",
+      "family": "(cv) the named bound's call-value family, a call's value the reading never follows: the spread of Array.from(...) carries snapshot and parsed data into Object.assign",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "d2e327e3a4573fa6"
+    },
+    {
+      "id": "R-GE5-DEFINE-GETTER-REFLECT-APPLY",
+      "pin": "P5",
+      "group": "j",
+      "family": "(j) __defineGetter__ reached through Reflect.apply or .bind: the legacy __defineGetter__, reached through Reflect.apply, defines a prototype member",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "2e3eabac472e32c3"
+    },
+    {
+      "id": "R-GE5-DEFINE-GETTER-BIND",
+      "pin": "P5",
+      "group": "j",
+      "family": "(j) __defineGetter__ reached through Reflect.apply or .bind: the legacy __defineGetter__, bound to the prototype through .bind, defines a prototype member",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "f23c50881e0e0b57"
+    },
+    {
+      "id": "R-GE5-ENTRIES-MAP",
+      "pin": "P5",
+      "group": "k",
+      "family": "(k) Object.fromEntries over a Map: Object.fromEntries over a Map carries the Object prototype slot into Object.assign",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "5f1d56f171feff52"
+    },
+    {
+      "id": "R-GE5-ENTRIES-MAPPED",
+      "pin": "P5",
+      "group": "cv",
+      "family": "(cv) the named bound's call-value family, a call's value the reading never follows: Object.fromEntries over Object.entries(...).map(...) carries the Object prototype slot into Object.assign",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "67cb0aeed2273bab"
+    }
+  ],
+  "requiredQuietRows": 39,
+  "channel": {
+    "id": "R-AGWJ-SPELLING-CHANNEL",
+    "family": "the spelling-generation channel: any spelling of a prototype or snapshot write outside the resolved set; this row places one at each pin, a rest binding read through a string index (P5) and the P4 sibling of GE5-ELEMENT-AT (P4), neither a probe of the gate's battery",
+    "sites": [
+      "S1",
+      "S2"
+    ],
+    "reading": "quiet",
+    "runtime": "unobserved: the census parses the observer sites and never runs them, so a write spelled through the channel would execute with no census signal",
+    "digest": "b59e4846d145d0a8"
+  },
+  "twins": [
+    {
+      "id": "T-F5-CLASS-PROTOTYPE",
+      "pin": "P5",
+      "form": "the prototype member of a local class, an owner other than Object, receives a parsed bulk write",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "cc1c939ff848ebd3"
+    },
+    {
+      "id": "T-F5-LOCAL-OBJECT-OWNER",
+      "pin": "P5",
+      "form": "a member reached through the Object member of a local object, not a global-object owner, is assigned",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "7fc45c646fe0d93e"
+    },
+    {
+      "id": "T-F5-LOCAL-REFLECT-OWNER",
+      "pin": "P5",
+      "form": "the set member of the Reflect member of a local object, not a global-object owner, is handed Object.prototype",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "4fb9a0d03b5b3bbd"
+    },
+    {
+      "id": "T-F5-LOCAL-OBJECT-ASSIGN",
+      "pin": "P4",
+      "form": "the assign member of the Object member of a local object, not a global-object owner, is handed snapshot and parsed data",
+      "sites": [
+        "S1",
+        "S2"
+      ],
+      "reading": "quiet",
+      "digest": "f66d4d021a6f3e61"
+    }
+  ],
+  "requiredTwinRows": 4
+}

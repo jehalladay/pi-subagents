@@ -1,0 +1,978 @@
+{
+ "bead": "wb-kku9.2",
+ "producer": {
+  "mw": {
+   "repository": "MechanicalWorkflows",
+   "checkout": "/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/MechanicalWorkflows/MechanicalWorkflows/src/MechanicalWorkflows",
+   "sha": "5ce2a07f891f5b165125d26739ec79720c295dd1",
+   "path": "docs/programs/cac-workflow-composition-2026-10-18/README.md",
+   "blob": "8724bfbef6638e8efa371e78a7c026c28ca2dc62",
+   "readme3": "**Design-only as of 2026-10-18 (19ca8d4): the two program documents are the only artifacts; P2–P4 plan adapter code and live runs.** MechanicalWorkflows is a family of composable workflow libraries and applications, not a workflow engine/scheduler, Beads status store, Forge verifier or new CAC runtime (it does ship an optional Furnace executor host adapter: apps/development-rig/src/furnace-process-executor.ts and furnace-app.ts, witnessed 2026-10-15).",
+   "readme17": "- Agent SDK or Pi designs may execute a step but do not retroactively establish source evidence (one bounded Claude Agent SDK step witnessed 2026-10-15 under CLI opt-in; no Pi adapter is wired at 19ca8d4).",
+   "readme21": "As of 2026-10-18 (19ca8d4) these are interface/theorem research requirements, not a claim that source code was modified or native workflows were run.",
+   "contractsPath": "docs/programs/cac-workflow-composition-2026-10-18/01-composition-contracts.md",
+   "contractsBlob": "5e6c16c0c0415f1df837671a949ee9f2c6a5fed2",
+   "contracts4": "Under the proposed contract a workflow step would expose its typed input/output, effect scope, authority/version requirements, idempotency/retry behavior, verifier predicate and native evidence reference. No current MechanicalWorkflows step type exposes effect scope, authority/version or idempotency/retry fields; docs/11 D-01 adds a primitive only when a real consumer demonstrates it. A composition validates (a) type compatibility, (b) local postcondition establishing successor precondition, (c) independent permissions for each effect, validated by the host/native admission owner, not by MechanicalWorkflows, (d) checkpoint/retry semantics checked against the producer's native contract where one exists (Furnace 0.1.0 ships run resume / work retry but no effect-idempotency contract), and (e) an explicit bridge invariant/certificate (CAC 0.1 Bridge rule) from local validations to the overall intended claim; no bridge checker exists at HEAD.",
+   "contracts6": "Use \\`CACWorkflowCompositionV0\\` as a concept only. It can point to existing workflow step and source artifact IDs, but it must not create new authoritative IDs for Beads tasks, Forge operations/gates, Furnace attempts, Git revisions or HyperUnix answers (a non-exhaustive list).",
+   "documents": [
+    "docs/programs/cac-workflow-composition-2026-10-18/01-composition-contracts.md",
+    "docs/programs/cac-workflow-composition-2026-10-18/README.md"
+   ],
+   "measuredBy": "ws-03 (g10-work-s59), read-only git show/ls-tree of the local checkout",
+   "measuredUtc": "2026-10-23T21:47:35Z"
+  }
+ },
+ "constants": {
+  "cited": [
+   "cac-workflow-composition",
+   "CACWorkflowCompositionV0"
+  ],
+  "designOnly": "design-only",
+  "citation": "cac[\\s_-]*workflow[\\s_-]*composition|CACWorkflow[\\s_-]*Composition[\\s_-]*V0",
+  "requirementId": "\\bMW-CAC-WORKFLOW-COMPOSITION-R\\d+\\b",
+  "readme21": "As of 2026-10-18 (19ca8d4) these are interface/theorem research requirements, not a claim that source code was modified or native workflows were run.",
+  "statusNegation": [
+   "\\b(?:not|never|nor|no|isn't|aren't|wasn't|weren't)\\b",
+   "^\\W*(?:no longer|no more|any ?more)\\b"
+  ],
+  "subjects": [
+   {
+    "id": "v0",
+    "spelling": "CACWorkflowCompositionV0",
+    "pattern": "CAC[\\s_-]*Workflow[\\s_-]*Composition[\\s_-]*V0"
+   },
+   {
+    "id": "bridge-checker",
+    "spelling": "a bridge checker",
+    "pattern": "\\bbridge[\\s_-]*checkers?\\b"
+   },
+   {
+    "id": "pi-mw-adapter",
+    "spelling": "a Pi MW adapter",
+    "pattern": "\\b(?:Pi(?:[\\s_-]+(?:MW|MechanicalWorkflows))?|MW|MechanicalWorkflows)[\\s_-]+adapters?\\b"
+   }
+  ],
+  "exists": "\\b(?:exist(?:s|ing|ed)?|ship(?:s|ped|ping)?|wired|implement(?:s|ed)|available|land(?:s|ed)|released|published|live|supported|consum(?:es|ed)|runs|enforce[sd])\\b",
+  "guard": [
+   "\\b(?:no|not|never|none|nothing|nor|neither|without|cannot|can't|isn't|aren't|wasn't|weren't|doesn't|don't|didn't|won't|hasn't|haven't|when|whenever|once|if|until|unless|before|would|will|may|might|could|should|proposed|planned|future|yet)\\b",
+   "^\\s*(?:nowhere|nothing|none|not|never|no)\\b"
+  ],
+  "clauseSplit": "(?<=[.!?])\\s+|;",
+  "units": [
+   "^\\s*(?:>\\s*)*$",
+   "^\\s*(?:>\\s*)*(?:[-*+]|\\d{1,9}[.)])\\s+",
+   "^\\s{0,3}#{1,6}(?:\\s|$)",
+   "^\\s*\\|",
+   "^\\s{0,3}(?:`{3,}|~{3,})"
+  ],
+  "scopes": {
+   "A1": {
+    "word": "docs/workbench",
+    "root": "docs/workbench",
+    "exclude": "docs/workbench/receipts/"
+   },
+   "A2": {
+    "word": "receipts",
+    "root": "docs/workbench/receipts",
+    "exclude": ""
+   },
+   "A3": {
+    "word": "src",
+    "root": "src",
+    "exclude": ""
+   }
+  },
+  "floors": {
+   "A1": {
+    "files": 25,
+    "units": 1500
+   },
+   "A2": {
+    "files": 44,
+    "units": 1400
+   },
+   "A3": {
+    "files": 115,
+    "units": 92000
+   }
+  },
+  "pinUnits": 105176,
+  "quotes": {
+   "A1": "static census over docs/workbench",
+   "A2": "receipts",
+   "A3": "and src",
+   "A4": "every string containing 'cac-workflow-composition' or 'CACWorkflowCompositionV0'",
+   "A5": "also carries 'design-only'",
+   "A6": "or the verbatim README.md:21 sentence",
+   "A7": "in the same paragraph",
+   "A8": "passes empty today",
+   "B1": "mutant: an unqualified citation",
+   "B2": "naming CACWorkflowCompositionV0 as a shipped type",
+   "B3": "fails the census",
+   "C1": "if docs/workbench/07 § MechanicalWorkflows gains the wb-klr7 acceptance (c) sentence",
+   "C2": "it carries the status verbatim",
+   "C3": "and is bound by test/workbench-docs07-provider-rules.census.ts",
+   "E1": "shall not present CACWorkflowCompositionV0",
+   "E2": "a bridge checker",
+   "E3": "or a Pi MW adapter as existing"
+  },
+  "docs07": "docs/workbench/07-native-integrations.md",
+  "docs07Census": "test/workbench-docs07-provider-rules.census.ts",
+  "docs07Parent": "07 — MechanicalWorkflows and ecosystem native SDK integration",
+  "identity": "src/workbench/identity.ts",
+  "schemaLiteral": "workflow-script/v1",
+  "filingPin": "d75b68d10a1a3a183d6fb7a55088f38f86c018a2",
+  "plants": {
+   "A1": {
+    "path": "docs/workbench/zz-wb-kku9.2-plant.md",
+    "text": "# Plant\n\nThe MechanicalWorkflows cac-workflow-composition-2026-10-18 program is design-only.\n\nPi reads the cac-workflow-composition-2026-10-18 program.\n\nCACWorkflowCompositionV0 (design-only) ships in Pi.\n"
+   },
+   "A2": {
+    "path": "docs/workbench/receipts/zz-wb-kku9.2-plant.md",
+    "text": "# Plant\n\nThe MechanicalWorkflows cac-workflow-composition-2026-10-18 program is design-only.\n\nPi reads the cac-workflow-composition-2026-10-18 program.\n\nCACWorkflowCompositionV0 (design-only) ships in Pi.\n"
+   },
+   "A3": {
+    "path": "src/zz-wb-kku9.2-plant.ts",
+    "text": "// The MechanicalWorkflows cac-workflow-composition-2026-10-18 program is design-only.\nexport const NOTE = \"Pi reads the cac-workflow-composition-2026-10-18 program.\";\nexport const CLAIM = \"CACWorkflowCompositionV0 (design-only) ships in Pi.\";\nexport type CACWorkflowCompositionV0 = { readonly steps: readonly string[] };\n"
+   }
+  },
+  "residuals": {
+   "R-SCOPE": [
+    "Q1"
+   ],
+   "R-REQUIREMENT-ID": [
+    "Q2"
+   ],
+   "R-PARAPHRASE-CITE": [
+    "Q3"
+   ],
+   "R-NEGATION-DISTANCE": [
+    "Q4"
+   ],
+   "R-PARAPHRASE-EXISTS": [
+    "Q5"
+   ],
+   "R-GUARD-WORD": [
+    "Q6"
+   ],
+   "R-CROSS-CLAUSE": [
+    "Q7"
+   ],
+   "R-SUBJECT-SPELLING": [
+    "Q8"
+   ],
+   "R-SPLIT-SOURCE": [
+    "Q9"
+   ],
+   "R-ESCAPED-SPELLING": [
+    "Q10"
+   ],
+   "R-DOCUMENT-SCOPE": [
+    "Q11"
+   ]
+  }
+ },
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+  "the outside anchors: the bead's own row binds the rows, the pin quotes, the scopes, the citation, the carriers, the subjects and the existence words; wb-klr7's row and the producer block carry clause (c) and the status",
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "A5",
+  "A6",
+  "A7",
+  "A8",
+  "B1",
+  "B2",
+  "B3",
+  "C1",
+  "C2",
+  "C3",
+  "E1",
+  "E2",
+  "E3",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "Q7",
+  "Q8",
+  "Q9",
+  "Q10",
+  "Q11",
+  "the registered tests and the reached pins equal the roster, in order and both ways"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) static census over docs/workbench, receipts and src: every string containing 'cac-workflow-composition' or 'CACWorkflowCompositionV0' also carries 'design-only' or the verbatim README.md:21 sentence in the same paragraph (passes empty today)",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "scope": "docs/workbench",
+      "walkIsTracked": true,
+      "floor": 25,
+      "unitFloor": 1500,
+      "liveness": {
+       "firstUnitIsH1": true
+      },
+      "plantCiting": [
+       "docs/workbench/zz-wb-kku9.2-plant.md:3",
+       "docs/workbench/zz-wb-kku9.2-plant.md:5",
+       "docs/workbench/zz-wb-kku9.2-plant.md:7"
+      ],
+      "findings": [
+       "docs/workbench/zz-wb-kku9.2-plant.md:5 unqualified",
+       "docs/workbench/zz-wb-kku9.2-plant.md:7 exists:v0"
+      ]
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "scope": "docs/workbench/receipts",
+      "walkIsTracked": true,
+      "floor": 44,
+      "unitFloor": 1400,
+      "liveness": {
+       "firstUnitIsReceiptTitle": true
+      },
+      "plantCiting": [
+       "docs/workbench/receipts/zz-wb-kku9.2-plant.md:3",
+       "docs/workbench/receipts/zz-wb-kku9.2-plant.md:5",
+       "docs/workbench/receipts/zz-wb-kku9.2-plant.md:7"
+      ],
+      "findings": [
+       "docs/workbench/receipts/zz-wb-kku9.2-plant.md:5 unqualified",
+       "docs/workbench/receipts/zz-wb-kku9.2-plant.md:7 exists:v0"
+      ]
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "scope": "src",
+      "walkIsTracked": true,
+      "floor": 115,
+      "unitFloor": 92000,
+      "liveness": {
+       "schemaLiteralHolders": [
+        "src/workbench/identity.ts"
+       ],
+       "identityUnitKinds": [
+        "code",
+        "comment",
+        "string"
+       ]
+      },
+      "plantCiting": [
+       "src/zz-wb-kku9.2-plant.ts:1",
+       "src/zz-wb-kku9.2-plant.ts:2",
+       "src/zz-wb-kku9.2-plant.ts:3",
+       "src/zz-wb-kku9.2-plant.ts:4"
+      ],
+      "findings": [
+       "src/zz-wb-kku9.2-plant.ts:2 unqualified",
+       "src/zz-wb-kku9.2-plant.ts:3 exists:v0",
+       "src/zz-wb-kku9.2-plant.ts:4 code"
+      ]
+     }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "literals": [
+       "cac-workflow-composition",
+       "CACWorkflowCompositionV0"
+      ],
+      "controls": [
+       {
+        "id": "directory",
+        "causes": []
+       },
+       {
+        "id": "type",
+        "causes": []
+       },
+       {
+        "id": "directory-bare",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "type-bare",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "title-case",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "underscore",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "upper",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "glued",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "line-wrapped",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "requirement-id",
+        "causes": []
+       },
+       {
+        "id": "requirement-id-and-type",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "lowercase-id",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "other-cac",
+        "causes": []
+       },
+       {
+        "id": "plain-mw",
+        "causes": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "A5",
+     "witness": {
+      "word": "design-only",
+      "controls": [
+       {
+        "id": "lower",
+        "causes": []
+       },
+       {
+        "id": "capital",
+        "causes": []
+       },
+       {
+        "id": "upper",
+        "causes": []
+       },
+       {
+        "id": "absent",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "unhyphenated",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "not",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "not-purely",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "no-longer",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "trailing-no-longer",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "prefixed",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "suffixed",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "negation-elsewhere",
+        "causes": []
+       },
+       {
+        "id": "one-of-two",
+        "causes": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "A6",
+     "witness": {
+      "sentenceWords": 22,
+      "controls": [
+       {
+        "id": "verbatim",
+        "causes": []
+       },
+       {
+        "id": "no-final-period",
+        "causes": []
+       },
+       {
+        "id": "wrapped",
+        "causes": []
+       },
+       {
+        "id": "fragment",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "altered-date",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "altered-word",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "readme3-line",
+        "causes": [
+         "unqualified"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "A7",
+     "witness": {
+      "controls": [
+       {
+        "id": "same-block",
+        "causes": []
+       },
+       {
+        "id": "blank-line-apart",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "list-items",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "list-continuation",
+        "causes": []
+       },
+       {
+        "id": "heading-status",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "table-rows",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "table-row",
+        "causes": []
+       },
+       {
+        "id": "fence",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "blockquote-blank",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "html-comment",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "src-string",
+        "causes": []
+       },
+       {
+        "id": "src-string-bare",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "src-comment-neighbour",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "src-comment",
+        "causes": []
+       },
+       {
+        "id": "src-template",
+        "causes": []
+       },
+       {
+        "id": "src-identifier",
+        "causes": [
+         "code"
+        ]
+       },
+       {
+        "id": "src-escape",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "src-jsdoc",
+        "causes": []
+       },
+       {
+        "id": "src-block-comment",
+        "causes": [
+         "unqualified"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "A8",
+     "witness": {
+      "pin": "d75b68d10a1a3a183d6fb7a55088f38f86c018a2",
+      "files": [
+       25,
+       39,
+       115
+      ],
+      "units": 105176,
+      "findings": [
+       "docs/workbench/zz-wb-kku9.2-plant.md:5 unqualified",
+       "docs/workbench/zz-wb-kku9.2-plant.md:7 exists:v0"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) mutant: an unqualified citation naming CACWorkflowCompositionV0 as a shipped type fails the census",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "controls": [
+       {
+        "id": "mutant",
+        "causes": [
+         "unqualified",
+         "exists:v0"
+        ]
+       },
+       {
+        "id": "mutant-unclaimed",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "mutant-directory",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "qualified-unclaimed",
+        "causes": []
+       },
+       {
+        "id": "src-mutant",
+        "causes": [
+         "unqualified",
+         "exists:v0"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "controls": [
+       {
+        "id": "qualified-shipped-type",
+        "causes": [
+         "exists:v0"
+        ]
+       },
+       {
+        "id": "qualified-exists",
+        "causes": [
+         "exists:v0"
+        ]
+       },
+       {
+        "id": "shipped-before",
+        "causes": [
+         "exists:v0"
+        ]
+       },
+       {
+        "id": "spaced-type",
+        "causes": [
+         "exists:v0"
+        ]
+       },
+       {
+        "id": "negated",
+        "causes": []
+       },
+       {
+        "id": "unshipped",
+        "causes": []
+       },
+       {
+        "id": "conditional",
+        "causes": []
+       },
+       {
+        "id": "concept-only",
+        "causes": []
+       },
+       {
+        "id": "nowhere",
+        "causes": []
+       },
+       {
+        "id": "src-type",
+        "causes": [
+         "code"
+        ]
+       },
+       {
+        "id": "src-import",
+        "causes": [
+         "code"
+        ]
+       },
+       {
+        "id": "src-shipped-string",
+        "causes": [
+         "exists:v0"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "flagged": [
+       [
+        "docs/workbench/mutant.md:3 unqualified",
+        "docs/workbench/mutant.md:3 exists:v0"
+       ],
+       [
+        "docs/workbench/receipts/mutant.md:3 unqualified",
+        "docs/workbench/receipts/mutant.md:3 exists:v0"
+       ],
+       [
+        "src/mutant.ts:1 unqualified",
+        "src/mutant.ts:1 exists:v0"
+       ]
+      ],
+      "quiet": [
+       [],
+       [],
+       []
+      ],
+      "citingTwins": [
+       1,
+       1,
+       1
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) if docs/workbench/07 § MechanicalWorkflows gains the wb-klr7 acceptance (c) sentence, it carries the status verbatim and is bound by test/workbench-docs07-provider-rules.census.ts",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "klr7": "docs/workbench/07 § MechanicalWorkflows gains one falsifiable sentence bound by the docs/07 census (wb-6hb.11 shape)",
+      "heading": "MechanicalWorkflows is an ordinary function library",
+      "headings": 1,
+      "plantCites": true
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "findings": [
+       "unqualified"
+      ],
+      "citing": true
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "holder": "test/workbench-docs07-provider-rules.census.ts",
+      "parent": "07 — MechanicalWorkflows and ecosystem native SDK integration",
+      "unbound": [
+       "Composition metadata of cac-workflow-composition-2026-10-18 (design-only) is never a source of identity."
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "E",
+   "label": "shall not present CACWorkflowCompositionV0, a bridge checker or a Pi MW adapter as existing",
+   "pins": [
+    {
+     "id": "E1",
+     "witness": {
+      "subject": "CACWorkflowCompositionV0",
+      "controls": [
+       {
+        "id": "concept-only",
+        "causes": []
+       },
+       {
+        "id": "available",
+        "causes": [
+         "exists:v0"
+        ]
+       },
+       {
+        "id": "not-available",
+        "causes": []
+       },
+       {
+        "id": "landed",
+        "causes": [
+         "exists:v0"
+        ]
+       }
+      ],
+      "findings": [
+       "docs/workbench/zz-e1.md:1 exists:v0"
+      ]
+     }
+    },
+    {
+     "id": "E2",
+     "witness": {
+      "subject": "a bridge checker",
+      "controls": [
+       {
+        "id": "mw-fact",
+        "causes": []
+       },
+       {
+        "id": "runs",
+        "causes": [
+         "exists:bridge-checker"
+        ]
+       },
+       {
+        "id": "hyphenated-wired",
+        "causes": [
+         "exists:bridge-checker"
+        ]
+       },
+       {
+        "id": "proposed",
+        "causes": []
+       },
+       {
+        "id": "would",
+        "causes": []
+       }
+      ],
+      "findings": [
+       "docs/workbench/zz-e2.md:1 exists:bridge-checker"
+      ]
+     }
+    },
+    {
+     "id": "E3",
+     "witness": {
+      "subject": "a Pi MW adapter",
+      "controls": [
+       {
+        "id": "mw-fact",
+        "causes": []
+       },
+       {
+        "id": "live",
+        "causes": [
+         "exists:pi-mw-adapter"
+        ]
+       },
+       {
+        "id": "mechanicalworkflows-ships",
+        "causes": [
+         "exists:pi-mw-adapter"
+        ]
+       },
+       {
+        "id": "blocked",
+        "causes": []
+       },
+       {
+        "id": "furnace-namesake",
+        "causes": []
+       }
+      ],
+      "findings": [
+       "docs/workbench/zz-e3.md:1 exists:pi-mw-adapter"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals: each named family pinned by its quiet row",
+   "pins": [
+    {
+     "id": "Q1",
+     "witness": {
+      "outside": [
+       "README.md",
+       "CHANGELOG.md",
+       "AGENTS.md",
+       "docs/rpc.md",
+       "qa/workbench/status-ledger.mjs",
+       "test/workbench-docs07-provider-rules.census.ts"
+      ],
+      "listed": []
+     }
+    },
+    {
+     "id": "Q2",
+     "witness": {
+      "causes": []
+     }
+    },
+    {
+     "id": "Q3",
+     "witness": {
+      "causes": []
+     }
+    },
+    {
+     "id": "Q4",
+     "witness": {
+      "causes": []
+     }
+    },
+    {
+     "id": "Q5",
+     "witness": {
+      "causes": []
+     }
+    },
+    {
+     "id": "Q6",
+     "witness": {
+      "causes": []
+     }
+    },
+    {
+     "id": "Q7",
+     "witness": {
+      "causes": []
+     }
+    },
+    {
+     "id": "Q8",
+     "witness": {
+      "causes": []
+     }
+    },
+    {
+     "id": "Q9",
+     "witness": {
+      "causes": []
+     }
+    },
+    {
+     "id": "Q10",
+     "witness": {
+      "causes": []
+     }
+    },
+    {
+     "id": "Q11",
+     "witness": {
+      "causes": []
+     }
+    }
+   ]
+  }
+ ]
+}
