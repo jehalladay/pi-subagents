@@ -1,0 +1,939 @@
+{
+  "bead": "wb-gxd7.1",
+  "statement": "[GPC-FEEDBACK-CONTRACT-AUDIT-R1] No Pi surface shall collapse two gp hashes into one identity because they share the `graphpolicy.snapshot.c1:` prefix or a hex suffix: each gp identity is carried verbatim under its producer field name with its profile or form tagged (`identities.graph`, `canonical_digest`, `receipt.input_snapshot`/`graph_digest`, checkpoint), compared only byte-equal within one profile/form, and old interpretations are kept until GP publishes a migration (D-IDENT-1 descriptor unshipped, gated) — docs/programs/feedback-contract-audit-2026-10-21/README.md:42@0107c72992f3",
+  "quote": "- Do not collapse logically different hashes because they have the same suffix or share a prefix; preserve old identity interpretation until migration is explicitly designed.",
+  "citation": "docs/programs/feedback-contract-audit-2026-10-21/README.md:42@0107c72992f3",
+  "authority": "Do not change the meaning of `graphpolicy.snapshot.c1:` in place or silently rewrite old journal records.",
+  "posture": "Pi holds no gp identity (0 gp hits at d75b68d1)",
+  "codeFacts": [
+    "digests.ts:23,100",
+    "graph-check.ts:143",
+    "evaluate.ts:150",
+    "rpc-sample.ts:178"
+  ],
+  "producer": {
+    "repo": "GraphPolicyCLI",
+    "pin": "0107c72992f35cf6832a37615a25c7df45747ebc",
+    "programDir": "docs/programs/feedback-contract-audit-2026-10-21/",
+    "head": "0fdf3956a6175400f4f576142b044d7e708a61dd",
+    "lines": {
+      "README.md:42": "- Do not collapse logically different hashes because they have the same suffix or share a prefix; preserve old identity interpretation until migration is explicitly designed.",
+      "01-finding-inventory.md:9": "| F01 | [one snapshot, three graph digests](../../../new-feedback/2026-10-21-one-snapshot-file-carries-three-graph-digests-graph-check-identity-inspect-graph-canonical-and-eval-input-snapshot-and-none-equals-another.md) | CONFIRMED-OPEN at `61fda0c`; current rerun owed | RC-IDENT |",
+      "01-finding-inventory.md:10": "| F02 | [one theta, two checkpoint identities](../../../new-feedback/2026-10-21-one-theta-has-two-checkpoint-identities-the-cli-receipt-hashes-program-digest-plus-parameters-the-library-receipt-hashes-the-words-alone.md) | CONFIRMED-OPEN at `61fda0c`; current rerun owed | RC-IDENT / RC-STORE |",
+      "02-contract-audit.md:24": "| `gp graph check` → `identities.graph` | GraphDataIR whole-document canonicalization with `GRAPH_DATA_SNAPSHOT_C1_PROFILE` | Document/profile identity | Deterministic for the same logical document under that pinned profile; not interchangeable with the projection digest |",
+      "02-contract-audit.md:25": "| `gp inspect graph` → `canonical_digest` / declared `digests.canonical` | `snapshotDigestPayload` and `DATA_DIGEST_PROFILE` | DataIR projection digest | Source projection excludes fields not selected by that payload; shares the `graphpolicy.snapshot.c1:` prefix with a different preimage, so consumers must name the profile explicitly |",
+      "02-contract-audit.md:26": "| `gp eval` → `receipt.input_snapshot`; `gp sample` / decision-journal snapshot binding | SHA-256 of the exact presented graph bytes (for RPC sample, compact `JSON.stringify(graph)` bytes) | Byte-exact invocation/journal join key | Whitespace and serialization affect the hash. Do not substitute a canonical document/projection hash into an existing journal link |",
+      "02-contract-audit.md:30": "**Decision D-IDENT-1 (open):** publish a versioned identity descriptor whose typed fields include domain, hash algorithm, canonical profile, payload/view, and value. Alternatives: (a) additive fields/metadata that leave existing digest strings unchanged; (b) a versioned new namespace plus migration. Do not change the meaning of `graphpolicy.snapshot.c1:` in place or silently rewrite old journal records.",
+      "02-contract-audit.md:38": "| `ts/src/function-ir/checkpoint.ts` / CLI named `--checkpoint` | digest of `{program_digest, parameters}` under checkpoint words profile | Logical policy identity is program-bound |",
+      "02-contract-audit.md:39": "| `ts/src/evaluator/evaluate.ts` → `checkpointIdentity(theta)` | digest of the parameter words alone | Library evaluator uses a different identity for the same theta |",
+      "02-contract-audit.md:40": "| `ts/src/artifact-store/cas.ts` `put(\"checkpoint\", bytes)` | canonical artifact-byte hash under a store kind | Stored blob address may differ from the logical checkpoint identity |",
+      "02-contract-audit.md:42": "**Decision D-IDENT-3 (open):** choose whether evaluator receipts should expose the program-bound logical checkpoint identity, a distinct explicitly named theta-words identity, or both. Every consumer must know what the field binds. Re-pinning a golden vector requires a versioned migration if the preimage/meaning changes.",
+      "02-contract-audit.md:52": "**Decision D-STORE-1 (open):** specify a total resolution relation from `(program identity, parameter words, logical checkpoint identity)` to a stored artifact address and its canonical bytes. Prefer a single store API or explicit immutable binding record. Only equate the logical digest and CAS blob hash if a proven canonical preimage theorem and tests show actual equality; do not assume equality from similar names.",
+      "03-developer-workplan.md:112": "- Any supposed identity equivalence based only on a shared prefix: stop until preimages/fixtures demonstrate equivalence.",
+      "ts/src/data-ir/digests.ts:23": " * (`graphpolicy.snapshot.c1:<hex>`, the GPR-1430 namespace form) and `digests.source` is carried",
+      "ts/src/data-ir/digests.ts:100": "/** `graphpolicy.snapshot.c1:<hex>`: the form `digests.canonical` must carry (GPR-1042, GPR-1430). */",
+      "ts/src/cli/graph-check.ts:143": "    graph = digest(\"snapshot\", graphDoc, GRAPH_DATA_SNAPSHOT_C1_PROFILE);",
+      "ts/src/evaluator/evaluate.ts:62": "  readonly checkpoint: string;",
+      "ts/src/evaluator/evaluate.ts:150": "  const checkpoint = checkpointIdentity(theta);",
+      "ts/src/cli/rpc-sample.ts:178": "    const probe = { program_digest: programHex, parameters } as never;",
+      "ts/src/cli/eval-run.ts:476": "  const identities = { program: receipt.program_digest, checkpoint: receipt.checkpoint_digest };",
+      "ts/src/cli/inspect-decision.ts:161": "const DECISION_IDENTITY_FIELDS = [\"graph_digest\", \"program_digest\", \"checkpoint_digest\"] as const;",
+      "ts/src/cli/sample-command.ts:312": "      snapshotDigest: bare(d.graph_digest),",
+      "ts/src/cli/sample-command.ts:314": "      checkpointDigest: unqualifyDigest(d.checkpoint_digest, \"checkpoint\"),",
+      "ts/src/evaluator/receipt.ts:30": "  readonly checkpoint: string;",
+      "ts/src/artifact-store/cas.ts:71": "  readonly digest: string;"
+    },
+    "headLines": {
+      "docs/dev/IDENTITIES.md:94": "| whole | `graphpolicy.snapshot.c1:69ce84735635f9c2c96a8bc0f05fa7f407fc73d89b76b5d1163cace3a364266a` |",
+      "docs/dev/IDENTITIES.md:95": "| projection | `graphpolicy.snapshot.c1:d821ba50282dee2e69381b6b089ce4eb2417d8836ec4a714ffbe92d107948b70` |",
+      "docs/dev/IDENTITIES.md:96": "| pretty | `sha256:06d3bcbb80f339636874630a8ae6c259ad14fb2251d485b72b4e28b62022fa2d` |",
+      "docs/dev/IDENTITIES.md:97": "| compact | `sha256:f6acb8ea80ddfc1a5f0e65236afe078432f2b7e207358542a8411ef28d0eaa90` |",
+      "docs/dev/IDENTITIES.md:101": "| logical | `graphpolicy.checkpoint.c1:c463f16949fe653b3b09eab84f2ef6f80a60f880d02e85a515a28f3f61ac080d` |",
+      "docs/dev/IDENTITIES.md:102": "| words-only | `graphpolicy.checkpoint.c1:81efdbefc9c53e24575b247d98d2b8bac03cfb7625293ef85a4cbd24b5075fda` |",
+      "docs/dev/IDENTITIES.md:103": "| cas | `graphpolicy.checkpoint.c1:f832aae7acdfbd30e920a5203720eddb451321143007206a4764d0b9645a557d` |",
+      "docs/dev/RULINGS.md:769": "| GP-FCA/D-IDENT-1 | RULED-A **CONTESTED** | Three graph preimages share two spellings; descriptor is additive, but verifier refutes lasting compose label and all-carriers MUST | Ship five typed graph/schema leaves with unchanged digest strings; **repair** compose and GPR scope wording before acceptance; GPR-1004 follow-up | 2026-10-22 |",
+      "requirements/ATOMIC-REQUIREMENTS.md:7144": "### GPR-1607 — Each gp-computed graph or schema identity is described by an additive graphpolicy.identity.v1 record beside its unchanged digest string"
+    },
+    "snapshot": {
+      "path": "fixtures/conformance/host-adapter/snapshot.json",
+      "sha256": "06d3bcbb80f339636874630a8ae6c259ad14fb2251d485b72b4e28b62022fa2d",
+      "bytes": "{\n  \"schema_ref\": {\n    \"namespace\": \"graphpolicy.data.v1\",\n    \"hash\": \"sha256:f43017c2b463a5de92800ca1f50951b99ef1ca7b83edc7dde9baf7f54e9a55ce\",\n    \"version\": \"1.0.0\"\n  },\n  \"observation\": {\n    \"adapter\": \"synthetic.mechanicalworkflows\",\n    \"revisions\": [\n      \"mw-synthetic-rev-0001\"\n    ],\n    \"scope\": \"fixtures://synthetic/host-adapter/read-only\",\n    \"extraction\": {\n      \"generator\": \"host-adapter-fixture\",\n      \"synthetic\": true\n    },\n    \"budget\": {\n      \"max_entities\": 64\n    },\n    \"completeness\": {\n      \"can_execute\": {\n        \"coverage\": 1,\n        \"complete\": true\n      },\n      \"needs\": {\n        \"coverage\": 1,\n        \"complete\": true\n      }\n    },\n    \"slice\": {\n      \"kind\": \"snapshot\"\n    }\n  },\n  \"entities\": [\n    {\n      \"id\": \"agent-1\",\n      \"kind\": \"agent\",\n      \"features\": {\n        \"capacity\": {\n          \"status\": \"known\",\n          \"value\": 1\n        }\n      }\n    },\n    {\n      \"id\": \"agent-2\",\n      \"kind\": \"agent\",\n      \"features\": {\n        \"capacity\": {\n          \"status\": \"known\",\n          \"value\": 1\n        }\n      }\n    },\n    {\n      \"id\": \"task-1\",\n      \"kind\": \"task\",\n      \"features\": {\n        \"priority\": {\n          \"status\": \"known\",\n          \"value\": 0.75\n        }\n      }\n    },\n    {\n      \"id\": \"task-2\",\n      \"kind\": \"task\",\n      \"features\": {\n        \"priority\": {\n          \"status\": \"known\",\n          \"value\": 0.5\n        }\n      }\n    },\n    {\n      \"id\": \"task-3\",\n      \"kind\": \"task\",\n      \"features\": {\n        \"priority\": {\n          \"status\": \"unknown\"\n        }\n      }\n    },\n    {\n      \"id\": \"resource-gpu\",\n      \"kind\": \"resource\",\n      \"features\": {\n        \"units\": {\n          \"status\": \"known\",\n          \"value\": 1\n        }\n      }\n    }\n  ],\n  \"relations\": [\n    {\n      \"id\": \"exec-a1-t1\",\n      \"kind\": \"can_execute\",\n      \"features\": {\n        \"affinity\": {\n          \"status\": \"known\",\n          \"value\": 0.875\n        }\n      },\n      \"incidences\": [\n        {\n          \"id\": \"exec-a1-t1-w\",\n          \"participant\": \"agent-1\",\n          \"role\": \"worker\"\n        },\n        {\n          \"id\": \"exec-a1-t1-k\",\n          \"participant\": \"task-1\",\n          \"role\": \"work\"\n        }\n      ]\n    },\n    {\n      \"id\": \"exec-a1-t2\",\n      \"kind\": \"can_execute\",\n      \"features\": {\n        \"affinity\": {\n          \"status\": \"known\",\n          \"value\": 0.625\n        }\n      },\n      \"incidences\": [\n        {\n          \"id\": \"exec-a1-t2-w\",\n          \"participant\": \"agent-1\",\n          \"role\": \"worker\"\n        },\n        {\n          \"id\": \"exec-a1-t2-k\",\n          \"participant\": \"task-2\",\n          \"role\": \"work\"\n        }\n      ]\n    },\n    {\n      \"id\": \"exec-a2-t2\",\n      \"kind\": \"can_execute\",\n      \"features\": {\n        \"affinity\": {\n          \"status\": \"known\",\n          \"value\": 0.75\n        }\n      },\n      \"incidences\": [\n        {\n          \"id\": \"exec-a2-t2-w\",\n          \"participant\": \"agent-2\",\n          \"role\": \"worker\"\n        },\n        {\n          \"id\": \"exec-a2-t2-k\",\n          \"participant\": \"task-2\",\n          \"role\": \"work\"\n        }\n      ]\n    },\n    {\n      \"id\": \"exec-a2-t3\",\n      \"kind\": \"can_execute\",\n      \"features\": {\n        \"affinity\": {\n          \"status\": \"known\",\n          \"value\": 0.25\n        }\n      },\n      \"incidences\": [\n        {\n          \"id\": \"exec-a2-t3-w\",\n          \"participant\": \"agent-2\",\n          \"role\": \"worker\"\n        },\n        {\n          \"id\": \"exec-a2-t3-k\",\n          \"participant\": \"task-3\",\n          \"role\": \"work\"\n        }\n      ]\n    },\n    {\n      \"id\": \"need-task-1\",\n      \"kind\": \"needs\",\n      \"features\": {},\n      \"incidences\": [\n        {\n          \"id\": \"need-task-1-c\",\n          \"participant\": \"task-1\",\n          \"role\": \"consumer\"\n        },\n        {\n          \"id\": \"need-task-1-s\",\n          \"participant\": \"resource-gpu\",\n          \"role\": \"supply\"\n        }\n      ]\n    },\n    {\n      \"id\": \"need-task-2\",\n      \"kind\": \"needs\",\n      \"features\": {},\n      \"incidences\": [\n        {\n          \"id\": \"need-task-2-c\",\n          \"participant\": \"task-2\",\n          \"role\": \"consumer\"\n        },\n        {\n          \"id\": \"need-task-2-s\",\n          \"participant\": \"resource-gpu\",\n          \"role\": \"supply\"\n        }\n      ]\n    },\n    {\n      \"id\": \"need-task-3\",\n      \"kind\": \"needs\",\n      \"features\": {},\n      \"incidences\": [\n        {\n          \"id\": \"need-task-3-c\",\n          \"participant\": \"task-3\",\n          \"role\": \"consumer\"\n        },\n        {\n          \"id\": \"need-task-3-s\",\n          \"participant\": \"resource-gpu\",\n          \"role\": \"supply\"\n        }\n      ]\n    }\n  ],\n  \"candidates\": {},\n  \"digests\": {\n    \"source\": \"mw-synthetic-rev-0001\",\n    \"canonical\": \"graphpolicy.snapshot.c1:d821ba50282dee2e69381b6b089ce4eb2417d8836ec4a714ffbe92d107948b70\"\n  }\n}\n"
+    },
+    "journal": {
+      "path": "fixtures/conformance/host-adapter/journal.jsonl",
+      "snapshotDigest": "06d3bcbb80f339636874630a8ae6c259ad14fb2251d485b72b4e28b62022fa2d",
+      "checkpointDigest": "c463f16949fe653b3b09eab84f2ef6f80a60f880d02e85a515a28f3f61ac080d"
+    },
+    "evidence": {
+      "path": "docs/programs/feedback-contract-audit-2026-10-21/evidence/WP0-IDENT/evidence-c19710e.json",
+      "bead": "gpc-1ly.12.1",
+      "sourceSha": "c19710ee0364db5c1f63b43fa0e2618678114113",
+      "graphCheck": "graphpolicy.snapshot.c1:69ce84735635f9c2c96a8bc0f05fa7f407fc73d89b76b5d1163cace3a364266a",
+      "inspectCanonical": "graphpolicy.snapshot.c1:d821ba50282dee2e69381b6b089ce4eb2417d8836ec4a714ffbe92d107948b70",
+      "evalCommitted": "sha256:06d3bcbb80f339636874630a8ae6c259ad14fb2251d485b72b4e28b62022fa2d",
+      "sampleCommitted": "sha256:06d3bcbb80f339636874630a8ae6c259ad14fb2251d485b72b4e28b62022fa2d",
+      "evalCompact": "sha256:f6acb8ea80ddfc1a5f0e65236afe078432f2b7e207358542a8411ef28d0eaa90",
+      "checkpointLiterals": {
+        "all-zero": {
+          "checkpoint": "graphpolicy.checkpoint.c1:0000000000000000000000000000000000000000000000000000000000000000",
+          "rc": 2,
+          "error": "GP_CLI_CHECKPOINT_MISMATCH",
+          "stage": "validate",
+          "receiptCheckpointDigest": null
+        },
+        "program-bound": {
+          "checkpoint": "graphpolicy.checkpoint.c1:c463f16949fe653b3b09eab84f2ef6f80a60f880d02e85a515a28f3f61ac080d",
+          "rc": 0,
+          "error": null,
+          "stage": null,
+          "receiptCheckpointDigest": "graphpolicy.checkpoint.c1:c463f16949fe653b3b09eab84f2ef6f80a60f880d02e85a515a28f3f61ac080d"
+        },
+        "words-only": {
+          "checkpoint": "graphpolicy.checkpoint.c1:81efdbefc9c53e24575b247d98d2b8bac03cfb7625293ef85a4cbd24b5075fda",
+          "rc": 2,
+          "error": "GP_CLI_CHECKPOINT_MISMATCH",
+          "stage": "validate",
+          "receiptCheckpointDigest": null
+        }
+      },
+      "libraryCheckpointIdentity": "graphpolicy.checkpoint.c1:81efdbefc9c53e24575b247d98d2b8bac03cfb7625293ef85a4cbd24b5075fda"
+    },
+    "gate": {
+      "descriptorSchema": "graphpolicy.identity.v1",
+      "productFilesAtPin": 0,
+      "productFilesAtHead": 0,
+      "installedBundleHits": 0
+    },
+    "installed": {
+      "version": "gp 0.1.0",
+      "buildCommit": "3f7d52cd17397d8ed22e2c768714a057fe098b62",
+      "bundleSha256": "0ad799c31da1dcd3ea3abf78bb099a407072c11ce63a76c2c6a1dd6b9ba52bd4",
+      "argv": [
+        "gp",
+        "graph",
+        "check",
+        "--schema",
+        "schema.json",
+        "--graph",
+        "snapshot.json",
+        "--json"
+      ],
+      "exit": 0,
+      "stderr": "",
+      "identitiesGraph": "graphpolicy.snapshot.c1:69ce84735635f9c2c96a8bc0f05fa7f407fc73d89b76b5d1163cace3a364266a",
+      "digestChecksCanonical": "verified",
+      "evalRefusal": "gp: not implemented: eval — see gp --help"
+    }
+  },
+  "carriers": [
+    {
+      "id": "graph",
+      "surface": "gp graph check",
+      "field": "identities.graph",
+      "value": "graphpolicy.snapshot.c1:69ce84735635f9c2c96a8bc0f05fa7f407fc73d89b76b5d1163cace3a364266a",
+      "row": "I01",
+      "form": "Document/profile identity",
+      "source": "the installed gp 0.1.0 (3f7d52c) graph check over the pin's host-adapter files, run by the seat 2026-10-23; equal to WP0-IDENT evidence (gpc-1ly.12.1, source c19710e; evidence-c19710e.json at gp main 0fdf395) p01 graph_check"
+    },
+    {
+      "id": "projection",
+      "surface": "gp inspect graph",
+      "field": "canonical_digest",
+      "value": "graphpolicy.snapshot.c1:d821ba50282dee2e69381b6b089ce4eb2417d8836ec4a714ffbe92d107948b70",
+      "row": "I02",
+      "form": "DataIR projection digest",
+      "source": "WP0-IDENT evidence (gpc-1ly.12.1, source c19710e; evidence-c19710e.json at gp main 0fdf395) p01 inspect_graph"
+    },
+    {
+      "id": "declared",
+      "surface": "GraphDataIR snapshot",
+      "field": "digests.canonical",
+      "value": "graphpolicy.snapshot.c1:d821ba50282dee2e69381b6b089ce4eb2417d8836ec4a714ffbe92d107948b70",
+      "row": "I02",
+      "form": "DataIR projection digest",
+      "source": "the pin's fixtures/conformance/host-adapter/snapshot.json (the installed gp: digest_checks.canonical verified)"
+    },
+    {
+      "id": "eval-pretty",
+      "surface": "gp eval",
+      "field": "receipt.input_snapshot",
+      "value": "sha256:06d3bcbb80f339636874630a8ae6c259ad14fb2251d485b72b4e28b62022fa2d",
+      "row": "I03",
+      "form": "Byte-exact invocation/journal join key",
+      "source": "WP0-IDENT evidence (gpc-1ly.12.1, source c19710e; evidence-c19710e.json at gp main 0fdf395) p01 eval over the committed file; the SHA-256 of the roster's snapshot bytes"
+    },
+    {
+      "id": "sample-pretty",
+      "surface": "gp sample",
+      "field": "decision.graph_digest",
+      "value": "sha256:06d3bcbb80f339636874630a8ae6c259ad14fb2251d485b72b4e28b62022fa2d",
+      "row": "I03",
+      "form": "Byte-exact invocation/journal join key",
+      "source": "WP0-IDENT evidence (gpc-1ly.12.1, source c19710e; evidence-c19710e.json at gp main 0fdf395) p01 sample over the committed file"
+    },
+    {
+      "id": "eval-compact",
+      "surface": "gp eval",
+      "field": "receipt.input_snapshot",
+      "value": "sha256:f6acb8ea80ddfc1a5f0e65236afe078432f2b7e207358542a8411ef28d0eaa90",
+      "row": "I03",
+      "form": "Byte-exact invocation/journal join key",
+      "source": "WP0-IDENT evidence (gpc-1ly.12.1, source c19710e; evidence-c19710e.json at gp main 0fdf395) p01 eval over the compact re-serialization of the same document"
+    },
+    {
+      "id": "journal-snapshot",
+      "surface": "decision journal",
+      "field": "sampled-decision.snapshotDigest",
+      "value": "06d3bcbb80f339636874630a8ae6c259ad14fb2251d485b72b4e28b62022fa2d",
+      "row": "I03",
+      "form": "Byte-exact invocation/journal join key",
+      "source": "the pin's fixtures/conformance/host-adapter/journal.jsonl sampled-decision record (bare)"
+    },
+    {
+      "id": "argv-checkpoint",
+      "surface": "gp eval",
+      "field": "--checkpoint",
+      "value": "graphpolicy.checkpoint.c1:c463f16949fe653b3b09eab84f2ef6f80a60f880d02e85a515a28f3f61ac080d",
+      "row": "I08",
+      "form": "program-bound",
+      "source": "WP0-IDENT evidence (gpc-1ly.12.1, source c19710e; evidence-c19710e.json at gp main 0fdf395) p02 literals program-bound (eval exit 0)"
+    },
+    {
+      "id": "receipt-checkpoint",
+      "surface": "gp eval",
+      "field": "receipt.checkpoint_digest",
+      "value": "graphpolicy.checkpoint.c1:c463f16949fe653b3b09eab84f2ef6f80a60f880d02e85a515a28f3f61ac080d",
+      "row": "I08",
+      "form": "program-bound",
+      "source": "WP0-IDENT evidence (gpc-1ly.12.1, source c19710e; evidence-c19710e.json at gp main 0fdf395) p02 literals program-bound eval receipt"
+    },
+    {
+      "id": "journal-checkpoint",
+      "surface": "decision journal",
+      "field": "sampled-decision.checkpointDigest",
+      "value": "c463f16949fe653b3b09eab84f2ef6f80a60f880d02e85a515a28f3f61ac080d",
+      "row": "I08",
+      "form": "program-bound",
+      "source": "the pin's fixtures/conformance/host-adapter/journal.jsonl sampled-decision record (bare)"
+    },
+    {
+      "id": "library-checkpoint",
+      "surface": "library evaluator receipt",
+      "field": "checkpoint",
+      "value": "graphpolicy.checkpoint.c1:81efdbefc9c53e24575b247d98d2b8bac03cfb7625293ef85a4cbd24b5075fda",
+      "row": "I09",
+      "form": "theta-words",
+      "source": "WP0-IDENT evidence (gpc-1ly.12.1, source c19710e; evidence-c19710e.json at gp main 0fdf395) p02 ts_library_checkpointIdentity"
+    },
+    {
+      "id": "store-blob",
+      "surface": "gp store put",
+      "field": "digest",
+      "value": "graphpolicy.checkpoint.c1:f832aae7acdfbd30e920a5203720eddb451321143007206a4764d0b9645a557d",
+      "row": "I10",
+      "form": "cas-blob",
+      "source": "docs/dev/IDENTITIES.md:103 at gp main 0fdf395 (the address gp store put --kind checkpoint returns for the theta's c1 document)"
+    }
+  ],
+  "scan": {
+    "pin": "0107c72992f3",
+    "unknownProfile": "unknown profile",
+    "descriptorSchema": "graphpolicy.identity.v1",
+    "checkpointForms": [
+      "program-bound",
+      "theta-words",
+      "cas-blob"
+    ],
+    "callMethods": [
+      "startsWith",
+      "endsWith",
+      "includes"
+    ],
+    "walkRoots": [
+      "src",
+      "qa",
+      "examples"
+    ],
+    "moduleExtensions": [
+      ".ts",
+      ".mts",
+      ".cts",
+      ".tsx",
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".jsx"
+    ],
+    "floors": {
+      "src": 100,
+      "qa": 55,
+      "examples": 5
+    },
+    "callFloor": 150,
+    "identityText": "graphpolicy\\.(?:[a-z][a-z0-9_-]*\\.c1(?![A-Za-z0-9])|[a-z][a-z0-9_-]*\\.?$|$)/",
+    "domainText": "graphpolicy\\.[a-z][a-z0-9_-]*\\.c1(?![A-Za-z0-9])/",
+    "ledger": [
+      {
+        "surface": "gp graph check",
+        "field": "identities.graph",
+        "form": "Document/profile identity",
+        "grounds": [
+          {
+            "line": "02-contract-audit.md:24",
+            "quote": "`gp graph check` → `identities.graph`"
+          }
+        ]
+      },
+      {
+        "surface": "gp inspect graph",
+        "field": "canonical_digest",
+        "form": "DataIR projection digest",
+        "grounds": [
+          {
+            "line": "02-contract-audit.md:25",
+            "quote": "`gp inspect graph` → `canonical_digest`"
+          }
+        ]
+      },
+      {
+        "surface": "GraphDataIR snapshot",
+        "field": "digests.canonical",
+        "form": "DataIR projection digest",
+        "grounds": [
+          {
+            "line": "02-contract-audit.md:25",
+            "quote": "declared `digests.canonical`"
+          }
+        ]
+      },
+      {
+        "surface": "gp eval",
+        "field": "receipt.input_snapshot",
+        "form": "Byte-exact invocation/journal join key",
+        "grounds": [
+          {
+            "line": "02-contract-audit.md:26",
+            "quote": "`gp eval` → `receipt.input_snapshot`"
+          }
+        ]
+      },
+      {
+        "surface": "gp sample",
+        "field": "decision.graph_digest",
+        "form": "Byte-exact invocation/journal join key",
+        "grounds": [
+          {
+            "line": "02-contract-audit.md:26",
+            "quote": "`gp sample` / decision-journal snapshot binding"
+          },
+          {
+            "line": "ts/src/cli/inspect-decision.ts:161",
+            "quote": "\"graph_digest\""
+          }
+        ]
+      },
+      {
+        "surface": "decision journal",
+        "field": "sampled-decision.snapshotDigest",
+        "form": "Byte-exact invocation/journal join key",
+        "grounds": [
+          {
+            "line": "02-contract-audit.md:26",
+            "quote": "decision-journal snapshot binding"
+          },
+          {
+            "line": "ts/src/cli/sample-command.ts:312",
+            "quote": "snapshotDigest: bare(d.graph_digest)"
+          }
+        ]
+      },
+      {
+        "surface": "gp eval",
+        "field": "--checkpoint",
+        "form": "program-bound",
+        "grounds": [
+          {
+            "line": "02-contract-audit.md:38",
+            "quote": "CLI named `--checkpoint`"
+          }
+        ]
+      },
+      {
+        "surface": "gp eval",
+        "field": "receipt.checkpoint_digest",
+        "form": "program-bound",
+        "grounds": [
+          {
+            "line": "02-contract-audit.md:38",
+            "quote": "Logical policy identity is program-bound"
+          },
+          {
+            "line": "ts/src/cli/eval-run.ts:476",
+            "quote": "receipt.checkpoint_digest"
+          }
+        ]
+      },
+      {
+        "surface": "gp eval",
+        "field": "identities.checkpoint",
+        "form": "program-bound",
+        "grounds": [
+          {
+            "line": "ts/src/cli/eval-run.ts:476",
+            "quote": "const identities = { program: receipt.program_digest, checkpoint: receipt.checkpoint_digest }"
+          }
+        ]
+      },
+      {
+        "surface": "decision journal",
+        "field": "sampled-decision.checkpointDigest",
+        "form": "program-bound",
+        "grounds": [
+          {
+            "line": "ts/src/cli/sample-command.ts:314",
+            "quote": "checkpointDigest: unqualifyDigest(d.checkpoint_digest, \"checkpoint\")"
+          }
+        ]
+      },
+      {
+        "surface": "library evaluator receipt",
+        "field": "checkpoint",
+        "form": "theta-words",
+        "grounds": [
+          {
+            "line": "02-contract-audit.md:39",
+            "quote": "`checkpointIdentity(theta)`"
+          },
+          {
+            "line": "ts/src/evaluator/evaluate.ts:62",
+            "quote": "readonly checkpoint: string;"
+          }
+        ]
+      },
+      {
+        "surface": "library evaluator receipt",
+        "field": "digests.checkpoint",
+        "form": "theta-words",
+        "grounds": [
+          {
+            "line": "02-contract-audit.md:39",
+            "quote": "digest of the parameter words alone"
+          },
+          {
+            "line": "ts/src/evaluator/receipt.ts:30",
+            "quote": "readonly checkpoint: string;"
+          }
+        ]
+      },
+      {
+        "surface": "gp store put",
+        "field": "digest",
+        "form": "cas-blob",
+        "grounds": [
+          {
+            "line": "02-contract-audit.md:40",
+            "quote": "`put(\"checkpoint\", bytes)`"
+          },
+          {
+            "line": "ts/src/artifact-store/cas.ts:71",
+            "quote": "readonly digest: string;"
+          }
+        ]
+      }
+    ],
+    "vocabulary": {
+      "leaves": [
+        "canonical_digest",
+        "checkpoint_digest",
+        "graph_digest",
+        "input_snapshot"
+      ],
+      "paths": [
+        "digests.canonical",
+        "digests.checkpoint",
+        "identities.checkpoint",
+        "identities.graph"
+      ],
+      "flags": [
+        "--checkpoint"
+      ],
+      "excluded": [
+        "checkpoint",
+        "digest",
+        "sampled-decision.checkpointDigest",
+        "sampled-decision.snapshotDigest"
+      ]
+    },
+    "ledgerTriple": [
+      "graph",
+      "projection",
+      "eval-pretty"
+    ],
+    "probes": [
+      "upper",
+      "newline",
+      "cross-domain",
+      "form-swap",
+      "described",
+      "described-null",
+      "theta-digests",
+      "blob-equal-bytes",
+      "unledgered",
+      "foreign-descriptor",
+      "other-value-descriptor"
+    ],
+    "controls": [
+      "F-RECEIVER-READ",
+      "F-ARGUMENT-READ",
+      "F-PREFIX-LITERAL",
+      "F-TEMPLATE",
+      "F-NAMESPACE",
+      "F-ALIAS",
+      "F-ELEMENT-OPTIONAL",
+      "F-DESTRUCTURED",
+      "F-DIGESTS-PATH",
+      "Q-OWN-PATH",
+      "Q-OWN-DIGEST",
+      "Q-SCHEMA-ID",
+      "Q-BYTE-EQUAL",
+      "R-ALIAS",
+      "R-COMPUTED",
+      "R-OTHER-METHOD",
+      "R-COMMENT",
+      "R-UNTYPED-FLOW",
+      "R-NAMESAKE"
+    ],
+    "comparatorMutants": [
+      "M-PREFIX",
+      "M-SUFFIX",
+      "M-INCLUDES",
+      "M-HEX-ONLY",
+      "M-CASEFOLD",
+      "M-TRIM",
+      "M-FORM-BLIND",
+      "M-PROFILE-BLIND",
+      "M-FIELD",
+      "M-NEVER"
+    ],
+    "argvMutants": [
+      "M-ANY-FORM",
+      "M-PREFIX-GATE",
+      "M-STRIP",
+      "M-THETA-OK"
+    ],
+    "checkpointMutants": [
+      "M-BLOB-OK",
+      "M-BLOB-AS-PROGRAM",
+      "M-PREFIX-ID"
+    ],
+    "rewriteMutants": [
+      "M-LOWER",
+      "M-STRIP-PREFIX",
+      "M-QUALIFY-BARE",
+      "M-TRIM",
+      "M-FORM-FROM-PREFIX",
+      "M-FIELD-NORMALIZE",
+      "M-GUESS-UNLEDGERED"
+    ],
+    "profileMutants": [
+      "M-PREFIX-PROFILE",
+      "M-LEDGER-PROFILE",
+      "M-DEFAULT-PROFILE",
+      "M-NULL-REWRITE",
+      "M-ANY-DESCRIPTOR"
+    ]
+  },
+  "residuals": [
+    "R-ALIAS",
+    "R-COMPUTED",
+    "R-OTHER-METHOD",
+    "R-COMMENT",
+    "R-UNTYPED-FLOW",
+    "R-NAMESAKE",
+    "R-OUTSIDE"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "(a) sameGpIdentity(a,b) holds only for byte-equal strings with the same profile/form tag; prefix/suffix-sharing pairs and the ledger's three digests of one snapshot compare false: over the measured host-adapter carriers the reference comparison is the producer's identity rows (one identity under two fields of one ledger row compares true), every pair sharing a domain prefix or a hex tail compares false, the snapshot's identities.graph, canonical_digest and receipt.input_snapshot compare false pairwise, and each collapsing comparator of the mutant table is refused by its rules",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "pin": "A1",
+            "carriers": [
+              "graph I01 gp graph check identities.graph",
+              "projection I02 gp inspect graph canonical_digest",
+              "declared I02 GraphDataIR snapshot digests.canonical",
+              "eval-pretty I03 gp eval receipt.input_snapshot",
+              "sample-pretty I03 gp sample decision.graph_digest",
+              "eval-compact I03 gp eval receipt.input_snapshot",
+              "journal-snapshot I03 decision journal sampled-decision.snapshotDigest",
+              "argv-checkpoint I08 gp eval --checkpoint",
+              "receipt-checkpoint I08 gp eval receipt.checkpoint_digest",
+              "journal-checkpoint I08 decision journal sampled-decision.checkpointDigest",
+              "library-checkpoint I09 library evaluator receipt checkpoint",
+              "store-blob I10 gp store put digest"
+            ],
+            "cells": 144,
+            "trueOffDiagonal": [
+              "declared~projection",
+              "eval-pretty~sample-pretty",
+              "argv-checkpoint~receipt-checkpoint"
+            ],
+            "reference": []
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "pin": "A2",
+            "prefixPairs": [
+              "graph~projection graphpolicy.snapshot.c1:",
+              "graph~declared graphpolicy.snapshot.c1:",
+              "eval-pretty~eval-compact sha256:",
+              "sample-pretty~eval-compact sha256:",
+              "argv-checkpoint~library-checkpoint graphpolicy.checkpoint.c1:",
+              "argv-checkpoint~store-blob graphpolicy.checkpoint.c1:",
+              "receipt-checkpoint~library-checkpoint graphpolicy.checkpoint.c1:",
+              "receipt-checkpoint~store-blob graphpolicy.checkpoint.c1:",
+              "library-checkpoint~store-blob graphpolicy.checkpoint.c1:"
+            ],
+            "suffixPairs": [
+              "eval-pretty~journal-snapshot 06d3bcbb",
+              "sample-pretty~journal-snapshot 06d3bcbb",
+              "argv-checkpoint~journal-checkpoint c463f169",
+              "argv-checkpoint~cross-domain c463f169",
+              "receipt-checkpoint~journal-checkpoint c463f169",
+              "receipt-checkpoint~cross-domain c463f169",
+              "journal-checkpoint~cross-domain c463f169"
+            ]
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "pin": "A3",
+            "bytes": 4784,
+            "sha256": "06d3bcbb80f339636874630a8ae6c259ad14fb2251d485b72b4e28b62022fa2d",
+            "fields": [
+              "identities.graph",
+              "canonical_digest",
+              "receipt.input_snapshot"
+            ],
+            "sharedPrefix": "graphpolicy.snapshot.c1:",
+            "pairs": {
+              "graph~projection": false,
+              "graph~eval-pretty": false,
+              "projection~eval-pretty": false
+            }
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "pin": "A4",
+            "reference": [],
+            "mutants": {
+              "M-PREFIX": [
+                "J-BYTES",
+                "J-FORM",
+                "J-LEDGER",
+                "J-PREFIX",
+                "J-PROFILE",
+                "J-TABLE"
+              ],
+              "M-SUFFIX": [
+                "J-FORM",
+                "J-PROFILE",
+                "J-SUFFIX",
+                "J-TABLE"
+              ],
+              "M-INCLUDES": [
+                "J-BYTES",
+                "J-FORM",
+                "J-PROFILE",
+                "J-SUFFIX",
+                "J-TABLE"
+              ],
+              "M-HEX-ONLY": [
+                "J-FORM",
+                "J-PROFILE",
+                "J-SUFFIX",
+                "J-TABLE"
+              ],
+              "M-CASEFOLD": [
+                "J-BYTES"
+              ],
+              "M-TRIM": [
+                "J-BYTES"
+              ],
+              "M-FORM-BLIND": [
+                "J-FORM"
+              ],
+              "M-PROFILE-BLIND": [
+                "J-PROFILE"
+              ],
+              "M-FIELD": [
+                "J-PROFILE",
+                "J-TABLE"
+              ],
+              "M-NEVER": [
+                "J-TABLE"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "(b) the checkpoint field carries a form tag in {program-bound, theta-words, cas-blob}; only the program-bound form is passed as --checkpoint and a CAS blob address is never a checkpoint identity: the form comes from the ledger row of the emitting surface and field, never from the shared graphpolicy.checkpoint.c1: prefix or a leaf name, the argv builder passes the program-bound value verbatim and refuses the theta-words form (which gp itself refuses as GP_CLI_CHECKPOINT_MISMATCH) and the cas-blob form, and a blob address is refused as a checkpoint identity even at equal bytes",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "pin": "B1",
+            "forms": [
+              "gp eval --checkpoint: program-bound",
+              "gp eval receipt.checkpoint_digest: program-bound",
+              "gp eval identities.checkpoint: program-bound",
+              "decision journal sampled-decision.checkpointDigest: program-bound",
+              "library evaluator receipt checkpoint: theta-words",
+              "library evaluator receipt digests.checkpoint: theta-words",
+              "gp store put digest: cas-blob"
+            ],
+            "carriers": [
+              "argv-checkpoint: program-bound",
+              "receipt-checkpoint: program-bound",
+              "journal-checkpoint: program-bound",
+              "library-checkpoint: theta-words",
+              "store-blob: cas-blob"
+            ],
+            "sharedPrefix": "graphpolicy.checkpoint.c1:",
+            "leafCheckpoint": [
+              "identities.checkpoint program-bound",
+              "checkpoint theta-words",
+              "digests.checkpoint theta-words"
+            ],
+            "unledgered": {
+              "refused": "unledgered"
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "pin": "B2",
+            "outcomes": {
+              "argv-checkpoint": "argv --checkpoint c463f169",
+              "receipt-checkpoint": "argv --checkpoint c463f169",
+              "journal-checkpoint": "argv --checkpoint c463f169",
+              "library-checkpoint": "refused checkpoint-form theta-words",
+              "store-blob": "refused checkpoint-form cas-blob",
+              "graph": "refused not-a-checkpoint"
+            },
+            "producer": {
+              "programBound": "rc 0",
+              "wordsOnly": "GP_CLI_CHECKPOINT_MISMATCH rc 2 validate"
+            },
+            "mutants": {
+              "M-ANY-FORM": [
+                "B-BLOB",
+                "B-OTHER",
+                "B-THETA"
+              ],
+              "M-PREFIX-GATE": [
+                "B-BLOB",
+                "B-PASS",
+                "B-THETA"
+              ],
+              "M-STRIP": [
+                "B-PASS"
+              ],
+              "M-THETA-OK": [
+                "B-THETA"
+              ]
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "pin": "B3",
+            "blob": "f832aae7",
+            "logical": "c463f169",
+            "blobOutcome": {
+              "refused": "blob-address"
+            },
+            "equalBytesOutcome": {
+              "refused": "blob-address"
+            },
+            "mutants": {
+              "M-BLOB-OK": [
+                "K-BLOB",
+                "K-EQUAL-BYTES"
+              ],
+              "M-BLOB-AS-PROGRAM": [
+                "K-BLOB",
+                "K-EQUAL-BYTES"
+              ],
+              "M-PREFIX-ID": [
+                "K-BLOB",
+                "K-EQUAL-BYTES",
+                "K-THETA"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "(c) census: no startsWith/endsWith/includes over gp identity strings in src; identity and profile/form never rewritten on read; post-D-IDENT-1 profile read from the descriptor, else 'unknown profile': today Pi holds no gp identity (0 gp hits at d75b68d1) - no module below src, qa or examples spells a gp identity domain or reads a gp identity field, so no prefix, suffix or substring test over one exists; the reference reader an adopter owes carries value and field verbatim beside its ledger row's form and reads the profile from a graphpolicy.identity.v1 descriptor only, which gp has not shipped",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "pin": "C1",
+            "roots": [
+              "src",
+              "qa",
+              "examples"
+            ],
+            "floors": {
+              "src": 100,
+              "qa": 55,
+              "examples": 5
+            },
+            "floorsMet": true,
+            "callFloor": 150,
+            "callFloorMet": true,
+            "spellings": [],
+            "reads": [],
+            "calls": [],
+            "otherSpellings": [],
+            "symlinks": [],
+            "unreadable": [],
+            "controls": [
+              "F-RECEIVER-READ flagged posture=true call=true",
+              "F-ARGUMENT-READ flagged posture=true call=true",
+              "F-PREFIX-LITERAL flagged posture=true call=true",
+              "F-TEMPLATE flagged posture=true call=true",
+              "F-NAMESPACE flagged posture=true call=true",
+              "F-ALIAS flagged posture=true call=true",
+              "F-ELEMENT-OPTIONAL flagged posture=true call=true",
+              "F-DESTRUCTURED flagged posture=true call=true",
+              "F-DIGESTS-PATH flagged posture=true call=true",
+              "Q-OWN-PATH quiet posture=false call=false",
+              "Q-OWN-DIGEST quiet posture=false call=false",
+              "Q-SCHEMA-ID quiet posture=false call=false",
+              "Q-BYTE-EQUAL quiet posture=true call=false",
+              "R-ALIAS residual posture=true call=false",
+              "R-COMPUTED residual posture=false call=false",
+              "R-OTHER-METHOD residual posture=true call=false",
+              "R-COMMENT residual posture=false call=false",
+              "R-UNTYPED-FLOW residual posture=false call=false",
+              "R-NAMESAKE residual posture=false call=false"
+            ],
+            "outside": {
+              "judged": true,
+              "unjudged": false
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "pin": "C2",
+            "cases": 23,
+            "reference": [],
+            "mutants": {
+              "M-LOWER": [
+                "R-VALUE"
+              ],
+              "M-STRIP-PREFIX": [
+                "R-VALUE"
+              ],
+              "M-QUALIFY-BARE": [
+                "R-VALUE"
+              ],
+              "M-TRIM": [
+                "R-VALUE"
+              ],
+              "M-FORM-FROM-PREFIX": [
+                "R-FORM"
+              ],
+              "M-FIELD-NORMALIZE": [
+                "R-FIELD"
+              ],
+              "M-GUESS-UNLEDGERED": [
+                "R-REFUSAL"
+              ]
+            }
+          }
+        },
+        {
+          "id": "C3",
+          "witness": {
+            "pin": "C3",
+            "gate": {
+              "descriptorSchema": "graphpolicy.identity.v1",
+              "productFilesAtPin": 0,
+              "productFilesAtHead": 0,
+              "installedBundleHits": 0
+            },
+            "profiles": {
+              "graph": "unknown profile",
+              "eval-pretty": "unknown profile",
+              "argv-checkpoint": "unknown profile"
+            },
+            "described": {
+              "described": "graphpolicy.c1",
+              "described-null": null
+            },
+            "refusals": {
+              "foreign-descriptor": {
+                "refused": "descriptor-schema"
+              },
+              "other-value-descriptor": {
+                "refused": "descriptor-value"
+              }
+            },
+            "mutants": {
+              "M-PREFIX-PROFILE": [
+                "R-PROFILE"
+              ],
+              "M-LEDGER-PROFILE": [
+                "R-PROFILE"
+              ],
+              "M-DEFAULT-PROFILE": [
+                "R-PROFILE"
+              ],
+              "M-NULL-REWRITE": [
+                "R-PROFILE"
+              ],
+              "M-ANY-DESCRIPTOR": [
+                "R-REFUSAL"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the bead row agree",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "B1",
+    "B2",
+    "B3",
+    "C1",
+    "C2",
+    "C3",
+    "records: every registered test ran once in run mode in roster order and every pin reached its end"
+  ]
+}
