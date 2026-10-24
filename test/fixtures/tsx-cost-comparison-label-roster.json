@@ -1,0 +1,915 @@
+{
+ "bead": "wb-csbt.4",
+ "citation": "docs/programs/resource-efficiency-frontier-2026-10-17/03-PROFILES-DECISIONS-AND-WORK-PACKAGES.md:34@76bbbffd9d4a",
+ "producer": {
+  "repository": "ReactiveFiberTSXSDK",
+  "pin": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
+  "measured": "read-only git ls-tree -r -t and git show on the local checkout (origin/main is the pin) by the cutting seat (ws-02, g10-work-s47), 2026-10-23",
+  "gate": "ABSENT",
+  "perfTree": [
+   {
+    "path": "docs",
+    "kind": "tree"
+   },
+   {
+    "path": "docs/perf",
+    "kind": "tree"
+   },
+   {
+    "path": "docs/perf/README.md",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/dogfood-baseline.json",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/dogfood-timing.schema.json",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/forge-throughput-baseline.json",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/host-complexity-baseline.json",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/host-complexity.schema.json",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/programs",
+    "kind": "tree"
+   },
+   {
+    "path": "docs/perf/programs/ip-2026-10-15",
+    "kind": "tree"
+   },
+   {
+    "path": "docs/perf/programs/ip-2026-10-15/budget-topk.schema.json",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/programs/ip-2026-10-15/campaigns",
+    "kind": "tree"
+   },
+   {
+    "path": "docs/perf/programs/ip-2026-10-15/campaigns/README.md",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/programs/ip-2026-10-15/capture-base-timing.darwin.json",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/programs/ip-2026-10-15/capture-base-timing.schema.json",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/programs/ip-2026-10-15/compact-report-study.json",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/programs/ip-2026-10-15/compact-report-study.schema.json",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/programs/ip-2026-10-15/host-memory.rftsx-ws-32.json",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/programs/ip-2026-10-15/host-memory.schema.json",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/programs/ip-2026-10-15/output-path-timing.darwin.json",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/programs/ip-2026-10-15/output-path-timing.schema.json",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/programs/ip-2026-10-15/perf-campaign-tolerance.schema.json",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/programs/ip-2026-10-15/perf-campaign.schema.json",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/programs/ip-2026-10-15/reconcile-paths.darwin.json",
+    "kind": "blob"
+   },
+   {
+    "path": "docs/perf/programs/ip-2026-10-15/reconcile-paths.schema.json",
+    "kind": "blob"
+   }
+  ],
+  "excerpts": [
+   {
+    "site": "docs/programs/resource-efficiency-frontier-2026-10-17/03-PROFILES-DECISIONS-AND-WORK-PACKAGES.md:34",
+    "textBase64": "fCBUU1gtUEYtMDUgfCBQdWJsaXNoIGluc3RhbGxlZCBTREsrUkZDTEkgZW5kLXRvLWVuZCBjb21wYXJpc29uIGFuZCBza2lsbCB1cGRhdGVzIHwgTm8gc3BlY3VsYXRpdmUg4oCcY29tcGxldGXigJ0gbGFiZWwgd2l0aG91dCBtZWFzdXJlZCBldmlkZW5jZSB8",
+    "sha256": "b4c9d8f25150035cf3ce8159a396ca449abb48c88ca635f62b45787992185883"
+   },
+   {
+    "site": "docs/programs/resource-efficiency-frontier-2026-10-17/BEADS-2026-10-21.md:39",
+    "textBase64": "fCByZnRzeC16YmxjcCB8IHRzeC1wZi0wNSB8IFtQRVJGLUZdIFNESyArIFJGQ0xJIGNvc3QgY29tcGFyaXNvbiBwdWJsaXNoZWQgZnJvbSBwaW5uZWQgc2lkZWNhcnMgYW5kIHRoZSBSRkMgYmVuY2ggd2l0aCBubyB1bmVhcm5lZCBsYWJlbCB8IFAzIHwgMTIwIHwgVFNYLVBGLTAwYiB8IGRvY3MvcGVyZi9wcm9ncmFtcy9wZXJmLWYtMjAyNi0xMC0xNy9zZGstcmZjbGktY29zdC1jb21wYXJpc29uLnttZCxqc29ufSBleGlzdDsgfCBFQVQtUjU1NSwgRUFULVI1NTYgfCBwcm9ncmFtOnJlc291cmNlLWVmZmljaWVuY3ktZnJvbnRpZXItMjAyNi0xMC0xNywgd3A6dHN4LXBmLTA1LCBmYW1pbHk6cGVyZiwga2luZDpkb2NzLCB0cmlhZ2U6MjAyNi0xMC0yMSwgc2xpY2U6bCwgYXJlYTpkb2NzLCBjcm9zcy1yZXBvOnJmY2xpIHw=",
+    "sha256": "6b3f7ca6258b1725a59f9805983f5a7854b207653b52e3ba6ffd47b12a177f50"
+   }
+  ]
+ },
+ "vocabulary": {
+  "named": [
+   {
+    "id": "N1",
+    "source": "(?<![a-z0-9])sdk[-_]rfcli(?![a-z0-9])"
+   },
+   {
+    "id": "N2",
+    "source": "(?<![a-z0-9])tsx[-_ ]?pf[-_ ]?0?5(?![a-z0-9])"
+   },
+   {
+    "id": "N3",
+    "source": "(?<![a-z0-9])rftsx[-_ ]?zblcp(?![a-z0-9])"
+   },
+   {
+    "id": "N4",
+    "source": "(?<![a-z0-9])perf[-_ ]?f[-_ ]?2026[-_ ]?10[-_ ]?17(?![a-z0-9])"
+   }
+  ],
+  "pair": {
+   "sdk": "(?<![a-z0-9])(?:sdks?|reactivefibertsxsdk|@reactive-fiber/tsx)(?![a-z0-9])",
+   "rfcli": "(?<![a-z0-9])(?:rfcli|reactivefibercli|rf[- ]cli)(?![a-z0-9])",
+   "comparison": "(?<![a-z0-9])(?:comparisons?|compar(?:e|es|ed|ing)|costs?|bench(?:mark)?(?:s|ed|ing)?)(?![a-z0-9])"
+  },
+  "claim": "(?<![a-z0-9])(complete[ds]?|completion|done|finished)(?![a-z0-9])",
+  "marker": "(?<![a-z0-9])(?:not|no|never|nor|without|until|unless|pending|absent|unshipped|unpublished|gated|before|if|when|once|whether)(?![a-z0-9])|n['\u2019]t(?![a-z0-9])"
+ },
+ "constants": {
+  "roots": [
+   "docs",
+   "src",
+   "qa",
+   "examples",
+   "test",
+   ".agents",
+   ".pi",
+   ".claude"
+  ],
+  "skillRoots": [
+   ".pi/skills",
+   ".agents/skills",
+   ".claude/skills"
+  ],
+  "outside": [
+   "new-feedback",
+   "vendor",
+   "media",
+   ".beads",
+   "dist",
+   "node_modules"
+  ],
+  "gate": {
+   "directory": "docs/perf/programs/perf-f-2026-10-17",
+   "files": [
+    "sdk-rfcli-cost-comparison.md",
+    "sdk-rfcli-cost-comparison.json"
+   ]
+  },
+  "filingRead": "d75b68d10a1a",
+  "exempt": [
+   "test/workbench-tsx-cost-comparison-label-census.test.ts",
+   "test/fixtures/tsx-cost-comparison-label-roster.json"
+  ]
+ },
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) a Pi guard greps Pi docs, workbench strings and any installed skill copies for a complete claim about the TSX SDK + RFCLI cost comparison and finds 0 while the artifact is absent (0 hits today at d75b68d)",
+   "pins": [
+    {
+     "id": "A1",
+     "quote": "a Pi guard greps Pi docs, workbench strings and any installed skill copies",
+     "witness": {
+      "roots": {
+       "docs": true,
+       "src": true,
+       "qa": true,
+       "examples": true,
+       "test": true,
+       ".agents": true,
+       ".pi": true,
+       ".claude": false
+      },
+      "floorsMet": true,
+      "anchorsListed": [],
+      "walkAgreesWithGit": true,
+      "links": [],
+      "unreadable": [],
+      "outsideQuiet": [
+       "docs/plant.md:1 N5: asserted-complete"
+      ],
+      "replicaFiles": [
+       "docs/plant.md"
+      ]
+     }
+    },
+    {
+     "id": "A2",
+     "quote": "for a complete claim about the TSX SDK + RFCLI cost comparison",
+     "witness": {
+      "spellings": [
+       "N1+N5: asserted-complete",
+       "N1: asserted-done",
+       "N2: asserted-complete",
+       "N2: asserted-finished",
+       "N2: asserted-completed",
+       "N3: asserted-done",
+       "N3: asserted-completes",
+       "N4: asserted-complete",
+       "N4: asserted-done",
+       "N5: asserted-complete",
+       "N5: asserted-done",
+       "N5: asserted-finished",
+       "N5: asserted-complete",
+       "N5: asserted-done",
+       "N5: asserted-completion",
+       "N5: asserted-complete",
+       "N5: asserted-complete",
+       "N5: asserted-complete",
+       "N5: asserted-complete",
+       "N5: asserted-complete",
+       "N5: asserted-complete"
+      ],
+      "claims": [
+       "N5: asserted-complete",
+       "N5: asserted-completed",
+       "N5: asserted-completes",
+       "N5: asserted-completion",
+       "N5: asserted-done",
+       "N5: asserted-finished",
+       "N5: asserted-complete",
+       "N5: asserted-complete",
+       "N5: asserted-complete",
+       "N5: asserted-complete"
+      ],
+      "markers": [
+       null,
+       null,
+       null,
+       null,
+       null,
+       null,
+       null,
+       null,
+       null,
+       null,
+       null,
+       null,
+       null,
+       null,
+       null,
+       null,
+       null,
+       null,
+       null
+      ],
+      "cutter": [
+       [
+        "docs/x.md:3 N5: asserted-complete"
+       ],
+       [
+        "src/x.ts:1 N5: asserted-complete"
+       ],
+       [
+        "docs/x.md:2 N5: asserted-complete"
+       ],
+       [],
+       [
+        "src/x.ts:1 N5: asserted-complete"
+       ],
+       [],
+       [
+        "docs/x.md:1 N5: asserted-complete"
+       ],
+       [
+        "docs/x.md:1 N5: asserted-complete"
+       ],
+       [
+        "test/fixtures/x.json:1 N5: asserted-complete"
+       ],
+       []
+      ],
+      "producerRows": [
+       null,
+       null
+      ],
+      "quiet": {
+       "R-MARKER-ANYWHERE": null,
+       "R-UNANCHORED": [
+        null,
+        null,
+        null
+       ],
+       "R-SPLIT": [],
+       "R-PARAPHRASE": [
+        null,
+        null,
+        null,
+        null
+       ],
+       "R-LOOKALIKE": [
+        null,
+        null
+       ]
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "quote": "and finds 0 while the artifact is absent",
+     "witness": {
+      "gate": "ABSENT",
+      "live": "pass",
+      "findings": [],
+      "exemptionsLoadBearing": [
+       true,
+       true
+      ],
+      "planted": [
+       "docs/workbench/plant.md:1 N5: asserted-complete",
+       "src/workbench/plant.ts:1 N2: asserted-done",
+       ".agents/skills/rf/SKILL.md:1 N1+N5: asserted-complete",
+       "README.md:1 N5: asserted-complete",
+       "qa/workbench/plant.mjs:1 N3+N4: asserted-finished"
+      ],
+      "plantedVerdict": "fail",
+      "standDown": "stand-down",
+      "twins": []
+     }
+    },
+    {
+     "id": "A4",
+     "quote": "(0 hits today at d75b68d)",
+     "witness": {
+      "revision": "d75b68d10a1a",
+      "ancestor": true,
+      "judgedFloor": true,
+      "exemptAbsent": true,
+      "links": [],
+      "findings": [],
+      "filingGrep": {
+       "docs": 0,
+       "src": 0,
+       "test": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) when the artifact exists, a fixture copy of sdk-rfcli-cost-comparison.md renders in Pi with the producer's status label verbatim and no added complete/done qualifier",
+   "pins": [
+    {
+     "id": "B1",
+     "quote": "when the artifact exists",
+     "witness": {
+      "pin": "ABSENT",
+      "programs": [
+       "docs/perf/programs/ip-2026-10-15"
+      ],
+      "present": "PRESENT",
+      "nearMisses": {
+       "md-only": "ABSENT",
+       "json-only": "ABSENT",
+       "directories": "ABSENT",
+       "links": "ABSENT",
+       "other-program": "ABSENT",
+       "next-day": "ABSENT",
+       "case-variant": "ABSENT",
+       "root-level": "ABSENT"
+      },
+      "fixtureCopies": []
+     }
+    },
+    {
+     "id": "B2",
+     "quote": "a fixture copy of sdk-rfcli-cost-comparison.md renders in Pi",
+     "witness": {
+      "skill": {
+       "flat": "bytes",
+       "directory": "bytes",
+       "replace": "bytes",
+       "append": "bytes"
+      },
+      "display": {
+       "text": "words",
+       "lines": "bytes",
+       "terminal": "words",
+       "label": "words"
+      },
+      "rf": {
+       "native": [
+        "bytes",
+        "bytes"
+       ],
+       "injected": [
+        "bytes",
+        "bytes"
+       ],
+       "curated-MCP": [
+        "words",
+        "words"
+       ],
+       "shared-JSON": [
+        "words",
+        "words"
+       ],
+       "shared-JSON-text": [
+        "words",
+        "words"
+       ]
+      },
+      "viewer": {
+       "assistant": [
+        true,
+        true
+       ],
+       "off": [
+        true,
+        true
+       ]
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "quote": "with the producer's status label verbatim",
+     "witness": {
+      "matrix": {
+       "Status: measured, 3 of 5 scenarios published": {
+        "skill": [
+         true,
+         true,
+         true,
+         true
+        ],
+        "display": [
+         true,
+         true,
+         true,
+         true,
+         true
+        ],
+        "rf": [
+         true,
+         true,
+         true,
+         true,
+         true
+        ],
+        "viewer": [
+         true,
+         true
+        ]
+       },
+       "Status: draft, numbers pending a re-measure": {
+        "skill": [
+         true,
+         true,
+         true,
+         true
+        ],
+        "display": [
+         true,
+         true,
+         true,
+         true,
+         true
+        ],
+        "rf": [
+         true,
+         true,
+         true,
+         true,
+         true
+        ],
+        "viewer": [
+         true,
+         true
+        ]
+       },
+       "Status: \u201ccomplete\u201d per the producer, measured at a pinned revision": {
+        "skill": [
+         true,
+         true,
+         true,
+         true
+        ],
+        "display": [
+         true,
+         true,
+         true,
+         true,
+         true
+        ],
+        "rf": [
+         true,
+         true,
+         true,
+         true,
+         true
+        ],
+        "viewer": [
+         true,
+         true
+        ]
+       },
+       "Status: done for 4 of 5 scenarios": {
+        "skill": [
+         true,
+         true,
+         true,
+         true
+        ],
+        "display": [
+         true,
+         true,
+         true,
+         true,
+         true
+        ],
+        "rf": [
+         true,
+         true,
+         true,
+         true,
+         true
+        ],
+        "viewer": [
+         true,
+         true
+        ]
+       }
+      },
+      "gaps": {
+       "Status:  partial, two spaces": {
+        "label": "words",
+        "text": "bytes",
+        "rf": {
+         "native": true,
+         "injected": true,
+         "curated-MCP": true,
+         "shared-JSON": true,
+         "shared-JSON-text": true
+        }
+       },
+       "Status:\tpartial, one tab": {
+        "label": "words",
+        "text": "words",
+        "rf": {
+         "native": true,
+         "injected": true,
+         "curated-MCP": false,
+         "shared-JSON": false,
+         "shared-JSON-text": false
+        }
+       }
+      }
+     }
+    },
+    {
+     "id": "B4",
+     "quote": "and no added complete/done qualifier",
+     "witness": {
+      "deltas": {
+       "Status: measured, 3 of 5 scenarios published": {
+        "base": 0,
+        "skill": [
+         0,
+         0,
+         0,
+         0
+        ],
+        "display": [
+         0,
+         0,
+         0,
+         0
+        ],
+        "rf": [
+         [
+          0,
+          0
+         ],
+         [
+          0,
+          0
+         ],
+         [
+          0,
+          0
+         ],
+         [
+          0,
+          0
+         ],
+         [
+          0,
+          0
+         ]
+        ],
+        "viewer": [
+         0,
+         0
+        ]
+       },
+       "Status: draft, numbers pending a re-measure": {
+        "base": 0,
+        "skill": [
+         0,
+         0,
+         0,
+         0
+        ],
+        "display": [
+         0,
+         0,
+         0,
+         0
+        ],
+        "rf": [
+         [
+          0,
+          0
+         ],
+         [
+          0,
+          0
+         ],
+         [
+          0,
+          0
+         ],
+         [
+          0,
+          0
+         ],
+         [
+          0,
+          0
+         ]
+        ],
+        "viewer": [
+         0,
+         0
+        ]
+       },
+       "Status: \u201ccomplete\u201d per the producer, measured at a pinned revision": {
+        "base": 1,
+        "skill": [
+         0,
+         0,
+         0,
+         0
+        ],
+        "display": [
+         0,
+         0,
+         0,
+         0
+        ],
+        "rf": [
+         [
+          0,
+          0
+         ],
+         [
+          0,
+          0
+         ],
+         [
+          0,
+          0
+         ],
+         [
+          0,
+          0
+         ],
+         [
+          0,
+          0
+         ]
+        ],
+        "viewer": [
+         0,
+         0
+        ]
+       },
+       "Status: done for 4 of 5 scenarios": {
+        "base": 1,
+        "skill": [
+         0,
+         0,
+         0,
+         0
+        ],
+        "display": [
+         0,
+         0,
+         0,
+         0
+        ],
+        "rf": [
+         [
+          0,
+          0
+         ],
+         [
+          0,
+          0
+         ],
+         [
+          0,
+          0
+         ],
+         [
+          0,
+          0
+         ],
+         [
+          0,
+          0
+         ]
+        ],
+        "viewer": [
+         0,
+         0
+        ]
+       }
+      },
+      "mutants": [
+       1,
+       1,
+       1,
+       1,
+       2
+      ],
+      "projection": {
+       "differing": [
+        "$.snapshots.0.nativePayloadRef"
+       ],
+       "carriesLabel": false,
+       "carriesStandIn": false,
+       "coverage": [
+        [
+         "complete"
+        ],
+        [
+         "complete"
+        ]
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) Pi's rf/TSX skill refresh path re-reads the producer's skill update rather than editing the label text locally",
+   "pins": [
+    {
+     "id": "C1",
+     "quote": "Pi's rf/TSX skill refresh path",
+     "witness": {
+      "installed": {
+       ".pi/skills": null,
+       ".agents/skills": [
+        "beads"
+       ],
+       ".claude/skills": null
+      },
+      "rfTsxCopies": [],
+      "loaderImporters": [
+       "src/agent-runner.ts"
+      ],
+      "skillRootSpellers": [
+       "src/skill-loader.ts"
+      ],
+      "preloadCallers": [
+       "src/agent-runner.ts"
+      ],
+      "promptComposers": [
+       "src/prompts.ts"
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "quote": "re-reads the producer's skill update",
+     "witness": {
+      "first": [
+       "v1",
+       "v1"
+      ],
+      "second": [
+       "v2",
+       "v2"
+      ],
+      "promptCarriesUpdate": true,
+      "removed": [
+       "not-found",
+       "not-found"
+      ],
+      "shadowed": [
+       "v1"
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "quote": "rather than editing the label text locally",
+     "witness": {
+      "trimOnly": [
+       true,
+       true,
+       true
+      ],
+      "writers": [],
+      "controls": [
+       [
+        "control.ts:1 writeFileSync"
+       ],
+       [
+        "control.ts:1 writeFile"
+       ],
+       [
+        "control.ts:1 copyFileSync"
+       ],
+       [
+        "control.ts:1 renameSync"
+       ],
+       [
+        "control.ts:1 appendFileSync"
+       ]
+      ],
+      "quiet": [
+       [],
+       []
+      ]
+     }
+    }
+   ]
+  }
+ ],
+ "residuals": [
+  {
+   "id": "R-OUTSIDE-ROOTS",
+   "quietPin": "A1"
+  },
+  {
+   "id": "R-MARKER-ANYWHERE",
+   "quietPin": "A2"
+  },
+  {
+   "id": "R-UNANCHORED",
+   "quietPin": "A2"
+  },
+  {
+   "id": "R-SPLIT",
+   "quietPin": "A2"
+  },
+  {
+   "id": "R-PARAPHRASE",
+   "quietPin": "A2"
+  },
+  {
+   "id": "R-LOOKALIKE",
+   "quietPin": "A2"
+  },
+  {
+   "id": "R-GATE-PARTIAL",
+   "quietPin": "B1"
+  },
+  {
+   "id": "R-DISPLAY-GAPS",
+   "quietPin": "B3"
+  },
+  {
+   "id": "R-COVERAGE-WORD",
+   "quietPin": "B4"
+  },
+  {
+   "id": "R-SHADOWED-COPY",
+   "quietPin": "C2"
+  },
+  {
+   "id": "R-INDIRECT-TARGET",
+   "quietPin": "C3"
+  }
+ ]
+}

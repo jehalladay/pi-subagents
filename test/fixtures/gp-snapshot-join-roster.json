@@ -1,0 +1,961 @@
+{
+  "comment": "wb-gxd7.3 (GPC-FEEDBACK-CONTRACT-AUDIT-R3; the hk9l/5jha roster pattern): the OUT-OF-FILE anchor of test/workbench-gp-snapshot-join-census.test.ts. rows: every judged row of test/helpers/gp-snapshot-join-census.ts in census order (TOUCHPOINTS, CLEAN, RESIDUALS, CAPTURES, FIXTURE, CASES, MUTANTS, SITE_CASES) - table, id, label, the SHA-256 of each pin as written (a source; a capture's argv, frame, path, value and recompute; the capture provenance; a case's clause, presentation, producer and expected outcome; a mutant's case, full recipe and expected rules; a site case's registrations, listings, files and expected rules) and the registered test. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its registered tests (vitest task tree, run modes) and its residual families against this file at test time, in order and both ways.",
+  "rows": [
+    {
+      "table": "TOUCHPOINTS",
+      "id": "T-FIELD",
+      "label": "a gp join-value field in code: input_snapshot, graph_digest or canonical_digest, or a camel-case mirror, as a name, a member, a string, a template part or a regular expression",
+      "pins": [
+        "55c9d40c7f3f5e8379b46e99091ce61420a03ad5bd802fb66f5d92087d47b5a3",
+        "c0c679ca23f546d43f052e94836d6b1622d5ec801ec6e1a485deaf691af2b413",
+        "5863871e62b2b6a864cea4f5c6608918b1b145b62d1b05f157a27c51edc0475b",
+        "c0854252811de27c4621b3d6e81edb01b77758d1a52e62f6fa39dece9a529764",
+        "4cedcfd855e4340216da1fb4908c4725a82f02d3250f0c384db02e126f9226e2",
+        "506f3db8f108d090d1e7b108c7a42c69b5d6289c91bf91e08934c21466c8e35c",
+        "939c7e131ab06cecb1ecff9991266881b2d6844921fc4e23cfc8e23776c3fbd3",
+        "293c5b341fde82047251c74d5aab767f60a0105d0266fd8bc457db54f29efdfd"
+      ],
+      "test": "TOUCHPOINTS T-FIELD"
+    },
+    {
+      "table": "TOUCHPOINTS",
+      "id": "T-IDENTITIES",
+      "label": "gp's whole-document identity read as identities.graph: a member chain, an optional chain, an element access, a binding or assignment pattern, or a path string",
+      "pins": [
+        "be2276f26ef75edcf7f7d06516a09f17da76f67e96188834a4f20298fbcbf2a5",
+        "e1b04bff0ba7d1a5fc30848f4fc799d77e8f14c5521ce83b37102540f2631530",
+        "4a70cd1b617c4d888d90dcc2c7c06b70452b1c40530f94ecdefa4f4690f99b51",
+        "c1c35d140b3cbe152ee8cbd38a5d4f6d5d36d4b2d3c5f19435b6175ef1b15d74",
+        "f1dc40a83d5722d7be5a237f7b821593c10dfb2e7f9f9fd345eded13a9a527c5",
+        "12bb6df3034f3b0f11f22b161c63c3dd85cb78edb02fb37130bc167a242bca69",
+        "857f13e387e59811a766f82e9b8b85c0e090965ab52efa4bf767a3339c65bfe9"
+      ],
+      "test": "TOUCHPOINTS T-IDENTITIES"
+    },
+    {
+      "table": "TOUCHPOINTS",
+      "id": "T-PREFIX",
+      "label": "the graphpolicy.snapshot.c1 spelling gp gives its document and its projection identity, in a string, a template or a regular expression",
+      "pins": [
+        "c503c3ea522a9b45ffad0c0080d3d2bd27249c7ef8fca2d40b3e13c9c4b2eb5a",
+        "f6b9caead46cc1deab99da6462e1bb01c0edd0b3166b1fb01216a3d1d61c31f5",
+        "334e0b6fc1a9ded1bee2da47a12f395336252d008d63275ea26ca2c8b106f8f7"
+      ],
+      "test": "TOUCHPOINTS T-PREFIX"
+    },
+    {
+      "table": "TOUCHPOINTS",
+      "id": "T-SHARED",
+      "label": "snapshotDigest, the name gp's journal and observation records give the join value, or its snake-case mirror, as a member, a binding or a string",
+      "pins": [
+        "27e50baccfdb108e66bb27f312cd7e58a978ae92ca02c34ae1512db6552a9d4d",
+        "b06b070c233ac961512ead2cfac6f6aa62327de823ae8023ee06955d16fd0e87",
+        "72c91c5ed5b417907ec504b5e134387dcd7e8221efb97abbdbc64e608f62e6a1"
+      ],
+      "test": "TOUCHPOINTS T-SHARED"
+    },
+    {
+      "table": "CLEAN",
+      "id": "C-PI-OWN",
+      "label": "Pi's own digests and snapshots: a SHA-256 over bytes, an invocation identity, a graph view, a snapshot record",
+      "pins": [
+        "5a45487ec9b9aff07387fa52377545c21a2f49435941e260bd5e6bdf8abee11c",
+        "4154c44849c3f6794a5f34cf9f530fa5865edd10cdbceb01846624e9f8be1834",
+        "4ea089a682e1306f9f49275f64c6d068a110ccf4adc9832e25eb102fef8a5cc2",
+        "93d781ca63ff45f2302c418cbad0522f10ddaa548f5393b7d7adeef78a5629c8"
+      ],
+      "test": "CLEAN C-PI-OWN"
+    },
+    {
+      "table": "CLEAN",
+      "id": "C-NEAR-NAMES",
+      "label": "near names: another identities member, the members in the other order, prose with spaces, a longer name, the bare graphpolicy.snapshot words",
+      "pins": [
+        "a7d15278e8032f4b6757696a22d9fb8db38721820a2432c2f2cbd5cf347d895c",
+        "b7f2a0e7da7b6022ce951e54cc41cfddcda1e0bfdf85bb2136b839f6d56af923",
+        "06b98c0526767752271872852d9f42bda769f9811b6823a36d3b2973fb04436e",
+        "2fcad5a899b3870d24f507d2a6f2e240af9823ffabebd0438a14ace2dadb5c90",
+        "4baa2485baa84697e0c23b1f18ed3f0098a6bd43037937f50878e77f0ce487d4"
+      ],
+      "test": "CLEAN C-NEAR-NAMES"
+    },
+    {
+      "table": "CLEAN",
+      "id": "C-COMMENT",
+      "label": "a comment that names a gp join field is not code",
+      "pins": [
+        "6dae8ee9b6c6a566e18e0733303b190554ff9a472cbf8b012af900d0bc69cb60",
+        "1581f8daf92e2cf2f0c1f53b56c10d5aaf6ea7b0ad61f3014881fc0b82b404e3"
+      ],
+      "test": "CLEAN C-COMMENT"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-COMPUTED",
+      "label": "a join-value field name assembled at run time or read through a variable, so no code token spells it",
+      "pins": [
+        "9306992928c4dfeb005e3d728b2166e2e9937fc6286a387e30aba91be90d08b2",
+        "d64f676a21d2558fae854c595ec99b844f1351fc99df7a71723487e6687c6e17",
+        "5f0bc513ac8828ac2e0400e8aa8ee2fa2c44d0d45d9cc7f1e2c2a5e9bee3afa8"
+      ],
+      "test": "RESIDUALS R-COMPUTED"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-ALIASED",
+      "label": "the identities object taken into an alias, or walked by entry, before its graph member is read",
+      "pins": [
+        "7ae34974106dac240f4b162e99bf351f94d51d62f977c6f334282c593443579f",
+        "e0209a40d973bd99dcdc717e3e568e3047c45fe01f40d3b6d2b535c7a19646e7"
+      ],
+      "test": "RESIDUALS R-ALIASED"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-PATTERN",
+      "label": "a regular expression that matches a field name without spelling it (a character class or a wildcard in its place)",
+      "pins": [
+        "890466a731ac2b61264db7416631815e7832be13e870a24bab93373267284cd2",
+        "d84505a4b666ecba45cc66ffc6699f76340f0e3403b178f7854abf0f17c8af71"
+      ],
+      "test": "RESIDUALS R-PATTERN"
+    },
+    {
+      "table": "RESIDUALS",
+      "id": "R-TRANSITIVE",
+      "label": "a module that compares a join value only through another src module's API, which is the site and carries the registration",
+      "pins": [
+        "017a73281a56db5d335fe6d9affefe1858fbda7426dbd59e6b367e29dbcaaf43"
+      ],
+      "test": "RESIDUALS R-TRANSITIVE"
+    },
+    {
+      "table": "CAPTURES",
+      "id": "P-EVAL-FILE",
+      "label": "gp eval over the fixture file: the runtime receipt's input_snapshot is SHA-256 of the file bytes",
+      "pins": [
+        "3f9dcffa3c28b74fc86d89a146f93def956193b8b8e451881483e2e1e8a70d39"
+      ],
+      "test": "CAPTURES P-EVAL-FILE"
+    },
+    {
+      "table": "CAPTURES",
+      "id": "P-SAMPLE-FILE",
+      "label": "gp sample over the fixture file, seed 11: the decision receipt's graph_digest is SHA-256 of the file bytes",
+      "pins": [
+        "93d49581b8c8541fbb695e9a3d1c710ca26d4f268d9d3b3c3e104863575a34c6"
+      ],
+      "test": "CAPTURES P-SAMPLE-FILE"
+    },
+    {
+      "table": "CAPTURES",
+      "id": "P-EVAL-COMPACT-FILE",
+      "label": "gp eval over the fixture value written as JSON.stringify with no trailing newline: input_snapshot is SHA-256 of those bytes",
+      "pins": [
+        "eb4e3e13ef6873dd481cd3d3436171fce974173c107e394cf735fcd04d7d17ff"
+      ],
+      "test": "CAPTURES P-EVAL-COMPACT-FILE"
+    },
+    {
+      "table": "CAPTURES",
+      "id": "P-RPC-COMPACT",
+      "label": "gp rpc sample, the fixture value in a compact frame: graph_digest is SHA-256 of UTF-8 JSON.stringify of the value",
+      "pins": [
+        "962e9b6099df6ac4217b15983ecaddad4d10ef2eec61fea787cf2175cc0dc72e"
+      ],
+      "test": "CAPTURES P-RPC-COMPACT"
+    },
+    {
+      "table": "CAPTURES",
+      "id": "P-RPC-SPACED",
+      "label": "gp rpc sample, the same value in a spaced frame: the frame's spelling does not move graph_digest",
+      "pins": [
+        "7076b084ec4d3259e0a93206ff2f431e90056015f895d3f4ac6b4de4004038a6"
+      ],
+      "test": "CAPTURES P-RPC-SPACED"
+    },
+    {
+      "table": "CAPTURES",
+      "id": "P-RPC-VARIANT",
+      "label": "gp rpc sample, the non-ASCII variant in a compact frame: graph_digest is SHA-256 of the UTF-8 bytes",
+      "pins": [
+        "0c2d2ef57972086a0fe5bd42bb4508633faa3f2e27d5902ed52b3efb1f6ef874"
+      ],
+      "test": "CAPTURES P-RPC-VARIANT"
+    },
+    {
+      "table": "CAPTURES",
+      "id": "P-RPC-VARIANT-ESCAPED",
+      "label": "gp rpc sample, the non-ASCII variant in an ASCII-escaped frame: the escapes do not move graph_digest",
+      "pins": [
+        "3d9343fe7e94f492a86b86428c573e0a985d302ba92c14130752faff0ee641ff"
+      ],
+      "test": "CAPTURES P-RPC-VARIANT-ESCAPED"
+    },
+    {
+      "table": "CAPTURES",
+      "id": "P-GRAPH-CHECK",
+      "label": "gp graph check over the fixture: identities.graph, the whole-document c1 identity",
+      "pins": [
+        "090c0931638b7d52e40c8bed3a8b5968d8838f136c435c24d3ed195be6c9010d"
+      ],
+      "test": "CAPTURES P-GRAPH-CHECK"
+    },
+    {
+      "table": "CAPTURES",
+      "id": "P-INSPECT-GRAPH",
+      "label": "gp inspect graph over the fixture: canonical_digest, the projection c1 identity",
+      "pins": [
+        "50b1af2080aba35bb1fe1dc2507b57c3d9aa8b8394693dc70ff8d1a17b20d773"
+      ],
+      "test": "CAPTURES P-INSPECT-GRAPH"
+    },
+    {
+      "table": "CAPTURES",
+      "id": "P-GRAPH-CHECK-VARIANT",
+      "label": "gp graph check over the variant (written compact): identities.graph of the variant",
+      "pins": [
+        "0432e5f7b92081b33833719fddac15416425507baf0cbe4856b74322f1cb20c9"
+      ],
+      "test": "CAPTURES P-GRAPH-CHECK-VARIANT"
+    },
+    {
+      "table": "CAPTURES",
+      "id": "P-INSPECT-GRAPH-VARIANT",
+      "label": "gp inspect graph over the variant: canonical_digest of the variant, the value its digests.canonical declares",
+      "pins": [
+        "ed6fbeb9d8e007b3289743f60785392d1b81e0235e0405516a79f19367baf53d"
+      ],
+      "test": "CAPTURES P-INSPECT-GRAPH-VARIANT"
+    },
+    {
+      "table": "FIXTURE",
+      "id": "F-BLOB",
+      "label": "the vendored bytes are the producer's committed fixture: its git blob at the bead pin and at the capture source, byte for byte",
+      "pins": [
+        "a2c0ff395ee67546ceb5368ecad3a7c045be24735f50f6c3c47be67be1921cd4"
+      ],
+      "test": "FIXTURE F-BLOB"
+    },
+    {
+      "table": "FIXTURE",
+      "id": "F-DISTINCT",
+      "label": "acceptance (a): the fixture serialized pretty (the file) and compact (JSON.stringify) hashes to two different SHA-256 values; the variant is a third",
+      "pins": [
+        "a2c0ff395ee67546ceb5368ecad3a7c045be24735f50f6c3c47be67be1921cd4"
+      ],
+      "test": "FIXTURE F-DISTINCT"
+    },
+    {
+      "table": "CASES",
+      "id": "A-RPC-COMPACT",
+      "label": "the fixture sent over RPC in a compact frame joins the RPC decision's graph_digest",
+      "pins": [
+        "5191cba889f1e7b01e9d58579c01ffb318bcc366e5fa05672dd08b04b436886b"
+      ],
+      "test": "CASES A-RPC-COMPACT"
+    },
+    {
+      "table": "CASES",
+      "id": "A-RPC-SPACED",
+      "label": "the fixture sent in a spaced frame still joins on JSON.stringify of the value, not on the frame's spelling",
+      "pins": [
+        "9ceb34e24d1ef83d00a07fd97daccc2345ac7763b6b4c71ce2d41af8346420ef"
+      ],
+      "test": "CASES A-RPC-SPACED"
+    },
+    {
+      "table": "CASES",
+      "id": "A-RPC-VARIANT",
+      "label": "the non-ASCII variant joins on the UTF-8 bytes of JSON.stringify",
+      "pins": [
+        "7c6be6b341c0412b07aafd7dd1dbcdd191b1a48f07fcda0a33ef5a8ec7830f97"
+      ],
+      "test": "CASES A-RPC-VARIANT"
+    },
+    {
+      "table": "CASES",
+      "id": "A-RPC-VARIANT-ESCAPED",
+      "label": "the non-ASCII variant sent ASCII-escaped still joins on the UTF-8 bytes of the value",
+      "pins": [
+        "2a4a4dab428ec97f77581b73a2d73038a4a0b07c10f70799511a106da37ab151"
+      ],
+      "test": "CASES A-RPC-VARIANT-ESCAPED"
+    },
+    {
+      "table": "CASES",
+      "id": "A-CLI-FILE",
+      "label": "the fixture file handed to gp eval joins the runtime receipt's input_snapshot on the file bytes",
+      "pins": [
+        "9bd0a6bb6a669dc9d51f9603976fdad4beb9dd407c852599492537d3969ebabc"
+      ],
+      "test": "CASES A-CLI-FILE"
+    },
+    {
+      "table": "CASES",
+      "id": "A-CLI-SAMPLE",
+      "label": "the fixture file handed to gp sample joins the decision's graph_digest on the file bytes",
+      "pins": [
+        "d5ecd2ab27d1227978e57ebda8b1fb5e88ddb692b69dfb2d8588046f426294d8"
+      ],
+      "test": "CASES A-CLI-SAMPLE"
+    },
+    {
+      "table": "CASES",
+      "id": "A-CLI-COMPACT",
+      "label": "a compact file with no trailing newline joins input_snapshot on its own bytes",
+      "pins": [
+        "864d965cdc40e85394b70ea72bd999c51b721e4692e94762e7aa1ff4a6136750"
+      ],
+      "test": "CASES A-CLI-COMPACT"
+    },
+    {
+      "table": "CASES",
+      "id": "A-CROSS-DECOMPOSED",
+      "label": "the variant presented with its accent decomposed refuses the decision over the composed value: normalized text is not the presented bytes",
+      "pins": [
+        "9828f4af79a3bb0b77699dcadfb5a8b53558145766150985e928cce35f643483"
+      ],
+      "test": "CASES A-CROSS-DECOMPOSED"
+    },
+    {
+      "table": "CASES",
+      "id": "A-CROSS-RPC",
+      "label": "a compact RPC presentation refuses the CLI decision over the pretty file of the same graph",
+      "pins": [
+        "05cf606f05dda3daada1ceef789fe82c551f2ef911599c9182192960f799638a"
+      ],
+      "test": "CASES A-CROSS-RPC"
+    },
+    {
+      "table": "CASES",
+      "id": "A-CROSS-CLI",
+      "label": "the pretty fixture file refuses the receipt over the compact spelling of the same graph",
+      "pins": [
+        "f7c65aa2e47d3c2bfdfeb1353b13d14d66168f5013260ea98d3ae0fd10efd610"
+      ],
+      "test": "CASES A-CROSS-CLI"
+    },
+    {
+      "table": "CASES",
+      "id": "B-IDENTITIES-GRAPH",
+      "label": "identities.graph substituted for input_snapshot is refused typed",
+      "pins": [
+        "bfb2433cafbee73c7291b65b2be8e8b27e54fca54d3c70480fdfabea984c4a78"
+      ],
+      "test": "CASES B-IDENTITIES-GRAPH"
+    },
+    {
+      "table": "CASES",
+      "id": "B-CANONICAL",
+      "label": "canonical_digest substituted for graph_digest is refused typed",
+      "pins": [
+        "af2633cc83a3224429b3d3b2cb5bf249d050ea9e88ec8e05d8d6d17efe71154d"
+      ],
+      "test": "CASES B-CANONICAL"
+    },
+    {
+      "table": "CASES",
+      "id": "B-RELABELLED",
+      "label": "the presented hex under the graphpolicy.snapshot.c1 spelling is refused: a prefix is part of the identity",
+      "pins": [
+        "d88e180e139ab75e9e27857190d38b41ca6fbaca17b72748127c28a89e3072eb"
+      ],
+      "test": "CASES B-RELABELLED"
+    },
+    {
+      "table": "CASES",
+      "id": "B-BARE",
+      "label": "the presented hex with no sha256: spelling is refused in a receipt field",
+      "pins": [
+        "8efaf732de4f700335338ea92a7a48bbf668d163766721f63a48cd3af1335e20"
+      ],
+      "test": "CASES B-BARE"
+    },
+    {
+      "table": "CASES",
+      "id": "B-UPPERCASE",
+      "label": "the presented key in upper-case hex is refused: the comparison is byte-equal",
+      "pins": [
+        "b68a24e98270bb706c19cd6489dda97bbbf46d601025ddb29a9747bc399f93d6"
+      ],
+      "test": "CASES B-UPPERCASE"
+    },
+    {
+      "table": "CASES",
+      "id": "B-LAST-DIGIT",
+      "label": "a value that differs from the presented key only in its last hex digit is refused: the whole string is compared",
+      "pins": [
+        "665fb862f56b266c576e581b25b09af932267481b5f688afde4dfe045a9cb6af"
+      ],
+      "test": "CASES B-LAST-DIGIT"
+    },
+    {
+      "table": "CASES",
+      "id": "B-PADDED",
+      "label": "the presented key with a trailing space is refused: the producer's value is not trimmed",
+      "pins": [
+        "6e7daf61139821b40228995255700ae64ca332d664fc7140e868d3c64fb02c54"
+      ],
+      "test": "CASES B-PADDED"
+    },
+    {
+      "table": "CASES",
+      "id": "C-APPEND-NEWLINE",
+      "label": "whitespace-only: one more trailing newline on the presented file is a mismatch refusal",
+      "pins": [
+        "b2135648d7551085cfb9e0eb0f0c804db6fa8433dee68cf91518b3cefc5f6d74"
+      ],
+      "test": "CASES C-APPEND-NEWLINE"
+    },
+    {
+      "table": "CASES",
+      "id": "C-STRIP-NEWLINE",
+      "label": "whitespace-only: the presented file without its final newline is a mismatch refusal",
+      "pins": [
+        "385c54d09c1f03ec32e8bbc17680e050496303440372bb0a42ea5384e8ec3f81"
+      ],
+      "test": "CASES C-STRIP-NEWLINE"
+    },
+    {
+      "table": "CASES",
+      "id": "C-CRLF",
+      "label": "whitespace-only: CRLF line ends on the presented file are a mismatch refusal",
+      "pins": [
+        "e5bb4ea68b1dde495b8eb95c7568e59921d22a5555d552ce7d94f83c22d71393"
+      ],
+      "test": "CASES C-CRLF"
+    },
+    {
+      "table": "CASES",
+      "id": "C-TABS",
+      "label": "whitespace-only: tab indentation on the presented file is a mismatch refusal",
+      "pins": [
+        "124530fb08455812d6959abb4ca2d432f83c1185810494712a7a844b617e2038"
+      ],
+      "test": "CASES C-TABS"
+    },
+    {
+      "table": "CASES",
+      "id": "C-COMPACT-NEWLINE",
+      "label": "whitespace-only: a trailing newline after the compact spelling is a mismatch refusal against the compact receipt",
+      "pins": [
+        "4f3d6232b654a644cb3c963ce29545bb6320ac8df500ef6044230ee375323a40"
+      ],
+      "test": "CASES C-COMPACT-NEWLINE"
+    },
+    {
+      "table": "CASES",
+      "id": "C-COMPACT-SPACE",
+      "label": "whitespace-only: one space after the first member colon of the compact spelling is a mismatch refusal",
+      "pins": [
+        "c7a0eab145bdf5ad560a309411b7397c274a966721489cb270e623541048604d"
+      ],
+      "test": "CASES C-COMPACT-SPACE"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-REPARSE-FILE",
+      "label": "the file is re-parsed and hashed compact",
+      "pins": [
+        "b57d75ab0fe60c7b126583a7ea6427075c0b5a8df568224d6a49b0b7b7d59514"
+      ],
+      "test": "MUTANTS M-REPARSE-FILE"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-REPARSE-WHITESPACE",
+      "label": "re-parsing hides a whitespace-only edit and joins",
+      "pins": [
+        "c0c8fe9573f0c8f2b7b576f7257c6e87e5827731a7258f0eeded64d61374d0d3"
+      ],
+      "test": "MUTANTS M-REPARSE-WHITESPACE"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-PRETTY-RPC",
+      "label": "the RPC value is hashed pretty-printed",
+      "pins": [
+        "a941fbc1bb44364ff843726fca797ef0622603659df04d05c6400693c661d11c"
+      ],
+      "test": "MUTANTS M-PRETTY-RPC"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-FRAME-SPACED",
+      "label": "the frame's spaced spelling is hashed instead of the value",
+      "pins": [
+        "e3ef843b19a333765c50eb328c841a3010a08566c9ff97afa9f79c213b0f97cf"
+      ],
+      "test": "MUTANTS M-FRAME-SPACED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-FRAME-ESCAPED",
+      "label": "the frame's ASCII-escaped spelling is hashed instead of the value",
+      "pins": [
+        "871d6f02e9c9b6764f350c8fb3c67c4f6cbe93de92ec0f8f6282daa8d2ea7b25"
+      ],
+      "test": "MUTANTS M-FRAME-ESCAPED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-TRIM",
+      "label": "trimming hides a trailing newline and joins",
+      "pins": [
+        "c044ee24fffa57e22be0dadfb146b0a2514948af5dc5b0ed28f2ab4bcc0ac6c4"
+      ],
+      "test": "MUTANTS M-TRIM"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-LINE-ENDINGS",
+      "label": "normalized line ends hide CRLF and join",
+      "pins": [
+        "933c6a6eb2b9f5aca1f1816670c70e4684f1f105f8de01f6ffdf28e22d0de009"
+      ],
+      "test": "MUTANTS M-LINE-ENDINGS"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-LATIN1",
+      "label": "the text is hashed as Latin-1, not UTF-8",
+      "pins": [
+        "cc706b6c2d7e58dc745ead20b485da11737be8b3073dd7382d7060665b81ba5c"
+      ],
+      "test": "MUTANTS M-LATIN1"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-UTF16",
+      "label": "the text is hashed as UTF-16 code units",
+      "pins": [
+        "f9a7fcd60b9dcccfbbb886b7dfe9bcc509dd03795795a6ddd9114827f541d876"
+      ],
+      "test": "MUTANTS M-UTF16"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-ASCII-ESCAPED",
+      "label": "the value is hashed ASCII-escaped",
+      "pins": [
+        "29b25ebe6804667fe32ab2e23eaaaada0fb2367a7839c3121c6eb3ebad710421"
+      ],
+      "test": "MUTANTS M-ASCII-ESCAPED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-NFC-NORMALIZED",
+      "label": "the text is NFC-normalized before it is hashed and a decomposed presentation joins",
+      "pins": [
+        "a587a7b1fd0661e8d6525c134a156a66971e99c9bc5af86348705e792fe30bdb"
+      ],
+      "test": "MUTANTS M-NFC-NORMALIZED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-HELD-GRAPH",
+      "label": "identities.graph is the key and joins its own substitution",
+      "pins": [
+        "1c499a10c4e7bbbdf2ed5b3be0e8f99df274b8a2f41a1fe4800cf9bb8828a831"
+      ],
+      "test": "MUTANTS M-HELD-GRAPH"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-HELD-CANONICAL",
+      "label": "canonical_digest is the key and joins its own substitution",
+      "pins": [
+        "f75b0219f706983e8146d557d6afeb69239d59ed78ced791c3e5aea1e0d45182"
+      ],
+      "test": "MUTANTS M-HELD-CANONICAL"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-HELD-GRAPH-CLI",
+      "label": "identities.graph is the key against a conforming receipt",
+      "pins": [
+        "f94a44385e83e27bcd140315d089dab40f64528dc5487a3657273fdb59fc1dde"
+      ],
+      "test": "MUTANTS M-HELD-GRAPH-CLI"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-TRUST-PRODUCER",
+      "label": "the producer's value is taken as the key",
+      "pins": [
+        "32f7f16a37107080c6da708ccacf01ab5cb3fc9e1b170d2d83cb7e60cfa29fac"
+      ],
+      "test": "MUTANTS M-TRUST-PRODUCER"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-BARE-KEY",
+      "label": "the key drops its sha256: spelling and joins a bare value",
+      "pins": [
+        "09d1fdcfaf24e62f04c2648b26c56e54874b552e5f2f9264f5d53f298c9062c4"
+      ],
+      "test": "MUTANTS M-BARE-KEY"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-HEX-SUFFIX",
+      "label": "the comparison reads only the hex after the colon",
+      "pins": [
+        "bd68443dbfb1634b8acb5b35163ffdb1f620d53fc50182c78ad55a762c3bb7a7"
+      ],
+      "test": "MUTANTS M-HEX-SUFFIX"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-HEX-SUFFIX-BARE",
+      "label": "the hex-only comparison joins a bare value",
+      "pins": [
+        "bc0ec6b2f040138f6dbc218dc8295f2eef8590cf7ca86b4badcace481a0e10e3"
+      ],
+      "test": "MUTANTS M-HEX-SUFFIX-BARE"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-CASE-FOLD",
+      "label": "the comparison folds case",
+      "pins": [
+        "7c29e202eafd82b57fd6dfebd60178252a33c16d71e24be8262401a231868a99"
+      ],
+      "test": "MUTANTS M-CASE-FOLD"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-PREFIX-COMPARE",
+      "label": "the comparison reads only the first twenty characters",
+      "pins": [
+        "2f446b8aeed5e423ff05f927d17ad632c2796c51987593ae67916c84a24fb9ad"
+      ],
+      "test": "MUTANTS M-PREFIX-COMPARE"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-TRIM-PRODUCER",
+      "label": "the producer's value is trimmed before the comparison",
+      "pins": [
+        "1c16a34d2cd5e2907c78b3a6e795fccd694b76180488003186aeed73f00f9127"
+      ],
+      "test": "MUTANTS M-TRIM-PRODUCER"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-ALWAYS",
+      "label": "every presentation joins",
+      "pins": [
+        "8121830a8ebc3036627f31f49dbae969a65c9f4732bb39702c42ecea51e92132"
+      ],
+      "test": "MUTANTS M-ALWAYS"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-NEVER",
+      "label": "every presentation is refused",
+      "pins": [
+        "d7c5685930507f54889726a2cb26c4f71066f89d8dbad35694016b59c8f24178"
+      ],
+      "test": "MUTANTS M-NEVER"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-CODE-MISSING",
+      "label": "the refusal carries no code",
+      "pins": [
+        "2325af9f4da0308e50db1d011768656563523957c3f9d9820083c8778e63f389"
+      ],
+      "test": "MUTANTS M-CODE-MISSING"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-CODE-RENAMED",
+      "label": "the refusal's code is not the typed mismatch",
+      "pins": [
+        "1837f4416dbb6c6536110310bafa8e4d640522a857a1b4ce140d481be54c086e"
+      ],
+      "test": "MUTANTS M-CODE-RENAMED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-FIELD",
+      "label": "the refusal names the other receipt field",
+      "pins": [
+        "34f146294b5b6598096bcc239ea61d8f950ee46725c454785afab301b58ece03"
+      ],
+      "test": "MUTANTS M-FIELD"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-ECHO-RECASED",
+      "label": "the refusal re-cases the producer's value",
+      "pins": [
+        "b565b8a1425d80dad2c55c04ef4e1f93cc244b130e248d1620bccad02172cafa"
+      ],
+      "test": "MUTANTS M-ECHO-RECASED"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-PRESENTED-MISSING",
+      "label": "the refusal does not carry the presented key",
+      "pins": [
+        "8b393e4940ac7fc258e740eaf3dd45801eece069fbe0eb9127ca5a260046154a"
+      ],
+      "test": "MUTANTS M-PRESENTED-MISSING"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-THROWS",
+      "label": "the drive throws on a mismatch instead of refusing typed",
+      "pins": [
+        "3875e9e3783ed09ad00c01c330988155fdd08ff67c2750a6b6079a4e77d293a2"
+      ],
+      "test": "MUTANTS M-THROWS"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-NULL",
+      "label": "the drive returns null on a mismatch",
+      "pins": [
+        "0876df8db510f49f6ab951d5f344a3018687efc44a6078b3b2e0cfa221347be2"
+      ],
+      "test": "MUTANTS M-NULL"
+    },
+    {
+      "table": "MUTANTS",
+      "id": "M-BOOLEAN",
+      "label": "the drive returns a bare boolean",
+      "pins": [
+        "ef20d6d38787ca281cf114bee8487a1fca5676ce4f1ba6909146c04ed26653e3"
+      ],
+      "test": "MUTANTS M-BOOLEAN"
+    },
+    {
+      "table": "SITE_CASES",
+      "id": "S-REGISTERED",
+      "label": "a join site registered with the join it exports",
+      "pins": [
+        "6670c900a3f1370b3d3268769cc2b356d377d71c1a8c97af0ce5b6fcc7ab17c8"
+      ],
+      "test": "SITE_CASES S-REGISTERED"
+    },
+    {
+      "table": "SITE_CASES",
+      "id": "S-UNREGISTERED",
+      "label": "a join site with no registration",
+      "pins": [
+        "c794782b510a6ea6ee00dc73223aecd20ee9cf540e57e610c02fd217a114242f"
+      ],
+      "test": "SITE_CASES S-UNREGISTERED"
+    },
+    {
+      "table": "SITE_CASES",
+      "id": "S-STALE",
+      "label": "a registration whose module carries no touch",
+      "pins": [
+        "9c4f3146d52f48fa54ebf30953f60aa33c48eb6cce7283fe7058adb9dd37ff15"
+      ],
+      "test": "SITE_CASES S-STALE"
+    },
+    {
+      "table": "SITE_CASES",
+      "id": "S-DUPLICATE",
+      "label": "one site registered twice",
+      "pins": [
+        "550c1e96b1e8cd8809178963771465365970ea7611e28a74fca539dfdb4be13e"
+      ],
+      "test": "SITE_CASES S-DUPLICATE"
+    },
+    {
+      "table": "SITE_CASES",
+      "id": "S-UNEXPORTED",
+      "label": "a registration whose join the module declares but does not export",
+      "pins": [
+        "e6b6910980207f2452e05e0de16ae40f27753d51d609b66c022a0af7ee900ccb"
+      ],
+      "test": "SITE_CASES S-UNEXPORTED"
+    },
+    {
+      "table": "SITE_CASES",
+      "id": "S-NEAR-LISTED",
+      "label": "the shared name in a listed module of Pi's own",
+      "pins": [
+        "ac6431675c6bd1cd3d9274dc7fbf40a41c3c0744d47c9b18f217e491007caa22"
+      ],
+      "test": "SITE_CASES S-NEAR-LISTED"
+    },
+    {
+      "table": "SITE_CASES",
+      "id": "S-NEAR-UNLISTED",
+      "label": "the shared name in a module nobody listed",
+      "pins": [
+        "d19615c0931fb35f2f4e258c290dc9d59177971a7a8b3b738a22cf59d115541b"
+      ],
+      "test": "SITE_CASES S-NEAR-UNLISTED"
+    },
+    {
+      "table": "SITE_CASES",
+      "id": "S-NEAR-STALE",
+      "label": "a listing whose module no longer carries the shared name",
+      "pins": [
+        "94e4a0ec352d4e25e2b5eb6f5348aa72d033a9668984d886106698278a3b3fe9"
+      ],
+      "test": "SITE_CASES S-NEAR-STALE"
+    },
+    {
+      "table": "SITE_CASES",
+      "id": "S-NEAR-FIELD",
+      "label": "a listing that names a gp join field: the field stays unregistered and the listing is refused",
+      "pins": [
+        "65e3352b56d38c2e650b54c0b893c36266f9a2e5922850e23724d237f565ea71"
+      ],
+      "test": "SITE_CASES S-NEAR-FIELD"
+    },
+    {
+      "table": "SITE_CASES",
+      "id": "S-NEAR-REASON",
+      "label": "a listing with an empty reason",
+      "pins": [
+        "50d79c9586a42e0d7504c3a3b7c8271eec1743e758fbbb62e194c382ad450d03"
+      ],
+      "test": "SITE_CASES S-NEAR-REASON"
+    },
+    {
+      "table": "SITE_CASES",
+      "id": "R-SHARED-NAME",
+      "label": "a gp join through snapshotDigest inside a listed module is not told apart from the module's own field",
+      "pins": [
+        "d244627b4be96995f2b34507bc4c8ec9b620633e732931b7d5ae4bc096dcdd31"
+      ],
+      "test": "SITE_CASES R-SHARED-NAME"
+    },
+    {
+      "table": "SITE_CASES",
+      "id": "R-DRIVE-BYPASS",
+      "label": "a registered module that names a join field and exports a join it never computes: whether the drive runs the module's code is reviewed, not judged",
+      "pins": [
+        "8537b9782ef52a1bf4031c79cb288b976a1b24761f75052347eabbc81e598d8a"
+      ],
+      "test": "SITE_CASES R-DRIVE-BYPASS"
+    }
+  ],
+  "tests": [
+    "TOUCHPOINTS T-FIELD",
+    "TOUCHPOINTS T-IDENTITIES",
+    "TOUCHPOINTS T-PREFIX",
+    "TOUCHPOINTS T-SHARED",
+    "CLEAN C-PI-OWN",
+    "CLEAN C-NEAR-NAMES",
+    "CLEAN C-COMMENT",
+    "RESIDUALS R-COMPUTED",
+    "RESIDUALS R-ALIASED",
+    "RESIDUALS R-PATTERN",
+    "RESIDUALS R-TRANSITIVE",
+    "CAPTURES P-EVAL-FILE",
+    "CAPTURES P-SAMPLE-FILE",
+    "CAPTURES P-EVAL-COMPACT-FILE",
+    "CAPTURES P-RPC-COMPACT",
+    "CAPTURES P-RPC-SPACED",
+    "CAPTURES P-RPC-VARIANT",
+    "CAPTURES P-RPC-VARIANT-ESCAPED",
+    "CAPTURES P-GRAPH-CHECK",
+    "CAPTURES P-INSPECT-GRAPH",
+    "CAPTURES P-GRAPH-CHECK-VARIANT",
+    "CAPTURES P-INSPECT-GRAPH-VARIANT",
+    "FIXTURE F-BLOB",
+    "FIXTURE F-DISTINCT",
+    "CASES A-RPC-COMPACT",
+    "CASES A-RPC-SPACED",
+    "CASES A-RPC-VARIANT",
+    "CASES A-RPC-VARIANT-ESCAPED",
+    "CASES A-CLI-FILE",
+    "CASES A-CLI-SAMPLE",
+    "CASES A-CLI-COMPACT",
+    "CASES A-CROSS-DECOMPOSED",
+    "CASES A-CROSS-RPC",
+    "CASES A-CROSS-CLI",
+    "CASES B-IDENTITIES-GRAPH",
+    "CASES B-CANONICAL",
+    "CASES B-RELABELLED",
+    "CASES B-BARE",
+    "CASES B-UPPERCASE",
+    "CASES B-LAST-DIGIT",
+    "CASES B-PADDED",
+    "CASES C-APPEND-NEWLINE",
+    "CASES C-STRIP-NEWLINE",
+    "CASES C-CRLF",
+    "CASES C-TABS",
+    "CASES C-COMPACT-NEWLINE",
+    "CASES C-COMPACT-SPACE",
+    "MUTANTS M-REPARSE-FILE",
+    "MUTANTS M-REPARSE-WHITESPACE",
+    "MUTANTS M-PRETTY-RPC",
+    "MUTANTS M-FRAME-SPACED",
+    "MUTANTS M-FRAME-ESCAPED",
+    "MUTANTS M-TRIM",
+    "MUTANTS M-LINE-ENDINGS",
+    "MUTANTS M-LATIN1",
+    "MUTANTS M-UTF16",
+    "MUTANTS M-ASCII-ESCAPED",
+    "MUTANTS M-NFC-NORMALIZED",
+    "MUTANTS M-HELD-GRAPH",
+    "MUTANTS M-HELD-CANONICAL",
+    "MUTANTS M-HELD-GRAPH-CLI",
+    "MUTANTS M-TRUST-PRODUCER",
+    "MUTANTS M-BARE-KEY",
+    "MUTANTS M-HEX-SUFFIX",
+    "MUTANTS M-HEX-SUFFIX-BARE",
+    "MUTANTS M-CASE-FOLD",
+    "MUTANTS M-PREFIX-COMPARE",
+    "MUTANTS M-TRIM-PRODUCER",
+    "MUTANTS M-ALWAYS",
+    "MUTANTS M-NEVER",
+    "MUTANTS M-CODE-MISSING",
+    "MUTANTS M-CODE-RENAMED",
+    "MUTANTS M-FIELD",
+    "MUTANTS M-ECHO-RECASED",
+    "MUTANTS M-PRESENTED-MISSING",
+    "MUTANTS M-THROWS",
+    "MUTANTS M-NULL",
+    "MUTANTS M-BOOLEAN",
+    "SITE_CASES S-REGISTERED",
+    "SITE_CASES S-UNREGISTERED",
+    "SITE_CASES S-STALE",
+    "SITE_CASES S-DUPLICATE",
+    "SITE_CASES S-UNEXPORTED",
+    "SITE_CASES S-NEAR-LISTED",
+    "SITE_CASES S-NEAR-UNLISTED",
+    "SITE_CASES S-NEAR-STALE",
+    "SITE_CASES S-NEAR-FIELD",
+    "SITE_CASES S-NEAR-REASON",
+    "SITE_CASES R-SHARED-NAME",
+    "SITE_CASES R-DRIVE-BYPASS",
+    "live: the scan walks every regular file under src/ and reads Pi's own snapshotDigest members there",
+    "live: no src module joins against a gp receipt today, and the registry and the listing match the touched modules",
+    "live (a)+(b)+(c): every JOIN_SITES entry reports a conforming outcome on every CASES row",
+    "rule 16: every judged table and the live subjects are frozen at their measured shape",
+    "roster: the judged rows, the registered tests and the residual families equal test/fixtures/gp-snapshot-join-roster.json, in order and both ways"
+  ],
+  "residuals": {
+    "R-COMPUTED": [
+      "RESIDUALS R-COMPUTED"
+    ],
+    "R-ALIASED": [
+      "RESIDUALS R-ALIASED"
+    ],
+    "R-TRANSITIVE": [
+      "RESIDUALS R-TRANSITIVE"
+    ],
+    "R-PATTERN": [
+      "RESIDUALS R-PATTERN"
+    ],
+    "R-SHARED-NAME": [
+      "SITE_CASES R-SHARED-NAME"
+    ],
+    "R-DRIVE-BYPASS": [
+      "SITE_CASES R-DRIVE-BYPASS"
+    ]
+  }
+}

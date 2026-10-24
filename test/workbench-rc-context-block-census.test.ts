@@ -1,0 +1,1572 @@
+/**
+ * wb-5ltg.1 (RC-NATIVE-INTERFACE-COMPONENT-CONTRACT-R1, program-triage-2026-10-22), a standing posture: gating none, shipped yes.
+ * Statement (the owner filing's full statement, the three census names written <SDK>, <ELEMENT> and <DOCUMENT>): "No Pi surface
+ * shall reinterpret <SDK> model-context blocks (the rf-rendered context document read as result.output.text/result.observations)
+ * as browser/TUI controls nor build a second general UI IR over them; Pi keeps its RC surface to the rf
+ * reactivefiber.render.preview envelope only and attributes no `Element`/`<DOCUMENT>` or envelope contract change to this program
+ * (standing posture; envelope shipped and unchanged)", pinned to the program's README.md:8 at 640a3b579a95 (QUOTE below). The
+ * acceptance clauses (a)-(c) of the filing are the labels of rows A-C, verbatim.
+ *
+ * SIBLING DISCIPLINE. <SDK>, <ELEMENT> and <DOCUMENT> stand for the three names clause (c)'s census reads: the producer SDK, the
+ * interface element identity and the producer's document type. This file and its roster spell none of them joined, in any case
+ * or separator convention, nor the snake-case SDK key rf echoes: every needle is assembled from parts at run time, so a sibling
+ * census that reads the test tree for those names holds over both files (this census reads no test file for them, R21).
+ *
+ * MEASURED BY THE CUTTING SEAT (2026-10-23, read-only git show on the local producer checkout, no fetch): at the pin
+ * 640a3b579a955f84388d7bacd385d13b232a3116 README.md:8 is the quoted line (it reads the same at origin/master 01187eb645a5, 21
+ * commits past the pin); the producer's model-context leaf is the frozen ContextBlock dataclass (src/<sdk module>/outputs.py:224: key, kind, content, visibility, provenance, diagnostics, metadata), its document the ordered <DOCUMENT>
+ * (outputs.py:406: key, blocks, metadata, omitted, hidden, truncated) and its element type element.py:194. A block's content and
+ * metadata are open JSON, so nothing at the producer keeps an action id, a handler or a control spec off a block: the posture is
+ * Pi's to hold. At the cut's base (trunk c6369e0) Pi's one rf reader is the reactivefiber.render.preview provider
+ * (src/workbench/providers/reactivefiber.ts: the native reader validates the noncommitted-preview shape and stays open to
+ * additive keys; the injected seam validates nothing); its two projections are the observer's topology
+ * (src/workbench/reactivefiber-observer.ts) and the native-evidence metadata (src/workbench/native-evidence.ts); no src/ui module
+ * imports an rf module, and the evidence loader roster (EVIDENCE_LOADER_ROWS) holds no reactivefiber row, so the inspector's one
+ * evidence action never loads the context text.
+ *
+ * ROWS (one test per pin, titled by the pin id under its row's label):
+ *  A, acceptance (a). A1 the carriage: the carrier (fullShapeRf, the full shape at the pinned rf) with CONTROL_FIELDS set at each
+ *    PLACEMENT (a block row, the block's metadata, a component row, an observation row, a necessity record, the output object and
+ *    an additive result key) and the TEXT variant (the output text holding a serialized document whose block carries them) ride
+ *    both seams byte for byte, one spawn of the --no-commit argv and one injected call each; A2 no derivation: under both seam
+ *    labels the topology, and the native-evidence metadata, of every placed variant equal those of its bare twin (the same
+ *    placement without the control fields), and the text variant differs from the carrier only in nativePayloadRef, exactly the
+ *    sha256 of its text; A3 the surface: every projection holds only the members SNAPSHOT_KEYS, NODE_KEYS and METADATA_KEYS name,
+ *    evidence refs of the kinds the observer source builds (REF_KINDS, read off reactivefiber-observer.ts), one rf-output sha256
+ *    nativePayloadRef, notes and status words, and no sentinel and no CONTROL word in any surfaced string or key; A4 the judge
+ *    refuses every control-surfacing mutant (MUTANTS) and reads today's projections quiet.
+ *  B, acceptance (b). B1 the fixtures validRf (the provider envelope audit) and result (the observer suite), each with the
+ *    declarations its value reads, and the helper rows result() calls, hold the pinned sha256 of their bytes; B2
+ *    test/helpers/rf-release-drift.ts spells no program, pin or census name, exports exactly its pinned names, records the
+ *    carrier's release and judges only the two release inputs; B3 the contractSource carrier equals the filing's quoted carrier,
+ *    both registrations state it on an unchanged read descriptor, the reconcile roster reads the preview alone, and the
+ *    carrier's statement spells nothing of the program; B4 the eight-key reader: the observer's ENVELOPE_KEYS and the provider's
+ *    RF_KEYS are the same eight keys (the filing's "eight-key reader"), the schema and contract constants stand, and a ninth
+ *    envelope key is refused by both seams.
+ *  C, acceptance (c). C1 the token census over Pi's surfaces, git's own file list (tracked, and untracked but not ignored) without
+ *    the bead store and the test tree (EXCLUDED, each prefix bound to a file the filing names that another pin reads): the exact
+ *    names occur nowhere, and every tolerant spelling is the rf echo (an sdk_versions key, a member of a block holding rf's other
+ *    sdk_versions members, an sdk_versions path or a component contract's sdk_contract distribution); C2 Pi types: the src modules spelling the rf CLI schema are exactly READERS, no identifier or string of
+ *    theirs carries a CONTROL word, no src type member is an rf block field and none pairs a context-block word with a CONTROL
+ *    word; C3 UI handlers: no src/ui module imports an rf module or spells rf vocabulary, and the evidence loader roster
+ *    holds no reactivefiber row; C4 beads: the program's rows (the epic and the children its title counts) hold no unmarked
+ *    control-model or attribution sentence in their titles and owner filings; C5 sentences: no .md page and no src file holds one.
+ *  M, the instruments rows A-C read, member by member: M1 the needles, the normalization and the echo classifier;
+ *    M2 the identifier word splitter and the CONTROL words; M3 the sentence cutter and the two sentence rules.
+ *  R, the residuals' pinned quiet rows.
+ * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row, every pin's witness, the
+ * constants, the registered test titles and each pin's assertion count are held to the out-of-file roster
+ * (test/fixtures/rc-context-block-roster.json).
+ * OUTSIDE ANCHOR: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-5ltg.1): each acceptance clause
+ * is exactly one row label; its notes carry the quote and its pin, the quoted carrier, the "eight-key reader" and the fixture
+ * names "(validRf/result)"; clause (a)'s control words must each be carried by a CONTROL_FIELDS key; clause (c)'s four surfaces
+ * are each bound to a pin (SURFACE_PINS) and its three census names are the needles; the epic's title states its child count.
+ * The walk is git's own file list, the reader set and the ref kinds are read off src, the fixture bytes off the fixture files.
+ * RECORDS: the last case walks this file's registered tests: each roster title once, in order, in run mode, not inverted, ran;
+ * every pin's witness again; every pin reached its end with its pinned assertion count.
+ * NOT CLAIMED: the placements, the control fields, the sentinels, the mutants and the sentence vocabularies are this census's
+ * reading of the filing (the producer defines no Pi slot for any of them); a member removed from every literal of this file and
+ * the roster together is anchored by the filing only where the filing names it (clause (a)'s three control words, clause (c)'s
+ * surfaces and names, the two fixture names).
+ * RESIDUALS (named families, each with a pinned quiet row in row R): R1 R-STATUS-WORD a control word rf states as an observation
+ *   status surfaces as a status word (the filing admits status words); R2 R-PRODUCER-IDENTITY a control word stated as a bounded
+ *   producer identity (cli_version, an engine version) surfaces as that identity; R3 R-PROSE-NAME the document name as two words
+ *   spaced, hyphenated or dotted reads as prose (rf's rendered context document, another SDK's context-document module); R4 R-COMPOSED a name assembled from literal parts; R5 R-ENCODED a JS escape or an HTML reference inside
+ *   a name; R6 R-LOOKALIKE a look-alike letter NFKC keeps; R7 R-OTHER-ROWS a bead row outside the program's epic and children,
+ *   or a note appended after an owner filing; R8 R-NON-PROSE a sentence in a file that is neither a .md page nor below src/;
+ *   R9 R-MARKER-ANYWHERE a marker anywhere in a sentence admits it; R10 R-VOCABULARY a control named outside the CONTROL
+ *   families; R11 R-PARAPHRASE a change stated without a CHANGE word; R12 R-SPLIT a model or an attribution carried across two
+ *   sentences; R13 R-COMPUTED-IMPORT a UI module reaching an rf module through a computed specifier; R14 R-OUTSIDE-READERS a
+ *   control-shaped identifier in a src module that does not spell the rf CLI schema; R15 R-IGNORED a file git ignores; R16
+ *   R-UNANCHORED a block modeled as a control in a sentence carrying no context-block anchor word; R17 R-COMMENT a control word
+ *   in a comment of an rf reader (C2 reads identifiers and strings); R18 R-TRANSITIVE a UI module reaching an rf module through
+ *   an intermediate module (C3 reads direct loads; src/workflow/runtime.ts loads native-evidence.ts today); R19 R-BEAD-EXPORT
+ *   the token census reads no bead row (the program's own filings spell the names; C4 judges them); R20 R-UNPLACED a control
+ *   field at an envelope slot no PLACEMENT names (budget, work_metrics, diagnostics_summary, provenance); R21 R-TEST-TREE the token
+ *   census reads no file below test/: the program's sibling censuses name the producer as their subject (at the cut, the queued
+ *   wb-4nut.2, wb-4nut.7, wb-4nut.9 and wb-fb2z.4 cuts spell the SDK and element names in their censuses and rosters) and the
+ *   fixtures carry the rf echo, so the test layer is the census layer, never a Pi surface the filing names.
+ * SCOPE: the producer facts are read at the pin and Pi vendors no producer source, so a producer change is seen only when a cut
+ * re-reads them. The fixture digests and the reader set move only with a reviewed cut (the landing-order rule: a lander editing a
+ * pinned surface updates this census in the same commit).
+ *
+ * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs, the fixtures, the bead export
+ * and git's file list are only read.
+ */
+import { spawnSync } from "node:child_process";
+import { createHash } from "node:crypto";
+import { chmodSync, lstatSync, readFileSync, writeFileSync } from "node:fs";
+import { dirname, join, relative } from "node:path";
+import { fileURLToPath } from "node:url";
+import ts from "typescript";
+import { afterAll, afterEach, describe, expect, it } from "vitest";
+import { CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
+import { EVIDENCE_LOADER_ROWS } from "../src/workbench/evidence-producers.js";
+import { nativeEvidence } from "../src/workbench/native-evidence.js";
+import {
+  REACTIVE_FIBER_CLI_SCHEMA,
+  REACTIVE_FIBER_CONTRACT_SOURCE,
+  REACTIVEFIBER_RENDER_PREVIEW_CONTRACT,
+  registerNativeReactiveFiberRender,
+  registerReactiveFiberRender,
+} from "../src/workbench/providers/reactivefiber.js";
+import { type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
+import { RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
+import { judgeRfReleaseDrift, recordedRfRelease } from "./helpers/rf-release-drift.js";
+import { fullShapeRf, rfFixtureBlock, rfFixtureDecision } from "./helpers/rf-render-fixture.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard(afterAll);
+
+type JsonObject = { [key: string]: JsonValue };
+
+const HERE = dirname(fileURLToPath(import.meta.url));
+const REPO = join(HERE, "..");
+const ROOT = process.cwd();
+const ROSTER_PATH = join(HERE, "fixtures", "rc-context-block-roster.json");
+const EXPORT_FILE = ".beads/issues.jsonl";
+const BEAD = "wb-5ltg.1";
+const EPIC = "wb-5ltg";
+const PROGRAM_TAG = "[RC-NATIVE-INTERFACE-COMPONENT-CONTRACT-R1]";
+const PROGRAM_SLUG = "native-interface-component-contract-2026-10-21";
+const PIN = "640a3b579a95";
+const QUOTE_PIN = `docs/programs/${PROGRAM_SLUG}/README.md:8@${PIN}`;
+const QUOTE = "**Do not create a second general UI IR** or reinterpret model-context blocks as browser/TUI controls.";
+/** The carrier the filing's gating sentence quotes, and the reader count it names. */
+const CARRIER = "rf@0.1.784:reactive-fiber.cli/v1 context.render --no-commit";
+const READER_WORD = "eight-key reader";
+const COUNT_WORDS: readonly string[] = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
+const PREVIEW_ID = "reactivefiber.render.preview";
+const GRANTS = ["reactivefiber:render"];
+/** Pi's own preview input, the legacy arm. */
+const INVOCATION = { model: "pi-invocation-model", task: "summarise the notes" };
+const SEAMS = ["rf-cli", "injected-fixture"] as const;
+type Seam = (typeof SEAMS)[number];
+
+interface Needle {
+  readonly id: string;
+  readonly name: string;
+  readonly words: readonly string[];
+  /** The separators its tolerant spelling admits between words, as a regex class: the SDK and the element are names in any
+   * prose spelling; the document's type is caught in identifier spellings only (joined, or snake case), since "context
+   * document" spaced, hyphenated or dotted is the ordinary name of rf's rendered output and of other SDKs' modules (R3). */
+  readonly separator: string;
+}
+/** Clause (c)'s three census names, assembled from parts (SIBLING DISCIPLINE), with the words their tolerant spellings join. */
+const NEEDLES: readonly Needle[] = [
+  { id: "sdk", name: ["Reactive", "Components"].join(""), words: ["reactive", "components"], separator: "[\\s_.-]*" },
+  { id: "element", name: ["Rf", "ts", "xElement"].join(""), words: ["rf", ["t", "sx"].join(""), "element"], separator: "[\\s_.-]*" },
+  { id: "document", name: ["Context", "Document"].join(""), words: ["context", "document"], separator: "_?" },
+];
+/** The snake-case key rf echoes the SDK under (result.provenance.sdk_versions, a component's sdk_contract.distribution). */
+const ECHO_KEY = ["reactive", "components"].join("_");
+const ECHO_KINDS: readonly string[] = ["sdk_versions-key", "sdk_versions-sibling", "sdk_versions-path", "sdk_contract-distribution"];
+/** The prefixes the token census leaves out, each with the file the filing names that another pin reads below it: the bead
+ * store (C4 judges the export's program rows) and the test tree (B1 and B2 read the clause (b) fixtures and drift helper there). */
+const EXCLUDED: Readonly<Record<string, string>> = { ".beads/": EXPORT_FILE, "test/": "test/helpers/rf-release-drift.ts" };
+function tokenCensused(rel: string): boolean {
+  return !Object.keys(EXCLUDED).some(prefix => rel.startsWith(prefix));
+}
+
+/** The control fields a context block could carry: each key and each sentinel value is distinct from every carrier string. */
+const CONTROL_FIELDS: JsonObject = {
+  action_ids: ["rcx-sentinel-action-open", "rcx-sentinel-action-close"],
+  actions: [{ id: "rcx-sentinel-action-submit", label: "rcx-sentinel-label-submit", handler: "rcx-sentinel-handler-submit" }],
+  handler: "rcx-sentinel-handler-render",
+  on_click: "rcx-sentinel-handler-click",
+  control: { kind: "rcx-sentinel-control-kind", label: "rcx-sentinel-control-label" },
+  callback: "rcx-sentinel-callback",
+  props: { variant: "rcx-sentinel-prop-variant" },
+  resource_bindings: [{ resource: "rcx-sentinel-binding-resource" }],
+};
+const SENTINEL = /rcx-sentinel-[a-z-]+/g;
+interface Placement {
+  readonly id: string;
+  /** Where, below result, the control fields are merged into an object (an index is a digit string). */
+  readonly path: readonly string[];
+  /** The bare object set at the path first, when the carrier holds none there. */
+  readonly seed: JsonObject | null;
+}
+/** Where a context block's control fields can ride an rf envelope. */
+const PLACEMENTS: readonly Placement[] = [
+  { id: "block", path: ["blocks", "0"], seed: null },
+  { id: "block-metadata", path: ["blocks", "0", "metadata"], seed: {} },
+  { id: "component", path: ["components", "0"], seed: { component_id: "fixture.component" } },
+  { id: "observation", path: ["observations", "0"], seed: { status: "observed", freshness: "captured_at_render", replayed: false } },
+  { id: "necessity", path: ["necessity", "0"], seed: null },
+  { id: "output", path: ["output"], seed: null },
+  { id: "result-key", path: ["interface"], seed: {} },
+];
+/** The words that mark an identifier, a key or a surfaced string as a control (whole words of the split; clause (a) names three). */
+const CONTROL_WORDS: readonly string[] = [
+  "action", "actions", "handler", "handlers", "callback", "callbacks", "control", "controls", "button", "buttons", "widget",
+  "widgets", "click", "clickable", "interactive", "props", "binding", "bindings", "submit", "ui",
+];
+/** The projection members today's surfaces hold (snapshot, its node, the native-evidence metadata). */
+const SNAPSHOT_KEYS: readonly string[] = [
+  "source", "scope", "capturedAt", "observedAt", "coverage", "node", "kind", "evidenceRefs", "sourceVersion", "sourceRevision", "nativePayloadRef", "trace",
+];
+const NODE_KEYS: readonly string[] = ["title", "type", "statusText", "statusTone"];
+const METADATA_KEYS: readonly string[] = ["provider", "nativeId", "domainStatus", "evidenceRefs", "sourceBasis", "producerRelease"];
+/** The evidence-ref kinds the observer source builds, the payload reference's kind aside. */
+const REF_KINDS: readonly string[] = ["rf-bundle", "rf-cli", "rf-engine", "rf-engine-spawns", "rf-graph", "rf-workspace"];
+const PAYLOAD_REF = /^rf-output:sha256:[0-9a-f]{64}$/;
+interface Fixture {
+  readonly name: string;
+  readonly file: string;
+  /** The top-level declarations the fixture's value reads, its own last. */
+  readonly declarations: readonly string[];
+}
+/** Clause (b)'s fixtures (the filing's "(validRf/result)"). */
+const FIXTURES: readonly Fixture[] = [
+  { name: "validRf", file: "test/workbench-provider-envelope-audit.test.ts", declarations: ["id", "digest", "validRf"] },
+  { name: "result", file: "test/workbench-reactivefiber-observer.test.ts", declarations: ["WS", "OPERATION", "WORKSPACE_ID", "GRAPH", "TEXT", "work", "formula", "result"] },
+];
+const DRIFT_FILE = "test/helpers/rf-release-drift.ts";
+const DRIFT_EXPORTS: readonly string[] = ["RF_LIVE_DRIFT_TITLE", "RF_LIVE_DRIFT_SHAPE_SUITE", "recordedRfRelease", "parseInstalledRfVersion", "RfReleaseDrift", "judgeRfReleaseDrift"];
+const PROVIDER_FILE = "src/workbench/providers/reactivefiber.ts";
+const OBSERVER_FILE = "src/workbench/reactivefiber-observer.ts";
+/** The src modules that spell the rf CLI schema (its literal or its constant): the modules that read an rf envelope. */
+const READERS: readonly string[] = ["src/workbench/native-evidence.ts", PROVIDER_FILE, OBSERVER_FILE];
+/** The rf vocabulary a module spells when it reads an rf envelope or its projection by name. */
+const RF_VOCABULARY = /reactivefiber|reactive-fiber|\brf[-_][a-z]|context\.render|nativePayloadRef|output\.text|result\.(?:blocks|observations|output|components)/i;
+/** Clause (c)'s four surfaces, each bound to the pin that judges it. */
+const SURFACE_PINS: Readonly<Record<string, string>> = { "Pi type": "C2", "UI handler": "C3", bead: "C4", "docs/workbench sentence": "C5" };
+
+function needleNamed(id: string): string {
+  const found = NEEDLES.find(needle => needle.id === id);
+  if (found === undefined) throw new Error(`no needle ${id}`);
+  return found.name;
+}
+const SDK_NAME = needleNamed("sdk");
+const ELEMENT_NAME = needleNamed("element");
+const DOCUMENT_NAME = needleNamed("document");
+/** A text with every census name written as its placeholder (<SDK>, <ELEMENT>, <DOCUMENT>): how the roster holds such a text. */
+function held(text: string): string {
+  return NEEDLES.reduce((current, needle) => current.split(needle.name).join(`<${needle.id.toUpperCase()}>`), text);
+}
+
+interface Row {
+  readonly id: string;
+  readonly label: string;
+  readonly pins: readonly string[];
+}
+/** The judged rows; their shape is pinned below and held to the roster and to the bead export. */
+const ROWS: readonly Row[] = [
+  {
+    id: "A",
+    label: "(a) hermetic: the preview projection derives only evidence refs, a nativePayloadRef digest, notes, counts and status words; any action/handler/control field from a context block fails",
+    pins: ["A1", "A2", "A3", "A4"],
+  },
+  {
+    id: "B",
+    label: "(b) hermetic rf fixtures (validRf/result) stay byte-identical; rf-release-drift.ts and the contractSource carrier record nothing from this program",
+    pins: ["B1", "B2", "B3", "B4"],
+  },
+  {
+    id: "C",
+    label: `(c) census: no Pi type, UI handler, bead or docs/workbench sentence models an rf context block as an interactive control or attributes an Element/${DOCUMENT_NAME}/envelope change to this program (${SDK_NAME}|${ELEMENT_NAME}|${DOCUMENT_NAME} census = 0 beyond the sdk_versions echo)`,
+    pins: ["C1", "C2", "C3", "C4", "C5"],
+  },
+  {
+    id: "M",
+    label: "the instruments rows A-C read judge their pinned inputs member by member: the needles and classifiers, the word splitter and control words, the sentence cutter and rules",
+    pins: ["M1", "M2", "M3"],
+  },
+  { id: "R", label: "the residuals: each named family reads quiet on its pinned row", pins: ["R1"] },
+];
+const JUDGED_TITLE = "the judged set: the frozen shape, the out-of-file roster, the bead export's acceptance clauses and the cases agree";
+const RECORD_TITLE = "the record: every registered test is in run mode and ran, and every pin reached its end with its pinned assertion count";
+
+interface RosterPin {
+  readonly id: string;
+  readonly witness: JsonValue;
+}
+interface RosterRow {
+  readonly id: string;
+  readonly label: string;
+  readonly pins: readonly RosterPin[];
+}
+interface Roster {
+  readonly bead: string;
+  readonly quotePin: string;
+  readonly quote: string;
+  readonly carrier: string;
+  readonly constants: JsonObject;
+  readonly rows: readonly RosterRow[];
+  readonly tests: readonly string[];
+  readonly reached: readonly string[];
+}
+
+function isObject(value: unknown): value is { [key: string]: unknown } {
+  return value !== null && typeof value === "object" && !Array.isArray(value);
+}
+function json(value: unknown): JsonValue {
+  return JSON.parse(JSON.stringify(value)) as JsonValue;
+}
+function objectOf(value: JsonValue | undefined, field: string): JsonObject {
+  if (value === undefined || value === null || typeof value !== "object" || Array.isArray(value)) throw new Error(`${field} must be an object`);
+  return value;
+}
+function arrayOf(value: JsonValue | undefined, field: string): JsonValue[] {
+  if (!Array.isArray(value)) throw new Error(`${field} must be a list`);
+  return value;
+}
+function strings(value: unknown, field: string): string[] {
+  if (!Array.isArray(value) || !value.every(item => typeof item === "string")) throw new Error(`roster ${field} must be a string list`);
+  return value;
+}
+function sha(text: string): string {
+  return createHash("sha256").update(text).digest("hex");
+}
+function textAt(rel: string): string {
+  return readFileSync(join(REPO, rel), "utf8");
+}
+
+/** Parses the roster, refusing any field of the wrong shape by name, so no case can read a malformed roster. */
+function readRoster(): Roster {
+  const raw: unknown = JSON.parse(readFileSync(ROSTER_PATH, "utf8"));
+  if (!isObject(raw) || !Array.isArray(raw.rows)) throw new Error("roster must be an object with rows");
+  const rows = raw.rows.map((row: unknown, index: number): RosterRow => {
+    if (!isObject(row) || typeof row.id !== "string" || typeof row.label !== "string" || !Array.isArray(row.pins)) {
+      throw new Error(`roster rows[${index}] needs an id, a label and a pins list`);
+    }
+    const pins = row.pins.map((pin: unknown, at: number): RosterPin => {
+      if (!isObject(pin) || typeof pin.id !== "string" || !Object.hasOwn(pin, "witness")) throw new Error(`roster rows[${index}].pins[${at}] needs an id and a witness`);
+      return { id: pin.id, witness: json(pin.witness) };
+    });
+    return { id: row.id, label: row.label, pins };
+  });
+  const { bead, quotePin, quote, carrier, constants } = raw;
+  if (typeof bead !== "string" || typeof quotePin !== "string" || typeof quote !== "string" || typeof carrier !== "string") {
+    throw new Error("roster needs bead, quotePin, quote and carrier strings");
+  }
+  if (!isObject(constants)) throw new Error("roster needs a constants object");
+  return { bead, quotePin, quote, carrier, constants: objectOf(json(constants), "constants"), rows, tests: strings(raw.tests, "tests"), reached: strings(raw.reached, "reached") };
+}
+const ROSTER = readRoster();
+function rosterWitness(pin: string): JsonValue {
+  const found = ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === pin);
+  if (found === undefined) throw new Error(`the roster holds no pin ${pin}`);
+  return found.witness;
+}
+
+interface ExportRow {
+  readonly id: string;
+  readonly title: string;
+  readonly notes: string;
+  readonly parents: readonly string[];
+}
+let exportCache: ExportRow[] | undefined;
+/** Every row of the tracked bead export: its id, title, notes and parent-child parents. */
+function exportRows(): ExportRow[] {
+  exportCache ??= textAt(EXPORT_FILE).split("\n").filter(line => line.trim().length > 0).map(line => {
+    const row: unknown = JSON.parse(line);
+    if (!isObject(row) || typeof row.id !== "string" || typeof row.title !== "string") throw new Error("a bead export row needs an id and a title");
+    const parents = Array.isArray(row.dependencies)
+      ? row.dependencies.flatMap(dependency => (isObject(dependency) && dependency.type === "parent-child" && typeof dependency.depends_on_id === "string" ? [dependency.depends_on_id] : []))
+      : [];
+    return { id: row.id, title: row.title, notes: typeof row.notes === "string" ? row.notes : "", parents };
+  });
+  return exportCache;
+}
+function exportRow(id: string): ExportRow {
+  const found = exportRows().find(row => row.id === id);
+  if (found === undefined) throw new Error(`the tracked bead export holds no ${id} row`);
+  return found;
+}
+/** The export's acceptance clauses, by letter: the text after each "(x) " marker of its Acceptance line, without the separator. */
+function acceptanceClauses(notes: string): Record<string, string> {
+  const line = notes.split("\n").find(entry => entry.startsWith("Acceptance: "));
+  if (line === undefined) throw new Error(`the ${BEAD} export row states no Acceptance line`);
+  const body = line.slice("Acceptance: ".length);
+  const marks = [...body.matchAll(/\(([a-d])\) /g)];
+  const clauses: Record<string, string> = {};
+  marks.forEach((mark, index) => {
+    const start = (mark.index ?? 0) + mark[0].length;
+    const end = index + 1 < marks.length ? (marks[index + 1]?.index ?? body.length) : body.length;
+    clauses[mark[1] ?? ""] = body.slice(start, end).trim().replace(/[;.]$/, "");
+  });
+  return clauses;
+}
+/** An owner filing's own lines: a child's notes through its "Not P0:" line, an epic's first paragraph; appended notes follow. */
+function filingOf(notes: string): string {
+  const lines = notes.split("\n");
+  const end = lines.findIndex(line => line.startsWith("Not P0:"));
+  return end >= 0 ? lines.slice(0, end + 1).join("\n") : (notes.split(/\n[ \t]*\n/)[0] ?? "");
+}
+
+/** A text as the census reads it: NFKC-folded, every default-ignorable code point (an invisible joiner or space) removed. */
+function normalized(text: string): string {
+  return text.normalize("NFKC").replace(/\p{Default_Ignorable_Code_Point}/gu, "");
+}
+interface Walked {
+  readonly rel: string;
+  readonly text: string;
+}
+interface Walk {
+  readonly files: readonly Walked[];
+  readonly listed: number;
+  readonly binary: readonly string[];
+  readonly symlinks: readonly string[];
+  readonly missing: readonly string[];
+}
+let walkCache: Walk | undefined;
+/** Git's own file list of the checkout (tracked, and untracked but not ignored), every text file read once; the bead export is
+ * read by C4 against its owner filings, so the walk leaves it out. A symlink is refused, never followed; a file with a NUL
+ * byte is binary. */
+function walk(): Walk {
+  if (walkCache !== undefined) return walkCache;
+  const listing = spawnSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard"], { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  if (listing.status !== 0) throw new Error(`git ls-files failed: ${listing.stderr}`);
+  const names = [...new Set(listing.stdout.split("\0").filter(name => name.length > 0))].sort();
+  const files: Walked[] = [];
+  const binary: string[] = [];
+  const symlinks: string[] = [];
+  const missing: string[] = [];
+  for (const rel of names) {
+    if (rel === EXPORT_FILE) continue;
+    let stat: ReturnType<typeof lstatSync>;
+    try {
+      stat = lstatSync(join(REPO, rel));
+    } catch {
+      missing.push(rel);
+      continue;
+    }
+    if (stat.isSymbolicLink()) {
+      symlinks.push(rel);
+      continue;
+    }
+    if (!stat.isFile()) continue;
+    const bytes = readFileSync(join(REPO, rel));
+    if (bytes.includes(0)) {
+      binary.push(rel);
+      continue;
+    }
+    files.push({ rel, text: normalized(bytes.toString("utf8")) });
+  }
+  walkCache = { files, listed: names.length, binary, symlinks, missing };
+  return walkCache;
+}
+
+/** The exact census names, case kept. */
+const EXACT = new RegExp(NEEDLES.map(needle => needle.name).join("|"), "g");
+/** A needle's tolerant spelling: its words in any case, joined by the separators it admits. */
+function tolerant(needle: Needle): RegExp {
+  return new RegExp(needle.words.join(needle.separator), "gi");
+}
+const TOLERANT: readonly { readonly id: string; readonly pattern: RegExp }[] = NEEDLES.map(needle => ({ id: needle.id, pattern: tolerant(needle) }));
+/** The object enclosing `index`: the nearest unmatched "{" to its left, its text through the matching "}", and the key before it. */
+function enclosingObject(text: string, index: number): { key: string | undefined; body: string } | undefined {
+  let depth = 0;
+  for (let at = index - 1; at >= 0; at -= 1) {
+    const char = text[at];
+    if (char === "}") depth += 1;
+    else if (char === "{") {
+      if (depth > 0) {
+        depth -= 1;
+        continue;
+      }
+      let close = at + 1;
+      for (let inner = 0; close < text.length; close += 1) {
+        if (text[close] === "{") inner += 1;
+        else if (text[close] === "}") {
+          if (inner === 0) break;
+          inner -= 1;
+        }
+      }
+      return { key: /["']?([A-Za-z0-9_]+)["']?\s*:\s*$/.exec(text.slice(Math.max(0, at - 80), at))?.[1], body: text.slice(at, close + 1) };
+    }
+  }
+  return undefined;
+}
+function enclosingKey(text: string, index: number): string | undefined {
+  return enclosingObject(text, index)?.key;
+}
+/** The other members rf states in result.provenance.sdk_versions (read off the full-shape fixture), the wire format aside. */
+const SDK_SIBLINGS: readonly string[] = Object.keys(objectOf(objectOf(resultOfShape().provenance, "provenance").sdk_versions, "sdk_versions")).filter(key => key !== ECHO_KEY && !key.endsWith("wire_format"));
+function resultOfShape(): JsonObject {
+  return objectOf(objectOf(json(fullShapeRf("/")), "shape").result, "shape result");
+}
+/** How a tolerant hit is the rf echo of the SDK, or undefined: the snake key itself as an sdk_versions member, as a member of an
+ * object holding at least two of rf's other sdk_versions members (a fixture's sibling block), as the segment after
+ * "sdk_versions." of a path, or as the distribution value of a component's sdk_contract. */
+function echoOf(text: string, index: number, match: string): string | undefined {
+  if (match !== ECHO_KEY) return undefined;
+  if (text.slice(Math.max(0, index - 13), index) === "sdk_versions.") return "sdk_versions-path";
+  const after = text.slice(index + match.length, index + match.length + 16);
+  if (/^["']?\s*:/.test(after)) {
+    const enclosing = enclosingObject(text, index);
+    if (enclosing?.key === "sdk_versions") return "sdk_versions-key";
+    const siblings = SDK_SIBLINGS.filter(key => new RegExp(`["']?\\b${key}["']?\\s*:`).test(enclosing?.body ?? ""));
+    if (siblings.length >= 2) return "sdk_versions-sibling";
+  }
+  if (/"distribution"\s*:\s*"$/.test(text.slice(Math.max(0, index - 40), index)) && enclosingKey(text, index) === "sdk_contract") return "sdk_contract-distribution";
+  return undefined;
+}
+interface Hit {
+  readonly rel: string;
+  readonly line: number;
+  readonly needle: string;
+  readonly kind: string;
+}
+function lineAt(text: string, index: number): number {
+  let line = 1;
+  for (let at = 0; at < index; at += 1) if (text.charCodeAt(at) === 10) line += 1;
+  return line;
+}
+/** Every census hit of one text: exact names first (always a finding), then each tolerant spelling, classified echo:<kind> or
+ * finding. */
+function hitsOf(rel: string, text: string): Hit[] {
+  const hits: Hit[] = [];
+  for (const match of text.matchAll(EXACT)) {
+    const index = match.index ?? 0;
+    const needle = NEEDLES.find(entry => entry.name === match[0])?.id ?? "?";
+    hits.push({ rel, line: lineAt(text, index), needle, kind: "exact" });
+  }
+  for (const { id, pattern } of TOLERANT) {
+    for (const match of text.matchAll(pattern)) {
+      const index = match.index ?? 0;
+      if (match[0] === needleNamed(id)) continue;
+      const echo = id === "sdk" ? echoOf(text, index, match[0]) : undefined;
+      hits.push({ rel, line: lineAt(text, index), needle: id, kind: echo !== undefined ? `echo:${echo}` : "finding" });
+    }
+  }
+  return hits;
+}
+
+interface Sentence {
+  readonly line: number;
+  readonly text: string;
+}
+const BLANK_LINE = /[ \t]*\r?\n/y;
+const LINE_OPENER = /[ \t]*(?:\||[-+*][ \t]|\d+[.)][ \t])/y;
+/** A text cut into sentences: at white space after ".", "!", "?" or ";", at a blank line, and before a line opening a table row
+ * or a list item. A sentence's white space is collapsed; its line is the line it starts on. */
+function sentencesOf(text: string): Sentence[] {
+  const found: Sentence[] = [];
+  let start = 0;
+  let line = 1;
+  let startLine = 1;
+  const push = (end: number, next: number): void => {
+    const body = text.slice(start, end).replace(/\s+/g, " ").trim();
+    if (body.length > 0) found.push({ line: startLine, text: body });
+    start = next;
+  };
+  for (let index = 0; index < text.length; index += 1) {
+    const char = text[index];
+    if (char === "\n") {
+      line += 1;
+      BLANK_LINE.lastIndex = index + 1;
+      LINE_OPENER.lastIndex = index + 1;
+      if (BLANK_LINE.test(text) || LINE_OPENER.test(text)) {
+        push(index, index + 1);
+        startLine = line;
+      }
+    } else if ((char === "." || char === "!" || char === "?" || char === ";") && /\s/.test(text[index + 1] ?? " ")) {
+      push(index + 1, index + 1);
+      startLine = line;
+    }
+  }
+  push(text.length, text.length);
+  return found;
+}
+interface Family {
+  readonly id: string;
+  readonly source: string;
+  /** One spelling per alternative, in order (row M3 pins each one). */
+  readonly spellings: readonly string[];
+}
+/** A sentence's context-block anchor: the rf-rendered context the filing names. */
+const ANCHORS: readonly Family[] = [
+  { id: "N1", source: "\\bcontext[\\s_-]+blocks?\\b|\\bmodel[\\s_-]+context\\b", spellings: ["context block", "context-blocks", "model-context"] },
+  { id: "N2", source: "\\bcontext[\\s_-]+documents?\\b|\\brendered[\\s_-]+context\\b|\\brf[\\s_-]+rendered\\b", spellings: ["context document", "rendered context", "rf-rendered"] },
+  { id: "N3", source: "\\bresult\\.(?:output|blocks|observations|components)\\b|\\boutput\\.text\\b", spellings: ["result.output", "result.blocks", "result.observations", "result.components", "output.text"] },
+  { id: "N4", source: "\\bcontext[\\s.-]+render\\b|\\brender[\\s_-]+preview\\b", spellings: ["context.render", "context render", "render preview"] },
+];
+/** A control, as a sentence names one (case-insensitive). */
+const CONTROLS: readonly Family[] = [
+  {
+    id: "K1",
+    source: "\\b(?:ui|tui|browser|interactive|interface|form)[\\s/_-]*(?:controls?|widgets?|elements?|buttons?)\\b",
+    spellings: ["UI control", "TUI controls", "browser/TUI controls", "interactive control", "interface widget", "form elements", "UI button"],
+  },
+  { id: "K2", source: "\\b(?:buttons?|widgets?|clickable)\\b", spellings: ["button", "widgets", "clickable"] },
+  { id: "K3", source: "\\b(?:click|event|action|input|submit)?[\\s_-]*handlers?\\b|\\bcallbacks?\\b", spellings: ["handler", "click handler", "event-handlers", "action handler", "callback"] },
+  { id: "K4", source: "\\baction[\\s_-]*ids?\\b|\\bon[_-]?(?:click|submit)\\b", spellings: ["action ids", "action_id", "onClick", "on_submit"] },
+  { id: "K5", source: "\\bui[\\s_-]+ir\\b|\\binteractive\\b", spellings: ["UI IR", "interactive"] },
+];
+/** The words that mark a sentence as not modeling or attributing what it names (closed; whole words, any case, and n't). */
+const MARKERS: readonly string[] = [
+  "no", "not", "never", "nor", "none", "neither", "without", "cannot", "unchanged", "intact", "fail", "fails", "failed", "refuse",
+  "refuses", "refused", "reject", "rejects", "rejected",
+];
+const MARKER = new RegExp(`\\b(?:${MARKERS.join("|")})\\b|n[\\u2019']t\\b`, "i");
+/** The program, as a sentence names it: its slug, its title words or its requirement tag. */
+const PROGRAM = /\bnative[\s_-]*interface[\s_-]*component[\s_-]*contract\b|\bRC[\s_-]*NATIVE[\s_-]*INTERFACE\b/i;
+/** What an attribution would change: the element and document contracts, the interface element identity and the envelope. */
+const CONTRACTS: readonly RegExp[] = [/`Element`|\bElement\b/, tolerantOnce("document"), tolerantOnce("element"), /\benvelopes?\b|\bcontractSource\b|reactive-fiber\.cli\/v1|reactivefiber\.render\.preview/i];
+/** A change, as a sentence states one (whole words, any case). */
+const CHANGES: readonly string[] = [
+  "change", "changes", "changed", "changing", "new", "replace", "replaces", "replaced", "redefine", "redefines", "redefined", "extend",
+  "extends", "extended", "amend", "amends", "amended", "modify", "modifies", "modified", "bump", "bumps", "bumped", "migrate",
+  "migrates", "migrated", "migration", "revise", "revises", "revised", "revision", "alter", "alters", "altered", "break", "breaks",
+  "breaking", "v2",
+];
+const CHANGE = new RegExp(`\\b(?:${CHANGES.join("|")})\\b`, "i");
+function tolerantOnce(id: string): RegExp {
+  const needle = NEEDLES.find(entry => entry.id === id);
+  if (needle === undefined) throw new Error(`no needle ${id}`);
+  return new RegExp(tolerant(needle).source, "i");
+}
+const FAMILY_PATTERN: ReadonlyMap<string, RegExp> = new Map([...ANCHORS, ...CONTROLS].map(family => [family.id, new RegExp(family.source, "i")]));
+function familyHits(families: readonly Family[], text: string): string[] {
+  return families.filter(family => FAMILY_PATTERN.get(family.id)?.test(text) === true).map(family => family.id);
+}
+/** The two sentence rules. control-model: a context-block anchor beside a control, unmarked. attribution: the program (named, or
+ * implied by a program row) beside a contract and a change, unmarked. */
+function sentenceFindings(text: string, programImplied: boolean): string[] {
+  const marked = MARKER.test(text);
+  const findings: string[] = [];
+  if (!marked && familyHits(ANCHORS, text).length > 0 && familyHits(CONTROLS, text).length > 0) findings.push("control-model");
+  if (!marked && (programImplied || PROGRAM.test(text)) && CONTRACTS.some(pattern => pattern.test(text)) && CHANGE.test(text)) findings.push("attribution");
+  return findings;
+}
+interface SentenceTally {
+  readonly findings: readonly string[];
+  readonly anchored: number;
+  readonly controlled: number;
+  readonly markedModels: number;
+  readonly markedAttributions: number;
+  readonly sentences: number;
+}
+/** Judges every sentence of a text; a finding reads `<where>:<line> <rule>: <sentence head>`. */
+function tallyOf(where: string, text: string, programImplied: boolean): SentenceTally {
+  const findings: string[] = [];
+  let anchored = 0;
+  let controlled = 0;
+  let markedModels = 0;
+  let markedAttributions = 0;
+  const sentences = sentencesOf(text);
+  for (const sentence of sentences) {
+    const anchor = familyHits(ANCHORS, sentence.text).length > 0;
+    const control = familyHits(CONTROLS, sentence.text).length > 0;
+    if (anchor) anchored += 1;
+    if (control) controlled += 1;
+    const marked = MARKER.test(sentence.text);
+    if (marked && anchor && control) markedModels += 1;
+    if (marked && (programImplied || PROGRAM.test(sentence.text)) && CONTRACTS.some(pattern => pattern.test(sentence.text)) && CHANGE.test(sentence.text)) markedAttributions += 1;
+    for (const rule of sentenceFindings(sentence.text, programImplied)) findings.push(`${where}:${sentence.line} ${rule}: ${sentence.text.slice(0, 80)}`);
+  }
+  return { findings, anchored, controlled, markedModels, markedAttributions, sentences: sentences.length };
+}
+
+/** The files C5 judges sentence by sentence: every .md page and every src file (R8 names the rest). */
+function sentenceJudged(rel: string): boolean {
+  return rel.endsWith(".md") || rel.startsWith("src/");
+}
+
+/** An identifier's words: its camel-case runs and its "_", "-" and "." separated parts, lower-cased. */
+function wordsOf(name: string): string[] {
+  return name
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
+    .split(/[^A-Za-z0-9]+/)
+    .filter(word => word.length > 0)
+    .map(word => word.toLowerCase());
+}
+function controlWordsOf(name: string): string[] {
+  return [...new Set(wordsOf(name).filter(word => CONTROL_WORDS.includes(word)))];
+}
+function sourceFile(rel: string, text = textAt(rel)): ts.SourceFile {
+  return ts.createSourceFile(rel, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+}
+/** Every identifier and every string or template literal piece of a module (comments are not read). */
+function namesOf(file: ts.SourceFile): string[] {
+  const names: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) names.push(node.text);
+    else if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) names.push(node.text);
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return names;
+}
+/** The member names of every type-level shape a module declares: interface and type-literal members and class members. */
+function typeMembersOf(file: ts.SourceFile): string[] {
+  const members: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if ((ts.isPropertySignature(node) || ts.isPropertyDeclaration(node) || ts.isMethodSignature(node) || ts.isMethodDeclaration(node)) && node.name !== undefined) {
+      const name = node.name;
+      if (ts.isIdentifier(name) || ts.isStringLiteral(name) || ts.isPrivateIdentifier(name)) members.push(name.text);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return members;
+}
+/** The module specifiers a module loads: import and export declarations, import-equals, and a literal import() or require(). */
+function specifiersOf(file: ts.SourceFile): string[] {
+  const found: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier !== undefined && ts.isStringLiteral(node.moduleSpecifier)) found.push(node.moduleSpecifier.text);
+    else if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference) && ts.isStringLiteral(node.moduleReference.expression)) found.push(node.moduleReference.expression.text);
+    else if (ts.isCallExpression(node) && (node.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(node.expression) && node.expression.text === "require"))) {
+      const first = node.arguments[0];
+      if (first !== undefined && (ts.isStringLiteral(first) || ts.isNoSubstitutionTemplateLiteral(first))) found.push(first.text);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return found;
+}
+/** A relative specifier resolved against its module, as a repository path with .js written .ts; a package specifier as itself. */
+function resolvedOf(from: string, specifier: string): string {
+  if (!specifier.startsWith(".")) return specifier;
+  return relative(REPO, join(REPO, dirname(from), specifier)).replace(/\.js$/, ".ts");
+}
+/** The exported declaration names of a module, in source order. */
+function exportsOf(file: ts.SourceFile): string[] {
+  const names: string[] = [];
+  for (const statement of file.statements) {
+    const exported = ts.canHaveModifiers(statement) && (ts.getModifiers(statement) ?? []).some(modifier => modifier.kind === ts.SyntaxKind.ExportKeyword);
+    if (!exported) continue;
+    if (ts.isVariableStatement(statement)) for (const declaration of statement.declarationList.declarations) names.push(declaration.name.getText(file));
+    else if ((ts.isFunctionDeclaration(statement) || ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement) || ts.isClassDeclaration(statement)) && statement.name !== undefined) names.push(statement.name.text);
+  }
+  return names;
+}
+/** The text of each named top-level declaration (its whole statement, leading comments excluded), in source order. */
+function declarationTexts(file: ts.SourceFile, names: readonly string[]): { name: string; text: string }[] {
+  const found: { name: string; text: string }[] = [];
+  for (const statement of file.statements) {
+    if (ts.isVariableStatement(statement)) {
+      for (const declaration of statement.declarationList.declarations) {
+        const name = declaration.name.getText(file);
+        if (names.includes(name)) found.push({ name, text: statement.getText(file) });
+      }
+    } else if (ts.isFunctionDeclaration(statement) && statement.name !== undefined && names.includes(statement.name.text)) {
+      found.push({ name: statement.name.text, text: statement.getText(file) });
+    }
+  }
+  return found;
+}
+/** The string elements of a top-level `const <name> = [...]` array literal. */
+function arrayLiteralOf(file: ts.SourceFile, name: string): string[] | undefined {
+  for (const statement of file.statements) {
+    if (!ts.isVariableStatement(statement)) continue;
+    for (const declaration of statement.declarationList.declarations) {
+      if (declaration.name.getText(file) !== name || declaration.initializer === undefined || !ts.isArrayLiteralExpression(declaration.initializer)) continue;
+      return declaration.initializer.elements.map(element => (ts.isStringLiteral(element) ? element.text : `<${ts.SyntaxKind[element.kind]}>`));
+    }
+  }
+  return undefined;
+}
+/** A top-level variable statement's text with its leading comments (the JSDoc that documents it). */
+function statementWithDocs(file: ts.SourceFile, name: string): string | undefined {
+  for (const statement of file.statements) {
+    if (ts.isVariableStatement(statement) && statement.declarationList.declarations.some(declaration => declaration.name.getText(file) === name)) {
+      return file.getFullText().slice(statement.getFullStart(), statement.getEnd());
+    }
+  }
+  return undefined;
+}
+
+/** The carrier: the full rf envelope shape at the pinned release, rooted at this run's workspace. */
+function carrier(): JsonObject {
+  return objectOf(json(fullShapeRf(ROOT)), "carrier");
+}
+function resultOf(envelope: JsonObject): JsonObject {
+  return objectOf(envelope.result, "result");
+}
+/** A copy of `envelope` with `fields` merged into the object at the placement (the seed set there first when it names one). */
+function placed(envelope: JsonObject, placement: Placement, fields: JsonObject): JsonObject {
+  const copy = objectOf(json(envelope), "envelope");
+  let node: JsonValue = resultOf(copy);
+  placement.path.forEach((key, index) => {
+    const last = index === placement.path.length - 1;
+    const container: JsonValue = node;
+    const read = (): JsonValue | undefined => (Array.isArray(container) ? container[Number(key)] : objectOf(container, `result.${placement.path.slice(0, index).join(".")}`)[key]);
+    const write = (value: JsonValue): void => {
+      if (Array.isArray(container)) container[Number(key)] = value;
+      else objectOf(container, "placement parent")[key] = value;
+    };
+    if (last && placement.seed !== null) write(json(placement.seed));
+    const next = read();
+    if (next === undefined) throw new Error(`placement ${placement.id}: no ${key} below result.${placement.path.slice(0, index).join(".")}`);
+    node = next;
+  });
+  Object.assign(objectOf(node, `placement ${placement.id}`), json(fields));
+  return copy;
+}
+/** The text variant: the carrier whose output text is a serialized document whose one block carries the control fields. */
+function textVariant(): JsonObject {
+  const copy = carrier();
+  const document = { key: "fixture.document", blocks: [{ key: "fixture.block", kind: "text", content: "fixture block body", visibility: "model", provenance: {}, diagnostics: [], metadata: json(CONTROL_FIELDS) }], metadata: {} };
+  objectOf(resultOf(copy).output, "result.output").text = JSON.stringify(document);
+  return copy;
+}
+function variantsOf(): { id: string; bare: JsonObject; variant: JsonObject }[] {
+  const base = carrier();
+  return [
+    ...PLACEMENTS.map(placement => ({ id: placement.id, bare: placed(base, placement, {}), variant: placed(base, placement, CONTROL_FIELDS) })),
+    { id: "text", bare: base, variant: textVariant() },
+  ];
+}
+
+const oldPath = process.env.PATH;
+const scratches: string[] = [];
+afterEach(() => {
+  if (oldPath === undefined) Reflect.deleteProperty(process.env, "PATH");
+  else process.env.PATH = oldPath;
+  removeScratch(...scratches.splice(0));
+});
+/** A hermetic stand-in `rf`: an absolute node shebang and PATH holding only its own directory; it appends one JSON argv line per
+ * spawn to the returned log and prints `answer`. */
+function standInRf(answer: JsonValue): string {
+  const folder = makeScratch("rc-context-block-");
+  scratches.push(folder);
+  const log = join(folder, "spawns.jsonl");
+  const script = join(folder, "rf");
+  writeFileSync(
+    script,
+    [
+      `#!${process.execPath}`,
+      'const fs = require("node:fs");',
+      `fs.appendFileSync(${JSON.stringify(log)}, JSON.stringify(process.argv.slice(2)) + "\\n");`,
+      `process.stdout.write(${JSON.stringify(JSON.stringify(answer))});`,
+      "",
+    ].join("\n"),
+  );
+  chmodSync(script, 0o700);
+  process.env.PATH = folder;
+  return log;
+}
+function spawnsOf(log: string): string[][] {
+  let text = "";
+  try {
+    text = readFileSync(log, "utf8");
+  } catch {
+    return [];
+  }
+  return text.trim().split("\n").filter(Boolean).map(line => JSON.parse(line) as string[]);
+}
+function invocationContext(): { grants: string[]; signal: AbortSignal } {
+  return { grants: [...GRANTS], signal: new AbortController().signal };
+}
+function readingOf(source: JsonObject): JsonValue {
+  return { contract: REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, workspaceRoot: ROOT, source: json(source) };
+}
+const LEGACY_ARGV = ["--workspace", ROOT, "context", "render", "--model", INVOCATION.model, "--task", INVOCATION.task, "--no-commit", "--no-input", "--json"];
+/** One registry invocation of the NATIVE preview against a stand-in rf printing `envelope`: the reading and the spawned argvs. */
+async function nativeReading(envelope: JsonObject): Promise<{ reading: JsonValue; spawns: string[][] }> {
+  const log = standInRf(envelope);
+  const registry = new CapabilityRegistry();
+  registerNativeReactiveFiberRender(registry, ROOT);
+  const reading = await registry.invoke(PREVIEW_ID, { ...INVOCATION }, invocationContext());
+  return { reading, spawns: spawnsOf(log) };
+}
+/** One registry invocation of the INJECTED preview whose reader answers `envelope`: the reading and the reader's call count. */
+async function injectedReading(envelope: JsonObject): Promise<{ reading: JsonValue; calls: number }> {
+  let calls = 0;
+  const registry = new CapabilityRegistry();
+  type Injected = Parameters<typeof registerReactiveFiberRender>[1];
+  const answer: Injected = async () => {
+    calls += 1;
+    return envelope as unknown as Awaited<ReturnType<Injected>>;
+  };
+  registerReactiveFiberRender(registry, answer, ROOT);
+  const reading = await registry.invoke(PREVIEW_ID, { ...INVOCATION }, invocationContext());
+  return { reading, calls };
+}
+const CONTEXTS: Readonly<Record<Seam, ReactiveFiberTopologyContext>> = {
+  "rf-cli": { scope: { workspace: ROOT, principal: "local-operator:tester" }, seam: "rf-cli", capturedAt: "2026-10-23T00:00:00Z", observedAt: "2026-10-23T00:00:01Z" },
+  "injected-fixture": { scope: { workspace: ROOT, principal: "local-operator:tester" }, seam: "injected-fixture", capturedAt: "2026-10-23T00:00:00Z", observedAt: "2026-10-23T00:00:01Z" },
+};
+interface Projections {
+  readonly "rf-cli": JsonValue;
+  readonly "injected-fixture": JsonValue;
+  readonly metadata: JsonValue;
+}
+/** Today's projections of an envelope: the topology under each seam label and the native-evidence metadata. */
+function projections(envelope: JsonObject): Projections {
+  const reading = readingOf(envelope);
+  return {
+    "rf-cli": json(reactivefiberTopology(reading, CONTEXTS["rf-cli"])),
+    "injected-fixture": json(reactivefiberTopology(reading, CONTEXTS["injected-fixture"])),
+    metadata: json(nativeEvidence(PREVIEW_ID, reading)),
+  };
+}
+const SURFACES = ["rf-cli", "injected-fixture", "metadata"] as const;
+type Surface = (typeof SURFACES)[number];
+
+/** Every path where two JSON values differ: a missing or extra key, a changed leaf, a list of another length, or key order. */
+function differences(left: JsonValue | undefined, right: JsonValue | undefined, at = "$"): string[] {
+  if (JSON.stringify(left) === JSON.stringify(right)) return [];
+  if (Array.isArray(left) && Array.isArray(right)) {
+    if (left.length !== right.length) return [at];
+    const found = left.flatMap((item, index) => differences(item, right[index], `${at}[${index}]`));
+    return found.length > 0 ? found : [at];
+  }
+  if (isObject(left) && isObject(right)) {
+    const keys = [...new Set([...Object.keys(left), ...Object.keys(right)])];
+    const found = keys.flatMap(key => (Object.hasOwn(left, key) && Object.hasOwn(right, key) ? differences(left[key] as JsonValue, right[key] as JsonValue, `${at}.${key}`) : [`${at}.${key}`]));
+    return found.length > 0 ? found : [at];
+  }
+  return [at];
+}
+/** Every key and every string of a JSON value, with its path. */
+function surfacedOf(value: JsonValue, at = "$"): { path: string; text: string; key: boolean }[] {
+  if (typeof value === "string") return [{ path: at, text: value, key: false }];
+  if (Array.isArray(value)) return value.flatMap((item, index) => surfacedOf(item, `${at}[${index}]`));
+  if (isObject(value)) return Object.entries(value).flatMap(([key, item]) => [{ path: `${at}.${key}`, text: key, key: true }, ...surfacedOf(item, `${at}.${key}`)]);
+  return [];
+}
+/** The kind of an evidence ref: the text before its first ":". */
+function kindOf(ref: string): string {
+  return ref.split(":")[0] ?? "";
+}
+/** Whether a topology or metadata member sits outside today's shape (a snapshot, node or metadata member no surface holds). */
+function shapeFindings(surface: Surface, value: JsonValue): string[] {
+  const findings: string[] = [];
+  if (surface === "metadata") {
+    for (const key of Object.keys(objectOf(value, "metadata"))) if (!METADATA_KEYS.includes(key)) findings.push(`shape:$.${key}`);
+    const refs = objectOf(value, "metadata").evidenceRefs;
+    if (refs !== undefined) for (const ref of strings(refs, "metadata.evidenceRefs")) if (!REF_KINDS.includes(kindOf(ref))) findings.push(`kind:${kindOf(ref)}`);
+    return findings;
+  }
+  const topology = objectOf(value, "topology");
+  for (const key of Object.keys(topology)) if (!["snapshots", "relations", "diagnostics"].includes(key)) findings.push(`shape:$.${key}`);
+  const snapshots = arrayOf(topology.snapshots, "snapshots");
+  if (snapshots.length !== 1) findings.push(`shape:$.snapshots.length=${snapshots.length}`);
+  snapshots.forEach((item, index) => {
+    const snapshot = objectOf(item, "snapshot");
+    for (const key of Object.keys(snapshot)) if (!SNAPSHOT_KEYS.includes(key)) findings.push(`shape:$.snapshots[${index}].${key}`);
+    const node = objectOf(snapshot.node, "node");
+    if (JSON.stringify(Object.keys(node)) !== JSON.stringify(NODE_KEYS)) findings.push(`shape:$.snapshots[${index}].node`);
+    for (const ref of strings(snapshot.evidenceRefs, "evidenceRefs")) if (!REF_KINDS.includes(kindOf(ref))) findings.push(`kind:${kindOf(ref)}`);
+    if (snapshot.nativePayloadRef !== undefined && (typeof snapshot.nativePayloadRef !== "string" || !PAYLOAD_REF.test(snapshot.nativePayloadRef))) findings.push(`shape:$.snapshots[${index}].nativePayloadRef`);
+  });
+  for (const relation of arrayOf(topology.relations, "relations")) if (objectOf(relation, "relation").kind !== "grouping") findings.push("shape:$.relations");
+  for (const note of arrayOf(topology.diagnostics, "diagnostics")) if (typeof note !== "string") findings.push("shape:$.diagnostics");
+  return findings;
+}
+/** The sentinels and the control words a projection surfaces, as `sentinel:<value>` and `word:<word>@<path>`. */
+function tokenFindings(value: JsonValue): string[] {
+  const findings: string[] = [];
+  for (const entry of surfacedOf(value)) {
+    for (const match of entry.text.matchAll(SENTINEL)) findings.push(`sentinel:${match[0]}`);
+    for (const word of controlWordsOf(entry.text)) findings.push(`word:${word}@${entry.path}`);
+  }
+  return [...new Set(findings)];
+}
+/**
+ * THE JUDGE. `base` is today's projection of an envelope without the control fields, `candidate` a projection of the same
+ * envelope with them. Findings: changed:<path> (the candidate differs from base there), shape:<path> (a member outside today's
+ * shape), kind:<kind> (an evidence ref of a kind the observer never builds) and sentinel:<value> (a planted value surfaced). A
+ * status word or a producer identity the envelope states is no finding (the filing admits status words; see R1 and R2).
+ */
+function judge(surface: Surface, base: JsonValue, candidate: JsonValue): string[] {
+  const findings = [
+    ...differences(base, candidate).map(path => `changed:${path}`),
+    ...shapeFindings(surface, candidate),
+    ...tokenFindings(candidate).filter(finding => finding.startsWith("sentinel:")),
+  ];
+  return [...new Set(findings)];
+}
+function snapshotOf(topology: JsonValue): JsonObject {
+  return objectOf(arrayOf(objectOf(topology, "topology").snapshots, "snapshots")[0], "snapshot");
+}
+type Edit = (value: JsonObject) => void;
+/** A control-surfacing adoption, applied to a copy of today's projection on one surface. */
+interface Mutant {
+  readonly surface: Surface;
+  readonly edit: Edit;
+}
+const firstAction = (): JsonObject => objectOf(arrayOf(CONTROL_FIELDS.actions, "actions")[0], "action");
+/** The routes a control field could take onto a surface, each a single edit. */
+const MUTANTS: Readonly<Record<string, Mutant>> = {
+  "ref of a new kind": { surface: "rf-cli", edit: value => arrayOf(snapshotOf(value).evidenceRefs, "refs").push(`rf-action:${String(firstAction().id)}`) },
+  "ref of a known kind": { surface: "rf-cli", edit: value => arrayOf(snapshotOf(value).evidenceRefs, "refs").push(`rf-graph:${String(CONTROL_FIELDS.handler)}`) },
+  "note naming an action": { surface: "rf-cli", edit: value => arrayOf(value.diagnostics, "notes").push(`block actions: ${String(arrayOf(CONTROL_FIELDS.action_ids, "ids")[0])}`) },
+  "note without a sentinel": { surface: "injected-fixture", edit: value => arrayOf(value.diagnostics, "notes").push("1 interactive control rendered") },
+  "status suffix": { surface: "rf-cli", edit: value => {
+    const node = objectOf(snapshotOf(value).node, "node");
+    node.statusText = `${String(node.statusText)} · 2 actions`;
+  } },
+  "title rewritten": { surface: "rf-cli", edit: value => {
+    objectOf(snapshotOf(value).node, "node").title = `RF context preview ${String(objectOf(CONTROL_FIELDS.control, "control").label)}`;
+  } },
+  "node member": { surface: "rf-cli", edit: value => {
+    objectOf(snapshotOf(value).node, "node").actions = json(CONTROL_FIELDS.actions);
+  } },
+  "node type": { surface: "rf-cli", edit: value => {
+    objectOf(snapshotOf(value).node, "node").type = "control";
+  } },
+  "snapshot member": { surface: "injected-fixture", edit: value => {
+    snapshotOf(value).controls = json(CONTROL_FIELDS.control);
+  } },
+  "second snapshot": { surface: "rf-cli", edit: value => {
+    arrayOf(value.snapshots, "snapshots").push({ ...snapshotOf(value), kind: "reactivefiber.render.control" });
+  } },
+  "relation": { surface: "rf-cli", edit: value => {
+    arrayOf(value.relations, "relations").push({ kind: "action", from: json(snapshotOf(value).source), to: json(snapshotOf(value).source) });
+  } },
+  "payload ref replaced": { surface: "rf-cli", edit: value => {
+    snapshotOf(value).nativePayloadRef = `rf-output:${String(CONTROL_FIELDS.callback)}`;
+  } },
+  "context text copied": { surface: "rf-cli", edit: value => {
+    arrayOf(value.diagnostics, "notes").push(String(objectOf(resultOf(textVariant()).output, "output").text).slice(0, 180));
+  } },
+  "metadata member": { surface: "metadata", edit: value => {
+    value.actions = json(CONTROL_FIELDS.action_ids);
+  } },
+  "metadata ref": { surface: "metadata", edit: value => {
+    value.evidenceRefs = [`rf-action:${String(firstAction().handler)}`];
+  } },
+};
+
+/** The release the filing's quoted carrier records, and the filing's reader count as a number. */
+function carrierRelease(carrierText: string): string {
+  const release = /^rf@([0-9]+(?:\.[0-9]+)*):/.exec(carrierText)?.[1];
+  if (release === undefined) throw new Error("the carrier is not rf@<release>:<contract>");
+  return release;
+}
+/** The quoted carrier of the filing's gating sentence. */
+function filedCarrier(notes: string): string | undefined {
+  return /REACTIVE_FIBER_CONTRACT_SOURCE '([^']+)'/.exec(notes)?.[1];
+}
+function filedReaderCount(notes: string): number {
+  const word = /\b([a-z]+)-key reader\b/.exec(notes)?.[1] ?? "";
+  return COUNT_WORDS.indexOf(word);
+}
+/** Every token of the program a file could record: its slug, title words or tag, the pin, the epic and the bead. */
+function programTokens(text: string): string[] {
+  const found: string[] = [];
+  if (PROGRAM.test(text)) found.push("program");
+  if (text.includes(PIN)) found.push("pin");
+  if (new RegExp(`\\b${EPIC.replace(".", "\\.")}(?:\\.\\d+)?\\b`).test(text)) found.push("bead");
+  for (const { id, pattern } of TOLERANT) if (new RegExp(pattern.source, "i").test(text)) found.push(`needle:${id}`);
+  return found;
+}
+
+/** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
+const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
+  A1: async () => {
+    const carried: JsonObject = {};
+    for (const { id, variant } of variantsOf()) {
+      const native = await nativeReading(variant);
+      const injected = await injectedReading(variant);
+      const expected = readingOf(variant);
+      expect(native.reading, `${id}: the native reading`).toStrictEqual(expected);
+      expect(JSON.stringify(objectOf(objectOf(native.reading, "reading").source, "source")), `${id}: the native source byte for byte`).toBe(JSON.stringify(variant));
+      expect(native.spawns, `${id}: one spawn of the --no-commit argv`).toStrictEqual([LEGACY_ARGV]);
+      expect(injected.reading, `${id}: the injected reading`).toStrictEqual(expected);
+      expect(JSON.stringify(objectOf(objectOf(injected.reading, "reading").source, "source")), `${id}: the injected source byte for byte`).toBe(JSON.stringify(variant));
+      expect(injected.calls, `${id}: one injected call`).toBe(1);
+      const sentinels = [...JSON.stringify(variant).matchAll(SENTINEL)].length;
+      expect(sentinels, `${id}: the variant carries the sentinels`).toBeGreaterThan(0);
+      carried[id] = { native: "verbatim", injected: "verbatim", spawns: native.spawns.length, calls: injected.calls };
+    }
+    return carried;
+  },
+  A2: async () => {
+    const derived: JsonObject = {};
+    for (const { id, bare, variant } of variantsOf()) {
+      const before = projections(bare);
+      const after = projections(variant);
+      if (id === "text") {
+        const text = String(objectOf(resultOf(variant).output, "output").text);
+        const expected = `rf-output:sha256:${sha(text)}`;
+        for (const seam of SEAMS) {
+          expect(snapshotOf(after[seam]).nativePayloadRef, `${id}/${seam}: the payload ref is the text's digest`).toBe(expected);
+          expect(differences(before[seam], after[seam]), `${id}/${seam}: only the payload ref moved`).toStrictEqual(["$.snapshots[0].nativePayloadRef"]);
+        }
+        expect(after.metadata, `${id}: the metadata`).toStrictEqual(before.metadata);
+        expect(snapshotOf(before["rf-cli"]).nativePayloadRef, "the carrier's payload ref is its own text's digest").toBe(`rf-output:sha256:${sha(String(objectOf(resultOf(bare).output, "output").text))}`);
+        derived[id] = "payload digest only";
+        continue;
+      }
+      for (const surface of SURFACES) expect(after[surface], `${id}/${surface}: identical to the bare twin`).toStrictEqual(before[surface]);
+      derived[id] = "identical to its bare twin";
+    }
+    return derived;
+  },
+  A3: async () => {
+    const snapshotKeys = new Set<string>();
+    const nodeKeys = new Set<string>();
+    const refKinds = new Set<string>();
+    const metadataKeys = new Set<string>();
+    const shape: string[] = [];
+    const tokens: string[] = [];
+    for (const { id, bare, variant } of variantsOf()) {
+      for (const [which, envelope] of [["bare", bare], ["variant", variant]] as const) {
+        const projected = projections(envelope);
+        for (const surface of SURFACES) {
+          shape.push(...shapeFindings(surface, projected[surface]).map(finding => `${id}/${which}/${surface} ${finding}`));
+          tokens.push(...tokenFindings(projected[surface]).map(finding => `${id}/${which}/${surface} ${finding}`));
+          if (surface === "metadata") {
+            for (const key of Object.keys(objectOf(projected.metadata, "metadata"))) metadataKeys.add(key);
+            continue;
+          }
+          const snapshot = snapshotOf(projected[surface]);
+          for (const key of Object.keys(snapshot)) snapshotKeys.add(key);
+          for (const key of Object.keys(objectOf(snapshot.node, "node"))) nodeKeys.add(key);
+          for (const ref of strings(snapshot.evidenceRefs, "evidenceRefs")) refKinds.add(kindOf(ref));
+          expect(arrayOf(objectOf(projected[surface], "topology").relations, "relations"), `${id}/${which}: no relation without an operation reference`).toStrictEqual([]);
+        }
+      }
+    }
+    const source = textAt(OBSERVER_FILE);
+    const sourceKinds = [...new Set([...source.matchAll(/`(rf-[a-z-]+):/g)].map(match => match[1] ?? ""))].sort();
+    expect(sourceKinds.filter(kind => kind !== "rf-output"), "REF_KINDS are the kinds the observer source builds").toStrictEqual([...REF_KINDS]);
+    expect(shape, "every projection holds today's shape").toStrictEqual([]);
+    expect(tokens, "no sentinel and no control word reaches a surface").toStrictEqual([]);
+    return { snapshotKeys: [...snapshotKeys], nodeKeys: [...nodeKeys], refKinds: [...refKinds].sort(), sourceKinds, metadataKeys: [...metadataKeys], shape, tokens };
+  },
+  A4: async () => {
+    const block = variantsOf().find(entry => entry.id === "block");
+    if (block === undefined) throw new Error("no block variant");
+    const today = projections(block.variant);
+    const quiet: JsonObject = {};
+    for (const { id, bare, variant } of variantsOf()) {
+      if (id === "text") continue;
+      const before = projections(bare);
+      const after = projections(variant);
+      for (const surface of SURFACES) quiet[`${id}/${surface}`] = judge(surface, before[surface], after[surface]);
+    }
+    expect(Object.entries(quiet).filter(([, found]) => arrayOf(found, "findings").length > 0).map(([name]) => name), "today's projections read quiet").toStrictEqual([]);
+    const findings: JsonObject = {};
+    for (const [name, mutant] of Object.entries(MUTANTS)) {
+      const candidate = objectOf(json(today[mutant.surface]), "candidate");
+      mutant.edit(candidate);
+      findings[name] = judge(mutant.surface, today[mutant.surface], candidate);
+    }
+    expect(Object.entries(findings).filter(([, found]) => arrayOf(found, "findings").length === 0).map(([name]) => name), "every control-surfacing mutant fails").toStrictEqual([]);
+    return { quiet: Object.keys(quiet).length, findings };
+  },
+  B1: async () => {
+    const fixtures: JsonObject = {};
+    for (const fixture of FIXTURES) {
+      const file = sourceFile(fixture.file);
+      const texts = declarationTexts(file, fixture.declarations);
+      expect(texts.map(entry => entry.name), `${fixture.name}: each declaration once, in source order`).toStrictEqual([...fixture.declarations]);
+      const bytes = texts.map(entry => entry.text).join("\n");
+      const tokens = [...programTokens(bytes), ...[...bytes.matchAll(SENTINEL)].map(match => match[0]), ...controlWordsOf(bytes)];
+      expect(tokens, `${fixture.name}: the fixture records nothing of the program and no control`).toStrictEqual([]);
+      fixtures[fixture.name] = { declarations: [...fixture.declarations], sha256: sha(bytes) };
+    }
+    const helperRows = JSON.stringify([rfFixtureBlock(), rfFixtureDecision(), rfFixtureDecision(false)]);
+    expect(controlWordsOf(helperRows), "the helper rows result() reads carry no control").toStrictEqual([]);
+    return { fixtures, helperRows: sha(helperRows) };
+  },
+  B2: async () => {
+    const text = textAt(DRIFT_FILE);
+    const tokens = [...programTokens(text), ...(text.includes("sdk_versions") ? ["sdk_versions"] : [])];
+    expect(tokens, "the drift helper records nothing of the program and reads no SDK echo").toStrictEqual([]);
+    const exported = exportsOf(sourceFile(DRIFT_FILE, text));
+    expect(exported, "the drift helper's exports").toStrictEqual([...DRIFT_EXPORTS]);
+    const notes = exportRow(BEAD).notes;
+    const filed = filedCarrier(notes);
+    if (filed === undefined) throw new Error("the filing quotes no carrier");
+    const release = carrierRelease(filed);
+    expect(recordedRfRelease(), "the drift helper records the filing's carrier release").toBe(release);
+    const plain = judgeRfReleaseDrift({ recorded: release, installed: release, previewCliVersion: release });
+    const extended = { recorded: release, installed: release, previewCliVersion: release, sdkVersions: { [ECHO_KEY]: "0.1.1" }, interface: json(CONTROL_FIELDS) };
+    expect(judgeRfReleaseDrift(extended), "an SDK echo and control fields beside the two releases change nothing").toStrictEqual(plain);
+    const echoed = judgeRfReleaseDrift({ recorded: release, installed: "0.1.1", previewCliVersion: release });
+    expect(echoed.ok, "an SDK version in the installed slot is drift, never a record").toBe(false);
+    return { tokens, exported, release, plain: json(plain), echoed: json(echoed) };
+  },
+  B3: async () => {
+    const notes = exportRow(BEAD).notes;
+    expect(filedCarrier(notes), "the carrier is the one the filing quotes").toBe(REACTIVE_FIBER_CONTRACT_SOURCE);
+    const descriptors: JsonValue[] = [];
+    for (const register of [
+      (registry: CapabilityRegistry) => registerNativeReactiveFiberRender(registry, ROOT),
+      (registry: CapabilityRegistry) => registerReactiveFiberRender(registry, async () => { throw new Error("never invoked"); }, ROOT),
+    ]) {
+      const registry = new CapabilityRegistry();
+      register(registry);
+      const catalog = registry.catalogSnapshot();
+      expect(catalog, "one descriptor per registration").toHaveLength(1);
+      const { id, version, effectClass, permissions, supportedModes, contractSource } = catalog[0]?.descriptor ?? { id: "", version: "", effectClass: "unknown", permissions: [], supportedModes: [], contractSource: undefined };
+      descriptors.push(json({ id, version, effectClass, permissions, supportedModes, contractSource }));
+    }
+    const expected = { id: PREVIEW_ID, version: "1.0.0", effectClass: "read", permissions: GRANTS, supportedModes: ["invoke"], contractSource: CARRIER };
+    expect(descriptors, "both registrations state the carrier on the unchanged read descriptor").toStrictEqual([expected, expected]);
+    expect(RECONCILE_EVIDENCE_READS.reactivefiber, "the reconcile roster reads the preview alone").toStrictEqual([PREVIEW_ID]);
+    const statement = statementWithDocs(sourceFile(PROVIDER_FILE), "REACTIVE_FIBER_CONTRACT_SOURCE") ?? "";
+    expect(statement.includes(CARRIER), "the carrier statement is read").toBe(true);
+    const tokens = programTokens(statement);
+    expect(tokens, "the carrier's statement records nothing of the program").toStrictEqual([]);
+    return { carrier: REACTIVE_FIBER_CONTRACT_SOURCE, descriptors, reconcile: [...RECONCILE_EVIDENCE_READS.reactivefiber], tokens };
+  },
+  B4: async () => {
+    const notes = exportRow(BEAD).notes;
+    const count = filedReaderCount(notes);
+    const observerKeys = arrayLiteralOf(sourceFile(OBSERVER_FILE), "ENVELOPE_KEYS");
+    const providerKeys = arrayLiteralOf(sourceFile(PROVIDER_FILE), "RF_KEYS");
+    expect(observerKeys, "the observer's envelope keys").toStrictEqual(providerKeys);
+    expect(observerKeys?.length, "the filing's reader count").toBe(count);
+    expect(REACTIVE_FIBER_CLI_SCHEMA, "the schema the carrier names").toBe(CARRIER.slice(CARRIER.indexOf(":") + 1).split(" ")[0]);
+    expect(REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, "the preview contract").toBe(`${PREVIEW_ID}/v1`);
+    const ninth = { ...carrier(), interface: json(CONTROL_FIELDS) };
+    const native = await nativeReading(ninth).then(() => "carried", (error: unknown) => (error instanceof CapabilityError ? `${error.category}: ${error.message}` : String(error)));
+    let observed = "projected";
+    try {
+      reactivefiberTopology(readingOf(ninth), CONTEXTS["rf-cli"]);
+    } catch (error) {
+      observed = error instanceof CapabilityError ? `${error.category}: ${error.message}` : String(error);
+    }
+    expect(native, "the native seam refuses a ninth envelope key").toBe("transport: RF preview returned an unrecognized native envelope.");
+    expect(observed, "the observer refuses a ninth envelope key").toBe("validation: ReactiveFiber topology refused: source must be the strict eight-key rf envelope.");
+    const metadata = json(nativeEvidence(PREVIEW_ID, readingOf(ninth)));
+    expect(metadata, "the metadata reads none of the ninth key").toStrictEqual(projections(carrier()).metadata);
+    return { keys: observerKeys ?? [], count, schema: REACTIVE_FIBER_CLI_SCHEMA, native, observed };
+  },
+  C1: async () => {
+    const { files, listed, binary, symlinks, missing } = walk();
+    const censused = files.filter(file => tokenCensused(file.rel));
+    const rels = censused.map(file => file.rel);
+    const floorMet = listed >= 800 && censused.length >= 250 && ["README.md", OBSERVER_FILE, "docs/workbench/receipts/wb-c7ku.md"].every(rel => rels.includes(rel));
+    expect(floorMet, `git listed ${listed}, the census read ${censused.length} text files`).toBe(true);
+    expect({ symlinks, missing }, "nothing listed is a symlink or missing").toStrictEqual({ symlinks: [], missing: [] });
+    const bound = Object.entries(EXCLUDED).filter(([prefix, file]) => !file.startsWith(prefix) || ![EXPORT_FILE, DRIFT_FILE, ...FIXTURES.map(fixture => fixture.file)].includes(file));
+    expect(bound, "each excluded prefix holds a file the filing names that another pin reads").toStrictEqual([]);
+    const hits = censused.flatMap(file => hitsOf(file.rel, file.text));
+    const findings = hits.filter(hit => hit.kind === "exact" || hit.kind === "finding").map(hit => `${hit.rel}:${hit.line} ${hit.needle} ${hit.kind}`);
+    const echoes = hits.filter(hit => hit.kind.startsWith("echo:"));
+    const echoKinds = [...new Set(echoes.map(hit => hit.kind.slice("echo:".length)))].sort();
+    const anchorEcho = echoes.some(hit => hit.rel === "docs/workbench/receipts/wb-c7ku.md");
+    expect(findings, "no census name and no tolerant spelling outside the rf echo").toStrictEqual([]);
+    expect(anchorEcho, "the echo classifier read the receipt of record's sdk_versions").toBe(true);
+    expect(echoKinds.every(kind => ECHO_KINDS.includes(kind)), "every echo is of a known kind").toBe(true);
+    expect(binary.length >= 3, "the binary files git lists are skipped, never read as text").toBe(true);
+    return { floorMet, excluded: Object.keys(EXCLUDED), findings, echoKinds, echoFloorMet: echoes.length >= 3 };
+  },
+  C2: async () => {
+    const src = walk().files.filter(file => file.rel.startsWith("src/") && file.rel.endsWith(".ts"));
+    const schemaSites = src.filter(file => file.text.includes(REACTIVE_FIBER_CLI_SCHEMA) || file.text.includes("REACTIVE_FIBER_CLI_SCHEMA")).map(file => file.rel).sort();
+    expect(schemaSites, "the src modules that read an rf envelope").toStrictEqual([...READERS].sort());
+    const words: JsonObject = {};
+    for (const rel of READERS) {
+      const found = [...new Set(namesOf(sourceFile(rel)).flatMap(controlWordsOf))].sort();
+      words[rel] = found;
+    }
+    expect(Object.values(words).flat(), "no identifier or string of an rf reader carries a control word").toStrictEqual([]);
+    const blockFields = [...new Set([...Object.keys(rfFixtureBlock()), ...Object.keys(rfFixtureDecision())])].filter(key => key.includes("_")).sort();
+    const members = src.flatMap(file => typeMembersOf(sourceFile(file.rel, file.text)).filter(name => blockFields.includes(name)).map(name => `${file.rel} ${name}`));
+    expect(members, "no src type member is an rf block field").toStrictEqual([]);
+    const typeNames = src.flatMap(file => typeMembersOf(sourceFile(file.rel, file.text)).filter(name => controlWordsOf(name).length > 0 && /block|context/i.test(name)).map(name => `${file.rel} ${name}`));
+    expect(typeNames, "no src type member pairs a context block with a control").toStrictEqual([]);
+    return { readers: schemaSites, words, blockFields, members, typeNames, srcFloorMet: src.length >= 100 };
+  },
+  C3: async () => {
+    const files = walk().files.filter(file => file.rel.startsWith("src/"));
+    const ui = files.filter(file => file.rel.startsWith("src/ui/") && file.rel.endsWith(".ts"));
+    const registrars = files.filter(file => /registerNativeReactiveFiberRender|registerReactiveFiberRender/.test(file.text) && file.rel !== PROVIDER_FILE).map(file => file.rel).sort();
+    const rfModules = [...READERS, ...registrars];
+    const loads = ui.flatMap(file => specifiersOf(sourceFile(file.rel, file.text)).map(specifier => resolvedOf(file.rel, specifier)).filter(target => rfModules.includes(target)).map(target => `${file.rel} -> ${target}`));
+    const vocabulary = ui.filter(file => RF_VOCABULARY.test(file.text)).map(file => file.rel);
+    const loaders = EVIDENCE_LOADER_ROWS.map(row => row.provider);
+    expect(ui.length >= 8, `src/ui modules read: ${ui.length}`).toBe(true);
+    expect(loads, "no src/ui module loads an rf module").toStrictEqual([]);
+    expect(vocabulary, "no src/ui module spells rf vocabulary").toStrictEqual([]);
+    expect(loaders.length > 0 && !loaders.includes("reactivefiber"), "the evidence loader roster holds no reactivefiber row").toBe(true);
+    return { rfModules, loads, vocabulary, reactivefiberLoader: loaders.includes("reactivefiber"), uiFloorMet: ui.length >= 8 };
+  },
+  C4: async () => {
+    const epic = exportRow(EPIC);
+    const children = exportRows().filter(row => row.parents.includes(EPIC)).map(row => row.id).sort();
+    const stated = Number(/\((\d+) gating\/posture requirements/.exec(epic.title)?.[1] ?? "-1");
+    expect(children.length, "the epic's children, as its title counts them").toBe(stated);
+    expect(children.includes(BEAD), "this bead is one of them").toBe(true);
+    const findings: string[] = [];
+    const rows: JsonObject = {};
+    for (const id of [EPIC, ...children]) {
+      const row = exportRow(id);
+      const title = tallyOf(`${id} title`, row.title, true);
+      const filing = tallyOf(`${id} filing`, filingOf(row.notes), true);
+      findings.push(...title.findings, ...filing.findings);
+      rows[id] = { markedModels: title.markedModels + filing.markedModels, markedAttributions: title.markedAttributions + filing.markedAttributions };
+    }
+    expect(findings, "no unmarked control-model or attribution sentence in the program's titles and filings").toStrictEqual([]);
+    const live = exportRow(BEAD);
+    const own = tallyOf(BEAD, `${live.title}\n\n${filingOf(live.notes)}`, true);
+    expect(own.markedModels > 0 && own.markedAttributions > 0, "both rules read live sentences of the filing").toBe(true);
+    return { children, stated, rows, findings };
+  },
+  C5: async () => {
+    const files = walk().files;
+    const pages = files.filter(file => file.rel.endsWith(".md"));
+    const src = files.filter(file => file.rel.startsWith("src/"));
+    const findings: string[] = [];
+    let anchored = 0;
+    let controlled = 0;
+    for (const file of files.filter(entry => sentenceJudged(entry.rel))) {
+      const tally = tallyOf(file.rel, file.text, false);
+      findings.push(...tally.findings);
+      anchored += tally.anchored;
+      controlled += tally.controlled;
+    }
+    const workbench = pages.filter(file => file.rel.startsWith("docs/workbench/"));
+    const pagesRead = ["README.md", "AGENTS.md", "docs/workbench/07-native-integrations.md"].every(rel => pages.some(file => file.rel === rel));
+    expect(pagesRead && workbench.length >= 60 && src.length >= 100, `pages ${pages.length}, docs/workbench ${workbench.length}, src ${src.length}`).toBe(true);
+    expect(anchored > 0 && controlled > 0, "both sides of the control-model rule read live sentences").toBe(true);
+    expect(findings, "no .md page and no src file holds an unmarked control-model or attribution sentence").toStrictEqual([]);
+    return { floorMet: pagesRead, findings, live: anchored > 0 && controlled > 0 };
+  },
+  M1: async () => {
+    const kinds = (text: string, rel = "probe.txt"): string[] => hitsOf(rel, normalized(text)).map(hit => `${hit.needle}:${hit.kind}`);
+    const [sdkWords, elementWords, documentWords] = NEEDLES.map(needle => needle.words);
+    const zwsp = String.fromCodePoint(0x200b);
+    const spellings: JsonObject = {};
+    for (const needle of NEEDLES) {
+      const joined = needle.words.map(word => `${word.slice(0, 1).toUpperCase()}${word.slice(1)}`);
+      spellings[needle.id] = {
+        exact: kinds(`see ${needle.name} here`),
+        snake: kinds(needle.words.join("_")),
+        upperKebab: kinds(needle.words.join("-").toUpperCase()),
+        dotted: kinds(joined.join(".")),
+        spaced: kinds(joined.join(" ")),
+        camel: kinds(`${needle.words[0]}${joined.slice(1).join("")}`),
+        invisible: kinds(`${needle.name.slice(0, 3)}${zwsp}${needle.name.slice(3)}`),
+        fullwidth: kinds([...needle.name].map(char => String.fromCodePoint((char.codePointAt(0) ?? 0) + 0xfee0)).join("")),
+      };
+    }
+    const sdk = (sdkWords ?? []).join("_");
+    const echo = {
+      jsonKey: kinds(`{"sdk_versions": {"fiber_optics": {"a": 1}, "${sdk}": {"distribution_version": "0.1.1"}}}`),
+      tsKey: kinds(`sdk_versions: { fiber_optics: { a: 1 }, ${sdk}: { distribution_version: "0.1.1" } }`),
+      siblingBlock: kinds(`const SIBLINGS = { fiber_optics: { a: 1 }, reactive_lenses: { a: 1 }, ${sdk}: { a: 1 } };`),
+      loneSibling: kinds(`const PAIR = { fiber_optics: { a: 1 }, ${sdk}: { a: 1 } };`),
+      path: kinds(`"result.provenance.sdk_versions.${sdk}"`),
+      distribution: kinds(`{"sdk_contract": {"distribution": "${sdk}", "version": "0.1.1"}}`),
+      otherObject: kinds(`{"dependencies": {"${sdk}": "0.1.1"}}`),
+      specifier: kinds(`import { render } from "${sdk}";`),
+      otherCase: kinds(`{"sdk_versions": {"${sdk.toUpperCase()}": "0.1.1"}}`),
+    };
+    const screaming = kinds(`const CANONICAL_${(documentWords ?? []).join("_").toUpperCase()} = {};`, "src/x.ts");
+    const misses = {
+      singular: kinds(`${(sdkWords ?? [])[0]} component`),
+      proseDocument: kinds((documentWords ?? []).join(" ")),
+      elementAlone: kinds("Element"),
+      partial: kinds(`${(elementWords ?? []).slice(1).join("")}`),
+    };
+    const SEPARATED: Readonly<Record<string, string>> = { snake: "_", upperKebab: "-", dotted: ".", spaced: " " };
+    const expectedHits = (needle: Needle, spelling: string): number => {
+      const separator = SEPARATED[spelling];
+      return separator === undefined || new RegExp(`^(?:${needle.separator})$`).test(separator) ? 1 : 0;
+    };
+    const counted = NEEDLES.flatMap(needle => Object.entries(objectOf(spellings[needle.id], "spellings")).filter(([spelling, found]) => arrayOf(found, "hits").length !== expectedHits(needle, spelling)).map(([spelling]) => `${needle.id}/${spelling}`));
+    expect(counted, "every spelling of every needle is one hit where its separators admit it, none elsewhere (R3)").toStrictEqual([]);
+    expect(echo, "the echo classifier").toStrictEqual({
+      jsonKey: ["sdk:echo:sdk_versions-key"],
+      tsKey: ["sdk:echo:sdk_versions-key"],
+      siblingBlock: ["sdk:echo:sdk_versions-sibling"],
+      loneSibling: ["sdk:finding"],
+      path: ["sdk:echo:sdk_versions-path"],
+      distribution: ["sdk:echo:sdk_contract-distribution"],
+      otherObject: ["sdk:finding"],
+      specifier: ["sdk:finding"],
+      otherCase: ["sdk:finding"],
+    });
+    expect(screaming, "a screaming-snake document identifier in a Pi surface is a finding").toStrictEqual(["document:finding"]);
+    expect(Object.values(misses).every(found => found.length === 0), "the near misses read no hit").toBe(true);
+    return { spellings, echo, screaming, misses };
+  },
+  M2: async () => {
+    const probes = [
+      "onClick", "on_submit", "actionIds", "action_ids", "submitHandler", "eventHandlers", "UiControls", "renderButton", "widgetKind", "isClickable",
+      "interactiveRows", "props", "resource_bindings", "callback", "transaction_id", "addEventListener", "inputSchema", "component_render_count", "hasExactKeys", "build",
+    ];
+    const read = Object.fromEntries(probes.map(probe => [probe, controlWordsOf(probe)]));
+    const fieldWords = Object.fromEntries(Object.keys(CONTROL_FIELDS).map(key => [key, controlWordsOf(key)]));
+    expect(Object.entries(fieldWords).filter(([, words]) => words.length === 0).map(([key]) => key), "every control field key carries a control word").toStrictEqual([]);
+    const clauseWords = /any ([a-z/]+) field from a context block/.exec(acceptanceClauses(exportRow(BEAD).notes).a ?? "")?.[1]?.split("/") ?? [];
+    expect(clauseWords.length, "clause (a) names its control words").toBe(3);
+    expect(clauseWords.filter(word => !Object.values(fieldWords).some(words => words.includes(word))), "each word clause (a) names is carried by a control field key").toStrictEqual([]);
+    return { read, fieldWords, clauseWords };
+  },
+  M3: async () => {
+    const cut = sentencesOf("One. Two; three!\nfour?\n\nfive\n| a | b |\n- item one\n1. item two\nsix.seven");
+    const families: JsonObject = {};
+    for (const family of [...ANCHORS, ...CONTROLS]) {
+      families[family.id] = family.spellings.map(spelling => FAMILY_PATTERN.get(family.id)?.test(` ${spelling} `) === true);
+    }
+    expect(Object.values(families).flatMap(found => arrayOf(found, "family")).every(found => found === true), "every family spelling matches its family").toBe(true);
+    const model = "Pi renders each context block as a TUI control";
+    const markers = Object.fromEntries(MARKERS.map(marker => [marker, sentenceFindings(`${model} ${marker} here.`, false)]));
+    expect(Object.values(markers).every(found => found.length === 0), "every marker admits the sentence").toBe(true);
+    const attribution = `The ${PROGRAM_SLUG} program changes the ${DOCUMENT_NAME} contract.`;
+    const changes = Object.fromEntries(CHANGES.map(change => [change, sentenceFindings(`The native interface component contract ${change} the envelope.`, false)]));
+    expect(Object.values(changes).every(found => JSON.stringify(found) === JSON.stringify(["attribution"])), "every change word reads an attribution").toBe(true);
+    const rules = {
+      model: sentenceFindings(`${model}.`, false),
+      modelContraction: sentenceFindings("Pi doesn't render a context block as a button.", false),
+      anchorAlone: sentenceFindings("Pi digests the context block text.", false),
+      controlAlone: sentenceFindings("The workflow dialog binds a key handler.", false),
+      attribution: sentenceFindings(attribution, false),
+      attributionImplied: sentenceFindings(`The ${DOCUMENT_NAME} contract changed.`, true),
+      attributionUnnamed: sentenceFindings(`The ${DOCUMENT_NAME} contract changed.`, false),
+      attributionUnchanged: sentenceFindings("The native interface component contract leaves the envelope unchanged.", false),
+      attributionNoChange: sentenceFindings(`The ${PROGRAM_SLUG} program cites \`Element\`.`, false),
+      tagged: sentenceFindings("RC-NATIVE-INTERFACE-COMPONENT-CONTRACT-R1 bumps the envelope.", false),
+    };
+    expect(rules, "the two rules").toStrictEqual({
+      model: ["control-model"],
+      modelContraction: [],
+      anchorAlone: [],
+      controlAlone: [],
+      attribution: ["attribution"],
+      attributionImplied: ["attribution"],
+      attributionUnnamed: [],
+      attributionUnchanged: [],
+      attributionNoChange: [],
+      tagged: ["attribution"],
+    });
+    return { cut: cut.map(sentence => `${sentence.line}:${sentence.text}`), families, rules };
+  },
+  R1: async () => {
+    const statusEnvelope = placed(carrier(), { id: "status", path: ["observations", "0"], seed: { status: "on_click", freshness: "captured_at_render", replayed: false } }, {});
+    const statusNotes = strings(objectOf(projections(statusEnvelope)["rf-cli"], "topology").diagnostics, "diagnostics");
+    const releaseEnvelope = carrier();
+    objectOf(resultOf(releaseEnvelope).provenance, "provenance").cli_version = "on_click";
+    const releaseRefs = strings(snapshotOf(projections(releaseEnvelope)["rf-cli"]).evidenceRefs, "refs");
+    const tolerantHits = (text: string): number => hitsOf("probe.txt", normalized(text)).length;
+    const [sdkWords, , documentWords] = NEEDLES.map(needle => needle.words);
+    const sdkTitle = (sdkWords ?? []).map(word => `${word.slice(0, 1).toUpperCase()}${word.slice(1)}`);
+    const appendedSentence = `Appended note: the program ships a new ${DOCUMENT_NAME} envelope shape.`;
+    const model = "Pi renders each context block as a button.";
+    const outside = ["test/x.test.ts", "qa/workbench/x.mjs", "test/fixtures/x.json", "package.json"];
+    const probeLoads = specifiersOf(sourceFile("src/ui/probe.ts", 'import { runWorkflow } from "../workflow/runtime.js";')).map(specifier => resolvedOf("src/ui/probe.ts", specifier));
+    const runtimeLoads = specifiersOf(sourceFile("src/workflow/runtime.ts")).map(specifier => resolvedOf("src/workflow/runtime.ts", specifier));
+    const computed = `const parts = ['reactive', 'fiber']; void import(\`../workbench/providers/\${parts.join('')}.js\`);`;
+    const residuals = {
+      "R-STATUS-WORD": statusNotes.some(note => note.includes("(on_click)")) && !PLACEMENTS.some(placement => placement.path.includes("status")),
+      "R-PRODUCER-IDENTITY": releaseRefs.includes("rf-cli:on_click") && !PLACEMENTS.some(placement => placement.path.includes("provenance")),
+      "R-PROSE-NAME": tolerantHits(`the rf ${(documentWords ?? []).join(" ")} is text, read by the ${(documentWords ?? []).join("-")} parser of ${(documentWords ?? []).join(".")}`) === 0,
+      "R-COMPOSED": tolerantHits(`const name = [${sdkTitle.map(word => `"${word}"`).join(", ")}].join("");`) === 0,
+      "R-ENCODED": tolerantHits(`${sdkTitle[0]}\\u0043omponents and ${sdkTitle[0]}&#67;omponents`) === 0,
+      "R-LOOKALIKE": tolerantHits(`R${String.fromCodePoint(0x0435)}active${sdkTitle[1]}`) === 0,
+      "R-OTHER-ROWS": sentenceFindings(appendedSentence, true).length === 1 && tallyOf("appended", filingOf(`Not P0: none.\n\n${appendedSentence}`), true).findings.length === 0,
+      "R-NON-PROSE": sentenceFindings(model, false).length === 1 && outside.filter(sentenceJudged).length === 0,
+      "R-MARKER-ANYWHERE": sentenceFindings("Pi renders each context block as a button, not a paragraph.", false).length === 0,
+      "R-VOCABULARY": sentenceFindings("Pi renders each context block as a toggle or a slider.", false).length === 0,
+      "R-PARAPHRASE": sentenceFindings(`The ${PROGRAM_SLUG} program reshapes the envelope.`, false).length === 0,
+      "R-SPLIT": tallyOf("split", "Pi reads each context block. It renders them as buttons.", false).findings.length === 0,
+      "R-COMPUTED-IMPORT": specifiersOf(sourceFile("src/ui/probe.ts", computed)).length === 0 && !RF_VOCABULARY.test(computed),
+      "R-OUTSIDE-READERS": !READERS.includes("src/index.ts") && !READERS.includes("src/workbench/native-modules.ts"),
+      "R-IGNORED": spawnSync("git", ["check-ignore", "-q", "dist/x.ts"], { cwd: REPO }).status === 0,
+      "R-UNANCHORED": sentenceFindings("The observer reads each block's handler.", false).length === 0,
+      "R-COMMENT": !namesOf(sourceFile("src/workbench/probe.ts", "// each block's handler\nexport const probe = 1;\n")).some(name => controlWordsOf(name).length > 0),
+      "R-TRANSITIVE": !probeLoads.some(target => READERS.includes(target)) && runtimeLoads.includes("src/workbench/native-evidence.ts"),
+      "R-BEAD-EXPORT": hitsOf(EXPORT_FILE, normalized(exportRow(BEAD).title)).some(hit => hit.kind === "exact") && !walk().files.some(file => file.rel === EXPORT_FILE),
+      "R-UNPLACED": !PLACEMENTS.some(placement => ["budget", "work_metrics", "diagnostics_summary", "provenance"].includes(placement.path[0] ?? "")),
+      "R-TEST-TREE": !tokenCensused("test/workbench-x-census.test.ts") && !tokenCensused("test/fixtures/x-roster.json") && tokenCensused("qa/workbench/x.mjs") && tokenCensused("src/x.ts"),
+    };
+    expect(residuals, "every residual reads quiet on its pinned row").toStrictEqual(Object.fromEntries(Object.keys(residuals).map(name => [name, true])));
+    return residuals;
+  },
+};
+
+/** The frozen constants the roster holds beside the rows (census names held by count and digest, never spelled). */
+function constants(): JsonValue {
+  return json({
+    needles: NEEDLES.map(needle => ({ id: needle.id, words: needle.words.length, separator: needle.separator, digest: sha(needle.name).slice(0, 16) })),
+    echoKinds: ECHO_KINDS,
+    excluded: EXCLUDED,
+    controlFields: CONTROL_FIELDS,
+    placements: PLACEMENTS,
+    controlWords: CONTROL_WORDS,
+    snapshotKeys: SNAPSHOT_KEYS,
+    nodeKeys: NODE_KEYS,
+    metadataKeys: METADATA_KEYS,
+    refKinds: REF_KINDS,
+    fixtures: FIXTURES,
+    driftExports: DRIFT_EXPORTS,
+    readers: READERS,
+    surfacePins: SURFACE_PINS,
+    anchors: ANCHORS,
+    controls: CONTROLS,
+    markers: MARKERS,
+    changes: CHANGES,
+    mutants: Object.keys(MUTANTS),
+  });
+}
+
+/** Each pin's witness as its case returned it; the record compares the whole set against the roster a second time. */
+const MEASURED: Record<string, JsonValue> = {};
+/** Each pin's assertion count when its case reached its end (its witness comparison included), in run order: `${pin}:${count}`. */
+const REACHED: string[] = [];
+
+describe("wb-5ltg.1 RC model-context block census (RC-NATIVE-INTERFACE-COMPONENT-CONTRACT-R1, standing posture)", () => {
+  it(JUDGED_TITLE, () => {
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:4", "C:5", "M:3", "R:1"]);
+    expect(ROWS.map(({ id, label, pins }) => ({ id, label: held(label), pins: [...pins] }))).toStrictEqual(
+      ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
+    );
+    expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
+    expect(constants()).toStrictEqual(ROSTER.constants);
+    expect({ bead: BEAD, quotePin: QUOTE_PIN, quote: QUOTE, carrier: CARRIER }).toStrictEqual({ bead: ROSTER.bead, quotePin: ROSTER.quotePin, quote: ROSTER.quote, carrier: ROSTER.carrier });
+    expect(NEEDLES.every(needle => needle.words.join("") === needle.name.toLowerCase()), "each needle's words spell its name").toBe(true);
+    // The anchor outside this file and its roster: the owner filing in the tracked bead export.
+    const { title, notes } = exportRow(BEAD);
+    const clauses = acceptanceClauses(notes);
+    const acceptanceRows = ROWS.filter(row => /^\([a-d]\) /.test(row.label));
+    expect(Object.keys(clauses)).toEqual(["a", "b", "c"]);
+    expect(acceptanceRows.map(row => row.label)).toEqual(Object.entries(clauses).map(([letter, clause]) => `(${letter}) ${clause}`));
+    expect(title.startsWith(`${PROGRAM_TAG} No Pi surface shall reinterpret`)).toBe(true);
+    expect(notes.includes(`'${QUOTE}' ${QUOTE_PIN}.`)).toBe(true);
+    expect(filedCarrier(notes)).toBe(CARRIER);
+    expect(filedReaderCount(notes), `the filing names an ${READER_WORD}`).toBe(8);
+    const fixtureNames = /\(([A-Za-z/]+)\) stay byte-identical/.exec(clauses.b ?? "")?.[1]?.split("/") ?? [];
+    expect(FIXTURES.map(fixture => fixture.name)).toStrictEqual(fixtureNames);
+    const surfaces = /^census: no (.+?) models /.exec(clauses.c ?? "")?.[1]?.split(/, | or /) ?? [];
+    expect(Object.keys(SURFACE_PINS)).toStrictEqual(surfaces);
+    expect(Object.values(SURFACE_PINS).filter(pin => !(ROWS.find(row => row.id === "C")?.pins ?? []).includes(pin))).toStrictEqual([]);
+    const names = /\(([A-Za-z|]+) census = 0 beyond the sdk_versions echo\)/.exec(clauses.c ?? "")?.[1]?.split("|") ?? [];
+    expect(NEEDLES.map(needle => needle.name)).toStrictEqual(names);
+    const contracts = /attributes an (.+?) change to this program/.exec(clauses.c ?? "")?.[1]?.split("/") ?? [];
+    expect(contracts).toStrictEqual(["Element", DOCUMENT_NAME, "envelope"]);
+    expect(contracts.filter(contract => !CONTRACTS.some(pattern => pattern.test(contract)))).toStrictEqual([]);
+  });
+
+  for (const row of ROWS) {
+    describe(`${row.id} ${row.label}`, () => {
+      for (const pin of row.pins) {
+        it(pin, { timeout: 120_000 }, async () => {
+          const impl = IMPL[pin];
+          expect(impl, `no case for ${pin}`).toBeTypeOf("function");
+          const witness = impl === undefined ? null : await impl();
+          MEASURED[pin] = witness;
+          expect(witness).toStrictEqual(rosterWitness(pin));
+          REACHED.push(`${pin}:${expect.getState().assertionCalls}`);
+        });
+      }
+    });
+  }
+
+  it(RECORD_TITLE, ({ task }) => {
+    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
+    const visit = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
+        else if (child.type === "suite") visit(child.tasks);
+      }
+    };
+    visit(task.file.tasks);
+    const titles = walked.map(entry => entry.name);
+    expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
+    expect(titles, "the judged title, one test per pin in row order, then this record").toEqual([JUDGED_TITLE, ...ROWS.flatMap(entry => entry.pins), RECORD_TITLE]);
+    const here = walked.findIndex(entry => entry.self);
+    expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
+    const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
+    const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
+    expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
+    const rosterWitnesses = Object.fromEntries(ROSTER.rows.flatMap(entry => entry.pins.map(pin => [pin.id, pin.witness])));
+    expect(MEASURED, "every pin's witness, compared against the roster a second time").toStrictEqual(rosterWitnesses);
+    expect(REACHED, "every pin reached its end, in row order, with its pinned assertion count").toEqual([...ROSTER.reached]);
+  });
+});
