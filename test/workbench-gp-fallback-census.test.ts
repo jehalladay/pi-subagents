@@ -27,24 +27,44 @@
  * the paired fallback's own decision. No key naming a score or a probability at any depth, and no value of the fake
  * seam's policy output anywhere.
  * RESIDUALS (named families, each member a pinned quiet row - a detector or judge change that reaches it reds the row
- * and the family is re-judged): R-COMPUTED, R-ENVIRONMENT and R-TRANSITIVE (the scan), R-UNNAMED-NUMBER (the judge).
+ * and the family is re-judged): R-COMPUTED, R-ENVIRONMENT, R-TRANSITIVE and R-BINARY-SPELLING (the scan),
+ * R-UNNAMED-NUMBER, R-UNWALKED-KEY and R-DERIVED-OUTPUT (the judge).
  * Rule 16: the frozen-shape case pins every table's row and pin shape and the live subjects; the OUT-OF-FILE anchor
  * test/fixtures/gp-fallback-roster.json (the hk9l/5jha roster pattern) carries every judged row (table, id, label, the
  * SHA-256 of each pin), every registered test title and the residual families, and the roster case judges this file
  * against it in order and both ways, with each registered test's run mode.
  *
+ * wb-qxdr (the wb-1xvp.4 follow-up: PREP F1 MEDIUM of landing 252, R694) pins the four groups of modes the first cut
+ * claimed but no row pinned, each by a row that reds when its mode is hollowed:
+ *  (i) walk coverage: the 'live' row's exact-set anchor - the walk, less what git ignores, equals what git would commit
+ *      under src/ (tracked or untracked, never ignored), file for file, beside the floor;
+ *  (ii) walker properties: the WALKS rows plant synthetic trees on rule-11 scratch - a hidden file, an extensionless
+ *      file in a nested directory, a symlinked file, a second link to a walked directory, a directory-symlink loop, and
+ *      a FIFO the walk fails closed on;
+ *  (iii) judge modes: a MUTANTS row per claimed probability member (propensity, logit, likelihood, distribution), the
+ *      J-FALLBACK family half, an inherited-key row per contract field (decision_source, action, fallback and its name,
+ *      reason, refusal_code: OWN reads only), a score beside a cycle (the cycle guard) and an array record (the array
+ *      guard); every structural edit is checked to be the shape it names (editShapeFindings), and that check is shown
+ *      to refuse each one degraded to a plain delete;
+ *  (iv) scan modes: the WIRE gp.cli schema pin and the bare 'gp' module specifier pin.
+ * The F4 escapes ride as the three new residual families above, and F3's headroom as LIVE_BUDGET_MS on the live rows.
+ *
  * Display paths added: none. Test-only: no src change, and no GraphPolicyCLI adapter, seam or fake binary.
  */
-import { readFileSync } from "node:fs";
+import { execFileSync, spawnSync } from "node:child_process";
+import { existsSync, lstatSync, mkdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "vitest";
 import {
   CLEAN,
   driveFindings,
+  type Edit,
   editedRecord,
+  editShapeFindings,
   FAMILIES,
   type FakeSeam,
+  isStructuralEdit,
   type JudgedRow,
   judgeRecord,
   MUTANTS,
@@ -63,12 +83,31 @@ import {
   srcFiles,
   TOUCHPOINTS,
   UNUSABLE,
+  WALKS,
 } from "./helpers/gp-fallback-census.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard(afterAll);
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const ROSTER = "test/fixtures/gp-fallback-roster.json";
 /** src holds well over this many files; fewer means the walk found nothing. */
 const MIN_SRC_FILES = 100;
+/** The first live row parses every src module (wb-1xvp.4 F3: 946-2953 ms measured against vitest's 5000 ms default), so each live row carries this explicit budget. */
+const LIVE_BUDGET_MS = 60_000;
+
+/** What git would commit under src/: tracked or untracked, never ignored, and still on disk (the walk's exact-set anchor). */
+function gitSrcFiles(): string[] {
+  const out = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", "src"], { cwd: ROOT, encoding: "utf8", maxBuffer: 1 << 26 });
+  return [...new Set(out.split("\0").filter(path => path !== "" && existsSync(join(ROOT, path))))].sort();
+}
+
+/** The paths among `paths` that git ignores: the walk reads them, but git would never commit them. */
+function gitIgnored(paths: readonly string[]): Set<string> {
+  const result = spawnSync("git", ["check-ignore", "--stdin", "-z"], { cwd: ROOT, input: paths.join("\0"), encoding: "utf8", maxBuffer: 1 << 26 });
+  if (result.status !== 0 && result.status !== 1) throw new Error(`git check-ignore exited ${String(result.status)}: ${result.stderr}`);
+  return new Set(result.stdout.split("\0").filter(path => path !== ""));
+}
 
 /** A src module that reaches GraphPolicyCLI, paired with its deterministic fallback and a drive over the fake seams. */
 interface CallSite extends Pairing {
@@ -174,6 +213,14 @@ describe("GraphPolicyCLI call-site fallback census (wb-1xvp.4, RF-GRAPH-POLICY-M
       expect(findings.map(ruleOf), findings.join("\n")).toEqual(entry.expect);
       // Without the edits the same drive conforms, so each rule above is the edit's own finding.
       expect(judgeRecord(editedRecord(shape.seam, []), REFERENCE, shape)).toEqual([]);
+      // Each structural edit (inherit, hide, symbol, link) is the shape it names, and the check refuses the same edit
+      // degraded to a plain delete, so no row passes on an edit that silently became a delete.
+      const structural = entry.edits.filter(isStructuralEdit);
+      if (structural.length > 0) {
+        expect(editShapeFindings(editedRecord(shape.seam, entry.edits), entry.edits)).toEqual([]);
+        const degraded = entry.edits.map((edit): Edit => (isStructuralEdit(edit) ? { op: "delete", path: edit.path } : edit));
+        expect(editShapeFindings(editedRecord(shape.seam, degraded), entry.edits)).toHaveLength(structural.length);
+      }
     });
   }
 
@@ -185,22 +232,58 @@ describe("GraphPolicyCLI call-site fallback census (wb-1xvp.4, RF-GRAPH-POLICY-M
     });
   }
 
-  it("live: the scan walks every regular file under src/ and reads the native CLI commands its call sites pass", () => {
+  for (const entry of WALKS) {
+    it(`WALKS ${entry.id}`, () => {
+      const root = makeScratch("gp-fallback-walk-");
+      try {
+        for (const [rel, node] of Object.entries(entry.tree)) {
+          const path = join(root, rel);
+          mkdirSync(dirname(path), { recursive: true });
+          if (node.kind === "file") writeFileSync(path, node.text);
+          else if (node.kind === "symlink") symlinkSync(node.target, path);
+          else execFileSync("mkfifo", [path]);
+        }
+        // The planted tree is the shape its row names.
+        const planted = Object.keys(entry.tree).map(rel => {
+          const info = lstatSync(join(root, rel));
+          return `${rel}:${info.isFIFO() ? "fifo" : info.isSymbolicLink() ? "symlink" : info.isFile() ? "file" : "other"}`;
+        });
+        expect(planted).toEqual(Object.entries(entry.tree).map(([rel, node]) => `${rel}:${node.kind}`));
+        let walked: readonly string[] | string;
+        try {
+          walked = srcFiles(root);
+        } catch (error) {
+          walked = error instanceof Error ? error.message : String(error);
+        }
+        expect(walked).toEqual("throws" in entry.expect ? entry.expect.throws : entry.expect.files);
+      } finally {
+        removeScratch(root);
+      }
+    });
+  }
+
+  it("live: the scan walks every regular file under src/ and reads the native CLI commands its call sites pass", { timeout: LIVE_BUDGET_MS }, () => {
     const { files, scans } = live();
     expect(files.length).toBeGreaterThanOrEqual(MIN_SRC_FILES);
     expect(files).toContain("src/workbench/providers/reactivefiber.ts");
+    // The exact-set anchor (wb-qxdr (i)): a walk that skips a directory or drops files reds here, not just below the floor.
+    const ignored = gitIgnored(files);
+    expect(
+      files.filter(file => !ignored.has(file)).sort(),
+      "the walk, less what git ignores, equals what git would commit under src/ (tracked or untracked, never ignored)",
+    ).toEqual(gitSrcFiles());
     const commands = new Set(scans.flatMap(scan => scan.commands));
     for (const command of ["rf", "git", "forge"]) expect(commands.has(command), `a src call passes the ${command} command`).toBe(true);
   });
 
-  it("live (c): no src file carries a GraphPolicyCLI touchpoint today, and GP_CALL_SITES pairs exactly the touched files", () => {
+  it("live (c): no src file carries a GraphPolicyCLI touchpoint today, and GP_CALL_SITES pairs exactly the touched files", { timeout: LIVE_BUDGET_MS }, () => {
     const { texts, scans } = live();
     const touchpoints = scans.flatMap(scan => scan.touchpoints);
     // Both readings in one assertion, so an unpaired site reds naming its P-UNPAIRED finding beside the absence pin.
     expect({ pairing: pairingFindings(GP_CALL_SITES, touchpoints, texts), touchpoints: touchpoints.map(point => `${point.file}:${point.line} ${point.kind} ${point.text}`) }).toEqual({ pairing: [], touchpoints: [] });
   });
 
-  it("live (a)+(b): every GP_CALL_SITES entry records a conforming fallback on every unusable fake seam", async () => {
+  it("live (a)+(b): every GP_CALL_SITES entry records a conforming fallback on every unusable fake seam", { timeout: LIVE_BUDGET_MS }, async () => {
     const touched = [...new Set(live().scans.flatMap(scan => scan.touchpoints.map(point => point.file)))].sort();
     expect(GP_CALL_SITES.map(site => site.file).sort()).toEqual(touched);
     const findings: string[] = [];
@@ -216,14 +299,15 @@ describe("GraphPolicyCLI call-site fallback census (wb-1xvp.4, RF-GRAPH-POLICY-M
   it("rule 16: every judged table and the live subjects are frozen at their measured shape", () => {
     expect(ROWS.map(entry => `${entry.table}/${entry.id}:${entry.pins.length}`)).toEqual([
       "TOUCHPOINTS/CLI:7",
-      "TOUCHPOINTS/SDK:7",
-      "TOUCHPOINTS/WIRE:7",
+      "TOUCHPOINTS/SDK:8",
+      "TOUCHPOINTS/WIRE:8",
       "CLEAN/C-NATIVE-CLI:5",
       "CLEAN/C-NEAR-NAMES:5",
       "CLEAN/C-COMMENT:2",
       "RESIDUALS/R-COMPUTED:2",
       "RESIDUALS/R-ENVIRONMENT:2",
       "RESIDUALS/R-TRANSITIVE:1",
+      "RESIDUALS/R-BINARY-SPELLING:3",
       "FAMILIES/existing-machine-rule:0",
       "FAMILIES/ready-first:0",
       "FAMILIES/priority-first:0",
@@ -252,6 +336,22 @@ describe("GraphPolicyCLI call-site fallback census (wb-1xvp.4, RF-GRAPH-POLICY-M
       "MUTANTS/M-NOT-A-RECORD:1",
       "MUTANTS/M-DRIVE-THROWS:1",
       "MUTANTS/R-UNNAMED-NUMBER:1",
+      "MUTANTS/M-PROPENSITY:1",
+      "MUTANTS/M-LOGIT-NESTED:1",
+      "MUTANTS/M-LIKELIHOOD:1",
+      "MUTANTS/M-DISTRIBUTION-NESTED:1",
+      "MUTANTS/M-FALLBACK-FAMILY:1",
+      "MUTANTS/M-SOURCE-INHERITED:1",
+      "MUTANTS/M-ACTION-INHERITED:1",
+      "MUTANTS/M-FALLBACK-INHERITED:1",
+      "MUTANTS/M-FALLBACK-NAME-INHERITED:1",
+      "MUTANTS/M-REASON-INHERITED:1",
+      "MUTANTS/M-CODE-INHERITED:1",
+      "MUTANTS/M-SCORE-BESIDE-CYCLE:1",
+      "MUTANTS/M-ARRAY-RECORD:1",
+      "MUTANTS/R-HIDDEN-SCORE:1",
+      "MUTANTS/R-SYMBOL-SCORE:1",
+      "MUTANTS/R-DERIVED-OUTPUT:1",
       "PAIRING_CASES/P-PAIRED:1",
       "PAIRING_CASES/P-REEXPORTED:1",
       "PAIRING_CASES/P-UNPAIRED:1",
@@ -259,12 +359,21 @@ describe("GraphPolicyCLI call-site fallback census (wb-1xvp.4, RF-GRAPH-POLICY-M
       "PAIRING_CASES/P-DUPLICATE:1",
       "PAIRING_CASES/P-FAMILY:1",
       "PAIRING_CASES/P-UNEXPORTED:1",
+      "WALKS/W-HIDDEN:1",
+      "WALKS/W-EXTENSIONLESS:1",
+      "WALKS/W-SYMLINKED-FILE:1",
+      "WALKS/W-DIRECTORY-ALIAS:1",
+      "WALKS/W-DIRECTORY-LOOP:1",
+      "WALKS/W-FIFO:1",
     ]);
     expect(Object.entries(RESIDUAL_FAMILIES).map(([family, members]) => `${family}:${members.join(",")}`)).toEqual([
       "R-COMPUTED:RESIDUALS R-COMPUTED",
       "R-ENVIRONMENT:RESIDUALS R-ENVIRONMENT",
       "R-TRANSITIVE:RESIDUALS R-TRANSITIVE",
+      "R-BINARY-SPELLING:RESIDUALS R-BINARY-SPELLING",
       "R-UNNAMED-NUMBER:MUTANTS R-UNNAMED-NUMBER",
+      "R-UNWALKED-KEY:MUTANTS R-HIDDEN-SCORE,MUTANTS R-SYMBOL-SCORE",
+      "R-DERIVED-OUTPUT:MUTANTS R-DERIVED-OUTPUT",
     ]);
     expect(GP_CALL_SITES.map(site => `${site.file}:${site.family}:${site.fallback}`)).toEqual([]);
   });

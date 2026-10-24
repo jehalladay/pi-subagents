@@ -11,6 +11,13 @@
  * it is handed. Every table is plain data, so ROWS (each row's id, label and the SHA-256 of each pin) is the same
  * wherever this module loads; test/fixtures/gp-fallback-roster.json is the out-of-file anchor ROWS is judged against.
  * Nothing here starts gp, fakes a gp binary or implements an adapter: the fake seams are data handed to a drive.
+ *
+ * wb-qxdr (the wb-1xvp.4 follow-up, PREP F1 of landing 252) adds a row for each mode the first cut claimed but no row
+ * pinned: the WALKS table (srcFiles on synthetic trees), a MUTANTS row per claimed probability member, the J-FALLBACK
+ * family half, an inherited-key row per contract field (the inherit edit), the cycle and array guards, and the WIRE
+ * gp.cli and bare gp module pins. The F4 escapes ride as named residuals, each a pinned quiet row: R-BINARY-SPELLING
+ * (the scan), R-UNWALKED-KEY and R-DERIVED-OUTPUT (the judge). editShapeFindings proves each structural edit
+ * (inherit, hide, symbol, link) is the shape it names, so no row passes on an edit that degraded to a delete or a set.
  */
 import { createHash } from "node:crypto";
 import { readdirSync, realpathSync, statSync } from "node:fs";
@@ -344,12 +351,61 @@ export function referenceRecord(seam: FakeSeam): Readonly<Record<string, unknown
   }
 }
 
-/** A data-only edit of the reference record (so the table digests the same everywhere): set, delete, or replace whole. */
+/**
+ * A data-only edit of the reference record (so the table digests the same everywhere): set, delete, or replace whole;
+ * inherit moves the key at path off its holder onto the holder's prototype, hide writes it as a non-enumerable own key,
+ * symbol writes the value under an own symbol key whose description is the last path segment, and link points the key
+ * at the very object another path reaches (a cycle when that object holds the key).
+ */
 export type Edit =
   | { readonly op: "set"; readonly path: readonly string[]; readonly value: unknown }
   | { readonly op: "delete"; readonly path: readonly string[] }
+  | { readonly op: "inherit"; readonly path: readonly string[] }
+  | { readonly op: "hide"; readonly path: readonly string[]; readonly value: unknown }
+  | { readonly op: "symbol"; readonly path: readonly string[]; readonly value: unknown }
+  | { readonly op: "link"; readonly path: readonly string[]; readonly to: readonly string[] }
   | { readonly op: "replace"; readonly value: unknown }
   | { readonly op: "throw"; readonly message: string };
+
+/** The value a path reaches through plain property reads (inherited keys included), or undefined. */
+function valueAt(root: unknown, path: readonly string[]): unknown {
+  let node = root;
+  for (const key of path) node = typeof node === "object" && node !== null ? (node as Readonly<Record<string, unknown>>)[key] : undefined;
+  return node;
+}
+
+export type StructuralEdit = Extract<Edit, { readonly op: "inherit" | "hide" | "symbol" | "link" }>;
+
+/** The edits that give the record a structure a plain set or delete cannot (set, delete, replace and throw carry none). */
+export const isStructuralEdit = (edit: Edit): edit is StructuralEdit => edit.op === "inherit" || edit.op === "hide" || edit.op === "symbol" || edit.op === "link";
+
+/**
+ * The structural edits whose shape the edited record does not carry, one finding each: an inherited key must read only
+ * through its holder's prototype, a hidden key must be an own key that is not enumerable, a symbol key must be an own
+ * symbol of that description, and a link must hold the very object its target path reaches. [] means every structural
+ * edit is the shape it names.
+ */
+export function editShapeFindings(record: unknown, edits: readonly Edit[]): string[] {
+  const findings: string[] = [];
+  for (const edit of edits) {
+    if (!isStructuralEdit(edit)) continue;
+    const where = `${edit.op} ${edit.path.join(".")}`;
+    const holder = valueAt(record, edit.path.slice(0, -1));
+    const last = edit.path[edit.path.length - 1] ?? "";
+    if (typeof holder !== "object" || holder === null) {
+      findings.push(`${where}: no object holds the key`);
+      continue;
+    }
+    if (edit.op === "inherit" && (Object.hasOwn(holder, last) || !(last in holder))) findings.push(`${where}: the key is not inherited through the prototype`);
+    if (edit.op === "hide" && Object.getOwnPropertyDescriptor(holder, last)?.enumerable !== false) findings.push(`${where}: the key is not a non-enumerable own key`);
+    if (edit.op === "symbol" && !Object.getOwnPropertySymbols(holder).some(symbol => symbol.description === last)) findings.push(`${where}: no own symbol key carries that description`);
+    if (edit.op === "link") {
+      const target = valueAt(record, edit.to);
+      if (typeof target !== "object" || target === null || (holder as Readonly<Record<string, unknown>>)[last] !== target) findings.push(`${where}: the key does not hold the object ${edit.to.join(".")} reaches`);
+    }
+  }
+  return findings;
+}
 
 /** The record a mutant drive returns: the reference record for the seam with each edit applied in order (or a throw). */
 export function editedRecord(seam: FakeSeam, edits: readonly Edit[]): unknown {
@@ -367,8 +423,29 @@ export function editedRecord(seam: FakeSeam, edits: readonly Edit[]): unknown {
       target = target[key] as Record<string, unknown>;
     }
     const last = edit.path[edit.path.length - 1] ?? "";
-    if (edit.op === "set") target[last] = structuredClone(edit.value);
-    else delete target[last];
+    switch (edit.op) {
+      case "set":
+        target[last] = structuredClone(edit.value);
+        break;
+      case "delete":
+        delete target[last];
+        break;
+      case "inherit": {
+        const moved = target[last];
+        delete target[last];
+        Object.setPrototypeOf(target, Object.assign(Object.create(Object.getPrototypeOf(target)) as object, { [last]: moved }));
+        break;
+      }
+      case "hide":
+        Object.defineProperty(target, last, { value: structuredClone(edit.value), enumerable: false, writable: true, configurable: true });
+        break;
+      case "symbol":
+        Object.defineProperty(target, Symbol(last), { value: structuredClone(edit.value), enumerable: true, writable: true, configurable: true });
+        break;
+      case "link":
+        target[last] = valueAt(record, edit.to);
+        break;
+    }
   }
   return record;
 }
@@ -409,6 +486,7 @@ export const TOUCHPOINTS: readonly (SourceRow & { readonly kind: TouchpointKind 
       'import gpCli = require("graph_policy");',
       'const client = require("gp/rpc");',
       'type Envelope = import("GraphPolicy").Envelope;',
+      'import { connect } from "gp";',
     ],
   },
   {
@@ -423,6 +501,7 @@ export const TOUCHPOINTS: readonly (SourceRow & { readonly kind: TouchpointKind 
       ["const code = `GP_RPC_$", "{name}`;"].join(""),
       'const failClosed = "GP_E_BACKEND_UNAVAILABLE";',
       'const observation = { schema: "graphpolicy.data.v1", nodes };',
+      'const errorSchema = "gp.cli.error/v1";',
     ],
   },
 ];
@@ -478,6 +557,11 @@ export const RESIDUALS: readonly SourceRow[] = [
     label: "a module that reaches GraphPolicyCLI only through another src module, which is the site and carries the pairing",
     pins: ['import { evaluate } from "./policy-client.js";\nawait evaluate(observation);'],
   },
+  {
+    id: "R-BINARY-SPELLING",
+    label: "the gp binary spelled in another case or as a Windows command shim: the command word is gp or gp.exe exactly as written",
+    pins: ['spawn("gp.cmd", argv);', 'spawn("GP", argv);', 'spawn("GP.EXE", argv);'],
+  },
 ];
 
 export interface MutantRow {
@@ -520,6 +604,59 @@ export const MUTANTS: readonly MutantRow[] = [
     label: "a number the fake seam did not produce, under a key that names neither a score nor a probability",
     shape: "U-STALE-BASIS",
     edits: [{ op: "set", path: ["detail", "weight"], value: 0.5 }],
+    expect: [],
+  },
+  // wb-qxdr (iii): each claimed probability member, the J-FALLBACK family half, an OWN read of every contract field,
+  // the cycle guard and the array guard.
+  { id: "M-PROPENSITY", label: "a propensity is written on an absent binary", shape: "U-ABSENT", edits: [{ op: "set", path: ["propensity"], value: 0 }], expect: ["J-PROBABILITY"] },
+  { id: "M-LOGIT-NESTED", label: "a logit is written under a detail key", shape: "U-RPC-REFUSAL", edits: [{ op: "set", path: ["detail", "logit"], value: -0.4 }], expect: ["J-PROBABILITY"] },
+  { id: "M-LIKELIHOOD", label: "a likelihood is written on a stale basis", shape: "U-STALE-BASIS", edits: [{ op: "set", path: ["likelihood"], value: 0 }], expect: ["J-PROBABILITY"] },
+  { id: "M-DISTRIBUTION-NESTED", label: "a distribution is written under a detail key", shape: "U-OVER-BUDGET", edits: [{ op: "set", path: ["detail", "distribution"], value: [] }], expect: ["J-PROBABILITY"] },
+  {
+    id: "M-FALLBACK-FAMILY",
+    label: "the record names the paired fallback's name under another named family",
+    shape: "U-CLI-REFUSAL",
+    edits: [{ op: "set", path: ["fallback", "family"], value: "priority-first" }],
+    expect: ["J-FALLBACK"],
+  },
+  { id: "M-SOURCE-INHERITED", label: "decision_source is inherited through the prototype, not an own key", shape: "U-ABSENT", edits: [{ op: "inherit", path: ["decision_source"] }], expect: ["J-SOURCE"] },
+  { id: "M-ACTION-INHERITED", label: "the action is inherited through the prototype, not an own key", shape: "U-RPC-REFUSAL", edits: [{ op: "inherit", path: ["action"] }], expect: ["J-ACTION"] },
+  { id: "M-FALLBACK-INHERITED", label: "the fallback object is inherited through the prototype, not an own key", shape: "U-STALE-BASIS", edits: [{ op: "inherit", path: ["fallback"] }], expect: ["J-FALLBACK"] },
+  {
+    id: "M-FALLBACK-NAME-INHERITED",
+    label: "the fallback's name is inherited inside an own fallback object",
+    shape: "U-OVER-BUDGET",
+    edits: [{ op: "inherit", path: ["fallback", "name"] }],
+    expect: ["J-FALLBACK"],
+  },
+  { id: "M-REASON-INHERITED", label: "the reason is inherited through the prototype, not an own key", shape: "U-OVER-BUDGET", edits: [{ op: "inherit", path: ["reason"] }], expect: ["J-REASON"] },
+  {
+    id: "M-CODE-INHERITED",
+    label: "the producer's refusal code is inherited through the prototype, not an own key",
+    shape: "U-CLI-REFUSAL",
+    edits: [{ op: "inherit", path: ["refusal_code"] }],
+    expect: ["J-CODE"],
+  },
+  {
+    id: "M-SCORE-BESIDE-CYCLE",
+    label: "a score is written beside a cycle in the record: the walk cuts the cycle and still finds the key",
+    shape: "U-STALE-BASIS",
+    edits: [
+      { op: "set", path: ["detail", "score"], value: 0 },
+      { op: "link", path: ["detail", "self"], to: ["detail"] },
+    ],
+    expect: ["J-SCORE"],
+  },
+  { id: "M-ARRAY-RECORD", label: "the drive returns an array, not a record object", shape: "U-CLI-REFUSAL", edits: [{ op: "replace", value: [] }], expect: ["J-RECORD"] },
+  // wb-qxdr F4 escapes, named residuals of the judge (quiet rows): keys Object.keys does not list, and a derived copy
+  // of a policy-output string.
+  { id: "R-HIDDEN-SCORE", label: "a score written as a non-enumerable own key", shape: "U-CLI-REFUSAL", edits: [{ op: "hide", path: ["score"], value: 0 }], expect: [] },
+  { id: "R-SYMBOL-SCORE", label: "a score written under a symbol key", shape: "U-RPC-REFUSAL", edits: [{ op: "symbol", path: ["score"], value: 0 }], expect: [] },
+  {
+    id: "R-DERIVED-OUTPUT",
+    label: "a re-cased copy of the fake seam's policy candidate under an unnamed key",
+    shape: "U-STALE-BASIS",
+    edits: [{ op: "set", path: ["detail", "note"], value: "POLICY-CANDIDATE-7" }],
     expect: [],
   },
 ];
@@ -573,6 +710,55 @@ export const PAIRING_CASES: readonly PairingRow[] = [
   },
 ];
 
+/** One entry of a synthetic tree: a regular file, a symbolic link (its target relative to the link's directory), or a FIFO. */
+export type WalkEntry = { readonly kind: "file"; readonly text: string } | { readonly kind: "symlink"; readonly target: string } | { readonly kind: "fifo" };
+
+export interface WalkRow {
+  readonly id: string;
+  readonly label: string;
+  /** The tree a test plants under a scratch root, keyed by root-relative POSIX path. */
+  readonly tree: Readonly<Record<string, WalkEntry>>;
+  /** What srcFiles(root) must return, in order, or the message it must throw. */
+  readonly expect: { readonly files: readonly string[] } | { readonly throws: string };
+}
+
+const PLAIN: WalkEntry = { kind: "file", text: "export const plain = 1;\n" };
+
+/** wb-qxdr (ii): every property srcFiles claims, each on a synthetic tree planted on rule-11 scratch. */
+export const WALKS: readonly WalkRow[] = [
+  { id: "W-HIDDEN", label: "a hidden file is walked", tree: { "src/.hidden.ts": PLAIN, "src/plain.ts": PLAIN }, expect: { files: ["src/.hidden.ts", "src/plain.ts"] } },
+  {
+    id: "W-EXTENSIONLESS",
+    label: "an extensionless file in a nested directory is walked",
+    tree: { "src/nested/deeper/noext": PLAIN, "src/plain.ts": PLAIN },
+    expect: { files: ["src/nested/deeper/noext", "src/plain.ts"] },
+  },
+  {
+    id: "W-SYMLINKED-FILE",
+    label: "a symlinked file is followed and listed under its link path, beside its target",
+    tree: { "src/link.ts": { kind: "symlink", target: "real/target.ts" }, "src/real/target.ts": PLAIN },
+    expect: { files: ["src/link.ts", "src/real/target.ts"] },
+  },
+  {
+    id: "W-DIRECTORY-ALIAS",
+    label: "a second link to a real directory already walked is not walked again",
+    tree: { "src/real/b.ts": PLAIN, "src/zalias": { kind: "symlink", target: "real" } },
+    expect: { files: ["src/real/b.ts"] },
+  },
+  {
+    id: "W-DIRECTORY-LOOP",
+    label: "a directory symlink back to the walked directory ends the walk",
+    tree: { "src/a.ts": PLAIN, "src/loop": { kind: "symlink", target: "." } },
+    expect: { files: ["src/a.ts"] },
+  },
+  {
+    id: "W-FIFO",
+    label: "a FIFO is neither a regular file nor a directory, so the walk fails closed",
+    tree: { "src/a.ts": PLAIN, "src/pipe": { kind: "fifo" } },
+    expect: { throws: "src/pipe: neither a regular file nor a directory under the scan root" },
+  },
+];
+
 // ---- ROWS: every judged row, in census order, as the roster carries it ----
 
 export interface JudgedRow {
@@ -596,12 +782,16 @@ export const ROWS: readonly JudgedRow[] = [
   ...UNUSABLE.map(entry => row("UNUSABLE", entry.id, entry.label, [JSON.stringify({ reason: entry.reason, code: entry.code ?? null, seam: entry.seam })])),
   ...MUTANTS.map(entry => row("MUTANTS", entry.id, entry.label, [JSON.stringify({ shape: entry.shape, edits: entry.edits, expect: entry.expect })])),
   ...PAIRING_CASES.map(entry => row("PAIRING_CASES", entry.id, entry.label, [JSON.stringify({ pairings: entry.pairings, files: entry.files, expect: entry.expect })])),
+  ...WALKS.map(entry => row("WALKS", entry.id, entry.label, [JSON.stringify({ tree: entry.tree, expect: entry.expect })])),
 ];
 
-/** The named residual families and their quiet-row members (scan residuals and the judge's one). */
+/** The named residual families and their quiet-row members (the scan's, then the judge's). */
 export const RESIDUAL_FAMILIES: Readonly<Record<string, readonly string[]>> = {
   "R-COMPUTED": ["RESIDUALS R-COMPUTED"],
   "R-ENVIRONMENT": ["RESIDUALS R-ENVIRONMENT"],
   "R-TRANSITIVE": ["RESIDUALS R-TRANSITIVE"],
+  "R-BINARY-SPELLING": ["RESIDUALS R-BINARY-SPELLING"],
   "R-UNNAMED-NUMBER": ["MUTANTS R-UNNAMED-NUMBER"],
+  "R-UNWALKED-KEY": ["MUTANTS R-HIDDEN-SCORE", "MUTANTS R-SYMBOL-SCORE"],
+  "R-DERIVED-OUTPUT": ["MUTANTS R-DERIVED-OUTPUT"],
 };
