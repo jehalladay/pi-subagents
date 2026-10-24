@@ -1,11 +1,13 @@
 /**
  * wb-gxd7.4 (GPC-FEEDBACK-CONTRACT-AUDIT-R4, program-triage-2026-10-22, epic wb-gxd7): gp kind labels are never silently renamed
- * in Pi, a census with an until-then leg. Statement (the bead note's full statement; its title is trimmed): "When Pi's GraphDataIR
+ * in Pi, a census with an until-then leg. Statement (the bead note's full statement; its title is trimmed, program status at
+ * 0107c72992f3: "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics"): "When Pi's GraphDataIR
  * exporter or FunctionIR program for gp carries source kind labels like `ready-work` (gating artifact: the D-NAMES-1 ruling, open
  * at the pin, plus the Pi exporter of wb-0lf.2, none exists), it shall never silently rename or normalize them to satisfy
  * `IDENTIFIER_PATTERN`; any mapping is bijective over the admitted set, refuses collisions and retains the source label, and a
  * `GF_IDENTIFIER_INVALID` from `gp build` is a typed refusal, never a silent fix" - GraphPolicyCLI
- * docs/programs/feedback-contract-audit-2026-10-21/02-contract-audit.md:100 at 0107c72992f3. Acceptance (the owner filing's; each
+ * docs/programs/feedback-contract-audit-2026-10-21/02-contract-audit.md:100 at 0107c72992f3 (program status at 0107c72992f3:
+ * "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics"). Acceptance (the owner filing's; each
  * clause sits verbatim in exactly one row label below): "(a) an exporter fixture with kinds `ready-work` and `ready_work` yields
  * two distinct FunctionIR names or a typed collision refusal, never one merged name, with the source label kept verbatim beside
  * the mapped identifier; (b) a fixture GF_IDENTIFIER_INVALID build refusal is recorded as a typed refusal carrying the producer's
@@ -15,16 +17,22 @@
  *
  * MEASURED BY THE CUTTING SEAT (2026-10-23; read-only `git show` in the local GraphPolicyCLI checkout, no fetch; the installed gp
  * run by absolute path in a scratch directory outside every repository; the roster quotes every line it rests on, verbatim):
- * AT THE PIN 0107c72992f3: 02-contract-audit.md:100 is D-NAMES-1 (open) and carries the quote; 03-developer-workplan.md:58 and
+ * AT THE PIN 0107c72992f3: 02-contract-audit.md:100 is D-NAMES-1 (open, program status at 0107c72992f3:
+ * "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics") and carries the quote;
+ * 03-developer-workplan.md:58 and
  * 04-verification-playbook.md:98 carry the two authority sentences; 04:125 is the installed-replay cell "Adapter can represent
- * source names"; 01-finding-inventory.md:19 is F11 and links its feedback file, whose :37, :41 and :53 record the producer's own
+ * source names"; 01-finding-inventory.md:19 is F11 (program status at 0107c72992f3:
+ * "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics") and links its feedback file,
+ * whose :37, :41 and :53 record the producer's own
  * `gp build` refusal of a dashed candidate type, the program identity of the underscore spelling and the schema identity of the
  * dashed schema; ts/src/function-ir/catalogue.ts:405-406 are IDENTIFIER_PATTERN and PROGRAM_ID_PATTERN; structure.ts:257 emits
  * GF_IDENTIFIER_INVALID at the entry's JSON pointer with the bare message. AT THE INSTALLED gp (source checkout 3f7d52cd, a clean
  * descendant of the pin; built entry ts/dist/main.js identified by its SHA-256 in the roster, never by `gp --version`):
  * docs/dev/RULINGS.md:778 and :800 rule D-NAMES-1 RULED-OTHER (2026-10-22: both grammars kept, no GP-generated mapping, no silent
  * rename, dashed labels stay valid graphs), :810 lets the GF_IDENTIFIER_INVALID message change without changing code or path, and
- * the two patterns are byte-identical to the pin's. AT gp main b361dac (a descendant): docs/dev/DECISIONS.md:5394 (IMPL-12490)
+ * the two patterns are byte-identical to the pin's (program status at 0107c72992f3:
+ * "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics"). AT gp main b361dac (a
+ * descendant): docs/dev/DECISIONS.md:5394 (IMPL-12490)
  * changes every non-program-id message to a template naming the grammar (catalogue.ts:411), codes, paths and collect-all order
  * unchanged. THE RUNS (17, every one with its rc, stdout and stderr in the roster): the host-adapter program.json (blob ef964ee6,
  * byte-identical at the pin and the installed source) with its candidate type renamed to each grammar probe, its entity kind
@@ -33,18 +41,23 @@
  * snapshot.json --json`. Each presented document is re-derived here from the vendored bytes and held to its recorded SHA-256.
  *
  * Pi has no gp exporter (wb-0lf.2, owner-reserved, is unbuilt): no module below src, qa or examples names a FunctionIR or
- * GraphDataIR kind field, so the trigger has not fired and the D-NAMES-1 ruling alone does not open the gate. (a)-(c) are armed on
+ * GraphDataIR kind field, so the trigger has not fired and the D-NAMES-1 ruling alone (program status at 0107c72992f3:
+ * "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics") does not open the gate.
+ * (a)-(c) are armed on
  * a test-side REFERENCE, the rule an adopting exporter must meet, and its JUDGES, beside the walk that keeps the absence true:
  *  exportKindNames(labels, table) carries every source label verbatim beside its identifier, renames a label only through a
  *    recorded bijection table and otherwise passes it through untouched (gp, not Pi, judges the grammar), refuses a table that is
  *    no bijection, and refuses a collision of two sources on one identifier as a typed refusal naming both - Pi chooses neither
- *    alternative of D-NAMES-1 and records no table today.
+ *    alternative of D-NAMES-1 (program status at 0107c72992f3:
+ *    "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics") and records no table today.
  *  recordBuild(capture) records a gp build refusal as a typed refusal: the envelope code, the exit and every rejection's code, path
  *    and message verbatim in producer order, keyed by code and path (the message stays opaque), never repaired, never retried.
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
  *  A, acceptance (a). A1 the producer facts: the two grammars read from the pin's lines decide every measured build exactly as the
  *    installed gp did, the data layer admits both fixture kinds as distinct schemas, and the measured identities equal the pin's
- *    F11 records; A2 the reference over the fixture and every table case: two distinct names with the source verbatim, or a typed
+ *    F11 records (program status at 0107c72992f3:
+ *    "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics"); A2 the reference over the
+ *    fixture and every table case: two distinct names with the source verbatim, or a typed
  *    collision or table refusal, never one merged name; A3 the mapping mutants are refused, each by exactly its rules.
  *  B, acceptance (b). B1 the measured refusal: exit 2, GP_CLI_PROGRAM_INVALID, no program identity, three GF_IDENTIFIER_INVALID
  *    rejections whose paths resolve in the presented program to the dashed label and equal the pin's F11 record, the same for the
@@ -500,6 +513,8 @@ const ROWS: readonly Row[] = [
       "(a) an exporter fixture with kinds `ready-work` and `ready_work` yields two distinct FunctionIR names or a typed collision refusal, never one merged name, with the source label kept verbatim beside the mapped identifier: the two grammars read from the pin's lines decide every measured gp build as the installed gp did and the data layer admits both kinds as distinct schemas; the reference exporter carries each source label verbatim beside its identifier, passes both kinds through as two distinct names without a table, refuses a recorded table that collapses one onto the other as a typed collision naming both sources, refuses a table that is no bijection, and every merging, source-dropping or untyped mapping of the mutant table is refused by its rules",
     pins: ["A1", "A2", "A3"],
   },
+  // Rows A and B cite the pin's F11 record, a GP-FCA-2026-10-21 finding label (program status at 0107c72992f3:
+  // "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics")
   {
     id: "B",
     label:
@@ -1178,6 +1193,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(pinLine(`${F11}:53`), "the dashed schema identity is the one the pin's F11 recorded").toContain(`"schema":"${dashedSchema}"`);
     expect(pinLine(`${F11}:41`), "the underscore program identity is the one the pin's F11 recorded").toContain(`"program":"${underscoreProgram}"`);
     expect(pinLine("02-contract-audit.md:100"), "02:100 names the pass-check, fail-build gap").toContain("A `ready-work` source candidate type can therefore pass graph check but fail build.");
+    // D-NAMES-1 is a GP-FCA-2026-10-21 decision label (program status at 0107c72992f3:
+    // "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics")
     expect([installedLine("docs/dev/RULINGS.md:778").includes("RULED-OTHER"), installedLine("docs/dev/RULINGS.md:778").includes("no silent rename"), installedLine("docs/dev/RULINGS.md:800").includes("no GP-generated mapping")], "D-NAMES-1 is ruled at the installed source: both grammars kept, no mapping, no silent rename").toEqual([true, true, true]);
     expect(pinLine("04-verification-playbook.md:125"), "the installed-replay cell is the gate's second condition").toContain("Adapter can represent source names");
     return done("A1", {
@@ -1223,6 +1240,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(parsed.identities, "no program identity is minted").toEqual({});
     const rejections = refusalRejections(refused.stdout);
     expect(rejections.map(rejection => rejection.code), "three GF_IDENTIFIER_INVALID rejections").toEqual([REFUSAL_CODE, REFUSAL_CODE, REFUSAL_CODE]);
+    // F11 is a GP-FCA-2026-10-21 finding label (program status at 0107c72992f3:
+    // "Proposed audit obligations and candidate resolutions, NOT accepted GraphPolicyCLI semantics")
     expect(rejections, "the installed gp's rejections are the pin's F11 record").toStrictEqual(f11Rejections());
     const families = ROSTER.producer.runs
       .filter(entry => entry.verb === "build" && entry.rc !== 0 && KIND_FAMILIES.includes(entry.family))

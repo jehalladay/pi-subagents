@@ -21,19 +21,28 @@
  *   annotated call site (keyed <file>#<decision point id>; the name is checked for shape, not resolved).
  * The detector reads gp's MEASURED vocabulary (gp 0.1.0 on this host: `gp --version` names protocol graphpolicy.rpc.v1,
  * `gp inspect errors --json` answers schema graphpolicy.cli.v1 with GP_E_ registry codes, and `gp rpc --stdio` replies
- * gp.rpc.reply/v1 with gp.rpc.error/v1 and GP_RPC_ codes). The binary shape reads gp anywhere in a command line: before
- * it the start, whitespace, / or \, ; & | ( ` " ' or =, after it the end, whitespace, \, ; & | ) < > ` " ', in any
- * letter case, with or without .exe, .cmd or .ps1 (respin #1: refusal U2 and finding F3).
+ * gp.rpc.reply/v1 with gp.rpc.error/v1 and GP_RPC_ codes). The binary shape reads gp in a command line at the
+ * enumerated boundaries: before it the start, whitespace, / or \, ; & | ( ` " ' or =, after it the end, whitespace, \,
+ * ; & | ) < > ` " ', in any letter case, with or without .exe, .cmd or .ps1 (respin #1: refusal U2 and finding F3).
  * The audit document is judged in its RENDERED view through the landed census binding (docsSection and sectionTables
  * of test/helpers/census.ts): a section renders once under the level-1 AUDIT_TITLE and ends at the next level-1 or
  * level-2 heading, carries no HTML, and renders exactly one table, so a table hidden in an HTML comment or a code
- * block (nested fences included) or moved under another level-1 heading is a finding; a cell is read as it renders, and
- * a field whose rendered text shows no letter, number, punctuation or symbol (BLANK_FILLERS aside) is empty (respin #1:
- * refusal U1). A gp-decision-point comment inside a nested block, or trailing a later statement on the literal's line,
+ * block (nested fences included) or moved under another level-1 heading is a finding (respin #1: refusal U1). A cell's
+ * value is read as the cell renders on its own, so a value written as a reference-style link (its definition lies
+ * outside the cell) reads as its source and matches nothing: fail-closed. A field is empty when its rendered text, on
+ * its own or in the document (reference-style links resolved through the document's link reference definitions, as
+ * the binding's own lex renders the cell), shows no letter, number, punctuation or symbol (BLANK_FILLERS aside), so an
+ * empty reference-style link or image is empty (wb-66f7: gate F1 K01-K04 and review P2 of wb-1xvp.3 cut #2).
+ * A gp-decision-point comment inside a nested block, or trailing a later statement on the literal's line,
  * annotates that block or statement, not the call site (respin #1: finding F6).
  * Residuals (named, each pinned by a quiet row in RESIDUALS): a gp binary named only at run time (configuration or
  * environment), a binary name built by concatenation, the caller of a local gp wrapper (the wrapper's own literal
- * is the call site), and a gp name the shell assembles from quoted or escaped parts are not detected.
+ * is the call site), a gp name the shell assembles from quoted or escaped parts, and shell grammar outside the
+ * enumerated boundary sets (wb-66f7, gate E11-E18: a parameter expansion's default or assigned value, a case pattern's
+ * closing parenthesis, an IFS expansion, a brace expansion, a PowerShell script block, the caret escape of cmd.exe, a
+ * gp.bat shim) are not detected. Attribution residuals (named, each pinned by a row in MISATTRIBUTED that reads
+ * today's credit; wb-66f7, gate B01-B03): a marker annotating another expression of the call site's statement (an
+ * expression-bodied arrow's body, a nested call's argument, a ternary's first branch) is credited to the call site.
  * Rule 16: the judged tables live in test/helpers/gp-control-loop-audit-cases.ts; the frozen-shape row pins every row's
  * table/id:pin count, and the out-of-file anchor test/fixtures/gp-control-loop-audit-roster.json (the hk9l/5jha roster
  * pattern) carries every judged row (table, id, label, the SHA-256 of each pin), the residual families and every
@@ -69,6 +78,7 @@ import {
   HEADERS,
   type JudgedRow,
   MEASURED,
+  MISATTRIBUTED,
   MODULE,
   NOT_CALL_SITES,
   RESIDUALS,
@@ -193,6 +203,10 @@ describe("each gp call site names its audited decision point (gp-decision-point 
   it.each(UNANNOTATED)("%s does not name one", (_name, text) => {
     expect(pointsOf(text)).toEqual([[]]);
   });
+
+  it.each(MISATTRIBUTED)("residual %s (named, not cured: today's credit is pinned)", (_name, text, expected) => {
+    expect(pointsOf(text)).toEqual(expected);
+  });
 });
 
 function judge(fixture: Fixture = {}): string[] {
@@ -276,10 +290,11 @@ describe("the audit contract's frozen shape (the document a gp-wiring cut must s
     const tables: ReadonlyArray<readonly [string, readonly (readonly unknown[])[], number]> = [
       ["CALL_SITES", CALL_SITES, 32],
       ["NOT_CALL_SITES", NOT_CALL_SITES, 9],
-      ["RESIDUALS", RESIDUALS, 4],
+      ["RESIDUALS", RESIDUALS, 12],
       ["ANNOTATED", ANNOTATED, 7],
       ["UNANNOTATED", UNANNOTATED, 8],
-      ["FALSIFIERS", FALSIFIERS, 45],
+      ["MISATTRIBUTED", MISATTRIBUTED, 3],
+      ["FALSIFIERS", FALSIFIERS, 55],
       ["STAGES", STAGES, 11],
     ];
     for (const [name, rows, size] of tables) {
@@ -292,10 +307,11 @@ describe("the audit contract's frozen shape (the document a gp-wiring cut must s
     expect(ROWS.map((entry) => `${entry.table}/${entry.id}:${entry.pins.length}`)).toEqual([
       "CALL_SITES/CALL_SITES-01:2", "CALL_SITES/CALL_SITES-02:2", "CALL_SITES/CALL_SITES-03:2", "CALL_SITES/CALL_SITES-04:2", "CALL_SITES/CALL_SITES-05:2", "CALL_SITES/CALL_SITES-06:2", "CALL_SITES/CALL_SITES-07:2", "CALL_SITES/CALL_SITES-08:2", "CALL_SITES/CALL_SITES-09:2", "CALL_SITES/CALL_SITES-10:2", "CALL_SITES/CALL_SITES-11:2", "CALL_SITES/CALL_SITES-12:2", "CALL_SITES/CALL_SITES-13:2", "CALL_SITES/CALL_SITES-14:2", "CALL_SITES/CALL_SITES-15:2", "CALL_SITES/CALL_SITES-16:2", "CALL_SITES/CALL_SITES-17:2", "CALL_SITES/CALL_SITES-18:3", "CALL_SITES/CALL_SITES-19:2", "CALL_SITES/CALL_SITES-20:2", "CALL_SITES/CALL_SITES-21:2", "CALL_SITES/CALL_SITES-22:2", "CALL_SITES/CALL_SITES-23:2", "CALL_SITES/CALL_SITES-24:2", "CALL_SITES/CALL_SITES-25:2", "CALL_SITES/CALL_SITES-26:2", "CALL_SITES/CALL_SITES-27:2", "CALL_SITES/CALL_SITES-28:9", "CALL_SITES/CALL_SITES-29:2", "CALL_SITES/CALL_SITES-30:2", "CALL_SITES/CALL_SITES-31:3", "CALL_SITES/CALL_SITES-32:3",
       "NOT_CALL_SITES/NOT_CALL_SITES-01:1", "NOT_CALL_SITES/NOT_CALL_SITES-02:1", "NOT_CALL_SITES/NOT_CALL_SITES-03:1", "NOT_CALL_SITES/NOT_CALL_SITES-04:1", "NOT_CALL_SITES/NOT_CALL_SITES-05:1", "NOT_CALL_SITES/NOT_CALL_SITES-06:1", "NOT_CALL_SITES/NOT_CALL_SITES-07:1", "NOT_CALL_SITES/NOT_CALL_SITES-08:1", "NOT_CALL_SITES/NOT_CALL_SITES-09:1",
-      "RESIDUALS/RESIDUALS-01:1", "RESIDUALS/RESIDUALS-02:1", "RESIDUALS/RESIDUALS-03:1", "RESIDUALS/RESIDUALS-04:1",
+      "RESIDUALS/RESIDUALS-01:1", "RESIDUALS/RESIDUALS-02:1", "RESIDUALS/RESIDUALS-03:1", "RESIDUALS/RESIDUALS-04:1", "RESIDUALS/RESIDUALS-05:1", "RESIDUALS/RESIDUALS-06:1", "RESIDUALS/RESIDUALS-07:1", "RESIDUALS/RESIDUALS-08:1", "RESIDUALS/RESIDUALS-09:1", "RESIDUALS/RESIDUALS-10:1", "RESIDUALS/RESIDUALS-11:1", "RESIDUALS/RESIDUALS-12:1",
       "ANNOTATED/ANNOTATED-01:2", "ANNOTATED/ANNOTATED-02:2", "ANNOTATED/ANNOTATED-03:2", "ANNOTATED/ANNOTATED-04:2", "ANNOTATED/ANNOTATED-05:2", "ANNOTATED/ANNOTATED-06:2", "ANNOTATED/ANNOTATED-07:2",
       "UNANNOTATED/UNANNOTATED-01:1", "UNANNOTATED/UNANNOTATED-02:1", "UNANNOTATED/UNANNOTATED-03:1", "UNANNOTATED/UNANNOTATED-04:1", "UNANNOTATED/UNANNOTATED-05:1", "UNANNOTATED/UNANNOTATED-06:1", "UNANNOTATED/UNANNOTATED-07:1", "UNANNOTATED/UNANNOTATED-08:1",
-      "FALSIFIERS/FALSIFIERS-01:2", "FALSIFIERS/FALSIFIERS-02:2", "FALSIFIERS/FALSIFIERS-03:3", "FALSIFIERS/FALSIFIERS-04:3", "FALSIFIERS/FALSIFIERS-05:3", "FALSIFIERS/FALSIFIERS-06:3", "FALSIFIERS/FALSIFIERS-07:2", "FALSIFIERS/FALSIFIERS-08:3", "FALSIFIERS/FALSIFIERS-09:3", "FALSIFIERS/FALSIFIERS-10:2", "FALSIFIERS/FALSIFIERS-11:3", "FALSIFIERS/FALSIFIERS-12:2", "FALSIFIERS/FALSIFIERS-13:2", "FALSIFIERS/FALSIFIERS-14:2", "FALSIFIERS/FALSIFIERS-15:2", "FALSIFIERS/FALSIFIERS-16:2", "FALSIFIERS/FALSIFIERS-17:2", "FALSIFIERS/FALSIFIERS-18:2", "FALSIFIERS/FALSIFIERS-19:2", "FALSIFIERS/FALSIFIERS-20:2", "FALSIFIERS/FALSIFIERS-21:2", "FALSIFIERS/FALSIFIERS-22:2", "FALSIFIERS/FALSIFIERS-23:2", "FALSIFIERS/FALSIFIERS-24:2", "FALSIFIERS/FALSIFIERS-25:2", "FALSIFIERS/FALSIFIERS-26:2", "FALSIFIERS/FALSIFIERS-27:2", "FALSIFIERS/FALSIFIERS-28:2", "FALSIFIERS/FALSIFIERS-29:2", "FALSIFIERS/FALSIFIERS-30:3", "FALSIFIERS/FALSIFIERS-31:3", "FALSIFIERS/FALSIFIERS-32:3", "FALSIFIERS/FALSIFIERS-33:2", "FALSIFIERS/FALSIFIERS-34:2", "FALSIFIERS/FALSIFIERS-35:2", "FALSIFIERS/FALSIFIERS-36:3", "FALSIFIERS/FALSIFIERS-37:2", "FALSIFIERS/FALSIFIERS-38:3", "FALSIFIERS/FALSIFIERS-39:3", "FALSIFIERS/FALSIFIERS-40:3", "FALSIFIERS/FALSIFIERS-41:3", "FALSIFIERS/FALSIFIERS-42:1", "FALSIFIERS/FALSIFIERS-43:3", "FALSIFIERS/FALSIFIERS-44:1", "FALSIFIERS/FALSIFIERS-45:1",
+      "MISATTRIBUTED/MISATTRIBUTED-01:2", "MISATTRIBUTED/MISATTRIBUTED-02:2", "MISATTRIBUTED/MISATTRIBUTED-03:2",
+      "FALSIFIERS/FALSIFIERS-01:2", "FALSIFIERS/FALSIFIERS-02:2", "FALSIFIERS/FALSIFIERS-03:3", "FALSIFIERS/FALSIFIERS-04:3", "FALSIFIERS/FALSIFIERS-05:3", "FALSIFIERS/FALSIFIERS-06:3", "FALSIFIERS/FALSIFIERS-07:2", "FALSIFIERS/FALSIFIERS-08:3", "FALSIFIERS/FALSIFIERS-09:3", "FALSIFIERS/FALSIFIERS-10:2", "FALSIFIERS/FALSIFIERS-11:3", "FALSIFIERS/FALSIFIERS-12:2", "FALSIFIERS/FALSIFIERS-13:2", "FALSIFIERS/FALSIFIERS-14:2", "FALSIFIERS/FALSIFIERS-15:2", "FALSIFIERS/FALSIFIERS-16:2", "FALSIFIERS/FALSIFIERS-17:2", "FALSIFIERS/FALSIFIERS-18:2", "FALSIFIERS/FALSIFIERS-19:2", "FALSIFIERS/FALSIFIERS-20:2", "FALSIFIERS/FALSIFIERS-21:2", "FALSIFIERS/FALSIFIERS-22:2", "FALSIFIERS/FALSIFIERS-23:2", "FALSIFIERS/FALSIFIERS-24:2", "FALSIFIERS/FALSIFIERS-25:2", "FALSIFIERS/FALSIFIERS-26:2", "FALSIFIERS/FALSIFIERS-27:2", "FALSIFIERS/FALSIFIERS-28:2", "FALSIFIERS/FALSIFIERS-29:2", "FALSIFIERS/FALSIFIERS-30:3", "FALSIFIERS/FALSIFIERS-31:3", "FALSIFIERS/FALSIFIERS-32:3", "FALSIFIERS/FALSIFIERS-33:2", "FALSIFIERS/FALSIFIERS-34:2", "FALSIFIERS/FALSIFIERS-35:2", "FALSIFIERS/FALSIFIERS-36:3", "FALSIFIERS/FALSIFIERS-37:2", "FALSIFIERS/FALSIFIERS-38:3", "FALSIFIERS/FALSIFIERS-39:3", "FALSIFIERS/FALSIFIERS-40:3", "FALSIFIERS/FALSIFIERS-41:3", "FALSIFIERS/FALSIFIERS-42:1", "FALSIFIERS/FALSIFIERS-43:3", "FALSIFIERS/FALSIFIERS-44:1", "FALSIFIERS/FALSIFIERS-45:1", "FALSIFIERS/FALSIFIERS-46:3", "FALSIFIERS/FALSIFIERS-47:3", "FALSIFIERS/FALSIFIERS-48:3", "FALSIFIERS/FALSIFIERS-49:3", "FALSIFIERS/FALSIFIERS-50:3", "FALSIFIERS/FALSIFIERS-51:3", "FALSIFIERS/FALSIFIERS-52:1", "FALSIFIERS/FALSIFIERS-53:1", "FALSIFIERS/FALSIFIERS-54:2", "FALSIFIERS/FALSIFIERS-55:2",
       "STAGES/STAGES-01:1", "STAGES/STAGES-02:1", "STAGES/STAGES-03:1", "STAGES/STAGES-04:1", "STAGES/STAGES-05:1", "STAGES/STAGES-06:1", "STAGES/STAGES-07:1", "STAGES/STAGES-08:1", "STAGES/STAGES-09:1", "STAGES/STAGES-10:1", "STAGES/STAGES-11:1",
     ]);
   });
@@ -354,7 +370,7 @@ describe("the roster (the out-of-file anchor test/fixtures/gp-control-loop-audit
   it("roster: the judged rows, the residual families and every registered test equal the roster, in order and both ways", ({ task }) => {
     const roster = readRoster();
     expect(ROWS, "the judged rows, read now, equal the roster rows exactly and in order").toEqual(roster.rows);
-    expect(RESIDUALS.map(([name]) => name), "the named residual families equal the roster's").toEqual(roster.residuals);
+    expect([...RESIDUALS, ...MISATTRIBUTED].map(([name]) => name), "the named residual families equal the roster's").toEqual(roster.residuals);
     const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {
       for (const child of tasks) {

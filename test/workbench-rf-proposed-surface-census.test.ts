@@ -25,60 +25,83 @@
  *
  * READINGS
  * - PROPOSED: the program's proposed surface as three families, matched in any case: P1 <GATED_KIND> (its two words joined
- *   directly or by any run of white space, "_", "." or "-"); P2 a federation command (an rf command line whose first four
- *   words reach a word beginning federat, a dotted leaf or capability id with such a segment, or a federation receipt); P3
- *   the candidate shadow render (the flag --candidate, or shadow and render joined directly or by white space, "_" or "-").
+ *   directly or by any run of white space, "_", ".", "-" or a backslash (a markdown escape), or of their HTML character
+ *   references, which a docs page renders as the characters they name); P2 a federation command (an rf command line whose
+ *   first four words reach a word beginning federat, where an interposed word is any run of non-space characters, so an
+ *   operand such as <root>, /srv/ws or ~/ws is one word; a dotted leaf or capability id with such a segment; or a federation
+ *   receipt); P3 the candidate shadow render (the flag --candidate, or shadow and render joined directly or by white space,
+ *   "_" or "-").
  * - (a) A1 RECONCILE_EVIDENCE_READS.reactivefiber (src/workflow/reconcile.ts:67) is the pinned roster; A2 the reactivefiber.*
  *   descriptors of the native and the injected registration are the pinned roster, each read-class; A3 both input arms spawn
  *   one rf whose argv names context render (stand-in rf on PATH); A4 no src string or template literal spells a PROPOSED
- *   family and no argv array holds a federation word as an element (a TypeScript AST scan with a floor and a context render
- *   argv it must see); A5 no native or injected descriptor's
- *   JSON spells one; A6 a docs mention of a PROPOSED family is admitted only when a line it spans carries a NOT-INSTALLED
- *   marker (MARKERS: closed, whole words, any case), else it is named-as-available.
- * - (b) RECEIPT RULE: a registered reactivefiber.* descriptor outside the pinned roster is admitted only when ONE file of
- *   docs/workbench/receipts names its id as a whole token, carries the version command (`rf --json --version`, or its two
- *   flags in the other order) and quotes a result.leaves entry - a flat JSON object - whose path is the id's leaf (the id
- *   without "reactivefiber.") and whose served is true; otherwise, first failing condition first, receipt-absent,
- *   receipt-no-version-command, receipt-no-served-leaf or receipt-leaf-not-served. Every rf leaf registration beyond the
- *   roster is held to it: a federation leaf is one, and the rule does not try to tell federation leaves from others. B1
- *   applies it to the real registrations and receipts, B2-B6 to constructed ones (FED_ID).
+ *   family and no argv array holds a federation word as an element (a TypeScript AST scan of every src script module,
+ *   SCRIPT_MODULE: .ts, .mts, .cts, .tsx, .js, .mjs, .cjs or .jsx, with a floor, a context render argv it must see and a
+ *   walk covering every such src path git lists); A5 no native or injected descriptor's JSON spells one; A6 a docs mention
+ *   of a PROPOSED family is admitted only when a line it spans carries a NOT-INSTALLED marker outside an HTML comment
+ *   (MARKERS: closed, whole words, any case; a marker the page does not render admits nothing), else it is
+ *   named-as-available.
+ * - (b) RECEIPT RULE: a reactivefiber.* id beyond the frozen base RECEIPT_EXEMPT (the preview, which the filing states as
+ *   the whole roster) is admitted only when ONE file of docs/workbench/receipts names it as a whole token, carries the
+ *   version command (`rf --json --version`, or its two flags in the other order) and quotes a result.leaves entry - a flat
+ *   JSON object - whose path is the id's leaf (the id without "reactivefiber.") and whose served is true; otherwise, first
+ *   failing condition first, receipt-absent, receipt-no-version-command, receipt-no-served-leaf or receipt-leaf-not-served.
+ *   It judges every registered rf id and every PINNED_ROSTER member: the roster says which ids may register (any other is
+ *   beyond-roster) and exempts none of them, so a cut that flips PINNED_ROSTER without its receipt reds B1. A federation leaf
+ *   is one such id, and the rule does not try to tell federation leaves from others. B1 applies it to the real
+ *   registrations and receipts (a walk covering every receipt git lists; and, judged with no receipt, every roster member
+ *   beyond the base must read receipt-absent, so an exemption that follows the roster reds at the first flip), B2-B6, H1 and
+ *   H2 to constructed ones (FED_ID, and FLIP_ID flipped into a constructed roster, H1). Row B keeps the filing's clause and
+ *   its six pins: wb-4nut.2's census (C4) reads row B's label, pins and version commands from the roster.
  * - (c) CITATION: a locator of one of the program's documents (README, DEVELOPER or BEADS-2026-10-21, ".md" optional, then a
- *   colon and line numbers) joined to the program's directory or name (harness2-federated-peer with its optional date,
- *   federated-peer or h2fp, in any case, with any white space, "_", "." or "-" between the words) by only a slash or white
- *   space. Its pin is the hex token "@" attaches to it; without one, the hex tokens on the lines the citation spans.
+ *   colon and line numbers, or a #L anchor such as #L37 or #L13-L20) joined to the program's directory or name
+ *   (harness2-federated-peer with its optional date, federated-peer or h2fp, in any case, with any white space, "_", "." or
+ *   "-" between the words) by white space or by a run of punctuation - "/", ":", ",", "(", "[", a backtick, a quote, "-", an
+ *   en dash or an em dash - each with optional white space before it. Its pin is the hex token "@" attaches to it; without
+ *   one, the hex tokens on the lines the citation spans.
  *   ADMITTED: a token equal to or extending 740c1a817 (BEADS-2026-10-21.md:3) or 6a251bf73af5 (the owner triage's read sha).
  *   foreign-pin: an attached pin that is not admitted; unpinned: no attached pin and no admitted token on its lines. C1 judges
- *   every docs file; C2 every string value of every row of the tracked bead export (.beads/issues.jsonl), where a line that
- *   does not parse is a finding of its own.
+ *   every docs file (a walk covering every docs path git lists); C2 every string value of every row of the tracked bead
+ *   export (.beads/issues.jsonl), reading every non-empty line and every row it parses into, where a line that does not
+ *   parse is a finding of its own.
  * - KNOWN FINDINGS (measured at base 0b2a80f; reported, never admitted): C2 reads exactly two foreign-pin rows, wb-4nut.2 and
  *   wb-4nut.9 (owner filings of the harness2-reactive-evolution triage), whose citations carry 978f6515c302. FOREIGN_PIN_ROWS
  *   pins that pair set exactly, so a further foreign-pin or any unpinned citation reds; whether 978f6515c302 is admitted is
  *   the owner's ruling, not this census's.
  * OUTSIDE ANCHORS. F1: the owner filing row of wb-a9l2.7 in the tracked bead export carries every pinned constant verbatim,
  * its acceptance sentence names exactly the clauses rows A-C cover, and each of rows A-C's labels equals its clause there
- * (the placeholder composed back), so a relabelled or shortened label reds against the owner's own text.
+ * (the placeholder composed back), so a relabelled or shortened label reds against the owner's own text. The quoted
+ * constants include the receipt base RECEIPT_EXEMPT beside PINNED_ROSTER, so widening either beyond the preview reds F1.
  * The out-of-file roster test/fixtures/rf-proposed-surface-roster.json holds every row's id, label and pins, every pin's
  * witness and the pinned constants, so a pin deleted, relabelled, swapped or removed from every literal of this file at once
  * still reds against it. FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal.
  * RESIDUALS (named; each has a pinned quiet row in row R): R1 a locator joined to no program directory or name (README:37
  * alone) is not attributed, since one paragraph can carry several programs' README locators (measured: wb-4nut.9); R2 a
  * locator parted from the program name by any other word or a possessive is not joined; R3 a mention with no document
- * locator (the epic title, a filing's draft key) cites no statement; R4 a marker anywhere on a mention's lines admits it,
- * whatever the marker qualifies; R5 a paraphrase of the proposed surface outside P1-P3 - prose naming federation with no rf
+ * locator (the epic title, a filing's draft key) cites no statement; R4 a rendered marker (one outside an HTML comment)
+ * anywhere on a mention's lines admits it, whatever the marker qualifies; R5 a paraphrase of the proposed surface outside
+ * P1-P3 - prose naming federation with no rf
  * command form, dotted segment or receipt (rf's federation surface; the program names federated-peer and
  * federated-workspaces) - is not caught; R6 a src comment, or a literal
  * composed at runtime from parts, is invisible to A4 (A5 is the runtime backstop for descriptor text only); R7 the receipt
  * rule reads text, so a receipt quoting a leaf entry it never captured from rf passes; R8 an admitted token anywhere on an
  * unattached citation's lines admits it, whatever the token qualifies.
+ * FOLLOW-UP wb-svce (the wb-a9l2.7 gate's PREP F1-F7): F1 P2's interposed words are any non-space run (MA9-MA11 and A4's
+ * rootOperand, pathOperand and homeOperand controls); F2 the receipt base RECEIPT_EXEMPT replaces the PINNED_ROSTER
+ * exemption, the rule judges every roster member (H1) and F1 quotes the base; F3 the constructed aggregations G1-G3; F4 the
+ * claimed tolerances MA12-MA15, ME2 and H2; F5 the punctuation joins and #L anchors (MC11, MC12); F6 the git-covering walks
+ * of A4, A6, C1 and B1 (G4) and C2's every-row and every-line reads; F7 the backslash and character-reference separators
+ * (MA16), the comment-blind marker (MA17) and the script-module walk (G5).
  * SCOPE: the families, the markers and the leaf convention are this cut's reading of the filing; the producer facts above
  * are measured at the shas named and are not re-read here (the census is hermetic). A later cut that registers an rf leaf
- * flips PINNED_ROSTER and brings its receipt.
+ * flips PINNED_ROSTER, brings its receipt (B1 holds every id beyond RECEIPT_EXEMPT to one) and re-anchors F1's quoted
+ * roster, which the filing states as the preview only.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs, the receipts directory and
  * the bead export are only read.
  */
+import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { chmodSync, type Dirent, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, type Dirent, lstatSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -114,6 +137,9 @@ const PREVIEW_ID = "reactivefiber.render.preview";
 const RF_PREFIX = "reactivefiber.";
 /** Pi's rf capability roster at this cut: the reconcile evidence read (reconcile.ts:67) and both registrations. */
 const PINNED_ROSTER: readonly string[] = [PREVIEW_ID];
+/** The frozen base the receipt rule exempts: the preview, registered before this census and stated by the filing as the whole
+ * roster (F1 quotes it). A PINNED_ROSTER flip never widens it, so every leaf a later cut adds owes its receipt (B1, H1). */
+const RECEIPT_EXEMPT: readonly string[] = [PREVIEW_ID];
 const ROSTER_SITE = "src/workflow/reconcile.ts:67";
 /** The version command a registering receipt carries; rf reads its two flags in either order. */
 const VERSION_COMMANDS: readonly string[] = ["rf --json --version", "rf --version --json"];
@@ -131,9 +157,13 @@ const FOREIGN_PIN_ROWS: readonly string[] = ["wb-4nut.2@978f6515c302", "wb-4nut.
 /** A constructed federation leaf registration for the receipt rule's cases; no rf build serves it. */
 const FED_LEAF = "federation.read";
 const FED_ID = `${RF_PREFIX}${FED_LEAF}`;
+/** A constructed leaf flipped into a constructed roster (H1): roster membership never stands in for its receipt. */
+const FLIP_LEAF = "graph.test";
+const FLIP_ID = `${RF_PREFIX}${FLIP_LEAF}`;
 
-/** The separator class P1 allows between its two words: any run of white space, "_", "." or "-". */
-const SEP = "[\\s_.-]*";
+/** The separator class P1 allows between its two words: any run of white space, "_", ".", "-" or a backslash (a markdown escape),
+ * or of their HTML character references (a docs page renders each as the character it names). */
+const SEP = "(?:[\\s_.\\\\-]|&(?:#0*(?:32|45|46|95|160)|#x0*(?:20|2d|2e|5f|a0)|nbsp|lowbar|period);)*";
 interface Family {
   readonly id: string;
   readonly source: string;
@@ -144,7 +174,7 @@ const PROPOSED: readonly Family[] = [
   {
     id: "P2",
     source:
-      "\\brf(?:\\s+[\\w.-]+){0,3}?\\s+-{0,2}federat\\w*|\\b[\\w-]+\\.federat\\w*|\\bfederat\\w*\\.[\\w-]+|\\bfederation[\\s_-]+receipts?\\b",
+      "\\brf(?:\\s+\\S+){0,3}?\\s+-{0,2}federat\\w*|\\b[\\w-]+\\.federat\\w*|\\bfederat\\w*\\.[\\w-]+|\\bfederation[\\s_-]+receipts?\\b",
   },
   { id: "P3", source: "--candidate\\b|\\bshadow[\\s_-]*render" },
 ];
@@ -157,12 +187,18 @@ const MARKERS: readonly string[] = [
   "not served", "gated",
 ];
 const MARKER = new RegExp(`\\b(?:${MARKERS.map(marker => marker.split(" ").join("\\s+")).join("|")})\\b`, "i");
+/** A window as a docs page renders it: its HTML comments blanked (an unclosed one runs to the window's end), so a marker the
+ * page does not show admits nothing. */
+const rendered = (window: string): string => window.replace(/<!--[\s\S]*?(?:-->|$)/g, " ");
 
 /** The program's name, with its optional date: harness2-federated-peer, federated-peer or h2fp. */
 const NAME = "(?:\\bh2fp\\b|\\b(?:harness2[\\s_.-]*)?federated[\\s_.-]*peer(?:[\\s_.-]*2026-10-20)?)";
-const LINK = "(?:\\s*/\\s*|\\s+)";
+/** A name joins its locator by white space or by a run of punctuation ("/", ":", ",", "(", "[", a backtick, a quote, "-", an en
+ * dash or an em dash), each with optional white space before it. */
+const LINK = "(?:(?:\\s*[/:,(\\[`\"'\\u2013\\u2014-])+\\s*|\\s+)";
 const DOC = "(?:README|DEVELOPER|BEADS(?:-2026-10-21)?)(?:\\.md)?";
-const LINES = ":\\d+(?:-\\d+)?(?:\\s*,\\s*:?\\d+(?:-\\d+)?)*";
+/** Line numbers: a colon and numbers (a list, ranges allowed), or a #L anchor (#L37, #L13-L20). */
+const LINES = "(?::\\d+(?:-\\d+)?(?:\\s*,\\s*:?\\d+(?:-\\d+)?)*|#L\\d+(?:-L?\\d+)?)";
 /** Group 1 is the locator, group 2 the attached pin. */
 const CITATION = `${NAME}${LINK}(${DOC}${LINES})(?:@([0-9a-f]{7,40})(?![0-9a-z]))?`;
 const HEX_TOKEN = "(?<![0-9a-z])[0-9a-f]{7,40}(?![0-9a-z])";
@@ -196,9 +232,23 @@ const ROWS: readonly Row[] = [
     pins: ["F1"],
   },
   {
+    id: "G",
+    label: "the aggregations rows A4, A6 and C1 rest on, the walk-coverage reading and the src module filter report each finding of a constructed input in order and nothing else",
+    pins: ["G1", "G2", "G3", "G4", "G5"],
+  },
+  {
+    id: "H",
+    label: "the receipt rule row B1 applies: a member of a flipped roster still owes its receipt, and a receipt names an id only as a whole token",
+    pins: ["H1", "H2"],
+  },
+  {
     id: "M",
     label: "the citation matcher rows C1-C2 read, the export reader C2 reads and the mention matcher row A6 reads judge their pinned inputs in order",
-    pins: ["MC1", "MC2", "MC3", "MC4", "MC5", "MC6", "MC7", "MC8", "MC9", "MC10", "MA1", "MA2", "MA3", "MA4", "MA5", "MA6", "MA7", "MA8", "ME1"],
+    pins: [
+      "MC1", "MC2", "MC3", "MC4", "MC5", "MC6", "MC7", "MC8", "MC9", "MC10", "MC11", "MC12",
+      "MA1", "MA2", "MA3", "MA4", "MA5", "MA6", "MA7", "MA8", "MA9", "MA10", "MA11", "MA12", "MA13", "MA14", "MA15", "MA16", "MA17",
+      "ME1", "ME2",
+    ],
   },
   {
     id: "R",
@@ -258,6 +308,7 @@ function rosterWitness(pin: string): Json {
 function constants(): Json {
   return {
     pinnedRoster: [...PINNED_ROSTER],
+    receiptExempt: [...RECEIPT_EXEMPT],
     rosterSite: ROSTER_SITE,
     versionCommands: [...VERSION_COMMANDS],
     admittedPins: [...ADMITTED_PINS],
@@ -267,6 +318,7 @@ function constants(): Json {
     families: PROPOSED.map(family => family.id),
     markers: [...MARKERS],
     fedId: FED_ID,
+    flipId: FLIP_ID,
   };
 }
 
@@ -313,11 +365,15 @@ function docsFiles(): SourceFile[] {
   docsCache ??= filesBelow(join(REPO, "docs")).map(file => ({ path: relative(REPO, file), text: textOf(file) }));
   return docsCache;
 }
-function docsWalk(): { floorMet: boolean; anchorRead: boolean } {
+function docsWalk(): { floorMet: boolean; anchorRead: boolean; coversGit: boolean } {
   const files = docsFiles();
   const anchor = files.find(file => file.path === DOCS_ANCHOR.file);
-  const walk = { floorMet: files.length >= DOCS_FLOOR, anchorRead: anchor?.text.includes(DOCS_ANCHOR.token) === true };
-  expect(walk, `docs: ${files.length} files walked, floor ${DOCS_FLOOR}, anchor ${DOCS_ANCHOR.file}`).toStrictEqual({ floorMet: true, anchorRead: true });
+  const walk = {
+    floorMet: files.length >= DOCS_FLOOR,
+    anchorRead: anchor?.text.includes(DOCS_ANCHOR.token) === true,
+    coversGit: covers(files.map(file => file.path), gitListed("docs")),
+  };
+  expect(walk, `docs: ${files.length} files walked, floor ${DOCS_FLOOR}, anchor ${DOCS_ANCHOR.file}`).toStrictEqual({ floorMet: true, anchorRead: true, coversGit: true });
   return walk;
 }
 
@@ -356,7 +412,7 @@ function mentionsOf(text: string): Mention[] {
   return PROPOSED.flatMap(family =>
     [...text.matchAll(new RegExp(family.source, "gi"))].map(match => {
       const span = spanOf(text, starts, match.index ?? 0, match[0].length);
-      return { family: family.id, line: span.line, marked: MARKER.test(span.window) };
+      return { family: family.id, line: span.line, marked: MARKER.test(rendered(span.window)) };
     }),
   );
 }
@@ -432,11 +488,13 @@ function beadExport(): BeadExport {
   return exportCache;
 }
 /** Row C2's reading of an export: unpinned citations, foreign row@pin pairs and the rows holding an admitted citation. */
-function readExport(data: BeadExport): { unpinned: string[]; foreignPinPairs: string[]; citing: Set<string> } {
+function readExport(data: BeadExport): { unpinned: string[]; foreignPinPairs: string[]; citing: Set<string>; rowsRead: number } {
   const unpinned: string[] = [];
   const foreign = new Set<string>();
   const citing = new Set<string>();
+  let rowsRead = 0;
   for (const row of data.rows) {
+    rowsRead += 1;
     for (const value of row.strings) {
       for (const citation of citationsOf(value)) {
         if (citation.diagnosis === "unpinned") unpinned.push(`${row.id} ${citation.locator}`);
@@ -445,7 +503,7 @@ function readExport(data: BeadExport): { unpinned: string[]; foreignPinPairs: st
       }
     }
   }
-  return { unpinned, foreignPinPairs: [...foreign].sort(), citing };
+  return { unpinned, foreignPinPairs: [...foreign].sort(), citing, rowsRead };
 }
 /** The export holds 672 rows at base 0b2a80f. */
 const EXPORT_FLOOR = 500;
@@ -479,6 +537,36 @@ function injectedDescriptors(): { id: string; effectClass: string; text: string 
 
 const oldPath = process.env.PATH;
 const scratches: string[] = [];
+
+const listedMemo = new Map<string, string[]>();
+/** Whether a repo-relative path is a regular file on disk: the walks never follow a symlink, so a listed one is not owed. */
+function regularFile(path: string): boolean {
+  try {
+    return lstatSync(join(REPO, path)).isFile();
+  } catch {
+    return false;
+  }
+}
+/** The paths git lists below a repo root (tracked, and untracked ones git does not ignore) that are regular files on disk,
+ * repo-relative. */
+function gitListed(root: string): string[] {
+  let listed = listedMemo.get(root);
+  if (listed === undefined) {
+    const output = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", root], {
+      cwd: REPO,
+      encoding: "utf8",
+      env: { ...process.env, PATH: oldPath },
+    });
+    listed = [...new Set(output.split("\0"))].filter(path => path !== "" && regularFile(path));
+    listedMemo.set(root, listed);
+  }
+  return listed;
+}
+/** Whether a walk covers a listing: the listing is not empty and every listed path was walked (an extra walked path is fine). */
+function covers(walked: readonly string[], listed: readonly string[]): boolean {
+  const seen = new Set(walked);
+  return listed.length > 0 && listed.every(path => seen.has(path));
+}
 afterEach(() => {
   process.env.PATH = oldPath;
   removeScratch(...scratches.splice(0));
@@ -516,7 +604,7 @@ interface ScriptScan {
 }
 /** One module's string and template literals spelling a PROPOSED family, and its context render argv arrays. */
 function scanScripts(fileName: string, text: string): ScriptScan {
-  const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, /x$/.test(fileName) ? ts.ScriptKind.TSX : ts.ScriptKind.TS);
   const hits: string[] = [];
   let renderArgv = 0;
   const visit = (node: ts.Node): void => {
@@ -537,6 +625,13 @@ function scanScripts(fileName: string, text: string): ScriptScan {
   };
   visit(source);
   return { hits, renderArgv };
+}
+/** The src script modules A4 reads: every TypeScript or JavaScript module extension (src holds .ts only at this cut). */
+const SCRIPT_MODULE = /\.(?:[cm]?[jt]s|[jt]sx)$/;
+/** Row A4's aggregation over a module set: every module's hits in order, and the context render argv arrays across them. */
+function srcScan(files: readonly SourceFile[]): ScriptScan {
+  const found = files.map(file => scanScripts(file.path, file.text));
+  return { hits: found.flatMap(result => result.hits), renderArgv: found.reduce((sum, result) => sum + result.renderArgv, 0) };
 }
 
 /** Whether `text` names `token` as a whole token (a trailing full stop ends a sentence, not the token). */
@@ -560,10 +655,10 @@ function leafEntries(text: string): { path: string; served: boolean }[] {
   }
   return entries;
 }
-/** The receipt rule (header, READINGS (b)) over registered ids and receipt texts: one finding per unadmitted id. */
+/** The receipt rule (header, READINGS (b)) over rf ids and receipt texts: one finding per unadmitted id beyond the base. */
 function registrationFindings(ids: readonly string[], receipts: readonly string[]): string[] {
   const findings: string[] = [];
-  for (const id of ids.filter(entry => entry.startsWith(RF_PREFIX) && !PINNED_ROSTER.includes(entry))) {
+  for (const id of [...new Set(ids)].filter(entry => entry.startsWith(RF_PREFIX) && !RECEIPT_EXEMPT.includes(entry))) {
     const naming = receipts.filter(text => namesToken(text, id));
     const versioned = naming.filter(text => VERSION_COMMANDS.some(command => text.includes(command)));
     const entries = versioned.flatMap(leafEntries).filter(entry => entry.path === id.slice(RF_PREFIX.length));
@@ -574,6 +669,14 @@ function registrationFindings(ids: readonly string[], receipts: readonly string[
   }
   return findings;
 }
+/** Row B1's reading against a roster: the registered rf ids beyond it, and the receipt rule over every registered id and
+ * every roster member (the roster names which ids may register; it exempts none of them from a receipt). */
+function rosterReading(ids: readonly string[], receipts: readonly string[], roster: readonly string[]): { beyondRoster: string[]; findings: string[] } {
+  return {
+    beyondRoster: [...new Set(ids.filter(id => id.startsWith(RF_PREFIX) && !roster.includes(id)))],
+    findings: registrationFindings([...ids, ...roster], receipts),
+  };
+}
 /** One result.leaves entry in the shape the installed rf prints (measured at 0.1.832). */
 function leafJson(path: string, served: boolean): string {
   return JSON.stringify({
@@ -582,7 +685,7 @@ function leafJson(path: string, served: boolean): string {
   });
 }
 
-type CaseKind = "citation" | "mention" | "script" | "receipt" | "export";
+type CaseKind = "citation" | "mention" | "script" | "receipt" | "export" | "roster" | "docs-mentions" | "docs-citations" | "src" | "covers" | "modules";
 interface Case {
   readonly pin: string;
   readonly kind: CaseKind;
@@ -590,14 +693,61 @@ interface Case {
   readonly outcome: readonly string[];
 }
 const caps = (word: string): string => word.charAt(0).toUpperCase() + word.slice(1);
+const EN_DASH = String.fromCodePoint(0x2013);
+const EM_DASH = String.fromCodePoint(0x2014);
+/** A constructed file set from alternating path and text entries (rows G1-G3). */
+function fileSet(texts: readonly string[]): SourceFile[] {
+  const files: SourceFile[] = [];
+  for (let index = 0; index + 1 < texts.length; index += 2) files.push({ path: texts[index] ?? "", text: texts[index + 1] ?? "" });
+  return files;
+}
 const REGISTERS = `# wb-x: registers ${FED_ID}`;
-/** B2-B6 judge constructed receipts, M the two matchers, R the residuals' quiet rows. */
+/** B2-B6 and H judge constructed receipts and rosters, G the aggregations and walk readings, M the matchers, R the residuals' quiet rows. */
 const CASES: readonly Case[] = [
   { pin: "B2", kind: "receipt", texts: [], outcome: [`${FED_ID}: receipt-absent`] },
   { pin: "B3", kind: "receipt", texts: [REGISTERS, `\`rf --json --version\` -> ${leafJson(FED_LEAF, true)}`], outcome: [`${FED_ID}: receipt-no-version-command`] },
   { pin: "B4", kind: "receipt", texts: [`${REGISTERS}; \`rf --json --version\` -> ${leafJson("graph.test", true)}`], outcome: [`${FED_ID}: receipt-no-served-leaf`] },
   { pin: "B5", kind: "receipt", texts: [`${REGISTERS}; \`rf --json --version\` -> ${leafJson(FED_LEAF, false)}`], outcome: [`${FED_ID}: receipt-leaf-not-served`] },
   { pin: "B6", kind: "receipt", texts: [`${REGISTERS}.\n\`rf --version --json\` -> ${leafJson(FED_LEAF, true)}`], outcome: [] },
+  { pin: "H1", kind: "roster", texts: [], outcome: [`${FED_ID}: beyond-roster`, `${FED_ID}: receipt-absent`, `${FLIP_ID}: receipt-absent`] },
+  {
+    pin: "H2",
+    kind: "receipt",
+    texts: [`# wb-x: registers ${FED_ID}er and ${FED_ID}.v2; \`rf --json --version\` -> ${leafJson(FED_LEAF, true)}`],
+    outcome: [`${FED_ID}: receipt-absent`],
+  },
+  {
+    pin: "G1",
+    kind: "docs-mentions",
+    texts: [
+      "docs/x/a.md", "rf federation import is proposed.\nPi reads the preview.",
+      "docs/x/b.md", "Pi reads the preview.\nPi runs `rf federation import --json` for peers.",
+    ],
+    outcome: ["docs/x/b.md:2 P2: named-as-available"],
+  },
+  {
+    pin: "G2",
+    kind: "docs-citations",
+    texts: [
+      "docs/x/a.md", "harness2-federated-peer README.md:37@6a251bf73af5 pins the rule.",
+      "docs/x/b.md", "Intro.\nharness2-federated-peer DEVELOPER.md:64 keeps the program opt-in.",
+      "docs/x/c.md", "harness2-federated-peer BEADS:13@978f6515c302 lists the beads.",
+    ],
+    outcome: ["docs/x/b.md:2 DEVELOPER.md:64: unpinned", "docs/x/c.md:1 BEADS:13: foreign-pin"],
+  },
+  {
+    pin: "G3",
+    kind: "src",
+    texts: ["src/x/a.ts", 'spawn("rf", ["--workspace", root, "context", "render", "--json"]);', "src/x/b.ts", 'export const C = "rf federation import";'],
+    outcome: ["src/x/b.ts: P2", "renderArgv 1"],
+  },
+  { pin: "G4", kind: "covers", texts: ["src/x/a.ts", "src/x/b.ts"], outcome: ["covered", "not-covered", "covered", "not-covered"] },
+  {
+    pin: "G5",
+    kind: "modules",
+    texts: ["a.ts", "b.mts", "c.cts", "d.tsx", "e.js", "f.mjs", "g.cjs", "h.jsx", "i.d.ts", "j.json", "k.md", "l.tsbuildinfo"],
+    outcome: ["a.ts", "b.mts", "c.cts", "d.tsx", "e.js", "f.mjs", "g.cjs", "h.jsx", "i.d.ts"],
+  },
   { pin: "MC1", kind: "citation", texts: ["Quote. harness2-federated-peer-2026-10-20/DEVELOPER.md:3@6a251bf73af5. Authority follows."], outcome: ["admitted"] },
   { pin: "MC2", kind: "citation", texts: ["docs/programs/harness2-federated-peer-2026-10-20/README.md:37@740c1a817"], outcome: ["admitted"] },
   { pin: "MC3", kind: "citation", texts: ["harness2-federated-peer-2026-10-20/BEADS-2026-10-21.md:20@6a251bf73af57c3a703caf6892dfe3015e06a481"], outcome: ["admitted"] },
@@ -608,6 +758,22 @@ const CASES: readonly Case[] = [
   { pin: "MC8", kind: "citation", texts: ["per h2fp DEVELOPER.md:64 the program stays opt-in"], outcome: ["unpinned"] },
   { pin: "MC9", kind: "citation", texts: ["harness2-federated-peer\nREADME.md:37@6a251bf73af5"], outcome: ["admitted"] },
   { pin: "MC10", kind: "citation", texts: ["harness2_federated_peer BEADS:13, :14, :20 at 740c1a817;\nFederated-Peer DEVELOPER:52"], outcome: ["admitted", "unpinned"] },
+  {
+    pin: "MC11",
+    kind: "citation",
+    texts: [
+      `No command ships (harness2-federated-peer: README.md:37); harness2-federated-peer (DEVELOPER.md:64), harness2-federated-peer, BEADS:13 and federated-peer ${EN_DASH} README.md:43.`,
+    ],
+    outcome: ["unpinned", "unpinned", "unpinned", "unpinned"],
+  },
+  {
+    pin: "MC12",
+    kind: "citation",
+    texts: [
+      `harness2-federated-peer/README.md#L37@6a251bf73af5\nh2fp \`DEVELOPER.md:3\`\nfederated-peer [BEADS-2026-10-21.md#L13-L20]\nharness2-federated-peer ${EM_DASH} README:51@978f6515c302`,
+    ],
+    outcome: ["admitted", "unpinned", "unpinned", "foreign-pin"],
+  },
   { pin: "MA1", kind: "mention", texts: ["Pi runs `rf federation import --json` to read a peer."], outcome: ["P2:available"] },
   { pin: "MA2", kind: "mention", texts: [`Pi reads ${WORD_A}_${WORD_B} rows.`], outcome: ["P1:available"] },
   { pin: "MA3", kind: "mention", texts: ["`rf graph test --candidate C --json` shadow-renders the row."], outcome: ["P3:available", "P3:available"] },
@@ -616,6 +782,25 @@ const CASES: readonly Case[] = [
   { pin: "MA6", kind: "mention", texts: [`Pi registers ${FED_ID} for peers.`], outcome: ["P2:available"] },
   { pin: "MA7", kind: "mention", texts: ["Pi stores Federation Receipts beside the run."], outcome: ["P2:available"] },
   { pin: "MA8", kind: "mention", texts: ["Pi runs `rf federation import --json`.\nThat surface is proposed."], outcome: ["P2:available"] },
+  { pin: "MA9", kind: "mention", texts: ["Pi runs `rf --workspace <root> federation import --json` to read a peer."], outcome: ["P2:available"] },
+  { pin: "MA10", kind: "mention", texts: ["Pi runs `rf --workspace /srv/ws federation import --json` to read a peer."], outcome: ["P2:available"] },
+  { pin: "MA11", kind: "mention", texts: ["Pi runs `rf --workspace ~/ws federation import`."], outcome: ["P2:available"] },
+  { pin: "MA12", kind: "mention", texts: ["Pi runs `rf graph\nfederate` (proposed) for peers."], outcome: ["P2:marked"] },
+  { pin: "MA13", kind: "mention", texts: ["Pi runs `rf --no-input --json graph federate` for peers."], outcome: ["P2:available"] },
+  { pin: "MA14", kind: "mention", texts: [`Pi reads ${WORD_A} - ${WORD_B} rows and ${WORD_A}.${WORD_B} rows.`], outcome: ["P1:available", "P1:available"] },
+  { pin: "MA15", kind: "mention", texts: ["Pi runs the shadow_render pass, then the shadowrender pass."], outcome: ["P3:available", "P3:available"] },
+  {
+    pin: "MA16",
+    kind: "mention",
+    texts: [`Pi reads ${WORD_A}\\_${WORD_B}, ${WORD_A}&#95;${WORD_B} and ${WORD_A}&nbsp;${WORD_B} rows.`],
+    outcome: ["P1:available", "P1:available", "P1:available"],
+  },
+  {
+    pin: "MA17",
+    kind: "mention",
+    texts: ["Pi runs `rf federation import --json` to read a peer. <!-- proposed -->\nPi runs `rf federation import --json` (proposed). <!-- a note -->"],
+    outcome: ["P2:available", "P2:marked"],
+  },
   {
     pin: "ME1",
     kind: "export",
@@ -627,6 +812,17 @@ const CASES: readonly Case[] = [
       ].join("\n"),
     ],
     outcome: ["wb-x.1 README.md:37", "wb-x.2@978f6515c302", "line 3 unreadable"],
+  },
+  {
+    pin: "ME2",
+    kind: "export",
+    texts: [
+      [
+        JSON.stringify({ id: "wb-x.3", comments: [{ text: "Authority: harness2-federated-peer README.md:37." }] }),
+        JSON.stringify({ id: "wb-x.4", dependencies: [{ notes: ["harness2-federated-peer DEVELOPER.md:64@978f6515c302"] }] }),
+      ].join("\n"),
+    ],
+    outcome: ["wb-x.3 README.md:37", "wb-x.4@978f6515c302"],
   },
   { pin: "R1", kind: "citation", texts: ["README:37 and BEADS:3 pin this; DEVELOPER.md:64 too."], outcome: [] },
   { pin: "R2", kind: "citation", texts: ["harness2-federated-peer's README.md:37 and the federated-peer program README.md:51"], outcome: [] },
@@ -647,6 +843,22 @@ function outcomeOf(kind: CaseKind, texts: readonly string[]): string[] {
     const reading = readExport(data);
     return [...reading.unpinned, ...reading.foreignPinPairs, ...data.unreadable];
   }
+  if (kind === "roster") {
+    // A constructed roster (the preview with FLIP_ID flipped in), never the live PINNED_ROSTER: a real flip leaves H1 as it is.
+    const reading = rosterReading([PREVIEW_ID, FED_ID], texts, [PREVIEW_ID, FLIP_ID]);
+    return [...reading.beyondRoster.map(id => `${id}: beyond-roster`), ...reading.findings];
+  }
+  if (kind === "docs-mentions") return docsMentionFindings(fileSet(texts));
+  if (kind === "docs-citations") return docsCitationFindings(fileSet(texts));
+  if (kind === "src") {
+    const scan = srcScan(fileSet(texts));
+    return [...scan.hits, `renderArgv ${scan.renderArgv}`];
+  }
+  if (kind === "covers") {
+    const verdict = (walked: readonly string[], listed: readonly string[]): string => (covers(walked, listed) ? "covered" : "not-covered");
+    return [verdict(texts, texts), verdict(texts.slice(1), texts), verdict([...texts, "src/x/extra.ts"], texts), verdict([], [])];
+  }
+  if (kind === "modules") return texts.filter(name => SCRIPT_MODULE.test(name));
   return registrationFindings([PREVIEW_ID, FED_ID], texts);
 }
 
@@ -675,12 +887,13 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     return { legacy, view };
   },
   A4: async () => {
-    const files = filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts"));
-    const found = files.map(file => scanScripts(relative(REPO, file), textOf(file)));
-    const hits = found.flatMap(result => result.hits);
+    const files = filesBelow(join(REPO, "src")).filter(file => SCRIPT_MODULE.test(file));
+    const scan = srcScan(files.map(file => ({ path: relative(REPO, file), text: textOf(file) })));
+    const hits = scan.hits;
     const srcFloorMet = files.length >= 100;
-    const renderArgvSeen = found.reduce((sum, result) => sum + result.renderArgv, 0) >= 1;
-    expect({ srcFloorMet, renderArgvSeen }, `src modules walked: ${files.length}`).toStrictEqual({ srcFloorMet: true, renderArgvSeen: true });
+    const walkCoversGit = covers(files.map(file => relative(REPO, file)), gitListed("src").filter(path => SCRIPT_MODULE.test(path)));
+    const renderArgvSeen = scan.renderArgv >= 1;
+    expect({ srcFloorMet, walkCoversGit, renderArgvSeen }, `src modules walked: ${files.length}`).toStrictEqual({ srcFloorMet: true, walkCoversGit: true, renderArgvSeen: true });
     expect(hits, "a src literal spelling the proposed surface").toEqual([]);
     const control = (text: string): number => scanScripts("control.ts", text).hits.length;
     const controls = {
@@ -689,8 +902,11 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       template: control(["const cmd = `rf graph test $", "{c} shadow-render`;"].join("")),
       gatedLiteral: control(`const kind = "${WORD_A}_${WORD_B}";`),
       argvFederation: control('spawn("rf", ["--workspace", w, "federation", "import"]);'),
+      rootOperand: control('const cmd = "rf --workspace <root> federation import";'),
+      pathOperand: control('const cmd = "rf --workspace /srv/ws federation import";'),
+      homeOperand: control('const cmd = "rf --workspace ~/ws federation import";'),
     };
-    return { srcFloorMet, renderArgvSeen, hits, controls };
+    return { srcFloorMet, walkCoversGit, renderArgvSeen, hits, controls };
   },
   A5: async () => {
     const descriptors = [...(await nativeDescriptors()), ...injectedDescriptors()];
@@ -708,13 +924,18 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   },
   B1: async () => {
     const ids = [...(await nativeDescriptors()), ...injectedDescriptors()].map(descriptor => descriptor.id);
-    const receipts = filesBelow(RECEIPTS_DIR).filter(file => file.endsWith(".md")).map(textOf);
+    const files = filesBelow(RECEIPTS_DIR).filter(file => file.endsWith(".md"));
+    const receipts = files.map(textOf);
     const receiptsFloorMet = receipts.length >= 30;
-    const beyondRoster = [...new Set(ids.filter(id => id.startsWith(RF_PREFIX) && !PINNED_ROSTER.includes(id)))];
-    const findings = registrationFindings(ids, receipts);
-    expect(receiptsFloorMet, `receipts read: ${receipts.length}`).toBe(true);
+    const coversGit = covers(files.map(file => relative(REPO, file)), gitListed(relative(REPO, RECEIPTS_DIR)).filter(path => path.endsWith(".md")));
+    // The rule's exemption is the base alone: judged with no receipt, every roster member beyond RECEIPT_EXEMPT is a finding,
+    // so a rule that exempts PINNED_ROSTER again reds here at the first flip, whichever leaf it adds.
+    const owed = PINNED_ROSTER.filter(id => id.startsWith(RF_PREFIX) && !RECEIPT_EXEMPT.includes(id));
+    const exemptionIsBase = registrationFindings(PINNED_ROSTER, []).length === owed.length;
+    const { beyondRoster, findings } = rosterReading(ids, receipts, PINNED_ROSTER);
+    expect({ receiptsFloorMet, coversGit, exemptionIsBase }, `receipts read: ${receipts.length}`).toStrictEqual({ receiptsFloorMet: true, coversGit: true, exemptionIsBase: true });
     expect({ beyondRoster, findings }).toStrictEqual({ beyondRoster: [], findings: [] });
-    return { receiptsFloorMet, beyondRoster, findings };
+    return { receiptsFloorMet, coversGit, exemptionIsBase, beyondRoster, findings };
   },
   C1: async () => {
     const walk = docsWalk();
@@ -724,9 +945,12 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   },
   C2: async () => {
     const data = beadExport();
-    const { unpinned, foreignPinPairs, citing } = readExport(data);
+    const { unpinned, foreignPinPairs, citing, rowsRead } = readExport(data);
+    const lines = textOf(BEAD_EXPORT).split("\n").filter(line => line.trim() !== "").length;
     const reading = {
       rowsFloorMet: data.rows.length >= EXPORT_FLOOR,
+      everyLineRead: lines > 0 && data.rows.length + data.unreadable.length === lines,
+      everyRowRead: rowsRead === data.rows.length,
       unreadable: data.unreadable,
       filingRowsCiting: FILING_ROWS.filter(id => citing.has(id)),
       unpinned,
@@ -734,6 +958,8 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     };
     expect(reading).toStrictEqual({
       rowsFloorMet: true,
+      everyLineRead: true,
+      everyRowRead: true,
       unreadable: [],
       filingRowsCiting: [...FILING_ROWS],
       unpinned: [],
@@ -751,7 +977,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const clauses = clauseTexts.map(clause => /^\(([a-z])\) /.exec(clause)?.[1] ?? "");
     const judged = ROWS.filter(entry => /^\([a-z]\) /.test(entry.label));
     const labelsEqual = judged.filter((entry, index) => clauseTexts[index] === entry.label.replace(PLACEHOLDER, GATED_KIND)).map(entry => entry.id);
-    const pinned = [...PINNED_ROSTER, ROSTER_SITE, VERSION_COMMANDS[0] ?? "", ...ADMITTED_PINS, GATING];
+    const pinned = [...new Set([...RECEIPT_EXEMPT, ...PINNED_ROSTER]), ROSTER_SITE, VERSION_COMMANDS[0] ?? "", ...ADMITTED_PINS, GATING];
     const constantsQuoted = pinned.filter(constant => text.includes(constant));
     expect(clauses, "the filing's acceptance clauses against the judged rows").toEqual(judged.map(entry => entry.label.charAt(1)));
     expect(labelsEqual, "each judged label equals its acceptance clause").toEqual(judged.map(entry => entry.id));
@@ -772,7 +998,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
 
 describe("wb-a9l2.7 proposed-surface census (RF-HARNESS2-FEDERATED-PEER-R7, absent-today leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:6", "B:6", "C:2", "F:1", "M:19", "R:8"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:6", "B:6", "C:2", "F:1", "G:5", "H:2", "M:31", "R:8"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
