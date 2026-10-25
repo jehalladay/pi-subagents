@@ -7,6 +7,11 @@
  * (docs/programs/compositional-assembly-2026-10-18/README.md:33@6a251bf73af5). The acceptance is the owner filing's, verbatim: the
  * labels of rows A-D below.
  *
+ * FOLLOW-UP wb-dm26 (R694, F1 of the landing-277 gate, cmd_8bf70fa257bc composing cmd_edce85938e24): the zero-bytes rows A1-A3 and
+ * B4 also measure TEXT DEPENDENCE, so a partial or re-joined copy of the document is no longer green (the gate's S7/S7b); the src
+ * and docs walks hold every path git would commit below them, so a walk narrowed above its floor reds (S15/S16); D4 also reads the
+ * PAGE_ROOTS markdown pages, the root README.md included (S11), and residual R10 names the markdown it leaves unwalked.
+ *
  * SOURCE (ReactiveFiberCLI at 6a251bf73af5, read with git show; the filing quotes it): "5. 'assembly handoff': receipt containing
  * render ID, graph revision, source basis, environment/worker versions, workspace locator/capabilities and integrity digest; NOT the
  * copied prompt." (README.md:33); "These are semantic contracts, not commitments to six new top-level verbs." (:35); "All
@@ -26,8 +31,9 @@
  * render ID, the receipt's first field, and Pi hands no rf assembly across processes or agents: the statement's trigger has not
  * fired. The census pins that absence and every surface the obligation already reaches:
  *  T, the trigger, absent today. T1 a TypeScript AST scan of every src module: no identifier, string or template literal spells a
- *    handoff (HANDOFF_WORD: hand, an optional run of white space, "_" or "-", then off, in any case), with a floor and the controls
- *    of rows MT; T2 the receipt-field reader set: per field of the filing's Authority list, the src modules whose code spells it (an
+ *    handoff (HANDOFF_WORD: hand, an optional run of white space, "_" or "-", then off, in any case), with a floor, git's listing of
+ *    src as the walk's outside anchor and the controls of rows MT; T2 the receipt-field reader set: per field of the filing's
+ *    Authority list, the src modules whose code spells it (an
  *    identifier or property name equal to it, or a string literal holding it as a word) are exactly READER_SET, so a module that
  *    starts reading render_id or graph_revision_id - as any handoff carrying them must - reds until its cut re-pins the set (controls
  *    MF); T3 Pi's rf roster stays reactivefiber.render.preview (RECONCILE_EVIDENCE_READS.reactivefiber at
@@ -40,12 +46,17 @@
  *    sourceVersion) verbatim and zero bytes of the document or the block; A2 without bundle_revision_id it names no bundle at all; A3
  *    native evidence carries the operation id and the bundle (else the graph) basis and no document or block byte; A4 the native
  *    reading of that preview states render_id null, ephemeral true and no transaction: there is no render ID for a Pi surface to
- *    carry.
+ *    carry. ZERO BYTES is read two ways: no surfaced string holds the whole document or block, and TEXT DEPENDENCE - each surface is
+ *    built once from the preview and once from its twin (every ASCII letter of the document and of the block rotated thirteen
+ *    places, so each twin keeps its text's length and layout and holds no letter of it at any position); the input must differ
+ *    exactly at the two texts' own leaves (TEXT_LEAVES: the twins reached it), and the only surfaced leaf allowed to differ is Pi's
+ *    digest reference to the withheld text on each seam's projection (PAYLOAD_REF_LEAVES, R4), none on native evidence. A prefix, a
+ *    re-joined copy or an encoding of either text therefore differs between the two builds and reds.
  *  B, acceptance (b). Pi has no handoff builder; every Pi surface given a committed render envelope (ephemeral false, an rfr_
  *    render_id, commit_seq 1, an rft_ transaction: the schema's committed branch) emits nothing of it: B1 the native reader refuses it
  *    in one spawn and returns no reading; B2 the adapter refuses a reading carrying it before projecting anything; B3 three partial
  *    committed shapes (no transaction; a render_id beside ephemeral true; a commit_seq beside a null render_id) are refused by both;
- *    B4 native evidence of it names identifiers only: no render id, no document byte and no block byte.
+ *    B4 native evidence of it names identifiers only: no render id, no document byte and no block byte (no text-dependent leaf).
  *  C, acceptance (c). C1 an envelope whose provenance states no cli_version and no sdk_versions projects no rf-cli reference, no
  *    release note, no rf-engine reference and no digest beyond the envelope's own two and the adapter's payload reference (R4); C2
  *    the control: stated, both are carried (the rf-cli reference, the release note, the engine references), so C1's absence is the
@@ -54,7 +65,9 @@
  *  D, acceptance (d). D1 no src string or template literal spells a FAMILIES form (H, a handoff form; L, an rf receipt label; any
  *    case); D2 no native or injected descriptor's JSON spells one and both rf registrations carry REACTIVE_FIBER_CONTRACT_SOURCE; D3 no
  *    surfaced string of any projection this census builds (the four preview shapes and a refusal, on either seam) names a receipt:
- *    the adapter labels its own snapshot reactivefiber.render.preview.snapshot behind its seam label; D4 a docs mention of a FAMILIES form is admitted only when a line it
+ *    the adapter labels its own snapshot reactivefiber.render.preview.snapshot behind its seam label; D4 a mention of a FAMILIES
+ *    form in docs/ or in a PAGE_ROOTS page (the markdown files directly in the repository root, README.md among them, in examples/
+ *    and in vendor/) is admitted only when a line it
  *    spans carries a NOT-SHIPPED marker or the Pi-assembled label (MARKERS: closed, whole words, any case), else it is
  *    named-as-shipped (matcher rows MD).
  * The committed envelope, the document and the block are CONSTRUCTED from the full-shape fixture (test/helpers/rf-render-fixture.ts);
@@ -64,7 +77,10 @@
  * acceptance sentence names exactly the clauses rows A-D cover, and each of rows A-D's labels equals its clause there, so a relabelled
  * or shortened label reds against the owner's own text. The out-of-file roster test/fixtures/rf-assembly-handoff-roster.json holds
  * every row's id, label and pins, every pin's witness and the pinned constants, so a pin deleted, relabelled, swapped or removed from
- * every literal of this file at once still reds against it. FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a
+ * every literal of this file at once still reds against it. GIT'S LISTING (what git would commit: tracked or untracked, never
+ * ignored, present on disk) anchors the src walk of T1, T2 and D1 and the docs and pages walk of D4: each walk must hold every path
+ * git lists, so a walk narrowed above its floor reds while an additive file does not; the page anchor README.md must name the
+ * package.json name, so the pages are read, not only listed. FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a
  * literal.
  * RESIDUALS (named; each has a pinned quiet row in row R): R1 R-JOURNAL a read node's journal row keeps the whole reading, the
  * document and its blocks included, for the same run's resume (src/workflow/runtime.ts journals a read's payload); this census reads
@@ -81,7 +97,10 @@
  * R-PARAPHRASE a handoff or receipt paraphrase outside FAMILIES ("passes the assembly to the next agent", "the receipt rf printed")
  * is not caught. R9 R-TOOL-READ a Claude role the host exposes the preview capability to reads the whole reading, the document
  * included, as its capability_invoke reply (claude-capability-tools.ts, sanitized and bounded): this census reads that as the
- * agent's own read of rf context through Pi's tool surface, not an assembly handed from one process or agent to another.
+ * agent's own read of rf context through Pi's tool surface, not an assembly handed from one process or agent to another. R10
+ * R-UNWALKED-MARKDOWN the markdown below .agents/, .beads/, .pi/, new-feedback/ and test/ (tool instructions, agent feedback and
+ * test fixtures, not Pi's product pages) is not walked by D4, so a FAMILIES mention there is never judged; its quiet row pins
+ * exactly those roots as the unwalked extent, so markdown under any other root reds until a cut walks it or names it.
  * SCOPE: the families, the markers and the reading of "prompt text" as the rendered document (README:33's "copied prompt") are this
  * cut's reading of the filing; the producer facts above are measured at the shas named and are not re-read here (the census is
  * hermetic). The positive half of (d) - a Pi-assembled label on a handoff artifact - and the armed half of (a)-(c) wait for a Pi
@@ -89,8 +108,9 @@
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs and the bead export are only read.
  */
+import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { chmodSync, type Dirent, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, type Dirent, existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { SDKMessage } from "@anthropic-ai/claude-agent-sdk";
@@ -192,6 +212,22 @@ const SESSION_ID = `rfs_${"f".repeat(22)}`;
 /** The rendered document (result.output.text) and one block's content (context.show's `content` spelling), CONSTRUCTED. */
 const DOCUMENT = "Assembled census context: alpha bravo charlie delta.";
 const BLOCK_CONTENT = "Census block content: echo foxtrot golf hotel.";
+interface Texts {
+  readonly document: string;
+  readonly block: string;
+}
+const TEXTS: Texts = { document: DOCUMENT, block: BLOCK_CONTENT };
+/** A text's twin: every ASCII letter rotated thirteen places, so it keeps the text's length and layout and holds no letter of the
+ * text at any position (no word, prefix or re-joined copy of the text survives in it). */
+const twinOf = (text: string): string => text.replace(/[A-Za-z]/g, letter => {
+  const base = letter <= "Z" ? 65 : 97;
+  return String.fromCharCode(((letter.charCodeAt(0) - base + 13) % 26) + base);
+});
+const TWINS: Texts = { document: twinOf(DOCUMENT), block: twinOf(BLOCK_CONTENT) };
+/** The reading's own text leaves: where a preview and its twin must differ, and nowhere else. */
+const TEXT_LEAVES: readonly string[] = ["$.source.result.blocks.0.content", "$.source.result.output.text"];
+/** Pi's digest reference to the withheld text on each seam's projection (R4): the one surfaced leaf allowed to follow the text. */
+const PAYLOAD_REF_LEAVES: readonly string[] = ["$.0.snapshots.0.nativePayloadRef", "$.1.snapshots.0.nativePayloadRef"];
 const ENGINE_VERSIONS: JsonObject = {
   tsx_runtime: { distribution_version: "2.4.1", contract_fingerprint: "unknown" },
   tsx_sdk: { distribution_version: "0.3.2", contract_fingerprint: "unknown" },
@@ -242,8 +278,8 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "R",
-    label: "the named residuals R1-R9 stay pinned quiet",
-    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9"],
+    label: "the named residuals R1-R10 stay pinned quiet",
+    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10"],
   },
 ];
 
@@ -313,6 +349,10 @@ function constants(): JsonValue {
     handoffWord: HANDOFF_WORD.source,
     families: FAMILIES,
     markers: MARKERS,
+    srcFloor: SRC_FLOOR,
+    docsFloor: DOCS_FLOOR,
+    pageRoots: PAGE_ROOTS,
+    unwalkedPageRoots: UNWALKED_PAGE_ROOTS,
   });
 }
 
@@ -338,6 +378,12 @@ function textOf(path: string): string {
   } catch {
     return "";
   }
+}
+/** What git would commit for the pathspecs: tracked or untracked, never ignored, and present on disk, sorted. The walks' outside
+ * anchor: a walk must hold every path listed here, so a narrowed walk reds while an additive file does not. */
+function gitListed(...pathspecs: string[]): string[] {
+  const out = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", ...pathspecs], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 });
+  return [...new Set(out.split("\0").filter(path => path !== "" && existsSync(join(REPO, path))))].sort();
 }
 /** Every string a JSON value holds, keys excluded. */
 function stringLeaves(value: unknown): string[] {
@@ -373,16 +419,17 @@ const NO_BUNDLE: PreviewShape = { bundle: false, release: true, versions: "sdk" 
 const BARE: PreviewShape = { bundle: true, release: false, versions: "absent" };
 const STATED: PreviewShape = { bundle: true, release: true, versions: "engine" };
 
-/** A full-shape noncommitted preview carrying DOCUMENT and one block of BLOCK_CONTENT, with the shape's optional fields. */
-function previewEnvelope(shape: PreviewShape): JsonObject {
+/** A full-shape noncommitted preview carrying the document and one block of the block content (DOCUMENT and BLOCK_CONTENT, or the
+ * twins of A's text dependence), with the shape's optional fields. */
+function previewEnvelope(shape: PreviewShape, texts: Texts = TEXTS): JsonObject {
   const envelope = objectOf(clone(fullShapeRf(ROOT)), "fixture");
   const result = objectOf(envelope.result, "result");
   const output = objectOf(result.output, "result.output");
-  output.text = DOCUMENT;
-  output.size_bytes = Buffer.byteLength(DOCUMENT);
+  output.text = texts.document;
+  output.size_bytes = Buffer.byteLength(texts.document);
   result.blocks = [{
     final_index: 0, candidate_key: "census.block::body", component_id: "census.block", token_cost: { kind: "measured", tokens: 9 },
-    token_cost_kind: "measured", content: BLOCK_CONTENT,
+    token_cost_kind: "measured", content: texts.block,
   }];
   if (!shape.bundle) delete result.bundle_revision_id;
   const provenance = objectOf(result.provenance, "result.provenance");
@@ -403,8 +450,8 @@ type CommittedVariant = "committed" | "untransacted" | "id-beside-ephemeral" | "
 const PARTIAL_VARIANTS: readonly CommittedVariant[] = ["untransacted", "id-beside-ephemeral", "seq-beside-null-id"];
 /** The schema's committed branch (ephemeral false, an rfr_ render_id, an integer commit_seq, an rft_ transaction, one store write) or
  * one of three partial committed shapes. */
-function committedEnvelope(variant: CommittedVariant): JsonObject {
-  const envelope = previewEnvelope(FULL);
+function committedEnvelope(variant: CommittedVariant, texts: Texts = TEXTS): JsonObject {
+  const envelope = previewEnvelope(FULL, texts);
   const result = objectOf(envelope.result, "result");
   if (variant === "committed" || variant === "untransacted") {
     result.ephemeral = false;
@@ -445,6 +492,45 @@ const refsOf = (snapshot: JsonObject): string[] => stringLeaves(snapshot.evidenc
 const notesOf = (projected: Projected): string[] => projected.strings.filter(text => text.includes("producer release") || text.includes("TSX engine"));
 const DIGEST = /sha256:[0-9a-f]{64}/g;
 const digestsIn = (strings: readonly string[]): string[] => [...new Set(strings.flatMap(text => text.match(DIGEST) ?? []))].sort();
+/** Both seams' topologies of one reading: the live rf-cli seam and the injected fixture seam. */
+const topologiesOf = (reading: JsonValue): JsonValue => (["rf-cli", "injected-fixture"] as const).map(seam => clone(reactivefiberTopology(reading, contextOf(seam))));
+/** Native evidence of one reading. */
+const evidenceOf = (reading: JsonValue): JsonValue => clone(nativeEvidence(PREVIEW_ID, reading));
+/** Every leaf of a JSON value keyed by its path ("$", then each key or index after a "."), as its JSON text. */
+function leavesOf(value: JsonValue, path: string, into: Map<string, string>): Map<string, string> {
+  if (Array.isArray(value)) {
+    for (const [index, child] of value.entries()) leavesOf(child, `${path}.${index}`, into);
+  } else if (value !== null && typeof value === "object") {
+    for (const [key, child] of Object.entries(value)) leavesOf(child, `${path}.${key}`, into);
+  } else {
+    into.set(path, JSON.stringify(value));
+  }
+  return into;
+}
+/** The leaf paths at which two JSON values differ, sorted; a leaf held on one side only differs. */
+function differingLeaves(left: JsonValue, right: JsonValue): string[] {
+  const own = leavesOf(left, "$", new Map());
+  const other = leavesOf(right, "$", new Map());
+  return [...new Set([...own.keys(), ...other.keys()])].filter(path => own.get(path) !== other.get(path)).sort();
+}
+/** Whether a twin keeps its text's length and holds none of its letters at any position. */
+function letterDisjoint(text: string, twin: string): boolean {
+  if (text.length !== twin.length) return false;
+  for (let index = 0; index < text.length; index++) if (/[A-Za-z]/.test(text.charAt(index)) && twin.charAt(index) === text.charAt(index)) return false;
+  return true;
+}
+type Dependence = { twinDisjoint: boolean; inputDependent: string[]; dependent: string[] };
+/** TEXT DEPENDENCE (A1-A3, B4): `surface` applied to the input built from the texts and to the input built from their twins. The
+ * input must differ exactly at TEXT_LEAVES; every surfaced leaf that differs carries the text in some form. */
+function textDependence(input: (texts: Texts) => JsonValue, surface: (built: JsonValue) => JsonValue): Dependence {
+  const own = input(TEXTS);
+  const twin = input(TWINS);
+  return {
+    twinDisjoint: letterDisjoint(TEXTS.document, TWINS.document) && letterDisjoint(TEXTS.block, TWINS.block),
+    inputDependent: differingLeaves(own, twin),
+    dependent: differingLeaves(surface(own), surface(twin)),
+  };
+}
 
 interface Refusal {
   readonly category: string;
@@ -592,7 +678,8 @@ function scanCode(fileName: string, text: string): CodeScan {
   visit(source);
   return { handoff, labels, fields: [...fields].sort(), renderArgv };
 }
-/** The src modules walk at base 051d37e holds 115; the floor sits below it, so an emptied walk reds and an additive one does not. */
+/** The src modules walk held 115 at base 051d37e (115 at 7bfe51b); the floor sits below it, so an emptied walk reds and an additive
+ * one does not, and git's listing of src is the anchor a narrowed walk reds against. */
 const SRC_FLOOR = 100;
 let srcCache: { path: string; scan: CodeScan }[] | undefined;
 function srcScans(): { path: string; scan: CodeScan }[] {
@@ -602,10 +689,16 @@ function srcScans(): { path: string; scan: CodeScan }[] {
   });
   return srcCache;
 }
-function srcWalk(): { srcFloorMet: boolean; renderArgvSeen: boolean } {
+function srcWalk(): { srcFloorMet: boolean; srcUnwalked: string[]; renderArgvSeen: boolean } {
   const scans = srcScans();
-  const walk = { srcFloorMet: scans.length >= SRC_FLOOR, renderArgvSeen: scans.some(entry => entry.scan.renderArgv > 0) };
-  expect(walk, `src modules walked: ${scans.length}, floor ${SRC_FLOOR}`).toStrictEqual({ srcFloorMet: true, renderArgvSeen: true });
+  const listed = gitListed("src").filter(path => path.endsWith(".ts"));
+  const walked = new Set(scans.map(entry => entry.path));
+  const walk = {
+    srcFloorMet: scans.length >= SRC_FLOOR && listed.length >= SRC_FLOOR,
+    srcUnwalked: listed.filter(path => !walked.has(path)),
+    renderArgvSeen: scans.some(entry => entry.scan.renderArgv > 0),
+  };
+  expect(walk, `src modules walked: ${scans.length}, listed by git: ${listed.length}, floor ${SRC_FLOOR}`).toStrictEqual({ srcFloorMet: true, srcUnwalked: [], renderArgvSeen: true });
   return walk;
 }
 /** Per receipt field, the src modules spelling it, sorted. */
@@ -617,12 +710,33 @@ interface SourceFile {
   readonly path: string;
   readonly text: string;
 }
-/** The docs tree holds 69 files at base 051d37e; the floor sits below it, so an emptied walk reds and an additive one does not. */
+/** The docs tree held 69 files at base 051d37e (71 at 7bfe51b, beside 7 PAGE_ROOTS pages); the floor sits below it, so an emptied
+ * walk reds and an additive one does not, and git's listing of docs and the pages is the anchor a narrowed walk reds against. */
 const DOCS_FLOOR = 50;
 const DOCS_ANCHOR = { file: "docs/workbench/13-contracts-and-config.md", token: PREVIEW_ID };
+/** The roots whose markdown pages D4 reads beside docs/, one level deep each: the repository root (README.md, AGENTS.md,
+ * CHANGELOG.md, CONTRIBUTING.md, SECURITY.md at 7bfe51b), examples/ and vendor/. */
+const PAGE_ROOTS: readonly string[] = ["", "examples", "vendor"];
+const PAGE_SPECS: readonly string[] = PAGE_ROOTS.map(root => `:(glob)${root === "" ? "" : `${root}/`}*.md`);
+/** R10's unwalked extent: the roots of every markdown file git would commit that D4 does not read. */
+const UNWALKED_PAGE_ROOTS: readonly string[] = [".agents", ".beads", ".pi", "new-feedback", "test"];
+/** The page anchor: the root README.md names the package by its package.json name, so a read page is a page with its text. */
+const PAGE_ANCHOR = { file: "README.md", token: String((JSON.parse(textOf(join(REPO, "package.json"))) as { name?: unknown }).name) };
+/** A page root's own markdown files, one level deep (regular files; symlinks are not followed). */
+function pagesOf(root: string): string[] {
+  let entries: Dirent[];
+  try {
+    entries = readdirSync(join(REPO, root), { withFileTypes: true });
+  } catch {
+    return [];
+  }
+  return entries.filter(entry => entry.isFile() && entry.name.endsWith(".md")).map(entry => join(REPO, root, entry.name));
+}
 let docsCache: SourceFile[] | undefined;
 function docsFiles(): SourceFile[] {
-  docsCache ??= filesBelow(join(REPO, "docs")).map(file => ({ path: relative(REPO, file), text: textOf(file) }));
+  docsCache ??= filesBelow(join(REPO, "docs")).map(file => ({ path: relative(REPO, file), text: textOf(file) })).concat(
+    PAGE_ROOTS.flatMap(pagesOf).map(file => ({ path: relative(REPO, file), text: textOf(file) })),
+  );
   return docsCache;
 }
 function lineStarts(text: string): number[] {
@@ -813,10 +927,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       documentBytes: carrying(projected.strings, DOCUMENT),
       blockBytes: carrying(projected.strings, BLOCK_CONTENT),
       renderIds: carrying(projected.strings, "rfr_"),
+      dependence: textDependence(texts => readingOf(previewEnvelope(FULL, texts)), topologiesOf),
     };
     expect(reading).toStrictEqual({
       sourceRevision: RF_FIXTURE_GRAPH_REVISION, sourceVersion: BUNDLE,
       identityRefs: [`rf-graph:${RF_FIXTURE_GRAPH_REVISION}`, `rf-bundle:${BUNDLE}`], documentBytes: 0, blockBytes: 0, renderIds: 0,
+      dependence: { twinDisjoint: true, inputDependent: [...TEXT_LEAVES], dependent: [...PAYLOAD_REF_LEAVES] },
     });
     return placeheld(reading);
   },
@@ -829,10 +945,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       bundleNamed: carrying(projected.strings, BUNDLE),
       documentBytes: carrying(projected.strings, DOCUMENT),
       blockBytes: carrying(projected.strings, BLOCK_CONTENT),
+      dependence: textDependence(texts => readingOf(previewEnvelope(NO_BUNDLE, texts)), topologiesOf),
     };
     expect(reading).toStrictEqual({
       sourceRevision: RF_FIXTURE_GRAPH_REVISION, hasSourceVersion: false, identityRefs: [`rf-graph:${RF_FIXTURE_GRAPH_REVISION}`],
       bundleNamed: 0, documentBytes: 0, blockBytes: 0,
+      dependence: { twinDisjoint: true, inputDependent: [...TEXT_LEAVES], dependent: [...PAYLOAD_REF_LEAVES] },
     });
     return placeheld(reading);
   },
@@ -843,7 +961,13 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(objectOf(withBundle, "evidence").sourceBasis).toBe(BUNDLE);
     expect(objectOf(withoutBundle, "evidence").sourceBasis).toBe(RF_FIXTURE_GRAPH_REVISION);
     expect([carrying(strings, DOCUMENT), carrying(strings, BLOCK_CONTENT)]).toEqual([0, 0]);
-    return placeheld({ withBundle, withoutBundle, documentBytes: 0, blockBytes: 0 });
+    const dependence = {
+      withBundle: textDependence(texts => readingOf(previewEnvelope(FULL, texts)), evidenceOf),
+      withoutBundle: textDependence(texts => readingOf(previewEnvelope(NO_BUNDLE, texts)), evidenceOf),
+    };
+    const none: Dependence = { twinDisjoint: true, inputDependent: [...TEXT_LEAVES], dependent: [] };
+    expect(dependence).toStrictEqual({ withBundle: none, withoutBundle: none });
+    return placeheld({ withBundle, withoutBundle, documentBytes: 0, blockBytes: 0, dependence });
   },
   A4: async () => {
     const { refusal, reading, spawns } = await nativeOutcome(previewEnvelope(FULL));
@@ -886,8 +1010,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const evidence = clone(nativeEvidence(PREVIEW_ID, readingOf(committedEnvelope("committed"))));
     const strings = stringLeaves(evidence);
     const counts = { renderIds: carrying(strings, RENDER_ID), documentBytes: carrying(strings, DOCUMENT), blockBytes: carrying(strings, BLOCK_CONTENT) };
+    const dependence = textDependence(texts => readingOf(committedEnvelope("committed", texts)), evidenceOf);
     expect(counts).toStrictEqual({ renderIds: 0, documentBytes: 0, blockBytes: 0 });
-    return placeheld({ evidence, ...counts });
+    expect(dependence).toStrictEqual({ twinDisjoint: true, inputDependent: [...TEXT_LEAVES], dependent: [] });
+    return placeheld({ evidence, ...counts, dependence });
   },
   C1: async () => {
     const projected = projectionOf(previewEnvelope(BARE));
@@ -958,7 +1084,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     return { descriptorFloorMet, hits, rfCarriers };
   },
   D3: async () => {
-    const envelopes: JsonValue[] = [...[FULL, NO_BUNDLE, BARE, STATED].map(previewEnvelope), REFUSAL];
+    const envelopes: JsonValue[] = [...[FULL, NO_BUNDLE, BARE, STATED].map(shape => previewEnvelope(shape)), REFUSAL];
     const projections = envelopes.flatMap(envelope => (["rf-cli", "injected-fixture"] as const).map(seam => projectionOf(envelope, seam)));
     const receiptWords = projections.reduce((sum, projected) => sum + projected.strings.filter(text => /receipt/i.test(text)).length, 0);
     const kinds = [...new Set(projections.map(projected => String(projected.snapshot.kind)))].sort();
@@ -968,9 +1094,19 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
   D4: async () => {
     const files = docsFiles();
+    const listed = gitListed("docs", ...PAGE_SPECS);
+    const walked = new Set(files.map(file => file.path));
     const anchor = files.find(file => file.path === DOCS_ANCHOR.file);
-    const walk = { floorMet: files.length >= DOCS_FLOOR, anchorRead: anchor?.text.includes(DOCS_ANCHOR.token) === true };
-    expect(walk, `docs: ${files.length} files walked, floor ${DOCS_FLOOR}, anchor ${DOCS_ANCHOR.file}`).toStrictEqual({ floorMet: true, anchorRead: true });
+    const page = files.find(file => file.path === PAGE_ANCHOR.file);
+    const walk = {
+      floorMet: files.length >= DOCS_FLOOR && listed.length >= DOCS_FLOOR,
+      unwalked: listed.filter(path => !walked.has(path)),
+      anchorRead: anchor?.text.includes(DOCS_ANCHOR.token) === true,
+      pageAnchorRead: page?.text.includes(PAGE_ANCHOR.token) === true,
+    };
+    expect(walk, `docs and pages: ${files.length} files walked, ${listed.length} listed by git, floor ${DOCS_FLOOR}, anchors ${DOCS_ANCHOR.file} and ${PAGE_ANCHOR.file}`).toStrictEqual({
+      floorMet: true, unwalked: [], anchorRead: true, pageAnchorRead: true,
+    });
     const findings = files.flatMap(file =>
       mentionsOf(file.text).filter(mention => !mention.marked).map(mention => `${file.path}:${mention.line} ${mention.family}: named-as-shipped`),
     );
@@ -1047,6 +1183,15 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(witness).toStrictEqual({ isError: false, kind: "returned", replyCarriesDocument: true, replyCarriesBlockContent: true, replyNamesReceipt: false });
     return witness;
   },
+  R10: async () => {
+    const walked = new Set(docsFiles().map(file => file.path));
+    const unwalked = gitListed(":(glob)**/*.md").filter(path => !walked.has(path));
+    const roots = [...new Set(unwalked.map(path => path.split("/")[0] ?? path))].sort();
+    // The extent is real: a line D4 names as shipped there is never judged.
+    const planted = outcomeOf("mention", ["Pi stores the rf receipt beside the run."]);
+    expect({ roots, planted }).toStrictEqual({ roots: [...UNWALKED_PAGE_ROOTS], planted: ["L:shipped"] });
+    return { roots, planted };
+  },
   ...Object.fromEntries(
     CASES.map(entry => [
       entry.pin,
@@ -1061,7 +1206,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 
 describe("wb-pfxo.3 assembly-handoff census (RF-COMPOSITIONAL-ASSEMBLY-R4, absent-today leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "A:4", "B:4", "C:4", "D:4", "F:1", "M:15", "R:9"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "A:4", "B:4", "C:4", "D:4", "F:1", "M:15", "R:10"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
