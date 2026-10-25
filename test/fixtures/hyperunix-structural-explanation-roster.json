@@ -1,5 +1,5 @@
 {
- "provenance": "wb-x0xu.1 HX structural-explanation census roster. Producer facts MEASURED read-only by the cutting seat ws-03 (run g10-work-s59, 2026-10-23) by git show at the HyperUnix-CLI program pin 0091719d02887910fa0c2fb6693a32723e243600 and from Pi's vendored @hyperunix/sdk 0.1.0 tarball at Pi trunk feebb63b9113d4b4b2046bcbe81b2679e7e0fdf7. Every explanation text, class spelling, carrier key and fixture is CONSTRUCTED by this census (the program is design-only; the producer mints none of them). Witnesses were first held null (every pin red at its witness compare), then filled from the measured cases and reviewed reading by reading.",
+ "provenance": "wb-x0xu.1 HX structural-explanation census roster. Producer facts MEASURED read-only by the cutting seat ws-03 (run g10-work-s59, 2026-10-23) by git show at the HyperUnix-CLI program pin 0091719d02887910fa0c2fb6693a32723e243600 and from Pi's vendored @hyperunix/sdk 0.1.0 tarball at Pi trunk feebb63b9113d4b4b2046bcbe81b2679e7e0fdf7. Every explanation text, class spelling, carrier key and fixture is CONSTRUCTED by this census (the program is design-only; the producer mints none of them). Witnesses were first held null (every pin red at its witness compare), then filled from the measured cases and reviewed reading by reading. wb-dvfc (R694 follow-up of wb-x0xu.1 landing 330; seat ws-03, run g10-work-s86, 2026-10-25): the A1 producer reading, A2 attached, B1 plant and control.carried, Q1 withheld carried, Q2 assembledHits and Q5 interruptions and repaired were first held as they stood (the six pins red at their witness compares, every new in-case guard holding), then filled from the measured cases and reviewed reading by reading; every producer fact was re-read at the program pin by git show (read-only): the 12 blob ids, the quotes and the line lists all match.",
  "bead": "wb-x0xu.1",
  "programPin": "0091719d02887910fa0c2fb6693a32723e243600",
  "producer": {
@@ -386,7 +386,64 @@
        "flagged": 7,
        "quiet": 5
       },
-      "bound": []
+      "bound": [],
+      "producer": {
+       "manifest": {
+        "name": "@hyperunix/sdk",
+        "version": "0.1.0",
+        "blob": "8f023818ac242f9bb2668d26ddb9e65c31676c78"
+       },
+       "frameRouting": {
+        "file": "package/dist/protocol/decoder.js",
+        "line": 204
+       },
+       "representation": {
+        "resultToJson": [
+         459,
+         517
+        ],
+        "cited": [
+         459,
+         516
+        ],
+        "results": "workspace.d.ts:114"
+       },
+       "filing": {
+        "03-architecture.md:55": "exact",
+        "README.md:3": "part",
+        "05-physical-provider-lld.md:33": "exact",
+        "02-vision-decisions.md:30": "part"
+       },
+       "namesakeModules": [
+        "client",
+        "protocol",
+        "protocol/decoder",
+        "provider",
+        "transport/cli",
+        "workspace"
+       ],
+       "outOfRepo": [
+        "$.boundary.blob",
+        "$.status.blob",
+        "$.authority[0].blob",
+        "$.authority[1].blob",
+        "$.sdkAtPin.result.blob",
+        "$.sdkAtPin.result.stemLines",
+        "$.sdkAtPin.namesakes[0].blob",
+        "$.sdkAtPin.namesakes[0].lines",
+        "$.sdkAtPin.namesakes[1].blob",
+        "$.sdkAtPin.namesakes[1].lines",
+        "$.sdkAtPin.namesakes[2].blob",
+        "$.sdkAtPin.namesakes[2].lines",
+        "$.sdkAtPin.namesakes[3].blob",
+        "$.sdkAtPin.namesakes[3].lines",
+        "$.sdkAtPin.namesakes[4].blob",
+        "$.sdkAtPin.namesakes[4].lines",
+        "$.sdkAtPin.namesakes[5].blob",
+        "$.sdkAtPin.namesakes[5].lines"
+       ],
+       "refused": []
+      }
      }
     },
     {
@@ -450,7 +507,39 @@
        },
        "budgetDimension": "wall",
        "terminal": "budget_exhausted"
-      }
+      },
+      "attached": [
+       [
+        false,
+        false,
+        []
+       ],
+       [
+        false,
+        true,
+        [
+         {
+          "class": "budget-stop",
+          "text": "budget stop: the wall budget of 30s was reached (HXS-X5)"
+         }
+        ]
+       ],
+       [
+        true,
+        false,
+        []
+       ],
+       [
+        true,
+        true,
+        [
+         {
+          "class": "budget-stop",
+          "text": "budget stop: the wall budget of 30s was reached (HXS-X5)"
+         }
+        ]
+       ]
+      ]
      }
     }
    ]
@@ -488,9 +577,21 @@
        "$.runtime"
       ],
       "unchanged": 23,
+      "plant": {
+       "payloads": [
+        "efcad85bd7751c3c416063d74645b958c0059bc7cae006e7b2badf12cc17f8cf"
+       ],
+       "carried": [
+        "HXS-X1 HXS-X2 HXS-X3 HXS-X4 HXS-X5 assumption explanat"
+       ]
+      },
       "control": {
        "unchanged": false,
        "leaked": [
+        "HXS-X1",
+        "assumption"
+       ],
+       "carried": [
         "HXS-X1",
         "assumption"
        ]
@@ -994,27 +1095,51 @@
       "withheld": [
        {
         "unchanged": true,
-        "leaked": []
+        "leaked": [],
+        "carried": [
+         "HXS-X2",
+         "assumption"
+        ]
        },
        {
         "unchanged": true,
-        "leaked": []
+        "leaked": [],
+        "carried": [
+         "HXS-X2",
+         "assumption"
+        ]
        },
        {
         "unchanged": true,
-        "leaked": []
+        "leaked": [],
+        "carried": [
+         "HXS-X2",
+         "assumption"
+        ]
        },
        {
         "unchanged": true,
-        "leaked": []
+        "leaked": [],
+        "carried": [
+         "HXS-X2",
+         "assumption"
+        ]
        },
        {
         "unchanged": true,
-        "leaked": []
+        "leaked": [],
+        "carried": [
+         "HXS-X2",
+         "assumption"
+        ]
        },
        {
         "unchanged": true,
-        "leaked": []
+        "leaked": [],
+        "carried": [
+         "HXS-X2",
+         "assumption"
+        ]
        }
       ]
      }
@@ -1026,6 +1151,10 @@
       "composedKeys": [
        "explanation",
        "assumption"
+      ],
+      "assembledHits": [
+       1,
+       1
       ]
      }
     },
@@ -1078,7 +1207,21 @@
      "id": "Q5",
      "witness": {
       "split": 0,
-      "lookalike": []
+      "lookalike": [],
+      "interruptions": {
+       "split": 2,
+       "lookalike": 2
+      },
+      "repaired": {
+       "split": [
+        "assumption",
+        "explanat"
+       ],
+       "lookalike": [
+        "assumption",
+        "explanat"
+       ]
+      }
      }
     },
     {
