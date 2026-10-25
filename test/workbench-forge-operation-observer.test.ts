@@ -344,10 +344,38 @@ const DOCUMENTED_MEMBERS_UNAFFECTED = {
 };
 const settledReply = (status: string, data?: unknown, disposition = "completed"): Record<string, unknown> =>
   ({ operation_id: OP, status, terminal_disposition: disposition, lifecycle_state: "TERMINAL", ...(data !== undefined ? { data } : {}) });
+/**
+ * wb-dqhl (U1 class guard): a reply's null twin - the same reply whose own data record, stating no selection key, gains
+ * `selection: null` just before its accounting block, where MEASURED_FULL and MEASURED_ONLY_ALPHA carried it until wb-dqhl cut #1
+ * (NOT measured: forge 0.2.1 omits the key, see the fixture comment above). Every other own field is kept in its order, so the twin
+ * of a reply built from those fixtures is the reply the landed fixtures built. Undefined when the reply has no own data record or
+ * its data already states a selection.
+ */
+const nullTwin = (reply: unknown): Record<string, unknown> | undefined => {
+  if (typeof reply !== "object" || reply === null || !Object.hasOwn(reply, "data")) return undefined;
+  const { data } = reply as { data: unknown };
+  if (typeof data !== "object" || data === null || Array.isArray(data) || Object.hasOwn(data, "selection")) return undefined;
+  const fields: [string, unknown][] = Object.entries(data);
+  const at = fields.findIndex(([key]) => key === "selection_accounting");
+  fields.splice(at === -1 ? fields.length : at, 0, ["selection", null]);
+  return { ...reply, data: Object.fromEntries(fields) };
+};
+/**
+ * The reply's terminal node. wb-dqhl (U1 class guard): every render here also renders the reply's null twin and requires it to
+ * decode and render exactly as the reply, so each reply a case builds keeps the null reading the landed fixtures gave it - with
+ * its own gate_verdict, status and disposition - derived from the replies the cases build, never from a list of them.
+ */
 const terminalOf = (reply: unknown) => {
   const terminal = decodeForgeOperationTerminal(reply, OP, T2);
   if (terminal === undefined) throw new Error("the reply names no terminal for the operation");
-  return forgeOperationTerminalSnapshot(terminal, options);
+  const snapshot = forgeOperationTerminalSnapshot(terminal, options);
+  const twin = nullTwin(reply);
+  if (twin !== undefined) {
+    const twinTerminal = decodeForgeOperationTerminal(twin, OP, T2);
+    expect(twinTerminal, "wb-dqhl (U1): the reply's null twin decodes as the reply").toStrictEqual(terminal);
+    expect(twinTerminal === undefined ? undefined : forgeOperationTerminalSnapshot(twinTerminal, options), "wb-dqhl (U1): the reply's null twin renders as the reply").toStrictEqual(snapshot);
+  }
+  return snapshot;
 };
 const withUnits = (change: Record<string, unknown>) => ({ ...MEASURED_FULL, selection_accounting: { ...MEASURED_FULL.selection_accounting, ...change } });
 const [ROW_ALPHA, ROW_BETA, ROW_GAMMA] = MEASURED_FULL.selection_accounting.units;
@@ -546,11 +574,26 @@ describe("wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with
     const nullSnapshot = terminalOf(settledReply("success", nullBeside));
     expect(nullSnapshot.node).toStrictEqual({ title: `Forge operation ${OP}`, type: "workflow", statusText: "completed · selection complete: 3 of 3 steps selected", statusTone: "success" });
     expect(nullSnapshot.coverage).toBe("complete");
+    // wb-dqhl cut #3: the six blocks the landed cases build through withUnits, each built here exactly as its case builds it (withUnits
+    // spreads MEASURED_FULL, so each carried a null selection until cut #1): one row, short of complete by each unselected state, the
+    // empty declared universe and an inherited row selection.
+    const counts = MEASURED_FULL.selection_accounting.counts;
+    const inheritedRow = Object.assign(Object.create({ selection: "selected" }) as Record<string, unknown>, { ref: "gamma", outcome: "executed", basis: ROW_GAMMA.basis });
+    const constructed: [string, ReturnType<typeof withUnits>][] = [
+      ["the one-row block (1 of 1 step)", withUnits({ units: [ROW_ALPHA], counts: { ...counts, declared: 1, selected: 1, executed: 1 } })],
+      ...(["unaffected", "explicitly_narrowed", "unknown"] as const).map((state): [string, ReturnType<typeof withUnits>] => [
+        `the block short of complete by ${state} (2 of 3 steps)`,
+        withUnits({ units: [ROW_ALPHA, ROW_BETA, { ...ROW_GAMMA, selection: state, outcome: null }], counts: { ...counts, selected: 2, [state]: 1, executed: 2 } }),
+      ]),
+      ["the empty declared universe (0 of 0 steps)", withUnits({ units: [], counts: { ...counts, declared: 0, selected: 0, executed: 0 } })],
+      ["the block with an inherited row selection", withUnits({ units: [ROW_ALPHA, ROW_BETA, inheritedRow] })],
+    ];
     const blocks: [string, unknown][] = [
       ["the measured full block", MEASURED_FULL.selection_accounting],
       ["the measured --only block", MEASURED_ONLY_ALPHA.selection_accounting],
       ["the documented member block", DOCUMENTED_MEMBERS_UNAFFECTED.selection_accounting],
       ...malformedUnits,
+      ...constructed.map(([label, data]): [string, unknown] => [label, data.selection_accounting]),
     ];
     for (const [label, block] of blocks) {
       for (const status of ["success", "partial", "error"]) {
@@ -559,6 +602,45 @@ describe("wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with
         expect(decodeForgeOperationTerminal(nulled, OP, T2), `${label}/${status}`).toStrictEqual(decodeForgeOperationTerminal(absent, OP, T2));
         expect(terminalOf(nulled), `${label}/${status}`).toStrictEqual(terminalOf(absent));
       }
+    }
+  });
+
+  it("wb-dqhl (U1 class): NOT measured - a reply's null twin is the reply the landed fixtures built (selection: null where MEASURED_FULL and MEASURED_ONLY_ALPHA carried it, nothing else changed), and the inherited data block and the three observed gate.run replies read exactly as their null twins", async () => {
+    // The twin terminalOf also renders: for each measured unnarrowed reply it is the landed reply, field for field and in order.
+    for (const [fixture, verdict] of [[MEASURED_FULL, "PASS"], [MEASURED_ONLY_ALPHA, "COULD_NOT_JUDGE"]] as const) {
+      const twin = nullTwin(settledReply("partial", fixture, "late"));
+      expect(twin, verdict).toStrictEqual({ ...settledReply("partial", undefined, "late"), data: { gate_verdict: verdict, selection: null, selection_accounting: fixture.selection_accounting } });
+      expect(Object.keys(twin?.data ?? {}), verdict).toStrictEqual(["gate_verdict", "selection", "selection_accounting"]);
+    }
+    // No twin where the data already states a selection, is not a record, or is absent.
+    for (const data of [MEASURED_ARGS, { selection: null }, null, "data", [MEASURED_FULL]]) expect(nullTwin(settledReply("success", data)), JSON.stringify(data)).toBeUndefined();
+    expect(nullTwin(settledReply("success"))).toBeUndefined();
+    // The landed inherited case's data block, inherited with its null twin: it publishes no selection either.
+    const nullOnlyAlpha = nullTwin(settledReply("success", MEASURED_ONLY_ALPHA))?.data;
+    expect(nullOnlyAlpha).toStrictEqual({ ...MEASURED_ONLY_ALPHA, selection: null });
+    const inheritedTwin = Object.assign(Object.create({ data: nullOnlyAlpha }) as Record<string, unknown>, settledReply("success"));
+    expect(decodeForgeOperationTerminal(inheritedTwin, OP, T2)).toStrictEqual({ operationId: OP, status: "success", terminalDisposition: "completed", observedAt: T2 });
+    // The three replies the live-observer cases settle: each leaves the projection its null twin leaves.
+    const observed = async (reply: unknown, steps: [string, Record<string, unknown>][]) => {
+      const projection = new ObservationProjection();
+      const fake = fakeConnection();
+      const pending = observeForgeGateRun(fake.connection, deps(projection).deps);
+      fake.frame("operation.started", { operation_id: OP, request_id: "2" });
+      const observer = await pending;
+      for (const [method, params] of steps) fake.frame(method, params);
+      fake.reply(reply);
+      expect(await observer.settled).toBe("settled");
+      return projection.query({ scope: SCOPE, limit: 10 });
+    };
+    const runs: [string, Record<string, unknown>, [string, Record<string, unknown>][]][] = [
+      ["the --only reply", settledReply("partial", MEASURED_ONLY_ALPHA), [["gate.step_started", { operation_id: OP, seq: 1, step: "alpha" }], ["gate.step_finished", { operation_id: OP, seq: 2, step: "alpha", outcome: "passed", exit_code: 0 }]]],
+      ["the full reply over a failed step", settledReply("success", MEASURED_FULL), [["gate.step_finished", { operation_id: OP, seq: 1, step: "beta", outcome: "failed", exit_code: 1 }]]],
+      ["the full error reply over a passed step", settledReply("error", MEASURED_FULL), [["gate.step_finished", { operation_id: OP, seq: 1, step: "beta", outcome: "passed", exit_code: 0 }]]],
+    ];
+    for (const [label, reply, steps] of runs) {
+      const absent = await observed(reply, steps);
+      expect(absent.nodes.filter(node => node.presentation.statusText.includes(" · selection ")), label).toHaveLength(1);
+      expect(await observed(nullTwin(reply), steps), label).toStrictEqual(absent);
     }
   });
 
