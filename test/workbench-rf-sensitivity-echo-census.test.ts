@@ -6,6 +6,14 @@
  * credentials or capability secrets as manifest content" (docs/programs/federated-workspaces-2026-10-18/05-authority-consistency.md
  * :25@6a251bf73af5). Acceptance: the labels of rows A-D are its four clauses verbatim, held to the bead export below.
  *
+ * FOLLOW-UP wb-ox13 (R694 from landing 268; its filing, verbatim in the bead export, names the LEG-2 survivors of the first cut's
+ * gate): the row A6 matcher now counts the literal-key write shapes G2b (an entries pair), G4 (a keyed-collection set), G13 (a
+ * JSON payload) and G3 (a serialized-text rewrite); B5 pins strictest redaction on the single-line redactWorkbenchText path
+ * (G12); row C1 reads JS/JSON escapes (G5) and a $schema declaration (G6); row D3 counts a verb with flags between it and
+ * "workspace" (G7) and names the composed-argv blind spot (composedArgv) as R-COMPOSED-ARGV with the quiet row QD1; the MA and MC
+ * titles claim the enumerated shapes only; and every row's pin count is held outside this file (FROZEN SHAPE below), which kills
+ * the filing's coordinated X-MATCHER, Y1 and Y2 hollows (F2).
+ *
  * MEASURED AT THE PIN (ReactiveFiberCLI 6a251bf73af57c3a703caf6892dfe3015e06a481, read-only git show by the cutting seat): the
  * roster vendors seven producer excerpts verbatim, each hashed here (EXCERPT_SHA256, `git show <pin>:<path> | sed -n '<range>p' |
  * sha256sum`): the statement 05:25; the A-side link record 03:10 (LINK_SCHEMA and LINK_FIELDS are parsed from it, and it says
@@ -39,38 +47,57 @@
  *    relabels() checker finds nothing on the real surfaces and names each planted overwrite (to internal, to public, upward, an
  *    unknown word, a dropped field); A5 the reader adapter (reactivefiberTopology) surfaces no class word and no other row field,
  *    so no projection string can carry a relabelled class; A6 an AST scan of every src module finds no write to a
- *    SENSITIVITY_FIELD key (assignment, compound assignment, delete, object-literal property, shorthand, string or computed literal
- *    key, Object.defineProperty, Reflect.set or Reflect.defineProperty), with a floor, an anchor and read/compare/type controls.
+ *    SENSITIVITY_FIELD key (assignment, a destructuring-assignment target included, compound assignment, increment or decrement,
+ *    delete, object-literal property, shorthand, string or computed literal key, Object.defineProperty, Reflect.set or
+ *    Reflect.defineProperty, an entries pair, a keyed-collection set or append, or a serialized member that a string, template or
+ *    regex literal spells), with a floor, an anchor and read/compare/type controls.
  *  B, acceptance (b). B1 strictest() over all LEVELS pairs is the join on the pinned order and admitDeclared() refuses each of the
  *    six lowerings and an unknown word; B2 the owner's two TRUST-SEC-A34 marker forms in output.text survive both sanitizers as
  *    verbatim substrings; B3 where the owner left a value Pi's hygiene redaction matches, the surfaced text is Pi's redaction
  *    beside the owner's markers and the labels stay verbatim (the shared text layout shows a line break as a space); B4 the reader
- *    adapter withholds the text, its payload reference the sha256 of the owner's bytes, and shows no line of it.
- *  C, acceptance (c). C1 Pi authors no link manifest: no src module or qa file spells LINK_FAMILY and no data file under src,
- *    test, docs or qa declares a link-family schema (floors and anchors per tree); C2 manifestFindings() over a clean manifest and
+ *    adapter withholds the text, its payload reference the sha256 of the owner's bytes, and shows no line of it; B5 the same owner
+ *    text on one line takes the single-line redactWorkbenchText path, not the multi-line cover path, and surfaces through both
+ *    sanitizers exactly what B3 surfaces.
+ *  C, acceptance (c). C1 Pi authors no link manifest: no src module or qa file spells LINK_FAMILY, as written or with its JS and
+ *    JSON escapes decoded, and no data file under src, test, docs or qa declares a link-family schema under schema or $schema
+ *    (floors and anchors per tree); C2 manifestFindings() over a clean manifest and
  *    planted ones (an assignment in the locator, a secret-named extra field, a credential-shaped capability_ref, an unknown field);
  *    C3 the capability_ref rule: a reference passes, an inline object, inline bytes, a spaced value and a credential shape do not.
  *  D, acceptance (d). D1 LINK_SCHEMA is the excerpt's and the acceptance's id, and every near spelling is refused as not exact; D2
  *    renameFindings() over a clean rename and planted ones; D3 Pi has no link-alias commit path: no src module spells an rf
- *    workspace link verb (an argv "workspace" then link, links or unlink, or a string or template literal spelling one), and the
- *    native registration's rf descriptors are reactivefiber.render.preview alone.
- *  MA and MC, the matchers rows A6 and C1 read: MA1-MA12 and MC1-MC7 the spellings each must catch; QA1-QA3, QS1, QC1 and QC2 the
- *    pinned quiet rows of their named residuals.
+ *    workspace link verb (an argv naming "workspace" and, anywhere after it, link, links or unlink, or a string or template
+ *    literal spelling one with only flag tokens between the two words), and the native registration's rf descriptors are
+ *    reactivefiber.render.preview alone.
+ *  MA, MC and MD, the matchers rows A6, C1 and D3 read: MA1-MA18, MC1-MC9 and MD1-MD2 the spellings each must count; QA1-QA5, QS1,
+ *    QC1-QC3 and QD1 the pinned quiet rows of their named residuals.
  * FROZEN SHAPE (standing rule 16) AND OUTSIDE ANCHORS: ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set (each
  * row's id, label, parts and pins, each pin's witness, the vocabularies) is held to the out-of-file roster
  * test/fixtures/rf-sensitivity-echo-roster.json, whose excerpts are held to the pin by EXCERPT_SHA256 and from which the
  * vocabularies are DERIVED. The tracked bead export (.beads/issues.jsonl, row wb-o4h0.6) anchors the rows themselves: its
  * Acceptance line's four clauses are rows A-D's labels in order, every claim of a clause is a part, and every part needs a pin; its
- * Gating line names exactly GATING_ARTIFACTS, in order, and its quote is the 05:25 excerpt. So a row, a claim or a sole-proving pin removed from every
- * literal of this file and from the roster at once still reds. Not claimed: one of two pins proving the same part, or a matcher pin
- * (rows MA and MC, whose only out-of-file anchor is the roster), removed from this file and the roster together.
- * RESIDUALS (named, each with a pinned quiet row): R-COMPUTED a write through a non-literal key (QA1); R-SYNONYM a classification
- * under a name outside SENSITIVITY_FIELD (QA2); R-COMPOSED-KEY a key assembled at runtime (QA3); R-OUTSIDE-SRC row A6 reads src .ts
+ * Gating line names exactly GATING_ARTIFACTS, in order, and its quote is the 05:25 excerpt. Every row's pin count is held
+ * outside this file as well: it is the landed first cut's count, as that cut's delivery note in the same export records it (row
+ * wb-o4h0.6, "Frozen shape literal: ..."; 0 for a row this follow-up adds, NEW_ROWS), plus this follow-up's additions: one CURES pin
+ * for each survivor the follow-up filing names (row wb-ox13, its first "- F1 " line: the gate ids and composedArgv, in order) and
+ * the EXTRAS pins. So a row, a claim, any landed pin or a cure removed from every literal of this file and from the roster at once
+ * still reds (the follow-up anchors case replays the filing's F2 hollows X-MATCHER, Y1 and Y2 in memory and pins that the count
+ * check flags each). Not claimed: a pin swapped, in this file and the roster together, for another case that passes (every count
+ * holds and the witness moves with it), and an EXTRAS pin removed from this file, the roster and EXTRAS together (no record
+ * outside this file names it).
+ * RESIDUALS (named, each with a pinned quiet row): R-COMPUTED a write through a non-literal key (QA1), the entries-map relabel
+ * whose key is a callback parameter included (QA5); R-SYNONYM a classification under a name outside SENSITIVITY_FIELD (QA2);
+ * R-COMPOSED-KEY a key assembled at runtime (QA3); R-MERGED a class carried in by merging a whole value read elsewhere
+ * (Object.assign or a spread of a non-literal source), which spells no key at all (QA4); R-OUTSIDE-SRC row A6 reads src .ts
  * modules alone, so a write in qa, docs or a .js file is never scanned (QS1); R-INTERRUPTED a link-family spelling split by a
- * zero-width code point (QC1); R-COMPOSED a link-family spelling assembled at runtime from parts (QC2); R-OPAQUE-REF a raw value
- * shaped as a scheme:reference passes the capability_ref rule (C3 case opaqueShaped, pinned to no finding).
+ * zero-width code point (QC1); R-COMPOSED a link-family spelling assembled at runtime from parts (QC2); R-OTHER-KEY a data file
+ * naming the link schema under a key other than schema or $schema (QC3); R-COMPOSED-ARGV a link verb that reaches an argv
+ * through a variable, a spread or a later push (QD1); R-OPAQUE-REF a raw value shaped as a scheme:reference passes the
+ * capability_ref rule (C3 case opaqueShaped, pinned to no finding).
+ * OVER-COUNT, by construction (it can only red, never hide a write; src holds none of these): a literal spelling a serialized
+ * sensitivity member counts wherever it appears, a read of serialized text included; a key-first array literal counts as an
+ * entries pair; the first literal argument of a set or append call counts as its key.
  * SCOPE: the excerpts are producer facts at 6a251bf73af5; Pi vendors no rf source, so a producer-side change is seen only when an rf
- * pin-bump re-reads them. The live legs are A2-A6 and B2-B4 (Pi's real provider, sanitizers, reader adapter and src tree), C1 and
+ * pin-bump re-reads them. The live legs are A2-A6 and B2-B5 (Pi's real provider, sanitizers, reader adapter and src tree), C1 and
  * D3; A4, B1, C2, C3, D1 and D2 hold the reference rules against planted cases.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, qa, docs, test, the bead export and the
@@ -86,7 +113,7 @@ import { CapabilityRegistry, type JsonValue } from "../src/workbench/capability-
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
 import { nativeReactiveFiberRender, REACTIVEFIBER_RENDER_PREVIEW_CONTRACT } from "../src/workbench/providers/reactivefiber.js";
 import { type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
-import { sanitizeWorkbenchJson, sanitizeWorkbenchJsonText } from "../src/workbench/redaction.js";
+import { sanitizeWorkbenchJson, sanitizeWorkbenchJsonText, stripUnsafeText } from "../src/workbench/redaction.js";
 import { fullShapeRf, type Json } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
@@ -100,6 +127,8 @@ const ROOT = process.cwd();
 const ROSTER_PATH = join(HERE, "fixtures", "rf-sensitivity-echo-roster.json");
 const BEAD = "wb-o4h0.6";
 const BEAD_EXPORT = join(REPO, ".beads", "issues.jsonl");
+/** The R694 follow-up (from landing 268) whose filing names the LEG-2 survivors this cut cures. */
+const FOLLOW_UP = "wb-ox13";
 
 const FW = "docs/programs/federated-workspaces-2026-10-18";
 const STATEMENT_LINE = `${FW}/05-authority-consistency.md:25`;
@@ -132,8 +161,8 @@ const GATING_ARTIFACTS = ["rfc-0txnl.17", "rfc-0txnl.10", "rfc-0txnl.20"];
 const SENSITIVITY_FIELD = /sensitiv/i;
 /** Row C1's matcher: the two link-record words in any case, joined directly or by whitespace, "_", ".", "/" or "-". */
 const LINK_FAMILY = /federation[\s_./-]*link/i;
-/** Row D3's matcher: an rf workspace link verb spelled in one string. */
-const LINK_VERB_TEXT = /\bworkspace[\s._-]+(?:un)?links?\b/i;
+/** Row D3's matcher: an rf workspace link verb spelled in one string, flag tokens (-x, --x, --x=v) allowed between the two words. */
+const LINK_VERB_TEXT = /\bworkspace(?:\s+--?[a-z][\w-]*(?:=\S*)?)*[\s._-]+(?:un)?links?\b/i;
 const LINK_VERBS = ["link", "links", "unlink"];
 /** The capability_ref rule: a scheme, a colon and a reference with no whitespace (this census's floor). */
 const CAPABILITY_REF = /^[a-z][a-z0-9+.-]*:[A-Za-z0-9._~/-]{1,200}$/;
@@ -165,8 +194,8 @@ const ROWS: readonly Row[] = [
   {
     id: "B",
     label: "(b) differing owner/consumer policies: the surfaced redaction is the strictest",
-    parts: [{ claim: "differing owner/consumer policies: the surfaced redaction is the strictest", pins: ["B1", "B2", "B3", "B4"] }],
-    pins: ["B1", "B2", "B3", "B4"],
+    parts: [{ claim: "differing owner/consumer policies: the surfaced redaction is the strictest", pins: ["B1", "B2", "B3", "B4", "B5"] }],
+    pins: ["B1", "B2", "B3", "B4", "B5"],
   },
   {
     id: "C",
@@ -188,17 +217,47 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "MA",
-    label: "row A6's write matcher catches every sensitivity-field write shape, and its named residuals stay pinned quiet",
+    label: "row A6's write matcher counts each enumerated sensitivity-field write shape, and its named residuals stay pinned quiet",
     parts: [],
-    pins: ["MA1", "MA2", "MA3", "MA4", "MA5", "MA6", "MA7", "MA8", "MA9", "MA10", "MA11", "MA12", "QA1", "QA2", "QA3", "QS1"],
+    pins: ["MA1", "MA2", "MA3", "MA4", "MA5", "MA6", "MA7", "MA8", "MA9", "MA10", "MA11", "MA12", "MA13", "MA14", "MA15", "MA16", "MA17", "MA18", "QA1", "QA2", "QA3", "QA4", "QA5", "QS1"],
   },
   {
     id: "MC",
-    label: "row C1's link-family matcher catches every separator and case spelling of the link record, and its named residuals stay pinned quiet",
+    label: "row C1's link-family matcher and schema reader catch each enumerated spelling and declaration of the link record, and their named residuals stay pinned quiet",
     parts: [],
-    pins: ["MC1", "MC2", "MC3", "MC4", "MC5", "MC6", "MC7", "QC1", "QC2"],
+    pins: ["MC1", "MC2", "MC3", "MC4", "MC5", "MC6", "MC7", "MC8", "MC9", "QC1", "QC2", "QC3"],
+  },
+  {
+    id: "MD",
+    label: "row D3's verb matcher counts each enumerated argv and command-string spelling of an rf workspace link verb, and its named residual stays pinned quiet",
+    parts: [],
+    pins: ["MD1", "MD2", "QD1"],
   },
 ];
+
+/** Each survivor the follow-up filing names (a gate id, or composedArgv), with the one pin this cut adds against it. */
+const CURES: readonly { readonly survivor: string; readonly row: string; readonly pin: string }[] = [
+  { survivor: "G2b", row: "MA", pin: "MA13" },
+  { survivor: "G4", row: "MA", pin: "MA14" },
+  { survivor: "G13", row: "MA", pin: "MA15" },
+  { survivor: "G3", row: "MA", pin: "MA16" },
+  { survivor: "G12", row: "B", pin: "B5" },
+  { survivor: "G5", row: "MC", pin: "MC8" },
+  { survivor: "G6", row: "MC", pin: "MC9" },
+  { survivor: "G7", row: "MD", pin: "MD1" },
+  { survivor: "composedArgv", row: "MD", pin: "QD1" },
+];
+/** The pins this cut adds that no survivor names: sibling shapes of a cured family and the quiet rows of the residuals it names. */
+const EXTRAS: readonly { readonly row: string; readonly pin: string }[] = [
+  { row: "MA", pin: "MA17" },
+  { row: "MA", pin: "MA18" },
+  { row: "MA", pin: "QA4" },
+  { row: "MA", pin: "QA5" },
+  { row: "MC", pin: "QC3" },
+  { row: "MD", pin: "MD2" },
+];
+/** The rows this follow-up adds; every other row is the landed first cut's. */
+const NEW_ROWS = ["MD"];
 
 interface RosterPin {
   readonly id: string;
@@ -305,19 +364,49 @@ function derivedLink(): { schema: string; fields: string[] } {
   return { schema: match?.[1] ?? "", fields: (match?.[2] ?? "").split(",").filter(Boolean) };
 }
 
-/** The bead's own row in the tracked bead export: its notes, the owner filing this census answers to. */
-function beadNotes(): string {
+/** A bead's own row in the tracked bead export: its notes. */
+function notesOf(bead: string): string {
   for (const line of readFileSync(BEAD_EXPORT, "utf8").split("\n")) {
-    if (!line.includes(BEAD)) continue;
+    if (!line.includes(bead)) continue;
     const row: unknown = JSON.parse(line);
-    if (isObject(row) && row.id === BEAD && typeof row.notes === "string") return row.notes;
+    if (isObject(row) && row.id === bead && typeof row.notes === "string") return row.notes;
   }
   return "";
+}
+/** The bead's own notes: the owner filing this census answers to, then the first cut's delivery note. */
+function beadNotes(): string {
+  return notesOf(BEAD);
 }
 /** The four clauses of the filing's first `Acceptance: (a) ...` line, each starting with its letter. */
 function acceptanceClauses(notes: string): string[] {
   const line = notes.split("\n").find(text => text.startsWith("Acceptance: (a) ")) ?? "";
   return line.slice("Acceptance: ".length).replace(/\.$/, "").split(/; (?=\([a-z]\) )/);
+}
+/** The landed first cut's frozen shape as its delivery note in the bead export records it ("Frozen shape literal: A:6, ..."). */
+function landedShape(): Map<string, number> {
+  const listed = /Frozen shape literal: ([^.\n]*)\./.exec(beadNotes())?.[1] ?? "";
+  return new Map([...listed.matchAll(/\b([A-Z]+):(\d+)\b/g)].map((match): [string, number] => [match[1] ?? "", Number(match[2])]));
+}
+/** The survivors the follow-up filing names, in order: the gate ids and composedArgv on its first "- F1 " line. */
+function filedSurvivors(): string[] {
+  const line = notesOf(FOLLOW_UP).split("\n").find(text => text.startsWith("- F1 ")) ?? "";
+  return [...line.matchAll(/\bG\d+[a-z]?\b|\bcomposedArgv\b/g)].map(match => match[0]);
+}
+/** Where a judged set's pin counts leave the landed shape plus this cut's additions, by row (empty when every count agrees). */
+function shapeFindings(rows: readonly { readonly id: string; readonly pins: readonly string[] }[], landed: ReadonlyMap<string, number>): string[] {
+  const findings: string[] = [];
+  for (const row of rows) {
+    const base = landed.get(row.id) ?? (NEW_ROWS.includes(row.id) ? 0 : undefined);
+    if (base === undefined) {
+      findings.push(`row ${row.id} is neither landed nor new`);
+      continue;
+    }
+    const added = [...CURES, ...EXTRAS].filter(entry => entry.row === row.id);
+    for (const entry of added) if (!row.pins.includes(entry.pin)) findings.push(`${entry.pin} is not a pin of row ${row.id}`);
+    if (row.pins.length !== base + added.length) findings.push(`row ${row.id}: ${row.pins.length} pins, landed ${base} + added ${added.length}`);
+  }
+  for (const id of landed.keys()) if (!rows.some(row => row.id === id)) findings.push(`landed row ${id} is gone`);
+  return findings;
 }
 
 /** Every regular file below a root (symlinks are not followed); a path that vanishes mid-walk holds nothing tracked. */
@@ -396,6 +485,8 @@ const OWNER_MARKERS = [
 /** A value the owner left (an internal block) that Pi's own hygiene redaction matches: obviously fake. */
 const OWNER_LEFT = "lens fixture.lens2: password=obviously-fake-value";
 const OWNER_TEXT = [...OWNER_MARKERS, OWNER_LEFT, "plain context line"].join("\n");
+/** OWNER_TEXT on one line (its lines joined by spaces): it holds no unsafe unit, so the shared text sanitizer takes the single-line path. */
+const OWNER_LINE = [...OWNER_MARKERS, OWNER_LEFT, "plain context line"].join(" ");
 
 /** A full-shape render envelope whose output.text is `text` and whose observation rows state FIXTURE_CLASSES. */
 function envelopeWith(text: string): JsonObject {
@@ -517,6 +608,33 @@ function accessedName(node: ts.Expression): string | undefined {
   return undefined;
 }
 const DEFINERS = ["Object.defineProperty", "Reflect.set", "Reflect.defineProperty"];
+/** The keyed-collection writers (a Map, Headers, URLSearchParams or FormData, or a path setter): the call's first literal argument
+ * is its key. */
+const KEYED_WRITERS = ["set", "append"];
+/** A serialized member named for a sensitivity: the key, an optional closing quote, then ":" or "=" (JSON, YAML, TOML or a query). */
+const SERIALIZED_MEMBER = /sensitiv[\w-]*["']?\s*[:=]/i;
+const INCREMENTS = [ts.SyntaxKind.PlusPlusToken, ts.SyntaxKind.MinusMinusToken];
+/** The text a string literal or a template without substitutions spells. */
+function literalText(node: ts.Node | undefined): string | undefined {
+  return node !== undefined && ts.isStringLiteralLike(node) ? node.text : undefined;
+}
+/** The texts a literal spells: a string, a regex, or each literal part of a template. */
+function spelledTexts(node: ts.Node): string[] {
+  if (ts.isStringLiteralLike(node) || ts.isRegularExpressionLiteral(node)) return [node.text];
+  if (ts.isTemplateExpression(node)) return [node.head.text, ...node.templateSpans.map(span => span.literal.text)];
+  return [];
+}
+/** The targets an assignment pattern writes ([rec.sensitivity] = ..., ({ level: rec.sensitivity } = ...)); a default inside the
+ * pattern is an assignment of its own, which the scan counts where it stands. */
+function patternTargets(node: ts.Expression): ts.Expression[] {
+  if (ts.isParenthesizedExpression(node)) return patternTargets(node.expression);
+  if (ts.isArrayLiteralExpression(node)) return node.elements.flatMap(element => patternTargets(ts.isSpreadElement(element) ? element.expression : element));
+  if (ts.isObjectLiteralExpression(node)) {
+    return node.properties.flatMap(property => (ts.isPropertyAssignment(property) ? patternTargets(property.initializer) : ts.isSpreadAssignment(property) ? patternTargets(property.expression) : []));
+  }
+  if (ts.isBinaryExpression(node) || ts.isOmittedExpression(node)) return [];
+  return [node];
+}
 /** One module's writes to a SENSITIVITY_FIELD key, each `<file>:<line> <how> <name>`. */
 function scanWrites(fileName: string, text: string): string[] {
   const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
@@ -526,8 +644,10 @@ function scanWrites(fileName: string, text: string): string[] {
   };
   const visit = (node: ts.Node): void => {
     if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment) {
-      hit(node, "assigns", accessedName(node.left));
+      if (ts.isArrayLiteralExpression(node.left) || ts.isObjectLiteralExpression(node.left)) for (const target of patternTargets(node.left)) hit(target, "assigns", accessedName(target));
+      else hit(node, "assigns", accessedName(node.left));
     }
+    if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && INCREMENTS.includes(node.operator)) hit(node, "increments", accessedName(node.operand));
     if (ts.isDeleteExpression(node)) hit(node, "deletes", accessedName(node.expression));
     if (ts.isPropertyAssignment(node) || ts.isShorthandPropertyAssignment(node)) hit(node, "sets", keyText(node.name));
     if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)) {
@@ -535,6 +655,14 @@ function scanWrites(fileName: string, text: string): string[] {
       const key = node.arguments[1];
       if (DEFINERS.includes(callee) && key !== undefined) hit(node, callee, keyText(key));
     }
+    if (ts.isCallExpression(node)) {
+      const callee = node.expression;
+      const method = ts.isPropertyAccessExpression(callee) ? callee.name.text : ts.isIdentifier(callee) ? callee.text : undefined;
+      const defined = ts.isPropertyAccessExpression(callee) && DEFINERS.includes(`${callee.expression.getText(source)}.${callee.name.text}`);
+      if (method !== undefined && KEYED_WRITERS.includes(method) && !defined) hit(node, `${method}()`, node.arguments.map(argument => literalText(argument)).find(key => key !== undefined));
+    }
+    if (ts.isArrayLiteralExpression(node) && node.elements.length >= 2) hit(node, "pairs", literalText(node.elements[0]));
+    for (const spelled of spelledTexts(node)) hit(node, "serializes", SERIALIZED_MEMBER.exec(spelled)?.[0]);
     ts.forEachChild(node, visit);
   };
   visit(source);
@@ -547,7 +675,8 @@ interface VerbScan {
   readonly verbArgv: string[];
   readonly verbLiterals: string[];
 }
-/** One module's rf workspace link verbs: an argv array with "workspace" then a LINK_VERBS word, or a string or template literal. */
+/** One module's rf workspace link verbs: an argv array naming "workspace" and, anywhere after it, a LINK_VERBS word, or a string or
+ * template literal. */
 function scanLinkVerbs(fileName: string, text: string): VerbScan {
   const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const verbArgv: string[] = [];
@@ -555,7 +684,7 @@ function scanLinkVerbs(fileName: string, text: string): VerbScan {
   const visit = (node: ts.Node): void => {
     if (ts.isArrayLiteralExpression(node)) {
       const elements = node.elements.map(element => (ts.isStringLiteralLike(element) ? element.text : ""));
-      if (elements.some((element, index) => element === "workspace" && LINK_VERBS.includes(elements[index + 1] ?? ""))) verbArgv.push(`${fileName}: [${elements.filter(Boolean).join(", ")}]`);
+      if (elements.some((element, index) => element === "workspace" && elements.slice(index + 1).some(later => LINK_VERBS.includes(later)))) verbArgv.push(`${fileName}: [${elements.filter(Boolean).join(", ")}]`);
     }
     if (ts.isStringLiteralLike(node) && LINK_VERB_TEXT.test(node.text)) verbLiterals.push(`${fileName}: ${node.text}`);
     if (ts.isTemplateExpression(node)) {
@@ -583,17 +712,28 @@ const AUTHOR_ROOTS: readonly ScanRoot[] = [
   { root: "qa", floor: 50, anchorFile: "workbench/receipts-index.mjs", anchorToken: "docs/workbench/receipts", files: () => true },
 ];
 const DATA_FILE = /\.(?:json|toml|ya?ml)$/;
-/** The schema a data file declares at its top level, when it declares one. */
-function declaredSchema(path: string, text: string): string | undefined {
+/** The schemas a data file declares under schema or $schema: a JSON file's top-level members, a YAML or TOML file's key lines. */
+function declaredSchemas(path: string, text: string): string[] {
   if (path.endsWith(".json")) {
     try {
       const parsed: unknown = JSON.parse(text);
-      return isObject(parsed) && typeof parsed.schema === "string" ? parsed.schema : undefined;
+      return isObject(parsed) ? [parsed.schema, parsed.$schema].filter((value): value is string => typeof value === "string") : [];
     } catch {
-      return undefined;
+      return [];
     }
   }
-  return /^\s*schema\s*[=:]\s*["']?([^"'\s]+)/m.exec(text)?.[1];
+  return [...text.matchAll(/^\s*["']?\$?schema["']?\s*[=:]\s*["']?([^"'\s]+)/gm)].map(match => match[1] ?? "");
+}
+/** A text with its JS and JSON escapes decoded (\uXXXX, \u{X...}, \xXX), so an escaped spelling reads as what it spells. */
+function unescaped(text: string): string {
+  return text.replace(/\\u\{([0-9a-f]{1,6})\}|\\u([0-9a-f]{4})|\\x([0-9a-f]{2})/gi, (whole: string, braced?: string, four?: string, two?: string) => {
+    const code = Number.parseInt(braced ?? four ?? two ?? "", 16);
+    return code <= 0x10ffff ? String.fromCodePoint(code) : whole;
+  });
+}
+/** Row C1's text rule: LINK_FAMILY in the text as written, or with its escapes decoded. */
+function spellsLinkFamily(text: string): boolean {
+  return LINK_FAMILY.test(text) || LINK_FAMILY.test(unescaped(text));
 }
 
 let nativeIds: Promise<{ ids: string[]; texts: string[] }> | undefined;
@@ -612,7 +752,7 @@ interface Spelling {
   readonly pin: string;
   readonly text: string;
 }
-/** MA1-MA12 must each count one write; QA1-QA3 are the quiet rows of R-COMPUTED, R-SYNONYM and R-COMPOSED-KEY. */
+/** MA1-MA18 must each count the writes their text spells; QA1-QA5 are the quiet rows of R-COMPUTED (QA1, QA5), R-SYNONYM, R-COMPOSED-KEY and R-MERGED. */
 const WRITE_SPELLINGS: readonly (Spelling & { readonly hits: number })[] = [
   { pin: "MA1", text: 'rec.sensitivity = "internal";', hits: 1 },
   { pin: "MA2", text: 'rec["sensitivity"] = "public";', hits: 1 },
@@ -626,12 +766,20 @@ const WRITE_SPELLINGS: readonly (Spelling & { readonly hits: number })[] = [
   { pin: "MA10", text: 'Reflect.set(rec, "sensitivity", "public");', hits: 1 },
   { pin: "MA11", text: 'row.sensitivityClass = "public";', hits: 1 },
   { pin: "MA12", text: 'Object.assign(rec, { Sensitivity: "public" });', hits: 1 },
+  { pin: "MA13", text: 'const out = { ...rec, ...Object.fromEntries([["sensitivity", "public"]]) };', hits: 1 },
+  { pin: "MA14", text: 'const map = new Map(Object.entries(rec)); map.set("sensitivity", "public"); const out = Object.fromEntries(map);', hits: 1 },
+  { pin: "MA15", text: "Object.assign(row, JSON.parse('{\"sensitivity\":\"public\"}'));", hits: 1 },
+  { pin: "MA16", text: "const out = text.replaceAll('\"sensitivity\":\"secret\"', '\"sensitivity\":\"public\"');", hits: 2 },
+  { pin: "MA17", text: '[rec.sensitivity] = ["public"]; ({ level: row.sensitivity } = { level: "public" });', hits: 2 },
+  { pin: "MA18", text: "rec.sensitivity++; --row.sensitivityRank;", hits: 2 },
   { pin: "QA1", text: 'const key = "sensitivity"; rec[key] = "public";', hits: 0 },
   { pin: "QA2", text: 'rec.classification = "public";', hits: 0 },
   { pin: "QA3", text: 'rec["sensi" + "tivity"] = "public";', hits: 0 },
+  { pin: "QA4", text: "Object.assign(row, payload); const out = { ...row, ...payload };", hits: 0 },
+  { pin: "QA5", text: 'const out = Object.fromEntries(Object.entries(rec).map(([k, v]) => [k, k === "sensitivity" ? "public" : v]));', hits: 0 },
 ];
 const ZERO_WIDTH = String.fromCodePoint(0x200b);
-/** MC1-MC7 must hit; QC1 is R-INTERRUPTED, QC2 is R-COMPOSED (the source text of a runtime join). */
+/** MC1-MC8 must hit (MC8 an escaped spelling); QC1 is R-INTERRUPTED, QC2 is R-COMPOSED (the source text of a runtime join). */
 const LINK_SPELLINGS: readonly (Spelling & { readonly hit: boolean })[] = [
   { pin: "MC1", text: `const id = "${LINK_SCHEMA}";`, hit: true },
   { pin: "MC2", text: `const id = "${LINK_SCHEMA.toUpperCase()}";`, hit: true },
@@ -640,8 +788,20 @@ const LINK_SPELLINGS: readonly (Spelling & { readonly hit: boolean })[] = [
   { pin: "MC5", text: ["const id = `reactive-fiber.federation-link/v$", "{n}`;"].join(""), hit: true },
   { pin: "MC6", text: 'const kind = "FederationLink";', hit: true },
   { pin: "MC7", text: 'const id = "reactive-fiber.federation-links/v1";', hit: true },
+  { pin: "MC8", text: 'const id = "reactive-fiber.federation\\u002dlink/v1";', hit: true },
   { pin: "QC1", text: `const id = "reactive-fiber.federation${ZERO_WIDTH}-link/v1";`, hit: false },
   { pin: "QC2", text: 'const id = ["federation", "link"].join("-");', hit: false },
+];
+/** MC9 the $schema declarations row C1 must read (a JSON and a YAML file); QC3 is R-OTHER-KEY: the link schema under another key. */
+const SCHEMA_DECLARATIONS: readonly { readonly pin: string; readonly files: readonly (readonly [string, string])[]; readonly read: number }[] = [
+  { pin: "MC9", files: [["docs/workbench/link.json", `{"$schema": "${LINK_SCHEMA}", "alias": "kb"}`], ["docs/workbench/link.yaml", `$schema: ${LINK_SCHEMA}\nalias: kb\n`]], read: 2 },
+  { pin: "QC3", files: [["docs/workbench/link.json", `{"kind": "${LINK_SCHEMA}", "alias": "kb"}`], ["docs/workbench/link.yaml", `kind: ${LINK_SCHEMA}\nalias: kb\n`]], read: 0 },
+];
+/** MD1-MD2 must each count one verb (flags between the group and the verb); QD1 is R-COMPOSED-ARGV (a variable, a spread or a later push). */
+const VERB_SPELLINGS: readonly (Spelling & { readonly hits: number })[] = [
+  { pin: "MD1", text: 'spawn("rf", ["--workspace", "/w", "workspace", "--json", "link", "kb"]);', hits: 1 },
+  { pin: "MD2", text: 'const cmd = "rf workspace --json link kb";', hits: 1 },
+  { pin: "QD1", text: 'const verb = "link"; spawn("rf", ["workspace", verb]); spawn("rf", ["workspace", ...verbs]); const argv = ["workspace"]; argv.push("unlink");', hits: 0 },
 ];
 const digestOf = (text: string): string => sha256(text).slice(0, 16);
 
@@ -765,13 +925,31 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect({ payloadRefIsOwnerBytes, ownerTextShown }).toStrictEqual({ payloadRefIsOwnerBytes: true, ownerTextShown: [] });
     return { payloadRef, payloadRefIsOwnerBytes, ownerTextShown };
   },
+  B5: async () => {
+    const shown = (sanitized: Json): string => String(objectOf(objectOf(objectOf(objectOf(sanitized, "s").source, "s source").result, "s result").output, "s output").text);
+    const reading = readingOf(envelopeWith(OWNER_LINE));
+    const sanitized = sanitizeWorkbenchJson(clone(reading) as JsonValue) as Json;
+    const surfaced = shown(sanitized);
+    const textForm = shown(JSON.parse(sanitizeWorkbenchJsonText(reading)) as Json);
+    const multiLine = shown(sanitizeWorkbenchJson(clone(readingOf(envelopeWith(OWNER_TEXT))) as JsonValue) as Json);
+    const found = {
+      singleLine: stripUnsafeText(OWNER_LINE) === OWNER_LINE && stripUnsafeText(OWNER_TEXT) !== OWNER_TEXT,
+      consumerRedactions: surfaced.split("[REDACTED]").length - 1,
+      fakeValueShown: [surfaced, textForm].some(text => text.includes("obviously-fake-value")),
+      ownerMarkersKept: OWNER_MARKERS.filter(marker => surfaced.includes(marker) && textForm.includes(marker)).length,
+      labelsVerbatim: relabels(labelsOf(reading), labelsOf(sanitized)).length === 0,
+      sameAsMultiLine: surfaced === multiLine && textForm === multiLine,
+    };
+    expect(found).toStrictEqual({ singleLine: true, consumerRedactions: 1, fakeValueShown: false, ownerMarkersKept: 2, labelsVerbatim: true, sameAsMultiLine: true });
+    return { surfaced, ...found };
+  },
   C1: async () => {
     const trees = AUTHOR_ROOTS.map(scan => {
       const files = filesBelow(join(REPO, scan.root)).filter(file => scan.files(file));
       const anchor = join(REPO, scan.root, scan.anchorFile);
       const floorMet = files.length >= scan.floor;
       const anchorRead = files.includes(anchor) && textOf(anchor).includes(scan.anchorToken);
-      const hits = files.filter(file => LINK_FAMILY.test(textOf(file))).map(file => relative(REPO, file));
+      const hits = files.filter(file => spellsLinkFamily(textOf(file))).map(file => relative(REPO, file));
       expect(floorMet, `${scan.root}: ${files.length} files walked, floor ${scan.floor}`).toBe(true);
       expect(anchorRead, `${scan.root}: the anchor ${scan.anchorFile} was not read with ${scan.anchorToken}`).toBe(true);
       expect(hits, `files spelling the link record under ${scan.root}`).toEqual([]);
@@ -781,7 +959,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const dataAnchor = join(REPO, "test", "fixtures", "rf-result-keys.json");
     const dataFloorMet = data.length >= 20;
     const dataAnchorRead = data.includes(dataAnchor) && textOf(dataAnchor).includes("resultKeys");
-    const manifests = data.filter(file => LINK_FAMILY.test(declaredSchema(file, textOf(file)) ?? "")).map(file => relative(REPO, file));
+    const manifests = data.filter(file => declaredSchemas(file, textOf(file)).some(spellsLinkFamily)).map(file => relative(REPO, file));
     expect(dataFloorMet, `data files walked: ${data.length}`).toBe(true);
     expect(dataAnchorRead).toBe(true);
     expect(manifests, "a data file declaring a link-family schema is a Pi-authored link manifest").toEqual([]);
@@ -877,9 +1055,30 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     LINK_SPELLINGS.map(spelling => [
       spelling.pin,
       async () => {
-        const hit = LINK_FAMILY.test(spelling.text);
+        const hit = spellsLinkFamily(spelling.text);
         expect(hit).toBe(spelling.hit);
         return { digest: digestOf(spelling.text), hit };
+      },
+    ]),
+  ),
+  ...Object.fromEntries(
+    SCHEMA_DECLARATIONS.map(entry => [
+      entry.pin,
+      async () => {
+        const read = entry.files.filter(([path, text]) => declaredSchemas(path, text).some(spellsLinkFamily)).length;
+        expect(read).toBe(entry.read);
+        return { digest: digestOf(entry.files.map(file => file.join("\n")).join("\n")), read };
+      },
+    ]),
+  ),
+  ...Object.fromEntries(
+    VERB_SPELLINGS.map(spelling => [
+      spelling.pin,
+      async () => {
+        const scan = scanLinkVerbs("control.ts", spelling.text);
+        const hits = scan.verbArgv.length + scan.verbLiterals.length;
+        expect(hits).toBe(spelling.hits);
+        return { digest: digestOf(spelling.text), hits };
       },
     ]),
   ),
@@ -887,7 +1086,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
 
 describe("wb-o4h0.6 rf sensitivity echo census (RF-FEDERATED-WORKSPACES-R8)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:6", "B:4", "C:3", "D:3", "MA:16", "MC:9"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:6", "B:5", "C:3", "D:3", "MA:24", "MC:12", "MD:3"]);
     const shape = (rows: readonly { id: string; label: string; parts: readonly Part[]; pins: readonly string[] }[]) =>
       rows.map(({ id, label, parts, pins }) => ({ id, label, parts: parts.map(part => ({ claim: part.claim, pins: [...part.pins] })), pins: [...pins] }));
     expect(shape(ROWS)).toStrictEqual(shape(ROSTER.rows.map(row => ({ ...row, pins: row.pins.map(pin => pin.id) }))));
@@ -914,6 +1113,20 @@ describe("wb-o4h0.6 rf sensitivity echo census (RF-FEDERATED-WORKSPACES-R8)", ()
     const gating = notes.split("\n").find(line => line.startsWith("Gating: ")) ?? "";
     expect([...gating.matchAll(/rfc-[0-9a-z]+\.\d+/g)].map(match => match[0]), "the artifacts the filing's Gating line names, in order").toEqual(GATING_ARTIFACTS);
     expect(notes, "the filing quotes the 05:25 excerpt verbatim").toContain(excerpt(STATEMENT_LINE));
+  });
+
+  it("the follow-up anchors: each row's pins are its landed count plus this cut's cures and extras, and every filed survivor has its cure", () => {
+    const landed = landedShape();
+    expect([...landed.keys()], "the rows the first cut's delivery note records").toEqual(ROWS.map(row => row.id).filter(id => !NEW_ROWS.includes(id)));
+    expect(CURES.map(cure => cure.survivor), "the survivors the follow-up filing names, in order").toEqual(filedSurvivors());
+    const added = [...CURES, ...EXTRAS].map(entry => entry.pin);
+    expect(new Set(added).size, "each added pin once").toBe(added.length);
+    expect(shapeFindings(ROWS, landed)).toEqual([]);
+    // F2's coordinated hollows, each one pin dropped from the rows (the judged set holds the roster equal to them): X-MATCHER MA5, Y1 A3, Y2 QA1.
+    for (const pin of ["MA5", "A3", "QA1"]) {
+      const hollowed = ROWS.map(row => ({ id: row.id, pins: row.pins.filter(entry => entry !== pin) }));
+      expect(shapeFindings(hollowed, landed), pin).toHaveLength(1);
+    }
   });
 
   for (const row of ROWS) {
