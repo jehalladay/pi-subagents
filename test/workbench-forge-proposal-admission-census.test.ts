@@ -55,7 +55,11 @@
  *    outputs: no success tone, no PASS qualifier and no complete coverage, with and without every plant (counted per base,
  *    surface and snapshot index, beside the unplanted reading); the receipt control shows all three. The one reading that broke
  *    clause (b) at the wb-6ps1.1 cut - the workspace snapshot of the empty package list, complete while every() ran over zero
- *    packages - reads partial since wb-bbnl: forge-observer.ts derives that coverage from the judged guard its tone reads.
+ *    packages - reads partial since wb-bbnl: forge-observer.ts derives that coverage from the judged guard its tone reads. Since
+ *    wb-9akv B5's judge reads its own controls through the same judged() closure: the receipt family (the receipt read, a passed
+ *    step, a successful reply, the passed observed run) gives each of its three legs a positive witness, the FAIL family shows
+ *    the PASS qualifier on no FAIL reading (the success tone only on the current success package beside a failure), and every
+ *    judged reading is counted per surface (topology, evidence, operation, observed) for the planted, unplanted and control runs.
  *  C, acceptance (c), gated on the facet. C1 Pi's observation model and its Forge reader outputs hold no facet slot: no member
  *    of the judged interfaces names a FACET word or a needle. C2 FAIL readings (gate.status current failure, current error and a
  *    mixed workspace; the operation family's failed step, error and usage_error replies; the observed gate.run end to end) with
@@ -80,7 +84,9 @@
  * each walk of row A to git's tracked list. Each pin's witness carries what its own quote names (a row-A pin's subject - its
  * scope or reader file - and every single-quoted word of the quote), asserted in the pin case before the roster comparison, so a
  * swap of two pins' cases and witnesses together reds. The judging predicates are held to their own controls: tiles() to four
- * refusals, D1's reason check to three negative controls, the readings to the planted rows, the differential to its twins.
+ * refusals, D1's reason check to three negative controls, the readings to the planted rows, the differential to its twins, and
+ * B5's judge - its success, complete and passed legs - to the receipt and FAIL families read through the same closure, with the
+ * surface of every judged reading counted, so a leg forced quiet or a judged surface dropped reds B5.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; rows, constants and every pin's witness are
  * held to the out-of-file roster. SELF-READ: every case of IMPL names one of READERS and none of ROSTER_NAMES (direct identifiers
  * only). The record case walks this file's vitest task tree against the roster, compares every measured witness a second time
@@ -1123,6 +1129,11 @@ const FAIL_OPERATION: readonly OperationEntry[] = [
   { id: "reply-error", kind: "reply", value: REPLY_ERROR },
   { id: "reply-usage-error", kind: "reply", value: REPLY_USAGE },
 ];
+/** The operation family's receipts: a passed step and a successful reply (B5's receipt control). */
+const RECEIPT_OPERATION: readonly OperationEntry[] = [
+  { id: "step-passed", kind: "frame", value: STEP_PASSED },
+  { id: "reply-success", kind: "reply", value: REPLY_SUCCESS },
+];
 interface OperationDifferential {
   readonly cases: number;
   readonly planted: number;
@@ -1254,8 +1265,19 @@ function tally(labels: readonly string[]): string[] {
   for (const label of labels) counts.set(label, (counts.get(label) ?? 0) + 1);
   return [...counts].map(([label, count]) => `${label} x${count}`);
 }
+/** One run of B5's judge: each leg's findings (named by surface and snapshot index) and the surface of every reading it judged. */
+interface Judged {
+  readonly success: string[];
+  readonly complete: string[];
+  readonly passed: string[];
+  readonly reads: string[];
+  readonly judge: (where: string, value: JsonValue) => void;
+}
 /** B5: the no-receipt outputs never show the success tone, complete coverage or the PASS qualifier; the receipt control does. Each
- * finding is named by base, surface and snapshot index, counted over the planted readings and read again on the unplanted ones. */
+ * finding is named by base, surface and snapshot index, counted over the planted readings and read again on the unplanted ones.
+ * The judge is held to its own controls (wb-9akv): the receipt family (the receipt read, a passed step, a successful reply, the
+ * passed observed run) and the FAIL family go through the same judged() closure, so each leg has a positive witness and the PASS
+ * qualifier stays off every FAIL reading; every judged reading is counted per surface, so no judged surface drops out unseen. */
 async function noReceiptReading(): Promise<JsonObject> {
   const drive = new Drive();
   const gate = await gateDifferential(NO_RECEIPT, ALL_VARIANTS, drive);
@@ -1263,18 +1285,20 @@ async function noReceiptReading(): Promise<JsonObject> {
   const observed = await observedDifferential(OPEN_RUN, ALL_VARIANTS, drive);
   const receipt = await receiptReading();
   const passQualifier = String(receipt.qualifier);
-  const judged = (): { success: string[]; complete: string[]; passed: string[]; judge: (where: string, value: JsonValue) => void } => {
+  const judged = (): Judged => {
     const success: string[] = [];
     const complete: string[] = [];
     const passed: string[] = [];
+    const reads: string[] = [];
     const judge = (where: string, value: JsonValue): void => {
+      reads.push(where.slice(where.lastIndexOf(" ") + 1));
       presentations(value).forEach((entry, index) => {
         if (entry.tone === SUCCESS_TONE) success.push(`${where} ${index}`);
         if (entry.coverage === COVERAGE_WORD) complete.push(`${where} ${index}`);
       });
       if (textsOf(value).some(text => text.includes(passQualifier))) passed.push(where);
     };
-    return { success, complete, passed, judge };
+    return { success, complete, passed, reads, judge };
   };
   const planted = judged();
   for (const { base, outputs } of gate.outputs) {
@@ -1291,6 +1315,21 @@ async function noReceiptReading(): Promise<JsonObject> {
   }
   for (const entry of NO_RECEIPT_OPERATION) unplanted.judge(`${entry.id} operation`, entry.kind === "frame" ? frameOutput(entry.value, drive) : replyOutput(entry.value, drive));
   unplanted.judge(`${OPEN_RUN.id} observed`, observed.baseline);
+  // The judge's own controls, unplanted, over the same surfaces as above: the gate read, the operation family, the observed run.
+  const control = async (bases: readonly GateBase[], entries: readonly OperationEntry[], run: ObservedRun): Promise<Judged> => {
+    const reading = judged();
+    for (const base of bases) {
+      const outputs = await gateOutputs(base.method, base.source, drive);
+      reading.judge(`${base.id} topology`, outputs.topology);
+      reading.judge(`${base.id} evidence`, outputs.evidence);
+    }
+    for (const entry of entries) reading.judge(`${entry.id} operation`, entry.kind === "frame" ? frameOutput(entry.value, drive) : replyOutput(entry.value, drive));
+    reading.judge(`${run.id} observed`, await observedOutput(run, drive));
+    return reading;
+  };
+  const receiptControl = await control([RECEIPT], RECEIPT_OPERATION, PASSED_RUN);
+  const failControl = await control(FAIL, FAIL_OPERATION, FAILED_RUN);
+  const legs = (reading: Judged): JsonObject => ({ success: reading.success, complete: reading.complete, passed: reading.passed });
   return {
     readings: gate.planted + operation.planted + observed.outputs.length,
     success: tally(planted.success),
@@ -1298,6 +1337,8 @@ async function noReceiptReading(): Promise<JsonObject> {
     passed: tally(planted.passed),
     unplanted: { success: unique(unplanted.success), complete: unique(unplanted.complete), passed: unique(unplanted.passed) },
     receipt: { tone: receipt.tone ?? "", coverage: receipt.coverage ?? "", qualifier: receipt.qualifier ?? "" },
+    controls: { receipt: legs(receiptControl), fail: legs(failControl) },
+    reads: { planted: tally(planted.reads), unplanted: tally(unplanted.reads), receipt: tally(receiptControl.reads), fail: tally(failControl.reads) },
     driven: drive.list(),
   };
 }
