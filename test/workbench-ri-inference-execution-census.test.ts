@@ -39,12 +39,18 @@
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label; every witness is held to the roster):
  *  A, acceptance (a). A1 the reader closure: the src value-import closure of the three reader modules is an exact module set that
- *    spells and imports no authority entry (AUTHORITY_CALLS by reference, AUTHORITY_MEMBERS in call position), every name of the
- *    vocabulary resolves to a src export, no src/ui module holds an authority entry (a floor on the modules walked; the
- *    projection readers among them, the modules importing workbench/observation.js, are an exact set), and no src file spells
- *    a <LEAF> consumer (a floor on the files walked, an anchor on the preview id); the controls read a direct call,
- *    an alias and a member call, a property name as no reference, the R-COMPOSED quiet row, the consumer matcher on the
- *    served leaf, its CLI spelling and quiet type-inference prose, and the resolver on an export and a local declaration. A2 control is closed to the inference
+ *    spells and imports no authority entry (AUTHORITY_CALLS by reference, by value import - aliased or not - and as a member of a
+ *    namespace binding; AUTHORITY_MEMBERS in any position; either through a literal key), the vocabulary is exactly the functions
+ *    the AUTHORITY_MODULES export (derived from src both ways) and every name of it resolves to a src export, no src/ui module
+ *    holds an authority entry (a floor on the modules walked; the projection readers among them, the modules importing
+ *    workbench/observation.js, are an exact set), no src file spells a <LEAF> consumer by text or as an adjacent argv pair on
+ *    the AST (a floor on the files walked, an anchor on the preview id), every src module importing a reader module is an exact
+ *    set read backwards, and the preview contract has exactly one importer and one spelling; the controls read a direct call,
+ *    an alias and a member call, a member called through .call, Reflect.apply, .bind, a non-null or an optional call, a literal
+ *    key, a namespace and a dynamic-import namespace, an aliased import, a property name and another receiver's member as no
+ *    reference, the R-COMPOSED quiet row, the consumer reader on the served leaf, the CLI pair and Pi's argv form with no comment,
+ *    two adjacent call arguments, quiet type-inference prose and R-ARGV-SPLIT's reversed and interrupted pairs, and the resolvers
+ *    on an export, a local declaration and an exported constant. A2 control is closed to the inference
  *    producer: NATIVE_CONTROL_ACTIONS and the workflow_control executors name the same four producers, never reactivefiber, and
  *    the real decideControl denies every verb on the re-projected preview node unknown-action under its exact grant and a
  *    confirmation. A3 the inference projection never confers ownership: the adapter states one grouping edge only, a furnace
@@ -58,21 +64,29 @@
  *    (evidence-producer-mismatch), and furnace's own receipt can.
  *  B, acceptance (b). B1 three re-projections of ACTION_READING through Pi's reader composition (nativeEvidence, the adapter,
  *    refresh and relate on the session projection) beside live sinks, a connected curated tool server and a counting decision
- *    seam: 0 provider calls, 0 tool calls, 0 permits, the control sweep unchanged for the furnace nodes, byte-identical reads.
- *    B2 the tool surface: one capability_invoke of the preview returns the reading verbatim and dispatches nothing further, and
- *    re-projecting the returned value keeps every count. B3 the workflow host: a script reading the preview completes with 0
- *    sink calls although every sink is granted, and a resume replays the journaled read stale with 0 provider calls. B4 the
+ *    seam: 0 provider calls, 0 tool calls, 0 permits, the control sweep unchanged for the furnace nodes, byte-identical reads -
+ *    every count, the sweep and one more read taken after the SETTLE_MS settle. B2 the tool surface: one capability_invoke of the
+ *    preview returns the reading verbatim and dispatches nothing further, and re-projecting the returned value keeps every count,
+ *    before and after the settle; its deferred control (a preview whose answer holds the sink invokes it names until the call
+ *    has answered, then lands them DEFER_MS later) is counted only after the settle. B3 the workflow host: a script reading the
+ *    preview completes with 0 sink calls although every sink is granted, and a resume replays the journaled read stale with 0
+ *    provider calls, both counted after the settle, with the same deferred control. A4 reads its sinks after a settle too. B4 the
  *    reading is never read as an executed action: ACTION_READING and PLAIN_READING project identically except the payload
  *    digest (both seams), nativeEvidence is identical and states no domain status, and no surfaced string carries an action mark.
  *  C, acceptance (c). violationsOf, the checker B1 asserts empty, run on adapters that act because the reading names an action:
- *    C1 a sink invoke and a preview re-read through the registry; C2 a permit from the decision seam; C3 a capability_invoke
- *    through the tool server; C4 an executed claim recorded on the furnace run, a surfaced claim note, the claim written into
- *    the preview node's status line and a re-projection stamped with a moving clock (the reads drift); C5 the quiet controls (five passes, the plain reading, a copy, a reading
- *    that is only hashed) and R-DIRECT-DECIDE's quiet row.
+ *    C1 a sink invoke and a preview re-read through the registry, and the same invokes deferred DEFER_MS past the adapter's
+ *    return (G10's shape); C2 a permit from the decision seam, at once and deferred; C3 a capability_invoke through the tool
+ *    server, at once and deferred; C4 an executed claim recorded on the furnace run, at once and deferred, a surfaced claim note,
+ *    the claim written into the preview node's status line and a re-projection stamped with a moving clock (the reads drift);
+ *    C5 the quiet controls (five passes, the plain reading, a copy, a reading that is only hashed), R-DIRECT-DECIDE's quiet row
+ *    and R-LATE's.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id,
- * label and pins, every pin's witness, the sinks, the verbs, the tool names, the reader modules, the two authority vocabularies
- * and the digest of ACTION_TEXT - is held to the out-of-file roster test/fixtures/ri-inference-execution-roster.json; the last
- * case walks this file's vitest task tree against the roster's test list.
+ * label and pins, every pin's witness and own assertion count, the sinks, the verbs, the tool names, the reader modules, the
+ * authority modules, the two authority vocabularies, the settle, the gate probes and the digest of ACTION_TEXT - is held to the
+ * out-of-file roster test/fixtures/ri-inference-execution-roster.json; the last case walks this file's vitest task tree against
+ * the roster's test list. Beyond both files: every row label is held to its acceptance clause and the frozen shape and each row's
+ * pins to the landed delivery note, both in wb-tz4r.7's row of the committed bead store export (.beads/issues.jsonl), and the
+ * deferred pins to the probes wb-3rx7's row names; the vocabulary is held to the authority modules' exports in src.
  * RESIDUALS (named, each with a pinned row): R-COMPOSED an authority member reached through a computed name (`x[name](...)`) or a
  *    spelling assembled at runtime is invisible to A1's scanner (A1 controls: composed reads 0); the B and C rows are its runtime
  *    backstop for the reader composition and the two host surfaces. R-EXPLICIT a workflow script or the model that reads an
@@ -81,9 +95,32 @@
  *    R-DIRECT-DECIDE a permit minted by calling the pure decideControl directly and dropped leaves nothing the runtime checker
  *    reads (C5 decidesDirectly: 3 permits minted, violations empty); A1's scanner is its backstop for the reader modules and
  *    src/ui (a decideControl reference reds A1), and an executor or tool handed such a permit is counted by B1-C4.
+ *    R-LATE an effect scheduled past the SETTLE_MS settle (a longer timer, or one chained past it) lands after every runtime
+ *    row's re-read (C5 rLate: the same invokes, held until the observation is over, read violations empty at it and land later,
+ *    3); A1's scanner is its backstop for the reader modules and src/ui, whatever the delay.
+ *    R-ARGV-SPLIT a <LEAF> argv whose two words are not adjacent string literals (a flag between them, either word held in a
+ *    variable) is invisible to the argv reader (A1 controls: consumerReversed and consumerInterrupted 0); this census claims no
+ *    backstop for it.
  * SCOPE: Pi vendors no RI, RC or rf source, so a producer change is seen only when a re-probe re-reads the pins. The decision
  *    surface is unshipped, so nothing here reads a decision envelope (wb-tz4r.1 owns that shape); a future inference consumer is
  *    a new reader module, which reds A1's closure and its <LEAF> census by construction.
+ *
+ * FOLLOW-UP wb-3rx7 (R694, landing 322's gate verdict on wb-tz4r.7; F1 leads, F2-F6 ride; each cure pinned red-first):
+ *  F1 timer-deferred effects escaped every runtime row and the (c) checker: observe and A4, B2 and B3 now re-read every counter
+ *    after the bounded real-time SETTLE_MS settle (real timers: a fake clock is a forbidden marker), C1-C4 pin the deferred
+ *    mutants (G10's shape) and B2 and B3 a deferred control (G04f's and G04d's shape at the injected seam), and A1 reads
+ *    authority members in any position (G04d's .call spelling).
+ *  F2 the census anchored only on itself and its same-cut roster: the labels, the frozen shape, the pins and the deferred probes
+ *    are held to the bead store export, and the vocabulary to src (above).
+ *  F3 the consumer matcher missed Pi's own argv spelling, and the CLI control passed only through its comment: A1 reads adjacent
+ *    string-literal argv pairs on the AST, and the CLI and argv controls carry no comment.
+ *  F4 the forward-only closure missed a fourth reader reached through the contract constant: A1 reads the importers backwards
+ *    (an exact set) and holds the contract constant to one importer and one spelling.
+ *  F5 the scanner read members only in call position and hid namespace members: see A1's controls.
+ *  F6 a pin could not tell a measurement from a copy of its expected value: each case runs with the roster sealed and its own
+ *    assertion count held to the roster. NOT CLAIMED: a case that swaps its assertions for as many trivial ones and returns a
+ *    literal copy of its witness keeps its count; a hollow that drops an authority module from AUTHORITY_MODULES together with
+ *    its exports from the vocabulary and the roster removes two members, outside rule 16's coordinated (one-member) hollow.
  *
  * Display paths added: none. Test-only: no src file is edited, no scratch is allocated, and the stand-ins live in this file.
  */
@@ -135,6 +172,14 @@ const ROSTER_PATH = join(HERE, "fixtures", "ri-inference-execution-roster.json")
 const INDEX_SOURCE = join(SRC, "index.ts");
 
 const BEAD = "wb-tz4r.7";
+/** The R694 follow-up that hardened this census (landing 322's gate findings F1-F6); both beads' rows live in the store export. */
+const FOLLOW_UP = "wb-3rx7";
+const ISSUES_PATH = join(REPO, ".beads", "issues.jsonl");
+/** The bounded real-time settle every runtime row waits out before it re-reads its counters (F1): an effect a surface schedules on
+ * a timer firing inside it is counted; one deferred past it is the named residual R-LATE. Real timers only. */
+const SETTLE_MS = 500;
+/** How far past their return (or their release) the in-file deferred mutants and controls schedule their effects: inside the settle. */
+const DEFER_MS = 50;
 const RI_PIN = "485f3615db1e";
 const RI_PROBE = "9454d8ce1504";
 const RC_PIN = "640a3b579a95";
@@ -156,20 +201,38 @@ const OWNERSHIP_REF = "frn-req-census7-attempts";
 
 /** The three src modules that read an inference result's content. */
 const READERS: readonly string[] = ["src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts", "src/workbench/native-evidence.ts"];
-/** Pi's effect/action authority, by name: every one is a src export (A1 resolves each), and a reader may neither call nor reference one. */
+/** The src modules that hold Pi's effect/action authority (F2): the permit core and its receipts, the execute and reconcile deciders,
+ * the four producers' control adapters and the retained forge executor, the curated, control, execute and reconcile tools, the
+ * Claude workflow host and the workflow runtime. A1 derives the vocabulary from them: AUTHORITY_CALLS is exactly the functions they
+ * export, so an export added to one, or a name dropped from the list below, reds A1 against src. */
+const AUTHORITY_MODULES: readonly string[] = [
+  "src/workbench/control.ts", "src/workbench/execute.ts", "src/workbench/reconcile-decision.ts", "src/workbench/claude-control.ts",
+  "src/workbench/furnace-control.ts", "src/workbench/forge-control.ts", "src/workbench/detached-control.ts", "src/workbench/forge-control-retention.ts",
+  "src/workbench/claude-capability-tools.ts", "src/workbench/control-tool.ts", "src/workbench/execute-tool.ts", "src/workbench/reconcile-tool.ts",
+  "src/workbench/claude-host.ts", "src/workflow/runtime.ts",
+];
+/** Pi's effect/action authority, by name: every function the authority modules export (A1 holds the list to their exports, both
+ * ways, and resolves each to a src export), and a reader may neither call nor reference one. */
 const AUTHORITY_CALLS: readonly string[] = [
   "decideControl", "isCoreMintedDecision", "acknowledge", "settle", "decideExecute", "decideReconcile", "mintEvidenceReceipt",
   "executeClaudeControl", "executeFurnaceControl", "executeForgeControl", "executeDetachedControl", "settleClaudeInterrupt",
   "settleForgeControl", "createCuratedTools", "createWorkflowControlTool", "createWorkflowExecuteTool", "createWorkflowReconcileTool",
   "createRetainedForgeControlExecutor", "createClaudeWorkflowHost", "runWorkflow",
+  // The helpers the same modules export (F2: derived from src, the vocabulary holds every one).
+  "buildWorkflowExecuteReply", "vetClaudeControlDecision", "vetFurnaceControlDecision", "retainForgeOperation", "lookupForgeOperation",
+  "releaseForgeOperation", "recordControlReceipt", "workflowConcurrency", "assertBoundarySafe", "validateScript",
 ];
 /** The two words of rf's generative inference leaf, kept apart so this file never spells the leaf (THE LEAF NAME above). */
 const GROUP = "inference";
 const VERB = "run";
 /** A <LEAF> consumer's spelling, composed at runtime: the served leaf (dotted, spaced, snake or kebab) or the rf CLI verb pair. */
 const CONSUMER = new RegExp(`\\b${GROUP}[ ._-]${VERB}\\b|\\brf ${GROUP}\\b`);
-/** The member calls that dispatch a capability, a native control, a tool or a workflow node. */
+/** The members that dispatch a capability, a native control, a tool or a workflow node, read in any position (F1/F5): called,
+ * bound, applied, passed or read. */
 const AUTHORITY_MEMBERS: readonly string[] = ["invoke", "inspect", "requestControl", "callTool", "callNode"];
+/** The three gate probes the follow-up's lead finding names (wb-3rx7's export row, its '[leads] - F1' line), each with the pin member
+ * that is its in-file shape: G10's deferred adapter (C1), G04f's and G04d's deferral behind the preview call (B2, B3). */
+const GATE_PROBES: Readonly<Record<string, string>> = { G10: "C1 defersSinkInvoke", G04f: "B2 deferredControl", G04d: "B3 deferredControl" };
 
 interface Sink {
   readonly id: string;
@@ -276,18 +339,24 @@ interface RosterRow {
 }
 interface Roster {
   readonly bead: string;
+  readonly followUp: string;
+  readonly settleMs: number;
   readonly riPin: string;
   readonly riProbe: string;
   readonly rcPin: string;
   readonly rfVersion: string;
   readonly actionTextSha256: string;
   readonly readers: readonly string[];
+  readonly authorityModules: readonly string[];
   readonly authorityCalls: readonly string[];
   readonly authorityMembers: readonly string[];
+  readonly gateProbes: { readonly [probe: string]: string };
   readonly sinks: readonly Sink[];
   readonly verbs: readonly string[];
   readonly toolNames: readonly string[];
   readonly rows: readonly RosterRow[];
+  /** `${pin}:${n}`, n the assertions the pin's own case makes (F6), in row order. */
+  readonly counted: readonly string[];
   readonly tests: readonly string[];
 }
 
@@ -312,21 +381,82 @@ function readRoster(): Roster {
     }
     return { id: sink.id, effectClass: sink.effectClass, permission: sink.permission };
   });
-  for (const field of ["bead", "riPin", "riProbe", "rcPin", "rfVersion", "actionTextSha256"]) {
+  for (const field of ["bead", "followUp", "riPin", "riProbe", "rcPin", "rfVersion", "actionTextSha256"]) {
     if (typeof raw[field] !== "string") throw new Error(`roster ${field} must be a string`);
   }
+  if (typeof raw.settleMs !== "number") throw new Error("roster settleMs must be a number");
+  const probes = raw.gateProbes;
+  if (!isObject(probes) || !Object.values(probes).every(member => typeof member === "string")) throw new Error("roster gateProbes must map each probe to a pin member");
   return {
-    bead: String(raw.bead), riPin: String(raw.riPin), riProbe: String(raw.riProbe), rcPin: String(raw.rcPin), rfVersion: String(raw.rfVersion),
-    actionTextSha256: String(raw.actionTextSha256), readers: strings(raw.readers, "readers"), authorityCalls: strings(raw.authorityCalls, "authorityCalls"),
-    authorityMembers: strings(raw.authorityMembers, "authorityMembers"), sinks, verbs: strings(raw.verbs, "verbs"), toolNames: strings(raw.toolNames, "toolNames"),
-    rows, tests: strings(raw.tests, "tests"),
+    bead: String(raw.bead), followUp: String(raw.followUp), settleMs: raw.settleMs, riPin: String(raw.riPin), riProbe: String(raw.riProbe), rcPin: String(raw.rcPin),
+    rfVersion: String(raw.rfVersion), actionTextSha256: String(raw.actionTextSha256), readers: strings(raw.readers, "readers"),
+    authorityModules: strings(raw.authorityModules, "authorityModules"), authorityCalls: strings(raw.authorityCalls, "authorityCalls"),
+    authorityMembers: strings(raw.authorityMembers, "authorityMembers"), gateProbes: Object.fromEntries(Object.entries(probes).map(([probe, member]) => [probe, String(member)])),
+    sinks, verbs: strings(raw.verbs, "verbs"), toolNames: strings(raw.toolNames, "toolNames"), rows, counted: strings(raw.counted, "counted"), tests: strings(raw.tests, "tests"),
   };
 }
-const ROSTER = readRoster();
+const ROSTER_VALUE = readRoster();
+/** Raised while a pin's case runs (F6): a case measures its witness, it never reads (and so never copies) the expected one. */
+let rosterSealed = false;
+function roster(): Roster {
+  if (rosterSealed) throw new Error("a case read the roster while it ran: a pin measures its witness, it never copies the expected one");
+  return ROSTER_VALUE;
+}
 function rosterWitness(pin: string): JsonValue {
-  const found = ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === pin);
+  const found = roster().rows.flatMap(row => row.pins).find(entry => entry.id === pin);
   if (found === undefined) throw new Error(`the roster holds no pin ${pin}`);
   return found.witness;
+}
+function countedEntry(pin: string): string {
+  return roster().counted.find(entry => entry.startsWith(`${pin}:`)) ?? `${pin}: not counted in the roster`;
+}
+
+/* ---------------------------------------------------------------------------------------------------------------------------
+ * The anchors outside this file and its roster (F2): the bead store export's rows for this census's bead and its follow-up.
+ * ------------------------------------------------------------------------------------------------------------------------- */
+
+interface ExportRow {
+  readonly id: string;
+  readonly notes: string;
+}
+/** The committed bead store export's rows, parsed once. */
+let exported: readonly unknown[] | undefined;
+function exportedRows(): readonly unknown[] {
+  exported ??= readFileSync(ISSUES_PATH, "utf8").split("\n").filter(line => line.trim() !== "").map((line): unknown => JSON.parse(line));
+  return exported;
+}
+/** The one row of the committed bead store export with this id; none, or two, refuses. */
+function exportRow(id: string): ExportRow {
+  const found = exportedRows().filter((row): row is { [key: string]: unknown } => isObject(row) && row.id === id);
+  const [row] = found;
+  if (found.length !== 1 || row === undefined) throw new Error(`the bead store export holds ${found.length} rows for ${id}`);
+  return { id, notes: typeof row.notes === "string" ? row.notes : "" };
+}
+/** The first note line opening with `prefix`, the prefix dropped; none refuses. */
+function noteLine(row: ExportRow, prefix: string): string {
+  const line = row.notes.split("\n").find(entry => entry.startsWith(prefix));
+  if (line === undefined) throw new Error(`${row.id}'s notes carry no line opening ${JSON.stringify(prefix)}`);
+  return line.slice(prefix.length);
+}
+/** The owner filing's acceptance clauses, each from its `(x) ` mark to the next clause's `; `, the closing period dropped. */
+function acceptanceClauses(row: ExportRow): string[] {
+  return noteLine(row, "Acceptance: ").replace(/\.$/, "").split(/; (?=\([b-z]\) )/);
+}
+/** The landed delivery note's ROWS paragraph: the frozen shape it states and the pins it names under each row's clause mark. */
+function landedRows(row: ExportRow): { shape: string[]; pins: { [id: string]: string[] } } {
+  const paragraph = noteLine(row, "ROWS (frozen shape ");
+  const shape = /^([A-Z]:\d+(?: [A-Z]:\d+)*),/.exec(paragraph)?.[1]?.split(" ") ?? [];
+  const heads = [...paragraph.matchAll(/(?:: |\. )([A-Z]) \([a-z]\) /g)];
+  const pins = Object.fromEntries(heads.map((head, at) => {
+    const segment = paragraph.slice(head.index, heads[at + 1]?.index ?? paragraph.length);
+    return [head[1] ?? "", [...segment.matchAll(/(?:- |; )([A-Z]\d) /g)].map(match => match[1] ?? "")];
+  }));
+  return { shape, pins };
+}
+/** The gate probes the follow-up's lead finding names as surviving: `(G10, G04f and G04d survive ...`. */
+function leadProbes(row: ExportRow): string[] {
+  const named = /\(((?:G\d+[a-z]?(?:, | and ))*G\d+[a-z]?) survive/.exec(noteLine(row, "[leads] - F1 "))?.[1] ?? "";
+  return named.split(/, | and /).filter(probe => probe !== "");
 }
 
 /* ---------------------------------------------------------------------------------------------------------------------------
@@ -357,15 +487,40 @@ interface ValueImport {
 interface ModuleScan {
   readonly valueImports: readonly ValueImport[];
   readonly typeImports: readonly string[];
-  /** `name@line` for an authority reference, `.member@line` for an authority member call. */
+  /** `name@line` for an authority reference (an imported one included), `ns.name@line` for one reached through a namespace binding,
+   * `.member@line` for an authority member in any position and `[name]@line` for either reached through a literal key. */
   readonly authority: readonly string[];
 }
-function scanModule(name: string, text: string): ModuleScan {
+/** Every text this file parses, parsed once (A1 reads each src file through several readers). */
+const PARSED = new Map<string, ts.SourceFile>();
+function parsed(name: string, text: string): ts.SourceFile {
+  const cached = PARSED.get(text);
+  if (cached !== undefined) return cached;
   const source = ts.createSourceFile(name, text, ts.ScriptTarget.ES2022, true, ts.ScriptKind.TS);
+  PARSED.set(text, source);
+  return source;
+}
+/** Whether an expression is a dynamic import(), awaited or not: the binding it initializes is a namespace. */
+function isDynamicImport(expression: ts.Expression): boolean {
+  const call = ts.isAwaitExpression(expression) ? expression.expression : expression;
+  return ts.isCallExpression(call) && call.expression.kind === ts.SyntaxKind.ImportKeyword;
+}
+function scanModule(name: string, text: string): ModuleScan {
+  const source = parsed(name, text);
   const valueImports: ValueImport[] = [];
   const typeImports: string[] = [];
   const authority: string[] = [];
   const line = (node: ts.Node): number => source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1;
+  // The module's namespace bindings (F5): `import * as ns` and a binding a dynamic import() initializes; a member of one is a reference.
+  const namespaces = new Set<string>();
+  const collect = (node: ts.Node): void => {
+    if (ts.isImportDeclaration(node) && node.importClause?.namedBindings !== undefined && ts.isNamespaceImport(node.importClause.namedBindings)) {
+      namespaces.add(node.importClause.namedBindings.name.text);
+    }
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && isDynamicImport(node.initializer)) namespaces.add(node.name.text);
+    ts.forEachChild(node, collect);
+  };
+  collect(source);
   const visit = (node: ts.Node): void => {
     if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier)) {
       const from = node.moduleSpecifier.text;
@@ -378,7 +533,13 @@ function scanModule(name: string, text: string): ModuleScan {
         const bindings = clause.namedBindings;
         if (bindings !== undefined && ts.isNamespaceImport(bindings)) names.push(`* as ${bindings.name.text}`);
         if (bindings !== undefined && ts.isNamedImports(bindings)) {
-          for (const element of bindings.elements) if (!element.isTypeOnly) names.push((element.propertyName ?? element.name).text);
+          for (const element of bindings.elements) {
+            if (element.isTypeOnly) continue;
+            const imported = (element.propertyName ?? element.name).text;
+            names.push(imported);
+            // A value import of an authority name is a reference, aliased or not (F5): `import { decideControl as d }`.
+            if (AUTHORITY_CALLS.includes(imported)) authority.push(`${imported}@${line(element)}`);
+          }
         }
         if (names.length > 0) valueImports.push({ from, names: names.sort() });
         else typeImports.push(from);
@@ -391,17 +552,93 @@ function scanModule(name: string, text: string): ModuleScan {
     }
     if (ts.isIdentifier(node) && AUTHORITY_CALLS.includes(node.text)) {
       const parent = node.parent;
-      // A property NAME (x.settle, { settle: ... }) is not a reference to the authority binding; a bare identifier is.
-      const isMemberName = (ts.isPropertyAccessExpression(parent) && parent.name === node) || (ts.isPropertyAssignment(parent) && parent.name === node);
-      if (!isMemberName) authority.push(`${node.text}@${line(node)}`);
+      // A property NAME (x.settle, { settle: ... }) is not a reference to the authority binding; a bare identifier is, and so is
+      // a member of a namespace binding (ns.decideControl, F5).
+      const receiver = ts.isPropertyAccessExpression(parent) && parent.name === node && ts.isIdentifier(parent.expression) ? parent.expression.text : undefined;
+      const viaNamespace = receiver !== undefined && namespaces.has(receiver);
+      const isMemberName = (ts.isPropertyAccessExpression(parent) && parent.name === node && !viaNamespace) || (ts.isPropertyAssignment(parent) && parent.name === node);
+      if (!isMemberName) authority.push(`${viaNamespace ? `${receiver}.` : ""}${node.text}@${line(node)}`);
     }
-    if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression) && AUTHORITY_MEMBERS.includes(node.expression.name.text)) {
-      authority.push(`.${node.expression.name.text}@${line(node)}`);
+    // An authority member in ANY position (F1/F5): called, bound, applied, passed or read - x.invoke(...), x.invoke.call(...),
+    // Reflect.apply(x.invoke, ...), x.invoke.bind(x), x?.invoke(...), x.invoke!(...).
+    if (ts.isPropertyAccessExpression(node) && AUTHORITY_MEMBERS.includes(node.name.text)) authority.push(`.${node.name.text}@${line(node)}`);
+    // Either vocabulary reached through a literal key: x["invoke"], ns["decideControl"] (a computed name stays R-COMPOSED).
+    if (ts.isElementAccessExpression(node) && ts.isStringLiteralLike(node.argumentExpression) &&
+      [...AUTHORITY_MEMBERS, ...AUTHORITY_CALLS].includes(node.argumentExpression.text)) {
+      authority.push(`[${node.argumentExpression.text}]@${line(node)}`);
     }
     ts.forEachChild(node, visit);
   };
   visit(source);
   return { valueImports, typeImports, authority };
+}
+/** The line of every [GROUP, VERB] pair of adjacent string literals on the AST (F3): two adjacent elements of an array literal or
+ * two adjacent arguments of a call, in any quote style - Pi's own launch argv form, which no text matcher reads. */
+function argvSites(name: string, text: string): number[] {
+  const source = parsed(name, text);
+  const sites: number[] = [];
+  const pairs = (items: readonly ts.Expression[]): void => {
+    items.forEach((item, at) => {
+      const next = items[at + 1];
+      if (next !== undefined && ts.isStringLiteralLike(item) && ts.isStringLiteralLike(next) && item.text === GROUP && next.text === VERB) {
+        sites.push(source.getLineAndCharacterOfPosition(item.getStart(source)).line + 1);
+      }
+    });
+  };
+  const visit = (node: ts.Node): void => {
+    if (ts.isArrayLiteralExpression(node)) pairs(node.elements);
+    if (ts.isCallExpression(node) || ts.isNewExpression(node)) pairs(node.arguments ?? []);
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return sites;
+}
+/** Whether a text spells a <LEAF> consumer: the composed text matcher, or Pi's argv form on the AST. */
+function spellsConsumer(name: string, text: string): boolean {
+  return CONSUMER.test(text) || argvSites(name, text).length > 0;
+}
+interface ImportEdge {
+  readonly from: string;
+  readonly kind: "value" | "type" | "dynamic" | "reexport";
+  readonly names: readonly string[];
+}
+/** Every module edge a src module declares (F4): static value and type imports with their imported names, dynamic import()s and
+ * re-exports. */
+function importEdges(name: string, text: string): ImportEdge[] {
+  const source = parsed(name, text);
+  const edges: ImportEdge[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier)) {
+      const clause = node.importClause;
+      const bindings = clause?.namedBindings;
+      const named = bindings !== undefined && ts.isNamedImports(bindings) ? bindings.elements.map(element => (element.propertyName ?? element.name).text) : [];
+      const names = [...(clause?.name !== undefined ? ["default"] : []), ...(bindings !== undefined && ts.isNamespaceImport(bindings) ? ["*"] : []), ...named].sort();
+      edges.push({ from: node.moduleSpecifier.text, kind: clause?.isTypeOnly === true ? "type" : "value", names });
+    }
+    if (ts.isExportDeclaration(node) && node.moduleSpecifier !== undefined && ts.isStringLiteral(node.moduleSpecifier)) {
+      const clause = node.exportClause;
+      edges.push({ from: node.moduleSpecifier.text, kind: "reexport", names: clause !== undefined && ts.isNamedExports(clause) ? clause.elements.map(element => (element.propertyName ?? element.name).text).sort() : ["*"] });
+    }
+    if (ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword) {
+      const [specifier] = node.arguments;
+      edges.push({ from: specifier !== undefined && ts.isStringLiteral(specifier) ? specifier.text : "<computed>", kind: "dynamic", names: ["import()"] });
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return edges;
+}
+/** The functions a module exports: function declarations and function-valued constants carrying the export modifier. */
+function exportedFunctionsOf(text: string): string[] {
+  const source = parsed("exported-functions.ts", text);
+  return source.statements.flatMap(statement => {
+    const exported = (ts.canHaveModifiers(statement) ? ts.getModifiers(statement) : undefined)?.some(modifier => modifier.kind === ts.SyntaxKind.ExportKeyword) === true;
+    if (!exported) return [];
+    if (ts.isFunctionDeclaration(statement)) return statement.name === undefined ? [] : [statement.name.text];
+    if (!ts.isVariableStatement(statement)) return [];
+    return statement.declarationList.declarations.flatMap(declaration => ts.isIdentifier(declaration.name) && declaration.initializer !== undefined &&
+      (ts.isArrowFunction(declaration.initializer) || ts.isFunctionExpression(declaration.initializer)) ? [declaration.name.text] : []);
+  });
 }
 /** A relative specifier resolved to the src .ts module it names (the emitted `.js` spelling maps to the `.ts` source). */
 function resolveSpecifier(fromModule: string, specifier: string): string | undefined {
@@ -428,7 +665,7 @@ function closureOf(roots: readonly string[]): { modules: string[]; packages: str
 }
 /** Whether a src module exports a binding of this name (a declaration with the export modifier, or a named export list). */
 function exportsName(text: string, name: string): boolean {
-  const source = ts.createSourceFile("export-probe.ts", text, ts.ScriptTarget.ES2022, true, ts.ScriptKind.TS);
+  const source = parsed("export-probe.ts", text);
   return source.statements.some(statement => {
     const modifiers = ts.canHaveModifiers(statement) ? ts.getModifiers(statement) : undefined;
     const exported = modifiers?.some(modifier => modifier.kind === ts.SyntaxKind.ExportKeyword) === true;
@@ -442,7 +679,7 @@ function exportsName(text: string, name: string): boolean {
 }
 /** The own property names of the object literal initializing `const <name>` anywhere in a module. */
 function objectKeysOf(text: string, name: string): string[] {
-  const source = ts.createSourceFile("object-probe.ts", text, ts.ScriptTarget.ES2022, true, ts.ScriptKind.TS);
+  const source = parsed("object-probe.ts", text);
   const keys: string[] = [];
   const visit = (node: ts.Node): void => {
     if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === name && node.initializer !== undefined && ts.isObjectLiteralExpression(node.initializer)) {
@@ -481,15 +718,47 @@ function sinkProvider(sink: Sink, counts: Counts): CapabilityProvider {
     },
   };
 }
-function sessionRegistry(envelope: JsonObject): { registry: CapabilityRegistry; counts: Counts } {
+/** The injected-reader seam's envelope type over a JSON envelope (its one cast). */
+function injectedEnvelope(envelope: JsonObject): InjectedEnvelope {
+  return json(envelope) as unknown as InjectedEnvelope;
+}
+/** The bounded real-time settle (F1): a row waits it out, then re-reads every counter it judges. */
+async function waitSettle(): Promise<void> {
+  await new Promise<void>(resolve => {
+    setTimeout(resolve, SETTLE_MS);
+  });
+}
+/** Schedules, `delayMs` from now, an invoke of every sink the text names under the host's full grants - the deferred shape (F1). */
+function deferSinkInvokes(registry: CapabilityRegistry, text: string, delayMs: number): void {
+  for (const sink of SINKS) {
+    if (!text.includes(sink.id)) continue;
+    setTimeout(() => {
+      registry.invoke(sink.id, {}, contextOf(HOST_GRANTS)).catch(() => undefined);
+    }, delayMs);
+  }
+}
+interface Session {
+  readonly registry: CapabilityRegistry;
+  readonly counts: Counts;
+  /** Starts what a deferring reader held: each answer's sink invokes, scheduled DEFER_MS from the release. */
+  readonly release: () => void;
+}
+/** The session registry: the injected preview beside the sinks. With `deferring`, the preview's reader is the G04f/G04d shape at the
+ * injected seam: every answer holds an invoke of each sink it names, scheduled DEFER_MS after the row releases it - once the
+ * surface that read the preview has returned, so the effect lands after it whatever the load. */
+function sessionRegistry(envelope: JsonObject, options: { deferring?: boolean } = {}): Session {
   const counts: Counts = { preview: 0, sinks: Object.fromEntries(SINKS.map(sink => [sink.id, 0])) };
   const registry = new CapabilityRegistry();
+  const held: string[] = [];
   registerReactiveFiberRender(registry, async () => {
     counts.preview += 1;
-    return json(envelope) as unknown as InjectedEnvelope;
+    if (options.deferring === true) held.push(JSON.stringify(envelope));
+    return injectedEnvelope(envelope);
   }, ROOT);
   for (const sink of SINKS) registry.register(sinkProvider(sink, counts));
-  return { registry, counts };
+  return { registry, counts, release: () => {
+    for (const text of held.splice(0)) deferSinkInvokes(registry, text, DEFER_MS);
+  } };
 }
 /** Every grant any surface needs to run the preview and every sink: the host's full authority in this session. */
 const HOST_GRANTS: readonly string[] = [
@@ -602,9 +871,12 @@ const PI_READER: Adapter = async (reading, projection) => reproject(reading, pro
 
 interface Observation {
   readonly applied: number;
+  readonly settleMs: number;
+  /** Every count below is read after the settle (F1); `late` is the part of each that landed after the adapter's last pass. */
   readonly providerCalls: { readonly preview: number; readonly sinks: number };
   readonly toolCalls: number;
   readonly permits: number;
+  readonly late: { readonly preview: number; readonly sinks: number; readonly toolCalls: number; readonly permits: number };
   readonly sweepBefore: readonly string[];
   readonly sweepAfter: readonly string[];
   readonly othersChanged: boolean;
@@ -647,9 +919,15 @@ async function observe(adapter: Adapter, options: { passes?: number; reading?: J
     notes.push(...(await adapter(json(reading), projection, env)));
     reads.push(readOf(projection));
   }
+  const passed = { preview: counts.preview, sinks: sinkCalls(counts), toolCalls: tools.dispatched(), permits };
+  // F1: the settle, then every counter is read again - an effect an adapter deferred past its return is counted - and the
+  // projection is read once more, so a deferred projection change reads unstable.
+  await waitSettle();
+  reads.push(readOf(projection));
   const surfaced = surfacedStrings(projection, notes);
   return {
-    applied: passes, providerCalls: { preview: counts.preview, sinks: sinkCalls(counts) }, toolCalls: tools.dispatched(), permits,
+    applied: passes, settleMs: SETTLE_MS, providerCalls: { preview: counts.preview, sinks: sinkCalls(counts) }, toolCalls: tools.dispatched(), permits,
+    late: { preview: counts.preview - passed.preview, sinks: sinkCalls(counts) - passed.sinks, toolCalls: tools.dispatched() - passed.toolCalls, permits: permits - passed.permits },
     sweepBefore, sweepAfter: sweep(projection), othersChanged: readOf(projection, "furnace") !== othersBefore, stable: new Set(reads).size === 1,
     surfaced: ACTION_MARKS.filter(mark => surfaced.some(text => text.includes(mark))),
   };
@@ -743,22 +1021,53 @@ const IMPL: Record<string, () => Promise<JsonValue>> = {
     const ui = uiScans.filter(({ scanned }) => [...scanned.typeImports, ...scanned.valueImports.map(entry => entry.from)].some(from => from.endsWith("workbench/observation.js")))
       .map(({ path }) => path);
     const uiAuthority = uiScans.flatMap(({ path, scanned }) => scanned.authority.map(hit => `${repoPath(path)}: ${hit}`));
-    const consumers = srcFiles.filter(path => CONSUMER.test(texts.get(path) ?? "")).map(repoPath);
+    const consumers = srcFiles.filter(path => spellsConsumer(path, texts.get(path) ?? "")).map(repoPath);
     const anchored = srcFiles.filter(path => (texts.get(path) ?? "").includes(`"${PREVIEW_ID}"`)).map(repoPath);
+    // F2: the vocabulary is derived from src - exactly the functions the authority modules export, both ways.
+    const authorityExports = Object.fromEntries(AUTHORITY_MODULES.map(module => [module, exportedFunctionsOf(textOf(join(REPO, module)))]));
+    const derived = Object.values(authorityExports).flat();
+    const vocabulary = { missing: derived.filter(name => !AUTHORITY_CALLS.includes(name)), extra: AUTHORITY_CALLS.filter(name => !derived.includes(name)) };
+    // F4: who reads the inference result, read backwards - every src module importing a reader module (or re-exporting or loading
+    // one) is an exact set, and the contract constant that recognizes the reading has exactly one importer and one spelling.
+    const readerPaths = READERS.map(reader => join(REPO, reader));
+    const edges = srcFiles.flatMap(path => importEdges(path, texts.get(path) ?? "").map(edge => ({ path, edge, target: resolveSpecifier(path, edge.from) })));
+    const importers = edges.filter(({ target }) => target !== undefined && readerPaths.includes(target))
+      .map(({ path, edge, target }) => `${repoPath(path)} <- ${repoPath(target ?? "")} (${edge.kind}): ${edge.names.join(", ")}`).sort();
+    const contractImporters = edges.filter(({ edge, target }) => target === join(REPO, "src/workbench/providers/reactivefiber.ts") &&
+      edge.names.includes("REACTIVEFIBER_RENDER_PREVIEW_CONTRACT")).map(({ path }) => repoPath(path));
+    const contractSpelled = srcFiles.filter(path => (texts.get(path) ?? "").includes(REACTIVEFIBER_RENDER_PREVIEW_CONTRACT)).map(repoPath);
     const control = (code: string): number => scanModule("control.ts", code).authority.length;
+    const consumer = (code: string): number => Number(spellsConsumer("control.ts", code));
     const controls = {
       direct: control("await registry.invoke(id, input, context);"),
       alias: control("const run = decideControl;\nrun(request, deps);"),
       member: control("tools.callTool({ name });"),
       composed: control('const verb = "inv" + "oke";\nawait registry[verb](id, input, context);'),
       propertyName: control("const handlers = { settle: 1 };\nhandlers.settle;"),
-      // The consumer census flags the served leaf and its CLI spelling; TypeScript's own type-inference prose stays quiet.
-      consumerLeaf: Number(CONSUMER.test(`const leaf = "${[GROUP, VERB].join(".")}";`)),
-      consumerCli: Number(CONSUMER.test(`spawn("rf", ["${GROUP}", "${VERB}"]); // rf ${GROUP} ${VERB} --json`)),
-      consumerProse: Number(CONSUMER.test("which erases TypeBox's literal inference to `unknown`")),
-      // The vocabulary resolver reads an export, never a local declaration of the same name.
+      // F1/F5: a member read in any position, and the namespace, alias and literal-key spellings of either vocabulary.
+      callMember: control("registry.invoke.call(registry, id, input, context);"),
+      reflectApply: control("Reflect.apply(registry.invoke, registry, [id, input, context]);"),
+      boundMember: control("const run = registry.invoke.bind(registry);"),
+      nonNullCall: control("await registry.invoke!(id, input, context);"),
+      optionalCall: control("await registry?.invoke(id, input, context);"),
+      literalKey: control('await registry["invoke"](id, input, context);'),
+      namespaceCall: control('import * as core from "./control.js";\ncore.decideControl(request, deps);'),
+      dynamicNamespace: control('const core = await import("./control.js");\ncore.decideControl(request, deps);'),
+      aliasImport: control('import { decideControl as permitOf } from "./control.js";\npermitOf(request, deps);'),
+      otherReceiver: control("const options = { decideControl: 1 };\noptions.decideControl;"),
+      // The consumer census flags the served leaf, the CLI pair and Pi's own argv form with no comment to carry them (F3); TypeScript's
+      // own type-inference prose and a reversed or interrupted pair stay quiet.
+      consumerLeaf: consumer(`const leaf = "${[GROUP, VERB].join(".")}";`),
+      consumerCli: consumer(`spawn("rf", ["${GROUP}", "${VERB}"]);`),
+      consumerArgv: consumer(`function argv(workspaceRoot: string) {\n  return ["--workspace", workspaceRoot, '${GROUP}', \`${VERB}\`, "--no-input", "--json"];\n}`),
+      consumerArguments: consumer(`launch("rf", "${GROUP}", "${VERB}");`),
+      consumerProse: consumer("which erases TypeBox's literal inference to `unknown`"),
+      consumerReversed: consumer(`spawn("rf", ["${VERB}", "${GROUP}"]);`),
+      consumerInterrupted: consumer(`spawn("rf", ["${GROUP}", "--json", "${VERB}"]);`),
+      // The vocabulary resolver reads an export, never a local declaration of the same name; the export reader likewise.
       exported: Number(exportsName("export function decideControl() {}", "decideControl")),
       local: Number(exportsName("function decideControl() {}", "decideControl")),
+      exportReader: exportedFunctionsOf("export function a() {}\nfunction b() {}\nexport const c = () => 1;\nexport const d = 1;\nexport class E {}").length,
     };
     expect(srcFiles.length, "src .ts files walked").toBeGreaterThanOrEqual(100);
     expect(readerHits, "authority entries inside the three reader modules").toEqual([]);
@@ -767,8 +1076,16 @@ const IMPL: Record<string, () => Promise<JsonValue>> = {
     expect(uiScans.length, "src/ui modules walked").toBeGreaterThanOrEqual(10);
     expect(uiAuthority, "authority entries in src/ui").toEqual([]);
     expect(consumers, "src files spelling a <LEAF> consumer").toEqual([]);
-    expect(controls).toStrictEqual({ direct: 1, alias: 1, member: 1, composed: 0, propertyName: 0, consumerLeaf: 1, consumerCli: 1, consumerProse: 0, exported: 1, local: 0 });
-    return { closure: closure.modules, packages: closure.packages, imported, elsewhere, ui: ui.map(repoPath), consumers, anchored, controls };
+    expect(vocabulary, "the vocabulary against the authority modules' exports (F2)").toStrictEqual({ missing: [], extra: [] });
+    expect(derived.length, "functions the authority modules export").toBeGreaterThanOrEqual(30);
+    expect(contractImporters, "src modules importing the preview contract constant (F4)").toEqual(["src/workbench/reactivefiber-observer.ts"]);
+    expect(contractSpelled, "src files spelling the preview contract (F4)").toEqual(["src/workbench/providers/reactivefiber.ts"]);
+    expect(controls).toStrictEqual({
+      direct: 1, alias: 1, member: 1, composed: 0, propertyName: 0, callMember: 1, reflectApply: 1, boundMember: 1, nonNullCall: 1, optionalCall: 1,
+      literalKey: 1, namespaceCall: 1, dynamicNamespace: 1, aliasImport: 1, otherReceiver: 0, consumerLeaf: 1, consumerCli: 1, consumerArgv: 1,
+      consumerArguments: 1, consumerProse: 0, consumerReversed: 0, consumerInterrupted: 0, exported: 1, local: 0, exportReader: 2,
+    });
+    return { closure: closure.modules, packages: closure.packages, imported, elsewhere, ui: ui.map(repoPath), consumers, anchored, authorityExports, importers, contractImporters, contractSpelled, controls };
   },
   A2: async () => {
     const executors = objectKeysOf(textOf(INDEX_SOURCE), "controlExecutors");
@@ -807,23 +1124,29 @@ const IMPL: Record<string, () => Promise<JsonValue>> = {
   },
   A4: async () => {
     const injected = new CapabilityRegistry();
-    registerReactiveFiberRender(injected, async () => json(PLAIN_ENVELOPE) as unknown as InjectedEnvelope, ROOT);
+    registerReactiveFiberRender(injected, async () => injectedEnvelope(PLAIN_ENVELOPE), ROOT);
     const native = new CapabilityRegistry();
     (await loadWorkbenchNative()).registerNativeProviders(native, ROOT);
     const previewOf = (registry: CapabilityRegistry) => registry.catalogSnapshot().find(entry => entry.descriptor.id === PREVIEW_ID)?.descriptor;
     const descriptors = { injected: descriptorFacts(previewOf(injected)), native: descriptorFacts(previewOf(native)) };
     const refusals: { [id: string]: string[] } = {};
     const granted: { [id: string]: number } = {};
-    for (const sink of SINKS) {
-      const { registry, counts } = sessionRegistry(ACTION_ENVELOPE);
+    const sessions = SINKS.map(sink => ({ sink, ...sessionRegistry(ACTION_ENVELOPE) }));
+    for (const { sink, registry } of sessions) {
       await registry.invoke(PREVIEW_ID, PREVIEW_INPUT, contextOf(READ_GRANTS));
       refusals[sink.id] = [];
       for (const grant of READ_GRANTS) {
         refusals[sink.id]?.push(await registry.invoke(sink.id, {}, contextOf([grant])).then(() => "returned", categoryOf));
       }
       refusals[sink.id]?.push(await registry.invoke(sink.id, {}, contextOf(READ_GRANTS)).then(() => "returned", categoryOf));
-      const refusedCalls = counts.sinks[sink.id] ?? -1;
-      await registry.invoke(sink.id, {}, contextOf([sink.permission]));
+    }
+    // F1: the read-grant calls settle before any sink counter is read, and the granted calls settle before the difference is taken.
+    await waitSettle();
+    const refused = Object.fromEntries(sessions.map(({ sink, counts }) => [sink.id, counts.sinks[sink.id] ?? -1]));
+    for (const { sink, registry } of sessions) await registry.invoke(sink.id, {}, contextOf([sink.permission]));
+    await waitSettle();
+    for (const { sink, counts } of sessions) {
+      const refusedCalls = refused[sink.id] ?? -1;
       granted[sink.id] = (counts.sinks[sink.id] ?? -1) - refusedCalls;
       expect(refusedCalls, `${sink.id} calls under the read grants`).toBe(0);
     }
@@ -835,6 +1158,8 @@ const IMPL: Record<string, () => Promise<JsonValue>> = {
     const refusedRun = await runWorkflow({ script, host: claudeHost(readOnly.registry, READ_GRANTS) });
     const grantedSession = sessionRegistry(ACTION_ENVELOPE);
     const grantedRun = await runWorkflow({ script, host: claudeHost(grantedSession.registry, [...READ_GRANTS, sink.permission]) });
+    // F1: both scripts' sessions are counted after the settle - an invoke the preview deferred past the run's end is counted (G04d).
+    await waitSettle();
     const scriptRefused = { status: refusedRun.status, category: refusedRun.capabilityError?.category ?? null, preview: readOnly.counts.preview, sink: sinkCalls(readOnly.counts) };
     const scriptGranted = { status: grantedRun.status, preview: grantedSession.counts.preview, sink: sinkCalls(grantedSession.counts) };
     expect(scriptRefused).toStrictEqual({ status: "failed", category: "authorization", preview: 1, sink: 0 });
@@ -884,9 +1209,25 @@ const IMPL: Record<string, () => Promise<JsonValue>> = {
     const projection = sessionProjection(true);
     for (let pass = 0; pass < 3; pass += 1) reproject(value, projection);
     const afterReprojection = { dispatched: tools.dispatched(), preview: counts.preview, sinks: sinkCalls(counts) };
+    // F1: every count again after the settle - an invoke the call or the re-projection scheduled past its return is counted (G04f).
+    await waitSettle();
+    const afterSettle = { dispatched: tools.dispatched(), preview: counts.preview, sinks: sinkCalls(counts) };
+    // The settle's own control (G04f/G04d's shape at the injected seam): a preview whose answer holds an invoke of every sink it names,
+    // landing DEFER_MS after the call has answered; only the re-read after the settle counts the three invokes.
+    const deferring = sessionRegistry(ACTION_ENVELOPE, { deferring: true });
+    const deferringTools = await connectTools(deferring.registry, HOST_GRANTS);
+    await deferringTools.call("capability_invoke", { capabilityId: PREVIEW_ID, capabilityVersion: PREVIEW_VERSION, input: PREVIEW_INPUT });
+    const deferredCall = { dispatched: deferringTools.dispatched(), preview: deferring.counts.preview, sinks: sinkCalls(deferring.counts) };
+    deferring.release();
+    await waitSettle();
+    const deferredControl = { afterCall: deferredCall, afterSettle: { dispatched: deferringTools.dispatched(), preview: deferring.counts.preview, sinks: sinkCalls(deferring.counts) } };
     expect([answer.isError, payload.kind, verbatim]).toEqual([false, "returned", true]);
     expect(afterReprojection).toStrictEqual(afterCall);
-    return { kind: payload.kind ?? null, verbatim, textCarried: outputTextOf(value) === ACTION_TEXT, afterCall, afterReprojection };
+    expect(afterSettle, "the counts after the settle").toStrictEqual(afterCall);
+    expect(deferredControl, "the deferred control: counted only after the settle").toStrictEqual({
+      afterCall: { dispatched: 1, preview: 1, sinks: 0 }, afterSettle: { dispatched: 1, preview: 1, sinks: 3 },
+    });
+    return { kind: payload.kind ?? null, verbatim, textCarried: outputTextOf(value) === ACTION_TEXT, afterCall, afterReprojection, afterSettle, deferredControl };
   },
   B3: async () => {
     const script = `${HEAD}const reading = await node(${JSON.stringify(PREVIEW_ID)}, ${JSON.stringify(PREVIEW_INPUT)});\nreturn reading.source.result.output.text;`;
@@ -897,13 +1238,24 @@ const IMPL: Record<string, () => Promise<JsonValue>> = {
     } } });
     const second = sessionRegistry(ACTION_ENVELOPE);
     const resumed = await runWorkflow({ script, host: claudeHost(second.registry, HOST_GRANTS), journal: { entries } });
+    // F1: both sessions are counted after the settle - an invoke the preview node deferred past its return is counted (G04d).
+    await waitSettle();
     const nodeRows = entries.filter(entry => entry.kind === "node").map(entry => ({ capabilityId: entry.capabilityId ?? null, effectClass: entry.effectClass ?? null }));
     const freshness = resumed.progress.flatMap(entry => (isObject(entry) && entry.type === "workflow_node" && entry.state === "done" ? [String(entry.freshness)] : []));
     const run = { status: recorded.status, textReturned: recorded.value === ACTION_TEXT, preview: first.counts.preview, sinks: sinkCalls(first.counts) };
     const resume = { status: resumed.status, textReturned: resumed.value === ACTION_TEXT, replayedNodeCount: resumed.replayedNodeCount, preview: second.counts.preview, sinks: sinkCalls(second.counts), freshness };
     expect(run).toStrictEqual({ status: "completed", textReturned: true, preview: 1, sinks: 0 });
     expect(resume).toStrictEqual({ status: "completed", textReturned: true, replayedNodeCount: 1, preview: 0, sinks: 0, freshness: ["stale"] });
-    return { run, nodeRows, resume };
+    // The settle's own control: the same script over a deferring preview completes before its three sink invokes land (DEFER_MS after
+    // the run returned); only the re-read after the settle counts them.
+    const deferring = sessionRegistry(ACTION_ENVELOPE, { deferring: true });
+    const deferredRun = await runWorkflow({ script, host: claudeHost(deferring.registry, HOST_GRANTS) });
+    const immediate = sinkCalls(deferring.counts);
+    deferring.release();
+    await waitSettle();
+    const deferredControl = { status: deferredRun.status, preview: deferring.counts.preview, sinks: { atReturn: immediate, settled: sinkCalls(deferring.counts) } };
+    expect(deferredControl, "the deferred control: counted only after the settle").toStrictEqual({ status: "completed", preview: 1, sinks: { atReturn: 0, settled: 3 } });
+    return { run, nodeRows, resume, deferredControl };
   },
   B4: async () => {
     const seams: ReactiveFiberSeam[] = ["rf-cli", "injected-fixture"];
@@ -936,10 +1288,23 @@ const IMPL: Record<string, () => Promise<JsonValue>> = {
       if (outputTextOf(reading).includes(PREVIEW_ID)) await env.registry.invoke(PREVIEW_ID, PREVIEW_INPUT, contextOf(HOST_GRANTS));
       return notes;
     };
+    // G10's shape (F1): the same invokes scheduled DEFER_MS past the adapter's return - every one lands after the last pass, and the
+    // re-read after the settle counts them all.
+    const defersSinkInvoke: Adapter = async (reading, projection, env) => {
+      const notes = await PI_READER(reading, projection, env);
+      deferSinkInvokes(env.registry, outputTextOf(reading), DEFER_MS);
+      return notes;
+    };
     const invoked = await observe(invokesNamedSink);
     const reread = await observe(rereadsPreview);
-    const witness = { invokesNamedSink: violationsOf(invoked), sinkCalls: invoked.providerCalls.sinks, rereadsPreview: violationsOf(reread), previewCalls: reread.providerCalls.preview };
-    expect(witness).toStrictEqual({ invokesNamedSink: ["invoke"], sinkCalls: 9, rereadsPreview: ["invoke"], previewCalls: 3 });
+    const deferred = await observe(defersSinkInvoke);
+    const witness = {
+      invokesNamedSink: violationsOf(invoked), sinkCalls: invoked.providerCalls.sinks, rereadsPreview: violationsOf(reread), previewCalls: reread.providerCalls.preview,
+      defersSinkInvoke: violationsOf(deferred), deferredSinkCalls: { late: deferred.late.sinks, total: deferred.providerCalls.sinks },
+    };
+    expect(witness).toStrictEqual({
+      invokesNamedSink: ["invoke"], sinkCalls: 9, rereadsPreview: ["invoke"], previewCalls: 3, defersSinkInvoke: ["invoke"], deferredSinkCalls: { late: 9, total: 9 },
+    });
     return witness;
   },
   C2: async () => {
@@ -949,9 +1314,19 @@ const IMPL: Record<string, () => Promise<JsonValue>> = {
       for (const verb of VERBS) if (text.includes(`${CONTROL_TOOL} ${verb} ${RUN.id}`)) env.decide(controlRequest(RUN, verb));
       return notes;
     };
+    // The same permit scheduled DEFER_MS past the adapter's return (F1): the re-read after the settle counts it.
+    const defersPermit: Adapter = async (reading, projection, env) => {
+      const notes = await PI_READER(reading, projection, env);
+      const text = outputTextOf(reading);
+      for (const verb of VERBS) {
+        if (text.includes(`${CONTROL_TOOL} ${verb} ${RUN.id}`)) setTimeout(() => env.decide(controlRequest(RUN, verb)), DEFER_MS);
+      }
+      return notes;
+    };
     const observation = await observe(permitsNamedVerb, { passes: 1 });
-    const witness = { violations: violationsOf(observation), permits: observation.permits };
-    expect(witness).toStrictEqual({ violations: ["permit"], permits: 1 });
+    const deferred = await observe(defersPermit, { passes: 1 });
+    const witness = { violations: violationsOf(observation), permits: observation.permits, defersPermit: violationsOf(deferred), deferredPermits: { late: deferred.late.permits, total: deferred.permits } };
+    expect(witness).toStrictEqual({ violations: ["permit"], permits: 1, defersPermit: ["permit"], deferredPermits: { late: 1, total: 1 } });
     return witness;
   },
   C3: async () => {
@@ -964,9 +1339,26 @@ const IMPL: Record<string, () => Promise<JsonValue>> = {
       }
       return notes;
     };
+    // The same tool call scheduled DEFER_MS past the adapter's return (F1): the re-read after the settle counts the call and its invoke.
+    const defersToolCall: Adapter = async (reading, projection, env) => {
+      const notes = await PI_READER(reading, projection, env);
+      const [sink] = SINKS;
+      if (sink !== undefined && outputTextOf(reading).includes(`capability_invoke ${sink.id}`)) {
+        setTimeout(() => {
+          env.tools.call("capability_invoke", { capabilityId: sink.id, capabilityVersion: "1.0.0", input: {} }).catch(() => undefined);
+        }, DEFER_MS);
+      }
+      return notes;
+    };
     const observation = await observe(callsNamedTool, { passes: 1 });
-    const witness = { violations: violationsOf(observation), toolCalls: observation.toolCalls, sinkCalls: observation.providerCalls.sinks };
-    expect(witness).toStrictEqual({ violations: ["invoke", "tool-call"], toolCalls: 1, sinkCalls: 1 });
+    const deferred = await observe(defersToolCall, { passes: 1 });
+    const witness = {
+      violations: violationsOf(observation), toolCalls: observation.toolCalls, sinkCalls: observation.providerCalls.sinks,
+      defersToolCall: violationsOf(deferred), deferredCalls: { late: [deferred.late.toolCalls, deferred.late.sinks], total: [deferred.toolCalls, deferred.providerCalls.sinks] },
+    };
+    expect(witness).toStrictEqual({
+      violations: ["invoke", "tool-call"], toolCalls: 1, sinkCalls: 1, defersToolCall: ["invoke", "tool-call"], deferredCalls: { late: [1, 1], total: [1, 1] },
+    });
     return witness;
   },
   C4: async () => {
@@ -998,11 +1390,24 @@ const IMPL: Record<string, () => Promise<JsonValue>> = {
       for (const relation of topology.relations) projection.relate(relation);
       return topology.diagnostics;
     };
+    // The executed claim scheduled DEFER_MS past the adapter's return (F1): the settled reads see the furnace run change, and the read
+    // after the settle differs from every pass's.
+    const defersExecuted: Adapter = async (reading, projection, env) => {
+      const notes = await PI_READER(reading, projection, env);
+      if (outputTextOf(reading).includes(EXECUTED_CLAIM)) {
+        setTimeout(() => {
+          projection.refresh({ ...snapshotOf(RUN), capturedAt: LATER, observedAt: LATER, node: { title: `furnace run ${RUN.id}`, type: "sdk-operation", statusText: "stopped", statusTone: "success" } });
+        }, DEFER_MS);
+      }
+      return notes;
+    };
     const witness = {
       recordsExecuted: violationsOf(await observe(recordsExecuted)), notesClaim: violationsOf(await observe(notesClaim)),
-      statusClaim: violationsOf(await observe(statusClaim)), restamps: violationsOf(await observe(restamps)),
+      statusClaim: violationsOf(await observe(statusClaim)), restamps: violationsOf(await observe(restamps)), defersExecuted: violationsOf(await observe(defersExecuted)),
     };
-    expect(witness).toStrictEqual({ recordsExecuted: ["executed"], notesClaim: ["surfaced"], statusClaim: ["surfaced"], restamps: ["unstable"] });
+    expect(witness).toStrictEqual({
+      recordsExecuted: ["executed"], notesClaim: ["surfaced"], statusClaim: ["surfaced"], restamps: ["unstable"], defersExecuted: ["executed", "unstable"],
+    });
     return witness;
   },
   C5: async () => {
@@ -1019,34 +1424,71 @@ const IMPL: Record<string, () => Promise<JsonValue>> = {
       if (outputTextOf(reading).includes(`${CONTROL_TOOL} stop`)) direct += decideControl(controlRequest(RUN, "stop"), { projection, now: () => LATER }).decision === "permitted" ? 1 : 0;
       return notes;
     };
-    const witness = {
+    // R-LATE's pinned quiet row: the same invokes, held by the adapter and landing only once the observation is over (after its
+    // settle and every re-read, whatever the load), escape the checker - and do land, later.
+    let lateCounts: Counts | undefined;
+    const heldLate: Array<() => void> = [];
+    const defersPastSettle: Adapter = async (reading, projection, env) => {
+      const notes = await PI_READER(reading, projection, env);
+      lateCounts = env.counts;
+      const text = outputTextOf(reading);
+      heldLate.push(() => deferSinkInvokes(env.registry, text, DEFER_MS));
+      return notes;
+    };
+    const quiet = {
       fivePasses: violationsOf(await observe(PI_READER, { passes: 5 })),
       plainReading: violationsOf(await observe(PI_READER, { reading: PLAIN_READING })),
       copies: violationsOf(await observe(copies)),
       readsOnly: violationsOf(await observe(readsOnly)),
       decidesDirectly: violationsOf(await observe(decidesDirectly)),
     };
+    const pastSettle = violationsOf(await observe(defersPastSettle, { passes: 1 }));
+    const atObservation = lateCounts === undefined ? -1 : sinkCalls(lateCounts);
+    for (const release of heldLate.splice(0)) release();
+    await waitSettle();
+    const rLate = { violations: pastSettle, atObservation, landedLater: (lateCounts === undefined ? -1 : sinkCalls(lateCounts)) - atObservation };
     expect(direct, "the direct core call minted its permit on every pass").toBe(3);
-    expect(Object.values(witness)).toEqual(Object.keys(witness).map(() => []));
-    return witness;
+    expect(Object.values(quiet)).toEqual(Object.keys(quiet).map(() => []));
+    expect(rLate, "R-LATE: deferred past the settle, quiet at the observation, landed later").toStrictEqual({ violations: [], atObservation: 0, landedLater: 3 });
+    return { ...quiet, rLate };
   },
 };
 
 describe("wb-tz4r.7 RI inference execution census (RI-UNIFIED-DECISION-INFERENCE-R7, standing posture)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
+  it("the judged set: the frozen shape, the out-of-file roster and the cases agree", { timeout: 60_000 }, () => {
+    const held = roster();
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:4", "C:5"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
-      ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
+      held.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect({
-      bead: BEAD, riPin: RI_PIN, riProbe: RI_PROBE, rcPin: RC_PIN, rfVersion: RF_VERSION, actionTextSha256: sha256(ACTION_TEXT), readers: [...READERS],
-      authorityCalls: [...AUTHORITY_CALLS], authorityMembers: [...AUTHORITY_MEMBERS], sinks: SINKS.map(sink => ({ ...sink })), verbs: [...VERBS], toolNames: [...TOOL_NAMES],
+      bead: BEAD, followUp: FOLLOW_UP, settleMs: SETTLE_MS, riPin: RI_PIN, riProbe: RI_PROBE, rcPin: RC_PIN, rfVersion: RF_VERSION, actionTextSha256: sha256(ACTION_TEXT),
+      readers: [...READERS], authorityModules: [...AUTHORITY_MODULES], authorityCalls: [...AUTHORITY_CALLS], authorityMembers: [...AUTHORITY_MEMBERS], gateProbes: { ...GATE_PROBES },
+      sinks: SINKS.map(sink => ({ ...sink })), verbs: [...VERBS], toolNames: [...TOOL_NAMES],
     }).toStrictEqual({
-      bead: ROSTER.bead, riPin: ROSTER.riPin, riProbe: ROSTER.riProbe, rcPin: ROSTER.rcPin, rfVersion: ROSTER.rfVersion, actionTextSha256: ROSTER.actionTextSha256,
-      readers: [...ROSTER.readers], authorityCalls: [...ROSTER.authorityCalls], authorityMembers: [...ROSTER.authorityMembers], sinks: ROSTER.sinks.map(sink => ({ ...sink })),
-      verbs: [...ROSTER.verbs], toolNames: [...ROSTER.toolNames],
+      bead: held.bead, followUp: held.followUp, settleMs: held.settleMs, riPin: held.riPin, riProbe: held.riProbe, rcPin: held.rcPin, rfVersion: held.rfVersion,
+      actionTextSha256: held.actionTextSha256, readers: [...held.readers], authorityModules: [...held.authorityModules], authorityCalls: [...held.authorityCalls],
+      authorityMembers: [...held.authorityMembers], gateProbes: { ...held.gateProbes }, sinks: held.sinks.map(sink => ({ ...sink })), verbs: [...held.verbs], toolNames: [...held.toolNames],
     });
+    // F6: every pin's own assertion count is held once, in row order, and none is zero.
+    expect(held.counted.map(entry => entry.slice(0, entry.indexOf(":"))), "the counted pins, in row order").toEqual(ROWS.flatMap(row => row.pins));
+    expect(held.counted.filter(entry => !/^[A-Z]\d:[1-9]\d*$/.test(entry)), "counted entries that are not `<pin>:<n>`, n >= 1").toEqual([]);
+    // F2: the rows are held to anchors outside this file and its roster - the bead store export's row for this census's bead. Every
+    // label is its acceptance clause, verbatim; the frozen shape and every row's pins are the ones the landed delivery note states.
+    const filed = exportRow(BEAD);
+    expect(ROWS.map(row => row.label), "each row label against its acceptance clause in the bead's export row").toEqual(acceptanceClauses(filed));
+    const landed = landedRows(filed);
+    expect(landed.shape, "the frozen shape the landed delivery note states").toEqual(ROWS.map(row => `${row.id}:${row.pins.length}`));
+    expect(landed.pins, "the pins the landed delivery note names under each row").toStrictEqual(Object.fromEntries(ROWS.map(row => [row.id, [...row.pins]])));
+    // F1: the deferred pins are the probes the follow-up's own export row names as surviving, each mapped to a member of a judged pin.
+    expect(leadProbes(exportRow(FOLLOW_UP)), "the probes wb-3rx7's lead finding names").toEqual(Object.keys(GATE_PROBES));
+    const unpinned = Object.values(GATE_PROBES).filter(member => {
+      const [pin = "", key = ""] = member.split(" ");
+      const witness = ROWS.some(row => row.pins.includes(pin)) ? rosterWitness(pin) : null;
+      return !(isObject(witness) && Object.hasOwn(witness, key));
+    });
+    expect(unpinned, "probe members that are no key of a judged pin's witness").toEqual([]);
     // The fixture names every action word it is judged on, and the plain reading names none of them.
     expect(ACTION_MARKS.filter(mark => !ACTION_TEXT.includes(mark))).toEqual([]);
     expect(ACTION_MARKS.filter(mark => outputTextOf(PLAIN_READING).includes(mark))).toEqual([]);
@@ -1058,8 +1500,19 @@ describe("wb-tz4r.7 RI inference execution census (RI-UNIFIED-DECISION-INFERENCE
         it(pin, { timeout: 120_000 }, async () => {
           const impl = IMPL[pin];
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
-          const witness = impl === undefined ? null : await impl();
+          // F6: the case runs with the roster sealed and its own assertions counted - a copy of the expected witness reads the roster
+          // (refused) or asserts nothing (a count the roster does not hold).
+          const before = expect.getState().assertionCalls;
+          rosterSealed = true;
+          let witness: JsonValue = null;
+          try {
+            witness = impl === undefined ? null : await impl();
+          } finally {
+            rosterSealed = false;
+          }
+          const own = expect.getState().assertionCalls - before;
           expect(witness, `witness ${pin}: ${JSON.stringify(witness)}`).toStrictEqual(rosterWitness(pin));
+          expect(`${pin}:${own}`, "the case's own assertion count").toBe(countedEntry(pin));
         });
       }
     });
@@ -1075,7 +1528,7 @@ describe("wb-tz4r.7 RI inference execution census (RI-UNIFIED-DECISION-INFERENCE
     };
     walk(task.file.tasks);
     const titles = walked.map(entry => entry.name);
-    expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
+    expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...roster().tests]);
     expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice (an alias or a decoy)").toEqual([]);
     const here = walked.findIndex(entry => entry.self);
     expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);

@@ -1,5 +1,7 @@
 {
  "bead": "wb-tz4r.7",
+ "followUp": "wb-3rx7",
+ "settleMs": 500,
  "riPin": "485f3615db1e",
  "riProbe": "9454d8ce1504",
  "rcPin": "640a3b579a95",
@@ -9,6 +11,22 @@
   "src/workbench/providers/reactivefiber.ts",
   "src/workbench/reactivefiber-observer.ts",
   "src/workbench/native-evidence.ts"
+ ],
+ "authorityModules": [
+  "src/workbench/control.ts",
+  "src/workbench/execute.ts",
+  "src/workbench/reconcile-decision.ts",
+  "src/workbench/claude-control.ts",
+  "src/workbench/furnace-control.ts",
+  "src/workbench/forge-control.ts",
+  "src/workbench/detached-control.ts",
+  "src/workbench/forge-control-retention.ts",
+  "src/workbench/claude-capability-tools.ts",
+  "src/workbench/control-tool.ts",
+  "src/workbench/execute-tool.ts",
+  "src/workbench/reconcile-tool.ts",
+  "src/workbench/claude-host.ts",
+  "src/workflow/runtime.ts"
  ],
  "authorityCalls": [
   "decideControl",
@@ -30,7 +48,17 @@
   "createWorkflowReconcileTool",
   "createRetainedForgeControlExecutor",
   "createClaudeWorkflowHost",
-  "runWorkflow"
+  "runWorkflow",
+  "buildWorkflowExecuteReply",
+  "vetClaudeControlDecision",
+  "vetFurnaceControlDecision",
+  "retainForgeOperation",
+  "lookupForgeOperation",
+  "releaseForgeOperation",
+  "recordControlReceipt",
+  "workflowConcurrency",
+  "assertBoundarySafe",
+  "validateScript"
  ],
  "authorityMembers": [
   "invoke",
@@ -39,6 +67,11 @@
   "callTool",
   "callNode"
  ],
+ "gateProbes": {
+  "G10": "C1 defersSinkInvoke",
+  "G04f": "B2 deferredControl",
+  "G04d": "B3 deferredControl"
+ },
  "sinks": [
   {
    "id": "census.sink.write",
@@ -107,7 +140,12 @@
       ],
       "elsewhere": {
        "src/workbench/capability-registry.ts": [
-        ".invoke"
+        ".invoke",
+        ".inspect",
+        ".inspect",
+        ".inspect",
+        ".invoke",
+        ".inspect"
        ]
       },
       "ui": [
@@ -121,17 +159,109 @@
        "src/workbench/providers/reactivefiber.ts",
        "src/workflow/reconcile.ts"
       ],
+      "authorityExports": {
+       "src/workbench/control.ts": [
+        "decideControl",
+        "isCoreMintedDecision",
+        "acknowledge",
+        "settle"
+       ],
+       "src/workbench/execute.ts": [
+        "decideExecute",
+        "buildWorkflowExecuteReply"
+       ],
+       "src/workbench/reconcile-decision.ts": [
+        "mintEvidenceReceipt",
+        "decideReconcile"
+       ],
+       "src/workbench/claude-control.ts": [
+        "vetClaudeControlDecision",
+        "executeClaudeControl",
+        "settleClaudeInterrupt"
+       ],
+       "src/workbench/furnace-control.ts": [
+        "vetFurnaceControlDecision",
+        "executeFurnaceControl"
+       ],
+       "src/workbench/forge-control.ts": [
+        "executeForgeControl",
+        "settleForgeControl"
+       ],
+       "src/workbench/detached-control.ts": [
+        "executeDetachedControl"
+       ],
+       "src/workbench/forge-control-retention.ts": [
+        "retainForgeOperation",
+        "lookupForgeOperation",
+        "releaseForgeOperation",
+        "createRetainedForgeControlExecutor"
+       ],
+       "src/workbench/claude-capability-tools.ts": [
+        "createCuratedTools"
+       ],
+       "src/workbench/control-tool.ts": [
+        "recordControlReceipt",
+        "createWorkflowControlTool"
+       ],
+       "src/workbench/execute-tool.ts": [
+        "createWorkflowExecuteTool"
+       ],
+       "src/workbench/reconcile-tool.ts": [
+        "createWorkflowReconcileTool"
+       ],
+       "src/workbench/claude-host.ts": [
+        "createClaudeWorkflowHost"
+       ],
+       "src/workflow/runtime.ts": [
+        "workflowConcurrency",
+        "assertBoundarySafe",
+        "validateScript",
+        "runWorkflow"
+       ]
+      },
+      "importers": [
+       "src/workbench/forge-evidence.ts <- src/workbench/native-evidence.ts (value): nativeEvidence",
+       "src/workbench/forge-observer.ts <- src/workbench/native-evidence.ts (value): nativeEvidence",
+       "src/workbench/hosts/local-detached.ts <- src/workbench/providers/reactivefiber.ts (value): registerNativeReactiveFiberRender",
+       "src/workbench/native-evidence.ts <- src/workbench/providers/reactivefiber.ts (value): REACTIVE_FIBER_CLI_SCHEMA",
+       "src/workbench/native-modules.ts <- src/workbench/providers/reactivefiber.ts (dynamic): import()",
+       "src/workbench/reactivefiber-observer.ts <- src/workbench/native-evidence.ts (value): reportedRelease",
+       "src/workbench/reactivefiber-observer.ts <- src/workbench/providers/reactivefiber.ts (value): REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, REACTIVE_FIBER_CLI_SCHEMA",
+       "src/workbench/reconcile-decision.ts <- src/workbench/native-evidence.ts (value): nativeEvidence, nativeRefOf",
+       "src/workflow/runtime.ts <- src/workbench/native-evidence.ts (value): nativeEvidence, nativeRefOf"
+      ],
+      "contractImporters": [
+       "src/workbench/reactivefiber-observer.ts"
+      ],
+      "contractSpelled": [
+       "src/workbench/providers/reactivefiber.ts"
+      ],
       "controls": {
        "direct": 1,
        "alias": 1,
        "member": 1,
        "composed": 0,
        "propertyName": 0,
+       "callMember": 1,
+       "reflectApply": 1,
+       "boundMember": 1,
+       "nonNullCall": 1,
+       "optionalCall": 1,
+       "literalKey": 1,
+       "namespaceCall": 1,
+       "dynamicNamespace": 1,
+       "aliasImport": 1,
+       "otherReceiver": 0,
        "consumerLeaf": 1,
        "consumerCli": 1,
+       "consumerArgv": 1,
+       "consumerArguments": 1,
        "consumerProse": 0,
+       "consumerReversed": 0,
+       "consumerInterrupted": 0,
        "exported": 1,
-       "local": 0
+       "local": 0,
+       "exportReader": 2
       }
      }
     },
@@ -278,12 +408,19 @@
      "id": "B1",
      "witness": {
       "applied": 3,
+      "settleMs": 500,
       "providerCalls": {
        "preview": 0,
        "sinks": 0
       },
       "toolCalls": 0,
       "permits": 0,
+      "late": {
+       "preview": 0,
+       "sinks": 0,
+       "toolCalls": 0,
+       "permits": 0
+      },
       "sweepBefore": [
        "furnace/attempt cancel: unknown-action",
        "furnace/attempt delete: unknown-action",
@@ -339,6 +476,23 @@
        "dispatched": 1,
        "preview": 1,
        "sinks": 0
+      },
+      "afterSettle": {
+       "dispatched": 1,
+       "preview": 1,
+       "sinks": 0
+      },
+      "deferredControl": {
+       "afterCall": {
+        "dispatched": 1,
+        "preview": 1,
+        "sinks": 0
+       },
+       "afterSettle": {
+        "dispatched": 1,
+        "preview": 1,
+        "sinks": 3
+       }
       }
      }
     },
@@ -366,6 +520,14 @@
        "freshness": [
         "stale"
        ]
+      },
+      "deferredControl": {
+       "status": "completed",
+       "preview": 1,
+       "sinks": {
+        "atReturn": 0,
+        "settled": 3
+       }
       }
      }
     },
@@ -417,7 +579,14 @@
       "rereadsPreview": [
        "invoke"
       ],
-      "previewCalls": 3
+      "previewCalls": 3,
+      "defersSinkInvoke": [
+       "invoke"
+      ],
+      "deferredSinkCalls": {
+       "late": 9,
+       "total": 9
+      }
      }
     },
     {
@@ -426,7 +595,14 @@
       "violations": [
        "permit"
       ],
-      "permits": 1
+      "permits": 1,
+      "defersPermit": [
+       "permit"
+      ],
+      "deferredPermits": {
+       "late": 1,
+       "total": 1
+      }
      }
     },
     {
@@ -437,7 +613,21 @@
        "tool-call"
       ],
       "toolCalls": 1,
-      "sinkCalls": 1
+      "sinkCalls": 1,
+      "defersToolCall": [
+       "invoke",
+       "tool-call"
+      ],
+      "deferredCalls": {
+       "late": [
+        1,
+        1
+       ],
+       "total": [
+        1,
+        1
+       ]
+      }
      }
     },
     {
@@ -454,6 +644,10 @@
       ],
       "restamps": [
        "unstable"
+      ],
+      "defersExecuted": [
+       "executed",
+       "unstable"
       ]
      }
     },
@@ -464,11 +658,32 @@
       "plainReading": [],
       "copies": [],
       "readsOnly": [],
-      "decidesDirectly": []
+      "decidesDirectly": [],
+      "rLate": {
+       "violations": [],
+       "atObservation": 0,
+       "landedLater": 3
+      }
      }
     }
    ]
   }
+ ],
+ "counted": [
+  "A1:12",
+  "A2:3",
+  "A3:3",
+  "A4:5",
+  "A5:3",
+  "B1:2",
+  "B2:4",
+  "B3:3",
+  "B4:5",
+  "C1:1",
+  "C2:1",
+  "C3:1",
+  "C4:1",
+  "C5:3"
  ],
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster and the cases agree",
