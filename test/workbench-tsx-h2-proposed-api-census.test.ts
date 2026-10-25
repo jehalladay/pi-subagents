@@ -22,9 +22,10 @@
  *  A, acceptance (a). A1 every doc below the repository root (DOC_EXTENSIONS; SKIPPED_ROOTS skipped at the root only) is read
  *    through one fold (FOLD below) and no mention of a NAME_FAMILIES name stands without a not-available marker (MARKERS) on the
  *    lines it spans; the per-root floors are the measured counts, one anchor token per root must be read, and the same reading
- *    over a planted tree reports exactly the planted mentions (the positive control a hollowed walk or aggregation cannot pass);
- *    the admitted (marked) mentions are pinned in the witness too (none today), so a new admission is reviewed by the cut that
- *    re-measures the roster.
+ *    over a planted tree reports exactly the planted mentions (the positive control a hollowed walk or reader cannot pass);
+ *    the live call judges DOC_PLANT after the docs, so its only finding and admission are the plant's (LIVE CALL SITES below); the
+ *    admitted (marked) mentions are pinned in the witness too (none today but the plant's), so a new admission is reviewed by the
+ *    cut that re-measures the roster.
  *    A2 the matcher reads every spelling the fold claims (case, separators, plurals, a soft line break, intraword emphasis, an
  *    inserted invisible or soft hyphen, intraword HTML, numeric and named references, JS and percent escapes, combining marks,
  *    compatibility forms, mapped look-alikes) and admits only a marked window; its boundaries and the named residuals are pinned
@@ -32,9 +33,10 @@
  *    expression, and no src or qa JSON file as a key or a string value (the statement's "treat ... as an existing runtime API").
  *  B, acceptance (b). B1 no docs/workbench sentence (CLAIM WINDOW) names a Reactive SDK (SDK_FAMILY) beside a link word
  *    (LINK_FAMILY) without a marker; an identifier joining harness2 to a program or requirement name is not an SDK name; a planted
- *    tree is the positive control. B2 the claim matcher's cases and quiet rows. B3 every registered descriptor (the native
- *    registration and the injected one) names no H2 name, no Reactive SDK and no federation, adapter, bridge or peer word, and the
- *    reactivefiber.* ids of both are the preview alone.
+ *    tree is the positive control, and the live call judges CLAIM_PLANT after docs/workbench. B2 the claim matcher's cases and
+ *    quiet rows. B3 every registered descriptor (the native registration and the injected one) names no H2 name, no Reactive SDK
+ *    and no federation, adapter, bridge or peer word, and the reactivefiber.* ids of both are the preview alone; PLANTED_PROVIDER,
+ *    registered after the live registrations in both registries B3 reads, carries the only hits.
  *  C, acceptance (c). C1 Pi's RF surface is the rf CLI envelope: src holds one rf spawn site (nativeReactiveFiberRender), each
  *    input arm spawns rf once for `context render ... --json` against a stand-in rf, and the reading carries the rf CLI envelope
  *    under the reactivefiber.render.preview/v1 contract. C2 absence typed 'unavailable': an adapter capability (ADAPTER_ID) is
@@ -42,8 +44,9 @@
  *    both input arms: an exit-2 RF_USAGE_NOT_IMPLEMENTED refusal is typed unavailable in one spawn, and the same refusal at exit 0
  *    is transport. C4 no src module reads rf's leaves or a served flag, while the landed rules that arm that reading stand: the
  *    wb-a9l2.7 receipt rule (its roster row B: a registration beyond the preview needs an `rf --json --version` receipt quoting a
- *    served leaf) and the wb-973.14 refusal-mapping describe. C5 the installed rf's measured leaves[] (roster `producer`) hold no
- *    adapter leaf (ADAPTER_LEAF), so the armed half has not fired.
+ *    served leaf) and the wb-973.14 refusal-mapping describe, registered once with its cases in run form (no skip mode read on
+ *    any: SKIP MODES below). C5 the installed rf's measured leaves[] (roster `producer`) hold no adapter leaf (ADAPTER_LEAF), so
+ *    the armed half has not fired.
  *  D, acceptance (d). D1 measured at ReactiveFiberCLI 978f6515c302 and at the admitted read sha 6a251bf73af5 (its ancestor):
  *    `git grep -il federated <sha> -- src` lists 0 of 560 src files; three src files spell the stem federat (the federation
  *    boundary domain, the federation receipt port and its storage protocol), named in the roster, never read as the word. D2 the
@@ -72,7 +75,9 @@
  * SDK or no link word (A2 paraphrase; B2 unnamedPeer, unlinkedSdk); R-MARKER a marker anywhere on the window admits it, whatever
  * the marker qualifies (A2 markerAnywhere; B2 markerAnywhere); R-COMPOSED a name or binary assembled at runtime (A3 composed; C1
  * aliased); R-COMMENT a src comment is no runtime API (A3 comment); R-OUTSIDE a file below a skipped root, a non-doc file and a
- * test module are outside A1 and A3 (A1 planted skipped roots; A3 testModule).
+ * test module are outside A1 and A3 (A1 planted skipped roots; A3 testModule); R-HOLLOWED a mapping case whose body asserts
+ * nothing still reads registered in run form: the modifier closure reads modes, never a body (C4 hollowedBody; C3 pins the
+ * wb-973.14 behaviour live on both arms, so a hollowed mapping body hides no behaviour).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (id, label, pins), every pin's
  * witness (each carries its pin id), the constants (families, markers, vocabularies, floors, anchors, residuals), the producer
  * facts and the registered test titles are held to the out-of-file roster (test/fixtures/tsx-h2-proposed-api-roster.json).
@@ -81,7 +86,27 @@
  * NAME_FAMILIES' names in order, its quote and citation equal the roster's, its full statement carries the C-row phrases, and its
  * gating, status, authority and "Shipped: no" text is read by D2; C4 reads wb-a9l2.7's roster and the wb-973.14 test file. So a
  * row, a family or a quoted fact removed from every literal of this file and the roster still reds against the filing. Not
- * claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the filing anchors rows and names, not pins).
+ * claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the filing anchors rows and names, not pins); a
+ * live reading forged to its plant's exact entries, or a hollow that recognises a plant by its path, text or position and drops
+ * only the walked entries (a plant binds a call site against an emptied reading, never against a forged one); a reading no
+ * in-memory plant can carry, whose expected value stays empty: the live walk's symlink and unreadable lists (A1), C2's catalog
+ * listing and spawn count, and C5's adapter leaves and D1's counts, read from the roster's producer record (a planted leaf or
+ * file would falsify the measurement); a reading replaced by a non-empty expected constant (C1's spawn sites and arms, C2 and
+ * C3's typed refusals, B3's preview ids).
+ * LIVE CALL SITES (wb-4n55 F1, R694 follow-up of wb-4nut.2 landing 309, gate cmd_2c72a26c5e45): every live reading whose
+ * expected value would be absent is taken by the same call that judges a plant, after the walked tree or registration, so its
+ * expected value is the plant's entries and a reading emptied at its call site or in its aggregation reds (G32 A3's names, G33
+ * C4's served reads, G34 B3's hits, G35 A1's findings; B1's findings and C4's skip modes alike): A1 judges DOC_PLANT after the
+ * docs, B1 CLAIM_PLANT after docs/workbench, sourceReading SOURCE_PLANTS after src and qa (A3's names and JSON names, C4's reads;
+ * the qa plant's read stays outside C4, which reads src only), B3 reads PLANTED_PROVIDER from both catalogs, and C4 reads
+ * REGISTRATION_PLANT after the wb-973.14 file. Plants live in memory only, count toward no floor (the module and doc floors are
+ * the measured counts) and their digests are held to the roster (constants.plants).
+ * SKIP MODES (wb-4n55 F2, the title-census modifier closure): registeredTitles reads on every title the SKIP_MODES members along
+ * its call head, an OPTION_MODES key of an options object that is not literally false (a spread or a computed key read as one),
+ * every enclosing describe's modes, and a skip called on a parameter of the case function; C4 refuses a mapping case carrying any
+ * (G12 a skipped describe, G12b a skipped case), REGISTRATION_PLANT carries one falsifier per mode and form beside the run forms
+ * and R-HOLLOWED's quiet row, and SKIP_MODES and RUN_MEMBERS partition vitest's own registration members (REGISTRATION_MEMBERS
+ * of test/helpers/census.ts, pinned against the installed runtime by test/workbench-census-registration-model.test.ts).
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
  * not inverted, ran; every pin's case reached its end (REACHED); no registered test or suite title spells the hook (the labels
  * name the six other names on purpose: no census reads this file's titles for them).
@@ -91,8 +116,8 @@
  * ReactiveFiberCLI 978f6515c302 and 6a251bf73af5 the program README blob is 1be8d2d21b91 and the src counts are as D1 states. Pi
  * vendors none of these; a producer change is seen only when a cut re-measures the roster.
  *
- * Display paths added: none. Test-only: the stand-in rf and the planted trees live in makeScratch scratch; src, docs, qa, the
- * bead export and the landed censuses are only read.
+ * Display paths added: none. Test-only: the stand-in rf and the planted trees live in makeScratch scratch, the wb-4n55 plants in
+ * memory; src, docs, qa, the bead export and the landed censuses are only read.
  */
 import { createHash } from "node:crypto";
 import { chmodSync, type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -100,13 +125,14 @@ import { dirname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
-import { CapabilityError, CapabilityRegistry } from "../src/workbench/capability-registry.js";
+import { CapabilityError, type CapabilityProvider, CapabilityRegistry } from "../src/workbench/capability-registry.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
 import {
   nativeReactiveFiberRender,
   type ReactiveFiberRenderSelector,
   registerReactiveFiberRender,
 } from "../src/workbench/providers/reactivefiber.js";
+import { REGISTRATION_MEMBERS } from "./helpers/census.js";
 import { fullShapeRf, type Json } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
@@ -224,8 +250,17 @@ const SPAWNERS: readonly string[] = ["spawn", "spawnSync", "execFile", "execFile
 const RF_SITE = "src/workbench/providers/reactivefiber.ts#nativeReactiveFiberRender";
 const SERVED_WORDS: readonly string[] = ["leaves", "served"];
 const RESIDUALS: readonly string[] = [
-  "R-DOTTED", "R-LOOKALIKE", "R-ENCODED", "R-PARAPHRASE", "R-MARKER", "R-COMPOSED", "R-COMMENT", "R-OUTSIDE",
+  "R-DOTTED", "R-LOOKALIKE", "R-ENCODED", "R-PARAPHRASE", "R-MARKER", "R-COMPOSED", "R-COMMENT", "R-OUTSIDE", "R-HOLLOWED",
 ];
+/** C4's modifier closure (wb-4n55 F2): the registration members that leave a case unrun or inverted, on its call head or an
+ * enclosing describe's, and the members that leave it running as written; together they are vitest's own (REGISTRATION_MEMBERS). */
+const SKIP_MODES: readonly string[] = ["skip", "todo", "only", "fails", "skipIf", "runIf"];
+const RUN_MEMBERS: readonly string[] = [
+  "afterAll", "afterEach", "aroundAll", "aroundEach", "beforeAll", "beforeEach", "concurrent", "describe", "each", "extend", "for",
+  "override", "scoped", "sequential", "shuffle", "suite",
+];
+/** The options-object keys read as a skip mode when not literally false. */
+const OPTION_MODES: readonly string[] = ["skip", "todo", "only", "fails"];
 const FROZEN_TITLE = "the judged set: the frozen shape, the out-of-file roster and the bead row agree";
 const RECORDS_TITLE = "records: every registered test ran once in run mode in roster order, every pin reached its end, and no title spells the hook";
 
@@ -440,6 +475,13 @@ function constants(): Json {
     spawners: [...SPAWNERS],
     rfSite: RF_SITE,
     residuals: [...RESIDUALS],
+    skipModes: [...SKIP_MODES],
+    runMembers: [...RUN_MEMBERS],
+    optionModes: [...OPTION_MODES],
+    plants: [
+      ...[DOC_PLANT, CLAIM_PLANT, ...SOURCE_PLANTS, REGISTRATION_PLANT].map(plant => `${plant.path}:${digestOf(plant.text)}`),
+      `${PLANTED_PROVIDER.descriptor.id}:${digestOf(JSON.stringify(PLANTED_PROVIDER.descriptor))}`,
+    ],
   };
 }
 
@@ -534,6 +576,47 @@ function readText(root: string, path: string): string | undefined {
     return undefined;
   }
 }
+
+/** A planted file (wb-4n55 F1): judged by the same call as the live tree, after it, so a live reading emptied at its call site or
+ * in its aggregation loses the plant's entries. Plants live in memory only: none is written below the repository and none counts
+ * toward a floor. */
+interface Plant {
+  readonly path: string;
+  readonly text: string;
+}
+/** A1's plant: one name stated as available and one marked. */
+const DOC_PLANT: Plant = { path: "docs/zz-wb-4n55-plant.md", text: "Pi renders ContextProjection blocks.\n\nImportBinding is proposed.\n" };
+/** B1's plant: one unmarked claim and one marked. */
+const CLAIM_PLANT: Plant = {
+  path: "docs/workbench/zz-wb-4n55-plant.md",
+  text: "rf reaches ReactiveComponentsSDK through a federated host adapter.\n\nrf may connect to the Reactive SDKs when one is shipped; it is unshipped.\n",
+};
+/** A3's and C4's plants, read after src and qa: a src module spelling a name and reading leaves and served, a qa module spelling a
+ * name and reading leaves (outside C4, which reads src only) and a src JSON file keyed by a name. */
+const SOURCE_PLANTS: readonly Plant[] = [
+  {
+    path: "src/zz-wb-4n55-plant.ts",
+    text: "export type ContextProjection = { readonly blocks: readonly string[] };\nexport const servedLeaves = (envelope: { result: { leaves: { served: boolean }[] } }) =>\n  envelope.result.leaves.filter(leaf => leaf.served);\n",
+  },
+  { path: "qa/zz-wb-4n55-plant.mjs", text: 'export const kind = "SnapshotObservation";\nexport const leavesOf = envelope => envelope.result.leaves;\n' },
+  { path: "src/zz-wb-4n55-plant.json", text: '{ "ImportBinding": 1 }\n' },
+];
+const PLANTED_PATHS: ReadonlySet<string> = new Set(SOURCE_PLANTS.map(plant => plant.path));
+/** B3's plant: a provider registered after the live registrations of both registries B3 reads; it is never invoked. */
+const PLANTED_PROVIDER: CapabilityProvider = {
+  descriptor: {
+    id: "planted.descriptor",
+    version: "0.0.0",
+    description: "Reads ReactiveComponentsSDK through the federated host adapter",
+    inputSchema: { type: "object" },
+    effectClass: "read",
+    permissions: [],
+    supportedModes: ["invoke"],
+  },
+  invoke: async () => {
+    throw new Error("the planted provider is never invoked");
+  },
+};
 
 const cp = (...codes: number[]): string => String.fromCodePoint(...codes);
 /** Look-alike letters mapped to the Latin letter they imitate (Cyrillic, Greek and a few Latin variants). */
@@ -757,21 +840,22 @@ interface DocReading {
   readonly segments: number;
   readonly anchorsRead: string[];
 }
-/** Acceptance (a) over a tree: every doc file, its mentions, the unmarked ones as findings. */
-function readDocs(root: string): DocReading {
+/** Acceptance (a) over a tree: every doc file and then the plants (wb-4n55 F1), judged by one loop - their mentions, the unmarked
+ * ones as findings; the segments count the walked docs only. */
+function readDocs(root: string, plants: readonly Plant[] = []): DocReading {
   const walk = walkTree(root);
   const docs = walk.files.filter(isDoc);
   const findings: string[] = [];
   const admitted: string[] = [];
   const anchorsRead: string[] = [];
   let segments = 0;
-  for (const path of docs) {
-    const raw = readText(root, path);
+  const judged = [...docs.map(path => ({ path, raw: readText(root, path), planted: false })), ...plants.map(plant => ({ path: plant.path, raw: plant.text, planted: true }))];
+  for (const { path, raw, planted } of judged) {
     if (raw === undefined) {
       findings.push(`${path}: unreadable`);
       continue;
     }
-    segments += segmentsOf(raw).length;
+    if (!planted) segments += segmentsOf(raw).length;
     const anchor = DOC_ANCHORS.find(([file]) => file === path);
     if (anchor !== undefined && plainOf(raw).includes(anchor[1])) anchorsRead.push(path);
     for (const mention of mentionsOf(raw)) {
@@ -782,21 +866,27 @@ function readDocs(root: string): DocReading {
   }
   return { walk, docs, findings, admitted, segments, anchorsRead };
 }
-/** Acceptance (b) over a tree's docs/workbench: every claim window naming a Reactive SDK beside a link word. */
-function readClaims(root: string): { files: number; windows: number; sdkWindows: number; findings: string[]; admitted: string[] } {
+/** Acceptance (b) over a tree's docs/workbench and then the plants (wb-4n55 F1), judged by one loop: every claim window naming a
+ * Reactive SDK beside a link word; the window counts are the walked files' only. */
+function readClaims(root: string, plants: readonly Plant[] = []): { files: number; windows: number; sdkWindows: number; findings: string[]; admitted: string[] } {
   const files = walkTree(join(root, "docs", "workbench")).files.filter(isDoc);
   const findings: string[] = [];
   const admitted: string[] = [];
   let windows = 0;
   let sdkWindows = 0;
-  for (const path of files) {
-    const raw = readText(join(root, "docs", "workbench"), path) ?? "";
+  const judged = [
+    ...files.map(path => ({ path: `docs/workbench/${path}`, raw: readText(join(root, "docs", "workbench"), path) ?? "", planted: false })),
+    ...plants.map(plant => ({ path: plant.path, raw: plant.text, planted: true })),
+  ];
+  for (const { path, raw, planted } of judged) {
     for (const window of windowsOf(raw)) {
-      windows += 1;
-      if (namesSdk(wordsIn(window.plain))) sdkWindows += 1;
+      if (!planted) {
+        windows += 1;
+        if (namesSdk(wordsIn(window.plain))) sdkWindows += 1;
+      }
       const claim = claimOf(window);
-      if (claim === "claim") findings.push(`docs/workbench/${path}:${window.line}: claim-unmarked`);
-      else if (claim === "marked") admitted.push(`docs/workbench/${path}:${window.line}`);
+      if (claim === "claim") findings.push(`${path}:${window.line}: claim-unmarked`);
+      else if (claim === "marked") admitted.push(`${path}:${window.line}`);
     }
   }
   return { files: files.length, windows, sdkWindows, findings, admitted };
@@ -920,46 +1010,50 @@ function readJsonNames(path: string, source: string): string[] {
 interface SourceReading {
   readonly modules: Map<string, ModuleReading>;
   readonly jsonNames: string[];
-  readonly jsonFiles: number;
+  /** Every JSON file judged, the plants' included. */
+  readonly jsonFiles: string[];
   readonly anchorsRead: string[];
 }
 let sourceCache: SourceReading | undefined;
-/** The src and qa trees of the repository: every module and JSON file, read once. */
+/** The src and qa trees of the repository and then SOURCE_PLANTS (wb-4n55 F1): every module and JSON file, judged by one loop, once. */
 function sourceReading(): SourceReading {
   if (sourceCache !== undefined) return sourceCache;
   const modules = new Map<string, ModuleReading>();
   const jsonNames: string[] = [];
+  const jsonFiles: string[] = [];
   const anchorsRead: string[] = [];
-  let jsonFiles = 0;
-  for (const tree of ["src", "qa"]) {
-    for (const file of walkTree(join(REPO, tree)).files) {
-      const path = `${tree}/${file}`;
-      const source = readText(REPO, path);
-      if (source === undefined) continue;
-      const anchor = MODULE_ANCHORS.find(([anchorPath]) => anchorPath === path);
-      if (anchor !== undefined && source.includes(anchor[1])) anchorsRead.push(path);
-      if (isModule(path)) modules.set(path, readModule(path, source));
-      else if (extensionOf(path) === ".json") {
-        jsonFiles += 1;
-        jsonNames.push(...readJsonNames(path, source));
-      }
+  const walked = ["src", "qa"].flatMap(tree => walkTree(join(REPO, tree)).files.map(file => `${tree}/${file}`));
+  const judged = [...walked.map(path => ({ path, source: readText(REPO, path) })), ...SOURCE_PLANTS.map(plant => ({ path: plant.path, source: plant.text }))];
+  for (const { path, source } of judged) {
+    if (source === undefined) continue;
+    const anchor = MODULE_ANCHORS.find(([anchorPath]) => anchorPath === path);
+    if (anchor !== undefined && source.includes(anchor[1])) anchorsRead.push(path);
+    if (isModule(path)) modules.set(path, readModule(path, source));
+    else if (extensionOf(path) === ".json") {
+      jsonFiles.push(path);
+      jsonNames.push(...readJsonNames(path, source));
     }
   }
   sourceCache = { modules, jsonNames, jsonFiles, anchorsRead };
   return sourceCache;
 }
-const modulesUnder = (reading: SourceReading, tree: string): number => [...reading.modules.keys()].filter(path => path.startsWith(`${tree}/`)).length;
+/** A tree's judged modules, the plants left out: no plant counts toward a floor. */
+const modulesUnder = (reading: SourceReading, tree: string): number =>
+  [...reading.modules.keys()].filter(path => path.startsWith(`${tree}/`) && !PLANTED_PATHS.has(path)).length;
+/** The judged JSON files, the plants left out. */
+const walkedJson = (reading: SourceReading): number => reading.jsonFiles.filter(path => !PLANTED_PATHS.has(path)).length;
 
 interface DescriptorText {
   readonly id: string;
   readonly text: string;
 }
 let nativeCache: Promise<DescriptorText[]> | undefined;
-/** The native registration's descriptors, loaded once. */
+/** The native registration's descriptors and then PLANTED_PROVIDER's (wb-4n55 F1), read from one catalog, loaded once. */
 function nativeDescriptors(): Promise<DescriptorText[]> {
   nativeCache ??= loadWorkbenchNative().then(native => {
     const registry = new CapabilityRegistry();
     native.registerNativeProviders(registry, REPO);
+    registry.register(PLANTED_PROVIDER);
     return registry.catalogSnapshot().map(entry => ({ id: entry.descriptor.id, text: JSON.stringify(entry.descriptor) }));
   });
   return nativeCache;
@@ -976,8 +1070,13 @@ function injectedRegistry(): CapabilityRegistry {
   );
   return registry;
 }
-const injectedDescriptors = (): DescriptorText[] =>
-  injectedRegistry().catalogSnapshot().map(entry => ({ id: entry.descriptor.id, text: JSON.stringify(entry.descriptor) }));
+/** The injected registration's descriptors and then PLANTED_PROVIDER's (wb-4n55 F1), read from one catalog; C2 reads the
+ * registration without the plant. */
+function injectedDescriptors(): DescriptorText[] {
+  const registry = injectedRegistry();
+  registry.register(PLANTED_PROVIDER);
+  return registry.catalogSnapshot().map(entry => ({ id: entry.descriptor.id, text: JSON.stringify(entry.descriptor) }));
+}
 /** A descriptor text's H2 names, Reactive SDK names, federation links and claims. */
 function descriptorHits(descriptor: DescriptorText): string[] {
   const words = wordsIn(plainOf(descriptor.text));
@@ -1041,8 +1140,14 @@ const REFUSAL: Json = {
 interface RegisteredTitle {
   readonly describe: string | undefined;
   readonly title: string;
+  /** The skip modes read on it (wb-4n55 F2): its call head's, its options', every enclosing describe's, its body's context skip. */
+  readonly modes: readonly string[];
 }
-/** A test module's registered titles: every it, test or describe call (or a chained form) whose title folds to a literal. */
+/** A test module's registered titles: every it, test or describe call (with any member chain on its head) whose title folds to a
+ * literal, each with the innermost describe it sits in and the skip modes read on it (wb-4n55 F2, the title-census modifier
+ * closure) - the SKIP_MODES members along its call head, an OPTION_MODES key of an options-object argument that is not literally
+ * false (a spread or a computed key read as one), every enclosing describe's modes, and a skip called on a parameter of the case
+ * function (a member call, or a destructured skip). */
 function registeredTitles(path: string, source: string): RegisteredTitle[] {
   const file = sourceOf(path, source);
   const found: RegisteredTitle[] = [];
@@ -1052,24 +1157,125 @@ function registeredTitles(path: string, source: string): RegisteredTitle[] {
     if (ts.isCallExpression(callee)) return kindOf(callee.expression);
     return undefined;
   };
-  const visit = (node: ts.Node, inside: string | undefined): void => {
+  const headModes = (callee: ts.Expression): string[] => {
+    if (ts.isPropertyAccessExpression(callee)) return [...headModes(callee.expression), ...(SKIP_MODES.includes(callee.name.text) ? [callee.name.text] : [])];
+    if (ts.isCallExpression(callee)) return headModes(callee.expression);
+    return [];
+  };
+  const optionModes = (call: ts.CallExpression): string[] =>
+    call.arguments.filter(ts.isObjectLiteralExpression).flatMap(options =>
+      options.properties.flatMap((property): string[] => {
+        if (ts.isSpreadAssignment(property)) return ["options spread"];
+        if (property.name === undefined || ts.isComputedPropertyName(property.name)) return ["options computed key"];
+        const key = ts.isIdentifier(property.name) || ts.isStringLiteral(property.name) ? property.name.text : undefined;
+        if (key === undefined || !OPTION_MODES.includes(key)) return [];
+        return ts.isPropertyAssignment(property) && property.initializer.kind === ts.SyntaxKind.FalseKeyword ? [] : [`options ${key}`];
+      }),
+    );
+  const contextModes = (call: ts.CallExpression): string[] => {
+    const body = [...call.arguments].reverse().find(argument => ts.isArrowFunction(argument) || ts.isFunctionExpression(argument));
+    if (body === undefined || !(ts.isArrowFunction(body) || ts.isFunctionExpression(body))) return [];
+    const contexts = new Set<string>();
+    const skippers = new Set<string>();
+    for (const parameter of body.parameters) {
+      if (ts.isIdentifier(parameter.name)) contexts.add(parameter.name.text);
+      else if (ts.isObjectBindingPattern(parameter.name)) {
+        for (const element of parameter.name.elements) {
+          const key = element.propertyName ?? element.name;
+          if (ts.isIdentifier(key) && key.text === "skip" && ts.isIdentifier(element.name)) skippers.add(element.name.text);
+        }
+      }
+    }
+    let skipped = false;
+    const scan = (node: ts.Node): void => {
+      if (ts.isCallExpression(node)) {
+        const callee = node.expression;
+        if (ts.isPropertyAccessExpression(callee) && callee.name.text === "skip" && ts.isIdentifier(callee.expression) && contexts.has(callee.expression.text)) skipped = true;
+        if (ts.isIdentifier(callee) && skippers.has(callee.text)) skipped = true;
+      }
+      ts.forEachChild(node, scan);
+    };
+    scan(body.body);
+    return skipped ? ["context skip"] : [];
+  };
+  const visit = (node: ts.Node, inside: string | undefined, inherited: readonly string[]): void => {
     if (ts.isCallExpression(node)) {
       const kind = kindOf(node.expression);
       const first = node.arguments[0];
       const title = first === undefined ? undefined : fold(first);
       if ((kind === "it" || kind === "test" || kind === "describe") && title !== undefined) {
-        found.push({ describe: inside, title });
+        const modes = [...inherited, ...headModes(node.expression), ...optionModes(node)];
         if (kind === "describe") {
-          for (const argument of node.arguments) visit(argument, title);
+          found.push({ describe: inside, title, modes });
+          for (const argument of node.arguments) visit(argument, title, modes);
           return;
         }
+        found.push({ describe: inside, title, modes: [...modes, ...contextModes(node)] });
       }
     }
-    ts.forEachChild(node, child => visit(child, inside));
+    ts.forEachChild(node, child => visit(child, inside, inherited));
   };
-  visit(file, undefined);
+  visit(file, undefined, []);
   return found;
 }
+
+interface Registration extends RegisteredTitle {
+  readonly path: string;
+}
+/** The registered titles of several files, read by one call in order: the wb-973.14 file, then the plant (wb-4n55 F1). */
+const registrationsIn = (files: readonly Plant[]): Registration[] =>
+  files.flatMap(file => registeredTitles(file.path, file.text).map(entry => ({ path: file.path, ...entry })));
+
+/** C4's planted registration forms (wb-4n55 F2): each a case titled `plant <form>` whose innermost describe is MAPPING_DESCRIBE,
+ * with the skip modes C4 reads on it - one falsifier per mode and form, the run forms beside them (no mode) and R-HOLLOWED's quiet
+ * row (a case whose body asserts nothing still reads registered in run form). Members are composed at runtime. */
+interface RegistrationForm {
+  readonly form: string;
+  readonly block: string;
+  readonly modes: readonly string[];
+}
+const dot = (root: string, member: string): string => `${root}.${member}`;
+const PLANT_FN = "() => {\n    expect(1).toBe(1);\n  }";
+const LINUX = '(process.platform === "linux")';
+const mappingBlock = (head: string, inner: string, options = ""): string => `${head}(${JSON.stringify(MAPPING_DESCRIBE)}${options}, () => {\n${inner}\n});`;
+const plantCase = (form: string, head: string, rest = `, ${PLANT_FN}`): string => `  ${head}(${JSON.stringify(`plant ${form}`)}${rest});`;
+const caseForm = (form: string, head: string, modes: readonly string[], rest?: string): RegistrationForm => ({ form, block: mappingBlock("describe", plantCase(form, head, rest)), modes });
+const describeForm = (form: string, head: string, modes: readonly string[], options = ""): RegistrationForm => ({ form, block: mappingBlock(head, plantCase(form, "it"), options), modes });
+const REGISTRATION_FORMS: readonly RegistrationForm[] = [
+  caseForm("runnable", "it", []),
+  caseForm("caseSkip", dot("it", "skip"), ["skip"]),
+  caseForm("caseTodo", dot("it", "todo"), ["todo"], ""),
+  caseForm("caseOnly", dot("it", "only"), ["only"]),
+  caseForm("caseFails", dot("it", "fails"), ["fails"]),
+  caseForm("caseSkipIf", `${dot("it", "skipIf")}${LINUX}`, ["skipIf"]),
+  caseForm("caseRunIf", `${dot("it", "runIf")}${LINUX}`, ["runIf"]),
+  caseForm("testRoot", dot("test", "skip"), ["skip"]),
+  caseForm("skipThenEach", `${dot(dot("it", "skip"), "each")}([1])`, ["skip"]),
+  caseForm("optionsSkip", "it", ["options skip"], `, { skip: true }, ${PLANT_FN}`),
+  caseForm("optionsTodo", "it", ["options todo"], `, { todo: true }, ${PLANT_FN}`),
+  caseForm("optionsOnly", "it", ["options only"], `, { only: true }, ${PLANT_FN}`),
+  caseForm("optionsFails", "it", ["options fails"], `, { fails: true }, ${PLANT_FN}`),
+  caseForm("optionsLast", "it", ["options skip"], `, ${PLANT_FN}, { skip: true }`),
+  caseForm("optionsSpread", "it", ["options spread"], `, { ...SKIPPED }, ${PLANT_FN}`),
+  caseForm("optionsComputed", "it", ["options computed key"], `, { ["skip"]: true }, ${PLANT_FN}`),
+  describeForm("describeSkip", dot("describe", "skip"), ["skip"]),
+  describeForm("describeTodo", dot("describe", "todo"), ["todo"]),
+  describeForm("describeOnly", dot("describe", "only"), ["only"]),
+  describeForm("describeSkipIf", `${dot("describe", "skipIf")}${LINUX}`, ["skipIf"]),
+  describeForm("describeRunIf", `${dot("describe", "runIf")}${LINUX}`, ["runIf"]),
+  describeForm("describeOptions", "describe", ["options skip"], ", { skip: true }"),
+  { form: "outerDescribe", block: `${dot("describe", "skip")}("plant outer", () => {\n${mappingBlock("describe", plantCase("outerDescribe", "it"))}\n});`, modes: ["skip"] },
+  caseForm("contextSkip", "it", ["context skip"], `, context => {\n    ${dot("context", "skip")}();\n  }`),
+  caseForm("destructuredSkip", "it", ["context skip"], ", ({ skip }) => {\n    skip();\n  }"),
+  caseForm("eachRows", `${dot("it", "each")}([1])`, []),
+  caseForm("concurrent", dot("it", "concurrent"), []),
+  caseForm("optionsFalse", "it", [], `, { skip: false }, ${PLANT_FN}`),
+  caseForm("optionsTimeout", "it", [], `, { timeout: 5_000 }, ${PLANT_FN}`),
+  { form: "commented", block: `// ${dot("it", "skip")}("plant commented", () => {});\n${mappingBlock("describe", plantCase("commented", "it"))}`, modes: [] },
+  caseForm("hollowedBody", "it", [], ", () => {\n    return;\n    expect(1).toBe(1);\n  }"),
+];
+/** C4's plant: every form, in order, in one module read after the wb-973.14 file by the same call. */
+const REGISTRATION_PLANT: Plant = { path: "test/zz-wb-4n55-registration-plant.test.ts", text: `${REGISTRATION_FORMS.map(form => form.block).join("\n")}\n` };
 
 /** The constructed doc texts A2 judges (built at runtime; the roster keeps their digests). */
 function nameCases(): [string, string, string[]][] {
@@ -1154,7 +1360,7 @@ const caseWitness = (cases: [string, string, string[]][], outcome: (raw: string)
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
   A1: () => {
-    const live = readDocs(REPO);
+    const live = readDocs(REPO, [DOC_PLANT]);
     const perRoot = Object.fromEntries(Object.keys(DOC_FLOORS).map(root => [root, live.docs.filter(path => rootOf(path) === root).length]));
     const floors = Object.fromEntries(Object.entries(DOC_FLOORS).map(([root, floor]) => [root, (perRoot[root] ?? 0) >= floor]));
     expect(floors, `docs per root ${JSON.stringify(perRoot)}`).toStrictEqual(Object.fromEntries(Object.keys(DOC_FLOORS).map(root => [root, true])));
@@ -1162,7 +1368,10 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     expect(segmentsFloorMet, `segments read ${live.segments}, floor ${SEGMENTS_FLOOR}`).toBe(true);
     expect(live.anchorsRead, "every doc anchor was read with its token").toEqual(DOC_ANCHORS.map(([path]) => path).sort());
     expect({ symlinks: live.walk.symlinks, unreadable: live.walk.unreadable }, "the walk meets no symlink and no unreadable directory").toStrictEqual({ symlinks: [], unreadable: [] });
-    expect(live.findings, "a doc naming an H2 name as available").toEqual([]);
+    expect({ findings: live.findings, admitted: live.admitted }, "a doc naming an H2 name as available, or admitting one: the only mentions are DOC_PLANT's, judged by the live call").toStrictEqual({
+      findings: [`${DOC_PLANT.path}:1 N2: named-as-available`],
+      admitted: [`${DOC_PLANT.path}:3 N4`],
+    });
     const hook = HOOK_NAME;
     const planted = withPlantedTree(
       {
@@ -1215,12 +1424,15 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     const floors = {
       src: modulesUnder(reading, "src") >= (MODULE_FLOORS.src ?? 0),
       qa: modulesUnder(reading, "qa") >= (MODULE_FLOORS.qa ?? 0),
-      json: reading.jsonFiles >= (MODULE_FLOORS.json ?? 0),
+      json: walkedJson(reading) >= (MODULE_FLOORS.json ?? 0),
     };
-    expect(floors, `src ${modulesUnder(reading, "src")}, qa ${modulesUnder(reading, "qa")}, json ${reading.jsonFiles}`).toStrictEqual({ src: true, qa: true, json: true });
+    expect(floors, `src ${modulesUnder(reading, "src")}, qa ${modulesUnder(reading, "qa")}, json ${walkedJson(reading)}`).toStrictEqual({ src: true, qa: true, json: true });
     expect(reading.anchorsRead.sort(), "every module anchor was read with its token").toEqual(MODULE_ANCHORS.map(([path]) => path).sort());
     const names = [...reading.modules.values()].flatMap(module => module.names);
-    expect({ names, jsonNames: reading.jsonNames }, "a src or qa module or JSON file carrying an H2 name").toStrictEqual({ names: [], jsonNames: [] });
+    expect({ names, jsonNames: reading.jsonNames }, "a src or qa module or JSON file carrying an H2 name: the only spellings are SOURCE_PLANTS', judged by the live reading").toStrictEqual({
+      names: ["src/zz-wb-4n55-plant.ts: identifier N2", "qa/zz-wb-4n55-plant.mjs: literal N3"],
+      jsonNames: ["src/zz-wb-4n55-plant.json: json"],
+    });
     const spells = (path: string, source: string): boolean => readModule(path, source).names.length > 0;
     const [use, remote, resource] = [HOOK_WORDS[0] ?? "", HOOK_WORDS[1] ?? "", HOOK_WORDS[2] ?? ""];
     const controls = {
@@ -1246,10 +1458,13 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     return done("A3", { floors, anchorsRead: reading.anchorsRead, names, jsonNames: reading.jsonNames, controls, testModule });
   },
   B1: () => {
-    const live = readClaims(REPO);
+    const live = readClaims(REPO, [CLAIM_PLANT]);
     const floorMet = live.files >= WORKBENCH_FLOOR;
     expect({ floorMet, windowsFloorMet: live.windows >= WINDOWS_FLOOR }, `docs/workbench files ${live.files}, windows ${live.windows}`).toStrictEqual({ floorMet: true, windowsFloorMet: true });
-    expect(live.findings, "a docs/workbench claim that rf reaches a Reactive SDK through a federation link").toEqual([]);
+    expect({ findings: live.findings, admitted: live.admitted }, "a docs/workbench claim that rf reaches a Reactive SDK through a federation link: the only claims are CLAIM_PLANT's, judged by the live call").toStrictEqual({
+      findings: [`${CLAIM_PLANT.path}:1: claim-unmarked`],
+      admitted: [`${CLAIM_PLANT.path}:3`],
+    });
     const planted = withPlantedTree(
       {
         "docs/workbench/x.md": "rf reaches ReactiveComponentsSDK through a federated host adapter.\n",
@@ -1274,7 +1489,8 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     const rfIds = (descriptors: DescriptorText[]): string[] => descriptors.map(descriptor => descriptor.id).filter(id => id.startsWith(RF_PREFIX));
     expect({ native: rfIds(native), injected: rfIds(injected) }).toStrictEqual({ native: [PREVIEW_ID], injected: [PREVIEW_ID] });
     const hits = [...native, ...injected].flatMap(descriptorHits);
-    expect(hits, "a registered descriptor naming an H2 name, a Reactive SDK or a federation link").toEqual([]);
+    const plantHits = ["name", "sdk", "link", "claim"].map(hit => `${PLANTED_PROVIDER.descriptor.id}: ${hit}`);
+    expect(hits, "a registered descriptor naming an H2 name, a Reactive SDK or a federation link: the only hits are PLANTED_PROVIDER's, in both registries").toEqual([...plantHits, ...plantHits]);
     const controlId = "reactivefiber.control";
     const control = (description: string): string[] => descriptorHits({ id: controlId, text: JSON.stringify({ id: controlId, description }) }).map(hit => hit.slice(controlId.length + 2));
     const controls = {
@@ -1354,7 +1570,10 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
   C4: () => {
     const reading = sourceReading();
     const reads = [...reading.modules.entries()].filter(([path]) => path.startsWith("src/")).flatMap(([, module]) => module.servedReads);
-    expect(reads, "a src module reading rf's leaves or a served flag").toEqual([]);
+    expect(reads, "a src module reading rf's leaves or a served flag: the only reads are the src plant's (the qa plant's read is outside src)").toEqual([
+      "src/zz-wb-4n55-plant.ts: .leaves",
+      "src/zz-wb-4n55-plant.ts: .served",
+    ]);
     const readsIn = (source: string): number => readModule("c.ts", source).servedReads.length;
     const controls = {
       findServed: readsIn("const ok = envelope.result.leaves.find(leaf => leaf.served);\n"),
@@ -1374,13 +1593,19 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     };
     expect(receiptRule.label ?? "", "the receipt rule names the version command and a served leaf").toMatch(/`rf --json --version`.*served leaf/);
     expect(receiptRule.versionCommands, "the rule reads the version command in both flag orders").toEqual(["rf --json --version", "rf --version --json"]);
-    const mappingSource = readFileSync(join(REPO, MAPPING_FILE), "utf8");
-    const titles = registeredTitles(MAPPING_FILE, mappingSource);
+    const registrations = registrationsIn([{ path: MAPPING_FILE, text: readFileSync(join(REPO, MAPPING_FILE), "utf8") }, REGISTRATION_PLANT]);
+    const live = registrations.filter(entry => entry.path === MAPPING_FILE);
     const mapping = {
-      registered: titles.filter(entry => entry.title === MAPPING_DESCRIBE && entry.describe === undefined).length,
-      cases: titles.filter(entry => entry.describe === MAPPING_DESCRIBE).map(entry => entry.title),
+      registered: live.filter(entry => entry.title === MAPPING_DESCRIBE && entry.describe === undefined).length,
+      cases: live.filter(entry => entry.describe === MAPPING_DESCRIBE).map(entry => entry.title),
+      plantCases: registrations.filter(entry => entry.path === REGISTRATION_PLANT.path && entry.describe === MAPPING_DESCRIBE).map(entry => entry.title),
+      skipped: registrations.filter(entry => entry.describe === MAPPING_DESCRIBE && entry.modes.length > 0).map(entry => `${entry.path}: ${entry.title}: ${entry.modes.join(", ")}`),
     };
     expect(mapping.registered, "the wb-973.14 refusal-mapping describe, registered once").toBe(1);
+    expect(mapping.plantCases, "every planted registration form is read").toEqual(REGISTRATION_FORMS.map(form => `plant ${form.form}`));
+    expect(mapping.skipped, "a mapping case carrying a skip mode: the only skipped cases are the plant's falsifiers, one per mode and form").toEqual(
+      REGISTRATION_FORMS.filter(form => form.modes.length > 0).map(form => `${REGISTRATION_PLANT.path}: plant ${form.form}: ${form.modes.join(", ")}`),
+    );
     return done("C4", { reads, controls, receiptRule, mapping });
   },
   C5: () => {
@@ -1451,6 +1676,13 @@ describe("wb-4nut.2 H2 proposed-API census (TSX-HARNESS2-REACTIVE-EVOLUTION-R2, 
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect({ bead: BEAD, constants: constants() }).toStrictEqual({ bead: ROSTER.bead, constants: ROSTER.constants });
+    // wb-4n55 F2: SKIP_MODES and RUN_MEMBERS partition vitest's registration members (REGISTRATION_MEMBERS, pinned against the
+    // installed runtime by test/workbench-census-registration-model.test.ts), and every mode and options key has a falsifier form.
+    const members = [...new Set([...REGISTRATION_MEMBERS.test, ...REGISTRATION_MEMBERS.suite])].sort();
+    expect([...SKIP_MODES, ...RUN_MEMBERS].sort(), "SKIP_MODES and RUN_MEMBERS partition vitest's registration members").toEqual(members);
+    expect(OPTION_MODES.filter(key => !SKIP_MODES.includes(key)), "every options key read is a skip mode").toEqual([]);
+    const falsified = REGISTRATION_FORMS.flatMap(form => form.modes);
+    expect([...SKIP_MODES.filter(mode => !falsified.includes(mode)), ...OPTION_MODES.filter(key => !falsified.includes(`options ${key}`))], "a skip mode or options key with no falsifier form").toEqual([]);
     // The outside anchor: the owner filing's row in the tracked bead export.
     const bead = readBeadRow();
     const clauses = acceptanceClauses(bead.notes);

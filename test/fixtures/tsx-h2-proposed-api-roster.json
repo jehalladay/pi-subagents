@@ -157,7 +157,49 @@
    "R-MARKER",
    "R-COMPOSED",
    "R-COMMENT",
-   "R-OUTSIDE"
+   "R-OUTSIDE",
+   "R-HOLLOWED"
+  ],
+  "skipModes": [
+   "skip",
+   "todo",
+   "only",
+   "fails",
+   "skipIf",
+   "runIf"
+  ],
+  "runMembers": [
+   "afterAll",
+   "afterEach",
+   "aroundAll",
+   "aroundEach",
+   "beforeAll",
+   "beforeEach",
+   "concurrent",
+   "describe",
+   "each",
+   "extend",
+   "for",
+   "override",
+   "scoped",
+   "sequential",
+   "shuffle",
+   "suite"
+  ],
+  "optionModes": [
+   "skip",
+   "todo",
+   "only",
+   "fails"
+  ],
+  "plants": [
+   "docs/zz-wb-4n55-plant.md:49829697f77f8102",
+   "docs/workbench/zz-wb-4n55-plant.md:b4510a2b678457dd",
+   "src/zz-wb-4n55-plant.ts:93264b3ccf569cf0",
+   "qa/zz-wb-4n55-plant.mjs:24f03202cc75e8b0",
+   "src/zz-wb-4n55-plant.json:f46a570484143858",
+   "test/zz-wb-4n55-registration-plant.test.ts:517b55b05cd4dc03",
+   "planted.descriptor:f5a5b6ae19b2b0c6"
   ]
  },
  "producer": {
@@ -372,8 +414,12 @@
        "vendor/README.md"
       ],
       "segmentsFloorMet": true,
-      "findings": [],
-      "admitted": [],
+      "findings": [
+       "docs/zz-wb-4n55-plant.md:1 N2: named-as-available"
+      ],
+      "admitted": [
+       "docs/zz-wb-4n55-plant.md:3 N4"
+      ],
       "planted": {
        "findings": [
         ".agents/skills/s.md:1 N7: named-as-available",
@@ -664,8 +710,13 @@
        "src/workbench/detached-observer.ts",
        "src/workbench/providers/reactivefiber.ts"
       ],
-      "names": [],
-      "jsonNames": [],
+      "names": [
+       "src/zz-wb-4n55-plant.ts: identifier N2",
+       "qa/zz-wb-4n55-plant.mjs: literal N3"
+      ],
+      "jsonNames": [
+       "src/zz-wb-4n55-plant.json: json"
+      ],
       "controls": {
        "typeName": true,
        "camelIdentifier": true,
@@ -696,8 +747,12 @@
       "pin": "B1",
       "floorMet": true,
       "sdkWindowsFloorMet": true,
-      "findings": [],
-      "admitted": [],
+      "findings": [
+       "docs/workbench/zz-wb-4n55-plant.md:1: claim-unmarked"
+      ],
+      "admitted": [
+       "docs/workbench/zz-wb-4n55-plant.md:3"
+      ],
       "planted": {
        "findings": [
         "docs/workbench/receipts/y.md:1: claim-unmarked",
@@ -827,18 +882,27 @@
      "witness": {
       "pin": "B3",
       "native": {
-       "count": 4,
+       "count": 5,
        "rfIds": [
         "reactivefiber.render.preview"
        ]
       },
       "injected": {
-       "count": 1,
+       "count": 2,
        "rfIds": [
         "reactivefiber.render.preview"
        ]
       },
-      "hits": [],
+      "hits": [
+       "planted.descriptor: name",
+       "planted.descriptor: sdk",
+       "planted.descriptor: link",
+       "planted.descriptor: claim",
+       "planted.descriptor: name",
+       "planted.descriptor: sdk",
+       "planted.descriptor: link",
+       "planted.descriptor: claim"
+      ],
       "controls": {
        "adapterClaim": [
         "name",
@@ -963,7 +1027,10 @@
      "id": "C4",
      "witness": {
       "pin": "C4",
-      "reads": [],
+      "reads": [
+       "src/zz-wb-4n55-plant.ts: .leaves",
+       "src/zz-wb-4n55-plant.ts: .served"
+      ],
       "controls": {
        "findServed": 2,
        "destructured": 1,
@@ -992,6 +1059,65 @@
        "cases": [
         "maps an exit-2 RF_USAGE_NOT_IMPLEMENTED refusal to a typed unavailable error in exactly one spawn",
         "does not map the same refusal when the exit code contradicts it"
+       ],
+       "plantCases": [
+        "plant runnable",
+        "plant caseSkip",
+        "plant caseTodo",
+        "plant caseOnly",
+        "plant caseFails",
+        "plant caseSkipIf",
+        "plant caseRunIf",
+        "plant testRoot",
+        "plant skipThenEach",
+        "plant optionsSkip",
+        "plant optionsTodo",
+        "plant optionsOnly",
+        "plant optionsFails",
+        "plant optionsLast",
+        "plant optionsSpread",
+        "plant optionsComputed",
+        "plant describeSkip",
+        "plant describeTodo",
+        "plant describeOnly",
+        "plant describeSkipIf",
+        "plant describeRunIf",
+        "plant describeOptions",
+        "plant outerDescribe",
+        "plant contextSkip",
+        "plant destructuredSkip",
+        "plant eachRows",
+        "plant concurrent",
+        "plant optionsFalse",
+        "plant optionsTimeout",
+        "plant commented",
+        "plant hollowedBody"
+       ],
+       "skipped": [
+        "test/zz-wb-4n55-registration-plant.test.ts: plant caseSkip: skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant caseTodo: todo",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant caseOnly: only",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant caseFails: fails",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant caseSkipIf: skipIf",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant caseRunIf: runIf",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant testRoot: skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant skipThenEach: skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant optionsSkip: options skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant optionsTodo: options todo",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant optionsOnly: options only",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant optionsFails: options fails",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant optionsLast: options skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant optionsSpread: options spread",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant optionsComputed: options computed key",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant describeSkip: skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant describeTodo: todo",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant describeOnly: only",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant describeSkipIf: skipIf",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant describeRunIf: runIf",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant describeOptions: options skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant outerDescribe: skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant contextSkip: context skip",
+        "test/zz-wb-4n55-registration-plant.test.ts: plant destructuredSkip: context skip"
        ]
       }
      }
