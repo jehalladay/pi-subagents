@@ -1,6 +1,6 @@
 {
   "bead": "wb-hs2j.2",
-  "provenance": "wb-hs2j.2 census roster (test/workbench-rf-context-read-structure-census.test.ts). statement, quote, citation, mergedQuote, mergedCitation and shipped are the owner filing's (bead row wb-hs2j.2 in .beads/issues.jsonl: its Full statement line, its Source line and the Merged clause of that line, and the Shipped sentence of its Gating artifacts line), re-read at ReactiveFiberCLI 6a251bf73af5 with git show on 2026-10-23 (02-swarm-usage-and-command-grammar.md:38 and :40; BEADS-2026-10-21.md:15-16). producer is MEASURED read-only on 2026-10-23: rfVersion and rfCommit are `rf --json --version` result.version and result.provenance.commit_id of the installed rf (2618c211be0d, a descendant of the program pin by git merge-base --is-ancestor); contextLeaves are its result.leaves paths under context. (all served); options are the bracketed flags of the usage line of `rf context show|diff|explain --help`, in usage order; the key lists are the packaged schemas/cli/context.render.schema.json $defs.result properties (with its blocks and components item properties), context.show.schema.json $defs.block properties and context.diff.schema.json $defs.result properties, sorted, each schema file's sha256 in schemaDigests; gatingBeads are the rfc-s24ro.3 and rfc-s24ro.4 rows of BEADS-2026-10-21.md at the pin (id, path:line, title cell). The scan lists blockFields, genericBlockFields, diffKeys and genericDiffKeys are derived from those key lists by the census (a field or key the render result does not carry, split into snake_case and one-word names). Re-cut after owner ruling R710 (2026-10-23): re-measured on trunk edccd80 after wb-hs2j.1 (landing 287) gave the adapter its count-only result.blocks read - row C's label and C2 name that read and each of its uses; A1 holds the walk to node's recursive listing of the roots, E1 holds the producer's version, commit and served context leaves to test/fixtures/rf-version-leaves.json, and the R-REFLECTIVE family and A1's aliasedLauncher row name the reflective and aliased-launcher escapes (the s48 PREP findings F2, F3 in part and F4). Every witness is the expected outcome of its pin's case at this cut.",
+  "provenance": "wb-hs2j.2 census roster (test/workbench-rf-context-read-structure-census.test.ts). statement, quote, citation, mergedQuote, mergedCitation and shipped are the owner filing's (bead row wb-hs2j.2 in .beads/issues.jsonl: its Full statement line, its Source line and the Merged clause of that line, and the Shipped sentence of its Gating artifacts line), re-read at ReactiveFiberCLI 6a251bf73af5 with git show on 2026-10-23 (02-swarm-usage-and-command-grammar.md:38 and :40; BEADS-2026-10-21.md:15-16). producer is MEASURED read-only on 2026-10-23: rfVersion and rfCommit are `rf --json --version` result.version and result.provenance.commit_id of the installed rf (2618c211be0d, a descendant of the program pin by git merge-base --is-ancestor); contextLeaves are its result.leaves paths under context. (all served); options are the bracketed flags of the usage line of `rf context show|diff|explain --help`, in usage order; the key lists are the packaged schemas/cli/context.render.schema.json $defs.result properties (with its blocks and components item properties), context.show.schema.json $defs.block properties and context.diff.schema.json $defs.result properties, sorted, each schema file's sha256 in schemaDigests; gatingBeads are the rfc-s24ro.3 and rfc-s24ro.4 rows of BEADS-2026-10-21.md at the pin (id, path:line, title cell). The scan lists blockFields, genericBlockFields, diffKeys and genericDiffKeys are derived from those key lists by the census (a field or key the render result does not carry, split into snake_case and one-word names). Re-cut after owner ruling R710 (2026-10-23): re-measured on trunk edccd80 after wb-hs2j.1 (landing 287) gave the adapter its count-only result.blocks read - row C's label and C2 name that read and each of its uses; A1 holds the walk to node's recursive listing of the roots, E1 holds the producer's version, commit and served context leaves to test/fixtures/rf-version-leaves.json, and the R-REFLECTIVE family and A1's aliasedLauncher row name the reflective and aliased-launcher escapes (the s48 PREP findings F2, F3 in part and F4). Every witness is the expected outcome of its pin's case at this cut. Re-measured for wb-lcs3 (the R694 follow-up of landing 311) on 2026-10-24 at trunk 21eff29: every witness gains asserted (its test's assertion tally when the case returns through done()); A1's walk also records the non-module files below the roots (their rf launch lines judged; the walk held to node's listing of every file and to git ls-files); B1, C2 and D2 resolve element-access and computed binding keys through the module's own key bindings, and C2 follows a row-shape callback's module helpers one level; C2's planted rows take the measured rf's own vocabulary, read read-only with git show at rfCommit 2618c211be0d (packaged context.render.schema.json, sha256 equal to schemaDigests context.render): component status ok, failed or recovered, source_unavailable a list of lens refs, token_cost.kind = token_cost_kind measured, estimated or unknown (unknown exactly when tokens is null); scan gains textFloors, rfWord, iterators and followUp; residuals gain R-INDIRECT.",
   "statement": "[RF-REACTIVE-CONTEXT-ASSEMBLY-R2] No Pi consumer shall fabricate structure over rf context read envelopes: a component's block is read from attributed block records, never sentinel text regexed out of a full context-show envelope (adopt context show --block KEY when rfc-s24ro.3 ships; open, unshipped), and absent context diff keys are reported missing, never synthesized or rendered as constant fallbacks (adopt context diff --detail compact when rfc-s24ro.4 ships; open, unshipped) - pin docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:38@6a251bf73af5",
   "quote": "The consumer used text sentinel extraction rather than block attribution; this was its own workaround, with prospective spoof/format risk. Proposed computation: a **materialized component output query** `(render ID, component ID, occurrence key, audience)` whose return includes only the authorized attributed blocks and digest, not a speculative free-text grep.",
   "citation": "docs/programs/reactive-context-assembly-2026-10-18/02-swarm-usage-and-command-grammar.md:38@6a251bf73af5",
@@ -195,6 +195,10 @@
       "qa": 55,
       "examples": 5
     },
+    "textFloors": {
+      "qa": 4,
+      "examples": 1
+    },
     "renderCommand": "context.render",
     "launchers": [
       "spawn",
@@ -206,6 +210,20 @@
       "fork"
     ],
     "rfBinary": "rf",
+    "rfWord": "(?<![A-Za-z0-9_.-])rf(?![A-Za-z0-9_.-])/",
+    "iterators": [
+      "every",
+      "some",
+      "map",
+      "filter",
+      "forEach",
+      "find",
+      "findIndex",
+      "findLast",
+      "findLastIndex",
+      "flatMap"
+    ],
+    "followUp": "wb-lcs3",
     "textRead": "output.text",
     "containers": [
       "blocks",
@@ -298,7 +316,8 @@
     "R-RENAMED",
     "R-COMMENT",
     "R-OUTSIDE",
-    "R-REFLECTIVE"
+    "R-REFLECTIVE",
+    "R-INDIRECT"
   ],
   "rows": [
     {
@@ -326,6 +345,11 @@
               "history",
               "replay"
             ],
+            "textsFloorMet": true,
+            "textsListed": true,
+            "unwalked": [],
+            "unlisted": [],
+            "textLaunches": [],
             "controls": {
               "showArgv": [
                 "show"
@@ -352,8 +376,17 @@
               "composedBinary": 0,
               "prose": false,
               "comment": 0,
-              "aliasedLauncher": []
-            }
+              "aliasedLauncher": [],
+              "shellShow": 1,
+              "shellContinued": 1,
+              "pathQualified": 1,
+              "shellRender": 0,
+              "proseLeaf": 0,
+              "longerName": 0,
+              "scriptComposedBinary": 0,
+              "scriptArgvApart": 0
+            },
+            "asserted": 12
           }
         },
         {
@@ -416,7 +449,8 @@
                 ]
               ]
             ],
-            "selectorKeys": []
+            "selectorKeys": [],
+            "asserted": 6
           }
         }
       ]
@@ -463,8 +497,11 @@
               "aliasOutsideReaders": 0,
               "computedKey": 0,
               "reflectGet": 0,
-              "serializedOutput": 0
-            }
+              "serializedOutput": 0,
+              "constKey": 1,
+              "keyListKey": 1
+            },
+            "asserted": 3
           }
         },
         {
@@ -480,7 +517,8 @@
             ],
             "evidenceEqual": true,
             "evidenceTokens": [],
-            "evidenceProvider": "reactivefiber"
+            "evidenceProvider": "reactivefiber",
+            "asserted": 6
           }
         }
       ]
@@ -539,7 +577,8 @@
                 true,
                 true
               ]
-            }
+            },
+            "asserted": 4
           }
         },
         {
@@ -568,7 +607,11 @@
             "countDelta": [
               "diagnostics"
             ],
-            "plantedTokens": 11,
+            "pairDiffers": {
+              "blocks": true,
+              "components": true
+            },
+            "plantedTokens": 14,
             "recordTokens": [],
             "controls": {
               "findBlock": 1,
@@ -587,8 +630,22 @@
               "passThrough": 1,
               "aliasRows": 1,
               "nestedBinding": 1,
-              "reflectiveRows": 0
-            }
+              "reflectiveRows": 0,
+              "constIndexKey": 2,
+              "constScalarKey": 2,
+              "computedBinding": 2,
+              "computedBindingCount": 0,
+              "keyListCallback": 2,
+              "keyListLoop": 2,
+              "shadowedKey": 2,
+              "helperReadsField": 1,
+              "helperShapeCheck": 0,
+              "composedContainer": 0,
+              "objectMemberKey": 0,
+              "twoLevelHelper": 0,
+              "importedHelper": 0
+            },
+            "asserted": 9
           }
         }
       ]
@@ -618,7 +675,8 @@
               "renderKey": 0,
               "genericKey": 0,
               "comment": 0
-            }
+            },
+            "asserted": 2
           }
         },
         {
@@ -652,8 +710,11 @@
               "summaryRead": 1,
               "elementAccess": 1,
               "destructure": 1,
-              "genericOutsideReaders": 0
-            }
+              "genericOutsideReaders": 0,
+              "constKey": 1,
+              "keyListLoop": 2
+            },
+            "asserted": 4
           }
         }
       ]
@@ -683,7 +744,8 @@
               "context.diff": true
             },
             "producerCaptured": true,
-            "pinIsCitationSha": true
+            "pinIsCitationSha": true,
+            "asserted": 5
           }
         },
         {
@@ -708,7 +770,8 @@
               "compactCounts": true,
               "renderLeaf": false,
               "explainLeaf": false
-            }
+            },
+            "asserted": 4
           }
         }
       ]

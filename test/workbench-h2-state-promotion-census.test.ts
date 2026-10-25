@@ -23,9 +23,12 @@
  *  B, acceptance (b), at the same observer, the reader adapter that projects an rf render. B1 the noncommitted attempt (render_id null,
  *    transaction_id null, ephemeral, 0 storage writes) shows as a noncommitted preview and no surfaced string claims a commit; a
  *    render-report-shaped record stating committed false, true or nothing, riding an open object of the result, leaves the
- *    projection byte-identical. B2 each committed shape (a render id, a commit sequence, a transaction id, ephemeral false, a
- *    storage write) is a typed refusal naming its field, never a projection. B3 a missing flag is never defaulted: each required one
- *    removed is refused, and the judge rejects a reader that defaults it.
+ *    projection byte-identical; and a bare commit flag (committed false or true, no record around it) planted on every object the
+ *    render holds (the envelope, the result and every object below them, array elements included) is carried unread, the
+ *    projection byte-identical, or refused as a typed validation error by a strict object, never read. B2 each committed shape (a
+ *    render id, a commit sequence, a transaction id, ephemeral false, a storage write) is a typed refusal naming its field, never a
+ *    projection. B3 a missing flag is never defaulted: each required one removed is refused, and the judge rejects a reader that
+ *    defaults it.
  *  C, acceptance (c), at the capability registry, which admits and bounds every workflow capability call (capability-registry.ts
  *    dispatch). C1 an admitted effectful request (write, external, unknown) whose client deadline fires reads uncertain-effect,
  *    attempted once, never cancelled, though the provider completes after the deadline. C2 the controls: a request still queued at
@@ -44,8 +47,9 @@
  *    rf's sibling SDK entries (result.provenance.sdk_versions fiber_optics, reactive_lenses, reactive_inference), where every render
  *    Pi reads names those producers, are never read. E2 a lexical scan of every src module (literals and identifiers, camelCase split)
  *    finds no H2 record term and no distinctive state word, with a floor and three anchors (the observer, the registry,
- *    telemetry.ts) scanned and quiet. E3 the detector's controls: flagged lines (every term and word flags one), quiet lines and the
- *    residuals' quiet rows.
+ *    telemetry.ts) scanned and quiet. E1's and E2's walks each equal an independent recursive listing of src (node:fs readdirSync
+ *    recursive, not filesBelow), so a walk narrowed by a subtree or a file reds whatever the floor's margin. E3 the detector's
+ *    controls: flagged lines (every term and word flags one), quiet lines and the residuals' quiet rows.
  * MEASURED PRODUCER FACTS (roster `producers`, read-only git show on the local checkouts, 2026-10-23): the program README at the four
  * pins the epic wb-4nut names (FiberOpticsSDK e803f66c5fb9, ReactiveFiberTSXSDK 76bbbffd9d4a, ReactiveInferenceSDK 485f3615db1e,
  * ReactiveLensesSDK bfe1f4ac7fa0), its blob and every line the filing cites (FO 25, 27, 35, 36, 44, 47; TSX 37, 48; RI 23, 24, 34,
@@ -56,10 +60,25 @@
  * (.beads/issues.jsonl, row wb-4nut.10): the acceptance rows' labels are its Acceptance line's clauses, in order, and row E's is its
  * Not P0 line; FO L25's words are read from its Authority line; its Quote and Authority quotes sit inside the roster's measured
  * lines; every gating id it lists heads the roster line it cites. So a row, a publication word or a gating id removed from every
- * literal of this file and the roster still reds. Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together
- * (the filing anchors rows, clauses and words, not pins); the native provider seam (providers/reactivefiber.ts isPreviewEnvelope,
- * which refuses the same committed shapes before a reading exists) and the control adapters' executions (claude-control.ts,
- * detached-control.ts: their exported outcome tables are read here, their suites execute them).
+ * literal of this file and the roster still reds.
+ * THE RECORD (wb-vgxn, the landing-312 gate's F1: a case could return early, or the registration case go missing, and the file
+ * stayed green): every case records its own end in REACHED as `${id}:${count}`, after its last assertion - the judged set at its
+ * end, each pin right after its witness comparison - where count is vitest's own tally of the case's assertions
+ * (expect.getState().assertionCalls), so an early return, a dropped assertion or a case that echoes its roster witness before
+ * measuring leaves its entry absent or its count short; each pin also keeps its witness in MEASURED. The judged set, which runs
+ * first, holds the collected task tree to the roster's tests (every title once, in roster order, set to run and not inverted), so
+ * a registration case deleted, renamed, skipped or inverted reds there. The registration case holds REACHED to the roster's
+ * reached list and MEASURED to the roster's witnesses a second time, then records its own end, and the file-end judge (afterAll)
+ * holds that end, so a registration case that returns early or skips itself at run time reds after it has run. The judge reads
+ * which cases were selected to run from the collected tree before the first case runs (beforeEach, once): under a test-name filter
+ * that deselects the registration case it holds nothing.
+ * Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the filing anchors rows, clauses and words, not
+ * pins); an assertion removed from this file together with its pinned count in the roster; the file-end judge or the selection it
+ * reads removed (no claim rides them alone: the registration case still holds the record); every case of the file skipped at once
+ * (no case runs to read the tree, and vitest runs no hook for a file with nothing to run); the native provider seam
+ * (providers/reactivefiber.ts isPreviewEnvelope, which refuses the same committed shapes before a reading exists) and the control
+ * adapters' executions (claude-control.ts, detached-control.ts: their exported outcome tables are read here, their suites execute
+ * them).
  * RESIDUALS (named families, each with a pinned quiet row): R-FOREIGN-VALUE the observer knows rf's two observed words only, so a
  * producer VALUE reads not observed, verbatim (A1's VALUE reading); R-LISTED-FOUR the observations note lists at most four distinct
  * words, a fifth is counted and marked, never renamed (A2's five-word note); R-REFUSED-FLAG a missing flag is refused rather than
@@ -82,7 +101,7 @@ import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import ts from "typescript";
-import { describe, expect, it } from "vitest";
+import { afterAll, beforeEach, describe, expect, it, type RunnerTask } from "vitest";
 import { type CapabilityDescriptor, CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import { CLAUDE_CONTROL_RECONCILE, CLAUDE_INTERRUPT_OUTCOMES } from "../src/workbench/claude-control.js";
 import { DETACHED_CONTROL_VERBS } from "../src/workbench/detached-control.js";
@@ -123,6 +142,8 @@ const CONTROL_WORD = "zz-control";
 const UNLISTED = String.fromCodePoint(0x2026);
 /** Two open objects of an rf render result a render-report-shaped record can ride unread. */
 const REPORT_CARRIERS: readonly string[] = ["result.render_report", "result.provenance.render_report"];
+/** The key of a bare commit flag (no record around it) B1 plants on every object of a render. */
+const BARE_FLAG = "committed";
 /** The committed shapes, each the one edit that states a commit (the observer's reactivefiberTopology and previewSnapshot fences). */
 const COMMITTED_SHAPES: readonly string[] = ["transaction_id", "result.render_id", "result.commit_seq", "result.ephemeral", "result.work.storage_write_count"];
 /** The flags that state a render noncommitted and must be stated; commit_seq is the pinned schema's optional one. */
@@ -164,6 +185,12 @@ const RESIDUAL_FAMILIES: readonly string[] = [
   "R-FOREIGN-VALUE", "R-LISTED-FOUR", "R-REFUSED-FLAG", "R-OPTIONAL-COMMIT-SEQ", "R-READ-TIMEOUT", "R-COUNT-NOT-WORD", "R-COMPOSED",
   "R-GENERIC-WORD", "R-COMMENT",
 ];
+const JUDGED_TITLE = "the judged set: the frozen shape, the out-of-file roster, the collected cases and the filing's own notes agree";
+const REGISTRATION_TITLE =
+  "registration: every case of this file is registered once, in roster order, in run mode, ran before this one and reached its end with its pinned assertion count";
+/** The record's ids for the two cases that are not pins. */
+const JUDGED_ID = "judged";
+const REGISTRATION_ID = "registration";
 
 interface Row {
   readonly id: string;
@@ -224,6 +251,10 @@ interface Roster {
   readonly residuals: readonly string[];
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
+  /** The ends every case before the registration case records, in run order (`${id}:${count}`). */
+  readonly reached: readonly string[];
+  /** The registration case's own end, held by the file-end judge. */
+  readonly registrationEnd: string;
 }
 
 function isObject(value: unknown): value is { [key: string]: unknown } {
@@ -247,6 +278,7 @@ function readRoster(): Roster {
   if (!isObject(raw) || typeof raw.bead !== "string" || !Array.isArray(raw.rows) || !Array.isArray(raw.producers) || !isObject(raw.constants)) {
     throw new Error("roster must be an object with bead, producers, constants and rows");
   }
+  if (typeof raw.registrationEnd !== "string") throw new Error("roster registrationEnd must be a string");
   const rows = raw.rows.map((row: unknown, index: number): RosterRow => {
     if (!isObject(row) || typeof row.id !== "string" || typeof row.label !== "string" || !Array.isArray(row.pins)) {
       throw new Error(`roster rows[${index}] needs an id, a label and a pins list`);
@@ -267,7 +299,7 @@ function readRoster(): Roster {
   });
   return {
     bead: raw.bead, producers, constants: objectOf(json(raw.constants), "roster constants"), residuals: strings(raw.residuals, "residuals"), rows,
-    tests: strings(raw.tests, "tests"),
+    tests: strings(raw.tests, "tests"), reached: strings(raw.reached, "reached"), registrationEnd: raw.registrationEnd,
   };
 }
 
@@ -330,6 +362,20 @@ function parentOf(envelope: JsonObject, path: string): { holder: JsonObject; key
   let holder = envelope;
   for (const step of steps) holder = objectOf(holder[step], step);
   return { holder, key };
+}
+/** Every object a JSON value holds (itself included, array elements entered), by dotted path from the value ("" is the value). */
+function objectPaths(value: JsonValue, path = ""): string[] {
+  if (Array.isArray(value)) return value.flatMap((item, index) => objectPaths(item, path === "" ? String(index) : `${path}.${index}`));
+  if (value === null || typeof value !== "object") return [];
+  return [path, ...Object.entries(value).flatMap(([key, item]) => objectPaths(item, path === "" ? key : `${path}.${key}`))];
+}
+/** The object at a dotted path of objectPaths (array indices included). */
+function objectAt(root: JsonObject, path: string): JsonObject {
+  let holder: JsonValue = root;
+  for (const step of path === "" ? [] : path.split(".")) {
+    holder = Array.isArray(holder) ? (holder[Number(step)] ?? null) : objectOf(holder, step)[step] ?? null;
+  }
+  return objectOf(holder, path === "" ? "the envelope" : path);
 }
 function withRows(statuses: readonly string[]): JsonObject {
   const envelope = cleanEnvelope();
@@ -550,6 +596,16 @@ function hitsOf(items: readonly string[]): string[] {
 function srcModules(): { file: string; items: string[] }[] {
   return filesBelow(join(REPO, "src")).map(path => ({ file: relative(REPO, path).split("\\").join("/"), items: lexiconOf(path, readFileSync(path, "utf8")) }));
 }
+/** Every file below src by an independent route (node:fs recursive readdir, not filesBelow), sorted: what E1's and E2's walks equal. */
+function listedSrc(): string[] {
+  return readdirSync(join(REPO, "src"), { recursive: true, withFileTypes: true })
+    .filter(entry => entry.isFile())
+    .map(entry => relative(REPO, join(entry.parentPath, entry.name)).split("\\").join("/"))
+    .sort();
+}
+function walkedFiles(modules: readonly { readonly file: string }[]): string[] {
+  return modules.map(({ file }) => file).sort();
+}
 /** Whether an edit of the clean render's result.provenance.sdk_versions leaves its projection byte-identical. */
 function siblingUnread(clean: string, edit: (versions: JsonObject) => void): boolean {
   const envelope = cleanEnvelope();
@@ -618,9 +674,24 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       }
     }
     expect(carried, "every planted render report carried unread").toHaveLength(REPORT_CARRIERS.length * 3);
+    // wb-vgxn (the 312 gate's F2, P05): a bare commit flag, false or true, on every object of the render, is carried unread or refused
+    // by a strict object as a typed validation error; a projection that moves, or any other refusal, is a read.
+    const bare: { unread: string[]; refused: string[]; read: string[] } = { unread: [], refused: [], read: [] };
+    for (const path of objectPaths(cleanEnvelope())) {
+      for (const committed of [false, true]) {
+        const envelope = cleanEnvelope();
+        objectAt(envelope, path)[BARE_FLAG] = committed;
+        const refusal = refusalOf(() => project(envelope));
+        const unread = refusal === null && JSON.stringify(project(envelope)) === JSON.stringify(clean);
+        const outcome = refusal === null ? (unread ? "unread" : "read") : refusal.category === "validation" ? "refused" : "read";
+        bare[outcome].push(`${path === "" ? "envelope" : path}:${committed}`);
+      }
+    }
+    expect(bare.read, "a bare commit flag read into the projection").toEqual([]);
+    expect(bare.unread, "the result and its provenance carry a bare commit flag unread").toEqual(expect.arrayContaining(["result:false", "result:true", "result.provenance:false", "result.provenance:true"]));
     return json({
       pin: "B1", kind: snapshot.kind, statusText: snapshot.node.statusText, preview: clean.diagnostics.find(text => text.startsWith("ephemeral ")) ?? null,
-      claims, carried,
+      claims, carried, bare,
     });
   },
   B2: async () => {
@@ -760,6 +831,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const declared = declaredPackages().filter(name => H2_PACKAGE.test(name));
     const installed = installedPackages().filter(name => H2_PACKAGE.test(name));
     const modules = srcModules();
+    const listed = listedSrc();
+    expect(walkedFiles(modules), "E1's walk is every file below src (an independent recursive listing)").toEqual(listed);
     const named = modules.flatMap(({ file, items }) => items.filter(item => H2_PACKAGE.test(item)).map(item => `${file}: ${item}`));
     expect(declared, "an H2 producer package in package.json").toEqual([]);
     expect(installed, "an H2 producer package in node_modules").toEqual([]);
@@ -776,10 +849,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       }),
     ]);
     expect(unread, "every sibling entry, changed and removed, is unread").toEqual(SIBLING_ENTRIES.flatMap(() => [true, true]));
-    return json({ pin: "E1", declared, installed, named, siblingEntries: SIBLING_ENTRIES.length, unread: unread.every(Boolean) });
+    return json({ pin: "E1", declared, installed, named, siblingEntries: SIBLING_ENTRIES.length, unread: unread.every(Boolean), walkComplete: isDeepStrictEqual(walkedFiles(modules), listed) });
   },
   E2: async () => {
     const modules = srcModules();
+    const listed = listedSrc();
+    expect(walkedFiles(modules), "E2's walk is every file below src (an independent recursive listing)").toEqual(listed);
     const nonModules = modules.filter(({ file }) => !file.endsWith(".ts")).map(({ file }) => file);
     const hits = modules.flatMap(({ file, items }) => hitsOf(items).map(hit => `${file}: ${hit}`));
     expect(nonModules, "a src file that is not a .ts module").toEqual([]);
@@ -790,7 +865,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       return { file, scanned: found !== undefined && found.items.length > 0, hits: found === undefined ? null : hitsOf(found.items).length };
     });
     expect(anchors.map(anchor => anchor.scanned), "every anchor module was scanned").toEqual(ANCHORS.map(() => true));
-    return json({ pin: "E2", aboveFloor: modules.length >= MODULE_FLOOR, nonModules, hits, anchors });
+    return json({ pin: "E2", aboveFloor: modules.length >= MODULE_FLOOR, walkComplete: isDeepStrictEqual(walkedFiles(modules), listed), nonModules, hits, anchors });
   },
   E3: async () => {
     const lexicon = (text: string): string[] => lexiconOf("control.ts", text);
@@ -831,15 +906,57 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
 };
 
+/** THE RECORD: each case's end, in run order, as `${id}:${count}` (vitest's tally of the case's assertions), pushed only after the
+ * case's last assertion; a pin's right after its witness comparison. */
+const REACHED: string[] = [];
+/** Each pin's witness as its case measured it; the registration case compares it against the roster a second time. */
+const MEASURED: Record<string, JsonValue> = {};
+/** The titles selected to run, read from the collected task tree before any case runs (a test-name filter deselects the rest). */
+const SELECTED: string[] = [];
+
+interface Registered {
+  readonly name: string;
+  readonly mode: string;
+  readonly fails: boolean;
+  readonly state: string | undefined;
+  readonly self: boolean;
+}
+/** Every test a collected task tree holds, in registration order; self marks the case doing the reading. */
+function registered(tasks: readonly RunnerTask[], self?: RunnerTask): Registered[] {
+  const walked: Registered[] = [];
+  for (const child of tasks) {
+    if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === self });
+    else if (child.type === "suite") walked.push(...registered(child.tasks, self));
+  }
+  return walked;
+}
+/** A registered test's title with its collected mode, "+fails" marking an inverted one. */
+const modeLine = (entry: Registered): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""}`;
+
+// The selection, read once from the collected tree before the first case runs (no case has run, so every mode is the collected one).
+beforeEach(({ task }) => {
+  if (SELECTED.length === 0) SELECTED.push(...registered(task.file.tasks).filter(entry => entry.mode === "run").map(entry => entry.name));
+});
+// The file-end judge: a registration case selected to run reached its own end, after every other case's, with its pinned count.
+afterAll(() => {
+  if (!SELECTED.includes(REGISTRATION_TITLE)) return;
+  expect(REACHED, "every case of this file reached its end, the registration case last").toEqual([...ROSTER.reached, ROSTER.registrationEnd]);
+});
+
 describe("wb-4nut.10 H2 state-promotion census (TSX-HARNESS2-REACTIVE-EVOLUTION-R10, gated on FO-H2-02/03, TSX-H2-04, RI-H2-04/05 and RL-H2-04, until-then leg)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster, the cases and the filing's own notes agree", () => {
+  it(JUDGED_TITLE, ({ task }) => {
+    // The collected cases, read before any other case runs: a registration case deleted, renamed, skipped or inverted reds here.
+    const collected = registered(task.file.tasks, task);
+    expect(collected.map(entry => entry.name), "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
+    expect(collected.findIndex(entry => entry.self), "this case finds itself by task identity, registered first").toBe(0);
+    expect(collected.filter(entry => entry.mode !== "run" || entry.fails).map(modeLine), "every registered test is set to run and not inverted").toEqual([]);
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:3", "C:3", "D:2", "E:3"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect({
-      bead: BEAD, publicationWords: PUBLICATION_WORDS, nonTerminal: NON_TERMINAL, controlWord: CONTROL_WORD, reportCarriers: REPORT_CARRIERS,
+      bead: BEAD, publicationWords: PUBLICATION_WORDS, nonTerminal: NON_TERMINAL, controlWord: CONTROL_WORD, reportCarriers: REPORT_CARRIERS, bareFlag: BARE_FLAG,
       committedShapes: COMMITTED_SHAPES, requiredFlags: REQUIRED_FLAGS, optionalFlag: OPTIONAL_FLAG, effectful: EFFECTFUL, deadlineMs: DEADLINE_MS,
       outcomeKeys: OUTCOME_KEYS, h2Packages: H2_PACKAGES, siblingEntries: SIBLING_ENTRIES, recordTerms: RECORD_TERMS, stateWords: STATE_WORDS,
       anchors: ANCHORS, moduleFloor: MODULE_FLOOR, residuals: RESIDUAL_FAMILIES,
@@ -869,6 +986,7 @@ describe("wb-4nut.10 H2 state-promotion census (TSX-HARNESS2-REACTIVE-EVOLUTION-
     expect(gates.map(gate => gate.id)).toEqual(["FO-H2-02", "TSX-H2-04", "RI-H2-04", "FO-H2-03", "RI-H2-05", "RL-H2-04"]);
     expect(gates.filter(({ id, short, line }) => !producerLine(short, line).startsWith(`| ${id} |`)), "a gating id that does not head its measured line").toEqual([]);
     expect(notesLine(notes, "Gating artifact: ").endsWith("Shipped: no.")).toBe(true);
+    REACHED.push(`${JUDGED_ID}:${expect.getState().assertionCalls}`);
   });
 
   for (const row of ROWS) {
@@ -879,27 +997,29 @@ describe("wb-4nut.10 H2 state-promotion census (TSX-HARNESS2-REACTIVE-EVOLUTION-
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : await impl();
           expect(witness).toStrictEqual(rosterWitness(pin));
+          MEASURED[pin] = witness;
+          REACHED.push(`${pin}:${expect.getState().assertionCalls}`);
         });
       }
     });
   }
 
-  it("registration: every case of this file is registered once, in roster order, in run mode, and ran before this one", ({ task }) => {
-    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
-    const walk = (tasks: typeof task.file.tasks): void => {
-      for (const child of tasks) {
-        if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
-        else if (child.type === "suite") walk(child.tasks);
-      }
-    };
-    walk(task.file.tasks);
+  it(REGISTRATION_TITLE, ({ task }) => {
+    const walked = registered(task.file.tasks, task);
     const titles = walked.map(entry => entry.name);
     expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
     expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice (an alias or a decoy)").toEqual([]);
     const here = walked.findIndex(entry => entry.self);
     expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
     const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
-    const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
+    const read = (entry: Registered): string => `${modeLine(entry)} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
+    // THE RECORD: every case before this one reached its end - the judged set first, then each pin right after its witness
+    // comparison - with its pinned assertion count, and each pin's measured witness equals the roster's a second time.
+    const pins = ROWS.flatMap(row => row.pins);
+    expect(REACHED, "every case before this one reached its end, in run order, with its pinned assertion count").toEqual([...ROSTER.reached]);
+    expect(REACHED.map(entry => entry.split(":")[0]), "the reached ids are the judged set, then the rows' pins").toEqual([JUDGED_ID, ...pins]);
+    expect(MEASURED, "every pin's measured witness, compared against the roster a second time").toStrictEqual(Object.fromEntries(pins.map(pin => [pin, rosterWitness(pin)])));
+    REACHED.push(`${REGISTRATION_ID}:${expect.getState().assertionCalls}`);
   });
 });

@@ -70,6 +70,7 @@
    "result.render_report",
    "result.provenance.render_report"
   ],
+  "bareFlag": "committed",
   "committedShapes": [
    "transaction_id",
    "result.render_id",
@@ -261,7 +262,58 @@
        "result.provenance.render_report:false",
        "result.provenance.render_report:true",
        "result.provenance.render_report:absent"
-      ]
+      ],
+      "bare": {
+       "unread": [
+        "result:false",
+        "result:true",
+        "result.output:false",
+        "result.output:true",
+        "result.budget:false",
+        "result.budget:true",
+        "result.budget.formula_terms:false",
+        "result.budget.formula_terms:true",
+        "result.diagnostics_summary:false",
+        "result.diagnostics_summary:true",
+        "result.blocks.0:false",
+        "result.blocks.0:true",
+        "result.blocks.0.token_cost:false",
+        "result.blocks.0.token_cost:true",
+        "result.provenance:false",
+        "result.provenance:true",
+        "result.provenance.sdk_versions:false",
+        "result.provenance.sdk_versions:true",
+        "result.provenance.sdk_versions.fiber_optics:false",
+        "result.provenance.sdk_versions.fiber_optics:true",
+        "result.provenance.sdk_versions.reactive_lenses:false",
+        "result.provenance.sdk_versions.reactive_lenses:true",
+        "result.provenance.sdk_versions.reactive_components:false",
+        "result.provenance.sdk_versions.reactive_components:true",
+        "result.provenance.sdk_versions.reactive_inference:false",
+        "result.provenance.sdk_versions.reactive_inference:true",
+        "result.provenance.storage:false",
+        "result.provenance.storage:true",
+        "result.work_metrics:false",
+        "result.work_metrics:true",
+        "result.necessity.0:false",
+        "result.necessity.0:true",
+        "result.retry_work:false",
+        "result.retry_work:true",
+        "result.plan:false",
+        "result.plan:true"
+       ],
+       "refused": [
+        "envelope:false",
+        "envelope:true",
+        "workspace:false",
+        "workspace:true",
+        "result.work:false",
+        "result.work:true",
+        "result.engine_metrics:false",
+        "result.engine_metrics:true"
+       ],
+       "read": []
+      }
      }
     },
     {
@@ -591,7 +643,8 @@
       "installed": [],
       "named": [],
       "siblingEntries": 3,
-      "unread": true
+      "unread": true,
+      "walkComplete": true
      }
     },
     {
@@ -599,6 +652,7 @@
      "witness": {
       "pin": "E2",
       "aboveFloor": true,
+      "walkComplete": true,
       "nonModules": [],
       "hits": [],
       "anchors": [
@@ -746,7 +800,7 @@
   }
  ],
  "tests": [
-  "the judged set: the frozen shape, the out-of-file roster, the cases and the filing's own notes agree",
+  "the judged set: the frozen shape, the out-of-file roster, the collected cases and the filing's own notes agree",
   "A1",
   "A2",
   "A3",
@@ -761,6 +815,24 @@
   "E1",
   "E2",
   "E3",
-  "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
- ]
+  "registration: every case of this file is registered once, in roster order, in run mode, ran before this one and reached its end with its pinned assertion count"
+ ],
+ "reached": [
+  "judged:19",
+  "A1:9",
+  "A2:8",
+  "A3:4",
+  "B1:6",
+  "B2:12",
+  "B3:4",
+  "C1:4",
+  "C2:5",
+  "C3:4",
+  "D1:4",
+  "D2:4",
+  "E1:8",
+  "E2:7",
+  "E3:4"
+ ],
+ "registrationEnd": "registration:7"
 }

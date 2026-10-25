@@ -1453,6 +1453,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "injected": {
@@ -1461,6 +1466,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "blocks": 1,
@@ -1477,6 +1487,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "injected": {
@@ -1485,6 +1500,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "blocks": 2,
@@ -1501,6 +1521,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "injected": {
@@ -1509,6 +1534,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "blocks": 1,
@@ -1525,6 +1555,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "injected": {
@@ -1533,6 +1568,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "blocks": 2,
@@ -1654,6 +1694,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "injected": {
@@ -1662,6 +1707,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "budgetVerbatim": true,
@@ -1683,6 +1733,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "injected": {
@@ -1691,6 +1746,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "budgetVerbatim": true,
@@ -1712,6 +1772,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "injected": {
@@ -1720,6 +1785,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "budgetVerbatim": true,
@@ -1741,6 +1811,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "injected": {
@@ -1749,6 +1824,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "budgetVerbatim": true,
@@ -1758,6 +1838,51 @@
         "window": 1000000
        },
        "failures": []
+      },
+      "disagreeing": {
+       "native": {
+        "verbatim": true,
+        "spawns": 1,
+        "verb": [
+         "context",
+         "render"
+        ],
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
+        ]
+       },
+       "injected": {
+        "verbatim": true,
+        "calls": 1,
+        "piStrings": [
+         "reactivefiber.render.preview/v1",
+         "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
+        ]
+       },
+       "stated": 123456,
+       "shown": {
+        "available": 123456,
+        "window": 1000000
+       },
+       "failures": [],
+       "derived": {
+        "available": 989760,
+        "window": 1000000
+       },
+       "derivedFailures": [
+        "shown 989760 of 1000000 where the producer stated 123456 of 1000000"
+       ]
       }
      }
     },
@@ -1882,6 +2007,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "injected": {
@@ -1890,6 +2020,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "carried": {
@@ -1910,6 +2045,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "injected": {
@@ -1918,6 +2058,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "carried": {
@@ -1942,6 +2087,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "injected": {
@@ -1950,6 +2100,11 @@
         "piStrings": [
          "reactivefiber.render.preview/v1",
          "/fixture/rf-workspace"
+        ],
+        "piKeys": [
+         "contract",
+         "workspaceRoot",
+         "source"
         ]
        },
        "carried": {
@@ -2213,7 +2368,49 @@
       "ownRf": false,
       "declaredH2": [],
       "installedH2": [],
-      "importedH2": []
+      "importedH2": [],
+      "controls": {
+       "lists": {
+        "dependencies": [
+         "reactive-components"
+        ],
+        "devDependencies": [
+         "@reactive-fiber/tsx"
+        ],
+        "peerDependencies": [
+         "reactive-inference"
+        ],
+        "optionalDependencies": [
+         "fiber-optics"
+        ],
+        "bundledDependencies": [
+         "reactive-lenses"
+        ],
+        "bundleDependencies": [
+         "@reactive/inference"
+        ]
+       },
+       "forms": {
+        "importFrom": [
+         "reactive-components"
+        ],
+        "exportStar": [
+         "@reactive-fiber/tsx"
+        ],
+        "exportFrom": [
+         "reactive-inference"
+        ],
+        "importEquals": [
+         "fiber-optics"
+        ],
+        "dynamicImport": [
+         "reactive-lenses"
+        ],
+        "requireCall": [
+         "@reactive/inference"
+        ]
+       }
+      }
      }
     },
     {
@@ -2229,7 +2426,29 @@
       "reconcile": [
        "reactivefiber.render.preview"
       ],
-      "spelling": []
+      "spelling": [],
+      "controls": {
+       "selector": {
+        "reactivefiberId": [
+         "reactivefiber.context.explain"
+        ],
+        "rfId": [
+         "rf.render"
+        ],
+        "permissionOnly": [
+         "workbench.fiber.preview2"
+        ],
+        "contractOnly": [
+         "workbench.explain"
+        ],
+        "neutral": []
+       },
+       "spelled": {
+        "receiptId": true,
+        "pricedDescription": true,
+        "neutral": false
+       }
+      }
      }
     },
     {
@@ -2243,11 +2462,13 @@
       "anchors": {
        "observer": true,
        "provider": true,
-       "usage": true
+       "usage": true,
+       "claudeHost": true
       },
       "unparsed": [],
       "receipt": [],
-      "pricing": []
+      "pricing": [],
+      "usage": []
      }
     },
     {
@@ -2256,105 +2477,159 @@
       "flagged": {
        "projectionExport": {
         "receipt": 1,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "budgetReceipt": {
         "receipt": 1,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "usageReceipt": {
         "receipt": 2,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "capabilitySnapshot": {
         "receipt": 1,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "renderReport": {
         "receipt": 1,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "cachePrefix": {
         "receipt": 1,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "promptCacheLabel": {
         "receipt": 1,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "modelReported": {
         "receipt": 1,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "tokenizer": {
         "receipt": 1,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "packetId": {
         "receipt": 1,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "dottedCapability": {
         "receipt": 1,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "includedTokens": {
         "receipt": 0,
-        "pricing": 1
+        "pricing": 1,
+        "usage": 0
        },
        "tokenCostKind": {
         "receipt": 0,
-        "pricing": 1
+        "pricing": 1,
+        "usage": 0
        },
        "accountingElement": {
         "receipt": 0,
-        "pricing": 1
+        "pricing": 1,
+        "usage": 0
        },
        "methodDestructured": {
         "receipt": 0,
-        "pricing": 1
+        "pricing": 1,
+        "usage": 0
        },
        "estimatorTemplate": {
         "receipt": 0,
-        "pricing": 2
+        "pricing": 2,
+        "usage": 0
        },
        "estimatorRule": {
         "receipt": 0,
-        "pricing": 1
+        "pricing": 1,
+        "usage": 0
        },
        "countTokens": {
         "receipt": 0,
-        "pricing": 1
+        "pricing": 1,
+        "usage": 0
        },
        "tokenEstimate": {
         "receipt": 1,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "estimatedTokens": {
         "receipt": 1,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "exactCount": {
         "receipt": 1,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "truncatedTokens": {
         "receipt": 0,
-        "pricing": 1
+        "pricing": 1,
+        "usage": 0
        },
        "unknownCostCount": {
         "receipt": 0,
-        "pricing": 1
+        "pricing": 1,
+        "usage": 0
        },
        "tokenCost": {
         "receipt": 0,
-        "pricing": 1
+        "pricing": 1,
+        "usage": 0
+       },
+       "templateOnly": {
+        "receipt": 1,
+        "pricing": 0,
+        "usage": 0
+       },
+       "noSubstitution": {
+        "receipt": 1,
+        "pricing": 0,
+        "usage": 0
+       },
+       "wireUsage": {
+        "receipt": 0,
+        "pricing": 0,
+        "usage": 2
+       },
+       "wireCache": {
+        "receipt": 0,
+        "pricing": 0,
+        "usage": 2
+       },
+       "chatUsage": {
+        "receipt": 0,
+        "pricing": 0,
+        "usage": 2
+       },
+       "chatCache": {
+        "receipt": 0,
+        "pricing": 0,
+        "usage": 1
        }
       },
       "perTerm": {
        "context projections?": 2,
-       "budget receipts?": 1,
-       "usage receipts?": 1,
+       "budget receipts?": 2,
+       "usage receipts?": 2,
        "capability snapshots?": 1,
        "render reports?": 1,
        "cache prefix(?:es)?": 1,
@@ -2376,40 +2651,72 @@
        "utf8 bytes div4": 1,
        "(?:estimate|count) tokens": 1
       },
+      "perKey": {
+       "input_tokens": 1,
+       "output_tokens": 1,
+       "prompt_tokens": 1,
+       "completion_tokens": 1,
+       "cache_read_input_tokens": 1,
+       "cache_creation_input_tokens": 1,
+       "cached_tokens": 1
+      },
       "quiet": {
        "formulaReader": {
         "receipt": 0,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "budgetPhrase": {
         "receipt": 0,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "inclusionCount": {
         "receipt": 0,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "piTokensFormat": {
         "receipt": 0,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "cachePlane": {
         "receipt": 0,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
+       },
+       "requestLimit": {
+        "receipt": 0,
+        "pricing": 0,
+        "usage": 0
        }
       },
       "residuals": {
        "R-COMPOSED": {
         "receipt": 0,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "R-GENERIC-WALK": {
         "receipt": 0,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
        },
        "R-PI-USAGE": {
         "receipt": 0,
-        "pricing": 0
+        "pricing": 0,
+        "usage": 0
+       },
+       "R-HOST-USAGE": {
+        "receipt": 0,
+        "pricing": 0,
+        "usage": 0
+       },
+       "R-SPELLING": {
+        "receipt": 0,
+        "pricing": 0,
+        "usage": 0
        }
       }
      }
@@ -2433,6 +2740,6 @@
   "E2",
   "E3",
   "E4",
-  "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
+  "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one, and every pin that passed reached its witness compare with the roster's witness"
  ]
 }
