@@ -108,7 +108,14 @@
  * format but JSON and JSON Lines (YAML, TOML, CSV and the rest): walked, never judged (A1 planted test/fixtures/worker.yaml);
  * R-HOLLOWED a measured case whose body is hollowed (an early return, an assertion removed): B5 and C4 read registration and skip
  * modes, never what a body asserts, so it still reads registered in run form (B5 hollowedBody; C4's K1-K3 are reporter-verified
- * by test/workbench-child-crash-faults.census.ts, B5's titles are not).
+ * by test/workbench-child-crash-faults.census.ts, B5's titles are not); R-INDIRECT (wb-mdvg) a skip reached indirectly - in a function
+ * the case or a hook calls (a helper handed the context), through a hook registered under another name (an alias, an object holding
+ * it) or through a member name computed at run time (B5 contextHandoff, aliasedHook, computedMember); R-EMPTIED (wb-mdvg) a table that
+ * registers no case though it is no literal empty array - a binding emptied where it is declared or at run time (B5 emptiedBinding;
+ * vitest registers nothing for an empty table and stays green); R-RUNFILTER (wb-mdvg) a run-level route that leaves a registered case
+ * unrun - the vitest config (include, exclude, testNamePattern, tagsFilter, projects), a CLI filter, a setup file or a module mock that
+ * rewrites vitest, or a tag the config filters: B5 and C4 read the measured module's source alone (B5 taggedCase: a tags key reads as a
+ * run form).
  * wb-nh4s (R694 follow-up of wb-fb2z.3 landing 302, gate cmd_36948b0a1981: F1 leads, F2-F4 ride). PLANTED CONTROLS IN CODE (F1):
  * CONTROL_CLASSES holds every planted control's class in this file, beside the roster witness - FLAGGED reads true; a residual
  * family's quiet row and a CLEAR precision control (not the judged thing at all) read false - and A1, A2, B5 and D2 assert it (B1
@@ -116,13 +123,45 @@
  * witness still reds (LEG-2 L2-01, L2-02, L2-03, L2-07); the key set is the control set, so a dropped control reds as well. ROOT
  * MODULES (F2): vitest.config.ts is a walk anchor and A1's planted tree plants reader.mts at its root, so a walk that stops
  * listing depth-0 modules reds (L2-05). DATA FILES (F3): JSON Lines files are judged line by line (E1); every other data format
- * is the named residual R-DATAFILE (E4). SKIP MODES (F4, the title-census modifier closure): registeredTitles reads on every
+ * is the named residual R-DATAFILE (E4). SKIP MODES (F4, the title-census modifier closure, widened by wb-mdvg below): registeredTitles reads on every
  * title the SKIP_MODES members along its call head, an OPTION_MODES key of an options object that is not literally false (a
  * spread or a computed key read as one), every enclosing describe's modes, and a skip called on a parameter of the case
  * function; B5 and C4 refuse a measured title carrying any (L2-11) and B5's planted controls carry one falsifier per mode;
  * SKIP_MODES and RUN_MEMBERS partition vitest's own registration members (REGISTRATION_MEMBERS of test/helpers/census.ts, pinned
  * against the installed runtime by test/workbench-census-registration-model.test.ts); a hollowed body is the named residual
  * R-HOLLOWED (L2-12). D2 still reads a skipped claim title as registered (its skippedClaim control: the conservative direction).
+ * wb-mdvg (R694 follow-up of wb-nh4s landing 394, gate cmd_525b66b0fa3e: F1 leads; hop 3 of the landing-302 chain, authored in the
+ * TERMINAL enumerate-the-resolvable form, R739). The closure's six members that kept B5 18/18 while vitest skipped the cases (N11 and
+ * N16 an options object by reference at case and describe level, N12 a context destructured in the body, N13 a wrapped case function,
+ * N17 a beforeEach context skip, N18 an enclosing suite skip) are cured red-first, and the claim is now EXACTLY this reading, each a
+ * mode B5 and C4 refuse on a measured title: (1) a case or suite is a call on a REGISTRATION_ROOTS root (suite admitted, N18) whose
+ * every chain link is a vitest registration member (SKIP_MODES or RUN_MEMBERS; a literal element access reads as its member); a chain
+ * switching to a SUITE_ROOTS member is a suite, one ending in a HOOK_MEMBERS member a hook, one ending in a FIXTURE_MEMBERS member a
+ * fixture override, and one ending in extend builds a new API - a title registered any other way (an alias, a namespace import, an
+ * extended API bound to a name, a chain through another member) reads as no registration, so a measured title registered so reads
+ * missing; (2) the SKIP_MODES members along its chain; (3) every argument after its title, as written or through the one same-file
+ * const declaration (or function declaration) of its name whose every reference is such a call argument (N11, N16): an options object
+ * (through parentheses, as, satisfies and non-null wrappers; an OPTION_MODES key not literally false, a spread or a computed key read
+ * as one), a function or a timeout literal - anything else is argument unknown (N13 a call; a member, a conditional, a name bound by
+ * let or var, written or handed on elsewhere, or bound nowhere) - and a case with no function is no function (vitest's todo); (4)
+ * every enclosing suite call's modes; (5) placement unknown unless the call is a statement of the module or of a suite factory (its
+ * expression body included) with no return or throw before it there; (6) root rebound when the module binds the root itself
+ * (anything but an import from vitest, such as a const it bound to a skip chain); (7) empty table for a literal empty each or for
+ * table; (8) its case function's own text, parameters, body and nested functions alike, whatever object a member starts from (N12): a
+ * member named skip (read or called), a ["skip"] key that folds, a destructured skip, and a write (an assignment, ++, -- or delete) to
+ * a RUNNER_STATE_MEMBERS member; (9) every hook registered in an enclosing suite's factory or in the module, bare or on a chain (N17),
+ * its callback read as in (8), as written or through the one same-file declaration of (3), any other argument but a timeout hook
+ * unknown; (10) every fixture override (test.override, test.scoped) registered there, its arguments read whole as in (8), an
+ * unresolved one fixture unknown; (11) file only when any registration of the module carries an only mode. B5's planted controls carry
+ * one falsifier per reading branch (32 wb-mdvg kill controls, each read false or unregistered by the landed reader), ten precision
+ * controls and the quiet rows of R-INDIRECT, R-EMPTIED and R-RUNFILTER; D2 reads the same registrations (suiteClaim) and no chain
+ * through another member (nonMemberCall). MEASURED (vitest 4.1.10 under this repository's config, a throwaway module, 2026-10-25): a
+ * case with no function reports todo; an each over an empty array registers no case and the module stays green; it.beforeEach,
+ * afterEach and an override auto fixture calling skip each skip the case; a beforeAll writing suite.mode skips its suite's cases; a
+ * task.mode write in a case body does not; a test-chain flag before a describe switch is dropped (that suite runs). OVER-READ
+ * (disclosed, the conservative direction; each such reading is re-judged, never silenced): (8) reads any member named skip in a case's
+ * or a hook's text whatever it belongs to, (3) refuses an argument it cannot resolve, (2) keeps a flag across a describe switch, (5)
+ * refuses a registration in a loop or a branch that vitest does register, and a hook placed in a case body is read as its suite's.
  * Display paths added: none. Test-only: the stand-in rf and the planted trees live in makeScratch scratch only.
  */
 import { chmodSync, type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -193,13 +232,23 @@ const OBSERVER_TEST = "test/workbench-reactivefiber-observer.test.ts";
 const CHILD_CRASH_TEST = "test/workbench-child-crash-faults.test.ts";
 const PROVIDER = "src/workbench/providers/reactivefiber.ts";
 const DEADLINE_MESSAGE = "RF preview exceeded the execution deadline.";
-const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-RENAMED", "R-MANIFEST", "R-LOOKALIKE", "R-ENCODED", "R-PROSE", "R-OUTSIDE", "R-PASSTHROUGH", "R-DEADLINE", "R-DATAFILE", "R-HOLLOWED"];
+const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-RENAMED", "R-MANIFEST", "R-LOOKALIKE", "R-ENCODED", "R-PROSE", "R-OUTSIDE", "R-PASSTHROUGH", "R-DEADLINE", "R-DATAFILE", "R-HOLLOWED", "R-INDIRECT", "R-EMPTIED", "R-RUNFILTER"];
 /** B5 and C4 (wb-nh4s F4): the registration members that leave a case unrun or inverted, on its call head or an enclosing
  * describe's, and the members that leave it running as written; together they are vitest's own (REGISTRATION_MEMBERS). */
 const SKIP_MODES = ["skip", "todo", "only", "fails", "skipIf", "runIf"];
 const RUN_MEMBERS = ["afterAll", "afterEach", "aroundAll", "aroundEach", "beforeAll", "beforeEach", "concurrent", "describe", "each", "extend", "for", "override", "scoped", "sequential", "shuffle", "suite"];
 /** The options-object keys read as a skip mode when not literally false. */
 const OPTION_MODES = ["skip", "todo", "only", "fails"];
+/** wb-mdvg (N18): the registration roots - vitest's it, test, describe and suite (suite is describe's alias). */
+const REGISTRATION_ROOTS = ["it", "test", "describe", "suite"];
+/** wb-mdvg: the suite APIs, as a root or as a member (it.describe and test.suite switch the chain to the suite API). */
+const SUITE_ROOTS = ["describe", "suite"];
+/** wb-mdvg (N17): vitest's hooks, called bare or carried on a registration chain (it.beforeEach). */
+const HOOK_MEMBERS = ["afterAll", "afterEach", "aroundAll", "aroundEach", "beforeAll", "beforeEach"];
+/** wb-mdvg: the fixture calls that hand every plain case under them an auto fixture (test.override, test.scoped). */
+const FIXTURE_MEMBERS = ["override", "scoped"];
+/** wb-mdvg: the runner-state members a write to which leaves a case unrun or inverted (a beforeAll writing suite.mode skips its cases). */
+const RUNNER_STATE_MEMBERS = ["fails", "mode", "pending", "result"];
 const CYRILLIC_O = String.fromCodePoint(0x043e);
 const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
 /** Every scan constant, as the roster holds it. */
@@ -221,6 +270,11 @@ const SCAN = {
   skipModes: SKIP_MODES,
   runMembers: RUN_MEMBERS,
   optionModes: OPTION_MODES,
+  registrationRoots: REGISTRATION_ROOTS,
+  suiteRoots: SUITE_ROOTS,
+  hookMembers: HOOK_MEMBERS,
+  fixtureMembers: FIXTURE_MEMBERS,
+  runnerStateMembers: RUNNER_STATE_MEMBERS,
 };
 const FROZEN_TITLE = "the judged set: the frozen shape, the out-of-file roster and the bead row agree";
 const RECORDS_TITLE = "records: every registered test ran once in run mode in roster order, every pin reached its end, and no title spells a judged family";
@@ -755,10 +809,20 @@ const CONTROL_CLASSES: Readonly<Record<string, Readonly<Record<string, string>>>
     describeOnly: FLAGGED, describeSkipIf: FLAGGED, describeRunIf: FLAGGED, describeOptions: FLAGGED, outerDescribe: FLAGGED,
     contextSkip: FLAGGED, destructuredSkip: FLAGGED, eachRows: CLEAR, concurrent: CLEAR, optionsFalse: CLEAR, optionsTimeout: CLEAR,
     commented: CLEAR, hollowedBody: "R-HOLLOWED",
+    // wb-mdvg: the kill controls (each read false or unregistered by the landed reader), the precision controls and the quiet rows.
+    optionsReference: FLAGGED, describeOptionsReference: FLAGGED, optionsWrapped: FLAGGED, optionsMutated: FLAGGED, optionsLet: FLAGGED,
+    optionsLetTimeout: FLAGGED, optionsUnbound: FLAGGED, wrappedCase: FLAGGED, noFunction: FLAGGED, bodyDestructured: FLAGGED,
+    memberRead: FLAGGED, elementSkip: FLAGGED, chainSkip: FLAGGED, restSkip: FLAGGED, stateWrite: FLAGGED, hookSkip: FLAGGED,
+    hookChain: FLAGGED, hookAfter: FLAGGED, hookFile: FLAGGED, hookOuter: FLAGGED, hookReference: FLAGGED, hookUnbound: FLAGGED,
+    hookState: FLAGGED, fixtureOverride: FLAGGED, suiteSkip: FLAGGED, elementHead: FLAGGED, deadBranch: FLAGGED, afterReturn: FLAGGED,
+    describePlacement: FLAGGED, rootRebound: FLAGGED, siblingOnly: FLAGGED, emptyTable: FLAGGED, optionsReferenceTimeout: CLEAR,
+    optionsWrappedTimeout: CLEAR, caseReference: CLEAR, timeoutReference: CLEAR, rowContext: CLEAR, plainHook: CLEAR,
+    hookReferencePlain: CLEAR, suiteSwitch: CLEAR, suitePlain: CLEAR, stateRead: CLEAR, contextHandoff: "R-INDIRECT",
+    aliasedHook: "R-INDIRECT", computedMember: "R-INDIRECT", emptiedBinding: "R-EMPTIED", taggedCase: "R-RUNFILTER",
   },
   D2: {
     successBlocks: FLAGGED, staleSuccess: FLAGGED, priorSuccess: FLAGGED, documentKind: FLAGGED, typedFailedDocument: FLAGGED,
-    eachTitle: FLAGGED, skippedClaim: FLAGGED, unrelated: CLEAR, labelOnly: CLEAR,
+    eachTitle: FLAGGED, skippedClaim: FLAGGED, unrelated: CLEAR, labelOnly: CLEAR, suiteClaim: FLAGGED, nonMemberCall: CLEAR,
   },
 };
 /** The residual families whose pinned quiet row is not a planted boolean control, and the case that asserts it in code. */
@@ -781,9 +845,10 @@ const PLANT_DESCRIBE = "pinned describe";
 const PLANT_CASE = "pinned case";
 const dot = (root: string, member: string): string => `${root}.${member}`;
 const CASE_FN = "() => {\n    expect(1).toBe(1);\n  }";
-/** A planted module: `registration` inside the factory `describeHead` opens. */
-function plantModule(registration: string, describeHead = `describe("${PLANT_DESCRIBE}", () => {`): string {
-  return `import { describe, expect, it, test } from "vitest";\n${describeHead}\n  ${registration}\n});\n`;
+const PLANT_IMPORTS = 'import { describe, expect, it, test } from "vitest";';
+/** A planted module: `registration` inside the factory `describeHead` opens, below the module's `imports` line. */
+function plantModule(registration: string, describeHead = `describe("${PLANT_DESCRIBE}", () => {`, imports = PLANT_IMPORTS): string {
+  return `${imports}\n${describeHead}\n  ${registration}\n});\n`;
 }
 /** The pinned case's registration call: `head` called with its title, then `rest`. */
 const caseCall = (head: string, rest = `, ${CASE_FN}`): string => `${head}("${PLANT_CASE}"${rest});`;
@@ -797,82 +862,263 @@ function plantSkips(source: string): boolean {
 interface RegisteredTitle {
   readonly describe: string | undefined;
   readonly title: string;
-  /** The skip modes read on it (wb-nh4s F4): its call head's, its options', every enclosing describe's, its body's context skip. */
+  /** The skip modes read on it (wb-nh4s F4, wb-mdvg): its call head's and its arguments', every enclosing suite call's, its placement
+   * and its root's binding, its case function's own text, and the hooks and fixture overrides of every enclosing suite and the module. */
   readonly modes: readonly string[];
 }
-/** A test module's registered titles: every it, test or describe call (with any member chain on its head) whose title folds to a
- * literal, each with the innermost describe it sits in and the skip modes read on it - the SKIP_MODES members along its call head,
- * an OPTION_MODES key of an options-object argument that is not literally false (a spread or a computed key read as one), every
- * enclosing describe's modes, and a skip called on a parameter of the case function (a member call, or a destructured skip). */
+type FunctionNode = ts.ArrowFunction | ts.FunctionExpression | ts.FunctionDeclaration;
+const isFunctionNode = (node: ts.Node): node is FunctionNode => ts.isArrowFunction(node) || ts.isFunctionExpression(node) || ts.isFunctionDeclaration(node);
+/** An expression without its parentheses and type-only wrappers (as, satisfies, a non-null mark, a type assertion). */
+function unwrap(node: ts.Expression): ts.Expression {
+  if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isNonNullExpression(node) || ts.isTypeAssertionExpression(node)) return unwrap(node.expression);
+  return node;
+}
+/** A call head read as a chain: its root identifier, the member names along it (a literal element access included) and the table each
+ * each or for call along it holds. */
+interface Chain {
+  readonly root: string;
+  readonly members: readonly string[];
+  readonly tables: readonly ts.Expression[];
+}
+/** The chain of a call head, or undefined when any link is neither a name, a member, a literal element access nor a call. */
+function chainOf(head: ts.Expression): Chain | undefined {
+  const node = unwrap(head);
+  if (ts.isIdentifier(node)) return { root: node.text, members: [], tables: [] };
+  if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) {
+    const member = ts.isPropertyAccessExpression(node) ? node.name.text : fold(node.argumentExpression);
+    const inner = chainOf(node.expression);
+    return member === undefined || inner === undefined ? undefined : { ...inner, members: [...inner.members, member] };
+  }
+  if (ts.isCallExpression(node)) {
+    const inner = chainOf(node.expression);
+    const table = node.arguments[0];
+    const last = inner?.members.at(-1);
+    if (inner === undefined || table === undefined || (last !== "each" && last !== "for")) return inner;
+    return { ...inner, tables: [...inner.tables, table] };
+  }
+  return undefined;
+}
+type CallKind = "case" | "suite" | "hook" | "fixture";
+/** What a call registers, read off its chain (wb-mdvg): a hook (bare, or carried on a registration chain: it.beforeEach), a fixture
+ * override (test.override, test.scoped), a suite (a suite root, or a chain switching to one: it.describe) or a case - a chain on a
+ * registration root whose every link is one of vitest's own registration members - or nothing (test.extend builds a new API). */
+function callKind(chain: Chain): CallKind | undefined {
+  if (chain.members.length === 0 && HOOK_MEMBERS.includes(chain.root)) return "hook";
+  if (!REGISTRATION_ROOTS.includes(chain.root) || !chain.members.every(member => SKIP_MODES.includes(member) || RUN_MEMBERS.includes(member))) return undefined;
+  const last = chain.members.at(-1);
+  if (last !== undefined && HOOK_MEMBERS.includes(last)) return "hook";
+  if (last !== undefined && FIXTURE_MEMBERS.includes(last)) return "fixture";
+  if (last === "extend") return undefined;
+  return SUITE_ROOTS.includes(chain.root) || chain.members.some(member => SUITE_ROOTS.includes(member)) ? "suite" : "case";
+}
+function kindOfCall(call: ts.CallExpression): CallKind | undefined {
+  const chain = chainOf(call.expression);
+  return chain === undefined ? undefined : callKind(chain);
+}
+/** A module's bindings: every declaration of a name and every reference to it (a member name or a property key is neither). */
+interface FileScope {
+  readonly declarations: ReadonlyMap<string, readonly ts.Node[]>;
+  readonly references: ReadonlyMap<string, readonly ts.Identifier[]>;
+}
+function declaresName(parent: ts.Node, node: ts.Identifier): boolean {
+  if (ts.isVariableDeclaration(parent) || ts.isParameter(parent) || ts.isBindingElement(parent)) return parent.name === node;
+  if (ts.isFunctionDeclaration(parent) || ts.isFunctionExpression(parent) || ts.isClassDeclaration(parent) || ts.isClassExpression(parent)) return parent.name === node;
+  if (ts.isImportSpecifier(parent) || ts.isImportClause(parent) || ts.isNamespaceImport(parent) || ts.isImportEqualsDeclaration(parent) || ts.isEnumDeclaration(parent)) return parent.name === node;
+  return false;
+}
+function namesMember(parent: ts.Node, node: ts.Identifier): boolean {
+  if (ts.isPropertyAccessExpression(parent) || ts.isPropertyAssignment(parent) || ts.isMethodDeclaration(parent) || ts.isPropertyDeclaration(parent)) return parent.name === node;
+  if (ts.isPropertySignature(parent) || ts.isMethodSignature(parent) || ts.isGetAccessorDeclaration(parent) || ts.isSetAccessorDeclaration(parent) || ts.isEnumMember(parent)) return parent.name === node;
+  if (ts.isBindingElement(parent) || ts.isImportSpecifier(parent)) return parent.propertyName === node;
+  if (ts.isQualifiedName(parent)) return parent.right === node;
+  return ts.isLabeledStatement(parent) || ts.isBreakOrContinueStatement(parent);
+}
+function fileScopeOf(file: ts.SourceFile): FileScope {
+  const declarations = new Map<string, ts.Node[]>();
+  const references = new Map<string, ts.Identifier[]>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node)) {
+      if (declaresName(node.parent, node)) declarations.set(node.text, [...(declarations.get(node.text) ?? []), node.parent]);
+      else if (!namesMember(node.parent, node)) references.set(node.text, [...(references.get(node.text) ?? []), node]);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return { declarations, references };
+}
+/** Whether an identifier stands as a direct argument of a case, suite, hook or fixture call. */
+function isCallArgument(reference: ts.Identifier): boolean {
+  const call = reference.parent;
+  return ts.isCallExpression(call) && call.arguments.some(argument => argument === reference) && kindOfCall(call) !== undefined;
+}
+/** wb-mdvg (N11, N16): an argument's value as written, or through the one same-file const declaration (or function declaration) of its
+ * name when every reference to that name is itself such a call argument (so nothing writes or hands it on); undefined when unreadable. */
+function argumentValue(argument: ts.Expression, scope: FileScope): ts.Expression | ts.FunctionDeclaration | undefined {
+  const value = unwrap(argument);
+  if (!ts.isIdentifier(value)) return value;
+  const declarations = scope.declarations.get(value.text) ?? [];
+  const declaration = declarations[0];
+  if (declarations.length !== 1 || declaration === undefined || !(scope.references.get(value.text) ?? []).every(isCallArgument)) return undefined;
+  if (ts.isFunctionDeclaration(declaration)) return declaration;
+  if (!ts.isVariableDeclaration(declaration) || declaration.initializer === undefined || !ts.isVariableDeclarationList(declaration.parent)) return undefined;
+  if ((declaration.parent.flags & ts.NodeFlags.BlockScoped) !== ts.NodeFlags.Const) return undefined;
+  const initializer = unwrap(declaration.initializer);
+  return ts.isIdentifier(initializer) ? undefined : initializer;
+}
+/** An options object's skip modes: an OPTION_MODES key that is not literally false, a spread or a computed key read as one. */
+function optionsModes(options: ts.ObjectLiteralExpression): string[] {
+  return options.properties.flatMap((property): string[] => {
+    if (ts.isSpreadAssignment(property)) return ["options spread"];
+    if (property.name === undefined || ts.isComputedPropertyName(property.name)) return ["options computed key"];
+    const key = ts.isIdentifier(property.name) || ts.isStringLiteral(property.name) ? property.name.text : undefined;
+    if (key === undefined || !OPTION_MODES.includes(key)) return [];
+    return ts.isPropertyAssignment(property) && property.initializer.kind === ts.SyntaxKind.FalseKeyword ? [] : [`options ${key}`];
+  });
+}
+/** A case or suite call's arguments after its title (wb-mdvg N11, N13, N16): each an options object (its modes), a function or a
+ * timeout - written or through argumentValue - or else "argument unknown" (a call, a member, a conditional, a name bound by let or
+ * var, written elsewhere or bound nowhere ...); a case with no function at all is vitest's todo ("no function"). */
+function argumentsOf(call: ts.CallExpression, scope: FileScope, kind: "case" | "suite"): { modes: string[]; functions: FunctionNode[] } {
+  const modes: string[] = [];
+  const functions: FunctionNode[] = [];
+  for (const argument of call.arguments.slice(1)) {
+    const value = argumentValue(argument, scope);
+    if (value !== undefined && isFunctionNode(value)) functions.push(value);
+    else if (value !== undefined && ts.isObjectLiteralExpression(value)) modes.push(...optionsModes(value));
+    else if (value === undefined || !ts.isNumericLiteral(value)) modes.push("argument unknown");
+  }
+  if (kind === "case" && functions.length === 0) modes.push("no function");
+  return { modes, functions };
+}
+/** wb-mdvg (N12 and its class): what a case function, a hook callback or a fixture override reads or writes anywhere in its own text
+ * (parameters, body and nested functions alike, from whatever object): a skip member - a property named skip, a ["skip"] key that
+ * folds, a destructured skip - and a write (an assignment, ++ or --, delete) to a RUNNER_STATE_MEMBERS member. */
+function bodyModes(root: ts.Node): string[] {
+  const modes = new Set<string>();
+  const memberOf = (node: ts.Node): string | undefined => {
+    if (ts.isPropertyAccessExpression(node)) return node.name.text;
+    return ts.isElementAccessExpression(node) ? fold(node.argumentExpression) : undefined;
+  };
+  const write = (target: ts.Expression): void => {
+    const member = memberOf(unwrap(target));
+    if (member !== undefined && RUNNER_STATE_MEMBERS.includes(member)) modes.add("state write");
+  };
+  const scan = (node: ts.Node): void => {
+    if (memberOf(node) === "skip") modes.add("context skip");
+    if (ts.isBindingElement(node)) {
+      const key = node.propertyName ?? node.name;
+      const name = ts.isIdentifier(key) || ts.isStringLiteralLike(key) ? key.text : ts.isComputedPropertyName(key) ? fold(key.expression) : undefined;
+      if (name === "skip") modes.add("context skip");
+    }
+    if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment) write(node.left);
+    if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken)) write(node.operand);
+    if (ts.isDeleteExpression(node)) write(node.expression);
+    ts.forEachChild(node, scan);
+  };
+  scan(root);
+  return [...modes];
+}
+/** wb-mdvg (N17): a hook's callback read like a case function (bodyModes), written or through argumentValue; any other argument but a
+ * timeout is "hook unknown". */
+function hookModes(call: ts.CallExpression, scope: FileScope): string[] {
+  return call.arguments.flatMap(argument => {
+    const value = argumentValue(argument, scope);
+    if (value !== undefined && isFunctionNode(value)) return bodyModes(value).map(mode => `hook ${mode}`);
+    return value !== undefined && ts.isNumericLiteral(value) ? [] : ["hook unknown"];
+  });
+}
+/** wb-mdvg: a fixture override's arguments read whole with bodyModes (its auto fixtures run for every plain case under it); a name or a
+ * timeout literal reads nothing, anything else is "fixture unknown". */
+function fixtureModes(call: ts.CallExpression, scope: FileScope): string[] {
+  return call.arguments.flatMap(argument => {
+    const value = argumentValue(argument, scope);
+    if (value === undefined) return ["fixture unknown"];
+    if (ts.isStringLiteralLike(value) || ts.isNumericLiteral(value)) return [];
+    if (ts.isObjectLiteralExpression(value) || ts.isArrayLiteralExpression(value) || isFunctionNode(value)) return bodyModes(value).map(mode => `fixture ${mode}`);
+    return ["fixture unknown"];
+  });
+}
+/** Whether a statement can leave its function: a return or throw anywhere in it, outside a nested function or class. */
+function exits(node: ts.Node): boolean {
+  if (ts.isReturnStatement(node) || ts.isThrowStatement(node)) return true;
+  if (ts.isFunctionLike(node) || ts.isClassLike(node)) return false;
+  return ts.forEachChild(node, child => (exits(child) ? true : undefined)) === true;
+}
+/** wb-mdvg: whether a registration runs where it is written at collection - a statement of the module, or of the factory a suite call
+ * holds (its expression body included) with no return or throw before it there; anything else reads "placement unknown". */
+function placed(call: ts.CallExpression, factories: ReadonlySet<ts.Node>): boolean {
+  const statement = call.parent;
+  if (ts.isArrowFunction(statement)) return statement.body === call && factories.has(statement);
+  if (!ts.isExpressionStatement(statement)) return false;
+  const body = statement.parent;
+  if (ts.isSourceFile(body)) return true;
+  return ts.isBlock(body) && factories.has(body.parent) && !body.statements.slice(0, body.statements.indexOf(statement)).some(exits);
+}
+/** wb-mdvg: the registration roots a module binds itself - by a const, let or var, a function, a class, a parameter, a destructure or an
+ * import from another module, anything but an import from vitest - each read "root rebound" on every call through it. */
+function reboundRoots(scope: FileScope): Set<string> {
+  const fromVitest = (declaration: ts.Node): boolean => {
+    if (!ts.isImportSpecifier(declaration)) return false;
+    const module = declaration.parent.parent.parent.moduleSpecifier;
+    return REGISTRATION_ROOTS.includes((declaration.propertyName ?? declaration.name).text) && ts.isStringLiteral(module) && module.text === "vitest";
+  };
+  return new Set(REGISTRATION_ROOTS.filter(root => (scope.declarations.get(root) ?? []).some(declaration => !fromVitest(declaration))));
+}
+/** wb-mdvg: a literal empty table registers no case (vitest's each and for over [] register nothing and stay green). */
+function isEmptyTable(table: ts.Expression): boolean {
+  const value = unwrap(table);
+  return ts.isArrayLiteralExpression(value) && value.elements.length === 0;
+}
+/** A test module's registered titles: every case or suite call whose title folds to a literal - a chain on it, test, describe or suite
+ * through vitest's own members (wb-mdvg) - each with the innermost suite it sits in and the skip modes read on it: the SKIP_MODES
+ * members along its call head; its arguments (argumentsOf); every enclosing suite call's modes; its placement ("placement unknown");
+ * its root's binding ("root rebound"); a literal empty table ("empty table"); its case function's own text (bodyModes); the hooks and
+ * fixture overrides registered in every enclosing suite's factory and in the module ("hook ...", "fixture ..."); and an only mode
+ * anywhere in the module ("file only": vitest then runs the only-marked registrations alone). */
 function registeredTitles(path: string, source: string): RegisteredTitle[] {
   const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
-  const found: RegisteredTitle[] = [];
-  const kindOf = (callee: ts.Expression): string | undefined => {
-    if (ts.isIdentifier(callee)) return callee.text;
-    if (ts.isPropertyAccessExpression(callee)) return kindOf(callee.expression);
-    if (ts.isCallExpression(callee)) return kindOf(callee.expression);
-    return undefined;
-  };
-  const headModes = (callee: ts.Expression): string[] => {
-    if (ts.isPropertyAccessExpression(callee)) return [...headModes(callee.expression), ...(SKIP_MODES.includes(callee.name.text) ? [callee.name.text] : [])];
-    if (ts.isCallExpression(callee)) return headModes(callee.expression);
-    return [];
-  };
-  const optionModes = (call: ts.CallExpression): string[] =>
-    call.arguments.filter(ts.isObjectLiteralExpression).flatMap(options =>
-      options.properties.flatMap((property): string[] => {
-        if (ts.isSpreadAssignment(property)) return ["options spread"];
-        if (property.name === undefined || ts.isComputedPropertyName(property.name)) return ["options computed key"];
-        const key = ts.isIdentifier(property.name) || ts.isStringLiteral(property.name) ? property.name.text : undefined;
-        if (key === undefined || !OPTION_MODES.includes(key)) return [];
-        return ts.isPropertyAssignment(property) && property.initializer.kind === ts.SyntaxKind.FalseKeyword ? [] : [`options ${key}`];
-      }),
-    );
-  const contextModes = (call: ts.CallExpression): string[] => {
-    const body = [...call.arguments].reverse().find(argument => ts.isArrowFunction(argument) || ts.isFunctionExpression(argument));
-    if (body === undefined || !(ts.isArrowFunction(body) || ts.isFunctionExpression(body))) return [];
-    const contexts = new Set<string>();
-    const skippers = new Set<string>();
-    for (const parameter of body.parameters) {
-      if (ts.isIdentifier(parameter.name)) contexts.add(parameter.name.text);
-      else if (ts.isObjectBindingPattern(parameter.name)) {
-        for (const element of parameter.name.elements) {
-          const key = element.propertyName ?? element.name;
-          if (ts.isIdentifier(key) && key.text === "skip" && ts.isIdentifier(element.name)) skippers.add(element.name.text);
-        }
-      }
-    }
-    let skipped = false;
-    const scan = (node: ts.Node): void => {
-      if (ts.isCallExpression(node)) {
-        const callee = node.expression;
-        if (ts.isPropertyAccessExpression(callee) && callee.name.text === "skip" && ts.isIdentifier(callee.expression) && contexts.has(callee.expression.text)) skipped = true;
-        if (ts.isIdentifier(callee) && skippers.has(callee.text)) skipped = true;
-      }
-      ts.forEachChild(node, scan);
-    };
-    scan(body.body);
-    return skipped ? ["context skip"] : [];
-  };
-  const visit = (node: ts.Node, inside: string | undefined, inherited: readonly string[]): void => {
+  const scope = fileScopeOf(file);
+  const rebound = reboundRoots(scope);
+  const factories = new Set<ts.Node>();
+  const scopeModes = new Map<ts.Node, string[]>();
+  const found: { readonly describe: string | undefined; readonly title: string; readonly modes: readonly string[]; readonly scopes: readonly ts.Node[] }[] = [];
+  const visit = (node: ts.Node, inside: string | undefined, inherited: readonly string[], scopes: readonly ts.Node[]): void => {
     if (ts.isCallExpression(node)) {
-      const kind = kindOf(node.expression);
+      const chain = chainOf(node.expression);
+      const kind = chain === undefined ? undefined : callKind(chain);
+      const at = scopes.at(-1) ?? file;
+      if (kind === "hook") scopeModes.set(at, [...(scopeModes.get(at) ?? []), ...hookModes(node, scope)]);
+      if (kind === "fixture") scopeModes.set(at, [...(scopeModes.get(at) ?? []), ...fixtureModes(node, scope)]);
       const first = node.arguments[0];
       const title = first === undefined ? undefined : fold(first);
-      if ((kind === "it" || kind === "test" || kind === "describe") && title !== undefined) {
-        const modes = [...inherited, ...headModes(node.expression), ...optionModes(node)];
-        if (kind === "describe") {
-          found.push({ describe: inside, title, modes });
-          for (const argument of node.arguments) visit(argument, title, modes);
+      if (chain !== undefined && (kind === "case" || kind === "suite") && title !== undefined) {
+        const read = argumentsOf(node, scope, kind);
+        const modes = [
+          ...inherited,
+          ...chain.members.filter(member => SKIP_MODES.includes(member)),
+          ...read.modes,
+          ...(rebound.has(chain.root) ? ["root rebound"] : []),
+          ...(chain.tables.some(isEmptyTable) ? ["empty table"] : []),
+          ...(placed(node, factories) ? [] : ["placement unknown"]),
+        ];
+        if (kind === "suite") {
+          found.push({ describe: inside, title, modes, scopes });
+          for (const factory of read.functions) factories.add(factory);
+          for (const argument of node.arguments) visit(argument, title, modes, [...scopes, node]);
           return;
         }
-        found.push({ describe: inside, title, modes: [...modes, ...contextModes(node)] });
+        found.push({ describe: inside, title, modes: [...modes, ...read.functions.flatMap(fn => bodyModes(fn))], scopes });
       }
     }
-    ts.forEachChild(node, child => visit(child, inside, inherited));
+    ts.forEachChild(node, child => visit(child, inside, inherited, scopes));
   };
-  visit(file, undefined, []);
-  return found;
+  visit(file, undefined, [], []);
+  const only = found.some(entry => entry.modes.includes("only") || entry.modes.includes("options only"));
+  return found.map(({ describe, title, modes, scopes }) => ({
+    describe,
+    title,
+    modes: [...modes, ...[file, ...scopes].flatMap(at => scopeModes.get(at) ?? []), ...(only ? ["file only"] : [])],
+  }));
 }
 /** The case titles registered directly under `describe` (cases of a nested describe excluded), how often it is registered, and the
  * skip modes read on each of those titles (wb-nh4s F4; a title registered twice carries both registrations' modes). */
@@ -1286,6 +1532,8 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     ).toEqual([]);
     // One falsifier per skip mode (the title-census modifier closure), the run forms beside them, and the R-HOLLOWED quiet row.
     const describeHead = (head: string): string => `${head}("${PLANT_DESCRIBE}", () => {`;
+    /** `declarations` at module level above the pinned describe's factory `head` opens (wb-mdvg). */
+    const declared = (declarations: string, head = describeHead("describe")): string => `${declarations}\n${head}`;
     const linux = '(process.platform === "linux")';
     const controls = {
       runnable: plantSkips(plantModule(caseCall("it"))),
@@ -1319,8 +1567,58 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       optionsTimeout: plantSkips(plantModule(caseCall("it", `, { timeout: 5_000 }, ${CASE_FN}`))),
       commented: plantSkips(plantModule(`// ${caseCall(dot("it", "skip"), ", () => {}")}\n  ${caseCall("it")}`)),
       hollowedBody: plantSkips(plantModule(caseCall("it", ", () => {\n    return;\n    expect(1).toBe(1);\n  }"))),
+      // wb-mdvg (F1: N11, N12, N13, N16, N17, N18 and their classes): options by reference, a non-literal or missing case function, a
+      // skip read anywhere in the case's own text, hooks and fixture overrides, the suite root, placement, the root's binding, a
+      // sibling only mode and an empty table; the precision controls; and the quiet rows of R-INDIRECT, R-EMPTIED and R-RUNFILTER.
+      optionsReference: plantSkips(plantModule(caseCall("it", `, PLANT_SKIPPED, ${CASE_FN}`), declared("const PLANT_SKIPPED = { skip: true };"))),
+      describeOptionsReference: plantSkips(plantModule(caseCall("it"), declared("const PLANT_SKIPPED = { skip: true };", `describe("${PLANT_DESCRIBE}", PLANT_SKIPPED, () => {`))),
+      optionsWrapped: plantSkips(plantModule(caseCall("it", `, { skip: true } as const, ${CASE_FN}`))),
+      optionsMutated: plantSkips(plantModule(caseCall("it", `, PLANT_OPTIONS, ${CASE_FN}`), declared(`const PLANT_OPTIONS: { skip?: boolean } = {};\n${dot("PLANT_OPTIONS", "skip")} = true;`))),
+      optionsLet: plantSkips(plantModule(caseCall("it", `, PLANT_SKIPPED, ${CASE_FN}`), declared("let PLANT_SKIPPED = { skip: true };"))),
+      optionsLetTimeout: plantSkips(plantModule(caseCall("it", `, PLANT_LIMITS, ${CASE_FN}`), declared("let PLANT_LIMITS = { timeout: 5_000 };"))),
+      optionsUnbound: plantSkips(plantModule(caseCall("it", `, PLANT_OPTIONS, ${CASE_FN}`))),
+      wrappedCase: plantSkips(plantModule(caseCall("it", ", skipFirst(() => {\n    expect(1).toBe(1);\n  })"), declared(`const skipFirst = (body: () => void) => (ctx: { skip: () => void }): void => {\n  ${dot("ctx", "skip")}();\n  body();\n};`))),
+      noFunction: plantSkips(plantModule(caseCall("it", ""))),
+      bodyDestructured: plantSkips(plantModule(caseCall("it", ", ctx => {\n    const { skip } = ctx;\n    skip();\n  }"))),
+      memberRead: plantSkips(plantModule(caseCall("it", `, ctx => {\n    const leave = ${dot("ctx", "skip")};\n    leave();\n  }`))),
+      elementSkip: plantSkips(plantModule(caseCall("it", ', ctx => {\n    ctx["skip"]();\n  }'))),
+      chainSkip: plantSkips(plantModule(caseCall("it", `, ctx => {\n    ${dot("ctx.task.context", "skip")}();\n  }`))),
+      restSkip: plantSkips(plantModule(caseCall("it", `, ({ ...rest }) => {\n    ${dot("rest", "skip")}();\n  }`))),
+      stateWrite: plantSkips(plantModule(caseCall("it", `, ctx => {\n    ${dot("ctx.task", "fails")} = true;\n    expect(1).toBe(2);\n  }`))),
+      hookSkip: plantSkips(plantModule(`beforeEach(ctx => {\n    ${dot("ctx", "skip")}();\n  });\n  ${caseCall("it")}`)),
+      hookChain: plantSkips(plantModule(`${dot("it", "beforeEach")}(ctx => {\n    ${dot("ctx", "skip")}();\n  });\n  ${caseCall("it")}`)),
+      hookAfter: plantSkips(plantModule(`afterEach(({ skip }) => {\n    skip();\n  });\n  ${caseCall("it")}`)),
+      hookFile: plantSkips(plantModule(caseCall("it"), declared(`beforeEach(ctx => {\n  ${dot("ctx", "skip")}();\n});`))),
+      hookOuter: plantSkips(plantModule(`describe("${PLANT_DESCRIBE}", () => {\n    ${caseCall("it")}\n  });`, `describe("outer", () => {\n  beforeEach(ctx => {\n    ${dot("ctx", "skip")}();\n  });`)),
+      hookReference: plantSkips(plantModule(`beforeEach(skipEach);\n  ${caseCall("it")}`, declared(`const skipEach = (ctx: { skip: () => void }): void => {\n  ${dot("ctx", "skip")}();\n};`))),
+      hookUnbound: plantSkips(plantModule(`beforeEach(PLANT_HOOK);\n  ${caseCall("it")}`)),
+      hookState: plantSkips(plantModule(`beforeAll(suite => {\n    suite.mode = "skip";\n  });\n  ${caseCall("it")}`)),
+      fixtureOverride: plantSkips(plantModule(`${dot("test", "override")}({ autoSkip: [async ({ skip }: { skip: () => void }, use: (value: number) => Promise<void>) => {\n    skip();\n    await use(1);\n  }, { auto: true }] });\n  ${caseCall("it")}`)),
+      suiteSkip: plantSkips(plantModule(`describe("${PLANT_DESCRIBE}", () => {\n    ${caseCall("it")}\n  });`, `${dot("suite", "skip")}("outer", () => {`)),
+      elementHead: plantSkips(plantModule(caseCall('it["skip"]'))),
+      deadBranch: plantSkips(plantModule(`if (process.env.PLANT_NEVER) {\n    ${caseCall("it")}\n  }`)),
+      afterReturn: plantSkips(plantModule(`return;\n  ${caseCall("it")}`)),
+      describePlacement: plantSkips(plantModule(caseCall("it"), `if (process.env.PLANT_NEVER) describe("${PLANT_DESCRIBE}", () => {`)),
+      rootRebound: plantSkips(plantModule(caseCall("it"), describeHead("describe"), `import { describe, expect, test } from "vitest";\nconst it = ${dot("test", "skip")};`)),
+      siblingOnly: plantSkips(plantModule(`${caseCall("it")}\n  ${dot("it", "only")}("another case", ${CASE_FN});`)),
+      emptyTable: plantSkips(plantModule(caseCall(`${dot("it", "each")}([])`))),
+      optionsReferenceTimeout: plantSkips(plantModule(caseCall("it", `, PLANT_LIMITS, ${CASE_FN}`), declared("const PLANT_LIMITS = { timeout: 5_000 };"))),
+      optionsWrappedTimeout: plantSkips(plantModule(caseCall("it", `, { timeout: 5_000 } as const, ${CASE_FN}`))),
+      caseReference: plantSkips(plantModule(caseCall("it", ", pinnedBody"), declared("function pinnedBody(): void {\n  expect(1).toBe(1);\n}"))),
+      timeoutReference: plantSkips(plantModule(caseCall("it", `, ${CASE_FN}, PLANT_LIMIT`), declared("const PLANT_LIMIT = 5_000;"))),
+      rowContext: plantSkips(plantModule(caseCall(`${dot("it", "each")}([[1, { seam: "rf-cli" }]])`, ', (row, ctx) => {\n    expect(String(row) + JSON.stringify(ctx)).toBeTypeOf("string");\n  }'))),
+      plainHook: plantSkips(plantModule(`afterEach(() => {\n    expect(1).toBe(1);\n  });\n  ${caseCall("it")}`)),
+      hookReferencePlain: plantSkips(plantModule(`beforeEach(resetEach);\n  ${caseCall("it")}`, declared("const resetEach = (): void => {\n  expect(1).toBe(1);\n};"))),
+      suiteSwitch: plantSkips(plantModule(caseCall("it"), describeHead(dot("test", "describe")))),
+      suitePlain: plantSkips(plantModule(caseCall("it"), describeHead("suite"))),
+      stateRead: plantSkips(plantModule(caseCall("it", ', ctx => {\n    expect(ctx.task.mode).toBe("run");\n  }'))),
+      contextHandoff: plantSkips(plantModule(caseCall("it", ", ctx => {\n    skipVia(ctx);\n  }"), declared(`function skipVia(ctx: { skip: () => void }): void {\n  ${dot("ctx", "skip")}();\n}`))),
+      aliasedHook: plantSkips(plantModule(`const hook = beforeEach;\n  hook(ctx => {\n    ${dot("ctx", "skip")}();\n  });\n  ${caseCall("it")}`)),
+      computedMember: plantSkips(plantModule(caseCall("it", ", ctx => {\n    const member = String.fromCharCode(115, 107, 105, 112);\n    ctx[member]();\n  }"))),
+      emptiedBinding: plantSkips(plantModule(caseCall(`${dot("it", "each")}(PLANT_ROWS)`), declared("const PLANT_ROWS: number[] = [];"))),
+      taggedCase: plantSkips(plantModule(caseCall("it", `, { tags: ["plant-filtered"] }, ${CASE_FN}`))),
     };
-    expect(misread("B5", controls), "every planted registration control reads as its class in code: each skip mode refused, the run forms and the hollowed body (R-HOLLOWED) quiet").toEqual([]);
+    expect(misread("B5", controls), "every planted registration control reads as its class in code: each skip mode refused, the run forms quiet, and the quiet rows of R-HOLLOWED, R-INDIRECT, R-EMPTIED and R-RUNFILTER quiet").toEqual([]);
     return done("B5", { file: OBSERVER_TEST, describes, controls });
   },
   C1: async () => {
@@ -1419,6 +1717,8 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       skippedClaim: claimIn(`${dot("it", "skip")}("zero success blocks", () => {});\n`),
       unrelated: claimIn('it("the clean render projects complete and successful", () => {});\n'),
       labelOnly: claimIn('expect(reading, "zero success blocks").toBe(true);\n'),
+      suiteClaim: claimIn('suite("zero success blocks", () => {});\n'),
+      nonMemberCall: claimIn('suite.indexOf("zero success blocks");\n'),
     };
     expect(misread("D2", controls), "every planted title control reads as its class in code (a skipped claim title is still a claim)").toEqual([]);
     return done("D2", { floorsMet, claims, controls });
@@ -1458,6 +1758,9 @@ describe("wb-fb2z.3 TSX worker document census (TSX-COMPONENT-ASSEMBLY-R3, absen
     const members = [...new Set([...REGISTRATION_MEMBERS.test, ...REGISTRATION_MEMBERS.suite])].sort();
     expect([...SKIP_MODES, ...RUN_MEMBERS].sort(), "SKIP_MODES and RUN_MEMBERS partition vitest's registration members").toEqual(members);
     expect(OPTION_MODES.filter(key => !SKIP_MODES.includes(key)), "every options key read is a skip mode").toEqual([]);
+    // wb-mdvg: the roots, suite members, hooks and fixture calls the reader reads are vitest's own registration API.
+    expect(REGISTRATION_ROOTS, "the registration roots: it, test and the suite roots").toEqual(["it", "test", ...SUITE_ROOTS]);
+    expect([...SUITE_ROOTS, ...HOOK_MEMBERS, ...FIXTURE_MEMBERS].filter(member => !RUN_MEMBERS.includes(member)), "suite roots, hooks and fixture calls outside vitest's run members").toEqual([]);
     // The outside anchor: the owner filing's row in the tracked bead export.
     const bead = readBeadRow();
     const clauses = acceptanceClauses(bead.notes);
