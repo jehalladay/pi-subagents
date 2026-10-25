@@ -1,7 +1,7 @@
 {
   "bead": "wb-tnz5.1",
   "pin": "6a251bf73af5",
-  "basis": "The out-of-file roster of test/workbench-rf-federation-effect-authority-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness and the four vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at ReactiveFiberCLI 6a251bf73af5 (read-only git show): docs/programs/certified-federated-reactive-refinement-2026-10-18/README.md:34 (B permission, idempotency key and effect receipt; a read export grants neither evaluate nor effects), BEADS-2026-10-21.md:37 (rfc-bak67.6, FW-CFRR-08a: no docs/adr/ADR-RFC-*-federation-effects.md at the pin), federated-workspaces-2026-10-18/04-cli-api.md:18 (the planned rf workspace invoke), 03-protocol-and-storage.md:53,55 (I05, I07) and 09-froe20-26-certified-live-admission.md:19. Pi facts measured at base 52bdd9e (src identical to a7896f8, where they were first read). Matcher digests are the first 16 hex of sha256 over the UTF-8 spelling; the Q1 and Q2 spellings carry U+200B and U+0435 and are never written raw here. wb-10fd (the R694 follow-up of landing 269, gate findings F1-F7) adds A5 (the A4 twin on the no-permission branch), B5 and D5 (B3 and D4 for every non-read class the effectClass union in capability-registry.ts declares) and strengthens B2 (a section-bounded, comment-stripped, negation-aware receipt clause), B4 (exact CapabilityDescriptor and InvocationContext member sets), C1 (the decoded reading of every src string literal, template part and identifier), C3 (the src register-surface inventory, with the local-detached operator-module bridge named outside the claim, and src-wide effectClass string literals), D1 (camelCase-joined and interleaved verbs), D2 (a const-bound rf binary) and D3 (non-literal import specifiers and every network-global reference); Pi facts re-measured at base 92e5ae2 (landing 324).",
+  "basis": "The out-of-file roster of test/workbench-rf-federation-effect-authority-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness and the four vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at ReactiveFiberCLI 6a251bf73af5 (read-only git show): docs/programs/certified-federated-reactive-refinement-2026-10-18/README.md:34 (B permission, idempotency key and effect receipt; a read export grants neither evaluate nor effects), BEADS-2026-10-21.md:37 (rfc-bak67.6, FW-CFRR-08a: no docs/adr/ADR-RFC-*-federation-effects.md at the pin), federated-workspaces-2026-10-18/04-cli-api.md:18 (the planned rf workspace invoke), 03-protocol-and-storage.md:53,55 (I05, I07) and 09-froe20-26-certified-live-admission.md:19. Pi facts measured at base 52bdd9e (src identical to a7896f8, where they were first read). Matcher digests are the first 16 hex of sha256 over the UTF-8 spelling; the Q1 and Q2 spellings carry U+200B and U+0435 and are never written raw here. wb-10fd (the R694 follow-up of landing 269, gate findings F1-F7) adds A5 (the A4 twin on the no-permission branch), B5 and D5 (B3 and D4 for every non-read class the effectClass union in capability-registry.ts declares) and strengthens B2 (a section-bounded, comment-stripped, negation-aware receipt clause), B4 (exact CapabilityDescriptor and InvocationContext member sets), C1 (the decoded reading of every src string literal, template part and identifier), C3 (the src register-surface inventory, with the local-detached operator-module bridge named outside the claim, and src-wide effectClass string literals), D1 (camelCase-joined and interleaved verbs), D2 (a const-bound rf binary) and D3 (non-literal import specifiers and every network-global reference); Pi facts re-measured at base 92e5ae2 (landing 324). wb-dghg (the R694 follow-up of landing 360, gate findings F1-F6, cut in the R739 TERMINAL enumerate-the-resolvable form) strengthens B2 (neither, nor, nothing, nobody and nowhere join the negation words; R-UNNEGATED-ABSENCE pinned quiet), B4 (the built-on inventory - an interface or class that extends or implements either pinned surface, a second declaration of either name, an intersection that includes either - with seven new controls; R-MAPPED-SURFACE pinned quiet), C3 (a register string literal anywhere, with four new controls; R-COMPUTED-REGISTER widened to reflective lookups), D2 (the command words of shell strings, templates, consts and argv elements, launch aliases, keyed launchers and process.execve, with twelve new controls; R-OPAQUE-LAUNCHER pinned quiet) and D3 (getBuiltinModule, createRequire and member-require edges, process native bindings and execve, code evaluators, loader and code-evaluation modules, global- and process-object reads and network-name literals, with eighteen new controls; R-COMPOSED-GLOBAL pinned quiet); Pi facts re-measured at base b887fa2 (landing 395).",
   "readAdmission": [
     "discover:reactivefiber.render.preview",
     "discover:reactivefiber.workspace.invoke",
@@ -173,13 +173,17 @@
               "negated": [
                 "reactivefiber.workspace.invoke: no registering receipt names it with FW-CFRR-08 and rfc-bak67.6, an idempotency key and an effect receipt"
               ],
+              "neitherNor": [
+                "reactivefiber.workspace.invoke: no registering receipt names it with FW-CFRR-08 and rfc-bak67.6, an idempotency key and an effect receipt"
+              ],
               "splitSections": [
                 "reactivefiber.workspace.invoke: no registering receipt names it with FW-CFRR-08 and rfc-bak67.6, an idempotency key and an effect receipt"
               ],
               "commented": [
                 "reactivefiber.workspace.invoke: no registering receipt names it with FW-CFRR-08 and rfc-bak67.6, an idempotency key and an effect receipt"
               ]
-            }
+            },
+            "unnegatedAbsence": []
           }
         },
         {
@@ -223,7 +227,17 @@
               "principal",
               "signal",
               "workspace"
-            ]
+            ],
+            "builtOn": [],
+            "controls": {
+              "extendsDescriptor": 1,
+              "extendsContext": 1,
+              "intersection": 1,
+              "augmentation": 1,
+              "classImplements": 1,
+              "unrelated": 0,
+              "mappedSurface": 0
+            }
           }
         },
         {
@@ -339,7 +353,11 @@
               "destructured": 1,
               "elementAccess": 1,
               "computedRegister": 0,
-              "inlineRead": 0
+              "inlineRead": 0,
+              "reflectGet": 1,
+              "ownDescriptor": 1,
+              "constKey": 1,
+              "reflectComputed": 0
             }
           }
         }
@@ -414,7 +432,19 @@
             "controls": {
               "literal": 1,
               "constBound": 1,
-              "opaque": 0
+              "opaque": 0,
+              "shellString": 1,
+              "callbackExec": 1,
+              "templateCommand": 1,
+              "constCommand": 1,
+              "chainedCommand": 1,
+              "pathQualified": 1,
+              "shellArgv": 1,
+              "importAlias": 1,
+              "keyedLauncher": 1,
+              "inPlaceExec": 1,
+              "otherProgram": 0,
+              "opaqueLauncher": 0
             }
           }
         },
@@ -478,7 +508,25 @@
               "nonLiteralImport": 1,
               "nonLiteralRequire": 1,
               "aliasedFetch": 1,
-              "keyedFetch": 1
+              "keyedFetch": 1,
+              "builtinModule": 1,
+              "builtinModuleExec": 1,
+              "keyedBuiltinModule": 1,
+              "aliasedLoader": 1,
+              "destructuredProcess": 1,
+              "createRequireCall": 1,
+              "boundCreateRequire": 1,
+              "memberRequire": 1,
+              "loaderModule": 1,
+              "nativeBinding": 1,
+              "inPlaceExec": 1,
+              "codeEval": 1,
+              "functionConstructor": 1,
+              "codeModule": 1,
+              "composedGlobalKey": 1,
+              "reflectGlobal": 1,
+              "networkNameLiteral": 1,
+              "composedGlobal": 0
             }
           }
         },
