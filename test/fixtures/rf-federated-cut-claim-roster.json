@@ -1,9 +1,11 @@
 {
   "bead": "wb-a9l2.5",
+  "amendedBy": "wb-1ded (R-VOCABULARY named; B4/C3 armed on the record key shape and the watermark fold)",
   "producerPin": "ReactiveFiberCLI 6a251bf73af5 (read-only git show by the cutting seat)",
   "sources": ["harness2-federated-peer-2026-10-20/README.md:25 (the duty), :36 (RFCLI-H2-04), :45 (cursor gap requires owner resync)", "src/reactive_fiber_cli/domain/federation_boundary.py:9-10 (cursor and revision never equated), :61-67 (OwnerStreamCursor), :85-87 (OwnerBoundary), :173-192 (record_notification, max() at :191)", "certified-federated-reactive-refinement-2026-10-18/BEADS-2026-10-21.md:21 (rfc-bak67.4 FW-CFRR-02c acceptance: notify 1 then 3 gaps, notify 1, 2, 3 does not)", "federated-workspaces-2026-10-18/BEADS-2026-10-21.md:53 (rfc-0txnl.12 FW-13: gap/epoch -> RESYNC_REQUIRED)"],
   "notificationWords": ["resync", "watermark", "notified position", "record notification", "delivered fence"],
   "cursorWords": ["resource revision", "stream cursor"],
+  "recordKeys": ["epoch", "stream_id", "position"],
   "producerAcceptance": {"gapped": [1, 3], "contiguous": [1, 2, 3]},
   "fixture": {"gapped": [{"epoch": "epoch-fixture-a", "stream_id": "peer.notes.stream", "position": 1}, {"epoch": "epoch-fixture-a", "stream_id": "peer.notes.stream", "position": 3}], "contiguous": [{"epoch": "epoch-fixture-a", "stream_id": "peer.notes.stream", "position": 1}, {"epoch": "epoch-fixture-a", "stream_id": "peer.notes.stream", "position": 2}, {"epoch": "epoch-fixture-a", "stream_id": "peer.notes.stream", "position": 3}], "accepted": {"resource_revision": "rev-0007", "cursor": {"epoch": "epoch-fixture-a", "stream_id": "peer.notes.stream", "position": 1}, "publication_state": "VALUE", "value": "peer notes accepted at the fence"}},
   "rows": [
@@ -26,7 +28,7 @@
         {"id": "B1", "witness": {"gapped": {"sameEpoch": true, "sameStream": true, "deliveredFence": 1, "notifiedPosition": 3, "gap": true, "verdict": "resync-required"}, "contiguous": {"sameEpoch": true, "sameStream": true, "deliveredFence": 3, "notifiedPosition": 3, "gap": false, "verdict": "contiguous"}, "producerWatermark": {"gapped": 3, "contiguous": 3}, "acceptedAtFence": true}},
         {"id": "B2", "witness": {"contract": "reactivefiber.render.preview/v1", "readingKeys": ["contract", "source", "workspaceRoot"], "notificationKeys": ["epoch", "position", "stream_id"], "positions": [1, 3], "spawns": 1}},
         {"id": "B3", "witness": {"snapshots": 1, "equalsWithout": true, "stringsRead": true, "surfaced": []}},
-        {"id": "B4", "witness": {"srcFloorMet": true, "sites": [], "bound": [], "stale": [], "synthetic": {"compliant": [], "watermark": ["no resync-required word for a same-epoch gap", "spells <CLAIM-B>"], "freshValue": ["carries the accepted value while resync is required"]}, "controls": {"snake": true, "camel": true, "bareWord": false}}}
+        {"id": "B4", "witness": {"srcFloorMet": true, "sites": [], "bound": [], "stale": [], "synthetic": {"compliant": [], "watermark": ["no resync-required word for a same-epoch gap", "spells <CLAIM-B>"], "freshValue": ["carries the accepted value while resync is required"]}, "controls": {"snake": true, "camel": true, "bareWord": false, "recordShape": true, "recordRead": true, "recordQuoted": true, "recordDestructured": true, "recordCamel": true, "watermarkFold": true, "watermarkFoldReversed": true, "singleKey": false, "comparisonFold": false}}}
       ]
     },
     {
@@ -35,7 +37,7 @@
       "pins": [
         {"id": "C1", "witness": {"boundaryKeys": ["cursor", "publication_state", "resource_revision", "value"], "revision": "rev-0007", "cursor": {"epoch": "epoch-fixture-a", "stream_id": "peer.notes.stream", "position": 1}, "spawns": 1}},
         {"id": "C2", "witness": {"sourceRevisionIsGraph": true, "sourceVersionIsBundle": true, "takesRevision": false, "takesPosition": false, "equalsWithout": true}},
-        {"id": "C3", "witness": {"srcFloorMet": true, "sites": [], "bound": [], "stale": [], "synthetic": {"separate": [], "revisionFromPosition": ["the resource revision is not echoed verbatim"], "positionFromRevision": ["the cursor position is not echoed verbatim"]}, "controls": {"snake": true, "camel": true, "bareWords": false}}}
+        {"id": "C3", "witness": {"srcFloorMet": true, "sites": [], "bound": [], "stale": [], "synthetic": {"separate": [], "revisionFromPosition": ["the resource revision is not echoed verbatim"], "positionFromRevision": ["the cursor position is not echoed verbatim"]}, "controls": {"snake": true, "camel": true, "bareWords": false, "positionBesideRevision": true, "renamedKey": false, "versionField": false}}}
       ]
     },
     {

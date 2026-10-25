@@ -10,10 +10,10 @@
  * digest-equality statement names final_document_digest verbatim and says canonical committed bytes, never re-execution or
  * external effects; (d) fixture status "incomplete": coverage partial, never success."
  *
- * The guarded claim classes: <CLAIM-R> joins re-execution with equality (either order); <CLAIM-E> joins effects with reproduced
- * or re-executed (either order), or external(-world) effects with equality (either order). This file never spells one: CLAIMS
- * composes each from CLAIM_WORDS at runtime and every comment and label writes the placeholder (Q7 reads this file and the
- * roster for it).
+ * The guarded claim classes: <CLAIM-R> joins re-execution with equality (either order; the re-execution-first arm admits the
+ * same copula fill as the effect arms, wb-hmre); <CLAIM-E> joins effects with reproduced or re-executed (either order), or
+ * external(-world) effects with equality (either order). This file never spells one: CLAIMS composes each from CLAIM_WORDS at
+ * runtime and every comment and label writes the placeholder (Q7 reads this file and the roster for it).
  *
  * MEASURED (read-only, by the cutting seat, 2026-10-23): at the pin, ReactiveFiberCLI 6a251bf73af5, README.md:69 carries the
  * quoted sentences and src/reactive_fiber_cli/schemas/cli/context/replay-result.json (reactive-fiber.replay-result/v1) spells
@@ -40,14 +40,17 @@
  * ARMED half that binds the first replay reader to come:
  *  A, the trigger. A1 every src module and every native descriptor read as tokens for REPLAY_VOCABULARY (snake, camel, constant
  *    and kebab spellings fold to one token, matched inside longer identifiers too), with a floor, an anchor and controls; a module
- *    that spells one must be bound in REPLAY_READERS, and every binding must name such a module (empty both ways today). A2 the
+ *    that spells one must be bound in REPLAY_READERS, and every binding must name such a module (empty both ways today); the
+ *    module set is bound to the git index (every tracked src .ts module is read, the anchor module among them). A2 the
  *    native reader against a stand-in rf answering each wire envelope with its exit: the transport refusal of an unrecognized
  *    envelope every time (it recognizes only context.render), never a reading, one spawn of the render argv. A3 the reader
  *    adapter refuses a reading of each wire envelope and of the incomplete fragment.
  *  B, acceptance (a). B1 the fixture oracle; B2 the registered reading (the registry's injected-reader seam) carries each exit-0
  *    envelope byte for byte, effects_denied and its count included; B3 no file of src, docs, qa or the front matter spells a
- *    guarded claim, with the matcher's spellings read on composed controls; B4 the armed check: every bound reader names the
- *    denied count and every denied id and spells no guarded claim (synthetic readers exercise the checker).
+ *    guarded claim, with the matcher's spellings read on composed controls (the copula form of <CLAIM-R> among them); every
+ *    walk B3 and D1 read covers each file the git index tracks under its root, an anchor outside this file and the roster;
+ *    B4 the armed check: every bound reader names the denied count and every denied id and spells no guarded claim (synthetic
+ *    readers exercise the checker).
  *  C, acceptance (b). C1 the fixture oracle; C2 the registered reading carries the mismatch, its diff verbatim; C3 never a success
  *    tone: the native reader refuses the wire envelope as unrecognized, its render-command form is the typed refusal naming
  *    RF_REPLAY_MISMATCH, and the adapter's projection of that form is a failure; C4 the armed check: no success tone, every diff
@@ -67,14 +70,23 @@
  * label and pins, every pin's witness, the enums, codes, exits, vocabulary, claim words and residual families, and every
  * registered test title - is held to the out-of-file roster, whose producer fixtures anchor the enums, codes and diff outside
  * this file. The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it) and
- * the set of pins that reached their witness. Not claimed: an edit of this file and the roster together.
+ * the set of pins that reached their witness; a file-level afterAll holds that last case to its own run: when every pin reached
+ * its witness (an unfiltered run) and the last case neither finished nor failed - a plain or conditional skip modifier, a todo,
+ * an early return or a deleted case - the file reds (wb-hmre, the pfxo.5 gate's F2). Not claimed: an edit of this file and the
+ * roster together; one edit of this file that both disables the last case and deletes that file-level guard; one that narrows a
+ * docs, qa or front-matter walk and its own git pathspec together above the floor (a src narrowing stays caught through A1's
+ * module pathspec).
  * RESIDUALS (named, each with its pinned quiet row): R-WITHHELD the native reader names nothing of a wire replay envelope (it is
  * unrecognized), and of the render-command form the native typed refusal and the adapter's projection carry the code but withhold
  * the diff and both digests, so the diff rides only the registered reading (Q1); R-COVERAGE-WORD the adapter's
  * failure projection of the exit-5 refusal's render-command form reads coverage unknown with a failure tone - never complete,
  * never success - but not the word partial, which binds the armed half (Q2); R-VOCABULARY a reader reading only the generic keys (outcome, status,
  * diff) or a key composed at runtime spells no vocabulary token and is invisible to A1 (Q3); R-PARAPHRASE a reworded claim is
- * not caught (Q4); R-INTERRUPTED a claim split by a zero-width code point, or spelled with a homoglyph letter, is not caught (Q5);
+ * not caught - a synonym or an inflection outside CLAIM_WORDS, or an auxiliary or linking word outside the fill sets; Q4 pins
+ * PARAPHRASES, thirteen members (the eleven non-copula escapes of the pfxo.5 gate's corpus among them), each beside the plain
+ * spelling it rewords, which the matcher catches (Q4); R-INTERRUPTED a claim split by a zero-width code point, spelled with a
+ * homoglyph letter, or hyphenated with a dash homoglyph (U+2011 in place of the hyphen-minus the separator class admits) is not
+ * caught (Q5);
  * R-SCOPE test/ and the bead-store export .beads/ lie outside every scanned root, and .beads/ spells the guarded claims (the
  * owner filing quotes the statement) (Q6); R-COMPOSED a claim assembled at runtime, this file's own mechanism, is invisible to
  * any text scan (Q7); R-UNIT a digest-equality unit whose rf context lies outside the unit (a heading, a neighbouring sentence)
@@ -87,7 +99,8 @@
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs, qa and .beads are only read.
  */
-import { chmodSync, type Dirent, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { chmodSync, type Dirent, existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
@@ -391,29 +404,61 @@ function frontMatter(): string[] {
   return [...markdown, ...filesBelow(join(REPO, "examples"))];
 }
 
+/** The files the git index tracks under the pathspecs and the working tree holds (repo-relative, sorted): the anchor outside this
+ * file and the roster that every walk must cover (wb-hmre: a walk narrowed above its floor, or a module filter that reads nothing,
+ * reds). A tracked file deleted from the working tree and not yet staged holds nothing to read, so it is not owed. */
+function trackedFiles(...pathspecs: string[]): string[] {
+  return execFileSync("git", ["ls-files", "-z", "--", ...pathspecs], { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 })
+    .split("\0")
+    .filter(path => path !== "" && existsSync(join(REPO, path)))
+    .sort();
+}
+
 interface ScanRoot {
   readonly root: string;
   readonly floor: number;
   readonly anchorFile: string;
   readonly anchorToken: string;
   readonly files: () => string[];
+  /** The files the git index tracks under the root; the walk must read every one. */
+  readonly tracked: () => string[];
 }
 /** The Pi surfaces B3 and D1 read; each floor sits below the count measured at base ce85c7c (src 115, docs 70, qa 67 files;
- * front matter 5 root *.md files and 7 under examples/), so an emptied or misdirected walk reds and an additive change does not. */
+ * front matter 5 root *.md files and 7 under examples/), so an emptied or misdirected walk reds and an additive change does not;
+ * and each walk must read every file the git index tracks under its root (measured at 27ae04e: src 115, docs 71, qa 67, front
+ * matter 12, each walked in full), so a walk narrowed above its floor reds too (wb-hmre, the pfxo.5 gate's X15-X18). */
 const SURFACE_ROOTS: readonly ScanRoot[] = [
-  { root: "src", floor: 100, anchorFile: "src/workbench/providers/reactivefiber.ts", anchorToken: "context.render", files: () => filesBelow(join(REPO, "src")) },
-  { root: "docs", floor: 50, anchorFile: "docs/workbench/13-contracts-and-config.md", anchorToken: PREVIEW_ID, files: () => filesBelow(join(REPO, "docs")) },
-  { root: "qa", floor: 50, anchorFile: "qa/workbench/receipts-index.mjs", anchorToken: "docs/workbench/receipts", files: () => filesBelow(join(REPO, "qa")) },
-  { root: "front matter (root *.md, examples/)", floor: 10, anchorFile: "README.md", anchorToken: "@tintinweb/pi-subagents", files: frontMatter },
+  {
+    root: "src", floor: 100, anchorFile: "src/workbench/providers/reactivefiber.ts", anchorToken: "context.render",
+    files: () => filesBelow(join(REPO, "src")), tracked: () => trackedFiles("src"),
+  },
+  {
+    root: "docs", floor: 50, anchorFile: "docs/workbench/13-contracts-and-config.md", anchorToken: PREVIEW_ID,
+    files: () => filesBelow(join(REPO, "docs")), tracked: () => trackedFiles("docs"),
+  },
+  {
+    root: "qa", floor: 50, anchorFile: "qa/workbench/receipts-index.mjs", anchorToken: "docs/workbench/receipts",
+    files: () => filesBelow(join(REPO, "qa")), tracked: () => trackedFiles("qa"),
+  },
+  {
+    root: "front matter (root *.md, examples/)", floor: 10, anchorFile: "README.md", anchorToken: "@tintinweb/pi-subagents",
+    files: frontMatter, tracked: () => trackedFiles(":(glob)*.md", "examples"),
+  },
 ];
-function walkRoot(scan: ScanRoot): { files: string[]; floorMet: boolean; anchorRead: boolean } {
+function walkRoot(scan: ScanRoot): { files: string[]; floorMet: boolean; anchorRead: boolean; anchorTracked: boolean; unwalked: string[] } {
   const files = scan.files();
   const floorMet = files.length >= scan.floor;
   const anchor = join(REPO, scan.anchorFile);
   const anchorRead = files.includes(anchor) && textOf(anchor).includes(scan.anchorToken);
+  const tracked = scan.tracked();
+  const walked = new Set(files.map(file => relative(REPO, file)));
+  const anchorTracked = tracked.includes(scan.anchorFile);
+  const unwalked = tracked.filter(path => !walked.has(path));
   expect(floorMet, `${scan.root}: ${files.length} files walked, floor ${scan.floor}`).toBe(true);
   expect(anchorRead, `${scan.root}: the anchor ${scan.anchorFile} was not read with ${scan.anchorToken}`).toBe(true);
-  return { files, floorMet, anchorRead };
+  expect(anchorTracked, `${scan.root}: the git index lists no ${scan.anchorFile}`).toBe(true);
+  expect(unwalked, `${scan.root}: files the git index tracks that the walk did not read`).toEqual([]);
+  return { files, floorMet, anchorRead, anchorTracked, unwalked };
 }
 
 const SEP = "[\\s_.:/-]+";
@@ -436,7 +481,7 @@ const CLAIMS: readonly { readonly name: string; readonly pattern: RegExp }[] = (
     { name: "CLAIM-E redo, then effect", source: `\\b${redo}${fill(CLAIM_WORDS.beforeEffect)}${SEP}(?:${external}${SEP})?${effect}\\b` },
     { name: "CLAIM-E equal, then external effect", source: `\\b${equal}${fill(CLAIM_WORDS.linking)}${SEP}${external}${SEP}${effect}\\b` },
     { name: "CLAIM-E external effect, then equal", source: `\\b${external}${SEP}${effect}${fill(CLAIM_WORDS.afterEffect)}${SEP}(?:${equal}|${redo})\\b` },
-    { name: "CLAIM-R reexecution, then equal", source: `\\b${reexecution}${SEP}${equal}\\b` },
+    { name: "CLAIM-R reexecution, then equal", source: `\\b${reexecution}${fill(CLAIM_WORDS.afterEffect)}${SEP}${equal}\\b` },
     { name: "CLAIM-R equal, then reexecution", source: `\\b${equal}${fill(CLAIM_WORDS.linking)}${SEP}${reexecution}\\b` },
   ].map(({ name, source }) => ({ name, pattern: new RegExp(source, "gi") }));
 })();
@@ -479,6 +524,26 @@ function statementViolations(unit: string): string[] {
   if (claimsIn(unit).length > 0) violations.push("claim");
   return violations;
 }
+
+/** R-PARAPHRASE's pinned members (Q4): each a reworded spelling of a guarded claim the matcher does not catch, beside the plain
+ * spelling it rewords, which the matcher does catch. Words only, joined by compose at runtime, so no source line spells either.
+ * The first two are the pfxo.5 cut's own members; the other eleven are the pfxo.5 gate's escaping corpus (F1 (i), less its copula
+ * form, which B3 now catches). */
+const PARAPHRASES: readonly { readonly member: string; readonly variant: readonly string[]; readonly plain: readonly string[] }[] = [
+  { member: "synonym: happened again", variant: ["the", "side", "effects", "happened", "again"], plain: ["effects", "reproduced"] },
+  { member: "synonym: ran a second time", variant: ["every", "effect", "ran", "a", "second", "time"], plain: ["every", "effect", "re-executed"] },
+  { member: "inflection: equals", variant: ["re-execution", "equals"], plain: ["re-execution", "equal"] },
+  { member: "inflection: plural", variant: ["re-executions", "equal"], plain: ["re-execution", "equal"] },
+  { member: "linking: under", variant: ["equal", "under", "re-execution"], plain: ["equal", "to", "re-execution"] },
+  { member: "linking: on", variant: ["equality", "on", "re-execution"], plain: ["equality", "of", "re-execution"] },
+  { member: "auxiliary: have been", variant: ["effects", "have", "been", "reproduced"], plain: ["effects", "been", "reproduced"] },
+  { member: "auxiliary: being", variant: ["effects", "being", "reproduced"], plain: ["effects", "are", "reproduced"] },
+  { member: "inflection: reproduce", variant: ["effects", "reproduce"], plain: ["effects", "reproduced"] },
+  { member: "inflection: reproducing", variant: ["reproducing", "the", "effects"], plain: ["reproduced", "the", "effects"] },
+  { member: "synonym: match", variant: ["the", "external", "effects", "match"], plain: ["the", "external", "effects", "equal"] },
+  { member: "synonym: stay", variant: ["external", "effects", "stay", "identical"], plain: ["external", "effects", "are", "identical"] },
+  { member: "linking: with", variant: ["equality", "with", "external", "effects"], plain: ["equality", "of", "external", "effects"] },
+];
 
 interface ReplayReading {
   readonly texts: readonly string[];
@@ -686,14 +751,23 @@ function nativeDescriptors(): Promise<{ ids: string[]; texts: string[] }> {
 
 /** The pins that reached their witness compare, in run order; the last case holds it to every pin. */
 const REACHED: string[] = [];
+/** The last case's run record (wb-hmre, the pfxo.5 gate's F2): set when it finishes or fails; the file-level afterAll reads it. */
+const JUDGE = { failed: false, finished: false };
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
     const scan = SURFACE_ROOTS[0];
     if (scan === undefined) throw new Error("no src root");
-    const { files, floorMet, anchorRead } = walkRoot(scan);
+    const { files, floorMet, anchorRead, anchorTracked, unwalked } = walkRoot(scan);
     const modules = files.filter(file => file.endsWith(".ts"));
+    // wb-hmre (the pfxo.5 gate's X14): the module set A1 reads is bound to the git index, not only the walk's floor.
+    const read = new Set(modules.map(file => relative(REPO, file)));
+    const trackedModules = trackedFiles(":(glob)src/**/*.ts");
+    const moduleAnchor = read.has(scan.anchorFile);
+    const moduleTracked = trackedModules.includes(scan.anchorFile);
+    const unreadModules = trackedModules.filter(path => !read.has(path));
+    expect({ moduleAnchor, moduleTracked, unreadModules }, "A1 reads every src .ts module the git index tracks").toStrictEqual({ moduleAnchor: true, moduleTracked: true, unreadModules: [] });
     const spelling = modules.map(file => ({ module: relative(REPO, file), words: vocabularyIn(textOf(file)) })).filter(entry => entry.words.length > 0);
     const { ids, texts } = await nativeDescriptors();
     const descriptorHits = ids.filter((_, index) => vocabularyIn(texts[index] ?? "").length > 0);
@@ -711,7 +785,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       embedded: vocabularyIn("const effectsDeniedCount = 2;"),
       unrelated: vocabularyIn("const outcome = result.status;"),
     };
-    return { srcFloorMet: floorMet, anchorRead, descriptorsRead: ids.length > 0, spelling, descriptorHits, bound, unbound, stale, controls };
+    return {
+      srcFloorMet: floorMet, anchorRead, srcAnchorTracked: anchorTracked, srcUnwalked: unwalked, moduleAnchor, moduleTracked, unreadModules,
+      descriptorsRead: ids.length > 0, spelling, descriptorHits, bound, unbound, stale, controls,
+    };
   },
   A2: async () => {
     const outcomes: JsonObject = {};
@@ -755,10 +832,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   B3: async () => {
     const roots: JsonValue[] = [];
     for (const scan of SURFACE_ROOTS) {
-      const { files, floorMet, anchorRead } = walkRoot(scan);
+      const { files, floorMet, anchorRead, anchorTracked, unwalked } = walkRoot(scan);
       const hits = files.flatMap(file => claimsIn(textOf(file)).map(name => `${relative(REPO, file)}: ${name}`));
       expect(hits, `guarded claims spelled under ${scan.root}`).toEqual([]);
-      roots.push({ root: scan.root, floor: scan.floor, floorMet, anchorRead, hits });
+      roots.push({ root: scan.root, floor: scan.floor, floorMet, anchorRead, anchorTracked, unwalked, hits });
     }
     const spellings = {
       effectThenRedo: claimsIn(compose("effects", "reproduced")),
@@ -768,6 +845,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       externalThenEqual: claimsIn(compose("external", "effects", "are", "identical")),
       reexecutionThenEqual: claimsIn(compose("re-execution", "equality")),
       equalThenReexecution: claimsIn(compose("identical", "re-execution")),
+      // wb-hmre (the pfxo.5 gate's G09 and its corpus): the copula form of <CLAIM-R>, caught like the copula fill of the effect arms.
+      copulaIsIdentical: claimsIn(compose("re-execution", "is", "identical")),
+      copulaIsEqual: claimsIn(compose("re-execution", "is", "equal")),
+      copulaWasEqual: claimsIn(compose("re-execution", "was", "equal")),
+      copulaSentence: claimsIn(compose("The", "rf", "replay", "proves", "re-execution", "is", "identical.")),
       snakeJoined: claimsIn(["effects", "reproduced"].join("_")),
       echoQuiet: claimsIn("outcome reproduced; effects_denied 2"),
       workflowQuiet: claimsIn("a replayed effect; re-run the effect after all"),
@@ -834,11 +916,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   D1: async () => {
     const roots: JsonValue[] = [];
     for (const scan of SURFACE_ROOTS) {
-      const { files, floorMet, anchorRead } = walkRoot(scan);
+      const { files, floorMet, anchorRead, anchorTracked, unwalked } = walkRoot(scan);
       const statements = files.flatMap(file => unitsOf(textOf(file)).filter(isReplayDigestStatement).map(unit => ({ file: relative(REPO, file), unit })));
       const violations = statements.map(entry => ({ ...entry, violations: statementViolations(entry.unit) })).filter(entry => entry.violations.length > 0);
       expect(violations, `replay digest-equality statements under ${scan.root} owe acceptance (c)`).toEqual([]);
-      roots.push({ root: scan.root, floorMet, anchorRead, statements: statements.length, violations });
+      roots.push({ root: scan.root, floorMet, anchorRead, anchorTracked, unwalked, statements: statements.length, violations });
     }
     const judge = (unit: string): JsonValue => (isReplayDigestStatement(unit) ? statementViolations(unit) : null);
     const controls = {
@@ -934,17 +1016,23 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     return { generic, composed };
   },
   Q4: async () => {
-    const reworded = [...claimsIn("the side effects happened again"), ...claimsIn("every effect ran a second time")];
+    const members = PARAPHRASES.map(({ member, variant, plain }) => ({ member, variant: compose(...variant), caught: claimsIn(compose(...variant)), plain: claimsIn(compose(...plain)) }));
     const digestReworded = isReplayDigestStatement("rf context replay: the digests agree, so the document is faithful");
-    expect({ reworded, digestReworded }).toStrictEqual({ reworded: [], digestReworded: false });
-    return { reworded, digestReworded };
+    const caughtMembers = members.filter(entry => entry.caught.length > 0).map(entry => entry.member);
+    const plainEscapes = members.filter(entry => entry.plain.length === 0).map(entry => entry.member);
+    expect({ caughtMembers, plainEscapes, digestReworded }).toStrictEqual({ caughtMembers: [], plainEscapes: [], digestReworded: false });
+    return { members, digestReworded };
   },
   Q5: async () => {
     const zeroWidth = claimsIn(["effects", "reproduced"].join(String.fromCodePoint(0x200b)));
     const homoglyph = claimsIn(compose(`${String.fromCodePoint(0x0435)}ffects`, "reproduced"));
+    // wb-hmre (the pfxo.5 gate's G15): a dash homoglyph, U+2011 in place of the hyphen-minus, inside the re-execution word.
+    const dashHomoglyph = claimsIn(compose(["re", "execution"].join(String.fromCodePoint(0x2011)), "equality"));
     const plain = claimsIn(compose("effects", "reproduced"));
-    expect({ zeroWidth, homoglyph, plainCaught: plain.length > 0 }).toStrictEqual({ zeroWidth: [], homoglyph: [], plainCaught: true });
-    return { zeroWidth, homoglyph, plainCaught: plain.length > 0 };
+    const plainDash = claimsIn(compose(["re", "execution"].join("-"), "equality"));
+    const judged = { zeroWidth, homoglyph, dashHomoglyph, plainCaught: plain.length > 0, plainDashCaught: plainDash.length > 0 };
+    expect(judged).toStrictEqual({ zeroWidth: [], homoglyph: [], dashHomoglyph: [], plainCaught: true, plainDashCaught: true });
+    return judged;
   },
   Q6: async () => {
     const beads = filesBelow(join(REPO, ".beads")).filter(file => file.endsWith(".jsonl"));
@@ -1007,7 +1095,10 @@ describe("wb-pfxo.5 rf replay outcome echo census (RF-COMPOSITIONAL-ASSEMBLY-R6)
     });
   }
 
-  it("the registered tests and the reached pins equal the roster, in order and both ways", ({ task }) => {
+  it("the registered tests and the reached pins equal the roster, in order and both ways", ({ task, onTestFailed }) => {
+    onTestFailed(() => {
+      JUDGE.failed = true;
+    });
     const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {
       for (const child of tasks) {
@@ -1025,5 +1116,16 @@ describe("wb-pfxo.5 rf replay outcome echo census (RF-COMPOSITIONAL-ASSEMBLY-R6)
     const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
     expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
+    JUDGE.finished = true;
   });
+});
+
+// wb-hmre (the pfxo.5 gate's F2: S8, a plain skip modifier, and S11, a conditional one, on the last case left rc 0): a skip
+// modifier, a todo, an early return or a deleted last case leaves its run record unfinished; when every pin reached its witness
+// (an unfiltered run), that reds the file here, outside the case.
+afterAll(() => {
+  const reached = ROWS.flatMap(row => row.pins).every(pin => REACHED.includes(pin));
+  if (reached && !JUDGE.finished && !JUDGE.failed) {
+    throw new Error("the registration judge did not run to its end while every pin reached its witness: it is skipped, emptied or gone");
+  }
 });

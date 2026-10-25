@@ -32,30 +32,46 @@
  * (reactivefiber-observer.ts, the designated workflow_observe feed) has no src caller today; row A5 pins its projection anyway.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
- *  A, acceptance (a). A1 the invoke-site roster and its classes, and the observer's 0 src callers. A2 capability_invoke over the
+ *  A, acceptance (a). A1 the invoke-reference roster and its classes (every `invoke` member reference of src, called or not,
+ *    by property access or string-literal element access, each form with a positive control, over a walk covering every src file
+ *    git lists, a narrowed walk read as not covering), and the observer's 0 src callers. A2 capability_invoke over the
  *    native registration and a stand-in rf: the reply is Pi's frame (kind, contract, workspaceRoot, isError) plus the envelope
  *    the stand-in printed, verbatim, at value.source; the frame carries no planted string and is identical with or without the
  *    artifacts. A3 workflow_reconcile evidence: the snapshot quotes the envelope verbatim, the receipt names producer
  *    reactivefiber (capabilityId and nativeRef too) and states no domainStatus, and the frame (the result-identity digests aside)
- *    is identical with or without the artifacts. A4 a workflow script's node() call returns the reading byte for byte. A5 the
- *    observer's topology and the workflow_observe reply over it are byte-identical with or without the artifacts.
+ *    is identical with or without the artifacts and is pinned whole, its EVIDENCE_GUIDANCE lines included. A4 a workflow
+ *    script's node() call returns the reading byte for byte. A5 the observer's topology and the workflow_observe reply over it
+ *    are byte-identical with or without the artifacts. A6 no reply part outside content[0]: in every variant both replies hold
+ *    exactly one content block, capability_invoke's reply has no key beside content (no structuredContent) and
+ *    workflow_reconcile's details stay undefined.
  *  B, acceptance (b). B1 the transcription is the producer's fixture (digest, keys, the ten check ids, statuses, invariants) and
  *    the regrades are its two invalid fixtures. B2 every grade word reaches capability_invoke, workflow_reconcile and node()
  *    verbatim inside the rf envelope, for the printed receipt and both regrades. B3 Pi adds no pass/fail label: the two frames
  *    stay identical across all four variants, isError stays false, and no frame string matches the pass/fail lexicon outside
- *    workflow_reconcile's fixed EVIDENCE_GUIDANCE lines. B4 the receipt's own graph.test envelope is refused by the command
- *    gate before anything is surfaced, and neither reply carries a receipt string.
+ *    workflow_reconcile's fixed EVIDENCE_GUIDANCE lines (A3 pins those lines). B4 the receipt's own graph.test envelope is
+ *    refused by the command gate before anything is surfaced, neither reply carries a receipt string, and each refusal holds
+ *    one content block.
  *  C, acceptance (c). C1 the host evidence store has no rf loader: every rf reference the observer mints renders
  *    unavailable no-loader, while a forge reference reaches its loader. C2 the native registration's rf capability is the
- *    invoke-only preview and no descriptor spells the receipt vocabulary. C3 no src file spells it (floor and anchor walk).
- *  M, the matcher row C reads: M1-M9 the spellings VOCAB_FAMILY must catch; Q1-Q3 the pinned quiet rows of the residuals.
+ *    invoke-only preview, read three ways (id namespace, permission namespace, contractSource producer or rf schema; each way
+ *    exercised by a constructed descriptor that names rf that way alone), the native id set is pinned whole (a new native
+ *    capability of any producer reds here until it is classified), and no descriptor spells the receipt vocabulary. C3 no src
+ *    file spells it (floor, anchor and a walk covering every src file git lists). C4 src launches the rf binary from one site, the
+ *    preview's spawn: every string literal naming rf is found (conservative: an rf-led prose literal reads as a site too), with
+ *    positive and quiet controls.
+ *  M, the matcher rows C2 and C3 read: M1-M14 the spellings they must catch (words joined directly or by whitespace, "_", ".",
+ *    "-", ":" or "/"; a JS source escape is read as the character it spells first); Q1-Q4 the pinned quiet rows of the residuals.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the judged set (every row's id, label and
  * pins, every pin's witness, the vocabularies and the producer fixture facts) is held to the out-of-file roster
  * test/fixtures/rf-evaluator-artifact-context-roster.json, so a pin deleted, relabelled, swapped for another passing case or
  * removed from every literal here at once still reds against it, and every witness is measured by its own case.
  * RESIDUALS (named, each with a pinned quiet row): R-INTERRUPTED a vocabulary spelling split by a zero-width code point (Q1) or
  * carrying a homoglyph letter (Q2) is not caught by C3; R-COMPOSED a token assembled at runtime from parts is invisible to any
- * text scan (Q3), and C2 is the runtime backstop for served descriptor text only.
+ * text scan (Q3), and C2 is the runtime backstop for served descriptor text only; R-SPLIT a separator inside one word of a term
+ * (sub_processes_spawned, Q4) is not caught: a matcher admitting a separator between any two letters reads the landed observer
+ * text "view_contract s(atisfied)" in src as view_contracts (measured at the wb-e9j2 cut), so the split stays a named residual.
+ * FOLLOW-UP wb-e9j2 (the wb-a9l2.6 gate's PREP F1 (i)-(v) and F2): A6; A3's whole frame; C2's three readings and id set; C4; the
+ * git-covering walks of A1, C3 and C4; A1's every-reference invoke scan; the ":" and "/" separators, the escape reading, M10-M14, Q4.
  * SCOPE: a workflow script authors its own prompts; A4 pins that what it receives is the producer-labelled reading, and what it
  * then writes is the script's. result.view_contract (the served --view outcome the observer notes, wb-973.2) is a landed reader
  * of a served context.render field, not an H2 evaluator artifact, and stays with its own pins. The vocabularies are producer
@@ -63,8 +79,9 @@
  *
  * Display paths added: none. Test-only: the stand-in rf, the journal and every workspace root live in makeScratch scratch.
  */
+import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { chmodSync, type Dirent, readdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
+import { chmodSync, type Dirent, existsSync, readdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { ExtensionToolContext } from "@earendil-works/pi-coding-agent";
@@ -167,8 +184,21 @@ const RECEIPT_FIELDS = [
 /** The H2 evaluator artifacts by the program's own names (README:34, :37, :51). */
 const ARTIFACT_PHRASES = ["shadow test", "federation receipt", "conformance verdict", "evaluator artifact"];
 const VOCABULARY = [...RECEIPT_FIELDS, ...CHECK_IDS, ...ARTIFACT_PHRASES];
-/** Row C's matcher: each term's words in any case, joined directly or by any run of whitespace, "_", "." or "-". */
-const VOCAB_FAMILY = new RegExp(VOCABULARY.map(term => term.split(/[\s_.]+/).join(String.raw`[\s_.-]*`)).join("|"), "i");
+/** Row C's matcher: each term's words in any case, joined directly or by any run of whitespace, "_", ".", "-", ":" or "/". */
+const VOCAB_FAMILY = new RegExp(VOCABULARY.map(term => term.split(/[\s_.]+/).join(String.raw`[\s_.:/-]*`)).join("|"), "i");
+/** A JS source escape: a backslash-u with four hex digits or a braced code point, or a backslash-x with two hex digits. */
+const SOURCE_ESCAPE = /\\u\{([0-9a-fA-F]{1,6})\}|\\u([0-9a-fA-F]{4})|\\x([0-9a-fA-F]{2})/g;
+/** A text with each source escape read as the character it spells (a code point beyond Unicode stays as written). */
+function unescaped(text: string): string {
+  return text.replace(SOURCE_ESCAPE, (whole: string, braced: string | undefined, four: string | undefined, two: string | undefined): string => {
+    const code = Number.parseInt(braced ?? four ?? two ?? "", 16);
+    return code <= 0x10ffff ? String.fromCodePoint(code) : whole;
+  });
+}
+/** Whether a text spells the receipt vocabulary: VOCAB_FAMILY over the text with its source escapes read (rows C2, C3 and M). */
+function spelled(text: string): boolean {
+  return VOCAB_FAMILY.test(unescaped(text));
+}
 
 /** CONSTRUCTED probes (no producer shape at the pin): an H2-02 acceptance receipt and an H2-05 conformance outcome. */
 const ACCEPTANCE_PROBE: JsonObject = {
@@ -188,8 +218,9 @@ const PLANTED: readonly Variant[] = ["printed", "check-failed", "valid-false"];
 /** Words Pi would use if it graded the artifact itself; none may appear in a Pi-owned string. */
 const LABEL_LEXICON = /\b(?:pass(?:ed|es|ing)?|fail(?:ed|s|ing|ure)?|success(?:ful)?|verified|conformant|approved)\b/i;
 
-/** The registry invoke call sites of src and what each one reaches (row A1). */
-const SITE_CLASSES: Readonly<Record<string, "agent" | "script" | "fixed">> = {
+/** The modules of src that reference a registry or provider `invoke` member, and what each one reaches (row A1). */
+const SITE_CLASSES: Readonly<Record<string, "agent" | "script" | "fixed" | "registry">> = {
+  "src/workbench/capability-registry.ts": "registry",
   "src/workbench/claude-capability-tools.ts": "agent",
   "src/workbench/reconcile-tool.ts": "agent",
   "src/workbench/claude-host.ts": "script",
@@ -209,7 +240,7 @@ const ROWS: readonly Row[] = [
   {
     id: "A",
     label: "(a) Pi's agent-context composers carry an rf evaluator artifact only inside the producer-labelled reading (contract reactivefiber.render.preview/v1 over a reactive-fiber.cli/v1 source), never as a Pi-authored string",
-    pins: ["A1", "A2", "A3", "A4", "A5"],
+    pins: ["A1", "A2", "A3", "A4", "A5", "A6"],
   },
   {
     id: "B",
@@ -219,12 +250,12 @@ const ROWS: readonly Row[] = [
   {
     id: "C",
     label: "(c) until an rf evaluator surface ships (RFCLI-H2-00..05, none at the pin), Pi pins its absence: no rf evidence loader, no rf evaluator capability and no src spelling of the receipt vocabulary",
-    pins: ["C1", "C2", "C3"],
+    pins: ["C1", "C2", "C3", "C4"],
   },
   {
     id: "M",
-    label: "row C3's matcher catches every separator and case spelling of the receipt vocabulary, and its named residuals stay pinned quiet",
-    pins: ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "Q1", "Q2", "Q3"],
+    label: "the C2 and C3 matcher catches each receipt vocabulary term in any case, its words joined directly or by any run of whitespace, '_', '.', '-', ':' or '/', also behind a JS source escape, and its named residuals stay pinned quiet",
+    pins: ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11", "M12", "M13", "M14", "Q1", "Q2", "Q3", "Q4"],
   },
 ];
 
@@ -395,9 +426,18 @@ function spawnCount(log: string): number {
   return textOf(log).split("\n").filter(Boolean).length;
 }
 
+/** A tool reply's parts beside its first text block: its content block count, its top-level keys and the keys holding a value. */
+type ReplyShape = { blocks: number; keys: string[]; defined: string[] };
+function shapeOf(reply: object): ReplyShape {
+  const content: unknown = Reflect.get(reply, "content");
+  const keys = Object.keys(reply).sort();
+  return { blocks: Array.isArray(content) ? content.length : -1, keys, defined: keys.filter(key => Reflect.get(reply, key) !== undefined) };
+}
+
 interface ToolReply {
   readonly isError: boolean;
   readonly payload: Json;
+  readonly shape: ReplyShape;
 }
 
 /** capability_invoke through the real curated MCP server and a real MCP client, exposing the native rf capability only. */
@@ -417,7 +457,7 @@ async function curatedReply(root: string): Promise<ToolReply> {
     const content: unknown = result.content;
     const first: unknown = Array.isArray(content) ? content[0] : undefined;
     if (!isObject(first) || first.type !== "text" || typeof first.text !== "string") throw new Error("expected one text content block");
-    return { isError: result.isError === true, payload: JSON.parse(first.text) as Json };
+    return { isError: result.isError === true, payload: JSON.parse(first.text) as Json, shape: shapeOf(result) };
   } finally {
     await client.close();
     await server.instance.close();
@@ -432,7 +472,7 @@ const NOW = "2026-10-22T00:00:00Z";
 const JOURNALED_EFFECT = "reactivefiber.fixture.effect";
 
 /** One workflow_reconcile evidence action over the native rf read, from a journal holding one non-read rf node row. */
-async function reconcileReply(root: string): Promise<Json> {
+async function reconcileReply(root: string): Promise<{ body: Json; shape: ReplyShape }> {
   const registry = new CapabilityRegistry();
   registerNativeReactiveFiberRender(registry, root);
   const journalPath = join(root, "journal.jsonl");
@@ -447,7 +487,7 @@ async function reconcileReply(root: string): Promise<Json> {
   const result = await tool.execute("rf-evaluator-reconcile", { taskId: TASK_ID, action: "evidence", position: 0, evidence: { capabilityId: PREVIEW_ID, input: RENDER_INPUT } }, undefined, undefined, ctx);
   const first = result.content[0];
   if (first?.type !== "text") throw new Error("expected one text content block");
-  return JSON.parse(first.text) as Json;
+  return { body: JSON.parse(first.text) as Json, shape: shapeOf(result) };
 }
 
 const SCRIPT = `export const meta = { name: "rf-evaluator-context", description: "wb-a9l2.6 node() bridge" };\nreturn await node(${JSON.stringify(PREVIEW_ID)}, ${JSON.stringify(RENDER_INPUT)});`;
@@ -466,6 +506,7 @@ interface Readings {
   readonly envelope: JsonObject;
   readonly curated: ToolReply;
   readonly reconcile: Json;
+  readonly reconcileShape: ReplyShape;
   readonly node: { status: string; value: Json };
   readonly spawns: number;
 }
@@ -484,9 +525,9 @@ function readings(variant: Variant): Promise<Readings> {
       process.env.PATH = standIn.dir;
       try {
         const curated = await curatedReply(root);
-        const reconcile = await reconcileReply(root);
+        const reconciled = await reconcileReply(root);
         const node = await nodeOutcome(root);
-        return { root, envelope, curated, reconcile, node, spawns: spawnCount(standIn.log) };
+        return { root, envelope, curated, reconcile: reconciled.body, reconcileShape: reconciled.shape, node, spawns: spawnCount(standIn.log) };
       } finally {
         process.env.PATH = originalPath;
         removeScratch(root, standIn.dir);
@@ -550,34 +591,118 @@ function observed(variant: Variant): { topology: Json; reply: Json } {
   return { topology: clone(topology as unknown as Json), reply: clone(reply as unknown as Json) };
 }
 
-let nativeMemo: Promise<{ ids: string[]; modes: string[][]; texts: string[] }> | undefined;
-/** The native registration's descriptors, loaded once: the ids, each one's modes and each one's JSON text. */
-function nativeDescriptors(): Promise<{ ids: string[]; modes: string[][]; texts: string[] }> {
+interface NativeDescriptors {
+  readonly ids: string[];
+  readonly modes: string[][];
+  readonly texts: string[];
+  readonly permissions: string[][];
+  readonly contracts: string[];
+}
+let nativeMemo: Promise<NativeDescriptors> | undefined;
+/** The native registration's descriptors, loaded once: the ids, each one's modes, JSON text, permissions and contractSource. */
+function nativeDescriptors(): Promise<NativeDescriptors> {
   nativeMemo ??= loadWorkbenchNative().then(native => {
     const registry = new CapabilityRegistry();
     native.registerNativeProviders(registry, REPO);
     const descriptors = registry.catalogSnapshot().map(entry => entry.descriptor);
-    return { ids: descriptors.map(item => item.id), modes: descriptors.map(item => [...item.supportedModes]), texts: descriptors.map(item => JSON.stringify(item)) };
+    return {
+      ids: descriptors.map(item => item.id), modes: descriptors.map(item => [...item.supportedModes]), texts: descriptors.map(item => JSON.stringify(item)),
+      permissions: descriptors.map(item => [...item.permissions]), contracts: descriptors.map(item => item.contractSource ?? ""),
+    };
   });
   return nativeMemo;
 }
 
-/** Every `<expr>.invoke(id, input, context)` call of src (three or more arguments), with its id argument when that is a literal. */
-function invokeSites(files: readonly string[]): string[] {
+/**
+ * Every reference to an `invoke` member in a TS text, by property access or by string-literal element access, called or not. A
+ * call is tagged by its literal first argument (else "computed"); a reference that is not called (a bind, an alias) is tagged
+ * "reference".
+ */
+function invokeReferences(label: string, text: string): string[] {
+  const source = ts.createSourceFile(label, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const sites: string[] = [];
-  for (const file of files) {
-    const source = ts.createSourceFile(file, textOf(file), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-    const visit = (node: ts.Node): void => {
-      if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression) && node.expression.name.text === "invoke" && node.arguments.length >= 3) {
-        const first = node.arguments[0];
-        sites.push(`${relative(REPO, file)}:${first !== undefined && ts.isStringLiteralLike(first) ? first.text : "computed"}`);
-      }
-      ts.forEachChild(node, visit);
-    };
-    visit(source);
-  }
-  return sites.sort();
+  const visit = (node: ts.Node): void => {
+    const member =
+      (ts.isPropertyAccessExpression(node) && node.name.text === "invoke") ||
+      (ts.isElementAccessExpression(node) && ts.isStringLiteralLike(node.argumentExpression) && node.argumentExpression.text === "invoke");
+    if (member) {
+      const call = ts.isCallExpression(node.parent) && node.parent.expression === node ? node.parent : undefined;
+      const first = call?.arguments[0];
+      const tag = call === undefined ? "reference" : first !== undefined && ts.isStringLiteralLike(first) ? first.text : "computed";
+      sites.push(`${label}:${tag}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return sites;
 }
+/** The invoke references of src files, repo-relative and sorted (row A1). */
+function invokeSites(files: readonly string[]): string[] {
+  return files.flatMap(file => invokeReferences(relative(REPO, file), textOf(file))).sort();
+}
+let listedMemo: string[] | undefined;
+/** The src paths git lists (tracked, and untracked ones git does not ignore) that exist on disk, repo-relative and sorted. */
+function listedSrc(): string[] {
+  listedMemo ??= [
+    ...new Set(
+      execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", "src"], { cwd: REPO, encoding: "utf8", env: { ...process.env, PATH: originalPath } }).split("\0"),
+    ),
+  ]
+    .filter(path => path !== "" && existsSync(join(REPO, path)))
+    .sort();
+  return listedMemo;
+}
+/** Whether a walk read every src path git lists (`.ts` only when asked), so no directory can drop out of it unseen. */
+function walkCoversGit(files: readonly string[], tsOnly: boolean): boolean {
+  const walked = new Set(files.map(file => relative(REPO, file)));
+  const listed = listedSrc().filter(path => !tsOnly || path.endsWith(".ts"));
+  return listed.length > 0 && listed.every(path => walked.has(path));
+}
+/** A literal naming the rf binary: exactly "rf", or an "rf ..." command line (conservative: an "rf ..." prose literal reads the same). */
+const RF_BINARY = /^rf(?:\s|$)/;
+/** Every string literal of a TS text that names the rf binary, tagged by the callee it is handed to (else its holder's kind). */
+function rfLaunchSites(file: string, text: string): string[] {
+  const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const sites: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if ((ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node) || ts.isTemplateHead(node)) && RF_BINARY.test(node.text)) {
+      let holder: ts.Node = ts.isTemplateHead(node) ? node.parent : node;
+      while (ts.isParenthesizedExpression(holder.parent) || ts.isAsExpression(holder.parent)) holder = holder.parent;
+      const parent = holder.parent;
+      sites.push(`${file}:${ts.isCallExpression(parent) || ts.isNewExpression(parent) ? parent.expression.getText(source) : ts.SyntaxKind[parent.kind]}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return sites;
+}
+/** The producer words naming ReactiveFiberCLI, read off a descriptor's id, a permission or its contractSource (row C2). */
+const RF_WORDS: ReadonlySet<string> = new Set(["reactivefiber", "rf"]);
+const leadWord = (text: string): string => (text.replace(/^@/, "").split(/[.:/@_-]/)[0] ?? "").toLowerCase();
+/** The descriptor facts row C2 reads rf off. */
+interface DescriptorFacts {
+  readonly id: string;
+  readonly permissions: readonly string[];
+  readonly contract: string;
+}
+/** The descriptors that name rf by id namespace, by a permission namespace, and by contractSource (producer word or rf schema). */
+function rfReadings(descriptors: readonly DescriptorFacts[]): { id: string[]; permission: string[]; contractSource: string[] } {
+  return {
+    id: descriptors.filter(item => RF_WORDS.has(leadWord(item.id))).map(item => item.id),
+    permission: descriptors.filter(item => item.permissions.some(permission => RF_WORDS.has(leadWord(permission)))).map(item => item.id),
+    contractSource: descriptors.filter(item => RF_WORDS.has(leadWord(item.contract)) || item.contract.includes(REACTIVE_FIBER_CLI_SCHEMA)).map(item => item.id),
+  };
+}
+/** CONSTRUCTED descriptors, each naming rf one way only (the last names it no way), so every reading of rfReadings is exercised. */
+const PLANTED_DESCRIPTORS: readonly DescriptorFacts[] = [
+  { id: "rf.overlay.evaluate", permissions: ["workbench:observe"], contract: "" },
+  { id: "overlay.evaluate", permissions: ["reactivefiber:render"], contract: "" },
+  { id: "overlay.score", permissions: ["workbench:observe"], contract: "rf@0.1.784:graph.test --json" },
+  { id: "overlay.check", permissions: [], contract: "cli:reactive-fiber.cli/v1 graph.test" },
+  { id: "overlay.sdk", permissions: [], contract: "@reactivefiber/sdk@1.0.0:Rf.evaluate" },
+  { id: "forge.gate.run", permissions: ["forge:inspect"], contract: "@forge/sdk@0.1.0:ServerConnection.request(gate.run)" },
+];
+const TICK = String.fromCodePoint(0x60);
 /** The src modules other than the observer's own that name reactivefiberTopology (an import, a call or a re-export). */
 function observerCallers(files: readonly string[]): string[] {
   return files
@@ -599,7 +724,9 @@ interface Spelling {
   readonly text: string;
   readonly hit: boolean;
 }
-/** M1-M9 must hit; Q1 and Q2 are R-INTERRUPTED, Q3 is R-COMPOSED (a runtime composition's source text). */
+/** A backslash, built from its code point so no escape sequence is typed here (M12-M14 spell source escapes). */
+const BACKSLASH = String.fromCodePoint(0x5c);
+/** M1-M14 must hit; Q1 and Q2 are R-INTERRUPTED, Q3 is R-COMPOSED (a runtime composition's source text), Q4 is R-SPLIT. */
 const SPELLINGS: readonly Spelling[] = [
   { pin: "M1", text: "validation_digest", hit: true },
   { pin: "M2", text: "validationDigest", hit: true },
@@ -610,9 +737,15 @@ const SPELLINGS: readonly Spelling[] = [
   { pin: "M7", text: 'command === "graph.test"', hit: true },
   { pin: "M8", text: "isGraphTest", hit: true },
   { pin: "M9", text: 'case "effects_authorized":', hit: true },
+  { pin: "M10", text: 'const grant = "reactivefiber:graph:test";', hit: true },
+  { pin: "M11", text: "schemas/graph/test", hit: true },
+  { pin: "M12", text: `"validation${BACKSLASH}u005fdigest"`, hit: true },
+  { pin: "M13", text: `"validation${BACKSLASH}u{5f}digest"`, hit: true },
+  { pin: "M14", text: `"budget${BACKSLASH}x5fgate"`, hit: true },
   { pin: "Q1", text: `validation${String.fromCodePoint(0x200b)}_digest`, hit: false },
   { pin: "Q2", text: `v${String.fromCodePoint(0x0430)}lidation_digest`, hit: false },
   { pin: "Q3", text: '["validation", "digest"].join("_")', hit: false },
+  { pin: "Q4", text: "export const sub_processes_spawned = 0;", hit: false },
 ];
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
@@ -620,16 +753,25 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   A1: async () => {
     const files = filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts"));
     const srcFloorMet = files.length >= 100;
+    const walkCovers = walkCoversGit(files, true);
+    const narrowedWalkCaught = !walkCoversGit(files.slice(1), true);
     const sites = invokeSites(files);
+    const controls = [
+      'registry.invoke("probe.id", input, context);', "const call = registry.invoke.bind(registry);",
+      'registry["invoke"]("probe.id", input, context);', "registry.invoke(id, input);",
+    ].map(text => invokeReferences("probe.ts", text));
     const unclassified = sites.map(site => site.slice(0, site.lastIndexOf(":"))).filter(file => SITE_CLASSES[file] === undefined);
     const callers = observerCallers(files);
     const observerDefined = textOf(join(REPO, OBSERVER_MODULE)).includes("export function reactivefiberTopology(");
     expect(srcFloorMet, `src modules walked: ${files.length}`).toBe(true);
+    expect(walkCovers, "the A1 walk must read every src module git lists").toBe(true);
+    expect(narrowedWalkCaught, "a walk missing one listed module must read as unequal").toBe(true);
+    expect(controls).toEqual([["probe.ts:probe.id"], ["probe.ts:reference"], ["probe.ts:probe.id"], ["probe.ts:computed"]]);
     expect(unclassified, "a new registry invoke site needs a class and, when it reaches an agent, a behavioral pin here").toEqual([]);
     expect(callers, "a src caller of the rf observer makes workflow_observe an rf composer: re-measure row A").toEqual([]);
     expect(observerDefined).toBe(true);
-    const classes = Object.fromEntries((["agent", "script", "fixed"] as const).map(name => [name, Object.keys(SITE_CLASSES).filter(file => SITE_CLASSES[file] === name).sort()]));
-    return { srcFloorMet, sites, classes, observerCallers: callers, observerDefined };
+    const classes = Object.fromEntries((["agent", "script", "fixed", "registry"] as const).map(name => [name, Object.keys(SITE_CLASSES).filter(file => SITE_CLASSES[file] === name).sort()]));
+    return { srcFloorMet, walkCoversGit: walkCovers, narrowedWalkCaught, sites, controls, classes, observerCallers: callers, observerDefined };
   },
   A2: async () => {
     const twin = await readings("absent");
@@ -671,7 +813,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect(frameLeaks).toEqual([]);
     expect(Object.hasOwn(receipt, "domainStatus"), "an rf receipt states no domain status").toBe(false);
     return {
-      producer: String(receipt.producer), capabilityId: String(receipt.capabilityId), nativeRefProvider: String(nativeRef.provider),
+      frame: twinFrame, producer: String(receipt.producer), capabilityId: String(receipt.capabilityId), nativeRefProvider: String(nativeRef.provider),
       outcome: String(receipt.outcome), domainStatus: Object.hasOwn(receipt, "domainStatus"), receiptKeys: Object.keys(receipt),
       replyKeys: Object.keys(objectOf(twin.reconcile, "reply")), verbatim, frameLeaks,
     };
@@ -705,6 +847,20 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect(surfaced).toEqual([]);
     expect(strings).toBeGreaterThanOrEqual(10);
     return { invariant, surfaced, tone: String(node.statusTone), coverage: String(snapshot.coverage), stringsRead: strings >= 10 };
+  },
+  A6: async () => {
+    const curated: ReplyShape[] = [];
+    const reconcile: ReplyShape[] = [];
+    for (const variant of VARIANTS) {
+      const found = await readings(variant);
+      curated.push(found.curated.shape);
+      reconcile.push(found.reconcileShape);
+    }
+    const control = shapeOf({ content: [{ type: "text", text: "reading" }, { type: "text", text: "rf shadow test: PASS" }], structuredContent: { label: "PASS" }, details: undefined });
+    expect(curated, "capability_invoke answers with its one text block and no other key").toStrictEqual(VARIANTS.map(() => ({ blocks: 1, keys: ["content"], defined: ["content"] })));
+    expect(reconcile, "workflow_reconcile answers with its one text block and undefined details").toStrictEqual(VARIANTS.map(() => ({ blocks: 1, keys: ["content", "details"], defined: ["content"] })));
+    expect(control).toStrictEqual({ blocks: 2, keys: ["content", "details", "structuredContent"], defined: ["content", "structuredContent"] });
+    return { curated, reconcile, control };
   },
   B1: async () => {
     const digest = sha256(JSON.stringify(SHADOW_RECEIPT));
@@ -768,12 +924,14 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     return { curatedFrames: curated.size, reconcileFrames: reconcile.size, isError, lexiconHits: hits, controlCaught: control.length === 1, guidanceFixed: guidance };
   },
   B4: async () => {
-    const replyTo = async (envelope: JsonObject): Promise<{ curated: ToolReply; reconcile: Json; spawns: number }> => {
+    const replyTo = async (envelope: JsonObject): Promise<{ curated: ToolReply; reconcile: Json; reconcileShape: ReplyShape; spawns: number }> => {
       const root = realpathSync(makeScratch("rf-evaluator-root-"));
       const standIn = standInRf(envelope);
       process.env.PATH = standIn.dir;
       try {
-        return { curated: await curatedReply(root), reconcile: await reconcileReply(root), spawns: spawnCount(standIn.log) };
+        const curated = await curatedReply(root);
+        const reconciled = await reconcileReply(root);
+        return { curated, reconcile: reconciled.body, reconcileShape: reconciled.shape, spawns: spawnCount(standIn.log) };
       } finally {
         process.env.PATH = originalPath;
         removeScratch(root, standIn.dir);
@@ -788,9 +946,12 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect(refused.curated.isError).toBe(true);
     expect(surfaced).toEqual([]);
     expect(Object.hasOwn(body, "snapshot")).toBe(false);
+    expect(refused.curated.shape).toStrictEqual({ blocks: 1, keys: ["content", "isError"], defined: ["content", "isError"] });
+    expect(refused.reconcileShape).toStrictEqual({ blocks: 1, keys: ["content", "details"], defined: ["content"] });
     return {
       curated: refused.curated.payload, isError: refused.curated.isError, reconcileOutcome: String(receipt.outcome), reconcileSnapshot: Object.hasOwn(body, "snapshot"),
       surfaced, spawns: refused.spawns, controlDiagnostic: String(objectOf(control.curated.payload, "control payload").diagnostic),
+      curatedShape: refused.curated.shape, reconcileShape: refused.reconcileShape,
     };
   },
   C1: async () => {
@@ -825,35 +986,60 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     };
   },
   C2: async () => {
-    const { ids, modes, texts } = await nativeDescriptors();
-    const rfIds = ids.filter(id => id.startsWith("reactivefiber."));
-    const rfModes = ids.flatMap((id, index) => (id.startsWith("reactivefiber.") ? (modes[index] ?? []) : []));
-    const hits = ids.filter((_, index) => VOCAB_FAMILY.test(texts[index] ?? ""));
+    const { ids, modes, texts, permissions, contracts } = await nativeDescriptors();
+    const rfBy = rfReadings(ids.map((id, index) => ({ id, permissions: permissions[index] ?? [], contract: contracts[index] ?? "" })));
+    const rfIds = [...new Set([...rfBy.id, ...rfBy.permission, ...rfBy.contractSource])].sort();
+    const rfModes = ids.flatMap((id, index) => (rfIds.includes(id) ? (modes[index] ?? []) : []));
+    const hits = ids.filter((_, index) => spelled(texts[index] ?? ""));
     const descriptorFloorMet = ids.length >= 4;
+    const controls = rfReadings(PLANTED_DESCRIPTORS);
     expect(descriptorFloorMet, `native descriptors: ${ids.join(", ")}`).toBe(true);
+    expect(rfBy, "each rf reading of the native descriptors finds the preview alone").toStrictEqual({ id: [PREVIEW_ID], permission: [PREVIEW_ID], contractSource: [PREVIEW_ID] });
     expect(rfIds).toEqual([PREVIEW_ID]);
     expect(rfModes).toEqual(["invoke"]);
     expect(hits).toEqual([]);
-    return { rfIds, rfModes, descriptorFloorMet, hits };
+    expect(controls, "each rf reading finds the planted descriptor that names rf its way").toStrictEqual({
+      id: ["rf.overlay.evaluate"], permission: ["overlay.evaluate"], contractSource: ["overlay.score", "overlay.check", "overlay.sdk"],
+    });
+    return { nativeIds: [...ids].sort(), rfIds, rfBy, rfModes, descriptorFloorMet, hits, controls };
   },
   C3: async () => {
     const base = join(REPO, "src");
     const files = filesBelow(base);
     const floorMet = files.length >= 100;
-    const hits = files.filter(file => VOCAB_FAMILY.test(textOf(file))).map(file => relative(REPO, file));
+    const walkCovers = walkCoversGit(files, false);
+    const hits = files.filter(file => spelled(textOf(file))).map(file => relative(REPO, file));
     const anchorFile = "workbench/providers/reactivefiber.ts";
     const anchorToken = "REACTIVEFIBER_RENDER_PREVIEW_CONTRACT";
     const anchorRead = files.includes(join(base, anchorFile)) && textOf(join(base, anchorFile)).includes(anchorToken);
     expect(floorMet, `src: ${files.length} files walked, floor 100`).toBe(true);
+    expect(walkCovers, "the C3 walk must read every src file git lists").toBe(true);
     expect(anchorRead, `src: the anchor ${anchorFile} was not read with ${anchorToken}`).toBe(true);
     expect(hits, "src files spelling the rf shadow-test receipt vocabulary").toEqual([]);
-    return { root: "src", floor: 100, anchorFile, anchorToken, floorMet, anchorRead, hits };
+    return { root: "src", floor: 100, anchorFile, anchorToken, floorMet, walkCoversGit: walkCovers, anchorRead, hits };
+  },
+  C4: async () => {
+    const files = filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts"));
+    const walkCovers = walkCoversGit(files, true);
+    const sites = files.flatMap(file => rfLaunchSites(relative(REPO, file), textOf(file))).sort();
+    const controls = [
+      rfLaunchSites("probe.ts", 'spawn("rf", ["--workspace", "/w", "graph", "test", "--json"]);'),
+      rfLaunchSites("probe.ts", 'execSync("rf graph test --candidate c --json");'),
+      rfLaunchSites("probe.ts", `run(${TICK}rf graph test --candidate ${"$"}{candidate}${TICK});`),
+      rfLaunchSites("probe.ts", 'const binary = ("rf" as string);'),
+    ];
+    const quiet = rfLaunchSites("probe.ts", 'spawn("rf-graph", []); const id = "rfo_planted"; const word = "rfc"; const flag = " rf";');
+    expect(walkCovers, "the C4 walk must read every src module git lists").toBe(true);
+    expect(sites, "a second literal naming rf is a second path to rf (or an rf-led prose string): classify it and re-measure rows A-C").toEqual(["src/workbench/providers/reactivefiber.ts:spawn"]);
+    expect(controls.map(found => found.length)).toEqual([1, 1, 1, 1]);
+    expect(quiet).toEqual([]);
+    return { walkCoversGit: walkCovers, sites, controls, quiet };
   },
   ...Object.fromEntries(
     SPELLINGS.map(spelling => [
       spelling.pin,
       async () => {
-        const hit = VOCAB_FAMILY.test(spelling.text);
+        const hit = spelled(spelling.text);
         expect(hit).toBe(spelling.hit);
         return { digest: sha256(spelling.text).slice(0, 16), hit };
       },
@@ -863,7 +1049,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
 
 describe("wb-a9l2.6 rf evaluator artifact context census (RF-HARNESS2-FEDERATED-PEER-R6)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:4", "C:3", "M:12"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:6", "B:4", "C:4", "M:18"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );

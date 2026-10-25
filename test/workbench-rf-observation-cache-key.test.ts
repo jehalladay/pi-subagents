@@ -29,7 +29,9 @@
  *    classified; B3 a TypeScript AST scan of every src module for a hash over an rf payload outside the one reference site; B4 the
  *    same scan for a payload reference in a key position (a Map/Set key, a JSON.stringify array key, an equality, a computed
  *    name); B5 the scans' controls; B6 equal-payload readings mint distinct reconcile receipts; B7 the cache keys on identity and
- *    never on the payload reference.
+ *    never on the payload reference; B8 (wb-l4q7, the o4h0.1 gate's F1) two equal-payload readings under two identities stay two
+ *    rows in the cache's stored count, in window(), in query() by scope and by invocation, and in the graph view built on the
+ *    window.
  *  C, acceptance (c), the factorization census FIELDS: one row per envelope field of the shared full-shape render fixture
  *    (test/helpers/rf-render-fixture.ts, held to the captured roster test/fixtures/rf-result-keys.json) plus the read-visible
  *    slices of the additive shapes the observer reads (a failure, an ok diagnostic, an observation row, a --view contract, the TSX
@@ -49,12 +51,20 @@
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` and FIELDS `${base}:${path}:${disposition}` as literals; the
  * judged set (labels, pins, witnesses, fields and justifications) is held to the out-of-file roster
  * test/fixtures/rf-observation-cache-key-roster.json; the clause letters and the family list are held to the bead's export row;
- * the field universe is held to the full-shape fixture, the captured result roster and the observer's and provider's own key
- * constants read from src.
+ * every row's pin set is held to the judged-pin table of the append-only receipt docs/workbench/receipts/wb-l4q7.md, an anchor
+ * outside this census (wb-l4q7, the o4h0.1 gate's F2: a pin removed from ROWS, the frozen literal, IMPL and the roster together
+ * still stands in that table). The full-shape rows of the field universe are held to the full-shape fixture, the captured result
+ * roster and the observer's and provider's own key constants read from src. The five additive slices are shapes this census
+ * authors (BASES), so their fields are held to the additive-slice table of the same receipt (the gate's F3) and, for both
+ * diagnostic slices, to the observer's DIAGNOSTIC_KEYS. The note member of both engine entries is planted here as an unread
+ * member, not a field the producer writes (the receipt records that read); its two rows stand for any unread engine-entry member.
  * RESIDUALS (named, each with a pinned quiet row): R-UNSHIPPED-FIELDS rf states no sensitivity and no coverage digest at the pin,
  * so Pi has none to read or key on (Q1); R-ALIASED-PAYLOAD a payload bound to a local name before it is hashed or keyed is
- * invisible to the B3/B4 text-of-argument scans (Q2), and B2's per-plane hash-site roster and the behavioral A rows are its
- * backstop inside the planes.
+ * invisible to the B3/B4 text-of-argument scans (Q2). Its backstop is bounded (wb-l4q7 narrows it, the o4h0.1 gate's F1): B2's
+ * per-plane hash-site roster reds on a new hash site in any plane module, and the behavioral rows read these paths of an
+ * equal-payload pair - refresh and re-read under one identity (the A rows); stored, window(), query() by scope and by
+ * invocation, and the graph view built on the window (B8). An aliased Map or Set key, or an aliased comparison, anywhere else -
+ * another query() filter, another plane module - is seen by neither.
  *
  * Display paths added: none. Test-only: no scratch, no spawn; src, the fixtures and the store export are only read.
  */
@@ -75,6 +85,7 @@ import {
   reactivefiberTopology,
 } from "../src/workbench/reactivefiber-observer.js";
 import { mintEvidenceReceipt } from "../src/workbench/reconcile-decision.js";
+import { docsSection, sectionTables } from "./helpers/census.js";
 import { fullShapeRf, type Json, readRfResultRoster, rfFixtureDecision } from "./helpers/rf-render-fixture.js";
 
 type JsonObject = { [key: string]: Json };
@@ -87,6 +98,17 @@ const BEAD = "wb-o4h0.1";
 const PREVIEW_ID = "reactivefiber.render.preview";
 const OBSERVER = "src/workbench/reactivefiber-observer.ts";
 const PROVIDER = "src/workbench/providers/reactivefiber.ts";
+/** wb-l4q7 (the o4h0.1 gate's F2 and F3): the append-only receipt whose two tables anchor this census from outside it. */
+const RECEIPT_PATH = join(REPO, "docs", "workbench", "receipts", "wb-l4q7.md");
+/** The rendered headings the two table sections sit under: the receipt's title and the entry that states them. */
+const RECEIPT_PARENTS: readonly string[] = [
+  "wb-l4q7: o4h0.1 census F1-F3 follow-up: aliased payload-only dedupe survives (P10/P10c), pin-level CT6 self-anchoring (B5/C4/Q2), self-anchored field universe - red-first cures",
+  "2026-10-24 the cache-key census pin set and additive-slice fields, anchored outside the census (wb-o4h0.1 gate F2 and F3)",
+];
+const PIN_SECTION = "Judged pins, wb-l4q7 cut 1";
+const PIN_HEADER: readonly string[] = ["Row", "Pin"];
+const SLICE_SECTION = "Additive-slice fields, wb-l4q7 cut 1";
+const SLICE_HEADER: readonly string[] = ["Base", "Field"];
 
 /** A fixed reading root: nothing here touches the filesystem through it. */
 const ROOT = "/workspace/rf-cache-key-census";
@@ -488,6 +510,25 @@ function snapshotOf(source: JsonObject, host: ReactiveFiberTopologyContext = HOS
   if (snapshot === undefined) throw new Error("the topology projected no snapshot");
   return snapshot;
 }
+/**
+ * The body rows of one table section of the receipt, read through the shared docs reader (test/helpers/census.ts): the section
+ * must render exactly one table and nothing else, carry no HTML (a comment or a tag) and keep its header, so a line added to the
+ * append-only receipt can neither hide a row (a comment, an HTML block, a code fence) nor split the table and restate it. A cell
+ * is the table's source text.
+ */
+function receiptTable(heading: string, header: readonly string[]): string[][] {
+  const markdown = readFileSync(RECEIPT_PATH, "utf8");
+  const where = `docs/workbench/receipts/wb-l4q7.md section "${heading}"`;
+  const section = docsSection(markdown, heading, 3, RECEIPT_PARENTS);
+  if (!section.ok) throw new Error(`${where}: ${section.why}`);
+  if (section.hasHtml) throw new Error(`${where} carries HTML, which can hide a row of its table`);
+  const kinds = section.blocks.map(block => (block.kind === "other" ? `other:${block.type}` : block.kind));
+  if (!same(kinds, ["other:table"])) throw new Error(`${where} must render exactly one table and nothing else; it renders [${kinds.join(", ")}]`);
+  const [head, ...rows] = sectionTables(markdown, heading, 3, RECEIPT_PARENTS).grids[0] ?? [];
+  if (!same(head, header)) throw new Error(`${where}: its header row is ${JSON.stringify(head ?? null)}; the census binds ${JSON.stringify(header)}`);
+  return rows.map(row => [...row]);
+}
+
 /** The parts of the projections that differ: snapshot keys, the relations, the diagnostics, the native evidence. */
 function changedParts(before: Admitted, after: Admitted): string[] {
   const left: { [key: string]: unknown } = { ...before.topology.snapshots[0] };
@@ -917,7 +958,7 @@ const ROWS: readonly Row[] = [
     id: "B",
     clause: "b",
     label: "(b) a guard over Pi's rf adapters and observation planes finds no payload-only hash key over an rf observation, and its scans report every planted key shape",
-    pins: ["B1", "B2", "B3", "B4", "B5", "B6", "B7"],
+    pins: ["B1", "B2", "B3", "B4", "B5", "B6", "B7", "B8"],
   },
   {
     id: "C",
@@ -1019,6 +1060,32 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(reading).toStrictEqual({ sameIdentityEntries: 1, storedPayload: `rf-output:${digest("7")}`, samePayloadEntries: 2 });
     return reading;
   },
+  B8: () => {
+    // wb-l4q7 (the o4h0.1 gate's F1): one payload under two identities, read back through the stored count, window(), query() by
+    // scope and by invocation, and the graph view. The gate's plants P10 (window) and P10c (query) dedupe on an aliased payload
+    // reference the B3/B4 scans cannot see.
+    const first = snapshotOf(BASES.full());
+    const second = snapshotOf({ ...BASES.full(), operation_id: OTHER_OPERATION });
+    const cache = new ObservationProjection();
+    const refreshed = [cache.refresh(first), cache.refresh(second)];
+    const ids = (nodes: readonly { readonly nativeRef: { readonly id: string } }[]): string[] => nodes.map(node => node.nativeRef.id).sort();
+    const viewport = cache.window({ scope: SCOPE, invocationId: INVOCATION, offset: 0, limit: 10 });
+    const reading = {
+      payloadEqual: first.nativePayloadRef !== undefined && first.nativePayloadRef === second.nativePayloadRef,
+      refreshed,
+      identities: [first.source.id, second.source.id].sort(),
+      stored: cache.stats().nodes,
+      window: { rows: ids(viewport.nodes), total: viewport.total },
+      byScope: ids(cache.query({ scope: SCOPE, limit: 10 }).nodes),
+      byInvocation: ids(cache.query({ scope: SCOPE, invocationId: INVOCATION, limit: 10 }).nodes),
+      view: ids(buildGraphView(cache, VIEW).nodes),
+    };
+    expect(reading.payloadEqual, "the two readings carry one payload").toBe(true);
+    expect(new Set(reading.identities).size, "under two identities").toBe(2);
+    const paths = { window: reading.window.rows, byScope: reading.byScope, byInvocation: reading.byInvocation, view: reading.view };
+    for (const [path, rows] of Object.entries(paths)) expect(rows, `${path} keeps both readings`).toStrictEqual(reading.identities);
+    return reading;
+  },
   C1: () => {
     const roster = readRfResultRoster();
     const derived = universe();
@@ -1026,6 +1093,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const provenanceKeys = [...new Set(FIELDS.filter(field => field.path.startsWith("result.provenance.")).map(field => field.path.split(".")[2] ?? ""))];
     const envelopeKeys = [...new Set(FIELDS.filter(field => field.base === "full" && !field.path.startsWith("result.")).map(field => field.path.split(".")[0] ?? ""))].sort();
     const diagnosticKeys = FIELDS.filter(field => field.base === "failure").map(field => field.path.split(".")[1] ?? "");
+    const okDiagnosticKeys = FIELDS.filter(field => field.base === "diagnostic").map(field => field.path.split(".")[1] ?? "");
+    const slices = FIELDS.filter(field => field.base !== "full").map(field => [field.base, field.path]);
     const engineEntries = [...new Set(FIELDS.filter(field => field.base === "engine").map(field => field.path.split(".")[3] ?? ""))];
     const workKeys = FIELDS.filter(field => field.path.startsWith("result.work.")).map(field => field.path.split(".")[2] ?? "");
     expect(FIELDS.map(field => field.id), "the census rows are exactly the field universe").toStrictEqual(derived);
@@ -1035,12 +1104,16 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect([...envelopeKeys, "result"].sort()).toStrictEqual([...stringConstant(OBSERVER, "ENVELOPE_KEYS")].sort());
     expect([...envelopeKeys, "result"].sort()).toStrictEqual([...stringConstant(PROVIDER, "RF_KEYS")].sort());
     expect(diagnosticKeys).toStrictEqual(stringConstant(OBSERVER, "DIAGNOSTIC_KEYS"));
+    expect(okDiagnosticKeys).toStrictEqual(stringConstant(OBSERVER, "DIAGNOSTIC_KEYS"));
+    // wb-l4q7 (the o4h0.1 gate's F3): the additive slices, which this census authors, held to the receipt's slice table.
+    expect(slices, "the additive-slice fields stand in the receipt's slice table").toStrictEqual(receiptTable(SLICE_SECTION, SLICE_HEADER));
     expect(engineEntries).toStrictEqual(stringConstant(OBSERVER, "ENGINE_KEYS"));
     expect(workKeys).toStrictEqual(stringConstant(OBSERVER, "WORK_KEYS"));
     expect(workKeys).toStrictEqual(roster.workKeys);
     return {
       rows: FIELDS.length, byBase: Object.fromEntries((Object.keys(BASES) as BaseId[]).map(base => [base, FIELDS.filter(field => field.base === base).length])),
       resultKeys: resultKeys.length, rosterRfVersion: roster.rfVersion, envelopeKeys, diagnosticKeys, engineEntries, workKeys: workKeys.length,
+      anchoredSlices: slices.length,
     };
   },
   C2: () => {
@@ -1155,8 +1228,10 @@ function rosterWitness(pin: string): Json {
 }
 
 describe("wb-o4h0.1 rf observation cache-key census (RF-FEDERATED-WORKSPACES-R1)", () => {
-  it("the judged set: the frozen shapes, the out-of-file roster, the bead's export row and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:8", "B:7", "C:5", "D:1", "Q:2"]);
+  it("the judged set: the frozen shapes, the out-of-file roster, the receipt's judged-pin table, the bead's export row and the cases agree", () => {
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:8", "B:8", "C:5", "D:1", "Q:2"]);
+    // wb-l4q7 (the o4h0.1 gate's F2): every row's pins, in order, held to the receipt's judged-pin table outside this census.
+    expect(ROWS.flatMap(row => row.pins.map(pin => [row.id, pin])), "the pins stand in the receipt's judged-pin table").toStrictEqual(receiptTable(PIN_SECTION, PIN_HEADER));
     expect(ROWS.map(({ id, clause, label, pins }) => ({ id, clause, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, clause, label, pins }) => ({ id, clause, label, pins: pins.map(pin => pin.id) })),
     );

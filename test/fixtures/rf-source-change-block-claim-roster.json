@@ -3738,13 +3738,20 @@
        "negativeUnchanged": 0,
        "residualComposed": 0,
        "residualFar": 0,
-       "residualVocabulary": 0
+       "residualVocabulary": 0,
+       "windowEdge": 1,
+       "residualPastWindow": 0
       }
      }
     },
     {
      "id": "A2",
      "witness": {
+      "floors": {
+       "modules": true,
+       "literals": true,
+       "identifiers": true
+      },
       "renderArgvSeen": true,
       "argv": [],
       "literals": [],
@@ -3781,6 +3788,34 @@
         "composedArgv": 1
        },
        "residualAliased": {
+        "hits": 0,
+        "composedArgv": 0
+       },
+       "interleavedFlag": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "interleavedValue": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "interleavedLiteral": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "camelField": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "precisionFlagValue": {
+        "hits": 1,
+        "composedArgv": 0
+       },
+       "residualComposedInterleaved": {
+        "hits": 0,
+        "composedArgv": 1
+       },
+       "residualAssembled": {
         "hits": 0,
         "composedArgv": 0
        }
@@ -4219,25 +4254,67 @@
        "joined": 1,
        "emphasis": 1,
        "comment": 1,
-       "references": 1
+       "references": 1,
+       "windowEdge": 1,
+       "intrawordEmphasis": 1,
+       "intrawordCode": 1,
+       "intrawordStrike": 1,
+       "intrawordHtml": 1,
+       "intrawordLink": 1,
+       "zeroWidthReference": 1,
+       "softHyphenReference": 1,
+       "zeroWidthRaw": 1,
+       "combiningMark": 1,
+       "fullwidth": 1,
+       "homoglyph": 1,
+       "homoglyphBlock": 1,
+       "homoglyphAttribute": 1,
+       "bidiOverride": 1,
+       "lookalikeSymbol": 1,
+       "lookalikeEdge": 1
       },
       "quiet": {
        "receiptSources": 0,
        "unchanged": 0,
-       "diffReads": 0
+       "diffReads": 0,
+       "pastWindowEdge": 0
       },
       "residuals": {
        "R-ACROSS": 0,
        "R-FAR": 0,
        "R-VOCABULARY": 0,
-       "R-ENCODED": 0
+       "R-ENCODED": 0,
+       "R-ENCODED-NAMED": 0,
+       "R-SPACED": 0
       },
-      "denial": 1
+      "denial": 1,
+      "foreign": {
+       "letter": 1,
+       "symbol": 1
+      }
      }
     }
    ]
   }
  ],
+ "readers": {
+  "nativeReactiveFiberPreview": "native",
+  "nativeReactiveFiberRender": "native",
+  "reactivefiberTopology": "adapter",
+  "registerNativeReactiveFiberRender": "native",
+  "registerReactiveFiberRender": "registered"
+ },
+ "clauseFixtures": {
+  "a": [
+   "explainSource",
+   "planSource",
+   "impactRefusal"
+  ],
+  "b": [
+   "diffSourceOnly",
+   "diffContent"
+  ]
+ },
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster and the cases agree",
   "A1",
@@ -4255,5 +4332,21 @@
   "D1",
   "D2",
   "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
+ ],
+ "reached": [
+  "A1:7",
+  "A2:6",
+  "A3:5",
+  "B1:10",
+  "B2:17",
+  "B3:14",
+  "B4:8",
+  "B5:14",
+  "C1:6",
+  "C2:8",
+  "C3:8",
+  "C4:16",
+  "D1:5",
+  "D2:7"
  ]
 }

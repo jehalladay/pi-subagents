@@ -26,12 +26,25 @@
  *      require is pinned on every rf launch src makes today: the LAUNCHES rows judge scanRfLaunches, the live row finds no rf launch
  *      setting detached: true and no rf child unref'd, and the process-tree row shows the rf child of a settled read is gone.
  *
+ * Walk anchors (wb-dbpa, the R694 follow-up of the landing-265 gate: F1 lead, F2 and F4 riders). Every whole-tree walk is held
+ * three ways. (1) Exact set: the two src walks read their file list off their own scans and hold it to an independent recursive
+ * listing of src/, so narrowing a walk, or filtering it between its listing and its scans, reds; the test/qa walk holds its
+ * listing the same way and its read list to every .json and module file. (2) Root floors (WALK_FLOORS): under each root the files
+ * a walk read number at least the root's floor (src 100, test 500, qa 50, each below the count measured at trunk c27bd4b: src
+ * 115 of 115 read, test 572 of 598, qa 63 of 67) and include the root's anchor file, holding its token, so a root dropped from or
+ * narrowed in a walk AND its exact-set anchor together still reds, and an additive change does not. (3) Content floors: the
+ * preview's context render argv and its rf launch, the landed context render success envelopes and the captured version
+ * envelope. The four slow live rows (both src walks, the descriptor load and the test/qa walk) register WALK_BUDGET_MS, never
+ * vitest's 5000 ms default, and the roster row reads each row's timeout off vitest's task tree.
+ *
  * Residual families, each named with a pinned quiet row: R-COMPUTED-LEAF and R-SEPARATED-LEAF (source scan), R-INDIRECT-LAUNCH
  * (launch scan), R-INDIRECT-ENVELOPE and R-UNREAD-KIND (fabrication scan: .md and .sh files are not read).
  *
  * Rule 16: the frozen-shape row pins every judged row as table/id:case count, and test/fixtures/rf-workspace-family-roster.json
  * (the hk9l/5jha/1xvp.4 roster pattern) is the out-of-file anchor: every judged row (table, id, label, SHA-256 of each case), the
- * residual families and every registered test title, judged by this file's last row in order and both ways.
+ * residual families and every registered test title, judged by this file's last row in order and both ways. The family list is
+ * anchored outside this file and its roster: the anchor row reads it from the owner filing's title in the tracked bead export
+ * (.beads/issues.jsonl, row wb-o4h0.3), so a hollow that drops a leaf from every literal here and regenerates the roster reds.
  *
  * Display paths added: none. This file is test-only.
  */
@@ -70,6 +83,29 @@ const ROSTER = "test/fixtures/rf-workspace-family-roster.json";
 const PREVIEW = "src/workbench/providers/reactivefiber.ts";
 /** The fixture kinds the fabrication walk reads, by extension (envelopeKind's json and module kinds). */
 const READ_KIND = /\.(?:json|[cm]?ts|[cm]?js)$/;
+/** The tracked bead export and this census's row in it: the owner filing, an anchor outside this file and its roster. */
+const BEAD_EXPORT = ".beads/issues.jsonl";
+const BEAD = "wb-o4h0.3";
+/** The owner filing's title names the family once, as `the proposed rf workspace <leaf>|...|<leaf> family`. */
+const FILING_FAMILY = /\bthe proposed rf workspace ((?:[a-z]+\|)+[a-z]+) family\b/g;
+/** The budget the slow live rows register (landing-265 gate F4: 1649 ms and 931 ms in-gate under the 5000 ms default, one PREP-measured timeout at load1 ~292). */
+const WALK_BUDGET_MS = 60_000;
+/**
+ * Each walk root's floor: under the root, the files a walk read number at least `floor` and include `anchorFile`, whose text holds
+ * `anchorToken`. Each floor sits below the count measured at trunk c27bd4b (src 115 read of 115 files, test 572 of 598, qa 63 of 67);
+ * each anchor sits outside the subtrees that hold the content floors (src/workbench, test/fixtures), so a walk narrowed to one of
+ * them loses its anchor even when its count floor is lowered with it.
+ */
+const WALK_FLOORS = {
+  src: { floor: 100, anchorFile: "src/index.ts", anchorToken: "export default function" },
+  test: { floor: 500, anchorFile: "test/source-hygiene.test.ts", anchorToken: "wb-era" },
+  qa: { floor: 50, anchorFile: "qa/workbench/receipts-index.mjs", anchorToken: "docs/workbench/receipts" },
+} as const;
+/** The slow live rows, by title: the roster row holds them, and only them, to WALK_BUDGET_MS. */
+const SRC_WALK = "live (b): no src file spells a family argv or literal; the walk is every regular file under src/ and reaches the preview's argv";
+const DESCRIPTOR_WALK = "live (b): no registered native capability descriptor names the family";
+const FIXTURE_WALK = "live (b): no file under test/ or qa/ fabricates a family success envelope; the walk reads every .json and module file there";
+const LAUNCH_WALK = "live (c)/(d): no src rf launch sets detached: true and no rf child is unref'd; the walk is every regular file under src/ and reaches the preview's launch";
 
 interface Capture {
   readonly source: string;
@@ -90,6 +126,24 @@ function listedFiles(dir: string): string[] {
     .map(name => `${dir}/${name.split("\\").join("/")}`)
     .filter(rel => statSync(join(ROOT, rel)).isFile())
     .sort();
+}
+
+/** Holds one root of a walk to its floor: the files read under the root meet the count floor and include the anchor file, holding its token. */
+function expectWalkFloor(root: keyof typeof WALK_FLOORS, read: readonly string[]): void {
+  const { floor, anchorFile, anchorToken } = WALK_FLOORS[root];
+  const under = read.filter(rel => rel.startsWith(`${root}/`));
+  expect(under.length >= floor, `${root}: ${under.length} files read, floor ${floor}`).toBe(true);
+  expect(under.includes(anchorFile) && readFileSync(join(ROOT, anchorFile), "utf8").includes(anchorToken), `${root}: the walk read ${anchorFile}, holding ${anchorToken}`).toBe(true);
+}
+
+/** The title of this census's row in the tracked bead export; throws when the export holds no such row. */
+function filingTitle(): string {
+  for (const line of readFileSync(join(ROOT, BEAD_EXPORT), "utf8").split("\n")) {
+    if (!line.includes(`"${BEAD}"`)) continue;
+    const row: unknown = JSON.parse(line);
+    if (row !== null && typeof row === "object" && "id" in row && row.id === BEAD && "title" in row && typeof row.title === "string") return row.title;
+  }
+  throw new Error(`the tracked bead export holds no ${BEAD} row`);
 }
 
 function envelopeCounts(file: string, text: string): { readonly family: number; readonly successes: number } {
@@ -183,15 +237,16 @@ describe("rf workspace family census (wb-o4h0.3, RF-FEDERATED-WORKSPACES-R4)", (
     expect({ verdict: verdict.verdict, leaves: verdict.leaves, served: verdict.served, planned: verdict.planned }).toEqual({ verdict: "absent", leaves: 79, served: [], planned: [] });
   });
 
-  it("live (b): no src file spells a family argv or literal; the walk is every regular file under src/ and reaches the preview's argv", () => {
-    const files = srcFiles(ROOT);
-    expect([...files].sort(), "the walk equals an independent recursive listing of src/").toEqual(listedFiles("src"));
-    const scans = files.map(rel => scanFamilySource(rel, readFileSync(join(ROOT, rel), "utf8")));
+  it(SRC_WALK, { timeout: WALK_BUDGET_MS }, () => {
+    const scans = srcFiles(ROOT).map(rel => ({ rel, ...scanFamilySource(rel, readFileSync(join(ROOT, rel), "utf8")) }));
+    const read = scans.map(scan => scan.rel);
+    expect([...read].sort(), "the walk scanned exactly an independent recursive listing of src/").toEqual(listedFiles("src"));
+    expectWalkFloor("src", read);
     expect({ argv: scans.flatMap(scan => scan.argv), literals: scans.flatMap(scan => scan.literals) }).toEqual({ argv: [], literals: [] });
     expect(scans.flatMap(scan => scan.renderArgv).some(site => site.startsWith(`${PREVIEW}:`)), "the walk reached the preview's context render argv").toBe(true);
   });
 
-  it("live (b): no registered native capability descriptor names the family", { timeout: 60_000 }, async () => {
+  it(DESCRIPTOR_WALK, { timeout: WALK_BUDGET_MS }, async () => {
     const native = await loadWorkbenchNative();
     const registry = new CapabilityRegistry();
     native.registerNativeProviders(registry, ROOT);
@@ -202,7 +257,7 @@ describe("rf workspace family census (wb-o4h0.3, RF-FEDERATED-WORKSPACES-R4)", (
     expect(spellsFamily(JSON.stringify({ ...descriptors[0], id: "reactivefiber.workspace.read" }))).toBe(true);
   });
 
-  it("live (b): no file under test/ or qa/ fabricates a family success envelope; the walk reads every .json and module file there", { timeout: 60_000 }, () => {
+  it(FIXTURE_WALK, { timeout: WALK_BUDGET_MS }, () => {
     const files = [...srcFiles(ROOT, "test"), ...srcFiles(ROOT, "qa")];
     expect([...files].sort(), "the walk equals an independent recursive listing of test/ and qa/").toEqual([...listedFiles("test"), ...listedFiles("qa")].sort());
     const family: string[] = [];
@@ -222,6 +277,9 @@ describe("rf workspace family census (wb-o4h0.3, RF-FEDERATED-WORKSPACES-R4)", (
     // The floor: the walk reached the landed context render success envelopes in modules and the captured version envelope in JSON.
     expect(successes.some(entry => entry.endsWith(" context.render"))).toBe(true);
     expect(successes).toContain(`${CAPTURE}#/envelope version`);
+    // The root floors: a root dropped from or narrowed in the walk and its exact-set anchor together reds here.
+    expectWalkFloor("test", read);
+    expectWalkFloor("qa", read);
   });
 
   it("live (b): the rf wrapper maps an exit-2 pending-leaf refusal to typed unavailable and the captured unknown-leaf refusal to typed transport, each in one spawn naming no family leaf", async () => {
@@ -241,8 +299,11 @@ describe("rf workspace family census (wb-o4h0.3, RF-FEDERATED-WORKSPACES-R4)", (
     }
   });
 
-  it("live (c)/(d): no src rf launch sets detached: true and no rf child is unref'd; the walk reaches the preview's launch", () => {
-    const scans = srcFiles(ROOT).map(rel => scanRfLaunches(rel, readFileSync(join(ROOT, rel), "utf8")));
+  it(LAUNCH_WALK, { timeout: WALK_BUDGET_MS }, () => {
+    const scans = srcFiles(ROOT).map(rel => ({ rel, ...scanRfLaunches(rel, readFileSync(join(ROOT, rel), "utf8")) }));
+    const read = scans.map(scan => scan.rel);
+    expect([...read].sort(), "the launch walk scanned exactly an independent recursive listing of src/").toEqual(listedFiles("src"));
+    expectWalkFloor("src", read);
     expect({ detached: scans.flatMap(scan => scan.detached), unref: scans.flatMap(scan => scan.unref) }).toEqual({ detached: [], unref: [] });
     expect(scans.flatMap(scan => scan.launches).some(site => site.startsWith(`${PREVIEW}:`)), "the walk reached the preview's rf launch").toBe(true);
   });
@@ -259,6 +320,12 @@ describe("rf workspace family census (wb-o4h0.3, RF-FEDERATED-WORKSPACES-R4)", (
       state = (error as NodeJS.ErrnoException).code ?? "unknown";
     }
     expect(state).toBe("ESRCH");
+  });
+
+  it("anchor: the family is the list the owner filing names, read from its row in the tracked bead export (.beads/issues.jsonl, wb-o4h0.3)", () => {
+    const named = [...filingTitle().matchAll(FILING_FAMILY)].map(match => (match[1] ?? "").split("|"));
+    expect(named, "the filing's title names the family exactly once").toHaveLength(1);
+    expect(RF_WORKSPACE_FAMILY, "the census family equals the filing's list, leaf for leaf and in order").toEqual(named[0]);
   });
 
   it("rule 16: every judged row is frozen at its measured shape", () => {
@@ -307,10 +374,10 @@ describe("rf workspace family census (wb-o4h0.3, RF-FEDERATED-WORKSPACES-R4)", (
     expect(ROWS, "the judged rows, read now, equal the roster rows exactly and in order").toEqual(roster.rows);
     expect(RESIDUAL_FAMILIES, "the named residual families equal the roster's").toEqual(roster.residuals);
     for (const member of Object.values(RESIDUAL_FAMILIES).flat()) expect(ROWS.some(entry => entry.test === member), `${member} is a judged row`).toBe(true);
-    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
+    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly timeout: number; readonly self: boolean }[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {
       for (const child of tasks) {
-        if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
+        if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, timeout: child.timeout, self: child === task });
         else if (child.type === "suite") walk(child.tasks);
       }
     };
@@ -319,6 +386,10 @@ describe("rf workspace family census (wb-o4h0.3, RF-FEDERATED-WORKSPACES-R4)", (
     expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual(roster.tests);
     expect(roster.tests.slice(0, ROWS.length), "each judged row registers its own test, in row order").toEqual(ROWS.map(entry => entry.test));
     expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice (an alias or a decoy)").toEqual([]);
+    expect(
+      walked.filter(entry => entry.timeout === WALK_BUDGET_MS).map(entry => entry.name),
+      "the four slow live rows, and only they, register the walk budget (never vitest's 5000 ms default)",
+    ).toEqual([SRC_WALK, DESCRIPTOR_WALK, FIXTURE_WALK, LAUNCH_WALK]);
     const here = walked.findIndex(entry => entry.self);
     expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
     const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
