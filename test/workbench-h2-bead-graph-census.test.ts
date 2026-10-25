@@ -49,8 +49,8 @@
  *    T3 Pi's beads reader, driven through a recording seam with the gate's snapshot row closed and ruled in its notes, calls show
  *    alone, keeps the creation title and no description, notes, close-reason or labels, and the reference reader reads no verdict
  *    from what it keeps; T4 the walked roots' files spelling a verdict word (VERDICT_WORDS: ADOPT or REJECT, case-sensitive, at word
- *    bounds) are exactly GATE_READERS, the Pi surfaces that read a gate verdict, and this file imports every one of them (A4, B6,
- *    C5 and D3 drive it).
+ *    bounds; in a script file its code only, comments and JSDoc unread, wb-k888) are exactly GATE_READERS, the Pi surfaces that
+ *    read a gate verdict, and this file imports every one of them (A4, B6, C5 and D3 drive it; the drive record holds them to it).
  *  A, acceptance (a). A1 Pi's store as its tracked export: a floor of rows read, this bead's row read, no row with a gated wp label,
  *    any wp:tsx-h2- label or an rftsx id; A2 no gate text Pi can reach reads ADOPT (no gate row in Pi's store; the producer's gate
  *    row reads no-verdict, the substring count reads ADOPT - F-1); A3 packetViolations, the guard a Pi bead machine must meet, over
@@ -63,13 +63,16 @@
  *    (closure, labels, close reason, substring count, first of many, case-folded); B5 the creation title and every listed
  *    alternative form read no-verdict while the substring count reads ADOPT; B6 the program readiness reader's gate verdict, driven
  *    through its bd seams: the judge over READER_CASES passes it, and it equals the reference's on every B1-B3 and B5 input, on R5's
- *    case variants and on the seven gate-authored inputs of the wb-4nut.5 cut #1 gate's paired probe (PAIRED_INPUTS).
+ *    case variants and on the seven gate-authored inputs of the wb-4nut.5 cut #1 gate's paired probe (PAIRED_INPUTS); on the
+ *    READER_ONLY rows (a text field that is not a string) the reader alone reads unknown (store unreachable) where the reference
+ *    reads a verdict (wb-k888), so a case that swaps in the reference changes them.
  *  C, acceptance (c). The reference compile step compileGated over the vendored gated list: C1 REJECT and DEFER create no bead and
  *    archive the five packets with their verdict; C2 ADOPT creates the five under the epic, each with one `related` edge to the gate
  *    and no family: label; C3 no verdict creates and archives nothing; C4 judgeCompile refuses each mutant (creating without ADOPT,
  *    a skipped or extra archive, a blocks edge, a draft outside the epic, a family: label, a dropped packet); C5 the program
  *    readiness reader's verdict compiles as the reference's (judgeCompile passes it for REJECT, DEFER, ADOPT and no-verdict gates)
- *    and the reader refuses a blocks edge from a packet to its gate: a premise is a `related` edge.
+ *    and the reader refuses a blocks edge from a packet to its gate: a premise is a `related` edge; an unreadable gate (READER_ONLY's
+ *    titled row) reads unknown and compiles nothing, so against the reference's ADOPT the judge names exactly c:packets (wb-k888).
  *  D, acceptance (d). D1 Pi's store holds no program-labelled bead and no family: label; the producer's six program-labelled rows
  *    carry none while rftsx-auqdi reads open; D2 familyViolations over constructed stores; D3 the program readiness reader writes
  *    nothing: over a store whose epic carries a family: label while rftsx-auqdi is open it reads through show and dependents
@@ -81,26 +84,37 @@
  *  F, the owner filing: F1 wb-4nut.4's row in the tracked bead export carries every FILING_CONSTANTS entry and an acceptance whose
  *    "(x) ..." clauses are exactly rows A-D, each label equal to its clause.
  *  M, the matchers: MH1-MH6 hit the H2 family, MW1-MW9 the bd write family, MG1-MG3 the prerequisites.
- *  R, the named residuals, each with a pinned quiet row: R1 R-COMPOSED an id or a bd argv assembled at runtime; R2 R-GENERIC-RUNNER
+ *  R, the named residuals, each with a pinned quiet row: R1 R-COMPOSED an id, a bd argv or a verdict word assembled at runtime
+ *    (the composed verdict word is T4's escape, wb-k888); R2 R-GENERIC-RUNNER
  *    a launch whose command and argv come from data; R3 R-TEST-TREE test/ is not walked (it quotes bd writes and names the program
  *    in censuses, this file included); R4 R-TRACKER-DATA the export and the interactions log are data, not surfaces (the export's
  *    wb-4nut rows name the program); R5 R-CASE-VARIANT a ruling in another letter case reads no-verdict (verbatim); R6
- *    R-ALTERNATIVE-UNLISTED an alternative joined by a word MARKER does not list reads as a marker (the one known false-ADOPT
- *    form); R7 R-DEFER-UNREAD (F-2); R8 R-OTHER-FIELD a marker only in design, acceptance_criteria or close_reason is not read; R9
+ *    R-ALTERNATIVE-UNLISTED an alternative joined by a word MARKER does not list reads as a marker (a known false-ADOPT form; R13
+ *    is the other); R7 R-DEFER-UNREAD (F-2); R8 R-OTHER-FIELD a marker only in design, acceptance_criteria or close_reason is not read; R9
  *    R-SNAPSHOT the census reads the export and the vendored map, never a live store (a bead filed after the last export is
  *    invisible here: 707 live against 706 exported at the cut); R10 R-OTHER-STORE an H2 bead in another store (a hosted agent's
  *    shell in the rftsx checkout) is invisible to A1; R11 R-BD-INTEGRATION bd's own hook verbs (hooks run, codex-hook) sync the
  *    tracker and are not write spellings; R12 R-PROSE-RECORDS docs/, new-feedback/ and vendor/ are prose and records T1 does not
- *    walk, and G1 reads docs but its receipts, which quote bead titles (a later wb-4nut receipt names the program by its title).
- * OUTSIDE ANCHORS: F1 (the bead export: rows A-D), A1 and D1 (the export's rows), T1-T2, T4 and G1 (the walked trees), T3
- * (readBeadsWork itself), A4, B6, C5 and D3 (readBeadsProgramReadiness itself). Every other pin is held by the roster alone, so removing it from every literal at once stays green: the
- * seat measured that for P4 and R5 and names it here rather than claim otherwise. The out-of-file roster
+ *    walk, and G1 reads docs but its receipts, which quote bead titles (a later wb-4nut receipt names the program by its title);
+ *    R13 R-NEGATED-PROSE a negated marker inside prose ('not yet ruled ADOPT') reads ADOPT under the reference and the program
+ *    readiness reader alike (the wb-4nut.5 census pins it as its gate form G08); R14 R-COORDINATED-PIN a pin removed from every
+ *    literal at once (ROWS, IMPL, the roster and the frozen count) stays green unless something outside this file and the roster
+ *    requires it: the drive record requires T4's walk and the A4, B6, C5 and D3 drives of each walked gate reader, and a
+ *    single-pin row's describe empties; every other pin, a paired input or an A4 gate state is held by the roster alone (R14
+ *    derives the held and quiet pins from the run).
+ * OUTSIDE ANCHORS of a pin's witness: F1 (the bead export: rows A-D), A1 and D1 (the export's rows), T1-T2, T4 and G1 (the walked
+ * trees), T3 (readBeadsWork itself), A4, B6, C5 and D3 (readBeadsProgramReadiness itself). An anchor of a witness is no anchor of
+ * the pin: removing T1, T3, A1 or D1 from every literal at once stays green like any roster-held pin (the landing-381 F18
+ * measurement, R14). THE DRIVE RECORD (wb-k888) anchors T4, A4, B6, C5 and D3 themselves: each case runs with its pin recorded,
+ * and the closing case holds every gate reader the walk finds to a T pin's walk and a drive from each of rows A, B, C and D. The
+ * seat measured P4 and R5 as roster-held and names them here rather than claim otherwise. The out-of-file roster
  * test/fixtures/h2-bead-graph-roster.json holds every row's id, label and pins, every pin's witness, the pinned constants and the
  * vendored producer lines; FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal.
  * SCOPE: readGateVerdict, packetViolations, compileGated and familyViolations are the rule a future Pi bead machine must meet, not a
  * bead machine: nothing here spawns bd, writes a store or reads a live one. A later cut that adds a Pi surface reading the gate or
  * writing beads brings it under rows A-D and re-pins T. wb-4nut.5's respin did so for the program readiness reader (fake bd
- * seams, no live store): a later gate reader joins GATE_READERS and the A4, B6, C5 and D3 drives; a bead writer re-pins T again.
+ * seams, no live store): a later gate reader joins GATE_READERS and the A4, B6, C5 and D3 drives (the drive record reds until it
+ * does); a bead writer re-pins T again.
  *
  * Display paths added: none. Test-only: nothing is spawned or written; the repository files read are only read.
  */
@@ -108,9 +122,10 @@ import { createHash } from "node:crypto";
 import { type Dirent, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { type BeadsReadClient, type BeadsShowCall, type BeadsShowResult, readBeadsWork } from "../src/workbench/beads-observer.js";
-import { type BeadsProgramClient, type BeadsProgramReadiness, readBeadsProgramReadiness } from "../src/workbench/beads-program-readiness.js";
+import { type BeadsProgramClient, type BeadsProgramReadiness, readBeadsProgramReadiness, STORE_UNREACHABLE } from "../src/workbench/beads-program-readiness.js";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
 
 type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
@@ -198,6 +213,31 @@ const VERDICT_WORDS = /(?<![\w-])(?:ADOPT|REJECT)(?![\w-])/;
 /** T4's binding: every Pi surface that reads a gate verdict (wb-4nut.5's program readiness reader). Each is imported here and
  * driven by A4, B6, C5 and D3; a walked file spelling a verdict word outside this list reds T4. */
 const GATE_READERS: readonly string[] = ["src/workbench/beads-program-readiness.ts"];
+/** T4 reads a script file's code only (wb-k888, the landing-381 F20 false red: a comment spelling REJECT read as a reader): the
+ * tokens the TypeScript parser reads, comments and JSDoc left out. Any other walked file is read whole: an instruction file
+ * that spells a verdict word reads as a reader. */
+const SCRIPT_FILE = /\.(?:[cm]?[jt]s|[jt]sx)$/;
+function codeOf(path: string, text: string): string {
+  const kind = path.endsWith(".tsx") ? ts.ScriptKind.TSX : path.endsWith(".jsx") ? ts.ScriptKind.JSX : /\.[cm]?js$/.test(path) ? ts.ScriptKind.JS : ts.ScriptKind.TS;
+  const file = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, kind);
+  const tokens: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isJSDoc(node)) return;
+    const children = node.getChildren(file);
+    if (children.length === 0) tokens.push(node.getText(file));
+    else for (const child of children) visit(child);
+  };
+  visit(file);
+  return tokens.join(" ");
+}
+/** T4's reading of one text: a verdict word in its code (a script file) or anywhere in it (any other walked file). */
+const spellsVerdict = (path: string, text: string): boolean => VERDICT_WORDS.test(text) && (!SCRIPT_FILE.test(path) || VERDICT_WORDS.test(codeOf(path, text)));
+/** The drive record (wb-k888, the landing-381 F18 coordinated hollows): the pin whose case is running, each gate reader's
+ * driving pins by the reader's path, and the pins that ran T4's walk. The closing case holds rows T and A-D to the walk. */
+let running: string | undefined;
+const DRIVES = new Map<string, Set<string>>();
+const WALKERS = new Set<string>();
+const PROGRAM_READER = "src/workbench/beads-program-readiness.ts";
 /** B6's paired inputs: the seven gate-authored gate texts of the wb-4nut.5 cut #1 gate's paired probe (PREP, run g10-gate-s62),
  * verbatim; the probe compared that cut's reader with readGateVerdict on them and read six divergences (owner ruling R727). */
 const PAIRED_INPUTS: readonly { readonly id: string; readonly fields: JsonObject }[] = [
@@ -210,6 +250,10 @@ const PAIRED_INPUTS: readonly { readonly id: string; readonly fields: JsonObject
   { id: "padded-crlf", fields: { notes: "Owner ruling recorded.\r\n  ruled ADOPT  \r\nAPI-PIN.md landed." } },
 ];
 
+/** B6 and C5's reader-only rows (wb-k888, the landing-381 F19 liveness-only substitutions): gate texts the store returns with a
+ * text field that is not a string. The program reader reads them unknown (store unreachable); the reference, which reads string
+ * fields only, reads a verdict. Only the reader itself reads these rows, so a case that swaps in the reference changes them. */
+const READER_ONLY: readonly JsonObject[] = [{ notes: 7 }, { title: "gate - ruled ADOPT", notes: 7 }];
 /** sha256 of each vendored block, newline-terminated lines: `git -C <ReactiveFiberTSXSDK> show 76bbbffd9d4a:<path> | sed -n '<lines>p'`. */
 const EXCERPT_SHA256: Readonly<Record<string, string>> = {
   storeRead: "6caa3b6c1b914cacb0ba4e723baf081fd3702565fa6b5a3971b10a1eaceec746",
@@ -346,8 +390,8 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "R",
-    label: "the named residuals R1-R12 stay pinned quiet",
-    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12"],
+    label: "the named residuals R1-R14 stay pinned quiet",
+    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14"],
   },
 ];
 
@@ -509,6 +553,13 @@ function writeScan(scan: ScanRoot): { readonly walk: Walk; readonly spellings: s
   });
   return { walk, spellings };
 }
+
+/** T4's walk: the walked roots' files whose code spells a verdict word, recorded for the pin that runs it. */
+function gateReaderWalk(): string[] {
+  if (running !== undefined) WALKERS.add(running);
+  return PROGRAM_SCANS.flatMap(scan => walked(scan, filesOf(scan)).files.filter(file => spellsVerdict(file, textOf(file))).map(rel)).sort();
+}
+const rowOf = (pin: string): string => ROWS.find(row => row.pins.includes(pin))?.id ?? "";
 
 // --- the bead export --------------------------------------------------------------------------------------------------
 
@@ -683,7 +734,7 @@ interface Compiled {
 }
 /** The reference compile step: ADOPT creates every packet under the epic with one `related` edge to its gate; DEFER and REJECT
  * archive every packet with the verdict; anything else leaves the list gated. No family: label is ever minted (the ruling's). */
-function compileGated(verdict: CompileVerdict, packets: readonly Packet[]): Compiled {
+function compileGated(verdict: CompileVerdict | typeof STORE_UNREACHABLE, packets: readonly Packet[]): Compiled {
   if (verdict === "ADOPT") {
     return { created: packets.map(packet => ({ key: packet.key, parent: EPIC, labels: [PROGRAM_LABEL, `wp:${packet.key.toLowerCase()}`], edges: [{ type: "related", to: GATE }] })), archived: [] };
   }
@@ -808,6 +859,7 @@ function programClient(store: readonly StoreBead[]): { readonly client: BeadsPro
 /** readBeadsProgramReadiness over a modeled store, host-bound to a fixture workspace; the host binds readBeadsWork as its work
  * reader (the module imports no Beads reader: the wb-kku9.3 claim re-check census holds that reader's importers empty). */
 async function readProgram(client: BeadsProgramClient, gates: Readonly<Record<string, string>>): Promise<BeadsProgramReadiness> {
+  if (running !== undefined) DRIVES.set(PROGRAM_READER, new Set([...(DRIVES.get(PROGRAM_READER) ?? []), running]));
   const workspaceRoot = "/fixture/rftsx";
   return readBeadsProgramReadiness(client, {
     program: { epics: [EPIC], gates },
@@ -853,13 +905,14 @@ async function refusal(promise: Promise<unknown>): Promise<string> {
 
 interface Spelling {
   readonly pin: string;
-  readonly family: "h2" | "write" | "prerequisite";
+  readonly family: "h2" | "write" | "prerequisite" | "verdict";
   readonly text: string;
   readonly hit: boolean;
 }
 const familyHits = (spelling: Spelling): boolean => {
   if (spelling.family === "h2") return H2.test(spelling.text);
   if (spelling.family === "prerequisite") return GATE_PREREQUISITES.test(spelling.text);
+  if (spelling.family === "verdict") return spellsVerdict("spelling.ts", spelling.text);
   return writeHits(spelling.text).length > 0;
 };
 /** MH1-MH6, MW1-MW9 and MG1-MG3 must hit; R1, R2 and R11 are quiet rows of their named residuals. */
@@ -888,6 +941,7 @@ const QUIET: Readonly<Record<string, readonly Spelling[]>> = {
   R1: [
     { pin: "R1", family: "h2", text: 'const gate = ["rftsx", "rupqh"].join("-");', hit: false },
     { pin: "R1", family: "write", text: 'spawnSync(["b", "d"].join(""), ["create", "x"]);', hit: false },
+    { pin: "R1", family: "verdict", text: "const WORD = ['ADO', 'PT'].join('');\nexport const gateAdopts = (notes: string): boolean => notes.includes('ruled ' + WORD);\n", hit: false },
   ],
   R2: [{ pin: "R2", family: "write", text: "spawnSync(command.binary, command.argv, { cwd });", hit: false }],
   R11: [
@@ -923,12 +977,19 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     return witness;
   },
   T4: async () => {
-    const readers = PROGRAM_SCANS.flatMap(scan => walked(scan, filesOf(scan)).files.filter(file => VERDICT_WORDS.test(textOf(file))).map(rel)).sort();
+    const readers = gateReaderWalk();
     const imports = ownImports();
     const driven = GATE_READERS.map(path => imports.includes(`../${path.replace(/\.ts$/, ".js")}`));
+    // wb-k888 (F20): a comment spelling a verdict word reads no reader, the same word in code does, and JSDoc is a comment.
+    const controls = [
+      spellsVerdict("comment.ts", '// REJECT here is an HTTP-style outcome, not a gate verdict.\nexport const OUTCOME = "deny";\n'),
+      spellsVerdict("reader.ts", 'export const adopts = (notes: string): boolean => notes.includes("ruled ADOPT");\n'),
+      spellsVerdict("doc.ts", '/** A gate here is ruled ADOPT by its owner, and this module reads none. */\nexport const OUTCOME = "deny";\n'),
+    ];
     expect(readers, "the walked files spelling a verdict word").toEqual([...GATE_READERS]);
     expect(driven).toEqual(GATE_READERS.map(() => true));
-    return { readers, driven };
+    expect(controls).toEqual([false, true, false]);
+    return { readers, driven, controls };
   },
   A1: async () => {
     const rows = exportRows();
@@ -1066,9 +1127,11 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       ...[creationTitle(), "ruled ADOPT or REJECT", "ruled ADOPT|REJECT", "ruled ADOPT / REJECT", "ruled ADOPT, DEFER or REJECT", "(ruled ADOPT or ruled REJECT)"].map((title, index) => ({ id: `b5:${index + 1}`, bead: gate({ title }) })),
       ...["Ruled ADOPT", "ruled Adopt", "RULED ADOPT", "ruled adopt"].map((notes, index) => ({ id: `r5:${index + 1}`, bead: gate({ notes }) })),
       ...PAIRED_INPUTS.map(input => ({ id: `paired:${input.id}`, bead: gate(input.fields) })),
+      ...READER_ONLY.map((fields, index) => ({ id: `reader-only:${index + 1}`, bead: gate(fields) })),
     ];
     const readings = new Map<string, string>();
     for (const input of inputs) readings.set(JSON.stringify(input.bead), await programVerdict(input.bead));
+    const judgedInputs = inputs.filter(input => !input.id.startsWith("reader-only:"));
     const programReader: Reader = bead => {
       const verdict = readings.get(JSON.stringify(bead));
       if (verdict !== "ADOPT" && verdict !== "REJECT" && verdict !== "no-verdict") throw new Error(`the program reader read ${String(verdict)} for a judged bead`);
@@ -1076,10 +1139,12 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     };
     const witness = {
       judged: judgeReader(programReader),
-      diverging: inputs.filter(input => programReader(input.bead) !== reference(input.bead)).map(input => input.id),
-      readings: inputs.map(input => `${input.id} ${programReader(input.bead)}`),
+      diverging: judgedInputs.filter(input => programReader(input.bead) !== reference(input.bead)).map(input => input.id),
+      readings: judgedInputs.map(input => `${input.id} ${programReader(input.bead)}`),
+      readerOnly: inputs.filter(input => input.id.startsWith("reader-only:")).map(input => `${input.id} ${readings.get(JSON.stringify(input.bead))} (reference ${reference(input.bead)})`),
     };
     expect([witness.judged, witness.diverging]).toEqual([[], []]);
+    expect(witness.readerOnly).toEqual([`reader-only:1 ${STORE_UNREACHABLE} (reference no-verdict)`, `reader-only:2 ${STORE_UNREACHABLE} (reference ADOPT)`]);
     return witness;
   },
   C1: async () => {
@@ -1113,12 +1178,12 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   },
   C5: async () => {
     const packets = gatedPackets();
-    const gates: Readonly<Record<string, JsonObject>> = { reject: { notes: "ruled REJECT" }, defer: { notes: "ruled DEFER" }, adopt: { notes: "ruled ADOPT" }, none: { notes: "awaiting" }, titleOnly: { title: creationTitle() } };
+    const gates: Readonly<Record<string, JsonObject>> = { reject: { notes: "ruled REJECT" }, defer: { notes: "ruled DEFER" }, adopt: { notes: "ruled ADOPT" }, none: { notes: "awaiting" }, titleOnly: { title: creationTitle() }, unreadable: READER_ONLY[1] ?? {} };
     const compiled: Record<string, Json> = {};
     for (const [name, fields] of Object.entries(gates)) {
       const bead = { id: GATE, ...fields };
       const verdict = await programVerdict(bead);
-      if (verdict !== "ADOPT" && verdict !== "REJECT" && verdict !== "DEFER" && verdict !== "no-verdict") throw new Error(`the program reader read ${verdict} for the ${name} gate`);
+      if (verdict !== "ADOPT" && verdict !== "REJECT" && verdict !== "DEFER" && verdict !== "no-verdict" && verdict !== STORE_UNREACHABLE) throw new Error(`the program reader read ${verdict} for the ${name} gate`);
       compiled[name] = { verdict, judged: judgeCompile(reference(bead), compileGated(verdict, packets), packets, true) };
     }
     const epic: StoreBead = { id: EPIC, title: "epic", status: "open", issue_type: "epic", priority: 2, labels: [PROGRAM_LABEL] };
@@ -1130,7 +1195,9 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       blocksEdge: await refusal(readProgram(programClient([epic, gate, blocked]).client, { "TSX-H2-01": GATE })),
       relatedEdge: (await readProgram(programClient([epic, gate, related]).client, { "TSX-H2-01": GATE })).ready,
     };
-    expect(Object.values(compiled).map(entry => (isObject(entry) ? entry.judged : null))).toEqual(Object.keys(gates).map(() => []));
+    // The unreadable gate: the reader reads it unknown and compiles nothing, so against the reference's ADOPT the judge names
+    // exactly c:packets (wb-k888, F19: fail-closed, never a created packet); every other gate compiles as the reference's verdict.
+    expect(Object.entries(compiled).map(([name, entry]) => [name, isObject(entry) ? entry.judged : null])).toEqual(Object.keys(gates).map(name => [name, name === "unreadable" ? ["c:packets"] : []]));
     expect([witness.blocksEdge, witness.relatedEdge]).toEqual(["validation", ["TSX-H2-01"]]);
     return witness;
   },
@@ -1305,6 +1372,21 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     return witness;
   },
   R11: async () => quietRow("R11"),
+  R13: async () => {
+    const notes = "not yet ruled ADOPT";
+    const witness = { reference: reference({ notes }), reader: await programVerdict({ id: GATE, notes }), driven: DRIVES.get(PROGRAM_READER)?.has("R13") === true };
+    expect(witness).toStrictEqual({ reference: "ADOPT", reader: "ADOPT", driven: true });
+    return witness;
+  },
+  R14: async () => {
+    const pins = ROWS.flatMap(row => row.pins);
+    const drivenAlone = (pin: string): boolean =>
+      ["A", "B", "C", "D"].includes(rowOf(pin)) && [...DRIVES.values()].some(drivers => [...drivers].filter(other => rowOf(other) === rowOf(pin)).join(" ") === pin);
+    const walkedAlone = (pin: string): boolean => rowOf(pin) === "T" && [...WALKERS].filter(other => rowOf(other) === "T").join(" ") === pin;
+    const aloneInRow = (pin: string): boolean => ROWS.find(row => row.pins.includes(pin))?.pins.length === 1;
+    const held = pins.filter(pin => drivenAlone(pin) || walkedAlone(pin) || aloneInRow(pin));
+    return { held, quiet: pins.filter(pin => !held.includes(pin)) };
+  },
   R12: async () => {
     const receipts = filesBelow(join(REPO, "docs", "workbench", "receipts")).filter(file => file.endsWith(".md"));
     const docsScan = GATED_SCANS.find(scan => scan.root === "docs");
@@ -1321,7 +1403,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
 
 describe("wb-4nut.4 H2 bead-graph census (TSX-HARNESS2-REACTIVE-EVOLUTION-R4, absent-today leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "A:4", "B:6", "C:5", "D:3", "G:1", "P:4", "F:1", "M:18", "R:12"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "A:4", "B:6", "C:5", "D:3", "G:1", "P:4", "F:1", "M:18", "R:14"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -1335,10 +1417,25 @@ describe("wb-4nut.4 H2 bead-graph census (TSX-HARNESS2-REACTIVE-EVOLUTION-R4, ab
         it(pin, { timeout: 60_000 }, async () => {
           const impl = IMPL[pin];
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
-          const witness = impl === undefined ? null : await impl();
-          expect(witness).toStrictEqual(rosterWitness(pin));
+          running = pin;
+          try {
+            const witness = impl === undefined ? null : await impl();
+            expect(witness).toStrictEqual(rosterWitness(pin));
+          } finally {
+            running = undefined;
+          }
         });
       }
     });
   }
+
+  it("the drive record (wb-k888): every gate reader the walk finds is walked by a T pin and driven by a pin of each of rows A, B, C and D", () => {
+    const readers = gateReaderWalk();
+    expect(readers.length, "the walk finds a gate reader").toBeGreaterThan(0);
+    const rows = (reader: string): string => ["A", "B", "C", "D"].filter(row => [...(DRIVES.get(reader) ?? [])].some(pin => rowOf(pin) === row)).join("");
+    expect(readers.map(reader => `${reader} ${rows(reader)}`)).toEqual(readers.map(reader => `${reader} ABCD`));
+    expect([...WALKERS].map(rowOf)).toContain("T");
+    // A negative control: a module no case drives reads no row.
+    expect(rows("src/workbench/observation.ts")).toBe("");
+  });
 });
