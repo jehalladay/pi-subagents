@@ -1,5 +1,5 @@
 {
-  "provenance": "wb-kku9.3 census roster, cut by ws-03 (run g10-work-s64) on trunk caad9514303e63d9bd771bcc2462e12ad39adb2d (the landing-310 ledger hop). Producer facts: read-only git show at the pins named below - the MechanicalWorkflows line verbatim, and two verbatim excerpts of the flywheel work-lane generation (generations/g10-work.js blob 21587f9b, the generationBlob of the dispatch args), each beside its sha256. Pin witnesses: measured by test/workbench-beads-claim-recheck-census.test.ts on caad951 plus the cut, each reviewed against the bead's acceptance before it was written here. A literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here.",
+  "provenance": "wb-kku9.3 census roster, cut by ws-03 (run g10-work-s64) on trunk caad9514303e63d9bd771bcc2462e12ad39adb2d (the landing-310 ledger hop). Producer facts: read-only git show at the pins named below - the MechanicalWorkflows line verbatim, and two verbatim excerpts of the flywheel work-lane generation (generations/g10-work.js blob 21587f9b, the generationBlob of the dispatch args), each beside its sha256. Pin witnesses: measured by test/workbench-beads-claim-recheck-census.test.ts on caad951 plus the cut, each reviewed against the bead's acceptance before it was written here. A literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. Re-measured for wb-xogu (the R694 follow-up of the wb-kku9.3 gate) by ws-03 (run g10-work-s86) on trunk 3a713726f28dea84a57981d1bc65443a7424bc6d (the landing-383 ledger hop): the constants (scanRoots gains .beads/hooks; rootManifests, seamInterface and residualStatement are added) and the B1, B3, Q4 and Q5 witnesses, measured by the census on 3a71372 plus the cut and each reviewed against the wb-xogu notes (F1-F8) before it was written here; every other witness, the producer texts and the test titles are unchanged from the wb-kku9.3 cut.",
   "bead": "wb-kku9.3",
   "programPin": "5ce2a07f891f5b165125d26739ec79720c295dd1",
   "producer": {
@@ -81,13 +81,34 @@
         "floor": 2,
         "anchorFile": ".github/workflows/ci.yml",
         "anchorToken": "setup-node"
+      },
+      {
+        "root": ".beads/hooks",
+        "floor": 4,
+        "anchorFile": ".beads/hooks/pre-commit",
+        "anchorToken": "bd hooks run"
       }
     ],
+    "rootManifests": {
+      "pattern": "^(?:package\\.json|forge\\.toml|[\\w.-]+\\.config\\.[cm]?[jt]s)$",
+      "floor": 12,
+      "anchors": [
+        {
+          "file": "package.json",
+          "token": "\"scripts\""
+        },
+        {
+          "file": "forge.toml",
+          "token": "[build.commands]"
+        }
+      ]
+    },
     "importRoots": [
       "src",
       "qa",
       "examples"
     ],
+    "seamInterface": "BeadsReadClient",
     "readerModule": "src/workbench/beads-observer.ts",
     "instructionFiles": [
       "AGENTS.md",
@@ -156,6 +177,7 @@
       "claimStep": "797750486c268e7884a6d5ed45a78ed4423153e2d9bad2ae859c2911b85b319d",
       "resume": "0e7b0f0049893e2ba1a3530a297144dfdd54a60aa77d7d0cda0998b42dd4d7aa"
     },
+    "residualStatement": "RESIDUALS (named, each with its pinned quiet row): ",
     "contract": "beads.work.readiness/v1"
   },
   "tests": [
@@ -577,8 +599,20 @@
                 "root": ".github",
                 "floor": true,
                 "anchor": true
+              },
+              {
+                "root": ".beads/hooks",
+                "floor": true,
+                "anchor": true
               }
             ],
+            "manifests": {
+              "floor": true,
+              "anchors": [
+                true,
+                true
+              ]
+            },
             "launched": [],
             "bound": [],
             "controls": {
@@ -605,10 +639,69 @@
             "seam": [
               "show"
             ],
+            "readerSeam": [
+              "show"
+            ],
             "seamControl": [
               "claim",
               "show"
             ],
+            "seamSpellings": {
+              "plain": [
+                "claim",
+                "show"
+              ],
+              "optionalMethod": [
+                "claim",
+                "show"
+              ],
+              "readonlyProperty": [
+                "claim",
+                "show"
+              ],
+              "genericMethod": [
+                "claim",
+                "show"
+              ],
+              "accessor": [
+                "claim",
+                "show"
+              ],
+              "quotedName": [
+                "claim",
+                "show"
+              ],
+              "sameLine": [
+                "claim",
+                "show"
+              ],
+              "afterNestedBrace": [
+                "claim",
+                "show"
+              ],
+              "mergedDeclaration": [
+                "claim",
+                "show"
+              ],
+              "augmentation": [
+                "claim"
+              ],
+              "indexSignature": [
+                "(index signature)",
+                "show"
+              ],
+              "heritage": [
+                "extends ClaimClient",
+                "show"
+              ],
+              "typeAlias": [
+                "claim",
+                "show"
+              ],
+              "aliasOfAnother": [
+                "type ClaimingClient"
+              ]
+            },
             "exports": [
               "BEADS_WORK_CONTRACT",
               "projectBeadsWork",
@@ -671,9 +764,12 @@
                 1,
                 1,
                 1,
+                1,
+                1,
                 1
               ],
               "quiet": [
+                0,
                 0,
                 0,
                 0,
@@ -684,6 +780,7 @@
             "seamReads": true,
             "readControls": {
               "flagged": [
+                1,
                 1,
                 1,
                 1,
@@ -933,31 +1030,39 @@
             "quiet": [
               0,
               0,
+              0,
               0
             ],
             "edge": 1,
+            "composedImport": 0,
             "composedControl": 1
           }
         },
         {
           "id": "Q5",
-          "witness": [
-            {
-              "file": "AGENTS.md",
-              "claims": true,
-              "scanned": false
-            },
-            {
-              "file": ".agents/skills/beads/SKILL.md",
-              "claims": true,
-              "scanned": false
-            },
-            {
-              "file": ".beads/README.md",
-              "claims": true,
-              "scanned": false
+          "witness": {
+            "files": [
+              {
+                "file": "AGENTS.md",
+                "claims": true,
+                "scanned": false
+              },
+              {
+                "file": ".agents/skills/beads/SKILL.md",
+                "claims": true,
+                "scanned": false
+              },
+              {
+                "file": ".beads/README.md",
+                "claims": true,
+                "scanned": false
+              }
+            ],
+            "controls": {
+              "hidden": 0,
+              "shown": 1
             }
-          ]
+          }
         },
         {
           "id": "Q6",
