@@ -22,7 +22,9 @@
   "pool",
   "pools",
   "resident",
+  "residents",
   "admission",
+  "admissions",
   "admit",
   "admits"
  ],
@@ -34,7 +36,12 @@
     {
      "id": "A1",
      "witness": {
-      "hits": [],
+      "hits": [
+       "plant:src/dir-variable.ts:1 dir-variable",
+       "plant:src/verb-run.ts:1 deno-verb",
+       "plant:src/verb-task.ts:1 deno-verb",
+       "plant:package.json:1 sdk-scope"
+      ],
       "manifest": [
        "package.json"
       ],
@@ -63,9 +70,15 @@
     {
      "id": "A2",
      "witness": {
-      "outsideHolders": [],
+      "outsideHolders": [
+       "plant:test/fixtures/plant.json",
+       "plant:test/helpers/plant-helper.ts",
+       "plant:test/plant.test.ts"
+      ],
       "holderFloor": true,
-      "denoLaunches": [],
+      "denoLaunches": [
+       "plant:test/workbench-launch-census.test.ts spawn(\"deno\")"
+      ],
       "launchFloor": true,
       "symlinks": [],
       "self": [
@@ -109,67 +122,131 @@
     {
      "id": "B1",
      "witness": {
-      "spellings": [],
-      "unresolved": [],
+      "spellings": [
+       "plant:literalCommand.ts:2 literal \"deno\"",
+       "plant:namespacePath.ts:2 literal \"/usr/local/bin/deno\"",
+       "plant:identifierWord.ts:1 identifier denoCache",
+       "plant:requireLaunch.ts:1 literal \"deno\"",
+       "plant:capitalLiteral.ts:1 literal \"Deno\""
+      ],
+      "admissions": [
+       "plant:admissionIdentifier.ts:1 identifier tsxStarts",
+       "plant:admissionIdentifier.ts:2 identifier TSX_START_LIMIT",
+       "plant:admissionLiteral.ts:1 literal \"TSX start not admitted.\""
+      ],
+      "unresolved": [
+       "plant:aliasedUnresolved.ts:3 launch(bin)",
+       "plant:composedCommand.ts:3 spawn(bin)"
+      ],
       "providerLaunches": [
-       "src/workbench/providers/reactivefiber.ts spawn(\"rf\")"
+       "src/workbench/providers/reactivefiber.ts spawn(\"rf\")",
+       "plant:providerShape.ts spawn(\"rf\")"
       ],
       "providerBindings": [
-       "child"
+       "child",
+       "helper"
       ],
       "providerKills": [
        "child.kill(\"SIGTERM\")",
-       "child.kill(\"SIGKILL\")"
+       "child.kill(\"SIGKILL\")",
+       "helper.kill(\"SIGINT\")"
       ],
       "nonTs": [],
       "launchFloor": true,
       "controls": {
        "literalCommand": {
         "spellings": 1,
+        "admissions": 0,
         "launches": [
-         "literalCommand.ts spawn(\"deno\")"
+         "plant:literalCommand.ts spawn(\"deno\")"
         ],
         "unresolved": 0
        },
        "aliasedUnresolved": {
         "spellings": 0,
+        "admissions": 0,
         "launches": [],
         "unresolved": 1
        },
        "namespacePath": {
         "spellings": 1,
+        "admissions": 0,
         "launches": [
-         "namespacePath.ts cp.execFileSync(\"/usr/local/bin/deno\")"
+         "plant:namespacePath.ts cp.execFileSync(\"/usr/local/bin/deno\")"
         ],
         "unresolved": 0
        },
        "identifierWord": {
         "spellings": 1,
+        "admissions": 0,
         "launches": [],
         "unresolved": 0
        },
        "denominated": {
         "spellings": 0,
+        "admissions": 0,
         "launches": [],
         "unresolved": 0
        },
        "composedCommand": {
         "spellings": 0,
+        "admissions": 0,
         "launches": [],
         "unresolved": 1
        },
        "composedUnbound": {
         "spellings": 0,
+        "admissions": 0,
         "launches": [],
         "unresolved": 0
        },
        "commentOnly": {
         "spellings": 0,
+        "admissions": 0,
         "launches": [],
         "unresolved": 0
        },
        "requireLaunch": {
         "spellings": 1,
+        "admissions": 0,
+        "launches": [],
+        "unresolved": 0
+       },
+       "capitalLiteral": {
+        "spellings": 1,
+        "admissions": 0,
+        "launches": [],
+        "unresolved": 0
+       },
+       "providerShape": {
+        "spellings": 0,
+        "admissions": 0,
+        "launches": [
+         "plant:providerShape.ts spawn(\"rf\")"
+        ],
+        "unresolved": 0
+       },
+       "admissionIdentifier": {
+        "spellings": 0,
+        "admissions": 2,
+        "launches": [],
+        "unresolved": 0
+       },
+       "admissionLiteral": {
+        "spellings": 0,
+        "admissions": 1,
+        "launches": [],
+        "unresolved": 0
+       },
+       "admissionQuiet": {
+        "spellings": 0,
+        "admissions": 0,
+        "launches": [],
+        "unresolved": 0
+       },
+       "admissionProperty": {
+        "spellings": 0,
+        "admissions": 0,
         "launches": [],
         "unresolved": 0
        }
@@ -298,28 +375,38 @@
         "reply": "envelope",
         "rfSpawns": 1,
         "outcome": "returned",
+        "aliveDuring": null,
         "aliveAfter": 0
        },
        {
         "reply": "refusal",
         "rfSpawns": 1,
         "outcome": "unavailable: RF render refused: RF_COMPONENT_RUNTIME_ABSENT",
+        "aliveDuring": null,
         "aliveAfter": 0
        },
        {
         "reply": "malformed",
         "rfSpawns": 1,
         "outcome": "transport: RF preview returned malformed JSON.",
+        "aliveDuring": null,
         "aliveAfter": 0
        },
        {
         "reply": "hang",
         "rfSpawns": 1,
         "outcome": "transport: RF preview cancelled.",
+        "aliveDuring": 1,
         "aliveAfter": 0
        }
       ],
-      "denoExecutions": []
+      "denoExecutions": [],
+      "tripwire": {
+       "resolvesToTripwire": true,
+       "recorded": [
+        "[\"--census-tripwire-control\"]"
+       ]
+      }
      }
     },
     {
@@ -348,7 +435,41 @@
     {
      "id": "C1",
      "witness": {
-      "hits": [],
+      "hits": [
+       "plant:workerCount",
+       "plant:poolSize",
+       "plant:tsxRuntime",
+       "plant:admissionLimit",
+       "plant:admitLimit",
+       "plant:admitsMax",
+       "plant:denoHome",
+       "plant:workersMax",
+       "plant:poolsMax",
+       "plant:residentsMax",
+       "plant:admissionsLimit",
+       "plant:workerLimit",
+       "plant:denoFlag",
+       "plant:poolFlag",
+       "plant:admitFlag",
+       "plant:tsxLimit",
+       "plant:poolLimit",
+       "plant:residentLimit",
+       "plant:tsxFlag",
+       "plant:admitTsx",
+       "plant:residentMode"
+      ],
+      "declaring": [
+       "src/settings.ts",
+       "plant:src/admission-knobs.ts",
+       "plant:src/admit-knobs.ts",
+       "plant:src/augment.ts",
+       "plant:src/class-knobs.ts",
+       "plant:src/deno-knobs.ts",
+       "plant:src/settings.ts",
+       "plant:src/sizing-options.ts",
+       "plant:src/star-knobs.ts",
+       "plant:src/tsx-knobs.ts"
+      ],
       "sanitizeMatchesWorkbench": true,
       "memberFloor": true,
       "controls": [
@@ -357,9 +478,28 @@
        "residentWorker:true",
        "workerPool:true",
        "DENO\u005fDIR:true",
+       "denoHome:true",
+       "tsxRuntime:true",
+       "workerCount:true",
+       "workersMax:true",
+       "poolSize:true",
+       "poolsMax:true",
+       "residentMode:true",
+       "residentsMax:true",
+       "admissionLimit:true",
+       "admissionsLimit:true",
+       "admitLimit:true",
+       "admitsMax:true",
        "reactivefiberWorkspaceRoot:false",
        "maxConcurrent:false",
-       "workspace:false"
+       "workspace:false",
+       "poolingMode:false",
+       "threadCount:false"
+      ],
+      "quiet": [
+       "packaged: workbench packaged | hits 0",
+       "browser: workbench browser | hits 0",
+       "configure: workbench configure | hits 0"
       ]
      }
     },
@@ -404,10 +544,13 @@
        "DENO_V8_FLAGS",
        "DENO_NO_UPDATE_CHECK",
        "RF_TSX_WORKER_COUNT",
-       "RF_TSX_RESIDENT_WORKER"
+       "RF_TSX_RESIDENT_WORKER",
+       "LC_CTYPE"
       ],
       "spawns": 3,
-      "reached": [],
+      "reached": [
+       "LC_CTYPE"
+      ],
       "allowlistFamily": [],
       "argvFamily": []
      }
@@ -428,6 +571,10 @@
   "C2",
   "C3",
   "C4",
-  "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
- ]
+  "registration: every case of this file is registered once, in roster order, in run mode, ran before this one and reached its witness compare"
+ ],
+ "runPin": {
+  "file": "test/workbench-rf-tsx-worker-lifecycle-run-pin.census.ts",
+  "sha256": "a34d1b3214b76fcea070f45274a70b16234972825ef277dd904b3678a7f83805"
+ }
 }
