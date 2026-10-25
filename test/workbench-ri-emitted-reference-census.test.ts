@@ -37,19 +37,25 @@
  * PI'S SEAMS. A reference could reach Pi only through rf: RI may surface a decision result as a separately tagged Reactive Fiber
  * resource (01-contracts.md :23), and Pi's one rf reader is the reactivefiber.render.preview provider (the native reader, here over a
  * stand-in rf on PATH, and the injected seam) and its adapter (reactivefiber-observer.ts). Pi's one reference-resolution seam is the
- * host's evidence store (docs/workbench/20: "A reference is only a pointer"), built by createWorkbenchEvidenceStore with the loaders
+ * host's evidence store (docs/workbench/20; src/workbench/evidence-loader.ts :3: "A reference is only a pointer"), built by
+ * createWorkbenchEvidenceStore with the loaders
  * of EVIDENCE_LOADER_ROWS; it routes by provider first and answers an unknown producer or ref kind no-loader. Neither seat uses an
  * emitted reference today, so acceptance (a) is armed on a test-side REFERENCE ADOPTION, an evidence loader that compares the
  * reference's snapshot digest to the basis it is handed (byte-exact) and refuses a mismatch typed, through the store's own refusal
  * channel (EvidenceRefusal carrying freshness stale), before any read; and THE JUDGE reads every use through the real store: the
- * entry it settles and how often the snapshot was read.
- *  A, acceptance (c) and the trigger. A1 a TypeScript-AST census of every src module: no literal is an RFC 6901 escape token
- *    (~0, ~1) and no regular expression carries one, no literal and no package name carries the reference word family (pointer,
- *    deref, extractive, ptr), and the only identifiers that do are the judged sites, the selection glyph of three terminal views;
- *    floors, flagged controls, quiet controls and the residuals' quiet rows. A2 the host-wired store answers every form of every
- *    reference (its canonical JSON, the bare pointer and the digest#pointer fragment form) on an rf preview node and on a node of
- *    each served provider's own type no-loader, and no reader seam is called; docs/20's no-loader row and refusal rule stand. A3 the gating envelope
- *    is measured unshipped: the roster's producer facts, the bead row's gating sentence, and no RI package declared or loaded.
+ * entry it settles and how often the snapshot was read. A use rule holds the basis's id and digest, and its document only through a
+ * getter that counts as a read, so read() and that getter are its only paths to the snapshot and the judge counts both.
+ *  A, acceptance (c) and the trigger. A1 a TypeScript-AST census of every src module, the walk held to the paths git lists: no
+ *    literal is an RFC 6901 escape token (~0, ~1) and no regular expression carries one (a pattern is read by its spelling and,
+ *    compiled, by what it matches, a RegExp constructor's literal pattern included), no literal and no package name carries the
+ *    reference word family (pointer, deref, extractive, ptr), and the only identifiers that do are the judged sites, the selection
+ *    glyph of three terminal views; floors, flagged controls, quiet controls and the residuals' quiet rows. A2 the host-wired store
+ *    answers every form of every reference (its canonical JSON, the bare pointer and the digest#pointer fragment form) on an rf
+ *    preview node and on a node of each served provider's own type no-loader, settled at the request itself (no loader takes the
+ *    form), and no reader seam is called; docs/20, read by section, keeps its anything-else no-loader row last in the mapping table,
+ *    and its refusal-and-freshness section reads as measured, opening with the no-loader rule. A3 the gating envelope is measured
+ *    unshipped: the roster's producer facts, the bead row's gating sentence, and no RI package declared or named: no load specifier
+ *    and no src literal (a spawn argument, a resolved name, a dotted module path) spells its root; flagged and quiet controls.
  *  B, acceptance (a). B1 the adoption fixture is well formed: each reference carries the producer's snapshot digest in the request
  *    contract's form, its target resolves in SNAPSHOT by RFC 6901 (escapes included) and its pointer resolves to another value in
  *    MOVED; B2 the reference adoption over the real store refuses every reference at every stale basis typed (unavailable,
@@ -60,17 +66,21 @@
  *    quiet: 0 dereferences until the gate opens.
  *  C, acceptance (b). The judge and the rf checker refuse every escape: C1 dereferencing without the digest comparison; C2
  *    dereferencing against the current snapshot when the digests differ (re-bound and labelled stale, the docs/20 load-and-label
- *    idiom, or matched leniently); C3 reading the snapshot before the comparison, an untyped refusal, and a Pi-minted digest
- *    compared in place of the producer's; C4 the rf adapter mutants: a dereference surfaced in the projection, the reference's digest
+ *    idiom, or matched leniently); C3 reading the snapshot before the comparison (through read() or through the basis handle, the
+ *    gate's G07), an untyped refusal, and a Pi-minted digest compared in place of the producer's, and no use rule naming a module
+ *    binding that holds a snapshot; C4 the rf adapter mutants: a dereference surfaced in the projection, the reference's digest
  *    adopted as an evidence ref or as the snapshot's basis, the reading rewritten; C5 the quiet controls and R-REASON's quiet row.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row, every pin's witness, the scan
  * constants, the fixture and the registered test titles are held to the out-of-file roster
  * (test/fixtures/ri-emitted-reference-roster.json). OUTSIDE ANCHORS: the owner filing's row in the tracked bead export
  * (.beads/issues.jsonl, row wb-tz4r.6): each acceptance clause sits verbatim in exactly one row label, the trigger in row A's, and its
- * quote, gating and authority lines agree with the roster's producer lines; docs/20's table row and refusal rule (A2); the src
- * registry EVIDENCE_LOADER_ROWS (A2's providers).
- * RECORDS: the last case walks this file's registered tests: each roster title once, in order, in run mode, not inverted, ran; and
- * every pin's case reached its end.
+ * quote, gating and authority lines agree with the roster's producer lines; the cut's landed delivery note in the same row, read off
+ * its own words (each row it names judged under its clause with every pin it names, A1's escape tokens and word family read, each
+ * residual it names kept with its quiet pin); the follow-up's row (wb-48r6: the gate probe its lead line names is a use mutant C3
+ * reads); docs/20's mapping table and refusal rules (A2); the src registry EVIDENCE_LOADER_ROWS (A2's providers); git's listing of
+ * src (A1's walk, A3's modules).
+ * RECORDS: the last case walks this file's registered tests: each roster title once, in order, in run mode, not inverted, ran; every
+ * pin's case reached its end; and each made the assertion count the roster records for it, counted once its witness compare held.
  * UNTIL-THEN: acceptance (a)'s use is NOT implemented in Pi (gated: no reference ships at RI 075ac589d64d); B2-B3 arm it on the
  * test-side adoption and B4 pins today's posture. THE GATE-OPENING SIGNAL: when RI ships its typed envelope with emitted references
  * (RI-DEC-03/07) and rf surfaces one, the adopter's loader replaces the reference adoption under the same judge, and a re-measured
@@ -79,17 +89,28 @@
  * NOT CLAIMED: the reference's key names, its evidence-ref string forms, the resource's placements, the near-miss list and the
  * refusal reason word (transport, docs/20's "a failed read against a disconnected source is transport plus stale") are this
  * fixture's choices, anchored by nothing outside these two files; whether a scheme-prefixed digest (sha256:<hex>) names the same
- * snapshot is the adopter's normalization choice, so no near-miss is one.
+ * snapshot is the adopter's normalization choice, so no near-miss is one. The flagged and quiet controls, the use mutants other than
+ * the follow-up's named probe, the node types and the holder names are anchored only in these two files (the landed note names
+ * the mutants in prose, never as members); a case that swaps its own assertions for as many trivial ones and returns its witness as a
+ * literal keeps its count; and no docs page but docs/20 is read.
  * RESIDUALS (named families, each with a pinned quiet row): R-SPAN-WORD Pi's own span vocabulary (time intervals, trace spans,
  * redaction ranges) is not read, so a span dereference spelled with span words alone is invisible to A1; R-NAIVE-WALK a pointer
- * walked by split("/") without the escape pair and with no family word is invisible to A1; R-COMPOSED an escape token assembled at
- * runtime is invisible to A1's literal reading (A1's quiet rows); R-REASON the judge binds the stale label and the absent read, never
- * the refusal reason, so a typed stale under any reason reads quiet (C5's quiet row).
+ * walked by split("/") without the escape pair and with no family word is invisible to A1; R-COMPOSED an escape token or a pattern
+ * assembled at runtime is invisible to A1's literal reading (A1's quiet rows); R-REASON the judge binds the stale label and the
+ * absent read, never the refusal reason, so a typed stale under any reason reads quiet (C5's quiet row); R-RI-UNNAMED an RI load
+ * whose literals never spell the package root (a name assembled at runtime, a path or an alias) is invisible to A3 (A3's quiet row).
+ * FOLLOW-UP wb-48r6 (R694, the landing-318 gate's LEG-2 survivors, gate of record cmd_77500c8a5789): F1 the use rule's basis is
+ * {id, digest} plus a counted document getter, G07's shape is C3's peek-first mutant, and the holder guard is C3's; F2 the landed
+ * note and the follow-up's row anchor the pins, the escape tokens, the word family, the residuals and the named probe outside these
+ * two files; F3 A1 reads a compiled pattern by what it matches; F4 A3 reads every src literal for RI's root; F5 A2 reads docs/20 by
+ * section; F6 the walk is held to git's listing in both directions; F7 the per-pin assertion count; F8 A2 reads each entry at its
+ * request; F9 the "only a pointer" sentence is attributed to evidence-loader.ts, where it is.
  * SCOPE: the producer facts are read at their pins and Pi vendors no RI source, so a producer change is seen only when a re-probe
  * re-reads them. No reader, loader or provider is added to src, and nothing here is registered in the host.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src is only read.
  */
+import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { chmodSync, type Dirent, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -111,6 +132,8 @@ installScratchLeakGuard(afterAll);
 type JsonObject = { [key: string]: JsonValue };
 
 const BEAD = "wb-tz4r.6";
+/** The R694 follow-up whose filing names the gate probe C3 reads (wb-48r6, filed at the landing-318 fold). */
+const FOLLOW_UP = "wb-48r6";
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
 const ROSTER_FILE = "test/fixtures/ri-emitted-reference-roster.json";
 const BEAD_EXPORT = ".beads/issues.jsonl";
@@ -122,6 +145,9 @@ const REFERENCE_WORD = /pointer|deref|extractive|(?<![a-z])ptr(?![a-z])/;
 const ESCAPE_TOKENS: readonly string[] = ["~0", "~1"];
 /** A1: an escape token inside a regular expression literal. */
 const ESCAPE_IN_PATTERN = /~0|~1|~\[01\]|~\[10\]/;
+/** A1 (wb-48r6 F3): strings an escape-reading pattern must refuse, so a compiled pattern is flagged only when both the tilde and the
+ * escape digit decide its match. */
+const ESCAPE_CONTROLS: readonly string[] = ["~", "~x", "~2", "x0", "x1"];
 const MODULE_EXTENSIONS: readonly string[] = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx"];
 /** Each floor sits below the count at base ff4082d (115 src files, all modules). */
 const FLOORS = { srcFiles: 105, srcModules: 105 };
@@ -142,6 +168,10 @@ const FLAGGED_CONTROLS: readonly (readonly [string, string])[] = [
   ["ptr-identifier", "const ptr = reference.path;"],
   ["pointer-literal", 'const kind = "json-pointer";'],
   ["pointer-specifier", 'import { get } from "jsonpointer";'],
+  ["escape-capture", 'const token = raw.replace(/~([01])/g, (_match, digit) => (digit === "0" ? "~" : "/"));'],
+  ["escape-alternation", 'const token = raw.replace(/~(?:0|1)/g, "");'],
+  ["escape-code-point", "const escaped = /\\u007e[01]/.test(raw);"],
+  ["escape-constructor", 'const pattern = new RegExp("~([01])", "g");'],
 ];
 /** A1's quiet controls: each module text must read no site. */
 const QUIET_CONTROLS: readonly (readonly [string, string])[] = [
@@ -149,20 +179,48 @@ const QUIET_CONTROLS: readonly (readonly [string, string])[] = [
   ["home-path", 'const home = "~/.pi/agent";'],
   ["tilde-alone", 'const tilde = "~";'],
   ["reference-word", "const evidenceRef = node.evidenceRefs[0];"],
+  ["approximate-pattern", "const approximate = /~\\d+/;"],
+  ["home-pattern", "const home = /^~(?=\\/|$)/;"],
+  ["wide-pattern", "const anything = /\\S+/;"],
+  ["other-constructor", 'const pattern = new RegExp("^pw-[0-9]+$");'],
 ];
 /** The residuals' quiet rows (A1): each module text is a member of its family and reads no site. */
 const RESIDUAL_CONTROLS: Readonly<Record<string, string>> = {
   "R-SPAN-WORD": "const part = body.slice(span.start, span.end);",
   "R-NAIVE-WALK": 'let node = document; for (const key of path.split("/").slice(1)) node = node[key];',
-  "R-COMPOSED": 'const escaped = "~" + "1";',
+  "R-COMPOSED": 'const escaped = "~" + "1"; const pattern = new RegExp("~" + "[01]");',
 };
-const RESIDUAL_FAMILIES: readonly string[] = ["R-SPAN-WORD", "R-NAIVE-WALK", "R-COMPOSED", "R-REASON"];
-const RESIDUAL_ROWS: Readonly<Record<string, string>> = { "R-SPAN-WORD": "A1", "R-NAIVE-WALK": "A1", "R-COMPOSED": "A1", "R-REASON": "C5" };
+/** The residual's quiet row (A3): a module text that loads RI under a name it never spells reads no site. */
+const RI_RESIDUAL_CONTROLS: Readonly<Record<string, string>> = {
+  "R-RI-UNNAMED": 'spawn("python3", ["-m", ["reactive", "inference"].join("_")]);',
+};
+const RESIDUAL_FAMILIES: readonly string[] = ["R-SPAN-WORD", "R-NAIVE-WALK", "R-COMPOSED", "R-REASON", "R-RI-UNNAMED"];
+const RESIDUAL_ROWS: Readonly<Record<string, string>> = { "R-SPAN-WORD": "A1", "R-NAIVE-WALK": "A1", "R-COMPOSED": "A1", "R-REASON": "C5", "R-RI-UNNAMED": "A3" };
 /** A2: each provider's own node type in src (claude-topology.ts :133, furnace-observer.ts :148, forge-operation-observer.ts :87, the
  * rf observer's preview node), so a served loader's shape check is the only guard a reference meets; a provider without one fails A2. */
 const NODE_TYPES: Readonly<Record<string, string>> = { reactivefiber: "context-preview", "claude-agent-sdk": "session", furnace: "run", forge: "operation" };
-/** A3: RI's package root in any spelling a package name or a specifier takes. */
+/** A3: RI's package root in any spelling a package name, a specifier, a spawn argument or a dotted module path takes. */
 const RI_PACKAGE = /reactive[-_./]?inference/i;
+/** A3's controls (wb-48r6 F4): each module text must name RI's root as a literal at least once (flagged) or never (quiet). */
+const RI_FLAGGED_CONTROLS: readonly (readonly [string, string])[] = [
+  ["python-argv", 'spawn("python3", ["-m", "reactive_inference"]);'],
+  ["resolved-name", 'const entry = createRequire(import.meta.url).resolve("reactive-inference");'],
+  ["dotted-module", 'const module = "reactive_inference.contracts";'],
+  ["dynamic-specifier", 'const sdk = await import("reactive-inference");'],
+];
+const RI_QUIET_CONTROLS: readonly (readonly [string, string])[] = [
+  ["other-python-module", 'spawn("python3", ["-m", "json.tool"]);'],
+  ["fiber-package", 'const sdk = await import("@reactive-fiber/sdk");'],
+];
+/** A2 (wb-48r6 F5): docs/20 is read by section: its mapping table under one heading, its refusal rules under another. */
+const DOCS20_MAPPING = "## Producer mapping";
+const DOCS20_RULES = "## Refusal and freshness rules";
+const DOCS20_RULE = "Unknown producer or ref kind: no-loader, ref stays listed sanitized.";
+/** C3 (wb-48r6 F1): the module bindings that hold a snapshot document; no use rule names one, so read() and the held basis's counted
+ * getter are a rule's only paths to a snapshot. */
+const SNAPSHOT_HOLDERS = /\b(?:SNAPSHOT_DOCUMENT|MOVED_DOCUMENT|BASES|FIXTURE|ROSTER|resourceOf|placed)\b/;
+/** The gate probes the follow-up's lead line names, each with the use mutant C3 reads for it (wb-48r6 F1, F2). */
+const GATE_PROBES: Readonly<Record<string, string>> = { G07: "peek-first" };
 /** A3: a name that would be a result, reference, pointer or span type among the module's exports. */
 const RESULT_NAME = /result|reference|pointer|span|envelope/i;
 
@@ -390,6 +448,7 @@ interface Roster {
   readonly residualRows: JsonObject;
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
+  readonly counted: readonly string[];
 }
 
 function text(value: unknown, field: string): string {
@@ -456,6 +515,7 @@ function readRoster(): Roster {
     residualRows: json(raw.residualRows) as JsonObject,
     rows,
     tests: strings(raw.tests, "tests"),
+    counted: strings(raw.counted, "counted"),
   };
 }
 
@@ -481,20 +541,55 @@ interface BeadRow {
   readonly title: string;
   readonly notes: string;
 }
-/** The owner filing's row in the tracked bead export, found by id on a line that parses. */
-function readBeadRow(): BeadRow {
+/** A row of the tracked bead export (the owner filing's by default), found by id on a line that parses. */
+function readBeadRow(id: string = BEAD): BeadRow {
   for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
-    if (!line.includes(`"id":"${BEAD}"`)) continue;
+    if (!line.includes(`"id":"${id}"`)) continue;
     const row: unknown = JSON.parse(line);
-    if (isObject(row) && row.id === BEAD && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
+    if (isObject(row) && row.id === id && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
   }
-  throw new Error(`${BEAD_EXPORT} carries no row ${BEAD}`);
+  throw new Error(`${BEAD_EXPORT} carries no row ${id}`);
 }
-/** One line of the filing's notes, found by its opening words. */
+/** One line of a row's notes, the first found by its opening words; a later note is never read. */
 function noteLine(notes: string, opening: string): string {
   const line = notes.split("\n").find(entry => entry.startsWith(opening));
-  if (line === undefined) throw new Error(`${BEAD} notes carry no "${opening}" line`);
+  if (line === undefined) throw new Error(`the notes carry no "${opening}" line`);
   return line;
+}
+/** The cut's landed delivery note in the wb-tz4r.6 row, as written at landing 318 (wb-48r6 F2): which rows its WHAT IT PINS
+ * paragraphs name and the pins each names, A1's escape tokens and reference word family, and each residual's pin. Every value is read
+ * off the note's own words, never off a census list, so a hollow of the census and its roster leaves the note's reading whole. */
+interface LandedNote {
+  readonly rows: Readonly<Record<string, { readonly clause: string; readonly pins: readonly string[] }>>;
+  readonly escapeTokens: readonly string[];
+  readonly wordFamily: readonly string[];
+  readonly residuals: Readonly<Record<string, string>>;
+}
+function landedNote(notes: string): LandedNote {
+  const lines = notes.split("\n");
+  const rows: Record<string, { clause: string; pins: string[] }> = {};
+  for (const line of lines) {
+    const head = /^([A-Z]), clause \(([a-z])\)/.exec(line);
+    const id = head?.[1] ?? "";
+    if (head === null || Object.hasOwn(rows, id)) continue;
+    rows[id] = { clause: head[2] ?? "", pins: [...new Set(line.match(new RegExp(`\\b${id}[1-9]\\b`, "g")) ?? [])] };
+  }
+  const listed = (pattern: RegExp, separator: string): string[] => {
+    const line = lines.find(entry => pattern.test(entry)) ?? "";
+    return pattern.exec(line)?.[1]?.split(separator) ?? [];
+  };
+  const residuals: Record<string, string> = {};
+  const opening = "RESIDUALS (named, each with a pinned quiet row): ";
+  for (const part of noteLine(notes, opening).slice(opening.length).replace(/\.$/, "").split("; ")) {
+    const parsed = /^(.+?) \(([A-Z][1-9]) /.exec(part);
+    for (const name of parsed?.[1]?.split(", ") ?? []) residuals[name] = parsed?.[2] ?? "";
+  }
+  return {
+    rows,
+    escapeTokens: listed(/an RFC 6901 escape token \(([^)]*)\)/, ", "),
+    wordFamily: listed(/the reference word family \(([^)]*)\)/, "|"),
+    residuals,
+  };
 }
 /** The filing's acceptance clauses: its "Acceptance: " line, split before each "(x) ", the final period dropped. */
 function acceptanceClauses(notes: string): string[] {
@@ -529,6 +624,19 @@ function srcFiles(): { files: string[]; symlinks: string[] } {
   visit(join(REPO, "src"), "src");
   return { files, symlinks };
 }
+/** Every path below src/ git lists, tracked or untracked and not ignored, sorted (wb-48r6 F6): the walk's outside anchor. */
+function listedSrc(): string[] {
+  return execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", "src"], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 })
+    .split("\0")
+    .filter(Boolean)
+    .sort();
+}
+/** How a walk agrees with git's listing: the paths only the walk reads and the paths only git lists. */
+function walkAgreement(walked: readonly string[]): { walkOnly: string[]; gitOnly: string[] } {
+  const listed = listedSrc();
+  const read = new Set(walked);
+  return { walkOnly: walked.filter(path => !listed.includes(path)).sort(), gitOnly: listed.filter(path => !read.has(path)) };
+}
 /** A name or a text as the family reads it: camelCase split, lower-cased, every other character a space. */
 function words(value: string): string {
   return value
@@ -551,6 +659,26 @@ interface ModuleScan {
   /** RFC 6901 escape tokens, `<path>:<line> <kind> <text>`. */
   readonly escapes: string[];
 }
+/** A1: whether a pattern carries an escape token: its source spells one (ESCAPE_IN_PATTERN), or, compiled, it matches an escape
+ * token and none of ESCAPE_CONTROLS, so capture groups, alternations, classes and character escapes are read by what they match
+ * (wb-48r6 F3). A source that does not compile is read by its spelling alone. */
+function escapePattern(source: string, flags: string): boolean {
+  if (ESCAPE_IN_PATTERN.test(source)) return true;
+  let pattern: RegExp;
+  try {
+    pattern = new RegExp(source, flags.replace(/[gy]/g, ""));
+  } catch {
+    return false;
+  }
+  return ESCAPE_TOKENS.some(token => pattern.test(token)) && !ESCAPE_CONTROLS.some(control => pattern.test(control));
+}
+/** A RegExp constructor's literal pattern and flags (a string or a template without substitutions), or undefined for any other call. */
+function constructedPattern(node: ts.Node): { readonly source: string; readonly flags: string } | undefined {
+  if (!(ts.isNewExpression(node) || ts.isCallExpression(node)) || !ts.isIdentifier(node.expression) || node.expression.text !== "RegExp") return undefined;
+  const [source, flags] = node.arguments ?? [];
+  if (source === undefined || !(ts.isStringLiteral(source) || ts.isNoSubstitutionTemplateLiteral(source))) return undefined;
+  return { source: source.text, flags: flags !== undefined && (ts.isStringLiteral(flags) || ts.isNoSubstitutionTemplateLiteral(flags)) ? flags.text : "" };
+}
 /** One module, parsed under its own script kind: its identifiers, string and template parts and regular expressions. Comments are
  * never read: a comment dereferences nothing. */
 function scanModule(path: string, source: string): ModuleScan {
@@ -563,12 +691,15 @@ function scanModule(path: string, source: string): ModuleScan {
     if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) {
       if (REFERENCE_WORD.test(words(node.text))) identifiers.add(`${path} ${node.text}`);
     } else if (ts.isRegularExpressionLiteral(node)) {
-      if (ESCAPE_IN_PATTERN.test(node.text)) escapes.push(`${path}:${line(node)} pattern ${node.text}`);
+      const close = node.text.lastIndexOf("/");
+      if (escapePattern(node.text.slice(1, close), node.text.slice(close + 1))) escapes.push(`${path}:${line(node)} pattern ${node.text}`);
       if (REFERENCE_WORD.test(words(node.text))) literals.push(`${path}:${line(node)} pattern ${node.text}`);
     } else if (ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) {
       if (ESCAPE_TOKENS.includes(node.text)) escapes.push(`${path}:${line(node)} literal ${JSON.stringify(node.text)}`);
       if (REFERENCE_WORD.test(words(node.text))) literals.push(`${path}:${line(node)} literal ${JSON.stringify(node.text)}`);
     }
+    const constructed = constructedPattern(node);
+    if (constructed !== undefined && escapePattern(constructed.source, constructed.flags)) escapes.push(`${path}:${line(node)} constructed ${JSON.stringify(constructed.source)}`);
     ts.forEachChild(node, visit);
   };
   visit(file);
@@ -587,6 +718,29 @@ function declaredPackages(): string[] {
     if (isObject(entries)) names.push(...Object.keys(entries));
   }
   return names;
+}
+/** A3 (wb-48r6 F4): every string, template part and pattern of a module that names RI's package root, `<path>:<line> <text>`: a spawn
+ * argument, a resolved name or a dotted module path names the root as a literal where no load specifier does. Comments are never read. */
+function riLiteralsOf(path: string, source: string): string[] {
+  const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
+  const found: string[] = [];
+  const visit = (node: ts.Node): void => {
+    const literal = ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node) || ts.isRegularExpressionLiteral(node);
+    if (literal && RI_PACKAGE.test(node.text)) found.push(`${path}:${file.getLineAndCharacterOfPosition(node.getStart(file)).line + 1} ${JSON.stringify(node.text)}`);
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return found;
+}
+/** A2 (wb-48r6 F5): the lines of one section of a markdown page, below its heading and up to the next heading of level one or two; a
+ * heading that is absent or repeated reads null. */
+function sectionOf(page: string, heading: string): string[] | null {
+  const lines = page.split("\n");
+  const starts = lines.flatMap((line, index) => (line === heading ? [index] : []));
+  if (starts.length !== 1) return null;
+  const start = (starts[0] ?? 0) + 1;
+  const next = lines.findIndex((line, index) => index >= start && /^#{1,2} /.test(line));
+  return lines.slice(start, next === -1 ? lines.length : next);
 }
 /** Every load specifier of a src module: import, export, import type, dynamic import and require. */
 function specifiersOf(path: string, source: string): string[] {
@@ -608,8 +762,25 @@ function specifiersOf(path: string, source: string): string[] {
 // ---------------------------------------------------------------------------------------------------------------------------
 // B and C: the use, the reference adoption, its mutants and the judge.
 
+/** What a use rule holds of the host's basis (wb-48r6 F1): its id and digest, and its document only through a getter that counts as
+ * one snapshot read each time it is touched, so read() and the getter are the two paths to the snapshot and the judge counts both. */
+interface HeldBasis {
+  readonly id: string;
+  readonly digest: string;
+  readonly document: JsonValue;
+}
 /** One use rule: what an adopting loader does with a reference, the basis the host holds, and the one way to read the snapshot. */
-type UseRule = (reference: EmittedReference, basis: Basis, read: () => JsonValue) => EvidenceContent;
+type UseRule = (reference: EmittedReference, basis: HeldBasis, read: () => JsonValue) => EvidenceContent;
+/** The basis as a rule holds it: every touch of its document is a counted read. */
+function heldBasis(basis: Basis, read: () => JsonValue): HeldBasis {
+  return Object.freeze({
+    id: basis.id,
+    digest: basis.digest,
+    get document(): JsonValue {
+      return read();
+    },
+  });
+}
 const contentOf = (value: string, sourceBasis: string, freshness: "current" | "stale"): EvidenceContent => ({
   kind: "ri.emitted-reference/constructed-0",
   provider: RF_PROVIDER,
@@ -651,6 +822,13 @@ const USE_MUTANTS: Readonly<Record<string, UseRule>> = {
     if (sha256(canonical(document)) !== reference.snapshot_digest) throw new EvidenceRefusal("transport", "stale");
     return contentOf(dereference(document, reference), reference.snapshot_digest, "current");
   },
+  /** The gate's G07 (wb-48r6 F1): the snapshot dereferenced through the basis handle before the comparison, read() only after it. */
+  "peek-first": (reference, basis, read) => {
+    const value = dereference(basis.document, reference);
+    if (reference.snapshot_digest !== basis.digest) throw new EvidenceRefusal("transport", "stale");
+    read();
+    return contentOf(value, reference.snapshot_digest, "current");
+  },
 };
 /** R-REASON's quiet row: a typed stale under another reason word. */
 const OTHER_REASON: UseRule = (reference, basis, read) => {
@@ -669,7 +847,8 @@ interface UseReading {
   readonly entry: JsonObject;
   readonly reads: number;
 }
-/** Every reference used at every basis under one rule, each basis through its own real EvidenceStore; reads counts snapshot reads. */
+/** Every reference used at every basis under one rule, each basis through its own real EvidenceStore; reads counts snapshot reads,
+ * through read() and through the held basis's document alike. */
 async function usesOf(rule: UseRule): Promise<UseReading[]> {
   const readings: UseReading[] = [];
   for (const basis of BASES) {
@@ -681,10 +860,11 @@ async function usesOf(rule: UseRule): Promise<UseReading[]> {
       load: async request => {
         const reference = referenceOf(request.evidenceRef);
         if (reference === undefined) throw new EvidenceRefusal("no-loader");
-        return rule(reference, basis, () => {
+        const read = (): JsonValue => {
           reads.set(request.evidenceRef, (reads.get(request.evidenceRef) ?? 0) + 1);
           return json(basis.document);
-        });
+        };
+        return rule(reference, heldBasis(basis, read), read);
       },
     };
     const store = new EvidenceStore({ loaders: [loader], maxEntries: 8, maxBytes: 4096, timeoutMs: 30_000, scope: SCOPE });
@@ -825,6 +1005,8 @@ function firstSnapshot(topology: JsonObject): JsonObject {
 // The cases.
 
 const REACHED: string[] = [];
+/** `${pin}:${assertions}` once a pin's witness compare held (wb-48r6 F7), held by the records case to the roster's counted list. */
+const COUNTED: string[] = [];
 function done(pin: string, witness: object): JsonValue {
   REACHED.push(pin);
   return json(witness);
@@ -843,7 +1025,9 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     const quiet = Object.fromEntries(QUIET_CONTROLS.map(([id, source]) => [id, controlSites(source)]));
     const residualQuiet = Object.fromEntries(Object.entries(RESIDUAL_CONTROLS).map(([family, source]) => [family, controlSites(source)]));
     const floors = { srcFiles: files.length >= FLOORS.srcFiles, srcModules: modules.length >= FLOORS.srcModules };
+    const walk = walkAgreement([...files, ...symlinks]);
     expect(floors, "the walk reaches at least the floor of src files and modules").toStrictEqual({ srcFiles: true, srcModules: true });
+    expect(walk, "the walk reads exactly the src paths git lists").toStrictEqual({ walkOnly: [], gitOnly: [] });
     expect(escapes, "no src literal is an RFC 6901 escape token and no pattern carries one").toEqual([]);
     expect(literals, "no src literal or pattern carries the reference word family").toEqual([]);
     expect(identifiers, "every family identifier in src is a judged glyph site, and every judged site is still read").toEqual(Object.keys(JUDGED_SITES).sort());
@@ -851,7 +1035,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     expect(Object.values(flagged).every(Boolean), "every flagged control reads a site").toBe(true);
     expect(Object.values(quiet).every(sites => sites === 0), "every quiet control reads none").toBe(true);
     expect(Object.values(residualQuiet).every(sites => sites === 0), "every residual's member reads none").toBe(true);
-    return done("A1", { floors, symlinks, escapes, literals, identifiers, packages, controls: { flagged, quiet }, quiet: residualQuiet });
+    return done("A1", { floors, walk, symlinks, escapes, literals, identifiers, packages, controls: { flagged, quiet }, quiet: residualQuiet });
   },
   A2: async () => {
     const projection = new ObservationProjection();
@@ -878,25 +1062,37 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     expect(providers.filter(provider => !Object.hasOwn(NODE_TYPES, provider)), "every provider has its own node type judged").toEqual([]);
     const forms = REFERENCES.flatMap(entry => [canonical(entry.reference), entry.reference.pointer, `${entry.reference.snapshot_digest}#${entry.reference.pointer}`]);
     const entries = new Set<string>();
+    const routed = new Set<string>();
     for (const provider of providers) {
       for (const form of forms) {
         const ref: NativeRef = { ...RF_NODE, provider, type: NODE_TYPES[provider] ?? "unjudged" };
-        await store.request(SCOPE, ref, form);
+        const pending = store.request(SCOPE, ref, form);
+        // Read at the request itself (wb-48r6 F8): a form no loader takes settles no-loader at once, while a loader that takes it
+        // leaves it loading first, even one that then refuses it no-loader.
+        routed.add(canonical(store.get(SCOPE, ref, form)));
+        await pending;
         entries.add(canonical(store.get(SCOPE, ref, form)));
       }
     }
     const reads = { claude: claudeRead.mock.calls.length, furnace: furnaceClient.mock.calls.length, registry: invoke.mock.calls.length };
     const docs = readFileSync(join(REPO, DOCS20), "utf8");
+    const table = (sectionOf(docs, DOCS20_MAPPING) ?? []).filter(line => line.startsWith("|"));
     const docs20 = {
-      anythingElse: /^\| anything else \| \S+ \| `unavailable: no-loader`, a visible unknown \| \S+ \|$/m.test(docs),
-      rule: docs.includes("Unknown producer or ref kind: no-loader, ref stays listed sanitized."),
+      mapping: table.slice(2).map(line => line.split("|")[1]?.trim() ?? ""),
+      anythingElse: table.some(line => /^\| anything else \| \S+ \| `unavailable: no-loader`, a visible unknown \| \S+ \|$/.test(line)),
+      rules: (sectionOf(docs, DOCS20_RULES) ?? []).filter(line => line.trim() !== "").join(" ").split(/(?<=\.) +/).filter(Boolean),
       pointer: readFileSync(join(REPO, "src/workbench/evidence-loader.ts"), "utf8").includes("A reference is only a pointer"),
     };
-    expect([...entries], "every form under every provider settles no-loader").toEqual([canonical({ state: "unavailable", reason: "no-loader" })]);
+    const noLoader = canonical({ state: "unavailable", reason: "no-loader" });
+    expect([...routed], "no loader takes any form: each request settles no-loader at the request itself").toEqual([noLoader]);
+    expect([...entries], "every form under every provider settles no-loader").toEqual([noLoader]);
     expect(reads, "no reader seam is called").toStrictEqual({ claude: 0, furnace: 0, registry: 0 });
-    expect(docs20).toStrictEqual({ anythingElse: true, rule: true, pointer: true });
+    expect(
+      { last: docs20.mapping[docs20.mapping.length - 1], anythingElse: docs20.anythingElse, first: docs20.rules[0], pointer: docs20.pointer },
+      "docs/20's mapping table ends with its no-loader row and its refusal rules open with the no-loader rule",
+    ).toStrictEqual({ last: "anything else", anythingElse: true, first: DOCS20_RULE, pointer: true });
     expect(evidenceRefsOf(baseline).some(ref => ref.startsWith("rf-")), "the rf node's own refs are rf's").toBe(true);
-    return done("A2", { nodes: providers.map(provider => `${provider}/${NODE_TYPES[provider] ?? "unjudged"}`), forms: forms.length, requests: providers.length * forms.length, entries: [...entries], reads, docs20 });
+    return done("A2", { nodes: providers.map(provider => `${provider}/${NODE_TYPES[provider] ?? "unjudged"}`), forms: forms.length, requests: providers.length * forms.length, routed: [...routed], entries: [...entries], reads, docs20 });
   },
   A3: () => {
     const producer = ROSTER.producer;
@@ -905,8 +1101,16 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     const named = [...producer.exportsAtPin, ...producer.exportsAtProbe].filter(name => RESULT_NAME.test(name));
     const requestSide = [...producer.digestRowsAtPin, ...producer.digestRowsAtProbe].every(row => /\/(?:contracts|preflight)\.py:\d+:/.test(row));
     const modules = srcFiles().files.filter(path => MODULE_EXTENSIONS.includes(extensionOf(path)));
-    const specifiers = modules.flatMap(path => specifiersOf(path, readFileSync(join(REPO, path), "utf8")).filter(name => RI_PACKAGE.test(name)).map(name => `${path}: ${name}`));
+    const listedModules = listedSrc().filter(path => MODULE_EXTENSIONS.includes(extensionOf(path)));
+    const sources = modules.map(path => [path, readFileSync(join(REPO, path), "utf8")] as const);
+    const specifiers = sources.flatMap(([path, source]) => specifiersOf(path, source).filter(name => RI_PACKAGE.test(name)).map(name => `${path}: ${name}`));
+    const literals = sources.flatMap(([path, source]) => riLiteralsOf(path, source));
     const packages = declaredPackages().filter(name => RI_PACKAGE.test(name));
+    const controls = {
+      flagged: Object.fromEntries(RI_FLAGGED_CONTROLS.map(([id, source]) => [id, riLiteralsOf("control.ts", source).length > 0])),
+      quiet: Object.fromEntries(RI_QUIET_CONTROLS.map(([id, source]) => [id, riLiteralsOf("control.ts", source).length])),
+    };
+    const residualQuiet = Object.fromEntries(Object.entries(RI_RESIDUAL_CONTROLS).map(([family, source]) => [family, riLiteralsOf("control.ts", source).length]));
     const held = {
       exportsMatch: canonical([...producer.exportsAtPin].sort()) === canonical([...producer.exportsAtProbe].sort()),
       noResultExport: named.length === 0,
@@ -920,8 +1124,17 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     expect(held, "the gating envelope is measured unshipped and the filing's gating sentence agrees").toStrictEqual({
       exportsMatch: true, noResultExport: true, noSrcRow: true, requestSideDigest: true, shippedNo: true, dec03: true, dec07: true, outputFamily: true,
     });
-    expect({ specifiers, packages }, "Pi declares and loads no RI package").toStrictEqual({ specifiers: [], packages: [] });
-    return done("A3", { held, exports: [...producer.exportsAtPin].sort(), srcProbe: producer.srcProbe, digestRows: [...producer.digestRowsAtPin], specifiers, packages });
+    expect([...modules].sort(), "A3 reads every src module git lists").toEqual(listedModules);
+    expect(
+      { specifiers, literals, packages },
+      "Pi declares no RI package and no src literal names its root: no load specifier, spawn argument, resolved name or dotted module path",
+    ).toStrictEqual({ specifiers: [], literals: [], packages: [] });
+    expect(Object.values(controls.flagged).every(Boolean), "every flagged control names the root").toBe(true);
+    expect(Object.values(controls.quiet).every(sites => sites === 0), "every quiet control names none").toBe(true);
+    expect(Object.values(residualQuiet).every(sites => sites === 0), "the residual's member names none").toBe(true);
+    return done("A3", {
+      held, exports: [...producer.exportsAtPin].sort(), srcProbe: producer.srcProbe, digestRows: [...producer.digestRowsAtPin], specifiers, literals, packages, controls, quiet: residualQuiet,
+    });
   },
   B1: () => {
     const readings = REFERENCES.map(entry => ({
@@ -992,10 +1205,18 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     const readFirst = useViolations(await usesOf(USE_MUTANTS["read-first"] ?? REFERENCE_ADOPTION));
     const untyped = useViolations(await usesOf(USE_MUTANTS.untyped ?? REFERENCE_ADOPTION));
     const minted = useViolations(await usesOf(USE_MUTANTS.minted ?? REFERENCE_ADOPTION));
+    const peekFirst = useViolations(await usesOf(USE_MUTANTS["peek-first"] ?? REFERENCE_ADOPTION));
     expect(readFirst, "reading before the comparison").toEqual(STALE_BASES.map(id => `read:${id}`).sort());
+    expect(peekFirst, "dereferencing through the basis handle before the comparison is a read (G07)").toEqual(STALE_BASES.map(id => `read:${id}`).sort());
     expect(untyped, "an untyped refusal").toEqual(STALE_BASES.map(id => `untyped:${id}`).sort());
     expect(minted, "a Pi-minted digest refuses the producer's own snapshot").toEqual(["fresh-refused", ...STALE_BASES.map(id => `read:${id}`)].sort());
-    return done("C3", { "read-first": readFirst, untyped, minted });
+    // A rule reaches a snapshot only through read() or the held basis's counted getter (wb-48r6 F1): no rule names a module binding
+    // that holds one, and a rule that does is read.
+    const rules: readonly (readonly [string, UseRule])[] = [["adoption", REFERENCE_ADOPTION], ["other-reason", OTHER_REASON], ...Object.entries(USE_MUTANTS)];
+    const holders = rules.filter(([, rule]) => SNAPSHOT_HOLDERS.test(String(rule))).map(([id]) => id);
+    const holderControl = SNAPSHOT_HOLDERS.test(String((reference: EmittedReference): string => dereference(MOVED_DOCUMENT, reference)));
+    expect({ holders, holderControl }, "no use rule names a binding that holds a snapshot, and one that does is read").toStrictEqual({ holders: [], holderControl: true });
+    return done("C3", { "read-first": readFirst, untyped, minted, "peek-first": peekFirst, holders, holderControl });
   },
   C4: async () => {
     const base = await injectedCarry(carrier());
@@ -1058,6 +1279,14 @@ const SCAN: JsonObject = json({
   nodeTypes: NODE_TYPES,
   riPackage: `${RI_PACKAGE.source}/${RI_PACKAGE.flags}`,
   resultName: `${RESULT_NAME.source}/${RESULT_NAME.flags}`,
+  escapeControls: ESCAPE_CONTROLS,
+  riFlaggedControls: RI_FLAGGED_CONTROLS,
+  riQuietControls: RI_QUIET_CONTROLS,
+  riResidualControls: RI_RESIDUAL_CONTROLS,
+  docs20: { mapping: DOCS20_MAPPING, rules: DOCS20_RULES, rule: DOCS20_RULE },
+  snapshotHolders: `${SNAPSHOT_HOLDERS.source}/${SNAPSHOT_HOLDERS.flags}`,
+  gateProbes: GATE_PROBES,
+  followUp: FOLLOW_UP,
 }) as JsonObject;
 /** The constructed fixture, as the roster holds it. */
 const FIXTURE: JsonObject = json({
@@ -1085,7 +1314,8 @@ describe("wb-tz4r.6 RI emitted-reference census (RI-UNIFIED-DECISION-INFERENCE-R
     expect({ bead: BEAD, scan: SCAN, fixture: FIXTURE, residuals: RESIDUAL_FAMILIES, residualRows: RESIDUAL_ROWS }).toStrictEqual({
       bead: ROSTER.bead, scan: ROSTER.scan, fixture: ROSTER.fixture, residuals: [...ROSTER.residuals], residualRows: ROSTER.residualRows,
     });
-    expect(Object.keys(USE_MUTANTS), "every use mutant the C rows read").toEqual(["unchecked", "rebound", "lenient", "read-first", "untyped", "minted"]);
+    expect(Object.keys(USE_MUTANTS), "every use mutant the C rows read").toEqual(["unchecked", "rebound", "lenient", "read-first", "untyped", "minted", "peek-first"]);
+    expect(ROSTER.counted.map(entry => entry.slice(0, entry.indexOf(":"))), "the roster counts every pin once, in row order").toEqual(ROWS.flatMap(row => row.pins));
     // Every residual names a pin of the judged set, and that pin's roster witness carries its pinned quiet row.
     const quietRows = RESIDUAL_FAMILIES.map(family => {
       const pin = RESIDUAL_ROWS[family] ?? "";
@@ -1122,6 +1352,34 @@ describe("wb-tz4r.6 RI emitted-reference census (RI-UNIFIED-DECISION-INFERENCE-R
       quote: true, citationSha: true, intent: true, field: true, exactChecks: true, staleWord: true, compareNeverMint: true,
     });
     expect(ROSTER.producer.files.every(file => !file.path.includes("_engine")), "the producer paths keep the module placeholder").toBe(true);
+    // The cut's landed delivery note in the same row (wb-48r6 F2), read off its own words: every row its WHAT IT PINS paragraphs name
+    // is judged under that clause with every pin the paragraph names, every escape token and family word A1's line names is read,
+    // and every residual its RESIDUALS line names keeps its family and its quiet pin.
+    const landed = landedNote(bead.notes);
+    const landedRows = Object.entries(landed.rows).map(([id, entry]) => {
+      const judged = ROWS.find(row => row.id === id);
+      const pins = judged?.pins ?? [];
+      const kept = (judged?.label.startsWith(`(${entry.clause}) `) ?? false) && entry.pins.length > 0 && entry.pins.every(pin => pins.includes(pin));
+      return `${id}:${kept}`;
+    });
+    expect(landedRows, "every row the landed note names is judged under its clause with every pin it names").toEqual(ROWS.map(row => `${row.id}:true`));
+    expect(
+      {
+        tokens: landed.escapeTokens.length > 0 && landed.escapeTokens.every(token => ESCAPE_TOKENS.includes(token)),
+        words: landed.wordFamily.length > 0 && landed.wordFamily.every(word => REFERENCE_WORD.test(words(word))),
+        residuals: Object.keys(landed.residuals).length,
+        dropped: Object.entries(landed.residuals).filter(([family, pin]) => !RESIDUAL_FAMILIES.includes(family) || RESIDUAL_ROWS[family] !== pin).map(([family]) => family),
+      },
+      "the landed note's escape tokens and family words are read, and every residual it names keeps its quiet pin",
+    ).toStrictEqual({ tokens: true, words: true, residuals: 4, dropped: [] });
+    // The follow-up's own filing (wb-48r6): its lead line names the gate probe C3 reads as a use mutant.
+    const lead = noteLine(readBeadRow(FOLLOW_UP).notes, "- F1 MEDIUM leads: ");
+    const c3 = rosterWitness("C3");
+    expect([...new Set(lead.match(/\bG\d{2}[a-z]?\b/g) ?? [])], "the follow-up's lead line names the gate probes the census reads").toEqual(Object.keys(GATE_PROBES));
+    expect(
+      Object.values(GATE_PROBES).filter(mutant => !Object.hasOwn(USE_MUTANTS, mutant) || !isObject(c3) || !Object.hasOwn(c3, mutant)),
+      "each named probe is a use mutant whose reading C3's witness holds",
+    ).toEqual([]);
   });
 
   for (const row of ROWS) {
@@ -1134,6 +1392,9 @@ describe("wb-tz4r.6 RI emitted-reference census (RI-UNIFIED-DECISION-INFERENCE-R
           expect(String(impl), `${pin}'s case reads the roster's witnesses`).not.toMatch(/\brosterWitness\b|\bROSTER\.rows\b/);
           const witness = impl === undefined ? null : await impl();
           expect(witness).toStrictEqual(rosterWitness(pin));
+          // Counted once the witness compare held (wb-48r6 F7): a case that swaps its own assertions for a copy of its witness makes
+          // fewer of them than the roster records.
+          COUNTED.push(`${pin}:${expect.getState().assertionCalls}`);
         });
       }
     });
@@ -1157,5 +1418,6 @@ describe("wb-tz4r.6 RI emitted-reference census (RI-UNIFIED-DECISION-INFERENCE-R
     const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
     expect(REACHED, "every pin's case reached its end, in row order").toEqual(ROWS.flatMap(row => row.pins));
+    expect(COUNTED, "every pin's case made the assertions the roster counts for it, once its witness compare held").toEqual(ROSTER.counted);
   });
 });
