@@ -46,13 +46,19 @@
  *  C, acceptance (c). C1 the token census over Pi's surfaces, git's own file list (tracked, and untracked but not ignored) without
  *    the bead store and the test tree (EXCLUDED, each prefix bound to a file the filing names that another pin reads): the exact
  *    names occur nowhere, and every tolerant spelling is the rf echo (an sdk_versions key, a member of a block holding rf's other
- *    sdk_versions members, an sdk_versions path or a component contract's sdk_contract distribution); C2 Pi types: the src modules spelling the rf CLI schema are exactly READERS, no identifier or string of
- *    theirs carries a CONTROL word, no src type member is an rf block field and none pairs a context-block word with a CONTROL
- *    word; C3 UI handlers: no src/ui module imports an rf module or spells rf vocabulary, and the evidence loader roster
- *    holds no reactivefiber row; C4 beads: the program's rows (the epic and the children its title counts) hold no unmarked
- *    control-model or attribution sentence in their titles and owner filings; C5 sentences: no .md page and no src file holds one.
- *  M, the instruments rows A-C read, member by member: M1 the needles, the normalization and the echo classifier;
- *    M2 the identifier word splitter and the CONTROL words; M3 the sentence cutter and the two sentence rules.
+ *    sdk_versions members, an sdk_versions path or a component contract's sdk_contract distribution); every listed file is read
+ *    (a file whose bytes are not UTF-8, media or an archive, through a lossy decode; a NUL byte never skips a file) and every
+ *    censused path is read beside its text; C2 Pi types: the src modules spelling the rf CLI schema are exactly READERS, no
+ *    identifier or string of theirs carries a CONTROL word, no src type member is an rf block field and no type member or
+ *    declared type name pairs a context-block word with a CONTROL word; C3 UI handlers: the UI modules (every src module below
+ *    src/ui/ or loading the TUI package, the extension entrypoints package.json declares among them) load no rf module and spell
+ *    no rf vocabulary, save that an entrypoint registers the preview through an rf registrar and spells the provider's name in
+ *    its pinned registration names, never the rf reading vocabulary; and the evidence loader roster holds no reactivefiber row;
+ *    C4 beads: the program's rows (the epic and the children its title counts) hold no unmarked control-model or attribution
+ *    sentence in their titles and owner filings; C5 sentences: no .md page and no src file holds one.
+ *  M, the instruments rows A-C read, member by member: M1 the needles, the normalization, the echo classifier, the lossy decode
+ *    and the path reading; M2 the identifier word splitter and the CONTROL words; M3 the sentence cutter and the two sentence
+ *    rules.
  *  R, the residuals' pinned quiet rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row, every pin's witness, the
  * constants, the registered test titles and each pin's assertion count are held to the out-of-file roster
@@ -61,13 +67,22 @@
  * is exactly one row label; its notes carry the quote and its pin, the quoted carrier, the "eight-key reader" and the fixture
  * names "(validRf/result)"; clause (a)'s control words must each be carried by a CONTROL_FIELDS key; clause (c)'s four surfaces
  * are each bound to a pin (SURFACE_PINS) and its three census names are the needles; the epic's title states its child count.
- * The walk is git's own file list, the reader set and the ref kinds are read off src, the fixture bytes off the fixture files.
+ * Every pin of rows A-C covers words of the filing (COVERS, verbatim spans of its row's text: rows A and C their clause, row B
+ * clause (b) read with the gating sentence's contract parenthetical, whose carrier and eight-key reader B3 and B4 pin): a row's
+ * pins cover every word of that text and each pin covers a word no other pin of its row covers, so a pin removed from every
+ * literal leaves words of the filing uncovered. The first cut's delivery note in the same row names row M's instrument pins (its
+ * "M1-M3 pin the instruments" sentence) and row R's pin with its residual list; R1's quiet rows and the RESIDUALS list below
+ * equal that list, in order (wb-48lm, the R694 follow-up of landing 321: its F1 and F2).
+ * The walk is git's own file list, the reader set and the ref kinds are read off src, the fixture bytes off the fixture files,
+ * the UI entrypoints off package.json.
  * RECORDS: the last case walks this file's registered tests: each roster title once, in order, in run mode, not inverted, ran;
  * every pin's witness again; every pin reached its end with its pinned assertion count.
  * NOT CLAIMED: the placements, the control fields, the sentinels, the mutants and the sentence vocabularies are this census's
- * reading of the filing (the producer defines no Pi slot for any of them); a member removed from every literal of this file and
- * the roster together is anchored by the filing only where the filing names it (clause (a)'s three control words, clause (c)'s
- * surfaces and names, the two fixture names).
+ * reading of the filing (the producer defines no Pi slot for any of them), so a member of those literals removed from every
+ * literal of this file and the roster together is anchored by the filing only where the filing names it (clause (a)'s three
+ * control words, clause (c)'s surfaces and names, the two fixture names); the rows, the pins and the residual list are anchored
+ * as above, but which pin covers which words is this census's reading (COVERS); an edit of the tracked bead export itself is
+ * outside every anchor (it is machine-written at each ledger hop).
  * RESIDUALS (named families, each with a pinned quiet row in row R): R1 R-STATUS-WORD a control word rf states as an observation
  *   status surfaces as a status word (the filing admits status words); R2 R-PRODUCER-IDENTITY a control word stated as a bounded
  *   producer identity (cli_version, an engine version) surfaces as that identity; R3 R-PROSE-NAME the document name as two words
@@ -77,18 +92,23 @@
  *   R9 R-MARKER-ANYWHERE a marker anywhere in a sentence admits it; R10 R-VOCABULARY a control named outside the CONTROL
  *   families; R11 R-PARAPHRASE a change stated without a CHANGE word; R12 R-SPLIT a model or an attribution carried across two
  *   sentences; R13 R-COMPUTED-IMPORT a UI module reaching an rf module through a computed specifier; R14 R-OUTSIDE-READERS a
- *   control-shaped identifier in a src module that does not spell the rf CLI schema; R15 R-IGNORED a file git ignores; R16
+ *   control-shaped value identifier (C2 reads type members and type names) in a src module that does not spell the rf CLI
+ *   schema, its row a non-reader projection of result.blocks C2's reading leaves quiet; R15 R-IGNORED a file git ignores; R16
  *   R-UNANCHORED a block modeled as a control in a sentence carrying no context-block anchor word; R17 R-COMMENT a control word
  *   in a comment of an rf reader (C2 reads identifiers and strings); R18 R-TRANSITIVE a UI module reaching an rf module through
  *   an intermediate module (C3 reads direct loads; src/workflow/runtime.ts loads native-evidence.ts today); R19 R-BEAD-EXPORT
  *   the token census reads no bead row (the program's own filings spell the names; C4 judges them); R20 R-UNPLACED a control
- *   field at an envelope slot no PLACEMENT names (budget, work_metrics, diagnostics_summary, provenance); R21 R-TEST-TREE the token
+ *   field at an envelope slot no PLACEMENT names (budget, work_metrics, diagnostics_summary, provenance), its row the control
+ *   fields set at each such slot of the carrier, no judged variant there and every surface quiet; R21 R-TEST-TREE the token
  *   census reads no file below test/: the program's sibling censuses name the producer as their subject (at the cut, the queued
  *   wb-4nut.2, wb-4nut.7, wb-4nut.9 and wb-fb2z.4 cuts spell the SDK and element names in their censuses and rosters) and the
  *   fixtures carry the rf echo, so the test layer is the census layer, never a Pi surface the filing names.
  * SCOPE: the producer facts are read at the pin and Pi vendors no producer source, so a producer change is seen only when a cut
  * re-reads them. The fixture digests and the reader set move only with a reviewed cut (the landing-order rule: a lander editing a
  * pinned surface updates this census in the same commit).
+ * FOLLOW-UP wb-48lm (landing 321's findings): F1 the pins and rows M and R anchored in the export (COVERS, the first cut's
+ * delivery note); F2 the RESIDUALS list read back against R1's quiet rows; F3 C3 reads the UI modules and the entrypoints; F4
+ * the R14 and R20 rows exercise their families; F5 the pin's short form is a program token; F6 the lossy decode and the paths.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs, the fixtures, the bead export
  * and git's file list are only read.
@@ -130,6 +150,8 @@ const EPIC = "wb-5ltg";
 const PROGRAM_TAG = "[RC-NATIVE-INTERFACE-COMPONENT-CONTRACT-R1]";
 const PROGRAM_SLUG = "native-interface-component-contract-2026-10-21";
 const PIN = "640a3b579a95";
+/** The pin as git abbreviates it (its first seven hex digits): every longer spelling of the pin holds it. */
+const SHORT_PIN = PIN.slice(0, 7);
 const QUOTE_PIN = `docs/programs/${PROGRAM_SLUG}/README.md:8@${PIN}`;
 const QUOTE = "**Do not create a second general UI IR** or reinterpret model-context blocks as browser/TUI controls.";
 /** The carrier the filing's gating sentence quotes, and the reader count it names. */
@@ -228,8 +250,15 @@ const PROVIDER_FILE = "src/workbench/providers/reactivefiber.ts";
 const OBSERVER_FILE = "src/workbench/reactivefiber-observer.ts";
 /** The src modules that spell the rf CLI schema (its literal or its constant): the modules that read an rf envelope. */
 const READERS: readonly string[] = ["src/workbench/native-evidence.ts", PROVIDER_FILE, OBSERVER_FILE];
-/** The rf vocabulary a module spells when it reads an rf envelope or its projection by name. */
-const RF_VOCABULARY = /reactivefiber|reactive-fiber|\brf[-_][a-z]|context\.render|nativePayloadRef|output\.text|result\.(?:blocks|observations|output|components)/i;
+/** The rf vocabulary a module spells: the provider's name (a registration spells it) and the words of an rf envelope or its
+ * projection read by name; a UI module spells neither, an extension entrypoint never the reading words. */
+const RF_NAME = /reactivefiber|reactive-fiber/i;
+const RF_READING = /\brf[-_][a-z]|context\.render|nativePayloadRef|output\.text|result\.(?:blocks|observations|output|components)/i;
+const RF_VOCABULARY = new RegExp(`${RF_NAME.source}|${RF_READING.source}`, "i");
+/** The TUI package a module loads when it renders Pi's terminal UI: every module loading it is a UI module (C3). */
+const UI_PACKAGE = "@earendil-works/pi-tui";
+/** The envelope slots no PLACEMENT names (R20 R-UNPLACED). */
+const UNPLACED: readonly string[] = ["budget", "work_metrics", "diagnostics_summary", "provenance"];
 /** Clause (c)'s four surfaces, each bound to the pin that judges it. */
 const SURFACE_PINS: Readonly<Record<string, string>> = { "Pi type": "C2", "UI handler": "C3", bead: "C4", "docs/workbench sentence": "C5" };
 
@@ -241,6 +270,28 @@ function needleNamed(id: string): string {
 const SDK_NAME = needleNamed("sdk");
 const ELEMENT_NAME = needleNamed("element");
 const DOCUMENT_NAME = needleNamed("document");
+/** Clause (c)'s two predicates, each judged on the surfaces that can carry it. */
+const CONTROL_MODEL = "models an rf context block as an interactive control";
+const ATTRIBUTION = `attributes an Element/${DOCUMENT_NAME}/envelope change to this program`;
+/** Each acceptance pin's share of the filing: verbatim spans of its row's text (rows A and C their clause; row B clause (b) read
+ * with the gating sentence's contract parenthetical, whose carrier and eight-key reader B3 and B4 pin). A row's pins together
+ * cover every word of that text and each covers a word no other pin of its row covers (coverageOf), so a pin removed from every
+ * literal of this file and the roster leaves words of the filing uncovered. */
+const COVERS: Readonly<Record<string, readonly string[]>> = {
+  A1: ["hermetic: the preview"],
+  A2: ["projection derives only", "a nativePayloadRef digest"],
+  A3: ["evidence refs", "notes, counts and status words"],
+  A4: ["any action/handler/control field from a context block fails"],
+  B1: ["hermetic rf fixtures (validRf/result) stay byte-identical"],
+  B2: ["rf-release-drift.ts", "record nothing from this program"],
+  B3: ["the contractSource carrier record nothing from this program", `REACTIVE_FIBER_CONTRACT_SOURCE '${CARRIER}', providers/reactivefiber.ts:17`],
+  B4: [`${READER_WORD}, reactivefiber-observer.ts:396`],
+  C1: ["census:", `(${SDK_NAME}|${ELEMENT_NAME}|${DOCUMENT_NAME} census = 0 beyond the sdk_versions echo)`],
+  C2: ["no Pi type", CONTROL_MODEL],
+  C3: ["UI handler", CONTROL_MODEL],
+  C4: ["bead", CONTROL_MODEL, ATTRIBUTION],
+  C5: ["docs/workbench sentence", CONTROL_MODEL, ATTRIBUTION],
+};
 /** A text with every census name written as its placeholder (<SDK>, <ELEMENT>, <DOCUMENT>): how the roster holds such a text. */
 function held(text: string): string {
   return NEEDLES.reduce((current, needle) => current.split(needle.name).join(`<${needle.id.toUpperCase()}>`), text);
@@ -395,6 +446,64 @@ function filingOf(notes: string): string {
   const end = lines.findIndex(line => line.startsWith("Not P0:"));
   return end >= 0 ? lines.slice(0, end + 1).join("\n") : (notes.split(/\n[ \t]*\n/)[0] ?? "");
 }
+/** The filing's gating contract: the parenthetical of its Gating line (the carrier and the eight-key reader it declares unchanged). */
+function gatingContract(notes: string): string {
+  const found = /^Gating: [^(\n]*\(([^)\n]+)\)/m.exec(notes)?.[1];
+  if (found === undefined) throw new Error(`the ${BEAD} export row states no Gating parenthetical`);
+  return found;
+}
+/** The words a coverage reading counts: a text split at white space and at the punctuation that separates its parts. */
+const COVER_STOP: readonly string[] = ["a", "an", "and", "as", "from", "or", "the", "this", "to"];
+function coverWords(text: string): string[] {
+  return text.split(/[\s/|,;():]+/).filter(word => word.length > 0 && !COVER_STOP.includes(word));
+}
+interface Coverage {
+  /** Covered phrases that are not verbatim spans of the text, as `<pin>: <phrase>`. */
+  readonly outside: readonly string[];
+  /** Words of the text no pin covers. */
+  readonly uncovered: readonly string[];
+  /** Pins covering no word of their own (another pin of the row covers each of their words too). */
+  readonly withoutOwnWord: readonly string[];
+}
+/** How a row's pins cover the text the row judges (texts are written with their census names held, see held()). */
+function coverageOf(text: string, pins: readonly string[], covers: Readonly<Record<string, readonly string[]>>): Coverage {
+  const wordsBy = new Map(pins.map(pin => [pin, new Set((covers[pin] ?? []).flatMap(coverWords))]));
+  const covered = new Set([...wordsBy.values()].flatMap(words => [...words]));
+  const outside = pins.flatMap(pin => (covers[pin] ?? []).filter(phrase => !text.includes(phrase)).map(phrase => `${pin}: ${held(phrase)}`));
+  const uncovered = [...new Set(coverWords(text).filter(word => !covered.has(word)))].map(held);
+  const withoutOwnWord = pins.filter(pin => {
+    const others = new Set(pins.filter(other => other !== pin).flatMap(other => [...(wordsBy.get(other) ?? [])]));
+    return [...(wordsBy.get(pin) ?? [])].every(word => others.has(word));
+  });
+  return { outside, uncovered, withoutOwnWord };
+}
+interface FirstCut {
+  readonly instruments: readonly string[];
+  readonly residualPin: string;
+  readonly residuals: readonly string[];
+}
+/** What the first cut's delivery note in this bead's export row names beside rows A-C (the note's first such sentence, so a later
+ * note never moves it): row M's instrument pins, and row R's pin with its residual list. */
+function firstCutOf(notes: string): FirstCut {
+  const found = /\bM(\d+)-M(\d+) pin the instruments member by member; (R\d+) pins (\d+) named residuals with quiet rows \(([^)]+)\)/.exec(notes);
+  if (found === null) throw new Error(`the ${BEAD} export row's first delivery note names no instrument pins and residual list`);
+  const [, from, to, residualPin, count, list] = found;
+  const first = Number(from);
+  const instruments = Array.from({ length: Number(to) - first + 1 }, (_, index) => `M${first + index}`);
+  const residuals = (list ?? "").split(", ");
+  if (residuals.length !== Number(count)) throw new Error(`the first cut names ${count} residuals and lists ${residuals.length}`);
+  return { instruments, residualPin: residualPin ?? "", residuals };
+}
+/** This file's own RESIDUALS list (its header between "RESIDUALS (" and "SCOPE:", comment line breaks read as spaces), as
+ * `R<n> <name>`, in order. */
+function headerResiduals(): string[] {
+  const text = readFileSync(fileURLToPath(import.meta.url), "utf8");
+  const start = text.indexOf(" * RESIDUALS (");
+  const end = text.indexOf(" * SCOPE:", start);
+  if (start < 0 || end < 0) throw new Error("this file's header holds no RESIDUALS list");
+  const block = text.slice(start, end).replace(/\n \*\s*/g, " ");
+  return [...block.matchAll(/\bR(\d+) (R-[A-Z]+(?:-[A-Z]+)*)/g)].map(match => `R${match[1]} ${match[2]}`);
+}
 
 /** A text as the census reads it: NFKC-folded, every default-ignorable code point (an invisible joiner or space) removed. */
 function normalized(text: string): string {
@@ -405,23 +514,36 @@ interface Walked {
   readonly text: string;
 }
 interface Walk {
+  /** Every listed name but the bead export (the paths C1 reads). */
+  readonly names: readonly string[];
   readonly files: readonly Walked[];
   readonly listed: number;
-  readonly binary: readonly string[];
+  /** The files whose bytes are not UTF-8, read through the lossy decode. */
+  readonly lossy: readonly string[];
   readonly symlinks: readonly string[];
   readonly missing: readonly string[];
 }
+const UTF8 = new TextDecoder("utf-8", { fatal: true });
+const UTF8_LOSSY = new TextDecoder("utf-8");
+/** A file's text: its UTF-8 decoding, or, when its bytes are not UTF-8 (media, an archive), its lossy decoding (each invalid
+ * sequence read as U+FFFD), so no file is skipped as binary; a NUL byte is read like any other code point. */
+function decoded(bytes: Uint8Array): { text: string; lossy: boolean } {
+  try {
+    return { text: UTF8.decode(bytes), lossy: false };
+  } catch {
+    return { text: UTF8_LOSSY.decode(bytes), lossy: true };
+  }
+}
 let walkCache: Walk | undefined;
-/** Git's own file list of the checkout (tracked, and untracked but not ignored), every text file read once; the bead export is
- * read by C4 against its owner filings, so the walk leaves it out. A symlink is refused, never followed; a file with a NUL
- * byte is binary. */
+/** Git's own file list of the checkout (tracked, and untracked but not ignored), every file read once (decoded()); the bead
+ * export is read by C4 against its owner filings, so the walk leaves it out. A symlink is refused, never followed. */
 function walk(): Walk {
   if (walkCache !== undefined) return walkCache;
   const listing = spawnSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard"], { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
   if (listing.status !== 0) throw new Error(`git ls-files failed: ${listing.stderr}`);
   const names = [...new Set(listing.stdout.split("\0").filter(name => name.length > 0))].sort();
   const files: Walked[] = [];
-  const binary: string[] = [];
+  const lossy: string[] = [];
   const symlinks: string[] = [];
   const missing: string[] = [];
   for (const rel of names) {
@@ -438,14 +560,11 @@ function walk(): Walk {
       continue;
     }
     if (!stat.isFile()) continue;
-    const bytes = readFileSync(join(REPO, rel));
-    if (bytes.includes(0)) {
-      binary.push(rel);
-      continue;
-    }
-    files.push({ rel, text: normalized(bytes.toString("utf8")) });
+    const read = decoded(readFileSync(join(REPO, rel)));
+    if (read.lossy) lossy.push(rel);
+    files.push({ rel, text: normalized(read.text) });
   }
-  walkCache = { files, listed: names.length, binary, symlinks, missing };
+  walkCache = { names: names.filter(rel => rel !== EXPORT_FILE), files, listed: names.length, lossy, symlinks, missing };
   return walkCache;
 }
 
@@ -704,6 +823,52 @@ function typeMembersOf(file: ts.SourceFile): string[] {
   };
   visit(file);
   return members;
+}
+/** The declared names of every type-level shape a module declares: interfaces, type aliases, enums and named classes. */
+function typeNamesOf(file: ts.SourceFile): string[] {
+  const names: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node) || ts.isEnumDeclaration(node)) names.push(node.name.text);
+    else if (ts.isClassDeclaration(node) && node.name !== undefined) names.push(node.name.text);
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return names;
+}
+/** The rf block fields Pi's own fixture rows name: the snake-case keys of a block row and a decision row. */
+function blockFields(): string[] {
+  return [...new Set([...Object.keys(rfFixtureBlock()), ...Object.keys(rfFixtureDecision())])].filter(key => key.includes("_")).sort();
+}
+interface PiTypes {
+  readonly readers: readonly string[];
+  readonly words: JsonObject;
+  readonly members: readonly string[];
+  readonly typeNames: readonly string[];
+}
+/** C2's reading of a set of src modules: the modules spelling the rf CLI schema (the readers), the CONTROL words of each reader's
+ * identifiers and strings, every type member that is an rf block field, and every type member or declared type name pairing a
+ * context-block word with a CONTROL word. */
+function piTypesOf(src: readonly Walked[]): PiTypes {
+  const fields = blockFields();
+  const readers = src.filter(file => file.text.includes(REACTIVE_FIBER_CLI_SCHEMA) || file.text.includes("REACTIVE_FIBER_CLI_SCHEMA")).map(file => file.rel).sort();
+  const words: JsonObject = {};
+  const members: string[] = [];
+  const typeNames: string[] = [];
+  for (const file of src) {
+    const parsed = sourceFile(file.rel, file.text);
+    if (readers.includes(file.rel)) words[file.rel] = [...new Set(namesOf(parsed).flatMap(controlWordsOf))].sort();
+    const declared = typeMembersOf(parsed);
+    members.push(...declared.filter(name => fields.includes(name)).map(name => `${file.rel} ${name}`));
+    typeNames.push(...[...declared, ...typeNamesOf(parsed)].filter(name => controlWordsOf(name).length > 0 && /block|context/i.test(name)).map(name => `${file.rel} ${name}`));
+  }
+  return { readers, words, members, typeNames };
+}
+/** The extension entrypoints package.json declares (its pi.extensions), as repository paths. */
+function entrypoints(): string[] {
+  const manifest: unknown = JSON.parse(textAt("package.json"));
+  const pi = isObject(manifest) ? manifest.pi : undefined;
+  const declared: unknown[] = isObject(pi) && Array.isArray(pi.extensions) ? pi.extensions : [];
+  return declared.filter((entry: unknown): entry is string => typeof entry === "string").map(entry => relative(REPO, join(REPO, entry)));
 }
 /** The module specifiers a module loads: import and export declarations, import-equals, and a literal import() or require(). */
 function specifiersOf(file: ts.SourceFile): string[] {
@@ -1040,11 +1205,12 @@ function filedReaderCount(notes: string): number {
   const word = /\b([a-z]+)-key reader\b/.exec(notes)?.[1] ?? "";
   return COUNT_WORDS.indexOf(word);
 }
-/** Every token of the program a file could record: its slug, title words or tag, the pin, the epic and the bead. */
+/** Every token of the program a file could record: its slug, title words or tag, the pin (in full or as git abbreviates it), the
+ * epic and the bead. */
 function programTokens(text: string): string[] {
   const found: string[] = [];
   if (PROGRAM.test(text)) found.push("program");
-  if (text.includes(PIN)) found.push("pin");
+  if (text.includes(SHORT_PIN)) found.push("pin");
   if (new RegExp(`\\b${EPIC.replace(".", "\\.")}(?:\\.\\d+)?\\b`).test(text)) found.push("bead");
   for (const { id, pattern } of TOLERANT) if (new RegExp(pattern.source, "i").test(text)) found.push(`needle:${id}`);
   return found;
@@ -1164,6 +1330,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const text = textAt(DRIFT_FILE);
     const tokens = [...programTokens(text), ...(text.includes("sdk_versions") ? ["sdk_versions"] : [])];
     expect(tokens, "the drift helper records nothing of the program and reads no SDK echo").toStrictEqual([]);
+    const pinControl = [programTokens(`pinned at ${SHORT_PIN}`), programTokens(`pinned at ${PIN}`)];
+    expect(pinControl, "the pin, as git abbreviates it and in full, is a program token").toStrictEqual([["pin"], ["pin"]]);
     const exported = exportsOf(sourceFile(DRIFT_FILE, text));
     expect(exported, "the drift helper's exports").toStrictEqual([...DRIFT_EXPORTS]);
     const notes = exportRow(BEAD).notes;
@@ -1176,7 +1344,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(judgeRfReleaseDrift(extended), "an SDK echo and control fields beside the two releases change nothing").toStrictEqual(plain);
     const echoed = judgeRfReleaseDrift({ recorded: release, installed: "0.1.1", previewCliVersion: release });
     expect(echoed.ok, "an SDK version in the installed slot is drift, never a record").toBe(false);
-    return { tokens, exported, release, plain: json(plain), echoed: json(echoed) };
+    return { tokens, pinControl, exported, release, plain: json(plain), echoed: json(echoed) };
   },
   B3: async () => {
     const notes = exportRow(BEAD).notes;
@@ -1226,7 +1394,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     return { keys: observerKeys ?? [], count, schema: REACTIVE_FIBER_CLI_SCHEMA, native, observed };
   },
   C1: async () => {
-    const { files, listed, binary, symlinks, missing } = walk();
+    const { names, files, listed, lossy, symlinks, missing } = walk();
     const censused = files.filter(file => tokenCensused(file.rel));
     const rels = censused.map(file => file.rel);
     const floorMet = listed >= 800 && censused.length >= 250 && ["README.md", OBSERVER_FILE, "docs/workbench/receipts/wb-c7ku.md"].every(rel => rels.includes(rel));
@@ -1239,42 +1407,58 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const echoes = hits.filter(hit => hit.kind.startsWith("echo:"));
     const echoKinds = [...new Set(echoes.map(hit => hit.kind.slice("echo:".length)))].sort();
     const anchorEcho = echoes.some(hit => hit.rel === "docs/workbench/receipts/wb-c7ku.md");
+    const paths = names.filter(tokenCensused);
+    const pathFindings = paths.flatMap(rel => hitsOf(rel, normalized(rel)).map(hit => `${rel} path ${hit.needle} ${hit.kind}`));
     expect(findings, "no census name and no tolerant spelling outside the rf echo").toStrictEqual([]);
+    expect(pathFindings, "no censused path spells a census name, in any spelling").toStrictEqual([]);
     expect(anchorEcho, "the echo classifier read the receipt of record's sdk_versions").toBe(true);
     expect(echoKinds.every(kind => ECHO_KINDS.includes(kind)), "every echo is of a known kind").toBe(true);
-    expect(binary.length >= 3, "the binary files git lists are skipped, never read as text").toBe(true);
-    return { floorMet, excluded: Object.keys(EXCLUDED), findings, echoKinds, echoFloorMet: echoes.length >= 3 };
+    const lossyRead = lossy.length >= 3 && lossy.every(rel => !tokenCensused(rel) || rels.includes(rel));
+    expect(lossyRead, "the files git lists whose bytes are not UTF-8 are read through the lossy decode, never skipped").toBe(true);
+    return { floorMet, excluded: Object.keys(EXCLUDED), findings, pathFindings, echoKinds, echoFloorMet: echoes.length >= 3, lossyFloorMet: lossyRead, pathFloorMet: paths.length >= 250 };
   },
   C2: async () => {
     const src = walk().files.filter(file => file.rel.startsWith("src/") && file.rel.endsWith(".ts"));
-    const schemaSites = src.filter(file => file.text.includes(REACTIVE_FIBER_CLI_SCHEMA) || file.text.includes("REACTIVE_FIBER_CLI_SCHEMA")).map(file => file.rel).sort();
-    expect(schemaSites, "the src modules that read an rf envelope").toStrictEqual([...READERS].sort());
-    const words: JsonObject = {};
-    for (const rel of READERS) {
-      const found = [...new Set(namesOf(sourceFile(rel)).flatMap(controlWordsOf))].sort();
-      words[rel] = found;
-    }
-    expect(Object.values(words).flat(), "no identifier or string of an rf reader carries a control word").toStrictEqual([]);
-    const blockFields = [...new Set([...Object.keys(rfFixtureBlock()), ...Object.keys(rfFixtureDecision())])].filter(key => key.includes("_")).sort();
-    const members = src.flatMap(file => typeMembersOf(sourceFile(file.rel, file.text)).filter(name => blockFields.includes(name)).map(name => `${file.rel} ${name}`));
-    expect(members, "no src type member is an rf block field").toStrictEqual([]);
-    const typeNames = src.flatMap(file => typeMembersOf(sourceFile(file.rel, file.text)).filter(name => controlWordsOf(name).length > 0 && /block|context/i.test(name)).map(name => `${file.rel} ${name}`));
-    expect(typeNames, "no src type member pairs a context block with a control").toStrictEqual([]);
-    return { readers: schemaSites, words, blockFields, members, typeNames, srcFloorMet: src.length >= 100 };
+    const read = piTypesOf(src);
+    expect(read.readers, "the src modules that read an rf envelope").toStrictEqual([...READERS].sort());
+    expect(Object.values(read.words).flat(), "no identifier or string of an rf reader carries a control word").toStrictEqual([]);
+    expect(read.members, "no src type member is an rf block field").toStrictEqual([]);
+    expect(read.typeNames, "no src type member or declared type name pairs a context block with a control").toStrictEqual([]);
+    return { readers: [...read.readers], words: read.words, blockFields: blockFields(), members: [...read.members], typeNames: [...read.typeNames], srcFloorMet: src.length >= 100 };
   },
   C3: async () => {
     const files = walk().files.filter(file => file.rel.startsWith("src/"));
-    const ui = files.filter(file => file.rel.startsWith("src/ui/") && file.rel.endsWith(".ts"));
+    const declared = entrypoints();
+    const loadsOf = new Map(files.filter(file => file.rel.endsWith(".ts")).map(file => [file.rel, specifiersOf(sourceFile(file.rel, file.text))]));
+    const ui = files.filter(file => file.rel.endsWith(".ts") && (file.rel.startsWith("src/ui/") || declared.includes(file.rel) || (loadsOf.get(file.rel) ?? []).includes(UI_PACKAGE)));
+    const uiDir = ui.filter(file => file.rel.startsWith("src/ui/"));
     const registrars = files.filter(file => /registerNativeReactiveFiberRender|registerReactiveFiberRender/.test(file.text) && file.rel !== PROVIDER_FILE).map(file => file.rel).sort();
     const rfModules = [...READERS, ...registrars];
-    const loads = ui.flatMap(file => specifiersOf(sourceFile(file.rel, file.text)).map(specifier => resolvedOf(file.rel, specifier)).filter(target => rfModules.includes(target)).map(target => `${file.rel} -> ${target}`));
-    const vocabulary = ui.filter(file => RF_VOCABULARY.test(file.text)).map(file => file.rel);
+    const edges = ui.flatMap(file => (loadsOf.get(file.rel) ?? []).map(specifier => resolvedOf(file.rel, specifier)).filter(target => rfModules.includes(target)).map(target => ({ from: file.rel, target })));
+    // An entrypoint registers the preview through an rf registrar (a registration, never a reading); no other UI load is admitted.
+    const admitted = edges.filter(edge => declared.includes(edge.from) && registrars.includes(edge.target)).map(edge => `${edge.from} -> ${edge.target}`);
+    const loads = edges.map(edge => `${edge.from} -> ${edge.target}`).filter(edge => !admitted.includes(edge));
+    const vocabulary = ui.filter(file => (declared.includes(file.rel) ? RF_READING : RF_VOCABULARY).test(file.text)).map(file => file.rel);
+    const registrationNames: JsonObject = {};
+    for (const file of ui.filter(entry => declared.includes(entry.rel))) {
+      registrationNames[file.rel] = [...new Set(namesOf(sourceFile(file.rel, file.text)).filter(name => RF_NAME.test(name)))].sort();
+    }
     const loaders = EVIDENCE_LOADER_ROWS.map(row => row.provider);
-    expect(ui.length >= 8, `src/ui modules read: ${ui.length}`).toBe(true);
-    expect(loads, "no src/ui module loads an rf module").toStrictEqual([]);
-    expect(vocabulary, "no src/ui module spells rf vocabulary").toStrictEqual([]);
+    expect(uiDir.length >= 8, `src/ui modules read: ${uiDir.length}`).toBe(true);
+    expect(declared.length > 0 && declared.every(rel => ui.some(file => file.rel === rel)), `the entrypoints package.json declares are read as UI modules: ${declared.join(", ")}`).toBe(true);
+    expect(loads, "no UI module loads an rf module, save an entrypoint's registrar").toStrictEqual([]);
+    expect(vocabulary, "no UI module spells rf vocabulary, and no entrypoint the rf reading words").toStrictEqual([]);
     expect(loaders.length > 0 && !loaders.includes("reactivefiber"), "the evidence loader roster holds no reactivefiber row").toBe(true);
-    return { rfModules, loads, vocabulary, reactivefiberLoader: loaders.includes("reactivefiber"), uiFloorMet: ui.length >= 8 };
+    return {
+      rfModules,
+      entrypoints: declared,
+      admitted,
+      registrationNames,
+      loads,
+      vocabulary,
+      reactivefiberLoader: loaders.includes("reactivefiber"),
+      uiFloorMet: uiDir.length >= 8,
+    };
   },
   C4: async () => {
     const epic = exportRow(EPIC);
@@ -1374,7 +1558,20 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     });
     expect(screaming, "a screaming-snake document identifier in a Pi surface is a finding").toStrictEqual(["document:finding"]);
     expect(Object.values(misses).every(found => found.length === 0), "the near misses read no hit").toBe(true);
-    return { spellings, echo, screaming, misses };
+    const encode = (text: string): Uint8Array => new TextEncoder().encode(text);
+    const page = decoded(encode(`# probe\n${String.fromCodePoint(0)}\nsee ${SDK_NAME} here\n`));
+    const notUtf8 = decoded(Uint8Array.from([...encode("# probe\n"), 0xff, 0, ...encode(`\nsee ${SDK_NAME} here\n`)]));
+    const readings = {
+      nulPage: { lossy: page.lossy, hits: kinds(page.text) },
+      notUtf8: { lossy: notUtf8.lossy, hits: kinds(notUtf8.text) },
+      path: kinds(`src/workbench/${(sdkWords ?? []).join("-")}-bridge.ts`),
+    };
+    expect(readings, "the decode reads a NUL-bearing page and a page that is not UTF-8, and a path reads like a text").toStrictEqual({
+      nulPage: { lossy: false, hits: ["sdk:exact"] },
+      notUtf8: { lossy: true, hits: ["sdk:exact"] },
+      path: ["sdk:finding"],
+    });
+    return { spellings, echo, screaming, misses, readings };
   },
   M2: async () => {
     const probes = [
@@ -1443,6 +1640,21 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const probeLoads = specifiersOf(sourceFile("src/ui/probe.ts", 'import { runWorkflow } from "../workflow/runtime.js";')).map(specifier => resolvedOf("src/ui/probe.ts", specifier));
     const runtimeLoads = specifiersOf(sourceFile("src/workflow/runtime.ts")).map(specifier => resolvedOf("src/workflow/runtime.ts", specifier));
     const computed = `const parts = ['reactive', 'fiber']; void import(\`../workbench/providers/\${parts.join('')}.js\`);`;
+    // R14: a projection of result.blocks under a control-shaped name, in a module spelling no CLI schema, reads quiet under C2's
+    // reading; the same module spelling the schema is a reader, and its control word is caught.
+    const projection = "export const rfBlockControls = (reading: JsonValue): unknown => (reading as { source: { result: { blocks: unknown } } }).source.result.blocks;\n";
+    const probeView = "src/workbench/probe-view.ts";
+    const outsideReaders = piTypesOf([{ rel: probeView, text: projection }]);
+    const asReader = piTypesOf([{ rel: probeView, text: `${projection}export const probeSchema = "${REACTIVE_FIBER_CLI_SCHEMA}";\n` }]);
+    // R20: the control fields set at each unplaced slot of the carrier: no judged variant carries one there, and every surface
+    // reads the placed envelope quiet under the judge.
+    const unplaced = UNPLACED.map(slot => {
+      const bare = carrier();
+      const before = projections(bare);
+      const after = projections(placed(bare, { id: slot, path: [slot], seed: null }, CONTROL_FIELDS));
+      const judged = variantsOf().some(entry => [...JSON.stringify(resultOf(entry.variant)[slot] ?? null).matchAll(SENTINEL)].length > 0);
+      return { judged, findings: SURFACES.flatMap(surface => judge(surface, before[surface], after[surface])) };
+    });
     const residuals = {
       "R-STATUS-WORD": statusNotes.some(note => note.includes("(on_click)")) && !PLACEMENTS.some(placement => placement.path.includes("status")),
       "R-PRODUCER-IDENTITY": releaseRefs.includes("rf-cli:on_click") && !PLACEMENTS.some(placement => placement.path.includes("provenance")),
@@ -1457,13 +1669,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       "R-PARAPHRASE": sentenceFindings(`The ${PROGRAM_SLUG} program reshapes the envelope.`, false).length === 0,
       "R-SPLIT": tallyOf("split", "Pi reads each context block. It renders them as buttons.", false).findings.length === 0,
       "R-COMPUTED-IMPORT": specifiersOf(sourceFile("src/ui/probe.ts", computed)).length === 0 && !RF_VOCABULARY.test(computed),
-      "R-OUTSIDE-READERS": !READERS.includes("src/index.ts") && !READERS.includes("src/workbench/native-modules.ts"),
+      "R-OUTSIDE-READERS":
+        controlWordsOf("rfBlockControls").length > 0 &&
+        JSON.stringify(outsideReaders) === JSON.stringify({ readers: [], words: {}, members: [], typeNames: [] }) &&
+        JSON.stringify(asReader.words) === JSON.stringify({ [probeView]: ["controls"] }),
       "R-IGNORED": spawnSync("git", ["check-ignore", "-q", "dist/x.ts"], { cwd: REPO }).status === 0,
       "R-UNANCHORED": sentenceFindings("The observer reads each block's handler.", false).length === 0,
       "R-COMMENT": !namesOf(sourceFile("src/workbench/probe.ts", "// each block's handler\nexport const probe = 1;\n")).some(name => controlWordsOf(name).length > 0),
       "R-TRANSITIVE": !probeLoads.some(target => READERS.includes(target)) && runtimeLoads.includes("src/workbench/native-evidence.ts"),
       "R-BEAD-EXPORT": hitsOf(EXPORT_FILE, normalized(exportRow(BEAD).title)).some(hit => hit.kind === "exact") && !walk().files.some(file => file.rel === EXPORT_FILE),
-      "R-UNPLACED": !PLACEMENTS.some(placement => ["budget", "work_metrics", "diagnostics_summary", "provenance"].includes(placement.path[0] ?? "")),
+      "R-UNPLACED": unplaced.every(entry => !entry.judged && entry.findings.length === 0) && !PLACEMENTS.some(placement => UNPLACED.includes(placement.path[0] ?? "")),
       "R-TEST-TREE": !tokenCensused("test/workbench-x-census.test.ts") && !tokenCensused("test/fixtures/x-roster.json") && tokenCensused("qa/workbench/x.mjs") && tokenCensused("src/x.ts"),
     };
     expect(residuals, "every residual reads quiet on its pinned row").toStrictEqual(Object.fromEntries(Object.keys(residuals).map(name => [name, true])));
@@ -1479,6 +1694,7 @@ function constants(): JsonValue {
     excluded: EXCLUDED,
     controlFields: CONTROL_FIELDS,
     placements: PLACEMENTS,
+    unplaced: UNPLACED,
     controlWords: CONTROL_WORDS,
     snapshotKeys: SNAPSHOT_KEYS,
     nodeKeys: NODE_KEYS,
@@ -1487,7 +1703,12 @@ function constants(): JsonValue {
     fixtures: FIXTURES,
     driftExports: DRIFT_EXPORTS,
     readers: READERS,
+    uiPackage: UI_PACKAGE,
+    rfName: RF_NAME.source,
+    rfReading: RF_READING.source,
     surfacePins: SURFACE_PINS,
+    covers: Object.fromEntries(Object.entries(COVERS).map(([pin, phrases]) => [pin, phrases.map(held)])),
+    coverStop: COVER_STOP,
     anchors: ANCHORS,
     controls: CONTROLS,
     markers: MARKERS,
@@ -1531,6 +1752,20 @@ describe("wb-5ltg.1 RC model-context block census (RC-NATIVE-INTERFACE-COMPONENT
     const contracts = /attributes an (.+?) change to this program/.exec(clauses.c ?? "")?.[1]?.split("/") ?? [];
     expect(contracts).toStrictEqual(["Element", DOCUMENT_NAME, "envelope"]);
     expect(contracts.filter(contract => !CONTRACTS.some(pattern => pattern.test(contract)))).toStrictEqual([]);
+    // Every pin and row anchored in the export (wb-48lm F1, F2): each acceptance pin covers words of its row's text, and the first
+    // cut's delivery note names row M's pins and row R's residual list, which R1's quiet rows and this file's header restate.
+    const obligations: Readonly<Record<string, string>> = { A: clauses.a ?? "", B: `${clauses.b ?? ""}; ${gatingContract(notes)}`, C: clauses.c ?? "" };
+    expect(Object.keys(COVERS), "every acceptance pin holds a share of the filing").toEqual(acceptanceRows.flatMap(row => row.pins));
+    for (const row of acceptanceRows) {
+      const coverage = coverageOf(obligations[row.id] ?? "", row.pins, COVERS);
+      expect(coverage, `row ${row.id}: its pins cover the filing's words, each with words of its own`).toStrictEqual({ outside: [], uncovered: [], withoutOwnWord: [] });
+    }
+    const first = firstCutOf(notes);
+    const others = ROWS.filter(row => !acceptanceRows.includes(row)).map(row => ({ id: row.id, pins: [...row.pins] }));
+    expect(others, "rows M and R hold the pins the first cut's delivery note names").toStrictEqual([{ id: "M", pins: [...first.instruments] }, { id: "R", pins: [first.residualPin] }]);
+    const quietRows = Object.keys(objectOf(rosterWitness(first.residualPin), "the residual witness"));
+    expect(quietRows, "R1's quiet rows: the first cut's residual list, in order").toEqual([...first.residuals]);
+    expect(headerResiduals(), "the header's RESIDUALS: the same list, numbered in order").toEqual(first.residuals.map((name, index) => `R${index + 1} ${name}`));
   });
 
   for (const row of ROWS) {

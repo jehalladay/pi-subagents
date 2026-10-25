@@ -125,6 +125,12 @@
     "seed": {}
    }
   ],
+  "unplaced": [
+   "budget",
+   "work_metrics",
+   "diagnostics_summary",
+   "provenance"
+  ],
   "controlWords": [
    "action",
    "actions",
@@ -221,12 +227,78 @@
    "src/workbench/providers/reactivefiber.ts",
    "src/workbench/reactivefiber-observer.ts"
   ],
+  "uiPackage": "@earendil-works/pi-tui",
+  "rfName": "reactivefiber|reactive-fiber",
+  "rfReading": "\\brf[-_][a-z]|context\\.render|nativePayloadRef|output\\.text|result\\.(?:blocks|observations|output|components)",
   "surfacePins": {
    "Pi type": "C2",
    "UI handler": "C3",
    "bead": "C4",
    "docs/workbench sentence": "C5"
   },
+  "covers": {
+   "A1": [
+    "hermetic: the preview"
+   ],
+   "A2": [
+    "projection derives only",
+    "a nativePayloadRef digest"
+   ],
+   "A3": [
+    "evidence refs",
+    "notes, counts and status words"
+   ],
+   "A4": [
+    "any action/handler/control field from a context block fails"
+   ],
+   "B1": [
+    "hermetic rf fixtures (validRf/result) stay byte-identical"
+   ],
+   "B2": [
+    "rf-release-drift.ts",
+    "record nothing from this program"
+   ],
+   "B3": [
+    "the contractSource carrier record nothing from this program",
+    "REACTIVE_FIBER_CONTRACT_SOURCE 'rf@0.1.784:reactive-fiber.cli/v1 context.render --no-commit', providers/reactivefiber.ts:17"
+   ],
+   "B4": [
+    "eight-key reader, reactivefiber-observer.ts:396"
+   ],
+   "C1": [
+    "census:",
+    "(<SDK>|<ELEMENT>|<DOCUMENT> census = 0 beyond the sdk_versions echo)"
+   ],
+   "C2": [
+    "no Pi type",
+    "models an rf context block as an interactive control"
+   ],
+   "C3": [
+    "UI handler",
+    "models an rf context block as an interactive control"
+   ],
+   "C4": [
+    "bead",
+    "models an rf context block as an interactive control",
+    "attributes an Element/<DOCUMENT>/envelope change to this program"
+   ],
+   "C5": [
+    "docs/workbench sentence",
+    "models an rf context block as an interactive control",
+    "attributes an Element/<DOCUMENT>/envelope change to this program"
+   ]
+  },
+  "coverStop": [
+   "a",
+   "an",
+   "and",
+   "as",
+   "from",
+   "or",
+   "the",
+   "this",
+   "to"
+  ],
   "anchors": [
    {
     "id": "N1",
@@ -630,6 +702,14 @@
      "id": "B2",
      "witness": {
       "tokens": [],
+      "pinControl": [
+       [
+        "pin"
+       ],
+       [
+        "pin"
+       ]
+      ],
       "exported": [
        "RF_LIVE_DRIFT_TITLE",
        "RF_LIVE_DRIFT_SHAPE_SUITE",
@@ -721,10 +801,13 @@
        "test/"
       ],
       "findings": [],
+      "pathFindings": [],
       "echoKinds": [
        "sdk_versions-key"
       ],
-      "echoFloorMet": true
+      "echoFloorMet": true,
+      "lossyFloorMet": true,
+      "pathFloorMet": true
      }
     },
     {
@@ -767,6 +850,18 @@
        "src/workbench/hosts/local-detached.ts",
        "src/workbench/native-modules.ts"
       ],
+      "entrypoints": [
+       "src/index.ts"
+      ],
+      "admitted": [
+       "src/index.ts -> src/workbench/native-modules.ts"
+      ],
+      "registrationNames": {
+       "src/index.ts": [
+        "discover:reactivefiber.render.preview",
+        "reactivefiberWorkspaceRoot"
+       ]
+      },
       "loads": [],
       "vocabulary": [],
       "reactivefiberLoader": false,
@@ -931,6 +1026,23 @@
        "proseDocument": [],
        "elementAlone": [],
        "partial": []
+      },
+      "readings": {
+       "nulPage": {
+        "lossy": false,
+        "hits": [
+         "sdk:exact"
+        ]
+       },
+       "notUtf8": {
+        "lossy": true,
+        "hits": [
+         "sdk:exact"
+        ]
+       },
+       "path": [
+        "sdk:finding"
+       ]
       }
      }
     },
@@ -1175,15 +1287,15 @@
   "A3:37",
   "A4:4",
   "B1:7",
-  "B2:7",
+  "B2:8",
   "B3:9",
   "B4:9",
-  "C1:9",
+  "C1:10",
   "C2:6",
-  "C3:6",
+  "C3:7",
   "C4:6",
   "C5:5",
-  "M1:6",
+  "M1:7",
   "M2:5",
   "M3:6",
   "R1:3"
