@@ -1,5 +1,5 @@
 {
- "provenance": "wb-if7q.2 census roster (test/workbench-rf-tsx-closed-vocabulary-census.test.ts). quote and citation are the owner filing's (bead row wb-if7q.2 of the tracked export .beads/issues.jsonl). producer is MEASURED read-only on 2026-10-23: programPin and runtimePin are ReactiveFiberTSXSDK commits read with git show (runtimePin is the distribution source the installed rf 0.1.832 names in its packaged integrations/tsx/runtime-lock.json, package @reactive-fiber/tsx 0.1.649); contextVocabulary is the eight intrinsic type ids at vocabularySites, identical at both pins; descriptorProfile counts the src files of each pin matching its family by git grep -l -i -E (0 at both), lists each pin's package.json exports keys and the docs pages naming the family at the program pin; rf is the installed rf (`rf --json --version` result.version) and its packaged diagnostics registry row for the host code a worker invalid_output failure maps to (integrations/tsx.py WORKER_FAILURE_CODES), with the worker's SDK code and message (integrations/tsx/worker_entry.ts), and tsxCodes the 12 RF_TSX_ DiagnosticCode members of domain/diagnostics.py (the census's unregistered code is none of them; it appears in no file of the package). The refusal envelope the census builds from rf is CONSTRUCTED from these facts (no Deno engine is provisioned for a TSX render here). Every witness is the expected outcome of its pin's case at this cut.",
+ "provenance": "wb-if7q.2 census roster (test/workbench-rf-tsx-closed-vocabulary-census.test.ts). quote and citation are the owner filing's (bead row wb-if7q.2 of the tracked export .beads/issues.jsonl). producer is MEASURED read-only on 2026-10-23: programPin and runtimePin are ReactiveFiberTSXSDK commits read with git show (runtimePin is the distribution source the installed rf 0.1.832 names in its packaged integrations/tsx/runtime-lock.json, package @reactive-fiber/tsx 0.1.649); contextVocabulary is the eight intrinsic type ids at vocabularySites, identical at both pins; descriptorProfile counts the src files of each pin matching its family by git grep -l -i -E (0 at both), lists each pin's package.json exports keys and the docs pages naming the family at the program pin; rf is the installed rf (`rf --json --version` result.version) and its packaged diagnostics registry row for the host code a worker invalid_output failure maps to (integrations/tsx.py WORKER_FAILURE_CODES), with the worker's SDK code and message (integrations/tsx/worker_entry.ts), and tsxCodes the 12 RF_TSX_ DiagnosticCode members of domain/diagnostics.py (the census's unregistered code is none of them; it appears in no file of the package). The refusal envelope the census builds from rf is CONSTRUCTED from these facts (no Deno engine is provisioned for a TSX render here). Every witness is the expected outcome of its pin's case at this cut. claims (wb-wtfr) are each pin's quote cut into terms that tile it, each term with the witness facts that show it; every pin's live witness shows its own claims and no other pin's.",
  "bead": "wb-if7q.2",
  "quote": "Reactive Fiber itself is the UI framework. `ReactiveWebInterfaceSDK` and `ReactiveTUIInterfaceSDK` are independent host implementations **depending on this package**, not aliases for it. Neither React.js nor ReactiveFiberCLI is a rendering intermediary. React compatibility is outside this program.",
  "citation": "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/README.md:6@76bbbffd9d4a",
@@ -189,6 +189,10 @@
   {
    "id": "R-OUTSIDE-CLOSURE",
    "quietRow": "B3: a planted reader of result.output.html that names neither the envelope's schema nor its command is not in the closure and spells no descriptor-profile phrase"
+  },
+  {
+   "id": "R-REAUTHORED",
+   "quietRow": "claims bound: C3 re-authored (its case cut to one refusal's reading under one matching claim, roster witness to match) shows that claim with every fact under it, no other pin's claims accept it, and C3's own claims refuse it"
   }
  ],
  "rows": [
@@ -199,6 +203,62 @@
     {
      "id": "A1",
      "quote": "Pi's validRf/fullShapeRf fixtures stay unchanged",
+     "claims": [
+      {
+       "term": "Pi's validRf/fullShapeRf fixtures",
+       "checks": [
+        {
+         "path": "validRf.provider",
+         "equals": "admitted/verbatim/spawns 1"
+        },
+        {
+         "path": "fullShapeRf.provider",
+         "equals": "admitted/verbatim/spawns 1"
+        },
+        {
+         "path": "*.adapter",
+         "equals": "projected"
+        }
+       ]
+      },
+      {
+       "term": "stay unchanged",
+       "checks": [
+        {
+         "path": "*.envelopeKeys",
+         "equals": [
+          "schema",
+          "ok",
+          "command",
+          "operation_id",
+          "workspace",
+          "transaction_id",
+          "result",
+          "diagnostics"
+         ]
+        },
+        {
+         "path": "validRf.outputKeys",
+         "equals": [
+          "text"
+         ]
+        },
+        {
+         "path": "fullShapeRf.outputKeys",
+         "equals": [
+          "text",
+          "size_bytes",
+          "digest",
+          "path"
+         ]
+        },
+        {
+         "path": "*.uiFindings",
+         "equals": []
+        }
+       ]
+      }
+     ],
      "witness": {
       "pin": "A1",
       "validRf": {
@@ -245,6 +305,38 @@
     {
      "id": "A2",
      "quote": "a block kind outside rftsx.*",
+     "claims": [
+      {
+       "term": "a block kind",
+       "checks": [
+        {
+         "path": "degraded.*.*",
+         "equals": "admitted/verbatim/same/surfaced 0/spawns 1"
+        }
+       ]
+      },
+      {
+       "term": "outside rftsx.*",
+       "checks": [
+        {
+         "path": "outsideKindsInVocabulary",
+         "equals": []
+        },
+        {
+         "path": "insideKindInVocabulary",
+         "equals": true
+        },
+        {
+         "path": "closedVocabularyRefusal.provider",
+         "matches": "^[a-z]+: .+ \\(errors 1, spawns 1\\)$"
+        },
+        {
+         "path": "closedVocabularyRefusal.adapter",
+         "matches": "^projected unknown/failure: refused · RF_[A-Z_]+$"
+        }
+       ]
+      }
+     ],
      "witness": {
       "pin": "A2",
       "outsideKindsInVocabulary": [],
@@ -274,6 +366,34 @@
     {
      "id": "A3",
      "quote": "a UI-descriptor block",
+     "claims": [
+      {
+       "term": "a UI-descriptor",
+       "checks": [
+        {
+         "path": "*.serializedAsText",
+         "equals": "admitted/verbatim/same-but-payload/surfaced 0/spawns 1"
+        },
+        {
+         "path": "*.treeAsText.provider",
+         "matches": "^[a-z]+: .+ \\(errors 1, spawns 1\\)$"
+        },
+        {
+         "path": "*.treeAsText.adapter",
+         "matches": "^validation: ReactiveFiber topology refused: "
+        }
+       ]
+      },
+      {
+       "term": "block",
+       "checks": [
+        {
+         "path": "*.blockRow",
+         "equals": "admitted/verbatim/same/surfaced 0/spawns 1"
+        }
+       ]
+      }
+     ],
      "witness": {
       "pin": "A3",
       "validRf": {
@@ -297,6 +417,38 @@
     {
      "id": "A4",
      "quote": "an HTML body is refused/degraded as today",
+     "claims": [
+      {
+       "term": "an HTML body",
+       "checks": [
+        {
+         "path": "htmlBodyDigest",
+         "equals": "sha256:7cec0bfd248703934803dcd7592484861b8b89f8f314d3e9c23170542bcac0b8"
+        },
+        {
+         "path": "fixtures.*.payloadRef",
+         "equals": "rf-output:sha256:7cec0bfd248703934803dcd7592484861b8b89f8f314d3e9c23170542bcac0b8"
+        }
+       ]
+      },
+      {
+       "term": "is refused/degraded as today",
+       "checks": [
+        {
+         "path": "fixtures.*.body",
+         "equals": "admitted/verbatim/same-but-payload/surfaced 0/spawns 1"
+        },
+        {
+         "path": "fixtures.*.htmlField.provider",
+         "matches": "^[a-z]+: .+ \\(errors 1, spawns 1\\)$"
+        },
+        {
+         "path": "fixtures.*.htmlField.adapter",
+         "matches": "^validation: ReactiveFiber topology refused: "
+        }
+       ]
+      }
+     ],
      "witness": {
       "pin": "A4",
       "htmlBodyDigest": "sha256:7cec0bfd248703934803dcd7592484861b8b89f8f314d3e9c23170542bcac0b8",
@@ -329,6 +481,36 @@
     {
      "id": "B1",
      "quote": "src/workbench/providers/reactivefiber.ts accepts no UI-descriptor",
+     "claims": [
+      {
+       "term": "src/workbench/providers/reactivefiber.ts accepts no",
+       "checks": [
+        {
+         "path": "*.*.provider",
+         "matches": "^[a-z]+: .+ \\(errors 1, spawns 1\\)$"
+        }
+       ]
+      },
+      {
+       "term": "UI-descriptor",
+       "checks": [
+        {
+         "path": "*",
+         "keys": [
+          "ui-schema",
+          "ui-schema-failure",
+          "ui-command",
+          "descriptor-command",
+          "descriptor-list"
+         ]
+        },
+        {
+         "path": "*.*.adapter",
+         "matches": "^validation: ReactiveFiber topology refused: "
+        }
+       ]
+      }
+     ],
      "witness": {
       "pin": "B1",
       "validRf": {
@@ -380,6 +562,50 @@
     {
      "id": "B2",
      "quote": "host-output envelope",
+     "claims": [
+      {
+       "term": "host-output envelope",
+       "checks": [
+        {
+         "path": "*",
+         "keys": [
+          "dom-commit",
+          "tui-cells",
+          "mounted-control",
+          "additive-host-output-key"
+         ]
+        },
+        {
+         "path": "*.dom-commit.provider",
+         "matches": "^[a-z]+: .+ \\(errors 1, spawns 1\\)$"
+        },
+        {
+         "path": "*.dom-commit.adapter",
+         "matches": "^validation: ReactiveFiber topology refused: "
+        },
+        {
+         "path": "*.tui-cells.provider",
+         "matches": "^[a-z]+: .+ \\(errors 1, spawns 1\\)$"
+        },
+        {
+         "path": "*.tui-cells.adapter",
+         "matches": "^validation: ReactiveFiber topology refused: "
+        },
+        {
+         "path": "*.mounted-control.provider",
+         "matches": "^[a-z]+: .+ \\(errors 1, spawns 1\\)$"
+        },
+        {
+         "path": "*.mounted-control.adapter",
+         "matches": "^validation: ReactiveFiber topology refused: "
+        },
+        {
+         "path": "*.additive-host-output-key",
+         "equals": "admitted/verbatim/same/surfaced 0/spawns 1"
+        }
+       ]
+      }
+     ],
      "witness": {
       "pin": "B2",
       "validRf": {
@@ -417,6 +643,128 @@
     {
      "id": "B3",
      "quote": "(a mutant adding one fails the census)",
+     "claims": [
+      {
+       "term": "(a mutant adding one fails the census)",
+       "checks": [
+        {
+         "path": "modules",
+         "equals": [
+          "src/workbench/native-evidence.ts",
+          "src/workbench/providers/reactivefiber.ts",
+          "src/workbench/reactivefiber-observer.ts"
+         ]
+        },
+        {
+         "path": "facts",
+         "equals": {
+          "src/workbench/native-evidence.ts": {
+           "comparisons": [
+            "command=context.render",
+            "schema=reactive-fiber.cli/v1"
+           ],
+           "outputReads": [],
+           "keyLiterals": [],
+           "registrations": [],
+           "uiWords": []
+          },
+          "src/workbench/providers/reactivefiber.ts": {
+           "comparisons": [
+            "command=context.render",
+            "schema=reactive-fiber.cli/v1"
+           ],
+           "outputReads": [
+            "text"
+           ],
+           "keyLiterals": [
+            [
+             "schema",
+             "ok",
+             "command",
+             "operation_id",
+             "workspace",
+             "transaction_id",
+             "result",
+             "diagnostics"
+            ]
+           ],
+           "registrations": [
+            "reactivefiber.render.preview",
+            "reactivefiber.render.preview"
+           ],
+           "uiWords": []
+          },
+          "src/workbench/reactivefiber-observer.ts": {
+           "comparisons": [
+            "command=context.render",
+            "schema=reactive-fiber.cli/v1"
+           ],
+           "outputReads": [
+            "text"
+           ],
+           "keyLiterals": [
+            [
+             "schema",
+             "ok",
+             "command",
+             "operation_id",
+             "workspace",
+             "transaction_id",
+             "result",
+             "diagnostics"
+            ]
+           ],
+           "registrations": [],
+           "uiWords": []
+          }
+         }
+        },
+        {
+         "path": "mutants",
+         "equals": {
+          "M1-ui-schema": [
+           "comparisons",
+           "ui-words"
+          ],
+          "M2-interface-command": [
+           "comparisons"
+          ],
+          "M3-output-nodes": [
+           "output-reads"
+          ],
+          "M4-output-html": [
+           "output-reads",
+           "ui-words"
+          ],
+          "M5-ninth-key": [
+           "key-literals"
+          ],
+          "M6-registration": [
+           "registrations"
+          ],
+          "M7-profile-reader": [
+           "ui-words"
+          ],
+          "M8-output-destructure": [
+           "output-reads"
+          ],
+          "Q1-text-type-relaxed": [],
+          "Q2-failure-schema-disjunct": []
+         }
+        },
+        {
+         "path": "outsideReader",
+         "equals": {
+          "inClosure": false,
+          "phraseHits": 0,
+          "outputReads": [
+           "html"
+          ]
+         }
+        }
+       ]
+      }
+     ],
      "witness": {
       "pin": "B3",
       "modules": [
@@ -527,6 +875,116 @@
     {
      "id": "B4",
      "quote": "roster (wb-973.11)",
+     "claims": [
+      {
+       "term": "roster",
+       "checks": [
+        {
+         "path": "uiKeys",
+         "equals": []
+        },
+        {
+         "path": "documentKeys",
+         "equals": [
+          "output",
+          "blocks",
+          "components"
+         ]
+        },
+        {
+         "path": "fullShapeDiff",
+         "equals": {
+          "failures": [],
+          "extraResultKeys": []
+         }
+        }
+       ]
+      },
+      {
+       "term": "(wb-973.11)",
+       "checks": [
+        {
+         "path": "rfVersion",
+         "equals": "0.1.784"
+        },
+        {
+         "path": "source",
+         "equals": "captured"
+        },
+        {
+         "path": "receipt",
+         "equals": "cmd_ab79e0c5d689"
+        },
+        {
+         "path": "resultKeys",
+         "equals": [
+          "output",
+          "budget",
+          "diagnostics_summary",
+          "blocks",
+          "components",
+          "provenance",
+          "work_metrics",
+          "work",
+          "engine_metrics",
+          "scope",
+          "audience",
+          "bundle_revision_id",
+          "observations",
+          "necessity",
+          "attempts",
+          "superseded_transaction_ids",
+          "retry_work",
+          "fiber_transaction_refs",
+          "ephemeral",
+          "render_id",
+          "commit_seq",
+          "session_id",
+          "effects",
+          "plan"
+         ]
+        },
+        {
+         "path": "provenanceKeys",
+         "equals": [
+          "graph_revision_id",
+          "cli_version",
+          "sdk_versions"
+         ]
+        },
+        {
+         "path": "workKeys",
+         "equals": [
+          "source_capture_count",
+          "fiber_signal_count",
+          "component_render_count",
+          "lens_resolution_count",
+          "necessity_eval_count",
+          "storage_write_count"
+         ]
+        },
+        {
+         "path": "workMetricsKeys",
+         "equals": [
+          "source_capture_count",
+          "fiber_signal_count",
+          "fiber_transaction_count",
+          "invalidated_component_count",
+          "rendered_component_count",
+          "state_read_count",
+          "state_write_count",
+          "journal_records_scanned",
+          "blob_bytes_written",
+          "history_rows_materialized",
+          "reused_component_count",
+          "observation_executed_count",
+          "observation_reused_count",
+          "publish_conflict_count"
+         ]
+        }
+       ]
+      }
+     ],
      "witness": {
       "pin": "B4",
       "rfVersion": "0.1.784",
@@ -602,6 +1060,52 @@
     {
      "id": "B5",
      "quote": "eight-key strictness (wb-2j3.9) unchanged",
+     "claims": [
+      {
+       "term": "eight-key strictness (wb-2j3.9) unchanged",
+       "checks": [
+        {
+         "path": "*.cases",
+         "equals": [
+          "ninth ui",
+          "ninth descriptors",
+          "ninth html",
+          "ninth host_output",
+          "ninth mount",
+          "missing schema",
+          "missing ok",
+          "missing command",
+          "missing operation_id",
+          "missing workspace",
+          "missing transaction_id",
+          "missing result",
+          "missing diagnostics",
+          "renamed transaction_id->ui"
+         ]
+        },
+        {
+         "path": "*.admitted",
+         "equals": []
+        },
+        {
+         "path": "*.spawns",
+         "equals": 14
+        },
+        {
+         "path": "*.provider",
+         "equals": [
+          "transport: RF preview returned an unrecognized native envelope."
+         ]
+        },
+        {
+         "path": "*.adapter",
+         "equals": [
+          "validation: ReactiveFiber topology refused: source must be the strict eight-key rf envelope."
+         ]
+        }
+       ]
+      }
+     ],
      "witness": {
       "pin": "B5",
       "validRf": {
@@ -667,6 +1171,64 @@
     {
      "id": "C1",
      "quote": "armed on TSX-IF-03",
+     "claims": [
+      {
+       "term": "armed on",
+       "checks": [
+        {
+         "path": "phraseHits",
+         "equals": []
+        },
+        {
+         "path": "argvWords",
+         "equals": []
+        },
+        {
+         "path": "srcFloorMet",
+         "equals": true
+        },
+        {
+         "path": "admitted",
+         "equals": true
+        },
+        {
+         "path": "argv",
+         "equals": [
+          [
+           "--workspace",
+           "<root>",
+           "context",
+           "render",
+           "--model",
+           "model",
+           "--task",
+           "task",
+           "--no-commit",
+           "--no-input",
+           "--json"
+          ]
+         ]
+        }
+       ]
+      },
+      {
+       "term": "TSX-IF-03",
+       "checks": [
+        {
+         "path": "gate.closed",
+         "equals": true
+        },
+        {
+         "path": "gate.proposedEntries",
+         "equals": []
+        },
+        {
+         "path": "gate.exportsMeasured",
+         "equals": 6
+        }
+       ]
+      }
+     ],
      "witness": {
       "pin": "C1",
       "gate": {
@@ -698,6 +1260,43 @@
     {
      "id": "C2",
      "quote": "an unregistered descriptor ID or newer version yields one typed diagnostic",
+     "claims": [
+      {
+       "term": "an unregistered descriptor ID",
+       "checks": [
+        {
+         "path": "unregistered-code.adapter",
+         "matches": "^projected unknown/failure: refused · RF_[A-Z_]+$"
+        }
+       ]
+      },
+      {
+       "term": "newer version",
+       "checks": [
+        {
+         "path": "newer-envelope-version.adapter",
+         "matches": "^validation: ReactiveFiber topology refused: "
+        },
+        {
+         "path": "newer-version-failure.adapter",
+         "matches": "^validation: ReactiveFiber topology refused: "
+        }
+       ]
+      },
+      {
+       "term": "yields one typed diagnostic",
+       "checks": [
+        {
+         "path": "*.provider",
+         "matches": "^[a-z]+: .+ \\(errors 1, spawns 1\\)$"
+        },
+        {
+         "path": "sdk-coded-primary.adapter",
+         "matches": "^validation: ReactiveFiber topology refused: "
+        }
+       ]
+      }
+     ],
      "witness": {
       "pin": "C2",
       "unregistered-code": {
@@ -721,6 +1320,50 @@
     {
      "id": "C3",
      "quote": "no generic block",
+     "claims": [
+      {
+       "term": "no generic block",
+       "checks": [
+        {
+         "path": "cases",
+         "keys": [
+          "closed-vocabulary",
+          "unregistered-code"
+         ]
+        },
+        {
+         "path": "cases.*.reading",
+         "equals": false
+        },
+        {
+         "path": "cases.*.snapshots",
+         "equals": 1
+        },
+        {
+         "path": "cases.*.valueCarried",
+         "equals": false
+        },
+        {
+         "path": "cases.*.evidenceRefs",
+         "equals": [
+          "rf-workspace"
+         ]
+        },
+        {
+         "path": "cases.*.sentinelInvariant",
+         "equals": true
+        },
+        {
+         "path": "cases.*.surfaced",
+         "equals": []
+        },
+        {
+         "path": "sdkWithheld",
+         "equals": true
+        }
+       ]
+      }
+     ],
      "witness": {
       "pin": "C3",
       "cases": {
@@ -751,6 +1394,41 @@
     {
      "id": "C4",
      "quote": "unknown stays unknown (wb-973.10)",
+     "claims": [
+      {
+       "term": "unknown stays unknown (wb-973.10)",
+       "checks": [
+        {
+         "path": "*.provider",
+         "equals": "admitted/verbatim"
+        },
+        {
+         "path": "unknown.coverage",
+         "equals": "partial"
+        },
+        {
+         "path": "unknown.tone",
+         "equals": "unknown"
+        },
+        {
+         "path": "unknown.note",
+         "equals": "observations: 2 rows, 2 not observed (unregistered, …): partial"
+        },
+        {
+         "path": "known.coverage",
+         "equals": "complete"
+        },
+        {
+         "path": "known.tone",
+         "equals": "success"
+        },
+        {
+         "path": "known.note",
+         "equals": "observations: 1 row, 0 reused"
+        }
+       ]
+      }
+     ],
      "witness": {
       "pin": "C4",
       "unknown": {
@@ -785,6 +1463,7 @@
   "C2",
   "C3",
   "C4",
+  "claims bound: each pin's claims refuse every other pin's live witness, and a re-authored pin stays quiet (R-REAUTHORED)",
   "records: every registered test ran once in run mode in roster order, and every pin reached its witness"
  ]
 }
