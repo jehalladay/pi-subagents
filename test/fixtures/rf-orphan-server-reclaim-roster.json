@@ -3,7 +3,7 @@
   "producer": "ReactiveFiberCLI",
   "pin": "6a251bf73af57c3a703caf6892dfe3015e06a481",
   "installed": {"rfVersion": "0.1.832", "rfCommit": "2618c211be0dbbb74ba10e965e2d3d1f0fb5903e"},
-  "basis": "The out-of-file roster of test/workbench-rf-orphan-server-reclaim-census.test.ts (standing rule 16). <ENGINE> is the storage engine's name, which the census never spells. constants mirror the census's pinned constants. rows holds every judged row's id, label and pins, each pin with the witness its case measures. excerpts are ReactiveFiberCLI lines at the pin, verbatim (regenerate with: git -C <ReactiveFiberCLI> show 6a251bf73af5:<path> | sed -n '<lines>p'; the census pins each block's sha256). schemaRequired and grammar are the required key lists, patterns and enums of src/reactive_fiber_cli/schemas/cli/storage.local-servers.schema.json (blob 56a82232bbb1155b96111e15aa4173c45988eaa7) and src/reactive_fiber_cli/schemas/cli/plan.json (blob f1e3b406056fa225c1ed72cbadaf12efae0420fa), identical at the pin and in the installed rf 0.1.832. runs: ledgerUntrusted is MEASURED (the installed rf, read form, see its basis); the other four are CONSTRUCTED from the producer lines each basis names, with fake identities (server ids of one repeated hex digit, pids 41001-41004, ports 43001-43004, roots under /fixture) and no rf build behind them. The wb-gue9 follow-up (R694, from landing 286) added the pins A10, A11, B6, C4, F2, MA14, MA15, R11 and R12, re-pinned A9 and B5, and moved these schema locators to repository paths (the gate's F4).",
+  "basis": "The out-of-file roster of test/workbench-rf-orphan-server-reclaim-census.test.ts (standing rule 16). <ENGINE> is the storage engine's name, which the census never spells. constants mirror the census's pinned constants. rows holds every judged row's id, label and pins, each pin with the witness its case measures. excerpts are ReactiveFiberCLI lines at the pin, verbatim (regenerate with: git -C <ReactiveFiberCLI> show 6a251bf73af5:<path> | sed -n '<lines>p'; the census pins each block's sha256). schemaRequired and grammar are the required key lists, patterns and enums of src/reactive_fiber_cli/schemas/cli/storage.local-servers.schema.json (blob 56a82232bbb1155b96111e15aa4173c45988eaa7) and src/reactive_fiber_cli/schemas/cli/plan.json (blob f1e3b406056fa225c1ed72cbadaf12efae0420fa), identical at the pin and in the installed rf 0.1.832. runs: ledgerUntrusted is MEASURED (the installed rf, read form, see its basis); the other four are CONSTRUCTED from the producer lines each basis names, with fake identities (server ids of one repeated hex digit, pids 41001-41004, ports 43001-43004, roots under /fixture) and no rf build behind them. The wb-gue9 follow-up (R694, from landing 286) added the pins A10, A11, B6, C4, F2, MA14, MA15, R11 and R12, re-pinned A9 and B5, and moved these schema locators to repository paths (the gate's F4). The wb-4jum follow-up (R694, from landing 379) added the pins F3, MA16-MA20 and R13, the trackedScan constant and R12's tracked-set fields, and the heading counts of B6, C4, F1 and F2.",
   "constants": {
     "argv": ["rf", "storage", "local-servers", "--orphaned", "--stop", "--json"],
     "window": 5,
@@ -37,6 +37,7 @@
     "nonScriptEntries": [".git", ".beads", "vendor", "media"],
     "remainderAnchor": {"file": "LICENSE", "token": "MIT License"},
     "shebangScan": {"floor": 10, "anchors": [".beads/hooks/pre-commit", "qa/workbench/smoke.sh"]},
+    "trackedScan": {"floor": 500, "anchor": "LICENSE", "plant": "build/zz-gate-reclaim.sh"},
     "followUp": "wb-gue9"
   },
   "rows": [
@@ -257,6 +258,7 @@
         {
           "id": "B6",
           "witness": {
+            "rulingHeadings": [1, 2],
             "ruling": "R709",
             "rulingFlags": ["--yes", "--no-input"],
             "rfFlags": ["--yes", "--no-input"],
@@ -312,6 +314,7 @@
         {
           "id": "C4",
           "witness": {
+            "acceptanceHeadings": [1, 2],
             "facts": ["the sibling's pid never enters the stop set", "the surfaced count is the envelope's"],
             "reading": {"stopPids": ["<orphan>"], "siblingStopped": false, "count": 2, "envelopeRows": 2},
             "agrees": ["stopPids", "siblingStopped", "count", "envelopeRows"]
@@ -411,11 +414,12 @@
     },
     {
       "id": "F",
-      "label": "the owner filing row of wb-pfxo.8 in the tracked bead export carries every pinned constant, names exactly the clauses rows A-D cover, states each of their labels as its clause and quotes only targets row M controls; every pin its delivery record names stays judged and the line its review planted is a control",
+      "label": "the owner filing row of wb-pfxo.8 in the tracked bead export carries every pinned constant, names exactly the clauses rows A-D cover, states each of their labels as its clause and quotes only targets row M controls; every pin its delivery record names stays judged and the line its review planted is a control; every kill line wb-gue9's gate finding planted is a control; each section these readings bind to occurs once",
       "pins": [
         {
           "id": "F1",
           "witness": {
+            "acceptanceHeadings": [1, 2],
             "clauses": ["a", "b", "c", "d"],
             "labelsEqual": ["A", "B", "C", "D"],
             "constantsQuoted": 11,
@@ -425,10 +429,19 @@
         {
           "id": "F2",
           "witness": {
+            "headings": {"record": [1, 2], "planted": [1, 2]},
             "stated": 54,
             "named": 54,
             "missing": [],
             "plantedControl": "MA14"
+          }
+        },
+        {
+          "id": "F3",
+          "witness": {
+            "findingHeadings": [1, 2],
+            "plants": ["P10", "P10b"],
+            "controls": ["MA16", "MA17"]
           }
         }
       ]
@@ -498,6 +511,26 @@
           "witness": {"family": "window", "digest": "94bff2e3c9c5fc51", "hit": true}
         },
         {
+          "id": "MA16",
+          "witness": {"family": "window", "digest": "090eba72be28292c", "hit": true}
+        },
+        {
+          "id": "MA17",
+          "witness": {"family": "window", "digest": "634869786cff5614", "hit": true}
+        },
+        {
+          "id": "MA18",
+          "witness": {"family": "window", "digest": "c94e523fd40a7b2b", "hit": true}
+        },
+        {
+          "id": "MA19",
+          "witness": {"family": "window", "digest": "8b9175674c1c8f0e", "hit": true}
+        },
+        {
+          "id": "MA20",
+          "witness": {"family": "window", "digest": "a601140a6446c9d1", "hit": true}
+        },
+        {
           "id": "ML1",
           "witness": {"family": "leaf", "digest": "878e741bd8f97c79", "hit": true}
         },
@@ -521,7 +554,7 @@
     },
     {
       "id": "R",
-      "label": "the named residuals R1-R12 stay pinned quiet",
+      "label": "the named residuals R1-R13 stay pinned quiet",
       "pins": [
         {
           "id": "R1",
@@ -580,8 +613,15 @@
             "nonScriptEntries": [".git", ".beads", "vendor", "media"],
             "walkedUnderNonScript": [".beads/hooks"],
             "walkedUnderIgnored": 0,
-            "plantWouldHit": true
+            "plantWouldHit": true,
+            "trackedRead": true,
+            "trackedUnderIgnored": [],
+            "plantPathIgnored": true
           }
+        },
+        {
+          "id": "R13",
+          "witness": {"family": "window", "digest": "6293250c8cf9f4cb", "hit": false}
         }
       ]
     }
