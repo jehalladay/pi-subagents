@@ -170,7 +170,9 @@
    "media",
    ".beads",
    "dist",
-   "node_modules"
+   "node_modules",
+   ".codex",
+   ".github"
   ],
   "gate": {
    "directory": "docs/perf/programs/perf-f-2026-10-17",
@@ -214,7 +216,54 @@
       ],
       "replicaFiles": [
        "docs/plant.md"
-      ]
+      ],
+      "trackedTop": [
+       ".agents",
+       ".beads",
+       ".codex",
+       ".github",
+       ".pi",
+       "docs",
+       "examples",
+       "media",
+       "new-feedback",
+       "qa",
+       "src",
+       "test",
+       "vendor"
+      ],
+      "loaderRoots": [
+       "cwd/.pi/skills",
+       "cwd/.agents/skills",
+       "getAgentDir()/skills",
+       "homedir()/.agents/skills",
+       "homedir()/.pi/skills"
+      ],
+      "outsideWhenRead": [
+       "new-feedback/plant.md:1 N5: asserted-complete",
+       "vendor/plant.md:1 N5: asserted-complete",
+       "media/plant.md:1 N5: asserted-complete",
+       ".beads/plant.md:1 N5: asserted-complete",
+       "dist/plant.md:1 N5: asserted-complete",
+       "node_modules/plant.md:1 N5: asserted-complete",
+       ".codex/plant.md:1 N5: asserted-complete",
+       ".github/plant.md:1 N5: asserted-complete",
+       "PLANT.txt:1 N5: asserted-complete",
+       "plant.json:1 N5: asserted-complete"
+      ],
+      "userLevel": {
+       "served": [
+        true,
+        true,
+        true
+       ],
+       "whenRead": [
+        ".pi/agent/skills/csbt4-user-agent/SKILL.md:1 N5: asserted-complete",
+        ".agents/skills/csbt4-user-agents/SKILL.md:1 N5: asserted-complete",
+        ".pi/skills/csbt4-user-legacy.md:1 N5: asserted-complete"
+       ],
+       "livePass": []
+      }
      }
     },
     {
@@ -314,7 +363,11 @@
         null,
         null
        ],
-       "R-SPLIT": [],
+       "R-SPLIT": [
+        [],
+        [],
+        []
+       ],
        "R-PARAPHRASE": [
         null,
         null,
@@ -323,7 +376,15 @@
        ],
        "R-LOOKALIKE": [
         null,
+        null,
         null
+       ],
+       "R-RENDERED-TEXT": [
+        [],
+        [],
+        [
+         "docs/x.md:1 N5: asserted-complete"
+        ]
        ]
       }
      }
@@ -348,7 +409,27 @@
       ],
       "plantedVerdict": "fail",
       "standDown": "stand-down",
-      "twins": []
+      "twins": [],
+      "coverage": {
+       "readAll": true,
+       "floorsMet": true,
+       "sentencesFloorMet": true
+      },
+      "replica": {
+       "findings": [
+        ".agents/skills/rf/SKILL.md:1 N1+N5: asserted-complete",
+        "README.md:1 N5: asserted-complete",
+        "docs/workbench/plant.md:1 N5: asserted-complete",
+        "qa/workbench/plant.mjs:1 N3+N4: asserted-finished",
+        "src/workbench/plant.ts:1 N2: asserted-done"
+       ],
+       "exemptionsLoadBearing": [
+        true,
+        true
+       ],
+       "read": 12,
+       "verdict": "fail"
+      }
      }
     },
     {
@@ -365,6 +446,10 @@
        "docs": 0,
        "src": 0,
        "test": 0
+      },
+      "judged": {
+       "files": 712,
+       "sentences": 163012
       }
      }
     }
@@ -393,7 +478,14 @@
        "case-variant": "ABSENT",
        "root-level": "ABSENT"
       },
-      "fixtureCopies": []
+      "fixtureCopies": [],
+      "fixtureScan": {
+       "examinedFloorMet": true
+      },
+      "replicaCopies": [
+       "docs/perf/programs/perf-f-2026-10-17/sdk-rfcli-cost-comparison.json",
+       "test/fixtures/sdk-rfcli-cost-comparison.md"
+      ]
      }
     },
     {
@@ -475,7 +567,33 @@
         "viewer": [
          true,
          true
-        ]
+        ],
+        "foreign": {
+         "skill": [
+          false,
+          false,
+          false,
+          false
+         ],
+         "display": [
+          false,
+          false,
+          false,
+          false,
+          true
+         ],
+         "rf": [
+          false,
+          false,
+          false,
+          false,
+          false
+         ],
+         "viewer": [
+          false,
+          false
+         ]
+        }
        },
        "Status: draft, numbers pending a re-measure": {
         "skill": [
@@ -501,7 +619,33 @@
         "viewer": [
          true,
          true
-        ]
+        ],
+        "foreign": {
+         "skill": [
+          false,
+          false,
+          false,
+          false
+         ],
+         "display": [
+          false,
+          false,
+          false,
+          false,
+          true
+         ],
+         "rf": [
+          false,
+          false,
+          false,
+          false,
+          false
+         ],
+         "viewer": [
+          false,
+          false
+         ]
+        }
        },
        "Status: \u201ccomplete\u201d per the producer, measured at a pinned revision": {
         "skill": [
@@ -527,7 +671,33 @@
         "viewer": [
          true,
          true
-        ]
+        ],
+        "foreign": {
+         "skill": [
+          false,
+          false,
+          false,
+          false
+         ],
+         "display": [
+          false,
+          false,
+          false,
+          false,
+          true
+         ],
+         "rf": [
+          false,
+          false,
+          false,
+          false,
+          false
+         ],
+         "viewer": [
+          false,
+          false
+         ]
+        }
        },
        "Status: done for 4 of 5 scenarios": {
         "skill": [
@@ -553,7 +723,33 @@
         "viewer": [
          true,
          true
-        ]
+        ],
+        "foreign": {
+         "skill": [
+          false,
+          false,
+          false,
+          false
+         ],
+         "display": [
+          false,
+          false,
+          false,
+          false,
+          true
+         ],
+         "rf": [
+          false,
+          false,
+          false,
+          false,
+          false
+         ],
+         "viewer": [
+          false,
+          false
+         ]
+        }
        }
       },
       "gaps": {
@@ -860,7 +1056,22 @@
       "quiet": [
        [],
        []
-      ]
+      ],
+      "scanned": {
+       "parsedAll": true,
+       "modulesFloorMet": true,
+       "examinedFloorMet": true
+      },
+      "replica": {
+       "hits": [
+        "src/plant.ts:1 writeFileSync"
+       ],
+       "parsed": [
+        "src/plant.ts",
+        "src/quiet.ts"
+       ],
+       "examined": 2
+      }
      }
     }
    ]
@@ -889,6 +1100,10 @@
   },
   {
    "id": "R-LOOKALIKE",
+   "quietPin": "A2"
+  },
+  {
+   "id": "R-RENDERED-TEXT",
    "quietPin": "A2"
   },
   {
