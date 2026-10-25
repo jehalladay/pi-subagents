@@ -6,6 +6,11 @@
  * seed is shipped, RI-DEC-01/03/06-10 are not); pin docs/programs/unified-decision-inference-2026-10-21/03-conformance.md:16
  * @485f3615db1e". The acceptance is the owner filing's, verbatim but for the placeholders: the labels of rows A, B and C.
  *
+ * FOLLOW-UP wb-p46r (the R694 follow-up of the landing-351 gate verdict: F2 and F4 lead, F3 rides). The docs page selector now
+ * reads .markdown pages too, in any case (F2's extension member, cured; MS1 is its control); R-RENDERED names the rest of the
+ * rendered-text family (F2's splits and F3's hidden marker) and R-COORDINATED the coordinated census + roster hollow (F4), each
+ * with its pinned quiet row (R11, R12).
+ *
  * THE PLACEHOLDERS. Acceptance (c)'s grep has three alternatives: <DE> is the producer's typed decision module (two words, one
  * underscore), <NDB> its native backend class (three words, Pascal case) and <DI> the bead's own two prose words (one space).
  * This file and its roster never spell one: NEEDLE_PARTS holds the words, NEEDLES composes each alternative at runtime by array
@@ -37,7 +42,8 @@
  * (712 rows at c6369e0, 739 at 187591e) names a family in seven rows, the owner filings wb-tz4r.1-.6 and wb-tz4r.8
  * (FILING_ROWS), and every string value that names one carries a marker and the pin; the epic wb-tz4r, wb-tz4r.7 and the
  * residuals bead wb-nzdh name the program only (R-PROGRAM). The live store read the same, with the delivery notes the next
- * export carries.
+ * export carries. RE-MEASURED AT b1ce8c1 (landing 392, the wb-p46r cut): 98 docs pages, every one .md (0 .markdown, 0 under
+ * another markdown extension), 46 receipts and 814 export rows; rows A and B read 0 docs mentions.
  *
  * READINGS
  * - MENTIONS, matched in any case: M1 <DI>, its two words joined directly or by any run of white space, "_", "." or "-", except
@@ -50,9 +56,10 @@
  *    the capability, unmarked (no marker) or unpinned (a marker, no pin). The window is the lines a mention spans in a docs file
  *    (R-LINE) and the whole string value in a bead row (R-FIELD: the filings quote the producer in Authority and Gating paragraphs
  *    of their own, so 25 of the 49 mentions in their fields carry no marker or no pin on their own line, measured on the live
- *    store, while every field carries both). DOC_ROOTS: every markdown file directly in the repository root and below docs/,
- *    new-feedback/, .agents/, .pi/, .beads/, examples/ and vendor/ (95 at base); src, test and qa are row C's (R-SCOPE). A1 the
- *    walk is not blind (floors, the two pages the clause names, the export); A2 every docs mention admitted (0 mentions at base);
+ *    store, while every field carries both). DOC_ROOTS: every markdown page (MARKDOWN_PAGE: a file name ending .md or .markdown,
+ *    in any case) directly in the repository root and below docs/, new-feedback/, .agents/, .pi/, .beads/, examples/ and vendor/
+ *    (95 at base, 98 at b1ce8c1); src, test and qa are row C's (R-SCOPE). A1 the walk is not blind (floors, the two pages the
+ *    clause names, the export); A2 every docs mention admitted (0 mentions at base);
  *    A3 every export string value naming a family admitted, and every filing row judged; A4 no descriptor of the native
  *    registration or of the four injected ones spells a family (the registry; its page 06-capability-registry.md is read by A2).
  *  B, acceptance (b), the receipt rule. A mention in a docs file outside docs/workbench/receipts/ is admitted only when the lines
@@ -74,12 +81,14 @@
  *  M, the matchers' controls on constructed inputs, each the very function its row reads: MM1-MV1 the mention, marker, pin,
  *    window, export, citation and echo readers; MN1 the needle detector C1, C2 and records share finds each NEEDLE once; MD1
  *    A4's descriptor scan finds a family in a description and in a schema key; MQ1 the quote partition and verbatim reading on
- *    a constructed tree and filing. R, the residuals' pinned quiet rows.
+ *    a constructed tree and filing; MS1 the page selector rows A and B share reads .md and .markdown names in any case and no
+ *    other name. R, the residuals' pinned quiet rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every row's id, label and pins, every pin's
  * witness, the constants and the registered test titles are held to the out-of-file roster
  * test/fixtures/ri-decision-seed-claim-roster.json, and the records case walks this file's vitest task tree against it, so a pin
  * deleted, relabelled, swapped or removed from every literal of this file at once still reds there or against the filing (F1
- * counts the filing's clauses against the judged rows, so a judged row hollowed from both files at once reds too).
+ * counts the filing's clauses against the judged rows, so a judged row hollowed from both files at once reds too). Anything
+ * else hollowed from both files at once survives: R-COORDINATED.
  * RESIDUALS (named families, each a pinned quiet row in row R; the escape stays uncaught and the row reds when that changes):
  * R-LINE a marker and the pin anywhere on a docs mention's lines admit it, whatever they qualify; R-FIELD the same for a whole
  * bead string value; R-PROGRAM the words right after "unified" are read as the program's name, never a mention; R-VOCABULARY a
@@ -93,7 +102,21 @@
  * title), :9 (its quoted acceptance (b)) and :614 (row B's label) and its roster at :222 (the same label) - and C1 admits exactly
  * those four sites (path, line and needle, one occurrence each) only while each line is its quote and a frame (a comment marker
  * or a label key, nothing else) and the quote is verbatim in that bead's title or notes in the tracked export, so any other,
- * additional, moved or reworded site reds C1, and R10 pins the four exempt, carried and filed.
+ * additional, moved or reworded site reds C1, and R10 pins the four exempt, carried and filed. R-RENDERED rows A and B read a
+ * page's source text, never its rendering: a family whose words markdown or HTML syntax outside the join's characters splits
+ * (an asterisk strong or emphasis marker, a link's brackets, an HTML tag or comment, a character reference such as &nbsp;) is
+ * no mention, while an underscore marker is a join character, so its split reads as a mention (the edge R11 pins); a marker,
+ * the pin or a receipt
+ * citation that only an HTML comment carries still counts on the mention's lines (R-LINE reads the source, so the landing-351
+ * gate's hidden-marker plant reads admitted, caught only by A2's and B1's pinned zero counts); and a markdown page named other
+ * than .md or .markdown (.mdown, .mkd, .mkdn, .mdwn, .mdx) is read by neither row; R11 pins each member quiet. R-COORDINATED a
+ * pin, a row or a constant removed or rewritten in this file and its roster at once agrees with itself in both, so only a
+ * reading outside the two files can see it: the filing, whose F1 reading counts its clauses against the judged rows A-C and
+ * compares their labels, and the real tree (C1 and R10 need the needle detector and the quote partition to find wb-tz4r.5's
+ * four sites; A1-A4, B1 and C2 read the docs, the export and the registrations). A pin of any row, or row F, M or R whole, so
+ * hollowed survives (the landing-351 gate's X2, X3, X5-X7 and Y7b, 38/38 each); a judged row so hollowed reds through F1 (Y5),
+ * and a hollow that also breaks a reader the tree exercises reds there (Y6, Y7c). R12 pins F1's reading of the real filing
+ * blind to the first and seeing the second.
  * SCOPE: the producer facts are read at the shas named and the census is hermetic (Pi vendors no RI source); a later cut that
  * names the capability in docs brings its receipt and its markers, and one that ships an RI consumer re-cuts row C.
  *
@@ -104,6 +127,7 @@ import { createHash } from "node:crypto";
 import { type Dirent, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { isDeepStrictEqual } from "node:util";
 import { describe, expect, it } from "vitest";
 import { type CapabilityDescriptor, CapabilityRegistry } from "../src/workbench/capability-registry.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
@@ -189,6 +213,9 @@ const MEASUREMENT = /`[^`\n]+`|\bcmd_[0-9a-f]{12}\b/;
 
 /** The docs the rows A and B walk: the root's own markdown files and every markdown file below these directories. */
 const DOC_DIRS: readonly string[] = ["docs", "new-feedback", ".agents", ".pi", ".beads", "examples", "vendor"];
+/** A markdown page, the files rows A and B read below DOC_ROOTS: a name ending .md or .markdown, in any case (R-RENDERED names the rest). */
+const MARKDOWN_PAGE = /\.(?:md|markdown)$/i;
+const isMarkdownPage = (path: string): boolean => MARKDOWN_PAGE.test(path);
 /** The two pages acceptance (a) names, each with a token the walk must read in it. */
 const DOC_ANCHORS: readonly (readonly [string, string])[] = [
   ["docs/workbench/feature-matrix.md", "reactivefiber.render.preview"],
@@ -215,7 +242,7 @@ const ECHO = new RegExp(
 );
 const RESIDUALS: readonly string[] = [
   "R-LINE", "R-FIELD", "R-PROGRAM", "R-VOCABULARY", "R-INTERRUPTED", "R-CASE", "R-COMPOSED", "R-RECEIPT-TEXT", "R-SCOPE",
-  "R-SIBLING-QUOTE",
+  "R-SIBLING-QUOTE", "R-RENDERED", "R-COORDINATED",
 ];
 /** The bead whose filing the R-SIBLING-QUOTE sites quote. */
 const QUOTE_SOURCE = "wb-tz4r.5";
@@ -291,13 +318,13 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "M",
-    label: "the mention, marker, pin, window, export, receipt-citation, echo, needle, descriptor and quote matchers judge their pinned inputs in order",
-    pins: ["MM1", "MM2", "MM3", "MM4", "MK1", "MP1", "MW1", "MF1", "MR1", "MV1", "MN1", "MD1", "MQ1"],
+    label: "the mention, marker, pin, window, export, receipt-citation, echo, needle, descriptor, quote and page matchers judge their pinned inputs in order",
+    pins: ["MM1", "MM2", "MM3", "MM4", "MK1", "MP1", "MW1", "MF1", "MR1", "MV1", "MN1", "MD1", "MQ1", "MS1"],
   },
   {
     id: "R",
-    label: "the named residuals R-LINE, R-FIELD, R-PROGRAM, R-VOCABULARY, R-INTERRUPTED, R-CASE, R-COMPOSED, R-RECEIPT-TEXT, R-SCOPE and R-SIBLING-QUOTE stay pinned quiet",
-    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10"],
+    label: "the named residuals R-LINE, R-FIELD, R-PROGRAM, R-VOCABULARY, R-INTERRUPTED, R-CASE, R-COMPOSED, R-RECEIPT-TEXT, R-SCOPE, R-SIBLING-QUOTE, R-RENDERED and R-COORDINATED stay pinned quiet",
+    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12"],
   },
 ];
 
@@ -371,6 +398,7 @@ function constants(): Json {
     receiptCite: RECEIPT_CITE.source,
     measurement: MEASUREMENT.source,
     docDirs: [...DOC_DIRS],
+    markdownPage: `/${MARKDOWN_PAGE.source}/${MARKDOWN_PAGE.flags}`,
     docAnchors: DOC_ANCHORS.map(([path, token]) => `${path}:${token}`),
     floors: { docs: DOCS_FLOOR, receipts: RECEIPTS_FLOOR, exportRows: EXPORT_FLOOR, ...FLOORS, echoReceipts: ECHO_RECEIPTS_FLOOR },
     filingRows: [...FILING_ROWS],
@@ -418,13 +446,13 @@ let docsCache: SourceFile[] | undefined;
 function docFiles(): SourceFile[] {
   if (docsCache === undefined) {
     const paths = readdirSync(REPO, { withFileTypes: true })
-      .filter(entry => entry.isFile() && entry.name.endsWith(".md"))
+      .filter(entry => entry.isFile() && isMarkdownPage(entry.name))
       .map(entry => entry.name)
       .sort();
     for (const directory of DOC_DIRS) {
       const files: string[] = [];
       walk(join(REPO, directory), files, []);
-      paths.push(...files.filter(file => file.endsWith(".md")));
+      paths.push(...files.filter(isMarkdownPage));
     }
     docsCache = paths.map(path => ({ path, text: textOf(join(REPO, path)) }));
   }
@@ -680,6 +708,32 @@ function quoteReading(sites: readonly string[], pinned: readonly QuoteSite[], li
     verbatim: verdicts.map(verdict => `${verdict.key}: ${verdict.carried ? "carried" : "not carried"}, ${verdict.filed}`),
   };
 }
+/**
+ * F1's reading of a filing against a row set (R12 reads it too): the judged rows (a label opening with a clause mark), the
+ * filing's Acceptance clause count, and the facts F1 pins - the clause marks, the judged rows whose labels equal their clauses
+ * with the placeholders composed back, the grep, the quote, the citation, the title tail and the two pages.
+ */
+function filingReading(rows: readonly Row[], filing: Filing) {
+  const acceptance = /^Acceptance: (.*)$/m.exec(filing.notes)?.[1] ?? "";
+  const clauses = acceptance.split(/;\s+(?=\([a-z]\) )/).map(clause => clause.replace(/\.$/, ""));
+  const judged = rows.filter(entry => /^\([a-z]\) /.test(entry.label));
+  const grep = /^\(c\) pin: grep (.+?) over Pi /.exec(clauses[2] ?? "")?.[1]?.split("|") ?? [];
+  const quoted = /^'(.+)' (\S+)\.$/m.exec(filing.notes);
+  return {
+    judged: judged.map(entry => entry.id),
+    clauses: clauses.length,
+    reading: {
+      clauses: clauses.map(clause => clause.slice(0, 4)),
+      labelsEqual: judged.filter((entry, index) => clauses[index] === expand(entry.label)).map(entry => entry.id),
+      grepIsNeedles: grep.length === NEEDLES.length && grep.every((alternative, index) => alternative === NEEDLES[index]),
+      quote: quoted?.[1] === QUOTE,
+      citation: quoted?.[2] === CITATION,
+      titleCites: filing.title.endsWith(`pin ${CITATION}`),
+      pagesNamed: DOC_ANCHORS.map(([path]) => acceptance.includes(path.slice(path.lastIndexOf("/") + 1))),
+    },
+  };
+}
+
 let quoteCache: QuoteReading | undefined;
 /** The real reading: C1's needle sites against QUOTED_SITES and the quoted bead's row in the tracked export. */
 function treeQuotes(): QuoteReading {
@@ -707,7 +761,7 @@ function echoesOf(text: string): Echo[] {
   });
 }
 
-type CaseKind = "mention" | "export" | "receipt" | "cite" | "needle" | "echo";
+type CaseKind = "mention" | "export" | "receipt" | "cite" | "needle" | "echo" | "page";
 interface Case {
   readonly pin: string;
   readonly kind: CaseKind;
@@ -829,6 +883,12 @@ const CASES: readonly Case[] = [
     outcome: ["1:0.2.60.20261018120223", "2:0.2.55", "3:0.1.17"],
   },
   { pin: "MN1", kind: "needle", texts: [[DE, NDB, DI].join("\n")], outcome: ["x.ts:1 <DE>", "x.ts:2 <NDB>", "x.ts:3 <DI>", "mentions:M1,M2,M3"] },
+  {
+    pin: "MS1",
+    kind: "page",
+    texts: [["README.md", "AGENTS.MD", "docs/a.markdown", "docs/b.Markdown", "docs/c.md.txt", "docs/d.txt", "docs/e.mdown", "docs/f.mdx"].join("\n")],
+    outcome: ["README.md", "AGENTS.MD", "docs/a.markdown", "docs/b.Markdown"],
+  },
   { pin: "R1", kind: "mention", texts: [`${caps(DI)} serves Pi today; the seed only preflight at ${RI_PIN} is older.`], outcome: ["M1:1:admitted"] },
   {
     pin: "R2",
@@ -872,6 +932,7 @@ function outcomeOf(kind: CaseKind, texts: readonly string[]): string[] {
     return receiptFindings([{ path: "doc.md", text }], receipts);
   }
   if (kind === "cite") return citedReceipts(text);
+  if (kind === "page") return text.split("\n").filter(isMarkdownPage);
   if (kind === "needle") {
     const sites = needleSites("x.ts", text);
     const mentions = mentionsOf(text).map(mention => mention.family);
@@ -907,6 +968,33 @@ const QUOTE_CONTROL_PINNED: readonly QuoteSite[] = [
   { path: "q.ts", line: 3, placeholder: "<DI>", quote: "the <DE> quote" },
   { path: "q.ts", line: 4, placeholder: "<DI>", quote: "<DI> serves Pi" },
   { path: "p.ts", line: 1, placeholder: "<DI>", quote: "an unfiled <DI> quote" },
+];
+
+/**
+ * R-RENDERED's split members (header, RESIDUALS), one per line: strong, emphasis, link, character-reference, tag and comment
+ * splits; the last line is the residual's edge, an underscore emphasis split, which the join reads as a mention.
+ */
+const RENDERED_SPLITS = [
+  `**${caps(WORD.decision)}** ${WORD.inference} is runnable in Pi today.`,
+  `*${WORD.decision}* ${WORD.inference} is supported in Pi today.`,
+  `${caps(WORD.decision)} [${WORD.inference}](x.md) is runnable in Pi today.`,
+  `${caps(WORD.decision)}&nbsp;${WORD.inference} is runnable in Pi today.`,
+  `<b>${caps(WORD.decision)}</b> ${WORD.inference} is runnable in Pi today.`,
+  `${caps(WORD.decision)}<!-- -->${WORD.inference} is runnable in Pi today.`,
+  `_${WORD.decision}_ ${WORD.inference} is runnable in Pi today.`,
+].join("\n");
+/** R-RENDERED's hidden members: a docs line whose marker and pin, then also its receipt citation, only an HTML comment carries. */
+const RENDERED_HIDDEN = `${caps(DI)} runs in Pi today. <!-- proposed at ${RI_PIN} -->`;
+const RENDERED_HIDDEN_CITE = `${caps(DI)} runs in Pi today. <!-- proposed at ${RI_PIN}; docs/workbench/receipts/wb-x.md -->`;
+/** R-RENDERED's page member: markdown pages under other extensions, which MARKDOWN_PAGE does not select. */
+const UNREAD_PAGES: readonly string[] = ["docs/a.mdown", "docs/b.mkd", "docs/c.mkdn", "docs/d.mdwn", "docs/e.mdx"];
+/** R-COORDINATED's hollows (header, RESIDUALS): what each leaves of the rows when it is applied to this file and the roster at once. */
+const COORDINATED_HOLLOWS: readonly (readonly [string, (rows: readonly Row[]) => readonly Row[]])[] = [
+  ["pin B6 of row B", rows => rows.map(row => (row.id === "B" ? { ...row, pins: row.pins.filter(pin => pin !== "B6") } : row))],
+  ["row F", rows => rows.filter(row => row.id !== "F")],
+  ["row M", rows => rows.filter(row => row.id !== "M")],
+  ["row R", rows => rows.filter(row => row.id !== "R")],
+  ["row C", rows => rows.filter(row => row.id !== "C")],
 ];
 
 /** The pins whose case reached its end, in the order they ran. */
@@ -1014,26 +1102,11 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     return done("C2", reading);
   },
   F1: async () => {
-    const row = beadRow(BEAD);
-    const acceptance = /^Acceptance: (.*)$/m.exec(row.notes)?.[1] ?? "";
-    const clauses = acceptance.split(/;\s+(?=\([a-z]\) )/).map(clause => clause.replace(/\.$/, ""));
-    const judged = ROWS.filter(entry => /^\([a-z]\) /.test(entry.label));
-    expect(judged.length, "one judged row per clause of the filing's Acceptance, counted from the filing").toBe(clauses.length);
-    const labelsEqual = judged.filter((entry, index) => clauses[index] === expand(entry.label)).map(entry => entry.id);
-    const grep = /^\(c\) pin: grep (.+?) over Pi /.exec(clauses[2] ?? "")?.[1]?.split("|") ?? [];
-    const quoted = /^'(.+)' (\S+)\.$/m.exec(row.notes);
-    const reading = {
-      clauses: clauses.map(clause => clause.slice(0, 4)),
-      labelsEqual,
-      grepIsNeedles: grep.length === NEEDLES.length && grep.every((alternative, index) => alternative === NEEDLES[index]),
-      quote: quoted?.[1] === QUOTE,
-      citation: quoted?.[2] === CITATION,
-      titleCites: row.title.endsWith(`pin ${CITATION}`),
-      pagesNamed: DOC_ANCHORS.map(([path]) => acceptance.includes(path.slice(path.lastIndexOf("/") + 1))),
-    };
+    const { judged, clauses, reading } = filingReading(ROWS, beadRow(BEAD));
+    expect(judged.length, "one judged row per clause of the filing's Acceptance, counted from the filing").toBe(clauses);
     expect(reading).toStrictEqual({
       clauses: ["(a) ", "(b) ", "(c) "],
-      labelsEqual: judged.map(entry => entry.id),
+      labelsEqual: [...judged],
       grepIsNeedles: true,
       quote: true,
       citation: true,
@@ -1076,6 +1149,34 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     });
     return done("R10", reading);
   },
+  R11: async () => {
+    const reading = {
+      splits: outcomeOf("mention", [RENDERED_SPLITS]),
+      hidden: outcomeOf("mention", [RENDERED_HIDDEN]),
+      hiddenCite: outcomeOf("receipt", [RENDERED_HIDDEN_CITE, MEASURING_RECEIPT]),
+      pages: outcomeOf("page", [UNREAD_PAGES.join("\n")]),
+    };
+    expect(reading, "R-RENDERED: rows A and B read the source text, so an asterisk, link, reference, tag or comment split is no mention (an underscore split is), hidden text still counts and other extensions stay unread").toStrictEqual({
+      splits: ["M1:7:unmarked"],
+      hidden: ["M1:1:admitted"],
+      hiddenCite: [],
+      pages: [],
+    });
+    return done("R11", { digest: digestOf([RENDERED_SPLITS, RENDERED_HIDDEN, RENDERED_HIDDEN_CITE, ...UNREAD_PAGES]), ...reading });
+  },
+  R12: async () => {
+    const filing = beadRow(BEAD);
+    const landed = filingReading(ROWS, filing);
+    const outcome = COORDINATED_HOLLOWS.map(([name, hollow]) => `${name}: ${isDeepStrictEqual(filingReading(hollow(ROWS), filing), landed) ? "unseen" : "seen"}`);
+    expect(outcome, "R-COORDINATED: the filing reads the judged rows, never a pin or the rows F, M and R").toStrictEqual([
+      "pin B6 of row B: unseen",
+      "row F: unseen",
+      "row M: unseen",
+      "row R: unseen",
+      "row C: seen",
+    ]);
+    return done("R12", { outcome });
+  },
   ...Object.fromEntries(
     CASES.map(entry => [
       entry.pin,
@@ -1093,7 +1194,7 @@ const titleOf = (row: Row): string => `${row.id} ${row.label}`;
 
 describe("wb-tz4r.8 ReactiveInference seed-only claim census (program-triage-2026-10-22 R8, standing posture)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the constants agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:7", "C:2", "F:1", "M:13", "R:10"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:7", "C:2", "F:1", "M:14", "R:12"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
