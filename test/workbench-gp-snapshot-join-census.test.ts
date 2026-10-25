@@ -40,6 +40,15 @@
  * sent to gp: it is the same text once NFC-normalized, so a site that normalizes before hashing joins a value it did not present.
  * RESIDUALS (named, each pinned by a quiet row): R-COMPUTED, R-ALIASED, R-TRANSITIVE and R-PATTERN (the scan); R-SHARED-NAME and
  * R-DRIVE-BYPASS (the registration judge).
+ * THE SCAN'S OWN CLAIMS (wb-5efc, the landing-324 hollowing probes P15-P18): TOUCHPOINTS pins a private name for a field
+ * (T-FIELD) and for the shared name (T-SHARED), and the dotted identities.graph path string beside the slashed one
+ * (T-IDENTITIES). WALKS plants one synthetic tree per property srcFiles claims, on rule-11 scratch: hidden files and
+ * directories, a nested extensionless file, a followed file link and directory link, each real directory walked once, a link
+ * loop, the root/src scope, the listing in srcFiles' own sort order (two names whose UTF-8 byte order, the order readdirSync
+ * returns, differs from their UTF-16 code-unit order), the depth-first listing (a directory's files at its name's place),
+ * and a FIFO that fails the walk closed. ORACLE pins both answers of the whitespace-only oracle the clause-(c) rows read:
+ * false for identical bytes, for a one-field value edit and for a space added inside a string value; true for the file
+ * respelled compact.
  * Rule 16: the frozen-shape case pins every table's row and pin shape and the live subjects; the OUT-OF-FILE anchor
  * test/fixtures/gp-snapshot-join-roster.json (the hk9l/5jha roster pattern) carries every judged row (table, id, label, the
  * SHA-256 of each pin), every registered test title and the residual families, and the roster case judges this file against it
@@ -47,10 +56,11 @@
  *
  * Display paths added: none. Test-only: no src change, no gp adapter, seam or fake binary.
  */
-import { readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { lstatSync, mkdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
-import { describe, expect, it } from "vitest";
+import { afterAll, describe, expect, it } from "vitest";
 import {
   CAPTURES,
   CASES,
@@ -65,6 +75,8 @@ import {
   MUTANTS,
   materialize,
   NEAR_NAMES,
+  ORACLE,
+  oracleText,
   outcomeFindings,
   PRODUCER,
   type Presented,
@@ -82,8 +94,12 @@ import {
   srcFiles,
   TOUCHPOINTS,
   type Touch,
+  WALKS,
   whitespaceOnly,
 } from "./helpers/gp-snapshot-join-census.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+installScratchLeakGuard(afterAll);
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 const ROSTER = "test/fixtures/gp-snapshot-join-roster.json";
@@ -230,6 +246,46 @@ describe("gp snapshot-join census (wb-gxd7.3, GPC-FEEDBACK-CONTRACT-AUDIT-R3)", 
     });
   }
 
+  for (const entry of WALKS) {
+    it(`WALKS ${entry.id}`, () => {
+      const root = makeScratch("gp-snapshot-join-walk-");
+      try {
+        for (const [rel, node] of Object.entries(entry.tree)) {
+          const path = join(root, rel);
+          mkdirSync(dirname(path), { recursive: true });
+          if (node.kind === "file") writeFileSync(path, node.text);
+          else if (node.kind === "symlink") symlinkSync(node.target, path);
+          else execFileSync("mkfifo", [path]);
+        }
+        // The planted tree is the shape its row names.
+        const planted = Object.keys(entry.tree).map(rel => {
+          const info = lstatSync(join(root, rel));
+          return `${rel}:${info.isFIFO() ? "fifo" : info.isSymbolicLink() ? "symlink" : info.isFile() ? "file" : "other"}`;
+        });
+        expect(planted).toEqual(Object.entries(entry.tree).map(([rel, node]) => `${rel}:${node.kind}`));
+        let walked: readonly string[] | string;
+        try {
+          walked = srcFiles(root);
+        } catch (error) {
+          walked = error instanceof Error ? error.message : String(error);
+        }
+        expect(walked).toEqual("throws" in entry.expect ? entry.expect.throws : entry.expect.files);
+      } finally {
+        removeScratch(root);
+      }
+    });
+  }
+
+  for (const entry of ORACLE) {
+    it(`ORACLE ${entry.id}`, () => {
+      const original = fileText(fixture(), entry.original);
+      const text = oracleText(fixture(), entry.text);
+      // The two texts are byte-identical exactly when the row names one text twice, so each answer is judged on the texts its label names.
+      expect(text === original, "the row's texts are byte-identical").toBe(entry.text === entry.original);
+      expect(whitespaceOnly(original, text)).toBe(entry.expect);
+    });
+  }
+
   it("live: the scan walks every regular file under src/ and reads Pi's own snapshotDigest members there", () => {
     const { files, touches } = live();
     expect(files.length).toBeGreaterThanOrEqual(MIN_SRC_FILES);
@@ -260,10 +316,10 @@ describe("gp snapshot-join census (wb-gxd7.3, GPC-FEEDBACK-CONTRACT-AUDIT-R3)", 
 
   it("rule 16: every judged table and the live subjects are frozen at their measured shape", () => {
     expect(ROWS.map(entry => `${entry.table}/${entry.id}:${entry.pins.length}`)).toEqual([
-      "TOUCHPOINTS/T-FIELD:8",
-      "TOUCHPOINTS/T-IDENTITIES:7",
+      "TOUCHPOINTS/T-FIELD:9",
+      "TOUCHPOINTS/T-IDENTITIES:8",
       "TOUCHPOINTS/T-PREFIX:3",
-      "TOUCHPOINTS/T-SHARED:3",
+      "TOUCHPOINTS/T-SHARED:4",
       "CLEAN/C-PI-OWN:4",
       "CLEAN/C-NEAR-NAMES:5",
       "CLEAN/C-COMMENT:2",
@@ -350,6 +406,20 @@ describe("gp snapshot-join census (wb-gxd7.3, GPC-FEEDBACK-CONTRACT-AUDIT-R3)", 
       "SITE_CASES/S-NEAR-REASON:1",
       "SITE_CASES/R-SHARED-NAME:1",
       "SITE_CASES/R-DRIVE-BYPASS:1",
+      "WALKS/W-HIDDEN:1",
+      "WALKS/W-EXTENSIONLESS:1",
+      "WALKS/W-SYMLINKED-FILE:1",
+      "WALKS/W-LINKED-DIRECTORY:1",
+      "WALKS/W-DIRECTORY-ALIAS:1",
+      "WALKS/W-DIRECTORY-LOOP:1",
+      "WALKS/W-SCOPE:1",
+      "WALKS/W-SORTED:1",
+      "WALKS/W-DEPTH-FIRST:1",
+      "WALKS/W-FIFO:1",
+      "ORACLE/O-UNCHANGED:1",
+      "ORACLE/O-RESPELLED:1",
+      "ORACLE/O-VALUE-EDIT:1",
+      "ORACLE/O-SPACE-IN-STRING:1",
     ]);
     expect(Object.entries(RESIDUAL_FAMILIES).map(([family, members]) => `${family}:${members.join(",")}`)).toEqual([
       "R-COMPUTED:RESIDUALS R-COMPUTED",

@@ -43,6 +43,22 @@
  * each pin, every registered test title, the residual families and the known set; the roster case judges this file
  * against it in order and both ways, with each test's run mode), the captured roster (every captured rpc op and cli word
  * is a judged case) and the bead's export row in .beads/issues.jsonl (the four clauses).
+ * OUTSIDE ANCHORS (wb-atq9, the wb-gxd7.5 gate's F1 and F2): the roster is a same-cut literal, so a coordinated hollow of
+ * this file, the helper and the roster together stayed green below the capture and the docs walk. Three readers anchor the
+ * census outside all three. (1) The append-only receipt docs/workbench/receipts/wb-atq9.md, read through the shared docs
+ * reader of test/helpers/census.ts: every level-3 section is a ledger section "<family>, wb-atq9 cut <n>" rendering one
+ * table, and the ledger (every cut's tables in cut order: a member stands once a cut adds it and leaves only when a Removed
+ * table names it, so a restated table that drops a member removes nothing) equals the census's judged set both ways: every
+ * row with its label and each pin (the first 16 hex digits of the sha256 the roster holds) and every member of VOCABULARIES
+ * (verdict words and codes, capability nouns, revision keys, claim statuses, missing prerequisites, receipt fields, walk
+ * exclusions), each member likewise as a digest so no docs page spells a judged word. (2) wb-gxd7.5's export row, read through two append-only paragraphs only: the owner filing's Acceptance
+ * sentence, cut at each "; (<letter>) " marker, equals ACCEPTANCE clause by clause, never a substring of the notes, each
+ * clause's sha256 pinned in the roster; and the landed delivery paragraph's RESIDUALS line, every family of which stays a
+ * named residual here. (3) The vocabularies case proves each verdict word and code, capability noun, revision key, claim
+ * status and missing prerequisite is read by its judge, so a list and the judge built from it cannot part.
+ * NOT CLAIMED: the receipt anchors membership, never order (the roster and the frozen-shape literal hold order and counts);
+ * the walk exclusions are anchored as members only (no case reads them behaviourally); a coordinated edit of the ledger's
+ * family names or FOLLOW_UP together with an appended receipt section re-points the anchor, a visible docs append.
  *
  * Display paths added: none. Test-only: no src change, no gp seam. No scratch is allocated: every case is in memory, and
  * the live leg passes the receipt to gp on stdin.
@@ -51,7 +67,9 @@ import { spawnSync } from "node:child_process";
 import { readFileSync, realpathSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { marked, type Tokens } from "marked";
 import { describe, expect, it } from "vitest";
+import { docsSection, sectionTables } from "./helpers/census.js";
 import {
   ACCEPTANCE,
   applyEdits,
@@ -60,26 +78,45 @@ import {
   CAPTURE_EDITS,
   CAPTURE_FIXTURE,
   type Capture,
+  CLAIM_STATUSES,
   CLAUSE_TABLES,
   capabilityOf,
   claimFindings,
+  DELIVERED_HEAD,
+  DELIVERED_RESIDUALS_HEAD,
   DOC_LINES,
+  deliveredResiduals,
+  digest16,
   docFindings,
   docLineClasses,
   docTextFindings,
+  FILING_HEAD,
+  FOLLOW_UP,
   filesBelow,
+  filingClauses,
+  foldLedger,
   type HostFs,
+  judgedLedger,
   KNOWN_UNGROUNDED,
+  LEDGER_HEADERS,
+  type LedgerSection,
+  ledgerEntryTables,
+  ledgerHeading,
+  MISSING,
   memoryHost,
+  NOUNS,
   namesGp,
+  ownerFiling,
   PROVENANCE,
   provenanceFindings,
+  RECEIPT_DOC,
   RECEIPT_FIXTURE,
   RECEIPT_MUTANTS,
   RESIDUAL_FAMILIES,
   RESIDUALS,
   RESOLVE,
   RESOLVE_PIN,
+  REVISION_KEYS,
   ROSTER_FIXTURE,
   ROWS,
   readCapture,
@@ -93,7 +130,10 @@ import {
   STATIC_RECEIPT_EDITS,
   sha256,
   VENDORED_RECEIPTS,
+  VERDICT_CODES,
+  VERDICT_WORDS,
   VERSION_LINE,
+  VOCABULARIES,
   vendoredReceipts,
 } from "./helpers/gp-provenance-census.js";
 
@@ -118,8 +158,60 @@ interface Roster {
   readonly tests: readonly string[];
   readonly residuals: unknown;
   readonly known: unknown;
+  /** wb-atq9: the sha256 of each acceptance clause, in clause order. */
+  readonly clauses: unknown;
+  /** wb-atq9: the census's vocabularies, each in its judge's order. */
+  readonly vocabularies: unknown;
 }
 const readRoster = (): Roster => readJson(ROSTER_FIXTURE) as Roster;
+
+/** A bead's notes in the tracked bead export (.beads/issues.jsonl), "" when its row is absent. */
+function beadNotes(id: string): string {
+  const rows = readFileSync(join(ROOT, ".beads/issues.jsonl"), "utf8")
+    .split("\n")
+    .filter((line) => line.trim() !== "")
+    .map((line) => JSON.parse(line) as { id?: unknown; notes?: unknown });
+  const notes = rows.find((candidate) => candidate.id === id)?.notes;
+  return typeof notes === "string" ? notes : "";
+}
+
+type SectionsReading = { readonly ok: true; readonly sections: readonly LedgerSection[] } | { readonly ok: false; readonly why: string };
+
+/**
+ * The ledger sections of a receipt, read through the shared docs reader (test/helpers/census.ts): every level-3 heading of
+ * the receipt must be a ledger heading ("<family>, wb-atq9 cut <n>"), and each section must render exactly one table with
+ * its family's header and no HTML (a comment or a tag), so an appended line can neither hide a row nor split a table and
+ * restate it. A cell is the table's source text.
+ */
+function receiptSections(markdown: string): SectionsReading {
+  const refuse = (why: string): SectionsReading => ({ ok: false, why });
+  const sections: LedgerSection[] = [];
+  const path: Tokens.Heading[] = [];
+  for (const token of marked.lexer(markdown)) {
+    if (token.type !== "heading") continue;
+    const heading = token as Tokens.Heading;
+    while (path.length > 0 && (path[path.length - 1]?.depth ?? 0) >= heading.depth) path.pop();
+    const parents = path.map((entry) => entry.text);
+    path.push(heading);
+    if (heading.depth !== 3) continue;
+    const bound = ledgerHeading(heading.text);
+    if (bound === undefined) return refuse(`the level-3 section "${heading.text}" is no ledger section`);
+    const section = docsSection(markdown, heading.text, 3, parents);
+    if (!section.ok) return refuse(`"${heading.text}": ${section.why}`);
+    if (section.hasHtml) return refuse(`"${heading.text}" carries HTML, which can hide a row of its table`);
+    const kinds = section.blocks.map((block) => (block.kind === "other" ? `other:${block.type}` : block.kind));
+    if (kinds.join(",") !== "other:table") return refuse(`"${heading.text}" must render exactly one table and nothing else; it renders [${kinds.join(", ")}]`);
+    const [head, ...rows] = sectionTables(markdown, heading.text, 3, parents).grids[0] ?? [];
+    if (JSON.stringify(head) !== JSON.stringify(LEDGER_HEADERS[bound.family])) return refuse(`"${heading.text}": its header row is ${JSON.stringify(head ?? null)}`);
+    sections.push({ ...bound, rows });
+  }
+  return { ok: true, sections };
+}
+/** A receipt's ledger: its sections folded, or why it cannot be read. */
+function receiptLedger(markdown: string): ReturnType<typeof foldLedger> {
+  const reading = receiptSections(markdown);
+  return reading.ok ? foldLedger(reading.sections) : reading;
+}
 
 /** The real host the live leg resolves gp on. */
 const realHost: HostFs = {
@@ -248,6 +340,34 @@ describe("gp provenance census (wb-gxd7.5, GPC-FEEDBACK-CONTRACT-AUDIT-R5)", () 
     expect(typeof bead?.notes, "the bead's export row carries its notes").toBe("string");
     for (const clause of ACCEPTANCE) expect(String(bead?.notes).includes(clause), clause).toBe(true);
     expect(CLAUSE_TABLES.map((tables) => tables.every((table) => ROWS.some((entry) => entry.table === table)))).toEqual([true, true, true, true]);
+    // wb-atq9 (the wb-gxd7.5 gate's F2): each clause is the WHOLE delimited clause of the owner filing's Acceptance sentence,
+    // never a substring of the notes, and each clause's sha256 is the roster's.
+    const filing = ownerFiling(String(bead?.notes));
+    expect(filing.startsWith(FILING_HEAD), "the notes' second paragraph is the owner filing").toBe(true);
+    const clauses = filingClauses(filing);
+    expect(clauses.length, "the filing's Acceptance sentence was read").toBe(CLAUSE_TABLES.length);
+    expect(ACCEPTANCE, "ACCEPTANCE equals the owner filing's delimited clauses, each whole, in order").toEqual(clauses);
+    expect(clauses.map((clause) => sha256(clause)), "each delimited clause's sha256 is the roster's").toEqual(readRoster().clauses);
+    // The filing reader's controls on synthetic text: it cuts only before a "; (<letter>) " marker, ends at its sentence,
+    // and reads nothing from a filing without one Acceptance head or with clauses out of order.
+    expect(filingClauses("Owner filing (x). Acceptance: (a) one; two (b) three; (b) four. Not P0: five.")).toEqual(["(a) one; two (b) three", "(b) four"]);
+    expect(filingClauses("Owner filing (x). Acceptance: (a) one; (c) two.")).toEqual([]);
+    expect(filingClauses("Owner filing (x). Acceptance: (a) one. Acceptance: (a) two.")).toEqual([]);
+    expect(filingClauses("Owner filing (x). No acceptance sentence.")).toEqual([]);
+    expect(ownerFiling("a statement\n\nnot the filing\n\nOwner filing (x). Acceptance: (a) one.")).toBe("");
+  });
+
+  it("landed note: every residual family the landed wb-gxd7.5 delivery named stays a named residual here, read from its append-only delivered paragraph", () => {
+    const delivered = deliveredResiduals(beadNotes(BEAD));
+    expect(delivered.length, "the delivered paragraph's RESIDUALS line was read").toBeGreaterThan(0);
+    expect(new Set(delivered).size, "each landed residual family is named once").toBe(delivered.length);
+    expect(
+      delivered.filter((name) => !RESIDUALS.some((entry) => entry.id === name)),
+      "landed residual families no longer named here",
+    ).toEqual([]);
+    // The reader's controls on synthetic notes: it reads the delivered paragraph's own line, and nothing elsewhere.
+    expect(deliveredResiduals(`lead\n\n${DELIVERED_HEAD}x)\nRed: y\n${DELIVERED_RESIDUALS_HEAD} z): R-ONE, R-TWO-PARTS.\n\nlater`)).toEqual(["R-ONE", "R-TWO-PARTS"]);
+    expect(deliveredResiduals(`lead\n\nnot delivered\n${DELIVERED_RESIDUALS_HEAD} z): R-ONE.`)).toEqual([]);
   });
 
   it("live (a): the captured build is a provenance, five revisions print its one --version line, and that line is no revision", () => {
@@ -370,6 +490,66 @@ describe("gp provenance census (wb-gxd7.5, GPC-FEEDBACK-CONTRACT-AUDIT-R5)", () 
     expect([refused.status, envelope.ok, envelope.error.code, envelope.error.details.rejections]).toEqual([2, false, recorded.code, recorded.rejections]);
   });
 
+  it("vocabularies: every verdict word and code, capability noun, revision key, claim status and missing prerequisite is read by its judge, and the same reading without one is not", () => {
+    const captured = capture();
+    const roster = rosterOf(captured);
+    // A verdict word or code makes a gp line naming a backticked roster verb a C2 claim; the same frame without one is quiet.
+    for (const word of VERDICT_WORDS) expect(docLineClasses(`gp \`eval\` is ${word} here.`, roster), word).toEqual(["C2"]);
+    for (const code of VERDICT_CODES) expect(docLineClasses(`gp \`eval\` exits with GP_CLI_${code}`, roster), code).toEqual(["C2"]);
+    expect(docLineClasses("gp `eval` is fast here.", roster), "the frame alone").toEqual([]);
+    // A capability noun stands in for a verb; a word outside the nouns does not.
+    for (const noun of NOUNS) expect(docLineClasses(`gp ${noun} is unavailable here.`, roster), noun).toEqual(["C2"]);
+    expect(docLineClasses("gp scoring is unavailable here.", roster), "a word outside the nouns").toEqual([]);
+    // A version line under any revision key is refused as a revision; under versionLine it stays an opaque string.
+    const { sourceSha, entrySha256 } = captured.build;
+    for (const key of REVISION_KEYS) expect(provenanceFindings({ sourceSha, entrySha256, [key]: VERSION_LINE }).map(ruleOf), key).toContain("P-VERSION-AS-REVISION");
+    expect(provenanceFindings({ sourceSha, entrySha256, versionLine: VERSION_LINE }), "versionLine is no revision key").toEqual([]);
+    // Every claim status is a status the claim judge accepts, and not-implemented is not; every missing prerequisite is one
+    // a prerequisite-missing claim may name.
+    for (const status of CLAIM_STATUSES) expect(claimFindings({ surface: "cli", verb: "eval", status }, undefined).map(ruleOf), status).not.toContain("C-STATUS");
+    expect(claimFindings({ surface: "cli", verb: "eval", status: "not-implemented" }, undefined).map(ruleOf), "not-implemented").toContain("C-STATUS");
+    for (const missing of MISSING) expect(claimFindings({ surface: "cli", verb: "eval", status: "prerequisite-missing", missing }, undefined), missing).toEqual([]);
+    expect(claimFindings({ surface: "cli", verb: "eval", status: "prerequisite-missing", missing: "network" }, undefined).map(ruleOf), "network").toEqual(["C-MISSING"]);
+  });
+
+  it("receipt ledger: every judged row (its label and each pin) and every vocabulary member stands in the append-only receipt docs/workbench/receipts/wb-atq9.md, read through every cut's tables, so a member leaves only by a named removal", () => {
+    const reading = receiptLedger(readFileSync(join(ROOT, RECEIPT_DOC), "utf8"));
+    if (!reading.ok) throw new Error(`${RECEIPT_DOC}: ${reading.why}`);
+    expect(
+      ROWS.filter((entry) => new Set(entry.pins.map(digest16)).size !== entry.pins.length).map((entry) => entry.test),
+      "rows whose pins share a ledger digest",
+    ).toEqual([]);
+    expect(reading.ledger, "the census's judged set equals the receipt's ledger, both ways").toEqual(judgedLedger());
+    // The ledger reader's controls on synthetic receipts: it reads what it is given, never a fixed answer.
+    const [pinA, pinB, pinC, label1, label2, word1, word2] = ["a", "b", "c", "1", "2", "d", "e"].map((digit) => digit.repeat(16));
+    const section = (family: string, cut: number, lines: readonly string[]): string => {
+      const header = family.endsWith("rows") || family.startsWith("Judged rows") ? ["Row", "Label", "Pins"] : ["Vocabulary", "Members"];
+      return [`### ${family}, ${FOLLOW_UP} cut ${cut}`, "", `| ${header.join(" | ")} |`, `| ${header.map(() => "---").join(" | ")} |`, ...lines, ""].join("\n");
+    };
+    const receipt = (...entries: readonly string[]): string => [`# ${FOLLOW_UP}: synthetic`, "", ...entries.map((body, index) => `## 2026-01-0${index + 1} entry ${index + 1}\n\n${body}`)].join("\n");
+    const cut1 = `${section("Judged rows", 1, [`| T/X | ${label1} | ${pinA} ${pinB} |`])}\n${section("Vocabularies", 1, [`| v | ${word1} ${word2} |`])}`;
+    const read = (markdown: string): unknown => {
+      const folded = receiptLedger(markdown);
+      return folded.ok ? folded.ledger : folded.why;
+    };
+    expect(read(receipt(cut1))).toEqual({ rows: { "T/X": { labels: [label1], pins: [pinA, pinB] } }, vocabularies: { v: [word1, word2] } });
+    // A later cut that restates the tables without a member removes nothing; a named removal does.
+    const restated = `${section("Judged rows", 2, [`| T/X | ${label1} | ${pinA} |`])}\n${section("Vocabularies", 2, [`| v | ${word1} |`])}`;
+    expect(read(receipt(cut1, restated))).toEqual({ rows: { "T/X": { labels: [label1], pins: [pinA, pinB] } }, vocabularies: { v: [word1, word2] } });
+    const removed = `${section("Removed rows", 2, [`| T/X |  | ${pinB} |`])}\n${section("Removed vocabulary members", 2, [`| v | ${word2} |`])}`;
+    expect(read(receipt(cut1, removed))).toEqual({ rows: { "T/X": { labels: [label1], pins: [pinA] } }, vocabularies: { v: [word1] } });
+    // A relabel without the old label's removal, a removal of a member that does not stand, a gap in the cuts, an unbound
+    // level-3 section, HTML inside a section and a second table are each no reading.
+    expect(read(receipt(cut1, section("Judged rows", 2, [`| T/X | ${label2} | ${pinA} |`])))).toBe(`row T/X stands with 2 labels and 2 pins`);
+    expect(read(receipt(cut1, section("Removed rows", 2, [`| T/X |  | ${pinC} |`])))).toBe(`cut 2 Removed rows: the removal names pin ${pinC} of row T/X, which does not stand`);
+    expect(read(receipt(cut1, section("Judged rows", 3, [`| T/Y | ${label1} | ${pinC} |`])))).toBe("the ledger's cuts are [1, 3], not 1..k without a gap");
+    expect(read(receipt(cut1, section("Judged rows v2", 2, [`| T/X | ${label1} | ${pinA} |`])))).toBe(`the level-3 section "Judged rows v2, ${FOLLOW_UP} cut 2" is no ledger section`);
+    expect(read(receipt(cut1, section("Removed rows", 2, ["<!-- hidden -->", "", `| T/X |  | ${pinB} |`])))).toMatch(/carries HTML/);
+    expect(read(receipt(cut1, `${section("Removed rows", 2, [`| T/X |  | ${pinB} |`])}\n| Row | Label | Pins |\n| --- | --- | --- |\n| T/X | ${label1} | ${pinB} |\n`))).toMatch(/exactly one table/);
+    // The census's own tables, rendered as a cut states them, read back as its judged set.
+    expect(read(receipt(ledgerEntryTables(1)))).toEqual(judgedLedger());
+  });
+
   it("rule 16: every judged table, the residual families, the known set and the clause map are frozen at their measured shape", () => {
     expect(ROWS.map((entry) => `${entry.table}/${entry.id}:${entry.pins.length}`)).toEqual([
       "PROVENANCE/P-ACCEPT:3",
@@ -430,6 +610,16 @@ describe("gp provenance census (wb-gxd7.5, GPC-FEEDBACK-CONTRACT-AUDIT-R5)", () 
     ]);
     expect(KNOWN_UNGROUNDED.map((entry) => `${entry.file}:${entry.line}:${entry.cls}`)).toEqual(["docs/workbench/receipts/wb-1xvp.3.md:15:C1", "docs/workbench/receipts/wb-1xvp.3.md:18:C1", "docs/workbench/receipts/wb-1xvp.5.md:11:C1"]);
     expect(CLAUSE_TABLES.map((tables) => tables.join("+"))).toEqual(["PROVENANCE", "CAPABILITY", "DOC_LINES", "RECEIPT_MUTANTS+RESOLVE"]);
+    expect(Object.entries(VOCABULARIES).map(([name, members]) => `${name}:${members.length}`)).toEqual([
+      "verdict words:12",
+      "verdict codes:2",
+      "capability nouns:4",
+      "revision keys:6",
+      "claim statuses:5",
+      "missing prerequisites:2",
+      "receipt fields:17",
+      "walk exclusions:6",
+    ]);
   });
 
   it("roster: the judged rows, the registered tests, the residual families and the known set equal test/fixtures/gp-provenance-roster.json, in order and both ways", ({ task }) => {
@@ -437,6 +627,8 @@ describe("gp provenance census (wb-gxd7.5, GPC-FEEDBACK-CONTRACT-AUDIT-R5)", () 
     expect(ROWS, "the judged rows, read now, equal the roster rows exactly and in order").toEqual(roster.rows);
     expect(RESIDUAL_FAMILIES, "the named residual families equal the roster's").toEqual(roster.residuals);
     expect(KNOWN_UNGROUNDED, "the known ungrounded lines equal the roster's").toEqual(roster.known);
+    expect(ACCEPTANCE.map((clause) => sha256(clause)), "each acceptance clause's sha256 equals the roster's").toEqual(roster.clauses);
+    expect(VOCABULARIES, "the vocabularies, each in its judge's order, equal the roster's").toEqual(roster.vocabularies);
     for (const member of Object.values(RESIDUAL_FAMILIES).flat()) expect(ROWS.some((entry) => entry.test === member), `${member} is a judged row`).toBe(true);
     const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {

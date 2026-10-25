@@ -46,16 +46,20 @@
  *  A, (a). A1 the two files: the vendored result.d.ts (from the committed tarball, byte-identical to the installed copy) spells no
  *    stem (a hit there is the gating artifact arriving: re-measure), and the reader adapter's stem count is pinned at 0, a judged src
  *    file spelling a stem exactly when its reader is bound in HX_EXPLANATION_READERS (empty both ways today); QueryResult's members
- *    and the cited lines are pinned; the stem judge is read on flagged and quiet controls. A2 a budget-exhausted read, direct and on
- *    the provider path (class 6 with HX-BUDGET-EXHAUSTED and its dimension), under either licence and with a budget-stop explanation
- *    attached, projects coverage partial, statusTone unknown and a statusText carrying "absence not licensed", never known-empty,
- *    and the live invariant licenses no absence.
+ *    and the cited lines are pinned; the stem judge is read on flagged and quiet controls; and the roster's producer block is held to
+ *    what this repository holds (PRODUCER below). A2 a budget-exhausted read, direct and on the provider path (class 6 with
+ *    HX-BUDGET-EXHAUSTED and its dimension), under either licence and with a budget-stop explanation attached (read back from the
+ *    reading: exactly that explanation, and none without it), projects coverage partial, statusTone unknown and a statusText
+ *    carrying "absence not licensed", never known-empty, and the live invariant licenses no absence.
  *  B, (b). B1 an explanation-shaped member planted at EVERY object node of a full provider reading (the walk derives the positions
  *    from the SDK's own representation, no hand list, and its count is re-derived from the reading's JSON text) leaves the
  *    projection strictEqual to the reading without it and reaches no output string; a planted operation text is the control that
- *    the leak detector sees a leak. B2 the same member planted at every object node of the SDK document, plus the diagnostic-grammar
- *    entries (05-physical-provider-lld.md:33 "Cost fallbacks and explainable refusal use existing diagnostic grammar."), through the
- *    registered provider: which positions survive the decoder is measured, and the projection stays strictEqual with nothing shown.
+ *    the leak detector sees a leak. Each plant is read back at its own position and carries every explanation verbatim, each text a
+ *    string of its own, and the judge reports what every judged candidate carried (each sentinel), so an empty, partial or misplaced
+ *    plant, or a judge handed the unplanted reading, reds B1; the witness pins the payload's digest (wb-dvfc F1). B2 the same member
+ *    planted at every object node of the SDK document, plus the diagnostic-grammar entries (05-physical-provider-lld.md:33 "Cost
+ *    fallbacks and explainable refusal use existing diagnostic grammar."), through the registered provider: which positions survive
+ *    the decoder is measured, and the projection stays strictEqual with nothing shown.
  *  C, (c), armed on landing. C1 the fixture oracle: each armed fixture is the base plus exactly its carrier member (and the kind or
  *    licence its spec names), today's adapter projects it equal to its twin, and every text is sanitizer-stable; C2 the armed check
  *    (violationsOf) on synthetic readers: the honest reader (today's projection plus one sanitized facet per explanation) passes
@@ -74,15 +78,27 @@
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and the
  * roster (the bead text anchors rows, not pins); a check removed from CHECKS, the judge and the roster (the firing assertion binds
  * the listed checks only); a fixture or mutant removed while every remaining mutant still fails some fixture; a pin's case
- * replaced by one that echoes its roster witness.
+ * replaced by one that echoes its roster witness; a producer fact with no in-repo bytes (PRODUCER) rewritten to another
+ * well-formed value.
  * RESIDUALS (named, each with its pinned quiet row): R-VOCABULARY an explanation field under a generic name (reason, rationale,
- * note, detail, why, justification) spells no stem and is invisible to A1's trigger, while B still withholds its content (Q1);
- * R-COMPOSED a stem assembled at runtime from parts is invisible to any text scan (Q2); R-NAMESAKE the vendored declarations outside
- * the judged pair spell the stems for the explain read verbs, their explanation frames and sourceRootAssumption, and A1 does not read
- * them (Q3); R-RAW-READING the registered provider hands the surviving containers to its invoking caller verbatim - only the display
+ * note, detail, why, justification) spells no stem and is invisible to A1's trigger, while B still withholds its content (Q1; each
+ * judged candidate carries the planted text); R-COMPOSED a stem assembled at runtime from parts is invisible to any text scan (Q2;
+ * the keys are read from the probe text itself, and each spells a stem whole); R-NAMESAKE the vendored declarations outside
+ * the judged pair spell the stems for the explain read verbs, their explanation frames and sourceRootAssumption, and A1's trigger
+ * does not judge them (Q3; A1's PRODUCER reading only matches the modules that spell a stem to the pin's namesake list);
+ * R-RAW-READING the registered provider hands the surviving containers to its invoking caller verbatim - only the display
  * projection withholds them, so the echo the statement owes binds the armed half, not today's raw reading (Q4); R-INTERRUPTED a stem
- * split by a zero-width code point or spelled with a homoglyph letter is not caught (Q5); R-SCOPE the trigger reads the two files the
- * acceptance names: the src modules that load the HX SDK or provider lie outside it, and no src module imports the adapter yet (Q6).
+ * split by a zero-width code point or spelled with a homoglyph letter is not caught (Q5; each probe carries its interruption, and
+ * repaired it spells the stems); R-SCOPE the trigger reads the two files the acceptance names: the src modules that load the HX SDK
+ * or provider lie outside it, and no src module imports the adapter yet (Q6).
+ * PRODUCER (wb-dvfc F3): A1 holds the roster's producer block to what the repository holds: the vendored manifest's name, version
+ * and git blob id (the pin's sdk/typescript/package.json blob is the committed tarball's package/package.json, byte for byte), the
+ * decoder's frame-routing line, the representation's cited lines, the filing's own quotes of the program's lines (each producer
+ * quote is the filing's single-quoted text at the same file:line, whole or the part the filing quotes; the boundary line whole, with
+ * the program path and the pin) and the namesake modules (the pin's namesake files name exactly the vendored modules that spell a
+ * stem, and result names none). The other producer facts - the eleven HyperUnix-CLI blob ids and the pin's namesake and result line
+ * lists - have no in-repo bytes: each is held to its shape and their list is pinned; the cutting seat read every one at the pin
+ * (git show, read-only). The repository name, piBase and the namesakes' descriptions are labels, not judged.
  * SCOPE: the stem judge does not read negation or context, so a comment that merely mentions a stem in either file reds A1
  * (OVER-READ, disclosed: neither file spells one today, and an edit that must will re-measure this census). The Unknown marker is
  * held to (c)'s never-absence check with the three markers (c) names (OVER-READ of the clause, from the statement's title, which
@@ -146,6 +162,8 @@ const EXPLANATIONS: readonly Explanation[] = [
   { class: "budget-stop", text: "budget stop: the wall budget of 30s was reached (HXS-X5)" },
 ];
 const SENTINEL = /HXS-X\d/g;
+/** Each explanation's sentinel, in class order: what a plant must carry and no output may show. */
+const SENTINELS: readonly string[] = EXPLANATIONS.flatMap(entry => entry.text.match(SENTINEL) ?? []);
 /** The explanation-shaped member B plants, and the census's constructed carrier key inside the SDK's extension sidecar. */
 const MEMBER = "hxs_explanations";
 const CARRIER = "hx.structural-explanations";
@@ -290,6 +308,10 @@ function textOf(path: string): string {
 function sha256(bytes: Buffer | string): string {
   return createHash("sha256").update(bytes).digest("hex");
 }
+/** The git blob id of some bytes (what git hash-object prints), so a producer blob id can be held to committed bytes. */
+function gitBlobId(bytes: Buffer): string {
+  return createHash("sha1").update(`blob ${bytes.length}\0`).update(bytes).digest("hex");
+}
 
 /** Every regular file of a gzipped tar by entry name (ustar prefix joined); directories and other entry types are skipped. */
 function tarEntries(archive: Buffer): Map<string, Buffer> {
@@ -363,6 +385,154 @@ function tsBelow(directory: string): string[] {
 /** The module specifiers a source text loads, static and dynamic. */
 function specifiersOf(text: string): string[] {
   return [...text.matchAll(/\bfrom\s+["']([^"']+)["']|\bimport\s*\(\s*["']([^"']+)["']\s*\)/g)].map(match => match[1] ?? match[2] ?? "");
+}
+
+function fieldOf(value: JsonValue | undefined, key: string): JsonValue | undefined {
+  return isObject(value) ? (value as JsonObject)[key] : undefined;
+}
+const textAt = (value: JsonValue | undefined): string => (typeof value === "string" ? value : "");
+const numberAt = (value: JsonValue | undefined): number => (typeof value === "number" ? value : 0);
+/** The module a source or dist path names: sdk/typescript/src/protocol/decoder.ts and package/dist/protocol/decoder.js both name
+ * protocol/decoder. */
+function moduleOf(path: string): string {
+  return path.replace(/^(sdk\/typescript\/src|package\/dist)\//, "").replace(/(\.d)?\.(ts|js)$/, "");
+}
+/** The filing: the bead's notes up to its "Not P0:" sentence, before any delivery or verdict note was appended. */
+function filingOf(notes: string): string {
+  const end = notes.indexOf(" Not P0:");
+  return end === -1 ? "" : notes.slice(0, end);
+}
+function escaped(text: string): string {
+  return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+/** How the filing quotes a producer line: "exact" (the producer's quote whole), "part" (24 or more of its characters, in one piece)
+ * or "absent"; only a single-quoted text right after the citation file:line, or right before it, is read. */
+function filingQuote(filing: string, file: string, line: number, quote: string): string {
+  const cite = escaped(`${file}:${line}`);
+  const quoted = [
+    ...filing.matchAll(new RegExp(`(?:^|[\\s/])${cite} '([^']+)'`, "g")),
+    ...filing.matchAll(new RegExp(`'([^']+)' (?:\\S*/)?${cite}(?![0-9])`, "g")),
+  ].map(match => match[1] ?? "");
+  if (quote.length > 0 && quoted.includes(quote)) return "exact";
+  return quoted.some(part => part.length >= 24 && quote.includes(part)) ? "part" : "absent";
+}
+/** Every producer field holding a blob id or a line list, by path, and whether its shape holds (40 hex digits; ascending positive
+ * integers). */
+function shapedFacts(value: JsonValue, path: Path = []): { readonly path: string; readonly shaped: boolean }[] {
+  if (Array.isArray(value)) return value.flatMap((item, index) => shapedFacts(item, [...path, index]));
+  if (!isObject(value)) return [];
+  return Object.entries(value as JsonObject).flatMap(([key, item]) => {
+    const at = [...path, key];
+    if (key === "blob") return [{ path: pathText(at), shaped: typeof item === "string" && /^[0-9a-f]{40}$/.test(item) }];
+    if (key === "lines" || key === "stemLines") {
+      const shaped =
+        Array.isArray(item) &&
+        item.every((entry, index, all) => typeof entry === "number" && Number.isInteger(entry) && entry > 0 && (index === 0 || entry > Number(all[index - 1])));
+      return [{ path: pathText(at), shaped }];
+    }
+    return shapedFacts(item, at);
+  });
+}
+interface ProducerReading {
+  readonly manifest: JsonObject;
+  readonly frameRouting: JsonObject;
+  readonly representation: JsonObject;
+  readonly filing: Readonly<Record<string, string>>;
+  readonly namesakeModules: readonly string[];
+  readonly outOfRepo: readonly string[];
+  readonly refused: readonly string[];
+}
+/** The producer facts whose bytes this repository holds: the vendored manifest's blob (the pin's package.json, byte for byte). */
+const ANCHORED_FACTS: readonly string[] = ["$.sdkAtPin.package.blob"];
+/** The roster's producer block held to what this repository holds (wb-dvfc F3; PRODUCER in the header): each failed hold is named in
+ * refused; the facts with no in-repo bytes are held to their shape and listed. */
+function producerReading(producer: JsonObject, entries: ReadonlyMap<string, Buffer>, notes: string): ProducerReading {
+  const refused: string[] = [];
+  const hold = (ok: boolean, what: string): void => {
+    if (!ok) refused.push(what);
+  };
+  const linesOf = (name: string): string[] => (entries.get(name) ?? Buffer.alloc(0)).toString("utf8").split("\n");
+  const vendored = fieldOf(producer, "vendored");
+  const sdk = fieldOf(producer, "sdkAtPin");
+  const manifestBytes = entries.get("package/package.json") ?? Buffer.alloc(0);
+  const parsed: unknown = manifestBytes.length > 0 ? JSON.parse(manifestBytes.toString("utf8")) : null;
+  const manifest = {
+    name: isObject(parsed) && typeof parsed.name === "string" ? parsed.name : "",
+    version: isObject(parsed) && typeof parsed.version === "string" ? parsed.version : "",
+    blob: gitBlobId(manifestBytes),
+  };
+  hold(textAt(fieldOf(vendored, "tarball")) === VENDORED_TGZ, "vendored.tarball is the committed tarball");
+  hold(isDeepStrictEqual(fieldOf(vendored, "package"), { name: manifest.name, version: manifest.version }), "vendored.package is the tarball's manifest");
+  const pinPackage = fieldOf(sdk, "package");
+  hold(
+    textAt(fieldOf(pinPackage, "name")) === manifest.name && textAt(fieldOf(pinPackage, "version")) === manifest.version,
+    "sdkAtPin.package names the vendored name and version",
+  );
+  hold(textAt(fieldOf(pinPackage, "blob")) === manifest.blob, "sdkAtPin.package.blob is the git blob id of the tarball's manifest");
+  const routing = fieldOf(vendored, "frameRouting");
+  const routingFile = textAt(fieldOf(routing, "file"));
+  const routingLine = numberAt(fieldOf(routing, "line"));
+  const routingText = textAt(fieldOf(routing, "text"));
+  hold(routingText.length > 0 && routingLine > 0 && (linesOf(routingFile)[routingLine - 1] ?? "").includes(routingText), "vendored.frameRouting is the decoder's line");
+  const cited = /^(package\/dist\/\S+) resultToJson \(:(\d+)-(\d+)\) .*ReadResult\.results \((\S+):(\d+)\)/.exec(textAt(fieldOf(vendored, "representation")));
+  const [, representationFile = "", startText = "0", endText = "0", resultsFile = "", resultsText = "0"] = cited ?? [];
+  const [start, end, resultsLine] = [Number(startText), Number(endText), Number(resultsText)];
+  const representationLines = linesOf(representationFile);
+  const closes = representationLines.findIndex((line, index) => index >= start && line === "}") + 1;
+  hold(
+    cited !== null && (representationLines[start - 1] ?? "").includes("function resultToJson(") && start < end && end <= closes,
+    "vendored.representation cites resultToJson's lines",
+  );
+  const declaration = linesOf(`package/dist/${resultsFile}`).slice(0, resultsLine);
+  const owner = [...declaration].reverse().find(line => line.startsWith("export interface ")) ?? "";
+  hold(
+    resultsLine > 0 && /^\s+readonly results:/.test(declaration[resultsLine - 1] ?? "") && owner.startsWith("export interface ReadResult"),
+    "vendored.representation cites ReadResult.results",
+  );
+  const filing = filingOf(notes);
+  const quotes: Record<string, string> = {};
+  const quoted = (entry: JsonValue | undefined, key: string): void => {
+    const file = textAt(fieldOf(entry, "file"));
+    const line = numberAt(fieldOf(entry, "line"));
+    const how = filingQuote(filing, file, line, textAt(fieldOf(entry, key)));
+    quotes[`${file}:${line}`] = how;
+    hold(how !== "absent", `the filing quotes ${file}:${line} as the producer does`);
+  };
+  const boundary = fieldOf(producer, "boundary");
+  const boundaryCite = `${textAt(fieldOf(boundary, "file"))}:${numberAt(fieldOf(boundary, "line"))}`;
+  quoted(boundary, "text");
+  quoted(fieldOf(producer, "status"), "quote");
+  const authority = fieldOf(producer, "authority");
+  for (const entry of Array.isArray(authority) ? authority : []) quoted(entry, "quote");
+  hold(
+    quotes[boundaryCite] === "exact" && filing.includes(`${textAt(fieldOf(producer, "program"))}/${boundaryCite}@${PROGRAM_PIN.slice(0, 12)}`),
+    "the filing quotes the boundary line whole, cited with the program path and the pin",
+  );
+  const spelling = [...entries]
+    .filter(([name, bytes]) => /^package\/dist\/.+\.(d\.ts|js)$/.test(name) && stemLines(bytes.toString("utf8")).length > 0)
+    .map(([name]) => moduleOf(name));
+  const namesakeModules = [...new Set(spelling)].sort();
+  const namesakes = fieldOf(sdk, "namesakes");
+  const pinModules = (Array.isArray(namesakes) ? namesakes : []).map(entry => moduleOf(textAt(fieldOf(entry, "file")))).sort();
+  hold(isDeepStrictEqual(pinModules, namesakeModules), "the pin's namesake files name exactly the vendored modules that spell a stem");
+  const result = fieldOf(sdk, "result");
+  const resultLines = fieldOf(result, "stemLines");
+  hold(
+    !namesakeModules.includes(moduleOf(textAt(fieldOf(result, "file")))) && Array.isArray(resultLines) && resultLines.length === 0,
+    "sdkAtPin.result names a module that spells no stem",
+  );
+  const facts = shapedFacts(producer);
+  for (const fact of facts) hold(fact.shaped, `${fact.path} is well-formed`);
+  for (const path of ANCHORED_FACTS) hold(facts.some(fact => fact.path === path), `${path} is a producer fact`);
+  return {
+    manifest,
+    frameRouting: { file: routingFile, line: routingLine },
+    representation: { resultToJson: [start, closes], cited: [start, end], results: `${resultsFile}:${resultsLine}` },
+    filing: quotes,
+    namesakeModules,
+    outOfRepo: facts.map(fact => fact.path).filter(path => !ANCHORED_FACTS.includes(path)),
+    refused,
+  };
 }
 
 const WS = "/srv/pi-hx-census-ws";
@@ -510,6 +680,15 @@ function planted(value: JsonValue, path: Path, member: string, content: JsonValu
 function shapedContent(): JsonValue {
   return EXPLANATIONS.map(entry => ({ class: entry.class, text: entry.text }));
 }
+/** The JSON text of `member` on the object at the path, read back from the value; empty when the object or the member is absent. */
+function memberText(value: JsonValue, path: Path, member: string): string {
+  const node = nodeAt(value, path);
+  return isObject(node) && Object.hasOwn(node, member) ? JSON.stringify(node[member]) : "";
+}
+/** The classes whose text a planted payload's JSON lacks as a string of its own: a full plant lacks none (wb-dvfc F1). */
+function payloadGaps(payload: string): string[] {
+  return EXPLANATIONS.filter(entry => !payload.includes(JSON.stringify(entry.text))).map(entry => entry.class);
+}
 /** Every sentinel and stem an output shows. */
 function leaksOf(output: unknown): string[] {
   const text = JSON.stringify(output);
@@ -523,6 +702,8 @@ function reading(value: JsonValue): { topology: HyperUnixProjectionTopology; ver
 interface Plant {
   readonly unchanged: boolean;
   readonly leaked: readonly string[];
+  /** Every sentinel and stem the judged candidate itself carries: the plant as the judge saw it (wb-dvfc F1). */
+  readonly carried: readonly string[];
 }
 function judgePlant(base: JsonValue, candidate: JsonValue): Plant {
   const before = reading(base);
@@ -531,7 +712,7 @@ function judgePlant(base: JsonValue, candidate: JsonValue): Plant {
     isDeepStrictEqual(after.topology, before.topology) &&
     JSON.stringify(after.topology) === JSON.stringify(before.topology) &&
     isDeepStrictEqual(after.verdict, before.verdict);
-  return { unchanged, leaked: leaksOf(after.topology) };
+  return { unchanged, leaked: leaksOf(after.topology), carried: leaksOf(candidate) };
 }
 
 interface Facet {
@@ -825,7 +1006,8 @@ const REACHED: string[] = [];
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
-    const packed = vendoredEntries().get(PACKED_RESULT);
+    const entries = vendoredEntries();
+    const packed = entries.get(PACKED_RESULT);
     expect(packed, `${VENDORED_TGZ} packs ${PACKED_RESULT}`).toBeDefined();
     const installed = readFileSync(join(REPO, JUDGED_FILES[0] ?? ""));
     expect(sha256(installed), "the installed result.d.ts is the vendored tarball's bytes").toBe(sha256(packed ?? ""));
@@ -849,6 +1031,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const spelling = files.filter(file => file.path.startsWith("src/") && file.hits.length > 0).map(file => file.path);
     const bound = Object.keys(HX_EXPLANATION_READERS).sort();
     expect(bound, "a judged src file that spells a stem binds its reader in HX_EXPLANATION_READERS, both ways").toStrictEqual(spelling.sort());
+    const producer = producerReading(ROSTER.producer, entries, beadNotes());
+    expect(producer.refused, "the roster's producer block holds to the committed bytes and to the filing's own quotes").toStrictEqual([]);
     return {
       tarball: sha256(readFileSync(join(REPO, VENDORED_TGZ))),
       resultDeclaration: sha256(installed),
@@ -857,6 +1041,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       citedLines: cited,
       controls: { flagged: FLAGGED_CONTROLS.length, quiet: QUIET_CONTROLS.length },
       bound,
+      producer: json(producer),
     };
   },
   A2: async () => {
@@ -913,32 +1098,52 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       });
     };
     let carried: JsonValue = null;
+    const attached: JsonValue[] = [];
     for (const licensed of [false, true]) {
       for (const marker of [false, true]) {
         const value = await invoked(exhausted(licensed, marker));
         const source = isObject(value) && isObject(value.source) ? value.source : {};
         carried = json({ executionStatus: source.execution_status, budgetDimension: source.budget_dimension, terminal: source.terminal });
+        const explained = carriedBy(value);
+        expect(explained, `provider licensed=${licensed} marker=${marker}: the reading carries exactly the attached explanation`).toStrictEqual(
+          marker ? [explanationOf("budget-stop")] : [],
+        );
+        attached.push(json([licensed, marker, explained]));
         record("provider", licensed, marker, value);
       }
     }
-    return { table, carried };
+    return { table, carried, attached };
   },
   B1: async () => {
     const base = await invoked(sdkDocument(ONE_ROW));
     const positions = objectPaths(base);
     expect(positions.length, "the walk reached every object node of the reading (counted from its JSON text)").toBe(bracesOf(base));
     const outcomes: Record<string, Plant> = {};
+    const payloads = new Set<string>();
     for (const path of positions) {
       const value = planted(base, path, MEMBER, shapedContent());
       expect(hyperunixTopology(value, CONTEXT), `${pathText(path)}: projection strictEqual`).toStrictEqual(hyperunixTopology(base, CONTEXT));
+      const payload = memberText(value, path, MEMBER);
+      expect(payloadGaps(payload), `${pathText(path)}: the plant, read back at its position, carries every explanation verbatim`).toStrictEqual([]);
+      payloads.add(payload);
       outcomes[pathText(path)] = judgePlant(base, value);
     }
     const failing = Object.entries(outcomes).filter(([, plant]) => !plant.unchanged || plant.leaked.length > 0);
     expect(failing, "no planted position moves the projection or reaches an output string").toStrictEqual([]);
+    const unseen = Object.entries(outcomes)
+      .filter(([, plant]) => SENTINELS.some(sentinel => !plant.carried.includes(sentinel)))
+      .map(([at]) => at);
+    expect(SENTINELS.length, "every explanation carries a sentinel").toBe(EXPLANATIONS.length);
+    expect(unseen, "every judged candidate carried every explanation's sentinel: the judge saw the plant").toStrictEqual([]);
     const sourceOf = isObject(base) && isObject(base.source) ? base.source : {};
     const control = judgePlant(base, { ...(base as JsonObject), source: json({ ...sourceOf, operation: `find ${explanationOf("accepted-assumption").text}` }) });
     expect(control.leaked, "the leak detector sees a leak through the operation the title shows").not.toStrictEqual([]);
-    return { positions: positions.map(pathText), unchanged: Object.keys(outcomes).length, control: json(control) };
+    return {
+      positions: positions.map(pathText),
+      unchanged: Object.keys(outcomes).length,
+      plant: { payloads: [...payloads].map(payload => sha256(payload)), carried: [...new Set(Object.values(outcomes).map(plant => plant.carried.join(" ")))] },
+      control: json(control),
+    };
   },
   B2: async () => {
     const document = sdkDocument(ONE_ROW);
@@ -953,8 +1158,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       const text = JSON.stringify(value);
       survives[label] = EXPLANATIONS.every(entry => text.includes(entry.text));
       expect(hyperunixTopology(value, CONTEXT), `${label}: projection strictEqual`).toStrictEqual(hyperunixTopology(twin, CONTEXT));
-      const plant = judgePlant(twin, value);
-      expect(plant, `${label}: nothing moves or shows`).toStrictEqual({ unchanged: true, leaked: [] });
+      const { unchanged, leaked } = judgePlant(twin, value);
+      expect({ unchanged, leaked }, `${label}: nothing moves or shows`).toStrictEqual({ unchanged: true, leaked: [] });
     };
     for (const path of positions) check(pathText(path), await invoked(planted(document, path, MEMBER, shapedContent()) as JsonObject));
     const grammar = sdkDocument({
@@ -1034,11 +1239,22 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const generic = ["reason", "rationale", "note", "detail", "why", "justification"];
     const base = await invoked(sdkDocument(ONE_ROW));
     const withheld = generic.map(key => judgePlant(base, planted(base, ["source"], key, explanationOf("rejected-assumption").text)));
+    const [sentinel = ""] = explanationOf("rejected-assumption").text.match(SENTINEL) ?? [];
+    expect(
+      generic.filter((_, index) => sentinel === "" || !(withheld[index]?.carried ?? []).includes(sentinel)),
+      "every generic key's judged candidate carried the planted rejected-assumption text",
+    ).toStrictEqual([]);
     return { genericKeyHits: generic.map(key => stemHits(key).length), withheld: json(withheld) };
   },
   Q2: async () => {
     const composed = 'const key = ["expl", "anation"].join(""); const other = ["assum", "ption"].join("");';
-    return { hits: stemHits(composed).length, composedKeys: [["expl", "anation"].join(""), ["assum", "ption"].join("")] };
+    const composedKeys = [...composed.matchAll(/\["([^"]*)", "([^"]*)"\]\.join\(""\)/g)].map(match => `${match[1] ?? ""}${match[2] ?? ""}`);
+    expect(composedKeys.length, "the probe text assembles its keys").toBeGreaterThan(0);
+    expect(
+      composedKeys.filter(key => stemHits(key).length === 0),
+      "every key the probe assembles spells a stem whole: the scan misses only the composed form",
+    ).toStrictEqual([]);
+    return { hits: stemHits(composed).length, composedKeys, assembledHits: composedKeys.map(key => stemHits(key).length) };
   },
   Q3: async () => {
     const entries = vendoredEntries();
@@ -1071,7 +1287,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const homoglyph = String.fromCodePoint(0x0430);
     const split = `readonly expl${zeroWidth}anations: readonly string[]; readonly assum${zeroWidth}ption: string;`;
     const lookalike = `readonly expl${homoglyph}nations: readonly string[]; readonly ${homoglyph}ssumption: string;`;
-    return { split: stemHits(split).length, lookalike: stemHits(lookalike).map(hit => hit.slice(hit.indexOf(":") + 1)) };
+    const stemsOf = (text: string): string[] => stemHits(text).map(hit => hit.slice(hit.indexOf(":") + 1));
+    const interruptions = { split: split.split(zeroWidth).length - 1, lookalike: lookalike.split(homoglyph).length - 1 };
+    const repaired = { split: stemsOf(split.split(zeroWidth).join("")), lookalike: stemsOf(lookalike.split(homoglyph).join("a")) };
+    expect(Object.entries(interruptions).filter(([, count]) => count === 0), "each probe carries its interruption").toStrictEqual([]);
+    expect(Object.entries(repaired).filter(([, stems]) => stems.length === 0), "each probe, repaired, spells the stems").toStrictEqual([]);
+    return { split: stemHits(split).length, lookalike: stemsOf(lookalike), interruptions, repaired };
   },
   Q6: async () => {
     const modules = tsBelow(join(REPO, "src")).map(path => relative(REPO, path).split("\\").join("/")).sort();

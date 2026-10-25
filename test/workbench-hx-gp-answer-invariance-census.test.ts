@@ -26,7 +26,9 @@
  * - (a) GP-SHAPED KEYS: GP_KEYS, the clause's five keys in its order (the two labels split at "/"), each carrying a value that claims
  *   what GP may never decide - a complete, cheap plan with a licensed absence, the top priority, a receipt claiming a complete
  *   verdict, an observation labelled covered and complete, one labelled uncovered and absent (gpKeys()). They are planted, never over
- *   an existing key, at every SITE (every object of the envelope two keys deep, read from the envelope itself) over every BASE (each
+ *   an existing key, at every SITE (every object the envelope holds, at any depth and through every item of every list, read from the
+ *   envelope itself: 17, each certificate's cause, scope, target and body included; every base holds the same objects and is a 0-row
+ *   answer, so no row object is a site) over every BASE (each
  *   kind of the adapter's exported HYPERUNIX_EXECUTION_KINDS, unlicensed and runtime-licensed: 26). BYTE-IDENTICAL means the reader's
  *   whole outcome - its frozen projection, or its typed refusal for the two mutation kinds - serializes to the same JSON as the
  *   key-less base's; coverage and statusTone (the projection) and absenceLicensed (the live verdict) are recorded per base. No reader's
@@ -56,11 +58,14 @@
  *   is not a needle (R1). Hits are read per line, as git grep reads them.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
- *  A, acceptance (a). A1 the reader adapter over 26 bases x 8 sites; A2 the registered provider over the SDK document's sites (the
- *    SDK keeps the keys only in its lossless extensions sidecar, which the provider echoes byte for byte and no reader reads; every
- *    other site drops them), for an unlicensed incomplete and a licensed complete-empty document; A3 the native-evidence projection;
- *    A4 the live verdict, absenceLicensed included; A5 the cited lines hold the derivation the clause cites.
- *  B, acceptance (b). B1 src and qa: zero hits; B2 docs: every hit in a holder region; B3 test: every hit file a holder.
+ *  A, acceptance (a). A1 the reader adapter over 26 bases x 17 sites; A2 the registered provider over the SDK document's 19 sites
+ *    (every object at any depth and every list item): the SDK keeps the keys byte for byte where it keeps opaque JSON (the extensions
+ *    sidecar and each certificate's cause, scope, target and body), keeps their names with stringified values in the provider-version
+ *    map and drops them at every other site (SDK_KEEPS, measured), and no reader reads any of them, for an unlicensed incomplete and a
+ *    licensed complete-empty document; A3 the native-evidence projection; A4 the live verdict, absenceLicensed included; A5 the cited
+ *    lines hold the derivation the clause cites.
+ *  B, acceptance (b). B1 src and qa: zero hits; B2 docs: every hit in a holder region, the docs/03 boundary region being the RENDERED
+ *    section read back to its source lines (boundaryLines); B3 test: every hit file a holder.
  *  C, acceptance (c). C1 claiming fields read 'partial'; C2 the uncovered label; C3 the GP-less baseline; C4 the landing tripwire.
  *  F, the outside anchors. F1: the owner filing row of wb-kjg9.1 in the tracked bead export (.beads/issues.jsonl) states each
  *    acceptance clause exactly as the label of rows A, B and C (whole clause, so a shortened label reds); clause (a)'s keys are
@@ -71,17 +76,28 @@
  *    landed anchors - the wb-1xvp.3 receipt's measured wire vocabulary and its graphpolicy spellings each read as a needle member, the
  *    wb-csbt.3 roster's R719-ratified holder patterns are the first two TEST_HOLDERS, and the landed docs binding (docsSection and
  *    sectionTables of test/helpers/census.ts) binds the docs/03 GraphPolicyCLI section and the GraphPolicyCLI ownership row B2 reads.
- *    So removing a clause, a key, a field, a cite, a needle member, a root, a holder pattern or a claim plant from every literal of
- *    this file and the roster still reds.
+ *    F1 also holds row R to the wb-kjg9.1 delivery note in the same export: its RESIDUALS line names exactly row R's pins, in order,
+ *    with their residual names (RESIDUALS), and the judged set requires each R case to name its residual. So removing a clause, a key,
+ *    a field, a cite, a needle member, a root, a holder pattern, a claim plant or a residual from every literal of this file and the
+ *    roster still reds.
  *  M, the instruments rows A-C read, pinned member by member: MN the needle members (spellings and near misses), MU the uncovered
- *    matcher, MH the holder classifiers (test classes, docs/03 regions, receipt titles), MS the planter, the site lists and the
- *    surfacing reader.
+ *    matcher, MH the holder classifiers (test classes, receipt titles, docs/03 regions: a heading the rendered view reads as level 1 or
+ *    2 ends the boundary region wherever its raw line hides it - setext, indented, tab-separated, empty - and a section the landed
+ *    binding refuses, or a page whose source the lexer rewrites (CR line ends), holds nothing), MS the planter, the site lists (every object at any depth, every list item; the bases share one
+ *    shape and hold no row object) and the surfacing reader.
  *  R, the residuals' pinned quiet rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and pins,
  * every pin's witness and the vocabularies - is held to the out-of-file roster (ROSTER_FILE); the judged set also reads this file's
  * IMPL block and refuses a roster handle inside it, so a case swapped for its own roster witness reds; a last case reads that every
- * pin's case ran to its end. Not claimed: a pin of rows M or R removed from ROWS, the literal, IMPL and the roster together (F1 and
- * F2 anchor clauses and vocabularies, not those pins).
+ * pin's case ran to its end. Row R is anchored outside this file (F1, the export's RESIDUALS line). Not claimed: a pin of row M
+ * removed from ROWS, the literal, IMPL and the roster together (no outside source names the instrument pins; F1 and F2 anchor
+ * clauses, vocabularies and residuals, not those pins).
+ * FOLLOW-UP wb-xaof (R694, from the wb-kjg9.1 gate cmd_11f5baf475d4 at landing 335): F1 B2 read the docs/03 boundary region from raw
+ *   lines (the raw heading line to the next raw '#'/'##' line), so a setext or indented heading after the section left a needle below
+ *   it held while the landed docsSection put it outside; the region is now the rendered section (boundaryLines), held to the landed
+ *   binding. F2 the site lists stopped two keys deep (one for the SDK document) at the first item of each list; they now read every
+ *   object at any depth and every list item. F3 row R's pins were anchored only to this file and the roster; F1 now holds them to the
+ *   export. F4 was note honesty and carries no code.
  * RESIDUALS (named; each with a pinned quiet row in row R): R1 R-BARE-GP the bare token gp (the GraphPolicyCLI binary) is not a
  *   needle, because src names a local gp for the general-purpose agent (src/agent-types.ts), so a gp launch is invisible to rows B -
  *   the landed wb-1xvp.2 census judges every src gp call site; R2 R-COMPOSED a needle assembled at runtime from parts escapes rows B,
@@ -105,6 +121,7 @@ import { type Dirent, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { resultFromJson } from "@hyperunix/sdk";
+import { marked, type Token } from "marked";
 import { describe, expect, it } from "vitest";
 import { CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import { HYPERUNIX_EXECUTION_KINDS, type HyperUnixTopologyContext, hxLiveInvariant, hyperunixTopology } from "../src/workbench/hyperunix-observer.js";
@@ -282,6 +299,25 @@ const SDK_DIST = "node_modules/@hyperunix/sdk/dist";
 const SDK_DECLARATIONS_FLOOR = 10;
 const HX_MODULES: readonly string[] = ["src/workbench/providers/hyperunix.ts", OBSERVER, "src/workbench/native-evidence.ts"];
 
+interface Residual {
+  readonly id: string;
+  readonly name: string;
+}
+/** The named residuals in order: each is a pin of row R whose quiet row names it, and F1 holds them to the delivery note's RESIDUALS
+ * line in the tracked bead export (wb-xaof F3), so a residual removed from every literal of this file and the roster still reds. */
+const RESIDUALS: readonly Residual[] = [
+  { id: "R1", name: "R-BARE-GP" },
+  { id: "R2", name: "R-COMPOSED" },
+  { id: "R3", name: "R-SPELLING" },
+  { id: "R4", name: "R-HOLDER-NAME" },
+  { id: "R5", name: "R-HOLDER-REGION" },
+  { id: "R6", name: "R-OUTSIDE-ROOTS" },
+  { id: "R7", name: "R-NEW-READER" },
+  { id: "R8", name: "R-LICENCE-WINS" },
+];
+/** The lead of the RESIDUALS line in the wb-kjg9.1 delivery note (the export's notes); the line runs to its first sentence end. */
+const RESIDUALS_LEAD = "RESIDUALS (named, each with a pinned quiet row in row R): ";
+
 interface Row {
   readonly id: string;
   readonly label: string;
@@ -306,7 +342,7 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "F",
-    label: "the owner filing row of wb-kjg9.1 in the tracked bead export and the landed receipt, roster and docs binding anchor every clause, key, field, cite, needle member, root, holder pattern and claim plant the census reads",
+    label: "the owner filing row of wb-kjg9.1 in the tracked bead export and the landed receipt, roster and docs binding anchor every clause, key, field, cite, needle member, root, holder pattern, claim plant and residual the census reads",
     pins: ["F1", "F2"],
   },
   {
@@ -392,6 +428,9 @@ function constants(): unknown {
     sdkDist: SDK_DIST,
     sdkDeclarationsFloor: SDK_DECLARATIONS_FLOOR,
     hxModules: HX_MODULES,
+    residuals: RESIDUALS,
+    residualsLead: RESIDUALS_LEAD,
+    sdkKeeps: SDK_KEEPS,
   };
 }
 
@@ -460,6 +499,34 @@ function testHolderOf(path: string): string | null {
   return TEST_HOLDERS.find(holder => holder.pattern.test(path))?.id ?? null;
 }
 const cellsOf = (line: string): string[] => line.split("|").slice(1, -1).map(cell => cell.trim());
+/** The 1-based source lines of the docs/03 boundary section in the RENDERED view, or null when the two views disagree (wb-xaof F1).
+ * The section is the run of top-level tokens marked's lexer (the landed binding's own) cuts after the unique level-2 boundary heading,
+ * up to the next rendered level-1 or level-2 heading or EOF (boundSection's rule), so a setext, indented, tab-separated or empty
+ * heading ends the held region exactly where the rendered view ends the section. The tokens' raw source must rebuild the page (the
+ * lines are read back through it), and the slice is held to the landed binding: docsSection must bind the section under the page
+ * title and render one block per non-space token of the slice. Any disagreement holds nothing, so a needle in the section reds. */
+function boundaryLines(text: string): { readonly from: number; readonly to: number } | null {
+  const tokens: Token[] = marked.lexer(text);
+  if (tokens.map(token => token.raw).join("") !== text) return null;
+  const starts = tokens.flatMap((token, index) => (token.type === "heading" && token.depth === 2 && token.text === BOUNDARY_HEADING ? [index] : []));
+  const start = starts.length === 1 ? starts[0] : undefined;
+  if (start === undefined) return null;
+  const next = tokens.findIndex((token, index) => index > start && token.type === "heading" && token.depth <= 2);
+  const end = next < 0 ? tokens.length : next;
+  const landed = docsSection(text, BOUNDARY_HEADING, 2, [PAGE_TITLE]);
+  if (!landed.ok || landed.blocks.length !== tokens.slice(start + 1, end).filter(token => token.type !== "space").length) return null;
+  const before = tokens
+    .slice(0, start)
+    .map(token => token.raw)
+    .join("");
+  const section = tokens
+    .slice(start, end)
+    .map(token => token.raw)
+    .join("");
+  const from = before.split("\n").length;
+  const spanned = section.split("\n").length - (section.endsWith("\n") ? 1 : 0);
+  return { from, to: from + spanned - 1 };
+}
 /** The 1-based line numbers of a docs page that sit in a holder region, and the regions found. */
 function docHolderLines(path: string, text: string): { lines: Set<number>; regions: string[] } {
   const lines = text.split("\n");
@@ -475,17 +542,9 @@ function docHolderLines(path: string, text: string): { lines: Set<number>; regio
     }
   }
   if (path === DOCS_03) {
-    const headings = lines.flatMap((line, index) => (line === `## ${BOUNDARY_HEADING}` ? [index] : []));
-    const start = headings.length === 1 ? headings[0] : undefined;
-    if (start !== undefined) {
-      let end = lines.length;
-      for (let index = start + 1; index < lines.length; index++) {
-        if (/^#{1,2} /.test(lines[index] ?? "")) {
-          end = index;
-          break;
-        }
-      }
-      for (let index = start; index < end; index++) held.add(index + 1);
+    const section = boundaryLines(text);
+    if (section !== null) {
+      for (let line = section.from; line <= section.to; line++) held.add(line);
       regions.push("boundary-section");
     }
     lines.forEach((line, index) => {
@@ -587,19 +646,19 @@ const siteName = (path: Path): string => (path.length === 0 ? "top" : path.map((
 const carries = (value: Json, path: Path, keys: Json): boolean => Object.entries(keys).every(([key, planted]) => JSON.stringify(objectAt(value, path)[key]) === JSON.stringify(planted));
 /** Whether no planted key already exists at `path` below `value`, so a plant never overwrites a field the reader reads. */
 const fresh = (value: Json, path: Path, keys: Json): boolean => Object.keys(keys).every(key => !Object.hasOwn(objectAt(value, path), key));
-/** Every object `value` holds down to `depth` keys, read from the value itself: the value, each object-valued key and the first
- * item of each list of objects, so a site list is never typed by hand. */
-function objectPaths(value: Json, depth: number): Path[] {
-  const paths: Path[] = [[]];
-  const visit = (at: Json, path: Path, left: number): void => {
-    for (const [key, child] of Object.entries(at)) {
-      if (isObject(child)) {
-        paths.push([...path, key]);
-        if (left > 1) visit(child as Json, [...path, key], left - 1);
-      } else if (Array.isArray(child) && isObject(child[0])) paths.push([...path, key, 0]);
+/** Every object `value` holds, read from the value itself in document order: the value, then each object at any depth, through every
+ * item of every list (a list of lists included), so a site list is never typed by hand and never stops at a depth or a first item. */
+function objectPaths(value: Json): Path[] {
+  const paths: Path[] = [];
+  const visit = (at: JsonValue, path: Path): void => {
+    if (Array.isArray(at)) {
+      for (const [index, item] of at.entries()) visit(item, [...path, index]);
+    } else if (isObject(at)) {
+      paths.push(path);
+      for (const [key, child] of Object.entries(at)) visit(child as JsonValue, [...path, key]);
     }
   };
-  visit(value, [], depth);
+  visit(value, []);
   return paths;
 }
 /** A hyperunix.find/v1 envelope as the registered provider returns it, for one kind and licence. */
@@ -623,8 +682,9 @@ function reading(kind: string, licensed: boolean): Json {
 }
 /** Every base reading: each kind of the adapter's exported closed kind set, unlicensed and runtime-licensed. */
 const BASES: readonly (readonly [string, boolean, Json])[] = HYPERUNIX_EXECUTION_KINDS.flatMap(kind => [false, true].map(licensed => [kind, licensed, reading(kind, licensed)] as const));
-/** Every object of the envelope a reader could read (two keys deep), top level included. */
-const SITES: readonly Path[] = objectPaths(reading("incomplete", false), 2);
+/** Every object of the envelope a reader could read, at any depth and every list item, top level included (17; every base holds the
+ * same objects, and every base is a 0-row answer, so no row object is a site - MS pins both). */
+const SITES: readonly Path[] = objectPaths(reading("incomplete", false));
 /** Whether a value's JSON carries a GP key, a GP_MARK value or the word uncovered. */
 function surfaced(value: unknown): boolean {
   const text = JSON.stringify(value) ?? "";
@@ -688,8 +748,34 @@ const SDK_DOCUMENTS: readonly (readonly [string, Json])[] = [
     },
   ],
 ];
-/** Every object of the SDK document (one key deep) a successor could carry the keys in, top level included. */
-const SDK_SITES: readonly Path[] = objectPaths(sdkDocument(), 1);
+/** Where the vendored SDK keeps keys planted at an SDK document site, measured (every site not named drops them): byte for byte where
+ * it keeps opaque JSON (the extensions sidecar and each certificate's cause, scope, target and body), and as stringified values in the
+ * provider-version map, whose entries it reads as provider names. */
+const SDK_KEEPS: Readonly<Record<string, string>> = {
+  "coverage[0].cause": "kept",
+  "coverage[0].scope": "kept",
+  "coverage[0].target": "kept",
+  "coverage[0].body": "kept",
+  "coverage[1].cause": "kept",
+  "coverage[1].scope": "kept",
+  "coverage[1].target": "kept",
+  "coverage[1].body": "kept",
+  "evidence.provider_versions": "coerced",
+  extensions: "kept",
+};
+/** How the provider output keeps keys planted at an SDK document site: not at all ('dropped'), byte for byte at the same site of its
+ * source ('kept'), as stringified values there ('coerced'), or otherwise ('other' with the output). */
+function keptAs(base: JsonValue, output: JsonValue, site: Path, keys: Json): string {
+  if (json(output) === json(base)) return "dropped";
+  if (!isObject(base)) return `other ${json(output)}`;
+  const at: Path = ["source", ...site];
+  if (json(output) === json(planted(base as Json, at, keys))) return "kept";
+  const strings: Json = Object.fromEntries(Object.entries(keys).map(([key, value]) => [key, String(value)]));
+  if (json(output) === json(planted(base as Json, at, strings))) return "coerced";
+  return `other ${json(output)}`;
+}
+/** Every object of the SDK document a successor could carry the keys in, at any depth and every list item, top level included (19). */
+const SDK_SITES: readonly Path[] = objectPaths(sdkDocument());
 /** The registered hyperunix.find provider's own output, through CapabilityRegistry.invoke, for an injected SDK document. */
 async function providerOutput(document: Json, served: string[]): Promise<JsonValue> {
   const reader: HyperUnixReader = {
@@ -748,6 +834,23 @@ const PLANTED_DOCS_03 = [
   "",
   "Pi reads graphpolicy scores.",
 ].join("\n");
+
+/** The needle the wb-kjg9.1 gate placed after the docs/03 boundary section (its GF12a-GF12c probes). */
+const PLANT_NEEDLE = "Pi reads graphpolicy scores from hx results.";
+/** Headings the rendered view reads as level 1 or 2 (the CommonMark ATX and setext forms), each placed after the boundary section of
+ * a planted docs/03 page with PLANT_NEEDLE below it: the gate's GF12a (ATX), GF12b (setext) and GF12c (indented ATX), and the rest of
+ * the class (a setext level 1, a one-space level 1, a tab after the opening sequence, an empty heading). */
+const HIDDEN_HEADINGS: readonly (readonly [string, readonly string[]])[] = [
+  ["atx", ["## Plant section"]],
+  ["setext-h2", ["Plant section", "-------------"]],
+  ["indented-atx", ["   ## Plant section"]],
+  ["setext-h1", ["Plant section", "============="]],
+  ["one-space-h1", [" # Plant section"]],
+  ["tab-atx", [`##${cp(0x09)}Plant section`]],
+  ["empty-atx", ["##"]],
+];
+/** PLANTED_DOCS_03 through the end of its boundary section (lines 1-13), then `tail`. */
+const plantedThroughBoundary = (tail: readonly string[]): string => [...PLANTED_DOCS_03.split("\n").slice(0, 13), ...tail].join("\n");
 
 /** MN: each needle member's spellings and near misses, with the members each text carries. */
 const NEEDLE_CASES: readonly (readonly [string, readonly string[]])[] = [
@@ -873,25 +976,21 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
         const input = planted(document, site, keys);
         expect(fresh(document, site, keys) && carries(input, site, keys), `${id}: the SDK document carries the fresh keys at ${siteName(site)}`).toBe(true);
         const output = await providerOutput(input, served);
-        const source = isObject(output) && isObject(output.source) ? (output.source as Json) : {};
-        const sidecar = json(source.extensions);
-        const withoutSidecar = isObject(output) ? { ...(output as Json), source: { ...source, extensions: {} } } : output;
         const projection = topologyOf(output);
         const evidence = nativeEvidence("hyperunix.find", output);
         const verdict = hxLiveInvariant(output);
         expect(projection, `${id}: the reader over the provider output for ${siteName(site)}`).toStrictEqual(baseProjection);
-        expect(withoutSidecar, `${id}: the provider output for ${siteName(site)} beside its sidecar`).toStrictEqual(base);
         expect(evidence, `${id}: native evidence for ${siteName(site)}`).toStrictEqual(baseEvidence);
         expect(verdict, `${id}: the live verdict for ${siteName(site)}`).toStrictEqual(baseVerdict);
         sites.push({
           site: siteName(site),
           served,
-          sidecar: sidecar === json(keys) ? "echoed" : sidecar === "{}" ? "dropped" : `other ${sidecar}`,
+          kept: keptAs(base, output, site, keys),
           identical: json(projection) === json(baseProjection),
           surfaced: surfaced(projection) || surfaced(evidence) || surfaced(verdict),
         });
       }
-      expect(sites.map(site => [site.site, site.sidecar]), `${id}: the SDK keeps the keys only in its sidecar`).toEqual(SDK_SITES.map(site => [siteName(site), siteName(site) === "extensions" ? "echoed" : "dropped"]));
+      expect(sites.map(site => [site.site, site.kept]), `${id}: where the provider output keeps the keys, beside readers that read none of them`).toEqual(SDK_SITES.map(site => [siteName(site), SDK_KEEPS[siteName(site)] ?? "dropped"]));
       for (const site of sites) expect({ served: site.served, identical: site.identical, surfaced: site.surfaced }, `${id} at ${site.site}`).toStrictEqual({ served: ["find", "runtime"], identical: true, surfaced: false });
       documents.push({ id, reading: readingOf(baseProjection, baseVerdict), baseSurfaced: surfaced(base), sites });
     }
@@ -1011,7 +1110,11 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
       ],
       held: [`${DOCS_03}:7`, `${DOCS_03}:10`, `${DOCS_03}:12`, `${RECEIPTS}/wb-plant.1.md:1`, `${RECEIPTS}/wb-plant.1.md:3`],
     });
-    return { walked, symlinks, findings: judged.findings, regions, receiptHeld, controls };
+    const hidden = HIDDEN_HEADINGS.map(([id, heading]) => [id, docsFindings(plantTree([[DOCS_03, plantedThroughBoundary([...heading, "", PLANT_NEEDLE])]])).findings] as const);
+    expect(hidden, "a needle below a heading the rendered view ends the section at sits outside the held region").toStrictEqual(
+      HIDDEN_HEADINGS.map(([id, heading]) => [id, [`${DOCS_03}:8 graphpolicy,GP: outside-holder`, `${DOCS_03}:${13 + heading.length + 2} graphpolicy: outside-holder`]]),
+    );
+    return { walked, symlinks, findings: judged.findings, regions, receiptHeld, controls, hidden };
   },
   B3: async () => {
     const live = liveRead();
@@ -1184,6 +1287,9 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
     const statement = between(notes, "): [HX-GRAPH-POLICY-OPTIMIZATION-R1] ", " graph-policy-optimization-2026-10-18/README.md:7@");
     const gating = between(notes, "Gating artifact: ", "\nAcceptance: ");
     const atPin = README_LINES.find(line => line.line === 7)?.text ?? "";
+    const residuals = between(notes, RESIDUALS_LEAD, ". ")
+      .split(", ")
+      .map(item => item.split(" "));
     const witness = {
       clauses,
       keys,
@@ -1207,6 +1313,8 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
       readmeLines: README_LINES.map(line => [line.cite, sha256(line.text) === line.sha256]),
       labelsAtPin: (README_LINES.find(line => line.line === 13)?.text ?? "").includes(`${GP_KEYS[3]}/${GP_KEYS[4]}`),
       pin: PIN_COMMIT.startsWith(PIN),
+      residuals,
+      residualPins: ROWS.find(row => row.id === "R")?.pins ?? [],
     };
     expect(witness.clauses).toStrictEqual([
       { clause: "(a)", equalsLabel: true },
@@ -1227,6 +1335,8 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
       labelsAtPin: true,
       pin: true,
     });
+    expect(residuals, "the delivery note's RESIDUALS line in the export names the residuals").toStrictEqual(RESIDUALS.map(({ id, name }) => [id, name]));
+    expect(witness.residualPins, "row R pins exactly the exported residuals, in order").toStrictEqual(residuals.map(([id]) => id));
     return witness;
   },
   F2: async () => {
@@ -1286,6 +1396,10 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
       otherBead: regionOf(`${RECEIPTS}/wb-plant.1.md`, receiptTitle("wb-plant.2", "RF-GRAPH-POLICY-MACHINE-CONTROL-R9")),
       nested: regionOf(`${RECEIPTS}/old/wb-plant.1.md`, receiptTitle("wb-plant.1", "RF-GRAPH-POLICY-MACHINE-CONTROL-R9")),
       notReceipts: regionOf("docs/workbench/wb-plant.1.md", receiptTitle("wb-plant.1", "RF-GRAPH-POLICY-MACHINE-CONTROL-R9")),
+      hidden: Object.fromEntries(HIDDEN_HEADINGS.map(([id, heading]) => [id, regionOf(DOCS_03, plantedThroughBoundary([...heading, "", PLANT_NEEDLE]))])),
+      fenced: regionOf(DOCS_03, plantedThroughBoundary(["```", "## Plant section", "```", "", PLANT_NEEDLE])),
+      subsection: regionOf(DOCS_03, plantedThroughBoundary(["### Plant subsection", "", PLANT_NEEDLE])),
+      carriageReturn: regionOf(DOCS_03, PLANTED_DOCS_03.split("\n").join("\r\n")),
     };
     expect(docs).toStrictEqual({
       page: { lines: [7, 10, 11, 12, 13], regions: ["boundary-section", "ownership-row"] },
@@ -1297,6 +1411,10 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
       otherBead: { lines: [], regions: [] },
       nested: { lines: [], regions: [] },
       notReceipts: { lines: [], regions: [] },
+      hidden: Object.fromEntries(HIDDEN_HEADINGS.map(([id]) => [id, { lines: [7, 10, 11, 12, 13], regions: ["boundary-section", "ownership-row"] }])),
+      fenced: { lines: [7], regions: ["ownership-row"] },
+      subsection: { lines: [7, 10, 11, 12, 13, 14, 15, 16], regions: ["boundary-section", "ownership-row"] },
+      carriageReturn: { lines: [7], regions: ["ownership-row"] },
     });
     return { classes, docs };
   },
@@ -1320,14 +1438,59 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
       { plan_cost_estimate: 0 },
       { coverage: "partial", statusText: "complete · rows 0", evidenceRefs: ["hx-coverage:b1"], diagnostics: ["runtime did not license absence"] },
     ].map(value => surfaced(value));
-    const witness = { sites, sdkSites, freshEverywhere, plantsRead, untouched, controls };
+    const shape = {
+      bases: BASES.every(([, , value]) => json(objectPaths(value)) === json(SITES)),
+      documents: SDK_DOCUMENTS.every(([, document]) => json(objectPaths(document)) === json(SDK_SITES)),
+      rowObjects: [...BASES.map(([, , value]) => objectAt(value, ["source"]).rows), ...SDK_DOCUMENTS.map(([, document]) => document.rows)].filter(rows => json(rows) !== "[]").length,
+      nested: objectPaths({ list: [[{ deep: { deeper: {} } }], 1, { item: [] }], value: null }).map(siteName),
+    };
+    const witness = { sites, sdkSites, freshEverywhere, plantsRead, untouched, controls, shape };
     expect(witness).toStrictEqual({
-      sites: ["top", "source", "source.execution_status", "source.coverage_summary", "source.coverage[0]", "source.evidence", "source.extensions", "runtime"],
-      sdkSites: ["top", "coverage[0]", "status", "execution_status", "transport", "coverage_summary", "evidence", "extensions"],
+      sites: [
+        "top",
+        "source",
+        "source.execution_status",
+        "source.coverage_summary",
+        "source.coverage[0]",
+        "source.coverage[0].cause",
+        "source.coverage[0].scope",
+        "source.coverage[0].target",
+        "source.coverage[0].body",
+        "source.coverage[1]",
+        "source.coverage[1].cause",
+        "source.coverage[1].scope",
+        "source.coverage[1].target",
+        "source.coverage[1].body",
+        "source.evidence",
+        "source.extensions",
+        "runtime",
+      ],
+      sdkSites: [
+        "top",
+        "coverage[0]",
+        "coverage[0].cause",
+        "coverage[0].scope",
+        "coverage[0].target",
+        "coverage[0].body",
+        "coverage[1]",
+        "coverage[1].cause",
+        "coverage[1].scope",
+        "coverage[1].target",
+        "coverage[1].body",
+        "status",
+        "status.streams[0]",
+        "execution_status",
+        "transport",
+        "coverage_summary",
+        "evidence",
+        "evidence.provider_versions",
+        "extensions",
+      ],
       freshEverywhere: { keys: true, claims: true, labels: true, sdk: true },
       plantsRead: true,
       untouched: true,
       controls: [true, true, true, true, false],
+      shape: { bases: true, documents: true, rowObjects: 0, nested: ["top", "list[0][0]", "list[0][0].deep", "list[0][0].deep.deeper", "list[2]"] },
     });
     return witness;
   },
@@ -1429,6 +1592,11 @@ describe("wb-kjg9.1 HX GraphPolicy answer-invariance census (HX-GRAPH-POLICY-OPT
     const cases = block.split(/\n {2}(?=[A-Z][A-Z0-9]*: async \(\) => \{)/).slice(1);
     const named = cases.map(body => [body.slice(0, body.indexOf(":")), READERS.some(reader => new RegExp(`\\b${reader}\\(`).test(body))]);
     expect(named, "every case names a reader of the subject").toStrictEqual(ROWS.flatMap(row => row.pins).map(pin => [pin, true]));
+    const bodies = new Map(cases.map(body => [body.slice(0, body.indexOf(":")), body] as const));
+    expect(
+      RESIDUALS.map(({ id, name }) => [id, (bodies.get(id) ?? "").includes(`"${name}: `)]),
+      "each residual's quiet row names its residual",
+    ).toStrictEqual(RESIDUALS.map(({ id }) => [id, true]));
   });
 
   for (const row of ROWS) {

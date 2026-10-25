@@ -142,6 +142,18 @@
    },
    {
     "pin": "T1",
+    "root": ".beads",
+    "floor": 3,
+    "anchorFile": "README.md",
+    "anchorToken": "AI-Native Issue Tracking",
+    "omit": [
+     "issues.jsonl",
+     "interactions.jsonl"
+    ],
+    "own": true
+   },
+   {
+    "pin": "T1",
     "root": ".",
     "floor": 20,
     "anchorFile": "package.json",
@@ -317,11 +329,97 @@
    }
   ],
   "families": {
-   "h2": "harness2-reactive-evolution|tsx-h2-(?:0[0-5]|adr)(?![\\w])|rftsx-(?:bhmrd|7sy4c|8er6b|e9a5e|auqdi|rupqh)(?![\\w])",
+   "h2": "harness2[-_\\s]+reactive[-_\\s]+evolution|tsx[-_\\s]h2[-_\\s](?:0[0-5]|adr)(?![a-z0-9])|rftsx[-_](?:bhmrd|7sy4c|8er6b|e9a5e|auqdi|rupqh)(?![a-z0-9])",
    "prerequisites": "API-PIN|TSX-FED-01|harness2-api-pin",
    "marker": "(?<![\\w-])ruled (ADOPT|REJECT)(?![\\w-])(?![\\s()\\[\\],;:/|'\"`]*(?:(?:or|and|nor)(?![\\w-])[\\s()\\[\\],;:/|'\"`]*)?(?:ADOPT|REJECT|DEFER)(?![\\w-]))",
    "verdictWords": "(?<![\\w-])(?:ADOPT|REJECT)(?![\\w-])"
-  }
+  },
+  "trackerData": [
+   ".beads/issues.jsonl",
+   ".beads/interactions.jsonl"
+  ],
+  "scriptlessRoots": [
+   ".agents",
+   ".pi",
+   ".beads"
+  ],
+  "claimlessRoots": [
+   ".github",
+   ".codex",
+   ".beads/hooks",
+   ".beads"
+  ],
+  "claimRoots": [
+   "docs"
+  ],
+  "notWalked": {
+   "R3": [
+    "test"
+   ],
+   "R4": [
+    ".beads/issues.jsonl",
+    ".beads/interactions.jsonl"
+   ],
+   "R12": [
+    "docs",
+    "new-feedback",
+    "vendor"
+   ]
+  },
+  "residuals": [
+   {
+    "pin": "R1",
+    "name": "R-COMPOSED"
+   },
+   {
+    "pin": "R2",
+    "name": "R-GENERIC-RUNNER"
+   },
+   {
+    "pin": "R3",
+    "name": "R-TEST-TREE"
+   },
+   {
+    "pin": "R4",
+    "name": "R-TRACKER-DATA"
+   },
+   {
+    "pin": "R5",
+    "name": "R-CASE-VARIANT"
+   },
+   {
+    "pin": "R6",
+    "name": "R-ALTERNATIVE-UNLISTED"
+   },
+   {
+    "pin": "R7",
+    "name": "R-DEFER-UNREAD"
+   },
+   {
+    "pin": "R8",
+    "name": "R-OTHER-FIELD"
+   },
+   {
+    "pin": "R9",
+    "name": "R-SNAPSHOT"
+   },
+   {
+    "pin": "R10",
+    "name": "R-OTHER-STORE"
+   },
+   {
+    "pin": "R11",
+    "name": "R-BD-INTEGRATION"
+   },
+   {
+    "pin": "R12",
+    "name": "R-PROSE-RECORDS"
+   }
+  ],
+  "followUpRows": [
+   "E",
+   "K"
+  ]
  },
  "rows": [
   {
@@ -330,62 +428,98 @@
    "pins": [
     {
      "id": "T1",
-     "witness": [
-      {
-       "root": "src",
-       "floorMet": true,
-       "anchorRead": true,
-       "hits": []
+     "witness": {
+      "roots": [
+       {
+        "root": "src",
+        "floorMet": true,
+        "anchorRead": true,
+        "trackedRead": true,
+        "hits": []
+       },
+       {
+        "root": "qa",
+        "floorMet": true,
+        "anchorRead": true,
+        "trackedRead": true,
+        "hits": []
+       },
+       {
+        "root": "examples",
+        "floorMet": true,
+        "anchorRead": true,
+        "trackedRead": true,
+        "hits": []
+       },
+       {
+        "root": ".agents",
+        "floorMet": true,
+        "anchorRead": true,
+        "trackedRead": true,
+        "hits": []
+       },
+       {
+        "root": ".pi",
+        "floorMet": true,
+        "anchorRead": true,
+        "trackedRead": true,
+        "hits": []
+       },
+       {
+        "root": ".github",
+        "floorMet": true,
+        "anchorRead": true,
+        "trackedRead": true,
+        "hits": []
+       },
+       {
+        "root": ".codex",
+        "floorMet": true,
+        "anchorRead": true,
+        "trackedRead": true,
+        "hits": []
+       },
+       {
+        "root": ".beads/hooks",
+        "floorMet": true,
+        "anchorRead": true,
+        "trackedRead": true,
+        "hits": []
+       },
+       {
+        "root": ".beads",
+        "floorMet": true,
+        "anchorRead": true,
+        "trackedRead": true,
+        "hits": []
+       },
+       {
+        "root": ".",
+        "floorMet": true,
+        "anchorRead": true,
+        "trackedRead": true,
+        "hits": []
+       }
+      ],
+      "notWalked": {
+       "R4": [
+        ".beads/interactions.jsonl",
+        ".beads/issues.jsonl"
+       ],
+       "R12": [
+        "docs",
+        "new-feedback",
+        "vendor"
+       ],
+       "binary": [
+        "media"
+       ],
+       "R3": [
+        "test"
+       ]
       },
-      {
-       "root": "qa",
-       "floorMet": true,
-       "anchorRead": true,
-       "hits": []
-      },
-      {
-       "root": "examples",
-       "floorMet": true,
-       "anchorRead": true,
-       "hits": []
-      },
-      {
-       "root": ".agents",
-       "floorMet": true,
-       "anchorRead": true,
-       "hits": []
-      },
-      {
-       "root": ".pi",
-       "floorMet": true,
-       "anchorRead": true,
-       "hits": []
-      },
-      {
-       "root": ".github",
-       "floorMet": true,
-       "anchorRead": true,
-       "hits": []
-      },
-      {
-       "root": ".codex",
-       "floorMet": true,
-       "anchorRead": true,
-       "hits": []
-      },
-      {
-       "root": ".beads/hooks",
-       "floorMet": true,
-       "anchorRead": true,
-       "hits": []
-      },
-      {
-       "root": ".",
-       "floorMet": true,
-       "anchorRead": true,
-       "hits": []
-      }
-     ]
+      "unclassified": []
+     }
     },
     {
      "id": "T2",
@@ -394,37 +528,44 @@
        {
         "root": "src",
         "floorMet": true,
-        "anchorRead": true
+        "anchorRead": true,
+        "trackedRead": true
        },
        {
         "root": "qa",
         "floorMet": true,
-        "anchorRead": true
+        "anchorRead": true,
+        "trackedRead": true
        },
        {
         "root": "examples",
         "floorMet": true,
-        "anchorRead": true
+        "anchorRead": true,
+        "trackedRead": true
        },
        {
         "root": ".github",
         "floorMet": true,
-        "anchorRead": true
+        "anchorRead": true,
+        "trackedRead": true
        },
        {
         "root": ".codex",
         "floorMet": true,
-        "anchorRead": true
+        "anchorRead": true,
+        "trackedRead": true
        },
        {
         "root": ".beads/hooks",
         "floorMet": true,
-        "anchorRead": true
+        "anchorRead": true,
+        "trackedRead": true
        },
        {
         "root": ".",
         "floorMet": true,
-        "anchorRead": true
+        "anchorRead": true,
+        "trackedRead": true
        }
       ],
       "spellings": [
@@ -464,11 +605,6 @@
       ],
       "driven": [
        true
-      ],
-      "controls": [
-       false,
-       true,
-       false
       ]
      }
     }
@@ -734,10 +870,6 @@
        "paired:title-only-adopt ADOPT",
        "paired:adopt-trailing-period ADOPT",
        "paired:padded-crlf ADOPT"
-      ],
-      "readerOnly": [
-       "reader-only:1 unknown (store unreachable) (reference no-verdict)",
-       "reader-only:2 unknown (store unreachable) (reference ADOPT)"
       ]
      }
     }
@@ -952,12 +1084,6 @@
        "titleOnly": {
         "verdict": "no-verdict",
         "judged": []
-       },
-       "unreadable": {
-        "verdict": "unknown (store unreachable)",
-        "judged": [
-         "c:packets"
-        ]
        }
       },
       "blocksEdge": "validation",
@@ -1035,42 +1161,49 @@
        "root": "src",
        "floorMet": true,
        "anchorRead": true,
+       "trackedRead": true,
        "hits": []
       },
       {
        "root": "qa",
        "floorMet": true,
        "anchorRead": true,
+       "trackedRead": true,
        "hits": []
       },
       {
        "root": "docs",
        "floorMet": true,
        "anchorRead": true,
+       "trackedRead": true,
        "hits": []
       },
       {
        "root": "examples",
        "floorMet": true,
        "anchorRead": true,
+       "trackedRead": true,
        "hits": []
       },
       {
        "root": ".agents",
        "floorMet": true,
        "anchorRead": true,
+       "trackedRead": true,
        "hits": []
       },
       {
        "root": ".pi",
        "floorMet": true,
        "anchorRead": true,
+       "trackedRead": true,
        "hits": []
       },
       {
        "root": ".",
        "floorMet": true,
        "anchorRead": true,
+       "trackedRead": true,
        "hits": []
       }
      ]
@@ -1333,7 +1466,7 @@
   },
   {
    "id": "R",
-   "label": "the named residuals R1-R14 stay pinned quiet",
+   "label": "the named residuals R1-R12 stay pinned quiet",
    "pins": [
     {
      "id": "R1",
@@ -1346,11 +1479,6 @@
       {
        "family": "write",
        "digest": "1041ce40b8a62649",
-       "hit": false
-      },
-      {
-       "family": "verdict",
-       "digest": "26d6e911d8575407",
        "hit": false
       }
      ]
@@ -1422,7 +1550,6 @@
       "node:fs",
       "node:path",
       "node:url",
-      "typescript",
       "vitest",
       "../src/workbench/beads-observer.js",
       "../src/workbench/beads-program-readiness.js",
@@ -1458,81 +1585,166 @@
       "receiptsReadByG1": 0,
       "receiptsQuoteTitles": true
      }
-    },
+    }
+   ]
+  },
+  {
+   "id": "E",
+   "label": "the escapes wb-ze6u's filing names are judged: the path-qualified, quoted-flag and split-argv write spellings and the underscore and spaced family spellings hit, and T1 walks the tracker's README and config",
+   "pins": [
     {
-     "id": "R13",
+     "id": "E01",
      "witness": {
-      "reference": "ADOPT",
-      "reader": "ADOPT",
-      "driven": true
+      "family": "write",
+      "digest": "26fa5c672f88ec13",
+      "hit": true
      }
     },
     {
-     "id": "R14",
+     "id": "E02",
      "witness": {
-      "held": [
-       "T4",
-       "A4",
-       "B6",
-       "C5",
-       "D3",
-       "G1",
-       "F1"
-      ],
-      "quiet": [
-       "T1",
-       "T2",
-       "T3",
-       "A1",
-       "A2",
-       "A3",
-       "B1",
-       "B2",
-       "B3",
-       "B4",
-       "B5",
-       "C1",
-       "C2",
-       "C3",
-       "C4",
-       "D1",
-       "D2",
-       "P1",
-       "P2",
-       "P3",
-       "P4",
-       "MH1",
-       "MH2",
-       "MH3",
-       "MH4",
-       "MH5",
-       "MH6",
-       "MW1",
-       "MW2",
-       "MW3",
-       "MW4",
-       "MW5",
-       "MW6",
-       "MW7",
-       "MW8",
-       "MW9",
-       "MG1",
-       "MG2",
-       "MG3",
-       "R1",
-       "R2",
-       "R3",
-       "R4",
-       "R5",
-       "R6",
-       "R7",
-       "R8",
-       "R9",
-       "R10",
-       "R11",
-       "R12",
-       "R13",
-       "R14"
+      "family": "write",
+      "digest": "efd0757e3344ea89",
+      "hit": true
+     }
+    },
+    {
+     "id": "E03",
+     "witness": {
+      "family": "write",
+      "digest": "25526e5c9f7db892",
+      "hit": true
+     }
+    },
+    {
+     "id": "E04",
+     "witness": {
+      "family": "h2",
+      "digest": "47f65e5a6a929ca1",
+      "hit": true
+     }
+    },
+    {
+     "id": "E05",
+     "witness": {
+      "family": "h2",
+      "digest": "63937474dcbca87f",
+      "hit": true
+     }
+    },
+    {
+     "id": "E09",
+     "witness": {
+      "family": "write",
+      "digest": "308792faab0c7b13",
+      "hit": true
+     }
+    },
+    {
+     "id": "E06",
+     "witness": {
+      "path": ".beads/README.md",
+      "tracked": true,
+      "root": ".beads",
+      "read": true,
+      "hit": false
+     }
+    },
+    {
+     "id": "E07",
+     "witness": {
+      "path": ".beads/config.yaml",
+      "tracked": true,
+      "root": ".beads",
+      "read": true,
+      "hit": false
+     }
+    }
+   ]
+  },
+  {
+   "id": "K",
+   "label": "the registration, reached-record, floor and surface judges this census applies to its own run flag a constructed model of each mutant wb-ze6u's filing names",
+   "pins": [
+    {
+     "id": "M1",
+     "witness": [
+      "mode:skip x77"
+     ]
+    },
+    {
+     "id": "M3",
+     "witness": [
+      "mode:skip B1",
+      "mode:skip B2",
+      "mode:skip B3",
+      "mode:skip B4",
+      "mode:skip B5",
+      "mode:skip B6"
+     ]
+    },
+    {
+     "id": "M4",
+     "witness": [
+      "unregistered x65"
+     ]
+    },
+    {
+     "id": "M5",
+     "witness": [
+      "mode:skip C1",
+      "mode:skip C2",
+      "mode:skip C3",
+      "mode:skip C4",
+      "mode:skip C5"
+     ]
+    },
+    {
+     "id": "M6",
+     "witness": [
+      "mode:skip B3",
+      "unrun:skip B3"
+     ]
+    },
+    {
+     "id": "M7",
+     "witness": [
+      "mode:skip D1",
+      "mode:skip D2",
+      "mode:skip D3"
+     ]
+    },
+    {
+     "id": "M8",
+     "witness": [
+      "unreached T1",
+      "unreached T2",
+      "unreached T3"
+     ]
+    },
+    {
+     "id": "M9",
+     "witness": [
+      "mode:todo P4"
+     ]
+    },
+    {
+     "id": "I18",
+     "witness": [
+      "witness D1"
+     ]
+    },
+    {
+     "id": "I12",
+     "witness": [
+      "floor 0 below four fifths of the 706 rows recorded"
+     ]
+    },
+    {
+     "id": "I16",
+     "witness": {
+      "unclassifiedRoots": [
+       ".agents"
       ]
      }
     }

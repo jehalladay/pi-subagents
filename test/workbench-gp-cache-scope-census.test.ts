@@ -64,12 +64,16 @@
  *    foreign requester holding the owner's key never get the object; C2 the (c) rules on the reference and their mutants.
  *  D, the posture. D1 the walk: every module below WALK_ROOTS read as tokens (the src walk equals the tsconfig program's file
  *    set; qa and examples above their floors); a module that reaches GraphPolicyCLI (the landed touchpoint scanner, or graph
- *    policy spelled as words) or spells a cached-output word (a KIND as a word, singular or plural), and holds a cache shape (a
- *    Map or WeakMap construction, by name or as a property such as globalThis.Map, or a cache-named identifier), is FLAGGED and must be bound in GP_CACHES, and every binding must
+ *    policy spelled as words) or spells a cached-output word (a KIND as a word, singular or plural; identifiers and literals
+ *    split into words at case, separator and letter-digit boundaries), and holds a cache shape (a Map or WeakMap construction,
+ *    by name or as a property such as globalThis.Map, or a cache-named identifier), is FLAGGED and must be bound in GP_CACHES, and every binding must
  *    name a flagged module (empty both ways today), with the cache detector's floor, its anchor (the evidence store, quiet, and
  *    its cacheKey scope-keyed) and flagged and quiet controls; D2 every bound cache passes every rule (none bound today; the same
  *    judge over the reference and the mutants is the non-vacuity control: the reference passes, every mutant is refused, the
- *    two liveness mutants by H-AFTER).
+ *    two liveness mutants by H-AFTER); D3 the judges' reading of the reference's choices (CHOICES): each choice is held to the
+ *    rules that refuse the ADOPTERS making it otherwise - independent designs (opaque-token or record keys, no subject part, no
+ *    kind check at put, no purge, a stale key read as miss) run through every rule - so the provenance triple reads bound by
+ *    A-PROVENANCE and every other choice free (see SCOPE).
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * OUTSIDE ANCHOR (the tracked bead export, .beads/issues.jsonl row wb-ojm5.2, read only through the OWNER FILING: the row's
  * notes through their first "Not P0:" line, so a lane's delivery or refusal note appended later changes nothing read, which the
@@ -80,11 +84,16 @@
  * reference's vocabulary is parsed from the clauses: KEY_PARTS from (a)'s "omitting ... cannot be constructed", OBJECT_PARTS
  * from its "carries ...", CHANGES from (b)'s "after a ... a lookup", KINDS from its "never the old ...", and each parsed part and
  * change is the term of a rule. FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every row, pin
- * witness, constant, rule, defect, residual and registered test title is held to the out-of-file roster
- * (test/fixtures/gp-cache-scope-roster.json). Not claimed (each measured green by the cutting seat): a pin, rule or defect
+ * witness, constant, rule, defect, residual, adopter, choice and registered test title is held to the out-of-file roster
+ * (test/fixtures/gp-cache-scope-roster.json). Not claimed (each measured green by the seat that names it): a pin, rule or defect
  * removed from this file and the roster together (the bead row anchors rows, clauses and terms, not pins, and a term two rules
  * share keeps the other); a root dropped from WALK_ROOTS together with its floor (src is held to tsconfig's program, qa and
- * examples stand on floors); an edit of the judging code itself (the tsconfig comparison replaced by true stays green).
+ * examples stand on floors); an edit of the judging code itself (the tsconfig comparison replaced by true stays green) - these
+ * three by the census's cutting seat; and, by wb-yco1's seat, a residual family removed from every literal of this file and of
+ * the roster together (its RESIDUALS entry, its quiet pin in ROWS, IMPL and the literal, and the roster's rows, tests and
+ * constants.residuals: R-NON-MODULE with Q8 stays green), a D1 control removed from CONTROLS and the roster's D1 witness
+ * together, and an adopter or a choice removed from ADOPTERS or CHOICES (and from the choices naming it) and the roster together
+ * - nothing outside the two files names a residual family, a control, an adopter or a choice.
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
  * not inverted, ran; every pin's case reached its witness compare with the witness equal to the roster's (REACHED: a guarded
  * early return or a swapped matcher leaves a pin unreached, the wb-csbt.3 F2 class).
@@ -94,17 +103,34 @@
  * local adapter imported under a generic name (Q3); R-SHAPE a cache held in a plain object, an array, a closure or a Map
  * constructed through an alias (const M = Map), with no cache-named identifier (Q4); R-OUTSIDE test/, docs and the tracker export lie outside WALK_ROOTS (this file and the GP censuses hold GP
  * caches and vocabulary on purpose) (Q5); R-GENERIC-CACHE a GP value handed to a generic Pi cache whose module names no GP word,
- * the EvidenceStore of src/workbench/evidence-loader.ts through a loader registered elsewhere (Q6); R-INTERRUPTED a GP name
- * spelled with a homoglyph letter (a zero-width split is caught: the word split reads it as graph, policy) (Q7); R-NON-MODULE a
- * shell script, JSON or Markdown file below the roots is listed but never judged (Q8).
+ * the EvidenceStore of src/workbench/evidence-loader.ts through a loader registered elsewhere (Q6); R-INTERRUPTED a GP name or a
+ * cached-output word spelled with a homoglyph letter, split inside a word by a zero-width character, or interrupted by a digit
+ * (graph2policy reads graph, 2, policy; a zero-width split at the name's own word boundary is caught, the word split reading
+ * graph, policy, and a digit glued after a word is split off) (Q7); R-NON-MODULE a shell script, JSON or Markdown file below the
+ * roots is listed but never judged (Q8).
  * SCOPE: the walk reads presence, not flow: a flagged module may hold a cache that never sees a GP value (its cut binds it and
  * drives it through the judges, or re-measures this census), and score is read even where it is Pi's own (OVER-READ, disclosed:
- * no Pi module spelling it holds a cache shape today). The reference fixes choices the filing leaves open - the provenance fields
- * (producer, checkpoint, receipt, after GLLM-103 at 01:15), the subject part, a kind check at put, invalidated as the prior key's
- * reading, a refusal of even a complete hand-built key - and the judges require none of them. NOT CLAIMED: a revision rolled back
- * to an earlier value (the filing does not say whether its slot may serve again; the reference purged it at the bump), a
+ * no Pi module spelling it holds a cache shape today). The reference fixes choices the filing leaves open (CHOICES, judged by D3
+ * over the ADOPTERS), and the judges BIND one of them: the provenance fields (producer, checkpoint, receipt, after GLLM-103 at
+ * 01:15). A-PROVENANCE refuses an object without provenance, without its producer or its checkpoint, or with an empty receipt
+ * (PROVENANCE_CASES), so the first GP cache must require that triple to bind - a narrower reading than clause (a)'s "carries
+ * provenance": an adopter requiring the producer only, or the producer and the receipt, is refused by exactly A-PROVENANCE, and
+ * the same design requiring the triple passes every rule. The judges require none of the others: the subject part, a kind check
+ * at put, invalidated as the prior key's reading, a refusal of even a complete hand-built key, frozen keys the cache minted and a
+ * purge at the change. NOT CLAIMED: a revision rolled back to an earlier value (the filing does not say whether its slot may
+ * serve again; the reference purged it at the bump, D3's token adopter serves it again, and the judges accept both), a
  * permission basis re-granted under its old name (the reference keeps it revoked), and anything about GP's own caches. No GP
  * cache is added to src and none is faked there.
+ *
+ * wb-yco1 (the R694 follow-up of landing 336; seat ws-03, run g10-work-s87, 2026-10-25, base 24e0d5b): F1 the header said the
+ * judges require none of the reference's choices, the provenance fields among them; D3 made that claim executable and it read red
+ * (the adopters requiring the producer only, or the producer and the receipt, are refused by A-PROVENANCE), so SCOPE now states
+ * the binding - the gate's second cure; the judges are unchanged. F2 the residual-family form of the coordinated hollow is named
+ * in the non-claim. F3 wordsOf splits letter-digit boundaries: the gate's two plants (embedding2Cache and graphPolicy2 beside a
+ * Map) read red as D1 controls before the split, and on the real tree the split flags no module and changes no witness. GLLM-103
+ * at the pin reads "all receipts include graph schema/revision/scope digest, function/checkpoint digest, numerical profile,
+ * backend and target provenance where applicable" (01-requirements-decisions.md:15, blob 407b1ae4b96e, read with git show, no
+ * fetch): it names the checkpoint digest and the receipt, not a producer field, so the triple stays the reference's reading.
  *
  * Display paths added: none. Test-only: no process is spawned and no file is written; src, qa, examples, tsconfig.json, the
  * roster and the bead export are only read.
@@ -628,6 +654,120 @@ function mutantTable(clauses: readonly Clause[]): { readonly reference: string[]
   return { reference: violations(reference, clauses), mutants };
 }
 
+// ---- independent adopters: the judges' reading of the reference's choices (row D3) ----
+
+type ProvenanceField = (typeof PROVENANCE_FIELDS)[number];
+/** An adopter's design. Each adopter is written apart from the reference, not as the reference with a guard off. */
+interface AdopterDesign {
+  /** Opaque string tokens, or plain records any caller may build (the reference mints frozen records only it accepts). */
+  readonly keys: "token" | "record";
+  /** The provenance fields put requires (the reference requires the triple). */
+  readonly provenance: readonly ProvenanceField[];
+}
+/**
+ * The adopters D3 judges: the wb-ojm5.2 gate's J10 (token keys, the triple), J11 (token keys, the producer only) and J12 (the
+ * producer and the receipt, no checkpoint) designs, and a record-keyed design that serves a complete hand-built key.
+ */
+const ADOPTERS: Readonly<Record<string, AdopterDesign>> = {
+  "token keys, the provenance triple": { keys: "token", provenance: ["producer", "checkpoint", "receipt"] },
+  "token keys, the producer only": { keys: "token", provenance: ["producer"] },
+  "token keys, the producer and the receipt": { keys: "token", provenance: ["producer", "receipt"] },
+  "record keys, the provenance triple": { keys: "record", provenance: ["producer", "checkpoint", "receipt"] },
+};
+/** A key as an adopter keeps it: no subject part (its design). */
+type AdopterKey = Omit<GpKeyParts, "subject">;
+
+/**
+ * An adopter of the contract. Beyond its design it makes each of the reference's other choices otherwise: its keys carry no
+ * subject, put checks no kind, a change is recorded and read at get (no purge), a stale key reads miss (not invalidated), and a
+ * refusal is a plain Error.
+ */
+class AdopterGpCache implements GpCache {
+  private readonly tokens = new Map<string, AdopterKey>();
+  private readonly objects = new Map<string, GpCachedObject>();
+  private readonly revisions = new Map<string, string>();
+  private readonly withdrawn = new Set<string>();
+
+  constructor(private readonly design: AdopterDesign) {}
+
+  /** The parts every key needs, checked; a value lacking one is refused. */
+  private parts(value: unknown): AdopterKey {
+    const scope = isRecord(value) && isRecord(value.scope) ? value.scope : undefined;
+    if (!isRecord(value) || scope === undefined || !filled(scope.workspace) || !filled(scope.principal)) throw new Error("adopter: no source scope");
+    if (!filled(value.sourceRevision) || !filled(value.permissionBasis)) throw new Error("adopter: no source revision or permission basis");
+    const kind = KINDS.find(candidate => candidate === value.kind);
+    if (kind === undefined) throw new Error("adopter: no kind");
+    return { scope: { workspace: scope.workspace, principal: scope.principal }, sourceRevision: value.sourceRevision, permissionBasis: value.permissionBasis, kind };
+  }
+
+  private resolve(key: unknown): AdopterKey {
+    if (this.design.keys === "record") return this.parts(key);
+    const found = typeof key === "string" ? this.tokens.get(key) : undefined;
+    if (found === undefined) throw new Error("adopter: unknown key");
+    return found;
+  }
+
+  private slotOf(key: AdopterKey): string {
+    return JSON.stringify([key.scope.workspace, key.scope.principal, key.sourceRevision, key.permissionBasis, key.kind]);
+  }
+
+  key(parts: unknown): unknown {
+    const checked = this.parts(parts);
+    if (this.design.keys === "record") return { ...checked, scope: { ...checked.scope } };
+    const token = `adopter-key-${this.tokens.size + 1}`;
+    this.tokens.set(token, checked);
+    return token;
+  }
+
+  put(key: unknown, object: unknown): void {
+    const parts = this.resolve(key);
+    if (!isRecord(object)) throw new Error("adopter: no object");
+    const provenance: Record<string, unknown> = isRecord(object.provenance) ? object.provenance : {};
+    if (this.design.provenance.some(field => !filled(provenance[field]))) throw new Error("adopter: no provenance");
+    const tenant: Record<string, unknown> = isRecord(object.tenantScope) ? object.tenantScope : {};
+    if (tenant.workspace !== parts.scope.workspace || tenant.principal !== parts.scope.principal) throw new Error("adopter: no tenant scope");
+    this.objects.set(this.slotOf(parts), structuredClone(object) as unknown as GpCachedObject);
+  }
+
+  get(requester: GpScope, key: unknown): GpLookup {
+    const parts = this.resolve(key);
+    if (!sameScope(requester, parts.scope)) return { state: "miss" };
+    const id = scopeId(parts.scope);
+    const revision = this.revisions.get(id);
+    if (revision !== undefined && revision !== parts.sourceRevision) return { state: "miss" };
+    if (this.withdrawn.has(JSON.stringify([id, parts.permissionBasis]))) return { state: "miss" };
+    const object = this.objects.get(this.slotOf(parts));
+    return object === undefined ? { state: "miss" } : { state: "hit", object };
+  }
+
+  revise(scope: GpScope, revision: string): void {
+    this.revisions.set(scopeId(scope), revision);
+  }
+
+  revoke(scope: GpScope, basis: string): void {
+    this.withdrawn.add(JSON.stringify([scopeId(scope), basis]));
+  }
+}
+
+interface Choice {
+  /** The reference's choice, as the header's SCOPE names it. */
+  readonly choice: string;
+  /** The adopters that make it otherwise. */
+  readonly adopters: readonly string[];
+  /** The rules that refuse those adopters: none when the judges leave the choice free. */
+  readonly bound: readonly string[];
+}
+/** The choices the reference fixes and the filing leaves open, each held by D3 to the rules that refuse its adopters. */
+const CHOICES: readonly Choice[] = [
+  { choice: "the provenance fields (producer, checkpoint, receipt)", adopters: ["token keys, the producer only", "token keys, the producer and the receipt"], bound: ["A-PROVENANCE"] },
+  { choice: "the subject part", adopters: ["token keys, the provenance triple"], bound: [] },
+  { choice: "a kind check at put", adopters: ["token keys, the provenance triple"], bound: [] },
+  { choice: "invalidated as the prior key's reading", adopters: ["token keys, the provenance triple"], bound: [] },
+  { choice: "a refusal of even a complete hand-built key", adopters: ["record keys, the provenance triple"], bound: [] },
+  { choice: "frozen keys the cache minted", adopters: ["token keys, the provenance triple", "record keys, the provenance triple"], bound: [] },
+  { choice: "a purge at the change", adopters: ["token keys, the provenance triple", "record keys, the provenance triple"], bound: [] },
+];
+
 // ---- the walk (row D) ----
 
 const WALK_ROOTS: readonly string[] = ["src", "qa", "examples"];
@@ -642,12 +782,17 @@ const ANCHOR = "src/workbench/evidence-loader.ts";
 const CACHE_NAME = /cach(?:e|ed|es|ing)|memoi[sz]|lru/i;
 const CACHE_CONSTRUCTORS: readonly string[] = ["Map", "WeakMap"];
 
-/** The words of an identifier or literal: camel, Pascal, snake, kebab, dotted and spaced spellings split and lowercased. */
+/**
+ * The words of an identifier or literal: camel, Pascal, snake, kebab, dotted, spaced and letter-digit spellings split and
+ * lowercased (embedding2Cache reads embedding, 2, cache; graphPolicy2 reads graph, policy, 2).
+ */
 const wordsOf = (text: string): string[] =>
   text
     .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
     .replace(/([A-Z]+)([A-Z][a-z])/g, "$1 $2")
     .toLowerCase()
+    .replace(/([a-z])([0-9])/g, "$1 $2")
+    .replace(/([0-9])([a-z])/g, "$1 $2")
     .split(/[^a-z0-9]+/)
     .filter(word => word.length > 0);
 /** GraphPolicyCLI's name as words: graphpolicy, or graph then policy. */
@@ -736,8 +881,8 @@ function cacheKeyScoped(): boolean {
 
 /**
  * D1's controls, each reaching its verdict by one route: the landed scanner's SDK specifier, CLI command and wire code, graph
- * policy as words, a cached-output word as an identifier, a plural literal and a singular identifier, beside a Map, a WeakMap or a
- * cache-named identifier; and the quiet ones: a cache with no GP word, GP words with no cache shape, words in comments only, and a
+ * policy as words, a cached-output word as an identifier, a plural literal and a singular identifier, a kind word and the name
+ * each with a digit glued on (wb-yco1 F3), beside a Map, a WeakMap or a cache-named identifier; and the quiet ones: a cache with no GP word, GP words with no cache shape, words in comments only, and a
  * kind or the name across a word boundary.
  */
 const CONTROLS: Readonly<Record<string, Sample>> = {
@@ -772,6 +917,14 @@ const CONTROLS: Readonly<Record<string, Sample>> = {
   "score identifier beside a Map": {
     file: "src/control.ts",
     text: ["const ranked = new Map<string, number>();", "export const bestScore = (id: string): number => ranked.get(id) ?? 0;"].join("\n"),
+  },
+  "embedding2Cache beside a Map": {
+    file: "src/control.ts",
+    text: ["const embedding2Cache = new Map<string, number[]>();", "export const read = (id: string): number[] | undefined => embedding2Cache.get(id);"].join("\n"),
+  },
+  "graphPolicy2 beside a Map": {
+    file: "src/control.ts",
+    text: ["const graphPolicy2 = new Map<string, number>();", "export const read = (id: string): number | undefined => graphPolicy2.get(id);"].join("\n"),
   },
   "a cache with no GP word": {
     file: "src/control.ts",
@@ -839,7 +992,7 @@ const ROWS: readonly Row[] = [
     pins: ["B1", "B2", "B3"],
   },
   { id: "C", label: "(c) a lookup from another scope never returns a cached GP object", pins: ["C1", "C2"] },
-  { id: "D", label: "(posture) no such cache exists, nothing is live-false; the pin binds the first GP cache", pins: ["D1", "D2"] },
+  { id: "D", label: "(posture) no such cache exists, nothing is live-false; the pin binds the first GP cache", pins: ["D1", "D2", "D3"] },
   { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8"] },
 ];
 
@@ -893,6 +1046,8 @@ const CONSTANTS: JsonObject = {
   cacheName: CACHE_NAME.source,
   cacheConstructors: [...CACHE_CONSTRUCTORS],
   residuals: Object.fromEntries(Object.entries(RESIDUALS).map(([family, rows]) => [family, [...rows]])),
+  adopters: Object.fromEntries(Object.entries(ADOPTERS).map(([name, design]) => [name, { keys: design.keys, provenance: [...design.provenance] }])),
+  choices: CHOICES.map(({ choice, adopters, bound }) => ({ choice, adopters: [...adopters], bound: [...bound] })),
 };
 
 function rosterWitness(pin: string): JsonValue {
@@ -1105,6 +1260,38 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       unrefused: DEFECTS.filter(defect => violations(mutant(defect)).length === 0),
     };
   },
+  D3: () => {
+    const refusals = new Map(Object.entries(ADOPTERS).map(([name, design]) => [name, violations(() => new AdopterGpCache(design))] as const));
+    const choices: JsonObject = {};
+    for (const { choice, adopters, bound } of CHOICES) {
+      const refusing = RULES.map(rule => rule.id).filter(id => adopters.some(name => refusals.get(name)?.includes(id) === true));
+      if (adopters.some(name => !refusals.has(name)) || !isDeepStrictEqual(refusing, [...bound])) {
+        throw new Error(`CHOICES: "${choice}" claims [${bound.join(", ")}]; its adopters (${adopters.join("; ")}) are refused by [${refusing.join(", ")}]`);
+      }
+      choices[choice] = refusing;
+    }
+    const design = (name: string): AdopterDesign => {
+      const found = ADOPTERS[name];
+      if (found === undefined) throw new Error(`no adopter ${name}`);
+      return found;
+    };
+    const token = new AdopterGpCache(design("token keys, the provenance triple"));
+    const key = token.key(partsOf());
+    token.put(key, objectOf());
+    const readings: JsonObject = {
+      "token keys: the key": typeof key,
+      "token keys: another subject's key": reading(() => token.get(S, token.key(partsOf({ subject: "node-8" })))),
+      "token keys: an embedding put under a score key": reading(() => token.put(key, objectOf("embedding"))),
+    };
+    token.revise(S, "rev-2");
+    readings["token keys: the prior key after a revision bump"] = reading(() => token.get(S, key));
+    token.revise(S, "rev-1");
+    readings["token keys: the prior key after the revision rolls back"] = reading(() => token.get(S, key));
+    const record = new AdopterGpCache(design("record keys, the provenance triple"));
+    record.put(record.key(partsOf()), objectOf());
+    readings["record keys: a complete hand-built key"] = reading(() => record.get(S, { ...partsOf() }));
+    return { adopters: Object.fromEntries(refusals), choices, readings };
+  },
   Q1: () =>
     quietRow(
       { file: "src/q1.ts", text: ['import { decide } from "./decide.js";', "const logits = new Map<string, number[]>();", "export const read = (id: string): number[] => logits.get(id) ?? decide(id);"].join("\n") },
@@ -1135,6 +1322,10 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     return {
       ...quietRow(sample(`gr${String.fromCodePoint(0x0430)}phpolicy`), sample("graphpolicy")),
       zeroWidth: verdictJson(sample(`graph${String.fromCodePoint(0x200b)}policy`)),
+      zeroWidthInside: verdictJson(sample(`gr${String.fromCodePoint(0x200b)}aphpolicy`)),
+      digitInside: verdictJson(sample("graph2policy")),
+      kind: quietRow(sample(`sc${String.fromCodePoint(0x043e)}res`), sample("scores")),
+      kindZeroWidth: verdictJson(sample(`sco${String.fromCodePoint(0x200b)}res`)),
     };
   },
   Q8: () => {
@@ -1145,7 +1336,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
 
 describe("wb-ojm5.2 GP cache scope census (GPC-GRAPH-NATIVE-LLM-RLP-R2)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the bead's acceptance text agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:3", "C:2", "D:2", "Q:8"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:3", "C:2", "D:3", "Q:8"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
