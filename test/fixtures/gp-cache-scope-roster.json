@@ -1,5 +1,5 @@
 {
-  "provenance": "wb-ojm5.2 GP cache scope census roster (test/workbench-gp-cache-scope-census.test.ts). Producer lines MEASURED read-only by the cutting seat ws-01 (run g10-work-s58, 2026-10-23) with git show and git grep in the local GraphPolicyCLI checkout at the program pin, no fetch: each line's text is the file's line verbatim and its blob is git rev-parse <pin>:<path>; sourceInvalidate is `git grep -l SOURCE_INVALIDATE <pin>` (matches) and the same grep under ts, python and fixtures (underCode). title is the bead's title in the tracker export (.beads/issues.jsonl at Pi base feebb63). Every witness was written as the cut's specification before the census first ran against it.",
+  "provenance": "wb-ojm5.2 GP cache scope census roster (test/workbench-gp-cache-scope-census.test.ts). Producer lines MEASURED read-only by the cutting seat ws-01 (run g10-work-s58, 2026-10-23) with git show and git grep in the local GraphPolicyCLI checkout at the program pin, no fetch: each line's text is the file's line verbatim and its blob is git rev-parse <pin>:<path>; sourceInvalidate is `git grep -l SOURCE_INVALIDATE <pin>` (matches) and the same grep under ts, python and fixtures (underCode). title is the bead's title in the tracker export (.beads/issues.jsonl at Pi base feebb63). Every witness was written as the cut's specification before the census first ran against it. wb-yco1 (seat ws-03, run g10-work-s87, 2026-10-25, base 24e0d5b): D3's witness (adopters, choices, readings), constants.adopters, the D1 controls 'embedding2Cache beside a Map' and 'graphPolicy2 beside a Map' and Q7's zeroWidthInside, digitInside, kind and kindZeroWidth were written as that cut's specification before the census ran against them; constants.choices first carried the landed header's claim (every choice free), D3 read red against it, and the provenance triple's entry now carries the measured binding (A-PROVENANCE).",
   "bead": "wb-ojm5.2",
   "programPin": "0107c72992f35cf6832a37615a25c7df45747ebc",
   "title": "[GPC-GRAPH-NATIVE-LLM-RLP-R2] No Pi surface shall reuse cached GP scores, embeddings or posteriors across a source scope boundary, and Pi shall invalidate any such cache on graph/source revision change or permission change/revocation, carrying provenance and tenant scope in every cached object (posture; no gating artifact, no GP cache exists in Pi today) - docs/programs/graph-native-llm-rlp-2026-10-18/14-sparse-query-design-and-bayesian-certification.md:13@0107c72992f3",
@@ -255,7 +255,94 @@
       "R-NON-MODULE": [
         "Q8"
       ]
-    }
+    },
+    "adopters": {
+      "token keys, the provenance triple": {
+        "keys": "token",
+        "provenance": [
+          "producer",
+          "checkpoint",
+          "receipt"
+        ]
+      },
+      "token keys, the producer only": {
+        "keys": "token",
+        "provenance": [
+          "producer"
+        ]
+      },
+      "token keys, the producer and the receipt": {
+        "keys": "token",
+        "provenance": [
+          "producer",
+          "receipt"
+        ]
+      },
+      "record keys, the provenance triple": {
+        "keys": "record",
+        "provenance": [
+          "producer",
+          "checkpoint",
+          "receipt"
+        ]
+      }
+    },
+    "choices": [
+      {
+        "choice": "the provenance fields (producer, checkpoint, receipt)",
+        "adopters": [
+          "token keys, the producer only",
+          "token keys, the producer and the receipt"
+        ],
+        "bound": [
+          "A-PROVENANCE"
+        ]
+      },
+      {
+        "choice": "the subject part",
+        "adopters": [
+          "token keys, the provenance triple"
+        ],
+        "bound": []
+      },
+      {
+        "choice": "a kind check at put",
+        "adopters": [
+          "token keys, the provenance triple"
+        ],
+        "bound": []
+      },
+      {
+        "choice": "invalidated as the prior key's reading",
+        "adopters": [
+          "token keys, the provenance triple"
+        ],
+        "bound": []
+      },
+      {
+        "choice": "a refusal of even a complete hand-built key",
+        "adopters": [
+          "record keys, the provenance triple"
+        ],
+        "bound": []
+      },
+      {
+        "choice": "frozen keys the cache minted",
+        "adopters": [
+          "token keys, the provenance triple",
+          "record keys, the provenance triple"
+        ],
+        "bound": []
+      },
+      {
+        "choice": "a purge at the change",
+        "adopters": [
+          "token keys, the provenance triple",
+          "record keys, the provenance triple"
+        ],
+        "bound": []
+      }
+    ]
   },
   "tests": [
     "the judged set: the frozen shape, the out-of-file roster and the bead's acceptance text agree",
@@ -269,6 +356,7 @@
     "C2",
     "D1",
     "D2",
+    "D3",
     "Q1",
     "Q2",
     "Q3",
@@ -635,6 +723,20 @@
                 "cache": true,
                 "flagged": true
               },
+              "embedding2Cache beside a Map": {
+                "reach": false,
+                "output": [
+                  "embedding"
+                ],
+                "cache": true,
+                "flagged": true
+              },
+              "graphPolicy2 beside a Map": {
+                "reach": true,
+                "output": [],
+                "cache": true,
+                "flagged": true
+              },
               "a cache with no GP word": {
                 "reach": false,
                 "output": [],
@@ -685,6 +787,40 @@
               ]
             },
             "unrefused": []
+          }
+        },
+        {
+          "id": "D3",
+          "witness": {
+            "adopters": {
+              "token keys, the provenance triple": [],
+              "token keys, the producer only": [
+                "A-PROVENANCE"
+              ],
+              "token keys, the producer and the receipt": [
+                "A-PROVENANCE"
+              ],
+              "record keys, the provenance triple": []
+            },
+            "choices": {
+              "the provenance fields (producer, checkpoint, receipt)": [
+                "A-PROVENANCE"
+              ],
+              "the subject part": [],
+              "a kind check at put": [],
+              "invalidated as the prior key's reading": [],
+              "a refusal of even a complete hand-built key": [],
+              "frozen keys the cache minted": [],
+              "a purge at the change": []
+            },
+            "readings": {
+              "token keys: the key": "string",
+              "token keys: another subject's key": "hit",
+              "token keys: an embedding put under a score key": "accepted",
+              "token keys: the prior key after a revision bump": "miss",
+              "token keys: the prior key after the revision rolls back": "hit",
+              "record keys: a complete hand-built key": "hit"
+            }
           }
         }
       ]
@@ -820,6 +956,45 @@
               "output": [],
               "cache": true,
               "flagged": true
+            },
+            "zeroWidthInside": {
+              "file": "src/q7.ts",
+              "reach": false,
+              "output": [],
+              "cache": true,
+              "flagged": false
+            },
+            "digitInside": {
+              "file": "src/q7.ts",
+              "reach": false,
+              "output": [],
+              "cache": true,
+              "flagged": false
+            },
+            "kind": {
+              "sample": {
+                "file": "src/q7.ts",
+                "reach": false,
+                "output": [],
+                "cache": true,
+                "flagged": false
+              },
+              "twin": {
+                "file": "src/q7.ts",
+                "reach": false,
+                "output": [
+                  "score"
+                ],
+                "cache": true,
+                "flagged": true
+              }
+            },
+            "kindZeroWidth": {
+              "file": "src/q7.ts",
+              "reach": false,
+              "output": [],
+              "cache": true,
+              "flagged": false
             }
           }
         },
