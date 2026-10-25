@@ -17,7 +17,7 @@
  *    callers); readClaudeMessageEvidence is wired through evidence-producers.ts.
  *  - HyperUnix: hyperunixTopology projects one hyperunix.query.snapshot of provider hyperunix whose evidence references are
  *    hx-binary and hx-coverage only; its one possible edge is the display grouping from the operation the host names.
- *  - src (115 TypeScript modules, read by the TypeScript parser): the observation class is the nine claude-* / hyperunix-*
+ *  - src (115 TypeScript modules at bff0b3c, read by the TypeScript parser): the observation class is the nine claude-* / hyperunix-*
  *    modules of src/workbench with providers/hyperunix.ts (four of them import an observation SDK); seventeen modules build
  *    an authority construct (a provider literal beads/bd/forge/furnace/git, or a git/bd exec call) or import the Forge or
  *    Furnace SDK; no observation-class module imports an authority module or builds an authority construct; five holders
@@ -31,6 +31,13 @@
  *    21(1)), was read by the cutting seat at its commit dacd58e (sha256 3f9eb0739a8e48b4...): 0 'bd close'; its one bd write
  *    appends a delivery note (update --append-notes-file), which sets no status. That reading rides the delivery note and is
  *    never claimed here.
+ * CUT #3 (owner ruling R766, 2026-10-25; trunk 3a71372 merged INTO the branch): landing 381 added
+ * src/workbench/beads-program-readiness.ts, which imports capability-registry.ts and observation.ts only and joins neither class,
+ * so the src count moved 115 -> 116 and C1's hand-counted integer read red at landing 384's land-prep - and again through C1's
+ * verbatim title in the docs07 provider-rules census (its AC2 row H3 'never-an-authority' pins C1). C1 now pins the walked module
+ * set to tsconfig.json's program (srcIsProgram, the reading the gp-cache-scope census makes of the same program) and a floor
+ * below the count (floorMet, MODULES_FLOOR), never the count itself: a src landing that adds or removes a module of neither class
+ * leaves C1 green, while a class, holder, scope or edge change still reds C1-C3, and a walk or program that drifts apart reds C1.
  *
  * Rows, each a describe of its pins:
  *  A, acceptance (a). A1 a succeeded Claude SDK run (the claude-host query seam fed SDK messages whose text and result say fixed
@@ -41,10 +48,11 @@
  *  B, acceptance (b). B1 hyperunixTopology over hyperunix.find/v1 readings of every read kind (and one built on the provider's
  *    own SDK path), whose rows name .beads, forge.toml, .furnace and .git paths, carries no beads, forge, furnace or git kind,
  *    reference or edge; B2 the token count of evidence-loader.ts and evidence-wiring.ts.
- *  C, acceptance (c). C1 the module graph: the observation class, the authority modules and the holders are exactly the
- *    measured rosters and no edge joins the first two outside the holders; C2 the scopes: the only scopes in src that read an
- *    observation-class binding beside an authority binding or construct are the five pinned composition scopes; C3 no src
- *    module spells a bd close or update or execs bd, and the bd seam has only show.
+ *  C, acceptance (c). C1 the module graph, over a walk that is tsconfig.json's program above a floor: the observation class,
+ *    the authority modules and the holders are exactly the measured rosters and no edge joins the first two outside the
+ *    holders; C2 the scopes: the only scopes in src that read an observation-class binding beside an authority binding or
+ *    construct are the five pinned composition scopes; C3 no src module spells a bd close or update or execs bd, and the bd
+ *    seam has only show.
  *  D, acceptance (d). D1 docs/07 § Agent provider and D2 § HyperUnix provider each render their sentence exactly once; D3 the
  *    docs07 provider-rules census quotes both, so each is census-bound (rows A1 and H3 there pin this file's cases).
  *  F, the owner filing: F1 wb-kku9.1's row in the tracked bead export carries the pinned constants and an acceptance whose
@@ -58,7 +66,7 @@
  *    (docs/07 § Furnace provider) - the executor's own report, outside clause (c)'s Claude and HX scope, and it imports no
  *    observation-class module; R6 R-NAMING a module that reads Claude or HX values under another name and imports no
  *    observation-class module is not in the class; R7 R-TEST-TREE only src is walked (tests build authority refs on purpose).
- * OUTSIDE ANCHORS: F1 (the bead export: rows A-D), C1-C3 (the src tree, walked), D1-D3 (docs/07 and the docs07 census), A1-A4
+ * OUTSIDE ANCHORS: F1 (the bead export: rows A-D), C1-C3 (the src tree, walked; C1 also tsconfig.json's program), D1-D3 (docs/07 and the docs07 census), A1-A4
  * and B1 (the adapters themselves), B2 (the two files). The out-of-file roster test/fixtures/observation-class-roster.json holds
  * every row's id, label and pins and every pin's witness; FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}`.
  * SCOPE: test-only. Nothing is spawned or written; the repository files read are only read.
@@ -68,6 +76,7 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, posix, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
+import { isDeepStrictEqual } from "node:util";
 import type { SDKMessage } from "@anthropic-ai/claude-agent-sdk";
 import { resultFromJson, resultToJson } from "@hyperunix/sdk";
 import ts from "typescript";
@@ -281,6 +290,26 @@ function tsFilesBelow(root: string): string[] {
 }
 const WALK_ROOTS: readonly string[] = ["src"];
 const srcModules = (): SourceModule[] => WALK_ROOTS.flatMap(root => tsFilesBelow(root)).map(path => ({ path, text: textOf(path) }));
+/** tsconfig.json's program (its include reads every .ts file below src): the product's own module set, repository-relative and
+ * sorted - an anchor outside this census that every src landing moves with it (the gp-cache-scope census reads the same program as
+ * srcIsProgram). */
+function programModules(): string[] {
+  const parsed = ts.getParsedCommandLineOfConfigFile(
+    join(REPO, "tsconfig.json"),
+    {},
+    {
+      ...ts.sys,
+      onUnRecoverableConfigFileDiagnostic: diagnostic => {
+        throw new Error(ts.flattenDiagnosticMessageText(diagnostic.messageText, "\n"));
+      },
+    },
+  );
+  if (parsed === undefined || parsed.errors.length > 0) throw new Error("tsconfig.json did not parse");
+  return parsed.fileNames.map(file => relative(REPO, file).split(sep).join("/")).sort();
+}
+/** A floor below the src module count (115 at bff0b3c, 116 at 3a71372; the ri-decision-seed-claim census holds the same src
+ * floor), so the walk is never blind; C1 pins this floor and the program, never the count. */
+const MODULES_FLOOR = 105;
 
 /** A package specifier's package (scope and name); a relative one resolved against its module, .js read as the .ts source. */
 function resolveSpecifier(from: string, specifier: string): string {
@@ -801,7 +830,16 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   },
   C1: async () => {
     const analysis = real();
-    const witness = { modules: analysis.modules, observation: [...analysis.observation], authority: [...analysis.authority], holders: [...analysis.holders], violations: [...analysis.violations] };
+    const walked = WALK_ROOTS.flatMap(root => tsFilesBelow(root));
+    const program = programModules();
+    expect(walked, `the src walk (${analysis.modules} modules) reads exactly tsconfig.json's program (${program.length})`).toEqual(program);
+    const witness = {
+      modules: { srcIsProgram: isDeepStrictEqual(walked, program), floorMet: analysis.modules >= MODULES_FLOOR },
+      observation: [...analysis.observation],
+      authority: [...analysis.authority],
+      holders: [...analysis.holders],
+      violations: [...analysis.violations],
+    };
     expect(witness.holders).toEqual([...HOLDERS]);
     expect(witness.observation.filter(path => witness.authority.includes(path))).toEqual([]);
     expect(witness.violations).toEqual([]);

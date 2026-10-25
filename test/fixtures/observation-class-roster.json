@@ -150,7 +150,10 @@
           "id": "C1",
           "title": "C1: the module graph: the observation class, the authority modules and the five holders are the measured rosters and no edge joins the first two outside the holders",
           "witness": {
-            "modules": 115,
+            "modules": {
+              "srcIsProgram": true,
+              "floorMet": true
+            },
             "observation": [
               "src/workbench/claude-capability-tools.ts",
               "src/workbench/claude-control-observer.ts",
