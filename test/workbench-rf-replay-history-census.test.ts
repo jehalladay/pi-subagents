@@ -29,12 +29,18 @@
  *    arm with and without its optional model) spawns exactly one argv against a stand-in rf, each `context render ... --no-commit`
  *    and none naming replay; A2 the rf launch sites of src: every call or construction whose first argument reads as a literal
  *    naming the rf program, whatever its callee or binding, is exactly the provider's spawn (a src floor). The literal is the
- *    argument itself or a module-local const bound to one, through parentheses and type assertions, either operand of ?? or ||,
- *    either branch of a conditional, or the leading literal piece of a concatenation or template (literal and const spans
- *    folded); it names rf whole (a bare name or a path) or as the first word of a shell-command line after any NAME=value
- *    assignments (wb-bstx F1: `execSync("rf --json status")`). Controls: bare, aliased, namespace, method, template, path and
- *    const launchers, the shell line (plain, concatenated, templated, env-prefixed), the fallback, the conditional and the
- *    asserted program; A3 no string or template literal of any src module spells an rf replay verb (a template read with its
+ *    argument itself or a module-local const read through its initializer (wb-3l7x F1: every const of the name at any depth, a
+ *    cycle reading nothing), through parentheses and type assertions, either operand of ?? or ||, either branch of a conditional,
+ *    or the leading literal piece of a concatenation or template (a span folded while it reads whole: a literal, a const, or a
+ *    fallback or conditional of them); it names rf whole (a bare name or a path) or as the program word of a shell-command line's
+ *    first simple command (wb-bstx F1: `execSync("rf --json status")`), read with its quoting removed (single and double quotes
+ *    and their $-prefixed forms, backslashes) after any opener (a subshell or group, !, if, while, until) and command prefix
+ *    (NAME=value assignments, a quoted value included, and redirections), every unquoted operator ending a word (wb-3l7x F2).
+ *    Controls: bare, aliased, namespace, method, template, path and const launchers, the shell line (plain, concatenated,
+ *    templated, env-prefixed), the fallback, the conditional and the asserted program, the const-bound shell lines (templated,
+ *    concatenated, chained) and programs (fallback, asserted), the const and conditional spans, the const cycle (0), and the
+ *    quoted (env value, program, double-quoted, $-quoted), escaped, subshell, grouped, negated, conditioned, redirected, glued and
+ *    commented shell lines; A3 no string or template literal of any src module spells an rf replay verb (a template read with its
  *    literal and const spans folded in), no array literal or argument list has "context" before "replay" (a flag between them,
  *    a module-local const resolved), and no literal of an rf launch module (the modules A2 finds) spells the word replay at
  *    all, so a push, a concat or a const composing the verb from a literal reds too.
@@ -77,13 +83,17 @@
  * RESIDUALS (named, each with a pinned quiet row): R-WITHHELD the native typed refusal and the adapter's projection carry the code
  * and withhold source_id with the producer's message and hint (quiet rows B2 and B4: no value named, sentinel invariance), so the
  * source_id rides only the registered reading (B3); R-COMPOSED a program name, verb, port name or label that no literal of its
- * module spells - built by a call (a join, a wrapper's return value), split across a concatenation, split by a template's
- * non-literal expression, read from a property, or bound by an import from another module (a re-export included) - is
- * invisible to A2, A3, B6 and C5, and each scan pins one quiet control per member, each staying 0 (A2 and A3: `composed` the
- * call, composedConcat, composedTemplate, composedProperty, composedImport; B6 and C5: `composed` the concatenation,
- * composedCall, composedTemplate, composedProperty, composedImport); R-WRAPPED an rf launch whose program is a wrapper (a
- * shell's -c line, env) or a later command of a shell line (`cd /w && rf ...`) is not an A2 site, so its module is no A3 launch
- * module (A3's verb scan still reads its literals; quiet controls wrappedShell, wrappedEnv and chained stay 0); R-UNLISTED a
+ * module spells - built by a call (a join, a wrapper's return value), split across a concatenation (inside a template span too),
+ * split by a template's non-literal expression, read from a property, bound by an import from another module (a re-export
+ * included), or expanded by the shell from a variable - or whose program position a template's non-literal expression opens
+ * (`${prefix} rf ...`, its leading piece read as that expression) is invisible to A2, A3, B6 and C5, and each scan pins one quiet
+ * control per member, each staying 0 (A2 and A3: `composed` the call, composedConcat, composedTemplate, composedProperty,
+ * composedImport, and A2's shell-reading members composedSpan, composedAfterSpan and composedShellVar, wb-3l7x; B6 and C5:
+ * `composed` the concatenation, composedCall, composedTemplate, composedProperty, composedImport); R-WRAPPED an rf launch whose
+ * program is a wrapper (a shell's -c line, env, or a builtin or keyword that runs its arguments: exec, command, time) or a later
+ * or nested command of a shell line (`cd /w && rf ...`, inside a subshell too, or a command substitution) is not an A2 site, so
+ * its module is no A3 launch module (A3's verb scan still reads its literals; quiet controls wrappedShell, wrappedEnv,
+ * wrappedExec, wrappedCommand, wrappedTime, chained, chainedSubshell and nested stay 0); R-UNLISTED a
  * port outside the listed network globals, network modules and child_process launchers (a worker, a native addon,
  * process.binding) is not read by B6 (its `unlisted`, `worker` and `addon` controls stay quiet); R-LOADER an edge loaded through
  * a runtime-bound loader (a createRequire result, module.require) is neither followed nor refused by B6 (its edge controls
@@ -156,6 +166,15 @@ const FRESH_LABELS =
 const RF_PROGRAM = /(?:^|[\\/])rf(?:\.exe|\.cmd)?$/;
 /** A leading NAME=value environment assignment of a shell-command line; A2 reads the program after any of them. */
 const ENV_ASSIGNMENT = /^[A-Za-z_][A-Za-z0-9_]*=/;
+/** A shell operator at the start of a text: a control operator or a redirection, its io number included (wb-3l7x F2). */
+const SHELL_OPERATOR = /^(?:&&|\|\||;;|&>>|&>|\d*(?:<<-|<<<|<<|<>|<&|>&|>>|>\||<|>)|[()&|;])/;
+/** A redirection operator of a command prefix; the token after it is its target, never the program. */
+const SHELL_REDIRECTION = /^(?:&>>|&>|\d*(?:<<-|<<<|<<|<>|<&|>&|>>|>\||<|>))$/;
+/** What opens a command position before a shell line's first program: a subshell or a group, a negation, and the reserved words
+ * whose condition is a command list. A wrapper that runs its arguments (env, exec, command, time) is R-WRAPPED. */
+const SHELL_OPENERS: ReadonlySet<string> = new Set(["(", "{", "!", "if", "while", "until"]);
+/** The characters that end an unquoted shell word: whitespace and the operator characters. */
+const SHELL_BREAK = /[\s()&|;<>]/;
 /** The ports a network contact would need; none may appear in the reader closure (B6). */
 const NETWORK_GLOBALS = ["fetch", "WebSocket", "EventSource", "XMLHttpRequest"];
 const NETWORK_MODULE = /^(?:node:)?(?:net|http|https|http2|dns|tls|dgram)$|^(?:undici|ws)$/;
@@ -397,31 +416,158 @@ function templateText(node: ts.TemplateExpression, bindings: ReadonlyMap<string,
   }
   return text;
 }
-/** Every literal text an rf launch argument can read as (A2): the argument itself or a module-local const bound to one, through
- * parentheses, a type assertion or a non-null mark, either operand of ?? and ||, either branch of a conditional, the leftmost
- * literal piece of a concatenation and a template's leading text, so a shell line composed after its first word
- * (`"rf context show " + id`) still names its program. */
-function launchTextsOf(node: ts.Expression | undefined, bindings: ReadonlyMap<string, string>): string[] {
+/** A module's const initializers by name: every `const NAME = <expression>` declaration, at any depth (A2 reads a launch
+ * argument's const through them, wb-3l7x F1). */
+function constInitializers(source: ts.SourceFile): Map<string, ts.Expression[]> {
+  const initializers = new Map<string, ts.Expression[]>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && ts.isVariableDeclarationList(node.parent) &&
+      (node.parent.flags & ts.NodeFlags.Const) !== 0) initializers.set(node.name.text, [...(initializers.get(node.name.text) ?? []), node.initializer]);
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return initializers;
+}
+/** One reading of an rf launch argument: its text, and whether that text is the argument's whole value or only its leading piece
+ * (a concatenation's left operand, or a template cut at a span that does not read whole). */
+interface LaunchReading {
+  readonly text: string;
+  readonly whole: boolean;
+}
+/** Every reading an rf launch argument can take (A2): the argument itself or a module-local const read through its initializer
+ * (wb-3l7x F1: every const of the name, a cycle reading nothing), through parentheses, a type assertion or a non-null mark, either
+ * operand of ?? and ||, either branch of a conditional, the leftmost literal piece of a concatenation and a template's leading
+ * text, each span folded while it reads whole, so a shell line composed after its first word (`"rf context show " + id`) still
+ * names its program. */
+function launchReadingsOf(node: ts.Expression | undefined, initializers: ReadonlyMap<string, readonly ts.Expression[]>, resolving: ReadonlySet<string> = new Set()): LaunchReading[] {
   if (node === undefined) return [];
-  const literal = literalOf(node, bindings);
-  if (literal !== null) return [literal];
-  if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node)) {
-    return launchTextsOf(node.expression, bindings);
+  if (ts.isStringLiteralLike(node)) return [{ text: node.text, whole: true }];
+  if (ts.isIdentifier(node)) {
+    if (resolving.has(node.text)) return [];
+    const inner = new Set([...resolving, node.text]);
+    return (initializers.get(node.text) ?? []).flatMap(initializer => launchReadingsOf(initializer, initializers, inner));
   }
-  if (ts.isConditionalExpression(node)) return [...launchTextsOf(node.whenTrue, bindings), ...launchTextsOf(node.whenFalse, bindings)];
+  const read = (expression: ts.Expression): LaunchReading[] => launchReadingsOf(expression, initializers, resolving);
+  if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node)) {
+    return read(node.expression);
+  }
+  if (ts.isConditionalExpression(node)) return [...read(node.whenTrue), ...read(node.whenFalse)];
   if (ts.isBinaryExpression(node)) {
     const operator = node.operatorToken.kind;
-    if (operator === ts.SyntaxKind.QuestionQuestionToken || operator === ts.SyntaxKind.BarBarToken) return [...launchTextsOf(node.left, bindings), ...launchTextsOf(node.right, bindings)];
-    if (operator === ts.SyntaxKind.PlusToken) return launchTextsOf(node.left, bindings);
+    if (operator === ts.SyntaxKind.QuestionQuestionToken || operator === ts.SyntaxKind.BarBarToken) return [...read(node.left), ...read(node.right)];
+    if (operator === ts.SyntaxKind.PlusToken) return read(node.left).map(reading => ({ text: reading.text, whole: false }));
   }
-  if (ts.isTemplateExpression(node)) return [templateText(node, bindings, null)];
+  if (ts.isTemplateExpression(node)) {
+    let readings: LaunchReading[] = [{ text: node.head.text, whole: true }];
+    for (const span of node.templateSpans) {
+      const pieces = read(span.expression);
+      readings = readings.flatMap((reading): LaunchReading[] => {
+        if (!reading.whole) return [reading];
+        if (pieces.length === 0) return [{ text: reading.text, whole: false }];
+        return pieces.map(piece => (piece.whole ? { text: reading.text + piece.text + span.literal.text, whole: true } : { text: reading.text + piece.text, whole: false }));
+      });
+    }
+    return readings;
+  }
   return [];
 }
-/** The programs a launch text can name: the text whole (a bare name or a path) and its first word read as a shell-command line,
- * after any leading NAME=value assignments. */
+interface ShellToken {
+  readonly raw: string;
+  readonly value: string;
+  readonly operator: boolean;
+}
+/** A shell line's tokens with its quoting removed (wb-3l7x F2): single quotes, double quotes (inside them a backslash escapes $, `,
+ * ", \ and a newline), their $-prefixed forms ($'...' and $"...") and a backslash outside them (a backslash-newline joins the
+ * lines); every unquoted operator is a token of its own and ends the word before it, and a # that starts a word comments out the
+ * rest of its line. */
+function shellTokens(text: string): ShellToken[] {
+  const tokens: ShellToken[] = [];
+  let at = 0;
+  while (at < text.length) {
+    const char = text.charAt(at);
+    if (/\s/.test(char)) {
+      at += 1;
+      continue;
+    }
+    if (char === "#") {
+      const end = text.indexOf("\n", at);
+      at = end < 0 ? text.length : end;
+      continue;
+    }
+    const operator = SHELL_OPERATOR.exec(text.slice(at));
+    if (operator !== null) {
+      tokens.push({ raw: operator[0], value: operator[0], operator: true });
+      at += operator[0].length;
+      continue;
+    }
+    let raw = "";
+    let value = "";
+    while (at < text.length && !SHELL_BREAK.test(text.charAt(at))) {
+      const next = text.charAt(at);
+      if (next === "\\") {
+        const escaped = text.charAt(at + 1);
+        raw += next + escaped;
+        if (escaped !== "\n") value += escaped;
+        at += 2;
+      } else if (next === "$" && (text.charAt(at + 1) === "'" || text.charAt(at + 1) === '"')) {
+        raw += next;
+        at += 1;
+      } else if (next === "'") {
+        const end = text.indexOf("'", at + 1);
+        const close = end < 0 ? text.length : end;
+        raw += text.slice(at, close + 1);
+        value += text.slice(at + 1, close);
+        at = close + 1;
+      } else if (next === '"') {
+        raw += next;
+        at += 1;
+        while (at < text.length && text.charAt(at) !== '"') {
+          const inner = text.charAt(at);
+          const escaped = text.charAt(at + 1);
+          if (inner === "\\" && /[$`"\\\n]/.test(escaped)) {
+            raw += inner + escaped;
+            if (escaped !== "\n") value += escaped;
+            at += 2;
+          } else {
+            raw += inner;
+            value += inner;
+            at += 1;
+          }
+        }
+        raw += text.charAt(at);
+        at += 1;
+      } else {
+        raw += next;
+        value += next;
+        at += 1;
+      }
+    }
+    tokens.push({ raw, value, operator: false });
+  }
+  return tokens;
+}
+/** The program word of a shell line's first simple command (wb-3l7x F2): past every opener (SHELL_OPENERS) and command prefix (a
+ * NAME=value assignment, its value quoted or not, or a redirection and its target), the next word with its quoting removed; null
+ * when an operator ends the command first. */
+function shellProgramOf(text: string): string | null {
+  const tokens = shellTokens(text);
+  let at = 0;
+  while (at < tokens.length) {
+    const token = tokens[at];
+    if (token === undefined) break;
+    at += 1;
+    if (SHELL_OPENERS.has(token.raw) || (!token.operator && ENV_ASSIGNMENT.test(token.raw))) continue;
+    if (!token.operator) return token.value;
+    if (!SHELL_REDIRECTION.test(token.raw)) return null;
+    at += 1;
+  }
+  return null;
+}
+/** The programs a launch text can name: the text whole (a bare name or a path) and the program word of its first simple command
+ * read as a shell-command line (shellProgramOf). */
 function programsOf(text: string): string[] {
-  const first = text.trim().split(/\s+/).find(word => !ENV_ASSIGNMENT.test(word));
-  return first === undefined ? [text] : [text, first];
+  const program = shellProgramOf(text);
+  return program === null ? [text] : [text, program];
 }
 
 const oldPath = process.env.PATH;
@@ -572,15 +718,15 @@ function armsOf(schema: unknown): string[][] {
   return schema.oneOf.map((arm: unknown) => (isObject(arm) && Array.isArray(arm.required) ? arm.required.map(String) : []));
 }
 
-/** One module's rf launch sites: every call or construction whose first argument reads as a literal (launchTextsOf) naming the rf
- * program whole or as the first word of a shell-command line (programsOf). */
+/** One module's rf launch sites: every call or construction whose first argument reads as a literal (launchReadingsOf) naming the
+ * rf program whole or as the program word of a shell-command line's first simple command (programsOf). */
 function rfLaunchSites(fileName: string, text: string): string[] {
   const source = sourceOf(fileName, text);
-  const bindings = constStrings(source);
+  const initializers = constInitializers(source);
   const sites: string[] = [];
   const visit = (node: ts.Node): void => {
     if (ts.isCallExpression(node) || ts.isNewExpression(node)) {
-      const programs = launchTextsOf(node.arguments?.[0], bindings).flatMap(programsOf);
+      const programs = launchReadingsOf(node.arguments?.[0], initializers).flatMap(reading => programsOf(reading.text));
       if (programs.some(program => RF_PROGRAM.test(program))) sites.push(`${fileName}: ${node.expression.getText(source)}`);
     }
     ts.forEachChild(node, visit);
@@ -813,15 +959,52 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       fallback: control('spawn(process.env.RF_BIN ?? "rf", []);'),
       conditional: control('spawn(windows ? "rf.exe" : "rf", []);'),
       asserted: control('spawn(("rf" as string), []);'),
+      // wb-3l7x F1: an argument bound to a module-local const is read through the const's initializer, so a const bound to a
+      // template or concatenation shell line (the gate's G6-01 and G6-02 plants), a fallback, an asserted literal or another const
+      // names its program as the expression passed directly does; a template span folds while it reads whole; a cycle reads nothing.
+      constShellTemplate: control(["const CMD = `rf --workspace $", "{process.cwd()} --json status`; execSync(CMD);"].join("")),
+      constShellConcat: control('const CMD = "rf --json status " + String(process.pid); execSync(CMD);'),
+      constFallback: control('const program = process.env.RF_BIN ?? "rf"; spawn(program, []);'),
+      constAsserted: control('const program = "rf" as const; spawn(program, []);'),
+      constChain: control(["const BASE = `rf --workspace $", "{root}`; const CMD = BASE; execSync(CMD);"].join("")),
+      constSpan: control(['const BIN = process.env.RF_BIN ?? "rf"; execSync(`$', "{BIN} --json status`);"].join("")),
+      conditionalSpan: control(['execSync(`$', '{windows ? "rf.exe" : "rf"} --json status`);'].join("")),
+      constCycle: control("const a = b; const b = a; spawn(a, []);"),
+      // wb-3l7x F2: the shell line's first simple command is read with shell quoting removed, after any opener and command prefix
+      // (the gate's G6-05, G6-06 and G6-11 plants first), and an unquoted operator ends a word.
+      shellQuotedEnv: control(`execSync('RF_HOME="/a b" rf --json status');`),
+      shellQuotedProgram: control(`execSync("'rf' --json status");`),
+      shellSubshell: control('execSync("(rf --json status)");'),
+      shellDoubleQuoted: control(`execSync('"rf" --json status');`),
+      shellEscaped: control('execSync("r\\\\f --json status");'),
+      shellGroup: control('execSync("{ rf --json status; }");'),
+      shellNegated: control('execSync("! rf --json status");'),
+      shellCondition: control('execSync("if rf --json status; then exit 0; fi");'),
+      shellRedirected: control('execSync("2>/dev/null rf --json status");'),
+      shellGlued: control('execSync("rf|jq .result");'),
+      shellComment: control('execSync("# status\\nrf --json status");'),
+      shellAnsiQuoted: control(`execSync("$'rf' --json status");`),
       // R-WRAPPED quiet rows: rf behind a wrapper program or after another shell command is no A2 site.
       wrappedShell: control('spawn("sh", ["-c", "rf --json status"]);'),
       wrappedEnv: control('spawn("env", ["rf", "--json", "status"]);'),
       chained: control('execSync("cd /w && rf --json status");'),
+      // wb-3l7x: R-WRAPPED members named with the shell reading - a builtin or keyword that runs its arguments, a later command
+      // inside a subshell, and a nested (substituted) command.
+      wrappedExec: control('execSync("exec rf --json status");'),
+      wrappedCommand: control('execSync("command rf --json status");'),
+      wrappedTime: control('execSync("time rf --json status");'),
+      chainedSubshell: control('execSync("(cd /w && rf --json status)");'),
+      nested: control('execSync("echo $(rf --json status)");'),
       // R-COMPOSED quiet rows, one per member (`composed` above is the call member).
       composedConcat: control('spawn("r" + "f", []);'),
       composedTemplate: control(["spawn(`r$", "{suffix}`, []);"].join("")),
       composedProperty: control("spawn(BINARIES.rf, []);"),
       composedImport: control('import { RF_BIN } from "./process-env.js"; spawn(RF_BIN, []);'),
+      // wb-3l7x: R-COMPOSED members of the shell reading - a concatenation split inside a template span, a program position a
+      // template's non-literal expression opens, and a program the shell expands from a variable.
+      composedSpan: control(['execSync(`$', '{"r" + suffix}f --json status`);'].join("")),
+      composedAfterSpan: control(["execSync(`$", "{prefix} rf --json status`);"].join("")),
+      composedShellVar: control('execSync("$RF_BIN --json status");'),
     };
     return { srcFloorMet, sites, controls };
   },
