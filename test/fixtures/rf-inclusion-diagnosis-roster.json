@@ -184,7 +184,17 @@
       "blocksNonObjectRow": "validation: ReactiveFiber topology refused: result.blocks must be an array of block objects.",
       "necessityObject": "validation: ReactiveFiber topology refused: result.necessity must be an array of decision records, each with a boolean include.",
       "necessityTextInclude": "validation: ReactiveFiber topology refused: result.necessity must be an array of decision records, each with a boolean include.",
-      "necessityRowWithoutInclude": "validation: ReactiveFiber topology refused: result.necessity must be an array of decision records, each with a boolean include."
+      "necessityRowWithoutInclude": "validation: ReactiveFiber topology refused: result.necessity must be an array of decision records, each with a boolean include.",
+      "blocksNull": "validation: ReactiveFiber topology refused: result.blocks must be an array of block objects.",
+      "necessityNull": "validation: ReactiveFiber topology refused: result.necessity must be an array of decision records, each with a boolean include.",
+      "blocksMixedRows": "validation: ReactiveFiber topology refused: result.blocks must be an array of block objects.",
+      "blocksMixedInteriorRow": "validation: ReactiveFiber topology refused: result.blocks must be an array of block objects.",
+      "necessityMixedRows": "validation: ReactiveFiber topology refused: result.necessity must be an array of decision records, each with a boolean include.",
+      "necessityMixedInteriorRow": "validation: ReactiveFiber topology refused: result.necessity must be an array of decision records, each with a boolean include.",
+      "blocksArrayRow": "validation: ReactiveFiber topology refused: result.blocks must be an array of block objects.",
+      "blocksNullRow": "validation: ReactiveFiber topology refused: result.blocks must be an array of block objects.",
+      "necessityNullRow": "validation: ReactiveFiber topology refused: result.necessity must be an array of decision records, each with a boolean include.",
+      "necessityArrayRow": "validation: ReactiveFiber topology refused: result.necessity must be an array of decision records, each with a boolean include."
      }
     },
     {
@@ -224,5 +234,42 @@
     }
    ]
   }
+ ],
+ "reached": [
+  "A1:1",
+  "A2:1",
+  "A3:3",
+  "A4:3",
+  "B1:1",
+  "B2:1",
+  "B3:1",
+  "B4:2",
+  "C1:4",
+  "C2:2",
+  "D1:1",
+  "D2:16",
+  "D3:1",
+  "Q1:1",
+  "Q2:1"
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the export acceptance and the captured result roster agree",
+  "the anchors outside the cut: the landed delivery record names every pin by its row, and every gate mutant the follow-up names has D2 shapes that refuse it",
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "B1",
+  "B2",
+  "B3",
+  "B4",
+  "C1",
+  "C2",
+  "D1",
+  "D2",
+  "D3",
+  "Q1",
+  "Q2",
+  "the record: every registered test is in run mode and ran, and every pin reached its seams with its pinned read count"
  ]
 }
