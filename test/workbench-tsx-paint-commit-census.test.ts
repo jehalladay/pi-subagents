@@ -45,7 +45,15 @@
  * listing and the read is skipped). FLOORS sit below the counts measured at base febca35; WALK_ANCHORS, NAME_ANCHORS (one live
  * name per read position: an import binding, an implements clause, an indexed access type, a JS module's JSDoc), LOAD_ANCHORS
  * (a static import, a dynamic import, a vitest importActual) and TITLE_ANCHOR (the rf-tsx tier's success row) keep each reader
- * non-vacuous on the real tree, and the planted controls keep each position live.
+ * non-vacuous on the real tree, and the planted controls keep each position live; A1's planted tree carries a module at its
+ * root (host.ts, beside the root symlink link.ts) as well as below it, so a walk that stops listing depth-0 modules reds.
+ * POLARITY (wb-ab0i F1, asserted in code on each pin's live witness before the roster compare): every planted control and
+ * plant reads true unless a quiet row (QUIET) or a negative control (NEGATIVE_CONTROLS: the near misses each reader must leave
+ * alone, and the gate's closed readings - the measured facts and a site added under docs/) names it, and those read false;
+ * B1's registrar titles are exactly REGISTRAR_TITLES; POLARITY_COUNTS pins each pin's true/false counts, so a control dropped
+ * beside its reader reds. Each vocabulary alternative, each gate condition and each side of an import-map entry carries a
+ * control of its own, so a reader's predicate hollowed together with a roster regenerated from its own witnesses and
+ * constants reds in code.
  * MEASURED PRODUCER FACTS (roster `producer`, read-only, 2026-10-23): ReactiveFiberTSXSDK at the program pin 76bbbffd9d4a
  * (package 0.1.668; origin/main of the local clone at its last fetch): `git grep -n -E 'InterfaceHost|InterfaceEvaluation'`
  * gives three sites, all under docs/ and none in code (01-runtime-contracts.md:11 and :13, 02-implementation.md:13); `git grep -l -E
@@ -79,6 +87,12 @@
  * file below a skipped root entry; R-OWN-HOST Pi's own render and write vocabulary (its TUI frames, its store's atomic rename),
  * which names no TSX host; R-COMPUTED-TITLE a title computed at runtime, or registered through another registrar (a test.extend
  * result, a node:test subtest's t.test), which no static reader reads.
+ * NOT CLAIMED (wb-ab0i F2, the live verdicts): A1's references, A2's loads and manifest hits and the armed legs' claims are
+ * aggregated over a clean tree, so replacing one of those aggregations by a constant empty list stays green - the planted
+ * controls run the same readers over planted trees, but no canary reaches a live aggregation, so only a dirty tree tells a
+ * hollowed aggregation from a clean one. NOT CLAIMED either (the polarity literals): which control reads true is this file's
+ * own literal, so a reader's predicate hollowed together with every polarity literal (its flipped controls moved into QUIET
+ * or NEGATIVE_CONTROLS, POLARITY_COUNTS and REGISTRAR_TITLES rewritten to match) and a regenerated roster stays green.
  * Display paths added: none. Test-only: it spawns nothing; the controls plant files in makeScratch scratch only.
  */
 import { type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -213,6 +227,13 @@ const SKIP_WORD = ["sk", "ip"].join("");
 const VI_MOCK = ["vi", "mock"].join(".");
 /** The Gating sentence's lead-in before the bead row's absence facts. */
 const SHIPPED_NO = "Shipped: no - ";
+/** The controls that read false and name no residual (wb-ab0i F1): the near misses each reader must leave alone, and the
+ * gate's closed readings (the measured facts, and a site added under docs/). Every other planted control and plant reads true. */
+const NEGATIVE_CONTROLS: readonly string[] = ["A1:nearMiss", "A2:otherPackage", "B1:measured", "B1:docsSiteAdded", "B2:measured", "B2:docsSiteAdded"];
+/** The titles B1's registrar snippet registers, in order: one per t-line, none for an n-line. */
+const REGISTRAR_TITLES: readonly string[] = ["t1", "t2", "t3", "t4 %s", "t5", "t6", "t7", "t8", "t9", "t10", "t11", "t12", "t13", "t14", "t15"];
+/** Each pin's planted controls and plants by polarity, `<reading true>/<reading false>` (B1's registrar titles aside). */
+const POLARITY_COUNTS: Readonly<Record<string, string>> = { A1: "40/22", A2: "41/19", B1: "16/8", B2: "18/4" };
 
 interface Row {
   readonly id: string;
@@ -791,6 +812,9 @@ function gateControls(symbol: string): JsonObject {
     mappedEntry: opens({ importMap: { ...base.importMap, [HOST_ENTRY]: `npm:${SDK}@0.1.669/host` } }),
     srcPythonFile: opens({ srcPython: ["python/reactive_fiber/host.py"] }),
     mappedSite: opens({ mappedSites: ["dist/host.js:1"] }),
+    publishedDocsSite: opens({ pinSites: [...base.pinSites, "docs/published.md:3"], files: [...base.files, "docs/published.md"] }),
+    mappedKey: opens({ importMap: { ...base.importMap, [HOST_ENTRY]: "./vendor/host.js" } }),
+    mappedValue: opens({ importMap: { ...base.importMap, "#ui": `npm:${SDK}@0.1.669/ui` } }),
   };
 }
 /** Pins B1 and B2 share this reading: the type's gate from the roster's producer facts, the bead row's Gating sentence, and
@@ -922,6 +946,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "qa/host.mjs": `/** @implements {${EVALUATION_TYPE}} */\nexport class E {}\n`,
       "nested/dist/host.ts": plant,
       "link.ts": null,
+      "host.ts": plant,
       "docs/host.md": plant,
       "fixtures/host.json": JSON.stringify({ source: plant }),
       "node_modules/pkg/host.ts": plant,
@@ -940,6 +965,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         "qa/host.mjs",
         "nested/dist/host.ts",
         "link.ts",
+        "host.ts",
         "docs/host.md",
         "fixtures/host.json",
         "node_modules/pkg/host.ts",
@@ -1077,6 +1103,9 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       purityClause: PURITY_CLAIM.test(clause),
       frameCallback: PURITY_CLAIM.test("frame callbacks run no component"),
       componentInvocation: PURITY_CLAIM.test("zero component invocations per paint"),
+      paintCallback: PURITY_CLAIM.test("a paint callback"),
+      mountedFixtureTree: PURITY_CLAIM.test("a mounted fixture tree"),
+      incidentalRenderEffect: PURITY_CLAIM.test("an incidental render effect"),
       ownFrame: PURITY_CLAIM.test("a rendered frame touches no filesystem"),
       ownPaint: PURITY_CLAIM.test("emits zero diff bytes for an identical frame and the whole frame for a cold paint"),
       ownWidget: PURITY_CLAIM.test("AgentWidget.render (per TUI frame)"),
@@ -1091,6 +1120,11 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       atomicityClause: ATOMICITY_CLAIM.test(clause),
       stagedMutation: ATOMICITY_CLAIM.test("a fault between two staged mutations leaves the last generation"),
       evaluationGeneration: ATOMICITY_CLAIM.test("commits once per accepted evaluation generation"),
+      evaluationGenerationOnly: ATOMICITY_CLAIM.test("one evaluation generation"),
+      stagedCommit: ATOMICITY_CLAIM.test("staged commits"),
+      preEvaluation: ATOMICITY_CLAIM.test("a pre-evaluation snapshot"),
+      acceptedEvaluation: ATOMICITY_CLAIM.test("an accepted evaluation"),
+      midEvaluation: ATOMICITY_CLAIM.test("injected mid-evaluation"),
       ownAtomicWrite: ATOMICITY_CLAIM.test("uses atomic temp+rename: write produces final file, no .tmp leftover"),
       ownGeneration: ATOMICITY_CLAIM.test("blocks code generation from strings"),
     };
@@ -1112,6 +1146,35 @@ function quietValue(id: string): unknown {
 function rosterAnchor(pin: string): unknown {
   const witness = rosterWitness(pin);
   return isObject(witness) ? witness.anchor : undefined;
+}
+/** The list-valued controls, each read whole. */
+const LIST_CONTROLS: ReadonlyMap<string, readonly string[]> = new Map([["B1:titles", REGISTRAR_TITLES]]);
+/** A pin's planted controls and plants read against their polarity in code (wb-ab0i F1): a quiet row (QUIET) or a negative
+ * control (NEGATIVE_CONTROLS) reads false, every other control and plant reads true, and a list-valued control reads its list
+ * whole. Returns the misses (`<id> reads <value>`, or `<id> absent` for a named control the witness lacks) and the counts
+ * POLARITY_COUNTS pins. */
+function polarity(pin: string, witness: Json): { readonly misses: string[]; readonly counts: string } {
+  const own = (id: string): boolean => id.startsWith(`${pin}:`);
+  const quiet = new Set([...Object.values(QUIET).flat(), ...NEGATIVE_CONTROLS].filter(own));
+  const record = isObject(witness) ? witness : {};
+  const misses: string[] = [];
+  const read = new Set<string>();
+  const counts = { true: 0, false: 0 };
+  for (const [group, prefix] of [["controls", ""], ["plants", "plant:"]] as const) {
+    const entries = record[group];
+    if (!isObject(entries)) continue;
+    for (const [key, value] of Object.entries(entries)) {
+      const id = `${pin}:${prefix}${key}`;
+      read.add(id);
+      const list = LIST_CONTROLS.get(id);
+      if (list !== undefined) {
+        if (JSON.stringify(value) !== JSON.stringify(list)) misses.push(`${id} reads ${JSON.stringify(value)}`);
+      } else if (typeof value === "boolean" && value === !quiet.has(id)) counts[value ? "true" : "false"] += 1;
+      else misses.push(`${id} reads ${JSON.stringify(value)}`);
+    }
+  }
+  for (const id of [...quiet, ...[...LIST_CONTROLS.keys()].filter(own)]) if (!read.has(id)) misses.push(`${id} absent`);
+  return { misses, counts: `${counts.true}/${counts.false}` };
 }
 /** The constants the roster holds: the bead, the two types, the SDK, every scan constant, the residuals and their quiet rows. */
 function scanConstants(): Json {
@@ -1139,6 +1202,7 @@ function scanConstants(): Json {
       nameAnchors: NAME_ANCHORS.map(([path, kind, value]) => `${path}:${kind}:${value}`),
       loadAnchors: LOAD_ANCHORS.map(([path, specifier]) => `${path}:${specifier}`),
       titleAnchor: TITLE_ANCHOR.join(":"),
+      negativeControls: NEGATIVE_CONTROLS,
     },
     residuals: RESIDUAL_FAMILIES,
     quiet: QUIET,
@@ -1187,6 +1251,7 @@ describe("wb-if7q.3 TSX host paint and commit census (TSX-NATIVE-INTERFACES-AND-
           const impl = IMPL[pin];
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : impl();
+          expect(polarity(pin, witness), `${pin}: every planted control against its polarity, in code`).toStrictEqual({ misses: [], counts: POLARITY_COUNTS[pin] });
           expect(witness).toStrictEqual(rosterWitness(pin));
         });
       }

@@ -20,10 +20,11 @@
  * 7 as a non-recovered primary or kept as an error row on a recovered render (CLI-TSX-D-CRASH (a)). So the statement's trigger has
  * not fired: acceptance (a) and (c) are read where they already apply, at Pi's rf seam, and (b) waits for the artifact. The census:
  *  A, the trigger's inventory, empty today. A1 no judged module (identifiers and regular expressions always; string and template
- *    literals, constant-folded literals and JSX text when NAME-LIKE - no white space once trimmed; comments never) and no judged
- *    JSON file (its keys always, its name-like string values; a file that does not parse is read token by token) names a
- *    host-evaluation document or the producer's worker-host functions (DOC_FAMILY, read over words), and the walk reaches its
- *    floors and anchors and meets no symlink and no unreadable file; A2 no judged module loads the producer's embedding entry
+ *    literals, constant-folded literals and JSX text when NAME-LIKE - no white space once trimmed; comments never), no judged
+ *    JSON file (its keys always, its name-like string values; a file that does not parse is read token by token) and no judged
+ *    JSON Lines file (each line read as one JSON text) names a host-evaluation document or the producer's worker-host functions
+ *    (DOC_FAMILY, read over words), and the walk reaches its floors and anchors (a root-level module among them) and meets no
+ *    symlink and no unreadable file; A2 no judged module loads the producer's embedding entry
  *    (EMBEDDING_FAMILY: where serveEmbeddedWorker and every host-evaluation function live - the root index carries none of them)
  *    through an import or export declaration, an import-equals require, an import type, or as the first argument of any call or new
  *    expression, nor names the worker engine as a command there (ENGINE_FAMILY: deno, the engine rf's runtime lock pins); A3 the
@@ -36,7 +37,8 @@
  *    flag, the flag beside a spawned worker, an error row the summary counts), degraded (a degraded observation row, an unsatisfied
  *    view contract), failed (an rf refusal, an observation row whose status word is failed): each partial or a failure, never
  *    success, and each named in a note or the status text; B5 the existing wb-973.2 and wb-973.10 pins are registered unchanged:
- *    both describes once in test/workbench-reactivefiber-observer.test.ts and every case title measured under them still there.
+ *    both describes once in test/workbench-reactivefiber-observer.test.ts and every case title measured under them still there,
+ *    each in run form (no skip mode read on it: SKIP MODES below).
  *  C, acceptance (c), at the rf seam. C1 the native provider (src/workbench/providers/reactivefiber.ts nativeReactiveFiberRender,
  *    one spawn of a stand-in rf first on PATH each) answers every worker end the statement names - EOF, crash, timeout, malformed
  *    result frame, each in the producer's typed refusal - with the typed unavailable refusal naming the code, never transport and
@@ -44,7 +46,7 @@
  *    envelope and the exit, not a constant; C2 the adapter projects each refusal as a failure naming its code, never success; C3
  *    the recovered render (the worker row kept, the summary counting it, one worker spawned) passes the provider unchanged and
  *    projects partial, never success; C4 the wb-ksz.6 child-crash shape is registered: the K1-K3 typed-failure rows of
- *    test/workbench-child-crash-faults.test.ts under their describe; C5 rf's measured default TSX bounds sit under the provider's
+ *    test/workbench-child-crash-faults.test.ts under their describe, each in run form; C5 rf's measured default TSX bounds sit under the provider's
  *    own deadline, so with them rf types a worker timeout before Pi's deadline can fire.
  *  D, acceptance (b), gated. D1 the measured artifact is unshipped: at both producer pins the worker-failure suite is absent (the
  *    harness present, the deadline reply already typed failed, the status words closed at four), the distribution pin is rf's
@@ -53,8 +55,8 @@
  *    claims the proof before the artifact ships.
  * THE WALK: every regular file below the repository root, at any depth, in name order; the root entries SKIPPED_ROOTS (git's
  * data, the tracker export - bead rows quote the statement -, installed dependencies, build, coverage and Forge outputs) are
- * skipped at the root only, and the two EXEMPT files are walked but not judged. Modules (MODULE_EXTENSIONS) and JSON files are
- * judged; prose is walked and never judged. The working tree is read, so an untracked plant is read, and a copy of this file or its
+ * skipped at the root only, and the two EXEMPT files are walked but not judged. Modules (MODULE_EXTENSIONS), JSON files and JSON
+ * Lines files (JSON_LINES_EXTENSIONS) are judged; prose and every other data format are walked and never judged. The working tree is read, so an untracked plant is read, and a copy of this file or its
  * roster anywhere else in the walk is a finding. The JSON judge reads test/fixtures/rf-result-keys.json, the frozen roster of the
  * keys rf's render result carries, so a re-capture that adds a host-evaluation key reds A1.
  * OVER-READ (disclosed): an identifier or a name-like literal using a DOC_FAMILY phrase in another sense, or deno named as a
@@ -87,7 +89,8 @@
  * words of B2, B3 and B4 in order, the worker ends of the statement are WORKER_ENDS in order, its quote and citation equal the
  * roster's and its "Shipped: no" sentence and site list are read by D1; B5 reads the observer test file and C4 the child-crash
  * file, so a pin set removed from every literal of this file and the roster still reds there. Not claimed: A1-A4, B1, B5, C1-C5,
- * D1 or D2 removed from ROWS, the literal, IMPL and the roster together (no outside anchor counts those pins).
+ * D1 or D2 removed from ROWS, the literal, IMPL and the roster together (no outside anchor counts those pins); a planted control
+ * reclassified in CONTROL_CLASSES together with its judge and its roster witness (no outside anchor counts the controls).
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
  * not inverted, ran; every pin's case reached its end (REACHED); no registered test or suite title spells DOC_FAMILY or
  * CLAIM_FAMILY (describe titles mask them).
@@ -97,11 +100,29 @@
  * renamedPackage); R-MANIFEST an import map, a manifest or any JSON naming the entry, which A2 never reads as a load (A2 importMap;
  * the landed test/fixtures/rf-tsx-remote-hook-roster.json records rf's import map, which names it); R-LOOKALIKE a non-ASCII look-alike letter or an inserted invisible (A1 lookalike, invisible); R-ENCODED an
  * encoding the compiler does not cook (A1 rot13); R-PROSE comments and literals or JSON values with white space inside (A1
- * comment, proseLiteral, jsonProse); R-OUTSIDE a file below a skipped root entry (A1 planted node_modules/, dist/, .beads/,
+ * comment, proseLiteral, jsonProse, jsonLinesProse); R-OUTSIDE a file below a skipped root entry (A1 planted node_modules/, dist/, .beads/,
  * .forge/, build/, coverage/); R-PASSTHROUGH a host-evaluation document riding an additive key of an otherwise clean render: the
  * reader does not read it, so the projection stays complete and successful (B1 passthrough; rf's own CLI-TSX-A32 keeps a failed
  * evaluation off ok, so the clean render this row constructs is not one rf emits); R-DEADLINE an rf whose bounds or retries reach
- * the provider's own deadline: Pi's deadline answers first, as transport (C5 deadlineCategory).
+ * the provider's own deadline: Pi's deadline answers first, as transport (C5 deadlineCategory); R-DATAFILE a data file in any
+ * format but JSON and JSON Lines (YAML, TOML, CSV and the rest): walked, never judged (A1 planted test/fixtures/worker.yaml);
+ * R-HOLLOWED a measured case whose body is hollowed (an early return, an assertion removed): B5 and C4 read registration and skip
+ * modes, never what a body asserts, so it still reads registered in run form (B5 hollowedBody; C4's K1-K3 are reporter-verified
+ * by test/workbench-child-crash-faults.census.ts, B5's titles are not).
+ * wb-nh4s (R694 follow-up of wb-fb2z.3 landing 302, gate cmd_36948b0a1981: F1 leads, F2-F4 ride). PLANTED CONTROLS IN CODE (F1):
+ * CONTROL_CLASSES holds every planted control's class in this file, beside the roster witness - FLAGGED reads true; a residual
+ * family's quiet row and a CLEAR precision control (not the judged thing at all) read false - and A1, A2, B5 and D2 assert it (B1
+ * and C5 assert their R-PASSTHROUGH and R-DEADLINE quiet rows), so a judge hollowed together with its roster scan string and
+ * witness still reds (LEG-2 L2-01, L2-02, L2-03, L2-07); the key set is the control set, so a dropped control reds as well. ROOT
+ * MODULES (F2): vitest.config.ts is a walk anchor and A1's planted tree plants reader.mts at its root, so a walk that stops
+ * listing depth-0 modules reds (L2-05). DATA FILES (F3): JSON Lines files are judged line by line (E1); every other data format
+ * is the named residual R-DATAFILE (E4). SKIP MODES (F4, the title-census modifier closure): registeredTitles reads on every
+ * title the SKIP_MODES members along its call head, an OPTION_MODES key of an options object that is not literally false (a
+ * spread or a computed key read as one), every enclosing describe's modes, and a skip called on a parameter of the case
+ * function; B5 and C4 refuse a measured title carrying any (L2-11) and B5's planted controls carry one falsifier per mode;
+ * SKIP_MODES and RUN_MEMBERS partition vitest's own registration members (REGISTRATION_MEMBERS of test/helpers/census.ts, pinned
+ * against the installed runtime by test/workbench-census-registration-model.test.ts); a hollowed body is the named residual
+ * R-HOLLOWED (L2-12). D2 still reads a skipped claim title as registered (its skippedClaim control: the conservative direction).
  * Display paths added: none. Test-only: the stand-in rf and the planted trees live in makeScratch scratch only.
  */
 import { chmodSync, type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -112,6 +133,7 @@ import { afterAll, describe, expect, it } from "vitest";
 import { CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
 import { nativeReactiveFiberRender, REACTIVEFIBER_RENDER_PREVIEW_CONTRACT } from "../src/workbench/providers/reactivefiber.js";
 import { type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
+import { REGISTRATION_MEMBERS } from "./helpers/census.js";
 import { fullShapeRf } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
@@ -142,19 +164,22 @@ const FAMILY_TEXT =
   /host[\s_.-]*evaluation|evaluate[\s_.-]*(?:for[\s_.-]*)?host|serve[\s_.-]*embedded[\s_.-]*workers?|success[\s_.-]*blocks?|stale[\s_.-]*success|prior[\s_.-]*success|typed[\s_.-]*failed[\s_.-]*documents?/gi;
 const MODULE_EXTENSIONS = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx"];
 const JSON_EXTENSIONS = [".json"];
+/** A1 (wb-nh4s F3): JSON Lines files, judged line by line - each line one JSON text. */
+const JSON_LINES_EXTENSIONS = [".jsonl", ".ndjson"];
 const SKIPPED_ROOTS = [".git", ".beads", "node_modules", "dist", "build", "coverage", ".forge"];
 const EXEMPT = [SELF, ROSTER_FILE];
 /** Each floor sits below the count measured at base f69ce85 (826 files before this cut; src 115, test 443, qa 62 modules; 50 JSON; 402
  * judged test and census modules registering 9251 literal titles). */
 const FLOORS = { files: 700, modules: { src: 100, test: 380, qa: 55 }, json: 40, testModules: 330, titles: 8000 };
 /** Files the walk must reach, each with a token its bytes carry: a root page, the TSX worker reader, rf's frozen result-key roster,
- * the manifest and a binary. */
+ * the manifest, a binary and a root-level module (wb-nh4s F2: a walk that stops listing depth-0 modules misses it). */
 const WALK_ANCHORS: readonly (readonly [string, string])[] = [
   ["README.md", "pi-subagents"],
   ["src/workbench/reactivefiber-observer.ts", "ENGINE_METRIC_KEYS"],
   ["test/fixtures/rf-result-keys.json", "engine_metrics"],
   ["package.json", "@tintinweb/pi-subagents"],
   ["media/screenshot.png", "PNG"],
+  ["vitest.config.ts", "defineConfig"],
 ];
 /** The nearest TSX worker readers Pi has, each with what the reader must read in it: an identifier or a load specifier. */
 const NEAREST_READERS: readonly (readonly [string, "identifier" | "specifier", string])[] = [
@@ -168,7 +193,13 @@ const OBSERVER_TEST = "test/workbench-reactivefiber-observer.test.ts";
 const CHILD_CRASH_TEST = "test/workbench-child-crash-faults.test.ts";
 const PROVIDER = "src/workbench/providers/reactivefiber.ts";
 const DEADLINE_MESSAGE = "RF preview exceeded the execution deadline.";
-const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-RENAMED", "R-MANIFEST", "R-LOOKALIKE", "R-ENCODED", "R-PROSE", "R-OUTSIDE", "R-PASSTHROUGH", "R-DEADLINE"];
+const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-RENAMED", "R-MANIFEST", "R-LOOKALIKE", "R-ENCODED", "R-PROSE", "R-OUTSIDE", "R-PASSTHROUGH", "R-DEADLINE", "R-DATAFILE", "R-HOLLOWED"];
+/** B5 and C4 (wb-nh4s F4): the registration members that leave a case unrun or inverted, on its call head or an enclosing
+ * describe's, and the members that leave it running as written; together they are vitest's own (REGISTRATION_MEMBERS). */
+const SKIP_MODES = ["skip", "todo", "only", "fails", "skipIf", "runIf"];
+const RUN_MEMBERS = ["afterAll", "afterEach", "aroundAll", "aroundEach", "beforeAll", "beforeEach", "concurrent", "describe", "each", "extend", "for", "override", "scoped", "sequential", "shuffle", "suite"];
+/** The options-object keys read as a skip mode when not literally false. */
+const OPTION_MODES = ["skip", "todo", "only", "fails"];
 const CYRILLIC_O = String.fromCodePoint(0x043e);
 const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
 /** Every scan constant, as the roster holds it. */
@@ -181,11 +212,15 @@ const SCAN = {
   claimFamily: `${CLAIM_FAMILY.source}/${CLAIM_FAMILY.flags}`,
   moduleExtensions: MODULE_EXTENSIONS,
   jsonExtensions: JSON_EXTENSIONS,
+  jsonLinesExtensions: JSON_LINES_EXTENSIONS,
   skippedRoots: SKIPPED_ROOTS,
   exempt: EXEMPT,
   floors: FLOORS,
   walkAnchors: WALK_ANCHORS.map(([path, token]) => `${path}:${token}`),
   nearestReaders: NEAREST_READERS.map(([path, kind, token]) => `${path}:${kind}:${token}`),
+  skipModes: SKIP_MODES,
+  runMembers: RUN_MEMBERS,
+  optionModes: OPTION_MODES,
 };
 const FROZEN_TITLE = "the judged set: the frozen shape, the out-of-file roster and the bead row agree";
 const RECORDS_TITLE = "records: every registered test ran once in run mode in roster order, every pin reached its end, and no title spells a judged family";
@@ -448,6 +483,7 @@ function extensionOf(path: string): string {
 }
 const isModule = (path: string): boolean => MODULE_EXTENSIONS.includes(extensionOf(path));
 const isJson = (path: string): boolean => JSON_EXTENSIONS.includes(extensionOf(path));
+const isJsonLines = (path: string): boolean => JSON_LINES_EXTENSIONS.includes(extensionOf(path));
 
 /** A text as lowercase words: camelCase and PascalCase humps split, acronym runs kept, every other character a separator. */
 function wordsOf(value: string): string {
@@ -606,6 +642,11 @@ function readJson(path: string, source: string): string[] {
   visit(value);
   return documents;
 }
+/** One JSON Lines file's DOC_FAMILY spellings (wb-nh4s F3): each line read as one JSON text, as readJson reads a JSON file (a line
+ * that does not parse token by token), each spelling naming its line; a blank line holds nothing. */
+function readJsonLines(path: string, source: string): string[] {
+  return source.split("\n").flatMap((line, index) => (line.trim().length === 0 ? [] : readJson(`${path}:${index + 1}`, line)));
+}
 
 interface TreeReading {
   readonly walk: Walk;
@@ -633,6 +674,7 @@ function readTree(root: string): TreeReading {
     const utf8 = buffer.toString("utf8");
     if (isModule(file)) modules.set(file, readModule(file, utf8));
     if (isJson(file)) jsonFiles.set(file, readJson(file, utf8));
+    if (isJsonLines(file)) jsonFiles.set(file, readJsonLines(file, utf8));
     const anchor = WALK_ANCHORS.find(([path]) => path === file);
     if (anchor !== undefined) anchors.set(file, buffer.includes(anchor[1]));
   }
@@ -677,13 +719,91 @@ const documentsIn = (path: string, source: string): boolean => readModule(path, 
 const loadsEmbedding = (path: string, source: string): boolean => readModule(path, source).embeddingLoads.length > 0;
 const namesEngine = (path: string, source: string): boolean => readModule(path, source).engineCommands.length > 0;
 const jsonDocuments = (source: string): boolean => readJson("c.json", source).length > 0;
+const jsonLinesDocuments = (source: string): boolean => readJsonLines("c.jsonl", source).length > 0;
+
+const FLAGGED = "flagged";
+const CLEAR = "clear";
+/** wb-nh4s F1: every planted control's class, held in this file beside the roster witness. FLAGGED must read true; a residual
+ * family (RESIDUAL_FAMILIES) is that family's pinned quiet row and CLEAR a precision control (not the judged thing at all), both
+ * reading false. A judge hollowed together with its roster scan string and witness therefore still reds, and the key set is the
+ * control set, so a control dropped from its case reds too (every key names a planted control, never a Pi surface) */
+const CONTROL_CLASSES: Readonly<Record<string, Readonly<Record<string, string>>>> = {
+  A1: {
+    schemaTag: FLAGGED, typeName: FLAGGED, parseFunction: FLAGGED, constantCase: FLAGGED, requestKey: FLAGGED, attemptLiteral: FLAGGED,
+    documentNoun: FLAGGED, evaluateForHost: FLAGGED, evaluateHostRequest: FLAGGED, serveWorker: FLAGGED, folded: FLAGGED,
+    escaped: FLAGGED, regex: FLAGGED, jsonKey: FLAGGED, jsonValue: FLAGGED, jsonUnparsed: FLAGGED, jsonLinesKey: FLAGGED,
+    jsonLinesValue: FLAGGED, jsonLinesUnparsed: FLAGGED, comment: "R-PROSE", proseLiteral: "R-PROSE", jsonProse: "R-PROSE",
+    jsonLinesProse: "R-PROSE", bareHostEvaluation: CLEAR, interfaceEvaluation: CLEAR, piEmbeddedWorker: CLEAR, hostEvaluate: CLEAR,
+    composed: "R-COMPOSED", joined: "R-COMPOSED", lookalike: "R-LOOKALIKE", invisible: "R-LOOKALIKE", rot13: "R-ENCODED",
+  },
+  "A1 walk": {
+    "src/reader.ts": FLAGGED, "test/fixtures/worker.json": FLAGGED, "nested/node_modules/pkg/index.js": FLAGGED, "notes/plan.md": CLEAR,
+    "node_modules/pkg/index.js": "R-OUTSIDE", "dist/index.js": "R-OUTSIDE", ".beads/issues.jsonl": "R-OUTSIDE", ".forge/report.json": "R-OUTSIDE",
+    "build/reader.ts": "R-OUTSIDE", "coverage/reader.ts": "R-OUTSIDE", "src/link.ts": FLAGGED, "reader.mts": FLAGGED,
+    "test/fixtures/capture.jsonl": FLAGGED, "test/fixtures/capture.ndjson": FLAGGED, "test/fixtures/worker.yaml": "R-DATAFILE",
+  },
+  A2: {
+    importDeclaration: FLAGGED, typeOnly: FLAGGED, exportFrom: FLAGGED, dynamicImport: FLAGGED, require: FLAGGED, importEquals: FLAGGED,
+    importType: FLAGGED, npmSpecifier: FLAGGED, urlSpecifier: FLAGGED, foldedSpecifier: FLAGGED, rootIndex: CLEAR, testingEntry: CLEAR,
+    mentionOnly: CLEAR, composedSpecifier: "R-COMPOSED", renamedPackage: "R-RENAMED", importMap: "R-MANIFEST", spawnEngine: FLAGGED,
+    engineByPath: FLAGGED, shellCommand: FLAGGED, manifestName: CLEAR, rfCommand: CLEAR, composedCommand: "R-COMPOSED",
+  },
+  B5: {
+    runnable: CLEAR, caseSkip: FLAGGED, caseTodo: FLAGGED, caseOnly: FLAGGED, caseFails: FLAGGED, caseSkipIf: FLAGGED, caseRunIf: FLAGGED,
+    testRoot: FLAGGED, skipThenEach: FLAGGED, optionsSkip: FLAGGED, optionsTodo: FLAGGED, optionsOnly: FLAGGED, optionsFails: FLAGGED,
+    optionsLast: FLAGGED, optionsSpread: FLAGGED, optionsComputed: FLAGGED, describeSkip: FLAGGED, describeTodo: FLAGGED,
+    describeOnly: FLAGGED, describeSkipIf: FLAGGED, describeRunIf: FLAGGED, describeOptions: FLAGGED, outerDescribe: FLAGGED,
+    contextSkip: FLAGGED, destructuredSkip: FLAGGED, eachRows: CLEAR, concurrent: CLEAR, optionsFalse: CLEAR, optionsTimeout: CLEAR,
+    commented: CLEAR, hollowedBody: "R-HOLLOWED",
+  },
+  D2: {
+    successBlocks: FLAGGED, staleSuccess: FLAGGED, priorSuccess: FLAGGED, documentKind: FLAGGED, typedFailedDocument: FLAGGED,
+    eachTitle: FLAGGED, skippedClaim: FLAGGED, unrelated: CLEAR, labelOnly: CLEAR,
+  },
+};
+/** The residual families whose pinned quiet row is not a planted boolean control, and the case that asserts it in code. */
+const QUIET_ROWS_ELSEWHERE: Readonly<Record<string, string>> = { "R-PASSTHROUGH": "B1 passthrough", "R-DEADLINE": "C5 deadlineCategory" };
+/** The planted controls of `group` reading against their class, and every class with no control (empty when all agree). */
+function misread(group: string, controls: Readonly<Record<string, boolean>>): string[] {
+  const classes: Readonly<Record<string, string | undefined>> = CONTROL_CLASSES[group] ?? {};
+  return [...new Set([...Object.keys(classes), ...Object.keys(controls)])].sort().flatMap(name => {
+    const expected = classes[name];
+    const reading = controls[name];
+    if (expected === undefined) return [`${name}: read ${String(reading)} with no class`];
+    if (reading === undefined) return [`${name}: ${expected} with no control`];
+    return reading === (expected === FLAGGED) ? [] : [`${name}: ${expected} read ${String(reading)}`];
+  });
+}
+
+/** wb-nh4s F4: B5's planted test modules, each registering PLANT_CASE under PLANT_DESCRIBE. dot() composes a member reference,
+ * so this file carries no registration-marker text of its own (the gate's marker scan lists every text hit). */
+const PLANT_DESCRIBE = "pinned describe";
+const PLANT_CASE = "pinned case";
+const dot = (root: string, member: string): string => `${root}.${member}`;
+const CASE_FN = "() => {\n    expect(1).toBe(1);\n  }";
+/** A planted module: `registration` inside the factory `describeHead` opens. */
+function plantModule(registration: string, describeHead = `describe("${PLANT_DESCRIBE}", () => {`): string {
+  return `import { describe, expect, it, test } from "vitest";\n${describeHead}\n  ${registration}\n});\n`;
+}
+/** The pinned case's registration call: `head` called with its title, then `rest`. */
+const caseCall = (head: string, rest = `, ${CASE_FN}`): string => `${head}("${PLANT_CASE}"${rest});`;
+/** Whether a planted module registers its pinned case with a skip mode: the reading B5 and C4 take of every measured title. */
+function plantSkips(source: string): boolean {
+  const entry = registeredTitles("plant.test.ts", source).find(found => found.describe === PLANT_DESCRIBE && found.title === PLANT_CASE);
+  if (entry === undefined) throw new Error(`the plant registers no "${PLANT_CASE}" under "${PLANT_DESCRIBE}"`);
+  return entry.modes.length > 0;
+}
 
 interface RegisteredTitle {
   readonly describe: string | undefined;
   readonly title: string;
+  /** The skip modes read on it (wb-nh4s F4): its call head's, its options', every enclosing describe's, its body's context skip. */
+  readonly modes: readonly string[];
 }
-/** A test module's registered titles: every it, test or describe call (or its .each, .skip, .todo, .only, .concurrent form)
- * whose title folds to a literal, each with the innermost describe it sits in. */
+/** A test module's registered titles: every it, test or describe call (with any member chain on its head) whose title folds to a
+ * literal, each with the innermost describe it sits in and the skip modes read on it - the SKIP_MODES members along its call head,
+ * an OPTION_MODES key of an options-object argument that is not literally false (a spread or a computed key read as one), every
+ * enclosing describe's modes, and a skip called on a parameter of the case function (a member call, or a destructured skip). */
 function registeredTitles(path: string, source: string): RegisteredTitle[] {
   const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
   const found: RegisteredTitle[] = [];
@@ -693,34 +813,92 @@ function registeredTitles(path: string, source: string): RegisteredTitle[] {
     if (ts.isCallExpression(callee)) return kindOf(callee.expression);
     return undefined;
   };
-  const visit = (node: ts.Node, inside: string | undefined): void => {
+  const headModes = (callee: ts.Expression): string[] => {
+    if (ts.isPropertyAccessExpression(callee)) return [...headModes(callee.expression), ...(SKIP_MODES.includes(callee.name.text) ? [callee.name.text] : [])];
+    if (ts.isCallExpression(callee)) return headModes(callee.expression);
+    return [];
+  };
+  const optionModes = (call: ts.CallExpression): string[] =>
+    call.arguments.filter(ts.isObjectLiteralExpression).flatMap(options =>
+      options.properties.flatMap((property): string[] => {
+        if (ts.isSpreadAssignment(property)) return ["options spread"];
+        if (property.name === undefined || ts.isComputedPropertyName(property.name)) return ["options computed key"];
+        const key = ts.isIdentifier(property.name) || ts.isStringLiteral(property.name) ? property.name.text : undefined;
+        if (key === undefined || !OPTION_MODES.includes(key)) return [];
+        return ts.isPropertyAssignment(property) && property.initializer.kind === ts.SyntaxKind.FalseKeyword ? [] : [`options ${key}`];
+      }),
+    );
+  const contextModes = (call: ts.CallExpression): string[] => {
+    const body = [...call.arguments].reverse().find(argument => ts.isArrowFunction(argument) || ts.isFunctionExpression(argument));
+    if (body === undefined || !(ts.isArrowFunction(body) || ts.isFunctionExpression(body))) return [];
+    const contexts = new Set<string>();
+    const skippers = new Set<string>();
+    for (const parameter of body.parameters) {
+      if (ts.isIdentifier(parameter.name)) contexts.add(parameter.name.text);
+      else if (ts.isObjectBindingPattern(parameter.name)) {
+        for (const element of parameter.name.elements) {
+          const key = element.propertyName ?? element.name;
+          if (ts.isIdentifier(key) && key.text === "skip" && ts.isIdentifier(element.name)) skippers.add(element.name.text);
+        }
+      }
+    }
+    let skipped = false;
+    const scan = (node: ts.Node): void => {
+      if (ts.isCallExpression(node)) {
+        const callee = node.expression;
+        if (ts.isPropertyAccessExpression(callee) && callee.name.text === "skip" && ts.isIdentifier(callee.expression) && contexts.has(callee.expression.text)) skipped = true;
+        if (ts.isIdentifier(callee) && skippers.has(callee.text)) skipped = true;
+      }
+      ts.forEachChild(node, scan);
+    };
+    scan(body.body);
+    return skipped ? ["context skip"] : [];
+  };
+  const visit = (node: ts.Node, inside: string | undefined, inherited: readonly string[]): void => {
     if (ts.isCallExpression(node)) {
       const kind = kindOf(node.expression);
       const first = node.arguments[0];
       const title = first === undefined ? undefined : fold(first);
       if ((kind === "it" || kind === "test" || kind === "describe") && title !== undefined) {
+        const modes = [...inherited, ...headModes(node.expression), ...optionModes(node)];
         if (kind === "describe") {
-          found.push({ describe: inside, title });
-          for (const argument of node.arguments) visit(argument, title);
+          found.push({ describe: inside, title, modes });
+          for (const argument of node.arguments) visit(argument, title, modes);
           return;
         }
-        found.push({ describe: inside, title });
+        found.push({ describe: inside, title, modes: [...modes, ...contextModes(node)] });
       }
     }
-    ts.forEachChild(node, child => visit(child, inside));
+    ts.forEachChild(node, child => visit(child, inside, inherited));
   };
-  visit(file, undefined);
+  visit(file, undefined, []);
   return found;
 }
-/** The case titles registered directly under `describe` (cases of a nested describe excluded), and how often it is registered. */
-function casesUnder(path: string, describeTitle: string): { registered: number; titles: string[] } {
+/** The case titles registered directly under `describe` (cases of a nested describe excluded), how often it is registered, and the
+ * skip modes read on each of those titles (wb-nh4s F4; a title registered twice carries both registrations' modes). */
+function casesUnder(path: string, describeTitle: string): { registered: number; titles: string[]; modes: Map<string, string[]> } {
   const titles = registeredTitles(path, readFileSync(join(REPO, path), "utf8"));
   const describes = new Set(titles.filter(entry => entry.describe !== undefined).map(entry => entry.describe));
   const nested = new Set(titles.filter(entry => entry.describe === describeTitle && describes.has(entry.title)).map(entry => entry.title));
-  return {
-    registered: titles.filter(entry => entry.title === describeTitle).length,
-    titles: titles.filter(entry => entry.describe === describeTitle && !nested.has(entry.title)).map(entry => entry.title),
-  };
+  const direct = titles.filter(entry => entry.describe === describeTitle && !nested.has(entry.title));
+  const modes = new Map<string, string[]>();
+  for (const entry of direct) modes.set(entry.title, [...(modes.get(entry.title) ?? []), ...entry.modes]);
+  return { registered: titles.filter(entry => entry.title === describeTitle).length, titles: direct.map(entry => entry.title), modes };
+}
+/** B5 and C4: each measured describe of `file` as registered now - how often, which measured titles are missing, and which carry a
+ * skip mode (each named with the modes read on it). */
+function pinnedDescribes(file: string, table: { readonly [describe: string]: readonly string[] }) {
+  return Object.entries(table).map(([title, measured]) => {
+    const now = casesUnder(file, title);
+    const modesOf = (entry: string): string[] => now.modes.get(entry) ?? [];
+    return {
+      describe: title,
+      registered: now.registered,
+      measured: measured.length,
+      missing: measured.filter(entry => !now.titles.includes(entry)),
+      skipped: measured.filter(entry => modesOf(entry).length > 0).map(entry => `${entry}: ${modesOf(entry).join(", ")}`),
+    };
+  });
 }
 
 const ROOT = REPO;
@@ -913,9 +1091,13 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       jsonKey: jsonDocuments('{"host_evaluation_result":{"status":"failed"}}'),
       jsonValue: jsonDocuments(`{"schema":"${SCHEMA_TAG}"}`),
       jsonUnparsed: jsonDocuments(`{"schema": "${SCHEMA_TAG}",}`),
+      jsonLinesKey: jsonLinesDocuments('{"status":"ok"}\n{"host_evaluation_result":{"status":"failed"}}\n'),
+      jsonLinesValue: jsonLinesDocuments(`{"schema":"${SCHEMA_TAG}"}\n`),
+      jsonLinesUnparsed: jsonLinesDocuments(`{"status":"ok"}\n{"schema": "${SCHEMA_TAG}",}\n`),
       comment: documentsIn("c.ts", "// a host-evaluation result\nexport {};\n"),
       proseLiteral: documentsIn("c.ts", 'const note = "no host evaluation result is read here";\n'),
       jsonProse: jsonDocuments('{"note":"Pi reads no host evaluation result today"}'),
+      jsonLinesProse: jsonLinesDocuments('{"note":"Pi reads no host evaluation result today"}\n'),
       bareHostEvaluation: documentsIn("c.ts", 'const path = "src/host/evaluation.mts";\n'),
       interfaceEvaluation: documentsIn("c.ts", "export class InterfaceEvaluation {}\n"),
       piEmbeddedWorker: documentsIn("c.ts", "const embeddedWorker = new Worker(source);\n"),
@@ -938,6 +1120,10 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       "build/reader.ts": "export const hostEvaluationResult = 1;\n",
       "coverage/reader.ts": "export const hostEvaluationResult = 1;\n",
       "src/link.ts": null,
+      "reader.mts": `export const TAG = "${SCHEMA_TAG}";\n`,
+      "test/fixtures/capture.jsonl": '{"status":"ok"}\n{"host_evaluation_result":{"status":"failed"}}\n',
+      "test/fixtures/capture.ndjson": `{"schema":"${SCHEMA_TAG}"}\n`,
+      "test/fixtures/worker.yaml": "host_evaluation_result:\n  status: failed\n",
     });
     const flaggedIn = (path: string): boolean =>
       planted.walk.symlinks.includes(path) || (planted.modules.get(path)?.documents.length ?? 0) > 0 || (planted.json.get(path)?.length ?? 0) > 0;
@@ -954,8 +1140,14 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
         "build/reader.ts",
         "coverage/reader.ts",
         "src/link.ts",
+        "reader.mts",
+        "test/fixtures/capture.jsonl",
+        "test/fixtures/capture.ndjson",
+        "test/fixtures/worker.yaml",
       ].map(path => [path, flaggedIn(path)]),
     );
+    expect(misread("A1", controls), "every planted judge control reads as its class in code (FLAGGED true; a residual's quiet row and a CLEAR control false)").toEqual([]);
+    expect(misread("A1 walk", walkControls), "every planted walk control reads as its class in code").toEqual([]);
     return done("A1", { floors, anchorsWalked: tree.anchorsWalked, modules, jsonFiles, controls, walkControls });
   },
   A2: () => {
@@ -990,6 +1182,7 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       rfCommand: namesEngine("c.ts", 'const child = spawn("rf", ["context", "render"]);\n'),
       composedCommand: namesEngine("c.ts", 'const engine = "deno";\nconst child = spawn(engine, ["run"]);\n'),
     };
+    expect(misread("A2", controls), "every planted load and command control reads as its class in code").toEqual([]);
     return done("A2", { specifierAnchor, commandAnchor, embeddingLoads, engineCommands, controls });
   },
   A3: () => {
@@ -1045,13 +1238,14 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       { ...CONTEXT, seam: "injected-fixture" },
     ).snapshots[0];
     // R-PASSTHROUGH quiet row: a failed document riding an additive result key is not read, so the clean render stays successful.
-    const passthrough = project(renderWith({ host_evaluation_result: { schema: SCHEMA_TAG, schema_version: 1, status: "failed", output: null } }));
+    const passthrough = classes(project(renderWith({ host_evaluation_result: { schema: SCHEMA_TAG, schema_version: 1, status: "failed", output: null } })), /host[\s_-]*evaluation/i);
+    expect(passthrough, "R-PASSTHROUGH quiet row, read in code (wb-nh4s F1): the additive document is not read").toStrictEqual({ coverage: "complete", tone: "success", named: false });
     return done("B1", {
       clean: { coverage: clean.coverage, tone: clean.tone },
       tsxSpawned: classes(tsxSpawned, /TSX worker spawned/),
       tsxEngine: classes(tsxEngine, /TSX engine identity/),
       fixtureSeam: { coverage: String(fixtureSeam?.coverage), tone: String(fixtureSeam?.node.statusTone) },
-      passthrough: classes(passthrough, /host[\s_-]*evaluation/i),
+      passthrough,
     });
   },
   B2: () => {
@@ -1084,13 +1278,50 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     return done("B4", { word: "failed", variants });
   },
   B5: () => {
-    const describes = Object.entries(ROSTER.existingPins).map(([title, measured]) => {
-      const now = casesUnder(OBSERVER_TEST, title);
-      return { describe: title, registered: now.registered, measured: measured.length, missing: measured.filter(entry => !now.titles.includes(entry)) };
-    });
+    const describes = pinnedDescribes(OBSERVER_TEST, ROSTER.existingPins);
     expect(describes.map(entry => entry.describe.match(/wb-973\.\d+/)?.[0]), "the two pin sets the clause names").toEqual(["wb-973.2", "wb-973.10"]);
-    expect(describes.filter(entry => entry.registered !== 1 || entry.measured === 0 || entry.missing.length > 0), "both describes registered once, every measured case title still under them").toEqual([]);
-    return done("B5", { file: OBSERVER_TEST, describes });
+    expect(
+      describes.filter(entry => entry.registered !== 1 || entry.measured === 0 || entry.missing.length > 0 || entry.skipped.length > 0),
+      "both describes registered once, every measured case title still under them and none carrying a skip mode",
+    ).toEqual([]);
+    // One falsifier per skip mode (the title-census modifier closure), the run forms beside them, and the R-HOLLOWED quiet row.
+    const describeHead = (head: string): string => `${head}("${PLANT_DESCRIBE}", () => {`;
+    const linux = '(process.platform === "linux")';
+    const controls = {
+      runnable: plantSkips(plantModule(caseCall("it"))),
+      caseSkip: plantSkips(plantModule(caseCall(dot("it", "skip")))),
+      caseTodo: plantSkips(plantModule(caseCall(dot("it", "todo"), ""))),
+      caseOnly: plantSkips(plantModule(caseCall(dot("it", "only")))),
+      caseFails: plantSkips(plantModule(caseCall(dot("it", "fails")))),
+      caseSkipIf: plantSkips(plantModule(caseCall(`${dot("it", "skipIf")}${linux}`))),
+      caseRunIf: plantSkips(plantModule(caseCall(`${dot("it", "runIf")}${linux}`))),
+      testRoot: plantSkips(plantModule(caseCall(dot("test", "skip")))),
+      skipThenEach: plantSkips(plantModule(caseCall(`${dot(dot("it", "skip"), "each")}([1])`))),
+      optionsSkip: plantSkips(plantModule(caseCall("it", `, { skip: true }, ${CASE_FN}`))),
+      optionsTodo: plantSkips(plantModule(caseCall("it", `, { todo: true }, ${CASE_FN}`))),
+      optionsOnly: plantSkips(plantModule(caseCall("it", `, { only: true }, ${CASE_FN}`))),
+      optionsFails: plantSkips(plantModule(caseCall("it", `, { fails: true }, ${CASE_FN}`))),
+      optionsLast: plantSkips(plantModule(caseCall("it", `, ${CASE_FN}, { skip: true }`))),
+      optionsSpread: plantSkips(plantModule(caseCall("it", `, { ...SKIPPED }, ${CASE_FN}`))),
+      optionsComputed: plantSkips(plantModule(caseCall("it", `, { ["skip"]: true }, ${CASE_FN}`))),
+      describeSkip: plantSkips(plantModule(caseCall("it"), describeHead(dot("describe", "skip")))),
+      describeTodo: plantSkips(plantModule(caseCall("it"), describeHead(dot("describe", "todo")))),
+      describeOnly: plantSkips(plantModule(caseCall("it"), describeHead(dot("describe", "only")))),
+      describeSkipIf: plantSkips(plantModule(caseCall("it"), describeHead(`${dot("describe", "skipIf")}${linux}`))),
+      describeRunIf: plantSkips(plantModule(caseCall("it"), describeHead(`${dot("describe", "runIf")}${linux}`))),
+      describeOptions: plantSkips(plantModule(caseCall("it"), `describe("${PLANT_DESCRIBE}", { skip: true }, () => {`)),
+      outerDescribe: plantSkips(plantModule(`describe("${PLANT_DESCRIBE}", () => {\n    ${caseCall("it")}\n  });`, `${dot("describe", "skip")}("outer", () => {`)),
+      contextSkip: plantSkips(plantModule(caseCall("it", `, context => {\n    ${dot("context", "skip")}();\n  }`))),
+      destructuredSkip: plantSkips(plantModule(caseCall("it", ", ({ skip }) => {\n    skip();\n  }"))),
+      eachRows: plantSkips(plantModule(caseCall(`${dot("it", "each")}([1])`))),
+      concurrent: plantSkips(plantModule(caseCall(dot("it", "concurrent")))),
+      optionsFalse: plantSkips(plantModule(caseCall("it", `, { skip: false }, ${CASE_FN}`))),
+      optionsTimeout: plantSkips(plantModule(caseCall("it", `, { timeout: 5_000 }, ${CASE_FN}`))),
+      commented: plantSkips(plantModule(`// ${caseCall(dot("it", "skip"), ", () => {}")}\n  ${caseCall("it")}`)),
+      hollowedBody: plantSkips(plantModule(caseCall("it", ", () => {\n    return;\n    expect(1).toBe(1);\n  }"))),
+    };
+    expect(misread("B5", controls), "every planted registration control reads as its class in code: each skip mode refused, the run forms and the hollowed body (R-HOLLOWED) quiet").toEqual([]);
+    return done("B5", { file: OBSERVER_TEST, describes, controls });
   },
   C1: async () => {
     const ends: JsonObject[] = [];
@@ -1124,14 +1355,14 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     return done("C3", { outcome, unchanged, recovered });
   },
   C4: () => {
-    const describes = Object.entries(ROSTER.childCrashShape).map(([title, measured]) => {
-      const now = casesUnder(CHILD_CRASH_TEST, title);
-      return { describe: title, registered: now.registered, measured: measured.length, missing: measured.filter(entry => !now.titles.includes(entry)) };
-    });
+    const describes = pinnedDescribes(CHILD_CRASH_TEST, ROSTER.childCrashShape);
     const shape = Object.values(ROSTER.childCrashShape).flat();
     expect(shape.map(entry => entry.slice(0, 2)), "the shape is the K1-K3 typed-failure rows").toEqual(["K1", "K2", "K3"]);
     expect(shape.every(entry => /typed|settles once/.test(entry)), "each row settles the dead worker as one typed failure").toBe(true);
-    expect(describes.filter(entry => entry.registered !== 1 || entry.missing.length > 0), "the describe registered once, every shape row still under it").toEqual([]);
+    expect(
+      describes.filter(entry => entry.registered !== 1 || entry.missing.length > 0 || entry.skipped.length > 0),
+      "the describe registered once, every shape row still under it and none carrying a skip mode",
+    ).toEqual([]);
     return done("C4", { file: CHILD_CRASH_TEST, describes });
   },
   C5: () => {
@@ -1140,6 +1371,7 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     const boundsUnderDeadline = deadline.ms !== undefined && [bounds.attempt, bounds.round, bounds.cpu].every(bound => bound < (deadline.ms ?? 0));
     expect(deadline.ms, "the provider's deadline is read from its source").toBeTypeOf("number");
     expect(boundsUnderDeadline, "rf's default attempt, round and CPU bounds each sit under the provider's deadline").toBe(true);
+    expect(deadline.category, "R-DEADLINE quiet row, read in code (wb-nh4s F1): the provider's own deadline answers as transport").toBe("transport");
     return done("C5", { deadlineMs: deadline.ms ?? null, deadlineCategory: deadline.category ?? null, bounds: { ...bounds }, boundsUnderDeadline });
   },
   D1: () => {
@@ -1184,9 +1416,11 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       documentKind: claimIn('describe("host-evaluation result echo", () => {});\n'),
       typedFailedDocument: claimIn('it.each([1])("a typed failed document %s", () => {});\n'),
       eachTitle: claimIn('it.each([1])("zero success blocks %s", () => {});\n'),
+      skippedClaim: claimIn(`${dot("it", "skip")}("zero success blocks", () => {});\n`),
       unrelated: claimIn('it("the clean render projects complete and successful", () => {});\n'),
       labelOnly: claimIn('expect(reading, "zero success blocks").toBe(true);\n'),
     };
+    expect(misread("D2", controls), "every planted title control reads as its class in code (a skipped claim title is still a claim)").toEqual([]);
     return done("D2", { floorsMet, claims, controls });
   },
 };
@@ -1210,6 +1444,20 @@ describe("wb-fb2z.3 TSX worker document census (TSX-COMPONENT-ASSEMBLY-R3, absen
       workerEnds: ROSTER.producer.rfWorkerEnds.map(({ end, code, site }) => ({ end, code, site })),
       residuals: [...ROSTER.residuals],
     });
+    // wb-nh4s F1: a control's class is FLAGGED, CLEAR or a residual family, and every residual family has a quiet row read in code.
+    const controlClasses = Object.values(CONTROL_CLASSES).flatMap(group => Object.values(group));
+    expect(
+      controlClasses.filter(entry => entry !== FLAGGED && entry !== CLEAR && !RESIDUAL_FAMILIES.includes(entry)),
+      "control classes outside FLAGGED, CLEAR and the residual families",
+    ).toEqual([]);
+    expect(
+      RESIDUAL_FAMILIES.filter(family => !controlClasses.includes(family) && !Object.hasOwn(QUIET_ROWS_ELSEWHERE, family)),
+      "residual families with no quiet row read in code",
+    ).toEqual([]);
+    // wb-nh4s F4: SKIP_MODES and RUN_MEMBERS partition vitest's own registration members (pinned against the installed runtime).
+    const members = [...new Set([...REGISTRATION_MEMBERS.test, ...REGISTRATION_MEMBERS.suite])].sort();
+    expect([...SKIP_MODES, ...RUN_MEMBERS].sort(), "SKIP_MODES and RUN_MEMBERS partition vitest's registration members").toEqual(members);
+    expect(OPTION_MODES.filter(key => !SKIP_MODES.includes(key)), "every options key read is a skip mode").toEqual([]);
     // The outside anchor: the owner filing's row in the tracked bead export.
     const bead = readBeadRow();
     const clauses = acceptanceClauses(bead.notes);

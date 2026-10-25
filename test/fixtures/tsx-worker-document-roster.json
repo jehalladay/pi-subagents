@@ -1,5 +1,5 @@
 {
- "provenance": "wb-fb2z.3 census roster (test/workbench-tsx-worker-document-census.test.ts). quote and citation are the owner filing's (bead row wb-fb2z.3 of the tracked export .beads/issues.jsonl). producer is MEASURED read-only on 2026-10-23: the two ReactiveFiberTSXSDK pins by git show, ls-tree and grep on the local checkout; rfVersion by rf --json --version; runtimeLock from the installed rf's integrations/tsx/runtime-lock.json; rfBoundsMs from its application/config.py:1189-1191; rfWorkerEnds from its runtime/tsx_worker.py (each end's raising site). existingPins and childCrashShape are the case titles measured at trunk f69ce85 under the named describes. Every witness is the value its pin's case returns.",
+ "provenance": "wb-fb2z.3 census roster (test/workbench-tsx-worker-document-census.test.ts). quote and citation are the owner filing's (bead row wb-fb2z.3 of the tracked export .beads/issues.jsonl). producer is MEASURED read-only on 2026-10-23: the two ReactiveFiberTSXSDK pins by git show, ls-tree and grep on the local checkout; rfVersion by rf --json --version; runtimeLock from the installed rf's integrations/tsx/runtime-lock.json; rfBoundsMs from its application/config.py:1189-1191; rfWorkerEnds from its runtime/tsx_worker.py (each end's raising site). existingPins and childCrashShape are the case titles measured at trunk f69ce85 under the named describes. Every witness is the value its pin's case returns. wb-nh4s (2026-10-24, R694 follow-up of wb-fb2z.3 landing 302): scan gains jsonLinesExtensions, the vitest.config.ts walk anchor, skipModes, runMembers and optionModes; residuals gain R-DATAFILE and R-HOLLOWED; A1 gains the JSON Lines controls and four planted-tree controls, B5 and C4 a skipped reading per describe, B5 its registration controls and D2 skippedClaim, each the value its case returns on trunk 4083efe plus the cut.",
  "bead": "wb-fb2z.3",
  "quote": "- TSX worker crash/timeout and malformed publication: typed failure, no mistaken success block or silent reuse.",
  "citation": "docs/programs/component-assembly-2026-10-18/RFCLI-INTEROP.md:29@76bbbffd9d4a",
@@ -22,6 +22,10 @@
   ],
   "jsonExtensions": [
    ".json"
+  ],
+  "jsonLinesExtensions": [
+   ".jsonl",
+   ".ndjson"
   ],
   "skippedRoots": [
    ".git",
@@ -52,7 +56,8 @@
    "src/workbench/reactivefiber-observer.ts:ENGINE_METRIC_KEYS",
    "test/fixtures/rf-result-keys.json:engine_metrics",
    "package.json:@tintinweb/pi-subagents",
-   "media/screenshot.png:PNG"
+   "media/screenshot.png:PNG",
+   "vitest.config.ts:defineConfig"
   ],
   "nearestReaders": [
    "src/workbench/reactivefiber-observer.ts:identifier:ENGINE_METRIC_KEYS",
@@ -60,6 +65,38 @@
    "src/workflow/runtime.ts:specifier:node:worker_threads",
    "test/workbench-child-crash-faults.test.ts:identifier:runWorkflow",
    "test/workbench-native-rf-tsx-preview.test.ts:identifier:nativeReactiveFiberPreview"
+  ],
+  "skipModes": [
+   "skip",
+   "todo",
+   "only",
+   "fails",
+   "skipIf",
+   "runIf"
+  ],
+  "runMembers": [
+   "afterAll",
+   "afterEach",
+   "aroundAll",
+   "aroundEach",
+   "beforeAll",
+   "beforeEach",
+   "concurrent",
+   "describe",
+   "each",
+   "extend",
+   "for",
+   "override",
+   "scoped",
+   "sequential",
+   "shuffle",
+   "suite"
+  ],
+  "optionModes": [
+   "skip",
+   "todo",
+   "only",
+   "fails"
   ]
  },
  "producer": {
@@ -209,7 +246,9 @@
   "R-PROSE",
   "R-OUTSIDE",
   "R-PASSTHROUGH",
-  "R-DEADLINE"
+  "R-DEADLINE",
+  "R-DATAFILE",
+  "R-HOLLOWED"
  ],
  "rows": [
   {
@@ -247,9 +286,13 @@
        "jsonKey": true,
        "jsonValue": true,
        "jsonUnparsed": true,
+       "jsonLinesKey": true,
+       "jsonLinesValue": true,
+       "jsonLinesUnparsed": true,
        "comment": false,
        "proseLiteral": false,
        "jsonProse": false,
+       "jsonLinesProse": false,
        "bareHostEvaluation": false,
        "interfaceEvaluation": false,
        "piEmbeddedWorker": false,
@@ -271,7 +314,11 @@
        ".forge/report.json": false,
        "build/reader.ts": false,
        "coverage/reader.ts": false,
-       "src/link.ts": true
+       "src/link.ts": true,
+       "reader.mts": true,
+       "test/fixtures/capture.jsonl": true,
+       "test/fixtures/capture.ndjson": true,
+       "test/fixtures/worker.yaml": false
       }
      }
     },
@@ -473,15 +520,50 @@
         "describe": "view_contract on a --view render (wb-973.2 SCG-R2)",
         "registered": 1,
         "measured": 21,
-        "missing": []
+        "missing": [],
+        "skipped": []
        },
        {
         "describe": "observation rows from result.observations (wb-973.10 SCG-R10)",
         "registered": 1,
         "measured": 21,
-        "missing": []
+        "missing": [],
+        "skipped": []
        }
-      ]
+      ],
+      "controls": {
+       "runnable": false,
+       "caseSkip": true,
+       "caseTodo": true,
+       "caseOnly": true,
+       "caseFails": true,
+       "caseSkipIf": true,
+       "caseRunIf": true,
+       "testRoot": true,
+       "skipThenEach": true,
+       "optionsSkip": true,
+       "optionsTodo": true,
+       "optionsOnly": true,
+       "optionsFails": true,
+       "optionsLast": true,
+       "optionsSpread": true,
+       "optionsComputed": true,
+       "describeSkip": true,
+       "describeTodo": true,
+       "describeOnly": true,
+       "describeSkipIf": true,
+       "describeRunIf": true,
+       "describeOptions": true,
+       "outerDescribe": true,
+       "contextSkip": true,
+       "destructuredSkip": true,
+       "eachRows": false,
+       "concurrent": false,
+       "optionsFalse": false,
+       "optionsTimeout": false,
+       "commented": false,
+       "hollowedBody": false
+      }
      }
     }
    ]
@@ -595,7 +677,8 @@
         "describe": "injected worker death (mocked node:worker_threads, NOT a real crash and NOT a sandbox property; the real-child proof rides wb-ksz slice 3)",
         "registered": 1,
         "measured": 3,
-        "missing": []
+        "missing": [],
+        "skipped": []
        }
       ]
      }
@@ -646,6 +729,7 @@
        "documentKind": true,
        "typedFailedDocument": true,
        "eachTitle": true,
+       "skippedClaim": true,
        "unrelated": false,
        "labelOnly": false
       }

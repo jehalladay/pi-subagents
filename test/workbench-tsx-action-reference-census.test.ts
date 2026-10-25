@@ -24,8 +24,14 @@
  *    require, new URL), and no manifest names the SDK; A2 no tsx-action capability
  *    entry: the registry Pi builds (native-modules registerNativeProviders, the in-process wiring of src/index.ts registryFor)
  *    holds exactly the four measured read entries and none in the family (the SDK or VOCABULARY anywhere in a descriptor's
- *    JSON), the detached host registers only its four native providers (the case labels of hosts/local-detached.ts
- *    registryFor), and the Claude curated server lists exactly its three capability tools, none taking a reference; A3 no src
+ *    JSON), the detached host registers only its four native providers (each case of the hosts/local-detached.ts registryFor
+ *    provider switch, read by the compiler, registers exactly the one entry the host's own NATIVE_CAPABILITIES table names for
+ *    its label: every statement the case runs, fall-through followed, resolves through the host's import binding to a provider
+ *    registrar the census runs on a fresh registry, any other statement reads as unresolved, and the cases together register
+ *    the in-process four), every registration seam in src is the measured one (each CapabilityRegistry construction, each
+ *    reference to a member named register - a call, a read, an assignment, a literal element access, a destructuring or the
+ *    name as a folded literal (a reflected read) - and each reference to a function holding one, by module and enclosing
+ *    function), and the Claude curated server lists exactly its three capability tools, none taking a reference; A3 no src
  *    module spells VOCABULARY in an identifier (escapes decoded by the compiler), a string, template or regular-expression
  *    literal, or a constant-folded `+` concatenation: no src type, field, tool or text names an action reference, a TSX action,
  *    the InterfaceHost/InterfaceEvaluation boundary or SurfaceCapabilities.
@@ -34,8 +40,11 @@
  *    (the reference or the mount as the target, the action ID as the verb or the provider, the reference smuggled beside the
  *    params with grants, an authorization word and a confirmation) is refused, 0 executor calls on every wired provider and 0
  *    control events recorded; B2 admission decides, the selection is no authority: on the one allowlisted verb over an
- *    observed target (furnace stop), the 24 cells grant x ownership x operator confirmation are each run plain and with FIXTURE
- *    smuggled, and only the cell holding the exact grant, producer-confirmed ownership and confirmation invokes (once), while
+ *    observed target (furnace stop), the 36 cells grant x ownership x operator confirmation are each run plain and with FIXTURE
+ *    smuggled (ownership: none, a causation edge, a reversed edge, the producer-confirmed edge, and that edge reported without
+ *    the producer's confirmation ref or as stated by another producer - the projection refuses both at relate(), so a reporting
+ *    view hands them to the core, whose own provenance re-check decides), and only the cell holding the exact grant,
+ *    producer-confirmed ownership and confirmation invokes (once), while
  *    every smuggled run's reply is byte-identical to its plain twin; B3 recorded with provenance (wb-pjj): in that cell the
  *    executor receives the decision isCoreMintedDecision vouches for, the requested receipt is already recorded in the
  *    projection (control.requested, evidence control-receipt:<requestId>) when the executor runs, the receipt carries the exact
@@ -80,18 +89,33 @@
  * row label, its trigger phrase in row A's, every row carries one of them, its quote, restrictions and citation equal the
  * roster's, and its "Shipped: no" sentence is read beside the roster's producer facts, so a row removed from every literal of
  * this file and the roster still reds. Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the
- * bead row anchors rows and clauses, not pins).
+ * bead row anchors rows and clauses, not pins). A2's detached reading carries two live anchors outside every literal: each
+ * case's registered capability is held to the host's own NATIVE_CAPABILITIES table, and the cases together to the in-process
+ * entries, so an added detached registration reds A2 even when IMPL and the roster witness are hollowed together. Also not
+ * claimed: the src registration seam has no anchor outside the roster, so a seam field hollowed in IMPL and the roster
+ * together stays green (the in-process entries' standing shape).
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
  * not inverted, ran; every pin's case reached its end (REACHED).
- * RESIDUALS (named families, each with a pinned quiet row in the controls): R-COMPOSED a specifier or a name assembled at runtime
- * from a variable is invisible to A1 and A3 (A1 composedSpecifier, A3 composedName); R-LOOKALIKE a look-alike letter from
- * another script names a different identifier (A3 lookalike), while an inserted invisible splits the words and is read (A3
- * invisible); R-UNNAMED a registration that never spells the
- * vocabulary (A2 unnamedEntry), whose backstop is A2's exact entry list: any added registration reds it whatever its name;
+ * RESIDUALS (named families, each with a pinned quiet row in the controls): R-COMPOSED a specifier or a name assembled at
+ * runtime from a variable is invisible to A1, A2's seam reader and A3 (A1 composedSpecifier, A2 composedMember, A3
+ * composedName); R-LOOKALIKE a look-alike letter from another script names a different identifier (A3 lookalike), while an
+ * inserted invisible splits the words and is read (A3 invisible); R-UNNAMED a registration that never spells the vocabulary (A2
+ * unnamedEntry), whose backstop is A2's exact lists - the in-process entries, each detached case's entries (held to the host's
+ * own capability table) and the src registration seam - so a registration added in src reds A2 whatever its name: in a detached
+ * case (A2 extraInCase, fallThrough, inlineInCase, aliasedImport), beside the switch (A2 besideSwitch), on the returned
+ * registry (A2 onReturned, reflectedMember) or through a new registrar (A2 newRegistrar); R-RUN-TOGETHER a vocabulary pair
+ * written as one lowercase run with no camelCase, acronym or separator boundary (interfacehost, componentmount) is one word,
+ * not the pair, since A3 reads words and splitting runs would read transactionref as action ref (A3 runTogether); R-SHAPE a src
+ * type carrying the fixture's wire-identity fields under no vocabulary name spells nothing A3 reads (A3 shapeOnly);
  * R-INERT-TEXT callback source text in a string field the bounded schema admits is delivered as inert data, never evaluated (C2
  * inertLabel). Comments are prose, never A3's ground (A3 comment).
- * Display paths added: none. Test-only: it spawns nothing, writes no file, and every provider, executor and launcher is a counting
- * fake; the stand-in capability and the fixture live in this file only.
+ * STANDING CONTACT (A1, by design): A1 reads the first argument of any call as a specifier, since a load-shaped call can carry
+ * any callee name (a created require, a wrapper), so a module anywhere in the walked tree - a later TSX-family census included
+ * - that passes the SDK or a vocabulary file name as a literal first call argument reads as an importer (A1
+ * callArgumentMention, identifierCallMention): such a needle goes through a constant or a template, as this file's do.
+ * Display paths added: none. Test-only: it spawns nothing, writes no file, and every provider, executor and launcher it invokes is
+ * a counting fake (the real registrars A2 runs only register descriptors on fresh registries, never invoked); the stand-in
+ * capability and the fixture live in this file only.
  */
 import { type Dirent, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
@@ -111,7 +135,11 @@ import { createWorkflowExecuteTool, type ExecuteLaunch, type WorkflowExecuteDeps
 import { executeFurnaceControl, type FurnaceControlClient } from "../src/workbench/furnace-control.js";
 import type { DefinitionRef } from "../src/workbench/identity.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
-import { type NativeRef, ObservationProjection, type ObservationScope } from "../src/workbench/observation.js";
+import { type NativeRef, ObservationProjection, type ObservationScope, type Relation } from "../src/workbench/observation.js";
+import { registerNativeForgeGateStatus } from "../src/workbench/providers/forge.js";
+import { registerNativeFurnaceRunInspect } from "../src/workbench/providers/furnace.js";
+import { registerNativeHyperUnixFind } from "../src/workbench/providers/hyperunix.js";
+import { registerNativeReactiveFiberRender } from "../src/workbench/providers/reactivefiber.js";
 import { stripUnsafeText } from "../src/workbench/redaction.js";
 
 type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
@@ -149,7 +177,10 @@ const VOCABULARY: readonly (readonly [string, string])[] = [
 const MODULE_EXTENSIONS = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx"];
 const MANIFEST = /(?:^|\/)(?:package(?:-lock)?\.json|npm-shrinkwrap\.json|deno\.jsonc?|import[-_]map\.json|[tj]sconfig[^/]*\.json)$/i;
 const SKIPPED_ROOTS = [".git", ".beads", "node_modules", "dist", "build", "coverage", ".forge"];
-/** Each floor sits below the count measured at base dae1788 (818 files; src 115, test 439, qa 62, examples 6 modules; 4 manifests). */
+/**
+ * Each floor sits at or below the count measured at base dae1788 (818 files; src 115, test 439, qa 62, examples 6 modules; 4
+ * manifests): the manifests floor equals its measured 4, every other floor sits below its count.
+ */
 const FLOORS = { files: 760, modules: { src: 105, test: 400, qa: 55, examples: 5 }, manifests: 4 };
 /** A load the specifier reader must see: src/workbench/control.ts imports the capability registry. */
 const ANCHOR = { module: "src/workbench/control.ts", specifier: "./capability-registry.js" };
@@ -157,11 +188,25 @@ const ANCHOR = { module: "src/workbench/control.ts", specifier: "./capability-re
 const IDENTIFIER_ANCHOR = { module: "src/workbench/control.ts", identifier: "isCoreMintedDecision" };
 const DETACHED_HOST = "src/workbench/hosts/local-detached.ts";
 const DETACHED_REGISTRY_FUNCTION = "registryFor";
+/** The detached host's own table of the one capability each provider label registers (its identity-capture source). */
+const DETACHED_CAPABILITY_TABLE = "NATIVE_CAPABILITIES";
+/** The provider registrars a detached case may call, keyed `${imported name}@${module}` as the host imports them; the census runs the same exports. */
+const DETACHED_REGISTRARS: Readonly<Record<string, (registry: CapabilityRegistry, workspaceRoot: string) => void>> = {
+  "registerNativeForgeGateStatus@../providers/forge.js": registerNativeForgeGateStatus,
+  "registerNativeHyperUnixFind@../providers/hyperunix.js": registerNativeHyperUnixFind,
+  "registerNativeReactiveFiberRender@../providers/reactivefiber.js": registerNativeReactiveFiberRender,
+  "registerNativeFurnaceRunInspect@../providers/furnace.js": registerNativeFurnaceRunInspect,
+};
+/** The arguments each detached case hands its registrar: the host's registry and the request's workspace. */
+const DETACHED_ARGUMENTS = ["registry", "request.cwd"];
+/** The class a registry is built from and the member a registration goes through. */
+const REGISTRY_CLASS = "CapabilityRegistry";
+const REGISTER_MEMBER = "register";
 /** The control adapters wb-cra wires, keyed by provider: one counting executor stands for each. */
 const EXECUTOR_PROVIDERS = ["furnace", "claude-agent-sdk", "forge", "local-detached"];
 /** A global the callback source texts would set if anything evaluated them. */
 const SENTINEL = "wbIf7q4EvaluatedSentinel";
-const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-LOOKALIKE", "R-UNNAMED", "R-INERT-TEXT"];
+const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-LOOKALIKE", "R-UNNAMED", "R-RUN-TOGETHER", "R-SHAPE", "R-INERT-TEXT"];
 const CYRILLIC_A = String.fromCodePoint(0x0430);
 const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
 /** The unsafe display units C3 plants in identity fields, by name. */
@@ -532,17 +577,223 @@ function propertiesOf(schema: unknown): string[] {
 const entryOf = (descriptor: CapabilityDescriptor): string =>
   `${descriptor.id}@${descriptor.version} ${descriptor.effectClass} [${propertiesOf(descriptor.inputSchema).join(",")}] {${[...descriptor.permissions].join(",")}}`;
 
-/** The string case labels of the detached host's registry switch, read from its source by the compiler. */
-function detachedProviderCases(): string[] {
-  const file = ts.createSourceFile(DETACHED_HOST, readFileSync(join(REPO, DETACHED_HOST), "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
-  const cases: string[] = [];
-  const within = (node: ts.Node, inside: boolean): void => {
-    const here = inside || (ts.isFunctionDeclaration(node) && node.name?.text === DETACHED_REGISTRY_FUNCTION);
-    if (here && ts.isCaseClause(node)) cases.push(folded(node.expression) ?? `<non-literal ${node.expression.getText(file)}>`);
-    ts.forEachChild(node, child => within(child, here));
+const flat = (text: string): string => text.replace(/\s+/g, " ").trim();
+/** A name the compiler spells statically (an identifier, a private name or a string literal), else undefined. */
+function staticName(name: ts.Node): string | undefined {
+  return ts.isIdentifier(name) || ts.isPrivateIdentifier(name) || ts.isStringLiteral(name) ? name.text : undefined;
+}
+interface DetachedReading {
+  /** The string case labels of the registryFor provider switch, in source order. */
+  readonly cases: readonly string[];
+  /** Per label (a default clause as <default>): the entries its statements register on a fresh registry, then the rest. */
+  readonly entries: Readonly<Record<string, readonly string[]>>;
+  /** The host's own NATIVE_CAPABILITIES table: provider label to the one capability id it registers. */
+  readonly table: Readonly<Record<string, string>>;
+}
+/**
+ * The detached host read by the compiler: its provider switch's labels, what each case registers when its label matches (every
+ * statement from that clause on until a break, fall-through followed, a statement that calls a provider registrar through the
+ * host's own import binding run on a fresh registry, any other statement read as unresolved) and its own capability table.
+ */
+function readDetachedHost(source: string): DetachedReading {
+  const file = ts.createSourceFile(DETACHED_HOST, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const bindings = new Map<string, string>();
+  for (const statement of file.statements) {
+    if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier)) continue;
+    const named = statement.importClause?.namedBindings;
+    if (named === undefined || !ts.isNamedImports(named)) continue;
+    for (const element of named.elements) bindings.set(element.name.text, `${(element.propertyName ?? element.name).text}@${statement.moduleSpecifier.text}`);
+  }
+  const registrarOf = (statement: ts.Statement): ((registry: CapabilityRegistry, workspaceRoot: string) => void) | undefined => {
+    if (!ts.isExpressionStatement(statement) || !ts.isCallExpression(statement.expression) || !ts.isIdentifier(statement.expression.expression)) return undefined;
+    const binding = bindings.get(statement.expression.expression.text);
+    const args = statement.expression.arguments.map(argument => flat(argument.getText(file)));
+    return binding !== undefined && JSON.stringify(args) === JSON.stringify(DETACHED_ARGUMENTS) ? DETACHED_REGISTRARS[binding] : undefined;
   };
-  within(file, false);
-  return cases;
+  const registeredFrom = (clauses: readonly ts.CaseOrDefaultClause[]): string[] => {
+    const registry = new CapabilityRegistry();
+    const rest: string[] = [];
+    for (const statement of clauses.flatMap(clause => [...clause.statements])) {
+      if (ts.isBreakStatement(statement)) break;
+      const registrar = registrarOf(statement);
+      if (registrar === undefined) rest.push(`unresolved: ${flat(statement.getText(file))}`);
+      else {
+        try {
+          registrar(registry, REPO);
+        } catch (error) {
+          rest.push(`refused: ${error instanceof Error ? error.message : String(error)}`);
+        }
+      }
+      if (ts.isReturnStatement(statement) || ts.isThrowStatement(statement) || ts.isContinueStatement(statement)) break;
+    }
+    return [...registry.catalogSnapshot().map(({ descriptor }) => entryOf(descriptor)), ...rest];
+  };
+  const cases: string[] = [];
+  const entries: Record<string, string[]> = {};
+  const table: Record<string, string> = {};
+  const visit = (node: ts.Node, inside: boolean): void => {
+    const here = inside || (ts.isFunctionDeclaration(node) && node.name?.text === DETACHED_REGISTRY_FUNCTION);
+    if (here && ts.isCaseBlock(node)) {
+      for (const [at, clause] of node.clauses.entries()) {
+        const label = ts.isCaseClause(clause) ? (folded(clause.expression) ?? `<non-literal ${clause.expression.getText(file)}>`) : "<default>";
+        if (ts.isCaseClause(clause)) cases.push(label);
+        // Only the first clause of a label is reached by it; a repeated label still shows in the labels.
+        if (!Object.hasOwn(entries, label)) entries[label] = registeredFrom(node.clauses.slice(at));
+      }
+    }
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === DETACHED_CAPABILITY_TABLE && node.initializer !== undefined) {
+      let value: ts.Expression = node.initializer;
+      while (ts.isAsExpression(value) || ts.isSatisfiesExpression(value) || ts.isParenthesizedExpression(value)) value = value.expression;
+      if (ts.isObjectLiteralExpression(value)) {
+        for (const property of value.properties) {
+          const key = ts.isPropertyAssignment(property) ? staticName(property.name) : undefined;
+          if (key !== undefined && ts.isPropertyAssignment(property)) table[key] = folded(property.initializer) ?? `<non-literal ${flat(property.initializer.getText(file))}>`;
+        }
+      }
+    }
+    ts.forEachChild(node, child => visit(child, here));
+  };
+  visit(file, false);
+  return { cases, entries, table };
+}
+/** Each detached case as `label: the capability ids it registers`, in label order: what the host's table must equal. */
+const caseCapabilities = (reading: DetachedReading): string[] =>
+  Object.entries(reading.entries)
+    .map(([label, list]) => `${label}: ${list.map(entry => entry.slice(0, entry.includes("@") ? entry.indexOf("@") : entry.length)).join(" + ")}`)
+    .sort();
+const tableCapabilities = (reading: DetachedReading): string[] =>
+  Object.entries(reading.table)
+    .map(([label, id]) => `${label}: ${id}`)
+    .sort();
+
+/** The function a node sits in: a declaration's, a method's or an accessor's name, or the variable an arrow or function initializes. */
+function enclosingName(node: ts.Node): string {
+  for (let at: ts.Node | undefined = node.parent; at !== undefined; at = at.parent) {
+    if ((ts.isFunctionDeclaration(at) || ts.isFunctionExpression(at)) && at.name !== undefined) return at.name.text;
+    if (ts.isMethodDeclaration(at) || ts.isGetAccessorDeclaration(at) || ts.isSetAccessorDeclaration(at)) return staticName(at.name) ?? "<computed>";
+    if ((ts.isArrowFunction(at) || ts.isFunctionExpression(at)) && ts.isVariableDeclaration(at.parent) && ts.isIdentifier(at.parent.name)) return at.parent.name.text;
+  }
+  return "<module>";
+}
+/** How a member reference is used: called, assigned to or read (bound, tested, passed). */
+function memberUse(node: ts.Node): string {
+  const { parent } = node;
+  if (ts.isCallExpression(parent) && parent.expression === node) return "call";
+  if (ts.isBinaryExpression(parent) && parent.left === node && parent.operatorToken.kind === ts.SyntaxKind.EqualsToken) return "assign";
+  return "read";
+}
+/** How a reference to a registrar is used: imported, called (directly or as a member) or otherwise referenced (an alias, a value). */
+function referenceRole(node: ts.Identifier): string {
+  const { parent } = node;
+  if (ts.isImportSpecifier(parent)) return "import";
+  if (ts.isCallExpression(parent) && parent.expression === node) return "call";
+  if (ts.isPropertyAccessExpression(parent) && parent.name === node && ts.isCallExpression(parent.parent) && parent.parent.expression === parent) return "call";
+  return "reference";
+}
+/** Whether an identifier is the name a function, method or member declares (its own declaration, never a reference to it). */
+function declaresName(node: ts.Identifier): boolean {
+  const { parent } = node;
+  return (
+    (ts.isFunctionDeclaration(parent) || ts.isMethodDeclaration(parent) || ts.isMethodSignature(parent) || ts.isPropertySignature(parent) || ts.isPropertyDeclaration(parent)) &&
+    parent.name === node
+  );
+}
+interface ModuleSeam {
+  readonly path: string;
+  readonly constructions: readonly string[];
+  readonly registrations: readonly { readonly fn: string; readonly text: string }[];
+  /** The function and method names the module declares. */
+  readonly functions: ReadonlySet<string>;
+  /** Every identifier that is not a declaration's own name, by its text. */
+  readonly identifiers: ReadonlyMap<string, readonly ts.Identifier[]>;
+}
+/** One module's registration seam facts, read by the compiler under its own script kind. */
+function moduleSeam(path: string, source: string): ModuleSeam {
+  const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKind(path));
+  const constructions: string[] = [];
+  const registrations: { fn: string; text: string }[] = [];
+  const functions = new Set<string>();
+  const identifiers = new Map<string, ts.Identifier[]>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isNewExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === REGISTRY_CLASS) constructions.push(`${path}:${enclosingName(node)}`);
+    if ((ts.isPropertyAccessExpression(node) && node.name.text === REGISTER_MEMBER) || (ts.isElementAccessExpression(node) && folded(node.argumentExpression) === REGISTER_MEMBER)) {
+      registrations.push({ fn: enclosingName(node), text: `${flat(node.expression.getText(file))}.${REGISTER_MEMBER} ${memberUse(node)}` });
+    }
+    if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent) && staticName(node.propertyName ?? node.name) === REGISTER_MEMBER) {
+      registrations.push({ fn: enclosingName(node), text: `{${REGISTER_MEMBER}} destructured` });
+    }
+    // The member's name as a (folded) literal anywhere else - Reflect.get(registry, "register"), a property descriptor read - counts
+    // once: never the argument an element access already counted, never a part of a larger literal that folds to it.
+    const literal = ts.isStringLiteralLike(node) || ts.isTemplateExpression(node) || (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken);
+    if (literal && folded(node) === REGISTER_MEMBER) {
+      const { parent } = node;
+      const counted = ts.isElementAccessExpression(parent) && parent.argumentExpression === node;
+      const inside = (ts.isBinaryExpression(parent) || ts.isParenthesizedExpression(parent)) && folded(parent) === REGISTER_MEMBER;
+      if (!counted && !inside) registrations.push({ fn: enclosingName(node), text: `"${REGISTER_MEMBER}" literal` });
+    }
+    if ((ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node)) && node.name !== undefined) {
+      const name = staticName(node.name);
+      if (name !== undefined) functions.add(name);
+    }
+    if (ts.isIdentifier(node) && !declaresName(node)) {
+      const list = identifiers.get(node.text);
+      if (list === undefined) identifiers.set(node.text, [node]);
+      else list.push(node);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return { path, constructions, registrations, functions, identifiers };
+}
+interface Seam {
+  readonly constructions: readonly string[];
+  readonly registrations: readonly string[];
+  readonly references: readonly string[];
+}
+/**
+ * The src registration seam: every CapabilityRegistry construction, every reference to a member named register, and every
+ * reference to a function holding one (a registrar) - matched by name across src when one module declares that name, and only
+ * inside the registrar's own module when several do (src/index.ts and the detached host each declare a registryFor).
+ */
+function registrationSeam(modules: readonly ModuleSeam[]): Seam {
+  const holders = new Map<string, Set<string>>();
+  for (const module of modules) {
+    for (const { fn } of module.registrations) {
+      if (fn === "<module>") continue;
+      const paths = holders.get(fn) ?? new Set<string>();
+      paths.add(module.path);
+      holders.set(fn, paths);
+    }
+  }
+  const declaredIn = (name: string): number => modules.filter(module => module.functions.has(name)).length;
+  const references: string[] = [];
+  for (const module of modules) {
+    for (const [name, paths] of holders) {
+      if (declaredIn(name) > 1 && !paths.has(module.path)) continue;
+      for (const node of module.identifiers.get(name) ?? []) references.push(`${module.path}:${enclosingName(node)}: ${name} ${referenceRole(node)}`);
+    }
+  }
+  return {
+    constructions: modules.flatMap(module => module.constructions),
+    registrations: modules.flatMap(module => module.registrations.map(({ fn, text }) => `${module.path}:${fn}: ${text}`)),
+    references: references.sort(),
+  };
+}
+let cachedSeams: readonly ModuleSeam[] | undefined;
+/** Every src module's seam facts, from the walked tree, in its name order. */
+function srcSeams(): readonly ModuleSeam[] {
+  if (cachedSeams !== undefined) return cachedSeams;
+  cachedSeams = [...liveTree().modules.keys()].filter(path => path.startsWith("src/")).map(path => moduleSeam(path, readFileSync(join(REPO, path), "utf8")));
+  return cachedSeams;
+}
+/** The live detached host source with each [from, to] edit applied once; a missing anchor throws, never a silent no-op. */
+function editedHost(edits: readonly (readonly [string, string])[]): string {
+  let source = readFileSync(join(REPO, DETACHED_HOST), "utf8");
+  for (const [from, to] of edits) {
+    if (!source.includes(from)) throw new Error(`${DETACHED_HOST} no longer carries ${from}`);
+    source = source.replace(from, () => to);
+  }
+  return source;
 }
 
 // ---------------------------------------------------------------------------------------------------- control and execute
@@ -562,17 +813,44 @@ const ALL_CONTROL_GRANTS: readonly string[] = [
   "workbench:observe",
   "observe:furnace.run.inspect",
 ];
-type Ownership = "none" | "causation" | "reversed" | "confirmed";
-const OWNERSHIPS: readonly Ownership[] = ["none", "causation", "reversed", "confirmed"];
+/** How a reporting view drifts the producer's ownership statement: its confirmation ref dropped, or stated by another producer. */
+type Drift = "refDropped" | "foreignSource";
+type Ownership = "none" | "causation" | "reversed" | "confirmed" | Drift;
+const OWNERSHIPS: readonly Ownership[] = ["none", "causation", "reversed", "confirmed", "refDropped", "foreignSource"];
+/** The producer a foreignSource cell attributes the ownership statement to: a native producer other than the target's. */
+const FOREIGN_PRODUCER = "forge";
+/**
+ * A projection that reports its ownership edges drifted as `drift` names. relate() refuses to record either drift (it requires
+ * the confirmation ref, from the from-ref's producer), so only a reporting view hands one to the decision core, whose own
+ * provenance re-check (control.ts confirmedOwnership) is what the drift cells of B2 measure.
+ */
+class ReportedProjection extends ObservationProjection {
+  readonly #drift: Drift;
+  constructor(drift: Drift) {
+    super();
+    this.#drift = drift;
+  }
+  override relations(input: Parameters<ObservationProjection["relations"]>[0]): Relation[] {
+    return super.relations(input).map(relation => {
+      if (relation.kind !== "ownership") return relation;
+      const { source, observedAt } = relation.provenance;
+      if (this.#drift === "foreignSource") return { ...relation, provenance: { ...relation.provenance, source: FOREIGN_PRODUCER } };
+      return { ...relation, provenance: observedAt === undefined ? { source } : { source, observedAt } };
+    });
+  }
+}
 const GRANT_SETS: Readonly<Record<string, readonly string[]>> = {
   observer: ["workbench:observe", "observe:furnace.run.inspect"],
   otherVerb: ["control:furnace.pause"],
   exact: ["control:furnace.stop"],
 };
 
-/** The run and its attempt observed in SCOPE, related as `ownership` dictates; only "confirmed" is the producer's statement. */
+/**
+ * The run and its attempt observed in SCOPE, related as `ownership` dictates; only "confirmed" is the producer's statement, and
+ * the drift cells record that same statement but report it drifted.
+ */
 function projectionWith(ownership: Ownership): ObservationProjection {
-  const projection = new ObservationProjection();
+  const projection = ownership === "refDropped" || ownership === "foreignSource" ? new ReportedProjection(ownership) : new ObservationProjection();
   for (const source of [RUN, CHILD]) {
     projection.refresh({
       source,
@@ -587,7 +865,7 @@ function projectionWith(ownership: Ownership): ObservationProjection {
   const provenance = { source: "furnace", observedAt: AT, nativeConfirmationRef: OWNERSHIP_REF };
   if (ownership === "causation") projection.relate({ scope: SCOPE, from: RUN, to: CHILD, kind: "causation", provenance });
   if (ownership === "reversed") projection.relate({ scope: SCOPE, from: CHILD, to: RUN, kind: "ownership", provenance });
-  if (ownership === "confirmed") projection.relate({ scope: SCOPE, from: RUN, to: CHILD, kind: "ownership", provenance });
+  if (ownership === "confirmed" || ownership === "refDropped" || ownership === "foreignSource") projection.relate({ scope: SCOPE, from: RUN, to: CHILD, kind: "ownership", provenance });
   return projection;
 }
 /** The control events the projection recorded in SCOPE, as kind:evidence. */
@@ -847,6 +1125,40 @@ function stringLeaves(value: Json): string[] {
 const carriesUnsafe = (value: string): boolean => [...value].some(char => UNSAFE_POINTS.includes(char.codePointAt(0) ?? -1)) || stripUnsafeText(value) !== value;
 const sentinelSet = (): boolean => Object.hasOwn(globalThis, SENTINEL);
 
+/**
+ * Whether A2 reds an edited detached host: a case that no longer registers exactly its table's capability, cases that no longer
+ * register the in-process entries together, or a src registration seam that differs from the live one.
+ */
+function seamControls(inProcess: readonly string[], seam: Seam, live: readonly ModuleSeam[]): Record<string, boolean> {
+  const forgeCase = 'case "forge": registerNativeForgeGateStatus(registry, request.cwd); break;';
+  const construction = "const registry = new CapabilityRegistry();";
+  const returned = "const registry = registryFor({ ...request, localProvider: undefined });";
+  const reds = (edits: readonly (readonly [string, string])[]): boolean => {
+    const source = editedHost(edits);
+    const reading = readDetachedHost(source);
+    const edited = registrationSeam(live.map(module => (module.path === DETACHED_HOST ? moduleSeam(DETACHED_HOST, source) : module)));
+    return (
+      JSON.stringify(caseCapabilities(reading)) !== JSON.stringify(tableCapabilities(reading)) ||
+      JSON.stringify(Object.values(reading.entries).flat().sort()) !== JSON.stringify(inProcess) ||
+      JSON.stringify(edited) !== JSON.stringify(seam)
+    );
+  };
+  return {
+    extraInCase: reds([[forgeCase, 'case "forge": registerNativeForgeGateStatus(registry, request.cwd); registerNativeHyperUnixFind(registry, request.cwd); break;']]),
+    fallThrough: reds([[forgeCase, 'case "forge": registerNativeForgeGateStatus(registry, request.cwd);']]),
+    inlineInCase: reds([[forgeCase, 'case "forge": registerNativeForgeGateStatus(registry, request.cwd); registry.register(extraProvider); break;']]),
+    aliasedImport: reds([['import { registerNativeForgeGateStatus } from "../providers/forge.js";', 'import { registerNativeHyperUnixFind as registerNativeForgeGateStatus } from "../providers/hyperunix.js";']]),
+    besideSwitch: reds([[construction, `${construction}\n  registerNativeHyperUnixFind(registry, request.cwd);`]]),
+    onReturned: reds([[returned, `${returned}\n  registry.register(extraProvider);`]]),
+    newRegistrar: reds([
+      [`function ${DETACHED_REGISTRY_FUNCTION}(`, `function addExtra(registry: CapabilityRegistry): void {\n  registry.register(extraProvider);\n}\nfunction ${DETACHED_REGISTRY_FUNCTION}(`],
+      [construction, `${construction}\n  addExtra(registry);`],
+    ]),
+    reflectedMember: reds([[returned, `${returned}\n  Reflect.apply(Reflect.get(registry, "register") as (provider: unknown) => void, registry, [extraProvider]);`]]),
+    composedMember: reds([[returned, `${returned}\n  const verb = ["reg", "ister"].join("");\n  (registry as unknown as Record<string, (provider: unknown) => void>)[verb]?.(extraProvider);`]]),
+  };
+}
+
 // --------------------------------------------------------------------------------------------------------------- the cases
 
 const IMPL: Record<string, () => Json | Promise<Json>> = {
@@ -894,6 +1206,8 @@ const IMPL: Record<string, () => Json | Promise<Json>> = {
       mentionOnly: loadsIn("c.ts", `const label = "${SDK}";\n`),
       transactionModule: loadsIn("c.ts", 'import { ref } from "./transaction-ref.js";\n'),
       composedSpecifier: loadsIn("c.mjs", `const tail = "tsx";\nconst sdk = await import(\`@reactive-fiber/${"$"}{tail}\`);\n`),
+      callArgumentMention: loadsIn("c.ts", `export const mentionsSdk = (text: string): boolean => text.includes("${SDK}");\n`),
+      identifierCallMention: loadsIn("c.ts", 'export const label = (name: string): string => name;\nexport const MOUNT_LABEL = label("component-mount");\n'),
     };
     return done("A1", { floorsMet, anchor, loads, manifestHits: [...tree.manifestHits], symlinks: [...tree.symlinks], controls });
   },
@@ -904,7 +1218,10 @@ const IMPL: Record<string, () => Json | Promise<Json>> = {
     const catalog = registry.catalogSnapshot().map(({ descriptor }) => descriptor);
     const entries = catalog.map(entryOf);
     const family = catalog.filter(inFamily).map(descriptor => descriptor.id);
-    const detachedCases = detachedProviderCases();
+    const detached = readDetachedHost(readFileSync(join(REPO, DETACHED_HOST), "utf8"));
+    const detachedCases = [...detached.cases];
+    const live = srcSeams();
+    const seam = registrationSeam(live);
     const server = await curated(new CapabilityRegistry(), []);
     let tools: string[];
     try {
@@ -914,6 +1231,9 @@ const IMPL: Record<string, () => Json | Promise<Json>> = {
     }
     expect(family, "registered descriptors in the tsx-action family").toEqual([]);
     expect(detachedCases.filter(label => inFamily(label)), "detached host providers in the tsx-action family").toEqual([]);
+    // Two live anchors outside every literal: the host's own capability table, and the in-process entries.
+    expect(caseCapabilities(detached), "each detached case registers exactly the capability the host's own table names for its label").toEqual(tableCapabilities(detached));
+    expect(Object.values(detached.entries).flat().sort(), "the detached cases together register the in-process entries").toEqual([...entries].sort());
     expect(
       tools.map(tool => tool.slice(0, tool.indexOf("("))),
       "the curated Claude server lists exactly its capability tools",
@@ -925,8 +1245,9 @@ const IMPL: Record<string, () => Json | Promise<Json>> = {
       mountSchemaEntry: inFamily({ id: "reactivefiber.ui.dispatch", inputSchema: { properties: { componentMount: { type: "string" } } } }),
       sdkContractEntry: inFamily({ id: "reactivefiber.ui.dispatch", contractSource: `${SDK}@0.1.668:dispatch` }),
       unnamedEntry: inFamily({ id: "reactivefiber.ui.dispatch", description: "dispatch a remote handler" }),
+      ...seamControls([...entries].sort(), seam, live),
     };
-    return done("A2", { entries, family, detachedCases, tools, controls });
+    return done("A2", { entries, family, detachedCases, detachedEntries: detached.entries, seam, tools, controls });
   },
   A3: () => {
     const tree = liveTree();
@@ -957,6 +1278,10 @@ const IMPL: Record<string, () => Json | Promise<Json>> = {
       lookalike: spells(`const ${CYRILLIC_A}ctionRef = 1;\n`),
       invisible: spells(`const label = "action${ZERO_WIDTH_SPACE}Ref";\n`),
       comment: spells("// relays the action reference\nexport {};\n"),
+      runTogether: spells('export const relayinterfacehost = "componentmount";\n'),
+      shapeOnly: spells(
+        "export interface RemoteHandle {\n  readonly session: string;\n  readonly owner: string;\n  readonly mount: { readonly id: string; readonly generation: number };\n  readonly actionId: string;\n  readonly payloadSchema: string;\n  readonly sourceRevision: string;\n}\n",
+      ),
     };
     return done("A3", { srcModules: src.length >= FLOORS.modules.src, anchor, spellings, controls });
   },
@@ -1269,6 +1594,11 @@ describe("wb-if7q.4 TSX action-reference census (TSX-NATIVE-INTERFACES-AND-PORTA
         anchor: `${ANCHOR.module}:${ANCHOR.specifier}`,
         identifierAnchor: `${IDENTIFIER_ANCHOR.module}:${IDENTIFIER_ANCHOR.identifier}`,
         detachedHost: `${DETACHED_HOST}:${DETACHED_REGISTRY_FUNCTION}`,
+        detachedCapabilityTable: `${DETACHED_HOST}:${DETACHED_CAPABILITY_TABLE}`,
+        detachedRegistrars: Object.keys(DETACHED_REGISTRARS),
+        detachedArguments: DETACHED_ARGUMENTS,
+        registerMember: `${REGISTRY_CLASS}.${REGISTER_MEMBER}`,
+        foreignProducer: FOREIGN_PRODUCER,
         executorProviders: EXECUTOR_PROVIDERS,
         standIn: `${STAND_IN_ID}:${STAND_IN_PERMISSION}`,
         standInSchema: json(STAND_IN_SCHEMA),
