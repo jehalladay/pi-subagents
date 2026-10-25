@@ -75,18 +75,33 @@
  *    refused even at equal bytes) and the mutants are refused.
  *  C, acceptance (c) and the posture. C1 the walk: no module below WALK_ROOTS spells a gp identity domain, reads a gp identity
  *    field or calls startsWith, endsWith or includes over one, and no other file below them spells one, with floors, flagged and
- *    quiet controls and each residual's quiet row; C2 the reference reader carries value and field verbatim beside its ledger
- *    row's form and the rewriting readers are refused; C3 the profile comes from the descriptor or reads 'unknown profile', the
- *    profile mutants are refused, and the descriptor is measured unshipped.
+ *    quiet controls and each residual's quiet row; the walk below each root reads exactly the regular files git lists there
+ *    (tracked or untracked, ignored ones included), its modules exactly git's by extension, each floor sits at or below git's
+ *    module count, every module's judging visit covers every node of its parse (counted apart by nodesOf) and every other file's
+ *    every line is judged; the raw scan has flagged and quiet controls, and stub trees drive the walk's symlink and fail-closed
+ *    legs (a symlink named like a module is recorded, never followed; an entry of no known kind is unreadable); C2 the reference
+ *    reader carries value and field verbatim beside its ledger row's form and the rewriting readers are refused; C3 the profile
+ *    comes from the descriptor or reads 'unknown profile', the profile mutants are refused, and the descriptor is measured
+ *    unshipped.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (id, label, pins), every pin's
  * witness, the scan constants, the ledger, the derived vocabulary, the residual families and the registered test titles are held
  * to the out-of-file roster (test/fixtures/gp-identity-roster.json). OUTSIDE ANCHOR: the owner filing's row in the tracked bead
  * export (.beads/issues.jsonl, row wb-gxd7.1): each acceptance clause and the posture fact sit verbatim in exactly one row label,
  * every row carries one, the statement, quote, citation and authority sentence equal the roster's, the quote is the producer's
  * README.md:42 line and the authority sentence sits in its 02:30 line, the filing's field names are ledger fields, its checkpoint
- * form set is the ledger's, its three method names are CALL_METHODS, its comparator name is the reference's, its 'unknown profile'
- * is UNKNOWN_PROFILE, and its gating sentence names the roster's code facts. Not claimed: a pin removed from ROWS, the literal,
- * IMPL and the roster together (the bead row anchors rows and clauses, not pins).
+ * form set is the ledger's, its three method names are CALL_METHODS, its judged scope (clause (c)'s "in src") is a walk root, its
+ * comparator name is the reference's, its 'unknown profile' is UNKNOWN_PROFILE, its gating sentence names the roster's code facts,
+ * and every residual family its delivery record names (the first sentence opening with DELIVERED_RESIDUALS_HEAD in the row's
+ * append-only notes) is still a residual family. OUTSIDE COUNT: git's listing below each walk root (C1). Not claimed: a pin
+ * removed from ROWS, the literal, IMPL and the roster together (the bead row anchors rows and clauses, not pins); a residual
+ * family added after the delivery record (the record bounds the set from below, the roster alone holds an addition); a control
+ * row's source rewritten to another case of its own family (controls are held to the roster); an anchor whose own reader is
+ * rewritten (readBeadRow, gitFiles).
+ * wb-qvwt (the R694 follow-up of landing 326, gate cmd_d6126e5acf7f): F1 clause (c)'s judged scope was self-anchored (src could
+ * leave WALK_ROOTS, FLOORS, CALL_FLOOR, OUTSIDE and the roster together); it is read from the filing now, and git's listing
+ * holds the walk and its floors. F2 a residual family could leave the census and the roster together; the delivery record now
+ * bounds the families from below. F3 the raw scan and the walk's symlink leg had no flagged control; RAW_CONTROLS and
+ * WALK_CONTROLS give each leg a flagged and a quiet row.
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
  * not inverted, ran; every pin's case reached its end (REACHED).
  * RESIDUALS (named families, each with a pinned quiet row in C1's controls): R-ALIAS a gp identity read through two or more aliases
@@ -95,11 +110,12 @@
  * reaching a parameter or a generic helper with no gp name on the way; R-NAMESAKE a gp field whose name is generic or Pi's own
  * (the journal's snapshotDigest, the library receipt's checkpoint, the put result's digest), which the vocabulary excludes;
  * R-OUTSIDE a module outside WALK_ROOTS (test helpers and fixtures hold gp identities on purpose).
- * Display paths added: none. Test-only: no process is spawned and no file is written; src, qa, examples, the roster and the bead
- * export are only read.
+ * Display paths added: none. Test-only: the one process spawned is `git ls-files` (a read-only listing below each walk root), and
+ * no file is written; src, qa, examples, the roster and the bead export are only read.
  */
+import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { type Dirent, readdirSync, readFileSync } from "node:fs";
+import { lstatSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -123,7 +139,8 @@ const CALL_METHODS: readonly string[] = ["startsWith", "endsWith", "includes"];
 /** The Pi code paths judged: product sources, QA scripts and shipped examples (every file below them, at any depth). */
 const WALK_ROOTS: readonly string[] = ["src", "qa", "examples"];
 const MODULE_EXTENSIONS: readonly string[] = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx"];
-/** Each floor sits below the module count measured at base a11b36f (src 115, qa 62, examples 6). */
+/** Each floor sits below the module count measured at base a11b36f (src 115, qa 62, examples 6; the same at 5f3dd4c), and C1 holds
+ * it to git's module count below its root (wb-qvwt F1). */
 const FLOORS: Readonly<Record<string, number>> = { src: 100, qa: 55, examples: 5 };
 /** Below the startsWith/endsWith/includes calls the walk reads at base a11b36f: the non-vacuity anchor of the call rule. */
 const CALL_FLOOR = 150;
@@ -250,6 +267,8 @@ function vocabulary(ledger: readonly LedgerEntry[]): Vocabulary {
 const VOCABULARY = vocabulary(LEDGER);
 
 const RESIDUAL_FAMILIES: readonly string[] = ["R-ALIAS", "R-COMPUTED", "R-OTHER-METHOD", "R-COMMENT", "R-UNTYPED-FLOW", "R-NAMESAKE", "R-OUTSIDE"];
+/** The head of the delivery record's residual sentence in the filing row's notes (the record the residual families answer to). */
+const DELIVERED_RESIDUALS_HEAD = "RESIDUALS (named families, each with a pinned quiet row in C1's controls): ";
 
 interface Row {
   readonly id: string;
@@ -766,11 +785,20 @@ interface Walk {
   readonly symlinks: string[];
   readonly unreadable: string[];
 }
+/** One directory entry as the walk reads it (a node:fs Dirent, or a control's stub). */
+interface DirEntry {
+  readonly name: string;
+  isFile(): boolean;
+  isDirectory(): boolean;
+  isSymbolicLink(): boolean;
+}
+type Lister = (relative: string) => readonly DirEntry[];
+const listDirectory: Lister = relative => readdirSync(join(REPO, relative), { withFileTypes: true });
 /** Every file below one root, in name order, repository-relative; symlinks are recorded, never followed; any other entry fails closed. */
-function walkRoot(root: string): Walk {
+function walkRoot(root: string, list: Lister = listDirectory): Walk {
   const walk: Walk = { modules: [], others: [], symlinks: [], unreadable: [] };
   const visit = (relative: string): void => {
-    const entries: Dirent[] = readdirSync(join(REPO, relative), { withFileTypes: true });
+    const entries = list(relative);
     for (const entry of [...entries].sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0))) {
       const child = posix(`${relative}/${entry.name}`);
       if (entry.isSymbolicLink()) walk.symlinks.push(child);
@@ -782,12 +810,34 @@ function walkRoot(root: string): Walk {
   visit(root);
   return walk;
 }
+/** Every regular file git sees below a root - tracked or untracked, ignored ones included, so it lists what the walk reads - as
+ * sorted repository-relative paths: the outside count the walk is held to (wb-qvwt F1). A path git still indexes that the checkout
+ * no longer holds is no file the walk can read, so it is left out. */
+function gitFiles(root: string): string[] {
+  const listing = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--", root], { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+  const isFile = (path: string): boolean => {
+    try {
+      return lstatSync(join(REPO, path)).isFile();
+    } catch {
+      return false;
+    }
+  };
+  return [...new Set(listing.split("\0"))].filter(path => path !== "" && isFile(path)).sort();
+}
+/** The paths one list holds and the other lacks, both ways, labelled by root. */
+function drift(root: string, read: readonly string[], listed: readonly string[]): string[] {
+  const readSet = new Set(read);
+  const listedSet = new Set(listed);
+  return [...listed.filter(path => !readSet.has(path)).map(path => `${root}: unread ${path}`), ...read.filter(path => !listedSet.has(path)).map(path => `${root}: unlisted ${path}`)];
+}
 
 interface Findings {
   readonly spellings: string[];
   readonly reads: string[];
   readonly calls: string[];
   readonly callCount: number;
+  /** The nodes the judging visit traversed: the per-file record C1 holds to nodesOf. */
+  readonly nodes: number;
 }
 function scriptKind(path: string): ts.ScriptKind {
   const extension = extensionOf(path);
@@ -842,9 +892,11 @@ function scanSource(path: string, source: string): Findings {
     ts.forEachChild(node, collect);
   };
   collect(file);
-  const findings: Findings = { spellings: [], reads: [], calls: [], callCount: 0 };
+  const findings: Findings = { spellings: [], reads: [], calls: [], callCount: 0, nodes: 0 };
   let calls = 0;
+  let nodes = 0;
   const visit = (node: ts.Node): void => {
+    nodes += 1;
     const literal = literalText(node);
     if (literal !== undefined && (GP_IDENTITY_TEXT.test(literal) || VOCABULARY.flags.includes(literal))) findings.spellings.push(`${at(node)} ${JSON.stringify(literal)}`);
     if (isGpRead(node)) findings.reads.push(`${at(node)} ${node.getText(file)}`);
@@ -856,11 +908,33 @@ function scanSource(path: string, source: string): Findings {
     ts.forEachChild(node, visit);
   };
   visit(file);
-  return { ...findings, callCount: calls };
+  return { ...findings, callCount: calls, nodes };
 }
-/** A file that is no module: its lines spelling a gp identity domain. */
-function rawSpellings(path: string, source: string): string[] {
-  return source.split("\n").flatMap((line, index) => (GP_DOMAIN_TEXT.test(line) ? [`${path}:${index + 1}`] : []));
+/** Every node of a module's parse, counted apart from the judging visit (wb-qvwt: a scan that skips a file or part of one reads
+ * fewer nodes than this). */
+function nodesOf(path: string, source: string): number {
+  let total = 0;
+  const count = (node: ts.Node): void => {
+    total += 1;
+    ts.forEachChild(node, count);
+  };
+  count(ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKind(path)));
+  return total;
+}
+interface RawScan {
+  readonly hits: string[];
+  /** The lines the judge read: the per-file record C1 holds to the file's line count. */
+  readonly lines: number;
+}
+/** A file that is no module: its lines spelling a gp identity domain, and how many lines were judged. */
+function rawScan(path: string, source: string): RawScan {
+  const hits: string[] = [];
+  let lines = 0;
+  for (const [index, line] of source.split("\n").entries()) {
+    lines += 1;
+    if (GP_DOMAIN_TEXT.test(line)) hits.push(`${path}:${index + 1}`);
+  }
+  return { hits, lines };
 }
 
 interface Control {
@@ -895,6 +969,59 @@ const CONTROLS: readonly Control[] = [
 /** R-OUTSIDE's pinned row: the walk's root predicate leaves test helpers and fixtures unjudged. */
 const OUTSIDE = { judged: "src/workbench/example.ts", unjudged: "test/helpers/example.ts" };
 
+interface RawControl {
+  readonly id: string;
+  readonly family: string;
+  readonly source: string;
+  /** The 1-based lines the raw scan must flag ([] for a quiet control). */
+  readonly flagged: readonly number[];
+}
+/** In-memory files that are no module, which the raw scan must flag (F-) or keep quiet (Q-) (wb-qvwt F3). */
+const RAW_CONTROLS: readonly RawControl[] = [
+  { id: "F-RAW-PROSE", family: "flagged", source: "# note\n\nThe graph identity is graphpolicy.snapshot.c1:0000 for this example.\n", flagged: [3] },
+  { id: "F-RAW-SHELL", family: "flagged", source: '#!/bin/sh\ncase "$1" in\n  graphpolicy.checkpoint.c1*) echo yes ;;\nesac\n', flagged: [3] },
+  { id: "Q-RAW-NO-DOMAIN", family: "quiet", source: "schema graphpolicy.cli.v1, profile graphpolicy.c1\nversion graphpolicy.snapshot.c10\n", flagged: [] },
+];
+
+/** A stub directory entry of one kind (an "other" entry is neither file, directory nor symlink: a socket or a FIFO). */
+function stubEntry(name: string, kind: "file" | "directory" | "symlink" | "other"): DirEntry {
+  return { name, isFile: () => kind === "file", isDirectory: () => kind === "directory", isSymbolicLink: () => kind === "symlink" };
+}
+interface WalkControl {
+  readonly id: string;
+  readonly family: string;
+  /** The stub tree: each listed directory's entries, given out of name order. */
+  readonly tree: Readonly<Record<string, readonly DirEntry[]>>;
+  readonly expect: Walk;
+}
+/** Stub trees the walk must read leg by leg (wb-qvwt F3): the flagged tree fills every leg - a symlink named like a module is
+ * recorded as a symlink and never followed, an entry of no known kind fails closed - and the quiet tree fills neither. */
+const WALK_CONTROLS: readonly WalkControl[] = [
+  {
+    id: "W-EVERY-LEG",
+    family: "flagged",
+    tree: {
+      control: [stubEntry("sub", "directory"), stubEntry("link.ts", "symlink"), stubEntry("b.md", "file"), stubEntry("a.ts", "file")],
+      "control/sub": [stubEntry("socket", "other"), stubEntry("c.mjs", "file")],
+    },
+    expect: { modules: ["control/a.ts", "control/sub/c.mjs"], others: ["control/b.md"], symlinks: ["control/link.ts"], unreadable: ["control/sub/socket"] },
+  },
+  {
+    id: "W-QUIET",
+    family: "quiet",
+    tree: { control: [stubEntry("sub", "directory"), stubEntry("a.ts", "file")], "control/sub": [stubEntry("b.json", "file")] },
+    expect: { modules: ["control/a.ts"], others: ["control/sub/b.json"], symlinks: [], unreadable: [] },
+  },
+];
+/** The lister a walk control reads: its stub tree, failing on any directory the tree does not hold. */
+function stubLister(control: WalkControl): Lister {
+  return relative => {
+    const entries = control.tree[relative];
+    if (entries === undefined) throw new Error(`walk control ${control.id} holds no directory ${relative}`);
+    return entries;
+  };
+}
+
 // ---------------------------------------------------------------------------------------------------------------------------------
 // The bead row (the outside anchor).
 
@@ -917,6 +1044,19 @@ function acceptanceClauses(notes: string): string[] {
   const end = notes.indexOf(". Not P0: ", start);
   if (start < 0 || end < 0) throw new Error(`${BEAD} notes carry no Acceptance sentence`);
   return notes.slice(start + "Acceptance: ".length, end).split(/; (?=\([a-z]\) )/);
+}
+/** The residual families the cut's delivery record names (wb-qvwt F2): the R- ids of the first sentence opening with
+ * DELIVERED_RESIDUALS_HEAD in the filing row's notes, up to ". Non-vacuity:". The notes are append-only, so the first such
+ * sentence is the delivery record's and a later one cannot displace it. */
+function deliveredResiduals(notes: string): string[] {
+  const start = notes.indexOf(DELIVERED_RESIDUALS_HEAD);
+  const end = notes.indexOf(". Non-vacuity:", start);
+  if (start < 0 || end < 0) throw new Error(`${BEAD} notes carry no delivered residual sentence`);
+  return [...notes.slice(start + DELIVERED_RESIDUALS_HEAD.length, end).matchAll(/\bR-[A-Z]+(?:-[A-Z]+)*/g)].map(match => match[0]);
+}
+/** The delivered residual families a family list lacks: the bound F2 holds RESIDUAL_FAMILIES to. */
+function missingResiduals(delivered: readonly string[], families: readonly string[]): string[] {
+  return delivered.filter(family => !families.includes(family));
 }
 
 const REACHED: string[] = [];
@@ -1056,16 +1196,42 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     return done("B3", { blob: hexTail(blob.value).slice(0, 8), logical: hexTail(logical.value).slice(0, 8), blobOutcome: checkpointIdentityOf(blob), equalBytesOutcome: checkpointIdentityOf(equalBytes), mutants: verdicts });
   },
   C1: () => {
-    const walks = WALK_ROOTS.map(root => ({ root, walk: walkRoot(root) }));
+    const walks = WALK_ROOTS.map(root => ({ root, listed: gitFiles(root), walk: walkRoot(root) }));
     const modules = Object.fromEntries(walks.map(({ root, walk }) => [root, walk.modules.length]));
     const floorsMet = WALK_ROOTS.every(root => (modules[root] ?? 0) >= (FLOORS[root] ?? Number.POSITIVE_INFINITY));
     expect(floorsMet, `module floors ${JSON.stringify(FLOORS)} over ${JSON.stringify(modules)}`).toBe(true);
-    const scans = walks.flatMap(({ walk }) => walk.modules.map(path => scanSource(path, readFileSync(join(REPO, path), "utf8"))));
+    // wb-qvwt F1: the outside count. The walk below each root reads exactly the regular files git lists there, its modules exactly
+    // git's by extension, and each floor sits at or below git's module count.
+    const gitModules = Object.fromEntries(walks.map(({ root, listed }) => [root, listed.filter(isModule).length]));
+    expect(WALK_ROOTS.filter(root => (gitModules[root] ?? 0) < (FLOORS[root] ?? Number.POSITIVE_INFINITY)), `module floors ${JSON.stringify(FLOORS)} over git's ${JSON.stringify(gitModules)}`).toEqual([]);
+    expect([drift("root", ["root/a"], ["root/a", "root/b"]), drift("root", ["root/a", "root/c"], ["root/a"])], "the drift judge is live both ways").toEqual([["root: unread root/b"], ["root: unlisted root/c"]]);
+    const unmatched = walks.flatMap(({ root, listed, walk }) => [...drift(root, [...walk.modules, ...walk.others], listed), ...drift(`${root} modules`, walk.modules, listed.filter(isModule))]);
+    expect(unmatched, "the walk below each root reads exactly git's listing of its regular files, its modules by extension").toEqual([]);
+    const listedByGit = Object.fromEntries(walks.map(({ root }) => [root, !unmatched.some(entry => entry.startsWith(`${root}:`) || entry.startsWith(`${root} modules:`))]));
+    // The per-file record: each module's judging visit covers every node of its parse, and each other file's every line is judged.
+    const moduleScans = walks.flatMap(({ walk }) =>
+      walk.modules.map(path => {
+        const source = readFileSync(join(REPO, path), "utf8");
+        return { path, scan: scanSource(path, source), nodes: nodesOf(path, source) };
+      }),
+    );
+    const rawScans = walks.flatMap(({ walk }) =>
+      walk.others.map(path => {
+        const source = readFileSync(join(REPO, path), "utf8");
+        return { path, scan: rawScan(path, source), lines: source.split("\n").length };
+      }),
+    );
+    const partial = [
+      ...moduleScans.filter(entry => entry.scan.nodes !== entry.nodes).map(entry => `${entry.path}: judged ${entry.scan.nodes} of ${entry.nodes} nodes`),
+      ...rawScans.filter(entry => entry.scan.lines !== entry.lines).map(entry => `${entry.path}: judged ${entry.scan.lines} of ${entry.lines} lines`),
+    ];
+    expect(partial, "every module's judging visit covered every node of its parse and every other file's every line was judged").toEqual([]);
+    const scans = moduleScans.map(entry => entry.scan);
     const spellings = scans.flatMap(scan => scan.spellings);
     const reads = scans.flatMap(scan => scan.reads);
     const calls = scans.flatMap(scan => scan.calls);
     const callCount = scans.reduce((sum, scan) => sum + scan.callCount, 0);
-    const otherSpellings = walks.flatMap(({ walk }) => walk.others.flatMap(path => rawSpellings(path, readFileSync(join(REPO, path), "utf8"))));
+    const otherSpellings = rawScans.flatMap(entry => entry.scan.hits);
     const symlinks = walks.flatMap(({ walk }) => walk.symlinks);
     const unreadable = walks.flatMap(({ walk }) => walk.unreadable);
     expect(
@@ -1083,7 +1249,45 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(CONTROLS.filter(control => control.family === "residual").map(control => control.id), "each residual but R-OUTSIDE has its quiet row").toEqual(RESIDUAL_FAMILIES.filter(family => family !== "R-OUTSIDE"));
     const outside = { judged: judgedPath(OUTSIDE.judged), unjudged: judgedPath(OUTSIDE.unjudged) };
     expect(outside, "R-OUTSIDE: test helpers are not judged").toEqual({ judged: true, unjudged: false });
-    return done("C1", { roots: [...WALK_ROOTS], floors: { ...FLOORS }, floorsMet, callFloor: CALL_FLOOR, callFloorMet: callCount >= CALL_FLOOR, spellings, reads, calls, otherSpellings, symlinks, unreadable, controls, outside });
+    // wb-qvwt F3: the raw scan and the walk's symlink and fail-closed legs each have a flagged and a quiet control.
+    expect(RAW_CONTROLS.filter(control => (control.family === "flagged") !== (control.flagged.length > 0)).map(control => control.id), "a raw control flags lines exactly when it is a flagged control").toEqual([]);
+    expect([...new Set(RAW_CONTROLS.map(control => control.family))].sort(), "the raw scan has flagged and quiet controls").toEqual(["flagged", "quiet"]);
+    const rawControls = RAW_CONTROLS.map(control => {
+      const path = `control/${control.id}.txt`;
+      const scan = rawScan(path, control.source);
+      expect(scan, `raw control ${control.id}`).toEqual({ hits: control.flagged.map(line => `${path}:${line}`), lines: control.source.split("\n").length });
+      return `${control.id} ${control.family} hits=${scan.hits.length}`;
+    });
+    const legs = (walk: Walk): Record<string, number> => ({ modules: walk.modules.length, others: walk.others.length, symlinks: walk.symlinks.length, unreadable: walk.unreadable.length });
+    expect(WALK_CONTROLS.filter(control => control.family === "flagged" && Object.values(legs(control.expect)).some(size => size === 0)).map(control => control.id), "a flagged walk control fills every leg").toEqual([]);
+    expect(WALK_CONTROLS.filter(control => control.family === "quiet" && control.expect.symlinks.length + control.expect.unreadable.length > 0).map(control => control.id), "a quiet walk control records no symlink and no unreadable entry").toEqual([]);
+    expect([...new Set(WALK_CONTROLS.map(control => control.family))].sort(), "the walk has flagged and quiet controls").toEqual(["flagged", "quiet"]);
+    const walkControls = Object.fromEntries(
+      WALK_CONTROLS.map(control => {
+        const walk = walkRoot("control", stubLister(control));
+        expect(walk, `walk control ${control.id}`).toEqual(control.expect);
+        return [control.id, { family: control.family, ...legs(walk) }];
+      }),
+    );
+    return done("C1", {
+      roots: [...WALK_ROOTS],
+      floors: { ...FLOORS },
+      floorsMet,
+      callFloor: CALL_FLOOR,
+      callFloorMet: callCount >= CALL_FLOOR,
+      listedByGit,
+      judgedInFull: partial.length === 0,
+      spellings,
+      reads,
+      calls,
+      otherSpellings,
+      symlinks,
+      unreadable,
+      controls,
+      rawControls,
+      walkControls,
+      outside,
+    });
   },
   C2: () => {
     expect(judgeReader(readGpIdentity), "the reference reader breaks no rule").toEqual([]);
@@ -1134,6 +1338,8 @@ describe("wb-gxd7.1 gp identity census (GPC-FEEDBACK-CONTRACT-AUDIT-R1)", () => 
         ledgerTriple: LEDGER_TRIPLE,
         probes: PROBES.map(entry => entry.id),
         controls: CONTROLS.map(control => control.id),
+        rawControls: RAW_CONTROLS.map(control => control.id),
+        walkControls: WALK_CONTROLS.map(control => control.id),
         comparatorMutants: Object.keys(COMPARATOR_MUTANTS),
         argvMutants: Object.keys(ARGV_MUTANTS),
         checkpointMutants: Object.keys(CHECKPOINT_MUTANTS),
@@ -1169,6 +1375,17 @@ describe("wb-gxd7.1 gp identity census (GPC-FEEDBACK-CONTRACT-AUDIT-R1)", () => 
     expect(named?.filter(name => !LEDGER.some(entry => entry.field === name || entry.field.endsWith(`.${name}`))), "every field the statement names is a ledger field").toEqual([]);
     expect(/\{([^}]+)\}/.exec(clauses[1] ?? "")?.[1]?.split(", "), "clause (b)'s forms are CHECKPOINT_FORMS").toEqual([...CHECKPOINT_FORMS]);
     expect(/no (\S+) over gp identity strings/.exec(clauses[2] ?? "")?.[1]?.split("/"), "clause (c)'s methods are CALL_METHODS").toEqual([...CALL_METHODS]);
+    // wb-qvwt F1: clause (c)'s judged scope comes from the filing ("... over gp identity strings in src;"), not from WALK_ROOTS.
+    const scope = /over gp identity strings in (\S+?);/.exec(clauses[2] ?? "")?.[1];
+    expect(WALK_ROOTS, `clause (c)'s judged scope ${JSON.stringify(scope ?? null)} is a walk root`).toContain(scope);
+    // wb-qvwt F2: every residual family the delivery record names is still a residual family (the record bounds the set from below).
+    const delivered = deliveredResiduals(bead.notes);
+    expect(delivered.length, "the delivery record names its residual families").toBeGreaterThan(0);
+    expect(missingResiduals(delivered, RESIDUAL_FAMILIES), "every residual family the delivery record names is still a residual family").toEqual([]);
+    expect(
+      delivered.map(family => missingResiduals(delivered, RESIDUAL_FAMILIES.filter(other => other !== family))),
+      "the bound is live: dropping any one delivered family is caught, naming exactly that family",
+    ).toEqual(delivered.map(family => [family]));
     expect(/else '([^']+)'/.exec(clauses[2] ?? "")?.[1], "clause (c)'s profile word is UNKNOWN_PROFILE").toBe(UNKNOWN_PROFILE);
     expect(/^\(a\) (\w+)\(a,b\)/.exec(clauses[0] ?? "")?.[1], "clause (a)'s comparator is the reference's").toBe(sameGpIdentity.name);
     // The filing's D-IDENT-1 gate is a GP-FCA-2026-10-21 decision label (program status at 0107c72992f3:
