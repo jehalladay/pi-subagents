@@ -20,11 +20,14 @@
  * graph verification verdict"), so an rf node never reaches the workflow card's verified tick (domainStatus "verified",
  * src/ui/workflow-card.ts). The one rf field with "replay" in its name any Pi reader reads is the observation row's boolean
  * replayed, which can only demote. Pi has no show, history, replay or assembly reader, so the trigger has not fired; the census
- * pins that state, and every surface the obligation already reaches, over THE WALK (every module below WALK_ROOTS, parsed by the
- * TypeScript compiler; comments are not read) and over the readings, projections and inspector lines the readers produce:
- *  A, the trigger, absent today. A1 no judged module spells an rf read-side replay field, a replayability class or a replay
- *    outcome (VOCABULARY: the measured snake_case names and their camelCase forms) as an identifier or a whole word of a literal,
- *    nor an rf assembly verb (argv or literal), with floors, an anchor and twelve controls. A2 the producer's three status
+ * pins that state, and every surface the obligation already reaches, over THE WALK (every file below WALK_ROOTS: a module parsed by
+ * the TypeScript compiler, whose comments are not read; any other file, a shell script, a JSON receipt or a markdown page, read
+ * whole as one text) and over the readings, projections and inspector lines the readers produce:
+ *  A, the trigger, absent today. A1 no judged file spells an rf read-side replay field, a replayability class or a replay
+ *    outcome (VOCABULARY: the measured snake_case names and their camelCase forms, case aside) as an identifier or a whole word of
+ *    a literal (a regular expression's pattern words, and strings folded through the module's const bindings, included), nor an rf
+ *    assembly verb (argv or literal, flags between the group and its subverb aside), with floors, a module and a text anchor, the
+ *    tree anchor and twenty-two controls. A2 the producer's three status
  *    envelopes (a context.show and a context.history read stating replayable_exact, a context.replay outcome reproduced) are
  *    refused by the adapter, project no native evidence and are refused by the native provider in one spawn.
  *  B, acceptance (a). B1 a preview carrying a replayability claim (each measured class, with its reasons, on additive result keys)
@@ -32,19 +35,20 @@
  *    seam. B2 never verified: for each class the claim-carrying preview projects exactly as the claim-free one, on a clean and on
  *    a demoted base (no upgrade), its native evidence is the claim-free evidence and no evidence states a domainStatus, no
  *    projected string carries a verification word, and the 02:60 sequence (a replayable_exact read, then the replay refused with
- *    RF_INTERNAL) projects the refusal as a failure of unknown coverage carrying no value. B3 no judged module states a verified
- *    replay (VERIFIED_REPLAY), with seven controls. B4 the observation row's replayed flag demotes: two reused rows hold the
+ *    RF_INTERNAL) projects the refusal as a failure of unknown coverage carrying no value. B3 no judged file states a verified
+ *    replay (VERIFIED_REPLAY), with thirteen controls. B4 the observation row's replayed flag demotes: two reused rows hold the
  *    preview at partial with the reused note and no verification word, the same rows fresh read complete.
  *  C, acceptance (b), gated. C1 the five-label contract is unshipped: the roster's measured classes are the four render-time
  *    classes in both read schemas, the five labels the program offers (02:60) are disjoint from them and spelled by no file of the
  *    installed rf, the first is document_exact (the filing's authority restriction), the BEADS rows 61-62 hold rfc-kxtb5.17 and
  *    rfc-02alo open, and the filing's gating sentence and title agree; a re-measure that ships a label flips C1 red until (b)
- *    lands with it. C2 today: no judged module and no docs file spells a label, no judged module states byte-exactness, and a
- *    preview carrying each label rides the registered reading verbatim and projects and evidences exactly as the label-free one.
+ *    lands with it. C2 today: no judged file and no docs file spells a label (case aside), no judged file states byte-exactness
+ *    (docs carry Pi-native byte-exact lines and are not judged for it), and a preview carrying each label rides the registered
+ *    reading verbatim and projects and evidences exactly as the label-free one.
  *  D, acceptance (c), gated. D1 the assembly coverage verb is unshipped: the captured rf registry (test/fixtures/
  *    rf-version-leaves.json, the roster's build) serves no assembly or coverage leaf, README:76 states the filing's merged quote,
- *    README:99 and BEADS:94 state design only, and the gating sentence agrees. D2 no judged module states that no context was
- *    needed (NO_CONTEXT), with seven controls, and neither the projection of an empty-results render nor any inspector line of it
+ *    README:99 and BEADS:94 state design only, and the gating sentence agrees. D2 no judged file states that no context was
+ *    needed (NO_CONTEXT), with eleven controls, and neither the projection of an empty-results render nor any inspector line of it
  *    or of an empty invocation does; the empty invocation reads the inspector's scoped no-results line.
  *  E, acceptance (d). E1 Pi's snapshot coverage vocabulary is complete/partial/unknown (the NativeSnapshot type, read by the
  *    compiler); a refused render projects coverage unknown in a failure tone, an empty-results render projects neither, and the two
@@ -76,21 +80,39 @@
  * titles are held to the out-of-file roster (test/fixtures/rf-read-status-upgrade-roster.json). OUTSIDE ANCHOR: the owner
  * filing's row in the tracked bead export (.beads/issues.jsonl, row wb-hs2j.8): each acceptance clause and the trigger sit verbatim
  * in exactly one row label, every row carries one of them, and its statement, quotes, citations, authority restriction and gating
- * sentence equal the roster's, so a row removed from every literal of this file and the roster still reds. Not claimed: a pin
- * removed from ROWS, the literal, IMPL and the roster together (the bead row anchors rows and clauses, not pins).
+ * sentence equal the roster's, so a row removed from every literal of this file and the roster still reds. TREE ANCHOR: the
+ * repository's top-level directories (dot directories aside) are read beside the walk, and each one holding a module must be a walk
+ * root or one of OUTSIDE_ROOTS, so a root dropped from every literal of this file and the roster that names or reads below it
+ * (WALK_ROOTS, FLOORS, TEXT_ANCHOR) still reds (A1, B3, C2, D2). Not claimed: a pin removed from ROWS, the literal, IMPL and the
+ * roster together (the bead row anchors rows and clauses, not pins); a walk root moved into OUTSIDE_ROOTS, with those literals, in
+ * this file and the roster together (the tree anchors that every directory holding a module is walked or named outside, not on
+ * which side it is named).
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
- * not inverted, ran; every pin's case reached its end (REACHED).
- * RESIDUALS (named families, each with a pinned quiet row): R-COMPOSED a field name or verb assembled at run time is invisible to
- * the walk (A1 composed); R-COMMENT a comment naming a field is not read (A1 comment); R-GENERIC-WORD the one-word replay outcome
+ * not inverted, ran; every pin's case reached its end (REACHED). The judged set reads the same task tree at registration
+ * (collection precedes every case), so the records case deleted, skipped or inverted still reds there.
+ * BREADTH (disclosed, fail-closed): the families judge wording, not subsystem, so Pi-native text in their shapes (the workflow
+ * journal's own replay, a packaging note, a wizard hint) reds as an rf claim would; B3 journalNative, C2 packagingNote and D2
+ * wizardHint pin that breadth, so narrowing a family changes a witness and is never silent.
+ * RESIDUALS (named families, each with a pinned quiet row): R-COMPOSED a field name or verb assembled at run time (from a
+ * parameter, an import, a call or a computed member, or through a name the module binds to two values) is invisible to the walk (A1
+ * composed, importedConstant); R-COMMENT a comment naming a field is not read in a module (A1 comment; a non-module file is read
+ * whole); R-GENERIC-WORD the one-word replay outcome
  * "reproduced" (and the replay output's nested classification key) is a common word, so it is not scanned in modules, only in
  * projected strings (A1 genericOutcome); R-LABEL-UNRENDERED
  * the adapter renders no replayability label at all, neither claimed nor verified, so a claim reaches a reader only through the
  * registered reading (B2's identical projections); R-ROWS-SILENT the observation leg states nothing about an empty or an absent
  * observation list, so for the render's own rows Pi distinguishes neither (E1 rowsSilent; the render's own list is rf's record of
- * that render, not a coverage status); R-OUTSIDE a module outside WALK_ROOTS (test helpers and fixtures plant rf envelopes) is not
- * judged.
- * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, qa, examples, docs, the captured
- * registry and the bead export are only read.
+ * that render, not a coverage status); R-OUTSIDE a file outside WALK_ROOTS is not judged: test helpers and fixtures (they plant rf
+ * envelopes), the dependency tree, the ignored build, plan and coverage outputs, dot directories and the repository root's own files;
+ * R-SPELLING a member rendered with spaces or hyphens is not the member (A1 spelled, "Replayable exact"); R-PARAPHRASE a
+ * verified-replay, byte-exactness or no-context claim worded outside its family is not matched (B3, C2 and D2 paraphrase).
+ * FOLLOW-UP (wb-15hl, R694 from landing 291, gate cmd_325acc1f0c97): the gate's A1 trigger escapes are read (P01 a regular
+ * expression literal, P02 an upper-case literal, P03 argv through named constants, P04 an interleaved flag, P05 an rf assembly call
+ * in a qa shell script), the B3, C2 and D2 wording escapes are matched (P10a-d, P11a-b, P12a-b), the walk-root hollow reds through
+ * the tree anchor (G03), the records case is read from the judged set (G10), the families' breadth is pinned (F5) and row C's
+ * label states C2's scope (F6).
+ * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, qa, examples, docs, the repository's
+ * top-level directories, the captured registry and the bead export are only read.
  */
 import { chmodSync, type Dirent, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
@@ -116,32 +138,44 @@ const ROSTER_FILE = "test/fixtures/rf-read-status-upgrade-roster.json";
 const BEAD_EXPORT = ".beads/issues.jsonl";
 const BEAD = "wb-hs2j.8";
 const CAPTURE = "test/fixtures/rf-version-leaves.json";
-/** The Pi code paths judged: product sources, QA scripts and shipped examples (every module below them, at any depth). */
+/** The Pi code paths judged: product sources, QA scripts and shipped examples (every file below them, at any depth). */
 const WALK_ROOTS = ["src", "qa", "examples"];
+/** The top-level directories the walk leaves out (R-OUTSIDE): tests (their helpers and fixtures plant rf envelopes), the dependency
+ * tree and the outputs .gitignore ignores (build, dist and plan, coverage). Every other top-level directory holding a module (dot
+ * directories aside) must be a walk root: the repository tree, read beside the walk, is the anchor. */
+const OUTSIDE_ROOTS = ["build", "coverage", "dist", "node_modules", "plan", "test"];
 /** The documentation tree C2 also reads as text: a docs table could map the five labels before any module reads one. */
 const DOC_ROOT = "docs";
 const MODULE_EXTENSIONS = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx"];
-/** Each floor sits below the count measured at base bf06b20 (src 115, qa 62 and examples 6 modules; docs 70 files). */
-const FLOORS: Readonly<Record<string, number>> = { src: 100, qa: 55, examples: 5, docs: 60 };
+/** Each floor sits below the count measured at base bf06b20 (src 115, qa 62 and examples 6 modules; docs 70 files); texts below
+ * the 6 non-module files of the walk roots measured at f8e3a48 (4 qa shell scripts, 1 qa receipt JSON, 1 examples markdown). */
+const FLOORS: Readonly<Record<string, number>> = { src: 100, qa: 55, examples: 5, docs: 60, texts: 5 };
 /** The module the walk must reach holding the render command literal: the one rf launch. */
 const ANCHOR = { path: "src/workbench/providers/reactivefiber.ts", token: "context.render" };
+/** The non-module file the walk must reach, read as text, holding its token: the shell script the gate's workbench-shell step runs. */
+const TEXT_ANCHOR = { path: "qa/workbench/smoke.sh", token: "node qa/workbench/smoke.mjs" };
+/** The vocabulary and the five labels are matched without regard to case: a SCREAMING_SNAKE or PascalCase spelling is the member. */
+const VOCABULARY_FLAGS = "i";
 /** The subverbs the program's command table names under `assembly` (02:72-80); the measured rf serves no assembly leaf. */
 const ASSEMBLY_SUBVERBS = ["prepare", "inspect", "publish", "coverage"];
-const ASSEMBLY_VERB = /\bassembly(?:\s+|\.)(?:prepare|inspect|publish|coverage)\b/i;
-/** A literal claiming a replay was verified (acceptance (a)), and the identifier spellings of one. */
-const VERIFIED_REPLAY = /\breplay(?:ability)?[\s_-]*(?:is\s+|was\s+)?verified\b|\bverified[\s_-]*replay|\breplay[\s_-]*verification\b/i;
-const VERIFIED_REPLAY_IDENTIFIER = /^(?:replay_?verified|verified_?replay|replay_?verification)$/i;
-/** A literal stating byte-exactness (acceptance (b): only document_exact may, once it ships). */
-const BYTE_EXACT = /\bbyte[\s_-]*exact\b|\bbytewise[\s_-]+exact\b/i;
-/** A literal stating that no context was needed (acceptance (c)'s forbidden reading). */
+/** The group then a subverb, dotted or spaced, with any flags (and their values) between them: `assembly --json coverage`. */
+const ASSEMBLY_VERB = /\bassembly(?:\s+--?[\w-]+(?:=\S+|\s+(?!-)\S+)?)*(?:\s+|\.)(?:prepare|inspect|publish|coverage)\b/i;
+/** A literal claiming a replay was verified (acceptance (a)), and the identifier spellings of one: "replay verified", "replayed and
+ * verified", "replay: verified", "verified by replay", isReplayVerified. */
+const VERIFIED_REPLAY = /\breplay(?:ability|ed)?[\s_:-]*(?:is\s+|was\s+|and\s+)?verified\b|\bverified[\s_-]*(?:by[\s_-]+)?replay|\breplay[\s_-]*verification\b/i;
+const VERIFIED_REPLAY_IDENTIFIER = /^(?:is|has|was)?_?(?:replay(?:ed)?_?(?:and_?)?verified|verified_?(?:by_?)?replay|replay_?verification)$/i;
+/** A literal stating byte-exactness (acceptance (b): only document_exact may, once it ships): byte-exact, byte-for-byte, bit-exact. */
+const BYTE_EXACT = /\bbyte[\s_-]*exact\b|\bbytewise[\s_-]+exact\b|\bbyte[\s_-]*for[\s_-]*byte\b|\bbit[\s_-]*(?:exact|for[\s_-]*bit)\b/i;
+/** A literal stating that no context was needed (acceptance (c)'s forbidden reading), "no extra context needed" and "context: none
+ * needed" among them. */
 const NO_CONTEXT =
-  /\bno\s+(?:more\s+|further\s+|additional\s+)?context\s+(?:is\s+|was\s+)?(?:needed|required|necessary)\b|\bcontext\s+(?:is\s+|was\s+)?(?:not\s+|un)(?:needed|required|necessary)\b|\bneeds?\s+no\s+(?:more\s+)?context\b|\bnothing\s+(?:more\s+|else\s+)?(?:is\s+|was\s+)?(?:needed|required)\b|\bno[\s_-]+context[\s_-]+needed\b/i;
+  /\bno\s+(?:more\s+|further\s+|additional\s+|extra\s+|other\s+)?context\s+(?:is\s+|was\s+)?(?:needed|required|necessary)\b|\bcontext\s+(?:is\s+|was\s+)?(?:not\s+|un)(?:needed|required|necessary)\b|\bcontext[\s:_-]+none[\s_-]+(?:needed|required|necessary)\b|\bneeds?\s+no\s+(?:more\s+)?context\b|\bnothing\s+(?:more\s+|else\s+)?(?:is\s+|was\s+)?(?:needed|required)\b|\bno[\s_-]+context[\s_-]+needed\b/i;
 /** The words a projected string would need to state a verified or an exact replay. */
 const VERIFICATION = /\bverif(?:y|ied|ication)\b|\bbyte[\s_-]*exact\b|\breproduced\b|\bdocument_exact\b/i;
 /** The inspector's one no-results line (src/ui/workflow-inspector.ts) and the coverage word of its details line. */
 const EMPTY_PAGE_LINE = "No source observations for this invocation; no graph or timeline is inferred.";
 const COVERAGE_UNKNOWN = "coverage unknown";
-const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-COMMENT", "R-GENERIC-WORD", "R-LABEL-UNRENDERED", "R-ROWS-SILENT", "R-OUTSIDE"];
+const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-COMMENT", "R-GENERIC-WORD", "R-LABEL-UNRENDERED", "R-ROWS-SILENT", "R-OUTSIDE", "R-SPELLING", "R-PARAPHRASE"];
 /** The fixture workspace every planted reading names, and the invocation the inspector pages. */
 const ROOT = "/fixture/rf-workspace";
 const PREVIEW_ID = "reactivefiber.render.preview";
@@ -167,7 +201,7 @@ interface Row {
 const ROWS: readonly Row[] = [
   {
     id: "A",
-    label: "(trigger, absent today) Pi reads no replay or coverage fields today: no module of src, qa or examples spells an rf read-side replay field, a replayability class, a replay outcome or an rf assembly verb, and every Pi rf reader refuses the producer's show, history and replay status envelopes",
+    label: "(trigger, absent today) Pi reads no replay or coverage fields today: no file of src, qa or examples spells an rf read-side replay field, a replayability class, a replay outcome or an rf assembly verb, and every Pi rf reader refuses the producer's show, history and replay status envelopes",
     pins: ["A1", "A2"],
   },
   {
@@ -177,7 +211,7 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "C",
-    label: "(b) when the five labels ship, Pi carries the label verbatim and treats only document_exact as byte-exact: the five-label classifier is unshipped at the measured rf, no Pi module or doc spells a label or states byte-exactness, and a label-carrying preview rides verbatim and projects as a label-free one",
+    label: "(b) when the five labels ship, Pi carries the label verbatim and treats only document_exact as byte-exact: the five-label classifier is unshipped at the measured rf, no file of src, qa or examples and no doc spells a label, no file of src, qa or examples states byte-exactness (docs are not judged for it), and a label-carrying preview rides verbatim and projects as a label-free one",
     pins: ["C1", "C2"],
   },
   {
@@ -405,27 +439,58 @@ function scriptKindOf(path: string): ts.ScriptKind {
   if (extension === ".jsx") return ts.ScriptKind.JSX;
   return ts.ScriptKind.JS;
 }
-/** A string literal, a parenthesized one or a `+` concatenation of foldable parts. */
-function fold(node: ts.Node): string | undefined {
+/** A module's `const NAME = <initializer>` declarations, at any depth, by name. */
+type Bindings = ReadonlyMap<string, readonly ts.Expression[]>;
+function constBindings(source: ts.SourceFile): Bindings {
+  const found = new Map<string, ts.Expression[]>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && ts.isVariableDeclarationList(node.parent) &&
+      (node.parent.flags & ts.NodeFlags.Const) !== 0) found.set(node.name.text, [...(found.get(node.name.text) ?? []), node.initializer]);
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return found;
+}
+/** A string literal, a parenthesized, `as` or `satisfies` one, a `+` concatenation or a template of foldable parts, or an identifier
+ * every const declaration of this module binds to one foldable value (a name bound to two values folds to none). */
+function fold(node: ts.Node, bindings: Bindings, seen: ReadonlySet<string> = new Set()): string | undefined {
   if (ts.isStringLiteralLike(node)) return node.text;
-  if (ts.isParenthesizedExpression(node)) return fold(node.expression);
+  if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node)) return fold(node.expression, bindings, seen);
   if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken) {
-    const left = fold(node.left);
-    const right = fold(node.right);
+    const left = fold(node.left, bindings, seen);
+    const right = fold(node.right, bindings, seen);
     return left === undefined || right === undefined ? undefined : left + right;
+  }
+  if (ts.isTemplateExpression(node)) {
+    let text = node.head.text;
+    for (const span of node.templateSpans) {
+      const part = fold(span.expression, bindings, seen);
+      if (part === undefined) return undefined;
+      text += part + span.literal.text;
+    }
+    return text;
+  }
+  if (ts.isIdentifier(node) && !seen.has(node.text)) {
+    const values = new Set((bindings.get(node.text) ?? []).map(initializer => fold(initializer, bindings, new Set([...seen, node.text]))));
+    return values.size === 1 ? [...values][0] : undefined;
   }
   return undefined;
 }
+/** A regular expression literal's pattern with every escape sequence and syntax character blanked, so the words it names read as
+ * whole words: /"replayability"\s*:/ reads `"replayability"  :`. */
+const patternWords = (text: string): string => text.slice(1, text.lastIndexOf("/")).replace(/\\./g, " ").replace(/[\^$.|?*+()[\]{}]/g, " ");
 
 interface Reading {
   readonly identifiers: readonly string[];
   readonly literals: readonly string[];
   readonly argvs: readonly (readonly (string | null)[])[];
 }
-/** One module as the compiler reads it: every identifier, every literal text (string, template parts joined, folded `+` chains)
- * and every array literal as its word list (null for an element that is not a literal). Comments are not nodes, so not read. */
+/** One module as the compiler reads it: every identifier, every literal text (string, template parts joined, regular expression
+ * pattern words, folded `+` chains and templates, through the module's const string bindings) and every array literal as its word
+ * list (an element folded the same way, null when it does not fold). Comments are not nodes, so not read. */
 function readSource(fileName: string, text: string): Reading {
   const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, scriptKindOf(fileName));
+  const bindings = constBindings(source);
   const identifiers: string[] = [];
   const literals: string[] = [];
   const argvs: (string | null)[][] = [];
@@ -433,12 +498,13 @@ function readSource(fileName: string, text: string): Reading {
     if (ts.isIdentifier(node)) identifiers.push(node.text);
     else if (ts.isPrivateIdentifier(node)) identifiers.push(node.text.slice(1));
     else if (ts.isStringLiteralLike(node)) literals.push(node.text);
+    else if (ts.isRegularExpressionLiteral(node)) literals.push(patternWords(node.text));
     else if (ts.isTemplateExpression(node)) literals.push([node.head.text, ...node.templateSpans.map(span => span.literal.text)].join(" "));
-    if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken) {
-      const folded = fold(node);
+    if ((ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken) || ts.isTemplateExpression(node)) {
+      const folded = fold(node, bindings);
       if (folded !== undefined) literals.push(folded);
     }
-    if (ts.isArrayLiteralExpression(node)) argvs.push(node.elements.map(element => (ts.isStringLiteralLike(element) ? element.text : null)));
+    if (ts.isArrayLiteralExpression(node)) argvs.push(node.elements.map(element => fold(element, bindings) ?? null));
     ts.forEachChild(node, visit);
   };
   visit(source);
@@ -447,10 +513,35 @@ function readSource(fileName: string, text: string): Reading {
 
 interface Tree {
   readonly modules: readonly (readonly [string, Reading])[];
+  /** Every non-module file below WALK_ROOTS, each one text reading. */
+  readonly texts: readonly (readonly [string, Reading])[];
+  /** What every walking pin judges: the modules, then the texts. */
+  readonly judged: readonly (readonly [string, Reading])[];
   readonly docs: readonly (readonly [string, string])[];
   readonly counts: Readonly<Record<string, number>>;
   readonly floorsMet: boolean;
   readonly anchorRead: boolean;
+  readonly textAnchorRead: boolean;
+  /** The top-level directories holding a module that are neither walked nor named outside: none, unless the walk lost a root. */
+  readonly unjudged: readonly string[];
+}
+/** A non-module file as one text: its whole content is one literal, comments included (a shell script or a JSON file has no
+ * compiler reading, so every word of it is read). */
+const readText = (text: string): Reading => ({ identifiers: [], literals: [text], argvs: [] });
+/** Every top-level directory of the repository (dot directories aside) that holds a module and is neither a walk root nor named in
+ * OUTSIDE_ROOTS, by name: the repository tree, not a literal of this file or the roster, says which directories hold modules. */
+function unjudgedRoots(): string[] {
+  let entries: Dirent[];
+  try {
+    entries = readdirSync(REPO, { withFileTypes: true });
+  } catch {
+    return ["<the repository root is unreadable>"];
+  }
+  return entries
+    .filter(entry => entry.isDirectory() && !entry.name.startsWith(".") && !WALK_ROOTS.includes(entry.name) && !OUTSIDE_ROOTS.includes(entry.name))
+    .map(entry => entry.name)
+    .filter(name => filesBelow(name).some(path => MODULE_EXTENSIONS.includes(extensionOf(path))))
+    .sort();
 }
 let walked: Tree | undefined;
 /** THE WALK, taken once: every module below WALK_ROOTS read by the compiler, and every docs file read as text. */
@@ -458,33 +549,42 @@ function liveTree(): Tree {
   if (walked !== undefined) return walked;
   const counts: Record<string, number> = {};
   const modules: (readonly [string, Reading])[] = [];
+  const texts: (readonly [string, Reading])[] = [];
   for (const root of WALK_ROOTS) {
-    const paths = filesBelow(root).filter(path => MODULE_EXTENSIONS.includes(extensionOf(path)));
+    const files = filesBelow(root);
+    const paths = files.filter(path => MODULE_EXTENSIONS.includes(extensionOf(path)));
     counts[root] = paths.length;
     for (const path of paths) modules.push([path, readSource(path, textOf(join(REPO, path)))]);
+    for (const path of files.filter(file => !MODULE_EXTENSIONS.includes(extensionOf(file)))) texts.push([path, readText(textOf(join(REPO, path)))]);
   }
+  counts.texts = texts.length;
   const docs = filesBelow(DOC_ROOT).map(path => [path, textOf(join(REPO, path))] as const);
   counts[DOC_ROOT] = docs.length;
   const anchor = modules.find(([path]) => path === ANCHOR.path)?.[1];
+  const textAnchor = texts.find(([path]) => path === TEXT_ANCHOR.path)?.[1];
   walked = {
     modules,
+    texts,
+    judged: [...modules, ...texts],
     docs,
     counts,
     floorsMet: Object.entries(FLOORS).every(([root, floor]) => (counts[root] ?? 0) >= floor),
     anchorRead: anchor?.literals.includes(ANCHOR.token) === true,
+    textAnchorRead: textAnchor?.literals.some(text => text.includes(TEXT_ANCHOR.token)) === true,
+    unjudged: unjudgedRoots(),
   };
   return walked;
 }
 
 const escapeRegExp = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-const wordOf = (members: readonly string[]): RegExp => new RegExp(`(?<![A-Za-z0-9_])(?:${members.map(escapeRegExp).join("|")})(?![A-Za-z0-9_])`);
+const wordOf = (members: readonly string[], flags = ""): RegExp => new RegExp(`(?<![A-Za-z0-9_])(?:${members.map(escapeRegExp).join("|")})(?![A-Za-z0-9_])`, flags);
 const unique = (items: readonly string[]): string[] => [...new Set(items)];
-/** Every identifier equal to a member and every literal holding one as a whole word. */
+/** Every identifier equal to a member and every literal holding one as a whole word, case aside (VOCABULARY_FLAGS). */
 function vocabularyHits(path: string, reading: Reading, members: readonly string[]): string[] {
-  const set = new Set(members);
-  const word = wordOf(members);
+  const set = new Set(members.map(member => member.toLowerCase()));
+  const word = wordOf(members, VOCABULARY_FLAGS);
   return unique([
-    ...reading.identifiers.filter(name => set.has(name)).map(name => `${path} identifier ${name}`),
+    ...reading.identifiers.filter(name => set.has(name.toLowerCase())).map(name => `${path} identifier ${name}`),
     ...reading.literals.filter(text => word.test(text)).map(text => `${path} literal ${text.slice(0, 80)}`),
   ]);
 }
@@ -495,9 +595,10 @@ function familyHits(path: string, reading: Reading, family: RegExp, identifierFa
     ...reading.literals.filter(text => family.test(text)).map(text => `${path} literal ${text.slice(0, 80)}`),
   ]);
 }
-/** An rf assembly verb: an argv word list with "assembly" before one of its subverbs, or a literal spelling one. */
+/** An rf assembly verb: an argv word list with "assembly" before one of its subverbs (flags and expressions between them aside), or
+ * a literal spelling one. */
 function assemblyHits(path: string, reading: Reading): string[] {
-  const argv = reading.argvs.filter(words => words.some((word, index) => word === "assembly" && ASSEMBLY_SUBVERBS.includes(words[index + 1] ?? "")));
+  const argv = reading.argvs.filter(words => words.some((word, index) => word === "assembly" && words.slice(index + 1).some(later => later !== null && ASSEMBLY_SUBVERBS.includes(later))));
   return unique([
     ...argv.map(words => `${path} argv [${words.map(word => word ?? "<expr>").join(", ")}]`),
     ...reading.literals.filter(text => ASSEMBLY_VERB.test(text)).map(text => `${path} literal ${text.slice(0, 80)}`),
@@ -700,15 +801,15 @@ function done(pin: string, witness: JsonObject): JsonValue {
 const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
   A1: () => {
     const live = liveTree();
-    const vocabulary = live.modules.flatMap(([path, reading]) => vocabularyHits(path, reading, VOCABULARY));
-    const assembly = live.modules.flatMap(([path, reading]) => assemblyHits(path, reading));
+    const vocabulary = live.judged.flatMap(([path, reading]) => vocabularyHits(path, reading, VOCABULARY));
+    const assembly = live.judged.flatMap(([path, reading]) => assemblyHits(path, reading));
     expect(live.floorsMet, `files walked per root: ${JSON.stringify(live.counts)}`).toBe(true);
     expect(live.anchorRead, `${ANCHOR.path} was not read with ${ANCHOR.token}`).toBe(true);
-    expect({ vocabulary, assembly }, "an rf read-side replay field, class or outcome, or an rf assembly verb, in a Pi module").toStrictEqual({ vocabulary: [], assembly: [] });
-    const control = (text: string): number => {
-      const reading = readSource("control.ts", text);
-      return vocabularyHits("control.ts", reading, VOCABULARY).length + assemblyHits("control.ts", reading).length;
-    };
+    expect(live.textAnchorRead, `${TEXT_ANCHOR.path} was not read as text with ${TEXT_ANCHOR.token}`).toBe(true);
+    expect(live.unjudged, "a top-level directory holding a module is neither a walk root nor named outside").toEqual([]);
+    expect({ vocabulary, assembly }, "an rf read-side replay field, class or outcome, or an rf assembly verb, in a Pi file").toStrictEqual({ vocabulary: [], assembly: [] });
+    const count = (reading: Reading): number => vocabularyHits("control.ts", reading, VOCABULARY).length + assemblyHits("control.ts", reading).length;
+    const control = (text: string): number => count(readSource("control.ts", text));
     const controls = {
       property: control("const claim = result.replayability;"),
       binding: control("const { replayability_reasons: reasons } = row;"),
@@ -722,8 +823,18 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       genericOutcome: control(`const word = "${GENERIC_OUTCOMES[0] ?? ""}";`),
       composed: control('const key = "replay" + suffix;'),
       comment: control("// result.replayability is the producer's claim\nconst x = 1;"),
+      regexLiteral: control('const pattern = /"replayability"\\s*:\\s*"([a-z_]+)"/;'),
+      upperCase: control('const exact = "REPLAYABLE_EXACT";'),
+      pascalType: control("type ReplayabilityClass = string;"),
+      namedConstants: control('const GROUP = "assembly";\nconst VERB = "coverage";\nspawn("rf", ["--workspace", root, GROUP, VERB, "--json"]);'),
+      constantTemplate: control(`const GROUP = "assembly";\nconst line = \`rf \${GROUP} coverage\`;`),
+      interleavedFlag: control('spawn("rf", ["--workspace", root, "assembly", "--json", "coverage"]);'),
+      interleavedLiteral: control('const command = "rf assembly --json coverage";'),
+      shellScript: count(readText('rf --workspace "$PWD" assembly coverage --json >/dev/null || true\n')),
+      importedConstant: control('import { VERB } from "./verbs.js";\nspawn("rf", ["assembly", VERB]);'),
+      spelled: control('const label = "Replayable exact";'),
     };
-    return done("A1", { floorsMet: live.floorsMet, anchorRead: live.anchorRead, hits: { vocabulary, assembly }, controls });
+    return done("A1", { floorsMet: live.floorsMet, anchorRead: live.anchorRead, textAnchorRead: live.textAnchorRead, unjudged: [...live.unjudged], hits: { vocabulary, assembly }, controls });
   },
   A2: async () => {
     const envelopes: JsonObject = {};
@@ -796,9 +907,10 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
   },
   B3: () => {
     const live = liveTree();
-    const hits = live.modules.flatMap(([path, reading]) => familyHits(path, reading, VERIFIED_REPLAY, VERIFIED_REPLAY_IDENTIFIER));
+    const hits = live.judged.flatMap(([path, reading]) => familyHits(path, reading, VERIFIED_REPLAY, VERIFIED_REPLAY_IDENTIFIER));
     expect(live.floorsMet).toBe(true);
-    expect(hits, "a Pi module stating a verified replay").toEqual([]);
+    expect(live.unjudged).toEqual([]);
+    expect(hits, "a Pi file stating a verified replay").toEqual([]);
     const control = (text: string): number => familyHits("control.ts", readSource("control.ts", text), VERIFIED_REPLAY, VERIFIED_REPLAY_IDENTIFIER).length;
     const controls = {
       spaced: control('const note = "replay verified";'),
@@ -808,6 +920,12 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       identifier: control("const replayVerified = true;"),
       snakeKey: control("const row = { replay_verified: true };"),
       posture: control('const note = "producer-reported and observed, not verified by Workbench";'),
+      replayedAndVerified: control('const note = "replayed and verified";'),
+      verifiedByReplay: control('const note = "render verified by replay";'),
+      colonVerified: control('const note = "replay: verified";'),
+      isIdentifier: control("const isReplayVerified = false;"),
+      journalNative: control('const note = "journal replay verified against its digest";'),
+      paraphrase: control('const note = "the replay checked out";'),
     };
     return done("B3", { floorsMet: live.floorsMet, hits, controls });
   },
@@ -859,13 +977,14 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
   },
   C2: async () => {
     const live = liveTree();
-    const word = wordOf(FIVE_LABEL_SPELLINGS);
+    const word = wordOf(FIVE_LABEL_SPELLINGS, VOCABULARY_FLAGS);
     const labelHits = [
-      ...live.modules.flatMap(([path, reading]) => vocabularyHits(path, reading, FIVE_LABEL_SPELLINGS)),
+      ...live.judged.flatMap(([path, reading]) => vocabularyHits(path, reading, FIVE_LABEL_SPELLINGS)),
       ...live.docs.filter(([, text]) => word.test(text)).map(([path]) => `${path} text`),
     ];
-    const byteExactHits = live.modules.flatMap(([path, reading]) => familyHits(path, reading, BYTE_EXACT));
+    const byteExactHits = live.judged.flatMap(([path, reading]) => familyHits(path, reading, BYTE_EXACT));
     expect(live.floorsMet).toBe(true);
+    expect(live.unjudged).toEqual([]);
     expect({ labelHits, byteExactHits }, "an offered label or a byte-exactness claim in Pi").toStrictEqual({ labelHits: [], byteExactHits: [] });
     const plain = project(fullShapeRf(ROOT));
     const plainEvidence = evidenceOf(fullShapeRf(ROOT));
@@ -891,6 +1010,11 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       byteExact: control('const note = "byte-exact replay";'),
       byteSpaced: control('const note = "byte exact";'),
       exactBytes: control('const note = "a digest beside it pins its exact bytes";'),
+      byteForByte: control('const note = "replay reproduced the document byte-for-byte";'),
+      bitExact: control('const note = "bit-exact replay";'),
+      labelUpper: control('const label = "DOCUMENT_EXACT";'),
+      packagingNote: control('const note = "the tarball is a byte-exact copy of the build";'),
+      paraphrase: control('const note = "identical down to the last bit";'),
       docsText: word.test("| `missing_evidence` | a label row |") ? 1 : 0,
     };
     return done("C2", { floorsMet: live.floorsMet, labelHits, byteExactHits, carried, controls });
@@ -914,9 +1038,10 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
   },
   D2: () => {
     const live = liveTree();
-    const staticHits = live.modules.flatMap(([path, reading]) => familyHits(path, reading, NO_CONTEXT));
+    const staticHits = live.judged.flatMap(([path, reading]) => familyHits(path, reading, NO_CONTEXT));
     expect(live.floorsMet).toBe(true);
-    expect(staticHits, "a Pi module stating that no context was needed").toEqual([]);
+    expect(live.unjudged).toEqual([]);
+    expect(staticHits, "a Pi file stating that no context was needed").toEqual([]);
     const control = (text: string): number => familyHits("control.ts", readSource("control.ts", text), NO_CONTEXT).length;
     const controls = {
       spaced: control('const note = "no context needed";'),
@@ -926,6 +1051,10 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       snake: control('const status = "no_context_needed";'),
       scopedNoResults: control(`const note = ${JSON.stringify(EMPTY_PAGE_LINE)};`),
       window: control('const note = "no context window was reported";'),
+      extraContext: control('const note = "no extra context needed";'),
+      colonNone: control('const note = "context: none needed";'),
+      wizardHint: control('const hint = "No additional context is required.";'),
+      paraphrase: control('const note = "nothing further to fetch";'),
     };
     const empty = project(emptyResults());
     const projected = stringLeaves(json(empty)).filter(text => NO_CONTEXT.test(text));
@@ -983,16 +1112,29 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
 const pattern = (family: RegExp): string => `${family.source}/${family.flags}`;
 
 describe("wb-hs2j.8 rf read-side status upgrade census (RF-REACTIVE-CONTEXT-ASSEMBLY-R9, posture leg)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster and the bead row agree", () => {
+  it("the judged set: the frozen shape, the out-of-file roster and the bead row agree", ({ task }) => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:4", "C:2", "D:2", "E:2"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(entry => entry.id) })),
     );
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
+    // The registered set, read from vitest's task tree beside the records case: collection precedes every case, so a records case
+    // deleted, skipped or inverted reds here although it can no longer red itself.
+    const registered: { readonly name: string; readonly mode: string; readonly fails: boolean }[] = [];
+    const visit = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") registered.push({ name: child.name, mode: child.mode, fails: child.fails === true });
+        else if (child.type === "suite") visit(child.tasks);
+      }
+    };
+    visit(task.file.tasks);
+    expect(registered.map(entry => entry.name), "every registered test of this file, exactly and in roster order, the records case included").toEqual(ROSTER.tests);
+    expect(registered.filter(entry => entry.mode !== "run" || entry.fails).map(entry => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""}`), "every registered test is in run mode and not inverted").toEqual([]);
     expect({
       bead: BEAD,
       scan: {
-        walkRoots: WALK_ROOTS, docRoot: DOC_ROOT, moduleExtensions: MODULE_EXTENSIONS, floors: FLOORS, anchor: ANCHOR,
+        walkRoots: WALK_ROOTS, outsideRoots: OUTSIDE_ROOTS, docRoot: DOC_ROOT, moduleExtensions: MODULE_EXTENSIONS, floors: FLOORS, anchor: ANCHOR,
+        textAnchor: TEXT_ANCHOR, vocabularyFlags: VOCABULARY_FLAGS,
         assemblySubverbs: ASSEMBLY_SUBVERBS, emptyPageLine: EMPTY_PAGE_LINE, coverageUnknown: COVERAGE_UNKNOWN,
         families: {
           assemblyVerb: pattern(ASSEMBLY_VERB), verifiedReplay: pattern(VERIFIED_REPLAY), verifiedReplayIdentifier: pattern(VERIFIED_REPLAY_IDENTIFIER),
