@@ -661,7 +661,86 @@
               "R-UNNAMED-RF": {
                 "binary": 0,
                 "schema": 0,
-                "providerNames": 0
+                "providerNames": 0,
+                "family": true,
+                "emptyFamily": false
+              },
+              "R-EMBEDDED-RF": {
+                "binary": 0,
+                "schema": 0,
+                "providerNames": 0,
+                "family": true,
+                "emptyFamily": false
+              },
+              "R-CASE-RF": {
+                "binary": 0,
+                "schema": 0,
+                "providerNames": 0,
+                "family": true,
+                "emptyFamily": false
+              }
+            },
+            "controls": {
+              "launches": {
+                "templateCommandLine": 1,
+                "pathQualified": 1,
+                "stringCommandLine": 1,
+                "pathCommandLine": 1,
+                "templateSpanPath": 1,
+                "windowsExe": 1,
+                "npmShim": 1,
+                "oneTokenCase": 1,
+                "wholeName": 1
+              },
+              "loads": {
+                "createRequire": [
+                  "module-load",
+                  "registerNativeReactiveFiberRender"
+                ],
+                "require": [
+                  "module-load",
+                  "registerNativeReactiveFiberRender"
+                ],
+                "boundLoad": [
+                  "module-load",
+                  "registerNativeReactiveFiberRender"
+                ],
+                "importEquals": [
+                  "module-load",
+                  "registerNativeReactiveFiberRender"
+                ],
+                "url": [
+                  "module-load"
+                ],
+                "heldSpecifier": [
+                  "specifier"
+                ]
+              },
+              "quiet": {
+                "rfDirectory": {
+                  "binary": 0,
+                  "providerNames": []
+                },
+                "rfPrefixed": {
+                  "binary": 0,
+                  "providerNames": []
+                },
+                "otherSegment": {
+                  "binary": 0,
+                  "providerNames": []
+                },
+                "rfProse": {
+                  "binary": 0,
+                  "providerNames": []
+                },
+                "caseProse": {
+                  "binary": 0,
+                  "providerNames": []
+                },
+                "siblingProvider": {
+                  "binary": 0,
+                  "providerNames": []
+                }
               }
             }
           }
@@ -975,11 +1054,22 @@
             ],
             "refusedBy": [],
             "residuals": {
-              "R-INLINE-FIXTURE": 0
+              "R-INLINE-FIXTURE": {
+                "envelopes": 0,
+                "family": true,
+                "emptyFamily": false
+              }
             },
             "walk": {
               "filesFloorMet": true,
               "unwalked": []
+            },
+            "controls": {
+              "object": 1,
+              "encodedOnce": 1,
+              "encodedTwice": 1,
+              "jsonlLine": 1,
+              "notJson": 0
             }
           }
         }
@@ -1016,115 +1106,273 @@
             "flagged": {
               "countToWord": {
                 "derivations": 1,
-                "planFields": 1
+                "planFields": 1,
+                "fields": [
+                  "identifier refresh_required"
+                ]
               },
               "decisionToWord": {
                 "derivations": 1,
-                "planFields": 1
+                "planFields": 1,
+                "fields": [
+                  "literal reuse"
+                ]
               },
               "camelCount": {
                 "derivations": 1,
-                "planFields": 1
+                "planFields": 1,
+                "fields": [
+                  "identifier nonReusable"
+                ]
               },
               "evidenceFlag": {
                 "derivations": 1,
-                "planFields": 1
+                "planFields": 1,
+                "fields": [
+                  "identifier evidence_complete"
+                ]
               },
               "elementAccess": {
                 "derivations": 1,
-                "planFields": 1
+                "planFields": 1,
+                "fields": [
+                  "literal invalidated"
+                ]
               },
               "destructured": {
                 "derivations": 1,
-                "planFields": 1
+                "planFields": 1,
+                "fields": [
+                  "identifier refresh_required"
+                ]
               },
               "template": {
                 "derivations": 1,
-                "planFields": 1
+                "planFields": 1,
+                "fields": [
+                  "identifier non_reusable"
+                ]
               },
               "upperCase": {
                 "derivations": 1,
-                "planFields": 1
+                "planFields": 1,
+                "fields": [
+                  "identifier invalidated"
+                ]
               },
               "instances": {
                 "derivations": 1,
-                "planFields": 1
+                "planFields": 1,
+                "fields": [
+                  "identifier observed_instances"
+                ]
               },
               "predictionFallback": {
                 "derivations": 1,
-                "planFields": 2
+                "planFields": 2,
+                "fields": [
+                  "identifier prediction",
+                  "identifier reuse"
+                ]
               },
               "regexField": {
                 "derivations": 1,
-                "planFields": 1
+                "planFields": 1,
+                "fields": [
+                  "pattern /^refresh_required$/"
+                ]
               },
               "wordList": {
                 "derivations": 1,
-                "planFields": 1
+                "planFields": 1,
+                "fields": [
+                  "literal reuse invalidated"
+                ]
               },
               "separatorTransform": {
                 "derivations": 1,
-                "planFields": 1
+                "planFields": 1,
+                "fields": [
+                  "literal refresh-required"
+                ]
               },
               "spacedWhole": {
                 "derivations": 1,
-                "planFields": 1
+                "planFields": 1,
+                "fields": [
+                  "literal refresh required"
+                ]
               },
               "camelSuffix": {
                 "derivations": 1,
-                "planFields": 2
+                "planFields": 2,
+                "fields": [
+                  "identifier refreshRequiredCount",
+                  "identifier refreshRequiredCount"
+                ]
               },
               "caseVariant": {
                 "derivations": 1,
-                "planFields": 1
+                "planFields": 1,
+                "fields": [
+                  "literal REUSE"
+                ]
+              },
+              "privateName": {
+                "derivations": 1,
+                "planFields": 2,
+                "fields": [
+                  "identifier #refresh_required",
+                  "identifier #refresh_required"
+                ]
+              },
+              "privateMethod": {
+                "derivations": 1,
+                "planFields": 2,
+                "fields": [
+                  "identifier #refreshRequired",
+                  "identifier #refreshRequired"
+                ]
+              },
+              "regexHexEscape": {
+                "derivations": 1,
+                "planFields": 1,
+                "fields": [
+                  "pattern /^refresh\\x5frequired$/"
+                ]
+              },
+              "regexUnicodeEscape": {
+                "derivations": 1,
+                "planFields": 1,
+                "fields": [
+                  "pattern /^refresh\\u005frequired$/"
+                ]
+              },
+              "regexBracedEscape": {
+                "derivations": 1,
+                "planFields": 1,
+                "fields": [
+                  "pattern /^refresh\\u{5f}required$/u"
+                ]
+              },
+              "regexOctalEscape": {
+                "derivations": 1,
+                "planFields": 1,
+                "fields": [
+                  "pattern /^refresh\\137required$/"
+                ]
+              },
+              "regexClassEscape": {
+                "derivations": 1,
+                "planFields": 1,
+                "fields": [
+                  "pattern /^refresh[\\x5f]required$/"
+                ]
+              },
+              "regexWordEscape": {
+                "derivations": 1,
+                "planFields": 1,
+                "fields": [
+                  "pattern /^re\\x66resh_required$/"
+                ]
+              },
+              "regexSource": {
+                "derivations": 1,
+                "planFields": 1,
+                "fields": [
+                  "literal ^refresh\\u005frequired$"
+                ]
               }
             },
             "quiet": {
               "attentionConstant": {
                 "derivations": 0,
-                "planFields": 0
+                "planFields": 0,
+                "fields": []
               },
               "observerStatus": {
                 "derivations": 0,
-                "planFields": 0
+                "planFields": 0,
+                "fields": []
               },
               "echoVerbatim": {
                 "derivations": 0,
-                "planFields": 2
+                "planFields": 2,
+                "fields": [
+                  "identifier prediction",
+                  "identifier prediction"
+                ]
               },
               "countsVerbatim": {
                 "derivations": 0,
-                "planFields": 2
+                "planFields": 2,
+                "fields": [
+                  "identifier refresh_required",
+                  "identifier evidence_complete"
+                ]
               },
               "prose": {
                 "derivations": 0,
-                "planFields": 0
+                "planFields": 0,
+                "fields": []
+              },
+              "escapedControlClass": {
+                "derivations": 0,
+                "planFields": 0,
+                "fields": []
+              },
+              "escapedBackslash": {
+                "derivations": 0,
+                "planFields": 0,
+                "fields": []
               }
             },
             "residuals": {
               "R-COMPOSED": {
                 "derivations": 0,
-                "planFields": 0
+                "planFields": 0,
+                "fields": [],
+                "family": true,
+                "emptyFamily": false
               },
               "R-COMPOSED-WORD": {
                 "derivations": 0,
-                "planFields": 1
+                "planFields": 1,
+                "fields": [
+                  "identifier refresh_required"
+                ],
+                "family": true,
+                "emptyFamily": false
               },
               "R-VOCABULARY": {
                 "derivations": 0,
-                "planFields": 1
+                "planFields": 1,
+                "fields": [
+                  "identifier refresh_required"
+                ],
+                "family": true,
+                "emptyFamily": false
               },
               "R-ROWS-ONLY": {
                 "derivations": 0,
-                "planFields": 0
+                "planFields": 0,
+                "fields": [],
+                "family": true,
+                "emptyFamily": false
               },
               "R-CROSS-MODULE": {
                 "derivations": 0,
-                "planFields": 0
+                "planFields": 0,
+                "fields": [],
+                "family": true,
+                "emptyFamily": false
               },
               "R-PROSE": {
                 "derivations": 0,
-                "planFields": 0
+                "planFields": 0,
+                "fields": [],
+                "family": true,
+                "emptyFamily": false
               }
             }
           }
@@ -1149,5 +1397,10 @@
     "D2",
     "reach: rows A and B reached every rf surface src holds, for every measured plan and every word, and every passing pin reached its witness comparison",
     "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
-  ]
+  ],
+  "judges": {
+    "the judged set: the frozen shape, the out-of-file roster, the owner's acceptance clauses and the cases agree": 11,
+    "reach: rows A and B reached every rf surface src holds, for every measured plan and every word, and every passing pin reached its witness comparison": 5,
+    "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one": 4
+  }
 }
