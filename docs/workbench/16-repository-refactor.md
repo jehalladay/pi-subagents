@@ -127,6 +127,7 @@ Pre-existing upstream paths under `src/` and `test/` (outside `src/workbench` an
 | `test/workflow-meta.test.ts` | b44f1ce | +4 -5 lines against the baseline |
 | `test/workflow-progress.test.ts` | b44f1ce | +17 -0 lines against the baseline |
 | `test/workflow-render.test.ts` | b44f1ce | +29 -0 lines against the baseline |
+| `test/workflow-runtime.test.ts` | ba08a2d | +46 -5 lines against the baseline |
 | `test/workflow-task.test.ts` | b44f1ce | +148 -0 lines against the baseline |
 | `test/workflow-tool-description.test.ts` | b44f1ce | +9 -0 lines against the baseline |
 | `test/workflow-tool.test.ts` | cc63071 | +14 -14 lines against the baseline |
