@@ -1,5 +1,5 @@
 {
-  "provenance": "wb-o4h0.5 census roster. Quote, verbs, authority line and gating rows read at ReactiveFiberCLI 6a251bf73af5 (read-only git show of docs/programs/federated-workspaces-2026-10-18/04-cli-api.md:8-18 and :104-106, 03-protocol-and-storage.md:53, 08-adaptive-read-and-causal-admission.md:27, BEADS-2026-10-21.md:31/:34/:35). stamps is CONSTRUCTED from 04-cli-api.md:106 and FW-10c (BEADS:34) and rides a context.render preview as its one additive result key imported_source; no federation envelope is fabricated (RF-FEDERATED-WORKSPACES-R4, wb-o4h0.3 acceptance (b)); its field names are placeholders mapped to the bead's clause (a) terms by fieldTerms, and its values share none with test/helpers/rf-render-fixture.ts fullShapeRf. federationRefusal is a CONSTRUCTED workspace.read refusal (ok false; RF_FED_RESOURCE_UNAVAILABLE is a proposed code, 04-cli-api.md:104). unknownCommand is MEASURED: the stdout of `rf --json workspace read knowledge:view:architecture` at the installed rf 0.1.832 (exit 2), captured 2026-10-22 in a scratch directory. missingBlob and refusalIds are MEASURED: copied verbatim from test/fixtures/rf-replay-refusal-echo-roster.json envelopes.blob (rf 0.1.832, wb-a9l2.4). Every pin witness is the value its own case returned on trunk e8850da + this cut; reached is each pin's assertion count at its end.",
+  "provenance": "wb-o4h0.5 census roster. Quote, verbs, authority line and gating rows read at ReactiveFiberCLI 6a251bf73af5 (read-only git show of docs/programs/federated-workspaces-2026-10-18/04-cli-api.md:8-18 and :104-106, 03-protocol-and-storage.md:53, 08-adaptive-read-and-causal-admission.md:27, BEADS-2026-10-21.md:31/:34/:35). stamps is CONSTRUCTED from 04-cli-api.md:106 and FW-10c (BEADS:34) and rides a context.render preview as its one additive result key imported_source; no federation envelope is fabricated (RF-FEDERATED-WORKSPACES-R4, wb-o4h0.3 acceptance (b)); its field names are placeholders mapped to the bead's clause (a) terms by fieldTerms, and its values share none with test/helpers/rf-render-fixture.ts fullShapeRf. federationRefusal is a CONSTRUCTED workspace.read refusal (ok false; RF_FED_RESOURCE_UNAVAILABLE is a proposed code, 04-cli-api.md:104). unknownCommand is MEASURED: the stdout of `rf --json workspace read knowledge:view:architecture` at the installed rf 0.1.832 (exit 2), captured 2026-10-22 in a scratch directory. missingBlob and refusalIds are MEASURED: copied verbatim from test/fixtures/rf-replay-refusal-echo-roster.json envelopes.blob (rf 0.1.832, wb-a9l2.4). Every pin witness is the value its own case returned on trunk e8850da + this cut; reached is each pin's assertion count at its end. wb-vu3i (the R694 follow-up of landing 273, 2026-10-24) re-measured A1, A2 and C3 at trunk 3c9c7ac after holding every src walk to node's recursive listing, the src floor and one anchor per part of src (A1, A2 and C3's src root), the qa walk to its listing, A2's seam walk to the seam's declaration, folding literal '+' chains in A1's scan, and planting one file per stamp alternative through C3's scan; every other witness is unchanged, and reached is re-measured.",
   "bead": "wb-o4h0.5",
   "rfVersion": "0.1.832",
   "quotePin": "docs/programs/federated-workspaces-2026-10-18/04-cli-api.md:106@6a251bf73af5",
@@ -166,6 +166,19 @@
           "id": "A1",
           "witness": {
             "srcFloorMet": true,
+            "walk": {
+              "floorMet": true,
+              "anchors": [
+                "src/index.ts",
+                "src/ui/fleet-list.ts",
+                "src/workbench/reactivefiber-observer.ts",
+                "src/workflow/reconcile.ts"
+              ],
+              "listing": {
+                "missed": [],
+                "extra": []
+              }
+            },
             "renderArgvSeen": true,
             "argv": [],
             "literals": [],
@@ -223,6 +236,22 @@
               "callComposed": {
                 "hits": 0,
                 "composed": 0
+              },
+              "concat": {
+                "hits": 1,
+                "composed": 0
+              },
+              "concatRecord": {
+                "hits": 1,
+                "composed": 0
+              },
+              "concatComposed": {
+                "hits": 0,
+                "composed": 0
+              },
+              "callSpelled": {
+                "hits": 0,
+                "composed": 0
               }
             }
           }
@@ -239,12 +268,30 @@
             "reconcile": [
               "reactivefiber.render.preview"
             ],
+            "walk": {
+              "floorMet": true,
+              "anchors": [
+                "src/index.ts",
+                "src/ui/fleet-list.ts",
+                "src/workbench/reactivefiber-observer.ts",
+                "src/workflow/reconcile.ts"
+              ],
+              "listing": {
+                "missed": [],
+                "extra": []
+              }
+            },
+            "declared": [
+              "src/workbench/providers/reactivefiber.ts: registerReactiveFiberRender"
+            ],
             "seamCalls": [],
             "controls": {
               "byId": true,
               "byPermission": true,
               "byContract": true,
-              "untagged": false
+              "untagged": false,
+              "seamCall": 1,
+              "seamMember": 1
             }
           }
         },
@@ -641,6 +688,10 @@
                 "floor": 100,
                 "floorMet": true,
                 "anchorRead": true,
+                "listing": {
+                  "missed": [],
+                  "extra": []
+                },
                 "hits": []
               },
               {
@@ -648,9 +699,70 @@
                 "floor": 50,
                 "floorMet": true,
                 "anchorRead": true,
+                "listing": {
+                  "missed": [],
+                  "extra": []
+                },
                 "hits": []
               }
             ],
+            "srcParts": {
+              "floorMet": true,
+              "anchors": [
+                "src/index.ts",
+                "src/ui/fleet-list.ts",
+                "src/workbench/reactivefiber-observer.ts",
+                "src/workflow/reconcile.ts"
+              ],
+              "listing": {
+                "missed": [],
+                "extra": []
+              }
+            },
+            "planted": {
+              "reading": {
+                "root": "plants",
+                "floor": 8,
+                "floorMet": true,
+                "anchorRead": true,
+                "listing": {
+                  "missed": [],
+                  "extra": []
+                },
+                "hits": [
+                  "plants/accepted-commit.ts",
+                  "plants/accepted-into.ts",
+                  "plants/accepted-snapshot.ts",
+                  "plants/local-accepted.ts",
+                  "plants/produced-at-b.ts",
+                  "plants/produced-at-origin.ts",
+                  "plants/produced-at-source.ts"
+                ]
+              },
+              "alternatives": {
+                "accepted-snapshot": [
+                  "accepted-snapshot"
+                ],
+                "accepted-commit": [
+                  "accepted-commit"
+                ],
+                "accepted-into": [
+                  "accepted-into"
+                ],
+                "local-accepted": [
+                  "local-accepted"
+                ],
+                "produced-at-b": [
+                  "produced-at-b"
+                ],
+                "produced-at-source": [
+                  "produced-at-source"
+                ],
+                "produced-at-origin": [
+                  "produced-at-origin"
+                ]
+              }
+            },
             "closureModules": 7,
             "digests": [
               "src/workbench/reactivefiber-observer.ts: createHash(sha256).update(output.text)"
@@ -1025,8 +1137,8 @@
     "the record: every registered test is in run mode and ran, and every pin reached its end with its pinned assertion count"
   ],
   "reached": [
-    "A1:5",
-    "A2:6",
+    "A1:8",
+    "A2:10",
     "A3:16",
     "A4:4",
     "A5:7",
@@ -1035,7 +1147,7 @@
     "B3:13",
     "C1:24",
     "C2:8",
-    "C3:13",
+    "C3:23",
     "D1:9",
     "D2:10",
     "D3:7",

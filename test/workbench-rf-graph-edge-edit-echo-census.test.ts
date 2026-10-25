@@ -108,7 +108,7 @@ import { fileURLToPath } from "node:url";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import ts from "typescript";
-import { afterAll, afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import { type CapabilityDescriptor, CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import { createCuratedTools } from "../src/workbench/claude-capability-tools.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
@@ -123,7 +123,8 @@ import { RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
 import { fullShapeRf } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
-installScratchLeakGuard(afterAll);
+// The guard registers through the helper's own afterAll: the census tier's judge refuses a vitest hook handed to a call (wb-vu3i).
+installScratchLeakGuard();
 
 type JsonObject = { [key: string]: JsonValue };
 /** The envelope the injected-reader seam hands on; it validates nothing, which is what A4, B2 and C2 read. */
@@ -1094,21 +1095,41 @@ describe("wb-pfxo.7 rf graph edge-edit echo census (RF-COMPOSITIONAL-ASSEMBLY-R8
   }
 
   it("registration: every case of this file is registered once, in roster order, in run mode, and ran before this one", ({ task }) => {
-    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
-    const walk = (tasks: typeof task.file.tasks): void => {
-      for (const child of tasks) {
-        if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
-        else if (child.type === "suite") walk(child.tasks);
+    // wb-vu3i (this census's gate F1, which rides wb-vu3i: the record skipped or hollowed stayed rc 0): the census tier's run pin
+    // (test/workbench-rf-census-run-pins.census.ts) judges every title of this file, so the task tree is read INLINE - no task handed to
+    // a call or placed in a literal, each read into primitives - at the three levels this file nests (its describe, a row's describe and
+    // that row's pins); a suite nested deeper is recorded by its name, so the title read below reds on it rather than miss what it holds.
+    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string; readonly self: boolean }[] = [];
+    for (const top of task.file.tasks) {
+      if (top.type !== "suite") {
+        walked.push({ name: `${top.name}`, mode: `${top.mode}`, fails: top.fails === true, state: `${top.result?.state ?? "no result"}`, self: top.id === task.id });
+        continue;
       }
-    };
-    walk(task.file.tasks);
+      for (const middle of top.tasks) {
+        if (middle.type !== "suite") {
+          walked.push({ name: `${middle.name}`, mode: `${middle.mode}`, fails: middle.fails === true, state: `${middle.result?.state ?? "no result"}`, self: middle.id === task.id });
+          continue;
+        }
+        for (const leaf of middle.tasks) {
+          walked.push({
+            name: leaf.type === "suite" ? `suite ${leaf.name}` : `${leaf.name}`, mode: `${leaf.mode}`, fails: leaf.type === "suite" ? false : leaf.fails === true,
+            state: `${leaf.result?.state ?? "no result"}`, self: leaf.id === task.id,
+          });
+        }
+      }
+    }
     const titles = walked.map(entry => entry.name);
-    expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
-    expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice (an alias or a decoy)").toEqual([]);
     const here = walked.findIndex(entry => entry.self);
-    expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
-    const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
-    const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
-    expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
+    const ran = (state: string): boolean => state === "pass" || state === "fail";
+    const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : entry.state}`;
+    // ONE assertion, this case's last statement: an exit anywhere before it leaves the case without an assertion, which
+    // --expect.requireAssertions fails in this tier and the census tier's judge reads as no-assertion.
+    expect(
+      {
+        rosterOrder: titles, twice: titles.filter((name, index) => titles.indexOf(name) !== index), here,
+        irregular: walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read),
+      },
+      "the registration record: every registered test of this file (vitest task tree) exactly in roster order, no title registered twice (an alias or a decoy), this case found by task identity and registered last, and every other test in run mode, not inverted and run before this case",
+    ).toStrictEqual({ rosterOrder: [...ROSTER.tests], twice: [], here: walked.length - 1, irregular: [] });
   });
 });
