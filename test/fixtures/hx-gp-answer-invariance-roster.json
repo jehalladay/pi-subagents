@@ -295,7 +295,54 @@
    "src/workbench/providers/hyperunix.ts",
    "src/workbench/hyperunix-observer.ts",
    "src/workbench/native-evidence.ts"
-  ]
+  ],
+  "residuals": [
+   {
+    "id": "R1",
+    "name": "R-BARE-GP"
+   },
+   {
+    "id": "R2",
+    "name": "R-COMPOSED"
+   },
+   {
+    "id": "R3",
+    "name": "R-SPELLING"
+   },
+   {
+    "id": "R4",
+    "name": "R-HOLDER-NAME"
+   },
+   {
+    "id": "R5",
+    "name": "R-HOLDER-REGION"
+   },
+   {
+    "id": "R6",
+    "name": "R-OUTSIDE-ROOTS"
+   },
+   {
+    "id": "R7",
+    "name": "R-NEW-READER"
+   },
+   {
+    "id": "R8",
+    "name": "R-LICENCE-WINS"
+   }
+  ],
+  "residualsLead": "RESIDUALS (named, each with a pinned quiet row in row R): ",
+  "sdkKeeps": {
+   "coverage[0].cause": "kept",
+   "coverage[0].scope": "kept",
+   "coverage[0].target": "kept",
+   "coverage[0].body": "kept",
+   "coverage[1].cause": "kept",
+   "coverage[1].scope": "kept",
+   "coverage[1].target": "kept",
+   "coverage[1].body": "kept",
+   "evidence.provider_versions": "coerced",
+   "extensions": "kept"
+  }
  },
  "rows": [
   {
@@ -311,6 +358,15 @@
        "source.execution_status",
        "source.coverage_summary",
        "source.coverage[0]",
+       "source.coverage[0].cause",
+       "source.coverage[0].scope",
+       "source.coverage[0].target",
+       "source.coverage[0].body",
+       "source.coverage[1]",
+       "source.coverage[1].cause",
+       "source.coverage[1].scope",
+       "source.coverage[1].target",
+       "source.coverage[1].body",
        "source.evidence",
        "source.extensions",
        "runtime"
@@ -321,9 +377,9 @@
         "licensed": false,
         "reading": "partial/unknown/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -331,9 +387,9 @@
         "licensed": true,
         "reading": "complete/success/true",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -341,9 +397,9 @@
         "licensed": false,
         "reading": "partial/unknown/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -351,9 +407,9 @@
         "licensed": true,
         "reading": "complete/success/true",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -361,9 +417,9 @@
         "licensed": false,
         "reading": "partial/unknown/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -371,9 +427,9 @@
         "licensed": true,
         "reading": "partial/unknown/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -381,9 +437,9 @@
         "licensed": false,
         "reading": "partial/unknown/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -391,9 +447,9 @@
         "licensed": true,
         "reading": "partial/unknown/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -401,9 +457,9 @@
         "licensed": false,
         "reading": "partial/unknown/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -411,9 +467,9 @@
         "licensed": true,
         "reading": "partial/unknown/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -421,9 +477,9 @@
         "licensed": false,
         "reading": "partial/unknown/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -431,9 +487,9 @@
         "licensed": true,
         "reading": "partial/unknown/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -441,9 +497,9 @@
         "licensed": false,
         "reading": "unknown/failure/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -451,9 +507,9 @@
         "licensed": true,
         "reading": "unknown/failure/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -461,9 +517,9 @@
         "licensed": false,
         "reading": "unknown/failure/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -471,9 +527,9 @@
         "licensed": true,
         "reading": "unknown/failure/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -481,9 +537,9 @@
         "licensed": false,
         "reading": "unknown/failure/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -491,9 +547,9 @@
         "licensed": true,
         "reading": "unknown/failure/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -501,9 +557,9 @@
         "licensed": false,
         "reading": "unknown/failure/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -511,9 +567,9 @@
         "licensed": true,
         "reading": "unknown/failure/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -521,9 +577,9 @@
         "licensed": false,
         "reading": "unknown/failure/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -531,9 +587,9 @@
         "licensed": true,
         "reading": "unknown/failure/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -541,9 +597,9 @@
         "licensed": false,
         "reading": "refused:validation/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -551,9 +607,9 @@
         "licensed": true,
         "reading": "refused:validation/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -561,9 +617,9 @@
         "licensed": false,
         "reading": "refused:validation/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -571,9 +627,9 @@
         "licensed": true,
         "reading": "refused:validation/false",
         "baseSurfaced": false,
-        "fresh": 8,
-        "carried": 8,
-        "identical": 8,
+        "fresh": 17,
+        "carried": 17,
+        "identical": 17,
         "surfaced": 0
        }
       ],
@@ -595,11 +651,22 @@
       "sites": [
        "top",
        "coverage[0]",
+       "coverage[0].cause",
+       "coverage[0].scope",
+       "coverage[0].target",
+       "coverage[0].body",
+       "coverage[1]",
+       "coverage[1].cause",
+       "coverage[1].scope",
+       "coverage[1].target",
+       "coverage[1].body",
        "status",
+       "status.streams[0]",
        "execution_status",
        "transport",
        "coverage_summary",
        "evidence",
+       "evidence.provider_versions",
        "extensions"
       ],
       "documents": [
@@ -614,7 +681,7 @@
            "find",
            "runtime"
           ],
-          "sidecar": "dropped",
+          "kept": "dropped",
           "identical": true,
           "surfaced": false
          },
@@ -624,7 +691,97 @@
            "find",
            "runtime"
           ],
-          "sidecar": "dropped",
+          "kept": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[0].cause",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "kept",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[0].scope",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "kept",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[0].target",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "kept",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[0].body",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "kept",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[1]",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[1].cause",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "kept",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[1].scope",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "kept",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[1].target",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "kept",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[1].body",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "kept",
           "identical": true,
           "surfaced": false
          },
@@ -634,7 +791,17 @@
            "find",
            "runtime"
           ],
-          "sidecar": "dropped",
+          "kept": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "status.streams[0]",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "dropped",
           "identical": true,
           "surfaced": false
          },
@@ -644,7 +811,7 @@
            "find",
            "runtime"
           ],
-          "sidecar": "dropped",
+          "kept": "dropped",
           "identical": true,
           "surfaced": false
          },
@@ -654,7 +821,7 @@
            "find",
            "runtime"
           ],
-          "sidecar": "dropped",
+          "kept": "dropped",
           "identical": true,
           "surfaced": false
          },
@@ -664,7 +831,7 @@
            "find",
            "runtime"
           ],
-          "sidecar": "dropped",
+          "kept": "dropped",
           "identical": true,
           "surfaced": false
          },
@@ -674,7 +841,17 @@
            "find",
            "runtime"
           ],
-          "sidecar": "dropped",
+          "kept": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "evidence.provider_versions",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "coerced",
           "identical": true,
           "surfaced": false
          },
@@ -684,7 +861,7 @@
            "find",
            "runtime"
           ],
-          "sidecar": "echoed",
+          "kept": "kept",
           "identical": true,
           "surfaced": false
          }
@@ -701,7 +878,7 @@
            "find",
            "runtime"
           ],
-          "sidecar": "dropped",
+          "kept": "dropped",
           "identical": true,
           "surfaced": false
          },
@@ -711,7 +888,97 @@
            "find",
            "runtime"
           ],
-          "sidecar": "dropped",
+          "kept": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[0].cause",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "kept",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[0].scope",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "kept",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[0].target",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "kept",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[0].body",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "kept",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[1]",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[1].cause",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "kept",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[1].scope",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "kept",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[1].target",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "kept",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "coverage[1].body",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "kept",
           "identical": true,
           "surfaced": false
          },
@@ -721,7 +988,17 @@
            "find",
            "runtime"
           ],
-          "sidecar": "dropped",
+          "kept": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "status.streams[0]",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "dropped",
           "identical": true,
           "surfaced": false
          },
@@ -731,7 +1008,7 @@
            "find",
            "runtime"
           ],
-          "sidecar": "dropped",
+          "kept": "dropped",
           "identical": true,
           "surfaced": false
          },
@@ -741,7 +1018,7 @@
            "find",
            "runtime"
           ],
-          "sidecar": "dropped",
+          "kept": "dropped",
           "identical": true,
           "surfaced": false
          },
@@ -751,7 +1028,7 @@
            "find",
            "runtime"
           ],
-          "sidecar": "dropped",
+          "kept": "dropped",
           "identical": true,
           "surfaced": false
          },
@@ -761,7 +1038,17 @@
            "find",
            "runtime"
           ],
-          "sidecar": "dropped",
+          "kept": "dropped",
+          "identical": true,
+          "surfaced": false
+         },
+         {
+          "site": "evidence.provider_versions",
+          "served": [
+           "find",
+           "runtime"
+          ],
+          "kept": "coerced",
           "identical": true,
           "surfaced": false
          },
@@ -771,7 +1058,7 @@
            "find",
            "runtime"
           ],
-          "sidecar": "echoed",
+          "kept": "kept",
           "identical": true,
           "surfaced": false
          }
@@ -791,7 +1078,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -801,7 +1088,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -811,7 +1098,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -821,7 +1108,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -831,7 +1118,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -841,7 +1128,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -851,7 +1138,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -861,7 +1148,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -871,7 +1158,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -881,7 +1168,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -891,7 +1178,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -901,7 +1188,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -911,7 +1198,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -921,7 +1208,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -931,7 +1218,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -941,7 +1228,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -951,7 +1238,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -961,7 +1248,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -971,7 +1258,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -981,7 +1268,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -991,7 +1278,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1001,7 +1288,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1011,7 +1298,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1021,7 +1308,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1031,7 +1318,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1041,7 +1328,7 @@
         "evidenceRefs": [
          "support-1"
         ],
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        }
       ]
@@ -1057,7 +1344,7 @@
         "holds": true,
         "violations": [],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1066,7 +1353,7 @@
         "holds": true,
         "violations": [],
         "absenceLicensed": true,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1075,7 +1362,7 @@
         "holds": true,
         "violations": [],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1084,7 +1371,7 @@
         "holds": true,
         "violations": [],
         "absenceLicensed": true,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1093,7 +1380,7 @@
         "holds": true,
         "violations": [],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1104,7 +1391,7 @@
          "licence-without-complete-kind"
         ],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1113,7 +1400,7 @@
         "holds": true,
         "violations": [],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1124,7 +1411,7 @@
          "licence-without-complete-kind"
         ],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1133,7 +1420,7 @@
         "holds": true,
         "violations": [],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1144,7 +1431,7 @@
          "licence-without-complete-kind"
         ],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1153,7 +1440,7 @@
         "holds": true,
         "violations": [],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1164,7 +1451,7 @@
          "licence-without-complete-kind"
         ],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1173,7 +1460,7 @@
         "holds": true,
         "violations": [],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1184,7 +1471,7 @@
          "licence-without-complete-kind"
         ],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1193,7 +1480,7 @@
         "holds": true,
         "violations": [],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1204,7 +1491,7 @@
          "licence-without-complete-kind"
         ],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1213,7 +1500,7 @@
         "holds": true,
         "violations": [],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1224,7 +1511,7 @@
          "licence-without-complete-kind"
         ],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1233,7 +1520,7 @@
         "holds": true,
         "violations": [],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1244,7 +1531,7 @@
          "licence-without-complete-kind"
         ],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1253,7 +1540,7 @@
         "holds": true,
         "violations": [],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1264,7 +1551,7 @@
          "licence-without-complete-kind"
         ],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1275,7 +1562,7 @@
          "read-outcome"
         ],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1287,7 +1574,7 @@
          "licence-without-complete-kind"
         ],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1298,7 +1585,7 @@
          "read-outcome"
         ],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        },
        {
@@ -1310,7 +1597,7 @@
          "licence-without-complete-kind"
         ],
         "absenceLicensed": false,
-        "identical": 8,
+        "identical": 17,
         "surfaced": 0
        }
       ]
@@ -1413,7 +1700,58 @@
         "docs/workbench/receipts/wb-plant.1.md:1",
         "docs/workbench/receipts/wb-plant.1.md:3"
        ]
-      }
+      },
+      "hidden": [
+       [
+        "atx",
+        [
+         "docs/workbench/03-architecture-and-ownership.md:8 graphpolicy,GP: outside-holder",
+         "docs/workbench/03-architecture-and-ownership.md:16 graphpolicy: outside-holder"
+        ]
+       ],
+       [
+        "setext-h2",
+        [
+         "docs/workbench/03-architecture-and-ownership.md:8 graphpolicy,GP: outside-holder",
+         "docs/workbench/03-architecture-and-ownership.md:17 graphpolicy: outside-holder"
+        ]
+       ],
+       [
+        "indented-atx",
+        [
+         "docs/workbench/03-architecture-and-ownership.md:8 graphpolicy,GP: outside-holder",
+         "docs/workbench/03-architecture-and-ownership.md:16 graphpolicy: outside-holder"
+        ]
+       ],
+       [
+        "setext-h1",
+        [
+         "docs/workbench/03-architecture-and-ownership.md:8 graphpolicy,GP: outside-holder",
+         "docs/workbench/03-architecture-and-ownership.md:17 graphpolicy: outside-holder"
+        ]
+       ],
+       [
+        "one-space-h1",
+        [
+         "docs/workbench/03-architecture-and-ownership.md:8 graphpolicy,GP: outside-holder",
+         "docs/workbench/03-architecture-and-ownership.md:16 graphpolicy: outside-holder"
+        ]
+       ],
+       [
+        "tab-atx",
+        [
+         "docs/workbench/03-architecture-and-ownership.md:8 graphpolicy,GP: outside-holder",
+         "docs/workbench/03-architecture-and-ownership.md:16 graphpolicy: outside-holder"
+        ]
+       ],
+       [
+        "empty-atx",
+        [
+         "docs/workbench/03-architecture-and-ownership.md:8 graphpolicy,GP: outside-holder",
+         "docs/workbench/03-architecture-and-ownership.md:16 graphpolicy: outside-holder"
+        ]
+       ]
+      ]
      }
     },
     {
@@ -1485,92 +1823,92 @@
        {
         "kind": "complete",
         "reading": "partial/unknown/false",
-        "plants": 40,
-        "identical": 40,
+        "plants": 85,
+        "identical": 85,
         "surfaced": 0
        },
        {
         "kind": "complete-empty",
         "reading": "partial/unknown/false",
-        "plants": 40,
-        "identical": 40,
+        "plants": 85,
+        "identical": 85,
         "surfaced": 0
        },
        {
         "kind": "incomplete",
         "reading": "partial/unknown/false",
-        "plants": 40,
-        "identical": 40,
+        "plants": 85,
+        "identical": 85,
         "surfaced": 0
        },
        {
         "kind": "budget-exhausted",
         "reading": "partial/unknown/false",
-        "plants": 40,
-        "identical": 40,
+        "plants": 85,
+        "identical": 85,
         "surfaced": 0
        },
        {
         "kind": "cancelled",
         "reading": "partial/unknown/false",
-        "plants": 40,
-        "identical": 40,
+        "plants": 85,
+        "identical": 85,
         "surfaced": 0
        },
        {
         "kind": "view-invalidated",
         "reading": "partial/unknown/false",
-        "plants": 40,
-        "identical": 40,
+        "plants": 85,
+        "identical": 85,
         "surfaced": 0
        },
        {
         "kind": "provider-failed",
         "reading": "unknown/failure/false",
-        "plants": 40,
-        "identical": 40,
+        "plants": 85,
+        "identical": 85,
         "surfaced": 0
        },
        {
         "kind": "schema-failed",
         "reading": "unknown/failure/false",
-        "plants": 40,
-        "identical": 40,
+        "plants": 85,
+        "identical": 85,
         "surfaced": 0
        },
        {
         "kind": "internal-failed",
         "reading": "unknown/failure/false",
-        "plants": 40,
-        "identical": 40,
+        "plants": 85,
+        "identical": 85,
         "surfaced": 0
        },
        {
         "kind": "protocol-failed",
         "reading": "unknown/failure/false",
-        "plants": 40,
-        "identical": 40,
+        "plants": 85,
+        "identical": 85,
         "surfaced": 0
        },
        {
         "kind": "usage-error",
         "reading": "unknown/failure/false",
-        "plants": 40,
-        "identical": 40,
+        "plants": 85,
+        "identical": 85,
         "surfaced": 0
        },
        {
         "kind": "mutation-rejected",
         "reading": "refused:validation/false",
-        "plants": 40,
-        "identical": 40,
+        "plants": 85,
+        "identical": 85,
         "surfaced": 0
        },
        {
         "kind": "mutation-partial",
         "reading": "refused:validation/false",
-        "plants": 40,
-        "identical": 40,
+        "plants": 85,
+        "identical": 85,
         "surfaced": 0
        }
       ]
@@ -1588,208 +1926,208 @@
         "kind": "complete",
         "licensed": false,
         "reading": "partial/unknown/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "complete",
         "licensed": true,
         "reading": "complete/success/true",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "complete-empty",
         "licensed": false,
         "reading": "partial/unknown/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "complete-empty",
         "licensed": true,
         "reading": "complete/success/true",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "incomplete",
         "licensed": false,
         "reading": "partial/unknown/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "incomplete",
         "licensed": true,
         "reading": "partial/unknown/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "budget-exhausted",
         "licensed": false,
         "reading": "partial/unknown/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "budget-exhausted",
         "licensed": true,
         "reading": "partial/unknown/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "cancelled",
         "licensed": false,
         "reading": "partial/unknown/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "cancelled",
         "licensed": true,
         "reading": "partial/unknown/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "view-invalidated",
         "licensed": false,
         "reading": "partial/unknown/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "view-invalidated",
         "licensed": true,
         "reading": "partial/unknown/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "provider-failed",
         "licensed": false,
         "reading": "unknown/failure/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "provider-failed",
         "licensed": true,
         "reading": "unknown/failure/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "schema-failed",
         "licensed": false,
         "reading": "unknown/failure/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "schema-failed",
         "licensed": true,
         "reading": "unknown/failure/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "internal-failed",
         "licensed": false,
         "reading": "unknown/failure/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "internal-failed",
         "licensed": true,
         "reading": "unknown/failure/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "protocol-failed",
         "licensed": false,
         "reading": "unknown/failure/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "protocol-failed",
         "licensed": true,
         "reading": "unknown/failure/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "usage-error",
         "licensed": false,
         "reading": "unknown/failure/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "usage-error",
         "licensed": true,
         "reading": "unknown/failure/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "mutation-rejected",
         "licensed": false,
         "reading": "refused:validation/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "mutation-rejected",
         "licensed": true,
         "reading": "refused:validation/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "mutation-partial",
         "licensed": false,
         "reading": "refused:validation/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        },
        {
         "kind": "mutation-partial",
         "licensed": true,
         "reading": "refused:validation/false",
-        "plants": 16,
-        "identical": 16,
+        "plants": 34,
+        "identical": 34,
         "worded": 0
        }
       ],
@@ -2042,7 +2380,7 @@
   },
   {
    "id": "F",
-   "label": "the owner filing row of wb-kjg9.1 in the tracked bead export and the landed receipt, roster and docs binding anchor every clause, key, field, cite, needle member, root, holder pattern and claim plant the census reads",
+   "label": "the owner filing row of wb-kjg9.1 in the tracked bead export and the landed receipt, roster and docs binding anchor every clause, key, field, cite, needle member, root, holder pattern, claim plant and residual the census reads",
    "pins": [
     {
      "id": "F1",
@@ -2186,7 +2524,51 @@
        ]
       ],
       "labelsAtPin": true,
-      "pin": true
+      "pin": true,
+      "residuals": [
+       [
+        "R1",
+        "R-BARE-GP"
+       ],
+       [
+        "R2",
+        "R-COMPOSED"
+       ],
+       [
+        "R3",
+        "R-SPELLING"
+       ],
+       [
+        "R4",
+        "R-HOLDER-NAME"
+       ],
+       [
+        "R5",
+        "R-HOLDER-REGION"
+       ],
+       [
+        "R6",
+        "R-OUTSIDE-ROOTS"
+       ],
+       [
+        "R7",
+        "R-NEW-READER"
+       ],
+       [
+        "R8",
+        "R-LICENCE-WINS"
+       ]
+      ],
+      "residualPins": [
+       "R1",
+       "R2",
+       "R3",
+       "R4",
+       "R5",
+       "R6",
+       "R7",
+       "R8"
+      ]
      }
     },
     {
@@ -2445,6 +2827,131 @@
        "notReceipts": {
         "lines": [],
         "regions": []
+       },
+       "hidden": {
+        "atx": {
+         "lines": [
+          7,
+          10,
+          11,
+          12,
+          13
+         ],
+         "regions": [
+          "boundary-section",
+          "ownership-row"
+         ]
+        },
+        "setext-h2": {
+         "lines": [
+          7,
+          10,
+          11,
+          12,
+          13
+         ],
+         "regions": [
+          "boundary-section",
+          "ownership-row"
+         ]
+        },
+        "indented-atx": {
+         "lines": [
+          7,
+          10,
+          11,
+          12,
+          13
+         ],
+         "regions": [
+          "boundary-section",
+          "ownership-row"
+         ]
+        },
+        "setext-h1": {
+         "lines": [
+          7,
+          10,
+          11,
+          12,
+          13
+         ],
+         "regions": [
+          "boundary-section",
+          "ownership-row"
+         ]
+        },
+        "one-space-h1": {
+         "lines": [
+          7,
+          10,
+          11,
+          12,
+          13
+         ],
+         "regions": [
+          "boundary-section",
+          "ownership-row"
+         ]
+        },
+        "tab-atx": {
+         "lines": [
+          7,
+          10,
+          11,
+          12,
+          13
+         ],
+         "regions": [
+          "boundary-section",
+          "ownership-row"
+         ]
+        },
+        "empty-atx": {
+         "lines": [
+          7,
+          10,
+          11,
+          12,
+          13
+         ],
+         "regions": [
+          "boundary-section",
+          "ownership-row"
+         ]
+        }
+       },
+       "fenced": {
+        "lines": [
+         7
+        ],
+        "regions": [
+         "ownership-row"
+        ]
+       },
+       "subsection": {
+        "lines": [
+         7,
+         10,
+         11,
+         12,
+         13,
+         14,
+         15,
+         16
+        ],
+        "regions": [
+         "boundary-section",
+         "ownership-row"
+        ]
+       },
+       "carriageReturn": {
+        "lines": [
+         7
+        ],
+        "regions": [
+         "ownership-row"
+        ]
        }
       }
      }
@@ -2458,6 +2965,15 @@
        "source.execution_status",
        "source.coverage_summary",
        "source.coverage[0]",
+       "source.coverage[0].cause",
+       "source.coverage[0].scope",
+       "source.coverage[0].target",
+       "source.coverage[0].body",
+       "source.coverage[1]",
+       "source.coverage[1].cause",
+       "source.coverage[1].scope",
+       "source.coverage[1].target",
+       "source.coverage[1].body",
        "source.evidence",
        "source.extensions",
        "runtime"
@@ -2465,11 +2981,22 @@
       "sdkSites": [
        "top",
        "coverage[0]",
+       "coverage[0].cause",
+       "coverage[0].scope",
+       "coverage[0].target",
+       "coverage[0].body",
+       "coverage[1]",
+       "coverage[1].cause",
+       "coverage[1].scope",
+       "coverage[1].target",
+       "coverage[1].body",
        "status",
+       "status.streams[0]",
        "execution_status",
        "transport",
        "coverage_summary",
        "evidence",
+       "evidence.provider_versions",
        "extensions"
       ],
       "freshEverywhere": {
@@ -2486,7 +3013,19 @@
        true,
        true,
        false
-      ]
+      ],
+      "shape": {
+       "bases": true,
+       "documents": true,
+       "rowObjects": 0,
+       "nested": [
+        "top",
+        "list[0][0]",
+        "list[0][0].deep",
+        "list[0][0].deep.deeper",
+        "list[2]"
+       ]
+      }
      }
     }
    ]
