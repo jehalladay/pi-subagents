@@ -426,10 +426,11 @@
  "rows": [
   {
    "id": "A",
-   "label": "(trigger, absent today) Pi carries no decision envelope today (census 0): no package.json dependency, src file or rf roster entry reads a ReactiveInference native result, and its gating envelope (RI-DEC-06/08) is measured unshipped at the pin and at the probe",
+   "label": "(trigger, absent today) Pi carries no decision envelope today (census 0): no package.json dependency or src file spells the ReactiveInference module root, no src file spells model revision or sampling policy as one identifier (joined or with one underscore, dot or dash) or native_evidence, the rf roster is the preview alone, and its gating envelope (RI-DEC-06/08) is measured unshipped at the pin and at the probe",
    "pins": [
     {
      "id": "A1",
+     "quote": "If Pi ever echoes a native decision result",
      "witness": {
       "floorMet": true,
       "anchorRead": true,
@@ -443,11 +444,21 @@
        "dotted": true,
        "spaced": true,
        "quiet": false
+      },
+      "fieldSites": [],
+      "fieldControls": {
+       "snake": true,
+       "camel": true,
+       "evidence": true,
+       "quietProse": false,
+       "quietOwnEvidence": false,
+       "quietEndpoint": false
       }
      }
     },
     {
      "id": "A2",
+     "quote": "(gated: RI native decision envelope",
      "witness": {
       "native": [
        "reactivefiber.render.preview"
@@ -463,6 +474,7 @@
     },
     {
      "id": "A3",
+     "quote": "carrying endpoint/model revision, sampling policy and native evidence, RI-DEC-06/08; unshipped at 485f3615db1e)",
      "witness": {
       "shippedNo": true,
       "noEnvelope": true,
@@ -512,6 +524,7 @@
    "pins": [
     {
      "id": "B1",
+     "quote": "adoption fixture: endpoint/model revision, sampling policy and native evidence",
      "witness": {
       "fields": [
        "endpoint",
@@ -543,6 +556,7 @@
     },
     {
      "id": "B2",
+     "quote": "travel verbatim",
      "witness": {
       "top/rf-cli": {
        "verbatim": true,
@@ -626,6 +640,7 @@
     },
     {
      "id": "B3",
+     "quote": "as distinct",
      "witness": {
       "adopted": {
        "rf-cli": {
@@ -666,6 +681,7 @@
     },
     {
      "id": "B4",
+     "quote": "evidence refs/metadata",
      "witness": {
       "base": {
        "rf-cli": "cd2642b941ecc4d0",
@@ -732,6 +748,7 @@
     },
     {
      "id": "B5",
+     "quote": "when present",
      "witness": {
       "release": "0.1.836",
       "ref": [
@@ -757,6 +774,7 @@
    "pins": [
     {
      "id": "C1",
+     "quote": "absent-field fixture",
      "witness": {
       "endpoint absent": {
        "keys": [
@@ -834,6 +852,7 @@
     },
     {
      "id": "C2",
+     "quote": "projection byte-identical to today's",
      "witness": {
       "fixtures": {
        "endpoint absent": {
@@ -964,6 +983,7 @@
     },
     {
      "id": "C3",
+     "quote": "no carrier default substitutes",
      "witness": {
       "counts": {
        "budget.requested_model_id": {
@@ -996,6 +1016,7 @@
     },
     {
      "id": "C4",
+     "quote": "(wb-2j3.2 pattern)",
      "witness": {
       "removedRefs": [
        "rf-cli:0.1.836"
@@ -1034,6 +1055,7 @@
    "pins": [
     {
      "id": "D1",
+     "quote": "mutant: defaulting an absent model revision",
      "witness": {
       "probes": [
        "\"unknown\" -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riModelRevision",
@@ -1060,6 +1082,7 @@
     },
     {
      "id": "D2",
+     "quote": "(or policy)",
      "witness": {
       "probes": [
        "{} -> rf-cli changed:$.snapshots[0].evidenceRefs | injected-fixture changed:$.snapshots[0].evidenceRefs | metadata changed:$.riSamplingPolicy",
@@ -1082,6 +1105,7 @@
     },
     {
      "id": "D3",
+     "quote": "to any literal",
      "witness": {
       "revision absent, note states a default": [
        "changed:$.diagnostics"
@@ -1143,6 +1167,7 @@
     },
     {
      "id": "D4",
+     "quote": "fails",
      "witness": {
       "quiet": {
        "base/rf-cli": [],
@@ -1185,8 +1210,15 @@
       "residuals": {
        "R-COINCIDENT": [],
        "R-KIND": [],
-       "R-ORDER": []
-      }
+       "R-ORDER": [],
+       "R-REBIND": [],
+       "R-UNMEASURED": []
+      },
+      "rebind": [
+       "mutant: defaulting an absent model revision",
+       "(or policy)",
+       "to any literal fails"
+      ]
      }
     }
    ]
@@ -1213,7 +1245,7 @@
   "the record: every registered test is in run mode and ran, and every pin reached its end with its pinned assertion count"
  ],
  "reached": [
-  "A1:5",
+  "A1:7",
   "A2:6",
   "A3:8",
   "B1:8",
