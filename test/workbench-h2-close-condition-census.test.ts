@@ -35,8 +35,14 @@
  * it names), bd gate resolve, bd gate check, bd orphans --fix, bd mol squash (the digest's and the molecule root's close reason),
  * bd duplicates --auto-merge (derived: the help names the merged-away issue's closure), bd update to a closing status (the --status
  * flag or a status=<value> pair) and a bd batch close or closing-update op, written before or after the bd word. The roster carries
- * each help line verbatim. The executable surfaces beside SCAN_ROOTS: the repository root's own files (forge.toml's legs,
- * package.json's scripts, the vitest configs) and the tracker's git hooks (.beads/hooks, now a scanned root).
+ * each help line verbatim. wb-c61s (the R694 follow-up from landing 397; its notes in the tracker export carry the gate's F1 plants
+ * verbatim) re-read every bd help on the installed bd 1.1.0-rc.1 (build c7aec2c4c, the same release; every landed help line reads
+ * verbatim there) and adds the three import-class paths of its F1, which upsert an export's rows (closed statuses included) as bd
+ * import does and whose own help names the import, never the close: bd bootstrap (restores a backup's JSONL or imports the
+ * git-tracked one), bd init --from-jsonl and bd doctor --fix --source=jsonl (rebuilds the database from a JSONL export). The same
+ * scan meets bd human respond and bd human dismiss, which wb-s6jw's queued cut adds; this cut leaves them to it. The executable
+ * surfaces beside SCAN_ROOTS: the repository root's own files (forge.toml's legs, package.json's scripts, the vitest configs) and the
+ * tracker's git hooks (.beads/hooks, now a scanned root).
  *
  * THE CLOSE RULE, ARMED. No Pi closer exists, so the rule is armed on a reference: CLOSE_CASES states each clause of the acceptance
  * as a store state (closed ids, leg runs, landings, recorded verdict texts, ruling texts, the closing-gate receipt) over a program
@@ -52,9 +58,12 @@
  *    acceptance names none never closes by this rule; no title names one; over the pinned graph (no receipt, the leg ABSENT) nothing
  *    closes. A3 the trigger: no file under SCAN_ROOTS or ROOT_FILES launches a bead close (the bd word followed within CLOSE_WINDOW
  *    words by every word of a CLOSE_COMMANDS entry or by an update to status closed or done, or a bd batch with a close or closing-
- *    update op within CLOSE_WINDOW words on either side), with floors, anchors and controls, and every gate plant P06-P13 (wb-zoq7's
- *    notes, verbatim) flagged; the Beads seam offers show alone and its module exports no writer; a module A3 flags must be bound in
- *    BEAD_CLOSERS and every binding must name one (empty both ways today).
+ *    update op within CLOSE_WINDOW words on either side), with floors, anchors and controls, every gate plant P06-P13 (wb-zoq7's
+ *    notes, verbatim) and P14-P16 (wb-c61s's notes, verbatim) flagged, and a liveness plant: one close launch two directories below
+ *    every scanned root and two at the tree's own root (a regular file and a dotfile), planted in makeScratch scratch and read
+ *    through the same walk and judge as the repository, each launching while a root .md page beside them does not; the Beads seam
+ *    offers show alone and its module exports no writer; a module A3 flags must be bound in BEAD_CLOSERS and every binding must name
+ *    one (empty both ways today).
  *  B, the epic close, (b). B1 the epic cases: every ungated child closed, a verdict recorded on every gate bead ("ruled ADOPT",
  *    "ruled DEFER" or "ruled REJECT") and a full forge build green on main at a named sha close the epic; rftsx-auqdi open, no
  *    verdict text (a closed gate bead included: closure is never a verdict), text without a verdict, no receipt, a leg receipt, a
@@ -71,11 +80,13 @@
  * beads, beads (`${id}:${milestone}:${kind}`), gated packets and adopted beads as a literal held to the graph parsed from the
  * producer rows the roster carries; the whole judged set - every row's id, label and pins, every pin's witness, the constants and
  * every registered test title - is held to the out-of-file roster, and the labels of rows A to C and the carried PERF-F ids to the
- * bead's own notes in the tracker export (.beads/issues.jsonl); A3's vocabulary rides the roster's bd help lines (an entry, the
- * batch op and the status update each, both ways) and the gate's plants P06-P13 ride wb-zoq7's notes in that same export, each
- * flagged by A3. The last case reads the vitest task tree (every registered test, in
- * roster order, in run mode, ran before it) and the set of pins that reached their witness. Not claimed: an edit of this file and
- * the roster together.
+ * bead's own notes in the tracker export (.beads/issues.jsonl); A3's vocabulary rides the roster's bd help lines (an entry, the batch
+ * op and the status update each, both ways; an import-class entry's own help names an import from a JSONL export, and its close rides
+ * the import entry, whose help names the closed status the import upserts) and the gate's plants P06-P13 ride wb-zoq7's notes in that
+ * same export and P14-P16 wb-c61s's, each flagged by A3. The last case reads the vitest task tree (every registered test, in roster
+ * order, in run mode, ran before it) and the set of pins that reached their witness. Not claimed: an edit of this file and the roster
+ * together; a scan edited to tell the planted scratch from the repository (by its base or a plant's path); a case dropping or
+ * filtering its own scan's result after the scan ran.
  * RESIDUALS (named, each with its pinned quiet row): R-ARGV a close verb more than CLOSE_WINDOW words after the bd word, or held in a
  * variable, and batch ops read from a file (bd batch -f) or piped from a stream composed elsewhere escape A3 (Q1); R-COMPOSED a bd
  * word assembled at runtime escapes A3 (Q2); R-PARAPHRASE a close stated without the bd word - prose, or a status payload for another
@@ -83,14 +94,16 @@
  * .beads/README.md teach a generic bd close or done-status update for this repository's own store and name no rftsx bead: instruction
  * text outside A3's executable roots (Q4); R-CONTROLLER a Furnace Run closes its own Work by Furnace's authority on an Attempt's
  * outcome, and Pi's Furnace host spells no bd word: a bead run under Furnace closes outside this census (Q5); R-STORE a direct write
- * of a bead store bypasses bd; the one store write under the executable roots is the VC-4 tier's bd init of a disposable fx store
- * (Q6); R-EVIDENCE the rule judges the evidence a closer states, never its truth: a well-formed green for the leg ABSENT at the pin
- * closes the child under honest too - green is the leg's own exit, echoed, and its truth is the producer's (Q7); R-SCOPE test/ and
- * the tracker export lie outside every scanned root and ROOT_FILES, and both spell the close vocabulary (Q8); R-UNCARRIED five PERF-F children
- * (rftsx-abin9, rftsx-irbta, rftsx-bh3x7, rftsx-zblcp, rftsx-nwut7) ride without their acceptance cell, so the census reads no leg of
- * theirs: an uncarried acceptance names no leg here and the bead never closes by the child rule (Q9); R-SYNC a sync or merge from
- * another store (bd federation sync, bd vc merge, bd dolt pull, a tracker integration's sync such as bd jira sync --pull) carries
- * that store's closed statuses in by the other store's authority, and A3 reads none of them as a close (Q10).
+ * of a bead store bypasses bd, and so does bd sql's raw SQL (its help: "Direct database access bypasses the storage layer"): a raw
+ * insert of a closed row spells no update to a closing status, and A3 reads it as no close; the one store write under the executable
+ * roots is the VC-4 tier's bd init of a disposable fx store (Q6); R-EVIDENCE the rule judges the evidence a closer states, never its
+ * truth: a well-formed green for the leg ABSENT at the pin closes the child under honest too - green is the leg's own exit, echoed,
+ * and its truth is the producer's (Q7); R-SCOPE test/ and the tracker export lie outside every scanned root and ROOT_FILES, and both
+ * spell the close vocabulary (Q8); R-UNCARRIED five PERF-F children (rftsx-abin9, rftsx-irbta, rftsx-bh3x7, rftsx-zblcp, rftsx-nwut7)
+ * ride without their acceptance cell, so the census reads no leg of theirs: an uncarried acceptance names no leg here and the bead
+ * never closes by the child rule (Q9); R-SYNC a sync or merge from another store (bd federation sync, bd vc merge, bd dolt pull, a
+ * tracker integration's sync such as bd jira sync --pull) or a restore of a Dolt backup (bd backup restore) carries that store's
+ * closed statuses in by the other store's authority, and A3 reads none of them as a close (Q10).
  * SCOPE: PERF-F rides as cells because queued program censuses (wb-csbt.1, wb-csbt.2, wb-if7q.1) read every file below test/ and
  * police that program's own vocabulary: a verbatim PERF-F row in a fixture reads to them as a Pi sentence about the program
  * (measured by overlaying every queued entry beside this cut). The acceptance one-liners are the BEADS snapshot's cells (some cut by the producer with "..."); a closer reads each field
@@ -99,19 +112,25 @@
  * recorded on each of its gate beads (PF:76's gate-bead column; the merged R10 draft: "a verdict token in the gate beads' notes"), a
  * conservative reading. The verdict words are the producer's own ("ruled (ADOPT/DEFER/REJECT)", H2:19); the exact verdict reader is
  * wb-4nut.4's duty and is not re-pinned here. A3 reads no grammar: prose naming the bd word and a close word within the window reds
- * it, and so does a preview (bd epic close-eligible --dry-run, bd import --dry-run) (OVER-READ, disclosed: no executable root or root
- * file spells one today). The producer facts are measured at the pin; Pi vendors no producer file, so a producer change is seen only
- * when the roster is re-measured; likewise the close vocabulary is the installed bd's, re-measured on a bd upgrade.
+ * it, and so does a preview (bd epic close-eligible --dry-run, bd import --dry-run, bd bootstrap --dry-run) (OVER-READ, disclosed: no
+ * executable root or root file spells one today). The producer facts are measured at the pin; Pi vendors no producer file, so a
+ * producer change is seen only when the roster is re-measured; likewise the close vocabulary is the installed bd's, re-measured on a
+ * bd upgrade.
  *
- * Display paths added: none. Test-only: src, qa, docs and .beads are only read; nothing is written and no scratch is allocated.
+ * Display paths added: none. Test-only: src, qa, docs and .beads are only read; A3's liveness plant is written to makeScratch
+ * scratch only (test/helpers/scratch.ts, leak guard installed).
  */
-import { type Dirent, readdirSync, readFileSync } from "node:fs";
+import { type Dirent, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import * as beadsObserver from "../src/workbench/beads-observer.js";
 import type { JsonValue } from "../src/workbench/capability-registry.js";
 import type { ObservationScope } from "../src/workbench/observation.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+// A3's liveness plant lives in makeScratch scratch (wb-c61s F3); the guard registers through the helper's own afterAll.
+installScratchLeakGuard();
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
@@ -221,10 +240,11 @@ const FOLLOW_UP = "wb-zoq7";
 /** A3's close vocabulary (wb-zoq7 F1), read from the installed bd 1.1.0-rc.1's own help, each entry beside its help line in the roster:
  * a launch is the bd word followed within CLOSE_WINDOW words by every word of one entry, folded as wordsOf folds them (close and its
  * alias done, which also covers todo done; epic close-eligible; duplicate --of; supersede --with; import; gate resolve; gate check;
- * orphans --fix; mol squash; duplicates --auto-merge). */
+ * orphans --fix; mol squash; duplicates --auto-merge). wb-c61s adds the import class of its F1: bootstrap, init --from-jsonl and the
+ * doctor's --fix --source=jsonl rebuild, each upserting an export's rows as import does. */
 const CLOSE_COMMANDS: readonly (readonly string[])[] = [
   ["close"], ["done"], ["closeeligible"], ["duplicate"], ["supersede"], ["import"], ["gate", "resolve"], ["gate", "check"],
-  ["orphans", "fix"], ["mol", "squash"], ["duplicates", "automerge"],
+  ["orphans", "fix"], ["mol", "squash"], ["duplicates", "automerge"], ["bootstrap"], ["init", "fromjsonl"], ["doctor", "fix", "source", "jsonl"],
 ];
 /** The gate's plants that stayed green at landing 308, each verbatim from wb-zoq7's notes: F1's six src plants (P06-P11; an argv
  * list rides spawnSync("bd", ...) as the gate planted it) and F2's two root configs (P12 a forge.toml leg, P13 an npm script). */
@@ -237,6 +257,15 @@ const FINDING_PLANTS: Readonly<Record<string, string>> = {
   P11: '["import", "-i", rowsFile]',
   P12: 'command = "bd close rftsx-auqdi"',
   P13: '"zz-close": "bd close rftsx-auqdi"',
+};
+/** The follow-up bead whose notes carry the import-class plants (R694 follow-up from wb-zoq7 landing 397: F1 the import class). */
+const IMPORT_FOLLOW_UP = "wb-c61s";
+/** The import-class close paths that stayed green at landing 397, each verbatim from wb-c61s's notes: F1 (a) a src spawn of bd
+ * bootstrap, (b) a qa spawn of the doctor's JSONL rebuild, (c) a .github workflow step of bd init --from-jsonl. */
+const IMPORT_PLANTS: Readonly<Record<string, string>> = {
+  P14: 'spawnSync("bd", ["bootstrap", "--yes"])',
+  P15: "spawnSync('bd', ['doctor', '--fix', '--source=jsonl', '--yes'])",
+  P16: "run: bd init --from-jsonl",
 };
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-ARGV": ["Q1"],
@@ -275,12 +304,31 @@ interface RootScan {
 }
 /** The repository root's own files A3 also reads (wb-zoq7 F2): forge.toml's legs and package.json's scripts run commands and the
  * vitest configs are executed modules, so every regular file at the root is judged but its .md pages (instruction text; AGENTS.md is
- * R-INSTRUCTION's) and git's own .git pointer (a file in a worktree). The floor sits below the 22 files measured at base 9f6b726;
- * each anchor is read and quiet. */
+ * R-INSTRUCTION's) and git's own .git pointer (a file in a worktree). The floor sits at the 22 files measured at base bc6519f
+ * (wb-c61s F2: the landed floor of 20 left a margin equal to the root's two dotfiles, .gitignore and .npmignore, so a walk that also
+ * dropped dotfiles stayed green); each anchor is read and quiet. */
 const ROOT_FILES: RootScan = {
-  floor: 20,
+  floor: 22,
   anchors: [{ file: "forge.toml", token: "[build.commands." }, { file: "package.json", token: '"scripts": {' }],
 };
+/** A3's liveness plant (wb-c61s F3): the text each planted file holds, a close launch. */
+const LIVENESS_TEXT = "bd close rftsx-auqdi";
+/** Where the liveness plant writes it in its scratch tree, in the order A3 judges (the scanned roots in SCAN_ROOTS order, then the
+ * root's own files by name): two directories below every scanned root, where the repository nests its files, and at the root a
+ * regular file and a dotfile. Each must launch. */
+const LIVENESS_PLANTS: readonly string[] = [
+  "src/workbench/zz-live/plant.ts",
+  "qa/workbench/zz-live/plant.mjs",
+  "examples/workflows/zz-live/plant.js",
+  ".pi/agents/zz-live/plant.md",
+  ".codex/zz-live/nested/hooks.json",
+  ".github/workflows/zz-live/plant.yml",
+  ".beads/hooks/zz-live/nested/pre-commit",
+  ".zz-live-plant",
+  "zz-live-plant.config.ts",
+];
+/** The plant's quiet page: a root .md page (instruction text, never a root file A3 judges) holding the same launch. */
+const LIVENESS_QUIET: readonly string[] = ["ZZ-LIVE-PLANT.md"];
 
 interface RosterPin {
   readonly id: string;
@@ -786,22 +834,54 @@ function filesBelow(directory: string): string[] {
   }
   return files;
 }
-/** The regular files at the repository root A3 reads (ROOT_FILES): all but the .md pages and git's .git pointer. */
-function rootFiles(): string[] {
+/** The regular files at a tree's root A3 reads (ROOT_FILES): all but the .md pages and git's .git pointer. */
+function rootFiles(base: string): string[] {
   let entries: Dirent[];
   try {
-    entries = readdirSync(REPO, { withFileTypes: true });
+    entries = readdirSync(base, { withFileTypes: true });
   } catch {
     return [];
   }
   return entries
     .sort(byName)
     .filter(entry => entry.isFile() && entry.name !== ".git" && !entry.name.endsWith(".md"))
-    .map(entry => join(REPO, entry.name));
+    .map(entry => join(base, entry.name));
 }
-/** Every file A3 judges: the files below each scanned root, then the root's own files. */
+interface TreeWalk {
+  readonly roots: readonly { readonly scan: ScanRoot; readonly files: readonly string[] }[];
+  readonly top: readonly string[];
+}
+/** A3's walk of one tree (the repository, or the liveness plant's scratch): the files below each scanned root, and the root's own. */
+function walkTree(base: string): TreeWalk {
+  return { roots: SCAN_ROOTS.map(scan => ({ scan, files: filesBelow(join(base, scan.root)) })), top: rootFiles(base) };
+}
+/** Every file A3 judges in a walked tree: the files below each scanned root, then the root's own files. */
+function judgedOf(walk: TreeWalk): string[] {
+  return [...walk.roots.flatMap(entry => entry.files), ...walk.top];
+}
+/** A3's judge over a walked tree: each launch, named by its file's path relative to the tree's base. */
+function launchesOf(base: string, walk: TreeWalk): string[] {
+  return judgedOf(walk).flatMap(file => closeLaunchesIn(textOf(file)).map(found => `${relative(base, file)}: ${found}`));
+}
+/** Every file A3 judges in the repository (Q4, Q6 and Q8 read it). */
 function executableFiles(): string[] {
-  return [...SCAN_ROOTS.flatMap(scan => filesBelow(join(REPO, scan.root))), ...rootFiles()];
+  return judgedOf(walkTree(REPO));
+}
+/** Scratch directories the liveness plant wrote; each is removed after its case. */
+const scratches: string[] = [];
+afterEach(() => {
+  removeScratch(...scratches.splice(0));
+});
+/** A3's liveness plant (wb-c61s F3): every planted file and the quiet page written into a fresh makeScratch tree, which A3's own walk
+ * and judge then read. */
+function livenessLaunches(): string[] {
+  const base = makeScratch("h2-close-condition-a3-");
+  scratches.push(base);
+  for (const path of [...LIVENESS_PLANTS, ...LIVENESS_QUIET]) {
+    mkdirSync(dirname(join(base, path)), { recursive: true });
+    writeFileSync(join(base, path), `${LIVENESS_TEXT}\n`);
+  }
+  return launchesOf(base, walkTree(base));
 }
 /** The words a text spells, folded (lowercased; "_", "-" and "$" dropped, so flags, snake, kebab and camel forms agree). */
 function wordsOf(text: string): string[] {
@@ -837,6 +917,22 @@ function seamMembers(): string[] {
   const body = /export interface BeadsReadClient \{([^}]*)\}/.exec(text)?.[1] ?? "";
   return [...body.matchAll(/^\s*(\w+)\s*[(:]/gm)].map(match => match[1] ?? "").sort();
 }
+
+/** Whether a roster help entry stands for a close: one of its lines names the close, or it routes through the import entry (`via`) and
+ * one of its lines names an import from a JSONL export (wb-c61s's import class: bootstrap, init --from-jsonl, the doctor's rebuild). */
+function helpNamesClose(record: { readonly [key: string]: JsonValue }, lines: readonly string[]): boolean {
+  if (record.via === undefined) return lines.some(line => /\bclos/i.test(line));
+  return record.via === "import" && lines.some(line => /\b(?:import|restor|rebuild)/i.test(line) && /jsonl|import\.path/i.test(line));
+}
+/** The help rule's firing controls, each a real bd help line the rule must refuse: no close named (bd show), an import routed to another
+ * entry (bd import's own first line), and an import-class entry whose line names no JSONL import (bd restore, bd close, bd export). */
+const HELP_RULE_REFUSALS: readonly { readonly record: { readonly [key: string]: JsonValue }; readonly lines: readonly string[] }[] = [
+  { record: {}, lines: ["Show issue details"] },
+  { record: { via: "export" }, lines: ["Import issues from a JSONL file (newline-delimited JSON) into the database."] },
+  { record: { via: "import" }, lines: ["Restore the pre-compaction content of a compacted issue."] },
+  { record: { via: "import" }, lines: ["Close one or more issues."] },
+  { record: { via: "import" }, lines: ["Export all issues to JSONL (newline-delimited JSON) format."] },
+];
 
 /** A bead's own notes in the tracker export: wb-4nut.6's carry the acceptance text rows A to C quote, wb-zoq7's the gate's plants. */
 function notesOf(id: string): string {
@@ -906,15 +1002,15 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     return json({ legs, legless, leglessCloses, titled, pinned, forgeLeg: legOf("`forge run census` exits 0 on main"), legPresentAtPin: leg.present });
   },
   A3: async () => {
-    const roots = SCAN_ROOTS.map(scan => {
-      const files = filesBelow(join(REPO, scan.root));
+    const walk = walkTree(REPO);
+    const roots = walk.roots.map(({ scan, files }) => {
       const anchor = join(REPO, scan.anchorFile);
       const anchorRead = files.includes(anchor) && textOf(anchor).includes(scan.anchorToken) && closeLaunchesIn(textOf(anchor)).length === 0;
       expect(files.length >= scan.floor, `${scan.root}: ${files.length} files walked, floor ${scan.floor}`).toBe(true);
       expect(anchorRead, `${scan.root}: the anchor ${scan.anchorFile} was read and is quiet`).toBe(true);
-      return { root: scan.root, floor: files.length >= scan.floor, anchor: anchorRead, files };
+      return { root: scan.root, floor: files.length >= scan.floor, anchor: anchorRead };
     });
-    const top = rootFiles();
+    const top = walk.top;
     const root = {
       floor: top.length >= ROOT_FILES.floor,
       anchors: ROOT_FILES.anchors.map(anchor => {
@@ -924,8 +1020,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     };
     expect(root.floor, `the root: ${top.length} files read, floor ${ROOT_FILES.floor}`).toBe(true);
     expect(root.anchors, "the root: each anchor was read and is quiet").toEqual(ROOT_FILES.anchors.map(() => true));
-    const judged = [...roots.flatMap(scan => scan.files), ...top];
-    const launched = judged.flatMap(file => closeLaunchesIn(textOf(file)).map(found => `${relative(REPO, file)}: ${found}`));
+    const launched = launchesOf(REPO, walk);
     const launchingModules = [...new Set(launched.map(entry => entry.slice(0, entry.indexOf(":"))))];
     const bound = BEAD_CLOSERS.map(binding => binding.module);
     const controls = {
@@ -946,6 +1041,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         "bd duplicates --auto-merge",
         "printf 'update rftsx-auqdi status=closed\\n' | bd batch",
         "bd batch <<EOF\nclose rftsx-auqdi green\nEOF",
+        "BD_NON_INTERACTIVE=1 bd bootstrap",
+        "bd -C /repo init --from-jsonl --prefix wb",
+        "bd doctor --source=jsonl --fix --yes",
+        "execFileSync('bd', ['doctor', '--fix', '--source', 'jsonl'])",
       ].map(text => closeLaunchesIn(text).length),
       quiet: [
         "bd show rftsx-auqdi --json",
@@ -963,12 +1062,20 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         "bd orphans",
         "printf 'create task 2 probe\\n' | bd batch",
         "bd hooks run pre-commit",
+        "bd init --non-interactive --prefix fx --quiet",
+        "bd doctor --check=artifacts",
+        "bd export -o .beads/issues.jsonl",
       ].map(text => closeLaunchesIn(text).length),
     };
     const followUp = notesOf(FOLLOW_UP);
     const plants = Object.fromEntries(
       Object.entries(FINDING_PLANTS).map(([id, plant]) => [id, { carried: followUp.includes(plant), launches: closeLaunchesIn(launchOf(plant)).length }]),
     );
+    const importFollowUp = notesOf(IMPORT_FOLLOW_UP);
+    const importPlants = Object.fromEntries(
+      Object.entries(IMPORT_PLANTS).map(([id, plant]) => [id, { carried: importFollowUp.includes(plant), launches: closeLaunchesIn(plant).length }]),
+    );
+    const liveness = livenessLaunches();
     const exports = Object.keys(beadsObserver).sort();
     expect(launched, "a file under the executable roots or at the root launching a bead close").toEqual([]);
     expect(launchingModules.filter(module => !bound.includes(module)), "a launching module not bound in BEAD_CLOSERS").toEqual([]);
@@ -978,8 +1085,20 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       Object.entries(plants).filter(([, entry]) => !entry.carried || entry.launches === 0).map(([id]) => id),
       `a gate plant ${FOLLOW_UP}'s notes do not carry or A3 misses`,
     ).toEqual([]);
+    expect(
+      Object.entries(importPlants).filter(([, entry]) => !entry.carried || entry.launches !== 1).map(([id]) => id),
+      `an import-class plant ${IMPORT_FOLLOW_UP}'s notes do not carry or A3 misses`,
+    ).toEqual([]);
+    expect(
+      SCAN_ROOTS.filter(scan => !LIVENESS_PLANTS.some(path => path.startsWith(`${scan.root}/`))).map(scan => scan.root),
+      "a scanned root the liveness plant leaves unplanted",
+    ).toEqual([]);
+    expect(
+      liveness.map(entry => entry.slice(0, entry.indexOf(":"))),
+      "the liveness plant: every planted launch judged through A3's own walk, in judged order, and the quiet page not",
+    ).toEqual([...LIVENESS_PLANTS]);
     expect(seamMembers(), "the Beads seam offers show alone").toEqual(["show"]);
-    return json({ roots: roots.map(({ root, floor, anchor }) => ({ root, floor, anchor })), root, launched, bound, controls, plants, seam: seamMembers(), exports });
+    return json({ roots, root, launched, bound, controls, plants, importPlants, liveness, seam: seamMembers(), exports });
   },
   B1: async () => clauseWitness("b"),
   B2: async () => {
@@ -1079,7 +1198,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const bdArgv = [...launcher.matchAll(/spawnSync\('bd', \[([^\]]*)\]/g)].map(match => (match[1] ?? "").split(", ").map(item => item.replace(/^'|'$/g, "")));
     const storeJoins = [...launcher.matchAll(/join\(root, '\.beads', '([^']+)'/g)].map(match => match[1] ?? "");
     const exportReaders = executableFiles().filter(file => textOf(file).includes("issues.jsonl")).map(file => relative(REPO, file));
-    return json({ bdArgv, storeJoins, exportReaders });
+    const rawSql = closeLaunchesIn(`bd sql 'INSERT INTO issues (id, title, status) VALUES ("rftsx-zz", "probe", "closed")'`).length;
+    return json({ bdArgv, storeJoins, exportReaders, rawSql });
   },
   Q7: async () => {
     const fabricated = h2Child();
@@ -1109,6 +1229,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       merge: "bd vc merge main --strategy theirs",
       pull: "bd dolt pull",
       tracker: "bd jira sync --pull --state closed",
+      restore: "bd backup restore /backups/beads",
     };
     return json(Object.fromEntries(Object.entries(syncs).map(([name, text]) => [name, closeLaunchesIn(text).length])));
   },
@@ -1127,18 +1248,27 @@ describe("wb-4nut.6 H2 close-condition census (TSX-HARNESS2-REACTIVE-EVOLUTION-R
       programShape: PROGRAM_SHAPE, leg: LEG_H2, dispatchClauses: DISPATCH_CLAUSES, carried: CARRIED, closeWindow: CLOSE_WINDOW,
       closingStatus: CLOSING_STATUS, closeCommands: CLOSE_COMMANDS, instructionFiles: INSTRUCTION_FILES, scanRoots: SCAN_ROOTS,
       rootFiles: ROOT_FILES, followUp: FOLLOW_UP, findingPlants: FINDING_PLANTS, residuals: RESIDUALS,
+      importFollowUp: IMPORT_FOLLOW_UP, importPlants: IMPORT_PLANTS, livenessText: LIVENESS_TEXT, livenessPlants: LIVENESS_PLANTS,
+      livenessQuiet: LIVENESS_QUIET,
       cases: CLOSE_CASES.map(entry => `${entry.clause}:${entry.expect.join(",")}`), mutants: Object.keys(MUTANTS),
     }).toStrictEqual(ROSTER.constants);
-    // A3's vocabulary is the installed bd's: every entry, the batch op and the status update ride help lines, one naming the close.
+    // A3's vocabulary is the installed bd's: every entry, the batch op and the status update ride help lines, one naming the close
+    // (an import-class entry's help names the import from a JSONL export, and its close rides the import entry's closed status).
     expect(textField(ROSTER.bd, "version", "roster bd"), "the help was read from the installed bd 1.1.0-rc.1").toMatch(/^bd version 1\.1\.0-rc\.1 /);
+    const remeasured = objectOf(ROSTER.bd.remeasured, "roster bd.remeasured");
+    expect(textField(remeasured, "version", "roster bd.remeasured"), "wb-c61s re-read the help on the installed bd 1.1.0-rc.1").toMatch(/^bd version 1\.1\.0-rc\.1 /);
     const help = objectOf(ROSTER.bd.help, "roster bd.help");
     expect(Object.keys(help).sort(), "a help entry for every vocabulary entry, the batch op and the status update").toEqual(
       [...CLOSE_COMMANDS.map(entry => entry.join(" ")), "batch", "update"].sort(),
     );
     for (const [key, entry] of Object.entries(help)) {
-      const lines = strings(objectOf(entry, `roster bd.help.${key}`).lines, `roster bd.help.${key}.lines`);
-      expect(lines.some(line => /\bclos/i.test(line)), `a help line of ${key} names the close`).toBe(true);
+      const record = objectOf(entry, `roster bd.help.${key}`);
+      const lines = strings(record.lines, `roster bd.help.${key}.lines`);
+      expect(helpNamesClose(record, lines), `a help line of ${key} names the close, or its import from a JSONL export`).toBe(true);
     }
+    expect(HELP_RULE_REFUSALS.map(entry => helpNamesClose(entry.record, entry.lines)), "the help rule's firing controls").toEqual(
+      HELP_RULE_REFUSALS.map(() => false),
+    );
     // Each program's graph, parsed from the producer's own rows, equals its frozen literal.
     for (const key of Object.keys(PROGRAMS) as ProgramKey[]) expect(shapeOf(PROGRAMS[key]), `${key}'s graph`).toStrictEqual(PROGRAM_SHAPE[key]);
     const named: Record<string, ProgramKey> = { [AUQDI]: "h2", [RUPQH]: "h2", [R05]: "h2", [J83YD]: "perfF", [M69SF]: "perfF", [IT5RY]: "perfF", [W9AKC]: "perfF", [BGE18]: "perfF" };

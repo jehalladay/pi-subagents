@@ -1,5 +1,5 @@
 {
- "provenance": "wb-4nut.6 census roster, cut by ws-02 (run g10-work-s47) on trunk edccd80289349182284b65d296aee98742c11b34 (landing 287 hop). Producer facts: read-only git show and git cat-file -e at the pins named below (H2 rows verbatim; PERF-F rows as measured cells, each beside the sha256 of its verbatim row); pin witnesses: measured by test/workbench-h2-close-condition-census.test.ts on edccd80 plus the cut, each reviewed against the bead's acceptance before it was written here. Re-measured for wb-zoq7 (the R694 follow-up from landing 308) by ws-03 (run g10-work-s80) on trunk 9f6b726eb7abcb0525b862ece779ab54b17df96e: the A3, Q1 and Q8 witnesses, the new Q10 witness, the constants closeCommands, rootFiles, followUp and findingPlants, the .beads/hooks scan root, R-SYNC, and the bd section (the installed bd 1.1.0-rc.1's help lines, verbatim); every other witness and constant is unchanged.",
+ "provenance": "wb-4nut.6 census roster, cut by ws-02 (run g10-work-s47) on trunk edccd80289349182284b65d296aee98742c11b34 (landing 287 hop). Producer facts: read-only git show and git cat-file -e at the pins named below (H2 rows verbatim; PERF-F rows as measured cells, each beside the sha256 of its verbatim row); pin witnesses: measured by test/workbench-h2-close-condition-census.test.ts on edccd80 plus the cut, each reviewed against the bead's acceptance before it was written here. Re-measured for wb-zoq7 (the R694 follow-up from landing 308) by ws-03 (run g10-work-s80) on trunk 9f6b726eb7abcb0525b862ece779ab54b17df96e: the A3, Q1 and Q8 witnesses, the new Q10 witness, the constants closeCommands, rootFiles, followUp and findingPlants, the .beads/hooks scan root, R-SYNC, and the bd section (the installed bd 1.1.0-rc.1's help lines, verbatim); every other witness and constant is unchanged. Re-measured for wb-c61s (the R694 follow-up from landing 397) by ws-03 (run g10-work-s96) on trunk bc6519fef424f899d9bba05938c113b112282263: the A3, Q6 and Q10 witnesses, the constants closeCommands, rootFiles, importFollowUp, importPlants, livenessText, livenessPlants and livenessQuiet, and the bd section's three new help entries and its remeasured record (the installed bd 1.1.0-rc.1, build c7aec2c4c); every other witness and constant is unchanged.",
  "bead": "wb-4nut.6",
  "programPin": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
  "producer": {
@@ -412,6 +412,19 @@
    [
     "duplicates",
     "automerge"
+   ],
+   [
+    "bootstrap"
+   ],
+   [
+    "init",
+    "fromjsonl"
+   ],
+   [
+    "doctor",
+    "fix",
+    "source",
+    "jsonl"
    ]
   ],
   "instructionFiles": [
@@ -464,7 +477,7 @@
    }
   ],
   "rootFiles": {
-   "floor": 20,
+   "floor": 22,
    "anchors": [
     {
      "file": "forge.toml",
@@ -487,6 +500,27 @@
    "P12": "command = \"bd close rftsx-auqdi\"",
    "P13": "\"zz-close\": \"bd close rftsx-auqdi\""
   },
+  "importFollowUp": "wb-c61s",
+  "importPlants": {
+   "P14": "spawnSync(\"bd\", [\"bootstrap\", \"--yes\"])",
+   "P15": "spawnSync('bd', ['doctor', '--fix', '--source=jsonl', '--yes'])",
+   "P16": "run: bd init --from-jsonl"
+  },
+  "livenessText": "bd close rftsx-auqdi",
+  "livenessPlants": [
+   "src/workbench/zz-live/plant.ts",
+   "qa/workbench/zz-live/plant.mjs",
+   "examples/workflows/zz-live/plant.js",
+   ".pi/agents/zz-live/plant.md",
+   ".codex/zz-live/nested/hooks.json",
+   ".github/workflows/zz-live/plant.yml",
+   ".beads/hooks/zz-live/nested/pre-commit",
+   ".zz-live-plant",
+   "zz-live-plant.config.ts"
+  ],
+  "livenessQuiet": [
+   "ZZ-LIVE-PLANT.md"
+  ],
   "residuals": {
    "R-ARGV": [
     "Q1"
@@ -820,9 +854,16 @@
         1,
         1,
         1,
+        1,
+        1,
+        1,
+        1,
         1
        ],
        "quiet": [
+        0,
+        0,
+        0,
         0,
         0,
         0,
@@ -874,6 +915,31 @@
         "launches": 1
        }
       },
+      "importPlants": {
+       "P14": {
+        "carried": true,
+        "launches": 1
+       },
+       "P15": {
+        "carried": true,
+        "launches": 1
+       },
+       "P16": {
+        "carried": true,
+        "launches": 1
+       }
+      },
+      "liveness": [
+       "src/workbench/zz-live/plant.ts: bd close rftsxauqdi",
+       "qa/workbench/zz-live/plant.mjs: bd close rftsxauqdi",
+       "examples/workflows/zz-live/plant.js: bd close rftsxauqdi",
+       ".pi/agents/zz-live/plant.md: bd close rftsxauqdi",
+       ".codex/zz-live/nested/hooks.json: bd close rftsxauqdi",
+       ".github/workflows/zz-live/plant.yml: bd close rftsxauqdi",
+       ".beads/hooks/zz-live/nested/pre-commit: bd close rftsxauqdi",
+       ".zz-live-plant: bd close rftsxauqdi",
+       "zz-live-plant.config.ts: bd close rftsxauqdi"
+      ],
       "seam": [
        "show"
       ],
@@ -1194,7 +1260,8 @@
        "formulas",
        "formulas"
       ],
-      "exportReaders": []
+      "exportReaders": [],
+      "rawSql": 0
      }
     },
     {
@@ -1245,7 +1312,8 @@
       "federation": 0,
       "merge": 0,
       "pull": 0,
-      "tracker": 0
+      "tracker": 0,
+      "restore": 0
      }
     }
    ]
@@ -1325,6 +1393,28 @@
      "      --auto-merge   Automatically merge all duplicates"
     ]
    },
+   "bootstrap": {
+    "command": "bd bootstrap --help",
+    "via": "import",
+    "lines": [
+     "  \u2022 If .beads/backup/*.jsonl exists: restores from backup",
+     "  \u2022 If .beads/issues.jsonl exists: imports from git-tracked JSONL"
+    ]
+   },
+   "init fromjsonl": {
+    "command": "bd init --help",
+    "via": "import",
+    "lines": [
+     "      --from-jsonl                                     Import issues from configured import.path; refuses remote history unless --discard-remote authorizes replacement"
+    ]
+   },
+   "doctor fix source jsonl": {
+    "command": "bd doctor --help",
+    "via": "import",
+    "lines": [
+     "  bd doctor --fix --source=jsonl # Rebuild database from a JSONL export"
+    ]
+   },
    "batch": {
     "command": "bd batch --help",
     "lines": [
@@ -1341,6 +1431,10 @@
      "      --force                        Override close-time integrity guards when setting --status closed (blocked-by-open, epic-with-open-children); mirrors 'bd close --force'"
     ]
    }
+  },
+  "remeasured": {
+   "version": "bd version 1.1.0-rc.1 (c7aec2c4c) db-schema-max=v59",
+   "measuredBy": "bd --version and bd <command> --help for every command the root help lists and every subcommand each of those lists, run by the wb-c61s cutting seat (ws-03, run g10-work-s96, 2026-10-25) from an empty scratch directory outside any repository, no store opened (the directory stayed empty); every landed help line above reads verbatim in this build, and the entries bootstrap, init fromjsonl and doctor fix source jsonl were read from it, every line verbatim, leading spaces kept; the same scan met bd human respond and bd human dismiss (direct closes of a human-needed bead), which wb-s6jw's queued cut adds, and this cut leaves them to it"
   }
  }
 }
