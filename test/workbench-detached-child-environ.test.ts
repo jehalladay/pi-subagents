@@ -20,7 +20,8 @@
 import { chmodSync, mkdtempSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
-import { type DetachedLaunchRequest, launchDetachedWorkflow } from "../src/workbench/hosts/local-detached.js";
+import type { DetachedLaunchRequest } from "../src/workbench/hosts/local-detached.js";
+import { HOST_HOOK_TIMEOUT_MS, launchDetachedMarked, pollFor, reportAfterCleanup } from "./helpers/detached-timing.js";
 import { installScratchLeakGuard, removeScratch, trackScratch } from "./helpers/scratch.js";
 
 installScratchLeakGuard();
@@ -46,8 +47,9 @@ function privateDir(prefix: string): string {
 function alive(pid: number): boolean {
   try { process.kill(pid, 0); return true; } catch { return false; }
 }
+/** True once `pid` has exited; a host still running at the budget is a lapse that names the wait (wb-maza). */
 async function gone(pid: number): Promise<boolean> {
-  for (let i = 0; i < 150 && alive(pid); i++) await new Promise(resolve => setTimeout(resolve, 20));
+  await pollFor(`the exit of host pid ${pid}`, () => alive(pid), running => !running);
   return !alive(pid);
 }
 beforeEach(() => {
@@ -57,13 +59,15 @@ afterEach(async () => {
   const stopping = hostPids.splice(0);
   for (const pid of stopping) { try { process.kill(pid, "SIGTERM"); } catch {} }
   // Each host has exited (bounded) before its fixtures are removed: it unlinks its own socket directory while stopping (wb-e37).
-  await Promise.all(stopping.map(gone));
-  for (const name of HOST_ENV_NAMES) {
-    const prior = savedEnv[name];
-    if (prior === undefined) delete process.env[name]; else process.env[name] = prior;
-  }
-  removeScratch(...scratch.splice(0));
-});
+  // A host still running at its budget is a lapse reported only after the cleanup has run (wb-maza).
+  await reportAfterCleanup(stopping.map(gone), () => {
+    for (const name of HOST_ENV_NAMES) {
+      const prior = savedEnv[name];
+      if (prior === undefined) delete process.env[name]; else process.env[name] = prior;
+    }
+    removeScratch(...scratch.splice(0));
+  });
+}, HOST_HOOK_TIMEOUT_MS);
 
 function launchRequest(invocationId: string): DetachedLaunchRequest {
   const cwd = privateDir("env973-ws-");
@@ -94,7 +98,7 @@ async function launchedChildEnviron(invocationId: string): Promise<{ pid: number
   process.env[CANARY_CREDENTIAL.name] = CANARY_CREDENTIAL.value;
   process.env[UNLISTED_OPERATIONAL.name] = UNLISTED_OPERATIONAL.value;
   const base = privateDir("env973-sock-");
-  const receipt = await launchDetachedWorkflow(launchRequest(invocationId), { env: {}, tmpdir: base, runUserRoot: NO_RUN_USER });
+  const receipt = await launchDetachedMarked(launchRequest(invocationId), { env: {}, tmpdir: base, runUserRoot: NO_RUN_USER });
   hostPids.push(receipt.pid);
   return { pid: receipt.pid, environ: childEnviron(receipt.pid) };
 }
@@ -130,7 +134,7 @@ describe("wb-973.18 live-child env parity: /proc/<pid>/environ of the real detac
     // rejection (a red test), so a missing child can never read as a pass or a skip.
     const request = { ...launchRequest("env973-nospawn"), scriptPath: "/nonexistent/wb-973-18/pure.js" };
     const base = privateDir("env973-sock-");
-    await expect(launchDetachedWorkflow(request, { env: {}, tmpdir: base, runUserRoot: NO_RUN_USER })).rejects.toBeInstanceOf(Error);
+    await expect(launchDetachedMarked(request, { env: {}, tmpdir: base, runUserRoot: NO_RUN_USER })).rejects.toBeInstanceOf(Error);
     expect(hostPids.length, "no child was registered for a refused launch").toBe(0);
     expect(() => childEnviron(2 ** 22 + 7), "reading a pid that does not exist throws instead of returning an empty environment").toThrow();
   }, 30000);
