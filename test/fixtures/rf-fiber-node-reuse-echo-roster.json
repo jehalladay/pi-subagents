@@ -146,13 +146,44 @@
         "cutWithReplacement": false,
         "decidedLossy": true
        },
+       "consumed": {
+        "whole": true,
+        "keyCut": false,
+        "labelCut": false,
+        "bothBlank": false,
+        "keySubstituted": false,
+        "keyIsItsPasses": true,
+        "labelIsItsParts": true
+       },
        "disk": {
         "lossyFile": {
          "lossy": true,
          "whole": true
         },
         "keyPlant": 1,
-        "labelPlant": 1
+        "labelPlant": 1,
+        "farPlants": {
+         ".json": {
+          "keyPairs": 1,
+          "labels": 1,
+          "whole": true
+         },
+         ".md": {
+          "keyPairs": 1,
+          "labels": 1,
+          "whole": true
+         },
+         ".mjs": {
+          "keyPairs": 1,
+          "labels": 1,
+          "whole": true
+         },
+         ".ts": {
+          "keyPairs": 1,
+          "labels": 1,
+          "whole": true
+         }
+        }
        }
       }
      }
@@ -888,6 +919,8 @@
    ],
    "registerComposedId": [],
    "registerImportedId": [],
+   "registerClassField": [],
+   "registerAssignedId": [],
    "toolNamed": [
     "#probe_invoke"
    ],
@@ -904,6 +937,12 @@
     "#probe_invoke"
    ],
    "toolDestructured": [
+    "#probe_invoke"
+   ],
+   "toolAssigned": [
+    "#probe_invoke"
+   ],
+   "toolAssignedLogical": [
     "#probe_invoke"
    ],
    "toolNamespaceElement": [
@@ -939,6 +978,10 @@
    "toolDynamicImport": [],
    "toolImportedHandler": [],
    "toolInvokeComposed": [],
+   "toolDestructuringAssignment": [],
+   "toolHelperCall": [],
+   "toolHelperChosen": [],
+   "toolSdkSubpath": [],
    "projectModifier": [
     "#project"
    ],
@@ -966,12 +1009,18 @@
    "projectTypeAlias": [
     "#project"
    ],
+   "projectParenthesized": [
+    "#project"
+   ],
    "projectUnexported": [],
    "projectScalar": [],
    "projectOptionalReading": [],
    "projectMember": [],
    "projectReexport": [],
-   "projectSchemaLiteral": []
+   "projectSchemaLiteral": [],
+   "projectQualifiedType": [],
+   "projectContextualType": [],
+   "projectAssignedValue": []
   }
  },
  "tests": [
