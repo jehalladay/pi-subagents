@@ -784,10 +784,23 @@ describe("wb-752.15 liveness: the adopted judge is not accept-all (the real repo
     expect(verdict?.code).toBe("tier-mismatch");
   });
 
+  /**
+   * wb-ro6u (owner tune M:16183): the explicit budget of the next case ALONE (the R546 sizing recipe, file-local); every
+   * other case, this file and the suite keep vitest's 5000 ms default. The case is one synchronous judge() over all 56
+   * pins of the table (15 files): judge() reads the default tier's whole report and analyses each pinned file with its
+   * relative import closure on the calling thread, so the case awaits nothing that a tighter setup could bound. vitest
+   * fails a synchronous body that returns after its budget but cannot interrupt one, so the budget moves only that
+   * duration verdict, never an assertion. Measured at base 4c97422 against a full default-tier report (17037 cases,
+   * written by `npm run test` at 8 workers), this file alone under vitest.census.config.ts at cap 1: 3635-5645 ms over
+   * 10 runs, 5 of them past 5000 ms. Sized as 5 x the costliest wall of record, the case at 11620 ms in the file-alone
+   * serial leg of the wb-sjx2 gate (cmd_d4fd9ea78492, 2026-10-24): 58100 ms, rounded up to a whole 5 s.
+   */
+  const WHOLE_TABLE_BUDGET_MS = 60_000;
+
   it("a present, passing case is never reported absent, skipped or inverted: the whole table is ok through roster rows only", () => {
     const verdicts = judge(REPORT, ALL_PINS.map(entry => casePin(entry)));
     expect(verdicts.map(verdict => verdict.code)).toEqual(ALL_PINS.map(() => "ok"));
-  });
+  }, WHOLE_TABLE_BUDGET_MS);
 });
 
 describe("wb-752.15 attribution: a mutated report is red for its TRUE cause, on independent fixtures", () => {
