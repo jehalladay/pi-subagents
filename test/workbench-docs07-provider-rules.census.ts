@@ -1749,7 +1749,7 @@ interface Sourced {
  * The frozen EXPECTATION's provenance, pinned as source-level string literals (R696 (1), read back by the LITERAL PIN row from
  * this file's AST): the fixture path and the SHA-256 of its committed bytes (sha256sum), written out and never computed here.
  */
-const EXPECTATION: Provenance = { path: "test/fixtures/docs19-full-section-omxf.json", sha256: "6f0d6217045be897e9121b5489a3be53164b24cef062c2cb1bbb42b30a824cf2" };
+const EXPECTATION: Provenance = { path: "test/fixtures/docs19-full-section-omxf.json", sha256: "7e636fe7f252a675bbfe0fea73bc96c70b604f5fe28631f40a774ee34e34b397" };
 const sha256Hex = (bytes: string | Buffer): string => createHash("sha256").update(bytes).digest("hex");
 /** A file under a repo root with the digest of exactly its bytes: the one read every full-slice row judges. */
 function readWithProvenance(root: string, path: string): Sourced {
@@ -2731,5 +2731,958 @@ describe("wb-6ps1.2 docs/workbench/07 row F5: the gate.run selection sentence an
     for (const quote of quotes) expect(sentences.filter(sentence => sentence === quote), quote).toHaveLength(1);
     for (const unbound of FORGE_UNBOUND_SENTENCES) expect(sentences.filter(sentence => sentence === unbound), unbound).toHaveLength(1);
     expect(sentences).toHaveLength(quotes.length + FORGE_UNBOUND_SENTENCES.length);
+  });
+});
+
+/**
+ * wb-ur08 respin #1 (owner ruling R739: the TERMINAL enumerate-the-resolvable form under rules 14 and 19(c); hop 3, the last,
+ * of the EXPECTATION chain omxf 247 -> lybr 251 -> ur08; the R694 follow-up of the landing-251 PREP F1 READER-CONSEQUENCE G4
+ * survivor). The lybr pin binds each read of EXPECTATION by identifier, site and reader TEXT; this pin binds where each
+ * CONSEQUENCE reader's statement sits and what it does, by this file's own AST and checker (the lybr program of this one
+ * source: parsed and bound, never run). The consequence readers are CONSEQUENCE_ROSTER, the READ_ROSTER readers minus the two
+ * failure-message templates (payload pushed after a decision, never a decision); their sites are CONSEQUENCE_SITES.
+ * THE CRITERION (R739): this pin's roster is the RESOLVABLE CLASSES of CONSEQUENCE_CLASSES, never the escapes found so far.
+ * Each class names the syntax it reads, the claim it serves, the line kind its falsifier rows draw, and those rows; the
+ * CLASSES row holds every falsifier row to exactly one class and every class to at least one witness, and the classes are
+ * anchored out of file (the fixture's consequenceClasses). Claiming exactly these classes and no more:
+ * (1) SITE-BOUND AND UNGUARDED (classes GUARD, CLOSURE, NAMESAKE, REGISTRAR; the respin-#1 gate's U2 SITE-NAMESAKE survivor is
+ * CURED here): walking from a consequence reader's statement up to the module, the only function-like nodes passed are its
+ * site's ONE node - a module-scope function declaration, or the callback of an it/test registration - and the describe
+ * callbacks above it; no if, try, for, for-in, for-of, while, do, switch or labeled statement stands on that path (around
+ * the statement, around the site's registration or around a describe above it); every registration on the path calls the
+ * vitest import of its own name, as this file's checker resolves it (never a shadow), and one through .each iterates a bare
+ * identifier of a module-scope const (never an inline or computed table such as it.each([])); and exactly one node carries
+ * each site's key in this file - a second function declaration of a function site's name, or a second registration of a
+ * test site's title head, is a NAMESAKE (lines "guarded", naming the nearest guard, and "namesake").
+ * (2) CONDITION (class CONDITION): no if on that path names EXPECTATION in its condition (line "cond-expectation").
+ * (3) RETURN AHEAD (class RETURN-AHEAD): no return outside a nested function precedes the reader's statement, or a
+ * registration on its path, in any enclosing block up to the module (line "early-exit"; a throw is loud and not counted).
+ * (4) PUSH (class PUSH): each provenance check's consequence is exactly if (<the check>) out.push(<one template literal>),
+ * with no else and no nested guard (line "push-consequence").
+ * (5) SINK (class SINK; the gate's F1 SINK-SUBCLASS is CURED here): every declaration of a sink named out is a const
+ * initialized by [] or by a call of a module-scope function whose last statement is return out, made directly in the body
+ * of a module-scope function whose last statement is return out with no return between the two; every other reference to
+ * an identifier out (a member name .out aside) is out.push(...) or that last return (line "sink").
+ * (6) ASSERT (class ASSERT; the gate's F2 MATCHER-PROTO is CURED here): every reference to expect is an unaliased import of it
+ * from vitest or the head of a matcher statement expect(...)[.not|.resolves|.rejects].<matcher>(...); whose matcher call is
+ * the whole statement, awaited or not (line "assert"). ANCHOR reports the committed source's lines by a plain throw as well as
+ * by its matcher, so no override this claim refuses can empty the matcher that reports it.
+ * ROUTED to the lybr reads pin (rows ROUTE-*): an expression-level guard or sibling inside a reader's statement, or a site
+ * re-keyed (renamed, moved, or registered through a modifier such as .skip), changes the read's key; this pin then refuses to
+ * judge the page (no read keyed so) and the reads pin draws exactly the row's missing and unexpected lines.
+ * NOT CLAIMED, each a NAMED RESIDUAL with its pinned quiet row below: R-COORDINATED-CONSEQUENCE-ROSTER,
+ * R-COORDINATED-READS-TABLE, R-RUNTIME-OVERRIDE, R-DOWNSTREAM-DISCARD and R-RUNNER-CONTROL. CHAIN TERMINAL (R739): a later
+ * survivor outside the enumerated classes is record-only unless it contradicts a claim above.
+ * The findings of record, each verbatim in a row: the s24 G4 spec (G4); the respin-#1 gate's U2 members N1, N2 and N3 and
+ * its in-place LIVE variant (NAMESAKE-FUNCTION, NAMESAKE-ON-DISK, NAMESAKE-SUITE and NAMESAKE-IN-SITE, the three members
+ * together U2-NAMESAKE-FULL); F1's N5b and N5 sinks (SINK-SUBCLASS, SINK-OWN-PUSH); F2's N7 (MATCHER-PROTO).
+ */
+/** The consequence class a rostered reader stands for: a provenance check's push, or an assertion. */
+type ConsequenceKind = "push" | "assertion";
+/** One AST-located consequence edit of this file's source, applied in memory to a page that is parsed and bound, never run. */
+type ConsequenceEdit =
+  | { readonly op: "guard"; readonly read: string; readonly nested: string }
+  | { readonly op: "wrap-if"; readonly read: string; readonly condition: string }
+  | { readonly op: "wrap-try"; readonly read: string; readonly rethrow: boolean }
+  | { readonly op: "wrap-while"; readonly read: string; readonly condition: string }
+  | { readonly op: "wrap-closure"; readonly read: string }
+  | { readonly op: "wrap-label"; readonly read: string; readonly exit: string }
+  | { readonly op: "push-spread"; readonly read: string; readonly condition: string }
+  | { readonly op: "fn-before-return"; readonly fn: string; readonly text: string }
+  | { readonly op: "prepend"; readonly site: string; readonly text: string }
+  | { readonly op: "nest-function"; readonly read: string; readonly call: string }
+  | { readonly op: "namesake"; readonly reads: readonly string[]; readonly condition: string; readonly at: "suite" | "site"; readonly prelude: string }
+  | { readonly op: "wrap-registration"; readonly site: string; readonly condition: string }
+  | { readonly op: "suite-prepend"; readonly site: string; readonly text: string }
+  | { readonly op: "sink-initializer"; readonly fn: string; readonly text: string }
+  | { readonly op: "guard-expression"; readonly read: string; readonly condition: string }
+  | { readonly op: "registrar"; readonly site: string; readonly to: string }
+  | { readonly op: "import-vitest"; readonly name: string }
+  | { readonly op: "after-call"; readonly fn: string; readonly callee: string; readonly text: string }
+  | { readonly op: "runtime-skip"; readonly site: string };
+/** A CONSEQUENCE row: [id, the edits of this file's source it reads (null: the committed source), the lines the pin must draw]. */
+type ConsequenceRow = readonly [string, readonly ConsequenceEdit[] | null, readonly string[]];
+/** The rostered consequence readers: [read key, its kind] - the READ_ROSTER readers minus the two failure-message templates. */
+const CONSEQUENCE_ROSTER: readonly (readonly [string, ConsequenceKind])[] = [
+  [readKey(READ_SITE_FAILURES, "expectation.provenance.path !== EXPECTATION.path"), "push"],
+  [readKey(READ_SITE_FAILURES, READ_DIGEST_CHECK), "push"],
+  [readKey(READ_SITE_LIVE, READ_PROVENANCE_EQUAL), "assertion"],
+  [readKey(READ_SITE_LIVE, READ_LIVE_PIN), "assertion"],
+  [readKey(READ_SITE_ON_DISK, READ_PROVENANCE_EQUAL), "assertion"],
+  [readKey(READ_SITE_LITERAL, "expect(reading.pin, `...`).toEqual(edit === null ? EXPECTATION : undefined)"), "assertion"],
+  [readKey(READ_SITE_RESIDUAL, 'expect(page.expectation.provenance.sha256, "the fixture carries the edit").not.toBe(EXPECTATION.sha256)'), "assertion"],
+  [readKey(READ_SITE_RESIDUAL, 'expect(moved, "the page moves the literal").not.toBe(EXPECTATION.sha256)'), "assertion"],
+  [readKey(READ_SITE_RESIDUAL, "expect(expectationLiteral(page.source)).toEqual({ findings: [], pin: { path: EXPECTATION.path, sha256: moved } })"), "assertion"],
+];
+/** The s24 G4 and respin-#1 N1 condition, verbatim: the expectation's digest differs from the on-disk fixture's current digest. */
+const G4_DIFFERS = "expectation.provenance.sha256 !== sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE)))";
+/** The gate's s24 G4 guard, verbatim: it exempts the on-disk fixture's current digest. */
+const G4_GUARD = `if (${G4_DIFFERS})`;
+/** The gate's s24 G4 never-true wrap condition, verbatim (also the respin-#1 N2 and in-place LIVE namesake guard). */
+const G4_WRAP = "expectation.text.length < 0";
+/** The exemption G4's guard draws, as a condition: the expectation's digest is the on-disk fixture's current digest. */
+const G4_EXEMPT = "expectation.provenance.sha256 === sha256Hex(readFileSync(join(ROOT, OMXF_ANCHOR_FILE)))";
+/** An always-true condition that names no read: the head of a silent early return or break. */
+const ALWAYS = "OMXF_WHERE.length > 0";
+/** The respin-#1 N3 never-true registration guard, verbatim. */
+const NEVER = "OMXF_WHERE.length < 0";
+/** The respin-#1 N3 namesake's prelude, verbatim: it re-reads the expectation the moved statements consume. */
+const LIVE_PRELUDE = "const { expectation } = liveReading(ROOT);";
+/** The respin-#1 gate's F1 sinks, verbatim: N5b, an Array subclass whose push drops the digest line, and N5, an own push that drops every line. */
+const N5B_SINK = `${G4_EXEMPT} ? new (class extends Array<string> { override push(...lines: string[]): number { return super.push(...lines.filter(line => !line.includes("expectation-digest"))); } })() : []`;
+const N5_SINK = `${G4_EXEMPT} ? Object.assign([] as string[], { push: (..._lines: string[]): number => 0 }) : []`;
+/** The respin-#1 gate's F2 N7, verbatim: the matcher's prototype reached through a sanctioned call head and emptied. */
+const N7_PROTO = "Object.getPrototypeOf(expect(0)).toEqual = function (): void {};";
+const DIGEST_READ = readKey(READ_SITE_FAILURES, READ_DIGEST_CHECK);
+const LIVE_EQUAL_READ = readKey(READ_SITE_LIVE, READ_PROVENANCE_EQUAL);
+const LIVE_PIN_READ = readKey(READ_SITE_LIVE, READ_LIVE_PIN);
+const ON_DISK_READ = readKey(READ_SITE_ON_DISK, READ_PROVENANCE_EQUAL);
+/** The omxf describe's seven consequence readers in roster order: every reader a suite-level edit there reaches. */
+const SUITE_READS: readonly string[] = CONSEQUENCE_ROSTER.map(([key]) => key).filter(key => !key.startsWith(`${READ_SITE_FAILURES} | `));
+/** The namesake line a page draws when it carries a second node keyed as one rostered site. */
+const twoCarriers = (site: string): string => `namesake: ${site} -> 2 nodes carry this site key`;
+/**
+ * wb-ur08: row CONSEQUENCES reads the committed source, quiet; each falsifier edits it in memory by AST position and must draw
+ * exactly its lines. Each falsifier witnesses one class of CONSEQUENCE_CLASSES (the CLASSES row): G4 is the s24 finding of
+ * record; the WRAP rows and GUARD-REGISTRATION wrap a reader's statement or its site's registration, EACH-INLINE-TABLE
+ * registers LIVE through .each over an inline empty table (GUARD); WRAP-CLOSURE
+ * wraps a statement in a never-run closure (CLOSURE); the NAMESAKE rows are the respin-#1 gate's U2 members, verbatim, and an
+ * unguarded second registration (NAMESAKE); REGISTRAR-SHADOW shadows it above the omxf registrations (REGISTRAR); the COND
+ * rows consult the literal (CONDITION); the EXIT rows return ahead of a reader and of a registration (RETURN-AHEAD);
+ * GUARD-EXEMPT and PUSH-SPREAD bend a push (PUSH); the SINK rows empty, shorten, subclass or exempt a sink (SINK); the ASSERT
+ * rows and MATCHER-PROTO override, alias or empty a matcher (ASSERT).
+ */
+const UR08_CONSEQUENCE: readonly ConsequenceRow[] = [
+  ["CONSEQUENCES", null, []],
+  [
+    "G4",
+    [
+      { op: "guard", read: DIGEST_READ, nested: G4_GUARD },
+      { op: "wrap-if", read: LIVE_EQUAL_READ, condition: G4_WRAP },
+      { op: "wrap-if", read: LIVE_PIN_READ, condition: G4_WRAP },
+      { op: "wrap-if", read: ON_DISK_READ, condition: G4_WRAP },
+    ],
+    [
+      `push-consequence: ${DIGEST_READ} -> a nested if`,
+      `guarded: ${LIVE_EQUAL_READ} -> its statement sits inside an if`,
+      `guarded: ${LIVE_PIN_READ} -> its statement sits inside an if`,
+      `guarded: ${ON_DISK_READ} -> its statement sits inside an if`,
+    ],
+  ],
+  ["GUARD-EXEMPT", [{ op: "guard", read: DIGEST_READ, nested: G4_GUARD }], [`push-consequence: ${DIGEST_READ} -> a nested if`]],
+  ["WRAP-LIVE-PIN", [{ op: "wrap-if", read: LIVE_PIN_READ, condition: G4_WRAP }], [`guarded: ${LIVE_PIN_READ} -> its statement sits inside an if`]],
+  ["WRAP-LIVE-EQUAL", [{ op: "wrap-if", read: LIVE_EQUAL_READ, condition: G4_WRAP }], [`guarded: ${LIVE_EQUAL_READ} -> its statement sits inside an if`]],
+  ["WRAP-ON-DISK", [{ op: "wrap-if", read: ON_DISK_READ, condition: G4_WRAP }], [`guarded: ${ON_DISK_READ} -> its statement sits inside an if`]],
+  ["WRAP-TRY", [{ op: "wrap-try", read: LIVE_PIN_READ, rethrow: false }], [`guarded: ${LIVE_PIN_READ} -> its statement sits inside a try`]],
+  ["WRAP-TRY-RETHROW", [{ op: "wrap-try", read: LIVE_PIN_READ, rethrow: true }], [`guarded: ${LIVE_PIN_READ} -> its statement sits inside a try`]],
+  ["WRAP-WHILE", [{ op: "wrap-while", read: LIVE_PIN_READ, condition: G4_WRAP }], [`guarded: ${LIVE_PIN_READ} -> its statement sits inside a while`]],
+  ["WRAP-CLOSURE", [{ op: "wrap-closure", read: ON_DISK_READ }], [`guarded: ${ON_DISK_READ} -> its statement sits inside a closure`]],
+  ["WRAP-LABEL", [{ op: "wrap-label", read: LIVE_PIN_READ, exit: ALWAYS }], [`guarded: ${LIVE_PIN_READ} -> its statement sits inside a label`]],
+  [
+    "GUARD-REGISTRATION",
+    [{ op: "wrap-registration", site: READ_SITE_LIVE, condition: NEVER }],
+    [`guarded: ${LIVE_EQUAL_READ} -> its statement sits inside an if`, `guarded: ${LIVE_PIN_READ} -> its statement sits inside an if`],
+  ],
+  [
+    "EACH-INLINE-TABLE",
+    [{ op: "registrar", site: READ_SITE_LIVE, to: "it.each([])" }],
+    [`guarded: ${LIVE_EQUAL_READ} -> its statement sits inside an each over a table that is not a module-scope const`, `guarded: ${LIVE_PIN_READ} -> its statement sits inside an each over a table that is not a module-scope const`],
+  ],
+  [
+    "NAMESAKE-FUNCTION",
+    [{ op: "nest-function", read: DIGEST_READ, call: G4_DIFFERS }],
+    [`guarded: ${DIGEST_READ} -> its statement sits inside a nested function`, twoCarriers(READ_SITE_FAILURES)],
+  ],
+  [
+    "NAMESAKE-SUITE",
+    [{ op: "namesake", reads: [LIVE_EQUAL_READ, LIVE_PIN_READ], condition: NEVER, at: "suite", prelude: LIVE_PRELUDE }],
+    [`guarded: ${LIVE_EQUAL_READ} -> its statement sits inside an if`, `guarded: ${LIVE_PIN_READ} -> its statement sits inside an if`, twoCarriers(READ_SITE_LIVE)],
+  ],
+  [
+    "NAMESAKE-IN-SITE",
+    [{ op: "namesake", reads: [LIVE_EQUAL_READ, LIVE_PIN_READ], condition: G4_WRAP, at: "site", prelude: "" }],
+    [`guarded: ${LIVE_EQUAL_READ} -> its statement sits inside an if`, `guarded: ${LIVE_PIN_READ} -> its statement sits inside an if`, twoCarriers(READ_SITE_LIVE)],
+  ],
+  [
+    "NAMESAKE-ON-DISK",
+    [{ op: "namesake", reads: [ON_DISK_READ], condition: G4_WRAP, at: "site", prelude: "" }],
+    [`guarded: ${ON_DISK_READ} -> its statement sits inside an if`, twoCarriers(READ_SITE_ON_DISK)],
+  ],
+  ["NAMESAKE-UNGUARDED", [{ op: "namesake", reads: [LIVE_EQUAL_READ, LIVE_PIN_READ], condition: "", at: "suite", prelude: LIVE_PRELUDE }], [twoCarriers(READ_SITE_LIVE)]],
+  [
+    "U2-NAMESAKE-FULL",
+    [
+      { op: "nest-function", read: DIGEST_READ, call: G4_DIFFERS },
+      { op: "namesake", reads: [ON_DISK_READ], condition: G4_WRAP, at: "site", prelude: "" },
+      { op: "namesake", reads: [LIVE_EQUAL_READ, LIVE_PIN_READ], condition: NEVER, at: "suite", prelude: LIVE_PRELUDE },
+    ],
+    [
+      `guarded: ${DIGEST_READ} -> its statement sits inside a nested function`,
+      `guarded: ${LIVE_EQUAL_READ} -> its statement sits inside an if`,
+      `guarded: ${LIVE_PIN_READ} -> its statement sits inside an if`,
+      `guarded: ${ON_DISK_READ} -> its statement sits inside an if`,
+      twoCarriers(READ_SITE_FAILURES),
+      twoCarriers(READ_SITE_LIVE),
+      twoCarriers(READ_SITE_ON_DISK),
+    ],
+  ],
+  [
+    "REGISTRAR-SHADOW",
+    [{ op: "suite-prepend", site: READ_SITE_LIVE, text: "const it = (..._args: unknown[]): void => undefined;" }],
+    SUITE_READS.map(read => `guarded: ${read} -> its statement sits inside a registration whose it is not the vitest import`),
+  ],
+  [
+    "COND-EXPECTATION",
+    [{ op: "wrap-if", read: LIVE_PIN_READ, condition: "EXPECTATION !== undefined" }],
+    [`guarded: ${LIVE_PIN_READ} -> its statement sits inside an if`, `cond-expectation: ${LIVE_PIN_READ} -> the guard condition names EXPECTATION`],
+  ],
+  [
+    "COND-OUTER",
+    [
+      { op: "wrap-if", read: LIVE_PIN_READ, condition: "EXPECTATION !== undefined" },
+      { op: "wrap-try", read: LIVE_PIN_READ, rethrow: true },
+    ],
+    [`guarded: ${LIVE_PIN_READ} -> its statement sits inside a try`, `cond-expectation: ${LIVE_PIN_READ} -> the guard condition names EXPECTATION`],
+  ],
+  ["EXIT-RETURN", [{ op: "prepend", site: READ_SITE_LIVE, text: `if (${ALWAYS}) return;` }], [`early-exit: ${LIVE_EQUAL_READ} -> a return precedes its statement`, `early-exit: ${LIVE_PIN_READ} -> a return precedes its statement`]],
+  ["EXIT-SUITE", [{ op: "suite-prepend", site: READ_SITE_LIVE, text: `if (${ALWAYS}) return;` }], SUITE_READS.map(read => `early-exit: ${read} -> a return precedes its site's registration`)],
+  ["PUSH-SPREAD", [{ op: "push-spread", read: DIGEST_READ, condition: G4_EXEMPT }], [`push-consequence: ${DIGEST_READ} -> the push argument is not one template literal`]],
+  ["SINK-ASSIGN", [{ op: "fn-before-return", fn: "expectationFailures", text: "out.length = 0;" }], ["sink: out.length = 0;"]],
+  ["SINK-METHOD", [{ op: "fn-before-return", fn: "expectationFailures", text: "out.pop();" }], ["sink: out.pop();"]],
+  ["SINK-UPDATE", [{ op: "fn-before-return", fn: "expectationFailures", text: "out.length--;" }], ["sink: out.length--;"]],
+  ["SINK-SUBCLASS", [{ op: "sink-initializer", fn: "expectationFailures", text: N5B_SINK }], [`sink: const out: string[] = ${N5B_SINK};`]],
+  ["SINK-OWN-PUSH", [{ op: "sink-initializer", fn: "expectationFailures", text: N5_SINK }], [`sink: const out: string[] = ${N5_SINK};`]],
+  ["SINK-EXEMPT-RETURN", [{ op: "fn-before-return", fn: "expectationFailures", text: `if (${G4_EXEMPT}) return [];` }], ["sink: const out: string[] = []; -> a return stands between the declaration and its function's last statement"]],
+  ["ASSERT-EXTEND", [{ op: "prepend", site: READ_SITE_LIVE, text: 'expect.extend({ toEqual: () => ({ pass: true, message: () => "" }) });' }], ['assert: expect.extend({ toEqual: () => ({ pass: true, message: () => "" }) });']],
+  ["ASSERT-ALIAS", [{ op: "prepend", site: READ_SITE_LIVE, text: "const verdictOf = expect;" }], ["assert: const verdictOf = expect;"]],
+  ["MATCHER-PROTO", [{ op: "prepend", site: READ_SITE_LIVE, text: N7_PROTO }], [`assert: ${N7_PROTO}`]],
+];
+/** A ROUTED row: [id, the edits of this file's source it reads, the lines the lybr reads pin must draw over the page]. */
+type RoutedRow = readonly [string, readonly ConsequenceEdit[], readonly string[]];
+/** The omxf describe's title, the site its reads re-key to when their registration is no longer a site. */
+const OMXF_SUITE = "describe wb-omxf R677 + R695 full docs19 section equality (explicit expectation with asserted provenance, no NAMES_RF selection)";
+/**
+ * wb-ur08: the routed families, each read by the lybr reads pin instead of this one: an expression-level guard re-keys the
+ * reader TEXT (ROUTE-EXPRESSION); a registration modifier unmakes the site, so its reads re-key to the describe above it
+ * (ROUTE-MODIFIER). Over each page this pin refuses to judge (no read keyed so) and the reads pin draws exactly the lines.
+ */
+const UR08_ROUTED: readonly RoutedRow[] = [
+  ["ROUTE-EXPRESSION", [{ op: "guard-expression", read: LIVE_PIN_READ, condition: NEVER }], [`missing: ${LIVE_PIN_READ}`, `unexpected: ${readKey(READ_SITE_LIVE, `${NEVER} && ${READ_LIVE_PIN}`)}`]],
+  [
+    "ROUTE-MODIFIER",
+    [{ op: "registrar", site: READ_SITE_LIVE, to: "it.skip" }],
+    [`missing: ${LIVE_EQUAL_READ}`, `missing: ${LIVE_PIN_READ}`, `unexpected: ${readKey(OMXF_SUITE, READ_PROVENANCE_EQUAL)}`, `unexpected: ${readKey(OMXF_SUITE, READ_LIVE_PIN)}`],
+  ],
+];
+/** A resolvable class of the consequence pin (R739's criterion): what it reads, the claim it serves, the line kind its rows draw, its rows. */
+interface ConsequenceClass {
+  readonly id: string;
+  readonly claim: string;
+  readonly reads: string;
+  readonly line: string;
+  readonly rows: readonly string[];
+}
+/** R739: the enumerated resolvable classes - the criterion this pin claims, each witnessed by its falsifier rows. */
+const CONSEQUENCE_CLASSES: readonly ConsequenceClass[] = [
+  {
+    id: "GUARD",
+    claim: "(1)",
+    reads: "an if, try, for, for-in, for-of, while, do, switch or labeled statement anywhere on the path from a consequence reader's statement to the module: around the statement, around its site's registration, or around a describe above it; and a registration on that path through .each over a table other than a bare identifier of a module-scope const",
+    line: "guarded",
+    rows: ["G4", "WRAP-LIVE-PIN", "WRAP-LIVE-EQUAL", "WRAP-ON-DISK", "WRAP-TRY", "WRAP-TRY-RETHROW", "WRAP-WHILE", "WRAP-LABEL", "GUARD-REGISTRATION", "EACH-INLINE-TABLE"],
+  },
+  {
+    id: "CLOSURE",
+    claim: "(1)",
+    reads: "a function-like node on that path other than the site's one node and the describe callbacks above it: an arrow function, a function expression, a function declaration, a method or an accessor, or a test callback around the site's registration",
+    line: "guarded",
+    rows: ["WRAP-CLOSURE"],
+  },
+  {
+    id: "NAMESAKE",
+    claim: "(1)",
+    reads: "a second node carrying a rostered site's key: a function declaration of a function site's name below module scope, or a registration of a test site's title head under a guard, inside another test's callback or beside the site's own (the respin-#1 gate's U2 SITE-NAMESAKE class)",
+    line: "namesake",
+    rows: ["NAMESAKE-FUNCTION", "NAMESAKE-SUITE", "NAMESAKE-IN-SITE", "NAMESAKE-ON-DISK", "NAMESAKE-UNGUARDED", "U2-NAMESAKE-FULL"],
+  },
+  {
+    id: "REGISTRAR",
+    claim: "(1)",
+    reads: "a registration on that path whose it, test or describe this file's checker does not resolve to the vitest import of that name (a shadow, an unbound name or another import renamed to it)",
+    line: "guarded",
+    rows: ["REGISTRAR-SHADOW"],
+  },
+  { id: "CONDITION", claim: "(2)", reads: "an if on that path whose condition names EXPECTATION", line: "cond-expectation", rows: ["COND-EXPECTATION", "COND-OUTER"] },
+  {
+    id: "RETURN-AHEAD",
+    claim: "(3)",
+    reads: "a return outside nested functions ahead of the reader's statement, or of a registration on its path, in any enclosing block up to the module",
+    line: "early-exit",
+    rows: ["EXIT-RETURN", "EXIT-SUITE"],
+  },
+  { id: "PUSH", claim: "(4)", reads: "a provenance check whose consequence is not exactly if (<the check>) out.push(<one template literal>)", line: "push-consequence", rows: ["GUARD-EXEMPT", "PUSH-SPREAD"] },
+  {
+    id: "SINK",
+    claim: "(5)",
+    reads: "a reference to a sink named out other than out.push(...) and its function's last return; a declaration other than a const initialized by [] or by a call of a module-scope sink function, or one whose function returns between it and the last statement (the gate's F1 SINK-SUBCLASS)",
+    line: "sink",
+    rows: ["SINK-ASSIGN", "SINK-METHOD", "SINK-UPDATE", "SINK-SUBCLASS", "SINK-OWN-PUSH", "SINK-EXEMPT-RETURN"],
+  },
+  {
+    id: "ASSERT",
+    claim: "(6)",
+    reads: "a reference to expect other than an unaliased vitest import of it and the head of a matcher statement, including an assertion object reaching anything but its matcher call (the gate's F2 MATCHER-PROTO)",
+    line: "assert",
+    rows: ["ASSERT-EXTEND", "ASSERT-ALIAS", "MATCHER-PROTO"],
+  },
+];
+/** How a residual's quiet row builds its family's page: a judged table's form row removed with the literal moved, or a representative member. */
+type ResidualPage =
+  | { readonly kind: "coordinated"; readonly table: "UR08_CONSEQUENCE" | "LYBR_READS"; readonly form: string }
+  | { readonly kind: "member"; readonly edits: readonly ConsequenceEdit[]; readonly marks: readonly string[] };
+/** A named residual NOT CLAIMED by the consequence pin: its family, how its page is built, and its quiet and runtime readings. */
+interface ConsequenceResidual {
+  readonly id: string;
+  readonly family: string;
+  readonly page: ResidualPage;
+  /** What this file reads on the family's page. */
+  readonly reading: string;
+  /** What the whole census reads, run under the family's edit on disk. */
+  readonly runtime: string;
+}
+const UR08_RESIDUALS: readonly ConsequenceResidual[] = [
+  {
+    id: "R-COORDINATED-CONSEQUENCE-ROSTER",
+    family:
+      "a CONSEQUENCE row removed from the census's consequence table, its class's rows and frozen row count, its frozen-shape element and the fixture's consequenceRows and consequenceClasses together (any row keyed on it rewritten alike), the EXPECTATION sha256 literal moved to the edited fixture's bytes",
+    page: { kind: "coordinated", table: "UR08_CONSEQUENCE", form: "G4" },
+    reading:
+      "quiet: the page's table and class rows hold every row but the form row, its frozen shape lacks the element and counts the form row's class one row fewer, the consequence judgment and the reads pin draw no line over the page's source (the removal touches no read), and the literal-shape pin reads the moved literal as it reads the pinned one",
+    runtime:
+      "quiet for every member but its own form: with a CONSEQUENCE row other than G4 removed from the census table, its class's rows and frozen row count, its frozen-shape element and the fixture's consequenceRows and consequenceClasses together and the EXPECTATION sha256 literal moved (measured: WRAP-TRY), the whole census reads green, 0 failed | 225 passed; removing the form row G4 itself reds this quiet row and CONSEQUENCE FROZEN SHAPE (2 failed | 223 passed: the page's witness is gone); no reading in this file tells a reviewed row removal from a hollowing one, so the edit is the review: its diff drops the row from the fixture and moves the literal",
+  },
+  {
+    id: "R-COORDINATED-READS-TABLE",
+    family:
+      "a lybr READS row removed from LYBR_READS, its frozen-shape element and the fixture's readerRows together (the lybr PREP F5 generic coordinated anchor edit, its CT6-COORD form), the EXPECTATION sha256 literal moved to the edited fixture's bytes",
+    page: { kind: "coordinated", table: "LYBR_READS", form: "ALIAS-SPREAD" },
+    reading:
+      "quiet: the page's READS table holds every row but the form row, its frozen shape lacks the element, the consequence judgment and the reads pin draw no line over the page's source (the removal touches no read), and the literal-shape pin reads the moved literal as it reads the pinned one",
+    runtime:
+      "quiet for every member but its own form: with a READS row other than ALIAS-SPREAD removed from LYBR_READS, its frozen-shape element and the fixture's readerRows together and the EXPECTATION sha256 literal moved (measured: ALIAS-CONST), the whole census reads green, 0 failed | 225 passed; removing the form row ALIAS-SPREAD itself reds this quiet row and CONSEQUENCE FROZEN SHAPE (2 failed | 223 passed); no reading in this file tells a reviewed row removal from a hollowing one, so the edit is the review: its diff drops the row from the fixture's readerRows and moves the literal",
+  },
+  {
+    id: "R-RUNTIME-OVERRIDE",
+    family:
+      "the runtime a consequence reader or this pin's own judge calls, replaced through a channel that names neither a sink named out nor expect: a builtin's prototype (Array.prototype.push, String.prototype.includes), the hash or the file read, the typescript module the judge parses with, the runner's assertion objects reached through another vitest import (chai.Assertion.prototype), or code this file's AST never parses (an evaluated string, the lybr PREP F2 eval family that biome noGlobalEval refuses out of band)",
+    page: {
+      kind: "member",
+      edits: [
+        { op: "import-vitest", name: "chai" },
+        { op: "prepend", site: READ_SITE_LIVE, text: "chai.Assertion.prototype.toEqual = function (): void {};" },
+      ],
+      marks: ["chai.Assertion.prototype.toEqual = function (): void {};", ", chai }"],
+    },
+    reading: "quiet: the vitest import gains chai and LIVE empties chai's toEqual first; no consequence or reads line, since the page names no sink and expect only as before",
+    runtime:
+      "a full survivor of every assertion after it: with the member on disk (chai imported, LIVE emptying chai's toEqual first) the census reads 1 failed | 225 passed, only this quiet row (its page cannot carry the member a second time), and a wrong expected line in row G4 that alone reds 3 rows (ANCHOR, CONSEQUENCE G4, CONSEQUENCE FROZEN SHAPE) reads the same 1 failed under it: the hollowed matcher is read by no row of this file",
+  },
+  {
+    id: "R-DOWNSTREAM-DISCARD",
+    family:
+      "a pushed provenance line dropped after its sink returns, by a caller of a push site: a filter, slice or substitution of the result of expectationFailures or provenanceFailures in fullExampleFailures, expectedTables or a row (claim (5) binds a sink named out, never a caller's own binding)",
+    page: {
+      kind: "member",
+      edits: [{ op: "after-call", fn: "fullExampleFailures", callee: "provenanceFailures", text: '.filter(line => !line.includes("expectation-digest"))' }],
+      marks: ['provenanceFailures(subject, expectation).filter(line => !line.includes("expectation-digest"))'],
+    },
+    reading: "quiet: fullExampleFailures filters the digest line out of provenanceFailures's result; every push site and sink stays exactly its claimed shape",
+    runtime:
+      "loud: with the member on disk the census reads 16 failed | 210 passed - the ten ANCHOR-SIDE rows, P-ANCHOR-LIVE-DOCS, P-ANCHOR-IS-SUBJECT and the omxf R-COORDINATED-LITERAL-AND-ANCHOR quiet row (each expects the dropped digest line), this quiet row (its page cannot carry the member a second time) and both FROZEN SHAPE rows (judged-list cascades); the omxf rows read the drop at runtime, this pin does not",
+  },
+  {
+    id: "R-RUNNER-CONTROL",
+    family:
+      "a registered site whose body the runner stops or skips at runtime through a call rather than a return or a guard: the test context's skip, called as a member or by its bracketed name (the respin-#1 gate's N8 control), a hook that skips the test, or a registration through .each whose module-scope table holds no row at runtime",
+    page: { kind: "member", edits: [{ op: "runtime-skip", site: READ_SITE_LIVE }], marks: ['(ctx) => {\n    ctx["skip"]();'] },
+    reading: "quiet: LIVE's callback takes the test context and calls its skip first; a call is no return, no guard and no function on the path",
+    runtime:
+      "loud: with the member on disk the census reads 3 failed | 222 passed | 1 skipped - LIVE skips, the omxf FROZEN SHAPE judged list misses it, this quiet row cannot build its page (LIVE's callback already takes a parameter) and CONSEQUENCE FROZEN SHAPE cascades; the judged lists read the skip at runtime, this pin does not",
+  },
+];
+interface ConsequenceAnchor {
+  readonly consequenceRoster: readonly (readonly [string, ConsequenceKind])[];
+  readonly consequenceRows: readonly ConsequenceRow[];
+  readonly consequenceRouted: readonly RoutedRow[];
+  readonly consequenceClasses: readonly ConsequenceClass[];
+  readonly consequenceResiduals: readonly ConsequenceResidual[];
+}
+/** The consequence tables out of file: the fixture's own, read behind its pinned provenance (expectedTables refuses any other read). */
+function consequenceAnchor(expectation: Sourced): ConsequenceAnchor {
+  const tables: unknown = expectedTables(expectation);
+  if (!isRecord(tables) || ![tables.consequenceRoster, tables.consequenceRows, tables.consequenceRouted, tables.consequenceClasses, tables.consequenceResiduals].every(Array.isArray)) {
+    throw new Error(`${OMXF_ANCHOR_FILE}: missing the consequence roster, row, routed, class or residual anchor`);
+  }
+  return tables as unknown as ConsequenceAnchor;
+}
+const UR08_JUDGED: string[] = [];
+/** The rostered sites, in roster order, each once: the keys exactly one node of this file must carry. */
+const CONSEQUENCE_SITES: readonly string[] = [...new Set(CONSEQUENCE_ROSTER.map(([key]) => key.slice(0, key.indexOf(" | "))))];
+/** The innermost statement containing a node; throws when there is none. */
+function closestStatement(node: ts.Node): ts.Statement {
+  let at = node;
+  while (!ts.isStatement(at)) {
+    if (at.parent === undefined || ts.isSourceFile(at.parent)) throw new Error(`${SELF}: a judged node outside every statement`);
+    at = at.parent;
+  }
+  return at;
+}
+/** The registrar identifier of a registration callback (it, test or describe, directly or through .each); undefined for any other node. */
+function registrarOf(node: ts.Node): ts.Identifier | undefined {
+  if (registrationSite(node) === undefined || !ts.isCallExpression(node.parent)) return undefined;
+  const callee = node.parent.expression;
+  const base = ts.isCallExpression(callee) && ts.isPropertyAccessExpression(callee.expression) && callee.expression.name.text === "each" ? callee.expression.expression : callee;
+  return ts.isIdentifier(base) ? base : undefined;
+}
+/** Whether an identifier resolves, by this file's checker, to the vitest module's import of its own name (never another import renamed to it). */
+function isVitestImport(identifier: ts.Identifier, checker: ts.TypeChecker): boolean {
+  const declaration = checker.getSymbolAtLocation(identifier)?.declarations?.[0];
+  if (declaration === undefined || !ts.isImportSpecifier(declaration) || (declaration.propertyName ?? declaration.name).text !== identifier.text) return false;
+  const specifier = declaration.parent.parent.parent.moduleSpecifier;
+  return ts.isStringLiteral(specifier) && specifier.text === "vitest";
+}
+/** The table a registration callback's .each iterates, or undefined when the registration does not go through .each. */
+function eachTableOf(node: ts.Node): ts.Expression | undefined {
+  if (registrationSite(node) === undefined || !ts.isCallExpression(node.parent)) return undefined;
+  const callee = node.parent.expression;
+  return ts.isCallExpression(callee) && ts.isPropertyAccessExpression(callee.expression) && callee.expression.name.text === "each" ? callee.arguments[0] : undefined;
+}
+/** Whether a .each table is a bare identifier this file's checker resolves to a module-scope const. */
+function isModuleTable(table: ts.Expression, checker: ts.TypeChecker): boolean {
+  if (!ts.isIdentifier(table)) return false;
+  const declaration = checker.getSymbolAtLocation(table)?.valueDeclaration;
+  return declaration !== undefined && ts.isVariableDeclaration(declaration) && isModuleScope(declaration) && declarationKeyword(declaration) === "const";
+}
+interface PathGuard {
+  readonly kind: string;
+  readonly condition: ts.Expression | undefined;
+}
+/** The statement guard a node stands for on a reader's path, or undefined when it is none. */
+function statementGuardOf(node: ts.Node): PathGuard | undefined {
+  if (ts.isIfStatement(node)) return { kind: "an if", condition: node.expression };
+  if (ts.isTryStatement(node)) return { kind: "a try", condition: undefined };
+  if (ts.isForStatement(node) || ts.isForInStatement(node) || ts.isForOfStatement(node)) return { kind: "a for", condition: undefined };
+  if (ts.isWhileStatement(node)) return { kind: "a while", condition: undefined };
+  if (ts.isDoStatement(node)) return { kind: "a do", condition: undefined };
+  if (ts.isSwitchStatement(node)) return { kind: "a switch", condition: undefined };
+  return ts.isLabeledStatement(node) ? { kind: "a label", condition: undefined } : undefined;
+}
+/**
+ * wb-ur08 (1): every guard on the path from a statement up to the module, nearest first. The site's one node (a module-scope
+ * function declaration, where the walk ends, or the nearest it/test callback) and the describe callbacks above it are the
+ * only function-like nodes passed without a guard; a registration whose registrar is not the vitest import of its name, or
+ * whose .each iterates anything but a bare identifier of a module-scope const, is a guard.
+ */
+function pathGuards(statement: ts.Statement, checker: ts.TypeChecker): PathGuard[] {
+  const guards: PathGuard[] = [];
+  let siteFound = false;
+  for (let at: ts.Node = statement.parent; !ts.isSourceFile(at); at = at.parent) {
+    const guard = statementGuardOf(at);
+    if (guard !== undefined) {
+      guards.push(guard);
+      continue;
+    }
+    if (!ts.isFunctionLike(at)) continue;
+    if (!siteFound && ts.isFunctionDeclaration(at) && ts.isSourceFile(at.parent)) return guards;
+    const registered = registrationSite(at);
+    const registrar = registrarOf(at);
+    if (registrar !== undefined && !isVitestImport(registrar, checker)) guards.push({ kind: `a registration whose ${registrar.text} is not the vitest import`, condition: undefined });
+    const table = eachTableOf(at);
+    if (table !== undefined && !isModuleTable(table, checker)) guards.push({ kind: "an each over a table that is not a module-scope const", condition: undefined });
+    if (registered?.startsWith("describe ")) continue;
+    if (registered !== undefined && !siteFound) {
+      siteFound = true;
+      continue;
+    }
+    guards.push({ kind: ts.isFunctionDeclaration(at) ? (ts.isSourceFile(at.parent) ? "a function" : "a nested function") : registered !== undefined ? "an outer test" : "a closure", condition: undefined });
+  }
+  return guards;
+}
+/** Whether a node names EXPECTATION anywhere in it (a guard that consults the literal vouches itself). */
+function namesExpectation(node: ts.Node): boolean {
+  if (ts.isIdentifier(node) && node.text === "EXPECTATION") return true;
+  return ts.forEachChild(node, namesExpectation) ?? false;
+}
+/** Whether a node holds a return statement outside every nested function. */
+function holdsReturn(node: ts.Node): boolean {
+  if (ts.isReturnStatement(node)) return true;
+  if (ts.isFunctionLike(node)) return false;
+  return ts.forEachChild(node, holdsReturn) ?? false;
+}
+/** wb-ur08 (3): what a return outside a nested function precedes, in any enclosing block up to the module: the statement, its site's registration, or nothing. */
+function returnAhead(statement: ts.Statement): string | undefined {
+  let past = false;
+  for (let at: ts.Node = statement; !ts.isSourceFile(at.parent); at = at.parent) {
+    if (registrationSite(at) !== undefined) past = true;
+    const parent = at.parent;
+    if (ts.isBlock(parent) || ts.isCaseClause(parent) || ts.isDefaultClause(parent)) {
+      for (const member of parent.statements) {
+        if (member === at) break;
+        if (holdsReturn(member)) return past ? "its site's registration" : "its statement";
+      }
+    }
+  }
+  return undefined;
+}
+/** Why a provenance check's statement is not exactly if (<the check>) out.push(<one template literal>), or undefined when it is. */
+function pushShapeWhy(statement: ts.Statement, file: ts.SourceFile): string | undefined {
+  if (!ts.isIfStatement(statement)) return "its statement is not an if";
+  if (statement.elseStatement !== undefined) return "an else";
+  const then = statement.thenStatement;
+  if (ts.isIfStatement(then)) return "a nested if";
+  if (ts.isBlock(then)) return "a block then";
+  if (!ts.isExpressionStatement(then)) return "the then is not an expression statement";
+  const call = then.expression;
+  if (!ts.isCallExpression(call) || !ts.isPropertyAccessExpression(call.expression) || call.expression.expression.getText(file) !== "out" || call.expression.name.text !== "push") return "the then is not exactly out.push";
+  if (call.arguments.length !== 1 || !(ts.isTemplateExpression(call.arguments[0]) || ts.isNoSubstitutionTemplateLiteral(call.arguments[0]))) return "the push argument is not one template literal";
+  return undefined;
+}
+/** wb-ur08 (1): one namesake line per rostered site that a number of nodes other than one carries. */
+function namesakeLines(file: ts.SourceFile): string[] {
+  const carriers = new Map<string, number>();
+  const visit = (node: ts.Node): void => {
+    const site = ts.isFunctionDeclaration(node) && node.name !== undefined && node.body !== undefined ? `function ${node.name.text}` : registrationSite(node);
+    if (site !== undefined) carriers.set(site, (carriers.get(site) ?? 0) + 1);
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return CONSEQUENCE_SITES.filter(site => carriers.get(site) !== 1).map(site => `namesake: ${site} -> ${carriers.get(site) ?? 0} nodes carry this site key`);
+}
+/** Whether a function declaration sits at module scope and ends in return out: a sink function. */
+function isSinkFunction(node: ts.Node): node is ts.FunctionDeclaration {
+  if (!ts.isFunctionDeclaration(node) || !ts.isSourceFile(node.parent)) return false;
+  const last = node.body?.statements.at(-1);
+  return last !== undefined && ts.isReturnStatement(last) && last.expression !== undefined && ts.isIdentifier(last.expression) && last.expression.text === "out";
+}
+/** wb-ur08 (5): whether a declaration of out is a const initialized by [] or by a call of a module-scope sink function (resolved by the checker). */
+function sanctionedSinkDeclaration(declaration: ts.VariableDeclaration, checker: ts.TypeChecker): boolean {
+  if (!ts.isVariableDeclarationList(declaration.parent) || (declaration.parent.flags & ts.NodeFlags.Const) === 0) return false;
+  const initializer = declaration.initializer;
+  if (initializer === undefined) return false;
+  if (ts.isArrayLiteralExpression(initializer)) return initializer.elements.length === 0;
+  if (!ts.isCallExpression(initializer) || !ts.isIdentifier(initializer.expression)) return false;
+  const callee = checker.getSymbolAtLocation(initializer.expression)?.valueDeclaration;
+  return callee !== undefined && isSinkFunction(callee);
+}
+/** wb-ur08 (5): why the function holding a sanctioned sink declaration may drop what it holds, or undefined when it cannot. */
+function sinkHolderWhy(declaration: ts.VariableDeclaration): string | undefined {
+  const statement = declaration.parent.parent;
+  const body = statement.parent;
+  if (!ts.isVariableStatement(statement) || !ts.isBlock(body) || !isSinkFunction(body.parent)) return "it is not declared directly in a module-scope function whose last statement is return out";
+  const members = body.statements;
+  if (members.slice(members.indexOf(statement) + 1, -1).some(holdsReturn)) return "a return stands between the declaration and its function's last statement";
+  return undefined;
+}
+/** Whether an identifier named out is a sanctioned reference: its sanctioned declaration, a member name, out.push(...), or its function's last return. */
+function sanctionedSinkUse(identifier: ts.Identifier, checker: ts.TypeChecker): boolean {
+  const parent = identifier.parent;
+  if (ts.isVariableDeclaration(parent) && parent.name === identifier) return sanctionedSinkDeclaration(parent, checker);
+  if (ts.isPropertyAccessExpression(parent) && parent.name === identifier) return true;
+  if (ts.isPropertyAccessExpression(parent) && parent.name.text === "push" && ts.isCallExpression(parent.parent) && parent.parent.expression === parent) return true;
+  return ts.isReturnStatement(parent) && parent.expression === identifier && ts.isBlock(parent.parent) && parent.parent.statements.at(-1) === parent && isSinkFunction(parent.parent.parent);
+}
+/** wb-ur08 (5): one line per unsanctioned reference to a sink named out, and per sanctioned declaration whose function may drop it. */
+function sinkLines(file: ts.SourceFile, checker: ts.TypeChecker): string[] {
+  const lines: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && node.text === "out") {
+      if (!sanctionedSinkUse(node, checker)) lines.push(`sink: ${readerTextOf(closestStatement(node), file)}`);
+      else if (ts.isVariableDeclaration(node.parent) && node.parent.name === node) {
+        const why = sinkHolderWhy(node.parent);
+        if (why !== undefined) lines.push(`sink: ${readerTextOf(closestStatement(node), file)} -> ${why}`);
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return lines;
+}
+/** The modifiers a matcher statement may chain between expect(...) and its matcher. */
+const MATCHER_MODIFIERS: ReadonlySet<string> = new Set(["not", "resolves", "rejects"]);
+/** wb-ur08 (6): whether an expect(...) call heads a matcher statement expect(...)[.not|.resolves|.rejects].<matcher>(...); whose matcher call is the whole statement. */
+function headsMatcherStatement(call: ts.CallExpression): boolean {
+  let at: ts.Expression = call;
+  while (ts.isPropertyAccessExpression(at.parent) && at.parent.expression === at && MATCHER_MODIFIERS.has(at.parent.name.text)) at = at.parent;
+  const member = at.parent;
+  if (!ts.isPropertyAccessExpression(member) || member.expression !== at) return false;
+  const matcher = member.parent;
+  if (!ts.isCallExpression(matcher) || matcher.expression !== member) return false;
+  return ts.isExpressionStatement(ts.isAwaitExpression(matcher.parent) ? matcher.parent.parent : matcher.parent);
+}
+/** wb-ur08 (6): whether an identifier named expect is a sanctioned reference: its one unaliased vitest import, or the head of a matcher statement. */
+function sanctionedAssertUse(identifier: ts.Identifier): boolean {
+  const parent = identifier.parent;
+  if (ts.isImportSpecifier(parent)) {
+    const specifier = parent.parent.parent.parent.moduleSpecifier;
+    return parent.propertyName === undefined && parent.name === identifier && ts.isStringLiteral(specifier) && specifier.text === "vitest";
+  }
+  return ts.isCallExpression(parent) && parent.expression === identifier && headsMatcherStatement(parent);
+}
+/** wb-ur08 (6): one line per unsanctioned reference to expect. */
+function assertLines(file: ts.SourceFile): string[] {
+  const lines: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node) && node.text === "expect" && !sanctionedAssertUse(node)) lines.push(`assert: ${readerTextOf(closestStatement(node), file)}`);
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return lines;
+}
+/** wb-ur08 (1)-(6): the consequence lines a source of this file draws - per roster reader in roster order, then the namesake, sink and assert lines. */
+function consequenceJudgment(source: string): readonly string[] {
+  const { file, checker } = boundSource(source);
+  const reads = locateReads(file, checker);
+  const lines: string[] = [];
+  for (const [key, kind] of CONSEQUENCE_ROSTER) {
+    const read = reads.find(entry => readKey(entry.site, entry.reader) === key);
+    if (read === undefined) throw new Error(`${SELF}: no read of EXPECTATION is keyed ${key}`);
+    const statement = closestStatement(read.access);
+    const guards = pathGuards(statement, checker);
+    if (guards.length > 0) lines.push(`guarded: ${key} -> its statement sits inside ${guards[0].kind}`);
+    if (guards.some(guard => guard.condition !== undefined && namesExpectation(guard.condition))) lines.push(`cond-expectation: ${key} -> the guard condition names EXPECTATION`);
+    const ahead = returnAhead(statement);
+    if (ahead !== undefined) lines.push(`early-exit: ${key} -> a return precedes ${ahead}`);
+    if (kind === "push") {
+      const why = pushShapeWhy(statement, file);
+      if (why !== undefined) lines.push(`push-consequence: ${key} -> ${why}`);
+    }
+  }
+  return [...lines, ...namesakeLines(file), ...sinkLines(file, checker), ...assertLines(file)];
+}
+/** A source with each [start, end, text] splice applied, the latest first, so every offset stays the parsed one. */
+function spliced(source: string, splices: readonly (readonly [number, number, string])[]): string {
+  return [...splices].sort((left, right) => right[0] - left[0]).reduce((text, [start, end, replacement]) => `${text.slice(0, start)}${replacement}${text.slice(end)}`, source);
+}
+/** The whole lines a statement spans, as [start, end): from its line's start through its line break. */
+function lineSpan(source: string, statement: ts.Statement, file: ts.SourceFile): readonly [number, number] {
+  const end = statement.getEnd();
+  return [source.lastIndexOf("\n", statement.getStart(file)) + 1, source[end] === "\n" ? end + 1 : end];
+}
+/** The registration of a site: its callback, and the statement that registers it; throws when the site has none. */
+function siteRegistration(file: ts.SourceFile, site: string): { readonly callback: ts.ArrowFunction | ts.FunctionExpression; readonly statement: ts.ExpressionStatement } {
+  const visit = (node: ts.Node): ts.ArrowFunction | ts.FunctionExpression | undefined => {
+    if ((ts.isArrowFunction(node) || ts.isFunctionExpression(node)) && registrationSite(node) === site) return node;
+    return ts.forEachChild(node, visit);
+  };
+  const callback = visit(file);
+  const statement = callback === undefined ? undefined : closestStatement(callback);
+  if (callback === undefined || statement === undefined || !ts.isExpressionStatement(statement)) throw new Error(`${SELF}: no registration statement at ${site}`);
+  return { callback, statement };
+}
+/** The module-scope function declaration of a name; throws when there is none. */
+function moduleFunction(file: ts.SourceFile, name: string): ts.FunctionDeclaration & { readonly body: ts.Block } {
+  const declared = file.statements.find((entry): entry is ts.FunctionDeclaration & { readonly body: ts.Block } => ts.isFunctionDeclaration(entry) && entry.name?.text === name && entry.body !== undefined);
+  if (declared === undefined) throw new Error(`${SELF}: no module-scope function ${name}`);
+  return declared;
+}
+/** The statement of a keyed read of EXPECTATION in a bound source; throws when no read is keyed so. */
+function readStatement(source: string, key: string): { readonly file: ts.SourceFile; readonly statement: ts.Statement } {
+  const { file, checker } = boundSource(source);
+  const read = locateReads(file, checker).find(entry => readKey(entry.site, entry.reader) === key);
+  if (read === undefined) throw new Error(`${SELF}: no read of EXPECTATION is keyed ${key}`);
+  return { file, statement: closestStatement(read.access) };
+}
+/** A source text of this file with one consequence edit applied by AST position (a page, parsed and bound, never run); an absent anchor throws. */
+function withConsequenceEdit(source: string, edit: ConsequenceEdit): string {
+  if (edit.op === "prepend") return withReadsEdit(source, edit);
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  if (edit.op === "fn-before-return") {
+    const last = moduleFunction(file, edit.fn).body.statements.at(-1);
+    if (last === undefined || !ts.isReturnStatement(last)) throw new Error(`${SELF}: no function ${edit.fn} ending in a return`);
+    const at = last.getStart(file);
+    return spliced(source, [[at, at, `${edit.text}\n  `]]);
+  }
+  if (edit.op === "sink-initializer") {
+    const holder = moduleFunction(file, edit.fn).body.statements.find(entry => ts.isVariableStatement(entry) && entry.declarationList.declarations.some(declaration => declaration.name.getText(file) === "out"));
+    const initializer = holder !== undefined && ts.isVariableStatement(holder) ? holder.declarationList.declarations[0].initializer : undefined;
+    if (initializer === undefined) throw new Error(`${SELF}: function ${edit.fn} declares no initialized sink`);
+    return spliced(source, [[initializer.getStart(file), initializer.getEnd(), edit.text]]);
+  }
+  if (edit.op === "after-call") {
+    const visit = (node: ts.Node): ts.CallExpression | undefined => (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === edit.callee ? node : ts.forEachChild(node, visit));
+    const call = visit(moduleFunction(file, edit.fn).body);
+    if (call === undefined) throw new Error(`${SELF}: function ${edit.fn} calls no ${edit.callee}`);
+    return spliced(source, [[call.getEnd(), call.getEnd(), edit.text]]);
+  }
+  if (edit.op === "import-vitest") {
+    const named = file.statements.flatMap(entry => (ts.isImportDeclaration(entry) && ts.isStringLiteral(entry.moduleSpecifier) && entry.moduleSpecifier.text === "vitest" && entry.importClause?.namedBindings !== undefined && ts.isNamedImports(entry.importClause.namedBindings) ? [entry.importClause.namedBindings] : []));
+    const last = named[0]?.elements.at(-1);
+    if (named.length !== 1 || last === undefined) throw new Error(`${SELF}: no single named vitest import`);
+    return spliced(source, [[last.getEnd(), last.getEnd(), `, ${edit.name}`]]);
+  }
+  if (edit.op === "wrap-registration" || edit.op === "suite-prepend" || edit.op === "registrar" || edit.op === "runtime-skip") {
+    const { callback, statement } = siteRegistration(file, edit.site);
+    if (edit.op === "wrap-registration") return spliced(source, [[statement.getStart(file), statement.getStart(file), `if (${edit.condition}) `]]);
+    if (edit.op === "suite-prepend") {
+      const suite = statement.parent;
+      if (!ts.isBlock(suite)) throw new Error(`${SELF}: the registration at ${edit.site} is not a statement of a suite body`);
+      const open = suite.getStart(file) + 1;
+      return spliced(source, [[open, open, `\n  ${edit.text}`]]);
+    }
+    if (edit.op === "registrar") {
+      const registrar = registrarOf(callback);
+      if (registrar === undefined) throw new Error(`${SELF}: the site ${edit.site} has no registrar identifier`);
+      return spliced(source, [[registrar.getStart(file), registrar.getEnd(), edit.to]]);
+    }
+    if (callback.parameters.length > 0 || !ts.isBlock(callback.body)) throw new Error(`${SELF}: the callback at ${edit.site} is not a parameterless block`);
+    const open = callback.body.getStart(file) + 1;
+    return spliced(source, [
+      [callback.getStart(file), callback.getStart(file) + 2, "(ctx)"],
+      [open, open, '\n    ctx["skip"]();'],
+    ]);
+  }
+  if (edit.op === "namesake") {
+    const located = edit.reads.map(read => readStatement(source, read).statement);
+    const site = edit.reads[0].slice(0, edit.reads[0].indexOf(" | "));
+    const head = site.slice(site.indexOf(" ") + 1);
+    const body = [...(edit.prelude === "" ? [] : [edit.prelude]), ...located.map(statement => source.slice(statement.getStart(), statement.getEnd()))].map(text => `      ${text}`).join("\n");
+    const namesake = `${edit.condition === "" ? "" : `if (${edit.condition}) `}it(${JSON.stringify(`${head}: namesake`)}, () => {\n${body}\n    });`;
+    const removals = located.map((statement): readonly [number, number, string] => [...lineSpan(source, statement, statement.getSourceFile()), ""]);
+    if (edit.at === "site") return spliced(source, [[located[0].getStart(), located[0].getEnd(), namesake], ...removals.slice(1)]);
+    const { statement } = siteRegistration(file, site);
+    const at = statement.getStart(file);
+    return spliced(source, [[at, at, `${namesake.replaceAll("\n  ", "\n")}\n\n  `], ...removals]);
+  }
+  const { file: bound, statement } = readStatement(source, edit.read);
+  const start = statement.getStart(bound);
+  const end = statement.getEnd();
+  const wrapped = (head: string, tail: string): string => `${source.slice(0, start)}${head}\n    ${source.slice(start, end)}\n    ${tail}${source.slice(end)}`;
+  if (edit.op === "nest-function") {
+    const site = edit.read.slice(0, edit.read.indexOf(" | "));
+    if (!site.startsWith("function ")) throw new Error(`${SELF}: the read at ${edit.read} is not at a function site`);
+    const name = site.slice("function ".length);
+    if (!moduleFunction(bound, name).body.statements.includes(statement)) throw new Error(`${SELF}: the read at ${edit.read} is not a statement of its function's body`);
+    return spliced(source, [[start, end, `if (${edit.call}) ${name}();\n  function ${name}(): void {\n    ${source.slice(start, end)}\n  }`]]);
+  }
+  if (edit.op === "guard-expression") {
+    if (!ts.isExpressionStatement(statement)) throw new Error(`${SELF}: the read at ${edit.read} is not an expression statement`);
+    return spliced(source, [[statement.expression.getStart(bound), statement.expression.getStart(bound), `${edit.condition} && `]]);
+  }
+  if (edit.op === "guard" || edit.op === "push-spread") {
+    if (!ts.isIfStatement(statement) || pushShapeWhy(statement, bound) !== undefined) throw new Error(`${SELF}: the read at ${edit.read} is not if (<the check>) out.push(<one template literal>)`);
+    if (edit.op === "guard") {
+      const thenStart = statement.thenStatement.getStart(bound);
+      return `${source.slice(0, thenStart)}${edit.nested} ${source.slice(thenStart)}`;
+    }
+    const call = statement.thenStatement;
+    if (!ts.isExpressionStatement(call) || !ts.isCallExpression(call.expression)) throw new Error(`${SELF}: the read at ${edit.read} has no push call`);
+    const [argument] = call.expression.arguments;
+    return `${source.slice(0, argument.getStart(bound))}...(${edit.condition} ? [] : [${argument.getText(bound)}])${source.slice(argument.getEnd())}`;
+  }
+  if (edit.op === "wrap-if") return wrapped(`if (${edit.condition}) {`, "}");
+  if (edit.op === "wrap-while") return wrapped(`while (${edit.condition}) {`, "}");
+  if (edit.op === "wrap-closure") return wrapped("(() => {", "});");
+  if (edit.op === "wrap-label") return wrapped(`exit: {\n    if (${edit.exit}) break exit;`, "}");
+  return wrapped("try {", edit.rethrow ? "} catch (error) {\n      throw error;\n    }" : "} catch {\n    }");
+}
+/** A judged table's module-scope array literal in a source of this file, read by its AST (never evaluated). */
+function tableRows(file: ts.SourceFile, table: string): ts.NodeArray<ts.Expression> {
+  const statement = file.statements.find((entry): entry is ts.VariableStatement => ts.isVariableStatement(entry) && entry.declarationList.declarations.some(declaration => ts.isIdentifier(declaration.name) && declaration.name.text === table));
+  const initializer = statement?.declarationList.declarations[0].initializer;
+  if (initializer === undefined || !ts.isArrayLiteralExpression(initializer)) throw new Error(`${SELF}: ${table} is not a module-scope array literal`);
+  return initializer.elements;
+}
+/** The id of a judged table row ([id, edits, lines]); throws on any other shape. */
+function rowIdOf(element: ts.Expression): string {
+  if (!ts.isArrayLiteralExpression(element) || element.elements.length !== 3 || !ts.isStringLiteral(element.elements[0])) throw new Error(`${SELF}: a judged table row is not an [id, edits, lines] triple`);
+  return element.elements[0].text;
+}
+/** The row ids of a judged table in a source of this file, in source order. */
+const tableRowIds = (source: string, table: string): string[] => tableRows(ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS), table).map(rowIdOf);
+/** A source text of this file with one judged table row removed by AST position, its whole lines included (a page, never run); an absent id throws. */
+function withoutTableRow(source: string, table: string, id: string): string {
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const element = tableRows(file, table).find(candidate => rowIdOf(candidate) === id);
+  if (element === undefined) throw new Error(`${SELF}: ${table} has no row ${id}`);
+  const start = source.lastIndexOf("\n", element.getStart(file)) + 1;
+  let end = element.getEnd();
+  if (source[end] === ",") end += 1;
+  if (source[end] === "\n") end += 1;
+  return `${source.slice(0, start)}${source.slice(end)}`;
+}
+/** The string literals of every class's rows in CONSEQUENCE_CLASSES, read by the AST of a source of this file (never evaluated). */
+function classRowLiterals(file: ts.SourceFile): ts.StringLiteral[] {
+  return tableRows(file, "CONSEQUENCE_CLASSES").flatMap(entry => {
+    const rows = ts.isObjectLiteralExpression(entry) ? entry.properties.find((property): property is ts.PropertyAssignment => ts.isPropertyAssignment(property) && property.name.getText(file) === "rows") : undefined;
+    return rows !== undefined && ts.isArrayLiteralExpression(rows.initializer) ? rows.initializer.elements.filter(ts.isStringLiteral) : [];
+  });
+}
+/** The class rows a source of this file names, in source order. */
+const classRowIds = (source: string): string[] => classRowLiterals(ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS)).map(literal => literal.text);
+/** A source text of this file with one row id removed from its class's rows, with one adjacent separator (a page, never run); the id must be named once. */
+function withoutClassRow(source: string, id: string): string {
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const named = classRowLiterals(file).filter(literal => literal.text === id);
+  if (named.length !== 1) throw new Error(`${SELF}: the class rows name ${id} ${named.length} times, not once`);
+  const start = named[0].getStart(file);
+  const end = named[0].getEnd();
+  if (source.slice(end, end + 2) === ", ") return `${source.slice(0, start)}${source.slice(end + 2)}`;
+  return source.slice(start - 2, start) === ", " ? `${source.slice(0, start - 2)}${source.slice(end)}` : `${source.slice(0, start)}${source.slice(end)}`;
+}
+/** A frozen-shape element of a judged table row: id, edit count (or "-") and line count. */
+const frozenOf = (row: readonly [string, readonly unknown[] | null, readonly string[]]): string => `${row[0]}:${row[1]?.length ?? "-"}:${row[2].length}`;
+/** A source text of this file with one frozen-shape element and one adjacent separator removed (a page, never run); the element must occur exactly once. */
+function withoutFrozenElement(source: string, element: string): string {
+  const literal = JSON.stringify(element);
+  if (source.split(literal).length !== 2) throw new Error(`${SELF}: the frozen element ${element} does not occur exactly once`);
+  return source.includes(`${literal}, `) ? source.replace(`${literal}, `, () => "") : source.replace(`, ${literal}`, () => "");
+}
+/** A frozen classes element: id, claim, line kind and row count (the count given, or the class's own). */
+const classShapeOf = ({ id, claim, line, rows }: ConsequenceClass, count: number = rows.length): string => `${id}:${claim}:${line}:${count}`;
+/** A source text of this file whose frozen classes literal counts one class a row fewer (a page, never run); the element must occur exactly once. */
+function withClassCount(source: string, owner: ConsequenceClass): string {
+  const literal = JSON.stringify(classShapeOf(owner));
+  if (source.split(literal).length !== 2) throw new Error(`${SELF}: the frozen class element ${classShapeOf(owner)} does not occur exactly once`);
+  return source.replace(literal, () => JSON.stringify(classShapeOf(owner, owner.rows.length - 1)));
+}
+/** A residual page's frozen-shape element: the coordinated table and form, or the member's edit count. */
+const residualShapeOf = ({ id, page }: ConsequenceResidual): string => `${id}:${page.kind === "coordinated" ? `${page.table}:${page.form}` : `member:${page.edits.length}`}`;
+
+describe("wb-ur08 the consequence readers of EXPECTATION over the enumerated resolvable classes (R739 terminal form; this file's own AST and checker; s24 G4 and the respin-#1 U2/F1/F2 members red-first)", () => {
+  it("ANCHOR (wb-ur08): the committed source draws no consequence line, and the roster, the consequence and routed tables, the classes and the residuals equal their out-of-file anchor (the fixture's consequence keys, read behind the pinned provenance)", () => {
+    const tables = consequenceAnchor(readPair(ROOT).expectation);
+    const lines = consequenceJudgment(readRepo(SELF));
+    // The verdict on the committed source reaches the runner by a plain throw too, never only through a matcher that a line it
+    // refuses could have emptied first: the gate's F2 N7 empties toEqual inside LIVE, which runs before this row.
+    if (lines.length > 0) throw new Error(`the committed source draws ${lines.length} consequence line(s): ${lines.join(" | ")}`);
+    expect(lines, "the committed source draws no consequence line").toEqual([]);
+    expect(CONSEQUENCE_ROSTER).toEqual(tables.consequenceRoster);
+    expect(UR08_CONSEQUENCE).toEqual(tables.consequenceRows);
+    expect(UR08_ROUTED).toEqual(tables.consequenceRouted);
+    expect(CONSEQUENCE_CLASSES).toEqual(tables.consequenceClasses);
+    expect(UR08_RESIDUALS).toEqual(tables.consequenceResiduals);
+    UR08_JUDGED.push("ANCHOR");
+  });
+
+  it.each(UR08_CONSEQUENCE)("CONSEQUENCE %s (wb-ur08): this file's own AST and checker judge every consequence reader - CONSEQUENCES, the committed source, quiet; a falsifier, its edits applied in memory by AST position (parsed and bound, never run): exactly its lines", (id, edits, lines) => {
+    const own = readRepo(SELF);
+    const page = edits === null ? own : edits.reduce((source, edit) => withConsequenceEdit(source, edit), own);
+    expect(page === own, `${id}: only CONSEQUENCES reads the committed source unedited`).toBe(edits === null);
+    const reading = consequenceJudgment(page);
+    expect(reading, `${id}: ${reading.join(" | ")}`).toEqual(lines);
+    UR08_JUDGED.push(`CONSEQUENCE ${id}`);
+  });
+
+  it.each(UR08_ROUTED)("ROUTED %s (wb-ur08): a page that re-keys a consequence read is refused by this pin (no read keyed so) and read by the lybr reads pin as exactly its lines", (id, edits, lines) => {
+    const own = readRepo(SELF);
+    const page = edits.reduce((source, edit) => withConsequenceEdit(source, edit), own);
+    expect(page, `${id}: the page edits the committed source`).not.toBe(own);
+    expect(() => consequenceJudgment(page), `${id}: this pin refuses to judge a re-keyed read`).toThrow(/no read of EXPECTATION is keyed/u);
+    const reading = expectationReads(page, READ_ROSTER).lines;
+    expect(reading, `${id}: ${reading.join(" | ")}`).toEqual(lines);
+    UR08_JUDGED.push(`ROUTED ${id}`);
+  });
+
+  it("CLASSES (wb-ur08, R739: the criterion is the enumerated resolvable classes): every falsifier row witnesses exactly one class and draws that class's line kind, every class has a witness, every line kind any row draws is a class's, and the classes equal their out-of-file anchor", () => {
+    const falsifiers = UR08_CONSEQUENCE.filter(([, edits]) => edits !== null).map(([id]) => id);
+    const witnesses = CONSEQUENCE_CLASSES.flatMap(({ rows }) => rows);
+    expect(witnesses, "the class rows name exactly the falsifier rows, each once").toHaveLength(falsifiers.length);
+    for (const id of falsifiers) expect(witnesses.filter(row => row === id), `${id} witnesses exactly one class`).toHaveLength(1);
+    for (const { id, line, rows } of CONSEQUENCE_CLASSES) {
+      expect(rows.length, `${id} has a witness`).toBeGreaterThan(0);
+      for (const row of rows) {
+        const drawn = UR08_CONSEQUENCE.find(([rowId]) => rowId === row)?.[2] ?? [];
+        expect(drawn.some(entry => entry.startsWith(`${line}: `)), `${id}: ${row} draws a ${line} line`).toBe(true);
+      }
+    }
+    const kinds = [...new Set(UR08_CONSEQUENCE.flatMap(([, , lines]) => lines.map(entry => entry.slice(0, entry.indexOf(": ")))))];
+    for (const kind of kinds) expect(CONSEQUENCE_CLASSES.some(({ line }) => line === kind), `${kind} is a class's line kind`).toBe(true);
+    expect(CONSEQUENCE_CLASSES).toEqual(consequenceAnchor(readPair(ROOT).expectation).consequenceClasses);
+    UR08_JUDGED.push("CLASSES");
+  });
+
+  it.each(UR08_RESIDUALS)("RESIDUAL $id quiet row (wb-ur08, a named residual NOT CLAIMED by the consequence pin): the family's page reads quiet here, and the row reds when the page stops carrying any part of the family's edit", residual => {
+    const own = readRepo(SELF);
+    const pinned = expectationLiteral(own).pin;
+    if (residual.page.kind === "member") {
+      const { edits, marks } = residual.page;
+      const page = edits.reduce((source, edit) => withConsequenceEdit(source, edit), own);
+      // Liveness: the page carries every part of the member's edit, each mark once more than the committed source.
+      for (const mark of marks) expect(page.split(mark).length, `${residual.id}: the page carries ${mark}`).toBe(own.split(mark).length + 1);
+      // The quiet reading: no consequence or reads line, and the literal untouched.
+      expect(consequenceJudgment(page)).toEqual([]);
+      expect(expectationReads(page, READ_ROSTER).lines).toEqual([]);
+      expect(expectationLiteral(page)).toEqual({ findings: [], pin: pinned });
+      UR08_JUDGED.push(`RESIDUAL ${residual.id}`);
+      return;
+    }
+    const { table, form } = residual.page;
+    const rows: readonly (readonly [string, readonly unknown[] | null, readonly string[]])[] = table === "UR08_CONSEQUENCE" ? UR08_CONSEQUENCE : LYBR_READS;
+    const row = rows.find(([id]) => id === form);
+    if (row === undefined) throw new Error(`${residual.id}: ${form} is not a ${table} row`);
+    const owner = CONSEQUENCE_CLASSES.find(({ rows: witnesses }) => witnesses.includes(form));
+    if (table === "UR08_CONSEQUENCE" && owner === undefined) throw new Error(`${residual.id}: ${form} witnesses no class`);
+    const literal = "e".repeat(64);
+    const removed = withoutFrozenElement(withoutTableRow(own, table, form), frozenOf(row));
+    const page = withExpectationProperty(owner === undefined ? removed : withClassCount(withoutClassRow(removed, form), owner), "sha256", JSON.stringify(literal));
+    // Liveness: the page carries the family's whole edit - the row dropped (and from its class, counted one fewer), its frozen element dropped, the literal moved.
+    expect(tableRowIds(own, table), "the committed table holds the form row").toEqual(rows.map(([id]) => id));
+    expect(tableRowIds(page, table), "the page's table drops exactly the form row").toEqual(rows.map(([id]) => id).filter(id => id !== form));
+    if (owner !== undefined) {
+      expect(classRowIds(page), "the page's class rows drop exactly the form row").toEqual(classRowIds(own).filter(id => id !== form));
+      expect(page.includes(JSON.stringify(classShapeOf(owner, owner.rows.length - 1))), "the page's frozen classes count the form row's class one row fewer").toBe(true);
+    }
+    expect(own.split(JSON.stringify(frozenOf(row))).length, "the committed frozen shape holds the element once").toBe(2);
+    expect(page.includes(JSON.stringify(frozenOf(row))), "the page's frozen shape drops the element").toBe(false);
+    expect(literal, "the page moves the literal").not.toBe(pinned?.sha256);
+    // The quiet reading: no consequence or reads line over the page's source, and the moved literal read as the pinned one is.
+    expect(consequenceJudgment(page)).toEqual([]);
+    expect(expectationReads(page, READ_ROSTER).lines).toEqual([]);
+    expect(expectationLiteral(page)).toEqual({ findings: [], pin: { path: pinned?.path, sha256: literal } });
+    UR08_JUDGED.push(`RESIDUAL ${residual.id}`);
+  });
+
+  it("CONSEQUENCE FROZEN SHAPE (wb-ur08): the roster derives from READ_ROSTER minus the templates; the roster, the consequence and routed tables, the classes and the residuals are frozen here and equal to their out-of-file anchors; every judged member reaches its last assertion", () => {
+    expect(CONSEQUENCE_ROSTER.map(([key]) => key)).toEqual(READ_ROSTER.flatMap(([site, readers]) => readers.filter(reader => !reader.startsWith("template ")).map(reader => readKey(site, reader))));
+    expect(CONSEQUENCE_ROSTER.map(([key, kind]) => `${key.slice(0, key.indexOf(" | "))}:${kind}`)).toEqual([
+      "function expectationFailures:push",
+      "function expectationFailures:push",
+      "it LIVE (R695 (a)):assertion",
+      "it LIVE (R695 (a)):assertion",
+      "it ON-DISK %s:assertion",
+      "it LITERAL %s (R696 (1)):assertion",
+      "it RESIDUAL R-COORDINATED-LITERAL-AND-ANCHOR quiet row (R696 (3), the named residual above the literal pin):assertion",
+      "it RESIDUAL R-COORDINATED-LITERAL-AND-ANCHOR quiet row (R696 (3), the named residual above the literal pin):assertion",
+      "it RESIDUAL R-COORDINATED-LITERAL-AND-ANCHOR quiet row (R696 (3), the named residual above the literal pin):assertion",
+    ]);
+    expect(UR08_CONSEQUENCE.map(frozenOf)).toEqual([
+      "CONSEQUENCES:-:0", "G4:4:4", "GUARD-EXEMPT:1:1", "WRAP-LIVE-PIN:1:1", "WRAP-LIVE-EQUAL:1:1", "WRAP-ON-DISK:1:1", "WRAP-TRY:1:1", "WRAP-TRY-RETHROW:1:1", "WRAP-WHILE:1:1", "WRAP-CLOSURE:1:1", "WRAP-LABEL:1:1", "GUARD-REGISTRATION:1:2", "EACH-INLINE-TABLE:1:2",
+      "NAMESAKE-FUNCTION:1:2", "NAMESAKE-SUITE:1:3", "NAMESAKE-IN-SITE:1:3", "NAMESAKE-ON-DISK:1:2", "NAMESAKE-UNGUARDED:1:1", "U2-NAMESAKE-FULL:3:7", "REGISTRAR-SHADOW:1:7", "COND-EXPECTATION:1:2", "COND-OUTER:2:2", "EXIT-RETURN:1:2", "EXIT-SUITE:1:7",
+      "PUSH-SPREAD:1:1", "SINK-ASSIGN:1:1", "SINK-METHOD:1:1", "SINK-UPDATE:1:1", "SINK-SUBCLASS:1:1", "SINK-OWN-PUSH:1:1", "SINK-EXEMPT-RETURN:1:1", "ASSERT-EXTEND:1:1", "ASSERT-ALIAS:1:1", "MATCHER-PROTO:1:1",
+    ]);
+    expect(UR08_ROUTED.map(frozenOf)).toEqual(["ROUTE-EXPRESSION:1:2", "ROUTE-MODIFIER:1:4"]);
+    expect(CONSEQUENCE_CLASSES.map(entry => classShapeOf(entry))).toEqual([
+      "GUARD:(1):guarded:10", "CLOSURE:(1):guarded:1", "NAMESAKE:(1):namesake:6", "REGISTRAR:(1):guarded:1", "CONDITION:(2):cond-expectation:2", "RETURN-AHEAD:(3):early-exit:2", "PUSH:(4):push-consequence:2", "SINK:(5):sink:6", "ASSERT:(6):assert:3",
+    ]);
+    expect(UR08_RESIDUALS.map(residualShapeOf)).toEqual([
+      "R-COORDINATED-CONSEQUENCE-ROSTER:UR08_CONSEQUENCE:G4",
+      "R-COORDINATED-READS-TABLE:LYBR_READS:ALIAS-SPREAD",
+      "R-RUNTIME-OVERRIDE:member:2",
+      "R-DOWNSTREAM-DISCARD:member:1",
+      "R-RUNNER-CONTROL:member:1",
+    ]);
+    const tables = consequenceAnchor(readPair(ROOT).expectation);
+    expect(CONSEQUENCE_ROSTER).toEqual(tables.consequenceRoster);
+    expect(UR08_CONSEQUENCE).toEqual(tables.consequenceRows);
+    expect(UR08_ROUTED).toEqual(tables.consequenceRouted);
+    expect(CONSEQUENCE_CLASSES).toEqual(tables.consequenceClasses);
+    expect(UR08_RESIDUALS).toEqual(tables.consequenceResiduals);
+    expect(UR08_JUDGED).toEqual([
+      "ANCHOR",
+      ...UR08_CONSEQUENCE.map(([id]) => `CONSEQUENCE ${id}`),
+      ...UR08_ROUTED.map(([id]) => `ROUTED ${id}`),
+      "CLASSES",
+      ...UR08_RESIDUALS.map(({ id }) => `RESIDUAL ${id}`),
+    ]);
   });
 });
