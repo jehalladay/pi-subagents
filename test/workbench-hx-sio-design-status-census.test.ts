@@ -145,9 +145,13 @@
  *    name and path mask (no qualifier assembled across a blanked token), all four in the raw leg; MR1 the rendered leg's inline
  *    reading (comments, tags, link targets and titles, alt and struck text, escapes, character references, code spans, invisibles,
  *    bidirectional overrides, breaks), MR2 its blocks and their source lines, MR3 the whole judge's legs on single pages (the cured R4 and R5 members among them),
- *    MR4 the HTML_MARKUP forms one by one (each comment close, each bogus comment, a tag's name and quoted attributes, a tag the input
- *    ends inside, the RCDATA and raw-text elements, the inline tokens the standard closes early, and an inline tag), MU the UNREAD code
- *    points (each filler, controls, the markers, in a page and in code) beside the code points that stay read.
+ *    MR4 the HTML_MARKUP forms one by one (each comment close, each bogus comment, a tag's name and its attributes - a double- and a
+ *    single-quoted value, each holding the other quote, and an unquoted one; the solidus transition; "=", white space and a name right
+ *    after a quoted value; white space after a solidus and a second white space after a name -, a tag the input ends inside, the RCDATA
+ *    and raw-text elements and their end tag, one reading for both (closingTag), bounded by white space (a space, a tab, a line feed, a
+ *    form feed, and a carriage return on an HTML page, since marked reads a Markdown page's as a line feed), "/" or ">", the inline
+ *    tokens the standard closes early, and an inline tag), MU the UNREAD code points (each filler, controls, the markers, in a page and in
+ *    code) beside the code points that stay read.
  *  R, the residuals' pinned quiet rows (R1-R11).
  * ENUMERATION (cut #4; rule 19(c) engaged at refusal #3; the owner's reading of 2026-10-24: the R739 terminal enumerate-the-resolvable
  * form, the chain capped at this cut): for U1 RENDERED-TEXT DOCS TRUTH the census claims exactly its pinned set - refusal #2's members and
@@ -182,9 +186,12 @@
  *   it, whatever it qualifies - a sentence as the census cuts it, so a sentence end of another script (an ideographic or fullwidth full
  *   stop) joins two sentences a reader sees apart, as do a hard line break and a sentence end followed by a closing quote or parenthesis
  *   (refusal #3 F4); R2 R-SPLIT a claim carried by another sentence (a pronoun, or a cut after an abbreviation such as
- *   "e.g."); R3 R-PARAPHRASE a claim outside CLAIMS (ships, runs, is the runtime law); R4 R-LOOKALIKE a look-alike letter, a look-alike
- *   hyphen (U+2010, U+2011, U+2013, U+2212) or a look-alike dot (U+2024) inside a name, in any file (the rendered leg folds no
- *   look-alike), and an inserted invisible inside a name in a file that is not a page (a page's rendered leg drops it: MR3); R5 R-ENCODED a
+ *   "e.g."); R3 R-PARAPHRASE a claim outside CLAIMS (ships, runs, is the runtime law), a one-word negation among them (unregistered
+ *   and its sibling for every claim but plan route, which has none; the negated form the census reads is "is not <claim>": MC); R4
+ *   R-LOOKALIKE a look-alike letter, a look-alike hyphen (U+2010, U+2011, U+2013, U+2212) or a look-alike dot (U+2024) inside a name, in
+ *   any file (the rendered leg folds no look-alike), and an inserted invisible inside a name in a file that is not a page (a page's
+ *   rendered leg drops it: MR3); and, inside a claim word, a look-alike letter in any file and an inserted invisible (U+200B, U+00AD,
+ *   U+2060, U+FE0F) in a file that is not a page (a page's rendered leg drops each, so the claim reads there: MR3); R5 R-ENCODED a
  *   JS escape inside a name, in any file (a page shows it as written), and an HTML reference inside a name in a file that is not a page (a
  *   page's rendered leg decodes it: MR3); R6 R-COMPOSED a name assembled from literal parts; R7 R-CODE-LIST a list inside a code comment is
  *   one sentence, so one item's qualifier covers another; R8 R-OUTSIDE-ROOTS a file outside the judged surfaces (test/, vendor/,
@@ -227,6 +234,14 @@
  *   code point renders nothing") now hold for the pinned set (READINGS RENDERED LEG and UNREAD). F4's two members are pinned quiet in R1;
  *   the reference-model departures the seat found are named R11 with pinned quiet rows. A8 reads refusal #3's record from the bead export
  *   by first occurrence, as A7 reads refusal #2's.
+ * FOLLOW-UP wb-jh2f (the R694 follow-up of landing 418, gate cmd_79999c99a90c F1-F5; owner ruling R767): Q1 is answered PIN, not
+ *   narrow - MR4 pins a single-quoted value (each quote inside the other), the solidus transition, the transitions after a quoted value
+ *   ("=", white space, a name), white space after a solidus and a second white space after a name, and an end tag bounded by a tab, a
+ *   line feed, a form feed, a carriage return (on an HTML page) and "/", so the gate's partial mutants GH1-GH6b each red MR4 and the
+ *   READINGS sentences on a tag's attributes and its end tag hold as written. Q2: R4 extends from names to claim words (F2's invisibles in
+ *   a file that is not a page and F3's look-alike letters, each pinned quiet, with a page twin per invisible red in MR3); CLAIMS
+ *   'elaborated' carries its base, -s and -ing forms (F4; the gate's plants L2-IN1 and L2-IN2 red in MC); F5's one-word negations are
+ *   named R3 members, pinned quiet.
  * SCOPE: the vocabularies are this cut's reading of the filing; the program lines are measured at the pin and not re-read here
  * (the census is hermetic), so a program change is seen only when a cut re-measures STATUS_LINES and ID_ROWS.
  *
@@ -325,7 +340,7 @@ const CLAIMS: readonly Vocabulary[] = [
   { id: "verified", source: "acceptance (a); statement 'an admission or verification status'", forms: ["verified", "verify", "verifies", "verifying", "verification", "verifications"] },
   { id: "graduated", source: "acceptance (a)", forms: ["graduated", "graduate", "graduates", "graduating", "graduation"] },
   { id: "benchmarked", source: "acceptance (a); statement", forms: ["benchmarked", "benchmark", "benchmarks", "benchmarking"] },
-  { id: "elaborated", source: "statement 'Lean-elaborated'", forms: ["elaborated", "elaboration"] },
+  { id: "elaborated", source: "statement 'Lean-elaborated'", forms: ["elaborated", "elaborate", "elaborates", "elaborating", "elaboration"] },
   { id: "plan-route", source: "statement 'a selected hx plan route'", forms: ["plan route", "plan routes"] },
   { id: "checked", source: "acceptance (b)'s token list", forms: ["checked"] },
 ];
@@ -1811,8 +1826,18 @@ const CASES: readonly Case[] = [
       ...CLAIMS.flatMap(claim => claim.forms.map(form => `HXSI-01 ${form} here.`)),
       "HXSI-01 is not registered.",
       "HXSI-01 is a registry entry, verifiable, an admittance, a benchmarker and a checkpoint.",
+      "TI-23 is a theorem that Lean elaborates.",
+      "TI-23 is a theorem Lean will elaborate.",
+      "TI-23 is Lean-elaborated.",
     ],
-    outcome: [...CLAIMS.flatMap(claim => claim.forms.map(() => [`x.md:1 HXSI: unqualified-${claim.id}`])), ["x.md:1 HXSI: unqualified-registered"], []],
+    outcome: [
+      ...CLAIMS.flatMap(claim => claim.forms.map(() => [`x.md:1 HXSI: unqualified-${claim.id}`])),
+      ["x.md:1 HXSI: unqualified-registered"],
+      [],
+      ["x.md:1 TI: unqualified-elaborated"],
+      ["x.md:1 TI: unqualified-elaborated"],
+      ["x.md:1 TI: unqualified-elaborated"],
+    ],
   },
   {
     pin: "MQ",
@@ -1946,7 +1971,7 @@ const CASES: readonly Case[] = [
   {
     pin: "MR3",
     kind: "md",
-    kinds: ["md", "md", "md", "md", "md", "md", "md", "md", "md", "md", "html", "html"],
+    kinds: ["md", "md", "md", "md", "md", "md", "md", "md", "md", "md", "html", "html", "md", "md", "md", "md"],
     texts: [
       "HXSI-01 is registered.",
       "HXSI-01 is registered <!-- DESIGN ONLY -->.",
@@ -1960,6 +1985,10 @@ const CASES: readonly Case[] = [
       "TI-23 is registered, ~~design only~~ and DESIGN ONLY.",
       "<p>HXSI-01 is registered, DESIGN ONLY.</p>",
       "<p>Nothing here names a law.</p>",
+      `HXSI-01 is regis${cp(0x200b)}tered.`,
+      `HXSI-01 is regis${cp(0xad)}tered.`,
+      `HXSI-01 is regis${cp(0x2060)}tered.`,
+      `HXSI-01 is regis${cp(0xfe0f)}tered.`,
     ],
     outcome: [
       ["x.md:1 HXSI: unqualified-registered", "x.md:1 HXSI: rendered-unqualified-registered"],
@@ -1974,11 +2003,16 @@ const CASES: readonly Case[] = [
       [],
       ["x.html:1 HXSI: rendered-unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
       [],
+      ["x.md:1 HXSI: rendered-unqualified-registered"],
+      ["x.md:1 HXSI: rendered-unqualified-registered"],
+      ["x.md:1 HXSI: rendered-unqualified-registered"],
+      ["x.md:1 HXSI: rendered-unqualified-registered"],
     ],
   },
   {
     pin: "MR4",
     kind: "rendered",
+    kinds: [...Array.from({ length: 38 }, (): CaseKind => "rendered"), "html"],
     texts: [
       "<!-->one HXSI-01 two.",
       "<!--->two",
@@ -2006,6 +2040,19 @@ const CASES: readonly Case[] = [
       '<div><a ="x>twentysix">y</a></div>',
       '<div><i x=a b="c>d">twentyseven</i></div>',
       '<div><a b = "x>y">twentyeight</a></div>',
+      `<div><span title='a">b'>twentynine</span></div>`,
+      `<div><i x="c'>d">thirty</i></div>`,
+      '<div><a b/="x>y">thirtyone</a></div>',
+      '<div><a b="c"="x>y">thirtytwo</a></div>',
+      '<div><a b="c" ="x>y">thirtythree</a></div>',
+      '<div><a b/ ="x>y">thirtyfour</a></div>',
+      '<div><a b="c"d="x>y">thirtyfive</a></div>',
+      '<div><a b  ="x>y">thirtysix</a></div>',
+      "<textarea>a</textarea\tb>thirtyseven",
+      "<title>a</title\n>thirtyeight",
+      `<textarea>a</textarea${cp(0x0c)}>thirtynine`,
+      "<textarea>a</textarea/>forty",
+      "<title>HXSI-01</title\r> is registered.",
     ],
     outcome: [
       [`1 one HXSI-01 two. | plain ${"#".repeat(16)}`],
@@ -2034,6 +2081,19 @@ const CASES: readonly Case[] = [
       [`1 twentysix">y | plain ${"#".repeat(12)}`],
       [`1 twentyseven | plain ${"#".repeat(11)}`],
       [`1 twentyeight | plain ${"#".repeat(11)}`],
+      [`1 twentynine | plain ${"#".repeat(10)}`],
+      [`1 thirty | plain ${"#".repeat(6)}`],
+      [`1 y">thirtyone | plain ${"#".repeat(12)}`],
+      [`1 y">thirtytwo | plain ${"#".repeat(12)}`],
+      [`1 y">thirtythree | plain ${"#".repeat(14)}`],
+      [`1 y">thirtyfour | plain ${"#".repeat(13)}`],
+      [`1 thirtyfive | plain ${"#".repeat(10)}`],
+      [`1 thirtysix | plain ${"#".repeat(9)}`],
+      ["1 a | plain #", `1 thirtyseven | plain ${"#".repeat(11)}`],
+      ["1 a | plain #", `2 thirtyeight | plain ${"#".repeat(11)}`],
+      ["1 a | plain #", `1 thirtynine | plain ${"#".repeat(10)}`],
+      ["1 a | plain #", `1 forty | plain ${"#".repeat(5)}`],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
     ],
   },
   {
@@ -2079,11 +2139,26 @@ const CASES: readonly Case[] = [
     outcome: [[], [], [], [], [], []],
   },
   { pin: "R2", kind: "md", texts: ["HXSI-01 is an interval law. It is registered.", "HXSI-01 (e.g. the interval law) is registered."], outcome: [[], []] },
-  { pin: "R3", kind: "md", texts: ["HXSI-01 ships as a runtime law and hx plans with it.", "The hx.optim.spoke.exchange.v1 law is live."], outcome: [[], []] },
+  {
+    pin: "R3",
+    kind: "md",
+    texts: [
+      "HXSI-01 ships as a runtime law and hx plans with it.",
+      "The hx.optim.spoke.exchange.v1 law is live.",
+      "HXSI-01 is an unregistered runtime law.",
+      "HXSI-01 is unadmitted.",
+      "TI-23 is unverified.",
+      "TI-23 is ungraduated.",
+      "TI-23 is unbenchmarked.",
+      "TI-23 is unelaborated.",
+      "TI-23 is unchecked.",
+    ],
+    outcome: [[], [], [], [], [], [], [], [], []],
+  },
   {
     pin: "R4",
     kind: "md",
-    kinds: ["md", "md", "md", "md", "md", "md", "md", "ts"],
+    kinds: ["md", "md", "md", "md", "md", "md", "md", "ts", "ts", "ts", "ts", "ts", "ts", "md", "md", "md", "ts"],
     texts: [
       `HXS${cp(0x0399)}-01 is registered.`,
       `T${cp(0x0399)}-23 is benchmarked.`,
@@ -2093,8 +2168,17 @@ const CASES: readonly Case[] = [
       `TI${cp(0x2013)}23 is benchmarked.`,
       `TI${cp(0x2212)}23 is benchmarked.`,
       `// HXSI${cp(0x200b)}-01 is registered.\n`,
+      `// HXSI-01 is a regis${cp(0x200b)}tered runtime law.\n`,
+      `// HXSI-01 is a regis${cp(0xad)}tered runtime law.\n`,
+      `// HXSI-01 is a regis${cp(0x2060)}tered runtime law.\n`,
+      `// HXSI-01 is a regis${cp(0xfe0f)}tered runtime law.\n`,
+      `# TI-23 is bench${cp(0x200b)}marked by the hx gate.\n`,
+      `HXSI-01 is a r${cp(0x0435)}gistered runtime law.`,
+      `TI-23 is b${cp(0x0435)}nchmarked.`,
+      `hx.optim.spoke is ${cp(0x0430)}dmitted.`,
+      `// TI-23 is v${cp(0x0435)}rified.\n`,
     ],
-    outcome: [[], [], [], [], [], [], [], []],
+    outcome: [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []],
   },
   { pin: "R5", kind: "md", kinds: ["md", "ts", "ts"], texts: ["TI\\u002d23 is benchmarked.", "// HXSI&#45;01 is registered.\n", "// hx&#46;optim.spoke is admitted.\n"], outcome: [[], [], []] },
   { pin: "R6", kind: "ts", texts: ['const law = "hx." + "optim.spoke"; // registered\n', 'const id = ["HXSI", "01"].join("-"); // registered\n'], outcome: [[], []] },

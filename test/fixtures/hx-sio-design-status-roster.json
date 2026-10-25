@@ -211,6 +211,9 @@
     "source": "statement 'Lean-elaborated'",
     "forms": [
      "elaborated",
+     "elaborate",
+     "elaborates",
+     "elaborating",
      "elaboration"
     ]
    },
@@ -3389,6 +3392,15 @@
         "x.md:1 HXSI: unqualified-elaborated"
        ],
        [
+        "x.md:1 HXSI: unqualified-elaborated"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-elaborated"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-elaborated"
+       ],
+       [
         "x.md:1 HXSI: unqualified-plan-route"
        ],
        [
@@ -3400,7 +3412,16 @@
        [
         "x.md:1 HXSI: unqualified-registered"
        ],
-       []
+       [],
+       [
+        "x.md:1 TI: unqualified-elaborated"
+       ],
+       [
+        "x.md:1 TI: unqualified-elaborated"
+       ],
+       [
+        "x.md:1 TI: unqualified-elaborated"
+       ]
       ]
      }
     },
@@ -3578,7 +3599,11 @@
        "md",
        "md",
        "html",
-       "html"
+       "html",
+       "md",
+       "md",
+       "md",
+       "md"
       ],
       "outcome": [
        [
@@ -3614,7 +3639,19 @@
         "x.html:1 HXSI: rendered-unqualified-registered",
         "x.html:1 HXSI: html-unqualified-registered"
        ],
-       []
+       [],
+       [
+        "x.md:1 HXSI: rendered-unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI: rendered-unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI: rendered-unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI: rendered-unqualified-registered"
+       ]
       ]
      }
     },
@@ -3622,6 +3659,47 @@
      "id": "MR4",
      "witness": {
       "kind": "rendered",
+      "kinds": [
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "html"
+      ],
       "outcome": [
        [
         "1 one HXSI-01 two. | plain ################"
@@ -3699,6 +3777,50 @@
        ],
        [
         "1 twentyeight | plain ###########"
+       ],
+       [
+        "1 twentynine | plain ##########"
+       ],
+       [
+        "1 thirty | plain ######"
+       ],
+       [
+        "1 y\">thirtyone | plain ############"
+       ],
+       [
+        "1 y\">thirtytwo | plain ############"
+       ],
+       [
+        "1 y\">thirtythree | plain ##############"
+       ],
+       [
+        "1 y\">thirtyfour | plain #############"
+       ],
+       [
+        "1 thirtyfive | plain ##########"
+       ],
+       [
+        "1 thirtysix | plain #########"
+       ],
+       [
+        "1 a | plain #",
+        "1 thirtyseven | plain ###########"
+       ],
+       [
+        "1 a | plain #",
+        "2 thirtyeight | plain ###########"
+       ],
+       [
+        "1 a | plain #",
+        "1 thirtynine | plain ##########"
+       ],
+       [
+        "1 a | plain #",
+        "1 forty | plain #####"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
        ]
       ]
      }
@@ -3785,6 +3907,13 @@
       "kind": "md",
       "outcome": [
        [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
        []
       ]
      }
@@ -3801,9 +3930,27 @@
        "md",
        "md",
        "md",
+       "ts",
+       "ts",
+       "ts",
+       "ts",
+       "ts",
+       "ts",
+       "md",
+       "md",
+       "md",
        "ts"
       ],
       "outcome": [
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
        [],
        [],
        [],
