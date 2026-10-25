@@ -24,7 +24,7 @@ addedAtLanding 297; its reason still describes only the landing-297 shape): the 
 the reason names the new pinned surfaces - A2's src registration seam (every CapabilityRegistry construction,
 register-member reference and registrar reference across src, by module and enclosing function; 2/12/14 at the
 probe) and the detached host's NATIVE_CAPABILITIES table and registryFor case statements, resolved through its
-import bindings with the four native registrars run on fresh registries - plus the forward contact: a later cut
+module imports with the four native registrars run on fresh registries - plus the forward contact: a later cut
 that adds, moves or renames a capability registration or registrar anywhere in src reds A2 by design and must
 re-measure the roster's A2 seam witness in the same commit. [...]
 ```
@@ -174,3 +174,8 @@ All load-bearing bytes are quoted in the findings above; sources, in one list: `
 ## Postscript
 
 Ledger rows carry a `utc` timestamp key. An earlier draft of this file claimed they do not, from a key listing truncated after `run`: row 19326's full sorted key set runs `acceptanceSetShas` through `run` (the 20 keys that draft listed as the whole set) plus the alphabetical tail `shape`, `sweep`, `utc` — 23 keys; its `utc` = `2026-10-25T07:15:36Z`. Re-measured at revision time (19542 ledger rows): 19463 of 19542 carry `utc`; the 79 without are delivered 30, groom-family 31, bead-created 9, blocked 2, red 2, misc 5 — none a landing-gate row. Window scoping is one filter on `utc`, which is how Finding 3's counts are derived.
+
+SELF-REVISION (owner, 2026-10-25, landing-hold 401 / land-prep cmd_e3b14c75e9ab): line 27's module-import phrase
+(plain JS module-import resolution) folded into the landed H2 proposed-API census's N4 name at
+test/workbench-tsx-h2-proposed-api-census.test.ts:1371 (finding "…:27 N4: named-as-available"). Rephrased to
+"module imports" per the census's own another-phrasing rule; the claim and every number are unchanged.
