@@ -20,17 +20,20 @@
  * test that reads no field, .length) beside result.necessity's include flags, so no block is attributed or resolved; no Pi module
  * reads result.components or any diff envelope. So the trigger has not fired, (a)-(c) hold by construction and (d) waits for rf.
  * The census pins that state over THE WALK (every module below WALK_ROOTS, parsed by the TypeScript compiler; comments are not
- * read; the walk must equal node's own recursive listing of the roots):
+ * read; every other file there, a text: scripts, documents, data; the walk must equal node's own recursive listing of the roots,
+ * must hold every file git lists below them, tracked or untracked and not ignored, and every module it walks must be one git lists):
  *  A, the trigger, absent today. A1 the launch census: exactly one call of a process launcher (LAUNCHERS) whose first argument
  *    reads the rf binary (folded, or the leading literal piece of a composed shell line), the provider's; in every argv-shaped
  *    array literal (one holding a folded "--" flag, or the argv literal of an rf launch) the element after "context" is "render"; no folded literal spells another context leaf of the measured
- *    rf (context.show, .explain, .plan, .diff, .history, .replay, as `context.<leaf>` or `context <leaf>`). A2 the readers: a
+ *    rf (context.show, .explain, .plan, .diff, .history, .replay, as `context.<leaf>` or `context <leaf>`); and no line of a text
+ *    (backslash continuations joined) names the rf binary as a command word (RF_WORD: a path prefix may lead it) beside another
+ *    context leaf - a text line naming a leaf without the binary is not a launch, and is not judged. A2 the readers: a
  *    judged module holding the literal "context.render" is an rf READER (measured: native-evidence.ts, the provider, the
  *    adapter); the adapter refuses and the evidence projection ignores an envelope of every other context leaf, and the two rf
  *    registrations (registerReactiveFiberRender and registerNativeReactiveFiberRender, read through catalogSnapshot) register only
  *    the read-class render preview, whose input arms name no render, component, block, occurrence, instance or audience key.
  *  B, acceptance (a). B1 every read of a `text` field in a READER, and of `output.text` in any judged module (property access,
- *    literal element access or object binding), is the operand of a typeof or the sole argument of an update() whose receiver
+ *    element access or object binding, its key resolved as KEYS below), is the operand of a typeof or the sole argument of an update() whose receiver
  *    chain starts at createHash(); any other use (a match, split, exec, slice, alias or pass-through) is a finding. B2 behaviour:
  *    the adapter's projection of a preview whose document carries sentinel-style block markers is one snapshot with no relation,
  *    no marker token in any projected string and the sha256 payload reference of exactly that text; a marker-only text change
@@ -39,16 +42,27 @@
  *    snake_case fields of the measured context.show block record and the render result's block and component rows, minus the
  *    render result's own keys) as an identifier, nor as a whole word of a folded literal. C2 (re-pinned at the R710 re-cut on trunk
  *    edccd80, after wb-hs2j.1 landed its inclusion leg) the record containers (blocks, components) the READERS read by property
- *    access, literal element access or binding are exactly the adapter's result.blocks binding, and every use of a read container
- *    (a bound name is followed to each reference in its function) is a count (.length) or a row-shape check that reads no field
- *    (Array.isArray, or an every() whose callback reads no property); an element access, find, map, loop, spread, pass-through,
- *    alias or nested binding is a finding. Behaviour: populating both containers with attributed records changes no projection
- *    and no evidence field, on a clean render and on one withholding a judged candidate (so the inclusion note carries no record
- *    value either); one more block moves only the diagnostics (the inclusion note's count: the read is a count); and no planted
+ *    access, element access or binding (a key resolved as KEYS below) are exactly the adapter's result.blocks binding, and every
+ *    use of a read container (a bound name is followed to each reference in its function) is a count (.length) or a row-shape
+ *    check that reads no field (Array.isArray, or an every() whose callback reads no property and calls no function of its own
+ *    module that reads one - the helpers are followed one level, Array.isArray excepted, so the landed record() shape check reads
+ *    none); an element access, find, map, loop, spread, pass-through, alias or nested binding is a finding. Behaviour: populating
+ *    both containers with attributed records changes no projection and no evidence field, on a clean render and on one withholding
+ *    a judged candidate (so the inclusion note carries no record value either); the planted rows speak the measured rf's own
+ *    vocabulary, and the withheld pair keeps the block count the leg reads while differing in every other per-row count (each value
+ *    of each non-positional row field, and the component row count), so a count of statuses, kinds or unavailable lenses reaching
+ *    the note reds; one more block moves only the diagnostics (the inclusion note's count: the read is a count); and no planted
  *    record value reaches any projected string.
+ *  KEYS (B1, C2, D2): an element access argument or a computed binding name reads its folded literal; the strings a name of the
+ *    module is bound to (a variable declaration of a folded string; names are matched by name, not by scope, so a shadowing
+ *    parameter still reads the bound value); an element of a key list (an array literal whose every element folds, or a name bound
+ *    to one, as const read through: a literal index reads that element, any other index every element); or, for the first
+ *    parameter of an ITERATORS callback (every, some, map, filter, forEach, flatMap and the find family) on a key list or a for-of
+ *    variable over one, every key of the list. The landed adapter's INCLUSION_KEYS idiom (reactivefiber-observer.ts :94, a
+ *    presence check at :271) is such a list.
  *  D, acceptance (c), absent today. D1 no judged module spells an rf diff result key (DIFF_KEYS, the snake_case keys of the
  *    measured context.diff result minus the render result's keys) as an identifier or a whole word of a folded literal. D2 no
- *    READER reads a one-word diff key (GENERIC_DIFF_KEYS) by property access, literal element access or binding, and a
+ *    READER reads a one-word diff key (GENERIC_DIFF_KEYS) by property access, element access or binding (KEYS), and a
  *    context.diff envelope stating four of the fourteen measured result keys (the program's consumer guessed five absent ones,
  *    02:40) is refused by the adapter and projects no evidence field: nothing of it is rendered, so no absent key is synthesized.
  *  E, acceptance (d), gated. E1 the measured contract is unshipped: the roster's producer facts state no --block option on
@@ -65,22 +79,35 @@
  * key lists (each with its sha256); `git show 6a251bf73af5:` on the local ReactiveFiberCLI checkout reads parser.py:2220
  * `"context.show": (_RENDER, _REDACT, _DETAIL),` and :2238-2242 context.diff (RENDER_A, RENDER_B, _REDACT), and
  * BEADS-2026-10-21.md:15-16 the two gating rows. Pi vendors none of these; a producer change is seen only when a cut re-measures.
+ * The wb-lcs3 re-measure (2026-10-24, read-only): `git show 2618c211be0d:` on the same checkout reads the packaged
+ * context.render.schema.json (sha256 = the roster's schemaDigests entry), whose blocks items close token_cost.kind = token_cost_kind
+ * to measured | estimated | unknown and whose components items close status to ok | failed | recovered and give source_unavailable
+ * as a list of lens refs: C2's planted rows use exactly these values.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (id, label, pins), every pin's
  * witness (each carries its pin id), the scan constants, the derived vocabularies and the registered test titles are held to the
- * out-of-file roster (test/fixtures/rf-context-read-structure-roster.json). OUTSIDE ANCHOR: the owner filing's row in the tracked
- * bead export (.beads/issues.jsonl, row wb-hs2j.2): each acceptance clause and the trigger sit verbatim in exactly one row label,
- * every row carries one of them, and its statement, quotes, citations, gating beads and "Shipped: no;" sentence equal the
- * roster's, so a row removed from every literal of this file and the roster still reds. Not claimed: a pin removed from ROWS, the
- * literal, IMPL and the roster together (the bead row anchors rows and clauses, not pins); a case body that returns its roster
- * witness through done() without measuring it (the records case proves each case returned through done(), not what it read); a
- * record field or diff key dropped from the roster's producer key lists together with a plant of it (Pi captures no rf schema,
- * so those key lists are roster-only measured facts; the version, commit and context leaves are held to the capture, E1); the walk
- * and its listing hollowed together (both enumerations live in this file, so a directory both skip is not seen).
+ * out-of-file roster (test/fixtures/rf-context-read-structure-roster.json). OUTSIDE ANCHORS, all in the tracked bead export
+ * (.beads/issues.jsonl) or the git index: the owner filing's row (wb-hs2j.2): each acceptance clause and the trigger sit verbatim in
+ * exactly one row label, every row carries one of them, and its statement, quotes, citations, gating beads and "Shipped: no;"
+ * sentence equal the roster's, so a row removed from every literal of this file and the roster still reds; that row's delivery
+ * notes: each row holds at least the pins the delivery recorded ("the rule-16 frozen-shape literal [...]", a per-row floor, so a
+ * pin removed from every literal and the roster still reds and a later cut may add pins), and the residual families its
+ * delivery named (the "RESIDUALS (named" line and "the new residual family" sentence) together with those the follow-up wb-lcs3's
+ * filed finding lines name are each still carried (a floor); git ls-files below the walk roots: every file it lists is walked,
+ * and every walked module is one it lists (so its reading is never vacuous).
+ * Not claimed: a case body that returns its roster witness through done() after making exactly its measured number of
+ * assertions without measuring what it returns (asserted is vitest's tally, not what was asserted); a record field or diff key
+ * dropped from the roster's producer key lists together with a plant of it (Pi captures no rf schema, so those key lists are
+ * roster-only measured facts; the version, commit and context leaves are held to the capture, E1); the walk, node's listing and
+ * the git reading hollowed together (all three readers live in this file, the git index outside it); a pin or a residual family a
+ * later cut adds, removed again from every literal (the floors anchor what was delivered or filed).
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
- * not inverted, ran; every pin's case reached its end (REACHED).
- * RESIDUALS (named families, each with pinned quiet rows in the controls): R-COMPOSED a launch binary, verb, field name or text key
- * composed at run time, or a flagless argv built apart from its launch (A1 composedVerb, composedBinary and argvApart, B1
- * computedKey, C1 composedField); R-ALIAS document text read through an alias of the output object outside the READERS (B1
+ * not inverted, ran; every pin's case reached its end (REACHED); every witness carries the assertions its test had made when the
+ * case returned (asserted, held to the roster with the rest of the witness).
+ * RESIDUALS (named families, each with pinned quiet rows in the controls): R-COMPOSED a launch binary, verb, field name, text key or
+ * container key composed at run time, or a flagless argv built apart from its launch (A1 composedVerb, composedBinary, argvApart,
+ * scriptComposedBinary and scriptArgvApart, B1 computedKey, C1 composedField, C2 composedContainer and objectMemberKey);
+ * R-INDIRECT a row field read by a function a row-shape callback reaches through another function, or by one defined in another
+ * module (C2 twoLevelHelper, importedHelper); R-ALIAS document text read through an alias of the output object outside the READERS (B1
  * aliasOutsideReaders), or an rf launch through an aliased launcher with a flagless argv (A1 aliasedLauncher); R-GENERIC-KEY a
  * record field or diff key whose rf name is one common word (GENERIC_BLOCK_FIELDS, GENERIC_DIFF_KEYS), read outside the READERS
  * (C1 genericField, C2 containerOutsideReaders, D1 genericKey, D2 genericOutsideReaders); R-RENAMED a renamed spelling of an rf
@@ -88,11 +115,12 @@
  * outside WALK_ROOTS - test helpers and fixtures plant rf envelopes - is not judged (C1 outsideRoots); R-REFLECTIVE document text
  * or a record container reached reflectively, never by a named read: Reflect.get with a key, JSON.stringify of the output object,
  * Object.values or Object.entries of the result (B1 reflectGet and serializedOutput, C2 reflectiveRows).
- * Display paths added: none. Test-only: it spawns nothing and allocates no scratch; src, qa, examples, the two vitest tier configs,
- * forge.toml, the captured registry and the bead export are only read.
+ * Display paths added: none. Test-only: it spawns only `git ls-files` (read-only) and allocates no scratch; src, qa, examples, the
+ * two vitest tier configs, forge.toml, the captured registry and the bead export are only read.
  */
+import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { type Dirent, readdirSync, readFileSync } from "node:fs";
+import { type Dirent, existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -112,17 +140,25 @@ const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
 const ROSTER_FILE = "test/fixtures/rf-context-read-structure-roster.json";
 const BEAD_EXPORT = ".beads/issues.jsonl";
 const BEAD = "wb-hs2j.2";
+/** The R694 follow-up that carried the landed cut's findings (its filed finding lines name residual families, an outside anchor). */
+const FOLLOW_UP = "wb-lcs3";
 const CAPTURE = "test/fixtures/rf-version-leaves.json";
 /** The Pi code paths judged: product sources, QA scripts and shipped examples (every module below them, at any depth). */
 const WALK_ROOTS = ["src", "qa", "examples"];
 const MODULE_EXTENSIONS = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx"];
 /** Each floor sits below the module count measured at base 436e6db (src 115, qa 62, examples 6). */
 const FLOORS = { src: 100, qa: 55, examples: 5 };
+/** Each floor sits at or below the non-module file count measured at base 21eff29 (src 0, qa 5, examples 1). */
+const TEXT_FLOORS = { qa: 4, examples: 1 };
 /** The command every Pi rf envelope reader checks: a judged module holding it as a folded literal is an rf READER. */
 const RENDER_COMMAND = "context.render";
 const LEAF_PREFIX = "context.";
 const LAUNCHERS = ["spawn", "spawnSync", "execFile", "execFileSync", "exec", "execSync", "fork"];
 const RF_BINARY = "rf";
+/** The rf binary as a command word of a non-module line: a path prefix may lead it, no longer name holds it. */
+const RF_WORD = /(?<![A-Za-z0-9_.-])rf(?![A-Za-z0-9_.-])/;
+/** The array methods whose callback's first parameter ranges over the receiver's elements (a key list's keys). */
+const ITERATORS = ["every", "some", "map", "filter", "forEach", "find", "findIndex", "findLast", "findLastIndex", "flatMap"];
 /** The rf document text of a render result: result.output.text. */
 const TEXT_OBJECT = "output";
 const TEXT_FIELD = "text";
@@ -136,7 +172,7 @@ const SELECTOR_WORDS = /render|component|block|occurrence|instance|audience|cand
 const CLAIM_FAMILY = /\bcontext(?:\.|\s+)(?:show|diff)\b|--block\b|--detail\b|scoped[\s_-]*digest|compact[\s_-]*counts?/i;
 const TIER_CONFIGS = ["vitest.rf.config.ts", "vitest.rf-tsx.config.ts"];
 const TIER_COMMANDS = ["rf-preview", "rf-preview-tsx"];
-const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-ALIAS", "R-GENERIC-KEY", "R-RENAMED", "R-COMMENT", "R-OUTSIDE", "R-REFLECTIVE"];
+const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-ALIAS", "R-GENERIC-KEY", "R-RENAMED", "R-COMMENT", "R-OUTSIDE", "R-REFLECTIVE", "R-INDIRECT"];
 /** The fixture workspace every planted reading names. */
 const ROOT = "/fixture/rf-workspace";
 const HOST: ReactiveFiberTopologyContext = {
@@ -351,14 +387,31 @@ interface BeadRow {
   readonly title: string;
   readonly notes: string;
 }
-/** The owner filing's row in the tracked bead export, found by id on a line that parses. */
-function readBeadRow(): BeadRow {
+/** A bead's row in the tracked bead export (the owner filing's by default), found by id on a line that parses. */
+function readBeadRow(id: string = BEAD): BeadRow {
   for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
-    if (!line.includes(BEAD)) continue;
+    if (!line.includes(id)) continue;
     const row: unknown = JSON.parse(line);
-    if (isObject(row) && row.id === BEAD && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
+    if (isObject(row) && row.id === id && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
   }
-  throw new Error(`${BEAD_EXPORT} carries no row ${BEAD}`);
+  throw new Error(`${BEAD_EXPORT} carries no row ${id}`);
+}
+/** The per-row pin counts BEAD's delivery recorded in its tracked notes (the first "the rule-16 frozen-shape literal [...]" sentence):
+ * the pins' anchor outside this file and the roster, read as a floor so a later cut may add pins. */
+function deliveredShape(notes: string): string[] {
+  const literal = /the rule-16 frozen-shape literal (\[[^\]\n]*\])/.exec(notes)?.[1];
+  const shape: unknown = literal === undefined ? [] : JSON.parse(literal);
+  if (!Array.isArray(shape) || !shape.every(entry => typeof entry === "string" && /^[A-Z]:\d+$/.test(entry))) throw new Error(`${BEAD} notes record no frozen shape`);
+  return shape;
+}
+/** The residual families named outside this file and the roster: BEAD's delivery notes (the first "RESIDUALS (named" line and the
+ * first "the new residual family" sentence) and FOLLOW_UP's filed finding lines (its first note's [leads] and [rides] lines). */
+function namedResiduals(delivery: string, followUp: string): string[] {
+  const family = /(?<![A-Z0-9-])R-[A-Z]+(?:-[A-Z]+)*/g;
+  const listed = delivery.split("\n").find(line => line.startsWith("RESIDUALS (named")) ?? "";
+  const added = /the new residual family (R-[A-Z]+(?:-[A-Z]+)*)/.exec(delivery)?.[1] ?? "";
+  const filed = (followUp.split("\n\n")[0] ?? "").split("\n").filter(line => /^\[(?:leads|rides)\] /.test(line));
+  return [...new Set([...(listed.match(family) ?? []), ...(added === "" ? [] : [added]), ...filed.flatMap(line => line.match(family) ?? [])])].sort();
 }
 /** The filing's acceptance clauses: its first "Acceptance: " line, split before each "(x) ". */
 function acceptanceClauses(notes: string): string[] {
@@ -382,12 +435,15 @@ const judgedPath = (path: string): boolean => isModule(path) && WALK_ROOTS.some(
 
 interface Walk {
   readonly modules: string[];
+  readonly texts: string[];
   readonly symlinks: string[];
   readonly unreadable: string[];
 }
-/** Every module below each of WALK_ROOTS, in name order, repository-relative with "/" separators; symlinks are recorded, never followed. */
+/** Every module below each of WALK_ROOTS, and every other file there (texts: scripts, documents, data), in name order,
+ * repository-relative with "/" separators; symlinks are recorded, never followed. */
 function walkRoots(): Walk {
   const modules: string[] = [];
+  const texts: string[] = [];
   const symlinks: string[] = [];
   const unreadable: string[] = [];
   const visit = (directory: string): void => {
@@ -405,21 +461,36 @@ function walkRoots(): Walk {
       if (entry.isSymbolicLink()) symlinks.push(rel);
       else if (entry.isDirectory()) visit(path);
       else if (entry.isFile() && judgedPath(rel)) modules.push(rel);
+      else if (entry.isFile()) texts.push(rel);
     }
   };
   for (const root of WALK_ROOTS) visit(join(REPO, root));
-  return { modules, symlinks, unreadable };
+  return { modules, texts, symlinks, unreadable };
 }
-/** The judged modules by node's own recursive listing of each walk root (files only, no symlink followed), sorted: the walk's
- * anchor outside walkRoots(), so a walk that skips a directory reds A1 even while the floors hold. */
-function listedModules(): string[] {
+/** Every file by node's own recursive listing of each walk root (files only, no symlink followed), sorted: the walk's anchor
+ * outside walkRoots(), so a walk that skips a directory reds A1 even while the floors hold. */
+function listedFiles(): string[] {
   return WALK_ROOTS.flatMap(root =>
     readdirSync(join(REPO, root), { recursive: true, withFileTypes: true })
       .filter(entry => entry.isFile())
       .map(entry => posix(relative(REPO, join(entry.parentPath, entry.name)))),
-  )
-    .filter(judgedPath)
-    .sort();
+  ).sort();
+}
+const listedModules = (): string[] => listedFiles().filter(judgedPath);
+/** Every path git lists below the walk roots (tracked, or untracked and not ignored) that is present on disk, sorted: the walk's
+ * anchor outside this file (the repository's index), so a directory the walk and node's listing both skip still reds A1. */
+function gitListed(): string[] {
+  const out = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", ...WALK_ROOTS], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 });
+  return [...new Set(out.split("\0").filter(path => path !== "" && existsSync(join(REPO, path))))].sort();
+}
+/** A non-module file's rf launch lines (A1): each line, backslash continuations joined, naming the rf binary as a command word and
+ * another context leaf of the measured rf. */
+function launchLines(path: string, source: string): string[] {
+  return source
+    .replace(/\\\r?\n/g, " ")
+    .split(/\r?\n/)
+    .filter(line => RF_WORD.test(line) && VERB_FAMILY.test(line))
+    .map(line => `${path}: ${line.trim().slice(0, 80)}`);
 }
 
 function scriptKindOf(path: string): ts.ScriptKind {
@@ -477,6 +548,97 @@ function startsAtCreateHash(node: ts.Expression): boolean {
   return false;
 }
 
+/** An expression without its grouping and type-only wrappers: (x), x as T, x satisfies T, <T>x and x!. */
+function bare(node: ts.Expression): ts.Expression {
+  let current = node;
+  while (ts.isParenthesizedExpression(current) || ts.isAsExpression(current) || ts.isSatisfiesExpression(current) || ts.isTypeAssertionExpression(current) || ts.isNonNullExpression(current)) {
+    current = current.expression;
+  }
+  return current;
+}
+/** The names one module binds to a key: every variable a declaration (at any depth) binds to a folded string (scalars) or to an
+ * array literal whose every element folds (lists, as const read through). A name bound more than once keeps every binding, so a
+ * read through it resolves to every value any of them holds. */
+interface KeyBindings {
+  readonly scalars: ReadonlyMap<string, readonly string[]>;
+  readonly lists: ReadonlyMap<string, readonly (readonly string[])[]>;
+}
+const foldedList = (node: ts.Expression): string[] | undefined => {
+  const value = bare(node);
+  if (!ts.isArrayLiteralExpression(value)) return undefined;
+  const elements = value.elements.map(element => fold(bare(element)));
+  return elements.every((element): element is string => element !== undefined) ? elements : undefined;
+};
+function keyBindings(file: ts.SourceFile): KeyBindings {
+  const scalars = new Map<string, string[]>();
+  const lists = new Map<string, (readonly string[])[]>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined) {
+      const name = node.name.text;
+      const folded = fold(bare(node.initializer));
+      const list = foldedList(node.initializer);
+      if (folded !== undefined) scalars.set(name, [...(scalars.get(name) ?? []), folded]);
+      else if (list !== undefined) lists.set(name, [...(lists.get(name) ?? []), list]);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return { scalars, lists };
+}
+/** The key lists an expression names: an array literal whose every element folds, or a name bound to one. */
+function listsOf(node: ts.Expression, bindings: KeyBindings): (readonly string[])[] {
+  const value = bare(node);
+  const literal = foldedList(value);
+  if (literal !== undefined) return [literal];
+  return ts.isIdentifier(value) ? [...(bindings.lists.get(value.text) ?? [])] : [];
+}
+/** The keys a name ranges over when it is the first parameter of an ITERATORS callback on a key list, or a for-of variable over
+ * one; the nearest construct binding the name decides, so the parameter of any other function ranges over no list (a scalar
+ * binding of the same name, matched by name in keysOf, still applies). */
+function iteratedKeys(name: ts.Identifier, bindings: KeyBindings): string[] {
+  const binds = (declared: ts.BindingName): boolean => ts.isIdentifier(declared) && declared.text === name.text;
+  for (let node: ts.Node = name.parent; !ts.isSourceFile(node); node = node.parent) {
+    if (ts.isForOfStatement(node) && ts.isVariableDeclarationList(node.initializer) && node.initializer.declarations.some(declaration => binds(declaration.name))) {
+      return listsOf(node.expression, bindings).flat();
+    }
+    if (ts.isFunctionLike(node) && node.parameters.some(parameter => binds(parameter.name))) {
+      const call = node.parent;
+      const first = node.parameters[0];
+      const iterated =
+        (ts.isArrowFunction(node) || ts.isFunctionExpression(node)) &&
+        first !== undefined &&
+        binds(first.name) &&
+        ts.isCallExpression(call) &&
+        call.arguments[0] === node &&
+        ts.isPropertyAccessExpression(call.expression) &&
+        ITERATORS.includes(call.expression.name.text);
+      return iterated && ts.isCallExpression(call) && ts.isPropertyAccessExpression(call.expression) ? listsOf(call.expression.expression, bindings).flat() : [];
+    }
+  }
+  return [];
+}
+/** The keys an element access argument or a computed binding name reads (B1, C2, D2): its folded literal; the strings a bound name
+ * holds; an element of a key list (a literal index reads that element, any other index every element); or the keys an iterated
+ * name ranges over. A key composed at run time resolves to nothing (R-COMPOSED). */
+function keysOf(node: ts.Expression, bindings: KeyBindings): string[] {
+  const value = bare(node);
+  const folded = fold(value);
+  if (folded !== undefined) return [folded];
+  if (ts.isIdentifier(value)) return [...new Set([...(bindings.scalars.get(value.text) ?? []), ...iteratedKeys(value, bindings)])];
+  if (ts.isElementAccessExpression(value)) {
+    const lists = listsOf(value.expression, bindings);
+    const index = bare(value.argumentExpression);
+    return [...new Set(ts.isNumericLiteral(index) ? lists.flatMap(list => list[Number(index.text)] ?? []) : lists.flat())];
+  }
+  return [];
+}
+/** The keys an object binding element reads: its property name or shorthand name, or the keys its computed name resolves to. */
+function bindingKeys(node: ts.BindingElement, bindings: KeyBindings): string[] {
+  const named = node.propertyName ?? node.name;
+  if (ts.isIdentifier(named) || ts.isStringLiteral(named)) return [named.text];
+  return ts.isComputedPropertyName(named) ? keysOf(named.expression, bindings) : [];
+}
+
 interface TextRead {
   readonly object: string;
   readonly use: "typeof" | "digest" | "other";
@@ -490,10 +652,11 @@ interface ModuleReading {
   readonly keyReads: string[];
 }
 /** One module, parsed under its own script kind: its identifiers and folded literals, its rf launches (A1), the element after
- * "context" in each argv-shaped array (A1), its reads of a text field (B1) and the names it reads by property access, literal
- * element access or object binding (C2, D2). */
+ * "context" in each argv-shaped array (A1), its reads of a text field (B1) and the names it reads by property access, element
+ * access or object binding, a key resolved through the module's own key bindings (keysOf, bindingKeys) (C2, D2). */
 function readModule(path: string, source: string): ModuleReading {
   const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
+  const bindings = keyBindings(file);
   const identifiers: string[] = [];
   const literals: string[] = [];
   const launches: string[] = [];
@@ -547,16 +710,13 @@ function readModule(path: string, source: string): ModuleReading {
       if (node.name.text === TEXT_FIELD) textReads.push({ object: tailName(node.expression) ?? "", use: classify(node) });
     }
     if (ts.isElementAccessExpression(node)) {
-      const key = fold(node.argumentExpression);
-      if (key !== undefined) {
+      for (const key of keysOf(node.argumentExpression, bindings)) {
         keyReads.push(key);
         if (key === TEXT_FIELD) textReads.push({ object: tailName(node.expression) ?? "", use: classify(node) });
       }
     }
     if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent)) {
-      const named = node.propertyName ?? node.name;
-      const key = ts.isIdentifier(named) || ts.isStringLiteral(named) ? named.text : undefined;
-      if (key !== undefined) {
+      for (const key of bindingKeys(node, bindings)) {
         keyReads.push(key);
         if (key === TEXT_FIELD) {
           const declaration = node.parent.parent;
@@ -598,6 +758,54 @@ const readsAField = (callback: ts.Node): boolean => {
 };
 const isArrayIsArray = (node: ts.Expression): boolean =>
   ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "Array" && node.name.text === "isArray";
+const HELPERS = new WeakMap<ts.SourceFile, Map<string, ts.FunctionLikeDeclaration[]>>();
+/** A module's own functions by name (a function declaration, or a variable bound to an arrow or function expression), at any depth. */
+function moduleHelpers(file: ts.SourceFile): Map<string, ts.FunctionLikeDeclaration[]> {
+  const cached = HELPERS.get(file);
+  if (cached !== undefined) return cached;
+  const helpers = new Map<string, ts.FunctionLikeDeclaration[]>();
+  const add = (name: string, helper: ts.FunctionLikeDeclaration): void => {
+    helpers.set(name, [...(helpers.get(name) ?? []), helper]);
+  };
+  const visit = (node: ts.Node): void => {
+    if (ts.isFunctionDeclaration(node) && node.name !== undefined) add(node.name.text, node);
+    else if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined) {
+      const value = bare(node.initializer);
+      if (ts.isArrowFunction(value) || ts.isFunctionExpression(value)) add(node.name.text, value);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  HELPERS.set(file, helpers);
+  return helpers;
+}
+/** A helper reads a field when its parameters or body hold a property access, an element access or a binding pattern - readsAField's
+ * reading, Array.isArray (a global's member, never a row field) excepted, so the landed record() shape check reads none. */
+const helperReadsAField = (helper: ts.FunctionLikeDeclaration): boolean => {
+  let found = false;
+  const visit = (node: ts.Node): void => {
+    if (ts.isPropertyAccessExpression(node) && isArrayIsArray(node)) return;
+    if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node) || ts.isObjectBindingPattern(node) || ts.isArrayBindingPattern(node)) found = true;
+    else ts.forEachChild(node, visit);
+  };
+  ts.forEachChild(helper, visit);
+  return found;
+};
+/** True when a callback calls a function of its own module that reads a field: C2 follows a row-shape callback's helpers one level
+ * (a helper's own calls, and a helper defined in another module, are not followed: R-INDIRECT). */
+const callsAFieldReader = (callback: ts.Node): boolean => {
+  const helpers = moduleHelpers(callback.getSourceFile());
+  let found = false;
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node)) {
+      const callee = bare(node.expression);
+      if (ts.isIdentifier(callee) && (helpers.get(callee.text) ?? []).some(helperReadsAField)) found = true;
+    }
+    ts.forEachChild(node, visit);
+  };
+  ts.forEachChild(callback, visit);
+  return found;
+};
 function containerUse(node: ts.Expression): ContainerUse {
   let child: ts.Node = node;
   let parent: ts.Node = node.parent;
@@ -609,7 +817,7 @@ function containerUse(node: ts.Expression): ContainerUse {
     if (parent.name.text === "length") return "count";
     const call = parent.parent;
     const callback = ts.isCallExpression(call) && call.expression === parent && call.arguments.length === 1 ? call.arguments[0] : undefined;
-    const pure = callback !== undefined && (ts.isArrowFunction(callback) || ts.isFunctionExpression(callback)) && !readsAField(callback);
+    const pure = callback !== undefined && (ts.isArrowFunction(callback) || ts.isFunctionExpression(callback)) && !readsAField(callback) && !callsAFieldReader(callback);
     return parent.name.text === "every" && pure ? "check" : "other";
   }
   if (ts.isCallExpression(parent) && isArrayIsArray(parent.expression) && parent.arguments.length === 1 && parent.arguments[0] === child) return "check";
@@ -624,20 +832,20 @@ function referenceOf(node: ts.Identifier, declared: ts.Identifier): boolean {
   return !(ts.isBindingElement(parent) && parent.propertyName === node);
 }
 /** C2's use judge for one module: `<path> <container> <use>` for each use of a record container it reads, in source order - a
- * property or literal element access is used where it stands; a name bound by an object binding is followed to every reference of
- * that name in the enclosing function (a nested pattern is "other"). */
+ * property or element access (its key resolved through the module's key bindings) is used where it stands; a name bound by an
+ * object binding (a computed name resolved the same way) is followed to every reference of that name in the enclosing function
+ * (a nested pattern is "other"). */
 function containerUses(path: string, source: string): string[] {
   const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
+  const bindings = keyBindings(file);
   const uses: string[] = [];
   const visit = (node: ts.Node): void => {
     if (ts.isPropertyAccessExpression(node) && CONTAINERS.includes(node.name.text)) uses.push(`${path} ${node.name.text} ${containerUse(node)}`);
     else if (ts.isElementAccessExpression(node)) {
-      const key = fold(node.argumentExpression);
-      if (key !== undefined && CONTAINERS.includes(key)) uses.push(`${path} ${key} ${containerUse(node)}`);
+      for (const key of keysOf(node.argumentExpression, bindings)) if (CONTAINERS.includes(key)) uses.push(`${path} ${key} ${containerUse(node)}`);
     } else if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent)) {
-      const named = node.propertyName ?? node.name;
-      const key = ts.isIdentifier(named) || ts.isStringLiteral(named) ? named.text : undefined;
-      if (key !== undefined && CONTAINERS.includes(key)) {
+      for (const key of bindingKeys(node, bindings)) {
+        if (!CONTAINERS.includes(key)) continue;
         const declared = node.name;
         if (!ts.isIdentifier(declared)) uses.push(`${path} ${key} other`);
         else {
@@ -735,10 +943,12 @@ const tierInclude = (config: unknown): string[] => {
 };
 
 const REACHED: string[] = [];
-/** A pin's witness, recorded as reached: only a case that ran to its end returns through here. */
+/** A pin's witness, recorded as reached: only a case that ran to its end returns through here. It carries, last, the assertions its
+ * test had made by then (vitest's matcher-state tally: the harness's case check plus the case's own expects), so a case that
+ * returns its roster witness without measuring it no longer matches the roster. */
 function done(pin: string, witness: JsonObject): Json {
   REACHED.push(pin);
-  return { pin, ...witness };
+  return { pin, ...witness, asserted: expect.getState().assertionCalls };
 }
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
@@ -757,7 +967,22 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(launches, "rf launches in the judged modules: the provider's spawn alone").toEqual(["src/workbench/providers/reactivefiber.ts spawn"]);
     expect(followers, "the leaf after context in every argv-shaped array").toEqual(["render"]);
     expect(verbLiterals, "literals naming another context leaf of the measured rf").toEqual([]);
+    const texts = tree.walk.texts;
+    const textsBelow = (root: string): number => texts.filter(path => path.startsWith(`${root}/`)).length;
+    const textsFloorMet = Object.entries(TEXT_FLOORS).every(([root, floor]) => textsBelow(root) >= floor);
+    const textsListed = JSON.stringify([...texts].sort()) === JSON.stringify(listedFiles().filter(path => !isModule(path)));
+    const held = new Set([...tree.walk.modules, ...texts, ...tree.walk.symlinks]);
+    const git = gitListed();
+    const unwalked = git.filter(path => !held.has(path));
+    const unlisted = tree.walk.modules.filter(path => !git.includes(path));
+    const textLaunches = texts.flatMap(path => launchLines(path, readFileSync(join(REPO, path), "utf8")));
+    expect(textsFloorMet, `non-module files: ${Object.keys(TEXT_FLOORS).map(root => `${root} ${textsBelow(root)}`).join(", ")}`).toBe(true);
+    expect(textsListed, "the walk reads exactly the non-module files node's recursive listing of the walk roots holds").toBe(true);
+    expect(unwalked, "files git lists below the walk roots that the walk does not hold (the anchor outside both listings)").toEqual([]);
+    expect(unlisted, "walked modules git does not list (so the git reading is never vacuous)").toEqual([]);
+    expect(textLaunches, "rf launch lines naming another context leaf in the non-module files below the walk roots").toEqual([]);
     const of = (source: string): ModuleReading => readModule("c.ts", source);
+    const lines = (source: string): number => launchLines("x.sh", source).length;
     const controls = {
       showArgv: of('spawn("rf", ["--workspace", root, "context", "show", id, "--json"]);\n').followers,
       diffArgv: of('const argv = ["context", "diff", a, b, "--json"];\n').followers,
@@ -775,8 +1000,29 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       prose: of('const note = "the context window is full";\n').literals.some(value => VERB_FAMILY.test(value)),
       comment: of("// rf context show RENDER --json\nexport {};\n").literals.length,
       aliasedLauncher: of('const run = cp.spawnSync;\nrun("rf", ["context", "show", id]);\n').followers,
+      shellShow: lines('rf --workspace "$1" context show "$2" --json\n'),
+      shellContinued: lines('rf --workspace "$1" \\\n  context diff "$2" "$3" --json\n'),
+      pathQualified: lines('exec /usr/local/bin/rf context explain "$1" --block "$2"\n'),
+      shellRender: lines('rf --workspace "$1" context render --no-commit --json\n'),
+      proseLeaf: lines("the context show verb is unshipped in Pi\n"),
+      longerName: lines('rfx context show "$1"\nperf context show\n'),
+      scriptComposedBinary: lines('RF=rf\n"$RF" context show "$1"\n'),
+      scriptArgvApart: lines('set -- context show "$1"\nexec rf "$@"\n'),
     };
-    return done("A1", { modulesFloorMet, walkListed, launches, followers, verbLiterals, otherVerbs: [...VOCABULARY.otherVerbs], controls });
+    return done("A1", {
+      modulesFloorMet,
+      walkListed,
+      launches,
+      followers,
+      verbLiterals,
+      otherVerbs: [...VOCABULARY.otherVerbs],
+      textsFloorMet,
+      textsListed,
+      unwalked,
+      unlisted,
+      textLaunches,
+      controls,
+    });
   },
   A2: () => {
     const tree = liveTree();
@@ -849,6 +1095,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       computedKey: other('const field = "te" + suffix;\nconst parts = output[field].split(marker);\n'),
       reflectGet: reader('const marks = String(Reflect.get(output, "text")).split(marker);\n'),
       serializedOutput: reader("const marks = JSON.stringify(output).match(/<!-- block/g);\n"),
+      constKey: reader('const FIELD = "text";\nconst parts = output[FIELD].split(marker);\n'),
+      keyListKey: reader("const FIELDS = ['text', 'size_bytes'] as const;\nconst head = output[FIELDS[0]].slice(0, 12);\n"),
     };
     return done("B1", { readers: [...tree.readers], reads, outputReads, findings, controls });
   },
@@ -913,25 +1161,34 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const containerReads = [...tree.modules].flatMap(([path, reading]) => readerKeyFindings(path, reading, CONTAINERS));
     const uses = tree.readers.flatMap(path => containerUses(path, readFileSync(join(REPO, path), "utf8")));
     const useFindings = otherUses(uses);
-    const blockRow = (candidate: string, component: string, index: number, tokens: number): JsonObject => ({
+    // Planted rows in the measured rf's own vocabulary (context.render.schema.json at the roster's rfCommit, the roster's
+    // schemaDigests entry): token_cost.kind = token_cost_kind in measured | estimated | unknown (unknown exactly when tokens is
+    // null), component status in ok | failed | recovered, source_unavailable a list of lens:<key> refs.
+    const blockRow = (candidate: string, component: string, index: number, tokens: number | null, kind: string): JsonObject => ({
       candidate_key: candidate,
       component_id: component,
       final_index: index,
-      token_cost: { kind: "estimated", tokens },
-      token_cost_kind: "estimated",
+      token_cost: { kind, tokens },
+      token_cost_kind: kind,
     });
-    const componentRow = (component: string, instance: string, revision: string, status: string): JsonObject => ({
+    const componentRow = (component: string, instance: string, revision: string, status: string, unavailable: string[]): JsonObject => ({
       component_id: component,
       component_instance_id: instance,
       component_revision_id: `sha256:${revision.repeat(64)}`,
-      source_unavailable: false,
+      source_unavailable: unavailable,
       status,
     });
-    const attributed = [blockRow("demo.notes:notes::summary", "demo.notes", 0, 6), blockRow("demo.aside:aside::main", "demo.aside", 1, 4)];
-    const components = [componentRow("demo.notes", "notes", "c", "rendered"), componentRow("demo.aside", "aside", "d", "suppressed")];
-    const reattributed = [blockRow("demo.other:other::lead", "demo.other", 0, 9), blockRow("demo.third:third::tail", "demo.third", 1, 2)];
-    const recomponents = [componentRow("demo.other", "other", "e", "suppressed"), componentRow("demo.third", "third", "f", "rendered")];
-    const extra = blockRow("demo.more:more::extra", "demo.more", 2, 1);
+    const attributed = [blockRow("demo.notes:notes::summary", "demo.notes", 0, 6, "estimated"), blockRow("demo.aside:aside::main", "demo.aside", 1, 4, "estimated")];
+    const components = [
+      componentRow("demo.notes", "notes", "c", "ok", []),
+      componentRow("demo.aside", "aside", "d", "failed", ["lens:demo.feed"]),
+      componentRow("demo.extra", "extra", "a", "recovered", []),
+    ];
+    // The withheld pair keeps the block count the leg reads (a count read is not a record read) and differs in every other
+    // per-row count: each value of each non-positional row field, and the component row count (pairDiffers below).
+    const reattributed = [blockRow("demo.other:other::lead", "demo.other", 0, 9, "measured"), blockRow("demo.third:third::tail", "demo.third", 1, null, "unknown")];
+    const recomponents = [componentRow("demo.other", "other", "e", "ok", ["lens:demo.wire"]), componentRow("demo.third", "third", "f", "ok", ["lens:demo.wire"])];
+    const extra = blockRow("demo.more:more::extra", "demo.more", 2, 1, "estimated");
     /** A judged candidate the render withholds (include false), so the inclusion leg demotes and states its note. */
     const withheldKey = "demo.withheld:withheld::main";
     const records = (blocks: JsonObject[], rows: JsonObject[], withholds: boolean) => (result: JsonObject) => {
@@ -952,8 +1209,32 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const withheldProjectionEqual = project(withheld) === project(rewithheld);
     const withheldEvidenceEqual = evidence(withheld) === evidence(rewithheld);
     const countDelta = projectionDelta(reactivefiberTopology(withheld, HOST), reactivefiberTopology(withheldMore, HOST));
+    /** True when two row sets differ in the count of every value of every non-positional field (final_index is positional:
+     * 0..n-1 in both sets, as rf states it), each value compared as its JSON. */
+    const countsDiffer = (left: JsonObject[], right: JsonObject[]): boolean => {
+      const tally = (rows: JsonObject[], field: string): Map<string, number> => {
+        const counts = new Map<string, number>();
+        for (const row of rows) {
+          const value = JSON.stringify(row[field] ?? null);
+          counts.set(value, (counts.get(value) ?? 0) + 1);
+        }
+        return counts;
+      };
+      const fields = [...new Set([...left, ...right].flatMap(row => Object.keys(row)))].filter(field => field !== "final_index");
+      return fields.every(field => {
+        const a = tally(left, field);
+        const b = tally(right, field);
+        return [...new Set([...a.keys(), ...b.keys()])].every(value => (a.get(value) ?? 0) !== (b.get(value) ?? 0));
+      });
+    };
+    const pairDiffers = { blocks: countsDiffer(attributed, reattributed), components: countsDiffer(components, recomponents) && components.length !== recomponents.length };
     const planted = [
-      ...new Set([...attributed, ...reattributed, extra, ...components, ...recomponents].flatMap(row => Object.values(row)).filter((value): value is string => typeof value === "string" && value.startsWith("demo."))),
+      ...new Set(
+        [...attributed, ...reattributed, extra, ...components, ...recomponents]
+          .flatMap(row => Object.values(row))
+          .flatMap(value => (Array.isArray(value) ? value : [value]))
+          .filter((value): value is string => typeof value === "string" && value.includes("demo.")),
+      ),
       withheldKey,
     ];
     const surfaced = [bare, populated, withheld, rewithheld, withheldMore].map(reading => project(reading) + evidence(reading)).join("\n");
@@ -973,9 +1254,14 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       withheldEvidenceEqual: true,
     });
     expect(countDelta, "one more block moves only the diagnostics: the inclusion leg reads a count").toEqual(["diagnostics"]);
+    expect(pairDiffers, "the withheld pair differs in every per-row value count (status, kind, unavailable lenses) and in its component count").toStrictEqual({
+      blocks: true,
+      components: true,
+    });
     expect(recordTokens, "planted record values in any projected string").toEqual([]);
     const reader = (body: string): number => readerKeyFindings("c.ts", readModule("c.ts", asReader(body)), CONTAINERS).length;
     const others = (body: string): number => otherUses(containerUses("c.ts", asReader(body))).length;
+    const both = (body: string): number => reader(body) + others(body);
     const reflective = "const rows = Object.values(result).filter(Array.isArray).length;\n";
     const controls = {
       findBlock: reader("const block = result.blocks.find(row => row.final_index === 0);\n"),
@@ -995,6 +1281,19 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       aliasRows: others("const rows = result.blocks;\nconst n = rows.length;\n"),
       nestedBinding: others("const { blocks: [first] } = result;\n"),
       reflectiveRows: reader(reflective) + others(reflective),
+      constIndexKey: both("const KEYS = ['blocks', 'necessity'] as const;\nconst rows = result[KEYS[0]];\n"),
+      constScalarKey: both('const KEY = "components";\nconst rows = source.result[KEY];\n'),
+      computedBinding: both("const KEYS = ['blocks'] as const;\nconst { [KEYS[0]]: rows } = result;\nconst head = rows.find(row => row.final_index === 0);\n"),
+      computedBindingCount: others("const KEYS = ['blocks'] as const;\nconst { [KEYS[0]]: rows } = result;\nconst n = rows.length;\n"),
+      keyListCallback: both("const KEYS = ['blocks', 'necessity'];\nconst lists = KEYS.map(key => result[key]);\n"),
+      keyListLoop: both("for (const key of ['components']) use(result[key]);\n"),
+      shadowedKey: both("const KEY = 'blocks';\nconst read = (KEY) => result[KEY];\n"),
+      helperReadsField: others("const live = (row) => row.status === 'ok';\nconst { blocks } = result;\nif (!blocks.every(item => live(item))) throw refused();\n"),
+      helperShapeCheck: others("const isRow = (value) => value !== null && typeof value === 'object' && !Array.isArray(value);\nconst { blocks } = result;\nif (!blocks.every(item => isRow(item))) throw refused();\n"),
+      composedContainer: both('const rows = result[["block", "s"].join("")];\n'),
+      objectMemberKey: both('const K = { rows: "blocks" } as const;\nconst rows = result[K.rows];\n'),
+      twoLevelHelper: others("const deep = (row) => row.status === 'ok';\nconst live = (row) => deep(row);\nconst { blocks } = result;\nif (!blocks.every(item => live(item))) throw refused();\n"),
+      importedHelper: others('import { live } from "./rows.js";\nconst { blocks } = result;\nif (!blocks.every(item => live(item))) throw refused();\n'),
     };
     return done("C2", {
       containers: [...CONTAINERS],
@@ -1006,6 +1305,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       withheldProjectionEqual,
       withheldEvidenceEqual,
       countDelta,
+      pairDiffers,
       plantedTokens: planted.length,
       recordTokens,
       controls,
@@ -1055,6 +1355,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       elementAccess: reader('const sides = result["sides"];\n'),
       destructure: reader("const { attribution } = result;\n"),
       genericOutsideReaders: readerKeyFindings("c.ts", readModule("c.ts", "const counts = entry.summary;\n"), VOCABULARY.genericDiffKeys).length,
+      constKey: reader('const KEY = "summary";\nconst counts = result[KEY];\n'),
+      keyListLoop: reader("for (const key of ['sides', 'attribution']) use(result[key]);\n"),
     };
     return done("D2", { genericKeys: [...VOCABULARY.genericDiffKeys], genericReads, absent, refused, evidenceKeys, controls });
   },
@@ -1137,9 +1439,13 @@ describe("wb-hs2j.2 rf context read structure census (RF-REACTIVE-CONTEXT-ASSEMB
         walkRoots: WALK_ROOTS,
         moduleExtensions: MODULE_EXTENSIONS,
         floors: FLOORS,
+        textFloors: TEXT_FLOORS,
         renderCommand: RENDER_COMMAND,
         launchers: LAUNCHERS,
         rfBinary: RF_BINARY,
+        rfWord: `${RF_WORD.source}/${RF_WORD.flags}`,
+        iterators: ITERATORS,
+        followUp: FOLLOW_UP,
         textRead: `${TEXT_OBJECT}.${TEXT_FIELD}`,
         containers: CONTAINERS,
         selectorWords: `${SELECTOR_WORDS.source}/${SELECTOR_WORDS.flags}`,
@@ -1177,6 +1483,26 @@ describe("wb-hs2j.2 rf context read structure census (RF-REACTIVE-CONTEXT-ASSEMB
     });
     expect(bead.title.endsWith(ROSTER.citation), "the title cites the roster's citation").toBe(true);
     expect(ROSTER.citation.endsWith(`@${ROSTER.producer.programPin.sha.slice(0, 12)}`), "the citation pins the program sha the roster measured").toBe(true);
+    // The pins' and residuals' anchors outside this file and the roster: what BEAD's delivery and FOLLOW_UP's filing recorded.
+    const delivered = deliveredShape(bead.notes);
+    const shortRows = delivered.filter(entry => (ROWS.find(row => row.id === entry.slice(0, 1))?.pins.length ?? 0) < Number(entry.slice(2)));
+    expect(delivered, `the frozen shape ${BEAD}'s delivery recorded`).toEqual(["A:2", "B:2", "C:2", "D:2", "E:2"]);
+    expect(shortRows, "rows holding fewer pins than the delivery recorded (a per-row floor)").toEqual([]);
+    const named = namedResiduals(bead.notes, readBeadRow(FOLLOW_UP).notes);
+    expect(named, `the residual families ${BEAD}'s delivery and ${FOLLOW_UP}'s filed findings name`).toEqual([
+      "R-ALIAS",
+      "R-COMMENT",
+      "R-COMPOSED",
+      "R-GENERIC-KEY",
+      "R-INDIRECT",
+      "R-OUTSIDE",
+      "R-REFLECTIVE",
+      "R-RENAMED",
+    ]);
+    expect(
+      named.filter(family => !RESIDUAL_FAMILIES.includes(family)),
+      "residual families named outside this file that it no longer carries (a floor)",
+    ).toEqual([]);
   });
 
   for (const row of ROWS) {
