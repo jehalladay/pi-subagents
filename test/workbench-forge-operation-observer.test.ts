@@ -344,6 +344,37 @@ const DOCUMENTED_MEMBERS_UNAFFECTED = {
 };
 const settledReply = (status: string, data?: unknown, disposition = "completed"): Record<string, unknown> =>
   ({ operation_id: OP, status, terminal_disposition: disposition, lifecycle_state: "TERMINAL", ...(data !== undefined ? { data } : {}) });
+/*
+ * wb-dqhl cut #4: THE U1 CLASS GUARD, in the enumerate-the-resolvable form (rule 19(c)/(d); refusal #3, U2). The class: the kills
+ * the landed test file (blob ced0bb61) drew from the `selection: null` that MEASURED_FULL and MEASURED_ONLY_ALPHA carried, and from
+ * the key slot it held in front of selection_accounting, lost when wb-dqhl cut #1 dropped that null from the measured fixtures.
+ * PINNED SET: each dimension, the parts of this guard that pin it, and the members (src mutants, named as the gate and seat
+ * batteries on wb-dqhl name them) it kills. Nothing outside these six dimensions is claimed.
+ *   P1 block shape - a null selection beside each of the 20 accounting blocks this file builds (the null twin in terminalOf, the
+ *      U1 case's 20-block loop): GW1, GW1b, GW1c, GW3, N1, N2, N3, N5, N7, N8, N9, N10, N11, Q1, Q2, Q4, Q7, Q8.
+ *   P2 gate_verdict, status and disposition - each null twin keeps its reply's own (the null twin in terminalOf): Z1, Z2, Z3, Z4,
+ *      Z7, Q5.
+ *   P3 the observer path - the three observed gate.run replies against their null twins (the U1 class case): Z5, Q6.
+ *   P4 inherited data - the landed inherited data block against its null twin (the U1 class case): Z6.
+ *   P5 the null key's slot - the null twin inserts the key just before the accounting block, at the landed key count (the null
+ *      twin in terminalOf): Z8, Q3.
+ *   P6 the key position of a stated selection - the order twin in terminalOf moves a stated selection key to the other side of
+ *      selection_accounting, so the five landed replies that state a non-null selection over MEASURED_FULL (the four malformed
+ *      test-selection renders and the inherited-flag render) render again in the landed order: KO1, KO2 (KO3 and KO4 stay killed).
+ * CONSTRUCTION (an argument, not a measurement): each landed evaluation behind P1-P6 is re-evaluated as a structural copy of the
+ * landed reply - the same own keys in the same order, every value by reference - inside the same terminalOf call (or the U1 class
+ * case's explicit reads), after its own reply, and must decode and render exactly as that reply. So a decode that reads each reply
+ * on its own keys and values alone is killed here wherever the landed file killed it.
+ * NAMED RESIDUALS: the known-unpinned families of the class, each with a pinned quiet row (a case that reds when its family stops
+ * reading quiet through this guard, or when its page stops carrying the family).
+ *   R-SEQUENCE - a decode whose reading of a reply depends on the reads before it: the guard reads every twin after its reply, so
+ *      no landed reply is ever a first read here. Quiet row: "wb-dqhl (U1 residual R-SEQUENCE): ...".
+ *   R-SHARED-VALUES - a decode keyed on the identity of a value the reply carries: every twin carries its reply's values by
+ *      reference, so a reading memoized on the reply's accounting block is read back for its twin. Quiet row: "wb-dqhl (U1
+ *      residual R-SHARED-VALUES): ...".
+ * Outside the class (refusal #3: no row owed): MX6 and MX7 (prototype-chain reads, pre-existing at base) and C5 and C7 (the U3
+ * lexical controls).
+ */
 /**
  * wb-dqhl (U1 class guard): a reply's null twin - the same reply whose own data record, stating no selection key, gains
  * `selection: null` just before its accounting block, where MEASURED_FULL and MEASURED_ONLY_ALPHA carried it until wb-dqhl cut #1
@@ -361,21 +392,116 @@ const nullTwin = (reply: unknown): Record<string, unknown> | undefined => {
   return { ...reply, data: Object.fromEntries(fields) };
 };
 /**
+ * wb-dqhl cut #4 (U1 class guard, P6): a reply's order twin - the same reply whose own data record states a selection key and an
+ * accounting block, with the selection key moved to the other side of selection_accounting (just after it when it came first,
+ * just before it when it came after). Every other own field keeps its order and every value is kept by reference, so the order
+ * twin of a reply built as { ...MEASURED_FULL, selection } is the reply the landed fixtures built ([gate_verdict, selection,
+ * selection_accounting]). Undefined when the reply has no own data record or its data states no selection key or no accounting block.
+ */
+const orderTwin = (reply: unknown): Record<string, unknown> | undefined => {
+  if (typeof reply !== "object" || reply === null || !Object.hasOwn(reply, "data")) return undefined;
+  const { data } = reply as { data: unknown };
+  if (typeof data !== "object" || data === null || Array.isArray(data)) return undefined;
+  const fields: [string, unknown][] = Object.entries(data);
+  const from = fields.findIndex(([key]) => key === "selection");
+  const anchor = fields.findIndex(([key]) => key === "selection_accounting");
+  if (from === -1 || anchor === -1) return undefined;
+  const moved = fields.splice(from, 1);
+  const at = fields.findIndex(([key]) => key === "selection_accounting");
+  fields.splice(from < anchor ? at + 1 : at, 0, ...moved);
+  return { ...reply, data: Object.fromEntries(fields) };
+};
+/** A reply's own data record's own keys, in order (none when the reply has no own data record). */
+const dataKeys = (reply: unknown): string[] => {
+  if (typeof reply !== "object" || reply === null || !Object.hasOwn(reply, "data")) return [];
+  const { data } = reply as { data: unknown };
+  return typeof data === "object" && data !== null && !Array.isArray(data) ? Object.keys(data) : [];
+};
+/** One own field of a reply's own data record, or undefined. */
+const dataField = (reply: unknown, key: string): unknown => {
+  if (typeof reply !== "object" || reply === null || !Object.hasOwn(reply, "data")) return undefined;
+  const { data } = reply as { data: unknown };
+  return typeof data === "object" && data !== null && Object.hasOwn(data, key) ? (data as Record<string, unknown>)[key] : undefined;
+};
+type TerminalDecode = typeof decodeForgeOperationTerminal;
+/**
+ * wb-dqhl cut #4 (the residual quiet rows): how a residual family's decode misreads a reply of a landed shape - GW1's reading of a
+ * null selection beside the accounting block (a withheld test block) and KO1's of a withheld selection that precedes it (no test
+ * block); any other reply keeps the real decode's reading.
+ */
+const misread = (reply: unknown, terminal: ReturnType<TerminalDecode>): ReturnType<TerminalDecode> => {
+  const keys = dataKeys(reply);
+  if (terminal === undefined || terminal.selection === undefined || !keys.includes("selection") || !keys.includes("selection_accounting")) return terminal;
+  const { units, tests } = terminal.selection;
+  const kept = units !== undefined ? { units } : {};
+  if (dataField(reply, "selection") === null) return { ...terminal, selection: { ...kept, tests: "withheld" as const } };
+  if (tests === "withheld" && keys.indexOf("selection") < keys.indexOf("selection_accounting")) return { ...terminal, selection: kept };
+  return terminal;
+};
+/** R-SEQUENCE's family as a decode: its first read misreads a reply of a landed shape, and every later read is the real decode's. */
+const firstReadDecode = (): TerminalDecode => {
+  let reads = 0;
+  return (reply, operationId, observedAt) => {
+    reads += 1;
+    const terminal = decodeForgeOperationTerminal(reply, operationId, observedAt);
+    return reads === 1 ? misread(reply, terminal) : terminal;
+  };
+};
+/** R-SHARED-VALUES's family as a decode: its reading is memoized on the accounting block a reply carries, and its first reading of a block misreads a reply of a landed shape. */
+const blockMemoDecode = (): TerminalDecode => {
+  const readings = new Map<unknown, ReturnType<TerminalDecode>>();
+  return (reply, operationId, observedAt) => {
+    const block = dataField(reply, "selection_accounting");
+    if (block !== undefined && readings.has(block)) return readings.get(block);
+    const reading = misread(reply, decodeForgeOperationTerminal(reply, operationId, observedAt));
+    if (block !== undefined) readings.set(block, reading);
+    return reading;
+  };
+};
+/**
  * The reply's terminal node. wb-dqhl (U1 class guard): every render here also renders the reply's null twin and requires it to
  * decode and render exactly as the reply, so each reply a case builds keeps the null reading the landed fixtures gave it - with
  * its own gate_verdict, status and disposition - derived from the replies the cases build, never from a list of them.
+ * wb-dqhl cut #4 (P6): it renders the reply's order twin the same way, and it reads the reply and its twins through `decode` - the
+ * real decode, except in the two residual quiet rows, which pass their family's decode.
  */
-const terminalOf = (reply: unknown) => {
-  const terminal = decodeForgeOperationTerminal(reply, OP, T2);
+const terminalOf = (reply: unknown, decode: TerminalDecode = decodeForgeOperationTerminal) => {
+  const terminal = decode(reply, OP, T2);
   if (terminal === undefined) throw new Error("the reply names no terminal for the operation");
   const snapshot = forgeOperationTerminalSnapshot(terminal, options);
   const twin = nullTwin(reply);
   if (twin !== undefined) {
-    const twinTerminal = decodeForgeOperationTerminal(twin, OP, T2);
+    const twinTerminal = decode(twin, OP, T2);
     expect(twinTerminal, "wb-dqhl (U1): the reply's null twin decodes as the reply").toStrictEqual(terminal);
     expect(twinTerminal === undefined ? undefined : forgeOperationTerminalSnapshot(twinTerminal, options), "wb-dqhl (U1): the reply's null twin renders as the reply").toStrictEqual(snapshot);
   }
+  const moved = orderTwin(reply);
+  if (moved !== undefined) {
+    const movedTerminal = decode(moved, OP, T2);
+    expect(movedTerminal, "wb-dqhl (U1 P6): the reply's order twin decodes as the reply").toStrictEqual(terminal);
+    expect(movedTerminal === undefined ? undefined : forgeOperationTerminalSnapshot(movedTerminal, options), "wb-dqhl (U1 P6): the reply's order twin renders as the reply").toStrictEqual(snapshot);
+  }
   return snapshot;
+};
+/**
+ * The pages of the two residual quiet rows: replies the landed cases build whose twin is the reply the landed fixtures built - the
+ * two measured unnarrowed replies (a null twin) and the five replies that state a non-null selection over MEASURED_FULL (an order twin).
+ */
+const residualPages = (): [string, Record<string, unknown>][] => {
+  const inheritedFlag = Object.assign(Object.create({ narrowed: false }) as Record<string, unknown>, { denominator_complete: null });
+  return [
+    ["the measured full reply", settledReply("success", MEASURED_FULL)],
+    ["the measured --only reply", settledReply("partial", MEASURED_ONLY_ALPHA)],
+    ...[{ narrowed: "yes" }, { narrowed: false, denominator_complete: "no" }, "narrowed", [], inheritedFlag].map((selection): [string, Record<string, unknown>] => [
+      `the stated selection ${JSON.stringify(selection)}`,
+      settledReply("success", { ...MEASURED_FULL, selection }),
+    ]),
+  ];
+};
+/** A residual page's loud reading: the statusText a first read of its landed reply gives under the family's misreading. */
+const loudText = (page: Record<string, unknown>): string => {
+  const text = terminalOf(page).node.statusText;
+  return nullTwin(page) !== undefined ? `${text} · tests UNKNOWN` : text.replace(/ · tests UNKNOWN$/, "");
 };
 const withUnits = (change: Record<string, unknown>) => ({ ...MEASURED_FULL, selection_accounting: { ...MEASURED_FULL.selection_accounting, ...change } });
 const [ROW_ALPHA, ROW_BETA, ROW_GAMMA] = MEASURED_FULL.selection_accounting.units;
@@ -641,6 +767,55 @@ describe("wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with
       const absent = await observed(reply, steps);
       expect(absent.nodes.filter(node => node.presentation.statusText.includes(" · selection ")), label).toHaveLength(1);
       expect(await observed(nullTwin(reply), steps), label).toStrictEqual(absent);
+    }
+  });
+
+  it("wb-dqhl (U1 P6): NOT measured - a reply's order twin is the reply with its stated selection key on the other side of selection_accounting: for the five landed replies that state a non-null selection over MEASURED_FULL it is the reply the landed fixtures built, for MEASURED_ARGS the accounting-first order, and no order twin is built without a stated selection key or an accounting block", () => {
+    const inheritedFlag = Object.assign(Object.create({ narrowed: false }) as Record<string, unknown>, { denominator_complete: null });
+    for (const selection of [{ narrowed: "yes" }, { narrowed: false, denominator_complete: "no" }, "narrowed", [], inheritedFlag]) {
+      const label = JSON.stringify(selection);
+      const reply = settledReply("success", { ...MEASURED_FULL, selection });
+      expect(dataKeys(reply), label).toStrictEqual(["gate_verdict", "selection_accounting", "selection"]);
+      const twin = orderTwin(reply);
+      expect(twin, label).toStrictEqual({ ...settledReply("success"), data: { gate_verdict: "PASS", selection, selection_accounting: MEASURED_FULL.selection_accounting } });
+      expect(dataKeys(twin), label).toStrictEqual(["gate_verdict", "selection", "selection_accounting"]);
+      expect(dataField(twin, "selection"), label).toBe(selection);
+      expect(dataKeys(orderTwin(twin)), label).toStrictEqual(["gate_verdict", "selection_accounting", "selection"]);
+    }
+    expect(dataKeys(orderTwin(settledReply("success", MEASURED_ARGS)))).toStrictEqual(["gate_verdict", "selection_accounting", "selection"]);
+    // No order twin where the data states no selection key or no accounting block, is not a record, or is absent.
+    const noTwin = [MEASURED_FULL, { gate_verdict: "PASS", selection: { narrowed: false, denominator_complete: null } }, { selection: null }, null, "data", [MEASURED_ARGS]];
+    for (const data of noTwin) expect(orderTwin(settledReply("success", data)), JSON.stringify(data)).toBeUndefined();
+    expect(orderTwin(settledReply("success"))).toBeUndefined();
+  });
+
+  it("wb-dqhl (U1 residual R-SEQUENCE): NOT measured - pinned quiet reading: a decode whose reading of a reply depends on the reads before it stays quiet through the guard, which reads every twin after its reply, while a first read of the landed reply is loud", () => {
+    for (const [label, page] of residualPages()) {
+      const landed = nullTwin(page) ?? orderTwin(page);
+      // The page carries the family: its twin is the reply the landed fixtures built, and the page itself is not.
+      expect(dataKeys(landed), label).toStrictEqual(["gate_verdict", "selection", "selection_accounting"]);
+      expect(dataKeys(page), label).not.toStrictEqual(["gate_verdict", "selection", "selection_accounting"]);
+      // Quiet through the guard, read first and as terminalOf reads it: the page, then its twin, which the same decode reads as the real decode does.
+      expect(terminalOf(page, firstReadDecode()), label).toStrictEqual(terminalOf(page));
+      // Then loud on a first read: the family's decode misreads the landed reply read on its own.
+      const first = firstReadDecode()(landed, OP, T2);
+      expect(first === undefined ? undefined : forgeOperationTerminalSnapshot(first, options).node.statusText, label).toBe(loudText(page));
+      expect(loudText(page), label).not.toBe(terminalOf(page).node.statusText);
+    }
+  });
+
+  it("wb-dqhl (U1 residual R-SHARED-VALUES): NOT measured - pinned quiet reading: a decode memoized on the accounting block a reply carries stays quiet through the guard, whose twins carry their reply's values by reference, while a first read of the landed reply is loud", () => {
+    for (const [label, page] of residualPages()) {
+      const landed = nullTwin(page) ?? orderTwin(page);
+      // The page carries the family: its twin carries the page's own accounting block, by reference.
+      expect(typeof dataField(page, "selection_accounting"), label).toBe("object");
+      expect(dataField(landed, "selection_accounting"), label).toBe(dataField(page, "selection_accounting"));
+      // Quiet through the guard, read first and as terminalOf reads it: the page's own reading is memoized on its block and read back for its twin.
+      expect(terminalOf(page, blockMemoDecode()), label).toStrictEqual(terminalOf(page));
+      // Then loud on a first read: the family's decode misreads the landed reply read on its own.
+      const first = blockMemoDecode()(landed, OP, T2);
+      expect(first === undefined ? undefined : forgeOperationTerminalSnapshot(first, options).node.statusText, label).toBe(loudText(page));
+      expect(loudText(page), label).not.toBe(terminalOf(page).node.statusText);
     }
   });
 
