@@ -1,5 +1,5 @@
 {
-  "comment": "wb-tz4r.5 (RI-UNIFIED-DECISION-INFERENCE-R5): the judged set of test/workbench-ri-observation-authority-census.test.ts. The three spellings of acceptance (a)'s grep are written as placeholders and composed at runtime from their words; each sha256 is the digest of the alternative's own text in the bead (the third one's dot as the plain dot), so the words cannot drift. Producer facts (read-only git show, 2026-10-23): ReactiveInferenceSDK 485f3615db1e 01-contracts.md:20 (the observation-authority sentence), 02-implementation.md:9/:21/:23 (RI-DEC-04, RI-DEC-10, initial restricted seed only), 03-conformance.md:14, the typed decision package's preflight.py:1-3 and contracts.py:55-56 (observations and typed effect policies are later slices; the package name is a sibling census's guarded spelling and is not written here); re-probed at RI origin/master 075ac589d64d: the same sentence at contracts.py:63, no observation-port or tool type, gate closed. ReactiveAgentsSDK: no checkout on the cutting host, not probed. Installed rf 0.1.836 (commit b3494ab13397): 79 leaves, the inference group's one leaf served_reachable, store_required and attach_required, its help sending a recorded render to a model and offering tool schemas from a file; no decision leaf. Pi at c6369e0: the bead's raw grep reads 3, each a leaf-path string in a captured rf leaf catalog (the knownCatalogs), 0 at the filing (trunk 1443ffb and f331270). Witnesses are what each pin's case returns on the cut's tree.",
+  "comment": "wb-tz4r.5 (RI-UNIFIED-DECISION-INFERENCE-R5): the judged set of test/workbench-ri-observation-authority-census.test.ts. The three spellings of acceptance (a)'s grep are written as placeholders and composed at runtime from their words; each sha256 is the digest of the alternative's own text in the bead (the third one's dot as the plain dot), so the words cannot drift. Producer facts (read-only git show, 2026-10-23): ReactiveInferenceSDK 485f3615db1e 01-contracts.md:20 (the observation-authority sentence), 02-implementation.md:9/:21/:23 (RI-DEC-04, RI-DEC-10, initial restricted seed only), 03-conformance.md:14, the typed decision package's preflight.py:1-3 and contracts.py:55-56 (observations and typed effect policies are later slices; the package name is a sibling census's guarded spelling and is not written here); re-probed at RI origin/master 075ac589d64d: the same sentence at contracts.py:63, no observation-port or tool type, gate closed. ReactiveAgentsSDK: no checkout on the cutting host, not probed. Installed rf 0.1.836 (commit b3494ab13397): 79 leaves, the inference group's one leaf served_reachable, store_required and attach_required, its help sending a recorded render to a model and offering tool schemas from a file; no decision leaf. Pi at c6369e0: the bead's raw grep reads 3, each a leaf-path string in a captured rf leaf catalog (the knownCatalogs), 0 at the filing (trunk 1443ffb and f331270). Witnesses are what each pin's case returns on the cut's tree. wb-roxk (the R694 follow-up of landing 319) adds C1's environment shapes, C2's computed-load and wrapped-launch shapes, C3's quiet controls and three residual rows (R-ALIASED-LOADER, R-VARIABLE-COMMAND, R-EVALUATED-ENV), the outside anchor's test, the wiring constants and each pin's reached assertion count; every line above the row B label stays in place (the sibling seed-claim census pins it by line).",
   "bead": "wb-tz4r.5",
   "riPin": "485f3615db1e",
   "riProbe": "075ac589d64d",
@@ -337,6 +337,33 @@
             ],
             "pipedStdin": [
               "stdin"
+            ],
+            "envGatedFlag": [
+              "env-read"
+            ],
+            "destructuredRead": [
+              "env-read"
+            ],
+            "computedRead": [
+              "env-read"
+            ],
+            "aliasedEnvironment": [
+              "env-read"
+            ],
+            "importedEnvironment": [
+              "env-read"
+            ],
+            "unscrubbedChild": [
+              "env-read"
+            ],
+            "destructuredProcess": [
+              "env-read"
+            ],
+            "globalEnvironment": [
+              "env-read"
+            ],
+            "reflectedEnvironment": [
+              "env-read"
             ]
           }
         },
@@ -350,13 +377,46 @@
               "loop"
             ],
             "runnerImport": [
-              "orchestrator"
+              "orchestrator",
+              "env-read"
             ],
             "managerDynamic": [
-              "orchestrator"
+              "orchestrator",
+              "env-read"
             ],
             "secondLauncher": [
               "launches"
+            ],
+            "managerJoined": [
+              "computed-load"
+            ],
+            "runnerConcatenated": [
+              "computed-load"
+            ],
+            "managerConcatCall": [
+              "computed-load"
+            ],
+            "runnerRequired": [
+              "computed-load"
+            ],
+            "shellLauncher": [
+              "launches",
+              "wrapped"
+            ],
+            "envWrapper": [
+              "launches",
+              "wrapped"
+            ],
+            "shellCommand": [
+              "launches",
+              "wrapped"
+            ],
+            "providerShell": [
+              "wrapped"
+            ],
+            "managerCreateRequire": [
+              "orchestrator",
+              "env-read"
             ]
           }
         },
@@ -368,7 +428,14 @@
             "optionOrder": [],
             "fewerNames": [],
             "unrelatedLoop": [],
-            "typeOnlyImport": []
+            "typeOnlyImport": [],
+            "literalLoad": [],
+            "shellOther": [],
+            "rfInsideWords": [],
+            "environmentOutside": [],
+            "R-ALIASED-LOADER": [],
+            "R-VARIABLE-COMMAND": [],
+            "R-EVALUATED-ENV": []
           }
         }
       ]
@@ -376,6 +443,7 @@
   ],
   "tests": [
     "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "the outside anchor: the owner filing's export row holds the three clauses, the three spellings and every pin's own words",
     "A1",
     "A2",
     "A3",
@@ -389,5 +457,24 @@
     "C2",
     "C3",
     "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
+  ],
+  "wiring": {
+    "allowlistChannel": "scrubbedEnvironment",
+    "rfCommand": "/(?:^|[\\s;&|`('\"])(?:\\S*[\\\\/])?rf(?:\\.(?:exe|cmd))?(?=$|[\\s;&|)`'\"])/i",
+    "exportFile": ".beads/issues.jsonl"
+  },
+  "reached": [
+    "A1:5",
+    "A2:4",
+    "A3:5",
+    "A4:5",
+    "A5:6",
+    "A6:6",
+    "B1:5",
+    "B2:3",
+    "B3:3",
+    "C1:3",
+    "C2:3",
+    "C3:3"
   ]
 }

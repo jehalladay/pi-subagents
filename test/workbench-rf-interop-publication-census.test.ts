@@ -22,8 +22,33 @@
  * provider, adapter and curated MCP reply, not returned as a value. The additive twin is pinned opaque (R-OPAQUE), never consumed.
  * Every row/pin quotes a slice of its bead-export Acceptance clause. Ordered quotes tile each clause, leaving separator-only gaps:
  * deleting a row or pin from every census literal and its roster still reds against the owner's outside text (CT5/CT6).
- * FROZEN SHAPE: A:2 B:3 C:4; roster pins labels/quotes/witnesses, constants and every registered test's reached record.
- * RESIDUALS, with quiet pins: R-COMPUTED and R-PARAPHRASE (A1), R-STATUS-PROJECTION (B2), R-OPAQUE (C4).
+ * CLAIMS (wb-jint F1, G-SWAPW): each roster pin carries claims, terms that tile its bead-anchored quote with separator-only gaps,
+ * each naming the witness facts (top-level keys) that show it. A pin's live witness must show its claims: every term names a fact,
+ * every fact sits under exactly one term and the witness holds nothing else. The claims bound case holds every pin's claims against
+ * every other pin's live witness (9 x 8 ordered pairs, none accepted), so a case swap X := Y with X's roster witness rewritten to
+ * match reds at X's claims, at claims bound and at records.
+ * OWNER SUBJECTS (wb-jint F2, G-VOCDEEP): A1 reads the absent subjects of the owner's clause (a) from the bead export (the span
+ * between "has no" and "at the pinned version", split on " or ") and requires a scanner hit on each.
+ * OWNER WORDS (wb-jint refusal #1 U1, L2-NARROW-PUB/L2-NARROW-INTEROP): the words A1 holds are each subject's first word (split on
+ * a space or hyphen: interop, publication). Spelled from the bead export in seven forms that cover every scanner path (a property
+ * read, a destructured name, a literal key, a parenthesized concatenated key, a plain template key, a template key with a constant
+ * span, an import specifier), each must scan as exactly that word, and every VOCABULARY word an owner subject contains must be
+ * one of them. So dropping an owner word, or replacing it with any other word (narrower, as 'publicationconsumer' or
+ * 'interoprecord', broader or substituted), in VOCABULARY, A1's controlHits expectation and the roster together reds A1, beside
+ * any src reader of the owner word; A1 also judges a constructed narrowing (each owner word replaced by its whole folded subject)
+ * through the same judge and requires every form to miss while the subject hit still passes.
+ * The subjects' other words (record, reader, consumer) are not held: none is a VOCABULARY word, and a reader named by one alone
+ * falls under R-PARAPHRASE (A1's ownerWords fact shows each quiet).
+ * FROZEN SHAPE: A:2 B:3 C:4; claims (facts per term) A1:6+2 A2:5 B1:2 B2:2+2 B3:4 C1:1+3 C2:4 C3:2+2 C4:1+1; roster pins
+ * labels/quotes/witnesses/claims, constants and every registered test's reached record.
+ * RESIDUALS, with quiet pins: R-COMPUTED, R-PARAPHRASE and R-SYNONYM (A1), R-STATUS-PROJECTION (B2), R-OPAQUE (C4), R-REAUTHORED
+ * (claims bound). R-SYNONYM: a VOCABULARY word that no owner-named subject contains (A1's synonyms fact lists them) is held by this
+ * file alone; one dropped, or replaced by another word no owner subject contains (the substitution form on a synonym), in
+ * VOCABULARY, A1's controlHits and that list together, census and roster, stays green.
+ * R-REAUTHORED: a pin's case, claims and roster witness rewritten together, in whole or in part, are held by no anchor beyond the
+ * term tiling; the quiet row re-authors C3 as one fact under one claim, which shows that claim and no registered pin's claims accept.
+ * NOT CLAIMED: a case returning its roster witness unmeasured, and an edit of a judge (claimMisses, absentSubjects, ownerSpellings,
+ * ownerWordMisses) with the roster.
  * ARMED HALF PENDING: a future native publication reader's null/absence projection, completeness status and receipt admission
  * (acceptance b/c) remain gated TSX-IO-ADR/01/03b; the present carrier is not such a reader. No fake future adapter is tested.
  * Display paths added: none. Test only; every stand-in process lives in makeScratch scratch, with its leak guard installed.
@@ -52,8 +77,9 @@ installScratchLeakGuard(afterAll);
 type Obj = { [key: string]: JsonValue };
 interface Pin { readonly id: string; readonly quote: string }
 interface Row { readonly id: string; readonly label: string; readonly pins: readonly Pin[] }
-interface RosterRow extends Omit<Row, "pins"> { readonly pins: readonly (Pin & { readonly witness: JsonValue })[] }
-interface Roster { readonly bead: string; readonly citation: string; readonly producer: { readonly pin: string; readonly gate: string; readonly adrCount: number; readonly latestAdr: string; readonly fieldCensusExists: boolean; readonly excerpts: readonly { readonly site: string; readonly textBase64: string; readonly sha256: string }[] }; readonly rows: readonly RosterRow[]; readonly vocabulary: readonly string[]; readonly residuals: readonly { readonly id: string; readonly quietPin: string }[] }
+interface Claim { readonly term: string; readonly facts: readonly string[] }
+interface RosterRow extends Omit<Row, "pins"> { readonly pins: readonly (Pin & { readonly witness: JsonValue; readonly claims: readonly Claim[] })[] }
+interface Roster { readonly bead: string; readonly citation: string; readonly producer: { readonly pin: string; readonly gate: string; readonly adrCount: number; readonly latestAdr: string; readonly fieldCensusExists: boolean; readonly excerpts: readonly { readonly site: string; readonly textBase64: string; readonly sha256: string }[] }; readonly rows: readonly RosterRow[]; readonly vocabulary: readonly string[]; readonly residuals: readonly { readonly id: string; readonly quietPin: string }[]; readonly claimsBound: JsonValue }
 const ROOT = process.cwd();
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
 const ID = "reactivefiber.render.preview";
@@ -206,12 +232,12 @@ function constant(node: ts.Node): string | undefined {
   }
   return undefined;
 }
-function scan(text: string, path = "fixture.ts"): string[] {
+function scan(text: string, path = "fixture.ts", vocabulary: readonly string[] = VOCABULARY): string[] {
   const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const hits = new Set<string>();
   const visit = (node: ts.Node): void => {
     const value = ts.isIdentifier(node) ? node.text : constant(node);
-    if (value !== undefined) for (const word of VOCABULARY) if (fold(value).includes(word)) hits.add(word);
+    if (value !== undefined) for (const word of vocabulary) if (fold(value).includes(word)) hits.add(word);
     ts.forEachChild(node, visit);
   };
   visit(source); return [...hits].sort();
@@ -230,6 +256,8 @@ function differences(before: JsonValue, after: JsonValue, path = "$"): string[] 
 }
 const RECORD: Obj = { value: { overview: "constructed value sentinel" }, producer_digest: `sha256:${"3".repeat(64)}`, source_provenance: { revision: "constructed-revision" }, error: null, sensitivity: "internal" };
 const REACHED = new Set<string>();
+const LIVE = new Map<string, JsonValue>();
+const CLAIMS_BOUND = "claims bound";
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
     const walked = filesBelow(join(REPO, "src")).map(path => relative(REPO, path)).sort();
@@ -243,7 +271,27 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 /* gated fixture; no proposed reader */     expect(controlHits).toEqual([["publication"], ["interop"], ["dataoutput", "declareddataoutput"], ["valueedge"], ["interop", "rftsx"]]);
     const quiet = [scan('const key = "pub" + userSuffix; return source[key];'), scan('return source.payload.carrier;')];
     expect(quiet).toEqual([[], []]);
-    return { floorMet: true, pathsAgree: true, findings, controlHits, quiet };
+    // F2 (G-VOCDEEP): every absent subject the owner's clause (a) names is a scanner hit; the subjects come from the bead export.
+    const subjects = absentSubjects(); const subjectHits = subjects.map(subject => scan(JSON.stringify(subject)));
+    expect(subjects.length).toBeGreaterThan(0); expect(subjects.filter((_, index) => (subjectHits[index] ?? []).length === 0)).toEqual([]);
+    const ownerSubjects: JsonValue = subjects.map((subject, index) => [subject, subjectHits[index] ?? []]);
+    // Refusal #1 U1 (F2 class): each subject's first word is itself held in seven forms, and no other owner-contained word is scanned.
+    const words = subjects.map(subject => subject.split(/[\s-]/)[0] ?? "");
+    expect(ownerWordMisses(words, VOCABULARY)).toEqual([]);
+    expect(VOCABULARY.filter(word => subjects.some(subject => fold(subject).includes(word))).sort()).toEqual(words.map(fold).sort());
+    const owners = subjects.map((subject, index) => {
+      const word = words[index] ?? ""; const narrowed = VOCABULARY.map(entry => entry === fold(word) ? fold(subject) : entry);
+      // R-PARAPHRASE, quiet: the subject's other words are not VOCABULARY words, so a reader named by one alone escapes the scan.
+      const tails = subject.split(/[\s-]/).slice(1).map((tail): [string, string[]] => [tail, scan(`return source.${tail}.value;`)]);
+      // Liveness: the same judge refuses the owner word narrowed to its whole folded subject, which the subject hit alone accepts.
+      return { word, hits: ownerSpellings(word).map(text => scan(text)), narrower: fold(subject), misses: ownerWordMisses([word], narrowed).length, subjectStillHit: scan(JSON.stringify(subject), "fixture.ts", narrowed).length > 0, tails };
+    });
+    expect(owners.map(owner => owner.misses === ownerSpellings(owner.word).length && owner.subjectStillHit)).toEqual(subjects.map(() => true));
+    expect(owners.flatMap(owner => owner.tails.filter(([, hits]) => hits.length > 0))).toEqual([]);
+    const ownerWords: JsonValue = owners;
+    // R-SYNONYM, quiet: the VOCABULARY words that no owner-named subject contains are held by this file alone.
+    const synonyms = VOCABULARY.filter(word => !subjects.some(subject => fold(subject).includes(word)));
+    return { floorMet: true, pathsAgree: true, findings, controlHits, quiet, ownerSubjects, synonyms, ownerWords };
   },
   A2: async () => {
     const loaded = await loadWorkbenchNative(); const registry = new CapabilityRegistry(); loaded.registerNativeProviders(registry, ROOT);
@@ -350,30 +398,75 @@ function tiled(body: string, quotes: readonly string[]): boolean {
   for (const quote of quotes) { const found = body.indexOf(quote, at); if (found < 0 || !/^[\s,;:]*$/.test(body.slice(at, found))) return false; at = found + quote.length; }
   return /^[\s,;:]*$/.test(body.slice(at));
 }
+/** The owner's Acceptance clauses, read from the bead export (the outside anchor every row label equals). */
+function acceptanceClauses(): string[] {
+  const line = beadNotes().split("\n").find(text => text.startsWith("Acceptance: ")) ?? "";
+  return line.slice(12).replace(/\.$/, "").split(/; (?=\([a-z]\) )/);
+}
+/** F2 outside anchor: the absent subjects clause (a) names, between "has no" and "at the pinned version", split on " or ". */
+function absentSubjects(): string[] {
+  const span = /\bhas no (.+?) at the pinned version\b/.exec(acceptanceClauses()[0] ?? "")?.[1] ?? "";
+  return span.split(" or ").filter(subject => subject.length > 0);
+}
+/** Refusal #1 U1: an owner word in seven forms that cover every scanner path (property read, destructured name, literal key,
+ * parenthesized concatenated key, plain template key, template key with a constant span, import specifier), built from the
+ * bead-export word, never from a census literal. */
+function ownerSpellings(word: string): string[] {
+  const cut = Math.ceil(word.length / 2); const head = JSON.stringify(word.slice(0, cut)); const tail = word.slice(cut);
+  return [`return source.${word}.value;`, `const { ${word} } = source;`, `source[${JSON.stringify(word)}]`, `source[(${head}) + ${JSON.stringify(tail)}]`, `source[\`${word}\`]`, `source[\`\${${head}}${tail}\`]`, `import x from ${JSON.stringify(`${word}/x`)};`];
+}
+/** Why the scanner, judging by a vocabulary, does not hold each owner word itself: every form that scans as anything but exactly that word. */
+function ownerWordMisses(words: readonly string[], vocabulary: readonly string[]): string[] {
+  return words.flatMap(word => ownerSpellings(word).filter(text => JSON.stringify(scan(text, "fixture.ts", vocabulary)) !== JSON.stringify([fold(word)])).map(text => `${word}: ${text}`));
+}
+/** F1 (G-SWAPW): why a witness fails to show a pin's claims - terms must tile the quote, each naming facts, the facts partitioning its keys. */
+function claimMisses(quote: string, claims: readonly Claim[], witness: JsonValue): string[] {
+  const misses = tiled(quote, claims.map(claim => claim.term)) ? [] : ["tiling"];
+  for (const claim of claims) if (claim.facts.length === 0) misses.push(`idle: ${claim.term}`);
+  const facts = claims.flatMap(claim => claim.facts);
+  const keys = witness !== null && typeof witness === "object" && !Array.isArray(witness) ? Object.keys(witness) : [];
+  for (const [index, fact] of facts.entries()) if (facts.indexOf(fact) !== index) misses.push(`twice: ${fact}`);
+  for (const fact of facts) if (!keys.includes(fact)) misses.push(`absent: ${fact}`);
+  for (const key of keys) if (!facts.includes(key)) misses.push(`unclaimed: ${key}`);
+  return misses;
+}
 describe("wb-fb2z.2 absent interop publication census (TSX-COMPONENT-ASSEMBLY-R2, gated)", () => {
   it("judged set: frozen shape, roster, outside acceptance anchor and producer excerpts", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:3", "C:4"]);
     expect(ROWS).toEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(({ id, quote }) => ({ id, quote })) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins.map(pin => pin.id)).sort());
     expect(ROSTER.bead).toBe(BEAD); expect(ROSTER.vocabulary).toEqual(VOCABULARY);
-    const notes = beadNotes(); const line = notes.split("\n").find(text => text.startsWith("Acceptance: ")) ?? "";
-    const clauses = line.slice(12).replace(/\.$/, "").split(/; (?=\([a-z]\) )/);
+    const notes = beadNotes(); const clauses = acceptanceClauses();
     expect(ROWS.map(row => row.label)).toEqual(clauses);
     expect(clauses.map((clause, index) => tiled(clause.slice(4), ROWS[index]?.pins.map(pin => pin.quote) ?? []))).toEqual(clauses.map(() => true));
     expect(notes.includes(ROSTER.citation)).toBe(true); expect(ROSTER.citation.endsWith(`@${ROSTER.producer.pin.slice(0, 12)}`)).toBe(true);
     expect({ gate: ROSTER.producer.gate, adrCount: ROSTER.producer.adrCount, latestAdr: ROSTER.producer.latestAdr, fieldCensusExists: ROSTER.producer.fieldCensusExists }).toEqual({ gate: "ABSENT", adrCount: 80, latestAdr: "0082-incremental-performance-program-positions.md", fieldCensusExists: false });
     expect(ROSTER.producer.excerpts.map(excerpt => createHash("sha256").update(Buffer.from(excerpt.textBase64, "base64")).digest("hex"))).toEqual(ROSTER.producer.excerpts.map(excerpt => excerpt.sha256));
     const pins = ROWS.flatMap(row => row.pins.map(pin => pin.id));
-    expect(ROSTER.residuals.map(item => item.id)).toEqual(["R-OPAQUE", "R-COMPUTED", "R-PARAPHRASE", "R-STATUS-PROJECTION"]);
-    expect(ROSTER.residuals.every(item => pins.includes(item.quietPin))).toBe(true);
+    expect(ROSTER.residuals.map(item => item.id)).toEqual(["R-OPAQUE", "R-COMPUTED", "R-PARAPHRASE", "R-STATUS-PROJECTION", "R-SYNONYM", "R-REAUTHORED"]);
+    expect(ROSTER.residuals.every(item => [...pins, CLAIMS_BOUND].includes(item.quietPin))).toBe(true);
+    const held = ROSTER.rows.flatMap(row => row.pins);
+    expect(held.map(pin => `${pin.id}:${pin.claims.map(claim => claim.facts.length).join("+")}`)).toEqual(["A1:6+2", "A2:5", "B1:2", "B2:2+2", "B3:4", "C1:1+3", "C2:4", "C3:2+2", "C4:1+1"]);
+    expect(held.filter(pin => !tiled(pin.quote, pin.claims.map(claim => claim.term))).map(pin => pin.id)).toEqual([]);
   });
   for (const row of ROWS) describe(`${row.id} ${row.label}`, () => { for (const pin of row.pins) it(pin.id, { timeout: 180_000 }, async () => {
     const impl = IMPL[pin.id]; expect(impl).toBeTypeOf("function");
     const witness = impl === undefined ? null : await impl();
     const held = ROSTER.rows.flatMap(entry => entry.pins).find(entry => entry.id === pin.id);
-    expect(witness).toEqual(held?.witness); REACHED.add(pin.id);
+    LIVE.set(pin.id, witness);
+    expect(witness).toEqual(held?.witness); expect(claimMisses(pin.quote, held?.claims ?? [], witness)).toEqual([]); REACHED.add(pin.id);
   }); });
-  it("records: every registered pin ran and reached its witness", () => {
-    expect([...REACHED].sort()).toEqual(ROSTER.rows.flatMap(row => row.pins.map(pin => pin.id)).sort());
+  it(`${CLAIMS_BOUND}: every pin's claims refuse every other pin's live witness, and a re-authored pin stays quiet (R-REAUTHORED)`, () => {
+    const pins = ROSTER.rows.flatMap(row => row.pins);
+    expect([...LIVE.keys()].sort()).toEqual(pins.map(pin => pin.id).sort());
+    const accepted = pins.flatMap(pin => pins.filter(other => other.id !== pin.id && claimMisses(pin.quote, pin.claims, LIVE.get(other.id) ?? null).length === 0).map(other => `${pin.id} accepts ${other.id}`));
+    // R-REAUTHORED, the quiet row: C3 re-authored as one fact under one claim shows that claim and no registered pin's claims accept it.
+    const c3 = pins.find(pin => pin.id === "C3"); const fact = c3?.claims[0]?.facts[0] ?? ""; const reauthored: JsonValue = { [fact]: true };
+    const shows = claimMisses(c3?.quote ?? "", [{ term: c3?.quote ?? "", facts: [fact] }], reauthored);
+    const acceptedBy = pins.filter(pin => claimMisses(pin.quote, pin.claims, reauthored).length === 0).map(pin => pin.id);
+    expect({ pairs: pins.length * (pins.length - 1), accepted, reauthored: { fact, shows, acceptedBy } }).toEqual(ROSTER.claimsBound); REACHED.add(CLAIMS_BOUND);
+  });
+  it("records: every registered pin ran and reached its witness, and the claims bound case ran", () => {
+    expect([...REACHED].sort()).toEqual([...ROSTER.rows.flatMap(row => row.pins.map(pin => pin.id)), CLAIMS_BOUND].sort());
   });
 });
