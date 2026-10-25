@@ -24,11 +24,16 @@
  * host's replay basis). The rows:
  *  A, the trigger, absent today. A1 Pi declares, installs and loads no H2 producer package (H2_PACKAGE, the program's four Python
  *    SDKs and the TSX SDK in any spelling), and no src literal names one; A2 a lexical scan of every src module (identifiers and
- *    every string or template part, camelCase split, separators folded; comments are no reader) finds no gating work package
- *    (WORK_PACKAGE_TERMS) and no H2 identity-record word (IDENTITY_TERMS), with floors, the six judged sites as anchors, the four
- *    derived caches scanned quiet and the detector's controls; A3 the gating artifacts are measured unshipped: the bead row's
- *    gating sentence names RL-H2-01/02, FO-H2-01/02, RC-H2-02, RI-H2-02 and TSX-FED-01 and ends "Shipped: no.", and the roster's
- *    producer facts (read-only at the cited shas) hold each cited line verbatim and find no gating artifact name in producer src.
+ *    private names, every string or template part, every static name chain - a property access, an element access by a literal
+ *    key or a qualified name, read from its first named link - every nested key path of object keys, type members and binding
+ *    patterns, and every regex literal's pattern with its escapes and syntax read as separators; camelCase split, separators
+ *    folded; comments are no reader) finds no gating work package (WORK_PACKAGE_TERMS) and no H2 identity-record word
+ *    (IDENTITY_TERMS) beyond its one measured known spelling (KNOWN_SPELLINGS), with floors, the six judged sites as anchors, the
+ *    four derived caches scanned quiet and the detector's controls, one per term and one per reading (the chain, key-path and
+ *    regex readings and the reading controls: wb-flt6, the landing-316 gate's F3); A3 the gating artifacts are measured
+ *    unshipped: the bead row's gating sentence names RL-H2-01/02, FO-H2-01/02, RC-H2-02, RI-H2-02 and TSX-FED-01 and ends
+ *    "Shipped: no.", and the roster's producer facts (read-only at the cited shas) hold each cited line verbatim and find no gating
+ *    artifact name in producer src.
  *  B, acceptance (a). B1 at one native reference, a restarted owner's re-count (equal and lower sequences under fresh event ids)
  *    reads out-of-order and changes nothing, as do a sequence-less and a lower-sequence snapshot; a sequence-keyed cache fails the
  *    judge Pi's reading meets. B2 the observation cache's node key and event de-duplication and the evidence store's entry key
@@ -54,15 +59,31 @@
  *    reference field for field (mixed case and punctuation byte-identical), the rf preview's id and title carry rf's operation id
  *    verbatim through the cache and the reply, and an unsafe identity is refused as a typed row, never rewritten.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id, label
- * and pins, every pin's witness, the scan constants, the residual families and their quiet rows and every registered test title -
- * is held to the out-of-file roster (test/fixtures/h2-identity-reuse-roster.json). OUTSIDE ANCHOR: the owner filing's row in the
- * tracked bead export (.beads/issues.jsonl, row wb-4nut.9): each acceptance clause sits verbatim in exactly one row label and the
- * trigger in row A's, its quote and citation equal the roster's, its gating sentence lists the work packages A3 reads, and its quote,
- * authority quotes and merged citations are the roster's measured producer lines. Each pin's case is refused if its source reads the
- * roster's witnesses (rosterWitness or ROSTER.rows), so a case echoing the witness it is held to reds. Not claimed: a pin removed from
- * ROWS, the literal, IMPL and the roster together (the filing anchors rows and clauses, not pins), nor a case that returns its witness
- * as a literal or reads the roster through an alias. RECORDS: the last case walks this file's registered tests (vitest's task
- * tree): each roster title once, in order, in run mode, not inverted, ran; every pin's case reached its end.
+ * and pins, every pin's witness, the scan constants, the residual families and their quiet rows, every registered test title and
+ * the record below - is held to the out-of-file roster (test/fixtures/h2-identity-reuse-roster.json). OUTSIDE ANCHOR: the owner
+ * filing's row in the tracked bead export (.beads/issues.jsonl, row wb-4nut.9): each acceptance clause sits verbatim in exactly one
+ * row label and the trigger in row A's, its quote and citation equal the roster's, its gating sentence lists the work packages A3
+ * reads, and its quote, authority quotes and merged citations are the roster's measured producer lines. Each pin's case is refused
+ * if its source reads the roster's witnesses (rosterWitness or ROSTER.rows), so a case echoing the witness it is held to reds.
+ * THE RECORD (wb-flt6, the landing-316 gate's F1 and F4: a deleted witness comparison, a deleted outside-anchor block or a deleted
+ * records case left the file green): every case records its own end in REACHED as `${id}:${count}`, after its last assertion - the
+ * judged set at its end, each pin right after its witness comparison, the records case at its end - where count is vitest's own
+ * tally of the case's assertions (expect.getState().assertionCalls), so an early return, a dropped assertion or a deleted
+ * comparison leaves its entry absent or its count short; each pin also keeps its witness in MEASURED. The judged set, which runs
+ * first, holds the collected task tree to the roster's tests (every title once, in roster order, set to run and not inverted), so a
+ * records case deleted, renamed, skipped or inverted reds there. The records case walks the task tree again (each roster title
+ * once, in order, in run mode, not inverted, ran before it), holds REACHED to the roster's reached list and MEASURED to the
+ * roster's witnesses a second time, then records its own end, and the file-end judge (afterAll) holds that end, so a records case
+ * that returns early or skips itself at run time reds after it has run. The judge reads which cases were selected to run from the
+ * collected tree before the first case runs (beforeEach, once): under a test-name filter that deselects the records case it holds
+ * nothing.
+ * Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the filing anchors rows and clauses, not pins); a
+ * term removed from IDENTITY_TERMS or WORK_PACKAGE_TERMS together with its controls, the roster's scan and A2's witness (the
+ * filing anchors rows and clauses, not words, and no source outside this cut lists the vocabulary); an assertion removed from this
+ * file together with its pinned count in the roster's record; a case that keeps its own assertions but returns its witness as a
+ * literal, or reads the roster through an alias; the file-end judge or the selection it reads removed (no claim rides them alone:
+ * the records case still holds the record); every case of the file skipped at once (no case runs to read the tree, and vitest runs
+ * no hook for a file with nothing to run).
  * THE GATE-OPENING SIGNAL: A1 reds when an H2 producer package is declared, installed, loaded or named, and A2 when a src module
  * names a gating work package or an identity-record word: the H2 reader RL-H2-01/02, FO-H2-01/02, RC-H2-02 or RI-H2-02 calls for
  * reds this census first, and its cut re-pins (a) to (d) at that reader's own keys (B to E already pin the sites it would use).
@@ -73,7 +94,12 @@
  *   R-SAME-BASIS under one journal and one replay basis an equal prompt at an equal position after an intact prefix replays, which
  *   is Pi's own demand rule, not an inference demand (D2); R-COMPOSED a term assembled at runtime is invisible to A2 (its control
  *   reads 0); R-UNJUDGED-SITES the derived caches (the graph view's build cache, the inspector's relation cache, the workflow-name
- *   cache and the schedule store) are keyed by Pi's own keys or texts and are scanned by A2, quiet (A2).
+ *   cache and the schedule store) are keyed by Pi's own keys or texts and are scanned by A2, quiet (A2); R-OWN-FIELD the chain
+ *   reading reads Pi's own detached-host snapshot field (src/workbench/detached-observer.ts snapshot.observation, the local detached
+ *   contract's observed state: unknown, observed-started or observed-terminal) as the words "snapshot observation": it is no H2
+ *   record, so A2 holds it as its one known spelling, read (A2); R-SPLIT-NAMES a term split across two names that form no chain and
+ *   no key path - a key and the value it holds, a name and its type, a key and a call's argument, a declaration and its member - is
+ *   two names read one at a time, quiet (A2).
  * SCOPE: "Pi" is src/, the product modules; qa/ and test/ carry no Pi surface. Producer facts are measured at the cited shas
  * (read-only git rev-parse/show/grep on the local checkouts, no fetch; the checkouts' HEADs predate the pins): Pi vendors none of
  * them, so a producer ship is seen only when a cut re-measures the roster.
@@ -85,7 +111,7 @@ import { type Dirent, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
-import { describe, expect, it } from "vitest";
+import { afterAll, beforeEach, describe, expect, it, type RunnerTask } from "vitest";
 import { CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
 import { createClaudeWorkflowHost } from "../src/workbench/claude-host.js";
 import { type EvidenceContent, type EvidenceLoader, EvidenceStore } from "../src/workbench/evidence-loader.js";
@@ -157,19 +183,56 @@ const QUIET_CONTROLS: readonly string[] = [
   'const epoch = 1; const owner = "a"; const alias = "b"; const sequence = 3; const resync = true; const port = 8080;',
   "// owner epoch, RESYNC_REQUIRED and RL-H2-01 in a comment are no reader\nconst value = 1;",
   'const cacheKey = "k"; const projectionEventId = "e"; const replayBasis = "b";',
+  "const name = record.owner.name; const path = { owner: { name: 1 } }; const pattern = /owner[._]name/;",
 ];
 /** R-COMPOSED's quiet row: a term assembled at runtime. */
 const COMPOSED_CONTROL = 'const word = ["owner", "epoch"].join(" ");';
+/** One control per reading of the scan (wb-flt6, the 316 gate's F3: G08 dropped the private-name reading and the file stayed green):
+ * [label, the reading that must spell READING_TERM, the source], each source spelled by that reading alone, so a reading dropped
+ * from scanModule reds its control. */
+const READING_CONTROLS: readonly (readonly [string, string, string])[] = [
+  ["identifier", "identifier", "let ownerEpoch = 0;"],
+  ["private name", "identifier", "class Holder { #ownerEpoch = 0; }"],
+  ["string", "literal", 'const s = "owner epoch";'],
+  ["template part", "literal", `const t = \`\${a} owner epoch \${b}\`;`],
+  ["property access", "chain", "const e = record.owner.epoch;"],
+  ["computed root", "chain", "const e = load().owner.epoch;"],
+  ["element access", "chain", 'const e = record["owner"]?.["epoch"];'],
+  ["qualified name", "chain", "type E = Owner.Epoch;"],
+  ["object keys", "key path", "const o = { owner: { epoch: 1 } };"],
+  ["type members", "key path", "type T = { owner: { epoch: number } };"],
+  ["binding pattern", "key path", "const { owner: { epoch } } = record;"],
+  ["regex literal", "regex", "const r = /owner.epoch/;"],
+  ["regex escape", "regex", "const r = /owner\\.epoch/;"],
+  ["regex class", "regex", "const r = /owner[._-]epoch/i;"],
+];
+const READING_TERM = "owner epochs?";
+/** R-OWN-FIELD: the one spelling A2 reads in src and holds as known (`${path} ${reading} ${value}`): the local detached contract's
+ * snapshot field, read through the chain reading. */
+const KNOWN_SPELLINGS: readonly string[] = ["src/workbench/detached-observer.ts chain snapshot.observation"];
+/** R-SPLIT-NAMES' quiet row: a term split across two names that form no chain and no key path. */
+const SPLIT_CONTROLS: readonly string[] = [
+  "const o = { owner: epoch };", "function f(owner: Epoch) {}", "const o = { owner: wrap({ epoch: 1 }) };", "interface Owner { epoch: number }",
+];
 /** The H2 package spellings the pattern must read, and Pi's own rf provider module it must not. */
 const PACKAGE_CONTROLS: readonly string[] = ["reactive-components", "reactive_inference", "@reactive/inference", "fiber-optics", "fiber_optics", "reactive-lenses", "reactive_lenses", "@reactive-fiber/tsx"];
 const OWN_RF_SPECIFIER = "./providers/reactivefiber.js";
 /** The SDK packages Pi does bundle: the specifier reader must find each, so an empty H2 list is not a blind reader. */
 const OWN_SDKS: readonly string[] = ["@anthropic-ai/claude-agent-sdk", "@furnace/sdk", "@forge/sdk"];
-const RESIDUAL_FAMILIES: readonly string[] = ["R-EVENT-ID", "R-SNAPSHOT-RESYNC", "R-ADAPTER-REF", "R-SAME-BASIS", "R-COMPOSED", "R-UNJUDGED-SITES"];
+const RESIDUAL_FAMILIES: readonly string[] = [
+  "R-EVENT-ID", "R-SNAPSHOT-RESYNC", "R-ADAPTER-REF", "R-SAME-BASIS", "R-COMPOSED", "R-UNJUDGED-SITES", "R-OWN-FIELD", "R-SPLIT-NAMES",
+];
 /** The pin whose witness carries each residual's pinned quiet row (witness.quiet[family]). */
 const RESIDUAL_ROWS: Readonly<Record<string, string>> = {
   "R-EVENT-ID": "B1", "R-SNAPSHOT-RESYNC": "B1", "R-ADAPTER-REF": "B2", "R-SAME-BASIS": "D2", "R-COMPOSED": "A2", "R-UNJUDGED-SITES": "A2",
+  "R-OWN-FIELD": "A2", "R-SPLIT-NAMES": "A2",
 };
+const JUDGED_TITLE = "the judged set: the frozen shape, the out-of-file roster, the collected cases and the bead row agree";
+const RECORDS_TITLE =
+  "records: every case of this file is registered once, in roster order, in run mode, ran before this one and reached its end with its pinned assertion count";
+/** The record's ids for the two cases that are not pins. */
+const JUDGED_ID = "judged";
+const RECORDS_ID = "records";
 
 interface Row {
   readonly id: string;
@@ -244,6 +307,10 @@ interface Roster {
   readonly residualRows: JsonObject;
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
+  /** The ends every case before the records case records, in run order (`${id}:${count}`). */
+  readonly reached: readonly string[];
+  /** The records case's own end, held by the file-end judge. */
+  readonly recordsEnd: string;
 }
 
 function isObject(value: unknown): value is { [key: string]: unknown } {
@@ -299,6 +366,8 @@ function readRoster(): Roster {
     residualRows: json(raw.residualRows) as JsonObject,
     rows,
     tests: strings(raw.tests, "tests"),
+    reached: strings(raw.reached, "reached"),
+    recordsEnd: text(raw.recordsEnd, "recordsEnd"),
   };
 }
 
@@ -388,28 +457,96 @@ function scriptKindOf(path: string): ts.ScriptKind {
   if (extension === ".ts" || extension === ".mts" || extension === ".cts") return ts.ScriptKind.TS;
   return ts.ScriptKind.JSX;
 }
+/** One spelling of a vocabulary term: its module and line, the reading that read it, the term and the text it was read in. */
+interface Hit {
+  readonly path: string;
+  readonly line: number;
+  readonly reading: string;
+  readonly term: string;
+  readonly value: string;
+}
+const shownHit = (hit: Hit): string => `${hit.path}:${hit.line} ${hit.reading} ${hit.term}: ${hit.value}`;
+/** A hit as KNOWN_SPELLINGS names it: its module, its reading and its text, never its line. */
+const spellingOf = (hit: Hit): string => `${hit.path} ${hit.reading} ${hit.value}`;
 interface ModuleScan {
   readonly identifiers: Set<string>;
   readonly literals: Set<string>;
   readonly specifiers: string[];
-  readonly hits: string[];
+  readonly hits: Hit[];
   readonly packageLiterals: string[];
 }
 /** The literal text of a specifier-shaped argument, or undefined when it is computed. */
 const literalOf = (node: ts.Node | undefined): string | undefined => (node !== undefined && ts.isStringLiteralLike(node) ? node.text : undefined);
-/** One module, parsed under its own script kind: its identifiers and every string or template part (A2's terms and A1's package
- * literals), and its load specifiers - import, export, import-equals, import type, dynamic import, require and import.meta.resolve
- * (A1). Comments are never read: a comment is no reader. */
+/** One link of a static name chain: a property access, an element access by a literal key or a qualified name. */
+function linkOf(node: ts.Node): { readonly inner: ts.Node; readonly name: string } | undefined {
+  if (ts.isPropertyAccessExpression(node)) return { inner: node.expression, name: node.name.text };
+  if (ts.isElementAccessExpression(node) && ts.isStringLiteralLike(node.argumentExpression)) return { inner: node.expression, name: node.argumentExpression.text };
+  if (ts.isQualifiedName(node)) return { inner: node.left, name: node.right.text };
+  return undefined;
+}
+/** A chain's static spelling, its links joined by dots, read from its first named link: a computed root (a call, an element access
+ * by a computed key) is not part of it. */
+function chainOf(node: ts.Node): string | undefined {
+  const link = linkOf(node);
+  if (link === undefined) {
+    if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) return node.text;
+    return node.kind === ts.SyntaxKind.ThisKeyword ? "this" : undefined;
+  }
+  const inner = chainOf(link.inner);
+  return inner === undefined ? link.name : `${inner}.${link.name}`;
+}
+/** A member that states a key: an object key, a class or type member, or an element of a binding pattern. */
+type Keyed =
+  | ts.PropertyAssignment
+  | ts.ShorthandPropertyAssignment
+  | ts.PropertySignature
+  | ts.PropertyDeclaration
+  | ts.MethodDeclaration
+  | ts.MethodSignature
+  | ts.GetAccessorDeclaration
+  | ts.SetAccessorDeclaration
+  | ts.BindingElement;
+function isKeyed(node: ts.Node): node is Keyed {
+  return ts.isPropertyAssignment(node) || ts.isShorthandPropertyAssignment(node) || ts.isPropertySignature(node) || ts.isPropertyDeclaration(node) ||
+    ts.isMethodDeclaration(node) || ts.isMethodSignature(node) || ts.isGetAccessorDeclaration(node) || ts.isSetAccessorDeclaration(node) || ts.isBindingElement(node);
+}
+/** The key a member states when it is a name or a literal; a computed key states none. */
+function keyOf(node: Keyed): string | undefined {
+  const name = ts.isBindingElement(node) ? (node.propertyName ?? node.name) : node.name;
+  return ts.isIdentifier(name) || ts.isPrivateIdentifier(name) || ts.isStringLiteralLike(name) || ts.isNumericLiteral(name) ? name.text : undefined;
+}
+/** Where a key path ends: a function, a call, a class, a block, a parameter, or a declaration that names a binding or a type. */
+const pathEnds = (node: ts.Node): boolean =>
+  ts.isSourceFile(node) || ts.isFunctionLike(node) || ts.isCallExpression(node) || ts.isNewExpression(node) || ts.isClassLike(node) || ts.isBlock(node) ||
+  ts.isParameter(node) || ts.isVariableDeclaration(node) || ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node);
+/** A member's key path: the keys of the members it is nested in and its own, outermost first, up to where the path ends. */
+function keyPathOf(node: Keyed): string[] {
+  const keys: string[] = [];
+  for (let at: ts.Node = node; at === node || !pathEnds(at); at = at.parent) {
+    if (!isKeyed(at)) continue;
+    const key = keyOf(at);
+    if (key === undefined) break;
+    keys.unshift(key);
+  }
+  return keys;
+}
+/** A regex literal as the vocabulary reads it: every letter escape (\s, \d) and every pattern-syntax character a separator, an
+ * escaped character itself. */
+const patternOf = (literal: string): string => literal.replace(/\\[a-zA-Z]/g, " ").replace(/\\(.)/g, "$1").replace(/[[\]()?*+|{}^$\\]/g, " ");
+/** One module, parsed under its own script kind: its identifiers and private names, every string or template part, every static
+ * name chain (read once, from its outermost link), every nested key path of two or more keys and every regex literal's pattern
+ * (A2's terms; the literals are also A1's package literals), and its load specifiers - import, export, import-equals, import type,
+ * dynamic import, require and import.meta.resolve (A1). Comments are never read: a comment is no reader. */
 function scanModule(path: string, source: string): ModuleScan {
   const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
   const identifiers = new Set<string>();
   const literals = new Set<string>();
   const specifiers: string[] = [];
-  const hits: string[] = [];
+  const hits: Hit[] = [];
   const packageLiterals: string[] = [];
   const line = (node: ts.Node): number => file.getLineAndCharacterOfPosition(node.getStart(file)).line + 1;
-  const spelled = (node: ts.Node, kind: string, value: string): void => {
-    for (const term of termsIn(value)) hits.push(`${path}:${line(node)} ${kind} ${term}: ${value}`);
+  const spelled = (node: ts.Node, reading: string, value: string, read: string = value): void => {
+    for (const term of termsIn(read)) hits.push({ path, line: line(node), reading, term, value });
   };
   const load = (node: ts.Node | undefined): void => {
     const value = literalOf(node);
@@ -423,6 +560,17 @@ function scanModule(path: string, source: string): ModuleScan {
       literals.add(node.text);
       spelled(node, "literal", node.text);
       if (H2_PACKAGE.test(node.text)) packageLiterals.push(`${path}:${line(node)}: ${node.text}`);
+    } else if (ts.isRegularExpressionLiteral(node)) {
+      spelled(node, "regex", node.text, patternOf(node.text));
+    }
+    // A static name chain is read once, from its outermost link; a key path where it holds two or more keys.
+    if (linkOf(node) !== undefined && linkOf(node.parent)?.inner !== node) {
+      const chain = chainOf(node);
+      if (chain !== undefined) spelled(node, "chain", chain);
+    }
+    if (isKeyed(node)) {
+      const keys = keyPathOf(node);
+      if (keys.length > 1) spelled(node, "key path", keys.join("."));
     }
     if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) load(node.moduleSpecifier);
     if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference)) load(node.moduleReference.expression);
@@ -662,11 +810,6 @@ async function journalRun(basis: string, entries: readonly WorkflowJournalEntry[
   return { calls: calls.length, replayed: result.replayedCount, value: String(result.value), recorded };
 }
 
-const REACHED: string[] = [];
-function done(pin: string, witness: JsonObject): JsonValue {
-  REACHED.push(pin);
-  return json(witness);
-}
 const errorOf = (run: () => unknown): string => {
   try {
     run();
@@ -698,11 +841,14 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     expect(H2_PACKAGE.test(OWN_RF_SPECIFIER), "Pi's own rf provider module is not an H2 package").toBe(false);
     expect(installed.length, "node_modules is installed, so an empty installed list is measured").toBeGreaterThan(50);
     expect(Number(lists.dependencies) + Number(lists.devDependencies), "package.json's dependency lists are read").toBeGreaterThanOrEqual(10);
-    return done("A1", { declaredH2, installedH2, loadedH2, namedH2, ownSdksRead, patternReads, ownRfRead: false, declaredFloorMet: names.length >= 10, installedFloorMet: installed.length > 50 });
+    return json({ declaredH2, installedH2, loadedH2, namedH2, ownSdksRead, patternReads, ownRfRead: false, declaredFloorMet: names.length >= 10, installedFloorMet: installed.length > 50 });
   },
   A2: () => {
     const scan = srcScan();
-    const hits = [...scan.modules.values()].flatMap(scanned => scanned.hits);
+    const read = [...scan.modules.values()].flatMap(scanned => scanned.hits);
+    // R-OWN-FIELD: a hit KNOWN_SPELLINGS names (by module, reading and text) is held as known; every other hit is a finding.
+    const hits = read.filter(hit => !KNOWN_SPELLINGS.includes(spellingOf(hit))).map(shownHit);
+    const known = [...new Set(read.filter(hit => KNOWN_SPELLINGS.includes(spellingOf(hit))).map(spellingOf))].sort();
     const nonModules = scan.files.filter(path => !MODULE_EXTENSIONS.includes(extensionOf(path)));
     const anchors = Object.entries(ANCHORS).map(([path, identifier]) => `${path}:${scan.modules.get(path)?.identifiers.has(identifier) === true}`);
     const literalAnchors = Object.entries(LITERAL_ANCHORS).map(([path, literal]) => `${path}:${scan.modules.get(path)?.literals.has(literal) === true}`);
@@ -710,10 +856,13 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       const scanned = scan.modules.get(path);
       return `${path}:${scanned?.identifiers.has(identifier) === true}:${scanned?.hits.length ?? -1}`;
     });
-    const flagged = FLAGGED_CONTROLS.map(([source, term]) => `${term}:${scanModule("control.ts", source).hits.some(hit => hit.includes(` ${term}: `))}`);
+    const flagged = FLAGGED_CONTROLS.map(([source, term]) => `${term}:${scanModule("control.ts", source).hits.some(hit => hit.term === term)}`);
+    const readings = READING_CONTROLS.map(([label, reading, source]) => `${label}:${scanModule("control.ts", source).hits.some(hit => hit.reading === reading && hit.term === READING_TERM)}`);
     const quietControls = QUIET_CONTROLS.map(source => scanModule("control.ts", source).hits.length);
     const composed = scanModule("control.ts", COMPOSED_CONTROL).hits.length;
+    const split = SPLIT_CONTROLS.map(source => scanModule("control.ts", source).hits.length);
     expect(hits, "a src module names a gating work package or an H2 identity-record word").toEqual([]);
+    expect(known, "the known spelling is read where it stands, so the chain reading is live on src").toEqual([...KNOWN_SPELLINGS]);
     expect(scan.files.length, "src files above the floor").toBeGreaterThanOrEqual(FLOORS.srcFiles);
     expect(scan.modules.size, "src modules above the floor").toBeGreaterThanOrEqual(FLOORS.srcModules);
     expect({ nonModules, symlinks: scan.symlinks }, "every src file is a module the compiler parses").toStrictEqual({ nonModules: [], symlinks: [] });
@@ -721,10 +870,11 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     expect(literalAnchors.every(entry => entry.endsWith(":true")), "the scan reads literals at the judged sites").toBe(true);
     expect(quietSites.every(entry => entry.endsWith(":true:0")), "the derived caches are scanned and quiet").toBe(true);
     expect(flagged.every(entry => entry.endsWith(":true")), "each flagged control reads its own term").toBe(true);
+    expect(readings.every(entry => entry.endsWith(":true")), "each reading control is spelled by its own reading").toBe(true);
     expect(quietControls, "the quiet controls read nothing").toEqual(QUIET_CONTROLS.map(() => 0));
-    return done("A2", {
-      hits, floorsMet: { srcFiles: scan.files.length >= FLOORS.srcFiles, srcModules: scan.modules.size >= FLOORS.srcModules }, nonModules, anchors, literalAnchors, flagged, quietControls,
-      quiet: { "R-COMPOSED": composed, "R-UNJUDGED-SITES": quietSites },
+    return json({
+      hits, floorsMet: { srcFiles: scan.files.length >= FLOORS.srcFiles, srcModules: scan.modules.size >= FLOORS.srcModules }, nonModules, anchors, literalAnchors, flagged, readings,
+      quietControls, quiet: { "R-COMPOSED": composed, "R-UNJUDGED-SITES": quietSites, "R-OWN-FIELD": known, "R-SPLIT-NAMES": split },
     });
   },
   A3: () => {
@@ -752,7 +902,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     expect(rowsHold.every(entry => entry.endsWith(":true")), "each cited producer row names its work package").toBe(true);
     expect(probes.every(entry => entry.endsWith(":0")), "no producer src names a gating artifact at the pin").toBe(true);
     expect({ fedRow, publicPortOwner }, "TSX-FED-01 owns the public-port vocabulary").toStrictEqual({ fedRow: true, publicPortOwner: true });
-    return done("A3", { packages, fed, shipped, cited, rowsHold, probes, fedRow, publicPortOwner });
+    return json({ packages, fed, shipped, cited, rowsHold, probes, fedRow, publicPortOwner });
   },
   B1: () => {
     const projection = new ObservationProjection();
@@ -795,7 +945,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       nodes: 1, statusText: "VALUE epoch-2 r3", statusTone: "waiting", freshness: "current", completeness: "complete", sourceVersion: "epoch-2", subjectBasis: null,
       payloadRef: null, evidenceRefs: [], title: "port.value", observedAt: at(40),
     });
-    return done("B1", {
+    return json({
       first, restart, snapshots, unchanged, before: before.node, piFailures, sequenceKeyed, sequenceKeyedFailures,
       quiet: { "R-EVENT-ID": restated, "R-SNAPSHOT-RESYNC": resynced },
     });
@@ -853,7 +1003,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     expect(eventVerdicts).toEqual(["applied", "applied"]);
     expect(adapterRef.nodes).toBe(1);
     expect(loadsAfterSecond, "a loaded entry is reused only at its own key").toBe(loadsAfterFirst);
-    return done("B2", {
+    return json({
       variants: variants.map(variant => variant.name), refreshed, readings, scopeless, scopelessFailures: judged(owed, scopeless), eventVerdicts,
       loads: [...first.loads, ...second.loads], loadsAfterFirst, loadsAfterSecond, entries, quiet: { "R-ADAPTER-REF": adapterRef },
     });
@@ -893,7 +1043,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     expect(byPayload, "no query selects by the payload digest").toStrictEqual({ evidence: 0, basis: 0, version: 0 });
     expect(queryMembers.some(member => /payload|digest|bytes|text/i.test(member)), "ObservationQuery has no payload member").toBe(false);
     expect(replyCarriesPayload, "the workflow_observe reply carries no payload digest").toBe(false);
-    return done("C1", { admitted, two, changed, invalidated, readings, payloadKeyed, payloadKeyedFailures: judged(owed, payloadKeyed), byPayload, queryMembers, replyNodes: reply.nodes.length, replyCarriesPayload });
+    return json({ admitted, two, changed, invalidated, readings, payloadKeyed, payloadKeyedFailures: judged(owed, payloadKeyed), byPayload, queryMembers, replyNodes: reply.nodes.length, replyCarriesPayload });
   },
   C2: async () => {
     const counting = countingLoader("h2-fixture", {
@@ -930,7 +1080,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     expect(judged(owed, readings), "each entry keeps its own freshness and receipt").toEqual([]);
     expect(new Set(views.map(view => String(view.sourceBasis))).size, "each entry keeps its own basis").toBe(2);
     expect(judged(owed, contentKeyed).length, "the content-keyed control fails the judge").toBe(1);
-    return done("C2", { loads: counting.loads, counts: [afterTwo, afterRepeat, afterOwnerB], views, samePreview, readings, contentKeyed, contentKeyedFailures: judged(owed, contentKeyed) });
+    return json({ loads: counting.loads, counts: [afterTwo, afterRepeat, afterOwnerB], views, samePreview, readings, contentKeyed, contentKeyedFailures: judged(owed, contentKeyed) });
   },
   C3: () => {
     const clean = previewOf({ operation: OPERATIONS.clean });
@@ -956,7 +1106,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     expect([cleanHeld?.statusTone, flaggedHeld?.statusTone]).toEqual(["success", "unknown"]);
     expect([replaced, replacedHeld?.statusTone, replacedHeld?.completeness]).toEqual(["applied", "unknown", "partial"]);
     expect(payloadIsEvidence, "the payload digest is never an evidence reference").toBe(false);
-    return done("C3", { clean: shape(clean), flagged: shape(flagged), payloadEqual: clean.nativePayloadRef === flagged.nativePayloadRef, admitted, cleanHeld, flaggedHeld, replaced, replacedHeld, payloadIsEvidence });
+    return json({ clean: shape(clean), flagged: shape(flagged), payloadEqual: clean.nativePayloadRef === flagged.nativePayloadRef, admitted, cleanHeld, flaggedHeld, replaced, replacedHeld, payloadIsEvidence });
   },
   D1: () => {
     const one = previewOf({ operation: OPERATIONS.bundleOne, bundle: BUNDLES.one });
@@ -986,7 +1136,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     expect(bundleRefs).toStrictEqual({ one: [OPERATIONS.bundleOne], two: [OPERATIONS.bundleTwo], payload: 0 });
     expect([moved, afterMove]).toStrictEqual(["applied", { one: [], two: [OPERATIONS.bundleOne, OPERATIONS.bundleTwo] }]);
     expect(textHashLoader, "no registered evidence loader reads an rf reference or a text hash").toBe(false);
-    return done("D1", { readings, payloadEqual: one.nativePayloadRef === two.nativePayloadRef, admitted, cohorts, bundleRefs, moved, afterMove, loaderRows, textHashLoader, textKeyedFailures: judged(owed, textKeyed) });
+    return json({ readings, payloadEqual: one.nativePayloadRef === two.nativePayloadRef, admitted, cohorts, bundleRefs, moved, afterMove, loaderRows, textHashLoader, textKeyedFailures: judged(owed, textKeyed) });
   },
   D2: async () => {
     const recordedUnderA = await journalRun("source-a", []);
@@ -1014,7 +1164,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     expect(judged(owed, [underB.value]), "the second source reads its own answer").toEqual([]);
     expect(judged(owed, promptKeyed).length, "the prompt-keyed control fails the judge").toBe(1);
     expect(hostBases, "Claude hosts separate the workspace, the principal and the grants").toStrictEqual({ sameConfigEqual: true, distinct: 4 });
-    return done("D2", {
+    return json({
       first: [recordedUnderA.calls, recordedUnderA.replayed], otherSource: [underB.calls, underB.replayed, underB.value], keysArePromptKey: keys.map(key => key === promptKey), bases, promptKeyed,
       promptKeyedFailures: judged(owed, promptKeyed), hostBases, quiet: { "R-SAME-BASIS": [underA.calls, underA.replayed, underA.value] },
     });
@@ -1052,7 +1202,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     expect(judged(owed, aliasKeyed).length, "the alias-keyed control fails the judge").toBe(2);
     expect(selfAlias).toBe("validation: ReactiveFiber topology refused: the operation reference aliases the preview node itself.");
     expect(otherOwnerEdge).toEqual([`h2-fixture/${OPERATIONS.clean} -> reactivefiber/${OPERATIONS.clean}`]);
-    return done("E1", { admitted, distinctKeys: new Set(keys.flat()).size, own, edges, readings, aliasKeyed, aliasKeyedFailures: judged(owed, aliasKeyed), selfAlias, otherOwnerEdge });
+    return json({ admitted, distinctKeys: new Set(keys.flat()).size, own, edges, readings, aliasKeyed, aliasKeyedFailures: judged(owed, aliasKeyed), selfAlias, otherOwnerEdge });
   },
   E2: () => {
     const spelled: NativeRef = { provider: "H2-Fixture.Owner", type: "Public-Port", id: "Owner-A.Port/value@r7#e1", scope: "Owner-A:Instance-1:Epoch-1" };
@@ -1079,7 +1229,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     expect(rfShown).toStrictEqual({ id: OPERATIONS.clean, title: `RF context preview ${OPERATIONS.clean}`, replyId: OPERATIONS.clean, replyTitle: `RF context preview ${OPERATIONS.clean}` });
     expect([refused, afterRefusal]).toEqual(["refused", 3]);
     expect(refusals).toEqual([{ path: "refresh", ref: "source", field: "id", codePoint: "U+202E", reason: "unsafe-identity" }]);
-    return done("E2", { shownRefs: json(shownRefs), verbatim, titles, rfShown, refused, refusals: json(refusals), afterRefusal });
+    return json({ shownRefs: json(shownRefs), verbatim, titles, rfShown, refused, refusals: json(refusals), afterRefusal });
   },
 };
 
@@ -1107,6 +1257,10 @@ const SCAN: JsonObject = json({
   flaggedControls: FLAGGED_CONTROLS,
   quietControls: QUIET_CONTROLS,
   composedControl: COMPOSED_CONTROL,
+  readingControls: READING_CONTROLS,
+  readingTerm: READING_TERM,
+  knownSpellings: KNOWN_SPELLINGS,
+  splitControls: SPLIT_CONTROLS,
   packageControls: PACKAGE_CONTROLS,
   ownRfSpecifier: OWN_RF_SPECIFIER,
   ownSdks: OWN_SDKS,
@@ -1115,8 +1269,52 @@ const SCAN: JsonObject = json({
 /** A describe title: the row id and its label. */
 const titleOf = (row: Row): string => `${row.id} ${row.label}`;
 
+/** THE RECORD: each case's end, in run order, as `${id}:${count}` (vitest's tally of the case's assertions), pushed only after the
+ * case's last assertion; a pin's right after its witness comparison. */
+const REACHED: string[] = [];
+/** Each pin's witness as its case measured it; the records case compares it against the roster a second time. */
+const MEASURED: Record<string, JsonValue> = {};
+/** The titles selected to run, read from the collected task tree before any case runs (a test-name filter deselects the rest). */
+const SELECTED: string[] = [];
+/** A case's end as the record holds it. */
+const endOf = (id: string): string => `${id}:${expect.getState().assertionCalls}`;
+
+interface Registered {
+  readonly name: string;
+  readonly mode: string;
+  readonly fails: boolean;
+  readonly state: string | undefined;
+  readonly self: boolean;
+}
+/** Every test a collected task tree holds, in registration order; self marks the case doing the reading. */
+function registered(tasks: readonly RunnerTask[], self?: RunnerTask): Registered[] {
+  const walked: Registered[] = [];
+  for (const child of tasks) {
+    if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === self });
+    else if (child.type === "suite") walked.push(...registered(child.tasks, self));
+  }
+  return walked;
+}
+/** A registered test's title with its collected mode, "+fails" marking an inverted one. */
+const modeLine = (entry: Registered): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""}`;
+
+// The selection, read once from the collected tree before the first case runs (no case has run, so every mode is the collected one).
+beforeEach(({ task }) => {
+  if (SELECTED.length === 0) SELECTED.push(...registered(task.file.tasks).filter(entry => entry.mode === "run").map(entry => entry.name));
+});
+// The file-end judge: a records case selected to run reached its own end, after every other case's, with its pinned count.
+afterAll(() => {
+  if (!SELECTED.includes(RECORDS_TITLE)) return;
+  expect(REACHED, "every case of this file reached its end, the records case last").toEqual([...ROSTER.reached, ROSTER.recordsEnd]);
+});
+
 describe("wb-4nut.9 H2 identity and reuse census (TSX-HARNESS2-REACTIVE-EVOLUTION-R9, absent-today leg and armed guard)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster and the bead row agree", { timeout: 60_000 }, () => {
+  it(JUDGED_TITLE, { timeout: 60_000 }, ({ task }) => {
+    // The collected cases, read before any other case runs: a records case deleted, renamed, skipped or inverted reds here.
+    const collected = registered(task.file.tasks, task);
+    expect(collected.map(entry => entry.name), "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
+    expect(collected.findIndex(entry => entry.self), "this case finds itself by task identity, registered first").toBe(0);
+    expect(collected.filter(entry => entry.mode !== "run" || entry.fails).map(modeLine), "every registered test is set to run and not inverted").toEqual([]);
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:2", "C:3", "D:2", "E:2"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
@@ -1164,6 +1362,7 @@ describe("wb-4nut.9 H2 identity and reuse census (TSX-HARNESS2-REACTIVE-EVOLUTIO
       return `${found[1]}:${source.sha.startsWith(found[3] ?? "-") && source.file.endsWith("README.md") && lines.every(line => source.lines.some(entry => entry.line === line))}`;
     });
     expect(merged).toEqual(["RL:true", "FO:true", "RC:true", "RI:true", "RF:true"]);
+    REACHED.push(endOf(JUDGED_ID));
   });
 
   for (const row of ROWS) {
@@ -1176,28 +1375,29 @@ describe("wb-4nut.9 H2 identity and reuse census (TSX-HARNESS2-REACTIVE-EVOLUTIO
           expect(String(impl), `${pin}'s case reads the roster's witnesses`).not.toMatch(/\brosterWitness\b|\bROSTER\.rows\b/);
           const witness = impl === undefined ? null : await impl();
           expect(witness).toStrictEqual(rosterWitness(pin));
+          MEASURED[pin] = witness;
+          REACHED.push(endOf(pin));
         });
       }
     });
   }
 
-  it("records: every registered test ran once in run mode in roster order and every pin reached its end", { timeout: 60_000 }, ({ task }) => {
-    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
-    const visit = (tasks: typeof task.file.tasks): void => {
-      for (const child of tasks) {
-        if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
-        else if (child.type === "suite") visit(child.tasks);
-      }
-    };
-    visit(task.file.tasks);
+  it(RECORDS_TITLE, { timeout: 60_000 }, ({ task }) => {
+    const walked = registered(task.file.tasks, task);
     const titles = walked.map(entry => entry.name);
-    expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual(ROSTER.tests);
+    expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
     expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice").toEqual([]);
     const here = walked.findIndex(entry => entry.self);
     expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
     const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
-    const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
+    const read = (entry: Registered): string => `${modeLine(entry)} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
-    expect(REACHED, "every pin's case reached its end, in row order").toEqual(ROWS.flatMap(row => row.pins));
+    // THE RECORD: every case before this one reached its end - the judged set first, then each pin right after its witness
+    // comparison - with its pinned assertion count, and each pin's measured witness equals the roster's a second time.
+    const pins = ROWS.flatMap(row => row.pins);
+    expect(REACHED, "every case before this one reached its end, in run order, with its pinned assertion count").toEqual([...ROSTER.reached]);
+    expect(REACHED.map(entry => entry.slice(0, entry.lastIndexOf(":"))), "the reached ids are the judged set, then the rows' pins").toEqual([JUDGED_ID, ...pins]);
+    expect(MEASURED, "every pin's measured witness, compared against the roster a second time").toStrictEqual(Object.fromEntries(pins.map(pin => [pin, rosterWitness(pin)])));
+    REACHED.push(endOf(RECORDS_ID));
   });
 });
