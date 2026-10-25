@@ -423,7 +423,16 @@ describe("W21 honest exit semantics (C1/C2)", () => {
     expect(receipt.exitCode).toBe(2);
     expect(exitCode(receipt)).toBe(2);
     expect(receipt.violations.map(violation => violation.rule)).toEqual(expect.arrayContaining(["operations-below-10000", "updates-below-100000"]));
-    for (const pass of Object.values(receipt.passes)) expect(pass.build.overall.p95).toBeLessThan(targetMs);
+    // "Every p95 is fast" is judged by the exit-code rule itself, never read off the wall clock (wb-rjch): a loaded
+    // shared host pushes a measured p95 past 20 ms while everything above stays put. The realised twin of this receipt,
+    // every judged p95 inside the target, exits 0; putting back this receipt's off-shape fixture, and nothing else,
+    // makes that same fast receipt exit 2 with exactly this receipt's violations, so the exit 2 is the shape's alone.
+    const twin = realisedFast();
+    expect(assess(twin)).toMatchObject({ realised: true, exitCode: 0, verdict: "within-target", target: { over: [] } });
+    twin.fixture = structuredClone(receipt.fixture);
+    const offShape = assess(twin);
+    expect(offShape).toMatchObject({ realised: false, exitCode: 2, verdict: "not-w21-shape" });
+    expect(offShape.violations).toEqual(receipt.violations);
   }, 120_000);
 
   it("exits 0 for a realised, fast, complete receipt; 20 ms itself is within target", () => {
