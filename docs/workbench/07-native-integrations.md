@@ -24,7 +24,7 @@ Use public TypeScript client for runs.start/get/status/events/pause/stop as veri
 
 ## HyperUnix provider
 
-Use typed TS HX SDK/HXQ builder/results; preserve source basis, coverage classification, bounds, known-empty vs incomplete/unknown and evidence. Incomplete query cannot silently authorize "nothing to do" or produce false success. Graph query as observation enhancement is optional; HX is not mandatory UI event storage.
+Use typed TS HX SDK/HXQ builder/results; preserve source basis, coverage classification, bounds, known-empty vs incomplete/unknown and evidence. Incomplete query cannot silently authorize "nothing to do" or produce false success. Graph query as observation enhancement is optional; HX is not mandatory UI event storage. An HX answer is an observation only: the hyperunix.find reader adapter projects one hyperunix.query.snapshot whose evidence references are hx-binary and hx-coverage references only and no Beads, Forge, Furnace or Git kind or reference, and its one possible edge is the display grouping from the invoking operation the host names, so an HX answer never closes Beads work, passes a Forge gate or stands for a Furnace state or a Git basis.
 
 ## ReactiveFiberCLI provider
 
@@ -40,7 +40,7 @@ Optional future continuation projection/adaptor, only when compatible native cap
 
 ## Agent provider
 
-Use Claude Agent SDK for workflow agent(). Role-specific tool catalogs may include restricted Forge/HX/Furnace/RF actions through the provider edges, not a universal all-tools conversion. Native Claude SDK hooks/session records remain first-class.
+Use Claude Agent SDK for workflow agent(). Role-specific tool catalogs may include restricted Forge/HX/Furnace/RF actions through the provider edges, not a universal all-tools conversion. Native Claude SDK hooks/session records remain first-class. A Claude agent() call's completion, its transcript and its session reference are observations only: the Claude topology adapter projects claude.call, claude.session and claude.tool-use snapshots with partial or unknown coverage and no Forge, Furnace, Beads or Git snapshot, edge or reference, and a claude-message evidence read carries no status or verdict, so a failed Forge gate stays failed and an open Beads item stays open whatever the transcript says.
 
 ## Shared integration requirements
 
