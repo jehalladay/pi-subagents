@@ -1,0 +1,160 @@
+{
+ "provenance": "wb-nqbd guard roster (the R694 follow-up of wb-maza landing 395, gate cmd_d35d53e6a40a: F1 leads, F2-F5 ride), cut by ws-03 (run g10-work-s96) on trunk 467b14b4bf0106677ab65fd79efb4c8a8c6990e9. The rules of every control were authored from the bead's findings before the widened reading existed (RED-1 of record: 28 of 28 kill controls read nothing on the landed reader); each finding's text was then measured by test/workbench-detached-timing-guard.test.ts on 467b14b plus the cut and reviewed against the finding it pins, so a control swapped to another case of the same rule reds. controls holds what each planted site of the guard yields, as '<rule> <text>' (F1, F2 and F3 kill controls; N negative controls, which yield nothing), residuals the quiet rows of each named residual (F5), raiseRows the family's raiseTransportLapse call rows (F5, R-RAISE-SITE), and tests the guard's collected test titles in order, '%s: ' opening a per-member rule row (F4, the frozen shape).",
+ "bead": "wb-nqbd",
+ "tests": [
+  "judges every default-gate member of the family, read from the test directory and vitest.config.ts",
+  "pins the members that import the marked twins: the two suites that drive real hosts, and the helper's own unit rows",
+  "%s: G1 drives hosts only through the marked twins, never a raw launch or connect value import",
+  "%s: G2 holds no raw timer - a timed wait is pollFor and a held window is holdOpen",
+  "%s: G3 holds no fixed-count or clock-deadline poll loop (the pre-cure shape)",
+  "%s: G4 a hook that stops hosts reports a lapse only after its cleanup, under HOST_HOOK_TIMEOUT_MS",
+  "reads each rule's own shape: a planted member with one site per rule yields exactly its G1-G4 findings (instrument check)",
+  "wb-nqbd F4 frozen shape, as collected: this file's tests equal the roster's, expanded over the judged set, in order and in run mode, and the roster's shape equals the frozen-shape literal",
+  "wb-nqbd F1 kill controls: vitest's wait helpers and AbortSignal.timeout read as G2 - by name on any receiver, by a string key or through a destructured binding",
+  "wb-nqbd F2 kill controls: a for, while or do loop whose condition joins any relational bound with && reads as G3 - a countdown, a reversed or named bound, a while or do counter",
+  "wb-nqbd F3 kill controls: a timer global by a string key and Atomics.wait read as G2, and every vitest hook that stops hosts - itself or through module-local functions - reads as G4",
+  "wb-nqbd negative controls: a settled hook, a hook that stops nothing, a loop without && or without a relational bound, text alone and another object's members yield no finding; the controls are the roster's, in order",
+  "wb-nqbd F5 named residuals: every residual the header names has quiet rows in the roster, and each quiet row's planted member yields no finding",
+  "wb-nqbd F5 R-RAISE-SITE: the family's raiseTransportLapse call rows equal the roster's - socket-base's 60-byte TMPDIR row and the helper's own unit row",
+  "wb-nqbd F4 frozen shape, as run: this file's tests equal the roster's, expanded over the judged set, and every other test ran before this last case"
+ ],
+ "controls": {
+  "F1.waitFor": [
+   "G2 uses vitest's waitFor as a member"
+  ],
+  "F1.waitUntil": [
+   "G2 uses vitest's waitUntil as a member"
+  ],
+  "F1.poll": [
+   "G2 uses vitest's poll as a member"
+  ],
+  "F1.helperBinding": [
+   "G2 uses vitest's waitFor through a destructured binding"
+  ],
+  "F1.helperKey": [
+   "G2 uses poll by a string key"
+  ],
+  "F1.signalTimeout": [
+   "G2 uses AbortSignal.timeout"
+  ],
+  "F1.signalGlobal": [
+   "G2 uses globalThis.AbortSignal.timeout"
+  ],
+  "F1.signalKey": [
+   "G2 uses AbortSignal.timeout by a string key"
+  ],
+  "F1.signalBinding": [
+   "G2 destructures AbortSignal.timeout"
+  ],
+  "F2.countdown": [
+   "G3 fixed-count poll loop: for (...; i > 0 && alive(); ...)"
+  ],
+  "F2.reversedBound": [
+   "G3 fixed-count poll loop: for (...; 150 > i && alive(); ...)"
+  ],
+  "F2.namedBound": [
+   "G3 fixed-count poll loop: for (...; i < MAX_POLLS && alive(); ...)"
+  ],
+  "F2.whileCounter": [
+   "G3 fixed-count poll loop: while (n++ < 150 && alive())"
+  ],
+  "F2.doCounter": [
+   "G3 fixed-count poll loop: do ... while (alive() && ++n <= 150)"
+  ],
+  "F2.atLeast": [
+   "G3 fixed-count poll loop: while (alive() && budget-- >= 1)"
+  ],
+  "F3.timerKey": [
+   "G2 uses setTimeout by a string key"
+  ],
+  "F3.timerTemplateKey": [
+   "G2 uses setInterval by a string key"
+  ],
+  "F3.timerBindingKey": [
+   "G2 destructures setTimeout by a string key"
+  ],
+  "F3.atomicsWait": [
+   "G2 uses Atomics.wait"
+  ],
+  "F3.atomicsWaitAsync": [
+   "G2 uses Atomics.waitAsync"
+  ],
+  "F3.afterAllHook": [
+   "G4 a hook that stops hosts (afterAll) runs without HOST_HOOK_TIMEOUT_MS",
+   "G4 a hook that stops hosts (afterAll) settles its waits without reportAfterCleanup"
+  ],
+  "F3.beforeEachHook": [
+   "G4 a hook that stops hosts (beforeEach) runs without HOST_HOOK_TIMEOUT_MS",
+   "G4 a hook that stops hosts (beforeEach) settles its waits without reportAfterCleanup"
+  ],
+  "F3.beforeAllHook": [
+   "G4 a hook that stops hosts (beforeAll) settles its waits without reportAfterCleanup"
+  ],
+  "F3.helperStop": [
+   "G4 a hook that stops hosts (afterEach through stopHosts) runs without HOST_HOOK_TIMEOUT_MS",
+   "G4 a hook that stops hosts (afterEach through stopHosts) settles its waits without reportAfterCleanup"
+  ],
+  "F3.arrowHelper": [
+   "G4 a hook that stops hosts (afterEach through stopHosts) settles its waits without reportAfterCleanup"
+  ],
+  "F3.namedCallback": [
+   "G4 a hook that stops hosts (afterEach through stopAll) settles its waits without reportAfterCleanup"
+  ],
+  "F3.deepHelper": [
+   "G4 a hook that stops hosts (afterEach through stopHosts > signal) runs without HOST_HOOK_TIMEOUT_MS",
+   "G4 a hook that stops hosts (afterEach through stopHosts > signal) settles its waits without reportAfterCleanup"
+  ],
+  "F3.aliasedHook": [
+   "G4 a hook that stops hosts (eachCleanup) runs without HOST_HOOK_TIMEOUT_MS",
+   "G4 a hook that stops hosts (eachCleanup) settles its waits without reportAfterCleanup"
+  ],
+  "F3.namespaceHook": [
+   "G4 a hook that stops hosts (vitest.afterAll) runs without HOST_HOOK_TIMEOUT_MS",
+   "G4 a hook that stops hosts (vitest.afterAll) settles its waits without reportAfterCleanup"
+  ],
+  "N.settledHelper": [],
+  "N.settledNamed": [],
+  "N.quietHook": [],
+  "N.unconjoined": [],
+  "N.conjoinedNoBound": [],
+  "N.textOnly": [],
+  "N.otherMember": []
+ },
+ "residuals": {
+  "R-WAIT-LOOP": [
+   "R-WAIT-LOOP.forOfBound",
+   "R-WAIT-LOOP.breakCount",
+   "R-WAIT-LOOP.noDelay"
+  ],
+  "R-HOST-ROUTE": [
+   "R-HOST-ROUTE.reexport",
+   "R-HOST-ROUTE.loaderAlias",
+   "R-HOST-ROUTE.computedSpecifier",
+   "R-HOST-ROUTE.piTool"
+  ],
+  "R-TIMER-ROUTE": [
+   "R-TIMER-ROUTE.importedSleep",
+   "R-TIMER-ROUTE.loaderAlias"
+  ],
+  "R-COMPUTED-KEY": [
+   "R-COMPUTED-KEY.concatenated",
+   "R-COMPUTED-KEY.named",
+   "R-COMPUTED-KEY.reflected"
+  ],
+  "R-OWNER-ALIAS": [
+   "R-OWNER-ALIAS.signal",
+   "R-OWNER-ALIAS.atomics"
+  ],
+  "R-HOOK-ROUTE": [
+   "R-HOOK-ROUTE.method",
+   "R-HOOK-ROUTE.imported"
+  ],
+  "R-RAISE-SITE": [
+   "R-RAISE-SITE.unraised"
+  ]
+ },
+ "raiseRows": [
+  "workbench-detached-socket-base.test.ts: launches and reattaches under a 60-byte TMPDIR when a short XDG_RUNTIME_DIR exists, recording the base in the receipt",
+  "workbench-detached-timing.test.ts: raiseTransportLapse raises the client's own unknown for a lapsed socket timeout and returns every other reading as read"
+ ]
+}
