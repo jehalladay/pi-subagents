@@ -38,15 +38,17 @@
  * unknown) that count their calls; src registers none of them.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label; every witness is held to the roster):
- *  A, acceptance (a). A1 the reader closure: the src value-import closure of the three reader modules is an exact module set that
- *    spells and imports no authority entry (AUTHORITY_CALLS by reference, by value import - aliased or not - and as a member of a
- *    namespace binding; AUTHORITY_MEMBERS in any position; either through a literal key), the vocabulary is exactly the functions
+ *  A, acceptance (a). A1 the reader closure: the src value-import, dynamic-import and re-export closure of the three reader
+ *    modules is an exact module set (type-only edges excluded), and spells and imports no authority entry (AUTHORITY_CALLS by
+ *    reference, by value import - aliased or not - and as a member of a namespace binding; AUTHORITY_MEMBERS in any position
+ *    including object destructuring; either through a literal key), the vocabulary is exactly the functions
  *    the AUTHORITY_MODULES export (derived from src both ways) and every name of it resolves to a src export, no src/ui module
  *    holds an authority entry (a floor on the modules walked; the projection readers among them, the modules importing
  *    workbench/observation.js, are an exact set), no src file spells a <LEAF> consumer by text or as an adjacent argv pair on
  *    the AST (a floor on the files walked, an anchor on the preview id), every src module importing a reader module is an exact
  *    set read backwards, and the preview contract has exactly one importer and one spelling; the controls read a direct call,
- *    an alias and a member call, a member called through .call, Reflect.apply, .bind, a non-null or an optional call, a literal
+ *    an alias and a member call, an object-destructured member or authority name, a value re-export closure and a type-only
+ *    re-export quiet row, a member called through .call, Reflect.apply, .bind, a non-null or an optional call, a literal
  *    key, a namespace and a dynamic-import namespace, an aliased import, a property name and another receiver's member as no
  *    reference, the R-COMPOSED quiet row, the consumer reader on the served leaf, the CLI pair and Pi's argv form with no comment,
  *    two adjacent call arguments, quiet type-inference prose and R-ARGV-SPLIT's reversed and interrupted pairs, and the resolvers
@@ -488,7 +490,7 @@ interface ModuleScan {
   readonly valueImports: readonly ValueImport[];
   readonly typeImports: readonly string[];
   /** `name@line` for an authority reference (an imported one included), `ns.name@line` for one reached through a namespace binding,
-   * `.member@line` for an authority member in any position and `[name]@line` for either reached through a literal key. */
+   * `.member@line` for an authority member in any position, `{member}@line` for an object binding and `[name]@line` for either reached through a literal key. */
   readonly authority: readonly string[];
 }
 /** Every text this file parses, parsed once (A1 reads each src file through several readers). */
@@ -550,13 +552,19 @@ function scanModule(name: string, text: string): ModuleScan {
       const [specifier] = node.arguments;
       valueImports.push({ from: specifier !== undefined && ts.isStringLiteral(specifier) ? specifier.text : "<computed>", names: ["import()"] });
     }
+    if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent)) {
+      const key = node.propertyName ?? node.name;
+      if ((ts.isIdentifier(key) || ts.isStringLiteralLike(key)) && [...AUTHORITY_MEMBERS, ...AUTHORITY_CALLS].includes(key.text)) {
+        authority.push(`{${key.text}}@${line(node)}`);
+      }
+    }
     if (ts.isIdentifier(node) && AUTHORITY_CALLS.includes(node.text)) {
       const parent = node.parent;
       // A property NAME (x.settle, { settle: ... }) is not a reference to the authority binding; a bare identifier is, and so is
       // a member of a namespace binding (ns.decideControl, F5).
       const receiver = ts.isPropertyAccessExpression(parent) && parent.name === node && ts.isIdentifier(parent.expression) ? parent.expression.text : undefined;
       const viaNamespace = receiver !== undefined && namespaces.has(receiver);
-      const isMemberName = (ts.isPropertyAccessExpression(parent) && parent.name === node && !viaNamespace) || (ts.isPropertyAssignment(parent) && parent.name === node);
+      const isMemberName = (ts.isPropertyAccessExpression(parent) && parent.name === node && !viaNamespace) || (ts.isPropertyAssignment(parent) && parent.name === node) || (ts.isBindingElement(parent) && parent.propertyName === node && ts.isObjectBindingPattern(parent.parent));
       if (!isMemberName) authority.push(`${viaNamespace ? `${receiver}.` : ""}${node.text}@${line(node)}`);
     }
     // An authority member in ANY position (F1/F5): called, bound, applied, passed or read - x.invoke(...), x.invoke.call(...),
@@ -615,7 +623,7 @@ function importEdges(name: string, text: string): ImportEdge[] {
       const names = [...(clause?.name !== undefined ? ["default"] : []), ...(bindings !== undefined && ts.isNamespaceImport(bindings) ? ["*"] : []), ...named].sort();
       edges.push({ from: node.moduleSpecifier.text, kind: clause?.isTypeOnly === true ? "type" : "value", names });
     }
-    if (ts.isExportDeclaration(node) && node.moduleSpecifier !== undefined && ts.isStringLiteral(node.moduleSpecifier)) {
+    if (ts.isExportDeclaration(node) && !node.isTypeOnly && node.moduleSpecifier !== undefined && ts.isStringLiteral(node.moduleSpecifier)) {
       const clause = node.exportClause;
       edges.push({ from: node.moduleSpecifier.text, kind: "reexport", names: clause !== undefined && ts.isNamedExports(clause) ? clause.elements.map(element => (element.propertyName ?? element.name).text).sort() : ["*"] });
     }
@@ -645,19 +653,21 @@ function resolveSpecifier(fromModule: string, specifier: string): string | undef
   if (!specifier.startsWith(".")) return undefined;
   return resolve(dirname(fromModule), specifier.replace(/\.js$/, ".ts"));
 }
-/** The src value-import closure of a module set, followed through relative specifiers only; packages are recorded by name. */
-function closureOf(roots: readonly string[]): { modules: string[]; packages: string[]; scans: Map<string, ModuleScan> } {
+/** The src value-import, dynamic-import and re-export closure of a module set, followed through relative specifiers only; packages are recorded by name. */
+function closureOf(roots: readonly string[], readText: (path: string) => string = textOf): { modules: string[]; packages: string[]; scans: Map<string, ModuleScan> } {
   const scans = new Map<string, ModuleScan>();
   const packages = new Set<string>();
   const queue = roots.map(root => join(REPO, root));
   while (queue.length > 0) {
     const path = queue.shift();
     if (path === undefined || scans.has(path)) continue;
-    const scanned = scanModule(path, textOf(path));
+    const text = readText(path);
+    const scanned = scanModule(path, text);
     scans.set(path, scanned);
-    for (const entry of scanned.valueImports) {
-      const target = resolveSpecifier(path, entry.from);
-      if (target === undefined) packages.add(entry.from);
+    for (const edge of importEdges(path, text)) {
+      if (edge.kind === "type") continue;
+      const target = resolveSpecifier(path, edge.from);
+      if (target === undefined) packages.add(edge.from);
       else queue.push(target);
     }
   }
@@ -1055,6 +1065,23 @@ const IMPL: Record<string, () => Promise<JsonValue>> = {
       dynamicNamespace: control('const core = await import("./control.js");\ncore.decideControl(request, deps);'),
       aliasImport: control('import { decideControl as permitOf } from "./control.js";\npermitOf(request, deps);'),
       otherReceiver: control("const options = { decideControl: 1 };\noptions.decideControl;"),
+      reexportValue: importEdges("control.ts", 'export * from "./control.js";').filter(edge => edge.kind === "reexport").length,
+      reexportType: importEdges("control.ts", 'export type * from "./control.js";').filter(edge => edge.kind === "reexport").length,
+      reexportClosure: closureOf(["src/workbench/virtual-reader.ts"], path => {
+        if (path.endsWith("virtual-reader.ts")) return 'export * from "./virtual-authority.js";';
+        if (path.endsWith("virtual-authority.ts")) return "export const mint = decideControl;";
+        throw new Error(`unexpected re-export target ${path}`);
+      }).modules.map(module => module.slice(module.lastIndexOf("/") + 1)),
+      reexportAuthority: closureOf(["src/workbench/virtual-reader.ts"], path => {
+        if (path.endsWith("virtual-reader.ts")) return 'export * from "./virtual-authority.js";';
+        if (path.endsWith("virtual-authority.ts")) return "export const mint = decideControl;";
+        throw new Error(`unexpected re-export target ${path}`);
+      }).scans.get(join(REPO, "src/workbench/virtual-authority.ts"))?.authority.length ?? 0,
+      destructuredMember: control("const {invoke} = registry;\ninvoke.call(registry, id, {}, {});"),
+      destructuredAlias: control("const {invoke: run} = registry;\nrun.call(registry, id, {}, {});"),
+      destructuredKey: control('const {"invoke": run} = registry;\nrun.call(registry, id, {}, {});'),
+      destructuredAuthority: control("const {decideControl: run} = core;\nrun(request, deps);"),
+      unrelatedDestructure: control("const {safe} = registry;"),
       // The consumer census flags the served leaf, the CLI pair and Pi's own argv form with no comment to carry them (F3); TypeScript's
       // own type-inference prose and a reversed or interrupted pair stay quiet.
       consumerLeaf: consumer(`const leaf = "${[GROUP, VERB].join(".")}";`),
@@ -1082,7 +1109,9 @@ const IMPL: Record<string, () => Promise<JsonValue>> = {
     expect(contractSpelled, "src files spelling the preview contract (F4)").toEqual(["src/workbench/providers/reactivefiber.ts"]);
     expect(controls).toStrictEqual({
       direct: 1, alias: 1, member: 1, composed: 0, propertyName: 0, callMember: 1, reflectApply: 1, boundMember: 1, nonNullCall: 1, optionalCall: 1,
-      literalKey: 1, namespaceCall: 1, dynamicNamespace: 1, aliasImport: 1, otherReceiver: 0, consumerLeaf: 1, consumerCli: 1, consumerArgv: 1,
+      literalKey: 1, namespaceCall: 1, dynamicNamespace: 1, aliasImport: 1, otherReceiver: 0, reexportValue: 1, reexportType: 0,
+      reexportClosure: ["virtual-authority.ts", "virtual-reader.ts"], reexportAuthority: 1,
+      destructuredMember: 1, destructuredAlias: 1, destructuredKey: 1, destructuredAuthority: 1, unrelatedDestructure: 0, consumerLeaf: 1, consumerCli: 1, consumerArgv: 1,
       consumerArguments: 1, consumerProse: 0, consumerReversed: 0, consumerInterrupted: 0, exported: 1, local: 0, exportReader: 2,
     });
     return { closure: closure.modules, packages: closure.packages, imported, elsewhere, ui: ui.map(repoPath), consumers, anchored, authorityExports, importers, contractImporters, contractSpelled, controls };
