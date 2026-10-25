@@ -52,12 +52,10 @@
  *    exactly, and the topology projection, the native-evidence metadata and the evidence pane equal the unplanted ones byte for
  *    byte. B3 the same for the high-score variants. B4 nothing of a plant reaches a Pi-derived output (no facet, no verdict, no
  *    text), while the capability result carries it verbatim (R-RAW-ECHO). B5 over B2, B3 and the operation family's no-receipt
- *    outputs: no success tone and no PASS qualifier, and complete coverage on exactly one snapshot - the workspace snapshot of the
- *    empty package list, where every() over zero packages reads complete while its tone stays unknown and its diagnostic says
- *    verification stays indeterminate - with and without every plant, so no plant yields it (pinned as measured, per base,
- *    surface and snapshot index, beside the unplanted reading); the receipt control shows all three. FINDING (disclosed): clause
- *    (b)'s "coverage never 'complete'" does not hold today for that one reading; the cure is a forge-observer.ts change, outside
- *    this test-only cut, and it reds B5 by design.
+ *    outputs: no success tone, no PASS qualifier and no complete coverage, with and without every plant (counted per base,
+ *    surface and snapshot index, beside the unplanted reading); the receipt control shows all three. The one reading that broke
+ *    clause (b) at the wb-6ps1.1 cut - the workspace snapshot of the empty package list, complete while every() ran over zero
+ *    packages - reads partial since wb-bbnl: forge-observer.ts derives that coverage from the judged guard its tone reads.
  *  C, acceptance (c), gated on the facet. C1 Pi's observation model and its Forge reader outputs hold no facet slot: no member
  *    of the judged interfaces names a FACET word or a needle. C2 FAIL readings (gate.status current failure, current error and a
  *    mixed workspace; the operation family's failed step, error and usage_error replies; the observed gate.run end to end) with
@@ -96,7 +94,9 @@
  *    the needle's words apart or reversed (quiet rows src/quiet-phrase.ts, docs/workbench/quiet-phrase.md); R-HOLDER a census
  *    module or roster holds a needle as data (quiet rows test/workbench-plant-census.test.ts, test/workbench-plant.census.ts,
  *    test/fixtures/plant-roster.json); R-SCOPE a needle outside the three scopes is not walked (quiet rows qa/quiet-scope.mjs,
- *    docs/quiet-outside.md); R-COMPOUND a word holding the token without being it (scoreboard) is quiet to A4-A6 (A4's compound);
+ *    docs/quiet-outside.md); R-COMPOUND a word holding the token without being it (scoreboard) is quiet to A4-A6's SCORE reading
+ *    (A4's compound) but not to their literal git grep -i leg, a substring reading that reds on such a compound in a reader file
+ *    (the over-read A4-A6 disclose for isCoreMintedDecision or underscore; never an escape);
  *    R-UNPLANTED-KEY a consumer reading a key outside PLANT_KEYS is not exercised by rows B-D (quiet row: B2's unplanted twin
  *    consumer stays identical); R-RAW-ECHO the forge.gate.status capability result is the producer's native JSON, verbatim, so a
  *    planted field rides it unlabelled to the caller (B4's rawEcho row: producer text, never a Pi verdict; labelling it is the (b)
