@@ -1,7 +1,7 @@
 {
   "bead": "wb-fb2z.1",
   "pin": "76bbbffd9d4a",
-  "basis": "The out-of-file roster of test/workbench-rf-render-parity-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness and the pinned constants, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Witnesses were measured by the cutting seat on trunk fc1534f; fixture identities are named by placeholder (<root>, <graph>, <bundle>, <operation>, <workspace>, <release>), and every producer verdict and variant here is CONSTRUCTED (rf ships no parity verdict at the pin).",
+  "basis": "The out-of-file roster of test/workbench-rf-render-parity-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness and the pinned constants, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Witnesses were measured by the cutting seat on trunk fc1534f; fixture identities are named by placeholder (<root>, <graph>, <bundle>, <operation>, <workspace>, <release>), and every producer verdict and variant here is CONSTRUCTED (rf ships no parity verdict at the pin). wb-mymm (R694 follow-up of landing 299, F1-F5) re-measured on trunk ccc8adc: the src and docs walk witnesses gain git's listing (listingSound, unwalked) and T3 the examples anchor (examplesRead); row M gains MC12-MC16 and MD6-MD9, row R gains R9; the constants gain examplesAnchor, gitListing, htmlComment and commentTail.",
   "constants": {
     "pinnedRoster": [
       "reactivefiber.render.preview"
@@ -40,6 +40,20 @@
       "README.md",
       "SECURITY.md"
     ],
+    "examplesAnchor": {
+      "file": "examples/agent-tool-description.md",
+      "token": "subagent_type parameter"
+    },
+    "gitListing": [
+      "ls-files",
+      "-z",
+      "--cached",
+      "--others",
+      "--exclude-standard",
+      "--"
+    ],
+    "htmlComment": "<!--[\\s\\S]*?(?:-->|$)",
+    "commentTail": "^(?:(?!<!--)[\\s\\S])*?-->",
     "textOnly": "\\btext[\\s_-]*only\\b",
     "payloadFields": [
       "nativePayloadRef",
@@ -136,6 +150,8 @@
           "id": "T1",
           "witness": {
             "srcFloorMet": true,
+            "listingSound": true,
+            "unwalked": [],
             "hits": []
           }
         },
@@ -167,6 +183,9 @@
             "floorMet": true,
             "rootRead": true,
             "anchorRead": true,
+            "examplesRead": true,
+            "listingSound": true,
+            "unwalked": [],
             "findings": []
           }
         },
@@ -188,6 +207,8 @@
           "id": "A1",
           "witness": {
             "srcFloorMet": true,
+            "listingSound": true,
+            "unwalked": [],
             "hits": []
           }
         },
@@ -195,6 +216,8 @@
           "id": "A2",
           "witness": {
             "srcFloorMet": true,
+            "listingSound": true,
+            "unwalked": [],
             "comments": {
               "src/mention.ts": 1,
               "src/ui/workflow-dialog.ts": 1,
@@ -210,6 +233,8 @@
           "id": "A3",
           "witness": {
             "srcFloorMet": true,
+            "listingSound": true,
+            "unwalked": [],
             "sites": {
               "src/workbench/observation.ts": [
                 "nativePayloadRef:read",
@@ -718,6 +743,53 @@
           }
         },
         {
+          "id": "MC12",
+          "witness": {
+            "digest": "77d54a298f7448c2",
+            "outcome": [
+              "site:output.text:comparison",
+              "site:output.text:comparison"
+            ]
+          }
+        },
+        {
+          "id": "MC13",
+          "witness": {
+            "digest": "f4c91646c796bd79",
+            "outcome": [
+              "site:output.text:comparison",
+              "site:output.text:comparison"
+            ]
+          }
+        },
+        {
+          "id": "MC14",
+          "witness": {
+            "digest": "0a2bc4b1b51b47fb",
+            "outcome": [
+              "site:output.text:comparison"
+            ]
+          }
+        },
+        {
+          "id": "MC15",
+          "witness": {
+            "digest": "a9f5475c6f05c1a6",
+            "outcome": [
+              "site:output.text:comparison"
+            ]
+          }
+        },
+        {
+          "id": "MC16",
+          "witness": {
+            "digest": "d1558d129bde06f1",
+            "outcome": [
+              "site:output.text:comparison"
+            ]
+          }
+        },
+        {
           "id": "MD1",
           "witness": {
             "digest": "62648f467153215c",
@@ -759,12 +831,48 @@
             "digest": "dc4d6fed7279f10b",
             "outcome": []
           }
+        },
+        {
+          "id": "MD6",
+          "witness": {
+            "digest": "eb09fd8f7a087ea3",
+            "outcome": [
+              "asserted"
+            ]
+          }
+        },
+        {
+          "id": "MD7",
+          "witness": {
+            "digest": "38a8ad80552361a0",
+            "outcome": [
+              "marked"
+            ]
+          }
+        },
+        {
+          "id": "MD8",
+          "witness": {
+            "digest": "4da336cf5e9345a9",
+            "outcome": [
+              "asserted"
+            ]
+          }
+        },
+        {
+          "id": "MD9",
+          "witness": {
+            "digest": "c29c566537757d2a",
+            "outcome": [
+              "asserted"
+            ]
+          }
         }
       ]
     },
     {
       "id": "R",
-      "label": "the named residuals R1-R8 stay pinned quiet",
+      "label": "the named residuals R1-R9 stay pinned quiet",
       "pins": [
         {
           "id": "R1",
@@ -826,6 +934,13 @@
             "outcome": [
               "marked"
             ]
+          }
+        },
+        {
+          "id": "R9",
+          "witness": {
+            "digest": "b0dc3a138a8c1d94",
+            "outcome": []
           }
         }
       ]

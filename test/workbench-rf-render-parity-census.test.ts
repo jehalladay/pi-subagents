@@ -29,15 +29,17 @@
  *    reactivefiber.render.preview (RECONCILE_EVIDENCE_READS.reactivefiber at src/workflow/reconcile.ts:67 and both registrations,
  *    read-class) and no native or injected descriptor's JSON spells PARITY_WORD or CLASS_WORD; T3 no sentence of docs/, the examples
  *    markdown or the root documents (ROOT_DOCS) couples PARITY_WORD with RENDER_WORD unless it carries a DOC_MARKERS word (paragraph
- *    units; table rows, headings and fence lines stand alone, a list item opens its own unit), with a floor and an anchor; T4 the
- *    captured rf result-key roster spells no PARITY_WORD, CLASS_WORD or VERDICT_WORD key, so rf states no verdict Pi could read.
+ *    units; table rows, headings and fence lines stand alone, a list item opens its own unit), with a floor, two anchors and git's
+ *    listing (WALK LISTINGS below), a sentence's marker read from its visible text: an HTML comment carries none (wb-mymm F4); T4
+ *    the captured rf result-key roster spells no PARITY_WORD, CLASS_WORD or VERDICT_WORD key, so rf states no verdict Pi could read.
  *  A, acceptance (a). A1 the same scan: no src code token spells PARITY_WORD; A2 the comment mentions are exactly COMMENT_SET, the
  *    filing's FILING_MENTIONS, every one a comment (the walk's positive control: four directories, six modules); A3 every src read of
  *    an rf document's text (a `text` member read off a value named output) or of Pi's payload reference (nativePayloadRef, payloadRef)
  *    is classified by its use - type-guard (typeof), digest (an update(...) argument), presence (equality with undefined or null),
  *    comparison (equality with anything else, Object.is or a deep/strict equality helper, a collection membership or key read,
- *    localeCompare, a switch or case operand, a computed key; parentheses and type assertions are seen through) or read - and a
- *    comparison counts as labelled only when a comment attached to its statement says text-only (TEXT_ONLY); the census holds zero
+ *    localeCompare, a switch or case operand, a computed key; parentheses, type assertions, non-null assertions and satisfies
+ *    clauses are seen through, around the read and around the value named output, wb-mymm F1) or read - and a comparison counts
+ *    as labelled only when a comment attached to its statement says text-only (TEXT_ONLY); the census holds zero
  *    unlabelled comparisons and SITE_SET: per module, every non-read use with its multiplicity and each read accessor once, so a new
  *    reader module, a new use class or one more guard, digest, presence check or comparison reds until its cut re-pins the set.
  *  B, acceptance (b). rf ships no parity verdict (T4), so the census CONSTRUCTS one - an additive result key holding a verdict, its
@@ -64,6 +66,15 @@
  * test/fixtures/rf-render-parity-roster.json holds every row's id, label and pins, every pin's witness and the pinned constants, so a
  * pin deleted, relabelled, swapped or removed from every literal of this file at once still reds against it. FROZEN SHAPE (standing
  * rule 16): ROWS pins `${id}:${pins.length}` as a literal.
+ * WALK LISTINGS (wb-mymm F2/F3; re-measured at trunk ccc8adc: src 115 modules, docs/ 71 files, one examples markdown file, the five
+ * root documents). A floor binds an emptied walk only, so each walk is also held to a listing it does not compute: git's own list of
+ * what it would commit below the walked roots (GIT_LISTING: tracked, or untracked and not ignored; regular files), read before the
+ * walk. Every src module git lists must have been scanned and every listed docs file, examples markdown file and root document read
+ * (unwalked empty), and each listing must itself be sound - it meets the walk's floor and names every SITE_SET and COMMENT_SET
+ * module, or both anchors' files and ROOT_DOCS - so an emptied listing, or one missing a named module or file, cannot pass;
+ * EXAMPLES_ANCHOR proves the examples walk read real text. A walk that drops src/index.ts, docs/workflows.md or the examples
+ * markdown reds T1 and A1-A3, or T3. The listings bind the walks, not this file's own filter of git's output: narrowing a listing
+ * and its walk by the same path here is an edit of both sides that no in-file check reads.
  * RESIDUALS (named; each has a pinned quiet row in row R): R1 R-TEXT-DIGEST the adapter's nativePayloadRef is Pi's sha256 over
  * result.output.text alone, so same-text renders share it whatever their occurrence ids or provenance: a content reference, stored
  * and never compared (A3), and never a parity claim (the reading wb-pfxo.4's census names R-TEXT-REF). R2 R-BLOCKS-UNREAD the
@@ -77,7 +88,9 @@
  * compare two readings by their text and return its own "equivalent": the runtime returns the script's value verbatim, which this
  * census reads as the script author's claim, not a Pi surface's. R7 R-UNNAMED-VERDICT Pi refuses no producer verdict it does not
  * read: one naming no observer class rides the reading verbatim and the projection omits it. R8 R-MARKER-ANYWHERE a DOC_MARKERS word
- * anywhere in a sentence admits it, whatever the marker qualifies.
+ * anywhere in a sentence's visible text admits it, whatever the marker qualifies. R9 R-CROSS-SENTENCE (wb-mymm F5) a PARITY_WORD
+ * and a RENDER_WORD in different sentences of one paragraph couple nothing ('The TSX and Python renders were compared. They are
+ * equivalent.' stays quiet): T3 judges one sentence at a time, the reading MD4's second paragraph pins.
  * SCOPE: the vocabularies (PARITY_WORD the filing's two words, CLASS_WORD, RENDER_WORD, DOC_MARKERS), the accessors of A3, the reading
  * of a render without TSX engine identity as the Python-component render, and the constructed verdict (its shape, and its place at an
  * additive top-level result key) are this cut's reading of the filing; A1-A3 and T1 judge src/*.ts, the filing's "census over src"
@@ -89,8 +102,9 @@
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs, the fixtures and the bead export are
  * only read.
  */
+import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { chmodSync, type Dirent, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, type Dirent, lstatSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
@@ -163,6 +177,10 @@ const RENDER_WORD = /\b(?:tsx|python|render(?:s|er|ers|ed|ing)?)\b/i;
 /** The words that admit a docs sentence coupling PARITY_WORD with RENDER_WORD: the posture's own terms or a not-shipped marker. */
 const DOC_MARKERS: readonly string[] = ["text-only", "producer-declared", "observer class", "never", "not shipped", "unshipped", "proposed", "gated"];
 const DOC_MARKER = new RegExp(`\\b(?:${DOC_MARKERS.map(marker => marker.split(" ").join("\\s+")).join("|")})\\b`, "i");
+/** An HTML comment, invisible when the page renders (wb-mymm F4): closed, or unclosed to the end of the text. */
+const HTML_COMMENT = /<!--[\s\S]*?(?:-->|$)/g;
+/** The tail of a comment opened before the text began: everything up to the first close no opener precedes. */
+const COMMENT_TAIL = /^(?:(?!<!--)[\s\S])*?-->/;
 /** The label that admits a comparison site (A3): a comment attached to its statement saying text-only. */
 const TEXT_ONLY = /\btext[\s_-]*only\b/i;
 /** A3's payload-reference accessors (Pi's digest of the document text, as the adapter and the cache name it). */
@@ -262,13 +280,14 @@ const ROWS: readonly Row[] = [
     label: "the matchers rows T1, T3, A1, A2 and A3 read judge their pinned inputs in order",
     pins: [
       "MA1", "MA2", "MA3", "MA4", "MA5", "MA6", "MO1", "MO2", "MO3",
-      "MC1", "MC2", "MC3", "MC4", "MC5", "MC6", "MC7", "MC8", "MC9", "MC10", "MC11", "MD1", "MD2", "MD3", "MD4", "MD5",
+      "MC1", "MC2", "MC3", "MC4", "MC5", "MC6", "MC7", "MC8", "MC9", "MC10", "MC11", "MC12", "MC13", "MC14", "MC15", "MC16",
+      "MD1", "MD2", "MD3", "MD4", "MD5", "MD6", "MD7", "MD8", "MD9",
     ],
   },
   {
     id: "R",
-    label: "the named residuals R1-R8 stay pinned quiet",
-    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8"],
+    label: "the named residuals R1-R9 stay pinned quiet",
+    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9"],
   },
 ];
 
@@ -340,6 +359,10 @@ function constants(): JsonValue {
     renderWord: RENDER_WORD.source,
     docMarkers: DOC_MARKERS,
     rootDocs: ROOT_DOCS,
+    examplesAnchor: EXAMPLES_ANCHOR,
+    gitListing: GIT_LISTING,
+    htmlComment: HTML_COMMENT.source,
+    commentTail: COMMENT_TAIL.source,
     textOnly: TEXT_ONLY.source,
     payloadFields: PAYLOAD_FIELDS,
     comparingCalls: COMPARING_CALLS,
@@ -592,11 +615,22 @@ const nameOf = (node: ts.Node): string | undefined => {
   return undefined;
 };
 const named = (node: ts.Expression, name: string): boolean => (ts.isIdentifier(node) && node.text === name) || nameOf(node) === name;
-/** A3's accessor a member read names: output.text (a `text` member of a value named output) or a payload-reference field. */
+/** The value a member read is taken off, with the parentheses, type assertions, non-null assertions and satisfies clauses around
+ * it seen through (wb-mymm F1: output!, (output as T), (output), (output satisfies T) and (<T>output) all name output). */
+function unwrapped(node: ts.Expression): ts.Expression {
+  let current = node;
+  while (
+    ts.isParenthesizedExpression(current) || ts.isAsExpression(current) || ts.isNonNullExpression(current) ||
+    ts.isSatisfiesExpression(current) || ts.isTypeAssertionExpression(current)
+  ) current = current.expression;
+  return current;
+}
+/** A3's accessor a member read names: output.text (a `text` member of a value named output, its wrappers seen through) or a
+ * payload-reference field. */
 function accessorOf(node: ts.Node): string | undefined {
   if (!ts.isPropertyAccessExpression(node) && !ts.isElementAccessExpression(node)) return undefined;
   const name = nameOf(node);
-  if (name === "text" && named(node.expression, "output")) return "output.text";
+  if (name === "text" && named(unwrapped(node.expression), "output")) return "output.text";
   return name !== undefined && PAYLOAD_FIELDS.includes(name) ? name : undefined;
 }
 /** The expression a read is used as: parentheses and type assertions around it are seen through. */
@@ -687,20 +721,55 @@ function scanCode(fileName: string, text: string): CodeScan {
 /** A module's A3 uses: every non-read use with its multiplicity, each read accessor once, sorted. */
 const usesOf = (sites: readonly string[]): string[] =>
   [...sites.filter(site => !site.endsWith(":read")), ...new Set(sites.filter(site => site.endsWith(":read")))].sort();
-/** The src modules walk at base fc1534f holds 115; the floor sits below it, so an emptied walk reds and an additive one does not. */
+/** The listing the walks are held to (wb-mymm F2/F3): git's own file list below the walked roots, tracked or untracked and not
+ * ignored. */
+const GIT_LISTING: readonly string[] = ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--"];
+/** Whether a repo-relative path is a regular file now (a symlink, a directory or a vanished path is not). */
+function regularFile(path: string): boolean {
+  try {
+    return lstatSync(join(REPO, path)).isFile();
+  } catch {
+    return false;
+  }
+}
+/** What git would commit below the roots, read from git and never from a walk: regular files only (the walks follow no symlink),
+ * root-relative and sorted. */
+function gitFilesBelow(...roots: string[]): string[] {
+  const out = execFileSync("git", [...GIT_LISTING, ...roots], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 });
+  return [...new Set(out.split("\0").filter(path => path !== "" && regularFile(path)))].sort();
+}
+/** The listed paths a walk did not read; a path gone by the time it is checked is no miss. */
+function unwalked(listed: readonly string[], walked: readonly string[]): string[] {
+  const seen = new Set(walked);
+  return listed.filter(path => !seen.has(path) && regularFile(path));
+}
+/** The src modules walk at base fc1534f holds 115 (115 at ccc8adc); the floor sits below it, so an emptied walk reds and an
+ * additive one does not; git's listing binds the rest (wb-mymm F2: a walk that drops one module keeps the floor). */
 const SRC_FLOOR = 100;
+let srcListing: string[] | undefined;
 let srcCache: { path: string; scan: CodeScan }[] | undefined;
 function srcScans(): { path: string; scan: CodeScan }[] {
+  // Git's listing is read before the walk, so a module added mid-walk is walked, never missed.
+  srcListing ??= gitFilesBelow("src").filter(path => path.endsWith(".ts"));
   srcCache ??= filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts")).sort().map(file => {
     const path = relative(REPO, file);
     return { path, scan: scanCode(path, textOf(file)) };
   });
   return srcCache;
 }
-function srcWalk(): { srcFloorMet: boolean } {
+/** The src walk's reach: its floor, git's listing sound (it meets the floor and names every SITE_SET and COMMENT_SET module) and
+ * every module git lists walked (wb-mymm F2). */
+function srcWalk(): { srcFloorMet: boolean; listingSound: boolean; unwalked: string[] } {
   const scans = srcScans();
-  const walk = { srcFloorMet: scans.length >= SRC_FLOOR };
-  expect(walk, `src modules walked: ${scans.length}, floor ${SRC_FLOOR}`).toStrictEqual({ srcFloorMet: true });
+  const listed = srcListing ?? [];
+  const walk = {
+    srcFloorMet: scans.length >= SRC_FLOOR,
+    listingSound: listed.length >= SRC_FLOOR && [...Object.keys(SITE_SET), ...Object.keys(COMMENT_SET)].every(path => listed.includes(path)),
+    unwalked: unwalked(listed, scans.map(entry => entry.path)),
+  };
+  expect(walk, `src modules walked: ${scans.length}, floor ${SRC_FLOOR}, git lists ${listed.length}`).toStrictEqual({
+    srcFloorMet: true, listingSound: true, unwalked: [],
+  });
   return walk;
 }
 
@@ -708,14 +777,20 @@ interface SourceFile {
   readonly path: string;
   readonly text: string;
 }
-/** The docs tree holds 70 files at base fc1534f; the floor sits below it, so an emptied walk reds and an additive one does not. */
+/** The docs tree holds 70 files at base fc1534f (71 at ccc8adc); the floor sits below it, so an emptied walk reds and an additive
+ * one does not; git's listing binds the rest (wb-mymm F2/F3). */
 const DOCS_FLOOR = 50;
 /** The repository's root product documents T3 reads beside docs/ and the examples markdown; each must read non-empty. */
 const ROOT_DOCS: readonly string[] = ["AGENTS.md", "CHANGELOG.md", "CONTRIBUTING.md", "README.md", "SECURITY.md"];
 /** A docs line the RENDER_WORD vocabulary must match, so a walk that reads nothing real reds. */
 const DOCS_ANCHOR = { file: "docs/workbench/07-native-integrations.md", token: "present Python/CLI interop honestly" };
+/** An examples markdown line the docs walk must read (wb-mymm F3), so a walk that skips the examples reds. */
+const EXAMPLES_ANCHOR = { file: "examples/agent-tool-description.md", token: "subagent_type parameter" };
+let docsListing: string[] | undefined;
 let docsCache: SourceFile[] | undefined;
 function docsFiles(): SourceFile[] {
+  // Git's listing is read before the walk, so a file added mid-walk is walked, never missed.
+  docsListing ??= gitFilesBelow("docs", "examples", ...ROOT_DOCS).filter(path => !path.startsWith("examples/") || path.endsWith(".md"));
   docsCache ??= [
     ...filesBelow(join(REPO, "docs")), ...filesBelow(join(REPO, "examples")).filter(file => file.endsWith(".md")), ...ROOT_DOCS.map(name => join(REPO, name)),
   ].sort().map(file => ({ path: relative(REPO, file), text: textOf(file) }));
@@ -748,11 +823,14 @@ interface Mention {
   readonly line: number;
   readonly marked: boolean;
 }
-/** Every sentence of a text's units coupling PARITY_WORD with RENDER_WORD, with whether it carries a DOC_MARKERS word. */
+/** A sentence's visible text (wb-mymm F4): its HTML comments, and the tail of one opened before it, stripped. */
+const visibleOf = (sentence: string): string => sentence.replace(COMMENT_TAIL, " ").replace(HTML_COMMENT, " ");
+/** Every sentence of a text's units coupling PARITY_WORD with RENDER_WORD (read raw, so a coupling inside a comment still counts),
+ * with whether its visible text carries a DOC_MARKERS word. */
 function mentionsOf(text: string): Mention[] {
   return unitsOf(text).flatMap(unit =>
     unit.text.split(/(?<=[.;!?])\s+/).filter(sentence => PARITY_WORD.test(sentence) && RENDER_WORD.test(sentence))
-      .map(sentence => ({ line: unit.line, marked: DOC_MARKER.test(sentence) })),
+      .map(sentence => ({ line: unit.line, marked: DOC_MARKER.test(visibleOf(sentence)) })),
   );
 }
 
@@ -820,11 +898,23 @@ const CASES: readonly Case[] = [
   { pin: "MC9", kind: "code", texts: ["switch (output.text) {\n  case cached.output.text:\n    break;\n}"], outcome: ["site:output.text:comparison", "site:output.text:comparison"] },
   { pin: "MC10", kind: "code", texts: ["const keyed = { [render.output.text]: true };"], outcome: ["site:output.text:comparison"] },
   { pin: "MC11", kind: "code", texts: ["const same = (left.output.text as string) === right;"], outcome: ["site:output.text:comparison"] },
+  { pin: "MC12", kind: "code", texts: ["const same = left.output!.text === right.output!.text;"], outcome: ["site:output.text:comparison", "site:output.text:comparison"] },
+  {
+    pin: "MC13", kind: "code", texts: ["const same = (left.output as { text: string }).text === (right.output as { text: string }).text;"],
+    outcome: ["site:output.text:comparison", "site:output.text:comparison"],
+  },
+  { pin: "MC14", kind: "code", texts: ["const same = (output).text === other.body;"], outcome: ["site:output.text:comparison"] },
+  { pin: "MC15", kind: "code", texts: ["const same = (output satisfies Rendered).text === other.body;"], outcome: ["site:output.text:comparison"] },
+  { pin: "MC16", kind: "code", texts: ["const same = (<Rendered>output).text === other.body;"], outcome: ["site:output.text:comparison"] },
   { pin: "MD1", kind: "docs", texts: ["The TSX and Python renders are equivalent."], outcome: ["asserted"] },
   { pin: "MD2", kind: "docs", texts: ["Pi never asserts TSX/Python render parity from text-only equality."], outcome: ["marked"] },
   { pin: "MD3", kind: "docs", texts: ["A render parity verdict is producer-declared and named with its observer class."], outcome: ["marked"] },
   { pin: "MD4", kind: "docs", texts: ["The TSX renderer reaches\nparity with the Python one.\n\nTSX components render in a worker. Equivalence is declared elsewhere."], outcome: ["asserted"] },
   { pin: "MD5", kind: "docs", texts: ["| TSX render | stays |\n| parity | none |\n- Python renders\n- equivalence is elsewhere"], outcome: [] },
+  { pin: "MD6", kind: "docs", texts: ["The TSX and Python renders are equivalent <!-- never -->."], outcome: ["asserted"] },
+  { pin: "MD7", kind: "docs", texts: ["The TSX and Python renders are equivalent <!-- draft -->, never text-only <!-- end -->."], outcome: ["marked"] },
+  { pin: "MD8", kind: "docs", texts: ["Draft <!-- notes. never --> The TSX and Python renders are equivalent."], outcome: ["asserted"] },
+  { pin: "MD9", kind: "docs", texts: ["The TSX and Python renders are equivalent <!-- never"], outcome: ["asserted"] },
   { pin: "R3", kind: "code", texts: ['// the renders reach parity here\nconst word = "pari" + "ty";\nconst key = "observer" + "_class";'], outcome: ["comments:1"] },
   { pin: "R4", kind: "code", texts: ['const claim = "the TSX and Python renders are identical";\nconst note = "same render, the renders match";'], outcome: [] },
   {
@@ -835,6 +925,7 @@ const CASES: readonly Case[] = [
     outcome: [],
   },
   { pin: "R8", kind: "docs", texts: ["The TSX and Python renders are equivalent, never text-only."], outcome: ["marked"] },
+  { pin: "R9", kind: "docs", texts: ["The TSX and Python renders were compared. They are equivalent."], outcome: [] },
 ];
 function outcomeOf(kind: CaseKind, texts: readonly string[]): string[] {
   const text = texts[0] ?? "";
@@ -868,13 +959,18 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   T3: async () => {
     const files = docsFiles();
     const anchor = files.find(file => file.path === DOCS_ANCHOR.file)?.text.split("\n").find(line => line.includes(DOCS_ANCHOR.token)) ?? "";
+    const examples = files.find(file => file.path === EXAMPLES_ANCHOR.file)?.text.split("\n").find(line => line.includes(EXAMPLES_ANCHOR.token)) ?? "";
+    const listed = docsListing ?? [];
     const docs = files.filter(file => file.path.startsWith("docs/")).length;
     const walk = {
       floorMet: docs >= DOCS_FLOOR, rootRead: ROOT_DOCS.every(name => (files.find(file => file.path === name)?.text ?? "") !== ""),
-      anchorRead: RENDER_WORD.test(anchor),
+      anchorRead: RENDER_WORD.test(anchor), examplesRead: examples !== "",
+      listingSound: listed.filter(path => path.startsWith("docs/")).length >= DOCS_FLOOR &&
+        [DOCS_ANCHOR.file, EXAMPLES_ANCHOR.file, ...ROOT_DOCS].every(path => listed.includes(path)),
+      unwalked: unwalked(listed, files.map(file => file.path)),
     };
-    expect(walk, `docs: ${docs} files walked, floor ${DOCS_FLOOR}, root ${ROOT_DOCS.join(" ")}, anchor ${DOCS_ANCHOR.file}`).toStrictEqual({
-      floorMet: true, rootRead: true, anchorRead: true,
+    expect(walk, `docs: ${docs} files walked, floor ${DOCS_FLOOR}, root ${ROOT_DOCS.join(" ")}, anchors ${DOCS_ANCHOR.file} ${EXAMPLES_ANCHOR.file}, git lists ${listed.length}`).toStrictEqual({
+      floorMet: true, rootRead: true, anchorRead: true, examplesRead: true, listingSound: true, unwalked: [],
     });
     const findings = files.flatMap(file =>
       mentionsOf(file.text).filter(mention => !mention.marked).map(mention => `${file.path}:${mention.line}: render parity asserted`),
@@ -1113,7 +1209,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 
 describe("wb-fb2z.1 render-parity census (TSX-COMPONENT-ASSEMBLY-R1, absent-today leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "A:3", "B:4", "C:4", "F:1", "M:25", "R:8"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "A:3", "B:4", "C:4", "F:1", "M:34", "R:9"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
