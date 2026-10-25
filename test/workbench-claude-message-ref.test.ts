@@ -3169,6 +3169,7 @@ describe("wb-e3eh R697 PREP F1: each wb-561n F1 form pinned refused, or named wi
         const { text, anchors } = placed(site, residual);
         expect(anchors.every(anchor => anchor.count === 1), "every insertion anchor applies once").toBe(true);
         const reading = readSite(site.file, text);
+        expectReadFrom("wb-e3eh quiet", residual.id, key, reading);
         expect(PINS.filter(pin => !JUDGES[pin.id](site, reading)).map(pin => pin.id), "landed pins stay quiet").toEqual([]);
         expect(E3EH_STRICT.P4(reading), "no snapshot write is read").toEqual([]);
         expect(E3EH_STRICT.P5(reading), "no prototype write is read").toEqual([]);
@@ -3636,6 +3637,7 @@ describe("wb-agwj R694 PREP F1, terminal form: every quiet spelling the wb-e3eh 
         const { text, anchors } = placed(site, residual);
         expect(anchors.every(anchor => anchor.count === 1), "every insertion anchor applies once").toBe(true);
         const reading = readSite(site.file, text);
+        expectReadFrom("wb-agwj quiet", residual.id, key, reading);
         expect(PINS.filter(pin => !JUDGES[pin.id](site, reading)).map(pin => pin.id), "landed pins stay quiet").toEqual([]);
         expect(E3EH_STRICT.P4(reading), "no snapshot write is read").toEqual([]);
         expect(E3EH_STRICT.P5(reading), "no prototype write is read").toEqual([]);
@@ -3650,6 +3652,7 @@ describe("wb-agwj R694 PREP F1, terminal form: every quiet spelling the wb-e3eh 
       const { text, anchors } = placed(site, AGWJ_CHANNEL);
       expect(anchors.map(anchor => `${anchor.name}:${anchor.count}`), "both spellings apply, once each").toEqual(["emitter head:1", "derive line:1"]);
       const reading = readSite(site.file, text);
+      expectReadFrom("wb-agwj channel", AGWJ_CHANNEL.id, key, reading);
       expect(PINS.filter(pin => !JUDGES[pin.id](site, reading)).map(pin => pin.id), "landed pins stay quiet").toEqual([]);
       expect(E3EH_STRICT.P4(reading), "the P4 spelling reads no snapshot write").toEqual([]);
       expect(E3EH_STRICT.P5(reading), "the P5 spelling reads no prototype write").toEqual([]);
@@ -3663,6 +3666,7 @@ describe("wb-agwj R694 PREP F1, terminal form: every quiet spelling the wb-e3eh 
         const { text, anchors } = placed(site, twin);
         expect(anchors.every(anchor => anchor.count === 1), "every insertion anchor applies once").toBe(true);
         const reading = readSite(site.file, text);
+        expectReadFrom("wb-agwj twin", twin.id, key, reading);
         expect(PINS.filter(pin => !JUDGES[pin.id](site, reading)).map(pin => pin.id), "landed pins stay quiet").toEqual([]);
         expect(E3EH_STRICT[OTHER_PIN[twin.pin]](reading), "the other strict reading stays quiet").toEqual([]);
         expect(E3EH_STRICT[twin.pin](reading), "its own pin reads only its frozen reading").toEqual(twinCauses(twin.reading));
@@ -3793,5 +3797,82 @@ describe("wb-agwj R694 PREP F1, terminal form: every quiet spelling the wb-e3eh 
     ];
     expect(registered.filter(row => /^wb-agwj (?:quiet |channel |twin )/.test(row))).toEqual(expected.map(row => `${row.name}: ${row.label}|run`));
     expect(AGWJ_REACHED).toEqual(expected.map(row => row.name));
+  });
+});
+
+/**
+ * wb-mgss (owner ruling R735 on the wb-agwj gate's F3: ONE structural site-binding follow-up, outside the spelling chain
+ * celw -> 561n -> e3eh -> agwj). Before this cut no per-site row asserted that the reading it judged came from the site its
+ * title names, so one body edit making every S2 row read S1 (the gate's S2-reads-S1 mutant, const site = siteNamed("S1"))
+ * kept the wb-agwj quiet, channel and twin rows and the landed wb-e3eh quiet loop green, red=0 on both: S1 and S2 read alike
+ * there, so every verdict held. Every row of the four BOUND SETS below now measures where its reading came from (readFrom: the
+ * sites whose file the reading parsed, with exactly the text that row's own tabled placement makes of the site's real source)
+ * and asserts that this is the one site its title names (SITE_BINDING_REQUIREMENT). SITE BINDING compares every measurement, in
+ * run order, to the rows the out-of-file rosters derive (MGSS_ROSTER names each set's roster and field; the wb-e3eh and wb-agwj
+ * rosters list the rows and their sites), so a row that drops its assertion, judges another site's reading or binds another
+ * row's placement is red there as well as in itself. FROZEN SHAPE pins the sets; ROSTER ties them and the requirement to
+ * MGSS_ROSTER. The scope is exactly R735's: the other per-site loops of this census are not bound here, and a set removed from
+ * MGSS_ROSTER as well as from every literal below is outside every in-repo anchor (the ruling text is the source of truth).
+ */
+const MGSS_ROSTER = "test/fixtures/claude-message-ref-mgss.json";
+/** What every bound row asserts of the reading it judges. */
+const SITE_BINDING_REQUIREMENT =
+  "the reading a bound row judges came from the site its title names: that site's file, with exactly the text the row's own tabled placement makes of the site's real source, and from no other site";
+/** A tabled row a bound set binds: its id, the sites its titles name, and its placement. */
+type BoundRow = Placement & { readonly id: string; readonly sites: readonly string[] };
+/** The bound sets in run order: each set's title stem and its rows, as this census tables them. */
+function siteBoundSets(): readonly { readonly stem: string; readonly rows: readonly BoundRow[] }[] {
+  return [
+    { stem: "wb-e3eh quiet", rows: E3EH_QUIET },
+    { stem: "wb-agwj quiet", rows: AGWJ_RESIDUALS },
+    { stem: "wb-agwj channel", rows: [AGWJ_CHANNEL] },
+    { stem: "wb-agwj twin", rows: AGWJ_TWINS },
+  ];
+}
+/** The sites a reading came from, judged on the reading alone: each site whose file it parsed, with exactly the text the placement makes of that site's real source. */
+const readFrom = (reading: Reading, placement: Placement): string[] =>
+  SITES.filter(site => reading.file.fileName === site.file && reading.file.text === placed(site, placement).text).map(site => site.key);
+/** Each bound row's stem, id and titled site beside the sites its reading came from, in run order. */
+const SITE_BOUND: string[] = [];
+/** A bound row's provenance assertion: the reading it judges came from the site its title names, and from no other. */
+function expectReadFrom(stem: string, id: string, key: string, reading: Reading): void {
+  const row = siteBoundSets()
+    .find(set => set.stem === stem)
+    ?.rows.find(candidate => candidate.id === id);
+  const from = row === undefined ? [] : readFrom(reading, row);
+  SITE_BOUND.push(`${stem} ${id} ${key}<-${from.join(",")}`);
+  expect(from, SITE_BINDING_REQUIREMENT).toEqual([key]);
+}
+/** The out-of-file roster, shape-checked. */
+function mgssRoster(): Record<string, unknown> {
+  const raw: unknown = JSON.parse(readRepo(MGSS_ROSTER));
+  if (!isRecord(raw)) throw new Error(`${MGSS_ROSTER}: not an object`);
+  return raw;
+}
+
+describe("wb-mgss R735: every bound per-site row judges a reading from the site its title names", () => {
+  it("wb-mgss SITE BINDING: every row of every bound set, at every site its out-of-file roster names, measured its reading from that site alone, once each, in run order", () => {
+    const raw = mgssRoster();
+    const expected = rosterRows(raw, "sets").flatMap(set => {
+      const file = rosterText(set, "roster");
+      const field = rosterText(set, "field");
+      const roster: unknown = JSON.parse(readRepo(file));
+      if (!isRecord(roster)) throw new Error(`${file}: not an object`);
+      const held = roster[field];
+      const rows = isRecord(held) ? [held] : rosterRows(roster, field);
+      return rows.flatMap(row => rosterTexts(row, "sites").map(site => `${rosterText(set, "stem")} ${rosterText(row, "id")} ${site}<-${site}`));
+    });
+    expect(expected.length, "the roster's bound row count").toBe(raw.requiredBoundRows);
+    expect(SITE_BOUND, "every bound row's reading came from its titled site").toEqual(expected);
+  });
+  it("wb-mgss FROZEN SHAPE (standing rule 16): the bound sets keep their frozen stems, row counts, sites and bound row counts", () => {
+    expect(
+      siteBoundSets().map(set => `${set.stem}:${set.rows.length}:${[...new Set(set.rows.flatMap(row => row.sites))].join(",")}:${set.rows.flatMap(row => row.sites).length}`),
+    ).toEqual(["wb-e3eh quiet:22:S1,S2:44", "wb-agwj quiet:39:S1,S2:78", "wb-agwj channel:1:S1,S2:2", "wb-agwj twin:4:S1,S2:8"]);
+  });
+  it("wb-mgss ROSTER: the bound sets, in order, and the requirement equal the out-of-file roster", () => {
+    const raw = mgssRoster();
+    expect(siteBoundSets().map(set => set.stem), "the bound sets, out of file").toEqual(rosterRows(raw, "sets").map(set => rosterText(set, "stem")));
+    expect(SITE_BINDING_REQUIREMENT, "the requirement, out of file").toBe(rosterText(raw, "requirement"));
   });
 });
