@@ -8,6 +8,12 @@
  * IPC") and 03-PROFILES-DECISIONS-AND-WORK-PACKAGES.md:37 ("Do not introduce a new security-scanner gate or default resident
  * worker"). The acceptance is the owner filing's, verbatim: the labels of rows A-C below, held to the tracked bead export.
  *
+ * CUT #3 FORM (owner ruling R762; rule 19(c), the frozen enumerate-the-resolvable form of rule 14): this header claims exactly the
+ * pinned set below and no broader one. Every known-unpinned mode is a NAMED RESIDUAL (RESIDUALS) with a pinned quiet row - a row whose
+ * reading is pinned, so it changes and reds its pin when its page is silenced or the reading moves past it; the one mode no row inside
+ * this file can hold (R-ALL-SKIP) has its quiet rows OUTSIDE it, in the census-tier run pin. A newly discovered escape is a residual-list
+ * addition unless it contradicts a pinned claim. NOT CLAIMED names the census's own coordinated self-hollows, which are no subject mode.
+ *
  * NEEDLES, SPELLED ESCAPED: clauses (a) and (c) quote the clause grep's own needles - the Deno directory variable and the TSX SDK's npm
  * scope - so this file and its roster spell the underscore of the one and the hyphen of the other as JS / JSON \u escapes (the cooked
  * values equal the owner's text exactly); A2 reads both files' raw bytes and pins zero hits, so this cut adds no line to the grep it
@@ -68,7 +74,8 @@
  *    declaration of which sits in a TypeScript lib file; and sanitize()'s workbench
  *    key set, which equals the checker's WorkbenchSettings properties: no name holds a FAMILY word and every live name is declared in
  *    src/settings.ts (declaring); a planted settings program rides the same reading (one member per reference form, each reaching a
- *    FAMILY-named property only through that form) and one single-word control per FAMILY word (wb-jdpn F4) reads as designed;
+ *    FAMILY-named property only through that form), one single-word control per FAMILY word (wb-jdpn F4) and each R-TYPE-FLOW quiet
+ *    row, read alone, read as designed;
  *    C2 loadSettings over a hermetic project file drops every family-named top-level key and refuses each under workbench by name;
  *    C3 every capability registerNativeProviders registers
  *    (each provider module holds one input-schema constant that its native and injected registrations share): no inputSchema property
@@ -89,7 +96,9 @@
  * take no inflection). The judged set holds this file's FAMILY to that derivation and the closing case holds the roster's family to
  * it, each reading the filing itself, so a FAMILY word removed from this file, the roster and C1's control witness together - an
  * inflection included (pools, admits) - reds both judges; every FAMILY word is also a word of the filing or the plural or third
- * person of one, the knob phrases split exactly into FAMILY and GENERIC, and every FAMILY word has its single-word name control.
+ * person of one, the knob phrases split exactly into FAMILY and GENERIC, and every FAMILY word has its single-word name control. The
+ * census-tier run pin freezes FAMILY again, outside this file and its roster, so a FAMILY word moved to GENERIC with its inflection,
+ * the roster's family and the witnesses regenerated together - which both judges read as a consistent derivation - reds there.
  * ADMISSION (B1, wb-jdpn F8) holds the words of the title's "admit TSX starts"
  * duty with their inflections. PRECISION: "workspace" is not "worker" (C1/C3 controls); the src word "admission" belongs to the
  * registry and the workflow launch admission, so it is a family word only in a settings, input or argv name, never in src prose.
@@ -97,7 +106,10 @@
  * the tracked bead export (.beads/issues.jsonl) - its acceptance clauses (a), (b) and (c) are the labels of rows A, B and C verbatim
  * and in order, clause (a)'s quoted pattern and pathspecs are CLAUSE_PATTERN and SCOPE, and its title, quote and citation equal the
  * roster's; the out-of-file roster holds every row's id, label and pins, every pin's witness, the vocabulary, the HOLDERS patterns and
- * the registered tests; B2's input forms are held to the src descriptor's inputSchema. The last case walks this file's vitest task tree
+ * the registered tests; B2's input forms are held to the src descriptor's inputSchema; the census-tier run pin (RUN_PIN) freezes the
+ * rows' pin ids, the 13 titles and FAMILY outside this file and its roster and judges the default gate's own report of this file, and
+ * both judges hold its bytes to the roster's sha256 (runPin), so a pin removed from ROWS, the literal, IMPL and the roster together
+ * reds there (its title absent from the report). The last case walks this file's vitest task tree
  * against the roster. SELF-READ: the judged set parses this file's IMPL and requires every case to name one of READERS (the functions
  * that read the subject) and none of ROSTER_NAMES (the parsed roster's handles), so a case swapped for its own roster witness reds
  * (direct identifiers only: a helper's own reads, or a case parsing the roster file by path, are not followed). ROSTER_NAMES is held to
@@ -108,29 +120,35 @@
  * witness to the roster, so a compare removed, guarded away (an early return) or swapped for a matcher that takes no expected value
  * (toBeDefined) reds the closing case.
  * ENDS (wb-jdpn U1, the same class outside the pin compares): the two judges - the judged set, registered first, and the closing
- * case, registered last - sit at FILE SCOPE, outside every suite, around the census suite that holds rows A-C, so no single suite
- * modifier (skip, skipIf, runIf, todo, a skip option) reaches either. Every case records its end as its last statement, with the
- * count of assertions it made on the way (ENDED: the judged set, each pin's case after REACHED, the closing case), and each judge
- * declares its own count (expect.assertions), so a judge that stops early - an early return anywhere in its body, or its end record
- * moved ahead of its checks - fails its declared count, and its missing end reds the other judge or the backstop. The judged set walks
- * the registration at collection: every roster title once, in order, in run mode, not inverted, and the file's own registrations
- * exactly the two judges around the census suite. The closing case walks it again after the run (every other test ran), requires every
- * other case's end in registration order and the judged set's at its declared count, and re-judges the outside anchor itself against
- * the roster - the owner filing's title, clauses, quote and citation, clause (a)'s pattern and pathspecs and the FAMILY derivation -
- * so no single matcher swap in either judge hides a divergence of the bead export. A file-level afterAll backstop walks the file task
- * the first case to run hands over (fileTask), so it needs neither judge to have run: no case running at all reds it, every registered
- * test ran in run mode, not inverted, to a pass or a fail (a hook that skips a case at run time reds here), and unless a case failed,
- * every case's end is recorded in registration order, the closing case's at its declared count; a failed case reds the run by itself,
- * so the backstop names only a quiet miss. Not claimed:
- * every task skipped at collection (an edit at each of the three file-scope registrations; vitest then runs no hook of this file); a
- * pin removed from ROWS, the literal, IMPL and the roster together (the bead row anchors rows and clauses, not pins); a FAMILY word
- * moved to GENERIC with its inflection, the roster's family and the witnesses regenerated together; a judged list replaced by its
- * whole expected witness (planted entries included), a live input dropped from a reading while its planted controls stay, or a shared
- * reader (clauseHits, readModule, settingsSurface, ownerFiling, knobPhrases, familyOf) hollowed for live paths only (wb-jdpn F5 bounds
- * the constant-substitution class at the constant each pin reads today; familyOf also carries a control); a compare swapped for a
- * weaker matcher that still takes rosterWitness as its expected value (toEqual is equivalent over JSON witnesses), or a harness hollow
- * that also evaluates rosterWitness apart from the compare and records the roster's own witness; a hook that rewrites a task's result.
- * RESIDUALS (named families, each with a pinned quiet row in the controls): R-SPELLING a needle in another letter case, spacing or
+ * case, registered last - sit at FILE SCOPE, outside every suite, around the census suite that holds rows A-C, so no modifier of the
+ * census suite (skip, skipIf, runIf, todo, a skip option) reaches either. A suite WRAPPING all three registrations does reach them,
+ * and so does `it` rebound to a skipping variant: either is ONE edit that skips every task at collection (R-ALL-SKIP below, held
+ * outside this file). Every case records its end as its last statement, with the count of assertions it made on the way (ENDED: the
+ * judged set, each pin's case after REACHED, the closing case), and each judge declares its own count (expect.assertions), so a judge
+ * that stops early - an early return anywhere in its body, or its end record moved ahead of its checks - fails its declared count
+ * unless it had already made every assertion, and either way its missing end reds the other judge or the backstop. The judged set walks the registration at collection: every roster title once,
+ * in order, in run mode, not inverted, and the file's own registrations exactly the two judges around the census suite. The closing
+ * case walks it again after the run (every other test ran), requires every other case's end in registration order and the judged
+ * set's at its declared count, and re-judges the outside anchors itself against the roster - the owner filing's title, clauses, quote
+ * and citation, clause (a)'s pattern and pathspecs, the FAMILY derivation and the run pin's bytes - so no single matcher swap in either
+ * judge hides a divergence of the bead export or an edit of the run pin. Both walks read vitest's task tree INLINE (wb-jdpn cut #3, the
+ * wb-vu3i form: three levels, a deeper suite recorded by its name, no task handed to a call or placed in a literal), and every case
+ * registers finished() as its first statement (FINISHED: the result the runner settled on, after every hook), so the census tier's
+ * judge reads every case of this file. A file-level afterAll backstop reads FINISHED and ENDED, so it needs neither judge to have run:
+ * no case finishing, a case of the roster's tests missing from FINISHED or out of its order, or a case settled other than pass or fail
+ * (a hook's run-time skip) reds it, and unless a case failed, every case's end is recorded in registration order, the closing case's at its declared count; a
+ * failed case reds the run by itself, so the backstop names only a quiet miss. Vitest runs the backstop unless every task is skipped at
+ * collection (R-ALL-SKIP).
+ * NOT CLAIMED (the census's own coordinated self-hollows, no subject mode): a judged list replaced by its whole expected witness
+ * (planted entries included), a live input dropped from a reading while its planted controls stay, or a shared reader (clauseHits,
+ * readModule, settingsSurface, ownerFiling, knobPhrases, familyOf) hollowed for live paths only (wb-jdpn F5 bounds the
+ * constant-substitution class at the constant each pin reads today; familyOf also carries a control); a compare swapped for a weaker
+ * matcher that still takes rosterWitness as its expected value, or a harness hollow that also evaluates rosterWitness apart from the
+ * compare and records the roster's own witness; a hook that rewrites a task's result; any coordinated edit of this file, its roster
+ * and the run pin together (the run pin re-digested in the roster), such as a pin removed or a FAMILY word moved in all three.
+ * EQUIVALENT (no escape): toEqual for a pin's toStrictEqual (the witnesses are JSON); the backstop removed with nothing else planted.
+ * RESIDUALS (named families, each with a pinned quiet row: in a pin's controls or quiet reading, or for R-ALL-SKIP in the census-tier
+ * run pin): R-SPELLING a needle in another letter case, spacing or
  * separator ("Deno run", two spaces) escapes the clause's case-sensitive pattern in A1/A2 (quiet rows quiet-case, quiet-spacing); in
  * src, B1's case-insensitive word read still sees deno. R-COMPOSED a needle or a deno command assembled at runtime (a join, a
  * concatenation) escapes A (quiet row quiet-composed) and B1's spelling read; handed to a bound launcher it is still caught
@@ -152,22 +170,37 @@
  * escapes B1's admission read (quiet rows admissionQuiet: rf's own tsx counters and a renderSlots constant, and admissionProperty: a tsx
  * object's starts and limit, each read 0 admissions); B4's three concurrent renders, each spawning its own rf, are the runtime
  * backstop for a cap below three.
- * R-TYPE-FLOW (wb-jdpn F7, U2) C1's checker reading loads src/ files and TypeScript's lib, nothing else, and reads names, not signature
- * parameters: a member typed by a package's type (or one declared outside src/) is not followed (quiet row: the planted program's `packaged` member, whose package type declares a worker
- * pool in a declaration file the reading never loads, reads no hit), and a property every declaration of which sits in a lib file is
- * no settings name (an Array's or a String's own members; quiet row: the planted `browser` member, typed by the lib's Navigator, whose
- * serviceWorker names a worker, reads no hit). R-VOCABULARY (wb-jdpn U3) FAMILY holds each knob word and its -s form only:
+ * R-TYPE-FLOW (wb-jdpn F7, U2; cut #3) C1's checker reading loads src/ files and TypeScript's lib, nothing else, and reads names, not
+ * signature parameters: a member typed by a package's type (or one declared outside src/) is not followed (quiet row `packaged`: its
+ * package type declares a worker pool in a declaration file the reading never loads), a property every declaration of which sits in a
+ * lib file is no settings name (an Array's or a String's own members; quiet row `browser`: typed by the lib's Navigator, whose
+ * serviceWorker names a worker), and a callback setting's parameter types are not read (quiet row `configure`, the cut-#2 gate's F42 /
+ * G20 shape: a callback whose parameter's type holds workerCount). Each quiet row is a one-member WorkbenchSettings page read ALONE
+ * through the same reading (TYPE_FLOW_QUIET), and C1's quiet witness pins what each reads - the member itself and no FAMILY name - so a
+ * silenced page or a reading that moves past the bound changes it. R-VOCABULARY (wb-jdpn U3) FAMILY holds each knob word and its -s form only:
  * another inflection or a synonym (pooling, a thread count) escapes the C1, C3 and C4 name reads (quiet rows: NAME_CONTROLS's
  * poolingMode and threadCount read false).
+ * R-ALL-SKIP (owner ruling R762: a member of refusal #1's U1 class, the whole-file skips) every task skipped at collection - one suite
+ * wrapping the three file-scope registrations (a describe in its skip, runIf(false) or skipIf(true) form), `it` rebound to a skipping
+ * variant (test's skip form, or its own runIf(false) or skipIf(true) form; runIf(false) spells no skip marker at all), or the three
+ * registrations skipped one by one - reads 0 passed / 13 skipped at rc 0 in both configs: vitest then runs no judge and no hook of this file, so no
+ * row inside it can see the skip. Its pinned quiet rows live OUTSIDE the file, in the census-tier run pin (RUN_PIN): reading the
+ * default gate's own report, its R-ALL-SKIP rows red unless the report records this file once, its cases exactly the 13 titles frozen
+ * there under their describe paths, each passed (collected 13, passed 13), and judge() reads each collected once, passed and asserting;
+ * both judges here pin the run pin's bytes (the roster's runPin), so a silenced run pin reds this file. Bound: the census tier runs in
+ * the complete gate, after its test step, never in a targeted run of this file, and its rows run only while the census tier collects
+ * the run pin (vitest.census.config.ts's test/**\/*.census.ts) and forge.toml's gate runs its census step: an edit keeping the run pin
+ * out of the census tier together with a whole-file skip here is a coordinated two-file hollow, NOT CLAIMED.
  * Display paths added: none. Test-only: the stand-in rf and the tripwire live in makeScratch scratch; src, the roster and the bead
  * export are only read; hermeticDir (makeScratch-backed) holds the settings files.
  */
 import { spawnSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { accessSync, chmodSync, constants, existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { basename, delimiter, dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
-import { afterAll, afterEach, describe, expect, it, type RunnerTask, type RunnerTestFile } from "vitest";
+import { afterAll, afterEach, describe, expect, it, onTestFinished, type TestContext } from "vitest";
 import { loadSettings } from "../src/settings.js";
 import { CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
@@ -177,7 +210,8 @@ import { hermeticDir } from "./helpers/boot-extension.js";
 import { fullShapeRf } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
-installScratchLeakGuard(afterAll);
+// The guard registers through the helper's own afterAll: the census tier's judge refuses a vitest hook handed to a call (wb-vu3i).
+installScratchLeakGuard();
 
 type JsonObject = { [key: string]: JsonValue };
 
@@ -185,6 +219,8 @@ const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
 const SELF = "test/workbench-rf-tsx-worker-lifecycle-census.test.ts";
 const ROSTER_FILE = "test/fixtures/rf-tsx-worker-lifecycle-roster.json";
+/** The census-tier run pin (wb-jdpn cut #3, R762): this file's out-of-file anchor, the home of its R-ALL-SKIP quiet rows. */
+const RUN_PIN = "test/workbench-rf-tsx-worker-lifecycle-run-pin.census.ts";
 const EXPORT_FILE = ".beads/issues.jsonl";
 const BEAD = "wb-csbt.3";
 /** The producer pin the filing cites (ReactiveFiberTSXSDK). */
@@ -332,6 +368,17 @@ const SETTINGS_CONTROLS: Readonly<Record<string, string>> = {
   "src/augment.ts": 'declare module "./settings.js" {\n  interface WorkbenchSettings {\n    residentMode?: boolean;\n  }\n}\nexport {};\n',
   "node_modules/census-absent-package/index.d.ts": "export interface PackageKnobs {\n  workerPool?: number;\n}\n",
 };
+/** The R-TYPE-FLOW quiet rows (wb-jdpn U2; cut #3 adds the signature-parameter row, the cut-#2 gate's F42 / G20 shape), each a settings
+ * page whose WorkbenchSettings holds that one member, read ALONE: the package's type (declared in a file the reading never loads), the
+ * lib's Navigator (whose serviceWorker names a worker in a lib file) and a callback whose PARAMETER's type names a FAMILY property (the
+ * reading follows call-signature returns, never parameters). C1 pins what each reads: the member itself, and no FAMILY name. */
+const TYPE_FLOW_QUIET: Readonly<Record<string, string>> = Object.fromEntries(
+  [
+    ["packaged", 'import type { PackageKnobs } from "census-absent-package";\n', "  packaged?: PackageKnobs;"],
+    ["browser", "", "  browser?: Navigator;"],
+    ["configure", "", "  configure?: (knobs: { workerCount?: number }) => void;"],
+  ].map(([member, imports, line]) => [member, `${imports}export interface SubagentsSettings {\n  workbench?: WorkbenchSettings;\n}\nexport interface WorkbenchSettings {\n${line}\n}\n`]),
+);
 
 interface Row {
   readonly id: string;
@@ -385,6 +432,8 @@ interface Roster {
   readonly family: string[];
   readonly rows: { readonly id: string; readonly label: string; readonly pins: RosterPin[] }[];
   readonly tests: string[];
+  /** The census-tier run pin's path and the sha256 of its bytes (wb-jdpn cut #3). */
+  readonly runPin: { readonly file: string; readonly sha256: string };
 }
 
 /** Parses the roster, refusing any field of the wrong shape by name, so no case can read a malformed roster. */
@@ -404,10 +453,12 @@ function readRoster(): Roster {
   for (const key of ["bead", "pin", "title", "quote", "citation", "pattern"]) {
     if (typeof raw[key] !== "string") throw new Error(`roster ${key} must be a string`);
   }
+  const runPin = raw.runPin;
+  if (!isObject(runPin) || typeof runPin.file !== "string" || typeof runPin.sha256 !== "string") throw new Error("roster runPin needs a file and a sha256");
   return {
     bead: String(raw.bead), pin: String(raw.pin), title: String(raw.title), quote: String(raw.quote), citation: String(raw.citation),
     pattern: String(raw.pattern), scope: strings(raw.scope, "scope"), holders: strings(raw.holders, "holders"),
-    family: strings(raw.family, "family"), rows, tests: strings(raw.tests, "tests"),
+    family: strings(raw.family, "family"), rows, tests: strings(raw.tests, "tests"), runPin: { file: runPin.file, sha256: runPin.sha256 },
   };
 }
 
@@ -429,8 +480,8 @@ function rosterWitness(pin: string): JsonValue {
 
 /** wb-jdpn U1: the assertions the judged set and the closing case make on their way to their end; each declares its count
  * (expect.assertions) and records the count it reached at its end, which the closing case and the backstop read. */
-const JUDGED_ASSERTIONS = 24;
-const CLOSING_ASSERTIONS = 23;
+const JUDGED_ASSERTIONS = 25;
+const CLOSING_ASSERTIONS = 24;
 interface End {
   readonly title: string;
   readonly assertions: number;
@@ -441,33 +492,31 @@ const ENDED: End[] = [];
 function ended(title: string): void {
   ENDED.push({ title, assertions: expect.getState().assertionCalls });
 }
+/** One test of this file's vitest task tree, read into primitives by a judge's own inline walk (wb-jdpn cut #3: the census tier's judge
+ * reads a case only while no task is handed to a call or placed in a literal, so neither judge hands its task to a helper). */
 interface Registered {
   readonly name: string;
   readonly mode: string;
   readonly fails: boolean;
-  readonly state: string | undefined;
+  readonly state: string;
   readonly self: boolean;
 }
-/** Every test registered below `tasks` in vitest's task tree, in registration order; `self` marks the walking case by task identity. */
-function registered(tasks: readonly RunnerTask[], self?: RunnerTask): Registered[] {
-  const walked: Registered[] = [];
-  const visit = (children: readonly RunnerTask[]): void => {
-    for (const child of children) {
-      if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === self });
-      else if (child.type === "suite") visit(child.tasks);
-    }
-  };
-  visit(tasks);
-  return walked;
-}
 function shown(entry: Registered): string {
-  return `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${entry.state ?? "no result"}`;
+  return `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${entry.state}`;
 }
-/** The file task, handed over by the first case that runs (wb-jdpn U1; vitest hands a hook no task in a form this file can take): the
- * backstop walks it, so it needs neither judge to have run, and no case running at all is itself a quiet miss. */
-let fileTask: RunnerTestFile | undefined;
-function running(task: { readonly file: RunnerTestFile }): void {
-  fileTask ??= task.file;
+interface Finish {
+  readonly title: string;
+  readonly state: string;
+}
+/** Every case's settled result, in run order (wb-jdpn cut #3): each case registers finished() as its first statement, so the backstop
+ * reads the state the runner settled on - after every hook, a hook's run-time skip included - and no case hands its task to a call. */
+const FINISHED: Finish[] = [];
+function finished({ task }: TestContext): void {
+  FINISHED.push({ title: `${task.name}`, state: `${task.result?.state ?? "no result"}` });
+}
+/** The sha256 of a repository file's bytes, or null when it is absent. */
+function digestOf(path: string): string | null {
+  return existsSync(join(REPO, path)) ? createHash("sha256").update(readFileSync(join(REPO, path))).digest("hex") : null;
 }
 
 interface OwnerFiling {
@@ -1041,7 +1090,7 @@ const SCHEMA_CONTROL = {
 // wb-jdpn U1: the judged set, registered first and at file scope, outside every suite. It declares its assertion count and records its
 // end as its last statement, so an early return anywhere in it fails its count and leaves no end for the closing case.
 it("the judged set: the frozen shape, the out-of-file roster, the owner's filing and the cases agree", { timeout: 60_000 }, ({ task }) => {
-  running(task);
+  onTestFinished(finished);
   expect.assertions(JUDGED_ASSERTIONS);
   expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:4", "C:4"]);
   expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
@@ -1061,6 +1110,9 @@ it("the judged set: the frozen shape, the out-of-file roster, the owner's filing
   expect(clauseA.slice(clauseA.indexOf("' -- ") + 5, clauseA.indexOf(" in Pi-subagents")).split(" ")).toEqual(SCOPE);
   expect({ title: filing.title, quote: filing.quote, citation: filing.citation }).toStrictEqual({ title: ROSTER.title, quote: ROSTER.quote, citation: ROSTER.citation });
   expect(ROSTER.citation.endsWith(`@${PIN}`)).toBe(true);
+  // wb-jdpn cut #3 (R762): the census-tier run pin - this file's out-of-file anchor and the home of its R-ALL-SKIP quiet rows - is held
+  // byte for byte to the roster's digest, so it is never deleted or edited alone.
+  expect({ file: RUN_PIN, sha256: digestOf(RUN_PIN) }, "the census-tier run pin's bytes against the roster").toStrictEqual(ROSTER.runPin);
   expect({ bead: BEAD, pin: PIN, pattern: CLAUSE_PATTERN, scope: SCOPE, holders: HOLDERS.map(pattern => pattern.source), family: FAMILY }).toStrictEqual({
     bead: ROSTER.bead, pin: ROSTER.pin, pattern: ROSTER.pattern, scope: [...ROSTER.scope], holders: [...ROSTER.holders], family: [...ROSTER.family],
   });
@@ -1085,14 +1137,34 @@ it("the judged set: the frozen shape, the out-of-file roster, the owner's filing
   expect(words(knobs.duty).filter(word => word !== "tsx" && !ADMISSION.includes(word)), `the title duty "${knobs.duty}" outside ADMISSION`).toEqual([]);
   expect(words(knobs.duty).includes("tsx"), "the title duty names TSX").toBe(true);
   // wb-jdpn U1: the registration at collection (vitest's task tree) - every roster title once, in order, in run mode, not inverted, and
-  // the file's own registrations exactly the two judges at file scope around the census suite.
-  const walked = registered(task.file.tasks, task);
+  // the file's own registrations exactly the two judges at file scope around the census suite. The tree is read INLINE (wb-jdpn cut #3,
+  // the wb-vu3i form): no task is handed to a call or placed in a literal, each is read into primitives at the three levels this file
+  // nests, and a suite nested deeper is recorded by its name, so the title compare reds on it rather than miss what it holds.
+  const walked: Registered[] = [];
+  const own: string[] = [];
+  for (const top of task.file.tasks) {
+    own.push(top.type === "suite" ? "suite" : `${top.type}:${top.name}`);
+    if (top.type !== "suite") {
+      walked.push({ name: `${top.name}`, mode: `${top.mode}`, fails: top.fails === true, state: `${top.result?.state ?? "no result"}`, self: top.id === task.id });
+      continue;
+    }
+    for (const middle of top.tasks) {
+      if (middle.type !== "suite") {
+        walked.push({ name: `${middle.name}`, mode: `${middle.mode}`, fails: middle.fails === true, state: `${middle.result?.state ?? "no result"}`, self: middle.id === task.id });
+        continue;
+      }
+      for (const leaf of middle.tasks) {
+        walked.push({
+          name: leaf.type === "suite" ? `suite ${leaf.name}` : `${leaf.name}`, mode: `${leaf.mode}`, fails: leaf.type === "suite" ? false : leaf.fails === true,
+          state: `${leaf.result?.state ?? "no result"}`, self: leaf.id === task.id,
+        });
+      }
+    }
+  }
   expect(walked.map(entry => entry.name), "every registered test of this file, exactly and in roster order").toEqual([...ROSTER.tests]);
   expect(walked.filter(entry => entry.mode !== "run" || entry.fails).map(shown), "every test is registered in run mode and not inverted").toEqual([]);
-  expect(task.file.tasks.map(child => (child.type === "suite" ? "suite" : `${child.type}:${child.name}`)), "the file's own registrations: the two judges around the census suite").toEqual([
-    `test:${task.name}`, "suite", `test:${ROSTER.tests.at(-1) ?? ""}`,
-  ]);
-  ended(task.name);
+  expect(own, "the file's own registrations: the two judges around the census suite").toEqual([`test:${task.name}`, "suite", `test:${ROSTER.tests.at(-1) ?? ""}`]);
+  ended(`${task.name}`);
 });
 
 const IMPL: Record<string, () => JsonValue | Promise<JsonValue>> = {
@@ -1252,6 +1324,12 @@ const IMPL: Record<string, () => JsonValue | Promise<JsonValue>> = {
       sanitizeMatchesWorkbench: JSON.stringify([...surface.sanitizeKeys].sort()) === JSON.stringify([...surface.workbenchMembers].sort()),
       memberFloor: surface.members.length >= FLOORS.settings,
       controls: NAME_CONTROLS.map(name => `${name}:${familyName(name)}`),
+      // wb-jdpn cut #3 (F42): each R-TYPE-FLOW quiet row read ALONE through the same checker reading, so a silenced page (the member
+      // gone) or a reading past the bound (a parameter, a package or a lib member read) changes its row.
+      quiet: Object.entries(TYPE_FLOW_QUIET).map(([member, page]) => {
+        const alone = settingsSurface(path => (path === "src/settings.ts" ? page : path.startsWith("src/") ? SETTINGS_CONTROLS[path] : undefined), ["src/settings.ts"]);
+        return `${member}: ${alone.members.join(" ")} | hits ${alone.members.filter(familyName).length}`;
+      }),
     };
   },
   C2: () => {
@@ -1327,8 +1405,8 @@ describe("wb-csbt.3 rf TSX worker lifecycle census (TSX-RESOURCE-EFFICIENCY-FRON
   for (const row of ROWS) {
     describe(`${row.id} ${row.label}`, () => {
       for (const pin of row.pins) {
-        it(pin, { timeout: 120_000 }, async ({ task }) => {
-          running(task);
+        it(pin, { timeout: 120_000 }, async () => {
+          onTestFinished(finished);
           const impl = IMPL[pin];
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : json(await impl());
@@ -1344,18 +1422,37 @@ describe("wb-csbt.3 rf TSX worker lifecycle census (TSX-RESOURCE-EFFICIENCY-FRON
 // wb-jdpn U1: the closing case, registered last and at file scope, outside every suite; it declares its assertion count and records its
 // end, which the backstop reads.
 it("registration: every case of this file is registered once, in roster order, in run mode, ran before this one and reached its witness compare", { timeout: 60_000 }, ({ task }) => {
-  running(task);
+  onTestFinished(finished);
   expect.assertions(CLOSING_ASSERTIONS);
-  const walked = registered(task.file.tasks, task);
+  // The tree read INLINE, as the judged set reads it (wb-jdpn cut #3).
+  const walked: Registered[] = [];
+  const own: string[] = [];
+  for (const top of task.file.tasks) {
+    own.push(top.type === "suite" ? "suite" : `${top.type}:${top.name}`);
+    if (top.type !== "suite") {
+      walked.push({ name: `${top.name}`, mode: `${top.mode}`, fails: top.fails === true, state: `${top.result?.state ?? "no result"}`, self: top.id === task.id });
+      continue;
+    }
+    for (const middle of top.tasks) {
+      if (middle.type !== "suite") {
+        walked.push({ name: `${middle.name}`, mode: `${middle.mode}`, fails: middle.fails === true, state: `${middle.result?.state ?? "no result"}`, self: middle.id === task.id });
+        continue;
+      }
+      for (const leaf of middle.tasks) {
+        walked.push({
+          name: leaf.type === "suite" ? `suite ${leaf.name}` : `${leaf.name}`, mode: `${leaf.mode}`, fails: leaf.type === "suite" ? false : leaf.fails === true,
+          state: `${leaf.result?.state ?? "no result"}`, self: leaf.id === task.id,
+        });
+      }
+    }
+  }
   const titles = walked.map(entry => entry.name);
   expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
   expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice (an alias or a decoy)").toEqual([]);
   const here = walked.findIndex(entry => entry.self);
   expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
-  expect(task.file.tasks.map(child => (child.type === "suite" ? "suite" : `${child.type}:${child.name}`)), "the file's own registrations: the two judges around the census suite").toEqual([
-    `test:${ROSTER.tests[0] ?? ""}`, "suite", `test:${task.name}`,
-  ]);
-  const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
+  expect(own, "the file's own registrations: the two judges around the census suite").toEqual([`test:${ROSTER.tests[0] ?? ""}`, "suite", `test:${task.name}`]);
+  const ran = (state: string): boolean => state === "pass" || state === "fail";
   expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(shown), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
   // wb-jdpn U1: every other case reached its end, in registration order, and the judged set after its declared count.
   expect(ENDED.map(end => end.title), "every other case reached its end, in registration order").toEqual(titles.slice(0, here));
@@ -1377,23 +1474,27 @@ it("registration: every case of this file is registered once, in roster order, i
     pattern: ROSTER.pattern, scope: [...ROSTER.scope],
   });
   expect(familyOf(knobPhrases(filing).phrases), "the roster's family against its derivation from the owner's knob phrases").toEqual([...ROSTER.family].sort());
-  ended(task.name);
+  // wb-jdpn cut #3 (R762): the census-tier run pin's bytes re-judged here, so a matcher swapped in the judged set cannot hide its edit.
+  expect({ file: RUN_PIN, sha256: digestOf(RUN_PIN) }, "the census-tier run pin's bytes against the roster").toStrictEqual(ROSTER.runPin);
+  ended(`${task.name}`);
 });
 
-// wb-jdpn U1: the backstop no single test, suite or hook modifier reaches. It walks the file task the first case to run handed over, so
-// it needs neither judge to have run, and vitest runs this file's hooks unless every task is skipped at collection (an edit at each of
-// the three file-scope registrations). No case running at all, or a registered test not run in run mode, not inverted, to a pass or a
-// fail, reds here; unless a case failed, every case's end is recorded in registration order, the closing case's after its declared
-// count. A failed case already reds the run, so the backstop names only a quiet miss (a run-time skip, an early return).
+// wb-jdpn U1: the backstop no test, suite or hook modifier inside this file's registrations reaches. It reads FINISHED - the result the
+// runner settled on for each case, after every hook - and ENDED, so it needs neither judge to have run and no task handed over (wb-jdpn
+// cut #3). No case finishing, a case of the roster's tests missing from FINISHED or out of its order, or a case settled other than
+// pass or fail (a hook's run-time skip) reds here; unless a case failed, every case's end is recorded in registration order, the
+// closing case's after its declared count. A failed case already reds the run, so the backstop names only a quiet miss (a run-time
+// skip, an early return). Vitest runs this hook unless every task is skipped at collection - R-ALL-SKIP, which one wrapping suite or
+// a rebound it reaches with a single edit - and the census-tier run pin reds that instead.
 afterAll(() => {
-  if (fileTask === undefined) throw new Error("wb-jdpn backstop: no case of this file ran");
-  const walked = registered(fileTask.tasks);
-  const quiet = walked.filter(entry => entry.mode !== "run" || entry.fails || (entry.state !== "pass" && entry.state !== "fail")).map(shown);
-  if (quiet.length > 0) throw new Error(`wb-jdpn backstop: a registered test did not run to a pass or a fail: ${quiet.join("; ")}`);
-  if (walked.some(entry => entry.state === "fail")) return;
+  const titles = FINISHED.map(entry => entry.title);
+  if (JSON.stringify(titles) !== JSON.stringify(ROSTER.tests)) throw new Error(`wb-jdpn backstop: the cases that finished are not every registered case, in order: ${titles.join("; ") || "none"}`);
+  const quiet = FINISHED.filter(entry => entry.state !== "pass" && entry.state !== "fail").map(entry => `${entry.title} | ${entry.state}`);
+  if (quiet.length > 0) throw new Error(`wb-jdpn backstop: a case did not finish to a pass or a fail: ${quiet.join("; ")}`);
+  if (FINISHED.some(entry => entry.state === "fail")) return;
   const ends = ENDED.map(end => end.title);
-  const closing = ENDED.find(end => end.title === walked.at(-1)?.name)?.assertions;
-  if (JSON.stringify(ends) !== JSON.stringify(walked.map(entry => entry.name)) || closing !== CLOSING_ASSERTIONS) {
-    throw new Error(`wb-jdpn backstop: a case passed without reaching its end: ${ends.length} of ${walked.length} ends recorded, the closing case's after ${closing ?? "no"} of its ${CLOSING_ASSERTIONS} assertions`);
+  const closing = ENDED.find(end => end.title === ROSTER.tests.at(-1))?.assertions;
+  if (JSON.stringify(ends) !== JSON.stringify(ROSTER.tests) || closing !== CLOSING_ASSERTIONS) {
+    throw new Error(`wb-jdpn backstop: a case passed without reaching its end: ${ends.length} of ${ROSTER.tests.length} ends recorded, the closing case's after ${closing ?? "no"} of its ${CLOSING_ASSERTIONS} assertions`);
   }
 });

@@ -495,6 +495,11 @@
        "workspace:false",
        "poolingMode:false",
        "threadCount:false"
+      ],
+      "quiet": [
+       "packaged: workbench packaged | hits 0",
+       "browser: workbench browser | hits 0",
+       "configure: workbench configure | hits 0"
       ]
      }
     },
@@ -567,5 +572,9 @@
   "C3",
   "C4",
   "registration: every case of this file is registered once, in roster order, in run mode, ran before this one and reached its witness compare"
- ]
+ ],
+ "runPin": {
+  "file": "test/workbench-rf-tsx-worker-lifecycle-run-pin.census.ts",
+  "sha256": "a34d1b3214b76fcea070f45274a70b16234972825ef277dd904b3678a7f83805"
+ }
 }
