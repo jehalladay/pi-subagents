@@ -25,7 +25,11 @@
  *    either DISTINCTIVE content state (STATE_FAMILY:
  *    recognizing, its -ising spelling, provisional, provisionally) - the distinctive pair is DERIVED: the six states of the bead
  *    row's merged pin minus the four Pi's modules already spell in other senses - and the walk reaches its floors and anchors,
- *    meets no symlink (refused, never followed) and no unreadable file; A2 no judged module or JSON file spells a streaming-block
+ *    meets no symlink (refused, never followed) and no unreadable file (A1's witness carries both lists too, so deleting the walk
+ *    assertion still reds a symlink). judgeStates judges the inventory BEFORE the derivation and each red names its sites: an
+ *    inventory red lists every spelling with its file and line, and a derivation red names, for each state it contradicts, the
+ *    files and lines that spell it (a spelling the inventory does not judge, prose among them) or that no judged module spells
+ *    it; A1's judgingControls pin that order and those messages over planted trees; A2 no judged module or JSON file spells a streaming-block
  *    name (BLOCK_FAMILY: the program's own nouns - streaming blocks, a block stream, a block parser, parsed blocks, a parse
  *    status, content states, a provisional suffix), read by A1's rule; A3 the nearest block readers (NEAREST_READERS) are reached by the reader,
  *    judged, and carry no A1, A2, B1 or B2 finding; A4 each exemption is load-bearing: this file and its roster are walked, are
@@ -50,7 +54,9 @@
  * THE WALK: every regular file below the repository root, at any depth, in name order. The root entries SKIPPED_ROOTS (git's
  * data, the tracker export - bead rows quote the statement -, installed dependencies, build, coverage and Forge outputs) are
  * skipped at the root only; the two EXEMPT files are walked but not judged. Modules (MODULE_EXTENSIONS) and JSON files
- * (JSON_EXTENSIONS) are judged; prose is walked and never judged. It reads the working tree, so an untracked plant is read, and a
+ * (JSON_EXTENSIONS) are judged; every other file is walked and never judged - prose, and also shell scripts, TOML and YAML
+ * configs, JSON Lines, extensionless files, packed archives and media (the unjudged extensions the walk meets at base 01e7c56:
+ * .md, .sh, none, .tgz, .toml, .yml, .yaml, .mp4, .png). It reads the working tree, so an untracked plant is read, and a
  * copy of this file or its roster anywhere in the walk is a finding (only the two exact paths are exempt). A later census that
  * needs either family as a needle adds its own file to EXEMPT in its cut, beside an A4-style reading.
  * OVER-READ (disclosed): an identifier or a name-like literal using a distinctive state in its everyday sense, or
@@ -74,15 +80,19 @@
  * refuses a producer object whose keys differ from the measured set, so a re-measure written under a renamed or misspelled key
  * is refused, never read as 0.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (id, label, pins), every
- * pin's witness (each carries its pin id), the scan constants, the content states, the residual families and the registered test
- * titles are held to the out-of-file roster (test/fixtures/tsx-streaming-block-roster.json). OUTSIDE ANCHOR: the owner filing's
+ * pin's witness (each carries its pin id), the scan constants, the content states, the residual families, the registered test
+ * titles and each pin's reached assertion count are held to the out-of-file roster (test/fixtures/tsx-streaming-block-roster.json). OUTSIDE ANCHOR: the owner filing's
  * row in the tracked bead export (.beads/issues.jsonl, row wb-if7q.5): every acceptance clause it lists sits verbatim in exactly
  * one row label, its trigger phrase in row A's, every row carries one of them, its quote, citation and merged-pin states equal
- * the roster's, A1 derives its distinctive pair from those states, and its "Shipped: no" sentence is read by C1, so a row removed
- * from every literal of this file and the roster still reds. Not claimed: a pin removed from ROWS, the literal, IMPL and the
- * roster together (the bead row anchors rows, clauses and the state list, not pins).
+ * the roster's, A1 derives its distinctive pair from those states, and its gating line (the filing's first "Gating: " line) ends with the "Shipped: no"
+ * sentence C1 reads, so a later note quoting that sentence is never read as the filing, and a row removed from every literal of
+ * this file and the roster still reds. Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the bead
+ * row anchors rows, clauses and the state list, not pins), nor a pin body that keeps its exact assertion count while returning a
+ * constant witness (REACHED pins the count, not the reading).
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run
- * mode, not inverted, ran; every pin's case reached its end (REACHED); no registered test or suite title spells either family
+ * mode, not inverted, ran; every pin's case reached its end (REACHED) with the assertion count
+ * the roster's reached list pins, so a pin body hollowed to return its witness without its own assertions reds; no registered
+ * test or suite title spells either family
  * (describe titles mask them), so a passing run's report written into the tree stays quiet.
  * RESIDUALS (named families, each with pinned quiet rows in the controls): R-COMPOSED a state word, a block name or a specifier
  * assembled at runtime from a variable, a call or an array join (A1 composed, joined; B1 composedSpecifier; B2
@@ -90,9 +100,11 @@
  * R-PASSTHROUGH block records read as opaque data and shown without a state word or a block name in code or JSON (A2
  * passthrough); R-RENAMED a parser loaded under a package name outside both families and bound under names outside
  * BLOCK_FAMILY (A2 renamedBinding; B2 renamedPackage); R-LOOKALIKE a non-ASCII look-alike letter or an inserted invisible (A1
- * lookalike, invisible); R-ENCODED an encoding the compiler does not cook, ROT13 or base-N (A1 rot13); R-PROSE prose files, code comments and
+ * lookalike, invisible); R-ENCODED an encoding the compiler does not cook, ROT13 or base-N (A1 rot13); R-PROSE every file of an unjudged
+ * extension (prose, and also shell scripts, TOML and YAML configs, JSON Lines and extensionless files), code comments, and
  * literals or JSON values with white space inside, walked or parsed but never judged - a space-separated state list in one
- * literal among them (A1 comment, proseLiteral, proseTemplate, jsonProse, spacedList and the planted notes/; A2 proseLiteral); R-OUTSIDE a file below a skipped root
+ * literal among them (A1 comment, proseLiteral, proseTemplate, jsonProse, spacedList, the planted notes/ and the planted
+ * unjudged-extension files of unjudgedControls; A2 proseLiteral); R-OUTSIDE a file below a skipped root
  * entry (A1 planted node_modules/, dist/, .beads/, .forge/, build/ and coverage/).
  * Display paths added: none. Test-only: it spawns nothing; the controls plant files in makeScratch scratch only.
  */
@@ -269,6 +281,7 @@ interface Roster {
   readonly residuals: readonly string[];
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
+  readonly reached: readonly string[];
 }
 
 function isObject(value: unknown): value is { [key: string]: unknown } {
@@ -376,6 +389,7 @@ function readRoster(): Roster {
     residuals: strings(raw.residuals, "residuals"),
     rows,
     tests: strings(raw.tests, "tests"),
+    reached: strings(raw.reached, "reached"),
   };
 }
 
@@ -418,6 +432,15 @@ function acceptanceClauses(notes: string): string[] {
 function quoteOf(notes: string): { quote: string | undefined; citation: string | undefined; states: string[] | undefined } {
   const match = /^Quote: '(.+)' (\S+)\. Merged pin \(same dir\): \S+ \('Content states: ([^.']+)\.'\)/m.exec(notes);
   return { quote: match?.[1], citation: match?.[2], states: match?.[3]?.split(", ") };
+}
+/** The filing's gating line: its first "Gating: " line, as acceptanceClauses reads its first "Acceptance: " line. */
+function gatingOf(notes: string): string | undefined {
+  return notes.split("\n").find(entry => entry.startsWith("Gating: "));
+}
+/** C1's reading of the filing: its gating line ends with the unshipped sentence for the program pin, so a later note quoting the
+ * sentence, a second gating line or a gating line going on past the sentence never reads as the filing (F2 rider P9). */
+function saysUnshipped(notes: string, sha12: string): boolean {
+  return gatingOf(notes)?.endsWith(` Shipped: no - git grep ${REFERENCE} over src/ python/ at ${sha12}: 0 files.`) === true;
 }
 
 const posix = (path: string): string => path.split(sep).join("/");
@@ -508,10 +531,12 @@ interface ModuleReading {
   readonly referenceLoads: string[];
   readonly identifiers: Set<string>;
   readonly words: Set<string>;
+  readonly stateSites: Map<string, string[]>;
 }
 /** One module, parsed under its own script kind: its state and block-name spellings (A1, A2), every word it spells (A1's
- * derivation), its module specifiers and the literal first argument of every call or new expression, and the SDK and reference
- * loads among them (B1, B2). Comments are never read. */
+ * derivation) with the file, line and kind of each content-state word among them (a derivation red names them), its module
+ * specifiers and the literal first argument of every call or new expression, and the SDK and reference loads among them (B1,
+ * B2). Comments are never read. */
 function readModule(path: string, source: string): ModuleReading {
   const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
   const states: string[] = [];
@@ -519,11 +544,19 @@ function readModule(path: string, source: string): ModuleReading {
   const specifiers: string[] = [];
   const identifiers = new Set<string>();
   const words = new Set<string>();
+  const stateSites = new Map<string, string[]>();
   const line = (node: ts.Node): number => file.getLineAndCharacterOfPosition(node.getStart(file)).line + 1;
   // Every word counts toward A1's derivation; an identifier or a regex is always judged, a literal only when it is name-like.
   const judge = (node: ts.Node, kind: string, value: string): void => {
     const read = wordsOf(value);
-    for (const word of read.split(" ")) if (word.length > 0) words.add(word);
+    const spelled = read.split(" ").filter(word => word.length > 0);
+    for (const word of spelled) words.add(word);
+    for (const state of CONTENT_STATES) {
+      if (!spelled.includes(state)) continue;
+      const sites = stateSites.get(state) ?? [];
+      sites.push(`${path}:${line(node)} ${kind}`);
+      stateSites.set(state, sites);
+    }
     if (!(kind === "identifier" || kind === "regex" || isNameLike(value))) return;
     if (STATE_FAMILY.test(read)) states.push(`${path}:${line(node)} ${kind}: ${value}`);
     if (BLOCK_FAMILY.test(read)) blocks.push(`${path}:${line(node)} ${kind}: ${value}`);
@@ -564,6 +597,7 @@ function readModule(path: string, source: string): ModuleReading {
     referenceLoads: specifiers.filter(specifier => REFERENCE_FAMILY.test(specifier)).map(specifier => `${path}: ${specifier}`),
     identifiers,
     words,
+    stateSites,
   };
 }
 
@@ -709,10 +743,70 @@ function tierReading(path: string, source: string): { titles: string[]; claims: 
 }
 const claimsIn = (source: string): boolean => tierReading("t.test.ts", source).claims.length > 0;
 
+const INVENTORY_LABEL = "distinctive content-state spellings outside the exemptions (the trigger's inventory)";
+const DERIVATION_LABEL = "STATE_FAMILY reads exactly the states no judged module spells";
+/** A derivation red names at most this many sites per state, then how many more spell it. */
+const SITES_SHOWN = 5;
+interface StateDerivation {
+  readonly spelledStates: string[];
+  readonly distinctive: string[];
+  readonly familyCovers: boolean;
+  readonly contradictions: string[];
+}
+/** A1's derivation over a walked tree: the bead row's six states (the frozen-shape case reads them) minus those its judged modules
+ * spell are the distinctive ones, and STATE_FAMILY must read exactly those. Each contradiction names its state with the sites
+ * that spell it, or says no judged module spells it. */
+function deriveStates(tree: TreeReading): StateDerivation {
+  const readings = [...tree.modules.values()];
+  const spelledStates = CONTENT_STATES.filter(word => readings.some(reading => reading.words.has(word)));
+  const distinctive = CONTENT_STATES.filter(word => !spelledStates.includes(word));
+  const familyCovers = distinctive.length > 0 && distinctive.every(word => STATE_FAMILY.test(word)) && spelledStates.every(word => !STATE_FAMILY.test(word));
+  const sitesOf = (word: string): string => {
+    const sites = readings.flatMap(reading => reading.stateSites.get(word) ?? []);
+    const more = sites.length > SITES_SHOWN ? ` and ${sites.length - SITES_SHOWN} more` : "";
+    return `${sites.slice(0, SITES_SHOWN).join("; ")}${more}`;
+  };
+  const contradictions = [
+    ...spelledStates.filter(word => STATE_FAMILY.test(word)).map(word => `${word} is spelled at ${sitesOf(word)}, so it is not distinctive, yet STATE_FAMILY reads it`),
+    ...distinctive.filter(word => !STATE_FAMILY.test(word)).map(word => `${word} is spelled by no judged module, so it is distinctive, yet STATE_FAMILY does not read it`),
+    ...(distinctive.length === 0 ? ["no content state is distinctive"] : []),
+  ];
+  return { spelledStates, distinctive, familyCovers, contradictions };
+}
+interface StatesJudged extends StateDerivation {
+  readonly modules: string[];
+  readonly jsonFiles: string[];
+}
+/** A1's judging of a walked tree, in this order: the trigger's inventory first, so a name-like spelling reds with its file and
+ * line, then the derivation, whose red names the sites of each state it contradicts (a spelling the inventory does not judge,
+ * prose among them) or the state no judged module spells (F1). It throws at the first failure; A1's judgingControls read which
+ * judgment failed first and what its red names. */
+function judgeStates(tree: TreeReading): StatesJudged {
+  const modules = [...tree.modules.values()].flatMap(reading => reading.states);
+  const jsonFiles = [...tree.json.values()].flatMap(reading => reading.states);
+  expect({ modules, jsonFiles }, `${INVENTORY_LABEL}: ${[...modules, ...jsonFiles].join("; ") || "none"}`).toStrictEqual({ modules: [], jsonFiles: [] });
+  const derivation = deriveStates(tree);
+  expect(derivation.familyCovers, `${DERIVATION_LABEL} (distinctive: ${derivation.distinctive.join(", ") || "none"}): ${derivation.contradictions.join(" | ")}`).toBe(true);
+  return { modules, jsonFiles, ...derivation };
+}
+/** Which of A1's judgments fails first over a planted tree, and whether its red names `needle`: "quiet" when both hold. */
+function stateRed(files: Readonly<Record<string, string | null>>, needle: string): string {
+  try {
+    judgeStates(plantedTree(files));
+    return "quiet";
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    const first = message.startsWith(INVENTORY_LABEL) ? "inventory" : message.startsWith(DERIVATION_LABEL) ? "derivation" : "other";
+    return `${first}:${message.includes(needle) ? "named" : "unnamed"}`;
+  }
+}
+
 const REACHED: string[] = [];
-/** A pin's witness, recorded as reached: only a case that ran to its end returns through here. */
+/** A pin's witness, recorded as reached with the assertions its case has made: only a case that ran to its end returns through
+ * here, and the roster's reached list pins each count, so a pin body hollowed to return its witness without its own assertions
+ * reds (F2 rider P2). */
 function done(pin: string, witness: JsonObject): Json {
-  REACHED.push(pin);
+  REACHED.push(`${pin}:${expect.getState().assertionCalls}`);
   return { pin, ...witness };
 }
 
@@ -729,15 +823,10 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       json: true,
     });
     expect(tree.anchorsWalked, "every walk anchor was reached with its token").toBe(true);
-    expect({ symlinks: tree.walk.symlinks, unreadable: tree.walk.unreadable }, "the walk meets no symlink and no unreadable file").toStrictEqual({ symlinks: [], unreadable: [] });
-    // The distinctive pair is derived: the bead row's six states (the frozen-shape case reads them) minus those Pi already spells.
-    const spelledStates = CONTENT_STATES.filter(word => [...tree.modules.values()].some(reading => reading.words.has(word)));
-    const distinctive = CONTENT_STATES.filter(word => !spelledStates.includes(word));
-    const familyCovers = distinctive.length > 0 && distinctive.every(word => STATE_FAMILY.test(word)) && spelledStates.every(word => !STATE_FAMILY.test(word));
-    expect(familyCovers, `STATE_FAMILY reads exactly the states no judged module spells: ${distinctive.join(", ")}`).toBe(true);
-    const modules = [...tree.modules.values()].flatMap(reading => reading.states);
-    const jsonFiles = [...tree.json.values()].flatMap(reading => reading.states);
-    expect({ modules, jsonFiles }, "distinctive content-state spellings outside the exemptions (the trigger's inventory)").toStrictEqual({ modules: [], jsonFiles: [] });
+    const walk = { symlinks: tree.walk.symlinks, unreadable: tree.walk.unreadable };
+    expect(walk, "the walk meets no symlink and no unreadable file").toStrictEqual({ symlinks: [], unreadable: [] });
+    // The trigger's inventory, then the derived distinctive pair (judgeStates; the frozen-shape case reads the bead row's states).
+    const { spelledStates, distinctive, familyCovers, modules, jsonFiles } = judgeStates(tree);
     const head = "provi";
     const controls = {
       stateLiteral: statesIn("c.ts", 'if (block.status === "provisional") mark(block);\n'),
@@ -782,6 +871,12 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       ".forge/report.json": '{"name":"provisional"}\n',
       "build/blocks.ts": "export const provisional = 1;\n",
       "coverage/blocks.ts": "export const provisional = 1;\n",
+      "scripts/stream.sh": "PROVISIONAL=1\n",
+      "config/stream.toml": 'state = "provisional"\n',
+      "config/stream.yml": "state: recognizing\n",
+      "config/stream.yaml": "state: provisional\n",
+      "data/blocks.jsonl": '{"state":"provisional"}\n',
+      "notes/STATE": "provisional\n",
       "src/link.ts": null,
     });
     const flaggedIn = (path: string): boolean =>
@@ -802,7 +897,35 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         "src/link.ts",
       ].map(path => [path, flaggedIn(path)]),
     );
-    return done("A1", { floors, anchorsWalked: tree.anchorsWalked, spelledStates, distinctive, familyCovers, modules, jsonFiles, controls, walkControls });
+    // R-PROSE's unjudged extensions (F3): each planted file is walked and stays quiet.
+    const unjudgedControls = Object.fromEntries(
+      ["scripts/stream.sh", "config/stream.toml", "config/stream.yml", "config/stream.yaml", "data/blocks.jsonl", "notes/STATE"].map(path => [
+        path,
+        `${planted.walk.files.includes(path) ? "walked" : "unwalked"}:${flaggedIn(path) ? "flagged" : "quiet"}`,
+      ]),
+    );
+    // judgeStates' order and messages (F1): which judgment reds first over a planted tree, and whether its red names the site.
+    const settled = { "src/settled.ts": 'export const SETTLED = ["complete", "validated", "invalid", "aborted"];\n' };
+    const judgingControls = {
+      quiet: stateRed(settled, ""),
+      exactSpelling: stateRed({ ...settled, "src/blocks.ts": 'export const PENDING = "provisional";\n' }, "src/blocks.ts:1"),
+      proseSpelling: stateRed({ ...settled, "src/notes.ts": 'export const NOTE = "a block still recognizing input";\n' }, "src/notes.ts:1"),
+      unspelledState: stateRed({ "src/settled.ts": 'export const SETTLED = ["complete", "validated", "invalid"];\n' }, "aborted"),
+    };
+    return done("A1", {
+      floors,
+      anchorsWalked: tree.anchorsWalked,
+      walk,
+      spelledStates,
+      distinctive,
+      familyCovers,
+      modules,
+      jsonFiles,
+      controls,
+      walkControls,
+      unjudgedControls,
+      judgingControls,
+    });
   },
   A2: () => {
     const tree = liveTree();
@@ -959,13 +1082,23 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       program.blockExports.includes("parseContextBlock") &&
       JSON.stringify(program.otherSense.blockParserSites) === JSON.stringify(distribution.otherSense.blockParserSites) &&
       program.otherSense.blockParserSites.length > 0;
-    const beadSaysUnshipped = readBeadRow().notes.includes(`Shipped: no - git grep ${REFERENCE} over src/ python/ at ${program.sha.slice(0, 12)}: 0 files.`);
+    const sha12 = program.sha.slice(0, 12);
+    const beadSaysUnshipped = saysUnshipped(readBeadRow().notes, sha12);
     const parserShipped = spelled.length > 0 || referenceDependencies.length > 0 || !docsOnly || streamEntries.length > 0;
     expect(beadSaysUnshipped, `the bead row ${BEAD} states the gating artifact unshipped`).toBe(true);
     expect(distributionPinned, "the distribution rf packages is the measured distribution pin").toBe(true);
     expect(sameBlockParser, "both pins carry the same one block parser, the context-block one").toBe(true);
     expect(parserShipped, "the parser shipped: (b) and (c) are owed with this re-measure (wb-if7q.5)").toBe(false);
-    return done("C1", { parserShipped, spelled, referenceDependencies, docsOnly, streamEntries, distributionPinned, sameBlockParser, beadSaysUnshipped });
+    // The filing's own gating line is read (F2 rider P9): a quoted, a second or a continued sentence never reads as the filing.
+    const sentence = `Shipped: no - git grep ${REFERENCE} over src/ python/ at ${sha12}: 0 files.`;
+    const controls = {
+      filing: saysUnshipped(`Quote: 'a parser'.\nGating: the parser work package. ${sentence}\nAcceptance: (a) none.`, sha12),
+      quotedLater: saysUnshipped(`Gating: the parser work package. Shipped: yes - at a later pin.\nA later note quotes '${sentence}'`, sha12),
+      secondGatingLine: saysUnshipped(`Gating: the parser work package. Shipped: yes - at a later pin.\nGating: re-read. ${sentence}`, sha12),
+      continuedLine: saysUnshipped(`Gating: the parser work package. ${sentence} Reopened: the parser shipped.`, sha12),
+      otherPin: saysUnshipped(`Gating: the parser work package. Shipped: no - git grep ${REFERENCE} over src/ python/ at 000000000000: 0 files.`, sha12),
+    };
+    return done("C1", { parserShipped, spelled, referenceDependencies, docsOnly, streamEntries, distributionPinned, sameBlockParser, beadSaysUnshipped, controls });
   },
   C2: () => {
     const include = (rfTsxConfig as unknown as { test?: { include?: readonly string[] } }).test?.include ?? [];
@@ -1062,7 +1195,8 @@ describe("wb-if7q.5 gated TSX parser consumer census (TSX-NATIVE-INTERFACES-AND-
     const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
     const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
-    expect(REACHED, "every pin's case reached its end, in row order").toEqual(ROWS.flatMap(row => row.pins));
+    expect(REACHED.map(entry => entry.slice(0, entry.indexOf(":"))), "every pin's case reached its end, in row order").toEqual(ROWS.flatMap(row => row.pins));
+    expect(REACHED, "every pin's case reached its end with the assertion count the roster pins").toEqual([...ROSTER.reached]);
     expect(
       [...suites, ...titles].filter(name => STATE_FAMILY.test(wordsOf(name)) || BLOCK_FAMILY.test(wordsOf(name))),
       "registered titles spelling a judged family",
