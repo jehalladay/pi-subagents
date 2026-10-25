@@ -27,6 +27,23 @@
    "src": 100,
    "native": 4,
    "export": 500
+  },
+  "followUp": "wb-7uzc",
+  "globals": {
+   "flags": [
+    "--json",
+    "--no-input",
+    "--yes",
+    "--debug",
+    "--no-retry",
+    "-v",
+    "--verbose"
+   ],
+   "values": [
+    "--workspace",
+    "--actor",
+    "--color"
+   ]
   }
  },
  "measured": {
@@ -598,6 +615,412 @@
     "ephemeral": false,
     "commit_seq": 58
    }
+  },
+  "globals": [
+   {
+    "site": "parser.py:250",
+    "text": "# CLI-A25: the eight global options, accepted before and after the subcommand with identical semantics."
+   },
+   {
+    "site": "parser.py:251",
+    "text": "GLOBAL_OPTIONS: Final[tuple[str, ...]] = ("
+   },
+   {
+    "site": "parser.py:252",
+    "text": "    \"--workspace\","
+   },
+   {
+    "site": "parser.py:253",
+    "text": "    \"--actor\","
+   },
+   {
+    "site": "parser.py:254",
+    "text": "    JSON_FLAG,"
+   },
+   {
+    "site": "parser.py:255",
+    "text": "    \"--no-input\","
+   },
+   {
+    "site": "parser.py:256",
+    "text": "    \"--yes\","
+   },
+   {
+    "site": "parser.py:257",
+    "text": "    \"--debug\","
+   },
+   {
+    "site": "parser.py:258",
+    "text": "    \"--color\","
+   },
+   {
+    "site": "parser.py:259",
+    "text": "    \"--no-retry\","
+   },
+   {
+    "site": "parser.py:260",
+    "text": ")"
+   },
+   {
+    "site": "parser.py:277",
+    "text": "VERBOSE_FLAGS: Final[tuple[str, str]] = (\"-v\", \"--verbose\")"
+   },
+   {
+    "site": "parser.py:286",
+    "text": "RF_VALUE_OPTIONS: Final[tuple[str, ...]] = (\"--workspace\", \"--actor\", \"--color\")"
+   },
+   {
+    "site": "registry.py:187",
+    "text": "JSON_FLAG: Final = \"--json\""
+   }
+  ],
+  "interleaved": {
+   "build": "0.1.836",
+   "commit": "b3494ab13397",
+   "replies": [
+    {
+     "argv": [
+      "context",
+      "--json",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--json",
+      "--no-input",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--workspace",
+      "/fixture/rf-workspace",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--workspace=/fixture/rf-workspace",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--actor",
+      "user:fixture",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--actor=user:fixture",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--color",
+      "never",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--color=never",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "-v",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "-vv",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--verbose",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--yes",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--debug",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--no-input",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--no-retry",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json",
+      "--workspace",
+      "/fixture/rf-workspace"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--redact",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 2,
+     "command": "context.show",
+     "code": "RF_USAGE_UNKNOWN_OPTION",
+     "message": "unrecognized arguments: --redact"
+    },
+    {
+     "argv": [
+      "context",
+      "--detail",
+      "full",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 2,
+     "command": "none",
+     "code": "RF_USAGE_UNKNOWN_COMMAND",
+     "message": "unknown command 'full'"
+    },
+    {
+     "argv": [
+      "context",
+      "--format",
+      "json",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa"
+     ],
+     "exit": 2,
+     "command": "none",
+     "code": "RF_USAGE_UNKNOWN_COMMAND",
+     "message": "unknown command 'json'"
+    },
+    {
+     "argv": [
+      "context",
+      "--format=json",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa"
+     ],
+     "exit": 2,
+     "command": "context.show",
+     "code": "RF_USAGE_UNKNOWN_OPTION",
+     "message": "unrecognized arguments: --format=json"
+    },
+    {
+     "argv": [
+      "context",
+      "--format",
+      "text",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 2,
+     "command": "none",
+     "code": "RF_USAGE_UNKNOWN_COMMAND",
+     "message": "unknown command 'text'"
+    },
+    {
+     "argv": [
+      "context",
+      "--json-metadata",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa"
+     ],
+     "exit": 2,
+     "command": "context.show",
+     "code": "RF_USAGE_UNKNOWN_OPTION",
+     "message": "unrecognized arguments: --json-metadata"
+    },
+    {
+     "argv": [
+      "context",
+      "--js",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 2,
+     "command": "context.show",
+     "code": "RF_USAGE_UNKNOWN_OPTION",
+     "message": "unrecognized arguments: --js"
+    },
+    {
+     "argv": [
+      "context",
+      "--works",
+      "/fixture/rf-workspace",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 2,
+     "command": "none",
+     "code": "RF_USAGE_UNKNOWN_COMMAND",
+     "message": "unknown command '/fixture/rf-workspace'"
+    },
+    {
+     "argv": [
+      "context",
+      "-h",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 0,
+     "command": "help",
+     "code": "none",
+     "message": "none"
+    },
+    {
+     "argv": [
+      "context",
+      "--help",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 0,
+     "command": "help",
+     "code": "none",
+     "message": "none"
+    }
+   ]
   }
  },
  "rows": [
@@ -683,6 +1106,7 @@
      "witness": {
       "srcFloorMet": true,
       "renderArgvSeen": true,
+      "unread": [],
       "showArgv": [],
       "showLiterals": []
      }
@@ -770,6 +1194,7 @@
      "witness": {
       "srcFloorMet": true,
       "renderArgvSeen": true,
+      "unread": [],
       "served": false,
       "showArgvFindings": [],
       "selectorLiterals": []
@@ -845,6 +1270,7 @@
      "witness": {
       "srcFloorMet": true,
       "renderArgvSeen": true,
+      "unread": [],
       "instanceReads": []
      }
     },
@@ -1085,6 +1511,18 @@
      }
     },
     {
+     "id": "MJ5",
+     "witness": {
+      "digest": "5017d4ddda1c4b7d",
+      "outcome": {
+       "kind": "refused",
+       "reason": "exit-2:RF_STORAGE_NOT_FOUND",
+       "rows": 0,
+       "ids": []
+      }
+     }
+    },
+    {
      "id": "MS1",
      "witness": {
       "digest": "bb826e282a9cc31f",
@@ -1180,12 +1618,194 @@
        "instanceReads": 0
       }
      }
+    },
+    {
+     "id": "MS8",
+     "witness": {
+      "digest": "61066b3d1de02252",
+      "outcome": {
+       "showArgv": [
+        []
+       ],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MS9",
+     "witness": {
+      "digest": "d8f399ce3c012471",
+      "outcome": {
+       "showArgv": [
+        []
+       ],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MS10",
+     "witness": {
+      "digest": "b5a43b904172a912",
+      "outcome": {
+       "showArgv": [
+        []
+       ],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MS11",
+     "witness": {
+      "digest": "e9c694c594465b14",
+      "outcome": {
+       "showArgv": [
+        []
+       ],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MS12",
+     "witness": {
+      "digest": "fcc9771cbeda06d0",
+      "outcome": {
+       "showArgv": [
+        []
+       ],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MS13",
+     "witness": {
+      "digest": "681448916744ab0e",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 5
+      }
+     }
+    },
+    {
+     "id": "MS14",
+     "witness": {
+      "digest": "2e6ecdb97ca8231d",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 5
+      }
+     }
+    },
+    {
+     "id": "MS15",
+     "witness": {
+      "digest": "d719390a898bfbee",
+      "outcome": {
+       "showArgv": [
+        []
+       ],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MS16",
+     "witness": {
+      "digest": "779ad06c7bee0296",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 1,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MG1",
+     "witness": {
+      "build": "0.1.836",
+      "producer": {
+       "flags": [
+        "--json",
+        "--no-input",
+        "--yes",
+        "--debug",
+        "--no-retry",
+        "-v",
+        "--verbose"
+       ],
+       "values": [
+        "--workspace",
+        "--actor",
+        "--color"
+       ]
+      },
+      "ran": [
+       "context --json show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "context --json --no-input show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "context --workspace /fixture/rf-workspace show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --workspace=/fixture/rf-workspace show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --actor user:fixture show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --actor=user:fixture show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --color never show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --color=never show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context -v show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context -vv show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --verbose show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --yes show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --debug show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --no-input show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --no-retry show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json --workspace /fixture/rf-workspace"
+      ],
+      "refused": [
+       "context --redact show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --detail full show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --format json show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "context --format=json show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "context --format text show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --json-metadata show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "context --js show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --works /fixture/rf-workspace show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context -h show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --help show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json"
+      ],
+      "disagree": []
+     }
     }
    ]
   },
   {
    "id": "R",
-   "label": "the named residuals R1-R6 stay pinned quiet",
+   "label": "the named residuals R1-R10 keep their pinned readings",
    "pins": [
     {
      "id": "R1",
@@ -1251,8 +1871,212 @@
       "digest": "aaee96ee7d3b858d",
       "outcome": []
      }
+    },
+    {
+     "id": "R7",
+     "witness": {
+      "digest": "4dd45c6745699abe",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "R8",
+     "witness": {
+      "digest": "e3b6b7a126df1289",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "R9",
+     "witness": {
+      "residual": "COORDINATED",
+      "addedTogether": [],
+      "addedHere": [
+       "roster rows differ",
+       "cure unbound: X-NOTFOUND-ANYEXIT"
+      ],
+      "landedTogether": [
+       "landed pin missing: A2"
+      ],
+      "namedTogether": [
+       "named probe unbound: G13"
+      ]
+     }
+    },
+    {
+     "id": "R10",
+     "witness": {
+      "digest": "9fbbfebbef802dac",
+      "outcome": {
+       "showArgv": [
+        [
+         "render-count:0"
+        ]
+       ],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
     }
    ]
   }
+ ],
+ "residuals": {
+  "R1": "RUNTIME-COMPOSED",
+  "R2": "COMMENTS",
+  "R3": "ECHOED-SELECTION",
+  "R4": "NOT-FOUND-SPELLING",
+  "R5": "CATEGORY-BY-MESSAGE",
+  "R6": "DESCRIPTOR-ID",
+  "R7": "UNRESOLVED-BINDING",
+  "R8": "SELECTION-ALIAS",
+  "R9": "COORDINATED",
+  "R10": "COMPOSED-FRAGMENT"
+ },
+ "cures": {
+  "G13": "MS8",
+  "G13b": "MS9",
+  "G38": "MS10",
+  "G39": "MS11",
+  "P41": "MS12",
+  "G20": "MS13",
+  "G21": "MS14",
+  "X-NOTFOUND-ANYEXIT": "MJ5"
+ },
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the landed record, the follow-up's probes and the cases agree",
+  "T1",
+  "T2",
+  "T3",
+  "T4",
+  "T5",
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "B1",
+  "B2",
+  "B3",
+  "C1",
+  "C2",
+  "C3",
+  "F1",
+  "MP1",
+  "MP2",
+  "MP3",
+  "MA1",
+  "MA2",
+  "MA3",
+  "MA4",
+  "MA5",
+  "MA6",
+  "MA7",
+  "MJ1",
+  "MJ2",
+  "MJ3",
+  "MJ4",
+  "MJ5",
+  "MS1",
+  "MS2",
+  "MS3",
+  "MS4",
+  "MS5",
+  "MS6",
+  "MS7",
+  "MS8",
+  "MS9",
+  "MS10",
+  "MS11",
+  "MS12",
+  "MS13",
+  "MS14",
+  "MS15",
+  "MS16",
+  "MG1",
+  "R1",
+  "R2",
+  "R3",
+  "R4",
+  "R5",
+  "R6",
+  "R7",
+  "R8",
+  "R9",
+  "R10",
+  "the record: every registered test is in run mode and ran, and every pin reached its end with its pinned assertion count"
+ ],
+ "reached": [
+  "T1:3",
+  "T2:3",
+  "T3:3",
+  "T4:4",
+  "T5:3",
+  "A1:3",
+  "A2:3",
+  "A3:4",
+  "A4:3",
+  "B1:3",
+  "B2:4",
+  "B3:4",
+  "C1:3",
+  "C2:3",
+  "C3:3",
+  "F1:7",
+  "MP1:3",
+  "MP2:3",
+  "MP3:3",
+  "MA1:3",
+  "MA2:3",
+  "MA3:3",
+  "MA4:3",
+  "MA5:3",
+  "MA6:3",
+  "MA7:3",
+  "MJ1:3",
+  "MJ2:3",
+  "MJ3:3",
+  "MJ4:3",
+  "MJ5:3",
+  "MS1:3",
+  "MS2:3",
+  "MS3:3",
+  "MS4:3",
+  "MS5:3",
+  "MS6:3",
+  "MS7:3",
+  "MS8:3",
+  "MS9:3",
+  "MS10:3",
+  "MS11:3",
+  "MS12:3",
+  "MS13:3",
+  "MS14:3",
+  "MS15:3",
+  "MS16:3",
+  "MG1:3",
+  "R1:3",
+  "R2:3",
+  "R3:3",
+  "R4:3",
+  "R5:3",
+  "R6:3",
+  "R7:3",
+  "R8:3",
+  "R9:3",
+  "R10:3"
  ]
 }
