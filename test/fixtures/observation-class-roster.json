@@ -480,5 +480,78 @@
         }
       ]
     }
-  ]
+  ],
+  "anchor": {
+    "filing": "wb-kku9.5",
+    "stated": {
+      "filed": 22,
+      "total": 29
+    },
+    "filed": [
+      "B2",
+      "C2",
+      "C3",
+      "D1",
+      "D2",
+      "D3",
+      "F1",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7",
+      "M8",
+      "M9",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6",
+      "R7"
+    ],
+    "bound": [
+      "A1",
+      "A2",
+      "A3",
+      "A4",
+      "B1",
+      "C1",
+      "R1"
+    ],
+    "findings": [],
+    "unseenPinRemovals": [],
+    "unseenRowRemovals": [],
+    "unseenPairedRemovals": [],
+    "unseenTitles": [
+      "B2",
+      "C2",
+      "C3",
+      "D1",
+      "D2",
+      "D3",
+      "F1",
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7",
+      "M8",
+      "M9",
+      "R2",
+      "R3",
+      "R4",
+      "R5",
+      "R6",
+      "R7"
+    ],
+    "unseenLabels": [
+      "F",
+      "M",
+      "R"
+    ]
+  }
 }

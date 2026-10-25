@@ -38,6 +38,23 @@
  * set to tsconfig.json's program (srcIsProgram, the reading the gp-cache-scope census makes of the same program) and a floor
  * below the count (floorMet, MODULES_FLOOR), never the count itself: a src landing that adds or removes a module of neither class
  * leaves C1 green, while a class, holder, scope or edge change still reds C1-C3, and a walk or program that drifts apart reds C1.
+ * PIN ANCHOR (wb-kku9.5, the review lane's follow-up of cut #1's seat-disclosed finding; trunk 6c0ebdb): before this cut a pin
+ * removed from every literal of this file and from the roster (its ROWS entry, its PIN_TITLES and IMPL entries and its count in
+ * the frozen shape) stayed green here for 27 of the 29 pins, and a whole row did for rows F, M and R (throwaway copies at
+ * 6c0ebdb; F1 and R1 read red only by accident: vitest fails row F's emptied describe, and R7's self-read loses this file's one
+ * provider construct with R1's case). The anchor case now holds the pin set to two records outside this file and its roster: the
+ * docs07 provider-rules census's frozen binding lines (`<half> | <this file> | <title>`: A1-A4, B1, R1 and C1, each by verbatim
+ * title) and the review filing of record, wb-kku9.5's row in the tracked bead export, whose title lists the other pins and the
+ * counts ("22 of 29 pins (B2, C2, C3, D1-D3, F1, M1-M9, R2-R7)"). Every pin a row holds is named by one of them, every pin they
+ * name is held (a docs07-bound pin under its bound title), and the docs07 bindings still cover the 7 pins (29 - 22) the filing
+ * left anchored outside, so a pin or a row removed from every literal here, or a docs07-bound pin removed here and from the docs07
+ * census together, reds the anchor case; the case also shows that it would, for each pin, each row and each docs07-bound pin. A
+ * later pin passes once an outside record names it (a docs07 binding); a pin no outside record names reds. No pin is added: the
+ * frozen shape and the docs07 bindings are unchanged.
+ * NAMED RESIDUAL R-WORDING (its pinned quiet reading is in the anchor case, because a new ROWS pin would need an outside name of its
+ * own): the anchor binds which pins exist. The wording of the 22 filing-named titles and of the labels of rows F, M and R is held
+ * by this file and its roster alone: reworded in every literal here, no outside reading sees it, while a reworded docs07-bound
+ * title (this anchor) or row A-D label (F1, against the owner filing) is seen. The anchor case pins both unseen sets.
  *
  * Rows, each a describe of its pins:
  *  A, acceptance (a). A1 a succeeded Claude SDK run (the claude-host query seam fed SDK messages whose text and result say fixed
@@ -67,8 +84,9 @@
  *    observation-class module; R6 R-NAMING a module that reads Claude or HX values under another name and imports no
  *    observation-class module is not in the class; R7 R-TEST-TREE only src is walked (tests build authority refs on purpose).
  * OUTSIDE ANCHORS: F1 (the bead export: rows A-D), C1-C3 (the src tree, walked; C1 also tsconfig.json's program), D1-D3 (docs/07 and the docs07 census), A1-A4
- * and B1 (the adapters themselves), B2 (the two files). The out-of-file roster test/fixtures/observation-class-roster.json holds
- * every row's id, label and pins and every pin's witness; FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}`.
+ * and B1 (the adapters themselves), B2 (the two files): each anchors what its case measures. Which pins exist is anchored by the
+ * pin anchor above. The out-of-file roster test/fixtures/observation-class-roster.json holds every row's id, label and pins, every
+ * pin's witness and the anchor case's reading; FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}`.
  * SCOPE: test-only. Nothing is spawned or written; the repository files read are only read.
  *
  * Display paths added: none.
@@ -106,6 +124,11 @@ const DOCS_07_PARENT = "07 — MechanicalWorkflows and ecosystem native SDK inte
 const DOCS07_CENSUS = "test/workbench-docs07-provider-rules.census.ts";
 /** The name the docs07 census pins this file by (its pin() helper composes test/workbench-<name>.test.ts). */
 const PIN_NAME = "observation-class-census";
+/** This file as the docs07 census's frozen binding lines name it (`<half> | test/workbench-<name>.test.ts | <title>`). */
+const SELF = `test/workbench-${PIN_NAME}.test.ts`;
+/** The review filing of record for the pin anchor: wb-kku9.5's title in the tracked bead export lists, as "<n> of <total> pins
+ * (<ids>)", the pins cut #1 held by this file and its roster alone and how many pins the rows held. */
+const PIN_FILING = "wb-kku9.5";
 
 /** The two sentences acceptance (d) adds to docs/07, verbatim; the docs07 census quotes both as its rows A1 and H3. */
 const AGENT_SENTENCE =
@@ -259,6 +282,8 @@ interface RosterRow {
 interface Roster {
   readonly bead: string;
   readonly rows: readonly RosterRow[];
+  /** The anchor case's reading (wb-kku9.5). */
+  readonly anchor: Json;
 }
 const ROSTER = JSON.parse(readFileSync(ROSTER_PATH, "utf8")) as Roster;
 const rosterWitness = (pin: string): Json => {
@@ -696,6 +721,90 @@ function hxProviderReading(): JsonValue {
 }
 const READ_KINDS: readonly string[] = HYPERUNIX_EXECUTION_KINDS.filter(kind => !kind.startsWith("mutation-"));
 
+// --- the outside records: the tracked bead export and the docs07 census's bindings (F1 and the pin anchor) -------------
+
+let exportRows: readonly JsonObject[] | undefined;
+/** A row of the tracked bead export by id, the export read once: the owner filing F1 reads and the review filing the pin anchor reads. */
+function exportRow(id: string): JsonObject | undefined {
+  exportRows ??= readFileSync(BEAD_EXPORT, "utf8")
+    .split("\n")
+    .filter(line => line.trim() !== "")
+    .map(line => JSON.parse(line) as JsonObject);
+  return exportRows.find(entry => entry.id === id);
+}
+/** The owner filing's acceptance clauses, each "(x) ..." without its closing period, in order (F1's reading of its notes). */
+const acceptanceClauses = (notes: string): string[] =>
+  (/Acceptance: ([\s\S]*?)\s*Not P0\/P1:/.exec(notes)?.[1] ?? "").split(/;\s+(?=\([a-z]\) )/).map(clause => clause.replace(/\.$/, ""));
+/** The judged rows (a label that opens with its "(x) " clause) whose label equals that clause, in order (F1's label reading). */
+const labelsEqualOf = (rows: readonly Row[], clauseTexts: readonly string[]): string[] =>
+  rows.filter(entry => /^\([a-z]\) /.test(entry.label)).filter((entry, index) => clauseTexts[index] === entry.label).map(entry => entry.id);
+
+/** A pin id: its row's letter, then its number. */
+const PIN_ID = /^[A-Z]\d+$/;
+/** One item of the filing's pin list with a range ("D1-D3") expanded; any other shape is kept as written and reads as a finding. */
+function expandPinItem(item: string): string[] {
+  const range = /^([A-Z])(\d+)-([A-Z])(\d+)$/.exec(item);
+  if (range === null) return [item];
+  const [, letter = "", first = "", lastLetter = "", last = ""] = range;
+  const from = Number(first);
+  const to = Number(last);
+  if (lastLetter !== letter || to < from) return [item];
+  return Array.from({ length: to - from + 1 }, (_, index) => `${letter}${from + index}`);
+}
+interface OutsidePins {
+  /** [pin id, title] for every frozen binding line of the docs07 census that names this file, in that census's order. */
+  readonly bound: readonly (readonly [string, string])[];
+  /** The pin ids the review filing's title lists, its ranges expanded, in its order. */
+  readonly filed: readonly string[];
+  /** The filing title's own counts, "<filed> of <total> pins" (-1 when the title states none). */
+  readonly stated: { readonly filed: number; readonly total: number };
+}
+let outsideReading: OutsidePins | undefined;
+/** The two records outside this file and its roster that name its pins, read once. */
+function outsidePins(): OutsidePins {
+  if (outsideReading !== undefined) return outsideReading;
+  const census = ts.createSourceFile(DOCS07_CENSUS, textOf(DOCS07_CENSUS), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const marker = ` | ${SELF} | `;
+  const bound: (readonly [string, string])[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isStringLiteralLike(node) && node.text.includes(marker)) {
+      const title = node.text.slice(node.text.indexOf(marker) + marker.length);
+      bound.push([/^([A-Z]\d+)[: ]/.exec(title)?.[1] ?? title, title]);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(census);
+  const filing = exportRow(PIN_FILING);
+  const title = filing !== undefined && typeof filing.title === "string" ? filing.title : "";
+  const counted = /\b(\d+) of (\d+) pins \(([^)]*)\)/.exec(title);
+  const filed = (counted?.[3] ?? "")
+    .split(",")
+    .map(item => item.trim())
+    .filter(item => item !== "")
+    .flatMap(expandPinItem);
+  outsideReading = { bound, filed, stated: { filed: Number(counted?.[1] ?? -1), total: Number(counted?.[2] ?? -1) } };
+  return outsideReading;
+}
+/** Every disagreement between rows (with their titles) and the outside records, each naming the pin and the record. */
+function anchorFindings(rows: readonly Row[], titles: Readonly<Record<string, string>>, outside: OutsidePins): string[] {
+  const findings: string[] = [];
+  const pins = rows.flatMap(row => row.pins);
+  const filing = `the review filing ${PIN_FILING}`;
+  if (outside.filed.length !== outside.stated.filed) findings.push(`${filing} lists ${outside.filed.length} pins, not its stated ${outside.stated.filed}`);
+  for (const id of outside.filed) if (!PIN_ID.test(id)) findings.push(`${filing} lists "${id}", which is no pin id`);
+  if (new Set(outside.filed).size !== outside.filed.length) findings.push(`${filing} lists a pin twice`);
+  const beyond = new Set(outside.bound.map(([id]) => id).filter(id => !outside.filed.includes(id))).size;
+  const leftBound = outside.stated.total - outside.stated.filed;
+  if (beyond < leftBound) findings.push(`the docs07 provider-rules census binds ${beyond} pins beyond ${filing}'s list, fewer than the ${leftBound} (${outside.stated.total} - ${outside.stated.filed}) it left bound outside`);
+  for (const id of outside.filed) if (!pins.includes(id)) findings.push(`${id}: ${filing} names it and no row holds it`);
+  for (const [id, title] of outside.bound) {
+    if (!pins.includes(id)) findings.push(`${id}: the docs07 provider-rules census binds it ("${title}") and no row holds it`);
+    else if (titles[id] !== title) findings.push(`${id}: the docs07 provider-rules census binds the title "${title}", not this file's "${titles[id] ?? ""}"`);
+  }
+  for (const id of pins) if (!outside.filed.includes(id) && !outside.bound.some(([boundId]) => boundId === id)) findings.push(`${id}: no outside record names it`);
+  return findings;
+}
+
 // --- the cases ----------------------------------------------------------------------------------------------------------
 
 const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
@@ -886,18 +995,13 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     return witness;
   },
   F1: async () => {
-    const row = readFileSync(BEAD_EXPORT, "utf8")
-      .split("\n")
-      .filter(line => line.trim() !== "")
-      .map(line => JSON.parse(line) as JsonObject)
-      .find(entry => entry.id === BEAD);
+    const row = exportRow(BEAD);
     const notes = row !== undefined && typeof row.notes === "string" ? row.notes : "";
     expect(notes, `${BEAD} has no notes in the bead export`).not.toBe("");
-    const acceptance = /Acceptance: ([\s\S]*?)\s*Not P0\/P1:/.exec(notes)?.[1] ?? "";
-    const clauseTexts = acceptance.split(/;\s+(?=\([a-z]\) )/).map(clause => clause.replace(/\.$/, ""));
+    const clauseTexts = acceptanceClauses(notes);
     const clauses = clauseTexts.map(clause => /^\(([a-z])\) /.exec(clause)?.[1] ?? "");
     const judged = ROWS.filter(entry => /^\([a-z]\) /.test(entry.label));
-    const labelsEqual = judged.filter((entry, index) => clauseTexts[index] === entry.label).map(entry => entry.id);
+    const labelsEqual = labelsEqualOf(ROWS, clauseTexts);
     const constantsQuoted = FILING_CONSTANTS.filter(constant => notes.includes(constant));
     expect(clauses).toEqual(judged.map(entry => entry.label.charAt(1)));
     expect(labelsEqual).toEqual(judged.map(entry => entry.id));
@@ -1025,6 +1129,10 @@ function quiet(analysis: Analysis): Json {
   return { violations: lines };
 }
 
+/** The pin anchor's case (wb-kku9.5): its own registered test beside the judged-set case, never a ROWS pin. */
+const ANCHOR_TITLE =
+  "the pin anchor: every pin is named outside this file and its roster (the docs07 provider-rules census's frozen bindings or the review filing's pin list), so a pin or a row removed from every literal here reds";
+
 describe("wb-kku9.1 observation-class census (MW-CAC-WORKFLOW-COMPOSITION-R1)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:2", "C:3", "D:3", "F:1", "M:9", "R:7"]);
@@ -1035,6 +1143,51 @@ describe("wb-kku9.1 observation-class census (MW-CAC-WORKFLOW-COMPOSITION-R1)", 
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect(Object.keys(PIN_TITLES).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     for (const row of ROWS) for (const pin of row.pins) expect(PIN_TITLES[pin]?.startsWith(`${pin}`), pin).toBe(true);
+  });
+
+  it(ANCHOR_TITLE, { timeout: 60_000 }, () => {
+    const outside = outsidePins();
+    const pins = ROWS.flatMap(row => row.pins);
+    const findings = anchorFindings(ROWS, PIN_TITLES, outside);
+    // Live: each pin, and each row, removed from every literal of this file (its ROWS entry, its title and its case; the
+    // judged-set case holds the roster and the frozen shape to the rows) is named by an outside record.
+    const without = (drop: readonly string[]): Row[] => ROWS.map(row => ({ ...row, pins: row.pins.filter(pin => !drop.includes(pin)) }));
+    const titlesWithout = (drop: readonly string[]): Record<string, string> => Object.fromEntries(Object.entries(PIN_TITLES).filter(([pin]) => !drop.includes(pin)));
+    const unseenPinRemovals = pins.filter(pin => anchorFindings(without([pin]), titlesWithout([pin]), outside).length === 0);
+    const unseenRowRemovals = ROWS.filter(row => anchorFindings(without(row.pins), titlesWithout(row.pins), outside).length === 0).map(row => row.id);
+    // A docs07-bound pin removed here and from the docs07 bindings together is still seen: the filing's counts leave 7 pins to them.
+    const unseenPairedRemovals = outside.bound
+      .map(([id]) => id)
+      .filter(id => anchorFindings(without([id]), titlesWithout([id]), { ...outside, bound: outside.bound.filter(([other]) => other !== id) }).length === 0);
+    // R-WORDING quiet reading: a title or a label reworded in every literal here, as the outside readings see it (this anchor
+    // for the titles; F1's label reading, against the owner filing's clauses, for the labels).
+    const reworded = (text: string): string => `${text}, reworded`;
+    const unseenTitles = pins.filter(pin => anchorFindings(ROWS, { ...PIN_TITLES, [pin]: reworded(PIN_TITLES[pin] ?? pin) }, outside).length === 0);
+    const owner = exportRow(BEAD);
+    const clauseTexts = acceptanceClauses(owner !== undefined && typeof owner.notes === "string" ? owner.notes : "");
+    const labels = labelsEqualOf(ROWS, clauseTexts);
+    const unseenLabels = ROWS.filter(row => isDeepStrictEqual(labelsEqualOf(ROWS.map(other => (other.id === row.id ? { ...other, label: reworded(other.label) } : other)), clauseTexts), labels)).map(
+      row => row.id,
+    );
+    const witness = {
+      filing: PIN_FILING,
+      stated: { ...outside.stated },
+      filed: [...outside.filed],
+      bound: sorted(outside.bound.map(([id]) => id)),
+      findings,
+      unseenPinRemovals,
+      unseenRowRemovals,
+      unseenPairedRemovals,
+      unseenTitles,
+      unseenLabels,
+    };
+    expect(findings, "the rows and the outside records agree").toEqual([]);
+    expect(unseenPinRemovals, "pins whose removal from every literal here no outside record would see").toEqual([]);
+    expect(unseenRowRemovals, "rows whose removal from every literal here no outside record would see").toEqual([]);
+    expect(unseenPairedRemovals, "docs07-bound pins whose removal here and from the docs07 bindings together no outside record would see").toEqual([]);
+    expect(unseenTitles, "R-WORDING: the titles no outside reading sees reworded are exactly the filing-named pins'").toEqual(pins.filter(pin => outside.filed.includes(pin)));
+    expect(unseenLabels, "R-WORDING: the labels no outside reading sees reworded are rows F, M and R's").toEqual(["F", "M", "R"]);
+    expect(witness).toStrictEqual(ROSTER.anchor);
   });
 
   for (const row of ROWS) {
