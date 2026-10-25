@@ -2,6 +2,8 @@
  * wb-a3s: a Forge operation this host starts becomes an observed, owned node of the session projection, read only off the
  * issuing connection's own frames and reply, so the control decision core admits it; everything else stays not-admitted.
  */
+import { readFileSync } from "node:fs";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
 import { decideControl } from "../src/workbench/control.js";
@@ -292,10 +294,12 @@ describe("the live observer over the issuing connection", () => {
  * (status success, gate_verdict PASS), `forge gate --json --only alpha` (status partial, gate_verdict COULD_NOT_JUDGE) and
  * `forge gate --json -- --extra-arg` (status success, gate_verdict null, gate_passed false). The served gate.run reply is that
  * same serialized envelope with the operation fields beside it (Forge src/forge/application/gate_methods.py run_gate_method).
+ * Only the narrowed `-- <args>` arm publishes a `data.selection` key: the full and the --only arm carry none (the key is
+ * absent, not null), so neither of their blocks states one (wb-dqhl; re-measured 2026-10-25 with forge 0.2.1 rev
+ * 40c9ca729f7e, where the gate_verdict, selection and selection_accounting readings of all three arms equal these blocks).
  */
 const MEASURED_FULL = {
   gate_verdict: "PASS",
-  selection: null,
   selection_accounting: {
     counts: { declared: 3, executed: 3, explicitly_narrowed: 0, not_run: 0, replayed: null, resume_attested: 0, resume_unattested: 0, selected: 3, unaffected: 0, unknown: 0 },
     not_applicable: ["replayed"], policy: "impacted/v2", selected_steps_passed: true, unit: "step",
@@ -308,7 +312,6 @@ const MEASURED_FULL = {
 };
 const MEASURED_ONLY_ALPHA = {
   gate_verdict: "COULD_NOT_JUDGE",
-  selection: null,
   selection_accounting: {
     counts: { declared: 3, executed: 1, explicitly_narrowed: 2, not_run: 0, replayed: null, resume_attested: 0, resume_unattested: 0, selected: 1, unaffected: 0, unknown: 0 },
     not_applicable: ["replayed"], policy: "impacted/v2", selected_steps_passed: true, unit: "step",
@@ -348,6 +351,8 @@ const terminalOf = (reply: unknown) => {
 };
 const withUnits = (change: Record<string, unknown>) => ({ ...MEASURED_FULL, selection_accounting: { ...MEASURED_FULL.selection_accounting, ...change } });
 const [ROW_ALPHA, ROW_BETA, ROW_GAMMA] = MEASURED_FULL.selection_accounting.units;
+/** A doc comment's text with its delimiters, leading stars and line breaks folded to single spaces, so a wrapped sentence reads whole. */
+const commentText = (raw: string): string => raw.replace(/^\/\*\*|\*\/$/g, "").replace(/\n\s*\*/g, " ").replace(/\s+/g, " ").trim();
 
 describe("wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict", () => {
   it("wb-6ps1.2 (a): the measured complete selection (3 of 3 steps) travels with the verdict as its own facet, complete coverage, and the command status keeps its tone", () => {
@@ -521,6 +526,40 @@ describe("wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with
       const node = projection.query({ scope: SCOPE, ref: target(), limit: 1 }).nodes[0];
       expect(node?.presentation.statusTone, `${outcome}/${status}`).toBe(operationTone);
       expect(node?.presentation.statusText, `${outcome}/${status}`).toBe("completed · selection complete: 3 of 3 steps selected");
+    }
+  });
+
+  it("wb-dqhl (F1): the measured unnarrowed arms (forge gate --json, --only alpha) carry no data.selection key - forge 0.2.1 omits it, absent rather than null - and only the narrowed -- <args> arm carries one", () => {
+    // A fixture labelled MEASURED states only what the producer published: null is not a value forge 0.2.1 wrote on those arms.
+    expect(Object.keys(MEASURED_FULL).sort()).toStrictEqual(["gate_verdict", "selection_accounting"]);
+    expect(Object.keys(MEASURED_ONLY_ALPHA).sort()).toStrictEqual(["gate_verdict", "selection_accounting"]);
+    expect(Object.keys(MEASURED_ARGS).sort()).toStrictEqual(["gate_verdict", "selection", "selection_accounting"]);
+  });
+
+  it("wb-dqhl (F1): the decode's doc comment states the measured absence of data.selection on an unnarrowed run and never names null as the producer's own value", () => {
+    const text = readFileSync(new URL("../src/workbench/forge-operation-observer.ts", import.meta.url), "utf8");
+    const file = ts.createSourceFile("forge-operation-observer.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    const decode = file.statements.filter(ts.isFunctionDeclaration).filter(fn => fn.name?.text === "decodeForgeRunSelection");
+    expect(decode, "exactly one module-level decodeForgeRunSelection()").toHaveLength(1);
+    const docs = (ts.getLeadingCommentRanges(text, decode[0].getFullStart()) ?? []).map(range => commentText(text.slice(range.pos, range.end)));
+    expect(docs, "exactly one doc comment above decodeForgeRunSelection()").toHaveLength(1);
+    expect(docs[0]).toContain("An unnarrowed run publishes no `data.selection` key (measured, forge 0.2.1: absent, not null)");
+    expect(docs[0]).not.toMatch(/`selection: null` is the producer's own value/);
+  });
+
+  it("wb-dqhl (F8): a withheld unit block beside a narrowed test block renders selection UNKNOWN and tests narrowed with partial coverage, and never lets a success tone stand", () => {
+    // Both narrowed forms of the measured test block: narrowed true, and denominator_complete false alone.
+    for (const tests of [MEASURED_ARGS.selection, { ...MEASURED_ARGS.selection, narrowed: false }]) {
+      for (const [label, block] of malformedUnits) {
+        const data = { ...MEASURED_ARGS, selection: tests, selection_accounting: block };
+        expect(decodeForgeOperationTerminal(settledReply("success", data), OP, T2)?.selection, label).toStrictEqual({ units: "withheld", tests: { narrowed: true } });
+        for (const [status, tone] of [["success", "unknown"], ["partial", "unknown"], ["error", "failure"]] as const) {
+          const snapshot = terminalOf(settledReply(status, data));
+          expect(snapshot.node.statusText, `${label}/${status}`).toBe("completed · selection UNKNOWN · tests narrowed");
+          expect(snapshot.node.statusTone, `${label}/${status}`).toBe(tone);
+          expect(snapshot.coverage, `${label}/${status}`).toBe("partial");
+        }
+      }
     }
   });
 });
