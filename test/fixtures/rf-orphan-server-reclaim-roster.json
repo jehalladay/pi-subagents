@@ -3,7 +3,7 @@
   "producer": "ReactiveFiberCLI",
   "pin": "6a251bf73af57c3a703caf6892dfe3015e06a481",
   "installed": {"rfVersion": "0.1.832", "rfCommit": "2618c211be0dbbb74ba10e965e2d3d1f0fb5903e"},
-  "basis": "The out-of-file roster of test/workbench-rf-orphan-server-reclaim-census.test.ts (standing rule 16). <ENGINE> is the storage engine's name, which the census never spells. constants mirror the census's pinned constants. rows holds every judged row's id, label and pins, each pin with the witness its case measures. excerpts are ReactiveFiberCLI lines at the pin, verbatim (regenerate with: git -C <ReactiveFiberCLI> show 6a251bf73af5:<path> | sed -n '<lines>p'; the census pins each block's sha256). schemaRequired and grammar are the required key lists, patterns and enums of schemas/cli/storage.local-servers.schema.json (blob 56a82232bbb1155b96111e15aa4173c45988eaa7) and schemas/cli/plan.json (blob f1e3b406056fa225c1ed72cbadaf12efae0420fa), identical at the pin and in the installed rf 0.1.832. runs: ledgerUntrusted is MEASURED (the installed rf, read form, see its basis); the other four are CONSTRUCTED from the producer lines each basis names, with fake identities (server ids of one repeated hex digit, pids 41001-41004, ports 43001-43004, roots under /fixture) and no rf build behind them.",
+  "basis": "The out-of-file roster of test/workbench-rf-orphan-server-reclaim-census.test.ts (standing rule 16). <ENGINE> is the storage engine's name, which the census never spells. constants mirror the census's pinned constants. rows holds every judged row's id, label and pins, each pin with the witness its case measures. excerpts are ReactiveFiberCLI lines at the pin, verbatim (regenerate with: git -C <ReactiveFiberCLI> show 6a251bf73af5:<path> | sed -n '<lines>p'; the census pins each block's sha256). schemaRequired and grammar are the required key lists, patterns and enums of src/reactive_fiber_cli/schemas/cli/storage.local-servers.schema.json (blob 56a82232bbb1155b96111e15aa4173c45988eaa7) and src/reactive_fiber_cli/schemas/cli/plan.json (blob f1e3b406056fa225c1ed72cbadaf12efae0420fa), identical at the pin and in the installed rf 0.1.832. runs: ledgerUntrusted is MEASURED (the installed rf, read form, see its basis); the other four are CONSTRUCTED from the producer lines each basis names, with fake identities (server ids of one repeated hex digit, pids 41001-41004, ports 43001-43004, roots under /fixture) and no rf build behind them. The wb-gue9 follow-up (R694, from landing 286) added the pins A10, A11, B6, C4, F2, MA14, MA15, R11 and R12, re-pinned A9 and B5, and moved these schema locators to repository paths (the gate's F4).",
   "constants": {
     "argv": ["rf", "storage", "local-servers", "--orphaned", "--stop", "--json"],
     "window": 5,
@@ -33,7 +33,11 @@
       {"pin": "G1", "root": "docs", "floor": 50, "anchorFile": "workbench/13-contracts-and-config.md", "anchorToken": "reactivefiber.render.preview"}
     ],
     "scriptExtensions": [".json", ".toml", ".ts", ".mjs", ".js", ".yml", ".yaml", ".sh"],
-    "instructionRoots": ["docs", ".agents", ".pi", "new-feedback"]
+    "instructionRoots": ["docs", ".agents", ".pi", "new-feedback"],
+    "nonScriptEntries": [".git", ".beads", "vendor", "media"],
+    "remainderAnchor": {"file": "LICENSE", "token": "MIT License"},
+    "shebangScan": {"floor": 10, "anchors": [".beads/hooks/pre-commit", "qa/workbench/smoke.sh"]},
+    "followUp": "wb-gue9"
   },
   "rows": [
     {
@@ -157,7 +161,24 @@
         {
           "id": "A9",
           "witness": {
-            "referenced": [".", "qa", "src", "test"],
+            "referenced": [".", ".codex", ".github", "qa", "src", "test"],
+            "uncovered": [],
+            "sources": [".codex/hooks.json", ".github/workflows/ci.yml", "forge.toml", "package.json"]
+          }
+        },
+        {
+          "id": "A10",
+          "witness": {
+            "remainder": [".gitignore", ".npmignore", "LICENSE"],
+            "anchorRead": true,
+            "hits": []
+          }
+        },
+        {
+          "id": "A11",
+          "witness": {
+            "floorMet": true,
+            "anchors": [".beads/hooks/pre-commit", "qa/workbench/smoke.sh"],
             "uncovered": []
           }
         }
@@ -228,7 +249,22 @@
             "relabelStatus": ["b:rows"],
             "addField": ["b:rows"],
             "rewriteReport": ["b:report"],
-            "argvAll": ["b:argv"]
+            "argvAll": ["b:argv"],
+            "argvUnconfirmed": ["b:argv"],
+            "argvAttended": ["b:argv"]
+          }
+        },
+        {
+          "id": "B6",
+          "witness": {
+            "ruling": "R709",
+            "rulingFlags": ["--yes", "--no-input"],
+            "rfFlags": ["--yes", "--no-input"],
+            "rulingRefusal": ["RF_CONFIRMATION_REQUIRED", "--yes"],
+            "rfRefusal": ["RF_CONFIRMATION_REQUIRED", "--yes"],
+            "argv": ["rf", "storage", "local-servers", "--orphaned", "--stop", "--json", "--yes", "--no-input"],
+            "gate": {"requiresConfirmation": true, "confirmed": true, "nonInteractive": true, "refusedAtGate": false},
+            "surfacedArgv": true
           }
         }
       ]
@@ -271,6 +307,14 @@
           "witness": {
             "hostPattern": ["c:stop-set", "c:sibling"],
             "stopsOnly": ["c:count"]
+          }
+        },
+        {
+          "id": "C4",
+          "witness": {
+            "facts": ["the sibling's pid never enters the stop set", "the surfaced count is the envelope's"],
+            "reading": {"stopPids": ["<orphan>"], "siblingStopped": false, "count": 2, "envelopeRows": 2},
+            "agrees": ["stopPids", "siblingStopped", "count", "envelopeRows"]
           }
         }
       ]
@@ -367,7 +411,7 @@
     },
     {
       "id": "F",
-      "label": "the owner filing row of wb-pfxo.8 in the tracked bead export carries every pinned constant, names exactly the clauses rows A-D cover, states each of their labels as its clause and quotes only targets row M controls",
+      "label": "the owner filing row of wb-pfxo.8 in the tracked bead export carries every pinned constant, names exactly the clauses rows A-D cover, states each of their labels as its clause and quotes only targets row M controls; every pin its delivery record names stays judged and the line its review planted is a control",
       "pins": [
         {
           "id": "F1",
@@ -376,6 +420,15 @@
             "labelsEqual": ["A", "B", "C", "D"],
             "constantsQuoted": 11,
             "targetsControlled": 2
+          }
+        },
+        {
+          "id": "F2",
+          "witness": {
+            "stated": 54,
+            "named": 54,
+            "missing": [],
+            "plantedControl": "MA14"
           }
         }
       ]
@@ -437,6 +490,14 @@
           "witness": {"family": "window", "digest": "32a60032eb75d675", "hit": true}
         },
         {
+          "id": "MA14",
+          "witness": {"family": "window", "digest": "dcd6e090a7e3bd2e", "hit": true}
+        },
+        {
+          "id": "MA15",
+          "witness": {"family": "window", "digest": "94bff2e3c9c5fc51", "hit": true}
+        },
+        {
           "id": "ML1",
           "witness": {"family": "leaf", "digest": "878e741bd8f97c79", "hit": true}
         },
@@ -460,7 +521,7 @@
     },
     {
       "id": "R",
-      "label": "the named residuals R1-R10 stay pinned quiet",
+      "label": "the named residuals R1-R12 stay pinned quiet",
       "pins": [
         {
           "id": "R1",
@@ -507,6 +568,19 @@
           "witness": {
             "stopPids": ["<orphan>"],
             "broken": []
+          }
+        },
+        {
+          "id": "R11",
+          "witness": {"family": "window", "digest": "5d35ad5b9df058ca", "hit": false}
+        },
+        {
+          "id": "R12",
+          "witness": {
+            "nonScriptEntries": [".git", ".beads", "vendor", "media"],
+            "walkedUnderNonScript": [".beads/hooks"],
+            "walkedUnderIgnored": 0,
+            "plantWouldHit": true
           }
         }
       ]

@@ -29,7 +29,10 @@
  *  A, the posture, absent today. A1 a lexical scan of every src module - string, no-substitution and template literals and every
  *    identifier - for a block word within WINDOW words of a change word (or one joined word spelling both), with floors, an anchor,
  *    controls and every src file a parsed .ts module; A2 no src module reads an rf diff, plan, explain or impact envelope: no argv array or literal spells one of their verbs
- *    and no literal or identifier spells one of their row fields, with the render argv read for non-vacuity; A3 the rf roster stays the
+ *    (flags, each taking at most one value, may sit between the group word and its verb: rf takes the first positional after the
+ *    group, so `rf context --json diff A B` runs context.diff) and no literal or identifier spells one of their row fields (a
+ *    camelCase spelling read as its snake_case one: countsByClass is counts_by_class), with floors of its own and the render argv
+ *    read for non-vacuity; A3 the rf roster stays the
  *    preview alone (native and injected registrations selected by id, permission and contract source, and
  *    RECONCILE_EVIDENCE_READS.reactivefiber at src/workflow/reconcile.ts).
  *  B, acceptance (a). B1 the fixtures: the receipt names the source change, the plan row is refresh_required, the impact verb refuses,
@@ -44,21 +47,43 @@
  *    exactly the producer's and the unchanged block whose sources moved stays unchanged; C4 no Pi reader re-derives a row: the native
  *    reader and the adapter refuse each diff.
  *  D, acceptance (c). D1 every sentence unit of every docs/workbench file (all markdown at base), with floors and an anchor, pairs
- *    no source-change with a block-change; D2 the detector's controls: the flagged paraphrases, the quiet negatives and the named
- *    residual and precision rows.
+ *    no source-change with a block-change, read twice: as written (references decoded) and as rendered (comments and element tags
+ *    dropped, link and image syntax read as its text, the * ~ ` delimiters dropped, the text NFKD-folded and every combining mark,
+ *    format and default-ignorable code point dropped), so intraword markup or an invisible character splits no word; and no unit,
+ *    its tag attributes and link targets included, carries a bidi control, a letter outside ASCII once folded, or a symbol or number
+ *    outside ASCII beside an ASCII letter, so a reversed display, a homoglyph (a Cyrillic o for a Latin one) or a look-alike symbol
+ *    (U+222A for u) hides no word; D2 the detector's controls: the flagged paraphrases (each rendered-text form among them:
+ *    intraword emphasis, code span, strikethrough, HTML and link, a zero-width or soft-hyphen reference, a raw zero-width, a
+ *    combining mark, fullwidth letters, three homoglyphs (one in a tag attribute), a bidi override and two look-alike symbols), the
+ *    quiet negatives, the window edges and the named residual and precision rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id, label and
- * pins, every pin's witness, the vocabularies, the window, the fixtures, their exits and the registered tests - is held to the
- * out-of-file roster, whose measured envelopes anchor the block rows and counts outside this file; the last case walks this file's
- * vitest task tree against the roster.
+ * pins, every pin's witness, the vocabularies, the window, the fixtures, their exits, the reader map, the clause fixtures, the
+ * registered tests and each pin's reached assertion count - is held to the out-of-file roster, whose measured envelopes anchor the
+ * block rows and counts outside this file; the last case walks this file's vitest task tree against the roster.
+ * ANCHORS OUTSIDE THE CENSUS AND ITS ROSTER (rule 16 CT5/CT6; wb-sekx, the landing-278 follow-up): the tracked bead export
+ * (.beads/issues.jsonl, wb-pfxo.2's Acceptance line) holds rows B-D, one per clause in order beside the posture row A, each label its
+ * clause with a leading "fixture: " dropped; src holds the reader cells - every function the rf provider and observer modules export
+ * is in the reader map (native, registered or adapter), and the last case requires every fixture a clause names judged by every
+ * reader surface and for its own facts, the measured previews through the ObservationProjection src exports where the clause names
+ * any Pi surface, and the docs/workbench walk where the clause names a docs census. REACHED: each pin records its vitest assertion
+ * count after its witness assertion, held to the roster, so a case that returns its witness before asserting reds. The window edges
+ * (a pair at exactly WINDOW words, flagged, and at WINDOW + 1, quiet) are asserted in this file for A1 and D2.
+ * NOT CLAIMED: a coordinated edit of this file and the roster that removes A1, A2, A3 or D2 (no text outside the census names those
+ * pins), or that also rewrites the reader map or the cell rule.
  * RESIDUALS (named, each with a pinned quiet row): R-NO-DIFF-READER no Pi reader reads a context.diff (or plan, explain or impact)
  * envelope, so the producer's block rows ride only the injected registered reading (quiet rows B2, B4, C4); R-COMPOSED a claim, verb or
- * field composed from non-literal parts, or spelled through an alias, is invisible to A1 and A2 (their composed and aliased controls
- * read no hit); R-VOCABULARY a block or change word
+ * field composed from non-literal parts, spelled through an alias, or an argv assembled at run time (pushed onto an array), is
+ * invisible to A1 and A2 (their composed, aliased and assembled controls, a composed verb after a flag among them, read no hit);
+ * R-VOCABULARY a block or change word
  * outside the pinned vocabularies (a paragraph, an input, an abbreviation) is invisible (quiet controls in A1 and D2); R-FAR a pair
- * farther apart than WINDOW words is invisible (quiet controls in A1 and D2); R-ACROSS a claim split across two sentence units is
- * invisible to D1 (quiet control in D2); R-ENCODED an encoding outside the decoded HTML character references (percent, backslash or
- * octal escapes) is invisible to D1 (quiet control in D2). PRECISION (not an escape): D1 also reds on a sentence that denies the
- * implication (the denial control in D2 reads 1), so such a sentence is judged by hand.
+ * farther apart than WINDOW words is invisible (quiet controls in A1 and D2, one at WINDOW + 1 in each); R-ACROSS a claim split across
+ * two sentence units is invisible to D1 (quiet control in D2); R-ENCODED an encoding outside the decoded HTML character references
+ * (percent, backslash or octal escapes, or a named reference outside the six decoded, &shy; for one) is invisible to D1 (quiet
+ * controls R-ENCODED and R-ENCODED-NAMED in D2); R-SPACED a word split by a space character, however thin (a hair space, U+200A),
+ * reads as two words (quiet control in D2). PRECISION (not an escape): D1 also reds on a sentence that denies the implication (the
+ * denial control in D2 reads 1) and on any unit it cannot read - a letter outside ASCII, or a symbol outside ASCII beside a letter,
+ * in a sentence that claims nothing (the foreign letter and symbol controls in D2, a Greek lambda and an arrow, each read 1); A2
+ * also reds on a verb word that may be a flag's value (its precisionFlagValue control reads 1); each is judged by hand.
  * SCOPE: the envelopes are producer facts at the installed rf; Pi vendors no rf schema, so a producer change is seen only when a
  * fixture re-measure re-reads them. No reader is added or faked here.
  *
@@ -90,6 +115,9 @@ type InjectedEnvelope = Awaited<ReturnType<Parameters<typeof registerReactiveFib
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
 const ROSTER_PATH = join(HERE, "fixtures", "rf-source-change-block-claim-roster.json");
+/** The tracked bead export, whose wb-pfxo.2 Acceptance line anchors rows B-D outside this file and its roster. */
+const BEADS_EXPORT = join(REPO, ".beads", "issues.jsonl");
+const BEAD = "wb-pfxo.2";
 const ROOT = process.cwd();
 /** The root every roster envelope names: the measured scratch root, rewritten. */
 const FIXTURE_ROOT = "/fixture/rf-workspace";
@@ -119,8 +147,24 @@ const RECEIPTS = ["explainSource", "planSource", "impactRefusal"] as const;
 const DIFFS = ["diffSourceOnly", "diffContent"] as const;
 type FixtureName = (typeof PREVIEWS)[number] | (typeof RECEIPTS)[number] | (typeof DIFFS)[number];
 const FIXTURES: readonly FixtureName[] = [...PREVIEWS, ...RECEIPTS, ...DIFFS];
-/** The rf read verbs a block-verdict reader would spawn or name; no src module may spell one. */
-const READ_VERB = /\b(?:context[\s._-]+(?:diff|plan|explain)|graph[\s._-]+(?:diff|impact))\b/i;
+/** The modules whose exported functions read an rf envelope, and the module exporting the projection the previews reach. */
+const READER_MODULES: readonly string[] = ["src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"];
+const OBSERVATION_MODULE = "src/workbench/observation.ts";
+/** The reader surface of every function the reader modules export (held to src's exports and to the roster): the native reader
+ * spawns rf, the registered reading carries an injected envelope, the adapter projects a reading. */
+const READER_OF: Readonly<Record<string, string>> = {
+  nativeReactiveFiberPreview: "native",
+  nativeReactiveFiberRender: "native",
+  reactivefiberTopology: "adapter",
+  registerNativeReactiveFiberRender: "native",
+  registerReactiveFiberRender: "registered",
+};
+/** The fixtures each fixture clause of the exported Acceptance line names: (a) the receipt and impact set, (b) the diffs. */
+const CLAUSE_FIXTURES: Readonly<Record<string, readonly FixtureName[]>> = { a: RECEIPTS, b: DIFFS };
+/** The flags a command literal may carry between a group word and its verb, each taking at most one value (`--json`, `--workspace W`). */
+const FLAGS = String.raw`(?:\s+-{1,2}[a-z][a-z0-9-]*(?:=\S*|\s+(?!-)\S+)?)*`;
+/** The rf read verbs a block-verdict reader would spawn or name, flags allowed between group and verb; no src module may spell one. */
+const READ_VERB = new RegExp(String.raw`\b(?:context${FLAGS}[\s._-]+(?:diff|plan|explain)|graph${FLAGS}[\s._-]+(?:diff|impact))\b`, "i");
 const VERB_PAIRS: readonly string[] = ["context diff", "context plan", "context explain", "graph diff", "graph impact"];
 /** The row fields of those envelopes a reader would read; no src literal or identifier may spell one. */
 const ROW_FIELDS: readonly string[] = [
@@ -128,6 +172,14 @@ const ROW_FIELDS: readonly string[] = [
   "final_document_changed", "content_changed", "refresh_required", "rerender_cause", "inputs_changed",
 ];
 const ROW_FIELD = new RegExp(`\\b(?:${ROW_FIELDS.join("|")})\\b`);
+/** A camelCase spelling read as its snake_case one (countsByClass is counts_by_class). */
+function snakeOf(text: string): string {
+  return text.replace(/([a-z0-9])([A-Z])/g, "$1_$2").toLowerCase();
+}
+/** Whether a literal, identifier or descriptor text spells a row field, as written or camelCase-folded. */
+function spellsField(text: string): boolean {
+  return ROW_FIELD.test(text) || ROW_FIELD.test(snakeOf(text));
+}
 
 interface Row {
   readonly id: string;
@@ -187,7 +239,15 @@ interface Roster {
   readonly exits: Readonly<Record<FixtureName, number>>;
   readonly envelopes: Readonly<Record<FixtureName, Envelope>>;
   readonly rows: readonly RosterRow[];
+  readonly readers: Readonly<Record<string, string>>;
+  readonly clauseFixtures: Readonly<Record<string, readonly string[]>>;
   readonly tests: readonly string[];
+  readonly reached: readonly string[];
+}
+/** One clause of the exported Acceptance line: its letter and text. */
+interface Clause {
+  readonly letter: string;
+  readonly text: string;
 }
 
 function isObject(value: unknown): value is { [key: string]: unknown } {
@@ -254,10 +314,16 @@ function readRoster(): Roster {
     return [name, exit];
   })) as Record<FixtureName, number>;
   if (typeof raw.bead !== "string" || typeof raw.rfVersion !== "string" || typeof raw.window !== "number") throw new Error("roster needs bead, rfVersion and window");
+  const { readers: rawReaders, clauseFixtures: rawClauses } = raw;
+  if (!isObject(rawReaders) || !Object.values(rawReaders).every(surface => typeof surface === "string")) throw new Error("roster readers must map names to surfaces");
+  if (!isObject(rawClauses)) throw new Error("roster clauseFixtures must be an object");
   return {
     bead: raw.bead, rfVersion: raw.rfVersion, window: raw.window,
     vocabulary: { block: strings(raw.vocabulary.block, "vocabulary.block"), source: strings(raw.vocabulary.source, "vocabulary.source"), change: strings(raw.vocabulary.change, "vocabulary.change") },
-    fixtures, exits, envelopes, rows, tests: strings(raw.tests, "tests"),
+    fixtures, exits, envelopes, rows,
+    readers: Object.fromEntries(Object.entries(rawReaders).map(([name, surface]) => [name, String(surface)])),
+    clauseFixtures: Object.fromEntries(Object.entries(rawClauses).map(([letter, names]) => [letter, strings(names, `clauseFixtures.${letter}`)])),
+    tests: strings(raw.tests, "tests"), reached: strings(raw.reached, "reached"),
   };
 }
 
@@ -269,6 +335,74 @@ function rosterWitness(pin: string): JsonValue {
   if (found === undefined) throw new Error(`the roster holds no pin ${pin}`);
   return found.witness;
 }
+
+let acceptanceRead: string | undefined;
+/** The Acceptance line of wb-pfxo.2's notes in the tracked bead export, its closing period dropped; read once. */
+function exportedAcceptance(): string {
+  acceptanceRead ??= acceptanceOf(readFileSync(BEADS_EXPORT, "utf8"));
+  return acceptanceRead;
+}
+function acceptanceOf(exported: string): string {
+  const marker = `"id":"${BEAD}"`;
+  for (const line of exported.split("\n")) {
+    if (!line.includes(marker)) continue;
+    const parsed: unknown = JSON.parse(line);
+    if (!isObject(parsed) || parsed.id !== BEAD || typeof parsed.notes !== "string") continue;
+    const found = /Acceptance: (\(a\) .*?)\. Related:/.exec(parsed.notes)?.[1];
+    if (found !== undefined) return found;
+  }
+  throw new Error(`the bead export holds no Acceptance line for ${BEAD}`);
+}
+/** The clauses of an Acceptance line: "(a) text; (b) text; ...". */
+function clausesOf(acceptance: string): Clause[] {
+  const pieces = acceptance.split(/(?:^|; )\(([a-z])\) /);
+  const clauses: Clause[] = [];
+  for (let at = 1; at + 1 < pieces.length; at += 2) clauses.push({ letter: pieces[at] ?? "", text: pieces[at + 1] ?? "" });
+  return clauses;
+}
+/** The label a clause's row carries: the clause, lettered, a leading "fixture: " dropped. */
+function clauseLabel(clause: Clause): string {
+  return `(${clause.letter}) ${clause.text.replace(/^fixture: /, "")}`;
+}
+/** The functions and classes src modules export, by their own AST (declarations and const-bound function expressions), sorted. */
+function exportedNames(modules: readonly string[]): string[] {
+  const exported = (statement: ts.Statement): boolean =>
+    ts.canHaveModifiers(statement) && (ts.getModifiers(statement) ?? []).some(modifier => modifier.kind === ts.SyntaxKind.ExportKeyword);
+  return modules.flatMap(module => {
+    const source = ts.createSourceFile(module, textOf(join(REPO, module)), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    return source.statements.filter(exported).flatMap(statement => {
+      if ((ts.isFunctionDeclaration(statement) || ts.isClassDeclaration(statement)) && statement.name !== undefined) return [statement.name.text];
+      if (!ts.isVariableStatement(statement)) return [];
+      return statement.declarationList.declarations.flatMap(declaration => {
+        const value = declaration.initializer;
+        return ts.isIdentifier(declaration.name) && value !== undefined && (ts.isArrowFunction(value) || ts.isFunctionExpression(value)) ? [declaration.name.text] : [];
+      });
+    });
+  }).sort();
+}
+
+/** The (surface, subject) cells each pin judged, recorded by the helper that judged them once its assertions passed. */
+const CELLS: Record<string, string[]> = {};
+/** The pin now running; the pin wrapper sets it. */
+let judging = "";
+function judged(surface: string, subject: string): void {
+  CELLS[judging] = [...(CELLS[judging] ?? []), `${surface}:${subject}`];
+}
+/** The cells a clause's row must judge: every fixture a fixture clause names, by every reader surface and for its own facts; the
+ * measured previews through the projection where the clause names any Pi surface; the docs walk where it names a docs census. */
+function requiredCells(clause: Clause | undefined): string[] {
+  if (clause === undefined) return ["(no exported clause)"];
+  const readers = [...new Set(Object.values(READER_OF))];
+  const fixtures = clause.text.startsWith("fixture: ") ? CLAUSE_FIXTURES[clause.letter] : [];
+  if (fixtures === undefined) return [`(no fixtures named for clause ${clause.letter})`];
+  return [
+    ...fixtures.flatMap(name => [...readers, "facts"].map(surface => `${surface}:${name}`)),
+    ...(clause.text.includes("any Pi surface") ? PREVIEWS.map(name => `projection:${name}`) : []),
+    ...(clause.text.startsWith("docs census: ") ? ["docs:docs/workbench"] : []),
+  ];
+}
+/** Each pin's vitest assertion count once its witness assertion passed, in run order. */
+const REACHED: string[] = [];
 
 /** Every string a JSON value holds, keys excluded. */
 function stringLeaves(value: unknown): string[] {
@@ -351,6 +485,40 @@ function unitsOf(text: string): string[] {
     .map(unit => unit.replace(/\s+/g, " ").trim())
     .filter(unit => unit.length > 0);
 }
+const ELEMENT_TAG = /<\/?[a-z][a-z0-9-]*(?:\s[^<>]*)?\/?>/gi;
+/** A text with its references decoded, NFKD-folded, and every combining mark, format and default-ignorable code point dropped. */
+function foldedOf(text: string): string {
+  return decoded(text).normalize("NFKD").replace(/[\p{M}\p{Cf}\p{Default_Ignorable_Code_Point}]/gu, "");
+}
+/** A unit as a reader sees it rendered: comments and element tags dropped, link and image syntax read as its text, the emphasis,
+ * strikethrough and code-span delimiters (* ~ `) dropped, then folded, so intraword markup or an invisible character splits no word. */
+function renderedOf(unit: string): string {
+  return foldedOf(
+    decoded(unit)
+      .replace(/<!--[\s\S]*?-->/g, "")
+      .replace(ELEMENT_TAG, "")
+      .replace(/!?\[([^\]]*)\](?:\([^)]*\)|\[[^\]]*\])/g, "$1")
+      .replace(/[*~`]/g, ""),
+  );
+}
+/** The code points that keep a unit unreadable to D1, read over the whole folded unit (tag attributes and link targets included): a
+ * bidi control (the display order is not the spelled order), a letter outside ASCII (a homoglyph: a Cyrillic o for a Latin one), and
+ * a symbol or number outside ASCII beside an ASCII letter (a look-alike: U+222A for u). */
+function unreadableOf(unit: string): string[] {
+  const folded = foldedOf(unit);
+  const found = [
+    ...[...decoded(unit).matchAll(/\p{Bidi_Control}/gu)].map(match => match[0]),
+    ...[...folded.matchAll(/[^\P{L}A-Za-z]/gu)].map(match => match[0]),
+    ...[...folded.matchAll(/(?<=[A-Za-z])[\p{S}\p{N}]|[\p{S}\p{N}](?=[A-Za-z])/gu)].map(match => match[0]).filter(point => (point.codePointAt(0) ?? 0) > 0x7f),
+  ];
+  return found.map(point => `U+${(point.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}`);
+}
+/** D1's reading of one unit: what keeps it unreadable, else the implication as written or as rendered; null for none. */
+function d1Hit(unit: string): string | null {
+  const unreadable = unreadableOf(unit);
+  if (unreadable.length > 0) return `unreadable ${unreadable.join(" ")}`;
+  return implication(unit) ?? implication(renderedOf(unit));
+}
 
 /** Every regular file below a root (symlinks are not followed); a path that vanishes mid-walk holds nothing. */
 function filesBelow(directory: string): string[] {
@@ -384,9 +552,23 @@ interface Lexicon {
   readonly renderArgv: number;
   readonly composedArgv: number;
 }
+/** Where an argv array's verb may sit after its group word at `at`: the first element that is no literal flag, read on past each
+ * flag and the one value it may take - rf takes the first positional after the group as the verb, so `context --json diff` and
+ * `context --workspace W diff` both run context.diff; a literal flag never holds the verb. */
+function verbPlaces(words: readonly (string | null)[], at: number): number[] {
+  const places: number[] = [];
+  for (let index = at + 1; index < words.length; index++) {
+    const word = words[index];
+    if (typeof word === "string" && word.startsWith("-")) continue;
+    places.push(index);
+    const previous = words[index - 1];
+    if (index - 1 === at || typeof previous !== "string" || !previous.startsWith("-")) break;
+  }
+  return places;
+}
 /** One module's lexicon: its string, no-substitution and template literals (a template's literal parts joined by a space), every
- * identifier, and its argv arrays - an rf read verb spelled as two literal words, the render argv, or "context"/"graph" before a
- * non-literal element. */
+ * identifier, and its argv arrays - an rf read verb spelled as two literal words with only flags between, the render argv, or
+ * "context"/"graph" whose verb place holds no literal element. */
 function lexiconOf(fileName: string, text: string): Lexicon {
   const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const literals: string[] = [];
@@ -401,11 +583,15 @@ function lexiconOf(fileName: string, text: string): Lexicon {
     if (ts.isArrayLiteralExpression(node)) {
       const words = node.elements.map(element => (ts.isStringLiteralLike(element) ? element.text : null));
       words.forEach((word, index) => {
-        if ((word !== "context" && word !== "graph") || index + 1 >= words.length) return;
-        const next = words[index + 1];
-        if (next === null || next === undefined) composedArgv += 1;
-        else if (VERB_PAIRS.includes(`${word} ${next}`)) verbArgv.push(`${fileName}: [${words.filter(item => item !== null).join(", ")}]`);
-        else if (word === "context" && next === "render") renderArgv += 1;
+        if (word !== "context" && word !== "graph") return;
+        const places = verbPlaces(words, index);
+        const literal = places.flatMap(place => {
+          const next = words[place];
+          return typeof next === "string" ? [next] : [];
+        });
+        if (literal.some(next => VERB_PAIRS.includes(`${word} ${next}`))) verbArgv.push(`${fileName}: [${words.filter(item => item !== null).join(", ")}]`);
+        else if (word === "context" && literal.includes("render")) renderArgv += 1;
+        else if (literal.length === 0 && places.length > 0) composedArgv += 1;
       });
     }
     ts.forEachChild(node, visit);
@@ -496,6 +682,7 @@ async function nativeRefusal(name: FixtureName): Promise<JsonValue> {
   expect(outcome.spawns).toHaveLength(1);
   expect(outcome.spawns[0]).toContain("--no-commit");
   expect(claim).toBeNull();
+  judged("native", name);
   return { ...outcome.refusal, reading: false, spawns: outcome.spawns.length, verb: verbOf(outcome.spawns), claim };
 }
 
@@ -523,6 +710,7 @@ async function verbatimReading(name: FixtureName): Promise<{ witness: JsonObject
   const piClaims = piStrings.filter(text => blockClaim(text) !== null);
   expect(piStrings).toStrictEqual([REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, FIXTURE_ROOT]);
   expect(piClaims).toEqual([]);
+  judged("registered", name);
   return { witness: { verbatim: true, calls, readingKeys: Object.keys(reading).sort(), piStrings, piClaims }, source: envelopeOf(reading.source, `${name} reading source`) };
 }
 
@@ -542,6 +730,7 @@ function adapterRefusal(name: FixtureName): JsonValue {
   const claim = blockClaim(refusal.message);
   expect(refusal).toStrictEqual({ category: "validation", message: NOT_A_RENDER });
   expect(claim).toBeNull();
+  judged("adapter", name);
   return { ...refusal, claim };
 }
 
@@ -593,6 +782,19 @@ function rebound(envelope: Envelope, root: string): JsonValue {
   return copy;
 }
 
+/** The code points outside ASCII the D2 controls spell, built from their numbers so this file stays ASCII. */
+const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
+const COMBINING_ACUTE = String.fromCodePoint(0x0301);
+const CYRILLIC_O = String.fromCodePoint(0x043e);
+const GREEK_LAMBDA = String.fromCodePoint(0x03bb);
+const RIGHT_TO_LEFT_OVERRIDE = String.fromCodePoint(0x202e);
+const POP_DIRECTIONAL_FORMATTING = String.fromCodePoint(0x202c);
+const UNION = String.fromCodePoint(0x222a);
+const ESTIMATED = String.fromCodePoint(0x212e);
+const RIGHTWARDS_ARROW = String.fromCodePoint(0x2192);
+const HAIR_SPACE = String.fromCodePoint(0x200a);
+const FULLWIDTH_SOURCE = String.fromCodePoint(...[..."source"].map(letter => (letter.codePointAt(0) ?? 0) + 0xfee0));
+
 const A1_CONTROLS: Readonly<Record<string, string>> = {
   literal: 'const label = "changed block";',
   reversed: 'const label = "block changed";',
@@ -609,6 +811,8 @@ const A1_CONTROLS: Readonly<Record<string, string>> = {
   residualComposed: 'const key = "block" + " " + verb;',
   residualFar: 'const key = "block one two three four five six changed";',
   residualVocabulary: 'const key = "changed paragraph";',
+  windowEdge: 'const key = "block one two three four changed";',
+  residualPastWindow: 'const key = "block one two three four five changed";',
 };
 const A2_CONTROLS: Readonly<Record<string, string>> = {
   argvDiff: 'spawn("rf", ["--workspace", w, "context", "diff", a, b, "--json"]);',
@@ -619,7 +823,20 @@ const A2_CONTROLS: Readonly<Record<string, string>> = {
   fieldIdentifier: "const changed = diff.changed_block_count;",
   residualComposed: 'const verb = "diff"; spawn("rf", ["context", verb]);',
   residualAliased: 'const noun = "context"; spawn("rf", [noun, "diff"]);',
+  interleavedFlag: 'spawn("rf", ["--workspace", "w", "context", "--json", "diff", "a", "b"]);',
+  interleavedValue: 'spawn("rf", ["context", "--workspace", root, "diff", a, b]);',
+  interleavedLiteral: 'const command = "rf context --json diff rfr_a rfr_b";',
+  camelField: "const counts = diff.countsByClass;",
+  precisionFlagValue: 'spawn("rf", ["context", "--format", "diff"]);',
+  residualComposedInterleaved: 'const verb = "diff"; spawn("rf", ["context", "--json", verb]);',
+  residualAssembled: 'const args = ["context"]; args.push("diff"); spawn("rf", args);',
 };
+/** An A2 control's reading by its class: a composed residual counts one composed argv, any other residual nothing, every other
+ * control one hit. */
+function a2Expected(name: string): JsonValue {
+  if (name.startsWith("residualComposed")) return { hits: 0, composedArgv: 1 };
+  return name.startsWith("residual") ? { hits: 0, composedArgv: 0 } : { hits: 1, composedArgv: 0 };
+}
 /** A control's A1 reading: the literals and identifiers carrying a block-change claim. */
 function a1Control(text: string): number {
   const lexicon = lexiconOf("control.ts", text);
@@ -629,7 +846,7 @@ function a1Control(text: string): number {
 function a2Control(text: string): JsonValue {
   const lexicon = lexiconOf("control.ts", text);
   const hits = lexicon.verbArgv.length + lexicon.literals.filter(item => READ_VERB.test(item)).length +
-    [...lexicon.literals, ...lexicon.identifiers].filter(item => ROW_FIELD.test(item)).length;
+    [...lexicon.literals, ...lexicon.identifiers].filter(spellsField).length;
   return { hits, composedArgv: lexicon.composedArgv };
 }
 
@@ -646,22 +863,48 @@ const D2_FLAGGED: Readonly<Record<string, string>> = {
   emphasis: "A **changed** source implies a `changed` block.",
   comment: "<!-- a changed source means a changed block -->",
   references: "a changed&#32;source implies a changed&nbsp;block",
+  windowEdge: "A changed source leads on through many more words to a block one two three four changed.",
+  intrawordEmphasis: "A changed sou**rce** implies a changed block.",
+  intrawordCode: "A changed sou`rce` implies a changed block.",
+  intrawordStrike: "A changed sou~~rce~~ implies a changed block.",
+  intrawordHtml: "A changed sou<span>rce</span> implies a changed block.",
+  intrawordLink: "A changed [sou](09-observation-and-provenance.md)rce implies a changed block.",
+  zeroWidthReference: "A changed sou&#8203;rce implies a changed block.",
+  softHyphenReference: "A changed sou&#xAD;rce implies a changed block.",
+  zeroWidthRaw: `A changed sou${ZERO_WIDTH_SPACE}rce implies a changed block.`,
+  combiningMark: `A changed sou${COMBINING_ACUTE}rce implies a changed block.`,
+  fullwidth: `A changed ${FULLWIDTH_SOURCE} implies a changed block.`,
+  homoglyph: `A changed s${CYRILLIC_O}urce implies a changed block.`,
+  homoglyphBlock: `A changed source implies a changed bl${CYRILLIC_O}ck.`,
+  homoglyphAttribute: `<span title="A changed s${CYRILLIC_O}urce implies a changed block">x</span>`,
+  bidiOverride: `A changed ${RIGHT_TO_LEFT_OVERRIDE}ecruos${POP_DIRECTIONAL_FORMATTING} implies a changed block.`,
+  lookalikeSymbol: `A changed so${UNION}rce implies a changed block.`,
+  lookalikeEdge: `A changed sourc${ESTIMATED} implies a changed block.`,
 };
 const D2_QUIET: Readonly<Record<string, string>> = {
   receiptSources: "its `sources` sha256 block records the pre-correction hashes of the three files edited for it",
   unchanged: "the block is unchanged and its source is read once",
   diffReads: "rf context diff reports each block's class beside its cited source snapshots",
+  pastWindowEdge: "A changed source leads on through many more words to a block one two three four five changed.",
 };
 const D2_RESIDUALS: Readonly<Record<string, string>> = {
   "R-ACROSS": "The source changed. So the block is stale.",
   "R-FAR": "a source alpha beta gamma delta epsilon zeta eta changed every block now changed",
   "R-VOCABULARY": "A changed input implies a changed paragraph.",
   "R-ENCODED": "a changed%20source implies a changed%20block",
+  "R-ENCODED-NAMED": "a changed sou&shy;rce implies a changed block",
+  "R-SPACED": `A changed sou${HAIR_SPACE}rce implies a changed block.`,
 };
 const D2_DENIAL = "A changed source never implies a changed block.";
-/** A control text's D1 reading: its sentence units stating the implication. */
+/** PRECISION rows of the unreadable reading: a letter outside ASCII, and a symbol outside ASCII beside a letter, in sentences that
+ * claim nothing. */
+const D2_FOREIGN: Readonly<Record<string, string>> = {
+  letter: `The ${GREEK_LAMBDA} calculus names no block at all.`,
+  symbol: `The build maps src${RIGHTWARDS_ARROW}dist and names no block at all.`,
+};
+/** A control text's D1 reading: its sentence units D1 flags. */
 function d1Reading(text: string): number {
-  return unitsOf(text).filter(unit => implication(unit) !== null).length;
+  return unitsOf(text).filter(unit => d1Hit(unit) !== null).length;
 }
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
@@ -682,21 +925,29 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(unparsed, "a src file the lexical scan does not parse").toEqual([]);
     expect(hits, "a src literal or identifier labelling a block changed or stale").toEqual([]);
     const controls = Object.fromEntries(Object.entries(A1_CONTROLS).map(([name, text]) => [name, a1Control(text)]));
+    const offClass = Object.entries(controls).filter(([name, count]) => count !== (/^(?:negative|residual)/.test(name) ? 0 : 1)).map(([name]) => name);
+    expect(offClass, "an A1 control off its class reading: flagged 1, negative and residual 0").toEqual([]);
     return { floors, anchorRead, unparsed, hits, controls };
   },
   A2: async () => {
     const lexica = srcLexicon();
+    const literalCount = lexica.reduce((sum, lexicon) => sum + lexicon.literals.length, 0);
+    const identifierCount = lexica.reduce((sum, lexicon) => sum + lexicon.identifiers.length, 0);
+    const floors = { modules: lexica.length >= 100, literals: literalCount >= 5000, identifiers: identifierCount >= 50000 };
     const argv = lexica.flatMap(lexicon => lexicon.verbArgv);
     const literals = lexica.flatMap(lexicon => lexicon.literals.filter(item => READ_VERB.test(item)).map(item => `${lexicon.file}: ${item}`));
-    const fields = lexica.flatMap(lexicon => [...lexicon.literals, ...lexicon.identifiers].filter(item => ROW_FIELD.test(item)).map(item => `${lexicon.file}: ${item}`));
+    const fields = lexica.flatMap(lexicon => [...lexicon.literals, ...lexicon.identifiers].filter(spellsField).map(item => `${lexicon.file}: ${item}`));
     const renderArgvSeen = lexica.reduce((sum, lexicon) => sum + lexicon.renderArgv, 0) >= 1;
     const composedArgv = lexica.reduce((sum, lexicon) => sum + lexicon.composedArgv, 0);
     const descriptors = await nativeDescriptors();
-    const descriptorHits = descriptors.filter(descriptor => READ_VERB.test(JSON.stringify(descriptor)) || ROW_FIELD.test(JSON.stringify(descriptor))).map(descriptor => descriptor.id);
+    const descriptorHits = descriptors.filter(descriptor => READ_VERB.test(JSON.stringify(descriptor)) || spellsField(JSON.stringify(descriptor))).map(descriptor => descriptor.id);
+    expect(floors, `src modules ${lexica.length}, literals ${literalCount}, identifiers ${identifierCount}`).toStrictEqual({ modules: true, literals: true, identifiers: true });
     expect(renderArgvSeen).toBe(true);
     expect({ argv, literals, fields, descriptorHits, composedArgv }, "an rf diff, plan, explain or impact reader in src").toStrictEqual({ argv: [], literals: [], fields: [], descriptorHits: [], composedArgv: 0 });
     const controls = Object.fromEntries(Object.entries(A2_CONTROLS).map(([name, text]) => [name, a2Control(text)]));
-    return { renderArgvSeen, argv, literals, fields, descriptorHits, composedArgv, controls };
+    const offClass = Object.entries(controls).filter(([name, reading]) => JSON.stringify(reading) !== JSON.stringify(a2Expected(name))).map(([name]) => name);
+    expect(offClass, "an A2 control off its class reading").toEqual([]);
+    return { floors, renderArgvSeen, argv, literals, fields, descriptorHits, composedArgv, controls };
   },
   A3: async () => {
     const injected = new CapabilityRegistry();
@@ -743,6 +994,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(pairedDiff.renderB).toBe(String(explain.render_id));
     expect(pairedDiff.renderA).toBe(String(plan.render_id));
     expect(pairedDiff.changedBlockCount).toBe(0);
+    for (const name of RECEIPTS) judged("facts", name);
     return {
       commands, diffRows, receiptRender: String(explain.render_id), causes, planRender: String(plan.render_id), planRows, planSummary: plan.summary ?? null,
       impact: { code: String(impact.code), plannedSlice: impactMetadata.planned_slice ?? null, exit: ROSTER.exits.impactRefusal }, pairedDiff,
@@ -786,6 +1038,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       const changeWords = surfaced.flatMap(text => wordsOf(text).filter(word => CHANGE.has(word)));
       expect(claims).toEqual([]);
       expect(changeWords).toEqual([]);
+      judged("projection", name);
       previews.push({ name, verb: verbOf(outcome.spawns), coverage: snapshot.coverage ?? null, tone: snapshot.node.statusTone, statusText: snapshot.node.statusText, claims, changeWords });
     }
     const freshness = refs.map(ref => projection.query({ scope, limit: 5, ref }).nodes[0]?.freshness ?? null);
@@ -802,6 +1055,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     }
     expect(objectOf(facts.diffSourceOnly, "diffSourceOnly").changedBlockCount).toBe(0);
     expect(objectOf(facts.diffContent, "diffContent").changedBlockCount).toBe(1);
+    for (const name of DIFFS) judged("facts", name);
     return facts;
   },
   C2: async () => {
@@ -829,13 +1083,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const anchor = join(REPO, "docs", "workbench", "09-observation-and-provenance.md");
     const anchorRead = files.includes(anchor) && textOf(anchor).includes("## Reader adapters");
     const hits = units.flatMap(({ file, unit }) => {
-      const found = implication(unit);
+      const found = d1Hit(unit);
       return found === null ? [] : [`${file}: ${found} :: ${unit.slice(0, 160)}`];
     });
     const floors = { files: files.length >= 60, units: units.length >= 6000 };
     expect(floors, `docs/workbench files ${files.length}, sentence units ${units.length}`).toStrictEqual({ files: true, units: true });
     expect(anchorRead).toBe(true);
     expect(hits, "a docs/workbench sentence stating a changed source implies a changed block").toEqual([]);
+    judged("docs", "docs/workbench");
     return { floors, anchorRead, hits };
   },
   D2: async () => {
@@ -843,11 +1098,13 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const quiet = Object.fromEntries(Object.entries(D2_QUIET).map(([name, text]) => [name, d1Reading(text)]));
     const residuals = Object.fromEntries(Object.entries(D2_RESIDUALS).map(([name, text]) => [name, d1Reading(text)]));
     const denial = d1Reading(D2_DENIAL);
+    const foreign = Object.fromEntries(Object.entries(D2_FOREIGN).map(([name, text]) => [name, d1Reading(text)]));
     expect(Object.values(flagged).every(count => count === 1)).toBe(true);
     expect(Object.values(quiet).every(count => count === 0)).toBe(true);
     expect(Object.values(residuals).every(count => count === 0)).toBe(true);
     expect(denial).toBe(1);
-    return { flagged, quiet, residuals, denial };
+    expect(Object.values(foreign).every(count => count === 1)).toBe(true);
+    return { flagged, quiet, residuals, denial, foreign };
   },
 };
 
@@ -862,6 +1119,13 @@ describe("wb-pfxo.2 rf source-change block-claim census (RF-COMPOSITIONAL-ASSEMB
       bead: ROSTER.bead, rfVersion: ROSTER.rfVersion, window: ROSTER.window,
       vocabulary: { block: [...ROSTER.vocabulary.block], source: [...ROSTER.vocabulary.source], change: [...ROSTER.vocabulary.change] }, fixtures: [...ROSTER.fixtures],
     });
+    expect({ readers: READER_OF, clauseFixtures: CLAUSE_FIXTURES }, "the reader map and clause fixtures against the roster").toStrictEqual({ readers: ROSTER.readers, clauseFixtures: ROSTER.clauseFixtures });
+    // Outside the census and its roster: the bead export's clauses hold rows B-D, src's rf exports hold the reader map.
+    const clauses = clausesOf(exportedAcceptance());
+    expect(ROWS.slice(1).map(row => row.label), "rows B-D against the exported Acceptance clauses, one row per clause in order").toEqual(clauses.map(clauseLabel));
+    expect(ROWS.length, "the posture row A beside one row per exported clause").toBe(clauses.length + 1);
+    expect(exportedNames(READER_MODULES), "the reader map against every function the rf reader modules export").toEqual(Object.keys(READER_OF).sort());
+    expect(exportedNames([OBSERVATION_MODULE]), "the projection the previews reach, exported by src").toContain("ObservationProjection");
     // The measured previews name the build the census pins; every fixture names the rewritten scratch root or none.
     expect(PREVIEWS.map(name => String(objectOf(objectOf(ENVELOPES[name].result, name).provenance, `${name} provenance`).cli_version))).toEqual([RF_VERSION, RF_VERSION]);
     expect(FIXTURES.map(name => ENVELOPES[name].workspace?.root ?? null)).toEqual([FIXTURE_ROOT, FIXTURE_ROOT, FIXTURE_ROOT, FIXTURE_ROOT, null, FIXTURE_ROOT, FIXTURE_ROOT]);
@@ -871,10 +1135,12 @@ describe("wb-pfxo.2 rf source-change block-claim census (RF-COMPOSITIONAL-ASSEMB
     describe(`${row.id} ${row.label}`, () => {
       for (const pin of row.pins) {
         it(pin, { timeout: 60_000 }, async () => {
+          judging = pin;
           const impl = IMPL[pin];
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : await impl();
           expect(witness).toStrictEqual(rosterWitness(pin));
+          REACHED.push(`${pin}:${expect.getState().assertionCalls}`);
         });
       }
     });
@@ -897,5 +1163,12 @@ describe("wb-pfxo.2 rf source-change block-claim census (RF-COMPOSITIONAL-ASSEMB
     const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
     const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
+    expect(REACHED, "every pin reached its end, in row order, with its pinned assertion count").toEqual([...ROSTER.reached]);
+    const clauses = clausesOf(exportedAcceptance());
+    const missing = Object.fromEntries(ROWS.slice(1).map((row, index) => {
+      const have = new Set(row.pins.flatMap(pin => CELLS[pin] ?? []));
+      return [row.id, requiredCells(clauses[index]).filter(cell => !have.has(cell))];
+    }));
+    expect(missing, "a cell the bead export and src require that no pin of its row judged").toStrictEqual(Object.fromEntries(ROWS.slice(1).map(row => [row.id, []])));
   });
 });

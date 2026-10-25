@@ -267,16 +267,66 @@
     "omit": []
    }
   ],
+  "gateReaders": [
+   "src/workbench/beads-program-readiness.ts"
+  ],
+  "pairedInputs": [
+   {
+    "id": "line-adopt+prose-reject",
+    "fields": {
+     "notes": "ruled ADOPT\nan earlier draft was ruled REJECT and withdrawn"
+    }
+   },
+   {
+    "id": "line-adopt+description-reject",
+    "fields": {
+     "description": "ruled REJECT",
+     "notes": "ruled ADOPT"
+    }
+   },
+   {
+    "id": "line-adopt+title-adopt",
+    "fields": {
+     "title": "gate - ruled ADOPT",
+     "notes": "ruled ADOPT"
+    }
+   },
+   {
+    "id": "line-adopt+line-defer",
+    "fields": {
+     "notes": "ruled ADOPT\nruled DEFER"
+    }
+   },
+   {
+    "id": "title-only-adopt",
+    "fields": {
+     "title": "gate - ruled ADOPT"
+    }
+   },
+   {
+    "id": "adopt-trailing-period",
+    "fields": {
+     "notes": "ruled ADOPT."
+    }
+   },
+   {
+    "id": "padded-crlf",
+    "fields": {
+     "notes": "Owner ruling recorded.\r\n  ruled ADOPT  \r\nAPI-PIN.md landed."
+    }
+   }
+  ],
   "families": {
    "h2": "harness2-reactive-evolution|tsx-h2-(?:0[0-5]|adr)(?![\\w])|rftsx-(?:bhmrd|7sy4c|8er6b|e9a5e|auqdi|rupqh)(?![\\w])",
    "prerequisites": "API-PIN|TSX-FED-01|harness2-api-pin",
-   "marker": "(?<![\\w-])ruled (ADOPT|REJECT)(?![\\w-])(?![\\s()\\[\\],;:/|'\"`]*(?:(?:or|and|nor)(?![\\w-])[\\s()\\[\\],;:/|'\"`]*)?(?:ADOPT|REJECT|DEFER)(?![\\w-]))"
+   "marker": "(?<![\\w-])ruled (ADOPT|REJECT)(?![\\w-])(?![\\s()\\[\\],;:/|'\"`]*(?:(?:or|and|nor)(?![\\w-])[\\s()\\[\\],;:/|'\"`]*)?(?:ADOPT|REJECT|DEFER)(?![\\w-]))",
+   "verdictWords": "(?<![\\w-])(?:ADOPT|REJECT)(?![\\w-])"
   }
  },
  "rows": [
   {
    "id": "T",
-   "label": "(trigger, absent today) no Pi surface grows the H2 bead graph or reads its gate: no walked root names the program, a work package or an H2 bead, the only bd write spelled in Pi's scripts is the live tier's scratch-store init, and Pi's one beads reader calls show alone and keeps no text a ruling could be read from but the title",
+   "label": "(trigger) no Pi surface grows the H2 bead graph: no walked root names the program, a work package or an H2 bead, the only bd write spelled in Pi's scripts is the live tier's scratch-store init, Pi's work reader calls show alone and keeps no text a ruling could be read from but the title, and the one Pi surface that reads a gate verdict is the program readiness reader, held to rows A-D",
    "pins": [
     {
      "id": "T1",
@@ -405,6 +455,17 @@
        "markers": 0
       }
      }
+    },
+    {
+     "id": "T4",
+     "witness": {
+      "readers": [
+       "src/workbench/beads-program-readiness.ts"
+      ],
+      "driven": [
+       true
+      ]
+     }
     }
    ]
   },
@@ -452,6 +513,53 @@
       "packetNoGateRow": [
        "a:rftsx-new01 wp:tsx-h2-01"
       ]
+     }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "producerMap": {
+       "reference": "no-verdict",
+       "readyPackets": [],
+       "violations": 5
+      },
+      "afterAdopt": {
+       "reference": "ADOPT",
+       "readyPackets": [
+        "TSX-H2-01",
+        "TSX-H2-02",
+        "TSX-H2-03",
+        "TSX-H2-04",
+        "TSX-H2-05"
+       ],
+       "violations": 0
+      },
+      "gateClosed": {
+       "reference": "no-verdict",
+       "readyPackets": [],
+       "violations": 5
+      },
+      "gateRejected": {
+       "reference": "REJECT",
+       "readyPackets": [],
+       "violations": 5
+      },
+      "titleReject": {
+       "reference": "REJECT",
+       "readyPackets": [],
+       "violations": 5
+      },
+      "bodyAdopt": {
+       "reference": "ADOPT",
+       "readyPackets": [
+        "TSX-H2-01",
+        "TSX-H2-02",
+        "TSX-H2-03",
+        "TSX-H2-04",
+        "TSX-H2-05"
+       ],
+       "violations": 0
+      }
      }
     }
    ]
@@ -577,6 +685,52 @@
        "substringCount": "no-verdict"
       }
      ]
+    },
+    {
+     "id": "B6",
+     "witness": {
+      "judged": [],
+      "diverging": [],
+      "readings": [
+       "case:one-adopt ADOPT",
+       "case:one-reject REJECT",
+       "case:none no-verdict",
+       "case:two-adopt no-verdict",
+       "case:adopt-and-reject no-verdict",
+       "case:closed-none no-verdict",
+       "case:closed-labels no-verdict",
+       "case:creation-title no-verdict",
+       "case:lowercase no-verdict",
+       "case:closed-ruled ADOPT",
+       "b1-b3:1 ADOPT",
+       "b1-b3:2 REJECT",
+       "b1-b3:3 REJECT",
+       "b1-b3:4 ADOPT",
+       "b1-b3:5 no-verdict",
+       "b1-b3:6 no-verdict",
+       "b1-b3:7 no-verdict",
+       "b1-b3:8 no-verdict",
+       "b1-b3:9 no-verdict",
+       "b1-b3:10 no-verdict",
+       "b5:1 no-verdict",
+       "b5:2 no-verdict",
+       "b5:3 no-verdict",
+       "b5:4 no-verdict",
+       "b5:5 no-verdict",
+       "b5:6 no-verdict",
+       "r5:1 no-verdict",
+       "r5:2 no-verdict",
+       "r5:3 no-verdict",
+       "r5:4 no-verdict",
+       "paired:line-adopt+prose-reject no-verdict",
+       "paired:line-adopt+description-reject no-verdict",
+       "paired:line-adopt+title-adopt no-verdict",
+       "paired:line-adopt+line-defer ADOPT",
+       "paired:title-only-adopt ADOPT",
+       "paired:adopt-trailing-period ADOPT",
+       "paired:padded-crlf ADOPT"
+      ]
+     }
     }
    ]
   },
@@ -765,6 +919,37 @@
        "c:packets"
       ]
      }
+    },
+    {
+     "id": "C5",
+     "witness": {
+      "compiled": {
+       "reject": {
+        "verdict": "REJECT",
+        "judged": []
+       },
+       "defer": {
+        "verdict": "no-verdict",
+        "judged": []
+       },
+       "adopt": {
+        "verdict": "ADOPT",
+        "judged": []
+       },
+       "none": {
+        "verdict": "no-verdict",
+        "judged": []
+       },
+       "titleOnly": {
+        "verdict": "no-verdict",
+        "judged": []
+       }
+      },
+      "blocksEdge": "validation",
+      "relatedEdge": [
+       "TSX-H2-01"
+      ]
+     }
     }
    ]
   },
@@ -802,6 +987,23 @@
       "adoptedDrafts": [],
       "apiPinUnseen": [
        "d:rftsx-bhmrd family:h2"
+      ]
+     }
+    },
+    {
+     "id": "D3",
+     "witness": {
+      "familyWhileOpen": [
+       "d:rftsx-bhmrd family:perf"
+      ],
+      "members": [
+       "dependents",
+       "show"
+      ],
+      "readingCarriesLabels": false,
+      "ready": [
+       "rftsx-auqdi",
+       "rftsx-rupqh"
       ]
      }
     }
@@ -1201,7 +1403,9 @@
       "node:path",
       "node:url",
       "vitest",
-      "../src/workbench/beads-observer.js"
+      "../src/workbench/beads-observer.js",
+      "../src/workbench/beads-program-readiness.js",
+      "../src/workbench/capability-registry.js"
      ]
     },
     {
