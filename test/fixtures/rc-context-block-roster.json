@@ -397,7 +397,8 @@
    "context text copied",
    "metadata member",
    "metadata ref"
-  ]
+  ],
+  "readingRoot": "rc-context-block-census-workspace"
  },
  "rows": [
   {
@@ -1172,7 +1173,7 @@
  "reached": [
   "A1:58",
   "A2:29",
-  "A3:37",
+  "A3:38",
   "A4:4",
   "B1:7",
   "B2:7",

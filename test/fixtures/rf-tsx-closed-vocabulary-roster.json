@@ -171,7 +171,8 @@
   "minimalFixture": {
    "file": "test/workbench-provider-envelope-audit.test.ts",
    "name": "validRf"
-  }
+  },
+  "readingRoot": "rf-tsx-closed-vocabulary-census-workspace"
  },
  "residuals": [
   {
