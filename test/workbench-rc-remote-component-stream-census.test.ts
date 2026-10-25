@@ -21,26 +21,34 @@
  * mutant of it. A future consumer is the thing that must pass the same judge; this file pins the judge, not a consumer.
  *  A, the trigger and acceptance (d). A1 no judged module (identifiers and regular expressions always; string and template
  *    literals cooked by the compiler, constant-folded literals and JSX text when NAME-LIKE, no white space once trimmed;
- *    comments never) and no judged JSON file (keys always, name-like string values; a file that does not parse is read token by
- *    token) names REMOTE_FAMILY - a remote component, element, producer or stream, a component stream, an RftsxElement, a
- *    crosswalk or a callback serialization - and the walk reaches its floors and anchors, meets no symlink (refused, never
- *    followed) and no unreadable file; every site found is printed with its file and line. A2 no judged module loads or runs the
- *    ReactiveComponents distribution (RC_FAMILY: vibranium-reactive-components or its reactive_components module, through an
- *    import or export declaration, an import-equals require, an import type, the first argument of any call or new expression,
- *    or the module after a `-m` in an array literal) and no manifest (MANIFEST) names it. A3 the nearest readers Pi has (its own
- *    registry, the rf preview carrier and observer, its own TUI card) are reached and quiet, and the instrument rule is
+ *    comments never), no judged JSON file (keys always, name-like string values; a file that does not parse is read token by
+ *    token) and no carrier (CARRIERS, read token by token) names REMOTE_FAMILY - a remote component, element, producer or
+ *    stream, a component stream, an RftsxElement, a crosswalk or a callback serialization - and the walk reaches its floors (the
+ *    whole tree, the modules of src, test, qa and examples, the carriers, and every root entry of ROOT_FLOORS) and anchors,
+ *    equals an independent listing of the same tree, meets no symlink (refused, never followed) and no unreadable directory or
+ *    file (a file gone between the listing and the read holds nothing); every site found is printed with its file and line. A2
+ *    no judged module loads or runs the ReactiveComponents distribution (RC_FAMILY: vibranium-reactive-components or its
+ *    reactive_components module, through an import or export declaration, an import-equals require, an import type, the first
+ *    argument of any call or new expression, or the module after a `-m` in an array literal, each position read through BOUND
+ *    VALUES), the loader calls whose specifier is not complete are exactly COMPUTED_LOADS, and no manifest (MANIFEST), no carrier
+ *    line and no JSON command line outside the instruments (a string value with white space inside; a JSON file that does not
+ *    parse is read line by line) names it. A3 the nearest readers Pi has (its own registry, the rf preview carrier and observer,
+ *    its own TUI card) are reached and quiet, and the instrument rule is
  *    load-bearing: this file and its roster are census instruments (CENSUS_INSTRUMENT), they spell the family, and every name
- *    found inside an instrument sits in an instrument. A4 the gating artifact is measured unshipped: the roster's producer facts
+ *    found inside an instrument sits in an instrument, as does every JSON command line, and the roster spells command lines too,
+ *    so the command routing is load-bearing as well. A4 the gating artifact is measured unshipped: the roster's producer facts
  *    (two shas of the local ReactiveComponentsSDK checkout) agree with the bead row's Gating and Shipped sentences.
  *  B, acceptance (a). B1 the reference adoption over Pi's registries: known frames are admitted and rendered once; an unknown
  *    component id, an unknown action id, an action id in the component slot, a component id in the action slot and a frame
  *    carrying its own resolver are each refused typed, nothing rendered or executed; the adoption's unknown-id refusal is the
  *    registry's own (CapabilityRegistry.invoke refuses the same id with the same category and message before any provider runs).
- *    B2 the judge passes the reference and fails M-RENDER-UNKNOWN, M-STREAM-RESOLVER, M-EXECUTE-ACTION and M-UNTYPED.
+ *    B2 the judge passes the reference and fails M-RENDER-UNKNOWN, M-STREAM-RESOLVER, M-EXECUTE-ACTION, M-UNTYPED,
+ *    M-BIND-UNKNOWN-ACTION, M-BARE-REFUSAL, M-RENDER-FIRST and M-MISCATEGORIZE, and every branch of the judge is live (JUDGE
+ *    LIVENESS).
  *  C, acceptance (b). C1 an in-process function (refused typed by validatedCapabilityJson), an undeclared field and an undeclared
  *    prop carrying callback source text, and a callback-tagged object in a typed prop are each refused typed: no callback runs,
- *    nothing is rendered and no refused frame is forwarded. C2 the judge fails M-FORWARD-UNDECLARED, M-FUNCTION-PASS and
- *    M-CALLBACK-REVIVE.
+ *    nothing is rendered and no refused frame is forwarded. C2 the judge fails M-FORWARD-UNDECLARED, M-FUNCTION-PASS,
+ *    M-CALLBACK-REVIVE and M-EVALUATE-CALLBACK.
  *  D, acceptance (c). D1 a schema version that is unknown, a string, missing or null is refused typed; a null in a nullable prop
  *    is kept as null and a null in a non-nullable prop is refused, never coerced; every admitted frame re-encodes to its input
  *    bytes; an integer-like key is refused typed, because a JS object cannot keep its order (measured: validatedCapabilityJson and
@@ -48,8 +56,29 @@
  *    names (BEAD_MUTANTS, read from clause (c)) and M-SORTED-KEYS.
  * THE WALK: every regular file below the repository root, at any depth, in name order; the root entries SKIPPED_ROOTS (git's data,
  * the tracker export - bead rows quote the statement -, installed dependencies, build, coverage and Forge outputs) are skipped at
- * the root only. Modules (MODULE_EXTENSIONS) and JSON files (JSON_EXTENSIONS) are judged; prose is walked and never judged. It
- * reads the working tree, so an untracked plant is read.
+ * the root only. Modules (MODULE_EXTENSIONS), JSON files (JSON_EXTENSIONS) and carriers are judged; prose (PROSE_EXTENSIONS) and
+ * binaries (BINARY_EXTENSIONS) are walked and never judged. It reads the working tree, so an untracked plant is read. The listing
+ * the walk must equal is fs.readdirSync's own recursive mode over each root entry, a second traversal, so a walk that skips a
+ * root, a directory or a file is a red, not a lower count above a floor. The walk's two reads (a directory's entries, a file's
+ * bytes) go through one Io, so a control makes each fail: an unreadable directory and an unreadable file are recorded, a
+ * vanished file (ENOENT) is not.
+ * CARRIERS (wb-wxhu F2): every file that is no module, no JSON file, no prose and no binary - a shell or Python script, a TOML,
+ * YAML or HTML file, an extensionless file, any type the walk has not met before - is a carrier: judged by default, never skipped
+ * by default. A1 reads its tokens; A2 reads its lines, and a line naming RC_FAMILY anywhere (a `python3 -m`, a `pip install`, an
+ * import, a comment) is a hit.
+ * BOUND VALUES (wb-wxhu F1): a load position reads every value its expression can take - a literal or a folded one; a name,
+ * through every binding of that name in the module (a const, let or var initializer, a parameter's or a destructured name's
+ * default, an assignment, the right side of a compound assignment, the elements of a for-of over an array literal), followed
+ * through the names those bind in turn; a parenthesized expression and an `as`, `satisfies`, non-null or angle-bracket
+ * assertion; both branches of a conditional and both sides of `??` and `||`; a `+` concatenation or a template, over every
+ * combination of its parts' values, an unknown part read as empty so the known text around it is still judged. A value is
+ * complete when nothing in it is unknown: a name bound any other way (a parameter, an import, a destructured or caught name, a
+ * compound or destructuring assignment, a for-of or for-in over anything else) or not bound at all, a call's result, a member
+ * read, a cycle. A loader call (import(), require(), require.resolve(), import.meta.resolve(), createRequire()() and
+ * createRequire().resolve() called in place, module.require()) whose specifier is not complete is a computed load, printed
+ * `<file>: <loader> <specifier text>`. Bindings are read by name, not by scope (an over-read, A2 boundElsewhere).
+ * JUDGE LIVENESS (wb-wxhu F3): each branch of the judge emits its own kind of finding (FINDING_KINDS), every kind is produced by
+ * at least one named mutant, and no other kind is ever emitted, so a judge branch no mutant reaches is a red.
  * MEASURED PRODUCER FACTS (roster `producer`; read-only git show, ls-tree and grep -l -i -E over src/ at two shas of the local
  * ReactiveComponentsSDK checkout, no fetch, 2026-10-23): the program pin 640a3b579a95 (56 src files) and origin/master 01187eb645a5
  * (65, 21 commits later) carry the same README blob ea960adb38e0 and the same distribution name; at both, src/ spells no remote
@@ -62,7 +91,8 @@
  * refuses a producer object whose keys differ from the measured set, so a re-measure under a misspelled key never reads as 0.
  * OVER-READ (disclosed): an identifier or a name-like literal using a family word in another sense - an rf TSX error code such
  * as RFTSX_ELEMENT_INVALID_KEY (a queued sibling census's roster quotes these), or a crosswalk table of some other pair - is
- * read as a finding; none exists outside the instruments today, and such a finding is re-judged, never silenced.
+ * read as a finding; none exists outside the instruments today, and such a finding is re-judged, never silenced. So is a carrier
+ * or JSON command line naming the distribution in a comment or a note, and a load through a name bound elsewhere (BOUND VALUES).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (id, label, pins), every pin's
  * witness, the scan constants, the residual families, the mutant assignment and the registered test titles are held to the
  * out-of-file roster (test/fixtures/rc-remote-component-stream-roster.json). OUTSIDE ANCHOR: the owner filing's row in the
@@ -75,12 +105,23 @@
  * not inverted, ran; every pin's case reached its end (REACHED); no registered test or suite title spells the family (describe
  * titles mask it).
  * RESIDUALS (named families, each with pinned quiet rows in the controls): R-COMPOSED a name or a specifier assembled at runtime
- * (A1 composed; A2 composedSpecifier); R-RENAMED a consumer bound under names outside the family (A1 renamed); R-PROSE prose
- * files, comments and literals or JSON values with white space inside (A1 comment, proseLiteral, jsonProse, the planted
- * docs/notes.md); R-INSTRUMENT census instruments, walked and load-judged but never name-judged (A1 the planted
- * test/x-census.test.ts and test/fixtures/x-roster.json); R-OUTSIDE a file below a skipped root entry (A1 planted node_modules/,
- * dist/, .beads/, .forge/, build/ and coverage/); R-LOOKALIKE a non-ASCII look-alike letter (A1 lookalike); R-COMMAND-STRING a
- * distribution run carried inside a shell command string that is not a call's first argument (A2 shellArgument).
+ * (A1 composed; A2 composedSpecifier, composedAppend and composedCommand, while a loader call records it as computed instead,
+ * composedComputed and computedAppend); R-RENAMED a consumer bound under names outside the family (A1 renamed); R-PROSE prose
+ * files (PROSE_EXTENSIONS), comments and literals or JSON values with white space inside (A1 comment, proseLiteral, jsonProse, the
+ * planted docs/notes.md; A2 the planted docs/rc.md); R-INSTRUMENT census instruments, walked and load-judged but never
+ * name-judged, their JSON never judged for command lines (A1 the planted test/x-census.test.ts and test/fixtures/x-roster.json; A2
+ * the planted test/fixtures/x-roster.json); R-OUTSIDE a file below a skipped root entry (A1 planted node_modules/, dist/, .beads/,
+ * .forge/, build/ and coverage/); R-LOOKALIKE a non-ASCII look-alike letter (A1 lookalike); R-COMMAND-STRING a distribution run
+ * carried inside a shell command string that is not a call's first argument (A2 shellArgument); R-BINARY a binary file
+ * (BINARY_EXTENSIONS), walked and never judged (A1 the planted media/x.png; A2 the planted media/rc.png); R-JSON-NAME a JSON key
+ * or name-like JSON value naming the distribution outside a manifest (an sdk_versions echo), read for names only (A2 the planted
+ * test/fixtures/sdk.json); R-UNRESOLVED a command outside a loader call that reaches its call through a member read, a call's
+ * result or an import, which reads no value (A2 memberCommand, callCommand, importedCommand); R-ALIASED-LOADER a computed
+ * specifier handed to a loader under another name (a require bound to a name other than require, a Worker entry point), which
+ * is not recorded as computed (A2 aliasedLoader, workerLoader).
+ * HARDENING (wb-wxhu, the R694 follow-up of landing 323, gate cmd_43323dc31e7f): F1 BOUND VALUES and COMPUTED_LOADS; F2 CARRIERS
+ * and JSON command lines; F3 JUDGE LIVENESS, four new B2 mutants and one new C2 mutant; F4 the independent listing, ROOT_FLOORS
+ * and the examples module floor; F5 the Io failure controls.
  * Display paths added: none. Test-only: it spawns nothing; the controls plant files in makeScratch scratch only.
  */
 import { type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -107,7 +148,8 @@ const REMOTE_FAMILY = /\b(?:remote (?:components?|elements?|producers?|streams?)
 const RC_DISTRIBUTION = "vibranium-reactive-components";
 const RC_MODULE = "reactive_components";
 const RC_FAMILY = /(?<![\w-])(?:vibranium-reactive-components|reactive[_-]components)(?![\w-])/i;
-/** Census instruments: walked and judged for loads (A2), never for names (A1) - a census's needles are not consumption. */
+/** Census instruments: walked and judged for module loads (A2), never for names (A1) or JSON command lines - a census's needles
+ * are not consumption. */
 const CENSUS_INSTRUMENT = /^test\/(?:[^/]+-census\.test\.ts|fixtures\/[^/]+-roster\.json)$/;
 /** A mask for describe titles, so a report holding this file's titles stays quiet. */
 const REMOTE_TEXT = /remote[\s_.-]*(?:components?|elements?|producers?|streams?)|components?[\s_.-]*streams?|rftsx[\s_.-]*elements?|crosswalks?|callback[\s_.-]*seriali[sz]ations?/gi;
@@ -116,8 +158,31 @@ const JSON_EXTENSIONS = [".json"];
 const MANIFEST =
   /(?:^|\/)(?:package(?:-lock)?\.json|npm-shrinkwrap\.json|deno\.jsonc?|import[-_]map\.json|[tj]sconfig[^/]*\.json|pyproject\.toml|requirements[^/]*\.txt)$/i;
 const SKIPPED_ROOTS = [".git", ".beads", "node_modules", "dist", "build", "coverage", ".forge"];
-/** Each floor sits below the count measured at base b1ab992 (859 files; src 115, test 459, qa 62 modules; 67 JSON; 4 manifests). */
-const FLOORS = { files: 760, modules: { src: 100, test: 400, qa: 55 }, json: 55, manifests: 4 };
+/** Walked, never judged (THE WALK): prose (R-PROSE) and binaries (R-BINARY). Every other file is a module, a JSON file or a carrier. */
+const PROSE_EXTENSIONS = [".md"];
+const BINARY_EXTENSIONS = [".png", ".mp4", ".tgz"];
+/** Each floor sits below the count measured at base f8afbef (967 files; src 115, test 510, qa 62, examples 6 modules; 121 JSON;
+ * 12 carriers; 4 manifests; root entries . 27, .github 2, docs 73, examples 7, media 2, qa 67, src 115, test 649, vendor 5 files). */
+const FLOORS = { files: 860, modules: { src: 100, test: 450, qa: 55, examples: 5 }, json: 100, carriers: 10, manifests: 4 };
+/** The root entries every walk reaches, each with a floor of files below it (a file at the root counts under "."). */
+const ROOT_FLOORS: Readonly<Record<string, number>> = { ".": 20, ".github": 1, docs: 60, examples: 6, media: 2, qa: 60, src: 100, test: 560, vendor: 3 };
+/** Every computed load at base f8afbef (BOUND VALUES), each judged by hand: Pi's own dist modules (the headless census child, the
+ * live operator receipt); the detached host's trusted local provider (a digest-pinned module path from the reviewed launch
+ * manifest) and its dependency pinner (each relative source literal of that provider, checked just before it is resolved); a
+ * module beside an installed package (the isolated-provider e2e); a scratch module the git-stamp test writes. None is the
+ * distribution. A new one is a red until it is judged and added here and to the roster. */
+const COMPUTED_LOADS = [
+  "qa/workbench/headless-census-child.mjs: import() entryUrl",
+  'qa/workbench/headless-census-child.mjs: import() distUrl("workflow/runtime.js")',
+  'qa/workbench/headless-census-child.mjs: import() distUrl("workbench/capability-registry.js")',
+  'qa/workbench/live-operator-receipt.mjs: import() join(repoRoot, "dist", "workbench", "claude-host.js")',
+  'qa/workbench/live-operator-receipt.mjs: import() join(repoRoot, "dist", "workflow", "runtime.js")',
+  "src/workbench/hosts/local-detached.ts: createRequire().resolve() specifier.text",
+  "src/workbench/hosts/local-detached.ts: createRequire()() request.localProvider.modulePath",
+  "test/e2e/isolated-provider.e2e.test.ts: import() mrUrl",
+  "test/workbench-git-stamp.test.ts: import() pathToFileURL(file).href",
+  "test/workbench-git-stamp.test.ts: import() pathToFileURL(file).href",
+];
 /** Files the walk must reach, each with a token its bytes carry: a root page, Pi's registry, a qa script, the manifest, a binary. */
 const WALK_ANCHORS: readonly (readonly [string, string])[] = [
   ["README.md", "pi-subagents"],
@@ -133,7 +198,19 @@ const NEAREST_READERS: readonly (readonly [string, string])[] = [
   ["src/workbench/reactivefiber-observer.ts", "reactivefiberTopology"],
   ["src/ui/workflow-card.ts", "UNICODE_GLYPHS"],
 ];
-const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-RENAMED", "R-PROSE", "R-INSTRUMENT", "R-OUTSIDE", "R-LOOKALIKE", "R-COMMAND-STRING"];
+const RESIDUAL_FAMILIES = [
+  "R-COMPOSED",
+  "R-RENAMED",
+  "R-PROSE",
+  "R-INSTRUMENT",
+  "R-OUTSIDE",
+  "R-LOOKALIKE",
+  "R-COMMAND-STRING",
+  "R-BINARY",
+  "R-JSON-NAME",
+  "R-UNRESOLVED",
+  "R-ALIASED-LOADER",
+];
 const CYRILLIC_O = String.fromCodePoint(0x043e);
 const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
 
@@ -152,9 +229,14 @@ const MUTANTS = [
   "M-STREAM-RESOLVER",
   "M-EXECUTE-ACTION",
   "M-UNTYPED",
+  "M-BIND-UNKNOWN-ACTION",
+  "M-BARE-REFUSAL",
+  "M-RENDER-FIRST",
+  "M-MISCATEGORIZE",
   "M-FORWARD-UNDECLARED",
   "M-FUNCTION-PASS",
   "M-CALLBACK-REVIVE",
+  "M-EVALUATE-CALLBACK",
   "M-ANY-VERSION",
   "M-NULL-COERCE",
   "M-SORTED-KEYS",
@@ -162,10 +244,30 @@ const MUTANTS = [
 type Mutant = (typeof MUTANTS)[number];
 /** Which pin fails which mutants; every mutant is failed by at least one pin. */
 const MUTANTS_BY_PIN: Readonly<Record<string, readonly Mutant[]>> = {
-  B2: ["M-RENDER-UNKNOWN", "M-STREAM-RESOLVER", "M-EXECUTE-ACTION", "M-UNTYPED"],
-  C2: ["M-FORWARD-UNDECLARED", "M-FUNCTION-PASS", "M-CALLBACK-REVIVE"],
+  B2: ["M-RENDER-UNKNOWN", "M-STREAM-RESOLVER", "M-EXECUTE-ACTION", "M-UNTYPED", "M-BIND-UNKNOWN-ACTION", "M-BARE-REFUSAL", "M-RENDER-FIRST", "M-MISCATEGORIZE"],
+  C2: ["M-FORWARD-UNDECLARED", "M-FUNCTION-PASS", "M-CALLBACK-REVIVE", "M-EVALUATE-CALLBACK"],
   D2: ["M-ANY-VERSION", "M-NULL-COERCE", "M-CALLBACK-REVIVE", "M-SORTED-KEYS"],
 };
+/** Every kind of finding the judge emits, one per branch (JUDGE LIVENESS); each is produced by a named mutant. */
+const FINDING_KINDS = [
+  "executed-action",
+  "evaluated-callback",
+  "untyped-refusal",
+  "bare-refusal",
+  "wrong-refusal",
+  "rendered-before-refusal",
+  "admitted",
+  "rendered-refused",
+  "deserialized-callback",
+  "forwarded-undeclared",
+  "resolved-unknown-component",
+  "resolved-through-stream",
+  "accepted-unknown-schema-version",
+  "bound-unknown-action",
+  "coerced-null",
+  "round-trip-changed",
+  "rendered-mismatch",
+];
 /** The mutants clause (c) names, by its own phrases. */
 const BEAD_MUTANTS: Readonly<Record<string, Mutant>> = {
   "accepting an unknown schema version": "M-ANY-VERSION",
@@ -184,7 +286,11 @@ const SCAN = {
   moduleExtensions: MODULE_EXTENSIONS,
   jsonExtensions: JSON_EXTENSIONS,
   skippedRoots: SKIPPED_ROOTS,
+  proseExtensions: PROSE_EXTENSIONS,
+  binaryExtensions: BINARY_EXTENSIONS,
   floors: FLOORS,
+  rootFloors: { ...ROOT_FLOORS },
+  computedLoads: COMPUTED_LOADS,
   walkAnchors: WALK_ANCHORS.map(([path, token]) => `${path}:${token}`),
   nearestReaders: NEAREST_READERS.map(([path, token]) => `${path}:${token}`),
   acceptedSchemaVersion: ACCEPTED_SCHEMA_VERSION,
@@ -194,6 +300,7 @@ const SCAN = {
   mutants: [...MUTANTS],
   mutantsByPin: Object.fromEntries(Object.entries(MUTANTS_BY_PIN).map(([pin, list]) => [pin, [...list]])),
   beadMutants: { ...BEAD_MUTANTS },
+  findingKinds: FINDING_KINDS,
 };
 const FROZEN_TITLE = "the judged set: the frozen shape, the out-of-file roster and the bead row agree";
 const RECORDS_TITLE = "records: every registered test ran once in run mode in roster order, every pin reached its end, and no title spells the judged family";
@@ -209,7 +316,7 @@ const ROWS: readonly Row[] = [
   {
     id: "A",
     label:
-      "(trigger, absent today) If Pi ever consumes a remote component stream: no judged module or JSON file names the remote-output family, nothing loads or runs the ReactiveComponents distribution, the nearest readers are reached and quiet, the instrument rule is load-bearing and the gating artifact is measured unshipped, so (d) today: zero remote-stream consumer sites in Pi",
+      "(trigger, absent today) If Pi ever consumes a remote component stream: no judged module, JSON file or carrier names the remote-output family, nothing loads or runs the ReactiveComponents distribution, the nearest readers are reached and quiet, the instrument rule is load-bearing and the gating artifact is measured unshipped, so (d) today: zero remote-stream consumer sites in Pi",
     pins: ["A1", "A2", "A3", "A4"],
   },
   {
@@ -450,6 +557,10 @@ function extensionOf(path: string): string {
 }
 const isModule = (path: string): boolean => MODULE_EXTENSIONS.includes(extensionOf(path));
 const isJson = (path: string): boolean => JSON_EXTENSIONS.includes(extensionOf(path));
+const isProse = (path: string): boolean => PROSE_EXTENSIONS.includes(extensionOf(path));
+const isBinary = (path: string): boolean => BINARY_EXTENSIONS.includes(extensionOf(path));
+/** CARRIERS: every file that is no module, no JSON file, no prose and no binary. */
+const isCarrier = (path: string): boolean => !isModule(path) && !isJson(path) && !isProse(path) && !isBinary(path);
 
 /** A text as lowercase words: camelCase and PascalCase humps split, acronym runs kept, every other character a separator. */
 function wordsOf(value: string): string {
@@ -468,15 +579,21 @@ interface Walk {
   readonly symlinks: string[];
   readonly unreadable: string[];
 }
+/** The walk's two reads (THE WALK), so a control can make each fail; the census itself always reads the disk. */
+interface Io {
+  readonly list: (directory: string) => Dirent[];
+  readonly read: (path: string) => Buffer;
+}
+const DISK: Io = { list: directory => readdirSync(directory, { withFileTypes: true }), read: path => readFileSync(path) };
 /** Every regular file below `root`, in name order, root-relative with "/" separators; SKIPPED_ROOTS are skipped at the root only. */
-function walkTree(root: string): Walk {
+function walkTree(root: string, io: Io = DISK): Walk {
   const files: string[] = [];
   const symlinks: string[] = [];
   const unreadable: string[] = [];
   const visit = (directory: string, depth: number): void => {
     let entries: Dirent[];
     try {
-      entries = readdirSync(directory, { withFileTypes: true });
+      entries = io.list(directory);
     } catch {
       unreadable.push(posix(relative(root, directory)));
       return;
@@ -493,6 +610,20 @@ function walkTree(root: string): Walk {
   visit(root, 0);
   return { files, symlinks, unreadable };
 }
+/** The same tree listed a second way (fs.readdirSync's own recursive mode over each root entry, not the walk's recursion), sorted. */
+function listingOf(root: string): string[] {
+  const listed: string[] = [];
+  for (const entry of readdirSync(root, { withFileTypes: true })) {
+    if (SKIPPED_ROOTS.includes(entry.name)) continue;
+    if (entry.isFile()) listed.push(entry.name);
+    else if (entry.isDirectory())
+      for (const inner of readdirSync(join(root, entry.name), { withFileTypes: true, recursive: true }))
+        if (inner.isFile()) listed.push(posix(relative(root, join(inner.parentPath, inner.name))));
+  }
+  return listed.sort();
+}
+/** A file's root entry: its first path segment, or "." for a file at the root. */
+const rootOf = (file: string): string => (file.includes("/") ? file.slice(0, file.indexOf("/")) : ".");
 
 function scriptKindOf(path: string): ts.ScriptKind {
   const extension = extensionOf(path);
@@ -521,18 +652,143 @@ function fold(node: ts.Node): string | undefined {
   return undefined;
 }
 
+/** BOUND VALUES: a binding of a name is the expression it was given, or unknown. */
+type Binding = ts.Expression | "unknown";
+interface Values {
+  readonly values: readonly string[];
+  /** Nothing in the expression is unknown, so its values are every value it can take. */
+  readonly complete: boolean;
+}
+const NO_VALUE: Values = { values: [], complete: false };
+/** The names an assignment target writes: a name, or every name inside an array or object destructuring pattern. */
+function targetsOf(node: ts.Node): ts.Identifier[] {
+  if (ts.isIdentifier(node)) return [node];
+  if (ts.isParenthesizedExpression(node) || ts.isSpreadElement(node)) return targetsOf(node.expression);
+  if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken) return targetsOf(node.left);
+  if (ts.isArrayLiteralExpression(node)) return node.elements.flatMap(element => targetsOf(element));
+  if (ts.isObjectLiteralExpression(node))
+    return node.properties.flatMap(property => {
+      if (ts.isShorthandPropertyAssignment(property)) return [property.name];
+      if (ts.isPropertyAssignment(property)) return targetsOf(property.initializer);
+      if (ts.isSpreadAssignment(property)) return targetsOf(property.expression);
+      return [];
+    });
+  return [];
+}
+const isAssignmentOperator = (kind: ts.SyntaxKind): boolean => kind >= ts.SyntaxKind.FirstAssignment && kind <= ts.SyntaxKind.LastAssignment;
+/** The bindings one node makes, added to a module's bindings by name and not by scope (BOUND VALUES): a const, let or var
+ * initializer, a parameter's or a destructured name's default, an assignment, the right side of a compound assignment, the
+ * elements of a for-of over an array literal - and "unknown" for every other way a name is bound. */
+function bindingsAt(node: ts.Node, bindings: Map<string, Binding[]>): void {
+  const bind = (name: ts.Node, value: Binding): void => {
+    if (!ts.isIdentifier(name)) return;
+    const list = bindings.get(name.text);
+    if (list === undefined) bindings.set(name.text, [value]);
+    else list.push(value);
+  };
+  if (ts.isForOfStatement(node) || ts.isForInStatement(node)) {
+    const literal = ts.isForOfStatement(node) && ts.isArrayLiteralExpression(node.expression) ? node.expression : undefined;
+    const targets = ts.isVariableDeclarationList(node.initializer) ? node.initializer.declarations.map(declaration => declaration.name) : targetsOf(node.initializer);
+    for (const target of targets)
+      if (literal !== undefined && ts.isVariableDeclarationList(node.initializer)) for (const element of literal.elements) bind(target, element);
+      else bind(target, "unknown");
+  } else if (ts.isVariableDeclaration(node) && node.initializer !== undefined) {
+    bind(node.name, node.initializer);
+  } else if (ts.isParameter(node) || ts.isBindingElement(node)) {
+    bind(node.name, "unknown");
+    if (node.initializer !== undefined) bind(node.name, node.initializer);
+  } else if (ts.isImportClause(node) || ts.isImportSpecifier(node) || ts.isNamespaceImport(node) || ts.isImportEqualsDeclaration(node)) {
+    if (node.name !== undefined) bind(node.name, "unknown");
+  } else if (ts.isCatchClause(node) && node.variableDeclaration !== undefined) {
+    bind(node.variableDeclaration.name, "unknown");
+  } else if (ts.isBinaryExpression(node) && isAssignmentOperator(node.operatorToken.kind)) {
+    if (node.operatorToken.kind === ts.SyntaxKind.EqualsToken && ts.isIdentifier(node.left)) bind(node.left, node.right);
+    else
+      for (const target of targetsOf(node.left)) {
+        bind(target, "unknown");
+        if (node.operatorToken.kind !== ts.SyntaxKind.EqualsToken) bind(target, node.right);
+      }
+  }
+}
+/** Every value of the heads followed by every value of `part` (an unknown part also read as empty) and then `tail`. */
+function combine(heads: readonly string[], part: Values, tail: string): string[] {
+  const parts = part.complete ? part.values : [...part.values, ""];
+  return heads.flatMap(head => parts.map(value => head + value + tail));
+}
+/** A name's values read from no other name (seen empty), kept per module so each name is resolved once. */
+const RESOLVED = new WeakMap<ReadonlyMap<string, readonly Binding[]>, Map<string, Values>>();
+/** The values a load position's expression can take, and whether that list is complete (BOUND VALUES). */
+function valuesOf(node: ts.Node, bindings: ReadonlyMap<string, readonly Binding[]>, seen: ReadonlySet<string> = new Set()): Values {
+  const folded = fold(node);
+  if (folded !== undefined) return { values: [folded], complete: true };
+  const union = (parts: readonly Values[]): Values => ({ values: parts.flatMap(part => part.values), complete: parts.every(part => part.complete) });
+  if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isNonNullExpression(node) || ts.isTypeAssertionExpression(node))
+    return valuesOf(node.expression, bindings, seen);
+  if (ts.isIdentifier(node)) {
+    const bound = bindings.get(node.text);
+    if (bound === undefined || seen.has(node.text)) return NO_VALUE;
+    const cache = seen.size === 0 ? RESOLVED.get(bindings) : undefined;
+    const known = cache?.get(node.text);
+    if (known !== undefined) return known;
+    const inner = new Set(seen).add(node.text);
+    const resolved = union(bound.map(value => (value === "unknown" ? NO_VALUE : valuesOf(value, bindings, inner))));
+    if (seen.size === 0) RESOLVED.set(bindings, (cache ?? new Map()).set(node.text, resolved));
+    return resolved;
+  }
+  if (ts.isConditionalExpression(node)) return union([valuesOf(node.whenTrue, bindings, seen), valuesOf(node.whenFalse, bindings, seen)]);
+  if (ts.isBinaryExpression(node) && (node.operatorToken.kind === ts.SyntaxKind.QuestionQuestionToken || node.operatorToken.kind === ts.SyntaxKind.BarBarToken))
+    return union([valuesOf(node.left, bindings, seen), valuesOf(node.right, bindings, seen)]);
+  if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken) {
+    const left = valuesOf(node.left, bindings, seen);
+    const right = valuesOf(node.right, bindings, seen);
+    return { values: combine(combine([""], left, ""), right, ""), complete: left.complete && right.complete };
+  }
+  if (ts.isTemplateExpression(node)) {
+    let values = [node.head.text];
+    let complete = true;
+    for (const span of node.templateSpans) {
+      const part = valuesOf(span.expression, bindings, seen);
+      values = combine(values, part, span.literal.text);
+      complete &&= part.complete;
+    }
+    return { values, complete };
+  }
+  return NO_VALUE;
+}
+/** The loader a call is (import(), require(), require.resolve(), import.meta.resolve(), createRequire()() and
+ * createRequire().resolve() called in place, module.require()), or undefined for any other call. */
+function loaderOf(call: ts.CallExpression): string | undefined {
+  const callee = call.expression;
+  if (callee.kind === ts.SyntaxKind.ImportKeyword) return "import()";
+  if (ts.isIdentifier(callee) && callee.text === "require") return "require()";
+  if (ts.isCallExpression(callee) && ts.isIdentifier(callee.expression) && callee.expression.text === "createRequire") return "createRequire()()";
+  if (!ts.isPropertyAccessExpression(callee)) return undefined;
+  const target = callee.expression;
+  if (callee.name.text === "resolve" && ts.isIdentifier(target) && target.text === "require") return "require.resolve()";
+  if (callee.name.text === "resolve" && ts.isMetaProperty(target) && target.keywordToken === ts.SyntaxKind.ImportKeyword) return "import.meta.resolve()";
+  if (callee.name.text === "resolve" && ts.isCallExpression(target) && ts.isIdentifier(target.expression) && target.expression.text === "createRequire") return "createRequire().resolve()";
+  if (callee.name.text === "require" && ts.isIdentifier(target) && target.text === "module") return "module.require()";
+  return undefined;
+}
+
 interface ModuleReading {
   readonly names: string[];
   readonly specifiers: string[];
   readonly loads: string[];
+  /** Loader calls whose specifier is not complete (BOUND VALUES), each `<file>: <loader> <specifier text>`. */
+  readonly computed: string[];
   readonly identifiers: Set<string>;
 }
-/** One module, parsed under its own script kind: its family names (A1), its load specifiers and `-m` modules, and the
- * distribution loads among them (A2). Comments are never read. */
+/** One module, parsed under its own script kind: its family names (A1), its load specifiers and `-m` modules read through BOUND
+ * VALUES, the distribution loads among them and its computed loads (A2). Comments are never read. */
 function readModule(path: string, source: string): ModuleReading {
   const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
+  // One walk collects the names, the bindings and the load positions; the positions are read once every binding is known.
+  const bindings = new Map<string, Binding[]>();
+  const positions: ({ readonly load: ts.Node } | { readonly flag: ts.Node; readonly next: ts.Node } | { readonly loader: string; readonly call: ts.CallExpression })[] = [];
   const names: string[] = [];
   const specifiers: string[] = [];
+  const computed: string[] = [];
   const identifiers = new Set<string>();
   const line = (node: ts.Node): number => file.getLineAndCharacterOfPosition(node.getStart(file)).line + 1;
   // An identifier or a regex is always judged, a literal only when it is name-like.
@@ -541,10 +797,10 @@ function readModule(path: string, source: string): ModuleReading {
     if (REMOTE_FAMILY.test(wordsOf(value))) names.push(`${path}:${line(node)} ${kind}: ${value}`);
   };
   const load = (node: ts.Node | undefined): void => {
-    const value = node === undefined ? undefined : fold(node);
-    if (value !== undefined) specifiers.push(value);
+    if (node !== undefined) positions.push({ load: node });
   };
   const visit = (node: ts.Node): void => {
+    bindingsAt(node, bindings);
     if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) {
       identifiers.add(node.text);
       judge(node, "identifier", node.text);
@@ -564,27 +820,45 @@ function readModule(path: string, source: string): ModuleReading {
     if (ts.isImportTypeNode(node) && ts.isLiteralTypeNode(node.argument)) load(node.argument.literal);
     // Any call or new expression's first argument: a dynamic import, require, require.resolve, a command, new URL.
     if (ts.isCallExpression(node) || ts.isNewExpression(node)) load(node.arguments?.[0]);
+    // A loader call whose specifier is not complete is a computed load (BOUND VALUES).
+    if (ts.isCallExpression(node)) {
+      const loader = loaderOf(node);
+      if (loader !== undefined) positions.push({ loader, call: node });
+    }
     // A module run as `-m <module>` in an argument list.
     if (ts.isArrayLiteralExpression(node))
       for (const [index, element] of node.elements.entries()) {
         const next = node.elements[index + 1];
-        if (fold(element) === "-m" && next !== undefined) load(next);
+        if (next !== undefined) positions.push({ flag: element, next });
       }
     ts.forEachChild(node, visit);
   };
   visit(file);
-  return { names, specifiers, loads: specifiers.filter(specifier => RC_FAMILY.test(specifier)).map(specifier => `${path}: ${specifier}`), identifiers };
+  for (const position of positions) {
+    if ("load" in position) specifiers.push(...valuesOf(position.load, bindings).values);
+    else if ("flag" in position) {
+      if (valuesOf(position.flag, bindings).values.includes("-m")) specifiers.push(...valuesOf(position.next, bindings).values);
+    } else {
+      const first = position.call.arguments[0];
+      if (first === undefined || !valuesOf(first, bindings).complete)
+        computed.push(`${path}: ${position.loader} ${first === undefined ? "" : first.getText(file).replace(/\s+/g, " ")}`.trimEnd());
+    }
+  }
+  return { names, specifiers, loads: specifiers.filter(specifier => RC_FAMILY.test(specifier)).map(specifier => `${path}: ${specifier}`), computed, identifiers };
 }
 
-/** One JSON file: every key, and every name-like string value, read as words (a file that does not parse is read token by token). */
-function readJson(path: string, source: string): string[] {
+/** One JSON file: every key and every name-like string value read as words (A1), and its command lines - string values with white
+ * space inside that name the distribution - for A2; a file that does not parse is read token by token and line by line. */
+function readJson(path: string, source: string): { names: string[]; commands: string[] } {
   const names: string[] = [];
+  const commands: string[] = [];
   const judge = (kind: string, value: string): void => {
     if (REMOTE_FAMILY.test(wordsOf(value))) names.push(kind === "text" ? `${path}: text: ${value}` : `${path}: ${kind}: ${value}`);
   };
   const visit = (value: unknown): void => {
     if (typeof value === "string") {
       if (isNameLike(value)) judge("value", value);
+      else if (RC_FAMILY.test(value)) commands.push(`${path}: command: ${value.trim()}`);
     } else if (Array.isArray(value)) for (const item of value) visit(item);
     else if (isObject(value))
       for (const [key, item] of Object.entries(value)) {
@@ -597,40 +871,62 @@ function readJson(path: string, source: string): string[] {
     value = JSON.parse(source);
   } catch {
     for (const token of source.split(/\s+/)) if (token.length > 0) judge("text", token);
-    return names;
+    for (const [index, line] of source.split("\n").entries()) if (RC_FAMILY.test(line)) commands.push(`${path}:${index + 1} ${line.trim()}`);
+    return { names, commands };
   }
   visit(value);
-  return names;
+  return { names, commands };
+}
+/** One carrier (CARRIERS): its tokens judged for the family (A1) and its lines for the distribution (A2), each with its line. */
+function readCarrier(path: string, source: string): { names: string[]; hits: string[] } {
+  const names: string[] = [];
+  const hits: string[] = [];
+  for (const [index, line] of source.split("\n").entries()) {
+    for (const token of line.split(/\s+/)) if (token.length > 0 && REMOTE_FAMILY.test(wordsOf(token))) names.push(`${path}:${index + 1} token: ${token}`);
+    if (RC_FAMILY.test(line)) hits.push(`${path}:${index + 1} ${line.trim()}`);
+  }
+  return { names, hits };
 }
 
 interface TreeReading {
   readonly walk: Walk;
   readonly modules: Map<string, ModuleReading>;
   readonly jsonFiles: number;
+  readonly carriers: number;
   /** Family names outside the census instruments (A1). */
   readonly names: string[];
   /** Family names inside the census instruments (A3). */
   readonly instrumentNames: string[];
   readonly loads: string[];
+  readonly computed: string[];
+  readonly carrierHits: string[];
+  readonly jsonCommands: string[];
+  /** JSON command lines inside the census instruments (A3): needles, never consumption. */
+  readonly instrumentCommands: string[];
   readonly manifests: string[];
   readonly manifestHits: string[];
   readonly anchorsWalked: boolean;
 }
 /** The walk of `root` and every judge over it. */
-function readTree(root: string): TreeReading {
-  const walk = walkTree(root);
+function readTree(root: string, io: Io = DISK): TreeReading {
+  const walk = walkTree(root, io);
   const modules = new Map<string, ModuleReading>();
   let jsonFiles = 0;
+  let carriers = 0;
   const names: string[] = [];
   const instrumentNames: string[] = [];
   const loads: string[] = [];
+  const computed: string[] = [];
+  const carrierHits: string[] = [];
+  const jsonCommands: string[] = [];
+  const instrumentCommands: string[] = [];
   const manifests: string[] = [];
   const manifestHits: string[] = [];
   const anchors = new Map<string, boolean>();
   for (const file of walk.files) {
     let buffer: Buffer;
     try {
-      buffer = readFileSync(join(root, file));
+      buffer = io.read(join(root, file));
     } catch (error) {
       // A file gone between the listing and the read holds nothing; any other read failure is a finding.
       if (!(error instanceof Error && "code" in error && error.code === "ENOENT")) walk.unreadable.push(file);
@@ -643,10 +939,17 @@ function readTree(root: string): TreeReading {
       modules.set(file, reading);
       found.push(...reading.names);
       loads.push(...reading.loads);
-    }
-    if (isJson(file)) {
+      computed.push(...reading.computed);
+    } else if (isJson(file)) {
       jsonFiles += 1;
-      found.push(...readJson(file, utf8));
+      const reading = readJson(file, utf8);
+      found.push(...reading.names);
+      (CENSUS_INSTRUMENT.test(file) ? instrumentCommands : jsonCommands).push(...reading.commands);
+    } else if (isCarrier(file)) {
+      carriers += 1;
+      const reading = readCarrier(file, utf8);
+      found.push(...reading.names);
+      carrierHits.push(...reading.hits);
     }
     (CENSUS_INSTRUMENT.test(file) ? instrumentNames : names).push(...found);
     if (MANIFEST.test(file)) {
@@ -657,7 +960,7 @@ function readTree(root: string): TreeReading {
     if (anchor !== undefined) anchors.set(file, buffer.includes(anchor[1]));
   }
   const anchorsWalked = WALK_ANCHORS.every(([path]) => anchors.get(path) === true);
-  return { walk, modules, jsonFiles, names, instrumentNames, loads, manifests, manifestHits, anchorsWalked };
+  return { walk, modules, jsonFiles, carriers, names, instrumentNames, loads, computed, carrierHits, jsonCommands, instrumentCommands, manifests, manifestHits, anchorsWalked };
 }
 let live: TreeReading | undefined;
 /** The repository's own reading, taken once. */
@@ -666,18 +969,29 @@ function liveTree(): TreeReading {
   return live;
 }
 const modulesBelow = (tree: TreeReading, root: string): number => [...tree.modules.keys()].filter(file => file.startsWith(`${root}/`)).length;
-function floorsOf(tree: TreeReading): { files: boolean; src: boolean; test: boolean; qa: boolean; json: boolean; manifests: boolean } {
+function floorsOf(tree: TreeReading): {
+  files: boolean;
+  src: boolean;
+  test: boolean;
+  qa: boolean;
+  examples: boolean;
+  json: boolean;
+  carriers: boolean;
+  manifests: boolean;
+} {
   return {
     files: tree.walk.files.length >= FLOORS.files,
     src: modulesBelow(tree, "src") >= FLOORS.modules.src,
     test: modulesBelow(tree, "test") >= FLOORS.modules.test,
     qa: modulesBelow(tree, "qa") >= FLOORS.modules.qa,
+    examples: modulesBelow(tree, "examples") >= FLOORS.modules.examples,
     json: tree.jsonFiles >= FLOORS.json,
+    carriers: tree.carriers >= FLOORS.carriers,
     manifests: tree.manifests.length >= FLOORS.manifests,
   };
 }
-/** Plants `files` in a fresh scratch root (a null content is a symlink to the root's first file) and reads that tree. */
-function plantedTree(files: Readonly<Record<string, string | null>>): TreeReading {
+/** Plants `files` in a fresh scratch root (a null content is a symlink to the root's first file) and reads that tree through `io`. */
+function plantedTree(files: Readonly<Record<string, string | null>>, io: Io = DISK): TreeReading {
   const root = makeScratch("rc-remote-component-stream-");
   try {
     for (const [path, content] of Object.entries(files)) {
@@ -686,7 +1000,7 @@ function plantedTree(files: Readonly<Record<string, string | null>>): TreeReadin
       if (content === null) symlinkSync(join(root, Object.keys(files)[0] ?? ""), target);
       else writeFileSync(target, content);
     }
-    return readTree(root);
+    return readTree(root, io);
   } finally {
     removeScratch(root);
   }
@@ -694,7 +1008,9 @@ function plantedTree(files: Readonly<Record<string, string | null>>): TreeReadin
 /** The judges over one snippet read as `path`, or one JSON text. */
 const namesIn = (path: string, source: string): boolean => readModule(path, source).names.length > 0;
 const loadsIn = (path: string, source: string): boolean => readModule(path, source).loads.length > 0;
-const jsonNames = (source: string): boolean => readJson("c.json", source).length > 0;
+/** A2's computed-load reading over one snippet read as `path` (BOUND VALUES). */
+const computedIn = (path: string, source: string): boolean => readModule(path, source).computed.length > 0;
+const jsonNames = (source: string): boolean => readJson("c.json", source).names.length > 0;
 /** A2's judge over one manifest text (the path comes first, so no literal naming the distribution sits in a load position). */
 const manifestNames = (path: string, source: string): boolean => MANIFEST.test(path) && RC_FAMILY.test(source);
 
@@ -802,6 +1118,20 @@ function containsFunction(value: unknown): boolean {
   return false;
 }
 const isCallbackShaped = (value: unknown): boolean => (typeof value === "string" && CALLBACK_SHAPE.test(value)) || (isRecord(value) && Object.hasOwn(value, "$fn"));
+/** M-EVALUATE-CALLBACK's step: every function inside an in-process frame is called once. */
+function evaluateCallbacks(value: unknown): void {
+  if (typeof value === "function") (value as () => unknown)();
+  else if (Array.isArray(value)) for (const item of value) evaluateCallbacks(item);
+  else if (isRecord(value)) for (const item of Object.values(value)) evaluateCallbacks(item);
+}
+/** M-BARE-REFUSAL's refusal of an unknown id, untyped three ways: a category outside CATEGORIES (an action id in the component
+ * slot), an empty reason (any other unknown component) and an empty field (an unknown action id). */
+function bareRefusal(field: string, id: string): Refusal {
+  const reason = `Unknown or unavailable capability: ${id}.`;
+  if (field === "component" && KNOWN_ACTIONS.includes(id)) return { refused: true, category: "denied" as string as CapabilityErrorCategory, field, reason };
+  if (field === "component") return { refused: true, category: "unavailable", field, reason: "" };
+  return { refused: true, category: "unavailable", field: "", reason };
+}
 
 /**
  * The reference adoption of one stream frame (JSON text, or an in-process value), built from Pi's seams only, and each named
@@ -819,6 +1149,7 @@ function adopt(input: unknown, host: Host, mutant?: Mutant): Outcome {
       return refuse("validation", "$", "the frame is not JSON");
     }
   }
+  if (mutant === "M-EVALUATE-CALLBACK") evaluateCallbacks(parsed);
   if (mutant === "M-FUNCTION-PASS" && typeof input !== "string" && isRecord(parsed)) frame = { ...parsed };
   else {
     let checked: unknown;
@@ -845,7 +1176,8 @@ function adopt(input: unknown, host: Host, mutant?: Mutant): Outcome {
   if (missing !== undefined) return refuse("validation", missing, "a missing field");
   const unavailable = (field: string, id: string): Refusal => {
     if (mutant === "M-UNTYPED") throw new Error(`unknown ${id}`);
-    return refuse("unavailable", field, `Unknown or unavailable capability: ${id}.`);
+    if (mutant === "M-BARE-REFUSAL") return bareRefusal(field, id);
+    return refuse(mutant === "M-MISCATEGORIZE" ? "validation" : "unavailable", field, `Unknown or unavailable capability: ${id}.`);
   };
   const component = frame.component;
   if (typeof component !== "string") return refuse("validation", "component", "a component id must be a string");
@@ -883,19 +1215,21 @@ function adopt(input: unknown, host: Host, mutant?: Mutant): Outcome {
     const absent = Object.keys(declared).find(name => !Object.hasOwn(props, name));
     if (absent !== undefined) return refuse("validation", `props.${absent}`, "a missing prop");
   }
+  // M-RENDER-FIRST renders once its props pass, before its action ids resolve (and does not render again).
+  const early = mutant === "M-RENDER-FIRST" ? host.render(renderAs, props) : undefined;
   const actions = frame.actions;
   if (!Array.isArray(actions)) return refuse("validation", "actions", "actions must be a list of declared action ids");
   const bound: string[] = [];
   for (const [index, action] of actions.entries()) {
     if (typeof action !== "string") return refuse("validation", `actions[${index}]`, "an action id must be a string");
-    if (host.actions.effectClassOf(action) === undefined) return unavailable(`actions[${index}]`, action);
+    if (host.actions.effectClassOf(action) === undefined && mutant !== "M-BIND-UNKNOWN-ACTION") return unavailable(`actions[${index}]`, action);
     bound.push(action);
   }
   const bindings = frame.bindings;
   if (!isRecord(bindings) || !Object.values(bindings).every(value => typeof value === "string")) return refuse("validation", "bindings", "bindings must map names to resource ids");
   if (mutant === "M-EXECUTE-ACTION") for (const action of bound) host.execute(action);
   const admitted = mutant === "M-SORTED-KEYS" ? sortedKeys(frame) : frame;
-  return { refused: false, frame: isRecord(admitted) ? admitted : frame, rendered: host.render(renderAs, props), actions: bound };
+  return { refused: false, frame: isRecord(admitted) ? admitted : frame, rendered: early ?? host.render(renderAs, props), actions: bound };
 }
 
 interface Case {
@@ -996,8 +1330,8 @@ function shown(run: Run): string {
   if (run.outcome === "threw") return "threw";
   return run.outcome.refused ? `refused ${run.outcome.category} ${run.outcome.field}` : "admitted";
 }
-const isTypedRefusal = (outcome: Refusal): boolean =>
-  CATEGORIES.includes(outcome.category) && typeof outcome.field === "string" && outcome.field.length > 0 && typeof outcome.reason === "string" && outcome.reason.length > 0;
+/** A typed refusal: a category of CATEGORIES, a field and a reason (each conjunct reached by M-BARE-REFUSAL). */
+const isTypedRefusal = (outcome: Refusal): boolean => CATEGORIES.includes(outcome.category) && outcome.field.length > 0 && outcome.reason.length > 0;
 /** What the judge finds in one case's run: each finding names the case and the property the run broke. */
 function findingsOf(entry: Case, run: Run): string[] {
   const found: string[] = [];
@@ -1012,9 +1346,9 @@ function findingsOf(entry: Case, run: Run): string[] {
     return found;
   }
   if (outcome.refused) {
-    if (!isTypedRefusal(outcome)) add("untyped-refusal");
+    if (!isTypedRefusal(outcome)) add("bare-refusal");
     if (entry.expect === "admit" || outcome.category !== entry.expect.category || outcome.field !== entry.expect.field) add("wrong-refusal");
-    if (run.rendered.length > 0) add("rendered-refused");
+    if (run.rendered.length > 0) add("rendered-before-refusal");
     return found;
   }
   if (entry.expect !== "admit") {
@@ -1068,14 +1402,14 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
   A1: () => {
     const tree = liveTree();
     const floors = floorsOf(tree);
-    expect(floors, `files ${tree.walk.files.length}; modules src ${modulesBelow(tree, "src")}, test ${modulesBelow(tree, "test")}, qa ${modulesBelow(tree, "qa")}; JSON ${tree.jsonFiles}`).toStrictEqual({
-      files: true,
-      src: true,
-      test: true,
-      qa: true,
-      json: true,
-      manifests: true,
-    });
+    expect(
+      floors,
+      `files ${tree.walk.files.length}; modules src ${modulesBelow(tree, "src")}, test ${modulesBelow(tree, "test")}, qa ${modulesBelow(tree, "qa")}, examples ${modulesBelow(tree, "examples")}; JSON ${tree.jsonFiles}; carriers ${tree.carriers}`,
+    ).toStrictEqual({ files: true, src: true, test: true, qa: true, examples: true, json: true, carriers: true, manifests: true });
+    const rootCounts = Object.fromEntries(Object.keys(ROOT_FLOORS).map(entry => [entry, tree.walk.files.filter(file => rootOf(file) === entry).length]));
+    const rootFloors = Object.fromEntries(Object.entries(ROOT_FLOORS).map(([entry, floor]) => [entry, (rootCounts[entry] ?? 0) >= floor]));
+    expect(rootFloors, `files below each root entry: ${JSON.stringify(rootCounts)}`).toStrictEqual(Object.fromEntries(Object.keys(ROOT_FLOORS).map(entry => [entry, true])));
+    expect([...tree.walk.files].sort(), "the walk equals an independent listing of the same tree").toStrictEqual(listingOf(REPO));
     expect(tree.anchorsWalked, "every walk anchor was reached with its token").toBe(true);
     expect({ symlinks: tree.walk.symlinks, unreadable: tree.walk.unreadable }, "the walk meets no symlink and no unreadable file").toStrictEqual({ symlinks: [], unreadable: [] });
     expect(tree.names, "remote-output names outside the census instruments, each with its file and line (the trigger's inventory)").toStrictEqual([]);
@@ -1121,18 +1455,43 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       ".forge/run.json": '{"remoteStream":1}',
       "build/index.js": consumer,
       "coverage/run.json": '{"remoteStream":1}',
+      "media/x.png": "RemoteComponent\n",
+      "qa/run.sh": "exec serve --remote-stream\n",
     });
+    // F5: each failing read has a positive control - an unreadable directory and file are recorded, a vanished file is not.
+    const failure = (code: string): Error => Object.assign(new Error(`${code}: a planted read failure`), { code });
+    const failing: Io = {
+      list: directory => {
+        if (posix(directory).endsWith("/src/sealed")) throw failure("EACCES");
+        return DISK.list(directory);
+      },
+      read: path => {
+        if (posix(path).endsWith("/src/locked.ts")) throw failure("EACCES");
+        if (posix(path).endsWith("/src/gone.ts")) throw failure("ENOENT");
+        return DISK.read(path);
+      },
+    };
+    const sealed = plantedTree(
+      { "src/gone.ts": "export {};\n", "src/locked.ts": "export {};\n", "src/open.ts": "export {};\n", "src/sealed/inner.ts": "export {};\n" },
+      failing,
+    );
     return done("A1", {
       floors,
+      rootFloors,
       anchorsWalked: tree.anchorsWalked,
       names: tree.names,
       controls,
       planted: { names: planted.names, instrumentNames: planted.instrumentNames, symlinks: planted.walk.symlinks, files: planted.walk.files },
+      unreadable: { unreadable: sealed.walk.unreadable, read: [...sealed.modules.keys()] },
     });
   },
   A2: () => {
     const tree = liveTree();
-    expect({ loads: tree.loads, manifestHits: tree.manifestHits }, "modules loading or running the ReactiveComponents distribution, and manifests naming it").toStrictEqual({ loads: [], manifestHits: [] });
+    expect(
+      { loads: tree.loads, manifestHits: tree.manifestHits, carrierHits: tree.carrierHits, jsonCommands: tree.jsonCommands },
+      "modules loading or running the ReactiveComponents distribution, and manifests, carrier lines and JSON command lines naming it",
+    ).toStrictEqual({ loads: [], manifestHits: [], carrierHits: [], jsonCommands: [] });
+    expect(tree.computed, "loader calls whose specifier is not complete, each judged by hand: exactly COMPUTED_LOADS").toStrictEqual(COMPUTED_LOADS);
     const controls = {
       importDistribution: loadsIn("c.ts", 'import { Element } from "vibranium-reactive-components";\n'),
       importModule: loadsIn("c.ts", 'import rc from "reactive_components";\n'),
@@ -1155,8 +1514,98 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       shellArgument: loadsIn("c.ts", 'spawn("sh", ["-c", "python3 -m reactive_components"]);\n'),
       otherModule: loadsIn("c.ts", 'spawn("python3", ["-m", "http.server"]);\n'),
       proseManifest: manifestNames("docs/notes.md", "vibranium-reactive-components\n"),
+      // BOUND VALUES (F1): the gate's const-bound plant first, then one control per binding, expression and position arm.
+      boundConst: loadsIn("c.ts", 'const spec = "vibranium-reactive-components";\nexport const load = () => import(spec);\n'),
+      boundLet: loadsIn("c.ts", 'let spec = "vibranium-reactive-components";\nexport const load = () => require(spec);\n'),
+      boundVar: loadsIn("c.js", 'var spec = "reactive_components";\nmodule.exports = () => require(spec);\n'),
+      boundDefault: loadsIn("c.ts", 'export const load = (spec = "vibranium-reactive-components") => import(spec);\n'),
+      boundDestructuredDefault: loadsIn("c.ts", 'export const load = ({ spec = "vibranium-reactive-components" }: { spec?: string }) => import(spec);\n'),
+      boundAssigned: loadsIn("c.ts", 'let spec = "node:fs";\nspec = "vibranium-reactive-components";\nexport const load = () => import(spec);\n'),
+      boundCompound: loadsIn("c.ts", 'let command = "python3";\ncommand += " -m reactive_components";\nexecSync(command);\n'),
+      boundNullishAssigned: loadsIn("c.ts", 'let spec: string | undefined;\nspec ??= "vibranium-reactive-components";\nexport const load = () => import(spec);\n'),
+      boundLoop: loadsIn("c.ts", 'for (const spec of ["node:fs", "vibranium-reactive-components"]) void import(spec);\n'),
+      boundChain: loadsIn("c.ts", 'const name = "vibranium-reactive-components";\nconst spec = name;\nexport const load = () => import(spec);\n'),
+      boundParenthesized: loadsIn("c.ts", 'const spec = "vibranium-reactive-components";\nexport const load = () => import((spec));\n'),
+      boundAsserted: loadsIn("c.ts", 'const spec: unknown = "vibranium-reactive-components";\nexport const load = () => import(spec as string);\n'),
+      boundSatisfies: loadsIn("c.ts", 'const spec = "vibranium-reactive-components";\nexport const load = () => import(spec satisfies string);\n'),
+      boundNonNull: loadsIn("c.ts", 'const spec: string | undefined = "vibranium-reactive-components";\nexport const load = () => import(spec!);\n'),
+      boundAngle: loadsIn("c.ts", 'const spec: unknown = "vibranium-reactive-components";\nexport const load = () => import(<string>spec);\n'),
+      boundConditional: loadsIn("c.ts", 'const spec = process.env.CI ? "node:fs" : "vibranium-reactive-components";\nexport const load = () => import(spec);\n'),
+      boundNullish: loadsIn("c.ts", 'export const load = (spec?: string) => import(spec ?? "vibranium-reactive-components");\n'),
+      boundOr: loadsIn("c.ts", 'export const load = (spec: string) => import(spec || "vibranium-reactive-components");\n'),
+      boundConcatenated: loadsIn("c.ts", 'const scope = "vibranium";\nexport const load = () => import(scope + "-reactive-components");\n'),
+      boundTemplate: loadsIn("c.ts", `const scope = "vibranium";\nexport const load = () => import(\`\${scope}-reactive-components\`);\n`),
+      partialCommand: loadsIn("c.ts", 'execSync("python3 -m reactive_components " + flags);\n'),
+      partialTemplate: loadsIn("c.ts", `execSync(\`python3 -m reactive_components \${flags}\`);\n`),
+      boundCommand: loadsIn("c.ts", 'const command = "python3 -m reactive_components serve";\nexecSync(command);\n'),
+      boundModuleFlag: loadsIn("c.ts", 'const module = "reactive_components";\nspawn("python3", ["-m", module]);\n'),
+      boundFlag: loadsIn("c.ts", 'const flag = "-m";\nspawn("python3", [flag, "reactive_components"]);\n'),
+      boundElsewhere: loadsIn("c.ts", 'function name() {\n  const spec = "vibranium-reactive-components";\n  return spec;\n}\nexport const load = (spec: string) => import(spec);\n'),
+      boundOther: loadsIn("c.ts", 'const spec = "node:fs";\nexport const load = () => import(spec);\n'),
+      // Computed loads (F1): one control per loader and per way a name is not complete, then the quiet rows.
+      computedImport: computedIn("c.ts", "export const load = (name: string) => import(name);\n"),
+      computedRequire: computedIn("c.cjs", "module.exports = name => require(name);\n"),
+      computedRequireResolve: computedIn("c.cjs", "module.exports = name => require.resolve(name);\n"),
+      computedMetaResolve: computedIn("c.mjs", "export const where = name => import.meta.resolve(name);\n"),
+      computedCreateRequire: computedIn("c.mjs", 'import { createRequire } from "node:module";\nexport const get = name => createRequire(import.meta.url)(name);\n'),
+      computedCreateResolve: computedIn("c.mjs", 'import { createRequire } from "node:module";\nexport const where = name => createRequire(import.meta.url).resolve(name);\n'),
+      computedModuleRequire: computedIn("c.cjs", "exports.get = name => module.require(name);\n"),
+      computedParameter: computedIn("c.ts", 'const spec = "node:fs";\nexport const load = (spec: string) => import(spec);\n'),
+      computedDestructured: computedIn("c.ts", 'const spec = "node:fs";\nexport const load = ({ spec }: { spec: string }) => import(spec);\n'),
+      computedCaught: computedIn("c.ts", 'const spec = "node:fs";\ntry {\n  run();\n} catch (spec) {\n  void import(spec as string);\n}\n'),
+      computedImported: computedIn("c.ts", 'import { spec } from "./names.js";\nconst local = () => {\n  const spec = "node:fs";\n  return spec;\n};\nexport const load = () => import(spec);\n'),
+      computedDefaultImport: computedIn("c.ts", 'import spec from "./names.js";\nconst local = () => {\n  const spec = "node:fs";\n  return spec;\n};\nexport const load = () => import(spec);\n'),
+      computedNamespaceImport: computedIn("c.ts", 'import * as spec from "./names.js";\nconst local = () => {\n  const spec = "node:fs";\n  return spec;\n};\nexport const load = () => import(spec);\n'),
+      computedImportEquals: computedIn("c.ts", 'import spec = require("./names.js");\nconst local = () => {\n  const spec = "node:fs";\n  return spec;\n};\nexport const load = () => import(spec);\n'),
+      computedLoopOther: computedIn("c.ts", 'const spec = "node:fs";\nfor (const spec of names) void import(spec);\n'),
+      computedForIn: computedIn("c.ts", 'const spec = "node:fs";\nfor (const spec in table) void import(spec);\n'),
+      computedLoopTarget: computedIn("c.ts", 'let spec = "node:fs";\nfor (spec of names) void import(spec);\n'),
+      computedAppend: computedIn("c.ts", 'let spec = "vibranium-reactive";\nspec += "-components";\nexport const load = () => import(spec);\n'),
+      computedDestructuringAssigned: computedIn("c.ts", 'let spec = "node:fs";\n[spec] = names;\nexport const load = () => import(spec);\n'),
+      computedPartial: computedIn("c.ts", 'let spec = "node:fs";\nspec = pick();\nexport const load = () => import(spec);\n'),
+      computedMember: computedIn("c.ts", "export const load = () => import(config.spec);\n"),
+      computedUnbound: computedIn("c.ts", "export const load = () => import(spec);\n"),
+      computedCycle: computedIn("c.ts", "let a = b;\nlet b = a;\nexport const load = () => import(a);\n"),
+      composedComputed: computedIn("c.ts", 'const rc = require(["vibranium", "reactive", "components"].join("-"));\n'),
+      computedLiteral: computedIn("c.ts", 'export const load = () => import("node:fs");\n'),
+      computedBound: computedIn("c.ts", 'const spec = "node:fs";\nexport const load = () => import(spec);\n'),
+      computedLoop: computedIn("c.ts", 'for (const spec of ["node:fs", "node:path"]) void import(spec);\n'),
+      computedOtherCall: computedIn("c.ts", "export const show = (name: string) => console.log(name);\n"),
+      aliasedLoader: computedIn("c.mjs", 'import { createRequire } from "node:module";\nconst load = createRequire(import.meta.url);\nexport const get = name => load(name);\n'),
+      workerLoader: computedIn("c.mjs", 'import { Worker } from "node:worker_threads";\nexport const start = name => new Worker(name);\n'),
+      // Quiet rows of R-COMPOSED and R-UNRESOLVED.
+      composedAppend: loadsIn("c.ts", 'let command = "python3 -m reactive";\ncommand += "_components";\nexecSync(command);\n'),
+      composedCommand: loadsIn("c.ts", 'execSync(["python3 -m", "reactive_components", "serve"].join(" "));\n'),
+      memberCommand: loadsIn("c.ts", 'const config = { command: "python3 -m reactive_components serve" };\nexecSync(config.command);\n'),
+      callCommand: loadsIn("c.ts", 'const commandFor = (verb: string) => ["python3 -m", "reactive_components", verb].join(" ");\nexecSync(commandFor("serve"));\n'),
+      importedCommand: loadsIn("c.ts", 'import { COMMAND } from "./commands.js";\nexecSync(COMMAND);\n'),
     };
-    return done("A2", { loads: tree.loads, manifestHits: tree.manifestHits, manifests: tree.manifests, controls });
+    // CARRIERS (F2): the gate's five carrier plants, an extensionless script and a JSON hook command are hits; prose, a binary and a
+    // JSON sdk_versions echo stay quiet (R-PROSE, R-BINARY, R-JSON-NAME).
+    const carriers = plantedTree({
+      ".codex/hooks.json": '{"hooks":[{"command":"python3 -m reactive_components serve"}]}\n',
+      ".github/workflows/rc.yml": "jobs:\n  rc:\n    steps:\n      - run: pip install vibranium-reactive-components\n",
+      "bin/rc": "#!/bin/sh\nexec python3 -m reactive_components\n",
+      "docs/rc.md": "python3 -m reactive_components\n",
+      "examples/rc.html": '<script type="module">import { Element } from "vibranium-reactive-components";</script>\n',
+      "forge.toml": '[tasks.rc]\ncommand = "python3 -m reactive_components serve"\n',
+      "media/rc.png": "vibranium-reactive-components\n",
+      "qa/tools/rc.py": "import reactive_components\n",
+      "qa/workbench/rc.sh": "#!/bin/sh\npython3 -m reactive_components serve --remote-stream\n",
+      "test/fixtures/broken.json": '{"command": "python3 -m reactive_components",}\n',
+      "test/fixtures/sdk.json": '{"sdk_versions":{"reactive_components":"0.1.1"}}\n',
+      "test/fixtures/x-roster.json": '{"note":"python3 -m reactive_components"}\n',
+    });
+    return done("A2", {
+      loads: tree.loads,
+      manifestHits: tree.manifestHits,
+      carrierHits: tree.carrierHits,
+      jsonCommands: tree.jsonCommands,
+      computed: tree.computed,
+      manifests: tree.manifests,
+      controls,
+      carriers: { hits: carriers.carrierHits, jsonCommands: carriers.jsonCommands, instrumentCommands: carriers.instrumentCommands },
+    });
   },
   A3: () => {
     const tree = liveTree();
@@ -1183,7 +1632,12 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       tree.instrumentNames.filter(hit => !CENSUS_INSTRUMENT.test(pathOf(hit))),
       "every name read inside an instrument sits in an instrument",
     ).toStrictEqual([]);
-    return done("A3", { readers, own, instrumentsOnly: true });
+    const rosterCommands = tree.instrumentCommands.some(hit => pathOf(hit) === ROSTER_FILE);
+    expect(
+      { outside: tree.instrumentCommands.filter(hit => !CENSUS_INSTRUMENT.test(pathOf(hit))), rosterCommands },
+      "every JSON command line read inside an instrument sits in an instrument, and the roster spells command lines",
+    ).toStrictEqual({ outside: [], rosterCommands: true });
+    return done("A3", { readers, own, instrumentsOnly: true, rosterCommands });
   },
   A4: () => {
     const bead = readBeadRow();
@@ -1249,7 +1703,22 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     expect(host.executed, "the registry refused before any provider ran").toStrictEqual([]);
     return done("B1", { outcomes, rendered, executed, registryRefusal });
   },
-  B2: () => done("B2", mutantWitness("B2")),
+  B2: () => {
+    const witness = mutantWitness("B2");
+    // JUDGE LIVENESS (F3): every branch of the judge is reached by a named mutant, and no other kind is emitted.
+    const runs = Object.fromEntries(MUTANTS.map(mutant => [mutant, judge(mutant)]));
+    const kindOf = (finding: string): string => finding.slice(finding.indexOf(":") + 1);
+    const reached = Object.fromEntries(FINDING_KINDS.map(kind => [kind, MUTANTS.filter(mutant => (runs[mutant] ?? []).some(finding => kindOf(finding) === kind))]));
+    expect(
+      FINDING_KINDS.filter(kind => (reached[kind] ?? []).length === 0),
+      "every branch of the judge is reached by a named mutant",
+    ).toStrictEqual([]);
+    expect(
+      [...new Set(Object.values(runs).flat().map(kindOf))].filter(kind => !FINDING_KINDS.includes(kind)),
+      "the judge emits no kind outside FINDING_KINDS",
+    ).toStrictEqual([]);
+    return done("B2", { ...witness, reached });
+  },
   C1: () => {
     const ids = ["F1", "F2", "F3", "F4"];
     const runs = Object.fromEntries(ids.map(id => [id, runCase(caseOf(id))]));
