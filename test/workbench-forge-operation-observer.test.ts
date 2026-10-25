@@ -536,6 +536,32 @@ describe("wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with
     expect(Object.keys(MEASURED_ARGS).sort()).toStrictEqual(["gate_verdict", "selection", "selection_accounting"]);
   });
 
+  it("wb-dqhl (U1): NOT measured - a constructed reply with a null data.selection beside the measured full accounting block decodes to the unit universe only (no tests facet): selection complete, complete coverage, the success tone kept - and beside every accounting block this file pins, a null key reads exactly as an absent one", () => {
+    // A null key is not what forge 0.2.1 writes (it omits the key on an unnarrowed run, see the fixture comment above). This reply is
+    // built, not captured: it keeps the decode's null clause beside an accounting block pinned now that no measured fixture carries one.
+    const nullBeside = { ...MEASURED_FULL, selection: null };
+    expect(decodeForgeOperationTerminal(settledReply("success", nullBeside), OP, T2)).toStrictEqual({
+      operationId: OP, status: "success", terminalDisposition: "completed", observedAt: T2, selection: { units: { unit: "step", selected: 3, declared: 3 } },
+    });
+    const nullSnapshot = terminalOf(settledReply("success", nullBeside));
+    expect(nullSnapshot.node).toStrictEqual({ title: `Forge operation ${OP}`, type: "workflow", statusText: "completed · selection complete: 3 of 3 steps selected", statusTone: "success" });
+    expect(nullSnapshot.coverage).toBe("complete");
+    const blocks: [string, unknown][] = [
+      ["the measured full block", MEASURED_FULL.selection_accounting],
+      ["the measured --only block", MEASURED_ONLY_ALPHA.selection_accounting],
+      ["the documented member block", DOCUMENTED_MEMBERS_UNAFFECTED.selection_accounting],
+      ...malformedUnits,
+    ];
+    for (const [label, block] of blocks) {
+      for (const status of ["success", "partial", "error"]) {
+        const absent = settledReply(status, { gate_verdict: null, selection_accounting: block });
+        const nulled = settledReply(status, { gate_verdict: null, selection_accounting: block, selection: null });
+        expect(decodeForgeOperationTerminal(nulled, OP, T2), `${label}/${status}`).toStrictEqual(decodeForgeOperationTerminal(absent, OP, T2));
+        expect(terminalOf(nulled), `${label}/${status}`).toStrictEqual(terminalOf(absent));
+      }
+    }
+  });
+
   it("wb-dqhl (F1): the decode's doc comment states the measured absence of data.selection on an unnarrowed run and never names null as the producer's own value", () => {
     const text = readFileSync(new URL("../src/workbench/forge-operation-observer.ts", import.meta.url), "utf8");
     const file = ts.createSourceFile("forge-operation-observer.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
@@ -545,6 +571,13 @@ describe("wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with
     expect(docs, "exactly one doc comment above decodeForgeRunSelection()").toHaveLength(1);
     expect(docs[0]).toContain("An unnarrowed run publishes no `data.selection` key (measured, forge 0.2.1: absent, not null)");
     expect(docs[0]).not.toMatch(/`selection: null` is the producer's own value/);
+    // wb-dqhl (U3): "never names null" holds for any wording, not only the one landed false sentence: every null the comment names
+    // (any case, plurals included) sits inside its one pinned honest sentence, and no invisible format character splits a word out
+    // of that reading. The reading is the comment's source text, folded as commentText folds it.
+    const honest = "An unnarrowed run publishes no `data.selection` key (measured, forge 0.2.1: absent, not null); a null one decodes the same, to no test universe.";
+    expect(docs[0]).toContain(honest);
+    expect(docs[0].split(honest).join(" "), "a null named outside the pinned honest sentence").not.toMatch(/null/i);
+    expect(docs[0], "an invisible format character in the doc comment").not.toMatch(/\p{Cf}/u);
   });
 
   it("wb-dqhl (F8): a withheld unit block beside a narrowed test block renders selection UNKNOWN and tests narrowed with partial coverage, and never lets a success tone stand", () => {
