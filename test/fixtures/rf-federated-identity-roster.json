@@ -299,6 +299,16 @@
               "rf-workspace",
               "rf-bundle",
               "rf-cli"
+            ],
+            "rootVerdicts": [
+              [
+                "authorized",
+                "authorization"
+              ],
+              [
+                "authorization",
+                "authorized"
+              ]
             ]
           }
         },
@@ -308,6 +318,7 @@
             "floorMet": true,
             "scopedFloorMet": true,
             "anchorRead": true,
+            "scopeReadInFull": true,
             "hits": [],
             "templateFloorMet": true
           }
@@ -456,6 +467,7 @@
             "floorMet": true,
             "scopedFloorMet": true,
             "anchorRead": true,
+            "scopeReadInFull": true,
             "hits": []
           }
         }
@@ -550,6 +562,20 @@
           }
         },
         {
+          "id": "MA13",
+          "witness": {
+            "digest": "c1f6326023ecba75",
+            "hit": true
+          }
+        },
+        {
+          "id": "MA14",
+          "witness": {
+            "digest": "f37be59c664ff8e3",
+            "hit": true
+          }
+        },
+        {
           "id": "QA1",
           "witness": {
             "digest": "a0fa707738d3d88b",
@@ -574,6 +600,34 @@
           "id": "QA4",
           "witness": {
             "digest": "9367654195002c1c",
+            "hit": false
+          }
+        },
+        {
+          "id": "QA5",
+          "witness": {
+            "digest": "3d9cb8020ffcf2de",
+            "hit": false
+          }
+        },
+        {
+          "id": "QA6",
+          "witness": {
+            "digest": "0f6d608768c04de6",
+            "hit": false
+          }
+        },
+        {
+          "id": "QA7",
+          "witness": {
+            "digest": "4a047a464c5b57ab",
+            "hit": false
+          }
+        },
+        {
+          "id": "QA8",
+          "witness": {
+            "digest": "b68a3c2a5cfd0ca3",
             "hit": false
           }
         },
@@ -682,6 +736,34 @@
             "digest": "13e10655c2927eb8",
             "hit": false
           }
+        },
+        {
+          "id": "QC6",
+          "witness": {
+            "digest": "488edd799f2a40af",
+            "hit": false
+          }
+        },
+        {
+          "id": "QC7",
+          "witness": {
+            "digest": "1abac0c633033586",
+            "hit": false
+          }
+        },
+        {
+          "id": "QC8",
+          "witness": {
+            "digest": "357c45e6282fc649",
+            "hit": false
+          }
+        },
+        {
+          "id": "QC9",
+          "witness": {
+            "digest": "4de7fb8e2ededc5d",
+            "hit": false
+          }
         }
       ]
     },
@@ -693,6 +775,14 @@
           "id": "KP1",
           "witness": {
             "names": 18,
+            "spellings": [
+              "bare",
+              "quoted",
+              "singleQuoted",
+              "computed",
+              "computedSingle",
+              "computedTemplate"
+            ],
             "missed": []
           }
         },
@@ -700,6 +790,14 @@
           "id": "KP2",
           "witness": {
             "suffixes": 5,
+            "spellings": [
+              "bare",
+              "quoted",
+              "singleQuoted",
+              "computed",
+              "computedSingle",
+              "computedTemplate"
+            ],
             "missed": []
           }
         },
@@ -742,7 +840,7 @@
     },
     {
       "id": "PC",
-      "label": "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and the A5 and C5 src scans",
+      "label": "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and two-root judgment, and the A5 and C5 src scans over a planted file and over each live rf-scope file",
       "pins": [
         {
           "id": "PC1",
@@ -795,6 +893,7 @@
             "floorMet": true,
             "scopedFloorMet": true,
             "anchorRead": true,
+            "scopeReadInFull": true,
             "hits": [
               "src/workbench/rf-federated-census-plant.ts: template link.locator",
               "src/workbench/rf-federated-census-plant.ts: key link.path",
@@ -812,11 +911,46 @@
             "floorMet": true,
             "scopedFloorMet": true,
             "anchorRead": true,
+            "scopeReadInFull": true,
             "hits": [
               "src/workbench/rf-federated-census-plant.ts: point.workspaceId | point.revision",
               "src/workbench/rf-federated-census-plant.ts: point.workspaceId + point.epoch",
               "src/workbench/rf-federated-census-plant.ts: point.epoch * 1000000 + point.revision"
             ]
+          }
+        },
+        {
+          "id": "PC5",
+          "witness": {
+            "controlSameKeys": true,
+            "plantedSameKeys": false,
+            "plantedLeaked": []
+          }
+        },
+        {
+          "id": "PC6",
+          "witness": {
+            "reported": [
+              "template link.locator",
+              "key link.path",
+              "map link.alias",
+              "plus workspace.root",
+              "computed link.url",
+              "pair link.href",
+              "index link.uri"
+            ],
+            "missed": []
+          }
+        },
+        {
+          "id": "PC7",
+          "witness": {
+            "reported": [
+              "point.workspaceId | point.revision",
+              "point.workspaceId + point.epoch",
+              "point.epoch * 1000000 + point.revision"
+            ],
+            "missed": []
           }
         }
       ]
