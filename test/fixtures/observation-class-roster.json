@@ -552,6 +552,23 @@
       "F",
       "M",
       "R"
-    ]
+    ],
+    "laterPin": {
+      "pin": "M10",
+      "unnamed": [
+        "M10: no outside record names it"
+      ],
+      "bound": [],
+      "boundUnseenPairedRemovals": [
+        "B1",
+        "R1",
+        "C1",
+        "A1",
+        "A2",
+        "A4",
+        "A3",
+        "M10"
+      ]
+    }
   }
 }

@@ -48,13 +48,22 @@
  * counts ("22 of 29 pins (B2, C2, C3, D1-D3, F1, M1-M9, R2-R7)"). Every pin a row holds is named by one of them, every pin they
  * name is held (a docs07-bound pin under its bound title), and the docs07 bindings still cover the 7 pins (29 - 22) the filing
  * left anchored outside, so a pin or a row removed from every literal here, or a docs07-bound pin removed here and from the docs07
- * census together, reds the anchor case; the case also shows that it would, for each pin, each row and each docs07-bound pin. A
- * later pin passes once an outside record names it (a docs07 binding); a pin no outside record names reds. No pin is added: the
- * frozen shape and the docs07 bindings are unchanged.
+ * census together, reds the anchor case; the case also shows that it would, for each pin, each row and each docs07-bound pin. No
+ * pin is added: the frozen shape and the docs07 bindings are unchanged.
+ * FORWARD CONTACT (cut #2, curing U1 of refusal #1; trunk fced7bf): a later pin that no outside record names, or that a docs07
+ * binding alone names, reds the anchor case, and the case pins both readings (laterPin). It reads one later pin, one more pin of
+ * row M numbered past its pins (M10 at this cut) under a title of its own. Named by no outside record, it reads as "<pin>: no
+ * outside record names it". Bound by one more docs07 frozen binding line under that title, the rows and the records agree, but the
+ * paired removal of every docs07-bound pin then goes unseen, the later pin's own included (8 of 8 at this cut): the floor is the
+ * review filing's count (29 - 22 = 7), and a later binding leaves it slack. The same two shapes as a real later pin (M10 in ROWS,
+ * PIN_TITLES, IMPL, the frozen shape and the roster, unnamed or docs07-bound) red this case on throwaway copies. A later cut that
+ * adds a pin therefore names it outside this file and, for a docs07 binding, changes the floor derivation in the same cut
+ * (re-pinning laterPin with it).
  * NAMED RESIDUAL R-WORDING (its pinned quiet reading is in the anchor case, because a new ROWS pin would need an outside name of its
- * own): the anchor binds which pins exist. The wording of the 22 filing-named titles and of the labels of rows F, M and R is held
- * by this file and its roster alone: reworded in every literal here, no outside reading sees it, while a reworded docs07-bound
- * title (this anchor) or row A-D label (F1, against the owner filing) is seen. The anchor case pins both unseen sets.
+ * own, and a docs07 binding alone would still red it: see FORWARD CONTACT): the anchor binds which pins exist. The wording of the
+ * 22 filing-named titles and of the labels of rows F, M and R is held by this file and its roster alone: reworded in every literal
+ * here, no outside reading sees it, while a reworded docs07-bound title (this anchor) or row A-D label (F1, against the owner
+ * filing) is seen. The anchor case pins both unseen sets.
  *
  * Rows, each a describe of its pins:
  *  A, acceptance (a). A1 a succeeded Claude SDK run (the claude-host query seam fed SDK messages whose text and result say fixed
@@ -1169,6 +1178,29 @@ describe("wb-kku9.1 observation-class census (MW-CAC-WORKFLOW-COMPOSITION-R1)", 
     const unseenLabels = ROWS.filter(row => isDeepStrictEqual(labelsEqualOf(ROWS.map(other => (other.id === row.id ? { ...other, label: reworded(other.label) } : other)), clauseTexts), labels)).map(
       row => row.id,
     );
+    // FORWARD CONTACT (pinned, the header's paragraph): one later pin, one more pin of row M numbered past its pins under a title of
+    // its own, read named by no outside record, then bound by one more docs07 frozen binding line under that title.
+    const later = `M${Math.max(0, ...(ROWS.find(row => row.id === "M")?.pins ?? []).map(pin => Number(pin.slice(1)))) + 1}`;
+    const laterTitle = `${later}: a later pin of row M`;
+    const laterRows = ROWS.map(row => (row.id === "M" ? { ...row, pins: [...row.pins, later] } : row));
+    const laterTitles: Record<string, string> = { ...PIN_TITLES, [later]: laterTitle };
+    const laterBinding: readonly [string, string] = [later, laterTitle];
+    const laterBound: OutsidePins = { ...outside, bound: [...outside.bound, laterBinding] };
+    const laterPin = {
+      pin: later,
+      unnamed: anchorFindings(laterRows, laterTitles, outside),
+      bound: anchorFindings(laterRows, laterTitles, laterBound),
+      boundUnseenPairedRemovals: laterBound.bound
+        .map(([id]) => id)
+        .filter(
+          id =>
+            anchorFindings(
+              laterRows.map(row => ({ ...row, pins: row.pins.filter(pin => pin !== id) })),
+              Object.fromEntries(Object.entries(laterTitles).filter(([pin]) => pin !== id)),
+              { ...laterBound, bound: laterBound.bound.filter(([other]) => other !== id) },
+            ).length === 0,
+        ),
+    };
     const witness = {
       filing: PIN_FILING,
       stated: { ...outside.stated },
@@ -1180,6 +1212,7 @@ describe("wb-kku9.1 observation-class census (MW-CAC-WORKFLOW-COMPOSITION-R1)", 
       unseenPairedRemovals,
       unseenTitles,
       unseenLabels,
+      laterPin,
     };
     expect(findings, "the rows and the outside records agree").toEqual([]);
     expect(unseenPinRemovals, "pins whose removal from every literal here no outside record would see").toEqual([]);
@@ -1187,6 +1220,12 @@ describe("wb-kku9.1 observation-class census (MW-CAC-WORKFLOW-COMPOSITION-R1)", 
     expect(unseenPairedRemovals, "docs07-bound pins whose removal here and from the docs07 bindings together no outside record would see").toEqual([]);
     expect(unseenTitles, "R-WORDING: the titles no outside reading sees reworded are exactly the filing-named pins'").toEqual(pins.filter(pin => outside.filed.includes(pin)));
     expect(unseenLabels, "R-WORDING: the labels no outside reading sees reworded are rows F, M and R's").toEqual(["F", "M", "R"]);
+    expect(laterPin.unnamed, "FORWARD CONTACT: a later pin no outside record names reads as unnamed").toEqual([`${later}: no outside record names it`]);
+    expect(laterPin.bound, "FORWARD CONTACT: a later pin a docs07 binding names agrees with the records").toEqual([]);
+    expect(laterPin.boundUnseenPairedRemovals, "FORWARD CONTACT: beside a later docs07 binding, no docs07-bound pin's paired removal is seen (the floor is the filing's count)").toEqual([
+      ...outside.bound.map(([id]) => id),
+      later,
+    ]);
     expect(witness).toStrictEqual(ROSTER.anchor);
   });
 
