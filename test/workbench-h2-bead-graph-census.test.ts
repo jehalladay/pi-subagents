@@ -105,6 +105,14 @@
  *    M7 a skip marker on row D's describe, M8 a guarded return before the T pins' witness compare, M9 a todo in place of P4, I18 a
  *    liveness-only compare under a subject change (K20: a family: label on a non-program export row), I12 a zeroed export floor,
  *    I16 .agents dropped from T1's roots.
+ *  V, the invocation and re-evaluation judges the closing case applies, one control per mutant wb-mdfe's filing names (F1), each
+ *    the closing judge over a constructed model of that mutant: V1 the bypass (a case body comparing the roster's own witness and
+ *    never invoking its IMPL), V2 the bypass beside a planted subject change that the re-evaluation reads.
+ *  X, the escapes wb-mdfe's filing names (F2-F5), each judged: W1-W8 the command-array, quoted-verb, continued-line, runner-argv,
+ *    spread, computed-flag-value, .exe and env-prefix write spellings hit the write family; H1-H5 the camelCase key, the dotted
+ *    program name, the unpadded key, the PascalCase gate key and the dotted bead id hit the H2 family; G-1-G-3 the underscore and
+ *    spaced spellings hit the prerequisite family; TR1 the tracker's own root reads only the files the git index tracks, so the
+ *    bd runtime files the filing lists are never read.
  * FOLLOW-UP (wb-ze6u, the R694 follow-up of landing 307; cut #1 on trunk 9f6b726, respun under owner ruling R760 on trunk
  * 24e0d5b over wb-4nut.5's landed rows T4, A4, B6, C5 and D3): the gate's LEG 2 survivors of wb-4nut.4 cut #1
  * are cured here - F1 by REGISTRATION, F2 by the OUTSIDE ANCHORS, F3 by row E - and row K holds a control per named mutant.
@@ -127,10 +135,35 @@
  * (SCRIPTLESS_ROOTS; CLAIMLESS_ROOTS, with docs added); and every walk holds every tracked file below its root, so an emptied or
  * narrowed walk reds whatever its floor. A1 and D1 (the export's rows), T4 and G1 (the walked trees), T3 (readBeadsWork itself)
  * and A4, B6, C5 and D3 (readBeadsProgramReadiness itself) keep their own anchors.
+ * CARRY (wb-mdfe, the R694 follow-up of landing 432, hop 2 of the landing-307 chain): its lead F1 is cured by INVOCATION, its
+ * rides F2-F4 by the widened families row X judges and F5 by the TRACKED ROOT.
+ * INVOCATION (F1): REACHED is written by the case body from the witness it compared, so a body that compares the roster's own
+ * witness (const witness = rosterWitness(pin)) held both compares by construction and never ran its IMPL. Now IMPL is CASES, each
+ * case wrapped: the wrapper records the witness its case returned in INVOKED at that return (a body that never invokes its IMPL
+ * leaves the pin uninvoked), and the closing case runs every case of CASES once more itself, outside the body and the wrapper, and
+ * holds the fresh witnesses to the roster as well - three evaluations, so a one-site bypass at the body, the wrapper or the
+ * re-evaluation cannot hide a subject change the other two read. CASES and IMPL are frozen: no later line swaps a case.
+ * FAMILIES (F2-F4): the write family reads a launch array whose first element is the executable (W1, W4), a quoted verb (W2), a
+ * backslash-newline continuation (W3), a spread or a call-valued flag among the leading elements (W5, W6) and the .exe suffix
+ * (W7); the H2 family separates a key, the program name or a bead id by nothing or a dot as well and reads an unpadded key
+ * (H1-H5); the prerequisite family reads the pin document and the mapping key separated by an underscore, a space, a dot or
+ * nothing (G-1-G-3). The current tree spells none of them: T1, T2 and G1 read as before.
+ * TRACKED ROOT (F5): the tracker's own root reads only its own files the git index tracks; bd's runtime files beside them
+ * (daemon logs, state files, .env: .beads/.gitignore ignores each) are machine data, so a checkout with a live store reads as a
+ * clean one.
+ * Rows V and X are held to wb-mdfe's filing in the tracked export (its first F1-F5 bullets): the findings it routes are exactly
+ * CARRY_CURES', each of F2-F4 cured by the pins named as its bullet names them, F1 by one control per mutant its cure names and
+ * F5 by one pin per cure candidate, whose model drops every runtime file the bullet lists.
  * NOT CLAIMED: an edit of this file together with the roster and the export rows it reads; every case of this file skipped at
  * once (vitest then runs no case and no hook; the delivered-file marker scan is the backstop); the exclusion sets, NOT_WALKED and
  * each scan's anchor token are literals here; a liveness-only compare at a pin with no subject change (I18 alone) reads the same
- * witness and stays green - what it used to hollow, the single compare, now has a second. The out-of-file roster
+ * witness and stays green - what it used to hollow, the single compare, now has two more. Of the evaluations: a one-site bypass
+ * with no subject change stays green at the wrapper, at the re-evaluation or at a body that also writes INVOKED itself (the other
+ * evaluations still read the subject; the plain body bypass reds, uninvoked); a coordinated edit of the re-evaluation with the
+ * wrapper, or with such a body; and an edit that rebuilds the case table itself so that every case returns the roster's witness,
+ * which all three evaluations read. The root's own untracked files are still read (a plant there is seen); only the tracker's own
+ * root is held to the index, so an untracked file there is never read, whatever it names. A launch whose executable or verb is
+ * computed stays R1 and R2, and a family spelling outside the ones listed is not claimed. The out-of-file roster
  * test/fixtures/h2-bead-graph-roster.json holds every row's id, label and pins, every pin's witness, the pinned constants and the
  * vendored producer lines; FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal.
  * SCOPE: readGateVerdict, packetViolations, compileGated and familyViolations are the rule a future Pi bead machine must meet, not a
@@ -169,6 +202,25 @@ const FOLLOW_UP_ROWS: readonly string[] = ["E", "K"];
 const READER_CUT = "wb-4nut.5";
 /** The rows that cut re-pinned, in order (its statement holds rows G to R unchanged). */
 const READER_CUT_ROWS: readonly string[] = ["T", "A", "B", "C", "D"];
+/** The R694 follow-up of landing 432 (wb-ze6u's gate verdict F1-F5); its filing in the tracked export anchors rows V and X. */
+const CARRY = "wb-mdfe";
+/** The rows the carry added after the follow-up's. */
+const CARRY_ROWS: readonly string[] = ["V", "X"];
+interface Cure {
+  readonly finding: string;
+  readonly pins: readonly string[];
+  /** What the finding's bullet names for its pins to cure: its item ids (a pattern), the mutants its cure is red-first against,
+   * or its cure candidates. */
+  readonly named: { readonly ids: string } | "mutants" | "candidates";
+}
+/** The findings the carry's filing routes (F1 leads; F2-F5 ride), each with the pins that cure it, in row order. */
+const CARRY_CURES: readonly Cure[] = [
+  { finding: "F1", pins: ["V1", "V2"], named: "mutants" },
+  { finding: "F2", pins: ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8"], named: { ids: "W\\d+" } },
+  { finding: "F3", pins: ["H1", "H2", "H3", "H4", "H5"], named: { ids: "H\\d+" } },
+  { finding: "F4", pins: ["G-1", "G-2", "G-3"], named: { ids: "G-\\d+" } },
+  { finding: "F5", pins: ["TR1"], named: "candidates" },
+];
 
 /** The tracker's executable name, composed so that no line of this file spells a bd command. */
 const BD = ["b", "d"].join("");
@@ -187,11 +239,14 @@ const TEXT_FIELDS: readonly string[] = ["title", "description", "notes"];
 const ARCHIVE_VERDICTS: readonly string[] = ["DEFER", "REJECT"];
 
 /** T1's family, in any case: the program's directory and label name, its work-package keys and labels (tsx-h2-00 to -05 and
- * tsx-h2-adr) and the six bead ids of its map. A key or the program name may be separated by hyphens, underscores or whitespace
- * (TSX_H2_01, 'harness2 reactive evolution': wb-ze6u E04, E05), and an identifier may run on past a key with "_" or "-". */
-const H2 = /harness2[-_\s]+reactive[-_\s]+evolution|tsx[-_\s]h2[-_\s](?:0[0-5]|adr)(?![a-z0-9])|rftsx[-_](?:bhmrd|7sy4c|8er6b|e9a5e|auqdi|rupqh)(?![a-z0-9])/i;
-/** G1's family: the gate's prerequisites - the API pin document, the vocabulary mapping and the pin's audit test. */
-const GATE_PREREQUISITES = /API-PIN|TSX-FED-01|harness2-api-pin/i;
+ * tsx-h2-adr) and the six bead ids of its map. A key or the program name may be separated by hyphens, underscores, whitespace or
+ * dots (TSX_H2_01, 'harness2 reactive evolution': wb-ze6u E04, E05; harness2.reactive.evolution: wb-mdfe H2) or by nothing
+ * (tsxH201, TsxH2Adr: H1, H4), a key's number may drop its padding (TSX-H2-1: H3), a bead id's prefix may end in a dot (rftsx.rupqh:
+ * H5), and an identifier may run on past a key with "_" or "-". */
+const H2 = /harness2[-_\s.]*reactive[-_\s.]*evolution|tsx[-_\s.]?h2[-_\s.]?(?:0?[0-5]|adr)(?![a-z0-9])|rftsx[-_.]?(?:bhmrd|7sy4c|8er6b|e9a5e|auqdi|rupqh)(?![a-z0-9])/i;
+/** G1's family: the gate's prerequisites - the API pin document, the vocabulary mapping and the pin's audit test, each name's
+ * parts separated by a hyphen, an underscore, whitespace, a dot or nothing (API_PIN.md, TSX_FED_01, 'api pin': wb-mdfe G-1-G-3). */
+const GATE_PREREQUISITES = /API[-_\s.]?PIN|TSX[-_\s.]?FED[-_\s.]?0?1|harness2[-_\s.]?api[-_\s.]?pin/i;
 /** T2's verb family: every bd verb that writes a store, makes one or brings rows into one. */
 const WRITE_VERBS: readonly string[] = [
   "create",
@@ -229,19 +284,24 @@ const VERB_GROUP = WRITE_VERBS.join("|");
 const FLAG_GROUP = WRITE_FLAGS.join("|");
 /** A path that may qualify the executable (/usr/local/bin/, ./, node_modules/.bin/): wb-ze6u E01, E02. */
 const EXEC_PATH = "(?:[\\w.~-]*/)*";
+/** The executable: bd, perhaps path-qualified, perhaps with the .exe suffix (wb-mdfe W7). */
+const EXEC = `${EXEC_PATH}${BD}(?:\\.exe)?`;
+/** A call's argument list, one nesting level deep (join("/x", "y.db")): a computed element (wb-mdfe W6). */
+const CALL = "\\((?:[^()]|\\([^()]*\\))*\\)";
+/** A launch array's leading elements before its verb: a spread (wb-mdfe W5), or a flag element perhaps followed by one value
+ * element - quoted, a bare name or a call (W6). */
+const LEADING = `(?:\\.\\.\\.[\\w.$]+(?:${CALL})?\\s*,\\s*|["'\`]-[^"'\`]*["'\`]\\s*,\\s*(?:(?:["'\`][^-"'\`][^"'\`]*["'\`]|[\\w.$]+(?:${CALL})?)\\s*,\\s*)?)*`;
 /** A shell-form bd command word: bd not inside an identifier, perhaps quoted and path-qualified, its global flags (with their
- * values, quoted or bare: E03), then a write verb. */
+ * values, quoted or bare: E03), then a write verb, perhaps quoted (wb-mdfe W2). */
 const WRITE_SHELL = new RegExp(
-  `(?<![\\w./-])["']?${EXEC_PATH}${BD}["']?(?:\\s+-{1,2}[A-Za-z][\\w-]*(?:[=\\s](?!-)(?:"[^"\\n]*"|'[^'\\n]*'|[^\\s'"\`]+))?)*\\s+(${VERB_GROUP})(?![\\w-])`,
+  `(?<![\\w./-])["']?${EXEC}["']?(?:\\s+-{1,2}[A-Za-z][\\w-]*(?:[=\\s](?!-)(?:"[^"\\n]*"|'[^'\\n]*'|[^\\s'"\`]+))?)*\\s+(?<quote>["']?)(?<verb>${VERB_GROUP})\\k<quote>(?![\\w-])`,
 );
-/** An argv-form launch: the quoted, perhaps path-qualified executable, then its leading flag elements (each perhaps with one value
- * element), then a quoted write verb. It is read over the whole text, so an array split across lines (E09) is one launch. */
-const WRITE_ARGV = new RegExp(
-  `["'\`]${EXEC_PATH}${BD}["'\`]\\s*,\\s*\\[\\s*(?:["'\`]-[^"'\`]*["'\`]\\s*,\\s*(?:(?:["'\`][^-"'\`][^"'\`]*["'\`]|[\\w.$]+)\\s*,\\s*)?)*["'\`](${VERB_GROUP})["'\`]`,
-  "g",
-);
+/** An argv-form launch: the quoted executable then its argv array, or a launch array whose first element is the executable
+ * (wb-mdfe W1, and a runner's argv such as npx's: W4); then the leading elements, then a quoted write verb. It is read over the
+ * whole text, so an array split across lines (E09) is one launch. */
+const WRITE_ARGV = new RegExp(`(?:["'\`]${EXEC}["'\`]\\s*,\\s*\\[|\\[\\s*["'\`]${EXEC}["'\`]\\s*,)\\s*${LEADING}["'\`](${VERB_GROUP})["'\`]`, "g");
 /** A bd command word on a line that also carries a write flag, in either form. */
-const WRITE_FLAG = new RegExp(`(?:(?<![\\w./-])["']?${EXEC_PATH}${BD}["']?\\s|["'\`]${EXEC_PATH}${BD}["'\`]\\s*,).*?(${FLAG_GROUP})(?![\\w-])`);
+const WRITE_FLAG = new RegExp(`(?:(?<![\\w./-])["']?${EXEC}["']?\\s|["'\`]${EXEC}["'\`]\\s*,).*?(${FLAG_GROUP})(?![\\w-])`);
 /** What follows a marker when it is the first member of an alternative: separators, at most one joining word, a verdict word. */
 const SEPARATORS = "[\\s()\\[\\],;:/|'\"`]*";
 /** A ruling marker: "ruled ADOPT" or "ruled REJECT" verbatim, at a word start, the verdict word ending where no letter, digit, "_"
@@ -290,14 +350,17 @@ interface ScanRoot {
   readonly omit: readonly string[];
   /** Read only the root's own regular files, never a directory below it (as "." always is). */
   readonly own?: boolean;
+  /** Read only the files the git index tracks: the tracker's own root, whose untracked neighbours are bd's runtime data (wb-mdfe F5). */
+  readonly tracked?: boolean;
 }
 /** The tracker's data (R4): the export and the interactions log, never a surface. */
 const TRACKER_DATA: readonly string[] = [".beads/issues.jsonl", ".beads/interactions.jsonl"];
 /** T1's roots: every surface that acts or tells an agent what to do. Each floor sits below the count measured at base 7718651
  * (src 115, qa 67, examples 7, .agents 2, .pi 1, .github 2, .codex 2, .beads/hooks 5, the root's own files 27; the tracker's own
  * files 4 at 9f6b726), so an emptied walk reds and an additive change does not; "." and an own root read their own regular files
- * (never .git) and nothing below them - the tracker's own root never descends into a local store. docs/, new-feedback/ and vendor/
- * are prose and records, not walked here (residual R12). */
+ * (never .git) and nothing below them - the tracker's own root never descends into a local store, and reads only the own files
+ * the git index tracks (wb-mdfe F5: bd's runtime files beside them are data). docs/, new-feedback/ and vendor/ are prose and
+ * records, not walked here (residual R12). */
 const PROGRAM_SCANS: readonly ScanRoot[] = [
   { pin: "T1", root: "src", floor: 100, anchorFile: "workbench/beads-observer.ts", anchorToken: "BeadsReadClient", omit: [] },
   { pin: "T1", root: "qa", floor: 50, anchorFile: "workbench/live-furnace-vc4-launch.mjs", anchorToken: "'init'", omit: [] },
@@ -307,7 +370,7 @@ const PROGRAM_SCANS: readonly ScanRoot[] = [
   { pin: "T1", root: ".github", floor: 2, anchorFile: "workflows/ci.yml", anchorToken: "runs-on", omit: [] },
   { pin: "T1", root: ".codex", floor: 2, anchorFile: "hooks.json", anchorToken: `${BD} codex-hook`, omit: [] },
   { pin: "T1", root: ".beads/hooks", floor: 5, anchorFile: "pre-commit", anchorToken: `${BD} hooks run`, omit: [] },
-  { pin: "T1", root: ".beads", floor: 3, anchorFile: "README.md", anchorToken: "AI-Native Issue Tracking", omit: ["issues.jsonl", "interactions.jsonl"], own: true },
+  { pin: "T1", root: ".beads", floor: 3, anchorFile: "README.md", anchorToken: "AI-Native Issue Tracking", omit: ["issues.jsonl", "interactions.jsonl"], own: true, tracked: true },
   { pin: "T1", root: ".", floor: 20, anchorFile: "package.json", anchorToken: '"extensions"', omit: [] },
 ];
 /** T2's script roots, Markdown never read (instruction text, residual R3's sibling); its own literal, so no row borrows T1's. */
@@ -442,6 +505,16 @@ const ROWS: readonly Row[] = [
     label: "the registration, reached-record, floor and surface judges this census applies to its own run flag a constructed model of each mutant wb-ze6u's filing names",
     pins: ["M1", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "I18", "I12", "I16"],
   },
+  {
+    id: "V",
+    label: "the invocation and re-evaluation judges the closing case applies flag a constructed model of each bypass wb-mdfe's filing names: the case body comparing the roster's own witness, alone and beside a planted subject change",
+    pins: ["V1", "V2"],
+  },
+  {
+    id: "X",
+    label: "the escapes wb-mdfe's filing names are judged: its write, H2 and prerequisite spellings hit their families, and the tracker's own root reads only the files the git index tracks, never the bd runtime files it lists",
+    pins: ["W1", "W2", "W3", "W4", "W5", "W6", "W7", "W8", "H1", "H2", "H3", "H4", "H5", "G-1", "G-2", "G-3", "TR1"],
+  },
 ];
 
 interface RosterPin {
@@ -533,6 +606,8 @@ const constants = (): Json =>
     notWalked: NOT_WALKED,
     residuals: RESIDUALS,
     followUpRows: FOLLOW_UP_ROWS,
+    carryRows: CARRY_ROWS,
+    carryCures: CARRY_CURES,
   });
 
 // --- the walk ---------------------------------------------------------------------------------------------------------
@@ -573,11 +648,18 @@ function ownFiles(directory: string): string[] {
   }
 }
 const isOwnRoot = (scan: ScanRoot): boolean => scan.root === "." || scan.own === true;
-/** A root's files: the whole tree below it, or for "." and an own root its own regular files, but the omitted subtrees and files. */
-function filesOf(scan: ScanRoot): string[] {
+/** A walk's rule over a listing of absolute paths: the omitted subtrees and files are dropped and, for a tracked root, every path
+ * the git index does not track (wb-mdfe F5; TR1 applies the rule to a constructed listing too). */
+function walkOf(scan: ScanRoot, listing: readonly string[], tracked: readonly string[]): string[] {
   const base = join(REPO, scan.root);
   const omitted = scan.omit.map(path => join(base, path));
-  return (isOwnRoot(scan) ? ownFiles(base) : filesBelow(base)).filter(file => !omitted.some(path => file === path || file.startsWith(`${path}/`)));
+  const indexed = new Set(tracked.map(path => join(REPO, path)));
+  return listing.filter(file => !omitted.some(path => file === path || file.startsWith(`${path}/`)) && (scan.tracked !== true || indexed.has(file)));
+}
+/** A root's files: the whole tree below it, or for "." and an own root its own regular files, under the walk's rule. */
+function filesOf(scan: ScanRoot, tracked: readonly string[]): string[] {
+  const base = join(REPO, scan.root);
+  return walkOf(scan, isOwnRoot(scan) ? ownFiles(base) : filesBelow(base), tracked);
 }
 
 // --- the git index ----------------------------------------------------------------------------------------------------
@@ -680,21 +762,44 @@ function walked(scan: ScanRoot, files: readonly string[], tracked: readonly stri
 }
 const rel = (path: string): string => relative(REPO, path);
 function familyScan(scan: ScanRoot, family: RegExp, spelled: string, tracked: readonly string[]): Json {
-  const walk = walked(scan, filesOf(scan), tracked);
+  const walk = walked(scan, filesOf(scan, tracked), tracked);
   const hits = walk.files.filter(file => family.test(textOf(file))).map(rel);
   expect(hits, `files spelling ${spelled} under ${scan.root}`).toEqual([]);
   return { root: scan.root, floorMet: walk.floorMet, anchorRead: walk.anchorRead, trackedRead: walk.trackedRead, hits };
 }
+interface LogicalLine {
+  readonly text: string;
+  readonly first: number;
+  readonly last: number;
+}
+/** The text's lines, each shell backslash-newline continuation joined onto the line it continues (wb-mdfe W3): the joined text,
+ * its first line and its last. */
+function logicalLines(text: string): LogicalLine[] {
+  const lines = text.split("\n");
+  const logical: LogicalLine[] = [];
+  for (let at = 0; at < lines.length; at += 1) {
+    const first = at;
+    let joined = lines[at] ?? "";
+    while (/\\\r?$/.test(joined) && at + 1 < lines.length) {
+      at += 1;
+      joined = `${joined.replace(/\\\r?$/, " ")}${lines[at] ?? ""}`;
+    }
+    logical.push({ text: joined, first, last: at });
+  }
+  return logical;
+}
 /** T2's matcher: the write verb (or flag) of every line spelling a bd write, in line order. An argv launch is read over the whole
- * text and counts on its executable's line, so one split across lines (E09) counts once. */
+ * text and counts on its executable's line, so one split across lines (E09) counts once; a shell command continued across lines
+ * by backslash-newlines (wb-mdfe W3) is read, and counts, as one line. */
 function writeHits(text: string): string[] {
   const argvVerbs = new Map<number, string>();
   for (const match of text.matchAll(WRITE_ARGV)) {
     const line = text.slice(0, match.index).split("\n").length - 1;
     if (!argvVerbs.has(line)) argvVerbs.set(line, match[1] ?? "");
   }
-  return text.split("\n").flatMap((line, index) => {
-    const verb = WRITE_SHELL.exec(line)?.[1] ?? argvVerbs.get(index) ?? WRITE_FLAG.exec(line)?.[1];
+  return logicalLines(text).flatMap(({ text: joined, first, last }) => {
+    const argv = Array.from({ length: last - first + 1 }, (_, step) => argvVerbs.get(first + step)).find(verb => verb !== undefined);
+    const verb = WRITE_SHELL.exec(joined)?.groups?.verb ?? argv ?? WRITE_FLAG.exec(joined)?.[1];
     return verb === undefined ? [] : [verb];
   });
 }
@@ -703,7 +808,7 @@ const isMarkdown = (path: string): boolean => path.endsWith(".md");
 function writeScan(scan: ScanRoot, tracked: readonly string[]): { readonly walk: Walk; readonly spellings: string[] } {
   const walk = walked(
     scan,
-    filesOf(scan).filter(file => !isMarkdown(file)),
+    filesOf(scan, tracked).filter(file => !isMarkdown(file)),
     tracked.filter(path => !isMarkdown(path)),
   );
   const spellings = walk.files.flatMap(file => {
@@ -1117,6 +1222,26 @@ const ESCAPES: readonly Spelling[] = [
   { pin: "E05", family: "h2", text: "the harness2 reactive evolution program", hit: true },
   { pin: "E09", family: "write", text: `spawnSync("${BD}", [\n  "create",\n  "--title",\n  "x",\n]);`, hit: true },
 ];
+/** wb-mdfe F2-F4's spellings, each now a hit of its family: the gate's plants at wb-ze6u cut #1 (PREP gate-prep-23), their launch
+ * or comment line verbatim. */
+const CARRY_ESCAPES: readonly Spelling[] = [
+  { pin: "W1", family: "write", text: `export const argv = ["${BD}", "create", "--title", "x"];`, hit: true },
+  { pin: "W2", family: "write", text: `${BD} 'create' --title x`, hit: true },
+  { pin: "W3", family: "write", text: `${BD} \\\n  create --title x`, hit: true },
+  { pin: "W4", family: "write", text: `spawnSync("npx", ["${BD}", "create", "x"]);`, hit: true },
+  { pin: "W5", family: "write", text: `execFileSync("${BD}", [...GLOBAL, "create"]);`, hit: true },
+  { pin: "W6", family: "write", text: `spawnSync("${BD}", ["--db", join("/x", "y.db"), "create"]);`, hit: true },
+  { pin: "W7", family: "write", text: `${BD}.exe create x`, hit: true },
+  { pin: "W8", family: "write", text: `env BEADS_DIR=/x ${BD} create x`, hit: true },
+  { pin: "H1", family: "h2", text: "export const tsxH201 = 1;", hit: true },
+  { pin: "H2", family: "h2", text: "// see harness2.reactive.evolution", hit: true },
+  { pin: "H3", family: "h2", text: "// TSX-H2-1 lands first", hit: true },
+  { pin: "H4", family: "h2", text: "export const TsxH2Adr = 1;", hit: true },
+  { pin: "H5", family: "h2", text: "// rftsx.rupqh records the ruling", hit: true },
+  { pin: "G-1", family: "prerequisite", text: "// API_PIN.md has landed", hit: true },
+  { pin: "G-2", family: "prerequisite", text: "// the TSX_FED_01 mapping exists", hit: true },
+  { pin: "G-3", family: "prerequisite", text: "// the api pin document has landed", hit: true },
+];
 /** A spelling's case: its family judges it as the roster says, and the witness carries its digest, never the text. */
 const spellingCase = (spelling: Spelling): Json => {
   const hit = familyHits(spelling);
@@ -1130,7 +1255,7 @@ function trackerFile(path: string, tracked: readonly string[]): Json {
     path,
     tracked: tracked.includes(path),
     root: scan?.root ?? null,
-    read: scan !== undefined && filesOf(scan).includes(join(REPO, path)),
+    read: scan !== undefined && filesOf(scan, tracked).includes(join(REPO, path)),
     hit: H2.test(textOf(join(REPO, path))),
   };
   expect(witness).toStrictEqual({ path, tracked: true, root: ".beads", read: true, hit: false });
@@ -1142,7 +1267,8 @@ function trackerFile(path: string, tracked: readonly string[]): Json {
 /** The top suite of this file, the case registered first and the case registered last. */
 const SUITE = "wb-4nut.4 H2 bead-graph census (TSX-HARNESS2-REACTIVE-EVOLUTION-R4, absent-today leg)";
 const JUDGED_SET = "the judged set: the frozen shape, the out-of-file roster and the cases agree";
-const CLOSING = "the registered tests ran and every pin reached its witness compare, in roster order, with the roster's witness";
+const CLOSING =
+  "the registered tests ran and every pin reached its witness compare, in roster order, with the roster's witness, which its case returned when its pin invoked it and again when run here";
 /** The pins that reached their witness compare, with the witness each recorded, in run order; the closing case holds it. */
 const REACHED = new Map<string, Json>();
 /** Set by the closing case's last line; the suite's afterAll hook holds it. */
@@ -1231,6 +1357,11 @@ function reachedGaps(reached: ReadonlyMap<string, Json>): string[] {
   if (gaps.length === 0 && !sameList(keys, ids)) gaps.push("order");
   return gaps;
 }
+/** The closing judge (wb-mdfe F1): REACHED (the case bodies' record), INVOKED (the record IMPL's wrapper writes) and the
+ * re-evaluation's fresh witnesses, each held to the roster as reachedGaps holds a record; invoked and fresh gaps carry their name. */
+function closingGaps(reached: ReadonlyMap<string, Json>, invoked: ReadonlyMap<string, Json>, fresh: ReadonlyMap<string, Json>): string[] {
+  return [...reachedGaps(reached), ...reachedGaps(invoked).map(gap => `invoked-${gap}`), ...reachedGaps(fresh).map(gap => `fresh-${gap}`)];
+}
 
 // --- the export's records (wb-ze6u F2) --------------------------------------------------------------------------------
 
@@ -1280,6 +1411,41 @@ function filedIds(notes: string): { readonly lead: string[]; readonly f2: string
   const bullet = (label: string): string => new RegExp(`^- ${label}: (.*)$`, "m").exec(notes)?.[1] ?? "";
   return { lead: idsIn(bullet("F1 leads")), f2: idsIn(bullet("F2 rides")), f3: idsIn(bullet("F3 rides")) };
 }
+/** The findings the carry's filing routes, in its order ("[leads] - F1 ...", "[rides] - F2 ..."), each with its first bullet. */
+function carryFiling(notes: string): { readonly routed: string[]; readonly bullets: Readonly<Record<string, string>> } {
+  const bullets: Record<string, string> = {};
+  for (const match of notes.matchAll(/^\[(?:leads|rides)\] - (F\d+) (.*)$/gm)) {
+    const finding = match[1] ?? "";
+    if (!Object.hasOwn(bullets, finding)) bullets[finding] = match[2] ?? "";
+  }
+  return { routed: Object.keys(bullets), bullets };
+}
+/** What a carry bullet names for its pins to cure, in order: its item ids, the mutants its cure is red-first against, or its cure
+ * candidates. */
+function namedBy(bullet: string, named: Cure["named"]): string[] {
+  if (named === "mutants") return (/red-first against (.+?) mutants/.exec(bullet)?.[1] ?? "").split(/,\s*|\s+and\s+/).filter(name => name !== "");
+  if (named === "candidates") return [...bullet.matchAll(/Cure candidate: ([^.;]*)/g)].map(match => match[1] ?? "");
+  return [...new Set([...bullet.matchAll(new RegExp(`(?<![\\w-])(?:${named.ids})(?![\\w-])`, "g"))].map(match => match[0]))];
+}
+/** The carry's cures against its filing: a routed finding without a cure (or the reverse), and a cure whose pins are not what its
+ * bullet names - the ids themselves, or one pin per named mutant or cure candidate. */
+function carryGaps(cures: readonly Cure[], notes: string): string[] {
+  const filing = carryFiling(notes);
+  const findings = cures.map(cure => cure.finding);
+  const gaps = [...filing.routed.filter(finding => !findings.includes(finding)).map(finding => `uncured ${finding}`), ...findings.filter(finding => !filing.routed.includes(finding)).map(finding => `unrouted ${finding}`)];
+  for (const cure of cures) {
+    const named = namedBy(filing.bullets[cure.finding] ?? "", cure.named);
+    const held = typeof cure.named === "object" ? sameList(cure.pins, named) : cure.pins.length === named.length;
+    if (!held || named.length === 0) gaps.push(`${cure.finding} names ${named.length === 0 ? "nothing" : named.join(", ")}; cured by ${cure.pins.join(", ") || "nothing"}`);
+  }
+  return gaps;
+}
+/** The bd runtime files a carry bullet names below the tracker's root - the ones it planted and its parenthesized list - as paths. */
+function runtimeFilesIn(bullet: string): string[] {
+  const planted = [...bullet.matchAll(/\.beads\/([\w.*-]+)/g)].map(match => match[1] ?? "");
+  const listed = (/runtime text files \(([^)]*)\)/.exec(bullet)?.[1] ?? "").split(", ").filter(name => name !== "");
+  return [...new Set([...planted, ...listed])].map(name => `.beads/${name}`);
+}
 /** The export floor's rule against the count the delivery recorded: below it, and at or above four fifths of it. */
 function exportFloorGaps(floor: number, recorded: number): string[] {
   if (!Number.isInteger(recorded) || recorded <= 0) return ["no export count recorded"];
@@ -1327,7 +1493,8 @@ const modelReached = (): Map<string, Json> => new Map(ROSTER.rows.flatMap(row =>
 
 // --- the cases --------------------------------------------------------------------------------------------------------
 
-const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
+/** Every pin's case. The pin cases reach a case only through IMPL; the closing case runs each once more itself (wb-mdfe F1). */
+const CASES: Readonly<Record<string, () => Promise<Json>>> = Object.freeze({
   T1: async () => {
     const tracked = trackedPaths();
     const roots = PROGRAM_SCANS.map(scan => familyScan(scan, H2, "the H2 family", tracked));
@@ -1361,7 +1528,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   },
   T4: async () => {
     const tracked = trackedPaths();
-    const readers = PROGRAM_SCANS.flatMap(scan => walked(scan, filesOf(scan), tracked).files.filter(file => VERDICT_WORDS.test(textOf(file))).map(rel)).sort();
+    const readers = PROGRAM_SCANS.flatMap(scan => walked(scan, filesOf(scan, tracked), tracked).files.filter(file => VERDICT_WORDS.test(textOf(file))).map(rel)).sort();
     const imports = ownImports();
     const driven = GATE_READERS.map(path => imports.includes(`../${path.replace(/\.ts$/, ".js")}`));
     expect(readers, "the walked files spelling a verdict word").toEqual([...GATE_READERS]);
@@ -1681,7 +1848,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect(constantsQuoted).toEqual([...FILING_CONSTANTS]);
     return { clauses, labelsEqual, constantsQuoted: constantsQuoted.length };
   },
-  ...Object.fromEntries([...SPELLINGS, ...ESCAPES].map(spelling => [spelling.pin, async () => spellingCase(spelling)])),
+  ...Object.fromEntries([...SPELLINGS, ...ESCAPES, ...CARRY_ESCAPES].map(spelling => [spelling.pin, async () => spellingCase(spelling)])),
   E06: async () => trackerFile(".beads/README.md", trackedPaths()),
   E07: async () => trackerFile(".beads/config.yaml", trackedPaths()),
   M1: async () => registrationModel("collected", entry => skipped(entry)),
@@ -1710,6 +1877,29 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     );
     return { unclassifiedRoots: [...new Set(surface.unclassified.map(path => path.split("/")[0] ?? path))] };
   },
+  // wb-mdfe F1's bypass: every case body compares the roster's own witness and records it, so no IMPL runs and nothing is invoked.
+  V1: async () => gapWitness(closingGaps(modelReached(), new Map(), modelReached())),
+  V2: async () => {
+    // The bypass beside the filing's plant (TSX_H2_01 in src/zz-gate-probe.ts): only the re-evaluation reads the changed subject.
+    const fresh = modelReached();
+    const t1 = fresh.get("T1") ?? null;
+    const planted = (root: Json): Json => (isObject(root) && root.root === "src" ? { ...root, hits: ["src/zz-gate-probe.ts"] } : root);
+    fresh.set("T1", isObject(t1) && Array.isArray(t1.roots) ? { ...t1, roots: t1.roots.map(planted) } : t1);
+    return gapWitness(closingGaps(modelReached(), new Map(), fresh));
+  },
+  TR1: async () => {
+    const tracked = trackedPaths();
+    const scan = PROGRAM_SCANS.find(entry => entry.tracked === true);
+    expect(scan?.root, "the tracked root is the tracker's own").toBe(".beads");
+    if (scan === undefined) return null;
+    const own = tracked.filter(path => holds(scan, path)).sort();
+    const walk = filesOf(scan, tracked).map(rel).sort();
+    const runtime = runtimeFilesIn(carryFiling(notesOf(exportRows(), CARRY)).bullets.F5 ?? "");
+    const modelWalk = walkOf(scan, [...own, ...runtime].map(path => join(REPO, path)), tracked).map(rel).sort();
+    expect(runtime.length, `the runtime files ${CARRY}'s F5 bullet lists`).toBeGreaterThan(0);
+    expect([walk, modelWalk], "the tracker's own walk reads its tracked own files only, beside the listed runtime files too").toEqual([own, own]);
+    return { root: scan.root, own, walk, runtime, modelWalk };
+  },
   R1: async () => quietRow("R1"),
   R2: async () => quietRow("R2"),
   R3: async () => {
@@ -1726,7 +1916,8 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   R4: async () => {
     const rows = exportRows();
     const data = TRACKER_DATA.map(path => join(REPO, path));
-    const walkedFiles = [...PROGRAM_SCANS, ...EXEC_SCANS, ...GATED_SCANS].flatMap(scan => filesOf(scan));
+    const tracked = trackedPaths();
+    const walkedFiles = [...PROGRAM_SCANS, ...EXEC_SCANS, ...GATED_SCANS].flatMap(scan => filesOf(scan, tracked));
     const witness = {
       // The tracker's own files are walked by T1 (wb-ze6u E06, E07); its data never is: no walk reads the export or the log.
       trackerDataWalked: walkedFiles.some(file => data.includes(file)),
@@ -1774,13 +1965,28 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const witness = {
       proseWalkedByT1: PROGRAM_SCANS.some(scan => ["docs", "new-feedback", "vendor"].includes(scan.root)),
       g1OmitsReceipts: docsScan?.omit.includes("workbench/receipts") === true,
-      receiptsReadByG1: docsScan === undefined ? -1 : filesOf(docsScan).filter(file => receipts.includes(file)).length,
+      receiptsReadByG1: docsScan === undefined ? -1 : filesOf(docsScan, trackedPaths()).filter(file => receipts.includes(file)).length,
       receiptsQuoteTitles: receipts.length > 0 && receipts.every(file => /^# wb-[\w.]+: \S/.test(textOf(file))),
     };
     expect(witness).toStrictEqual({ proseWalkedByT1: false, g1OmitsReceipts: true, receiptsReadByG1: 0, receiptsQuoteTitles: true });
     return witness;
   },
-};
+});
+/** Each pin's witness as its case returned it, recorded by IMPL's wrapper at that return and by no case body (wb-mdfe F1). */
+const INVOKED = new Map<string, Json>();
+/** The pin cases' way to a case: CASES, each case wrapped so that its return records the witness in INVOKED. */
+const IMPL: Readonly<Record<string, () => Promise<Json>>> = Object.freeze(
+  Object.fromEntries(
+    Object.entries(CASES).map(([pin, run]) => [
+      pin,
+      async (): Promise<Json> => {
+        const witness = await run();
+        INVOKED.set(pin, clone(witness));
+        return witness;
+      },
+    ]),
+  ),
+);
 
 describe(SUITE, () => {
   afterAll(() => {
@@ -1788,7 +1994,7 @@ describe(SUITE, () => {
   });
 
   it(JUDGED_SET, ({ task }) => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "A:4", "B:6", "C:5", "D:3", "G:1", "P:4", "F:1", "M:18", "R:12", "E:8", "K:11"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "A:4", "B:6", "C:5", "D:3", "G:1", "P:4", "F:1", "M:18", "R:12", "E:8", "K:11", "V:2", "X:17"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -1799,7 +2005,11 @@ describe(SUITE, () => {
     // OUTSIDE ANCHORS (wb-ze6u F2): the delivery's record and the follow-up's filing, read from the tracked bead export.
     const rows = exportRows();
     const delivered = deliveredRecord(notesOf(rows, BEAD));
-    expect(ROWS.map(row => row.id), "the rows are the delivered rows T to R, then the follow-up's").toEqual([...delivered.shape.map(entry => entry.split(":")[0] ?? ""), ...FOLLOW_UP_ROWS]);
+    expect(ROWS.map(row => row.id), "the rows are the delivered rows T to R, then the follow-up's, then the carry's").toEqual([
+      ...delivered.shape.map(entry => entry.split(":")[0] ?? ""),
+      ...FOLLOW_UP_ROWS,
+      ...CARRY_ROWS,
+    ]);
     expect(belowShape(delivered.shape), `rows T to R hold at least the pins ${BEAD}'s delivery recorded (a later cut may add a pin, never drop one)`).toEqual([]);
     const readerShape = readerCutShape(notesOf(rows, READER_CUT));
     expect(readerShape.map(entry => entry.split(":")[0] ?? ""), `the rows ${READER_CUT}'s delivery re-pinned`).toEqual([...READER_CUT_ROWS]);
@@ -1809,6 +2019,12 @@ describe(SUITE, () => {
     const filed = filedIds(notesOf(rows, FOLLOW_UP));
     expect([...(ROWS.find(row => row.id === "E")?.pins ?? [])], `row E against the escapes ${FOLLOW_UP}'s filing names`).toEqual(filed.f3);
     expect([...(ROWS.find(row => row.id === "K")?.pins ?? [])], `row K against the mutants ${FOLLOW_UP}'s filing names`).toEqual([...filed.lead, ...filed.f2]);
+    // CARRY ANCHORS (wb-mdfe): rows V and X against the carry's filing - its first F1-F5 bullets - in the export.
+    expect(carryGaps(CARRY_CURES, notesOf(rows, CARRY)), `the cures against the findings ${CARRY}'s filing routes and what each bullet names`).toEqual([]);
+    expect(
+      CARRY_ROWS.flatMap(id => ROWS.find(row => row.id === id)?.pins ?? []),
+      "rows V and X are the carry's cures, in finding order",
+    ).toEqual(CARRY_CURES.flatMap(cure => cure.pins));
     expect(exportFloorGaps(EXPORT_FLOOR, delivered.exportRows), "EXPORT_FLOOR against the export rows the delivery recorded").toEqual([]);
     expect(rootsOf(EXEC_SCANS), "T2's roots: T1's but the scriptless ones").toEqual(rootsOf(PROGRAM_SCANS).filter(root => !SCRIPTLESS_ROOTS.includes(root)));
     expect(rootsOf(GATED_SCANS).sort(), "G1's roots: T1's but the claimless ones, and docs").toEqual(
@@ -1832,9 +2048,15 @@ describe(SUITE, () => {
     });
   }
 
-  it(CLOSING, ({ task }) => {
+  it(CLOSING, { timeout: 120_000 }, async ({ task }) => {
     expect(registrationGaps(registeredOf(task.file, task), expectedTitles(), "ran"), "the task tree after the run against the roster").toEqual([]);
-    expect(reachedGaps(REACHED), "REACHED against the roster: every pin, in order, its recorded witness equal to the roster's").toEqual([]);
+    // RE-EVALUATION (wb-mdfe F1): every case once more, run here from CASES, outside the case bodies and IMPL's wrapper.
+    const fresh = new Map<string, Json>();
+    for (const pin of ROSTER.rows.flatMap(row => row.pins.map(entry => entry.id))) {
+      const run = CASES[pin];
+      fresh.set(pin, run === undefined ? null : await run());
+    }
+    expect(closingGaps(REACHED, INVOKED, fresh), "REACHED, INVOKED and the re-evaluation against the roster: every pin, in order, each witness the roster's").toEqual([]);
     CLOSED.done = true;
   });
 });
