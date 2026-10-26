@@ -166,6 +166,7 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
     const importers = [...readings].filter(([, reading]) => reading.twins.length > 0).map(([name, reading]) => `${name}:${reading.twins.join("+")}`);
     expect(importers).toEqual([
       "workbench-detached-child-environ.test.ts:launchDetachedMarked",
+      "workbench-detached-hostile-child.test.ts:connectDetachedMarked+launchDetachedMarked",
       "workbench-detached-socket-base.test.ts:connectDetachedMarked+launchDetachedMarked",
       "workbench-detached-timing.test.ts:connectDetachedMarked+launchDetachedMarked",
     ]);
