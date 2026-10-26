@@ -1,5 +1,5 @@
 {
- "provenance": "wb-4nut.1 census roster, cut by ws-02 (run g10-work-s44) on trunk 9357bf4267252eb91b043dafeb28bf0157838eee, then trunk 7718651667d0fe6ea03a4d761cd0812bc18dc232 (landing 286) merged into the branch by fast-forward. Producer facts: read-only git show at the pins named below; pin witnesses: measured by test/workbench-fiber-debug-identity-census.test.ts on 9357bf4 plus the cut and re-read unchanged on 7718651 plus the cut, each reviewed against the bead's acceptance before it was written here. Respin #1 (refusal #1, U1), re-cut by ws-03 (run g10-work-s58): trunk feebb63b9113d4b4b2046bcbe81b2679e7e0fdf7 (landing 301) merged into the branch; Q6 reads the tracker export through the bead's owner filing (the first paragraph of its notes, byte-stable under the append-only notes) instead of the whole notes, its witness key beadsSpell became filingSpells with the same nine tokens and afterAppend pins the same reading after an appended note that spells every vocabulary token, measured on feebb63 plus the cut, on the base export row of 7718651 and under appended notes. R694 follow-up wb-u29w (landing 329 gate cmd_b9a7a2a60415: F1 lead, F2 rider), cut by ws-01 (run g10-work-s86) on trunk 6c0605b65dcc7f5a5163de975c74a2e1ac0edbfe: the A3 and C1 witnesses gain planted, the readings of scratch plants through the same scans the repository goes through (A3: the twelve flagged controls each in a module of its own below plants/ beside the quiet anchor module plants/quiet.ts; C1: the six flagged C2 controls each in a markdown file of its own below docs/ and the five quiet ones at the top, beside a flagged plant below every DOC_SKIP root and a nested node_modules that the scan must skip), measured by the census on 6c0605b plus the cut and each checked by hand against the controls' own readings (A3 controls.flagged token for token, C1 claims = C2_FLAGGED one unit each); every other field byte-unchanged.",
+ "provenance": "wb-4nut.1 census roster, cut by ws-02 (run g10-work-s44) on trunk 9357bf4267252eb91b043dafeb28bf0157838eee, then trunk 7718651667d0fe6ea03a4d761cd0812bc18dc232 (landing 286) merged into the branch by fast-forward. Producer facts: read-only git show at the pins named below; pin witnesses: measured by test/workbench-fiber-debug-identity-census.test.ts on 9357bf4 plus the cut and re-read unchanged on 7718651 plus the cut, each reviewed against the bead's acceptance before it was written here. Respin #1 (refusal #1, U1), re-cut by ws-03 (run g10-work-s58): trunk feebb63b9113d4b4b2046bcbe81b2679e7e0fdf7 (landing 301) merged into the branch; Q6 reads the tracker export through the bead's owner filing (the first paragraph of its notes, byte-stable under the append-only notes) instead of the whole notes, its witness key beadsSpell became filingSpells with the same nine tokens and afterAppend pins the same reading after an appended note that spells every vocabulary token, measured on feebb63 plus the cut, on the base export row of 7718651 and under appended notes. R694 follow-up wb-u29w (landing 329 gate cmd_b9a7a2a60415: F1 lead, F2 rider), cut by ws-01 (run g10-work-s86) on trunk 6c0605b65dcc7f5a5163de975c74a2e1ac0edbfe: the A3 and C1 witnesses gain planted, the readings of scratch plants through the same scans the repository goes through (A3: the twelve flagged controls each in a module of its own below plants/ beside the quiet anchor module plants/quiet.ts; C1: the six flagged C2 controls each in a markdown file of its own below docs/ and the five quiet ones at the top, beside a flagged plant below every DOC_SKIP root and a nested node_modules that the scan must skip), measured by the census on 6c0605b plus the cut and each checked by hand against the controls' own readings (A3 controls.flagged token for token, C1 claims = C2_FLAGGED one unit each); every other field byte-unchanged. R694 follow-up wb-52pt (landing 422 gate cmd_841b2c1ed545: F1 lead, F2 rider; co-cut with wb-gy3t, the gate-s83 review's C1 depth member of the F1 class), cut by ws-03 (run g10-work-s102) on trunk fced7bfda63e6975d331fd4f31ff4463b2c9136e: the A3 witness's roots and planted reading gain whole (the files the scan judged equal Node's own recursive listing below the root), and planted.spelled reads the nested multi-line plants (1 to 5 directories below plants/, each control alone, first, between quiet lines or last) and the long plant plants/long.ts, whose control sits past the longest src or qa text; the C1 witness's planted files and claims read the nested multi-unit plants (1 to 6 path segments, each control alone, first, between quiet units or last) and the long plant docs/long.md, whose flagged unit sits past the longest Pi doc, and planted.skipped records the skip plants found on disk and unread; measured by the census on fced7bf plus the cut and each checked by hand against the controls' own readings (A3: spelled equals controls.flagged token for token, each at its plant's path; C1: claims are C2_FLAGGED one unit each at its plant's path, skipped is every DOC_SKIP root and both nested node_modules); every other field byte-unchanged.",
  "bead": "wb-4nut.1",
  "programPin": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
  "producer": {
@@ -371,12 +371,14 @@
        {
         "root": "src",
         "floor": true,
-        "anchor": true
+        "anchor": true,
+        "whole": true
        },
        {
         "root": "qa",
         "floor": true,
-        "anchor": true
+        "anchor": true,
+        "whole": true
        }
       ],
       "spelled": [],
@@ -437,22 +439,24 @@
        "reading": {
         "root": "plants",
         "floor": true,
-        "anchor": true
+        "anchor": true,
+        "whole": true
        },
        "spelled": [
+        "plants/a/b/c/d/flagged-04.ts: devtools",
+        "plants/a/b/c/d/flagged-09.ts: debuggingid",
+        "plants/a/b/c/flagged-03.ts: screenshot",
+        "plants/a/b/c/flagged-08.ts: debugsource",
+        "plants/a/b/flagged-02.ts: fiberoptics",
+        "plants/a/b/flagged-07.ts: fiberidentity",
+        "plants/a/flagged-01.ts: reactfiber",
+        "plants/a/flagged-06.ts: mappingtoken",
+        "plants/a/flagged-11.ts: fiberref",
         "plants/flagged-00.ts: debugid",
-        "plants/flagged-01.ts: reactfiber",
-        "plants/flagged-02.ts: fiberoptics",
-        "plants/flagged-03.ts: screenshot",
-        "plants/flagged-04.ts: devtools",
         "plants/flagged-05.ts: publicref",
         "plants/flagged-05.ts: uielement",
-        "plants/flagged-06.ts: mappingtoken",
-        "plants/flagged-07.ts: fiberidentity",
-        "plants/flagged-08.ts: debugsource",
-        "plants/flagged-09.ts: debuggingid",
         "plants/flagged-10.ts: screencapture",
-        "plants/flagged-11.ts: fiberref"
+        "plants/long.ts: debugid"
        ]
       }
      }
@@ -698,11 +702,12 @@
       "planted": {
        "files": [
         "docs/flagged-0.md",
-        "docs/flagged-1.md",
-        "docs/flagged-2.md",
-        "docs/flagged-3.md",
-        "docs/flagged-4.md",
-        "docs/flagged-5.md",
+        "docs/long.md",
+        "docs/workbench/flagged-1.md",
+        "docs/workbench/receipts/deep/er/flagged-4.md",
+        "docs/workbench/receipts/deep/flagged-3.md",
+        "docs/workbench/receipts/flagged-2.md",
+        "flagged-5.md",
         "quiet-0.md",
         "quiet-1.md",
         "quiet-2.md",
@@ -711,11 +716,22 @@
        ],
        "claims": [
         "docs/flagged-0.md: Workbench maps a React debug id to its FiberOptics component.",
-        "docs/flagged-1.md: A screenshot is enough to identify the Fiber node it shows.",
-        "docs/flagged-2.md: | Visual debugging | screenshot to FiberOptics port identity | available |",
-        "docs/flagged-3.md: - Hosted agents may upgrade a debugId into a FiberRef.",
-        "docs/flagged-4.md: The UI element resolves to the fiber_optics node behind it.",
-        "docs/flagged-5.md: React DevTools ids map onto Fiber Optics components."
+        "docs/long.md: Workbench maps a React debug id to its FiberOptics component.",
+        "docs/workbench/flagged-1.md: A screenshot is enough to identify the Fiber node it shows.",
+        "docs/workbench/receipts/deep/er/flagged-4.md: The UI element resolves to the fiber_optics node behind it.",
+        "docs/workbench/receipts/deep/flagged-3.md: - Hosted agents may upgrade a debugId into a FiberRef.",
+        "docs/workbench/receipts/flagged-2.md: | Visual debugging | screenshot to FiberOptics port identity | available |",
+        "flagged-5.md: React DevTools ids map onto Fiber Optics components."
+       ],
+       "skipped": [
+        ".forge/skipped.md",
+        ".git/skipped.md",
+        "coverage/skipped.md",
+        "dist/skipped.md",
+        "docs/node_modules/skipped.md",
+        "docs/workbench/receipts/node_modules/skipped.md",
+        "node_modules/skipped.md",
+        "test/skipped.md"
        ]
       }
      }
