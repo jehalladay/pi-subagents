@@ -152,7 +152,9 @@
           "witness": {
             "modules": {
               "srcIsProgram": true,
-              "floorMet": true
+              "floorMet": true,
+              "outsideProgram": [],
+              "links": []
             },
             "observation": [
               "src/workbench/claude-capability-tools.ts",
@@ -191,7 +193,16 @@
               "src/workbench/hosts/local-detached.ts",
               "src/workbench/native-modules.ts"
             ],
-            "violations": []
+            "violations": [],
+            "reachPlants": {
+              "outsideProgram": [
+                "src/lib/tool.mjs",
+                "src/workbench/claude-fwg-probe.tsx"
+              ],
+              "links": [
+                "src/workbench/fwg-link.ts"
+              ]
+            }
           }
         },
         {
@@ -377,7 +388,68 @@
           "title": "M5: a tracker close exec call",
           "witness": {
             "violation": "tracker-exec src/workbench/attention.ts",
-            "hit": true
+            "hit": true,
+            "filed": [
+              "observation-builds-authority src/workbench/claude-control.ts exec:bd",
+              "tracker-exec src/workbench/claude-control.ts"
+            ],
+            "read": [
+              "literal",
+              "property",
+              "element",
+              "import-alias",
+              "no-substitution",
+              "path",
+              "exe",
+              "windows-path",
+              "shell-line",
+              "shell-later",
+              "argv-env",
+              "argv-later",
+              "argv-no-substitution",
+              "argv-shell",
+              "break-tab",
+              "break-newline",
+              "break-single-quote",
+              "break-double-quote",
+              "break-backquote",
+              "break-semicolon",
+              "break-ampersand",
+              "break-pipe",
+              "break-open-paren",
+              "break-close-paren",
+              "break-less",
+              "break-greater"
+            ],
+            "unread": [
+              "const-alias",
+              "destructured-alias",
+              "promisified",
+              "wrapper-function",
+              "const-command",
+              "concatenated",
+              "template-command",
+              "argv-held",
+              "local-alias",
+              "member-held",
+              "re-exported",
+              "call-through",
+              "apply-through",
+              "paren-callee",
+              "comma-callee",
+              "typed-callee",
+              "typed-literal",
+              "typed-argv",
+              "tagged-template",
+              "argv-first",
+              "spliced",
+              "escaped",
+              "letter-case",
+              "other-suffix",
+              "expansion",
+              "word-part",
+              "other-api"
+            ]
           }
         },
         {
