@@ -641,7 +641,7 @@
                     "rf-graph:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                     "rf-workspace:rfw_aaaaaaaaaaaaaaaaaaaaaa",
                     "rf-bundle:sha256:2222222222222222222222222222222222222222222222222222222222222222",
-                    "rf-cli:0.1.784"
+                    "rf-cli:0.1.845"
                   ],
                   "sourceVersion": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
                   "sourceRevision": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -652,7 +652,7 @@
               "diagnostics": [
                 "ephemeral noncommitted preview: render_id null, transaction_id null, 0 authoritative storage writes (envelope storage_write_count)",
                 "context text withheld: referenced by sha256 digest",
-                "producer release from result.provenance.cli_version: rf@0.1.784",
+                "producer release from result.provenance.cli_version: rf@0.1.845",
                 "no native interval supplied"
               ]
             }

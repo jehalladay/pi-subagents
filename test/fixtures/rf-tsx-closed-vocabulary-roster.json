@@ -905,7 +905,7 @@
        "checks": [
         {
          "path": "rfVersion",
-         "equals": "0.1.784"
+         "equals": "0.1.845"
         },
         {
          "path": "source",
@@ -913,7 +913,7 @@
         },
         {
          "path": "receipt",
-         "equals": "cmd_ab79e0c5d689"
+         "equals": "cmd_790abd3a3890"
         },
         {
          "path": "resultKeys",
@@ -932,10 +932,13 @@
           "bundle_revision_id",
           "observations",
           "necessity",
+          "judge_context",
+          "judge_context_layers",
           "attempts",
           "superseded_transaction_ids",
           "retry_work",
           "fiber_transaction_refs",
+          "replay_of_operation_id",
           "ephemeral",
           "render_id",
           "commit_seq",
@@ -987,9 +990,9 @@
      ],
      "witness": {
       "pin": "B4",
-      "rfVersion": "0.1.784",
+      "rfVersion": "0.1.845",
       "source": "captured",
-      "receipt": "cmd_ab79e0c5d689",
+      "receipt": "cmd_790abd3a3890",
       "resultKeys": [
        "output",
        "budget",
@@ -1005,10 +1008,13 @@
        "bundle_revision_id",
        "observations",
        "necessity",
+       "judge_context",
+       "judge_context_layers",
        "attempts",
        "superseded_transaction_ids",
        "retry_work",
        "fiber_transaction_refs",
+       "replay_of_operation_id",
        "ephemeral",
        "render_id",
        "commit_seq",

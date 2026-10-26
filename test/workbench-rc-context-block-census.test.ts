@@ -106,6 +106,10 @@
  * SCOPE: the producer facts are read at the pin and Pi vendors no producer source, so a producer change is seen only when a cut
  * re-reads them. The fixture digests and the reader set move only with a reviewed cut (the landing-order rule: a lander editing a
  * pinned surface updates this census in the same commit).
+ * RE-PIN (wb-jwc.4, the rf 0.1.845 pin, under that rule): the filing quoted the carrier rf@0.1.784, and the carrier's release moves
+ * only through the gated rf-pin route (test/workbench-rf-contract-carrier.test.ts holds it to the stamped receipt), so B3 reads the
+ * filing's quoted carrier past its release component (carrierContract) and both registrations against the live carrier, and B2's
+ * drift helper records the live carrier's release; the filing's own release still feeds B2's pure judge inputs, so its witness holds.
  * FOLLOW-UP wb-48lm (landing 321's findings): F1 the pins and rows M and R anchored in the export (COVERS, the first cut's
  * delivery note); F2 the RESIDUALS list read back against R1's quiet rows; F3 C3 reads the UI modules and the entrypoints; F4
  * the R14 and R20 rows exercise their families; F5 the pin's short form is a program token; F6 the lossy decode and the paths.
@@ -1197,6 +1201,10 @@ function carrierRelease(carrierText: string): string {
   if (release === undefined) throw new Error("the carrier is not rf@<release>:<contract>");
   return release;
 }
+/** A carrier past its release component: the schema, the leaf and the flags it states (wb-jwc.4: the release is re-measured). */
+function carrierContract(carrierText: string): string {
+  return carrierText.slice(`rf@${carrierRelease(carrierText)}:`.length);
+}
 /** The quoted carrier of the filing's gating sentence. */
 function filedCarrier(notes: string): string | undefined {
   return /REACTIVE_FIBER_CONTRACT_SOURCE '([^']+)'/.exec(notes)?.[1];
@@ -1338,7 +1346,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const filed = filedCarrier(notes);
     if (filed === undefined) throw new Error("the filing quotes no carrier");
     const release = carrierRelease(filed);
-    expect(recordedRfRelease(), "the drift helper records the filing's carrier release").toBe(release);
+    expect(recordedRfRelease(), "the drift helper records the carrier's release").toBe(carrierRelease(REACTIVE_FIBER_CONTRACT_SOURCE));
     const plain = judgeRfReleaseDrift({ recorded: release, installed: release, previewCliVersion: release });
     const extended = { recorded: release, installed: release, previewCliVersion: release, sdkVersions: { [ECHO_KEY]: "0.1.1" }, interface: json(CONTROL_FIELDS) };
     expect(judgeRfReleaseDrift(extended), "an SDK echo and control fields beside the two releases change nothing").toStrictEqual(plain);
@@ -1348,7 +1356,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
   B3: async () => {
     const notes = exportRow(BEAD).notes;
-    expect(filedCarrier(notes), "the carrier is the one the filing quotes").toBe(REACTIVE_FIBER_CONTRACT_SOURCE);
+    expect(carrierContract(REACTIVE_FIBER_CONTRACT_SOURCE), "the carrier is the one the filing quotes, past its re-measured release").toBe(carrierContract(filedCarrier(notes) ?? ""));
     const descriptors: JsonValue[] = [];
     for (const register of [
       (registry: CapabilityRegistry) => registerNativeReactiveFiberRender(registry, ROOT),
@@ -1361,11 +1369,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       const { id, version, effectClass, permissions, supportedModes, contractSource } = catalog[0]?.descriptor ?? { id: "", version: "", effectClass: "unknown", permissions: [], supportedModes: [], contractSource: undefined };
       descriptors.push(json({ id, version, effectClass, permissions, supportedModes, contractSource }));
     }
-    const expected = { id: PREVIEW_ID, version: "1.0.0", effectClass: "read", permissions: GRANTS, supportedModes: ["invoke"], contractSource: CARRIER };
+    const expected = { id: PREVIEW_ID, version: "1.0.0", effectClass: "read", permissions: GRANTS, supportedModes: ["invoke"], contractSource: REACTIVE_FIBER_CONTRACT_SOURCE };
     expect(descriptors, "both registrations state the carrier on the unchanged read descriptor").toStrictEqual([expected, expected]);
     expect(RECONCILE_EVIDENCE_READS.reactivefiber, "the reconcile roster reads the preview alone").toStrictEqual([PREVIEW_ID]);
     const statement = statementWithDocs(sourceFile(PROVIDER_FILE), "REACTIVE_FIBER_CONTRACT_SOURCE") ?? "";
-    expect(statement.includes(CARRIER), "the carrier statement is read").toBe(true);
+    expect(statement.includes(REACTIVE_FIBER_CONTRACT_SOURCE), "the carrier statement is read").toBe(true);
     const tokens = programTokens(statement);
     expect(tokens, "the carrier's statement records nothing of the program").toStrictEqual([]);
     return { carrier: REACTIVE_FIBER_CONTRACT_SOURCE, descriptors, reconcile: [...RECONCILE_EVIDENCE_READS.reactivefiber], tokens };

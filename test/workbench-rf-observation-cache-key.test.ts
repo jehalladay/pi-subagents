@@ -204,6 +204,9 @@ const SLICES: Readonly<Record<Exclude<BaseId, "full">, readonly string[]>> = {
 /** Containers the census judges as one field (every member varied at once): no member of one reaches a projection. */
 const OPAQUE: ReadonlySet<string> = new Set([
   "result.work_metrics", "result.retry_work", "result.plan", "result.provenance.storage",
+  // wb-jwc.4 (the rf 0.1.845 pin): the two judge-context containers whose member keys carry a dot (session.active, task.tags,
+  // agent.role), which a dotted field path cannot name; no member of either reaches a projection.
+  "result.judge_context.workspace_facts", "result.judge_context_layers",
   "result.provenance.sdk_versions.fiber_optics", "result.provenance.sdk_versions.reactive_lenses",
   "result.provenance.sdk_versions.reactive_components", "result.provenance.sdk_versions.reactive_inference",
 ]);
@@ -300,10 +303,19 @@ const FIELD_ROWS: readonly (readonly [BaseId, string, Disposition, string?])[] =
   ["full", "result.bundle_revision_id", "projected"],
   ["full", "result.observations", "projected"],
   ["full", "result.necessity", "projected"],
+  ["full", "result.judge_context.task_digest", "omitted", "J-REQUEST-ECHO"],
+  ["full", "result.judge_context.task_tags", "omitted", "J-REQUEST-ECHO"],
+  ["full", "result.judge_context.agent_id", "omitted", "J-REQUEST-ECHO"],
+  ["full", "result.judge_context.agent_role", "omitted", "J-REQUEST-ECHO"],
+  ["full", "result.judge_context.session_id", "omitted", "J-REQUEST-ECHO"],
+  ["full", "result.judge_context.explicit_requests", "omitted", "J-REQUEST-ECHO"],
+  ["full", "result.judge_context.workspace_facts", "omitted", "J-REQUEST-ECHO"],
+  ["full", "result.judge_context_layers", "omitted", "J-REQUEST-ECHO"],
   ["full", "result.attempts", "omitted", "J-WORK-COUNTERS"],
   ["full", "result.superseded_transaction_ids", "omitted", "J-STRUCTURE"],
   ["full", "result.retry_work", "omitted", "J-WORK-COUNTERS"],
   ["full", "result.fiber_transaction_refs", "omitted", "J-STRUCTURE"],
+  ["full", "result.replay_of_operation_id", "omitted", "J-REQUEST-ECHO"],
   ["full", "result.render_id", "fenced"],
   ["full", "result.ephemeral", "fenced"],
   ["full", "result.commit_seq", "fenced"],
@@ -345,7 +357,8 @@ const FIELDS: readonly Field[] = FIELD_ROWS.map(([base, path, disposition, why])
   id: `${base}:${path}`, base, path, disposition, ...(why !== undefined ? { why } : {}),
 }));
 /** FIELDS' frozen shape at base 0b2a80f (standing rule 16): every row's base, path and disposition, as a literal; wb-hs2j.1 moved the
- * result.blocks and result.necessity rows from omitted to projected. */
+ * result.blocks and result.necessity rows from omitted to projected; wb-jwc.4 (the rf 0.1.845 pin) added the nine rows of the three
+ * result keys that pin emits, judge_context, judge_context_layers and replay_of_operation_id, each omitted. */
 const FROZEN_FIELDS: readonly string[] = [
   "full:schema:fenced",
   "full:ok:fenced",
@@ -400,10 +413,19 @@ const FROZEN_FIELDS: readonly string[] = [
   "full:result.bundle_revision_id:projected",
   "full:result.observations:projected",
   "full:result.necessity:projected",
+  "full:result.judge_context.task_digest:omitted",
+  "full:result.judge_context.task_tags:omitted",
+  "full:result.judge_context.agent_id:omitted",
+  "full:result.judge_context.agent_role:omitted",
+  "full:result.judge_context.session_id:omitted",
+  "full:result.judge_context.explicit_requests:omitted",
+  "full:result.judge_context.workspace_facts:omitted",
+  "full:result.judge_context_layers:omitted",
   "full:result.attempts:omitted",
   "full:result.superseded_transaction_ids:omitted",
   "full:result.retry_work:omitted",
   "full:result.fiber_transaction_refs:omitted",
+  "full:result.replay_of_operation_id:omitted",
   "full:result.render_id:fenced",
   "full:result.ephemeral:fenced",
   "full:result.commit_seq:fenced",
@@ -472,7 +494,7 @@ const JUSTIFICATIONS: Readonly<Record<string, string>> = {
   "J-WORK-COUNTERS": "execution counters other than necessity_eval_count and tsx_worker_spawns: validated where fenced, read by no cache, query or view",
   "J-PROVENANCE-AUX": "auxiliary provenance (creation time, schema versions, storage, sibling SDK entries, wire format): ordering uses the host capture and observation instants, the version cohort the bundle or graph digest, the engine identity only the TSX entries",
   "J-POLICY-REVISION": "the necessity policy revision is no Pi version cohort: the cohort is the bundle digest, else the graph digest (owner ruling G-A, wb-973.8), and equal-payload renders under two policies stay distinct cache entries by their operation ids",
-  "J-REQUEST-ECHO": "request echoes (audience, session id, a non-view scope): the host's own scope and invocation id key the cache and the viewport; no Pi operation reads rf's echo",
+  "J-REQUEST-ECHO": "request echoes (audience, session id, a non-view scope, the judge's inputs and their lens layers, a replayed request key's operation): the host's own scope and invocation id key the cache and the viewport; no Pi operation reads rf's echo",
   "J-DIAGNOSTIC-TEXT": "diagnostic message, hint, source and metadata: withheld from every surfaced string; status reads only severity (ok form) or the primary code (failure form)",
   "J-DIAGNOSTIC-CODE": "a code in an ok envelope: only severity moves coverage; a code is surfaced only as a refusal's primary code",
   "J-ROW-AUX": "observation-row fields beyond status, freshness, replayed and degraded: the demotion note carries only status words and counts",
