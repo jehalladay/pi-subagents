@@ -1,0 +1,859 @@
+{
+ "bead": "wb-ts6.1",
+ "pin": "694570cd00c2",
+ "basis": "The out-of-file roster of test/workbench-hx-recipe-serving-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the residual names and the vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at HyperUnix-CLI 694570cd00c2 (read-only git show): docs/programs/feedback-query-skill-factory-2026-10-16/06-workflow-recipes.md:3 (the operator contract) and the eight recipe headings W1-W8 with the fifteen hx command lines and spans they hold (recipes[].source and commandLines; W5 and W7 hold none), verbatim. Host facts: hxInstall, the installed hx 0.1.0 install-skill --list under an empty scratch HOME. The hx verb vocabulary is the COMMANDS (V1) inventory of the installed hx 0.1.0 --help plus its help dispatcher. Pi facts measured at base f381c52 (landing 443). Matcher witnesses carry the first 16 hex of sha256 over each case's UTF-8 text, never the text.",
+ "hxInstall": {
+  "hxVersion": "0.1.0",
+  "binarySha256": "8fddc7cc2e6c65d9773f0e35713af9b939031f9229e61c64d1ca7781678aa790",
+  "bundle": "skill hyper-unix: 26 file(s), bundle sha256/raw:6befde060c6974b98123e841c8c111d7577ebeee3090d0bd6648eb3cce6c33b8, hx 0.1.0",
+  "capturedUtc": "2026-10-26T22:01:19Z",
+  "command": "HOME=<empty scratch> hx install-skill --list (the scratch HOME stayed empty)",
+  "targets": [
+   {
+    "agent": "default",
+    "dir": "~/.skills/hyper-unix",
+    "state": "selected"
+   },
+   {
+    "agent": "claude",
+    "dir": "~/.claude/skills/hyper-unix",
+    "state": "marker absent"
+   },
+   {
+    "agent": "kiro",
+    "dir": "~/.kiro/skills/hyper-unix",
+    "state": "marker absent"
+   },
+   {
+    "agent": "codex",
+    "dir": "~/.codex/skills/hyper-unix",
+    "state": "marker absent"
+   },
+   {
+    "agent": "hermes",
+    "dir": "~/.hermes/skills/hyper-unix",
+    "state": "marker absent"
+   },
+   {
+    "agent": "opencode",
+    "dir": "~/.config/opencode/skills/hyper-unix",
+    "state": "marker absent"
+   },
+   {
+    "agent": "grokbuild",
+    "dir": "~/.grok/skills/hyper-unix",
+    "state": "marker absent"
+   },
+   {
+    "agent": "qwencode",
+    "dir": "~/.qwen/skills/hyper-unix",
+    "state": "marker absent"
+   },
+   {
+    "agent": "gemini-cli",
+    "dir": "~/.gemini/skills/hyper-unix",
+    "state": "marker absent"
+   },
+   {
+    "agent": "cursor",
+    "dir": "~/.cursor/skills/hyper-unix",
+    "state": "marker absent"
+   }
+  ]
+ },
+ "loaderRoots": [
+  "<cwd>/.pi/skills",
+  "<cwd>/.agents/skills",
+  "~/.pi/agent/skills",
+  "~/.agents/skills",
+  "~/.pi/skills"
+ ],
+ "recipes": [
+  {
+   "id": "W1",
+   "source": "06-workflow-recipes.md:5",
+   "heading": "## W1 — branch-landing-audit (P0)",
+   "commandLines": [
+    12,
+    13,
+    14,
+    15,
+    17,
+    18
+   ],
+   "commands": [
+    "hx --workspace \"$ROOT\" git merge-base \"$TRUNK\" \"$BRANCH\"",
+    "hx --workspace \"$ROOT\" git is-ancestor \"$BRANCH\" \"$TRUNK\"",
+    "hx --workspace \"$ROOT\" git diff \"$TRUNK\" \"$BRANCH\"",
+    "hx --workspace \"$ROOT\" git history --first-parent \\",
+    "hx --workspace \"$ROOT\" show \"git:$TRUNK:$PATH\"",
+    "hx --workspace \"$ROOT\" show \"git:$BRANCH:$PATH\""
+   ]
+  },
+  {
+   "id": "W2",
+   "source": "06-workflow-recipes.md:27",
+   "heading": "## W2 — changed-paths-between (P0)",
+   "commandLines": [
+    32
+   ],
+   "commands": [
+    "hx --workspace \"$ROOT\" git diff \"$LEFT\" \"$RIGHT\""
+   ]
+  },
+  {
+   "id": "W3",
+   "source": "06-workflow-recipes.md:37",
+   "heading": "## W3 — worktree-lane-census (P0)",
+   "commandLines": [
+    42,
+    43,
+    44,
+    45
+   ],
+   "commands": [
+    "hx --workspace \"$ROOT\" git worktrees",
+    "hx --workspace \"$ROOT\" git refs",
+    "hx --workspace \"$ROOT\" git conflicts",
+    "hx --workspace \"$ROOT\" git history --first-parent \"$PATH\""
+   ]
+  },
+  {
+   "id": "W4",
+   "source": "06-workflow-recipes.md:52",
+   "heading": "## W4 — source-orientation (P0)",
+   "commandLines": [
+    56,
+    56
+   ],
+   "commands": [
+    "`hx help members`",
+    "`hx members FILE`"
+   ]
+  },
+  {
+   "id": "W5",
+   "source": "06-workflow-recipes.md:62",
+   "heading": "## W5 — absence-certificate (P0)",
+   "commandLines": [],
+   "commands": []
+  },
+  {
+   "id": "W6",
+   "source": "06-workflow-recipes.md:74",
+   "heading": "## W6 — change-impact-report (P1)",
+   "commandLines": [
+    78
+   ],
+   "commands": [
+    "`hx dependents ... --depth N --plan`"
+   ]
+  },
+  {
+   "id": "W7",
+   "source": "06-workflow-recipes.md:82",
+   "heading": "## W7 — mutation-impact-preflight (P1)",
+   "commandLines": [],
+   "commands": []
+  },
+  {
+   "id": "W8",
+   "source": "06-workflow-recipes.md:95",
+   "heading": "## W8 — bounded-preflight and named-query-lifecycle (P1)",
+   "commandLines": [
+    99
+   ],
+   "commands": [
+    "`hx query show`"
+   ]
+  }
+ ],
+ "vocabulary": {
+  "recipeIds": [
+   "W1",
+   "W2",
+   "W3",
+   "W4",
+   "W5",
+   "W6",
+   "W7",
+   "W8"
+  ],
+  "slugs": [
+   "branch-landing-audit",
+   "changed-paths-between",
+   "worktree-lane-census",
+   "source-orientation",
+   "absence-certificate",
+   "change-impact-report",
+   "mutation-impact-preflight",
+   "bounded-preflight",
+   "named-query-lifecycle"
+  ],
+  "pages": [
+   "06-workflow-recipes",
+   "feedback-query-skill-factory"
+  ],
+  "decisionClasses": [
+   "BRANCH_ANCESTOR_OF_TRUNK",
+   "SAME_BLOB_AT_PATH",
+   "DIFFERENT_BLOB",
+   "PATH_MISSING_ONE_SIDE",
+   "CHANGED_PATHS_REPORTED",
+   "HISTORY_INCOMPLETE",
+   "RENAME_OR_CONTENT_COMPARISON_NEEDED",
+   "KNOWN_PRESENT",
+   "KNOWN_ABSENT_IN_SCOPE",
+   "UNTOUCHED_IN_RANGE",
+   "UNKNOWN_PATH_EXISTENCE",
+   "HISTORY_TRUNCATED",
+   "COMPLETE_WITHIN_DECLARED_SCOPE",
+   "KNOWN_AFFECTED_SUBSET"
+  ],
+  "skillNames": [
+   "hyper-unix",
+   "install-skill"
+  ],
+  "hxVerbs": [
+   "apply",
+   "children",
+   "config",
+   "create",
+   "definitions",
+   "dependencies",
+   "dependents",
+   "descendants",
+   "exec",
+   "explain",
+   "explain-query",
+   "exports",
+   "find",
+   "fs",
+   "git",
+   "help",
+   "hxs",
+   "init",
+   "install-skill",
+   "materialize",
+   "members",
+   "move",
+   "mutation",
+   "observer",
+   "ocaml",
+   "parent",
+   "plan",
+   "query",
+   "references",
+   "remove",
+   "rename",
+   "run",
+   "schema",
+   "select",
+   "show",
+   "watch"
+  ],
+  "servedWords": [
+   "available",
+   "installed",
+   "load",
+   "loaded",
+   "loads",
+   "reachable",
+   "run",
+   "runs",
+   "served",
+   "serves",
+   "serving",
+   "ships",
+   "use",
+   "uses"
+  ],
+  "notServedMarkers": [
+   "absent",
+   "can't",
+   "cannot",
+   "disjoint",
+   "doesn't",
+   "don't",
+   "gated",
+   "isn't",
+   "never",
+   "no",
+   "none",
+   "not",
+   "unavailable",
+   "unreachable",
+   "unserved",
+   "until",
+   "won't"
+  ],
+  "docRoots": [
+   "docs",
+   "examples",
+   "new-feedback",
+   ".agents",
+   ".pi"
+  ],
+  "outOfPopulation": [
+   "coverage",
+   "dist",
+   "media",
+   "node_modules",
+   "qa",
+   "src",
+   "test",
+   "vendor"
+  ]
+ },
+ "residuals": {
+  "Q1": "R-PARAPHRASE",
+  "Q2": "R-SPLIT-COMMAND",
+  "Q3": "R-OUTSIDE-POPULATION",
+  "Q4": "R-ANY-MARKER",
+  "Q5": "R-OUTSIDE-VOCABULARY",
+  "Q6": "R-OPERATOR-CONFIG",
+  "Q7": "R-HEADLESS-BODY",
+  "Q8": "R-BOUND-LAUNCH"
+ },
+ "rows": [
+  {
+   "id": "G",
+   "label": "gate: skill reachable via an install target in a Pi loader root or operator settingSources",
+   "pins": [
+    {
+     "id": "G1",
+     "witness": {
+      "source": [
+       "<cwd>/.pi/skills",
+       "<cwd>/.agents/skills",
+       "<agentDir>/skills",
+       "~/.agents/skills",
+       "~/.pi/skills"
+      ],
+      "agentDir": "~/.pi/agent",
+      "roots": [
+       "<cwd>/.pi/skills",
+       "<cwd>/.agents/skills",
+       "~/.pi/agent/skills",
+       "~/.agents/skills",
+       "~/.pi/skills"
+      ],
+      "targets": [
+       "~/.skills/hyper-unix",
+       "~/.claude/skills/hyper-unix",
+       "~/.kiro/skills/hyper-unix",
+       "~/.codex/skills/hyper-unix",
+       "~/.hermes/skills/hyper-unix",
+       "~/.config/opencode/skills/hyper-unix",
+       "~/.grok/skills/hyper-unix",
+       "~/.qwen/skills/hyper-unix",
+       "~/.gemini/skills/hyper-unix",
+       "~/.cursor/skills/hyper-unix"
+      ],
+      "inside": [],
+      "insideControl": [
+       "~/.skills/hyper-unix"
+      ]
+     }
+    },
+    {
+     "id": "G2",
+     "witness": {
+      "planted": 10,
+      "placeholder": true,
+      "reached": [
+       "<cwd>/.pi/skills",
+       "<cwd>/.agents/skills",
+       "~/.pi/agent/skills",
+       "~/.agents/skills",
+       "~/.pi/skills"
+      ]
+     }
+    },
+    {
+     "id": "G3",
+     "witness": {
+      "defaultSources": [],
+      "sites": [
+       "src/index.ts:?? []",
+       "src/index.ts:?? []",
+       "src/settings.ts:value",
+       "src/workbench/claude-host.ts:settings=?? []",
+       "src/workbench/hosts/local-detached.ts:[]"
+      ],
+      "floor": [
+       [
+        "project"
+       ]
+      ],
+      "userExamples": [],
+      "userControl": [
+       "control.md"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "N",
+   "label": "until then a census-style negative records that no Pi document presents the recipes as served",
+   "pins": [
+    {
+     "id": "N1",
+     "witness": {
+      "walkComplete": true,
+      "atFloor": true,
+      "unread": [],
+      "rootMarkdown": [
+       "AGENTS.md",
+       "CHANGELOG.md",
+       "CONTRIBUTING.md",
+       "README.md",
+       "SECURITY.md"
+      ],
+      "floor": [
+       {
+        "at": "docs/workbench/TRACEABILITY.md:236",
+        "verdict": "negated"
+       }
+      ],
+      "named": [],
+      "served": []
+     }
+    },
+    {
+     "id": "N2",
+     "witness": {
+      "placeholder": true,
+      "projectSkillRead": true,
+      "agentFilesRead": true,
+      "defaultsRead": true,
+      "declaring": [],
+      "declaringControl": true
+     }
+    },
+    {
+     "id": "N3",
+     "witness": {
+      "modules": true,
+      "floorSeen": [
+       "src/env.ts:exec:git",
+       "src/index.ts:execFileSync:git",
+       "src/workbench/providers/reactivefiber.ts:spawn:rf"
+      ],
+      "hxLaunches": [],
+      "literals": [],
+      "typed": [
+       "hyperunix.find:read:@hyperunix/sdk@<version>:HyperUnix.find",
+       "hyperunix.find:read:@hyperunix/sdk@<version>:HyperUnix.find"
+      ],
+      "flagged": [],
+      "flaggedControl": [
+       "census.planted"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "E",
+   "label": "a falsifier that goes red if a Pi doc embeds a recipe copy or shows an unquoted/interpolated REV/BASE/PATH",
+   "pins": [
+    {
+     "id": "E1",
+     "witness": [
+      {
+       "id": "W1",
+       "heading": "named",
+       "commands": [
+        "served",
+        "served",
+        "served",
+        "served",
+        "served",
+        "served"
+       ]
+      },
+      {
+       "id": "W2",
+       "heading": "named",
+       "commands": [
+        "served"
+       ]
+      },
+      {
+       "id": "W3",
+       "heading": "named",
+       "commands": [
+        "served",
+        "served",
+        "served",
+        "served"
+       ]
+      },
+      {
+       "id": "W4",
+       "heading": "named",
+       "commands": [
+        "served",
+        "served"
+       ]
+      },
+      {
+       "id": "W5",
+       "heading": "named",
+       "commands": []
+      },
+      {
+       "id": "W6",
+       "heading": "named",
+       "commands": [
+        "served"
+       ]
+      },
+      {
+       "id": "W7",
+       "heading": "named",
+       "commands": []
+      },
+      {
+       "id": "W8",
+       "heading": "named",
+       "commands": [
+        "served"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "E2",
+     "witness": [
+      [
+       "85efc4e0ccd986a6",
+       "served"
+      ],
+      [
+       "602040730cabd5ff",
+       "served"
+      ],
+      [
+       "385dc34c1f32cd37",
+       "served"
+      ],
+      [
+       "32b73df1c0d4cc7c",
+       "served"
+      ],
+      [
+       "07ef04e716486b2c",
+       "served"
+      ],
+      [
+       "c99702b1d5473101",
+       "served"
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "id": "M",
+   "label": "the matchers rows G, N and E read catch every spelling family they name and leave the near misses clean",
+   "pins": [
+    {
+     "id": "M1",
+     "witness": [
+      [
+       "b0940cd57a5d342d",
+       "named",
+       [
+        "slug"
+       ]
+      ],
+      [
+       "ca61a5d0622072cd",
+       "served",
+       [
+        "slug"
+       ]
+      ],
+      [
+       "9b32572ab7f3349e",
+       "negated",
+       [
+        "slug"
+       ]
+      ],
+      [
+       "c85c12782c867b12",
+       "named",
+       [
+        "page"
+       ]
+      ],
+      [
+       "09366b164e182b4d",
+       "named",
+       [
+        "class"
+       ]
+      ],
+      [
+       "9307f1abf898157d",
+       "named",
+       [
+        "skill"
+       ]
+      ],
+      [
+       "27ed19d4b4a330f1",
+       "served",
+       [
+        "skill"
+       ]
+      ],
+      [
+       "d22a4f63c41e3a8e",
+       "served",
+       [
+        "skill"
+       ]
+      ],
+      [
+       "f4790c1354d97321",
+       "served",
+       [
+        "number"
+       ]
+      ],
+      [
+       "c9aa8b0136d1ba32",
+       "negated",
+       [
+        "skill"
+       ]
+      ],
+      [
+       "be3196f2ac0365ee",
+       "none",
+       []
+      ],
+      [
+       "8aac1377e6e7c771",
+       "none",
+       []
+      ],
+      [
+       "3897e6003d2b3636",
+       "none",
+       []
+      ],
+      [
+       "32451b9961cc9683",
+       "none",
+       []
+      ],
+      [
+       "c7caeb3c38005490",
+       "none",
+       []
+      ],
+      [
+       "1db0a00bed2cc186",
+       "none",
+       []
+      ],
+      [
+       "d2081cee698afbfb",
+       "none",
+       []
+      ],
+      [
+       "a86891432878f510",
+       "none",
+       []
+      ]
+     ]
+    },
+    {
+     "id": "M2",
+     "witness": [
+      [
+       "2d8ca76cf590ae90",
+       true
+      ],
+      [
+       "3e8246b85776da8a",
+       true
+      ],
+      [
+       "a6bab49e5319c609",
+       true
+      ],
+      [
+       "bc9f19d182cf9679",
+       true
+      ],
+      [
+       "ef46b46d0f91efaf",
+       true
+      ],
+      [
+       "a86891432878f510",
+       false
+      ],
+      [
+       "ab2735d7c4eebb02",
+       false
+      ],
+      [
+       "053ad4e88fb93cda",
+       false
+      ],
+      [
+       "42573dd80f48251f",
+       false
+      ],
+      [
+       "f2537b3c10193221",
+       false
+      ],
+      [
+       "9eba348efc84c4a1",
+       false
+      ],
+      [
+       "8b6479ef7a7573cc",
+       false
+      ],
+      [
+       "0625420a0a030710",
+       false
+      ]
+     ]
+    },
+    {
+     "id": "M3",
+     "witness": {
+      "launches": [
+       [
+        "fdf7db86cac6c0de",
+        1,
+        1
+       ],
+       [
+        "d6441e4ece6bfd46",
+        1,
+        1
+       ],
+       [
+        "f56ffb049f423bae",
+        1,
+        0
+       ],
+       [
+        "740d629a8698a1c0",
+        1,
+        1
+       ]
+      ],
+      "literals": [
+       [
+        "a3b4f00d74c49230",
+        1
+       ],
+       [
+        "e526d11d548f6f24",
+        1
+       ],
+       [
+        "8e722eb037baa763",
+        0
+       ],
+       [
+        "fedaa342496be15b",
+        0
+       ]
+      ],
+      "sites": [
+       [
+        "587ed1caec8eb082",
+        "case.ts:?? []"
+       ],
+       [
+        "4fb2b22d71fca4d0",
+        "case.ts:value"
+       ],
+       [
+        "53e90be8c5955f7d",
+        "case.ts:s=?? []"
+       ],
+       [
+        "0699bae8b7edc2eb",
+        "case.ts:[]"
+       ]
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "R",
+   "label": "the named residuals, each a pinned quiet row that reds when its escape stops being quiet",
+   "pins": [
+    {
+     "id": "Q1",
+     "witness": "none"
+    },
+    {
+     "id": "Q2",
+     "witness": [
+      "none",
+      "none"
+     ]
+    },
+    {
+     "id": "Q3",
+     "witness": {
+      "outside": [],
+      "rosterServed": true
+     }
+    },
+    {
+     "id": "Q4",
+     "witness": "negated"
+    },
+    {
+     "id": "Q5",
+     "witness": [
+      "none",
+      "none",
+      "none"
+     ]
+    },
+    {
+     "id": "Q6",
+     "witness": {
+      "loaded": [
+       "user"
+      ],
+      "reached": [
+       "user"
+      ]
+     }
+    },
+    {
+     "id": "Q7",
+     "witness": "none"
+    },
+    {
+     "id": "Q8",
+     "witness": [
+      0,
+      0
+     ]
+    }
+   ]
+  }
+ ]
+}
