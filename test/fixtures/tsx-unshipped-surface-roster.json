@@ -1125,7 +1125,9 @@
             ],
             "tierClaims": [],
             "receiptsFloorMet": true,
-            "naming": [],
+            "naming": [
+              "docs/workbench/receipts/wb-693.7.md"
+            ],
             "receiptClaims": [],
             "controls": {
               "title": 1,

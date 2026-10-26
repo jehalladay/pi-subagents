@@ -1150,7 +1150,8 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const naming = receipts.filter(path => TIER_NAMES.some(name => textOf(join(REPO, path)).includes(name)));
     const receiptClaims = naming.flatMap(path => sentencesOf(textOf(join(REPO, path)), true).filter(sentence => receiptClaim(sentence.text)).map(sentence => `${path}:${sentence.line}`));
     const reading = { include: [...include], titles, tierClaims, receiptsFloorMet: receipts.length >= 30, naming, receiptClaims };
-    expect(reading).toStrictEqual({ include: [TIER], titles: ROSTER.titles, tierClaims: [], receiptsFloorMet: true, naming: [], receiptClaims: [] });
+    // wb-693.7 (RF-TSX-AND-EMBEDDING-R9) delivers the first kind=tsx receipt, so exactly that file names the tier; it carries no claim.
+    expect(reading).toStrictEqual({ include: [TIER], titles: ROSTER.titles, tierClaims: [], receiptsFloorMet: true, naming: ["docs/workbench/receipts/wb-693.7.md"], receiptClaims: [] });
     const tierControl = (source: string): number => wordsOf("tier.ts", source).filter(word => receiptClaim(word)).length;
     const controls = {
       title: tierControl('it("success row: the TSX data output reaches parity", () => {});\n'),
