@@ -14,6 +14,9 @@
  * members, `data.selection` for the tests) travels beside the disposition as its own facet whenever the reply publishes it,
  * and a published selection short of complete, or one that is not well formed, never settles with a success tone: a selected
  * or partial run is never a full-gate PASS. A gate-step node carries only its own step's outcome, never the operation's verdict.
+ * The reply's own run-start pin (`data.gated_commit`, `data.gated_tree`) is the verdict's basis whenever the host hands a head
+ * seam (wb-4ap.17): it is echoed as subjectBasis, compared with the host's own HEAD reading, and a missing, withheld, stale or
+ * uncompared basis never settles with a success tone.
  *
  * Retention: the started operation's connection is handed to the caller's `retain` seam (the wb-cra.1 registry), re-stated
  * on every frame of the operation so an active operation keeps its cancel offer past the registry TTL, and released on the
@@ -43,6 +46,16 @@ export const FORGE_TEST_SELECTION_FIELD = "selection";
 const NATIVE_TEXT_BYTES = 256;
 /** The closed selection axis of a selection_accounting row; a row outside it withholds the whole block. */
 const SELECTION_STATES: ReadonlySet<string> = new Set(["selected", "unaffected", "explicitly_narrowed", "unknown"]);
+/** Forge's result contract (docs/agent-interface.md § Fields, contract_version): a reply's run-start pin is read only under it (wb-4ap.17). */
+export const FORGE_RESULT_CONTRACT = "result-envelope/v1";
+/** The reply `data` keys of the run's content identity, both resolved by the producer at RUN START (docs/agent-interface.md). */
+const GATED_COMMIT_FIELD = "gated_commit";
+const GATED_TREE_FIELD = "gated_tree";
+/**
+ * A git object id as the producer and the host both spell it (a SHA-1 or a SHA-256 repository): the hex member of the digest
+ * shapes native-evidence.ts accepts as a source basis. A commit or a tree is never one of the content-digest forms.
+ */
+const OBJECT_ID = /^[0-9a-f]{40,64}$/;
 
 /** One notification as the connection delivers it; a real SDK Notification satisfies it unchanged. */
 export interface ForgeOperationFrame {
@@ -101,6 +114,37 @@ export interface ForgeOperationTerminal {
   readonly observedAt: string;
   /** Present only when the reply published a selection block. */
   readonly selection?: ForgeRunSelection;
+}
+/** The host's own reading of the package repository when a reply settles: `git rev-parse HEAD` and `HEAD^{tree}` (wb-4ap.17). */
+export interface ForgeObservedHead {
+  readonly commit: string;
+  readonly tree: string;
+}
+/**
+ * The verdict basis a gate.run reply publishes (wb-4ap.17): its own run-start pin, verbatim (a dirty run's tree is the producer's
+ * ""); missing when gated_commit is null (the producer's honest absent value) or not published at all (a cancelled run publishes
+ * none); withheld when the reply is off the result contract, carries no data object, or publishes a half that is not well formed.
+ */
+export type ForgeRunBasis =
+  | { readonly state: "pinned"; readonly commit: string; readonly tree: string }
+  | { readonly state: "missing"; readonly cause: "null" | "absent" }
+  | { readonly state: "withheld"; readonly cause: "contract" | "data" | "commit" | "tree" };
+/**
+ * The pin against the host's head: current only when both halves equal it, stale when either differs, indeterminate when there
+ * is no pin or no head to compare, UNKNOWN when the pin is withheld. It speaks about the head, never about the verdict.
+ */
+export type ForgeBasisFreshness = "current" | "stale" | "indeterminate" | "UNKNOWN";
+export interface ForgeGateRunContext extends ForgeTopologyOptions {
+  readonly observedAt: string;
+  /** The host's head reading when the reply settled; undefined when the host read none. */
+  readonly observedHead: ForgeObservedHead | undefined;
+}
+/** A settled gate.run as the reader projects it: the node snapshot, the basis it read, its freshness and fixed-sentence diagnostics. */
+export interface ForgeGateRunReading {
+  readonly snapshot: NativeSnapshot;
+  readonly basis: ForgeRunBasis;
+  readonly freshness: ForgeBasisFreshness;
+  readonly diagnostics: readonly string[];
 }
 export interface ForgeObservedRelation {
   readonly scope: ObservationScope;
@@ -312,6 +356,72 @@ export function decodeForgeOperationTerminal(reply: unknown, operationId: string
   return { operationId, status, terminalDisposition: disposition, observedAt, ...(selection !== undefined ? { selection } : {}) };
 }
 
+type BasisCause = Extract<ForgeRunBasis, { readonly cause: string }>["cause"];
+const WITHHELD = "so its verdict basis is withheld and shown as basis UNKNOWN.";
+/** Each withheld or missing basis, and an unread head, named in one fixed sentence; no producer text is ever quoted. */
+const BASIS_DIAGNOSTICS: Readonly<Record<BasisCause | "unobserved", string>> = Object.freeze({
+  contract: `Forge gate.run reply is not a ${FORGE_RESULT_CONTRACT} result, ${WITHHELD}`,
+  data: `Forge gate.run reply carries no data object, ${WITHHELD}`,
+  commit: `Forge gate.run published a gated_commit that is not a git object id, ${WITHHELD}`,
+  tree: `Forge gate.run published a gated_tree that is neither a git object id nor the producer's empty dirty-run value, ${WITHHELD}`,
+  null: "Forge gate.run published gated_commit null (the producer resolved no commit for the package), so the verdict names no basis and reads basis indeterminate.",
+  absent: "Forge gate.run published no gated_commit, so the verdict names no basis and reads basis indeterminate.",
+  unobserved: "The host read no HEAD for the package's repository when the reply settled, so the pinned commit is not compared and reads basis indeterminate.",
+});
+
+/**
+ * The reply's own run-start pin (wb-4ap.17): own fields only, read only under the result contract, used verbatim or not at all.
+ * gated_commit must be a git object id and gated_tree a git object id or the producer's "" for a dirty run. gated_commit null, or
+ * no gated_commit at all, is a missing pin; anything else is withheld whole, never repaired.
+ */
+export function decodeForgeRunBasis(reply: unknown): ForgeRunBasis {
+  if (!record(reply) || own(reply, "contract_version") !== FORGE_RESULT_CONTRACT) return { state: "withheld", cause: "contract" };
+  const data = own(reply, "data");
+  if (!record(data)) return { state: "withheld", cause: "data" };
+  if (!Object.hasOwn(data, GATED_COMMIT_FIELD)) return { state: "missing", cause: "absent" };
+  const commit = own(data, GATED_COMMIT_FIELD);
+  if (commit === null) return { state: "missing", cause: "null" };
+  if (typeof commit !== "string" || !OBJECT_ID.test(commit)) return { state: "withheld", cause: "commit" };
+  const tree = own(data, GATED_TREE_FIELD);
+  if (typeof tree !== "string" || (tree !== "" && !OBJECT_ID.test(tree))) return { state: "withheld", cause: "tree" };
+  return { state: "pinned", commit, tree };
+}
+
+/** A head reading the host made, used only when both of its halves are git object ids. */
+function readHead(head: ForgeObservedHead | undefined): ForgeObservedHead | undefined {
+  return head !== undefined && OBJECT_ID.test(head.commit) && OBJECT_ID.test(head.tree) ? head : undefined;
+}
+
+/**
+ * The gate.run reader (wb-4ap.17, COLLECTIVE-ADAPTATION-R17): the a3s and wb-6ps1.2 reading of the reply's terminal, with the
+ * reply's own run-start pin as the verdict's basis. subjectBasis echoes gated_commit verbatim whenever the pin is well formed; the
+ * basis word follows the text (current only when gated_commit and gated_tree both equal the host's head, stale when either differs,
+ * indeterminate with no pin or no head, UNKNOWN when the pin is withheld). Success needs a current basis and the producer's own
+ * PASS gate verdict, so a missing, withheld, stale or unread basis, a gate verdict that is not PASS, or a partial status never
+ * renders success, while a failure stays a failure. Neither the command status nor identity_closure is read for the basis.
+ * Undefined when the reply settles another operation or names no disposition, exactly as decodeForgeOperationTerminal.
+ */
+export function forgeGateRunReading(reply: unknown, operationId: string, context: ForgeGateRunContext): ForgeGateRunReading | undefined {
+  const terminal = decodeForgeOperationTerminal(reply, operationId, context.observedAt);
+  if (terminal === undefined) return undefined;
+  const settled = forgeOperationTerminalSnapshot(terminal, context);
+  const basis = decodeForgeRunBasis(reply);
+  const head = readHead(context.observedHead);
+  const freshness: ForgeBasisFreshness = basis.state === "withheld" ? "UNKNOWN"
+    : basis.state === "missing" || head === undefined ? "indeterminate"
+    : basis.commit === head.commit && basis.tree === head.tree ? "current" : "stale";
+  const diagnostics = basis.state !== "pinned" ? [BASIS_DIAGNOSTICS[basis.cause]] : head === undefined ? [BASIS_DIAGNOSTICS.unobserved] : [];
+  const data = record(reply) ? own(reply, "data") : undefined;
+  const passed = freshness === "current" && record(data) && own(data, "gate_verdict") === "PASS";
+  const statusTone: Presentation["statusTone"] = settled.node.statusTone === "success" && !passed ? "unknown" : settled.node.statusTone;
+  const snapshot: NativeSnapshot = {
+    ...settled,
+    ...(basis.state === "pinned" ? { subjectBasis: basis.commit } : {}),
+    node: { ...settled.node, statusText: `${settled.node.statusText} · basis ${freshness}`, statusTone },
+  };
+  return { snapshot, basis, freshness, diagnostics };
+}
+
 export interface ForgeOperationObserverDeps {
   /** The absolute package root gate.run runs on; the caller has already bound it to the workspace. */
   readonly root: string;
@@ -323,6 +433,11 @@ export interface ForgeOperationObserverDeps {
   readonly timeoutMs: number;
   /** The retention seam (wb-cra.1 retainForgeOperation): returns the disposer of the entry it made. */
   readonly retain: (operationId: string, connection: ForgeOperationConnection) => () => void;
+  /**
+   * wb-4ap.17: the host's reading of the package repository's HEAD, read once when the operation's own reply settles. Given, the
+   * settle is the basis reading (forgeGateRunReading) and a seam that throws reads as no head; without it the a3s reading stands.
+   */
+  readonly observedHead?: () => ForgeObservedHead | undefined;
 }
 export type ForgeOperationSettlement = "settled" | "transport-ended";
 export interface ForgeOperationObserver {
@@ -334,6 +449,24 @@ export interface ForgeOperationObserver {
   close(): void;
   /** close(), then releases the retention and closes the owned connection (reaping the spawned server). Issues no control verb. */
   dispose(): Promise<void>;
+}
+
+/**
+ * The node the operation's own reply settles, or undefined when it settles another operation or names no disposition: the basis
+ * reading when the host handed a head seam (wb-4ap.17), its head read only once the reply is this operation's, else the a3s reading.
+ */
+function settledSnapshot(result: unknown, operationId: string, options: ForgeTopologyOptions, deps: ForgeOperationObserverDeps): NativeSnapshot | undefined {
+  const observedAt = deps.now();
+  const terminal = decodeForgeOperationTerminal(result, operationId, observedAt);
+  if (terminal === undefined) return undefined;
+  if (deps.observedHead === undefined) return forgeOperationTerminalSnapshot(terminal, options);
+  let observedHead: ForgeObservedHead | undefined;
+  try {
+    observedHead = deps.observedHead();
+  } catch {
+    observedHead = undefined;
+  }
+  return forgeGateRunReading(result, operationId, { ...options, observedAt, observedHead })?.snapshot;
 }
 
 /**
@@ -398,9 +531,9 @@ export async function observeForgeGateRun(connection: ForgeOperationConnection, 
   const at = startedAt as string;
   const settled = reply.then(
     (result): ForgeOperationSettlement => {
-      const terminal = decodeForgeOperationTerminal(result, id, deps.now());
-      if (terminal === undefined) deps.projection.markStale({ scope: deps.scope, ref: forgeOperationRef(id) });
-      else deps.projection.refresh(forgeOperationTerminalSnapshot(terminal, options));
+      const snapshot = settledSnapshot(result, id, options, deps);
+      if (snapshot === undefined) deps.projection.markStale({ scope: deps.scope, ref: forgeOperationRef(id) });
+      else deps.projection.refresh(snapshot);
       observing = false;
       unsubscribe();
       release?.();

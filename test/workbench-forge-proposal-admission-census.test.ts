@@ -65,7 +65,10 @@
  *    finished step without an outcome; replies: no disposition, another operation; the observed gate.run whose reply settles
  *    nothing; gate.status without packages or under another protocol method), with every plant: outputs, refusal categories and
  *    messages unchanged; and the READER ENUMERATION: every function the three reader files export is driven by D1 or named in
- *    NOT_DRIVEN with a reason the census checks on the function's own body. D2 the VERDICT vocabulary is read off the readers
+ *    NOT_DRIVEN with a reason the census checks on the function's own body. wb-4ap.17 added the gate.run basis reader
+ *    (decodeForgeRunBasis, forgeGateRunReading): D1 drives it over the same no-receipt replies plus one reply on the result
+ *    contract whose pin is the producer's null, with every plant, and records its outputs unchanged and its tones (never success).
+ *    D2 the VERDICT vocabulary is read off the readers
  *    (the receipt and FAIL controls' tones and qualifiers), and no D1, B2 or B3 output carries a verdict tone or qualifier.
  * FACET words: clause (b)'s facet labels and clause (a)'s token, singular or plural (and the token's inflections), plus facet(s).
  * PLANT keys: every needle in five spellings (snake, camel, kebab, joined, Pascal), the facet labels, the token and the
@@ -122,8 +125,11 @@ import { forgeGateTopology } from "../src/workbench/forge-observer.js";
 import {
   decodeForgeOperationFrame,
   decodeForgeOperationTerminal,
+  decodeForgeRunBasis,
+  FORGE_RESULT_CONTRACT,
   type ForgeOperationConnection,
   type ForgeOperationFrame,
+  forgeGateRunReading,
   forgeGateStepTopology,
   forgeOperationStartedSnapshot,
   forgeOperationTerminalSnapshot,
@@ -1073,6 +1079,17 @@ function replyOutput(value: JsonValue, drive: Drive): JsonValue {
   const terminal = drive.call(decodeForgeOperationTerminal)(value, OPERATION, AT);
   return terminal === undefined ? null : json(drive.call(forgeOperationTerminalSnapshot)(terminal, OPTIONS));
 }
+/** wb-4ap.17: a settled reply on the result contract whose run-start pin is the producer's null (no repository): no native receipt. */
+const REPLY_UNPINNED: JsonObject = {
+  operation_id: OPERATION, status: "success", terminal_disposition: "completed", contract_version: FORGE_RESULT_CONTRACT,
+  data: { gate_verdict: null, gated_commit: null, gated_tree: null },
+};
+/** wb-4ap.17: one gate.run reply through the basis decoder and the basis reader, with no host head (a census reply is no checkout's). */
+function basisOutput(value: JsonValue, drive: Drive): JsonValue {
+  const basis = drive.call(decodeForgeRunBasis)(value);
+  const reading = drive.call(forgeGateRunReading)(value, OPERATION, { ...OPTIONS, observedAt: AT, observedHead: undefined });
+  return json({ basis, reading: reading ?? null });
+}
 /** A dedicated connection that, when gate.run is requested, delivers `frames` to every sink and answers `reply`. */
 function scriptedConnection(frames: readonly JsonObject[], reply: JsonValue): ForgeOperationConnection {
   const sinks = new Set<(frame: ForgeOperationFrame) => void>();
@@ -1129,13 +1146,13 @@ interface OperationDifferential {
   readonly divergent: string[];
   readonly outputs: { readonly label: string; readonly entry: string; readonly output: JsonValue }[];
 }
-function operationDifferential(entries: readonly OperationEntry[], variants: readonly Variant[], drive: Drive): OperationDifferential {
+function operationDifferential(entries: readonly OperationEntry[], variants: readonly Variant[], drive: Drive, readReply = replyOutput): OperationDifferential {
   let cases = 0;
   let planted = 0;
   const divergent: string[] = [];
   const outputs: OperationDifferential["outputs"] = [];
   for (const entry of entries) {
-    const read = (value: JsonObject): JsonValue => (entry.kind === "frame" ? frameOutput(value, drive) : replyOutput(value, drive));
+    const read = (value: JsonObject): JsonValue => (entry.kind === "frame" ? frameOutput(value, drive) : readReply(value, drive));
     const baseline = read(entry.value);
     const positions = entry.kind === "frame" ? FRAME_POSITIONS : REPLY_POSITIONS;
     for (const position of positionsOf(positions)) {
@@ -1418,6 +1435,10 @@ async function receiptlessReading(): Promise<JsonObject> {
   const drive = new Drive();
   const gate = await gateDifferential(REFUSED, ALL_VARIANTS, drive);
   const operation = operationDifferential(NO_RECEIPT_OPERATION, ALL_VARIANTS, drive);
+  // wb-4ap.17: the basis reader over the no-receipt replies and one on-contract reply whose pin is null, with every plant.
+  const basisEntries: readonly OperationEntry[] = [...NO_RECEIPT_OPERATION.filter(entry => entry.kind === "reply"), { id: "reply-unpinned", kind: "reply", value: REPLY_UNPINNED }];
+  const basis = operationDifferential(basisEntries, ALL_VARIANTS, drive, basisOutput);
+  const basisOutputs = [...basisEntries.map(entry => basisOutput(entry.value, drive)), ...basis.outputs.map(item => item.output)];
   const observed = await observedDifferential(OPEN_RUN, ALL_VARIANTS, drive);
   const nullReply = replyOutput(null, drive);
   const receipts = { step: presentations(frameOutput(STEP_PASSED, drive))[0]?.tone ?? "", terminal: presentations(replyOutput(REPLY_SUCCESS, drive))[0]?.tone ?? "" };
@@ -1449,6 +1470,10 @@ async function receiptlessReading(): Promise<JsonObject> {
   return {
     gate: { bases: REFUSED.map(base => base.id), cases: gate.cases, planted: gate.planted, divergent: gate.divergent, echoInexact: gate.echoInexact },
     operation: { entries: NO_RECEIPT_OPERATION.map(entry => entry.id), cases: operation.cases, planted: operation.planted, divergent: operation.divergent },
+    basis: {
+      entries: basisEntries.map(entry => entry.id), cases: basis.cases, planted: basis.planted, divergent: basis.divergent,
+      tones: unique(basisOutputs.flatMap(output => presentations(output).map(entry => entry.tone))).sort(),
+    },
     observed: { variants: ALL_VARIANTS.length, divergent: observed.divergent, settled: isObject(observed.baseline) ? (observed.baseline.settled ?? null) : null, tones: presentations(observed.baseline).map(entry => entry.tone) },
     nullReply,
     reasonControls,
