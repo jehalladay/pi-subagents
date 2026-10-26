@@ -95,3 +95,24 @@ return {coverage: found.source.coverage_summary, runtime: found.runtime};
 The native result can be incomplete even when files are returned. `licenses_absence: false` does not establish that a missing file or symbol is absent. This query is a filesystem read, not a task-scoped semantic dependency analysis.
 
 `furnace.run.inspect` accepts an existing `runId` under the authorized Pi workspace with explicit `furnace:inspect`. `reactivefiber.render.preview` accepts exactly one of two input arms under explicit `reactivefiber:render`: `model` and `task`, or `view` and `taskId` with an optional `model`, never both; its workspace must already be initialized. It uses a noncommitted render and must not be advertised as a durable RF artifact.
+
+## Claude role as a swarm context graph worker
+
+A swarm context graph worker is a Claude role that runs `rf` through its shell tool and follows the swarm recipe of the installed rf skill. `rf install-skill --agent claude` writes that skill to `~/.claude/skills/rf/`, whose `references/swarm-integration.md` holds the recipe. This page names that location and never restates the recipe, and the repository tracks no copy of the skill.
+
+```json
+{
+  "workbench": {
+    "workflowAgentBackend": "claude",
+    "settingSources": ["user"],
+    "roles": {
+      "scg-worker": {
+        "prompt": "Work as a swarm context graph worker: follow the swarm recipe of the rf skill installed at ~/.claude/skills/rf, and pass the directory SWARM_RF_WORKSPACE names as --workspace to every rf command.",
+        "tools": ["Bash", "Read"]
+      }
+    }
+  }
+}
+```
+
+Pi loads this `.pi/subagents.json` as written, with `settingSources` a `workbench` key and never a role key. Pi's Claude host passes every session it starts the configured `settingSources`, here `user`, and passes `[]` when the key is absent. The installed Agent SDK documents `user` as the global user settings in `~/.claude/settings.json` and `[]` as disabling filesystem settings. The role's `tools` replace the workbench-wide `tools` for its sessions, so `Bash` is the shell tool the worker runs `rf` through. The role declares no `capabilities`, so its sessions expose no Pi provider tool and need no capability grant. The worker learns the swarm workspace from `RF_WORKSPACE` and `SWARM_RF_WORKSPACE`, and the role adds no environment of its own: its sessions start with no `env` override, and the detached host's launch allowlist carries both names. The detached host starts its Claude sessions with `settingSources` `[]` whatever this file sets, so there the `user` source is not loaded.

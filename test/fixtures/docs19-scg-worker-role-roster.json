@@ -1,0 +1,167 @@
+{
+  "bead": "wb-973.15",
+  "basis": "The out-of-file roster of test/workbench-docs19-scg-worker-role.census.ts (standing rule 16 anchor): every judged row's id, paragraph, quote, status and pins (or reason), so a row or pin removed from the census and from every literal in it still reds here. Written by the cutting seat (ws-01, g10-work-s110) at the cut, 2026-10-26.",
+  "doc": "docs/workbench/19-worked-examples.md",
+  "section": "Claude role as a swarm context graph worker",
+  "census": "test/workbench-docs19-scg-worker-role.census.ts",
+  "cases": "test/workbench-role-capabilities-settings.test.ts",
+  "rows": [
+    {
+      "id": "R1",
+      "paragraph": 1,
+      "quote": "A swarm context graph worker is a Claude role that runs `rf` through its shell tool and follows the swarm recipe of the installed rf skill.",
+      "status": "pinned",
+      "pins": [
+        {
+          "file": "test/workbench-role-capabilities-settings.test.ts",
+          "title": "SCG-R15 R1: the page's block declares exactly one Claude role, whose tools carry Bash and whose prompt names the installed rf skill and SWARM_RF_WORKSPACE",
+          "suite": [
+            "wb-973.15 SCG-R15: the docs/19 swarm context graph worker role"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R2",
+      "paragraph": 1,
+      "quote": "`rf install-skill --agent claude` writes that skill to `~/.claude/skills/rf/`, whose `references/swarm-integration.md` holds the recipe.",
+      "status": "unpinned",
+      "pins": [],
+      "reason": "RFCLI's own install fact, not Pi's: measured with rf install-skill --list --json on rf 0.1.845 (2026-10-26: the claude destination is ~/.claude/skills/rf and the skill's files include references/swarm-integration.md); the default gate runs no rf, so no default-gate case can vouch for it"
+    },
+    {
+      "id": "R3",
+      "paragraph": 1,
+      "quote": "This page names that location and never restates the recipe, and the repository tracks no copy of the skill.",
+      "status": "pinned",
+      "pins": [
+        {
+          "file": "test/workbench-role-capabilities-settings.test.ts",
+          "title": "SCG-R15 R3a: the section names the installed skill's location and restates no recipe step: no rendered rf command beyond rf install-skill",
+          "suite": [
+            "wb-973.15 SCG-R15: the docs/19 swarm context graph worker role"
+          ]
+        },
+        {
+          "file": "test/workbench-role-capabilities-settings.test.ts",
+          "title": "SCG-R15 R3b: the repository tracks no copy of the rf skill: no rf directory under a skills directory, no recipe file and no SKILL.md naming rf",
+          "suite": [
+            "wb-973.15 SCG-R15: the docs/19 swarm context graph worker role"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R4",
+      "paragraph": 2,
+      "quote": "Pi loads this `.pi/subagents.json` as written, with `settingSources` a `workbench` key and never a role key.",
+      "status": "pinned",
+      "pins": [
+        {
+          "file": "test/workbench-role-capabilities-settings.test.ts",
+          "title": "SCG-R15 R4a: Pi loads the page's .pi/subagents.json as written, settingSources a workbench key",
+          "suite": [
+            "wb-973.15 SCG-R15: the docs/19 swarm context graph worker role"
+          ]
+        },
+        {
+          "file": "test/workbench-role-capabilities-settings.test.ts",
+          "title": "SCG-R15 R4b: a role that declares settingSources itself is refused, never read",
+          "suite": [
+            "wb-973.15 SCG-R15: the docs/19 swarm context graph worker role"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R5",
+      "paragraph": 2,
+      "quote": "Pi's Claude host passes every session it starts the configured `settingSources`, here `user`, and passes `[]` when the key is absent.",
+      "status": "pinned",
+      "pins": [
+        {
+          "file": "test/workbench-role-capabilities-settings.test.ts",
+          "title": "SCG-R15 R5: the Claude host passes every session the configured settingSources, the page's user, and [] when the key is absent",
+          "suite": [
+            "wb-973.15 SCG-R15: the docs/19 swarm context graph worker role"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R6",
+      "paragraph": 2,
+      "quote": "The installed Agent SDK documents `user` as the global user settings in `~/.claude/settings.json` and `[]` as disabling filesystem settings.",
+      "status": "pinned",
+      "pins": [
+        {
+          "file": "test/workbench-role-capabilities-settings.test.ts",
+          "title": "SCG-R15 R6: the installed Agent SDK documents user as the global ~/.claude/settings.json source and [] as disabling filesystem settings",
+          "suite": [
+            "wb-973.15 SCG-R15: the docs/19 swarm context graph worker role"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R7",
+      "paragraph": 2,
+      "quote": "The role's `tools` replace the workbench-wide `tools` for its sessions, so `Bash` is the shell tool the worker runs `rf` through.",
+      "status": "pinned",
+      "pins": [
+        {
+          "file": "test/workbench-role-capabilities-settings.test.ts",
+          "title": "SCG-R15 R7: the role's tools replace the workbench-wide tools for its sessions, so Bash reaches the worker",
+          "suite": [
+            "wb-973.15 SCG-R15: the docs/19 swarm context graph worker role"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R8",
+      "paragraph": 2,
+      "quote": "The role declares no `capabilities`, so its sessions expose no Pi provider tool and need no capability grant.",
+      "status": "pinned",
+      "pins": [
+        {
+          "file": "test/workbench-role-capabilities-settings.test.ts",
+          "title": "SCG-R15 R8: the role declares no capabilities, so its sessions expose no Pi provider tool and the file needs no capability grant",
+          "suite": [
+            "wb-973.15 SCG-R15: the docs/19 swarm context graph worker role"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R9",
+      "paragraph": 2,
+      "quote": "The worker learns the swarm workspace from `RF_WORKSPACE` and `SWARM_RF_WORKSPACE`, and the role adds no environment of its own: its sessions start with no `env` override, and the detached host's launch allowlist carries both names.",
+      "status": "pinned",
+      "pins": [
+        {
+          "file": "test/workbench-role-capabilities-settings.test.ts",
+          "title": "SCG-R15 R9: the role adds no environment of its own: its sessions get no env override, the detached allowlist carries RF_WORKSPACE and SWARM_RF_WORKSPACE, and a role env is refused",
+          "suite": [
+            "wb-973.15 SCG-R15: the docs/19 swarm context graph worker role"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "R10",
+      "paragraph": 2,
+      "quote": "The detached host starts its Claude sessions with `settingSources` `[]` whatever this file sets, so there the `user` source is not loaded.",
+      "status": "pinned",
+      "pins": [
+        {
+          "file": "test/workbench-role-capabilities-settings.test.ts",
+          "title": "SCG-R15 R10: the detached host starts its Claude sessions with settingSources [] whatever reaches it",
+          "suite": [
+            "wb-973.15 SCG-R15: the docs/19 swarm context graph worker role"
+          ]
+        }
+      ]
+    }
+  ]
+}
