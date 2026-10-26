@@ -46,18 +46,23 @@
  *   at once when written "<!-->" or "<!--->", any other at its first "-->" or "--!>", or at the end; "<?", "<!" that opens no comment (a
  *   declaration, a CDATA section in HTML content) and "</" followed by anything but a letter open a bogus comment that renders nothing to
  *   the first ">" ("</>" alone drops); a start or end tag renders nothing from its "<" through its name (any characters up to white space,
- *   "/" or ">") and its attributes to the first ">" outside a quoted value (tagEnd; a tag the input ends inside drops, with the rest); the
+ *   "/" or ">") and its attributes to the first ">" outside a quoted value (tagEnd, one reading for every kind of tag - the start and the end
+ *   tag of an ordinary, a block-level, each RCDATA and each raw-text element - in exactly the members row M lists for MR4: its whole
+ *   transition table through every kind of tag in an HTML block and on an HTML page, and in an inline token, wherever marked's tag rule reads
+ *   the tag, through the start tag of each kind but plaintext's at every cell such a tag can reach; a tag the input ends inside drops, with
+ *   the rest); the
  *   text of a textarea or title element (RCDATA) renders as written to its end tag, its references decoded and its comments and tags shown
  *   as text; the text of a script, style, xmp, iframe, noembed, noframes or noscript element renders as written to its end tag, and a
  *   plaintext element's to the end, references not decoded (a page shows only the xmp's and the plaintext's, so the others are an
  *   over-read); a tag that opens or closes a block-level element (BLOCK_TAGS) breaks the sentence (in an inline token a br tag breaks the
  *   line). So an inline HTML token renders nothing of a tag, and the text after a comment or a bogus comment that the standard closes
- *   before marked's token ends (IC1, PI1, CD1). Character references are decoded as marked passes them on (with their ";": decimal of 1-7
- *   digits, hex of 1-6, a name): a numeric one as its code point, a NAMED_REFERENCES name as its characters, any other name as one BLANK
- *   (R11 names where a browser reads them otherwise); never inside code or raw text, which show them as written. A default-ignorable code
- *   point and a control other than tab and line feed render nothing (an UNREAD one is never judged as read: UNREAD below); a bidirectional
- *   control renders nothing but may reorder: each outermost right-to-left override span (to its closer, or the unit's end) is read in
- *   reverse, as a reader sees it, and a unit holding any bidirectional control reads no qualifier. What a reader may
+ *   before marked's token ends (IC1, PI1, CD1); a tag written in a form marked's tag rule does not read (an end tag holding attributes
+ *   among them) is no inline token, and a paragraph shows it as written. Character references are decoded as marked passes them on (with
+ *   their ";": decimal of 1-7 digits, hex of 1-6, a name): a numeric one as its code point, a NAMED_REFERENCES name as its characters, any
+ *   other name as one BLANK (R11 names where a browser reads them otherwise); never inside code or raw text, which show them as written. A
+ *   default-ignorable code point and a control other than tab and line feed render nothing (an UNREAD one is never judged as read: UNREAD
+ *   below); a bidirectional control renders nothing but may reorder: each outermost right-to-left override span (to its closer, or the
+ *   unit's end) is read in reverse, as a reader sees it, and a unit holding any bidirectional control reads no qualifier. What a reader may
  *   see or hear (struck text, an image's alt text, an HTML block's text) is read for names and claims; a QUALIFIER counts only where a
  *   reader plainly sees it - never in struck text, alt text or an HTML block, and never in a sentence that holds an inline HTML token,
  *   since a page may hide what an element holds.
@@ -154,14 +159,28 @@
  *    kind inside an unquoted value; and tagEnd's whole transition table: each of its nine states reading each character class (each white
  *    space, "/", "=", each quote, ">" and any other character, a letter standing for that class), told by a pinned text from every other
  *    target it could take - another state or the tag's end - except a target that reads alike (the name and after-name states move alike
- *    on every character, as do the attributes, after-quoted and self-closing states, so no text tells them apart and none is claimed) -, a
- *    tag the input ends inside, each RCDATA element (textarea, title) and each raw-text element that ends (script, style, xmp, iframe,
- *    noembed, noframes, noscript) read to its end tag, one reading for both (closingTag), each one's end tag bounded by each white space
- *    (as above), "/" and ">", on the RCDATA and on the raw-text side an end tag in any case and one whose name runs on (no end tag), each
- *    RCDATA and raw-text element's text (a plaintext element's among them) shown as written with its comments and tags as text, an RCDATA
- *    element's references decoded and a raw-text element's kept, a plaintext element that never ends (even at a plaintext end tag), the
- *    inline tokens the standard closes early, and an inline tag), MU the UNREAD code points (each filler, controls, the markers, in a page
- *    and in code) beside the code points that stay read.
+ *    on every character, as do the attributes, after-quoted and self-closing states, so no text tells them apart and none is claimed) -;
+ *    each of those texts of an ordinary start tag in an HTML block read through every other kind of tag (EVERY_TAG, RESPIN 2 of wb-jh2f: an
+ *    ordinary and a block-level end tag, a block-level start tag, each RCDATA and each raw-text element's start and end tag and a plaintext
+ *    start tag, each in an HTML block and on an HTML page, a line feed member also as its carriage-return twin on an HTML page; and in an
+ *    inline token the start tag of an ordinary, a block-level, each RCDATA and each raw-text element that ends, each closed by its end tag,
+ *    for each text whose attributes marked's tag rule reads), each reading what that start tag's pinned outcome predicts; ordinary start
+ *    tags whose attributes marked's tag rule reads, one per group of the cells an inline token reads that the table's texts leave untold
+ *    there, read through every kind the same way; a tag written in each form marked's tag rule does not read (a quote or "=" starting an
+ *    attribute, a quote inside a name or an unquoted value, "=" inside an unquoted value, "/" before anything but ">", a name or "=" right
+ *    after a quoted value, ">" or "=" right after "="), which a paragraph shows as written, one text per form; a double- and a
+ *    single-quoted value holding ">", member by member, in the start tag of a block-level, each RCDATA and each raw-text element
+ *    (plaintext's among them) and the end tag of an ordinary, a block-level, each RCDATA and each raw-text element that ends, in an HTML
+ *    block and on an HTML page, and in an inline token in the start tag of an ordinary, a block-level, each RCDATA and each raw-text
+ *    element that ends; a double- and a single-quoted value holding the other quote and ">"; an end tag holding attributes, which is no
+ *    inline token; a block-level start tag in an inline token ending in each state marked's tag rule ends a tag in; a tag the input ends
+ *    inside, each RCDATA element (textarea, title) and each raw-text element that ends (script, style, xmp, iframe, noembed, noframes,
+ *    noscript) read to its end tag, one reading for both (closingTag), each one's end tag bounded by each white space (as above), "/" and
+ *    ">", on the RCDATA and on the raw-text side an end tag in any case and one whose name runs on (no end tag), each RCDATA and raw-text
+ *    element's text (a plaintext element's among them) shown as written with its comments and tags as text, an RCDATA element's references
+ *    decoded and a raw-text element's kept, a plaintext element that never ends (even at a plaintext end tag), the inline tokens the
+ *    standard closes early, and an inline tag), MU the UNREAD code points (each filler, controls, the markers, in a page and in code)
+ *    beside the code points that stay read.
  *  R, the residuals' pinned quiet rows (R1-R11).
  * ENUMERATION (cut #4; rule 19(c) engaged at refusal #3; the owner's reading of 2026-10-24: the R739 terminal enumerate-the-resolvable
  * form, the chain capped at this cut): for U1 RENDERED-TEXT DOCS TRUTH the census claims exactly its pinned set - refusal #2's members and
@@ -169,6 +188,14 @@
  * rows M (MR1-MR4, MU) - and nothing beyond it: every known departure of a leg from what a reader sees is a NAMED RESIDUAL with a pinned
  * quiet row (R1-R11), and NOT CLAIMED bounds the rest. An escape found outside the pinned set is a residual-list addition for the owner (a
  * FORM question), not a claim this census makes.
+ * ENUMERATION of wb-jh2f (cut #3; rule 19(c) engaged at refusal #2 through the rule 19(d) class reading): for the class refusal #1's
+ *   guard names - an attribute or end-tag member that a header or note sentence claims - the census claims exactly row M's MR4 members as
+ *   listed (the attribute and end-tag forms one by one, tagEnd's transition table through an ordinary start tag and through EVERY_TAG every
+ *   other kind of tag, a quoted ">" kind by kind and context by context, the forms no inline token holds) and nothing beyond them; a member
+ *   of the class row M does not list is NOT CLAIMED (below). The departures of the tag reading from what a reader sees that the seats know
+ *   are NOT CLAIMED forms named below, each a reading this census does not make (the tokenizer state carried from one block or inline token
+ *   into the next, a script element's escape states, foreign content). An escape found outside the pinned set is a residual-list addition
+ *   for the owner, not a claim this census makes.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the judged set - every row's id, label and
  * pins, every pin's witness and the vocabularies, the rendering's tables, the frozen dossier's text and sha-256 - is held to the
  * out-of-file roster (ROSTER_FILE). A last case reads that every pin's case ran to its end. Not claimed: a single pin removed from ROWS,
@@ -189,6 +216,11 @@
  * inline token into the next (an element, a comment or an attribute value that marked's block or token leaves open), each read on its own;
  * a script element's escape states (its text runs to the first "</script"); a character of tagEnd's "any other character" class beyond
  * the letters MR4's texts read it through (such as "<", "`" or a digit), which tagEnd reads like a letter but no pin holds one by one;
+ * a redirection of a tagEnd cell that no tag marked's tag rule reads can tell apart, read in an inline token (marked hands an inline token
+ * only a name and attributes after white space - a double-, a single- or an unquoted value - so a quote or "=" starting an attribute, "/"
+ * before anything but ">" and the other forms row M pins as no inline token never reach it there: such a change is equivalent in an
+ * inline token, and EVERY_TAG pins the cell through every kind of tag in an HTML block and on an HTML page); a plaintext start tag in an
+ * inline token, whose element a reader's tokenizer runs past marked's token (the carried tokenizer state above);
  * an svg or math element's content (foreign content), read as
  * HTML content, where a CDATA section is text (shown undecoded, as the raw leg reads it) and a title or style is no RCDATA or raw-text
  * element; the Unicode bidirectional algorithm beyond reversing each
@@ -261,10 +293,21 @@
  *   raw-text element's end tag under each boundary member (a space, a tab, a line feed, a form feed, a carriage return on an HTML page,
  *   "/" and ">"), so G07, G08, G09 and G10 (tagEnd's white space without a tab, a line feed, a form feed or a carriage return) and G18
  *   (closingTag's boundary narrowed on the raw-text side) each red MR4, and G14 (a plaintext element that ends at its end tag) reds it
- *   too. Beyond the guard's members MR4 pins tagEnd's whole transition table and each element's text (row M), so a tag reads to the first
- *   ">" outside a quoted value in every state on every character class the table names, each transition told from every target that
- *   reads otherwise. The READINGS clauses on a tag's name, its attributes and its end tag, and on an RCDATA, raw-text or plaintext
- *   element's text, claim exactly the members row M lists for MR4.
+ *   too. Beyond the guard's members MR4 pins tagEnd's whole transition table and each element's text (row M). CORRECTED at RESPIN 2: cut
+ *   #2 said here that a tag therefore reads to the first ">" outside a quoted value in every state on every character class, and that the
+ *   READINGS clauses on a tag claim exactly row M's MR4 members; its table's texts held an ordinary start tag in an HTML block only, and
+ *   refusal #2 measured the attributes of an end tag (ET1-ET3) and of an RCDATA, a raw-text and a block-level start tag (ST1-ST4) unpinned.
+ * RESPIN 2 of wb-jh2f (gate g10-gate-s100 refusal #2 of cut bbf4457a, record honesty; rule 19(c) engaged through the rule 19(d) class
+ *   reading, so this cut #3 takes the enumerate-the-resolvable form, ENUMERATION of wb-jh2f below): U1 cured - MR4 pins the end tag of an
+ *   ordinary, a block-level, each RCDATA and each raw-text element that ends holding a double- and a single-quoted value with ">", in an
+ *   HTML block and on an HTML page, so ET1 (an end tag read to its first ">", quotes ignored), ET2 (RCDATA and raw-text end tags read so)
+ *   and ET3 (ordinary end tags read so) each red MR4; U2 cured - MR4 pins the start tag of a block-level, each RCDATA and each raw-text
+ *   element (plaintext's among them) holding such a value, in an HTML block and on an HTML page, and in an inline token for each but
+ *   plaintext, so ST1 (RCDATA and raw-text start tags read to their first ">"), ST2 (RCDATA), ST3 (raw text) and ST4 (BLOCK_TAGS start
+ *   tags) each red MR4. Beyond the members refusal #2 measured, EVERY_TAG reads each text of an ordinary start tag in an HTML block through
+ *   every other kind of tag (row M), so the transition table and each white-space place are pinned through every kind of tag in an HTML
+ *   block and on an HTML page, and in an inline token through every cell a tag marked's tag rule reads can reach; the READINGS clause on a
+ *   tag claims exactly these members, and NOT CLAIMED names the cells no inline token reaches.
  * SCOPE: the vocabularies are this cut's reading of the filing; the program lines are measured at the pin and not re-read here
  * (the census is hermetic), so a program change is seen only when a cut re-measures STATUS_LINES and ID_ROWS.
  *
@@ -1817,6 +1860,98 @@ interface Case {
   readonly kinds?: readonly CaseKind[];
   readonly texts: readonly string[];
   readonly outcome: readonly (readonly string[])[];
+  /** MR4 only (RESPIN 2 of wb-jh2f): its texts of an ordinary start tag in an HTML block are read through every other kind of tag too (EVERY_TAG). */
+  readonly everyTag?: boolean;
+}
+/** A kind of tag other than an ordinary start tag (RESPIN 2 of wb-jh2f; header, row M MR4): the source an ordinary start tag's attributes and
+ * the rest are put behind (`open`, in place of EVERY_TAG_OPEN) and end with (`close`, in place of EVERY_TAG_CLOSE), and the outcome the kind
+ * reads, predicted from that start tag's pinned outcome (`outcome`) - never from the census's live reading. */
+interface TagKind {
+  readonly id: string;
+  readonly open: string;
+  readonly close: string;
+  readonly outcome: (pinned: readonly string[]) => string[];
+  /** An inline token's kind: the tag's name. Its text (closed by the element's end tag) is read only where marked lexes the start tag as one
+   * inline HTML token opening with that name (the attributes marked's tag rule reads), and only as a Markdown page. */
+  readonly inline?: string;
+}
+const EVERY_TAG_OPEN = "<div><a";
+const EVERY_TAG_CLOSE = "</a></div>";
+/** An MR4 text of an ordinary start tag in an HTML block: "<div><a", then white space, "/" or ">" (the name ends), to "</a></div>". */
+const EVERY_TAG_TEXT = /^<div><a[\t\n\f\r />]/;
+/** A pinned sentence of an HTML block: its line, its text and its plain text (an HTML block's text is never plain, so all BLANK). */
+const BLOCK_SENTENCE = /^(\d+) (.*) \| plain (#*)$/su;
+function blockSentence(sentence: string): { line: string; text: string; plain: string } {
+  const match = BLOCK_SENTENCE.exec(sentence);
+  if (match === null) throw new Error(`not a pinned sentence of an HTML block: ${sentence}`);
+  return { line: match[1] ?? "", text: match[2] ?? "", plain: match[3] ?? "" };
+}
+/** The kind reads what the start tag reads: a block-level, RCDATA or raw-text start tag, whose text (or element text) is the start tag's text. */
+const sameAsStart = (pinned: readonly string[]): string[] => [...pinned];
+/** The kind is an end tag after the text "x" and breaks the sentence (a block-level element's end tag): "x", then what the start tag reads. */
+const brokenAfterX = (pinned: readonly string[]): string[] => ["1 x | plain #", ...pinned];
+/** The kind is an end tag after the text "x" that does not break the sentence: "x" joins what the start tag reads (on line 1, where "x" is). */
+const joinedAfterX = (pinned: readonly string[]): string[] =>
+  pinned.length === 0
+    ? ["1 x | plain #"]
+    : pinned.map(sentence => {
+        const { text, plain } = blockSentence(sentence);
+        return `1 x${text} | plain #${plain}`;
+      });
+/** An inline start tag that breaks the sentence (a block-level element's): "Note", then the start tag's text as plain text (marked's), beside
+ * the element's end tag. */
+const brokenAfterNote = (pinned: readonly string[]): string[] =>
+  pinned.length === 1
+    ? pinned.flatMap(sentence => {
+        const { line, text } = blockSentence(sentence);
+        return ["1 Note | html", `${line} ${text} | html`];
+      })
+    : ["an inline tag the input ends inside is no inline token"];
+/** An inline start tag that does not break the sentence: "Note " joins the start tag's text as plain text (marked's), beside the HTML tokens. */
+const joinedAfterNote = (pinned: readonly string[]): string[] =>
+  pinned.length === 1 ? pinned.map(sentence => `1 Note ${blockSentence(sentence).text} | html`) : ["an inline tag the input ends inside is no inline token"];
+/** A plaintext start tag: its text runs to the end, so the start tag's text gains the close "</a></div>" as written. */
+const toTheEnd = (pinned: readonly string[]): string[] =>
+  pinned.map(sentence => {
+    const { line, text, plain } = blockSentence(sentence);
+    return `${line} ${text}${EVERY_TAG_CLOSE} | plain ${plain}${"#".repeat(EVERY_TAG_CLOSE.length)}`;
+  });
+/** Every kind of tag MR4 reads the ordinary start tag's attributes through (refusal #2 U1 and U2): in an HTML block, an ordinary end tag; a
+ * block-level start and end tag; each RCDATA element's and each raw-text element's start and end tag (an element of BLOCK_TAGS breaks the
+ * sentence at its tags: textarea, title, script, style, iframe, noframes; xmp, noembed and noscript do not); a plaintext start tag; and in an
+ * inline token (behind "Note "), the start tag of an ordinary (span), a block-level (p), each RCDATA and each raw-text element that ends (a plaintext
+ * element an inline token opens runs, as a reader's tokenizer reads it, past marked's token: NOT CLAIMED). */
+const EVERY_TAG: readonly TagKind[] = [
+  { id: "ordinary end tag", open: "<div><b>x</b", close: EVERY_TAG_CLOSE, outcome: joinedAfterX },
+  { id: "block-level start tag", open: "<div><p", close: EVERY_TAG_CLOSE, outcome: sameAsStart },
+  { id: "block-level end tag", open: "<div><p>x</p", close: EVERY_TAG_CLOSE, outcome: brokenAfterX },
+  ...(["textarea", "title", "script", "style", "xmp", "iframe", "noembed", "noframes", "noscript"] as const).flatMap((name): TagKind[] => [
+    { id: `${name} start tag`, open: `<div><${name}`, close: `</${name}></div>`, outcome: sameAsStart },
+    {
+      id: `${name} end tag`,
+      open: `<div><${name}>x</${name}`,
+      close: EVERY_TAG_CLOSE,
+      outcome: name === "xmp" || name === "noembed" || name === "noscript" ? joinedAfterX : brokenAfterX,
+    },
+  ]),
+  { id: "plaintext start tag", open: "<div><plaintext", close: EVERY_TAG_CLOSE, outcome: toTheEnd },
+  ...(["span", "p", "textarea", "title", "script", "style", "xmp", "iframe", "noembed", "noframes", "noscript"] as const).map(
+    (name): TagKind => ({
+      id: `inline ${name} start tag`,
+      open: `Note <${name}`,
+      close: `</${name}>`,
+      outcome: name === "span" || name === "xmp" || name === "noembed" || name === "noscript" ? joinedAfterNote : brokenAfterNote,
+      inline: name,
+    }),
+  ),
+];
+/** Whether marked lexes `text` as one paragraph holding exactly two inline HTML tokens: a start tag opening with `<${name}` and that element's end
+ * tag (which a reader's tokenizer ends the element at, as marked does). */
+function oneInlineTag(text: string, name: string): boolean {
+  const tokens = marked.lexer(text);
+  const paragraph = tokens.length === 1 && tokens[0]?.type === "paragraph" ? tokenChildren(tokens[0]) : [];
+  const html = paragraph.filter(token => token.type === "html");
+  return html.length === 2 && (html[0]?.raw.startsWith(`<${name}`) ?? false) && html[1]?.raw === `</${name}>`;
 }
 /** Rows M and R: each text judged by its kind (a per-text kind in `kinds`), with its expected outcome in order. */
 const CASES: readonly Case[] = [
@@ -2035,7 +2170,8 @@ const CASES: readonly Case[] = [
   {
     pin: "MR4",
     kind: "rendered",
-    kinds: [...Array.from({ length: 38 }, (): CaseKind => "rendered"), "html", ...Array.from({ length: 191 }, (): CaseKind => "rendered"), ...Array.from({ length: 31 }, (): CaseKind => "html")],
+    everyTag: true,
+    kinds:[...Array.from({ length: 38 }, (): CaseKind => "rendered"), "html", ...Array.from({ length: 191 }, (): CaseKind => "rendered"), ...Array.from({ length: 31 }, (): CaseKind => "html"), ...Array.from({ length: 106 }, (): CaseKind => "rendered"), ...Array.from({ length: 46 }, (): CaseKind => "html")],
     texts: [
       "<!-->one HXSI-01 two.",
       "<!--->two",
@@ -2305,6 +2441,168 @@ const CASES: readonly Case[] = [
       "<p><a b/\rHXSI-01 is registered</a></p>",
       '<p><a b="x"\rx="y>HXSI-01 is registered">c</a></p>',
       '<p><a b/\rx="y>HXSI-01 is registered">c</a></p>',
+      // RESPIN 2 of wb-jh2f (refusal #2 U2): in an HTML block, a block-level, each RCDATA and each raw-text element's start tag (plaintext's among them) holding a double- and a single-quoted value with ">"
+      '<div><p title=">">pstartdq</p></div>',
+      "<div><p title='>'>pstartsq</p></div>",
+      '<div><textarea title=">">textareastartdq</textarea></div>',
+      "<div><textarea title='>'>textareastartsq</textarea></div>",
+      '<div><title title=">">titlestartdq</title></div>',
+      "<div><title title='>'>titlestartsq</title></div>",
+      '<div><script title=">">scriptstartdq</script></div>',
+      "<div><script title='>'>scriptstartsq</script></div>",
+      '<div><style title=">">stylestartdq</style></div>',
+      "<div><style title='>'>stylestartsq</style></div>",
+      '<div><xmp title=">">xmpstartdq</xmp></div>',
+      "<div><xmp title='>'>xmpstartsq</xmp></div>",
+      '<div><iframe title=">">iframestartdq</iframe></div>',
+      "<div><iframe title='>'>iframestartsq</iframe></div>",
+      '<div><noembed title=">">noembedstartdq</noembed></div>',
+      "<div><noembed title='>'>noembedstartsq</noembed></div>",
+      '<div><noframes title=">">noframesstartdq</noframes></div>',
+      "<div><noframes title='>'>noframesstartsq</noframes></div>",
+      '<div><noscript title=">">noscriptstartdq</noscript></div>',
+      "<div><noscript title='>'>noscriptstartsq</noscript></div>",
+      '<div><plaintext title=">">plaintextstartdq</div>',
+      "<div><plaintext title='>'>plaintextstartsq</div>",
+      // RESPIN 2 of wb-jh2f (refusal #2 U1): in an HTML block, an ordinary, a block-level, each RCDATA and each raw-text element's end tag holding a double- and a single-quoted value with ">"
+      '<div><b>a</b title=">"> benddq</div>',
+      '<div><p>a</p title=">"> penddq</div>',
+      "<div><b>a</b title='>'> bendsq</div>",
+      "<div><p>a</p title='>'> pendsq</div>",
+      '<div><textarea>a</textarea title=">"> textareaenddq</div>',
+      "<div><textarea>a</textarea title='>'> textareaendsq</div>",
+      '<div><title>a</title title=">"> titleenddq</div>',
+      "<div><title>a</title title='>'> titleendsq</div>",
+      '<div><script>a</script title=">"> scriptenddq</div>',
+      "<div><script>a</script title='>'> scriptendsq</div>",
+      '<div><style>a</style title=">"> styleenddq</div>',
+      "<div><style>a</style title='>'> styleendsq</div>",
+      '<div><xmp>a</xmp title=">"> xmpenddq</div>',
+      "<div><xmp>a</xmp title='>'> xmpendsq</div>",
+      '<div><iframe>a</iframe title=">"> iframeenddq</div>',
+      "<div><iframe>a</iframe title='>'> iframeendsq</div>",
+      '<div><noembed>a</noembed title=">"> noembedenddq</div>',
+      "<div><noembed>a</noembed title='>'> noembedendsq</div>",
+      '<div><noframes>a</noframes title=">"> noframesenddq</div>',
+      "<div><noframes>a</noframes title='>'> noframesendsq</div>",
+      '<div><noscript>a</noscript title=">"> noscriptenddq</div>',
+      "<div><noscript>a</noscript title='>'> noscriptendsq</div>",
+      // RESPIN 2 of wb-jh2f (refusal #2 U1, U2): in an inline token, an ordinary, a block-level, each RCDATA and each raw-text element's start tag holding a double- and a single-quoted value with ">" (a plaintext element an inline token opens runs past it: NOT CLAIMED)
+      'Note <span title=">">inlinespandq</span>',
+      'Note <p title=">">inlinepdq</p>',
+      "Note <span title='>'>inlinespansq</span>",
+      "Note <p title='>'>inlinepsq</p>",
+      'Note <textarea title=">">inlinetextareadq</textarea>',
+      "Note <textarea title='>'>inlinetextareasq</textarea>",
+      'Note <title title=">">inlinetitledq</title>',
+      "Note <title title='>'>inlinetitlesq</title>",
+      'Note <script title=">">inlinescriptdq</script>',
+      "Note <script title='>'>inlinescriptsq</script>",
+      'Note <style title=">">inlinestyledq</style>',
+      "Note <style title='>'>inlinestylesq</style>",
+      'Note <xmp title=">">inlinexmpdq</xmp>',
+      "Note <xmp title='>'>inlinexmpsq</xmp>",
+      'Note <iframe title=">">inlineiframedq</iframe>',
+      "Note <iframe title='>'>inlineiframesq</iframe>",
+      'Note <noembed title=">">inlinenoembeddq</noembed>',
+      "Note <noembed title='>'>inlinenoembedsq</noembed>",
+      'Note <noframes title=">">inlinenoframesdq</noframes>',
+      "Note <noframes title='>'>inlinenoframessq</noframes>",
+      'Note <noscript title=">">inlinenoscriptdq</noscript>',
+      "Note <noscript title='>'>inlinenoscriptsq</noscript>",
+      // RESPIN 2 of wb-jh2f: an end tag holding attributes is no inline token (marked's tag rule reads none), so a paragraph shows it as written
+      'Note <b>a</b title=">"> inlineendtextdq',
+      "Note <b>a</b title='>'> inlineendtextsq",
+      // RESPIN 2 of wb-jh2f: in an inline token, a block-level start tag ending in each state marked's tag rule ends a tag in (its break shows where it ends)
+      "Note <p>inlineendname",
+      "Note <p >inlineendspace",
+      "Note <p b>inlineendattr",
+      "Note <p b >inlineendafterattr",
+      "Note <p b=c>inlineendunquoted",
+      'Note <p b="c">inlineenddouble',
+      "Note <p b='c'>inlineendsingle",
+      'Note <p b="c" >inlineendafterquoted',
+      "Note <p/>inlineendsolidus",
+      "Note <p b/>inlineendattrsolidus",
+      'Note <p b="c"/>inlineendquotedsolidus',
+      'Note <p b = "c">inlineendspacedvalue',
+      // RESPIN 2 of wb-jh2f: a tag written in a form marked's tag rule does not read is no inline token, so a paragraph shows it as written (one text per form)
+      'Note <p ="x">nontageqstart',
+      'Note <p "x">nontagdqstart',
+      'Note <p b"c">nontagnamedq',
+      "Note <p b/ c>nontagsolidus",
+      'Note <p b="c"d>nontagafterquoted',
+      'Note <p b="c"=d>nontagafterquotedeq',
+      'Note <p b=c"d>nontagunquoteddq',
+      "Note <p b=c=d>nontagunquotedeq",
+      "Note <p b=>nontagemptyvalue",
+      'Note <p b=="c">nontageqeq',
+      // RESPIN 2 of wb-jh2f: a double- and a single-quoted value holding the other quote and ">", as ordinary start tags (EVERY_TAG reads them through every kind of tag)
+      `<div><a b="x'y>z">indoubleothersq</a></div>`,
+      `<div><a b='x"y>z'>insingleotherdq</a></div>`,
+      // RESPIN 2 of wb-jh2f: ordinary start tags whose attributes marked's tag rule reads, one per group of tagEnd cells an inline token reads that the texts above left unpinned (EVERY_TAG reads each through every kind of tag, inline ones included)
+      "<div><a x='/>'>inlinecellaa</a></div>",
+      "<div><a x='=>'>inlinecellab</a></div>",
+      '<div><a x=// x=">">inlinecellac</a></div>',
+      '<div><a x="/>">inlinecellad</a></div>',
+      '<div><a x="=>">inlinecellae</a></div>',
+      '<div><a x=">>">inlinecellaf</a></div>',
+      "<div><a x='>>'>inlinecellag</a></div>",
+      '<div><a x=""\tx=">">inlinecellah</a></div>',
+      '<div><a x x=">">inlinecellai</a></div>',
+      '<div><a x=""\nx=">">inlinecellaj</a></div>',
+      `<div><a x=""${cp(0x0c)}x=">">inlinecellak</a></div>`,
+      '<div><a x=/x x=">">inlinecellal</a></div>',
+      '<div><a xx=">">inlinecellam</a></div>',
+      `<div><a x='' x=">">inlinecellan</a></div>`,
+      // RESPIN 2 of wb-jh2f (refusal #2 U2): on an HTML page, an ordinary, a block-level, each RCDATA and each raw-text element's start tag (plaintext's among them) holding a double- and a single-quoted value with ">" and a claim
+      '<p><a title="> HXSI-01 is registered">c</a></p>',
+      '<div><p title="> HXSI-01 is registered">c</p></div>',
+      "<p><a title='> HXSI-01 is registered'>c</a></p>",
+      "<div><p title='> HXSI-01 is registered'>c</p></div>",
+      '<p><textarea title="> HXSI-01 is registered">c</textarea></p>',
+      "<p><textarea title='> HXSI-01 is registered'>c</textarea></p>",
+      '<p><title title="> HXSI-01 is registered">c</title></p>',
+      "<p><title title='> HXSI-01 is registered'>c</title></p>",
+      '<p><script title="> HXSI-01 is registered">c</script></p>',
+      "<p><script title='> HXSI-01 is registered'>c</script></p>",
+      '<p><style title="> HXSI-01 is registered">c</style></p>',
+      "<p><style title='> HXSI-01 is registered'>c</style></p>",
+      '<p><xmp title="> HXSI-01 is registered">c</xmp></p>',
+      "<p><xmp title='> HXSI-01 is registered'>c</xmp></p>",
+      '<p><iframe title="> HXSI-01 is registered">c</iframe></p>',
+      "<p><iframe title='> HXSI-01 is registered'>c</iframe></p>",
+      '<p><noembed title="> HXSI-01 is registered">c</noembed></p>',
+      "<p><noembed title='> HXSI-01 is registered'>c</noembed></p>",
+      '<p><noframes title="> HXSI-01 is registered">c</noframes></p>',
+      "<p><noframes title='> HXSI-01 is registered'>c</noframes></p>",
+      '<p><noscript title="> HXSI-01 is registered">c</noscript></p>',
+      "<p><noscript title='> HXSI-01 is registered'>c</noscript></p>",
+      '<p><plaintext title="> HXSI-01 is registered">c',
+      "<p><plaintext title='> HXSI-01 is registered'>c",
+      // RESPIN 2 of wb-jh2f (refusal #2 U1): on an HTML page, an ordinary, a block-level, each RCDATA and each raw-text element's end tag holding a double- and a single-quoted value with ">" and a claim
+      '<p><b>c</b title="> HXSI-01 is registered"></p>',
+      '<div><p>c</p title="> HXSI-01 is registered"></div>',
+      "<p><b>c</b title='> HXSI-01 is registered'></p>",
+      "<div><p>c</p title='> HXSI-01 is registered'></div>",
+      '<p><textarea>c</textarea title="> HXSI-01 is registered"></p>',
+      "<p><textarea>c</textarea title='> HXSI-01 is registered'></p>",
+      '<p><title>c</title title="> HXSI-01 is registered"></p>',
+      "<p><title>c</title title='> HXSI-01 is registered'></p>",
+      '<p><script>c</script title="> HXSI-01 is registered"></p>',
+      "<p><script>c</script title='> HXSI-01 is registered'></p>",
+      '<p><style>c</style title="> HXSI-01 is registered"></p>',
+      "<p><style>c</style title='> HXSI-01 is registered'></p>",
+      '<p><xmp>c</xmp title="> HXSI-01 is registered"></p>',
+      "<p><xmp>c</xmp title='> HXSI-01 is registered'></p>",
+      '<p><iframe>c</iframe title="> HXSI-01 is registered"></p>',
+      "<p><iframe>c</iframe title='> HXSI-01 is registered'></p>",
+      '<p><noembed>c</noembed title="> HXSI-01 is registered"></p>',
+      "<p><noembed>c</noembed title='> HXSI-01 is registered'></p>",
+      '<p><noframes>c</noframes title="> HXSI-01 is registered"></p>',
+      "<p><noframes>c</noframes title='> HXSI-01 is registered'></p>",
+      '<p><noscript>c</noscript title="> HXSI-01 is registered"></p>',
+      "<p><noscript>c</noscript title='> HXSI-01 is registered'></p>",
     ],
     outcome: [
       [`1 one HXSI-01 two. | plain ${"#".repeat(16)}`],
@@ -2575,6 +2873,168 @@ const CASES: readonly Case[] = [
       ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
       ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
       ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      // RESPIN 2 of wb-jh2f (refusal #2 U2): in an HTML block, a block-level, each RCDATA and each raw-text element's start tag (plaintext's among them) holding a double- and a single-quoted value with ">"
+      [`1 pstartdq | plain ${"#".repeat(8)}`],
+      [`1 pstartsq | plain ${"#".repeat(8)}`],
+      [`1 textareastartdq | plain ${"#".repeat(15)}`],
+      [`1 textareastartsq | plain ${"#".repeat(15)}`],
+      [`1 titlestartdq | plain ${"#".repeat(12)}`],
+      [`1 titlestartsq | plain ${"#".repeat(12)}`],
+      [`1 scriptstartdq | plain ${"#".repeat(13)}`],
+      [`1 scriptstartsq | plain ${"#".repeat(13)}`],
+      [`1 stylestartdq | plain ${"#".repeat(12)}`],
+      [`1 stylestartsq | plain ${"#".repeat(12)}`],
+      [`1 xmpstartdq | plain ${"#".repeat(10)}`],
+      [`1 xmpstartsq | plain ${"#".repeat(10)}`],
+      [`1 iframestartdq | plain ${"#".repeat(13)}`],
+      [`1 iframestartsq | plain ${"#".repeat(13)}`],
+      [`1 noembedstartdq | plain ${"#".repeat(14)}`],
+      [`1 noembedstartsq | plain ${"#".repeat(14)}`],
+      [`1 noframesstartdq | plain ${"#".repeat(15)}`],
+      [`1 noframesstartsq | plain ${"#".repeat(15)}`],
+      [`1 noscriptstartdq | plain ${"#".repeat(15)}`],
+      [`1 noscriptstartsq | plain ${"#".repeat(15)}`],
+      [`1 plaintextstartdq</div> | plain ${"#".repeat(22)}`],
+      [`1 plaintextstartsq</div> | plain ${"#".repeat(22)}`],
+      // RESPIN 2 of wb-jh2f (refusal #2 U1): in an HTML block, an ordinary, a block-level, each RCDATA and each raw-text element's end tag holding a double- and a single-quoted value with ">"
+      [`1 a benddq | plain ${"#".repeat(8)}`],
+      ["1 a | plain #", `1 penddq | plain ${"#".repeat(6)}`],
+      [`1 a bendsq | plain ${"#".repeat(8)}`],
+      ["1 a | plain #", `1 pendsq | plain ${"#".repeat(6)}`],
+      ["1 a | plain #", `1 textareaenddq | plain ${"#".repeat(13)}`],
+      ["1 a | plain #", `1 textareaendsq | plain ${"#".repeat(13)}`],
+      ["1 a | plain #", `1 titleenddq | plain ${"#".repeat(10)}`],
+      ["1 a | plain #", `1 titleendsq | plain ${"#".repeat(10)}`],
+      ["1 a | plain #", `1 scriptenddq | plain ${"#".repeat(11)}`],
+      ["1 a | plain #", `1 scriptendsq | plain ${"#".repeat(11)}`],
+      ["1 a | plain #", `1 styleenddq | plain ${"#".repeat(10)}`],
+      ["1 a | plain #", `1 styleendsq | plain ${"#".repeat(10)}`],
+      [`1 a xmpenddq | plain ${"#".repeat(10)}`],
+      [`1 a xmpendsq | plain ${"#".repeat(10)}`],
+      ["1 a | plain #", `1 iframeenddq | plain ${"#".repeat(11)}`],
+      ["1 a | plain #", `1 iframeendsq | plain ${"#".repeat(11)}`],
+      [`1 a noembedenddq | plain ${"#".repeat(14)}`],
+      [`1 a noembedendsq | plain ${"#".repeat(14)}`],
+      ["1 a | plain #", `1 noframesenddq | plain ${"#".repeat(13)}`],
+      ["1 a | plain #", `1 noframesendsq | plain ${"#".repeat(13)}`],
+      [`1 a noscriptenddq | plain ${"#".repeat(15)}`],
+      [`1 a noscriptendsq | plain ${"#".repeat(15)}`],
+      // RESPIN 2 of wb-jh2f (refusal #2 U1, U2): in an inline token, an ordinary, a block-level, each RCDATA and each raw-text element's start tag holding a double- and a single-quoted value with ">" (a plaintext element an inline token opens runs past it: NOT CLAIMED)
+      ["1 Note inlinespandq | html"],
+      ["1 Note | html", "1 inlinepdq | html"],
+      ["1 Note inlinespansq | html"],
+      ["1 Note | html", "1 inlinepsq | html"],
+      ["1 Note | html", "1 inlinetextareadq | html"],
+      ["1 Note | html", "1 inlinetextareasq | html"],
+      ["1 Note | html", "1 inlinetitledq | html"],
+      ["1 Note | html", "1 inlinetitlesq | html"],
+      ["1 Note | html", "1 inlinescriptdq | html"],
+      ["1 Note | html", "1 inlinescriptsq | html"],
+      ["1 Note | html", "1 inlinestyledq | html"],
+      ["1 Note | html", "1 inlinestylesq | html"],
+      ["1 Note inlinexmpdq | html"],
+      ["1 Note inlinexmpsq | html"],
+      ["1 Note | html", "1 inlineiframedq | html"],
+      ["1 Note | html", "1 inlineiframesq | html"],
+      ["1 Note inlinenoembeddq | html"],
+      ["1 Note inlinenoembedsq | html"],
+      ["1 Note | html", "1 inlinenoframesdq | html"],
+      ["1 Note | html", "1 inlinenoframessq | html"],
+      ["1 Note inlinenoscriptdq | html"],
+      ["1 Note inlinenoscriptsq | html"],
+      // RESPIN 2 of wb-jh2f: an end tag holding attributes is no inline token (marked's tag rule reads none), so a paragraph shows it as written
+      ['1 Note a</b title=">"> inlineendtextdq | html'],
+      ["1 Note a</b title='>'> inlineendtextsq | html"],
+      // RESPIN 2 of wb-jh2f: in an inline token, a block-level start tag ending in each state marked's tag rule ends a tag in (its break shows where it ends)
+      ["1 Note | html", "1 inlineendname"],
+      ["1 Note | html", "1 inlineendspace"],
+      ["1 Note | html", "1 inlineendattr"],
+      ["1 Note | html", "1 inlineendafterattr"],
+      ["1 Note | html", "1 inlineendunquoted"],
+      ["1 Note | html", "1 inlineenddouble"],
+      ["1 Note | html", "1 inlineendsingle"],
+      ["1 Note | html", "1 inlineendafterquoted"],
+      ["1 Note | html", "1 inlineendsolidus"],
+      ["1 Note | html", "1 inlineendattrsolidus"],
+      ["1 Note | html", "1 inlineendquotedsolidus"],
+      ["1 Note | html", "1 inlineendspacedvalue"],
+      // RESPIN 2 of wb-jh2f: a tag written in a form marked's tag rule does not read is no inline token, so a paragraph shows it as written (one text per form)
+      ['1 Note <p ="x">nontageqstart'],
+      ['1 Note <p "x">nontagdqstart'],
+      ['1 Note <p b"c">nontagnamedq'],
+      ["1 Note <p b/ c>nontagsolidus"],
+      ['1 Note <p b="c"d>nontagafterquoted'],
+      ['1 Note <p b="c"=d>nontagafterquotedeq'],
+      ['1 Note <p b=c"d>nontagunquoteddq'],
+      ["1 Note <p b=c=d>nontagunquotedeq"],
+      ["1 Note <p b=>nontagemptyvalue"],
+      ['1 Note <p b=="c">nontageqeq'],
+      // RESPIN 2 of wb-jh2f: a double- and a single-quoted value holding the other quote and ">", as ordinary start tags (EVERY_TAG reads them through every kind of tag)
+      [`1 indoubleothersq | plain ${"#".repeat(15)}`],
+      [`1 insingleotherdq | plain ${"#".repeat(15)}`],
+      // RESPIN 2 of wb-jh2f: ordinary start tags whose attributes marked's tag rule reads, one per group of tagEnd cells an inline token reads that the texts above left unpinned (EVERY_TAG reads each through every kind of tag, inline ones included)
+      [`1 inlinecellaa | plain ${"#".repeat(12)}`],
+      [`1 inlinecellab | plain ${"#".repeat(12)}`],
+      [`1 inlinecellac | plain ${"#".repeat(12)}`],
+      [`1 inlinecellad | plain ${"#".repeat(12)}`],
+      [`1 inlinecellae | plain ${"#".repeat(12)}`],
+      [`1 inlinecellaf | plain ${"#".repeat(12)}`],
+      [`1 inlinecellag | plain ${"#".repeat(12)}`],
+      [`1 inlinecellah | plain ${"#".repeat(12)}`],
+      [`1 inlinecellai | plain ${"#".repeat(12)}`],
+      [`2 inlinecellaj | plain ${"#".repeat(12)}`],
+      [`1 inlinecellak | plain ${"#".repeat(12)}`],
+      [`1 inlinecellal | plain ${"#".repeat(12)}`],
+      [`1 inlinecellam | plain ${"#".repeat(12)}`],
+      [`1 inlinecellan | plain ${"#".repeat(12)}`],
+      // RESPIN 2 of wb-jh2f (refusal #2 U2): on an HTML page, an ordinary, a block-level, each RCDATA and each raw-text element's start tag (plaintext's among them) holding a double- and a single-quoted value with ">" and a claim
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      // RESPIN 2 of wb-jh2f (refusal #2 U1): on an HTML page, an ordinary, a block-level, each RCDATA and each raw-text element's end tag holding a double- and a single-quoted value with ">" and a claim
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
     ],
   },
   {
@@ -2698,6 +3158,40 @@ function outcomeOf(kind: CaseKind, text: string): string[] {
   if (kind === "cut" || kind === "cutMarkdown") return sentencesOf(text, kind === "cutMarkdown").map(sentence => sentence.text);
   if (kind === "names") return namesIn(text);
   return lawFieldsIn(text);
+}
+/** MR4's EVERY_TAG family (RESPIN 2 of wb-jh2f; header, row M MR4): each of the case's texts of an ordinary start tag in an HTML block, its tag
+ * read as each EVERY_TAG kind, reads - as a Markdown page and as an HTML page - the outcome the kind predicts from the start tag's PINNED
+ * outcome (the case's literal, never its live reading). The witness names the kinds, counts the texts and readings, and holds the sha-256 of
+ * every reading, so a reading moved with its prediction still reds against the roster. */
+function everyTag(entry: Case): { kinds: string[]; texts: number; readings: number; sha256: string } {
+  const pinned = entry.texts.flatMap((text, index) =>
+    (entry.kinds?.[index] ?? entry.kind) === "rendered" && EVERY_TAG_TEXT.test(text) && text.endsWith(EVERY_TAG_CLOSE) ? [{ text, outcome: entry.outcome[index] ?? [] }] : [],
+  );
+  const readings: string[][] = [];
+  const departures: string[] = [];
+  for (const start of pinned) {
+    const attributes = start.text.slice(EVERY_TAG_OPEN.length, start.text.length - EVERY_TAG_CLOSE.length);
+    for (const kind of EVERY_TAG) {
+      const text = `${kind.open}${attributes}${kind.close}`;
+      if (kind.inline !== undefined && !oneInlineTag(text, kind.inline)) continue;
+      const predicted = kind.outcome(start.outcome);
+      const markdownPage = outcomeOf("rendered", text);
+      const htmlPage = kind.inline === undefined ? renderedSentences(text, true).map(shown) : markdownPage;
+      readings.push(markdownPage, ...(kind.inline === undefined ? [htmlPage] : []));
+      if (JSON.stringify(markdownPage) !== JSON.stringify(predicted) || JSON.stringify(htmlPage) !== JSON.stringify(predicted))
+        departures.push(`${kind.id}: ${JSON.stringify(text)} reads ${JSON.stringify(markdownPage)} (HTML page ${JSON.stringify(htmlPage)}), predicted ${JSON.stringify(predicted)}`);
+      if (kind.inline !== undefined || !attributes.includes("\n")) continue;
+      // a line feed's carriage-return twin, read on an HTML page (marked reads a Markdown page's carriage return as a line feed): the whole text on line 1
+      const carriageReturn = `${kind.open}${attributes.replaceAll("\n", "\r")}${kind.close}`;
+      const onOneLine = predicted.map(sentence => sentence.replace(/^\d+ /u, "1 "));
+      const crPage = renderedSentences(carriageReturn, true).map(shown);
+      readings.push(crPage);
+      if (JSON.stringify(crPage) !== JSON.stringify(onOneLine))
+        departures.push(`${kind.id}: ${JSON.stringify(carriageReturn)} reads ${JSON.stringify(crPage)} on an HTML page, predicted ${JSON.stringify(onOneLine)}`);
+    }
+  }
+  expect(departures, "a kind of tag reads an ordinary start tag's attributes otherwise than that start tag's pinned outcome predicts").toEqual([]);
+  return { kinds: EVERY_TAG.map(kind => kind.id), texts: pinned.length, readings: readings.length, sha256: createHash("sha256").update(JSON.stringify(readings)).digest("hex") };
 }
 
 const REACHED = new Set<string>();
@@ -3165,7 +3659,8 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
         const kinds = entry.texts.map((_, index) => entry.kinds?.[index] ?? entry.kind);
         const outcome = entry.texts.map((text, index) => outcomeOf(kinds[index] ?? entry.kind, text));
         expect(outcome).toStrictEqual(entry.outcome.map(expected => [...expected]));
-        return entry.kinds === undefined ? { kind: entry.kind, outcome } : { kind: entry.kind, kinds, outcome };
+        const witness = entry.kinds === undefined ? { kind: entry.kind, outcome } : { kind: entry.kind, kinds, outcome };
+        return entry.everyTag === true ? { ...witness, everyTag: everyTag(entry) } : witness;
       },
     ]),
   ),

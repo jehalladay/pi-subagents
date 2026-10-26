@@ -3920,6 +3920,158 @@
        "html",
        "html",
        "html",
+       "html",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
+       "html",
        "html"
       ],
       "outcome": [
@@ -4727,8 +4879,590 @@
        [
         "x.html:1 HXSI: unqualified-registered",
         "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "1 pstartdq | plain ########"
+       ],
+       [
+        "1 pstartsq | plain ########"
+       ],
+       [
+        "1 textareastartdq | plain ###############"
+       ],
+       [
+        "1 textareastartsq | plain ###############"
+       ],
+       [
+        "1 titlestartdq | plain ############"
+       ],
+       [
+        "1 titlestartsq | plain ############"
+       ],
+       [
+        "1 scriptstartdq | plain #############"
+       ],
+       [
+        "1 scriptstartsq | plain #############"
+       ],
+       [
+        "1 stylestartdq | plain ############"
+       ],
+       [
+        "1 stylestartsq | plain ############"
+       ],
+       [
+        "1 xmpstartdq | plain ##########"
+       ],
+       [
+        "1 xmpstartsq | plain ##########"
+       ],
+       [
+        "1 iframestartdq | plain #############"
+       ],
+       [
+        "1 iframestartsq | plain #############"
+       ],
+       [
+        "1 noembedstartdq | plain ##############"
+       ],
+       [
+        "1 noembedstartsq | plain ##############"
+       ],
+       [
+        "1 noframesstartdq | plain ###############"
+       ],
+       [
+        "1 noframesstartsq | plain ###############"
+       ],
+       [
+        "1 noscriptstartdq | plain ###############"
+       ],
+       [
+        "1 noscriptstartsq | plain ###############"
+       ],
+       [
+        "1 plaintextstartdq</div> | plain ######################"
+       ],
+       [
+        "1 plaintextstartsq</div> | plain ######################"
+       ],
+       [
+        "1 a benddq | plain ########"
+       ],
+       [
+        "1 a | plain #",
+        "1 penddq | plain ######"
+       ],
+       [
+        "1 a bendsq | plain ########"
+       ],
+       [
+        "1 a | plain #",
+        "1 pendsq | plain ######"
+       ],
+       [
+        "1 a | plain #",
+        "1 textareaenddq | plain #############"
+       ],
+       [
+        "1 a | plain #",
+        "1 textareaendsq | plain #############"
+       ],
+       [
+        "1 a | plain #",
+        "1 titleenddq | plain ##########"
+       ],
+       [
+        "1 a | plain #",
+        "1 titleendsq | plain ##########"
+       ],
+       [
+        "1 a | plain #",
+        "1 scriptenddq | plain ###########"
+       ],
+       [
+        "1 a | plain #",
+        "1 scriptendsq | plain ###########"
+       ],
+       [
+        "1 a | plain #",
+        "1 styleenddq | plain ##########"
+       ],
+       [
+        "1 a | plain #",
+        "1 styleendsq | plain ##########"
+       ],
+       [
+        "1 a xmpenddq | plain ##########"
+       ],
+       [
+        "1 a xmpendsq | plain ##########"
+       ],
+       [
+        "1 a | plain #",
+        "1 iframeenddq | plain ###########"
+       ],
+       [
+        "1 a | plain #",
+        "1 iframeendsq | plain ###########"
+       ],
+       [
+        "1 a noembedenddq | plain ##############"
+       ],
+       [
+        "1 a noembedendsq | plain ##############"
+       ],
+       [
+        "1 a | plain #",
+        "1 noframesenddq | plain #############"
+       ],
+       [
+        "1 a | plain #",
+        "1 noframesendsq | plain #############"
+       ],
+       [
+        "1 a noscriptenddq | plain ###############"
+       ],
+       [
+        "1 a noscriptendsq | plain ###############"
+       ],
+       [
+        "1 Note inlinespandq | html"
+       ],
+       [
+        "1 Note | html",
+        "1 inlinepdq | html"
+       ],
+       [
+        "1 Note inlinespansq | html"
+       ],
+       [
+        "1 Note | html",
+        "1 inlinepsq | html"
+       ],
+       [
+        "1 Note | html",
+        "1 inlinetextareadq | html"
+       ],
+       [
+        "1 Note | html",
+        "1 inlinetextareasq | html"
+       ],
+       [
+        "1 Note | html",
+        "1 inlinetitledq | html"
+       ],
+       [
+        "1 Note | html",
+        "1 inlinetitlesq | html"
+       ],
+       [
+        "1 Note | html",
+        "1 inlinescriptdq | html"
+       ],
+       [
+        "1 Note | html",
+        "1 inlinescriptsq | html"
+       ],
+       [
+        "1 Note | html",
+        "1 inlinestyledq | html"
+       ],
+       [
+        "1 Note | html",
+        "1 inlinestylesq | html"
+       ],
+       [
+        "1 Note inlinexmpdq | html"
+       ],
+       [
+        "1 Note inlinexmpsq | html"
+       ],
+       [
+        "1 Note | html",
+        "1 inlineiframedq | html"
+       ],
+       [
+        "1 Note | html",
+        "1 inlineiframesq | html"
+       ],
+       [
+        "1 Note inlinenoembeddq | html"
+       ],
+       [
+        "1 Note inlinenoembedsq | html"
+       ],
+       [
+        "1 Note | html",
+        "1 inlinenoframesdq | html"
+       ],
+       [
+        "1 Note | html",
+        "1 inlinenoframessq | html"
+       ],
+       [
+        "1 Note inlinenoscriptdq | html"
+       ],
+       [
+        "1 Note inlinenoscriptsq | html"
+       ],
+       [
+        "1 Note a</b title=\">\"> inlineendtextdq | html"
+       ],
+       [
+        "1 Note a</b title='>'> inlineendtextsq | html"
+       ],
+       [
+        "1 Note | html",
+        "1 inlineendname"
+       ],
+       [
+        "1 Note | html",
+        "1 inlineendspace"
+       ],
+       [
+        "1 Note | html",
+        "1 inlineendattr"
+       ],
+       [
+        "1 Note | html",
+        "1 inlineendafterattr"
+       ],
+       [
+        "1 Note | html",
+        "1 inlineendunquoted"
+       ],
+       [
+        "1 Note | html",
+        "1 inlineenddouble"
+       ],
+       [
+        "1 Note | html",
+        "1 inlineendsingle"
+       ],
+       [
+        "1 Note | html",
+        "1 inlineendafterquoted"
+       ],
+       [
+        "1 Note | html",
+        "1 inlineendsolidus"
+       ],
+       [
+        "1 Note | html",
+        "1 inlineendattrsolidus"
+       ],
+       [
+        "1 Note | html",
+        "1 inlineendquotedsolidus"
+       ],
+       [
+        "1 Note | html",
+        "1 inlineendspacedvalue"
+       ],
+       [
+        "1 Note <p =\"x\">nontageqstart"
+       ],
+       [
+        "1 Note <p \"x\">nontagdqstart"
+       ],
+       [
+        "1 Note <p b\"c\">nontagnamedq"
+       ],
+       [
+        "1 Note <p b/ c>nontagsolidus"
+       ],
+       [
+        "1 Note <p b=\"c\"d>nontagafterquoted"
+       ],
+       [
+        "1 Note <p b=\"c\"=d>nontagafterquotedeq"
+       ],
+       [
+        "1 Note <p b=c\"d>nontagunquoteddq"
+       ],
+       [
+        "1 Note <p b=c=d>nontagunquotedeq"
+       ],
+       [
+        "1 Note <p b=>nontagemptyvalue"
+       ],
+       [
+        "1 Note <p b==\"c\">nontageqeq"
+       ],
+       [
+        "1 indoubleothersq | plain ###############"
+       ],
+       [
+        "1 insingleotherdq | plain ###############"
+       ],
+       [
+        "1 inlinecellaa | plain ############"
+       ],
+       [
+        "1 inlinecellab | plain ############"
+       ],
+       [
+        "1 inlinecellac | plain ############"
+       ],
+       [
+        "1 inlinecellad | plain ############"
+       ],
+       [
+        "1 inlinecellae | plain ############"
+       ],
+       [
+        "1 inlinecellaf | plain ############"
+       ],
+       [
+        "1 inlinecellag | plain ############"
+       ],
+       [
+        "1 inlinecellah | plain ############"
+       ],
+       [
+        "1 inlinecellai | plain ############"
+       ],
+       [
+        "2 inlinecellaj | plain ############"
+       ],
+       [
+        "1 inlinecellak | plain ############"
+       ],
+       [
+        "1 inlinecellal | plain ############"
+       ],
+       [
+        "1 inlinecellam | plain ############"
+       ],
+       [
+        "1 inlinecellan | plain ############"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.html:1 HXSI: unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
        ]
-      ]
+      ],
+      "everyTag": {
+       "kinds": [
+        "ordinary end tag",
+        "block-level start tag",
+        "block-level end tag",
+        "textarea start tag",
+        "textarea end tag",
+        "title start tag",
+        "title end tag",
+        "script start tag",
+        "script end tag",
+        "style start tag",
+        "style end tag",
+        "xmp start tag",
+        "xmp end tag",
+        "iframe start tag",
+        "iframe end tag",
+        "noembed start tag",
+        "noembed end tag",
+        "noframes start tag",
+        "noframes end tag",
+        "noscript start tag",
+        "noscript end tag",
+        "plaintext start tag",
+        "inline span start tag",
+        "inline p start tag",
+        "inline textarea start tag",
+        "inline title start tag",
+        "inline script start tag",
+        "inline style start tag",
+        "inline xmp start tag",
+        "inline iframe start tag",
+        "inline noembed start tag",
+        "inline noframes start tag",
+        "inline noscript start tag"
+       ],
+       "texts": 138,
+       "readings": 6952,
+       "sha256": "957871de2ff248b4cc594310a72fac087d61c5f92086d6d6f26a5576fef7608d"
+      }
      }
     },
     {
