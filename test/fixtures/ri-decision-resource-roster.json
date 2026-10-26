@@ -65,6 +65,53 @@
     "qa",
     "docs/workbench"
   ],
+  "walkFloors": {
+    "measuredAt": "12965aa27334fe7b52b8d9aa62e9ee1f13f00156",
+    "roots": [
+      {
+        "root": "src",
+        "tracked": 116,
+        "directories": [
+          "src",
+          "src/ui",
+          "src/workbench",
+          "src/workbench/hosts",
+          "src/workbench/providers",
+          "src/workflow"
+        ]
+      },
+      {
+        "root": "test",
+        "tracked": 654,
+        "directories": [
+          "test",
+          "test/e2e",
+          "test/fixtures",
+          "test/fixtures/.pi/agents",
+          "test/fixtures/.pi/skills",
+          "test/fixtures/release-checklist",
+          "test/helpers",
+          "test/perf"
+        ]
+      },
+      {
+        "root": "qa",
+        "tracked": 67,
+        "directories": [
+          "qa/workbench",
+          "qa/workbench/receipts"
+        ]
+      },
+      {
+        "root": "docs/workbench",
+        "tracked": 71,
+        "directories": [
+          "docs/workbench",
+          "docs/workbench/receipts"
+        ]
+      }
+    ]
+  },
   "placements": [
     {
       "id": "top",
@@ -468,6 +515,10 @@
               "walkOnly": [],
               "gitOnly": []
             },
+            "tracked": {
+              "floorMet": true,
+              "unwalked": []
+            },
             "anchors": {
               "decision": true,
               "engine": true,
@@ -500,6 +551,16 @@
                 "gitOnly": []
               }
             },
+            "tracked": {
+              "test": {
+                "floorMet": true,
+                "unwalked": []
+              },
+              "qa": {
+                "floorMet": true,
+                "unwalked": []
+              }
+            },
             "own": {
               "census": {
                 "walked": true,
@@ -530,6 +591,10 @@
             "walk": {
               "walkOnly": [],
               "gitOnly": []
+            },
+            "tracked": {
+              "floorMet": true,
+              "unwalked": []
             },
             "sites": []
           }
@@ -925,9 +990,9 @@
     "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
   ],
   "reached": [
-    "A1:7",
-    "A2:6",
-    "A3:6",
+    "A1:8",
+    "A2:7",
+    "A3:7",
     "A4:7",
     "A5:5",
     "B1:16",
