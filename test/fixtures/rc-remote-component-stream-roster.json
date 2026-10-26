@@ -4,7 +4,7 @@
   "citation": "docs/programs/native-interface-component-contract-2026-10-21/README.md:15@640a3b579a95",
   "scan": {
     "remoteFamily": "\\b(?:remote (?:components?|elements?|producers?|streams?)|components? streams?|rftsx elements?|crosswalks?|callback seriali[sz]ations?)\\b/",
-    "rcFamily": "(?<![\\w-])(?:vibranium-reactive-components|reactive[_-]components)(?![\\w-])/i",
+    "rcFamily": "(?<![\\w-])(?:vibranium[-_.]+reactive[-_.]+components|reactive[_-]components)(?!\\w|-(?!\\d))/i",
     "rcDistribution": "vibranium-reactive-components",
     "rcModule": "reactive_components",
     "censusInstrument": "^test\\/(?:[^/]+-census\\.test\\.ts|fixtures\\/[^/]+-roster\\.json)$/",
@@ -31,6 +31,8 @@
       "coverage",
       ".forge"
     ],
+    "gitData": ".git",
+    "ignoreFile": ".gitignore",
     "proseExtensions": [
       ".md"
     ],
@@ -53,10 +55,14 @@
     },
     "rootFloors": {
       ".": 20,
+      ".agents": 1,
+      ".codex": 1,
       ".github": 1,
+      ".pi": 1,
       "docs": 60,
       "examples": 6,
       "media": 2,
+      "new-feedback": 1,
       "qa": 60,
       "src": 100,
       "test": 560,
@@ -351,19 +357,35 @@
             },
             "rootFloors": {
               ".": true,
+              ".agents": true,
+              ".codex": true,
               ".github": true,
+              ".pi": true,
               "docs": true,
               "examples": true,
               "media": true,
+              "new-feedback": true,
               "qa": true,
               "src": true,
               "test": true,
               "vendor": true
             },
+            "skipAnchor": {
+              "unanchored": [],
+              "planted": [
+                ".agents",
+                ".pi",
+                "new-feedback"
+              ]
+            },
             "unreadable": {
               "unreadable": [
+                "src/faulted",
                 "src/sealed",
-                "src/locked.ts"
+                "src/faulty.ts",
+                "src/foreign.ts",
+                "src/locked.ts",
+                "src/uncoded.ts"
               ],
               "read": [
                 "src/open.ts"
@@ -466,7 +488,21 @@
               "composedCommand": false,
               "memberCommand": false,
               "callCommand": false,
-              "importedCommand": false
+              "importedCommand": false,
+              "pep503Carrier": true,
+              "pep503Requirements": true,
+              "pep503Case": true,
+              "pep503Runs": true,
+              "pep503MixedRun": true,
+              "pep503JsonCommand": true,
+              "pep503CommandString": true,
+              "artifactWheel": true,
+              "artifactSdist": true,
+              "pep503Joined": false,
+              "pep503OtherDistribution": false,
+              "composedCarrier": false,
+              "composedQuotedCarrier": false,
+              "composedContinuedCarrier": false
             },
             "carrierHits": [],
             "jsonCommands": [],
@@ -484,10 +520,12 @@
             ],
             "carriers": {
               "hits": [
+                ".github/workflows/gate-pep503.yml:4 - run: pip install vibranium_reactive_components",
                 ".github/workflows/rc.yml:4 - run: pip install vibranium-reactive-components",
                 "bin/rc:2 exec python3 -m reactive_components",
                 "examples/rc.html:1 <script type=\"module\">import { Element } from \"vibranium-reactive-components\";</script>",
                 "forge.toml:2 command = \"python3 -m reactive_components serve\"",
+                "qa/requirements-gate.txt:1 vibranium.reactive.components==0.1.1",
                 "qa/tools/rc.py:1 import reactive_components",
                 "qa/workbench/rc.sh:2 python3 -m reactive_components serve --remote-stream"
               ],
@@ -497,6 +535,9 @@
               ],
               "instrumentCommands": [
                 "test/fixtures/x-roster.json: command: python3 -m reactive_components"
+              ],
+              "manifestHits": [
+                "qa/requirements-gate.txt"
               ]
             }
           }
