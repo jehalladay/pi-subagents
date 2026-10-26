@@ -58,6 +58,21 @@
    "^\\s*(?:nowhere|nothing|none|not|never|no)\\b"
   ],
   "clauseSplit": "(?<=[.!?])\\s+|;",
+  "carrierView": {
+   "unshown": [
+    "html",
+    "image",
+    "def",
+    "del",
+    "space",
+    "hr"
+   ],
+   "element": "^<\\/?[A-Za-z]",
+   "footnote": [
+    "\\[\\^[^\\]\\n]+\\]",
+    "^\\s*(?:>\\s*)*\\[\\^[^\\]\\n]+\\]:"
+   ]
+  },
   "units": [
    "^\\s*(?:>\\s*)*$",
    "^\\s*(?:>\\s*)*(?:[-*+]|\\d{1,9}[.)])\\s+",
@@ -439,6 +454,80 @@
        {
         "id": "one-of-two",
         "causes": []
+       },
+       {
+        "id": "comment",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "link-destination",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "link-title",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "image-alt",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "definition",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "element",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "struck",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "hidden-citation",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "shown-link-text",
+        "causes": []
+       },
+       {
+        "id": "shown-code-span",
+        "causes": []
+       },
+       {
+        "id": "shown-escape",
+        "causes": []
+       },
+       {
+        "id": "shown-emphasis",
+        "causes": []
+       },
+       {
+        "id": "definition-cannot-interrupt",
+        "causes": []
        }
       ]
      }
@@ -446,6 +535,7 @@
     {
      "id": "A6",
      "witness": {
+      "sentence": "As of 2026-10-18 (19ca8d4) these are interface/theorem research requirements, not a claim that source code was modified or native workflows were run.",
       "sentenceWords": 22,
       "controls": [
        {
@@ -480,6 +570,30 @@
        },
        {
         "id": "readme3-line",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "line-reference",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "path-reference",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "linked-reference",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "comment",
         "causes": [
          "unqualified"
         ]
@@ -590,6 +704,46 @@
         "causes": [
          "unqualified"
         ]
+       },
+       {
+        "id": "comment-across-blocks",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "quoted-comment-across-blocks",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "html-block",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "reference-image",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "list-paragraph",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "fence-info-string",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "code-block",
+        "causes": []
        }
       ]
      }
@@ -656,6 +810,7 @@
     {
      "id": "B2",
      "witness": {
+      "subject": "CACWorkflowCompositionV0",
       "controls": [
        {
         "id": "qualified-shipped-type",
@@ -915,60 +1070,80 @@
     {
      "id": "Q2",
      "witness": {
+      "path": "docs/workbench/receipts/wb-kku9.1.md",
+      "text": "# wb-kku9.1: [MW-CAC-WORKFLOW-COMPOSITION-R1] No Pi surface shall present an observation as source evidence\n",
       "causes": []
      }
     },
     {
      "id": "Q3",
      "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "Pi reads the MW 2026-10-18 composition deposit and its CAC assurance program.",
       "causes": []
      }
     },
     {
      "id": "Q4",
      "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "cac-workflow-composition-2026-10-18 is not, as of today, design-only.",
       "causes": []
      }
     },
     {
      "id": "Q5",
      "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "cac-workflow-composition-2026-10-18 (design-only): Pi hands CACWorkflowCompositionV0 to the bridge checker, which vets each step.",
       "causes": []
      }
     },
     {
      "id": "Q6",
      "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "If anything, CACWorkflowCompositionV0 shipped (design-only).",
       "causes": []
      }
     },
     {
      "id": "Q7",
      "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "CACWorkflowCompositionV0 is design-only. It shipped anyway.",
       "causes": []
      }
     },
     {
      "id": "Q8",
      "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "cac-workflow-composition-2026-10-18 (design-only): the checker for the bridge ships, and Pi's MechanicalWorkflows integration is live.",
       "causes": []
      }
     },
     {
      "id": "Q9",
      "witness": {
+      "path": "src/x.ts",
+      "text": "export const A = \"CACWorkflow\" + \"CompositionV0\";",
       "causes": []
      }
     },
     {
      "id": "Q10",
      "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "The CAC\\-workflow\\-composition program and cac&#45;workflow&#45;composition.",
       "causes": []
      }
     },
     {
      "id": "Q11",
      "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "cac-workflow-composition-2026-10-18 is design-only.\n\nThe Pi MW adapter is wired.",
       "causes": []
      }
     }

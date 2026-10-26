@@ -14,6 +14,17 @@
  * Row E quotes the statement's second duty: "shall not present CACWorkflowCompositionV0, a bridge checker or a Pi MW adapter as
  * existing".
  *
+ * wb-3cql (the R694 follow-up of landing 343; gate cmd_54b35cd737ab, PREP findings F1-F5, its LEG-2 mutants re-measured
+ * surviving at trunk 12965aa before this cut): F1 every residual quiet row's witness carries its own probe (path and text) and
+ * the probe is re-judged where the witness is compared, so a row swapped for another's (G-CT3-Q4) or a probe the row never
+ * judged reds; F2 the README.md:21 carrier is the sentence itself - A6 pins a bare line reference, a path to it and a link to
+ * it as unqualified (the lenient carrier G-LENIENT-ONLY reds); F3 (the R658 rendered-view family) a carrier is read on THE
+ * CARRIER VIEW below, never on raw markup (A5 and A7 pin a status held only by a comment, a link destination or title, an
+ * image alt, a definition, a raw HTML element, struck text, a footnote label, an HTML block or a comment across blank lines
+ * as unqualified, and markup a reader sees through - link text, a code span, an escape, emphasis - as qualifying); F4 the
+ * anchored-element binding (OUTSIDE ANCHORS) reds a re-tiling that folds a pin into a neighbour (G-MERGE and its siblings);
+ * F5 stays NOT CLAIMED below (no outside anchor in this census's scope names the residual families).
+ *
  * MEASURED (read-only, by the cutting seat, 2026-10-23, at this census's base caad951). Producer (the local MechanicalWorkflows
  * checkout at 5ce2a07f891f, git show / ls-tree; the roster's producer block holds the lines and blobs, the hermetic census
  * never re-reads them): the program directory holds exactly two documents, README.md (blob 8724bfbef663) and
@@ -40,12 +51,23 @@
  * by word with any run of whitespace, underscore or hyphen between its words, case-insensitively) matches it outside a
  * requirement-id spelling (REQUIREMENT_ID: the bead family's own id form, MW-CAC-WORKFLOW-COMPOSITION-R<n>, derived from this
  * bead's title). A citing CODE unit is a finding (a Pi symbol naming the program or the type presents it as existing). A
- * citing text unit owes a carrier: "design-only" as a whole word (any case), not negated within the two words before it and
- * not followed by "no longer"/"no more"/"anymore", or the README.md:21 sentence (any whitespace between its words, the final
- * period optional); a unit carrying neither is a finding (unqualified). In every citing text unit the existence judge reads
+ * citing text unit owes a carrier on its CARRIER VIEW: "design-only" as a whole word (any case), not negated within the two
+ * words before it and not followed by "no longer"/"no more"/"anymore", or the README.md:21 sentence itself (any whitespace
+ * between its words, the final period optional; a reference to the line, its path or a link to it is no carrier); a unit
+ * carrying neither is a finding (unqualified). In every citing text unit the existence judge reads
  * each clause (split at sentence ends and semicolons) holding one of the statement's three subjects (SUBJECTS) and a word of
  * EXISTS not preceded in its clause by a GUARD word (negations, conditionals, modals, "proposed", "planned", "future", "yet")
  * and not followed by "nowhere"/"nothing"/"none"/"not"/"never"/"no": such a clause presents its subject as existing, a finding.
+ * The citation and existence judges read the raw text, so a citation or a claim only the raw markup holds still counts (a
+ * hidden citation fails closed); only the carrier is read on the view.
+ * THE CARRIER VIEW (wb-3cql F3). A markdown unit's carrier view is what its rendered page shows. marked's top-level tokens of
+ * the whole document (their raws tile its source) place each line: a raw HTML block (a comment, an element, a block spanning
+ * blank lines), a link reference definition and a code fence delimiter show nothing; a code block's lines show verbatim; a
+ * list or quote whose raw HTML crosses a blank line is opaque. The unit's remaining lines are rendered on their own through
+ * marked (indentation removed, footnote syntax removed, the document's definitions preloaded): HTML, images (their alt text
+ * included), definitions, link destinations and titles and struck text (UNSHOWN) show no carrier, and a raw HTML element
+ * (ELEMENT; an attribute or a style can hide the text between its tags) makes the view opaque, carrying nothing. A src unit
+ * and any other unit are shown as their text (src has no rendered page: a string is read cooked, a comment as written).
  *
  * ROWS. A, clause (a), one pin per quoted part (the pin quotes tile the clause): A1 the docs/workbench walk outside receipts/,
  * A2 the receipts walk, A3 the src walk - each git-tracked list equal to a filesystem walk, a file floor, a content-liveness
@@ -53,7 +75,8 @@
  * literal "workflow-script/v1" is a string unit of src/workbench/identity.ts and of no other src file) and the same call
  * judging a planted file after the tracked ones: the findings are exactly the plant's (an unqualified citation, a qualified
  * existence claim and, in src, a code unit), so a real finding, a hollowed judge or a live result forced empty reds; A4 the
- * citation reader; A5 the design-only carrier; A6 the README.md:21 carrier; A7 the unit boundaries (markdown and source); A8
+ * citation reader; A5 the design-only carrier, on the carrier view; A6 the README.md:21 carrier (the sentence, never a
+ * reference to its line); A7 the unit boundaries (markdown and source) and the document's own placing of a unit's lines; A8
  * the filing pin d75b68d: the same readers over git's objects at the pin read no citing unit, and the same call judges a plant.
  * B, clause (b): B1 the unqualified half of the mutant; B2 its shipped-type half (a qualified shipped claim still flags; a
  * src type declaration flags as code); B3 the mutant committed into a scratch git repository (test/helpers/scratch.ts, leak
@@ -64,7 +87,8 @@
  * is held verbatim in test/workbench-docs07-provider-rules.census.ts (read live; a planted bound twin is quiet). E, the
  * statement's second duty, one pin per subject: E1 CACWorkflowCompositionV0, E2 a bridge checker, E3 a Pi MW adapter - each
  * the existence judge on its controls (the filing's quoted MW facts quiet) and a docs walk judging its planted claim. Q, the
- * residuals' pinned quiet rows.
+ * residuals' pinned quiet rows: each witness (but R-SCOPE's path list) is its probe's path, text and causes, and the probe is
+ * re-judged where the witness is compared (wb-3cql F1).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and
  * pins, every pin's witness, the constants and every registered test title - is held to the out-of-file roster
  * (test/fixtures/mw-cac-citation-status-roster.json). OUTSIDE ANCHORS (their own registered case): the bead's own row in the
@@ -74,10 +98,18 @@
  * clause (a)'s quoted literals and the design-only carrier is its third quote; README.md:21 is the filing's quote; SUBJECTS
  * spell the statement's subjects; EXISTS reads the bead text's existence words (existing, shipped, exists, wired); clause (c)'s
  * holder and docs/07 page are its own references; wb-klr7's row carries the clause (c) sentence; the producer block's MW lines
- * carry the quoted status. The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran
- * before it) and REACHED (every pin reached its witness compare, and each compare's own result).
+ * carry the quoted status; and (wb-3cql F4) every ANCHORED ELEMENT the bead text names is carried by the roster witness of
+ * each pin of its row whose quote names it - clause (a)'s scope words, quoted literals and carrier word, the filing's
+ * README.md:21 sentence and the filing pin its notes name for "today", clause (b)'s "unqualified", CACWorkflowCompositionV0
+ * and the census's scopes, clause (c)'s wb-klr7 sentence and holder, row E's three subjects - so a re-tiling that folds a pin
+ * into a neighbour in every literal and the roster reds whenever the folded quote names one (G-MERGE: A6 into A5). The last
+ * case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it) and REACHED (every pin
+ * reached its witness compare, and each compare's own result).
  * NOT CLAIMED (edits of this file and the roster together): a residual row removed from ROWS, the literal, IMPL, RESIDUALS and
- * the roster (no outside anchor names the residual families); a control removed from IMPL and the roster together while
+ * the roster (no outside anchor names the residual families: landing 343's F5, CT6 on Q4, measured 30/30 at this cut - an
+ * external anchor would be a docs table outside this census's two files, the wb-64x.1 form); a re-tiling that folds A7 ("in
+ * the same paragraph") or C2 ("it carries the status verbatim"), the two quotes naming no anchored element, into a neighbour
+ * in every literal and the roster (measured 30/30 at this cut); a control removed from IMPL and the roster together while
  * every remaining control holds; a plant edited in IMPL and the roster together; a floor lowered in FLOORS and the roster
  * together (git's list equal to the filesystem walk stays the narrowing guard); a seat-added vocabulary member (of EXISTS,
  * GUARD or the negation lists) removed with every control naming it, in IMPL and the roster together (only the bead text's
@@ -95,7 +127,15 @@
  * SCOPE: the judges read words, not meaning. OVER-READS (disclosed; none today): a citing paragraph whose only status is a
  * paraphrase ("design only", a README.md:21 fragment) flags; a "Pi adapter" in a citing unit reads as the Pi MW adapter; a
  * code symbol that merely names the program (a status constant) flags as code; a status carried only by a heading or a
- * neighbouring paragraph or comment does not qualify a unit.
+ * neighbouring paragraph or comment does not qualify a unit; and, from the carrier view (wb-3cql, each conservative): a
+ * citation only a comment or a link destination holds still needs a carrier the page shows; a citing unit whose rendering
+ * holds a raw HTML element (an inline <br> or <span>, an element inside a list item or quote) or that sits in a list or quote
+ * with raw HTML across a blank line carries nothing; the lines of a top-level raw HTML block (even a visible <pre> or
+ * <details>), a comment's closing line after its --> and a footnote definition show no carrier; a carrier spelled with an
+ * entity (design&#45;only) does not qualify. One reading is measured, not
+ * assumed: a "[s]: <url>" line directly under a citing line cannot be a definition (a definition cannot interrupt a
+ * paragraph), so marked and CommonMark both show it as text and a status in its URL qualifies (A5 definition-cannot-interrupt;
+ * the definition above the citing line, or after a blank line, is hidden: A5 definition).
  *
  * Display paths added: none (test-only; src/ is read, never edited). Scratch: B3 composes makeScratch/removeScratch with the
  * leak guard installed; docs, src, .beads and git objects are otherwise only read.
@@ -105,6 +145,7 @@ import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
+import { Lexer, type Links, marked, type Token, type Tokens } from "marked";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
@@ -196,6 +237,12 @@ const GUARD =
   /\b(?:no|not|never|none|nothing|nor|neither|without|cannot|can't|isn't|aren't|wasn't|weren't|doesn't|don't|didn't|won't|hasn't|haven't|when|whenever|once|if|until|unless|before|would|will|may|might|could|should|proposed|planned|future|yet)\b/i;
 const GUARD_AFTER = /^\s*(?:nowhere|nothing|none|not|never|no)\b/i;
 const CLAUSE_SPLIT = /(?<=[.!?])\s+|;/;
+/** The carrier view (wb-3cql F3): marked token types whose text no reader of the rendered page sees as a status. */
+const UNSHOWN: readonly string[] = ["html", "image", "def", "del", "space", "hr"];
+/** An html token opening or closing an element: an attribute or a style can hide the text between its tags, so its view is opaque. */
+const ELEMENT = /^<\/?[A-Za-z]/;
+/** Footnote syntax shows no carrier: a reference renders as a number (never its label), a definition apart from its paragraph. */
+const FOOTNOTE = { reference: /\[\^[^\]\n]+\]/g, definition: /^\s*(?:>\s*)*\[\^[^\]\n]+\]:/ };
 
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-SCOPE": ["Q1"],
@@ -320,23 +367,119 @@ function textOf(path: string): string {
 }
 
 type UnitKind = "block" | "line" | "string" | "comment" | "code";
+/** What a reader sees of a unit, as a carrier: an opaque view carries nothing. */
+interface CarrierView {
+  readonly text: string;
+  readonly opaque: boolean;
+}
 interface Unit {
   readonly line: number;
   readonly kind: UnitKind;
   readonly text: string;
+  /** A markdown unit's carrier view (THE CARRIER VIEW), read lazily; a unit without one is shown as its text. */
+  readonly view?: () => CarrierView;
 }
 const BLANK = /^\s*(?:>\s*)*$/;
 const LIST_ITEM = /^\s*(?:>\s*)*(?:[-*+]|\d{1,9}[.)])\s+/;
 const HEADING = /^\s{0,3}#{1,6}(?:\s|$)/;
 const TABLE_ROW = /^\s*\|/;
 const FENCE = /^\s{0,3}(?:`{3,}|~{3,})/;
+
+/** A markdown line's place in its document's own rendering: rendered with its unit, shown verbatim as code, hidden, or opaque. */
+type LineShow = "rendered" | "code" | "hidden" | "opaque";
+const SHOW_RANK: Readonly<Record<LineShow, number>> = { rendered: 0, code: 1, hidden: 2, opaque: 3 };
+const isList = (token: Token): token is Tokens.List => token.type === "list";
+const isTable = (token: Token): token is Tokens.Table => token.type === "table";
+function childrenOf(token: Token): readonly Token[] {
+  if (isList(token)) return token.items.flatMap(item => item.tokens);
+  const value: unknown = (token as { tokens?: unknown }).tokens;
+  return Array.isArray(value) ? (value as Token[]) : [];
+}
+function textField(token: Token): string {
+  const value: unknown = (token as { text?: unknown }).text;
+  return typeof value === "string" ? value : "";
+}
+/** A list or quote whose raw HTML crosses a blank line: the census's units cannot see where that HTML ends. */
+function spansBlankLine(token: Token): boolean {
+  return childrenOf(token).some(child => (child.type === "html" && /\n[ \t>]*\n/.test(child.raw)) || spansBlankLine(child));
+}
+function placeOf(token: Token, line: string): LineShow {
+  if (token.type === "html" || token.type === "def") return "hidden";
+  if (token.type === "code") return FENCE.test(line) ? "hidden" : "code";
+  if ((token.type === "list" || token.type === "blockquote") && spansBlankLine(token)) return "opaque";
+  return "rendered";
+}
+/** Each line's place, read from marked's top-level tokens of the whole document (their raws tile its source), and its link definitions. */
+function documentView(text: string): { readonly places: readonly LineShow[]; readonly links: Links } {
+  const source = text.split("\n");
+  const places: LineShow[] = source.map(() => "rendered");
+  const tokens = marked.lexer(text);
+  let line = 0;
+  for (const token of tokens) {
+    const breaks = token.raw.split("\n").length - 1;
+    const last = token.raw.endsWith("\n") ? line + breaks - 1 : line + breaks;
+    for (let at = line; at <= last && at < source.length; at += 1) {
+      const place = placeOf(token, source[at] ?? "");
+      if (SHOW_RANK[place] > SHOW_RANK[places[at] ?? "rendered"]) places[at] = place;
+    }
+    line += breaks;
+  }
+  return { places, links: tokens.links };
+}
+/** What a reader sees of marked tokens as a carrier: unshown types and a link's destination and title show nothing. */
+function shownText(tokens: readonly Token[], separator: string, view: { opaque: boolean }): string {
+  return tokens
+    .map(token => {
+      if (token.type === "html" && ELEMENT.test(token.raw.trim())) view.opaque = true;
+      if (UNSHOWN.includes(token.type)) return "";
+      if (token.type === "br") return "\n";
+      if (isList(token)) return token.items.map(item => shownText(item.tokens, "\n", view)).join("\n");
+      if (isTable(token)) return [...token.header, ...token.rows.flat()].map(cell => shownText(cell.tokens, "", view)).join(" ");
+      const children = childrenOf(token);
+      return children.length > 0 ? shownText(children, token.type === "blockquote" ? "\n" : "", view) : textField(token);
+    })
+    .join(separator);
+}
+/** A unit's carrier view: its hidden lines dropped, code shown verbatim, the rest rendered on its own (indentation removed, footnote syntax removed, the document's definitions preloaded). */
+function carrierView(lines: readonly string[], places: readonly LineShow[], links: Links): CarrierView {
+  if (places.includes("opaque")) return { text: "", opaque: true };
+  const kept = lines.filter((_, index) => places[index] !== "hidden");
+  if (places.every(place => place === "code" || place === "hidden")) return { text: kept.join("\n"), opaque: false };
+  const markdown = kept
+    .filter(line => !FOOTNOTE.definition.test(line))
+    .map(line => line.replace(/^[ \t]+/, "").replace(FOOTNOTE.reference, ""))
+    .join("\n");
+  const lexer = new Lexer();
+  Object.assign(lexer.tokens.links, links);
+  const view = { opaque: false };
+  const text = shownText(lexer.lex(markdown), "\n", view);
+  return { text, opaque: view.opaque };
+}
+
 /** Markdown units: blank-line blocks; a heading, a table row and each fenced line are units of their own; a list item opens one. */
 function markdownUnits(text: string): Unit[] {
   const units: Unit[] = [];
+  let document: ReturnType<typeof documentView> | undefined;
+  /** The document's own rendering, read once and only when a citing unit asks for its view. */
+  const read = (): ReturnType<typeof documentView> => {
+    document ??= documentView(text);
+    return document;
+  };
+  const push = (line: number, kind: UnitKind, lines: readonly string[]): void => {
+    const view = (): CarrierView => {
+      const { places, links } = read();
+      return carrierView(
+        lines,
+        lines.map((_, offset) => places[line - 1 + offset] ?? "rendered"),
+        links,
+      );
+    };
+    units.push({ line, kind, text: lines.join("\n"), view });
+  };
   let open: { line: number; lines: string[] } | undefined;
   let fenced = false;
   const flush = (): void => {
-    if (open !== undefined) units.push({ line: open.line, kind: "block", text: open.lines.join("\n") });
+    if (open !== undefined) push(open.line, "block", open.lines);
     open = undefined;
   };
   for (const [index, line] of text.split("\n").entries()) {
@@ -344,12 +487,12 @@ function markdownUnits(text: string): Unit[] {
     if (FENCE.test(line)) {
       flush();
       fenced = !fenced;
-      units.push({ line: at, kind: "line", text: line });
-    } else if (fenced) units.push({ line: at, kind: "line", text: line });
+      push(at, "line", [line]);
+    } else if (fenced) push(at, "line", [line]);
     else if (BLANK.test(line)) flush();
     else if (HEADING.test(line) || TABLE_ROW.test(line)) {
       flush();
-      units.push({ line: at, kind: "line", text: line });
+      push(at, "line", [line]);
     } else if (LIST_ITEM.test(line) || open === undefined) {
       flush();
       open = { line: at, lines: [line] };
@@ -423,11 +566,13 @@ function existenceClaims(text: string): string[] {
   }
   return SUBJECTS.map(subject => subject.id).filter(id => claimed.has(id));
 }
-/** One unit's verdict: whether it cites, and its causes. */
+/** One unit's verdict: whether it cites (raw text), and its causes - its carrier read on its carrier view (wb-3cql F3), its existence claims on the raw text. */
 function judgeUnit(unit: Unit): { cites: boolean; causes: string[] } {
   if (citations(unit.text).length === 0) return { cites: false, causes: [] };
   if (unit.kind === "code") return { cites: true, causes: ["code"] };
-  return { cites: true, causes: [...(carries(unit.text) ? [] : ["unqualified"]), ...existenceClaims(unit.text).map(id => `exists:${id}`)] };
+  const view = unit.view?.() ?? { text: unit.text, opaque: false };
+  const carried = !view.opaque && carries(view.text);
+  return { cites: true, causes: [...(carried ? [] : ["unqualified"]), ...existenceClaims(unit.text).map(id => `exists:${id}`)] };
 }
 interface FileText {
   readonly path: string;
@@ -530,6 +675,17 @@ function controlsHold(controls: readonly Control[]): { id: string; causes: strin
     expect(causes, `${control.id}: its causes`).toEqual([...control.causes]);
     return { id: control.id, causes };
   });
+}
+/** A residual's quiet row (wb-3cql F1): its witness carries its own probe beside its causes, so a row swapped for another's reds. */
+function quiet(path: string, text: string, why: string): JsonValue {
+  const causes = causesOf(path, text);
+  expect(causes, why).toEqual([]);
+  return json({ path, text, causes });
+}
+/** A quiet row's probe, read back from its witness (re-judged where the witness is compared). */
+function probeOf(witness: JsonValue): { path: string; text: string; causes: unknown } | undefined {
+  if (!isObject(witness) || typeof witness.path !== "string" || typeof witness.text !== "string" || !Object.hasOwn(witness, "causes")) return undefined;
+  return { path: witness.path, text: witness.text, causes: witness.causes };
 }
 function scopeLeg(pin: "A1" | "A2" | "A3", liveness: (files: readonly string[]) => JsonValue): JsonValue {
   const scope = SCOPES[pin];
@@ -691,6 +847,21 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "suffixed", text: `${cite} is design-only-ish.`, causes: ["unqualified"] },
       { id: "negation-elsewhere", text: `Pi does not treat the design-only ${cite} program as shipped.`, causes: [] },
       { id: "one-of-two", text: `${cite} is not design-only; it is design-only.`, causes: [] },
+      // wb-3cql F3: the carrier is read on the rendered view; a status only the raw markup holds does not qualify.
+      { id: "comment", text: `Pi reads the ${cite} program. <!-- design-only -->`, causes: ["unqualified"] },
+      { id: "link-destination", text: `Pi reads the [${cite} program](https://example.invalid/design-only).`, causes: ["unqualified"] },
+      { id: "link-title", text: `Pi reads the [${cite} program](https://example.invalid "design-only").`, causes: ["unqualified"] },
+      { id: "image-alt", text: `![design-only](status.png) Pi reads the ${cite} program.`, causes: ["unqualified"] },
+      { id: "definition", text: `[s]: https://example.invalid/design-only\nPi reads the [${cite} program][s].`, causes: ["unqualified"] },
+      { id: "element", text: `Pi reads the ${cite} program. <span hidden>design-only</span>`, causes: ["unqualified"] },
+      { id: "struck", text: `${cite} is ~~design-only~~.`, causes: ["unqualified"] },
+      { id: "footnote-label", text: `Pi reads the ${cite} program[^design-only].\n\n[^design-only]: A note.`, causes: ["unqualified"] },
+      { id: "hidden-citation", text: `<!-- ${cite} is design-only. -->`, causes: ["unqualified"] },
+      { id: "shown-link-text", text: `${cite} is [design-only](https://example.invalid).`, causes: [] },
+      { id: "shown-code-span", text: `${cite} is \`design-only\`.`, causes: [] },
+      { id: "shown-escape", text: `${cite} is design\\-only.`, causes: [] },
+      { id: "shown-emphasis", text: `${cite} is design-*only*.`, causes: [] },
+      { id: "definition-cannot-interrupt", text: `Pi reads the [${cite} program][s].\n[s]: https://example.invalid/design-only`, causes: [] },
     ];
     return json({ word: DESIGN_ONLY, controls: controlsHold(controls) });
   },
@@ -704,8 +875,14 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "altered-date", text: `${cite}: ${README21.replace("2026-10-18", "2026-10-19")}`, causes: ["unqualified"] },
       { id: "altered-word", text: `${cite}: ${README21.replace("were run", "were witnessed")}`, causes: ["unqualified"] },
       { id: "readme3-line", text: `${cite}: the two program documents are the only artifacts.`, causes: ["unqualified"] },
+      // wb-3cql F2: the carrier is the sentence itself; a reference to its line is no carrier.
+      { id: "line-reference", text: `Pi reads the ${cite} program (its status: README.md:21).`, causes: ["unqualified"] },
+      { id: "path-reference", text: `${cite}: see docs/programs/${cite}/README.md:21.`, causes: ["unqualified"] },
+      { id: "linked-reference", text: `${cite}: [README.md:21](https://example.invalid/README.md#L21).`, causes: ["unqualified"] },
+      // wb-3cql F3: the sentence only the raw markup holds is no carrier.
+      { id: "comment", text: `${cite} <!-- ${README21} -->`, causes: ["unqualified"] },
     ];
-    return json({ sentenceWords: README21.split(/\s+/).length, controls: controlsHold(controls) });
+    return json({ sentence: README21, sentenceWords: README21.split(/\s+/).length, controls: controlsHold(controls) });
   },
   A7: () => {
     const cite = "cac-workflow-composition-2026-10-18";
@@ -729,6 +906,14 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "src-escape", path: "src/x.ts", text: 'export const A = "CACWorkflow\\u0043ompositionV0";', causes: ["unqualified"] },
       { id: "src-jsdoc", path: "src/x.ts", text: "/** @see CACWorkflowCompositionV0 design-only */\nexport const A = 1;", causes: [] },
       { id: "src-block-comment", path: "src/x.ts", text: `export const A = 1; /* ${cite} */`, causes: ["unqualified"] },
+      // wb-3cql F3: the document's own rendering places each line of a unit (raw HTML across blank lines, code, definitions).
+      { id: "comment-across-blocks", text: `<!-- design-only\n\nnote\n\ndesign-only -->\nPi reads the ${cite} program.`, causes: ["unqualified"] },
+      { id: "quoted-comment-across-blocks", text: `> <!-- design-only\n>\n> design-only -->\n> Pi reads the ${cite} program.`, causes: ["unqualified"] },
+      { id: "html-block", text: `<div hidden>\nPi reads the ${cite} program (design-only).\n</div>`, causes: ["unqualified"] },
+      { id: "reference-image", text: `![design-only][img] Pi reads the ${cite} program.\n\n[img]: status.png`, causes: ["unqualified"] },
+      { id: "list-paragraph", text: `- An item.\n\n    Pi reads the ${cite} program. <!-- design-only -->`, causes: ["unqualified"] },
+      { id: "fence-info-string", text: `\`\`\`${cite} design-only\nx\n\`\`\``, causes: ["unqualified"] },
+      { id: "code-block", text: `An example:\n\n    ${cite} <!-- design-only -->`, causes: [] },
     ];
     return json({ controls: controlsHold(controls) });
   },
@@ -774,7 +959,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "src-import", path: "src/x.ts", text: 'import { CACWorkflowCompositionV0 } from "./mw.js";', causes: ["code"] },
       { id: "src-shipped-string", path: "src/x.ts", text: 'export const A = "CACWorkflowCompositionV0 (design-only) ships";', causes: ["exists:v0"] },
     ];
-    return json({ controls: controlsHold(controls) });
+    return json({ subject: SUBJECTS[0]?.spelling ?? "", controls: controlsHold(controls) });
   },
   B3: () => {
     const root = makeScratch("wb-kku9.2-mutant-");
@@ -890,56 +1075,16 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     expect(outside.filter(path => listed.includes(path)), "no clause (a) scope lists them").toEqual([]);
     return json({ outside, listed: outside.filter(path => listed.includes(path)) });
   },
-  Q2: () => {
-    const causes = causesOf("docs/workbench/receipts/wb-kku9.1.md", "# wb-kku9.1: [MW-CAC-WORKFLOW-COMPOSITION-R1] No Pi surface shall present an observation as source evidence\n");
-    expect(causes, "a unit whose only matches are requirement ids does not cite").toEqual([]);
-    return json({ causes });
-  },
-  Q3: () => {
-    const causes = causesOf("docs/workbench/x.md", "Pi reads the MW 2026-10-18 composition deposit and its CAC assurance program.");
-    expect(causes, "a paraphrased citation does not cite").toEqual([]);
-    return json({ causes });
-  },
-  Q4: () => {
-    const causes = causesOf("docs/workbench/x.md", "cac-workflow-composition-2026-10-18 is not, as of today, design-only.");
-    expect(causes, "a negation three words away does not cancel the carrier").toEqual([]);
-    return json({ causes });
-  },
-  Q5: () => {
-    const causes = causesOf("docs/workbench/x.md", "cac-workflow-composition-2026-10-18 (design-only): Pi hands CACWorkflowCompositionV0 to the bridge checker, which vets each step.");
-    expect(causes, "predicates outside EXISTS are not read").toEqual([]);
-    return json({ causes });
-  },
-  Q6: () => {
-    const causes = causesOf("docs/workbench/x.md", "If anything, CACWorkflowCompositionV0 shipped (design-only).");
-    expect(causes, "a guard word before the predicate silences it").toEqual([]);
-    return json({ causes });
-  },
-  Q7: () => {
-    const causes = causesOf("docs/workbench/x.md", "CACWorkflowCompositionV0 is design-only. It shipped anyway.");
-    expect(causes, "a pronoun across a sentence end is not read").toEqual([]);
-    return json({ causes });
-  },
-  Q8: () => {
-    const causes = causesOf("docs/workbench/x.md", "cac-workflow-composition-2026-10-18 (design-only): the checker for the bridge ships, and Pi's MechanicalWorkflows integration is live.");
-    expect(causes, "subjects spelled outside SUBJECTS are not read").toEqual([]);
-    return json({ causes });
-  },
-  Q9: () => {
-    const causes = causesOf("src/x.ts", 'export const A = "CACWorkflow" + "CompositionV0";');
-    expect(causes, "a citation split across a concatenation does not cite").toEqual([]);
-    return json({ causes });
-  },
-  Q10: () => {
-    const causes = causesOf("docs/workbench/x.md", "The CAC\\-workflow\\-composition program and cac&#45;workflow&#45;composition.");
-    expect(causes, "escaped and entity spellings do not cite").toEqual([]);
-    return json({ causes });
-  },
-  Q11: () => {
-    const causes = causesOf("docs/workbench/x.md", "cac-workflow-composition-2026-10-18 is design-only.\n\nThe Pi MW adapter is wired.");
-    expect(causes, "an existence claim in a unit that does not cite is not judged").toEqual([]);
-    return json({ causes });
-  },
+  Q2: () => quiet("docs/workbench/receipts/wb-kku9.1.md", "# wb-kku9.1: [MW-CAC-WORKFLOW-COMPOSITION-R1] No Pi surface shall present an observation as source evidence\n", "a unit whose only matches are requirement ids does not cite"),
+  Q3: () => quiet("docs/workbench/x.md", "Pi reads the MW 2026-10-18 composition deposit and its CAC assurance program.", "a paraphrased citation does not cite"),
+  Q4: () => quiet("docs/workbench/x.md", "cac-workflow-composition-2026-10-18 is not, as of today, design-only.", "a negation three words away does not cancel the carrier"),
+  Q5: () => quiet("docs/workbench/x.md", "cac-workflow-composition-2026-10-18 (design-only): Pi hands CACWorkflowCompositionV0 to the bridge checker, which vets each step.", "predicates outside EXISTS are not read"),
+  Q6: () => quiet("docs/workbench/x.md", "If anything, CACWorkflowCompositionV0 shipped (design-only).", "a guard word before the predicate silences it"),
+  Q7: () => quiet("docs/workbench/x.md", "CACWorkflowCompositionV0 is design-only. It shipped anyway.", "a pronoun across a sentence end is not read"),
+  Q8: () => quiet("docs/workbench/x.md", "cac-workflow-composition-2026-10-18 (design-only): the checker for the bridge ships, and Pi's MechanicalWorkflows integration is live.", "subjects spelled outside SUBJECTS are not read"),
+  Q9: () => quiet("src/x.ts", 'export const A = "CACWorkflow" + "CompositionV0";', "a citation split across a concatenation does not cite"),
+  Q10: () => quiet("docs/workbench/x.md", "The CAC\\-workflow\\-composition program and cac&#45;workflow&#45;composition.", "escaped and entity spellings do not cite"),
+  Q11: () => quiet("docs/workbench/x.md", "cac-workflow-composition-2026-10-18 is design-only.\n\nThe Pi MW adapter is wired.", "an existence claim in a unit that does not cite is not judged"),
 };
 
 describe("wb-kku9.2 MW cac-workflow-composition citation-status census (MW-CAC-WORKFLOW-COMPOSITION-R2)", () => {
@@ -961,6 +1106,7 @@ describe("wb-kku9.2 MW cac-workflow-composition citation-status census (MW-CAC-W
         exists: EXISTS.source,
         guard: [GUARD.source, GUARD_AFTER.source],
         clauseSplit: CLAUSE_SPLIT.source,
+        carrierView: { unshown: UNSHOWN, element: ELEMENT.source, footnote: [FOOTNOTE.reference.source, FOOTNOTE.definition.source] },
         units: [BLANK.source, LIST_ITEM.source, HEADING.source, TABLE_ROW.source, FENCE.source],
         scopes: SCOPES,
         floors: FLOORS,
@@ -977,6 +1123,9 @@ describe("wb-kku9.2 MW cac-workflow-composition citation-status census (MW-CAC-W
       }),
     ).toStrictEqual(ROSTER.constants);
     for (const members of Object.values(RESIDUALS)) for (const member of members) expect(ROWS.flatMap(row => row.pins), `${member} is a judged pin`).toContain(member);
+    for (const [family, members] of Object.entries(RESIDUALS)) {
+      for (const member of members) if (family !== "R-SCOPE") expect(probeOf(rosterWitness(member)), `${member} (${family}) carries its own probe (wb-3cql F1)`).toBeDefined();
+    }
     for (const [pin, impl] of Object.entries(IMPL)) {
       expect(/\bROSTER\b|rosterWitness|readRoster/.test(impl.toString()), `${pin}'s case reads no roster (SELF-READ)`).toBe(false);
     }
@@ -1041,6 +1190,27 @@ describe("wb-kku9.2 MW cac-workflow-composition citation-status census (MW-CAC-W
     expect(textOf(DOCS07).split("\n")[0], "docs/07 opens with the holder's parent heading").toBe(`# ${DOCS07_PARENT}`);
     expect(c.includes(`the ${KLR7} acceptance (c) sentence`), "clause (c) names wb-klr7's acceptance (c) sentence").toBe(true);
     expect(beadNotes(KLR7).includes("(c) docs/workbench/07 § MechanicalWorkflows gains one falsifiable sentence bound by the docs/07 census"), "wb-klr7's row carries it").toBe(true);
+    // wb-3cql F4: every anchored element the bead text names is carried by the roster witness of each pin of its row whose
+    // quote names it, so a re-tiling that folds a pin into a neighbour (landing 343's G-MERGE) reds against the bead row.
+    const holder = /is bound by (\S+)$/.exec(c)?.[1] ?? "-";
+    const scopeWords = /^static census over (.+?): /.exec(a)?.[1]?.split(/, | and /) ?? [];
+    const anchored: { row: string; names: RegExp; carried: string }[] = [
+      ...scopeWords.map(word => ({ row: "A", names: new RegExp(`(?<![\\w/-])${escaped(word)}(?![\\w/-])`), carried: word })),
+      ...quotedWords(a).map(word => ({ row: "A", names: new RegExp(escaped(`'${word}'`)), carried: word })),
+      { row: "A", names: /README\.md:21/, carried: new RegExp(`Quote: '(.+?)' ${escaped(PROGRAM_PATH)}:21@5ce2a07f891f`).exec(notes)?.[1] ?? "-" },
+      { row: "A", names: /passes empty today/, carried: /over src\/docs\/test\/qa at ([0-9a-f]{7,40}) = 0 hits/.exec(notes)?.[1] ?? "-" },
+      { row: "B", names: /\bunqualified\b/, carried: "unqualified" },
+      ...subjects.filter(subject => (clauses.b ?? "").includes(subject)).map(subject => ({ row: "B", names: new RegExp(escaped(subject)), carried: subject })),
+      ...scopeWords.map(word => ({ row: "B", names: /fails the census/, carried: word })),
+      { row: "C", names: new RegExp(escaped(`${KLR7} acceptance (c) sentence`)), carried: /\(c\) (docs\/workbench\/07 § MechanicalWorkflows gains one falsifiable sentence bound by the docs\/07 census)/.exec(beadNotes(KLR7))?.[1] ?? "-" },
+      { row: "C", names: new RegExp(escaped(holder)), carried: holder },
+      ...subjects.map(subject => ({ row: "E", names: new RegExp(escaped(subject)), carried: subject })),
+    ];
+    for (const element of anchored) {
+      const naming = (ROWS.find(row => row.id === element.row)?.pins ?? []).filter(pin => element.names.test(QUOTES[pin] ?? ""));
+      expect(naming.length, `row ${element.row}: a pin's quote names ${element.names.source}`).toBeGreaterThan(0);
+      for (const pin of naming) expect(JSON.stringify(rosterWitness(pin)), `${pin}'s witness carries what its quote names (${element.names.source})`).toContain(JSON.stringify(element.carried).slice(1, -1));
+    }
     const mw = ROSTER.producer.mw;
     expect(isObject(mw), "the roster carries the MW producer block").toBe(true);
     if (!isObject(mw)) return;
@@ -1064,6 +1234,8 @@ describe("wb-kku9.2 MW cac-workflow-composition citation-status census (MW-CAC-W
           const expected = rosterWitness(pin);
           REACHED.push({ pin, same: isDeepStrictEqual(witness, expected) });
           expect(witness).toStrictEqual(expected);
+          const probe = probeOf(witness);
+          if (probe !== undefined) expect(causesOf(probe.path, probe.text), `${pin}'s causes are its own probe's (wb-3cql F1)`).toEqual(probe.causes);
         });
       }
     });
