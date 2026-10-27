@@ -69,3 +69,38 @@
 | missing prerequisites | 460ee6aa3a803591 9a3a45d01531a20e |
 | receipt fields | 7b9b0d82510b3f8c ba159dbf9d2f740f ae17bb2ef230c0a9 6c76d19ad35ef2bf 260f83a79a5da479 0b27c158feb36ab1 d776f804ff89373b 300c71d96c23e604 fcbb0b71c7618c47 29428e4f530f8c4f fd893336d225d55e 1c06771950cb2f31 af2bdbe1aa9b6ec1 df0ad6e43880f09c a6235752ef51e86c ed916476e5d36929 b314ae60cb741e69 |
 | walk exclusions | 4d0a4dff1f762e59 dba27c31aad93578 bcae0416621b3db4 44575cf5b28512d7 c3a3091b9d32267d 8d0eee604c4b7645 |
+
+## 2026-10-25 the provenance census's standalone cases and clause map, anchored outside the census (wb-atq9 gate F1, F2 and F3, follow-up wb-pzbq)
+
+- What binds here (cut 2): this entry adds two anchor families beside the ledger. Cases holds each standalone case of test/workbench-gp-provenance-census.test.ts, meaning each registered test that is no judged row's own test, by its key (the title's text before its first ": ") with the first 16 hex digits of the title's SHA-256; Clause tables holds each acceptance clause, by its letter, with the judged tables it maps to. Their removal families are Removed cases and Removed clause tables. Every level-3 section of this receipt is now a section of one of those eight families, under the heading form, header row, single-table and no-HTML rules above, in one cut numbering.
+- The anchors: a case stands with exactly one title and a clause with every table a cut adds; within a cut the additions apply first, then the removals, and a member leaves only when a Removed line of a cut names it, so a later table that restates the set without a member removes nothing and a reworded title needs its old title's removal. Four cases read the anchors: the receipt anchors case holds both families equal to the file's vitest task tree and to its clause map, both ways; the roster case holds Cases equal to the same task tree; the rule 16 case holds its frozen list of case keys equal to the keys of Cases; and the bead case holds Clause tables equal to the clause map. Deleting a case, a reader case included, together with its roster title therefore reads red unless a Removed cases line names it. The roster now also holds the clause map.
+- Permissive vocabularies (the gate's F3): the claim statuses and the missing prerequisites now equal what the reference readers mint from the captured roster, and every walk exclusion is the VCS directory or a directory the root .gitignore names by a plain directory line, below which git tracks no file; a digest appended to a later Vocabularies table therefore no longer admits a member that loosens the claim judge or narrows the docs and JSON walks.
+- Red first, measured in place on trunk fced7bf (the cut's base) with the gate's coordinated hollow shape (each case deleted together with its roster title, the roster regenerated from the mutated census, and at the cut its key dropped from the rule 16 list too), every file restored byte-identical after each run: deleting the receipt ledger, bead, landed note, live (b), live (c) or roster case, the receipt ledger case beside a removed RECEIPT_MUTANTS row, the bead case beside a reworded clause, or the vocabularies case beside a verdict built without one word, and rewording the live (d) title, each read 0 failed there; with this cut each reads failed 3 (the receipt anchors, rule 16 and roster cases), 2 when the deleted case is one of those readers, and 2 for the reworded title. Deleting a new case the same way reads failed 2 for the receipt anchors case (the rule 16 and roster cases redden) and 3 for the permissive vocabularies case. Moving RESOLVE out of clause (d), or into clause (c), with its rule-16 element and the roster regenerated read 0 failed at base and 2 with this cut (the bead and receipt anchors cases). Appending a walk exclusion (an inert name, or qa), a claim status or a missing prerequisite with its digest in a later Vocabularies table read 0 failed at base and 1 with this cut (permissive vocabularies), also when the mint or the ignore reader is hollowed to return the list it grounds. The same live (b) deletion beside an appended Removed cases line naming it reads green, the visible removal path.
+- Non-claims: the anchors hold membership, never order (the roster and the frozen-shape literals keep order and counts); deleting all three readers of Cases at once (the receipt anchors, rule 16 and roster cases) with their titles leaves no case to read that family; an appended member of a vocabulary that can only add findings (verdict words and codes, capability nouns, revision keys) still needs only its digest, and a walk exclusion naming another ignored directory with nothing tracked below it passes, since it skips nothing git tracks. This cut changes no src file, and TRACEABILITY.md is frozen and untouched. The receipt records no revision: these tables were rendered from the census at this cut and stand append-only from here.
+
+### Cases, wb-atq9 cut 2
+
+| Case | Title |
+| --- | --- |
+| bead | 9ec3343f58d0d818 |
+| landed note | 647247ddb21ac16b |
+| live (a) | 883557cb018ada96 |
+| live (b) | 3f395ba0036881e9 |
+| live (c) | 3cfc3630d49b5fd4 |
+| live (d) | e585595c19ef3519 |
+| live leg | b6c5655b05d60297 |
+| vocabularies | 51fee3465c590483 |
+| permissive vocabularies | 9f05d628cd346c70 |
+| receipt ledger | e69191102a594970 |
+| receipt anchors | 32a61e079523aa63 |
+| rule 16 | c9cadbaeb5be3b12 |
+| roster | 8d4e58589d8e0cea |
+
+### Clause tables, wb-atq9 cut 2
+
+| Clause | Tables |
+| --- | --- |
+| (a) | PROVENANCE |
+| (b) | CAPABILITY |
+| (c) | DOC_LINES |
+| (d) | RECEIPT_MUTANTS RESOLVE |

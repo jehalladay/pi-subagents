@@ -30,8 +30,12 @@
  *    read-class) and no native or injected descriptor's JSON spells PARITY_WORD or CLASS_WORD; T3 no sentence of docs/, the examples
  *    markdown or the root documents (ROOT_DOCS) couples PARITY_WORD with RENDER_WORD unless it carries a DOC_MARKERS word (paragraph
  *    units; table rows, headings and fence lines stand alone, a list item opens its own unit), with a floor, two anchors and git's
- *    listing (WALK LISTINGS below), a sentence's marker read from its visible text: an HTML comment carries none (wb-mymm F4); T4
- *    the captured rf result-key roster spells no PARITY_WORD, CLASS_WORD or VERDICT_WORD key, so rf states no verdict Pi could read.
+ *    listing (WALK LISTINGS below), a sentence's marker read from its visible text, twice, and admitted only when both readings
+ *    carry it: the source with its HTML comments stripped, where a comment carries none (wb-mymm F4), and the text as it renders
+ *    (wb-t69k F1: marked's inline lexer under the document's link reference definitions, read by the house rendering rule), where
+ *    a tag and its attributes, a link's destination and title, a resolved reference link's label and an image, its alt text
+ *    included, carry none; T4 the captured rf result-key roster spells no PARITY_WORD, CLASS_WORD or VERDICT_WORD key, so rf states
+ *    no verdict Pi could read.
  *  A, acceptance (a). A1 the same scan: no src code token spells PARITY_WORD; A2 the comment mentions are exactly COMMENT_SET, the
  *    filing's FILING_MENTIONS, every one a comment (the walk's positive control: four directories, six modules); A3 every src read of
  *    an rf document's text (a `text` member read off a value named output) or of Pi's payload reference (nativePayloadRef, payloadRef)
@@ -90,7 +94,18 @@
  * read: one naming no observer class rides the reading verbatim and the projection omits it. R8 R-MARKER-ANYWHERE a DOC_MARKERS word
  * anywhere in a sentence's visible text admits it, whatever the marker qualifies. R9 R-CROSS-SENTENCE (wb-mymm F5) a PARITY_WORD
  * and a RENDER_WORD in different sentences of one paragraph couple nothing ('The TSX and Python renders were compared. They are
- * equivalent.' stays quiet): T3 judges one sentence at a time, the reading MD4's second paragraph pins.
+ * equivalent.' stays quiet): T3 judges one sentence at a time, the reading MD4's second paragraph pins. R10 R-HIDDEN-CONTENT
+ * (wb-t69k) only tags and their attributes render nothing: the text inside an element is read as shown whatever may hide it where
+ * the page renders (a hidden or style attribute, a details body beyond its summary, template, noscript, script or style), so
+ * '... equivalent <span hidden>never</span>.' stays admitted. R11 R-FOOTNOTE (wb-t69k) marked, the reader, has no footnote syntax,
+ * so a footnote reference reads as written, label shown ('... equivalent [^never].' stays admitted), where a renderer that resolves
+ * footnotes shows a number. R12 R-JOINED-DEFINITION (wb-t69k) a link reference definition line directly above a paragraph line
+ * joins that paragraph's unit, so its destination and title read as sentence text ('[notes]: https://example.invalid/notes "never"'
+ * over '... equivalent.' stays admitted). Row M's T3 controls MD10-MD19 pin the rendered reading's every branch: the forms it hides
+ * (MD10 link destination, MD11 link title, MD12 tag attribute - the wb-mymm PREP survivors GL06-GL08 - MD13 image alt text, MD14 a
+ * reference label its document defines, MD19 an image inside a link's text, read through the link's own tokens) and the text it
+ * shows (MD15 link text, MD16 element content, MD17 an autolink, MD18 a code span); re-measured at trunk f6bbba7: no docs sentence couples the two vocabularies (docs/ 74 files, one examples markdown file,
+ * the five root documents), so the rendered reading moves no real-tree reading.
  * SCOPE: the vocabularies (PARITY_WORD the filing's two words, CLASS_WORD, RENDER_WORD, DOC_MARKERS), the accessors of A3, the reading
  * of a render without TSX engine identity as the Python-component render, and the constructed verdict (its shape, and its place at an
  * additive top-level result key) are this cut's reading of the filing; A1-A3 and T1 judge src/*.ts, the filing's "census over src"
@@ -109,6 +124,7 @@ import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
+import { Lexer, type Links, type Token } from "marked";
 import ts from "typescript";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
 import { CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
@@ -281,13 +297,13 @@ const ROWS: readonly Row[] = [
     pins: [
       "MA1", "MA2", "MA3", "MA4", "MA5", "MA6", "MO1", "MO2", "MO3",
       "MC1", "MC2", "MC3", "MC4", "MC5", "MC6", "MC7", "MC8", "MC9", "MC10", "MC11", "MC12", "MC13", "MC14", "MC15", "MC16",
-      "MD1", "MD2", "MD3", "MD4", "MD5", "MD6", "MD7", "MD8", "MD9",
+      "MD1", "MD2", "MD3", "MD4", "MD5", "MD6", "MD7", "MD8", "MD9", "MD10", "MD11", "MD12", "MD13", "MD14", "MD15", "MD16", "MD17", "MD18", "MD19",
     ],
   },
   {
     id: "R",
-    label: "the named residuals R1-R9 stay pinned quiet",
-    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9"],
+    label: "the named residuals R1-R12 stay pinned quiet",
+    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12"],
   },
 ];
 
@@ -825,12 +841,49 @@ interface Mention {
 }
 /** A sentence's visible text (wb-mymm F4): its HTML comments, and the tail of one opened before it, stripped. */
 const visibleOf = (sentence: string): string => sentence.replace(COMMENT_TAIL, " ").replace(HTML_COMMENT, " ");
+/** A marked token's text and inline children, as the house rendering rule reads them (test/helpers/census.ts). */
+const tokenText = (token: Token): string => {
+  const value: unknown = (token as { text?: unknown }).text;
+  return typeof value === "string" ? value : "";
+};
+const tokenChildren = (token: Token): readonly Token[] => {
+  const value: unknown = (token as { tokens?: unknown }).tokens;
+  return Array.isArray(value) ? (value as Token[]) : [];
+};
+const ENTITIES: Readonly<Record<string, string>> = { "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'", "&#x27;": "'", "&nbsp;": " " };
+const decode = (text: string): string => text.replace(/&(?:amp|lt|gt|quot|nbsp|#39|#x27);/g, entity => ENTITIES[entity] ?? entity);
+/** What a reader sees of inline tokens (wb-t69k F1): the house rendering rule (test/helpers/census.ts inlineText) - HTML, a tag
+ * with its attributes as much as a comment, renders nothing, and a link shows its text, never its destination or title - with one
+ * step stricter: an image shows nothing, its alt text included (alt text renders only where the image fails to load). */
+function shownOf(tokens: readonly Token[]): string {
+  let out = "";
+  for (const token of tokens) {
+    if (token.type === "html" || token.type === "image") continue;
+    if (token.type === "br") out += "\n";
+    else if (token.type === "codespan" || token.type === "escape") out += decode(tokenText(token));
+    else if (tokenChildren(token).length > 0) out += shownOf(tokenChildren(token));
+    else out += decode(tokenText(token));
+  }
+  return out;
+}
+/** A sentence's rendered text (wb-t69k F1): marked's inline lexer under its document's link reference definitions, so a reference
+ * link shows its text and never its label, read by shownOf. */
+function renderedOf(sentence: string, links: Links): string {
+  const lexer = new Lexer();
+  lexer.tokens.links = links;
+  return shownOf(lexer.inlineTokens(sentence));
+}
 /** Every sentence of a text's units coupling PARITY_WORD with RENDER_WORD (read raw, so a coupling inside a comment still counts),
- * with whether its visible text carries a DOC_MARKERS word. */
+ * with whether its visible text carries a DOC_MARKERS word. The marker is read twice and must hold in both readings (wb-t69k F1):
+ * the comment-stripped source (visibleOf, wb-mymm F4) and the rendered text under the text's own link reference definitions
+ * (renderedOf). Each reading hides what the other cannot: only the source reading drops the tail of a comment opened in an earlier
+ * sentence, and only the rendered one drops link destinations and titles, tags with their attributes, images and resolved reference
+ * labels; requiring both admits no sentence the comment-stripped reading refuses. */
 function mentionsOf(text: string): Mention[] {
+  const links = Lexer.lex(text).links;
   return unitsOf(text).flatMap(unit =>
     unit.text.split(/(?<=[.;!?])\s+/).filter(sentence => PARITY_WORD.test(sentence) && RENDER_WORD.test(sentence))
-      .map(sentence => ({ line: unit.line, marked: DOC_MARKER.test(visibleOf(sentence)) })),
+      .map(sentence => ({ line: unit.line, marked: DOC_MARKER.test(visibleOf(sentence)) && DOC_MARKER.test(renderedOf(sentence, links)) })),
   );
 }
 
@@ -872,7 +925,7 @@ interface Case {
   readonly texts: readonly string[];
   readonly outcome: readonly string[];
 }
-/** M judges the matchers' pinned inputs, R3-R5 and R8 the residuals' quiet rows. A code case's outcome is its A1 hits, its T1 hits,
+/** M judges the matchers' pinned inputs, R3-R5 and R8-R12 the residuals' quiet rows. A code case's outcome is its A1 hits, its T1 hits,
  * its A3 sites and its A2 comment count; a docs case's is one word per T3 mention. */
 const CASES: readonly Case[] = [
   { pin: "MA1", kind: "code", texts: ["export function isEquivalentRender(): boolean { return false; }"], outcome: ["control.ts: identifier isEquivalentRender"] },
@@ -915,6 +968,16 @@ const CASES: readonly Case[] = [
   { pin: "MD7", kind: "docs", texts: ["The TSX and Python renders are equivalent <!-- draft -->, never text-only <!-- end -->."], outcome: ["marked"] },
   { pin: "MD8", kind: "docs", texts: ["Draft <!-- notes. never --> The TSX and Python renders are equivalent."], outcome: ["asserted"] },
   { pin: "MD9", kind: "docs", texts: ["The TSX and Python renders are equivalent <!-- never"], outcome: ["asserted"] },
+  { pin: "MD10", kind: "docs", texts: ["The TSX and Python renders are equivalent ([notes](https://example.invalid/never))."], outcome: ["asserted"] },
+  { pin: "MD11", kind: "docs", texts: ['The TSX and Python renders are equivalent [notes](https://example.invalid/notes "never").'], outcome: ["asserted"] },
+  { pin: "MD12", kind: "docs", texts: ['The TSX and Python renders are equivalent <span title="never"></span>.'], outcome: ["asserted"] },
+  { pin: "MD13", kind: "docs", texts: ["The TSX and Python renders are equivalent ![never](https://example.invalid/figure.png)."], outcome: ["asserted"] },
+  { pin: "MD14", kind: "docs", texts: ["The TSX and Python renders are equivalent [notes][never].\n\n[never]: https://example.invalid/notes"], outcome: ["asserted"] },
+  { pin: "MD15", kind: "docs", texts: ["The TSX and Python renders are equivalent [never](https://example.invalid/notes)."], outcome: ["marked"] },
+  { pin: "MD16", kind: "docs", texts: ['The TSX and Python renders are equivalent <span title="notes">never</span>.'], outcome: ["marked"] },
+  { pin: "MD17", kind: "docs", texts: ["The TSX and Python renders are equivalent <https://example.invalid/never>."], outcome: ["marked"] },
+  { pin: "MD18", kind: "docs", texts: ["The TSX and Python renders are equivalent `never`."], outcome: ["marked"] },
+  { pin: "MD19", kind: "docs", texts: ["The TSX and Python renders are equivalent [![never](https://example.invalid/badge.png)](https://example.invalid/notes)."], outcome: ["asserted"] },
   { pin: "R3", kind: "code", texts: ['// the renders reach parity here\nconst word = "pari" + "ty";\nconst key = "observer" + "_class";'], outcome: ["comments:1"] },
   { pin: "R4", kind: "code", texts: ['const claim = "the TSX and Python renders are identical";\nconst note = "same render, the renders match";'], outcome: [] },
   {
@@ -926,6 +989,9 @@ const CASES: readonly Case[] = [
   },
   { pin: "R8", kind: "docs", texts: ["The TSX and Python renders are equivalent, never text-only."], outcome: ["marked"] },
   { pin: "R9", kind: "docs", texts: ["The TSX and Python renders were compared. They are equivalent."], outcome: [] },
+  { pin: "R10", kind: "docs", texts: ["The TSX and Python renders are equivalent <span hidden>never</span>."], outcome: ["marked"] },
+  { pin: "R11", kind: "docs", texts: ["The TSX and Python renders are equivalent [^never]."], outcome: ["marked"] },
+  { pin: "R12", kind: "docs", texts: ['[notes]: https://example.invalid/notes "never"\nThe TSX and Python renders are equivalent.'], outcome: ["marked"] },
 ];
 function outcomeOf(kind: CaseKind, texts: readonly string[]): string[] {
   const text = texts[0] ?? "";
@@ -1209,7 +1275,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 
 describe("wb-fb2z.1 render-parity census (TSX-COMPONENT-ASSEMBLY-R1, absent-today leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "A:3", "B:4", "C:4", "F:1", "M:34", "R:9"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "A:3", "B:4", "C:4", "F:1", "M:44", "R:12"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );

@@ -1,5 +1,5 @@
 {
- "provenance": "wb-if7q.2 census roster (test/workbench-rf-tsx-closed-vocabulary-census.test.ts). quote and citation are the owner filing's (bead row wb-if7q.2 of the tracked export .beads/issues.jsonl). producer is MEASURED read-only on 2026-10-23: programPin and runtimePin are ReactiveFiberTSXSDK commits read with git show (runtimePin is the distribution source the installed rf 0.1.832 names in its packaged integrations/tsx/runtime-lock.json, package @reactive-fiber/tsx 0.1.649); contextVocabulary is the eight intrinsic type ids at vocabularySites, identical at both pins; descriptorProfile counts the src files of each pin matching its family by git grep -l -i -E (0 at both), lists each pin's package.json exports keys and the docs pages naming the family at the program pin; rf is the installed rf (`rf --json --version` result.version) and its packaged diagnostics registry row for the host code a worker invalid_output failure maps to (integrations/tsx.py WORKER_FAILURE_CODES), with the worker's SDK code and message (integrations/tsx/worker_entry.ts), and tsxCodes the 12 RF_TSX_ DiagnosticCode members of domain/diagnostics.py (the census's unregistered code is none of them; it appears in no file of the package). The refusal envelope the census builds from rf is CONSTRUCTED from these facts (no Deno engine is provisioned for a TSX render here). Every witness is the expected outcome of its pin's case at this cut. claims (wb-wtfr) are each pin's quote cut into terms that tile it, each term with the witness facts that show it; every pin's live witness shows its own claims and no other pin's.",
+ "provenance": "wb-if7q.2 census roster (test/workbench-rf-tsx-closed-vocabulary-census.test.ts). quote and citation are the owner filing's (bead row wb-if7q.2 of the tracked export .beads/issues.jsonl). producer is MEASURED read-only on 2026-10-23: programPin and runtimePin are ReactiveFiberTSXSDK commits read with git show (runtimePin is the distribution source the installed rf 0.1.832 names in its packaged integrations/tsx/runtime-lock.json, package @reactive-fiber/tsx 0.1.649); contextVocabulary is the eight intrinsic type ids at vocabularySites, identical at both pins; descriptorProfile counts the src files of each pin matching its family by git grep -l -i -E (0 at both), lists each pin's package.json exports keys and the docs pages naming the family at the program pin; rf is the installed rf (`rf --json --version` result.version) and its packaged diagnostics registry row for the host code a worker invalid_output failure maps to (integrations/tsx.py WORKER_FAILURE_CODES), with the worker's SDK code and message (integrations/tsx/worker_entry.ts), and tsxCodes the 12 RF_TSX_ DiagnosticCode members of domain/diagnostics.py (the census's unregistered code is none of them; it appears in no file of the package). The refusal envelope the census builds from rf is CONSTRUCTED from these facts (no Deno engine is provisioned for a TSX render here). Every witness is the expected outcome of its pin's case at this cut. claims (wb-wtfr) are each pin's quote cut into terms that tile it, each term with the witness facts that show it; every pin's live witness shows its own claims and no other pin's. reached and recordsEnd (wb-g8uk) are THE RECORD: each case's end as id:count, count being vitest's tally of the expect calls the case made at this cut (the judged set 28; each pin 5 but A1 6, whose case also makes the census-owned workspace-root check of wb-j5y6, landing 470: no fixture string spells the checkout's path; the claims-bound case 3; the records case 7).",
  "bead": "wb-if7q.2",
  "quote": "Reactive Fiber itself is the UI framework. `ReactiveWebInterfaceSDK` and `ReactiveTUIInterfaceSDK` are independent host implementations **depending on this package**, not aliases for it. Neither React.js nor ReactiveFiberCLI is a rendering intermediary. React compatibility is outside this program.",
  "citation": "docs/programs/native-interfaces-and-portable-tsx-2026-10-21/README.md:6@76bbbffd9d4a",
@@ -171,7 +171,8 @@
   "minimalFixture": {
    "file": "test/workbench-provider-envelope-audit.test.ts",
    "name": "validRf"
-  }
+  },
+  "readingRoot": "rf-tsx-closed-vocabulary-census-workspace"
  },
  "residuals": [
   {
@@ -1464,6 +1465,24 @@
   "C3",
   "C4",
   "claims bound: each pin's claims refuse every other pin's live witness, and a re-authored pin stays quiet (R-REAUTHORED)",
-  "records: every registered test ran once in run mode in roster order, and every pin reached its witness"
- ]
+  "records: every registered test ran once in run mode in roster order, every pin reached its witness, and every case reached its end at its pinned assertion count"
+ ],
+ "reached": [
+  "judged:28",
+  "A1:6",
+  "A2:5",
+  "A3:5",
+  "A4:5",
+  "B1:5",
+  "B2:5",
+  "B3:5",
+  "B4:5",
+  "B5:5",
+  "C1:5",
+  "C2:5",
+  "C3:5",
+  "C4:5",
+  "claims:3"
+ ],
+ "recordsEnd": "records:7"
 }

@@ -1,7 +1,7 @@
 {
   "bead": "wb-a9l2.6",
   "pin": "6a251bf73af5",
-  "basis": "The out-of-file roster of test/workbench-rf-evaluator-artifact-context-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the receipt vocabulary and the producer fixture facts, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at ReactiveFiberCLI 6a251bf73af5 (read-only git show): checkIds is the graph.test.schema.json $defs.check_id enum in schema order; receiptFields are the command and the receipt keys only a receipt reader would name; artifactPhrases are the program's own names for its evaluator artifacts (harness2-federated-peer-2026-10-20/README.md:34, :37, :51); receiptSha256 is the sha256 of JSON.stringify of the result object of schemas/fixtures/graph.test/valid/ok_shadow.json as parsed; the two invalid fixtures are each one field away from it (checks[0].status failed; valid false). carriers are constructed additive context.render result keys, named by no shipped rf schema. wb-e9j2 (the follow-up of the wb-a9l2.6 gate's PREP F1 (i)-(v) and F2) adds A6, C4, M10-M14 and Q4, and widens the witnesses of A1 (every invoke member reference; the walk covers every src file git lists), A3 (the whole reconcile frame, its EVIDENCE_GUIDANCE lines included), B4 (the two refusals' reply shapes), C2 (rf read off id, permission and contractSource; the native id set) and C3 (the git-covering walk); row M's label states the matcher's definition.",
+  "basis": "The out-of-file roster of test/workbench-rf-evaluator-artifact-context-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the receipt vocabulary and the producer fixture facts, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at ReactiveFiberCLI 6a251bf73af5 (read-only git show): checkIds is the graph.test.schema.json $defs.check_id enum in schema order; receiptFields are the command and the receipt keys only a receipt reader would name; artifactPhrases are the program's own names for its evaluator artifacts (harness2-federated-peer-2026-10-20/README.md:34, :37, :51); receiptSha256 is the sha256 of JSON.stringify of the result object of schemas/fixtures/graph.test/valid/ok_shadow.json as parsed; the two invalid fixtures are each one field away from it (checks[0].status failed; valid false). carriers are constructed additive context.render result keys, named by no shipped rf schema. wb-e9j2 (the follow-up of the wb-a9l2.6 gate's PREP F1 (i)-(v) and F2) adds A6, C4, M10-M14 and Q4, and widens the witnesses of A1 (every invoke member reference; the walk covers every src file git lists), A3 (the whole reconcile frame, its EVIDENCE_GUIDANCE lines included), B4 (the two refusals' reply shapes), C2 (rf read off id, permission and contractSource; the native id set) and C3 (the git-covering walk); row M's label states the matcher's definition. wb-ofz4 (the follow-up of the wb-e9j2 gate's F1-F3, landing 353) adds M15-M18 and row S (Q5-Q9, the pinned quiet rows of the R-KEYED, R-EMBEDDED, R-CASE and R-COMPOSED residuals of the A1 and C4 scans), widens the witnesses of A1 (eleven destructuring and reflective controls, a quiet control) and C4 (seven path-qualified, template-span, extension and one-token case controls, a path quiet control), and row M's label states the full JS string-escape reading.",
   "checkIds": [
     "graph_schema",
     "compilability",
@@ -88,8 +88,42 @@
               ],
               [
                 "probe.ts:computed"
+              ],
+              [
+                "probe.ts:reference"
+              ],
+              [
+                "probe.ts:reference"
+              ],
+              [
+                "probe.ts:reference"
+              ],
+              [
+                "probe.ts:reference"
+              ],
+              [
+                "probe.ts:reference"
+              ],
+              [
+                "probe.ts:reference"
+              ],
+              [
+                "probe.ts:reference"
+              ],
+              [
+                "probe.ts:reference"
+              ],
+              [
+                "probe.ts:reference"
+              ],
+              [
+                "probe.ts:reference"
+              ],
+              [
+                "probe.ts:reference"
               ]
             ],
+            "quiet": [],
             "classes": {
               "agent": [
                 "src/workbench/claude-capability-tools.ts",
@@ -601,14 +635,38 @@
                 "probe.ts:VariableDeclaration"
               ]
             ],
-            "quiet": []
+            "quiet": [],
+            "pathControls": [
+              [
+                "probe.ts:spawn"
+              ],
+              [
+                "probe.ts:spawn"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execFile"
+              ],
+              [
+                "probe.ts:spawn"
+              ],
+              [
+                "probe.ts:spawn"
+              ],
+              [
+                "probe.ts:spawn"
+              ]
+            ],
+            "pathQuiet": []
           }
         }
       ]
     },
     {
       "id": "M",
-      "label": "the C2 and C3 matcher catches each receipt vocabulary term in any case, its words joined directly or by any run of whitespace, '_', '.', '-', ':' or '/', also behind a JS source escape, and its named residuals stay pinned quiet",
+      "label": "the C2 and C3 matcher catches each receipt vocabulary term in any case, its words joined directly or by any run of whitespace, '_', '.', '-', ':' or '/', also behind any JS string escape (a unicode, hex, legacy octal, single-character or identity escape, or a line continuation), and its named residuals stay pinned quiet",
       "pins": [
         {
           "id": "M1",
@@ -709,6 +767,34 @@
           }
         },
         {
+          "id": "M15",
+          "witness": {
+            "digest": "c14e0e66d01eb512",
+            "hit": true
+          }
+        },
+        {
+          "id": "M16",
+          "witness": {
+            "digest": "89a1df253b5bd67c",
+            "hit": true
+          }
+        },
+        {
+          "id": "M17",
+          "witness": {
+            "digest": "28bacc7a3b524bc2",
+            "hit": true
+          }
+        },
+        {
+          "id": "M18",
+          "witness": {
+            "digest": "30dc61cb9d6b672b",
+            "hit": true
+          }
+        },
+        {
           "id": "Q1",
           "witness": {
             "digest": "4256a644fd172a08",
@@ -734,6 +820,57 @@
           "witness": {
             "digest": "0e2915d0a003e105",
             "hit": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "S",
+      "label": "the A1 invoke scan and the C4 launch scan leave each named residual pinned quiet: an invoke key held in a variable (R-KEYED), rf after another word of a literal (R-EMBEDDED), a case-variant rf command line (R-CASE), and an invoke key or the rf binary's name assembled at runtime (R-COMPOSED)",
+      "pins": [
+        {
+          "id": "Q5",
+          "witness": {
+            "residual": "R-KEYED",
+            "scan": "invoke",
+            "digest": "fae77092b91e75ed",
+            "sites": []
+          }
+        },
+        {
+          "id": "Q6",
+          "witness": {
+            "residual": "R-COMPOSED",
+            "scan": "invoke",
+            "digest": "d5ea89efb453ef27",
+            "sites": []
+          }
+        },
+        {
+          "id": "Q7",
+          "witness": {
+            "residual": "R-EMBEDDED",
+            "scan": "launch",
+            "digest": "09a77b729f223296",
+            "sites": []
+          }
+        },
+        {
+          "id": "Q8",
+          "witness": {
+            "residual": "R-CASE",
+            "scan": "launch",
+            "digest": "5a428ad057cbb10b",
+            "sites": []
+          }
+        },
+        {
+          "id": "Q9",
+          "witness": {
+            "residual": "R-COMPOSED",
+            "scan": "launch",
+            "digest": "8b72608ef1707d30",
+            "sites": []
           }
         }
       ]

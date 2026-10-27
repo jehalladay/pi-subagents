@@ -33,10 +33,12 @@
  *  C, acceptance (c). C1 the reference over one fixture per unknown word and over the tally (five undecided results of six) carries
  *    each listable word verbatim, the unlistable one as the mark only, the count, no candidate of an undecided question and no
  *    success word, and the judge finds nothing; C2 the judge refuses unknown words read as success, selected, dropped and uncounted,
- *    normalized to a listed word or echoed raw, beside the R-SUCCESS-SYNONYM and R-COUNT-COINCIDENCE quiet rows; C3 the wb-973.10
- *    pattern: the landed rf observer (reactivefiberTopology over the full-shape render) reads three of these unknown words as
- *    observation statuses that are counted, verbatim, partial and never success, the judge's reading rules find nothing on that
- *    projection and refuse it once its tone reads success, and wb-973.10's row in the tracked bead export states the pattern.
+ *    normalized to a listed word or echoed raw, and the unlistable word shown at its echo path as anything but the mark (a listed
+ *    word, the decided word or no state at all) on its own fixture and on the tally, beside the R-SUCCESS-SYNONYM and
+ *    R-COUNT-COINCIDENCE quiet rows; C3 the wb-973.10 pattern: the landed rf observer (reactivefiberTopology over the full-shape
+ *    render) reads three of these unknown words as observation statuses that are counted, verbatim, partial and never success, the
+ *    judge's reading rules find nothing on that projection and refuse it once its tone reads success, and wb-973.10's row in the
+ *    tracked bead export states the pattern.
  *  D, the trigger and acceptance (d). D1 no src file spells either family (ENGINE_FAMILY, STATE_FAMILY) in an identifier, a literal,
  *    a folded literal, a regular expression, JSX text, its bytes (comments and prose included; UTF-8, UTF-16LE, UTF-16BE, raw and
  *    with escapes decoded) or its path, with a floor, an anchor and README.md's architecture map as an outside set the walk must
@@ -53,19 +55,29 @@
  * word for two probe words outside every vocabulary; both are found by re-projecting the envelope with only that result changed.
  * A projection with no answer slot is refused as unjudgeable (no-slot), so dropping decided answers never passes, and one that does
  * not echo an arbitrary word has no echo path, so its listed words read as relabeled (clause (c) is what makes (a) checkable).
+ * An unlistable word is judged at its echo paths too: the reading shows the mark there (else mark) and the word raw nowhere (else
+ * raw), so a listed word, the decided word or a dropped state in its place is refused (wb-wgsh F3).
  * Paths are positional: a projection that drops results shifts the later entries, so its slot findings name the shifted questions.
  * FIXTURES: every envelope is CONSTRUCTED (no RI build emits a native decision result at either commit); the decided control word is
  * the legacy DecisionKind's first member. Witnesses hold the reference's readings and the judge's findings by fixture name.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row, every pin's witness, the scan
- * constants, the words, the residual families and the registered test titles are held to the out-of-file roster
- * (test/fixtures/ri-decision-state-echo-roster.json). OUTSIDE ANCHORS: the owner filing's row in the tracked bead export
- * (.beads/issues.jsonl, row wb-tz4r.2): every acceptance clause sits verbatim in exactly one row label and the trigger in row D's,
- * A1 reads the listed words from clause (a)'s braces, D4 reads its "Shipped: no" sentence, its quote and citation equal the
- * roster's; wb-973.10's row and the landed observer (C3); README.md's architecture map (D1). Not claimed: a pin removed from ROWS,
- * the literal, IMPL and the roster together (the bead row anchors rows, clauses and words, not pins).
+ * constants, the words, the residual families, the registered test titles and every case's assertion count are held to the
+ * out-of-file roster (test/fixtures/ri-decision-state-echo-roster.json). OUTSIDE ANCHORS: the owner filing's row in the tracked
+ * bead export (.beads/issues.jsonl, row wb-tz4r.2): every acceptance clause sits verbatim in exactly one row label and the trigger
+ * in row D's, A1 reads the listed words from clause (a)'s braces, D4 reads its "Shipped: no" sentence, its quote and citation equal
+ * the roster's, and the landed first cut's delivery record in the same row ("15 registered tests: the judged set, 13 pins in rows
+ * A-D, the records case; frozen shape A:3 B:3 C:3 D:4") fixes the pins: each row's pins are its letter and the ordinals up to its
+ * count, and the registered tests are that many, so a pin removed from ROWS, the frozen literal, IMPL and the roster together
+ * leaves its row short of the record and reds the judged set, which also re-reads every single-pin removal as exactly that one
+ * missing pin (wb-wgsh F1, gate probes G1/G1b); wb-973.10's row and the landed observer (C3); README.md's architecture map (D1).
+ * NOT CLAIMED: the record fixes which pins exist and the count how many assertions a case makes, not what a case measures, so a
+ * case rewritten together with what the roster holds for it (its witness, its count) under the same pin id, or a case that echoes
+ * its witness while padding its count with unrelated assertions, is anchored by nothing outside these two files.
  * RECORDS: the last case walks this file's registered tests: each roster title once, in order, in run mode, not inverted, ran;
- * every pin's case reached its end; no title spells the engine family, so a report holding these titles stays quiet for the
- * sibling walks.
+ * every pin's case reached its end; the judged set and every pin's case made the assertion count the roster pins for it (the
+ * witness comparison included), so a case replaced by one that echoes its roster witness and makes none of its own assertions
+ * falls short and reds here (wb-wgsh F2, gate probe G3); no title spells the engine family, so a report holding these titles
+ * stays quiet for the sibling walks.
  * RESIDUALS (named families, each with pinned quiet rows): R-COMPOSED a needle assembled at runtime (D1 composedJoin,
  * composedState); R-PROSE the words spaced apart (D1 prose); R-ENCODED an encoding outside the decoded set (D1 rot13); R-LOOKALIKE
  * a look-alike letter or an inserted invisible (D1 lookalike, invisible); R-COMMENT a needle in a comment of a test, qa or
@@ -176,7 +188,7 @@ const ROWS: readonly Row[] = [
   {
     id: "C",
     label:
-      "(c) an unknown state word projects as non-choice (counted, verbatim), never as a selection or success (wb-973.10 pattern): the reference quiet over each unknown word and a mixed tally, unknown words read as success, selected, dropped, normalized or echoed raw all refused, and the landed wb-973.10 observer reading quiet under the same rules",
+      "(c) an unknown state word projects as non-choice (counted, verbatim), never as a selection or success (wb-973.10 pattern): the reference quiet over each unknown word and a mixed tally, unknown words read as success, selected, dropped, normalized or echoed raw and the unlistable word shown as anything but the mark all refused, and the landed wb-973.10 observer reading quiet under the same rules",
     pins: ["C1", "C2", "C3"],
   },
   {
@@ -237,6 +249,7 @@ interface Roster {
   readonly residuals: readonly string[];
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
+  readonly asserted: readonly string[];
 }
 
 function isObject(value: unknown): value is { [key: string]: unknown } {
@@ -349,6 +362,7 @@ function readRoster(): Roster {
     residuals: strings(raw.residuals, "residuals"),
     rows,
     tests: strings(raw.tests, "tests"),
+    asserted: strings(raw.asserted, "asserted"),
   };
 }
 
@@ -386,6 +400,34 @@ function acceptanceClauses(notes: string): string[] {
     .slice("Acceptance: ".length)
     .replace(/\.$/, "")
     .split(/; (?=\([a-z]\) )/);
+}
+/** The landed first cut's delivery record in the same row: "(<n> registered tests: the judged set, <m> pins in rows A-D, the
+ * records case; frozen shape A:3 ...)", its first match (later notes are appended after it). */
+const DELIVERY_RECORD = /\((\d+) registered tests: the judged set, (\d+) pins in rows [A-Z]-[A-Z], the records case; frozen shape ((?:[A-Z]:\d+ )*[A-Z]:\d+)\)/;
+interface PinSet {
+  readonly id: string;
+  readonly pins: readonly string[];
+}
+interface Delivered {
+  readonly tests: number;
+  readonly pins: number;
+  readonly rows: readonly PinSet[];
+}
+/** The record's counts and, for each row, the pins it fixes: the row letter and the ordinals 1 to its count. */
+function deliveredRecord(notes: string): Delivered {
+  const match = DELIVERY_RECORD.exec(notes);
+  if (match === null) throw new Error(`${BEAD} notes carry no delivery record of the frozen shape`);
+  const rows = (match[3] ?? "").split(" ").map((entry): PinSet => {
+    const [id = "", count = "0"] = entry.split(":");
+    return { id, pins: Array.from({ length: Number(count) }, (_, index) => `${id}${index + 1}`) };
+  });
+  return { tests: Number(match[1]), pins: Number(match[2]), rows };
+}
+/** The pins the record fixes that a judged set lacks, then the pins the judged set holds that the record does not fix. */
+function recordGaps(rows: readonly PinSet[], delivered: Delivered): string[] {
+  const held = new Set(rows.flatMap(row => row.pins));
+  const fixed = new Set(delivered.rows.flatMap(row => row.pins));
+  return [...[...fixed].filter(pin => !held.has(pin)), ...[...held].filter(pin => !fixed.has(pin))];
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------
@@ -446,8 +488,9 @@ interface Inspection {
 /** The judge over one envelope: sorted findings (empty is a pass) and the answer slots and echo paths it found. For every undecided
  * result: no-slot (no path carries the decided answer for every answer the question admits), slot (an answer slot holds a value),
  * candidate (a string carries one of the question's candidate ids), verbatim (a listable word is not at an echo path, letter case
- * kept) and raw (a string carries an unlistable word); for the reading once a result is undecided: success (a whole string value
- * reads as a success) and counted (no number and no whole decimal token states how many results are undecided). */
+ * kept), mark (no echo path of an unlistable word carries the mark, wb-wgsh F3) and raw (a string carries an unlistable word); for
+ * the reading once a result is undecided: success (a whole string value reads as a success) and counted (no number and no whole
+ * decimal token states how many results are undecided). */
 function inspect(project: Projection, envelope: Envelope): Inspection {
   const leaves = leavesOf(project(envelope));
   const values = stringsOf(leaves);
@@ -470,7 +513,10 @@ function inspect(project: Projection, envelope: Envelope): Inspection {
     if ((question.candidates ?? []).some(candidate => values.some(value => value.includes(candidate)))) findings.add(`candidate:${question.id}`);
     if (LISTABLE.test(result.state)) {
       if (!echoPaths.some(path => leaves.get(path) === result.state)) findings.add(`verbatim:${question.id}`);
-    } else if (values.some(value => value.includes(result.state))) findings.add(`raw:${question.id}`);
+    } else {
+      if (!echoPaths.some(path => leaves.get(path) === UNLISTED)) findings.add(`mark:${question.id}`);
+      if (values.some(value => value.includes(result.state))) findings.add(`raw:${question.id}`);
+    }
   }
   if (open.length > 0) {
     if (readsSuccess(values)) findings.add("success");
@@ -556,6 +602,11 @@ const MUTANTS: Readonly<Record<string, Projection>> = {
   unknownDropped: envelope => editResults(envelope, result => (isUnknown(result.state) ? undefined : result)),
   unknownNormalized: envelope => editResults(envelope, result => (isUnknown(result.state) ? { ...result, state: result.state.toLowerCase() } : result)),
   unknownRaw: envelope => editEntries(envelope, (entry, result) => (isUnknown(result.state) && !LISTABLE.test(result.state) ? { ...entry, state: result.state } : entry)),
+  unknownAsListed: envelope => editResults(envelope, result => (isUnknown(result.state) ? { ...result, state: "abstain" } : result)),
+  unlistableDropped: envelope =>
+    editEntries(envelope, (entry, result) => (isUnknown(result.state) && !LISTABLE.test(result.state) ? Object.fromEntries(Object.entries(entry).filter(([key]) => key !== "state")) : entry)),
+  unlistableDecided: envelope => editEntries(envelope, (entry, result) => (isUnknown(result.state) && !LISTABLE.test(result.state) ? { ...entry, state: DECIDED } : entry)),
+  unlistableAsListed: envelope => editEntries(envelope, (entry, result) => (isUnknown(result.state) && !LISTABLE.test(result.state) ? { ...entry, state: "stale" } : entry)),
   synonym: envelope => editReading(envelope, reading => (hasUnknown(envelope) ? { ...reading, tone: "green" } : reading)),
   successInProse: envelope => editReading(envelope, reading => (hasUnknown(envelope) ? { ...reading, tone: "success, with undecided results" } : reading)),
   totalOnly: envelope =>
@@ -885,6 +936,10 @@ function observerReading(statuses: readonly string[]): Json {
 }
 
 const REACHED: string[] = [];
+/** Each case's assertion count when it reached its end (the witness comparison included), in run order: `judged:${count}` for the
+ * judged set, then `${pin}:${count}` for each pin; the record holds it to the roster, so a case that echoes its roster witness
+ * instead of measuring falls short (wb-wgsh F2). */
+const ASSERTED: string[] = [];
 /** A pin's witness, recorded as reached: only a case that ran to its end returns through here. */
 function done(pin: string, witness: JsonObject): Json {
   REACHED.push(pin);
@@ -999,9 +1054,14 @@ const IMPL: Readonly<Record<string, () => Json>> = {
   },
   C2: () => {
     const fixtures: [string, Envelope][] = [...UNKNOWN_FIXTURES(), ["tally", ROSTER.fixtures.tally]];
-    const refusing = ["unknownSuccess", "unknownFirst", "unknownDropped", "unknownNormalized", "unknownRaw"];
+    const refusing = ["unknownSuccess", "unknownFirst", "unknownDropped", "unknownNormalized", "unknownRaw", "unknownAsListed", "unlistableDropped", "unlistableDecided", "unlistableAsListed"];
     const findings = mutantFindings(refusing, fixtures);
     const residual = mutantFindings(["synonym", "successInProse", "totalOnly"], fixtures);
+    // wb-wgsh F3: on each unlistable word's own fixture the judge reads the mark at the echo path, so every mutant that changes what
+    // the reading shows there is refused; the one quiet mutant lowercases a word that is lower case already, which changes nothing.
+    const unlistable = UNKNOWN_FIXTURES().filter(([word]) => !LISTABLE.test(word));
+    const quietOnUnlistable = refusing.filter(name => unlistable.some(([, envelope]) => judge(mutant(name), envelope).length === 0));
+    expect(quietOnUnlistable, "every unknown-word mutant but the no-op lowercasing is refused on each unlistable word's fixture").toEqual(["unknownNormalized"]);
     const tallyRefused = refusing.filter(name => judge(mutant(name), ROSTER.fixtures.tally).length > 0);
     expect(tallyRefused, "every unknown-word mutant is refused on the tally").toEqual(refusing);
     return done("C2", { findings, residual });
@@ -1224,6 +1284,20 @@ describe("wb-tz4r.2 ReactiveInference decision state echo census (program-triage
     expect({ quote: quote?.[1], citation: quote?.[2] }).toStrictEqual({ quote: ROSTER.quote, citation: ROSTER.citation });
     expect(bead.title.endsWith(ROSTER.citation), "the title cites the roster's citation").toBe(true);
     expect(ROSTER.citation.endsWith(`@${ROSTER.producer.pin.sha.slice(0, 12)}`), "the citation pins the program sha the roster measured").toBe(true);
+    // The pins' outside anchor (wb-wgsh F1): the landed first cut's delivery record in the same row fixes every row's pins and the
+    // registered-test count, so a pin removed from ROWS, the frozen literal, IMPL and the roster together reds here.
+    const delivered = deliveredRecord(bead.notes);
+    const pinned = ROWS.map((row): PinSet => ({ id: row.id, pins: [...row.pins] }));
+    expect(pinned, "every row's pins, in order, are the ones the landed delivery record fixes").toStrictEqual(delivered.rows);
+    expect({ pins: pinned.flatMap(row => row.pins).length, tests: ROSTER.tests.length }, "the delivery record's pin and registered-test counts").toStrictEqual({
+      pins: delivered.pins,
+      tests: delivered.tests,
+    });
+    for (const pin of pinned.flatMap(row => row.pins)) {
+      const hollowed = pinned.map(row => ({ id: row.id, pins: row.pins.filter(entry => entry !== pin) }));
+      expect(recordGaps(hollowed, delivered), `${pin} removed from every literal is the one pin the record misses`).toEqual([pin]);
+    }
+    ASSERTED.push(`judged:${expect.getState().assertionCalls}`);
   });
 
   for (const row of ROWS) {
@@ -1234,12 +1308,13 @@ describe("wb-tz4r.2 ReactiveInference decision state echo census (program-triage
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : impl();
           expect(witness).toStrictEqual(rosterWitness(pin));
+          ASSERTED.push(`${pin}:${expect.getState().assertionCalls}`);
         });
       }
     });
   }
 
-  it("records: every registered test ran once in run mode in roster order, every pin reached its end, and no title spells the engine family", { timeout: 60_000 }, ({ task }) => {
+  it("records: every registered test ran once in run mode in roster order, every pin reached its end, every case made its pinned assertion count, and no title spells the engine family", { timeout: 60_000 }, ({ task }) => {
     const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
     const suites: string[] = [];
     const visit = (tasks: typeof task.file.tasks): void => {
@@ -1261,6 +1336,7 @@ describe("wb-tz4r.2 ReactiveInference decision state echo census (program-triage
     const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
     expect(REACHED, "every pin's case reached its end, in row order").toEqual(ROWS.flatMap(row => row.pins));
+    expect(ASSERTED, "the judged set and every pin's case made the assertion count the roster pins (the witness comparison included), in run order").toEqual([...ROSTER.asserted]);
     expect([...suites, ...titles].filter(name => ENGINE_FAMILY.test(name)), "registered titles spelling the engine family").toEqual([]);
   });
 });
