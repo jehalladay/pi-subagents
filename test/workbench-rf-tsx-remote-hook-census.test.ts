@@ -94,6 +94,10 @@
  * satisfies, non-null and angle-bracket specifiers beside as (fold()), C2's row and suite heads seen through parentheses
  * and the as, satisfies, non-null and angle-bracket assertions (headOf(), suiteReference()), and C1's lowercase, uppercase
  * and uppercase-no notes for SHIPPED_OTHERWISE's letter case.
+ * wb-5qrd (the R694 follow-up of landing 465: gate finding F1 with rider F2) added C2's suite controls for the arms of
+ * suiteReference() no control read - a suite under a condition's call, a suite by element access and a vitest namespace's
+ * suite member by element access - and C1's whole-word notes for SHIPPED_OTHERWISE: a now reads otherwise and an
+ * Unshipped: is no key.
  * Display paths added: none. Test-only: it spawns nothing; the controls plant files in makeScratch scratch only.
  */
 import { type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -156,7 +160,8 @@ const ROW_REGISTRARS = ["it", "test"];
 const SUITE_REGISTRARS = ["describe", "suite"];
 const TABLE_FACTORIES = ["each", "for"];
 const API_FACTORIES = ["extend", "scoped"];
-/** A Shipped: in the bead row's notes that reads other than no, the key and the no each in any letter case (C1's controls). */
+/** A Shipped: in the bead row's notes that reads other than no, the key and the no each a whole word in any letter case
+ * (C1's controls: a now reads otherwise, an Unshipped: is no key). */
 const SHIPPED_OTHERWISE = /\bshipped:(?!\s*no\b)\s*\S*/gi;
 const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-ENCODED", "R-LOOKALIKE", "R-PROSE", "R-OUTSIDE", "R-HELPER"];
 const CYRILLIC_IE = String.fromCodePoint(0x0435);
@@ -704,8 +709,9 @@ function memberOf(node: ts.Identifier): { readonly access: ts.Expression; readon
   if (ts.isElementAccessExpression(parent) && parent.expression === node) return { access: parent, name: fold(parent.argumentExpression) ?? COMPUTED };
   return undefined;
 }
-/** The suite registrar a callee descends to (a suite binding, or a vitest namespace's suite member), if any, seen through
- * parentheses and the type assertions headOf sees through (C2 holds a suite control per arm). */
+/** The suite registrar a callee descends to (a suite binding, or a vitest namespace's suite member by property or by element
+ * access), if any, through each member (by property or by element access) and each call (a condition's) of the head, seen
+ * through parentheses and the type assertions headOf sees through (C2 holds a suite control per arm). */
 function suiteReference(callee: ts.Expression, bindings: RegistrarBindings): ts.Expression | undefined {
   let current = callee;
   for (;;) {
@@ -1044,6 +1050,9 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         appendedLowercaseShippedYes: shippedOtherwise(`${notes}\nshipped: yes, the hook is exported`).length,
         appendedUppercaseShippedYes: shippedOtherwise(`${notes}\nSHIPPED: YES, the hook is exported`).length,
         appendedUppercaseShippedNo: shippedOtherwise(`${notes}\nSHIPPED: NO, still docs only`).length,
+        // The key and the no each a whole word: a now reads otherwise, an Unshipped: is no key (gate F2 of landing 465).
+        appendedShippedNow: shippedOtherwise(`${notes}\nShipped: now, the hook is exported`).length,
+        appendedUnshippedNote: shippedOtherwise(`${notes}\nUnshipped: still docs only`).length,
       },
     });
   },
@@ -1090,6 +1099,11 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       asSuite: rowsIn(`${vitest}(describe as Api)("s", () => {\n  it("r1", () => {});\n});\n`),
       satisfiesSuite: rowsIn(`${vitest}(describe satisfies Api)("s", () => {\n  it("r1", () => {});\n});\n`),
       angleSuite: rowsIn(`${vitest}(<Api>describe)("s", () => {\n  it("r1", () => {});\n});\n`),
+      // A suite head through suiteReference()'s call and element arms - a suite under a condition's call, a suite by element
+      // access - and a vitest namespace's suite member by element access (gate F1 of landing 465).
+      conditionSuite: rowsIn(`${vitest}${chain("describe", ["run", "If"].join(""))}(true)("s", () => {\n  it("r1", () => {});\n});\n`),
+      elementSuite: rowsIn(`${vitest}describe["concurrent"]("s", () => {\n  it("r1", () => {});\n});\n`),
+      namespaceElementSuite: rowsIn('import * as vt from "vitest";\nvt["describe"]("s", () => {\n  vt.it("r1", () => {});\n});\n'),
       table: rowsIn(`${vitest}${chain("it", "each")}([1, 2])("r %s", () => {});\n`),
       forTable: rowsIn(`${vitest}${chain("test", "for")}([1, 2])("r %s", () => {});\n`),
       tableSuite: rowsIn(`${vitest}${chain("describe", "each")}([1, 2])("s %s", () => {\n  it("r1", () => {});\n});\n`),

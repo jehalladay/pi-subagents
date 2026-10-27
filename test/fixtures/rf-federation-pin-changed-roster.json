@@ -263,6 +263,118 @@
         "flags": 0,
         "composed": 0,
         "launches": 1
+       },
+       "assertedReceiver": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "nonNullReceiver": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "elementPush": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "wrappedPushCallee": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "aliasPush": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "aliasChain": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "foreignAlias": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "scopedAlias": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "assertedProgram": {
+        "render": 1,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "wrappedLauncherCallee": {
+        "render": 1,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "assertedLauncherAlias": {
+        "render": 1,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "assertedBoth": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "nonNullBoth": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "constantAsserted": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "constantAlias": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "indirectPush": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
        }
       }
      }
@@ -1350,6 +1462,9 @@
    "A3"
   ],
   "R-MUTATED-ARGV": [
+   "A1"
+  ],
+  "R-INDIRECT-PUSH": [
    "A1"
   ],
   "R-VACUOUS-PAYLOAD": [
