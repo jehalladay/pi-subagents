@@ -78,6 +78,9 @@
  * them verbatim and in order; the out-of-file roster holds every row's id, label and pins, every pin's witness, the pinned
  * vocabularies, the fixtures, their exits and the registered tests; T4's arms are held to the src descriptor's inputSchema. The last
  * case walks this file's vitest task tree against the roster, so a member removed from every literal of this file still reds there.
+ * THE RUN PIN: test/workbench-rf-census-run-pins.census.ts judges every title of this file in the census tier from the gate's own
+ * report, and its CENSUSES table is anchored HERE (wb-56od): the judged-set case reads that table back as a syntax tree and requires
+ * this file there exactly once, so a cut of this census from the tier reds in this file too.
  * RESIDUALS (named, each with a pinned quiet row): R-NO-EDGE-READER no Pi reader reads a graph.connect, graph.disconnect or graph.patch
  * envelope, so their code, reason, applied operations and revision ride only the registered reading and the capability_invoke reply
  * (quiet rows A2, A5, B4, B5, C3: the refusal stands); R-WITHHELD-REASON the native typed refusal and the adapter's failure projection
@@ -120,6 +123,7 @@ import {
 } from "../src/workbench/providers/reactivefiber.js";
 import { type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
 import { RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
+import { RUN_PIN_FILE, runPinnedFiles } from "./helpers/rf-census-run-pins.js";
 import { fullShapeRf } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
@@ -133,6 +137,8 @@ type InjectedEnvelope = Awaited<ReturnType<Parameters<typeof registerReactiveFib
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
 const ROSTER_PATH = join(HERE, "fixtures", "rf-graph-edge-edit-echo-roster.json");
+/** This census, repository-relative: the file the census tier's run pin must name (wb-56od). */
+const SELF = relative(REPO, fileURLToPath(import.meta.url));
 const EXPORT_PATH = join(REPO, ".beads", "issues.jsonl");
 const ROOT = process.cwd();
 const BEAD = "wb-pfxo.7";
@@ -1079,6 +1085,9 @@ describe("wb-pfxo.7 rf graph edge-edit echo census (RF-COMPOSITIONAL-ASSEMBLY-R8
     // Every fixture names the rewritten scratch root, and no envelope carries a host path.
     expect(FIXTURES.map(name => ENVELOPES[name].workspace?.root ?? null)).toEqual(FIXTURES.map(() => FIXTURE_ROOT));
     expect(FIXTURES.filter(name => /\/tmp\/|\/home\//.test(JSON.stringify(ENVELOPES[name])))).toEqual([]);
+    // The anchor outside the census tier's run pin (wb-56od): its CENSUSES table, read as a syntax tree, names this file exactly once,
+    // so a cut of this census from that table reds here, in the test tier, and not only there.
+    expect(runPinnedFiles(readFileSync(join(REPO, RUN_PIN_FILE), "utf8")).filter(file => file === SELF), `${RUN_PIN_FILE} names this census once`).toEqual([SELF]);
   });
 
   for (const row of ROWS) {
