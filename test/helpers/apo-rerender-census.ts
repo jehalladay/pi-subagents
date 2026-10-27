@@ -3,7 +3,8 @@
  * test/workbench-apo-rerender-census.test.ts, the rerender-authority census. The census file states the requirement, its
  * acceptance and what each table pins; this module holds the world every subject renders in, the judge that reads one
  * subject's renders, the syntactic type scan, the checker-based scans (a TypeScript program over src, or over planted
- * modules held in memory), the mention judge and the tables. ROWS digests every case as written for the out-of-file roster
+ * modules held in memory: the reach scan projectionReach and, from cut #4, the fail-closed forms judge readForms with its
+ * literal roster RESOLVABLE_FORMS), the mention judge and the tables. ROWS digests every case as written for the out-of-file roster
  * (test/fixtures/apo-rerender-roster.json); RESIDUAL_FAMILIES names the residuals, each with its pinned quiet row.
  *
  * Display paths added: none (test-only; src is read and run, never edited). Scratch: none (every world and every planted
@@ -962,24 +963,21 @@ function keyNames(key: ts.Type): string[] | undefined {
   }
   return names;
 }
-/**
- * Reads, for each given module, how it reaches the class declared in classModule (Reach); modules that reach nothing are
- * absent from the result, and the class's own module is never read. Names resolve through the checker, so an alias, a
- * namespace, a re-export chain and a render model, container, getter or function that carries the projection are all
- * followed, in value and type positions alike. A carrier is followed to the depth bound CARRIER_DEPTH states (the
- * instance inside at most four nested wrappers, a typed reader inside at most three), and an object type whose property
- * holds the projection is no carrier itself: a module that only relays such a value reads as reaching nothing
- * (R-DEEP-CARRIER), while any access through it exposes its holder. Every key - an element access, an indexed access
- * type, a binding or an assignment destructuring under every key form (identifier, string, numeric, computed) - is read
- * through the checker's type of it (keyNames), failing closed as UNRESOLVED_KEY over a value that exposes the class's
- * members. A member reached through an erasing step (a cast from unknown or of a holder, a structural type of the
- * module's own, Reflect, an any, a prototype lookup, an Object property call) is not read (the R-ERASED-ACCESS residual).
- */
-export function projectionReach(program: ts.Program, root: string, classModule: string, className: string, modules: readonly string[]): Map<string, Reach> {
+/** The class a scan judges: its checker, its symbol and declaration, its instance type, its public members and the carrier test. */
+interface ClassModel {
+  readonly checker: ts.TypeChecker;
+  readonly symbol: ts.Symbol;
+  readonly declaration: ts.ClassDeclaration;
+  readonly instance: ts.Type;
+  readonly isMember: (candidate: ts.Symbol) => boolean;
+  /** The carrier test the reach scan follows (CARRIER_DEPTH): the instance, a reader of it, or a union, container, index signature or call that yields one. */
+  readonly carries: (type: ts.Type, depth: number) => boolean;
+}
+function classModel(program: ts.Program, root: string, classModule: string, className: string): ClassModel {
   const checker = program.getTypeChecker();
   const declaration = declarationOf(program.getSourceFile(join(root, classModule)), ts.isClassDeclaration, className);
   const symbol = declaration?.name ? checker.getSymbolAtLocation(declaration.name) : undefined;
-  if (!symbol) throw new Error(`no class ${className} in ${classModule}`);
+  if (!declaration || !symbol) throw new Error(`no class ${className} in ${classModule}`);
   const instance = checker.getDeclaredTypeOfSymbol(symbol);
   const members = new Set<ts.Declaration>(publicProperties(checker, instance).flatMap(property => property.declarations ?? []));
   const isMember = (candidate: ts.Symbol): boolean => (candidate.declarations ?? []).some(item => members.has(item));
@@ -995,6 +993,33 @@ export function projectionReach(program: ts.Program, root: string, classModule: 
     if (checker.getIndexInfosOfType(type).some(info => carries(info.type, depth + 1))) return true;
     return type.getCallSignatures().some(signature => carries(signature.getReturnType(), depth + 1));
   };
+  return { checker, symbol, declaration, instance, isMember, carries };
+}
+/**
+ * The nodes of the class's own module a scan never reads: the class's name and its instance members (fields, methods,
+ * accessors and the constructor), which the REPROJECTION row's runtime reading and the MEMBERS row judge. Its static
+ * members and everything outside the class are read like any other module (cut #4, U1(b)).
+ */
+const classInternal = (model: ClassModel, node: ts.Node): boolean =>
+  node === model.declaration.name || (node.parent === model.declaration && ts.isClassElement(node) && (ts.getCombinedModifierFlags(node) & ts.ModifierFlags.Static) === 0);
+/**
+ * Reads, for each given module, how it reaches the class declared in classModule (Reach); modules that reach nothing are
+ * absent from the result. The class's own module is read outside the class's name and instance members (classInternal):
+ * a module function or a static member there is read as any module is. Names resolve through the checker, so an alias, a
+ * namespace, a re-export chain and a render model, container, getter or function that carries the projection are all
+ * followed, in value and type positions alike. A carrier is followed to the depth bound CARRIER_DEPTH states (the
+ * instance inside at most four nested wrappers, a typed reader inside at most three), and an object type whose property
+ * holds the projection is no carrier itself: a module that only relays such a value reads as reaching nothing
+ * (R-DEEP-CARRIER), while any access through it exposes its holder. Every key - an element access, an indexed access
+ * type, a binding or an assignment destructuring under every key form (identifier, string, numeric, computed) - is read
+ * through the checker's type of it (keyNames), failing closed as UNRESOLVED_KEY over a value that exposes the class's
+ * members. A member reached through an erasing step (a cast from unknown or of a holder, a structural type of the
+ * module's own, Reflect, an any, a prototype lookup, an Object property call, a generic accessor or alias over an
+ * unconstrained type parameter) is not read here: readForms refuses the erasing step itself, in the module that takes it.
+ */
+export function projectionReach(program: ts.Program, root: string, classModule: string, className: string, modules: readonly string[]): Map<string, Reach> {
+  const model = classModel(program, root, classModule, className);
+  const { checker, symbol, isMember, carries } = model;
   const holderOf = new Map<ts.Symbol, boolean>();
   const isHolder = (candidate: ts.Symbol): boolean => {
     const known = holderOf.get(candidate);
@@ -1005,7 +1030,7 @@ export function projectionReach(program: ts.Program, root: string, classModule: 
   };
   const result = new Map<string, Reach>();
   for (const rel of modules) {
-    if (rel === classModule) continue;
+    const inClassModule = rel === classModule;
     const source = program.getSourceFile(join(root, rel));
     if (!source) throw new Error(`the program holds no ${rel}`);
     let names = false;
@@ -1028,6 +1053,7 @@ export function projectionReach(program: ts.Program, root: string, classModule: 
       return ts.isIdentifier(key) || ts.isPrivateIdentifier(key) || ts.isStringLiteral(key) || ts.isNoSubstitutionTemplateLiteral(key) || ts.isNumericLiteral(key) ? [key.text] : undefined;
     };
     const visit = (node: ts.Node, inType: boolean): void => {
+      if (inClassModule && classInternal(model, node)) return;
       const typed = inType || ts.isTypeNode(node);
       if (ts.isIdentifier(node) || ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) {
         let resolved = checker.getSymbolAtLocation(node);
@@ -1055,6 +1081,402 @@ export function projectionReach(program: ts.Program, root: string, classModule: 
   }
   return result;
 }
+
+/**
+ * The resolvable forms (cut #4, the enumerate-the-resolvable form, ruling R-B33): readForms visits every node of a read
+ * module whose checker type exposes the projection (exposes: it carries it as the reach scan's carrier test reads it,
+ * to CARRIER_DEPTH, or it exposes one of the class's public members, as a subclass or an extending interface does; a
+ * type parameter through its constraint) and reads it in exactly one of these forms by its parent, or refuses it. Value
+ * side: member (a property access whose name the checker resolves to a class member, or to a property the value's own
+ * type declares: an apparent member such as constructor, call or bind refuses); element (an element access keyed to a
+ * declared property, an index signature or, over the class's members, any key the reach scan reads); callee (a function
+ * that yields the projection, called); argument, initializer, assignment, property, return and cast (a flow, judged
+ * against the type it flows into: judgeFlow); array-element and spread-array (an array literal that carries it); wrap
+ * (parentheses, a non-null assertion, a conditional branch, the result side of ??, || and && and a comma's right side);
+ * test (a condition, a comparison, !, typeof, void, instanceof and switch); iteration (for-of and for-in); await;
+ * statement (an expression statement, a comma's left side). Type side: annotation (the written type of a declaration,
+ * a cast or a type predicate); type-part (a union or intersection member, a parenthesized, array, tuple, optional, rest
+ * or readonly type); keyof; constraint (a type parameter's constraint); heritage (an extends or implements clause);
+ * indexed (the object of an indexed access, read through its key); lib-generic (a type argument of a generic
+ * TypeScript's default library declares: Pick, Partial, Map, WeakMap, Promise). Every other parent - a generic declared in
+ * src or in a package included - and every flow whose target hides the projection is refused with a row naming it.
+ */
+export const RESOLVABLE_FORMS = [
+  "member",
+  "element",
+  "callee",
+  "argument",
+  "initializer",
+  "assignment",
+  "property",
+  "return",
+  "cast",
+  "array-element",
+  "spread-array",
+  "wrap",
+  "test",
+  "iteration",
+  "await",
+  "statement",
+  "annotation",
+  "type-part",
+  "keyof",
+  "constraint",
+  "heritage",
+  "indexed",
+  "lib-generic",
+] as const;
+export type ResolvableForm = (typeof RESOLVABLE_FORMS)[number];
+/** How one module's nodes that expose the projection stand: the resolvable forms they stood in (sorted), and every use readForms refused, site by site (sorted, duplicates kept). */
+export interface FormsReading {
+  readonly forms: readonly ResolvableForm[];
+  readonly refused: readonly string[];
+}
+/** One node's reading: the resolvable form it stands in, or the refusing form (or "unlisted <parent kind>") and the site the row names. */
+type Verdict = { readonly form: ResolvableForm } | { readonly refused: string; readonly site: ts.Node };
+/** A refusal row: the refusing form (or "unlisted <parent kind>"), then the site's text, whitespace collapsed, at most 200 characters. */
+const refusalRow = (kind: string, site: ts.Node): string => `${kind}: ${site.getText().replace(/\s+/g, " ").slice(0, 200)}`;
+/** A function-like node's own declared parameters, when it has a parameter list (a signature declaration). */
+const parametersOf = (node: ts.Declaration | undefined): readonly ts.ParameterDeclaration[] =>
+  node && (ts.isFunctionLike(node) || ts.isJSDocSignature(node)) && "parameters" in node ? (node.parameters as readonly ts.ParameterDeclaration[]) : [];
+/** The declared return type node of the function-like a return statement or an arrow body belongs to. */
+function returnTypeOf(site: ts.Node): ts.TypeNode | undefined {
+  const fn = ts.isArrowFunction(site) ? site : ts.findAncestor(site.parent, ts.isFunctionLike);
+  return fn && "type" in fn ? (fn.type as ts.TypeNode | undefined) : undefined;
+}
+/** True for an identifier in a value position: not a declaration's, a member's, an import's, an export's or a label's name (a shorthand property is judged as a whole), and not a qualified name's part. */
+function isValueName(node: ts.Identifier): boolean {
+  const parent = node.parent;
+  if (ts.isShorthandPropertyAssignment(parent) || ts.isQualifiedName(parent)) return false;
+  if ("name" in parent && parent.name === node) return false;
+  if ("propertyName" in parent && parent.propertyName === node) return false;
+  if ("label" in parent && parent.label === node) return false;
+  return !(ts.isImportClause(parent) || ts.isNamespaceImport(parent) || ts.isNamespaceExport(parent));
+}
+/**
+ * The forms judge (cut #4; ruling R-B33, enumerate the resolvable): for each given module, every node whose checker type
+ * exposes the projection, read in one of RESOLVABLE_FORMS or refused (FormsReading); a module with no such node and no
+ * refusal is absent. It reads the same modules projectionReach reads (the class's own module outside classInternal). A
+ * flow - an argument, an initializer or default under a written type, an assignment, an object property under a
+ * contextual type, a return under a written return type, a cast - is judged against the type the value flows into: for a
+ * src callee the parameter as the callee's body sees it (an overload's implementation; a type parameter through its
+ * constraint, so an unconstrained one hides the projection: a module's own generic accessor, a generic destructuring
+ * accessor, a cross-module generic utility); for a library callee the instantiated parameter, and a value that exposes
+ * the projection only into a container's own element type in TypeScript's default library (a type parameter of the
+ * enclosing interface or class: push, set, get, add, has), never into a library generic's own type parameter, an any,
+ * an unknown, an object or a {} (Reflect, Object, JSON, Promise.resolve, call, bind), nor into any package's parameter. The target refuses when it hides the projection (exposesDeclared), when a
+ * callback's own parameter hides a path through which the target hands it the projection, or when a value that holds
+ * the projection only inside it (heldPaths: a property of a src or anonymous object type, a library generic's type
+ * argument, an index signature or a call's result, to CARRIER_DEPTH) meets a target that lacks or hides one of its paths.
+ * The arguments object of a function whose parameters hold the projection is refused. Dispatch: a src signature with no
+ * body of its own (an interface method, a function type, a call signature) is trusted for no parameter, so a value or a
+ * holder it takes is refused; a member standing in for another's signature (a class member overriding or implementing
+ * a base or interface member, an object literal's method under a contextual type, a setter for such a property) whose
+ * own parameter hides a path the signature hands it is refused at its declaration. Type side, a type argument of a
+ * generic declared in src (a module's own or another module's alias, interface or class) or in a package is refused: a
+ * generic indexed-access alias and an infer-conditional alias included.
+ */
+export function readForms(program: ts.Program, root: string, classModule: string, className: string, modules: readonly string[]): Map<string, FormsReading> {
+  const model = classModel(program, root, classModule, className);
+  const { checker, isMember, carries } = model;
+  const prefix = `${join(root, "src")}/`;
+  const isSrc = (node: ts.Node): boolean => node.getSourceFile().fileName.startsWith(prefix);
+  /** A declaration of TypeScript's own default library (lib.*.d.ts): the only library whose generics and container parameters the judge trusts. */
+  const isDefaultLibrary = (node: ts.Node): boolean => program.isSourceFileDefaultLibrary(node.getSourceFile());
+  const objectExposes = (type: ts.Type): boolean => (type.flags & ts.TypeFlags.Object) !== 0 && type.getProperties().some(isMember);
+  const constrained = (type: ts.Type): ts.Type => ((type.flags & ts.TypeFlags.TypeParameter) !== 0 ? (checker.getBaseConstraintOfType(type) ?? type) : type);
+  /** The projection is visible through the type: it carries it, or exposes a class member (a subclass, an extending interface), or (a type parameter) its constraint does. */
+  const exposes = (type: ts.Type): boolean => {
+    const seen = constrained(type);
+    if (seen === type && (type.flags & ts.TypeFlags.TypeParameter) !== 0) return false;
+    if (carries(seen, 0) || objectExposes(seen)) return true;
+    return seen.isUnionOrIntersection() && seen.types.some(objectExposes);
+  };
+  const isSrcType = (type: ts.Type): boolean => {
+    const first = type.symbol?.declarations?.[0];
+    return first === undefined || isSrc(first);
+  };
+  const held = new Map<ts.Type, readonly (readonly string[])[]>();
+  /** The paths through which a value that does not itself expose the projection holds one (a property, <i> a library generic's type argument, [] an index signature, () a call's result), to CARRIER_DEPTH. */
+  const heldPaths = (type: ts.Type, depth: number): readonly (readonly string[])[] => {
+    if (exposes(type)) return [[]];
+    if (depth > CARRIER_DEPTH) return [];
+    const known = depth === 0 ? held.get(type) : undefined;
+    if (known) return known;
+    const paths: string[][] = [];
+    const add = (segment: string, inner: ts.Type): void => {
+      for (const rest of heldPaths(inner, depth + 1)) paths.push([segment, ...rest]);
+    };
+    if (type.isUnionOrIntersection()) for (const part of type.types) for (const path of heldPaths(part, depth + 1)) paths.push([...path]);
+    else if ((type.flags & ts.TypeFlags.Object) !== 0) {
+      const object = type as ts.ObjectType;
+      if ((object.objectFlags & ts.ObjectFlags.Reference) !== 0) for (const [index, argument] of checker.getTypeArguments(object as ts.TypeReference).entries()) add(`<${index}>`, argument);
+      if (isSrcType(type)) for (const property of publicProperties(checker, type)) add(property.name, checker.getTypeOfSymbol(property));
+      for (const info of checker.getIndexInfosOfType(type)) add("[]", info.type);
+      for (const signature of type.getCallSignatures()) add("()", signature.getReturnType());
+    }
+    if (depth === 0) held.set(type, paths);
+    return paths;
+  };
+  /** The target keeps the projection at the path: each step exists on the target and the end exposes it. */
+  const pathKept = (target: ts.Type, path: readonly string[]): boolean => {
+    let at = constrained(target);
+    for (const segment of path) {
+      at = checker.getNonNullableType(at);
+      let next: ts.Type | undefined;
+      if (segment === "()") next = at.getCallSignatures()[0]?.getReturnType();
+      else if (segment === "[]") next = checker.getIndexInfosOfType(at)[0]?.type;
+      else if (segment.startsWith("<")) {
+        const object = at as ts.ObjectType;
+        next =
+          (at.flags & ts.TypeFlags.Object) !== 0 && (object.objectFlags & ts.ObjectFlags.Reference) !== 0
+            ? checker.getTypeArguments(object as ts.TypeReference)[Number(segment.slice(1, -1))]
+            : undefined;
+      } else {
+        const property = checker.getPropertyOfType(at, segment);
+        next = property ? checker.getTypeOfSymbol(property) : undefined;
+      }
+      if (!next) return false;
+      at = constrained(next);
+    }
+    return exposes(at);
+  };
+  const result = new Map<string, FormsReading>();
+  for (const rel of modules) {
+    const inClassModule = rel === classModule;
+    const source = program.getSourceFile(join(root, rel));
+    if (!source) throw new Error(`the program holds no ${rel}`);
+    const forms = new Set<ResolvableForm>();
+    const refused: string[] = [];
+    const ok = (form: ResolvableForm): void => {
+      forms.add(form);
+    };
+    const refuse = (kind: string, site: ts.Node): void => {
+      refused.push(refusalRow(kind, site));
+    };
+    const record = (verdict: Verdict | undefined): void => {
+      if (verdict === undefined) return;
+      if ("form" in verdict) ok(verdict.form);
+      else refuse(verdict.refused, verdict.site);
+    };
+    /** A flow of the value at node into target: the projection must stay visible there, a callback's own parameters must keep every path the target hands them, and a value's held paths must stay held. A quiet flow (the value itself hides the projection) records no form. */
+    const judgeFlow = (form: ResolvableForm, node: ts.Node, target: ts.Type, site: ts.Node, quiet: boolean): void => {
+      const sourceType = checker.getTypeAtLocation(node);
+      let hidden = exposes(sourceType) && !exposes(target);
+      const own = parametersOf(sourceType.getCallSignatures()[0]?.getDeclaration());
+      for (const signature of checker.getNonNullableType(constrained(target)).getCallSignatures()) {
+        for (const [index, parameter] of signature.getParameters().entries()) {
+          const declared = own[index];
+          if (!declared) continue;
+          for (const path of heldPaths(checker.getTypeOfSymbol(parameter), 0)) if (!pathKept(checker.getTypeAtLocation(declared), path)) hidden = true;
+        }
+      }
+      if (!exposes(sourceType)) for (const path of heldPaths(sourceType, 0)) if (!pathKept(target, path)) hidden = true;
+      if (hidden) refuse(form, site);
+      else if (!quiet) ok(form);
+    };
+    /** The type an argument flows into (undefined: no parameter takes it, or the callee is unresolved). */
+    const argumentTarget = (call: ts.CallExpression | ts.NewExpression, node: ts.Expression, exposing: boolean): ts.Type | undefined => {
+      const passed: readonly ts.Expression[] = call.arguments ?? [];
+      const index = passed.indexOf(node);
+      const signature = checker.getResolvedSignature(call);
+      let declaration = signature?.getDeclaration();
+      if (!signature || !declaration) return undefined;
+      if (isSrc(declaration) && (ts.isFunctionDeclaration(declaration) || ts.isMethodDeclaration(declaration)) && !declaration.body && declaration.name) {
+        const implementation = (checker.getSymbolAtLocation(declaration.name)?.declarations ?? []).find(item => (ts.isFunctionDeclaration(item) || ts.isMethodDeclaration(item)) && item.body !== undefined);
+        if (!implementation) return undefined;
+        declaration = implementation as ts.SignatureDeclaration;
+      }
+      // A src signature with no body of its own (an interface method, a function type, a call signature): the body that runs is an implementation the checker does not resolve here, so no parameter is trusted.
+      if (isSrc(declaration) && !hasBody(declaration)) return undefined;
+      const parameters = parametersOf(declaration);
+      const last = parameters[parameters.length - 1];
+      const parameter = parameters[index] ?? (last?.dotDotDotToken ? last : undefined);
+      if (!parameter) return undefined;
+      const element = (type: ts.Type): ts.Type => (parameter.dotDotDotToken ? (checker.getIndexTypeOfType(type, ts.IndexKind.Number) ?? type) : type);
+      const declared = element(checker.getTypeAtLocation(parameter));
+      if (isSrc(declaration)) return declared;
+      if (exposing) {
+        const owner = (declared.flags & ts.TypeFlags.TypeParameter) !== 0 ? declared.symbol?.declarations?.[0]?.parent : undefined;
+        if (!isDefaultLibrary(declaration) || !owner || !(ts.isInterfaceDeclaration(owner) || ts.isClassDeclaration(owner))) return undefined;
+      }
+      const instantiated = signature.getParameters()[Math.min(index, signature.getParameters().length - 1)];
+      return instantiated ? element(checker.getTypeOfSymbol(instantiated)) : undefined;
+    };
+    /** The flow a node in a flow position takes: its form, the type it flows into and the site the row names. */
+    const flowOf = (node: ts.Expression, exposing: boolean): { readonly form: ResolvableForm; readonly target: ts.Type | undefined; readonly site: ts.Node } | undefined => {
+      const parent = node.parent;
+      const passed: readonly ts.Expression[] = (ts.isCallExpression(parent) || ts.isNewExpression(parent)) && parent.arguments ? parent.arguments : [];
+      if ((ts.isCallExpression(parent) || ts.isNewExpression(parent)) && passed.includes(node)) return { form: "argument", target: argumentTarget(parent, node, exposing), site: parent };
+      if ((ts.isVariableDeclaration(parent) || ts.isPropertyDeclaration(parent)) && parent.initializer === node && parent.type) return { form: "initializer", target: checker.getTypeFromTypeNode(parent.type), site: parent };
+      if ((ts.isParameter(parent) || ts.isBindingElement(parent)) && parent.initializer === node) return { form: "initializer", target: checker.getTypeAtLocation(parent), site: parent };
+      if (ts.isBinaryExpression(parent) && parent.right === node && isAssignment(parent.operatorToken.kind) && !ts.isObjectLiteralExpression(parent.left) && !ts.isArrayLiteralExpression(parent.left)) {
+        return { form: "assignment", target: checker.getTypeAtLocation(parent.left), site: parent };
+      }
+      if (ts.isPropertyAssignment(parent) && parent.initializer === node) {
+        const contextual = checker.getContextualType(node);
+        return contextual ? { form: "property", target: contextual, site: parent } : undefined;
+      }
+      if (ts.isReturnStatement(parent) || (ts.isArrowFunction(parent) && parent.body === node)) {
+        const written = returnTypeOf(parent);
+        return written ? { form: "return", target: checker.getTypeFromTypeNode(written), site: parent } : undefined;
+      }
+      if (ts.isAsExpression(parent) || ts.isTypeAssertionExpression(parent)) return { form: "cast", target: checker.getTypeFromTypeNode(parent.type), site: parent };
+      return undefined;
+    };
+    /** A value node that exposes the projection, read by its parent. */
+    const judgeValue = (node: ts.Expression): Verdict | undefined => {
+      const parent = node.parent;
+      const flow = flowOf(node, true);
+      if (flow) {
+        if (!flow.target) return { refused: flow.form, site: flow.site };
+        judgeFlow(flow.form, node, flow.target, flow.site, false);
+        return undefined;
+      }
+      const own = checker.getNonNullableType(checker.getTypeAtLocation(node));
+      const parts = own.isUnionOrIntersection() ? own.types : [own];
+      const declares = (name: string): boolean => parts.some(part => checker.getPropertiesOfType(part).some(property => property.name === name));
+      if (ts.isPropertyAccessExpression(parent) && parent.expression === node) {
+        const resolved = checker.getSymbolAtLocation(parent.name);
+        return (resolved && isMember(resolved)) || declares(parent.name.text) ? { form: "member" } : { refused: "member", site: parent };
+      }
+      if (ts.isElementAccessExpression(parent) && parent.expression === node) {
+        const names = keyNames(checker.getTypeAtLocation(parent.argumentExpression));
+        const indexed = parts.some(part => checker.getIndexInfosOfType(part).length > 0);
+        const known = names === undefined ? indexed || parts.some(objectExposes) : names.every(name => declares(name) || (indexed && /^\d+$/.test(name)));
+        return known ? { form: "element" } : { refused: "element", site: parent };
+      }
+      if (ts.isCallExpression(parent) && parent.expression === node) return { form: "callee" };
+      if ((ts.isVariableDeclaration(parent) || ts.isPropertyDeclaration(parent)) && parent.initializer === node) return { form: "initializer" };
+      if (ts.isPropertyAssignment(parent) && parent.initializer === node) return { form: "property" };
+      if (ts.isReturnStatement(parent) || (ts.isArrowFunction(parent) && parent.body === node)) return { form: "return" };
+      if (ts.isBinaryExpression(parent)) {
+        const operator = parent.operatorToken.kind;
+        if (isAssignment(operator)) return { form: "assignment" };
+        if (operator === ts.SyntaxKind.QuestionQuestionToken || operator === ts.SyntaxKind.BarBarToken || operator === ts.SyntaxKind.AmpersandAmpersandToken) return { form: exposes(checker.getTypeAtLocation(parent)) ? "wrap" : "test" };
+        if (operator === ts.SyntaxKind.CommaToken) return { form: parent.right === node ? "wrap" : "statement" };
+        if (COMPARISONS.has(operator) || (operator === ts.SyntaxKind.InstanceOfKeyword && parent.left === node)) return { form: "test" };
+        return { refused: `unlisted ${ts.SyntaxKind[parent.kind]}`, site: parent };
+      }
+      if (ts.isSatisfiesExpression(parent)) return { form: "cast" };
+      if (ts.isArrayLiteralExpression(parent)) return { form: "array-element" };
+      if (ts.isSpreadElement(parent) && ts.isArrayLiteralExpression(parent.parent)) return { form: "spread-array" };
+      if (ts.isParenthesizedExpression(parent) || ts.isNonNullExpression(parent) || (ts.isConditionalExpression(parent) && parent.condition !== node)) return { form: "wrap" };
+      if (ts.isConditionalExpression(parent) || ts.isTypeOfExpression(parent) || ts.isVoidExpression(parent) || (ts.isPrefixUnaryExpression(parent) && parent.operator === ts.SyntaxKind.ExclamationToken)) return { form: "test" };
+      if ((ts.isIfStatement(parent) || ts.isWhileStatement(parent) || ts.isDoStatement(parent) || ts.isSwitchStatement(parent) || ts.isCaseClause(parent)) && parent.expression === node) return { form: "test" };
+      if (ts.isForStatement(parent) && parent.condition === node) return { form: "test" };
+      if ((ts.isForOfStatement(parent) || ts.isForInStatement(parent)) && parent.expression === node) return { form: "iteration" };
+      if (ts.isAwaitExpression(parent)) return { form: "await" };
+      if (ts.isExpressionStatement(parent)) return { form: "statement" };
+      return { refused: `unlisted ${ts.SyntaxKind[parent.kind]}`, site: parent };
+    };
+    /** A type node whose type exposes the projection, read by its parent. */
+    const judgeType = (node: ts.TypeNode): Verdict => {
+      const parent = node.parent;
+      if ("type" in parent && parent.type === node && (ts.isFunctionLike(parent) || ANNOTATED.has(parent.kind))) return { form: "annotation" };
+      if (TYPE_PARTS.has(parent.kind) || (ts.isTypeOperatorNode(parent) && parent.operator === ts.SyntaxKind.ReadonlyKeyword)) return { form: "type-part" };
+      if (ts.isTypeOperatorNode(parent) && parent.operator === ts.SyntaxKind.KeyOfKeyword) return { form: "keyof" };
+      if (ts.isTypeParameterDeclaration(parent) && parent.constraint === node) return { form: "constraint" };
+      if (ts.isHeritageClause(parent)) return { form: "heritage" };
+      if (ts.isIndexedAccessTypeNode(parent) && parent.objectType === node) return { form: "indexed" };
+      const generic = ts.isTypeReferenceNode(parent) ? parent.typeName : ts.isExpressionWithTypeArguments(parent) || ts.isNewExpression(parent) || ts.isCallExpression(parent) ? parent.expression : undefined;
+      if (generic && "typeArguments" in parent && (parent.typeArguments as readonly ts.TypeNode[] | undefined)?.includes(node)) {
+        let named = checker.getSymbolAtLocation(ts.isPropertyAccessExpression(generic) ? generic.name : ts.isQualifiedName(generic) ? generic.right : generic);
+        if (named && (named.flags & ts.SymbolFlags.Alias) !== 0) named = checker.getAliasedSymbol(named);
+        const declarations = named?.declarations ?? [];
+        if (declarations.length > 0 && declarations.every(isDefaultLibrary)) return { form: "lib-generic" };
+        return { refused: "type-argument", site: parent };
+      }
+      return { refused: `unlisted-type ${ts.SyntaxKind[parent.kind]}`, site: parent };
+    };
+    /** A member that stands in for another's signature - a class member overriding or implementing a base or interface member, an object literal's method under a contextual type - keeps every path through which that signature hands it the projection, in the parameters it declares itself (a setter: the property's type). */
+    const judgeStandIn = (member: ts.MethodDeclaration | ts.SetAccessorDeclaration | ts.PropertyDeclaration, bases: readonly ts.Type[], form: ResolvableForm): void => {
+      const name = ts.isIdentifier(member.name) || ts.isStringLiteral(member.name) || ts.isPrivateIdentifier(member.name) ? member.name.text : undefined;
+      if (name === undefined) return;
+      const own = ts.isPropertyDeclaration(member) ? (member.initializer && ts.isFunctionLike(member.initializer) ? parametersOf(member.initializer) : []) : parametersOf(member);
+      let lost = false;
+      for (const base of bases) {
+        const property = checker.getPropertyOfType(base, name);
+        if (!property) continue;
+        const declared = checker.getTypeOfSymbol(property);
+        const handed: { readonly type: ts.Type; readonly at: number }[] = ts.isSetAccessorDeclaration(member)
+          ? [{ type: declared, at: 0 }]
+          : checker
+              .getNonNullableType(declared)
+              .getCallSignatures()
+              .flatMap(signature => signature.getParameters().map((parameter, at) => ({ type: checker.getTypeOfSymbol(parameter), at })));
+        for (const { type, at } of handed) {
+          const parameter = own[at];
+          if (!parameter) continue;
+          for (const path of heldPaths(type, 0)) if (!pathKept(checker.getTypeAtLocation(parameter), path)) lost = true;
+        }
+      }
+      if (lost) refuse(form, member);
+    };
+    const visit = (node: ts.Node, inType: boolean): void => {
+      if (inClassModule && classInternal(model, node)) return;
+      const typed = inType || ts.isTypeNode(node);
+      if ((ts.isMethodDeclaration(node) || ts.isSetAccessorDeclaration(node) || ts.isPropertyDeclaration(node)) && ts.isClassLike(node.parent)) {
+        const heritage = (node.parent.heritageClauses ?? []).flatMap(clause => clause.types.map(item => checker.getTypeAtLocation(item)));
+        if (heritage.length > 0) judgeStandIn(node, heritage, "heritage");
+      } else if ((ts.isMethodDeclaration(node) || ts.isSetAccessorDeclaration(node)) && ts.isObjectLiteralExpression(node.parent)) {
+        const contextual = checker.getContextualType(node.parent);
+        if (contextual) judgeStandIn(node, [contextual], "property");
+      }
+      if (ts.isTypeNode(node)) {
+        if (exposes(checker.getTypeFromTypeNode(node))) record(judgeType(node));
+      } else if (!typed && ts.isIdentifier(node) && node.text === "arguments" && isValueName(node) && checker.getSymbolAtLocation(node)?.declarations === undefined) {
+        const owner = ts.findAncestor(node.parent, item => ts.isFunctionLike(item) && !ts.isArrowFunction(item));
+        if (owner && parametersOf(owner as ts.SignatureDeclaration).some(parameter => heldPaths(checker.getTypeAtLocation(parameter), 0).length > 0)) refuse("arguments", node.parent);
+      } else if (!typed && ts.isShorthandPropertyAssignment(node)) {
+        const contextual = checker.getContextualType(node.parent);
+        const property = contextual ? checker.getPropertyOfType(contextual, node.name.text) : undefined;
+        const exposing = exposes(checker.getTypeAtLocation(node.name));
+        if (property) judgeFlow("property", node.name, checker.getTypeOfSymbol(property), node, !exposing);
+        else if (exposing) ok("property");
+      } else if (!typed && ts.isExpression(node) && (!ts.isIdentifier(node) || isValueName(node))) {
+        if (exposes(checker.getTypeAtLocation(node))) record(judgeValue(node));
+        else {
+          const flow = flowOf(node, false);
+          if (flow?.target) judgeFlow(flow.form, node, flow.target, flow.site, true);
+          else if (flow && heldPaths(checker.getTypeAtLocation(node), 0).length > 0) refuse(flow.form, flow.site);
+        }
+      }
+      ts.forEachChild(node, child => visit(child, typed));
+    };
+    visit(source, false);
+    if (forms.size > 0 || refused.length > 0) result.set(rel, { forms: [...forms].sort(), refused: refused.sort() });
+  }
+  return result;
+}
+/** True for a declaration that carries its own body (a function, a method, an accessor, a constructor, an arrow, a function expression). */
+const hasBody = (declaration: ts.Declaration): boolean => "body" in declaration && declaration.body !== undefined;
+const isAssignment = (operator: ts.SyntaxKind): boolean =>
+  operator === ts.SyntaxKind.EqualsToken || operator === ts.SyntaxKind.QuestionQuestionEqualsToken || operator === ts.SyntaxKind.BarBarEqualsToken || operator === ts.SyntaxKind.AmpersandAmpersandEqualsToken;
+const COMPARISONS: ReadonlySet<ts.SyntaxKind> = new Set([ts.SyntaxKind.EqualsEqualsEqualsToken, ts.SyntaxKind.ExclamationEqualsEqualsToken, ts.SyntaxKind.EqualsEqualsToken, ts.SyntaxKind.ExclamationEqualsToken]);
+/** Declarations and expressions whose written type is an annotation (a function-like's return type is one too). */
+const ANNOTATED: ReadonlySet<ts.SyntaxKind> = new Set([
+  ts.SyntaxKind.Parameter,
+  ts.SyntaxKind.VariableDeclaration,
+  ts.SyntaxKind.PropertyDeclaration,
+  ts.SyntaxKind.PropertySignature,
+  ts.SyntaxKind.TypeAliasDeclaration,
+  ts.SyntaxKind.IndexSignature,
+  ts.SyntaxKind.AsExpression,
+  ts.SyntaxKind.TypeAssertionExpression,
+  ts.SyntaxKind.SatisfiesExpression,
+  ts.SyntaxKind.TypePredicate,
+]);
+const TYPE_PARTS: ReadonlySet<ts.SyntaxKind> = new Set([
+  ts.SyntaxKind.UnionType,
+  ts.SyntaxKind.IntersectionType,
+  ts.SyntaxKind.ParenthesizedType,
+  ts.SyntaxKind.ArrayType,
+  ts.SyntaxKind.TupleType,
+  ts.SyntaxKind.NamedTupleMember,
+  ts.SyntaxKind.OptionalType,
+  ts.SyntaxKind.RestType,
+]);
 
 /** True when an object or array literal is an assignment pattern: the left of an =, a for-of target, or nested inside one. */
 function isAssignmentPattern(node: ts.Node): boolean {
@@ -1547,9 +1969,22 @@ export interface ReachItem {
   readonly module: string;
   /** Its reach as projectionReach reads it, or null where the scan reads it as reaching nothing. */
   readonly expect: Reach | null;
+  /** Its forms as readForms reads them, or null where no node of it exposes the projection (cut #4; absent on the rows cut #3 pinned, whose cases are unchanged). */
+  readonly forms?: FormsReading | null;
+  /** The class's own module for this case, when the case plants one (CLASS-MODULE); absent, the real src/workbench/observation.ts. */
+  readonly classModule?: string;
 }
 const reached = (names: boolean, value: readonly string[], type: readonly string[], holders: readonly string[]): Reach => ({ names, value, type, holders });
 const reach = (module: string, text: string, expect: Reach | null, also: Readonly<Record<string, string>> = {}): ReachItem => ({ plants: { ...also, [module]: text }, module, expect });
+const formsRead = (forms: readonly ResolvableForm[], refused: readonly string[]): FormsReading => ({ forms, refused });
+/** A cut #4 case: its reach and its forms, each pinned; a CLASS-MODULE case names the planted class module it reads. */
+const reachForms = (module: string, text: string, expect: Reach | null, forms: FormsReading | null, also: Readonly<Record<string, string>> = {}, classModule?: string): ReachItem => ({
+  plants: { ...also, [module]: text },
+  module,
+  expect,
+  forms,
+  ...(classModule ? { classModule } : {}),
+});
 const OBS_UI = 'import type { ObservationProjection } from "../workbench/observation.js";\n';
 const MODEL = 'import type { InspectorModel } from "./workflow-inspector.js";\n';
 export const REACH: Table<ReachItem> = {
@@ -1798,7 +2233,7 @@ export const REACH: Table<ReachItem> = {
     {
       id: "R-ERASED-ACCESS",
       label:
-        "residual: a module that reaches the projection only through an erased or structural type - a cast from unknown, a structural interface of its own, Reflect, an any - reads as reaching nothing, and a typed holder's member reached through Reflect, a cast through unknown, a cast to any, a prototype lookup or an Object property call reads as the holder alone",
+        "residual: a module that reaches the projection only through an erased or structural type - a cast from unknown, a structural interface of its own, Reflect, an any - reads as reaching nothing (no node of it exposes the projection, so readForms reads nothing there either; the erasure is refused in the module that erased it: ERASING-FLOWS, LIBRARY-FLOWS), and a typed holder's member reached through Reflect, a cast through unknown, a cast to any, a prototype lookup or an Object property call reads as the holder alone to projectionReach, while readForms refuses the erasing step itself (ERASING-FLOWS, LIBRARY-FLOWS)",
       cases: [
         reach("src/ui/census-reach-cast.ts", "export const forget = (value: unknown): void => (value as { markStale(input: unknown): void }).markStale({});\n", null),
         reach("src/ui/census-reach-structural.ts", "interface Counts {\n  stats(): { nodes: number };\n}\nexport const nodes = (source: Counts): number => source.stats().nodes;\n", null),
@@ -1821,7 +2256,7 @@ export const REACH: Table<ReachItem> = {
     },
     {
       id: "R-DEEP-CARRIER",
-      label: `residual: a module that only relays a value whose carrier nests past the depth bound (the instance five wrappers deep, a typed reader four deep; CARRIER_DEPTH ${CARRIER_DEPTH}) or an object type whose property holds the projection reads as reaching nothing`,
+      label: `residual: a module that only relays a value whose carrier nests past the depth bound (the instance five wrappers deep, a typed reader four deep; CARRIER_DEPTH ${CARRIER_DEPTH}) or an object type whose property holds the projection reads as reaching nothing to projectionReach; readForms follows such a holder through at most CARRIER_DEPTH + 1 held-path steps, each ending at a carrier the reach scan's test reads (RELAYS judges the five-deep relay), and judges no flow past that (a relay of the instance nine wrappers deep into unknown reads no form)`,
       cases: [
         reach("src/ui/census-reach-deep5.ts", 'import type { Deep5 } from "./census-reach-deep5-type.js";\nexport const relayDeep5 = (views: Deep5) => views;\n', null, {
           "src/ui/census-reach-deep5-type.ts": `${OBS_UI}export type Deep5 = ReadonlyMap<string, ReadonlyMap<string, ReadonlyMap<string, ReadonlyMap<string, ReadonlyMap<string, ObservationProjection>>>>>;\n`,
@@ -1832,6 +2267,221 @@ export const REACH: Table<ReachItem> = {
         reach("src/ui/census-reach-box.ts", 'import type { Box } from "./census-reach-box-type.js";\nexport const relayBox = (box: Box) => box;\n', null, {
           "src/ui/census-reach-box-type.ts": `${OBS_UI}export interface Box {\n  readonly inner: { readonly projection: ObservationProjection };\n}\n`,
         }),
+        reachForms("src/ui/census-forms-deep9-relay.ts", 'import type { Deep9 } from "./census-forms-deep9-type.js";\nexport const relayDeep9 = (views: Deep9): unknown => views;\n', null, null, {
+          "src/ui/census-forms-deep9-type.ts": `${OBS_UI}type Map3<T> = ReadonlyMap<string, ReadonlyMap<string, ReadonlyMap<string, T>>>;\nexport type Deep9 = Map3<Map3<Map3<ObservationProjection>>>;\n`,
+        }),
+      ],
+    },
+    {
+      id: "RESOLVABLE-FORMS",
+      label:
+        "quiet: a node that exposes the projection in each resolvable form - a member, an element, a callee, an argument to a typed src parameter and to a container's own element, an initializer, an assignment, an object property, a return, a satisfies, an array element and spread, a wrapper (parentheses, a non-null assertion, a conditional branch, ??), a test (a condition, a comparison, typeof, !, switch), an iteration, an await, a statement, and on the type side an annotation, a union, array and readonly part, keyof, a constraint, a heritage clause, an indexed access and a library generic's type argument - is read and refused nowhere",
+      cases: [
+        reachForms("src/ui/census-forms-member.ts", `${OBS_UI}export const revision = (projection: ObservationProjection): number => projection.relationRevision() + projection["relationRevision"]();\n`, reached(true, ["relationRevision"], [], ["projection"]), formsRead(["annotation", "element", "member"], [])),
+        reachForms(
+          "src/ui/census-forms-callee.ts",
+          `${OBS_UI}export function nodes(source: () => ObservationProjection): number {\n  const projection = source();\n  return projection.stats().nodes;\n}\n`, reached(true, ["stats"], [], ["projection", "source"]), formsRead(["annotation", "callee", "initializer", "member"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-argument.ts",
+          `${OBS_UI}const count = (all: readonly ObservationProjection[]): number => all.length;\nexport function collect(projection: ObservationProjection): number {\n  const views: ObservationProjection[] = [];\n  views.push(projection);\n  return count(views);\n}\n`, reached(true, [], [], ["all", "projection", "views"]), formsRead(["annotation", "argument", "member", "type-part"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-assignment.ts",
+          `${OBS_UI}export function hold(projection: ObservationProjection): number {\n  let held: ObservationProjection | undefined;\n  held = projection;\n  if (held === undefined) return 0;\n  return (held ?? projection).stats().nodes;\n}\n`, reached(true, ["stats"], [], ["held", "projection"]), formsRead(["annotation", "assignment", "member", "statement", "test", "type-part", "wrap"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-property.ts",
+          `${OBS_UI}export const pick = (projection: ObservationProjection): ObservationProjection => projection;\nexport function bundle(projection: ObservationProjection): { readonly views: readonly ObservationProjection[] } {\n  const views = [projection, ...[projection]];\n  return { views: views satisfies readonly ObservationProjection[] };\n}\n`, reached(true, [], [], ["pick", "projection", "views"]), formsRead(["annotation", "array-element", "cast", "initializer", "property", "return", "spread-array", "type-part"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-iteration.ts",
+          `${OBS_UI}export async function each(views: readonly ObservationProjection[], later: Promise<ObservationProjection>): Promise<number> {\n  let total = 0;\n  for (const view of views) total += view.stats().nodes;\n  const settled = await later;\n  return total + (typeof settled === "object" && !settled ? 0 : settled.stats().edges);\n}\n`, reached(true, ["stats"], [], ["later", "settled", "view", "views"]), formsRead(["annotation", "await", "initializer", "iteration", "lib-generic", "member", "test", "type-part"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-wrap.ts",
+          `${OBS_UI}export function touch(projection: ObservationProjection | undefined, other: ObservationProjection): number {\n  projection;\n  const chosen = projection ? projection : other;\n  switch (chosen) {\n    case other:\n      return (void 0, chosen)!.stats().nodes;\n    default:\n      return 0;\n  }\n}\n`, reached(true, ["stats"], [], ["chosen", "other", "projection"]), formsRead(["annotation", "initializer", "member", "statement", "test", "type-part", "wrap"], []),
+        ),
+        reachForms(
+          "src/ui/census-forms-types.ts",
+          `${OBS_UI}export type Key = keyof ObservationProjection;\nexport type Revision = ObservationProjection["relationRevision"];\nexport const first = <T extends ObservationProjection>(holder: T): number => holder.stats().nodes;\nexport interface Lens extends Pick<ObservationProjection, "window"> {\n  readonly tag: string;\n}\nexport type Maybe = ObservationProjection | undefined;\n`, reached(true, ["stats"], ["relationRevision"], []), formsRead(["annotation", "constraint", "heritage", "indexed", "keyof", "lib-generic", "member", "type-part"], []),
+        ),
+      ],
+    },
+    {
+      id: "GENERIC-ACCESSORS",
+      label:
+        "a value that exposes the projection handed to a generic over an unconstrained type parameter - a module's own generic accessor (in a render module and through a non-render reader's deps), a generic destructuring accessor, a cross-module generic utility, an explicit type argument, a src generic class - is refused at the call",
+      cases: [
+        reachForms(
+          "src/ui/census-forms-generic-own.ts",
+          `${OBS_UI}function memberOf<T, K extends keyof T>(target: T, key: K): T[K] {\n  return target[key];\n}\nexport function forget(reader: ObservationProjection, input: Parameters<ObservationProjection["markStale"]>[0]): void {\n  memberOf(reader, "markStale").call(reader, input);\n}\n`, reached(true, [], ["markStale"], ["reader"]), formsRead(["annotation", "indexed"], ["argument: memberOf(reader, \"markStale\")", "argument: memberOf(reader, \"markStale\").call(reader, input)"]),
+        ),
+        reachForms(
+          "src/workbench/census-forms-generic-deps.ts",
+          `import type { ObservationProjection, ObservationScope } from "./observation.js";\nfunction peekOf<T, K extends keyof T>(target: T, key: K): T[K] {\n  return target[key];\n}\nexport function peek(deps: { readonly projection: ObservationProjection }, scope: ObservationScope): number {\n  return peekOf(deps.projection, "events")({ scope, limit: 1 }).events.length;\n}\n`, reached(true, [], [], ["projection"]), formsRead(["annotation"], ["argument: peekOf(deps.projection, \"events\")"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-generic-destructure.ts",
+          `${OBS_UI}function take<T, K extends keyof T>(target: T, key: K): T[K] {\n  const { [key]: value } = target;\n  return value;\n}\nexport const forget = (reader: ObservationProjection): unknown => take(reader, "markStale");\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["argument: take(reader, \"markStale\")"]),
+        ),
+        reachForms("src/ui/census-forms-generic-util.ts", `${OBS_UI}import { memberAt } from "./census-forms-generic-util-at.js";\nexport const forget = (reader: ObservationProjection): unknown => memberAt(reader, "markStale");\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["argument: memberAt(reader, \"markStale\")"]), {
+          "src/ui/census-forms-generic-util-at.ts": "export function memberAt<T, K extends keyof T>(target: T, key: K): T[K] {\n  return target[key];\n}\n",
+        }),
+        reachForms("src/ui/census-forms-generic-explicit.ts", `${OBS_UI}function same<T>(value: T): T {\n  return value;\n}\nexport const keep = (reader: ObservationProjection): ObservationProjection => same<ObservationProjection>(reader);\n`, reached(true, [], [], ["keep", "reader"]), formsRead(["annotation", "initializer", "return"], ["argument: same<ObservationProjection>(reader)", "type-argument: same<ObservationProjection>(reader)"])),
+        reachForms("src/ui/census-forms-generic-class.ts", `${OBS_UI}class Box<T> {\n  constructor(readonly held: T) {}\n}\nexport const box = (reader: ObservationProjection): Box<ObservationProjection> => new Box(reader);\n`, reached(true, [], [], ["box", "reader"]), formsRead(["annotation", "initializer", "return"], ["argument: new Box(reader)", "type-argument: Box<ObservationProjection>"])),
+      ],
+    },
+    {
+      id: "GENERIC-ALIASES",
+      label: "the projection as a type argument of a generic declared in src - a generic indexed-access alias, an infer-conditional alias, a src generic interface - and a conditional type over it are refused",
+      cases: [
+        reachForms("src/ui/census-forms-alias-indexed.ts", `${OBS_UI}type MemberType<T, K extends keyof T> = T[K];\nexport type RelateSink = MemberType<ObservationProjection, "relate">;\n`, reached(true, [], [], []), formsRead([], ["type-argument: MemberType<ObservationProjection, \"relate\">"])),
+        reachForms("src/ui/census-forms-alias-infer.ts", `${OBS_UI}type InferStale<T> = T extends { markStale: infer F } ? F : never;\nexport type Stale = InferStale<ObservationProjection>;\n`, reached(true, [], [], []), formsRead([], ["type-argument: InferStale<ObservationProjection>"])),
+        reachForms("src/ui/census-forms-alias-interface.ts", `${OBS_UI}interface Holder<T> {\n  readonly held: T;\n}\nexport type Held = Holder<ObservationProjection>;\n`, reached(true, [], [], []), formsRead(["annotation"], ["type-argument: Holder<ObservationProjection>"])),
+        reachForms("src/ui/census-forms-alias-conditional.ts", `${OBS_UI}export type Stale = ObservationProjection extends { markStale: infer F } ? F : never;\n`, reached(true, [], [], []), formsRead([], ["unlisted-type ConditionalType: ObservationProjection extends { markStale: infer F } ? F : never"])),
+      ],
+    },
+    {
+      id: "CLASS-MODULE",
+      label:
+        "the class's own module is read outside the class's instance members: a module function and a public static member that admit through the projection are read, and the class's instance members (judged by REPROJECTION and MEMBERS) are not",
+      cases: [
+        reachForms(
+          "src/workbench/census-forms-class-function.ts",
+          "export class ObservationProjection {\n  markStale(input: unknown): void {\n    void input;\n  }\n}\nexport function forget(projection: ObservationProjection, input: unknown): void {\n  projection.markStale(input);\n}\n", reached(true, ["markStale"], [], ["projection"]), formsRead(["annotation", "member"], []),
+          {},
+          "src/workbench/census-forms-class-function.ts",
+        ),
+        reachForms(
+          "src/workbench/census-forms-class-static.ts",
+          "export class ObservationProjection {\n  markStale(input: unknown): void {\n    void input;\n  }\n  static forget(projection: ObservationProjection, input: unknown): void {\n    projection.markStale(input);\n  }\n}\n", reached(true, ["markStale"], [], ["projection"]), formsRead(["annotation", "member"], []),
+          {},
+          "src/workbench/census-forms-class-static.ts",
+        ),
+        reachForms(
+          "src/workbench/census-forms-class-internal.ts",
+          "export class ObservationProjection {\n  markStale(input: unknown): void {\n    void input;\n  }\n  refresh(): void {\n    this.markStale(0);\n  }\n}\n", null, null,
+          {},
+          "src/workbench/census-forms-class-internal.ts",
+        ),
+      ],
+    },
+    {
+      id: "ERASING-FLOWS",
+      label:
+        "a value that exposes the projection flowing into a type that hides it - a structural seam of the module's own, a cast to any or through unknown, an unknown variable, assignment, field or default, a return into unknown, an overload whose implementation takes unknown - is refused",
+      cases: [
+        reachForms(
+          "src/ui/census-forms-erase-seam.ts",
+          `${OBS_UI}interface StaleSeam {\n  markStale(input: unknown): void;\n}\nconst forgetVia = (seam: StaleSeam, input: unknown): void => seam.markStale(input);\nexport const forget = (reader: ObservationProjection, input: unknown): void => forgetVia(reader, input);\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["argument: forgetVia(reader, input)"]),
+        ),
+        reachForms("src/ui/census-forms-erase-any.ts", `${OBS_UI}export const forget = (reader: ObservationProjection): unknown => (reader as any).markStale({});\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["cast: reader as any"])),
+        reachForms("src/ui/census-forms-erase-unknown.ts", `${OBS_UI}export const forget = (reader: ObservationProjection): void => (reader as unknown as { markStale(input: unknown): void }).markStale({});\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["cast: reader as unknown"])),
+        reachForms("src/ui/census-forms-erase-variable.ts", `${OBS_UI}export function relay(reader: ObservationProjection): unknown {\n  const held: unknown = reader;\n  return held;\n}\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["initializer: held: unknown = reader"])),
+        reachForms("src/ui/census-forms-erase-assign.ts", `${OBS_UI}let held: unknown;\nexport function relay(reader: ObservationProjection): void {\n  held = reader;\n}\nexport const last = (): unknown => held;\n`, reached(true, [], [], ["reader"]), formsRead(["annotation", "statement"], ["assignment: held = reader"])),
+        reachForms("src/ui/census-forms-erase-field.ts", `${OBS_UI}export class Relay {\n  held: unknown;\n  constructor(reader: ObservationProjection) {\n    this.held = reader;\n  }\n}\n`, reached(true, [], [], ["reader"]), formsRead(["annotation", "statement"], ["assignment: this.held = reader"])),
+        reachForms("src/ui/census-forms-erase-default.ts", `${OBS_UI}export const relay = (reader: ObservationProjection, held: unknown = reader): unknown => held;\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["initializer: held: unknown = reader"])),
+        reachForms("src/ui/census-forms-erase-return.ts", `${OBS_UI}export const relay = (reader: ObservationProjection): unknown => reader;\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["return: (reader: ObservationProjection): unknown => reader"])),
+        reachForms(
+          "src/ui/census-forms-erase-overload.ts",
+          `${OBS_UI}function sink(reader: ObservationProjection): void;\nfunction sink(reader: unknown): void {\n  (reader as { markStale(input: unknown): void }).markStale({});\n}\nexport const forget = (reader: ObservationProjection): void => sink(reader);\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["argument: sink(reader)"]),
+        ),
+      ],
+    },
+    {
+      id: "LIBRARY-FLOWS",
+      label:
+        "a value that exposes the projection handed to a library parameter other than a container's own element type - Reflect.get, Object.getPrototypeOf, Object.defineProperty, Object.values, JSON.stringify, Promise.resolve, a call's or a bind's this argument - is refused",
+      cases: [
+        reachForms("src/ui/census-forms-lib-reflect.ts", `${OBS_UI}export const admit = (reader: ObservationProjection): unknown => Reflect.get(reader, "refresh");\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["argument: Reflect.get(reader, \"refresh\")"])),
+        reachForms("src/ui/census-forms-lib-prototype.ts", `${OBS_UI}export const stale = (reader: ObservationProjection): unknown => Object.getPrototypeOf(reader).markStale;\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["argument: Object.getPrototypeOf(reader)"])),
+        reachForms("src/ui/census-forms-lib-define.ts", `${OBS_UI}export function patch(reader: ObservationProjection): void {\n  Object.defineProperty(reader, "refresh", { value: () => "applied" });\n}\n`, reached(true, [], [], ["reader"]), formsRead(["annotation", "statement"], ["argument: Object.defineProperty(reader, \"refresh\", { value: () => \"applied\" })"])),
+        reachForms("src/ui/census-forms-lib-values.ts", `${OBS_UI}export const members = (reader: ObservationProjection): unknown => Object.values(reader);\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["argument: Object.values(reader)"])),
+        reachForms("src/ui/census-forms-lib-json.ts", `${OBS_UI}export const text = (reader: ObservationProjection): string => JSON.stringify(reader);\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["argument: JSON.stringify(reader)"])),
+        reachForms("src/ui/census-forms-lib-promise.ts", `${OBS_UI}export const later = (reader: ObservationProjection): Promise<ObservationProjection> => Promise.resolve(reader);\n`, reached(true, [], [], ["later", "reader"]), formsRead(["annotation", "initializer", "lib-generic", "return"], ["argument: Promise.resolve(reader)"])),
+        reachForms("src/ui/census-forms-lib-call.ts", `${OBS_UI}export const forget = (reader: ObservationProjection, input: Parameters<ObservationProjection["markStale"]>[0]): void => reader.markStale.call(reader, input);\n`, reached(true, ["markStale"], ["markStale"], ["reader"]), formsRead(["annotation", "indexed", "member"], ["argument: reader.markStale.call(reader, input)"])),
+        reachForms("src/ui/census-forms-lib-bind.ts", `${OBS_UI}export const forgetter = (reader: ObservationProjection): unknown => reader.markStale.bind(reader);\n`, reached(true, ["markStale"], [], ["reader"]), formsRead(["annotation", "member"], ["argument: reader.markStale.bind(reader)"])),
+      ],
+    },
+    {
+      id: "RELAYS",
+      label:
+        "a callback or a holder that hands the projection on into a type that hides it - a callback whose own parameter is a structural seam or a generic, an annotated arrow, a promise's then, an object holding the projection (built first, written inline, in an array, a class instance, a getter, a record, a map), a carrier nested past the reach scan's bound (five deep) and a function returning a holder - is refused",
+      cases: [
+        reachForms(
+          "src/ui/census-forms-relay-callback.ts",
+          `${OBS_UI}interface Seam {\n  markStale(input: unknown): void;\n}\nconst forget = (seam: Seam): void => seam.markStale({});\nexport const forgetAll = (views: readonly ObservationProjection[]): void => views.forEach(forget);\n`, reached(true, [], [], ["views"]), formsRead(["annotation", "member", "type-part"], ["argument: views.forEach(forget)"]),
+        ),
+        reachForms("src/ui/census-forms-relay-generic.ts", `${OBS_UI}const same = <T>(value: T): T => value;\nexport const keep = (views: readonly ObservationProjection[]): readonly ObservationProjection[] => views.map(same);\n`, reached(true, [], [], ["keep", "views"]), formsRead(["annotation", "initializer", "member", "return", "type-part"], ["argument: views.map(same)"])),
+        reachForms(
+          "src/ui/census-forms-relay-arrow.ts",
+          `${OBS_UI}interface Seam {\n  markStale(input: unknown): void;\n}\nexport const forgetAll = (views: readonly ObservationProjection[]): void => views.forEach((seam: Seam) => seam.markStale({}));\n`, reached(true, [], [], ["views"]), formsRead(["annotation", "member", "type-part"], ["argument: views.forEach((seam: Seam) => seam.markStale({}))"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-relay-then.ts",
+          `${OBS_UI}interface Seam {\n  markStale(input: unknown): void;\n}\nexport const later = (pending: Promise<ObservationProjection>): Promise<void> => pending.then((seam: Seam) => seam.markStale({}));\n`, reached(true, [], [], ["pending"]), formsRead(["annotation", "lib-generic", "member"], ["argument: pending.then((seam: Seam) => seam.markStale({}))"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-relay-deps.ts",
+          `${OBS_UI}interface Seam {\n  markStale(input: unknown): void;\n}\nconst forgetVia = (deps: { readonly projection: Seam }): void => deps.projection.markStale({});\nexport function forget(projection: ObservationProjection): void {\n  const deps = { projection };\n  forgetVia(deps);\n}\n`, reached(true, [], [], ["projection"]), formsRead(["annotation", "property"], ["argument: forgetVia(deps)"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-relay-literal.ts",
+          `${OBS_UI}interface Seam {\n  markStale(input: unknown): void;\n}\nconst forgetVia = (deps: { readonly projection: Seam }): void => deps.projection.markStale({});\nexport const forget = (projection: ObservationProjection): void => forgetVia({ projection: projection });\n`, reached(true, [], [], ["projection"]), formsRead(["annotation"], ["argument: forgetVia({ projection: projection })", "property: projection: projection"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-relay-array.ts",
+          `${OBS_UI}const count = (all: readonly unknown[]): number => all.length;\nexport function relay(projection: ObservationProjection): number {\n  const deps = { projection };\n  return count([deps]);\n}\n`, reached(true, [], [], ["projection"]), formsRead(["annotation", "property"], ["argument: count([deps])"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-relay-instance.ts",
+          `${OBS_UI}interface Seam {\n  markStale(input: unknown): void;\n}\nclass Holder {\n  constructor(readonly projection: ObservationProjection) {}\n}\nconst forgetVia = (deps: { readonly projection: Seam }): void => deps.projection.markStale({});\nexport const forget = (projection: ObservationProjection): void => forgetVia(new Holder(projection));\n`, reached(true, [], [], ["projection"]), formsRead(["annotation", "argument"], ["argument: forgetVia(new Holder(projection))"]),
+        ),
+        reachForms(
+          "src/ui/census-forms-relay-getter.ts",
+          `${OBS_UI}const relayAll = (deps: object): object => deps;\nexport function relay(projection: ObservationProjection): object {\n  const deps = {\n    get current() {\n      return projection;\n    },\n  };\n  return relayAll(deps);\n}\n`, reached(true, [], [], ["current", "projection"]), formsRead(["annotation", "return"], ["argument: relayAll(deps)"]),
+        ),
+        reachForms("src/ui/census-forms-relay-record.ts", `${OBS_UI}const relayAll = (all: Readonly<Record<string, unknown>>): number => Object.keys(all).length;\nexport const relay = (projection: ObservationProjection): number => relayAll({ only: projection });\n`, reached(true, [], [], ["only", "projection"]), formsRead(["annotation"], ["argument: relayAll({ only: projection })", "property: only: projection"])),
+        reachForms("src/ui/census-forms-relay-map.ts", `${OBS_UI}const size = (all: ReadonlyMap<string, unknown>): number => all.size;\nexport const relay = (projection: ObservationProjection): number => size(new Map([["only", { projection }]]));\n`, reached(true, [], [], ["projection"]), formsRead(["annotation", "property"], ["argument: new Map([[\"only\", { projection }]])", "argument: size(new Map([[\"only\", { projection }]]))"])),
+        reachForms("src/ui/census-forms-relay-deep5.ts", 'import type { Deep5 } from "./census-reach-deep5-type.js";\nexport const relayDeep5 = (views: Deep5): unknown => views;\n', null, formsRead([], ["return: (views: Deep5): unknown => views"])),
+        reachForms("src/ui/census-forms-relay-function.ts", `${OBS_UI}export function relay(projection: ObservationProjection): unknown {\n  const later: () => unknown = () => ({ projection });\n  return later;\n}\n`, reached(true, [], [], ["projection"]), formsRead(["annotation", "property"], ["initializer: later: () => unknown = () => ({ projection })"])),
+      ],
+    },
+    {
+      id: "DISPATCH",
+      label:
+        "a flow the checker resolves to a signature whose body is not the one that runs - a call through an interface method or a function type (a value and a holder), a member overriding or implementing one with a parameter that hides the projection, an object literal's method and a setter doing so - is refused, while an override and a literal method that keep the projection read quiet",
+      cases: [
+        reachForms("src/ui/census-forms-dispatch-interface.ts", `${OBS_UI}interface Api {\n  forget(projection: ObservationProjection): void;\n}\nexport const run = (api: Api, projection: ObservationProjection): void => api.forget(projection);\n`, reached(true, [], [], ["projection"]), formsRead(["annotation"], ["argument: api.forget(projection)"])),
+        reachForms("src/ui/census-forms-dispatch-function-type.ts", `${OBS_UI}export const run = (sink: (projection: ObservationProjection) => void, projection: ObservationProjection): void => sink(projection);\n`, reached(true, [], [], ["projection"]), formsRead(["annotation"], ["argument: sink(projection)"])),
+        reachForms("src/ui/census-forms-dispatch-held.ts", `${OBS_UI}interface Api {\n  take(deps: { readonly projection: ObservationProjection }): void;\n}\nexport const run = (api: Api, projection: ObservationProjection): void => api.take({ projection });\n`, reached(true, [], [], ["projection"]), formsRead(["annotation", "property"], ["argument: api.take({ projection })"])),
+        reachForms("src/ui/census-forms-dispatch-override.ts", `${OBS_UI}export class Base {\n  forget(projection: ObservationProjection): void {\n    void projection.stats();\n  }\n}\nexport class Sub extends Base {\n  override forget(projection: unknown): void {\n    (projection as { markStale(input: unknown): void }).markStale({});\n  }\n}\n`, reached(true, ["stats"], [], ["projection"]), formsRead(["annotation", "member"], ["heritage: override forget(projection: unknown): void { (projection as { markStale(input: unknown): void }).markStale({}); }"])),
+        reachForms("src/ui/census-forms-dispatch-implements.ts", `${OBS_UI}interface Api {\n  forget(projection: ObservationProjection): void;\n}\nexport class Impl implements Api {\n  forget(projection: unknown): void {\n    (projection as { markStale(input: unknown): void }).markStale({});\n  }\n}\n`, reached(true, [], [], ["projection"]), formsRead(["annotation"], ["heritage: forget(projection: unknown): void { (projection as { markStale(input: unknown): void }).markStale({}); }"])),
+        reachForms("src/ui/census-forms-dispatch-literal.ts", `${OBS_UI}interface Api {\n  forget(projection: ObservationProjection): void;\n}\nexport const api: Api = {\n  forget(projection: unknown): void {\n    (projection as { markStale(input: unknown): void }).markStale({});\n  },\n};\n`, reached(true, [], [], ["projection"]), formsRead(["annotation"], ["property: forget(projection: unknown): void { (projection as { markStale(input: unknown): void }).markStale({}); }"])),
+        reachForms("src/ui/census-forms-dispatch-setter.ts", `${OBS_UI}interface Slot {\n  projection: ObservationProjection;\n}\nexport class Holder implements Slot {\n  #held: unknown;\n  get projection(): ObservationProjection {\n    return this.#held as ObservationProjection;\n  }\n  set projection(value: unknown) {\n    this.#held = value;\n  }\n}\n`, reached(true, [], [], ["projection"]), formsRead(["annotation", "return"], ["heritage: set projection(value: unknown) { this.#held = value; }"])),
+        reachForms("src/ui/census-forms-dispatch-quiet-override.ts", `${OBS_UI}export class Base {\n  read(projection: ObservationProjection): number {\n    return projection.stats().nodes;\n  }\n}\nexport class Sub extends Base {\n  override read(projection: ObservationProjection): number {\n    return projection.stats().edges;\n  }\n}\n`, reached(true, ["stats"], [], ["projection"]), formsRead(["annotation", "member"], [])),
+        reachForms("src/ui/census-forms-dispatch-quiet-literal.ts", `${OBS_UI}interface Api {\n  read(projection: ObservationProjection): number;\n}\nexport const api: Api = {\n  read(projection) {\n    return projection.stats().nodes;\n  },\n};\n`, reached(true, ["stats"], [], ["projection"]), formsRead(["annotation", "member"], [])),
+      ],
+    },
+    {
+      id: "UNLISTED-FORMS",
+      label:
+        "a node that exposes the projection in a parent no resolvable form names - an apparent member (constructor, a callable carrier's call), an undeclared element key, the arguments object, an object spread, a template, a yield, a throw, an export default, an in test - is refused",
+      cases: [
+        reachForms("src/ui/census-forms-unlisted-constructor.ts", `${OBS_UI}export const kind = (reader: ObservationProjection): unknown => reader.constructor;\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["member: reader.constructor"])),
+        reachForms("src/ui/census-forms-unlisted-call.ts", `${OBS_UI}export const current = (source: { readonly current: () => ObservationProjection }): unknown => source.current.call(undefined);\n`, reached(true, [], [], ["current"]), formsRead(["annotation"], ["member: source.current.call", "return: (source: { readonly current: () => ObservationProjection }): unknown => source.current.call(undefined)"])),
+        reachForms("src/ui/census-forms-unlisted-element.ts", `${OBS_UI}export const current = (source: { readonly current: () => ObservationProjection }): unknown => source.current["call"](undefined);\n`, reached(true, [], [], ["current"]), formsRead(["annotation"], ["element: source.current[\"call\"]", "return: (source: { readonly current: () => ObservationProjection }): unknown => source.current[\"call\"](undefined)"])),
+        reachForms(
+          "src/ui/census-forms-unlisted-arguments.ts",
+          `${OBS_UI}export function forget(reader: ObservationProjection): void {\n  void reader;\n  (arguments[0] as { markStale(input: unknown): void }).markStale({});\n}\n`, reached(true, [], [], ["reader"]), formsRead(["annotation", "test"], ["arguments: arguments[0]"]),
+        ),
+        reachForms("src/ui/census-forms-unlisted-spread.ts", `${OBS_UI}export const copy = (reader: ObservationProjection): object => ({ ...reader });\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["unlisted SpreadAssignment: ...reader"])),
+        reachForms("src/ui/census-forms-unlisted-template.ts", `${OBS_UI}export const text = (reader: ObservationProjection): string => \`\${reader}\`;\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["unlisted TemplateSpan: reader}`"])),
+        reachForms("src/ui/census-forms-unlisted-yield.ts", `${OBS_UI}export function* each(reader: ObservationProjection): Generator<ObservationProjection> {\n  yield reader;\n}\n`, reached(true, [], [], ["each", "reader"]), formsRead(["annotation", "lib-generic"], ["unlisted YieldExpression: yield reader"])),
+        reachForms("src/ui/census-forms-unlisted-throw.ts", `${OBS_UI}export function fail(reader: ObservationProjection): never {\n  throw reader;\n}\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["unlisted ThrowStatement: throw reader;"])),
+        reachForms("src/ui/census-forms-unlisted-default.ts", `${OBS_UI}declare const reader: ObservationProjection;\nexport default reader;\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["unlisted ExportAssignment: export default reader;"])),
+        reachForms("src/ui/census-forms-unlisted-in.ts", `${OBS_UI}export const stale = (reader: ObservationProjection): boolean => "markStale" in reader;\n`, reached(true, [], [], ["reader"]), formsRead(["annotation"], ["unlisted BinaryExpression: \"markStale\" in reader"])),
       ],
     },
   ],
@@ -1952,6 +2602,8 @@ export interface NonRenderReader {
   readonly type: readonly string[];
   /** Why the module never reads the projection on a redraw. */
   readonly reason: string;
+  /** The uses readForms refuses in it, site by site, as readForms writes them (sorted, duplicates kept); absent, none. */
+  readonly refused?: readonly string[];
 }
 const STATES_RELATE = "it references the class only in the statement type relate accepts (Parameters<ObservationProjection['relate']>[0]), never in a value position; the host admits what it states";
 /**
@@ -1971,7 +2623,13 @@ export const NON_RENDER: Readonly<Record<string, NonRenderReader>> = {
   "src/workbench/claude-topology.ts": { value: [], type: ["relate"], reason: `the Claude topology adapter: ${STATES_RELATE}` },
   "src/workbench/control-tool.ts": { value: ["ingest", "query"], type: [], reason: "the control tool's receipt recorder: on a control call it reads the target node and records the receipt phase as an event of it" },
   "src/workbench/control.ts": { value: ["query", "relations"], type: [], reason: "decideControl: the decision a control request runs, reading the target node and its relations" },
-  "src/workbench/detached-control.ts": { value: [], type: [], reason: "the detached control seam: it holds the projection in its deps type and references no member" },
+  "src/workbench/detached-control.ts": {
+    value: [],
+    type: [],
+    reason:
+      "the detached control seam: it holds the projection in its deps type and references no member the reach scan reads; its wiring check probes the deps' projection for its query and relations methods by reflection (method: Reflect.get over unknown) and type-tests the input and its deps (plain over unknown) - four erasing flows readForms refuses, named site by site",
+    refused: ['argument: method(input.deps.projection, "query")', 'argument: method(input.deps.projection, "relations")', "argument: plain(input)", "argument: plain(input.deps)"],
+  },
   "src/workbench/detached-observer.ts": {
     value: ["markStale", "refresh", "relate"],
     type: ["refresh", "relate"],

@@ -38,8 +38,36 @@
  * measured: the REACH and NAMES paragraphs below name each planted form, and what the scans do not read is named
  * (R-ERASED-ACCESS widened to a typed holder's erasing cast, Reflect, prototype lookup and Object property call; R-DEEP-CARRIER).
  *
- * MEASURED (read-only, by the cutting seat, 2026-10-27, at trunk 79dadb2 and before it at db2d796; trunk e61eaec, the base
- * this cut records, changes no src file after 79dadb2; src there differs from 3223843, cut #2's measured trunk, by the wb-4ap.17 landing (src/index.ts,
+ * CUT #4 (the respin of refusal #3, gate run g10-gate-s116; rule 19(c) engaged, the enumerate-the-resolvable form bound by
+ * refusal #3's CUT #4 FORM and orchestrator ruling R-B33). Cut #3's shape is frozen: every title, row, pin, plant case,
+ * NON_RENDER entry and residual family stands (0 pins removed or changed; R-DEEP-CARRIER gains one pin, R-ERASED-ACCESS and
+ * R-DEEP-CARRIER restate their labels, COVERAGE, NON-RENDER, RENDER TOUCHES, ANCHOR and rule 16 restate their titles to what
+ * is read). U1(a) and guard (A): the reach scan is closed by the forms judge readForms, which visits every node of every read
+ * module whose checker type exposes the projection and reads it in exactly one of RESOLVABLE_FORMS - a literal roster this
+ * file pins, value side member, element, callee, argument, initializer, assignment, property, return, cast, array-element,
+ * spread-array, wrap, test, iteration, await and statement, type side annotation, type-part, keyof, constraint, heritage,
+ * indexed and lib-generic - or refuses it with a row naming the site. A flow is judged against the type it flows into (a
+ * src callee's parameter as its own body sees it, a type parameter through its constraint; a library parameter only as a
+ * container's own element type in TypeScript's default library), a callback's own parameters and a holder's paths
+ * included, and a call through a signature with no body of its own or a member standing in for another's signature is
+ * judged where the body that runs is declared. So a generic accessor or alias over an unconstrained type parameter (a
+ * module's own, a destructuring one, a cross-module utility, an explicit type argument, a src generic class; a generic
+ * indexed-access alias, an infer-conditional alias, a src generic interface), a structural seam, an erasing cast, variable,
+ * field, default or return, a library parameter (Reflect, Object, JSON, Promise, call, bind), a callback or holder that
+ * hides it, a dispatch through an interface method, a function type, an override, an implementation, an object literal's
+ * method or a setter, and every parent no form names is refused, never read as reaching nothing (REACH RESOLVABLE-FORMS
+ * quiet; GENERIC-ACCESSORS, GENERIC-ALIASES, ERASING-FLOWS, LIBRARY-FLOWS, RELAYS, DISPATCH and UNLISTED-FORMS refused).
+ * U1(b): the class's own module is read outside the class's name and instance members (a module function and a public
+ * static member are read: REACH CLASS-MODULE), and RENDER TOUCHES judges it with the other SURFACES modules; the instance
+ * members stay judged by REPROJECTION's runtime reading and MEMBERS. F1 (a typed holder handed to a structural seam of the
+ * module's own) is refused (ERASING-FLOWS). F2 (bd's other requirement fields beside the judged title and filing) is pinned
+ * absent (ANCHOR). Measured on src: readForms refuses exactly four uses, all in the non-render reader detached-control (its
+ * wiring check's reflective method probes of query and relations, and its plain type-tests of the input and its deps, each
+ * over unknown), now named in its NON_RENDER entry site by site - cut #3 read that module as referencing no member, true of
+ * the reach scan's member reading and silent on these four erasing flows.
+ *
+ * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
+ * trunk b92d7a1, the base this cut merges, which changes no src file after e61eaec and so none after 79dadb2; src there differs from 3223843, cut #2's measured trunk, by the wb-4ap.17 landing (src/index.ts,
  * src/workbench/forge-operation-observer.ts), the wb-jwc.4 landing (src/workbench/providers/reactivefiber.ts) and the wb-3ht.1
  * landing (src/workbench/hyperunix-observer.ts: a consumed-fields table that references no projection member), and the live
  * reach map over every src module reads byte for byte the same under cut #2's reach scan and this cut's, at both trunks): src holds 116 TypeScript modules and none spells the program (the mention judge below:
@@ -52,7 +80,10 @@
  * the argument of Parameters or ReturnType (a statement or a result type: the type scan reads them as keeping no member,
  * the reach scan as type references of relate and refresh). ObservationProjection's public
  * instance members are its 18 methods: twelve copy-out reads and six admissions (disconnect, ingest, markStale, reconnect,
- * refresh, relate). No src file is edited by this cut.
+ * refresh, relate). The forms judge reads the same 24 modules, each in the forms LIVE_FORMS pins (annotation, argument,
+ * callee, indexed, initializer, lib-generic, member, property, statement, type-part), and refuses four uses, all four in
+ * detached-control (above); the class's own module reads nothing outside its instance members. No src file is edited by
+ * this cut.
  *
  * THE WORLD. Every subject renders in a fresh world: a real ObservationProjection holding recorded observations (five
  * snapshots, one event-only node, five typed relations of every kind, a cycle among them) behind a recording proxy (the
@@ -97,7 +128,11 @@
  * holds the projection is no carrier itself (R-DEEP-CARRIER past the bound); the access forms ACCESS-FORMS plants (a binding
  * or assignment destructuring, an element access, a typeof query, an indexed access, a statement or result type); the key
  * forms KEY-FORMS and KEY-HOLDERS plant, each read through the checker's type of the key; and the keys UNRESOLVED-KEYS
- * plants, each failing closed as <unresolved-key>. What it does not read is named: R-ERASED-ACCESS and R-DEEP-CARRIER.
+ * plants, each failing closed as <unresolved-key>. The forms judge (cut #4) is measured the same way: RESOLVABLE-FORMS
+ * plants a node in each of RESOLVABLE_FORMS and reads it quiet; GENERIC-ACCESSORS, GENERIC-ALIASES, ERASING-FLOWS,
+ * LIBRARY-FLOWS, RELAYS, DISPATCH and UNLISTED-FORMS plant each refused form and read its refusal row; CLASS-MODULE plants a
+ * class module of its own and reads a module function and a static member while the instance members read nothing. What
+ * neither scan reads is named: R-ERASED-ACCESS and R-DEEP-CARRIER.
  * NAMES, "issues no event admission and no invocation": planted classes and interfaces measure the member readers on the
  * name forms CLASS-NAME-FORMS plants, the member kinds CLASS-MEMBER-KINDS plants, the declaration shapes CLASS-MEMBER-SHAPES
  * plants, the interface forms INTERFACE-FORMS plants and the heritage and signature shapes INTERFACE-HERITAGE plants, and
@@ -108,22 +143,27 @@
  * member of it in a value or a type position, or declare or reference a declaration that carries it: typed as it, as a
  * reader of it, or as a container, a getter, a method or a function that yields it, to the depth bound), are exactly the SURFACES modules
  * and the NON_RENDER readers, so the first new module that reaches the projection through a typed name (an APO view
- * included) reds here until a SURFACES row judges it or NON_RENDER names and reasons it. NON-RENDER (armed): each
- * NON_RENDER reader references exactly the members its entry names (a key read through its type, an unresolved one as
- * <unresolved-key>, which no entry names), and none is in the runtime import closure of the
+ * included) reds here until a SURFACES row judges it or NON_RENDER names and reasons it; a module that makes a use the
+ * forms judge refuses counts as reaching it (the class's own module is judged by RENDER TOUCHES instead). NON-RENDER
+ * (armed): each NON_RENDER reader references exactly the members its entry names (a key read through its type, an
+ * unresolved one as <unresolved-key>, which no entry names) and makes exactly the refused uses its entry names, site by
+ * site (detached-control's four), and none is in the runtime import closure of the
  * SURFACES modules (the imports that run a module, static or literal dynamic, followed transitively; type-only ones run
- * nothing). RENDER TOUCHES: the SURFACES modules reference read members only, in value and type positions, as the checker
- * resolves them, every key through its type and <unresolved-key> failing closed (the static half of the SURFACES rows'
- * runtime reading). MEMBERS: the projection's public instance members,
+ * nothing). RENDER TOUCHES: the SURFACES modules, the class's own module outside its name and instance members included,
+ * reference read members only, in value and type positions, as the checker resolves them, every key through its type and
+ * <unresolved-key> failing closed, and make no use the forms judge refuses (the static half of the SURFACES rows' runtime
+ * reading). FORMS: RESOLVABLE_FORMS equals the forms RESOLVABLE-FORMS's quiet cases stand in (none refused), src's
+ * refused uses equal the NON_RENDER entries' rows, src's nodes stand in the forms LIVE_FORMS pins, and every module the
+ * reach scan reads holds a node the forms judge reads. MEMBERS: the projection's public instance members,
  * as the checker reads the class, are exactly READ_MEMBERS and ADMISSION_MEMBERS, the ADMISSION row plants every admission
  * member and REPROJECTION reads every read member. EFFECT CLASSES: the plants invoke every effect class the registry's
  * CapabilityDescriptor declares (its union read literally; any other shape reads none and reds). DIALOG ACTIONS: the plants
  * perform every WorkflowDialogActions member, as the checker reads the interface. ABSENCE WALK: no src module (path and
  * text) spells the program, at a file floor.
  * OUTSIDE ANCHORS (each a source of truth outside this file and its roster): src (COVERAGE, NON-RENDER, RENDER TOUCHES,
- * MEMBERS, EFFECT CLASSES, DIALOG ACTIONS) and the bead's export row (every table quote, the filing's bytes, the title's
- * bytes, the judged statement the quotes and their pinned junctions compose right after the requirement id, the two
- * tilings, the program's two spellings in the title), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class
+ * FORMS, MEMBERS, EFFECT CLASSES, DIALOG ACTIONS) and the bead's export row (every table quote, the filing's bytes, the
+ * title's bytes, the judged statement the quotes and their pinned junctions compose right after the requirement id, the
+ * two tilings, the program's two spellings in the title, the absence of bd's other requirement fields), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class
  * plant or a dialog-action plant removed from the helper, the frozen literal and the roster together still reds.
  * RESIDUALS (named, each with its pinned quiet row): R-DEFERRED-EFFECT an invocation, an admission or a host effect a
  * render schedules past the settle window - three rounds of immediates, so a timer of any delay, 0 ms included, can land
@@ -139,25 +179,34 @@
  * R-PARAPHRASE a paraphrase of the program or its abbreviation spelled with separators is not a mention (ABSENCE);
  * R-ERASED-ACCESS a module that reaches the projection only through an erased or structural type - a cast from unknown,
  * a structural interface of its own, Reflect, an any - reads as reaching nothing to the reach scan (REACH): COVERAGE
- * does not list it; and a typed holder's member reached through an erasing step - Reflect, a cast through unknown, a cast
- * to any, a prototype lookup, an Object property call - is no member reference: the module reaches through its holder alone, so RENDER TOUCHES and
- * NON-RENDER do not see the member; only a SURFACES row's runtime reading would judge either; R-DEEP-CARRIER a module that
- * only relays a value whose carrier nests past the depth bound, or an object type whose property holds the projection,
- * reads as reaching nothing (REACH; any access through such a value exposes its holder); R-RUNTIME-MEMBER a member patched onto
+ * does not list it, and no node of it exposes the projection, so the forms judge reads nothing there either; the erasure
+ * itself is refused where the value was erased, in the module that held it typed (ERASING-FLOWS, LIBRARY-FLOWS, RELAYS,
+ * DISPATCH), so in src no such module can be handed the projection without a refused row; and a typed holder's member
+ * reached through an erasing step - Reflect, a cast through unknown, a cast to any, a prototype lookup, an Object property
+ * call - is no member reference to the reach scan (the module reaches through its holder alone), while the forms judge
+ * refuses the erasing step (RENDER TOUCHES and NON-RENDER red on it); R-DEEP-CARRIER a module that only relays a value
+ * whose carrier nests past the depth bound, or an object type whose property holds the projection, reads as reaching
+ * nothing to the reach scan (REACH; any access through such a value exposes its holder), and the forms judge follows a
+ * holder through at most CARRIER_DEPTH + 1 held-path steps (a property, a library generic's type argument, an index
+ * signature, a call's result), each ending at a carrier the reach scan's test reads, and judges no flow of a value whose
+ * projection sits past that (the instance nine wrappers deep: R-DEEP-CARRIER's fourth case); R-RUNTIME-MEMBER a member patched onto
  * the class's prototype at run time is not read by the member readers, which read the declared class and interface
  * (NAMES).
  * NOT CLAIMED (edits of this file, its helper and the roster together): a plant row of IDENTITY, QUIET,
  * WRITE-ANY-ROUTE, OTHER-ROUTES, EVIDENCE-ABORTS, a READERS, REACH or NAMES row or a residual row removed with its
  * frozen-literal element and roster entry (no outside anchor names those plants); a case and its expected reading
  * re-authored together; the reach scan's key reading or its marker removed from the helper together with the REACH rows
- * that plant them (the src plants recorded with the cut are their falsifiers); an assertion narrowed in this file (the SURFACES rows' QUIET comparison cut to fewer fields
+ * that plant them, and a resolvable form or a refusal of the forms judge removed from the helper together with its REACH
+ * cases, RESOLVABLE_FORMS's element and the frozen literal (the src plants recorded with the cut are their falsifiers;
+ * LIVE_FORMS and src's refused uses anchor the forms src itself exercises); an assertion narrowed in this file (the SURFACES rows' QUIET comparison cut to fewer fields
  * stays green, since every real surface reads QUIET on every field, and the anchor's section reading widened back to
  * the whole row stays green on the clean export: the src and export plants recorded with the cut are those readings'
  * falsifiers); a NON_RENDER reason's prose (its member references and the closure are measured, its words are not); the
  * legacy (non-inspector) dialog frame, whose spinner and elapsed time read a clock by design and which reads no
  * observation beyond the window total.
  * FROZEN SHAPE (standing rule 16): the rule-16 row pins `${table}/${id}:${pins.length}` for every judged row, the NON_RENDER
- * entries, the residual families, the member sets, CARRIER_DEPTH and the marker as literals; test/fixtures/apo-rerender-roster.json holds every judged
+ * entries and their refused uses, the residual families, the member sets, CARRIER_DEPTH, the marker, RESOLVABLE_FORMS,
+ * REQUIREMENT_FIELDS and LIVE_FORMS as literals; test/fixtures/apo-rerender-roster.json holds every judged
  * row (table, id, label, SHA-256 of each case, test), the NON_RENDER entries, every registered test title and the residual
  * families, judged by this file's last row in order and both ways.
  *
@@ -182,6 +231,7 @@ import {
   EFFECT,
   EFFECT_CLASSES,
   type EffectClass,
+  type FormsReading,
   IDENTITY,
   INVOCATION,
   interfaceMembers,
@@ -201,8 +251,10 @@ import {
   READERS,
   RENDERS,
   RESIDUAL_FAMILIES,
+  RESOLVABLE_FORMS,
   type Reach,
   ROWS,
+  readForms,
   SURFACES,
   scanReaders,
   sourceProgram,
@@ -243,10 +295,13 @@ const STATEMENT = STATEMENT_PARTS.join("");
 const READER_WALK =
   "live: no typed reader (a Pick, an Omit or an indexed access over the class) in any src module keeps an admission member; the walk is every src module and reaches graph-view's reader";
 const COVERAGE =
-  "live (armed): every src module that reaches the projection - it names the class, references a member or holds a declaration that carries it, as the checker resolves names - is a SURFACES module or a named non-render reader";
-const NON_RENDER_ROW = "live (armed): each named non-render reader references exactly the members its entry names, and none is in the runtime import closure of the SURFACES modules";
+  "live (armed): every src module that reaches the projection - it names the class, references a member or holds a declaration that carries it, as the checker resolves names, or makes a use the forms judge refuses - is a SURFACES module or a named non-render reader";
+const NON_RENDER_ROW =
+  "live (armed): each named non-render reader references exactly the members its entry names and makes exactly the refused uses its entry names, site by site, and none is in the runtime import closure of the SURFACES modules";
 const RENDER_TOUCHES =
-  "live: the SURFACES modules reference read members of the projection only, in value and type positions, as the checker resolves them (every key through its type, an unresolved key failing closed)";
+  "live: the SURFACES modules, the class's own module outside its instance members included, reference read members of the projection only, in the forms the reach scan reads (every key through its type, an unresolved key failing closed), and make no use the forms judge refuses";
+const FORMS =
+  "live: the resolvable forms are exactly the forms the RESOLVABLE-FORMS row's quiet cases stand in, every src module's nodes that expose the projection stand in them or are refused, and src's refused uses are exactly the named non-render readers' rows";
 const MEMBERS =
   "live: the projection's public instance members, as the checker reads the class (the member kinds, declaration shapes and name forms NAMES plants), are exactly the read and admission members, each planted or re-projected";
 const CLASSES = "live: the invocation plants invoke every effect class the registry's descriptor declares";
@@ -254,8 +309,12 @@ const ACTIONS =
   "live: the effect plants perform every WorkflowDialogActions member, as the checker reads the interface (the name forms, heritage and signature shapes NAMES plants; signatures fail closed)";
 const ABSENCE_WALK = "live: no src module spells the program, by path or text; the walk is every src module";
 const ANCHOR =
-  "anchor: every table quote stands once in its section of the bead's export row (the title or the owner filing, each pinned byte for byte), the quotes with every junction between them pinned compose the judged statement contiguously after the requirement id, and the quotes tile the acceptance (.beads/issues.jsonl, wb-021.5)";
-const SLOW = new Set(["SURFACES INSPECTOR", "SURFACES DIALOG", "SURFACES REPROJECTION", READER_WALK, COVERAGE, NON_RENDER_ROW, RENDER_TOUCHES, MEMBERS, ACTIONS, ABSENCE_WALK]);
+  "anchor: every table quote stands once in its section of the bead's export row (the title or the owner filing, each pinned byte for byte), the quotes with every junction between them pinned compose the judged statement contiguously after the requirement id, the quotes tile the acceptance, and the row holds no other requirement field (description, design, acceptance criteria) (.beads/issues.jsonl, wb-021.5)";
+const SLOW = new Set(["SURFACES INSPECTOR", "SURFACES DIALOG", "SURFACES REPROJECTION", READER_WALK, COVERAGE, NON_RENDER_ROW, RENDER_TOUCHES, FORMS, MEMBERS, ACTIONS, ABSENCE_WALK]);
+/** bd's requirement fields beside the title and the notes: the export row holds none (F2 of refusal #3), so the title and the owner filing are the whole requirement. */
+const REQUIREMENT_FIELDS: readonly string[] = ["acceptance_criteria", "description", "design"];
+/** The forms src's nodes that expose the projection stand in, as measured at the cut (an outside anchor of RESOLVABLE_FORMS: a form the judge stops reading in src reds FORMS). */
+const LIVE_FORMS: readonly string[] = ["annotation", "argument", "callee", "indexed", "initializer", "lib-generic", "member", "property", "statement", "type-part"];
 const READ_SET: ReadonlySet<string> = new Set(READ_MEMBERS);
 
 interface Roster {
@@ -267,7 +326,14 @@ interface Roster {
 interface ExportRow {
   readonly title: string;
   readonly notes: string;
+  /** The requirement fields (REQUIREMENT_FIELDS) the row holds with a non-empty value. */
+  readonly requirementFields: readonly string[];
 }
+const requirementFieldsOf = (row: object): string[] =>
+  Object.entries(row)
+    .filter(([field, value]) => REQUIREMENT_FIELDS.includes(field) && value !== "" && value !== null && value !== undefined)
+    .map(([field]) => field)
+    .sort();
 const read = (rel: string): string => readFileSync(join(ROOT, rel), "utf8");
 
 /** git's tracked list of src/, held equal to an independent filesystem walk by the walking rows. */
@@ -301,6 +367,11 @@ const liveReach = (): Map<string, Reach> => {
   liveReachMemo ??= projectionReach(live(), ROOT, CLASS_MODULE, CLASS_NAME, srcModules());
   return liveReachMemo;
 };
+let liveFormsMemo: Map<string, FormsReading> | undefined;
+const liveForms = (): Map<string, FormsReading> => {
+  liveFormsMemo ??= readForms(live(), ROOT, CLASS_MODULE, CLASS_NAME, srcModules());
+  return liveFormsMemo;
+};
 /** Every REACH and NAMES plant, by repo-relative path: one program holds them all, in memory. */
 function plantModules(): Record<string, string> {
   const plants: Record<string, string> = {};
@@ -326,7 +397,7 @@ function exportRow(): ExportRow {
     const row: unknown = JSON.parse(line);
     if (row === null || typeof row !== "object" || !("id" in row) || row.id !== BEAD) continue;
     if (!("title" in row) || typeof row.title !== "string" || !("notes" in row) || typeof row.notes !== "string") throw new Error(`the ${BEAD} export row has no title or notes`);
-    rows.push({ title: row.title, notes: row.notes });
+    rows.push({ title: row.title, notes: row.notes, requirementFields: requirementFieldsOf(row) });
   }
   const [only] = rows;
   if (rows.length !== 1 || !only) throw new Error(`the tracked bead export holds ${rows.length} ${BEAD} rows; the anchor reads exactly one`);
@@ -383,7 +454,11 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
   }
   for (const entry of REACH.rows) {
     it(`REACH ${entry.id}`, { timeout: WALK_BUDGET_MS }, () => {
-      for (const item of entry.cases) expect(projectionReach(planted(), ROOT, CLASS_MODULE, CLASS_NAME, [item.module]).get(item.module) ?? null, item.module).toEqual(item.expect);
+      for (const item of entry.cases) {
+        const classModule = item.classModule ?? CLASS_MODULE;
+        expect(projectionReach(planted(), ROOT, classModule, CLASS_NAME, [item.module]).get(item.module) ?? null, item.module).toEqual(item.expect);
+        if (item.forms !== undefined) expect(readForms(planted(), ROOT, classModule, CLASS_NAME, [item.module]).get(item.module) ?? null, `${item.module}: its forms`).toEqual(item.forms);
+      }
     });
   }
   for (const entry of NAMES.rows) {
@@ -407,8 +482,10 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
 
   it(COVERAGE, { timeout: WALK_BUDGET_MS }, () => {
     const reach = liveReach();
+    const refusing = [...liveForms()].filter(([, reading]) => reading.refused.length > 0).map(([module]) => module);
+    const reaching = [...new Set([...reach.keys(), ...refusing])].filter(module => module !== CLASS_MODULE).sort();
     const judged = surfaceModules().filter(module => module !== CLASS_MODULE);
-    expect([...reach.keys()].sort(), "the src modules that reach the projection equal the SURFACES modules and the named non-render readers").toEqual([...judged, ...Object.keys(NON_RENDER)].sort());
+    expect(reaching, "the src modules that reach the projection or make a refused use of it equal the SURFACES modules and the named non-render readers").toEqual([...judged, ...Object.keys(NON_RENDER)].sort());
     expect(surfaceModules().filter(module => !existsSync(join(ROOT, module))), "every SURFACES module exists").toEqual([]);
     // Liveness: the dialog reaches the projection through the inspector model's holder only (it never names the class), and graph-view through its typed reader.
     expect(reach.get("src/ui/workflow-dialog.ts"), "the dialog's reach").toEqual({ names: false, value: ["window"], type: [], holders: ["projection"] });
@@ -417,12 +494,15 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
 
   it(NON_RENDER_ROW, { timeout: WALK_BUDGET_MS }, () => {
     const reach = liveReach();
+    const forms = liveForms();
+    const refusedOf = (rows: readonly string[]): string => (rows.length > 0 ? ` | refused ${rows.join("; ")}` : "");
     const measured = (module: string): string => {
       const found = reach.get(module);
-      return found ? `${module}: ${found.value.join(",")} | ${found.type.join(",")}` : `${module}: <reaches nothing>`;
+      const refused = refusedOf(forms.get(module)?.refused ?? []);
+      return found ? `${module}: ${found.value.join(",")} | ${found.type.join(",")}${refused}` : `${module}: <reaches nothing>${refused}`;
     };
-    expect(Object.keys(NON_RENDER).map(measured), "each non-render reader's member references (value | type), as measured").toEqual(
-      Object.entries(NON_RENDER).map(([module, entry]) => `${module}: ${entry.value.join(",")} | ${entry.type.join(",")}`),
+    expect(Object.keys(NON_RENDER).map(measured), "each non-render reader's member references (value | type) and refused uses, as measured").toEqual(
+      Object.entries(NON_RENDER).map(([module, entry]) => `${module}: ${entry.value.join(",")} | ${entry.type.join(",")}${refusedOf(entry.refused ?? [])}`),
     );
     const roots = [...new Set(surfaceModules())];
     const runtime = moduleClosure(live(), ROOT, roots, false);
@@ -434,14 +514,35 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
 
   it(RENDER_TOUCHES, { timeout: WALK_BUDGET_MS }, () => {
     const reach = liveReach();
-    const judged = surfaceModules().filter(module => module !== CLASS_MODULE);
+    const forms = liveForms();
+    // The class's own module is a SURFACES module (REPROJECTION): read outside its name and instance members, as every other render module is read.
+    const judged = surfaceModules();
     const references = judged.flatMap(module => {
       const found = reach.get(module);
       return [...(found?.value ?? []), ...(found?.type ?? [])].filter(member => !READ_SET.has(member)).map(member => `${module}: ${member}`);
     });
     expect(references, "admission members a render module references").toEqual([]);
-    // Non-vacuity: every render module references some read member in a value position.
-    expect(judged.filter(module => (reach.get(module)?.value.length ?? 0) === 0), "render modules referencing no member").toEqual([]);
+    expect(
+      judged.flatMap(module => (forms.get(module)?.refused ?? []).map(row => `${module}: ${row}`)),
+      "uses the forms judge refuses in a render module",
+    ).toEqual([]);
+    // Non-vacuity: every render module but the class's own references some read member in a value position, and the forms judge reads graph-view's reader passed on as an argument.
+    expect(judged.filter(module => module !== CLASS_MODULE && (reach.get(module)?.value.length ?? 0) === 0), "render modules referencing no member").toEqual([]);
+    expect(forms.get("src/workbench/graph-view.ts"), "graph-view's forms").toEqual({ forms: ["annotation", "argument", "lib-generic", "member"], refused: [] });
+  });
+
+  it(FORMS, { timeout: WALK_BUDGET_MS }, () => {
+    const quiet = REACH.rows.find(row => row.id === "RESOLVABLE-FORMS")?.cases ?? [];
+    expect([...new Set(quiet.flatMap(item => item.forms?.forms ?? []))].sort(), "the forms the quiet cases stand in are the resolvable forms, exactly").toEqual([...RESOLVABLE_FORMS].sort());
+    expect(quiet.filter(item => item.forms?.refused.length !== 0).map(item => item.module), "quiet cases refused (or unread)").toEqual([]);
+    const forms = liveForms();
+    expect(
+      [...forms].flatMap(([module, reading]) => reading.refused.map(row => `${module}: ${row}`)),
+      "src's refused uses are the named non-render readers' rows",
+    ).toEqual(Object.entries(NON_RENDER).flatMap(([module, entry]) => (entry.refused ?? []).map(row => `${module}: ${row}`)));
+    expect([...new Set([...forms.values()].flatMap(reading => reading.forms))].sort(), "the forms src's nodes stand in, as measured").toEqual([...LIVE_FORMS]);
+    // Non-vacuity: every module the reach scan reads holds a node the forms judge reads.
+    expect([...liveReach().keys()].filter(module => !forms.has(module)), "modules that reach the projection with no node the forms judge reads").toEqual([]);
   });
 
   it(MEMBERS, { timeout: WALK_BUDGET_MS }, () => {
@@ -473,6 +574,9 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
 
   it(ANCHOR, () => {
     const row = exportRow();
+    expect(row.requirementFields, "the export row holds no other requirement field: the title and the owner filing are the whole requirement").toEqual([]);
+    // Non-vacuity: the same reading finds a requirement field a row holds, and skips an empty one.
+    expect(requirementFieldsOf({ title: "t", notes: "n", description: "A Pi view refresh may trigger an effect.", design: "" }), "a planted row's requirement fields").toEqual(["description"]);
     const filing = filingOf(row.notes);
     expect(filing.startsWith(FILING_HEADER), "the owner filing's header paragraph opens the notes").toBe(true);
     expect(filing.split("\n\n")[1]?.startsWith(FILING_CITATION), "its second paragraph is the acceptance, opened by the authority citation").toBe(true);
@@ -499,7 +603,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     }
   });
 
-  it("rule 16: every judged row, the non-render readers, the residual families, the member sets and the reach scan's depth bound and marker are frozen at their measured shape", () => {
+  it("rule 16: every judged row, the non-render readers and their refused uses, the residual families, the member sets, the reach scan's depth bound and marker, the resolvable forms, the requirement fields and src's forms are frozen at their measured shape", () => {
     expect(ROWS.map(entry => `${entry.table}/${entry.id}:${entry.pins.length}`)).toEqual([
       "SURFACES/GRAPH-VIEW:3",
       "SURFACES/TIMELINE:2",
@@ -541,7 +645,16 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "REACH/KEY-HOLDERS:9",
       "REACH/UNRESOLVED-KEYS:9",
       "REACH/R-ERASED-ACCESS:9",
-      "REACH/R-DEEP-CARRIER:3",
+      "REACH/R-DEEP-CARRIER:4",
+      "REACH/RESOLVABLE-FORMS:8",
+      "REACH/GENERIC-ACCESSORS:6",
+      "REACH/GENERIC-ALIASES:4",
+      "REACH/CLASS-MODULE:3",
+      "REACH/ERASING-FLOWS:9",
+      "REACH/LIBRARY-FLOWS:8",
+      "REACH/RELAYS:13",
+      "REACH/DISPATCH:9",
+      "REACH/UNLISTED-FORMS:10",
       "NAMES/CLASS-NAME-FORMS:6",
       "NAMES/CLASS-MEMBER-KINDS:9",
       "NAMES/CLASS-MEMBER-SHAPES:10",
@@ -565,6 +678,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "src/workbench/hyperunix-observer.ts:0+1",
       "src/workbench/reactivefiber-observer.ts:0+1",
     ]);
+    expect(Object.entries(NON_RENDER).flatMap(([module, entry]) => (entry.refused ? [`${module}:${entry.refused.length}`] : []))).toEqual(["src/workbench/detached-control.ts:4"]);
     expect(Object.entries(RESIDUAL_FAMILIES).map(([family, members]) => `${family}:${members.join(",")}`)).toEqual([
       "R-DEFERRED-EFFECT:INVOCATION R-DEFERRED-EFFECT",
       "R-SIDE-CHANNEL:EFFECT R-SIDE-CHANNEL",
@@ -577,7 +691,18 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "R-DEEP-CARRIER:REACH R-DEEP-CARRIER",
       "R-RUNTIME-MEMBER:NAMES R-RUNTIME-MEMBER",
     ]);
-    expect([READ_MEMBERS.join(","), ADMISSION_MEMBERS.join(","), EFFECT_CLASSES.join(","), Object.keys(ACTION_EFFECTS).join(","), String(RENDERS), String(CARRIER_DEPTH), UNRESOLVED_KEY]).toEqual([
+    expect([
+      READ_MEMBERS.join(","),
+      ADMISSION_MEMBERS.join(","),
+      EFFECT_CLASSES.join(","),
+      Object.keys(ACTION_EFFECTS).join(","),
+      String(RENDERS),
+      String(CARRIER_DEPTH),
+      UNRESOLVED_KEY,
+      RESOLVABLE_FORMS.join(","),
+      REQUIREMENT_FIELDS.join(","),
+      LIVE_FORMS.join(","),
+    ]).toEqual([
       "aggregate,aggregateStats,events,identityRefusals,indexOf,query,relationRevision,relations,relationsPage,stats,truncation,window",
       "disconnect,ingest,markStale,reconnect,refresh,relate",
       "read,write,external,unknown",
@@ -585,6 +710,9 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "4",
       "3",
       "<unresolved-key>",
+      "member,element,callee,argument,initializer,assignment,property,return,cast,array-element,spread-array,wrap,test,iteration,await,statement,annotation,type-part,keyof,constraint,heritage,indexed,lib-generic",
+      "acceptance_criteria,description,design",
+      "annotation,argument,callee,indexed,initializer,lib-generic,member,property,statement,type-part",
     ]);
   });
 
