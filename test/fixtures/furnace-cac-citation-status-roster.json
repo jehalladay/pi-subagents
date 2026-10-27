@@ -1,0 +1,1706 @@
+{
+ "bead": "wb-dqf.2",
+ "producer": {
+  "furnace": {
+   "repository": "Furnace",
+   "checkout": "/workplace/jehallad/AgentEcosystem/ForgeWorkspaces/PrimaryInstallation/src/Furnace",
+   "sha": "0f791db71b9d96ba0c5d85cadbb566e09d3ea986",
+   "headSha": "05d60599ca7a0df91b78f9b13cf65810f3cc2cc8",
+   "headBlobsEqual": true,
+   "dir": "docs/programs/cac-execution-assurance-2026-10-18",
+   "readmeBlob": "2fb1fb0db741eb92e788f5f569af1d57ee6de7e5",
+   "contractsBlob": "ab9dbc0004543a7e66d4b8c6fbcc5285ec09c73f",
+   "readme3": "**2026-10-18 · Design-only adapter and correctness investigation.** Furnace owns attempt lifecycle, process supervision, retry/crash recovery, resource admission and execution logs. Beads owns task status and readiness. CAC does not create a second scheduler, status ledger or host.",
+   "readme12": "[Compositional Autonomous Computation](https://github.com/jehalladay/research/tree/main/programs/compositional-autonomous-computation) provides finite contract/refinement vocabulary. Claims about asynchronous attempt semantics are *targets for proof/measurement* and are not established by finite sequential theorems.",
+   "contracts3": "## Proposed source-owned references (not shipped)",
+   "contracts4": "\\`FurnaceAttemptCapabilityV0\\`: formula/task ref and Beads authority ID, attempt ID, executor identity and version, scope/principal, invocation environment and input digest, supervision/retry/idempotency assumptions, resource and time budget, emitted logs/events, outcome/uncertainty, native records and version.",
+   "contracts6": "\\`{{record-2:spelling}}\\`: which attempt state/log fields are exposed, resource counters, admitted client decisions and visibility policy. Distinguish attempt success from **verified task correctness**; a zero exit code alone may not prove the task's semantic goal."
+  }
+ },
+ "constants": {
+  "needles": [
+   "{{record-2:stem}}",
+   "FurnaceAttemptCapability",
+   "cac-execution",
+   "execution-assurance"
+  ],
+  "program": "cac-execution-assurance-2026-10-18",
+  "citation": "{{record-2:pattern}}|Furnace[\\s_-]*Attempt[\\s_-]*Capability|cac[\\s_-]*execution|execution[\\s_-]*assurance",
+  "requirementId": "\\bFURNACE-CAC-EXECUTION-ASSURANCE-R\\d+\\b",
+  "designOnly": "design-only",
+  "recordStatus": [
+   "proposed, not shipped",
+   "proposed-not-shipped",
+   "Proposed source-owned references (not shipped)"
+  ],
+  "asyncStatus": [
+   "targets for proof/measurement",
+   "targets-for-proof"
+  ],
+  "gradingPatterns": [
+   "(?<![\\w-])design-only(?![\\w-])",
+   "(?<![\\w-])proposed,\\s+not\\s+shipped(?![\\w-])",
+   "(?<![\\w-])proposed-not-shipped(?![\\w-])",
+   "(?<![\\w-])Proposed\\s+source-owned\\s+references\\s+\\(not\\s+shipped\\)(?![\\w-])",
+   "(?<![\\w-])targets\\s+for\\s+proof\\/measurement(?![\\w-])",
+   "(?<![\\w-])targets-for-proof(?![\\w-])"
+  ],
+  "statusNegation": [
+   "\\b(?:not|never|nor|no|isn't|aren't|wasn't|weren't)\\b",
+   "^\\W*(?:no longer|no more|any ?more)\\b"
+  ],
+  "records": [
+   {
+    "id": "attempt-capability",
+    "spelling": "FurnaceAttemptCapabilityV0",
+    "pattern": "Furnace[\\s_-]*Attempt[\\s_-]*Capability(?:[\\s_-]*V0)?"
+   },
+   {
+    "id": "{{record-2:id}}",
+    "spelling": "{{record-2:spelling}}",
+    "pattern": "{{record-2:pattern}}(?:[\\s_-]*V0)?"
+   }
+  ],
+  "cacRecord": {
+   "id": "cac-record",
+   "spelling": "a CAC record",
+   "pattern": "\\bCAC[\\s_-]+records?\\b"
+  },
+  "async": {
+   "id": "async-semantics",
+   "spelling": "asynchronous-attempt-semantics claims",
+   "pattern": "\\b(?:asynchronous|async)(?:[\\s_-]+attempts?)?[\\s_-]+semantics\\b"
+  },
+  "exists": "\\b(?:exist(?:s|ing|ed)?|ship(?:s|ped|ping)?|wired|implement(?:s|ed)|available|land(?:s|ed)|released|published|live|supported|consum(?:es|ed)|vendored|exported|runs|enforce[sd])\\b",
+  "established": "\\b(?:establish(?:es|ed)?|proven|prove[sd]?|verified|guaranteed|demonstrated|confirmed)\\b",
+  "guard": [
+   "\\b(?:no|not|never|none|nothing|nor|neither|without|cannot|can't|isn't|aren't|wasn't|weren't|doesn't|don't|didn't|won't|hasn't|haven't|when|whenever|once|if|until|unless|before|would|will|may|might|could|should|proposed|planned|future|yet)\\b",
+   "^\\s*(?:nowhere|nothing|none|not|never|no)\\b"
+  ],
+  "clauseSplit": "semicolon or sentence end (.!? then whitespace) at parenthesis depth 0",
+  "labels": [
+   "shipped",
+   "experimental",
+   "planned",
+   "blocked"
+  ],
+  "label": "\\b(?:shipped|experimental|planned|blocked)\\b",
+  "carrierView": {
+   "unshown": [
+    "html",
+    "image",
+    "def",
+    "del",
+    "space",
+    "hr"
+   ],
+   "element": "^<\\/?[A-Za-z]",
+   "footnote": [
+    "\\[\\^[^\\]\\n]+\\]",
+    "^\\s*(?:>\\s*)*\\[\\^[^\\]\\n]+\\]:"
+   ]
+  },
+  "units": [
+   "^\\s*(?:>\\s*)*$",
+   "^\\s*(?:>\\s*)*(?:[-*+]|\\d{1,9}[.)])\\s+",
+   "^\\s{0,3}#{1,6}(?:\\s|$)",
+   "^\\s*\\|",
+   "^\\s{0,3}(?:`{3,}|~{3,})"
+  ],
+  "scopes": {
+   "documents": {
+    "id": "documents",
+    "word": "Any Pi document",
+    "under": "",
+    "extension": ".md",
+    "exclude": [
+     "test/"
+    ],
+    "walk": "docs"
+   },
+   "strings": {
+    "id": "strings",
+    "word": "surfaced string",
+    "under": "src",
+    "extension": "",
+    "exclude": [],
+    "walk": "src"
+   }
+  },
+  "floors": {
+   "documents": {
+    "files": 102,
+    "units": 6100
+   },
+   "strings": {
+    "files": 116,
+    "units": 93000
+   },
+   "workbench": 25,
+   "receipts": 47,
+   "descriptors": 68
+  },
+  "pinPaths": 707,
+  "pinUnits": 106318,
+  "quotes": {
+   "A1": "Any Pi document",
+   "A2": "or surfaced string",
+   "A3": "citing Furnace's cac-execution-assurance-2026-10-18 program",
+   "A4": "shall carry its recorded status verbatim",
+   "B1": "design-only",
+   "B2": "FurnaceAttemptCapabilityV0",
+   "B3": "and {{record-2:spelling}}",
+   "B4": "proposed, not shipped",
+   "B5": "asynchronous-attempt-semantics claims",
+   "B6": "targets for proof/measurement",
+   "B7": "never established results",
+   "Z1": "until such a citation exists",
+   "Z2": "zero mentions stays the passing state",
+   "M1": "git grep for {{record-2:stem}} / FurnaceAttemptCapability / cac-execution / execution-assurance",
+   "M2": "over the working tree returns zero hits",
+   "D1": "any future Pi citation",
+   "D2": "docs/workbench rows",
+   "D3": "TRACEABILITY entries",
+   "D4": "descriptor",
+   "D5": "or receipt strings",
+   "D6": "carries the design-only / proposed-not-shipped / targets-for-proof grading verbatim",
+   "E1": "never presents a CAC record",
+   "E2": "or its async-semantics claims",
+   "E3": "as shipped or established",
+   "N1": "NFR-08's shipped/experimental/planned/blocked labelling discipline",
+   "N2": "docs/workbench/02-atomic-requirements.md:60",
+   "N3": "applies to the citing row",
+   "K1": "the first citing change lands the wording",
+   "K2": "together with a census row binding it"
+  },
+  "pages": {
+   "nfr": "docs/workbench/02-atomic-requirements.md",
+   "nfrLine": 60,
+   "traceability": "docs/workbench/TRACEABILITY.md",
+   "featureMatrix": "docs/workbench/feature-matrix.md",
+   "workbench": "docs/workbench/",
+   "receipts": "docs/workbench/receipts/",
+   "identity": "src/workbench/identity.ts"
+  },
+  "schemaLiteral": "workflow-script/v1",
+  "filingPin": "b21beb0f89ad49500069403c4815d58f2825b414",
+  "producerPin": "0f791db71b9d",
+  "plants": {
+   "documents": {
+    "path": "docs/workbench/zz-wb-dqf.2-plant.md",
+    "text": "# Plant\n\nThe Furnace cac-execution-assurance-2026-10-18 program is design-only.\n\nPi reads the cac-execution-assurance-2026-10-18 program.\n\n{{record-2:spelling}} (design-only) ships in Pi.\n\n| cac-execution-assurance-2026-10-18 | design-only |\n\nThe cac-execution-assurance-2026-10-18 program (design-only) proved its asynchronous attempt semantics.\n"
+   },
+   "receipts": {
+    "path": "docs/workbench/receipts/zz-wb-dqf.2-plant.md",
+    "text": "# Plant\n\nThe Furnace cac-execution-assurance-2026-10-18 program is design-only.\n\nPi reads the cac-execution-assurance-2026-10-18 program.\n\n{{record-2:spelling}} (design-only) ships in Pi.\n\n| cac-execution-assurance-2026-10-18 | design-only |\n\nThe cac-execution-assurance-2026-10-18 program (design-only) proved its asynchronous attempt semantics.\n"
+   },
+   "strings": {
+    "path": "src/zz-wb-dqf.2-plant.ts",
+    "text": "// The Furnace cac-execution-assurance-2026-10-18 program is design-only.\nexport const NOTE = \"Pi reads the cac-execution-assurance-2026-10-18 program.\";\nexport const CLAIM = \"{{record-2:spelling}} (design-only) ships in Pi.\";\nexport type FurnaceAttemptCapabilityV0 = { readonly attempt: string };\n"
+   }
+  },
+  "compliant": "Pi cites the cac-execution-assurance-2026-10-18 program (design-only): {{record-2:spelling}} is proposed, not shipped, and its asynchronous attempt semantics are targets for proof/measurement.",
+  "qualifier": "(design-only; proposed, not shipped)",
+  "bound": [],
+  "residuals": {
+   "R-SCOPE": [
+    "Q1"
+   ],
+   "R-REQUIREMENT-ID": [
+    "Q2"
+   ],
+   "R-PARAPHRASE-CITE": [
+    "Q3"
+   ],
+   "R-NEGATION-DISTANCE": [
+    "Q4"
+   ],
+   "R-PARAPHRASE-EXISTS": [
+    "Q5"
+   ],
+   "R-GUARD-WORD": [
+    "Q6"
+   ],
+   "R-CROSS-CLAUSE": [
+    "Q7"
+   ],
+   "R-SUBJECT-SPELLING": [
+    "Q8"
+   ],
+   "R-SPLIT-SOURCE": [
+    "Q9"
+   ],
+   "R-ESCAPED-SPELLING": [
+    "Q10"
+   ],
+   "R-DOCUMENT-SCOPE": [
+    "Q11"
+   ],
+   "R-PROSE-LABEL": [
+    "Q12"
+   ],
+   "R-EVIDENCE-TAIL": [
+    "Q13"
+   ],
+   "R-CARRIER-PLACEMENT": [
+    "Q14"
+   ]
+  },
+  "secondRecord": {
+   "sha256": "1c0769bbbe60b3db2262951f9239f28ecded7785247417e461f4a01956935ae2",
+   "token": "\\{\\{record-2:([a-z]+)\\}\\}",
+   "forms": [
+    "spelling",
+    "stem",
+    "pattern",
+    "id",
+    "words",
+    "head",
+    "tail"
+   ]
+  }
+ },
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+  "the outside anchors: the bead's own row binds the rows, the pin quotes, the needles, the program, the records, the gradings, the subjects, the scopes, the labels and the predicate words; the producer block carries the filing's status lines",
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "B1",
+  "B2",
+  "B3",
+  "B4",
+  "B5",
+  "B6",
+  "B7",
+  "Z1",
+  "Z2",
+  "M1",
+  "M2",
+  "D1",
+  "D2",
+  "D3",
+  "D4",
+  "D5",
+  "D6",
+  "E1",
+  "E2",
+  "E3",
+  "N1",
+  "N2",
+  "N3",
+  "K1",
+  "K2",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "Q7",
+  "Q8",
+  "Q9",
+  "Q10",
+  "Q11",
+  "Q12",
+  "Q13",
+  "Q14",
+  "the registered tests and the reached pins equal the roster, in order and both ways"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "Any Pi document or surfaced string citing Furnace's cac-execution-assurance-2026-10-18 program shall carry its recorded status verbatim",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "scope": "documents",
+      "word": "Any Pi document",
+      "walk": "docs",
+      "walkIsTracked": true,
+      "floor": 102,
+      "unitFloor": 6100,
+      "liveness": {
+       "nfr08Line": 60,
+       "receiptTitles": true,
+       "readmeH1": true
+      },
+      "plantCiting": [
+       "docs/workbench/zz-wb-dqf.2-plant.md:3",
+       "docs/workbench/zz-wb-dqf.2-plant.md:5",
+       "docs/workbench/zz-wb-dqf.2-plant.md:7",
+       "docs/workbench/zz-wb-dqf.2-plant.md:9",
+       "docs/workbench/zz-wb-dqf.2-plant.md:11"
+      ],
+      "plantUnbound": 5,
+      "findings": [
+       "docs/workbench/zz-wb-dqf.2-plant.md:5 unqualified",
+       "docs/workbench/zz-wb-dqf.2-plant.md:7 record-status",
+       "docs/workbench/zz-wb-dqf.2-plant.md:7 exists:{{record-2:id}}",
+       "docs/workbench/zz-wb-dqf.2-plant.md:9 unlabelled",
+       "docs/workbench/zz-wb-dqf.2-plant.md:11 async-status",
+       "docs/workbench/zz-wb-dqf.2-plant.md:11 established:async-semantics"
+      ]
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "scope": "strings",
+      "word": "surfaced string",
+      "walk": "src",
+      "walkIsTracked": true,
+      "floor": 116,
+      "unitFloor": 93000,
+      "liveness": {
+       "schemaLiteralHolders": [
+        "src/workbench/identity.ts"
+       ],
+       "identityUnitKinds": [
+        "code",
+        "comment",
+        "string"
+       ]
+      },
+      "plantCiting": [
+       "src/zz-wb-dqf.2-plant.ts:1",
+       "src/zz-wb-dqf.2-plant.ts:2",
+       "src/zz-wb-dqf.2-plant.ts:3",
+       "src/zz-wb-dqf.2-plant.ts:4"
+      ],
+      "plantUnbound": 4,
+      "findings": [
+       "src/zz-wb-dqf.2-plant.ts:2 unqualified",
+       "src/zz-wb-dqf.2-plant.ts:3 record-status",
+       "src/zz-wb-dqf.2-plant.ts:3 exists:{{record-2:id}}",
+       "src/zz-wb-dqf.2-plant.ts:4 code"
+      ]
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "program": "cac-execution-assurance-2026-10-18",
+      "needles": [
+       "{{record-2:stem}}",
+       "FurnaceAttemptCapability",
+       "cac-execution",
+       "execution-assurance"
+      ],
+      "controls": [
+       {
+        "id": "program",
+        "causes": []
+       },
+       {
+        "id": "program-bare",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "title-case",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "underscore",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "upper",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "glued",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "line-wrapped",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "cac-execution-alone",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "execution-assurance-alone",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "record-without-v0",
+        "causes": []
+       },
+       {
+        "id": "requirement-id",
+        "causes": []
+       },
+       {
+        "id": "requirement-id-and-program",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "lowercase-id",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "epic-slug",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "other-cac",
+        "causes": []
+       },
+       {
+        "id": "plain-furnace",
+        "causes": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "designOnly": "design-only",
+      "recordStatus": [
+       "proposed, not shipped",
+       "proposed-not-shipped",
+       "Proposed source-owned references (not shipped)"
+      ],
+      "asyncStatus": [
+       "targets for proof/measurement",
+       "targets-for-proof"
+      ],
+      "controls": [
+       {
+        "id": "every-grading",
+        "causes": []
+       },
+       {
+        "id": "design-paraphrase",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "record-paraphrase",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "record-half-proposed",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "record-half-not-shipped",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "async-paraphrase",
+        "causes": [
+         "async-status"
+        ]
+       },
+       {
+        "id": "async-half",
+        "causes": [
+         "async-status"
+        ]
+       },
+       {
+        "id": "every-grading-missing",
+        "causes": [
+         "unqualified",
+         "record-status",
+         "async-status"
+        ]
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "design-only; FurnaceAttemptCapabilityV0 and {{record-2:spelling}} proposed, not shipped; asynchronous-attempt-semantics claims targets for proof/measurement, never established results",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "word": "design-only",
+      "controls": [
+       {
+        "id": "lower",
+        "causes": []
+       },
+       {
+        "id": "capital",
+        "causes": []
+       },
+       {
+        "id": "upper",
+        "causes": []
+       },
+       {
+        "id": "absent",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "unhyphenated",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "not",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "not-purely",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "no-longer",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "trailing-no-longer",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "prefixed",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "suffixed",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "negation-elsewhere",
+        "causes": []
+       },
+       {
+        "id": "one-of-two",
+        "causes": []
+       },
+       {
+        "id": "comment",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "link-destination",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "link-title",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "image-alt",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "definition",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "element",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "struck",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "footnote-label",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "hidden-citation",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "shown-link-text",
+        "causes": []
+       },
+       {
+        "id": "shown-code-span",
+        "causes": []
+       },
+       {
+        "id": "shown-emphasis",
+        "causes": []
+       },
+       {
+        "id": "src-string",
+        "causes": []
+       },
+       {
+        "id": "src-comment-neighbour",
+        "causes": [
+         "unqualified"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "subject": "FurnaceAttemptCapabilityV0",
+      "id": "attempt-capability",
+      "controls": [
+       {
+        "id": "graded",
+        "causes": []
+       },
+       {
+        "id": "ungraded",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "spaced",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "no-v0",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "graded-elsewhere",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "src-string",
+        "causes": []
+       },
+       {
+        "id": "src-string-ungraded",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "src-identifier",
+        "causes": [
+         "code"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "subject": "{{record-2:spelling}}",
+      "id": "{{record-2:id}}",
+      "controls": [
+       {
+        "id": "graded",
+        "causes": []
+       },
+       {
+        "id": "ungraded",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "spaced",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "no-v0",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "graded-elsewhere",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "src-string",
+        "causes": []
+       },
+       {
+        "id": "src-string-ungraded",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "src-identifier",
+        "causes": [
+         "code"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "B4",
+     "witness": {
+      "spellings": [
+       "proposed, not shipped",
+       "proposed-not-shipped",
+       "Proposed source-owned references (not shipped)"
+      ],
+      "controls": [
+       {
+        "id": "statement-form",
+        "causes": []
+       },
+       {
+        "id": "wrapped",
+        "causes": []
+       },
+       {
+        "id": "capital",
+        "causes": []
+       },
+       {
+        "id": "duty-form",
+        "causes": []
+       },
+       {
+        "id": "producer-heading",
+        "causes": []
+       },
+       {
+        "id": "no-comma",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "reordered",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "negated",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "no-longer",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "comment",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "struck",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "link-title",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "shown-emphasis",
+        "causes": []
+       },
+       {
+        "id": "program-only",
+        "causes": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "B5",
+     "witness": {
+      "subject": "asynchronous-attempt-semantics claims",
+      "id": "async-semantics",
+      "controls": [
+       {
+        "id": "hyphenated",
+        "causes": [
+         "async-status"
+        ]
+       },
+       {
+        "id": "spaced",
+        "causes": [
+         "async-status"
+        ]
+       },
+       {
+        "id": "async-short",
+        "causes": [
+         "async-status"
+        ]
+       },
+       {
+        "id": "async-attempt",
+        "causes": [
+         "async-status"
+        ]
+       },
+       {
+        "id": "attempts",
+        "causes": [
+         "async-status"
+        ]
+       },
+       {
+        "id": "graded",
+        "causes": []
+       },
+       {
+        "id": "not-semantics",
+        "causes": []
+       },
+       {
+        "id": "sequential",
+        "causes": []
+       },
+       {
+        "id": "uncited",
+        "causes": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "B6",
+     "witness": {
+      "spellings": [
+       "targets for proof/measurement",
+       "targets-for-proof"
+      ],
+      "controls": [
+       {
+        "id": "statement-form",
+        "causes": []
+       },
+       {
+        "id": "producer-emphasis",
+        "causes": []
+       },
+       {
+        "id": "duty-form",
+        "causes": []
+       },
+       {
+        "id": "wrapped",
+        "causes": []
+       },
+       {
+        "id": "half",
+        "causes": [
+         "async-status"
+        ]
+       },
+       {
+        "id": "paraphrase",
+        "causes": [
+         "async-status"
+        ]
+       },
+       {
+        "id": "negated",
+        "causes": [
+         "async-status"
+        ]
+       },
+       {
+        "id": "comment",
+        "causes": [
+         "async-status"
+        ]
+       },
+       {
+        "id": "link-title",
+        "causes": [
+         "async-status"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "B7",
+     "witness": {
+      "word": "established",
+      "vocabulary": "\\b(?:establish(?:es|ed)?|proven|prove[sd]?|verified|guaranteed|demonstrated|confirmed)\\b",
+      "controls": [
+       {
+        "id": "never",
+        "causes": []
+       },
+       {
+        "id": "not-established",
+        "causes": []
+       },
+       {
+        "id": "established",
+        "causes": [
+         "established:async-semantics"
+        ]
+       },
+       {
+        "id": "graded-then-established",
+        "causes": [
+         "established:async-semantics"
+        ]
+       },
+       {
+        "id": "proven",
+        "causes": [
+         "established:async-semantics"
+        ]
+       },
+       {
+        "id": "verified",
+        "causes": [
+         "established:async-semantics"
+        ]
+       },
+       {
+        "id": "once",
+        "causes": []
+       },
+       {
+        "id": "would",
+        "causes": []
+       },
+       {
+        "id": "pronoun",
+        "causes": []
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "Z",
+   "label": "until such a citation exists, zero mentions stays the passing state",
+   "pins": [
+    {
+     "id": "Z1",
+     "witness": {
+      "bound": [],
+      "compliantCiting": 1,
+      "unboundWhileEmpty": 1,
+      "unboundWithRow": 0
+     }
+    },
+    {
+     "id": "Z2",
+     "witness": {
+      "scopes": [
+       "documents",
+       "strings"
+      ],
+      "mentions": 0,
+      "bound": 0,
+      "unbound": [],
+      "stale": []
+     }
+    }
+   ]
+  },
+  {
+   "id": "M",
+   "label": "git grep for {{record-2:stem}} / FurnaceAttemptCapability / cac-execution / execution-assurance over the working tree returns zero hits",
+   "pins": [
+    {
+     "id": "M1",
+     "witness": {
+      "needles": [
+       "{{record-2:stem}}",
+       "FurnaceAttemptCapability",
+       "cac-execution",
+       "execution-assurance"
+      ],
+      "citation": "{{record-2:pattern}}|Furnace[\\s_-]*Attempt[\\s_-]*Capability|cac[\\s_-]*execution|execution[\\s_-]*assurance",
+      "controls": [
+       {
+        "id": "spaced-record",
+        "causes": []
+       },
+       {
+        "id": "snake-record",
+        "causes": []
+       },
+       {
+        "id": "spaced-record-bare",
+        "causes": [
+         "unqualified",
+         "record-status"
+        ]
+       },
+       {
+        "id": "cac-execution",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "execution-assurance",
+        "causes": [
+         "unqualified"
+        ]
+       },
+       {
+        "id": "{{record-2:id}}-alone",
+        "causes": []
+       },
+       {
+        "id": "attempt-capability-alone",
+        "causes": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "M2",
+     "witness": {
+      "pin": "b21beb0f89ad49500069403c4815d58f2825b414",
+      "paths": 707,
+      "hits": [],
+      "units": 106318,
+      "plantFindings": [
+       "5 unqualified",
+       "7 record-status",
+       "7 exists:{{record-2:id}}",
+       "9 unlabelled",
+       "11 async-status",
+       "11 established:async-semantics"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "any future Pi citation (docs/workbench rows, TRACEABILITY entries, descriptor or receipt strings) carries the design-only / proposed-not-shipped / targets-for-proof grading verbatim",
+   "pins": [
+    {
+     "id": "D1",
+     "witness": {
+      "flagged": [
+       [
+        "docs/workbench/TRACEABILITY.md:3 unqualified",
+        "docs/workbench/TRACEABILITY.md:3 record-status",
+        "docs/workbench/TRACEABILITY.md:3 exists:{{record-2:id}}",
+        "docs/workbench/future.md:3 unqualified",
+        "docs/workbench/future.md:3 record-status",
+        "docs/workbench/future.md:3 exists:{{record-2:id}}",
+        "docs/workbench/receipts/wb-future.md:3 unqualified",
+        "docs/workbench/receipts/wb-future.md:3 record-status",
+        "docs/workbench/receipts/wb-future.md:3 exists:{{record-2:id}}"
+       ],
+       [
+        "src/future.ts:1 unqualified",
+        "src/future.ts:1 record-status",
+        "src/future.ts:1 exists:{{record-2:id}}"
+       ]
+      ],
+      "quiet": [
+       [],
+       []
+      ],
+      "unboundTwins": 4
+     }
+    },
+    {
+     "id": "D2",
+     "witness": {
+      "scope": "docs/workbench",
+      "floor": 25,
+      "page": "docs/workbench/feature-matrix.md",
+      "causes": [
+       "label:shipped"
+      ]
+     }
+    },
+    {
+     "id": "D3",
+     "witness": {
+      "page": "docs/workbench/TRACEABILITY.md",
+      "listed": true,
+      "causes": [
+       "record-status"
+      ]
+     }
+    },
+    {
+     "id": "D4",
+     "witness": {
+      "descriptor": "description",
+      "floor": 68,
+      "unread": [],
+      "causes": [
+       "unqualified",
+       "record-status"
+      ]
+     }
+    },
+    {
+     "id": "D5",
+     "witness": {
+      "scope": "docs/workbench/receipts",
+      "floor": 47,
+      "plantFindings": [
+       "5 unqualified",
+       "7 record-status",
+       "7 exists:{{record-2:id}}",
+       "9 unlabelled",
+       "11 async-status",
+       "11 established:async-semantics"
+      ]
+     }
+    },
+    {
+     "id": "D6",
+     "witness": {
+      "spellings": [
+       "design-only",
+       "proposed-not-shipped",
+       "targets-for-proof"
+      ],
+      "controls": [
+       {
+        "id": "duty-forms",
+        "causes": []
+       },
+       {
+        "id": "slash-list",
+        "causes": []
+       },
+       {
+        "id": "record-and",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "record-underscore",
+        "causes": [
+         "record-status"
+        ]
+       },
+       {
+        "id": "async-of",
+        "causes": [
+         "async-status"
+        ]
+       },
+       {
+        "id": "async-spaced",
+        "causes": [
+         "async-status"
+        ]
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "E",
+   "label": "never presents a CAC record or its async-semantics claims as shipped or established",
+   "pins": [
+    {
+     "id": "E1",
+     "witness": {
+      "subjects": [
+       "FurnaceAttemptCapabilityV0",
+       "{{record-2:spelling}}",
+       "a CAC record"
+      ],
+      "controls": [
+       {
+        "id": "available",
+        "causes": [
+         "exists:{{record-2:id}}"
+        ]
+       },
+       {
+        "id": "not-available",
+        "causes": []
+       },
+       {
+        "id": "implemented",
+        "causes": [
+         "exists:attempt-capability"
+        ]
+       },
+       {
+        "id": "vendored",
+        "causes": [
+         "exists:attempt-capability"
+        ]
+       },
+       {
+        "id": "graded-then-wired",
+        "causes": [
+         "exists:{{record-2:id}}"
+        ]
+       },
+       {
+        "id": "cac-record",
+        "causes": [
+         "exists:cac-record"
+        ]
+       },
+       {
+        "id": "cac-record-negated",
+        "causes": []
+       },
+       {
+        "id": "when",
+        "causes": []
+       },
+       {
+        "id": "nowhere",
+        "causes": []
+       }
+      ],
+      "findings": [
+       "docs/workbench/zz-e1.md:1 exists:{{record-2:id}}"
+      ]
+     }
+    },
+    {
+     "id": "E2",
+     "witness": {
+      "subject": "async-semantics",
+      "spelling": "asynchronous-attempt-semantics claims",
+      "controls": [
+       {
+        "id": "established",
+        "causes": [
+         "established:async-semantics"
+        ]
+       },
+       {
+        "id": "proven-short",
+        "causes": [
+         "established:async-semantics"
+        ]
+       },
+       {
+        "id": "guaranteed",
+        "causes": [
+         "established:async-semantics"
+        ]
+       },
+       {
+        "id": "not-established",
+        "causes": []
+       },
+       {
+        "id": "never",
+        "causes": []
+       }
+      ],
+      "findings": [
+       "docs/workbench/zz-e2.md:1 established:async-semantics"
+      ]
+     }
+    },
+    {
+     "id": "E3",
+     "witness": {
+      "anchors": [
+       "shipped",
+       "established"
+      ],
+      "exists": [
+       "shipped",
+       "ships",
+       "exists",
+       "existing",
+       "wired",
+       "implemented",
+       "available",
+       "landed",
+       "released",
+       "published",
+       "live",
+       "supported",
+       "consumed",
+       "vendored",
+       "exported",
+       "runs",
+       "enforced"
+      ],
+      "established": [
+       "established",
+       "proven",
+       "proved",
+       "verified",
+       "guaranteed",
+       "demonstrated",
+       "confirmed"
+      ],
+      "outside": []
+     }
+    }
+   ]
+  },
+  {
+   "id": "N",
+   "label": "NFR-08's shipped/experimental/planned/blocked labelling discipline (docs/workbench/02-atomic-requirements.md:60) applies to the citing row",
+   "pins": [
+    {
+     "id": "N1",
+     "witness": {
+      "labels": [
+       "shipped",
+       "experimental",
+       "planned",
+       "blocked"
+      ],
+      "controls": [
+       {
+        "id": "shipped",
+        "causes": [
+         "label:shipped"
+        ]
+       },
+       {
+        "id": "experimental",
+        "causes": []
+       },
+       {
+        "id": "planned",
+        "causes": []
+       },
+       {
+        "id": "blocked",
+        "causes": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "N2",
+     "witness": {
+      "ref": "docs/workbench/02-atomic-requirements.md:60",
+      "labels": [
+       "shipped",
+       "experimental",
+       "planned",
+       "blocked"
+      ]
+     }
+    },
+    {
+     "id": "N3",
+     "witness": {
+      "unit": "table row",
+      "controls": [
+       {
+        "id": "planned-row",
+        "causes": []
+       },
+       {
+        "id": "blocked-row",
+        "causes": []
+       },
+       {
+        "id": "experimental-row",
+        "causes": []
+       },
+       {
+        "id": "shipped-row",
+        "causes": [
+         "label:shipped"
+        ]
+       },
+       {
+        "id": "shipped-and-planned",
+        "causes": [
+         "label:shipped"
+        ]
+       },
+       {
+        "id": "other-status",
+        "causes": [
+         "unlabelled"
+        ]
+       },
+       {
+        "id": "negated-label",
+        "causes": [
+         "unlabelled"
+        ]
+       },
+       {
+        "id": "graded-only",
+        "causes": [
+         "unlabelled"
+        ]
+       },
+       {
+        "id": "label-in-comment",
+        "causes": [
+         "unlabelled"
+        ]
+       },
+       {
+        "id": "non-citing-row",
+        "causes": []
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "K",
+   "label": "the first citing change lands the wording together with a census row binding it",
+   "pins": [
+    {
+     "id": "K1",
+     "witness": {
+      "unworded": {
+       "causes": [
+        "unqualified",
+        "record-status"
+       ],
+       "unbound": 1
+      },
+      "worded": {
+       "causes": [],
+       "unbound": 1
+      },
+      "wordedAndBound": {
+       "causes": [],
+       "unbound": 0
+      }
+     }
+    },
+    {
+     "id": "K2",
+     "witness": {
+      "row": {
+       "path": "docs/workbench/07-native-integrations.md",
+       "text": "Pi reads {{record-2:spelling}} refs (design-only; proposed, not shipped)."
+      },
+      "cases": {
+       "same": 0,
+       "wrapped": 0,
+       "otherPath": 1,
+       "edited": 1,
+       "stale": 1,
+       "fresh": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals: each named family pinned by its quiet row",
+   "pins": [
+    {
+     "id": "Q1",
+     "witness": {
+      "outside": [
+       "package.json",
+       "forge.toml",
+       "vitest.config.ts",
+       "qa/workbench/smoke.sh",
+       "test/source-hygiene.test.ts",
+       "test/fixtures/hx-sio-design-status-dossier.md"
+      ],
+      "listed": []
+     }
+    },
+    {
+     "id": "Q2",
+     "witness": {
+      "path": "docs/workbench/receipts/wb-dqf.1.md",
+      "text": "# wb-dqf.1: [FURNACE-CAC-EXECUTION-ASSURANCE-R4] When Furnace ships the boundary record, Pi reads it\n",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q3",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "Pi reads Furnace's 2026-10-18 CAC design deposit for attempts and its {{record-2:words}}.",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q4",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "cac-execution-assurance-2026-10-18 is not, as of today, design-only.",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q5",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "{{record-2:spelling}} (design-only; proposed, not shipped) gates every attempt read Pi makes.",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q6",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "If anything, {{record-2:spelling}} (design-only; proposed, not shipped) is wired.",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q7",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "{{record-2:spelling}} is design-only and proposed, not shipped. It is wired anyway.",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q8",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "cac-execution-assurance-2026-10-18 (design-only): the Furnace boundary record is wired, and the attempt capability record ships.",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q9",
+     "witness": {
+      "path": "src/x.ts",
+      "text": "export const A = \"{{record-2:head}}\" + \"{{record-2:tail}}\";",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q10",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "The CAC\\-execution\\-assurance program and cac&#45;execution&#45;assurance.",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q11",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "cac-execution-assurance-2026-10-18 is design-only.\n\nThe CAC record is wired and asynchronous attempt semantics are established.",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q12",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "cac-execution-assurance-2026-10-18 is design-only and carries no status column.",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q13",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "| cac-execution-assurance-2026-10-18 | design-only | planned |",
+      "causes": []
+     }
+    },
+    {
+     "id": "Q14",
+     "witness": {
+      "path": "docs/workbench/x.md",
+      "text": "cac-execution-assurance-2026-10-18 (design-only) names {{record-2:spelling}} and FurnaceAttemptCapabilityV0; the second is proposed, not shipped.",
+      "causes": []
+     }
+    }
+   ]
+  }
+ ]
+}

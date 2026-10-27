@@ -1,0 +1,454 @@
+/**
+ * wb-e66.5 (MW-GRAPH-POLICY-COORDINATION-R10): the tables, the readers and the judges of the GP-coordination adoption
+ * census, test/workbench-mw-gp-coordination-census.test.ts (its header states the bead, the measured facts and every
+ * reading). Everything here is pure over the inputs it is handed except the four listers (gitList, walkList,
+ * ignoredOf, pinTree), which read only the repository they are given through git and the filesystem. Nothing here
+ * starts gp or mp, fakes a GraphPolicyCLI binary, adds a dependency or implements an adapter: the planted modules and
+ * receipts are text handed to the judges.
+ */
+import { execFileSync, spawnSync } from "node:child_process";
+import { lstatSync, readdirSync } from "node:fs";
+import { extname, join } from "node:path";
+import ts from "typescript";
+
+// ---- the vocabulary (the statement's "GraphPolicy/GraphDataIR/mw.training-export" and the filing grep's four words) ----
+
+export interface Word {
+  readonly id: string;
+  /** The spelling the bead text uses. */
+  readonly spelling: string;
+  /** The spelling read case-insensitively, any run of space, tab, dot, underscore or hyphen allowed between its parts. */
+  readonly pattern: RegExp;
+}
+
+/** The parts of a spelling: split at dots, underscores and hyphens, then at camel-case humps ("GraphDataIR" -> graph, data, ir). */
+export function partsOf(spelling: string): string[] {
+  return spelling
+    .split(/[._-]+/)
+    .flatMap(piece => piece.match(/[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+/g) ?? [])
+    .map(part => part.toLowerCase());
+}
+
+const SEPARATORS = "[ \\t._-]*";
+const escaped = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+const wordOf = (id: string, spelling: string): Word => ({ id, spelling, pattern: new RegExp(partsOf(spelling).map(escaped).join(SEPARATORS), "i") });
+
+/** The four words, in the filing grep's order: 'GraphPolicy|GraphDataIR|MicroPolicy|mw.training-export'. */
+export const VOCABULARY: readonly Word[] = [wordOf("V1", "GraphPolicy"), wordOf("V2", "GraphDataIR"), wordOf("V3", "MicroPolicy"), wordOf("V4", "mw.training-export")];
+
+/** The words a text names, in VOCABULARY order, each once. */
+export function namedWords(text: string): string[] {
+  return VOCABULARY.filter(word => word.pattern.test(text)).map(word => word.spelling);
+}
+
+// ---- the means reader: a GraphPolicyCLI or MicroPolicyCLI import, or a launch of their binaries ----
+
+/** The child_process launchers, called bare or as a member. */
+export const LAUNCHERS: readonly string[] = ["spawn", "spawnSync", "exec", "execSync", "execFile", "execFileSync", "fork"];
+/** The launchers whose first argument is a shell line (its program is the line's first word). */
+const SHELL_LAUNCHERS = new Set(["exec", "execSync"]);
+/** The two binaries: GraphPolicyCLI's gp and MicroPolicyCLI's mp. */
+export const PROGRAMS: readonly string[] = ["gp", "mp"];
+/** A bare gp or mp package specifier (gp, gp/<subpath>, mp, mp/<subpath>). */
+const BARE_SPECIFIER = /^(?:gp|mp)(?:\/|$)/i;
+
+const CODE_EXTENSIONS = new Set([".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx"]);
+
+function scriptKindOf(path: string): ts.ScriptKind {
+  const extension = extname(path).toLowerCase();
+  if (extension === ".tsx") return ts.ScriptKind.TSX;
+  if (extension === ".jsx") return ts.ScriptKind.JSX;
+  if (extension === ".js" || extension === ".mjs" || extension === ".cjs") return ts.ScriptKind.JS;
+  return ts.ScriptKind.TS;
+}
+
+/** The program a launch names: the file argument's last path segment (or a shell line's first word's), lower-cased, with a Windows launcher extension dropped. */
+export function programOf(launcher: string, argument: string): string {
+  const trimmed = argument.trim();
+  const word = SHELL_LAUNCHERS.has(launcher) ? (trimmed.split(/\s+/)[0] ?? "") : trimmed;
+  const segment = word.split(/[/\\]/).pop() ?? "";
+  return segment.toLowerCase().replace(/\.(?:exe|cmd|bat|ps1)$/, "");
+}
+
+/** A version probe: `gp --version` as the whole argv (the file form's one-element argument list, or the whole shell line). */
+function isVersionProbe(launcher: string, call: ts.CallExpression, argument: string): boolean {
+  if (SHELL_LAUNCHERS.has(launcher)) return argument.trim().split(/\s+/).slice(1).join(" ") === "--version";
+  const list = call.arguments[1];
+  return list !== undefined && ts.isArrayLiteralExpression(list) && list.elements.length === 1 && ts.isStringLiteralLike(list.elements[0] as ts.Expression) && (list.elements[0] as ts.StringLiteralLike).text === "--version";
+}
+
+export interface Means {
+  readonly kind: "imports" | "launches";
+  /** The specifier, or the launch's program argument as read. */
+  readonly text: string;
+  readonly versionProbe: boolean;
+}
+
+/** The string a first argument reads as: a string literal, a template's literal head, or a same-file const bound to a string literal. */
+function argumentText(node: ts.Expression | undefined, consts: ReadonlyMap<string, string>): string | undefined {
+  if (node === undefined) return undefined;
+  if (ts.isStringLiteralLike(node)) return node.text;
+  if (ts.isTemplateExpression(node)) return node.head.text;
+  if (ts.isIdentifier(node)) return consts.get(node.text);
+  return undefined;
+}
+
+/** Every const of the file bound to a string literal, by name (the first binding of a name wins). */
+function stringConsts(source: ts.SourceFile): Map<string, string> {
+  const consts = new Map<string, string>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isVariableDeclarationList(node) && (node.flags & ts.NodeFlags.Const) !== 0) {
+      for (const declaration of node.declarations) {
+        if (ts.isIdentifier(declaration.name) && declaration.initializer !== undefined && ts.isStringLiteralLike(declaration.initializer) && !consts.has(declaration.name.text)) {
+          consts.set(declaration.name.text, declaration.initializer.text);
+        }
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return consts;
+}
+
+const isGpSpecifier = (specifier: string): boolean => BARE_SPECIFIER.test(specifier) || namedWords(specifier).length > 0;
+const isGpProgram = (launcher: string, argument: string): boolean => PROGRAMS.includes(programOf(launcher, argument)) || namedWords(argument).length > 0;
+
+/** The GP means a source file carries, in source order: imports of a GP or MP package and launches of gp or mp. */
+export function meansOf(path: string, text: string): Means[] {
+  if (!CODE_EXTENSIONS.has(extname(path).toLowerCase())) return [];
+  const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, scriptKindOf(path));
+  const consts = stringConsts(source);
+  const found: Means[] = [];
+  const specifier = (node: ts.Expression | undefined): void => {
+    if (node !== undefined && ts.isStringLiteralLike(node) && isGpSpecifier(node.text)) found.push({ kind: "imports", text: node.text, versionProbe: false });
+  };
+  const visit = (node: ts.Node): void => {
+    if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) specifier(node.moduleSpecifier);
+    else if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference)) specifier(node.moduleReference.expression);
+    else if (ts.isCallExpression(node)) {
+      const callee = node.expression;
+      if (callee.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(callee) && callee.text === "require")) specifier(node.arguments[0]);
+      const name = ts.isIdentifier(callee) ? callee.text : ts.isPropertyAccessExpression(callee) ? callee.name.text : "";
+      if (LAUNCHERS.includes(name)) {
+        const argument = argumentText(node.arguments[0], consts);
+        if (argument !== undefined && isGpProgram(name, argument)) found.push({ kind: "launches", text: argument.trim(), versionProbe: isVersionProbe(name, node, argument) });
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return found;
+}
+
+// ---- the judges ----
+
+export type Leg = "src" | "test";
+
+/**
+ * One file's findings. src: every vocabulary word it names (any position, the filing grep's reading), then every GP
+ * means. test: every GP means except a version probe; a test file naming the vocabulary is a posture guard's text
+ * (the residual R-TEST-MENTION), never a finding.
+ */
+export function fileFindings(leg: Leg, path: string, text: string): string[] {
+  const words = leg === "src" ? namedWords(text).map(word => `${path}: names ${word}`) : [];
+  const means = meansOf(path, text)
+    .filter(entry => leg === "src" || !entry.versionProbe)
+    .map(entry => `${path}: ${entry.kind} ${entry.text}`);
+  return [...words, ...means];
+}
+
+export interface Adoption {
+  /** The src module or test file the allowlist admits. */
+  readonly path: string;
+  /** shadow: the shadow-mode adapter (or its tests); canary: the opt-in canary. */
+  readonly kind: "shadow" | "canary";
+  /** The receipt holding the dated adoption record. */
+  readonly receipt: string;
+}
+
+/** The receipts route (standing rule 13 / R539): TRACEABILITY.md is frozen, a record lands as a dated receipt entry. */
+export const RECEIPT_ROUTE = /^docs\/workbench\/receipts\/wb-[a-z0-9]+(?:\.[0-9]+)*\.md$/;
+/** A receipt reference: a Forge command id or a commit pin (<anything>@<7-40 hex>). */
+export const REFERENCE = /\bcmd_[0-9a-f]{12}\b|@[0-9a-f]{7,40}\b/;
+/** The eight acceptance terms, README.md:23@4b8b974ca72b, as the bead lists them. */
+export const TERMS: readonly string[] = [
+  "original Policy/reconcile laws unchanged",
+  "pure GP call",
+  "exact source ID mapping",
+  "original behavior probability",
+  "no native-effect bypass",
+  "stale result rejection",
+  "evidence sidecar parity",
+  "Forge-installed integration tests",
+];
+/** The shadow-mode run as clause (b) names it. */
+export const SHADOW_RUN: readonly string[] = ["shadow-mode run", "zero control decisions issued", "zero native verbs reached"];
+/** The canary's recorded rollback path as clause (c) names it. */
+export const ROLLBACK = "rollback path";
+
+export interface DatedEntry {
+  readonly date: string;
+  readonly text: string;
+}
+
+/** A receipt's dated entries: each "## YYYY-MM-DD ..." heading (a real month and day) up to the next level-1 or level-2 heading. */
+export function datedEntries(text: string): DatedEntry[] {
+  const entries: DatedEntry[] = [];
+  let current: { date: string; lines: string[] } | undefined;
+  const close = (): void => {
+    if (current !== undefined) entries.push({ date: current.date, text: current.lines.join("\n") });
+    current = undefined;
+  };
+  for (const line of text.split("\n")) {
+    if (/^#{1,2} /.test(line)) {
+      close();
+      const match = /^## (\d{4})-(\d{2})-(\d{2})(?:\s|$)/.exec(line);
+      const month = Number(match?.[2]);
+      const day = Number(match?.[3]);
+      if (match !== null && month >= 1 && month <= 12 && day >= 1 && day <= 31) current = { date: `${match[1]}-${match[2]}-${match[3]}`, lines: [line] };
+      continue;
+    }
+    current?.lines.push(line);
+  }
+  close();
+  return entries;
+}
+
+/**
+ * Why an adoption is not admitted: empty when its receipt's one dated record cites every term (each on a line of its own),
+ * the shadow-mode run (both zero phrases on one line) and, for a canary, the rollback path, each line carrying a reference.
+ */
+export function admissionFindings(adoption: Adoption, receipt: (path: string) => string | undefined): string[] {
+  const at = adoption.path;
+  if (!RECEIPT_ROUTE.test(adoption.receipt)) return [`${at}: receipt-route ${adoption.receipt}`];
+  const text = receipt(adoption.receipt);
+  if (text === undefined) return [`${at}: receipt-missing ${adoption.receipt}`];
+  const records = datedEntries(text).filter(entry => entry.text.includes(at));
+  if (records.length === 0) return [`${at}: record-missing ${adoption.receipt}`];
+  if (records.length > 1) return [`${at}: record-duplicate ${adoption.receipt}`];
+  const lines = (records[0]?.text ?? "").split("\n");
+  const names = (line: string, needle: string): boolean => line.toLowerCase().includes(needle.toLowerCase());
+  const cited = (needles: readonly string[]): boolean => lines.some(line => REFERENCE.test(line) && needles.every(needle => names(line, needle)));
+  // Each term is its own gate receipt: a line counts for a term only when it names no other term.
+  const citedAlone = (term: string): boolean => lines.some(line => REFERENCE.test(line) && names(line, term) && TERMS.every(other => other === term || !names(line, other)));
+  const findings = TERMS.filter(term => !citedAlone(term)).map(term => `${at}: term-uncited ${term}`);
+  if (!cited(SHADOW_RUN)) findings.push(`${at}: shadow-run-uncited`);
+  if (adoption.kind === "canary" && !cited([ROLLBACK])) findings.push(`${at}: canary-rollback-unrecorded`);
+  return findings;
+}
+
+export interface Entry {
+  readonly path: string;
+  readonly text: string;
+}
+
+/**
+ * A leg's findings over its files and the allowlist: a file with findings and no adoption keeps them; a file with one
+ * admitted adoption is admitted; a file with an unadmitted adoption keeps its findings plus the admission findings; two
+ * adoptions of one path, or an adoption of a path of this leg that carries no finding (stale), are findings too.
+ */
+export function legFindings(leg: Leg, entries: readonly Entry[], adoptions: readonly Adoption[], receipt: (path: string) => string | undefined): string[] {
+  const findings: string[] = [];
+  const touched = new Set<string>();
+  for (const entry of entries) {
+    const own = fileFindings(leg, entry.path, entry.text);
+    if (own.length === 0) continue;
+    touched.add(entry.path);
+    const listed = adoptions.filter(adoption => adoption.path === entry.path);
+    if (listed.length > 1) findings.push(...own, `${entry.path}: adoption-duplicate`);
+    else if (listed.length === 0) findings.push(...own);
+    else {
+      const admission = admissionFindings(listed[0] as Adoption, receipt);
+      if (admission.length > 0) findings.push(...own, ...admission);
+    }
+  }
+  for (const adoption of adoptions) {
+    if (adoption.path.startsWith(`${leg}/`) && !touched.has(adoption.path)) findings.push(`${adoption.path}: adoption-stale`);
+  }
+  return findings;
+}
+
+// ---- the listers ----
+
+/** What git would commit under a scope: tracked or untracked, never ignored, a regular file on disk (the walk's exact-set anchor). */
+export function gitList(root: string, scope: string): string[] {
+  const out = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", scope], { cwd: root, encoding: "utf8", maxBuffer: 1 << 26 });
+  const regular = (path: string): boolean => {
+    try {
+      return lstatSync(join(root, path)).isFile();
+    } catch {
+      return false;
+    }
+  };
+  return [...new Set(out.split("\0").filter(path => path !== "" && regular(path)))].sort();
+}
+
+/** Every regular file under a scope by a filesystem walk; symbolic links are never followed (they are not regular files). */
+export function walkList(root: string, scope: string): string[] {
+  const files: string[] = [];
+  const walk = (relative: string): void => {
+    for (const name of readdirSync(join(root, relative)).sort()) {
+      const path = `${relative}/${name}`;
+      const info = lstatSync(join(root, path));
+      if (info.isDirectory()) walk(path);
+      else if (info.isFile()) files.push(path);
+    }
+  };
+  walk(scope);
+  return files.sort();
+}
+
+/** The paths among `paths` that git ignores. */
+export function ignoredOf(root: string, paths: readonly string[]): Set<string> {
+  const result = spawnSync("git", ["check-ignore", "--stdin", "-z"], { cwd: root, input: paths.join("\0"), encoding: "utf8", maxBuffer: 1 << 26 });
+  if (result.status !== 0 && result.status !== 1) throw new Error(`git check-ignore exited ${String(result.status)}: ${result.stderr}`);
+  return new Set(result.stdout.split("\0").filter(path => path !== ""));
+}
+
+/** Every blob under the scopes at a commit, read from git's objects (git ls-tree, then one git cat-file --batch). */
+export function pinTree(root: string, commit: string, scopes: readonly string[]): Entry[] {
+  const listing = execFileSync("git", ["ls-tree", "-r", "-z", "--full-tree", commit, "--", ...scopes], { cwd: root, encoding: "utf8", maxBuffer: 1 << 26 });
+  const blobs: { readonly path: string; readonly object: string }[] = [];
+  for (const record of listing.split("\0")) {
+    const match = /^\d+ blob ([0-9a-f]{40})\t(.+)$/s.exec(record);
+    if (match !== null) blobs.push({ object: match[1] ?? "", path: match[2] ?? "" });
+  }
+  const batch = execFileSync("git", ["cat-file", "--batch"], { cwd: root, input: blobs.map(blob => blob.object).join("\n") + "\n", maxBuffer: 1 << 28 });
+  const entries: Entry[] = [];
+  let at = 0;
+  for (const blob of blobs) {
+    const newline = batch.indexOf(0x0a, at);
+    const header = batch.subarray(at, newline).toString("utf8");
+    const match = /^([0-9a-f]{40}) blob (\d+)$/.exec(header);
+    if (match === null || match[1] !== blob.object) throw new Error(`git cat-file --batch: unexpected header '${header}' for ${blob.path}`);
+    const size = Number(match[2]);
+    entries.push({ path: blob.path, text: batch.subarray(newline + 1, newline + 1 + size).toString("utf8") });
+    at = newline + 1 + size + 1;
+  }
+  return entries;
+}
+
+// ---- the tracker export (the outside anchor) ----
+
+export interface BeadRow {
+  readonly title: string;
+  readonly notes: string;
+}
+
+/** The bead's own row in the tracker export text. */
+export function beadRow(exportText: string, bead: string): BeadRow | undefined {
+  for (const line of exportText.split("\n")) {
+    if (!line.includes(`"id":"${bead}"`)) continue;
+    const row: unknown = JSON.parse(line);
+    if (typeof row !== "object" || row === null) continue;
+    const { id, title, notes } = row as { readonly id?: unknown; readonly title?: unknown; readonly notes?: unknown };
+    if (id === bead && typeof title === "string" && typeof notes === "string") return { title, notes };
+  }
+  return undefined;
+}
+
+/** The owner filing's acceptance clauses: the first "Acceptance shape: " sentence to its line end, split at "; ", the final period dropped. */
+export function acceptanceClauses(notes: string): string[] {
+  const start = notes.indexOf("Acceptance shape: ");
+  if (start === -1) return [];
+  const end = notes.indexOf("\n", start);
+  const body = notes.slice(start + "Acceptance shape: ".length, end === -1 ? undefined : end).trim();
+  return body.replace(/\.$/, "").split("; ");
+}
+
+/** The quotes tile the clause in order, with nothing but separators (whitespace, comma, semicolon, colon, parentheses) between. */
+export function tiles(clause: string, quotes: readonly string[]): boolean {
+  let at = 0;
+  for (const quote of quotes) {
+    const found = clause.indexOf(quote, at);
+    if (found < 0 || !/^[\s,;:()]*$/.test(clause.slice(at, found))) return false;
+    at = found + quote.length;
+  }
+  return /^[\s,;:()]*$/.test(clause.slice(at));
+}
+
+// ---- the judged rows (rule 16) ----
+
+export interface Row {
+  readonly id: string;
+  /** An acceptance clause verbatim (A, B, C), a slice of the statement (S) or the residual families (Q). */
+  readonly label: string;
+  readonly pins: readonly string[];
+}
+
+/** Each pin's quote: the quotes of a row tile its label. Q's pins name their residual families. */
+export const QUOTES: Readonly<Record<string, string>> = {
+  A1: "one vitest census (wb-cax.25 style)",
+  A2: "pins that grep at 0",
+  A3: "and names this bead",
+  B1: "any future adoption must first add a dated TRACEABILITY row",
+  B2: "citing each of the eight gate receipts",
+  B3: "and the shadow-mode run (zero control decisions issued, zero native verbs reached)",
+  B4: "before the census allowlist widens",
+  C1: "a canary without a recorded rollback path is refused by the same census",
+  S1: "one census pins zero GraphPolicy/GraphDataIR/mw.training-export references",
+  S2: "in src",
+  S3: "and test",
+  Q1: "R-COMPOSED",
+  Q2: "R-COMPUTED-LAUNCH",
+  Q3: "R-WRAPPED-LAUNCH",
+  Q4: "R-OTHER-LAUNCHER",
+  Q5: "R-TEST-MENTION",
+  Q6: "R-LOCAL-SCORER",
+};
+
+export const ROWS: readonly Row[] = [
+  { id: "A", label: "one vitest census (wb-cax.25 style) pins that grep at 0 and names this bead", pins: ["A1", "A2", "A3"] },
+  {
+    id: "B",
+    label: "any future adoption must first add a dated TRACEABILITY row citing each of the eight gate receipts and the shadow-mode run (zero control decisions issued, zero native verbs reached) before the census allowlist widens",
+    pins: ["B1", "B2", "B3", "B4"],
+  },
+  { id: "C", label: "a canary without a recorded rollback path is refused by the same census", pins: ["C1"] },
+  { id: "S", label: "one census pins zero GraphPolicy/GraphDataIR/mw.training-export references in src and test", pins: ["S1", "S2", "S3"] },
+  { id: "Q", label: "the named residual families, each member a pinned quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6"] },
+];
+
+/** The named residual families: what no reading here claims, each member a quiet row (the reader reports nothing for it). */
+export const RESIDUALS: Readonly<Record<string, readonly { readonly leg: Leg; readonly path: string; readonly text: string }[]>> = {
+  // A vocabulary word built at run time, spelled through an escape, or split by a separator outside space, tab, dot,
+  // underscore and hyphen (a no-break space): the text reader reads source characters only.
+  Q1: [
+    { leg: "src", path: "src/workbench/q1-concat.ts", text: 'export const NAME = "Graph" + "Policy";\n' },
+    { leg: "src", path: "src/workbench/q1-escape.ts", text: 'export const NAME = "\\u0047raphDataIR";\n' },
+    { leg: "src", path: "src/workbench/q1-codes.ts", text: 'export const NAME = String.fromCharCode(71, 114, 97, 112, 104) + "Policy";\n' },
+    { leg: "src", path: "src/workbench/q1-nbsp.ts", text: `export const NAME = "Graph${String.fromCodePoint(0xa0)}Policy";\n` },
+  ],
+  // A launch whose program is computed (a joined name, an environment value, a let binding) or whose launcher is reached
+  // indirectly (an alias, an element access, Function.prototype.call).
+  Q2: [
+    { leg: "src", path: "src/workbench/q2-joined.ts", text: 'import { spawn } from "node:child_process";\nconst bin = ["g", "p"].join("");\nspawn(bin, ["sample"]);\n' },
+    { leg: "src", path: "src/workbench/q2-env.ts", text: 'import { spawn } from "node:child_process";\nspawn(process.env.SCORER ?? "", ["sample"]);\n' },
+    { leg: "src", path: "src/workbench/q2-alias.ts", text: 'import { spawnSync } from "node:child_process";\nconst run = spawnSync;\nrun("gp", ["sample"]);\n' },
+    { leg: "src", path: "src/workbench/q2-let.ts", text: 'import { spawn } from "node:child_process";\nlet bin = "gp";\nspawn(bin, ["sample"]);\n' },
+    { leg: "src", path: "src/workbench/q2-element.ts", text: 'import * as cp from "node:child_process";\ncp["spawn"]("gp", ["sample"]);\n' },
+    { leg: "src", path: "src/workbench/q2-call.ts", text: 'import * as cp from "node:child_process";\ncp.spawnSync.call(undefined, "gp", ["sample"]);\n' },
+  ],
+  // gp anywhere but a shell line's bare first word: a later command, an env prefix, a quoted or grouped program word, or
+  // an argument of another program.
+  Q3: [
+    { leg: "src", path: "src/workbench/q3-env.ts", text: 'import { execSync } from "node:child_process";\nexecSync("env A=1 gp sample");\n' },
+    { leg: "src", path: "src/workbench/q3-chain.ts", text: 'import { execSync } from "node:child_process";\nexecSync("cd /tmp && gp sample");\n' },
+    { leg: "src", path: "src/workbench/q3-npx.ts", text: 'import { spawn } from "node:child_process";\nspawn("npx", ["gp", "sample"]);\n' },
+    { leg: "src", path: "src/workbench/q3-quoted.ts", text: 'import { execSync } from "node:child_process";\nexecSync("\'gp\' sample");\n' },
+    { leg: "src", path: "src/workbench/q3-group.ts", text: 'import { execSync } from "node:child_process";\nexecSync("(gp sample)");\n' },
+  ],
+  // A launch or a load outside node:child_process's seven launchers and the five import forms.
+  Q4: [
+    { leg: "src", path: "src/workbench/q4-worker.ts", text: 'import { Worker } from "node:worker_threads";\nnew Worker("./gp.js");\n' },
+    { leg: "src", path: "src/workbench/q4-execa.ts", text: 'declare const execa: (file: string, args: string[]) => void;\nexeca("gp", ["sample"]);\n' },
+    { leg: "test", path: "test/q4-loader.test.ts", text: 'import { createRequire } from "node:module";\nconst load = createRequire(import.meta.url);\nload("graph-policy-cli");\n' },
+  ],
+  // A test file naming the vocabulary as text or as a name, importing and launching nothing of GP.
+  Q5: [
+    { leg: "test", path: "test/q5-guard.test.ts", text: 'const GRAPH_POLICY_NAME = "GraphPolicyCLI";\nexport const words = [GRAPH_POLICY_NAME, "GraphDataIR", "MicroPolicy", "mw.training-export.v1"];\n' },
+    { leg: "test", path: "test/fixtures/q5-roster.json", text: '{ "graphDataIR": "mw.training-export.v1" }\n' },
+  ],
+  // Scoring or assignment code that names none of the words and launches nothing.
+  Q6: [{ leg: "src", path: "src/workbench/q6-scorer.ts", text: "export function assign(pairs: readonly { agent: string; logit: number }[]): string | undefined {\n  return [...pairs].sort((a, b) => b.logit - a.logit)[0]?.agent;\n}\n" }],
+};

@@ -1,0 +1,566 @@
+{
+  "bead": "wb-pyel.4",
+  "comment": "wb-pyel.4 (SDK-EVIDENCE-DIRECTED-COMPUTATION-R7): the OUT-OF-FILE anchor of test/workbench-edc-shipped-claim-census.test.ts. It holds the judged set the census must match exactly, in both directions: every row's id, label and pins, every pin's witness (the reading the census measured at the cut), the constants (stems, floors, script kinds, required pages and descriptors, surfaces, every control and residual probe) and every registered test title in order. A pin, row, control or test dropped or renamed in every literal of the census still reds here. Regenerate only by re-measuring: an adoption cut that makes Pi name EDC re-judges every row.",
+  "constants": {
+    "stems": {
+      "edc": "word",
+      "evidencedirected": "joined"
+    },
+    "topPages": [
+      "README.md",
+      "CHANGELOG.md"
+    ],
+    "requiredPages": [
+      "CHANGELOG.md",
+      "README.md",
+      "docs/rpc.md",
+      "docs/workbench/00-current-state-and-source-map.md",
+      "docs/workbench/01-product-vision-and-user-journeys.md",
+      "docs/workbench/02-atomic-requirements.md",
+      "docs/workbench/03-architecture-and-ownership.md",
+      "docs/workbench/04-claude-agent-sdk-executor.md",
+      "docs/workbench/05-script-language-and-runtime.md",
+      "docs/workbench/06-capability-registry.md",
+      "docs/workbench/07-native-integrations.md",
+      "docs/workbench/08-lifecycle-and-recovery.md",
+      "docs/workbench/09-observation-and-provenance.md",
+      "docs/workbench/10-terminal-inspector.md",
+      "docs/workbench/11-designer-and-operator.md",
+      "docs/workbench/12-security.md",
+      "docs/workbench/13-contracts-and-config.md",
+      "docs/workbench/14-qa-and-benchmarks.md",
+      "docs/workbench/15-implementation-program.md",
+      "docs/workbench/16-repository-refactor.md",
+      "docs/workbench/17-packaging-and-operations.md",
+      "docs/workbench/18-decisions-and-risks.md",
+      "docs/workbench/19-worked-examples.md",
+      "docs/workbench/20-evidence-loader-contract.md",
+      "docs/workbench/IMPLEMENTATION_GUIDE.md",
+      "docs/workbench/README.md",
+      "docs/workbench/TRACEABILITY.md",
+      "docs/workbench/feature-matrix.md",
+      "docs/workflows.md"
+    ],
+    "traceability": "docs/workbench/TRACEABILITY.md",
+    "floors": {
+      "pages": 60,
+      "blocks": 4000,
+      "words": 150000,
+      "modules": 100,
+      "texts": 60000,
+      "packages": 300,
+      "manifestTexts": 80
+    },
+    "scriptKinds": [
+      ".ts",
+      ".mts",
+      ".cts",
+      ".tsx",
+      ".js",
+      ".mjs",
+      ".cjs",
+      ".jsx"
+    ],
+    "requiredDescriptors": [
+      "forge.gate.status",
+      "furnace.run.inspect",
+      "hyperunix.find",
+      "reactivefiber.render.preview"
+    ],
+    "surfaces": {
+      "docs/workbench": "B2",
+      "TRACEABILITY": "B3",
+      "descriptors": "B4"
+    },
+    "pageControls": {
+      "heading": "# EDC adoption\n",
+      "paragraph": "Evidence-directed context assembly ships today.\n",
+      "table-header": "| EDC | Status |\n| --- | --- |\n| assembly | shipped |\n",
+      "table-cell": "| Feature | Status |\n| --- | --- |\n| EDC integration | shipped |\n",
+      "list-item": "- EDC integration is supported\n",
+      "nested-list": "- outer item\n  - evidence directed assembly\n",
+      "loose-list": "- first\n\n- EDCs are wired\n",
+      "blockquote": "> The EDC path is available.\n",
+      "fenced-code": "```ts\nimport { assemble } from './edc';\n```\n",
+      "codespan": "The `EvidenceDirected` reader ships.\n",
+      "link-text": "[EDC integration](https://example.invalid/a)\n",
+      "emphasis-split": "**Evidence**-*directed* assembly ships.\n",
+      "strikethrough": "~~EDC~~ shipped.\n",
+      "numeric-reference": "E&#68;C integration ships.\n",
+      "soft-break": "The evidence-\ndirected assembly ships.\n",
+      "zero-width": "E\u200bDC integration ships.\n",
+      "full-width": "\uff25\uff24\uff23 integration ships.\n",
+      "camel": "The EdcAssembler ships.\n",
+      "html-block": "<details>\n<summary>EDC integration</summary>\n</details>\n",
+      "cross-word": "The named capability is used carefully.\n",
+      "inside-word": "Reedcraft and credcheck ship.\n",
+      "inline-tag": "| Feature | Status |\n| --- | --- |\n| EDC<br>shipped | yes |\n"
+    },
+    "planted": {
+      "id": "planted.edc.read",
+      "version": "1.0.0",
+      "description": "Read one evidence-directed context block",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "edcBlock": {
+            "type": "string",
+            "description": "The EDC block id"
+          }
+        },
+        "additionalProperties": false
+      },
+      "effectClass": "read",
+      "permissions": [
+        "planted:edc"
+      ],
+      "supportedModes": [
+        "invoke"
+      ],
+      "contractSource": "evidence-directed@0.0.0"
+    },
+    "manifestControls": {
+      "dependency": {
+        "name": "x",
+        "dependencies": {
+          "@example/edc": "1.0.0"
+        }
+      },
+      "description": {
+        "name": "x",
+        "description": "Evidence-directed context assembly"
+      },
+      "dev-dependency": {
+        "name": "x",
+        "devDependencies": {
+          "evidence-directed-sdk": "1.0.0"
+        }
+      },
+      "clean": {
+        "name": "x",
+        "description": "A workflow workbench",
+        "dependencies": {
+          "@example/blocks": "1.0.0"
+        }
+      }
+    },
+    "lockControls": {
+      "package-path": {
+        "packages": {
+          "": {
+            "name": "x"
+          },
+          "node_modules/edc-assembler": {
+            "version": "1.0.0"
+          }
+        }
+      },
+      "package-name": {
+        "packages": {
+          "": {
+            "name": "x"
+          },
+          "node_modules/alias": {
+            "name": "evidence_directed"
+          }
+        }
+      },
+      "clean": {
+        "packages": {
+          "": {
+            "name": "x"
+          },
+          "node_modules/blocks": {
+            "version": "1.0.0"
+          }
+        }
+      }
+    },
+    "sourceControls": {
+      "identifier": "const EdcAssembler = 1;",
+      "string": "const label = \"evidence-directed context\";",
+      "template": "const label = `EDC ${name} ships`;",
+      "import-specifier": "import { assemble } from \"@example/edc\";",
+      "dynamic-import": "await import(\"evidence_directed\");",
+      "regex": "const pattern = /EDC/;",
+      "private-name": "class Host { #edcBlock = 1; }",
+      "cross-word": "const namedCount = 1; usedCarefully(namedCount);",
+      "jsx.tsx": "export const view = <span>EDC integration</span>;"
+    },
+    "vocabulary": [
+      "context assembly charter",
+      "evidence-driven assembly",
+      "demand-directed context",
+      "E.D.C. integration",
+      "evidence directing assembly",
+      "QueryView judgments as context inputs"
+    ],
+    "lookalike": [
+      {
+        "text": "\u0435vidence-directed assembly",
+        "lookalike": "\u0435",
+        "latin": "e"
+      },
+      {
+        "text": "ED\u0421 integration",
+        "lookalike": "\u0421",
+        "latin": "C"
+      }
+    ],
+    "nonClaimPages": {
+      "destination": "[context](https://example.invalid/evidence-directed-computation)\n",
+      "link-title": "[context](https://example.invalid/a \"EDC integration\")\n",
+      "image": "![EDC](https://example.invalid/edc.png)\n",
+      "definition": "[ref]: https://example.invalid/edc\n",
+      "comment": "<!-- see the charter -> EDC integration ships -->\n",
+      "attribute": "<div title=\"EDC integration\">context</div>\n"
+    },
+    "nonClaimSource": "// EDC integration ships\n/* evidence-directed */\nconst value = 1;",
+    "composed": [
+      "const label = \"evidence-\" + \"directed\";",
+      "evidence-"
+    ],
+    "outOfScope": [
+      "AGENTS.md",
+      "CONTRIBUTING.md",
+      "SECURITY.md",
+      "examples/agent-tool-description.md",
+      "new-feedback/README.md",
+      ".pi/agents/auditor.md",
+      ".agents/skills/beads/SKILL.md",
+      "vendor/README.md"
+    ],
+    "unnamedAdoption": "import { renderBlock } from \"@example/context-blocks\";\nexport const block = renderBlock({ queryView: { failures: 0, seal: null }, coverageProofRef: \"ref\" });",
+    "residuals": {
+      "R-VOCABULARY": [
+        "Q1"
+      ],
+      "R-LOOKALIKE": [
+        "Q2"
+      ],
+      "R-NON-CLAIM": [
+        "Q3"
+      ],
+      "R-COMPOSED": [
+        "Q4"
+      ],
+      "R-SCOPE": [
+        "Q5"
+      ],
+      "R-UNNAMED-ADOPTION": [
+        "Q6"
+      ]
+    }
+  },
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster, the bead's title and acceptance and the cases agree",
+    "A1",
+    "A2",
+    "A3",
+    "B1",
+    "B2",
+    "B3",
+    "B4",
+    "B5",
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "the registered tests and the reached pins equal the roster, in order and both ways"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "Pi-subagents shall not adopt any EDC charter component API while the charter status is 'DESIGN, not a new shipping component API'",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "manifestBelowFloor": false,
+            "packageJson": [],
+            "packageJsonText": [],
+            "lockBelowFloor": false,
+            "lock": []
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "modulesBelowFloor": false,
+            "textsBelowFloor": false,
+            "outsideSrc": [],
+            "mentions": []
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "manifests": {
+              "dependency": [
+                "dependency.dependencies.@example/edc#key|edc"
+              ],
+              "description": [
+                "description.description|evidencedirected"
+              ],
+              "dev-dependency": [
+                "dev-dependency.devDependencies.evidence-directed-sdk#key|evidencedirected"
+              ],
+              "clean": []
+            },
+            "locks": {
+              "package-path": [
+                "packages[node_modules/edc-assembler]|edc"
+              ],
+              "package-name": [
+                "packages[node_modules/alias]|evidencedirected"
+              ],
+              "clean": []
+            },
+            "sources": {
+              "identifier": [
+                "identifier:1|identifier|edc"
+              ],
+              "string": [
+                "string:1|string|evidencedirected"
+              ],
+              "template": [
+                "template:1|template|edc"
+              ],
+              "import-specifier": [
+                "import-specifier:1|string|edc"
+              ],
+              "dynamic-import": [
+                "dynamic-import:1|string|evidencedirected"
+              ],
+              "regex": [
+                "regex:1|regex|edc"
+              ],
+              "private-name": [
+                "private-name:1|identifier|edc"
+              ],
+              "cross-word": [],
+              "jsx.tsx": [
+                "jsx.tsx:1|jsx|edc"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "no Pi claim surface shall describe EDC integration as shipped meanwhile",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "missing": [],
+            "belowFloor": false,
+            "outsideScope": []
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "surface": "docs/workbench",
+            "empty": [],
+            "blocksBelowFloor": false,
+            "wordsBelowFloor": false,
+            "mentions": []
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "surface": "TRACEABILITY",
+            "inClaimPages": true,
+            "empty": [],
+            "mentions": []
+          }
+        },
+        {
+          "id": "B4",
+          "witness": {
+            "surface": "descriptors",
+            "native": {
+              "missing": [],
+              "read": true,
+              "mentions": []
+            },
+            "injected": {
+              "missing": [],
+              "read": true,
+              "mentions": []
+            }
+          }
+        },
+        {
+          "id": "B5",
+          "witness": {
+            "pages": {
+              "heading": [
+                "heading|heading#0|edc"
+              ],
+              "paragraph": [
+                "paragraph|paragraph#0|evidencedirected"
+              ],
+              "table-header": [
+                "table-header|header-cell#0|edc"
+              ],
+              "table-cell": [
+                "table-cell|cell#2|edc"
+              ],
+              "list-item": [
+                "list-item|text#0|edc"
+              ],
+              "nested-list": [
+                "nested-list|text#1|evidencedirected"
+              ],
+              "loose-list": [
+                "loose-list|paragraph#1|edc"
+              ],
+              "blockquote": [
+                "blockquote|paragraph#0|edc"
+              ],
+              "fenced-code": [
+                "fenced-code|code#0|edc"
+              ],
+              "codespan": [
+                "codespan|paragraph#0|evidencedirected"
+              ],
+              "link-text": [
+                "link-text|paragraph#0|edc"
+              ],
+              "emphasis-split": [
+                "emphasis-split|paragraph#0|evidencedirected"
+              ],
+              "strikethrough": [
+                "strikethrough|paragraph#0|edc"
+              ],
+              "numeric-reference": [
+                "numeric-reference|paragraph#0|edc"
+              ],
+              "soft-break": [
+                "soft-break|paragraph#0|evidencedirected"
+              ],
+              "zero-width": [
+                "zero-width|paragraph#0|edc"
+              ],
+              "full-width": [
+                "full-width|paragraph#0|edc"
+              ],
+              "camel": [
+                "camel|paragraph#0|edc"
+              ],
+              "html-block": [
+                "html-block|html#0|edc"
+              ],
+              "cross-word": [],
+              "inside-word": [],
+              "inline-tag": [
+                "inline-tag|cell#2|edc"
+              ]
+            },
+            "descriptor": [
+              "planted.edc.read.id|edc",
+              "planted.edc.read.description|evidencedirected",
+              "planted.edc.read.inputSchema.properties.edcBlock#key|edc",
+              "planted.edc.read.inputSchema.properties.edcBlock.description|edc",
+              "planted.edc.read.permissions[0]|edc",
+              "planted.edc.read.contractSource|evidencedirected"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the residuals: each named family pinned by its quiet row",
+      "pins": [
+        {
+          "id": "Q1",
+          "witness": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "Q2",
+          "witness": {
+            "lookalike": [
+              [],
+              []
+            ],
+            "repaired": [
+              [
+                "evidencedirected"
+              ],
+              [
+                "edc"
+              ]
+            ]
+          }
+        },
+        {
+          "id": "Q3",
+          "witness": {
+            "pages": {
+              "destination": [],
+              "link-title": [],
+              "image": [],
+              "definition": [],
+              "comment": [],
+              "attribute": []
+            },
+            "source": [],
+            "raw": [
+              true,
+              true,
+              true,
+              true,
+              true,
+              true
+            ]
+          }
+        },
+        {
+          "id": "Q4",
+          "witness": {
+            "source": [],
+            "parts": [
+              0,
+              0
+            ],
+            "registered": [
+              "planted.composed.read.description|evidencedirected"
+            ]
+          }
+        },
+        {
+          "id": "Q5",
+          "witness": {
+            "readDirectly": [
+              "AGENTS.md|paragraph#0|edc"
+            ],
+            "inScope": [],
+            "read": [],
+            "modulesOutsideSrc": 0
+          }
+        },
+        {
+          "id": "Q6",
+          "witness": {
+            "source": [],
+            "page": []
+          }
+        }
+      ]
+    }
+  ]
+}

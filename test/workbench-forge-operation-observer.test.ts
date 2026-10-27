@@ -13,10 +13,14 @@ import { createRetainedForgeControlExecutor, lookupForgeOperation, releaseForgeO
 import {
   decodeForgeOperationFrame,
   decodeForgeOperationTerminal,
+  decodeForgeRunBasis,
   FORGE_GATE_STEP_KIND,
   FORGE_OPERATION_KIND,
+  FORGE_RESULT_CONTRACT,
+  type ForgeObservedHead,
   type ForgeOperationConnection,
   type ForgeOperationFrame,
+  forgeGateRunReading,
   forgeGateStepRef,
   forgeGateStepTopology,
   forgeOperationRef,
@@ -851,5 +855,298 @@ describe("wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with
         }
       }
     }
+  });
+});
+
+/**
+ * wb-4ap.17 (COLLECTIVE-ADAPTATION-R17): Pi's gate.run consumer treats the reply's own run-start pin (data.gated_commit and
+ * data.gated_tree) as the verdict's basis. The four replies below were MEASURED on 2026-10-26 with the installed forge 0.2.1
+ * (rev c0f93b3c5d18) through the served app-server, on the path providers/forge.ts opens (ServerConnection.spawn("forge"),
+ * initialize, request("gate.run", { root })), over scratch packages: a clean git checkout whose gate is alpha, beta, gamma
+ * (gated_commit is that checkout's HEAD, gated_tree its HEAD^{tree}); the same commit with an uncommitted README edit (gated_tree
+ * "", the producer's dirty-run value); a directory in no repository (gated_commit and gated_tree null, the producer's honest
+ * absent values); and a one-step gate cancelled through operation.cancel while its step ran (status partial, cancelled-established,
+ * and a data block that publishes no pin at all). Only the fields the reader reads are kept, each verbatim; the clean and dirty
+ * runs' selection_accounting equals MEASURED_FULL's block above. LATER_HEAD is the clean checkout's HEAD after one more commit
+ * landed in it, read with git rev-parse HEAD and HEAD^{tree}.
+ */
+const PIN_COMMIT = "8d8cad68921f6f76e5cbd09328ebb7c65a5a78f7";
+const PIN_TREE = "807acb352b0b497f74cd24c5074caacbb3bed6c2";
+const DIRTY_OVERLAY = "sha256:170d8e1b32c9b0f4510062c73c04f6366d9b113270de76a5465de5278ddbff52";
+const MEASURED_HEAD: ForgeObservedHead = { commit: PIN_COMMIT, tree: PIN_TREE };
+const LATER_HEAD: ForgeObservedHead = { commit: "d8f5eec8a31e691f8f7860c7915d5fab2764e246", tree: "05b6df91ea9f1c5aafb57be6e6a2da796972c174" };
+const MEASURED_CLEAN_RUN = {
+  operation_id: "op-e0aea7ede755423389aaa3114b3c90d0", status: "success", terminal_disposition: "completed", lifecycle_state: "TERMINAL",
+  terminal_fact: "completed", contract_version: "result-envelope/v1",
+  data: { gate_verdict: "PASS", gate_passed: true, gated_commit: PIN_COMMIT, gated_tree: PIN_TREE, source_snapshot_id: PIN_TREE, selection_accounting: MEASURED_FULL.selection_accounting },
+};
+const MEASURED_DIRTY_RUN = {
+  operation_id: "op-f341b66d16eb48fabd0f5629129b80d6", status: "success", terminal_disposition: "completed", lifecycle_state: "TERMINAL",
+  terminal_fact: "completed", contract_version: "result-envelope/v1",
+  data: {
+    gate_verdict: "PASS", gate_passed: true, gated_commit: PIN_COMMIT, gated_tree: "", source_snapshot_id: `dirty-tree/v1:${PIN_TREE}:${DIRTY_OVERLAY}`,
+    selection_accounting: MEASURED_FULL.selection_accounting,
+    identity_closure: {
+      dirty_end: true, dirty_start: true, execution_isolated: false, head_moved_paths: [], head_tree_end: PIN_TREE, head_tree_start: PIN_TREE,
+      mode: "observed-boundaries/v2", overlay_dirty_at_start_paths: ["README.md"], overlay_end: DIRTY_OVERLAY, overlay_moved: false, overlay_moved_paths: [],
+      overlay_new_untracked_paths: [], overlay_start: DIRTY_OVERLAY, overlay_untracked_at_start_paths: [], reason: "dirty-at-start",
+      stable_at_observed_boundaries: false, tree_end: null, tree_start: null,
+    },
+  },
+};
+const MEASURED_UNREPOSITORIED_RUN = {
+  operation_id: "op-3fc8d4cfa88943b08eedb04c3a4e2215", status: "success", terminal_disposition: "completed", lifecycle_state: "TERMINAL",
+  terminal_fact: "completed", contract_version: "result-envelope/v1",
+  data: { gate_verdict: "PASS", gate_passed: true, gated_commit: null, gated_tree: null, source_snapshot_id: null, selection_accounting: MEASURED_FULL.selection_accounting },
+};
+const MEASURED_CANCELLED_RUN = {
+  operation_id: "op-a6143d99b2704572989a4a0579d9ae8c", status: "partial", terminal_disposition: "cancelled-established", lifecycle_state: "TERMINAL",
+  terminal_fact: "cancelled-established", contract_version: "result-envelope/v1",
+  data: {
+    answered: true, cancel_requested: true, cancellation: { establishment: "CANCELLED_CONFIRMED", requested: true },
+    delivery: { complete: true, dropped_count: 0, first_dropped_class: null }, label: "gate.run", operation_id: "op-a6143d99b2704572989a4a0579d9ae8c",
+    outcome_class: "cancelled-established", request_id: "2", terminal_disposition: "cancelled-established",
+  },
+};
+/** The a3s + wb-6ps1.2 text of the measured clean, dirty and unrepositoried runs, which the basis word follows. */
+const MEASURED_TEXT = "completed · selection complete: 3 of 3 steps selected";
+/** The distinct reason each withheld or missing pin names in its one diagnostic. */
+const REASONS = {
+  contract: "is not a result-envelope/v1 result",
+  data: "carries no data object",
+  commit: "gated_commit that is not a git object id",
+  tree: "gated_tree that is neither a git object id nor",
+  null: "gated_commit null",
+  absent: "published no gated_commit",
+  unobserved: "read no HEAD",
+} as const;
+
+/** A reply as these cases hand it to the reader: the operation's own id beside any other fields. */
+type MeasuredReply = { readonly operation_id: string; readonly [field: string]: unknown };
+function readingOf(reply: MeasuredReply, observedHead: ForgeObservedHead | undefined) {
+  const reading = forgeGateRunReading(reply, reply.operation_id, { ...options, observedAt: T2, observedHead });
+  if (reading === undefined) throw new Error("the reply names no terminal for its own operation");
+  return reading;
+}
+function withData(reply: { readonly operation_id: string; readonly data: object }, change: Record<string, unknown>) {
+  return { ...reply, data: { ...reply.data, ...change } };
+}
+
+describe("wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis", () => {
+  it("wb-4ap.17 (R17 a): the measured clean reply's subjectBasis echoes data.gated_commit verbatim, and data.gated_tree is read separately as the pin's second half", () => {
+    expect(FORGE_RESULT_CONTRACT).toBe(MEASURED_CLEAN_RUN.contract_version);
+    const reading = readingOf(MEASURED_CLEAN_RUN, MEASURED_HEAD);
+    expect(reading.snapshot.subjectBasis).toBe(MEASURED_CLEAN_RUN.data.gated_commit);
+    expect(reading.basis).toStrictEqual({ state: "pinned", commit: MEASURED_CLEAN_RUN.data.gated_commit, tree: MEASURED_CLEAN_RUN.data.gated_tree });
+    expect(decodeForgeRunBasis(MEASURED_DIRTY_RUN)).toStrictEqual({ state: "pinned", commit: MEASURED_DIRTY_RUN.data.gated_commit, tree: MEASURED_DIRTY_RUN.data.gated_tree });
+    // The basis is the reply's own pin: neither the host's head nor the run's source_snapshot_id ever stands in for it.
+    expect(readingOf(MEASURED_CLEAN_RUN, LATER_HEAD).snapshot.subjectBasis).toBe(PIN_COMMIT);
+    expect(readingOf(MEASURED_CLEAN_RUN, undefined).snapshot.subjectBasis).toBe(PIN_COMMIT);
+    expect(readingOf(MEASURED_DIRTY_RUN, MEASURED_HEAD).snapshot.subjectBasis).toBe(PIN_COMMIT);
+  });
+
+  it("wb-4ap.17 (R17 b): statusText says current only when the pin equals the supplied observed head, and stale when the head moved on, its tree differs or the run gated a dirty tree", () => {
+    const current = readingOf(MEASURED_CLEAN_RUN, MEASURED_HEAD);
+    expect(current.freshness).toBe("current");
+    expect(current.snapshot.node).toStrictEqual({ title: `Forge operation ${MEASURED_CLEAN_RUN.operation_id}`, type: "workflow", statusText: `${MEASURED_TEXT} · basis current`, statusTone: "success" });
+    expect(current.diagnostics).toStrictEqual([]);
+    const moved = readingOf(MEASURED_CLEAN_RUN, LATER_HEAD);
+    expect(moved.freshness).toBe("stale");
+    expect(moved.snapshot.node.statusText).toBe(`${MEASURED_TEXT} · basis stale`);
+    expect(moved.snapshot.node.statusTone).toBe("unknown");
+    expect(moved.diagnostics).toStrictEqual([]);
+    // The tree is compared on its own: an equal commit beside another tree is not current.
+    expect(readingOf(MEASURED_CLEAN_RUN, { commit: PIN_COMMIT, tree: LATER_HEAD.tree }).freshness).toBe("stale");
+    // A dirty run's "" tree is never the commit's, so the measured dirty run at its own commit is stale.
+    const dirty = readingOf(MEASURED_DIRTY_RUN, MEASURED_HEAD);
+    expect(dirty.freshness).toBe("stale");
+    expect(dirty.snapshot.node.statusText).toBe(`${MEASURED_TEXT} · basis stale`);
+    expect(dirty.snapshot.node.statusTone).toBe("unknown");
+    for (const reading of [moved, dirty]) expect(reading.snapshot.node.statusText).not.toContain("current");
+  });
+
+  it("wb-4ap.17 (R17 c): the measured null pin (a directory in no repository) yields no subjectBasis, one diagnostic naming the missing pin, basis indeterminate and never a success tone", () => {
+    for (const head of [MEASURED_HEAD, LATER_HEAD, undefined]) {
+      const reading = readingOf(MEASURED_UNREPOSITORIED_RUN, head);
+      const label = head?.commit ?? "no head";
+      expect("subjectBasis" in reading.snapshot, label).toBe(false);
+      expect(reading.basis, label).toStrictEqual({ state: "missing", cause: "null" });
+      expect(reading.freshness, label).toBe("indeterminate");
+      expect(reading.diagnostics, label).toHaveLength(1);
+      expect(reading.diagnostics[0], label).toContain(REASONS.null);
+      expect(reading.snapshot.node.statusText, label).toBe(`${MEASURED_TEXT} · basis indeterminate`);
+      expect(reading.snapshot.node.statusTone, label).toBe("unknown");
+    }
+  });
+
+  it("wb-4ap.17 (R17 c): the measured cancelled reply publishes no pin at all, so it reads indeterminate and never current, and the command status never moves the basis", () => {
+    for (const [status, tone] of [["partial", "unknown"], ["error", "failure"], ["success", "unknown"]] as const) {
+      const reading = readingOf({ ...MEASURED_CANCELLED_RUN, status }, MEASURED_HEAD);
+      expect(reading.basis, status).toStrictEqual({ state: "missing", cause: "absent" });
+      expect(reading.freshness, status).toBe("indeterminate");
+      expect("subjectBasis" in reading.snapshot, status).toBe(false);
+      expect(reading.diagnostics, status).toHaveLength(1);
+      expect(reading.diagnostics[0], status).toContain(REASONS.absent);
+      expect(reading.snapshot.node.statusText, status).toBe("cancelled-established · basis indeterminate");
+      expect(reading.snapshot.node.statusTone, status).toBe(tone);
+    }
+  });
+
+  it("wb-4ap.17 (R17 c): an inherited pin is no pin - a data block whose gated_commit and gated_tree come only from its prototype reads absent, never pinned", () => {
+    const inherited = Object.assign(Object.create({ gated_commit: PIN_COMMIT, gated_tree: PIN_TREE }) as Record<string, unknown>, MEASURED_CANCELLED_RUN.data);
+    const reading = readingOf({ ...MEASURED_CANCELLED_RUN, data: inherited }, MEASURED_HEAD);
+    expect(reading.basis).toStrictEqual({ state: "missing", cause: "absent" });
+    expect(reading.freshness).toBe("indeterminate");
+    expect("subjectBasis" in reading.snapshot).toBe(false);
+    expect(reading.diagnostics).toStrictEqual([expect.stringContaining(REASONS.absent)]);
+  });
+
+  it("wb-4ap.17 (R17 d, FGC-06): on a current pin a gate verdict that is not PASS, or a partial status, never renders success, and a failure stays a failure", () => {
+    const { gate_verdict: _verdict, ...noVerdict } = MEASURED_CLEAN_RUN.data;
+    const cases: readonly (readonly [string, MeasuredReply, string])[] = [
+      ["gate_verdict null", withData(MEASURED_CLEAN_RUN, { gate_verdict: null }), "unknown"],
+      ["no gate_verdict", { ...MEASURED_CLEAN_RUN, data: noVerdict }, "unknown"],
+      ["COULD_NOT_JUDGE under status partial", { ...withData(MEASURED_CLEAN_RUN, { gate_verdict: "COULD_NOT_JUDGE" }), status: "partial" }, "unknown"],
+      ["status partial beside a PASS verdict", { ...MEASURED_CLEAN_RUN, status: "partial" }, "unknown"],
+      ["FAIL under status error", { ...withData(MEASURED_CLEAN_RUN, { gate_verdict: "FAIL", gate_passed: false }), status: "error" }, "failure"],
+    ];
+    for (const [label, reply, tone] of cases) {
+      const reading = readingOf(reply, MEASURED_HEAD);
+      expect(reading.freshness, label).toBe("current");
+      expect(reading.snapshot.node.statusText, label).toBe(`${MEASURED_TEXT} · basis current`);
+      expect(reading.snapshot.node.statusTone, label).toBe(tone);
+    }
+  });
+
+  const { contract_version: _contract, ...offContract } = MEASURED_CLEAN_RUN;
+  const { gated_tree: _tree, ...noTree } = MEASURED_CLEAN_RUN.data;
+  const withheldPins: [string, unknown, string][] = [
+    ["a reply with no contract_version", offContract, REASONS.contract],
+    ["a reply on another result contract", { ...MEASURED_CLEAN_RUN, contract_version: "result-envelope/v2" }, REASONS.contract],
+    ["an inherited contract_version", Object.assign(Object.create({ contract_version: "result-envelope/v1" }) as Record<string, unknown>, offContract), REASONS.contract],
+    ["a null data block", { ...MEASURED_CLEAN_RUN, data: null }, REASONS.data],
+    ["a string data block", { ...MEASURED_CLEAN_RUN, data: "data" }, REASONS.data],
+    ["an array data block", { ...MEASURED_CLEAN_RUN, data: [MEASURED_CLEAN_RUN.data] }, REASONS.data],
+    ["an empty gated_commit", withData(MEASURED_CLEAN_RUN, { gated_commit: "" }), REASONS.commit],
+    ["a numeric gated_commit", withData(MEASURED_CLEAN_RUN, { gated_commit: 8 }), REASONS.commit],
+    ["a symbolic gated_commit", withData(MEASURED_CLEAN_RUN, { gated_commit: "HEAD" }), REASONS.commit],
+    ["an upper-case gated_commit", withData(MEASURED_CLEAN_RUN, { gated_commit: PIN_COMMIT.toUpperCase() }), REASONS.commit],
+    ["a truncated gated_commit", withData(MEASURED_CLEAN_RUN, { gated_commit: PIN_COMMIT.slice(0, 39) }), REASONS.commit],
+    ["a content digest in place of the commit", withData(MEASURED_CLEAN_RUN, { gated_commit: DIRTY_OVERLAY }), REASONS.commit],
+    ["the dirty-tree snapshot id in place of the commit", withData(MEASURED_CLEAN_RUN, { gated_commit: MEASURED_DIRTY_RUN.data.source_snapshot_id }), REASONS.commit],
+    ["an inherited gated_commit", { ...MEASURED_CLEAN_RUN, data: Object.assign(Object.create({ gated_commit: PIN_COMMIT }) as Record<string, unknown>, { gated_commit: 8, gated_tree: PIN_TREE }) }, REASONS.commit],
+    ["a commit beside a null gated_tree", withData(MEASURED_CLEAN_RUN, { gated_tree: null }), REASONS.tree],
+    ["a commit with no gated_tree", { ...MEASURED_CLEAN_RUN, data: noTree }, REASONS.tree],
+    ["an inherited gated_tree", { ...MEASURED_CLEAN_RUN, data: Object.assign(Object.create({ gated_tree: PIN_TREE }) as Record<string, unknown>, noTree) }, REASONS.tree],
+    ["a symbolic gated_tree", withData(MEASURED_CLEAN_RUN, { gated_tree: "HEAD^{tree}" }), REASONS.tree],
+    ["a numeric gated_tree", withData(MEASURED_CLEAN_RUN, { gated_tree: 0 }), REASONS.tree],
+  ];
+  it.each(withheldPins)("wb-4ap.17 (R17 e): %s yields no subjectBasis, exactly one diagnostic naming the reason, basis UNKNOWN, never a bare current and never a success tone", (_label, reply, reason) => {
+    for (const head of [MEASURED_HEAD, undefined]) {
+      const reading = forgeGateRunReading(reply, MEASURED_CLEAN_RUN.operation_id, { ...options, observedAt: T2, observedHead: head });
+      if (reading === undefined) throw new Error("a withheld pin still settles its operation");
+      expect("subjectBasis" in reading.snapshot).toBe(false);
+      expect(reading.basis.state).toBe("withheld");
+      expect(reading.freshness).toBe("UNKNOWN");
+      expect(reading.diagnostics).toHaveLength(1);
+      expect(reading.diagnostics[0]).toContain(reason);
+      expect(reading.snapshot.node.statusText).toMatch(/ · basis UNKNOWN$/);
+      expect(reading.snapshot.node.statusText).not.toMatch(/current/);
+      expect(reading.snapshot.node.statusTone).not.toBe("success");
+    }
+  });
+
+  it("wb-4ap.17 (R17 f): with no observed head, or a head reading that is no git object id pair, a pinned verdict keeps its subjectBasis but reads indeterminate, never current and never success, with one diagnostic", () => {
+    const unobserved: readonly (ForgeObservedHead | undefined)[] = [
+      undefined, { commit: "HEAD", tree: PIN_TREE }, { commit: PIN_COMMIT.toUpperCase(), tree: PIN_TREE }, { commit: PIN_COMMIT, tree: "" },
+    ];
+    for (const head of unobserved) {
+      const reading = readingOf(MEASURED_CLEAN_RUN, head);
+      const label = JSON.stringify(head ?? null);
+      expect(reading.snapshot.subjectBasis, label).toBe(PIN_COMMIT);
+      expect(reading.freshness, label).toBe("indeterminate");
+      expect(reading.snapshot.node.statusText, label).toBe(`${MEASURED_TEXT} · basis indeterminate`);
+      expect(reading.snapshot.node.statusTone, label).toBe("unknown");
+      expect(reading.diagnostics, label).toHaveLength(1);
+      expect(reading.diagnostics[0], label).toContain(REASONS.unobserved);
+    }
+    // A head reading whose tree is empty never meets a dirty run's "" tree as an equal.
+    expect(readingOf(MEASURED_DIRTY_RUN, { commit: PIN_COMMIT, tree: "" }).freshness).toBe("indeterminate");
+  });
+
+  it("wb-4ap.17 (R17 g): identity_closure path lists are disclosure only - planted or removed, they move neither the basis nor anything the reading shows", () => {
+    const closure = MEASURED_DIRTY_RUN.data.identity_closure;
+    const planted = {
+      ...closure, head_moved_paths: ["README.md"], overlay_moved_paths: ["src/a.ts"], overlay_new_untracked_paths: ["new.txt"],
+      overlay_dirty_at_start_paths: [], overlay_untracked_at_start_paths: ["untracked.txt"], overlay_moved: true, reason: "overlay-moved",
+    };
+    const { identity_closure: _closure, ...noClosure } = MEASURED_DIRTY_RUN.data;
+    const dirty = readingOf(MEASURED_DIRTY_RUN, MEASURED_HEAD);
+    expect(readingOf(withData(MEASURED_DIRTY_RUN, { identity_closure: planted }), MEASURED_HEAD)).toStrictEqual(dirty);
+    expect(readingOf({ ...MEASURED_DIRTY_RUN, data: noClosure }, MEASURED_HEAD)).toStrictEqual(dirty);
+    const clean = readingOf(MEASURED_CLEAN_RUN, MEASURED_HEAD);
+    expect(readingOf(withData(MEASURED_CLEAN_RUN, { identity_closure: planted }), MEASURED_HEAD)).toStrictEqual(clean);
+    expect(clean.freshness).toBe("current");
+  });
+
+  it("wb-4ap.17 (R17 h): the reading settles only its own operation, and it is the a3s reading of the same reply plus the basis, which the a3s building blocks never read", () => {
+    expect(forgeGateRunReading(MEASURED_CLEAN_RUN, OP, { ...options, observedAt: T2, observedHead: MEASURED_HEAD })).toBeUndefined();
+    const { terminal_disposition: _disposition, ...noDisposition } = MEASURED_CLEAN_RUN;
+    expect(forgeGateRunReading(noDisposition, MEASURED_CLEAN_RUN.operation_id, { ...options, observedAt: T2, observedHead: MEASURED_HEAD })).toBeUndefined();
+    const terminal = decodeForgeOperationTerminal(MEASURED_CLEAN_RUN, MEASURED_CLEAN_RUN.operation_id, T2);
+    if (terminal === undefined) throw new Error("the measured reply names its own terminal");
+    const a3s = forgeOperationTerminalSnapshot(terminal, options);
+    expect(a3s.node.statusText).toBe(MEASURED_TEXT);
+    expect("subjectBasis" in a3s).toBe(false);
+    const { subjectBasis, node, ...rest } = readingOf(MEASURED_CLEAN_RUN, MEASURED_HEAD).snapshot;
+    const { node: a3sNode, ...a3sRest } = a3s;
+    expect(subjectBasis).toBe(PIN_COMMIT);
+    expect(rest).toStrictEqual(a3sRest);
+    expect({ ...node, statusText: a3sNode.statusText }).toStrictEqual(a3sNode);
+  });
+
+  it("wb-4ap.17 (R17 i): through the live observer the host's head seam is read when the reply settles - equal settles current with the pinned subjectBasis, a later head stale, no head indeterminate", async () => {
+    const cases = [[MEASURED_HEAD, "current", "success"], [LATER_HEAD, "stale", "unknown"], [undefined, "indeterminate", "unknown"]] as const;
+    for (const [head, word, tone] of cases) {
+      const projection = new ObservationProjection();
+      const fake = fakeConnection();
+      let reads = 0;
+      const observedHead = (): ForgeObservedHead | undefined => { reads += 1; return head; };
+      const pending = observeForgeGateRun(fake.connection, { ...deps(projection).deps, observedHead });
+      fake.frame("operation.started", { operation_id: MEASURED_CLEAN_RUN.operation_id, request_id: "2" });
+      const observer = await pending;
+      fake.frame("gate.step_finished", { operation_id: MEASURED_CLEAN_RUN.operation_id, seq: 1, step: "alpha", outcome: "passed", exit_code: 0 });
+      expect(reads, word).toBe(0);
+      fake.reply(MEASURED_CLEAN_RUN);
+      expect(await observer.settled, word).toBe("settled");
+      expect(reads, word).toBe(1);
+      const node = projection.query({ scope: SCOPE, ref: forgeOperationRef(MEASURED_CLEAN_RUN.operation_id), limit: 1 }).nodes[0];
+      expect(node?.presentation.statusText, word).toBe(`${MEASURED_TEXT} · basis ${word}`);
+      expect(node?.presentation.statusTone, word).toBe(tone);
+      expect(node?.subjectBasis, word).toBe(PIN_COMMIT);
+    }
+  });
+
+  it("wb-4ap.17 (R17 i): a head seam that throws settles the node indeterminate and the settlement never rejects; without the seam the observer keeps the a3s reading", async () => {
+    const projection = new ObservationProjection();
+    const fake = fakeConnection();
+    const pending = observeForgeGateRun(fake.connection, { ...deps(projection).deps, observedHead: () => { throw new Error("git unavailable"); } });
+    fake.frame("operation.started", { operation_id: MEASURED_CLEAN_RUN.operation_id, request_id: "2" });
+    const observer = await pending;
+    fake.reply(MEASURED_CLEAN_RUN);
+    expect(await observer.settled).toBe("settled");
+    const node = projection.query({ scope: SCOPE, ref: forgeOperationRef(MEASURED_CLEAN_RUN.operation_id), limit: 1 }).nodes[0];
+    expect(node?.presentation.statusText).toBe(`${MEASURED_TEXT} · basis indeterminate`);
+    expect(node?.presentation.statusTone).toBe("unknown");
+    const legacy = new ObservationProjection();
+    const plain = fakeConnection();
+    const started = observeForgeGateRun(plain.connection, deps(legacy).deps);
+    plain.frame("operation.started", { operation_id: MEASURED_CLEAN_RUN.operation_id, request_id: "2" });
+    const a3s = await started;
+    plain.reply(MEASURED_CLEAN_RUN);
+    expect(await a3s.settled).toBe("settled");
+    const a3sNode = legacy.query({ scope: SCOPE, ref: forgeOperationRef(MEASURED_CLEAN_RUN.operation_id), limit: 1 }).nodes[0];
+    expect(a3sNode?.presentation.statusText).toBe(MEASURED_TEXT);
+    expect(a3sNode?.subjectBasis).toBeUndefined();
   });
 });

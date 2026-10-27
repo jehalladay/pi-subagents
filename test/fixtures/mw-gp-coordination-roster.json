@@ -1,0 +1,556 @@
+{
+  "comment": "wb-e66.5 (MW-GRAPH-POLICY-COORDINATION-R10; the hk9l/5jha roster pattern): the OUT-OF-FILE anchor of test/workbench-mw-gp-coordination-census.test.ts. rows: every judged row of test/helpers/gp-mw-coordination-census.ts in census order (id, label, pins). quotes: each pin's quote (the quotes of a row tile its label). witnesses: each pin's witness as measured at the cut (the census compares every pin's witness with this one). residuals: the members of each named residual family (each a pinned quiet row). tests: every test the census file registers, in order. producer: MechanicalWorkflows docs/programs/graph-policy-coordination-2026-10-18/README.md line 23 at the bead's pin, read with git show from the local checkout (the census never re-reads the producer).",
+  "bead": "wb-e66.5",
+  "rows": [
+    {
+      "id": "A",
+      "label": "one vitest census (wb-cax.25 style) pins that grep at 0 and names this bead",
+      "pins": [
+        "A1",
+        "A2",
+        "A3"
+      ]
+    },
+    {
+      "id": "B",
+      "label": "any future adoption must first add a dated TRACEABILITY row citing each of the eight gate receipts and the shadow-mode run (zero control decisions issued, zero native verbs reached) before the census allowlist widens",
+      "pins": [
+        "B1",
+        "B2",
+        "B3",
+        "B4"
+      ]
+    },
+    {
+      "id": "C",
+      "label": "a canary without a recorded rollback path is refused by the same census",
+      "pins": [
+        "C1"
+      ]
+    },
+    {
+      "id": "S",
+      "label": "one census pins zero GraphPolicy/GraphDataIR/mw.training-export references in src and test",
+      "pins": [
+        "S1",
+        "S2",
+        "S3"
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the named residual families, each member a pinned quiet row",
+      "pins": [
+        "Q1",
+        "Q2",
+        "Q3",
+        "Q4",
+        "Q5",
+        "Q6"
+      ]
+    }
+  ],
+  "quotes": {
+    "A1": "one vitest census (wb-cax.25 style)",
+    "A2": "pins that grep at 0",
+    "A3": "and names this bead",
+    "B1": "any future adoption must first add a dated TRACEABILITY row",
+    "B2": "citing each of the eight gate receipts",
+    "B3": "and the shadow-mode run (zero control decisions issued, zero native verbs reached)",
+    "B4": "before the census allowlist widens",
+    "C1": "a canary without a recorded rollback path is refused by the same census",
+    "S1": "one census pins zero GraphPolicy/GraphDataIR/mw.training-export references",
+    "S2": "in src",
+    "S3": "and test",
+    "Q1": "R-COMPOSED",
+    "Q2": "R-COMPUTED-LAUNCH",
+    "Q3": "R-WRAPPED-LAUNCH",
+    "Q4": "R-OTHER-LAUNCHER",
+    "Q5": "R-TEST-MENTION",
+    "Q6": "R-LOCAL-SCORER"
+  },
+  "witnesses": {
+    "A1": {
+      "census": "test/workbench-mw-gp-coordination-census.test.ts",
+      "include": [
+        "test/**/*.test.ts"
+      ],
+      "excluded": false,
+      "pinCases": 17
+    },
+    "A2": {
+      "src": [],
+      "srcFloor": true,
+      "listing": true,
+      "planted": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli"
+      ],
+      "pin": {
+        "commit": "758ec18187a5d66ba40b766caad38754b5313558",
+        "files": {
+          "src": 115,
+          "test": 410,
+          "docs": 59
+        },
+        "findings": []
+      },
+      "pinPlant": [
+        "docs/workbench/zz-plant.md: names GraphDataIR"
+      ]
+    },
+    "A3": {
+      "suite": "mw gp coordination census (wb-e66.5, MW-GRAPH-POLICY-COORDINATION-R10)",
+      "bead": "wb-e66.5",
+      "requirement": "MW-GRAPH-POLICY-COORDINATION-R10"
+    },
+    "B1": {
+      "no adoption": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli"
+      ],
+      "a TRACEABILITY.md receipt": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+        "src/workbench/gp-shadow.ts: receipt-route docs/workbench/TRACEABILITY.md"
+      ],
+      "a receipt outside receipts/": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+        "src/workbench/gp-shadow.ts: receipt-route docs/workbench/15-implementation-program.md"
+      ],
+      "an absent receipt": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+        "src/workbench/gp-shadow.ts: receipt-missing docs/workbench/receipts/wb-zz1.md"
+      ],
+      "an undated record": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+        "src/workbench/gp-shadow.ts: record-missing docs/workbench/receipts/wb-zz1.md"
+      ],
+      "a record of another path": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+        "src/workbench/gp-shadow.ts: record-missing docs/workbench/receipts/wb-zz1.md"
+      ],
+      "two records": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+        "src/workbench/gp-shadow.ts: record-duplicate docs/workbench/receipts/wb-zz1.md"
+      ],
+      "a complete record": []
+    },
+    "B2": {
+      "dropped": {
+        "original Policy/reconcile laws unchanged": [
+          "src/workbench/gp-shadow.ts: names GraphPolicy",
+          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
+        ],
+        "pure GP call": [
+          "src/workbench/gp-shadow.ts: names GraphPolicy",
+          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+          "src/workbench/gp-shadow.ts: term-uncited pure GP call"
+        ],
+        "exact source ID mapping": [
+          "src/workbench/gp-shadow.ts: names GraphPolicy",
+          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping"
+        ],
+        "original behavior probability": [
+          "src/workbench/gp-shadow.ts: names GraphPolicy",
+          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+          "src/workbench/gp-shadow.ts: term-uncited original behavior probability"
+        ],
+        "no native-effect bypass": [
+          "src/workbench/gp-shadow.ts: names GraphPolicy",
+          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass"
+        ],
+        "stale result rejection": [
+          "src/workbench/gp-shadow.ts: names GraphPolicy",
+          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+          "src/workbench/gp-shadow.ts: term-uncited stale result rejection"
+        ],
+        "evidence sidecar parity": [
+          "src/workbench/gp-shadow.ts: names GraphPolicy",
+          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity"
+        ],
+        "Forge-installed integration tests": [
+          "src/workbench/gp-shadow.ts: names GraphPolicy",
+          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests"
+        ]
+      },
+      "unreferenced": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+        "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping"
+      ],
+      "oneLine": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+        "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+        "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+        "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+        "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+        "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+        "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+        "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+        "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests"
+      ],
+      "terms": 8
+    },
+    "B3": {
+      "missing": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+        "src/workbench/gp-shadow.ts: shadow-run-uncited"
+      ],
+      "no control decisions phrase": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+        "src/workbench/gp-shadow.ts: shadow-run-uncited"
+      ],
+      "no native verbs phrase": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+        "src/workbench/gp-shadow.ts: shadow-run-uncited"
+      ],
+      "unreferenced": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+        "src/workbench/gp-shadow.ts: shadow-run-uncited"
+      ],
+      "cited": []
+    },
+    "B4": {
+      "live": {
+        "adoptions": 0,
+        "findings": []
+      },
+      "unadmitted": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli"
+      ],
+      "admitted": [],
+      "stale": [
+        "src/workbench/clean.ts: adoption-stale"
+      ],
+      "duplicate": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+        "src/workbench/gp-shadow.ts: adoption-duplicate"
+      ],
+      "another leg's adoption": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli"
+      ]
+    },
+    "C1": {
+      "a canary without a rollback path": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+        "src/workbench/gp-shadow.ts: canary-rollback-unrecorded"
+      ],
+      "a canary with an unreferenced rollback path": [
+        "src/workbench/gp-shadow.ts: names GraphPolicy",
+        "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+        "src/workbench/gp-shadow.ts: canary-rollback-unrecorded"
+      ],
+      "a canary with a recorded rollback path": [],
+      "a shadow adapter without a rollback path": []
+    },
+    "S1": {
+      "hits": {
+        "GraphPolicy": [
+          "GraphPolicy"
+        ],
+        "graph-policy-cli": [
+          "GraphPolicy"
+        ],
+        "GRAPH_POLICY": [
+          "GraphPolicy"
+        ],
+        "graph policy": [
+          "GraphPolicy"
+        ],
+        "graphpolicy.snapshot.c1": [
+          "GraphPolicy"
+        ],
+        "loadGraphPolicyCLI": [
+          "GraphPolicy"
+        ],
+        "GraphDataIR": [
+          "GraphDataIR"
+        ],
+        "graph_data_ir": [
+          "GraphDataIR"
+        ],
+        "MicroPolicy": [
+          "MicroPolicy"
+        ],
+        "@micro-policy/core": [
+          "MicroPolicy"
+        ],
+        "mw.training-export.v1": [
+          "mw.training-export"
+        ],
+        "mw_training_export": [
+          "mw.training-export"
+        ]
+      },
+      "quiet": {
+        "graph": [],
+        "policy": [],
+        "GraphQL policy": [],
+        "training-export": [],
+        "mw export": [],
+        "data ir graph": []
+      },
+      "parts": {
+        "GraphPolicy": [
+          "graph",
+          "policy"
+        ],
+        "GraphDataIR": [
+          "graph",
+          "data",
+          "ir"
+        ],
+        "MicroPolicy": [
+          "micro",
+          "policy"
+        ],
+        "mw.training-export": [
+          "mw",
+          "training",
+          "export"
+        ]
+      }
+    },
+    "S2": {
+      "an import of graph-policy-cli": [
+        "src/workbench/zz.ts: names GraphPolicy",
+        "src/workbench/zz.ts: imports graph-policy-cli"
+      ],
+      "an export from @micro-policy/core": [
+        "src/workbench/zz.ts: names MicroPolicy",
+        "src/workbench/zz.ts: imports @micro-policy/core"
+      ],
+      "a require of gp": [
+        "src/workbench/zz.ts: imports gp"
+      ],
+      "an import-equals of gp": [
+        "src/workbench/zz.ts: imports gp"
+      ],
+      "a dynamic import of mp/core": [
+        "src/workbench/zz.ts: imports mp/core"
+      ],
+      "spawn gp": [
+        "src/workbench/zz.ts: launches gp"
+      ],
+      "a shell line gp rpc": [
+        "src/workbench/zz.ts: launches gp rpc --stdio"
+      ],
+      "a Windows path to gp.exe": [
+        "src/workbench/zz.ts: launches C:\\tools\\gp.exe"
+      ],
+      "an absolute path to gp": [
+        "src/workbench/zz.ts: launches /opt/bin/gp"
+      ],
+      "a member call of mp": [
+        "src/workbench/zz.ts: launches mp"
+      ],
+      "a template program": [
+        "src/workbench/zz.ts: launches gp"
+      ],
+      "a const-bound program": [
+        "src/workbench/zz.ts: launches gp"
+      ],
+      "a version probe in src": [
+        "src/workbench/zz.ts: launches gp"
+      ],
+      "a fork of a GraphPolicyCLI module": [
+        "src/workbench/zz.ts: names GraphPolicy",
+        "src/workbench/zz.ts: launches node_modules/graph-policy-cli/dist/main.js"
+      ],
+      "git (quiet)": [],
+      "gpg (quiet)": [],
+      "mpv (quiet)": [],
+      "a graph-view module (quiet)": []
+    },
+    "S3": {
+      "findings": [],
+      "testFloor": true,
+      "own": [
+        {
+          "path": "test/workbench-mw-gp-coordination-census.test.ts",
+          "read": true
+        },
+        {
+          "path": "test/helpers/gp-mw-coordination-census.ts",
+          "read": true
+        },
+        {
+          "path": "test/fixtures/mw-gp-coordination-roster.json",
+          "read": true
+        }
+      ],
+      "listing": true,
+      "plants": {
+        "an import of graph-policy-cli": [
+          "test/zz.test.ts: imports graph-policy-cli"
+        ],
+        "spawn gp sample": [
+          "test/zz.test.ts: launches gp"
+        ],
+        "a shell line gp eval": [
+          "test/zz.test.ts: launches gp eval --json"
+        ],
+        "a version probe, file form": [],
+        "a version probe, shell line": [],
+        "a version probe with a second argument": [
+          "test/zz.test.ts: launches gp"
+        ]
+      },
+      "scratch": {
+        "listed": {
+          "src": [
+            "src/nested/planted.ts"
+          ],
+          "test": [
+            "test/nested/planted.ts"
+          ]
+        },
+        "src": [
+          "src/nested/planted.ts: names GraphPolicy",
+          "src/nested/planted.ts: imports graph-policy-cli",
+          "src/nested/planted.ts: launches gp"
+        ],
+        "test": [
+          "test/nested/planted.ts: imports graph-policy-cli",
+          "test/nested/planted.ts: launches gp"
+        ]
+      }
+    },
+    "Q1": {
+      "members": [
+        "src/workbench/q1-concat.ts",
+        "src/workbench/q1-escape.ts",
+        "src/workbench/q1-codes.ts",
+        "src/workbench/q1-nbsp.ts"
+      ],
+      "findings": []
+    },
+    "Q2": {
+      "members": [
+        "src/workbench/q2-joined.ts",
+        "src/workbench/q2-env.ts",
+        "src/workbench/q2-alias.ts",
+        "src/workbench/q2-let.ts",
+        "src/workbench/q2-element.ts",
+        "src/workbench/q2-call.ts"
+      ],
+      "findings": []
+    },
+    "Q3": {
+      "members": [
+        "src/workbench/q3-env.ts",
+        "src/workbench/q3-chain.ts",
+        "src/workbench/q3-npx.ts",
+        "src/workbench/q3-quoted.ts",
+        "src/workbench/q3-group.ts"
+      ],
+      "findings": []
+    },
+    "Q4": {
+      "members": [
+        "src/workbench/q4-worker.ts",
+        "src/workbench/q4-execa.ts",
+        "test/q4-loader.test.ts"
+      ],
+      "findings": []
+    },
+    "Q5": {
+      "members": [
+        "test/q5-guard.test.ts",
+        "test/fixtures/q5-roster.json"
+      ],
+      "findings": []
+    },
+    "Q6": {
+      "members": [
+        "src/workbench/q6-scorer.ts"
+      ],
+      "findings": []
+    }
+  },
+  "residuals": {
+    "Q1": [
+      "src/workbench/q1-concat.ts",
+      "src/workbench/q1-escape.ts",
+      "src/workbench/q1-codes.ts",
+      "src/workbench/q1-nbsp.ts"
+    ],
+    "Q2": [
+      "src/workbench/q2-joined.ts",
+      "src/workbench/q2-env.ts",
+      "src/workbench/q2-alias.ts",
+      "src/workbench/q2-let.ts",
+      "src/workbench/q2-element.ts",
+      "src/workbench/q2-call.ts"
+    ],
+    "Q3": [
+      "src/workbench/q3-env.ts",
+      "src/workbench/q3-chain.ts",
+      "src/workbench/q3-npx.ts",
+      "src/workbench/q3-quoted.ts",
+      "src/workbench/q3-group.ts"
+    ],
+    "Q4": [
+      "src/workbench/q4-worker.ts",
+      "src/workbench/q4-execa.ts",
+      "test/q4-loader.test.ts"
+    ],
+    "Q5": [
+      "test/q5-guard.test.ts",
+      "test/fixtures/q5-roster.json"
+    ],
+    "Q6": [
+      "src/workbench/q6-scorer.ts"
+    ]
+  },
+  "tests": [
+    "A1: one vitest census (wb-cax.25 style)",
+    "A2: pins that grep at 0",
+    "A3: and names this bead",
+    "B1: any future adoption must first add a dated TRACEABILITY row",
+    "B2: citing each of the eight gate receipts",
+    "B3: and the shadow-mode run (zero control decisions issued, zero native verbs reached)",
+    "B4: before the census allowlist widens",
+    "C1: a canary without a recorded rollback path is refused by the same census",
+    "S1: one census pins zero GraphPolicy/GraphDataIR/mw.training-export references",
+    "S2: in src",
+    "S3: and test",
+    "Q1: R-COMPOSED",
+    "Q2: R-COMPUTED-LAUNCH",
+    "Q3: R-WRAPPED-LAUNCH",
+    "Q4: R-OTHER-LAUNCHER",
+    "Q5: R-TEST-MENTION",
+    "Q6: R-LOCAL-SCORER",
+    "rule 16: the rows, the residual families, the vocabulary, the terms and the allowlist are frozen at their measured shape",
+    "the outside anchors: the bead's own row binds the rows, the pin quotes, the vocabulary, the scopes, the pin, the terms and the phrases; the producer block carries the terms",
+    "roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/mw-gp-coordination-roster.json, in order and both ways; every pin reached its witness compare"
+  ],
+  "producer": {
+    "repo": "MechanicalWorkflows",
+    "sha": "4b8b974ca72bf2ed36b99e315e45857c6181fbe8",
+    "path": "docs/programs/graph-policy-coordination-2026-10-18/README.md",
+    "blob": "0dbff582a14c13e4b4b13cb1848a23b935d92697",
+    "line": 23,
+    "text": "Original Policy/reconcile laws unchanged; pure GP call, exact source ID mapping, original behavior probability, no native-effect bypass, stale result rejection, evidence sidecar parity and Forge-installed integration tests before any runtime rollout."
+  }
+}
