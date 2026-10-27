@@ -44,7 +44,9 @@
  *    spelling planted in either of two lists and stays quiet on near misses. The roster diff that both tiers use reports a
  *    result-level epistemic key as unexpected against the captured roster, so the rf-preview tier's live diff fails on the
  *    first capture from an rf that adds one, and the re-capture that follows reds T2. T3 (ARMED):
- *    the same holds for scenario triggers, the shipped speculative and notice keys among them. T4: the bead names the file the
+ *    the same holds for scenario triggers, the shipped speculative and notice keys among them. Since wb-grmo.1 landed its
+ *    speculative tripwire in that diff (speculativeMarkers in test/helpers/rf-render-fixture.ts, landing 545), the diff also
+ *    names those two members as speculative, and T3's live diff pins both readings. T4: the bead names the file the
  *    owed cases land in, test/workbench-reactivefiber-observer.test.ts, and today it spells no epistemic word, so "those cases"
  *    do not exist yet.
  *  D, the filing's second clause. D1: the docs/09 § Reader adapters section renders SENTENCE exactly once, with no HTML. The
@@ -64,9 +66,11 @@
  *  F, the owner filing (an anchor outside this file and its roster). F1: in the wb-grmo.2 row of the tracked bead export, the
  *    first until-then sentence of the notes is "Until then: <row T label>, and <row D label>.". Each of those labels is its
  *    pins' quotes in order, joined only by connectives. The title holds row Z's label exactly once.
- *  Q, the named residuals, each with a pinned quiet row. Q1 R-NESTED: a marker below the result level (the shipped block
- *    metadata, a provenance key beyond the roster's three-key floor) passes the roster diff, so no re-capture brings it to the
- *    roster. Q2 R-VALUE: an uncertified word carried as the value of a roster key passes unseen, since the roster lists keys.
+ *  Q, the named residuals, each with a pinned quiet row. Q1 R-NESTED: a marker below the result level outside the speculative
+ *    tripwire's names (a provenance key beyond the roster's three-key floor) passes the roster diff, so no re-capture brings it
+ *    to the roster. The shipped block metadata markers (rf.epistemic_status, rf.scenario_id) left the family when wb-grmo.1's
+ *    tripwire landed: the diff names them at any depth, and Q1 pins that reading beside the quiet one. Q2 R-VALUE: an
+ *    uncertified word carried as the value of a roster key passes unseen, since the roster lists keys.
  *    Q3 R-VOCABULARY: a key outside the vocabulary that carries the same meaning reads quiet on T2 and T3. Q4 R-SHARED-WORD:
  *    Z1 does not take hypothesis, which src code spells for its own relation kind.
  *
@@ -204,7 +208,7 @@ const PIN_TITLES: Readonly<Record<string, string>> = {
   Z1: "Z1 Pi claims nothing in code: no src module's identifiers, strings, templates or regexes spell an epistemic, scenario, uncertified or speculative word",
   Z2: "Z2 Pi composes no epistemic claim: an envelope marked with each RF-WM-001 word, the shipped block markers or the scenario form projects and evidences byte for byte as its unmarked twin",
   F1: "F1 the owner filing's until-then sentence is rows T and D joined, each label its pins' quotes, and the title holds row Z's clause once",
-  Q1: "Q1 R-NESTED: a marker below the result level (block metadata, a provenance key) passes the roster diff, so no re-capture brings it to the roster",
+  Q1: "Q1 R-NESTED: a marker below the result level outside the speculative tripwire's names (a provenance key) passes the roster diff, so no re-capture brings it to the roster",
   Q2: "Q2 R-VALUE: an uncertified word carried as the value of a roster key passes the roster diff unseen",
   Q3: "Q3 R-VOCABULARY: a key outside the vocabulary that carries the same meaning (belief_state, what_if_view) reads quiet on T2 and T3",
   Q4: "Q4 R-SHARED-WORD: Z1 does not take hypothesis, which src code spells for Pi's own relation kind",
@@ -410,7 +414,12 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const scenarioForm = reading(markScenario) as JsonObject;
     const live = diff(rf, (scenarioForm.source as JsonObject).result as JsonObject);
     const witness = { hits, fired: fired.length, quiet: quiet.length, liveDiff: live };
-    expect(witness).toStrictEqual({ hits: [], fired: 24, quiet: 4, liveDiff: ["unexpected result.notice", "unexpected result.speculative"] });
+    expect(witness).toStrictEqual({
+      hits: [],
+      fired: 24,
+      quiet: 4,
+      liveDiff: ["unexpected result.notice", "unexpected result.speculative", "speculative result.notice", "speculative result.speculative"],
+    });
     return witness;
   },
   T4: () => {
@@ -533,7 +542,11 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "provenance.epistemic_status": { ...base, provenance: { ...(base.provenance as JsonObject), epistemic_status: "hypothesis" } },
     };
     const witness = { plants: Object.keys(plants), failures: Object.values(plants).map(result => diff(rf, result)), triggers: triggers(rf, "epistemic").length };
-    expect(witness).toStrictEqual({ plants: ["blocks[0].metadata.rf.epistemic_status", "provenance.epistemic_status"], failures: [[], []], triggers: 0 });
+    expect(witness).toStrictEqual({
+      plants: ["blocks[0].metadata.rf.epistemic_status", "provenance.epistemic_status"],
+      failures: [['speculative result.blocks[0].metadata["rf.epistemic_status"]', 'speculative result.blocks[0].metadata["rf.scenario_id"]'], []],
+      triggers: 0,
+    });
     return witness;
   },
   Q2: () => {

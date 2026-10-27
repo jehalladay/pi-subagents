@@ -44,7 +44,9 @@
             "quiet": 4,
             "liveDiff": [
               "unexpected result.notice",
-              "unexpected result.speculative"
+              "unexpected result.speculative",
+              "speculative result.notice",
+              "speculative result.speculative"
             ]
           }
         },
@@ -168,7 +170,7 @@
       "pins": [
         {
           "id": "Q1",
-          "title": "Q1 R-NESTED: a marker below the result level (block metadata, a provenance key) passes the roster diff, so no re-capture brings it to the roster",
+          "title": "Q1 R-NESTED: a marker below the result level outside the speculative tripwire's names (a provenance key) passes the roster diff, so no re-capture brings it to the roster",
           "quote": null,
           "witness": {
             "plants": [
@@ -176,7 +178,10 @@
               "provenance.epistemic_status"
             ],
             "failures": [
-              [],
+              [
+                "speculative result.blocks[0].metadata[\"rf.epistemic_status\"]",
+                "speculative result.blocks[0].metadata[\"rf.scenario_id\"]"
+              ],
               []
             ],
             "triggers": 0
@@ -284,7 +289,7 @@
     "Z1 Pi claims nothing in code: no src module's identifiers, strings, templates or regexes spell an epistemic, scenario, uncertified or speculative word",
     "Z2 Pi composes no epistemic claim: an envelope marked with each RF-WM-001 word, the shipped block markers or the scenario form projects and evidences byte for byte as its unmarked twin",
     "F1 the owner filing's until-then sentence is rows T and D joined, each label its pins' quotes, and the title holds row Z's clause once",
-    "Q1 R-NESTED: a marker below the result level (block metadata, a provenance key) passes the roster diff, so no re-capture brings it to the roster",
+    "Q1 R-NESTED: a marker below the result level outside the speculative tripwire's names (a provenance key) passes the roster diff, so no re-capture brings it to the roster",
     "Q2 R-VALUE: an uncertified word carried as the value of a roster key passes the roster diff unseen",
     "Q3 R-VOCABULARY: a key outside the vocabulary that carries the same meaning (belief_state, what_if_view) reads quiet on T2 and T3",
     "Q4 R-SHARED-WORD: Z1 does not take hypothesis, which src code spells for Pi's own relation kind",
