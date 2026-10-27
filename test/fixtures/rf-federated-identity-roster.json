@@ -324,6 +324,7 @@
             ],
             "scopeOnDisk": true,
             "scopeReadInFull": true,
+            "scopeSized": true,
             "hits": [],
             "templateFloorMet": true
           }
@@ -478,6 +479,7 @@
             ],
             "scopeOnDisk": true,
             "scopeReadInFull": true,
+            "scopeSized": true,
             "hits": []
           }
         }
@@ -850,7 +852,7 @@
     },
     {
       "id": "PC",
-      "label": "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and two-root judgment, and the A5 and C5 src scans over a planted file, over each live rf-scope file and over each rf-scope file read short",
+      "label": "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and two-root judgment, and the A5 and C5 src scans over a planted file, over each live rf-scope file and over each rf-scope file read short through the tree alone or through the tree and the disk reader together",
       "pins": [
         {
           "id": "PC1",
@@ -909,6 +911,7 @@
             ],
             "scopeOnDisk": true,
             "scopeReadInFull": true,
+            "scopeSized": true,
             "hits": [
               "src/workbench/rf-federated-census-plant.ts: template link.locator",
               "src/workbench/rf-federated-census-plant.ts: key link.path",
@@ -932,6 +935,7 @@
             ],
             "scopeOnDisk": true,
             "scopeReadInFull": true,
+            "scopeSized": true,
             "hits": [
               "src/workbench/rf-federated-census-plant.ts: point.workspaceId | point.revision",
               "src/workbench/rf-federated-census-plant.ts: point.workspaceId + point.epoch",
@@ -989,6 +993,28 @@
             "readings": [
               {
                 "unread": [
+                  "own"
+                ],
+                "unsized": [],
+                "anchorsUnread": [],
+                "offDisk": []
+              }
+            ],
+            "missed": [],
+            "untargeted": [],
+            "anchorsReadShort": [
+              true,
+              true
+            ]
+          }
+        },
+        {
+          "id": "PC9",
+          "witness": {
+            "readings": [
+              {
+                "unread": [],
+                "unsized": [
                   "own"
                 ],
                 "anchorsUnread": [],
