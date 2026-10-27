@@ -4,11 +4,14 @@
  * reading). Everything here is pure over the inputs it is handed except the four listers (gitList, walkList,
  * ignoredOf, pinTree), which read only the repository they are given through git and the filesystem. Nothing here
  * starts gp or mp, fakes a GraphPolicyCLI binary, adds a dependency or implements an adapter: the planted modules and
- * receipts are text handed to the judges.
+ * receipts are text handed to the judges. wb-5esj (the landing-542 verdict's F2 and F3): the means reader reads a program,
+ * a const's binding and a require or import() specifier through its wrappers, and the admission judge reads a receipt's
+ * rendered view and matches the record's path as a whole path.
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import { lstatSync, readdirSync } from "node:fs";
 import { extname, join } from "node:path";
+import { marked, type Token, type Tokens } from "marked";
 import ts from "typescript";
 
 // ---- the vocabulary (the statement's "GraphPolicy/GraphDataIR/mw.training-export" and the filing grep's four words) ----
@@ -84,23 +87,37 @@ export interface Means {
   readonly versionProbe: boolean;
 }
 
-/** The string a first argument reads as: a string literal, a template's literal head, or a same-file const bound to a string literal. */
+/**
+ * An expression read through its wrappers: parentheses and the as, satisfies, angle-bracket and non-null assertions, none
+ * of which changes the value (wb-5esj F2: "gp" as const, ("gp"), "gp" as string and "gp" satisfies string are "gp").
+ */
+function unwrapped(node: ts.Expression): ts.Expression {
+  let current = node;
+  while (ts.isParenthesizedExpression(current) || ts.isAsExpression(current) || ts.isSatisfiesExpression(current) || ts.isTypeAssertionExpression(current) || ts.isNonNullExpression(current)) {
+    current = current.expression;
+  }
+  return current;
+}
+
+/** The string a first argument reads as, through its wrappers: a string literal, a template's literal head, or a same-file const bound to a string literal. */
 function argumentText(node: ts.Expression | undefined, consts: ReadonlyMap<string, string>): string | undefined {
   if (node === undefined) return undefined;
-  if (ts.isStringLiteralLike(node)) return node.text;
-  if (ts.isTemplateExpression(node)) return node.head.text;
-  if (ts.isIdentifier(node)) return consts.get(node.text);
+  const value = unwrapped(node);
+  if (ts.isStringLiteralLike(value)) return value.text;
+  if (ts.isTemplateExpression(value)) return value.head.text;
+  if (ts.isIdentifier(value)) return consts.get(value.text);
   return undefined;
 }
 
-/** Every const of the file bound to a string literal, by name (the first binding of a name wins). */
+/** Every const of the file bound to a string literal (read through its wrappers), by name (the first binding of a name wins). */
 function stringConsts(source: ts.SourceFile): Map<string, string> {
   const consts = new Map<string, string>();
   const visit = (node: ts.Node): void => {
     if (ts.isVariableDeclarationList(node) && (node.flags & ts.NodeFlags.Const) !== 0) {
       for (const declaration of node.declarations) {
-        if (ts.isIdentifier(declaration.name) && declaration.initializer !== undefined && ts.isStringLiteralLike(declaration.initializer) && !consts.has(declaration.name.text)) {
-          consts.set(declaration.name.text, declaration.initializer.text);
+        const value = declaration.initializer === undefined ? undefined : unwrapped(declaration.initializer);
+        if (ts.isIdentifier(declaration.name) && value !== undefined && ts.isStringLiteralLike(value) && !consts.has(declaration.name.text)) {
+          consts.set(declaration.name.text, value.text);
         }
       }
     }
@@ -120,7 +137,8 @@ export function meansOf(path: string, text: string): Means[] {
   const consts = stringConsts(source);
   const found: Means[] = [];
   const specifier = (node: ts.Expression | undefined): void => {
-    if (node !== undefined && ts.isStringLiteralLike(node) && isGpSpecifier(node.text)) found.push({ kind: "imports", text: node.text, versionProbe: false });
+    const value = node === undefined ? undefined : unwrapped(node);
+    if (value !== undefined && ts.isStringLiteralLike(value) && isGpSpecifier(value.text)) found.push({ kind: "imports", text: value.text, versionProbe: false });
   };
   const visit = (node: ts.Node): void => {
     if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) specifier(node.moduleSpecifier);
@@ -191,7 +209,51 @@ export interface DatedEntry {
   readonly text: string;
 }
 
-/** A receipt's dated entries: each "## YYYY-MM-DD ..." heading (a real month and day) up to the next level-1 or level-2 heading. */
+// ---- the rendered view of a receipt (wb-5esj F3: marked's lexer, the docs censuses' binding) ----
+
+const tokenText = (token: Token): string => {
+  const value: unknown = (token as { text?: unknown }).text;
+  return typeof value === "string" ? value : "";
+};
+const tokenChildren = (token: Token): readonly Token[] => {
+  const value: unknown = (token as { tokens?: unknown }).tokens;
+  return Array.isArray(value) ? (value as Token[]) : [];
+};
+const isHeading = (token: Token): token is Tokens.Heading => token.type === "heading";
+const isList = (token: Token): token is Tokens.List => token.type === "list";
+const isTable = (token: Token): token is Tokens.Table => token.type === "table";
+
+/** What a reader sees of inline tokens: HTML (a comment or a tag) and an image show no text; every other token its text. */
+function shownInline(tokens: readonly Token[]): string {
+  let out = "";
+  for (const token of tokens) {
+    if (token.type === "html" || token.type === "image") continue;
+    if (token.type === "br") out += "\n";
+    else if (tokenChildren(token).length > 0) out += shownInline(tokenChildren(token));
+    else out += tokenText(token);
+  }
+  return out;
+}
+
+/** What a reader sees of block tokens, one line per shown line: HTML blocks and code blocks (fenced or indented) show no record text. */
+function shownLines(tokens: readonly Token[]): string[] {
+  const lines: string[] = [];
+  for (const token of tokens) {
+    if (token.type === "html" || token.type === "code" || token.type === "space" || token.type === "hr" || token.type === "def") continue;
+    if (isList(token)) for (const item of token.items) lines.push(...shownLines(item.tokens));
+    else if (isTable(token)) for (const cells of [token.header, ...token.rows]) lines.push(cells.map(cell => shownInline(cell.tokens)).join(" | "));
+    else if (token.type === "blockquote") lines.push(...shownLines(tokenChildren(token)));
+    else lines.push(...(tokenChildren(token).length > 0 ? shownInline(tokenChildren(token)) : tokenText(token)).split("\n"));
+  }
+  return lines;
+}
+
+/**
+ * A receipt's dated entries, read from its rendered view (marked's lexer; wb-5esj F3): an entry opens at a level-2 ATX
+ * heading in the first column whose shown text starts with a real date (a real month and day) and runs to the next
+ * level-1 or level-2 heading; its text is that heading's line and the shown lines of the blocks after it, so what HTML or
+ * a code block holds is never part of a record.
+ */
 export function datedEntries(text: string): DatedEntry[] {
   const entries: DatedEntry[] = [];
   let current: { date: string; lines: string[] } | undefined;
@@ -199,31 +261,40 @@ export function datedEntries(text: string): DatedEntry[] {
     if (current !== undefined) entries.push({ date: current.date, text: current.lines.join("\n") });
     current = undefined;
   };
-  for (const line of text.split("\n")) {
-    if (/^#{1,2} /.test(line)) {
+  for (const token of marked.lexer(text)) {
+    if (isHeading(token) && token.depth <= 2) {
       close();
-      const match = /^## (\d{4})-(\d{2})-(\d{2})(?:\s|$)/.exec(line);
+      const line = `${"#".repeat(token.depth)} ${shownInline(token.tokens)}`;
+      const match = token.raw.startsWith("## ") ? /^## (\d{4})-(\d{2})-(\d{2})(?:\s|$)/.exec(line) : null;
       const month = Number(match?.[2]);
       const day = Number(match?.[3]);
       if (match !== null && month >= 1 && month <= 12 && day >= 1 && day <= 31) current = { date: `${match[1]}-${match[2]}-${match[3]}`, lines: [line] };
       continue;
     }
-    current?.lines.push(line);
+    current?.lines.push(...shownLines([token]));
   }
   close();
   return entries;
 }
 
+/** A path's characters: a record names a path only as a whole run of them, its closing dots (a sentence's end) dropped. */
+const PATH_RUN = /[A-Za-z0-9_./~+-]+/g;
+/** Whether a text names a path as a whole path (wb-5esj F3: src/workbench/gp-shadow.tsx names no src/workbench/gp-shadow.ts). */
+export function namesPath(text: string, path: string): boolean {
+  return (text.match(PATH_RUN) ?? []).some(run => run.replace(/\.+$/, "") === path);
+}
+
 /**
- * Why an adoption is not admitted: empty when its receipt's one dated record cites every term (each on a line of its own),
- * the shadow-mode run (both zero phrases on one line) and, for a canary, the rollback path, each line carrying a reference.
+ * Why an adoption is not admitted: empty when its receipt's one dated record (read from the rendered view, naming the
+ * adoption's path as a whole path) cites every term (each on a line of its own), the shadow-mode run (both zero phrases on
+ * one line) and, for a canary, the rollback path, each line carrying a reference the rendered view shows.
  */
 export function admissionFindings(adoption: Adoption, receipt: (path: string) => string | undefined): string[] {
   const at = adoption.path;
   if (!RECEIPT_ROUTE.test(adoption.receipt)) return [`${at}: receipt-route ${adoption.receipt}`];
   const text = receipt(adoption.receipt);
   if (text === undefined) return [`${at}: receipt-missing ${adoption.receipt}`];
-  const records = datedEntries(text).filter(entry => entry.text.includes(at));
+  const records = datedEntries(text).filter(entry => namesPath(entry.text, at));
   if (records.length === 0) return [`${at}: record-missing ${adoption.receipt}`];
   if (records.length > 1) return [`${at}: record-duplicate ${adoption.receipt}`];
   const lines = (records[0]?.text ?? "").split("\n");
@@ -395,6 +466,7 @@ export const QUOTES: Readonly<Record<string, string>> = {
   Q4: "R-OTHER-LAUNCHER",
   Q5: "R-TEST-MENTION",
   Q6: "R-LOCAL-SCORER",
+  Q7: "R-COORDINATED",
 };
 
 export const ROWS: readonly Row[] = [
@@ -406,10 +478,14 @@ export const ROWS: readonly Row[] = [
   },
   { id: "C", label: "a canary without a recorded rollback path is refused by the same census", pins: ["C1"] },
   { id: "S", label: "one census pins zero GraphPolicy/GraphDataIR/mw.training-export references in src and test", pins: ["S1", "S2", "S3"] },
-  { id: "Q", label: "the named residual families, each member a pinned quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6"] },
+  { id: "Q", label: "the named residual families, each member a pinned quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"] },
 ];
 
-/** The named residual families: what no reading here claims, each member a quiet row (the reader reports nothing for it). */
+/**
+ * The named residual families: what no reading here claims, each member a quiet row (the reader reports nothing for it).
+ * R-COORDINATED (Q7), whose members are hollows of the judged set rather than texts, lives beside the outside anchors in the
+ * census file.
+ */
 export const RESIDUALS: Readonly<Record<string, readonly { readonly leg: Leg; readonly path: string; readonly text: string }[]>> = {
   // A vocabulary word built at run time, spelled through an escape, or split by a separator outside space, tab, dot,
   // underscore and hyphen (a no-break space): the text reader reads source characters only.
