@@ -38,7 +38,10 @@ it("rejects wildcard role capabilities",()=>{
 // force now ("Negative, in force now" in its acceptance), bound to no sentence. The served-leaves negative judges every
 // docs/workbench page twice (refusal #1 U2): as a reader sees it (the RENDERED LEG below) and as its source reads (the
 // SOURCE LEG, sentencesIn), so a served sentence reds whether its markup hides it from the source or its source hides it
-// from the reader.
+// from the reader. Refusal #2's class-level guard widens both legs: an HTML break or block tag reads as white space to the
+// reader (U1), a reader's sentence is never split after a listed abbreviation or before a lower-case continuation (U2),
+// and serve in every form is the served claim (U3); the family members neither leg reads are named residuals, each with
+// a pinned quiet row.
 // ---------------------------------------------------------------------------------------------
 installScratchLeakGuard();
 
@@ -62,7 +65,8 @@ const RF_COMMANDS: readonly string[] = [
 const RECIPE_STEP = new RegExp(`\\brf\\b(?:\\s+-\\S+(?:\\s+[^\\s-]\\S*)?)*\\s+(?:${RF_COMMANDS.join("|")})\\b`);
 /** The four rf leaves the bead's negative names, in their spaced, dotted, hyphenated or underscored spellings. */
 const NAMED_LEAF = /\b(?:graph[ ._-]impact|graph[ ._-]candidate|optic[ ._-]list|view[ ._-]list)\b/i;
-const SERVED_WORD = /\bserv(?:ed|es|ing)\b/i;
+/** Every form of the verb a reader reads as the served claim (refusal #2 U3): serve, serves, served and serving. */
+const SERVED_WORD = /\bserv(?:e|es|ed|ing)\b/i;
 /** Directories no repository walk below enters: dependencies, git internals and build or report output. */
 const WALK_SKIP: ReadonlySet<string> = new Set(["node_modules", ".git", "dist", ".forge", "coverage"]);
 
@@ -215,8 +219,36 @@ const skillCopies = (base: string): string[] =>
 /** A line that starts a markdown block of its own: a list item, a heading, a table row, a quote or a fence. */
 const BLOCK_START = /^\s*(?:[-*+]\s|\d+[.)]\s|#{1,6}\s|\||>|```)/;
 /**
+ * Abbreviations whose full stop never ends a reader's sentence (refusal #2 U2): the guard's e.g., i.e., etc. and vs., and
+ * the Latin and English abbreviations of technical prose beside them, matched in any case.
+ */
+const ABBREVIATIONS: readonly string[] = ["e.g.", "i.e.", "etc.", "vs.", "cf.", "viz.", "et al.", "a.k.a.", "approx.", "incl."];
+/** A text that ends with one of ABBREVIATIONS as a word of its own (a word that only ends like one, such as devs., does not). */
+const ABBREVIATION_END = new RegExp(
+  `(?<![\\p{L}\\p{N}])(?:${ABBREVIATIONS.map(abbreviation => abbreviation.replaceAll(".", "\\.").replaceAll(" ", "\\s+")).join("|")})$`,
+  "iu",
+);
+/**
+ * The sentences of one unit, for both legs (refusal #2 U2): the unit splits after ".", "!" or "?" that white space
+ * follows, except where the text before ends with one of ABBREVIATIONS or the text after opens with a lower-case letter
+ * (the reader's sentence goes on: an ellipsis, a full stop that ends a code span, an abbreviation outside the list), so a
+ * reader's single sentence is judged as one.
+ */
+function splitSentences(unit: string): string[] {
+  const sentences: string[] = [];
+  let start = 0;
+  for (const gap of unit.matchAll(/(?<=[.!?])\s+/gu)) {
+    const end = gap.index + gap[0].length;
+    if (ABBREVIATION_END.test(unit.slice(start, gap.index)) || /^\p{Ll}/u.test(unit.slice(end))) continue;
+    sentences.push(unit.slice(start, gap.index));
+    start = end;
+  }
+  sentences.push(unit.slice(start));
+  return sentences.filter(sentence => sentence !== "");
+}
+/**
  * The sentences of a text: each paragraph, list item, table row, heading or fence line with its continuation lines joined
- * (a wrapped sentence stays whole, two list items never merge), split after `.`, `!` or `?` that whitespace follows.
+ * (a wrapped sentence stays whole, two list items never merge), split by splitSentences.
  */
 function sentencesIn(text: string): string[] {
   const units: string[] = [];
@@ -229,7 +261,7 @@ function sentencesIn(text: string): string[] {
     } else current = `${current} ${trimmed}`;
   }
   if (current !== "") units.push(current);
-  return units.flatMap(unit => unit.split(/(?<=[.!?])\s+/)).filter(sentence => sentence !== "");
+  return units.flatMap(splitSentences);
 }
 /** A sentence that names one of the four leaves and a served word. */
 const servedLeaf = (sentence: string): boolean => NAMED_LEAF.test(sentence) && SERVED_WORD.test(sentence);
@@ -239,27 +271,33 @@ const servedLeafSentences = (base: string, dir: string): string[] =>
     sentencesIn(readFileSync(join(base, path), "utf8")).filter(servedLeaf).map(sentence => `${path}: ${sentence}`),
   );
 
-// RENDERED LEG (refusal #1 U2, the rendered-text docs truth floor of wb-9x5.17), every markdown page below the walked
-// directory (any other file renders as its source text: its sentencesIn sentences, folded as below, no reference decoded):
-// marked 18.0.11 (the lexer test/helpers/census.ts uses, GFM) lexes the page once. A unit is a paragraph, a
-// heading, the text of a list item or block quote, a code block, an HTML block, a table's header row, and each body row
-// read after its header row (cells joined by a space); a list that follows a paragraph whose last sentence is not ended
-// by ".", "!" or "?" (a lead-in, such as one ending in ":") is read item by item after that lead-in sentence. A unit
-// renders its text, code spans and backslash escapes as written,
-// and emphasis, strong, strikethrough, link text and image alt text flattened (a link destination or title is never
-// read); an inline HTML token (a comment or a tag) and a task checkbox render nothing, an HTML block renders its source
-// with comments (an unclosed one to its end) and tags removed, and a soft wrap or a hard break renders as white space.
-// Numeric character references and the names in NAMED_REFERENCES are decoded outside code; any other named reference is
-// recorded, and the live pages must carry none. The FOLDED KEY then applies: NFKD with combining marks dropped, format
-// code points (Cf) dropped, every white-space run one space, control code points (Cc) dropped, every dash (Pd) and the
-// minus sign read as "-". The folded unit splits into sentences after ".", "!" or "?" that white space follows, and a
-// sentence naming a leaf and a served word is a served sentence. RESIDUALS, each a named family whose planted quiet row
-// below is read and stays quiet: R-ANAPHORA, the served word in a later sentence that points back to the leaf ("It is
-// served."; cure: a sentence opening with It, This or That is also read after the sentence before it); R-HEADING-SCOPE,
-// the served word in a heading over a list or paragraph that names the leaf ("## Served leaves" over "- graph impact";
-// cure: read each unit of a section after its heading); R-PARAPHRASE, the leaf named in other words ("the impact leaf of
-// rf graph"; cure: read the leaf words in either order within a clause); R-SYNONYM, the claim in other words than served
-// ("available", "implemented"; cure: widen SERVED_WORD).
+// RENDERED LEG (refusal #1 U2, the rendered-text docs truth floor of wb-9x5.17; widened by refusal #2's class-level guard),
+// every markdown page below the walked directory (any other file renders as its source text: its sentencesIn sentences,
+// folded as below, no reference decoded): marked 18.0.11 (the lexer test/helpers/census.ts uses, GFM) lexes the page
+// once. A unit is a paragraph, a heading, the text of a list item or block quote, a code block, an HTML block, a table's
+// header row, and each body row read after its header row (cells joined by a space); a list that follows a paragraph
+// whose last sentence is not ended by ".", "!" or "?" (a lead-in, such as one ending in ":") is read item by item after
+// that lead-in sentence. A unit renders its text, code spans and backslash escapes as written, and emphasis, strong,
+// strikethrough, link text and image alt text flattened (a link destination or title is never read); a task checkbox
+// renders nothing, and raw HTML, an inline HTML token or an HTML block's source, renders as a reader sees it (renderHtml,
+// refusal #2 U1): a comment (an unclosed one to its end) renders nothing, a tag of BREAK_ELEMENTS (br in any case,
+// self-closing or carrying attributes, and every block-level element, met inline or in an HTML block) renders as white
+// space, and any other tag renders nothing; a soft wrap or a hard break renders as white space. Numeric character
+// references and the names in NAMED_REFERENCES are decoded outside code; any other named reference is recorded, and the
+// live pages must carry none. The FOLDED KEY then applies: NFKD with combining marks dropped, format code points (Cf)
+// dropped, every white-space run one space, control code points (Cc) dropped, every dash (Pd) and the minus sign read as
+// "-". The folded unit splits into sentences by splitSentences (after ".", "!" or "?" that white space follows, never
+// after one of ABBREVIATIONS or before a lower-case letter; refusal #2 U2), and a sentence naming a leaf and a served word
+// (SERVED_WORD, serve in every form; refusal #2 U3) is a served sentence. RESIDUALS, each a named family whose planted
+// quiet row below is read and stays quiet: R-ANAPHORA, the served word in a later sentence that points back to the leaf
+// ("It is served."; cure: a sentence opening with It, This or That is also read after the sentence before it);
+// R-HEADING-SCOPE, the served word in a heading over a list or paragraph that names the leaf ("## Served leaves" over
+// "- graph impact"; cure: read each unit of a section after its heading); R-PARAPHRASE, the leaf named in other words
+// ("the impact leaf of rf graph"; cure: read the leaf words in either order within a clause); R-SYNONYM, the claim in
+// other words than serve ("available", "implemented"; cure: widen SERVED_WORD); R-CSS-PRESENTATION, an element a style
+// displays as a block ('graph<span style="display:block">impact</span>'; the leg reads HTML by element, never by style;
+// cure: read a block display style as a break); R-UNLISTED-ABBREVIATION, the full stop of an abbreviation outside
+// ABBREVIATIONS before a capitalized word ("(Ref. Pi) is served."; cure: add it to ABBREVIATIONS).
 const at = (code: number): string => String.fromCodePoint(code);
 /** The named character references the rendered leg decodes; any other named reference is recorded as unreadable. */
 const NAMED_REFERENCES: ReadonlyMap<string, string> = new Map([
@@ -301,7 +339,21 @@ const FOLD: ReadonlyArray<readonly [RegExp, string]> = [
   [/ {2,}/g, " "],
 ];
 const HTML_COMMENT = /<!--[\s\S]*?(?:-->|$)/g;
-const HTML_TAG = /<\/?[A-Za-z][A-Za-z0-9-]*(?:\s[^>]*)?\/?>/g;
+const HTML_TAG = /<\/?([A-Za-z][A-Za-z0-9-]*)(?:\s[^>]*)?\/?>/g;
+/**
+ * The elements whose tags a reader sees as white space or a line break (refusal #2 U1): br, pre, and every block-level
+ * element marked 18.0.11 opens an HTML block with (CommonMark's start condition 6 names, with meta).
+ */
+const BREAK_ELEMENTS: ReadonlySet<string> = new Set([
+  "br", "pre", "address", "article", "aside", "base", "basefont", "blockquote", "body", "caption", "center", "col", "colgroup", "dd",
+  "details", "dialog", "dir", "div", "dl", "dt", "fieldset", "figcaption", "figure", "footer", "form", "frame", "frameset", "h1",
+  "h2", "h3", "h4", "h5", "h6", "head", "header", "hr", "html", "iframe", "legend", "li", "link", "main", "menu", "menuitem", "meta",
+  "nav", "noframes", "ol", "optgroup", "option", "p", "param", "search", "section", "summary", "table", "tbody", "td", "tfoot", "th",
+  "thead", "title", "tr", "track", "ul",
+]);
+/** Raw HTML as a reader sees it: a comment (an unclosed one to its end) renders nothing, a tag of BREAK_ELEMENTS one space, any other tag nothing. */
+const renderHtml = (raw: string): string =>
+  raw.replace(HTML_COMMENT, "").replace(HTML_TAG, (_tag: string, name: string) => (BREAK_ELEMENTS.has(name.toLowerCase()) ? " " : ""));
 const MARKDOWN_PAGE = /\.(?:md|markdown)$/i;
 
 /** `text` with every numeric reference and each NAMED_REFERENCES name decoded; any other named reference stays as written and is recorded in `unknown`. */
@@ -317,8 +369,8 @@ function decodeReferences(text: string, unknown: string[]): string {
 /** The FOLDED KEY of rendered text (see the RENDERED LEG). */
 const foldKey = (text: string): string =>
   FOLD.reduce((folded, [pattern, replacement]) => folded.replace(pattern, replacement), text.normalize("NFKD").replace(/\p{M}/gu, "")).trim();
-/** The rendered sentences of a unit: its folded key split after ".", "!" or "?" that white space follows. */
-const renderedSentences = (unit: string): string[] => foldKey(unit).split(/(?<=[.!?])\s+/u).filter(sentence => sentence !== "");
+/** The rendered sentences of a unit: its folded key split by splitSentences. */
+const renderedSentences = (unit: string): string[] => splitSentences(foldKey(unit));
 const tokenText = (token: Token): string => {
   const value: unknown = (token as { text?: unknown }).text;
   return typeof value === "string" ? value : "";
@@ -334,8 +386,9 @@ const isTableToken = (token: Token): token is Tokens.Table => token.type === "ta
 function inlineText(tokens: readonly Token[], unknown: string[]): string {
   let out = "";
   for (const token of tokens) {
-    if (token.type === "html" || token.type === "checkbox") continue;
-    if (token.type === "br") out += " ";
+    if (token.type === "checkbox") continue;
+    if (token.type === "html") out += renderHtml(token.raw);
+    else if (token.type === "br") out += " ";
     else if (token.type === "codespan" || token.type === "escape") out += tokenText(token);
     else if (tokenChildren(token).length > 0) out += inlineText(tokenChildren(token), unknown);
     else out += decodeReferences(tokenText(token), unknown);
@@ -345,7 +398,7 @@ function inlineText(tokens: readonly Token[], unknown: string[]): string {
 /** The units one block token renders (see the RENDERED LEG), in page order. */
 function unitsOf(token: Token, unknown: string[]): string[] {
   if (token.type === "space" || token.type === "hr" || token.type === "def" || token.type === "checkbox") return [];
-  if (token.type === "html") return [decodeReferences(token.raw.replace(HTML_COMMENT, "").replace(HTML_TAG, ""), unknown)];
+  if (token.type === "html") return [decodeReferences(renderHtml(token.raw), unknown)];
   if (token.type === "code") return [tokenText(token)];
   if (isTableToken(token)) {
     const header = token.header.map(cell => inlineText(cell.tokens, unknown)).join(" ");
@@ -563,7 +616,7 @@ describe(NEGATIVES_SUITE, () => {
     ]);
   });
 
-  it("SCG-R15 negative, rendered leg (refusal #1 U2): a served sentence reds as a reader sees it, whatever its white space, inline markup, references or structure", () => {
+  it("SCG-R15 negative, rendered leg (refusal #1 U2): a served sentence reds as a reader sees it, whatever its white space, inline markup, references or structure, outside the named residuals", () => {
     const base = plantRoot("scg-r15-rendered-leaf-");
     const fullwidth = (word: string): string => [...word].map(letter => at((letter.codePointAt(0) ?? 0) + 0xfee0)).join("");
     // Each plant needs one reading of the leg to red (named in its path); the source leg misses all but the noted ones.
@@ -641,7 +694,115 @@ describe(NEGATIVES_SUITE, () => {
     ]);
   });
 
-  it("SCG-R15 negative, residuals: R-ANAPHORA, R-HEADING-SCOPE, R-PARAPHRASE and R-SYNONYM are read and stay quiet, and each named cure flags its quiet row", () => {
+  it("SCG-R15 negative, refusal #2 class guard (U1-U3): an HTML break or block tag reads as white space, a listed abbreviation or a lower-case continuation never ends a reader's sentence, and every form of serve is the served claim", () => {
+    const base = plantRoot("scg-r15-class-guard-");
+    // (i) Rendered text (refusal #2 U1): a tag a reader sees as white space or a line break, br in every spelling, case and
+    // self-closing form and a block-level tag met inline, in a paragraph, a table cell or an HTML block (h01, h02, h03 and
+    // h04 are the gate's L23, L25, L26 and L43).
+    plantFile(base, "docs/h01-br.md", "The rf graph<br>impact leaf is served by this build.\n");
+    plantFile(base, "docs/h02-br-table.md", "| Leaf | Status |\n| --- | --- |\n| graph<br>impact | served |\n");
+    plantFile(base, "docs/h03-br-self-closing.md", "The rf optic<br/>list leaf is served by this build.\n");
+    plantFile(base, "docs/h04-br-upper.md", "The rf graph<BR>candidate leaf is served by this build.\n");
+    plantFile(base, "docs/h05-br-spaced.md", "The rf view<br />list leaf is served by this build.\n");
+    plantFile(base, "docs/h06-br-attribute.md", 'The rf graph<Br class="x">impact leaf is served by this build.\n');
+    plantFile(base, "docs/h07-paragraph-tags.md", "The rf graph</p><p>impact leaf is served by this build.\n");
+    plantFile(base, "docs/h08-div-tags.md", "The rf optic<div>list</div> leaf is served by this build.\n");
+    plantFile(base, "docs/h09-html-block.md", "<p>The rf graph<br>candidate leaf is served.</p>\n");
+    plantFile(base, "docs/h10-html-table.md", "<table><tr><td>view</td><td>list</td><td>served</td></tr></table>\n");
+    plantFile(base, "docs/h11-heading-tags.md", "The rf view<h2>list</h2> leaf is served by this build.\n");
+    // Quiet: a tag a reader sees as nothing (an inline element), and a tag spelled with references or inside a code span,
+    // which a reader sees as written.
+    plantFile(base, "docs/hq1-inline-element.md", "The rf graph<span>impact</span> leaf is served.\n");
+    plantFile(base, "docs/hq2-escaped-tag.md", "The rf graph&lt;br&gt;impact leaf is served.\n");
+    plantFile(base, "docs/hq3-code-span-tag.md", "The rf `graph<br>impact` leaf is served.\n");
+    // (ii) Sentence units (refusal #2 U2): a reader's single sentence is judged whole through a listed abbreviation (s01 and
+    // s02 are the gate's L27 and L28; s10 to s20 hold each ABBREVIATIONS entry, in either case, before a capitalized word,
+    // which only the list keeps in the sentence, and s21 a white-space run inside one) and before a lower-case continuation
+    // (an ellipsis, a full stop that ends a code span, a question mark inside parentheses).
+    plantFile(base, "docs/s01-eg.md", "The rf graph impact leaf, e.g. in this build, is served.\n");
+    plantFile(base, "docs/s02-ie.md", "The rf view list leaf is, i.e. at rf 0.1.845, served by this build.\n");
+    plantFile(base, "docs/s03-ellipsis.md", "The rf optic list leaf... is served.\n");
+    plantFile(base, "docs/s04-code-span-stop.md", "The `rf graph candidate.` leaf is served.\n");
+    plantFile(base, "docs/s05-question.md", "The rf view list leaf (ready? yes) is served.\n");
+    plantFile(base, "docs/s10-eg.md", "The rf graph impact leaf (e.g. Pi) is served.\n");
+    plantFile(base, "docs/s11-ie.md", "The rf graph impact leaf (i.e. Pi) is served.\n");
+    plantFile(base, "docs/s12-etc.md", "The rf graph impact leaf (etc. Pi) is served.\n");
+    plantFile(base, "docs/s13-vs.md", "The rf graph impact leaf (vs. Pi) is served.\n");
+    plantFile(base, "docs/s14-cf.md", "The rf graph impact leaf (cf. Pi) is served.\n");
+    plantFile(base, "docs/s15-viz.md", "The rf graph impact leaf (viz. Pi) is served.\n");
+    plantFile(base, "docs/s16-et-al.md", "The rf graph impact leaf (et al. Pi) is served.\n");
+    plantFile(base, "docs/s17-aka.md", "The rf graph impact leaf (a.k.a. Pi) is served.\n");
+    plantFile(base, "docs/s18-approx.md", "The rf graph impact leaf (approx. Pi) is served.\n");
+    plantFile(base, "docs/s19-incl.md", "The rf graph impact leaf (incl. Pi) is served.\n");
+    plantFile(base, "docs/s20-eg-capital.md", "The rf view list leaf (E.g. Pi) is served.\n");
+    plantFile(base, "docs/s21-et-al-spaced.md", "The rf view list leaf (et  al. Pi) is served.\n");
+    // Quiet: two sentences, and a word that only ends like an abbreviation, still end where a reader ends them.
+    plantFile(base, "docs/sq1-two-sentences.md", "The rf graph impact leaf refuses. The preview is served.\n");
+    plantFile(base, "docs/sq2-word-ending.md", "The rf graph impact leaf is for devs. The preview is served.\n");
+    // (iii) The served claim (refusal #2 U3): the bare verb (v01 is the gate's L29) and the imperative; quiet: the nouns.
+    plantFile(base, "docs/v01-serve.md", "This build will serve the rf graph impact leaf.\n");
+    plantFile(base, "docs/v02-serve-imperative.md", "Serve the rf optic list leaf from this build.\n");
+    plantFile(base, "docs/vq1-nouns.md", "The rf graph impact leaf names a server and a service.\n");
+    const unknown: string[] = [];
+    expect(renderedServedLeafSentences(base, "docs", unknown)).toEqual([
+      "docs/h01-br.md: The rf graph impact leaf is served by this build.",
+      "docs/h02-br-table.md: Leaf Status graph impact served",
+      "docs/h03-br-self-closing.md: The rf optic list leaf is served by this build.",
+      "docs/h04-br-upper.md: The rf graph candidate leaf is served by this build.",
+      "docs/h05-br-spaced.md: The rf view list leaf is served by this build.",
+      "docs/h06-br-attribute.md: The rf graph impact leaf is served by this build.",
+      "docs/h07-paragraph-tags.md: The rf graph impact leaf is served by this build.",
+      "docs/h08-div-tags.md: The rf optic list leaf is served by this build.",
+      "docs/h09-html-block.md: The rf graph candidate leaf is served.",
+      "docs/h10-html-table.md: view list served",
+      "docs/h11-heading-tags.md: The rf view list leaf is served by this build.",
+      "docs/s01-eg.md: The rf graph impact leaf, e.g. in this build, is served.",
+      "docs/s02-ie.md: The rf view list leaf is, i.e. at rf 0.1.845, served by this build.",
+      "docs/s03-ellipsis.md: The rf optic list leaf... is served.",
+      "docs/s04-code-span-stop.md: The rf graph candidate. leaf is served.",
+      "docs/s05-question.md: The rf view list leaf (ready? yes) is served.",
+      "docs/s10-eg.md: The rf graph impact leaf (e.g. Pi) is served.",
+      "docs/s11-ie.md: The rf graph impact leaf (i.e. Pi) is served.",
+      "docs/s12-etc.md: The rf graph impact leaf (etc. Pi) is served.",
+      "docs/s13-vs.md: The rf graph impact leaf (vs. Pi) is served.",
+      "docs/s14-cf.md: The rf graph impact leaf (cf. Pi) is served.",
+      "docs/s15-viz.md: The rf graph impact leaf (viz. Pi) is served.",
+      "docs/s16-et-al.md: The rf graph impact leaf (et al. Pi) is served.",
+      "docs/s17-aka.md: The rf graph impact leaf (a.k.a. Pi) is served.",
+      "docs/s18-approx.md: The rf graph impact leaf (approx. Pi) is served.",
+      "docs/s19-incl.md: The rf graph impact leaf (incl. Pi) is served.",
+      "docs/s20-eg-capital.md: The rf view list leaf (E.g. Pi) is served.",
+      "docs/s21-et-al-spaced.md: The rf view list leaf (et al. Pi) is served.",
+      "docs/v01-serve.md: This build will serve the rf graph impact leaf.",
+      "docs/v02-serve-imperative.md: Serve the rf optic list leaf from this build.",
+    ]);
+    expect(unknown).toEqual([]);
+    // The source leg shares the sentence units and the served word, so it flags every (ii) and (iii) plant; it reads a tag
+    // as written, so it flags no (i) plant (the rendered leg owns those).
+    expect(servedLeafSentences(base, "docs")).toEqual([
+      "docs/s01-eg.md: The rf graph impact leaf, e.g. in this build, is served.",
+      "docs/s02-ie.md: The rf view list leaf is, i.e. at rf 0.1.845, served by this build.",
+      "docs/s03-ellipsis.md: The rf optic list leaf... is served.",
+      "docs/s04-code-span-stop.md: The `rf graph candidate.` leaf is served.",
+      "docs/s05-question.md: The rf view list leaf (ready? yes) is served.",
+      "docs/s10-eg.md: The rf graph impact leaf (e.g. Pi) is served.",
+      "docs/s11-ie.md: The rf graph impact leaf (i.e. Pi) is served.",
+      "docs/s12-etc.md: The rf graph impact leaf (etc. Pi) is served.",
+      "docs/s13-vs.md: The rf graph impact leaf (vs. Pi) is served.",
+      "docs/s14-cf.md: The rf graph impact leaf (cf. Pi) is served.",
+      "docs/s15-viz.md: The rf graph impact leaf (viz. Pi) is served.",
+      "docs/s16-et-al.md: The rf graph impact leaf (et al. Pi) is served.",
+      "docs/s17-aka.md: The rf graph impact leaf (a.k.a. Pi) is served.",
+      "docs/s18-approx.md: The rf graph impact leaf (approx. Pi) is served.",
+      "docs/s19-incl.md: The rf graph impact leaf (incl. Pi) is served.",
+      "docs/s20-eg-capital.md: The rf view list leaf (E.g. Pi) is served.",
+      "docs/s21-et-al-spaced.md: The rf view list leaf (et  al. Pi) is served.",
+      "docs/v01-serve.md: This build will serve the rf graph impact leaf.",
+      "docs/v02-serve-imperative.md: Serve the rf optic list leaf from this build.",
+    ]);
+  });
+
+  it("SCG-R15 negative, residuals: R-ANAPHORA, R-HEADING-SCOPE, R-PARAPHRASE, R-SYNONYM, R-CSS-PRESENTATION and R-UNLISTED-ABBREVIATION are read and stay quiet, and each named cure flags its quiet row", () => {
     const base = plantRoot("scg-r15-leaf-residual-");
     // [family, page path, page text, the page's rendered sentences]
     const QUIET: ReadonlyArray<readonly [string, string, string, readonly string[]]> = [
@@ -649,6 +810,8 @@ describe(NEGATIVES_SUITE, () => {
       ["R-HEADING-SCOPE", "docs/r-heading-scope.md", "## Served leaves\n\n- graph impact", ["Served leaves", "graph impact"]],
       ["R-PARAPHRASE", "docs/r-paraphrase.md", "The impact leaf of rf graph is served.", ["The impact leaf of rf graph is served."]],
       ["R-SYNONYM", "docs/r-synonym.md", "The rf graph impact leaf is available in this build.", ["The rf graph impact leaf is available in this build."]],
+      ["R-CSS-PRESENTATION", "docs/r-css-presentation.md", 'The rf graph<span style="display:block">impact</span> leaf is served.', ["The rf graphimpact leaf is served."]],
+      ["R-UNLISTED-ABBREVIATION", "docs/r-unlisted-abbreviation.md", "The rf graph impact leaf (Ref. Pi) is served.", ["The rf graph impact leaf (Ref.", "Pi) is served."]],
     ];
     for (const [, path, page] of QUIET) plantFile(base, path, `${page}\n`);
     plantFile(base, "docs/control.md", "The rf graph impact leaf is served.\n");
@@ -658,25 +821,38 @@ describe(NEGATIVES_SUITE, () => {
     expect(QUIET.map(([, path]) => sentencesOfPage(path))).toEqual(QUIET.map(([, , , sentences]) => [...sentences]));
     expect(renderedServedLeafSentences(base, "docs")).toEqual(["docs/control.md: The rf graph impact leaf is served."]);
     expect(servedLeafSentences(base, "docs")).toEqual(["docs/control.md: The rf graph impact leaf is served."]);
-    // Each named cure, read over its own quiet row's rendered sentences, flags it: the quiet input is a member of its family.
-    const cures: Readonly<Record<string, (sentences: readonly string[]) => boolean>> = {
+    // Each named cure, read over its own quiet row's rendered sentences (R-CSS-PRESENTATION's over its page, since a style
+    // never reaches a rendered sentence), flags it: the quiet input is a member of its family.
+    const cures: Readonly<Record<string, (sentences: readonly string[], page: string) => boolean>> = {
       "R-ANAPHORA": sentences => sentences.some((sentence, index) => index > 0 && /^(?:It|This|That)\b/.test(sentence) && servedLeaf(`${sentences[index - 1]} ${sentence}`)),
       // The heading is the page's first rendered sentence; every later unit of its section is read after it.
       "R-HEADING-SCOPE": sentences => sentences.slice(1).some(sentence => servedLeaf(`${sentences[0]} ${sentence}`)),
       "R-PARAPHRASE": sentences => sentences.some(sentence => /\bimpact\b[^,;:]*\bgraph\b/i.test(sentence) && SERVED_WORD.test(sentence)),
       "R-SYNONYM": sentences => sentences.some(sentence => NAMED_LEAF.test(sentence) && /\b(?:available|implemented)\b/i.test(sentence)),
+      // The page with each tag whose style displays it as a block read as a break, then rendered by the leg.
+      "R-CSS-PRESENTATION": (_sentences, page) =>
+        blockUnits(marked.lexer(page.replace(/<[A-Za-z][A-Za-z0-9-]*\s[^>]*\bstyle\s*=\s*"[^"]*\bdisplay\s*:\s*block[^"]*"[^>]*>/g, " ")), [])
+          .flatMap(renderedSentences)
+          .some(servedLeaf),
+      // The sentence before a split that ends with the unlisted abbreviation, read with the sentence after it.
+      "R-UNLISTED-ABBREVIATION": sentences =>
+        sentences.some((sentence, index) => index > 0 && /\bRef\.$/.test(sentences[index - 1] ?? "") && servedLeaf(`${sentences[index - 1]} ${sentence}`)),
     };
-    expect(QUIET.map(([family, path]) => `${family}:${cures[family]?.(sentencesOfPage(path)) === true}`)).toEqual([
+    expect(QUIET.map(([family, path, page]) => `${family}:${cures[family]?.(sentencesOfPage(path), page) === true}`)).toEqual([
       "R-ANAPHORA:true",
       "R-HEADING-SCOPE:true",
       "R-PARAPHRASE:true",
       "R-SYNONYM:true",
+      "R-CSS-PRESENTATION:true",
+      "R-UNLISTED-ABBREVIATION:true",
     ]);
     expect(QUIET.map(([family, path]) => `${family}:${sentencesOfPage(path).some(servedLeaf)}`)).toEqual([
       "R-ANAPHORA:false",
       "R-HEADING-SCOPE:false",
       "R-PARAPHRASE:false",
       "R-SYNONYM:false",
+      "R-CSS-PRESENTATION:false",
+      "R-UNLISTED-ABBREVIATION:false",
     ]);
   });
 });
