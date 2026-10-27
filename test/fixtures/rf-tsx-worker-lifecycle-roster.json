@@ -499,7 +499,9 @@
       "quiet": [
        "packaged: workbench packaged | hits 0",
        "browser: workbench browser | hits 0",
-       "configure: workbench configure | hits 0"
+       "configure: workbench configure | hits 0",
+       "make: workbench make | hits 0",
+       "pick: workbench pick | hits 0"
       ]
      }
     },

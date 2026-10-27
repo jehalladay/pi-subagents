@@ -31,6 +31,35 @@
  *    21(1)), was read by the cutting seat at its commit dacd58e (sha256 3f9eb0739a8e48b4...): 0 'bd close'; its one bd write
  *    appends a delivery note (update --append-notes-file), which sets no status. That reading rides the delivery note and is
  *    never claimed here.
+ * WB-4TDN (the R694 follow-up of landing 437: F1 leads, F2 rides; cut on trunk fced7bf). Two readings widen; no row, pin, label,
+ * registered title or frozen-shape count changes.
+ *  - The exec reading (C1-C3, M5). A call is an exec construct of git or the tracker when its callee is an exec entry point and one
+ *    command word of its program texts is git or the tracker. The callee: an EXEC_CALLEES name as an identifier, a property or a
+ *    string-keyed element (cp["execFileSync"]), or the identifier an import specifier aliases one to (import { execFileSync as run }:
+ *    an import binding, read by its name like every import binding). The program texts: a string-literal first argument and each
+ *    string-literal element of an array-literal second argument (its argv), a no-substitution template counting as a string literal.
+ *    The command words: each text split at whitespace, a quote (' " `) or a shell operator (; & | ( ) < >), each word read by its
+ *    last path segment (after / or \) with one trailing .exe dropped, so a word that holds the command only as a part (--bd, x=bd,
+ *    bd-helper) names no command. So a path-qualified program (/usr/local/bin/bd, C:\tools\bd.exe), a wrapper's argv (env, sudo), a
+ *    shell line (its first or a later command, sh -c) and an aliased import now read, where the landed reading took only an unaliased
+ *    callee whose first argument was the command itself. M5 pins the gate's filed plant (its L2-3 members, appended to
+ *    claude-control.ts), one kill control per reading (each callee form, program text and word break) and one quiet row per spelling
+ *    left unread, each spelling a src module of its own added in memory. The readings are the same for git; on src they change
+ *    nothing (the classes, the holders, the scopes and C3's git exec modules read as at the landed census, 116 modules at fced7bf).
+ *  - The walk's reach (C1). The walk lists every regular file and every symbolic link below src and follows no link. A file whose
+ *    name ends in one of TypeScript's own source extensions (its public Extension enum, .json and .tsbuildinfo aside: .ts, .tsx,
+ *    .d.ts, .js, .jsx and the .mts and .cts families) that tsconfig.json's program does not hold, or a symbolic link anywhere below
+ *    src, reds C1: the judge reads neither. C1's planted reach control hands the same walk an in-memory tree (a program module, the
+ *    gate's L2-9 .tsx and a .mjs outside its program, the gate's L2-5 link, a markdown note and a JSON file) and pins what it lists.
+ *  - NOT CLAIMED, each a pinned quiet row of M5: an exec entry point carried in a const, a destructuring or a promisify return, and a
+ *    command passed into a wrapper function (R2's values: a module-level const, a return value, a parameter); a command that is no
+ *    string literal at its construct - a const, a concatenation, a template with a substitution, an argv held in a const (R3); an
+ *    entry point held in a variable of the call's own scope, in an object member, or exported by another module under a new name; a
+ *    call through call or apply; a callee in parentheses, after a comma or under a type assertion; a command literal or an argv under
+ *    a type assertion ("bd" as string, [...] as const); a tagged template; an argv as the first argument; a command word spliced from
+ *    quoted or escaped parts, in another letter case, behind another suffix (.cmd) or inside a parameter expansion; a process API
+ *    outside EXEC_CALLEES (execa). Not claimed and not a row: a walk edited to tell the planted entries from the disk's, an edit of
+ *    the disk listing alone (diskEntries) - the plants hold the walk's logic - and a source name in another letter case (x.TS).
  * CUT #3 (owner ruling R766, 2026-10-25; trunk 3a71372 merged INTO the branch): landing 381 added
  * src/workbench/beads-program-readiness.ts, which imports capability-registry.ts and observation.ts only and joins neither class,
  * so the src count moved 115 -> 116 and C1's hand-counted integer read red at landing 384's land-prep - and again through C1's
@@ -74,7 +103,8 @@
  *  B, acceptance (b). B1 hyperunixTopology over hyperunix.find/v1 readings of every read kind (and one built on the provider's
  *    own SDK path), whose rows name .beads, forge.toml, .furnace and .git paths, carries no beads, forge, furnace or git kind,
  *    reference or edge; B2 the token count of evidence-loader.ts and evidence-wiring.ts.
- *  C, acceptance (c). C1 the module graph, over a walk that is tsconfig.json's program above a floor: the observation class,
+ *  C, acceptance (c). C1 the module graph, over a walk that is tsconfig.json's program above a floor, with no source outside the
+ *    program and no link below src: the observation class,
  *    the authority modules and the holders are exactly the measured rosters and no edge joins the first two outside the
  *    holders; C2 the scopes: the only scopes in src that read an observation-class binding beside an authority binding or
  *    construct are the five pinned composition scopes; C3 no src module spells a bd close or update or execs bd, and the bd
@@ -83,7 +113,8 @@
  *    docs07 provider-rules census quotes both, so each is census-bound (rows A1 and H3 there pin this file's cases).
  *  F, the owner filing: F1 wb-kku9.1's row in the tracked bead export carries the pinned constants and an acceptance whose
  *    "(x) ..." clauses are exactly rows A-D, each label equal to its clause.
- *  M, the judge is live: M1-M9 each add one derivation shape to the real src tree and the judge names it.
+ *  M, the judge is live: M1-M9 each add one derivation shape to the real src tree and the judge names it; M5 also pins the exec
+ *    spellings of its table, the read ones and the unread ones (wb-4tdn).
  *  R, the named residuals, each with a pinned quiet row: R1 R-HOST-OPERATION the HX adapter echoes the operation the host names
  *    (a forge one included) as its display grouping, and no src module calls either topology adapter; R2 R-CROSS-SCOPE a value
  *    carried between scopes (a parameter, return value, closure or module-level const) is not traced; R3 R-COMPOSED a provider
@@ -309,18 +340,41 @@ interface SourceModule {
   readonly path: string;
   readonly text: string;
 }
-/** Every regular .ts file below a directory, repository-relative with / separators; symlinks are not followed. */
-function tsFilesBelow(root: string): string[] {
-  const out: string[] = [];
+/** The parts of a directory entry the walk reads: node:fs Dirent's own type predicates. */
+interface WalkEntry {
+  readonly name: string;
+  isDirectory(): boolean;
+  isFile(): boolean;
+  isSymbolicLink(): boolean;
+}
+/** A directory's entries as the disk lists them. */
+const diskEntries = (dir: string): readonly WalkEntry[] => readdirSync(dir, { withFileTypes: true });
+interface Listing {
+  /** Every regular file below the root, base-relative with / separators. */
+  readonly files: readonly string[];
+  /** Every symbolic link below the root (wb-4tdn F2): listed, never followed. */
+  readonly links: readonly string[];
+}
+/** Every regular file and every symbolic link below a directory, base-relative with / separators and sorted; a link is listed and
+ * never followed. Every walk reads the disk; C1's planted reach control hands the same walk an in-memory tree instead. */
+function listBelow(base: string, root: string, entriesOf: (dir: string) => readonly WalkEntry[] = diskEntries): Listing {
+  const files: string[] = [];
+  const links: string[] = [];
   const walk = (dir: string): void => {
-    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    for (const entry of entriesOf(dir)) {
       const path = join(dir, entry.name);
-      if (entry.isDirectory()) walk(path);
-      else if (entry.isFile() && entry.name.endsWith(".ts")) out.push(relative(REPO, path).split(sep).join("/"));
+      const listed = relative(base, path).split(sep).join("/");
+      if (entry.isSymbolicLink()) links.push(listed);
+      else if (entry.isDirectory()) walk(path);
+      else if (entry.isFile()) files.push(listed);
     }
   };
-  walk(join(REPO, root));
-  return out.sort();
+  walk(join(base, root));
+  return { files: files.sort(), links: links.sort() };
+}
+/** Every regular .ts file below a directory, repository-relative with / separators; symlinks are not followed. */
+function tsFilesBelow(root: string): string[] {
+  return listBelow(REPO, root).files.filter(path => path.endsWith(".ts"));
 }
 const WALK_ROOTS: readonly string[] = ["src"];
 const srcModules = (): SourceModule[] => WALK_ROOTS.flatMap(root => tsFilesBelow(root)).map(path => ({ path, text: textOf(path) }));
@@ -344,6 +398,21 @@ function programModules(): string[] {
 /** A floor below the src module count (115 at bff0b3c, 116 at 3a71372; the ri-decision-seed-claim census holds the same src
  * floor), so the walk is never blind; C1 pins this floor and the program, never the count. */
 const MODULES_FLOOR = 105;
+/** The file names TypeScript reads as sources: its own public Extension enum (.ts, .tsx, .d.ts, .js, .jsx and the .mts, .d.mts, .mjs
+ * and .cts, .d.cts, .cjs families), an anchor outside this census, with its two non-source members aside (.json, .tsbuildinfo). */
+const SOURCE_EXTENSIONS: readonly string[] = Object.values(ts.Extension).filter(extension => extension !== ts.Extension.Json && extension !== ts.Extension.TsBuildInfo);
+const isSource = (path: string): boolean => SOURCE_EXTENSIONS.some(extension => path.endsWith(extension));
+interface Reach {
+  /** The source files below the roots that the program does not hold (the judge never reads them). */
+  readonly outsideProgram: readonly string[];
+  /** The links below the roots (the walk follows none). */
+  readonly links: readonly string[];
+}
+/** The walk's reach over listings against a program (wb-4tdn F2): C1 holds src's to neither. */
+const reachOf = (listings: readonly Listing[], program: readonly string[]): Reach => ({
+  outsideProgram: sorted(listings.flatMap(listing => listing.files).filter(path => isSource(path) && !program.includes(path))),
+  links: sorted(listings.flatMap(listing => listing.links)),
+});
 
 /** A package specifier's package (scope and name); a relative one resolved against its module, .js read as the .ts source. */
 function resolveSpecifier(from: string, specifier: string): string {
@@ -360,6 +429,40 @@ const calleeName = (expression: ts.Expression): string =>
 const isFunctionLike = (node: ts.Node): boolean =>
   ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isArrowFunction(node) || ts.isMethodDeclaration(node) ||
   ts.isConstructorDeclaration(node) || ts.isGetAccessorDeclaration(node) || ts.isSetAccessorDeclaration(node);
+/** The local names a module's import specifiers alias an EXEC_CALLEES name to (import { execFileSync as run }): an import binding,
+ * read by its name like every import binding, never a value traced (wb-4tdn F1). */
+function importAliases(sf: ts.SourceFile): ReadonlyMap<string, string> {
+  const aliases = new Map<string, string>();
+  for (const statement of sf.statements) {
+    const named = ts.isImportDeclaration(statement) ? statement.importClause?.namedBindings : undefined;
+    if (named === undefined || !ts.isNamedImports(named)) continue;
+    for (const element of named.elements) {
+      const imported = element.propertyName === undefined ? "" : nameOf(element.propertyName);
+      if (EXEC_CALLEES.includes(imported)) aliases.set(element.name.text, imported);
+    }
+  }
+  return aliases;
+}
+/** A callee's exec name: an identifier's own (or the EXEC_CALLEES name its import specifier aliases), a property's, or a
+ * string-keyed element's (cp["execFileSync"]). */
+function execNameOf(expression: ts.Expression, aliases: ReadonlyMap<string, string>): string {
+  if (ts.isIdentifier(expression)) return aliases.get(expression.text) ?? expression.text;
+  if (ts.isElementAccessExpression(expression)) return ts.isStringLiteralLike(expression.argumentExpression) ? expression.argumentExpression.text : "";
+  return calleeName(expression);
+}
+/** What ends a command word: whitespace, a quote (' " `) or a shell operator (; & | ( ) < >). */
+const COMMAND_BREAK = /[\s'"`;&|()<>]+/;
+/** A text's command words, each read by its last path segment (after / or \) with one trailing .exe dropped. */
+const commandWords = (text: string): string[] => text.split(COMMAND_BREAK).map(word => (word.split(/[/\\]/).at(-1) ?? "").replace(/\.exe$/, ""));
+/** The authority commands an exec call names: a command word of its string-literal first argument, or of a string-literal element of
+ * an array-literal second argument (its argv), that is git or the tracker. */
+function commandsOf(call: ts.CallExpression): string[] {
+  const [first, argv] = call.arguments;
+  const texts = [first, ...(argv !== undefined && ts.isArrayLiteralExpression(argv) ? argv.elements : [])].flatMap(node =>
+    node !== undefined && ts.isStringLiteralLike(node) ? [node.text] : [],
+  );
+  return AUTHORITY_COMMANDS.filter(command => texts.some(text => commandWords(text).includes(command)));
+}
 /** An identifier that names a declaration, a member or an import/export slot rather than reading a binding. */
 function isNamePosition(node: ts.Identifier): boolean {
   const parent = node.parent;
@@ -397,6 +500,7 @@ function parseFresh(module: SourceModule): ParsedModule {
   const bindings = new Map<string, string>();
   const constructs: { kind: string; node: ts.Node }[] = [];
   let writeSpellings = 0;
+  const execAliases = importAliases(sf);
   const visit = (node: ts.Node): void => {
     if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier !== undefined && ts.isStringLiteralLike(node.moduleSpecifier)) {
       const target = resolveSpecifier(module.path, node.moduleSpecifier.text);
@@ -418,7 +522,7 @@ function parseFresh(module: SourceModule): ParsedModule {
       const literal = first !== undefined && ts.isStringLiteralLike(first) ? first.text : undefined;
       const loads = node.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(node.expression) && node.expression.text === "require");
       if (literal !== undefined && loads) edges.add(resolveSpecifier(module.path, literal));
-      if (literal !== undefined && EXEC_CALLEES.includes(calleeName(node.expression)) && AUTHORITY_COMMANDS.includes(literal)) constructs.push({ kind: `exec:${literal}`, node });
+      if (EXEC_CALLEES.includes(execNameOf(node.expression, execAliases))) for (const command of commandsOf(node)) constructs.push({ kind: `exec:${command}`, node });
     }
     if (ts.isPropertyAssignment(node) && nameOf(node.name) === "provider" && ts.isStringLiteralLike(node.initializer) && AUTHORITY_PROVIDERS.includes(node.initializer.text)) {
       constructs.push({ kind: `provider:${node.initializer.text}`, node });
@@ -552,6 +656,117 @@ function withModule(path: string, text: string, mode: "add" | "extend"): Analysi
 }
 /** The violations a change adds over the real tree's (which holds none). */
 const added = (analysis: Analysis): string[] => analysis.violations.filter(line => !real().violations.includes(line));
+/** The judge over the real src tree with modules added in memory (nothing is written). */
+const withModules = (extra: readonly SourceModule[]): Analysis => analyze([...srcModules(), ...extra]);
+
+/** C1's planted reach control (wb-4tdn F2): an in-memory tree that listBelow walks exactly as it walks src, these entries handed in
+ * for the disk's: one program module, two source modules outside its program (the gate's L2-9 .tsx, a .mjs), a link (the gate's
+ * L2-5, never followed), a markdown note and a JSON file (neither a source). */
+const REACH_PLANT_BASE = join(sep, "fwg-reach-plants");
+const REACH_PLANTS: Readonly<Record<string, "file" | "link">> = {
+  "src/index.ts": "file",
+  "src/lib/tool.mjs": "file",
+  "src/notes.md": "file",
+  "src/schema.json": "file",
+  "src/workbench/claude-fwg-probe.tsx": "file",
+  "src/workbench/fwg-link.ts": "link",
+};
+const REACH_PLANT_PROGRAM: readonly string[] = ["src/index.ts"];
+/** One directory's entries of the planted tree, in the shape the disk gives them. */
+function plantEntries(dir: string): WalkEntry[] {
+  const at = relative(REACH_PLANT_BASE, dir).split(sep).join("/");
+  const kinds = new Map<string, "file" | "link" | "directory">();
+  for (const [path, kind] of Object.entries(REACH_PLANTS)) {
+    if (!path.startsWith(`${at}/`)) continue;
+    const [name = "", ...below] = path.slice(at.length + 1).split("/");
+    kinds.set(name, below.length > 0 ? "directory" : kind);
+  }
+  return [...kinds].map(([name, kind]) => ({ name, isDirectory: () => kind === "directory", isFile: () => kind === "file", isSymbolicLink: () => kind === "link" }));
+}
+
+/** M5's spellings (wb-4tdn F1): one added src module per spelling, each one exec call of the tracker (show, so no write spelling
+ * joins it). A read spelling is a kill control the judge names as a tracker exec; an unread one is a pinned quiet row (the
+ * header's NOT CLAIMED list, its R2 and R3 members named there). */
+interface ExecSpelling {
+  readonly id: string;
+  readonly read: boolean;
+  readonly text: string;
+}
+const CHILD_IMPORTS = 'import * as cp from "node:child_process";\nimport { execFile, execFileSync, execSync, spawnSync } from "node:child_process";';
+const spelling = (id: string, read: boolean, body: string): ExecSpelling => ({ id, read, text: `${CHILD_IMPORTS}\n${body}` });
+const EXEC_SPELLINGS: readonly ExecSpelling[] = [
+  // Read: the callee, an EXEC_CALLEES name as an identifier, a property, a string-keyed element or an import specifier's alias.
+  spelling("literal", true, `export const run = (id: string) => execFileSync("${BD}", ["show", id]);`),
+  spelling("property", true, `export const run = (id: string) => cp.execFileSync("${BD}", ["show", id]);`),
+  spelling("element", true, `export const run = (id: string) => cp["execFileSync"]("${BD}", ["show", id]);`),
+  spelling("import-alias", true, `import { execFileSync as zzRun } from "node:child_process";\nexport const run = (id: string) => zzRun("${BD}", ["show", id]);`),
+  // Read: the program, a command word of the string-literal first argument.
+  spelling("no-substitution", true, `export const run = (id: string) => execFileSync(\`${BD}\`, ["show", id]);`),
+  spelling("path", true, `export const run = (id: string) => execFileSync("/usr/local/bin/${BD}", ["show", id]);`),
+  spelling("exe", true, `export const run = (id: string) => execFileSync("${BD}.exe", ["show", id]);`),
+  spelling("windows-path", true, `export const run = (id: string) => execFileSync("C:\\\\tools\\\\${BD}.exe", ["show", id]);`),
+  spelling("shell-line", true, `export const run = () => execSync("${BD} show wb-1 --json");`),
+  spelling("shell-later", true, `export const run = () => execSync("cd /tmp && ${BD} show wb-1");`),
+  // Read: the argv, a command word of a string-literal element of an array-literal second argument.
+  spelling("argv-env", true, `export const run = (id: string) => spawnSync("env", ["${BD}", "show", id]);`),
+  spelling("argv-later", true, `export const run = (id: string) => spawnSync("sudo", ["-u", "ops", "${BD}", "show", id]);`),
+  spelling("argv-no-substitution", true, `export const run = (id: string) => spawnSync("env", [\`${BD}\`, "show", id]);`),
+  spelling("argv-shell", true, `export const run = () => spawnSync("sh", ["-c", "${BD} show wb-1"]);`),
+  // Read: each word break alone (a whitespace, a quote or a shell operator on both sides of the command word).
+  spelling("break-tab", true, `export const run = () => execSync("x\\t${BD}\\ty");`),
+  spelling("break-newline", true, `export const run = () => execSync("x\\n${BD}\\ny");`),
+  spelling("break-single-quote", true, `export const run = () => execSync("x'${BD}'y");`),
+  spelling("break-double-quote", true, `export const run = () => execSync('x"${BD}"y');`),
+  spelling("break-backquote", true, `export const run = () => execSync("x\`${BD}\`y");`),
+  spelling("break-semicolon", true, `export const run = () => execSync("x;${BD};y");`),
+  spelling("break-ampersand", true, `export const run = () => execSync("x&${BD}&y");`),
+  spelling("break-pipe", true, `export const run = () => execSync("x|${BD}|y");`),
+  spelling("break-open-paren", true, `export const run = () => execSync("x(${BD}(y");`),
+  spelling("break-close-paren", true, `export const run = () => execSync("x)${BD})y");`),
+  spelling("break-less", true, `export const run = () => execSync("x<${BD}<y");`),
+  spelling("break-greater", true, `export const run = () => execSync("x>${BD}>y");`),
+  // Unread, R2 R-CROSS-SCOPE: an exec entry point carried in a module-level const or a destructuring, or returned by promisify, and
+  // a command passed into a wrapper function's parameter.
+  spelling("const-alias", false, `const zzRun = execFileSync;\nexport const run = (id: string) => zzRun("${BD}", ["show", id]);`),
+  spelling("destructured-alias", false, `const { execFileSync: zzRun } = cp;\nexport const run = (id: string) => zzRun("${BD}", ["show", id]);`),
+  spelling("promisified", false, `import { promisify } from "node:util";\nconst zzRun = promisify(execFile);\nexport const run = (id: string) => zzRun("${BD}", ["show", id]);`),
+  spelling("wrapper-function", false, `const zzRun = (command: string, args: string[]) => execFileSync(command, args);\nexport const run = (id: string) => zzRun("${BD}", ["show", id]);`),
+  // Unread, R3 R-COMPOSED: a command that is not a string literal at its construct.
+  spelling("const-command", false, `const zzCommand = "${BD}";\nexport const run = (id: string) => execFileSync(zzCommand, ["show", id]);`),
+  spelling("concatenated", false, `export const run = (id: string) => execSync("${BD}" + " show " + id);`),
+  spelling("template-command", false, `export const run = (id: string) => execSync(\`${BD} show \${id}\`);`),
+  spelling("argv-held", false, `const zzArgv = ["${BD}", "show"];\nexport const run = () => spawnSync("env", zzArgv);`),
+  // Unread, NOT CLAIMED: the callee, the argument position, the word and the API outside the readings.
+  spelling("local-alias", false, `export const run = (id: string) => {\n  const zzRun = execFileSync;\n  return zzRun("${BD}", ["show", id]);\n};`),
+  spelling("member-held", false, `const zzTools = { zzRun: execFileSync };\nexport const run = (id: string) => zzTools.zzRun("${BD}", ["show", id]);`),
+  spelling("re-exported", false, `import { zzRun } from "./zz-4tdn-exec-helpers.js";\nexport const run = (id: string) => zzRun("${BD}", ["show", id]);`),
+  spelling("call-through", false, `export const run = (id: string) => execFileSync.call(undefined, "${BD}", ["show", id]);`),
+  spelling("apply-through", false, `export const run = (id: string) => execFileSync.apply(undefined, ["${BD}", ["show", id]]);`),
+  spelling("paren-callee", false, `export const run = (id: string) => (execFileSync)("${BD}", ["show", id]);`),
+  spelling("comma-callee", false, `export const run = (id: string) => (0, execFileSync)("${BD}", ["show", id]);`),
+  spelling("typed-callee", false, `export const run = (id: string) => (execFileSync as typeof execFileSync)("${BD}", ["show", id]);`),
+  spelling("typed-literal", false, `export const run = (id: string) => execFileSync("${BD}" as string, ["show", id]);`),
+  spelling("typed-argv", false, `export const run = (id: string) => spawnSync("env", ["${BD}", "show", id] as const);`),
+  spelling("tagged-template", false, `export const run = () => execSync(String.raw\`${BD} show wb-1\`);`),
+  spelling("argv-first", false, `export const run = (id: string) => cp.spawn(["${BD}", "show", id]);`),
+  spelling("spliced", false, `export const run = () => execSync("${BD.charAt(0)}''${BD.charAt(1)} show wb-1");`),
+  spelling("escaped", false, `export const run = () => execSync("${BD.charAt(0)}\\\\${BD.charAt(1)} show wb-1");`),
+  spelling("letter-case", false, `export const run = (id: string) => execFileSync("${BD.toUpperCase()}", ["show", id]);`),
+  spelling("other-suffix", false, `export const run = (id: string) => execFileSync("${BD}.cmd", ["show", id]);`),
+  spelling("expansion", false, `export const run = () => execSync("\${ZZ:-${BD}} show wb-1");`),
+  spelling("word-part", false, `export const run = () => execFileSync("rf", ["--${BD}", "x=${BD}", "${BD}-helper", "${BD}s"]);`),
+  spelling("other-api", false, `import { execa } from "execa";\nexport const run = (id: string) => execa("${BD}", ["show", id]);`),
+];
+const spellingPath = (id: string): string => `src/workbench/zz-4tdn-${id}.ts`;
+/** The filed plant: the gate's L2-3 members (a path-qualified program, a wrapper's argv, an aliased import), appended to the
+ * observation-class claude-control.ts as the finding filed them. */
+const FILED_MODULE = "src/workbench/claude-control.ts";
+const FILED_PLANT = [
+  'import { execFileSync, spawnSync, execFileSync as fwProbeRun } from "node:child_process";',
+  `export const fwProbeByPath = (id: string) => execFileSync("/usr/local/bin/${BD}", ["close", id]);`,
+  `export const fwProbeViaEnv = (id: string) => spawnSync("env", ["${BD}", "close", id]);`,
+  `export const fwProbeAliased = (id: string) => fwProbeRun("${BD}", ["close", id]);`,
+].join("\n");
 
 // --- the Claude fixture -----------------------------------------------------------------------------------------------
 
@@ -951,16 +1166,29 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const walked = WALK_ROOTS.flatMap(root => tsFilesBelow(root));
     const program = programModules();
     expect(walked, `the src walk (${analysis.modules} modules) reads exactly tsconfig.json's program (${program.length})`).toEqual(program);
+    const reach = reachOf(WALK_ROOTS.map(root => listBelow(REPO, root)), program);
+    const planted = reachOf([listBelow(REACH_PLANT_BASE, "src", plantEntries)], REACH_PLANT_PROGRAM);
     const witness = {
-      modules: { srcIsProgram: isDeepStrictEqual(walked, program), floorMet: analysis.modules >= MODULES_FLOOR },
+      modules: {
+        srcIsProgram: isDeepStrictEqual(walked, program),
+        floorMet: analysis.modules >= MODULES_FLOOR,
+        outsideProgram: [...reach.outsideProgram],
+        links: [...reach.links],
+      },
       observation: [...analysis.observation],
       authority: [...analysis.authority],
       holders: [...analysis.holders],
       violations: [...analysis.violations],
+      reachPlants: { outsideProgram: [...planted.outsideProgram], links: [...planted.links] },
     };
     expect(witness.holders).toEqual([...HOLDERS]);
     expect(witness.observation.filter(path => witness.authority.includes(path))).toEqual([]);
     expect(witness.violations).toEqual([]);
+    expect(reach, "every source file below src is a program module, and src holds no link").toStrictEqual({ outsideProgram: [], links: [] });
+    expect(witness.reachPlants, "the walk names the planted sources outside the program and the planted link").toStrictEqual({
+      outsideProgram: ["src/lib/tool.mjs", "src/workbench/claude-fwg-probe.tsx"],
+      links: ["src/workbench/fwg-link.ts"],
+    });
     return witness;
   },
   C2: async () => {
@@ -1030,11 +1258,21 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       withModule("src/index.ts", 'export function settledWork(identity: ClaudeCallIdentity) { return { provider: "beads", type: "work", id: identity.agentId }; }', "extend"),
       "mixed-scope src/index.ts function:settledWork [ClaudeCallIdentity] [provider:beads]",
     ),
-  M5: async () =>
-    hit(
-      withModule("src/workbench/attention.ts", `import { execFileSync } from "node:child_process";\nexport const settle = (id: string) => execFileSync("${BD}", ["close", id]);`, "extend"),
-      "tracker-exec src/workbench/attention.ts",
-    ),
+  M5: async () => {
+    const violation = "tracker-exec src/workbench/attention.ts";
+    const landed = added(withModule("src/workbench/attention.ts", `import { execFileSync } from "node:child_process";\nexport const settle = (id: string) => execFileSync("${BD}", ["close", id]);`, "extend"));
+    // The lines whose subject is the planted module (a consequence on a module that imports it is not this pin's).
+    const filed = sorted(added(withModule(FILED_MODULE, FILED_PLANT, "extend")).filter(line => line.split(" ")[1] === FILED_MODULE));
+    const lines = added(withModules(EXEC_SPELLINGS.map(entry => ({ path: spellingPath(entry.id), text: entry.text }))));
+    const read = EXEC_SPELLINGS.filter(entry => lines.includes(`tracker-exec ${spellingPath(entry.id)}`)).map(entry => entry.id);
+    const unread = EXEC_SPELLINGS.filter(entry => !lines.some(line => line.includes(spellingPath(entry.id)))).map(entry => entry.id);
+    expect(landed).toContain(violation);
+    expect(filed, "the filed plant (the gate's L2-3 members in claude-control.ts) reads as the tracker exec it is").toEqual([`observation-builds-authority ${FILED_MODULE} exec:${BD}`, `tracker-exec ${FILED_MODULE}`]);
+    expect(read, "every read spelling reads as a tracker exec").toEqual(EXEC_SPELLINGS.filter(entry => entry.read).map(entry => entry.id));
+    expect(unread, "every unread spelling stays quiet").toEqual(EXEC_SPELLINGS.filter(entry => !entry.read).map(entry => entry.id));
+    expect(lines, "the spellings add nothing beside their tracker execs").toEqual(read.map(id => `tracker-exec ${spellingPath(id)}`));
+    return { violation, hit: landed.includes(violation), filed, read, unread };
+  },
   M6: async () => hit(withModule("src/workbench/timeline.ts", `export const HINT = "run ${BD} update wb-1 --status closed";`, "extend"), "tracker-write-spelling src/workbench/timeline.ts"),
   M7: async () =>
     hit(withModule("src/workbench/forge-evidence.ts", 'export type { ClaudeEvidenceContent } from "./claude-evidence.js";', "extend"), "authority-imports-observation src/workbench/forge-evidence.ts -> src/workbench/claude-evidence.ts"),
