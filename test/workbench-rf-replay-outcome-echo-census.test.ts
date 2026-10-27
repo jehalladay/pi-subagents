@@ -12,8 +12,12 @@
  *
  * The guarded claim classes: <CLAIM-R> joins re-execution with equality (either order; the re-execution-first arm admits the
  * same copula fill as the effect arms, wb-hmre); <CLAIM-E> joins effects with reproduced or re-executed (either order), or
- * external(-world) effects with equality (either order). This file never spells one: CLAIMS composes each from CLAIM_WORDS at
- * runtime and every comment and label writes the placeholder (Q7 reads this file and the roster for it).
+ * external(-world) effects with equality (either order). A claim's words, and a word's own hyphen, may be split by any run of
+ * the separator class SEPARATORS - whitespace, every ASCII punctuation mark but the comma and the semicolon (markdown emphasis,
+ * code spans, quotation marks, brackets and parentheses among them) and the Unicode hyphen, dash and curly quotation-mark forms -
+ * and only a letter or a digit ends a claim, never an underscore (wb-w1kd, the wb-hmre gate's F1). This file never spells one:
+ * CLAIMS composes each from CLAIM_WORDS at runtime and every comment and label writes the placeholder (Q7 reads this file and the
+ * roster for it).
  *
  * MEASURED (read-only, by the cutting seat, 2026-10-23): at the pin, ReactiveFiberCLI 6a251bf73af5, README.md:69 carries the
  * quoted sentences and src/reactive_fiber_cli/schemas/cli/context/replay-result.json (reactive-fiber.replay-result/v1) spells
@@ -47,8 +51,9 @@
  *    adapter refuses a reading of each wire envelope and of the incomplete fragment.
  *  B, acceptance (a). B1 the fixture oracle; B2 the registered reading (the registry's injected-reader seam) carries each exit-0
  *    envelope byte for byte, effects_denied and its count included; B3 no file of src, docs, qa or the front matter spells a
- *    guarded claim, with the matcher's spellings read on composed controls (the copula form of <CLAIM-R> among them); every
- *    walk B3 and D1 read covers each file the git index tracks under its root, an anchor outside this file and the roster;
+ *    guarded claim, with the matcher's spellings read on composed controls (the copula form of <CLAIM-R>, every member of the
+ *    separator class, the wb-hmre gate's markup and punctuation forms and both edges of a claim among them); every walk B3
+ *    and D1 read covers each file the git index tracks under its root, an anchor outside this file and the roster;
  *    B4 the armed check: every bound reader names the denied count and every denied id and spells no guarded claim (synthetic
  *    readers exercise the checker).
  *  C, acceptance (b). C1 the fixture oracle; C2 the registered reading carries the mismatch, its diff verbatim; C3 never a success
@@ -67,15 +72,23 @@
  * whose workspace keeps the fixture's id under the reading root (the adapter refuses a foreign root before projecting), since the
  * render plane never emits a replay code.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id,
- * label and pins, every pin's witness, the enums, codes, exits, vocabulary, claim words and residual families, and every
- * registered test title - is held to the out-of-file roster, whose producer fixtures anchor the enums, codes and diff outside
- * this file. The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it) and
- * the set of pins that reached their witness; a file-level afterAll holds that last case to its own run: when every pin reached
- * its witness (an unfiltered run) and the last case neither finished nor failed - a plain or conditional skip modifier, a todo,
- * an early return or a deleted case - the file reds (wb-hmre, the pfxo.5 gate's F2). Not claimed: an edit of this file and the
- * roster together; one edit of this file that both disables the last case and deletes that file-level guard; one that narrows a
- * docs, qa or front-matter walk and its own git pathspec together above the floor (a src narrowing stays caught through A1's
- * module pathspec).
+ * label and pins, every pin's witness, the enums, codes, exits, vocabulary, claim words, separator class and residual
+ * families, and every registered test title - is held to the out-of-file roster, whose producer fixtures anchor the enums, codes
+ * and diff outside this file. The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran
+ * before it) and the set of pins that reached their witness; a file-level afterAll holds that last case to its own run: when
+ * every pin reached its witness (an unfiltered run) and the last case neither finished nor failed - a plain or conditional skip
+ * modifier, a todo, an early return or a deleted case - the file reds (wb-hmre, the pfxo.5 gate's F2). Every describe factory
+ * here also ends by reading vitest's own registration record (refuseUnrunRegistrations): vitest fixes a registration's mode when
+ * it is registered and applies a name filter only after collection, so a describe or a case registered outside run mode - a
+ * plain or conditional skip, todo or only modifier, or a skipping options value - fails the file at collection whatever else is
+ * skipped with it, while a filtered run stays green (wb-w1kd, the wb-hmre gate's F2: a skip on the outer describe, and a
+ * conditional skip on one pin case beside a plain one on the last case, each left rc 0 because the afterAll needs every pin
+ * reached). Not claimed: an edit of this file and the roster together; one edit of this file that disables the last case and
+ * defeats every guard that would see it (a skip modifier with the registration read that holds it deleted, and the afterAll
+ * too while every pin still runs; or the last case's run record set before an early return, which only
+ * --expect.requireAssertions reds); a skip through the test context at run time in the last case and in a pin case together;
+ * one that narrows a docs, qa or front-matter walk and its own git pathspec together above the floor (a src narrowing stays
+ * caught through A1's module pathspec).
  * RESIDUALS (named, each with its pinned quiet row): R-WITHHELD the native reader names nothing of a wire replay envelope (it is
  * unrecognized), and of the render-command form the native typed refusal and the adapter's projection carry the code but withhold
  * the diff and both digests, so the diff rides only the registered reading (Q1); R-COVERAGE-WORD the adapter's
@@ -84,9 +97,11 @@
  * diff) or a key composed at runtime spells no vocabulary token and is invisible to A1 (Q3); R-PARAPHRASE a reworded claim is
  * not caught - a synonym or an inflection outside CLAIM_WORDS, or an auxiliary or linking word outside the fill sets; Q4 pins
  * PARAPHRASES, thirteen members (the eleven non-copula escapes of the pfxo.5 gate's corpus among them), each beside the plain
- * spelling it rewords, which the matcher catches (Q4); R-INTERRUPTED a claim split by a zero-width code point, spelled with a
- * homoglyph letter, or hyphenated with a dash homoglyph (U+2011 in place of the hyphen-minus the separator class admits) is not
- * caught (Q5);
+ * spelling it rewords, word for word (wb-w1kd, the wb-hmre gate's F3), which the matcher catches (Q4); R-INTERRUPTED a claim
+ * split by a zero-width code point, spelled with a homoglyph letter, split by a comma or a semicolon (the two ASCII marks the
+ * separator class leaves out, for the reasons at SEPARATORS) or by Unicode punctuation outside the class (an ellipsis), or
+ * split by markup that carries a letter or a digit (an HTML tag, a markdown link target) is not caught (Q5; the hyphen
+ * homoglyphs U+2010 and U+2011 are separators, caught in B3);
  * R-SCOPE test/ and the bead-store export .beads/ lie outside every scanned root, and .beads/ spells the guarded claims (the
  * owner filing quotes the statement) (Q6); R-COMPOSED a claim assembled at runtime, this file's own mechanism, is invisible to
  * any text scan (Q7); R-UNIT a digest-equality unit whose rf context lies outside the unit (a heading, a neighbouring sentence)
@@ -103,7 +118,7 @@ import { execFileSync } from "node:child_process";
 import { chmodSync, type Dirent, existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import { afterAll, afterEach, describe, expect, it, vi } from "vitest";
+import { afterAll, afterEach, describe, expect, it, TestRunner, vi } from "vitest";
 import { CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
 import {
@@ -248,6 +263,7 @@ interface Roster {
   readonly exits: JsonValue;
   readonly vocabulary: readonly string[];
   readonly claimWords: JsonValue;
+  readonly separators: JsonValue;
   readonly residuals: JsonValue;
   readonly tests: readonly string[];
   readonly envelopes: {
@@ -315,6 +331,7 @@ function readRoster(): Roster {
     exits: json(raw.exits),
     vocabulary: strings(raw.vocabulary, "roster vocabulary"),
     claimWords: json(raw.claimWords),
+    separators: json(raw.separators),
     residuals: json(raw.residuals),
     tests: strings(raw.tests, "roster tests"),
     envelopes: {
@@ -461,7 +478,31 @@ function walkRoot(scan: ScanRoot): { files: string[]; floorMet: boolean; anchorR
   return { files, floorMet, anchorRead, anchorTracked, unwalked };
 }
 
-const SEP = "[\\s_.:/-]+";
+/** The separator class (wb-w1kd, the wb-hmre gate's F1: markdown emphasis, a code span, parentheses, an em dash, underscore
+ * emphasis and double quotation marks each split a claim the class used to miss): whitespace, every ASCII punctuation mark but
+ * the comma and the semicolon, and the Unicode hyphen and dash forms U+2010-U+2015 and U+2212 and curly quotation marks U+2018,
+ * U+2019, U+201C and U+201D, written as code points so this file stays ASCII. The comma stays out because this file and the
+ * roster write a claim's words as list elements (a double quote, a comma, a space and a double quote between two words), which
+ * read as claims once the comma joins the double quote in the class (measured at the wb-w1kd cut: 48 hits in this file and 14
+ * in the roster); the semicolon stays out because the echo B4 prescribes (the outcome word, a semicolon, then effects_denied)
+ * would read as a claim (3 hits here, B3's echoQuiet and B4's good echo among them). Both are R-INTERRUPTED members (Q5). Under
+ * this class the real tree reads none (measured at 799eebe: every tracked file of src 116, docs 73, qa 67, front matter 12). */
+const SEPARATORS: { readonly ascii: string; readonly unicode: readonly number[] } = {
+  ascii: "_.:/-*`\"'()[]{}<>!?~|#$%&+=@\\^",
+  unicode: [0x2010, 0x2011, 0x2012, 0x2013, 0x2014, 0x2015, 0x2212, 0x2018, 0x2019, 0x201c, 0x201d],
+};
+/** Every separator as one character, ASCII first. */
+const SEPARATOR_CHARS: readonly string[] = [...SEPARATORS.ascii, ...SEPARATORS.unicode.map(code => String.fromCodePoint(code))];
+/** A character's code point, U+ and four or more hex digits, the key B3's per-separator controls are held to. */
+function codePoint(char: string): string {
+  return `U+${(char.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}`;
+}
+/** One run of the separator class; a class-special character (backslash, bracket, caret, hyphen) is escaped. */
+const SEP = `[\\s${SEPARATOR_CHARS.map(char => char.replace(/[\\\]^-]/g, "\\$&")).join("")}]+`;
+/** A claim's edges (wb-w1kd): a letter or a digit may not touch it; an underscore may, as it may split one (snake case,
+ * underscore emphasis), where the word boundary it replaces counted the underscore a letter. */
+const LEAD = "(?<![A-Za-z0-9])";
+const TRAIL = "(?![A-Za-z0-9])";
 /** One alternation over words; a hyphen or space inside a word matches any separator run. */
 function alt(words: readonly string[]): string {
   return `(?:${words.map(word => word.replace(/[-\s]+/g, SEP)).join("|")})`;
@@ -477,12 +518,12 @@ const CLAIMS: readonly { readonly name: string; readonly pattern: RegExp }[] = (
   const equal = alt(CLAIM_WORDS.equal);
   const reexecution = alt(CLAIM_WORDS.reexecution);
   return [
-    { name: "CLAIM-E effect, then redo", source: `\\b${effect}${fill(CLAIM_WORDS.afterEffect)}${SEP}${redo}\\b` },
-    { name: "CLAIM-E redo, then effect", source: `\\b${redo}${fill(CLAIM_WORDS.beforeEffect)}${SEP}(?:${external}${SEP})?${effect}\\b` },
-    { name: "CLAIM-E equal, then external effect", source: `\\b${equal}${fill(CLAIM_WORDS.linking)}${SEP}${external}${SEP}${effect}\\b` },
-    { name: "CLAIM-E external effect, then equal", source: `\\b${external}${SEP}${effect}${fill(CLAIM_WORDS.afterEffect)}${SEP}(?:${equal}|${redo})\\b` },
-    { name: "CLAIM-R reexecution, then equal", source: `\\b${reexecution}${fill(CLAIM_WORDS.afterEffect)}${SEP}${equal}\\b` },
-    { name: "CLAIM-R equal, then reexecution", source: `\\b${equal}${fill(CLAIM_WORDS.linking)}${SEP}${reexecution}\\b` },
+    { name: "CLAIM-E effect, then redo", source: `${LEAD}${effect}${fill(CLAIM_WORDS.afterEffect)}${SEP}${redo}${TRAIL}` },
+    { name: "CLAIM-E redo, then effect", source: `${LEAD}${redo}${fill(CLAIM_WORDS.beforeEffect)}${SEP}(?:${external}${SEP})?${effect}${TRAIL}` },
+    { name: "CLAIM-E equal, then external effect", source: `${LEAD}${equal}${fill(CLAIM_WORDS.linking)}${SEP}${external}${SEP}${effect}${TRAIL}` },
+    { name: "CLAIM-E external effect, then equal", source: `${LEAD}${external}${SEP}${effect}${fill(CLAIM_WORDS.afterEffect)}${SEP}(?:${equal}|${redo})${TRAIL}` },
+    { name: "CLAIM-R reexecution, then equal", source: `${LEAD}${reexecution}${fill(CLAIM_WORDS.afterEffect)}${SEP}${equal}${TRAIL}` },
+    { name: "CLAIM-R equal, then reexecution", source: `${LEAD}${equal}${fill(CLAIM_WORDS.linking)}${SEP}${reexecution}${TRAIL}` },
   ].map(({ name, source }) => ({ name, pattern: new RegExp(source, "gi") }));
 })();
 /** The guarded claims a text spells: each pattern's name, once per match. */
@@ -749,6 +790,20 @@ function nativeDescriptors(): Promise<{ ids: string[]; texts: string[] }> {
   return nativeTexts;
 }
 
+/** One registration as vitest records it at collection: a describe or a case, its name and its run mode. */
+interface Registration {
+  readonly name: string;
+  readonly mode: string;
+}
+/** wb-w1kd (the wb-hmre gate's F2): the collector of the describe factory that passes it, read on the spot in that factory's own
+ * synchronous code; any registration it holds - the describe itself, a case or a nested describe - outside run mode fails the
+ * file at collection. vitest applies a name filter only after collection, so a filtered run reads every registration in run mode.
+ * The last case holds this read to its own controls. */
+function refuseUnrunRegistrations(collector: Registration & { readonly tasks: readonly Registration[] }): void {
+  const unrun = [collector, ...collector.tasks].filter(entry => entry.mode !== "run").map(entry => `${entry.name} (${entry.mode})`);
+  if (unrun.length > 0) throw new Error(`registered outside run mode, so the census would not judge it: ${unrun.join(", ")}`);
+}
+
 /** The pins that reached their witness compare, in run order; the last case holds it to every pin. */
 const REACHED: string[] = [];
 /** The last case's run record (wb-hmre, the pfxo.5 gate's F2): set when it finishes or fails; the file-level afterAll reads it. */
@@ -850,6 +905,18 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       copulaIsEqual: claimsIn(compose("re-execution", "is", "equal")),
       copulaWasEqual: claimsIn(compose("re-execution", "was", "equal")),
       copulaSentence: claimsIn(compose("The", "rf", "replay", "proves", "re-execution", "is", "identical.")),
+      // wb-w1kd (the wb-hmre gate's F1 GE1, GE2, GE4-GE7 and GE10, markup and punctuation inside a claim; its F7 GE9 and the pfxo.5
+      // gate's G15, a hyphen homoglyph inside the re-execution word): each read through the separator class and both edges.
+      boldEmphasis: claimsIn(compose("re-execution", "is", "**identical**")),
+      codeSpan: claimsIn(compose("`re-execution`", "is", "identical")),
+      parenthesized: claimsIn(compose("re-execution", "(identical)")),
+      emDash: claimsIn(["re-execution", "identical"].join(String.fromCodePoint(0x2014))),
+      underscoreEmphasis: claimsIn(compose("_re-execution_", "is", "_identical_")),
+      doubleQuoted: claimsIn(compose("re-execution", "is", '"identical"')),
+      starEmphasisEffects: claimsIn(compose("the", "effects", "were", "*reproduced*")),
+      hyphenHomoglyphs: [0x2010, 0x2011].map(code => claimsIn(compose(["re", "execution"].join(String.fromCodePoint(code)), "equality"))),
+      everySeparator: Object.fromEntries(SEPARATOR_CHARS.map(char => [codePoint(char), claimsIn(["re-execution", "identical"].join(` ${char} `))])),
+      letterEdgeQuiet: claimsIn(compose("pre-execution", "is", "identical")),
       snakeJoined: claimsIn(["effects", "reproduced"].join("_")),
       echoQuiet: claimsIn("outcome reproduced; effects_denied 2"),
       workflowQuiet: claimsIn("a replayed effect; re-run the effect after all"),
@@ -1016,7 +1083,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     return { generic, composed };
   },
   Q4: async () => {
-    const members = PARAPHRASES.map(({ member, variant, plain }) => ({ member, variant: compose(...variant), caught: claimsIn(compose(...variant)), plain: claimsIn(compose(...plain)) }));
+    // wb-w1kd (the wb-hmre gate's F3: a plain swapped for another spelling that meets the same arm stayed green): each plain
+    // spelling is pinned word for word beside the arm it meets.
+    const members = PARAPHRASES.map(({ member, variant, plain }) => ({ member, variant: compose(...variant), caught: claimsIn(compose(...variant)), plainWords: [...plain], plain: claimsIn(compose(...plain)) }));
     const digestReworded = isReplayDigestStatement("rf context replay: the digests agree, so the document is faithful");
     const caughtMembers = members.filter(entry => entry.caught.length > 0).map(entry => entry.member);
     const plainEscapes = members.filter(entry => entry.plain.length === 0).map(entry => entry.member);
@@ -1026,12 +1095,18 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   Q5: async () => {
     const zeroWidth = claimsIn(["effects", "reproduced"].join(String.fromCodePoint(0x200b)));
     const homoglyph = claimsIn(compose(`${String.fromCodePoint(0x0435)}ffects`, "reproduced"));
-    // wb-hmre (the pfxo.5 gate's G15): a dash homoglyph, U+2011 in place of the hyphen-minus, inside the re-execution word.
-    const dashHomoglyph = claimsIn(compose(["re", "execution"].join(String.fromCodePoint(0x2011)), "equality"));
+    // wb-w1kd (the wb-hmre gate's F1 GE3, and the marks the separator class leaves out): a comma, a semicolon, Unicode punctuation
+    // outside the class (an ellipsis) and markup that carries a letter (an HTML tag, a markdown link target), each splitting a
+    // claim whose plain spelling the matcher catches. The pfxo.5 gate's G15 dash homoglyph is a separator now (B3).
+    const comma = claimsIn(["re-execution", "identical"].join(", "));
+    const semicolon = claimsIn(["re-execution", "identical"].join("; "));
+    const ellipsis = claimsIn(["re-execution", "identical"].join(` ${String.fromCodePoint(0x2026)} `));
+    const htmlTag = claimsIn(compose("re-execution</em>", "is", "<em>identical"));
+    const linkTarget = claimsIn(compose("[re-execution](#replay)", "is", "identical"));
     const plain = claimsIn(compose("effects", "reproduced"));
     const plainDash = claimsIn(compose(["re", "execution"].join("-"), "equality"));
-    const judged = { zeroWidth, homoglyph, dashHomoglyph, plainCaught: plain.length > 0, plainDashCaught: plainDash.length > 0 };
-    expect(judged).toStrictEqual({ zeroWidth: [], homoglyph: [], dashHomoglyph: [], plainCaught: true, plainDashCaught: true });
+    const judged = { zeroWidth, homoglyph, comma, semicolon, ellipsis, htmlTag, linkTarget, plainCaught: plain.length > 0, plainDashCaught: plainDash.length > 0 };
+    expect(judged).toStrictEqual({ zeroWidth: [], homoglyph: [], comma: [], semicolon: [], ellipsis: [], htmlTag: [], linkTarget: [], plainCaught: true, plainDashCaught: true });
     return judged;
   },
   Q6: async () => {
@@ -1073,10 +1148,10 @@ describe("wb-pfxo.5 rf replay outcome echo census (RF-COMPOSITIONAL-ASSEMBLY-R6)
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect({
       outcomes: OUTCOMES, statuses: STATUSES, echoKeys: ECHO_KEYS, codes: CODES, exits: EXITS, vocabulary: REPLAY_VOCABULARY, claimWords: CLAIM_WORDS,
-      residuals: RESIDUALS,
+      separators: SEPARATORS, residuals: RESIDUALS,
     }).toStrictEqual({
       outcomes: [...ROSTER.outcomes], statuses: [...ROSTER.statuses], echoKeys: [...ROSTER.echoKeys], codes: ROSTER.codes, exits: ROSTER.exits,
-      vocabulary: [...ROSTER.vocabulary], claimWords: ROSTER.claimWords, residuals: ROSTER.residuals,
+      vocabulary: [...ROSTER.vocabulary], claimWords: ROSTER.claimWords, separators: ROSTER.separators, residuals: ROSTER.residuals,
     });
     for (const members of Object.values(RESIDUALS)) for (const member of members) expect(ROWS.flatMap(row => row.pins), `${member} is a judged pin`).toContain(member);
   });
@@ -1092,6 +1167,7 @@ describe("wb-pfxo.5 rf replay outcome echo census (RF-COMPOSITIONAL-ASSEMBLY-R6)
           REACHED.push(pin);
         });
       }
+      refuseUnrunRegistrations(TestRunner.getCurrentSuite());
     });
   }
 
@@ -1115,9 +1191,15 @@ describe("wb-pfxo.5 rf replay outcome echo census (RF-COMPOSITIONAL-ASSEMBLY-R6)
     const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
     const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
+    // wb-w1kd: the registration read's own controls - a synthetic describe or case outside run mode is refused by name and mode,
+    // and one wholly in run mode is not, so a read emptied or inverted reds here.
+    expect(() => refuseUnrunRegistrations({ name: "control describe", mode: "run", tasks: [{ name: "control case", mode: "skip" }] })).toThrow("control case (skip)");
+    expect(() => refuseUnrunRegistrations({ name: "control describe", mode: "todo", tasks: [] })).toThrow("control describe (todo)");
+    expect(() => refuseUnrunRegistrations({ name: "control describe", mode: "run", tasks: [{ name: "control case", mode: "run" }] })).not.toThrow();
     expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
     JUDGE.finished = true;
   });
+  refuseUnrunRegistrations(TestRunner.getCurrentSuite());
 });
 
 // wb-hmre (the pfxo.5 gate's F2: S8, a plain skip modifier, and S11, a conditional one, on the last case left rc 0): a skip
