@@ -1,11 +1,14 @@
 /**
- * wb-a9l2.3 (RF-HARNESS2-FEDERATED-PEER-R3), the absent-today leg, hardened by wb-a09z (the PREP F1-F9 survivors of landing 256).
+ * wb-a9l2.3 (RF-HARNESS2-FEDERATED-PEER-R3), the absent-today leg, hardened by wb-a09z (the PREP F1-F9 survivors of landing 256)
+ * and by wb-4nvi (the landing-349 verdict's F1-F7: P2 and P1 read whole texts, A5's bound value, the walks held to git, the
+ * matchers' classes read from their own source, the export read whatever its spacing, R-COORDINATED enumerated).
  * Statement (bead notes; the refuted descriptor is written as the placeholder): "If Pi ever surfaces an rf federation owner
  * descriptor or multi-owner resources, it shall echo rf's seven OwnerResource fields verbatim and in rf's order, never synthesize,
  * rename or alias them to a FiberOptics <FO_DESCRIPTOR> descriptor (h2fp-C020 REFUTED), and never alias rows sharing a local
  * alias but differing in backend_instance_id (NEG-01); consumer surface gated on fw-b rfc-0txnl.17/.25 + FW-06 ADR rfc-0txnl.3
  * (unshipped; dataclass ships at federation_boundary.py:38-45)." (harness2-federated-peer-2026-10-20/BEADS-2026-10-21.md:30@
- * 6a251bf73af5). Acceptance, quoted, and read back at run time from the tracked bead export .beads/issues.jsonl (ACCEPTANCE):
+ * 6a251bf73af5). Acceptance, quoted, and read back at run time from the tracked bead export .beads/issues.jsonl (ACCEPTANCE; the
+ * record is found by its id whatever the export's JSON spacing, X3):
  * "(a) a hermetic fixture pins the seven field names and order against federation_boundary.py:39-45 (rename/drop/add fails);
  * (b) 0 Pi strings label an rf federation row as a FiberOptics <FO_DESCRIPTOR> descriptor; (c) fixture rows with equal local
  * alias and distinct backend_instance_id project as two identities (NEG-01), a key on alias alone fails; (d) until the surface
@@ -31,11 +34,17 @@
  *    `<name>: str` lines; A2 SEVEN_FIELDS, the roster's fields and the excerpt's names agree in order; A3 the comparator A2
  *    relies on refuses a renamed, dropped, added or reordered list; A4 every fixture record carries exactly the seven fields in
  *    rf's order, each value inside its rf grammar; A5 each grammar refuses its near misses (GRAMMAR_PROBES: prefix, length,
- *    case, alphabet, the DECLARED_ID_MAX bound at 128/129) and admits its boundary values.
+ *    case, alphabet, the DECLARED_ID_MAX bound at 128/129) and admits its boundary values; its witness carries each bound
+ *    probe's length, so the roster holds the bound's value (128 admitted, 129 refused), not only this file's constant.
  *  B, acceptance (b). B1-B4 scan every file of src, test, docs and qa (SCAN_ROOTS: a file floor and an anchor file whose token
  *    must be read); B5 no registered native descriptor's JSON spells it; B6 scans every other top-level entry of the repo -
  *    the shipped root files, examples, vendor, media, the tracker's own config, every configuration file - except EXCLUDED and
  *    the local outputs .gitignore names (dist, .forge and the like: never committed; dist is tsc output judged at src).
+ *    WALK HELD TO GIT (B1-B4, B6 and D1): each walk is held to git's own listing of its root (GIT_LISTING: the tracked files and
+ *    the untracked ones git does not ignore, every .gitignore rule at every depth as git applies it). A listed regular file the
+ *    walk never reached reds its pin, so a walk that skips a directory reds while its floor still holds; a scan reads only
+ *    listed files, so a local output a .gitignore names at any depth (.beads/backup, .pi/readcache, test/perf/.results) is
+ *    never read, and the floors and anchors count read files.
  *  C, acceptance (c). C1 pins the shapes of the fixture sets neg01 (one alias, records differing in backend_instance_id
  *    alone), sameRecord (two aliases, one record) and perField (one record per field, differing from neg01[0] in that field
  *    alone); C2 ownerIdentity, the reference projection (rf's whole record, every field verbatim in rf's order; the alias is
@@ -44,12 +53,25 @@
  *  D, acceptance (d). D1 scans every file of src for BACKEND_FAMILY (B1's floor and anchor); D2 no registered native
  *    descriptor's JSON spells it. A hit names GATING_ARTIFACTS: the surface ships with them, and this census moves with it.
  *  MB and MD, the matchers rows B and D read: MB1-MB14 and MD1-MD8 one must-hit spelling per separator of each class and per
- *    case form; QB1-QB5 and QD1-QD5 the pinned quiet rows of their named residuals.
+ *    case form; QB1-QB5 and QD1-QD5 the pinned quiet rows of their named residuals. A class's members are read from the
+ *    matcher's own source, never from a list beside it (classOf: each member of its bracket, each word its alternation reads
+ *    as a separator, "direct" when a run between two words may be empty, and the lower, upper and mixed case forms under its
+ *    "i" flag), and the judged set refuses a member or case form that no must-hit spelling exercises (classGaps).
  *  P, the scan primitives' positive controls: P1 the content scan reports this file and its roster for BACKEND_FAMILY over
- *    test; P2 the served scan reads each descriptor's JSON text, never its id; P3 the walk records a symbolic link (and every
- *    real scan refuses one); P4 the reader sees a spelling stored as UTF-16LE, UTF-16BE or UTF-32LE.
- *  X, the export anchor's controls: X1 a pin removed with its roster entry is still caught when it alone judges an ACCEPTANCE
- *    part (C3); X2 the pinned quiet row of R-COORDINATED.
+ *    test, and reads each whole (wholeTextOf: a family matching only a text of the file's exact length that opens and closes
+ *    with its first and last 64 characters hits it, so a prefix, a suffix or any shortened read misses); P2 the served scan
+ *    reads each descriptor's whole JSON text, never its id or a projection of it (every text is JSON.stringify of the
+ *    descriptor an independent registration serves, and the description and inputSchema keys, which no id carries, hit every
+ *    text); P3 the walk records a symbolic link (and every real scan refuses one); P4 the reader sees a spelling stored as
+ *    UTF-16LE, UTF-16BE or UTF-32LE; P5 the walk is held to git's listing (heldToGit over a planted walk and listing: a file
+ *    git does not list is never read, a listed file the walk never reached is reported, an unreadable listing reads nothing
+ *    and reports itself), and the listing's argv is GIT_LISTING.
+ *  X, the anchors outside the pin literals: X1 a pin removed with its roster entry is still caught when it alone judges an
+ *    ACCEPTANCE part (C3); X2 the first pinned quiet row of R-COORDINATED (B3); X3 the export reader finds this bead's record
+ *    whatever its JSON spacing (the record re-serialized with spaced separators reads the same Acceptance text); X4 every pin
+ *    whose removal from every literal at once (rows, parts and spellings) an anchor reports, with the report - the export for
+ *    a pin that alone judges an ACCEPTANCE part, the matcher's own class for a must-hit that alone exercises a member or case
+ *    form; X5 every other pin, enumerated: R-COORDINATED's quiet set, with its member one level up (a narrowed matcher).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id,
  * label and pins, every pin's witness, SEVEN_FIELDS and GATING_ARTIFACTS - is held to the out-of-file roster
  * test/fixtures/rf-owner-resource-roster.json; no two pins carry the same witness, so swapping two cases reds. ACCEPTANCE is
@@ -62,18 +84,25 @@
  * value (rfi_ plus 26 base32 letters) carries no field name (QD3); R-COMPOSED a spelling assembled at runtime from parts, this
  * file's own mechanism, is invisible to any text scan (QB4, QD4), and B5 and D2 are the runtime backstop for served descriptor
  * text only; R-ENCODED a spelling held only in an encoded form (base64, an archive) carries no readable word (QB5, QD5);
- * R-COORDINATED a pin removed from this file and its roster at once while another pin still judges its ACCEPTANCE part (X2).
+ * R-COORDINATED a pin removed from this file and its roster at once is quiet unless an anchor outside the pin literals names it
+ * (X4). X5 enumerates the quiet pins: each pin of rows A-D while another pin still judges its ACCEPTANCE part (B3 is X2's
+ * row), each must-hit while other must-hits still exercise every member and case form it exercises, and every quiet,
+ * control and anchor pin (QB, QD, P and X), which no anchor names. A matcher narrowed at once with its must-hit, the roster's
+ * family ids and these literals is the same class one level up, pinned quiet in X5 too (row B's bracket without "." while MB9
+ * goes with it reads no class gap).
  * SCOPE: the excerpt, the fields and the grammars are producer facts at 6a251bf73af5; Pi vendors no rf source, so a
  * producer-side change is seen only when an rf pin-bump re-reads them. ownerIdentity is the rule a future surface must match;
  * the surface itself waits for GATING_ARTIFACTS, and no reader is added or faked here. EXCLUDED, never read by row B: .git (the
  * object store), node_modules (installed third-party code) and the tracker's record files .beads/issues.jsonl and
  * .beads/interactions.jsonl (bead text and its change log, which quote the refuted descriptor - PREP F13).
  *
- * Display paths added: none. Test-only: nothing is spawned or written; the repo is only read.
+ * Display paths added: none. Test-only: nothing is written, and the one child process is git ls-files (GIT_LISTING), which only
+ * reads the repo.
  */
+import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { type Dirent, readdirSync, readFileSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
+import { type Dirent, lstatSync, readdirSync, readFileSync } from "node:fs";
+import { dirname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { CapabilityRegistry } from "../src/workbench/capability-registry.js";
@@ -130,6 +159,8 @@ const DESCRIPTOR_FAMILY = new RegExp(DESCRIPTOR_WORDS.join(`(?:[\\s_.+/,&:|${EN_
 /** Row D's matcher: WORD_BACKEND, WORD_INSTANCE and "id" in that order, in any case, joined directly or by any run of its
  * separator class - whitespace, "_", ".", "/", ":" or "-". */
 const BACKEND_FAMILY = new RegExp([WORD_BACKEND, WORD_INSTANCE, "id"].join("[\\s_./:-]*"), "i");
+/** Row D's words in that order, as classOf reads them back out of BACKEND_FAMILY's source. */
+const BACKEND_WORDS: readonly string[] = [WORD_BACKEND, WORD_INSTANCE, "id"];
 /** A family's identity in a witness: the first 16 hex of sha256 over its source and flags (so a scan swapped to the other
  * family reds, PREP F2). */
 const familyId = (family: RegExp): string => createHash("sha256").update(`${family.source}/${family.flags}`).digest("hex").slice(0, 16);
@@ -174,13 +205,13 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "P",
-    label: "the scan primitives rows B and D compose read file content and served JSON text, refuse symbolic links and read NUL-bearing files, each shown by a must-hit control",
-    pins: ["P1", "P2", "P3", "P4"],
+    label: "the scan primitives rows B and D compose read whole file content and whole served JSON text, refuse symbolic links, read NUL-bearing files and hold each walk to git's listing, each shown by a must-hit control",
+    pins: ["P1", "P2", "P3", "P4", "P5"],
   },
   {
     id: "X",
-    label: "the bead export holds every pin that alone judges an ACCEPTANCE part, and R-COORDINATED stays pinned quiet",
-    pins: ["X1", "X2"],
+    label: "the anchors outside the pin literals (the bead export, read whatever its JSON spacing, and each matcher's own class) name every pin whose coordinated removal they see, and R-COORDINATED's quiet set stays enumerated",
+    pins: ["X1", "X2", "X3", "X4", "X5"],
   },
 ];
 
@@ -283,11 +314,11 @@ function rosterWitness(pin: string): Json {
   return found.witness;
 }
 
-/** The Acceptance text of this bead's notes in the tracked bead export, from "(a)" through the period before "Related:". */
-function exportedAcceptance(): string {
-  const marker = `"id":"${BEAD}"`;
-  for (const line of readFileSync(BEADS_EXPORT, "utf8").split("\n")) {
-    if (!line.includes(marker)) continue;
+/** The Acceptance text of this bead's notes in the tracked bead export, from "(a)" through the period before "Related:". The
+ * record is found by its id, never by one serialization of its key, so a spaced re-export reads the same (PREP F7, X3). */
+function exportedAcceptance(exported: string = readFileSync(BEADS_EXPORT, "utf8")): string {
+  for (const line of exported.split("\n")) {
+    if (!line.includes(BEAD)) continue;
     const parsed: unknown = JSON.parse(line);
     if (!isObject(parsed) || parsed.id !== BEAD || typeof parsed.notes !== "string") continue;
     const match = /Acceptance: (\(a\) .*?\.) Related:/.exec(parsed.notes);
@@ -373,6 +404,47 @@ function bytesOf(path: string): Buffer {
 /** The files whose content the family matches, repo-relative: the one hit predicate every file scan composes. */
 const hitsIn = (files: readonly string[], family: RegExp): string[] =>
   files.filter(file => textsOf(bytesOf(file)).some(text => family.test(text))).map(file => relative(REPO, file));
+const escapeRegExp = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+/** A family that matches one file's whole text and nothing shorter or longer (P1, PREP F2): its exact length, and its first and
+ * last 64 characters in place (a literal of the whole text overruns the engine's pattern size limit). */
+function wholeTextOf(path: string): RegExp {
+  const text = readFileSync(path, "utf8");
+  if (text.length <= 128) return new RegExp(`^${escapeRegExp(text)}$`);
+  return new RegExp(`^(?=[\\s\\S]{${text.length}}$)${escapeRegExp(text.slice(0, 64))}[\\s\\S]*${escapeRegExp(text.slice(-64))}$`);
+}
+
+/** git's listing of a root: its tracked files and the untracked ones git does not ignore (every .gitignore rule at every
+ * depth, as git applies it), NUL-separated. */
+const GIT_LISTING: readonly string[] = ["ls-files", "-z", "--cached", "--others", "--exclude-standard"];
+const listings = new Map<string, ReadonlySet<string> | undefined>();
+const isRegularFile = (path: string): boolean => {
+  try {
+    return lstatSync(path).isFile();
+  } catch {
+    return false;
+  }
+};
+/** The regular files git lists below a root, absolute, listed once per root; undefined when git cannot list it. */
+function gitListed(root: string): ReadonlySet<string> | undefined {
+  if (listings.has(root)) return listings.get(root);
+  const listing = spawnSync("git", [...GIT_LISTING, "--", relative(REPO, root).split(sep).join("/") || "."], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 28 });
+  const listed =
+    listing.error === undefined && listing.status === 0
+      ? new Set(listing.stdout.split("\0").filter(path => path !== "").map(path => join(REPO, path)).filter(isRegularFile))
+      : undefined;
+  listings.set(root, listed);
+  return listed;
+}
+/** A walk held to git's listing of the same root (PREP F3, F6): the walked files git lists, the only files a scan reads, and the
+ * listed files the walk never reached, relative to `base`; an unreadable listing reads nothing and reports itself. */
+function heldToGit(base: string, walked: readonly string[], listed: ReadonlySet<string> | undefined): { read: string[]; unwalked: string[] } {
+  if (listed === undefined) return { read: [], unwalked: ["<git ls-files failed>"] };
+  const seen = new Set(walked);
+  return {
+    read: walked.filter(path => listed.has(path)),
+    unwalked: [...listed].filter(path => !seen.has(path)).map(path => relative(base, path)).sort(),
+  };
+}
 
 interface ScanRoot {
   readonly pin: string;
@@ -383,7 +455,8 @@ interface ScanRoot {
 }
 
 /** The four roots acceptance (b) names first; each floor sits below the count measured at base 0b2a80f (src 115, test 453,
- * docs 66, qa 67 files), so an emptied walk reds and an additive change does not. */
+ * docs 66, qa 67 files; re-measured at aa6d65d for wb-4nvi: src 116, test 654, docs 73, qa 67, every walked file git-listed),
+ * so an emptied walk reds and an additive change does not; the walk itself is held to git's listing (heldToGit). */
 const SCAN_ROOTS: readonly ScanRoot[] = [
   { pin: "B1", root: "src", floor: 100, anchorFile: "workflow/reconcile.ts", anchorToken: "RECONCILE_EVIDENCE_READS" },
   { pin: "B2", root: "test", floor: 400, anchorFile: "helpers/rf-render-fixture.ts", anchorToken: "RF_FIXTURE_RELEASE" },
@@ -396,22 +469,24 @@ const SRC_ROOT: ScanRoot = { pin: "D1", root: "src", floor: 100, anchorFile: "wo
 function scanRoot(scan: ScanRoot, family: RegExp, spelled: string): Json {
   const base = join(REPO, scan.root);
   const { files, links } = walk(base, new Set());
-  const floorMet = files.length >= scan.floor;
-  const hits = hitsIn(files, family);
+  const { read, unwalked } = heldToGit(REPO, files, gitListed(base));
+  const floorMet = read.length >= scan.floor;
+  const hits = hitsIn(read, family);
   const anchor = join(base, scan.anchorFile);
-  const anchorRead = files.includes(anchor) && bytesOf(anchor).toString("utf8").includes(scan.anchorToken);
-  expect(floorMet, `${scan.root}: ${files.length} files walked, floor ${scan.floor}`).toBe(true);
+  const anchorRead = read.includes(anchor) && bytesOf(anchor).toString("utf8").includes(scan.anchorToken);
+  expect(floorMet, `${scan.root}: ${read.length} listed files read, floor ${scan.floor}`).toBe(true);
   expect(anchorRead, `${scan.root}: the anchor ${scan.anchorFile} was not read with ${scan.anchorToken}`).toBe(true);
+  expect(unwalked, `${scan.root}: files git lists that the walk never reached`).toEqual([]);
   expect(links.map(link => relative(REPO, link)), `symbolic links under ${scan.root} (refused, never followed)`).toEqual([]);
   expect(hits, `files spelling ${spelled} under ${scan.root}`).toEqual([]);
-  return { pin: scan.pin, family: familyId(family), root: scan.root, floor: scan.floor, anchorFile: scan.anchorFile, anchorToken: scan.anchorToken, floorMet, anchorRead, links: [], hits };
+  return { pin: scan.pin, family: familyId(family), root: scan.root, floor: scan.floor, anchorFile: scan.anchorFile, anchorToken: scan.anchorToken, floorMet, anchorRead, unwalked, links: [], hits };
 }
 
 /** Never read by row B: the object store, installed third-party code, and the tracker's record files (bead text and its change
  * log quote the refuted descriptor, PREP F13). Every other top-level entry outside SCAN_ROOTS is B6's. */
 const EXCLUDED: readonly string[] = [".git", "node_modules", ".beads/issues.jsonl", ".beads/interactions.jsonl"];
 /** B6's floors (measured at base 893fe06: 36 entries and 71 files outside SCAN_ROOTS, EXCLUDED and the gitignored local
- * outputs) and the files it must read. */
+ * outputs; at aa6d65d for wb-4nvi, 36 entries and 72 git-listed files) and the files it must read. */
 const REST_FLOOR = { entries: 25, files: 55 };
 const REST_ANCHORS: readonly (readonly [string, string])[] = [
   ["README.md", "pi-subagents"],
@@ -446,14 +521,20 @@ function scanRest(family: RegExp, spelled: string): Json {
       links.push(...below.links);
     } else if (entry.isFile()) files.push(path);
   }
-  const floorMet = kept.length >= REST_FLOOR.entries && files.length >= REST_FLOOR.files;
-  const anchorsRead = REST_ANCHORS.every(([file, token]) => files.includes(join(REPO, file)) && bytesOf(join(REPO, file)).toString("utf8").includes(token));
-  const hits = hitsIn(files, family);
-  expect(floorMet, `${kept.length} top-level entries and ${files.length} files walked, floors ${REST_FLOOR.entries} and ${REST_FLOOR.files}`).toBe(true);
+  const listed = gitListed(REPO);
+  const under = (path: string, entry: string): boolean => path === join(REPO, entry) || path.startsWith(`${join(REPO, entry)}${sep}`);
+  const outside = [...roots, ...EXCLUDED];
+  const rest = listed === undefined ? undefined : new Set([...listed].filter(path => !outside.some(entry => under(path, entry))));
+  const { read, unwalked } = heldToGit(REPO, files, rest);
+  const floorMet = kept.length >= REST_FLOOR.entries && read.length >= REST_FLOOR.files;
+  const anchorsRead = REST_ANCHORS.every(([file, token]) => read.includes(join(REPO, file)) && bytesOf(join(REPO, file)).toString("utf8").includes(token));
+  const hits = hitsIn(read, family);
+  expect(floorMet, `${kept.length} top-level entries and ${read.length} listed files read, floors ${REST_FLOOR.entries} and ${REST_FLOOR.files}`).toBe(true);
   expect(anchorsRead, `the anchors ${REST_ANCHORS.map(([file]) => file).join(", ")} were not all read`).toBe(true);
+  expect(unwalked, "files git lists outside SCAN_ROOTS and EXCLUDED that the walk never reached").toEqual([]);
   expect(links.map(link => relative(REPO, link)), "symbolic links outside SCAN_ROOTS (refused, never followed)").toEqual([]);
   expect(hits, `files spelling ${spelled} outside SCAN_ROOTS`).toEqual([]);
-  return { pin: "B6", family: familyId(family), excluded: [...EXCLUDED], floor: { ...REST_FLOOR }, floorMet, anchorsRead, links: [], hits };
+  return { pin: "B6", family: familyId(family), excluded: [...EXCLUDED], floor: { ...REST_FLOOR }, floorMet, anchorsRead, unwalked, links: [], hits };
 }
 
 interface Served {
@@ -611,6 +692,98 @@ const SPELLINGS: readonly Spelling[] = [
   { pin: "QD5", family: BACKEND_FAMILY, text: base64("backend_instance_id"), hit: false },
 ];
 
+/** The two matchers whose classes the judged set reads (PREP F5), each under its row with its words in order. */
+const MATCHERS: readonly { readonly row: string; readonly family: RegExp; readonly words: readonly string[] }[] = [
+  { row: "MB", family: DESCRIPTOR_FAMILY, words: DESCRIPTOR_WORDS },
+  { row: "MD", family: BACKEND_FAMILY, words: BACKEND_WORDS },
+];
+const CASE_FORMS: readonly string[] = ["lower", "upper", "mixed"];
+/** The run a matcher's source reads between its words, or undefined when the source is not its words joined by one run. */
+function runOf(family: RegExp, words: readonly string[]): string | undefined {
+  const [first = "", second = ""] = words;
+  const source = family.source;
+  if (!source.startsWith(first)) return undefined;
+  const run = source.slice(first.length, source.indexOf(second, first.length));
+  return source === words.join(run) ? run : undefined;
+}
+/** A run's bracket members (regex fragments, one per member) and the words its alternation reads as separators. */
+function runMembers(run: string): { readonly bracket: string[]; readonly words: string[] } {
+  const bracket = /\[((?:\\.|[^\]\\])*)\]/.exec(run)?.[1] ?? "";
+  return { bracket: bracket.match(/\\.|[^\\]/gu) ?? [], words: [...run.matchAll(/\\b([a-z]+)\\b/g)].map(match => match[1] ?? "") };
+}
+/** A bracket member's label: whitespace for \s, a printable ASCII character as itself, anything else by its code point. */
+function memberLabel(member: string): string {
+  if (member === "\\s") return "whitespace";
+  const code = (member.startsWith("\\") ? member.slice(1) : member).codePointAt(0) ?? 0;
+  return code > 0x7e ? `U+${code.toString(16).toUpperCase().padStart(4, "0")}` : String.fromCodePoint(code);
+}
+/** What a matcher reads between its words, read from its own source: each bracket member, each separator word, "direct" when a
+ * run may be empty, and the case forms when it reads any case; "<unread source>" when the source is not its words joined by one
+ * run, which no spelling can cover. */
+function classOf(family: RegExp, words: readonly string[]): string[] {
+  const run = runOf(family, words);
+  if (run === undefined) return ["<unread source>"];
+  const members = runMembers(run);
+  return [
+    ...members.bracket.map(memberLabel),
+    ...members.words,
+    ...(new RegExp(`^(?:${run})$`).test("") ? ["direct"] : []),
+    ...(family.flags.includes("i") ? CASE_FORMS : []),
+  ];
+}
+/** The members and the case form one spelling exercises: the runs between its words as the matcher reads them, and the case of
+ * its words; nothing when the matcher does not read it. */
+function exercised(family: RegExp, words: readonly string[], text: string): string[] {
+  const run = runOf(family, words);
+  const match = run === undefined ? null : new RegExp(words.join(`(${run})`), family.flags).exec(text);
+  if (run === undefined || match === null) return [];
+  const runs = match.slice(1).map(entry => entry ?? "");
+  const members = runMembers(run);
+  let at = 0;
+  const letters = words
+    .map((word, index) => {
+      const read = match[0].slice(at, at + word.length);
+      at += word.length + (runs[index]?.length ?? 0);
+      return read;
+    })
+    .join("");
+  const caseForm = letters === letters.toLowerCase() ? "lower" : letters === letters.toUpperCase() ? "upper" : "mixed";
+  return [
+    ...members.bracket.filter(member => runs.some(entry => new RegExp(`[${member}]`).test(entry))).map(memberLabel),
+    ...members.words.filter(word => runs.some(entry => new RegExp(`\\b${word}\\b`, "i").test(entry))),
+    ...(runs.includes("") ? ["direct"] : []),
+    ...(family.flags.includes("i") ? [caseForm] : []),
+  ];
+}
+/** Each member or case form of a matcher's class that no must-hit spelling exercises, labelled by its matcher's row. */
+function classGaps(spellings: readonly Spelling[], matchers: typeof MATCHERS = MATCHERS): string[] {
+  return matchers.flatMap(({ row, family, words }) => {
+    const covered = new Set(spellings.filter(spelling => spelling.family === family && spelling.hit).flatMap(spelling => exercised(family, words, spelling.text)));
+    return classOf(family, words)
+      .filter(member => !covered.has(member))
+      .map(member => `${row} ${member}`);
+  });
+}
+/** What the anchors outside the pin literals report when one pin is removed from every literal at once - the rows, the
+ * ACCEPTANCE parts and the spellings - as a coordinated hollow does: the export's gaps, then the classes'. */
+function anchorsReport(pin: string): string[] {
+  const hollow = withoutPin(pin);
+  return [...exportGaps(hollow.rows, hollow.acceptance), ...classGaps(SPELLINGS.filter(spelling => spelling.pin !== pin))];
+}
+/** The tracked bead export with this bead's record re-serialized with spaced JSON separators (", " and ": "), still one line. */
+function spacedExport(exported: string): string {
+  return exported
+    .split("\n")
+    .map(line => {
+      if (!line.includes(BEAD)) return line;
+      const parsed: unknown = JSON.parse(line);
+      return isObject(parsed) && parsed.id === BEAD ? JSON.stringify(parsed, null, 1).replace(/\n\s*/g, " ") : line;
+    })
+    .join("\n");
+}
+/** Keys every served descriptor's JSON carries that no id carries: P2 must-hits each in every served text (PREP F1). */
+const NON_ID_KEYS: readonly string[] = ["description", "inputSchema"];
+
 /** P3's planted listing: a file, a link, and a directory holding a second link. */
 const PLANTED = "/planted";
 const plantedEntry = (name: string, kind: "file" | "dir" | "link"): Entry => ({
@@ -666,7 +839,8 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   A5: async () => {
     const read = GRAMMAR_PROBES.map(probe => ({ label: probe.label, admitted: withinGrammar(probe.field, probe.value) }));
     expect(read, "a grammar admits a near miss or refuses a boundary value").toStrictEqual(GRAMMAR_PROBES.map(probe => ({ label: probe.label, admitted: probe.admitted })));
-    return { admitted: read.filter(entry => entry.admitted).map(entry => entry.label), refused: read.filter(entry => !entry.admitted).map(entry => entry.label) };
+    const bounds = Object.fromEntries(GRAMMAR_PROBES.filter(probe => probe.label.endsWith("-max")).map(probe => [probe.label, probe.value.length]));
+    return { admitted: read.filter(entry => entry.admitted).map(entry => entry.label), refused: read.filter(entry => !entry.admitted).map(entry => entry.label), bounds };
   },
   ...Object.fromEntries(SCAN_ROOTS.map(scan => [scan.pin, async () => scanRoot(scan, DESCRIPTOR_FAMILY, `the refuted ${PLACEHOLDER}`)])),
   B5: async () => servedScan("B5", DESCRIPTOR_FAMILY, `the refuted ${PLACEHOLDER}`),
@@ -714,15 +888,35 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   ),
   P1: async () => {
     const hits = hitsIn(walk(join(REPO, "test"), new Set()).files, BACKEND_FAMILY);
-    const witness = { family: familyId(BACKEND_FAMILY), reportsCensus: hits.includes(CENSUS_FILE), reportsRoster: hits.includes(ROSTER_FILE) };
-    expect(witness, "the content scan does not report this file and its roster, which spell backend_instance_id").toStrictEqual({ family: familyId(BACKEND_FAMILY), reportsCensus: true, reportsRoster: true });
+    const readWhole = [CENSUS_FILE, ROSTER_FILE].filter(file => hitsIn([join(REPO, file)], wholeTextOf(join(REPO, file))).length === 1);
+    const witness = { family: familyId(BACKEND_FAMILY), reportsCensus: hits.includes(CENSUS_FILE), reportsRoster: hits.includes(ROSTER_FILE), readWhole };
+    expect(witness, "the content scan does not report this file and its roster, which spell backend_instance_id, or reads either short of its end").toStrictEqual({
+      family: familyId(BACKEND_FAMILY),
+      reportsCensus: true,
+      reportsRoster: true,
+      readWhole: [CENSUS_FILE, ROSTER_FILE],
+    });
     return witness;
   },
   P2: async () => {
     const descriptors = await servedDescriptors();
+    const native = await loadWorkbenchNative();
+    const registry = new CapabilityRegistry();
+    native.registerNativeProviders(registry, REPO);
+    const independent = registry.catalogSnapshot().map(entry => ({ id: entry.descriptor.id, text: JSON.stringify(entry.descriptor) }));
     const hits = servedHits(descriptors, /"id":"/);
-    const witness = { descriptorFloorMet: descriptors.length >= 4, everyTextRead: hits.length === descriptors.length && descriptors.length > 0 };
-    expect(witness, "the served scan does not read each descriptor's JSON text (its id carries no JSON key)").toStrictEqual({ descriptorFloorMet: true, everyTextRead: true });
+    const witness = {
+      descriptorFloorMet: descriptors.length >= 4,
+      everyTextRead: hits.length === descriptors.length && descriptors.length > 0,
+      wholeDescriptors: descriptors.length > 0 && JSON.stringify(descriptors) === JSON.stringify(independent),
+      nonIdKeysRead: NON_ID_KEYS.filter(key => descriptors.length > 0 && servedHits(descriptors, new RegExp(`"${key}":`)).length === descriptors.length),
+    };
+    expect(witness, "the served scan does not read each descriptor's whole JSON text (an id, or a projection to it, carries neither the description nor the inputSchema key)").toStrictEqual({
+      descriptorFloorMet: true,
+      everyTextRead: true,
+      wholeDescriptors: true,
+      nonIdKeysRead: [...NON_ID_KEYS],
+    });
     return witness;
   },
   P3: async () => {
@@ -743,6 +937,24 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect(witness, "the reader misses a NUL-bearing spelling").toStrictEqual({ utf16le: true, utf16be: true, utf32le: true, utf8DecodingAlone: false });
     return witness;
   },
+  P5: async () => {
+    const held = heldToGit(PLANTED, [join(PLANTED, "a.ts"), join(PLANTED, "local.log")], new Set([join(PLANTED, "a.ts"), join(PLANTED, "d", "b.ts")]));
+    const witness = {
+      argv: [...GIT_LISTING],
+      read: held.read.map(path => relative(PLANTED, path)),
+      unwalked: held.unwalked,
+      failed: heldToGit(PLANTED, [join(PLANTED, "a.ts")], undefined),
+      listsCensus: gitListed(join(REPO, "test"))?.has(join(REPO, CENSUS_FILE)) === true,
+    };
+    expect(witness, "the walk is not held to git's listing").toStrictEqual({
+      argv: [...GIT_LISTING],
+      read: ["a.ts"],
+      unwalked: ["d/b.ts"],
+      failed: { read: [], unwalked: ["<git ls-files failed>"] },
+      listsCensus: true,
+    });
+    return witness;
+  },
   X1: async () => {
     const hollow = withoutPin("C3");
     const gaps = exportGaps(hollow.rows, hollow.acceptance);
@@ -755,6 +967,45 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect(gaps, "R-COORDINATED: B3 removed from every literal at once is quiet while B1, B2, B4, B5 and B6 judge part (b)").toEqual([]);
     return { pin: "B3", gaps };
   },
+  X3: async () => {
+    const exported = readFileSync(BEADS_EXPORT, "utf8");
+    const spaced = spacedExport(exported);
+    const witness = { bead: BEAD, respaced: spaced !== exported && !spaced.includes(`"id":"${BEAD}"`), sameAcceptance: exportedAcceptance(spaced) === exportedAcceptance(exported) };
+    expect(witness, "the export reader misses this bead's record once it is re-serialized with spaced separators").toStrictEqual({ bead: BEAD, respaced: true, sameAcceptance: true });
+    return witness;
+  },
+  X4: async () => {
+    const reported = Object.fromEntries(
+      ROWS.flatMap(row => row.pins)
+        .map(pin => [pin, anchorsReport(pin)] as const)
+        .filter(([, report]) => report.length > 0),
+    );
+    expect(reported.MB9, "MB9, the one '.' must-hit, removed from every literal at once is unseen (the landing-349 S10 hollow)").toEqual(["MB ."]);
+    expect(reported.C3, "C3, the one judge of '(c) a key on alias alone fails', removed from every literal at once is unseen").toEqual(["(c) a key on alias alone fails: no pin"]);
+    return reported;
+  },
+  X5: async () => {
+    const quiet = ROWS.flatMap(row => row.pins).filter(pin => anchorsReport(pin).length === 0);
+    const mustHits = SPELLINGS.filter(spelling => spelling.hit).map(spelling => spelling.pin);
+    expect(quiet, "R-COORDINATED: B3, X2's row, is not among the quiet pins").toContain("B3");
+    expect(
+      quiet.filter(pin => mustHits.includes(pin)),
+      "R-COORDINATED: the must-hits whose every member and case form other must-hits still exercise",
+    ).toEqual(["MB1", "MB2", "MD1"]);
+    // One level up: row B's bracket without "." while MB9 goes with it reads no class gap (the roster's family ids and these
+    // literals would move with it).
+    const narrowed = new RegExp(DESCRIPTOR_FAMILY.source.split("_.+").join("_+"), DESCRIPTOR_FAMILY.flags);
+    const dotted = SPELLINGS.find(spelling => spelling.pin === "MB9")?.text ?? "";
+    const narrowedRead = {
+      dropsDot: DESCRIPTOR_FAMILY.test(dotted) && !narrowed.test(dotted),
+      gaps: classGaps(
+        SPELLINGS.filter(spelling => spelling.pin !== "MB9").map(spelling => (spelling.family === DESCRIPTOR_FAMILY ? { ...spelling, family: narrowed } : spelling)),
+        [{ row: "MB", family: narrowed, words: DESCRIPTOR_WORDS }],
+      ),
+    };
+    expect(narrowedRead, "R-COORDINATED one level up: a matcher narrowed with its must-hit is not quiet to the class anchor").toStrictEqual({ dropsDot: true, gaps: [] });
+    return { quiet, narrowed: narrowedRead };
+  },
 };
 
 /** Each pin's witness, recorded after its compare (PREP F1; the reached-record class): the closing case reads it. */
@@ -764,7 +1015,7 @@ const REGISTERED = "the registered tests: every pin registered once under its ro
 
 describe("wb-a9l2.3 OwnerResource seven-field census (RF-HARNESS2-FEDERATED-PEER-R3, absent-today leg)", () => {
   it(JUDGED_SET, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:6", "C:3", "D:2", "MB:19", "MD:13", "P:4", "X:2"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:6", "C:3", "D:2", "MB:19", "MD:13", "P:5", "X:5"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -779,6 +1030,7 @@ describe("wb-a9l2.3 OwnerResource seven-field census (RF-HARNESS2-FEDERATED-PEER
     const pins = ROWS.flatMap(row => row.pins);
     expect(ACCEPTANCE.flatMap(entry => entry.pins).filter(pin => !pins.includes(pin)), "ACCEPTANCE cites a pin no row holds").toEqual([]);
     expect(exportGaps(ROWS, ACCEPTANCE), "an ACCEPTANCE part with no pin, or a pin of rows A-D judging no part").toEqual([]);
+    expect(classGaps(SPELLINGS), "a member or case form of a matcher's class, read from its own source, that no must-hit spelling exercises").toEqual([]);
   });
 
   for (const row of ROWS) {
