@@ -1,5 +1,5 @@
 {
- "provenance": "wb-4nut.6 census roster, cut by ws-02 (run g10-work-s47) on trunk edccd80289349182284b65d296aee98742c11b34 (landing 287 hop). Producer facts: read-only git show and git cat-file -e at the pins named below (H2 rows verbatim; PERF-F rows as measured cells, each beside the sha256 of its verbatim row); pin witnesses: measured by test/workbench-h2-close-condition-census.test.ts on edccd80 plus the cut, each reviewed against the bead's acceptance before it was written here. Re-measured for wb-zoq7 (the R694 follow-up from landing 308) by ws-03 (run g10-work-s80) on trunk 9f6b726eb7abcb0525b862ece779ab54b17df96e: the A3, Q1 and Q8 witnesses, the new Q10 witness, the constants closeCommands, rootFiles, followUp and findingPlants, the .beads/hooks scan root, R-SYNC, and the bd section (the installed bd 1.1.0-rc.1's help lines, verbatim); every other witness and constant is unchanged.",
+ "provenance": "wb-4nut.6 census roster, cut by ws-02 (run g10-work-s47) on trunk edccd80289349182284b65d296aee98742c11b34 (landing 287 hop). Producer facts: read-only git show and git cat-file -e at the pins named below (H2 rows verbatim; PERF-F rows as measured cells, each beside the sha256 of its verbatim row); pin witnesses: measured by test/workbench-h2-close-condition-census.test.ts on edccd80 plus the cut, each reviewed against the bead's acceptance before it was written here. Re-measured for wb-zoq7 (the R694 follow-up from landing 308) by ws-03 (run g10-work-s80) on trunk 9f6b726eb7abcb0525b862ece779ab54b17df96e: the A3, Q1 and Q8 witnesses, the new Q10 witness, the constants closeCommands, rootFiles, followUp and findingPlants, the .beads/hooks scan root, R-SYNC, and the bd section (the installed bd 1.1.0-rc.1's help lines, verbatim); every other witness and constant is unchanged. Re-measured for wb-s6jw (the flywheel review of wb-zoq7's cut) by ws-02 (run g10-work-s91) on trunk 88b2ec526f2b1d5d29be4ac3aa225815337e59f8: the A3 witness (four human flagged controls, two human quiet controls, reviewPlants), the constants closeCommands (human respond, human dismiss), review and reviewPlants, and the bd section (every carried help line re-read byte-identical under the installed bd 1.1.0-rc.1 (c7aec2c4c), the human respond and human dismiss help lines added verbatim); every other witness and constant is unchanged.",
  "bead": "wb-4nut.6",
  "programPin": "76bbbffd9d4a419f972d6fefc8b7f9dc524df8df",
  "producer": {
@@ -412,6 +412,14 @@
    [
     "duplicates",
     "automerge"
+   ],
+   [
+    "human",
+    "respond"
+   ],
+   [
+    "human",
+    "dismiss"
    ]
   ],
   "instructionFiles": [
@@ -486,6 +494,13 @@
    "P11": "[\"import\", \"-i\", rowsFile]",
    "P12": "command = \"bd close rftsx-auqdi\"",
    "P13": "\"zz-close\": \"bd close rftsx-auqdi\""
+  },
+  "review": "wb-s6jw",
+  "reviewPlants": {
+   "respond": "bd human respond rftsx-auqdi \"fixed\"",
+   "dismiss": "bd human dismiss rftsx-auqdi",
+   "respondArgv": "spawnSync(\"bd\", [\"human\", \"respond\", id, text])",
+   "dismissArgv": "spawnSync(\"bd\", [\"human\", \"dismiss\", id, \"--note\", note])"
   },
   "residuals": {
    "R-ARGV": [
@@ -820,9 +835,15 @@
         1,
         1,
         1,
+        1,
+        1,
+        1,
+        1,
         1
        ],
        "quiet": [
+        0,
+        0,
         0,
         0,
         0,
@@ -870,6 +891,24 @@
         "launches": 1
        },
        "P13": {
+        "carried": true,
+        "launches": 1
+       }
+      },
+      "reviewPlants": {
+       "respond": {
+        "carried": true,
+        "launches": 1
+       },
+       "dismiss": {
+        "carried": true,
+        "launches": 1
+       },
+       "respondArgv": {
+        "carried": true,
+        "launches": 1
+       },
+       "dismissArgv": {
         "carried": true,
         "launches": 1
        }
@@ -1252,8 +1291,8 @@
   }
  ],
  "bd": {
-  "version": "bd version 1.1.0-rc.1 (a7903cb34) db-schema-max=v59",
-  "measuredBy": "bd --version and bd <command> --help for each entry below, run by the wb-zoq7 cutting seat (ws-03, run g10-work-s80, 2026-10-24) from an empty scratch directory outside any repository, no store opened; every line verbatim, leading spaces kept",
+  "version": "bd version 1.1.0-rc.1 (c7aec2c4c) db-schema-max=v59",
+  "measuredBy": "bd --version and bd <command> --help for each entry below, run by the wb-zoq7 cutting seat (ws-03, run g10-work-s80, 2026-10-24) from an empty scratch directory outside any repository, no store opened; every line verbatim, leading spaces kept. Re-read for wb-s6jw by ws-02 (run g10-work-s91, 2026-10-25) the same way under the installed build that version names (c7aec2c4c; wb-zoq7 read a7903cb34): every line wb-zoq7 carried is byte-identical there; the human respond and human dismiss entries are new, verbatim",
   "help": {
    "close": {
     "command": "bd close --help",
@@ -1323,6 +1362,21 @@
     "lines": [
      "   children orphans them while a depends-on link survives closure.",
      "      --auto-merge   Automatically merge all duplicates"
+    ]
+   },
+   "human respond": {
+    "command": "bd human respond --help; bd human --help",
+    "lines": [
+     "Respond to a human-needed bead by adding a comment and closing it.",
+     "The response is added as a comment and the issue is closed with reason \"Responded\".",
+     "  human respond <id>      Respond to a human-needed bead (adds comment and closes)"
+    ]
+   },
+   "human dismiss": {
+    "command": "bd human dismiss --help",
+    "lines": [
+     "Dismiss a human-needed bead permanently without responding.",
+     "The issue is closed with a \"Dismissed\" reason and optional note."
     ]
    },
    "batch": {
