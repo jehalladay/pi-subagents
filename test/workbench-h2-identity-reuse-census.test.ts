@@ -24,16 +24,27 @@
  * host's replay basis). The rows:
  *  A, the trigger, absent today. A1 Pi declares, installs and loads no H2 producer package (H2_PACKAGE, the program's four Python
  *    SDKs and the TSX SDK in any spelling), and no src literal names one; A2 a lexical scan of every src module (identifiers and
- *    private names, every string or template part, every static name chain - a property access, an element access by a literal
- *    key or a qualified name, read from its first named link - every nested key path of object keys, type members and binding
- *    patterns, and every regex literal's pattern with its escapes and syntax read as separators; camelCase split, separators
- *    folded; comments are no reader) finds no gating work package (WORK_PACKAGE_TERMS) and no H2 identity-record word
- *    (IDENTITY_TERMS) beyond its one measured known spelling (KNOWN_SPELLINGS), with floors, the six judged sites as anchors, the
- *    four derived caches scanned quiet and the detector's controls, one per term and one per reading (the chain, key-path and
- *    regex readings and the reading controls: wb-flt6, the landing-316 gate's F3); A3 the gating artifacts are measured
- *    unshipped: the bead row's gating sentence names RL-H2-01/02, FO-H2-01/02, RC-H2-02, RI-H2-02 and TSX-FED-01 and ends
- *    "Shipped: no.", and the roster's producer facts (read-only at the cited shas) hold each cited line verbatim and find no gating
- *    artifact name in producer src.
+ *    private names, every string, template part or number, every static name chain - a property access, an element access by a
+ *    literal key, a qualified name or an indexed access type by a literal key, read from its first named link through every
+ *    transparent wrapper (parentheses, a non-null assertion, an as or satisfies expression, a type assertion, a parenthesized
+ *    type) and rooted at a name, this, a type name or a type query; any other root (a call, an element access by a computed key,
+ *    a comma or any other expression) is computed and not part of it - every nested key path of object keys, type members and
+ *    binding patterns, and every regex literal's pattern, each character escape (\x2E, \u002E, \u{2E}) read as the character it
+ *    names and every other escape (a class, property, back-reference, assertion, control or digit escape, each read whole) and
+ *    the pattern syntax as separators, an escaped character as itself; camelCase split, separators folded; comments are no
+ *    reader) finds no gating work package (WORK_PACKAGE_TERMS) and no H2 identity-record word (IDENTITY_TERMS) beyond its one
+ *    measured known spelling (KNOWN_SPELLINGS), every hit passing the one finding step its own controls drive
+ *    (FINDING_CONTROLS: a flagged term beside the known spelling is a finding, and the known spelling in another module is one),
+ *    with floors, the six judged sites as anchors, the four derived caches scanned quiet, the detector's controls, one per term
+ *    and one per reading (the chain, key-path and regex readings and the reading controls: wb-flt6, the landing-316 gate's F3;
+ *    the wrapper, indexed-access-type, type-query and escape readings and the finding step's controls: wb-3wcm, the landing-405
+ *    gate's F1, F2, F3 and F6) and the TOKEN ANCHOR (wb-3wcm F4): the TypeScript compiler, outside this cut, is the anchor of
+ *    the token readings - every node of a src module's syntax tree that carries its own text (an identifier, a private name, a
+ *    string, a template part, a regex, a number) must be one a token reading read, so a token reading removed together with its
+ *    controls, the roster's scan and A2's witness reds (a text-carrying kind no reading reads, JSX text today, is the anchor's
+ *    own control); A3 the gating artifacts are measured unshipped: the bead row's gating sentence names RL-H2-01/02,
+ *    FO-H2-01/02, RC-H2-02, RI-H2-02 and TSX-FED-01 and ends "Shipped: no.", and the roster's producer facts (read-only at the
+ *    cited shas) hold each cited line verbatim and find no gating artifact name in producer src.
  *  B, acceptance (a). B1 at one native reference, a restarted owner's re-count (equal and lower sequences under fresh event ids)
  *    reads out-of-order and changes nothing, as do a sequence-less and a lower-sequence snapshot; a sequence-keyed cache fails the
  *    judge Pi's reading meets. B2 the observation cache's node key and event de-duplication and the evidence store's entry key
@@ -77,13 +88,24 @@
  * that returns early or skips itself at run time reds after it has run. The judge reads which cases were selected to run from the
  * collected tree before the first case runs (beforeEach, once): under a test-name filter that deselects the records case it holds
  * nothing.
+ * SELF-READ (wb-3wcm, the landing-405 gate's F5: both witness comparisons weakened in place to a same-count matcher, with a planted
+ * witness drift, kept every count and the file green): the judged set parses this file with the TypeScript compiler and holds each
+ * witness comparison (COMPARISONS: the pin case's and the records case's) to one expression statement spelled exactly so and
+ * standing directly in its case's body (no try, condition, loop or nested function around it), the list itself held to the
+ * roster's, so a comparison weakened, guarded or caught in place reds before any pin runs.
  * Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the filing anchors rows and clauses, not pins); a
  * term removed from IDENTITY_TERMS or WORK_PACKAGE_TERMS together with its controls, the roster's scan and A2's witness (the
  * filing anchors rows and clauses, not words, and no source outside this cut lists the vocabulary); an assertion removed from this
  * file together with its pinned count in the roster's record; a case that keeps its own assertions but returns its witness as a
  * literal, or reads the roster through an alias; the file-end judge or the selection it reads removed (no claim rides them alone:
  * the records case still holds the record); every case of the file skipped at once (no case runs to read the tree, and vitest runs
- * no hook for a file with nothing to run).
+ * no hook for a file with nothing to run); a composite reading (the chain or the key-path reading) removed from scanModule together
+ * with its reading controls, the roster's scan and A2's witness - and, for the chain reading, the known spelling - (the token
+ * anchor holds tokens, not composites, and no source outside this cut lists the composite readings); a token reading kept in place
+ * but made to read nothing, or a token marked read whose text no reading passes on, together with its controls (the anchor holds
+ * that every token is read, not what is read from it); a witness comparison weakened in place together with its COMPARISONS
+ * entry and the roster's, or hollowed through its matcher, an expect.extend override (the SELF-READ holds the spelling and the
+ * place, and no source outside this cut lists the comparisons).
  * THE GATE-OPENING SIGNAL: A1 reds when an H2 producer package is declared, installed, loaded or named, and A2 when a src module
  * names a gating work package or an identity-record word: the H2 reader RL-H2-01/02, FO-H2-01/02, RC-H2-02 or RI-H2-02 calls for
  * reds this census first, and its cut re-pins (a) to (d) at that reader's own keys (B to E already pin the sites it would use).
@@ -205,11 +227,42 @@ const READING_CONTROLS: readonly (readonly [string, string, string])[] = [
   ["regex literal", "regex", "const r = /owner.epoch/;"],
   ["regex escape", "regex", "const r = /owner\\.epoch/;"],
   ["regex class", "regex", "const r = /owner[._-]epoch/i;"],
+  ["non-null link", "chain", "const e = record.owner!.epoch;"],
+  ["parenthesized link", "chain", "const e = (record.owner).epoch;"],
+  ["as link", "chain", "const e = (record.owner as Owner).epoch;"],
+  ["satisfies link", "chain", "const e = (record.owner satisfies Owner).epoch;"],
+  ["type assertion link", "chain", "const e = (<Owner>record.owner).epoch;"],
+  ["parenthesized key", "chain", 'const e = record[("owner")][("epoch")];'],
+  ["indexed access type", "chain", 'type E = Rec["owner"]["epoch"];'],
+  ["parenthesized type", "chain", 'type E = (Rec["owner"])["epoch"];'],
+  ["type query root", "chain", 'type E = (typeof record)["owner"]["epoch"];'],
+  ["regex hex escape", "regex", "const r = /owner\\x2Eepoch/;"],
+  ["regex unicode escape", "regex", "const r = /owner\\u002Eepoch/;"],
+  ["regex code point escape", "regex", "const r = /owner\\u{2E}epoch/u;"],
+  ["regex escaped letter", "regex", "const r = /owner\\u0045poch/;"],
+  ["regex control escape", "regex", "const r = /owner\\cJepoch/;"],
+  ["regex digit escape", "regex", "const r = /owner\\0epoch/;"],
+  ["regex property escape", "regex", "const r = /owner\\p{P}epoch/u;"],
+  ["regex named back-reference", "regex", "const r = /(?<dot>\\.)owner\\k<dot>epoch/;"],
 ];
 const READING_TERM = "owner epochs?";
 /** R-OWN-FIELD: the one spelling A2 reads in src and holds as known (`${path} ${reading} ${value}`): the local detached contract's
  * snapshot field, read through the chain reading. */
 const KNOWN_SPELLINGS: readonly string[] = ["src/workbench/detached-observer.ts chain snapshot.observation"];
+/** The finding step's own controls (wb-3wcm, the landing-405 gate's F6): [the module path a source is scanned under, the source,
+ * the one term its hits must leave as a finding], each scanned and passed through findingsOf, so a finding step that drops a hit
+ * reds: the known spelling beside a flagged term at the known module, and the known spelling at another module. */
+const FINDING_CONTROLS: readonly (readonly [string, string, string])[] = [
+  ["src/workbench/detached-observer.ts", "const seen = snapshot.observation; const ownerEpoch = 1;", "owner epochs?"],
+  ["src/workbench/detached-observer-copy.ts", "const seen = snapshot.observation;", "snapshot observations?"],
+];
+/** The token anchor's own control: [path, source], a module whose JSX text no token reading reads, so the anchor lists it unread. */
+const TOKEN_CONTROL: readonly [string, string] = ["control.tsx", "const view = <b>owner epoch</b>;"];
+/** SELF-READ (wb-3wcm F5): each witness comparison of this file, as the expression statement that spells it. */
+const COMPARISONS: readonly string[] = [
+  "expect(witness).toStrictEqual(rosterWitness(pin));",
+  `expect(MEASURED, "every pin's measured witness, compared against the roster a second time").toStrictEqual(Object.fromEntries(pins.map(pin => [pin, rosterWitness(pin)])));`,
+];
 /** R-SPLIT-NAMES' quiet row: a term split across two names that form no chain and no key path. */
 const SPLIT_CONTROLS: readonly string[] = [
   "const o = { owner: epoch };", "function f(owner: Epoch) {}", "const o = { owner: wrap({ epoch: 1 }) };", "interface Owner { epoch: number }",
@@ -305,6 +358,8 @@ interface Roster {
   readonly producer: readonly ProducerSource[];
   readonly residuals: readonly string[];
   readonly residualRows: JsonObject;
+  /** The SELF-READ's witness comparisons. */
+  readonly comparisons: readonly string[];
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
   /** The ends every case before the records case records, in run order (`${id}:${count}`). */
@@ -364,6 +419,7 @@ function readRoster(): Roster {
     producer: raw.producer.map(producerOf),
     residuals: strings(raw.residuals, "residuals"),
     residualRows: json(raw.residualRows) as JsonObject,
+    comparisons: strings(raw.comparisons, "comparisons"),
     rows,
     tests: strings(raw.tests, "tests"),
     reached: strings(raw.reached, "reached"),
@@ -468,29 +524,63 @@ interface Hit {
 const shownHit = (hit: Hit): string => `${hit.path}:${hit.line} ${hit.reading} ${hit.term}: ${hit.value}`;
 /** A hit as KNOWN_SPELLINGS names it: its module, its reading and its text, never its line. */
 const spellingOf = (hit: Hit): string => `${hit.path} ${hit.reading} ${hit.value}`;
+/** A2's one finding step (R-OWN-FIELD): a hit KNOWN_SPELLINGS names (by module, reading and text) is held as known; every other hit
+ * is a finding. FINDING_CONTROLS drive it with hits of their own. */
+const findingsOf = (read: readonly Hit[]): Hit[] => read.filter(hit => !KNOWN_SPELLINGS.includes(spellingOf(hit)));
 interface ModuleScan {
   readonly identifiers: Set<string>;
   readonly literals: Set<string>;
   readonly specifiers: string[];
   readonly hits: Hit[];
   readonly packageLiterals: string[];
+  /** THE TOKEN ANCHOR: every node of the syntax tree the compiler gives its own text that no token reading read (`${path}:${line}: ${text}`). */
+  readonly unread: string[];
 }
 /** The literal text of a specifier-shaped argument, or undefined when it is computed. */
 const literalOf = (node: ts.Node | undefined): string | undefined => (node !== undefined && ts.isStringLiteralLike(node) ? node.text : undefined);
-/** One link of a static name chain: a property access, an element access by a literal key or a qualified name. */
+/** A transparent wrapper a static name chain reads through (wb-3wcm, the landing-405 gate's F1): parentheses, a non-null
+ * assertion, an as or satisfies expression, a type assertion, or a parenthesized type. */
+type Wrapper = ts.ParenthesizedExpression | ts.NonNullExpression | ts.AsExpression | ts.SatisfiesExpression | ts.TypeAssertion | ts.ParenthesizedTypeNode;
+const isWrapper = (node: ts.Node): node is Wrapper =>
+  ts.isParenthesizedExpression(node) || ts.isNonNullExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) ||
+  ts.isTypeAssertionExpression(node) || ts.isParenthesizedTypeNode(node);
+/** The node a run of transparent wrappers stands for. */
+function unwrapped(node: ts.Node): ts.Node {
+  let at = node;
+  while (isWrapper(at)) at = ts.isParenthesizedTypeNode(at) ? at.type : at.expression;
+  return at;
+}
+/** The nearest ancestor that is not a transparent wrapper: where a link that is wrapped would be read as an inner link. */
+function enclosing(node: ts.Node): ts.Node {
+  let at = node.parent;
+  while (isWrapper(at)) at = at.parent;
+  return at;
+}
+/** One link of a static name chain: a property access, an element access by a literal key, a qualified name or an indexed access
+ * type by a literal key (the element access's type-space twin, wb-3wcm F2), each read through its transparent wrappers. */
 function linkOf(node: ts.Node): { readonly inner: ts.Node; readonly name: string } | undefined {
-  if (ts.isPropertyAccessExpression(node)) return { inner: node.expression, name: node.name.text };
-  if (ts.isElementAccessExpression(node) && ts.isStringLiteralLike(node.argumentExpression)) return { inner: node.expression, name: node.argumentExpression.text };
+  if (ts.isPropertyAccessExpression(node)) return { inner: unwrapped(node.expression), name: node.name.text };
+  if (ts.isElementAccessExpression(node)) {
+    const key = unwrapped(node.argumentExpression);
+    return ts.isStringLiteralLike(key) ? { inner: unwrapped(node.expression), name: key.text } : undefined;
+  }
   if (ts.isQualifiedName(node)) return { inner: node.left, name: node.right.text };
+  if (ts.isIndexedAccessTypeNode(node)) {
+    const key = unwrapped(node.indexType);
+    return ts.isLiteralTypeNode(key) && ts.isStringLiteralLike(key.literal) ? { inner: unwrapped(node.objectType), name: key.literal.text } : undefined;
+  }
   return undefined;
 }
-/** A chain's static spelling, its links joined by dots, read from its first named link: a computed root (a call, an element access
- * by a computed key) is not part of it. */
+/** A chain's static spelling, its links joined by dots, read from its first named link: its root is a name, this, a type name or a
+ * type query, and a computed root (a call, an element access by a computed key, a comma or any other expression) is not part of
+ * it. */
 function chainOf(node: ts.Node): string | undefined {
   const link = linkOf(node);
   if (link === undefined) {
     if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) return node.text;
-    return node.kind === ts.SyntaxKind.ThisKeyword ? "this" : undefined;
+    if (ts.isTypeReferenceNode(node)) return chainOf(node.typeName);
+    if (ts.isTypeQueryNode(node)) return chainOf(node.exprName);
+    return node.kind === ts.SyntaxKind.ThisKeyword || ts.isThisTypeNode(node) ? "this" : undefined;
   }
   const inner = chainOf(link.inner);
   return inner === undefined ? link.name : `${inner}.${link.name}`;
@@ -530,13 +620,31 @@ function keyPathOf(node: Keyed): string[] {
   }
   return keys;
 }
-/** A regex literal as the vocabulary reads it: every letter escape (\s, \d) and every pattern-syntax character a separator, an
- * escaped character itself. */
-const patternOf = (literal: string): string => literal.replace(/\\[a-zA-Z]/g, " ").replace(/\\(.)/g, "$1").replace(/[[\]()?*+|{}^$\\]/g, " ");
-/** One module, parsed under its own script kind: its identifiers and private names, every string or template part, every static
- * name chain (read once, from its outermost link), every nested key path of two or more keys and every regex literal's pattern
- * (A2's terms; the literals are also A1's package literals), and its load specifiers - import, export, import-equals, import type,
- * dynamic import, require and import.meta.resolve (A1). Comments are never read: a comment is no reader. */
+/** A regex literal's escapes as the vocabulary reads them (wb-3wcm, the landing-405 gate's F3): a character escape (\x2E, \u002E,
+ * \u{2E}) is the character it names; a property escape (\p{P}), a named back-reference (\k<name>), a control escape (\cJ), a
+ * digit escape (\0, a back-reference \1) and a letter escape (\s, \d, \b) are each one separator, read whole; any other
+ * escaped character (\., \/) is itself. */
+const REGEX_ESCAPE = /\\x([0-9a-fA-F]{2})|\\u([0-9a-fA-F]{4})|\\u\{([0-9a-fA-F]{1,6})\}|\\[pP]\{[^}]*\}|\\k<[^>]*>|\\c[a-zA-Z]|\\[0-9]+|\\[a-zA-Z]|\\(.)/g;
+/** A regex literal as the vocabulary reads it: each character escape read as the character it names, every other escape (a class,
+ * property, back-reference, assertion, control or digit escape) and every pattern-syntax character a separator, an escaped
+ * character itself. */
+const patternOf = (literal: string): string =>
+  literal
+    .replace(REGEX_ESCAPE, (_escape: string, two?: string, four?: string, braced?: string, escaped?: string): string => {
+      const code = two ?? four ?? braced;
+      if (code !== undefined) {
+        const point = Number.parseInt(code, 16);
+        return point <= 0x10ffff ? String.fromCodePoint(point) : " ";
+      }
+      return escaped ?? " ";
+    })
+    .replace(/[[\]()?*+|{}^$\\]/g, " ");
+/** One module, parsed under its own script kind: its identifiers and private names, every string, template part or number,
+ * every static name chain (read once, from its outermost link), every nested key path of two or more keys and every regex
+ * literal's pattern (A2's terms; the literals are also A1's package literals), and its load specifiers - import, export,
+ * import-equals, import type, dynamic import, require and import.meta.resolve (A1). Comments are never read: a comment is no
+ * reader. The token anchor then walks the same tree on its own and lists every node that carries its own text and no token
+ * reading read. */
 function scanModule(path: string, source: string): ModuleScan {
   const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
   const identifiers = new Set<string>();
@@ -544,6 +652,8 @@ function scanModule(path: string, source: string): ModuleScan {
   const specifiers: string[] = [];
   const hits: Hit[] = [];
   const packageLiterals: string[] = [];
+  /** The nodes a token reading read: an identifier or private name, a string, template part or number, a regex. */
+  const tokens = new Set<ts.Node>();
   const line = (node: ts.Node): number => file.getLineAndCharacterOfPosition(node.getStart(file)).line + 1;
   const spelled = (node: ts.Node, reading: string, value: string, read: string = value): void => {
     for (const term of termsIn(read)) hits.push({ path, line: line(node), reading, term, value });
@@ -554,17 +664,24 @@ function scanModule(path: string, source: string): ModuleScan {
   };
   const visit = (node: ts.Node): void => {
     if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) {
+      tokens.add(node);
       identifiers.add(node.text);
       spelled(node, "identifier", node.text);
-    } else if (ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) {
+    } else if (
+      ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node) || ts.isNumericLiteral(node) ||
+      ts.isBigIntLiteral(node)
+    ) {
+      tokens.add(node);
       literals.add(node.text);
       spelled(node, "literal", node.text);
       if (H2_PACKAGE.test(node.text)) packageLiterals.push(`${path}:${line(node)}: ${node.text}`);
     } else if (ts.isRegularExpressionLiteral(node)) {
+      tokens.add(node);
       spelled(node, "regex", node.text, patternOf(node.text));
     }
-    // A static name chain is read once, from its outermost link; a key path where it holds two or more keys.
-    if (linkOf(node) !== undefined && linkOf(node.parent)?.inner !== node) {
+    // A static name chain is read once, from its outermost link (a wrapped link is an inner one); a key path where it holds two or
+    // more keys.
+    if (linkOf(node) !== undefined && linkOf(enclosing(node))?.inner !== node) {
       const chain = chainOf(node);
       if (chain !== undefined) spelled(node, "chain", chain);
     }
@@ -586,7 +703,15 @@ function scanModule(path: string, source: string): ModuleScan {
     ts.forEachChild(node, visit);
   };
   visit(file);
-  return { identifiers, literals, specifiers, hits, packageLiterals };
+  // THE TOKEN ANCHOR (wb-3wcm F4): the compiler's own tree, walked apart from the readings - every node that carries its own text
+  // (the source file's own text aside) is one a token reading read.
+  const unread: string[] = [];
+  const anchor = (node: ts.Node): void => {
+    if ("text" in node && typeof node.text === "string" && !tokens.has(node)) unread.push(`${path}:${line(node)}: ${node.text}`);
+    ts.forEachChild(node, anchor);
+  };
+  ts.forEachChild(file, anchor);
+  return { identifiers, literals, specifiers, hits, packageLiterals, unread };
 }
 
 /** The package names a package.json declares, across every dependency list. */
@@ -847,7 +972,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     const scan = srcScan();
     const read = [...scan.modules.values()].flatMap(scanned => scanned.hits);
     // R-OWN-FIELD: a hit KNOWN_SPELLINGS names (by module, reading and text) is held as known; every other hit is a finding.
-    const hits = read.filter(hit => !KNOWN_SPELLINGS.includes(spellingOf(hit))).map(shownHit);
+    const hits = findingsOf(read).map(shownHit);
     const known = [...new Set(read.filter(hit => KNOWN_SPELLINGS.includes(spellingOf(hit))).map(spellingOf))].sort();
     const nonModules = scan.files.filter(path => !MODULE_EXTENSIONS.includes(extensionOf(path)));
     const anchors = Object.entries(ANCHORS).map(([path, identifier]) => `${path}:${scan.modules.get(path)?.identifiers.has(identifier) === true}`);
@@ -861,6 +986,13 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     const quietControls = QUIET_CONTROLS.map(source => scanModule("control.ts", source).hits.length);
     const composed = scanModule("control.ts", COMPOSED_CONTROL).hits.length;
     const split = SPLIT_CONTROLS.map(source => scanModule("control.ts", source).hits.length);
+    // The finding step's own controls: each one's hits pass findingsOf and leave exactly its one owed term as a finding.
+    const controlFindings = FINDING_CONTROLS.map(([path, source]) => findingsOf(scanModule(path, source).hits));
+    const findingControls = controlFindings.map(found => found.map(shownHit));
+    const findingTerms = controlFindings.map(found => found.map(hit => hit.term));
+    // THE TOKEN ANCHOR: every src node the compiler gives its own text was read by a token reading; its control lists JSX text.
+    const unreadTokens = [...scan.modules.values()].flatMap(scanned => scanned.unread);
+    const tokenControl = scanModule(TOKEN_CONTROL[0], TOKEN_CONTROL[1]).unread;
     expect(hits, "a src module names a gating work package or an H2 identity-record word").toEqual([]);
     expect(known, "the known spelling is read where it stands, so the chain reading is live on src").toEqual([...KNOWN_SPELLINGS]);
     expect(scan.files.length, "src files above the floor").toBeGreaterThanOrEqual(FLOORS.srcFiles);
@@ -872,9 +1004,13 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     expect(flagged.every(entry => entry.endsWith(":true")), "each flagged control reads its own term").toBe(true);
     expect(readings.every(entry => entry.endsWith(":true")), "each reading control is spelled by its own reading").toBe(true);
     expect(quietControls, "the quiet controls read nothing").toEqual(QUIET_CONTROLS.map(() => 0));
+    expect(findingTerms, "each finding control leaves exactly its owed term as a finding").toEqual(FINDING_CONTROLS.map(([, , term]) => [term]));
+    expect(unreadTokens, "every src node the compiler gives its own text is read by a token reading").toEqual([]);
+    expect(tokenControl, "the token anchor lists a text-carrying node no token reading reads").toEqual([`${TOKEN_CONTROL[0]}:1: owner epoch`]);
     return json({
       hits, floorsMet: { srcFiles: scan.files.length >= FLOORS.srcFiles, srcModules: scan.modules.size >= FLOORS.srcModules }, nonModules, anchors, literalAnchors, flagged, readings,
-      quietControls, quiet: { "R-COMPOSED": composed, "R-UNJUDGED-SITES": quietSites, "R-OWN-FIELD": known, "R-SPLIT-NAMES": split },
+      quietControls, findingControls, unreadTokens, tokenControl,
+      quiet: { "R-COMPOSED": composed, "R-UNJUDGED-SITES": quietSites, "R-OWN-FIELD": known, "R-SPLIT-NAMES": split },
     });
   },
   A3: () => {
@@ -1260,6 +1396,8 @@ const SCAN: JsonObject = json({
   readingControls: READING_CONTROLS,
   readingTerm: READING_TERM,
   knownSpellings: KNOWN_SPELLINGS,
+  findingControls: FINDING_CONTROLS,
+  tokenControl: TOKEN_CONTROL,
   splitControls: SPLIT_CONTROLS,
   packageControls: PACKAGE_CONTROLS,
   ownRfSpecifier: OWN_RF_SPECIFIER,
@@ -1268,6 +1406,32 @@ const SCAN: JsonObject = json({
 
 /** A describe title: the row id and its label. */
 const titleOf = (row: Row): string => `${row.id} ${row.label}`;
+
+/** Text with every whitespace run dropped, so the SELF-READ compares spellings, not layout. */
+const squeezed = (value: string): string => value.replace(/\s+/g, "");
+/** A statement that stands directly in a test case's callback body (`it(title, options, callback)`): no try, condition, loop or
+ * nested function between the case and the statement. */
+function inCaseBody(statement: ts.Statement): boolean {
+  const body = statement.parent;
+  if (!ts.isBlock(body)) return false;
+  const callback = body.parent;
+  if (!ts.isArrowFunction(callback) && !ts.isFunctionExpression(callback)) return false;
+  const call = callback.parent;
+  return ts.isCallExpression(call) && ts.isIdentifier(call.expression) && call.expression.text === "it" && call.arguments.at(-1) === callback;
+}
+/** SELF-READ: every expression statement standing directly in a test case's callback body, as the TypeScript compiler parses
+ * this file, whitespace dropped. */
+function selfStatements(): string[] {
+  const path = fileURLToPath(import.meta.url);
+  const file = ts.createSourceFile(path, readFileSync(path, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const statements: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isExpressionStatement(node) && inCaseBody(node)) statements.push(squeezed(node.getText(file)));
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return statements;
+}
 
 /** THE RECORD: each case's end, in run order, as `${id}:${count}` (vitest's tally of the case's assertions), pushed only after the
  * case's last assertion; a pin's right after its witness comparison. */
@@ -1318,9 +1482,12 @@ describe("wb-4nut.9 H2 identity and reuse census (TSX-HARNESS2-REACTIVE-EVOLUTIO
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:2", "C:3", "D:2", "E:2"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
-    expect({ bead: BEAD, scan: SCAN, residuals: RESIDUAL_FAMILIES, residualRows: RESIDUAL_ROWS }).toStrictEqual({
-      bead: ROSTER.bead, scan: ROSTER.scan, residuals: [...ROSTER.residuals], residualRows: ROSTER.residualRows,
+    expect({ bead: BEAD, scan: SCAN, residuals: RESIDUAL_FAMILIES, residualRows: RESIDUAL_ROWS, comparisons: COMPARISONS }).toStrictEqual({
+      bead: ROSTER.bead, scan: ROSTER.scan, residuals: [...ROSTER.residuals], residualRows: ROSTER.residualRows, comparisons: [...ROSTER.comparisons],
     });
+    // SELF-READ: each witness comparison is one statement standing directly in a case's body, spelled exactly so.
+    const statements = selfStatements();
+    expect(COMPARISONS.map(comparison => statements.filter(statement => statement === squeezed(comparison)).length), "each witness comparison is spelled once, strict, directly in its case's body").toEqual(COMPARISONS.map(() => 1));
     // Every residual names a pin of the judged set, and that pin's roster witness carries its pinned quiet row.
     const quietRows = RESIDUAL_FAMILIES.map(family => {
       const pin = RESIDUAL_ROWS[family] ?? "";

@@ -56,10 +56,15 @@
  *    projection strictEqual to the reading without it and reaches no output string; a planted operation text is the control that
  *    the leak detector sees a leak. Each plant is read back at its own position and carries every explanation verbatim, each text a
  *    string of its own, and the judge reports what every judged candidate carried (each sentinel), so an empty, partial or misplaced
- *    plant, or a judge handed the unplanted reading, reds B1; the witness pins the payload's digest (wb-dvfc F1). B2 the same member
- *    planted at every object node of the SDK document, plus the diagnostic-grammar entries (05-physical-provider-lld.md:33 "Cost
- *    fallbacks and explainable refusal use existing diagnostic grammar."), through the registered provider: which positions survive
- *    the decoder is measured, and the projection stays strictEqual with nothing shown.
+ *    plant, or a judge handed the unplanted reading, reds B1; the witness pins the payload's digest (wb-dvfc F1). The judge also
+ *    reports the sha-256 of the reading it judged and where that reading departs from the base (planted), and B1 requires the
+ *    planted reading's own sha-256 and exactly the member at its position, so a judge handed the root plant, a second plant, the
+ *    base or any other reading whose JSON text differs reds B1; B2 and Q1 bind their judges by the same sha-256, the B1 and B2
+ *    witnesses count the distinct judged readings and Q1's names where each judged plant departs (wb-kggj F1). B2 the same
+ *    member planted at every object node of the SDK document, plus the diagnostic-grammar entries
+ *    (05-physical-provider-lld.md:33 "Cost fallbacks and explainable refusal use existing diagnostic grammar."), through the
+ *    registered provider: which positions survive the decoder is measured, and the projection stays strictEqual with nothing
+ *    shown.
  *  C, (c), armed on landing. C1 the fixture oracle: each armed fixture is the base plus exactly its carrier member (and the kind or
  *    licence its spec names), today's adapter projects it equal to its twin, and every text is sanitizer-stable; C2 the armed check
  *    (violationsOf) on synthetic readers: the honest reader (today's projection plus one sanitized facet per explanation) passes
@@ -79,13 +84,16 @@
  * roster (the bead text anchors rows, not pins); a check removed from CHECKS, the judge and the roster (the firing assertion binds
  * the listed checks only); a fixture or mutant removed while every remaining mutant still fails some fixture; a pin's case
  * replaced by one that echoes its roster witness; a producer fact with no in-repo bytes (PRODUCER) rewritten to another
- * well-formed value.
+ * well-formed value (the 02-vision-decisions.md:30 remainder: together with its witness); the README.md:3 quote re-extended to
+ * another span of the dossier's line together with its witness.
  * RESIDUALS (named, each with its pinned quiet row): R-VOCABULARY an explanation field under a generic name (reason, rationale,
  * note, detail, why, justification) spells no stem and is invisible to A1's trigger, while B still withholds its content (Q1; each
- * judged candidate carries the planted text); R-COMPOSED a stem assembled at runtime from parts is invisible to any text scan (Q2;
- * the keys are read from the probe text itself, and each spells a stem whole); R-NAMESAKE the vendored declarations outside
- * the judged pair spell the stems for the explain read verbs, their explanation frames and sourceRootAssumption, and A1's trigger
- * does not judge them (Q3; A1's PRODUCER reading only matches the modules that spell a stem to the pin's namesake list);
+ * plant is read back under its own key, each judged candidate is that planted reading and carries the planted text, and the
+ * witness names where each judged plant departs from the base, exactly its own key on the source: wb-kggj F2); R-COMPOSED a stem
+ * assembled at runtime from parts is invisible to any text scan (Q2; the keys are read from the probe text itself, and each spells
+ * a stem whole); R-NAMESAKE the vendored declarations outside the judged pair spell the stems for the explain read verbs, their
+ * explanation frames and sourceRootAssumption, and A1's trigger does not judge them (Q3; A1's PRODUCER reading only matches the
+ * modules that spell a stem to the pin's namesake list);
  * R-RAW-READING the registered provider hands the surviving containers to its invoking caller verbatim - only the display
  * projection withholds them, so the echo the statement owes binds the armed half, not today's raw reading (Q4); R-INTERRUPTED a stem
  * split by a zero-width code point or spelled with a homoglyph letter is not caught (Q5; each probe carries its interruption, and
@@ -96,9 +104,18 @@
  * decoder's frame-routing line, the representation's cited lines, the filing's own quotes of the program's lines (each producer
  * quote is the filing's single-quoted text at the same file:line, whole or the part the filing quotes; the boundary line whole, with
  * the program path and the pin) and the namesake modules (the pin's namesake files name exactly the vendored modules that spell a
- * stem, and result names none). The other producer facts - the eleven HyperUnix-CLI blob ids and the pin's namesake and result line
- * lists - have no in-repo bytes: each is held to its shape and their list is pinned; the cutting seat read every one at the pin
- * (git show, read-only). The repository name, piBase and the namesakes' descriptions are labels, not judged.
+ * stem, and result names none). THE REMAINDERS (wb-kggj F3): the filing quotes two producer quotes only in part (README.md:3 and
+ * 02-vision-decisions.md:30), and what each holds beyond that part is its remainder, held to its shape (the part sits in the quote
+ * exactly once and on word boundaries, and the quote is one line that ends with a period and holds no single quote) and pinned in
+ * the witness. README.md:3's remainder is also held to in-repo bytes: wb-x0xu.2's dossier (DOSSIER) names the program pin, carries
+ * no HTML and no fenced or indented code block (so the line read is never one hidden in a comment or a code block), and records the
+ * program's README.md:3 line under the same program path (the next quote line after that path's one line); the producer quote is
+ * held inside that line, and the witness pins the line's sha-256 (measured by the cutting seat equal to the line at the pin, and
+ * the value the dossier's own census pins). 02-vision-decisions.md:30's remainder ('A result may be useful as ' and the closing '.')
+ * has no in-repo bytes. The other producer facts - the eleven HyperUnix-CLI blob ids, the pin's namesake and result line lists
+ * and the 02-vision-decisions.md:30 remainder - have no in-repo bytes: each is held to its shape and their list is pinned; the
+ * cutting seat read every one at the pin (git show, read-only). The repository name, piBase and the namesakes' descriptions are
+ * labels, not judged.
  * SCOPE: the stem judge does not read negation or context, so a comment that merely mentions a stem in either file reds A1
  * (OVER-READ, disclosed: neither file spells one today, and an edit that must will re-measure this census). The Unknown marker is
  * held to (c)'s never-absence check with the three markers (c) names (OVER-READ of the clause, from the statement's title, which
@@ -106,7 +123,8 @@
  * carrier re-measures the fixtures. Hostile explanation text is not judged here; display safety stays with the shared sanitizers'
  * own pins. No HX explanation reader is added or faked: a reader's own cut binds itself in HX_EXPLANATION_READERS and meets C2.
  *
- * Display paths added: none. Test-only: no scratch is allocated; src, vendor, node_modules and .beads are only read.
+ * Display paths added: none. Test-only: no scratch is allocated; src, vendor, node_modules, .beads and wb-x0xu.2's dossier are
+ * only read.
  */
 import { createHash } from "node:crypto";
 import { type Dirent, readdirSync, readFileSync } from "node:fs";
@@ -133,6 +151,9 @@ type Path = readonly (string | number)[];
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
 const ROSTER_PATH = join(HERE, "fixtures", "hyperunix-structural-explanation-roster.json");
+/** wb-x0xu.2's dossier: it names the program pin and records the program's status lines whole (PRODUCER, the README.md:3
+ * remainder). */
+const DOSSIER = "test/fixtures/hx-sio-design-status-dossier.md";
 const BEAD = "wb-x0xu.1";
 /** The program pin (HyperUnix-CLI origin/main at the 2026-10-22 triage). */
 const PROGRAM_PIN = "0091719d02887910fa0c2fb6693a32723e243600";
@@ -405,16 +426,46 @@ function filingOf(notes: string): string {
 function escaped(text: string): string {
   return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
-/** How the filing quotes a producer line: "exact" (the producer's quote whole), "part" (24 or more of its characters, in one piece)
- * or "absent"; only a single-quoted text right after the citation file:line, or right before it, is read. */
-function filingQuote(filing: string, file: string, line: number, quote: string): string {
+/** The single-quoted texts the filing gives at a producer line: right after the citation file:line, or right before it. */
+function filingQuotes(filing: string, file: string, line: number): string[] {
   const cite = escaped(`${file}:${line}`);
-  const quoted = [
+  return [
     ...filing.matchAll(new RegExp(`(?:^|[\\s/])${cite} '([^']+)'`, "g")),
     ...filing.matchAll(new RegExp(`'([^']+)' (?:\\S*/)?${cite}(?![0-9])`, "g")),
   ].map(match => match[1] ?? "");
-  if (quote.length > 0 && quoted.includes(quote)) return "exact";
-  return quoted.some(part => part.length >= 24 && quote.includes(part)) ? "part" : "absent";
+}
+/** The parts of a producer quote the filing quotes at its line: 24 or more of its characters, in one piece, longest first. */
+function filingParts(filing: string, file: string, line: number, quote: string): string[] {
+  return filingQuotes(filing, file, line)
+    .filter(part => part.length >= 24 && quote.includes(part))
+    .sort((left, right) => right.length - left.length);
+}
+/** How the filing quotes a producer line: "exact" (the producer's quote whole), "part" (24 or more of its characters, in one piece)
+ * or "absent"; only a single-quoted text right after the citation file:line, or right before it, is read. */
+function filingQuote(filing: string, file: string, line: number, quote: string): string {
+  if (quote.length > 0 && filingQuotes(filing, file, line).includes(quote)) return "exact";
+  return filingParts(filing, file, line, quote).length > 0 ? "part" : "absent";
+}
+/** What a producer quote holds beyond the part the filing quotes: the text before and after that part, when the part sits in it
+ * exactly once (wb-kggj F3). */
+function remainderOf(quote: string, part: string): { readonly prefix: string; readonly suffix: string } | undefined {
+  const at = quote.indexOf(part);
+  if (part.length === 0 || at === -1 || quote.indexOf(part, at + 1) !== -1) return undefined;
+  return { prefix: quote.slice(0, at), suffix: quote.slice(at + part.length) };
+}
+/** A remainder's shape (wb-kggj F3): the quote is one sentence on one line that ends with a period and holds no single quote, and
+ * the filing's part sits in it on word boundaries. */
+function remainderShaped(quote: string, prefix: string, suffix: string): boolean {
+  return !/[\n']/.test(quote) && quote.endsWith(".") && (prefix === "" || prefix.endsWith(" ")) && (suffix === "" || !/^[\p{L}\p{N}]/u.test(suffix));
+}
+/** The program line the dossier records for a citation: the "> " line right after the one line that reads `<program>/<cite>`;
+ * undefined when no single such line is followed by a quote line. */
+function dossierLine(dossier: string, program: string, cite: string): string | undefined {
+  const lines = dossier.split("\n");
+  const at = lines.flatMap((line, index) => (line === `${program}/${cite}` ? [index] : []));
+  if (at.length !== 1) return undefined;
+  const next = lines.slice((at[0] ?? 0) + 1).find(line => line.trim() !== "");
+  return next?.startsWith("> ") === true ? next.slice(2) : undefined;
 }
 /** Every producer field holding a blob id or a line list, by path, and whether its shape holds (40 hex digits; ascending positive
  * integers). */
@@ -438,6 +489,7 @@ interface ProducerReading {
   readonly frameRouting: JsonObject;
   readonly representation: JsonObject;
   readonly filing: Readonly<Record<string, string>>;
+  readonly remainders: JsonObject;
   readonly namesakeModules: readonly string[];
   readonly outOfRepo: readonly string[];
   readonly refused: readonly string[];
@@ -445,8 +497,9 @@ interface ProducerReading {
 /** The producer facts whose bytes this repository holds: the vendored manifest's blob (the pin's package.json, byte for byte). */
 const ANCHORED_FACTS: readonly string[] = ["$.sdkAtPin.package.blob"];
 /** The roster's producer block held to what this repository holds (wb-dvfc F3; PRODUCER in the header): each failed hold is named in
- * refused; the facts with no in-repo bytes are held to their shape and listed. */
-function producerReading(producer: JsonObject, entries: ReadonlyMap<string, Buffer>, notes: string): ProducerReading {
+ * refused; the facts with no in-repo bytes are held to their shape and listed, and so is each remainder of a quote the filing
+ * quotes in part that the dossier does not record (wb-kggj F3). */
+function producerReading(producer: JsonObject, entries: ReadonlyMap<string, Buffer>, notes: string, dossier: string): ProducerReading {
   const refused: string[] = [];
   const hold = (ok: boolean, what: string): void => {
     if (!ok) refused.push(what);
@@ -491,23 +544,40 @@ function producerReading(producer: JsonObject, entries: ReadonlyMap<string, Buff
   );
   const filing = filingOf(notes);
   const quotes: Record<string, string> = {};
-  const quoted = (entry: JsonValue | undefined, key: string): void => {
+  const parted: { readonly cite: string; readonly at: string; readonly quote: string; readonly part: string }[] = [];
+  const quoted = (entry: JsonValue | undefined, key: string, at: string): void => {
     const file = textAt(fieldOf(entry, "file"));
     const line = numberAt(fieldOf(entry, "line"));
-    const how = filingQuote(filing, file, line, textAt(fieldOf(entry, key)));
+    const quote = textAt(fieldOf(entry, key));
+    const how = filingQuote(filing, file, line, quote);
     quotes[`${file}:${line}`] = how;
     hold(how !== "absent", `the filing quotes ${file}:${line} as the producer does`);
+    const [part] = filingParts(filing, file, line, quote);
+    if (how === "part" && part !== undefined) parted.push({ cite: `${file}:${line}`, at: `${at}.${key}`, quote, part });
   };
   const boundary = fieldOf(producer, "boundary");
   const boundaryCite = `${textAt(fieldOf(boundary, "file"))}:${numberAt(fieldOf(boundary, "line"))}`;
-  quoted(boundary, "text");
-  quoted(fieldOf(producer, "status"), "quote");
+  quoted(boundary, "text", "$.boundary");
+  quoted(fieldOf(producer, "status"), "quote", "$.status");
   const authority = fieldOf(producer, "authority");
-  for (const entry of Array.isArray(authority) ? authority : []) quoted(entry, "quote");
+  for (const [index, entry] of (Array.isArray(authority) ? authority : []).entries()) quoted(entry, "quote", `$.authority[${index}]`);
   hold(
     quotes[boundaryCite] === "exact" && filing.includes(`${textAt(fieldOf(producer, "program"))}/${boundaryCite}@${PROGRAM_PIN.slice(0, 12)}`),
     "the filing quotes the boundary line whole, cited with the program path and the pin",
   );
+  const program = textAt(fieldOf(producer, "program"));
+  hold(dossier.includes(PROGRAM_PIN), "the dossier names the program pin");
+  hold(!/<|^ {0,3}(?:```|~~~)|^(?: {4}|\t)/m.test(dossier), "the dossier carries no HTML and no fenced or indented code block, so no read line hides in one");
+  const remainders: JsonObject = {};
+  const unanchored: string[] = [];
+  for (const { cite, at, quote, part } of parted) {
+    const rest = remainderOf(quote, part);
+    hold(rest !== undefined && remainderShaped(quote, rest.prefix, rest.suffix), `${at}'s remainder beyond the filing's part is well-formed`);
+    const recorded = dossierLine(dossier, program, cite);
+    if (recorded === undefined) unanchored.push(at);
+    else hold(recorded.includes(quote), `${at} is held inside the program line the dossier records for ${cite}`);
+    remainders[cite] = { prefix: rest?.prefix ?? "", suffix: rest?.suffix ?? "", anchor: recorded === undefined ? null : { file: DOSSIER, sha256: sha256(recorded) } };
+  }
   const spelling = [...entries]
     .filter(([name, bytes]) => /^package\/dist\/.+\.(d\.ts|js)$/.test(name) && stemLines(bytes.toString("utf8")).length > 0)
     .map(([name]) => moduleOf(name));
@@ -529,8 +599,9 @@ function producerReading(producer: JsonObject, entries: ReadonlyMap<string, Buff
     frameRouting: { file: routingFile, line: routingLine },
     representation: { resultToJson: [start, closes], cited: [start, end], results: `${resultsFile}:${resultsLine}` },
     filing: quotes,
+    remainders,
     namesakeModules,
-    outOfRepo: facts.map(fact => fact.path).filter(path => !ANCHORED_FACTS.includes(path)),
+    outOfRepo: [...facts.map(fact => fact.path).filter(path => !ANCHORED_FACTS.includes(path)), ...unanchored],
     refused,
   };
 }
@@ -704,6 +775,24 @@ interface Plant {
   readonly leaked: readonly string[];
   /** Every sentinel and stem the judged candidate itself carries: the plant as the judge saw it (wb-dvfc F1). */
   readonly carried: readonly string[];
+  /** The sha-256 of the judged candidate's JSON text: which reading the judge saw, held to the planted reading's own (wb-kggj F1). */
+  readonly judged: string;
+  /** Where the judged candidate departs from the reading it is judged against (differences): where the judge saw the plant. */
+  readonly planted: readonly string[];
+}
+/** What a witness pins of a plant: where it departs and its outcome, never the digest of the reading. */
+interface Shown {
+  readonly planted: readonly string[];
+  readonly unchanged: boolean;
+  readonly leaked: readonly string[];
+  readonly carried: readonly string[];
+}
+/** The sha-256 of a reading's JSON text. */
+function digestOf(value: JsonValue): string {
+  return sha256(JSON.stringify(value));
+}
+function shown(plant: Plant): Shown {
+  return { planted: plant.planted, unchanged: plant.unchanged, leaked: plant.leaked, carried: plant.carried };
 }
 function judgePlant(base: JsonValue, candidate: JsonValue): Plant {
   const before = reading(base);
@@ -712,7 +801,7 @@ function judgePlant(base: JsonValue, candidate: JsonValue): Plant {
     isDeepStrictEqual(after.topology, before.topology) &&
     JSON.stringify(after.topology) === JSON.stringify(before.topology) &&
     isDeepStrictEqual(after.verdict, before.verdict);
-  return { unchanged, leaked: leaksOf(after.topology), carried: leaksOf(candidate) };
+  return { unchanged, leaked: leaksOf(after.topology), carried: leaksOf(candidate), judged: digestOf(candidate), planted: differences(base, candidate) };
 }
 
 interface Facet {
@@ -1031,7 +1120,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const spelling = files.filter(file => file.path.startsWith("src/") && file.hits.length > 0).map(file => file.path);
     const bound = Object.keys(HX_EXPLANATION_READERS).sort();
     expect(bound, "a judged src file that spells a stem binds its reader in HX_EXPLANATION_READERS, both ways").toStrictEqual(spelling.sort());
-    const producer = producerReading(ROSTER.producer, entries, beadNotes());
+    const producer = producerReading(ROSTER.producer, entries, beadNotes(), textOf(join(REPO, DOSSIER)));
     expect(producer.refused, "the roster's producer block holds to the committed bytes and to the filing's own quotes").toStrictEqual([]);
     return {
       tarball: sha256(readFileSync(join(REPO, VENDORED_TGZ))),
@@ -1126,7 +1215,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       const payload = memberText(value, path, MEMBER);
       expect(payloadGaps(payload), `${pathText(path)}: the plant, read back at its position, carries every explanation verbatim`).toStrictEqual([]);
       payloads.add(payload);
-      outcomes[pathText(path)] = judgePlant(base, value);
+      const plant = judgePlant(base, value);
+      expect(plant.judged, `${pathText(path)}: the judge judged the planted reading itself`).toBe(digestOf(value));
+      expect(plant.planted, `${pathText(path)}: the judged reading is the base plus exactly the member at its position`).toStrictEqual([pathText([...path, MEMBER])]);
+      outcomes[pathText(path)] = plant;
     }
     const failing = Object.entries(outcomes).filter(([, plant]) => !plant.unchanged || plant.leaked.length > 0);
     expect(failing, "no planted position moves the projection or reaches an output string").toStrictEqual([]);
@@ -1141,8 +1233,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     return {
       positions: positions.map(pathText),
       unchanged: Object.keys(outcomes).length,
-      plant: { payloads: [...payloads].map(payload => sha256(payload)), carried: [...new Set(Object.values(outcomes).map(plant => plant.carried.join(" ")))] },
-      control: json(control),
+      plant: {
+        payloads: [...payloads].map(payload => sha256(payload)),
+        carried: [...new Set(Object.values(outcomes).map(plant => plant.carried.join(" ")))],
+        judged: new Set(Object.values(outcomes).map(plant => plant.judged)).size,
+      },
+      control: json(shown(control)),
     };
   },
   B2: async () => {
@@ -1154,12 +1250,15 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const missing = positions.filter(path => !isObject(nodeAt(document, path)));
     expect(missing.map(pathText), "the base document holds every object node the SDK emits").toStrictEqual([]);
     const survives: Record<string, boolean> = {};
+    const judged = new Set<string>();
     const check = (label: string, value: JsonValue): void => {
       const text = JSON.stringify(value);
       survives[label] = EXPLANATIONS.every(entry => text.includes(entry.text));
       expect(hyperunixTopology(value, CONTEXT), `${label}: projection strictEqual`).toStrictEqual(hyperunixTopology(twin, CONTEXT));
-      const { unchanged, leaked } = judgePlant(twin, value);
-      expect({ unchanged, leaked }, `${label}: nothing moves or shows`).toStrictEqual({ unchanged: true, leaked: [] });
+      const plant = judgePlant(twin, value);
+      expect(plant.judged, `${label}: the judge judged the provider's reading itself`).toBe(digestOf(value));
+      judged.add(plant.judged);
+      expect({ unchanged: plant.unchanged, leaked: plant.leaked }, `${label}: nothing moves or shows`).toStrictEqual({ unchanged: true, leaked: [] });
     };
     for (const path of positions) check(pathText(path), await invoked(planted(document, path, MEMBER, shapedContent()) as JsonObject));
     const grammar = sdkDocument({
@@ -1180,7 +1279,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       ],
     });
     check("$.diagnostics[+] (diagnostic grammar)", await invoked(grammar));
-    return { survives };
+    return { survives, judged: judged.size };
   },
   C1: async () => {
     const fixtures = await armedFixtures();
@@ -1238,8 +1337,19 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   Q1: async () => {
     const generic = ["reason", "rationale", "note", "detail", "why", "justification"];
     const base = await invoked(sdkDocument(ONE_ROW));
-    const withheld = generic.map(key => judgePlant(base, planted(base, ["source"], key, explanationOf("rejected-assumption").text)));
-    const [sentinel = ""] = explanationOf("rejected-assumption").text.match(SENTINEL) ?? [];
+    const text = explanationOf("rejected-assumption").text;
+    const withheld = generic.map(key => {
+      const value = planted(base, ["source"], key, text);
+      expect(memberText(value, ["source"], key), `${key}: the plant, read back under its own key, is the planted text`).toBe(JSON.stringify(text));
+      const plant = judgePlant(base, value);
+      expect(plant.judged, `${key}: the judge judged the planted reading itself`).toBe(digestOf(value));
+      return shown(plant);
+    });
+    expect(
+      generic.filter((key, index) => !isDeepStrictEqual(withheld[index]?.planted, [pathText(["source", key])])),
+      "each generic key's judged reading is the base plus exactly that key on the source",
+    ).toStrictEqual([]);
+    const [sentinel = ""] = text.match(SENTINEL) ?? [];
     expect(
       generic.filter((_, index) => sentinel === "" || !(withheld[index]?.carried ?? []).includes(sentinel)),
       "every generic key's judged candidate carried the planted rejected-assumption text",
@@ -1315,6 +1425,7 @@ describe("wb-x0xu.1 HX structural-explanation census (HX-STRUCTURAL-INFORMATION-
       json({
         programPin: PROGRAM_PIN,
         vendoredTarball: VENDORED_TGZ,
+        dossier: DOSSIER,
         judgedFiles: JUDGED_FILES,
         stems: STEMS,
         classes: CLASSES,
