@@ -21,16 +21,46 @@
  * roster's hxInstall block, and the same ten the wb-kqx.5 filing names. The installed skill's references/agent-workflows.md
  * teaches W1, W2, W3 and W5 as task sections (:309, :336, :361, :386), so the recipes are served wherever that skill loads.
  *
- * MEASURED AT BASE (f381c52, landing 443): src/skill-loader.ts resolves five roots (<cwd>/.pi/skills, <cwd>/.agents/skills,
- * getAgentDir()/skills = ~/.pi/agent/skills by default, ~/.agents/skills, ~/.pi/skills), README's discovery-roots table and
- * the wb-kqx.5 filing state the same five, and none holds an hx install target; every src site that hands settingSources
- * on is [] or a ?? [] default (src/index.ts twice, src/workbench/claude-host.ts, src/workbench/hosts/local-detached.ts) but
- * the operator's own value passed through src/settings.ts, and docs/workbench/13's representative config names
- * ["project"]; src's 116 modules launch git, forge and rf by literal command, never hx, and no src literal names a recipe;
- * the only HX surface Pi registers is hyperunix.find, effectClass read, over @hyperunix/sdk; the 107-file Pi document
- * population (docs, examples, new-feedback, .agents, .pi and the five repo-root Markdown files) holds no hx command and no
- * recipe mention but one line, the wb-kqx.5 receipt in the byte-frozen TRACEABILITY.md (:236), which names the hx
- * installer and states the skill not found.
+ * MEASURED AT BASE (f381c52, landing 443; re-read at 52812a1, landing 456, for cut #2): src/skill-loader.ts resolves five
+ * roots (<cwd>/.pi/skills, <cwd>/.agents/skills, getAgentDir()/skills = ~/.pi/agent/skills by default, ~/.agents/skills,
+ * ~/.pi/skills), README's discovery-roots table and the wb-kqx.5 filing state the same five, and none holds an hx install
+ * target; every src site that hands settingSources on is [] or a ?? [] default (src/index.ts twice,
+ * src/workbench/claude-host.ts, src/workbench/hosts/local-detached.ts) but the operator's own value passed through
+ * src/settings.ts, and docs/workbench/13's representative config names ["project"]; src's 116 modules launch git, forge and
+ * rf by literal command, never hx, and no src literal names a recipe; the only HX surface Pi registers is hyperunix.find,
+ * effectClass read, over @hyperunix/sdk; the 107-file Pi document population (100 Markdown files, six .js and one .yaml
+ * under docs, examples, new-feedback, .agents and .pi, with the five repo-root Markdown files) holds no hx command and no
+ * recipe mention in its rendered view but one line, the wb-kqx.5 receipt in the byte-frozen TRACEABILITY.md (:236), which
+ * names the hx installer and states the skill not found.
+ *
+ * RESPIN, CUT #2 (refusal #1 of cut #1 6d6a56c3 at PREP F, bound 2026-10-27 by gate-prep-8 of g10-gate-s112; each unmet
+ * item and riding finding is cured where named):
+ *  U1, the ground (the rendered-text docs truth class bound on wb-9x5.17): THE RENDERED VIEW below. Rows N and E judge one
+ *    view, so the gate's T4, T5, T6, T7, T8, T21, T9 and T16 plants read served, T15 is folded and served, and T13 renders
+ *    nothing and reads none under R-HIDDEN-SOURCE (Q9); M4 pins every form.
+ *  F2, registration and third-leg liveness: THE RECORD below.
+ *  F3, the liveness of N1's two walks: N1 counts the lines it judges against the population's own line count
+ *    (examinedAll) and holds the independent Markdown walk to a non-empty superset of the population's Markdown files
+ *    (outsideCovers).
+ *  F4, G3's example reader: G3 reads inline array literals only; the YAML block list and the binding through a name are the
+ *    named residual R-EXAMPLE-SHAPE (Q10), the multi-line JSON array its read control.
+ *
+ * THE RENDERED VIEW: a Markdown file of the population is read as its page shows it, line by line. marked's lexer (the
+ * repo's pin, 18.0.11, the landed docs censuses' own) cuts the page, and each source line keeps only what renders on it:
+ * emphasis, strong, strike-through and link delimiters, code-span backticks, block-quote and list markers, the table
+ * delimiter row and every HTML tag and comment render nothing, and a table pipe renders one space, so two cells never fuse;
+ * a link's destination and title, an image (its alt text included), a fence line with its info string and a link
+ * reference definition render nothing; code-block and code-span text renders verbatim; a character reference decodes in
+ * text and HTML (a numeric one by code point, the 77 WHATWG named references whose value is ASCII, white space or a folded
+ * character by NAMED_REFERENCES, any other name as written: no name of the standard's table holds a matcher token, and any
+ * other value is one visible non-ASCII glyph). Every judged line, rendered or raw, is then FOLDED: default-ignorable, format
+ * and non-white-space control characters dropped, every white-space run one space. A file that is not Markdown keeps the
+ * raw read. The view is held to marked's own HTML: for every Markdown file of the population the lines, joined, equal
+ * marked's rendered HTML reduced to its visible text (hidden HTML dropped, references decoded), character for character
+ * outside white space and the invisibles (N1 viewMismatches), and a page whose tokens the walk cannot map is read raw and
+ * named (N1 unmapped), so a mapping failure is always loud: the measured shapes are CR LF line ends, which marked's lexer
+ * rewrites, and a block-quoted list followed by a lazy HTML line, whose raw marked rebuilds with an added blank line; the
+ * population holds neither.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label; the labels of G, N and E are the owner
  * filing's own clauses, verbatim from the tracked bead export):
@@ -42,16 +72,18 @@
  *    each of the five roots in turn is found (the positive control); G3 the Claude host hands the SDK settingSources []
  *    when none is configured (an injected query records the options), every src settingSources site is [] or a ?? []
  *    default but the operator passthrough in src/settings.ts, docs/13's example is ["project"], and no Pi document example
- *    names the user source (the same reader finds it in a planted example).
- *  N, the until-then negative. N1 every line of the Pi document population, the walk held to node's recursive listing and
- *    to an independent walk of every Markdown file outside the out-of-population trees: no line reads served or named
- *    (lineVerdict) and the TRACEABILITY.md:236 floor reads negated; N2 the repo's own skill and agent roots serve no
- *    hyper-unix skill: preloadSkills from the repo root reads the placeholder for it while beads, the one tracked project
- *    skill, is read, and no tracked .pi agent and no default agent declares it (the same predicate reads a planted
- *    frontmatter declaring it); N3 no src module launches hx by a literal command (the scan sees src's git and rf
- *    launches), no src string or template literal reads as a recipe mention or an hx command, and the hyperunix.*
- *    descriptors Pi registers are the typed hyperunix.find read, none flagged (the same reader flags a planted descriptor
- *    naming an hx command).
+ *    names the user source in an inline array literal (the same reader finds it in a planted example; G3 reads the raw
+ *    source, where a fenced example shows verbatim).
+ *  N, the until-then negative. N1 every line of the Pi document population in the rendered view: the walk held to node's
+ *    recursive listing and to an independent walk of every Markdown file outside the out-of-population trees (a non-empty
+ *    superset of the population's Markdown files), every line judged (the count held to the population's own), every
+ *    Markdown page mapped and its view held to marked's HTML; no line reads served or named (lineVerdict) and the
+ *    TRACEABILITY.md:236 floor reads negated; N2 the repo's own skill and agent roots serve no hyper-unix skill:
+ *    preloadSkills from the repo root reads the placeholder for it while beads, the one tracked project skill, is read, and
+ *    no tracked .pi agent and no default agent declares it (the same predicate reads a planted frontmatter declaring it);
+ *    N3 no src module launches hx by a literal command (the scan sees src's git and rf launches), no src string or template
+ *    literal reads as a recipe mention or an hx command, and the hyperunix.* descriptors Pi registers are the typed
+ *    hyperunix.find read, none flagged (the same reader flags a planted descriptor naming an hx command).
  *  E, the falsifier. E1 every roster recipe heading and every hx command line or span, appended to a copy of
  *    docs/workbench/07-native-integrations.md, is that page's only non-admitted line (a heading named, a command served),
  *    and the roster's recipe ids and slugs are the bead title's W1-W8 range and the slug vocabulary; E2 six command lines
@@ -59,35 +91,56 @@
  *    REV/PATH form read served on the same page.
  *  M, the matchers: M1 lineVerdict and its five mention families on planted lines (each family; served, negated; and the
  *    near misses Pi's own docs hold: its workflow "## Recipes", W-numbered requirements, hyperunix.find, "HX query"); M2
- *    the hx command form; M3 the launch, literal and settingSources scans on planted modules.
+ *    the hx command form; M3 the launch, literal and settingSources scans on planted modules; M4 the rendered view on
+ *    blocks planted on the same page: the gate's T4-T9, T15, T16 and T21 forms show T10's command or the served skill
+ *    sentence and read served; hx built from references (numeric, a named white space, a soft hyphen) or around a folded
+ *    word joiner, combining grapheme joiner (default-ignorable, not a format character) or BEL reads served; decision classes spelled with references read named; a heading, a block quote, a list item,
+ *    a table cell and fenced and indented code each show an hx command; two table cells never fuse into one mention; and
+ *    the controls: the raw lines of a marked-up page do not hold to marked's HTML while its rendered view does, and a page
+ *    whose tokens cannot be mapped (CR LF line ends, which marked rewrites) is named unmapped and read raw.
  *  R, the named residuals, each a pinned quiet row (the escape stays uncaught; the row reds when that changes): Q1
  *    R-PARAPHRASE a recipe retold without its slug, page, number, decision class, skill name or an hx command reads none;
- *    Q2 R-SPLIT-COMMAND an hx command broken across lines before its first option or verb reads none on both lines; Q3
- *    R-OUTSIDE-POPULATION code, tests, fixtures, vendored files and the other dot directories are not read (this census's
- *    own roster carries every recipe heading and command, and reads served); Q4 R-ANY-MARKER a not-served marker anywhere
- *    on a mention line admits it, whatever the marker qualifies; Q5 R-OUTSIDE-VOCABULARY a skill named outside the skill
- *    forms, an hx verb outside the captured inventory and the generic outcome names left out of DECISION_CLASSES read
- *    none; Q6 R-OPERATOR-CONFIG an operator's own workbench.settingSources ["user"] passes the settings parse and reaches the
- *    SDK options verbatim, so a Claude-backend session reaches ~/.claude/skills (an hx target; the wb-kqx.5 filing's
- *    positive, not measured here) outside every default and document this census reads; Q7 R-HEADLESS-BODY a recipe body line copied without its heading and holding no mention or
- *    command (W7 step 3) reads none; Q8 R-BOUND-LAUNCH a launch whose command arrives through a binding or an expression is
- *    not seen by N3's literal scan.
+ *    Q2 R-SPLIT-COMMAND an hx command broken across source lines before its first option or verb reads none on each line,
+ *    whether the page shows the lines apart (a shell continuation in a code block) or joins them (a soft line break,
+ *    inside emphasis or not, or a hidden construct that swallows the line end, h<!--(line end)-->x): the view judges source
+ *    lines, never a joined paragraph; Q3 R-OUTSIDE-POPULATION code, tests, fixtures, vendored files and the other dot
+ *    directories are not read (this census's own roster carries every recipe heading and command, and reads served); Q4
+ *    R-ANY-MARKER a not-served marker anywhere on a mention line admits it, whatever the marker qualifies; Q5
+ *    R-OUTSIDE-VOCABULARY a skill named outside the skill forms, an hx verb outside the captured inventory and the generic
+ *    outcome names left out of DECISION_CLASSES read none; Q6 R-OPERATOR-CONFIG an operator's own
+ *    workbench.settingSources ["user"] passes the settings parse and reaches the SDK options verbatim, so a Claude-backend
+ *    session reaches ~/.claude/skills (an hx target; the wb-kqx.5 filing's positive, not measured here) outside every
+ *    default and document this census reads; Q7 R-HEADLESS-BODY a recipe body line copied without its heading and holding
+ *    no mention or command (W7 step 3) reads none; Q8 R-BOUND-LAUNCH a launch whose command arrives through a binding or an
+ *    expression is not seen by N3's literal scan; Q9 R-HIDDEN-SOURCE what the page hides is not read: a comment (T13's
+ *    comment-only command, and a comment block), a fence's info string, an image's alt text, a link's title, a tag's
+ *    attribute and a link reference definition each read none, while the same command as an element's text reads served;
+ *    Q10 R-EXAMPLE-SHAPE a settingSources example written as a YAML block list or bound through a name (the gate's G3-Y and
+ *    G3-B) is not read by G3, while the multi-line JSON array (G3-J) is; Q11 R-CONFUSABLE a token spelled with look-alike
+ *    or compatibility characters (fullwidth, Cyrillic, mathematical double-struck, a combining mark inside it) reads none:
+ *    the fold drops invisibles, never compatibility or look-alike forms.
+ * THE RECORD (F2): every pin's case pushes its id to REACHED after its witness compare, and the last case walks vitest's
+ * own task tree: every registered test title equals the roster's ordered tests list, none registered twice, the record
+ * registered last, every other test in run mode, not inverted and run, and REACHED equals ROWS' pins in row order. A
+ * registration loop narrowed at its call site, a skipped pin and a guarded return before a witness compare each red it.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal. OUTSIDE ANCHORS: the out-of-file roster
  * test/fixtures/hx-recipe-serving-roster.json holds every row's id, label and pins, every pin's witness, the residual
- * names, the vocabularies, the hx capture and the recipe extract, so a pin deleted, relabelled, swapped for another passing
- * case or removed from every literal of this file at once still reds against it; the tracked bead export
- * (.beads/issues.jsonl) holds rows G, N and E's labels (the wb-ts6.1 title and notes; read against this file's labels and
- * again against the roster's), the W1-W8 range E1 holds the recipes to, and the wb-kqx.5 tables G1 holds the roots and
- * targets to; G1-G3 and N1-N3 read src, README, the docs and the loader at run time.
+ * names, the vocabularies (NAMED_REFERENCES among them), the ordered test titles, the hx capture and the recipe extract, so
+ * a pin deleted, relabelled, swapped for another passing case or removed from every literal of this file at once still
+ * reds against it; the tracked bead export (.beads/issues.jsonl) holds rows G, N and E's labels (the wb-ts6.1 title and
+ * notes; read against this file's labels and again against the roster's), the W1-W8 range E1 holds the recipes to, and the
+ * wb-kqx.5 tables G1 holds the roots and targets to; G1-G3 and N1-N3 read src, README, the docs and the loader at run
+ * time, and N1 holds the rendered view to marked's own HTML.
  * SCOPE: the recipe extract and the hx capture are producer and host facts at 694570cd00c2 and hx 0.1.0; Pi vendors no hx
  * source, so a producer change is seen only when the roster is re-captured. The parent Pi session's own skill discovery
  * belongs to @earendil-works/pi-coding-agent and is not read here. The armed half - a serving Pi doc/example bound to the
  * operator-contract wording and pointing at the installed skill (a wb-973.15/wb-973.16-style docs census sentence) - is owed
- * only when the gate arms: an hx target inside a loader root (G1, G2 red), a Pi default or documented example reaching the
- * user source (G3 red), or a Pi document presenting a recipe (N1 red); none is added here.
+ * only when the gate arms: an hx target inside a loader root (G1, G2 red), a Pi default or documented inline-array example
+ * reaching the user source (G3 red), or a Pi document presenting a recipe (N1 red); none is added here.
  *
  * Display paths added: none. Test-only: the scratch HOME, the stand-in skills and the recording SDK query live in
- * makeScratch scratch; src, docs, README, the roster and the bead export are only read.
+ * makeScratch scratch; src, docs, README, the roster and the bead export are only read; the fold is this census's own
+ * matching normalization of read-only text, never a display path.
  */
 import { createHash } from "node:crypto";
 import { type Dirent, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
@@ -95,6 +148,7 @@ import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { Options, SDKMessage } from "@anthropic-ai/claude-agent-sdk";
 import { getAgentDir } from "@earendil-works/pi-coding-agent";
+import { marked, type Token, type Tokens } from "marked";
 import ts from "typescript";
 import { afterAll, describe, expect, it } from "vitest";
 import { DEFAULT_AGENTS } from "../src/default-agents.js";
@@ -220,6 +274,347 @@ const NOT_SERVED_MARKERS = [
 const DOC_ROOTS = ["docs", "examples", "new-feedback", ".agents", ".pi"];
 /** The top-level trees outside the population (with every top-level dot directory not in DOC_ROOTS): code, tests, vendored and built files. */
 const OUT_OF_POPULATION = ["coverage", "dist", "media", "node_modules", "qa", "src", "test", "vendor"];
+/**
+ * The named character references the rendered view decodes, as name=code points: every WHATWG named reference whose value
+ * is ASCII, white space or a character the fold drops (77 of the standard's 2125 names with the semicolon, read from its
+ * table). Any other named reference renders one visible non-ASCII glyph and is read as written; no name of the standard's
+ * table holds a matcher token, so a name read as written never makes a hit.
+ */
+const NAMED_REFERENCE_LIST: readonly string[] = [
+  "AMP=0026",
+  "ApplyFunction=2061",
+  "DiacriticalGrave=0060",
+  "GT=003E",
+  "Hat=005E",
+  "InvisibleComma=2063",
+  "InvisibleTimes=2062",
+  "LT=003C",
+  "MediumSpace=205F",
+  "NegativeMediumSpace=200B",
+  "NegativeThickSpace=200B",
+  "NegativeThinSpace=200B",
+  "NegativeVeryThinSpace=200B",
+  "NewLine=000A",
+  "NoBreak=2060",
+  "NonBreakingSpace=00A0",
+  "QUOT=0022",
+  "Tab=0009",
+  "ThickSpace=205F 200A",
+  "ThinSpace=2009",
+  "UnderBar=005F",
+  "VerticalLine=007C",
+  "VeryThinSpace=200A",
+  "ZeroWidthSpace=200B",
+  "af=2061",
+  "amp=0026",
+  "apos=0027",
+  "ast=002A",
+  "bsol=005C",
+  "colon=003A",
+  "comma=002C",
+  "commat=0040",
+  "dollar=0024",
+  "emsp=2003",
+  "emsp13=2004",
+  "emsp14=2005",
+  "ensp=2002",
+  "equals=003D",
+  "excl=0021",
+  "fjlig=0066 006A",
+  "grave=0060",
+  "gt=003E",
+  "hairsp=200A",
+  "ic=2063",
+  "it=2062",
+  "lbrace=007B",
+  "lbrack=005B",
+  "lcub=007B",
+  "lowbar=005F",
+  "lpar=0028",
+  "lrm=200E",
+  "lsqb=005B",
+  "lt=003C",
+  "midast=002A",
+  "nbsp=00A0",
+  "num=0023",
+  "numsp=2007",
+  "percnt=0025",
+  "period=002E",
+  "plus=002B",
+  "puncsp=2008",
+  "quest=003F",
+  "quot=0022",
+  "rbrace=007D",
+  "rbrack=005D",
+  "rcub=007D",
+  "rlm=200F",
+  "rpar=0029",
+  "rsqb=005D",
+  "semi=003B",
+  "shy=00AD",
+  "sol=002F",
+  "thinsp=2009",
+  "verbar=007C",
+  "vert=007C",
+  "zwj=200D",
+  "zwnj=200C",
+];
+const NAMED_REFERENCES: ReadonlyMap<string, string> = new Map(
+  NAMED_REFERENCE_LIST.map(entry => {
+    const [name = "", points = ""] = entry.split("=");
+    return [name, points.split(" ").map(point => String.fromCodePoint(Number.parseInt(point, 16))).join("")] as const;
+  }),
+);
+
+/* ---------------------------------------------------------------------------------------------------------------------------
+ * The rendered view (U1): what each source line of a Markdown page shows, the one view rows N and E judge a page in.
+ * ------------------------------------------------------------------------------------------------------------------------- */
+
+/** Default-ignorable, format and non-white-space control characters: the page shows none of them, so the fold drops them. */
+const INVISIBLE = /[\p{Default_Ignorable_Code_Point}\p{Cf}]|[^\P{Cc}\t\n\v\f\r]/gu;
+/** One judged line as the reader compares it: the invisibles dropped, then every white-space run one space, trimmed. */
+const folded = (line: string): string => line.replace(INVISIBLE, "").replace(/\s+/g, " ").trim();
+
+const REFERENCE = /&(?:#([0-9]{1,7})|#[xX]([0-9a-fA-F]{1,6})|([A-Za-z][A-Za-z0-9]{1,31}));/g;
+/** A character reference's rendered value: a numeric one by code point (an invalid one U+FFFD), a named one by NAMED_REFERENCES, else as written. */
+function referenceValue(whole: string, decimal: string | undefined, hex: string | undefined, name: string | undefined): string {
+  if (decimal !== undefined || hex !== undefined) {
+    const code = decimal !== undefined ? Number.parseInt(decimal, 10) : Number.parseInt(hex ?? "", 16);
+    return code === 0 || code > 0x10ffff || (code >= 0xd800 && code <= 0xdfff) ? String.fromCodePoint(0xfffd) : String.fromCodePoint(code);
+  }
+  return NAMED_REFERENCES.get(name ?? "") ?? whole;
+}
+const decodeReferences = (text: string): string =>
+  text.replace(REFERENCE, (whole: string, decimal?: string, hex?: string, name?: string) => referenceValue(whole, decimal, hex, name));
+/** The parts of raw HTML a page never shows: comments, processing instructions, declarations, CDATA, and every tag with its attributes. */
+const HTML_HIDDEN =
+  /<!--[\s\S]*?(?:-->|$)|<\?[\s\S]*?(?:\?>|$)|<![A-Za-z][\s\S]*?(?:>|$)|<!\[CDATA\[[\s\S]*?(?:\]\]>|$)|<\/?[A-Za-z][A-Za-z0-9-]*(?:\s+[^\s"'>/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+))?)*\s*\/?>/g;
+
+/** A text the walk paints, and the page offset of each of its characters: the page itself, or a container's content. */
+interface Frame {
+  readonly text: string;
+  readonly at: (offset: number) => number;
+}
+/** What each page offset shows: its own character, a decoded reference's value (at the reference's first offset), a space, or nothing. */
+type Shown = string[];
+const lineStartsOf = (text: string): number[] => {
+  const starts = [0];
+  for (let index = 0; index < text.length; index += 1) if (text[index] === "\n") starts.push(index + 1);
+  return starts;
+};
+const subFrame = (frame: Frame, offset: number, length: number): Frame => ({ text: frame.text.slice(offset, offset + length), at: inner => frame.at(offset + inner) });
+/** A container's content (a list item, a block quote): marked strips each source line's marker or indent, so each content line is a suffix of its source line. */
+function suffixFrame(frame: Frame, at: number, raw: string, content: string): Frame {
+  const sourceLines = raw.split("\n");
+  const sourceStarts = lineStartsOf(raw);
+  const lines = content.split("\n");
+  const starts = lineStartsOf(content);
+  if (lines.length > sourceLines.length) throw new Error("a container's content has more lines than its source");
+  const shifts = lines.map((line, index) => {
+    const source = sourceLines[index] ?? "";
+    if (!source.endsWith(line)) throw new Error(`the container line ${JSON.stringify(line.slice(0, 40))} is not a suffix of its source line`);
+    return (sourceStarts[index] ?? 0) + source.length - line.length;
+  });
+  return {
+    text: content,
+    at: inner => {
+      let index = starts.length - 1;
+      while (index > 0 && (starts[index] ?? 0) > inner) index -= 1;
+      return frame.at(at + (shifts[index] ?? 0) + inner - (starts[index] ?? 0));
+    },
+  };
+}
+/** A table cell's frame: marked hands on the cell's source with the backslash of each escaped pipe dropped. */
+function cellFrame(frame: Frame, at: number, source: string, text: string): Frame {
+  const offsets: number[] = [];
+  let index = 0;
+  for (let position = 0; position < text.length; position += 1) {
+    if (source[index] === text[position]) {
+      offsets.push(index);
+      index += 1;
+    } else if (source[index] === "\\" && source[index + 1] === "|" && text[position] === "|") {
+      offsets.push(index + 1);
+      index += 2;
+    } else {
+      throw new Error(`the table cell ${JSON.stringify(text.slice(0, 40))} does not align with its source`);
+    }
+  }
+  return { text, at: inner => frame.at(at + (offsets[inner] ?? index)) };
+}
+/** One table row line cut on its unescaped pipes as GFM cuts it: each cell's trimmed source and offset, and the pipes. */
+function rowCells(line: string): { readonly cells: ReadonlyArray<{ readonly start: number; readonly text: string }>; readonly pipes: readonly number[] } {
+  const pipes: number[] = [];
+  for (let index = 0; index < line.length; index += 1) {
+    if (line[index] === "\\") index += 1;
+    else if (line[index] === "|") pipes.push(index);
+  }
+  const cuts = [-1, ...pipes, line.length];
+  const cells = cuts.slice(0, -1).map((cut, index) => {
+    const piece = line.slice(cut + 1, cuts[index + 1]);
+    return { start: cut + 1 + piece.length - piece.trimStart().length, text: piece.trim() };
+  });
+  if (cells[0]?.text === "" && line.trimStart().startsWith("|")) cells.shift();
+  if (cells.at(-1)?.text === "" && line.trimEnd().endsWith("|")) cells.pop();
+  return { cells, pipes };
+}
+
+function paintVerbatim(shown: Shown, frame: Frame, at: number, raw: string): void {
+  for (let index = 0; index < raw.length; index += 1) shown[frame.at(at + index)] = raw[index] ?? "";
+}
+/** Text with its character references decoded: a reference shows its value at its first offset and nothing at the rest. */
+function paintText(shown: Shown, frame: Frame, at: number, raw: string): void {
+  let last = 0;
+  for (const match of raw.matchAll(REFERENCE)) {
+    paintVerbatim(shown, frame, at + last, raw.slice(last, match.index));
+    shown[frame.at(at + match.index)] = referenceValue(match[0], match[1], match[2], match[3]);
+    last = match.index + match[0].length;
+  }
+  paintVerbatim(shown, frame, at + last, raw.slice(last));
+}
+/** Raw HTML (a block, or an inline tag or comment): the hidden parts show nothing, the rest is text. */
+function paintHtml(shown: Shown, frame: Frame, at: number, raw: string): void {
+  let last = 0;
+  for (const match of raw.matchAll(HTML_HIDDEN)) {
+    paintText(shown, frame, at + last, raw.slice(last, match.index));
+    last = match.index + match[0].length;
+  }
+  paintText(shown, frame, at + last, raw.slice(last));
+}
+const CLOSING_FENCE = /^ {0,3}(?:`{3,}|~{3,})[ \t]*$/;
+/** A code block shows its text verbatim; a fence line (the opening one with its info string, and the closing one) shows nothing. */
+function paintCode(shown: Shown, frame: Frame, at: number, code: Tokens.Code): void {
+  const lines = code.raw.split("\n");
+  const starts = lineStartsOf(code.raw);
+  let last = lines.length - 1;
+  while (last > 0 && (lines[last] ?? "").trim() === "") last -= 1;
+  const fenced = code.codeBlockStyle !== "indented";
+  lines.forEach((line, index) => {
+    if (fenced && (index === 0 || (index === last && CLOSING_FENCE.test(line)))) return;
+    paintVerbatim(shown, frame, at + (starts[index] ?? 0), line);
+  });
+}
+/** A table: each cell's inline tokens in the cell's source, each pipe one space (two cells never fuse), the delimiter row nothing. */
+function paintTable(shown: Shown, frame: Frame, at: number, table: Tokens.Table): void {
+  const lines = table.raw.split("\n");
+  const starts = lineStartsOf(table.raw);
+  [table.header, ...table.rows].forEach((cells, row) => {
+    const line = row === 0 ? 0 : row + 1;
+    const lineAt = at + (starts[line] ?? 0);
+    const cut = rowCells(lines[line] ?? "");
+    for (const pipe of cut.pipes) shown[frame.at(lineAt + pipe)] = " ";
+    cells.forEach((cell, column) => {
+      if (cell.text === "") return;
+      const source = cut.cells[column];
+      if (source === undefined) throw new Error(`a table cell of row ${row} has no source`);
+      paintTokens(shown, cell.tokens, cellFrame(frame, lineAt + source.start, source.text, cell.text));
+    });
+  });
+}
+const textOf = (token: Token): string => {
+  const value: unknown = (token as { text?: unknown }).text;
+  return typeof value === "string" ? value : "";
+};
+const childrenOf = (token: Token): readonly Token[] => {
+  const value: unknown = (token as { tokens?: unknown }).tokens;
+  return Array.isArray(value) ? (value as Token[]) : [];
+};
+const isCode = (token: Token): token is Tokens.Code => token.type === "code";
+const isList = (token: Token): token is Tokens.List => token.type === "list";
+const isTable = (token: Token): token is Tokens.Table => token.type === "table";
+/** The frame of a token's own text inside its source (a paragraph's, a heading's, an emphasis's or a link's text). */
+function innerFrame(frame: Frame, at: number, raw: string, inner: string, from = 0): Frame {
+  const offset = raw.indexOf(inner, from);
+  if (offset < 0) throw new Error(`the text ${JSON.stringify(inner.slice(0, 40))} is not inside its source ${JSON.stringify(raw.slice(0, 40))}`);
+  return subFrame(frame, at + offset, inner.length);
+}
+/** Paints tokens whose sources run in order through the frame (only white space between them). */
+function paintTokens(shown: Shown, tokens: readonly Token[], frame: Frame): void {
+  let cursor = 0;
+  for (const token of tokens) {
+    const at = frame.text.indexOf(token.raw, cursor);
+    if (at < 0 || /\S/.test(frame.text.slice(cursor, at))) throw new Error(`a ${token.type} token is not where its source runs`);
+    paintToken(shown, token, frame, at);
+    cursor = at + token.raw.length;
+  }
+}
+function paintToken(shown: Shown, token: Token, frame: Frame, at: number): void {
+  const raw = token.raw;
+  switch (token.type) {
+    case "space":
+    case "hr":
+    case "def":
+    case "checkbox":
+    case "image":
+      return;
+    case "html":
+      paintHtml(shown, frame, at, raw);
+      return;
+    case "code":
+      if (isCode(token)) paintCode(shown, frame, at, token);
+      return;
+    case "codespan": {
+      const ticks = /^`+/.exec(raw)?.[0].length ?? 0;
+      paintVerbatim(shown, frame, at + ticks, raw.slice(ticks, raw.length - ticks));
+      return;
+    }
+    case "escape":
+      shown[frame.at(at + 1)] = raw.slice(1);
+      return;
+    case "br":
+      shown[frame.at(at)] = " ";
+      return;
+    case "text":
+      if (childrenOf(token).length > 0) paintTokens(shown, childrenOf(token), innerFrame(frame, at, raw, textOf(token)));
+      else paintText(shown, frame, at, raw);
+      return;
+    case "link":
+      if (raw.startsWith("[")) paintTokens(shown, childrenOf(token), innerFrame(frame, at, raw, textOf(token), 1));
+      else paintVerbatim(shown, frame, at + (raw.startsWith("<") ? 1 : 0), textOf(token));
+      return;
+    case "strong":
+    case "em":
+    case "del":
+    case "paragraph":
+    case "heading":
+      paintTokens(shown, childrenOf(token), innerFrame(frame, at, raw, textOf(token)));
+      return;
+    case "blockquote":
+    case "list_item":
+      paintTokens(shown, childrenOf(token), suffixFrame(frame, at, raw, textOf(token)));
+      return;
+    case "list":
+      if (isList(token)) paintTokens(shown, token.items, subFrame(frame, at, raw.length));
+      return;
+    case "table":
+      if (isTable(token)) paintTable(shown, frame, at, token);
+      return;
+    default:
+      throw new Error(`no rendered map for a ${token.type} token`);
+  }
+}
+/** Each source line of a Markdown page as the page shows it, one entry per line; throws where a token cannot be mapped to its source. */
+function renderedLines(text: string): string[] {
+  const tokens = marked.lexer(text);
+  if (tokens.map(token => token.raw).join("") !== text) throw new Error("the lexed tokens do not rebuild the page");
+  const shown: Shown = new Array<string>(text.length).fill("");
+  paintTokens(shown, tokens, { text, at: offset => offset });
+  const starts = lineStartsOf(text);
+  return starts.map((start, index) => shown.slice(start, index + 1 < starts.length ? (starts[index + 1] ?? text.length) - 1 : text.length).join(""));
+}
+/** A page's visible characters with every white-space run and invisible dropped: the skeleton the line view is held to. */
+const skeletonOf = (text: string): string => text.replace(INVISIBLE, "").replace(/\s+/g, "");
+/** marked's own rendering of the page reduced to what a reader sees: the hidden HTML dropped, references decoded. */
+const htmlShown = (text: string): string => decodeReferences(marked.parse(text, { async: false }).replace(HTML_HIDDEN, ""));
+/** A line view of a page, joined, is marked's rendered HTML character for character outside white space and the invisibles. */
+const viewHeld = (lines: readonly string[], text: string): boolean => skeletonOf(lines.join(" ")) === skeletonOf(htmlShown(text));
+/** The rendered view of a page holds to marked's HTML (a page it cannot map does not). */
+function viewHolds(text: string): boolean {
+  try {
+    return viewHeld(renderedLines(text), text);
+  } catch {
+    return false;
+  }
+}
 
 /* ---------------------------------------------------------------------------------------------------------------------------
  * The line reader rows N and E judge with.
@@ -255,7 +650,8 @@ type LineVerdict = "none" | "named" | "negated" | "served";
  * bead's falsifier names); else no recipe mention is none; a mention with a not-served marker is negated; with a served
  * word it is served; else named. Row N admits only none and negated lines.
  */
-function lineVerdict(line: string): LineVerdict {
+function lineVerdict(raw: string): LineVerdict {
+  const line = folded(raw);
   if (HX_COMMAND.test(line)) return "served";
   if (mentionFamilies(line).length === 0) return "none";
   if (NOT_SERVED.test(line)) return "negated";
@@ -266,11 +662,28 @@ interface Judged {
   readonly named: string[];
   readonly negated: string[];
   readonly served: string[];
+  /** Lines judged: one per source line of every file, so a walk that stops early is seen (F3). */
+  examined: number;
+  /** Markdown pages whose tokens the rendered view could not map: read raw instead, and named by row N. */
+  readonly unmapped: string[];
+}
+const isMarkdown = (path: string): boolean => path.endsWith(".md");
+/** The lines one file is judged in: a Markdown page's rendered view (its raw lines where the view cannot map it), any other file's raw lines. */
+function viewOf(path: string, text: string): { readonly lines: readonly string[]; readonly mapped: boolean } {
+  if (!isMarkdown(path)) return { lines: text.split("\n"), mapped: true };
+  try {
+    return { lines: renderedLines(text), mapped: true };
+  } catch {
+    return { lines: text.split("\n"), mapped: false };
+  }
 }
 function judge(files: ReadonlyArray<readonly [string, string]>): Judged {
-  const judged: Judged = { named: [], negated: [], served: [] };
+  const judged: Judged = { named: [], negated: [], served: [], examined: 0, unmapped: [] };
   for (const [path, text] of files) {
-    text.split("\n").forEach((line, index) => {
+    const view = viewOf(path, text);
+    if (!view.mapped) judged.unmapped.push(path);
+    view.lines.forEach((line, index) => {
+      judged.examined += 1;
       const verdict = lineVerdict(line);
       if (verdict !== "none") judged[verdict].push(`${path}:${index + 1}`);
     });
@@ -306,12 +719,12 @@ const ROWS: readonly Row[] = [
   {
     id: "M",
     label: "the matchers rows G, N and E read catch every spelling family they name and leave the near misses clean",
-    pins: ["M1", "M2", "M3"],
+    pins: ["M1", "M2", "M3", "M4"],
   },
   {
     id: "R",
     label: "the named residuals, each a pinned quiet row that reds when its escape stops being quiet",
-    pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8"],
+    pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11"],
   },
 ];
 const RESIDUALS: Readonly<Record<string, string>> = {
@@ -323,6 +736,9 @@ const RESIDUALS: Readonly<Record<string, string>> = {
   Q6: "R-OPERATOR-CONFIG",
   Q7: "R-HEADLESS-BODY",
   Q8: "R-BOUND-LAUNCH",
+  Q9: "R-HIDDEN-SOURCE",
+  Q10: "R-EXAMPLE-SHAPE",
+  Q11: "R-CONFUSABLE",
 };
 
 /* ---------------------------------------------------------------------------------------------------------------------------
@@ -361,6 +777,8 @@ interface Roster {
   readonly vocabulary: Readonly<Record<string, readonly string[]>>;
   readonly residuals: Readonly<Record<string, string>>;
   readonly rows: readonly RosterRow[];
+  /** Every test this file registers, by title, in registration order (the record case reads the task tree against it). */
+  readonly tests: readonly string[];
 }
 /** Parses the roster, refusing any field of the wrong shape by name, so no case can read a malformed roster. */
 function parseRoster(text: string): Roster {
@@ -394,7 +812,7 @@ function parseRoster(text: string): Roster {
     if (typeof name !== "string") throw new Error(`roster residual ${pin} must name a family`);
     residuals[pin] = name;
   }
-  return { installTargets, loaderRoots: stringsOf(raw.loaderRoots, "roster loaderRoots"), recipes, vocabulary, residuals, rows };
+  return { installTargets, loaderRoots: stringsOf(raw.loaderRoots, "roster loaderRoots"), recipes, vocabulary, residuals, rows, tests: stringsOf(raw.tests, "roster tests") };
 }
 let rosterCache: Roster | undefined;
 /** Read on first use, so a missing or malformed roster reds every case that needs it rather than the file's collection. */
@@ -718,6 +1136,21 @@ function plantedVerdict(line: string): string {
   return `unexpected:${changed.join(",")}|before:${kinds.map(kind => before[kind].length).join("/")}`;
 }
 
+/**
+ * A block appended to a copy of PLANT_PAGE: every judged line it adds, as kind@+n (n the block's own line, so the reading
+ * never moves with the page's length); a block the reader leaves quiet adds none.
+ */
+function plantChanges(block: string): string[] {
+  const text = readFileSync(join(REPO, PLANT_PAGE), "utf8");
+  const body = text.endsWith("\n") ? text : `${text}\n`;
+  const offset = body.split("\n").length - 1;
+  const before = judge([[PLANT_PAGE, body]]);
+  const after = judge([[PLANT_PAGE, `${body}${block}\n`]]);
+  const kinds = ["named", "negated", "served"] as const;
+  return kinds.flatMap(kind =>
+    after[kind].filter(entry => !before[kind].includes(entry)).map(entry => `${kind}@+${Number(entry.slice(PLANT_PAGE.length + 1)) - offset}`),
+  );
+}
 const digestOf = (text: string): string => createHash("sha256").update(text).digest("hex").slice(0, 16);
 const sub = (name: string): string => ["$", "{", name, "}"].join("");
 
@@ -791,6 +1224,81 @@ const SITE_CASES: ReadonlyArray<readonly [string, readonly string[]]> = [
   ["const o = { settingSources: [] };", ["case.ts:[]"]],
 ];
 
+/** Invisible characters, built from code points (never written raw). */
+const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
+const WORD_JOINER = String.fromCodePoint(0x2060);
+/** Default-ignorable but not a format character (a combining grapheme joiner), and a non-white-space control (BEL). */
+const GRAPHEME_JOINER = String.fromCodePoint(0x034f);
+const BELL = String.fromCodePoint(0x0007);
+/** The gate's control T10 and the visible text every T-form below must render to. */
+const T10 = "Run hx git diff $TRUNK $BRANCH to compare the branch with trunk.";
+const SKILL_SENTENCE = "Agents can load the hyper-unix skill before a review.";
+const SLUG_SENTENCE = "The worktree-lane-census recipe is served to every Pi agent.";
+/** Row M4: [gate form id, planted line, the single line the page shows]: each renders to T10 or the served sentence. */
+const VIEW_TEXT_CASES: ReadonlyArray<readonly [string, string, string]> = [
+  ["T10", T10, T10],
+  ["T4", "Run **hx** git diff $TRUNK $BRANCH to compare the branch with trunk.", T10],
+  ["T5", "Run <code>hx</code> git diff $TRUNK $BRANCH to compare the branch with trunk.", T10],
+  ["T6", "Run hx&#32;git diff $TRUNK $BRANCH to compare the branch with trunk.", T10],
+  ["T7", "Run h<!-- -->x git diff $TRUNK $BRANCH to compare the branch with trunk.", T10],
+  ["T8", "Run `hx` `git diff $TRUNK $BRANCH` to compare the branch with trunk.", T10],
+  ["T21", "Run [hx](https://example.invalid/hx) git diff $TRUNK $BRANCH to compare the branch with trunk.", T10],
+  ["T9", "Agents can load the *hyper*-unix skill before a review.", SKILL_SENTENCE],
+  ["T16", "The **worktree**-lane-census recipe is served to every Pi agent.", SLUG_SENTENCE],
+  ["T15", `Run h${ZERO_WIDTH_SPACE}x git diff $TRUNK $BRANCH to compare the branch with trunk.`, T10],
+];
+/** Row M4: [block planted on PLANT_PAGE, the judged lines it must add]. */
+const VIEW_CASES: ReadonlyArray<readonly [string, readonly string[]]> = [
+  ...VIEW_TEXT_CASES.map(([, line]) => [line, ["served@+1"]] as const),
+  ["Run h&shy;x git diff $TRUNK $BRANCH", ["served@+1"]],
+  [`Run h${WORD_JOINER}x git diff $TRUNK $BRANCH`, ["served@+1"]],
+  [`Run h${GRAPHEME_JOINER}x git diff $TRUNK $BRANCH`, ["served@+1"]],
+  [`Run h${BELL}x git diff $TRUNK $BRANCH`, ["served@+1"]],
+  ["Run hx&nbsp;git diff $TRUNK $BRANCH", ["served@+1"]],
+  ["Run &#x68;&#120; git diff $TRUNK $BRANCH", ["served@+1"]],
+  ["Outcomes: KNOWN&lowbar;PRESENT and UNTOUCHED&#95;IN&#95;RANGE", ["named@+1"]],
+  ["## Run **hx** git diff $TRUNK $BRANCH", ["served@+1"]],
+  ["> Run `hx` git diff $TRUNK $BRANCH", ["served@+1"]],
+  ["- Agents can load the *hyper*-unix skill.", ["served@+1"]],
+  ["| step |\n| --- |\n| Run <code>hx</code> git diff $TRUNK $BRANCH |", ["served@+3"]],
+  ["```sh\nhx --workspace . git diff a b\n```", ["served@+2"]],
+  ["\n    hx --workspace . git diff a b", ["served@+2"]],
+  ["| the hyper- | unix skill |\n| --- | --- |", []],
+];
+/** Row M4's controls: a page whose line ends marked rewrites (CR LF), so its tokens cannot be mapped and it is read raw. */
+const UNMAPPED_PAGE = "Intro.\r\nRun hx git diff $TRUNK $BRANCH\r\n";
+/** Row Q2: blocks whose hx command is broken across source lines; the control shows it on one. */
+const SPLIT_CASES: readonly string[] = [
+  '```sh\nhx \\\n  --workspace "$ROOT" git diff "$LEFT" "$RIGHT"\n```',
+  "Run hx\ngit diff $TRUNK $BRANCH",
+  "Run **hx\ngit diff** $TRUNK $BRANCH",
+  "Run h<!--\n-->x git diff $TRUNK $BRANCH",
+];
+/** Row Q9: blocks whose command the page hides; the control shows it as an element's text. */
+const HIDDEN_CASES: readonly string[] = [
+  "<!-- hx git diff $TRUNK $BRANCH -->",
+  "<!--\nhx git diff $TRUNK $BRANCH\n-->",
+  "```hx git diff $TRUNK $BRANCH\necho census\n```",
+  "![hx git diff $TRUNK $BRANCH](census.png)",
+  '[census](https://example.invalid/hx "hx git diff $TRUNK $BRANCH")',
+  '<span title="hx git diff $TRUNK $BRANCH">census</span>',
+  '\n[census]: https://example.invalid/hx "hx git diff $TRUNK $BRANCH"',
+];
+const HIDDEN_CONTROL = "<span>hx git diff $TRUNK $BRANCH</span>";
+/** Row Q10: the gate's G3-B (a binding through a name) and G3-Y (a YAML block list); its control G3-J (a multi-line JSON array). */
+const EXAMPLE_SHAPES: readonly string[] = [
+  '```ts\nconst sources = ["user"];\ncreateClaudeWorkflowHost({ cwd, settingSources: sources });\n```',
+  "```yaml\nworkbench:\n  settingSources:\n    - user\n```",
+];
+const EXAMPLE_CONTROL = '```json\n{ "workbench": { "settingSources": [\n  "user"\n] } }\n```';
+/** Row Q11: hx in look-alike and compatibility spellings (fullwidth, Cyrillic ha, double-struck, a combining acute inside). */
+const CONFUSABLE_CASES: readonly string[] = [
+  `Run ${String.fromCodePoint(0xff48, 0xff58)} git diff $TRUNK $BRANCH`,
+  `Run h${String.fromCodePoint(0x0445)} git diff $TRUNK $BRANCH`,
+  `Run ${String.fromCodePoint(0x1d559, 0x1d569)} git diff $TRUNK $BRANCH`,
+  `Run h${String.fromCodePoint(0x0301)}x git diff $TRUNK $BRANCH`,
+];
+
 /** The real Pi doc line row N's floor names: the wb-kqx.5 receipt line in the byte-frozen TRACEABILITY.md, which names the hx installer and says the skill is not found. */
 const DOC_FLOOR = ["docs/workbench/TRACEABILITY.md:236"];
 /** Launch sites src really has, so N3's scan is shown to see launches at all. */
@@ -858,19 +1366,39 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
   },
   N1: () => {
     const files = docFiles();
+    const texts = docTexts();
     const walkComplete = DOC_ROOTS.every(root => JSON.stringify(filesBelow(join(REPO, root))) === JSON.stringify(listedBelow(join(REPO, root))));
-    const judged = judge(docTexts());
-    const unread = markdownOutside(REPO)
-      .filter(file => !files.includes(file))
-      .map(repoPath);
+    const judged = judge(texts);
+    const lineCount = texts.reduce((sum, [, text]) => sum + [...text.matchAll(/\n/g)].length + 1, 0);
+    const examinedAll = judged.examined === lineCount;
+    const outside = markdownOutside(REPO);
+    const outsideCovers = outside.length > 0 && files.filter(isMarkdown).every(file => outside.includes(file));
+    const unread = outside.filter(file => !files.includes(file)).map(repoPath);
+    const viewMismatches = texts.filter(([path, text]) => isMarkdown(path) && !viewHolds(text)).map(([path]) => path);
     const floor = DOC_FLOOR.map(at => ({ at, verdict: judged.negated.includes(at) ? "negated" : judged.named.includes(at) || judged.served.includes(at) ? "admitted-wrongly" : "none" }));
     expect(walkComplete).toBe(true);
     expect(files.length).toBeGreaterThanOrEqual(100);
+    expect(examinedAll, `${judged.examined} lines judged of the population's ${lineCount}`).toBe(true);
+    expect(outsideCovers, "the independent Markdown walk finds every population Markdown file").toBe(true);
     expect(unread).toEqual([]);
+    expect(judged.unmapped, "Markdown pages the rendered view cannot map").toEqual([]);
+    expect(viewMismatches, "Markdown pages whose line view differs from marked's rendered HTML").toEqual([]);
     expect(floor.map(entry => entry.verdict)).toEqual(DOC_FLOOR.map(() => "negated"));
     expect(judged.named).toEqual([]);
     expect(judged.served).toEqual([]);
-    return { walkComplete, atFloor: files.length >= 100, unread, rootMarkdown: rootMarkdown().map(repoPath), floor, named: judged.named, served: judged.served };
+    return {
+      walkComplete,
+      atFloor: files.length >= 100,
+      examinedAll,
+      outsideCovers,
+      unread,
+      unmapped: judged.unmapped,
+      viewMismatches,
+      rootMarkdown: rootMarkdown().map(repoPath),
+      floor,
+      named: judged.named,
+      served: judged.served,
+    };
   },
   N2: () =>
     withHome(() => {
@@ -953,15 +1481,36 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       sites: sites.map(({ digest, sites: found }) => [digest, ...found]),
     };
   },
+  M4: () => {
+    const texts = VIEW_TEXT_CASES.map(([id, line, shown]) => ({ id, shown: folded(renderedLines(`${line}\n`)[0] ?? ""), expected: shown }));
+    const blocks = VIEW_CASES.map(([block, expected]) => ({ digest: digestOf(block), changes: plantChanges(block), held: viewHolds(`${block}\n`), expected: [...expected] }));
+    for (const entry of texts) expect(entry.shown, `${entry.id} renders to the text the page shows`).toBe(entry.expected);
+    for (const entry of blocks) {
+      expect(entry.changes, `block ${entry.digest}`).toEqual(entry.expected);
+      expect(entry.held, `block ${entry.digest}: the line view is marked's HTML`).toBe(true);
+    }
+    const page = `${readFileSync(join(REPO, PLANT_PAGE), "utf8")}\n${VIEW_TEXT_CASES[1]?.[1] ?? ""}\n`;
+    const crlf = judge([["unmapped.md", UNMAPPED_PAGE]]);
+    const controls = { rawViewHeld: viewHeld(page.split("\n"), page), renderedViewHeld: viewHolds(page), unmapped: crlf.unmapped, readRaw: crlf.served };
+    expect(controls.rawViewHeld, "the raw lines of a marked-up page are not its rendered view (the hold check tells the views apart)").toBe(false);
+    expect(controls.renderedViewHeld).toBe(true);
+    expect(controls.unmapped, "a page whose tokens cannot be mapped is named").toEqual(["unmapped.md"]);
+    expect(controls.readRaw, "and read raw, so its command is still served").toEqual(["unmapped.md:2"]);
+    return { texts: texts.map(({ id, shown }) => [id, digestOf(shown)]), blocks: blocks.map(({ digest, changes }) => [digest, ...changes]), controls };
+  },
   Q1: () => {
     const verdict = lineVerdict("To check whether trunk already carries a branch, ask HyperUnix for the merge base, the ancestry and the changed paths.");
     expect(verdict).toBe("none");
     return verdict;
   },
   Q2: () => {
-    const verdicts = ["hx \\", '  --workspace "$ROOT" git diff "$LEFT" "$RIGHT"'].map(lineVerdict);
-    expect(verdicts).toEqual(["none", "none"]);
-    return verdicts;
+    const raw = ["hx \\", '  --workspace "$ROOT" git diff "$LEFT" "$RIGHT"'].map(lineVerdict);
+    const rendered = SPLIT_CASES.map(plantChanges);
+    const control = plantChanges(T10);
+    expect(raw).toEqual(["none", "none"]);
+    expect(rendered).toEqual(SPLIT_CASES.map(() => []));
+    expect(control).toEqual(["served@+1"]);
+    return { raw, rendered, control };
   },
   Q3: () => {
     const outside = docFiles().map(repoPath).filter(outsidePopulation);
@@ -1002,11 +1551,35 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     expect([bound, configured]).toEqual([0, 0]);
     return [bound, configured];
   },
+  Q9: () => {
+    const quiet = HIDDEN_CASES.map(plantChanges);
+    const shown = plantChanges(HIDDEN_CONTROL);
+    expect(quiet).toEqual(HIDDEN_CASES.map(() => []));
+    expect(shown).toEqual(["served@+1"]);
+    return { quiet, shown };
+  },
+  Q10: () => {
+    const quiet = EXAMPLE_SHAPES.map(text => userExamplesOf(docExamples([["shape.md", text]])));
+    const control = userExamplesOf(docExamples([["control.md", EXAMPLE_CONTROL]]));
+    expect(quiet).toEqual([[], []]);
+    expect(control).toEqual(["control.md"]);
+    return { quiet, control };
+  },
+  Q11: () => {
+    const quiet = CONFUSABLE_CASES.map(lineVerdict);
+    const control = lineVerdict("Run hx git diff $TRUNK $BRANCH");
+    expect(quiet).toEqual(CONFUSABLE_CASES.map(() => "none"));
+    expect(control).toBe("served");
+    return { quiet, control };
+  },
 };
+
+/** The pins whose case ran to its end and matched its roster witness, in run order (the record case reads it). */
+const REACHED: string[] = [];
 
 describe("wb-ts6.1 hx recipe serving census (HXFS-PI-R5, until-then leg)", () => {
   it("the frozen shape (standing rule 16): every judged row and its pin count", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["G:3", "N:3", "E:2", "M:3", "R:8"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["G:3", "N:3", "E:2", "M:4", "R:11"]);
   });
   it("the owner filing's gate, until-then and falsifier clauses in the tracked bead export are rows G, N and E's labels", () => {
     expect(ROWS.slice(0, 3).map(row => row.label)).toEqual(exportClauses());
@@ -1031,6 +1604,7 @@ describe("wb-ts6.1 hx recipe serving census (HXFS-PI-R5, until-then leg)", () =>
       notServedMarkers: NOT_SERVED_MARKERS,
       docRoots: DOC_ROOTS,
       outOfPopulation: OUT_OF_POPULATION,
+      namedReferences: NAMED_REFERENCE_LIST,
     }).toStrictEqual(Object.fromEntries(Object.entries(roster().vocabulary).map(([name, words]) => [name, [...words]])));
   });
   for (const row of ROWS) {
@@ -1041,8 +1615,35 @@ describe("wb-ts6.1 hx recipe serving census (HXFS-PI-R5, until-then leg)", () =>
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : await impl();
           expect(witness).toStrictEqual(rosterWitness(pin));
+          REACHED.push(pin);
         });
       }
     });
   }
+  it("the record: every registered test and every reached pin equal the roster, in order and both ways", ({ task }) => {
+    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    const titles = walked.map(entry => entry.name);
+    expect(titles, "every registered test of this file (vitest's task tree), in roster order").toEqual([...roster().tests]);
+    expect(
+      titles.filter((name, index) => titles.indexOf(name) !== index),
+      "titles registered twice",
+    ).toEqual([]);
+    const here = walked.findIndex(entry => entry.self);
+    expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
+    const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
+    expect(
+      walked
+        .filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state)))
+        .map(entry => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`),
+      "every other test is in run mode, not inverted, and ran before this case",
+    ).toEqual([]);
+    expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
+  });
 });

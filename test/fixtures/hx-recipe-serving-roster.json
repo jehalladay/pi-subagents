@@ -1,7 +1,7 @@
 {
  "bead": "wb-ts6.1",
  "pin": "694570cd00c2",
- "basis": "The out-of-file roster of test/workbench-hx-recipe-serving-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the residual names and the vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at HyperUnix-CLI 694570cd00c2 (read-only git show): docs/programs/feedback-query-skill-factory-2026-10-16/06-workflow-recipes.md:3 (the operator contract) and the eight recipe headings W1-W8 with the fifteen hx command lines and spans they hold (recipes[].source and commandLines; W5 and W7 hold none), verbatim. Host facts: hxInstall, the installed hx 0.1.0 install-skill --list under an empty scratch HOME. The hx verb vocabulary is the COMMANDS (V1) inventory of the installed hx 0.1.0 --help plus its help dispatcher. Pi facts measured at base f381c52 (landing 443). Matcher witnesses carry the first 16 hex of sha256 over each case's UTF-8 text, never the text.",
+ "basis": "The out-of-file roster of test/workbench-hx-recipe-serving-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the residual names and the vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at HyperUnix-CLI 694570cd00c2 (read-only git show): docs/programs/feedback-query-skill-factory-2026-10-16/06-workflow-recipes.md:3 (the operator contract) and the eight recipe headings W1-W8 with the fifteen hx command lines and spans they hold (recipes[].source and commandLines; W5 and W7 hold none), verbatim. Host facts: hxInstall, the installed hx 0.1.0 install-skill --list under an empty scratch HOME. The hx verb vocabulary is the COMMANDS (V1) inventory of the installed hx 0.1.0 --help plus its help dispatcher. Pi facts measured at base f381c52 (landing 443). Matcher witnesses carry the first 16 hex of sha256 over each case's UTF-8 text, never the text. Cut #2 (the respin of refusal #1, rendered-text docs truth): the rendered view's matcher pin M4, the residuals Q9-Q11 (R-HIDDEN-SOURCE, R-EXAMPLE-SHAPE, R-CONFUSABLE), the named-reference vocabulary (the 77 names of the WHATWG table, read from Python 3.12's html.entities.html5, whose value is ASCII, white space or a folded character) and the ordered test titles the record case reads; Pi facts re-read at 52812a1 (landing 456).",
  "hxInstall": {
   "hxVersion": "0.1.0",
   "binarySha256": "8fddc7cc2e6c65d9773f0e35713af9b939031f9229e61c64d1ca7781678aa790",
@@ -303,6 +303,85 @@
    "src",
    "test",
    "vendor"
+  ],
+  "namedReferences": [
+   "AMP=0026",
+   "ApplyFunction=2061",
+   "DiacriticalGrave=0060",
+   "GT=003E",
+   "Hat=005E",
+   "InvisibleComma=2063",
+   "InvisibleTimes=2062",
+   "LT=003C",
+   "MediumSpace=205F",
+   "NegativeMediumSpace=200B",
+   "NegativeThickSpace=200B",
+   "NegativeThinSpace=200B",
+   "NegativeVeryThinSpace=200B",
+   "NewLine=000A",
+   "NoBreak=2060",
+   "NonBreakingSpace=00A0",
+   "QUOT=0022",
+   "Tab=0009",
+   "ThickSpace=205F 200A",
+   "ThinSpace=2009",
+   "UnderBar=005F",
+   "VerticalLine=007C",
+   "VeryThinSpace=200A",
+   "ZeroWidthSpace=200B",
+   "af=2061",
+   "amp=0026",
+   "apos=0027",
+   "ast=002A",
+   "bsol=005C",
+   "colon=003A",
+   "comma=002C",
+   "commat=0040",
+   "dollar=0024",
+   "emsp=2003",
+   "emsp13=2004",
+   "emsp14=2005",
+   "ensp=2002",
+   "equals=003D",
+   "excl=0021",
+   "fjlig=0066 006A",
+   "grave=0060",
+   "gt=003E",
+   "hairsp=200A",
+   "ic=2063",
+   "it=2062",
+   "lbrace=007B",
+   "lbrack=005B",
+   "lcub=007B",
+   "lowbar=005F",
+   "lpar=0028",
+   "lrm=200E",
+   "lsqb=005B",
+   "lt=003C",
+   "midast=002A",
+   "nbsp=00A0",
+   "num=0023",
+   "numsp=2007",
+   "percnt=0025",
+   "period=002E",
+   "plus=002B",
+   "puncsp=2008",
+   "quest=003F",
+   "quot=0022",
+   "rbrace=007D",
+   "rbrack=005D",
+   "rcub=007D",
+   "rlm=200F",
+   "rpar=0029",
+   "rsqb=005D",
+   "semi=003B",
+   "shy=00AD",
+   "sol=002F",
+   "thinsp=2009",
+   "verbar=007C",
+   "vert=007C",
+   "zwj=200D",
+   "zwnj=200C"
   ]
  },
  "residuals": {
@@ -313,7 +392,10 @@
   "Q5": "R-OUTSIDE-VOCABULARY",
   "Q6": "R-OPERATOR-CONFIG",
   "Q7": "R-HEADLESS-BODY",
-  "Q8": "R-BOUND-LAUNCH"
+  "Q8": "R-BOUND-LAUNCH",
+  "Q9": "R-HIDDEN-SOURCE",
+  "Q10": "R-EXAMPLE-SHAPE",
+  "Q11": "R-CONFUSABLE"
  },
  "rows": [
   {
@@ -403,7 +485,11 @@
      "witness": {
       "walkComplete": true,
       "atFloor": true,
+      "examinedAll": true,
+      "outsideCovers": true,
       "unread": [],
+      "unmapped": [],
+      "viewMismatches": [],
       "rootMarkdown": [
        "AGENTS.md",
        "CHANGELOG.md",
@@ -794,6 +880,160 @@
        ]
       ]
      }
+    },
+    {
+     "id": "M4",
+     "witness": {
+      "texts": [
+       [
+        "T10",
+        "be775cffabfb20f3"
+       ],
+       [
+        "T4",
+        "be775cffabfb20f3"
+       ],
+       [
+        "T5",
+        "be775cffabfb20f3"
+       ],
+       [
+        "T6",
+        "be775cffabfb20f3"
+       ],
+       [
+        "T7",
+        "be775cffabfb20f3"
+       ],
+       [
+        "T8",
+        "be775cffabfb20f3"
+       ],
+       [
+        "T21",
+        "be775cffabfb20f3"
+       ],
+       [
+        "T9",
+        "516469f8af7a8bfa"
+       ],
+       [
+        "T16",
+        "549c643ee736d6cf"
+       ],
+       [
+        "T15",
+        "be775cffabfb20f3"
+       ]
+      ],
+      "blocks": [
+       [
+        "be775cffabfb20f3",
+        "served@+1"
+       ],
+       [
+        "a598a68c5ea20e3f",
+        "served@+1"
+       ],
+       [
+        "6b0f1450abf94393",
+        "served@+1"
+       ],
+       [
+        "b91f9d7dccf4a6a7",
+        "served@+1"
+       ],
+       [
+        "a45a8c3861912370",
+        "served@+1"
+       ],
+       [
+        "045be3134906dcbf",
+        "served@+1"
+       ],
+       [
+        "ee6063c02e31b7b8",
+        "served@+1"
+       ],
+       [
+        "eff9253766f7852a",
+        "served@+1"
+       ],
+       [
+        "80a9568d234ebcab",
+        "served@+1"
+       ],
+       [
+        "de10fa1f7c679b54",
+        "served@+1"
+       ],
+       [
+        "7a71969433fcdafd",
+        "served@+1"
+       ],
+       [
+        "7dd52c96d94d82e5",
+        "served@+1"
+       ],
+       [
+        "bcd3f0b84b87fbab",
+        "served@+1"
+       ],
+       [
+        "fc13a96c6d16ff04",
+        "served@+1"
+       ],
+       [
+        "0eae1f7ea4e1270a",
+        "served@+1"
+       ],
+       [
+        "04193e531a133c49",
+        "served@+1"
+       ],
+       [
+        "b70bfacb30734c89",
+        "named@+1"
+       ],
+       [
+        "ffa5e5b0acfc657c",
+        "served@+1"
+       ],
+       [
+        "8d60eb25f9062c63",
+        "served@+1"
+       ],
+       [
+        "3ccd66eb940dafb4",
+        "served@+1"
+       ],
+       [
+        "c136e0cd9d8a003d",
+        "served@+3"
+       ],
+       [
+        "211b7a4cadd8c99b",
+        "served@+2"
+       ],
+       [
+        "7d7d32719e51e97e",
+        "served@+2"
+       ],
+       [
+        "bd256907efb186d1"
+       ]
+      ],
+      "controls": {
+       "rawViewHeld": false,
+       "renderedViewHeld": true,
+       "unmapped": [
+        "unmapped.md"
+       ],
+       "readRaw": [
+        "unmapped.md:2"
+       ]
+      }
+     }
     }
    ]
   },
@@ -807,10 +1047,21 @@
     },
     {
      "id": "Q2",
-     "witness": [
-      "none",
-      "none"
-     ]
+     "witness": {
+      "raw": [
+       "none",
+       "none"
+      ],
+      "rendered": [
+       [],
+       [],
+       [],
+       []
+      ],
+      "control": [
+       "served@+1"
+      ]
+     }
     },
     {
      "id": "Q3",
@@ -852,8 +1103,79 @@
       0,
       0
      ]
+    },
+    {
+     "id": "Q9",
+     "witness": {
+      "quiet": [
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       []
+      ],
+      "shown": [
+       "served@+1"
+      ]
+     }
+    },
+    {
+     "id": "Q10",
+     "witness": {
+      "quiet": [
+       [],
+       []
+      ],
+      "control": [
+       "control.md"
+      ]
+     }
+    },
+    {
+     "id": "Q11",
+     "witness": {
+      "quiet": [
+       "none",
+       "none",
+       "none",
+       "none"
+      ],
+      "control": "served"
+     }
     }
    ]
   }
+ ],
+ "tests": [
+  "the frozen shape (standing rule 16): every judged row and its pin count",
+  "the owner filing's gate, until-then and falsifier clauses in the tracked bead export are rows G, N and E's labels",
+  "every judged pin has exactly one case",
+  "the out-of-file roster holds every row, label, pin, residual and vocabulary of this file",
+  "G1",
+  "G2",
+  "G3",
+  "N1",
+  "N2",
+  "N3",
+  "E1",
+  "E2",
+  "M1",
+  "M2",
+  "M3",
+  "M4",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "Q7",
+  "Q8",
+  "Q9",
+  "Q10",
+  "Q11",
+  "the record: every registered test and every reached pin equal the roster, in order and both ways"
  ]
 }
