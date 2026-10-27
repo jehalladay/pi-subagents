@@ -30,12 +30,17 @@
  *    read-class) and no native or injected descriptor's JSON spells PARITY_WORD or CLASS_WORD; T3 no sentence of docs/, the examples
  *    markdown or the root documents (ROOT_DOCS) couples PARITY_WORD with RENDER_WORD unless it carries a DOC_MARKERS word (paragraph
  *    units; table rows, headings and fence lines stand alone, a list item opens its own unit), with a floor, two anchors and git's
- *    listing (WALK LISTINGS below), a sentence's marker read from its visible text, twice, and admitted only when both readings
- *    carry it: the source with its HTML comments stripped, where a comment carries none (wb-mymm F4), and the text as it renders
- *    (wb-t69k F1: marked's inline lexer under the document's link reference definitions, read by the house rendering rule), where
- *    a tag and its attributes, a link's destination and title, a resolved reference link's label and an image, its alt text
- *    included, carry none; T4 the captured rf result-key roster spells no PARITY_WORD, CLASS_WORD or VERDICT_WORD key, so rf states
- *    no verdict Pi could read.
+ *    listing (WALK LISTINGS below). A sentence is what a reader sees (wb-n8ye F1): a unit is cut at each SENTENCE_END (a '.', ';',
+ *    '!' or '?' and the space after it) whose mark the whole unit shows, read by its position in the source (R13), and one inside a tag or its attributes, a link's
+ *    destination, title or label, an image or a comment ends nothing, so a coupling split there still counts. A sentence's marker
+ *    is read from its visible text and admitted only when every reading carries it: over the sentence's span of the WHOLE unit,
+ *    the source with its HTML comments stripped, where a comment carries none (wb-mymm F4), and the text as it renders (wb-t69k F1:
+ *    marked's inline lexer under the document's link reference definitions, read by the house rendering rule), where a tag and its
+ *    attributes, a link's destination and title, a resolved reference link's label and an image, its alt text included, carry none,
+ *    a construct opened in an earlier sentence of the unit included (wb-n8ye F1: this reading lexes the whole unit, never one sentence alone);
+ *    and every raw sentence in it that couples on its own keeps both readings of its own text (the landed per-sentence readings),
+ *    so the cut admits no sentence they refuse; T4 the captured rf result-key roster spells no PARITY_WORD, CLASS_WORD or
+ *    VERDICT_WORD key, so rf states no verdict Pi could read.
  *  A, acceptance (a). A1 the same scan: no src code token spells PARITY_WORD; A2 the comment mentions are exactly COMMENT_SET, the
  *    filing's FILING_MENTIONS, every one a comment (the walk's positive control: four directories, six modules); A3 every src read of
  *    an rf document's text (a `text` member read off a value named output) or of Pi's payload reference (nativePayloadRef, payloadRef)
@@ -101,12 +106,30 @@
  * so a footnote reference reads as written, label shown ('... equivalent [^never].' stays admitted), where a renderer that resolves
  * footnotes shows a number. R12 R-JOINED-DEFINITION (wb-t69k) a link reference definition line directly above a paragraph line
  * joins that paragraph's unit, so its destination and title read as sentence text ('[notes]: https://example.invalid/notes "never"'
- * over '... equivalent.' stays admitted). Row M's T3 controls MD10-MD19 pin the rendered reading's every branch: the forms it hides
+ * over '... equivalent.' stays admitted). R13 R-FALSE-END (wb-n8ye) a SENTENCE_END mark the whole unit shows ends a sentence even
+ * where a reader reads none - an entity's closing semicolon (read by its position in the source, so the ';' of '&amp;' counts as
+ * shown), an abbreviation's period, a period inside a code span - so a coupling across one couples nothing ('The Python renders &amp;
+ * are equivalent.', 'The Python renders, i.e. the frames, are equivalent.' and 'The Python renders `a. b` are equivalent.' stay quiet).
+ * R14 R-UNSPACED-END (wb-n8ye) a sentence end no space follows ends nothing, so the next sentence's marker admits it ('The TSX and
+ * Python renders are equivalent.Never text-only.' stays admitted). R15 R-QUOTE-LINE (wb-n8ye) each blockquote line opens its own
+ * unit (OPENS_UNIT), so a coupling split across two quoted lines of one paragraph couples nothing, and a construct opened on one
+ * quoted line reads its tail on the next as plain text ('> The Python renders are' over '> equivalent.' stays quiet; '>
+ * Draft <span title="a' over '> never"> The TSX and Python renders are equivalent.' stays admitted). Row M's T3 controls MD10-MD19 pin the rendered reading's every branch: the forms it hides
  * (MD10 link destination, MD11 link title, MD12 tag attribute - the wb-mymm PREP survivors GL06-GL08 - MD13 image alt text, MD14 a
  * reference label its document defines, MD19 an image inside a link's text, read through the link's own tokens) and the text it
  * shows (MD15 link text, MD16 element content, MD17 an autolink, MD18 a code span); re-measured at trunk f6bbba7: no docs sentence couples the two vocabularies (docs/ 74 files, one examples markdown file,
- * the five root documents), so the rendered reading moves no real-tree reading.
- * SCOPE: the vocabularies (PARITY_WORD the filing's two words, CLASS_WORD, RENDER_WORD, DOC_MARKERS), the accessors of A3, the reading
+ * the five root documents), so the rendered reading moves no real-tree reading. MD20-MD31 pin the whole-unit reading (wb-n8ye F1):
+ * the wb-t69k PREP survivors GS01-GS06 as MD20-MD25 (a marker past a sentence end inside a tag attribute, a link title, an image's
+ * alt text, an angle-bracket destination, a reference label, and a ';' inside an attribute), MD27 a link's destination after a
+ * sentence end its text shows, MD26 and MD30 a coupling split at a sentence end inside a tag attribute and inside a comment, MD31
+ * a joined sentence one of whose raw sentences the per-sentence readings refuse, and the quiet MD28 (a joined sentence keeps the
+ * marker it shows) and MD29 (a sentence end inside link text still ends a sentence); MD32-MD35 pin the whole-unit reading's
+ * branches: the quiet MD32 (an escaped period still ends a sentence), MD33 (the tail of a comment opened in an earlier unit hides
+ * its marker over a joined sentence), MD34 (a link with no text shows nothing, its title's sentence end included) and MD35 (an
+ * unclosed comment hides both a sentence end and a marker); re-measured at trunk 79dadb2 and again at 6c9d3b3: no unit of
+ * docs/ (77 files), the examples markdown file or the five root documents couples the two vocabularies, so the whole-unit reading
+ * moves no real-tree reading.
+ * SCOPE: the vocabularies (PARITY_WORD the filing's two words, CLASS_WORD, RENDER_WORD, DOC_MARKERS), T3's SENTENCE_END, the accessors of A3, the reading
  * of a render without TSX engine identity as the Python-component render, and the constructed verdict (its shape, and its place at an
  * additive top-level result key) are this cut's reading of the filing; A1-A3 and T1 judge src/*.ts, the filing's "census over src"
  * (qa/, test/ and dist/ are not judged); the census is hermetic (no rf build runs). A3 holds the stricter branch of (a)'s "or every
@@ -197,6 +220,8 @@ const DOC_MARKER = new RegExp(`\\b(?:${DOC_MARKERS.map(marker => marker.split(" 
 const HTML_COMMENT = /<!--[\s\S]*?(?:-->|$)/g;
 /** The tail of a comment opened before the text began: everything up to the first close no opener precedes. */
 const COMMENT_TAIL = /^(?:(?!<!--)[\s\S])*?-->/;
+/** T3's sentence end: a '.', ';', '!' or '?' and the space after it, which the cut drops. */
+const SENTENCE_END = /(?<=[.;!?])\s+/g;
 /** The label that admits a comparison site (A3): a comment attached to its statement saying text-only. */
 const TEXT_ONLY = /\btext[\s_-]*only\b/i;
 /** A3's payload-reference accessors (Pi's digest of the document text, as the adapter and the cache name it). */
@@ -298,12 +323,13 @@ const ROWS: readonly Row[] = [
       "MA1", "MA2", "MA3", "MA4", "MA5", "MA6", "MO1", "MO2", "MO3",
       "MC1", "MC2", "MC3", "MC4", "MC5", "MC6", "MC7", "MC8", "MC9", "MC10", "MC11", "MC12", "MC13", "MC14", "MC15", "MC16",
       "MD1", "MD2", "MD3", "MD4", "MD5", "MD6", "MD7", "MD8", "MD9", "MD10", "MD11", "MD12", "MD13", "MD14", "MD15", "MD16", "MD17", "MD18", "MD19",
+      "MD20", "MD21", "MD22", "MD23", "MD24", "MD25", "MD26", "MD27", "MD28", "MD29", "MD30", "MD31", "MD32", "MD33", "MD34", "MD35",
     ],
   },
   {
     id: "R",
-    label: "the named residuals R1-R12 stay pinned quiet",
-    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12"],
+    label: "the named residuals R1-R15 stay pinned quiet",
+    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15"],
   },
 ];
 
@@ -379,6 +405,7 @@ function constants(): JsonValue {
     gitListing: GIT_LISTING,
     htmlComment: HTML_COMMENT.source,
     commentTail: COMMENT_TAIL.source,
+    sentenceEnd: SENTENCE_END.source,
     textOnly: TEXT_ONLY.source,
     payloadFields: PAYLOAD_FIELDS,
     comparingCalls: COMPARING_CALLS,
@@ -873,18 +900,99 @@ function renderedOf(sentence: string, links: Links): string {
   lexer.tokens.links = links;
   return shownOf(lexer.inlineTokens(sentence));
 }
-/** Every sentence of a text's units coupling PARITY_WORD with RENDER_WORD (read raw, so a coupling inside a comment still counts),
- * with whether its visible text carries a DOC_MARKERS word. The marker is read twice and must hold in both readings (wb-t69k F1):
- * the comment-stripped source (visibleOf, wb-mymm F4) and the rendered text under the text's own link reference definitions
- * (renderedOf). Each reading hides what the other cannot: only the source reading drops the tail of a comment opened in an earlier
- * sentence, and only the rendered one drops link destinations and titles, tags with their attributes, images and resolved reference
- * labels; requiring both admits no sentence the comment-stripped reading refuses. */
+/** Whether a text couples PARITY_WORD with RENDER_WORD, read raw, so a coupling inside a comment still counts. */
+const coupling = (text: string): boolean => PARITY_WORD.test(text) && RENDER_WORD.test(text);
+/** A raw sentence's own two readings of its marker, the landed per-sentence readings: its comment-stripped source (visibleOf,
+ * wb-mymm F4) and its text as it renders when lexed alone under its document's link reference definitions (renderedOf, wb-t69k F1).
+ * Each hides what the other cannot: only the source reading drops the tail of a comment opened in an earlier sentence, and only the
+ * rendered one drops link destinations and titles, tags with their attributes, images and resolved reference labels. */
+const ownMarked = (sentence: string, links: Links): boolean => DOC_MARKER.test(visibleOf(sentence)) && DOC_MARKER.test(renderedOf(sentence, links));
+interface Sentence {
+  readonly start: number;
+  readonly text: string;
+}
+/** A unit's raw sentences: its text cut at every SENTENCE_END, each with the position in the unit it starts at. */
+function sentencesOf(text: string): Sentence[] {
+  const sentences: Sentence[] = [];
+  let start = 0;
+  for (const end of text.matchAll(SENTENCE_END)) {
+    sentences.push({ start, text: text.slice(start, end.index) });
+    start = end.index + end[0].length;
+  }
+  sentences.push({ start, text: text.slice(start) });
+  return sentences;
+}
+/** Marks in `shown` the unit positions the house rendering rule shows when marked's inline lexer reads the WHOLE unit (wb-n8ye F1),
+ * `tokens` starting at position `from`: a tag, its attributes included, and an image, its alt text included, show nothing; a token
+ * carrying inline children (a link, emphasis) shows only them, never a link's destination, title or label; an escape shows the
+ * character it escapes, a code span its content, and any other token itself. */
+function markShown(tokens: readonly Token[], from: number, shown: boolean[]): void {
+  let at = from;
+  for (const token of tokens) {
+    const end = at + token.raw.length;
+    const children: unknown = (token as { tokens?: unknown }).tokens;
+    if (token.type !== "html" && token.type !== "image") {
+      if (Array.isArray(children)) {
+        const inner = (children as Token[]).map(child => child.raw).join("");
+        const offset = inner === "" ? -1 : token.raw.indexOf(inner);
+        if (offset >= 0) markShown(children as Token[], at + offset, shown);
+      } else {
+        const fence = token.type === "codespan" ? (/^`+/.exec(token.raw)?.[0].length ?? 0) : 0;
+        shown.fill(true, at + (token.type === "escape" ? 1 : fence), end - fence);
+      }
+    }
+    at = end;
+  }
+}
+/** The unit positions a comment hides from its source (wb-mymm F4): the tail of one opened before the unit began, then every
+ * comment in the unit. */
+function commentHidden(text: string): boolean[] {
+  const hidden = Array.from({ length: text.length }, () => false);
+  const tail = COMMENT_TAIL.exec(text)?.[0].length ?? 0;
+  hidden.fill(true, 0, tail);
+  for (const comment of text.slice(tail).matchAll(HTML_COMMENT)) hidden.fill(true, tail + comment.index, tail + comment.index + comment[0].length);
+  return hidden;
+}
+/** Every sentence of a text's units that couples, with whether a DOC_MARKERS word shows in it. A sentence is what a reader sees
+ * (wb-n8ye F1): the unit's raw sentences joined across every SENTENCE_END whose mark the whole unit hides - one inside a tag or its
+ * attributes, a link's destination, title or label, an image or a comment ends nothing - so a coupling split there still counts. Its
+ * marker is read over its span of the WHOLE unit, twice: the source with its comments stripped (commentHidden) and the text as it
+ * renders (markShown, marked's inline lexer over the whole unit, so a construct opened in an earlier sentence hides its tail in a
+ * later one); and every raw sentence in it that couples on its own keeps its own two readings (ownMarked), so no sentence the
+ * per-sentence readings refuse is admitted. The sentence is admitted only when every reading carries a marker. */
 function mentionsOf(text: string): Mention[] {
   const links = Lexer.lex(text).links;
-  return unitsOf(text).flatMap(unit =>
-    unit.text.split(/(?<=[.;!?])\s+/).filter(sentence => PARITY_WORD.test(sentence) && RENDER_WORD.test(sentence))
-      .map(sentence => ({ line: unit.line, marked: DOC_MARKER.test(visibleOf(sentence)) && DOC_MARKER.test(renderedOf(sentence, links)) })),
-  );
+  return unitsOf(text).flatMap(unit => {
+    if (!coupling(unit.text)) return [];
+    const lexer = new Lexer();
+    lexer.tokens.links = links;
+    const shown = Array.from({ length: unit.text.length }, () => false);
+    markShown(lexer.inlineTokens(unit.text), 0, shown);
+    const hidden = commentHidden(unit.text);
+    const sentences: Sentence[][] = [];
+    for (const raw of sentencesOf(unit.text)) {
+      const current = sentences.at(-1);
+      const previous = current?.at(-1);
+      const mark = previous === undefined ? -1 : previous.start + previous.text.length - 1;
+      if (current === undefined || (shown[mark] === true && hidden[mark] === false)) sentences.push([raw]);
+      else current.push(raw);
+    }
+    return sentences.flatMap(parts => {
+      const from = parts[0]?.start ?? 0;
+      const last = parts.at(-1);
+      const to = last === undefined ? from : last.start + last.text.length;
+      if (!coupling(unit.text.slice(from, to))) return [];
+      let source = "";
+      let seen = "";
+      for (let at = from; at < to; at++) {
+        if (!hidden[at]) source += unit.text.charAt(at);
+        else if (at === from || !hidden[at - 1]) source += " ";
+        if (shown[at]) seen += unit.text.charAt(at);
+      }
+      const own = parts.filter(part => coupling(part.text)).every(part => ownMarked(part.text, links));
+      return [{ line: unit.line, marked: DOC_MARKER.test(source) && DOC_MARKER.test(decode(seen)) && own }];
+    });
+  });
 }
 
 /** The owner filing: the notes of this bead's row in the tracked bead export. */
@@ -925,7 +1033,7 @@ interface Case {
   readonly texts: readonly string[];
   readonly outcome: readonly string[];
 }
-/** M judges the matchers' pinned inputs, R3-R5 and R8-R12 the residuals' quiet rows. A code case's outcome is its A1 hits, its T1 hits,
+/** M judges the matchers' pinned inputs, R3-R5 and R8-R15 the residuals' quiet rows. A code case's outcome is its A1 hits, its T1 hits,
  * its A3 sites and its A2 comment count; a docs case's is one word per T3 mention. */
 const CASES: readonly Case[] = [
   { pin: "MA1", kind: "code", texts: ["export function isEquivalentRender(): boolean { return false; }"], outcome: ["control.ts: identifier isEquivalentRender"] },
@@ -978,6 +1086,25 @@ const CASES: readonly Case[] = [
   { pin: "MD17", kind: "docs", texts: ["The TSX and Python renders are equivalent <https://example.invalid/never>."], outcome: ["marked"] },
   { pin: "MD18", kind: "docs", texts: ["The TSX and Python renders are equivalent `never`."], outcome: ["marked"] },
   { pin: "MD19", kind: "docs", texts: ["The TSX and Python renders are equivalent [![never](https://example.invalid/badge.png)](https://example.invalid/notes)."], outcome: ["asserted"] },
+  { pin: "MD20", kind: "docs", texts: ['Draft <span title="a. never"> The TSX and Python renders are equivalent.'], outcome: ["asserted"] },
+  { pin: "MD21", kind: "docs", texts: ['Draft [notes](https://example.invalid/notes "a. never") The TSX and Python renders are equivalent.'], outcome: ["asserted"] },
+  { pin: "MD22", kind: "docs", texts: ["Draft ![a. never](https://example.invalid/figure.png) The TSX and Python renders are equivalent."], outcome: ["asserted"] },
+  { pin: "MD23", kind: "docs", texts: ["Draft [notes](<https://example.invalid/a. never>) The TSX and Python renders are equivalent."], outcome: ["asserted"] },
+  { pin: "MD24", kind: "docs", texts: ["Draft [notes][a. never] The TSX and Python renders are equivalent.\n\n[a. never]: https://example.invalid/notes"], outcome: ["asserted"] },
+  { pin: "MD25", kind: "docs", texts: ['Draft <abbr title="a; never">TSX</abbr> and Python renders are equivalent.'], outcome: ["asserted"] },
+  { pin: "MD26", kind: "docs", texts: ['The TSX and Python renders <span title="a. b">are equivalent.'], outcome: ["asserted"] },
+  { pin: "MD27", kind: "docs", texts: ["[Notes. x](https://example.invalid/never) The TSX and Python renders are equivalent."], outcome: ["asserted"] },
+  { pin: "MD28", kind: "docs", texts: ['Draft <span title="a. b"> The TSX and Python renders are equivalent, never text-only.'], outcome: ["marked"] },
+  { pin: "MD29", kind: "docs", texts: ["The Python [renders were compared. They are](https://example.invalid/notes) equivalent."], outcome: [] },
+  { pin: "MD30", kind: "docs", texts: ["The Python renders <!-- a. b --> are equivalent."], outcome: ["asserted"] },
+  {
+    pin: "MD31", kind: "docs", texts: ['The TSX renders are equivalent, never text-only <span title="a. b"> and the Python renders are equivalent.'],
+    outcome: ["asserted"],
+  },
+  { pin: "MD32", kind: "docs", texts: ["The Python renders\\. They are equivalent."], outcome: [] },
+  { pin: "MD33", kind: "docs", texts: ['<!-- draft\n\nnever --> The Python renders <span title="a. b">are equivalent.'], outcome: ["asserted"] },
+  { pin: "MD34", kind: "docs", texts: ['The Python renders [](https://example.invalid "a. never") are equivalent.'], outcome: ["asserted"] },
+  { pin: "MD35", kind: "docs", texts: ["The TSX renders <!-- a. never are equivalent."], outcome: ["asserted"] },
   { pin: "R3", kind: "code", texts: ['// the renders reach parity here\nconst word = "pari" + "ty";\nconst key = "observer" + "_class";'], outcome: ["comments:1"] },
   { pin: "R4", kind: "code", texts: ['const claim = "the TSX and Python renders are identical";\nconst note = "same render, the renders match";'], outcome: [] },
   {
@@ -992,6 +1119,17 @@ const CASES: readonly Case[] = [
   { pin: "R10", kind: "docs", texts: ["The TSX and Python renders are equivalent <span hidden>never</span>."], outcome: ["marked"] },
   { pin: "R11", kind: "docs", texts: ["The TSX and Python renders are equivalent [^never]."], outcome: ["marked"] },
   { pin: "R12", kind: "docs", texts: ['[notes]: https://example.invalid/notes "never"\nThe TSX and Python renders are equivalent.'], outcome: ["marked"] },
+  {
+    pin: "R13", kind: "docs",
+    texts: ["The Python renders &amp; are equivalent.\n\nThe Python renders, i.e. the frames, are equivalent.\n\nThe Python renders `a. b` are equivalent."],
+    outcome: [],
+  },
+  { pin: "R14", kind: "docs", texts: ["The TSX and Python renders are equivalent.Never text-only."], outcome: ["marked"] },
+  {
+    pin: "R15", kind: "docs",
+    texts: ['> The Python renders are\n> equivalent.\n\n> Draft <span title="a\n> never"> The TSX and Python renders are equivalent.'],
+    outcome: ["marked"],
+  },
 ];
 function outcomeOf(kind: CaseKind, texts: readonly string[]): string[] {
   const text = texts[0] ?? "";
@@ -1275,7 +1413,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 
 describe("wb-fb2z.1 render-parity census (TSX-COMPONENT-ASSEMBLY-R1, absent-today leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "A:3", "B:4", "C:4", "F:1", "M:44", "R:12"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:4", "A:3", "B:4", "C:4", "F:1", "M:60", "R:15"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
