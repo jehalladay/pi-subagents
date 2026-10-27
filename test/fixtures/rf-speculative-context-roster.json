@@ -1,0 +1,840 @@
+{
+ "bead": "wb-grmo.1",
+ "basis": "MEASURED by the cutting seat (ws-02, g10-work-s110, 2026-10-26), every read read-only and none re-read by the census. RFCLI (/workplace/.../PrimaryInstallation/src/ReactiveFiberCLI): the first commit whose context.render.schema.json defines result.speculative is 8bd35ecd4651 ('[RF-WM-R3-e] --scenario served on rf context render for cli', 2026-10-24, __version__.py VERSION 0.1.844); its $defs/result states the nine scenarioResultKeys 'present exactly on a `rf context render --scenario PATH` render ... and absent on a legacy or --view render', the same nine at origin/main c83fbd59ec1c (VERSION 0.1.845) and in the installed rf 0.1.845 schema (sha256 in measured). The marker keys and labels are application/scenario_view.py WHATIF_RESULT_KEY 'speculative', NOTICE_BLOCK_KEY 'rf.whatif_notice' and WhatIfNotice.text's opening 'WHAT-IF VIEW of scenario ', and domain/scenario.py SCENARIO_ID_MARKER_KEY 'rf.scenario_id' and EPISTEMIC_STATUS_MARKER_KEY 'rf.epistemic_status' (block and notice metadata); rendered_speculative_view is the design name of 02-architecture.md:9@82bd879eee52, spelled by no release; scenario_id and scenario are the scenario identity keys, which no 0.1.784 or 0.1.845 schema property spells outside a scenario member. The pin at the cut's base dc72a6d: RFCLI 403389a94 ('chore: bump version to 0.1.784') holds 28 result properties, none of the nine, and no marker or label string; recorded as provenance only (no case asserts it), so the queued re-pin wb-jwc.4 (0.1.845) moves nothing in this census. scenarioSample and scenarioBlock are CAPTURED: the nine members and the one block of a real `rf --workspace W context render --scenario scenario.json --audience cli --no-input --json` at the installed rf 0.1.845 (rc 0, ok true), in a disposable workspace W=/tmp/ws02-s110-grmo1-rfws provisioned by the rf-preview recipe of docs/workbench/receipts/wb-c7ku.md (rf init --backend jsonl --no-input; rf component create --kind declarative demo.banner; rf component add of its manifest; rf component activate demo.banner; rf graph validate; all rc 0), over one committed render of that workspace, with a reactive-fiber.scenario/v1 document whose one action is {source_id task, type set_source, value <text>}; the nine members carry no workspace path, id or timestamp. The same capture holds its notice in result.notice only (result.blocks is the one component block) and output.text opens with the notice line. Through the helper's diffAgainstRoster against this SCG-R11 roster the capture gives the 12 speculative entries B4 pins (the nine members, the two block markers, the output.text label), while a real --no-commit render of Pi's own legacy argv in the same workspace gives 0 speculative entries (its only failures are the pre-existing 0.1.784 to 0.1.845 drift keys judge_context, judge_context_layers and replay_of_operation_id). The members also pass the seat's structural check against the installed schema (required, additionalProperties false, enum, const, digest pattern; not a schema engine).",
+ "measured": {
+  "pinAtCutRelease": "0.1.784",
+  "pinAtCutCommit": "403389a947583fea6eab9b5ef215939e3b831526",
+  "firstServingRelease": "0.1.844",
+  "firstServingCommit": "8bd35ecd4651f2ae52c2a4df6d0452fefd456e4e",
+  "installedRelease": "0.1.845",
+  "installedSchemaSha256": "abf7f50b8bf6b6b8ccab20fc5803b84a2b64397d19e3f1be1c11d99cb3781ac7"
+ },
+ "citations": [
+  "docs/programs/predictive-world-model-context-2026-10-18/01-semantics.md:9@82bd879eee52",
+  "docs/programs/predictive-world-model-context-2026-10-18/02-architecture.md:3@82bd879eee52",
+  "docs/programs/predictive-world-model-context-2026-10-18/02-architecture.md:9@82bd879eee52",
+  "docs/programs/predictive-world-model-context-2026-10-18/README.md:2@82bd879eee52",
+  "src/reactive_fiber_cli/schemas/cli/context.render.schema.json $defs/result@8bd35ecd4651",
+  "src/reactive_fiber_cli/application/scenario_view.py NOTICE_BLOCK_KEY, WhatIfNotice.text@8bd35ecd4651",
+  "src/reactive_fiber_cli/domain/scenario.py SCENARIO_ID_MARKER_KEY, EPISTEMIC_STATUS_MARKER_KEY@8bd35ecd4651"
+ ],
+ "scenarioResultKeys": [
+  "speculative",
+  "notice",
+  "labels",
+  "exclusion_stages",
+  "counts_by_stage",
+  "suppressions",
+  "lens_snapshots",
+  "rendered_output",
+  "effects_denied"
+ ],
+ "markerKeys": [
+  "rendered_speculative_view",
+  "rf.scenario_id",
+  "rf.epistemic_status",
+  "scenario_id",
+  "scenario"
+ ],
+ "labelValues": [
+  "rf.whatif_notice"
+ ],
+ "labelTextPrefix": "WHAT-IF VIEW of scenario ",
+ "scenarioSample": {
+  "speculative": {
+   "scenario_id": "sha256:10c3e84cedad13e9d5299ad7d8c10a96dc3e9a210fc0ad4500d8376f060e49dc",
+   "base_view": "sha256:67021cf436bc952465f70e1d37e3e784c03c9532a2c7b557baf816591aa88636",
+   "certification": {
+    "status": "certified",
+    "rules": [
+     {
+      "status": "certified",
+      "causes": [],
+      "node_keys": [],
+      "source_ids": []
+     },
+     {
+      "status": "certified",
+      "causes": [],
+      "node_keys": [],
+      "source_ids": []
+     },
+     {
+      "status": "certified",
+      "causes": [],
+      "node_keys": [],
+      "source_ids": []
+     },
+     {
+      "status": "certified",
+      "causes": [],
+      "node_keys": [],
+      "source_ids": []
+     }
+    ]
+   },
+   "coherence": "coherent",
+   "ambiguity": [],
+   "stale_nodes": [
+    "demo.banner:banner::placeholder"
+   ],
+   "base_view_current": true,
+   "reuse": {
+    "memo": "miss",
+    "key_digest": "sha256:1197ed534bb2d7677ad5fd41b36be591a00b378f365a116bdc5f2a87e5e0f6c2"
+   },
+   "blocks": [
+    {
+     "candidate_key": "demo.banner:banner::placeholder",
+     "epistemic_status": "predicted_distribution",
+     "necessity_outcome": "include",
+     "budget_outcome": "kept",
+     "exclusion_stage": null,
+     "reason": "always_floor",
+     "source_refs": [
+      "sha256:048a019c02ebd3be007b27e70d35c80083574d5769ee0ae32498c4d4b279a2b0"
+     ],
+     "provenance_refs": [
+      "base_render:rfr_i4ni2gergj4yenpyl6tz2v5ary",
+      "intervention:task",
+      "kernel:deterministic",
+      "law:demo.banner@sha256:d36135ac2c2435285050ea9f8804d322fc7d5624c7ca006e4f6b27acf63b7a18",
+      "provenance:replay_substituted"
+     ]
+    }
+   ],
+   "base_view_compared": [
+    "graph_revision_id"
+   ]
+  },
+  "notice": {
+   "kind": "notice",
+   "key": "rf.whatif_notice",
+   "host_written": true,
+   "content": "WHAT-IF VIEW of scenario sha256:10c3e84cedad13e9d5299ad7d8c10a96dc3e9a210fc0ad4500d8376f060e49dc: predictor versions none; validity scope pinned_base; 1 predicted input: task; memo miss (sha256:1197ed534bb2d7677ad5fd41b36be591a00b378f365a116bdc5f2a87e5e0f6c2). Predictions are not observations (RF-WM-001): a block marked predicted_distribution follows from the intervention and verifies nothing; a block marked observation the intervention does not reach.",
+   "metadata": {
+    "rf.scenario_id": "sha256:10c3e84cedad13e9d5299ad7d8c10a96dc3e9a210fc0ad4500d8376f060e49dc",
+    "rf.epistemic_status": "observation"
+   }
+  },
+  "labels": {
+   "demo.banner:banner::placeholder": "predicted_distribution"
+  },
+  "exclusion_stages": {
+   "demo.banner:banner::placeholder": "included"
+  },
+  "counts_by_stage": {
+   "included": 1,
+   "host_visibility": 0,
+   "host_necessity": 0,
+   "sdk_assembly": 0
+  },
+  "suppressions": [],
+  "lens_snapshots": [
+   {
+    "component_render_id": "judge-context",
+    "key": "task.tags",
+    "layer": "defaults",
+    "strategy": "eager",
+    "value_digest": "sha256:4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "replay_mode": "captured"
+   },
+   {
+    "component_render_id": "judge-context",
+    "key": "agent.role",
+    "layer": "defaults",
+    "strategy": "eager",
+    "value_digest": "sha256:74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+    "replay_mode": "captured"
+   },
+   {
+    "component_render_id": "judge-context",
+    "key": "context.output_reserve",
+    "layer": "defaults",
+    "strategy": "eager",
+    "value_digest": "sha256:864a936a35324151e1c79c44a2e903ff2497f52fa892282d340585f493c637f0",
+    "replay_mode": "captured"
+   },
+   {
+    "component_render_id": "judge-context",
+    "key": "context.safety_margin",
+    "layer": "defaults",
+    "strategy": "eager",
+    "value_digest": "sha256:bfa0ec8bdf2946547879d50a68687ea32e2fa628db187357415858b633d194d9",
+    "replay_mode": "captured"
+   },
+   {
+    "component_render_id": "judge-context",
+    "key": "context.reconciliation_timeout_ms",
+    "layer": "defaults",
+    "strategy": "eager",
+    "value_digest": "sha256:40510175845988f13f6162ed8526f0b09f73384467fa855e1e79b44a56562a58",
+    "replay_mode": "captured"
+   },
+   {
+    "component_render_id": "judge-context",
+    "key": "context.max_budget_reconciliations",
+    "layer": "defaults",
+    "strategy": "eager",
+    "value_digest": "sha256:4e07408562bedb8b60ce05c1decfe3ad16b72230967de01f640b7e4729b49fce",
+    "replay_mode": "captured"
+   }
+  ],
+  "rendered_output": {
+   "text": "demo.banner has no content yet.\n",
+   "size_bytes": 32,
+   "digest": "sha256:4c474491a61ca90198bc7276f7f5291ed77ea0b6704fe534ccbbe022bfdd1ae5",
+   "path": null
+  },
+  "effects_denied": {
+   "count": 0,
+   "effect_ids": []
+  }
+ },
+ "scenarioBlock": {
+  "final_index": 0,
+  "candidate_key": "demo.banner:banner::placeholder",
+  "component_id": "demo.banner",
+  "token_cost": {
+   "kind": "estimated",
+   "tokens": 8
+  },
+  "token_cost_kind": "estimated",
+  "span": {
+   "start": 0,
+   "end": 31
+  },
+  "content": "demo.banner has no content yet.",
+  "metadata": {
+   "rf.scenario_id": "sha256:10c3e84cedad13e9d5299ad7d8c10a96dc3e9a210fc0ad4500d8376f060e49dc",
+   "rf.epistemic_status": "predicted_distribution"
+  }
+ },
+ "docsSpeculativeSentences": [],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(trigger, as it reaches Pi) Pi's preview arms never request a speculative render: the contractSource carrier states the context.render --no-commit contract, names no --scenario and pins the SCG-R11 roster's release, beside RFCLI's measured first --scenario release, and no src module literal spells the scenario flag or a speculative marker",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "contract": "reactive-fiber.cli/v1 context.render --no-commit",
+      "namesScenario": false,
+      "sameRelease": true,
+      "firstServing": "0.1.844"
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "floorMet": true,
+      "anchorRead": true,
+      "walkAgreesWithGit": true,
+      "hits": []
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "the SCG-R11 roster diff's freeze-and-flip tripwire: a result naming rendered_speculative_view, a scenario key or a speculative label fails diffAgainstRoster under the captured, a re-captured and the constructed roster alike, the clean fixture staying quiet and both tiers routing through it",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "resultKeys": [
+       "speculative",
+       "notice",
+       "labels",
+       "exclusion_stages",
+       "counts_by_stage",
+       "suppressions",
+       "lens_snapshots",
+       "rendered_output",
+       "effects_denied"
+      ],
+      "markerKeys": [
+       "rendered_speculative_view",
+       "rf.scenario_id",
+       "rf.epistemic_status",
+       "scenario_id",
+       "scenario"
+      ],
+      "labelValues": [
+       "rf.whatif_notice"
+      ],
+      "textPrefix": "WHAT-IF VIEW of scenario "
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "captured": {
+       "failures": [],
+       "extraResultKeys": []
+      },
+      "constructed": {
+       "failures": [],
+       "extraResultKeys": []
+      }
+     }
+    },
+    {
+     "id": "B3",
+     "witness": [
+      {
+       "key": "speculative",
+       "captured": [
+        "unexpected result.speculative",
+        "speculative result.speculative"
+       ],
+       "recaptured": [
+        "speculative result.speculative"
+       ],
+       "constructed": [
+        "speculative result.speculative"
+       ]
+      },
+      {
+       "key": "notice",
+       "captured": [
+        "unexpected result.notice",
+        "speculative result.notice"
+       ],
+       "recaptured": [
+        "speculative result.notice"
+       ],
+       "constructed": [
+        "speculative result.notice"
+       ]
+      },
+      {
+       "key": "labels",
+       "captured": [
+        "unexpected result.labels",
+        "speculative result.labels"
+       ],
+       "recaptured": [
+        "speculative result.labels"
+       ],
+       "constructed": [
+        "speculative result.labels"
+       ]
+      },
+      {
+       "key": "exclusion_stages",
+       "captured": [
+        "unexpected result.exclusion_stages",
+        "speculative result.exclusion_stages"
+       ],
+       "recaptured": [
+        "speculative result.exclusion_stages"
+       ],
+       "constructed": [
+        "speculative result.exclusion_stages"
+       ]
+      },
+      {
+       "key": "counts_by_stage",
+       "captured": [
+        "unexpected result.counts_by_stage",
+        "speculative result.counts_by_stage"
+       ],
+       "recaptured": [
+        "speculative result.counts_by_stage"
+       ],
+       "constructed": [
+        "speculative result.counts_by_stage"
+       ]
+      },
+      {
+       "key": "suppressions",
+       "captured": [
+        "unexpected result.suppressions",
+        "speculative result.suppressions"
+       ],
+       "recaptured": [
+        "speculative result.suppressions"
+       ],
+       "constructed": [
+        "speculative result.suppressions"
+       ]
+      },
+      {
+       "key": "lens_snapshots",
+       "captured": [
+        "unexpected result.lens_snapshots",
+        "speculative result.lens_snapshots"
+       ],
+       "recaptured": [
+        "speculative result.lens_snapshots"
+       ],
+       "constructed": [
+        "speculative result.lens_snapshots"
+       ]
+      },
+      {
+       "key": "rendered_output",
+       "captured": [
+        "unexpected result.rendered_output",
+        "speculative result.rendered_output"
+       ],
+       "recaptured": [
+        "speculative result.rendered_output"
+       ],
+       "constructed": [
+        "speculative result.rendered_output"
+       ]
+      },
+      {
+       "key": "effects_denied",
+       "captured": [
+        "unexpected result.effects_denied",
+        "speculative result.effects_denied"
+       ],
+       "recaptured": [
+        "speculative result.effects_denied"
+       ],
+       "constructed": [
+        "speculative result.effects_denied"
+       ]
+      }
+     ]
+    },
+    {
+     "id": "B4",
+     "witness": {
+      "failures": [
+       "unexpected result.counts_by_stage",
+       "unexpected result.effects_denied",
+       "unexpected result.exclusion_stages",
+       "unexpected result.labels",
+       "unexpected result.lens_snapshots",
+       "unexpected result.notice",
+       "unexpected result.rendered_output",
+       "unexpected result.speculative",
+       "unexpected result.suppressions",
+       "speculative label result.output.text",
+       "speculative result.blocks[0].metadata[\"rf.epistemic_status\"]",
+       "speculative result.blocks[0].metadata[\"rf.scenario_id\"]",
+       "speculative result.counts_by_stage",
+       "speculative result.effects_denied",
+       "speculative result.exclusion_stages",
+       "speculative result.labels",
+       "speculative result.lens_snapshots",
+       "speculative result.notice",
+       "speculative result.rendered_output",
+       "speculative result.speculative",
+       "speculative result.suppressions"
+      ],
+      "extraResultKeys": [
+       "counts_by_stage",
+       "effects_denied",
+       "exclusion_stages",
+       "labels",
+       "lens_snapshots",
+       "notice",
+       "rendered_output",
+       "speculative",
+       "suppressions"
+      ]
+     }
+    },
+    {
+     "id": "B5",
+     "witness": {
+      "designName": [
+       "speculative result.output.rendered_speculative_view"
+      ],
+      "deep": [
+       "speculative result.plan.operations[0].step.rendered_speculative_view"
+      ],
+      "blockMarkers": [
+       "speculative result.blocks[0].metadata[\"rf.epistemic_status\"]",
+       "speculative result.blocks[0].metadata[\"rf.scenario_id\"]"
+      ],
+      "scenarioKeys": [
+       "speculative result.components[0].scenario",
+       "speculative result.provenance.scenario_id"
+      ]
+     }
+    },
+    {
+     "id": "B6",
+     "witness": {
+      "noticeKey": [
+       "speculative label result.blocks[0].key"
+      ],
+      "labelElsewhere": [
+       "speculative label result.effects[0]"
+      ],
+      "noticeLine": [
+       "speculative label result.output.text"
+      ]
+     }
+    },
+    {
+     "id": "B7",
+     "witness": {
+      "live": {
+       "file": "test/workbench-native-rf-preview.test.ts",
+       "calls": true,
+       "holdsFailuresEmpty": true,
+       "tierSelects": true
+      },
+      "fixture": {
+       "file": "test/workbench-rf-result-fixture.test.ts",
+       "calls": true
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "docs census: no docs/workbench sentence presents what-if or speculative RF context as served",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "floorMet": true,
+      "sentenceFloorMet": true,
+      "anchorRead": true,
+      "servedSentences": true,
+      "walkAgreesWithGit": true,
+      "hits": []
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "floorMet": true,
+      "walkAgreesWithGit": true,
+      "allowed": [],
+      "hits": []
+     }
+    }
+   ]
+  },
+  {
+   "id": "M",
+   "label": "the matchers rows A to C read: M1-M4 the spellings each must catch and pass, Q1-Q8 the pinned quiet rows of the named residuals",
+   "pins": [
+    {
+     "id": "M1",
+     "witness": [
+      {
+       "text": "Pi serves speculative RF context.",
+       "hit": true
+      },
+      {
+       "text": "The what-if view is labeled.",
+       "hit": true
+      },
+      {
+       "text": "A WhatIf view opens the document.",
+       "hit": true
+      },
+      {
+       "text": "The WHAT-IF VIEW of scenario s opens the text.",
+       "hit": true
+      },
+      {
+       "text": "A what_if render.",
+       "hit": true
+      },
+      {
+       "text": "A hypothetical branch is read-only.",
+       "hit": true
+      },
+      {
+       "text": "A counterfactual render.",
+       "hit": true
+      },
+      {
+       "text": "rf context render --scenario plan.json",
+       "hit": true
+      },
+      {
+       "text": "The scenario overlay stays read-only.",
+       "hit": true
+      },
+      {
+       "text": "Speculatively rendered blocks.",
+       "hit": true
+      },
+      {
+       "text": "The uncertain-park scenario is not read.",
+       "hit": false
+      },
+      {
+       "text": "GraphPolicyCLI predictions and policy distributions.",
+       "hit": false
+      },
+      {
+       "text": "Component rendering, overlays, themes.",
+       "hit": false
+      },
+      {
+       "text": "What is served today?",
+       "hit": false
+      },
+      {
+       "text": "Whatever the reader admits.",
+       "hit": false
+      },
+      {
+       "text": "The scenarios list.",
+       "hit": false
+      }
+     ]
+    },
+    {
+     "id": "M2",
+     "witness": [
+      {
+       "text": "Pi serves it.",
+       "hit": true
+      },
+      {
+       "text": "It is served.",
+       "hit": true
+      },
+      {
+       "text": "Serving it.",
+       "hit": true
+      },
+      {
+       "text": "The reader admits it.",
+       "hit": true
+      },
+      {
+       "text": "It was admitted.",
+       "hit": true
+      },
+      {
+       "text": "It is available.",
+       "hit": true
+      },
+      {
+       "text": "It is supported.",
+       "hit": true
+      },
+      {
+       "text": "It is enabled.",
+       "hit": true
+      },
+      {
+       "text": "It exposes it.",
+       "hit": true
+      },
+      {
+       "text": "It offers it.",
+       "hit": true
+      },
+      {
+       "text": "It provides it.",
+       "hit": true
+      },
+      {
+       "text": "It delivers it.",
+       "hit": true
+      },
+      {
+       "text": "It is reserved.",
+       "hit": false
+      },
+      {
+       "text": "It was observed.",
+       "hit": false
+      },
+      {
+       "text": "It is unavailable.",
+       "hit": false
+      },
+      {
+       "text": "It is preserved.",
+       "hit": false
+      },
+      {
+       "text": "rf renders it.",
+       "hit": false
+      },
+      {
+       "text": "It returns validation.",
+       "hit": false
+      }
+     ]
+    },
+    {
+     "id": "M3",
+     "witness": {
+      "topLevelMember": [
+       "unexpected result.speculative",
+       "speculative result.speculative"
+      ],
+      "nullMember": [
+       "unexpected result.notice",
+       "speculative result.notice"
+      ],
+      "topLevelMarkerKey": [
+       "unexpected result.rf.scenario_id",
+       "speculative result[\"rf.scenario_id\"]"
+      ],
+      "deepMarkerKey": [
+       "speculative result.components[0].a[0].b[\"rf.epistemic_status\"]"
+      ]
+     }
+    },
+    {
+     "id": "M4",
+     "witness": {
+      "exactValueDeep": [
+       "speculative label result.components[0].note"
+      ],
+      "noticeLineOpens": [
+       "speculative label result.output.text"
+      ],
+      "nearValue": [],
+      "nearPrefix": []
+     }
+    },
+    {
+     "id": "Q1",
+     "witness": {
+      "topLevel": [
+       "unexpected result.epistemic_status"
+      ],
+      "nested": [],
+      "wordValue": []
+     }
+    },
+    {
+     "id": "Q2",
+     "witness": {
+      "reworded": {
+       "c1": false,
+       "c2": false
+      },
+      "spaced": {
+       "c1": false,
+       "c2": false
+      }
+     }
+    },
+    {
+     "id": "Q3",
+     "witness": {
+      "sentences": 2,
+      "c1": false,
+      "c2": true
+     }
+    },
+    {
+     "id": "Q4",
+     "witness": {
+      "literal": 1,
+      "exactWord": 1,
+      "split": 0,
+      "template": 0
+     }
+    },
+    {
+     "id": "Q5",
+     "witness": {
+      "wordInText": [],
+      "noticeNotOpening": [],
+      "blockContent": []
+     }
+    },
+    {
+     "id": "Q6",
+     "witness": {
+      "respelledTop": [
+       "unexpected result.Speculative"
+      ],
+      "respelledMarker": [],
+      "nestedMember": []
+     }
+    },
+    {
+     "id": "Q7",
+     "witness": {
+      "rosterSpells": true,
+      "scanned": [
+       "src",
+       "docs/workbench"
+      ],
+      "outside": true
+     }
+    },
+    {
+     "id": "Q8",
+     "witness": {
+      "lookAlike": {
+       "c1": false,
+       "c2": false
+      },
+      "fullwidth": {
+       "c1": true,
+       "c2": true
+      }
+     }
+    }
+   ]
+  }
+ ],
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+  "A1",
+  "A2",
+  "B1",
+  "B2",
+  "B3",
+  "B4",
+  "B5",
+  "B6",
+  "B7",
+  "C1",
+  "C2",
+  "M1",
+  "M2",
+  "M3",
+  "M4",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "Q7",
+  "Q8",
+  "registration: every test of this file is registered once, in roster order, in run mode, not inverted, and ran; every pin reached its end with its pinned assertion count"
+ ],
+ "reached": [
+  "A1:3",
+  "A2:5",
+  "B1:6",
+  "B2:3",
+  "B3:3",
+  "B4:3",
+  "B5:3",
+  "B6:3",
+  "B7:3",
+  "C1:5",
+  "C2:6",
+  "M1:3",
+  "M2:3",
+  "M3:3",
+  "M4:3",
+  "Q1:3",
+  "Q2:3",
+  "Q3:3",
+  "Q4:3",
+  "Q5:3",
+  "Q6:3",
+  "Q7:3",
+  "Q8:3"
+ ]
+}
