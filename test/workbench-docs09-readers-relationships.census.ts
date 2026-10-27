@@ -1189,7 +1189,10 @@ describe("wb-752.15 record honesty: each unpinned half names who holds its pin f
  * - FROZEN_ROWS: the whole table's identity as a literal, never derived from ROWS - each half's clause, then each pin as
  *   "row/half | file | describe path | title" (an it.each pin adds its table-row floor) - with RA6's lines equal to
  *   FROZEN_RA6 and each half's pin lines counted as FROZEN_HALF_SHAPE counts them, so a shortened clause, a swapped pin
- *   or a dropped pin is red against the literal (CT1, CT2, CT3, G4).
+ *   or a dropped pin is red against the literal (CT1, CT2, CT3, G4). Re-measured by wb-vm71 cut #2 from a throwaway dump
+ *   of ROWS at trunk 00f821f, once wb-4ap.17's RA4 split (RA4/b "build revision" pinned to its four R17 cases, RA4/c
+ *   "gate axes" unpinned) and wb-grmo.2's RA6/f (its three census cases) had landed: 97 lines, 34 clauses and 63 pins,
+ *   with RA4's lines equal to FROZEN_RA4. A cut that changes a row re-measures this literal in the same commit.
  * - TABLE ANCHOR: the LIVE docs/09 sections, read from the document and never from this file's docs mirrors, are tiled
  *   by the table's clauses: each clause occurs in exactly one rendered sentence of its section, and once every clause is
  *   cut out each sentence keeps only punctuation and one joining "and" (CONNECTIVES), or is one of UNBOUND_LEADS. A
@@ -1223,7 +1226,12 @@ const FROZEN_ROWS: readonly string[] = [
   "RA4/a | clause | native operation/verdict/artifact evidence",
   "RA4/a | test/workbench-forge-observer.test.ts |  | F1: a historical last_result is not a verdict: unknown tone and partial coverage, never a success tone",
   "RA4/a | test/workbench-projection-invalidation.test.ts |  | carries forge-operation evidence refs onto ObservedNode and keeps the 32-reference cap",
-  "RA4/b | clause | build revision and gate axes",
+  "RA4/b | clause | build revision",
+  "RA4/b | test/workbench-forge-operation-observer.test.ts | wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis | wb-4ap.17 (R17 a): the measured clean reply's subjectBasis echoes data.gated_commit verbatim, and data.gated_tree is read separately as the pin's second half",
+  "RA4/b | test/workbench-forge-operation-observer.test.ts | wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis | wb-4ap.17 (R17 b): statusText says current only when the pin equals the supplied observed head, and stale when the head moved on, its tree differs or the run gated a dirty tree",
+  "RA4/b | test/workbench-forge-operation-observer.test.ts | wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis | wb-4ap.17 (R17 c): the measured null pin (a directory in no repository) yields no subjectBasis, one diagnostic naming the missing pin, basis indeterminate and never a success tone",
+  "RA4/b | test/workbench-forge-operation-observer.test.ts | wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis | wb-4ap.17 (R17 i): through the live observer the host's head seam is read when the reply settles - equal settles current with the pinned subjectBasis, a later head stale, no head indeterminate",
+  "RA4/c | clause | gate axes",
   "RA5/a | clause | query coverage/bounds/query basis",
   "RA5/a | test/workbench-hyperunix-observer.test.ts |  | H1: the measured incomplete read projects exactly one partial, unknown-toned query snapshot that refreshes a projection",
   "RA5/a | test/workbench-hyperunix-observer.test.ts |  | H2: a 0-row incomplete answer that does not license absence stays partial and never reads as known-empty",
@@ -1242,6 +1250,10 @@ const FROZEN_ROWS: readonly string[] = [
   "RA6/d | test/workbench-reactivefiber-observer.test.ts | observation rows from result.observations (wb-973.10 SCG-R10) > observation freshness, replay and degradation (wb-973.9 SCG-R9) | SCG-R9 provider: the full-shape envelope with fresh and not-fresh rows passes unchanged and projects partial end to end",
   "RA6/e | clause | the projection's freshness is the host's reading witness, never a currentness claim about the rows",
   "RA6/e | test/workbench-reactivefiber-observer.test.ts | observation rows from result.observations (wb-973.10 SCG-R10) > observation freshness, replay and degradation (wb-973.9 SCG-R9) | SCG-R9: after ObservationProjection.refresh every not-fresh row leaves the node partial, and freshness stays projection-owned",
+  "RA6/f | clause | An RF prediction renders as unverified context, and Pi claims no epistemic status for a render",
+  "RA6/f | test/workbench-rf-epistemic-status-census.test.ts | wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2) > T a default-gate test reads the SCG-R11 fixture roster and fails when a captured envelope names epistemic_status or a scenario key before those cases exist (freeze-and-flip) | T2 fails when a captured envelope names epistemic_status (ARMED): no key of the roster's four lists spells an epistemic form, and the roster diff reds a result-level one",
+  "RA6/f | test/workbench-rf-epistemic-status-census.test.ts | wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2) > Z until then Pi claims nothing | Z1 Pi claims nothing in code: no src module's identifiers, strings, templates or regexes spell an epistemic, scenario, uncertified or speculative word",
+  "RA6/f | test/workbench-rf-epistemic-status-census.test.ts | wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2) > Z until then Pi claims nothing | Z2 Pi composes no epistemic claim: an envelope marked with each RF-WM-001 word, the shipped block markers or the scenario form projects and evidences byte for byte as its unmarked twin",
   "RA7/a | clause | invocation outcome, service spans if instrumented",
   "RA7/b | clause | arbitrary plain TypeScript calls are not magically discoverable",
   "RA8/a | clause | supported work readiness and linkage",
