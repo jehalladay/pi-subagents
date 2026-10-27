@@ -40,6 +40,14 @@
  *   leaf's own --redact and --detail LEVEL, --format VALUE in both spellings, --json-metadata, the abbreviations --js and
  *   --works, and -h/--help did not (exit 2 usage refusals; exit 0 command help). The roster keeps each reply's argv, exit,
  *   command and first diagnostic code and message, the scratch root rewritten to /fixture/rf-workspace.
+ * MEASURED BY THE SECOND FOLLOW-UP SEAT (wb-bf65, 2026-10-25):
+ * - the installed rf 0.1.845 (commit 2a3b55ec661a, a descendant of 6a251bf73af5), in a scratch jsonl workspace outside every
+ *   repository: 14 `rf context ... show <an unknown render id>` argvs with the end-of-options marker "--" between "context"
+ *   and "show". Nine ran as context.show (exit 3 RF_STORAGE_NOT_FOUND): "--" alone; after --json, -v, --actor ID,
+ *   --color=never and --workspace W spaced or after "="; and with --redact or --detail full after the render. Five were
+ *   refused at exit 2 RF_USAGE_UNKNOWN_COMMAND naming the word after "--": --workspace, --json, -v, a second "--" and the
+ *   leaf's own --redact. The roster keeps each reply's argv, exit, command and first diagnostic code and message, the
+ *   scratch root rewritten to /fixture/rf-workspace.
  *
  * READINGS
  * - TRIGGER (row T): the obligation binds once Pi reads a committed render's instance blocks. Today Pi's one rf reader
@@ -48,18 +56,29 @@
  * - PROBE RULE (a): the selector is served only when the reply to `context show RENDER --instance ID --json` is ok, names
  *   command context.show and states result.selection with an integer matched; any other reply reads not-served, with its
  *   reason (wrong-command, refused:<first diagnostic code>, no-selection).
- * - ARGV RULE (a): an argv array names context show when "context" is followed by "show" after any run of rf's globals
- *   between them - a global flag (-v repeated too), a value global and its value, a --global=VALUE spelling, or an element
- *   the module does not resolve (row M's MG1 holds that run to the measured replies). An element reads as written: a string
- *   literal, a same-module const string binding, or the members of a spread array literal or same-module const array; a const
- *   array spread into another array is judged inside it, never alone. After "show" the argv admits exactly one RENDER
+ * - ARGV RULE (a): an argv - an array literal, or the argument list of any call or new expression (a variadic launch helper,
+ *   Array.of) - names context show when "context" is followed by "show" after any run of rf's globals between them - a
+ *   global flag (-v repeated too), a value global and its value, a --global=VALUE spelling, or an element the module does
+ *   not resolve (row M's MG1 holds that run to the measured replies) - and the run may end at the end-of-options marker "--",
+ *   which "show" must then follow at once (MG2 holds that to the measured replies: a second "--" or a global after it is
+ *   refused). An element reads as written: a string literal, a same-module const string binding, or the members of a spread
+ *   array literal or same-module const array; a const array spread into another array is judged inside it, never alone. A
+ *   lookup element reads both as unresolved and as written when the module binds it once as written: a member of a const
+ *   object literal (by name, string key or same-module const string key, nested too), an enum member, a class static member,
+ *   or an element of a const array at a literal index, and a spread of a lookup bound to an array literal spreads its
+ *   members. An argv names context show when either reading does, and A3 holds the findings of both, so resolving a lookup
+ *   never drops a reading the unresolved element makes. After "show" the argv admits exactly one RENDER
  *   positional (a literal not starting with "-", or any non-literal element), --json, --redact and --detail LEVEL (LEVEL one
  *   of the measured levels compact and full, or a non-literal); --instance and its ID only while the probe reads served.
  *   Findings: instance-unserved, outside-admitted:<flag>, level:<value>, level:missing, render-count:<n>. The globals before
  *   "context" (Pi's --workspace ROOT) and between "context" and "show" are outside the leaf's set.
  * - SELECTION READ (b): B2 reads selection.matched in one access chain (a property access or a string-keyed element access,
- *   optional or not, through parentheses, non-null and type assertions; a same-module const string key resolves), on a
- *   receiver named selection, and in a destructuring pattern that binds matched under a selection key or from a selection.
+ *   optional or not, through parentheses, non-null and type assertions; a same-module const string key or a resolved lookup
+ *   key resolves), on a receiver named selection, in Reflect.get(<a selection>, "matched"), and in a destructuring pattern -
+ *   a declaration, an assignment, or a parameter of a function the module binds once by name and calls with a selection in
+ *   that position - that binds matched under a selection key or from a selection. A selection receiver is an access keyed
+ *   selection, a binding named selection, Reflect.get keyed selection, or a fallback one of whose operands is a selection
+ *   receiver: either operand of ??, || or &&, either branch of a conditional, the last operand of a comma expression.
  * - PROJECTION RULE (b)(c): a reply projects rows only when it is ok, exits 0, names context.show, states
  *   result.selection.matched 1 and every result.blocks row's component_instance_id equals the requested id; the rows are the
  *   producer's, verbatim. A failure reply at exit 3 whose first diagnostic code ends _NOT_FOUND is typed not-found; any other
@@ -72,15 +91,19 @@
  * from every literal of this file at once still reds against it. LANDED RECORD: the same export row carries the landed cut's
  * delivery note, which enumerates its 43 pins (T1-T5, A1-A4, B1-B3, C1-C3, F1, MP1-MP3, MA1-MA7, MJ1-MJ4, MS1-MS7, R1-R6), its
  * frozen shape and its six residuals by name; each must still be judged here in its row, so a landed member removed from this
- * file and the roster together still reds. FOLLOW-UP: the wb-7uzc row's title names the gate probes this cut cures (G13,
- * G13b, G38, P41); CURES binds each to a judged pin. The src walk is held to git's listing of src (tracked files and the
- * untracked ones git does not ignore), and the record case walks this file's vitest task tree and holds every pin's end to
- * the assertion count the roster pins (REACHED), so a case that returns its witness without doing its work reds. FROZEN SHAPE
- * (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal.
+ * file and the roster together still reds. FOLLOW-UP: the wb-7uzc row's title names the gate probes the first follow-up
+ * cures (G13, G13b, G38, P41) and the wb-bf65 row's title names E-DASHDASH; CURES binds each to a judged pin. The src walk is
+ * held to git's listing of src (tracked files and the untracked ones git does not ignore). The record case walks this file's
+ * vitest task tree and holds every pin's end to the assertion count the roster pins (REACHED), so a case that returns its
+ * witness without reaching its pinned assertion count reds, and it holds each src-walk pin's walk (T4, A3 and B2) to git's
+ * listing (WALKED), so a src-walk case that returns its witness without walking src reds; REACHED pins a count, not the work
+ * (R13). FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal.
  * RESIDUALS (named; each has a pinned row in row R): R1 RUNTIME-COMPOSED - an argv element or literal composed at run time
- * from parts (concatenation, push, a template substitution, a spread of anything but an array literal or a same-module const
- * array) is invisible to the src scans of rows T, A and B; R2 COMMENTS - a src comment naming the leaf, the selector or the
- * row key is not read; R3 ECHOED-SELECTION - the probe rule reads one reply's shape, so a reply that states selection without
+ * from parts (string or array concatenation, push, a template substitution, a spread of anything but an array literal, a
+ * same-module const array or a lookup bound to an array literal, an argv a call returns) is invisible to the src scans of rows
+ * T, A and B: a call's argument list is read as an argv, what the call composes from it is not; R2 COMMENTS - a src comment
+ * naming the leaf, the selector or the row key is not read; R3 ECHOED-SELECTION - the probe rule reads one reply's shape,
+ * so a reply that states selection without
  * narrowing its rows reads served (the projection rule's foreign-row check of B3 is the backstop); R4 NOT-FOUND-SPELLING - the
  * not-found typing reads the producer code's _NOT_FOUND suffix, and the landed unknown-instance code is unspecified at the pin
  * ("unknown id exit 3 ..."), so an exit-3 code without that suffix reads refused; R5 CATEGORY-BY-MESSAGE - Pi's capability
@@ -94,7 +117,14 @@
  * read by B2; R9 COORDINATED - a member this cut adds that neither the landed record nor the follow-up title names is held by
  * the roster alone, so removing it from this file and the roster together reads clean; R10 COMPOSED-FRAGMENT - a const array
  * composed outside an array spread (concat, push, a call) is judged where it is written, so A3 may name a render-count for the
- * fragment while T4 holds the verdict.
+ * fragment while T4 holds the verdict; R11 UNRESOLVED-LOOKUP - a member or element lookup the module does not bind once as
+ * written (a lookup on an import, a let or var, a parameter or a call result; a key or index that is neither a literal nor a
+ * same-module const string; an accessor, a method, or a member a later spread may override; an enum, class or object bound
+ * more than once) reads only as unresolved, so "context" followed by such a lookup verb names no context show; R12
+ * SELECTION-PARAMETER - a selection passed to a function the module does not bind once by name (a method, a callback, an
+ * import), or bound to a parameter that is then read through .matched, is not read by B2; R13 COUNT-MATCHED - the record
+ * holds each pin's assertion count, not its work: a case body replaced by as many assertions that returns the roster's
+ * witness reads clean, but for the src-walk pins T4, A3 and B2, whose walks R13 and the record hold to git's listing (WALKED).
  * SCOPE: the three rules are this cut's reading of the filing; the producer facts above are measured at the builds named and
  * are not re-read here (the census is hermetic: no rf runs, the stand-in rf answers from the roster). docs are not read: the
  * acceptance clauses name the argv builder, the projection and the exit-3 typing. A later cut that adds a context show reader
@@ -153,8 +183,14 @@ const NATIVE_FLOOR = 4;
 const EXPORT_FLOOR = 500;
 /** A context show spelling inside one string: the two words joined directly or by white space, ".", "_" or "-". */
 const SHOW_TEXT = /\bcontext[\s._-]*show\b/i;
-/** The follow-up bead whose title names the gate probes this cut cures. */
+/** The follow-up bead whose title names the gate probes the first follow-up cut cures. */
 const FOLLOW_UP = "wb-7uzc";
+/** The second follow-up bead, whose title names the end-of-options probe this cut cures. */
+const SECOND_FOLLOW_UP = "wb-bf65";
+/** argparse's end-of-options marker: it may end the run between "context" and "show" (MG2). */
+const END_OF_OPTIONS = "--";
+/** The pins whose case walks src; the record holds each one's walk to git's listing (WALKED). */
+const WALK_PINS: readonly string[] = ["T4", "A3", "B2"];
 /** rf's flag globals, accepted between "context" and "show": CLI-A25 GLOBAL_OPTIONS less its value-taking members, then
  * VERBOSE_FLAGS (parser.py:250-260 and :277 at 6a251bf73af5; JSON_FLAG is "--json" at registry.py:187). -v also repeats. */
 const GLOBAL_FLAGS: readonly string[] = ["--json", "--no-input", "--yes", "--debug", "--no-retry", "-v", "--verbose"];
@@ -172,9 +208,35 @@ const RESIDUALS: Readonly<Record<string, string>> = {
   R8: "SELECTION-ALIAS",
   R9: "COORDINATED",
   R10: "COMPOSED-FRAGMENT",
+  R11: "UNRESOLVED-LOOKUP",
+  R12: "SELECTION-PARAMETER",
+  R13: "COUNT-MATCHED",
 };
-/** The landing-285 gate probes this cut cures, each bound to the pin that pins its cured reading. */
-const CURES: Readonly<Record<string, string>> = { G13: "MS8", G13b: "MS9", G38: "MS10", G39: "MS11", P41: "MS12", G20: "MS13", G21: "MS14", "X-NOTFOUND-ANYEXIT": "MJ5" };
+/** The landing-285 and landing-380 gate probes the follow-up cuts cure, each bound to the pin that pins its cured reading. */
+const CURES: Readonly<Record<string, string>> = {
+  G13: "MS8",
+  G13b: "MS9",
+  G38: "MS10",
+  G39: "MS11",
+  P41: "MS12",
+  G20: "MS13",
+  G21: "MS14",
+  "X-NOTFOUND-ANYEXIT": "MJ5",
+  "E-DASHDASH": "MS17",
+  "E-ENUM": "MS18",
+  "E-OBJ": "MS19",
+  "E-OBJ-VERB": "MS19",
+  "E-STATIC": "MS20",
+  "E-ELEM": "MS21",
+  "E-VARIADIC": "MS22",
+  "E-ARRAYOF": "MS22",
+  "E-B2-NULLISH": "MS24",
+  "E-B2-DESTRUCT-NULLISH": "MS24",
+  "E-B2-ASSIGN": "MS25",
+  "E-B2-REFLECT": "MS26",
+  "E-B2-PARAM": "MS27",
+  "X-THIRD-COUNTMATCH-T4": "R13",
+};
 /** Where the landed cut's delivery note (in the wb-pfxo.9 export row) states its frozen shape, its pins and its residuals. */
 const LANDED_SHAPE_MARK = "FROZEN SHAPE (rule 16) literal [";
 const LANDED_PINS_MARK = "44 tests = the judged set + 43 pins: ";
@@ -249,13 +311,25 @@ const ROWS: readonly Row[] = [
       "MS14",
       "MS15",
       "MS16",
+      "MS17",
+      "MS18",
+      "MS19",
+      "MS20",
+      "MS21",
+      "MS22",
+      "MS23",
+      "MS24",
+      "MS25",
+      "MS26",
+      "MS27",
       "MG1",
+      "MG2",
     ],
   },
   {
     id: "R",
-    label: "the named residuals R1-R10 keep their pinned readings",
-    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10"],
+    label: "the named residuals R1-R13 keep their pinned readings",
+    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13"],
   },
 ];
 
@@ -295,7 +369,14 @@ interface Measured {
   /** The producer lines that state rf's globals, vendored verbatim with their sites (the follow-up seat's reading). */
   readonly globals: readonly { readonly site: string; readonly text: string }[];
   /** The follow-up seat's interleaving measurement: each argv with its exit, command and first diagnostic. */
-  readonly interleaved: { readonly build: string; readonly commit: string; readonly replies: readonly InterleavedReply[] };
+  readonly interleaved: ReplySet;
+  /** The second follow-up seat's end-of-options measurement, in the same shape. */
+  readonly endOfOptions: ReplySet;
+}
+interface ReplySet {
+  readonly build: string;
+  readonly commit: string;
+  readonly replies: readonly InterleavedReply[];
 }
 interface Roster {
   readonly constants: Json;
@@ -332,15 +413,15 @@ function readGlobals(value: unknown): Measured["globals"] {
     return { site: entry.site, text: entry.text };
   });
 }
-function readInterleaved(value: unknown): Measured["interleaved"] {
+function readReplySet(value: unknown, name: string): ReplySet {
   if (!isObject(value) || typeof value.build !== "string" || typeof value.commit !== "string" || !Array.isArray(value.replies)) {
-    throw new Error("roster measured.interleaved needs a build, a commit and a replies list");
+    throw new Error(`roster measured.${name} needs a build, a commit and a replies list`);
   }
   const replies = value.replies.map((entry: unknown, index: number): InterleavedReply => {
     if (!isObject(entry) || typeof entry.exit !== "number" || typeof entry.command !== "string" || typeof entry.code !== "string" || typeof entry.message !== "string") {
-      throw new Error(`roster measured.interleaved.replies[${index}] needs an argv, an exit, a command, a code and a message`);
+      throw new Error(`roster measured.${name}.replies[${index}] needs an argv, an exit, a command, a code and a message`);
     }
-    return { argv: readStrings(entry.argv, `measured.interleaved.replies[${index}].argv`), exit: entry.exit, command: entry.command, code: entry.code, message: entry.message };
+    return { argv: readStrings(entry.argv, `measured.${name}.replies[${index}].argv`), exit: entry.exit, command: entry.command, code: entry.code, message: entry.message };
   });
   return { build: value.build, commit: value.commit, replies };
 }
@@ -381,7 +462,8 @@ function readRoster(): Roster {
       replies,
       committed: { render_id: committed.render_id, ephemeral: committed.ephemeral, commit_seq: committed.commit_seq },
       globals: readGlobals(measured.globals),
-      interleaved: readInterleaved(measured.interleaved),
+      interleaved: readReplySet(measured.interleaved, "interleaved"),
+      endOfOptions: readReplySet(measured.endOfOptions, "endOfOptions"),
     },
     rows,
     residuals: readTable(raw.residuals, "residuals"),
@@ -420,7 +502,9 @@ function constants(): Json {
     sibling: SIBLING,
     floors: { src: SRC_FLOOR, native: NATIVE_FLOOR, export: EXPORT_FLOOR },
     followUp: FOLLOW_UP,
-    globals: { flags: [...GLOBAL_FLAGS], values: [...GLOBAL_VALUES] },
+    secondFollowUp: SECOND_FOLLOW_UP,
+    globals: { flags: [...GLOBAL_FLAGS], values: [...GLOBAL_VALUES], endOfOptions: END_OF_OPTIONS },
+    walkPins: [...WALK_PINS],
   };
 }
 
@@ -479,13 +563,27 @@ interface Scan {
   readonly instanceReads: readonly string[];
 }
 type Word = string | null;
-/** How one declaration binds a name: a const of one string literal, a const of one array literal, or anything else. */
-type Binding = { readonly kind: "string"; readonly text: string } | { readonly kind: "array"; readonly node: ts.ArrayLiteralExpression } | { readonly kind: "other" };
+/** How one declaration binds a name: a const of one string literal, array literal or object literal, an enum or a class with
+ * its initialized members, a function with its parameters, or anything else. */
+type Binding =
+  | { readonly kind: "string"; readonly text: string }
+  | { readonly kind: "array"; readonly node: ts.ArrayLiteralExpression }
+  | { readonly kind: "object"; readonly node: ts.ObjectLiteralExpression }
+  | { readonly kind: "members"; readonly members: ReadonlyMap<string, ts.Expression> }
+  | { readonly kind: "function"; readonly parameters: readonly ts.ParameterDeclaration[] }
+  | { readonly kind: "other" };
 interface Bindings {
   /** The names the module binds only by const declarations of one and the same string literal. */
   readonly strings: ReadonlyMap<string, string>;
   /** The names the module binds exactly once, by a const declaration of an array literal. */
   readonly arrays: ReadonlyMap<string, ts.ArrayLiteralExpression>;
+  /** The names the module binds exactly once, by a const declaration of an object literal. */
+  readonly objects: ReadonlyMap<string, ts.ObjectLiteralExpression>;
+  /** The names the module binds exactly once, by an enum or a class (declared, or a const class expression): its members
+   * with an initializer by name - every enum member, a class's static properties. */
+  readonly members: ReadonlyMap<string, ReadonlyMap<string, ts.Expression>>;
+  /** The names the module binds exactly once, by a function declaration or a const arrow or function expression. */
+  readonly functions: ReadonlyMap<string, readonly ts.ParameterDeclaration[]>;
 }
 
 /** An expression without the parentheses, non-null and type assertions that leave its value as written. */
@@ -496,7 +594,32 @@ function bare(node: ts.Expression): ts.Expression {
   }
   return current;
 }
-/** Every name the module binds, in any scope, and how; only the const string and const array bindings resolve. */
+/** A member name as written: an identifier, a string or numeric literal, or a computed string or numeric literal. */
+function memberName(name: ts.PropertyName): string | undefined {
+  if (ts.isIdentifier(name) || ts.isStringLiteralLike(name) || ts.isNumericLiteral(name)) return name.text;
+  if (!ts.isComputedPropertyName(name)) return undefined;
+  const inner = bare(name.expression);
+  return ts.isStringLiteralLike(inner) || ts.isNumericLiteral(inner) ? inner.text : undefined;
+}
+/** An enum's members, or a class's static properties, that carry an initializer, by name. */
+function membersOf(node: ts.EnumDeclaration | ts.ClassLikeDeclaration): Map<string, ts.Expression> {
+  const members = new Map<string, ts.Expression>();
+  if (ts.isEnumDeclaration(node)) {
+    for (const member of node.members) {
+      const name = memberName(member.name);
+      if (name !== undefined && member.initializer !== undefined) members.set(name, member.initializer);
+    }
+    return members;
+  }
+  for (const member of node.members) {
+    if (!ts.isPropertyDeclaration(member) || (ts.getCombinedModifierFlags(member) & ts.ModifierFlags.Static) === 0) continue;
+    const name = memberName(member.name);
+    if (name !== undefined && member.initializer !== undefined) members.set(name, member.initializer);
+  }
+  return members;
+}
+/** Every name the module binds, in any scope, and how; only the const string, array and object, enum, class and function
+ * bindings resolve. */
 function bindingsOf(source: ts.SourceFile): Bindings {
   const seen = new Map<string, Binding[]>();
   const record = (name: ts.Node | undefined, binding: Binding): void => {
@@ -505,11 +628,18 @@ function bindingsOf(source: ts.SourceFile): Bindings {
   const visit = (node: ts.Node): void => {
     if (ts.isVariableDeclaration(node)) {
       const constant = ts.isVariableDeclarationList(node.parent) && (node.parent.flags & ts.NodeFlags.Const) !== 0;
-      const value = node.initializer === undefined ? undefined : bare(node.initializer);
-      if (constant && value !== undefined && ts.isStringLiteralLike(value)) record(node.name, { kind: "string", text: value.text });
-      else if (constant && value !== undefined && ts.isArrayLiteralExpression(value)) record(node.name, { kind: "array", node: value });
+      const value = node.initializer === undefined || !constant ? undefined : bare(node.initializer);
+      if (value !== undefined && ts.isStringLiteralLike(value)) record(node.name, { kind: "string", text: value.text });
+      else if (value !== undefined && ts.isArrayLiteralExpression(value)) record(node.name, { kind: "array", node: value });
+      else if (value !== undefined && ts.isObjectLiteralExpression(value)) record(node.name, { kind: "object", node: value });
+      else if (value !== undefined && ts.isClassExpression(value)) record(node.name, { kind: "members", members: membersOf(value) });
+      else if (value !== undefined && (ts.isArrowFunction(value) || ts.isFunctionExpression(value))) record(node.name, { kind: "function", parameters: value.parameters });
       else record(node.name, { kind: "other" });
-    } else if (ts.isParameter(node) || ts.isBindingElement(node) || ts.isFunctionDeclaration(node) || ts.isClassDeclaration(node) || ts.isEnumDeclaration(node)) {
+    } else if (ts.isEnumDeclaration(node) || ts.isClassDeclaration(node)) {
+      record(node.name, { kind: "members", members: membersOf(node) });
+    } else if (ts.isFunctionDeclaration(node)) {
+      record(node.name, { kind: "function", parameters: node.parameters });
+    } else if (ts.isParameter(node) || ts.isBindingElement(node)) {
       record(node.name, { kind: "other" });
     } else if (ts.isImportSpecifier(node) || ts.isNamespaceImport(node) || ts.isImportEqualsDeclaration(node) || ts.isImportClause(node)) {
       record(node.name, { kind: "other" });
@@ -519,30 +649,104 @@ function bindingsOf(source: ts.SourceFile): Bindings {
   visit(source);
   const strings = new Map<string, string>();
   const arrays = new Map<string, ts.ArrayLiteralExpression>();
+  const objects = new Map<string, ts.ObjectLiteralExpression>();
+  const members = new Map<string, ReadonlyMap<string, ts.Expression>>();
+  const functions = new Map<string, readonly ts.ParameterDeclaration[]>();
   for (const [name, bound] of seen) {
     const first = bound[0];
     const text = first?.kind === "string" ? first.text : undefined;
     if (text !== undefined && bound.every(binding => binding.kind === "string" && binding.text === text)) strings.set(name, text);
-    if (first?.kind === "array" && bound.length === 1) arrays.set(name, first.node);
+    if (first === undefined || bound.length !== 1) continue;
+    if (first.kind === "array") arrays.set(name, first.node);
+    else if (first.kind === "object") objects.set(name, first.node);
+    else if (first.kind === "members") members.set(name, first.members);
+    else if (first.kind === "function") functions.set(name, first.parameters);
   }
-  return { strings, arrays };
+  return { strings, arrays, objects, members, functions };
+}
+/** A property's key as written (a computed same-module const string included). */
+function propertyKey(name: ts.PropertyName, bindings: Bindings): string | undefined {
+  if (ts.isComputedPropertyName(name)) {
+    const inner = bare(name.expression);
+    if (ts.isIdentifier(inner)) return bindings.strings.get(inner.text);
+  }
+  return memberName(name);
+}
+/** An object literal's member by key, as written: the last property of that key with no spread after it; a method or an
+ * accessor of that key, or a later spread, leaves it unbound. */
+function objectMember(node: ts.ObjectLiteralExpression, key: string, bindings: Bindings): ts.Expression | undefined {
+  let found: ts.Expression | undefined;
+  for (const property of node.properties) {
+    if (ts.isSpreadAssignment(property)) found = undefined;
+    else if (ts.isPropertyAssignment(property) && propertyKey(property.name, bindings) === key) found = property.initializer;
+    else if (ts.isShorthandPropertyAssignment(property) && property.name.text === key) found = property.name;
+    else if (property.name !== undefined && propertyKey(property.name, bindings) === key) found = undefined;
+  }
+  return found;
+}
+/** An array literal's element at a literal index, when no spread comes before it. */
+function arrayElement(node: ts.ArrayLiteralExpression, key: string): ts.Expression | undefined {
+  if (!/^(?:0|[1-9]\d*)$/.test(key)) return undefined;
+  const index = Number(key);
+  const head = node.elements.slice(0, index + 1);
+  return head.length === index + 1 && !head.some(element => ts.isSpreadElement(element)) ? node.elements[index] : undefined;
+}
+/** A lookup's key as written: a property name, or an element access's string or numeric literal, same-module const string or
+ * resolved lookup. */
+function lookupKey(node: ts.PropertyAccessExpression | ts.ElementAccessExpression, bindings: Bindings, resolving: ReadonlySet<ts.Node>): string | undefined {
+  if (ts.isPropertyAccessExpression(node)) return ts.isIdentifier(node.name) ? node.name.text : undefined;
+  const key = bare(node.argumentExpression);
+  if (ts.isNumericLiteral(key)) return key.text;
+  return stringOf(key, bindings, resolving);
+}
+/** The expression a lookup is bound to as written - a member of a const object literal, an enum member, a class static
+ * member, or an element of a const array at a literal index, through nested lookups too; undefined when the module does
+ * not bind it once as written (R11). */
+function lookupTarget(node: ts.Expression, bindings: Bindings, resolving: ReadonlySet<ts.Node>): ts.Expression | undefined {
+  const value = bare(node);
+  if (!(ts.isPropertyAccessExpression(value) || ts.isElementAccessExpression(value)) || resolving.has(value)) return undefined;
+  const next = new Set([...resolving, value]);
+  const key = lookupKey(value, bindings, next);
+  if (key === undefined) return undefined;
+  const receiver = bare(value.expression);
+  const members = ts.isIdentifier(receiver) ? bindings.members.get(receiver.text) : undefined;
+  if (members !== undefined) return members.get(key);
+  const holder = ts.isIdentifier(receiver) ? (bindings.objects.get(receiver.text) ?? bindings.arrays.get(receiver.text)) : ts.isObjectLiteralExpression(receiver) || ts.isArrayLiteralExpression(receiver) ? receiver : literalOf(lookupTarget(receiver, bindings, next), bindings);
+  if (holder === undefined) return undefined;
+  return ts.isObjectLiteralExpression(holder) ? objectMember(holder, key, bindings) : arrayElement(holder, key);
+}
+/** The object or array literal an expression is bound to: the literal itself, or a same-module const object or array. */
+function literalOf(node: ts.Expression | undefined, bindings: Bindings): ts.ObjectLiteralExpression | ts.ArrayLiteralExpression | undefined {
+  if (node === undefined) return undefined;
+  const value = bare(node);
+  if (ts.isObjectLiteralExpression(value) || ts.isArrayLiteralExpression(value)) return value;
+  return ts.isIdentifier(value) ? (bindings.objects.get(value.text) ?? bindings.arrays.get(value.text)) : undefined;
+}
+/** The string an expression reads as written: a string literal, a same-module const string, or a lookup bound once to one. */
+function stringOf(node: ts.Expression, bindings: Bindings, resolving: ReadonlySet<ts.Node>): string | undefined {
+  const value = bare(node);
+  if (ts.isStringLiteralLike(value)) return value.text;
+  if (ts.isIdentifier(value)) return bindings.strings.get(value.text);
+  const target = lookupTarget(value, bindings, resolving);
+  return target === undefined ? undefined : stringOf(target, bindings, new Set([...resolving, value]));
 }
 /** One argv element's words: a string's text, a same-module const string, or the members of a spread array literal or
- * const array (a name is spread once per path); null for anything else. */
-function wordsOf(element: ts.Expression, bindings: Bindings, spreading: ReadonlySet<string> = new Set()): Word[] {
+ * const array (each array spread once per path); in the resolving reading a lookup bound once as written reads as its
+ * string, and a spread of a lookup bound to an array literal spreads its members; null for anything else. */
+function wordsOf(element: ts.Expression, bindings: Bindings, resolve: boolean, expanding: ReadonlySet<ts.Node> = new Set()): Word[] {
   if (ts.isSpreadElement(element)) {
     const inner = bare(element.expression);
-    if (ts.isArrayLiteralExpression(inner)) return inner.elements.flatMap(item => wordsOf(item, bindings, spreading));
-    if (ts.isIdentifier(inner) && !spreading.has(inner.text)) {
-      const bound = bindings.arrays.get(inner.text);
-      if (bound !== undefined) return bound.elements.flatMap(item => wordsOf(item, bindings, new Set([...spreading, inner.text])));
-    }
-    return [null];
+    const named = ts.isIdentifier(inner) ? bindings.arrays.get(inner.text) : undefined;
+    const looked = resolve && named === undefined ? literalOf(lookupTarget(inner, bindings, new Set()), bindings) : undefined;
+    const array = ts.isArrayLiteralExpression(inner) ? inner : (named ?? (looked !== undefined && ts.isArrayLiteralExpression(looked) ? looked : undefined));
+    if (array === undefined || expanding.has(array)) return [null];
+    const next = new Set([...expanding, array]);
+    return array.elements.flatMap(item => wordsOf(item, bindings, resolve, next));
   }
   const value = bare(element);
   if (ts.isStringLiteralLike(value)) return [value.text];
   if (ts.isIdentifier(value)) return [bindings.strings.get(value.text) ?? null];
-  return [null];
+  return [resolve ? (stringOf(value, bindings, new Set()) ?? null) : null];
 }
 /** The array literals judged inside another array: a spread array literal, and a same-module const array spread by name. */
 function fragmentsOf(source: ts.SourceFile, bindings: Bindings): Set<ts.Node> {
@@ -562,13 +766,18 @@ function fragmentsOf(source: ts.SourceFile, bindings: Bindings): Set<ts.Node> {
 /** A flag global (-v repeated too) or a value global's --opt=VALUE spelling: one word of the run. */
 const globalWord = (word: string): boolean => GLOBAL_FLAGS.includes(word) || /^-v+$/.test(word) || GLOBAL_VALUES.some(option => word.startsWith(`${option}=`));
 /** The words after "context" VERB when an argv names it: "context", then any run of rf's globals (a flag global, a value
- * global and its value, a --global=VALUE spelling, an unresolved element), then VERB; undefined when it names none. */
+ * global and its value, a --global=VALUE spelling, an unresolved element) that may end at "--", then VERB; undefined when it
+ * names none. */
 function verbTail(words: readonly Word[], verb: string): Word[] | undefined {
   for (let start = 0; start < words.length; start++) {
     if (words[start] !== "context") continue;
     let at = start + 1;
     while (at < words.length) {
       const word = words[at];
+      if (word === END_OF_OPTIONS) {
+        at += 1;
+        break;
+      }
       if (word === null || globalWord(word)) at += 1;
       else if (GLOBAL_VALUES.includes(word)) at += 2;
       else break;
@@ -577,18 +786,37 @@ function verbTail(words: readonly Word[], verb: string): Word[] | undefined {
   }
   return undefined;
 }
-/** The literal key of a property access or of an element access (a string literal or a same-module const string). */
+/** The literal key of a property access or of an element access (a string literal, a same-module const string, or a
+ * resolved lookup). */
 function accessKey(node: ts.Node, bindings: Bindings): string | undefined {
   if (ts.isPropertyAccessExpression(node)) return node.name.text;
   if (!ts.isElementAccessExpression(node)) return undefined;
   const key = bare(node.argumentExpression);
   if (ts.isStringLiteralLike(key)) return key.text;
-  return ts.isIdentifier(key) ? bindings.strings.get(key.text) : undefined;
+  return ts.isIdentifier(key) ? bindings.strings.get(key.text) : stringOf(key, bindings, new Set());
 }
-/** A selection receiver: an access keyed selection, or a binding named selection. */
+/** A Reflect.get(target, key) call's target and key (any key spelling stringOf reads). */
+function reflectGet(node: ts.Node, bindings: Bindings): { readonly target: ts.Expression; readonly key: string | undefined } | undefined {
+  if (!ts.isCallExpression(node)) return undefined;
+  const callee = bare(node.expression);
+  if (!(ts.isPropertyAccessExpression(callee) || ts.isElementAccessExpression(callee)) || accessKey(callee, bindings) !== "get") return undefined;
+  const owner = bare(callee.expression);
+  const [target, key] = node.arguments;
+  if (!ts.isIdentifier(owner) || owner.text !== "Reflect" || target === undefined || key === undefined) return undefined;
+  return { target, key: stringOf(key, bindings, new Set()) };
+}
+const FALLBACK_OPERATORS: readonly ts.SyntaxKind[] = [ts.SyntaxKind.QuestionQuestionToken, ts.SyntaxKind.BarBarToken, ts.SyntaxKind.AmpersandAmpersandToken];
+/** A selection receiver: an access keyed selection, a binding named selection, Reflect.get keyed selection, or a fallback one
+ * of whose operands is a selection receiver (either operand of ??, || or &&, either branch of a conditional, the last
+ * operand of a comma expression). */
 function isSelection(node: ts.Expression, bindings: Bindings): boolean {
   const value = bare(node);
-  return accessKey(value, bindings) === "selection" || (ts.isIdentifier(value) && value.text === "selection");
+  if (accessKey(value, bindings) === "selection" || (ts.isIdentifier(value) && value.text === "selection")) return true;
+  if (reflectGet(value, bindings)?.key === "selection") return true;
+  if (ts.isConditionalExpression(value)) return isSelection(value.whenTrue, bindings) || isSelection(value.whenFalse, bindings);
+  if (!ts.isBinaryExpression(value)) return false;
+  if (value.operatorToken.kind === ts.SyntaxKind.CommaToken) return isSelection(value.right, bindings);
+  return FALLBACK_OPERATORS.includes(value.operatorToken.kind) && (isSelection(value.left, bindings) || isSelection(value.right, bindings));
 }
 /** The literal key one destructuring element binds. */
 function bindingKey(element: ts.BindingElement, bindings: Bindings): string | undefined {
@@ -599,14 +827,52 @@ function bindingKey(element: ts.BindingElement, bindings: Bindings): string | un
   if (ts.isStringLiteralLike(inner)) return inner.text;
   return ts.isIdentifier(inner) ? bindings.strings.get(inner.text) : undefined;
 }
-/** A read of selection.matched: one access chain on a selection receiver, or a destructuring that binds matched under a
- * selection key or from a selection receiver. */
+/** Whether an assignment pattern binds matched from a selection receiver, or under a selection key at any depth. */
+function assignsMatched(pattern: ts.ObjectLiteralExpression, fromSelection: boolean, bindings: Bindings): boolean {
+  return pattern.properties.some(property => {
+    const key = ts.isShorthandPropertyAssignment(property) ? property.name.text : ts.isPropertyAssignment(property) ? propertyKey(property.name, bindings) : undefined;
+    if (key === "matched" && fromSelection) return true;
+    if (!ts.isPropertyAssignment(property)) return false;
+    const inner = bare(property.initializer);
+    const nested = ts.isBinaryExpression(inner) && inner.operatorToken.kind === ts.SyntaxKind.EqualsToken ? bare(inner.left) : inner;
+    return ts.isObjectLiteralExpression(nested) && assignsMatched(nested, key === "selection", bindings);
+  });
+}
+/** Whether a call passes a selection receiver to a function the module binds once by name, in the position of a parameter
+ * whose object pattern binds matched (positions after a spread argument are not read). */
+function passesSelectionToMatched(call: ts.CallExpression, bindings: Bindings): boolean {
+  const callee = bare(call.expression);
+  const parameters = ts.isIdentifier(callee) ? bindings.functions.get(callee.text) : undefined;
+  if (parameters === undefined) return false;
+  const spread = call.arguments.findIndex(argument => ts.isSpreadElement(argument));
+  const read = spread < 0 ? call.arguments : call.arguments.slice(0, spread);
+  return read.some((argument, index) => {
+    const parameter = parameters[index];
+    if (parameter === undefined || parameter.dotDotDotToken !== undefined || !ts.isObjectBindingPattern(parameter.name)) return false;
+    return isSelection(argument, bindings) && parameter.name.elements.some(element => bindingKey(element, bindings) === "matched");
+  });
+}
+/** A read of selection.matched: one access chain on a selection receiver, Reflect.get(<a selection>, "matched"), a
+ * destructuring - a declaration or an assignment - that binds matched under a selection key or from a selection receiver,
+ * or a selection passed to a same-module function whose parameter pattern binds matched. */
 function readsSelectionMatched(node: ts.Node, bindings: Bindings): boolean {
   if ((ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) && accessKey(node, bindings) === "matched") return isSelection(node.expression, bindings);
+  const reflected = reflectGet(node, bindings);
+  if (reflected !== undefined) return reflected.key === "matched" && isSelection(reflected.target, bindings);
+  if (ts.isCallExpression(node)) return passesSelectionToMatched(node, bindings);
+  if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken) {
+    const pattern = bare(node.left);
+    return ts.isObjectLiteralExpression(pattern) && assignsMatched(pattern, isSelection(node.right, bindings), bindings);
+  }
   if (!ts.isBindingElement(node) || bindingKey(node, bindings) !== "matched" || !ts.isObjectBindingPattern(node.parent)) return false;
   const holder = node.parent.parent;
   if (ts.isBindingElement(holder)) return bindingKey(holder, bindings) === "selection";
   return ts.isVariableDeclaration(holder) && holder.initializer !== undefined && isSelection(holder.initializer, bindings);
+}
+/** The argv candidates of one node: an array literal judged alone, or the argument list of a call or new expression. */
+function argvElements(node: ts.Node, fragments: ReadonlySet<ts.Node>): readonly ts.Expression[] | undefined {
+  if (ts.isArrayLiteralExpression(node)) return fragments.has(node) ? undefined : node.elements;
+  return ts.isCallExpression(node) || ts.isNewExpression(node) ? node.arguments : undefined;
 }
 /** One module's context show argv arrays, its context render argv count and its literals or names reaching the selector. */
 function scanSource(fileName: string, text: string): Scan {
@@ -620,11 +886,17 @@ function scanSource(fileName: string, text: string): Scan {
   let renderArgv = 0;
   const at = (node: ts.Node): string => `${fileName}:${source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1}`;
   const visit = (node: ts.Node): void => {
-    if (ts.isArrayLiteralExpression(node) && !fragments.has(node)) {
-      const words = node.elements.flatMap(element => wordsOf(element, bindings));
-      const tail = verbTail(words, "show");
-      if (tail !== undefined) showArgv.push({ at: at(node), tail });
-      if (verbTail(words, "render") !== undefined) renderArgv += 1;
+    const elements = argvElements(node, fragments);
+    if (elements !== undefined) {
+      // Both readings: lookups unresolved (as the landed scanner read them) and lookups resolved; each distinct one is judged.
+      const unresolved = elements.flatMap(element => wordsOf(element, bindings, false));
+      const resolved = elements.flatMap(element => wordsOf(element, bindings, true));
+      const readings = JSON.stringify(resolved) === JSON.stringify(unresolved) ? [unresolved] : [unresolved, resolved];
+      for (const words of readings) {
+        const tail = verbTail(words, "show");
+        if (tail !== undefined) showArgv.push({ at: at(node), tail });
+      }
+      if (readings.some(words => verbTail(words, "render") !== undefined)) renderArgv += 1;
     }
     if (ts.isStringLiteralLike(node)) {
       if (SHOW_TEXT.test(node.text)) showLiterals.push(at(node));
@@ -661,16 +933,38 @@ function listedSrc(): string[] {
     .filter(path => path.endsWith(".ts") && existsSync(join(REPO, path)));
   return listedCache;
 }
+/** One src-walk pin's walk: how many of the modules git lists it read. */
+interface Walk {
+  readonly pin: string;
+  readonly read: number;
+}
+/** Each src-walk pin's walk, in run order; the record holds it to git's listing (WALKED). */
+const WALKED: Walk[] = [];
 /** The src walk's floor, its breadth (no module git lists goes unread) and its non-vacuity: it reached the live context
- * render argv of the rf reader. */
-function srcWalk(): { srcFloorMet: boolean; renderArgvSeen: boolean; unread: string[] } {
+ * render argv of the rf reader. The walk is recorded for the pin whose case made it. */
+function srcWalk(pin: string): { srcFloorMet: boolean; renderArgvSeen: boolean; unread: string[] } {
   const { files, walked, scans } = srcScans();
-  const unread = listedSrc()
-    .filter(path => !walked.includes(path))
-    .sort();
+  const listed = listedSrc();
+  const unread = listed.filter(path => !walked.includes(path)).sort();
+  WALKED.push({ pin, read: listed.length - unread.length });
   const walk = { srcFloorMet: files >= SRC_FLOOR, renderArgvSeen: scans.reduce((sum, scan) => sum + scan.renderArgv, 0) >= 1, unread };
   expect(walk, `src modules walked: ${files}, floor ${SRC_FLOOR}`).toStrictEqual({ srcFloorMet: true, renderArgvSeen: true, unread: [] });
   return walk;
+}
+/** REACHED: each pin's end with the assertion count its case reached, held to the roster's count, in row order. */
+function reachedFindings(reached: readonly string[]): string[] {
+  const pinned = ROSTER.reached;
+  const findings = reached.flatMap((entry, index) => (entry === pinned[index] ? [] : [`reached ${entry}, pinned ${pinned[index] ?? "none"}`]));
+  return reached.length === pinned.length ? findings : [...findings, `reached ${reached.length} ends, pinned ${pinned.length}`];
+}
+/** WALKED: every src-walk pin walked src and read every module git lists; no other case recorded a walk. */
+function walkedFindings(walked: readonly Walk[], listed: number): string[] {
+  const findings = WALK_PINS.flatMap(pin => {
+    const walks = walked.filter(entry => entry.pin === pin);
+    if (walks.length === 0) return [`walk unread: ${pin}`];
+    return walks.filter(entry => entry.read !== listed).map(entry => `walk short: ${pin} read ${entry.read} of ${listed}`);
+  });
+  return [...findings, ...walked.filter(entry => !WALK_PINS.includes(entry.pin)).map(entry => `walk unexpected: ${entry.pin}`)];
 }
 
 // ---- the three rules (READINGS) ----
@@ -940,6 +1234,72 @@ const CASES: readonly Case[] = [
     text: 'spawn("rf", ["context", "--redact", "show", r]);\nspawn("rf", ["context", "--format", "json", "show", r]);\nspawn("rf", ["context", "-h", "show", r]);\nspawn("rf", ["context", "render", "show", r]);',
     outcome: { showArgv: [], renderArgv: 1, showLiterals: 0, selectorLiterals: 0, instanceReads: 0 },
   },
+  {
+    pin: "MS17",
+    kind: "scan",
+    text: 'spawn("rf", ["context", "--", "show", r]);\nspawn("rf", ["context", "--json", "--", "show", r, "--redact"]);\nspawn("rf", ["context", "--workspace", w, "--", "show", r, "--instance", i]);\nspawn("rf", ["context", "--", "--json", "show", r]);\nspawn("rf", ["context", "--", "--", "show", r]);',
+    outcome: { showArgv: [[], [], ["instance-unserved"]], renderArgv: 0, showLiterals: 0, selectorLiterals: 1, instanceReads: 0 },
+  },
+  {
+    pin: "MS18",
+    kind: "scan",
+    text: 'enum Rf { Group = "context", Verb = "show", Flag = "--json" }\nspawn("rf", [Rf.Group, Rf.Verb, r, Rf.Flag]);\nspawn("rf", ["context", Rf["Verb"], r]);\nspawn("rf", [Rf.Group, "render", "--no-commit"]);',
+    outcome: { showArgv: [[], []], renderArgv: 1, showLiterals: 0, selectorLiterals: 0, instanceReads: 0 },
+  },
+  {
+    pin: "MS19",
+    kind: "scan",
+    text: 'const RF = { group: "context", verb: "show", nested: { verb: "show" }, "flag": "--json", words: ["context", "show"] } as const;\nconst KEY = "verb";\nconst V = "show";\nconst SHORT = { V };\nconst COMPUTED = { ["verb"]: "show" };\nconst KEYED = { [KEY]: "show" };\nspawn("rf", [RF.group, RF.verb, r]);\nspawn("rf", ["context", RF.nested.verb, r, RF["flag"]]);\nspawn("rf", ["context", RF[KEY], r]);\nspawn("rf", ["context", SHORT.V, r]);\nspawn("rf", ["context", COMPUTED.verb, r]);\nspawn("rf", ["context", KEYED.verb, r]);\nspawn("rf", [...RF.words, r, "--json"]);',
+    outcome: { showArgv: [["render-count:0"], [], [], [], [], [], [], []], renderArgv: 0, showLiterals: 0, selectorLiterals: 0, instanceReads: 0 },
+  },
+  {
+    pin: "MS20",
+    kind: "scan",
+    text: 'class Rf {\n  static readonly VERB = "show";\n  static group = "context";\n}\nconst Words = class {\n  static VERB = "show";\n};\nspawn("rf", [Rf.group, Rf.VERB, r]);\nspawn("rf", ["context", Words.VERB, r]);',
+    outcome: { showArgv: [[], []], renderArgv: 0, showLiterals: 0, selectorLiterals: 0, instanceReads: 0 },
+  },
+  {
+    pin: "MS21",
+    kind: "scan",
+    text: 'const WORDS = ["show", "context"] as const;\nspawn("rf", [WORDS[1], WORDS[0], r, "--json"]);\nspawn("rf", [WORDS[1], "--debug", WORDS[0], r]);',
+    outcome: { showArgv: [[], []], renderArgv: 0, showLiterals: 0, selectorLiterals: 0, instanceReads: 0 },
+  },
+  {
+    pin: "MS22",
+    kind: "scan",
+    text: 'const runRf = (...argv: string[]) => spawn("rf", argv);\nrunRf("context", "show", r, "--json");\nspawn("rf", Array.of("context", "--json", "show", r));\nspawn("rf", new Array("context", "show", r, "--instance", i));',
+    outcome: { showArgv: [[], [], ["instance-unserved"]], renderArgv: 0, showLiterals: 0, selectorLiterals: 1, instanceReads: 0 },
+  },
+  {
+    pin: "MS23",
+    kind: "scan",
+    text: 'const OTHER = { word: "list", flag: "--json" } as const;\nspawn("rf", ["context", OTHER.word, "show", r]);\nspawn("rf", ["context", "show", r, OTHER.flag]);',
+    outcome: { showArgv: [[], ["render-count:2"], []], renderArgv: 0, showLiterals: 0, selectorLiterals: 0, instanceReads: 0 },
+  },
+  {
+    pin: "MS24",
+    kind: "scan",
+    text: 'const a = (reply.selection ?? { matched: 0 }).matched;\nconst { matched } = reply.selection ?? { matched: 0 };\nconst b = (cached || reply.selection).matched;\nconst c = (ok && reply["selection"])?.matched;\nconst d = (fresh ? reply.selection : fallback).matched;\nconst e = (log(), reply.selection).matched;',
+    outcome: { showArgv: [], renderArgv: 0, showLiterals: 0, selectorLiterals: 0, instanceReads: 6 },
+  },
+  {
+    pin: "MS25",
+    kind: "scan",
+    text: 'let matched = 0;\nlet m = 0;\n({ matched } = reply.selection);\n({ matched: m } = reply["selection"]);\n({ selection: { matched } } = reply);\n({ selection: { matched: m = 1 } = {} } = reply);',
+    outcome: { showArgv: [], renderArgv: 0, showLiterals: 0, selectorLiterals: 0, instanceReads: 4 },
+  },
+  {
+    pin: "MS26",
+    kind: "scan",
+    text: 'const a = Reflect.get(reply.selection, "matched");\nconst KEY = "matched";\nconst b = Reflect.get(reply["selection"], KEY);\nconst c = Reflect.get(Reflect.get(reply, "selection"), "matched");\nconst d = Reflect.get(reply, "selection").matched;\nconst e = Reflect["get"](reply.selection, "matched");\nconst K = { sel: "selection", hit: "matched" } as const;\nconst f = reply[K.sel][K.hit];\nconst g = Reflect.get(reply.selection, K.hit);',
+    outcome: { showArgv: [], renderArgv: 0, showLiterals: 0, selectorLiterals: 0, instanceReads: 7 },
+  },
+  {
+    pin: "MS27",
+    kind: "scan",
+    text: 'const read = ({ matched }: { matched: number }) => matched;\nfunction count(label: string, { matched: hits }: { matched: number }) {\n  return label + hits;\n}\nconst a = read(reply.selection);\nconst b = count("x", reply["selection"]);\nconst c = read(reply.selection ?? { matched: 0 });',
+    outcome: { showArgv: [], renderArgv: 0, showLiterals: 0, selectorLiterals: 0, instanceReads: 3 },
+  },
   { pin: "R1", kind: "scan", text: 'spawn("rf", ["con" + "text", "show", r, "--inst" + "ance", i]);', outcome: QUIET_SCAN },
   { pin: "R2", kind: "scan", text: "// rf context show RENDER --instance ID\n/* reads row.component_instance_id */\nconst quiet = 1;", outcome: QUIET_SCAN },
   {
@@ -967,6 +1327,18 @@ const CASES: readonly Case[] = [
     kind: "scan",
     text: 'const RF_SHOW = ["context", "show"] as const;\nspawn("rf", RF_SHOW.concat([r, "--json"]));',
     outcome: { showArgv: [["render-count:0"]], renderArgv: 0, showLiterals: 0, selectorLiterals: 0, instanceReads: 0 },
+  },
+  {
+    pin: "R11",
+    kind: "scan",
+    text: 'import { WORDS } from "./rf-words.js";\nlet MUT = { verb: "show" };\nconst SPREAD = { verb: "show", ...MUT };\nconst GET = { verb: "show", get verb() { return "show"; } };\nclass Getter {\n  static get VERB() { return "show"; }\n}\nclass Instance {\n  VERB = "show";\n}\nenum Twice { Verb = "show" }\nenum Twice { Other = "list" }\nconst AFTER = [...WORDS, "show"];\nconst LIST = ["show"];\nconst idx = 0;\nspawn("rf", ["context", WORDS.verb, r]);\nspawn("rf", ["context", MUT.verb, r]);\nspawn("rf", ["context", SPREAD.verb, r]);\nspawn("rf", ["context", GET.verb, r]);\nspawn("rf", ["context", Getter.VERB, r]);\nspawn("rf", ["context", Instance.VERB, r]);\nspawn("rf", ["context", Twice.Verb, r]);\nspawn("rf", ["context", AFTER[1], r]);\nspawn("rf", ["context", LIST[idx], r]);',
+    outcome: QUIET_SCAN,
+  },
+  {
+    pin: "R12",
+    kind: "scan",
+    text: 'import { readMatched } from "./rf-read.js";\nconst holder = { read: ({ matched }: { matched: number }) => matched };\nconst viaMethod = holder.read(reply.selection);\nconst viaImport = readMatched(reply.selection);\nconst viaCallback = [reply.selection].map(({ matched }) => matched);\nconst plain = (sel: { matched: number }) => sel.matched;\nconst viaPlain = plain(reply.selection);\nfunction twice({ matched }: { matched: number }) {\n  return matched;\n}\nfunction twice(value: unknown) {\n  return value;\n}\nconst viaTwice = twice(reply.selection);\nfunction pair(label: string, { matched }: { matched: number }) {\n  return label + matched;\n}\nconst viaSpread = pair(...labels, reply.selection);\nfunction rest(...{ matched }: { matched: number }[]) {\n  return matched;\n}\nconst viaRest = rest(reply.selection);',
+    outcome: QUIET_SCAN,
   },
 ];
 
@@ -1014,7 +1386,7 @@ interface Anchors {
   readonly landedShape: readonly string[];
   /** The landed residuals, by pin. */
   readonly landedResiduals: Readonly<Record<string, string>>;
-  /** The gate probes the follow-up bead's title names. */
+  /** The gate probes the follow-up beads' titles name. */
   readonly namedProbes: readonly string[];
 }
 /** The outside anchors: the landed record in the wb-pfxo.9 export row and the probes the wb-7uzc row's title names. */
@@ -1028,7 +1400,10 @@ function exportAnchors(): Anchors {
   const shape: unknown = JSON.parse(`[${between(notes, LANDED_SHAPE_MARK, "]")}]`);
   const landedShape = Array.isArray(shape) ? shape.map(String) : [];
   const landedResiduals = Object.fromEntries([...between(notes, LANDED_RESIDUALS_MARK, "\n").matchAll(/\b(R\d+) ([A-Z]+(?:-[A-Z]+)*)\b/g)].map(match => [match[1] ?? "", match[2] ?? ""]));
-  const namedProbes = [...String(exportRow(FOLLOW_UP).title ?? "").matchAll(/\b[GP]\d+[a-z]?\b/g)].map(match => match[0]);
+  const namedProbes = [
+    ...[...String(exportRow(FOLLOW_UP).title ?? "").matchAll(/\b[GP]\d+[a-z]?\b/g)].map(match => match[0]),
+    ...[...String(exportRow(SECOND_FOLLOW_UP).title ?? "").matchAll(/\bE-[A-Z0-9]+(?:-[A-Z0-9]+)*\b/g)].map(match => match[0]),
+  ];
   return { landedPins, landedShape, landedResiduals, namedProbes };
 }
 /** What the roster and the outside anchors find missing from a judged set (rows, residual names and cure bindings). */
@@ -1099,7 +1474,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     return { command: isObject(show.envelope) ? String(show.envelope.command) : "<none>", exit: show.exit, ...reading };
   },
   T4: async () => {
-    const walk = srcWalk();
+    const walk = srcWalk("T4");
     const { scans } = srcScans();
     const showArgv = scans.flatMap(scan => scan.showArgv.map(argv => argv.at));
     const showLiterals = scans.flatMap(scan => scan.showLiterals);
@@ -1160,7 +1535,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     return { argv: [...probe.argv], exit: probe.exit, reading: { ...reading }, named };
   },
   A3: async () => {
-    const walk = srcWalk();
+    const walk = srcWalk("A3");
     const served = probeReading(MEASURED.replies.probe.envelope).served;
     const { scans } = srcScans();
     const showArgvFindings = scans.flatMap(scan => scan.showArgv.flatMap(argv => argvFindings(argv.tail, served).map(finding => `${argv.at} ${finding}`)));
@@ -1221,7 +1596,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     return reading;
   },
   B2: async () => {
-    const walk = srcWalk();
+    const walk = srcWalk("B2");
     const instanceReads = srcScans().scans.flatMap(scan => scan.instanceReads);
     expect(instanceReads, "a src read of the row key or of selection.matched").toEqual([]);
     return { ...walk, instanceReads };
@@ -1306,6 +1681,50 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       disagree,
     };
   },
+  MG2: async () => {
+    const measured = MEASURED.endOfOptions;
+    const readings = measured.replies.map(entry => ({
+      argv: entry.argv.join(" "),
+      ran: entry.exit === 3 && entry.command === SHOW_LEAF && entry.code === "RF_STORAGE_NOT_FOUND",
+      read: verbTail(entry.argv, "show") !== undefined,
+    }));
+    const disagree = readings.filter(entry => entry.ran !== entry.read).map(entry => entry.argv);
+    // Every measured argv carries the marker between "context" and "show", and both outcomes were measured.
+    const marked = measured.replies.every(entry => entry.argv.indexOf(END_OF_OPTIONS) > entry.argv.indexOf("context") && entry.argv.indexOf(END_OF_OPTIONS) < entry.argv.lastIndexOf("show"));
+    const kinds = { ran: readings.some(entry => entry.ran), refused: readings.some(entry => !entry.ran) };
+    expect({ marked, kinds, disagree }).toStrictEqual({ marked: true, kinds: { ran: true, refused: true }, disagree: [] });
+    return {
+      build: measured.build,
+      commit: measured.commit,
+      ran: readings.filter(entry => entry.ran).map(entry => entry.argv),
+      refused: readings.filter(entry => !entry.ran).map(entry => entry.argv),
+      disagree,
+    };
+  },
+  R13: async () => {
+    // The record's own REACHED and WALKED legs: over this run's live walks (rows T, A and B ran before row R), and over three
+    // hollows of the pinned state.
+    const listed = listedSrc().length;
+    const walks = (skip: string): Walk[] => WALK_PINS.filter(pin => pin !== skip).map(pin => ({ pin, read: listed }));
+    const pinned = (pin: string): string => ROSTER.reached.find(entry => entry.split(":")[0] === pin) ?? `${pin}:none`;
+    const ending = (pin: string, count: string): string[] => ROSTER.reached.map(entry => (entry.split(":")[0] === pin ? `${pin}:${count}` : entry));
+    const countOf = (pin: string): string => pinned(pin).split(":")[1] ?? "none";
+    const reading = {
+      residual: RESIDUALS.R13 ?? "<none>",
+      live: walkedFindings(WALKED, listed),
+      countMatchedB3: [...reachedFindings(ending("B3", countOf("B3"))), ...walkedFindings(walks(""), listed)],
+      countMatchedT4: [...reachedFindings(ending("T4", countOf("T4"))), ...walkedFindings(walks("T4"), listed)],
+      earlyReturnB3: [...reachedFindings(ending("B3", "2")), ...walkedFindings(walks(""), listed)],
+    };
+    expect(reading).toStrictEqual({
+      residual: "COUNT-MATCHED",
+      live: [],
+      countMatchedB3: [],
+      countMatchedT4: ["walk unread: T4"],
+      earlyReturnB3: [`reached B3:2, pinned ${pinned("B3")}`],
+    });
+    return reading;
+  },
   R9: async () => {
     const anchors = exportAnchors();
     const rowsWithout = (pin: string): Row[] => ROWS.map(row => ({ ...row, pins: row.pins.filter(entry => entry !== pin) }));
@@ -1344,7 +1763,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
 };
 
 const JUDGED_TITLE = "the judged set: the frozen shape, the out-of-file roster, the landed record, the follow-up's probes and the cases agree";
-const RECORD_TITLE = "the record: every registered test is in run mode and ran, and every pin reached its end with its pinned assertion count";
+const RECORD_TITLE = "the record: every registered test is in run mode and ran, every pin reached its end with its pinned assertion count, and every src-walk pin walked src";
 /** Each pin's witness, held to the roster a second time by the record. */
 const WITNESSED: Record<string, Json> = {};
 /** Each pin's end, with the assertion count its case reached. */
@@ -1352,13 +1771,14 @@ const REACHED: string[] = [];
 
 describe("wb-pfxo.9 context show instance census (RF-COMPOSITIONAL-ASSEMBLY-R10, absent-today leg)", () => {
   it(JUDGED_TITLE, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:5", "A:4", "B:3", "C:3", "F:1", "M:32", "R:10"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:5", "A:4", "B:3", "C:3", "F:1", "M:44", "R:13"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect(constants()).toStrictEqual(ROSTER.constants);
     expect(Object.keys(RESIDUALS), "every row R pin names its residual").toEqual(ROWS.find(row => row.id === "R")?.pins ?? []);
+    expect(exportAnchors().namedProbes, "the probes the two follow-up titles name").toEqual(["G13", "G13b", "G38", "P41", "E-DASHDASH"]);
     expect(anchorFindings(ROWS, RESIDUALS, CURES, ROSTER, exportAnchors()), "the roster, the landed record and the follow-up's probes").toEqual([]);
   });
 
@@ -1396,6 +1816,7 @@ describe("wb-pfxo.9 context show instance census (RF-COMPOSITIONAL-ASSEMBLY-R10,
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
     const rosterWitnesses = Object.fromEntries(ROSTER.rows.flatMap(entry => entry.pins.map(pin => [pin.id, pin.witness])));
     expect(WITNESSED, "every pin's witness, compared against the roster a second time").toStrictEqual(rosterWitnesses);
-    expect(REACHED, "every pin reached its end, in row order, with its pinned assertion count").toEqual([...ROSTER.reached]);
+    expect(reachedFindings(REACHED), "every pin reached its end, in row order, with its pinned assertion count (REACHED)").toEqual([]);
+    expect(walkedFindings(WALKED, listedSrc().length), "every src-walk pin walked src and read every module git lists (WALKED)").toEqual([]);
   });
 });

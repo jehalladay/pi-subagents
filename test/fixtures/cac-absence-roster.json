@@ -1,0 +1,286 @@
+{
+ "bead": "wb-zzb4",
+ "producer": "Library",
+ "pin": "e412851d9ce66caf09b11f11fcd04c572f35f910",
+ "program": "docs/programs/compositional\u002dautonomous\u002dcomputation-2026-10-18",
+ "filing": {
+  "export": ".beads/issues.jsonl",
+  "paragraphs": 2,
+  "sha256": "a7f823171bd451f76d715e0bdfb6844271e263f4d07032bdc9bfe14ea8fc55e8"
+ },
+ "spans": [
+  {
+   "site": "03-contracts-api.md:5",
+   "textBase64": "IyMgQ2FwYWJpbGl0eUJvdW5kYXJ5VjE=",
+   "sha256": "8ed5aa349d96c7e44bce749b1f581bcf3275a0072c9861bcdd62af3b03b30681"
+  },
+  {
+   "site": "03-contracts-api.md:18",
+   "textBase64": "IyMgT2JzZXJ2YXRpb25DZXJ0aWZpY2F0ZVYx",
+   "sha256": "fdc5a2422d922e8a3fe310aaea29b60cc36c60f1902522c3cded7521da6096db"
+  },
+  {
+   "site": "03-contracts-api.md:24",
+   "textBase64": "IyMgRXZpZGVuY2VDZXJ0aWZpY2F0ZVYx",
+   "sha256": "c1441226c9122f87294e75d5feceab61d9fc097dc1ddcf3125c64defb1c79467"
+  },
+  {
+   "site": "03-contracts-api.md:30",
+   "textBase64": "IyMgQ2FwYWJpbGl0eVJlcGxhY2VtZW50VmVyZGljdFYx",
+   "sha256": "a9721029338611421f489b7504ac0f5484d02ebd0942d810f5aaf3059b7ac2c5"
+  },
+  {
+   "site": "10-certified-composition-v2.md:53",
+   "textBase64": "KipBdXRob3JpdHlTbmFwc2hvdFJlZlYyKio=",
+   "sha256": "4e53cc81e6e009be999d9febd509f74367e1ab5358d2c63f0215ee445f865619"
+  },
+  {
+   "site": "10-certified-composition-v2.md:57",
+   "textBase64": "KipUeXBlZEVmZmVjdENvbnRyYWN0VjIqKg==",
+   "sha256": "43f4632b42e5f471ec15eb01155f5355cf7ef626f9617b2bd9c82ab653b5adf6"
+  },
+  {
+   "site": "10-certified-composition-v2.md:61",
+   "textBase64": "KipFdmlkZW5jZUNsYWltVjIqKg==",
+   "sha256": "c7d112b19cda167efd9c7c98c5c1cf74130a92ca1c8332ab866bc45b3103426e"
+  },
+  {
+   "site": "10-certified-composition-v2.md:65",
+   "textBase64": "KipSZXBsYWNlbWVudEFzc2Vzc21lbnRWMioq",
+   "sha256": "83f92868a8d45511ef241ae290737d52e3ffe55f2f630aab81810d454c43e58b"
+  },
+  {
+   "site": "11-certified-effect-admission-v3.md:19",
+   "textBase64": "KipUeXBlZENhcGFiaWxpdHlFZmZlY3RWMyoq",
+   "sha256": "a64e00839fbc36c28130e0169d166fbdd6a4f2bcee19505603280d6a18e9dec9"
+  },
+  {
+   "site": "11-certified-effect-admission-v3.md:26",
+   "textBase64": "KipTZW1hbnRpY0RlcGVuZGVuY3lDZXJ0aWZpY2F0ZVYxKio=",
+   "sha256": "181cf2ffded53a751e9b833a5a160cf77ab96d7495b0ab249047f3d85c464666"
+  },
+  {
+   "site": "11-certified-effect-admission-v3.md:33",
+   "textBase64": "KipUeXBlZENob2ljZVByb29mVjEqKg==",
+   "sha256": "35852720926733e1a2442ba496d936142e685b23c4f2dd4bcb0a3d59459accbc"
+  },
+  {
+   "site": "11-certified-effect-admission-v3.md:40",
+   "textBase64": "KipSZXBsYWNlbWVudEFzc2Vzc21lbnRWMyoq",
+   "sha256": "7b641017c75604a873d62576fb9cfeba2c187688f76448b633841e4a851e9c3c"
+  },
+  {
+   "site": "11-certified-typed-effects-v3.md:26",
+   "textBase64": "IyMgT3B0aW9uYWwgVHlwZWRFZmZlY3RDZXJ0aWZpY2F0ZVYzIGZpZWxkcyAobm90IGFuIGV4aXN0aW5nIEFQSSk=",
+   "sha256": "37fbb1a58bad096b41ade10aec2863869fe92257b06671addcc25e9dfa70725c"
+  },
+  {
+   "site": "12-generalized-choice-temporal-v4.md:17",
+   "textBase64": "KipDaG9pY2VDZXJ0aWZpY2F0ZVYyOioqIHJlYWxpemF0aW9uUmVmLCBjbGllbnRCb3VuZGFyeVZlcnNpb24sIGJyYW5jaFJlZnMsIGFjdGl2ZVN1cHBvcnRQb2xpY3ksIHNlbGVjdGlvbktlcm5lbFJlZiwgc2VsZWN0b3JPcGVyYXRpb25hbFJlYWRzLCBzZWxlY3RvclNlbWFudGljRGVwZW5kZW5jaWVzLCBvYnNlcnZhYmxlQ2hvaWNlVHJhY2VSZWYsIGJyYW5jaEVmZmVjdHMsIHVuaW9uV3JpdGVzLCBwYXJ0aWFsV3JpdGVEZXBlbmRlbmNpZXMsIGV4YWN0T3JBcHByb3hpbWF0ZUxvY2FsaXR5Qm91bmQsIHNlbGVjdG9yVFZCb3VuZCwgY2hlY2tlclRpZXIsIHNvdXJjZVJldmlzaW9ucywgSGFyZE9LUHJvb2ZSZWZzLCBzdGF0dXMu",
+   "sha256": "60bd2b31825fab0f4c252f355abd2d8c07d1302512c1d42c317b1bd0861fcd9b"
+  },
+  {
+   "site": "12-generalized-choice-temporal-v4.md:19",
+   "textBase64": "KipUZW1wb3JhbFJlbGlhbmNlQ2VydGlmaWNhdGVWMToqKiBzb3VyY2VBdXRob3JpdHlSZWZzLCBleGFjdFByZWRpY2F0ZVJlZiwgb3JpZ2luYWxFdmlkZW5jZVNuYXBzaG90LCBjaGVja2VyUG9saWN5U25hcHNob3QsIGNvbXBsZXRlbmVzc1Byb29mUmVmT2ZFbnZpcm9ubWVudFRyYW5zaXRpb25SZWxhdGlvbiwgY3VycmVudFVzZVByZWRpY2F0ZSwgc291cmNlR3VhcmRSZWNlaXB0IE9SIGluZHVjdGl2ZUludmFyaWFudFJlZiwgdmFsaWRpdHlIb3Jpem9uLCByZXZvY2F0aW9uSGFuZGxpbmcsIHByb29mVGllciwgYWRtaXNzaW9uVmVyZGljdC4gSW4gYW4gb2ZmbGluZSBmaW5pdGUgbW9kZWwgdGhlIGludmFyaWFudCBtYXkgYmUgZ3JlYXRlc3QtU2FmZTsgaXRzIHJlc3VsdCBpcyBNT0RFTF9QQVNTIHVudGlsIGNvbXBsZXRlIG5hdGl2ZSBzb3VyY2UgdHJhbnNpdGlvbiBjb3ZlcmFnZSBpcyBpbmRlcGVuZGVudGx5IHNob3duLg==",
+   "sha256": "bdd389528b7173edfeb8811556a4267bf818bd0eb20345bcd100047dacfd026e"
+  },
+  {
+   "site": "12-generalized-choice-temporal-v4.md:21",
+   "textBase64": "KipPYnNlcnZlckRlcGVuZGVuY2VWMjoqKiBmdWxsIHByb2R1Y3QgZmxhZyBPUiB2YWxpZC13b3JsZCBjb25zdHJhaW50IG1vZGVsLCB0cmFjZSBvYnNlcnZlciBoLCBqb2ludCBsYXcgbW9kZWwvc291cmNlIGRpZ2VzdCwgZXhhY3QgZXF1aXZhbGVuY2UgcGFydGl0aW9uLCBjYW5kaWRhdGUgc2VtYW50aWMgY29vcmRpbmF0ZSBzZXQsIGZpYmVyIGNvbm5lY3Rpdml0eSB3aXRuZXNzIChpZiBjbGFpbWluZyBsZWFzdCBzZXQpLCBlZGdlLXdlaWdodC9zaG9ydGVzdC1wYXRoIFRWIGJvdW5kLCBvcGVyYXRpb25hbCBhY2Nlc3MgTSwgc291cmNlIGZyZXNobmVzcyB0cmlnZ2Vycy4=",
+   "sha256": "9a72df654d7fdc9da5be4490a52b6b69bc48f719c440c3b96c09c35accdaea6a"
+  },
+  {
+   "site": "12-generalized-choice-temporal-v4.md:23",
+   "textBase64": "KipDb25jdXJyZW50U3dhcENlcnRpZmljYXRlVjE6KiogZml4ZWQgY2F1c2FsaXR5IGdyYXBoLCBpbmNvbXBhcmFibGUtZXZlbnQgcmVsYXRpb24sIGpvaW50IHB1YmxpYyB0cmFjZSBwcm9qZWN0aW9uLCBleGFjdC9lcHNpbG9uIHR3by1zdGVwIGNvbW11dGF0aW9uIGNlcnRpZmljYXRlIHBlciBzd2FwcGFibGUgcGFpciwgbmF0aXZlIGVuYWJsZWRuZXNzL2d1YXJkL2VmZmVjdCBhc3N1bXB0aW9ucywgc2NoZWR1bGVyIHNjb3BlIGFuZCBwZXItbGluZWFyaXphdGlvbiBib3VuZC4gSWYgYSBjbGllbnQgc2VlcyByYXcgb3JkZXJpbmcsIHRoZSBzd2FwIGNhbm5vdCBiZSBzaWxlbnRseSBjZXJ0aWZpZWQu",
+   "sha256": "eafa913a4ebd83fcd759cfb357b7ad771b14fc9700bc2f9af316f91cd2d56bd6"
+  },
+  {
+   "site": "12-generalized-choice-temporal-v4.md:25",
+   "textBase64": "KipMZWFybmluZ1RyYW5zZmVyU2FmZXR5VjE6KiogQ1ZJQyBpbnRlcmFjdGlvbi9jb29yZGluYXRpb24gcmVmcywgVHJhaW5pbmdXb3JrcyBhYnN0cmFjdGlvbi9saWZ0IHJlZnMsIHVuaWZvcm0gc291cmNlL21vZGVsIHRyYW5zaXRpb24gYW5kIHJld2FyZCBkaXNjcmVwYW5jaWVzLCBwb2xpY3ktY2xhc3MgYmlhcyDOtywgb3B0aW1pemF0aW9uIGdhcCDOviwgdmFsdWUgaG9yaXpvbiBILCBjb250cm9sIHNtYWxsLWdhaW4vaW52YXJpYW50IHByb29mIHdoZXJlIHJlbGV2YW50LCBzb3VyY2UgaGFyZCBwZXJtaXNzaW9ucywgbmF0aXZlIG91dGNvbWUgdGllciwgY2F1c2FsIGludGVydmVudGlvbiBkZXNpZ24gb3IgTk9UX0lERU5USUZJRUQu",
+   "sha256": "4d09e4c61447e17f2cdad840863f5025afad4b49b2ea467180f739fd574b7f5a"
+  }
+ ],
+ "statusLine": {
+  "site": "README.md:3",
+  "textBase64": "KioyMDI2LTEwLTE4IMK3IERlc2lnbiBvbmx5LioqIE5vIENBQyBwcm9kdWN0aW9uIFNESywgcnVudGltZSBvciBhZGFwdGVyIGlzIGNsYWltZWQgaW1wbGVtZW50ZWQgYnkgdGhlc2UgY29tbWl0cy4gTm8gTGVhbiBwcm9vZiB2ZXJpZmllZCBieSB0aGVzZSBkb2N1bWVudHMu",
+  "sha256": "3af2ab29ac3e44c6635191c57ce8ed8e1164b6f703a5a96617e397dee800a2db"
+ },
+ "excluded": [
+  {
+   "member": "Training\u0057orks",
+   "residual": "R-SIBLING"
+  }
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "one default-gate vitest reads those trees as text and asserts zero matches for the identifier set",
+   "pins": [
+    {
+     "id": "A1",
+     "quote": "one default-gate vitest reads those trees as text",
+     "witness": {
+      "claim": "f3376b033d8e40f8",
+      "roots": [
+       "src",
+       "test",
+       "qa",
+       "docs/workbench",
+       "examples"
+      ],
+      "floors": true,
+      "anchors": 5,
+      "unread": 0,
+      "walker": {
+       "hidden": true,
+       "nested": true,
+       "symlink": "unread"
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "quote": "asserts zero matches for the identifier set",
+     "witness": {
+      "claim": "7d6d7f1cf9ff4426",
+      "judged": 30,
+      "families": {
+       "schema": 18,
+       "status": 9,
+       "program": 3
+      },
+      "excluded": 1,
+      "product": 0,
+      "outside": 0,
+      "self": 0,
+      "bound": 1
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "zero Library/\u0043AC package names in package.json and vendor/dependency-lock.json",
+   "pins": [
+    {
+     "id": "B1",
+     "quote": "zero Library/\u0043AC package names in package.json",
+     "witness": {
+      "claim": "b084c8e8b20e64a6",
+      "manifest": "package.json",
+      "findings": 0,
+      "floor": true,
+      "controls": {
+       "hit": 11,
+       "quiet": 6
+      },
+      "imports": {
+       "findings": 0,
+       "controls": {
+        "hit": 4,
+        "quiet": 4
+       }
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "quote": "vendor/dependency-lock.json",
+     "witness": {
+      "claim": "f6dcdf0be1daead7",
+      "manifest": "vendor/dependency-lock.json",
+      "findings": 0,
+      "floor": true,
+      "root": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "shown red by a one-identifier mutant then green",
+   "pins": [
+    {
+     "id": "C1",
+     "quote": "shown red by a one-identifier mutant",
+     "witness": {
+      "claim": "567f8d56399ad998",
+      "needles": 30,
+      "sites": 5,
+      "killed": 150,
+      "exact": true
+     }
+    },
+    {
+     "id": "C2",
+     "quote": "then green",
+     "witness": {
+      "claim": "7235e01c575d240f",
+      "base": 0,
+      "restored": 150,
+      "real": 0
+     }
+    }
+   ]
+  },
+  {
+   "id": "D",
+   "label": "docs/workbench/18-decisions-and-risks.md gains one falsifiable sentence (\u0043AC is a Library design program — neither a provider, an authority nor an evidence source for Pi; its status words are not consumed) bound by that census",
+   "pins": [
+    {
+     "id": "D1",
+     "quote": "docs/workbench/18-decisions-and-risks.md gains one falsifiable sentence (\u0043AC is a Library design program — neither a provider, an authority nor an evidence source for Pi; its status words are not consumed)",
+     "witness": {
+      "claim": "7cc64cd51d500120",
+      "heading": "Library design programs",
+      "blocks": 1,
+      "sites": 1,
+      "controls": {
+       "reworded": false,
+       "commented": false,
+       "deleted": false,
+       "extra": false
+      }
+     }
+    },
+    {
+     "id": "D2",
+     "quote": "bound by that census",
+     "witness": {
+      "claim": "ed3b28fa843ab7df",
+      "blanked": 1,
+      "copy": 1,
+      "named": 0,
+      "floors": true
+     }
+    }
+   ]
+  }
+ ],
+ "residuals": [
+  {
+   "id": "R-SIBLING",
+   "family": "the filing's excluded member names a sibling program Pi cites (the landed BEADS status census and qa/workbench/status-ledger.mjs:30); it is not judged"
+  },
+  {
+   "id": "R-HOLDER",
+   "family": "a needle in a census module or a test/fixtures/ file a census module names by path is the census's data (the R719 class reading)"
+  },
+  {
+   "id": "R-SPELLING",
+   "family": "a needle in another case or separator escapes the case-sensitive reading"
+  },
+  {
+   "id": "R-ENCODED",
+   "family": "a needle escaped, base64-encoded or assembled at run time escapes the line reading (this census's own technique)"
+  },
+  {
+   "id": "R-SCOPE",
+   "family": "a needle outside src, test, qa, docs/workbench and examples (root pages, docs outside docs/workbench, .agents, vendor) is not walked"
+  },
+  {
+   "id": "R-ALIAS",
+   "family": "a Library or program package, provider or evidence read under a name carrying no judged segment escapes the name readings"
+  }
+ ]
+}

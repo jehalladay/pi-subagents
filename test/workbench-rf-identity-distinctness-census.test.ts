@@ -69,12 +69,37 @@
  * viewReaders, viewDetached, recordReadOnly and viewNarrowedInPlace (the view, its clone, its digest and its record);
  * walkNarrowed, listingNarrowed, srcListingNarrowed, newRoot and rootDropped (the walk's anchor); and, in the records case
  * after every judge recorded, a constructed empty view recorded as its own digest and not A1's (the view record itself).
- * THE F1 CLASS, ENUMERATED (wb-mzoc cut #3, the rule 19(c) enumerate-the-resolvable form): a judged module set narrowed, or a
- * judged module misread, while the floors hold. PINNED, and nothing broader: the walk held to Git's listing and the
- * tsconfig.json program (A1 walk); A1's view held to the walk, to Git's blob ids, to the compiler's own readings and to its own
- * READER reading (A1 judged); every tree judge's view, as it stands at the end of its case, held to A1's anchored view (A4, B1,
- * C1 and D1 viewHeld; the record's view digests). RESIDUALS of the class, each a named family with pinned quiet rows (see
- * RESIDUALS): R-PIN-LOCAL, R-CO-NARROWED and R-ROOT-MOVED. No other member of the class is claimed absent.
+ * THE GUARDS' SWEEPS (wb-yvoa F1: each guard's constructed controls above exercise one representative - one module, one
+ * reading field - so a guard hollowed partially past them, beside the shared-site edit it hides, survived): each of the three
+ * guards is also held to every module of A1's view by its sweep, each module alone and every module at once. walkSweep (the
+ * walk anchor): every walked module left out of the walk is unwalked and left out of Git's listing is unlisted, every root file
+ * of the tsconfig.json program left out of the walk is programUnwalked, every walk root held unjudged is an outside root, and an
+ * emptied walk or listing reads every module. anchorSweep (A1's judged anchor, over one-module trees and over the whole view):
+ * every module left out of a view is unjudged, read from another text is misread, altered in any one reading field is reread,
+ * and misstated in its READER standing is in the readers finding. digestSweep (the view digest): every module's one-module view
+ * digests apart from the empty view, under another key, with any one reading field altered and as a readers entry, and the
+ * whole view digests apart with any one reading field altered in every module. Every reading field is swept: FIELD_ALTERATIONS
+ * gives each field of ModuleReading an alteration (its mapped type names every field, so a field added without one does not
+ * type-check), and each swept reading's own keys are held to READING_FIELDS. A1 holds every sweep empty, so a guard blind,
+ * whatever its input, to one reading field (for every module or below one directory) or to the modules below one directory
+ * reds alone - wb-yvoa F1's partial hollows: the digest blind to members, to literals or below src/workbench/hosts, the reread
+ * comparing identifiers only, and the walk anchor blind below src/workbench/hosts. Each sweep's own constructed controls keep
+ * it live: run against a partial guard - the gate's measured shapes, constructed - it finds it: a digest blind to members
+ * (digestMembersBlind) or to literals (digestLiteralsBlind), an anchor rereading identifiers only (anchorIdentifiersOnly), and
+ * a digest, a judged anchor and a walk anchor blind below RUNTIME's directory (digestDirectoryBlind, anchorDirectoryBlind,
+ * walkDirectoryBlind); each control sweeps a sample of A1's view (the modules below RUNTIME's directory, the READERS and the
+ * first module of each walk root), the walk controls a sample walk of those modules with Git's listing and the program held to
+ * them.
+ * THE F1 CLASS, ENUMERATED (wb-mzoc cut #3, the rule 19(c) enumerate-the-resolvable form; wb-yvoa adds the guards' sweeps): a
+ * judged module set narrowed, or a judged module misread, while the floors hold. PINNED, and nothing broader: the walk held to
+ * Git's listing and the tsconfig.json program (A1 walk); A1's view held to the walk, to Git's blob ids, to the compiler's own
+ * readings and to its own READER reading (A1 judged); every tree judge's view, as it stands at the end of its case, held to A1's
+ * anchored view (A4, B1, C1 and D1 viewHeld; the record's view digests); and each of those three guards held, by its sweep, to
+ * every module of A1's view and every reading field, one module at a time and every module at once (A1 sweeps), so a guard
+ * blind, whatever its input, to a reading field or to the modules below a directory reds alone, with or without the shared-site
+ * edit it would hide (a guard blind only on inputs no sweep builds is R-GUARD-CONDITIONED).
+ * RESIDUALS of the class, each a named family with pinned quiet rows (see RESIDUALS): R-PIN-LOCAL, R-CO-NARROWED, R-ROOT-MOVED,
+ * R-GUARD-CONDITIONED and R-ANCHOR-SOURCE. No other member of the class is claimed absent.
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label):
  *  A, acceptance (a) and the first posture fact. A1 the readers' identity table: which rf identity names each READER spells
  *    (exactly the measured sets; the filing's "Pi's own render_id / transaction_id / bundle_revision_id reads" among them),
@@ -124,6 +149,13 @@
  * (QUIET_ROWS, by residual family) or an accepted form (ACCEPTED_FORMS) must read quiet, every other control must fire (a count
  * of 1 or more, a non-empty list, a ratio with a read) - so a positive control zeroed in this file and the roster together
  * still reds (X-WITNESS).
+ * FROZEN VOCABULARIES (wb-yvoa F2: the shared site splicing render_ref out of RENDER_MEMBERS on its second call hid a
+ * render_ref member from C1, whose controls spelled four of the five members): every module-scope constant a judge reads - the
+ * walk's and the anchors' vocabularies, the identity vocabularies and patterns, the residual and quiet-row tables, ROWS, ROSTER,
+ * VOCABULARY and the sweeps' field table - is frozen deep where it is bound (FROZEN; the judged-set case holds each one frozen
+ * and their names to the roster's scan.frozen), so a run-time edit of one throws where it runs; and C1's positive controls
+ * declare every RENDER_MEMBERS spelling, render_ref included (referenceMember), their spellings held to the roster's
+ * renderMembers, so a spelling dropped at run time also reds its own control.
  * RESIDUALS (named families, each with pinned quiet rows: QUIET_ROWS for the controls, the judged-set case for R-PIN-HOLLOW):
  * R-COMPOSED a name, prefix or pattern composed at run time (A1 composedName, B1 composedField, D1 composedPrefix); R-COMMENT a
  * comment naming one (A1, B1, D1 comment); R-ALIAS document text read through an alias of the output object outside the
@@ -144,7 +176,17 @@
  * positive A1.srcListingNarrowed: below src the program alone still sees it); R-ROOT-MOVED a root moved from WALK_ROOTS to
  * UNJUDGED_ROOTS with its floor, its modules and A1's walk controls that name it, in this file and the roster together (quiet
  * row A1.rootMoved, beside the positive A1.rootDropped: a root dropped from the walk alone reds, and a root moved while A1's
- * controls still name it reds through them).
+ * controls still name it reds through them); R-GUARD-CONDITIONED (wb-yvoa) a guard partial only on inputs no sweep builds:
+ * honest on each module alone and on every module at once, and blind below one directory when two or more but not all of its
+ * modules are off (the digest: on a view of two or more modules) - the shape of a narrowing below one directory, since each
+ * sweep reads one module or all of them (quiet rows A1.digestConditioned, A1.anchorConditioned and A1.walkConditioned: each
+ * sweep, run against such a guard, finds nothing, beside the positive digestDirectoryBlind, anchorDirectoryBlind and
+ * walkDirectoryBlind: the same guards unconditioned are found); R-ANCHOR-SOURCE (wb-yvoa) an outside anchor's own source served
+ * from the shared site - the compiler's second read (ownReadings, or the TypeScript compiler itself) or Git's blob ids - since
+ * a guard and its sweep hold a reading to whatever its source returns, never to where it came from (quiet rows A1.sourceReread
+ * and A1.sourceBlobs: the judged anchor fed the shared site's reading as its second read, or the reading's own blob id as
+ * Git's, finds nothing, beside the positive A1.alteredReading and A1.otherText: the real sources find the same readings);
+ * Git's listing and the program narrowed together with the walk are R-CO-NARROWED.
  * NOT CLAIMED, outside the F1 class (coordinated hollows of this file's own records - the wb-mzoc F2, F3 and F4 boundaries -
  * that no anchor outside this file and its roster sees): a control changed or reclassed together with its roster value and its
  * quiet-row or accepted-form entry, or a ratio control's compared count changed with its roster value (the control reading
@@ -153,8 +195,10 @@
  * roster together (the control reading reads the controls present, the named quiet rows and the accepted forms); the judged-set
  * case and the records case dropped from the run together, the records case skipping itself at run time, or the file's describe
  * skipped - nothing in the file then runs to see it (the collector's added-line marker scan refuses the skip-call spelling, not
- * the skipIf or runIf forms); and a case that returns its roster witness after padding its count with other assertions (COUNTED
- * counts assertions, not judge runs).
+ * the skipIf or runIf forms); a case that returns its roster witness after padding its count with other assertions (COUNTED
+ * counts assertions, not judge runs); and a sweep hollowed together with the guard it sweeps - one that skips, for the modules
+ * or fields its own constructed controls never exercise, the check that guard is blind to - since the constructed controls
+ * hold a sweep live, not complete (wb-yvoa).
  * Display paths added: none. Test-only: three spawns - A1's read-only git ls-files listing of the checkout, liveTree's
  * read-only git hash-object of the walked modules (it hashes, never writes an object), and A3's hermetic stub rf (tracked
  * scratch, the only PATH entry, an absolute-node shebang), so no installed rf ever runs; src, qa, examples, tsconfig.json and
@@ -178,29 +222,45 @@ import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/s
 type Json = null | boolean | number | string | Json[] | { [key: string]: Json };
 type JsonObject = { [key: string]: Json };
 
+/** A constant frozen deep where it is bound (wb-yvoa F2): it and every array, plain object and regular expression inside it, so a
+ * run-time edit of a judged vocabulary - a splice at the shared site, say - throws where it runs instead of narrowing what a
+ * later judge reads. */
+function frozen<T>(value: T): T {
+  if (value !== null && typeof value === "object" && !Object.isFrozen(value)) {
+    Object.freeze(value);
+    for (const entry of Object.values(value)) frozen(entry);
+  }
+  return value;
+}
+/** True when a value and every array, plain object and regular expression inside it are frozen (wb-yvoa F2). */
+function frozenDeep(value: unknown): boolean {
+  if (value === null || typeof value !== "object") return true;
+  return Object.isFrozen(value) && Object.values(value).every(frozenDeep);
+}
+
 const REPO = join(dirname(fileURLToPath(import.meta.url)), "..");
 const ROSTER_FILE = "test/fixtures/rf-identity-distinctness-roster.json";
 const BEAD_EXPORT = ".beads/issues.jsonl";
 const BEAD = "wb-hs2j.7";
 /** The Pi code paths judged: product sources, QA scripts and shipped examples (every module below them, at any depth). */
-const WALK_ROOTS = ["src", "qa", "examples"];
-const MODULE_EXTENSIONS = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx"];
+const WALK_ROOTS: readonly string[] = frozen(["src", "qa", "examples"]);
+const MODULE_EXTENSIONS: readonly string[] = frozen([".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx"]);
 /** Each floor sits below the module count measured at base bf06b20 (src 115, qa 62, examples 6). The floors are the empty-walk
  * guard only; the walked set itself is held to the outside listings below (wb-mzoc F1). */
-const FLOORS = { src: 100, qa: 55, examples: 5 };
+const FLOORS = frozen({ src: 100, qa: 55, examples: 5 });
 /** The walk's outside anchor (wb-mzoc F1): Git's own list of the checkout - tracked, and untracked but not ignored. */
-const LISTING = ["ls-files", "-z", "--cached", "--others", "--exclude-standard"];
+const LISTING: readonly string[] = frozen(["ls-files", "-z", "--cached", "--others", "--exclude-standard"]);
 /** The parsed texts' outside anchor (wb-mzoc U1): Git's own blob id of each walked module's file, its bytes hashed as they are
  * on disk (no filter, never written as an object). */
-const HASH_OBJECT = ["hash-object", "--no-filters", "--stdin-paths"];
+const HASH_OBJECT: readonly string[] = frozen(["hash-object", "--no-filters", "--stdin-paths"]);
 /** The one file name every judged module is parsed under (wb-mzoc U1), so the reader never sees a module's path. */
 const PARSE_NAME = "judged-module";
 /** The TypeScript compiler's extension forms (ts.Extension) that name no script. Every other form classes a listed path as a
  * module by the compiler's own vocabulary, so the listing is never classed by MODULE_EXTENSIONS, the walk's own predicate. */
-const NON_SCRIPT_FORMS: readonly string[] = [ts.Extension.Json, ts.Extension.TsBuildInfo];
+const NON_SCRIPT_FORMS: readonly string[] = frozen([ts.Extension.Json, ts.Extension.TsBuildInfo]);
 /** The top-level roots whose modules Git lists but the census does not judge: test (its helpers and fixtures plant rf
  * envelopes) and "." (the repository root's own files, the vitest configs). A listed module below any other root reds A1. */
-const UNJUDGED_ROOTS = [".", "test"];
+const UNJUDGED_ROOTS: readonly string[] = frozen([".", "test"]);
 /** The TypeScript program whose root files are a second outside listing of src (its include is src). */
 const PROGRAM_CONFIG = "tsconfig.json";
 /** The command every Pi rf envelope reader checks: a judged module holding it as a folded literal is an rf READER. */
@@ -208,7 +268,7 @@ const RENDER_COMMAND = "context.render";
 const CAPABILITY = "reactivefiber.render.preview";
 /** The family of each identity the filing names: (a) the data-model identities, (b) the component/occurrence identities, and
  * the namesake rf shares with another producer Pi reads (the Claude SDK's session_id). */
-const FAMILY_OF: Readonly<Record<string, "a" | "b" | "namesake">> = {
+const FAMILY_OF: Readonly<Record<string, "a" | "b" | "namesake">> = frozen({
   component_id: "b",
   component_instance_id: "b",
   occurrence_id: "b",
@@ -217,22 +277,22 @@ const FAMILY_OF: Readonly<Record<string, "a" | "b" | "namesake">> = {
   transaction_id: "a",
   session_id: "namesake",
   workspace_id: "a",
-};
+});
 /** The rf identities Pi's readers carry beside the filing's eight: the operation id names the preview, and the bundle is
  * acceptance (a)'s "bundle identity". */
-const CARRIED = ["operation_id", "bundle_revision_id"];
+const CARRIED: readonly string[] = frozen(["operation_id", "bundle_revision_id"]);
 /** The identity word forge shares with rf (forge.gate.status operation_id), judged beside the Claude SDK's session_id. */
-const PRODUCER_NAMESAKES = ["operation_id"];
+const PRODUCER_NAMESAKES: readonly string[] = frozen(["operation_id"]);
 /** The two identities Pi requires null in every reading it admits. */
-const NULL_ONLY = ["render_id", "transaction_id"];
+const NULL_ONLY: readonly string[] = frozen(["render_id", "transaction_id"]);
 /** The rf workspace id: the `id` of the envelope's workspace block. */
 const WORKSPACE_ID_READ = "workspace.id";
 /** An rf evidence reference prefix as the reader adapter mints it: rf-<kind>: ... */
-const REF_PREFIX = /^rf-[a-z-]+:/;
+const REF_PREFIX = frozen(/^rf-[a-z-]+:/);
 /** What a render-, transaction-, session-, component- or occurrence-typed key or reference would be named. */
-const IDENTITY_WORDS = /render|transaction|session|component|occurrence|candidate/i;
+const IDENTITY_WORDS = frozen(/render|transaction|session|component|occurrence|candidate/i);
 /** A regular expression or RegExp argument naming render ids. */
-const RENDER_PATTERN = /render|rfr/i;
+const RENDER_PATTERN = frozen(/render|rfr/i);
 /** The rf id family grammar (ids.py ID_PATTERN) as a source spelling. */
 const FAMILY_GRAMMAR = "rf[a-z]_";
 const RENDER_PREFIX = "rfr_";
@@ -242,7 +302,7 @@ const CLAUDE_ANCHOR = "src/workbench/claude-host.ts";
 const RUNTIME = "src/workflow/runtime.ts";
 /** The residual families the controls pin, each with its quiet rows (`<pin>.<control>`): a control named here must read quiet,
  * since its residual form escapes the judge; every other control of a witness must fire (wb-mzoc F3). */
-const QUIET_ROWS: Readonly<Record<string, readonly string[]>> = {
+const QUIET_ROWS: Readonly<Record<string, readonly string[]>> = frozen({
   "R-COMPOSED": ["A1.composedName", "B1.composedField", "D1.composedPrefix"],
   "R-COMMENT": ["A1.comment", "B1.comment", "D1.comment"],
   "R-ALIAS": ["D1.aliasOutsideReaders"],
@@ -253,18 +313,20 @@ const QUIET_ROWS: Readonly<Record<string, readonly string[]>> = {
   "R-PIN-LOCAL": ["A1.caseNarrowed", "A1.helperNarrowed"],
   "R-CO-NARROWED": ["A1.coNarrowedQa", "A1.coNarrowedExamples", "A1.coNarrowedSrc"],
   "R-ROOT-MOVED": ["A1.rootMoved"],
-};
+  "R-GUARD-CONDITIONED": ["A1.digestConditioned", "A1.anchorConditioned", "A1.walkConditioned"],
+  "R-ANCHOR-SOURCE": ["A1.sourceReread", "A1.sourceBlobs"],
+});
 /** The one quiet control that is no residual: a form the judge accepts (D1's sha256 digest of the document text). */
-const ACCEPTED_FORMS = ["D1.textDigest"];
+const ACCEPTED_FORMS: readonly string[] = frozen(["D1.textDigest"]);
 /** R-PIN-HOLLOW: the pins whose removal from every literal (ROWS, the frozen literal, IMPL, the roster) the bead-row anchor
  * cannot see - its quiet row in the judged-set case recomputes them. */
-const PIN_HOLLOW_MEMBERS = ["A1", "A2", "A3", "A4", "B1", "B2", "C1", "C2", "D1", "D2"];
-const RESIDUAL_FAMILIES = [...Object.keys(QUIET_ROWS), "R-PIN-HOLLOW"];
+const PIN_HOLLOW_MEMBERS: readonly string[] = frozen(["A1", "A2", "A3", "A4", "B1", "B2", "C1", "C2", "D1", "D2"]);
+const RESIDUAL_FAMILIES: readonly string[] = frozen([...Object.keys(QUIET_ROWS), "R-PIN-HOLLOW"]);
 /** The judges that read the shared tree (wb-mzoc U2), A1 first: each reads only its own view, and every view is held to A1's
  * anchored one. Held to the pins whose own case source calls liveTree. */
-const TREE_JUDGES = ["A1", "A4", "B1", "C1", "D1"];
+const TREE_JUDGES: readonly string[] = frozen(["A1", "A4", "B1", "C1", "D1"]);
 /** Names a member holding a render id would carry: the producer's spelling, its camelCase and the reference forms. */
-const RENDER_MEMBERS = ["render_id", "renderId", "renderID", "render_ref", "renderRef"];
+const RENDER_MEMBERS: readonly string[] = frozen(["render_id", "renderId", "renderID", "render_ref", "renderRef"]);
 
 /** The fixture workspaces: the host's own (the reading's root), a Pi workspace and an rf root the host authorizes apart. */
 const ROOT = "/fixture/rf-workspace";
@@ -300,7 +362,7 @@ const SECOND_OCCURRENCE = `${FIRST_OCCURRENCE}::2`;
 const INVOCATION = "inv-fixture-1";
 const OPERATION_REF = { provider: "workflow", type: "node-call", id: "call-fixture-1", scope: ROOT };
 /** Every fixture value by name, so a witness names the value it located instead of spelling it. */
-const VALUE_NAMES: Readonly<Record<string, string>> = {
+const VALUE_NAMES: Readonly<Record<string, string>> = frozen({
   OPERATION,
   SECOND_OPERATION,
   PROSE_OPERATION,
@@ -316,7 +378,7 @@ const VALUE_NAMES: Readonly<Record<string, string>> = {
   PI_ROOT,
   RF_ROOT,
   INVOCATION,
-};
+});
 
 interface Row {
   readonly id: string;
@@ -325,7 +387,7 @@ interface Row {
 }
 
 /** The judged rows; their shape is pinned below and held to the roster and the bead row. */
-const ROWS: readonly Row[] = [
+const ROWS: readonly Row[] = frozen([
   {
     id: "A",
     label:
@@ -350,7 +412,7 @@ const ROWS: readonly Row[] = [
       "(d) no Pi code parses model-generated prose to recover a render id for authoritative use: no module spells the rf render-id prefix, the rf id family grammar or a render-naming pattern, rf document text is read only to type-check and digest it, and render-id-shaped prose in a document reaches no projected or evidence field",
     pins: ["D1", "D2"],
   },
-];
+]);
 
 interface RosterPin {
   readonly id: string;
@@ -456,7 +518,7 @@ function readRoster(): Roster {
   };
 }
 
-const ROSTER = readRoster();
+const ROSTER = frozen(readRoster());
 
 const camel = (name: string): string => name.replace(/_([a-z])/g, (_match, letter: string) => letter.toUpperCase());
 interface Vocabularies {
@@ -492,12 +554,12 @@ function vocabularies(producer: Producer): Vocabularies {
       .sort(),
   };
 }
-const VOCABULARY = vocabularies(ROSTER.producer);
+const VOCABULARY = frozen(vocabularies(ROSTER.producer));
 const escaped = (word: string): string => word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const wordIn = (words: readonly string[]): RegExp => new RegExp(`(?<![A-Za-z0-9_])(?:${words.map(escaped).join("|")})(?![A-Za-z0-9_])`);
-const A_WORD = wordIn(VOCABULARY.aFamily);
-const B_WORD = wordIn(VOCABULARY.bFamily);
-const PREFIX_WORD = new RegExp(`(?<![A-Za-z0-9])(?:${VOCABULARY.prefixes.map(escaped).join("|")})`, "g");
+const A_WORD = frozen(wordIn(VOCABULARY.aFamily));
+const B_WORD = frozen(wordIn(VOCABULARY.bFamily));
+const PREFIX_WORD = frozen(new RegExp(`(?<![A-Za-z0-9])(?:${VOCABULARY.prefixes.map(escaped).join("|")})`, "g"));
 /** A producer grammar from the roster, compiled for JavaScript (Python's named groups spelled the JavaScript way). */
 const grammar = (field: string): RegExp => new RegExp((ROSTER.producer.grammar[field] ?? "(?!)").replace(/\(\?P</g, "(?<"));
 
@@ -586,7 +648,7 @@ function gitListing(): string[] {
   return [...new Set(listing.stdout.split("\0"))].filter(path => path.length > 0 && regularFile(join(REPO, path))).sort();
 }
 /** The script forms of the TypeScript compiler's extension vocabulary; a path ending in one is a module by the compiler. */
-const COMPILER_FORMS: readonly string[] = Object.values(ts.Extension).filter(form => !NON_SCRIPT_FORMS.includes(form));
+const COMPILER_FORMS: readonly string[] = frozen(Object.values(ts.Extension).filter(form => !NON_SCRIPT_FORMS.includes(form)));
 const compilerModule = (path: string): boolean => COMPILER_FORMS.some(form => path.toLowerCase().endsWith(form));
 /** A path's top-level root: its first segment, or "." for a file at the repository root. */
 const rootOf = (path: string): string => (path.includes("/") ? path.slice(0, path.indexOf("/")) : ".");
@@ -664,11 +726,11 @@ function unwrapped(node: ts.Node): { child: ts.Node; parent: ts.Node } {
   }
   return { child, parent };
 }
-const EQUALITY = new Set([ts.SyntaxKind.EqualsEqualsEqualsToken, ts.SyntaxKind.ExclamationEqualsEqualsToken, ts.SyntaxKind.EqualsEqualsToken, ts.SyntaxKind.ExclamationEqualsToken]);
+const EQUALITY: readonly ts.SyntaxKind[] = frozen([ts.SyntaxKind.EqualsEqualsEqualsToken, ts.SyntaxKind.ExclamationEqualsEqualsToken, ts.SyntaxKind.EqualsEqualsToken, ts.SyntaxKind.ExclamationEqualsToken]);
 /** True when the read is one operand of an (in)equality whose other operand is the literal null. */
 function comparedWithNull(node: ts.Node): boolean {
   const { child, parent } = unwrapped(node);
-  if (!ts.isBinaryExpression(parent) || !EQUALITY.has(parent.operatorToken.kind)) return false;
+  if (!ts.isBinaryExpression(parent) || !EQUALITY.includes(parent.operatorToken.kind)) return false;
   const other = parent.left === child ? parent.right : parent.left;
   return other.kind === ts.SyntaxKind.NullKeyword;
 }
@@ -800,7 +862,7 @@ function nullOnlyReads(reading: ModuleReading): { [name: string]: string } {
 const refPrefixes = (reading: ModuleReading): string[] =>
   [...new Set(reading.literals.filter(value => REF_PREFIX.test(value)).map(value => value.slice(0, value.indexOf(":") + 1)))].sort();
 /** The rf id prefixes a module spells in a literal or a regular expression. */
-const idPrefixes = (reading: ModuleReading): string[] => [...new Set([...reading.literals, ...reading.regexes].flatMap(value => value.match(PREFIX_WORD) ?? []))].sort();
+const idPrefixes = (reading: ModuleReading): string[] => [...new Set([...reading.literals, ...reading.regexes].flatMap(value => [...value.matchAll(PREFIX_WORD)].map(match => match[0])))].sort();
 /** D1's judge for one module: a literal or pattern spelling the render prefix or the family grammar, or a pattern naming render. */
 function renderPatternFindings(path: string, reading: ModuleReading): string[] {
   return [
@@ -882,6 +944,8 @@ function guardReads(tree: Pick<TreeReading, "modules" | "readers">, judge: (view
   judge(view);
   return Number(viewDigest(view) !== taken);
 }
+/** The compiler's own reading of each of `paths` (compilerReading), by path: judgedAnchor's second read (wb-yvoa F1). */
+const ownReadings = (paths: readonly string[]): ReadonlyMap<string, ModuleReading> => new Map(paths.map(path => [path, compilerReading(path)]));
 interface JudgedAnchor {
   readonly unjudged: string[];
   readonly misread: string[];
@@ -893,10 +957,11 @@ interface JudgedAnchor {
  * not Git's (J-READ) - the judged modules whose reading is not the compiler's own reading of the listed file (a reading altered
  * after its parse, or parsed under another script kind), and the judged modules whose READER standing in the view's readers
  * list is not their own compiler reading's (it holds the render command literal), so a readers list filtered or widened reds.
- * A const binding, like walkAnchor, heldToA1 and the view's helpers, so nothing that runs later can replace it. */
-const judgedAnchor = (tree: Pick<TreeReading, "walk" | "blobs">, view: JudgedView): JudgedAnchor => {
+ * The compiler's own readings are the view's modules' (ownReadings) unless the caller passes them: A1 takes them once and
+ * shares them with its sweep (wb-yvoa F1). A const binding, like walkAnchor, heldToA1 and the view's helpers, so nothing that
+ * runs later can replace it. */
+const judgedAnchor = (tree: Pick<TreeReading, "walk" | "blobs">, view: JudgedView, own: ReadonlyMap<string, ModuleReading> = ownReadings([...view.modules.keys()])): JudgedAnchor => {
   const judged = [...view.modules];
-  const own = new Map(judged.map(([path]) => [path, compilerReading(path)]));
   const ownReaders = judged.filter(([path]) => own.get(path)?.literals.includes(RENDER_COMMAND) === true).map(([path]) => path);
   return {
     unjudged: tree.walk.modules.filter(path => !view.modules.has(path)),
@@ -937,6 +1002,95 @@ const readingOf = (view: Pick<JudgedView, "modules">, path: string): ModuleReadi
   const reading = view.modules.get(path);
   if (reading === undefined) throw new Error(`the walk read no ${path}`);
   return reading;
+};
+
+/** A value the sweeps write into a reading (wb-yvoa F1); no module spells it. */
+const ALTERED = "wb-yvoa-altered";
+/** One alteration per reading field (wb-yvoa F1), each giving the field a value no reading holds: a list gains one entry, a
+ * count gains one, the blob id becomes another text's. Its mapped type names every field of ModuleReading, so a field added
+ * without an alteration does not type-check. */
+const FIELD_ALTERATIONS: { readonly [Field in keyof ModuleReading]: (reading: ModuleReading) => ModuleReading } = frozen({
+  identifiers: reading => ({ ...reading, identifiers: [...reading.identifiers, ALTERED] }),
+  literals: reading => ({ ...reading, literals: [...reading.literals, ALTERED] }),
+  regexes: reading => ({ ...reading, regexes: [...reading.regexes, ALTERED] }),
+  reads: reading => ({ ...reading, reads: [...reading.reads, { name: ALTERED, nullCompared: false }] }),
+  members: reading => ({ ...reading, members: [...reading.members, ALTERED] }),
+  nullTypedMembers: reading => ({ ...reading, nullTypedMembers: [...reading.nullTypedMembers, ALTERED] }),
+  textReads: reading => ({ ...reading, textReads: [...reading.textReads, { object: ALTERED, use: "other" }] }),
+  workspaceIdReads: reading => ({ ...reading, workspaceIdReads: reading.workspaceIdReads + 1 }),
+  nativeEvidenceCalls: reading => ({ ...reading, nativeEvidenceCalls: reading.nativeEvidenceCalls + 1 }),
+  textBlob: reading => ({ ...reading, textBlob: gitBlobOf(ALTERED) }),
+});
+/** Every reading field the sweeps alter, in a reading's own key order; each swept reading's keys are held to it. */
+const READING_FIELDS: readonly (keyof ModuleReading)[] = frozen(Object.keys(FIELD_ALTERATIONS) as (keyof ModuleReading)[]);
+/** A guard as its sweep runs it (wb-yvoa F1): the view digest, A1's judged anchor and the walk anchor, or a constructed partial
+ * one (the sweeps' own controls). */
+type DigestGuard = (view: JudgedView) => string;
+type AnchorGuard = (tree: Pick<TreeReading, "walk" | "blobs">, view: JudgedView, own: ReadonlyMap<string, ModuleReading>) => JudgedAnchor;
+type WalkGuard = (tree: Pick<TreeReading, "walk" | "listing" | "program">, roots?: readonly string[]) => WalkAnchor;
+/** True when two path lists hold the same paths. */
+const samePaths = (found: readonly string[], expected: readonly string[]): boolean => JSON.stringify([...found].sort()) === JSON.stringify([...expected].sort());
+/** The digest's sweep (wb-yvoa F1): what a digest does not move with over every module of a view - alone, as a one-module view:
+ * its keys not READING_FIELDS, its digest the empty view's, the same under another key, the same with any one reading field
+ * altered, and the same as a readers entry - and over the whole view: the same with any one reading field altered in every
+ * module at once. Empty for viewDigest; its own controls run it against partial digests. */
+const digestSweep = (view: JudgedView, digest: DigestGuard = viewDigest): string[] => {
+  const none = digest({ modules: new Map(), readers: [] });
+  const one = (path: string, reading: ModuleReading): string => digest({ modules: new Map([[path, reading]]), readers: [] });
+  const whole = digest(view);
+  const everyModule = (change: (reading: ModuleReading) => ModuleReading): JudgedView => ({ modules: new Map([...view.modules].map(([path, reading]) => [path, change(reading)])), readers: [...view.readers] });
+  return [
+    ...[...view.modules].flatMap(([path, reading]) => {
+      const alone = one(path, reading);
+      return [
+        ...(JSON.stringify(Object.keys(reading)) === JSON.stringify(READING_FIELDS) ? [] : [`${path}: fields`]),
+        ...(alone === none ? [`${path}: module`] : []),
+        ...(one(`${path}/${ALTERED}`, reading) === alone ? [`${path}: key`] : []),
+        ...READING_FIELDS.filter(field => one(path, FIELD_ALTERATIONS[field](reading)) === alone).map(field => `${path}: ${field}`),
+        ...(digest({ modules: new Map(), readers: [path] }) === none ? [`${path}: readers`] : []),
+      ];
+    }),
+    ...READING_FIELDS.filter(field => digest(everyModule(FIELD_ALTERATIONS[field])) === whole).map(field => `every module: ${field}`),
+  ];
+};
+/** The judged anchor's sweep (wb-yvoa F1): what an anchor does not find over every module of a view - alone, as a one-module
+ * tree, and every module at once: the modules left out of an empty view (unjudged), their blob ids another text's (misread),
+ * any one reading field altered (reread), and their READER standing misstated - every non-reader listed, every reader left out
+ * (readers). Empty for judgedAnchor; its own controls run it against partial anchors. */
+const anchorSweep = (tree: Pick<TreeReading, "walk" | "blobs">, view: JudgedView, own: ReadonlyMap<string, ModuleReading>, anchor: AnchorGuard = judgedAnchor): string[] => {
+  const ownReader = (path: string): boolean => own.get(path)?.literals.includes(RENDER_COMMAND) === true;
+  const on = (paths: readonly string[]): Pick<TreeReading, "walk" | "blobs"> => ({ ...tree, walk: { ...tree.walk, modules: [...paths] } });
+  const altered = (paths: readonly string[], change: (reading: ModuleReading) => ModuleReading): JudgedView => ({ modules: new Map(paths.map(path => [path, change(readingOf(view, path))])), readers: [] });
+  const sweep = (paths: readonly string[], label: string): string[] => [
+    ...(samePaths(anchor(on(paths), { modules: new Map(), readers: [] }, own).unjudged, paths) ? [] : [`${label}: unjudged`]),
+    ...(samePaths(anchor(on(paths), altered(paths, FIELD_ALTERATIONS.textBlob), own).misread, paths) ? [] : [`${label}: misread`]),
+    ...READING_FIELDS.filter(field => !samePaths(anchor(on(paths), altered(paths, FIELD_ALTERATIONS[field]), own).reread, paths)).map(field => `${label}: ${field}`),
+    ...(samePaths(anchor(on(paths), { modules: new Map(paths.map(path => [path, readingOf(view, path)])), readers: paths.filter(path => !ownReader(path)) }, own).readers, paths) ? [] : [`${label}: readers`]),
+  ];
+  const paths = [...view.modules.keys()];
+  return [...paths.flatMap(path => sweep([path], path)), ...sweep(paths, "every module")];
+};
+/** The walk anchor's sweep (wb-yvoa F1): what a walk anchor does not find - every walked module alone left out of the walk
+ * (unwalked) and out of Git's listing (unlisted), every root file of the program alone left out of the walk (programUnwalked),
+ * every walk root alone held unjudged (outsideRoots), and every module at once: the walk emptied (unwalked, programUnwalked)
+ * and the listing emptied (unlisted). Empty for walkAnchor; its own controls run it against partial walk anchors. */
+const walkSweep = (tree: Pick<TreeReading, "walk" | "listing" | "program">, anchor: WalkGuard = walkAnchor): string[] => {
+  const walked = tree.walk.modules;
+  const on = (modules: readonly string[], listing: readonly string[]): Pick<TreeReading, "walk" | "listing" | "program"> => ({ walk: { ...tree.walk, modules: [...modules] }, listing: [...listing], program: [...tree.program] });
+  const without = (paths: readonly string[], path: string): string[] => paths.filter(entry => entry !== path);
+  const unwalkedOne = new Map(walked.map(path => [path, anchor(on(without(walked, path), tree.listing))]));
+  const leftOut = (path: string): WalkAnchor => unwalkedOne.get(path) ?? anchor(on(without(walked, path), tree.listing));
+  return [
+    ...walked.flatMap(path => [
+      ...(samePaths(leftOut(path).unwalked, [path]) ? [] : [`${path}: unwalked`]),
+      ...(samePaths(anchor(on(walked, without(tree.listing, path))).unlisted, [path]) ? [] : [`${path}: unlisted`]),
+    ]),
+    ...tree.program.filter(path => !samePaths(leftOut(path).programUnwalked, [path])).map(path => `${path}: programUnwalked`),
+    ...WALK_ROOTS.filter(root => !anchor(on(walked, tree.listing), WALK_ROOTS.filter(other => other !== root)).outsideRoots.includes(root)).map(root => `${root}: outsideRoots`),
+    ...(samePaths(anchor(on([], tree.listing)).unwalked, walked) ? [] : ["every module: unwalked"]),
+    ...(samePaths(anchor(on([], tree.listing)).programUnwalked, tree.program) ? [] : ["every module: programUnwalked"]),
+    ...(samePaths(anchor(on(walked, [])).unlisted, walked) ? [] : ["every module: unlisted"]),
+  ];
 };
 /** A snippet read as a READER module: it carries the render command literal the readers check. */
 const asReader = (snippet: string): string => `const COMMAND = "${RENDER_COMMAND}";\n${snippet}`;
@@ -1177,7 +1331,8 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     try {
       const modulesFloorMet = floorsMet(tree);
       const walk = walkAnchor(tree);
-      const judged = judgedAnchor(tree, view);
+      const own = ownReadings([...view.modules.keys()]);
+      const judged = judgedAnchor(tree, view, own);
       const table = Object.fromEntries(view.readers.map(path => [path, spelled(readingOf(view, path), VOCABULARY.readerTable)]));
       const nullOnly = Object.fromEntries(view.readers.map(path => [path, nullOnlyReads(readingOf(view, path))]));
       const nullTyped = Object.fromEntries(view.readers.map(path => [path, readingOf(view, path).nullTypedMembers.filter(name => NULL_ONLY.includes(name))]));
@@ -1207,6 +1362,10 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       expect(judged.misread, "judged modules parsed from a text other than the listed file's own bytes (git hash-object)").toEqual([]);
       expect(judged.reread, "judged modules whose reading is not the compiler's own reading of the listed file").toEqual([]);
       expect(judged.readers, "judged modules whose READER standing in the view is not their own compiler reading's").toEqual([]);
+      // wb-yvoa F1: each guard swept over every module of A1's view and every reading field, alone and at once, so a guard
+      // blind to a reading field or below a directory reds here, with or without the shared-site edit it would hide.
+      const sweeps = { walk: walkSweep(tree), anchor: anchorSweep(tree, view, own), digest: digestSweep(view) };
+      expect(sweeps, "what each guard does not find, swept over every module of A1's view and every reading field").toStrictEqual({ walk: [], anchor: [], digest: [] });
       expect(view.readers, "the judged modules holding the render command literal").toEqual(["src/workbench/native-evidence.ts", "src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"]);
       expect(shippedSpelled, `the filing's shipped reads (${ROSTER.shippedReads.join(", ")}) are spelled by a READER`).toBe(true);
       expect(
@@ -1226,9 +1385,10 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       const readerPath = view.readers[0] ?? RUNTIME;
       const anchorOf = (modules: Map<string, ModuleReading>, readers: string[] = [], path = RUNTIME): JudgedAnchor =>
         judgedAnchor({ ...tree, walk: { ...tree.walk, modules: [path] } }, { modules, readers });
-      // The view's own controls (wb-mzoc U2): its digest moves with each key, blob id, reading field and the readers list, its
-      // clone stays as taken when the tree it was taken from changes in place, and a recorded digest refuses replacement and
-      // deletion.
+      // The view's own controls (wb-mzoc U2; wb-yvoa F3 states what they move): its digest moves with one key set (viewKeys: the
+      // runtime module against none), one blob id (viewBlob), one reading field (viewReading: the identifiers) and one readers
+      // list (viewReaders) - every module's key, reading fields and readers entry are digestSweep's, above - its clone stays as
+      // taken when the tree it was taken from changes in place, and a recorded digest refuses replacement and deletion.
       const runtimeView: JudgedView = { modules: new Map([[RUNTIME, runtimeReading]]), readers: [] };
       const differs = (other: JudgedView): number => Number(viewDigest(other) !== viewDigest(runtimeView));
       const detached = (): number => {
@@ -1261,6 +1421,51 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       const examplesModule = firstBelow("examples");
       const srcModule = tree.program[0] ?? "src/";
       const unrooted = walked.filter(path => rootOf(path) !== "qa");
+      // The sweeps' own controls (wb-yvoa F1): each sweep, run against a partial guard - the gate's measured shapes, constructed -
+      // finds it, and run against a guard partial only when two or more but not all of its modules are off finds nothing
+      // (R-GUARD-CONDITIONED). Each control sweeps a sample of A1's view - the modules below RUNTIME's directory, the READERS
+      // and the first module of each walk root - and the walk controls a sample walk of the same modules, Git's listing and the
+      // program held to them (a root without a sampled module would read as unjudged to the root check whatever the guard).
+      const directory = RUNTIME.slice(0, RUNTIME.lastIndexOf("/") + 1);
+      const inDirectory = (path: string): boolean => path.startsWith(directory);
+      const outsideDirectory = (paths: readonly string[]): string[] => paths.filter(path => !inDirectory(path));
+      const someOff = (paths: readonly string[], all: number): string[] => (paths.length > 1 && paths.length < all ? outsideDirectory(paths) : [...paths]);
+      const samplePaths = [...view.modules.keys()].filter(path => inDirectory(path) || view.readers.includes(path) || WALK_ROOTS.some(root => path === firstBelow(root)));
+      const sample: JudgedView = { modules: new Map(samplePaths.map(path => [path, readingOf(view, path)])), readers: [...view.readers] };
+      const sampleTree = { ...tree, walk: { ...tree.walk, modules: samplePaths } };
+      const sampleWalk = {
+        walk: { ...tree.walk, modules: samplePaths },
+        listing: tree.listing.filter(path => !compilerModule(path) || !WALK_ROOTS.includes(rootOf(path)) || samplePaths.includes(path)),
+        program: tree.program.filter(path => samplePaths.includes(path)),
+      };
+      const fieldBlind =
+        (change: (reading: ModuleReading) => ModuleReading): DigestGuard =>
+        seen =>
+          viewDigest({ modules: new Map([...seen.modules].map(([path, reading]) => [path, change(reading)])), readers: seen.readers });
+      const directoryBlind: DigestGuard = seen => viewDigest({ modules: new Map([...seen.modules].filter(([path]) => !inDirectory(path))), readers: seen.readers });
+      const anchorNarrowed =
+        (narrow: (paths: readonly string[], all: number) => string[]): AnchorGuard =>
+        (on, seen, readings) => {
+          const found = judgedAnchor(on, seen, readings);
+          const all = on.walk.modules.length;
+          return { unjudged: narrow(found.unjudged, all), misread: narrow(found.misread, all), reread: narrow(found.reread, all), readers: narrow(found.readers, all) };
+        };
+      const identifiersOnly: AnchorGuard = (on, seen, readings) => ({
+        ...judgedAnchor(on, seen, readings),
+        reread: [...seen.modules].filter(([path, reading]) => JSON.stringify(reading.identifiers) !== JSON.stringify(readings.get(path)?.identifiers)).map(([path]) => path),
+      });
+      const walkNarrowedBy =
+        (narrow: (paths: readonly string[], all: number) => string[]): WalkGuard =>
+        (on, roots = WALK_ROOTS) => {
+          const found = walkAnchor(on, roots);
+          const listedIn = on.listing.filter(path => compilerModule(path) && roots.includes(rootOf(path))).length;
+          return { ...found, unwalked: narrow(found.unwalked, listedIn), unlisted: narrow(found.unlisted, on.walk.modules.length), programUnwalked: narrow(found.programUnwalked, on.program.length) };
+        };
+      expect(walkFinds(walkAnchor(sampleWalk)), "the sample walk, its listing and its program agree").toBe(0);
+      const finds = (unfound: readonly string[]): number => Number(unfound.length > 0);
+      // R-ANCHOR-SOURCE (wb-yvoa): the judged anchor fed the shared site's altered reading as its own second read, or a reading's
+      // own blob id as Git's, finds nothing - beside alteredReading and otherText, where the real sources find them.
+      const sharedReading = new Map([[RUNTIME, { ...runtimeReading, identifiers: [] }]]);
       const controls = {
         propertyRead: ratio("const id = result.render_id;\n", "render_id"),
         nullCompare: ratio("if (result.render_id !== null) throw refused();\n", "render_id"),
@@ -1309,8 +1514,20 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
           ),
           [...UNJUDGED_ROOTS, "qa"].sort(),
         ),
+        digestMembersBlind: finds(digestSweep(sample, fieldBlind(reading => ({ ...reading, members: [] })))),
+        digestLiteralsBlind: finds(digestSweep(sample, fieldBlind(reading => ({ ...reading, literals: [] })))),
+        digestDirectoryBlind: finds(digestSweep(sample, directoryBlind)),
+        digestConditioned: finds(digestSweep(sample, seen => (seen.modules.size > 1 ? directoryBlind(seen) : viewDigest(seen)))),
+        anchorIdentifiersOnly: finds(anchorSweep(sampleTree, sample, own, identifiersOnly)),
+        anchorDirectoryBlind: finds(anchorSweep(sampleTree, sample, own, anchorNarrowed(outsideDirectory))),
+        anchorConditioned: finds(anchorSweep(sampleTree, sample, own, anchorNarrowed(someOff))),
+        walkDirectoryBlind: finds(walkSweep(sampleWalk, walkNarrowedBy(outsideDirectory))),
+        walkConditioned: finds(walkSweep(sampleWalk, walkNarrowedBy(someOff))),
+        sourceReread: judgedAnchor({ ...tree, walk: { ...tree.walk, modules: [RUNTIME] } }, { modules: sharedReading, readers: [] }, sharedReading).reread.length,
+        sourceBlobs: judgedAnchor({ ...tree, walk: { ...tree.walk, modules: [RUNTIME] }, blobs: new Map([[RUNTIME, gitBlobOf("")]]) }, { modules: new Map([[RUNTIME, readModule(scriptKindOf(RUNTIME), "")]]), readers: [] })
+          .misread.length,
       };
-      return done("A1", { modulesFloorMet, walk: json(walk), judged: json(judged), readers: [...view.readers], table, nullOnly, nullTyped, prefixes, typedPrefixes, outside, shippedSpelled, controls });
+      return done("A1", { modulesFloorMet, walk: json(walk), judged: json(judged), sweeps, readers: [...view.readers], table, nullOnly, nullTyped, prefixes, typedPrefixes, outside, shippedSpelled, controls });
     } finally {
       recordOnce(VIEWS, "A1", viewDigest(view));
     }
@@ -1523,17 +1740,25 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       keys: ["nativeId", "producerRelease", "provider", "sourceBasis"],
     });
     const members = (source: string): number => snippet(source).members.filter(name => RENDER_MEMBERS.includes(name)).length;
+    // wb-yvoa F2: one positive control per RENDER_MEMBERS spelling, render_ref included (referenceMember); the spellings they
+    // declare are held to the roster's renderMembers, outside any run-time edit of the constant.
+    const positive = {
+      interfaceMember: "interface Handoff { render_id: string }\n",
+      camelMember: "const handoff = { renderId: id };\n",
+      shorthandMember: "const handoff = { renderRef };\n",
+      classField: "class Handoff { renderID = id; }\n",
+      referenceMember: "interface Handoff { render_ref: string }\n",
+    };
+    const controlSpellings = [...new Set(Object.values(positive).flatMap(source => snippet(source).members))].sort();
+    expect(controlSpellings, "the spellings C1's positive controls declare: every renderMembers spelling of the roster").toEqual([...strings(ROSTER.scan.renderMembers, "scan.renderMembers")].sort());
     const controls = {
-      interfaceMember: members("interface Handoff { render_id: string }\n"),
-      camelMember: members("const handoff = { renderId: id };\n"),
-      shorthandMember: members("const handoff = { renderRef };\n"),
-      classField: members("class Handoff { renderID = id; }\n"),
+      ...Object.fromEntries(Object.entries(positive).map(([name, source]) => [name, members(source)])),
       renamedMember: members("const handoff = { handoffRef: id };\n"),
     };
     // wb-mzoc U2: the view C1 judged, as it stands at the end of its case, is A1's anchored view.
     const viewHeld = heldToA1("C1", view);
     expect(viewHeld, "C1 judged A1's anchored view: the same keys, readings and readers").toBe(true);
-    return done("C1", { renderSpellings, renderMembers, runtimeBuildsFromEvidence, committedEvidence, viewHeld, controls });
+    return done("C1", { renderSpellings, renderMembers, runtimeBuildsFromEvidence, committedEvidence, controlSpellings, viewHeld, controls });
   },
   C2: () => {
     const first = previewReading();
@@ -1641,6 +1866,43 @@ function renderSpellingsOf(reading: ModuleReading): { identifiers: number; liter
   return { identifiers: reading.identifiers.filter(name => name === "render_id" || name === "renderId").length, literals: reading.literals.filter(value => word.test(value)).length };
 }
 
+/** Every module-scope constant a judge reads, by name (wb-yvoa F2): each is frozen deep where it is bound; the judged-set case
+ * holds each one frozen and the names to the roster's scan.frozen. The map itself is frozen shallow, so the check reads each
+ * binding's own freeze (a deep freeze here would freeze every member whatever its binding did). */
+const FROZEN: Readonly<Record<string, unknown>> = Object.freeze({
+  WALK_ROOTS,
+  MODULE_EXTENSIONS,
+  FLOORS,
+  LISTING,
+  HASH_OBJECT,
+  NON_SCRIPT_FORMS,
+  UNJUDGED_ROOTS,
+  FAMILY_OF,
+  CARRIED,
+  PRODUCER_NAMESAKES,
+  NULL_ONLY,
+  REF_PREFIX,
+  IDENTITY_WORDS,
+  RENDER_PATTERN,
+  QUIET_ROWS,
+  ACCEPTED_FORMS,
+  PIN_HOLLOW_MEMBERS,
+  RESIDUAL_FAMILIES,
+  TREE_JUDGES,
+  RENDER_MEMBERS,
+  VALUE_NAMES,
+  ROWS,
+  ROSTER,
+  VOCABULARY,
+  A_WORD,
+  B_WORD,
+  PREFIX_WORD,
+  COMPILER_FORMS,
+  EQUALITY,
+  FIELD_ALTERATIONS,
+  READING_FIELDS,
+});
+
 describe("wb-hs2j.7 rf typed identity distinctness census (RF-REACTIVE-CONTEXT-ASSEMBLY-R8)", () => {
   afterEach(() => {
     if (originalPath === undefined) Reflect.deleteProperty(process.env, "PATH");
@@ -1662,6 +1924,12 @@ describe("wb-hs2j.7 rf typed identity distinctness census (RF-REACTIVE-CONTEXT-A
     expect(
       TREE_JUDGES.filter(pin => sources[pin]?.includes(pin === "A1" ? 'recordOnce(VIEWS, "A1", viewDigest(view))' : `heldToA1("${pin}", view)`) !== true),
       "tree judges whose case does not record the view it read",
+    ).toEqual([]);
+    // wb-yvoa F2: every module-scope constant a judge reads is frozen deep, so a run-time edit of one - a splice of
+    // RENDER_MEMBERS at the shared site, say - throws where it runs.
+    expect(
+      Object.keys(FROZEN).filter(name => !frozenDeep(FROZEN[name])),
+      "module-scope constants a judge reads that are not frozen deep",
     ).toEqual([]);
     // wb-mzoc F4: this case runs first and reads the task tree as collected, so a records case skipped, set to todo,
     // inverted or deleted reds here, before the records case could have run.
@@ -1694,6 +1962,8 @@ describe("wb-hs2j.7 rf typed identity distinctness census (RF-REACTIVE-CONTEXT-A
         acceptedForms: ACCEPTED_FORMS,
         pinHollowMembers: PIN_HOLLOW_MEMBERS,
         treeJudges: TREE_JUDGES,
+        readingFields: READING_FIELDS,
+        frozen: Object.keys(FROZEN),
         renderCommand: RENDER_COMMAND,
         capability: CAPABILITY,
         familyOf: FAMILY_OF,

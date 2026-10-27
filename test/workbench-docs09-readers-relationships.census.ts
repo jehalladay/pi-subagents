@@ -17,17 +17,23 @@
  *   a missing title), so the label is only ever carried by the gate's own report.
  * - UNPINNED HALVES: five clauses have no landed case at base 1a36ece (CLAIM_BASE, the trunk this cut merges). Each is
  *   listed WITH a reason and a title probe, and SLOT_ROUTING records who holds its pin flip as the bead store read at
- *   that sha: an open producer (RA4/b wb-5uh and wb-4ap.17, RA5/b wb-4ap.13) or a blocked one (RA7/a,b wb-04s, wb-w12),
+ *   that sha: an open producer (RA4/c wb-5uh, RA5/b wb-4ap.13) or a blocked one (RA7/a,b wb-04s, wb-w12),
  *   whose lander pins the half in the same commit, or, where the store holds no producer (RA2/b), the census owner
  *   wb-752.15. A closed bead whose acceptance quoted a clause without landing a case that evidences it is named as such
  *   (RA2/b wb-6ze.3, RA5/b wb-6ze.7). Every claim is dated by that sha, never by a day. The probe is a REPORTER-VERIFIED
  *   title probe: it tests the registered case names the gate's own report holds (fullName), never a file's text, so a
  *   comment, a string or a docs quotation can never move it (the false-red class of the 06:52Z landing-merge red). A
- *   registered case that names the clause turns the half red until it is pinned. The RA5/b and RA4/b probes carry their
+ *   registered case that names the clause turns the half red until it is pinned. The RA5/b and RA4/c probes carry their
  *   producers' wording (typed directional refs, related-to, a bounded or HX-scoped neighborhood, ancestry or traversal;
- *   verdict axes, gated_commit); the bare kind verbs (produces, consumes, depends, blocks, verifies), a bare
+ *   gate axes, verdict axes); the bare kind verbs (produces, consumes, depends, blocks, verifies), a bare
  *   neighborhood, a path traversal and a relation kind stay out, because registered names at that sha already carry
  *   them and would flip the half falsely.
+ * - RA4 SPLIT (wb-4ap.17, COLLECTIVE-ADAPTATION-R17): the Forge clause "build revision and gate axes" was one unpinned half
+ *   whose open producers were wb-5uh (the gate axes) and wb-4ap.17 (the build revision), routed to whichever landed its
+ *   case first, splitting the half if that case evidenced only one of the two. wb-4ap.17 landed the build revision: the
+ *   gate.run reader echoes the reply's own run-start pin (data.gated_commit, with data.gated_tree read beside it) as the
+ *   verdict's subjectBasis and reads it against the host's head, so RA4/b "build revision" is pinned to those cases and
+ *   the gate axes stand alone as the unpinned RA4/c, still routed to wb-5uh.
  * - RECORD HONESTY (gate cmd_e7d15ee63790 U1): each unpinned reason is checked against SLOT_ROUTING: it names the base
  *   sha and no calendar day, names every producer with the landing-order duty, claims that no producer is on file only
  *   where none is, and names each closed quoter with its reading. These rows prove the record agrees with itself; that
@@ -52,11 +58,6 @@
  *   table's row/half/pin-count shape and RA6's identity (clauses and bindings) are literals, never derived from ROWS, and
  *   the RA6 ANCHOR reads the live document: every sentence of the RF bullet is covered clause by clause by RA6's halves,
  *   so a half removed from every literal of this file (CT5/CT6) is still red against the docs.
- * - RA6 f (wb-grmo.2, RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2, the until-then leg; folded into wb-973.17's RF bullet, which
- *   landed first): the bullet's fourth sentence, an RF prediction rendering as unverified context with no epistemic status
- *   claimed. Half f binds three cases of the wb-grmo.2 freeze-and-flip census (test/workbench-rf-epistemic-status-census.test.ts)
- *   under their describe paths: T2, the captured SCG-R11 roster naming no epistemic key, and Z1 and Z2, src naming no
- *   epistemic word and the adapter composing none. That census quotes this half's clause and this file's pin of it (its row D1).
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -157,26 +158,6 @@ const GRAPH_AC2: Pin = {
   suite: [GRAPH_VIEW_SUITE],
 };
 
-/** wb-grmo.2: the freeze-and-flip census RA6/f binds, and the describe paths of its rows T and Z (outermost first). */
-const EPISTEMIC_CENSUS = "test/workbench-rf-epistemic-status-census.test.ts";
-const EPISTEMIC_SUITE = "wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2)";
-const EPISTEMIC_TRIGGER_SUITE = [EPISTEMIC_SUITE, "T a default-gate test reads the SCG-R11 fixture roster and fails when a captured envelope names epistemic_status or a scenario key before those cases exist (freeze-and-flip)"];
-const EPISTEMIC_CLAIMS_SUITE = [EPISTEMIC_SUITE, "Z until then Pi claims nothing"];
-const GRMO_T2: Pin = {
-  file: EPISTEMIC_CENSUS,
-  title: "T2 fails when a captured envelope names epistemic_status (ARMED): no key of the roster's four lists spells an epistemic form, and the roster diff reds a result-level one",
-  suite: EPISTEMIC_TRIGGER_SUITE,
-};
-const GRMO_Z1: Pin = {
-  file: EPISTEMIC_CENSUS,
-  title: "Z1 Pi claims nothing in code: no src module's identifiers, strings, templates or regexes spell an epistemic, scenario, uncertified or speculative word",
-  suite: EPISTEMIC_CLAIMS_SUITE,
-};
-const GRMO_Z2: Pin = {
-  file: EPISTEMIC_CENSUS,
-  title: "Z2 Pi composes no epistemic claim: an envelope marked with each RF-WM-001 word, the shipped block markers or the scenario form projects and evidences byte for byte as its unmarked twin",
-  suite: EPISTEMIC_CLAIMS_SUITE,
-};
 /** wb-973.17: the describe paths of the wb-973.8 SCG-R8 and wb-973.9 SCG-R9 cases RA6 b-e bind (outermost first). */
 const BUNDLE_SUITE = ["bundle revision from result.bundle_revision_id (wb-973.8 SCG-R8)"];
 const FRESHNESS_SUITE = ["observation rows from result.observations (wb-973.10 SCG-R10)", "observation freshness, replay and degradation (wb-973.9 SCG-R9)"];
@@ -202,6 +183,29 @@ const R9_NOT_FRESH: Pin = {
 };
 const R9_PROVIDER_PARTIAL = inSuite(REACTIVEFIBER_OBSERVER, "SCG-R9 provider: the full-shape envelope with fresh and not-fresh rows passes unchanged and projects partial end to end", FRESHNESS_SUITE);
 const R9_REFRESH = inSuite(REACTIVEFIBER_OBSERVER, "SCG-R9: after ObservationProjection.refresh every not-fresh row leaves the node partial, and freshness stays projection-owned", FRESHNESS_SUITE);
+/** wb-4ap.17 (R17): the gate.run reader's cases, under their describe path; they evidence RA4/b's build revision. */
+const FORGE_OPERATION_OBSERVER = "test/workbench-forge-operation-observer.test.ts";
+const BASIS_SUITE = ["wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis"];
+const R17_ECHO = inSuite(
+  FORGE_OPERATION_OBSERVER,
+  "wb-4ap.17 (R17 a): the measured clean reply's subjectBasis echoes data.gated_commit verbatim, and data.gated_tree is read separately as the pin's second half",
+  BASIS_SUITE,
+);
+const R17_HEAD = inSuite(
+  FORGE_OPERATION_OBSERVER,
+  "wb-4ap.17 (R17 b): statusText says current only when the pin equals the supplied observed head, and stale when the head moved on, its tree differs or the run gated a dirty tree",
+  BASIS_SUITE,
+);
+const R17_NULL_PIN = inSuite(
+  FORGE_OPERATION_OBSERVER,
+  "wb-4ap.17 (R17 c): the measured null pin (a directory in no repository) yields no subjectBasis, one diagnostic naming the missing pin, basis indeterminate and never a success tone",
+  BASIS_SUITE,
+);
+const R17_LIVE = inSuite(
+  FORGE_OPERATION_OBSERVER,
+  "wb-4ap.17 (R17 i): through the live observer the host's head seam is read when the reply settles - equal settles current with the pinned subjectBasis, a later head stale, no head indeterminate",
+  BASIS_SUITE,
+);
 
 /**
  * The trunk sha this cut merges, at which every unpinned-half claim in the table was verified: the bead store's title,
@@ -272,12 +276,13 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
         pin(FORGE_OBSERVER, "F1: a historical last_result is not a verdict: unknown tone and partial coverage, never a success tone"),
         pin(PROJECTION_INVALIDATION, "carries forge-operation evidence refs onto ObservedNode and keeps the 32-reference cap"),
       ]),
+      pinned("b", "build revision", "gated_commit", [R17_ECHO, R17_HEAD, R17_NULL_PIN, R17_LIVE]),
       unpinned(
-        "b",
-        "build revision and gate axes",
-        `no landed case evidences this clause at base ${CLAIM_BASE}: the forge cases pinned above speak of verdict, evidence and projection, and the landed wb-4ap collective-adaptation forge cases echo a per-package invalidation-basis descriptor (its digest and freshness word, docs/07's source basis); none states a build revision or a per-axis gate state. Its producers are open: wb-5uh (W08 Forge provider: "Preserve native verdict axes, source basis") owns the gate axes, and wb-4ap.17 (a gate.run consumer whose subjectBasis echoes the envelope's gated_commit, decided under wb-5uh) owns the build revision; whichever lands its case first ${landerPins("RA4/b")}, splitting the half if that case evidences only one of the two.`,
-        /build revision|gate axes|verdict axes|gated[_ ]commit/iu,
-        "projects the forge build revision and the gate axes",
+        "c",
+        "gate axes",
+        `no landed case evidences this clause at base ${CLAIM_BASE}: the forge cases pinned above speak of verdict, evidence, projection and, since wb-4ap.17 split RA4/b by landing the build revision, the gate.run reply's own run-start pin as the verdict's basis; none states a per-axis gate state. Its producer is open: wb-5uh (W08 Forge provider: "Preserve native verdict axes, source basis") owns the gate axes; whichever lands its case ${landerPins("RA4/c")}.`,
+        /gate axes|verdict axes/iu,
+        "projects the forge gate axes",
       ),
     ],
   },
@@ -309,8 +314,6 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
       // wb-973.17 (SCG-R17 (b)): not-fresh rows demote to partial; freshness stays the projection's own reading.
       pinned("d", "Reused, replayed or non-observed observation rows demote an RF preview to partial", "partial", [R9_NOT_FRESH, R9_PROVIDER_PARTIAL]),
       pinned("e", "the projection's freshness is the host's reading witness, never a currentness claim about the rows", "freshness", [R9_REFRESH]),
-      // wb-grmo.2 (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2, until then): an RF prediction is unverified context; Pi claims no epistemic status.
-      pinned("f", "An RF prediction renders as unverified context, and Pi claims no epistemic status for a render", "epistemic", [GRMO_T2, GRMO_Z1, GRMO_Z2]),
     ],
   },
   {
@@ -425,8 +428,8 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
 ]);
 
 const EXPECTED_ROW_IDS: readonly string[] = ["RA1", "RA2", "RA3", "RA4", "RA5", "RA6", "RA7", "RA8", "RA9", "RA10", "RA11", "RL1", "RL2", "RL3", "RL4", "RL5"];
-const EXPECTED_UNPINNED: readonly string[] = ["RA2/b", "RA4/b", "RA5/b", "RA7/a", "RA7/b"];
-const DISTINCT_PINS = 46;
+const EXPECTED_UNPINNED: readonly string[] = ["RA2/b", "RA4/c", "RA5/b", "RA7/a", "RA7/b"];
+const DISTINCT_PINS = 47;
 
 /**
  * wb-973.17 (standing rule 16): the table's shape frozen as a literal, never derived from ROWS - every half as
@@ -439,7 +442,8 @@ const FROZEN_HALF_SHAPE: readonly string[] = [
   "RA3/a:2",
   "RA3/b:1",
   "RA4/a:2",
-  "RA4/b:0",
+  "RA4/b:4",
+  "RA4/c:0",
   "RA5/a:2",
   "RA5/b:0",
   "RA6/a:2",
@@ -447,7 +451,6 @@ const FROZEN_HALF_SHAPE: readonly string[] = [
   "RA6/c:1",
   "RA6/d:2",
   "RA6/e:1",
-  "RA6/f:3",
   "RA7/a:0",
   "RA7/b:0",
   "RA8/a:2",
@@ -488,11 +491,25 @@ const FROZEN_RA6: readonly string[] = [
   "d | test/workbench-reactivefiber-observer.test.ts | observation rows from result.observations (wb-973.10 SCG-R10) > observation freshness, replay and degradation (wb-973.9 SCG-R9) | SCG-R9 provider: the full-shape envelope with fresh and not-fresh rows passes unchanged and projects partial end to end",
   "e | clause | the projection's freshness is the host's reading witness, never a currentness claim about the rows",
   "e | test/workbench-reactivefiber-observer.test.ts | observation rows from result.observations (wb-973.10 SCG-R10) > observation freshness, replay and degradation (wb-973.9 SCG-R9) | SCG-R9: after ObservationProjection.refresh every not-fresh row leaves the node partial, and freshness stays projection-owned",
-  "f | clause | An RF prediction renders as unverified context, and Pi claims no epistemic status for a render",
-  "f | test/workbench-rf-epistemic-status-census.test.ts | wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2) > T a default-gate test reads the SCG-R11 fixture roster and fails when a captured envelope names epistemic_status or a scenario key before those cases exist (freeze-and-flip) | T2 fails when a captured envelope names epistemic_status (ARMED): no key of the roster's four lists spells an epistemic form, and the roster diff reds a result-level one",
-  "f | test/workbench-rf-epistemic-status-census.test.ts | wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2) > Z until then Pi claims nothing | Z1 Pi claims nothing in code: no src module's identifiers, strings, templates or regexes spell an epistemic, scenario, uncertified or speculative word",
-  "f | test/workbench-rf-epistemic-status-census.test.ts | wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2) > Z until then Pi claims nothing | Z2 Pi composes no epistemic claim: an envelope marked with each RF-WM-001 word, the shipped block markers or the scenario form projects and evidences byte for byte as its unmarked twin",
 ];
+/**
+ * wb-4ap.17 (standing rule 16): row RA4's identity frozen as a literal in FROZEN_RA6's form, never derived from ROWS, so the
+ * split cannot be hollowed: a shortened clause, a dropped pin, a pin swapped for an unrelated passing case or a dropped half
+ * reds here, and the RA4 anchor reads the live Forge bullet beside it.
+ */
+const FROZEN_RA4: readonly string[] = [
+  "a | clause | native operation/verdict/artifact evidence",
+  "a | test/workbench-forge-observer.test.ts |  | F1: a historical last_result is not a verdict: unknown tone and partial coverage, never a success tone",
+  "a | test/workbench-projection-invalidation.test.ts |  | carries forge-operation evidence refs onto ObservedNode and keeps the 32-reference cap",
+  "b | clause | build revision",
+  "b | test/workbench-forge-operation-observer.test.ts | wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis | wb-4ap.17 (R17 a): the measured clean reply's subjectBasis echoes data.gated_commit verbatim, and data.gated_tree is read separately as the pin's second half",
+  "b | test/workbench-forge-operation-observer.test.ts | wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis | wb-4ap.17 (R17 b): statusText says current only when the pin equals the supplied observed head, and stale when the head moved on, its tree differs or the run gated a dirty tree",
+  "b | test/workbench-forge-operation-observer.test.ts | wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis | wb-4ap.17 (R17 c): the measured null pin (a directory in no repository) yields no subjectBasis, one diagnostic naming the missing pin, basis indeterminate and never a success tone",
+  "b | test/workbench-forge-operation-observer.test.ts | wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis | wb-4ap.17 (R17 i): through the live observer the host's head seam is read when the reply settles - equal settles current with the pinned subjectBasis, a later head stale, no head indeterminate",
+  "c | clause | gate axes",
+];
+/** The Forge bullet's label in the live document; the RA4 anchor reads the sentence after it. */
+const FORGE_BULLET_LABEL = "Forge: ";
 /** A row's identity in FROZEN_RA6's form: each half's clause, then one line per pin. */
 const identityOf = (row: Row): string[] =>
   row.halves.flatMap(half => [
@@ -521,7 +538,7 @@ interface SlotRouting {
  */
 const SLOT_ROUTING: Readonly<Record<string, SlotRouting>> = freezeDeep<Readonly<Record<string, SlotRouting>>>({
   "RA2/b": { openProducers: [], blockedProducers: [], closedQuoters: ["wb-6ze.3"] },
-  "RA4/b": { openProducers: ["wb-5uh", "wb-4ap.17"], blockedProducers: [], closedQuoters: [] },
+  "RA4/c": { openProducers: ["wb-5uh"], blockedProducers: [], closedQuoters: [] },
   "RA5/b": { openProducers: ["wb-4ap.13"], blockedProducers: [], closedQuoters: ["wb-6ze.7"] },
   "RA7/a": { openProducers: [], blockedProducers: ["wb-04s", "wb-w12"], closedQuoters: [] },
   "RA7/b": { openProducers: [], blockedProducers: ["wb-04s"], closedQuoters: [] },
@@ -561,7 +578,7 @@ const READERS_BULLETS: readonly string[] = [
   "Furnace: native Run status/event stream and possible descendant references.",
   "Forge: native operation/verdict/artifact evidence, build revision and gate axes.",
   "HX: query coverage/bounds/query basis, and optional graph traversal of linked native refs.",
-  "RF: render context provenance and context artifact references. An RF snapshot's definition basis is bundle_revision_id when the envelope carries it, with graph_revision_id remaining the topology identity only. Reused, replayed or non-observed observation rows demote an RF preview to partial, and the projection's freshness is the host's reading witness, never a currentness claim about the rows. An RF prediction renders as unverified context, and Pi claims no epistemic status for a render.",
+  "RF: render context provenance and context artifact references. An RF snapshot's definition basis is bundle_revision_id when the envelope carries it, with graph_revision_id remaining the topology identity only. Reused, replayed or non-observed observation rows demote an RF preview to partial, and the projection's freshness is the host's reading witness, never a currentness claim about the rows.",
   "MechanicalWorkflows: invocation outcome, service spans if instrumented; arbitrary plain TypeScript calls are not magically discoverable.",
   "Beads: supported work readiness and linkage, never reconstructed from heuristics alone.",
 ];
@@ -745,12 +762,33 @@ describe("wb-752.15 docs/workbench/09 § Reader adapters and § Relationships ce
     expect(rf).toHaveLength(1);
     const clauses = (ROWS.find(row => row.id === "RA6")?.halves ?? []).map(half => half.clause);
     const sentences = (rf[0] ?? "").slice(RF_BULLET_LABEL.length).split(/(?<=\.) /u);
-    expect(sentences).toHaveLength(4);
+    expect(sentences).toHaveLength(3);
     for (const sentence of sentences) {
       const rest = clauses.reduce((left, clause) => left.replace(clause, ""), sentence);
       expect(rest, `the RF bullet sentence ${JSON.stringify(sentence)} states text no RA6 half binds`).toMatch(CONNECTIVES);
     }
     for (const clause of clauses) expect(sentences.filter(sentence => sentence.includes(clause)), `RA6 clause ${JSON.stringify(clause)}`).toHaveLength(1);
+  });
+
+  it("AC1 (wb-4ap.17): row RA4 binds the Forge bullet's build-revision clause to the R17 gate.run reader cases by file, describe path and verbatim title, keeps the gate axes unpinned, frozen as a literal", () => {
+    const ra4 = ROWS.find(row => row.id === "RA4");
+    expect(ra4).toBeDefined();
+    if (ra4 === undefined) return;
+    expect(identityOf(ra4)).toEqual(FROZEN_RA4);
+    expect(ra4.halves.map(half => `${half.id}:${isPinned(half) ? "pinned" : "unpinned"}`)).toEqual(["a:pinned", "b:pinned", "c:unpinned"]);
+  });
+
+  it("RA4 anchor (wb-4ap.17, rule 16): the LIVE docs/09 Forge bullet is covered clause by clause by RA4's halves, read from the document, never from this file's literals", () => {
+    const found = docsSection(readRepo(DOCS_FILE), READERS, 2, [DOCS_PARENT]);
+    expect(found.ok, found.why).toBe(true);
+    const items = found.blocks.flatMap(block => (block.kind === "list" ? block.items.map(item => item.text) : []));
+    const forge = items.filter(item => item.startsWith(FORGE_BULLET_LABEL));
+    expect(forge).toHaveLength(1);
+    const bullet = (forge[0] ?? "").slice(FORGE_BULLET_LABEL.length);
+    const clauses = (ROWS.find(row => row.id === "RA4")?.halves ?? []).map(half => half.clause);
+    const rest = clauses.reduce((left, clause) => left.replace(clause, ""), bullet);
+    expect(rest, `the Forge bullet ${JSON.stringify(bullet)} states text no RA4 half binds`).toMatch(CONNECTIVES);
+    for (const clause of clauses) expect(bullet.split(clause).length - 1, `RA4 clause ${JSON.stringify(clause)}`).toBe(1);
   });
 
   it("RL3: the half is pinned to wb-6ze.34's named graph-view cases under its named describe, not left unpinned", () => {
@@ -818,8 +856,9 @@ describe("wb-752.15 liveness: the adopted judge is not accept-all (the real repo
 
   /**
    * wb-ro6u (owner tune M:16183): the explicit budget of the next case ALONE (the R546 sizing recipe, file-local); every
-   * other case, this file and the suite keep vitest's 5000 ms default. The case is one synchronous judge() over all 56
-   * pins of the table (15 files; wb-grmo.2's RA6/f adds three pins in one more file, not re-measured): judge() reads the default tier's whole report and analyses each pinned file with its
+   * other case, this file and the suite keep vitest's 5000 ms default. The case is one synchronous judge() over all 60
+   * pins of the table (16 files; wb-4ap.17 added RA4/b's four R17 cases and their file to the 56 pins and 15 files this
+   * budget was sized at): judge() reads the default tier's whole report and analyses each pinned file with its
    * relative import closure on the calling thread, so the case awaits nothing that a tighter setup could bound. vitest
    * fails a synchronous body that returns after its budget but cannot interrupt one, so the budget moves only that
    * duration verdict, never an assertion. Measured at base 4c97422 against a full default-tier report (17037 cases,
@@ -913,7 +952,7 @@ describe("wb-752.15 attribution: a mutated report is red for its TRUE cause, on 
     const registers = loadReport(REPORT);
     registers.testResults.push({ name: join(ROOT, "test/decoy.test.ts"), assertionResults: [{ title: "projects the forge build revision and the gate axes", fullName: "decoy projects the forge build revision and the gate axes", ancestorTitles: ["decoy"], status: "passed" }] });
     const lines = flipFindings(registers);
-    expect(namedRows(lines)).toEqual(["RA4/b"]);
+    expect(namedRows(lines)).toEqual(["RA4/c"]);
     expect(lines[0]).toContain("[pin-flip]");
     const mentions = loadReport(REPORT);
     mentions.testResults.push({
@@ -1076,11 +1115,16 @@ describe("wb-752.15 record honesty: each unpinned half names who holds its pin f
   });
 
   it.each([
+    "projects the forge gate axes",
     "projects the forge build revision and the gate axes",
-    "subjectBasis echoes the gate.run envelope's gated_commit verbatim",
     "preserves the native verdict axes of a gate.status answer",
-  ])("the RA4/b probe fires on the wording of its producers wb-5uh and wb-4ap.17, and only RA4/b flips: %s", name => {
-    expect(namedRows(flipFindings(reportOf([name])))).toEqual(["RA4/b"]);
+  ])("the RA4/c probe fires on the wording of its producer wb-5uh, and only RA4/c flips: %s", name => {
+    expect(namedRows(flipFindings(reportOf([name])))).toEqual(["RA4/c"]);
+  });
+
+  it("wb-4ap.17: the build-revision wording now names the pinned RA4/b, so a gated_commit or build-revision case flips no half", () => {
+    expect(flipFindings(reportOf(["subjectBasis echoes the gate.run envelope's gated_commit verbatim", "projects the forge build revision", R17_ECHO.title]))).toEqual([]);
+    expect(PINNED_HALVES.filter(({ row, half }) => row.id === "RA4" && half.id === "b").map(({ half }) => half.pins.length)).toEqual([4]);
   });
 
   it("the widened probes stay quiet on near misses: a bare neighborhood, a path traversal (also under HX), a relation kind, a typed refusal, gate.run, bare axes and a bare ref-kind verb", () => {

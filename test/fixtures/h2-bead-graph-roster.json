@@ -150,7 +150,8 @@
      "issues.jsonl",
      "interactions.jsonl"
     ],
-    "own": true
+    "own": true,
+    "tracked": true
    },
    {
     "pin": "T1",
@@ -329,8 +330,8 @@
    }
   ],
   "families": {
-   "h2": "harness2[-_\\s]+reactive[-_\\s]+evolution|tsx[-_\\s]h2[-_\\s](?:0[0-5]|adr)(?![a-z0-9])|rftsx[-_](?:bhmrd|7sy4c|8er6b|e9a5e|auqdi|rupqh)(?![a-z0-9])",
-   "prerequisites": "API-PIN|TSX-FED-01|harness2-api-pin",
+   "h2": "harness2[-_\\s.]*reactive[-_\\s.]*evolution|tsx[-_\\s.]?h2[-_\\s.]?(?:0?[0-5]|adr)(?![a-z0-9])|rftsx[-_.]?(?:bhmrd|7sy4c|8er6b|e9a5e|auqdi|rupqh)(?![a-z0-9])",
+   "prerequisites": "API[-_\\s.]?PIN|TSX[-_\\s.]?FED[-_\\s.]?0?1|harness2[-_\\s.]?api[-_\\s.]?pin",
    "marker": "(?<![\\w-])ruled (ADOPT|REJECT)(?![\\w-])(?![\\s()\\[\\],;:/|'\"`]*(?:(?:or|and|nor)(?![\\w-])[\\s()\\[\\],;:/|'\"`]*)?(?:ADOPT|REJECT|DEFER)(?![\\w-]))",
    "verdictWords": "(?<![\\w-])(?:ADOPT|REJECT)(?![\\w-])"
   },
@@ -414,11 +415,80 @@
    {
     "pin": "R12",
     "name": "R-PROSE-RECORDS"
+   },
+   {
+    "pin": "R13",
+    "name": "R-NEGATED-PROSE"
+   },
+   {
+    "pin": "R14",
+    "name": "R-COORDINATED-PIN"
    }
   ],
   "followUpRows": [
    "E",
    "K"
+  ],
+  "carryRows": [
+   "V",
+   "X"
+  ],
+  "carryCures": [
+   {
+    "finding": "F1",
+    "pins": [
+     "V1",
+     "V2"
+    ],
+    "named": "mutants"
+   },
+   {
+    "finding": "F2",
+    "pins": [
+     "W1",
+     "W2",
+     "W3",
+     "W4",
+     "W5",
+     "W6",
+     "W7",
+     "W8"
+    ],
+    "named": {
+     "ids": "W\\d+"
+    }
+   },
+   {
+    "finding": "F3",
+    "pins": [
+     "H1",
+     "H2",
+     "H3",
+     "H4",
+     "H5"
+    ],
+    "named": {
+     "ids": "H\\d+"
+    }
+   },
+   {
+    "finding": "F4",
+    "pins": [
+     "G-1",
+     "G-2",
+     "G-3"
+    ],
+    "named": {
+     "ids": "G-\\d+"
+    }
+   },
+   {
+    "finding": "F5",
+    "pins": [
+     "TR1"
+    ],
+    "named": "candidates"
+   }
   ]
  },
  "rows": [
@@ -605,6 +675,11 @@
       ],
       "driven": [
        true
+      ],
+      "controls": [
+       false,
+       true,
+       false
       ]
      }
     }
@@ -870,6 +945,10 @@
        "paired:title-only-adopt ADOPT",
        "paired:adopt-trailing-period ADOPT",
        "paired:padded-crlf ADOPT"
+      ],
+      "readerOnly": [
+       "reader-only:1 unknown (store unreachable) (reference no-verdict)",
+       "reader-only:2 unknown (store unreachable) (reference ADOPT)"
       ]
      }
     }
@@ -1084,6 +1163,12 @@
        "titleOnly": {
         "verdict": "no-verdict",
         "judged": []
+       },
+       "unreadable": {
+        "verdict": "unknown (store unreachable)",
+        "judged": [
+         "c:packets"
+        ]
        }
       },
       "blocksEdge": "validation",
@@ -1466,7 +1551,7 @@
   },
   {
    "id": "R",
-   "label": "the named residuals R1-R12 stay pinned quiet",
+   "label": "the named residuals R1-R14 stay pinned quiet",
    "pins": [
     {
      "id": "R1",
@@ -1479,6 +1564,11 @@
       {
        "family": "write",
        "digest": "1041ce40b8a62649",
+       "hit": false
+      },
+      {
+       "family": "verdict",
+       "digest": "26d6e911d8575407",
        "hit": false
       }
      ]
@@ -1550,6 +1640,7 @@
       "node:fs",
       "node:path",
       "node:url",
+      "typescript",
       "vitest",
       "../src/workbench/beads-observer.js",
       "../src/workbench/beads-program-readiness.js",
@@ -1584,6 +1675,142 @@
       "g1OmitsReceipts": true,
       "receiptsReadByG1": 0,
       "receiptsQuoteTitles": true
+     }
+    },
+    {
+     "id": "R13",
+     "witness": {
+      "reference": "ADOPT",
+      "reader": "ADOPT",
+      "driven": true
+     }
+    },
+    {
+     "id": "R14",
+     "witness": {
+      "heldBy": {
+       "floor": [
+        "T1",
+        "T2",
+        "T3",
+        "T4",
+        "A1",
+        "A2",
+        "A3",
+        "A4",
+        "B1",
+        "B2",
+        "B3",
+        "B4",
+        "B5",
+        "B6",
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5",
+        "D1",
+        "D2",
+        "D3",
+        "G1",
+        "P1",
+        "P2",
+        "P3",
+        "P4",
+        "F1",
+        "MH1",
+        "MH2",
+        "MH3",
+        "MH4",
+        "MH5",
+        "MH6",
+        "MW1",
+        "MW2",
+        "MW3",
+        "MW4",
+        "MW5",
+        "MW6",
+        "MW7",
+        "MW8",
+        "MW9",
+        "MG1",
+        "MG2",
+        "MG3"
+       ],
+       "residualName": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12"
+       ],
+       "filing": [
+        "E01",
+        "E02",
+        "E03",
+        "E04",
+        "E05",
+        "E09",
+        "E06",
+        "E07",
+        "M1",
+        "M3",
+        "M4",
+        "M5",
+        "M6",
+        "M7",
+        "M8",
+        "M9",
+        "I18",
+        "I12",
+        "I16"
+       ],
+       "carry": [
+        "V1",
+        "V2",
+        "W1",
+        "W2",
+        "W3",
+        "W4",
+        "W5",
+        "W6",
+        "W7",
+        "W8",
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "G-1",
+        "G-2",
+        "G-3",
+        "TR1"
+       ],
+       "drive": [
+        "A4",
+        "B6",
+        "C5",
+        "D3"
+       ],
+       "walk": [
+        "T4"
+       ],
+       "describe": [
+        "G1",
+        "F1"
+       ]
+      },
+      "quiet": [
+       "R13",
+       "R14"
+      ]
      }
     }
    ]
@@ -1669,7 +1896,7 @@
     {
      "id": "M1",
      "witness": [
-      "mode:skip x77"
+      "mode:skip x98"
      ]
     },
     {
@@ -1686,7 +1913,7 @@
     {
      "id": "M4",
      "witness": [
-      "unregistered x65"
+      "unregistered x84"
      ]
     },
     {
@@ -1745,6 +1972,194 @@
      "witness": {
       "unclassifiedRoots": [
        ".agents"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "V",
+   "label": "the invocation and re-evaluation judges the closing case applies flag a constructed model of each bypass wb-mdfe's filing names: the case body comparing the roster's own witness, alone and beside a planted subject change",
+   "pins": [
+    {
+     "id": "V1",
+     "witness": [
+      "invoked-unreached x98"
+     ]
+    },
+    {
+     "id": "V2",
+     "witness": [
+      "invoked-unreached x98",
+      "fresh-witness x1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "X",
+   "label": "the escapes wb-mdfe's filing names are judged: its write, H2 and prerequisite spellings hit their families, and the tracker's own root reads only the files the git index tracks, never the bd runtime files it lists",
+   "pins": [
+    {
+     "id": "W1",
+     "witness": {
+      "family": "write",
+      "digest": "27f67e2041c8ba29",
+      "hit": true
+     }
+    },
+    {
+     "id": "W2",
+     "witness": {
+      "family": "write",
+      "digest": "cc24a6c165b6408f",
+      "hit": true
+     }
+    },
+    {
+     "id": "W3",
+     "witness": {
+      "family": "write",
+      "digest": "63477cd402991c08",
+      "hit": true
+     }
+    },
+    {
+     "id": "W4",
+     "witness": {
+      "family": "write",
+      "digest": "f37f9f0153a2f830",
+      "hit": true
+     }
+    },
+    {
+     "id": "W5",
+     "witness": {
+      "family": "write",
+      "digest": "f6b9da56e68a8a06",
+      "hit": true
+     }
+    },
+    {
+     "id": "W6",
+     "witness": {
+      "family": "write",
+      "digest": "a21d103df7d0fda9",
+      "hit": true
+     }
+    },
+    {
+     "id": "W7",
+     "witness": {
+      "family": "write",
+      "digest": "c9b7298d4970c618",
+      "hit": true
+     }
+    },
+    {
+     "id": "W8",
+     "witness": {
+      "family": "write",
+      "digest": "e5fe83c07f5ddc3a",
+      "hit": true
+     }
+    },
+    {
+     "id": "H1",
+     "witness": {
+      "family": "h2",
+      "digest": "5eb1c619e39adb8c",
+      "hit": true
+     }
+    },
+    {
+     "id": "H2",
+     "witness": {
+      "family": "h2",
+      "digest": "619da99544e0fd22",
+      "hit": true
+     }
+    },
+    {
+     "id": "H3",
+     "witness": {
+      "family": "h2",
+      "digest": "2d88050f8e319274",
+      "hit": true
+     }
+    },
+    {
+     "id": "H4",
+     "witness": {
+      "family": "h2",
+      "digest": "d4b6c73ea97be907",
+      "hit": true
+     }
+    },
+    {
+     "id": "H5",
+     "witness": {
+      "family": "h2",
+      "digest": "4e711267ada11a4b",
+      "hit": true
+     }
+    },
+    {
+     "id": "G-1",
+     "witness": {
+      "family": "prerequisite",
+      "digest": "a906dd782174c3cb",
+      "hit": true
+     }
+    },
+    {
+     "id": "G-2",
+     "witness": {
+      "family": "prerequisite",
+      "digest": "9d5d662f51a6ef0b",
+      "hit": true
+     }
+    },
+    {
+     "id": "G-3",
+     "witness": {
+      "family": "prerequisite",
+      "digest": "52e06bcebfc87427",
+      "hit": true
+     }
+    },
+    {
+     "id": "TR1",
+     "witness": {
+      "root": ".beads",
+      "own": [
+       ".beads/.gitignore",
+       ".beads/README.md",
+       ".beads/config.yaml",
+       ".beads/metadata.json"
+      ],
+      "walk": [
+       ".beads/.gitignore",
+       ".beads/README.md",
+       ".beads/config.yaml",
+       ".beads/metadata.json"
+      ],
+      "runtime": [
+       ".beads/daemon.log",
+       ".beads/redirect",
+       ".beads/daemon.*",
+       ".beads/dolt-server.log",
+       ".beads/sync-state.json",
+       ".beads/export-state.json",
+       ".beads/push-state.json",
+       ".beads/last-touched",
+       ".beads/.env"
+      ],
+      "modelWalk": [
+       ".beads/.gitignore",
+       ".beads/README.md",
+       ".beads/config.yaml",
+       ".beads/metadata.json"
       ]
      }
     }

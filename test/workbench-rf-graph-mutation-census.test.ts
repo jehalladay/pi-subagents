@@ -93,14 +93,48 @@
  *    computed key is no site to A1.
  *    Q10 R-COMPOSED-PATH: a document path built from non-literal segments escapes B2.
  *    Q11 R-SHELL-QUOTED: a quoted option value that holds a space splits apart in a shell line and hides the leaf from A2.
+ * TERMINAL FOLLOW-UP ROWS (wb-7thm, the R694 follow-up of landing 362, gate of record cmd_593bb938a609; hop 3 of the
+ * a9l2.8 chain in the TERMINAL enumerate-the-resolvable form: every enumerated item is bound by a row below, and the
+ * census claims exactly the pinned set):
+ *  U, F1's cure. A1 reads a callee through calleeOf after unwrapped() removes its outer-expression wrappers at any depth:
+ *    parentheses, a non-null assertion, an as or angle-bracket type assertion, satisfies, and a comma expression's last
+ *    operand. K4 (parenthesized, the gate's G-ST7), K5 (non-null, G-ST8), K6 (the type assertions, G-ST9), K7
+ *    (satisfies) and K8 (the comma tail, G-ST10) each read one site per form, nested forms included, and keep a wrapped
+ *    callee that names no child-process function clean.
+ *  P, F2's cure. B2 reads every literal and every joined segment run as written and through path.posix.normalize
+ *    (documentIn). D4 covers a trailing slash, a dot segment, an empty segment, a ".." inside a segment and a double slash
+ *    (the gate's G-DP1, G-DP2, G-DP4 and G-DP5 among them), and keeps a ".." that leaves graphs/ clean.
+ *  H, F3's cure. A2 also reads each string and template literal in its shellUnquoted form (backslash escapes, a "$"
+ *    opening a quote, and every ' and " removed), as spelled and option-elided; an argv array element is passed to rf
+ *    verbatim, so it is never unquoted. I4 covers every MUTATING leaf with its words single-quoted (the gate's G-ST13),
+ *    double-quoted, quoted inside a word, backslash-escaped, ANSI-C quoted, quoted with globals between them and quoted
+ *    in a template, keeps the read leaves and the near misses clean, and Q11 stays quiet.
+ *  X, F7's X5 rider. anchorFindings refuses a receipt in which marked 18 lexes any html token (receiptHtml: a complete or
+ *    an unclosed comment, an HTML block, an inline tag), since each renders nothing and a listing line under one drops
+ *    out of the rendered receipt while its source line still matches. X5 replays the gate's X5 edit (one complete comment
+ *    around the 2026-10-24 listing) and three siblings in memory, and reads the committed receipt clean.
+ *  W, F7's landing-263 riders. W11 holds committingCount to constructed descriptor sets that hold committing members,
+ *    one per clause of the count (the W11 mutant counts zero); W12 holds SRC_FLOOR to its value and to refusing an empty walk (the W12 mutant sets it
+ *    to 0); W13 holds the src walk to node's own recursive listing of src (the W13a-c mutants skip src/ui, src/workflow
+ *    or src/workbench/hosts), module by module and byte for byte, so a walker that visits a module but reads it as other
+ *    text reds too.
+ *  T, the terminal follow-up's named residuals, each a pinned quiet row:
+ *    Q12 R-OTHER-CALLEE: a callee written through any other expression (a conditional, a logical operator such as || or ??,
+ *    an instantiation expression) is no site to A1.
+ *    Q13 R-SHELL-EXPANSION: a leaf word that only a shell expansion spells (brace expansion, a parameter expansion's literal
+ *    default, an ANSI-C escape sequence) hides the leaf from A2.
+ *  F6 (the witness attribution): WITNESS names the trunk each row group was measured on.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` and RF_GRAPH_LEAVES pins `${leaf}:${flag}` as literals.
  * Every pin's case returns a witness held to WITNESS under its own pin, so a case swapped for another passing one reds.
  * OUTSIDE ANCHORS: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-a9l2.8) states the
  * acceptance clauses (a), (b) and (c), and rows A, B and C hold their labels to them verbatim; the receipt
  * docs/workbench/receipts/wb-a9l2.8.md carries the anchor listing every row, pin, leaf and residual is held to, in order (its
- * 2026-10-24 entry continues the listing with rows S, I, K, D and N and residuals Q7-Q11); the wb-pdee row of the same
- * export states F1's cure and F2's families (i), (ii) and (iii), and rows S, I, K and D hold their labels to them verbatim;
- * C9 reads the src registry and the src tool roster. A member removed from every literal of this file still reds there.
+ * 2026-10-24 entry continues the listing with rows S, I, K, D and N and residuals Q7-Q11, and its 2026-10-25 entry with rows
+ * U, P, H, X, W and T and residuals Q12-Q13), and it lexes with no html token; the wb-pdee row of the same export states
+ * F1's cure and F2's families (i), (ii) and (iii), and rows S, I, K and D hold their labels to them verbatim; the wb-7thm
+ * row states F1's, F2's and F3's cure shapes and F7's two riders, and rows U, P, H, X and W hold their labels to them
+ * verbatim; C9 reads the src registry and the src tool roster; W13 reads node's own recursive listing of src. A member
+ * removed from every literal of this file still reds there.
  * Not claimed: this file's judged-set case deleted together with a hollow (census-code self-hollowing); a re-pin, a
  * compaction of the export row, or a reworded owner filing re-states the anchors in the same cut.
  *
@@ -109,10 +143,11 @@
  */
 import { type ChildProcess, spawn } from "node:child_process";
 import { chmodSync, type Dirent, existsSync, readdirSync, readFileSync, realpathSync, writeFileSync } from "node:fs";
-import { basename, delimiter, dirname, join, relative } from "node:path";
+import { basename, delimiter, dirname, join, posix, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
+import { Lexer, walkTokens } from "marked";
 import ts from "typescript";
 import { afterAll, afterEach, beforeEach, describe, expect, it } from "vitest";
 import { CapabilityError, CapabilityRegistry } from "../src/workbench/capability-registry.js";
@@ -140,6 +175,9 @@ const PREVIEW_ID = "reactivefiber.render.preview";
 const RF_PREFIX = "reactivefiber.";
 /** The R694 follow-up of landing 263 that adds rows S, I, K, D and N; its row of the tracked bead export anchors their labels. */
 const FOLLOW_UP = "wb-pdee";
+/** The R694 follow-up of landing 362 (hop 3, the TERMINAL form) that adds rows U, P, H, X, W and T; its row of the tracked
+ * bead export anchors the labels of U, P, H, X and W. */
+const TERMINAL = "wb-7thm";
 
 interface Leaf {
   readonly leaf: string;
@@ -233,13 +271,45 @@ const ROWS: readonly Row[] = [
     label: "the follow-up's named residuals, each a pinned quiet row that reds when its escape stops being quiet",
     pins: ["Q7", "Q8", "Q9", "Q10", "Q11"],
   },
+  {
+    id: "U",
+    label: "calleeOf unwraps outer expressions (ts.skipOuterExpressions, or a loop over parenthesized, non-null, as, satisfies and comma-tail forms) with one K pin per form",
+    pins: ["K4", "K5", "K6", "K7", "K8"],
+  },
+  {
+    id: "P",
+    label: "B2 reads path.posix.normalize of the joined literal segments, and of each literal, before the GRAPH_DOCUMENT check, with one D pin",
+    pins: ["D4"],
+  },
+  {
+    id: "H",
+    label: "shell-unquote string literals before leafPattern runs",
+    pins: ["I4"],
+  },
+  {
+    id: "X",
+    label: "restore the dropped X5 rider",
+    pins: ["X5"],
+  },
+  {
+    id: "W",
+    label: "the landing-263 W11/W12/W13a-c rider",
+    pins: ["W11", "W12", "W13"],
+  },
+  {
+    id: "T",
+    label: "the terminal follow-up's named residuals, each a pinned quiet row that reds when its escape stops being quiet",
+    pins: ["Q12", "Q13"],
+  },
 ];
 /** The acceptance rows, in the order the owner filing states its clauses. */
 const ACCEPTANCE_ROWS = ["A", "B", "C"];
 /** The follow-up rows, in the order the wb-pdee filing states F1's cure and F2's families (i), (ii) and (iii). */
 const FOLLOW_UP_ROWS = ["S", "I", "K", "D"];
+/** The terminal follow-up rows, in the order the wb-7thm filing states F1's, F2's and F3's cure shapes and F7's two riders. */
+const TERMINAL_ROWS = ["U", "P", "H", "X", "W"];
 /** The rows whose pins are named residuals. */
-const RESIDUAL_ROWS = ["R", "N"];
+const RESIDUAL_ROWS = ["R", "N", "T"];
 const RESIDUALS: Readonly<Record<string, string>> = {
   Q1: "R-COMPOSED",
   Q2: "R-INDIRECT-BINARY",
@@ -252,6 +322,8 @@ const RESIDUALS: Readonly<Record<string, string>> = {
   Q9: "R-REBOUND-CALLEE",
   Q10: "R-COMPOSED-PATH",
   Q11: "R-SHELL-QUOTED",
+  Q12: "R-OTHER-CALLEE",
+  Q13: "R-SHELL-EXPANSION",
 };
 
 function isObject(value: unknown): value is { [key: string]: unknown } {
@@ -298,12 +370,39 @@ function followUpClauses(text: string): string[] {
   throw new Error(`the tracked bead export holds no ${FOLLOW_UP} row`);
 }
 
+/** The terminal follow-up filing's phrases, read from the wb-7thm row of the tracked bead export: F1's, F2's and F3's cure
+ * shapes and F7's two riders (the dropped X5 rider and the landing-263 W11/W12/W13a-c rider). */
+function terminalClauses(text: string): string[] {
+  for (const line of text.split("\n")) {
+    if (!line.includes(`"id":"${TERMINAL}"`)) continue;
+    const row: unknown = JSON.parse(line);
+    if (!isObject(row) || row.id !== TERMINAL || typeof row.notes !== "string") continue;
+    const callee = /- F1 [^\n]*? Cure shape: (.+?), or a named residual with a pinned quiet row\.\n/.exec(row.notes);
+    const path = /- F2 [^\n]*? Cure shape: (.+?), or a named residual\.\n/.exec(row.notes);
+    const shell = /- F3 [^\n]*? Cure shape: (.+?), or name this beside Q11\.\n/.exec(row.notes);
+    const riders = /- F7 [^\n]*? BIND routing: rides the next follow-up to (.+?); (the landing-263 [^\n]+? rider) was dropped the same way/.exec(row.notes);
+    if (callee === null || path === null || shell === null || riders === null) throw new Error(`the ${TERMINAL} export row carries no F1, F2 or F3 cure shape or no F7 rider sentence`);
+    return [callee[1] ?? "", path[1] ?? "", shell[1] ?? "", riders[1] ?? "", riders[2] ?? ""];
+  }
+  throw new Error(`the tracked bead export holds no ${TERMINAL} row`);
+}
+
+/** Every html token marked 18 lexes in a receipt, block or inline: a complete or an unclosed comment, an HTML block, a tag.
+ * Each renders nothing, so a listing line under one drops out of the rendered receipt while its source line still matches. */
+function receiptHtml(receipt: string): string[] {
+  const html: string[] = [];
+  walkTokens(new Lexer().lex(receipt), token => {
+    if (token.type === "html") html.push(token.raw);
+  });
+  return html;
+}
+
 const ROW_LINE = /^- Row ([A-Z]) \(pins ([A-Z0-9]+(?:, [A-Z0-9]+)*)\): (.+)$/;
 const LEAF_LINE = /^- Leaf (graph\.[a-z.-]+): (mutates|reads) \(registry\.py:(\d+)\)$/;
 const RESIDUAL_LINE = /^- Residual (Q\d+): (R-[A-Z-]+)$/;
 
 /** Every disagreement between the census literals, the receipt's anchor listing and the export's acceptance clauses. */
-function anchorFindings(rows: readonly Row[], leaves: readonly Leaf[], residuals: Readonly<Record<string, string>>, receipt: string, clauses: readonly string[], followUp: readonly string[]): string[] {
+function anchorFindings(rows: readonly Row[], leaves: readonly Leaf[], residuals: Readonly<Record<string, string>>, receipt: string, clauses: readonly string[], followUp: readonly string[], terminal: readonly string[]): string[] {
   const lines = receipt.split("\n");
   const listedRows = lines.flatMap(line => {
     const match = ROW_LINE.exec(line);
@@ -325,6 +424,9 @@ function anchorFindings(rows: readonly Row[], leaves: readonly Leaf[], residuals
   if (JSON.stringify(labels) !== JSON.stringify(clauses)) findings.push("acceptance labels differ from the export");
   const followUpLabels = FOLLOW_UP_ROWS.map(id => rows.find(row => row.id === id)?.label ?? "");
   if (JSON.stringify(followUpLabels) !== JSON.stringify(followUp)) findings.push("follow-up labels differ from the export");
+  const terminalLabels = TERMINAL_ROWS.map(id => rows.find(row => row.id === id)?.label ?? "");
+  if (JSON.stringify(terminalLabels) !== JSON.stringify(terminal)) findings.push("terminal labels differ from the export");
+  if (receiptHtml(receipt).length > 0) findings.push("receipt carries HTML");
   return findings;
 }
 
@@ -361,9 +463,20 @@ function leafPattern(leaf: string): RegExp {
 function leavesIn(text: string, leaves: readonly string[]): string[] {
   return leaves.filter(leaf => leafPattern(leaf).test(text));
 }
+/** Whether a text names rf's graph document location, read as written and through path.posix.normalize (wb-7thm row P), so a
+ * trailing slash, a dot or empty segment, a ".." inside a segment or a double slash still spells it. */
 function documentIn(text: string): boolean {
   const folded = text.toLowerCase().replaceAll("\\", "/");
-  return GRAPH_DOCUMENT.some(part => folded.includes(part));
+  return [folded, posix.normalize(folded)].some(reading => GRAPH_DOCUMENT.some(part => reading.includes(part)));
+}
+/** A shell line with its quoting removed (wb-7thm row H): a backslash escape keeps its character, a "$" opening a quote is
+ * dropped, then every ' and " is dropped, so a line whose leaf words are quoted reads as its words. Brace expansion and
+ * ANSI-C escape sequences are never expanded (residual Q13). */
+function shellUnquoted(text: string): string {
+  return text
+    .replace(/\\(.)/gs, "$1")
+    .replace(/\$(?=['"])/g, "")
+    .replace(/['"]/g, "");
 }
 /** rf's value-taking globals at the pin (parser.py:286 RF_VALUE_OPTIONS): spelled apart, each consumes the next token. */
 const RF_VALUE_OPTIONS = ["--workspace", "--actor", "--color"];
@@ -387,25 +500,30 @@ interface LiteralScan {
 }
 /** One module's string and template literals and argv arrays (non-literal elements read as EXPR) against MUTATING and
  * GRAPH_DOCUMENT; renderArgv counts the arrays holding "context" then "render". A literal names a leaf as spelled or in its
- * optionElided reading (strings and templates split at white space, an array element by element), once per leaf; an array's
- * elements and a call's arguments are also read as one path joined by "/". */
+ * optionElided reading (strings and templates split at white space, an array element by element), and a string or template
+ * also in its shellUnquoted reading, spelled and option-elided, once per leaf; an array's elements and a call's arguments
+ * are also read as one path joined by "/". */
 function scanLiterals(fileName: string, text: string): LiteralScan {
   const leafHits: string[] = [];
   const documentHits: string[] = [];
   let renderArgv = 0;
-  const judge = (form: string, spelled: string, tokens: readonly string[], paths: readonly string[]): void => {
-    const elided = optionElided(tokens);
-    for (const leaf of MUTATING) if (leafPattern(leaf).test(spelled) || leafPattern(leaf).test(elided)) leafHits.push(`${fileName} ${form} ${leaf}`);
+  const judge = (form: string, spelled: string, tokens: readonly string[], paths: readonly string[], shell: boolean): void => {
+    const readings = [spelled, optionElided(tokens)];
+    if (shell) {
+      const unquoted = shellUnquoted(spelled);
+      readings.push(unquoted, optionElided(unquoted.split(/\s+/)));
+    }
+    for (const leaf of MUTATING) if (readings.some(reading => leafPattern(leaf).test(reading))) leafHits.push(`${fileName} ${form} ${leaf}`);
     if ([spelled, ...paths].some(documentIn)) documentHits.push(`${fileName} ${form}`);
   };
   const visit = (node: ts.Node): void => {
-    if (ts.isStringLiteralLike(node)) judge("literal", node.text, node.text.split(/\s+/), []);
+    if (ts.isStringLiteralLike(node)) judge("literal", node.text, node.text.split(/\s+/), [], true);
     else if (ts.isTemplateExpression(node)) {
       const spelled = [node.head.text, ...node.templateSpans.map(span => span.literal.text)].join(EXPR);
-      judge("template", spelled, spelled.split(/\s+/), []);
+      judge("template", spelled, spelled.split(/\s+/), [], true);
     } else if (ts.isArrayLiteralExpression(node)) {
       const words = node.elements.map(element => (ts.isStringLiteralLike(element) ? element.text : EXPR));
-      judge("argv", words.join(" "), words, [words.join("/")]);
+      judge("argv", words.join(" "), words, [words.join("/")], false);
       if (words.some((word, index) => word === "context" && words[index + 1] === "render")) renderArgv += 1;
     } else if (ts.isCallExpression(node)) {
       const segments = node.arguments.map(argument => (ts.isStringLiteralLike(argument) ? argument.text : EXPR));
@@ -465,9 +583,18 @@ function childProcessAliases(source: ts.SourceFile): Map<string, string> {
   visit(source);
   return aliases;
 }
-/** A call's child-process function: an identifier read through its child_process alias, a property name, or a literal
- * element-access key. */
-function calleeOf(expression: ts.Expression, aliases: ReadonlyMap<string, string>): string {
+/** A callee with its outer-expression wrappers removed at any depth (wb-7thm row U): parentheses, a non-null assertion, an
+ * as or angle-bracket type assertion, satisfies, and a comma expression's last operand. Any other expression stays as
+ * written (residual Q12). */
+function unwrapped(expression: ts.Expression): ts.Expression {
+  if (ts.isParenthesizedExpression(expression) || ts.isNonNullExpression(expression) || ts.isAsExpression(expression) || ts.isTypeAssertionExpression(expression) || ts.isSatisfiesExpression(expression)) return unwrapped(expression.expression);
+  if (ts.isBinaryExpression(expression) && expression.operatorToken.kind === ts.SyntaxKind.CommaToken) return unwrapped(expression.right);
+  return expression;
+}
+/** A call's child-process function, read after unwrapped(): an identifier read through its child_process alias, a property
+ * name, or a literal element-access key. */
+function calleeOf(written: ts.Expression, aliases: ReadonlyMap<string, string>): string {
+  const expression = unwrapped(written);
   if (ts.isIdentifier(expression)) return aliases.get(expression.text) ?? expression.text;
   if (ts.isPropertyAccessExpression(expression)) return expression.name.text;
   if (ts.isElementAccessExpression(expression) && ts.isStringLiteralLike(expression.argumentExpression)) return expression.argumentExpression.text;
@@ -857,6 +984,16 @@ const GATE_PROBES: Readonly<Record<string, string>> = {
   P07b: 'import { spawn as launch } from "node:child_process";\nexport function fwGateProbe(): void { launch("rf", ["graph", "--json", "publish"]); }\n',
   P11b: 'import { join } from "node:path";\nexport const fwGateProbe = (workspaceDir: string): string => join(workspaceDir, "graphs", "context.toml");\n',
   P11c: 'export const fwGateProbe = (): string => ["graphs", "context.toml"].join("/");\n',
+  // The landing-362 gate's LEG-2 survivors (cmd_593bb938a609 PREP), spelled as the BIND verdict quotes them, each a whole module.
+  "G-ST7": 'import { spawn } from "node:child_process";\nexport function fwGateProbe(): void { (spawn)("rf", ["graph", "show"]); }\n',
+  "G-ST8": 'import { spawn } from "node:child_process";\nexport function fwGateProbe(): void { spawn!("rf", ["graph", "show"]); }\n',
+  "G-ST9": 'import { spawn } from "node:child_process";\nexport function fwGateProbe(): void { (spawn as typeof spawn)("rf", ["graph", "show"]); }\n',
+  "G-ST10": 'import { spawn } from "node:child_process";\nexport function fwGateProbe(): void { (0, spawn)("rf", ["graph", "show"]); }\n',
+  "G-ST13": "export const fwGateProbe = (): string => \"rf 'graph' 'publish'\";\n",
+  "G-DP1": 'import { join } from "node:path";\nexport const fwGateProbe = (dir: string): string => join(dir, "graphs/", "context.toml");\n',
+  "G-DP2": 'import { join } from "node:path";\nexport const fwGateProbe = (dir: string): string => join(dir, "graphs", "./context.toml");\n',
+  "G-DP4": 'export const fwGateProbe = (): string => ["graphs/", "context.toml"].join("");\n',
+  "G-DP5": 'import { join } from "node:path";\nexport const fwGateProbe = (dir: string): string => join(dir, "graphs", "", "context.toml");\n',
 };
 function probe(id: string): string {
   const source = GATE_PROBES[id];
@@ -1085,13 +1222,14 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const exported = readFileSync(EXPORT_PATH, "utf8");
     const clauses = exportClauses(exported);
     const followUp = followUpClauses(exported);
+    const terminal = terminalClauses(exported);
     const lessRows = ROWS.filter(row => row.id !== "R");
     const lessReceipt = receipt
       .split("\n")
       .filter(line => !line.startsWith("- Row R "))
       .join("\n");
-    const coordinated = anchorFindings(lessRows, RF_GRAPH_LEAVES, RESIDUALS, lessReceipt, clauses, followUp);
-    const censusOnly = anchorFindings(lessRows, RF_GRAPH_LEAVES, RESIDUALS, receipt, clauses, followUp);
+    const coordinated = anchorFindings(lessRows, RF_GRAPH_LEAVES, RESIDUALS, lessReceipt, clauses, followUp, terminal);
+    const censusOnly = anchorFindings(lessRows, RF_GRAPH_LEAVES, RESIDUALS, receipt, clauses, followUp, terminal);
     expect(coordinated).toEqual([]);
     expect(censusOnly).toEqual(["receipt rows differ"]);
     return { residual: RESIDUALS.Q5 ?? "", coordinated, censusOnly };
@@ -1318,9 +1456,197 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect([quotedValues, unquoted]).toEqual([[0, 0], 1]);
     return { residual: RESIDUALS.Q11 ?? "", quotedValues, unquoted };
   },
+  K4: async () => {
+    const forms = [
+      'import { spawn } from "node:child_process";\n(spawn)("rf", argv);',
+      'import { execFile as run } from "node:child_process";\n((run))("rf", argv);',
+      'import * as cp from "node:child_process";\n(cp.spawn)("rf", argv);',
+      'import * as cp from "node:child_process";\n(cp["execFileSync"])("rf", argv);',
+    ].map(sitesOf);
+    const gate = { "G-ST7": sitesOf(probe("G-ST7")) };
+    const clean = sitesOf('import { spawn as launch } from "./launcher.js";\n(launch)("rf", argv);');
+    expect(forms).toEqual([1, 1, 1, 1]);
+    expect([gate["G-ST7"], clean]).toEqual([1, 0]);
+    return { forms, gate, clean };
+  },
+  K5: async () => {
+    const forms = [
+      'import { spawn } from "node:child_process";\nspawn!("rf", argv);',
+      'import { execFile as run } from "node:child_process";\nrun!("rf", argv);',
+      'import * as cp from "node:child_process";\ncp.spawnSync!("rf", argv);',
+      'import { fork } from "node:child_process";\n(fork)!("rf", argv);',
+    ].map(sitesOf);
+    const gate = { "G-ST8": sitesOf(probe("G-ST8")) };
+    const clean = sitesOf('import { spawn as launch } from "./launcher.js";\nlaunch!("rf", argv);');
+    expect(forms).toEqual([1, 1, 1, 1]);
+    expect([gate["G-ST8"], clean]).toEqual([1, 0]);
+    return { forms, gate, clean };
+  },
+  K6: async () => {
+    const forms = [
+      'import { spawn } from "node:child_process";\n(spawn as typeof spawn)("rf", argv);',
+      'import { spawn } from "node:child_process";\n(<typeof spawn>spawn)("rf", argv);',
+      'import { execFile } from "node:child_process";\n(execFile as unknown as typeof execFile)("rf", argv);',
+      'import * as cp from "node:child_process";\n(cp["spawn"] as typeof cp.spawn)("rf", argv);',
+    ].map(sitesOf);
+    const gate = { "G-ST9": sitesOf(probe("G-ST9")) };
+    const clean = sitesOf('import { spawn as launch } from "./launcher.js";\n(launch as typeof launch)("rf", argv);');
+    expect(forms).toEqual([1, 1, 1, 1]);
+    expect([gate["G-ST9"], clean]).toEqual([1, 0]);
+    return { forms, gate, clean };
+  },
+  K7: async () => {
+    const forms = [
+      'import { spawn } from "node:child_process";\n(spawn satisfies typeof spawn)("rf", argv);',
+      'import * as cp from "node:child_process";\n(cp.execFileSync satisfies unknown)("rf", argv);',
+      'import { exec } from "node:child_process";\n((exec satisfies unknown) as typeof exec)("rf context render");',
+    ].map(sitesOf);
+    const clean = sitesOf('import { spawn as launch } from "./launcher.js";\n(launch satisfies unknown)("rf", argv);');
+    expect(forms).toEqual([1, 1, 1]);
+    expect(clean).toBe(0);
+    return { forms, clean };
+  },
+  K8: async () => {
+    const forms = [
+      'import { spawn } from "node:child_process";\n(0, spawn)("rf", argv);',
+      'import * as cp from "node:child_process";\n(void 0, cp.execFileSync)("rf", argv);',
+      'import { fork } from "node:child_process";\n(log("x"), 0, fork)("rf", argv);',
+      'import { spawn } from "node:child_process";\n(0, (spawn as typeof spawn)!)("rf", argv);',
+    ].map(sitesOf);
+    const gate = { "G-ST10": sitesOf(probe("G-ST10")) };
+    const clean = sitesOf('import { spawn } from "node:child_process";\nimport { spawn as launch } from "./launcher.js";\n(spawn, launch)("rf", argv);');
+    expect(forms).toEqual([1, 1, 1, 1]);
+    expect([gate["G-ST10"], clean]).toEqual([1, 0]);
+    return { forms, gate, clean };
+  },
+  D4: async () => {
+    const forms = [
+      'import { join } from "node:path";\njoin(dir, "graphs/", "context.toml");',
+      'import { join } from "node:path";\njoin(dir, "graphs", "./context.toml");',
+      'import { join } from "node:path";\njoin(dir, "graphs", "", "context.toml");',
+      'import { join } from "node:path";\njoin(dir, "graphs/views/..", "context.toml");',
+      'const p = ["graphs/", "context.toml"].join("");',
+      'const p = "graphs//context.toml";',
+    ].map(documentsOf);
+    const gate = { "G-DP1": documentsOf(probe("G-DP1")), "G-DP2": documentsOf(probe("G-DP2")), "G-DP4": documentsOf(probe("G-DP4")), "G-DP5": documentsOf(probe("G-DP5")) };
+    const clean = [
+      'import { join } from "node:path";\njoin(dir, "graphs", "..", "context.toml");',
+      'const p = "graphs/../context.toml";',
+      'import { join } from "node:path";\njoin(dir, "graphs/", "./lens.toml");',
+    ].map(documentsOf);
+    expect(forms.every(count => count >= 1)).toBe(true);
+    expect(Object.values(gate).every(count => count >= 1)).toBe(true);
+    expect(clean).toEqual([0, 0, 0]);
+    return { forms, gate, clean };
+  },
+  I4: async () => {
+    const quotings = (leaf: string): string[] => {
+      const parts = words(leaf);
+      return [
+        `rf ${parts.map(part => `'${part}'`).join(" ")}`,
+        `rf ${parts.map(part => `"${part}"`).join(" ")}`,
+        `rf ${parts.map(part => `${part.slice(0, 1)}'${part.slice(1)}'`).join(" ")}`,
+        `rf ${parts.map(part => `\\${part}`).join(" ")}`,
+        `rf ${parts.map(part => `$'${part}'`).join(" ")}`,
+        `rf --json ${parts.map(part => `'${part}'`).join(" --workspace '/srv/ws' ")}`,
+      ];
+    };
+    const shell = MUTATING.map(leaf => quotings(leaf).map(line => hitsOf(`const cmd = ${JSON.stringify(line)};`)));
+    const template = MUTATING.map(leaf => hitsOf(["const cmd = `rf ", words(leaf).map(part => `'${part}'`).join(" "), " --workspace $", "{root}`;"].join("")));
+    const gate = { "G-ST13": hitsOf(probe("G-ST13")) };
+    const readLeaves = READING.map(leaf => hitsOf(`const cmd = ${JSON.stringify(`rf ${words(leaf).map(part => `'${part}'`).join(" ")}`)};`));
+    const nearMisses = [
+      "const cmd = \"rf 'graph' 'show' publish\";",
+      "const cmd = \"rf 'subgraph' 'publish'\";",
+      "const cmd = \"rf 'graph publisher'\";",
+      'spawn("rf", ["\'graph\'", "\'publish\'"]);',
+    ].map(hitsOf);
+    expect([...shell.flat(), ...template, gate["G-ST13"]].every(count => count === 1)).toBe(true);
+    expect([...readLeaves, ...nearMisses].every(count => count === 0)).toBe(true);
+    return { shell, template, gate, readLeaves, nearMisses };
+  },
+  X5: async () => {
+    const receipt = readFileSync(RECEIPT_PATH, "utf8");
+    const exported = readFileSync(EXPORT_PATH, "utf8");
+    const clauses = exportClauses(exported);
+    const followUp = followUpClauses(exported);
+    const terminal = terminalClauses(exported);
+    const findingsOf = (text: string): string[] => anchorFindings(ROWS, RF_GRAPH_LEAVES, RESIDUALS, text, clauses, followUp, terminal);
+    /** The 2026-10-24 listing's first and last lines, the span the gate's X5 replay wrapped. */
+    const first = "\n- Row S (pins S1";
+    const last = "- Residual Q11: R-SHELL-QUOTED\n";
+    expect([receipt.split(first).length, receipt.split(last).length]).toEqual([2, 2]);
+    const hidden = {
+      X5: findingsOf(receipt.replace(first, `\n<!--${first}`).replace(last, `${last}-->\n`)),
+      unclosed: findingsOf(receipt.replace(first, `\n<!--${first}`)),
+      block: findingsOf(receipt.replace(first, `\n<div hidden>${first}`).replace(last, `${last}</div>\n`)),
+      inline: findingsOf(receipt.replace(last, `- Residual Q11: R-SHELL-QUOTED <span hidden>withdrawn</span>\n`)),
+    };
+    const committed = findingsOf(receipt);
+    expect(committed).toEqual([]);
+    expect(Object.values(hidden).every(findings => findings.includes("receipt carries HTML"))).toBe(true);
+    return { committed, html: receiptHtml(receipt), hidden };
+  },
+  W11: async () => {
+    const sets: ReadonlyArray<readonly RfDescriptorShape[]> = [
+      [],
+      [{ id: PREVIEW_ID, effectClass: "read", contractSource: REACTIVE_FIBER_CONTRACT_SOURCE }],
+      [{ id: "reactivefiber.graph.publish", effectClass: "read", contractSource: PUBLISHING_CONTRACT }],
+      [
+        { id: "reactivefiber.graph.publish", effectClass: "write", contractSource: PUBLISHING_CONTRACT },
+        { id: "reactivefiber.render.commit", effectClass: "write", contractSource: `${CONTRACT} context.render --idempotency-key K` },
+        { id: PREVIEW_ID, effectClass: "read", contractSource: REACTIVE_FIBER_CONTRACT_SOURCE },
+      ],
+      [{ id: "reactivefiber.graph.document", effectClass: "write", contractSource: `${CONTRACT} context.render ${DRY_RUN_FLAG} then graphs/context.toml` }],
+      [{ id: "reactivefiber.graph.edit", effectClass: "write", contractSource: `${CONTRACT} context.render ${DRY_RUN_FLAG} then graph.patch` }],
+      [{ id: "reactivefiber.render.unknown", effectClass: "read" }],
+      [{ id: "forge.graph.publish", effectClass: "write", contractSource: PUBLISHING_CONTRACT }],
+    ];
+    const counts = sets.map(committingCount);
+    expect(counts).toEqual([0, 0, 1, 2, 1, 1, 1, 0]);
+    return { counts };
+  },
+  W12: async () => {
+    const meets = (count: number): boolean => count >= SRC_FLOOR;
+    const floor = { floor: SRC_FLOOR, emptyWalkMeetsFloor: meets(0), walkMeetsFloor: meets(srcModules().length) };
+    expect(floor.emptyWalkMeetsFloor).toBe(false);
+    expect(floor.walkMeetsFloor).toBe(true);
+    return floor;
+  },
+  W13: async () => {
+    const listed = readdirSync(join(REPO, "src"), { withFileTypes: true, recursive: true })
+      .filter(entry => entry.isFile() && entry.name.endsWith(".ts"))
+      .map(entry => relative(REPO, join(entry.parentPath, entry.name)))
+      .sort();
+    const modules = srcModules();
+    const walked = modules.map(module => module.name).sort();
+    const missing = listed.filter(name => !walked.includes(name));
+    const extra = walked.filter(name => !listed.includes(name));
+    const misread = modules.filter(module => module.text !== readFileSync(join(REPO, module.name), "utf8")).map(module => module.name);
+    expect([missing, extra, misread]).toEqual([[], [], []]);
+    return { missing, extra, misread, floorMet: listed.length >= SRC_FLOOR };
+  },
+  Q12: async () => {
+    const other = [
+      'import { spawn, spawnSync } from "node:child_process";\n(flag ? spawn : spawnSync)("rf", ["graph", "show"]);',
+      'import { spawn } from "node:child_process";\n(override || spawn)("rf", ["graph", "show"]);',
+      'import { spawn } from "node:child_process";\n(override ?? spawn)("rf", ["graph", "show"]);',
+      'import { spawn } from "node:child_process";\n(spawn<never>)("rf", ["graph", "show"]);',
+    ].map(sitesOf);
+    const unwrapped = sitesOf('import { spawn } from "node:child_process";\n(0, (spawn as typeof spawn)!)("rf", ["graph", "show"]);');
+    expect([other, unwrapped]).toEqual([[0, 0, 0, 0], 1]);
+    return { residual: RESIDUALS.Q12 ?? "", other, unwrapped };
+  },
+  Q13: async () => {
+    const expanded = ['const cmd = "rf {graph,} publish";', ['const cmd = "rf $', '{MODE:-graph} publish";'].join(""), "const cmd = \"rf graph $'publ\\\\x69sh'\";"].map(hitsOf);
+    const quoted = hitsOf("const cmd = \"rf 'graph' 'publish'\";");
+    expect([expanded, quoted]).toEqual([[0, 0, 0], 1]);
+    return { residual: RESIDUALS.Q13 ?? "", expanded, quoted };
+  },
 };
 
-/** Each pin's witness, measured at base 0b2a80f. */
+/** Each pin's witness. Rows A, B, C, M and R were measured at base 0b2a80f (wb-a9l2.8); each later row group names the trunk
+ * its cutting seat measured it on (the wb-7thm F6 attribution fix). */
 const WITNESS: Readonly<Record<string, Json>> = {
   A1: {
     srcFloorMet: true,
@@ -1541,6 +1867,7 @@ const WITNESS: Readonly<Record<string, Json>> = {
   Q4: { residual: "R-DECLARED-ROUTE", misdeclared: [] },
   Q5: { residual: "R-COORDINATED", coordinated: [], censusOnly: ["receipt rows differ"] },
   Q6: { residual: "R-EFFECT-LEDGER", admitted: { effectStatus: "executed", wouldCommit: true }, spawns: 1 },
+  // Rows S, I, K, D and N (wb-pdee): measured by its cutting seat on trunk 92e5ae2 and cut on 61dac63.
   S1: { discovered: ["reactivefiber.render.preview"], effectClass: "read", settled: { window: 3000, running: 0, spawns: 0 } },
   S2: { category: "unavailable", message: "Capability reactivefiber.render.preview does not support inspect.", settled: { window: 3000, running: 0, spawns: 0 } },
   S3: {
@@ -1602,11 +1929,44 @@ const WITNESS: Readonly<Record<string, Json>> = {
   Q9: { residual: "R-REBOUND-CALLEE", rebound: [0, 0, 0, 0], literal: 1 },
   Q10: { residual: "R-COMPOSED-PATH", composed: [0, 0, 0], literal: 1 },
   Q11: { residual: "R-SHELL-QUOTED", quotedValues: [0, 0], unquoted: 1 },
+  // Rows U, P, H, X, W and T (wb-7thm): measured by its cutting seat on trunk b887fa2.
+  K4: { forms: [1, 1, 1, 1], gate: { "G-ST7": 1 }, clean: 0 },
+  K5: { forms: [1, 1, 1, 1], gate: { "G-ST8": 1 }, clean: 0 },
+  K6: { forms: [1, 1, 1, 1], gate: { "G-ST9": 1 }, clean: 0 },
+  K7: { forms: [1, 1, 1], clean: 0 },
+  K8: { forms: [1, 1, 1, 1], gate: { "G-ST10": 1 }, clean: 0 },
+  D4: { forms: [1, 1, 1, 1, 1, 1], gate: { "G-DP1": 1, "G-DP2": 1, "G-DP4": 1, "G-DP5": 1 }, clean: [0, 0, 0] },
+  I4: {
+    shell: [
+      [1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1],
+      [1, 1, 1, 1, 1, 1],
+    ],
+    template: [1, 1, 1, 1, 1, 1, 1, 1],
+    gate: { "G-ST13": 1 },
+    readLeaves: [0, 0, 0, 0, 0, 0, 0, 0],
+    nearMisses: [0, 0, 0, 0],
+  },
+  X5: {
+    committed: [],
+    html: [],
+    hidden: { X5: ["receipt carries HTML"], unclosed: ["receipt carries HTML"], block: ["receipt carries HTML"], inline: ["receipt residuals differ", "receipt carries HTML"] },
+  },
+  W11: { counts: [0, 0, 1, 2, 1, 1, 1, 0] },
+  W12: { floor: 100, emptyWalkMeetsFloor: false, walkMeetsFloor: true },
+  W13: { missing: [], extra: [], misread: [], floorMet: true },
+  Q12: { residual: "R-OTHER-CALLEE", other: [0, 0, 0, 0], unwrapped: 1 },
+  Q13: { residual: "R-SHELL-EXPANSION", expanded: [0, 0, 0], quoted: 1 },
 };
 
 describe("wb-a9l2.8 rf graph mutation census (RF-HARNESS2-FEDERATED-PEER-R8)", () => {
   it("the judged set: the frozen shape, the owner's acceptance in the tracked export, the receipt anchor listing and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:6", "C:9", "M:5", "R:6", "S:6", "I:3", "K:3", "D:3", "N:5"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:6", "C:9", "M:5", "R:6", "S:6", "I:3", "K:3", "D:3", "N:5", "U:5", "P:1", "H:1", "X:1", "W:3", "T:2"]);
     expect(RF_GRAPH_LEAVES.map(leaf => `${leaf.leaf}:${leaf.mutates ? "mutates" : "reads"}`)).toEqual([
       "graph.show:reads",
       "graph.validate:reads",
@@ -1626,7 +1986,7 @@ describe("wb-a9l2.8 rf graph mutation census (RF-HARNESS2-FEDERATED-PEER-R8)", (
       "graph.rollback:mutates",
     ]);
     const exported = readFileSync(EXPORT_PATH, "utf8");
-    expect(anchorFindings(ROWS, RF_GRAPH_LEAVES, RESIDUALS, readFileSync(RECEIPT_PATH, "utf8"), exportClauses(exported), followUpClauses(exported))).toEqual([]);
+    expect(anchorFindings(ROWS, RF_GRAPH_LEAVES, RESIDUALS, readFileSync(RECEIPT_PATH, "utf8"), exportClauses(exported), followUpClauses(exported), terminalClauses(exported))).toEqual([]);
     const pins = ROWS.flatMap(row => row.pins).sort();
     expect(Object.keys(IMPL).sort()).toEqual(pins);
     expect(Object.keys(WITNESS).sort()).toEqual(pins);
