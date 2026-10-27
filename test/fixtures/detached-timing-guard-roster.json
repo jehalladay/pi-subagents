@@ -1,5 +1,5 @@
 {
- "provenance": "wb-nqbd guard roster (the R694 follow-up of wb-maza landing 395, gate cmd_d35d53e6a40a: F1 leads, F2-F5 ride), cut by ws-03 (run g10-work-s96) on trunk 467b14b4bf0106677ab65fd79efb4c8a8c6990e9. The rules of every control were authored from the bead's findings before the widened reading existed (RED-1 of record: 28 of 28 kill controls read nothing on the landed reader); each finding's text was then measured by test/workbench-detached-timing-guard.test.ts on 467b14b plus the cut and reviewed against the finding it pins, so a control swapped to another case of the same rule reds. controls holds what each planted site of the guard yields, as '<rule> <text>' (F1, F2 and F3 kill controls; N negative controls, which yield nothing), residuals the quiet rows of each named residual (F5), raiseRows the family's raiseTransportLapse call rows (F5, R-RAISE-SITE), and tests the guard's collected test titles in order, '%s: ' opening a per-member rule row (F4, the frozen shape).",
+ "provenance": "wb-nqbd guard roster (the R694 follow-up of wb-maza landing 395, gate cmd_d35d53e6a40a: F1 leads, F2-F5 ride), cut by ws-03 (run g10-work-s96) on trunk 467b14b4bf0106677ab65fd79efb4c8a8c6990e9. The rules of every control were authored from the bead's findings before the widened reading existed (RED-1 of record: 28 of 28 kill controls read nothing on the landed reader); each finding's text was then measured by test/workbench-detached-timing-guard.test.ts on 467b14b plus the cut and reviewed against the finding it pins, so a control swapped to another case of the same rule reds. controls holds what each planted site of the guard yields, as '<rule> <text>' (F1, F2 and F3 kill controls; N negative controls, which yield nothing), residuals the quiet rows of each named residual (F5), raiseRows the family's raiseTransportLapse call rows (F5, R-RAISE-SITE), and tests the guard's collected test titles in order, '%s: ' opening a per-member rule row (F4, the frozen shape). wb-vh7c carry (the R694 follow-up of wb-nqbd landing 491, gate cmd_7cbc36ba6b11: F1 leads, F2 rides), cut by ws-01 (run g10-work-s117) on trunk 94fc15ab5f9a4b9d21c0e77bd7f1cba9b4654da7: adds the V1 kill controls (G3: a counter of the loop under an equality operator or read as its truth value), the V2 kill controls (G4: vitest's onTestFinished, onTestFailed, aroundEach and aroundAll, hooks through a destructured binding or a variable, and every fixture that stops hosts), five N negatives, the R-COUNTER-ROUTE and R-REGISTRAR-ROUTE quiet rows, and three test titles. Each V control's finding was authored from the bead's findings before the widened reading existed (RED-2 of record: 28 of 28 V kill controls read nothing on the landed reader), and the cut's reader then yields each one unchanged.",
  "bead": "wb-nqbd",
  "tests": [
   "judges every default-gate member of the family, read from the test directory and vitest.config.ts",
@@ -12,8 +12,11 @@
   "wb-nqbd F4 frozen shape, as collected: this file's tests equal the roster's, expanded over the judged set, in order and in run mode, and the roster's shape equals the frozen-shape literal",
   "wb-nqbd F1 kill controls: vitest's wait helpers and AbortSignal.timeout read as G2 - by name on any receiver, by a string key or through a destructured binding",
   "wb-nqbd F2 kill controls: a for, while or do loop whose condition joins any relational bound with && reads as G3 - a countdown, a reversed or named bound, a while or do counter",
-  "wb-nqbd F3 kill controls: a timer global by a string key and Atomics.wait read as G2, and every vitest hook that stops hosts - itself or through module-local functions - reads as G4",
-  "wb-nqbd negative controls: a settled hook, a hook that stops nothing, a loop without && or without a relational bound, text alone and another object's members yield no finding; the controls are the roster's, in order",
+  "wb-nqbd F3 kill controls: a timer global by a string key and Atomics.wait read as G2, and an afterEach, afterAll, beforeEach or beforeAll hook that stops hosts - itself or through module-local functions, by name, a vitest import alias or a namespace member - reads as G4",
+  "wb-vh7c F1 kill controls: a for, while or do loop whose condition joins with && a counter of the loop reads as G3 - compared by ===, ==, !== or != against a literal or a named bound (on either side, under a negation too), or read as its truth value (n--, --n, n -= 1, a member's step, or n stepped in the body)",
+  "wb-vh7c F2 kill controls: vitest's other four hooks that stop hosts read as G4 - onTestFinished and onTestFailed (by name, a vitest import alias, a test-context member, a destructured binding, or a variable bound to one by name or as a member), aroundEach and aroundAll - and so does every fixture that stops hosts (extend, override or scoped; inline, as a tuple, through a builder's onCleanup or a module-local function), which no timeout bounds",
+  "wb-vh7c F2 hook kinds: the hooks G4 reads by name are exactly vitest's own hook exports (before*, after*, around* and onTest*), read from the vitest module",
+  "wb-nqbd and wb-vh7c negative controls: a settled hook (an onTestFinished among them), a hook or a fixture that stops nothing, a loop without && (a countdown among them), a loop whose && joins neither a relational bound nor a counter of its own (an inequality on a state, an equality on a flag while another value counts), text alone and another object's members yield no finding; the controls are the roster's, in order",
   "wb-nqbd F5 named residuals: every residual the header names has quiet rows in the roster, and each quiet row's planted member yields no finding",
   "wb-nqbd F5 R-RAISE-SITE: the family's raiseTransportLapse call rows equal the roster's - socket-base's 60-byte TMPDIR row and the helper's own unit row",
   "wb-nqbd F4 frozen shape, as run: this file's tests equal the roster's, expanded over the judged set, and every other test ran before this last case"
@@ -112,19 +115,119 @@
    "G4 a hook that stops hosts (vitest.afterAll) runs without HOST_HOOK_TIMEOUT_MS",
    "G4 a hook that stops hosts (vitest.afterAll) settles its waits without reportAfterCleanup"
   ],
+  "V1.inequalityFor": [
+   "G3 fixed-count poll loop (a counter under an equality operator): for (...; i !== 150 && alive(); ...)"
+  ],
+  "V1.inequalityStep": [
+   "G3 fixed-count poll loop (a counter under an equality operator): while (alive() && tries++ !== MAX_TRIES)"
+  ],
+  "V1.reversedInequality": [
+   "G3 fixed-count poll loop (a counter under an equality operator): while (alive() && 150 !== ++n)"
+  ],
+  "V1.doInequality": [
+   "G3 fixed-count poll loop (a counter under an equality operator): do ... while (--n !== 0 && alive())"
+  ],
+  "V1.looseInequality": [
+   "G3 fixed-count poll loop (a counter under an equality operator): for (...; i != MAX_POLLS && alive(); ...)"
+  ],
+  "V1.negatedEquality": [
+   "G3 fixed-count poll loop (a counter under an equality operator): while (!(n === 0) && alive())"
+  ],
+  "V1.looseEquality": [
+   "G3 fixed-count poll loop (a counter under an equality operator): do ... while (!(left-- == 0) && alive())"
+  ],
+  "V1.truthCountdown": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (n-- && alive())"
+  ],
+  "V1.forCountdown": [
+   "G3 fixed-count poll loop (a counter read as its truth value): for (...; n-- && alive(); ...)"
+  ],
+  "V1.prefixCountdown": [
+   "G3 fixed-count poll loop (a counter read as its truth value): do ... while (alive() && --left)"
+  ],
+  "V1.bodyCountdown": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (left && alive())"
+  ],
+  "V1.memberCountdown": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while (alive() && state.left--)"
+  ],
+  "V1.assignedCountdown": [
+   "G3 fixed-count poll loop (a counter read as its truth value): while ((left -= 1) && alive())"
+  ],
+  "V2.finishedHook": [
+   "G4 a hook that stops hosts (onTestFinished) runs without HOST_HOOK_TIMEOUT_MS",
+   "G4 a hook that stops hosts (onTestFinished) settles its waits without reportAfterCleanup"
+  ],
+  "V2.failedHook": [
+   "G4 a hook that stops hosts (onTestFailed) settles its waits without reportAfterCleanup"
+  ],
+  "V2.aliasedFinished": [
+   "G4 a hook that stops hosts (afterTest) runs without HOST_HOOK_TIMEOUT_MS",
+   "G4 a hook that stops hosts (afterTest) settles its waits without reportAfterCleanup"
+  ],
+  "V2.contextMember": [
+   "G4 a hook that stops hosts (context.onTestFinished) runs without HOST_HOOK_TIMEOUT_MS",
+   "G4 a hook that stops hosts (context.onTestFinished) settles its waits without reportAfterCleanup"
+  ],
+  "V2.contextBinding": [
+   "G4 a hook that stops hosts (onFail) settles its waits without reportAfterCleanup"
+  ],
+  "V2.registrarAlias": [
+   "G4 a hook that stops hosts (atEnd) runs without HOST_HOOK_TIMEOUT_MS",
+   "G4 a hook that stops hosts (atEnd) settles its waits without reportAfterCleanup"
+  ],
+  "V2.memberAlias": [
+   "G4 a hook that stops hosts (onFail) runs without HOST_HOOK_TIMEOUT_MS",
+   "G4 a hook that stops hosts (onFail) settles its waits without reportAfterCleanup"
+  ],
+  "V2.aroundEachHook": [
+   "G4 a hook that stops hosts (aroundEach) runs without HOST_HOOK_TIMEOUT_MS",
+   "G4 a hook that stops hosts (aroundEach) settles its waits without reportAfterCleanup"
+  ],
+  "V2.aroundAllHook": [
+   "G4 a hook that stops hosts (aroundAll through stopHosts) settles its waits without reportAfterCleanup"
+  ],
+  "V2.fixture": [
+   "G4 a fixture that stops hosts (test.extend) tears down under no timeout"
+  ],
+  "V2.fixtureTuple": [
+   "G4 a fixture that stops hosts (it.extend through stopHosts) tears down under no timeout"
+  ],
+  "V2.builderFixture": [
+   "G4 a fixture that stops hosts (test.extend) tears down under no timeout"
+  ],
+  "V2.namedFixture": [
+   "G4 a fixture that stops hosts (test.extend through hostsFixture) tears down under no timeout"
+  ],
+  "V2.overrideFixture": [
+   "G4 a fixture that stops hosts (hostTest.override) tears down under no timeout"
+  ],
+  "V2.scopedFixture": [
+   "G4 a fixture that stops hosts (hostTest.scoped) tears down under no timeout"
+  ],
   "N.settledHelper": [],
   "N.settledNamed": [],
   "N.quietHook": [],
   "N.unconjoined": [],
   "N.conjoinedNoBound": [],
   "N.textOnly": [],
-  "N.otherMember": []
+  "N.otherMember": [],
+  "N.stateInequality": [],
+  "N.flagEquality": [],
+  "N.unconjoinedCountdown": [],
+  "N.settledFinished": [],
+  "N.quietFixture": []
  },
  "residuals": {
   "R-WAIT-LOOP": [
    "R-WAIT-LOOP.forOfBound",
    "R-WAIT-LOOP.breakCount",
    "R-WAIT-LOOP.noDelay"
+  ],
+  "R-COUNTER-ROUTE": [
+   "R-COUNTER-ROUTE.plainStep",
+   "R-COUNTER-ROUTE.calledStep",
+   "R-COUNTER-ROUTE.coerced"
   ],
   "R-HOST-ROUTE": [
    "R-HOST-ROUTE.reexport",
@@ -148,6 +251,13 @@
   "R-HOOK-ROUTE": [
    "R-HOOK-ROUTE.method",
    "R-HOOK-ROUTE.imported"
+  ],
+  "R-REGISTRAR-ROUTE": [
+   "R-REGISTRAR-ROUTE.assignedAlias",
+   "R-REGISTRAR-ROUTE.computedKey",
+   "R-REGISTRAR-ROUTE.fixtureTable",
+   "R-REGISTRAR-ROUTE.importedFixture",
+   "R-REGISTRAR-ROUTE.methodFixture"
   ],
   "R-RAISE-SITE": [
    "R-RAISE-SITE.unraised"
