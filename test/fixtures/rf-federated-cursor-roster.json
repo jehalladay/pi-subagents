@@ -236,6 +236,32 @@
    "accepted-cursor-misechoed",
    "notified-cursor-misechoed",
    "dirty-flag-misechoed"
+  ],
+  "scopeClasses": [
+   {
+    "pin": "S1",
+    "name": "S-TEXT-WINDOW"
+   },
+   {
+    "pin": "S2",
+    "name": "S-TEXT-CONTEXT"
+   },
+   {
+    "pin": "S3",
+    "name": "S-SPELLING"
+   },
+   {
+    "pin": "S4",
+    "name": "S-PATH-WINDOW"
+   },
+   {
+    "pin": "S5",
+    "name": "S-FILE-GATE"
+   },
+   {
+    "pin": "S6",
+    "name": "S-BRANCH"
+   }
   ]
  },
  "records": {
@@ -769,6 +795,7 @@
        "scoped": [],
        "hits": []
       },
+      "independentScope": [],
       "planted": {
        "scoped": [
         "src/workbench/federation-import.ts",
@@ -781,6 +808,11 @@
         "src/workbench/peer-sync.ts: current"
        ]
       },
+      "independentPlanted": [
+       "src/workbench/federation-import.ts",
+       "src/workbench/peer-watermark.ts",
+       "src/workbench/peer-sync.ts"
+      ],
       "walk": {
        "files": [
         "src/.peers/watermark.ts",
@@ -831,7 +863,16 @@
          "src/workbench/hosts/federation/peer.ts: current",
          "src/workflow/peers/archive/2026/q4/watermark-log.json: latest"
         ]
-       }
+       },
+       "independent": [
+        "src/.peers/watermark.ts",
+        "src/workbench/.federation-cache.json",
+        "src/workbench/FEDERATION-NOTES",
+        "src/workbench/federation-notes.md",
+        "src/workbench/federation-peer.mjs",
+        "src/workbench/hosts/federation/peer.ts",
+        "src/workflow/peers/archive/2026/q4/watermark-log.json"
+       ]
       },
       "floorControl": {
        "atFloor": [
@@ -996,6 +1037,347 @@
        ],
        "hits": []
       }
+     }
+    }
+   ]
+  },
+  {
+   "id": "S",
+   "label": "each resolvable narrowing class of row C2's scope branches reds at its own controls, one pin per class",
+   "pins": [
+    {
+     "id": "S1",
+     "witness": {
+      "name": "S-TEXT-WINDOW",
+      "controls": [
+       {
+        "branch": "text",
+        "shape": "line-two",
+        "path": "src/workflow/relay-note.ts",
+        "spelling": "federation",
+        "belowLineOne": true,
+        "pastStart": false,
+        "pastEnd": false
+       },
+       {
+        "branch": "text",
+        "shape": "deep-head",
+        "path": "src/workbench/deep-head.ts",
+        "spelling": "federation",
+        "belowLineOne": true,
+        "pastStart": true,
+        "pastEnd": false
+       },
+       {
+        "branch": "text",
+        "shape": "deep-tail",
+        "path": "src/workbench/deep-tail.ts",
+        "spelling": "federation",
+        "belowLineOne": false,
+        "pastStart": false,
+        "pastEnd": true
+       }
+      ],
+      "scoped": 3,
+      "independent": 3,
+      "unscopedTwins": 3
+     }
+    },
+    {
+     "id": "S2",
+     "witness": {
+      "name": "S-TEXT-CONTEXT",
+      "controls": [
+       {
+        "branch": "text",
+        "shape": "line-comment",
+        "path": "src/workbench/line-note.ts",
+        "spelling": "federation"
+       },
+       {
+        "branch": "text",
+        "shape": "block-comment",
+        "path": "src/workbench/block-note.ts",
+        "spelling": "federation"
+       },
+       {
+        "branch": "text",
+        "shape": "doc-comment",
+        "path": "src/workbench/doc-note.ts",
+        "spelling": "federation"
+       },
+       {
+        "branch": "text",
+        "shape": "double-quoted",
+        "path": "src/workbench/double-note.ts",
+        "spelling": "federation"
+       },
+       {
+        "branch": "text",
+        "shape": "single-quoted",
+        "path": "src/workbench/single-note.ts",
+        "spelling": "federation"
+       },
+       {
+        "branch": "text",
+        "shape": "template",
+        "path": "src/workbench/template-note.ts",
+        "spelling": "federation"
+       },
+       {
+        "branch": "text",
+        "shape": "identifier",
+        "path": "src/workbench/identifier-note.ts",
+        "spelling": "federation"
+       },
+       {
+        "branch": "text",
+        "shape": "prose",
+        "path": "src/workbench/prose-note.md",
+        "spelling": "federation"
+       }
+      ],
+      "scoped": 8,
+      "independent": 8,
+      "unscopedTwins": 8
+     }
+    },
+    {
+     "id": "S3",
+     "witness": {
+      "name": "S-SPELLING",
+      "perMember": [
+       {
+        "text": 4,
+        "path": 4
+       },
+       {
+        "text": 4,
+        "path": 4
+       },
+       {
+        "text": 4,
+        "path": 4
+       },
+       {
+        "text": 4,
+        "path": 4
+       }
+      ],
+      "scoped": 32,
+      "independent": 32,
+      "unscopedTwins": 32
+     }
+    },
+    {
+     "id": "S4",
+     "witness": {
+      "name": "S-PATH-WINDOW",
+      "controls": [
+       {
+        "branch": "path",
+        "shape": "basename",
+        "path": "src/workbench/federation-basename.ts",
+        "spelling": "federation",
+        "inBasename": true,
+        "inExtension": false,
+        "pastStart": false,
+        "pastEnd": false
+       },
+       {
+        "branch": "path",
+        "shape": "extension",
+        "path": "src/workbench/peer.federation",
+        "spelling": "federation",
+        "inBasename": true,
+        "inExtension": true,
+        "pastStart": false,
+        "pastEnd": false
+       },
+       {
+        "branch": "path",
+        "shape": "deep-path-head",
+        "path": "src/<levels>/federation-head.ts",
+        "spelling": "federation",
+        "inBasename": true,
+        "inExtension": false,
+        "pastStart": true,
+        "pastEnd": false
+       },
+       {
+        "branch": "path",
+        "shape": "deep-path-tail",
+        "path": "src/federation-tail/<levels>/peer.ts",
+        "spelling": "federation",
+        "inBasename": false,
+        "inExtension": false,
+        "pastStart": false,
+        "pastEnd": true
+       }
+      ],
+      "scoped": 4,
+      "independent": 4,
+      "unscopedTwins": 4
+     }
+    },
+    {
+     "id": "S5",
+     "witness": {
+      "name": "S-FILE-GATE",
+      "controls": [
+       {
+        "branch": "text",
+        "shape": "text:src",
+        "path": "src/relay.ts",
+        "spelling": "federation",
+        "large": false
+       },
+       {
+        "branch": "text",
+        "shape": "text:src/ui:.md",
+        "path": "src/ui/notes.md",
+        "spelling": "watermark",
+        "large": false
+       },
+       {
+        "branch": "text",
+        "shape": "text:src/workbench:.json",
+        "path": "src/workbench/cache.json",
+        "spelling": "notified_position",
+        "large": false
+       },
+       {
+        "branch": "text",
+        "shape": "text:src/workbench/hosts:.mjs",
+        "path": "src/workbench/hosts/host.mjs",
+        "spelling": "accepted boundary",
+        "large": false
+       },
+       {
+        "branch": "text",
+        "shape": "text:src/workbench/providers:extensionless",
+        "path": "src/workbench/providers/NOTES",
+        "spelling": "FEDERATION",
+        "large": false
+       },
+       {
+        "branch": "text",
+        "shape": "text:src/workflow:dot-named",
+        "path": "src/workflow/.state.json",
+        "spelling": "watermark",
+        "large": false
+       },
+       {
+        "branch": "text",
+        "shape": "text:deep-directory",
+        "path": "src/workflow/runs/archive/2026/q4/log.ts",
+        "spelling": "federated",
+        "large": false
+       },
+       {
+        "branch": "text",
+        "shape": "text:dot-directory",
+        "path": "src/.cache/sync.ts",
+        "spelling": "notifiedPosition",
+        "large": false
+       },
+       {
+        "branch": "text",
+        "shape": "text:large",
+        "path": "src/workbench/ledger.ts",
+        "spelling": "federation",
+        "large": true
+       },
+       {
+        "branch": "path",
+        "shape": "path:src",
+        "path": "src/federation.ts",
+        "spelling": "federation",
+        "large": false
+       },
+       {
+        "branch": "path",
+        "shape": "path:src/ui:.md",
+        "path": "src/ui/watermark-notes.md",
+        "spelling": "watermark",
+        "large": false
+       },
+       {
+        "branch": "path",
+        "shape": "path:src/workbench:.json",
+        "path": "src/workbench/notified-position.json",
+        "spelling": "notified-position",
+        "large": false
+       },
+       {
+        "branch": "path",
+        "shape": "path:src/workbench/hosts:.mjs",
+        "path": "src/workbench/hosts/accepted-boundary.mjs",
+        "spelling": "accepted-boundary",
+        "large": false
+       },
+       {
+        "branch": "path",
+        "shape": "path:src/workbench/providers:extensionless",
+        "path": "src/workbench/providers/FEDERATION",
+        "spelling": "FEDERATION",
+        "large": false
+       },
+       {
+        "branch": "path",
+        "shape": "path:src/workflow:dot-named",
+        "path": "src/workflow/.watermark.json",
+        "spelling": "watermark",
+        "large": false
+       },
+       {
+        "branch": "path",
+        "shape": "path:deep-directory",
+        "path": "src/workflow/runs/archive/2026/q4/notified_position.ts",
+        "spelling": "notified_position",
+        "large": false
+       },
+       {
+        "branch": "path",
+        "shape": "path:dot-directory",
+        "path": "src/.federated/sync.ts",
+        "spelling": "federated",
+        "large": false
+       },
+       {
+        "branch": "path",
+        "shape": "path:large",
+        "path": "src/workbench/accepted-boundaries.ts",
+        "spelling": "accepted-boundaries",
+        "large": true
+       }
+      ],
+      "scoped": 18,
+      "independent": 18,
+      "unscopedTwins": 18
+     }
+    },
+    {
+     "id": "S6",
+     "witness": {
+      "name": "S-BRANCH",
+      "controls": [
+       {
+        "branch": "text",
+        "shape": "text",
+        "path": "src/workbench/branch-text.ts",
+        "spelling": "federation"
+       },
+       {
+        "branch": "path",
+        "shape": "path",
+        "path": "src/workbench/federation-branch.ts",
+        "spelling": "federation"
+       }
+      ],
+      "scoped": 2,
+      "independent": 2,
+      "unscopedTwins": 2
      }
     }
    ]
