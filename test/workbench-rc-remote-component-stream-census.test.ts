@@ -68,9 +68,17 @@
  * recorded.
  * SKIP ANCHOR (wb-yfzf F3): the listing shares SKIPPED_ROOTS with the walk, so each skipped entry is anchored outside this
  * file and its roster: git's own data (GIT_DATA), the tracker export's root entry (BEAD_EXPORT's first segment), or a root
- * entry the repository's IGNORE_FILE ignores by name (a pattern with no glob, negation or inner "/"; a leading or trailing "/"
- * allowed). A skip added to the census and the roster together is a red, not a lower count above a floor. Every root entry
- * the walk reached at base carries a floor in ROOT_FLOORS.
+ * entry the repository's IGNORE_FILE ignores by name (a pattern with no glob, negation, comment, backslash, white space inside
+ * or inner "/"; a leading or trailing "/" allowed, white space around trimmed). A skip added to the census and the roster
+ * together is a red, not a lower count above a floor. Every root entry the walk reached at base carries a floor in ROOT_FLOORS.
+ * The parse is pinned live (wb-gc4o): the roster holds the names the repository's IGNORE_FILE ignores as read (ignoreNames,
+ * sorted, once each: 18 today, the five skips it anchors among them), the parse of a planted ignore file (PLANTED_IGNORE, one
+ * line of each kind the parser reads or refuses, written to scratch and read back through the same read, ignoredRootsAt) and
+ * the judge's verdicts with no ignore file at all (bare: every skip but git's data and the export's root entry). So a parser
+ * that never reads the file's text (returning the walk's own skip list) or a read of some other text is a red, and a
+ * consumer planted below a skip added to the census and the roster is a red beside such a parser or read, or beside a judge
+ * that reads every skip as anchored (bare moves with the skip list). An edit of the ignore file that adds or drops a root
+ * name reds A1 until ignoreNames is re-measured.
  * CARRIERS (wb-wxhu F2): every file that is no module, no JSON file, no prose and no binary - a shell or Python script, a TOML,
  * YAML or HTML file, an extensionless file, any type the walk has not met before - is a carrier: judged by default, never skipped
  * by default. A1 reads its tokens; A2 reads its lines, and a line naming RC_FAMILY anywhere (a `python3 -m`, a `pip install`, an
@@ -121,8 +129,12 @@
  * anchors rows, clauses and the named mutants, not pins); a ROOT_FLOORS floor removed together with its roster copy (no outside
  * source lists the root entries without running git; the removal drops no read by itself: the walk still equals the listing
  * and every skip stays anchored); a skipped root entry the ignore file ignores that still holds files (added past the ignore
- * file) - the SKIP ANCHOR trusts the ignore file, which no read here can check without running git; and the armed rows prove
- * the judge, not a Pi consumer (none exists).
+ * file) - the SKIP ANCHOR trusts the ignore file, which no read here can check without running git; a SKIP ANCHOR reading
+ * forged (a parser, a read or the judge, unanchoredSkips, returning a value of its own for the repository's inputs - a name
+ * the ignore file does not ignore, an anchored verdict for a skip it does not name - with each roster pin it would move, of
+ * ignoreNames, plantedNames and bare, matched by the forged value or edited to match: no reader but the parser and the
+ * judge compares those pins with the ignore file); a SKIP ANCHOR reading removed from the case, its key literal and the
+ * roster together; and the armed rows prove the judge, not a Pi consumer (none exists).
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
  * not inverted, ran; every pin's case reached its end (REACHED); no registered test or suite title spells the family (describe
  * titles mask it).
@@ -151,6 +163,9 @@
  * installs the distribution by, pinned in a carrier, a manifest, a JSON command line and a command string; F2 R-COMPOSED's three
  * carrier members, named with quiet rows; F3 SKIP ANCHOR and a floor for each of the four root entries that had none; F4 a second
  * failure for each Io control (EIO for a directory; EIO, an Error without a code and a value that is no Error for a file).
+ * HARDENING (wb-gc4o, the review finding on wb-yfzf cut #1 bf938afa, gate cmd_413e638a96db, landed at 512): the SKIP ANCHOR's
+ * parse is pinned live (ignoreNames, plantedNames, bare), so ignoredRootsOf returning the walk's own skip list, or the ignore
+ * read replaced by some other text, is a red, and so is a consumer planted below a skip added to the census and the roster.
  * Display paths added: none. Test-only: it spawns nothing; the controls plant files in makeScratch scratch only.
  */
 import { type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -193,6 +208,11 @@ const SKIPPED_ROOTS = [".git", ".beads", "node_modules", "dist", "build", "cover
  * entry, or a root entry the repository's ignore file ignores by name. */
 const GIT_DATA = ".git";
 const IGNORE_FILE = ".gitignore";
+/** SKIP ANCHOR's planted ignore file (wb-gc4o): one line of each kind ignoredRootsOf reads (a name, a dotted name, a leading
+ * "/", a trailing "/", both, white space around) or refuses (two comments, a blank line, four globs, a negation, two inner "/"
+ * patterns, white space inside, a backslash escape). A1 writes it as the ignore file of a scratch root and reads it back
+ * through the read A1 makes of the repository's own (ignoredRootsAt); the roster holds what comes back. */
+const PLANTED_IGNORE = ["# a comment", "#hashed", "", "kept", ".dotted", "/lead", "trail/", "/both/", "  padded  ", "*.glob", "glob*", "gl?b", "[gb]lob", "!negated", "inner/slash", "/inner/both/", "two words", "\\#escaped"];
 /** Walked, never judged (THE WALK): prose (R-PROSE) and binaries (R-BINARY). Every other file is a module, a JSON file or a carrier. */
 const PROSE_EXTENSIONS = [".md"];
 const BINARY_EXTENSIONS = [".png", ".mp4", ".tgz"];
@@ -340,6 +360,7 @@ const SCAN = {
   skippedRoots: SKIPPED_ROOTS,
   gitData: GIT_DATA,
   ignoreFile: IGNORE_FILE,
+  plantedIgnore: PLANTED_IGNORE,
   proseExtensions: PROSE_EXTENSIONS,
   binaryExtensions: BINARY_EXTENSIONS,
   floors: FLOORS,
@@ -678,13 +699,27 @@ function listingOf(root: string): string[] {
 }
 /** A file's root entry: its first path segment, or "." for a file at the root. */
 const rootOf = (file: string): string => (file.includes("/") ? file.slice(0, file.indexOf("/")) : ".");
-/** SKIP ANCHOR: the names an ignore file ignores at the root - every pattern with no glob, negation, comment or inner "/" (a
- * leading "/" or a trailing "/" allowed). */
+/** SKIP ANCHOR: the names an ignore file ignores at the root - every pattern with no glob, negation, comment, backslash, white
+ * space inside or inner "/" (a leading "/" or a trailing "/" allowed; white space around a line trimmed). PLANTED_IGNORE pins
+ * each kind (wb-gc4o). */
 function ignoredRootsOf(source: string): string[] {
   return source.split("\n").flatMap(line => {
     const name = /^\/?([^\s/*?[\]!#\\][^\s/*?[\]\\]*)\/?$/.exec(line.trim())?.[1];
     return name === undefined ? [] : [name];
   });
+}
+/** SKIP ANCHOR: the root names the ignore file below `root` ignores - the one read A1 makes of the repository's ignore file and,
+ * wb-gc4o, of the planted one. */
+const ignoredRootsAt = (root: string): string[] => ignoredRootsOf(readFileSync(join(root, IGNORE_FILE), "utf8"));
+/** SKIP ANCHOR (wb-gc4o): what ignoredRootsAt reads from PLANTED_IGNORE, written as the ignore file of a fresh scratch root. */
+function plantedIgnoreNames(): string[] {
+  const root = makeScratch("rc-remote-component-stream-ignore-");
+  try {
+    writeFileSync(join(root, IGNORE_FILE), PLANTED_IGNORE.join("\n"));
+    return ignoredRootsAt(root);
+  } finally {
+    removeScratch(root);
+  }
 }
 /** SKIP ANCHOR: the skipped root entries no outside source anchors - neither git's own data, nor the tracker export's root entry,
  * nor a root entry the ignore file ignores. */
@@ -1483,11 +1518,18 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     expect([...tree.walk.files].sort(), "the walk equals an independent listing of the same tree").toStrictEqual(listingOf(REPO));
     // SKIP ANCHOR (F3): the listing shares SKIPPED_ROOTS, so every skip is anchored outside this file and its roster; a skip of
     // a root entry nothing outside anchors (the gate's .agents plant, .pi with only an inner ignore pattern, new-feedback) reads.
-    const ignored = ignoredRootsOf(readFileSync(join(REPO, IGNORE_FILE), "utf8"));
+    // wb-gc4o: the parse is pinned live. ignoreNames is the repository's ignore file as parsed, held by the roster (a parser that
+    // returns the walk's own skip list, or a read of any other text, reads other names); plantedNames is what the same read makes
+    // of the planted ignore file; bare is the skips with no ignore file at all (only git's data and the export stay anchored).
+    const ignored = ignoredRootsAt(REPO);
     const skipAnchor = {
+      ignoreNames: [...new Set(ignored)].sort(),
       unanchored: unanchoredSkips(SKIPPED_ROOTS, ignored),
       planted: unanchoredSkips([".agents", ".pi", "new-feedback"], ignored),
+      bare: unanchoredSkips(SKIPPED_ROOTS, []),
+      plantedNames: plantedIgnoreNames(),
     };
+    expect(Object.keys(skipAnchor), "the SKIP ANCHOR's readings, each held by the roster").toEqual(["ignoreNames", "unanchored", "planted", "bare", "plantedNames"]);
     expect(skipAnchor.unanchored, "every skipped root entry is git's data, the tracker export's root entry or ignored by the ignore file").toStrictEqual([]);
     expect(tree.anchorsWalked, "every walk anchor was reached with its token").toBe(true);
     expect({ symlinks: tree.walk.symlinks, unreadable: tree.walk.unreadable }, "the walk meets no symlink and no unreadable file").toStrictEqual({ symlinks: [], unreadable: [] });

@@ -38,6 +38,15 @@
     ],
     "R-UNMARKED-READER": [
       "A2"
+    ],
+    "R-FLOWED": [
+      "B6"
+    ],
+    "R-CROSS-MODULE": [
+      "B6"
+    ],
+    "R-SCOPE-BLIND": [
+      "B6"
     ]
   },
   "tests": [
@@ -699,6 +708,821 @@
                 "globals": 0,
                 "dynamic": 0,
                 "launches": []
+              },
+              "assign": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "assignNs": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "destrAssign": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "paramDefault": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "nameDefault": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "elementDefault": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "logicalAssign": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "assignDefault": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "restSpace": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "nestedDefault": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "computedKey": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "getBuiltin": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "moduleRequire": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "requireCall": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "requireApply": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "requireBind": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "makerAlias": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "destructuredLoader": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "comma": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "cond": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "logical": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "condElement": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "letName": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "assignedName": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "aliasName": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "shadowedProgram": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "objHolder": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "argument": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "returned": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "arrayHeld": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "reexportFrom": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "reexportImport": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "launcherAlias": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "callbackByName": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "paramElement": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "dataImport": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "forOfHead": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "forInHead": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "forAwaitHead": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "arrayHead": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "objectHead": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "prefixUpdate": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "postfixUpdate": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "functionName": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "className": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "functionExpressionName": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "classExpressionName": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "enumName": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "namespaceName": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "enumMember": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "importDefaultName": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "<composed>",
+                  "rf"
+                ]
+              },
+              "importNamespaceName": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "<composed>",
+                  "rf"
+                ]
+              },
+              "importNamedName": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "<composed>",
+                  "rf"
+                ]
+              },
+              "importEqualsName": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "<composed>",
+                  "rf"
+                ]
+              },
+              "orAssign": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "andAssign": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "orOperand": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "andOperand": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "shorthandDefault": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "assignRest": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "assignPropertyDefault": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "catchShadow": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "forOfDeclShadow": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "compoundShadow": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "objectPatternShadow": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "arrayPatternShadow": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "unscopedLet": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "wrappedProgram": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "launcherNamed": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "storedBindRequire": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "storedBindGetBuiltin": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "loaderHolder": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "loaderReturned": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "loaderArgument": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "loopElement": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "rebindAssignPattern": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindParamDefault": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindNestedDefault": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindParamSpace": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindCommaSpace": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindAssignedSpace": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindLogicalAssign": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindElementDefault": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindDeclaration": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindThen": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindDestructured": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindThenBound": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindBeforeLauncher": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindImport": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "computedKeyNames": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "competingBind": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "curl"
+                ]
+              },
+              "competingCall": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "curl"
+                ]
+              },
+              "competingApply": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "curl"
+                ]
+              },
+              "patternPropertyTarget": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "patternObjectRest": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "patternArraySpread": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "patternDefaultedTarget": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "patternWrappedTarget": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "updateWrappedOperand": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "globalThisWrite": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf"
+                ]
+              },
+              "unscopedConst": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf"
+                ]
               }
             }
           }

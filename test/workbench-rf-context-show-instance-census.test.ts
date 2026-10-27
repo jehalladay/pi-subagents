@@ -64,7 +64,8 @@
  *   refused). An element reads as written: a string literal, a same-module const string binding, or the members of a spread
  *   array literal or same-module const array; a const array spread into another array is judged inside it, never alone. A
  *   lookup element reads both as unresolved and as written when the module binds it once as written: a member of a const
- *   object literal (by name, string key or same-module const string key, nested too), an enum member, a class static member,
+ *   object literal (by name, string key, same-module const string key or a key that is itself a lookup the module binds once
+ *   as written to a string - P05, MS33 - nested too), an enum member, a class static member,
  *   or an element of a const array at a literal index, and a spread of a lookup bound to an array literal spreads its
  *   members. An argv names context show when either reading does, and A3 holds the findings of both, so resolving a lookup
  *   never drops a reading the unresolved element makes. After "show" the argv admits exactly one RENDER
@@ -74,11 +75,20 @@
  *   "context" (Pi's --workspace ROOT) and between "context" and "show" are outside the leaf's set.
  * - SELECTION READ (b): B2 reads selection.matched in one access chain (a property access or a string-keyed element access,
  *   optional or not, through parentheses, non-null and type assertions; a same-module const string key or a resolved lookup
- *   key resolves), on a receiver named selection, in Reflect.get(<a selection>, "matched"), and in a destructuring pattern -
- *   a declaration, an assignment, or a parameter of a function the module binds once by name and calls with a selection in
- *   that position - that binds matched under a selection key or from a selection. A selection receiver is an access keyed
- *   selection, a binding named selection, Reflect.get keyed selection, or a fallback one of whose operands is a selection
- *   receiver: either operand of ??, || or &&, either branch of a conditional, the last operand of a comma expression.
+ *   key resolves) on a selection receiver; in a property read call keyed matched on a selection - Reflect.get, and
+ *   Object.getOwnPropertyDescriptor or Reflect.getOwnPropertyDescriptor; in an object assignment pattern; in a parameter
+ *   pattern of a function the module binds once by name and calls with a selection in that position; and in an object
+ *   destructuring pattern that binds matched under a selection key or from a selection - one of the pattern's sources: a
+ *   declaration's initializer, a parameter's or a binding element's default, each element of the inline or same-module const
+ *   array a for-of declaration iterates (spreads of such arrays expanded), and, for a pattern nested in another, the member at
+ *   its key of an inline or const object literal source, or the element at its index of an inline or const array source with
+ *   no spread before it. A selection receiver is an access keyed selection, a binding named selection, Reflect.get keyed
+ *   selection, a fallback one of whose operands is a selection receiver (either operand of ??, || or &&, either branch of a
+ *   conditional, the last operand of a comma expression), an await of one, a spread clone of one (an object literal whose
+ *   last spread spreads one, with no matched property and no other spread after it), or a lookup the module binds once as
+ *   written to one (a member of an inline or const object literal, an element of an inline or const array at a literal
+ *   index, an enum member or a class static member). The wb-agup cut (2026-10-27) widened the reading to this form: rows MS28
+ *   to MS32 pin the landing-483 gate plants E01-E05 and the wb-bf65 seat's KS-B2 survivors, MS33 pins the lookup key P05.
  * - PROJECTION RULE (b)(c): a reply projects rows only when it is ok, exits 0, names context.show, states
  *   result.selection.matched 1 and every result.blocks row's component_instance_id equals the requested id; the rows are the
  *   producer's, verbatim. A failure reply at exit 3 whose first diagnostic code ends _NOT_FOUND is typed not-found; any other
@@ -92,7 +102,9 @@
  * delivery note, which enumerates its 43 pins (T1-T5, A1-A4, B1-B3, C1-C3, F1, MP1-MP3, MA1-MA7, MJ1-MJ4, MS1-MS7, R1-R6), its
  * frozen shape and its six residuals by name; each must still be judged here in its row, so a landed member removed from this
  * file and the roster together still reds. FOLLOW-UP: the wb-7uzc row's title names the gate probes the first follow-up
- * cures (G13, G13b, G38, P41) and the wb-bf65 row's title names E-DASHDASH; CURES binds each to a judged pin. The src walk is
+ * cures (G13, G13b, G38, P41) and the wb-bf65 row's title names E-DASHDASH; CURES binds each to a judged pin. The wb-agup
+ * row's title names no probe, so the third follow-up's probes (E01-E05, the KS members, P05, E16 and the X-WK hollows) are
+ * bound in CURES and held by the roster alone (R9). The src walk is
  * held to git's listing of src (tracked files and the untracked ones git does not ignore). The record case walks this file's
  * vitest task tree and holds every pin's end to the assertion count the roster pins (REACHED), so a case that returns its
  * witness without reaching its pinned assertion count reds, and it holds each src-walk pin's walk (T4, A3 and B2) to git's
@@ -113,18 +125,28 @@
  * reactivefiber.<leaf> id convention of wb-a9l2.7); R7 UNRESOLVED-BINDING - an element named by an import, a let or var, a
  * parameter, or a name the module binds otherwise than by const declarations of one string is not resolved, so "context"
  * followed by an imported verb names no context show; R8 SELECTION-ALIAS - selection.matched read through a binding of the
- * selection object under another name, or through a key that is neither a literal nor a same-module const string, is not
- * read by B2; R9 COORDINATED - a member this cut adds that neither the landed record nor the follow-up title names is held by
+ * selection object, or of a spread clone of it, under another name, or through a destructuring key that is neither a
+ * literal nor a same-module const string (E16: a lookup key there is not resolved, while an access key resolves through a
+ * lookup bound once to a string, MS26), is not read by B2; R9 COORDINATED - a member this cut adds that neither the landed record nor the follow-up title names is held by
  * the roster alone, so removing it from this file and the roster together reads clean; R10 COMPOSED-FRAGMENT - a const array
  * composed outside an array spread (concat, push, a call) is judged where it is written, so A3 may name a render-count for the
  * fragment while T4 holds the verdict; R11 UNRESOLVED-LOOKUP - a member or element lookup the module does not bind once as
- * written (a lookup on an import, a let or var, a parameter or a call result; a key or index that is neither a literal nor a
- * same-module const string; an accessor, a method, or a member a later spread may override; an enum, class or object bound
- * more than once) reads only as unresolved, so "context" followed by such a lookup verb names no context show; R12
+ * written (a lookup on an import, a let or var, a parameter, this (KS-LOOKUP-THIS-STATIC), a namespace (KS-LOOKUP-NAMESPACE)
+ * or a call result; a key or index that is neither a literal, a same-module const string nor a lookup the module binds once
+ * as written to a string; an accessor, a method, or a member a later spread may override; an enum, class or object bound
+ * more than once; an enum member initialized by another member (KS-ENUM-SELF-REF)) reads only as unresolved, so "context"
+ * followed by such a lookup verb names no context show, and such a lookup reaches no selection receiver for B2; R12
  * SELECTION-PARAMETER - a selection passed to a function the module does not bind once by name (a method, a callback, an
  * import), or bound to a parameter that is then read through .matched, is not read by B2; R13 COUNT-MATCHED - the record
  * holds each pin's assertion count, not its work: a case body replaced by as many assertions that returns the roster's
- * witness reads clean, but for the src-walk pins T4, A3 and B2, whose walks R13 and the record hold to git's listing (WALKED).
+ * witness reads clean; the src-walk pins T4, A3 and B2 are held to git's listing too (WALKED), which holds their walks, not
+ * their judgements, so a src-walk case that keeps its walk and its count and drops its judgement reads clean as well (the
+ * landing-483 X-WK hollows; R13 pins that reading); R14 SELECTION-COMPOSED - a selection reached through a call or
+ * constructor result (Object.assign, structuredClone, Promise.resolve, Object.getOwnPropertyDescriptors), a whole-object read
+ * or presence test that names no matched member as written (Object.values, JSON.stringify, for-in, "matched" in), or a clone
+ * whose matched member a later spread or property may set, is not read by B2; R15 ASSIGNED-ARRAY-PATTERN - an array
+ * assignment pattern, or a for-of whose target is an assignment pattern rather than a declaration, that binds matched from a
+ * selection is not read by B2 (an object assignment pattern is, MS25; an array declaration pattern is, MS28).
  * SCOPE: the three rules are this cut's reading of the filing; the producer facts above are measured at the builds named and
  * are not re-read here (the census is hermetic: no rf runs, the stand-in rf answers from the roster). docs are not read: the
  * acceptance clauses name the argv builder, the projection and the exit-3 typing. A later cut that adds a context show reader
@@ -211,6 +233,8 @@ const RESIDUALS: Readonly<Record<string, string>> = {
   R11: "UNRESOLVED-LOOKUP",
   R12: "SELECTION-PARAMETER",
   R13: "COUNT-MATCHED",
+  R14: "SELECTION-COMPOSED",
+  R15: "ASSIGNED-ARRAY-PATTERN",
 };
 /** The landing-285 and landing-380 gate probes the follow-up cuts cure, each bound to the pin that pins its cured reading. */
 const CURES: Readonly<Record<string, string>> = {
@@ -236,6 +260,22 @@ const CURES: Readonly<Record<string, string>> = {
   "E-B2-REFLECT": "MS26",
   "E-B2-PARAM": "MS27",
   "X-THIRD-COUNTMATCH-T4": "R13",
+  E01: "MS28",
+  E05: "MS28",
+  E03: "MS29",
+  E04: "MS30",
+  E02: "MS31",
+  "KS-B2-AWAIT": "MS32",
+  "KS-B2-ARRAY-LOOKUP": "MS32",
+  "KS-B2-OBJECT-LOOKUP": "MS32",
+  P05: "MS33",
+  E16: "R8",
+  "KS-LOOKUP-THIS-STATIC": "R11",
+  "KS-LOOKUP-NAMESPACE": "R11",
+  "KS-ENUM-SELF-REF": "R11",
+  "X-WK-T4": "R13",
+  "X-WK-A3": "R13",
+  "X-WK-B2": "R13",
 };
 /** Where the landed cut's delivery note (in the wb-pfxo.9 export row) states its frozen shape, its pins and its residuals. */
 const LANDED_SHAPE_MARK = "FROZEN SHAPE (rule 16) literal [";
@@ -322,14 +362,20 @@ const ROWS: readonly Row[] = [
       "MS25",
       "MS26",
       "MS27",
+      "MS28",
+      "MS29",
+      "MS30",
+      "MS31",
+      "MS32",
+      "MS33",
       "MG1",
       "MG2",
     ],
   },
   {
     id: "R",
-    label: "the named residuals R1-R13 keep their pinned readings",
-    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13"],
+    label: "the named residuals R1-R15 keep their pinned readings",
+    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13", "R14", "R15"],
   },
 ];
 
@@ -795,28 +841,58 @@ function accessKey(node: ts.Node, bindings: Bindings): string | undefined {
   if (ts.isStringLiteralLike(key)) return key.text;
   return ts.isIdentifier(key) ? bindings.strings.get(key.text) : stringOf(key, bindings, new Set());
 }
-/** A Reflect.get(target, key) call's target and key (any key spelling stringOf reads). */
-function reflectGet(node: ts.Node, bindings: Bindings): { readonly target: ts.Expression; readonly key: string | undefined } | undefined {
+/** A keyed read call's target and key. */
+interface KeyedRead {
+  readonly target: ts.Expression;
+  readonly key: string | undefined;
+}
+/** A call <owner>.<method>(target, key) for an owner.method pair named in `calls` - the callee a property access or an
+ * element access with any key spelling accessKey reads - with its target and its key (any key spelling stringOf reads). */
+function keyedCall(node: ts.Node, bindings: Bindings, calls: readonly string[]): KeyedRead | undefined {
   if (!ts.isCallExpression(node)) return undefined;
   const callee = bare(node.expression);
-  if (!(ts.isPropertyAccessExpression(callee) || ts.isElementAccessExpression(callee)) || accessKey(callee, bindings) !== "get") return undefined;
+  if (!(ts.isPropertyAccessExpression(callee) || ts.isElementAccessExpression(callee))) return undefined;
   const owner = bare(callee.expression);
   const [target, key] = node.arguments;
-  if (!ts.isIdentifier(owner) || owner.text !== "Reflect" || target === undefined || key === undefined) return undefined;
+  if (!ts.isIdentifier(owner) || !calls.includes(`${owner.text}.${accessKey(callee, bindings) ?? ""}`) || target === undefined || key === undefined) return undefined;
   return { target, key: stringOf(key, bindings, new Set()) };
 }
+/** A Reflect.get(target, key) call's target and key. */
+function reflectGet(node: ts.Node, bindings: Bindings): KeyedRead | undefined {
+  return keyedCall(node, bindings, ["Reflect.get"]);
+}
+/** The calls that read one property of their target: Reflect.get and the own-property descriptor reads (wb-agup E02). */
+const PROPERTY_READS: readonly string[] = ["Reflect.get", "Reflect.getOwnPropertyDescriptor", "Object.getOwnPropertyDescriptor"];
 const FALLBACK_OPERATORS: readonly ts.SyntaxKind[] = [ts.SyntaxKind.QuestionQuestionToken, ts.SyntaxKind.BarBarToken, ts.SyntaxKind.AmpersandAmpersandToken];
-/** A selection receiver: an access keyed selection, a binding named selection, Reflect.get keyed selection, or a fallback one
- * of whose operands is a selection receiver (either operand of ??, || or &&, either branch of a conditional, the last
- * operand of a comma expression). */
-function isSelection(node: ts.Expression, bindings: Bindings): boolean {
+/** A selection receiver: an access keyed selection, a binding named selection, Reflect.get keyed selection, a fallback one of
+ * whose operands is a selection receiver (either operand of ??, || or &&, either branch of a conditional, the last operand of
+ * a comma expression), an await of one, a spread clone of one, or a lookup the module binds once as written to one (a member
+ * of an inline or const object literal, an element of an inline or const array at a literal index, an enum member or a class
+ * static member; wb-agup KS-B2-AWAIT, KS-B2-ARRAY-LOOKUP, KS-B2-OBJECT-LOOKUP). */
+function isSelection(node: ts.Expression, bindings: Bindings, seen: ReadonlySet<ts.Node> = new Set()): boolean {
   const value = bare(node);
+  if (seen.has(value)) return false;
+  const next = new Set([...seen, value]);
   if (accessKey(value, bindings) === "selection" || (ts.isIdentifier(value) && value.text === "selection")) return true;
   if (reflectGet(value, bindings)?.key === "selection") return true;
-  if (ts.isConditionalExpression(value)) return isSelection(value.whenTrue, bindings) || isSelection(value.whenFalse, bindings);
+  if (ts.isAwaitExpression(value)) return isSelection(value.expression, bindings, next);
+  if (ts.isObjectLiteralExpression(value)) return clonesSelection(value, bindings, next);
+  if (ts.isConditionalExpression(value)) return isSelection(value.whenTrue, bindings, next) || isSelection(value.whenFalse, bindings, next);
+  const target = lookupTarget(value, bindings, new Set());
+  if (target !== undefined) return isSelection(target, bindings, next);
   if (!ts.isBinaryExpression(value)) return false;
-  if (value.operatorToken.kind === ts.SyntaxKind.CommaToken) return isSelection(value.right, bindings);
-  return FALLBACK_OPERATORS.includes(value.operatorToken.kind) && (isSelection(value.left, bindings) || isSelection(value.right, bindings));
+  if (value.operatorToken.kind === ts.SyntaxKind.CommaToken) return isSelection(value.right, bindings, next);
+  return FALLBACK_OPERATORS.includes(value.operatorToken.kind) && (isSelection(value.left, bindings, next) || isSelection(value.right, bindings, next));
+}
+/** A spread clone of a selection receiver: an object literal whose matched member comes from its last spread, which spreads
+ * one - no matched property and no other spread after it (wb-agup E03). */
+function clonesSelection(node: ts.ObjectLiteralExpression, bindings: Bindings, seen: ReadonlySet<ts.Node>): boolean {
+  let cloned = false;
+  for (const property of node.properties) {
+    if (ts.isSpreadAssignment(property)) cloned = isSelection(property.expression, bindings, seen);
+    else if (property.name !== undefined && propertyKey(property.name, bindings) === "matched") cloned = false;
+  }
+  return cloned;
 }
 /** The literal key one destructuring element binds. */
 function bindingKey(element: ts.BindingElement, bindings: Bindings): string | undefined {
@@ -852,12 +928,49 @@ function passesSelectionToMatched(call: ts.CallExpression, bindings: Bindings): 
     return isSelection(argument, bindings) && parameter.name.elements.some(element => bindingKey(element, bindings) === "matched");
   });
 }
-/** A read of selection.matched: one access chain on a selection receiver, Reflect.get(<a selection>, "matched"), a
- * destructuring - a declaration or an assignment - that binds matched under a selection key or from a selection receiver,
- * or a selection passed to a same-module function whose parameter pattern binds matched. */
+/** The elements an inline or same-module const array holds, a spread of such an array expanded in place (each array once). */
+function arrayItems(node: ts.Expression, bindings: Bindings, expanding: ReadonlySet<ts.Node> = new Set()): ts.Expression[] {
+  const array = literalOf(node, bindings);
+  if (array === undefined || !ts.isArrayLiteralExpression(array) || expanding.has(array)) return [];
+  const next = new Set([...expanding, array]);
+  return array.elements.flatMap(element => (ts.isSpreadElement(element) ? arrayItems(element.expression, bindings, next) : ts.isOmittedExpression(element) ? [] : [element]));
+}
+/** What one destructuring pattern is bound to, as written: "selection" when it sits under a selection key, else its sources -
+ * a declaration's initializer, a parameter's or a binding element's default, each element of the inline or same-module const
+ * array a for-of declaration iterates (spreads of such arrays expanded), and, for a pattern nested in another, the member at
+ * its key of each outer source that is an inline or const object literal, or the element at its index of each outer source
+ * that is an inline or const array with no spread before it (wb-agup E01, E04, E05). */
+function patternSources(pattern: ts.BindingPattern, bindings: Bindings): readonly ts.Expression[] | "selection" {
+  const holder = pattern.parent;
+  if (ts.isParameter(holder)) return holder.initializer === undefined ? [] : [holder.initializer];
+  if (ts.isVariableDeclaration(holder)) {
+    if (holder.initializer !== undefined) return [holder.initializer];
+    const loop = ts.isVariableDeclarationList(holder.parent) ? holder.parent.parent : undefined;
+    return loop !== undefined && ts.isForOfStatement(loop) ? arrayItems(loop.expression, bindings) : [];
+  }
+  if (!ts.isBindingElement(holder) || holder.dotDotDotToken !== undefined) return [];
+  const defaults = holder.initializer === undefined ? [] : [holder.initializer];
+  const outer = holder.parent;
+  const key = ts.isObjectBindingPattern(outer) ? bindingKey(holder, bindings) : String(outer.elements.indexOf(holder));
+  if (ts.isObjectBindingPattern(outer) && key === "selection") return "selection";
+  const sources = patternSources(outer, bindings);
+  if (sources === "selection" || key === undefined) return defaults;
+  const nested = sources.flatMap(source => {
+    const literal = literalOf(source, bindings);
+    if (literal === undefined) return [];
+    const found = ts.isObjectLiteralExpression(literal) ? (ts.isObjectBindingPattern(outer) ? objectMember(literal, key, bindings) : undefined) : ts.isArrayBindingPattern(outer) ? arrayElement(literal, key) : undefined;
+    return found === undefined ? [] : [found];
+  });
+  return [...defaults, ...nested];
+}
+/** A read of selection.matched: one access chain on a selection receiver, a property read call (Reflect.get, or Object or
+ * Reflect getOwnPropertyDescriptor) of a selection keyed matched, an object assignment pattern that binds matched under a
+ * selection key or from a selection receiver, an object destructuring pattern that binds matched under a selection key or
+ * from one of its sources (patternSources) that is a selection receiver, or a selection passed to a same-module function
+ * whose parameter pattern binds matched. */
 function readsSelectionMatched(node: ts.Node, bindings: Bindings): boolean {
   if ((ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) && accessKey(node, bindings) === "matched") return isSelection(node.expression, bindings);
-  const reflected = reflectGet(node, bindings);
+  const reflected = keyedCall(node, bindings, PROPERTY_READS);
   if (reflected !== undefined) return reflected.key === "matched" && isSelection(reflected.target, bindings);
   if (ts.isCallExpression(node)) return passesSelectionToMatched(node, bindings);
   if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken) {
@@ -865,9 +978,8 @@ function readsSelectionMatched(node: ts.Node, bindings: Bindings): boolean {
     return ts.isObjectLiteralExpression(pattern) && assignsMatched(pattern, isSelection(node.right, bindings), bindings);
   }
   if (!ts.isBindingElement(node) || bindingKey(node, bindings) !== "matched" || !ts.isObjectBindingPattern(node.parent)) return false;
-  const holder = node.parent.parent;
-  if (ts.isBindingElement(holder)) return bindingKey(holder, bindings) === "selection";
-  return ts.isVariableDeclaration(holder) && holder.initializer !== undefined && isSelection(holder.initializer, bindings);
+  const sources = patternSources(node.parent, bindings);
+  return sources === "selection" || sources.some(source => isSelection(source, bindings));
 }
 /** The argv candidates of one node: an array literal judged alone, or the argument list of a call or new expression. */
 function argvElements(node: ts.Node, fragments: ReadonlySet<ts.Node>): readonly ts.Expression[] | undefined {
@@ -1300,6 +1412,12 @@ const CASES: readonly Case[] = [
     text: 'const read = ({ matched }: { matched: number }) => matched;\nfunction count(label: string, { matched: hits }: { matched: number }) {\n  return label + hits;\n}\nconst a = read(reply.selection);\nconst b = count("x", reply["selection"]);\nconst c = read(reply.selection ?? { matched: 0 });',
     outcome: { showArgv: [], renderArgv: 0, showLiterals: 0, selectorLiterals: 0, instanceReads: 3 },
   },
+  { pin: "MS28", kind: "scan", text: "for (const { matched } of [reply.selection]) use(matched);\nconst [{ matched }] = [reply.selection];\nconst PAIR = [other, reply.selection] as const;\nfor (const { matched: b } of PAIR) use(b);\nconst [, { matched: c }] = PAIR;\nconst [[{ matched: d }]] = [[reply.selection]];\nconst { box: { matched: e } } = { box: reply.selection };\nfor (const { matched: f } of [...[reply.selection]]) use(f);\nconst [{ matched: g }] = [other, reply.selection];", outcome: { showArgv: [], renderArgv: 0, showLiterals: 0, selectorLiterals: 0, instanceReads: 7 } },
+  { pin: "MS29", kind: "scan", text: "const a = ({ ...reply.selection }).matched;\nconst b = { ...cached, ...reply.selection, label: \"x\" }[\"matched\"];\nconst { matched } = { ...reply.selection };\nconst c = ({ ...(fresh ? reply.selection : fallback) }).matched;\nconst d = ({ ...reply.selection, matched: 0 }).matched;\nconst e = ({ ...reply.selection, ...extra }).matched;", outcome: { showArgv: [], renderArgv: 0, showLiterals: 0, selectorLiterals: 0, instanceReads: 4 } },
+  { pin: "MS30", kind: "scan", text: "function f({ matched }: {matched:number} = reply.selection) {\n  return matched;\n}\nconst g = ({ matched: hits }: { matched: number } = reply[\"selection\"]) => hits;\nclass Reader {\n  read({ matched }: { matched: number } = reply.selection ?? fallback) {\n    return matched;\n  }\n}\nconst [{ matched: h } = reply.selection] = [];\nconst k = ({ matched }: { matched: number } = other) => matched;", outcome: { showArgv: [], renderArgv: 0, showLiterals: 0, selectorLiterals: 0, instanceReads: 4 } },
+  { pin: "MS31", kind: "scan", text: "const a = Object.getOwnPropertyDescriptor(reply.selection, \"matched\")?.value;\nconst KEY = \"matched\";\nconst b = Reflect.getOwnPropertyDescriptor(reply[\"selection\"], KEY)?.value;\nconst c = Object[\"getOwnPropertyDescriptor\"](reply.selection ?? fallback, \"matched\");\nconst d = Object.getOwnPropertyDescriptor(reply.selection, \"label\")?.value;\nconst e = Object.getOwnPropertyDescriptor(other, \"matched\")?.value;", outcome: { showArgv: [], renderArgv: 0, showLiterals: 0, selectorLiterals: 0, instanceReads: 3 } },
+  { pin: "MS32", kind: "scan", text: "const a = (await reply.selection).matched;\nconst b = [reply.selection][0].matched;\nconst c = ({ s: reply.selection }).s.matched;\nconst BOX = { s: reply.selection, list: [other, reply.selection] } as const;\nconst d = BOX.s.matched;\nconst e = BOX[\"list\"][1].matched;\nclass Held {\n  static sel = reply.selection;\n}\nconst f = Held.sel.matched;\nconst { matched: g } = await reply.selection;\nconst h = [reply.selection][1]?.matched;\nconst k = BOX.list[0].matched;", outcome: { showArgv: [], renderArgv: 0, showLiterals: 0, selectorLiterals: 0, instanceReads: 7 } },
+  { pin: "MS33", kind: "scan", text: "const K = { v: \"verb\" } as const;\nconst RFK = { verb: \"show\" } as const;\nspawn(\"rf\", [\"context\", RFK[K.v], r]);\nconst N = { k: K.v } as const;\nspawn(\"rf\", [\"context\", RFK[N.k], r, \"--json\"]);\nspawn(\"rf\", [\"context\", RFK[K.w], r]);", outcome: { showArgv: [[],[]], renderArgv: 0, showLiterals: 0, selectorLiterals: 0, instanceReads: 0 } },
   { pin: "R1", kind: "scan", text: 'spawn("rf", ["con" + "text", "show", r, "--inst" + "ance", i]);', outcome: QUIET_SCAN },
   { pin: "R2", kind: "scan", text: "// rf context show RENDER --instance ID\n/* reads row.component_instance_id */\nconst quiet = 1;", outcome: QUIET_SCAN },
   {
@@ -1316,30 +1434,22 @@ const CASES: readonly Case[] = [
     text: 'import { VERB } from "./rf-verbs.js";\nlet group = "context";\nconst a = ["context", VERB, r];\nconst b = [group, "show", r];\nconst c = (verb: string) => ["context", verb, r];\nfunction d() {\n  const V = "show";\n  return ["context", V, r];\n}\nfunction e() {\n  const V = "list";\n  return V;\n}',
     outcome: QUIET_SCAN,
   },
-  {
-    pin: "R8",
-    kind: "scan",
-    text: 'const sel = reply.selection;\nconst n = sel.matched;\nlet key = "matched";\nconst m = reply.selection[key];\nconst { [key]: k } = reply.selection;',
-    outcome: QUIET_SCAN,
-  },
+  { pin: "R8", kind: "scan", text: "const sel = reply.selection;\nconst n = sel.matched;\nlet key = \"matched\";\nconst m = reply.selection[key];\nconst { [key]: k } = reply.selection;\nconst K2 = { m: \"matched\" } as const;\nconst { [K2.m]: hits } = reply.selection;\nconst clone = { ...reply.selection };\nconst q = clone.matched;", outcome: QUIET_SCAN },
   {
     pin: "R10",
     kind: "scan",
     text: 'const RF_SHOW = ["context", "show"] as const;\nspawn("rf", RF_SHOW.concat([r, "--json"]));',
     outcome: { showArgv: [["render-count:0"]], renderArgv: 0, showLiterals: 0, selectorLiterals: 0, instanceReads: 0 },
   },
-  {
-    pin: "R11",
-    kind: "scan",
-    text: 'import { WORDS } from "./rf-words.js";\nlet MUT = { verb: "show" };\nconst SPREAD = { verb: "show", ...MUT };\nconst GET = { verb: "show", get verb() { return "show"; } };\nclass Getter {\n  static get VERB() { return "show"; }\n}\nclass Instance {\n  VERB = "show";\n}\nenum Twice { Verb = "show" }\nenum Twice { Other = "list" }\nconst AFTER = [...WORDS, "show"];\nconst LIST = ["show"];\nconst idx = 0;\nspawn("rf", ["context", WORDS.verb, r]);\nspawn("rf", ["context", MUT.verb, r]);\nspawn("rf", ["context", SPREAD.verb, r]);\nspawn("rf", ["context", GET.verb, r]);\nspawn("rf", ["context", Getter.VERB, r]);\nspawn("rf", ["context", Instance.VERB, r]);\nspawn("rf", ["context", Twice.Verb, r]);\nspawn("rf", ["context", AFTER[1], r]);\nspawn("rf", ["context", LIST[idx], r]);',
-    outcome: QUIET_SCAN,
-  },
+  { pin: "R11", kind: "scan", text: "import { WORDS } from \"./rf-words.js\";\nlet MUT = { verb: \"show\" };\nconst SPREAD = { verb: \"show\", ...MUT };\nconst GET = { verb: \"show\", get verb() { return \"show\"; } };\nclass Getter {\n  static get VERB() { return \"show\"; }\n}\nclass Instance {\n  VERB = \"show\";\n}\nenum Twice { Verb = \"show\" }\nenum Twice { Other = \"list\" }\nconst AFTER = [...WORDS, \"show\"];\nconst LIST = [\"show\"];\nconst idx = 0;\nspawn(\"rf\", [\"context\", WORDS.verb, r]);\nspawn(\"rf\", [\"context\", MUT.verb, r]);\nspawn(\"rf\", [\"context\", SPREAD.verb, r]);\nspawn(\"rf\", [\"context\", GET.verb, r]);\nspawn(\"rf\", [\"context\", Getter.VERB, r]);\nspawn(\"rf\", [\"context\", Instance.VERB, r]);\nspawn(\"rf\", [\"context\", Twice.Verb, r]);\nspawn(\"rf\", [\"context\", AFTER[1], r]);\nspawn(\"rf\", [\"context\", LIST[idx], r]);\nclass This {\n  static VERB = \"show\";\n  static argv() {\n    return [\"context\", this.VERB, r];\n  }\n}\nnamespace Ns {\n  export const VERB = \"show\";\n}\nspawn(\"rf\", [\"context\", Ns.VERB, r]);\nenum Self { Verb = \"show\", Alias = Verb }\nspawn(\"rf\", [\"context\", Self.Alias, r]);\nconst viaIndex = [reply.selection][idx].matched;\nlet BOX = { sel: reply.selection };\nconst viaLet = BOX.sel.matched;", outcome: QUIET_SCAN },
   {
     pin: "R12",
     kind: "scan",
     text: 'import { readMatched } from "./rf-read.js";\nconst holder = { read: ({ matched }: { matched: number }) => matched };\nconst viaMethod = holder.read(reply.selection);\nconst viaImport = readMatched(reply.selection);\nconst viaCallback = [reply.selection].map(({ matched }) => matched);\nconst plain = (sel: { matched: number }) => sel.matched;\nconst viaPlain = plain(reply.selection);\nfunction twice({ matched }: { matched: number }) {\n  return matched;\n}\nfunction twice(value: unknown) {\n  return value;\n}\nconst viaTwice = twice(reply.selection);\nfunction pair(label: string, { matched }: { matched: number }) {\n  return label + matched;\n}\nconst viaSpread = pair(...labels, reply.selection);\nfunction rest(...{ matched }: { matched: number }[]) {\n  return matched;\n}\nconst viaRest = rest(reply.selection);',
     outcome: QUIET_SCAN,
   },
+  { pin: "R14", kind: "scan", text: "const a = Object.assign({}, reply.selection).matched;\nconst b = structuredClone(reply.selection).matched;\nconst c = (await Promise.resolve(reply.selection)).matched;\nconst d = Object.getOwnPropertyDescriptors(reply.selection).matched;\nconst e = ({ ...reply.selection, ...extra }).matched;\nconst f = ({ ...reply.selection, matched: 0 }).matched;\nconst g = Object.values(reply.selection);\nconst h = JSON.stringify(reply.selection);\nconst has = \"matched\" in reply.selection;\nfor (const key in reply.selection) use(key);", outcome: QUIET_SCAN },
+  { pin: "R15", kind: "scan", text: "let matched = 0;\n[{ matched }] = [reply.selection];\n[, { matched }] = [other, reply.selection];\nfor ({ matched } of [reply.selection]) use(matched);", outcome: QUIET_SCAN },
 ];
 
 function outcomeOf(entry: Case): Json {
@@ -1715,6 +1825,9 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       countMatchedB3: [...reachedFindings(ending("B3", countOf("B3"))), ...walkedFindings(walks(""), listed)],
       countMatchedT4: [...reachedFindings(ending("T4", countOf("T4"))), ...walkedFindings(walks("T4"), listed)],
       earlyReturnB3: [...reachedFindings(ending("B3", "2")), ...walkedFindings(walks(""), listed)],
+      // The landing-483 X-WK hollows: a src-walk case that keeps its walk and its count but drops its judgement - WALKED holds
+      // the walk, not the judgement, so the record reads it clean (R13's wb-agup correction).
+      walkKeptT4: [...reachedFindings(ending("T4", countOf("T4"))), ...walkedFindings(walks(""), listed)],
     };
     expect(reading).toStrictEqual({
       residual: "COUNT-MATCHED",
@@ -1722,6 +1835,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       countMatchedB3: [],
       countMatchedT4: ["walk unread: T4"],
       earlyReturnB3: [`reached B3:2, pinned ${pinned("B3")}`],
+      walkKeptT4: [],
     });
     return reading;
   },
@@ -1771,7 +1885,7 @@ const REACHED: string[] = [];
 
 describe("wb-pfxo.9 context show instance census (RF-COMPOSITIONAL-ASSEMBLY-R10, absent-today leg)", () => {
   it(JUDGED_TITLE, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:5", "A:4", "B:3", "C:3", "F:1", "M:44", "R:13"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:5", "A:4", "B:3", "C:3", "F:1", "M:50", "R:15"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
