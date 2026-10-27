@@ -1,0 +1,293 @@
+{
+  "bead": "wb-grmo.2",
+  "rows": [
+    {
+      "id": "T",
+      "label": "a default-gate test reads the SCG-R11 fixture roster and fails when a captured envelope names epistemic_status or a scenario key before those cases exist (freeze-and-flip)",
+      "pins": [
+        {
+          "id": "T1",
+          "title": "T1 reads the SCG-R11 fixture roster: test/fixtures/rf-result-keys.json parses through readRfResultRoster as the captured, exhaustive roster, each key list at its floor",
+          "quote": "a default-gate test reads the SCG-R11 fixture roster",
+          "witness": {
+            "source": "captured",
+            "receipt": "stated",
+            "floorsMet": [
+              "resultKeys",
+              "provenanceKeys",
+              "workKeys",
+              "workMetricsKeys"
+            ],
+            "anchorsHeld": 7
+          }
+        },
+        {
+          "id": "T2",
+          "title": "T2 fails when a captured envelope names epistemic_status (ARMED): no key of the roster's four lists spells an epistemic form, and the roster diff reds a result-level one",
+          "quote": "fails when a captured envelope names epistemic_status",
+          "witness": {
+            "hits": [],
+            "fired": 8,
+            "quiet": 4,
+            "liveDiff": [
+              "unexpected result.epistemic_status"
+            ]
+          }
+        },
+        {
+          "id": "T3",
+          "title": "T3 or a scenario key (ARMED): no roster key spells scenario, uncertified or speculative or is the shipped notice key, and the roster diff reds a result-level one",
+          "quote": "or a scenario key",
+          "witness": {
+            "hits": [],
+            "fired": 24,
+            "quiet": 4,
+            "liveDiff": [
+              "unexpected result.notice",
+              "unexpected result.speculative"
+            ]
+          }
+        },
+        {
+          "id": "T4",
+          "title": "T4 before those cases exist (freeze-and-flip): the observer suite the owed cases land in spells no epistemic word, so this census stands in its frozen form",
+          "quote": "before those cases exist (freeze-and-flip)",
+          "witness": {
+            "suite": "test/workbench-reactivefiber-observer.test.ts",
+            "observerSuite": true,
+            "epistemicMentions": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "docs/workbench/09 § Reader adapters gains one census-bound sentence that an RF prediction renders as unverified context (fold into wb-973.17 if it lands first)",
+      "pins": [
+        {
+          "id": "D1",
+          "title": "D1 docs/workbench/09 § Reader adapters gains one census-bound sentence: it renders there exactly once and the docs09 census binds it as half RA6/f",
+          "quote": "docs/workbench/09 § Reader adapters gains one census-bound sentence",
+          "witness": {
+            "occurrences": 1,
+            "hasHtml": false,
+            "censusQuotesClause": 1,
+            "censusFreezesClause": true,
+            "censusBindsThisFile": true,
+            "ra6f": [
+              "T2",
+              "Z1",
+              "Z2"
+            ]
+          }
+        },
+        {
+          "id": "D2",
+          "title": "D2 that an RF prediction renders as unverified context: the sentence opens with the owner's words verbatim",
+          "quote": "that an RF prediction renders as unverified context",
+          "witness": {
+            "opening": "An RF prediction renders as unverified context",
+            "sentences": [
+              "An RF prediction renders as unverified context, and Pi claims no epistemic status for a render."
+            ]
+          }
+        },
+        {
+          "id": "D3",
+          "title": "D3 (fold into wb-973.17 if it lands first): wb-973.17 landed first, and the sentence closes the RF bullet that carries its clauses",
+          "quote": "(fold into wb-973.17 if it lands first)",
+          "witness": {
+            "receiptTitled": true,
+            "bulletSentences": 4,
+            "position": 3,
+            "foldedBeside973_17": true,
+            "otherItems": 0
+          }
+        }
+      ]
+    },
+    {
+      "id": "Z",
+      "label": "until then Pi claims nothing",
+      "pins": [
+        {
+          "id": "Z1",
+          "title": "Z1 Pi claims nothing in code: no src module's identifiers, strings, templates or regexes spell an epistemic, scenario, uncertified or speculative word",
+          "quote": null,
+          "witness": {
+            "floorMet": true,
+            "anchorsRead": 3,
+            "controls": {
+              "string": 1,
+              "identifier": 1,
+              "template": 1,
+              "regex": 1,
+              "comment": 0
+            },
+            "hits": []
+          }
+        },
+        {
+          "id": "Z2",
+          "title": "Z2 Pi composes no epistemic claim: an envelope marked with each RF-WM-001 word, the shipped block markers or the scenario form projects and evidences byte for byte as its unmarked twin",
+          "quote": null,
+          "witness": {
+            "variants": 11,
+            "sameProjection": 11,
+            "sameEvidence": 11,
+            "snapshots": 1,
+            "composed": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "label": "the owner filing in the tracked bead export tiles rows T and D pin by pin and its title holds row Z",
+      "pins": [
+        {
+          "id": "F1",
+          "title": "F1 the owner filing's until-then sentence is rows T and D joined, each label its pins' quotes, and the title holds row Z's clause once",
+          "quote": null,
+          "witness": {
+            "filing": true,
+            "untilThen": true,
+            "tiling": {
+              "T": " and   ",
+              "D": "  "
+            },
+            "joined": true,
+            "titleHoldsZ": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the named residuals, each with a pinned quiet row",
+      "pins": [
+        {
+          "id": "Q1",
+          "title": "Q1 R-NESTED: a marker below the result level (block metadata, a provenance key) passes the roster diff, so no re-capture brings it to the roster",
+          "quote": null,
+          "witness": {
+            "plants": [
+              "blocks[0].metadata.rf.epistemic_status",
+              "provenance.epistemic_status"
+            ],
+            "failures": [
+              [],
+              []
+            ],
+            "triggers": 0
+          }
+        },
+        {
+          "id": "Q2",
+          "title": "Q2 R-VALUE: an uncertified word carried as the value of a roster key passes the roster diff unseen",
+          "quote": null,
+          "witness": {
+            "plant": "result.audience = uncertified",
+            "failures": []
+          }
+        },
+        {
+          "id": "Q3",
+          "title": "Q3 R-VOCABULARY: a key outside the vocabulary that carries the same meaning (belief_state, what_if_view) reads quiet on T2 and T3",
+          "quote": null,
+          "witness": {
+            "keys": [
+              "belief_state",
+              "what_if_view"
+            ],
+            "hits": []
+          }
+        },
+        {
+          "id": "Q4",
+          "title": "Q4 R-SHARED-WORD: Z1 does not take hypothesis, which src code spells for Pi's own relation kind",
+          "quote": null,
+          "witness": {
+            "snippetHits": 0,
+            "srcSpellsHypothesis": true
+          }
+        }
+      ]
+    }
+  ],
+  "reached": {
+    "T1": {
+      "roster": 1
+    },
+    "T2": {
+      "roster": 1,
+      "diff": 1
+    },
+    "T3": {
+      "roster": 1,
+      "diff": 1
+    },
+    "T4": {
+      "suite": 1
+    },
+    "D1": {
+      "docs": 1,
+      "census": 1
+    },
+    "D2": {
+      "docs": 1
+    },
+    "D3": {
+      "receipt": 1,
+      "docs": 1
+    },
+    "Z1": {
+      "src": 1
+    },
+    "Z2": {
+      "topology": 12,
+      "evidence": 12
+    },
+    "F1": {
+      "export": 1
+    },
+    "Q1": {
+      "roster": 1,
+      "diff": 2
+    },
+    "Q2": {
+      "roster": 1,
+      "diff": 1
+    },
+    "Q3": {
+      "roster": 1
+    },
+    "Q4": {
+      "src": 1
+    }
+  },
+  "residuals": {
+    "R-NESTED": "Q1",
+    "R-VALUE": "Q2",
+    "R-VOCABULARY": "Q3",
+    "R-SHARED-WORD": "Q4"
+  },
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "T1 reads the SCG-R11 fixture roster: test/fixtures/rf-result-keys.json parses through readRfResultRoster as the captured, exhaustive roster, each key list at its floor",
+    "T2 fails when a captured envelope names epistemic_status (ARMED): no key of the roster's four lists spells an epistemic form, and the roster diff reds a result-level one",
+    "T3 or a scenario key (ARMED): no roster key spells scenario, uncertified or speculative or is the shipped notice key, and the roster diff reds a result-level one",
+    "T4 before those cases exist (freeze-and-flip): the observer suite the owed cases land in spells no epistemic word, so this census stands in its frozen form",
+    "D1 docs/workbench/09 § Reader adapters gains one census-bound sentence: it renders there exactly once and the docs09 census binds it as half RA6/f",
+    "D2 that an RF prediction renders as unverified context: the sentence opens with the owner's words verbatim",
+    "D3 (fold into wb-973.17 if it lands first): wb-973.17 landed first, and the sentence closes the RF bullet that carries its clauses",
+    "Z1 Pi claims nothing in code: no src module's identifiers, strings, templates or regexes spell an epistemic, scenario, uncertified or speculative word",
+    "Z2 Pi composes no epistemic claim: an envelope marked with each RF-WM-001 word, the shipped block markers or the scenario form projects and evidences byte for byte as its unmarked twin",
+    "F1 the owner filing's until-then sentence is rows T and D joined, each label its pins' quotes, and the title holds row Z's clause once",
+    "Q1 R-NESTED: a marker below the result level (block metadata, a provenance key) passes the roster diff, so no re-capture brings it to the roster",
+    "Q2 R-VALUE: an uncertified word carried as the value of a roster key passes the roster diff unseen",
+    "Q3 R-VOCABULARY: a key outside the vocabulary that carries the same meaning (belief_state, what_if_view) reads quiet on T2 and T3",
+    "Q4 R-SHARED-WORD: Z1 does not take hypothesis, which src code spells for Pi's own relation kind",
+    "the record: every registered test is in run mode and ran, and every pin reached its seams as the roster pins"
+  ]
+}

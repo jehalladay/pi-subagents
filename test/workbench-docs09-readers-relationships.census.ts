@@ -52,6 +52,11 @@
  *   table's row/half/pin-count shape and RA6's identity (clauses and bindings) are literals, never derived from ROWS, and
  *   the RA6 ANCHOR reads the live document: every sentence of the RF bullet is covered clause by clause by RA6's halves,
  *   so a half removed from every literal of this file (CT5/CT6) is still red against the docs.
+ * - RA6 f (wb-grmo.2, RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2, the until-then leg; folded into wb-973.17's RF bullet, which
+ *   landed first): the bullet's fourth sentence, an RF prediction rendering as unverified context with no epistemic status
+ *   claimed. Half f binds three cases of the wb-grmo.2 freeze-and-flip census (test/workbench-rf-epistemic-status-census.test.ts)
+ *   under their describe paths: T2, the captured SCG-R11 roster naming no epistemic key, and Z1 and Z2, src naming no
+ *   epistemic word and the adapter composing none. That census quotes this half's clause and this file's pin of it (its row D1).
  */
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -152,6 +157,26 @@ const GRAPH_AC2: Pin = {
   suite: [GRAPH_VIEW_SUITE],
 };
 
+/** wb-grmo.2: the freeze-and-flip census RA6/f binds, and the describe paths of its rows T and Z (outermost first). */
+const EPISTEMIC_CENSUS = "test/workbench-rf-epistemic-status-census.test.ts";
+const EPISTEMIC_SUITE = "wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2)";
+const EPISTEMIC_TRIGGER_SUITE = [EPISTEMIC_SUITE, "T a default-gate test reads the SCG-R11 fixture roster and fails when a captured envelope names epistemic_status or a scenario key before those cases exist (freeze-and-flip)"];
+const EPISTEMIC_CLAIMS_SUITE = [EPISTEMIC_SUITE, "Z until then Pi claims nothing"];
+const GRMO_T2: Pin = {
+  file: EPISTEMIC_CENSUS,
+  title: "T2 fails when a captured envelope names epistemic_status (ARMED): no key of the roster's four lists spells an epistemic form, and the roster diff reds a result-level one",
+  suite: EPISTEMIC_TRIGGER_SUITE,
+};
+const GRMO_Z1: Pin = {
+  file: EPISTEMIC_CENSUS,
+  title: "Z1 Pi claims nothing in code: no src module's identifiers, strings, templates or regexes spell an epistemic, scenario, uncertified or speculative word",
+  suite: EPISTEMIC_CLAIMS_SUITE,
+};
+const GRMO_Z2: Pin = {
+  file: EPISTEMIC_CENSUS,
+  title: "Z2 Pi composes no epistemic claim: an envelope marked with each RF-WM-001 word, the shipped block markers or the scenario form projects and evidences byte for byte as its unmarked twin",
+  suite: EPISTEMIC_CLAIMS_SUITE,
+};
 /** wb-973.17: the describe paths of the wb-973.8 SCG-R8 and wb-973.9 SCG-R9 cases RA6 b-e bind (outermost first). */
 const BUNDLE_SUITE = ["bundle revision from result.bundle_revision_id (wb-973.8 SCG-R8)"];
 const FRESHNESS_SUITE = ["observation rows from result.observations (wb-973.10 SCG-R10)", "observation freshness, replay and degradation (wb-973.9 SCG-R9)"];
@@ -284,6 +309,8 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
       // wb-973.17 (SCG-R17 (b)): not-fresh rows demote to partial; freshness stays the projection's own reading.
       pinned("d", "Reused, replayed or non-observed observation rows demote an RF preview to partial", "partial", [R9_NOT_FRESH, R9_PROVIDER_PARTIAL]),
       pinned("e", "the projection's freshness is the host's reading witness, never a currentness claim about the rows", "freshness", [R9_REFRESH]),
+      // wb-grmo.2 (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2, until then): an RF prediction is unverified context; Pi claims no epistemic status.
+      pinned("f", "An RF prediction renders as unverified context, and Pi claims no epistemic status for a render", "epistemic", [GRMO_T2, GRMO_Z1, GRMO_Z2]),
     ],
   },
   {
@@ -399,7 +426,7 @@ const ROWS: readonly Row[] = freezeDeep<readonly Row[]>([
 
 const EXPECTED_ROW_IDS: readonly string[] = ["RA1", "RA2", "RA3", "RA4", "RA5", "RA6", "RA7", "RA8", "RA9", "RA10", "RA11", "RL1", "RL2", "RL3", "RL4", "RL5"];
 const EXPECTED_UNPINNED: readonly string[] = ["RA2/b", "RA4/b", "RA5/b", "RA7/a", "RA7/b"];
-const DISTINCT_PINS = 43;
+const DISTINCT_PINS = 46;
 
 /**
  * wb-973.17 (standing rule 16): the table's shape frozen as a literal, never derived from ROWS - every half as
@@ -420,6 +447,7 @@ const FROZEN_HALF_SHAPE: readonly string[] = [
   "RA6/c:1",
   "RA6/d:2",
   "RA6/e:1",
+  "RA6/f:3",
   "RA7/a:0",
   "RA7/b:0",
   "RA8/a:2",
@@ -460,6 +488,10 @@ const FROZEN_RA6: readonly string[] = [
   "d | test/workbench-reactivefiber-observer.test.ts | observation rows from result.observations (wb-973.10 SCG-R10) > observation freshness, replay and degradation (wb-973.9 SCG-R9) | SCG-R9 provider: the full-shape envelope with fresh and not-fresh rows passes unchanged and projects partial end to end",
   "e | clause | the projection's freshness is the host's reading witness, never a currentness claim about the rows",
   "e | test/workbench-reactivefiber-observer.test.ts | observation rows from result.observations (wb-973.10 SCG-R10) > observation freshness, replay and degradation (wb-973.9 SCG-R9) | SCG-R9: after ObservationProjection.refresh every not-fresh row leaves the node partial, and freshness stays projection-owned",
+  "f | clause | An RF prediction renders as unverified context, and Pi claims no epistemic status for a render",
+  "f | test/workbench-rf-epistemic-status-census.test.ts | wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2) > T a default-gate test reads the SCG-R11 fixture roster and fails when a captured envelope names epistemic_status or a scenario key before those cases exist (freeze-and-flip) | T2 fails when a captured envelope names epistemic_status (ARMED): no key of the roster's four lists spells an epistemic form, and the roster diff reds a result-level one",
+  "f | test/workbench-rf-epistemic-status-census.test.ts | wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2) > Z until then Pi claims nothing | Z1 Pi claims nothing in code: no src module's identifiers, strings, templates or regexes spell an epistemic, scenario, uncertified or speculative word",
+  "f | test/workbench-rf-epistemic-status-census.test.ts | wb-grmo.2 RF epistemic-status freeze-and-flip census (RF-PREDICTIVE-WORLD-MODEL-CONTEXT-R2) > Z until then Pi claims nothing | Z2 Pi composes no epistemic claim: an envelope marked with each RF-WM-001 word, the shipped block markers or the scenario form projects and evidences byte for byte as its unmarked twin",
 ];
 /** A row's identity in FROZEN_RA6's form: each half's clause, then one line per pin. */
 const identityOf = (row: Row): string[] =>
@@ -529,7 +561,7 @@ const READERS_BULLETS: readonly string[] = [
   "Furnace: native Run status/event stream and possible descendant references.",
   "Forge: native operation/verdict/artifact evidence, build revision and gate axes.",
   "HX: query coverage/bounds/query basis, and optional graph traversal of linked native refs.",
-  "RF: render context provenance and context artifact references. An RF snapshot's definition basis is bundle_revision_id when the envelope carries it, with graph_revision_id remaining the topology identity only. Reused, replayed or non-observed observation rows demote an RF preview to partial, and the projection's freshness is the host's reading witness, never a currentness claim about the rows.",
+  "RF: render context provenance and context artifact references. An RF snapshot's definition basis is bundle_revision_id when the envelope carries it, with graph_revision_id remaining the topology identity only. Reused, replayed or non-observed observation rows demote an RF preview to partial, and the projection's freshness is the host's reading witness, never a currentness claim about the rows. An RF prediction renders as unverified context, and Pi claims no epistemic status for a render.",
   "MechanicalWorkflows: invocation outcome, service spans if instrumented; arbitrary plain TypeScript calls are not magically discoverable.",
   "Beads: supported work readiness and linkage, never reconstructed from heuristics alone.",
 ];
@@ -713,7 +745,7 @@ describe("wb-752.15 docs/workbench/09 § Reader adapters and § Relationships ce
     expect(rf).toHaveLength(1);
     const clauses = (ROWS.find(row => row.id === "RA6")?.halves ?? []).map(half => half.clause);
     const sentences = (rf[0] ?? "").slice(RF_BULLET_LABEL.length).split(/(?<=\.) /u);
-    expect(sentences).toHaveLength(3);
+    expect(sentences).toHaveLength(4);
     for (const sentence of sentences) {
       const rest = clauses.reduce((left, clause) => left.replace(clause, ""), sentence);
       expect(rest, `the RF bullet sentence ${JSON.stringify(sentence)} states text no RA6 half binds`).toMatch(CONNECTIVES);
@@ -787,7 +819,7 @@ describe("wb-752.15 liveness: the adopted judge is not accept-all (the real repo
   /**
    * wb-ro6u (owner tune M:16183): the explicit budget of the next case ALONE (the R546 sizing recipe, file-local); every
    * other case, this file and the suite keep vitest's 5000 ms default. The case is one synchronous judge() over all 56
-   * pins of the table (15 files): judge() reads the default tier's whole report and analyses each pinned file with its
+   * pins of the table (15 files; wb-grmo.2's RA6/f adds three pins in one more file, not re-measured): judge() reads the default tier's whole report and analyses each pinned file with its
    * relative import closure on the calling thread, so the case awaits nothing that a tighter setup could bound. vitest
    * fails a synchronous body that returns after its budget but cannot interrupt one, so the budget moves only that
    * duration verdict, never an assertion. Measured at base 4c97422 against a full default-tier report (17037 cases,
