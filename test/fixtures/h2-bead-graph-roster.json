@@ -150,7 +150,8 @@
      "issues.jsonl",
      "interactions.jsonl"
     ],
-    "own": true
+    "own": true,
+    "tracked": true
    },
    {
     "pin": "T1",
@@ -329,8 +330,8 @@
    }
   ],
   "families": {
-   "h2": "harness2[-_\\s]+reactive[-_\\s]+evolution|tsx[-_\\s]h2[-_\\s](?:0[0-5]|adr)(?![a-z0-9])|rftsx[-_](?:bhmrd|7sy4c|8er6b|e9a5e|auqdi|rupqh)(?![a-z0-9])",
-   "prerequisites": "API-PIN|TSX-FED-01|harness2-api-pin",
+   "h2": "harness2[-_\\s.]*reactive[-_\\s.]*evolution|tsx[-_\\s.]?h2[-_\\s.]?(?:0?[0-5]|adr)(?![a-z0-9])|rftsx[-_.]?(?:bhmrd|7sy4c|8er6b|e9a5e|auqdi|rupqh)(?![a-z0-9])",
+   "prerequisites": "API[-_\\s.]?PIN|TSX[-_\\s.]?FED[-_\\s.]?0?1|harness2[-_\\s.]?api[-_\\s.]?pin",
    "marker": "(?<![\\w-])ruled (ADOPT|REJECT)(?![\\w-])(?![\\s()\\[\\],;:/|'\"`]*(?:(?:or|and|nor)(?![\\w-])[\\s()\\[\\],;:/|'\"`]*)?(?:ADOPT|REJECT|DEFER)(?![\\w-]))",
    "verdictWords": "(?<![\\w-])(?:ADOPT|REJECT)(?![\\w-])"
   },
@@ -427,6 +428,67 @@
   "followUpRows": [
    "E",
    "K"
+  ],
+  "carryRows": [
+   "V",
+   "X"
+  ],
+  "carryCures": [
+   {
+    "finding": "F1",
+    "pins": [
+     "V1",
+     "V2"
+    ],
+    "named": "mutants"
+   },
+   {
+    "finding": "F2",
+    "pins": [
+     "W1",
+     "W2",
+     "W3",
+     "W4",
+     "W5",
+     "W6",
+     "W7",
+     "W8"
+    ],
+    "named": {
+     "ids": "W\\d+"
+    }
+   },
+   {
+    "finding": "F3",
+    "pins": [
+     "H1",
+     "H2",
+     "H3",
+     "H4",
+     "H5"
+    ],
+    "named": {
+     "ids": "H\\d+"
+    }
+   },
+   {
+    "finding": "F4",
+    "pins": [
+     "G-1",
+     "G-2",
+     "G-3"
+    ],
+    "named": {
+     "ids": "G-\\d+"
+    }
+   },
+   {
+    "finding": "F5",
+    "pins": [
+     "TR1"
+    ],
+    "named": "candidates"
+   }
   ]
  },
  "rows": [
@@ -1710,6 +1772,27 @@
         "I12",
         "I16"
        ],
+       "carry": [
+        "V1",
+        "V2",
+        "W1",
+        "W2",
+        "W3",
+        "W4",
+        "W5",
+        "W6",
+        "W7",
+        "W8",
+        "H1",
+        "H2",
+        "H3",
+        "H4",
+        "H5",
+        "G-1",
+        "G-2",
+        "G-3",
+        "TR1"
+       ],
        "drive": [
         "A4",
         "B6",
@@ -1813,7 +1896,7 @@
     {
      "id": "M1",
      "witness": [
-      "mode:skip x79"
+      "mode:skip x98"
      ]
     },
     {
@@ -1830,7 +1913,7 @@
     {
      "id": "M4",
      "witness": [
-      "unregistered x67"
+      "unregistered x84"
      ]
     },
     {
@@ -1889,6 +1972,194 @@
      "witness": {
       "unclassifiedRoots": [
        ".agents"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "V",
+   "label": "the invocation and re-evaluation judges the closing case applies flag a constructed model of each bypass wb-mdfe's filing names: the case body comparing the roster's own witness, alone and beside a planted subject change",
+   "pins": [
+    {
+     "id": "V1",
+     "witness": [
+      "invoked-unreached x98"
+     ]
+    },
+    {
+     "id": "V2",
+     "witness": [
+      "invoked-unreached x98",
+      "fresh-witness x1"
+     ]
+    }
+   ]
+  },
+  {
+   "id": "X",
+   "label": "the escapes wb-mdfe's filing names are judged: its write, H2 and prerequisite spellings hit their families, and the tracker's own root reads only the files the git index tracks, never the bd runtime files it lists",
+   "pins": [
+    {
+     "id": "W1",
+     "witness": {
+      "family": "write",
+      "digest": "27f67e2041c8ba29",
+      "hit": true
+     }
+    },
+    {
+     "id": "W2",
+     "witness": {
+      "family": "write",
+      "digest": "cc24a6c165b6408f",
+      "hit": true
+     }
+    },
+    {
+     "id": "W3",
+     "witness": {
+      "family": "write",
+      "digest": "63477cd402991c08",
+      "hit": true
+     }
+    },
+    {
+     "id": "W4",
+     "witness": {
+      "family": "write",
+      "digest": "f37f9f0153a2f830",
+      "hit": true
+     }
+    },
+    {
+     "id": "W5",
+     "witness": {
+      "family": "write",
+      "digest": "f6b9da56e68a8a06",
+      "hit": true
+     }
+    },
+    {
+     "id": "W6",
+     "witness": {
+      "family": "write",
+      "digest": "a21d103df7d0fda9",
+      "hit": true
+     }
+    },
+    {
+     "id": "W7",
+     "witness": {
+      "family": "write",
+      "digest": "c9b7298d4970c618",
+      "hit": true
+     }
+    },
+    {
+     "id": "W8",
+     "witness": {
+      "family": "write",
+      "digest": "e5fe83c07f5ddc3a",
+      "hit": true
+     }
+    },
+    {
+     "id": "H1",
+     "witness": {
+      "family": "h2",
+      "digest": "5eb1c619e39adb8c",
+      "hit": true
+     }
+    },
+    {
+     "id": "H2",
+     "witness": {
+      "family": "h2",
+      "digest": "619da99544e0fd22",
+      "hit": true
+     }
+    },
+    {
+     "id": "H3",
+     "witness": {
+      "family": "h2",
+      "digest": "2d88050f8e319274",
+      "hit": true
+     }
+    },
+    {
+     "id": "H4",
+     "witness": {
+      "family": "h2",
+      "digest": "d4b6c73ea97be907",
+      "hit": true
+     }
+    },
+    {
+     "id": "H5",
+     "witness": {
+      "family": "h2",
+      "digest": "4e711267ada11a4b",
+      "hit": true
+     }
+    },
+    {
+     "id": "G-1",
+     "witness": {
+      "family": "prerequisite",
+      "digest": "a906dd782174c3cb",
+      "hit": true
+     }
+    },
+    {
+     "id": "G-2",
+     "witness": {
+      "family": "prerequisite",
+      "digest": "9d5d662f51a6ef0b",
+      "hit": true
+     }
+    },
+    {
+     "id": "G-3",
+     "witness": {
+      "family": "prerequisite",
+      "digest": "52e06bcebfc87427",
+      "hit": true
+     }
+    },
+    {
+     "id": "TR1",
+     "witness": {
+      "root": ".beads",
+      "own": [
+       ".beads/.gitignore",
+       ".beads/README.md",
+       ".beads/config.yaml",
+       ".beads/metadata.json"
+      ],
+      "walk": [
+       ".beads/.gitignore",
+       ".beads/README.md",
+       ".beads/config.yaml",
+       ".beads/metadata.json"
+      ],
+      "runtime": [
+       ".beads/daemon.log",
+       ".beads/redirect",
+       ".beads/daemon.*",
+       ".beads/dolt-server.log",
+       ".beads/sync-state.json",
+       ".beads/export-state.json",
+       ".beads/push-state.json",
+       ".beads/last-touched",
+       ".beads/.env"
+      ],
+      "modelWalk": [
+       ".beads/.gitignore",
+       ".beads/README.md",
+       ".beads/config.yaml",
+       ".beads/metadata.json"
       ]
      }
     }

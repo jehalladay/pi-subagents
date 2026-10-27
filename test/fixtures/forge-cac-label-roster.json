@@ -1,0 +1,730 @@
+{
+ "bead": "wb-b9n.3",
+ "constants": {
+  "label": "CAC verified",
+  "gating": "ForgeCACReceiptV0",
+  "neutral": "XQZ recorded"
+ },
+ "residuals": [
+  {
+   "id": "R-COMPOSED",
+   "quietPin": "A1",
+   "quiet": [
+    "composed"
+   ],
+   "twin": [
+    "composedTwin"
+   ]
+  },
+  {
+   "id": "R-NAME",
+   "quietPin": "A1",
+   "quiet": [
+    "name"
+   ],
+   "twin": [
+    "nameTwin"
+   ]
+  },
+  {
+   "id": "R-LOOKALIKE",
+   "quietPin": "A1",
+   "quiet": [
+    "cyrillic"
+   ],
+   "twin": [
+    "fullwidth"
+   ]
+  },
+  {
+   "id": "R-PARAPHRASE",
+   "quietPin": "A1",
+   "quiet": [
+    "certified",
+    "verifiedBy"
+   ],
+   "twin": [
+    "title"
+   ]
+  },
+  {
+   "id": "R-EMBEDDED",
+   "quietPin": "A1",
+   "quiet": [
+    "embedded"
+   ],
+   "twin": [
+    "glued"
+   ]
+  },
+  {
+   "id": "R-UNNAMED-RECEIPT",
+   "quietPin": "B1",
+   "quiet": [
+    "unnamed"
+   ],
+   "twin": [
+    "named"
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) a hermetic guard proving no Pi caption/status path emits a CAC-verified label today",
+   "pins": [
+    {
+     "id": "A1",
+     "quote": "a hermetic guard proving",
+     "witness": {
+      "texts": {
+       "title": "label=1 word=1 CAC verified",
+       "hyphen": "label=1 word=1 CAC-verified",
+       "underscore": "label=1 word=0 CAC_VERIFIED",
+       "lower": "label=1 word=0 cac verified",
+       "glued": "label=1 word=0 CACVerified",
+       "sentence": "label=1 word=1 Receipt status: CAC verified.",
+       "spaced": "label=1 word=1 CAC  -  verified",
+       "fullwidth": "label=1 word=1 \\u{ff23}\\u{ff21}\\u{ff23} verified",
+       "bareWord": "label=0 word=1 CAC",
+       "bareVerified": "label=0 word=0 verified",
+       "requirementId": "label=0 word=1 MW-CAC-WORKFLOW-COMPOSITION-R1",
+       "compositionName": "label=0 word=0 CACWorkflowCompositionV0",
+       "gatingName": "label=0 word=0 ForgeCACReceiptV0",
+       "efficacy": "label=0 word=0 efficacy verified",
+       "certified": "label=0 word=1 CAC certified",
+       "verifiedBy": "label=0 word=1 verified by CAC",
+       "cyrillic": "label=0 word=0 \\u{421}\\u{410}\\u{421} verified",
+       "embedded": "label=0 word=0 isCACVerified"
+      },
+      "modules": {
+       "composed": "label=0 word=0 export const shown = \"CA\" + \"C verified\";\n",
+       "composedTwin": "label=1 word=1 export const shown = \"CAC verified\";\n",
+       "name": "label=0 word=0 export const LABELS = { CACVerified: true } as const;\nexport const shown = Object.keys(LABELS)[0];\n",
+       "nameTwin": "label=1 word=1 export const LABELS = { \"CAC verified\": true } as const;\n",
+       "comment": "label=0 word=0 // a CAC verified label is never shown\nexport const shown = 1;\n",
+       "template": "label=1 word=1 export const shown = (state: string) => `CAC verified: ${state}`;\n"
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "quote": "no Pi caption/status path",
+     "witness": {
+      "judgedEqualsListedPlusPlants": true,
+      "bigPlantLongest": true,
+      "gitEqualsWalk": true,
+      "links": [],
+      "floorMet": true,
+      "label": [
+       "src/workbench/forge-cac-label-plant.ts \"CAC verified\"",
+       "src/workbench/forge-cac-label-plant-big.ts \"CAC verified\""
+      ],
+      "word": [
+       "src/workbench/forge-cac-label-plant.ts \"CAC verified\"",
+       "src/workbench/forge-cac-label-plant-big.ts \"CAC verified\""
+      ]
+     }
+    },
+    {
+     "id": "A3",
+     "quote": "emits a CAC-verified label today",
+     "witness": {
+      "rendered": [
+       "forgeGateTopology:historical",
+       "readForgeOperationEvidence:historical",
+       "nativeEvidence:historical",
+       "forgeGateTopology:currentSuccess",
+       "readForgeOperationEvidence:currentSuccess",
+       "nativeEvidence:currentSuccess",
+       "forgeGateTopology:currentFailure",
+       "readForgeOperationEvidence:currentFailure",
+       "nativeEvidence:currentFailure",
+       "forgeGateTopology:degraded",
+       "readForgeOperationEvidence:degraded",
+       "nativeEvidence:degraded",
+       "forgeGateTopology:empty",
+       "readForgeOperationEvidence:empty",
+       "nativeEvidence:empty",
+       "forgeGateTopology:described",
+       "readForgeOperationEvidence:described",
+       "nativeEvidence:described",
+       "forgeGateTopology:withheld",
+       "readForgeOperationEvidence:withheld",
+       "nativeEvidence:withheld",
+       "forgeOperationStartedSnapshot:started",
+       "forgeGateStepTopology:started",
+       "forgeGateStepTopology:passed",
+       "forgeGateStepTopology:failed",
+       "forgeOperationTerminalSnapshot:success",
+       "forgeOperationTerminalSnapshot:error",
+       "layoutWorkflowCard:7 nodes"
+      ],
+      "fixtureDigest": "32cc06d4d86e3378",
+      "walked": true,
+      "label": [],
+      "word": [],
+      "control": {
+       "label": 2,
+       "word": 2
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) on receipt consumption, fixtures with checker identity+version AND source-version evidence may surface the producer's label with those fields cited beside it, while fixtures missing either render FAIL/UNKNOWN with the label refused and a diagnostic naming the missing evidence",
+   "pins": [
+    {
+     "id": "B1",
+     "quote": "on receipt consumption",
+     "witness": {
+      "scannedEqualsListedPlusPlants": true,
+      "consumers": [
+       "src/workbench/forge-cac-label-plant.ts",
+       "src/workbench/forge-cac-label-plant-big.ts"
+      ],
+      "planted": {
+       "unnamed": "consumers=0 export const checkerOf = (receipt: { checker_identity?: string }) => receipt.checker_identity;\n",
+       "named": "consumers=1 export interface ForgeCACReceiptV0Reader { readonly checker_identity: string }\n"
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) a gate.status or receipt payload embedding the literal string renders it as quoted data only",
+   "pins": [
+    {
+     "id": "C1",
+     "quote": "a gate.status",
+     "witness": {
+      "current/source.status": {
+       "planted": [
+        "reading.source.status"
+       ],
+       "snapshots": [
+        {
+         "id": "workspace",
+         "title": "Forge gate status /b9n3-forge-ws",
+         "tone": "unknown",
+         "coverage": "partial",
+         "text": "{L} · FORGE_OK · verification indeterminate",
+         "refs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n3"
+         ]
+        },
+        {
+         "id": "code:b9n3",
+         "title": "Forge package code:b9n3",
+         "tone": "success",
+         "coverage": "partial",
+         "text": "success (current)",
+         "refs": []
+        }
+       ],
+       "diagnostics": [
+        "Every package reports current success but the read status or declared verdict does not, so workspace success is withheld."
+       ]
+      },
+      "current/source.envelope.verdict": {
+       "planted": [
+        "reading.source.envelope.verdict"
+       ],
+       "snapshots": [
+        {
+         "id": "workspace",
+         "title": "Forge gate status /b9n3-forge-ws",
+         "tone": "unknown",
+         "coverage": "complete",
+         "text": "success · {L} · FORGE_OK · verification indeterminate",
+         "refs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n3"
+         ]
+        },
+        {
+         "id": "code:b9n3",
+         "title": "Forge package code:b9n3",
+         "tone": "success",
+         "coverage": "complete",
+         "text": "success (current)",
+         "refs": []
+        }
+       ],
+       "diagnostics": [
+        "Every package reports current success but the read status or declared verdict does not, so workspace success is withheld."
+       ]
+      },
+      "current/source.envelope.reason_code": {
+       "planted": [
+        "reading.source.envelope.reason_code"
+       ],
+       "snapshots": [
+        {
+         "id": "workspace",
+         "title": "Forge gate status /b9n3-forge-ws",
+         "tone": "success",
+         "coverage": "complete",
+         "text": "success · {L} · current gate passed",
+         "refs": [
+          "forge:gate.status:{L}",
+          "forge-operation:op_b9n3"
+         ]
+        },
+        {
+         "id": "code:b9n3",
+         "title": "Forge package code:b9n3",
+         "tone": "success",
+         "coverage": "complete",
+         "text": "success (current)",
+         "refs": []
+        }
+       ],
+       "diagnostics": []
+      },
+      "current/package.ref": {
+       "planted": [
+        "reading.source.data.packages[0].ref"
+       ],
+       "snapshots": [
+        {
+         "id": "workspace",
+         "title": "Forge gate status /b9n3-forge-ws",
+         "tone": "success",
+         "coverage": "complete",
+         "text": "success · FORGE_OK · current gate passed",
+         "refs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n3"
+         ]
+        },
+        {
+         "id": "{L}",
+         "title": "Forge package {L}",
+         "tone": "success",
+         "coverage": "complete",
+         "text": "success (current)",
+         "refs": []
+        }
+       ],
+       "diagnostics": []
+      },
+      "current/package.last_result": {
+       "planted": [
+        "reading.source.data.packages[0].last_result"
+       ],
+       "snapshots": [
+        {
+         "id": "workspace",
+         "title": "Forge gate status /b9n3-forge-ws",
+         "tone": "unknown",
+         "coverage": "complete",
+         "text": "success · FORGE_OK · verification indeterminate",
+         "refs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n3"
+         ]
+        },
+        {
+         "id": "code:b9n3",
+         "title": "Forge package code:b9n3",
+         "tone": "unknown",
+         "coverage": "complete",
+         "text": "{L} (current)",
+         "refs": []
+        }
+       ],
+       "diagnostics": []
+      },
+      "current/package.unverified_reason": {
+       "planted": [
+        "reading.source.data.packages[0].unverified_reason"
+       ],
+       "snapshots": [
+        {
+         "id": "workspace",
+         "title": "Forge gate status /b9n3-forge-ws",
+         "tone": "success",
+         "coverage": "complete",
+         "text": "success · FORGE_OK · current gate passed",
+         "refs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n3"
+         ]
+        },
+        {
+         "id": "code:b9n3",
+         "title": "Forge package code:b9n3",
+         "tone": "success",
+         "coverage": "complete",
+         "text": "success (current)",
+         "refs": []
+        }
+       ],
+       "diagnostics": []
+      },
+      "historical/source.status": {
+       "planted": [
+        "reading.source.status"
+       ],
+       "snapshots": [
+        {
+         "id": "workspace",
+         "title": "Forge gate status /b9n3-forge-ws",
+         "tone": "unknown",
+         "coverage": "partial",
+         "text": "{L} · FORGE_OK · verification indeterminate",
+         "refs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n3"
+         ]
+        },
+        {
+         "id": "code:b9n3",
+         "title": "Forge package code:b9n3",
+         "tone": "unknown",
+         "coverage": "partial",
+         "text": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED)",
+         "refs": []
+        }
+       ],
+       "diagnostics": []
+      },
+      "historical/source.envelope.verdict": {
+       "planted": [
+        "reading.source.envelope.verdict"
+       ],
+       "snapshots": [
+        {
+         "id": "workspace",
+         "title": "Forge gate status /b9n3-forge-ws",
+         "tone": "unknown",
+         "coverage": "partial",
+         "text": "success · {L} · FORGE_OK · verification indeterminate",
+         "refs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n3"
+         ]
+        },
+        {
+         "id": "code:b9n3",
+         "title": "Forge package code:b9n3",
+         "tone": "unknown",
+         "coverage": "partial",
+         "text": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED)",
+         "refs": []
+        }
+       ],
+       "diagnostics": []
+      },
+      "historical/source.envelope.reason_code": {
+       "planted": [
+        "reading.source.envelope.reason_code"
+       ],
+       "snapshots": [
+        {
+         "id": "workspace",
+         "title": "Forge gate status /b9n3-forge-ws",
+         "tone": "unknown",
+         "coverage": "partial",
+         "text": "success · {L} · verification indeterminate",
+         "refs": [
+          "forge:gate.status:{L}",
+          "forge-operation:op_b9n3"
+         ]
+        },
+        {
+         "id": "code:b9n3",
+         "title": "Forge package code:b9n3",
+         "tone": "unknown",
+         "coverage": "partial",
+         "text": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED)",
+         "refs": []
+        }
+       ],
+       "diagnostics": []
+      },
+      "historical/package.ref": {
+       "planted": [
+        "reading.source.data.packages[0].ref"
+       ],
+       "snapshots": [
+        {
+         "id": "workspace",
+         "title": "Forge gate status /b9n3-forge-ws",
+         "tone": "unknown",
+         "coverage": "partial",
+         "text": "success · FORGE_OK · verification indeterminate",
+         "refs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n3"
+         ]
+        },
+        {
+         "id": "{L}",
+         "title": "Forge package {L}",
+         "tone": "unknown",
+         "coverage": "partial",
+         "text": "success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED)",
+         "refs": []
+        }
+       ],
+       "diagnostics": []
+      },
+      "historical/package.last_result": {
+       "planted": [
+        "reading.source.data.packages[0].last_result"
+       ],
+       "snapshots": [
+        {
+         "id": "workspace",
+         "title": "Forge gate status /b9n3-forge-ws",
+         "tone": "unknown",
+         "coverage": "partial",
+         "text": "success · FORGE_OK · verification indeterminate",
+         "refs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n3"
+         ]
+        },
+        {
+         "id": "code:b9n3",
+         "title": "Forge package code:b9n3",
+         "tone": "unknown",
+         "coverage": "partial",
+         "text": "{L} (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED)",
+         "refs": []
+        }
+       ],
+       "diagnostics": []
+      },
+      "historical/package.unverified_reason": {
+       "planted": [
+        "reading.source.data.packages[0].unverified_reason"
+       ],
+       "snapshots": [
+        {
+         "id": "workspace",
+         "title": "Forge gate status /b9n3-forge-ws",
+         "tone": "unknown",
+         "coverage": "partial",
+         "text": "success · FORGE_OK · verification indeterminate",
+         "refs": [
+          "forge:gate.status:FORGE_OK",
+          "forge-operation:op_b9n3"
+         ]
+        },
+        {
+         "id": "code:b9n3",
+         "title": "Forge package code:b9n3",
+         "tone": "unknown",
+         "coverage": "partial",
+         "text": "success (historical; authoritative_current=false; {L})",
+         "refs": []
+        }
+       ],
+       "diagnostics": []
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "quote": "payload embedding the literal string",
+     "witness": {
+      "unknownKeys": {
+       "planted": [
+        "reading.source.label",
+        "reading.source.envelope.label",
+        "reading.source.data.label",
+        "reading.source.data.packages[0].label",
+        "reading.source.data.packages[0].cac_status"
+       ],
+       "identical": true,
+       "shown": 0
+      },
+      "freshness": {
+       "words": [
+        "{L}",
+        "XQZ recorded"
+       ],
+       "identical": true,
+       "shown": 0,
+       "packageText": "success (current) · basis UNKNOWN"
+      }
+     }
+    },
+    {
+     "id": "C3",
+     "quote": "renders it as quoted data",
+     "witness": {
+      "current/source.status": {
+       "planted": [
+        "reading.source.status"
+       ],
+       "freshness": "current",
+       "statusText": "{L} · FORGE_OK · verification indeterminate",
+       "preview": [
+        "forge-operation:op_b9n3",
+        "status: {L} · FORGE_OK · verification indeterminate",
+        "Forge package code:b9n3: success (current)"
+       ]
+      },
+      "current/source.envelope.verdict": {
+       "planted": [
+        "reading.source.envelope.verdict"
+       ],
+       "freshness": "current",
+       "statusText": "success · {L} · FORGE_OK · verification indeterminate",
+       "preview": [
+        "forge-operation:op_b9n3",
+        "status: success · {L} · FORGE_OK · verification indeterminate",
+        "Forge package code:b9n3: success (current)"
+       ]
+      },
+      "current/source.envelope.reason_code": {
+       "planted": [
+        "reading.source.envelope.reason_code"
+       ],
+       "freshness": "current",
+       "statusText": "success · {L} · current gate passed",
+       "preview": [
+        "forge-operation:op_b9n3",
+        "status: success · {L} · current gate passed",
+        "Forge package code:b9n3: success (current)"
+       ]
+      },
+      "current/package.ref": {
+       "planted": [
+        "reading.source.data.packages[0].ref"
+       ],
+       "freshness": "current",
+       "statusText": "success · FORGE_OK · current gate passed",
+       "preview": [
+        "forge-operation:op_b9n3",
+        "status: success · FORGE_OK · current gate passed",
+        "Forge package {L}: success (current)"
+       ]
+      },
+      "current/package.last_result": {
+       "planted": [
+        "reading.source.data.packages[0].last_result"
+       ],
+       "freshness": "current",
+       "statusText": "success · FORGE_OK · verification indeterminate",
+       "preview": [
+        "forge-operation:op_b9n3",
+        "status: success · FORGE_OK · verification indeterminate",
+        "Forge package code:b9n3: {L} (current)"
+       ]
+      },
+      "current/package.unverified_reason": {
+       "planted": [
+        "reading.source.data.packages[0].unverified_reason"
+       ],
+       "freshness": "current",
+       "statusText": "success · FORGE_OK · current gate passed",
+       "preview": [
+        "forge-operation:op_b9n3",
+        "status: success · FORGE_OK · current gate passed",
+        "Forge package code:b9n3: success (current)"
+       ]
+      },
+      "historical/source.status": {
+       "planted": [
+        "reading.source.status"
+       ],
+       "freshness": "current",
+       "statusText": "{L} · FORGE_OK · verification indeterminate (historical; not current verification)",
+       "preview": [
+        "forge-operation:op_b9n3",
+        "status: {L} · FORGE_OK · verification indeterminate (historical; not current verification)",
+        "Forge package code:b9n3: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED)"
+       ]
+      },
+      "historical/source.envelope.verdict": {
+       "planted": [
+        "reading.source.envelope.verdict"
+       ],
+       "freshness": "current",
+       "statusText": "success · {L} · FORGE_OK · verification indeterminate (historical; not current verification)",
+       "preview": [
+        "forge-operation:op_b9n3",
+        "status: success · {L} · FORGE_OK · verification indeterminate (historical; not current verification)",
+        "Forge package code:b9n3: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED)"
+       ]
+      },
+      "historical/source.envelope.reason_code": {
+       "planted": [
+        "reading.source.envelope.reason_code"
+       ],
+       "freshness": "current",
+       "statusText": "success · {L} · verification indeterminate (historical; not current verification)",
+       "preview": [
+        "forge-operation:op_b9n3",
+        "status: success · {L} · verification indeterminate (historical; not current verification)",
+        "Forge package code:b9n3: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED)"
+       ]
+      },
+      "historical/package.ref": {
+       "planted": [
+        "reading.source.data.packages[0].ref"
+       ],
+       "freshness": "current",
+       "statusText": "success · FORGE_OK · verification indeterminate (historical; not current verification)",
+       "preview": [
+        "forge-operation:op_b9n3",
+        "status: success · FORGE_OK · verification indeterminate (historical; not current verification)",
+        "Forge package {L}: success (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED)"
+       ]
+      },
+      "historical/package.last_result": {
+       "planted": [
+        "reading.source.data.packages[0].last_result"
+       ],
+       "freshness": "current",
+       "statusText": "success · FORGE_OK · verification indeterminate (historical; not current verification)",
+       "preview": [
+        "forge-operation:op_b9n3",
+        "status: success · FORGE_OK · verification indeterminate (historical; not current verification)",
+        "Forge package code:b9n3: {L} (historical; authoritative_current=false; FORGE_CURRENT_STATE_UNVERIFIED)"
+       ]
+      },
+      "historical/package.unverified_reason": {
+       "planted": [
+        "reading.source.data.packages[0].unverified_reason"
+       ],
+       "freshness": "current",
+       "statusText": "success · FORGE_OK · verification indeterminate (historical; not current verification)",
+       "preview": [
+        "forge-operation:op_b9n3",
+        "status: success · FORGE_OK · verification indeterminate (historical; not current verification)",
+        "Forge package code:b9n3: success (historical; authoritative_current=false; {L})"
+       ]
+      }
+     }
+    },
+    {
+     "id": "C4",
+     "quote": "quoted data only",
+     "witness": {
+      "domainStatus": "{L}",
+      "refs": [
+       "forge-operation:op_b9n3"
+      ],
+      "glyphs": {
+       "label": "?",
+       "neutral": "?",
+       "verified": "\\u{221a}"
+      },
+      "outcome": "? forge gate 0 · forge.gate.status · {L}",
+      "neutralOutcome": "? forge gate 1 · forge.gate.status · XQZ recorded"
+     }
+    }
+   ]
+  }
+ ]
+}

@@ -586,6 +586,19 @@
               "planted": 99,
               "divergent": []
             },
+            "basis": {
+              "entries": [
+                "reply-open",
+                "reply-other-operation",
+                "reply-unpinned"
+              ],
+              "cases": 27,
+              "planted": 27,
+              "divergent": [],
+              "tones": [
+                "unknown"
+              ]
+            },
             "observed": {
               "variants": 9,
               "divergent": [],
@@ -618,6 +631,8 @@
                 "forgeOperationTerminalSnapshot",
                 "decodeForgeOperationFrame",
                 "decodeForgeOperationTerminal",
+                "decodeForgeRunBasis",
+                "forgeGateRunReading",
                 "observeForgeGateRun"
               ],
               "providers/forge.ts": [
@@ -630,6 +645,8 @@
             "driven": [
               "decodeForgeOperationFrame",
               "decodeForgeOperationTerminal",
+              "decodeForgeRunBasis",
+              "forgeGateRunReading",
               "forgeGateStepTopology",
               "forgeGateTopology",
               "forgeOperationStartedSnapshot",
