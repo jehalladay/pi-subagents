@@ -6,63 +6,117 @@
  * never as the published head; until then Pi claims nothing about the definition source beyond today's 'ephemeral noncommitted
  * preview' note."
  *
- * MEASURED AT THE CUT (2026-10-26, read-only, by the cutting seat): the named artifact is still absent. The installed rf 0.1.845
- * (provenance commit 0eaf3859fab0) holds 0 definition_source hits in schemas/cli/context.render.schema.json, and a fresh
- * `rf context render --no-commit --json` in a disposable `rf init` workspace returned a result with no such key; the key lives on
- * the persisted pin only (schemas/workspace/render-pin.schema.json requires it; schemas/workspace/render.schema.json holds it with
- * the five other optional pin keys under dependentRequired: present together or absent together). R11's fixture record
- * (test/fixtures/rf-result-keys.json, rf 0.1.784, source captured) names it in no key list. So this cut lands the acceptance's
- * until-then half and its trigger; the 'Armed on landing' clauses become the trigger's checks (ARMED), never observer behaviour.
+ * MEASURED AT THE CUT (2026-10-26, read-only, by the cutting seats of cut #1 and cut #2): the named artifact is still absent. The
+ * installed rf 0.1.845 (provenance commit 0eaf3859fab0) holds 0 definition_source hits in schemas/cli/context.render.schema.json,
+ * and a fresh `rf context render --no-commit --json` in a disposable `rf init` workspace returned a result with no such key; the
+ * key lives on the persisted pin only (schemas/workspace/render-pin.schema.json requires it; schemas/workspace/render.schema.json
+ * holds it with the five other optional pin keys under dependentRequired: present together or absent together). R11's fixture
+ * record (test/fixtures/rf-result-keys.json, rf 0.1.784, source captured) names it in no key list. So this census lands the
+ * acceptance's until-then half and its trigger; the 'Armed on landing' clauses become the trigger's checks (ARMED), never
+ * observer behaviour.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row):
- *  A the until-then docs census. A1 every markdown file under docs/workbench is walked and no sentence says the preview reads the
- *    published head, while every docs path the export's SURFACES line names is walked and carries preview sentences; A2 the
- *    sentence judge on planted sentences: a claim is a sentence naming the preview and the published head with no negation before
- *    the head (claims flagged; negated, preview-free and head-free sentences quiet); A3-A6 the residuals' quiet rows, each beside
- *    its live twin.
+ *  A the until-then docs census, judged on the RENDERED VIEW below.
+ *    A1 the walk of docs/workbench equals git's listing of its markdown (git ls-files --cached --others --exclude-standard: tracked
+ *      or untracked, never ignored, present on disk; the walk's anchor outside the census), and git lists at least DOCS_FLOOR
+ *      pages; every docs path the export's SURFACES line names is walked and carries preview sentences; no walked page holds a
+ *      character reference the rendered view cannot decode; and ONE scan of the walked pages plus a planted claim page (its
+ *      claim a soft-wrapped second sentence) finds exactly the planted claim, so no walked sentence says the preview reads the
+ *      published head.
+ *    A2 the sentence judge on planted sentences, each carried in the witness beside its reading. A claim is a sentence naming the
+ *      preview and the published head with no negation before the head. Every preview spelling (preview, previews, previewing,
+ *      previewed, noncommitted, non-committed, uncommitted, --no-commit or no-commit, and the dotted capability id) is the only
+ *      preview spelling of at least one claim, and the head is spelled published head or heads, the two words joined by white
+ *      space, '_', '-', '*', a backtick or a quote mark, in any case; the negated, preview-free and head-free sentences are
+ *      quiet.
+ *    A3-A6 the residuals' quiet rows (RESIDUALS): each quiet input is quiet under today's judge and flagged by its residual's
+ *      named cure, beside its live twin, which today's judge flags.
+ *    A7 inline markup renders into the sentence it splits: emphasis, strong, strikethrough, a link's text, a code span, an inline
+ *      tag, a backslash escape, a heading's and an HTML block's text, a named or numeric character reference, and a format code
+ *      point (dropped), each read as one claim.
+ *    A8 sentence bounds: a soft wrap, a hard break, a task item's, a list item's and a block quote's continuation line, and a
+ *      table row's cells each join into one sentence (one claim each), while a ';', a '!' or a '?' ends one (a preview before
+ *      it and a head after it read none).
+ *    A9 unrendered text is not judged: an HTML comment (closed or not), a fenced and an indented code block, an inline comment, a
+ *      link destination and title, a link reference definition, and a character reference inside a code span (shown as
+ *      written) each read no claim, while the same words shown read one.
+ *    A10 a named character reference outside NAMED_REFERENCES fails closed: it is reported unreadable (A1 holds every walked page
+ *      to none) and renders as written, while a decoded one renders.
  *  B the until-then anchor note. B1 the observer module the export's SURFACES line names spells exactly one string literal that
  *    starts with the statement's quoted anchor phrase (comments never count; its twin, a planted module, counts two literals and
- *    not its comment); B2 a clean full-shape projection states that note first and once (its twin, one note put before it, moves
- *    it to second).
+ *    not its comment); B2 a clean full-shape projection of the --no-commit preview reading (the witness carries its preview
+ *    contract and that it states no key) states that literal first and once (its twin, one note put before it, moves it to
+ *    second).
  *  C the statement's until-then clause. C1 a reading whose result states definition_source (each word of the statement's closed
- *    set and one word outside it) projects exactly as the same reading stating none: the reader claims nothing about it yet (its
- *    twin, the armed stand-in, changes the working-tree projection and refuses the other three words).
- *  T the trigger check (freeze-and-flip). T1 R11's fixture record, read through readRfResultRoster, beside the real reader: no
- *    armed clause is missed, because no key list names the key (nothing is due); T2 the record cleared of the key and then given
- *    it in each key list in turn, beside an unarmed stand-in (the real reader over the reading with the key removed, so T2-T4
- *    never depend on what the real record names or on the observer's later arming): the trigger fires and names each armed clause
- *    the reader misses (the working-tree note, the contradiction refusal and the closed-set refusal; the absent-key clause holds);
- *    T3 the same planted records beside an armed stand-in (the unarmed one plus the armed clauses): the trigger clears, and the
- *    armed stand-in unarmed again misses what T2's reader misses; T4 a
- *    residual's quiet row beside its live twin (its base record already names the key in another list, which the clearing
- *    removes); T5 each armed clause is judged on its own: a stand-in armed for every clause but one (the contradiction one refuses
- *    published_head and admits overlay) misses exactly that clause, and one refusing with an untyped error instead of the
- *    category misses both refusal clauses.
+ *    set and one word outside it) projects exactly as the same reading stating none: the reader claims nothing about it yet. The
+ *    witness carries the word each reading handed to the observer states, recorded at the call (so the observer is shown to be
+ *    handed the key), and its twin, the armed stand-in, changes the working-tree projection and refuses the other three words.
+ *  T the trigger check (freeze-and-flip); T2-T5's trigger readings carry the key lists their planted records name (named), so a
+ *    planted record swapped for another reds. T1 R11's fixture record, read through readRfResultRoster, beside the real reader:
+ *    no armed clause is missed, because no key list names the key (nothing is due; T1 keeps only the misses, so the FLIP below
+ *    holds); T2 the record cleared of the key and then given it in each key list in turn, beside an
+ *    unarmed stand-in (the real reader over the reading with the key removed, so T2-T4 never depend on what the real record
+ *    names or on the observer's later arming): the trigger fires and names each armed clause the reader misses (the working-tree
+ *    note, the contradiction refusal and the closed-set refusal; the absent-key clause holds); T3 the same planted records
+ *    beside an armed stand-in (the unarmed one plus the armed clauses): the trigger clears, and the armed stand-in unarmed again
+ *    misses what T2's reader misses; T4 R-NESTED's quiet row (its record carries the container key in the result list, and its
+ *    base record named the key in another list, which the clearing removes), its cure's reading and its live twin; T5 each armed
+ *    clause is judged on its own: a stand-in armed for every clause but one (the contradiction one refuses published_head and
+ *    admits overlay) misses exactly that clause, and one refusing with an untyped error instead of the category misses both
+ *    refusal clauses.
+ * RENDERED VIEW (the rendered-text docs truth floor, 9x5.17): marked 18.0.11 (the lexer test/helpers/census.ts and the docs
+ * shared-filesystem census use) lexes each page once. A unit is a paragraph, a heading, the text of a list item or block quote, a
+ * table row (its cells joined by a space) or an HTML block, numbered by the line its top-level block starts on. A unit renders
+ * its text, code spans and backslash escapes as written, emphasis, strong, strikethrough and link text flattened, an inline tag,
+ * an inline comment and a task checkbox as nothing and a hard break as a space; an HTML block renders its source with comments
+ * (an unclosed one to its end) and tags removed; a link destination or title, a link reference definition and every fenced or
+ * indented code block render nothing. Numeric character references and the names in NAMED_REFERENCES are decoded outside code;
+ * any other named reference stays as written and is unreadable. Format code points (Cf) are dropped and every white-space run
+ * folds to one space. The folded unit splits into sentences after '.', '!', '?' or ';' followed by white space, and each sentence
+ * is judged.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal.
  * ANCHORS OUTSIDE THE CENSUS (rule 16 CT5/CT6): each row's clause and each ARMED clause is one whole clause of the tracked export
  * description, and together they are exactly its testable clauses: every clause of every labelled ACCEPTANCE item (the one
  * unlabelled item, the tracking line, is the only one not judged) plus the statement's until-then clause. The key, its closed set,
  * the working-tree note, the contradiction words, the refusal category, the anchor phrase and the walked surfaces are read from
- * the export, never spelled here; the trigger's key lists are held to the record's own array-valued fields.
- * REACHED: each pin's case reads through the seams it declares (the docs walk, the sentence judge, the src read, a reader
- * projection, the record read, the trigger), so a case swapped for an unrelated passing one reds; the last test holds every
- * registered test to run mode and a pass.
- * RESIDUALS (named families, each with a pinned quiet row and its live twin): R-PARAPHRASE (A3) a claim in other words than
- * 'published head' (the store-resident head's manifest) is not judged; R-ANAPHORA (A4) a claim whose preview stands in an earlier
- * sentence ('The preview is noncommitted. It reads the published head.') is not judged; R-NEGATION-SCOPE (A5) a negation before the
- * head that governs another phrase ('The preview, not the committed render, reads the published head.') reads the sentence as
- * negated; R-OUTSIDE-WALK (A6) text outside the docs/workbench markdown (the root README, docs/programs, src comments) is not
- * walked; R-NESTED (T4) the trigger sees only the record's key lists, so the key nested in a result object no list names (a pin
- * container, or provenance beyond its floor keys) stays invisible until a roster cut names the key itself.
+ * the export for every check the census runs; where a row clause, an ARMED clause or a witness spells one of them as an expected
+ * value, the judged set or the pin's own comparison holds that spelling to the value read from the export, so a respelled value
+ * reds. The trigger's key lists are held to the record's own array-valued fields, and A1's walk to git's listing.
+ * REACHED: each pin's case reads through the seams it declares (the docs walk, git's listing, the sentence judge, the src read, a
+ * reader projection, the record read, the trigger), and each witness carries the inputs its case planted (a sentence, a page or
+ * its path, a planted record's named lists, a reading's contract) beside the readings, so a case given other inputs, or swapped
+ * for another pin's case, reds. Each residual's quiet input is also read by its residual's named cure, which must flag it, so a
+ * quiet input swapped for one outside its family reds even when the witness's copy of the input is edited to match. What this
+ * does not prove: a case rewritten together with its whole witness (an input, its copy and its readings), or a case rewritten
+ * to return its pinned witness as a constant while still reading its seams, stays green; those are rewrites of the census, not
+ * swaps of a case. The last test holds every registered test to run mode and a pass.
+ * RESIDUALS (named families, each with a pinned quiet row, its named cure and its live twin):
+ *  R-PARAPHRASE (A3) a claim naming the head in other words than 'published head' is not judged: the store-resident head's
+ *    manifest, or a word between published and head ('the published graph head'); cure: the head term also reads
+ *    'store-resident head' and 'published <word> head'.
+ *  R-ANAPHORA (A4) a claim whose preview stands in an earlier sentence ('The preview is noncommitted. It reads the published
+ *    head.') is not judged; cure: a sentence opening with It, This or That joins the sentence before it.
+ *  R-NEGATION-SCOPE (A5) a negation before the head that governs another phrase reads the sentence as negated ('The preview, not
+ *    the committed render, reads the published head.', 'No longer experimental, the preview reads the published head.', 'The
+ *    preview never fails: it reads the published head.'); cure: only the clause nearest the head (after the last ',', ':' or ';'
+ *    before it) is read for a negation.
+ *  R-OUTSIDE-WALK (A6) text outside the docs/workbench markdown is not walked: the root README, docs/programs, a .txt under
+ *    docs/workbench, a src comment; cure: every planted path is in scope.
+ *  R-NESTED (T4) the trigger sees only the record's key lists, so the key nested in a result object no list names (a pin
+ *    container, or provenance beyond its floor keys) stays invisible until a roster cut names the key itself; cure: a list naming
+ *    the container counts as naming the key.
  * FLIP (measured on throwaway plants at the cut): a roster naming definition_source reds T1 alone until the observer case exists;
  * the observer case clears T1 and flips C1 (a stated key is then read), so the cut that lands it rewrites C1 in the same commit.
  *
- * Display paths added: none. Test-only: no scratch, no spawn; src, docs, the roster and the store export are only read.
+ * Display paths added: none. Test-only: no scratch; src, docs, the roster and the store export are only read, and git's listing
+ * of docs/workbench is read with git ls-files.
  */
-import { readdirSync, readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { existsSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
+import { marked, type Token, type Tokens } from "marked";
 import ts from "typescript";
 import { describe, expect, it, type TestContext } from "vitest";
 import { CapabilityError, type CapabilityErrorCategory, type JsonValue } from "../src/workbench/capability-registry.js";
@@ -78,8 +132,8 @@ const REPO = join(HERE, "..");
 const EXPORT_PATH = join(REPO, ".beads", "issues.jsonl");
 const BEAD = "wb-973.13";
 const DOCS_ROOT = "docs/workbench";
-/** Two below the 72 markdown files docs/workbench held at base 20a13c5 (25 pages, 47 receipts): an emptied or misdirected walk
- * reds, an added page does not. */
+/** Two below the 72 markdown files docs/workbench held at base 20a13c5 (25 pages, 47 receipts): the least git's listing of
+ * docs/workbench markdown may hold, so an emptied listing reds even though the walk would equal it. */
 const DOCS_FLOOR = 70;
 const WS = "/workspace/rf-definition-source-census";
 const scope: ObservationScope = { workspace: WS, principal: "local-operator:census" };
@@ -105,7 +159,7 @@ const isJsonObject = (value: Json | undefined): value is JsonObject => typeof va
 const isCategory = (word: string): word is CapabilityErrorCategory => CATEGORIES.some(category => category === word);
 
 /** The seams a pin's case reads through; each read is recorded against the case that is running. */
-type Seam = "docs" | "judge" | "src" | "reader" | "roster" | "trigger";
+type Seam = "docs" | "listing" | "judge" | "src" | "reader" | "roster" | "trigger";
 let running: Seam[] | undefined;
 function touch(seam: Seam): void {
   if (running !== undefined && !running.includes(seam)) running.push(seam);
@@ -115,7 +169,8 @@ interface Clause {
   readonly source: string;
   readonly clause: string;
 }
-/** The bead's description in the tracked store export: the anchor outside this census (its notes and status are never read). */
+/** The bead's description in the tracked store export: the anchor outside this census. Its notes and status are never read, so
+ * a notes or status write cannot red the census; an edit of the description itself reds the judged set by design. */
 function exportDescription(): string {
   for (const line of readFileSync(EXPORT_PATH, "utf8").split("\n")) {
     if (!line.includes(`"id":"${BEAD}"`) && !line.includes(`"id": "${BEAD}"`)) continue;
@@ -219,15 +274,15 @@ function readExported(): Exported {
 const EXPORTED = readExported();
 const sortedClauses = (clauses: readonly Clause[]): string[] => clauses.map(({ source, clause }) => `${source} | ${clause}`).sort();
 
+// ---------------------------------------------------------------------------------------------
+// The docs: the walk, git's listing, the rendered view and the sentence judge.
+// ---------------------------------------------------------------------------------------------
+
 interface DocFile {
   readonly path: string;
   readonly text: string;
 }
-interface DocClaim {
-  readonly path: string;
-  readonly line: number;
-  readonly sentence: string;
-}
+const isMarkdown = (path: string): boolean => /\.(?:md|markdown)$/i.test(path);
 /** Every file under docs/workbench, read from disk in path order. */
 function docsTree(): DocFile[] {
   touch("docs");
@@ -242,46 +297,207 @@ function docsTree(): DocFile[] {
   walk(DOCS_ROOT);
   return files.sort((left, right) => (left.path < right.path ? -1 : left.path > right.path ? 1 : 0));
 }
-const PREVIEW_TERM = /\bpreviews?\b|\bnon-?committed\b|--no-commit\b/i;
-const HEAD_TERM = /\bpublished[\s_-]+head\b/i;
-/** A negation word; the 'no' of --no-commit is a flag, never a negation. */
-const NEGATION = /\b(?:never|not|nor|without|cannot)\b|n't\b|(?<![-\w])no\b(?!-)/i;
-/** A sentence says the preview reads the published head when it names the preview and the published head and no negation comes
- * before the head. */
-function claimsHead(sentence: string): boolean {
-  touch("judge");
-  const head = HEAD_TERM.exec(sentence);
-  if (head === null || !PREVIEW_TERM.test(sentence)) return false;
-  return !NEGATION.test(sentence.slice(0, head.index));
+/** What git would commit under a root: tracked or untracked, never ignored, present on disk, sorted (the walk's outside anchor). */
+function gitListed(root: string): string[] {
+  touch("listing");
+  const out = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", root], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 });
+  return [...new Set(out.split("\0").filter(path => path !== "" && existsSync(join(REPO, path))))].sort();
 }
-const sentencesOf = (line: string): string[] => line.split(/(?<=[.!?;])\s+/).filter(part => part.trim().length > 0);
-const inScope = (path: string): boolean => path.startsWith(`${DOCS_ROOT}/`) && path.endsWith(".md");
-/** The in-scope files of a set, each sentence judged: the files scanned, every claim, and each scanned file's preview sentence count. */
-function scan(files: readonly DocFile[]): { scanned: string[]; claims: DocClaim[]; previews: Record<string, number> } {
+
+const at = (code: number): string => String.fromCodePoint(code);
+/** The named character references the rendered view decodes (the docs shared-filesystem census's set); any other is unreadable. */
+const NAMED_REFERENCES: ReadonlyMap<string, string> = new Map([
+  ["amp", "&"],
+  ["lt", "<"],
+  ["gt", ">"],
+  ["quot", '"'],
+  ["apos", "'"],
+  ["nbsp", at(0xa0)],
+  ["ensp", at(0x2002)],
+  ["emsp", at(0x2003)],
+  ["thinsp", at(0x2009)],
+  ["hairsp", at(0x200a)],
+  ["shy", at(0xad)],
+  ["ZeroWidthSpace", at(0x200b)],
+  ["zwnj", at(0x200c)],
+  ["zwj", at(0x200d)],
+  ["NoBreak", at(0x2060)],
+  ["hyphen", at(0x2010)],
+  ["dash", at(0x2010)],
+  ["ndash", at(0x2013)],
+  ["mdash", at(0x2014)],
+  ["minus", at(0x2212)],
+  ["period", "."],
+  ["excl", "!"],
+  ["quest", "?"],
+  ["comma", ","],
+  ["colon", ":"],
+  ["semi", ";"],
+]);
+const REFERENCE = /&(?:#(\d{1,7})|#[xX]([0-9a-fA-F]{1,6})|([A-Za-z][A-Za-z0-9]{1,31}));/g;
+/** `text` with every numeric reference and each NAMED_REFERENCES name decoded; any other named reference stays as written and is
+ * recorded in `unknown`. */
+function decodeReferences(text: string, unknown: string[]): string {
+  return text.replace(REFERENCE, (whole: string, decimal?: string, hex?: string, name?: string) => {
+    const code = decimal !== undefined ? Number.parseInt(decimal, 10) : hex !== undefined ? Number.parseInt(hex, 16) : undefined;
+    if (code !== undefined) return code <= 0x10ffff ? at(code) : whole;
+    const value = NAMED_REFERENCES.get(name ?? "");
+    if (value === undefined) unknown.push(whole);
+    return value ?? whole;
+  });
+}
+const HTML_COMMENT = /<!--[\s\S]*?(?:-->|$)/g;
+const HTML_TAG = /<\/?[A-Za-z][A-Za-z0-9-]*(?:\s[^>]*)?\/?>/g;
+const textOf = (token: Token): string => {
+  const value: unknown = (token as { text?: unknown }).text;
+  return typeof value === "string" ? value : "";
+};
+const childrenOf = (token: Token): readonly Token[] => {
+  const value: unknown = (token as { tokens?: unknown }).tokens;
+  return Array.isArray(value) ? (value as Token[]) : [];
+};
+const isList = (token: Token): token is Tokens.List => token.type === "list";
+const isTable = (token: Token): token is Tokens.Table => token.type === "table";
+/** What a reader sees of inline tokens: markup flattened, an inline tag, comment or checkbox nothing, a hard break a space. */
+function inlineText(tokens: readonly Token[], unknown: string[]): string {
+  let out = "";
+  for (const token of tokens) {
+    if (token.type === "html" || token.type === "checkbox") continue;
+    if (token.type === "br") out += " ";
+    else if (token.type === "codespan" || token.type === "escape") out += textOf(token);
+    else if (childrenOf(token).length > 0) out += inlineText(childrenOf(token), unknown);
+    else out += decodeReferences(textOf(token), unknown);
+  }
+  return out;
+}
+/** The units a block token renders (see RENDERED VIEW), in page order, before folding. */
+function unitsOf(token: Token, unknown: string[]): string[] {
+  if (token.type === "space" || token.type === "hr" || token.type === "def" || token.type === "code" || token.type === "checkbox") return [];
+  if (token.type === "html") return [decodeReferences(token.raw.replace(HTML_COMMENT, " ").replace(HTML_TAG, " "), unknown)];
+  if (isTable(token)) return [token.header, ...token.rows].map(row => row.map(cell => inlineText(cell.tokens, unknown)).join(" "));
+  if (isList(token)) return token.items.flatMap(item => item.tokens.flatMap(child => unitsOf(child, unknown)));
+  if (token.type === "blockquote") return childrenOf(token).flatMap(child => unitsOf(child, unknown));
+  const children = childrenOf(token);
+  return [children.length > 0 ? inlineText(children, unknown) : decodeReferences(textOf(token), unknown)];
+}
+const folded = (text: string): string => text.replace(/\p{Cf}/gu, "").replace(/\s+/g, " ").trim();
+const newlines = (text: string): number => text.split("\n").length - 1;
+interface Unit {
+  readonly line: number;
+  readonly text: string;
+}
+/** A page's rendered units, each numbered by the line its top-level block starts on, and the references it cannot decode. */
+function renderedPage(markdown: string): { readonly units: readonly Unit[]; readonly unknown: readonly string[] } {
+  const unknown: string[] = [];
+  const units: Unit[] = [];
+  let cursor = 0;
+  let line = 1;
+  for (const token of marked.lexer(markdown)) {
+    const found = markdown.indexOf(token.raw, cursor);
+    const start = found < 0 ? cursor : found;
+    line += newlines(markdown.slice(cursor, start));
+    for (const unit of unitsOf(token, unknown)) {
+      const text = folded(unit);
+      if (text.length > 0) units.push({ line, text });
+    }
+    line += newlines(token.raw);
+    cursor = start + token.raw.length;
+  }
+  return { units, unknown };
+}
+
+const PREVIEW_TERM = /\bpreview(?:s|ing|ed)?\b|\b(?:non-?|un)committed\b|(?:--|\b)no-commit\b/i;
+/** The head: published head or heads, the words joined by white space, '_', '-', '*', a backtick or a quote mark (a rendered
+ * escape or quote between them never hides it). */
+const HEAD_TERM = /\bpublished[\s_*'"`\u2018\u2019\u201C\u201D-]+heads?\b/i;
+/** A negation word; the 'no' of --no-commit or no-commit is a flag, never a negation. */
+const NEGATION = /\b(?:never|not|nor|without|cannot)\b|n't\b|(?<![-\w])no\b(?!-)/i;
+interface Judge {
+  /** Where the sentence names the published head. */
+  readonly head: RegExp;
+  /** The text before the head that is read for a negation. */
+  readonly window: (before: string) => string;
+}
+const JUDGE: Judge = { head: HEAD_TERM, window: before => before };
+/** R-PARAPHRASE's cure: the head term also reads the store-resident head and a word between published and head. */
+const PARAPHRASE_CURE: Judge = { head: new RegExp(`${HEAD_TERM.source}|\\bstore-resident[\\s_-]+heads?\\b|\\bpublished[\\s_-]+\\w+[\\s_-]+heads?\\b`, "i"), window: before => before };
+/** R-NEGATION-SCOPE's cure: only the clause nearest the head (after the last ',', ':' or ';' before it) is read for a negation. */
+const NEGATION_SCOPE_CURE: Judge = { head: HEAD_TERM, window: before => before.split(/[,:;]/).pop() ?? "" };
+/** A sentence says the preview reads the published head when it names the preview and the head and no negation comes before the
+ * head (in the judge's window). */
+function claimsWith(judge: Judge, sentence: string): boolean {
+  touch("judge");
+  const head = judge.head.exec(sentence);
+  if (head === null || !PREVIEW_TERM.test(sentence)) return false;
+  return !NEGATION.test(judge.window(sentence.slice(0, head.index)));
+}
+const claimsHead = (sentence: string): boolean => claimsWith(JUDGE, sentence);
+const sentencesOf = (text: string): string[] => text.split(/(?<=[.!?;])\s+/).filter(part => part.trim().length > 0);
+/** R-ANAPHORA's cure: a sentence opening with It, This or That joins the sentence before it. */
+function anaphoraJoined(text: string): string[] {
+  const joined: string[] = [];
+  for (const part of sentencesOf(text)) {
+    const last = joined.length - 1;
+    if (/^(?:It|This|That)\b/.test(part) && last >= 0) joined[last] = `${joined[last] ?? ""} ${part}`;
+    else joined.push(part);
+  }
+  return joined;
+}
+const inScope = (path: string): boolean => path.startsWith(`${DOCS_ROOT}/`) && isMarkdown(path);
+/** R-OUTSIDE-WALK's cure: every planted path is in scope. */
+const anyScope = (): boolean => true;
+interface ScanOptions {
+  readonly judge?: Judge;
+  readonly sentences?: (text: string) => string[];
+  readonly scope?: (path: string) => boolean;
+}
+interface Scan {
+  readonly scanned: readonly string[];
+  readonly claims: readonly string[];
+  readonly previews: Readonly<Record<string, number>>;
+  readonly unreadable: readonly string[];
+}
+/** The in-scope files of a set, each rendered and each sentence judged: the files scanned, every claim (`path:line sentence`),
+ * each scanned file's preview sentence count, and every reference the rendered view cannot decode (`path reference`). */
+function scan(files: readonly DocFile[], options: ScanOptions = {}): Scan {
+  const judge = options.judge ?? JUDGE;
+  const split = options.sentences ?? sentencesOf;
+  const within = options.scope ?? inScope;
   const scanned: string[] = [];
-  const claims: DocClaim[] = [];
+  const claims: string[] = [];
   const previews: Record<string, number> = {};
+  const unreadable: string[] = [];
   for (const file of files) {
-    if (!inScope(file.path)) continue;
+    if (!within(file.path)) continue;
     scanned.push(file.path);
+    const page = renderedPage(file.text);
+    unreadable.push(...page.unknown.map(reference => `${file.path} ${reference}`));
     let count = 0;
-    file.text.split("\n").forEach((line, index) => {
-      for (const sentence of sentencesOf(line)) {
+    for (const unit of page.units) {
+      for (const sentence of split(unit.text)) {
         if (PREVIEW_TERM.test(sentence)) count += 1;
-        if (claimsHead(sentence)) claims.push({ path: file.path, line: index + 1, sentence });
+        if (claimsWith(judge, sentence)) claims.push(`${file.path}:${unit.line} ${sentence}`);
       }
-    });
+    }
     previews[file.path] = count;
   }
-  return { scanned, claims, previews };
+  return { scanned, claims, previews, unreadable };
 }
-const claimCount = (files: readonly DocFile[]): number => scan(files).claims.length;
+const claimCount = (files: readonly DocFile[], options?: ScanOptions): number => scan(files, options).claims.length;
+const planted = (text: string, path = `${DOCS_ROOT}/planted.md`): DocFile => ({ path, text });
+const PLANTED_CLAIM = "The preview reads the published head.";
+/** A1's planted claim page: its claim a soft-wrapped second sentence, scanned with the walked pages in one call. */
+const PLANTED_PAGE: DocFile = planted("# Planted page\n\nFixture text is never real context. The rf preview reads the\npublished head.\n", `${DOCS_ROOT}/zz-wb-973-13-planted.md`);
+
+// ---------------------------------------------------------------------------------------------
+// The src read, the reader and the trigger.
+// ---------------------------------------------------------------------------------------------
 
 /** Every string literal of a src module (read from disk, or the planted text), template parts included; comments are never
  * literals. */
-function stringLiterals(path: string, planted?: string): string[] {
+function stringLiterals(path: string, plantedText?: string): string[] {
   touch("src");
-  const source = ts.createSourceFile(path, planted ?? readFileSync(join(REPO, path), "utf8"), ts.ScriptTarget.ES2022, true);
+  const source = ts.createSourceFile(path, plantedText ?? readFileSync(join(REPO, path), "utf8"), ts.ScriptTarget.ES2022, true);
   const literals: string[] = [];
   const visit = (node: ts.Node): void => {
     if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) literals.push(node.text);
@@ -291,9 +507,19 @@ function stringLiterals(path: string, planted?: string): string[] {
   visit(source);
   return literals;
 }
+const anchoredLiterals = (literals: readonly string[]): string[] => literals.filter(text => text.startsWith(EXPORTED.anchorPhrase));
+/** B2's twin: one note put before the projection's notes. */
+const TWIN_NOTE = "a note put before it";
 
 type Reader = (reading: JsonValue) => ReactiveFiberProjectionTopology;
-const realRead: Reader = reading => reactivefiberTopology(reading, HOST);
+/** While C1 reads its real side: the word each reading handed to the observer itself states ('none' for no key), recorded at the
+ * call, so a reader that strips the key before the observer is called is seen. */
+let handed: string[] | undefined;
+const realRead: Reader = reading => {
+  const word = statedWord(reading);
+  handed?.push(word === undefined ? "none" : String(word));
+  return reactivefiberTopology(reading, HOST);
+};
 const isValueObject = (value: JsonValue | undefined): value is { [key: string]: JsonValue } => typeof value === "object" && value !== null && !Array.isArray(value);
 /** A reader the census judges: each projection it makes is a read through the reader seam. */
 const tracked =
@@ -421,14 +647,19 @@ function withKey(record: RfResultRoster, list: KeyList, key: string): RfResultRo
   copy[list] = [...record[list], key];
   return copy;
 }
+/** Whether one key list of a record names the key. */
+type Names = (record: RfResultRoster, list: KeyList) => boolean;
+const namesKey: Names = (record, list) => record[list].includes(EXPORTED.key);
+/** R-NESTED's cure: a list naming the container counts as naming the key. */
+const namesContainer: Names = (record, list) => namesKey(record, list) || record[list].includes(CONTAINER_KEY);
 /** The trigger (freeze-and-flip): nothing is due while no key list of the record names the key; once one does, each armed clause
- * the reader misses is one miss, so the default gate reds until the observer case exists. */
-function trigger(record: RfResultRoster, read: Reader): { named: string[]; misses: string[] } {
+ * the reader misses is one miss, so the default gate reds until the observer case exists. `named` is the lists that name it. */
+function trigger(record: RfResultRoster, read: Reader, names: Names = namesKey): { named: string[]; misses: string[] } {
   touch("trigger");
-  const named = LISTS.filter(list => record[list].includes(EXPORTED.key));
+  const named = LISTS.filter(list => names(record, list));
   return { named, misses: named.length === 0 ? [] : ARMED.filter(check => !check.holds(read)).map(check => check.id) };
 }
-const plantedEach = (read: Reader): Json => Object.fromEntries(LISTS.map(list => [list, trigger(withKey(cleared(roster()), list, EXPORTED.key), read).misses]));
+const plantedEach = (read: Reader): Json => Object.fromEntries(LISTS.map(list => [list, trigger(withKey(cleared(roster()), list, EXPORTED.key), read)]));
 
 interface Pin {
   readonly id: string;
@@ -442,6 +673,7 @@ interface Row {
   readonly pins: readonly Pin[];
 }
 const FIRED = ["note", "contradiction", "closed-set"];
+const firedIn = (list: KeyList, misses: readonly string[]): Json => ({ named: [list], misses: [...misses] });
 /** The judged rows; their shape is pinned in the judged set and their clauses held to the tracked export. */
 const ROWS: readonly Row[] = [
   {
@@ -451,21 +683,138 @@ const ROWS: readonly Row[] = [
     pins: [
       {
         id: "A1",
-        seams: ["docs", "judge"],
+        seams: ["docs", "listing", "judge"],
         witness: {
+          listed: true,
           walked: true,
           surfaces: [
             { path: "docs/workbench/07-native-integrations.md", walked: true, previews: true },
             { path: "docs/workbench/19-worked-examples.md", walked: true, previews: true },
           ],
-          claims: [],
+          unreadable: [],
+          claims: ["docs/workbench/zz-wb-973-13-planted.md:3 The rf preview reads the published head."],
         },
       },
-      { id: "A2", seams: ["judge"], witness: [true, true, true, true, true, true, false, false, false, false] },
-      { id: "A3", seams: ["judge"], witness: { quiet: false, twin: true } },
-      { id: "A4", seams: ["judge"], witness: { quiet: 0, twin: 1 } },
-      { id: "A5", seams: ["judge"], witness: { quiet: false, twin: true } },
-      { id: "A6", seams: ["judge"], witness: { quiet: 0, twin: 2 } },
+      {
+        id: "A2",
+        seams: ["judge"],
+        witness: [
+          { sentence: "The preview reads the published head.", claims: true },
+          { sentence: "reactivefiber.render.preview renders the published_head definitions.", claims: true },
+          { sentence: "A --no-commit render reads the PUBLISHED HEAD, not the working tree.", claims: true },
+          { sentence: "Noncommitted previews resolve definitions from the published-head manifest.", claims: true },
+          { sentence: "The non-committed render resolves the published head.", claims: true },
+          { sentence: "Previews read the published head.", claims: true },
+          { sentence: "A previewing render reads the published head.", claims: true },
+          { sentence: "A previewed context reads the published head.", claims: true },
+          { sentence: "The uncommitted render reads the published head.", claims: true },
+          { sentence: "A no-commit render reads the published head.", claims: true },
+          { sentence: "Noncommitted renders read the published head.", claims: true },
+          { sentence: "The preview reads published heads.", claims: true },
+          { sentence: "The preview reads the published 'head'.", claims: true },
+          { sentence: "The noncommitted preview never reads the published head.", claims: false },
+          { sentence: "The preview does not read the published head.", claims: false },
+          { sentence: "rf graph publish promotes a candidate to the published head.", claims: false },
+          { sentence: "The preview reads the working tree.", claims: false },
+        ],
+      },
+      {
+        id: "A3",
+        seams: ["judge"],
+        witness: {
+          quiet: [
+            { sentence: "The preview reads the store-resident head's manifest.", judged: false, cured: true },
+            { sentence: "The preview reads the published graph head.", judged: false, cured: true },
+          ],
+          twin: { sentence: "The preview reads the published head's manifest.", judged: true },
+        },
+      },
+      {
+        id: "A4",
+        seams: ["judge"],
+        witness: {
+          quiet: { text: "The preview is noncommitted. It reads the published head.", claims: 0, cured: 1 },
+          twin: { text: "The preview is noncommitted and reads the published head.", claims: 1 },
+        },
+      },
+      {
+        id: "A5",
+        seams: ["judge"],
+        witness: {
+          quiet: [
+            { sentence: "The preview, not the committed render, reads the published head.", judged: false, cured: true },
+            { sentence: "No longer experimental, the preview reads the published head.", judged: false, cured: true },
+            { sentence: "The preview never fails: it reads the published head.", judged: false, cured: true },
+          ],
+          twin: { sentence: "The preview, unlike the committed render, reads the published head.", judged: true },
+        },
+      },
+      {
+        id: "A6",
+        seams: ["judge"],
+        witness: {
+          quiet: { paths: ["README.md", "docs/programs/planted.md", "docs/workbench/planted.txt", "src/workbench/planted.ts"], claims: 0, cured: 4 },
+          twin: { paths: ["docs/workbench/planted.md", "docs/workbench/receipts/planted.md"], claims: 2 },
+        },
+      },
+      {
+        id: "A7",
+        seams: ["judge"],
+        witness: [
+          { text: "The preview reads the *published* head.", claims: 1 },
+          { text: "The preview reads the **published head**.", claims: 1 },
+          { text: "The preview reads the published [head](#pins).", claims: 1 },
+          { text: "The `--no-commit` render reads the published head.", claims: 1 },
+          { text: "The preview reads the <em>published</em> head.", claims: 1 },
+          { text: "<p>The preview reads the published head.</p>", claims: 1 },
+          { text: "The preview reads the published&nbsp;head.", claims: 1 },
+          { text: "The preview reads the published&#160;head.", claims: 1 },
+          { text: "The preview reads the published&ZeroWidthSpace; head.", claims: 1 },
+          { text: "The preview reads the ~~published~~ head.", claims: 1 },
+          { text: "The preview reads the \\*published\\* head.", claims: 1 },
+          { text: "## The preview reads the published head", claims: 1 },
+        ],
+      },
+      {
+        id: "A8",
+        seams: ["judge"],
+        witness: [
+          { text: "The preview reads the\npublished head.", claims: 1 },
+          { text: "The preview\nreads the published head.", claims: 1 },
+          { text: "The --no-commit render keeps the working tree out of the store and,\nunlike the committed render, reads the published head.", claims: 1 },
+          { text: "The preview reads the  \npublished head.", claims: 1 },
+          { text: "- The preview reads the\n  published head.", claims: 1 },
+          { text: "> The preview reads the\n> published head.", claims: 1 },
+          { text: "| The preview | reads the published head. |\n| --- | --- |", claims: 1 },
+          { text: "- [ ] The preview reads the\n  published head.", claims: 1 },
+          { text: "The --no-commit preview reads the working tree; the committed render reads the published head.", claims: 0 },
+          { text: "The preview is noncommitted! The committed render reads the published head.", claims: 0 },
+          { text: "Is the preview noncommitted? The committed render reads the published head.", claims: 0 },
+        ],
+      },
+      {
+        id: "A9",
+        seams: ["judge"],
+        witness: [
+          { hidden: "<!-- The preview reads the published head. -->", claims: 0, shown: "The preview reads the published head.", shownClaims: 1 },
+          { hidden: "```\nThe preview reads the published head.\n```", claims: 0, shown: "The preview reads the published head.", shownClaims: 1 },
+          { hidden: "Intro.\n\n    The preview reads the published head.", claims: 0, shown: "Intro.\n\nThe preview reads the published head.", shownClaims: 1 },
+          { hidden: "The preview reads the <!-- published head --> working tree.", claims: 0, shown: "The preview reads the published head working tree.", shownClaims: 1 },
+          { hidden: "The preview reads [the docs](#published-head).", claims: 0, shown: "The preview reads [the published head](#docs).", shownClaims: 1 },
+          { hidden: "<!-- The preview reads the published head.", claims: 0, shown: "The preview reads the published head.", shownClaims: 1 },
+          { hidden: 'The preview reads [the docs](#x "the published head").', claims: 0, shown: 'The preview reads [the published head](#x "the docs").', shownClaims: 1 },
+          { hidden: '[preview]: #x "The preview reads the published head."\n\nSee the docs.', claims: 0, shown: "The preview reads the published head.\n\nSee the docs.", shownClaims: 1 },
+          { hidden: "The preview reads the `published&nbsp;head`.", claims: 0, shown: "The preview reads the `published head`.", shownClaims: 1 },
+        ],
+      },
+      {
+        id: "A10",
+        seams: ["judge"],
+        witness: {
+          unknown: { text: "The preview reads the published&emsp13;head.", unreadable: ["docs/workbench/planted.md &emsp13;"], claims: 0 },
+          known: { text: "The preview reads the published&emsp;head.", unreadable: [], claims: 1 },
+        },
+      },
     ],
   },
   {
@@ -473,8 +822,19 @@ const ROWS: readonly Row[] = [
     source: "Until then",
     clause: "the anchor note stays reactivefiber-observer.ts:193@9df9a03",
     pins: [
-      { id: "B1", seams: ["src"], witness: { file: "src/workbench/reactivefiber-observer.ts", anchorLiterals: 1, twin: 2 } },
-      { id: "B2", seams: ["reader"], witness: { anchoredAt: [0], twin: [1] } },
+      {
+        id: "B1",
+        seams: ["src"],
+        witness: {
+          file: "src/workbench/reactivefiber-observer.ts",
+          anchorLiterals: 1,
+          twin: {
+            module: `// ephemeral noncommitted preview: a comment\nconst a = "ephemeral noncommitted preview: one";\nconst b = \`ephemeral noncommitted preview: \${a}\`;\nexport const c = [a, b];\n`,
+            anchorLiterals: 2,
+          },
+        },
+      },
+      { id: "B2", seams: ["reader", "src"], witness: { previewContract: true, keyStated: false, srcNote: true, anchoredAt: [0], twin: { before: "a note put before it", anchoredAt: [1] } } },
     ],
   },
   {
@@ -492,6 +852,7 @@ const ROWS: readonly Row[] = [
             { word: "overlay", reads: "unchanged" },
             { word: OUTSIDE_WORD, reads: "unchanged" },
           ],
+          handed: ["none", "working_tree", "published_head", "overlay", OUTSIDE_WORD],
           twin: [
             { word: "working_tree", reads: "changed" },
             { word: "published_head", reads: "refused" },
@@ -509,24 +870,49 @@ const ROWS: readonly Row[] = [
       "a default-gate test reads R11's fixture record and, when definition_source appears in a captured envelope, fails until the observer case exists (freeze-and-flip, 05-IMPLEMENTATION-PLAN.md:39@8a8b83e4d)",
     pins: [
       { id: "T1", seams: ["roster", "trigger"], witness: { misses: [] } },
-      { id: "T2", seams: ["roster", "trigger", "reader"], witness: { resultKeys: FIRED, provenanceKeys: FIRED, workKeys: FIRED, workMetricsKeys: FIRED } },
+      {
+        id: "T2",
+        seams: ["roster", "trigger", "reader"],
+        witness: {
+          resultKeys: firedIn("resultKeys", FIRED),
+          provenanceKeys: firedIn("provenanceKeys", FIRED),
+          workKeys: firedIn("workKeys", FIRED),
+          workMetricsKeys: firedIn("workMetricsKeys", FIRED),
+        },
+      },
       {
         id: "T3",
         seams: ["roster", "trigger", "reader"],
-        witness: { armed: { resultKeys: [], provenanceKeys: [], workKeys: [], workMetricsKeys: [] }, unarmedArmed: FIRED },
+        witness: {
+          armed: { resultKeys: firedIn("resultKeys", []), provenanceKeys: firedIn("provenanceKeys", []), workKeys: firedIn("workKeys", []), workMetricsKeys: firedIn("workMetricsKeys", []) },
+          unarmedArmed: firedIn("resultKeys", FIRED),
+        },
       },
-      { id: "T4", seams: ["roster", "trigger", "reader"], witness: { quiet: { named: [], misses: [] }, twin: { named: ["resultKeys"], misses: FIRED } } },
+      {
+        id: "T4",
+        seams: ["roster", "trigger", "reader"],
+        witness: {
+          quiet: { containers: ["resultKeys"], named: [], misses: [], cured: firedIn("resultKeys", FIRED) },
+          twin: firedIn("resultKeys", FIRED),
+        },
+      },
       {
         id: "T5",
         seams: ["roster", "trigger", "reader"],
-        witness: { note: ["note"], contradiction: ["contradiction"], "closed-set": ["closed-set"], absent: ["absent"], untyped: ["contradiction", "closed-set"] },
+        witness: {
+          note: firedIn("resultKeys", ["note"]),
+          contradiction: firedIn("resultKeys", ["contradiction"]),
+          "closed-set": firedIn("resultKeys", ["closed-set"]),
+          absent: firedIn("resultKeys", ["absent"]),
+          untyped: firedIn("resultKeys", ["contradiction", "closed-set"]),
+        },
       },
     ],
   },
 ];
 
-/** A2's planted sentences: six claims (each preview spelling alone carries one), then a negated pair, a preview-free and a
- * head-free sentence. */
+/** A2's planted sentences: claims (every preview spelling is the only one of at least one, and the head is spelled as joined,
+ * plural and capitalized), then a negated pair, a preview-free and a head-free sentence. */
 const SENTENCES = [
   "The preview reads the published head.",
   "reactivefiber.render.preview renders the published_head definitions.",
@@ -534,60 +920,136 @@ const SENTENCES = [
   "Noncommitted previews resolve definitions from the published-head manifest.",
   "The non-committed render resolves the published head.",
   "Previews read the published head.",
+  "A previewing render reads the published head.",
+  "A previewed context reads the published head.",
+  "The uncommitted render reads the published head.",
+  "A no-commit render reads the published head.",
+  "Noncommitted renders read the published head.",
+  "The preview reads published heads.",
+  "The preview reads the published 'head'.",
   "The noncommitted preview never reads the published head.",
   "The preview does not read the published head.",
   "rf graph publish promotes a candidate to the published head.",
   "The preview reads the working tree.",
 ];
-const PLANTED_CLAIM = SENTENCES[0] ?? "";
+/** A7's planted pages: inline markup, a character reference or a format code point inside a claim. */
+const MARKUP = [
+  "The preview reads the *published* head.",
+  "The preview reads the **published head**.",
+  "The preview reads the published [head](#pins).",
+  "The `--no-commit` render reads the published head.",
+  "The preview reads the <em>published</em> head.",
+  "<p>The preview reads the published head.</p>",
+  "The preview reads the published&nbsp;head.",
+  "The preview reads the published&#160;head.",
+  "The preview reads the published&ZeroWidthSpace; head.",
+  "The preview reads the ~~published~~ head.",
+  "The preview reads the \\*published\\* head.",
+  "## The preview reads the published head",
+];
+/** A8's planted pages: a claim across a soft wrap, a hard break, a list item's and a block quote's continuation line, and a table
+ * row's cells; then a ';' between a preview and a head, which ends the sentence. */
+const JOINS = [
+  "The preview reads the\npublished head.",
+  "The preview\nreads the published head.",
+  "The --no-commit render keeps the working tree out of the store and,\nunlike the committed render, reads the published head.",
+  "The preview reads the  \npublished head.",
+  "- The preview reads the\n  published head.",
+  "> The preview reads the\n> published head.",
+  "| The preview | reads the published head. |\n| --- | --- |",
+  "- [ ] The preview reads the\n  published head.",
+  "The --no-commit preview reads the working tree; the committed render reads the published head.",
+  "The preview is noncommitted! The committed render reads the published head.",
+  "Is the preview noncommitted? The committed render reads the published head.",
+];
+/** A9's planted pages: each claim hidden from the rendered view, beside the same words shown. */
+const HIDDEN: readonly (readonly [string, string])[] = [
+  ["<!-- The preview reads the published head. -->", "The preview reads the published head."],
+  ["```\nThe preview reads the published head.\n```", "The preview reads the published head."],
+  ["Intro.\n\n    The preview reads the published head.", "Intro.\n\nThe preview reads the published head."],
+  ["The preview reads the <!-- published head --> working tree.", "The preview reads the published head working tree."],
+  ["The preview reads [the docs](#published-head).", "The preview reads [the published head](#docs)."],
+  ["<!-- The preview reads the published head.", "The preview reads the published head."],
+  ['The preview reads [the docs](#x "the published head").', 'The preview reads [the published head](#x "the docs").'],
+  ['[preview]: #x "The preview reads the published head."\n\nSee the docs.', "The preview reads the published head.\n\nSee the docs."],
+  ["The preview reads the `published&nbsp;head`.", "The preview reads the `published head`."],
+];
+const judgedWith = (judge: Judge) => (sentence: string) => ({ sentence, judged: claimsHead(sentence), cured: claimsWith(judge, sentence) });
+const twinOf = (sentence: string): Json => ({ sentence, judged: claimsHead(sentence) });
+const scanned = (file: DocFile): Json => {
+  const result = scan([file]);
+  return { text: file.text, unreadable: [...result.unreadable], claims: result.claims.length };
+};
 
 /** Each pin's case: it reads through the seams its pin declares and returns the witness its pin holds. */
 const IMPL: Readonly<Record<string, () => Json>> = {
   A1: () => {
-    const files = docsTree();
-    const { scanned, claims, previews } = scan(files);
+    const listed = gitListed(DOCS_ROOT).filter(isMarkdown);
+    const { scanned: paths, claims, previews, unreadable } = scan([...docsTree(), PLANTED_PAGE]);
+    const walked = paths.filter(path => path !== PLANTED_PAGE.path);
     return {
-      walked: scanned.length >= DOCS_FLOOR,
-      surfaces: EXPORTED.docsSurfaces.map(path => ({ path, walked: scanned.includes(path), previews: (previews[path] ?? 0) > 0 })),
-      claims: claims.map(claim => `${claim.path}:${claim.line} ${claim.sentence}`),
+      listed: listed.length >= DOCS_FLOOR,
+      walked: isDeepStrictEqual(walked, listed),
+      surfaces: EXPORTED.docsSurfaces.map(path => ({ path, walked: walked.includes(path), previews: (previews[path] ?? 0) > 0 })),
+      unreadable: [...unreadable],
+      claims: [...claims],
     };
   },
-  A2: () => SENTENCES.map(sentence => claimsHead(sentence)),
-  // R-PARAPHRASE: the store-resident head's manifest names the head in other words.
-  A3: () => ({ quiet: claimsHead("The preview reads the store-resident head's manifest."), twin: claimsHead("The preview reads the published head's manifest.") }),
-  // R-ANAPHORA: the preview stands in the sentence before the one that names the head.
-  A4: () => ({
-    quiet: claimCount([{ path: `${DOCS_ROOT}/planted.md`, text: "The preview is noncommitted. It reads the published head." }]),
-    twin: claimCount([{ path: `${DOCS_ROOT}/planted.md`, text: "The preview is noncommitted and reads the published head." }]),
+  A2: () => SENTENCES.map(sentence => ({ sentence, claims: claimsHead(sentence) })),
+  // R-PARAPHRASE: the head named in other words; its cure reads them.
+  A3: () => ({
+    quiet: ["The preview reads the store-resident head's manifest.", "The preview reads the published graph head."].map(judgedWith(PARAPHRASE_CURE)),
+    twin: twinOf("The preview reads the published head's manifest."),
   }),
-  // R-NEGATION-SCOPE: the 'not' before the head governs the committed render, not the reading.
+  // R-ANAPHORA: the preview stands in the sentence before the one that names the head; its cure joins them.
+  A4: () => {
+    const quiet = "The preview is noncommitted. It reads the published head.";
+    const twin = "The preview is noncommitted and reads the published head.";
+    return {
+      quiet: { text: quiet, claims: claimCount([planted(quiet)]), cured: claimCount([planted(quiet)], { sentences: anaphoraJoined }) },
+      twin: { text: twin, claims: claimCount([planted(twin)]) },
+    };
+  },
+  // R-NEGATION-SCOPE: each negation before the head governs another phrase; its cure reads only the clause nearest the head.
   A5: () => ({
-    quiet: claimsHead("The preview, not the committed render, reads the published head."),
-    twin: claimsHead("The preview, unlike the committed render, reads the published head."),
+    quiet: [
+      "The preview, not the committed render, reads the published head.",
+      "No longer experimental, the preview reads the published head.",
+      "The preview never fails: it reads the published head.",
+    ].map(judgedWith(NEGATION_SCOPE_CURE)),
+    twin: twinOf("The preview, unlike the committed render, reads the published head."),
   }),
-  // R-OUTSIDE-WALK: the same claim outside docs/workbench markdown, then inside it.
-  A6: () => ({
-    quiet: claimCount([
-      { path: "README.md", text: PLANTED_CLAIM },
-      { path: "docs/programs/planted.md", text: PLANTED_CLAIM },
-      { path: `${DOCS_ROOT}/planted.txt`, text: PLANTED_CLAIM },
-    ]),
-    twin: claimCount([
-      { path: `${DOCS_ROOT}/planted.md`, text: PLANTED_CLAIM },
-      { path: `${DOCS_ROOT}/receipts/planted.md`, text: PLANTED_CLAIM },
-    ]),
-  }),
+  // R-OUTSIDE-WALK: the same claim outside docs/workbench markdown, then inside it; its cure walks every planted path.
+  A6: () => {
+    const quiet = [planted(PLANTED_CLAIM, "README.md"), planted(PLANTED_CLAIM, "docs/programs/planted.md"), planted(PLANTED_CLAIM, `${DOCS_ROOT}/planted.txt`), planted(`// ${PLANTED_CLAIM}`, "src/workbench/planted.ts")];
+    const twin = [planted(PLANTED_CLAIM), planted(PLANTED_CLAIM, `${DOCS_ROOT}/receipts/planted.md`)];
+    return {
+      quiet: { paths: quiet.map(file => file.path), claims: claimCount(quiet), cured: claimCount(quiet, { scope: anyScope }) },
+      twin: { paths: twin.map(file => file.path), claims: claimCount(twin) },
+    };
+  },
+  A7: () => MARKUP.map(text => ({ text, claims: claimCount([planted(text)]) })),
+  A8: () => JOINS.map(text => ({ text, claims: claimCount([planted(text)]) })),
+  A9: () => HIDDEN.map(([hidden, shown]) => ({ hidden, claims: claimCount([planted(hidden)]), shown, shownClaims: claimCount([planted(shown)]) })),
+  A10: () => ({ unknown: scanned(planted("The preview reads the published&emsp13;head.")), known: scanned(planted("The preview reads the published&emsp;head.")) }),
   B1: () => {
     const file = EXPORTED.srcSurfaces[0] ?? "";
-    const anchored = (literals: readonly string[]): number => literals.filter(text => text.startsWith(EXPORTED.anchorPhrase)).length;
     const phrase = EXPORTED.anchorPhrase;
-    const planted = `// ${phrase}: a comment\nconst a = "${phrase}: one";\nconst b = \`${phrase}: \${a}\`;\nexport const c = [a, b];\n`;
-    return { file, anchorLiterals: anchored(stringLiterals(file)), twin: anchored(stringLiterals("planted.ts", planted)) };
+    const plantedModule = `// ${phrase}: a comment\nconst a = "${phrase}: one";\nconst b = \`${phrase}: \${a}\`;\nexport const c = [a, b];\n`;
+    return { file, anchorLiterals: anchoredLiterals(stringLiterals(file)).length, twin: { module: plantedModule, anchorLiterals: anchoredLiterals(stringLiterals("planted.ts", plantedModule)).length } };
   },
   B2: () => {
     const anchoredAt = (notes: readonly string[]): number[] => notes.flatMap((note, index) => (note.startsWith(EXPORTED.anchorPhrase) ? [index] : []));
-    const notes = tracked(realRead)(previewReading()).diagnostics;
-    return { anchoredAt: anchoredAt(notes), twin: anchoredAt(["a note put before it", ...notes]) };
+    const reading = previewReading();
+    const notes = tracked(realRead)(reading).diagnostics;
+    const srcNotes = anchoredLiterals(stringLiterals(EXPORTED.srcSurfaces[0] ?? ""));
+    return {
+      previewContract: isValueObject(reading) && reading.contract === REACTIVEFIBER_RENDER_PREVIEW_CONTRACT,
+      keyStated: statedWord(reading) !== undefined,
+      srcNote: srcNotes.length === 1 && notes[0] === srcNotes[0],
+      anchoredAt: anchoredAt(notes),
+      twin: { before: TWIN_NOTE, anchoredAt: anchoredAt([TWIN_NOTE, ...notes]) },
+    };
   },
   C1: () => {
     const readings = (reader: Reader): Json => {
@@ -598,20 +1060,28 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         return { word, reads: projected === null ? "refused" : isDeepStrictEqual(projected, absent) ? "unchanged" : "changed" };
       });
     };
-    return { real: readings(realRead), twin: readings(armedStandIn) };
+    handed = [];
+    const real = readings(realRead);
+    const observed = handed;
+    handed = undefined;
+    return { real, handed: observed, twin: readings(armedStandIn) };
   },
   T1: () => ({ misses: trigger(roster(), tracked(realRead)).misses }),
   T2: () => plantedEach(tracked(unarmedStandIn)),
   T3: () => ({
     armed: plantedEach(tracked(armedStandIn)),
-    unarmedArmed: trigger(withKey(cleared(roster()), "resultKeys", EXPORTED.key), tracked(unarmed(armedStandIn))).misses,
+    unarmedArmed: trigger(withKey(cleared(roster()), "resultKeys", EXPORTED.key), tracked(unarmed(armedStandIn))),
   }),
-  // R-NESTED: a container key the pin fields could ride in, then the key itself, each in the result list.
-  T4: () => ({
-    quiet: trigger(withKey(cleared(withKey(roster(), "provenanceKeys", EXPORTED.key)), "resultKeys", CONTAINER_KEY), tracked(unarmedStandIn)),
-    twin: trigger(withKey(cleared(roster()), "resultKeys", EXPORTED.key), tracked(unarmedStandIn)),
-  }),
-  T5: () => Object.fromEntries(Object.entries(PARTIAL).map(([id, read]) => [id, trigger(withKey(cleared(roster()), "resultKeys", EXPORTED.key), tracked(read)).misses])),
+  // R-NESTED: a container key the pin fields could ride in, then the key itself, each in the result list; its cure counts the
+  // container as the key.
+  T4: () => {
+    const quiet = withKey(cleared(withKey(roster(), "provenanceKeys", EXPORTED.key)), "resultKeys", CONTAINER_KEY);
+    return {
+      quiet: { containers: LISTS.filter(list => quiet[list].includes(CONTAINER_KEY)), ...trigger(quiet, tracked(unarmedStandIn)), cured: trigger(quiet, tracked(unarmedStandIn), namesContainer) },
+      twin: trigger(withKey(cleared(roster()), "resultKeys", EXPORTED.key), tracked(unarmedStandIn)),
+    };
+  },
+  T5: () => Object.fromEntries(Object.entries(PARTIAL).map(([id, read]) => [id, trigger(withKey(cleared(roster()), "resultKeys", EXPORTED.key), tracked(read))])),
 };
 
 type Registered = { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean };
@@ -630,7 +1100,7 @@ function registered(task: TestContext["task"]): Registered[] {
 
 describe("wb-973.13 rf definition-source census (SWARM-CONTEXT-GRAPH-R13, the until-then leg and its trigger)", () => {
   it(JUDGED_TITLE, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:6", "B:2", "C:1", "T:5"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:10", "B:2", "C:1", "T:5"]);
     expect(Object.keys(IMPL).sort(), "a pin without a case, or a case without a pin").toEqual(ROWS.flatMap(row => row.pins.map(pin => pin.id)).sort());
     const cited: Clause[] = [...ROWS.map(({ source, clause }) => ({ source, clause })), ...ARMED.map(({ clause }) => ({ source: ARMED_SOURCE, clause }))];
     expect(sortedClauses(cited), "the judged clauses against the tracked export's testable clauses").toStrictEqual(sortedClauses(EXPORTED.clauses));
