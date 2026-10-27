@@ -152,6 +152,10 @@
       "pin": "Q7"
     }
   ],
+  "runPin": {
+    "file": "test/workbench-rf-external-authority-echo-run-pin.census.ts",
+    "sha256": "f8bc10d3423d1a3965ebc614d3d628571613474cecf1073c6fbab83d028cad90"
+  },
   "tests": [
     "the judged set: the frozen shape, the out-of-file roster, the quoted excerpt, the bead export, the registration and the cases agree",
     "A1",
