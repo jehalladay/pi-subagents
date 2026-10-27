@@ -2,6 +2,7 @@ import { lstatSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { Options } from "@anthropic-ai/claude-agent-sdk";
+import { marked, type Token, type Tokens } from "marked";
 import ts from "typescript";
 import {afterEach,describe,expect,it} from "vitest";
 import {loadSettings,type WorkbenchSettings} from "../src/settings.js";
@@ -34,7 +35,10 @@ it("rejects wildcard role capabilities",()=>{
 // behind their documented SDK query fixture seam (FakeClaudeSdk: the SDK module is never mocked, no process is spawned,
 // nothing touches the network). test/workbench-docs19-scg-worker-role.census.ts binds the section's sentences to the
 // WORKER_SUITE cases by file, describe path and verbatim title; the NEGATIVES_SUITE cases are the bead's two negatives in
-// force now ("Negative, in force now" in its acceptance), bound to no sentence.
+// force now ("Negative, in force now" in its acceptance), bound to no sentence. The served-leaves negative judges every
+// docs/workbench page twice (refusal #1 U2): as a reader sees it (the RENDERED LEG below) and as its source reads (the
+// SOURCE LEG, sentencesIn), so a served sentence reds whether its markup hides it from the source or its source hides it
+// from the reader.
 // ---------------------------------------------------------------------------------------------
 installScratchLeakGuard();
 
@@ -227,11 +231,161 @@ function sentencesIn(text: string): string[] {
   if (current !== "") units.push(current);
   return units.flatMap(unit => unit.split(/(?<=[.!?])\s+/)).filter(sentence => sentence !== "");
 }
-/** Every sentence of every file below `dir` that names one of the four leaves and a served word, as `<path>: <sentence>`. */
+/** A sentence that names one of the four leaves and a served word. */
+const servedLeaf = (sentence: string): boolean => NAMED_LEAF.test(sentence) && SERVED_WORD.test(sentence);
+/** SOURCE LEG: every source sentence (sentencesIn) of every file below `dir` that names one of the four leaves and a served word, as `<path>: <sentence>`. */
 const servedLeafSentences = (base: string, dir: string): string[] =>
   filesBelow(base, dir).flatMap(path =>
-    sentencesIn(readFileSync(join(base, path), "utf8")).filter(sentence => NAMED_LEAF.test(sentence) && SERVED_WORD.test(sentence)).map(sentence => `${path}: ${sentence}`),
+    sentencesIn(readFileSync(join(base, path), "utf8")).filter(servedLeaf).map(sentence => `${path}: ${sentence}`),
   );
+
+// RENDERED LEG (refusal #1 U2, the rendered-text docs truth floor of wb-9x5.17), every markdown page below the walked
+// directory (any other file renders as its source text: its sentencesIn sentences, folded as below, no reference decoded):
+// marked 18.0.11 (the lexer test/helpers/census.ts uses, GFM) lexes the page once. A unit is a paragraph, a
+// heading, the text of a list item or block quote, a code block, an HTML block, a table's header row, and each body row
+// read after its header row (cells joined by a space); a list that follows a paragraph whose last sentence is not ended
+// by ".", "!" or "?" (a lead-in, such as one ending in ":") is read item by item after that lead-in sentence. A unit
+// renders its text, code spans and backslash escapes as written,
+// and emphasis, strong, strikethrough, link text and image alt text flattened (a link destination or title is never
+// read); an inline HTML token (a comment or a tag) and a task checkbox render nothing, an HTML block renders its source
+// with comments (an unclosed one to its end) and tags removed, and a soft wrap or a hard break renders as white space.
+// Numeric character references and the names in NAMED_REFERENCES are decoded outside code; any other named reference is
+// recorded, and the live pages must carry none. The FOLDED KEY then applies: NFKD with combining marks dropped, format
+// code points (Cf) dropped, every white-space run one space, control code points (Cc) dropped, every dash (Pd) and the
+// minus sign read as "-". The folded unit splits into sentences after ".", "!" or "?" that white space follows, and a
+// sentence naming a leaf and a served word is a served sentence. RESIDUALS, each a named family whose planted quiet row
+// below is read and stays quiet: R-ANAPHORA, the served word in a later sentence that points back to the leaf ("It is
+// served."; cure: a sentence opening with It, This or That is also read after the sentence before it); R-HEADING-SCOPE,
+// the served word in a heading over a list or paragraph that names the leaf ("## Served leaves" over "- graph impact";
+// cure: read each unit of a section after its heading); R-PARAPHRASE, the leaf named in other words ("the impact leaf of
+// rf graph"; cure: read the leaf words in either order within a clause); R-SYNONYM, the claim in other words than served
+// ("available", "implemented"; cure: widen SERVED_WORD).
+const at = (code: number): string => String.fromCodePoint(code);
+/** The named character references the rendered leg decodes; any other named reference is recorded as unreadable. */
+const NAMED_REFERENCES: ReadonlyMap<string, string> = new Map([
+  ["amp", "&"],
+  ["lt", "<"],
+  ["gt", ">"],
+  ["quot", '"'],
+  ["apos", "'"],
+  ["nbsp", at(0xa0)],
+  ["ensp", at(0x2002)],
+  ["emsp", at(0x2003)],
+  ["thinsp", at(0x2009)],
+  ["hairsp", at(0x200a)],
+  ["shy", at(0xad)],
+  ["ZeroWidthSpace", at(0x200b)],
+  ["zwnj", at(0x200c)],
+  ["zwj", at(0x200d)],
+  ["NoBreak", at(0x2060)],
+  ["hyphen", at(0x2010)],
+  ["dash", at(0x2010)],
+  ["ndash", at(0x2013)],
+  ["mdash", at(0x2014)],
+  ["minus", at(0x2212)],
+  ["period", "."],
+  ["lowbar", "_"],
+  ["excl", "!"],
+  ["quest", "?"],
+  ["comma", ","],
+  ["colon", ":"],
+  ["semi", ";"],
+]);
+const REFERENCE = /&(?:#(\d{1,7})|#[xX]([0-9a-fA-F]{1,6})|([A-Za-z][A-Za-z0-9]{1,31}));/g;
+/** The folded key's rewrites after NFKD and dropping combining marks, in order. */
+const FOLD: ReadonlyArray<readonly [RegExp, string]> = [
+  [/\p{Cf}/gu, ""],
+  [/\s+/gu, " "],
+  [/\p{Cc}/gu, ""],
+  [/[\p{Pd}\u{2212}]/gu, "-"],
+  [/ {2,}/g, " "],
+];
+const HTML_COMMENT = /<!--[\s\S]*?(?:-->|$)/g;
+const HTML_TAG = /<\/?[A-Za-z][A-Za-z0-9-]*(?:\s[^>]*)?\/?>/g;
+const MARKDOWN_PAGE = /\.(?:md|markdown)$/i;
+
+/** `text` with every numeric reference and each NAMED_REFERENCES name decoded; any other named reference stays as written and is recorded in `unknown`. */
+function decodeReferences(text: string, unknown: string[]): string {
+  return text.replace(REFERENCE, (whole: string, decimal?: string, hex?: string, name?: string) => {
+    const code = decimal !== undefined ? Number.parseInt(decimal, 10) : hex !== undefined ? Number.parseInt(hex, 16) : undefined;
+    if (code !== undefined) return code <= 0x10ffff ? at(code) : whole;
+    const value = NAMED_REFERENCES.get(name ?? "");
+    if (value === undefined) unknown.push(whole);
+    return value ?? whole;
+  });
+}
+/** The FOLDED KEY of rendered text (see the RENDERED LEG). */
+const foldKey = (text: string): string =>
+  FOLD.reduce((folded, [pattern, replacement]) => folded.replace(pattern, replacement), text.normalize("NFKD").replace(/\p{M}/gu, "")).trim();
+/** The rendered sentences of a unit: its folded key split after ".", "!" or "?" that white space follows. */
+const renderedSentences = (unit: string): string[] => foldKey(unit).split(/(?<=[.!?])\s+/u).filter(sentence => sentence !== "");
+const tokenText = (token: Token): string => {
+  const value: unknown = (token as { text?: unknown }).text;
+  return typeof value === "string" ? value : "";
+};
+const tokenChildren = (token: Token): readonly Token[] => {
+  const value: unknown = (token as { tokens?: unknown }).tokens;
+  return Array.isArray(value) ? (value as Token[]) : [];
+};
+const isListToken = (token: Token): token is Tokens.List => token.type === "list";
+const isTableToken = (token: Token): token is Tokens.Table => token.type === "table";
+
+/** What a reader sees of inline tokens (see the RENDERED LEG); a link destination or title is never read. */
+function inlineText(tokens: readonly Token[], unknown: string[]): string {
+  let out = "";
+  for (const token of tokens) {
+    if (token.type === "html" || token.type === "checkbox") continue;
+    if (token.type === "br") out += " ";
+    else if (token.type === "codespan" || token.type === "escape") out += tokenText(token);
+    else if (tokenChildren(token).length > 0) out += inlineText(tokenChildren(token), unknown);
+    else out += decodeReferences(tokenText(token), unknown);
+  }
+  return out;
+}
+/** The units one block token renders (see the RENDERED LEG), in page order. */
+function unitsOf(token: Token, unknown: string[]): string[] {
+  if (token.type === "space" || token.type === "hr" || token.type === "def" || token.type === "checkbox") return [];
+  if (token.type === "html") return [decodeReferences(token.raw.replace(HTML_COMMENT, "").replace(HTML_TAG, ""), unknown)];
+  if (token.type === "code") return [tokenText(token)];
+  if (isTableToken(token)) {
+    const header = token.header.map(cell => inlineText(cell.tokens, unknown)).join(" ");
+    return [header, ...token.rows.map(row => `${header} ${row.map(cell => inlineText(cell.tokens, unknown)).join(" ")}`)];
+  }
+  if (isListToken(token)) return token.items.flatMap(item => blockUnits(item.tokens, unknown));
+  if (token.type === "blockquote") return blockUnits(tokenChildren(token), unknown);
+  const children = tokenChildren(token);
+  return [children.length > 0 ? inlineText(children, unknown) : decodeReferences(tokenText(token), unknown)];
+}
+/** The units a run of block tokens renders, in order; a list after a paragraph whose last sentence is not ended by ".", "!" or "?" is read item by item after that lead-in. */
+function blockUnits(tokens: readonly Token[], unknown: string[]): string[] {
+  const out: string[] = [];
+  let leadIn = "";
+  for (const token of tokens) {
+    if (token.type === "space") continue;
+    const lead = leadIn;
+    const units =
+      lead !== "" && isListToken(token) ? token.items.flatMap(item => blockUnits(item.tokens, unknown).map(unit => `${lead} ${unit}`)) : unitsOf(token, unknown);
+    out.push(...units);
+    const last = token.type === "paragraph" || token.type === "text" ? (renderedSentences(units.join(" ")).at(-1) ?? "") : "";
+    leadIn = /[.!?]$/.test(last) ? "" : last;
+  }
+  return out;
+}
+/** RENDERED LEG: every rendered sentence of every file below `dir`, as [path, sentence]; each named reference a markdown page carries that the leg cannot decode goes to `unknown` as `<path>: <reference>`. */
+function renderedSentencesBelow(base: string, dir: string, unknown: string[]): (readonly [string, string])[] {
+  return filesBelow(base, dir).flatMap(path => {
+    const source = readFileSync(join(base, path), "utf8");
+    const missed: string[] = [];
+    const units = MARKDOWN_PAGE.test(path) ? blockUnits(marked.lexer(source), missed) : sentencesIn(source);
+    unknown.push(...missed.map(reference => `${path}: ${reference}`));
+    return units.flatMap(renderedSentences).map(sentence => [path, sentence] as const);
+  });
+}
+/** RENDERED LEG: every rendered sentence below `dir` that names one of the four leaves and a served word, as `<path>: <sentence>`. */
+const renderedServedLeafSentences = (base: string, dir: string, unknown: string[] = []): string[] =>
+  renderedSentencesBelow(base, dir, unknown)
+    .filter(([, sentence]) => servedLeaf(sentence))
+    .map(([path, sentence]) => `${path}: ${sentence}`);
 function plantFile(base: string, path: string, text: string): void {
   mkdirSync(dirname(join(base, path)), { recursive: true });
   writeFileSync(join(base, path), text);
@@ -383,7 +537,17 @@ describe(WORKER_SUITE, () => {
 describe(NEGATIVES_SUITE, () => {
   it("SCG-R15 negative: no docs/workbench sentence lists graph impact, graph candidate, optic list or view list as served", () => {
     expect(servedLeafSentences(ROOT, "docs/workbench")).toEqual([]);
-    // The reader is live on the real pages: a receipt that names a leaf is read, and quiet.
+    // The rendered leg (refusal #1 U2): no page renders a served sentence to a reader, and every named reference the
+    // live pages carry is one the leg decodes.
+    const unknown: string[] = [];
+    expect(renderedServedLeafSentences(ROOT, "docs/workbench", unknown)).toEqual([]);
+    expect(unknown).toEqual([]);
+    // Both legs are live on the real pages: every page renders a sentence, and a receipt that names a leaf is read, and quiet.
+    const rendered = renderedSentencesBelow(ROOT, "docs/workbench", []);
+    expect([...new Set(rendered.map(([path]) => path))]).toEqual(filesBelow(ROOT, "docs/workbench"));
+    expect(rendered.filter(([, sentence]) => NAMED_LEAF.test(sentence)).map(([path, sentence]) => `${path}: ${sentence}`)).toContain(
+      "docs/workbench/receipts/wb-a9l2.8.md: Leaf graph.impact: reads (registry.py:880)",
+    );
     const named = filesBelow(ROOT, "docs/workbench").filter(path => sentencesIn(readFileSync(join(ROOT, path), "utf8")).some(sentence => NAMED_LEAF.test(sentence)));
     expect(named).toContain("docs/workbench/receipts/wb-a9l2.8.md");
     const base = plantRoot("scg-r15-served-leaf-");
@@ -396,6 +560,123 @@ describe(NEGATIVES_SUITE, () => {
       "docs/b.md: Here graph.candidate.create is served by this build.",
       "docs/c.md: The view list leaf serves rows.",
       "docs/c.md: Optic-list serving is next.",
+    ]);
+  });
+
+  it("SCG-R15 negative, rendered leg (refusal #1 U2): a served sentence reds as a reader sees it, whatever its white space, inline markup, references or structure", () => {
+    const base = plantRoot("scg-r15-rendered-leaf-");
+    const fullwidth = (word: string): string => [...word].map(letter => at((letter.codePointAt(0) ?? 0) + 0xfee0)).join("");
+    // Each plant needs one reading of the leg to red (named in its path); the source leg misses all but the noted ones.
+    plantFile(base, "docs/db.md", "The rf graph impact leaf is served by this build.\n");
+    plantFile(base, "docs/db2.md", "The rf graph  impact leaf is served by this build.\n");
+    plantFile(base, "docs/db3.md", "The rf graph **impact** leaf is served by this build.\n");
+    plantFile(base, "docs/e1-references.md", "The rf graph&nbsp;candidate leaf is ser<!-- x -->ved. The rf graph&#46;impact leaf is served.\n");
+    plantFile(base, "docs/e10-controls.md", `The rf graph ${at(0x7)} impact leaf is served.\n`);
+    plantFile(base, "docs/e11-marks.md", `The rf graph impact leaf is se${at(0x301)}rved.\n`);
+    plantFile(base, "docs/e12-quote.md", "> The rf optic list leaf is served.\n");
+    plantFile(base, "docs/e13-list.md", "- The rf view list leaf is served.\n");
+    plantFile(base, "docs/e14-heading.md", "## The rf graph candidate leaf is served\n");
+    plantFile(base, "docs/e15-open-lead-in.md", "The leaves this build serves\n\n- optic list\n");
+    plantFile(base, "docs/e16-soft-wrap.md", "The rf graph\nimpact leaf is served.\n");
+    plantFile(base, "docs/e17-named.md", "The rf graph&lowbar;impact, optic&period;list, view&hyphen;list and graph&ensp;candidate leaves are served.\n");
+    plantFile(base, "docs/e2-escapes.md", "The rf optic\\_list leaf **serv**es rows.\n");
+    plantFile(base, "docs/e3-link.md", `The [rf view${at(0x200b)} list](https://example.invalid/a) leaf is served.\n`);
+    plantFile(base, "docs/e4-break.md", "The rf graph  \nimpact leaf is served.\n");
+    plantFile(base, "docs/e5-table.md", "| Served leaf | Notes |\n| --- | --- |\n| graph&#46;impact | slice 17 |\n");
+    plantFile(base, "docs/e6-lead-in.md", "The leaves this build serves:\n\n- graph candidate\n- view list\n");
+    plantFile(base, "docs/e7-fold.md", `The rf ${fullwidth("graph")}${at(0x2011)}impact leaf is served.\n`);
+    plantFile(base, "docs/e8-html.md", "<div>\nThe rf view list leaf is served.\n</div>\n");
+    plantFile(base, "docs/e9-code.md", "```text\nrf graph impact: served\n```\n");
+    plantFile(base, "docs/notes.txt", "The rf graph  impact leaf is served.\n");
+    // Quiet for the rendered leg: a destination or a comment a reader never sees, inline, inside an HTML block or left
+    // unclosed there (the source leg flags all four), a served word in another sentence, and a named reference the leg
+    // cannot decode, which it records instead.
+    plantFile(base, "docs/q1-destination.md", "The [preview](https://example.invalid/graph-impact) is served.\n");
+    plantFile(base, "docs/q2-comment.md", "Text. <!-- The rf graph impact leaf is served. -->\n");
+    plantFile(base, "docs/q3-apart.md", "rf graph impact refuses with RF_USAGE_NOT_IMPLEMENTED. The preview is served.\n");
+    plantFile(base, "docs/q4-unknown.md", "The rf graph&rarr;impact leaf is served.\n");
+    plantFile(base, "docs/q5-block-comment.md", "<div>\n<!-- The rf graph impact leaf is served. -->\n</div>\n");
+    plantFile(base, "docs/q6-unclosed-comment.md", "<div>\n<!-- The rf graph impact leaf is served.\n</div>\n");
+    const unknown: string[] = [];
+    expect(renderedServedLeafSentences(base, "docs", unknown)).toEqual([
+      "docs/db.md: The rf graph impact leaf is served by this build.",
+      "docs/db2.md: The rf graph impact leaf is served by this build.",
+      "docs/db3.md: The rf graph impact leaf is served by this build.",
+      "docs/e1-references.md: The rf graph candidate leaf is served.",
+      "docs/e1-references.md: The rf graph.impact leaf is served.",
+      "docs/e10-controls.md: The rf graph impact leaf is served.",
+      "docs/e11-marks.md: The rf graph impact leaf is served.",
+      "docs/e12-quote.md: The rf optic list leaf is served.",
+      "docs/e13-list.md: The rf view list leaf is served.",
+      "docs/e14-heading.md: The rf graph candidate leaf is served",
+      "docs/e15-open-lead-in.md: The leaves this build serves optic list",
+      "docs/e16-soft-wrap.md: The rf graph impact leaf is served.",
+      "docs/e17-named.md: The rf graph_impact, optic.list, view-list and graph candidate leaves are served.",
+      "docs/e2-escapes.md: The rf optic_list leaf serves rows.",
+      "docs/e3-link.md: The rf view list leaf is served.",
+      "docs/e4-break.md: The rf graph impact leaf is served.",
+      "docs/e5-table.md: Served leaf Notes graph.impact slice 17",
+      "docs/e6-lead-in.md: The leaves this build serves: graph candidate",
+      "docs/e6-lead-in.md: The leaves this build serves: view list",
+      "docs/e7-fold.md: The rf graph-impact leaf is served.",
+      "docs/e8-html.md: The rf view list leaf is served.",
+      "docs/e9-code.md: rf graph impact: served",
+      "docs/notes.txt: The rf graph impact leaf is served.",
+    ]);
+    expect(unknown).toEqual(["docs/q4-unknown.md: &rarr;"]);
+    // The source leg reads the same plants: it misses DB2, DB3 and every rendered-only shape, and flags what a reader never sees.
+    expect(servedLeafSentences(base, "docs")).toEqual([
+      "docs/db.md: The rf graph impact leaf is served by this build.",
+      "docs/e12-quote.md: > The rf optic list leaf is served.",
+      "docs/e13-list.md: - The rf view list leaf is served.",
+      "docs/e14-heading.md: ## The rf graph candidate leaf is served",
+      "docs/e16-soft-wrap.md: The rf graph impact leaf is served.",
+      "docs/e4-break.md: The rf graph impact leaf is served.",
+      "docs/e8-html.md: <div> The rf view list leaf is served.",
+      "docs/e9-code.md: ```text rf graph impact: served",
+      "docs/q1-destination.md: The [preview](https://example.invalid/graph-impact) is served.",
+      "docs/q2-comment.md: <!-- The rf graph impact leaf is served.",
+      "docs/q5-block-comment.md: <div> <!-- The rf graph impact leaf is served.",
+      "docs/q6-unclosed-comment.md: <div> <!-- The rf graph impact leaf is served.",
+    ]);
+  });
+
+  it("SCG-R15 negative, residuals: R-ANAPHORA, R-HEADING-SCOPE, R-PARAPHRASE and R-SYNONYM are read and stay quiet, and each named cure flags its quiet row", () => {
+    const base = plantRoot("scg-r15-leaf-residual-");
+    // [family, page path, page text, the page's rendered sentences]
+    const QUIET: ReadonlyArray<readonly [string, string, string, readonly string[]]> = [
+      ["R-ANAPHORA", "docs/r-anaphora.md", "The rf graph impact leaf ships in this build. It is served.", ["The rf graph impact leaf ships in this build.", "It is served."]],
+      ["R-HEADING-SCOPE", "docs/r-heading-scope.md", "## Served leaves\n\n- graph impact", ["Served leaves", "graph impact"]],
+      ["R-PARAPHRASE", "docs/r-paraphrase.md", "The impact leaf of rf graph is served.", ["The impact leaf of rf graph is served."]],
+      ["R-SYNONYM", "docs/r-synonym.md", "The rf graph impact leaf is available in this build.", ["The rf graph impact leaf is available in this build."]],
+    ];
+    for (const [, path, page] of QUIET) plantFile(base, path, `${page}\n`);
+    plantFile(base, "docs/control.md", "The rf graph impact leaf is served.\n");
+    // Each quiet row's page is read (it renders exactly its pinned sentences), and only the control reds: the families stay quiet.
+    const read = renderedSentencesBelow(base, "docs", []);
+    const sentencesOfPage = (path: string): string[] => read.filter(([page]) => page === path).map(([, sentence]) => sentence);
+    expect(QUIET.map(([, path]) => sentencesOfPage(path))).toEqual(QUIET.map(([, , , sentences]) => [...sentences]));
+    expect(renderedServedLeafSentences(base, "docs")).toEqual(["docs/control.md: The rf graph impact leaf is served."]);
+    expect(servedLeafSentences(base, "docs")).toEqual(["docs/control.md: The rf graph impact leaf is served."]);
+    // Each named cure, read over its own quiet row's rendered sentences, flags it: the quiet input is a member of its family.
+    const cures: Readonly<Record<string, (sentences: readonly string[]) => boolean>> = {
+      "R-ANAPHORA": sentences => sentences.some((sentence, index) => index > 0 && /^(?:It|This|That)\b/.test(sentence) && servedLeaf(`${sentences[index - 1]} ${sentence}`)),
+      // The heading is the page's first rendered sentence; every later unit of its section is read after it.
+      "R-HEADING-SCOPE": sentences => sentences.slice(1).some(sentence => servedLeaf(`${sentences[0]} ${sentence}`)),
+      "R-PARAPHRASE": sentences => sentences.some(sentence => /\bimpact\b[^,;:]*\bgraph\b/i.test(sentence) && SERVED_WORD.test(sentence)),
+      "R-SYNONYM": sentences => sentences.some(sentence => NAMED_LEAF.test(sentence) && /\b(?:available|implemented)\b/i.test(sentence)),
+    };
+    expect(QUIET.map(([family, path]) => `${family}:${cures[family]?.(sentencesOfPage(path)) === true}`)).toEqual([
+      "R-ANAPHORA:true",
+      "R-HEADING-SCOPE:true",
+      "R-PARAPHRASE:true",
+      "R-SYNONYM:true",
+    ]);
+    expect(QUIET.map(([family, path]) => `${family}:${sentencesOfPage(path).some(servedLeaf)}`)).toEqual([
+      "R-ANAPHORA:false",
+      "R-HEADING-SCOPE:false",
+      "R-PARAPHRASE:false",
+      "R-SYNONYM:false",
     ]);
   });
 });

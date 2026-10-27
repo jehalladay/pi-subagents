@@ -18,9 +18,15 @@
  * sentences must be exactly the rows' quotes, so a row removed from TABLE and from every literal here still reds on the page),
  * the PINS by the out-of-file roster test/fixtures/docs19-scg-worker-role-roster.json (TABLE must equal it row for row and pin
  * for pin, so a pin removed or swapped here and in every literal here still reds on the roster), and FROZEN_SHAPE pins the
- * row/pin shape in this file. Scope: this one section of docs/19; the page's other sections and the bead's two negatives in
- * force now (no rf skill copy tracked, no docs/workbench sentence listing the four rf leaves as served) are measured by their
- * own cases and bound to no row here, except that row R3's second clause is the skill-copy case.
+ * row/pin shape in this file. JUDGED SUBSET (standing rule 16, refusal #1 U1): the AC2 it.each runs PINNED, the rows whose
+ * status is pinned; FROZEN_JUDGED freezes that subset by id and pin count, and the out-of-file roster's own pinned rows must
+ * equal it, so a filter, a slice or a hand-edited PINNED that drops a judged row reds. EACH-LIVENESS: the AC2 call site must
+ * register exactly one run-mode case per frozen judged row, in order and on the judging budget (read from this file's own
+ * collected tasks), and every one must reach its last assertion this run (completed), so a narrowed call site, a skipped or
+ * filtered AC2 case, or an AC2 body that returns early reds. Scope: this one section of docs/19; the page's other sections
+ * and the bead's two negatives in force now (no rf skill copy tracked, no docs/workbench sentence listing the four rf leaves
+ * as served) are measured by their own cases and bound to no row here, except that row R3's second clause is the
+ * skill-copy case.
  */
 import { readFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
@@ -164,6 +170,12 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
 
 /** Standing rule 16: the table's row/pin shape, frozen at the cut. */
 const FROZEN_SHAPE: readonly string[] = ["R1:1", "R2:0", "R3:2", "R4:2", "R5:1", "R6:1", "R7:1", "R8:1", "R9:1", "R10:1"];
+/** Standing rule 16 (refusal #1 U1): the judged subset the AC2 it.each runs, by row id and pin count, frozen at the cut. */
+const FROZEN_JUDGED: readonly string[] = ["R1:1", "R3:2", "R4:2", "R5:1", "R6:1", "R7:1", "R8:1", "R9:1", "R10:1"];
+/** The title the AC2 it.each registers for a judged row: vitest renders a string $id quoted. */
+const AC2_CASE = (id: string): string => `AC2 row '${id}': every pinned case is collected once, passed and asserting in the default gate's own report`;
+/** EACH-LIVENESS: the id of every judged row whose AC2 case reached its last assertion this run, in run order. */
+const completed = new Set<string>();
 
 /** The section's settings file, exactly as its json fence shows it. */
 const SETTINGS_BLOCK = `{
@@ -271,6 +283,20 @@ describe("wb-973.15 docs/workbench/19 § Claude role as a swarm context graph wo
     expect(rows).toEqual(TABLE.map(rosterView));
   });
 
+  it("AC1 (rule 16 judged subset, U1): the AC2 it.each runs exactly the frozen judged rows, and they are the roster's pinned rows", () => {
+    expect(PINNED.map(row => `${row.id}:${row.pins.length}`), "the set the AC2 it.each runs, by row id and pin count").toEqual(FROZEN_JUDGED);
+    expect(PINNED.every(row => row.status === "pinned" && row.pins.length > 0)).toBe(true);
+    const roster: unknown = JSON.parse(readRepo(ROSTER_FILE));
+    const rows: unknown = roster !== null && typeof roster === "object" && "rows" in roster ? roster.rows : undefined;
+    const rosterPinned = Array.isArray(rows)
+      ? rows.flatMap((row: unknown) => {
+          if (row === null || typeof row !== "object" || !("id" in row) || !("status" in row) || !("pins" in row)) return [];
+          return row.status === "pinned" && Array.isArray(row.pins) ? [`${String(row.id)}:${row.pins.length}`] : [];
+        })
+      : [];
+    expect(rosterPinned, "the out-of-file roster's pinned rows, the anchor outside this file").toEqual(FROZEN_JUDGED);
+  });
+
   it("AC3: the unpinned rows are listed so none is ever counted as passed, each naming its reason", () => {
     const unpinned = TABLE.filter((row): row is UnpinnedRow => row.status === "unpinned");
     expect(unpinned.map(row => row.id)).toEqual(["R2"]);
@@ -278,10 +304,28 @@ describe("wb-973.15 docs/workbench/19 § Claude role as a swarm context graph wo
   });
 
   it.each(PINNED)("AC2 row $id: every pinned case is collected once, passed and asserting in the default gate's own report", row => {
+    expect(row.pins.length, `row ${row.id}: an AC2 case judges a row with pins, never an empty one vacuously`).toBeGreaterThan(0);
     const verdicts = judge(REPORT, row.pins.map(casePin));
     expect(verdicts).toHaveLength(row.pins.length);
     expect(failures(row, verdicts)).toEqual([]);
+    expect(verdicts.map(verdict => verdict.code)).toEqual(row.pins.map(() => "ok"));
+    completed.add(row.id);
   }, JUDGE_BUDGET_MS);
+
+  it("AC2 each-liveness (rule 16, U1): the it.each registers one run-mode AC2 case per frozen judged row, in order and on the judging budget, and every one reached its last assertion", ({ task }) => {
+    const registered: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test" && child.name.startsWith("AC2 row ")) registered.push(`${child.name}|${child.mode}|${child.timeout}`);
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    const ids = FROZEN_JUDGED.map(entry => entry.slice(0, entry.indexOf(":")));
+    expect(JUDGE_BUDGET_MS, "the judging budget is above vitest's default test timeout").toBeGreaterThan(5_000);
+    expect(registered, "the AC2 cases this file registers, by title, mode and timeout").toEqual(ids.map(id => `${AC2_CASE(id)}|run|${JUDGE_BUDGET_MS}`));
+    expect([...completed], "the AC2 cases that reached their last assertion this run").toEqual(ids);
+  });
 
   it("AC4: the leg judges the gate's own report and executes nothing: it imports judge, never judgePins, and loads no module at runtime", () => {
     const own = sourceStructure(ROOT, SELF);
