@@ -2140,6 +2140,87 @@
      }
     },
     {
+     "id": "MS28",
+     "witness": {
+      "digest": "6e5f54f0e58f9089",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 7
+      }
+     }
+    },
+    {
+     "id": "MS29",
+     "witness": {
+      "digest": "42b8b421f09ee856",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 4
+      }
+     }
+    },
+    {
+     "id": "MS30",
+     "witness": {
+      "digest": "5b8d756eedc2d33e",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 4
+      }
+     }
+    },
+    {
+     "id": "MS31",
+     "witness": {
+      "digest": "48692f36d5842412",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 3
+      }
+     }
+    },
+    {
+     "id": "MS32",
+     "witness": {
+      "digest": "9481fb5cb19c38d9",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 7
+      }
+     }
+    },
+    {
+     "id": "MS33",
+     "witness": {
+      "digest": "3bba903f63b22a0b",
+      "outcome": {
+       "showArgv": [
+        [],
+        []
+       ],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
      "id": "MG1",
      "witness": {
       "build": "0.1.836",
@@ -2222,7 +2303,7 @@
   },
   {
    "id": "R",
-   "label": "the named residuals R1-R13 keep their pinned readings",
+   "label": "the named residuals R1-R15 keep their pinned readings",
    "pins": [
     {
      "id": "R1",
@@ -2305,7 +2386,7 @@
     {
      "id": "R8",
      "witness": {
-      "digest": "e3b6b7a126df1289",
+      "digest": "75dc6d617d486c97",
       "outcome": {
        "showArgv": [],
        "renderArgv": 0,
@@ -2352,7 +2433,7 @@
     {
      "id": "R11",
      "witness": {
-      "digest": "c70290fceadb3413",
+      "digest": "2ebfad8a729ab938",
       "outcome": {
        "showArgv": [],
        "renderArgv": 0,
@@ -2386,7 +2467,34 @@
       ],
       "earlyReturnB3": [
        "reached B3:2, pinned B3:4"
-      ]
+      ],
+      "walkKeptT4": []
+     }
+    },
+    {
+     "id": "R14",
+     "witness": {
+      "digest": "e484d52a6888e025",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "R15",
+     "witness": {
+      "digest": "19a39ec07fa2555e",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
      }
     }
    ]
@@ -2405,7 +2513,9 @@
   "R10": "COMPOSED-FRAGMENT",
   "R11": "UNRESOLVED-LOOKUP",
   "R12": "SELECTION-PARAMETER",
-  "R13": "COUNT-MATCHED"
+  "R13": "COUNT-MATCHED",
+  "R14": "SELECTION-COMPOSED",
+  "R15": "ASSIGNED-ARRAY-PATTERN"
  },
  "cures": {
   "G13": "MS8",
@@ -2429,7 +2539,23 @@
   "E-B2-ASSIGN": "MS25",
   "E-B2-REFLECT": "MS26",
   "E-B2-PARAM": "MS27",
-  "X-THIRD-COUNTMATCH-T4": "R13"
+  "X-THIRD-COUNTMATCH-T4": "R13",
+  "E01": "MS28",
+  "E05": "MS28",
+  "E03": "MS29",
+  "E04": "MS30",
+  "E02": "MS31",
+  "KS-B2-AWAIT": "MS32",
+  "KS-B2-ARRAY-LOOKUP": "MS32",
+  "KS-B2-OBJECT-LOOKUP": "MS32",
+  "P05": "MS33",
+  "E16": "R8",
+  "KS-LOOKUP-THIS-STATIC": "R11",
+  "KS-LOOKUP-NAMESPACE": "R11",
+  "KS-ENUM-SELF-REF": "R11",
+  "X-WK-T4": "R13",
+  "X-WK-A3": "R13",
+  "X-WK-B2": "R13"
  },
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster, the landed record, the follow-up's probes and the cases agree",
@@ -2491,6 +2617,12 @@
   "MS25",
   "MS26",
   "MS27",
+  "MS28",
+  "MS29",
+  "MS30",
+  "MS31",
+  "MS32",
+  "MS33",
   "MG1",
   "MG2",
   "R1",
@@ -2506,6 +2638,8 @@
   "R11",
   "R12",
   "R13",
+  "R14",
+  "R15",
   "the record: every registered test is in run mode and ran, every pin reached its end with its pinned assertion count, and every src-walk pin walked src"
  ],
  "reached": [
@@ -2567,6 +2701,12 @@
   "MS25:3",
   "MS26:3",
   "MS27:3",
+  "MS28:3",
+  "MS29:3",
+  "MS30:3",
+  "MS31:3",
+  "MS32:3",
+  "MS33:3",
   "MG1:3",
   "MG2:3",
   "R1:3",
@@ -2581,6 +2721,8 @@
   "R10:3",
   "R11:3",
   "R12:3",
-  "R13:3"
+  "R13:3",
+  "R14:3",
+  "R15:3"
  ]
 }
