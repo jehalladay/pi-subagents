@@ -87,7 +87,9 @@
  * test/workbench-rf-census-run-pins.census.ts judges this file's 18 titles in the census tier from the gate's own test report -
  * collected once, passed, asserting - with the titles frozen there; the record reads the task tree inline (no task handed to a call or
  * placed in a literal, which that judge cannot follow) and asserts ONCE, as its last statement, so an exit anywhere before that
- * assertion leaves the case without one (--expect.requireAssertions here, no-assertion there). Each outside anchor is read from its
+ * assertion leaves the case without one (--expect.requireAssertions here, no-assertion there). The run pin's own CENSUSES table is
+ * anchored HERE (wb-56od): the judged-set case reads that table back as a syntax tree and requires this file there exactly once, so
+ * a cut of this census from the tier reds in this file too. Each outside anchor is read from its
  * own line of the owner filing (wb-vu3i B3): the clauses from its Acceptance line, the quote pin from its Full statement and Quote
  * lines, the gating ids from its Gating line.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the whole judged set - every row's id, label and
@@ -133,6 +135,7 @@ import {
 } from "../src/workbench/providers/reactivefiber.js";
 import { type ReactiveFiberSeam, type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
 import { RECONCILE_EVIDENCE_READS } from "../src/workflow/reconcile.js";
+import { RUN_PIN_FILE, runPinnedFiles } from "./helpers/rf-census-run-pins.js";
 import { fullShapeRf } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
@@ -144,6 +147,8 @@ type JsonObject = { [key: string]: JsonValue };
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
 const ROSTER_PATH = join(HERE, "fixtures", "rf-federation-stamps-roster.json");
+/** This census, repository-relative: the file the census tier's run pin must name (wb-56od). */
+const SELF = relative(REPO, fileURLToPath(import.meta.url));
 /** The measured refusal of rf 0.1.832 (wb-a9l2.4's roster): the anchor the fixture's missing-blob diagnostic is held to. */
 const MEASURED_PATH = join(HERE, "fixtures", "rf-replay-refusal-echo-roster.json");
 const EXPORT_PATH = join(REPO, ".beads", "issues.jsonl");
@@ -1435,6 +1440,9 @@ describe("wb-o4h0.5 rf federation stamps census (RF-FEDERATED-WORKSPACES-R7, abs
     // Each outside anchor is read from its own line of the owner filing (wb-vu3i B3), never anywhere in the accumulating notes.
     expect(GATING_ARTIFACTS.filter(artifact => !noteLine(notes, "Gating: ").includes(artifact)), "every gating id on the filing's Gating line").toEqual([]);
     expect(["Full statement ", "Quote: "].filter(marker => !noteLine(notes, marker).includes(QUOTE_PIN)), "the quote pin on the filing's statement and quote lines").toEqual([]);
+    // The anchor outside the census tier's run pin (wb-56od): its CENSUSES table, read as a syntax tree, names this file exactly once,
+    // so a cut of this census from that table reds here, in the test tier, and not only there.
+    expect(runPinnedFiles(readFileSync(join(REPO, RUN_PIN_FILE), "utf8")).filter(file => file === SELF), `${RUN_PIN_FILE} names this census once`).toEqual([SELF]);
   });
 
   for (const row of ROWS) {

@@ -1,5 +1,5 @@
 {
-  "provenance": "wb-pfxo.6 census roster (test/workbench-rf-plan-prediction-census.test.ts). envelopes.plan, envelopes.committed and envelopes.preview are MEASURED on 2026-10-23 from the installed rf 0.1.832 (rf --json --version result.provenance.commit_id 2618c211be0dbbb74ba10e965e2d3d1f0fb5903e) in one private scratch workspace (jsonl backend), by the E1 recipe of new-feedback/2026-10-18-CORROBORATION-context-plan-answered-refresh-required-in-3-of-3-source-fed-pure-true-renders-that-reused-in-2-of-2-reruns-and-non-reusable-in-3-of-3-source-free-renders-so-no-graph-reaches-reuse-at-0-1-768.md (ReactiveFiberCLI 6a251bf73af5): rf init; rf component create pc1 --kind declarative; the manifest edited pure = false to pure = true; rf component add; rf component activate pc1; three committing rf context render --model claude-opus-5 --task 'probe plan reuse' calls, each followed by rf context plan RENDER --json; then one rf context render ... --no-commit. committed is render 2, the plan is rf context plan of render 2, and preview is the noncommitted render measured after that plan. Only the scratch workspace root was rewritten to /fixture/rf-workspace (one occurrence per envelope, workspace.root). wb-nrbk (2026-10-24, base 9a9f6b6, re-measured identical at base cbe3588): the walkAgreesWithGit witness fields and reached (each pin's assertion count at the end of its case, in row order) are produced by the census itself; the envelopes are unchanged.",
+  "provenance": "wb-pfxo.6 census roster (test/workbench-rf-plan-prediction-census.test.ts). envelopes.plan, envelopes.committed and envelopes.preview are MEASURED on 2026-10-23 from the installed rf 0.1.832 (rf --json --version result.provenance.commit_id 2618c211be0dbbb74ba10e965e2d3d1f0fb5903e) in one private scratch workspace (jsonl backend), by the E1 recipe of new-feedback/2026-10-18-CORROBORATION-context-plan-answered-refresh-required-in-3-of-3-source-fed-pure-true-renders-that-reused-in-2-of-2-reruns-and-non-reusable-in-3-of-3-source-free-renders-so-no-graph-reaches-reuse-at-0-1-768.md (ReactiveFiberCLI 6a251bf73af5): rf init; rf component create pc1 --kind declarative; the manifest edited pure = false to pure = true; rf component add; rf component activate pc1; three committing rf context render --model claude-opus-5 --task 'probe plan reuse' calls, each followed by rf context plan RENDER --json; then one rf context render ... --no-commit. committed is render 2, the plan is rf context plan of render 2, and preview is the noncommitted render measured after that plan. Only the scratch workspace root was rewritten to /fixture/rf-workspace (one occurrence per envelope, workspace.root). wb-nrbk (2026-10-24, base 9a9f6b6, re-measured identical at base cbe3588): the walkAgreesWithGit witness fields and reached (each pin's assertion count at the end of its case, in row order) are produced by the census itself; the envelopes are unchanged. wb-b1rq (2026-10-25, base 869bdf9): the unjudged witness fields (A1, D1, D2, E2, E3: each judge's per-file record held to git hash-object's reading of the listed files), the M7 controls and the new M4, M5, M6, Q1 and Q2 rows are produced by the census itself; the envelopes are unchanged.",
   "rfVersion": "0.1.832",
   "rfCommit": "2618c211be0dbbb74ba10e965e2d3d1f0fb5903e",
   "programPin": "6a251bf73af57c3a703caf6892dfe3015e06a481",
@@ -698,6 +698,7 @@
           "witness": {
             "srcFloorMet": true,
             "walkAgreesWithGit": true,
+            "unjudged": [],
             "renderArgvSeen": true,
             "argv": [],
             "literals": [],
@@ -935,6 +936,7 @@
             "anchorRead": true,
             "executedSentences": true,
             "walkAgreesWithGit": true,
+            "unjudged": [],
             "hits": []
           }
         },
@@ -943,6 +945,7 @@
           "witness": {
             "floorMet": true,
             "walkAgreesWithGit": true,
+            "unjudged": [],
             "allowed": [],
             "hits": []
           }
@@ -983,6 +986,7 @@
                 "root": "src",
                 "floorMet": true,
                 "walkAgreesWithGit": true,
+                "unjudged": [],
                 "anchorRead": true,
                 "respelled": []
               },
@@ -990,6 +994,7 @@
                 "root": "qa",
                 "floorMet": true,
                 "walkAgreesWithGit": true,
+                "unjudged": [],
                 "anchorRead": true,
                 "respelled": []
               }
@@ -1007,11 +1012,13 @@
               {
                 "root": "src",
                 "walkAgreesWithGit": true,
+                "unjudged": [],
                 "producer": []
               },
               {
                 "root": "qa",
                 "walkAgreesWithGit": true,
+                "unjudged": [],
                 "producer": []
               }
             ]
@@ -1021,7 +1028,7 @@
     },
     {
       "id": "M",
-      "label": "the matchers rows A to E read: M1-M6 the spellings each must catch and pass, Q1-Q6 the pinned quiet rows of the named residuals",
+      "label": "the matchers rows A to E read: M1-M6 the spellings each must catch and pass, M7 the judged-record anchor naming what a hollow judge left, Q1-Q6 the pinned quiet rows of the named residuals",
       "pins": [
         {
           "id": "M1",
@@ -1268,6 +1275,62 @@
               "hit": true
             },
             {
+              "text": "rf\u02bcs plan named the row.",
+              "hit": true
+            },
+            {
+              "text": "rf\u2018s plan named the row.",
+              "hit": true
+            },
+            {
+              "text": "rf\u201bs plan named the row.",
+              "hit": true
+            },
+            {
+              "text": "rf\u2032s plan named the row.",
+              "hit": true
+            },
+            {
+              "text": "rf\u02b9s plan named the row.",
+              "hit": true
+            },
+            {
+              "text": "rf\u02bbs plan named the row.",
+              "hit": true
+            },
+            {
+              "text": "rf\u02bds plan named the row.",
+              "hit": true
+            },
+            {
+              "text": "rf`s plan named the row.",
+              "hit": true
+            },
+            {
+              "text": "rf\u00b4s plan named the row.",
+              "hit": true
+            },
+            {
+              "text": "rf\uff07s plan named the row.",
+              "hit": true
+            },
+            {
+              "text": "rf's plans named the row.",
+              "hit": true
+            },
+            {
+              "text": "The ReactiveFiber's plans named the rows.",
+              "hit": true
+            },
+            {
+              "text": "The rf context plans named the rows.",
+              "hit": true
+            },
+            {
+              "text": "`rf`'s plan named the row.",
+              "hit": true
+            },
+            {
               "text": "The implementation plan lists the beads.",
               "hit": false
             },
@@ -1325,6 +1388,14 @@
               "hit": true
             },
             {
+              "text": "The executor\u2018s output was reused.",
+              "hit": true
+            },
+            {
+              "text": "The `executor`'s output was reused.",
+              "hit": true
+            },
+            {
               "text": "A resume reuses the transcript.",
               "hit": false
             },
@@ -1358,6 +1429,18 @@
               "hit": true
             },
             {
+              "text": "rf\u2018s plan matched what the executor reused.",
+              "hit": true
+            },
+            {
+              "text": "rf's plans matched what the executor reused.",
+              "hit": true
+            },
+            {
+              "text": "`rf`'s plan matched what the executor reused.",
+              "hit": true
+            },
+            {
               "text": "The plan row said refresh_required.",
               "hit": false
             },
@@ -1368,6 +1451,23 @@
           ]
         },
         {
+          "id": "M7",
+          "witness": {
+            "full": {
+              "modules": [],
+              "code": [],
+              "pages": []
+            },
+            "hollows": {
+              "workflowScan": true,
+              "workflowText": true,
+              "uiViews": true,
+              "uiLiterals": true,
+              "matrixSentences": true
+            }
+          }
+        },
+        {
           "id": "Q1",
           "witness": {
             "letter": {
@@ -1375,6 +1475,10 @@
               "family": 0
             },
             "separator": {
+              "planTerm": false,
+              "family": 0
+            },
+            "possessive": {
               "planTerm": false,
               "family": 0
             }
@@ -1388,6 +1492,10 @@
               "d2": false
             },
             "otherPossessor": {
+              "d1": false,
+              "d2": false
+            },
+            "interposed": {
               "d1": false,
               "d2": false
             }
@@ -1480,6 +1588,7 @@
     "M4",
     "M5",
     "M6",
+    "M7",
     "Q1",
     "Q2",
     "Q3",
@@ -1489,7 +1598,7 @@
     "registration: every test of this file is registered once, in roster order, in run mode, not inverted, and ran; every pin reached its end with its pinned assertion count"
   ],
   "reached": [
-    "A1:6",
+    "A1:7",
     "A2:6",
     "A3:6",
     "A4:4",
@@ -1502,17 +1611,18 @@
     "C4:4",
     "C5:5",
     "C6:5",
-    "D1:5",
-    "D2:6",
+    "D1:6",
+    "D2:7",
     "E1:6",
-    "E2:10",
-    "E3:8",
+    "E2:12",
+    "E3:10",
     "M1:3",
     "M2:3",
     "M3:5",
     "M4:3",
     "M5:3",
     "M6:3",
+    "M7:4",
     "Q1:3",
     "Q2:3",
     "Q3:3",

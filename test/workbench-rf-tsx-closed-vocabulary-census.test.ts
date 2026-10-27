@@ -129,7 +129,17 @@ type JsonObject = { [key: string]: JsonValue };
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
-const ROOT = process.cwd();
+/**
+ * The workspace root both fixtures and every seam are told (wb-j5y6): a census identity, never the checkout's path. A1 word-scans
+ * every key and string of each fixture, and a checkout's name is a host input like the clock: land-prep checks each try out at
+ * mktemp -d /tmp/fw-landprep-<bead>-XXXX, landing 373's try 1 drew the suffix edUi, whose case boundary splits off the reader
+ * word ui, and A1 found it at $.workspace.root of validRf and fullShapeRf, while try 2 (suffix vBqv, the same tree) read quiet.
+ * It holds no "/", so no checkout's absolute path is a substring of it; the roster holds it (scan.readingRoot).
+ */
+const ROOT = "rf-tsx-closed-vocabulary-census-workspace";
+/** The checkout this file runs in, both spellings (the launch directory and this file's repository): read only to show that no
+ * fixture string spells either (A1). */
+const CHECKOUTS: readonly string[] = [...new Set([process.cwd(), REPO])];
 const ROSTER_FILE = "test/fixtures/rf-tsx-closed-vocabulary-roster.json";
 const BEAD_EXPORT = ".beads/issues.jsonl";
 const BEAD = "wb-if7q.2";
@@ -415,6 +425,7 @@ function scanConstants(): JsonValue {
     closure: CLOSURE,
     outsideReader: OUTSIDE_READER,
     minimalFixture: MINIMAL_FIXTURE,
+    readingRoot: ROOT,
   });
 }
 
@@ -461,7 +472,8 @@ function tiles(body: string, quotes: readonly string[]): { covered: boolean; gap
 // ----------------------------------------------------------------------------------------------------------------- the fixtures
 
 /** Evaluates the literal tree of one module-local declaration: object, array, string, template, number, boolean and null literals,
- * module-local const references, `'x'.repeat(n)` and `process.cwd()` (the reading root). Anything else throws, naming the node. */
+ * module-local const references, `'x'.repeat(n)` and `process.cwd()` (read as ROOT, the census's reading root, never the checkout's
+ * path). Anything else throws, naming the node. */
 function evaluateDeclaration(file: string, name: string): JsonValue {
   const source = ts.createSourceFile(file, readFileSync(join(REPO, file), "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const declarations = new Map<string, ts.Expression>();
@@ -751,6 +763,15 @@ function uiFindings(value: JsonValue, path = "$"): string[] {
   if (Array.isArray(value)) return value.flatMap((item, index) => uiFindings(item, `${path}[${index}]`));
   if (value === null || typeof value !== "object") return [];
   return Object.entries(value).flatMap(([key, item]) => [...(readerWordHits(key).length + uiPhraseHits(key).length > 0 ? [`${path}.${key}`] : []), ...uiFindings(item, `${path}.${key}`)]);
+}
+
+/** Every key and string of a JSON value spelling the checkout's path, by path (wb-j5y6: what no word scan may read). */
+function checkoutPathsOf(value: JsonValue, path = "$"): string[] {
+  const spells = (text: string): boolean => CHECKOUTS.some(checkout => text.includes(checkout));
+  if (typeof value === "string") return spells(value) ? [path] : [];
+  if (Array.isArray(value)) return value.flatMap((item, index) => checkoutPathsOf(item, `${path}[${index}]`));
+  if (value === null || typeof value !== "object") return [];
+  return Object.entries(value).flatMap(([key, item]) => [...(spells(key) ? [`${path}.${key}`] : []), ...checkoutPathsOf(item, `${path}.${key}`)]);
 }
 
 /** One module's identifiers and literal texts (string, template parts, regular expressions): what a reader can match or read. */
@@ -1222,7 +1243,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
     const rf = installStandIn();
     const out: JsonObject = {};
+    const hosted: string[] = [];
     for (const fixture of fixtures()) {
+      hosted.push(...checkoutPathsOf(fixture.envelope).map(path => `${fixture.name} ${path}`));
       const output = objectOf(resultOf(fixture.envelope).output, "result.output");
       const provided = await provide(rf, fixture.envelope, 0);
       const observed = observe(provided.reading ?? readingOf(fixture.envelope));
@@ -1234,6 +1257,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         adapter: observed.topology === null ? refusalText(observed.refusal) : "projected",
       };
     }
+    expect(hosted, "no fixture string spells the checkout's path: both fixtures read the census's own root").toStrictEqual([]);
     return done("A1", out);
   },
   A2: async () => {
