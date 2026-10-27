@@ -1,6 +1,6 @@
 {
   "bead": "wb-4nut.3",
-  "basis": "The out-of-file roster of test/workbench-tsx-resource-closure-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the scan constants, the fixture records and the residual families, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read-only on the local ReactiveFiberTSXSDK checkout (no fetch) at 76bbbffd9d4a419f972d6fefc8b7f9dc524df8df, its origin/main at its last fetch: kinds and statuses = git show <sha>:src/resources/types.ts lines 40-47 and 75; resourceExports = every `export const|type|interface|function` declaration name of that file spelling Resource or RESOURCE, in file order; apiPin.matchesAtPin = git ls-tree -r --name-only <sha> | grep -i -E '(^|/)API-PIN\\.md$|harness2-api-pin' (none); queryViewSrcFiles = git grep -l QueryView <sha> -- src (none); citedBlob is docs/programs/harness2-reactive-evolution-2026-10-20/BEADS-2026-10-21.md, whose line 28 holds the quote. fixtures are constructed records in the producer's ResourceRequest and ResourceEntry shapes (types.ts:62-73 and :78-88); the out-of-closure ones carry the acceptance's kind query, kind QueryView and status UNKNOWN, the in-closure ones a kind and a status of the tuples. wb-nbp3 (R694 follow-up of wb-4nut.3, landing 305): every pin carries quote (its slice of the owner text its row carries: the title's gated trigger or an acceptance clause after its marker; a unit's pins tile it) and sources (the live sources its case consults under the measurement guard); producer.typesBase64 vendors src/resources/types.ts at the pin verbatim (git show <typesBlob>, base64-encoded as the landed producer excerpts are, so no Pi text census reads the producer's prose as Pi text; its git blob id is typesBlob, whose 12-hex prefix the wb-4nut.3 bead row's PRODUCER FACTS line measured), so resourceExports and the kinds and statuses declarations are re-read from the producer's bytes; quietRows pins the quiet readings of the residuals R-RETILED and R-IDLE-READ.",
+  "basis": "The out-of-file roster of test/workbench-tsx-resource-closure-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the scan constants, the fixture records and the residual families, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read-only on the local ReactiveFiberTSXSDK checkout (no fetch) at 76bbbffd9d4a419f972d6fefc8b7f9dc524df8df, its origin/main at its last fetch: kinds and statuses = git show <sha>:src/resources/types.ts lines 40-47 and 75; resourceExports = every `export const|type|interface|function` declaration name of that file spelling Resource or RESOURCE, in file order; apiPin.matchesAtPin = git ls-tree -r --name-only <sha> | grep -i -E '(^|/)API-PIN\\.md$|harness2-api-pin' (none); queryViewSrcFiles = git grep -l QueryView <sha> -- src (none); citedBlob is docs/programs/harness2-reactive-evolution-2026-10-20/BEADS-2026-10-21.md, whose line 28 holds the quote. fixtures are constructed records in the producer's ResourceRequest and ResourceEntry shapes (types.ts:62-73 and :78-88); the out-of-closure ones carry the acceptance's kind query, kind QueryView and status UNKNOWN, the in-closure ones a kind and a status of the tuples. wb-nbp3 (R694 follow-up of wb-4nut.3, landing 305): every pin carries quote (its slice of the owner text its row carries: the title's gated trigger or an acceptance clause after its marker; a unit's pins tile it) and sources (the live sources its case consults under the measurement guard); producer.typesBase64 vendors src/resources/types.ts at the pin verbatim (git show <typesBlob>, base64-encoded as the landed producer excerpts are, so no Pi text census reads the producer's prose as Pi text; its git blob id is typesBlob, whose 12-hex prefix the wb-4nut.3 bead row's PRODUCER FACTS line measured), so resourceExports and the kinds and statuses declarations are re-read from the producer's bytes; quietRows pins the quiet readings of the residuals R-RETILED and R-IDLE-READ. wb-blzr (R694 follow-up of wb-nbp3, landing 396): every parsed pin's witness is an accessor that records its read against the running case (F1); guardControls pins each guard and pin-anchor judge arm firing on a planted case or quote set (F5: witness reads through rosterWitness and through ROSTER.rows, an unconsulted and an undeclared source, two quotes exchanged between rows, a dropped pin of a multi-pin and of a single-pin unit); the producer-export filter is cross-checked against the exports spelling the directory stem the bead row's gating sentence names (F2); every pin declares at least one source (F4); B2 carries the divergence control divergent (F6); quietRows adds retiledGap (R-RETILED widened, F3), reread (R-REREAD, F1), narrowed (R-SOURCES, F4) and underived (R-UNDERIVED, F6).",
   "quote": "RESOURCE_KINDS equals the six literals of src/resources/types.ts:40-47, RESOURCE_ENTRY_STATUSES equals its literals",
   "citation": "docs/programs/harness2-reactive-evolution-2026-10-20/BEADS-2026-10-21.md:28@76bbbffd9d4a",
   "scan": {
@@ -255,7 +255,10 @@
     "R-OUTSIDE",
     "R-UNNAMED",
     "R-RETILED",
-    "R-IDLE-READ"
+    "R-IDLE-READ",
+    "R-REREAD",
+    "R-SOURCES",
+    "R-UNDERIVED"
   ],
   "quietRows": {
     "retiled": {
@@ -267,7 +270,53 @@
       "pin": "A3",
       "misses": [],
       "copied": true
+    },
+    "retiledGap": {
+      "dropped": "A2",
+      "gap": "^[\\s\\S]*$/",
+      "untiled": []
+    },
+    "reread": {
+      "pin": "A3",
+      "misses": [],
+      "copied": true
+    },
+    "narrowed": {
+      "pin": "A2",
+      "declared": [
+        "bead"
+      ],
+      "misses": []
+    },
+    "underived": {
+      "pin": "B2",
+      "misses": [],
+      "witness": {
+        "generic": true
+      }
     }
+  },
+  "guardControls": {
+    "witnessRead": [
+      "witness read: A3"
+    ],
+    "directRead": [
+      "witness read: A3"
+    ],
+    "unconsulted": [
+      "unconsulted: bead"
+    ],
+    "undeclared": [
+      "undeclared: producer"
+    ],
+    "misplaced": [
+      "B2",
+      "C2"
+    ],
+    "untiled": [
+      "trigger",
+      "(d)"
+    ]
   },
   "rows": [
     {
@@ -452,6 +501,10 @@
             "kindUnread": {
               "observedQueryView": true,
               "unknownQuery": true
+            },
+            "divergent": {
+              "swapEqual": false,
+              "spelled": true
             }
           }
         }
@@ -611,8 +664,8 @@
             "pin": "D2",
             "cliVersion": {
               "dropped": [
-                "rf-cli:0.1.784",
-                "producer release from result.provenance.cli_version: rf@0.1.784"
+                "rf-cli:0.1.845",
+                "producer release from result.provenance.cli_version: rf@0.1.845"
               ],
               "otherwiseIdentical": true
             },

@@ -1224,6 +1224,14 @@
    ]
   }
  ],
+ "harness": [
+  "const impl = IMPL[pin];",
+  "expect(impl, `no case for ${pin}`).toBeTypeOf(\"function\");",
+  "const witness = impl === undefined ? null : await impl();",
+  "MEASURED[pin] = witness;",
+  "expect(witness).toStrictEqual(rosterWitness(pin));",
+  "REACHED.push(`${pin}:${expect.getState().assertionCalls}`);"
+ ],
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster, the bead export's acceptance clauses and the cases agree",
   "A1",

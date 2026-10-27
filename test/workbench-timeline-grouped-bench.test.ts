@@ -435,6 +435,42 @@ describe("W21 honest exit semantics (C1/C2)", () => {
     expect(offShape.violations).toEqual(receipt.violations);
   }, 120_000);
 
+  it("exits 2, not 1, on an off-shape receipt even when a judged p95 is over 20 ms or a build over-reads: the shape is judged first", () => {
+    const { receipt } = smallRun();
+    expect(receipt.realised).toBe(false);
+    expect(receipt.violations.length).toBeGreaterThan(0);
+    // The off-shape SLOW twin (wb-ttdv, from wb-rjch F1): exit 1 is for a complete and realised receipt only, so no
+    // exit-1 cause may outrank the shape. Each realised twin below first exits 1 for its own cause and names it;
+    // putting back this receipt's off-shape fixture, and nothing else, makes that same twin exit 2 with exactly this
+    // receipt's violations and no speed or read judgement. Every judged p95 is set, never read off the wall clock.
+    const slowSeries: ReadonlyArray<readonly [PassLabel, string]> = [
+      ["maxQuery-40", "overall"],
+      ["maxQuery-100", "z8c80"],
+    ];
+    for (const [label, series] of slowSeries) {
+      const slow = realisedFast();
+      (slow.passes[label].build[series] as Distribution).p95 = targetMs + 0.5;
+      slow.passes[label].pass = false;
+      slow.pass = false;
+      expect(assess(slow)).toMatchObject({ realised: true, exitCode: 1, verdict: "over-target", target: { over: [`${label}/${series}`] }, inconsistencies: [] });
+      slow.fixture = structuredClone(receipt.fixture);
+      const offShape = assess(slow);
+      expect(offShape).toMatchObject({ realised: false, exitCode: 2, verdict: "not-w21-shape", target: { over: [], readsExceedingRows: [] } });
+      expect(offShape.violations).toEqual(receipt.violations);
+      expect(exitCode(slow)).toBe(2);
+    }
+    const overRead = realisedFast();
+    overRead.passes["maxQuery-100"].relationReads.buildsExceedingRows = 1;
+    overRead.passes["maxQuery-100"].pass = false;
+    overRead.pass = false;
+    expect(assess(overRead)).toMatchObject({ realised: true, exitCode: 1, verdict: "reads-exceed-rows", target: { over: [], readsExceedingRows: ["maxQuery-100"] }, inconsistencies: [] });
+    overRead.fixture = structuredClone(receipt.fixture);
+    const offShapeRead = assess(overRead);
+    expect(offShapeRead).toMatchObject({ realised: false, exitCode: 2, verdict: "not-w21-shape", target: { over: [], readsExceedingRows: [] } });
+    expect(offShapeRead.violations).toEqual(receipt.violations);
+    expect(exitCode(overRead)).toBe(2);
+  }, 120_000);
+
   it("exits 0 for a realised, fast, complete receipt; 20 ms itself is within target", () => {
     const receipt = realisedFast();
     expect(shapeCheck(receipt.fixture as unknown as FixtureShape).realised).toBe(true);

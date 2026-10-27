@@ -214,6 +214,55 @@
         "flags": 0,
         "composed": 0,
         "launches": 0
+       },
+       "absolutePath": {
+        "render": 1,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "windowsPath": {
+        "render": 1,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "assertedArgv": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "assertedPlus": {
+        "render": 0,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 0
+       },
+       "pushArgv": {
+        "render": 1,
+        "uncommitted": 1,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
+       },
+       "pushComposed": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 1,
+        "launches": 1
+       },
+       "unshiftArgv": {
+        "render": 0,
+        "uncommitted": 0,
+        "flags": 0,
+        "composed": 0,
+        "launches": 1
        }
       }
      }
@@ -272,6 +321,20 @@
         "noCommitSource": true
        }
       ],
+      "provider": [
+       {
+        "id": "reactivefiber.render.preview",
+        "effectClass": "read",
+        "permissions": [
+         "reactivefiber:render"
+        ],
+        "modes": [
+         "invoke"
+        ],
+        "carrier": true,
+        "noCommitSource": true
+       }
+      ],
       "injected": [
        {
         "id": "reactivefiber.render.preview",
@@ -289,12 +352,46 @@
       "reconcile": [
        "reactivefiber.render.preview"
       ],
+      "reach": {
+       "launchers": [
+        "nativeReactiveFiberRender"
+       ],
+       "sites": [
+        "src/workbench/providers/reactivefiber.ts > nativeReactiveFiberPreview",
+        "src/workbench/providers/reactivefiber.ts > registerNativeReactiveFiberRender"
+       ],
+       "wrappers": [
+        "nativeReactiveFiberPreview"
+       ],
+       "wrapperSites": []
+      },
       "controls": {
        "otherIdRfRelease": true,
        "otherIdSchemaOnly": true,
        "otherIdPermissionOnly": true,
        "prefixOnly": true,
-       "forgeQuiet": false
+       "forgeQuiet": false,
+       "unmarkedMarker": false,
+       "nativeWholeWithUnmarked": [
+        "context.render.commit",
+        "reactivefiber.render.preview"
+       ],
+       "injectedWholeWithUnmarked": [
+        "context.render.commit",
+        "reactivefiber.render.preview"
+       ],
+       "importedCall": [
+        "control.ts > <module>",
+        "control.ts > commitRender"
+       ],
+       "namespaceCall": [
+        "control.ts > commitRender"
+       ],
+       "literalMember": [
+        "control.ts > commitRender"
+       ],
+       "registryRelay": [],
+       "assembledName": []
       }
      }
     },
@@ -656,7 +753,7 @@
   },
   {
    "id": "M",
-   "label": "the pin-change vocabulary matcher A4 reads, raw and with escape sequences decoded: the spellings it catches (M1-M15) and the pinned quiet rows of its named residuals (Q1 R-INTERRUPTED, Q2 R-HOMOGLYPH, Q3 R-COMPOSED)",
+   "label": "the pin-change vocabulary matcher A4 reads, raw and with escape sequences and line continuations decoded: the spellings it catches (M1-M17) and the pinned quiet rows of its named residuals (Q1 R-INTERRUPTED, Q2 R-HOMOGLYPH, Q3 R-COMPOSED)",
    "pins": [
     {
      "id": "M1",
@@ -764,6 +861,20 @@
      }
     },
     {
+     "id": "M16",
+     "witness": {
+      "form": "export const CODE = \"RF_FEDERATION_PIN_\\<U+000A>CHANGED\";",
+      "hit": true
+     }
+    },
+    {
+     "id": "M17",
+     "witness": {
+      "form": "export const CODE = \"RF_FEDERATION_PIN_\\<U+000D><U+000A>CHANGED\";",
+      "hit": true
+     }
+    },
+    {
      "id": "Q1",
      "witness": {
       "form": "RF_FEDERATION_PIN<U+200B>_CHANGED",
@@ -788,7 +899,7 @@
   },
   {
    "id": "L",
-   "label": "the freshness matcher D4 reads: the inflections and synonyms it catches (L1-L12) and the pinned quiet rows of its named residuals (LQ1 R-FRESH-PARAPHRASE, LQ2 R-FRESH-HOMOGLYPH, LQ3 R-FRESH-INTERRUPTED)",
+   "label": "the freshness matcher D4 reads, raw and with identifier joints opened: the inflections and synonyms it catches (L1-L12), the joined spellings it opens (L13-L17), the capitalised inflection only its raw reading keeps (L18), and the pinned quiet rows of its named residuals (LQ1 R-FRESH-PARAPHRASE, LQ2 R-FRESH-HOMOGLYPH, LQ3 R-FRESH-INTERRUPTED, LQ4 R-FRESH-RUNON)",
    "pins": [
     {
      "id": "L1",
@@ -875,6 +986,48 @@
      }
     },
     {
+     "id": "L13",
+     "witness": {
+      "form": "fresh_output",
+      "hit": true
+     }
+    },
+    {
+     "id": "L14",
+     "witness": {
+      "form": "isFresh",
+      "hit": true
+     }
+    },
+    {
+     "id": "L15",
+     "witness": {
+      "form": "rendered_live_now",
+      "hit": true
+     }
+    },
+    {
+     "id": "L16",
+     "witness": {
+      "form": "LIVEPreview",
+      "hit": true
+     }
+    },
+    {
+     "id": "L17",
+     "witness": {
+      "form": "fresh2render",
+      "hit": true
+     }
+    },
+    {
+     "id": "L18",
+     "witness": {
+      "form": "the NEWest receipt",
+      "hit": true
+     }
+    },
+    {
      "id": "LQ1",
      "witness": {
       "form": "rendered as of now",
@@ -892,6 +1045,13 @@
      "id": "LQ3",
      "witness": {
       "form": "fre<U+200B>sh output",
+      "hit": false
+     }
+    },
+    {
+     "id": "LQ4",
+     "witness": {
+      "form": "isfresh",
       "hit": false
      }
     }
@@ -972,6 +1132,26 @@
      }
     }
    ]
+  },
+  {
+   "id": "H",
+   "label": "the witness guard every pin's case runs under: a case reading a roster witness, or handing back an object the roster holds, is refused (H1, the guard's positive controls), and the pinned quiet row of its named residual (HQ1 R-VACUOUS-PAYLOAD)",
+   "pins": [
+    {
+     "id": "H1",
+     "witness": {
+      "readRefused": true,
+      "heldFlagged": true,
+      "nestedFlagged": true
+     }
+    },
+    {
+     "id": "HQ1",
+     "witness": {
+      "copyFlagged": false
+     }
+    }
+   ]
   }
  ],
  "tests": [
@@ -1011,6 +1191,8 @@
   "M13",
   "M14",
   "M15",
+  "M16",
+  "M17",
   "Q1",
   "Q2",
   "Q3",
@@ -1026,9 +1208,16 @@
   "L10",
   "L11",
   "L12",
+  "L13",
+  "L14",
+  "L15",
+  "L16",
+  "L17",
+  "L18",
   "LQ1",
   "LQ2",
   "LQ3",
+  "LQ4",
   "N1",
   "N2",
   "N3",
@@ -1036,12 +1225,14 @@
   "N5",
   "NQ1",
   "NQ2",
+  "H1",
+  "HQ1",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ],
  "reached": [
   "A1:3",
   "A2:12",
-  "A3:4",
+  "A3:6",
   "A4:6",
   "B1:7",
   "B2:5",
@@ -1074,6 +1265,8 @@
   "M13:1",
   "M14:1",
   "M15:1",
+  "M16:1",
+  "M17:1",
   "Q1:1",
   "Q2:1",
   "Q3:1",
@@ -1089,16 +1282,25 @@
   "L10:1",
   "L11:1",
   "L12:1",
+  "L13:1",
+  "L14:1",
+  "L15:1",
+  "L16:1",
+  "L17:1",
+  "L18:1",
   "LQ1:1",
   "LQ2:1",
   "LQ3:1",
+  "LQ4:1",
   "N1:1",
   "N2:1",
   "N3:1",
   "N4:1",
   "N5:1",
   "NQ1:1",
-  "NQ2:1"
+  "NQ2:1",
+  "H1:1",
+  "HQ1:1"
  ],
  "residuals": {
   "R-WITHHELD": [
@@ -1140,6 +1342,18 @@
   ],
   "R-SHORT-PREFIX": [
    "NQ2"
+  ],
+  "R-FRESH-RUNON": [
+   "LQ4"
+  ],
+  "R-RELAYED-REACH": [
+   "A3"
+  ],
+  "R-MUTATED-ARGV": [
+   "A1"
+  ],
+  "R-VACUOUS-PAYLOAD": [
+   "HQ1"
   ]
  }
 }

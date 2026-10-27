@@ -11,11 +11,101 @@
     "siblingRosters": [
       {
         "file": "test/fixtures/gp-identity-roster.json",
-        "bead": "wb-gxd7.1"
+        "bead": "wb-gxd7.1",
+        "census": "test/workbench-gp-identity-census.test.ts",
+        "verbatim": [
+          {
+            "pointer": "/statement",
+            "mirror": "filing"
+          },
+          {
+            "pointer": "/citation",
+            "mirror": "filing"
+          },
+          {
+            "pointer": "/producer/programDir",
+            "mirror": "filing"
+          },
+          {
+            "pointer": "/producer/lines/01-finding-inventory.md:9",
+            "mirror": "producer"
+          },
+          {
+            "pointer": "/producer/lines/01-finding-inventory.md:10",
+            "mirror": "producer"
+          },
+          {
+            "pointer": "/producer/lines/02-contract-audit.md:30",
+            "mirror": "producer"
+          },
+          {
+            "pointer": "/producer/lines/02-contract-audit.md:42",
+            "mirror": "producer"
+          },
+          {
+            "pointer": "/producer/lines/02-contract-audit.md:52",
+            "mirror": "producer"
+          },
+          {
+            "pointer": "/producer/headLines/docs~1dev~1RULINGS.md:769",
+            "mirror": "producer"
+          },
+          {
+            "pointer": "/producer/evidence/path",
+            "mirror": "producer"
+          }
+        ]
       },
       {
         "file": "test/fixtures/gp-kind-label-roster.json",
-        "bead": "wb-gxd7.4"
+        "bead": "wb-gxd7.4",
+        "census": "test/workbench-gp-kind-label-census.test.ts",
+        "verbatim": [
+          {
+            "pointer": "/statement",
+            "mirror": "filing"
+          },
+          {
+            "pointer": "/citation",
+            "mirror": "filing"
+          },
+          {
+            "pointer": "/piPosture",
+            "mirror": "filing"
+          },
+          {
+            "pointer": "/codeFacts/3",
+            "mirror": "filing"
+          },
+          {
+            "pointer": "/rows/1/label",
+            "mirror": "row"
+          },
+          {
+            "pointer": "/producer/lines/02-contract-audit.md:100",
+            "mirror": "producer"
+          },
+          {
+            "pointer": "/producer/lines/03-developer-workplan.md:58",
+            "mirror": "producer"
+          },
+          {
+            "pointer": "/producer/lines/01-finding-inventory.md:19",
+            "mirror": "producer"
+          },
+          {
+            "pointer": "/producer/installedLines/docs~1dev~1RULINGS.md:778",
+            "mirror": "producer"
+          },
+          {
+            "pointer": "/producer/installedLines/docs~1dev~1RULINGS.md:800",
+            "mirror": "producer"
+          },
+          {
+            "pointer": "/producer/installedLines/docs~1dev~1RULINGS.md:810",
+            "mirror": "producer"
+          }
+        ]
       }
     ],
     "traceFile": "docs/workbench/TRACEABILITY.md",
@@ -674,10 +764,95 @@
               {
                 "file": "test/fixtures/gp-identity-roster.json",
                 "bead": "wb-gxd7.1",
+                "census": "test/workbench-gp-identity-census.test.ts",
                 "walked": true,
-                "readByA": false,
+                "readByA": true,
                 "readByB": true,
-                "loadBearing": true,
+                "quiet": true,
+                "leaves": [
+                  {
+                    "pointer": "/statement",
+                    "mirror": "filing",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/citation",
+                    "mirror": "filing",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/producer/programDir",
+                    "mirror": "filing",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/producer/lines/01-finding-inventory.md:9",
+                    "mirror": "producer",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/producer/lines/01-finding-inventory.md:10",
+                    "mirror": "producer",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/producer/lines/02-contract-audit.md:30",
+                    "mirror": "producer",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/producer/lines/02-contract-audit.md:42",
+                    "mirror": "producer",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/producer/lines/02-contract-audit.md:52",
+                    "mirror": "producer",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/producer/headLines/docs~1dev~1RULINGS.md:769",
+                    "mirror": "producer",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/producer/evidence/path",
+                    "mirror": "producer",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  }
+                ],
+                "crossMeasured": [
+                  "/producer/lines/02-contract-audit.md:30",
+                  "/producer/lines/02-contract-audit.md:42",
+                  "/producer/lines/02-contract-audit.md:52"
+                ],
+                "controls": {
+                  "filing": false,
+                  "producerPlacement": false,
+                  "producerMeasured": false,
+                  "row": false,
+                  "loadBearing": false
+                },
                 "sibling": true,
                 "sameProgram": true,
                 "verbatimFiling": true
@@ -685,10 +860,98 @@
               {
                 "file": "test/fixtures/gp-kind-label-roster.json",
                 "bead": "wb-gxd7.4",
+                "census": "test/workbench-gp-kind-label-census.test.ts",
                 "walked": true,
-                "readByA": false,
+                "readByA": true,
                 "readByB": true,
-                "loadBearing": true,
+                "quiet": true,
+                "leaves": [
+                  {
+                    "pointer": "/statement",
+                    "mirror": "filing",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/citation",
+                    "mirror": "filing",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/piPosture",
+                    "mirror": "filing",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/codeFacts/3",
+                    "mirror": "filing",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/rows/1/label",
+                    "mirror": "row",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/producer/lines/02-contract-audit.md:100",
+                    "mirror": "producer",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/producer/lines/03-developer-workplan.md:58",
+                    "mirror": "producer",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/producer/lines/01-finding-inventory.md:19",
+                    "mirror": "producer",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/producer/installedLines/docs~1dev~1RULINGS.md:778",
+                    "mirror": "producer",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/producer/installedLines/docs~1dev~1RULINGS.md:800",
+                    "mirror": "producer",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  },
+                  {
+                    "pointer": "/producer/installedLines/docs~1dev~1RULINGS.md:810",
+                    "mirror": "producer",
+                    "resolved": true,
+                    "loadBearing": true,
+                    "anchored": true
+                  }
+                ],
+                "crossMeasured": [],
+                "controls": {
+                  "filing": false,
+                  "producerPlacement": false,
+                  "producerMeasured": false,
+                  "row": false,
+                  "loadBearing": false
+                },
                 "sibling": true,
                 "sameProgram": true,
                 "verbatimFiling": true
@@ -2178,12 +2441,36 @@
         {
           "id": "R22",
           "witness": {
-            "a": [
-              "test/fixtures/gp-twin-roster.json:1 N2: lacks-status+sha"
-            ],
-            "b": [
-              "test/fixtures/gp-identity-roster.json#/reply/result/store_state K6: state store_state=\"missing\""
-            ]
+            "scoped": {
+              "a": [
+                "test/fixtures/gp-kind-label-roster.json:1 N2: lacks-status+sha",
+                "test/fixtures/gp-twin-roster.json:1 N2: lacks-status+sha"
+              ],
+              "b": [
+                "test/fixtures/gp-identity-roster.json#/reply/result/store_state K6: state store_state=\"missing\""
+              ]
+            },
+            "edges": {
+              "extends": {
+                "a": [
+                  "test/fixtures/gp-identity-roster.json:1 N2: lacks-status+sha"
+                ],
+                "b": []
+              },
+              "duplicated": {
+                "a": [
+                  "test/fixtures/gp-kind-label-roster.json:1 N2: lacks-status+sha"
+                ],
+                "b": []
+              },
+              "above": {
+                "a": [
+                  "test/fixtures/gp-identity-roster.json:1 N2: lacks-status+sha"
+                ],
+                "b": []
+              }
+            },
+            "duplicated": "statement"
           }
         }
       ]

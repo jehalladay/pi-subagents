@@ -228,8 +228,53 @@
    "src/workbench/reactivefiber-observer.ts"
   ],
   "uiPackage": "@earendil-works/pi-tui",
+  "uiLoadProbes": {
+   "@earendil-works/pi-tui": true,
+   "@earendil-works/pi-tui/dist/index.js": true,
+   "@earendil-works/pi-tui-extra": false
+  },
   "rfName": "reactivefiber|reactive-fiber",
   "rfReading": "\\brf[-_][a-z]|context\\.render|nativePayloadRef|output\\.text|result\\.(?:blocks|observations|output|components)",
+  "resultMembers": [
+   "blocks",
+   "observations",
+   "output",
+   "components"
+  ],
+  "reflectiveReads": [
+   "Object.values",
+   "Object.entries",
+   "Object.assign",
+   "Object.getOwnPropertyDescriptors",
+   "Reflect.get",
+   "Reflect.ownKeys",
+   "JSON.stringify",
+   "structuredClone"
+  ],
+  "readProbes": [
+   "computed-key",
+   "parameter-key",
+   "literal-key",
+   "optional-key",
+   "alias-member",
+   "destructured",
+   "renamed",
+   "nested",
+   "rest",
+   "result-binding",
+   "assigned",
+   "named-result",
+   "local-helper",
+   "spread",
+   "for-in",
+   "reflective"
+  ],
+  "quietProbes": [
+   "other-member",
+   "bare-spread",
+   "bare-other-member",
+   "string-result"
+  ],
   "surfacePins": {
    "Pi type": "C2",
    "UI handler": "C3",
@@ -469,7 +514,8 @@
    "context text copied",
    "metadata member",
    "metadata ref"
-  ]
+  ],
+  "readingRoot": "rc-context-block-census-workspace"
  },
  "rows": [
   {
@@ -708,7 +754,16 @@
        ],
        [
         "pin"
+       ],
+       [
+        "pin"
+       ],
+       [
+        "pin"
        ]
+      ],
+      "beadControl": [
+       "bead"
       ],
       "exported": [
        "RF_LIVE_DRIFT_TITLE",
@@ -734,7 +789,7 @@
     {
      "id": "B3",
      "witness": {
-      "carrier": "rf@0.1.784:reactive-fiber.cli/v1 context.render --no-commit",
+      "carrier": "rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit",
       "descriptors": [
        {
         "id": "reactivefiber.render.preview",
@@ -746,7 +801,7 @@
         "supportedModes": [
          "invoke"
         ],
-        "contractSource": "rf@0.1.784:reactive-fiber.cli/v1 context.render --no-commit"
+        "contractSource": "rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit"
        },
        {
         "id": "reactivefiber.render.preview",
@@ -758,7 +813,7 @@
         "supportedModes": [
          "invoke"
         ],
-        "contractSource": "rf@0.1.784:reactive-fiber.cli/v1 context.render --no-commit"
+        "contractSource": "rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit"
        }
       ],
       "reconcile": [
@@ -864,6 +919,70 @@
       },
       "loads": [],
       "vocabulary": [],
+      "resultReads": [],
+      "probes": {
+       "loads": {
+        "@earendil-works/pi-tui": true,
+        "@earendil-works/pi-tui/dist/index.js": true,
+        "@earendil-works/pi-tui-extra": false
+       },
+       "reads": {
+        "computed-key": [
+         "2 element blocks"
+        ],
+        "parameter-key": [
+         "1 element computed"
+        ],
+        "literal-key": [
+         "1 element blocks"
+        ],
+        "optional-key": [
+         "2 element blocks"
+        ],
+        "alias-member": [
+         "2 member blocks"
+        ],
+        "destructured": [
+         "1 binding blocks"
+        ],
+        "renamed": [
+         "1 binding observations"
+        ],
+        "nested": [
+         "1 binding output"
+        ],
+        "rest": [
+         "1 binding rest"
+        ],
+        "result-binding": [
+         "2 element components"
+        ],
+        "assigned": [
+         "2 assigned blocks"
+        ],
+        "named-result": [
+         "1 element computed"
+        ],
+        "local-helper": [
+         "1 member blocks"
+        ],
+        "spread": [
+         "1 spread"
+        ],
+        "for-in": [
+         "3 for-in"
+        ],
+        "reflective": [
+         "1 reflective Object.values"
+        ]
+       },
+       "quiet": {
+        "other-member": [],
+        "bare-spread": [],
+        "bare-other-member": [],
+        "string-result": []
+       }
+      },
       "reactivefiberLoader": false,
       "uiFloorMet": true
      }
@@ -1030,12 +1149,42 @@
       "readings": {
        "nulPage": {
         "lossy": false,
+        "encoding": "utf-8",
         "hits": [
          "sdk:exact"
         ]
        },
        "notUtf8": {
         "lossy": true,
+        "encoding": "utf-8",
+        "hits": [
+         "sdk:exact"
+        ]
+       },
+       "utf16le": {
+        "lossy": false,
+        "encoding": "utf-16le",
+        "hits": [
+         "sdk:exact"
+        ]
+       },
+       "utf16be": {
+        "lossy": false,
+        "encoding": "utf-16be",
+        "hits": [
+         "sdk:exact"
+        ]
+       },
+       "utf16leUnmarked": {
+        "lossy": false,
+        "encoding": "utf-16le",
+        "hits": [
+         "sdk:exact"
+        ]
+       },
+       "utf16beUnmarked": {
+        "lossy": false,
+        "encoding": "utf-16be",
         "hits": [
          "sdk:exact"
         ]
@@ -1284,15 +1433,15 @@
  "reached": [
   "A1:58",
   "A2:29",
-  "A3:37",
+  "A3:38",
   "A4:4",
   "B1:7",
-  "B2:8",
+  "B2:9",
   "B3:9",
   "B4:9",
   "C1:10",
   "C2:6",
-  "C3:7",
+  "C3:11",
   "C4:6",
   "C5:5",
   "M1:7",

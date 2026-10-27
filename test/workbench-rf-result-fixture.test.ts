@@ -4,8 +4,9 @@
  * kind and capture receipt recorded beside it, and is itself pinned here to a literal roster authored independently from the
  * ReactiveFiberCLI emitter (first read at 8a8b83e4d for the 0.1.716 pin; re-read for the 0.1.768 pin by wb-973.17 at the
  * installed reactivefibercli 0.1.768 distribution, the delta being retry_work and the four ruling R-53 work_metrics
- * counters; re-read unchanged for the 0.1.784 pin by wb-c7ku at the installed 0.1.784 distribution), so an emptied, shrunken
- * or renamed roster cannot hold the census green. The fixture home
+ * counters; re-read unchanged for the 0.1.784 pin by wb-c7ku at the installed 0.1.784 distribution; re-read for the 0.1.845 pin
+ * by wb-jwc.4 at the installed 0.1.845 distribution, the delta being judge_context, judge_context_layers and
+ * replay_of_operation_id), so an emptied, shrunken or renamed roster cannot hold the census green. The fixture home
  * is test/helpers/rf-render-fixture.ts (owner ruling R1 (b'), row 481): validRf()/result() in the envelope-audit and observer
  * suites stay the minimal cli_version-free pins. Provider rows run a scripted rf stand-in HERMETICALLY: an absolute node shebang
  * (process.execPath) and PATH restricted to the stand-in's own directory, so the provider can resolve no other rf and a stand-in
@@ -21,7 +22,9 @@
  * receipt), and the reader also refuses every list item but a top-level '- ' item, the only list lines U6-U9 read (U12 pins ten
  * such forms), so an altered restatement under another list marker, a marker spaced or indented otherwise, or a nested or quoted
  * item cannot stand beside a bound line unread. Two restatement families stay outside that rule, each a named residual with a
- * quiet row: R-OUTSIDE-LIST (outside every list item) and R-PATTERN-MISS (a top-level '- ' item a row's pattern skips). */
+ * quiet row: R-OUTSIDE-LIST (outside every list item) and R-PATTERN-MISS (a top-level '- ' item a row's pattern skips).
+ * wb-954g: each residual's insertion line is pinned beside its digest, in the frozen literal and in the receipt, and the quiet
+ * rows read U7's own listing pattern. */
 import { createHash } from 'node:crypto';
 import { chmodSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, join } from 'node:path';
@@ -45,44 +48,56 @@ installScratchLeakGuard();
  * conditional: step L always runs, so every finished --no-commit render emits it (render_service.py:1527-1532 and its comment). */
 /** result: render_service.py:1494-1513 (output .. observations), :1533-1539 (attempts, superseded_transaction_ids,
  * fiber_transaction_refs), render.py:3569-3580 (the step-P ephemeral keys render_id, ephemeral, commit_seq, effects, plan) and
- * render_service.py:1527-1532 (necessity) and :1549 (session_id), all at 8a8b83e4d; retry_work at the installed 0.1.784
- * distribution, reactive_fiber_cli/application/render_service.py:1539-1541 (:1524-1526 at 0.1.768; PMO-13-a: assigned on
- * every render, beside the superseded ids, before fiber_transaction_refs). */
+ * render_service.py:1527-1532 (necessity) and :1549 (session_id), all at 8a8b83e4d; retry_work at the installed 0.1.845
+ * distribution, reactive_fiber_cli/application/render_service.py:2137 (:1539-1541 at 0.1.784, :1524-1526 at 0.1.768; PMO-13-a:
+ * assigned on every render, beside the superseded ids, before fiber_transaction_refs); and, new at the 0.1.845 pin (wb-jwc.4),
+ * judge_context and judge_context_layers (render_service.py:2125-2131, ADR-RFC-005 slice 8 / NEC-A13 AC2: assigned beside
+ * necessity in the step-L block every finished render reaches, :2111-2131) and replay_of_operation_id (:2147, rfc-epju8.4:
+ * assigned on every render, null except on an --idempotency-key replay, after fiber_transaction_refs). */
 const PINNED_RESULT_KEYS = [
   'output', 'budget', 'diagnostics_summary', 'blocks', 'components', 'provenance', 'work_metrics', 'work',
-  'engine_metrics', 'scope', 'audience', 'bundle_revision_id', 'observations', 'necessity', 'attempts',
-  'superseded_transaction_ids', 'retry_work', 'fiber_transaction_refs',
+  'engine_metrics', 'scope', 'audience', 'bundle_revision_id', 'observations', 'necessity', 'judge_context', 'judge_context_layers',
+  'attempts', 'superseded_transaction_ids', 'retry_work', 'fiber_transaction_refs', 'replay_of_operation_id',
   'ephemeral', 'render_id', 'commit_seq', 'session_id', 'effects', 'plan',
 ];
 /** result.provenance, at least: context_show.py:313-339 at 8a8b83e4d, where render_provenance emitted seven keys (these three are
- * the dossier's floor). At the installed 0.1.784 distribution it emits eight (context_show.py:451-463, the dict literal it
- * returns: the seven PROVENANCE_KEYS record fields, then the storage block), seven at 0.1.768; U9 holds the builder to all eight by name. */
+ * the dossier's floor). At the installed 0.1.845 distribution it emits eight (context_show.py:556-567, the dict literal it
+ * returns: the seven PROVENANCE_KEYS record fields, then the storage block), as at 0.1.784 (:451-463), seven at 0.1.768; U9 holds
+ * the builder to all eight by name. */
 const PINNED_PROVENANCE_KEYS = ['graph_revision_id', 'cli_version', 'sdk_versions'];
 /** result.work: rendering.py:2606-2613 (WORK_KEYS, emission order). */
 const PINNED_WORK_KEYS = [
   'source_capture_count', 'fiber_signal_count', 'component_render_count', 'lens_resolution_count', 'necessity_eval_count', 'storage_write_count',
 ];
 /** result.work_metrics: integrations/fiber.py:2474-2485 at 8a8b83e4d (the ten legacy keys), widened once by ruling R-53: at the
- * installed 0.1.768 and 0.1.784 distributions reactive_fiber_cli/integrations/fiber.py:2719-2751, the same lines in both
- * (WORK_METRICS_KEYS = the ten LEGACY_WORK_METRICS_KEYS, never removed or renamed, then the four R53_WORK_METRICS_KEYS). */
+ * installed 0.1.768 and 0.1.784 distributions reactive_fiber_cli/integrations/fiber.py:2719-2751, the same lines in both, and at
+ * the installed 0.1.845 distribution :3173-3205 (WORK_METRICS_KEYS = the ten LEGACY_WORK_METRICS_KEYS, never removed or renamed,
+ * then the four R53_WORK_METRICS_KEYS). */
 const PINNED_WORK_METRICS_KEYS = [
   'source_capture_count', 'fiber_signal_count', 'fiber_transaction_count', 'invalidated_component_count', 'rendered_component_count',
   'state_read_count', 'state_write_count', 'journal_records_scanned', 'blob_bytes_written', 'history_rows_materialized',
   'reused_component_count', 'observation_executed_count', 'observation_reused_count', 'publish_conflict_count',
 ];
 
-/** The roster's capture receipt of record (receipts/wb-c7ku.md, the 0.1.784 re-pin; receipts/wb-973.17.md keeps the 0.1.768 capture), read by U6. */
+/** The roster's capture receipt of record since the 0.1.845 re-pin (receipts/wb-jwc.4.md, wb-jwc.4): one append-only entry holding
+ * the capture id, the delta line, every key of the roster and the emitted provenance listings, read by U6, U7, U8 and U9. */
+const PIN_RECEIPT = 'docs/workbench/receipts/wb-jwc.4.md';
+/** The 0.1.784 pin's capture receipt of record (receipts/wb-c7ku.md; receipts/wb-973.17.md keeps the 0.1.768 capture). Since the
+ * 0.1.845 re-pin U6-U9 read PIN_RECEIPT; this committed append-only receipt stays the corpus U10, U11 and U12 derive their
+ * forms from (its lines hold still, so their positional pins and stated digests do too). */
 const ROSTER_RECEIPT = 'docs/workbench/receipts/wb-c7ku.md';
 /** How the receipt spells a small count. */
 const COUNT_WORDS: readonly string[] = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
-/** Every key of the captured roster, listed in an append-only receipt entry (receipts/wb-c7ku.md since the 0.1.784 re-capture;
- * receipts/wb-j032.md keeps the 0.1.768 listing), read by U7. */
+/** Every key of the 0.1.784 roster, listed in an append-only receipt entry (receipts/wb-c7ku.md; receipts/wb-j032.md keeps the
+ * 0.1.768 listing). Since the 0.1.845 re-pin U7 reads the listing of PIN_RECEIPT; this receipt stays a U10-U12 corpus. */
 const ROSTER_KEYS_RECEIPT = 'docs/workbench/receipts/wb-c7ku.md';
 /** The key lists that entry states, in its order: one line each, `- <label> keys (<count>): <key>, <key>, ... <key>.` */
 const ROSTER_KEY_LIST_LABELS: readonly string[] = ['Result', 'Provenance', 'Work', 'Work metrics'];
-/** The emitted provenance listings (wb-91yt, the wb-c7ku gate's F2 under ruling R691): every result.provenance key the pinned rf
- * and the pin before it emit, in emission order, and the pinned rf's storage block keys, each read off that release's own
- * emitter (never from the builder, the roster or the receipt of record) into an append-only receipt entry, read by U9. */
+/** The emitted provenance listings of the 0.1.784 pin (wb-91yt, the wb-c7ku gate's F2 under ruling R691) and the lists of the
+ * hiding forms, their line digests and the named residuals (wb-91yt cut #2, wb-xmo2), which U10, U11 and U12 read here. Since
+ * the 0.1.845 re-pin U9 reads the emitted listings of PIN_RECEIPT: every result.provenance key the pinned rf and the pin its
+ * newest provenance key arrived after emit, in emission order, and the pinned rf's storage block keys, each read off that
+ * release's own emitter (never from the builder or the roster). */
 const PROVENANCE_LISTING_RECEIPT = 'docs/workbench/receipts/wb-91yt.md';
 /** The listing lines that entry states, one per release: `- Emitted provenance keys at rf <release> (<count>): <key>, ... <key>.` */
 const EMITTED_PROVENANCE_LIST = /^- Emitted provenance keys at rf (\d+\.\d+\.\d+) \((\d+)\): ([a-z_]+(?:, [a-z_]+)*)\.$/;
@@ -168,13 +183,17 @@ const LIST_ITEM_FORM_LIST = /^- List item forms the receipt reader refuses \((\d
  * prefix matches; here the Result keys line restated under a respelled label (Result keys, restated). A restatement that keeps a
  * bound line's prefix is not in either family: U10, U11 and U12 require each target prefix to start exactly one line, and U7 reads
  * every raw line, a code block's included. receipts/wb-91yt.md lists the families in this order with the digest of each form's
- * lines. */
+ * lines and, since wb-954g (the wb-xmo2 gate's F1), the line each form is inserted at, the one below the line its after prefix
+ * starts: the digests bind only the inserted lines, so a form moved below another line kept every row green, and R-OUTSIDE-LIST
+ * moved below a heading is a paragraph there, no longer the lazy continuation its family names. */
 const RECEIPT_RESIDUAL_FORMS = [
   ['R-OUTSIDE-LIST', ROSTER_KEYS_RECEIPT, '- Work metrics keys (14): ', '- Result keys (24): ', [[['- Result', 'Result'], [', audience, ', ', audience_kind, ']]]],
   ['R-PATTERN-MISS', ROSTER_KEYS_RECEIPT, '- Work metrics keys (14): ', '- Result keys (24): ', [[['- Result keys (24)', '- Result keys, restated (24)'], [', audience, ', ', audience_kind, ']]]],
 ] as const;
 /** The receipt line that lists those families with their line digests, in table order: `- Named residuals of the list item rule (<count>): <id> <digest>, ...` */
 const RESIDUAL_LIST = /^- Named residuals of the list item rule \((\d+)\): ([A-Z0-9-]+ [0-9a-f]{16}(?:, [A-Z0-9-]+ [0-9a-f]{16})*)\.$/;
+/** The receipt line that states the line each family's form is inserted at, in table order (wb-954g): `- Named residual insertion lines (<count>): <id> <line>, ...` */
+const RESIDUAL_LINE_LIST = /^- Named residual insertion lines \((\d+)\): ([A-Z0-9-]+ \d+(?:, [A-Z0-9-]+ \d+)*)\.$/;
 
 const roster = readRfResultRoster();
 
@@ -277,6 +296,9 @@ function insertedVariant(path: string, after: string, restated: string, pinned: 
   const at = onlyLine(lines, after);
   return { inserted, variant: [...lines.slice(0, at + 1), ...inserted, ...lines.slice(at + 1)].join('\n') };
 }
+/** The line, counted from 1 as U12's cause lines count, that a form inserted below the line of a committed receipt starting with
+ * `after` opens on in its variant. */
+const insertedLine = (path: string, after: string): number => onlyLine(committedReceipt(path).split('\n'), after) + 2;
 /** A form's lines as receipts/wb-91yt.md states them: the first 16 hex digits of the sha256 of their JSON array. */
 const lineDigest = (lines: readonly string[]): string => digestOf(JSON.stringify(lines)).slice(0, 16);
 /** The stated count and the `<name> <digest>` entries of every `pattern` line of receipts/wb-91yt.md, in file order. */
@@ -286,7 +308,9 @@ function statedEntries(pattern: RegExp): { stated: number; entries: string[] }[]
     return match === null ? [] : [{ stated: Number(match[1]), entries: (match[2] ?? '').split(', ') }];
   });
 }
-/** U7's listing pattern, read by the residual quiet rows: the key-list lines U7 binds. */
+/** U7's listing pattern: the key-list lines U7 binds, read by U7 and by the residual quiet rows alike, so the two cannot diverge
+ * (wb-954g, the wb-xmo2 gate's F2: the quiet rows read a byte copy of U7's inline pattern, so widening U7's own to read the
+ * R-PATTERN-MISS line kept every row green). */
 const ROSTER_KEY_LIST = /^- ([A-Z][a-z]+(?: [a-z]+)*) keys \((\d+)\): ([a-z_]+(?:, [a-z_]+)*)\.$/;
 
 /** The diff a fixture whose result drops `key` must produce: that key, plus every roster key of a subtree it takes with it. */
@@ -350,11 +374,11 @@ const PROVIDER_REFUSAL_ROWS = [
 
 describe('SCG-R11: full-shape offline RF result fixture', () => {
   // U5 (independent oracle): the roster file equals the independently authored literal, key for key and in order, at the
-  // pinned lengths (24 result / 3 provenance / 6 work / 14 work_metrics at the 0.1.784 pin, unchanged from the 0.1.768 pin;
-  // 23 / 3 / 6 / 10 at the 0.1.716 pin),
+  // pinned lengths (27 result / 3 provenance / 6 work / 14 work_metrics at the 0.1.845 pin; 24 / 3 / 6 / 14 at the 0.1.784 and
+  // 0.1.768 pins; 23 / 3 / 6 / 10 at the 0.1.716 pin),
   // so an emptied, shrunken or renamed roster is red here.
-  it('the frozen roster equals the independently authored literal roster: 24 result, 3 provenance, 6 work and 14 work_metrics keys', () => {
-    expect([PINNED_RESULT_KEYS.length, PINNED_PROVENANCE_KEYS.length, PINNED_WORK_KEYS.length, PINNED_WORK_METRICS_KEYS.length]).toStrictEqual([24, 3, 6, 14]);
+  it('the frozen roster equals the independently authored literal roster: 27 result, 3 provenance, 6 work and 14 work_metrics keys', () => {
+    expect([PINNED_RESULT_KEYS.length, PINNED_PROVENANCE_KEYS.length, PINNED_WORK_KEYS.length, PINNED_WORK_METRICS_KEYS.length]).toStrictEqual([27, 3, 6, 14]);
     expect(roster.resultKeys).toStrictEqual(PINNED_RESULT_KEYS);
     expect(roster.provenanceKeys).toStrictEqual(PINNED_PROVENANCE_KEYS);
     expect(roster.workKeys).toStrictEqual(PINNED_WORK_KEYS);
@@ -364,12 +388,13 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
   // U6 (wb-973.20, gate F5): an anchor OUTSIDE the roster, the literal and the fixture. The roster's capture receipt of record
   // (rule 13 receipts route; a receipt is append-only, so its statements hold still) names the capture id and states the
   // measured counts and the keys the roster gained over its 0.1.716 first read (the 0.1.768 delta, re-read unchanged at the 0.1.784
-  // pin, receipts/wb-c7ku.md). A coordinated hollow of one key across the JSON roster, the literal above
+  // pin, plus the three result keys new at the 0.1.845 pin, receipts/wb-jwc.4.md). A coordinated hollow of one key across the JSON
+  // roster, the literal above
   // and fullShapeRf changes a stated count, and a coordinated swap of a key the delta names drops that key, so either is red
   // here; a count-preserving swap of any other key keeps every stated count and is not red here (U7 below holds every key).
   it('U6: the captured roster agrees with its receipt of record: the capture id, the four stated counts and every key the delta names', () => {
-    const receipt = receiptText(ROSTER_RECEIPT);
-    expect([roster.source, roster.receipt]).toStrictEqual(['captured', 'cmd_ab79e0c5d689']);
+    const receipt = receiptText(PIN_RECEIPT);
+    expect([roster.source, roster.receipt]).toStrictEqual(['captured', 'cmd_790abd3a3890']);
     expect(receipt).toContain(`(receipt of record ${roster.receipt})`);
     expect(receipt).toContain(`is promoted to source ${roster.source} with receipt ${roster.receipt}.`);
     const delta = receipt.split('\n').filter(line => line.startsWith(`- Delta read at the installed reactivefibercli ${roster.rfVersion} distribution: `));
@@ -377,14 +402,14 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
     const line = delta[0] ?? '';
     const stated = (pattern: RegExp): string => pattern.exec(line)?.[1] ?? '<absent>';
     expect([
-      stated(/so it joins the result roster \((\d+) keys\)/), stated(/; (\d+) keys\); result\.work is unchanged/),
+      stated(/so they join the result roster \((\d+) keys\)/), stated(/; (\d+) keys\); result\.work is unchanged/),
       stated(/result\.work is unchanged \((\d+) keys\)/), stated(/provenance carries the (\w+) roster keys/),
     ]).toStrictEqual([
       String(roster.resultKeys.length), String(roster.workMetricsKeys.length), String(roster.workKeys.length), COUNT_WORDS[roster.provenanceKeys.length],
     ]);
     const addedResult = [...line.matchAll(/result\.([a-z_]+) is assigned on every render/g)].map(match => match[1] ?? '');
     const addedMetrics = stated(/to the ten legacy keys plus (.+?) \(/).split(/, | and /);
-    expect([addedResult.length, addedMetrics.length]).toStrictEqual([1, 4]);
+    expect([addedResult.length, addedMetrics.length]).toStrictEqual([4, 4]);
     expect(addedResult.filter(key => !roster.resultKeys.includes(key))).toStrictEqual([]);
     expect(addedMetrics.filter(key => !roster.workMetricsKeys.includes(key))).toStrictEqual([]);
     expect(roster.workMetricsKeys.length - addedMetrics.length).toBe(10);
@@ -397,13 +422,14 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
   // so each item renders exactly its text after the '- ' marker). The listing is read whole, so a missing, repeated, renamed or extra
   // list line is red, and each file is held to it: the roster and the literal key for key in roster order, the builders as key sets
   // (result, work and work_metrics exactly; provenance as the three-key floor the roster states, since the builder's carries eight at
-  // the 0.1.784 pin). The title states that reach (wb-c7ku, the wb-j032 delivery gate's F1 under ruling R681 (2)).
+  // the 0.1.784 and 0.1.845 pins). The title states that reach (wb-c7ku, the wb-j032 delivery gate's F1 under ruling R681 (2)).
+  // Since the 0.1.845 re-pin (wb-jwc.4) the listing is the one in PIN_RECEIPT.
   it('U7: the JSON roster and the literal roster equal the key lists of their receipt of record key for key in order; the full-shape builders carry exactly its result, work and work_metrics key sets and at least its provenance keys', () => {
-    const lines = receiptLines(ROSTER_KEYS_RECEIPT);
+    const lines = receiptLines(PIN_RECEIPT);
     expect(lines.filter(line => line.startsWith('- Roster of record: ')))
-      .toStrictEqual([`- Roster of record: rf ${roster.rfVersion}, source ${roster.source}, capture receipt ${roster.receipt} (${ROSTER_RECEIPT}).`]);
+      .toStrictEqual([`- Roster of record: rf ${roster.rfVersion}, source ${roster.source}, capture receipt ${roster.receipt} (${PIN_RECEIPT}).`]);
     const listing = lines.flatMap(line => {
-      const match = /^- ([A-Z][a-z]+(?: [a-z]+)*) keys \((\d+)\): ([a-z_]+(?:, [a-z_]+)*)\.$/.exec(line);
+      const match = ROSTER_KEY_LIST.exec(line);
       return match === null ? [] : [{ label: match[1] ?? '', stated: Number(match[2]), keys: (match[3] ?? '').split(', ') }];
     });
     expect(listing.map(list => list.label)).toStrictEqual(ROSTER_KEY_LIST_LABELS);
@@ -419,13 +445,14 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
     expect(provenance.filter(key => !Object.hasOwn(asObject(fixture.provenance), key))).toStrictEqual([]);
   });
 
-  // U8 (wb-c7ku, the 0.1.784 pin): rf 0.1.784 emits an eighth provenance key, the storage block, beyond the roster's three-key
+  // U8 (wb-c7ku, the 0.1.784 pin; read at the 0.1.845 pin from PIN_RECEIPT, wb-jwc.4): rf 0.1.784 and 0.1.845 emit an eighth
+  // provenance key, the storage block, beyond the roster's three-key
   // floor. The full-shape builder carries it, so the provider round-trip and observer rows below admit it in the default gate;
   // this row holds the builder's provenance key count and that key to the delta line of the receipt of record, an anchor outside
   // the builder, so dropping the block or any other provenance key is red here. A count-preserving rename of an unlisted
   // provenance key stays outside this row and U7 (the provenance floor U7's title states); U9 below holds every key by name.
   it('U8: the full-shape builder carries the provenance key count its receipt of record states, including the key that receipt names as new', () => {
-    const receipt = receiptText(ROSTER_RECEIPT);
+    const receipt = receiptText(PIN_RECEIPT);
     const delta = receipt.split('\n').filter(line => line.startsWith(`- Delta read at the installed reactivefibercli ${roster.rfVersion} distribution: `));
     expect(delta).toHaveLength(1);
     const stated = /provenance carries the \w+ roster keys among its (\w+), the \w+ new since the [0-9.]+ pin: ([a-z_]+),/.exec(delta[0] ?? '');
@@ -444,11 +471,14 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
   // storage block keys to the listings, so either residual is red here. FROZEN SHAPE (rule 16): 8 keys at the pin, 7 at the
   // previous pin, and 2 storage block keys, in that line order; the entry's own Source line states how many lists it carries, an
   // anchor outside this file, so deleting one list from this row and from the literal together is still red.
+  // Since the 0.1.845 re-pin (wb-jwc.4) the listings are the ones in PIN_RECEIPT: the 0.1.845 listing (8 keys, as at 0.1.784),
+  // the 0.1.768 listing (7 keys: the pin the delta line names, after which storage arrived) and the 0.1.845 storage block keys,
+  // read off those releases' own emitters, with that entry's own Source line.
   it('U9: the full-shape builder carries exactly the provenance keys, in emission order, and the storage block keys its emitted listing states for the pinned rf, and the delta line of the receipt of record names the one key that listing adds over the previous pin', () => {
-    const entry = receiptLines(PROVENANCE_LISTING_RECEIPT);
+    const entry = receiptLines(PIN_RECEIPT);
     const lists = [...keyLists(entry, EMITTED_PROVENANCE_LIST), ...keyLists(entry, STORAGE_BLOCK_LIST)];
     expect(entry.filter(line => line.startsWith('- Source of the ')).map(line => /^- Source of the (\w+) lists: /.exec(line)?.[1])).toStrictEqual([COUNT_WORDS[lists.length]]);
-    const delta = receiptLines(ROSTER_RECEIPT).filter(line => line.startsWith(`- Delta read at the installed reactivefibercli ${roster.rfVersion} distribution: `));
+    const delta = receiptLines(PIN_RECEIPT).filter(line => line.startsWith(`- Delta read at the installed reactivefibercli ${roster.rfVersion} distribution: `));
     expect(delta).toHaveLength(1);
     const named = /provenance carries the \w+ roster keys among its (\w+), the (\w+) new since the ([0-9.]+) pin: ([a-z_]+), the [^{]* block \{([a-z_]+(?:, [a-z_]+)*)\}/.exec(delta[0] ?? '');
     expect(lists.map(list => list.release)).toStrictEqual([roster.rfVersion, named?.[3], roster.rfVersion]);
@@ -502,7 +532,7 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
     expect(thrownBy(() => receiptText(path, variant))).toMatchObject({ message: `${path} cannot be bound: it holds ${cause}` });
   });
   it('U10: receiptText returns each committed receipt byte for byte, and reads angle brackets in a code span as text', () => {
-    for (const path of [ROSTER_RECEIPT, PROVENANCE_LISTING_RECEIPT]) expect(receiptText(path)).toBe(committedReceipt(path));
+    for (const path of [PIN_RECEIPT, ROSTER_RECEIPT, PROVENANCE_LISTING_RECEIPT]) expect(receiptText(path)).toBe(committedReceipt(path));
     const coded = `${committedReceipt(PROVENANCE_LISTING_RECEIPT)}- A code span such as \`<div hidden>\` renders as text.\n`;
     expect(receiptText(PROVENANCE_LISTING_RECEIPT, coded)).toBe(coded);
   });
@@ -559,15 +589,23 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
   // The named residuals of U12's rule (wb-xmo2): each family's form, derived in memory from a committed receipt like U12's rows,
   // reads quiet: receiptText returns it unrefused and U7's listing pattern does not match the line it inserts, so a reader that
   // starts refusing the form reds its row (promote the form to U12's table). FROZEN SHAPE (rule 16): two families, in the order
-  // receipts/wb-91yt.md lists them with the digest of each form's lines, an anchor outside this file.
-  it("U12: the residual table names two families with quiet rows, in the order its receipt lists them with the digest of each form's lines", () => {
-    expect(RECEIPT_RESIDUAL_FORMS.map(([id, path, , , lines]) => `${id} ${basename(path)} ${lines.length}`)).toStrictEqual(['R-OUTSIDE-LIST wb-c7ku.md 1', 'R-PATTERN-MISS wb-c7ku.md 1']);
+  // receipts/wb-91yt.md lists them with the digest of each form's lines and, since wb-954g, the line each form is inserted at,
+  // anchors outside this file, so a form moved below another line is red against its literal and against its receipt line.
+  it("U12: the residual table names two families with quiet rows, in the order its receipt lists them with the digest of each form's lines and the line it is inserted at", () => {
+    expect(RECEIPT_RESIDUAL_FORMS.map(([id, path, after, , lines]) => `${id} ${basename(path)} ${lines.length} at line ${insertedLine(path, after)}`)).toStrictEqual([
+      'R-OUTSIDE-LIST wb-c7ku.md 1 at line 18',
+      'R-PATTERN-MISS wb-c7ku.md 1 at line 18',
+    ]);
     const digests = RECEIPT_RESIDUAL_FORMS.map(([id, path, after, restated, lines]) => `${id} ${lineDigest(insertedVariant(path, after, restated, lines).inserted)}`);
     expect(statedEntries(RESIDUAL_LIST)).toStrictEqual([{ stated: RECEIPT_RESIDUAL_FORMS.length, entries: digests }]);
+    const insertedAt = RECEIPT_RESIDUAL_FORMS.map(([id, path, after]) => `${id} ${insertedLine(path, after)}`);
+    expect(statedEntries(RESIDUAL_LINE_LIST)).toStrictEqual([{ stated: RECEIPT_RESIDUAL_FORMS.length, entries: insertedAt }]);
   });
-  it.each(RECEIPT_RESIDUAL_FORMS)('U12 residual %s: its form of a committed receipt reads quiet, returned unrefused and unmatched by U7', (_id, path, after, restated, lines) => {
+  it.each(RECEIPT_RESIDUAL_FORMS)('U12 residual %s: its form of a committed receipt opens on its insertion line and reads quiet, returned unrefused and unmatched by U7', (_id, path, after, restated, lines) => {
     const { inserted, variant } = insertedVariant(path, after, restated, lines);
     expect(variant).not.toBe(committedReceipt(path));
+    const at = insertedLine(path, after);
+    expect(variant.split('\n').slice(at - 1, at - 1 + inserted.length)).toStrictEqual(inserted);
     expect(receiptText(path, variant)).toBe(variant);
     expect(inserted.filter(line => ROSTER_KEY_LIST.test(line))).toStrictEqual([]);
   });
@@ -589,7 +627,7 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
 
   // Acceptance 4: the mirrored rf version, the source kind and the receipt; 'captured' only with a cmd_ receipt, else null.
   it('records the mirrored rf version, source kind and capture receipt beside the roster', () => {
-    expect(roster.rfVersion).toBe('0.1.784');
+    expect(roster.rfVersion).toBe('0.1.845');
     expect(['captured', 'constructed']).toContain(roster.source);
     if (roster.source === 'captured') expect(roster.receipt).toMatch(/^cmd_[0-9a-f]{12}$/);
     else expect(roster.receipt).toBeNull();
@@ -616,8 +654,8 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
     expect(diffAgainstRoster(roster, { ...result, work: { ...fullShapeWork(), seventh_count: 0 } }).failures).toStrictEqual(['unexpected result.work.seventh_count']);
     expect(diffAgainstRoster(roster, { ...result, work_metrics: { ...fullShapeWorkMetrics(), eleventh_count: 0 } }).failures)
       .toStrictEqual(['unexpected result.work_metrics.eleventh_count']);
-    // A conditional key rides beside the roster: view_id is stated only by a --view render (render_service.py:1518-1523 at the
-    // 0.1.784 pin, :1503-1508 at 0.1.768). retry_work (an extra key at 0.1.723) and necessity are roster members since their pins. Beside a constructed
+    // A conditional key rides beside the roster: view_id is stated only by a --view render (render_service.py:2099-2105 at the
+    // 0.1.845 pin, :1518-1523 at 0.1.784, :1503-1508 at 0.1.768). retry_work (an extra key at 0.1.723) and necessity are roster members since their pins. Beside a constructed
     // roster (a floor read off the emitter, before a capture promotes it) the extra key is recorded, never failed; beside the
     // captured roster it fails by name (owner ruling R649 (3), the R649 row below).
     const constructed: RfResultRoster = { ...roster, source: 'constructed', receipt: null };

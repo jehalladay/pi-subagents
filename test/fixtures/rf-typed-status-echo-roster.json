@@ -146,12 +146,14 @@
     "R-ADDITIVE-UNREAD": "Q4",
     "R-COMPOSED-FIELD": "A1",
     "R-ABSENCE-VOCABULARY": "Q5",
-    "R-UNENUMERATED-FIELD": "Q6"
+    "R-UNENUMERATED-FIELD": "Q6",
+    "R-FUSED-SPLIT": "A1",
+    "R-SPLIT-PATH": "A1"
   },
   "rows": [
     {
       "id": "A",
-      "label": "(trigger, absent today) Pi reads no rf federation status record: no src module's code (identifiers, plain name chains and literals; comments are never read) spells a federation boundary or query-view field or record name FEDERATION_MATCHERS enumerates, the rf roster stays reactivefiber.render.preview alone, and both readers refuse a federation record as an envelope",
+      "label": "(trigger, absent today) Pi reads no rf federation status record: no src file's code (identifiers, access chains, nested key paths and literals, each read as spelled, as its words, singular and fused within one word; a non-module file whole; comments are never read) spells a federation boundary or query-view field or record name FEDERATION_MATCHERS enumerates, the rf roster stays reactivefiber.render.preview alone, and both readers refuse a federation record as an envelope",
       "pins": [
         {
           "id": "A1",
@@ -160,6 +162,7 @@
             "unitsFloorMet": true,
             "anchorRead": true,
             "hits": [],
+            "others": [],
             "controls": {
               "members": {
                 "publication_state": [
@@ -229,6 +232,96 @@
             "measuredWitnessFields": {
               "witness_digest": 1,
               "manifest_digest": 1
+            },
+            "fusedMatchers": [
+              "publicationstate",
+              "publicstate",
+              "witnessdigest",
+              "manifestdigest",
+              "completenessreason",
+              "matchedcount",
+              "specdigest",
+              "resourcerevision",
+              "evidencedigest",
+              "provenancedigest",
+              "publicport",
+              "backendinstanceid",
+              "queryviews?",
+              "ownerboundary",
+              "federat"
+            ],
+            "widened": {
+              "plural": {
+                "snake": 1,
+                "camel": 1,
+                "quoted": 1,
+                "ies": 1,
+                "inner": 1
+              },
+              "fused": {
+                "lower": 1,
+                "upper": 1,
+                "prefixed": 1,
+                "plural": 1,
+                "prose": 1
+              },
+              "chains": {
+                "element": 1,
+                "mixed": 1,
+                "nonNull": 1,
+                "asserted": 1,
+                "satisfied": 1,
+                "called": 1,
+                "constructed": 1,
+                "optional": 1,
+                "templateKey": 1
+              },
+              "nested": {
+                "binding": 1,
+                "parameter": 1,
+                "assignment": 1,
+                "literal": 1,
+                "type": 1,
+                "member": 1,
+                "classProperty": 1,
+                "deep": 1,
+                "array": 1
+              }
+            },
+            "quiet": {
+              "fusedSplitCamel": 0,
+              "fusedSplitSnake": 0,
+              "compoundCamel": 0,
+              "compoundSnake": 0,
+              "aliasedPath": 0,
+              "keyedPath": 0,
+              "boundPath": 0
+            },
+            "walk": {
+              "files": {
+                "data.json": 1,
+                "nested/plant.cjs": 1,
+                "nested/plant.cts": 1,
+                "nested/plant.js": 1,
+                "nested/plant.jsx": 1,
+                "nested/plant.mjs": 1,
+                "nested/plant.mts": 1,
+                "nested/plant.ts": 1,
+                "nested/plant.tsx": 1
+              },
+              "others": [
+                "linked.json"
+              ],
+              "kinds": {
+                ".ts": "TS",
+                ".mts": "TS",
+                ".cts": "TS",
+                ".tsx": "TSX",
+                ".js": "JSX",
+                ".mjs": "JSX",
+                ".cjs": "JSX",
+                ".jsx": "JSX"
+              }
             }
           }
         },
@@ -641,7 +734,7 @@
                     "rf-graph:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                     "rf-workspace:rfw_aaaaaaaaaaaaaaaaaaaaaa",
                     "rf-bundle:sha256:2222222222222222222222222222222222222222222222222222222222222222",
-                    "rf-cli:0.1.784"
+                    "rf-cli:0.1.845"
                   ],
                   "sourceVersion": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
                   "sourceRevision": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -652,7 +745,7 @@
               "diagnostics": [
                 "ephemeral noncommitted preview: render_id null, transaction_id null, 0 authoritative storage writes (envelope storage_write_count)",
                 "context text withheld: referenced by sha256 digest",
-                "producer release from result.provenance.cli_version: rf@0.1.784",
+                "producer release from result.provenance.cli_version: rf@0.1.845",
                 "no native interval supplied"
               ]
             }

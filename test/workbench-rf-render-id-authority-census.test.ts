@@ -33,8 +33,11 @@
  * rf 0.1.832 registry, 79 leaf paths in this order, all seven dereference leaves served), and C1 holds them to it; the census
  * never reads the live rf. Re-measured 2026-10-24 by the wb-sbtv seat: the installed rf now reads 0.1.836 (commit
  * b3494ab13397) with the same 79 leaf paths in the same order and the seven dereference leaves served_reachable.
- * MEASURED AT BASE (2a26385, landing 272; re-measured at f8e3a48 for wb-sbtv): src is 115 .ts files, the same 115 that
- * `git ls-files -z --cached --others -- src` lists (no untracked, ignored or symlinked entry); its one rf launch is spawn("rf", argv) in
+ * MEASURED AT BASE (2a26385, landing 272; re-measured at f8e3a48 for wb-sbtv; re-measured at e0c7828 for wb-h55d: 116, the
+ * one added file src/workbench/beads-program-readiness.ts from wb-4nut.5): src is 116 .ts files, the same 116 that
+ * `git ls-files -z --cached --others -- src` lists (no untracked or ignored entry at that measurement; no symbolic link, and
+ * that part is pinned, not dated: the listing keeps symbolic links, which the walk never follows, so a link reds as unwalked);
+ * its one rf launch is spawn("rf", argv) in
  * nativeReactiveFiberRender (providers/reactivefiber.ts) with argv from renderArgv (`context render ... --no-commit --no-input
  * --json`); the rf descriptor (native and injected) admits only the {model, task} or {view, taskId, model?} input arm, declares
  * supportedModes ["invoke"] (no inspect, the registry's ref-dereference mode), and both readers require result.render_id null
@@ -103,6 +106,17 @@
  * minus the anchor module's directory and the walk plus a path git does not list; the capture comparison reports a producer
  * reading that departs from the capture in every judged way; the task-tree walker returns exactly the pin cases from the row
  * suites alone.
+ * THIS HOP (wb-h55d, the R694 follow-up of landing 385, hop 3 of the landing-290 chain, in the R739 TERMINAL
+ * enumerate-the-resolvable form: it claims exactly the two classes below and enumerates no further escapes on this chain):
+ * F1, the judged set beside the records case (PREP N17): the records case holds the registered titles to the in-file literals,
+ * as the judged set holds the roster's (JUDGED_TITLE first, the ROWS-derived pin titles in row order, RECORDS_TITLE last), and
+ * requires the judged set to have reached its end (JUDGED_REACHED), so deleting the judged case together with its roster title,
+ * or emptying it in place under its title, reds the records case; the mirror (the records case with its title) still reds the
+ * judged set through RECORDS_TITLE. F2, symbolic links under src (PREP N05): git's listing keeps a symbolic link beside the
+ * regular files and the walk never follows one, so a link under src, to a module or to a directory, is listed and unwalked and
+ * reds A1 and C1; its planted positive control (C1 gitControls.symlinked) is a scratch git tree whose src holds one regular
+ * module, a link to a module outside src that launches an rf dereference and a link to a directory outside src, and the
+ * comparison reads exactly the two links unwalked.
  * RESIDUALS (named families, each with a pinned quiet row in a witness): R-COMPOSED-ARGV a dereference argv built from non-literal
  * parts (C1 composedArgv); R-INDIRECT-LAUNCH an rf launch whose binary is not the literal "rf" (C1 indirectLaunch); R-INTERRUPTED a
  * receipt spelling split by a zero-width code point (C1 interrupted); R-UNNAMED a receipt surface that never spells context or
@@ -113,20 +127,24 @@
  * own digest is what the record carries).
  * NOT CLAIMED: a coordinated removal of one residual family (its RESIDUALS entry, its quiet row and the roster's copies) has no
  * anchor outside this census; a coordinated edit of a judge, its planted control and what it judges inside this file (the src
- * walk and its git anchor; the coverage judge and RENDER_ID_INPUTS; the task-tree walker beside a deleted case) has none either;
+ * walk and its git anchor; the coverage judge and RENDER_ID_INPUTS; the task-tree walker beside a deleted case; the records
+ * case's title literals and its JUDGED_REACHED check beside a deleted or emptied judged case; the git anchor's link filter beside
+ * its scratch-tree control) has none either; the records case is the last judge, so emptying it in place leaves no later case to
+ * red (the judged set still holds its title, its registration and its run mode);
  * the roster's help-text readings of the installed rf (contextShowDetail, the choice of the seven dereference leaves,
  * rfc-s24ro.6's unserved --detail receipt) have no landed capture and are held to the roster only; the dereference checks
  * themselves (issuer, workspace, build, observer scope, document digest) arm with C3 and are not implemented, and no Pi receipt
  * verb or record is added.
  * RECORDS: the judged set walks this file's registered tests at collection (each roster title once, in order, in run mode, not
- * inverted); the last case walks them again after the pins: each ran, and every pin's case reached its end (REACHED).
+ * inverted); the last case walks them again after the pins: the titles equal the roster's and the in-file literals' (wb-h55d
+ * F1), each ran, every pin's case reached its end (REACHED), and the judged set reached its end (JUDGED_REACHED).
  *
  * Display paths added: none. Test-only: the stand-in rf and the planted trees live in makeScratch scratch; src, the bead export
  * and the roster are only read.
  */
 import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { chmodSync, type Dirent, lstatSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, type Dirent, lstatSync, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, extname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -235,8 +253,9 @@ const MODULE_KINDS: Readonly<Record<string, ts.ScriptKind>> = {
   ".cjs": ts.ScriptKind.JS,
   ".jsx": ts.ScriptKind.JSX,
 };
-/** Sits below the 115 src files measured at base 2a26385 (115 again at f8e3a48); the anchor is a token the provider's bytes
- * carry. The floor guards an empty or misdirected walk; git's own listing of src (gitListed) is what the walk must equal. */
+/** Sits below the 115 src files measured at base 2a26385 (115 again at f8e3a48, 116 at e0c7828); the anchor is a token the
+ * provider's bytes carry. The floor guards an empty or misdirected walk; git's own listing of src (gitListed) is what the walk
+ * must equal. */
 const SRC_FLOOR = 100;
 const SRC_ANCHOR = ["workbench/providers/reactivefiber.ts", "RF render refused"] as const;
 /** The bead export's Acceptance line splits into clauses before "; (x) " and each clause into parts before ", " or " and no ". */
@@ -705,28 +724,55 @@ function filesBelow(directory: string): string[] {
   return files.sort();
 }
 const posix = (path: string): string => path.split(sep).join("/");
-/** Git's own listing of a root below the repo (tracked and untracked, ignored files included so a local ignored file cannot
- * split the walk from its anchor), regular files only, repo-relative and sorted: the walk's anchor outside filesBelow, so a walk
- * that skips a directory or a file reds even while the floor and the anchor token hold. Undefined when git cannot list it. */
-function gitListed(root: string): string[] | undefined {
-  const listing = spawnSync("git", ["ls-files", "-z", "--cached", "--others", "--", posix(relative(REPO, root))], { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
+/** Git's own listing of a root below a repo (tracked and untracked, ignored files included so a local ignored file cannot
+ * split the walk from its anchor), regular files and symbolic links, repo-relative and sorted: the walk's anchor outside
+ * filesBelow, so a walk that skips a directory or a file reds even while the floor and the anchor token hold. A symbolic link is
+ * kept (wb-h55d F2): the walk never follows one, so a link under the root, to a module or to a directory, reads unwalked rather
+ * than both sides agreeing by dropping it. Undefined when git cannot list it. */
+function gitListed(root: string, repo = REPO, env: NodeJS.ProcessEnv = process.env): string[] | undefined {
+  const listing = spawnSync("git", ["ls-files", "-z", "--cached", "--others", "--", posix(relative(repo, root))], { cwd: repo, env, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
   if (listing.status !== 0) return undefined;
-  const regular = (path: string): boolean => {
+  const kept = (path: string): boolean => {
     try {
-      return lstatSync(join(REPO, path)).isFile();
+      const stats = lstatSync(join(repo, path));
+      return stats.isFile() || stats.isSymbolicLink();
     } catch {
       return false;
     }
   };
-  return [...new Set(listing.stdout.split("\0").filter(path => path.length > 0))].filter(regular).sort();
+  return [...new Set(listing.stdout.split("\0").filter(path => path.length > 0))].filter(kept).sort();
 }
 /** A walk's files (repo-relative) against git's own listing of the same root: whether they agree, and what each lacks. */
-function againstGit(root: string, walked: readonly string[]): { agrees: boolean; unwalked: string[]; unlisted: string[] } {
-  const listed = gitListed(root);
+function againstGit(root: string, walked: readonly string[], repo = REPO, env?: NodeJS.ProcessEnv): { agrees: boolean; unwalked: string[]; unlisted: string[] } {
+  const listed = gitListed(root, repo, env);
   if (listed === undefined) return { agrees: false, unwalked: ["<git ls-files failed>"], unlisted: [] };
   const unwalked = listed.filter(path => !walked.includes(path));
   const unlisted = walked.filter(path => !listed.includes(path));
   return { agrees: unwalked.length === 0 && unlisted.length === 0 && listed.length === walked.length, unwalked, unlisted };
+}
+/** Repository locators a hook may export (a linked worktree's hooks receive GIT_DIR): a scratch git tree runs without them and
+ * without global or system configuration, so its commands never reach the outer repository or the host's settings. */
+const GIT_LOCATORS = ["GIT_DIR", "GIT_WORK_TREE", "GIT_INDEX_FILE", "GIT_OBJECT_DIRECTORY", "GIT_ALTERNATE_OBJECT_DIRECTORIES", "GIT_COMMON_DIR", "GIT_NAMESPACE"];
+function scratchGitEnv(): NodeJS.ProcessEnv {
+  const inherited = Object.fromEntries(Object.entries(process.env).filter(([key]) => !GIT_LOCATORS.includes(key)));
+  return { ...inherited, GIT_CONFIG_GLOBAL: "/dev/null", GIT_CONFIG_SYSTEM: "/dev/null" };
+}
+/** The git anchor's link control (wb-h55d F2): a scratch git tree whose src holds one regular module beside a symbolic link to a
+ * module outside src that launches an rf dereference and a symbolic link to a directory outside src; the walk of that src, and
+ * the walk against git's own listing of it. */
+function symlinkedControl(): { walked: string[]; agrees: boolean; unwalked: string[]; unlisted: string[] } {
+  const tree = scratch("rf-render-id-authority-git-");
+  const env = scratchGitEnv();
+  const init = spawnSync("git", ["init", "-q"], { cwd: tree, env, encoding: "utf8" });
+  if (init.status !== 0) throw new Error(`git init failed in the scratch tree: ${init.stderr}`);
+  mkdirSync(join(tree, "src", "sub"), { recursive: true });
+  mkdirSync(join(tree, "outside"));
+  writeFileSync(join(tree, "src", "kept.ts"), "export const kept = 1;\n");
+  writeFileSync(join(tree, "outside", "launch.ts"), 'import { spawn } from "node:child_process";\nspawn("rf", ["context", "replay", id]);\n');
+  symlinkSync(join("..", "outside", "launch.ts"), join(tree, "src", "zz-link.ts"));
+  symlinkSync(join("..", "..", "outside"), join(tree, "src", "sub", "zz-dirlink"));
+  const walked = filesBelow(join(tree, "src")).map(file => posix(relative(tree, file)));
+  return { walked, ...againstGit(join(tree, "src"), walked, tree, env) };
 }
 
 interface Scan {
@@ -860,6 +906,8 @@ const scanned = (text: string, name = "control.ts"): Scan => scanModule(name, te
  * ------------------------------------------------------------------------------------------------------------------------- */
 
 const REACHED: string[] = [];
+/** The judged set's own end, recorded as reached: the records case requires it exactly once (wb-h55d F1). */
+const JUDGED_REACHED: string[] = [];
 /** A pin's witness, recorded as reached: only a case that ran to its end returns through here. */
 function done(pin: string, witness: { [key: string]: unknown }): Json {
   REACHED.push(pin);
@@ -1135,7 +1183,9 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     });
     const empty = scanTree(scratch("rf-render-id-authority-empty-"), REPO);
     expect(empty.files >= SRC_FLOOR).toBe(false);
-    // The git anchor is live: the src walk minus the anchor module's directory, or plus a path git does not list, disagrees.
+    // The git anchor is live: the src walk minus the anchor module's directory, or plus a path git does not list, disagrees; and
+    // it keeps symbolic links (wb-h55d F2): in a scratch git tree, a link to a module and a link to a directory read unwalked
+    // beside the one regular module the walk reads.
     const skippedDirectory = `${posix(join("src", dirname(SRC_ANCHOR[0])))}/`;
     const narrowed = againstGit(SRC, tree.walked.filter(path => !path.startsWith(skippedDirectory)));
     const widened = againstGit(SRC, [...tree.walked, "src/zz-census-unlisted.ts"]);
@@ -1144,8 +1194,15 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       narrowedUnwalkedAreTheSkipped: narrowed.unwalked.length > 0 && narrowed.unwalked.every(path => path.startsWith(skippedDirectory)),
       widenedAgrees: widened.agrees,
       widenedUnlisted: widened.unlisted,
+      symlinked: symlinkedControl(),
     };
-    expect(gitControls).toStrictEqual({ narrowedAgrees: false, narrowedUnwalkedAreTheSkipped: true, widenedAgrees: false, widenedUnlisted: ["src/zz-census-unlisted.ts"] });
+    expect(gitControls).toStrictEqual({
+      narrowedAgrees: false,
+      narrowedUnwalkedAreTheSkipped: true,
+      widenedAgrees: false,
+      widenedUnlisted: ["src/zz-census-unlisted.ts"],
+      symlinked: { walked: ["src/kept.ts"], agrees: false, unwalked: ["src/sub/zz-dirlink", "src/zz-link.ts"], unlisted: [] },
+    });
     const controls = {
       argv: scanned('run(["context", "show", id]);').dereferences.length,
       dotted: scanned('const leaf = "context.replay";').dereferences.length,
@@ -1353,6 +1410,7 @@ describe("wb-hs2j.4 render-id authority census (RF-REACTIVE-CONTEXT-ASSEMBLY-R4,
     // The walker is live: the row suites alone (this case's siblings that are suites) hold exactly the pin cases.
     const rowSuites = (task.suite?.tasks ?? []).filter(child => child.type === "suite");
     expect(registeredTests(rowSuites).map(entry => entry.name), "the row suites hold exactly the pin cases").toEqual(ROWS.flatMap(row => row.pins.map(pin => `${pin} ${rosterPin(pin).part}`)));
+    JUDGED_REACHED.push(task.name);
   });
 
   for (const row of ROWS) {
@@ -1379,6 +1437,13 @@ describe("wb-hs2j.4 render-id authority census (RF-REACTIVE-CONTEXT-ASSEMBLY-R4,
     visit(task.file.tasks);
     const titles = walked.map(entry => entry.name);
     expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
+    // The registered titles against the in-file literals too, as the judged set holds the roster's (wb-h55d F1): the judged case
+    // deleted together with its roster title, which the roster compare above cannot see, reds here.
+    expect(titles, "the registered titles against the in-file literals: the judged set first, each pin by its exported part in row order, this case last").toEqual([
+      JUDGED_TITLE,
+      ...ROWS.flatMap(row => row.pins.map(pin => `${pin} ${rosterPin(pin).part}`)),
+      RECORDS_TITLE,
+    ]);
     expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice").toEqual([]);
     const here = walked.findIndex(entry => entry.self);
     expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
@@ -1386,5 +1451,6 @@ describe("wb-hs2j.4 render-id authority census (RF-REACTIVE-CONTEXT-ASSEMBLY-R4,
     const read = (entry: (typeof walked)[number]): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""} | ${ran(entry.state) ? "ran" : (entry.state ?? "no result")}`;
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read), "every other test is in run mode, not inverted, and ran before this case").toEqual([]);
     expect(REACHED, "every pin's case reached its end, in row order").toEqual(ROWS.flatMap(row => row.pins));
+    expect(JUDGED_REACHED, "the judged set reached its end, once (wb-h55d F1: the judged case emptied in place under its title reds here)").toEqual([JUDGED_TITLE]);
   });
 });

@@ -118,21 +118,32 @@
  * module exports it under. A name resolves as TypeScript resolves it inside the module (a one-file program: the module's own
  * scopes, its imports unresolved). The derivations read exactly these spellings, each with a positive row in DERIVATION_CONTROLS:
  * (i) in a Pi rf reader, every property id - a plain, string or computed-literal name, or a shorthand - whose value is the preview
- *   id (the literal, or a const of the module holding it), wherever the object sits (inline in a register call, behind a type
- *   assertion or in a variable), keyed by the exported function it lies in - a function declaration, or a variable or export
+ *   id (the literal, or a const of the module holding it: its initializer the literal or, followed transitively, another such
+ *   const - wb-23d1, the landing-431 gate's F4), wherever the object sits (inline in a register call, behind a type assertion or
+ *   in a variable), keyed by the exported function it lies in - a function declaration, or a variable or export
  *   default holding a function value, exported by a modifier, an export list or export default - else (module) (B1 the injected
  *   registerReactiveFiberRender, B2 the native registerNativeReactiveFiberRender);
  * (ii) in a src module naming the agent SDK, every call of the SDK's tool helper - imported by name from the SDK itself (aliases
  *   included), a member (by name or by a string element access) of a namespace or default import of the SDK, or a variable of the
- *   module bound to either by its initializer (plain, or an object destructuring of a namespace or default import) or by an
- *   assignment whose target is the variable itself (=, ??=, ||= or &&=, anywhere in the module; cut #3, the gate's D1) - whose
- *   arguments, or the declarations of the module any name in them resolves to (followed transitively), call a member or a binding
- *   named invoke, keyed by the tool's name (a literal or a const of the module, else (unnamed)) (B3 capability_invoke);
+ *   module bound to either - or to another such variable, followed transitively - by its initializer (plain, or an object
+ *   destructuring of a namespace or default import) or by an assignment whose target is the variable itself (=, ??=, ||= or &&=,
+ *   anywhere in the module; cut #3, the gate's D1) - whose arguments, or the declarations of the module any name in them resolves
+ *   to (followed transitively), call a member or a binding named invoke, keyed by the tool's name (a literal or a const of the
+ *   module, read as (i) reads the id, else (unnamed)) (B3 capability_invoke);
  * (iii) in an ENVELOPE READER - a Pi rf reader whose syntax names the rf envelope schema constant, so it reads the envelope itself -
  *   every export (by a modifier, an export list with its aliases, or export default) of a function declaration or of a function
  *   value, held directly or through a name of the module by its initializer, that declares a parameter typed JsonValue - named
- *   directly, through an import alias of it, or through a type alias of the module naming it, each inside any parentheses (cut #3,
- *   the gate's D4) (B4 reactivefiberTopology, B5 nativeEvidence).
+ *   directly, through an import alias of it, or through a type alias of the module naming it (directly or through another such
+ *   alias), each inside any parentheses, at the parameter or in an alias's own type (cut #3, the gate's D4) (B4
+ *   reactivefiberTopology, B5 nativeEvidence).
+ * POSITIVE ROWS (wb-23d1, the R694 follow-up of the wb-5618 landing-431 gate's F1, owner reading (a)): each alternative the list
+ *   above names has a positive row in DERIVATION_CONTROLS, and each row added here reds the bound case under a census-only
+ *   derivation mutant that drops its alternative - the landing gate's four unpinned spellings (||= toolAssignedOrOr, &&=
+ *   toolAssignedAndAnd, a string name registerStringName, a default-import destructuring toolDestructuredDefault), its alias inside
+ *   parentheses (projectParenthesizedAlias) and its export default holder (registerDefaultExport), the other named alternatives
+ *   that had no row (registerDefaultFunction, toolReboundMember, toolAssignedInModule, projectDefaultArrow,
+ *   projectParenthesizedImportAlias), and the chains the derivations follow (registerConstChain, toolNameConstChain,
+ *   toolReboundChain, projectTypeAliasChain).
  * The bound witness holds T1's reader floor, not an exact reader count, so a new rf reader adding no surface stays green as it does
  * at T1. Each binding is also proven as its case runs: reach() records the src function a B case called, by that function's own
  * name, or the agent tool it called, and the term a T case judged (T1 the components key it reads every rf reader for, T2 the rf
@@ -151,9 +162,12 @@
  * gate's F5 and the wb-5618 gates' record-only rows): a reading's own matching rewritten to read less than the text it reports
  * consumed (its patterns, fold or window, or its per-unit iteration); the liveness re-pointed at a text the readings did not
  * consume (scannedWhole or readingsWhole handed the untouched read), where a reading cut keyed to a path the far plants do not
- * share - every file under the repository, or every file below test/ - then stays green; a control's expected value edited in
- * this file and the roster together; and a derivation's reading weakened together with its controls in both files (the wb-5618
- * gate's K-CTRL).
+ * share - every file under the repository, or every file below test/ - then stays green; a reading's reported findings dropped
+ * after it consumed the text (scanFile handing back no KEY pair or LABEL for a file both readings consumed whole, keyed to such a
+ * path - the wb-5618 landing-431 gate's L2-DISC-TEST, L2-DISC-REPO and L2-DISC-TESTb, equal in effect to the archived H02: the
+ * walk's own per-file reading rewritten, and no plant anchors it, since makeScratch scratch lies outside the repository and a
+ * walked path carries no hit); a control's expected value edited in this file and the roster together; and a derivation's
+ * reading weakened together with its controls in both files (the wb-5618 gate's K-CTRL).
  * NOT CLAIMED (3): a spelling (i)-(iii) do not read, beyond the named residuals of the derivations, is not claimed.
  * RESIDUALS (named, each with a pinned quiet row in A3's QUIET_CONTROLS unless named otherwise): R-FEATURE-WORDS skip, skips and
  * skipping beside the nouns are not read - they name ADR-0032's deferred skip feature (the wb-csbt.1 posture's subject), not a
@@ -204,6 +218,15 @@
  * holder's type (a module type alias naming a function type, D5), is not read by (iii) (projectContextualType);
  * R-ASSIGNED-FUNCTION a projection held by a variable through an assignment rather than its initializer is not read by (iii)
  * (projectAssignedValue).
+ * RESIDUALS OF THE DERIVATIONS, wb-23d1 (the wb-5618 landing-431 gate's F3 list, each quiet there beside red controls; each with
+ * a pinned quiet row in DERIVATION_CONTROLS, named in parentheses): R-COMPUTED-HELPER gains the comma operator - a variable
+ * bound to (0, tool), or the helper called as (0, tool)(...) (toolHelperComma, toolHelperCallComma) - and the chained
+ * assignment make = other = tool (toolHelperChained), each an expression that computes the helper rather than names it;
+ * R-PARAMETER-HELPER the helper bound to a parameter by its default value, which is no variable of the module, is not read by
+ * (ii) (toolHelperParameter); R-QUALIFIED-TYPE gains JsonValue named through an import type, the registry module's path then
+ * .JsonValue (projectImportType); R-OPTIONAL-READING gains a type parameter constrained by JsonValue, the parameter typed by it
+ * (projectTypeParameter); R-MUTABLE-ID a preview id held by a let or a var of the module rather than a const is not read by (i)
+ * (registerLetId); R-DESCRIPTOR-SHAPE gains an accessor stating the id, a getter named id returning it (registerGetterId).
  * PRECISION (not escapes): the bare third segment is never a needle - the adapter's observation-freshness note ("observations: <n>
  * rows, <r> ...", wb-973.9) and rf's own counters (reused_component_count, observation_reused_count) read quiet (bareWord,
  * rfInstanceCounter, rfObservationCounter), and A1 reads the adapter and the fixture helper that spell them.
@@ -978,15 +1001,17 @@ function propertyNameText(name: ts.PropertyName): string | undefined {
   const computed = ts.isComputedPropertyName(name) ? unwrapped(name.expression) : undefined;
   return computed !== undefined && ts.isStringLiteralLike(computed) ? computed.text : undefined;
 }
-/** A string an expression states: a literal, or a const of the module holding one. */
-function stringOf(syntax: ModuleSyntax, expression: ts.Expression): string | undefined {
+/** A string an expression states: a literal, or a const of the module holding one - its initializer a literal or, followed
+ * transitively, another such const (wb-23d1, the wb-5618 landing-431 gate's F4: registerConstChain, toolNameConstChain). */
+function stringOf(syntax: ModuleSyntax, expression: ts.Expression, seen: Set<ts.Node> = new Set()): string | undefined {
   const value = unwrapped(expression);
   if (ts.isStringLiteralLike(value)) return value.text;
   if (!ts.isIdentifier(value)) return undefined;
   for (const declaration of declarationsOf(syntax, value)) {
-    if (!ts.isVariableDeclaration(declaration) || declaration.initializer === undefined || (ts.getCombinedNodeFlags(declaration) & ts.NodeFlags.Const) === 0) continue;
-    const held = unwrapped(declaration.initializer);
-    if (ts.isStringLiteralLike(held)) return held.text;
+    if (seen.has(declaration) || !ts.isVariableDeclaration(declaration) || declaration.initializer === undefined || (ts.getCombinedNodeFlags(declaration) & ts.NodeFlags.Const) === 0) continue;
+    seen.add(declaration);
+    const held = stringOf(syntax, declaration.initializer, seen);
+    if (held !== undefined) return held;
   }
   return undefined;
 }
@@ -1156,40 +1181,55 @@ const NAMED_TOOL = `import { tool } from "${AGENT_SDK}";`;
 const INVOKING = 'async () => registry.invoke("x", {}, {} as never)';
 const READER_HEAD = `import type { JsonValue } from "./capability-registry.js";\nimport { ${ENVELOPE_SCHEMA_CONSTANT} } from "./providers/reactivefiber.js";\nexport const schema = ${ENVELOPE_SCHEMA_CONSTANT};\n`;
 const PROJECTING = "{\n  return JSON.stringify(value);\n}";
-/** BOUND (respin #1, cut #3): the derivation's own controls, each a module source read through moduleSurfaces as CONTROL_MODULE -
- * a positive row for every spelling (i)-(iii) read (cut #3 adds toolAssigned, toolAssignedLogical and projectParenthesized),
- * precision rows for what they must not read, and one quiet row per named residual of the derivations (registerComposedId,
- * registerImportedId, registerClassField, registerAssignedId, toolPiDefineTool, toolSdkReexport, toolDynamicImport,
- * toolImportedHandler, toolInvokeComposed, toolDestructuringAssignment, toolHelperCall, toolHelperChosen, toolSdkSubpath,
- * projectOptionalReading, projectMember, projectReexport, projectSchemaLiteral, projectQualifiedType, projectContextualType,
+/** BOUND (respin #1, cut #3, wb-23d1): the derivation's own controls, each a module source read through moduleSurfaces as
+ * CONTROL_MODULE - a positive row for every spelling (i)-(iii) read (cut #3 adds toolAssigned, toolAssignedLogical and
+ * projectParenthesized; wb-23d1 adds the fifteen POSITIVE ROWS the header names), precision rows for what they must not read,
+ * and one quiet row per named residual of the derivations (registerComposedId, registerImportedId, registerLetId,
+ * registerClassField, registerAssignedId, registerGetterId, toolPiDefineTool, toolSdkReexport, toolDynamicImport,
+ * toolImportedHandler, toolInvokeComposed, toolDestructuringAssignment, toolHelperCall, toolHelperChosen, toolHelperComma,
+ * toolHelperCallComma, toolHelperChained, toolHelperParameter, toolSdkSubpath, projectOptionalReading, projectTypeParameter,
+ * projectMember, projectReexport, projectSchemaLiteral, projectQualifiedType, projectImportType, projectContextualType,
  * projectAssignedValue). The bound witness holds what each derives. */
 const DERIVATION_CONTROLS: Readonly<Record<string, string>> = {
   registerLiteral: `${REGISTRAR}export function registerProbe(registry: CapabilityRegistry): void {\n  ${registers(PREVIEW)}\n}\n`,
   registerModuleConst: `${REGISTRAR}const PREVIEW = ${PREVIEW};\nexport function registerProbe(registry: CapabilityRegistry): void {\n  ${registers("PREVIEW")}\n}\n`,
+  registerConstChain: `${REGISTRAR}const BASE_ID = ${PREVIEW};\nconst PREVIEW = BASE_ID;\nexport function registerProbe(registry: CapabilityRegistry): void {\n  ${registers("PREVIEW")}\n}\n`,
   registerHeldDescriptor: `${REGISTRAR}export function registerProbe(registry: CapabilityRegistry): void {\n  const descriptor = { id: ${PREVIEW} } as const;\n  registry.register({ descriptor } as never);\n}\n`,
   registerShorthand: `${REGISTRAR}const id = ${PREVIEW};\nexport function registerProbe(registry: CapabilityRegistry): void {\n  registry.register({ descriptor: { id } } as never);\n}\n`,
   registerComputedName: `${REGISTRAR}export function registerProbe(registry: CapabilityRegistry): void {\n  registry.register({ descriptor: { ["id"]: ${PREVIEW} } } as never);\n}\n`,
+  registerStringName: `${REGISTRAR}export function registerProbe(registry: CapabilityRegistry): void {\n  registry.register({ descriptor: { "id": ${PREVIEW} } } as never);\n}\n`,
   registerArrow: `${REGISTRAR}export const registerProbe = (registry: CapabilityRegistry): void => {\n  ${registers(PREVIEW)}\n};\n`,
+  registerDefaultExport: `${REGISTRAR}export default (registry: CapabilityRegistry): void => {\n  ${registers(PREVIEW)}\n};\n`,
+  registerDefaultFunction: `${REGISTRAR}export default function registerProbe(registry: CapabilityRegistry): void {\n  ${registers(PREVIEW)}\n}\n`,
   registerListed: `${REGISTRAR}function register(registry: CapabilityRegistry): void {\n  ${registers(PREVIEW)}\n}\nexport { register as registerProbe };\n`,
   registerInModule: `${REGISTRAR}function register(registry: CapabilityRegistry): void {\n  ${registers(PREVIEW)}\n}\nexport const registered = register.name;\n`,
   registerComposedId: `${REGISTRAR}export function registerProbe(registry: CapabilityRegistry): void {\n  ${registers(`${JSON.stringify(PREVIEW_ID.split("."))}.join(".")`)}\n}\n`,
   registerImportedId: `${REGISTRAR}import { PREVIEW } from "./preview-id.js";\nexport function registerProbe(registry: CapabilityRegistry): void {\n  ${registers("PREVIEW")}\n}\n`,
+  registerLetId: `${REGISTRAR}let preview = ${PREVIEW};\nexport function registerProbe(registry: CapabilityRegistry): void {\n  ${registers("preview")}\n}\nexport function trimProbe(): void {\n  preview = preview.trim();\n}\n`,
   registerClassField: `${REGISTRAR}class Descriptor {\n  id = ${PREVIEW};\n}\nexport function registerProbe(registry: CapabilityRegistry): void {\n  registry.register({ descriptor: new Descriptor() } as never);\n}\n`,
   registerAssignedId: `${REGISTRAR}export function registerProbe(registry: CapabilityRegistry): void {\n  const descriptor: Record<string, unknown> = {};\n  descriptor.id = ${PREVIEW};\n  registry.register({ descriptor } as never);\n}\n`,
+  registerGetterId: `${REGISTRAR}export function registerProbe(registry: CapabilityRegistry): void {\n  registry.register({ descriptor: { get id() {\n    return ${PREVIEW};\n  } } } as never);\n}\n`,
   toolNamed: toolModule(NAMED_TOOL, `  return [tool("probe_invoke", "probe", {}, ${INVOKING})];`),
   toolAliased: toolModule(`import { tool as defineTool } from "${AGENT_SDK}";`, `  return [defineTool("probe_invoke", "probe", {}, ${INVOKING})];`),
   toolNamespace: toolModule(`import * as sdk from "${AGENT_SDK}";`, `  return [sdk.tool("probe_invoke", "probe", {}, ${INVOKING})];`),
   toolDefaultImport: toolModule(`import sdk from "${AGENT_SDK}";`, `  return [sdk.tool("probe_invoke", "probe", {}, ${INVOKING})];`),
   toolRebound: toolModule(NAMED_TOOL, `  const make = tool;\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolReboundMember: toolModule(`import * as sdk from "${AGENT_SDK}";`, `  const make = sdk.tool;\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolReboundChain: toolModule(NAMED_TOOL, `  const other = tool;\n  const make = other;\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
   toolDestructured: toolModule(`import * as sdk from "${AGENT_SDK}";`, `  const { tool: make } = sdk;\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolDestructuredDefault: toolModule(`import sdk from "${AGENT_SDK}";`, `  const { tool: make } = sdk;\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
   toolAssigned: toolModule(NAMED_TOOL, `  let make: typeof tool | undefined;\n  make = tool;\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
   toolAssignedLogical: toolModule(NAMED_TOOL, `  let make: typeof tool | undefined;\n  make ??= tool;\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolAssignedOrOr: toolModule(NAMED_TOOL, `  let make: typeof tool | undefined;\n  make ||= tool;\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolAssignedAndAnd: toolModule(NAMED_TOOL, `  let make: typeof tool | undefined;\n  make &&= tool;\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolAssignedInModule: toolModule(`${NAMED_TOOL}\nlet make: typeof tool | undefined;\nmake = tool;`, `  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
   toolNamespaceElement: toolModule(`import * as sdk from "${AGENT_SDK}";`, `  return [sdk["tool"]("probe_invoke", "probe", {}, ${INVOKING})];`),
   toolHandlerReference: toolModule(NAMED_TOOL, `  const handler = ${INVOKING};\n  return [tool("probe_invoke", "probe", {}, handler as never)];`),
   toolHandlerFunction: toolModule(NAMED_TOOL, '  async function handler() {\n    return registry.invoke("x", {}, {} as never);\n  }\n  return [tool("probe_invoke", "probe", {}, handler)];'),
   toolHandlerIndirect: toolModule(NAMED_TOOL, `  const read = ${INVOKING};\n  const handler = async () => read();\n  return [tool("probe_invoke", "probe", {}, handler)];`),
   toolHandlerMember: toolModule(NAMED_TOOL, `  const handlers = { read: ${INVOKING} };\n  return [tool("probe_invoke", "probe", {}, handlers.read)];`),
   toolNameConst: toolModule(NAMED_TOOL, `  const name = "probe_invoke";\n  return [tool(name, "probe", {}, ${INVOKING})];`),
+  toolNameConstChain: toolModule(NAMED_TOOL, `  const base = "probe_invoke";\n  const name = base;\n  return [tool(name, "probe", {}, ${INVOKING})];`),
   toolNameComposed: toolModule(NAMED_TOOL, `  return [tool(["probe", "invoke"].join("_"), "probe", {}, ${INVOKING})];`),
   toolInvokeElement: toolModule(NAMED_TOOL, '  return [tool("probe_invoke", "probe", {}, async () => registry["invoke"]("x", {}, {} as never))];'),
   toolInvokeBinding: toolModule(NAMED_TOOL, '  const { invoke } = registry;\n  return [tool("probe_invoke", "probe", {}, async () => invoke("x", {}, {} as never))];'),
@@ -1202,6 +1242,10 @@ const DERIVATION_CONTROLS: Readonly<Record<string, string>> = {
   toolDestructuringAssignment: toolModule(`import * as sdk from "${AGENT_SDK}";`, `  let make: typeof sdk.tool | undefined;\n  ({ tool: make } = sdk);\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
   toolHelperCall: toolModule(NAMED_TOOL, `  return [tool.call(undefined, "probe_invoke", "probe", {}, ${INVOKING})];`),
   toolHelperChosen: toolModule(NAMED_TOOL, `  const make = registry === undefined ? undefined : tool;\n  return [make?.("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolHelperComma: toolModule(NAMED_TOOL, `  let make: typeof tool | undefined;\n  make = (0, tool);\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolHelperCallComma: toolModule(NAMED_TOOL, `  return [(0, tool)("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolHelperChained: toolModule(NAMED_TOOL, `  let other: typeof tool | undefined;\n  let make: typeof tool | undefined;\n  make = other = tool;\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolHelperParameter: toolModule(`${NAMED_TOOL}\nfunction build(registry: CapabilityRegistry, make = tool) {\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];\n}`, "  return build(registry);"),
   toolSdkSubpath: toolModule(`import { tool } from "${AGENT_SDK}/sdk.mjs";`, `  return [tool("probe_invoke", "probe", {}, ${INVOKING})];`),
   projectModifier: `${READER_HEAD}export function project(value: JsonValue): string ${PROJECTING}\n`,
   projectConstValue: `${READER_HEAD}export const project = (value: JsonValue): string => JSON.stringify(value);\n`,
@@ -1209,17 +1253,23 @@ const DERIVATION_CONTROLS: Readonly<Record<string, string>> = {
   projectListedAlias: `${READER_HEAD}function project(value: JsonValue): string ${PROJECTING}\nexport { project as projectAlias };\n`,
   projectDefault: `${READER_HEAD}export default function project(value: JsonValue): string ${PROJECTING}\n`,
   projectDefaultValue: `${READER_HEAD}const project = (value: JsonValue): string => JSON.stringify(value);\nexport default project;\n`,
+  projectDefaultArrow: `${READER_HEAD}export default (value: JsonValue): string => JSON.stringify(value);\n`,
   projectRebound: `${READER_HEAD}function project(value: JsonValue): string ${PROJECTING}\nexport const used = project;\n`,
   projectImportAlias: `import type { JsonValue as Reading } from "./capability-registry.js";\nimport { ${ENVELOPE_SCHEMA_CONSTANT} } from "./providers/reactivefiber.js";\nexport const schema = ${ENVELOPE_SCHEMA_CONSTANT};\nexport function project(value: Reading): string ${PROJECTING}\n`,
   projectTypeAlias: `${READER_HEAD}type Reading = JsonValue;\nexport function project(value: Reading): string ${PROJECTING}\n`,
+  projectTypeAliasChain: `${READER_HEAD}type Base = JsonValue;\ntype Reading = Base;\nexport function project(value: Reading): string ${PROJECTING}\n`,
   projectParenthesized: `${READER_HEAD}export function project(value: (JsonValue)): string ${PROJECTING}\n`,
+  projectParenthesizedAlias: `${READER_HEAD}type Reading = (JsonValue);\nexport function project(value: Reading): string ${PROJECTING}\n`,
+  projectParenthesizedImportAlias: `import type { JsonValue as Reading } from "./capability-registry.js";\nimport { ${ENVELOPE_SCHEMA_CONSTANT} } from "./providers/reactivefiber.js";\nexport const schema = ${ENVELOPE_SCHEMA_CONSTANT};\nexport function project(value: (Reading)): string ${PROJECTING}\n`,
   projectUnexported: `${READER_HEAD}function project(value: JsonValue): string ${PROJECTING}\nexport const projected = project({});\n`,
   projectScalar: `${READER_HEAD}export function project(value: string): string ${PROJECTING}\n`,
   projectOptionalReading: `${READER_HEAD}export function project(value: JsonValue | undefined): string ${PROJECTING}\n`,
+  projectTypeParameter: `${READER_HEAD}export function project<T extends JsonValue>(value: T): string ${PROJECTING}\n`,
   projectMember: `${READER_HEAD}export const projections = {\n  project(value: JsonValue): string ${PROJECTING},\n};\n`,
   projectReexport: `${READER_HEAD}export { project } from "./projections.js";\n`,
   projectSchemaLiteral: `import type { JsonValue } from "./capability-registry.js";\nimport { REACTIVEFIBER_RENDER_PREVIEW_CONTRACT } from "./providers/reactivefiber.js";\nexport const contract = REACTIVEFIBER_RENDER_PREVIEW_CONTRACT;\nexport const schema = ${JSON.stringify(REACTIVE_FIBER_CLI_SCHEMA)};\nexport function project(value: JsonValue): string ${PROJECTING}\n`,
   projectQualifiedType: `import type * as registry from "./capability-registry.js";\nimport { ${ENVELOPE_SCHEMA_CONSTANT} } from "./providers/reactivefiber.js";\nexport const schema = ${ENVELOPE_SCHEMA_CONSTANT};\nexport function project(value: registry.JsonValue): string ${PROJECTING}\n`,
+  projectImportType: `import { ${ENVELOPE_SCHEMA_CONSTANT} } from "./providers/reactivefiber.js";\nexport const schema = ${ENVELOPE_SCHEMA_CONSTANT};\nexport function project(value: import("./capability-registry.js").JsonValue): string ${PROJECTING}\n`,
   projectContextualType: `${READER_HEAD}type Projection = (value: JsonValue) => string;\nexport const project: Projection = value => JSON.stringify(value);\n`,
   projectAssignedValue: `${READER_HEAD}let project: ((value: JsonValue) => string) | undefined;\nproject = (value: JsonValue): string => JSON.stringify(value);\nexport { project };\n`,
 };

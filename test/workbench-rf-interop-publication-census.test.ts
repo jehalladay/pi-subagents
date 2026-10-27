@@ -7,8 +7,14 @@
  * The roster vendors the cited lines verbatim with SHA256 (UTF-8, no trailing newline); this hermetic test does not re-query upstream.
  *
  * A1 scans every tracked src TypeScript module (independent git listing held against a recursive filesystem walk), AST identifiers,
- * literals, constant string concatenations and templates for VOCABULARY; no unshipped record reader or publication consumer.
- * The scanner's owning controls include property access, destructuring, literal-key indexing, concatenated keys and imports.
+ * literals, regular-expression literals by their pattern text (flags dropped) and constant string compositions for VOCABULARY; no
+ * unshipped record reader or publication consumer. A constant string composition is a + concatenation, a template, a dotted String
+ * concat call (the receiver and every argument constant) or a dotted array-literal join (every element and the separator constant,
+ * a comma when none is given), each part a string literal or such a composition, nested to any depth (wb-4zoa, the wb-jint landing
+ * 410 F1 cure).
+ * The scanner's owning controls include property access, destructuring, literal-key indexing, concatenated keys, imports, a regex
+ * test, a concat-call key and a join key (the three PREP plants verbatim), a multi-argument concat on a composed receiver, a
+ * default-comma join of composed elements and a concat nested inside a + concatenation.
  * A2 pins the only rf registration/reconcile read as preview/read and checks that absent optional keys stay absent through the
  * native process, injected registry, curated MCP reply and shared JSON sanitizer (the eight-key CLI envelope is not a publication).
  * B1 tests constructed additive records with null versus absence at every carrier; the topology holds both opaque and equal.
@@ -30,10 +36,11 @@
  * OWNER SUBJECTS (wb-jint F2, G-VOCDEEP): A1 reads the absent subjects of the owner's clause (a) from the bead export (the span
  * between "has no" and "at the pinned version", split on " or ") and requires a scanner hit on each.
  * OWNER WORDS (wb-jint refusal #1 U1, L2-NARROW-PUB/L2-NARROW-INTEROP): the words A1 holds are each subject's first word (split on
- * a space or hyphen: interop, publication). Spelled from the bead export in seven forms that cover every scanner path (a property
+ * a space or hyphen: interop, publication). Spelled from the bead export in ten forms that cover every scanner path (a property
  * read, a destructured name, a literal key, a parenthesized concatenated key, a plain template key, a template key with a constant
- * span, an import specifier), each must scan as exactly that word, and every VOCABULARY word an owner subject contains must be
- * one of them. So dropping an owner word, or replacing it with any other word (narrower, as 'publicationconsumer' or
+ * span, an import specifier, a regex literal, a concat-call key, a join key), each must scan as exactly that word, and every
+ * VOCABULARY word an owner subject contains must be one of them.
+ * So dropping an owner word, or replacing it with any other word (narrower, as 'publicationconsumer' or
  * 'interoprecord', broader or substituted), in VOCABULARY, A1's controlHits expectation and the roster together reds A1, beside
  * any src reader of the owner word; A1 also judges a constructed narrowing (each owner word replaced by its whole folded subject)
  * through the same judge and requires every form to miss while the subject hit still passes.
@@ -41,9 +48,14 @@
  * falls under R-PARAPHRASE (A1's ownerWords fact shows each quiet).
  * FROZEN SHAPE: A:2 B:3 C:4; claims (facts per term) A1:6+2 A2:5 B1:2 B2:2+2 B3:4 C1:1+3 C2:4 C3:2+2 C4:1+1; roster pins
  * labels/quotes/witnesses/claims, constants and every registered test's reached record.
- * RESIDUALS, with quiet pins: R-COMPUTED, R-PARAPHRASE and R-SYNONYM (A1), R-STATUS-PROJECTION (B2), R-OPAQUE (C4), R-REAUTHORED
- * (claims bound). R-SYNONYM: a VOCABULARY word that no owner-named subject contains (A1's synonyms fact lists them) is held by this
- * file alone; one dropped, or replaced by another word no owner subject contains (the substitution form on a synonym), in
+ * RESIDUALS, with quiet pins: R-COMPUTED, R-PARAPHRASE, R-SYNONYM and R-UNFOLDED (A1), R-STATUS-PROJECTION (B2), R-OPAQUE (C4),
+ * R-REAUTHORED (claims bound). R-COMPUTED's quiet rows in A1's quiet fact are a + concatenation, a concat call and a join, each with
+ * a runtime part. R-UNFOLDED (wb-4zoa): a name the scanner does not fold, when no constant part spells the word alone, escapes the
+ * scan: a regex whose folded pattern text does not hold the word (a wildcard inside it), a constant reached through any other
+ * operation (another method such as replace, a method named through an element access, a spread, an array concat) or through a
+ * non-string part (a number), each member pinned quiet in A1's quiet fact. R-SYNONYM: a VOCABULARY word that no owner-named
+ * subject contains (A1's synonyms fact lists them) is held by this file alone;
+ * one dropped, or replaced by another word no owner subject contains (the substitution form on a synonym), in
  * VOCABULARY, A1's controlHits and that list together, census and roster, stays green.
  * R-REAUTHORED: a pin's case, claims and roster witness rewritten together, in whole or in part, are held by no anchor beyond the
  * term tiling; the quiet row re-authors C3 as one fact under one claim, which shows that claim and no registered pin's claims accept.
@@ -218,6 +230,8 @@ async function carriers(envelope: JsonValue): Promise<{ sources: Obj[]; names: s
   return { sources, names: ["native", "injected", "curated-MCP", "shared-JSON", "shared-JSON-text"] };
 }
 const fold = (text: string): string => text.normalize("NFKC").toLowerCase().replace(/[^a-z0-9]/g, "");
+/** A constant string composition: a string literal, a parenthesized part, a + concatenation, a template, or (wb-4zoa) a String concat
+ * call or an array-literal join, every part itself constant; no other operation and no non-string part is folded (R-UNFOLDED). */
 function constant(node: ts.Node): string | undefined {
   if (ts.isStringLiteralLike(node)) return node.text;
   if (ts.isParenthesizedExpression(node)) return constant(node.expression);
@@ -230,13 +244,29 @@ function constant(node: ts.Node): string | undefined {
     for (const span of node.templateSpans) { const value = constant(span.expression); if (value === undefined) return undefined; text += value + span.literal.text; }
     return text;
   }
+  if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression)) return composition(node.expression.expression, node.expression.name.text, node.arguments);
   return undefined;
 }
+/** wb-4zoa: a dotted `receiver.concat(...args)` is the constant receiver followed by every constant argument; a dotted
+ * `[...elements].join(separator)` is an array literal's constant elements joined by the constant separator, a comma when none is
+ * given. A non-constant part (a spread among them), any other method, a method named through an element access and any other
+ * receiver leave the call unread (R-UNFOLDED). */
+function composition(receiver: ts.Expression, method: string, args: readonly ts.Expression[]): string | undefined {
+  const parts: string[] = [];
+  for (const arg of args) { const value = constant(arg); if (value === undefined) return undefined; parts.push(value); }
+  if (method === "concat") { const head = constant(receiver); return head === undefined ? undefined : head + parts.join(""); }
+  if (method !== "join" || !ts.isArrayLiteralExpression(receiver)) return undefined;
+  const elements: string[] = [];
+  for (const element of receiver.elements) { const value = constant(element); if (value === undefined) return undefined; elements.push(value); }
+  return elements.join(parts[0] ?? ",");
+}
+/** wb-4zoa: a regular-expression literal is read by its pattern text, the flags after the closing slash dropped. */
+const patternText = (node: ts.RegularExpressionLiteral): string => node.text.slice(1, node.text.lastIndexOf("/"));
 function scan(text: string, path = "fixture.ts", vocabulary: readonly string[] = VOCABULARY): string[] {
   const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const hits = new Set<string>();
   const visit = (node: ts.Node): void => {
-    const value = ts.isIdentifier(node) ? node.text : constant(node);
+    const value = ts.isIdentifier(node) ? node.text : ts.isRegularExpressionLiteral(node) ? patternText(node) : constant(node);
     if (value !== undefined) for (const word of vocabulary) if (fold(value).includes(word)) hits.add(word);
     ts.forEachChild(node, visit);
   };
@@ -266,11 +296,20 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     for (const anchor of ["src/index.ts", "src/ui/workflow-inspector.ts", "src/workflow/runtime.ts", "src/workbench/providers/reactivefiber.ts"]) expect(walked).toContain(anchor);
     const findings = walked.flatMap(path => scan(readFileSync(join(REPO, path), "utf8"), path).map(word => `${path}:${word}`));
     expect(findings).toEqual([]);
-/* gated fixture; no proposed reader */     const controls = ['return source.publication.value;', 'const { interop_record } = source;', 'source["declared_data_output"]', 'source["value" + "_edge"]', 'import x from "rftsx/interop";'];
+/* gated fixture; no proposed reader */     const controls = ['return source.publication.value;', 'const { interop_record } = source;', 'source["declared_data_output"]', 'source["value" + "_edge"]', 'import x from "rftsx/interop";',
+      // wb-4zoa: the three PREP plants verbatim (a regex test, a concat-call key, a join key), then one control per new reading branch:
+      // a multi-argument concat on a composed receiver with a template argument, a default-comma join of composed elements, and a
+      // concat nested inside a + (a composition is folded wherever a constant part may stand).
+      'const key = Object.keys(result).find(name => /^publication$/.test(name)); return key === undefined ? undefined : result[key];', 'return result["publi".concat("cation")];', 'return source[["inter", "op"].join("")];',
+      'return source[("pu" + "b").concat("li", `cation`)];', 'return source[["in" + "ter", `op`].join()];', 'return source["pub" + "li".concat("cation")];'];
     const controlHits = controls.map(text => scan(text));
-/* gated fixture; no proposed reader */     expect(controlHits).toEqual([["publication"], ["interop"], ["dataoutput", "declareddataoutput"], ["valueedge"], ["interop", "rftsx"]]);
-    const quiet = [scan('const key = "pub" + userSuffix; return source[key];'), scan('return source.payload.carrier;')];
-    expect(quiet).toEqual([[], []]);
+/* gated fixture; no proposed reader */     expect(controlHits).toEqual([["publication"], ["interop"], ["dataoutput", "declareddataoutput"], ["valueedge"], ["interop", "rftsx"], ["publication"], ["publication"], ["interop"], ["publication"], ["interop"], ["publication"]]);
+    // Quiet: R-COMPUTED (a +, then wb-4zoa's concat call and join, each with a runtime part), a plain carrier read, and R-UNFOLDED
+    // (wb-4zoa: a regex wildcard inside the word, a replace call, a number part, an array concat, an element-access concat, a spread).
+    const quiet = [scan('const key = "pub" + userSuffix; return source[key];'), scan('return source.payload.carrier;'), scan('return source["pub".concat(userSuffix)];'), scan('return source[["pub", userSuffix].join("")];'),
+      scan('return /^publ.cation$/.test(name);'), scan('return source["publiXcation".replace("X", "")];'), scan('return source["graphv" + 2];'), scan('return source[["inter"].concat(["op"]).join("")];'),
+      scan('return source["publi"["concat"]("cation")];'), scan('return source["".concat(...["publi", "cation"])];')];
+    expect(quiet).toEqual([[], [], [], [], [], [], [], [], [], []]);
     // F2 (G-VOCDEEP): every absent subject the owner's clause (a) names is a scanner hit; the subjects come from the bead export.
     const subjects = absentSubjects(); const subjectHits = subjects.map(subject => scan(JSON.stringify(subject)));
     expect(subjects.length).toBeGreaterThan(0); expect(subjects.filter((_, index) => (subjectHits[index] ?? []).length === 0)).toEqual([]);
@@ -408,12 +447,12 @@ function absentSubjects(): string[] {
   const span = /\bhas no (.+?) at the pinned version\b/.exec(acceptanceClauses()[0] ?? "")?.[1] ?? "";
   return span.split(" or ").filter(subject => subject.length > 0);
 }
-/** Refusal #1 U1: an owner word in seven forms that cover every scanner path (property read, destructured name, literal key,
- * parenthesized concatenated key, plain template key, template key with a constant span, import specifier), built from the
- * bead-export word, never from a census literal. */
+/** Refusal #1 U1 and wb-4zoa: an owner word in ten forms that cover every scanner path (property read, destructured name, literal key,
+ * parenthesized concatenated key, plain template key, template key with a constant span, import specifier, regex literal, concat-call
+ * key, join key), built from the bead-export word, never from a census literal. */
 function ownerSpellings(word: string): string[] {
   const cut = Math.ceil(word.length / 2); const head = JSON.stringify(word.slice(0, cut)); const tail = word.slice(cut);
-  return [`return source.${word}.value;`, `const { ${word} } = source;`, `source[${JSON.stringify(word)}]`, `source[(${head}) + ${JSON.stringify(tail)}]`, `source[\`${word}\`]`, `source[\`\${${head}}${tail}\`]`, `import x from ${JSON.stringify(`${word}/x`)};`];
+  return [`return source.${word}.value;`, `const { ${word} } = source;`, `source[${JSON.stringify(word)}]`, `source[(${head}) + ${JSON.stringify(tail)}]`, `source[\`${word}\`]`, `source[\`\${${head}}${tail}\`]`, `import x from ${JSON.stringify(`${word}/x`)};`, `return /^${word}$/.test(name);`, `source[${head}.concat(${JSON.stringify(tail)})]`, `source[[${head}, ${JSON.stringify(tail)}].join("")]`];
 }
 /** Why the scanner, judging by a vocabulary, does not hold each owner word itself: every form that scans as anything but exactly that word. */
 function ownerWordMisses(words: readonly string[], vocabulary: readonly string[]): string[] {
@@ -443,7 +482,7 @@ describe("wb-fb2z.2 absent interop publication census (TSX-COMPONENT-ASSEMBLY-R2
     expect({ gate: ROSTER.producer.gate, adrCount: ROSTER.producer.adrCount, latestAdr: ROSTER.producer.latestAdr, fieldCensusExists: ROSTER.producer.fieldCensusExists }).toEqual({ gate: "ABSENT", adrCount: 80, latestAdr: "0082-incremental-performance-program-positions.md", fieldCensusExists: false });
     expect(ROSTER.producer.excerpts.map(excerpt => createHash("sha256").update(Buffer.from(excerpt.textBase64, "base64")).digest("hex"))).toEqual(ROSTER.producer.excerpts.map(excerpt => excerpt.sha256));
     const pins = ROWS.flatMap(row => row.pins.map(pin => pin.id));
-    expect(ROSTER.residuals.map(item => item.id)).toEqual(["R-OPAQUE", "R-COMPUTED", "R-PARAPHRASE", "R-STATUS-PROJECTION", "R-SYNONYM", "R-REAUTHORED"]);
+    expect(ROSTER.residuals.map(item => item.id)).toEqual(["R-OPAQUE", "R-COMPUTED", "R-PARAPHRASE", "R-STATUS-PROJECTION", "R-SYNONYM", "R-REAUTHORED", "R-UNFOLDED"]);
     expect(ROSTER.residuals.every(item => [...pins, CLAIMS_BOUND].includes(item.quietPin))).toBe(true);
     const held = ROSTER.rows.flatMap(row => row.pins);
     expect(held.map(pin => `${pin.id}:${pin.claims.map(claim => claim.facts.length).join("+")}`)).toEqual(["A1:6+2", "A2:5", "B1:2", "B2:2+2", "B3:4", "C1:1+3", "C2:4", "C3:2+2", "C4:1+1"]);

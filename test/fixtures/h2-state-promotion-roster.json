@@ -136,7 +136,14 @@
    "src/workbench/capability-registry.ts",
    "src/workbench/telemetry.ts"
   ],
-  "moduleFloor": 100
+  "moduleFloor": 100,
+  "gitListing": [
+   "ls-files",
+   "-z",
+   "--cached",
+   "--others",
+   "--"
+  ]
  },
  "residuals": [
   "R-FOREIGN-VALUE",
@@ -297,6 +304,12 @@
         "result.work_metrics:true",
         "result.necessity.0:false",
         "result.necessity.0:true",
+        "result.judge_context:false",
+        "result.judge_context:true",
+        "result.judge_context.workspace_facts:false",
+        "result.judge_context.workspace_facts:true",
+        "result.judge_context_layers:false",
+        "result.judge_context_layers:true",
         "result.retry_work:false",
         "result.retry_work:true",
         "result.plan:false",
@@ -644,7 +657,8 @@
       "named": [],
       "siblingEntries": 3,
       "unread": true,
-      "walkComplete": true
+      "walkComplete": true,
+      "walkGitListed": true
      }
     },
     {
@@ -653,6 +667,7 @@
       "pin": "E2",
       "aboveFloor": true,
       "walkComplete": true,
+      "walkGitListed": true,
       "nonModules": [],
       "hits": [],
       "anchors": [
@@ -830,8 +845,8 @@
   "C3:4",
   "D1:4",
   "D2:4",
-  "E1:8",
-  "E2:7",
+  "E1:9",
+  "E2:8",
   "E3:4"
  ],
  "registrationEnd": "registration:7"
