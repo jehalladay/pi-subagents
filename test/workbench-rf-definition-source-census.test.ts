@@ -6,15 +6,23 @@
  * never as the published head; until then Pi claims nothing about the definition source beyond today's 'ephemeral noncommitted
  * preview' note."
  *
- * MEASURED AT THE CUT (read-only; 2026-10-26 by the cutting seats of cut #1 and cut #2, re-read 2026-10-27 at cut #3): the named
- * artifact is still absent. The installed rf 0.1.845 (provenance commit 0eaf3859fab0) holds 0 definition_source hits in
+ * MEASURED AT THE CUT (read-only; 2026-10-26 by the cutting seats of cut #1 and cut #2, re-read 2026-10-27 at cut #3 and cut #4):
+ * the named artifact is still absent. The installed rf 0.1.845 (provenance commit 0eaf3859fab0) holds 0 definition_source hits in
  * schemas/cli/context.render.schema.json, and a fresh `rf context render --no-commit --json` in a disposable `rf init` workspace
  * returned a result with no such key (cut #1 and cut #2); the key lives on the persisted pin only
  * (schemas/workspace/render-pin.schema.json requires it; schemas/workspace/render.schema.json holds it with the five other
- * optional pin keys under dependentRequired: present together or absent together). At cut #3 the same release and commit are
- * installed, and those three schema files hold 0, 3 and 8 hits. R11's fixture record (test/fixtures/rf-result-keys.json, rf
- * 0.1.784, source captured) names it in no key list. So this census lands the acceptance's until-then half and its trigger; the
+ * optional pin keys under dependentRequired: present together or absent together). At cut #3 and cut #4 the same release and
+ * commit are installed, and those three schema files hold 0, 3 and 8 hits. R11's fixture record (test/fixtures/rf-result-keys.json,
+ * rf 0.1.784, source captured) names it in no key list. So this census lands the acceptance's until-then half and its trigger; the
  * 'Armed on landing' clauses become the trigger's checks (ARMED), never observer behaviour.
+ *
+ * FORM (standing rule 19(c), engaged at this bead's refusal #3): enumerate-the-resolvable. The pinned set is the cut #3 baseline
+ * (22 pins in four rows), no pin of it removed, narrowed or re-scoped, plus the residual pins A15-A19; the frozen shape counts
+ * them all. The header claims exactly that set: REACHED states what the records prove of a case's inputs and lists, as not
+ * proven, the rewrites of the census itself that its records do not see; every escape family known at the cut (a page or
+ * sentence a reader reads as a claim while the census reads none, or a key nested where the trigger cannot see it) is a named
+ * residual (RESIDUALS) with a pinned quiet row, its named cure and its live twin. A residual's quiet row pins the members it
+ * lists; the census claims nothing for a family member its cure does not flag (another word for the preview or the head, say).
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row):
  *  A the until-then docs census, judged on the RENDERED VIEW below.
@@ -26,12 +34,14 @@
  *      no walked sentence says the preview reads the published head.
  *    A2 the sentence judge on planted sentences, each carried in the witness beside its reading. A claim is a sentence naming the
  *      preview and the published head with no negation before the head. Every preview spelling (preview, previews, previewing,
- *      previewed, noncommitted, non-committed, uncommitted, --no-commit or no-commit, and the dotted capability id) is the only
- *      preview spelling of at least one claim. The head is spelled published head or heads, in any case, the two words joined by
- *      a run of these eleven separators: white space, '_', '-', '*', a backtick, an ASCII apostrophe, an ASCII double quote and
- *      the curly quotes U+2018, U+2019, U+201C and U+201D; each separator is needed by at least one claim (a head term without it
- *      misses that claim). The negated, preview-free and head-free sentences are quiet.
- *    A3-A6 and A12-A14 the residuals' quiet rows (RESIDUALS): each quiet input is quiet under today's judge and flagged by its
+ *      previewed; pre-view, pre view and pre_view; noncommitted, non-committed, non committed and non_committed; uncommitted,
+ *      un-committed, un committed and un_committed; --no-commit or no-commit, no_commit and nocommit; and the dotted capability
+ *      id) is the only preview spelling of at least one claim ('no commit', two words, is R-NO-COMMIT's residual). The head is
+ *      spelled published head or heads, in any case, the two words joined by a run of these eleven separators: white space, '_',
+ *      '-', '*', a backtick, an ASCII apostrophe, an ASCII double quote and the curly quotes U+2018, U+2019, U+201C and U+201D;
+ *      each separator is needed by at least one claim (a head term without it misses that claim). The negated, preview-free and
+ *      head-free sentences are quiet.
+ *    A3-A6 and A12-A19 the residuals' quiet rows (RESIDUALS): each quiet input is quiet under today's judge and flagged by its
  *      residual's named cure, beside its live twin, which today's judge flags.
  *    A7 inline markup renders into the sentence it splits: emphasis, strong, strikethrough, a link's text, a code span, an inline
  *      tag, a backslash escape, a heading's and an HTML block's text, a named or numeric character reference, a format code point
@@ -47,9 +57,10 @@
  *      to none) and renders as written, while a decoded one renders.
  *    A11 every dash joins as '-' does: for each dash code point (Pd in the running engine's Unicode tables, read with \p{Pd}) and
  *      the minus sign U+2212, a planted page joining published and head with it and one joining non and committed with it each
- *      read one claim. The witness holds the two page templates, that each planted page carries its own dash, that the minus
- *      sign was planted, and that at least DASH_FLOOR code points were planted; DASH_FLOOR sits two below the 28 planted at the
- *      cut, so an enumeration narrowed by up to two Pd code points is not seen (the fold itself is held for every one planted).
+ *      read one claim, all of them scanned in one call, each page at its own path. The witness holds the two page templates,
+ *      that each planted page carries its own dash, that the minus sign was planted, and that at least DASH_FLOOR code points
+ *      were planted; DASH_FLOOR sits two below the 28 planted at the cut, so an enumeration narrowed by up to two Pd code points
+ *      is not seen (the fold itself is held for every one planted).
  *  B the until-then anchor note. B1 the observer module the export's SURFACES line names spells exactly one string literal that
  *    starts with the statement's quoted anchor phrase (comments never count; its twin, a planted module, counts two literals and
  *    not its comment); B2 a clean full-shape projection of the --no-commit preview reading (the witness carries its preview
@@ -62,17 +73,16 @@
  *  T the trigger check (freeze-and-flip); T2-T5's trigger readings carry the key lists their planted records name (named), so a
  *    planted record swapped for another reds. T1 R11's fixture record, read through readRfResultRoster, beside the real reader:
  *    no armed clause is missed, because no key list names the key (nothing is due; T1 keeps only the misses, so the FLIP below
- *    holds); its INPUTS hold that the trigger was handed R11's own record, the real reader and the key's names rule; T2 the
- *    record cleared of the key and then given it in each key list in turn, beside an unarmed stand-in (the real reader over
- *    the reading with the key removed, so T2-T4 never depend on what the real record
- *    names or on the observer's later arming): the trigger fires and names each armed clause the reader misses (the working-tree
- *    note, the contradiction refusal and the closed-set refusal; the absent-key clause holds); T3 the same planted records
- *    beside an armed stand-in (the unarmed one plus the armed clauses): the trigger clears, and the armed stand-in unarmed again
- *    misses what T2's reader misses; T4 R-NESTED's quiet row (its record carries the container key in the result list, and its
- *    base record named the key in another list, which the clearing removes), its cure's reading and its live twin; T5 each armed
- *    clause is judged on its own: a stand-in armed for every clause but one (the contradiction one refuses published_head and
- *    admits overlay) misses exactly that clause, and one refusing with an untyped error instead of the category misses both
- *    refusal clauses.
+ *    holds); its CALLS hold one roster read and one trigger call handed R11's own record, the real reader and the key's names
+ *    rule; T2 the record cleared of the key and then given it in each key list in turn, beside an unarmed stand-in (the real
+ *    reader over the reading with the key removed, so T2-T4 never depend on what the real record names or on the observer's
+ *    later arming): the trigger fires and names each armed clause the reader misses (the working-tree note, the contradiction
+ *    refusal and the closed-set refusal; the absent-key clause holds); T3 the same planted records beside an armed stand-in (the
+ *    unarmed one plus the armed clauses): the trigger clears, and the armed stand-in unarmed again misses what T2's reader
+ *    misses; T4 R-NESTED's quiet row (its record carries the container key in the result list, and its base record named the
+ *    key in another list, which the clearing removes), its cure's reading and its live twin; T5 each armed clause is judged on
+ *    its own: a stand-in armed for every clause but one (the contradiction one refuses published_head and admits overlay) misses
+ *    exactly that clause, and one refusing with an untyped error instead of the category misses both refusal clauses.
  * RENDERED VIEW (the rendered-text docs truth floor, 9x5.17): marked 18.0.11 (the lexer test/helpers/census.ts and the docs
  * shared-filesystem census use) lexes each page once. A unit is a paragraph, a heading, the text of a list item or block quote, a
  * table row (its cells joined by a space) or an HTML block, numbered by the line its top-level block starts on. A unit renders
@@ -80,10 +90,12 @@
  * other than a line break, an inline comment and a task checkbox as nothing, and a hard break or an inline <br> tag (any case,
  * with an attribute or a closing slash) as a space; an HTML block renders its source with comments (an unclosed one to its end)
  * and tags removed; a link destination or title, a link reference definition and every fenced or indented code block render
- * nothing. Numeric character references and the names in NAMED_REFERENCES are decoded outside code; any other named reference
- * stays as written and is unreadable. Format code points (Cf) are dropped, every white-space run folds to one space, and every
- * dash (Pd) and the minus sign (U+2212) read as '-' (as the docs shared-filesystem census's folded key reads them). The folded
- * unit splits into sentences after '.', '!', '?' or ';' followed by white space, and each sentence is judged.
+ * nothing. marked lexes no markdown footnotes: a footnote reference ([^label]) stays as written, and a footnote definition is a
+ * paragraph, or a link reference definition when its text has that shape (R-FOOTNOTE-REFERENCE and R-FOOTNOTE-DEFINITION).
+ * Numeric character references and the names in NAMED_REFERENCES are decoded outside code; any other named reference stays as
+ * written and is unreadable. Format code points (Cf) are dropped, every white-space run folds to one space, and every dash (Pd)
+ * and the minus sign (U+2212) read as '-' (as the docs shared-filesystem census's folded key reads them). The folded unit splits
+ * into sentences after '.', '!', '?' or ';' followed by white space, and each sentence is judged.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal.
  * ANCHORS OUTSIDE THE CENSUS (rule 16 CT5/CT6): each row's clause and each ARMED clause is one whole clause of the tracked export
  * description, and together they are exactly its testable clauses: every clause of every labelled ACCEPTANCE item (the one
@@ -92,46 +104,55 @@
  * the export for every check the census runs; where a row clause, an ARMED clause or a witness spells one of them as an expected
  * value, the judged set or the pin's own comparison holds that spelling to the value read from the export, so a respelled value
  * reds. The trigger's key lists are held to the record's own array-valued fields, and A1's walk to git's listing.
- * INPUTS: while a pin's case runs, each seam it reads records, at the call, what it was handed, as `<seam> <input>`: the docs
- * walk and git's listing their root; the sentence judge, the splitter, the scope and the R-FOOTNOTE page cure by name (census, or
- * the residual whose cure it is); a src read the module's path, or planted for a planted text; a reader projection the reader's
- * name; the trigger the record it was handed (R11 for an object the roster seam returned that equals an independent
- * readRfResultRoster read; R11, changed, for such an object that no longer equals it; the record's derivation from R11's, each
- * clearing and each key put in a list, for a record the census built; unbuilt for any other), the reader's name and the names
- * rule's name; and the tracked export each field the case reads, itself or through a seam or helper. A pin's inputs list must
- * equal that record exactly. The trigger's armed checks run only once a list names the key, and their own reads are never
- * recorded, so a case's inputs never depend on what the record names (the FLIP holds).
- * REACHED (what this record proves of a case's inputs; nothing beyond it is claimed): each pin's case reads through the seams it
+ * CALLS: while a pin's case runs, every call it makes to a recorded seam is recorded, in call order, as `<seam>` or `<seam> <what
+ * the call was handed>`: the docs walk and git's listing their root; a direct sentence judgement the judge by name (census, or the
+ * residual whose cure it is); a scan, as one call, its judge, splitter and scope by name (a scan's own sentence judgements are its
+ * own work, never calls of the case); a page cure its residual's name; a src read the module's path, or planted for a planted
+ * text; a reader projection the reader's name; a roster read; and a trigger call, as one call, the record it was handed (R11 for
+ * an object the roster seam returned that equals an independent readRfResultRoster read; R11, changed, for such an object that no
+ * longer equals it; the record's derivation from R11's, each clearing and each key put in a list, for a record the census built;
+ * unbuilt for any other), the reader's name and the names rule's name. A pin's calls list must equal that record as a list, in
+ * order and with every count: a run of identical calls is written once, followed by ` x<count>` when it repeats (a lossless
+ * spelling of the same list). The trigger's armed checks run only once a list names the key, and their own calls and field reads
+ * are never recorded, so a case's records never depend on what the record names (the FLIP holds).
+ * FIELDS: each field of the tracked export a running case reads, itself or through a seam or helper (never through the trigger's
+ * armed checks, whose reads are the trigger's own), is recorded once; a pin's fields list must equal that set. The judged set and
+ * the module's set-up read the export unrecorded.
+ * REACHED (what these records prove of a case's inputs; nothing beyond it is claimed): each pin's case reads through the seams it
  * declares, and (1) its witness carries, as literals, the inputs it plants: each planted sentence, page text and path, module,
  * note and word, each built reading's stated word (C1) or its contract and stated key (B2), and each planted record's named lists
  * (T4's container key too); A11's dashes come from the engine's Unicode tables, and its witness holds instead that each planted
  * page carries its own dash, that the minus sign was planted and that at least DASH_FLOOR were planted. So a planted input
- * changed at its one site reds the pin. (2) Its INPUTS record holds every seam input listed above, so a case handed another root,
- * judge, splitter, scope, page cure, src module, reader, record or names rule at one site, a case that stops reading a field of
- * the export its list names, or a case swapped for another pin's case, reds. A1's walk is also held to git's listing, and the
- * listing to DOCS_FLOOR. Each residual's quiet input is also read by its named cure, which must flag it, so a quiet input swapped
- * for one its cure does not flag reds, even when the witness's copy of the input is edited to match. What this does not prove:
- * (a) a case rewritten together with its whole witness and its inputs list (an input, its copy, its readings and its recorded
- * inputs); (b) a case rewritten to return its pinned witness as a constant while still reading its seams with the recorded
- * inputs; (c) a seam's own implementation rewritten (the walk, the listing, the rendered view, a judge, splitter, scope or cure,
- * the src read, the reading fixture, a reader or stand-in, the roster read, a record's derivation, the trigger, A11's dash
- * enumeration (narrowed by at most two Pd code points, which DASH_FLOOR admits), or the INPUTS record itself), for example the
- * walk and the listing both made to skip the same pages, which DOCS_FLOOR bounds to two pages at the cut; (d) a census constant
- * edited at its definition when no witness or inputs list spells the edited value (the readings' workspace root and host context,
- * a floor lowered, a NAMED_REFERENCES entry no pin exercises), which moves every case that reads it together, or a literal
- * written at one read site of an export field the case still reads at another (the record is per field, never per read site).
- * Those are rewrites of the census, not swaps of a case's inputs. The last test holds every registered test to run mode and a
- * pass.
+ * changed at its one site reds the pin. (2) Its CALLS record holds every recorded call in order with what it was handed, so a
+ * case one of whose calls is handed another root, judge, splitter, scope, page cure, src module, reader, record or names rule
+ * reds, whether or not another call of the same case is handed that input (a residual's twin handed its own row's cure reds); so
+ * does a case that makes a recorded call more or fewer times or in another order, and a case swapped for another pin's case. (3)
+ * Its FIELDS record holds each export field it reads, so a case that stops reading a field its list names reds. A1's walk is also
+ * held to git's listing, and the listing to DOCS_FLOOR. Each residual's quiet input is also read by its named cure, which must
+ * flag it, so a quiet input swapped for one its cure does not flag reds, even when the witness's copy of the input is edited to
+ * match. What this does not prove: (a) a case rewritten together with its whole witness and its calls and fields lists (an input,
+ * its copy, its readings and its records), or a pin removed together with its case and its count in the frozen shape (a pin's
+ * count is held only by the census's own literal; rows and ARMED clauses are held to the export); (b) a case rewritten to return
+ * its pinned witness as a constant while still making its recorded calls and reads; (c) a seam's own implementation rewritten
+ * (the walk, the listing, the rendered view, a judge, splitter, scope or cure, the src read, the reading fixture, a reader or
+ * stand-in, the roster read, a record's derivation, the trigger, A11's dash enumeration (narrowed by at most two Pd code points,
+ * which DASH_FLOOR admits), or the CALLS and FIELDS records themselves), for example the walk and the listing both made to skip
+ * the same pages, which DOCS_FLOOR bounds to two pages at the cut; (d) a census constant edited at its definition when no witness
+ * or list spells the edited value (the readings' workspace root and host context, a floor lowered, a NAMED_REFERENCES entry no
+ * pin exercises), which moves every case that reads it together, or a literal written at one read site of an export field the
+ * case still reads at another (FIELDS is per field, never per read site). Those are rewrites of the census, not swaps of a case's
+ * inputs. The last test holds every registered test to run mode and a pass.
  * RESIDUALS (named families, each with a pinned quiet row, its named cure and its live twin):
  *  R-PARAPHRASE (A3) a claim naming the head in other words than 'published head' is not judged: the store-resident head's
  *    manifest, or a word between published and head ('the published graph head'); cure: the head term also reads
  *    'store-resident head' and 'published <word> head'.
  *  R-ANAPHORA (A4) a claim whose preview stands in an earlier sentence ('The preview is noncommitted. It reads the published
  *    head.') is not judged; cure: a sentence opening with It, This or That joins the sentence before it.
- *  R-NEGATION-SCOPE (A5) a negation before the head that governs another phrase reads the sentence as negated ('The preview, not
- *    the committed render, reads the published head.', 'No longer experimental, the preview reads the published head.', 'The
- *    preview never fails: it reads the published head.'); cure: only the clause nearest the head (after the last ',', ':' or ';'
- *    before it) is read for a negation.
+ *  R-NEGATION-SCOPE (A5) a negation in a clause before the head's own (set off by ',', ':' or ';') that governs another phrase
+ *    reads the sentence as negated ('The preview, not the committed render, reads the published head.', 'No longer
+ *    experimental, the preview reads the published head.', 'The preview never fails: it reads the published head.'); cure: only
+ *    the clause nearest the head (after the last ',', ':' or ';' before it) is read for a negation (a negation inside the head's
+ *    own clause is R-NEGATION-PHRASE's).
  *  R-OUTSIDE-WALK (A6) text outside the docs/workbench markdown is not walked: the root README, docs/programs, a .txt under
  *    docs/workbench, a src comment; cure: every planted path is in scope.
  *  R-ABBREVIATION (A12) a period after the abbreviation i.e., e.g., cf. or vs. ends the sentence, so a claim it splits reads none
@@ -140,15 +161,31 @@
  *  R-PREVIEW-WORDS (A13) a claim naming the preview in other words is not judged ('The ephemeral render reads the published
  *    head.', 'A dry-run render ...', 'A non-committing render ...'); cure: the preview term also reads ephemeral, dry-run and
  *    non-committing.
- *  R-FOOTNOTE (A14) a footnote marker between published and head hides the head ('The preview reads the published<sup>1</sup>
- *    head.' renders as 'published1 head'); cure: an inline <sup> element renders nothing.
+ *  R-FOOTNOTE (A14) a superscript footnote marker (an inline <sup> element) between published and head hides the head ('The preview
+ *    reads the published<sup>1</sup> head.' renders as 'published1 head'); cure: an inline <sup> element renders nothing (the
+ *    markdown footnote reference is R-FOOTNOTE-REFERENCE's).
+ *  R-FOOTNOTE-REFERENCE (A15) a markdown footnote reference between published and head stays as written and hides the head ('The
+ *    preview reads the published[^1] head.' renders as 'published[^1] head'); cure: a footnote reference ([^label] not followed by
+ *    ':') renders nothing.
+ *  R-FOOTNOTE-DEFINITION (A16) a markdown footnote definition whose text has the shape of a link reference definition (a
+ *    destination, then a quoted title) is lexed as one and renders nothing ("[^1]: https://example.com 'The preview reads the
+ *    published head.'"); cure: a footnote definition's marker ([^label]: at a line start) is dropped, so its text renders as a
+ *    paragraph.
+ *  R-SUBSCRIPT (A17) an inline <sub> element between published and head hides the head ('The preview reads the
+ *    published<sub>1</sub> head.' renders as 'published1 head'); cure: an inline <sub> element renders nothing.
+ *  R-NO-COMMIT (A18) the preview written as the two words 'no commit' is not judged: the preview term does not read it, and its
+ *    'no' reads as a negation before the head ('A no commit render reads the published head.', 'The no commit preview reads the
+ *    published head.'); cure: the preview term also reads 'no commit', and a 'no' before 'commit' is never read as a negation.
+ *  R-NEGATION-PHRASE (A19) a negation inside the head's own clause that governs another phrase reads the sentence as negated
+ *    ('The preview makes no change and reads the published head.', 'The preview without a commit reads the published head.');
+ *    cure: only the three words before the head are read for a negation.
  *  R-NESTED (T4) the trigger sees only the record's key lists, so the key nested in a result object no list names (a pin
  *    container, or provenance beyond its floor keys) stays invisible until a roster cut names the key itself; cure: a list naming
  *    the container counts as naming the key.
  * FLIP (measured on throwaway plants at the cut): a roster naming definition_source reds T1 alone until the observer case exists;
  * the observer case clears T1 and flips C1 (a stated key is then read), so the cut that lands it rewrites C1 in the same commit.
- * T1's inputs hold under the FLIP: the trigger records its record, reader and names rule at the call, never the armed checks'
- * own reads.
+ * T1's calls hold under the FLIP: the trigger records one call (its record, reader and names rule), never the armed checks' own
+ * calls or field reads.
  *
  * Display paths added: none. Test-only: no scratch; src, docs, the roster and the store export are only read, and git's listing
  * of docs/workbench is read with git ls-files.
@@ -203,12 +240,44 @@ const isCategory = (word: string): word is CapabilityErrorCategory => CATEGORIES
 /** The seams a pin's case reads through; each read is recorded against the case that is running. */
 type Seam = "docs" | "listing" | "judge" | "src" | "reader" | "roster" | "trigger" | "export";
 let running: Seam[] | undefined;
-/** What the running case handed each seam, recorded at the call as `<seam> <input>` (INPUTS in the header). */
-let inputs: string[] | undefined;
+/** Every call the running case makes to a recorded seam, in call order, as `<seam>` or `<seam> <what the call was handed>` (CALLS
+ * in the header). */
+let calls: string[] | undefined;
+/** Each field of the tracked export the running case reads (FIELDS in the header). */
+let fields: string[] | undefined;
 function touch(seam: Seam, input?: string): void {
   if (running !== undefined && !running.includes(seam)) running.push(seam);
-  const entry = input === undefined ? undefined : `${seam} ${input}`;
-  if (entry !== undefined && inputs !== undefined && !inputs.includes(entry)) inputs.push(entry);
+  calls?.push(input === undefined ? seam : `${seam} ${input}`);
+}
+function readField(field: string): void {
+  if (running !== undefined && !running.includes("export")) running.push("export");
+  if (fields !== undefined && !fields.includes(field)) fields.push(field);
+}
+/** A seam's own work (a scan's sentence judgements, the trigger's armed checks) is never the case's: its calls and field reads are
+ * not recorded. */
+function quietly<T>(work: () => T): T {
+  const outer = { calls, fields };
+  calls = undefined;
+  fields = undefined;
+  try {
+    return work();
+  } finally {
+    calls = outer.calls;
+    fields = outer.fields;
+  }
+}
+/** A call record spelled with each run of identical calls written once, followed by ` x<count>` when it repeats (lossless). */
+function runs(record: readonly string[]): string[] {
+  const spelled: string[] = [];
+  let index = 0;
+  while (index < record.length) {
+    const call = record[index] ?? "";
+    let end = index + 1;
+    while (end < record.length && record[end] === call) end += 1;
+    spelled.push(end - index === 1 ? call : `${call} x${end - index}`);
+    index = end;
+  }
+  return spelled;
 }
 
 interface Clause {
@@ -317,11 +386,11 @@ function readExported(): Exported {
     srcSurfaces: surfaces.filter(path => path.startsWith("src/")),
   };
 }
-/** The tracked export's values. Each field a running case reads, itself or through a seam or helper it calls, is recorded as one
- * of its inputs (`export <field>`); the judged set and the module's set-up read it unrecorded. */
+/** The tracked export's values. Each field a running case reads, itself or through a seam or helper it calls, is recorded once in
+ * its FIELDS; the judged set and the module's set-up read it unrecorded. */
 const EXPORTED: Exported = new Proxy(readExported(), {
   get(target, field, receiver) {
-    if (typeof field === "string") touch("export", field);
+    if (typeof field === "string") readField(field);
     return Reflect.get(target, field, receiver);
   },
 });
@@ -465,11 +534,14 @@ function renderedPage(markdown: string): { readonly units: readonly Unit[]; read
   return { units, unknown };
 }
 
-const PREVIEW_TERM = /\bpreview(?:s|ing|ed)?\b|\b(?:non-?|un)committed\b|(?:--|\b)no-commit\b/i;
+/** The preview: preview and its forms, noncommitted and uncommitted, each also written with a '-', a space or an '_' at its join
+ * (pre-view, non committed, un_committed), and the no-commit flag, also written no_commit or nocommit ('no commit', two words, is
+ * R-NO-COMMIT's residual). */
+const PREVIEW_TERM = /\bpre[\s_-]?view(?:s|ing|ed)?\b|\b(?:non|un)[\s_-]?committed\b|(?:--|\b)no[_-]?commit\b/i;
 /** The head: published head or heads, the words joined by white space, '_', '-', '*', a backtick or a quote mark (a rendered
  * escape or quote between them never hides it). */
 const HEAD_TERM = /\bpublished[\s_*'"`\u2018\u2019\u201C\u201D-]+heads?\b/i;
-/** A negation word; the 'no' of --no-commit or no-commit is a flag, never a negation. */
+/** A negation word; the 'no' of --no-commit, no-commit, no_commit or nocommit is a flag, never a negation. */
 const NEGATION = /\b(?:never|not|nor|without|cannot)\b|n't\b|(?<![-\w])no\b(?!-)/i;
 interface Judge {
   /** Where the sentence names the preview: PREVIEW_TERM unless a cure widens it. */
@@ -486,12 +558,18 @@ const PARAPHRASE_CURE: Judge = { head: new RegExp(`${HEAD_TERM.source}|\\bstore-
 const NEGATION_SCOPE_CURE: Judge = { head: HEAD_TERM, window: before => before.split(/[,:;]/).pop() ?? "" };
 /** R-PREVIEW-WORDS' cure: the preview term also reads ephemeral, dry-run and non-committing. */
 const PREVIEW_WORDS_CURE: Judge = { preview: new RegExp(`${PREVIEW_TERM.source}|\\bephemeral\\b|\\bdry-run\\b|\\bnon-committing\\b`, "i"), head: HEAD_TERM, window: before => before };
-/** Each judge by name, recorded as a case's input. */
+/** R-NO-COMMIT's cure: the preview term also reads 'no commit' (two words), and a 'no' before 'commit' is never read as a negation. */
+const NO_COMMIT_CURE: Judge = { preview: new RegExp(`${PREVIEW_TERM.source}|\\bno\\s+commit\\b`, "i"), head: HEAD_TERM, window: before => before.replace(/\bno\s+(?=commit\b)/gi, "") };
+/** R-NEGATION-PHRASE's cure: only the three words before the head are read for a negation. */
+const NEGATION_PHRASE_CURE: Judge = { head: HEAD_TERM, window: before => before.trim().split(/\s+/).slice(-3).join(" ") };
+/** Each judge by name, recorded in a case's calls. */
 const JUDGES: ReadonlyMap<Judge, string> = new Map<Judge, string>([
   [JUDGE, "census"],
   [PARAPHRASE_CURE, "R-PARAPHRASE"],
   [NEGATION_SCOPE_CURE, "R-NEGATION-SCOPE"],
   [PREVIEW_WORDS_CURE, "R-PREVIEW-WORDS"],
+  [NO_COMMIT_CURE, "R-NO-COMMIT"],
+  [NEGATION_PHRASE_CURE, "R-NEGATION-PHRASE"],
 ]);
 /** A sentence says the preview reads the published head when it names the preview and the head and no negation comes before the
  * head (in the judge's window). */
@@ -527,7 +605,7 @@ function abbreviationJoined(text: string): string[] {
 const inScope = (path: string): boolean => path.startsWith(`${DOCS_ROOT}/`) && isMarkdown(path);
 /** R-OUTSIDE-WALK's cure: every planted path is in scope. */
 const anyScope = (): boolean => true;
-/** Each sentence splitter and scope by name, recorded as a scan's input. */
+/** Each sentence splitter and scope by name, recorded in a scan's call. */
 const SPLITTERS: ReadonlyMap<(text: string) => string[], string> = new Map<(text: string) => string[], string>([
   [sentencesOf, "census"],
   [anaphoraJoined, "R-ANAPHORA"],
@@ -549,14 +627,17 @@ interface Scan {
   readonly unreadable: readonly string[];
 }
 /** The in-scope files of a set, each rendered and each sentence judged: the files scanned, every claim (`path:line sentence`),
- * each scanned file's preview sentence count, and every reference the rendered view cannot decode (`path reference`). */
+ * each scanned file's preview sentence count, and every reference the rendered view cannot decode (`path reference`). One call of
+ * the case, recorded with the judge, splitter and scope it was handed by name. */
 function scan(files: readonly DocFile[], options: ScanOptions = {}): Scan {
   const judge = options.judge ?? JUDGE;
   const split = options.sentences ?? sentencesOf;
   const within = options.scope ?? inScope;
-  touch("judge", JUDGES.get(judge) ?? "unnamed");
-  touch("judge", `split ${SPLITTERS.get(split) ?? "unnamed"}`);
-  touch("judge", `scope ${SCOPES.get(within) ?? "unnamed"}`);
+  touch("judge", `scan ${JUDGES.get(judge) ?? "unnamed"}; split ${SPLITTERS.get(split) ?? "unnamed"}; scope ${SCOPES.get(within) ?? "unnamed"}`);
+  return quietly(() => judgedPages(files, judge, split, within));
+}
+/** A scan's own work: each in-scope file rendered and each of its sentences judged. */
+function judgedPages(files: readonly DocFile[], judge: Judge, split: (text: string) => string[], within: (path: string) => boolean): Scan {
   const scanned: string[] = [];
   const claims: string[] = [];
   const previews: Record<string, number> = {};
@@ -586,6 +667,25 @@ const SUPERSCRIPT = /<sup\b[^<>]*>[\s\S]*?<\/sup>/gi;
 function footnoteCured(file: DocFile): DocFile {
   touch("judge", "page R-FOOTNOTE");
   return { path: file.path, text: file.text.replace(SUPERSCRIPT, "") };
+}
+/** R-FOOTNOTE-REFERENCE's cure: a markdown footnote reference ([^label] not followed by ':') renders nothing. */
+const FOOTNOTE_REFERENCE = /\[\^[^\]\s]+\](?!:)/g;
+function footnoteReferenceCured(file: DocFile): DocFile {
+  touch("judge", "page R-FOOTNOTE-REFERENCE");
+  return { path: file.path, text: file.text.replace(FOOTNOTE_REFERENCE, "") };
+}
+/** R-FOOTNOTE-DEFINITION's cure: a markdown footnote definition's marker ([^label]: at a line start) is dropped, so its text
+ * renders as a paragraph. */
+const FOOTNOTE_DEFINITION = /^ {0,3}\[\^[^\]\s]+\]:[ \t]*/gm;
+function footnoteDefinitionCured(file: DocFile): DocFile {
+  touch("judge", "page R-FOOTNOTE-DEFINITION");
+  return { path: file.path, text: file.text.replace(FOOTNOTE_DEFINITION, "") };
+}
+/** R-SUBSCRIPT's cure: an inline <sub> element renders nothing. */
+const SUBSCRIPT = /<sub\b[^<>]*>[\s\S]*?<\/sub>/gi;
+function subscriptCured(file: DocFile): DocFile {
+  touch("judge", "page R-SUBSCRIPT");
+  return { path: file.path, text: file.text.replace(SUBSCRIPT, "") };
 }
 /** A1's planted claim page: its claim a soft-wrapped second sentence, scanned with the walked pages in one call. */
 const PLANTED_PAGE: DocFile = planted("# Planted page\n\nFixture text is never real context. The rf preview reads the\npublished head.\n", `${DOCS_ROOT}/zz-wb-973-13-planted.md`);
@@ -790,27 +890,22 @@ const NAMES: ReadonlyMap<Names, string> = new Map<Names, string>([
 /** The trigger (freeze-and-flip): nothing is due while no key list of the record names the key; once one does, each armed clause
  * the reader misses is one miss, so the default gate reds until the observer case exists. `named` is the lists that name it. */
 function trigger(record: RfResultRoster, read: Reader, names: Names = namesKey): { named: string[]; misses: string[] } {
-  touch("trigger", `record ${recordName(record)}`);
-  touch("trigger", `reader ${readerName(read)}`);
-  touch("trigger", `names ${NAMES.get(names) ?? "unnamed"}`);
+  touch("trigger", `record ${recordName(record)}; reader ${readerName(read)}; names ${NAMES.get(names) ?? "unnamed"}`);
   const named = LISTS.filter(list => names(record, list));
   if (named.length === 0) return { named, misses: [] };
-  // The armed checks run only once a list names the key, so what they read is the trigger's own, never the case's inputs.
-  const caseInputs = inputs;
-  inputs = undefined;
-  try {
-    return { named, misses: ARMED.filter(check => !check.holds(read)).map(check => check.id) };
-  } finally {
-    inputs = caseInputs;
-  }
+  // The armed checks run only once a list names the key, so what they call and read is the trigger's own, never the case's.
+  return { named, misses: quietly(() => ARMED.filter(check => !check.holds(read)).map(check => check.id)) };
 }
 const plantedEach = (read: Reader): Json => Object.fromEntries(LISTS.map(list => [list, trigger(withKey(cleared(roster()), list, EXPORTED.key), read)]));
 
 interface Pin {
   readonly id: string;
   readonly seams: readonly Seam[];
-  /** What the case hands its seams (INPUTS in the header); the record of the run must equal it. */
-  readonly inputs: readonly string[];
+  /** Every call the case makes to a recorded seam, in order, a run of identical calls written once with ` x<count>` (CALLS in the
+   * header); the run's record must equal it as a list. */
+  readonly calls: readonly string[];
+  /** Each field of the tracked export the case reads (FIELDS in the header); the run's record must equal it as a set. */
+  readonly fields: readonly string[];
   readonly witness: Json;
 }
 interface Row {
@@ -831,7 +926,8 @@ const ROWS: readonly Row[] = [
       {
         id: "A1",
         seams: ["docs", "listing", "judge"],
-        inputs: ["docs docs/workbench", "export docsSurfaces", "judge census", "judge scope census", "judge split census", "listing docs/workbench"],
+        calls: ["listing docs/workbench", "docs docs/workbench", "judge scan census; split census; scope census"],
+        fields: ["docsSurfaces"],
         witness: {
           planted: {
             path: "docs/workbench/zz-wb-973-13-planted.md",
@@ -850,7 +946,8 @@ const ROWS: readonly Row[] = [
       {
         id: "A2",
         seams: ["judge"],
-        inputs: ["judge census"],
+        calls: ["judge census x34"],
+        fields: [],
         witness: [
           { sentence: "The preview reads the published head.", claims: true },
           { sentence: "reactivefiber.render.preview renders the published_head definitions.", claims: true },
@@ -872,6 +969,16 @@ const ROWS: readonly Row[] = [
           { sentence: `The preview reads the ${at(0x2018)}published${at(0x2019)} head.`, claims: true },
           { sentence: `The preview reads the published ${at(0x201c)}head${at(0x201d)}.`, claims: true },
           { sentence: `The preview reads the ${at(0x201c)}published${at(0x201d)} head.`, claims: true },
+          { sentence: "The pre-view reads the published head.", claims: true },
+          { sentence: "The pre view reads the published head.", claims: true },
+          { sentence: "The pre_view reads the published head.", claims: true },
+          { sentence: "The non committed render reads the published head.", claims: true },
+          { sentence: "The non_committed render reads the published head.", claims: true },
+          { sentence: "The un-committed render reads the published head.", claims: true },
+          { sentence: "The un committed render reads the published head.", claims: true },
+          { sentence: "The un_committed render reads the published head.", claims: true },
+          { sentence: "A no_commit render reads the published head.", claims: true },
+          { sentence: "A nocommit render reads the published head.", claims: true },
           { sentence: "The noncommitted preview never reads the published head.", claims: false },
           { sentence: "The preview does not read the published head.", claims: false },
           { sentence: "rf graph publish promotes a candidate to the published head.", claims: false },
@@ -881,7 +988,8 @@ const ROWS: readonly Row[] = [
       {
         id: "A3",
         seams: ["judge"],
-        inputs: ["judge R-PARAPHRASE", "judge census"],
+        calls: ["judge census", "judge R-PARAPHRASE", "judge census", "judge R-PARAPHRASE", "judge census"],
+        fields: [],
         witness: {
           quiet: [
             { sentence: "The preview reads the store-resident head's manifest.", judged: false, cured: true },
@@ -893,7 +1001,8 @@ const ROWS: readonly Row[] = [
       {
         id: "A4",
         seams: ["judge"],
-        inputs: ["judge census", "judge scope census", "judge split R-ANAPHORA", "judge split census"],
+        calls: ["judge scan census; split census; scope census", "judge scan census; split R-ANAPHORA; scope census", "judge scan census; split census; scope census"],
+        fields: [],
         witness: {
           quiet: { text: "The preview is noncommitted. It reads the published head.", claims: 0, cured: 1 },
           twin: { text: "The preview is noncommitted and reads the published head.", claims: 1 },
@@ -902,7 +1011,8 @@ const ROWS: readonly Row[] = [
       {
         id: "A5",
         seams: ["judge"],
-        inputs: ["judge R-NEGATION-SCOPE", "judge census"],
+        calls: ["judge census", "judge R-NEGATION-SCOPE", "judge census", "judge R-NEGATION-SCOPE", "judge census", "judge R-NEGATION-SCOPE", "judge census"],
+        fields: [],
         witness: {
           quiet: [
             { sentence: "The preview, not the committed render, reads the published head.", judged: false, cured: true },
@@ -915,7 +1025,8 @@ const ROWS: readonly Row[] = [
       {
         id: "A6",
         seams: ["judge"],
-        inputs: ["judge census", "judge scope R-OUTSIDE-WALK", "judge scope census", "judge split census"],
+        calls: ["judge scan census; split census; scope census", "judge scan census; split census; scope R-OUTSIDE-WALK", "judge scan census; split census; scope census"],
+        fields: [],
         witness: {
           planted: {
             quiet: ["The preview reads the published head.", "The preview reads the published head.", "The preview reads the published head.", "// The preview reads the published head."],
@@ -928,7 +1039,8 @@ const ROWS: readonly Row[] = [
       {
         id: "A7",
         seams: ["judge"],
-        inputs: ["judge census", "judge scope census", "judge split census"],
+        calls: ["judge scan census; split census; scope census x19"],
+        fields: [],
         witness: [
           { text: "The preview reads the *published* head.", claims: 1 },
           { text: "The preview reads the **published head**.", claims: 1 },
@@ -954,7 +1066,8 @@ const ROWS: readonly Row[] = [
       {
         id: "A8",
         seams: ["judge"],
-        inputs: ["judge census", "judge scope census", "judge split census"],
+        calls: ["judge scan census; split census; scope census x11"],
+        fields: [],
         witness: [
           { text: "The preview reads the\npublished head.", claims: 1 },
           { text: "The preview\nreads the published head.", claims: 1 },
@@ -972,7 +1085,8 @@ const ROWS: readonly Row[] = [
       {
         id: "A9",
         seams: ["judge"],
-        inputs: ["judge census", "judge scope census", "judge split census"],
+        calls: ["judge scan census; split census; scope census x18"],
+        fields: [],
         witness: [
           { hidden: "<!-- The preview reads the published head. -->", claims: 0, shown: "The preview reads the published head.", shownClaims: 1 },
           { hidden: "```\nThe preview reads the published head.\n```", claims: 0, shown: "The preview reads the published head.", shownClaims: 1 },
@@ -988,7 +1102,8 @@ const ROWS: readonly Row[] = [
       {
         id: "A10",
         seams: ["judge"],
-        inputs: ["judge census", "judge scope census", "judge split census"],
+        calls: ["judge scan census; split census; scope census x2"],
+        fields: [],
         witness: {
           unknown: { text: "The preview reads the published&emsp13;head.", unreadable: ["docs/workbench/planted.md &emsp13;"], claims: 0 },
           known: { text: "The preview reads the published&emsp;head.", unreadable: [], claims: 1 },
@@ -997,13 +1112,15 @@ const ROWS: readonly Row[] = [
       {
         id: "A11",
         seams: ["judge"],
-        inputs: ["judge census", "judge scope census", "judge split census"],
+        calls: ["judge scan census; split census; scope census"],
+        fields: [],
         witness: { pages: ["The preview reads the published{dash}head.", "The non{dash}committed render reads the published head."], planted: true, dashes: true, minus: true, unread: [] },
       },
       {
         id: "A12",
         seams: ["judge"],
-        inputs: ["judge census", "judge scope census", "judge split R-ABBREVIATION", "judge split census"],
+        calls: ["judge scan census; split census; scope census", "judge scan census; split R-ABBREVIATION; scope census", "judge scan census; split census; scope census", "judge scan census; split R-ABBREVIATION; scope census", "judge scan census; split census; scope census", "judge scan census; split R-ABBREVIATION; scope census", "judge scan census; split census; scope census", "judge scan census; split R-ABBREVIATION; scope census", "judge scan census; split census; scope census"],
+        fields: [],
         witness: {
           quiet: [
             { text: "The preview reads, i.e. resolves, the published head.", claims: 0, cured: 1 },
@@ -1017,7 +1134,8 @@ const ROWS: readonly Row[] = [
       {
         id: "A13",
         seams: ["judge"],
-        inputs: ["judge R-PREVIEW-WORDS", "judge census"],
+        calls: ["judge census", "judge R-PREVIEW-WORDS", "judge census", "judge R-PREVIEW-WORDS", "judge census", "judge R-PREVIEW-WORDS", "judge census"],
+        fields: [],
         witness: {
           quiet: [
             { sentence: "The ephemeral render reads the published head.", judged: false, cured: true },
@@ -1030,10 +1148,67 @@ const ROWS: readonly Row[] = [
       {
         id: "A14",
         seams: ["judge"],
-        inputs: ["judge census", "judge page R-FOOTNOTE", "judge scope census", "judge split census"],
+        calls: ["judge scan census; split census; scope census", "judge page R-FOOTNOTE", "judge scan census; split census; scope census x2"],
+        fields: [],
         witness: {
           quiet: { text: "The preview reads the published<sup>1</sup> head.", claims: 0, cured: 1 },
           twin: { text: "The preview reads the published head.<sup>1</sup>", claims: 1 },
+        },
+      },
+      {
+        id: "A15",
+        seams: ["judge"],
+        calls: ["judge scan census; split census; scope census", "judge page R-FOOTNOTE-REFERENCE", "judge scan census; split census; scope census x2"],
+        fields: [],
+        witness: {
+          quiet: { text: "The preview reads the published[^1] head.\n\n[^1]: A note.", claims: 0, cured: 1 },
+          twin: { text: "The preview reads the published head.[^1]\n\n[^1]: A note.", claims: 1 },
+        },
+      },
+      {
+        id: "A16",
+        seams: ["judge"],
+        calls: ["judge scan census; split census; scope census", "judge page R-FOOTNOTE-DEFINITION", "judge scan census; split census; scope census x2"],
+        fields: [],
+        witness: {
+          quiet: { text: "Intro.[^1]\n\n[^1]: https://example.com 'The preview reads the published head.'", claims: 0, cured: 1 },
+          twin: { text: "Intro.[^1]\n\n[^1]: The preview reads the published head.", claims: 1 },
+        },
+      },
+      {
+        id: "A17",
+        seams: ["judge"],
+        calls: ["judge scan census; split census; scope census", "judge page R-SUBSCRIPT", "judge scan census; split census; scope census x2"],
+        fields: [],
+        witness: {
+          quiet: { text: "The preview reads the published<sub>1</sub> head.", claims: 0, cured: 1 },
+          twin: { text: "The preview reads the published head.<sub>1</sub>", claims: 1 },
+        },
+      },
+      {
+        id: "A18",
+        seams: ["judge"],
+        calls: ["judge census", "judge R-NO-COMMIT", "judge census", "judge R-NO-COMMIT", "judge census"],
+        fields: [],
+        witness: {
+          quiet: [
+            { sentence: "A no commit render reads the published head.", judged: false, cured: true },
+            { sentence: "The no commit preview reads the published head.", judged: false, cured: true },
+          ],
+          twin: { sentence: "A no-commit render reads the published head.", judged: true },
+        },
+      },
+      {
+        id: "A19",
+        seams: ["judge"],
+        calls: ["judge census", "judge R-NEGATION-PHRASE", "judge census", "judge R-NEGATION-PHRASE", "judge census"],
+        fields: [],
+        witness: {
+          quiet: [
+            { sentence: "The preview makes no change and reads the published head.", judged: false, cured: true },
+            { sentence: "The preview without a commit reads the published head.", judged: false, cured: true },
+          ],
+          twin: { sentence: "The preview makes a change and reads the published head.", judged: true },
         },
       },
     ],
@@ -1046,7 +1221,8 @@ const ROWS: readonly Row[] = [
       {
         id: "B1",
         seams: ["src"],
-        inputs: ["export anchorPhrase", "export srcSurfaces", "src planted", "src src/workbench/reactivefiber-observer.ts"],
+        calls: ["src src/workbench/reactivefiber-observer.ts", "src planted"],
+        fields: ["anchorPhrase", "srcSurfaces"],
         witness: {
           file: "src/workbench/reactivefiber-observer.ts",
           anchorLiterals: 1,
@@ -1059,7 +1235,8 @@ const ROWS: readonly Row[] = [
       {
         id: "B2",
         seams: ["reader", "src"],
-        inputs: ["export anchorPhrase", "export key", "export srcSurfaces", "reader real", "src src/workbench/reactivefiber-observer.ts"],
+        calls: ["reader real", "src src/workbench/reactivefiber-observer.ts"],
+        fields: ["anchorPhrase", "key", "srcSurfaces"],
         witness: { previewContract: true, keyStated: false, srcNote: true, anchoredAt: [0], twin: { before: "a note put before it", anchoredAt: [1] } },
       },
     ],
@@ -1072,7 +1249,8 @@ const ROWS: readonly Row[] = [
       {
         id: "C1",
         seams: ["reader"],
-        inputs: ["export category", "export closedSet", "export key", "export note", "export workingTree", "reader armed stand-in", "reader real"],
+        calls: ["reader real x5", "reader armed stand-in x5"],
+        fields: ["category", "closedSet", "key", "note", "workingTree"],
         witness: {
           real: [
             { word: "working_tree", reads: "unchanged" },
@@ -1097,11 +1275,21 @@ const ROWS: readonly Row[] = [
     clause:
       "a default-gate test reads R11's fixture record and, when definition_source appears in a captured envelope, fails until the observer case exists (freeze-and-flip, 05-IMPLEMENTATION-PLAN.md:39@8a8b83e4d)",
     pins: [
-      { id: "T1", seams: ["roster", "trigger"], inputs: ["export key", "trigger names key", "trigger reader real", "trigger record R11"], witness: { misses: [] } },
+      { id: "T1", seams: ["roster", "trigger"], calls: ["roster", "trigger record R11; reader real; names key"], fields: ["key"], witness: { misses: [] } },
       {
         id: "T2",
         seams: ["roster", "trigger", "reader"],
-        inputs: ["export key", "trigger names key", "trigger reader unarmed stand-in", "trigger record R11, cleared, definition_source in provenanceKeys", "trigger record R11, cleared, definition_source in resultKeys", "trigger record R11, cleared, definition_source in workKeys", "trigger record R11, cleared, definition_source in workMetricsKeys"],
+        calls: [
+          "roster",
+          "trigger record R11, cleared, definition_source in resultKeys; reader unarmed stand-in; names key",
+          "roster",
+          "trigger record R11, cleared, definition_source in provenanceKeys; reader unarmed stand-in; names key",
+          "roster",
+          "trigger record R11, cleared, definition_source in workKeys; reader unarmed stand-in; names key",
+          "roster",
+          "trigger record R11, cleared, definition_source in workMetricsKeys; reader unarmed stand-in; names key",
+        ],
+        fields: ["key"],
         witness: {
           resultKeys: firedIn("resultKeys", FIRED),
           provenanceKeys: firedIn("provenanceKeys", FIRED),
@@ -1112,7 +1300,19 @@ const ROWS: readonly Row[] = [
       {
         id: "T3",
         seams: ["roster", "trigger", "reader"],
-        inputs: ["export key", "trigger names key", "trigger reader armed stand-in", "trigger reader armed stand-in, unarmed again", "trigger record R11, cleared, definition_source in provenanceKeys", "trigger record R11, cleared, definition_source in resultKeys", "trigger record R11, cleared, definition_source in workKeys", "trigger record R11, cleared, definition_source in workMetricsKeys"],
+        calls: [
+          "roster",
+          "trigger record R11, cleared, definition_source in resultKeys; reader armed stand-in; names key",
+          "roster",
+          "trigger record R11, cleared, definition_source in provenanceKeys; reader armed stand-in; names key",
+          "roster",
+          "trigger record R11, cleared, definition_source in workKeys; reader armed stand-in; names key",
+          "roster",
+          "trigger record R11, cleared, definition_source in workMetricsKeys; reader armed stand-in; names key",
+          "roster",
+          "trigger record R11, cleared, definition_source in resultKeys; reader armed stand-in, unarmed again; names key",
+        ],
+        fields: ["key"],
         witness: {
           armed: { resultKeys: firedIn("resultKeys", []), provenanceKeys: firedIn("provenanceKeys", []), workKeys: firedIn("workKeys", []), workMetricsKeys: firedIn("workMetricsKeys", []) },
           unarmedArmed: firedIn("resultKeys", FIRED),
@@ -1121,14 +1321,14 @@ const ROWS: readonly Row[] = [
       {
         id: "T4",
         seams: ["roster", "trigger", "reader"],
-        inputs: [
-          "export key",
-          "trigger names container (R-NESTED)",
-          "trigger names key",
-          "trigger reader unarmed stand-in",
-          "trigger record R11, cleared, definition_source in resultKeys",
-          "trigger record R11, definition_source in provenanceKeys, cleared, render_pin in resultKeys",
+        calls: [
+          "roster",
+          "trigger record R11, definition_source in provenanceKeys, cleared, render_pin in resultKeys; reader unarmed stand-in; names key",
+          "trigger record R11, definition_source in provenanceKeys, cleared, render_pin in resultKeys; reader unarmed stand-in; names container (R-NESTED)",
+          "roster",
+          "trigger record R11, cleared, definition_source in resultKeys; reader unarmed stand-in; names key",
         ],
+        fields: ["key"],
         witness: {
           container: "render_pin",
           quiet: { containers: ["resultKeys"], named: [], misses: [], cured: firedIn("resultKeys", FIRED) },
@@ -1138,16 +1338,19 @@ const ROWS: readonly Row[] = [
       {
         id: "T5",
         seams: ["roster", "trigger", "reader"],
-        inputs: [
-          "export key",
-          "trigger names key",
-          "trigger reader partial stand-in absent",
-          "trigger reader partial stand-in closed-set",
-          "trigger reader partial stand-in contradiction",
-          "trigger reader partial stand-in note",
-          "trigger reader partial stand-in untyped",
-          "trigger record R11, cleared, definition_source in resultKeys",
+        calls: [
+          "roster",
+          "trigger record R11, cleared, definition_source in resultKeys; reader partial stand-in note; names key",
+          "roster",
+          "trigger record R11, cleared, definition_source in resultKeys; reader partial stand-in contradiction; names key",
+          "roster",
+          "trigger record R11, cleared, definition_source in resultKeys; reader partial stand-in closed-set; names key",
+          "roster",
+          "trigger record R11, cleared, definition_source in resultKeys; reader partial stand-in absent; names key",
+          "roster",
+          "trigger record R11, cleared, definition_source in resultKeys; reader partial stand-in untyped; names key",
         ],
+        fields: ["key"],
         witness: {
           note: firedIn("resultKeys", ["note"]),
           contradiction: firedIn("resultKeys", ["contradiction"]),
@@ -1183,6 +1386,16 @@ const SENTENCES = [
   `The preview reads the ${at(0x2018)}published${at(0x2019)} head.`,
   `The preview reads the published ${at(0x201c)}head${at(0x201d)}.`,
   `The preview reads the ${at(0x201c)}published${at(0x201d)} head.`,
+  "The pre-view reads the published head.",
+  "The pre view reads the published head.",
+  "The pre_view reads the published head.",
+  "The non committed render reads the published head.",
+  "The non_committed render reads the published head.",
+  "The un-committed render reads the published head.",
+  "The un committed render reads the published head.",
+  "The un_committed render reads the published head.",
+  "A no_commit render reads the published head.",
+  "A nocommit render reads the published head.",
   "The noncommitted preview never reads the published head.",
   "The preview does not read the published head.",
   "rf graph publish promotes a candidate to the published head.",
@@ -1320,14 +1533,17 @@ const IMPL: Readonly<Record<string, () => Json>> = {
   A8: () => JOINS.map(text => ({ text, claims: claimCount([planted(text)]) })),
   A9: () => HIDDEN.map(([hidden, shown]) => ({ hidden, claims: claimCount([planted(hidden)]), shown, shownClaims: claimCount([planted(shown)]) })),
   A10: () => ({ unknown: scanned(planted("The preview reads the published&emsp13;head.")), known: scanned(planted("The preview reads the published&emsp;head.")) }),
+  // Every planted page is scanned in one call, each at its own path, so the case's calls never depend on the engine's tables.
   A11: () => {
-    const plantedPages = dashCodePoints().flatMap(code => DASH_PAGES.map(page => ({ code, file: planted(page.replace("{dash}", at(code))) })));
+    const plantedPages = dashCodePoints().flatMap(code => DASH_PAGES.map((page, index) => ({ code, file: planted(page.replace("{dash}", at(code)), `${DOCS_ROOT}/dash-${code.toString(16)}-${index}.md`) })));
+    const { claims } = scan(plantedPages.map(({ file }) => file));
+    const claimsOn = (path: string): number => claims.filter(claim => claim.startsWith(`${path}:`)).length;
     return {
       pages: [...DASH_PAGES],
       planted: plantedPages.every(({ code, file }) => file.text.includes(at(code))),
       dashes: plantedPages.length / DASH_PAGES.length >= DASH_FLOOR,
       minus: plantedPages.some(({ code }) => code === 0x2212),
-      unread: plantedPages.filter(({ file }) => claimCount([file]) !== 1).map(({ code, file }) => `U+${code.toString(16).toUpperCase().padStart(4, "0")} ${file.text}`),
+      unread: plantedPages.filter(({ file }) => claimsOn(file.path) !== 1).map(({ code, file }) => `U+${code.toString(16).toUpperCase().padStart(4, "0")} ${file.text}`),
     };
   },
   // R-ABBREVIATION: a period after an abbreviation ends the sentence it splits; its cure keeps the sentence open.
@@ -1346,6 +1562,34 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const twin = planted("The preview reads the published head.<sup>1</sup>");
     return { quiet: { text: quiet.text, claims: claimCount([quiet]), cured: claimCount([footnoteCured(quiet)]) }, twin: { text: twin.text, claims: claimCount([twin]) } };
   },
+  // R-FOOTNOTE-REFERENCE: a markdown footnote reference between published and head; its cure renders the reference as nothing.
+  A15: () => {
+    const reference = planted("The preview reads the published[^1] head.\n\n[^1]: A note.");
+    const trailing = planted("The preview reads the published head.[^1]\n\n[^1]: A note.");
+    return { quiet: { text: reference.text, claims: claimCount([reference]), cured: claimCount([footnoteReferenceCured(reference)]) }, twin: { text: trailing.text, claims: claimCount([trailing]) } };
+  },
+  // R-FOOTNOTE-DEFINITION: a footnote definition lexed as a link reference definition; its cure renders the definition's text.
+  A16: () => {
+    const titled = planted("Intro.[^1]\n\n[^1]: https://example.com 'The preview reads the published head.'");
+    const plain = planted("Intro.[^1]\n\n[^1]: The preview reads the published head.");
+    return { quiet: { text: titled.text, claims: claimCount([titled]), cured: claimCount([footnoteDefinitionCured(titled)]) }, twin: { text: plain.text, claims: claimCount([plain]) } };
+  },
+  // R-SUBSCRIPT: an inline <sub> element between published and head; its cure renders the element as nothing.
+  A17: () => {
+    const lowered = planted("The preview reads the published<sub>1</sub> head.");
+    const after = planted("The preview reads the published head.<sub>1</sub>");
+    return { quiet: { text: lowered.text, claims: claimCount([lowered]), cured: claimCount([subscriptCured(lowered)]) }, twin: { text: after.text, claims: claimCount([after]) } };
+  },
+  // R-NO-COMMIT: the preview written as the two words no commit; its cure reads them as the preview and never as a negation.
+  A18: () => ({
+    quiet: ["A no commit render reads the published head.", "The no commit preview reads the published head."].map(judgedWith(NO_COMMIT_CURE)),
+    twin: twinOf("A no-commit render reads the published head."),
+  }),
+  // R-NEGATION-PHRASE: a negation in the head's own clause that governs another phrase; its cure reads only the words before the head.
+  A19: () => ({
+    quiet: ["The preview makes no change and reads the published head.", "The preview without a commit reads the published head."].map(judgedWith(NEGATION_PHRASE_CURE)),
+    twin: twinOf("The preview makes a change and reads the published head."),
+  }),
   B1: () => {
     const file = EXPORTED.srcSurfaces[0] ?? "";
     const phrase = EXPORTED.anchorPhrase;
@@ -1415,7 +1659,7 @@ function registered(task: TestContext["task"]): Registered[] {
 
 describe("wb-973.13 rf definition-source census (SWARM-CONTEXT-GRAPH-R13, the until-then leg and its trigger)", () => {
   it(JUDGED_TITLE, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:14", "B:2", "C:1", "T:5"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:19", "B:2", "C:1", "T:5"]);
     expect(Object.keys(IMPL).sort(), "a pin without a case, or a case without a pin").toEqual(ROWS.flatMap(row => row.pins.map(pin => pin.id)).sort());
     const cited: Clause[] = [...ROWS.map(({ source, clause }) => ({ source, clause })), ...ARMED.map(({ clause }) => ({ source: ARMED_SOURCE, clause }))];
     expect(sortedClauses(cited), "the judged clauses against the tracked export's testable clauses").toStrictEqual(sortedClauses(EXPORTED.clauses));
@@ -1440,17 +1684,21 @@ describe("wb-973.13 rf definition-source census (SWARM-CONTEXT-GRAPH-R13, the un
           const impl = IMPL[pin.id];
           expect(impl, `no case for ${pin.id}`).toBeTypeOf("function");
           running = [];
-          inputs = [];
+          calls = [];
+          fields = [];
           const witness = impl === undefined ? null : impl();
           const reads = running;
-          const recorded = inputs;
+          const made = calls;
+          const fieldsRead = fields;
           running = undefined;
-          inputs = undefined;
+          calls = undefined;
+          fields = undefined;
           expect(
             pin.seams.filter(seam => !reads.includes(seam)),
             `${pin.id} did not read through every seam it declares`,
           ).toEqual([]);
-          expect([...recorded].sort(), `${pin.id}'s inputs, recorded at its seams, against its inputs list`).toEqual([...pin.inputs].sort());
+          expect(runs(made), `${pin.id}'s calls, recorded in call order at its seams, against its calls list`).toEqual([...pin.calls]);
+          expect([...fieldsRead].sort(), `${pin.id}'s export fields, recorded as read, against its fields list`).toEqual([...pin.fields].sort());
           expect(witness).toStrictEqual(pin.witness);
         });
       }
