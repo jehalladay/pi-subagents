@@ -288,6 +288,13 @@
       "digest": "1cd588866aa92cffde0b4b5e798b870fb253ef1780f1689f22f9735c978669bd",
       "reading": "row quiet",
       "runtime": "invisible: getBuiltinModule returns the unmocked builtin"
+    },
+    {
+      "id": "R-IMPORTACTUAL",
+      "family": "vi.importActual requisition",
+      "digest": "cd8e590e840ebe06999fef348cd32fa8af1e610d69b42551475442107f0eaf9a",
+      "reading": "row quiet",
+      "runtime": "invisible: vi.importActual returns the unmocked builtin"
     }
   ],
   "packageCopySuite": "WB-014 immutable invocation identity",

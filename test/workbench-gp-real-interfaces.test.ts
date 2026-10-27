@@ -77,6 +77,21 @@
  * member's frozen reading beside a paired control one change away that the census does read as a bd write; the closing
  * tally holds the members read to the out-of-file roster.
  *
+ * THE wb-yxkq FOLLOW-UP (R694 of landing 456; gate of record cmd_ffe6aadbb818, PREP F1 leads, F2 rides). F1: the
+ * class-level members are read back from docs/03, family to member as well as member to family. familyShapesOf reads the
+ * shapes a residual's family enumerates in the rendered residual line by the family's own grammar (after its first colon,
+ * groups opened by an article, each naming its shapes after its last "such as", "spelled" or "as in", or between "the" and
+ * its closing noun), and a D row holds every residual's shapes to its members: each shape names exactly one member by its
+ * named words, in the family's order, and a single-shape family enumerates none. So gate G1 and G1b (one member dropped
+ * from MISREAD_MEMBERS, from the S member literal and from the roster) red through docs/03, which still names the shape.
+ * F2: the paired control is enforced, not only authored. The Q row holds each control to differ from its statement, to be
+ * read as a bd write by the census itself whatever controlWrites pins, and to be one change away from its statement
+ * (oneChangeAway over statementWordsOf, a reading of the two calls made without the census's own: one run of at most two
+ * words dropped, respelled or rejoined into at most one word, or one word moved), so gate G2 (a control set to its own
+ * statement, controlWrites []) and G2b (a control swapped to an unrelated bd write) red. Both checks are proved live in
+ * memory: the D row plants each kind of disagreement (G1 and G1b among them) into the members or the docs line, and an F
+ * row holds familyShapesOf, namesShape, statementWordsOf, oneChangeAway and pairingProblems to probes, one or more per branch.
+ *
  * Display paths added: none. No scratch directory is allocated: the synthetic trees live in memory.
  */
 import { createHash } from "node:crypto";
@@ -2087,8 +2102,8 @@ const REGISTERED = {
     "type-only-launcher",
   ],
 } as const satisfies Readonly<Record<"F" | "Q" | "DT", readonly string[]>>;
-/** Every case this file registers: 18 fixed cases, the three it.each tables and the closing tally. */
-const FILE_CASES = 103;
+/** Every case this file registers: 20 fixed cases, the three it.each tables and the closing tally. */
+const FILE_CASES = 105;
 /** What this run's it.each cases did, recorded by each case at its last line; the closing tally pins every list. */
 const RAN: Record<"F" | "Q" | "DT", string[]> = { F: [], Q: [], DT: [] };
 /** The class-level residual members the Q rows read this run (residual/member), each recorded after its control (wb-nh0t F2). */
@@ -2144,6 +2159,119 @@ const boundaryBlocks = (): RenderedBlock[] => [
 ];
 const boundarySection = (): ReturnType<typeof docsSection> => docsSection(readRepo(DOCS_03), BOUNDARY_HEADING, 2, [PAGE_TITLE]);
 const RESIDUAL_ENTRY = /([A-Z][A-Z-]*[A-Z]) \(([^)]+)\)/g;
+
+/**
+ * A residual family's enumerated shapes (wb-yxkq F1), read from the family text alone: the enumeration follows the family's
+ * first ": "; it parts into groups at each ", " that opens an article ("a ", "an " or "the ", alone or after "or "); a group
+ * names its shapes after its last "such as", "spelled" or "as in", or between "the" and its closing noun ("the time, coproc
+ * or function keyword"); and the shapes part at ", " and " or ". A group that names none is returned in unread, never
+ * dropped; a family with no colon enumerates nothing.
+ */
+const FAMILY_GROUPS = /, (?=(?:or )?(?:an?|the) )/;
+const CUED_SHAPES = /^.* (?:such as|spelled|as in) (.+)$/;
+const NOUNED_SHAPES = /^the (.+) [a-z]+$/;
+const SHAPE_PARTS = /, | or /;
+function familyShapesOf(family: string): { readonly shapes: readonly string[]; readonly unread: readonly string[] } {
+  const colon = family.indexOf(": ");
+  if (colon < 0) return { shapes: [], unread: [] };
+  const shapes: string[] = [];
+  const unread: string[] = [];
+  for (const group of family.slice(colon + 2).split(FAMILY_GROUPS)) {
+    const listed = CUED_SHAPES.exec(group)?.[1] ?? NOUNED_SHAPES.exec(group)?.[1];
+    if (listed === undefined) unread.push(group);
+    else shapes.push(...listed.split(SHAPE_PARTS));
+  }
+  return { shapes, unread };
+}
+/** Whether a member's named words carry a shape: the shape's words as one contiguous run of whole words (so >/dev/null is not 2>/dev/null). */
+function namesShape(named: string, shape: string): boolean {
+  const words = named.split(" ");
+  const run = shape.split(" ");
+  return words.some((_, start) => run.every((word, offset) => words[start + offset] === word));
+}
+
+/**
+ * A residual member's statement or control as plain words (wb-yxkq F2), read without the census's own launch reading: the
+ * callee of its one call, then its first argument - a shell line split at white space, or a binary followed by its argv
+ * array's elements. Any other shape (a second statement, a non-literal argument, a third argument) reads as no words.
+ */
+function statementWordsOf(statement: string): readonly string[] {
+  const source = ts.createSourceFile("member.ts", statement, ts.ScriptTarget.Latest, false, ts.ScriptKind.TS);
+  const [only] = source.statements;
+  if (source.statements.length !== 1 || only === undefined || !ts.isExpressionStatement(only) || !ts.isCallExpression(only.expression)) return [];
+  const callee = calleeName(only.expression.expression);
+  const [first, argv, ...rest] = only.expression.arguments;
+  const head = literalText(first);
+  if (callee === undefined || head === undefined || rest.length > 0) return [];
+  if (argv === undefined) return [callee, ...head.split(/\s+/).filter(word => word !== "")];
+  if (!ts.isArrayLiteralExpression(argv)) return [];
+  const words = argv.elements.map(element => literalText(element));
+  return words.every(word => word !== undefined) ? [callee, head, ...words] : [];
+}
+/** Whether one word moved: taking the same word out of each leaves the same words in the same order. */
+function movedOneWord(statement: readonly string[], control: readonly string[]): boolean {
+  const without = (words: readonly string[], index: number): string => JSON.stringify(words.filter((_, at) => at !== index));
+  return statement.some((word, from) => control.some((other, to) => other === word && without(statement, from) === without(control, to)));
+}
+/**
+ * Whether a control is one change away from its statement (wb-yxkq F2): the word lists differ, and either they differ in
+ * one contiguous run where at most two of the statement's words give way to at most one word (a word dropped, inserted or
+ * respelled, two words rejoined), or one word moved. A wider run, two separate changes or an identical control is not one.
+ */
+function oneChangeAway(statement: readonly string[], control: readonly string[]): boolean {
+  if (statement.length === 0 || control.length === 0 || JSON.stringify(statement) === JSON.stringify(control)) return false;
+  let prefix = 0;
+  while (prefix < statement.length && prefix < control.length && statement[prefix] === control[prefix]) prefix += 1;
+  let suffix = 0;
+  while (
+    suffix < statement.length - prefix &&
+    suffix < control.length - prefix &&
+    statement[statement.length - 1 - suffix] === control[control.length - 1 - suffix]
+  ) {
+    suffix += 1;
+  }
+  const removed = statement.length - prefix - suffix;
+  const added = control.length - prefix - suffix;
+  return (removed <= 2 && added <= 1) || movedOneWord(statement, control);
+}
+/**
+ * Where docs/03's residual line and a residual table disagree on members (wb-yxkq F1): for each residual the line names,
+ * each shape its family enumerates that names other than exactly one member, each member named by other than exactly one
+ * shape, members out of the family's order, and each group of a class-level family that the grammar cannot read. Empty
+ * when they agree; a single-shape residual agrees when its family enumerates nothing.
+ */
+function memberMismatches(line: string, residuals: readonly Residual[]): string[] {
+  const problems: string[] = [];
+  for (const [, id = "", family = ""] of line.matchAll(RESIDUAL_ENTRY)) {
+    const members = residuals.find(residual => residual.id === id)?.members ?? [];
+    const { shapes, unread } = familyShapesOf(family);
+    const byShape = shapes.map(shape => members.filter(member => namesShape(member.named, shape)));
+    byShape.forEach((named, index) => {
+      if (named.length !== 1) problems.push(`${id}: shape ${shapes[index]} names ${named.map(member => member.name).join(" | ") || "no member"}`);
+    });
+    for (const member of members) {
+      const count = byShape.filter(named => named.includes(member)).length;
+      if (count !== 1) problems.push(`${id}: member ${member.name} is named by ${count} shapes`);
+    }
+    const order = byShape.flatMap(named => (named.length === 1 ? named.map(member => member.name) : []));
+    const table = members.map(member => member.name).filter(name => order.includes(name));
+    if (JSON.stringify(order) !== JSON.stringify(table)) problems.push(`${id}: members out of the family's order`);
+    if (members.length > 0) for (const group of unread) problems.push(`${id}: unread group ${group}`);
+  }
+  return problems;
+}
+/**
+ * What a class-level member's paired control fails of its pairing (wb-yxkq F2), read independently of its pinned
+ * controlWrites: the census itself reads no bd write in the control, or the control is not one change away from its
+ * statement. Empty when the control is a live pair.
+ */
+function pairingProblems(member: ResidualMember): string[] {
+  const control = moduleCensus("src/workbench/probe.ts", `${MEMBER_HEAD}\n${member.control}`);
+  return [
+    ...(control.bdWrite.length > 0 ? [] : [`${member.name}: the census reads no bd write in the control`]),
+    ...(oneChangeAway(statementWordsOf(member.statement), statementWordsOf(member.control)) ? [] : [`${member.name}: the control is not one change away from its statement`]),
+  ];
+}
 
 /** The census tables as the roster lists them: rows with pins, clauses and falsifier expectations, residuals, detector probes by SHA-256. */
 interface RosterResidual {
@@ -2348,6 +2476,101 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
     expect(planted, "every plant read").toEqual(CONCERN_TERMS);
   });
 
+  it("D: docs/03 names exactly each residual's measured members - every shape a family enumerates in the rendered residual line names exactly one of that residual's members by its named words, in the family's order, and a single-shape family enumerates none, so a member dropped from every literal of this census and from the roster still reds (wb-yxkq F1, gate G1/G1b)", () => {
+    const section = boundarySection();
+    expect(section.why).toBe("");
+    const lines = section.blocks.flatMap(block => (block.kind === "paragraph" && block.text.startsWith("Named residuals") ? [block.text] : []));
+    expect(lines).toHaveLength(1);
+    const line = lines[0] ?? "";
+    const families = new Map([...line.matchAll(RESIDUAL_ENTRY)].map(match => [match[1] ?? "", match[2] ?? ""] as const));
+    expect([...families.keys()], "the residuals docs/03 names, each read").toEqual(RESIDUALS.map(residual => residual.id));
+    expect(memberMismatches(line, RESIDUALS), "docs/03 against this census's members").toEqual([]);
+    // The check is live: each kind of disagreement, planted in memory in the members or in the docs line, is the one named.
+    const misread = "MISREAD-COMMAND-WORD";
+    const edited = (edit: (members: readonly ResidualMember[]) => readonly ResidualMember[]): Residual[] =>
+      RESIDUALS.map(residual => (residual.id === misread ? { ...residual, members: edit(residual.members ?? []) } : residual));
+    const without = (name: string): Residual[] => edited(members => members.filter(member => member.name !== name));
+    expect(memberMismatches(line, without("P32 the coproc keyword")), "gate G1: P32 dropped").toEqual([`${misread}: shape coproc names no member`]);
+    expect(memberMismatches(line, without("P17 a global flag value read as the verb")), "gate G1b: P17 dropped").toEqual([`${misread}: shape bd --actor doctor close names no member`]);
+    expect(memberMismatches(line, edited(() => [])), "every member dropped").toEqual(familyShapesOf(families.get(misread) ?? "").shapes.map(shape => `${misread}: shape ${shape} names no member`));
+    expect(
+      memberMismatches(line, edited(members => [...members, ...members.slice(0, 1).map(member => ({ ...member, name: "P99 an unlisted shape", named: "an unlisted shape" }))])),
+      "a member the family does not list",
+    ).toEqual([`${misread}: member P99 an unlisted shape is named by 0 shapes`]);
+    expect(
+      memberMismatches(line, edited(members => members.map((member, index, all) => (index === 2 ? (all[3] ?? member) : index === 3 ? (all[2] ?? member) : member)))),
+      "two members out of the family's order",
+    ).toEqual([`${misread}: members out of the family's order`]);
+    expect(
+      memberMismatches(line, edited(members => members.map(member => (member.name === "P05 the time keyword" ? { ...member, named: "time coproc" } : member)))),
+      "a member named by two shapes",
+    ).toEqual([`${misread}: shape coproc names P05 the time keyword | P32 the coproc keyword`, `${misread}: member P05 the time keyword is named by 2 shapes`]);
+    expect(
+      memberMismatches(line.replace("as in bd --actor doctor close)", "as in bd --actor doctor close, or a form the grammar cannot read)"), RESIDUALS),
+      "an unread group of a class-level family",
+    ).toEqual([`${misread}: unread group or a form the grammar cannot read`]);
+    expect(
+      memberMismatches(line.replace("does not unwrap, such as timeout, sudo, nice or xargs)", "does not unwrap: a program such as timeout)"), RESIDUALS),
+      "a single-shape family that enumerates a shape",
+    ).toEqual(["WRAPPED-COMMAND: shape timeout names no member"]);
+  });
+
+  it("F: the class-level member readings meet their in-memory probes - familyShapesOf reads each branch of the family grammar and returns a group it cannot read, namesShape reads whole contiguous words, statementWordsOf reads only one launcher call of literals, oneChangeAway admits one dropped, inserted, respelled or rejoined run or one moved word and refuses an identical, wider or second change, and pairingProblems names a control set to its own statement, an unrelated bd write and a misread respelling (wb-yxkq F1/F2, gate G2/G2b)", () => {
+    expect(familyShapesOf("a lead such as Z: the A or B noun"), "after the colon; between the and its noun; or").toEqual({ shapes: ["A", "B"], unread: [] });
+    expect(familyShapesOf("lead: a group such as A, B or C, the D noun, an other group spelled E, or a group spelled F or G"), "groups at a, the, an and or a").toEqual({
+      shapes: ["A", "B", "C", "D", "E", "F", "G"],
+      unread: [],
+    });
+    expect(familyShapesOf("lead: a group whose value is v, as in G H"), "as in; one shape of two words").toEqual({ shapes: ["G H"], unread: [] });
+    expect(familyShapesOf("lead: a group such as a word spelled K"), "the last cue").toEqual({ shapes: ["K"], unread: [] });
+    expect(familyShapesOf("lead: a group naming nothing, a group such as L"), "an unread group is returned").toEqual({ shapes: ["L"], unread: ["a group naming nothing"] });
+    expect(familyShapesOf("a family that enumerates nothing, such as M"), "no colon, no enumeration").toEqual({ shapes: [], unread: [] });
+    expect([namesShape("2>/dev/null", ">/dev/null"), namesShape("the time", "time"), namesShape("bd --actor doctor close", "--actor doctor"), namesShape("bd --actor doctor close", "bd close")], "whole contiguous words").toEqual([
+      false,
+      true,
+      true,
+      false,
+    ]);
+    expect(statementWordsOf('execSync(" a\\nb  c ");'), "a shell line at white space").toEqual(["execSync", "a", "b", "c"]);
+    expect(statementWordsOf('spawnSync("bd", ["close", "wb-x"]);'), "a binary and its argv").toEqual(["spawnSync", "bd", "close", "wb-x"]);
+    expect(
+      ['spawnSync("bd", ["close", id]);', 'spawnSync("bd", argv);', 'spawnSync("bd", ["close"], {});', "execSync(line);", '(0, execSync)("a");', 'void execSync("a");', 'const out = execSync("a");', 'execSync("a"); execSync("b");', ""].map(statementWordsOf),
+      "any other shape reads as no words",
+    ).toEqual([[], [], [], [], [], [], [], [], []]);
+    const pairs: readonly (readonly [readonly string[], readonly string[], boolean])[] = [
+      [["x", "a", "b"], ["x", "a", "b"], false],
+      [["x", "a", "b"], ["x", "b"], true],
+      [["x", "b"], ["x", "a", "b"], true],
+      [["x", "a", "b"], ["x", "c", "b"], true],
+      [["x", "a", "b", "c"], ["x", "ab", "c"], true],
+      [["x", "a", "b", "c"], ["x", "b", "c", "a"], true],
+      [["x", "a", "b", "c", "d"], ["x", "e", "d"], false],
+      [["x", "a", "b", "c"], ["x", "d", "e", "c"], false],
+      [["x", "a", "b"], ["x", "c", "d", "b"], false],
+      [["x", "a", "b", "c", "d"], ["x", "e", "b", "c", "f"], false],
+      [["x", "a", "b", "c", "d"], ["x", "b", "a", "d", "c"], false],
+      [[], ["x"], false],
+      [["x"], [], false],
+    ];
+    expect(
+      pairs.map(([statement, control]) => oneChangeAway(statement, control)),
+      "identical, dropped, inserted, respelled, rejoined, moved, a run of three, two for two, one for two, two changes, two moves, no statement, no control",
+    ).toEqual(pairs.map(pair => pair[2]));
+    const member = (name: string): ResidualMember[] => MISREAD_MEMBERS.filter(candidate => candidate.name === name);
+    expect(
+      member("P06 a leading redirection").flatMap(found => pairingProblems({ ...found, control: found.statement, controlWrites: [] })),
+      "gate G2: a control set to its own statement",
+    ).toEqual(["P06 a leading redirection: the census reads no bd write in the control", "P06 a leading redirection: the control is not one change away from its statement"]);
+    expect(
+      member("P05 the time keyword").flatMap(found => pairingProblems({ ...found, control: 'execSync("bd create wb-other");', controlWrites: ["bd create wb-other"] })),
+      "gate G2b: an unrelated bd write",
+    ).toEqual(["P05 the time keyword: the control is not one change away from its statement"]);
+    expect(
+      member("P05 the time keyword").flatMap(found => pairingProblems({ ...found, control: 'execSync("timer bd close wb-example");', controlWrites: [] })),
+      "a misread respelling one change away",
+    ).toEqual(["P05 the time keyword: the census reads no bd write in the control"]);
+  });
+
   it("F: a compliant gp integration judges clean - the rules admit a real-interface seam rather than banning gp", () => {
     expect(judge(treeOf(CLEAN), CLEAN.seams)).toEqual([]);
     const ctx = contextOf(treeOf(CLEAN), CLEAN.seams);
@@ -2464,6 +2687,8 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
         control.bdWrite.map(found => found.text),
         `${member.name}: the control one change away is read`,
       ).toEqual(member.controlWrites);
+      // wb-yxkq F2: the pairing is enforced whatever controlWrites pins - a bd write the census itself reads, one change away.
+      expect(pairingProblems(member), `${member.name}: the paired control is live`).toEqual([]);
       MEMBERS_READ.push(`${key}/${member.name}`);
     }
     RAN.Q.push(key);

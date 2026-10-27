@@ -1,5 +1,5 @@
 {
-  "comment": "wb-1xvp.3 (RF-GRAPH-POLICY-MACHINE-CONTROL-R2; the hk9l/5jha roster pattern, as wb-1xvp.4 uses it; extended by wb-66f7 and wb-rdv6): the OUT-OF-FILE anchor of test/workbench-gp-control-loop-audit.test.ts. rows: every judged row of test/helpers/gp-control-loop-audit-cases.ts in table order (CALL_SITES, NOT_CALL_SITES, RESIDUALS, ANNOTATED, UNANNOTATED, MISATTRIBUTED, FALSIFIERS, STAGES) - table, positional id, label and the SHA-256 of each pin as written (each input and each expectation). residuals: the named residual families, each pinned by its row (the RESIDUALS quiet rows, then the MISATTRIBUTED rows that read today's credit). tests: every test the suite registers, in order. Written from the rows and the registered tests as measured at the cut; the suite judges its tables, its residual families and its registered tests (vitest task tree, run modes) against this file at test time, in order and both ways.",
+  "comment": "wb-1xvp.3 (RF-GRAPH-POLICY-MACHINE-CONTROL-R2; the hk9l/5jha roster pattern, as wb-1xvp.4 uses it; extended by wb-66f7, wb-rdv6 and wb-lx6m): the OUT-OF-FILE anchor of test/workbench-gp-control-loop-audit.test.ts. rows: every judged row of test/helpers/gp-control-loop-audit-cases.ts in table order (CALL_SITES, NOT_CALL_SITES, RESIDUALS, ANNOTATED, UNANNOTATED, MISATTRIBUTED, FALSIFIERS, STAGES) - table, positional id, label and the SHA-256 of each pin as written (each input and each expectation). residuals: the named residual families, each pinned by its row (the RESIDUALS quiet rows, then the MISATTRIBUTED rows that read today's credit). tests: every test the suite registers, in order. Written from the rows and the registered tests as measured at the cut; the suite judges its tables, its residual families and its registered tests (vitest task tree, run modes) against this file at test time, in order and both ways.",
   "rows": [
     {
       "table": "CALL_SITES",
@@ -699,6 +699,22 @@
       ]
     },
     {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-13",
+      "label": "a marker inside a nested type literal of a preceding argument (wb-lx6m)",
+      "pins": [
+        "bd957623199988990095f0ede4fb8ddcc5909774f84c8011a2b1952bc1afb906"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-14",
+      "label": "a marker inside a nested class expression's body in a preceding argument (wb-lx6m)",
+      "pins": [
+        "c5c3e5e75a176a105fbab9b5d3ddd79b56b9eeb94d6032e5973f144a6edfe954"
+      ]
+    },
+    {
       "table": "MISATTRIBUTED",
       "id": "MISATTRIBUTED-01",
       "label": "RES-13 a marker inside an expression-bodied arrow, annotating its body, is credited to a gp literal later in the same call (gate B01)",
@@ -749,6 +765,366 @@
       "label": "RES-18 a marker after a nested arrow's parameter-list parenthesis is credited to a gp literal later in the outer call (wb-rdv6)",
       "pins": [
         "9033c4ef7b73ea296b53dd19ef987474a410d77d95e67399df5f35a05d75089d",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-07",
+      "label": "RES-19 a marker after a nested array literal's opening bracket is credited to a gp literal later in the outer call (wb-rdv6 gate P24)",
+      "pins": [
+        "70c6cda86141a1cb92e6dc82c98cb713dd3db6e8157d5c06c973b11b3d40e544",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-08",
+      "label": "RES-20 a line comment after a nested array literal's opening bracket, on a line above the gp literal, is credited to it (wb-rdv6 gate P32)",
+      "pins": [
+        "f2ee46002964f1eb9ba8808e37eb9f8af814cf328eecbd57b3211642b2a23b49",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-09",
+      "label": "RES-21 a marker after a comma inside a nested array literal is credited to a gp literal later in the outer call (wb-rdv6 gate P47)",
+      "pins": [
+        "add12bfa7d23bb7af5377ae127f981ee659974633469394fb83bd23119f7c978",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-10",
+      "label": "RES-22 a marker after a parenthesized preceding argument's opening parenthesis is credited to a gp literal later in the same call (wb-rdv6 gate P33)",
+      "pins": [
+        "741d1ff8d5eb1cdec6412c57db7ef0fdbef59442bdf0b00aafde3d4730db2c0c",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-11",
+      "label": "RES-23 a marker after the as keyword of a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P34)",
+      "pins": [
+        "ed23d7621656baf39da3f4c0a52b00daa3eb818ae4185475cc7b958f94da55fd",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-12",
+      "label": "RES-24 a marker after an element access's opening bracket in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P35)",
+      "pins": [
+        "93755ccc20c20ab1420b67506cf72ccecbfec41479cf7f3c783d6794b827b876",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-13",
+      "label": "RES-25 a marker after a property access's dot in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P36)",
+      "pins": [
+        "e60806bca7909e8541170db660f336d32a13b03cf84d1a8cec6c15c48a50f299",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-14",
+      "label": "RES-26 a marker after the opening angle bracket of a nested call's type arguments is credited to a gp literal later in the outer call (wb-rdv6 gate P37)",
+      "pins": [
+        "f3146ac76a9c1d9428780f7a06fe87f65b44561f10f50a7ba7a0e64a51dacbf0",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-15",
+      "label": "RES-27 a marker after the new keyword of a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P40)",
+      "pins": [
+        "2d1669df336868da2a5dcbb0e929a46ab3f0b001b6c09ef13175161a49c61d9a",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-16",
+      "label": "RES-28 a marker after typeof in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P42)",
+      "pins": [
+        "d524b3db66133fdbe0b878bdd7e19615f8b6878fe963afe47535b008ca23b0d3",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-17",
+      "label": "RES-29 a marker after a prefix ! in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P43)",
+      "pins": [
+        "2282395f7164b07f28a7cf682ec30219526886a1c69986f129e87841adc09e58",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-18",
+      "label": "RES-30 a marker after a nested function expression's parameter-list parenthesis is credited to a gp literal later in the outer call (wb-rdv6 gate P45)",
+      "pins": [
+        "b9b751aa931dc8d6e7c86f45519c6f2f12557171db3ca5bb85df6e67bc7248a7",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-19",
+      "label": "RES-31 a marker after await in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P46)",
+      "pins": [
+        "d3a418d0d3fb4e9c3500aa401fb45f3aaf18eaacfa1a759532a6b6622be15b2c",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-20",
+      "label": "RES-32 a marker after a spread token in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P50)",
+      "pins": [
+        "2e22929c056ba6efb3a11eefb7322ffa292b38e997d645fe11b97e832ba3db63",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-21",
+      "label": "RES-33 a marker trailing an if condition, annotating its blockless then branch, is credited to a gp literal in the else branch (wb-rdv6 gate P53)",
+      "pins": [
+        "8fa58022b5fda56f242b722fbe952e2013e2f4af5b0a7f86500b962d8bce28d4",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-22",
+      "label": "RES-34 a marker after a nested call's opening parenthesis on the gp literal's own line is credited to it (wb-rdv6 gate P22)",
+      "pins": [
+        "ef6d37a37547f0c79df12a5f2a1adc2eb605910428010c7f4dac34a1e5c940ff",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-23",
+      "label": "RES-35 a marker after a comma inside a nested call's argument list is credited to a gp literal later in the outer call (wb-rdv6 gate P38)",
+      "pins": [
+        "c3b4556a6b85286dfb55d365464f29c71e250b073ad8300169dd39946adc0e2f",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-24",
+      "label": "RES-36 a marker after a destructuring brace in a nested arrow's parameter list is credited to a gp literal later in the outer call (wb-rdv6 gate P39)",
+      "pins": [
+        "71ba7c72605437e7656de92f27f36b3d565e0c4139c7e0307c3348eefac4dd10",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-25",
+      "label": "RES-37 a marker trailing a preceding argument's comma on the call's first line is credited to a gp literal on the next line (wb-rdv6 gate P49)",
+      "pins": [
+        "299c1483fbeb271fae80b1e0e86f5252e6cfce0be1344b6933266c8b61e64cd5",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-26",
+      "label": "RES-38 a marker trailing a blockless then branch on the if line is credited to a gp literal in the else branch on the next line (wb-rdv6 gate P60)",
+      "pins": [
+        "62508a38be9e4607c77d932da8c8b5cc2def8ddde0de32864b5ace461c9851c8",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-27",
+      "label": "RES-39 a marker after a ternary's question mark, annotating its first branch, is credited to a gp literal in the second branch on the same line (wb-rdv6 gate P21)",
+      "pins": [
+        "a37101fe5a0388aa895ea72d3d6338ca45157b510588efe4ec0eb5de199df895",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-28",
+      "label": "RES-40 a marker after an expression-bodied arrow argument's arrow token, annotating its body, is credited to a gp literal later in the same call (wb-rdv6 gate P23)",
+      "pins": [
+        "c7bd4c43d6346808bbf3ff58d08cafda5d19d98ca1084e4bb703f304cb866152",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-29",
+      "label": "RES-41 a marker on its own line inside a multi-line nested array literal is credited to a gp literal later in the outer call (wb-rdv6 gate P31)",
+      "pins": [
+        "b5584b49ba14516d63d318de9bb4b6c92e53da98d65b128bd5b9d778eca59517",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-30",
+      "label": "RES-42 a marker after a template literal's substitution opening in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P41)",
+      "pins": [
+        "fa9e216f4ed3ca87b656bc7191761fe4684492bfeb18b6597be4a017e706e966",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-31",
+      "label": "RES-43 a marker after a binary + in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P44)",
+      "pins": [
+        "32230a2a78895b2d0024694be0f37ec2b9ec05003bb38957e753ac83966f2ed4",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-32",
+      "label": "RES-44 a marker after satisfies in a preceding argument is credited to a gp literal later in the same call (wb-lx6m)",
+      "pins": [
+        "d4c9cd5667fb75a5e6f2189398bdde96762e1c9e31530b5436d8f69b3b95d8b1",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-33",
+      "label": "RES-45 a marker after void in a preceding argument is credited to a gp literal later in the same call (wb-lx6m)",
+      "pins": [
+        "08723a604e0c9fb62d94284498d6a2142a3aaf8068a9a588fd441954be64a068",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-34",
+      "label": "RES-46 a marker after delete in a preceding argument is credited to a gp literal later in the same call (wb-lx6m)",
+      "pins": [
+        "d14af4f41486b42bcb3dd3495e14400c61c0f60dbb106703331bef433083707e",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-35",
+      "label": "RES-47 a marker after an angle-bracket type assertion's closing bracket in a preceding argument is credited to a gp literal later in the same call (wb-lx6m)",
+      "pins": [
+        "b06d62e23d4fabe70c7f21bb33b9d47d34337edef3dc89594f3368c8e2eb42a3",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-36",
+      "label": "RES-48 a marker after yield in a preceding argument is credited to a gp literal later in the same call (wb-lx6m)",
+      "pins": [
+        "833013dc889fc7e106b823daaa2137ffbbf48e82057a84f46b41deb397754f12",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-37",
+      "label": "RES-49 a marker after a nested arrow parameter's type-annotation colon is credited to a gp literal later in the outer call (wb-lx6m)",
+      "pins": [
+        "0bb3e7f23c5e8a0aacb44191e52df3cdaf6a1af7f04123e65e1ba3963f2117d9",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-38",
+      "label": "RES-50 a marker after the = of a nested arrow parameter's default value is credited to a gp literal later in the outer call (wb-lx6m)",
+      "pins": [
+        "50da43a33f5ba02ac272bb17cd40adba8c7326f78b9151835d9751d3c009187f",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-39",
+      "label": "RES-51 a marker after the dot of import.meta in a preceding argument is credited to a gp literal later in the same call (wb-lx6m)",
+      "pins": [
+        "431f36960ab9c9090fffff4a7d33001b2938a38adf44327344ac198000fd2f53",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-40",
+      "label": "RES-52 a marker inside a preceding declarator's call is credited to a gp literal in a later declarator of the same statement (wb-lx6m)",
+      "pins": [
+        "1199f5cd1c4cd69abd674d2d754c09c8beb3fb2356624bbebd1d9ac5b15301bc",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-41",
+      "label": "RES-53 a marker annotating a do statement's blockless body is credited to a gp literal in its while condition on a later line (wb-lx6m)",
+      "pins": [
+        "70a9a9249a045263d9586e8610740a7e769e2aa3435d399b14b57e41269dab75",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-42",
+      "label": "RES-54 a marker inside a nested array literal after the gp literal, on the literal's own line, is credited to it (wb-lx6m)",
+      "pins": [
+        "80c8e62a15cd12e0c8fa408ec6c91aab81a4e849e249ea82995711338e46ded8",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-43",
+      "label": "RES-55 a marker inside a nested call's argument list after the gp literal, on the literal's own line, is credited to it (wb-lx6m)",
+      "pins": [
+        "0f9d43d17a91c66a5a6cbadfe51fb376c2d3dc07792d2c9d2b2fddd2fae36bcc",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-44",
+      "label": "RES-56 a marker after an expression-bodied arrow's arrow token after the gp literal, on the literal's own line, is credited to it (wb-lx6m)",
+      "pins": [
+        "ae433a591e8e52e84b8acb83588a0e90382b219c619b8ede80280120dca0cfc4",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-45",
+      "label": "RES-57 a marker inside a class property initializer's nested call is credited to a gp literal later in the same initializer (wb-lx6m)",
+      "pins": [
+        "835c211e95f069b8cd7ebcff11c5e7dc356e5971ce811d8f70d7c7ee6722e37d",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-46",
+      "label": "RES-58 a marker inside an object property value's nested call is credited to a gp literal later in the same value (wb-lx6m)",
+      "pins": [
+        "865dd7dd7003c7cb9de111765e098ed297a9fa4b217d9700b51240a084a151e6",
         "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
       ]
     },
@@ -1371,7 +1747,47 @@
     "RES-15 a marker on a ternary's first branch is credited to a gp literal in its second branch (gate B03)",
     "RES-16 a marker after a nested call's opening parenthesis is credited to a gp literal later in the outer call (wb-rdv6)",
     "RES-17 a marker trailing a preceding argument's comma is credited to a gp literal later in the same call (wb-rdv6)",
-    "RES-18 a marker after a nested arrow's parameter-list parenthesis is credited to a gp literal later in the outer call (wb-rdv6)"
+    "RES-18 a marker after a nested arrow's parameter-list parenthesis is credited to a gp literal later in the outer call (wb-rdv6)",
+    "RES-19 a marker after a nested array literal's opening bracket is credited to a gp literal later in the outer call (wb-rdv6 gate P24)",
+    "RES-20 a line comment after a nested array literal's opening bracket, on a line above the gp literal, is credited to it (wb-rdv6 gate P32)",
+    "RES-21 a marker after a comma inside a nested array literal is credited to a gp literal later in the outer call (wb-rdv6 gate P47)",
+    "RES-22 a marker after a parenthesized preceding argument's opening parenthesis is credited to a gp literal later in the same call (wb-rdv6 gate P33)",
+    "RES-23 a marker after the as keyword of a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P34)",
+    "RES-24 a marker after an element access's opening bracket in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P35)",
+    "RES-25 a marker after a property access's dot in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P36)",
+    "RES-26 a marker after the opening angle bracket of a nested call's type arguments is credited to a gp literal later in the outer call (wb-rdv6 gate P37)",
+    "RES-27 a marker after the new keyword of a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P40)",
+    "RES-28 a marker after typeof in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P42)",
+    "RES-29 a marker after a prefix ! in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P43)",
+    "RES-30 a marker after a nested function expression's parameter-list parenthesis is credited to a gp literal later in the outer call (wb-rdv6 gate P45)",
+    "RES-31 a marker after await in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P46)",
+    "RES-32 a marker after a spread token in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P50)",
+    "RES-33 a marker trailing an if condition, annotating its blockless then branch, is credited to a gp literal in the else branch (wb-rdv6 gate P53)",
+    "RES-34 a marker after a nested call's opening parenthesis on the gp literal's own line is credited to it (wb-rdv6 gate P22)",
+    "RES-35 a marker after a comma inside a nested call's argument list is credited to a gp literal later in the outer call (wb-rdv6 gate P38)",
+    "RES-36 a marker after a destructuring brace in a nested arrow's parameter list is credited to a gp literal later in the outer call (wb-rdv6 gate P39)",
+    "RES-37 a marker trailing a preceding argument's comma on the call's first line is credited to a gp literal on the next line (wb-rdv6 gate P49)",
+    "RES-38 a marker trailing a blockless then branch on the if line is credited to a gp literal in the else branch on the next line (wb-rdv6 gate P60)",
+    "RES-39 a marker after a ternary's question mark, annotating its first branch, is credited to a gp literal in the second branch on the same line (wb-rdv6 gate P21)",
+    "RES-40 a marker after an expression-bodied arrow argument's arrow token, annotating its body, is credited to a gp literal later in the same call (wb-rdv6 gate P23)",
+    "RES-41 a marker on its own line inside a multi-line nested array literal is credited to a gp literal later in the outer call (wb-rdv6 gate P31)",
+    "RES-42 a marker after a template literal's substitution opening in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P41)",
+    "RES-43 a marker after a binary + in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P44)",
+    "RES-44 a marker after satisfies in a preceding argument is credited to a gp literal later in the same call (wb-lx6m)",
+    "RES-45 a marker after void in a preceding argument is credited to a gp literal later in the same call (wb-lx6m)",
+    "RES-46 a marker after delete in a preceding argument is credited to a gp literal later in the same call (wb-lx6m)",
+    "RES-47 a marker after an angle-bracket type assertion's closing bracket in a preceding argument is credited to a gp literal later in the same call (wb-lx6m)",
+    "RES-48 a marker after yield in a preceding argument is credited to a gp literal later in the same call (wb-lx6m)",
+    "RES-49 a marker after a nested arrow parameter's type-annotation colon is credited to a gp literal later in the outer call (wb-lx6m)",
+    "RES-50 a marker after the = of a nested arrow parameter's default value is credited to a gp literal later in the outer call (wb-lx6m)",
+    "RES-51 a marker after the dot of import.meta in a preceding argument is credited to a gp literal later in the same call (wb-lx6m)",
+    "RES-52 a marker inside a preceding declarator's call is credited to a gp literal in a later declarator of the same statement (wb-lx6m)",
+    "RES-53 a marker annotating a do statement's blockless body is credited to a gp literal in its while condition on a later line (wb-lx6m)",
+    "RES-54 a marker inside a nested array literal after the gp literal, on the literal's own line, is credited to it (wb-lx6m)",
+    "RES-55 a marker inside a nested call's argument list after the gp literal, on the literal's own line, is credited to it (wb-lx6m)",
+    "RES-56 a marker after an expression-bodied arrow's arrow token after the gp literal, on the literal's own line, is credited to it (wb-lx6m)",
+    "RES-57 a marker inside a class property initializer's nested call is credited to a gp literal later in the same initializer (wb-lx6m)",
+    "RES-58 a marker inside an object property value's nested call is credited to a gp literal later in the same value (wb-lx6m)"
   ],
   "tests": [
     "src/ carries no gp call site: the census over every src module is empty",
@@ -1460,12 +1876,54 @@
     "a marker after a nested block's opening brace on the literal's line does not name one",
     "a marker trailing the enclosing function's opening line (gate A03, same-line form) does not name one",
     "a marker trailing the opening brace of the object literal that holds the property does not name one",
+    "a marker inside a nested type literal of a preceding argument (wb-lx6m) does not name one",
+    "a marker inside a nested class expression's body in a preceding argument (wb-lx6m) does not name one",
     "residual RES-13 a marker inside an expression-bodied arrow, annotating its body, is credited to a gp literal later in the same call (gate B01) (named, not cured: today's credit is pinned)",
     "residual RES-14 a marker inside a nested call's argument list is credited to a gp literal later in the outer call (gate B02) (named, not cured: today's credit is pinned)",
     "residual RES-15 a marker on a ternary's first branch is credited to a gp literal in its second branch (gate B03) (named, not cured: today's credit is pinned)",
     "residual RES-16 a marker after a nested call's opening parenthesis is credited to a gp literal later in the outer call (wb-rdv6) (named, not cured: today's credit is pinned)",
     "residual RES-17 a marker trailing a preceding argument's comma is credited to a gp literal later in the same call (wb-rdv6) (named, not cured: today's credit is pinned)",
     "residual RES-18 a marker after a nested arrow's parameter-list parenthesis is credited to a gp literal later in the outer call (wb-rdv6) (named, not cured: today's credit is pinned)",
+    "residual RES-19 a marker after a nested array literal's opening bracket is credited to a gp literal later in the outer call (wb-rdv6 gate P24) (named, not cured: today's credit is pinned)",
+    "residual RES-20 a line comment after a nested array literal's opening bracket, on a line above the gp literal, is credited to it (wb-rdv6 gate P32) (named, not cured: today's credit is pinned)",
+    "residual RES-21 a marker after a comma inside a nested array literal is credited to a gp literal later in the outer call (wb-rdv6 gate P47) (named, not cured: today's credit is pinned)",
+    "residual RES-22 a marker after a parenthesized preceding argument's opening parenthesis is credited to a gp literal later in the same call (wb-rdv6 gate P33) (named, not cured: today's credit is pinned)",
+    "residual RES-23 a marker after the as keyword of a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P34) (named, not cured: today's credit is pinned)",
+    "residual RES-24 a marker after an element access's opening bracket in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P35) (named, not cured: today's credit is pinned)",
+    "residual RES-25 a marker after a property access's dot in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P36) (named, not cured: today's credit is pinned)",
+    "residual RES-26 a marker after the opening angle bracket of a nested call's type arguments is credited to a gp literal later in the outer call (wb-rdv6 gate P37) (named, not cured: today's credit is pinned)",
+    "residual RES-27 a marker after the new keyword of a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P40) (named, not cured: today's credit is pinned)",
+    "residual RES-28 a marker after typeof in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P42) (named, not cured: today's credit is pinned)",
+    "residual RES-29 a marker after a prefix ! in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P43) (named, not cured: today's credit is pinned)",
+    "residual RES-30 a marker after a nested function expression's parameter-list parenthesis is credited to a gp literal later in the outer call (wb-rdv6 gate P45) (named, not cured: today's credit is pinned)",
+    "residual RES-31 a marker after await in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P46) (named, not cured: today's credit is pinned)",
+    "residual RES-32 a marker after a spread token in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P50) (named, not cured: today's credit is pinned)",
+    "residual RES-33 a marker trailing an if condition, annotating its blockless then branch, is credited to a gp literal in the else branch (wb-rdv6 gate P53) (named, not cured: today's credit is pinned)",
+    "residual RES-34 a marker after a nested call's opening parenthesis on the gp literal's own line is credited to it (wb-rdv6 gate P22) (named, not cured: today's credit is pinned)",
+    "residual RES-35 a marker after a comma inside a nested call's argument list is credited to a gp literal later in the outer call (wb-rdv6 gate P38) (named, not cured: today's credit is pinned)",
+    "residual RES-36 a marker after a destructuring brace in a nested arrow's parameter list is credited to a gp literal later in the outer call (wb-rdv6 gate P39) (named, not cured: today's credit is pinned)",
+    "residual RES-37 a marker trailing a preceding argument's comma on the call's first line is credited to a gp literal on the next line (wb-rdv6 gate P49) (named, not cured: today's credit is pinned)",
+    "residual RES-38 a marker trailing a blockless then branch on the if line is credited to a gp literal in the else branch on the next line (wb-rdv6 gate P60) (named, not cured: today's credit is pinned)",
+    "residual RES-39 a marker after a ternary's question mark, annotating its first branch, is credited to a gp literal in the second branch on the same line (wb-rdv6 gate P21) (named, not cured: today's credit is pinned)",
+    "residual RES-40 a marker after an expression-bodied arrow argument's arrow token, annotating its body, is credited to a gp literal later in the same call (wb-rdv6 gate P23) (named, not cured: today's credit is pinned)",
+    "residual RES-41 a marker on its own line inside a multi-line nested array literal is credited to a gp literal later in the outer call (wb-rdv6 gate P31) (named, not cured: today's credit is pinned)",
+    "residual RES-42 a marker after a template literal's substitution opening in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P41) (named, not cured: today's credit is pinned)",
+    "residual RES-43 a marker after a binary + in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P44) (named, not cured: today's credit is pinned)",
+    "residual RES-44 a marker after satisfies in a preceding argument is credited to a gp literal later in the same call (wb-lx6m) (named, not cured: today's credit is pinned)",
+    "residual RES-45 a marker after void in a preceding argument is credited to a gp literal later in the same call (wb-lx6m) (named, not cured: today's credit is pinned)",
+    "residual RES-46 a marker after delete in a preceding argument is credited to a gp literal later in the same call (wb-lx6m) (named, not cured: today's credit is pinned)",
+    "residual RES-47 a marker after an angle-bracket type assertion's closing bracket in a preceding argument is credited to a gp literal later in the same call (wb-lx6m) (named, not cured: today's credit is pinned)",
+    "residual RES-48 a marker after yield in a preceding argument is credited to a gp literal later in the same call (wb-lx6m) (named, not cured: today's credit is pinned)",
+    "residual RES-49 a marker after a nested arrow parameter's type-annotation colon is credited to a gp literal later in the outer call (wb-lx6m) (named, not cured: today's credit is pinned)",
+    "residual RES-50 a marker after the = of a nested arrow parameter's default value is credited to a gp literal later in the outer call (wb-lx6m) (named, not cured: today's credit is pinned)",
+    "residual RES-51 a marker after the dot of import.meta in a preceding argument is credited to a gp literal later in the same call (wb-lx6m) (named, not cured: today's credit is pinned)",
+    "residual RES-52 a marker inside a preceding declarator's call is credited to a gp literal in a later declarator of the same statement (wb-lx6m) (named, not cured: today's credit is pinned)",
+    "residual RES-53 a marker annotating a do statement's blockless body is credited to a gp literal in its while condition on a later line (wb-lx6m) (named, not cured: today's credit is pinned)",
+    "residual RES-54 a marker inside a nested array literal after the gp literal, on the literal's own line, is credited to it (wb-lx6m) (named, not cured: today's credit is pinned)",
+    "residual RES-55 a marker inside a nested call's argument list after the gp literal, on the literal's own line, is credited to it (wb-lx6m) (named, not cured: today's credit is pinned)",
+    "residual RES-56 a marker after an expression-bodied arrow's arrow token after the gp literal, on the literal's own line, is credited to it (wb-lx6m) (named, not cured: today's credit is pinned)",
+    "residual RES-57 a marker inside a class property initializer's nested call is credited to a gp literal later in the same initializer (wb-lx6m) (named, not cured: today's credit is pinned)",
+    "residual RES-58 a marker inside an object property value's nested call is credited to a gp literal later in the same value (wb-lx6m) (named, not cured: today's credit is pinned)",
     "reads each module's own comments: the unannotated module read first lends none of its comments to the next (wb-rdv6)",
     "control: an audit covering all eleven stages, with an annotated call site, an exported entrypoint, the measured gp version, the schema's keys, a fallback and a two-status inventory, reads no finding",
     "an audit beside a tree with no call site is still judged: the control reads clean, and a defect in it is a finding before any wiring",

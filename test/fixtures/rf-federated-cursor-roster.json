@@ -755,20 +755,30 @@
        "missing": [],
        "extra": []
       },
+      "scanned": {
+       "missing": [],
+       "extra": []
+      },
       "anchorRead": true,
       "anchorMinted": true,
       "real": {
        "scoped": [],
        "hits": []
       },
+      "independentScan": {
+       "scoped": [],
+       "hits": []
+      },
       "planted": {
        "scoped": [
         "src/workbench/federation-import.ts",
-        "src/workbench/peer-watermark.ts"
+        "src/workbench/peer-watermark.ts",
+        "src/workbench/peer-sync.ts"
        ],
        "hits": [
         "src/workbench/federation-import.ts: latest",
-        "src/workbench/peer-watermark.ts: current"
+        "src/workbench/peer-watermark.ts: current",
+        "src/workbench/peer-sync.ts: current"
        ]
       },
       "walk": {
@@ -791,6 +801,16 @@
         "src/workbench/federation-peer.mjs",
         "src/workbench/hosts/federation/peer.ts",
         "src/workflow/peers/archive/2026/q4/watermark-log.json"
+       ],
+       "read": [
+        "src/.peers/watermark.ts 1245055751305afc",
+        "src/plain.ts 5ab8002265af801d",
+        "src/workbench/.federation-cache.json 991e38a39f70a881",
+        "src/workbench/FEDERATION-NOTES 3f742570d25e7407",
+        "src/workbench/federation-notes.md 1f0acdaffcf21a16",
+        "src/workbench/federation-peer.mjs a2378b2946455258",
+        "src/workbench/hosts/federation/peer.ts a2378b2946455258",
+        "src/workflow/peers/archive/2026/q4/watermark-log.json 6382f41977bbc953"
        ],
        "scan": {
         "scoped": [

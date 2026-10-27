@@ -318,6 +318,11 @@
             "floorMet": true,
             "scopedFloorMet": true,
             "anchorRead": true,
+            "anchors": [
+              "src/workbench/reactivefiber-observer.ts: context-preview",
+              "src/workbench/providers/reactivefiber.ts: REACTIVE_FIBER_CONTRACT_SOURCE"
+            ],
+            "scopeOnDisk": true,
             "scopeReadInFull": true,
             "hits": [],
             "templateFloorMet": true
@@ -467,6 +472,11 @@
             "floorMet": true,
             "scopedFloorMet": true,
             "anchorRead": true,
+            "anchors": [
+              "src/workbench/reactivefiber-observer.ts: context-preview",
+              "src/workbench/providers/reactivefiber.ts: REACTIVE_FIBER_CONTRACT_SOURCE"
+            ],
+            "scopeOnDisk": true,
             "scopeReadInFull": true,
             "hits": []
           }
@@ -840,7 +850,7 @@
     },
     {
       "id": "PC",
-      "label": "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and two-root judgment, and the A5 and C5 src scans over a planted file and over each live rf-scope file",
+      "label": "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and two-root judgment, and the A5 and C5 src scans over a planted file, over each live rf-scope file and over each rf-scope file read short",
       "pins": [
         {
           "id": "PC1",
@@ -893,6 +903,11 @@
             "floorMet": true,
             "scopedFloorMet": true,
             "anchorRead": true,
+            "anchors": [
+              "src/workbench/reactivefiber-observer.ts: context-preview",
+              "src/workbench/providers/reactivefiber.ts: REACTIVE_FIBER_CONTRACT_SOURCE"
+            ],
+            "scopeOnDisk": true,
             "scopeReadInFull": true,
             "hits": [
               "src/workbench/rf-federated-census-plant.ts: template link.locator",
@@ -911,6 +926,11 @@
             "floorMet": true,
             "scopedFloorMet": true,
             "anchorRead": true,
+            "anchors": [
+              "src/workbench/reactivefiber-observer.ts: context-preview",
+              "src/workbench/providers/reactivefiber.ts: REACTIVE_FIBER_CONTRACT_SOURCE"
+            ],
+            "scopeOnDisk": true,
             "scopeReadInFull": true,
             "hits": [
               "src/workbench/rf-federated-census-plant.ts: point.workspaceId | point.revision",
@@ -939,7 +959,12 @@
               "pair link.href",
               "index link.uri"
             ],
-            "missed": []
+            "missed": [],
+            "untargeted": [],
+            "anchorReports": [
+              7,
+              7
+            ]
           }
         },
         {
@@ -950,7 +975,32 @@
               "point.workspaceId + point.epoch",
               "point.epoch * 1000000 + point.revision"
             ],
-            "missed": []
+            "missed": [],
+            "untargeted": [],
+            "anchorReports": [
+              3,
+              3
+            ]
+          }
+        },
+        {
+          "id": "PC8",
+          "witness": {
+            "readings": [
+              {
+                "unread": [
+                  "own"
+                ],
+                "anchorsUnread": [],
+                "offDisk": []
+              }
+            ],
+            "missed": [],
+            "untargeted": [],
+            "anchorsReadShort": [
+              true,
+              true
+            ]
           }
         }
       ]
