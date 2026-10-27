@@ -63,19 +63,36 @@
  * read the cut-1 table any more): the census reads every "<family>, wb-l4q7 cut <n>" table of the receipt, not only the one
  * it names. Each family's cuts open with the landed cut 1 and climb in document order; the census's pointer must name the
  * latest cut; and that table keeps every row of every earlier cut unless a later "<family> removed, wb-l4q7 cut <n>" table,
- * beside its own cut's table, names the removal with a reason (and names only a row an earlier cut lists and its cut drops). A
- * heading that names a wb-l4q7 cut in any other spelling, at another level or inside a list item or blockquote is refused. The
- * receipt-anchor case holds each rule to a planted control (the F2 re-point among them). The earlier tables stand because the
- * receipt is append-only (standing rule 15: the lane and the gate's IDENTIFY step refuse a removed receipt line). Non-claim: the
- * chain is the cut tables of the one file RECEIPT_PATH names (its "What binds here" line names this census back); a pointer
- * moved to another receipt file is an edit of that literal, which this anchor does not see.
+ * beside its own cut's table, names the removal with a reason (and names only a row an earlier cut lists and its cut drops).
+ * Which headings are cut tables (wb-fed7, the wb-bqnj gate's F3: this sentence claimed "any other spelling"; it now states the
+ * mechanism): a rendered heading whose text, as the shared docs reader decodes it (the named entities &amp; &lt; &gt; &quot;
+ * &nbsp; and the apostrophe references &#39; and &#x27;, no other reference), reads wb-l4q7, then only non-word characters,
+ * then "cut", in any case (CUT_MENTION), must spell one of those two tables at level 3 of the receipt itself; such a heading in
+ * any other spelling, at another level or inside a list item or blockquote is refused. A cut named outside CUT_MENTION is the
+ * residual R-CUT-SPELLING. The receipt-anchor case holds each rule to a planted control (the F2 re-point among them). The
+ * plants re-base on the receipt they are planted on (wb-fed7, the wb-bqnj gate's F2 forward contact: they hard-coded cut 2,
+ * cut 3 and the cut-1 parents, so a later cut table the grammar admits redded the case until a lander re-based them): each
+ * family's next cut numbers and the planted entry's parents come from its latest cut, the renumbered heading from its first,
+ * and the members from the latest tables (the middle pin - B5 at cut 1 - and the pin before it; the last field - the tsx_sdk
+ * note). The re-base case holds every control's reading over five receipts a later cut leaves: both tables restated (the
+ * gate's L2-b), either table alone restated, the designed escape - the middle pin dropped with its removal named (the gate's
+ * L2-f) - and its slice twin, the last field dropped with its removal named. A later cut table therefore owes the anchor case
+ * no edit. The earlier tables stand because the receipt is append-only (standing rule 15: the lane and the gate's IDENTIFY step
+ * refuse a removed receipt line). Non-claim: the chain is the cut tables of the one file RECEIPT_PATH names (its "What binds
+ * here" line names this census back); a pointer moved to another receipt file is an edit of that literal, which this anchor
+ * does not see.
  * RESIDUALS (named, each with a pinned quiet row): R-UNSHIPPED-FIELDS rf states no sensitivity and no coverage digest at the pin,
  * so Pi has none to read or key on (Q1); R-ALIASED-PAYLOAD a payload bound to a local name before it is hashed or keyed is
  * invisible to the B3/B4 text-of-argument scans (Q2). Its backstop is bounded (wb-l4q7 narrows it, the o4h0.1 gate's F1): B2's
  * per-plane hash-site roster reds on a new hash site in any plane module, and the behavioral rows read these paths of an
  * equal-payload pair - refresh and re-read under one identity (the A rows); stored, window(), query() by scope and by
  * invocation, and the graph view built on the window (B8). An aliased Map or Set key, or an aliased comparison, anywhere else -
- * another query() filter, another plane module - is seen by neither.
+ * another query() filter, another plane module - is seen by neither. R-CUT-SPELLING (wb-fed7, the wb-bqnj gate's F3) a heading
+ * that names a wb-l4q7 cut outside CUT_MENTION - a numeric character reference in the bead token (wb&#45;l4q7 renders as
+ * wb-l4q7, but the shared reader keeps the reference, and decoding it there is a shared-reader contact) or the cut word before
+ * the token (cut 2 of wb-l4q7) - is neither refused nor bound. It binds nothing: the pointer binds only the latest CUT_HEADING
+ * table, so such a heading can neither re-point the anchor nor hide a drop (the receipt-anchor case's quiet controls each read
+ * ok and bind the latest pin table whole; its closed control, the pointer moved to the cut such a heading renders, reads latest).
  *
  * Display paths added: none. Test-only: no scratch, no spawn; src, the fixtures and the store export are only read.
  */
@@ -707,6 +724,217 @@ function receiptTable(family: ReceiptFamily): string[][] {
   const verdict = cutChain(readFileSync(RECEIPT_PATH, "utf8"), family);
   if (!verdict.ok) throw new Error(`docs/workbench/receipts/${RECEIPT_BEAD}.md, the "${family.stem}" cut tables (${verdict.code}): ${verdict.why}`);
   return verdict.rows.map(row => [...row]);
+}
+
+/** A cut-table heading of a family, as a later cut writes it: "<stem>, wb-l4q7 cut <n>", or "<stem> removed, wb-l4q7 cut <n>". */
+const cutHeading = (family: ReceiptFamily, cut: number, removal = false): string => `${family.stem}${removal ? " removed" : ""}, ${RECEIPT_BEAD} cut ${cut}`;
+/** The receipt markdown a later cut writes: a table, its level-3 section, a dated level-2 entry, and the receipt with entries appended. */
+const receiptGrid = (header: readonly string[], rows: readonly (readonly string[])[]): string =>
+  [header, header.map(() => "---"), ...rows].map(cells => `| ${cells.join(" | ")} |`).join("\n");
+const receiptSection = (heading: string, body: string): string => `### ${heading}\n\n${body}\n`;
+const receiptEntry = (heading: string, ...sections: readonly string[]): string => `\n## ${heading}\n\n- Planted.\n\n${sections.join("\n")}`;
+const withEntries = (receipt: string, ...entries: readonly string[]): string => `${receipt.trimEnd()}\n${entries.join("")}`;
+function firstOf<T>(items: readonly T[], what: string): T {
+  const [item] = items;
+  if (item === undefined) throw new Error(`${what}: none`);
+  return item;
+}
+function lastOf<T>(items: readonly T[], what: string): T {
+  const item = items[items.length - 1];
+  if (item === undefined) throw new Error(`${what}: none`);
+  return item;
+}
+/**
+ * wb-fed7 (the wb-bqnj gate's F2): a family's cut tables as the receipt spells them - the CUT_HEADING headings at level 3 of the
+ * receipt itself, in document order - which the planted controls read to re-base on the receipt they are planted on.
+ */
+function spelledCuts(markdown: string, family: ReceiptFamily): readonly CutTable[] {
+  const cuts: CutTable[] = [];
+  for (const heading of receiptHeadings(markdown)) {
+    const match = heading.nested || heading.depth !== 3 ? null : CUT_HEADING.exec(heading.text);
+    if (match === null || match[1] !== family.stem || match[2] !== undefined) continue;
+    cuts.push({ heading: heading.text, stem: family.stem, removal: false, cut: Number(match[3]), parents: heading.parents });
+  }
+  return cuts;
+}
+
+/** A receipt text and the two pointers the census carries over it (each family's bound table and its parents). */
+interface AnchorWorld {
+  readonly receipt: string;
+  readonly pins: ReceiptFamily;
+  readonly slices: ReceiptFamily;
+}
+const liveWorld = (): AnchorWorld => ({ receipt: readFileSync(RECEIPT_PATH, "utf8"), pins: PIN_FAMILY, slices: SLICE_FAMILY });
+type AnchorControl = readonly [id: string, stem: string, verdict: CutVerdict];
+/** One world's planted controls, with the rows they were planted from. */
+interface AnchorReading {
+  readonly controls: readonly AnchorControl[];
+  readonly pins: readonly (readonly string[])[];
+  readonly fields: readonly (readonly string[])[];
+  /** The latest pin table less the planted member: the rows a named removal leaves. */
+  readonly keptPins: readonly (readonly string[])[];
+  /** The latest slice table less its last field: the rows the slice drop leaves. */
+  readonly keptFields: readonly (readonly string[])[];
+  /** The heading of the receipt's latest pin table: the table a refused re-point names. */
+  readonly latestPinHeading: string;
+}
+function boundRows(world: AnchorWorld, family: ReceiptFamily): readonly (readonly string[])[] {
+  const verdict = cutChain(world.receipt, family);
+  if (!verdict.ok) throw new Error(`the anchor world's "${family.stem}" pointer is refused (${verdict.code}): ${verdict.why}`);
+  return verdict.rows;
+}
+/**
+ * The receipt-anchor case's planted controls over one world: each is the world's receipt plus (or edited by) the lines a later
+ * cut would write; nothing is written. wb-fed7 (the wb-bqnj gate's F2, a forward contact: the plants hard-coded cut 2, cut 3
+ * and the cut-1 parents): every plant re-bases on the receipt it is planted on. Each family's next cut numbers and the planted
+ * entry's parents come from its latest cut, the renumbered heading from its first, and the members from the latest tables
+ * (the middle pin - B5 at cut 1 - and the pin before it; the last field - the tsx_sdk note at cut 1), so a later cut table the
+ * grammar admits owes these controls no edit.
+ */
+function anchorControls(world: AnchorWorld): AnchorReading {
+  const real = world.receipt;
+  const pins = boundRows(world, world.pins);
+  const fields = boundRows(world, world.slices);
+  // The re-base: every number, parent and member below is read from the world's receipt, never written here.
+  const firstPin = firstOf(spelledCuts(real, PIN_FAMILY), `the receipt's "${PIN_FAMILY.stem}" cut tables`);
+  const latestPin = lastOf(spelledCuts(real, PIN_FAMILY), `the receipt's "${PIN_FAMILY.stem}" cut tables`);
+  const latestSlice = lastOf(spelledCuts(real, SLICE_FAMILY), `the receipt's "${SLICE_FAMILY.stem}" cut tables`);
+  const [title = ""] = latestPin.parents;
+  const nextPin = latestPin.cut + 1;
+  const afterPin = latestPin.cut + 2;
+  const nextSlice = latestSlice.cut + 1;
+  const middle = Math.floor(pins.length / 2);
+  const dropped = pins[middle];
+  const before = pins[middle - 1];
+  const lastField = fields[fields.length - 1];
+  if (dropped === undefined || before === undefined || lastField === undefined) throw new Error("the latest tables hold too few rows to plant from");
+  const entry = "a planted later cut";
+  const later = [title, entry];
+  const at = (family: ReceiptFamily, cut: number, parents: readonly string[] = later): ReceiptFamily => ({ ...family, bound: cutHeading(family, cut), parents });
+  const removalOf = (rows: readonly (readonly string[])[], why = "planted removal"): string =>
+    receiptSection(cutHeading(PIN_FAMILY, nextPin, true), receiptGrid(removalHeader(PIN_FAMILY), rows.map(row => [...row, why])));
+  const keptPins = pins.filter(row => !same(row, dropped));
+  const keptFields = fields.filter(row => !same(row, lastField));
+  const pinsNext = receiptSection(cutHeading(PIN_FAMILY, nextPin), receiptGrid(PIN_HEADER, keptPins));
+  const f2 = withEntries(real, receiptEntry(entry, pinsNext, receiptSection(cutHeading(SLICE_FAMILY, nextSlice), receiptGrid(SLICE_HEADER, fields))));
+  const firstEntry = real.indexOf("\n## ");
+  if (firstEntry <= 0) throw new Error("the receipt has no dated entry under its title");
+  const renumberedLine = `### ${firstPin.heading}\n`;
+  const renumbered = real.replace(renumberedLine, `### ${cutHeading(PIN_FAMILY, afterPin)}\n`);
+  if (renumbered === real) throw new Error(`the receipt holds no line ${JSON.stringify(renumberedLine)} to renumber`);
+  // R-CUT-SPELLING (the wb-bqnj gate's F3): two spellings outside CUT_MENTION over a table that drops the planted member.
+  const entitySpelt = withEntries(real, receiptEntry(entry, receiptSection(`${PIN_FAMILY.stem}, ${RECEIPT_BEAD.replace("-", "&#45;")} cut ${nextPin}`, receiptGrid(PIN_HEADER, keptPins))));
+  const wordOrder = withEntries(real, receiptEntry(entry, receiptSection(`${PIN_FAMILY.stem}, cut ${nextPin} of ${RECEIPT_BEAD}`, receiptGrid(PIN_HEADER, keptPins))));
+  const planted: readonly (readonly [string, ReceiptFamily, string])[] = [
+    ["live receipt, pins", world.pins, real],
+    ["live receipt, slices", world.slices, real],
+    ["F2 re-point, pins: the next cut drops the latest table's middle pin and the pointer follows it", at(PIN_FAMILY, nextPin), f2],
+    ["F2 re-point, slices: the same entry restates every field", at(SLICE_FAMILY, nextSlice), f2],
+    ["named removal: the next cut names the middle pin's removal with its reason", at(PIN_FAMILY, nextPin), `${f2}\n${removalOf([dropped])}`],
+    ["unreasoned removal: the next cut names the middle pin's removal with an empty reason", at(PIN_FAMILY, nextPin), `${f2}\n${removalOf([dropped], "")}`],
+    ["phantom removal: the next cut also names the pin before the middle one, which it still lists", at(PIN_FAMILY, nextPin), `${f2}\n${removalOf([dropped, before])}`],
+    ["orphan removal: a removal table beside no table of its own cut", world.pins, withEntries(real, receiptEntry(entry, removalOf([dropped])))],
+    ["slice drop: the next cut drops the latest table's last field and the pointer follows it", at(SLICE_FAMILY, nextSlice), withEntries(real, receiptEntry(entry, receiptSection(cutHeading(SLICE_FAMILY, nextSlice), receiptGrid(SLICE_HEADER, keptFields))))],
+    ["stale pointer: the next cut restates every pin and the census still binds the latest cut", world.pins, withEntries(real, receiptEntry(entry, receiptSection(cutHeading(PIN_FAMILY, nextPin), receiptGrid(PIN_HEADER, pins))))],
+    ["misspelt cut heading", world.pins, withEntries(real, receiptEntry(entry, receiptSection(`${PIN_FAMILY.stem}, ${RECEIPT_BEAD}, cut ${nextPin}`, receiptGrid(PIN_HEADER, keptPins))))],
+    ["unknown family heading", world.pins, withEntries(real, receiptEntry(entry, receiptSection(`Judged pin set, ${RECEIPT_BEAD} cut ${nextPin}`, receiptGrid(PIN_HEADER, keptPins))))],
+    ["level-4 cut heading", at(PIN_FAMILY, nextPin), withEntries(real, receiptEntry(entry, `#${pinsNext}`))],
+    ["blockquoted cut heading", world.pins, withEntries(real, receiptEntry(entry, `> ### ${cutHeading(PIN_FAMILY, nextPin)}\n`))],
+    ["inserted above: the next cut's entry sits above the landed cut 1", world.pins, `${real.slice(0, firstEntry)}${receiptEntry(entry, pinsNext)}${real.slice(firstEntry)}`],
+    ["renumbered landed cut: cut 1's heading reads the cut after next", at(PIN_FAMILY, afterPin, firstPin.parents), renumbered],
+    ["out of order: the cut after next, then the next cut", at(PIN_FAMILY, nextPin, [title, `${entry}, again`]), withEntries(real, receiptEntry(entry, receiptSection(cutHeading(PIN_FAMILY, afterPin), receiptGrid(PIN_HEADER, pins))), receiptEntry(`${entry}, again`, receiptSection(cutHeading(PIN_FAMILY, nextPin), receiptGrid(PIN_HEADER, pins))))],
+    ["hidden row: the next cut's section carries an HTML comment", at(PIN_FAMILY, nextPin), withEntries(real, receiptEntry(entry, receiptSection(cutHeading(PIN_FAMILY, nextPin), `${receiptGrid(PIN_HEADER, keptPins)}\n\n<!-- | ${dropped.join(" | ")} | -->`)))],
+    ["R-CUT-SPELLING quiet, a numeric reference in the token: the heading binds nothing", world.pins, entitySpelt],
+    ["R-CUT-SPELLING quiet, the cut word before the token: the heading binds nothing", world.pins, wordOrder],
+    ["R-CUT-SPELLING closed: the pointer names the cut the numeric-reference heading renders", at(PIN_FAMILY, nextPin), entitySpelt],
+  ];
+  const controls = planted.map(([id, family, markdown]): AnchorControl => [id, family.stem, cutChain(markdown, family)]);
+  return { controls, pins, fields, keptPins, keptFields, latestPinHeading: latestPin.heading };
+}
+/** Each planted control's reading, the same over every world: the live receipt and each receipt a later admitted cut leaves. */
+const ANCHOR_READINGS: readonly string[] = [
+  "live receipt, pins: ok",
+  "live receipt, slices: ok",
+  "F2 re-point, pins: the next cut drops the latest table's middle pin and the pointer follows it: kept",
+  "F2 re-point, slices: the same entry restates every field: ok",
+  "named removal: the next cut names the middle pin's removal with its reason: ok",
+  "unreasoned removal: the next cut names the middle pin's removal with an empty reason: shape",
+  "phantom removal: the next cut also names the pin before the middle one, which it still lists: removal",
+  "orphan removal: a removal table beside no table of its own cut: removal",
+  "slice drop: the next cut drops the latest table's last field and the pointer follows it: kept",
+  "stale pointer: the next cut restates every pin and the census still binds the latest cut: latest",
+  "misspelt cut heading: spelling",
+  "unknown family heading: spelling",
+  "level-4 cut heading: placement",
+  "blockquoted cut heading: placement",
+  "inserted above: the next cut's entry sits above the landed cut 1: start",
+  "renumbered landed cut: cut 1's heading reads the cut after next: start",
+  "out of order: the cut after next, then the next cut: order",
+  "hidden row: the next cut's section carries an HTML comment: shape",
+  "R-CUT-SPELLING quiet, a numeric reference in the token: the heading binds nothing: ok",
+  "R-CUT-SPELLING quiet, the cut word before the token: the heading binds nothing: ok",
+  "R-CUT-SPELLING closed: the pointer names the cut the numeric-reference heading renders: latest",
+];
+/** What the receipt-anchor case holds of one world's controls. */
+function expectAnchor(reading: AnchorReading, world: string): void {
+  const { controls, pins, fields, keptPins, keptFields, latestPinHeading } = reading;
+  expect(controls.map(([id, , verdict]) => `${id}: ${verdict.ok ? "ok" : verdict.code}`), world).toEqual([...ANCHOR_READINGS]);
+  // Every rule of the cut grammar refuses at least one planted control, so no rule's only control can go without a red, and
+  // each family both reads a planted later cut and refuses one that drops a row.
+  expect([...new Set(controls.flatMap(([, , verdict]) => (verdict.ok ? [] : [verdict.code])))].sort(), world).toStrictEqual([...CUT_REFUSALS].sort());
+  for (const family of RECEIPT_FAMILIES) {
+    const outcomes = controls.filter(([id, stem]) => stem === family.stem && !id.startsWith("live receipt")).map(([, , verdict]) => (verdict.ok ? "ok" : verdict.code));
+    expect([...new Set(outcomes)].filter(outcome => outcome === "ok" || outcome === "kept").sort(), `${world}, ${family.stem}: planted later cuts`).toStrictEqual(["kept", "ok"]);
+  }
+  // An accepted verdict reads the rows it binds: the latest tables, the faithful slice restatement, the latest pins less the
+  // named member, and (R-CUT-SPELLING) the latest pins whole, because a heading outside CUT_MENTION binds nothing.
+  const rowsOf = (id: string): readonly (readonly string[])[] | string => {
+    const verdict = controls.find(([name]) => name.startsWith(id))?.[2];
+    return verdict?.ok === true ? verdict.rows : `${id}: ${verdict === undefined ? "absent" : verdict.why}`;
+  };
+  expect(keptPins, world).toHaveLength(pins.length - 1);
+  expect(keptFields, world).toHaveLength(fields.length - 1);
+  expect(rowsOf("live receipt, pins"), world).toStrictEqual(pins);
+  expect(rowsOf("live receipt, slices"), world).toStrictEqual(fields);
+  expect(rowsOf("F2 re-point, slices"), world).toStrictEqual(fields);
+  expect(rowsOf("named removal"), world).toStrictEqual(keptPins);
+  expect(rowsOf("R-CUT-SPELLING quiet, a numeric reference"), world).toStrictEqual(pins);
+  expect(rowsOf("R-CUT-SPELLING quiet, the cut word"), world).toStrictEqual(pins);
+  // The closed control's refusal names the receipt's own latest pin table: the numeric-reference heading never became one.
+  expect(rowsOf("R-CUT-SPELLING closed"), world).toEqual(expect.stringContaining(`latest "${PIN_FAMILY.stem}" table is "${latestPinHeading}"`));
+}
+/**
+ * wb-fed7 (the wb-bqnj gate's F2, measured there as L2-b and L2-f): receipts a later cut the grammar admits leaves, each with
+ * the pointers that cut moves - both tables restated (L2-b); either table alone restated, so the two families' latest cuts
+ * differ both ways; the designed escape (L2-f): the pin table less its middle pin beside a removal table that names it with a
+ * reason, every field restated; and its slice twin: the slice table less its last field, the removal named, every pin restated.
+ */
+function laterWorlds(live: AnchorWorld): readonly (readonly [string, AnchorWorld])[] {
+  const pins = boundRows(live, live.pins);
+  const fields = boundRows(live, live.slices);
+  const latestPin = lastOf(spelledCuts(live.receipt, PIN_FAMILY), `the receipt's "${PIN_FAMILY.stem}" cut tables`);
+  const latestSlice = lastOf(spelledCuts(live.receipt, SLICE_FAMILY), `the receipt's "${SLICE_FAMILY.stem}" cut tables`);
+  const [title = ""] = latestPin.parents;
+  const entry = "a later cut of this receipt";
+  const moved = (family: ReceiptFamily, cut: number): ReceiptFamily => ({ ...family, bound: cutHeading(family, cut), parents: [title, entry] });
+  const pinCut = latestPin.cut + 1;
+  const sliceCut = latestSlice.cut + 1;
+  const middle = pins[Math.floor(pins.length / 2)];
+  const lastField = fields[fields.length - 1];
+  if (middle === undefined || lastField === undefined) throw new Error("the latest tables are empty");
+  const pinTable = (rows: readonly (readonly string[])[]): string => receiptSection(cutHeading(PIN_FAMILY, pinCut), receiptGrid(PIN_HEADER, rows));
+  const sliceTable = (rows: readonly (readonly string[])[]): string => receiptSection(cutHeading(SLICE_FAMILY, sliceCut), receiptGrid(SLICE_HEADER, rows));
+  const removal = (family: ReceiptFamily, cut: number, row: readonly string[]): string =>
+    receiptSection(cutHeading(family, cut, true), receiptGrid(removalHeader(family), [[...row, "a later cut drops it"]]));
+  const later = (...sections: readonly string[]): string => withEntries(live.receipt, receiptEntry(entry, ...sections));
+  const both = { pins: moved(PIN_FAMILY, pinCut), slices: moved(SLICE_FAMILY, sliceCut) };
+  return [
+    ["L2-b: both tables restated, both pointers moved", { receipt: later(pinTable(pins), sliceTable(fields)), ...both }],
+    ["the pin table alone restated, its pointer moved", { receipt: later(pinTable(pins)), pins: moved(PIN_FAMILY, pinCut), slices: live.slices }],
+    ["the slice table alone restated, its pointer moved", { receipt: later(sliceTable(fields)), pins: live.pins, slices: moved(SLICE_FAMILY, sliceCut) }],
+    ["L2-f: the middle pin dropped, its removal named with a reason, every field restated", { receipt: later(pinTable(pins.filter(row => !same(row, middle))), removal(PIN_FAMILY, pinCut, middle), sliceTable(fields)), ...both }],
+    ["the last field dropped, its removal named with a reason, every pin restated", { receipt: later(pinTable(pins), sliceTable(fields.filter(row => !same(row, lastField))), removal(SLICE_FAMILY, sliceCut, lastField)), ...both }],
+  ];
 }
 
 /** The parts of the projections that differ: snapshot keys, the relations, the diagnostics, the native evidence. */
@@ -1427,87 +1655,36 @@ describe("wb-o4h0.1 rf observation cache-key census (RF-FEDERATED-WORKSPACES-R1)
   });
 
   it("the receipt anchor (wb-bqnj, the wb-l4q7 gate's F2): every cut table of both families is bound, and the census's own is the latest cut and keeps every earlier cut's rows unless a removal is named", () => {
-    const real = readFileSync(RECEIPT_PATH, "utf8");
-    const pins = receiptTable(PIN_FAMILY);
-    const fields = receiptTable(SLICE_FAMILY);
-    const [title = ""] = RECEIPT_PARENTS;
-    // Planted receipts, each the committed receipt plus (or edited by) the lines a later cut would write; nothing is written.
-    const entry = "a planted later cut";
-    const later = [title, entry];
-    const cutOf = (family: ReceiptFamily, cut: number, removal = false): string => `${family.stem}${removal ? " removed" : ""}, ${RECEIPT_BEAD} cut ${cut}`;
-    const at = (family: ReceiptFamily, cut: number, parents: readonly string[] = later): ReceiptFamily => ({ ...family, bound: cutOf(family, cut), parents });
-    const table = (header: readonly string[], rows: readonly (readonly string[])[]): string =>
-      [header, header.map(() => "---"), ...rows].map(cells => `| ${cells.join(" | ")} |`).join("\n");
-    const section = (heading: string, body: string): string => `### ${heading}\n\n${body}\n`;
-    const entryOf = (heading: string, ...sections: readonly string[]): string => `\n## ${heading}\n\n- Planted.\n\n${sections.join("\n")}`;
-    const appended = (...entries: readonly string[]): string => `${real.trimEnd()}\n${entries.join("")}`;
-    const removalOf = (rows: readonly (readonly string[])[], why = "planted removal"): string =>
-      section(cutOf(PIN_FAMILY, 2, true), table(removalHeader(PIN_FAMILY), rows.map(row => [...row, why])));
-    const withoutB5 = pins.filter(([row, pin]) => !(row === "B" && pin === "B5"));
-    const withoutNote = fields.filter(([base, field]) => !(base === "engine" && field === "result.provenance.sdk_versions.tsx_sdk.note"));
-    const pins2 = section(cutOf(PIN_FAMILY, 2), table(PIN_HEADER, withoutB5));
-    const f2 = appended(entryOf(entry, pins2, section(cutOf(SLICE_FAMILY, 2), table(SLICE_HEADER, fields))));
-    const firstEntry = real.indexOf("\n## ");
-    expect(firstEntry, "the receipt has a dated entry under its title").toBeGreaterThan(0);
-    const planted: readonly (readonly [string, ReceiptFamily, string])[] = [
-      ["live receipt, pins", PIN_FAMILY, real],
-      ["live receipt, slices", SLICE_FAMILY, real],
-      ["F2 re-point, pins: cut 2 drops B5 and the pointer follows it", at(PIN_FAMILY, 2), f2],
-      ["F2 re-point, slices: the same entry restates every field", at(SLICE_FAMILY, 2), f2],
-      ["named removal: cut 2 names B5's removal with its reason", at(PIN_FAMILY, 2), `${f2}\n${removalOf([["B", "B5"]])}`],
-      ["unreasoned removal: cut 2 names B5's removal with an empty reason", at(PIN_FAMILY, 2), `${f2}\n${removalOf([["B", "B5"]], "")}`],
-      ["phantom removal: cut 2 also names B4, which it still lists", at(PIN_FAMILY, 2), `${f2}\n${removalOf([["B", "B5"], ["B", "B4"]])}`],
-      ["orphan removal: a removal table beside no cut 2 table", PIN_FAMILY, appended(entryOf(entry, removalOf([["B", "B5"]])))],
-      ["slice drop: cut 2 drops the tsx_sdk note and the pointer follows it", at(SLICE_FAMILY, 2), appended(entryOf(entry, section(cutOf(SLICE_FAMILY, 2), table(SLICE_HEADER, withoutNote))))],
-      ["stale pointer: cut 2 restates every pin and the census still binds cut 1", PIN_FAMILY, appended(entryOf(entry, section(cutOf(PIN_FAMILY, 2), table(PIN_HEADER, pins))))],
-      ["misspelt cut heading", PIN_FAMILY, appended(entryOf(entry, section(`${PIN_FAMILY.stem}, ${RECEIPT_BEAD}, cut 2`, table(PIN_HEADER, withoutB5))))],
-      ["unknown family heading", PIN_FAMILY, appended(entryOf(entry, section(`Judged pin set, ${RECEIPT_BEAD} cut 2`, table(PIN_HEADER, withoutB5))))],
-      ["level-4 cut heading", at(PIN_FAMILY, 2), appended(entryOf(entry, `#${pins2}`))],
-      ["blockquoted cut heading", PIN_FAMILY, appended(entryOf(entry, `> ### ${cutOf(PIN_FAMILY, 2)}\n`))],
-      ["inserted above: cut 2's entry sits above the landed cut 1", PIN_FAMILY, `${real.slice(0, firstEntry)}${entryOf(entry, pins2)}${real.slice(firstEntry)}`],
-      ["renumbered landed cut: cut 1's heading reads cut 3", at(PIN_FAMILY, 3, RECEIPT_PARENTS), real.replace(`### ${PIN_SECTION}\n`, `### ${cutOf(PIN_FAMILY, 3)}\n`)],
-      ["out of order: cut 3, then cut 2", at(PIN_FAMILY, 2, [title, `${entry}, again`]), appended(entryOf(entry, section(cutOf(PIN_FAMILY, 3), table(PIN_HEADER, pins))), entryOf(`${entry}, again`, section(cutOf(PIN_FAMILY, 2), table(PIN_HEADER, pins))))],
-      ["hidden row: cut 2's section carries an HTML comment", at(PIN_FAMILY, 2), appended(entryOf(entry, section(cutOf(PIN_FAMILY, 2), `${table(PIN_HEADER, withoutB5)}\n\n<!-- | B | B5 | -->`)))],
-    ];
-    const controls = planted.map(([id, family, markdown]) => [id, family.stem, cutChain(markdown, family)] as const);
-    expect(controls.map(([id, , verdict]) => `${id}: ${verdict.ok ? "ok" : verdict.code}`)).toEqual([
-      "live receipt, pins: ok",
-      "live receipt, slices: ok",
-      "F2 re-point, pins: cut 2 drops B5 and the pointer follows it: kept",
-      "F2 re-point, slices: the same entry restates every field: ok",
-      "named removal: cut 2 names B5's removal with its reason: ok",
-      "unreasoned removal: cut 2 names B5's removal with an empty reason: shape",
-      "phantom removal: cut 2 also names B4, which it still lists: removal",
-      "orphan removal: a removal table beside no cut 2 table: removal",
-      "slice drop: cut 2 drops the tsx_sdk note and the pointer follows it: kept",
-      "stale pointer: cut 2 restates every pin and the census still binds cut 1: latest",
-      "misspelt cut heading: spelling",
-      "unknown family heading: spelling",
-      "level-4 cut heading: placement",
-      "blockquoted cut heading: placement",
-      "inserted above: cut 2's entry sits above the landed cut 1: start",
-      "renumbered landed cut: cut 1's heading reads cut 3: start",
-      "out of order: cut 3, then cut 2: order",
-      "hidden row: cut 2's section carries an HTML comment: shape",
+    expectAnchor(anchorControls(liveWorld()), "the live receipt");
+  });
+
+  it("the receipt anchor re-bases (wb-fed7, the wb-bqnj gate's F2): over each receipt a later cut the grammar admits leaves, every planted control reads as it reads over the live receipt", () => {
+    const live = liveWorld();
+    const worlds = laterWorlds(live);
+    // Each later receipt is one the grammar admits: its latest cuts climb past the live ones, and its moved pointers bind its
+    // latest tables, read whole or less the named pin.
+    const cutOfLatest = (world: AnchorWorld, family: ReceiptFamily): number => lastOf(spelledCuts(world.receipt, family), family.stem).cut;
+    const livePins = cutOfLatest(live, PIN_FAMILY);
+    const liveSlices = cutOfLatest(live, SLICE_FAMILY);
+    expect(worlds.map(([name, world]) => [name, cutOfLatest(world, PIN_FAMILY), cutOfLatest(world, SLICE_FAMILY)])).toStrictEqual([
+      ["L2-b: both tables restated, both pointers moved", livePins + 1, liveSlices + 1],
+      ["the pin table alone restated, its pointer moved", livePins + 1, liveSlices],
+      ["the slice table alone restated, its pointer moved", livePins, liveSlices + 1],
+      ["L2-f: the middle pin dropped, its removal named with a reason, every field restated", livePins + 1, liveSlices + 1],
+      ["the last field dropped, its removal named with a reason, every pin restated", livePins + 1, liveSlices + 1],
     ]);
-    // Every rule of the cut grammar refuses at least one planted control, so no rule's only control can go without a red, and
-    // each family both reads a planted later cut and refuses one that drops a row.
-    expect([...new Set(controls.flatMap(([, , verdict]) => (verdict.ok ? [] : [verdict.code])))].sort()).toStrictEqual([...CUT_REFUSALS].sort());
-    for (const family of RECEIPT_FAMILIES) {
-      const outcomes = controls.filter(([id, stem]) => stem === family.stem && !id.startsWith("live receipt")).map(([, , verdict]) => (verdict.ok ? "ok" : verdict.code));
-      expect([...new Set(outcomes)].filter(outcome => outcome === "ok" || outcome === "kept").sort(), `${family.stem}: planted later cuts`).toStrictEqual(["kept", "ok"]);
-    }
-    // An accepted verdict reads the rows it binds: the live tables, the faithful slice restatement, and cut 2 less the named B5.
-    const rowsOf = (id: string): readonly (readonly string[])[] | string => {
-      const verdict = controls.find(([name]) => name.startsWith(id))?.[2];
-      return verdict?.ok === true ? verdict.rows : `${id}: ${verdict === undefined ? "absent" : verdict.why}`;
-    };
-    expect(withoutB5).toHaveLength(pins.length - 1);
-    expect(withoutNote).toHaveLength(fields.length - 1);
-    expect(rowsOf("live receipt, pins")).toStrictEqual(pins);
-    expect(rowsOf("live receipt, slices")).toStrictEqual(fields);
-    expect(rowsOf("F2 re-point, slices")).toStrictEqual(fields);
-    expect(rowsOf("named removal")).toStrictEqual(withoutB5);
+    const pins = boundRows(live, live.pins);
+    const fields = boundRows(live, live.slices);
+    const middle = pins[Math.floor(pins.length / 2)];
+    const lastField = fields[fields.length - 1];
+    expect(worlds.map(([, world]) => [boundRows(world, world.pins), boundRows(world, world.slices)])).toStrictEqual([
+      [pins, fields],
+      [pins, fields],
+      [pins, fields],
+      [pins.filter(row => !same(row, middle)), fields],
+      [pins, fields.filter(row => !same(row, lastField))],
+    ]);
+    for (const [name, world] of worlds) expectAnchor(anchorControls(world), name);
   });
 
   for (const row of ROWS) {
