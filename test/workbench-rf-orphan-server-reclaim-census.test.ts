@@ -47,6 +47,18 @@
  * C4 re-reads clause (c) from the stop run itself against C2's witness, which kills the C2 swap. F3 is R709 above (B6, and B5's
  * two argv mutants). The gate's F4 (the roster's schema locators were package-relative) is corrected to repository paths.
  *
+ * FOLLOW-UP wb-4jum (R694, from landing 379's gate verdict, gate cmd_08af0c861153; the finding lines are read from wb-gue9's row of
+ * the tracked bead export). F1 (lead): row A's verb family missed taskkill and Stop-Process, so the gate's plants
+ * execSync("taskkill /F /IM <ENGINE>.exe") (P10) and Stop-Process -Name <ENGINE> -Force (P10b) escaped row A. KILL now carries the
+ * Windows verbs taskkill, tskill, pskill, Stop-Process and its alias spps under the same no-letter-before guard, with one hitting
+ * control each (MA16-MA20), and F3 holds every kill line that finding quotes as a plant to a hitting control of row M (MA16, MA17
+ * read from the export, an anchor outside this census); a process ended by deleting its WMI or CIM object carries no kill verb and
+ * is the named residual R13. F2 (rides): each section-bound reading of the bead export binds its first match (acceptanceClauses
+ * for F1 and C4, landedRecord's delivery record and E1 line for F2, f3Ruling for B6, and F3's finding line), so each case now
+ * asserts that its heading occurs exactly once: a superseding or decoy section reds instead of being read past. F3 (rides): R12's
+ * premise that an ignored entry is untracked is pinned against git's tracked set (git ls-files, read-only): no tracked file lies
+ * under a top-level name the .gitignore patterns ignore, and the gate's plant path build/zz-gate-reclaim.sh (P09) reads as one.
+ *
  * Pi spawns rf only through the reactivefiber.render.preview provider (a context render), so no Pi surface reclaims an rf-owned
  * server today and the statement's trigger has not fired. The census pins that absence and the acceptance it arms:
  *  T, the trigger, absent today. T1 no src file spells the reclaim leaf (LEAF: local, an optional separator, server or servers, in
@@ -82,14 +94,18 @@
  *    exactly the clauses rows A-D cover with each label equal to its clause, and each target the filing quotes for (a) has its own
  *    hitting control in row M, the line `pkill -f '<target>'` (MA1, MA2); F2 the same row's record beyond the filing: every pin
  *    its delivery record names by range stays a judged pin with its case (the count it states, 54, read too), and the kill line
- *    its review planted as an escape (E1) is a hitting control of row M (MA14).
- *  M, the matchers rows A, T and the reference surfacing read: MA1-MA15 must hit the kill window (MA14-MA15 through STATE_ROOT),
- *    ML1-ML5 the leaf.
+ *    its review planted as an escape (E1) is a hitting control of row M (MA14); F3 the follow-up's gate finding, read from
+ *    wb-gue9's row: every kill line its F1 line quotes as a plant (P10, P10b) is a hitting control of row M (MA16, MA17). Every
+ *    section these readings bind to (the acceptance, the delivery record, the E1 line, the F3-disposition ruling, the F1 finding
+ *    line) occurs exactly once in its row's notes (wb-4jum F2).
+ *  M, the matchers rows A, T and the reference surfacing read: MA1-MA20 must hit the kill window (MA14-MA15 through STATE_ROOT,
+ *    MA16-MA20 through the Windows verbs), ML1-ML5 the leaf.
  *  R, the named residuals, each with a pinned quiet row: R1 R-FAR a verb WINDOW+1 lines from the name; R2 R-INTERRUPTED the name
  *    split by a zero-width code point; R3 R-HOMOGLYPH one letter swapped for a look-alike from another script; R4 R-COMPOSED the name
  *    assembled at runtime (this file's own mechanism); R5 R-PID-FILE a kill of a recorded pid whose window never names the engine;
- *    R6 R-SERVICE-STOP a stop through a service manager, no kill verb; R7 R-INTERIOR-LOWER the name inside a lowercase run (the
- *    beads store's directory name); R8 R-INSTRUCTION-TEXT docs, agent skills, Pi agent files, feedback files and root Markdown are
+ *    R6 R-SERVICE-STOP a stop through a service manager, no kill verb (systemctl; on Windows Stop-Service, sc stop and net stop
+ *    are the same family); R7 R-INTERIOR-LOWER the name inside a lowercase run (the beads store's directory name); R8
+ *    R-INSTRUCTION-TEXT docs, agent skills, Pi agent files, feedback files and root Markdown are
  *    instructions, not scripts, and are not walked (a runbook line there would read as a hit; at base the beads skill names bd's own
  *    killall verb on one such line); R9 R-LEAF-COMPOSED the leaf assembled from parts; R10 R-AGREEING-CLASSIFIER a Pi-side
  *    classifier whose stop set happens to equal rf's plan passes the judge, which sees the set and not who classified it; R11
@@ -97,7 +113,10 @@
  *    root (the server word alone, a partial path) reaches the servers unseen; R12 R-UNWALKED-ENTRY the named non-script entries
  *    (.git the version-control store; .beads the bead store's data, its hooks/ walked by A6; vendor the vendored package bytes;
  *    media the demo media) and every ignored entry are not walked by the kill window: a script there escapes row A unless its
- *    first two bytes are a shebang (A11), and an ignored entry is untracked, so A11 does not read it either.
+ *    first two bytes are a shebang (A11), and an ignored entry is untracked, so A11 does not read it either - that premise is
+ *    pinned against git's tracked set (no tracked file lies under an ignored top-level name; wb-4jum F3); R13 R-OBJECT-DELETE a
+ *    process ended by deleting its WMI or CIM object (wmic process ... delete, Remove-CimInstance, Remove-WmiObject) names no kill
+ *    verb and reaches the servers unseen.
  * FIXTURES (the roster's runs): ledgerUntrusted is MEASURED, the installed rf's stdout and exit for the read form `rf storage
  * local-servers --orphaned --json` against a scratch ledger directory of mode 0755 (rf's server-ledger variable), outside every repository, with
  * ambient RF_* variables dropped (exit 6, RF_STORAGE_UNAVAILABLE server_ledger_untrusted, nothing read from /proc or signalled;
@@ -110,10 +129,13 @@
  * pin, control MA14), A9 (package.json, forge.toml, the CI workflows and the Codex hooks: the roots they name and their own), A10
  * (the repository's own top-level listing and .gitignore), A11 (the files' own shebangs), B2 (the landed rf registry capture), B6
  * (R709 in wb-gue9's export row), C4 (clause (c) in the export and the stop run itself, held against C2's witness), T3
- * (RECONCILE_EVIDENCE_READS and the native registration). What the roster alone still holds: each landed pin's witness content
- * beyond its existence (outside C2 and the readings above), and the existence of the pins this follow-up adds other than MA14
- * (A10, A11, B6, C4, F2, MA15, R11, R12), which no record outside this census names yet, so removing one of those from every
- * literal at once stays green; the seat measured that for each and names it here rather than claim otherwise. The out-of-file
+ * (RECONCILE_EVIDENCE_READS and the native registration), F3 (the plants wb-gue9's export row quotes: controls MA16, MA17), R12
+ * (git's tracked set). What the roster alone still holds: each landed pin's witness content beyond its existence (outside C2 and
+ * the readings above), and the existence of the pins this follow-up adds other than MA14 (A10, A11, B6, C4, F2, MA15, R11, R12),
+ * which no record outside this census names yet, so removing one of those from every literal at once stays green; the seat
+ * measured that for each and names it here rather than claim otherwise. Of the pins wb-4jum adds, MA16 and MA17 are held from
+ * outside (F3); MA18-MA20, R13 and F3 itself are held by this census's literals and the roster alone, so removing one of them
+ * from every literal at once stays green (measured for each by the cutting seat). The out-of-file
  * roster test/fixtures/rf-orphan-server-reclaim-roster.json holds every row's id, label and pins, every pin's witness and the
  * pinned constants; FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal.
  * SCOPE: surfaceReclaim and judge are the rule a future Pi reclaim path must meet, not a reclaim path: nothing here spawns rf,
@@ -121,8 +143,10 @@
  * scripts live outside this repository and are not walked. A later cut that adds a Pi reclaim path brings its argv and its surfacing
  * under rows B-D and re-pins T.
  *
- * Display paths added: none. Test-only: nothing is spawned or written; the repository files read are only read.
+ * Display paths added: none. Test-only: nothing is written, the one process spawned is a read-only `git ls-files` (R12's tracked
+ * set), and the repository files read are only read.
  */
+import { spawnSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { closeSync, type Dirent, openSync, readdirSync, readFileSync, readSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
@@ -175,9 +199,10 @@ const FOLLOW_UP = "wb-gue9";
 /** rf's state root (its workspace directory's name), composed so that no line of this file spells it whole. */
 const STATE_DIR = [".reactive", "fiber"].join("-");
 
-/** Row A's verb family, in any case: pkill, killall, killpg, kill (also as a .kill( call), fuser, terminate, pgrep and the two
- * signal names; kill, fuser and terminate count only where no letter precedes them, so "skill" is no verb. */
-const KILL = /pkill|SIGKILL|SIGTERM|pgrep|(?<![a-z])(?:kill|fuser|terminate)/i;
+/** Row A's verb family, in any case: pkill, killall, killpg, kill (also as a .kill( call), fuser, terminate, pgrep, the two signal
+ * names and the Windows verbs taskkill, tskill, pskill, Stop-Process and its alias spps (wb-4jum F1); kill, fuser, terminate and the
+ * Windows verbs count only where no letter precedes them, so "skill" is no verb and "agentskills" holds no tskill. */
+const KILL = /pkill|SIGKILL|SIGTERM|pgrep|(?<![a-z])(?:kill|fuser|terminate|taskkill|tskill|pskill|stop-process|spps)/i;
 /** Row A's target family: the engine's name at a word start or after "_" (lower, Title or upper case), or in Title or upper case
  * after a lowercase letter or digit (camelCase and snake_case identifiers). Both targets the filing quotes carry it. */
 const TARGET = new RegExp(`(?:\\b|_)(?:${ENGINE}|${ENGINE_TITLE}|${ENGINE_UPPER})|[a-z0-9](?:${ENGINE_TITLE}|${ENGINE_UPPER})`);
@@ -236,6 +261,10 @@ const REMAINDER_ANCHOR = { file: "LICENSE", token: "MIT License" } as const;
 /** A11's floor and anchors. At base cbe3588 the scan finds 14 shebang files (the five bead hooks and nine qa scripts); the floor
  * sits below that count, so an emptied scan reds and an additive change does not, and each anchor must be among those found. */
 const SHEBANG_SCAN = { floor: 10, anchors: [".beads/hooks/pre-commit", "qa/workbench/smoke.sh"] } as const;
+/** R12's tracked-set reading (wb-4jum F3): git must list at least `floor` tracked paths, the anchor among them, and the gate's plant
+ * path (P09: a shebang kill script under the ignored build/, escaping A10 and A11 once tracked with git add -f) must read as lying
+ * under an ignored top-level name. At base 0305d42 git lists 990 tracked paths; the floor sits below that count. */
+const TRACKED_SCAN = { floor: 500, anchor: "LICENSE", plant: "build/zz-gate-reclaim.sh" } as const;
 /** Row T's src walk, and G1's three walks; each its own literal (the same floors and anchors as A1 and A2 where the roots match), so
  * no row borrows another row's entry. */
 const SRC_SCAN: ScanRoot = { pin: "T", root: "src", floor: 100, anchorFile: "workflow/reconcile.ts", anchorToken: "RECONCILE_EVIDENCE_READS" };
@@ -287,18 +316,21 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "F",
-    label: "the owner filing row of wb-pfxo.8 in the tracked bead export carries every pinned constant, names exactly the clauses rows A-D cover, states each of their labels as its clause and quotes only targets row M controls; every pin its delivery record names stays judged and the line its review planted is a control",
-    pins: ["F1", "F2"],
+    label: "the owner filing row of wb-pfxo.8 in the tracked bead export carries every pinned constant, names exactly the clauses rows A-D cover, states each of their labels as its clause and quotes only targets row M controls; every pin its delivery record names stays judged and the line its review planted is a control; every kill line wb-gue9's gate finding planted is a control; each section these readings bind to occurs once",
+    pins: ["F1", "F2", "F3"],
   },
   {
     id: "M",
     label: "the kill-window and leaf matchers rows A and T read judge their pinned spellings as hits",
-    pins: ["MA1", "MA2", "MA3", "MA4", "MA5", "MA6", "MA7", "MA8", "MA9", "MA10", "MA11", "MA12", "MA13", "MA14", "MA15", "ML1", "ML2", "ML3", "ML4", "ML5"],
+    pins: [
+      "MA1", "MA2", "MA3", "MA4", "MA5", "MA6", "MA7", "MA8", "MA9", "MA10", "MA11", "MA12", "MA13", "MA14", "MA15", "MA16", "MA17", "MA18", "MA19", "MA20",
+      "ML1", "ML2", "ML3", "ML4", "ML5",
+    ],
   },
   {
     id: "R",
-    label: "the named residuals R1-R12 stay pinned quiet",
-    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12"],
+    label: "the named residuals R1-R13 stay pinned quiet",
+    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12", "R13"],
   },
 ];
 
@@ -409,6 +441,7 @@ const constants = (): Json =>
     nonScriptEntries: NON_SCRIPT_ENTRIES,
     remainderAnchor: REMAINDER_ANCHOR,
     shebangScan: SHEBANG_SCAN,
+    trackedScan: TRACKED_SCAN,
     followUp: FOLLOW_UP,
   });
 
@@ -528,6 +561,18 @@ const shebangFiles = (): string[] =>
     .filter(entry => entry.name !== VCS_STORE && entry.entryClass !== "ignored")
     .flatMap(filesOfEntry)
     .filter(startsWithShebang);
+
+/** git's tracked set, an outside source (what the repository holds, whatever the filesystem carries): `git ls-files -z`, read-only. */
+function trackedFiles(): string[] {
+  const listing = spawnSync("git", ["ls-files", "-z"], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 });
+  if (listing.status !== 0) throw new Error(`git ls-files failed: ${listing.stderr}`);
+  return listing.stdout.split("\0").filter(path => path !== "");
+}
+/** The paths whose top-level name one of the .gitignore patterns ignores: the entries topLevel() classes as ignored. */
+function underIgnoredName(paths: readonly string[]): string[] {
+  const ignored = ignoredNames();
+  return paths.filter(path => ignored.some(pattern => pattern.test(path.split("/")[0] ?? "")));
+}
 
 /** Row A's matcher: every (kill-verb line, target line) pair at most WINDOW lines apart, 1-based; a target line holds either
  * family (TARGET or STATE_ROOT). */
@@ -887,6 +932,17 @@ function filingNotes(bead: string): string {
   }
   return "";
 }
+/** The headings the section-bound readings below bind to, each by its first match (wb-4jum F2). */
+const ACCEPTANCE_HEADING = /Acceptance: /;
+const RECORD_HEADING = /\(\d+ tests: the judged set \+ \d+ pins - /;
+const PLANTED_HEADING = /E1 [^(]*\(planted /;
+const F3_RULING_HEADING = /OWNER RULING R\d+ \(F3 disposition/;
+const FINDING_HEADING = /F1 LOW LEADS: row A's kill-verb family/;
+/** How often a heading occurs in a row's notes: a reading that binds its first match needs exactly one. */
+const headingCount = (notes: string, heading: RegExp): number => [...notes.matchAll(new RegExp(heading.source, "g"))].length;
+/** A heading's count in the notes and in the notes read twice over: [1, 2] for a unique section, and the second count is the
+ * counter's own liveness control (a counter that cannot see a second section reads less than 2 there). */
+const headingCounts = (notes: string, heading: RegExp): number[] => [headingCount(notes, heading), headingCount(`${notes}\n\n${notes}`, heading)];
 /** The filing's acceptance sentence, cut into its "(x) ..." clauses. */
 function acceptanceClauses(notes: string): string[] {
   const acceptance = /Acceptance: ([\s\S]*?)\s*(?:Related:|$)/.exec(notes)?.[1] ?? "";
@@ -906,10 +962,22 @@ function landedRecord(notes: string): { stated: number; pins: string[]; planted:
 }
 /** The owner ruling on the follow-up's F3 line: the paragraph of its export notes that opens "OWNER RULING R<n> (F3". */
 function f3Ruling(notes: string): string {
-  const start = notes.search(/OWNER RULING R\d+ \(F3 disposition/);
+  const start = notes.search(F3_RULING_HEADING);
   if (start < 0) return "";
   const end = notes.indexOf("\n\n", start);
   return notes.slice(start, end < 0 ? undefined : end);
+}
+/** F3's reading of the follow-up's export notes: the gate verdict's F1 line (FINDING_HEADING to the end of its line) and the kill
+ * lines it quotes as the gate's plants, each `'<line>'`, optionally `in <dir>`, then `(P<n>)`, with <ENGINE> substituted back. */
+function plantedEscapes(notes: string): Array<{ id: string; line: string }> {
+  const start = notes.search(FINDING_HEADING);
+  if (start < 0) return [];
+  const end = notes.indexOf("\n", start);
+  const finding = notes.slice(start, end < 0 ? undefined : end);
+  return [...finding.matchAll(/'([^']+)'(?: in [\w/.-]+)? \((P\d+b?)\)/g)].map(match => ({
+    id: match[2] ?? "",
+    line: (match[1] ?? "").split(PLACEHOLDER).join(ENGINE),
+  }));
 }
 
 // --- the matcher spellings ----------------------------------------------------------------------------------------------
@@ -923,7 +991,9 @@ interface Spelling {
 }
 const lines = (...parts: string[]): string => parts.join("\n");
 const gap = (count: number): string[] => Array.from({ length: count }, () => "");
-/** MA1-MA15 and ML1-ML5 must hit; R1-R7, R9 and R11 are quiet rows of their named residuals (R8, R10 and R12 are judged below). */
+/** MA1-MA20 and ML1-ML5 must hit; R1-R7, R9, R11 and R13 are quiet rows of their named residuals (R8, R10 and R12 are judged
+ * below). MA16 and MA17 are the gate's plants P10 and P10b verbatim (F3 reads them from wb-gue9's export row); MA16-MA20 each hit
+ * through one Windows verb alone. */
 const SPELLINGS: readonly Spelling[] = [
   { pin: "MA1", family: "window", text: `pkill -f '${ENGINE} sql-server'`, hit: true },
   { pin: "MA2", family: "window", text: `pkill -f '.reactive-fiber/${ENGINE}'`, hit: true },
@@ -940,6 +1010,11 @@ const SPELLINGS: readonly Spelling[] = [
   { pin: "MA13", family: "window", text: `if (code === "${STOP_INCOMPLETE}") process.kill(pid);`, hit: true },
   { pin: "MA14", family: "window", text: `pkill -f '${STATE_DIR}/'`, hit: true },
   { pin: "MA15", family: "window", text: `kill $(pgrep -f "$HOME/${STATE_DIR}")`, hit: true },
+  { pin: "MA16", family: "window", text: `execSync("taskkill /F /IM ${ENGINE}.exe")`, hit: true },
+  { pin: "MA17", family: "window", text: `Stop-Process -Name ${ENGINE} -Force`, hit: true },
+  { pin: "MA18", family: "window", text: `tskill ${ENGINE}`, hit: true },
+  { pin: "MA19", family: "window", text: `pskill -t ${ENGINE}.exe`, hit: true },
+  { pin: "MA20", family: "window", text: `Get-Process -Name ${ENGINE} | spps -Force`, hit: true },
   { pin: "ML1", family: "leaf", text: "storage.local-servers", hit: true },
   { pin: "ML2", family: "leaf", text: "local_servers", hit: true },
   { pin: "ML3", family: "leaf", text: "localServers", hit: true },
@@ -954,6 +1029,12 @@ const SPELLINGS: readonly Spelling[] = [
   { pin: "R7", family: "window", text: `pkill -f embedded${ENGINE}`, hit: false },
   { pin: "R9", family: "leaf", text: '["local", "servers"].join("-")', hit: false },
   { pin: "R11", family: "window", text: lines("pkill -f 'sql-server'", "pkill -f 'fiber/'"), hit: false },
+  {
+    pin: "R13",
+    family: "window",
+    text: lines(`wmic process where "name='${ENGINE}.exe'" delete`, `Get-CimInstance Win32_Process -Filter "Name='${ENGINE}.exe'" | Remove-CimInstance`),
+    hit: false,
+  },
 ];
 const spellingHits = (spelling: Spelling): boolean =>
   spelling.family === "window" ? windowHits(spelling.text).length > 0 : LEAF.test(spelling.text);
@@ -1070,11 +1151,13 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     return broken;
   },
   B6: async () => {
-    const ruling = f3Ruling(filingNotes(FOLLOW_UP));
+    const notes = filingNotes(FOLLOW_UP);
+    const ruling = f3Ruling(notes);
     const flags = /SHALL issue the destructive form with `([^`]+)` \(and `([^`]+)` when unattended\)/.exec(ruling);
     const refusal = /SHALL surface the (\w+) refusal verbatim when `([^`]+)` is absent/.exec(ruling);
     const argv = confirmedArgv();
     const witness = {
+      rulingHeadings: headingCounts(notes, F3_RULING_HEADING),
       ruling: /^OWNER RULING (R\d+) /.exec(ruling)?.[1] ?? null,
       rulingFlags: flags === null ? [] : [flags[1] ?? "", flags[2] ?? ""],
       rfFlags: [confirmFlag(), noInputFlag()],
@@ -1085,6 +1168,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       surfacedArgv: sameJson(surfaceReclaim(runOf("stopSibling")).argv, argv),
     };
     expect(witness.ruling, `${FOLLOW_UP}'s export row holds no F3 ruling`).not.toBeNull();
+    expect(witness.rulingHeadings, `${FOLLOW_UP}'s F3-disposition rulings (notes, notes twice); f3Ruling reads the first`).toEqual([1, 2]);
     expect(witness.rulingFlags, "the ruling's flags against rf's spellings").toEqual(witness.rfFlags);
     expect(witness.rulingRefusal, "the ruling's refusal against rf's confirmation code and flag").toEqual(witness.rfRefusal);
     expect(witness.gate, "rf's gate refuses the corrected argv").toStrictEqual({ requiresConfirmation: true, confirmed: true, nonInteractive: true, refusedAtGate: false });
@@ -1132,13 +1216,16 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const rows = envelopeRows(run).length;
     // Read past the reference surfacing: the plan's stop set by role, the sibling against it, the envelope's applied rows.
     const reading: JsonObject = { stopPids: plan.map(pid => roleOf(run, pid)), siblingStopped: plan.includes(rolePid(run, "active")), count: rows, envelopeRows: rows };
-    const clause = acceptanceClauses(filingNotes(BEAD)).find(text => text.startsWith("(c) ")) ?? "";
+    const notes = filingNotes(BEAD);
+    const acceptanceHeadings = headingCounts(notes, ACCEPTANCE_HEADING);
+    const clause = acceptanceClauses(notes).find(text => text.startsWith("(c) ")) ?? "";
     const facts = (clause.split(": ")[1] ?? "").split(", ").filter(fact => fact !== "");
     const c2 = objectOf(rosterWitness("C2"));
     const agrees = Object.keys(reading).filter(key => c2 !== undefined && sameJson(c2[key], reading[key]));
+    expect(acceptanceHeadings, `${BEAD}'s acceptance sections (notes, notes twice); acceptanceClauses reads the first`).toEqual([1, 2]);
     expect(facts.length, `clause (c)'s judged facts: ${facts.join(" | ")}`).toBe(2);
     expect(agrees, "C2's witness against the stop run's own reading of clause (c)").toEqual(Object.keys(reading));
-    return { facts, reading, agrees };
+    return { acceptanceHeadings, facts, reading, agrees };
   },
   D1: async () => {
     const run = runOf("emptyNoProc");
@@ -1197,21 +1284,47 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const controls = SPELLINGS.filter(spelling => spelling.pin.startsWith("MA") && spelling.hit && spellingHits(spelling));
     // (a) reads "pkill/kill-by-pattern over '<target>'": each quoted target needs the control that is exactly that pkill line.
     const targetsControlled = FILING_TARGETS.filter(target => text.includes(`'${target}'`) && controls.some(spelling => spelling.text === `pkill -f '${target}'`));
+    const acceptanceHeadings = headingCounts(text, ACCEPTANCE_HEADING);
+    expect(acceptanceHeadings, `${BEAD}'s acceptance sections (notes, notes twice); acceptanceClauses reads the first`).toEqual([1, 2]);
     expect(clauses, "the filing's acceptance clauses against the judged rows").toEqual(judged.map(row => row.label.charAt(1)));
     expect(labelsEqual, "each judged label equals its acceptance clause").toEqual(judged.map(row => row.id));
     expect(constantsQuoted).toEqual([...FILING_CONSTANTS]);
     expect(targetsControlled, "a target the filing quotes for (a) has no hitting control").toEqual([...FILING_TARGETS]);
-    return { clauses, labelsEqual, constantsQuoted: constantsQuoted.length, targetsControlled: targetsControlled.length };
+    return { acceptanceHeadings, clauses, labelsEqual, constantsQuoted: constantsQuoted.length, targetsControlled: targetsControlled.length };
   },
   F2: async () => {
-    const record = landedRecord(filingNotes(BEAD));
+    const notes = filingNotes(BEAD);
+    const record = landedRecord(notes);
+    const headings = { record: headingCounts(notes, RECORD_HEADING), planted: headingCounts(notes, PLANTED_HEADING) };
     const judged = ROWS.flatMap(row => row.pins);
     const missing = record.pins.filter(pin => !judged.includes(pin) || IMPL[pin] === undefined);
     const control = SPELLINGS.find(spelling => spelling.hit && spelling.text === record.planted && spellingHits(spelling))?.pin ?? null;
     expect(record.stated > 0 && record.pins.length === record.stated, `the delivery record's ranges (${record.pins.length}) against the count it states (${record.stated})`).toBe(true);
     expect(missing, "a pin the delivery record names left the judged set").toEqual([]);
     expect(control, `the line the review planted (${record.planted ?? "none read"}) has no hitting control in row M`).not.toBeNull();
-    return { stated: record.stated, named: record.pins.length, missing, plantedControl: control };
+    expect(headings, `${BEAD}'s delivery-record and E1 sections (notes, notes twice), each read by its first match`).toStrictEqual({
+      record: [1, 2],
+      planted: [1, 2],
+    });
+    return { headings, stated: record.stated, named: record.pins.length, missing, plantedControl: control };
+  },
+  F3: async () => {
+    const notes = filingNotes(FOLLOW_UP);
+    const plants = plantedEscapes(notes);
+    const controlOf = (line: string): string | null =>
+      SPELLINGS.find(spelling => spelling.hit && spelling.text === line && spellingHits(spelling))?.pin ?? null;
+    const witness = {
+      findingHeadings: headingCounts(notes, FINDING_HEADING),
+      plants: plants.map(plant => plant.id),
+      controls: plants.map(plant => controlOf(plant.line)),
+    };
+    expect(witness.findingHeadings, `${FOLLOW_UP}'s F1 finding lines (notes, notes twice); F3 reads the first`).toEqual([1, 2]);
+    expect(plants.length >= 2, `the F1 finding line quotes ${plants.length} plants`).toBe(true);
+    expect(
+      plants.filter(plant => controlOf(plant.line) === null).map(plant => plant.id),
+      "a kill line the follow-up's gate finding planted has no hitting control in row M",
+    ).toEqual([]);
+    return witness;
   },
   ...Object.fromEntries(
     SPELLINGS.map(spelling => [
@@ -1239,6 +1352,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   },
   R12: async () => {
     const files = killWindowFiles().map(rel);
+    const tracked = trackedFiles();
     const under = (name: string): string[] => files.filter(path => path === name || path.startsWith(`${name}/`));
     const witness = {
       nonScriptEntries: [...NON_SCRIPT_ENTRIES],
@@ -1247,15 +1361,26 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
         .filter(entry => entry.entryClass === "ignored")
         .flatMap(entry => under(entry.name)).length,
       plantWouldHit: windowHits(`pkill -f '${FILING_TARGETS[0] ?? ""}'`).length > 0,
+      trackedRead: tracked.length >= TRACKED_SCAN.floor && tracked.includes(TRACKED_SCAN.anchor),
+      trackedUnderIgnored: underIgnoredName(tracked),
+      plantPathIgnored: sameList(underIgnoredName([TRACKED_SCAN.plant]), [TRACKED_SCAN.plant]),
     };
-    expect(witness).toStrictEqual({ nonScriptEntries: [...NON_SCRIPT_ENTRIES], walkedUnderNonScript: [".beads/hooks"], walkedUnderIgnored: 0, plantWouldHit: true });
+    expect(witness).toStrictEqual({
+      nonScriptEntries: [...NON_SCRIPT_ENTRIES],
+      walkedUnderNonScript: [".beads/hooks"],
+      walkedUnderIgnored: 0,
+      plantWouldHit: true,
+      trackedRead: true,
+      trackedUnderIgnored: [],
+      plantPathIgnored: true,
+    });
     return witness;
   },
 };
 
 describe("wb-pfxo.8 orphan-server reclaim census (RF-COMPOSITIONAL-ASSEMBLY-R9, absent-today leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:3", "A:11", "B:6", "C:4", "D:4", "G:1", "F:2", "M:20", "R:12"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:3", "A:11", "B:6", "C:4", "D:4", "G:1", "F:3", "M:25", "R:13"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
