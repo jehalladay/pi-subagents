@@ -30,8 +30,11 @@
  *    registrar the census runs on a fresh registry, any other statement reads as unresolved, and the cases together register
  *    the in-process four), every registration seam in src is the measured one (each CapabilityRegistry construction, each
  *    reference to a member named register - a call, a read, an assignment, a literal element access, a destructuring or the
- *    name as a folded literal (a reflected read) - and each reference to a function holding one, by module and enclosing
- *    function), and the Claude curated server lists exactly its three capability tools, none taking a reference; A3 no src
+ *    name as a folded literal (a reflected read) -, each reference to a function holding one, and each reference in those
+ *    forms to a member named like the registry's private store - the private members (a private modifier or a #name) its
+ *    register method reaches through this, read from the class in src/workbench/capability-registry.ts, providers today -,
+ *    the class body included, by module and enclosing function), and the Claude curated server lists exactly its three
+ *    capability tools, none taking a reference; A3 no src
  *    module spells VOCABULARY in an identifier (escapes decoded by the compiler), a string, template or regular-expression
  *    literal, or a constant-folded `+` concatenation: no src type, field, tool or text names an action reference, a TSX action,
  *    the InterfaceHost/InterfaceEvaluation boundary or SurfaceCapabilities.
@@ -91,28 +94,45 @@
  * this file and the roster still reds. Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the
  * bead row anchors rows and clauses, not pins). A2's detached reading carries two live anchors outside every literal: each
  * case's registered capability is held to the host's own NATIVE_CAPABILITIES table, and the cases together to the in-process
- * entries, so an added detached registration reds A2 even when IMPL and the roster witness are hollowed together. Also not
- * claimed: the src registration seam has no anchor outside the roster, so a seam field hollowed in IMPL and the roster
- * together stays green (the in-process entries' standing shape).
+ * entries, so an added detached registration reds A2 even when IMPL and the roster witness are hollowed together. The store
+ * reading carries one live anchor outside the roster: the store members it reads from the class are not empty and it reads
+ * the registry's own register method reaching each (src/workbench/capability-registry.ts:register: this.<member> read), so a
+ * store reading switched off or emptied in IMPL and the roster together still reds A2. Also not claimed: the rest of the src
+ * registration seam has no anchor outside the roster, so a seam field hollowed in IMPL and the roster together stays green
+ * (the in-process entries' standing shape) - a construction, a registration, a registrar reference, or one store reference
+ * form dropped together with its control.
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
  * not inverted, ran; every pin's case reached its end (REACHED).
  * RESIDUALS (named families, each with a pinned quiet row in the controls): R-COMPOSED a specifier or a name assembled at
- * runtime from a variable is invisible to A1, A2's seam reader and A3 (A1 composedSpecifier, A2 composedMember, A3
- * composedName); R-LOOKALIKE a look-alike letter from another script names a different identifier (A3 lookalike), while an
+ * runtime from a variable is invisible to A1, A2's seam reader and A3 (A1 composedSpecifier, A2 composedMember and
+ * composedStore, A3 composedName); R-LOOKALIKE a look-alike letter from another script names a different identifier (A3 lookalike), while an
  * inserted invisible splits the words and is read (A3 invisible); R-UNNAMED a registration that never spells the vocabulary (A2
  * unnamedEntry), whose backstop is A2's exact lists - the in-process entries, each detached case's entries (held to the host's
- * own capability table) and the src registration seam - so a registration added in src reds A2 whatever its name: in a detached
- * case (A2 extraInCase, fallThrough, inlineInCase, aliasedImport), beside the switch (A2 besideSwitch), on the returned
- * registry (A2 onReturned, reflectedMember) or through a new registrar (A2 newRegistrar); R-RUN-TOGETHER a vocabulary pair
+ * own capability table) and the src registration seam - so a registration added in src through the register member, a
+ * registrar holding one or a member reference to the registry's private store reds A2 whatever its name: in a detached case
+ * (A2 extraInCase, fallThrough, inlineInCase, aliasedImport, storeInCase), beside the switch (A2 besideSwitch,
+ * storeBesideSwitch), on the returned registry (A2 onReturned, reflectedMember, storeOnReturned, storeElement, storeReflected,
+ * storeDestructured, storeAssigned), in the in-process wiring of src/index.ts registryFor (A2 storeInProcess), inside the
+ * registry class (A2 storeInClass) or through a new registrar (A2 newRegistrar), the store followed as the class names it (A2
+ * storeRenamed, storeHashPrivate, storePublicReach); a store write through no member reference is R-PRIVATE-STORE;
+ * R-RUN-TOGETHER a vocabulary pair
  * written as one lowercase run with no camelCase, acronym or separator boundary (interfacehost, componentmount) is one word,
  * not the pair, since A3 reads words and splitting runs would read transactionref as action ref (A3 runTogether); R-SHAPE a src
  * type carrying the fixture's wire-identity fields under no vocabulary name spells nothing A3 reads (A3 shapeOnly);
  * R-INERT-TEXT callback source text in a string field the bounded schema admits is delivered as inert data, never evaluated (C2
- * inertLabel). Comments are prose, never A3's ground (A3 comment).
+ * inertLabel); R-PRIVATE-STORE a write that reaches the registry's private store through no member reference - an object
+ * literal's own key handed to Object.assign (A2 storeKeyed), the store found by enumerating the registry's own values (A2
+ * storeEnumerated) or a write spelled only inside text the runtime evaluates (A2 storeEvaluated) - spells nothing A2's seam
+ * reader reads, since an object literal's key names a member of a new object, never a reference to the registry's, and
+ * evaluated text is a string, never source the compiler reads (wb-913h). Comments are prose, never A3's ground (A3 comment).
  * STANDING CONTACT (A1, by design): A1 reads the first argument of any call as a specifier, since a load-shaped call can carry
  * any callee name (a created require, a wrapper), so a module anywhere in the walked tree - a later TSX-family census included
  * - that passes the SDK or a vocabulary file name as a literal first call argument reads as an importer (A1
  * callArgumentMention, identifierCallMention): such a needle goes through a constant or a template, as this file's do.
+ * STANDING CONTACT (A2, by design, wb-913h): the store reading reads every reference in src to a member named like the
+ * registry's private store, an unrelated object's included (request.providers in the detached host, supernode.providers,
+ * item.providers and three "providers" literals today), so a src change that adds, moves or removes such a reference, or
+ * changes how the registry class reaches its store, reds A2 and re-measures the roster's storeReferences in the same commit.
  * Display paths added: none. Test-only: it spawns nothing, writes no file, and every provider, executor and launcher it invokes is
  * a counting fake (the real registrars A2 runs only register descriptors on fresh registries, never invoked); the stand-in
  * capability and the fixture live in this file only.
@@ -202,11 +222,14 @@ const DETACHED_ARGUMENTS = ["registry", "request.cwd"];
 /** The class a registry is built from and the member a registration goes through. */
 const REGISTRY_CLASS = "CapabilityRegistry";
 const REGISTER_MEMBER = "register";
+/** The module that declares the registry class (its private store is read from the class), and the in-process host whose registryFor wires Pi's own registry. */
+const REGISTRY_MODULE = "src/workbench/capability-registry.ts";
+const IN_PROCESS_HOST = "src/index.ts";
 /** The control adapters wb-cra wires, keyed by provider: one counting executor stands for each. */
 const EXECUTOR_PROVIDERS = ["furnace", "claude-agent-sdk", "forge", "local-detached"];
 /** A global the callback source texts would set if anything evaluated them. */
 const SENTINEL = "wbIf7q4EvaluatedSentinel";
-const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-LOOKALIKE", "R-UNNAMED", "R-RUN-TOGETHER", "R-SHAPE", "R-INERT-TEXT"];
+const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-LOOKALIKE", "R-UNNAMED", "R-RUN-TOGETHER", "R-SHAPE", "R-INERT-TEXT", "R-PRIVATE-STORE"];
 const CYRILLIC_A = String.fromCodePoint(0x0430);
 const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
 /** The unsafe display units C3 plants in identity fields, by name. */
@@ -702,34 +725,81 @@ interface ModuleSeam {
   readonly path: string;
   readonly constructions: readonly string[];
   readonly registrations: readonly { readonly fn: string; readonly text: string }[];
+  /** Each reference to a member named like the registry's private store, in the same forms as a registration. */
+  readonly stores: readonly { readonly fn: string; readonly text: string }[];
   /** The function and method names the module declares. */
   readonly functions: ReadonlySet<string>;
   /** Every identifier that is not a declaration's own name, by its text. */
   readonly identifiers: ReadonlyMap<string, readonly ts.Identifier[]>;
 }
-/** One module's registration seam facts, read by the compiler under its own script kind. */
-function moduleSeam(path: string, source: string): ModuleSeam {
+/**
+ * The registry's private store, read from its own class: the private members (a `private` modifier or a #name) that the
+ * CapabilityRegistry register method reaches through `this`, sorted - the state a registration writes.
+ */
+function storeMembersOf(source: string): string[] {
+  const file = ts.createSourceFile(REGISTRY_MODULE, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const found = new Set<string>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isClassDeclaration(node) && node.name?.text === REGISTRY_CLASS) {
+      const privates = new Set<string>();
+      for (const member of node.members) {
+        const name = member.name === undefined ? undefined : staticName(member.name);
+        const modifiers = ts.canHaveModifiers(member) ? (ts.getModifiers(member) ?? []) : [];
+        const isPrivate = (member.name !== undefined && ts.isPrivateIdentifier(member.name)) || modifiers.some(modifier => modifier.kind === ts.SyntaxKind.PrivateKeyword);
+        if (name !== undefined && isPrivate) privates.add(name);
+      }
+      const reach = (inner: ts.Node): void => {
+        if (ts.isPropertyAccessExpression(inner) && inner.expression.kind === ts.SyntaxKind.ThisKeyword && privates.has(inner.name.text)) found.add(inner.name.text);
+        ts.forEachChild(inner, reach);
+      };
+      for (const member of node.members) if (ts.isMethodDeclaration(member) && staticName(member.name) === REGISTER_MEMBER && member.body !== undefined) reach(member.body);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return [...found].sort();
+}
+let cachedStores: readonly string[] | undefined;
+/** The live registry's private store members, read once from its own module. */
+function liveStores(): readonly string[] {
+  cachedStores ??= storeMembersOf(readFileSync(join(REPO, REGISTRY_MODULE), "utf8"));
+  return cachedStores;
+}
+/**
+ * A reference to a member named `member` as the seam reads one, else undefined: a property access or a literal element access
+ * (with its use), a destructuring, or the name as a (folded) literal anywhere else - Reflect.get(registry, "register"), a property
+ * descriptor read - counted once: never the argument an element access already counted, never a part of a larger literal that
+ * folds to it.
+ */
+function memberReference(node: ts.Node, member: string, file: ts.SourceFile): string | undefined {
+  if ((ts.isPropertyAccessExpression(node) && node.name.text === member) || (ts.isElementAccessExpression(node) && folded(node.argumentExpression) === member)) {
+    return `${flat(node.expression.getText(file))}.${member} ${memberUse(node)}`;
+  }
+  if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent) && staticName(node.propertyName ?? node.name) === member) return `{${member}} destructured`;
+  const literal = ts.isStringLiteralLike(node) || ts.isTemplateExpression(node) || (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken);
+  if (literal && folded(node) === member) {
+    const { parent } = node;
+    const counted = ts.isElementAccessExpression(parent) && parent.argumentExpression === node;
+    const inside = (ts.isBinaryExpression(parent) || ts.isParenthesizedExpression(parent)) && folded(parent) === member;
+    if (!counted && !inside) return `"${member}" literal`;
+  }
+  return undefined;
+}
+/** One module's registration seam facts, read by the compiler under its own script kind (the store read from the live registry). */
+function moduleSeam(path: string, source: string, storeMembers: readonly string[] = liveStores()): ModuleSeam {
   const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKind(path));
   const constructions: string[] = [];
   const registrations: { fn: string; text: string }[] = [];
+  const stores: { fn: string; text: string }[] = [];
   const functions = new Set<string>();
   const identifiers = new Map<string, ts.Identifier[]>();
   const visit = (node: ts.Node): void => {
     if (ts.isNewExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === REGISTRY_CLASS) constructions.push(`${path}:${enclosingName(node)}`);
-    if ((ts.isPropertyAccessExpression(node) && node.name.text === REGISTER_MEMBER) || (ts.isElementAccessExpression(node) && folded(node.argumentExpression) === REGISTER_MEMBER)) {
-      registrations.push({ fn: enclosingName(node), text: `${flat(node.expression.getText(file))}.${REGISTER_MEMBER} ${memberUse(node)}` });
-    }
-    if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent) && staticName(node.propertyName ?? node.name) === REGISTER_MEMBER) {
-      registrations.push({ fn: enclosingName(node), text: `{${REGISTER_MEMBER}} destructured` });
-    }
-    // The member's name as a (folded) literal anywhere else - Reflect.get(registry, "register"), a property descriptor read - counts
-    // once: never the argument an element access already counted, never a part of a larger literal that folds to it.
-    const literal = ts.isStringLiteralLike(node) || ts.isTemplateExpression(node) || (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken);
-    if (literal && folded(node) === REGISTER_MEMBER) {
-      const { parent } = node;
-      const counted = ts.isElementAccessExpression(parent) && parent.argumentExpression === node;
-      const inside = (ts.isBinaryExpression(parent) || ts.isParenthesizedExpression(parent)) && folded(parent) === REGISTER_MEMBER;
-      if (!counted && !inside) registrations.push({ fn: enclosingName(node), text: `"${REGISTER_MEMBER}" literal` });
+    const registration = memberReference(node, REGISTER_MEMBER, file);
+    if (registration !== undefined) registrations.push({ fn: enclosingName(node), text: registration });
+    for (const member of storeMembers) {
+      const reference = memberReference(node, member, file);
+      if (reference !== undefined) stores.push({ fn: enclosingName(node), text: reference });
     }
     if ((ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node)) && node.name !== undefined) {
       const name = staticName(node.name);
@@ -743,19 +813,23 @@ function moduleSeam(path: string, source: string): ModuleSeam {
     ts.forEachChild(node, visit);
   };
   visit(file);
-  return { path, constructions, registrations, functions, identifiers };
+  return { path, constructions, registrations, stores, functions, identifiers };
 }
 interface Seam {
   readonly constructions: readonly string[];
   readonly registrations: readonly string[];
   readonly references: readonly string[];
+  /** The registry's private store members, read from its class, and every reference to one across src (its own class body included). */
+  readonly storeMembers: readonly string[];
+  readonly storeReferences: readonly string[];
 }
 /**
- * The src registration seam: every CapabilityRegistry construction, every reference to a member named register, and every
+ * The src registration seam: every CapabilityRegistry construction, every reference to a member named register, every
  * reference to a function holding one (a registrar) - matched by name across src when one module declares that name, and only
- * inside the registrar's own module when several do (src/index.ts and the detached host each declare a registryFor).
+ * inside the registrar's own module when several do (src/index.ts and the detached host each declare a registryFor) - and
+ * every reference to a member named like the registry's private store, in the registration forms (wb-913h).
  */
-function registrationSeam(modules: readonly ModuleSeam[]): Seam {
+function registrationSeam(modules: readonly ModuleSeam[], storeMembers: readonly string[] = liveStores()): Seam {
   const holders = new Map<string, Set<string>>();
   for (const module of modules) {
     for (const { fn } of module.registrations) {
@@ -777,6 +851,8 @@ function registrationSeam(modules: readonly ModuleSeam[]): Seam {
     constructions: modules.flatMap(module => module.constructions),
     registrations: modules.flatMap(module => module.registrations.map(({ fn, text }) => `${module.path}:${fn}: ${text}`)),
     references: references.sort(),
+    storeMembers: [...storeMembers],
+    storeReferences: modules.flatMap(module => module.stores.map(({ fn, text }) => `${module.path}:${fn}: ${text}`)),
   };
 }
 let cachedSeams: readonly ModuleSeam[] | undefined;
@@ -786,15 +862,17 @@ function srcSeams(): readonly ModuleSeam[] {
   cachedSeams = [...liveTree().modules.keys()].filter(path => path.startsWith("src/")).map(path => moduleSeam(path, readFileSync(join(REPO, path), "utf8")));
   return cachedSeams;
 }
-/** The live detached host source with each [from, to] edit applied once; a missing anchor throws, never a silent no-op. */
-function editedHost(edits: readonly (readonly [string, string])[]): string {
-  let source = readFileSync(join(REPO, DETACHED_HOST), "utf8");
+/** The live source of a src module with each [from, to] edit applied once; a missing anchor throws, never a silent no-op. */
+function editedSource(path: string, edits: readonly (readonly [string, string])[]): string {
+  let source = readFileSync(join(REPO, path), "utf8");
   for (const [from, to] of edits) {
-    if (!source.includes(from)) throw new Error(`${DETACHED_HOST} no longer carries ${from}`);
+    if (!source.includes(from)) throw new Error(`${path} no longer carries ${from}`);
     source = source.replace(from, () => to);
   }
   return source;
 }
+/** The live detached host source with each [from, to] edit applied once. */
+const editedHost = (edits: readonly (readonly [string, string])[]): string => editedSource(DETACHED_HOST, edits);
 
 // ---------------------------------------------------------------------------------------------------- control and execute
 
@@ -1143,6 +1221,23 @@ function seamControls(inProcess: readonly string[], seam: Seam, live: readonly M
       JSON.stringify(edited) !== JSON.stringify(seam)
     );
   };
+  /** Whether an edited src module other than the detached host moves the src registration seam off the live one. */
+  const redsIn = (path: string, edits: readonly (readonly [string, string])[]): boolean => {
+    const source = editedSource(path, edits);
+    return JSON.stringify(registrationSeam(live.map(module => (module.path === path ? moduleSeam(path, source) : module)))) !== JSON.stringify(seam);
+  };
+  // wb-913h F1: a provider written straight into the registry's private store - the gate's placements (L2-01 beside the switch,
+  // L2-02 the in-process wiring, L2-03 inside a case, L2-04 the returned registry) and each member-reference form.
+  const store = "(registry as unknown as { providers: Map<string, unknown> }).providers";
+  const extraEntry = '"forge.gate.extra", { descriptor: { id: "forge.gate.extra", version: "1.0.0" }, invoke: async () => null }';
+  const storeSet = `${store}.set(${extraEntry});`;
+  const inProcessWiring = "workbenchNative().registerNativeProviders(registry, scope, reactivefiberWorkspaceRoot === undefined ? undefined : { reactivefiberWorkspaceRoot });";
+  const registerMethod = "  register(provider: CapabilityProvider): void {";
+  /** The registry module with its store renamed throughout (the declaration and every this-reach); a missing anchor throws. */
+  const renamedRegistry = (declaration: string, member: string): string =>
+    editedSource(REGISTRY_MODULE, [["private readonly providers =", declaration]]).replaceAll("this.providers", `this.${member}`);
+  const renamedWrite = "(registry as unknown as { entries: Map<string, unknown> }).entries";
+  const renamedHost = editedHost([[returned, `${returned}\n  ${renamedWrite}.set(${extraEntry});`]]);
   return {
     extraInCase: reds([[forgeCase, 'case "forge": registerNativeForgeGateStatus(registry, request.cwd); registerNativeHyperUnixFind(registry, request.cwd); break;']]),
     fallThrough: reds([[forgeCase, 'case "forge": registerNativeForgeGateStatus(registry, request.cwd);']]),
@@ -1156,6 +1251,24 @@ function seamControls(inProcess: readonly string[], seam: Seam, live: readonly M
     ]),
     reflectedMember: reds([[returned, `${returned}\n  Reflect.apply(Reflect.get(registry, "register") as (provider: unknown) => void, registry, [extraProvider]);`]]),
     composedMember: reds([[returned, `${returned}\n  const verb = ["reg", "ister"].join("");\n  (registry as unknown as Record<string, (provider: unknown) => void>)[verb]?.(extraProvider);`]]),
+    storeBesideSwitch: reds([[construction, `${construction}\n  if ((request.providers ?? []).includes("forge")) ${storeSet}`]]),
+    storeInProcess: redsIn(IN_PROCESS_HOST, [[inProcessWiring, `${inProcessWiring}\n      ${storeSet}`]]),
+    storeInCase: reds([[forgeCase, `case "forge": registerNativeForgeGateStatus(registry, request.cwd); ${storeSet} break;`]]),
+    storeOnReturned: reds([[returned, `${returned}\n  ${storeSet}`]]),
+    storeElement: reds([[returned, `${returned}\n  (registry as unknown as Record<string, Map<string, unknown>>)["providers"]?.set(${extraEntry});`]]),
+    storeReflected: reds([[returned, `${returned}\n  (Reflect.get(registry, "providers") as Map<string, unknown>).set(${extraEntry});`]]),
+    storeDestructured: reds([[returned, `${returned}\n  const { providers: entries } = registry as unknown as { providers: Map<string, unknown> };\n  entries.set(${extraEntry});`]]),
+    storeAssigned: reds([[returned, `${returned}\n  ${store} = new Map([[${extraEntry}]]);`]]),
+    storeInClass: redsIn(REGISTRY_MODULE, [[registerMethod, `  add(provider: CapabilityProvider): void {\n    this.providers.set(provider.descriptor.id, provider);\n  }\n\n${registerMethod}`]]),
+    storeKeyed: reds([[returned, `${returned}\n  Object.assign(registry, { providers: new Map([[${extraEntry}]]) });`]]),
+    storeEnumerated: reds([[returned, `${returned}\n  for (const value of Object.values(registry)) if (value instanceof Map) value.set(${extraEntry});`]]),
+    storeEvaluated: reds([[returned, `${returned}\n  new Function("registry", 'registry.providers.set("forge.gate.extra", null);')(registry);`]]),
+    composedStore: reds([[returned, `${returned}\n  const field = ["prov", "iders"].join("");\n  (registry as unknown as Record<string, Map<string, unknown>>)[field]?.set(${extraEntry});`]]),
+    // The store is read from the class, never named here: a renamed store is followed into the seam, a #-private one is a store,
+    // and a public member the register method reaches is none.
+    storeRenamed: moduleSeam(DETACHED_HOST, renamedHost, storeMembersOf(renamedRegistry("private readonly entries =", "entries"))).stores.some(({ text }) => text.startsWith(`${renamedWrite} `)),
+    storeHashPrivate: JSON.stringify(storeMembersOf(renamedRegistry("readonly #providers =", "#providers"))) === JSON.stringify(["#providers"]),
+    storePublicReach: JSON.stringify(storeMembersOf(editedSource(REGISTRY_MODULE, [[registerMethod, `${registerMethod}\n    this.admission();`]]))) === JSON.stringify(seam.storeMembers),
   };
 }
 
@@ -1238,6 +1351,9 @@ const IMPL: Record<string, () => Json | Promise<Json>> = {
       tools.map(tool => tool.slice(0, tool.indexOf("("))),
       "the curated Claude server lists exactly its capability tools",
     ).toEqual([...CLAUDE_CAPABILITY_TOOL_NAMES]);
+    // A live anchor outside the roster: the store reader reads the registry's own register method reaching each store member.
+    const storeAnchor = seam.storeMembers.length > 0 && seam.storeMembers.every(member => seam.storeReferences.includes(`${REGISTRY_MODULE}:${REGISTER_MEMBER}: this.${member} read`));
+    expect(storeAnchor, `the store reader reads ${REGISTRY_CLASS}.${REGISTER_MEMBER} reaching its private store (${seam.storeMembers.join(", ")})`).toBe(true);
     const stand = standIn().registry.catalogSnapshot()[0]?.descriptor;
     const controls = {
       standInEntry: stand !== undefined && inFamily(stand),
@@ -1598,6 +1714,8 @@ describe("wb-if7q.4 TSX action-reference census (TSX-NATIVE-INTERFACES-AND-PORTA
         detachedRegistrars: Object.keys(DETACHED_REGISTRARS),
         detachedArguments: DETACHED_ARGUMENTS,
         registerMember: `${REGISTRY_CLASS}.${REGISTER_MEMBER}`,
+        registryModule: `${REGISTRY_MODULE}:${REGISTRY_CLASS}`,
+        inProcessHost: IN_PROCESS_HOST,
         foreignProducer: FOREIGN_PRODUCER,
         executorProviders: EXECUTOR_PROVIDERS,
         standIn: `${STAND_IN_ID}:${STAND_IN_PERMISSION}`,

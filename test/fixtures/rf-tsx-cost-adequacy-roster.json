@@ -1,0 +1,471 @@
+{
+  "bead": "wb-693.8",
+  "provenance": "wb-693.8 rf TSX cost-adequacy census roster (test/workbench-rf-tsx-cost-adequacy-census.test.ts). Producer facts MEASURED read-only by the cutting seat on 2026-10-26 at the ReactiveFiberCLI pin; rows and witnesses are the census's own judged set.",
+  "producer": {
+    "repository": "ReactiveFiberCLI",
+    "pin": "e20f565fd7604c4ca3be7b9a66fd5c3173ea49fa",
+    "listing": {
+      "count": 10209,
+      "sha256": "a14e398e3c705051c9dc70be42eff8c648b9cecbf373f7c2b4a9b0052a8c99d1",
+      "filterWord": "baseline",
+      "filtered": [
+        "docs/plans/forge-ib-adoption-2026-10-10/00-baseline-and-gap-register.md",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/00-BASELINE-AND-FINDINGS.md",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/02-BASELINE-AND-EVIDENCE.md",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/cross-controlled-cli-baselines-fit.json",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/cross-shared-cli-baselines-fit.json",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/opt-cli-controlled-candidate-cli-baselines.json",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/opt-cli-graded-test_cli_baselines.json",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/opt-cli-shared-candidate-cli-baselines.json",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/ref-cli-controlled-baseline-cli-baselines.json",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/ref-cli-controlled-baseline-legacy_render.json",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/ref-cli-graded-test_cli_baselines.json",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/ref-cli-shared-baseline-cli-baselines.json",
+        "docs/programs/performance-mathematical-optimization-2026-10-16/phase-ii-resource-frontier/evidence/RFC2-P14-a2/ref-cli-shared-baseline-legacy_render.json",
+        "new-feedback/2026-09-18-CORROBORATION-realized-cost-forge-toml-127s-load-85-projection-fired-7-test-steps-killed-at-5400-s-longest-pass-94-8-pct-of-budget-and-the-re-baseline-rule-plus-equality-audit-hold-the-raise-shut.md",
+        "new-feedback/2026-10-15-CORROBORATION-the-new-feedback-conventions-audit-is-still-red-at-1010a4812-with-9-deviations-7-filename-1-metadata-1-grade-up-from-6-and-1-at-74c82dfef-after-151-new-feedback-commits-and-0-edits-to-the-rule-the-baseline-or-the-readme.md",
+        "new-feedback/2026-10-17-POSITIVE-the-rf-perf-baseline-selector-refuses-7-of-12-spellings-with-exit-2-in-42-of-72-head-0-1-722-runs-and-keeps-the-envelope-equal-in-2-of-2-comparisons-while-0-1-717-ignores-all-12-in-72-of-72.md",
+        "new-feedback/2026-10-17-the-bootstrap-sync-baseline-pre-fetch-object-probe-leaks-one-fatal-not-a-valid-object-name-stderr-line-per-stale-checkout-in-4-of-4-successful-exit-0-runs-at-head-0-1-734-6fc7a84c8.md",
+        "new-feedback/2026-10-24-POSITIVE-head-0-1-844-history-projection-seam-decoded-exactly-the-page-in-7-of-7-default-reads-of-a-31-render-store-where-baseline-and-installed-0-1-836-decoded-all-31-and-items-matched-across-all-three-arms-in-9-of-9-cases.md",
+        "scripts/refresh_sdk_baseline.py",
+        "tests/audit/new_feedback_baseline.json",
+        "tests/audit/sdk_baseline.json",
+        "tests/audit/test_bench_baselines.py",
+        "tests/bench/test_cli_baselines.py",
+        "tests/bench/test_j1_journey_baselines.py",
+        "tests/bench/test_scg_baselines.py",
+        "tests/bench/test_tsx_baselines.py",
+        "tests/fixtures/golden/s0_baseline_context_render_component.txt",
+        "tests/fixtures/renders/legacy_baseline.py",
+        "tests/fixtures/renders/legacy_baseline_component_v1.json",
+        "tests/fixtures/renders/legacy_baseline_plain_v1.json",
+        "tests/fixtures/renders/legacy_baseline_v1.receipt.json",
+        "tests/fixtures/trainingworks/baseline_v1.json",
+        "tests/fixtures/trainingworks/baseline_v1.receipt.json",
+        "tests/fixtures/trainingworks/schemas/intervention/valid/baseline_record.json",
+        "tests/journeys/test_agent_perf_baseline_switch.py",
+        "tests/unit/test_refresh_sdk_baseline.py",
+        "tests/unit/test_training_baseline.py"
+      ]
+    },
+    "excerpts": [
+      {
+        "site": ".gitignore:52-53",
+        "textBase64": "IyDilIDilIAgQmVuY2htYXJrIHJlcG9ydHMgKC5yZi1iZW5jaC88bmFtZT4uanNvbiB3cml0dGVuIGJ5IGBweXRlc3QgLW0gYmVuY2hgLCBPQlMtUEVSRi1BMjYpIOKUgOKUgAovLnJmLWJlbmNoLw==",
+        "sha256": "012ecb3632494b1e1f2be82633f76aaf4a2f69161999a90caa496f2576d2425c"
+      },
+      {
+        "site": "tests/bench/test_tsx_baselines.py:63-64",
+        "textBase64": "SW52b2NhdGlvbjogYGBweXRlc3QgLW0gYmVuY2ggdGVzdHMvYmVuY2gvdGVzdF90c3hfYmFzZWxpbmVzLnB5YGAgKGBgUkZfQkVOQ0hfVFNYX1JVTlNgYCBzZXRzIGssIGBgUkZfQkVOQ0hfRElSYGAKcmVkaXJlY3RzIHRoZSByZXBvcnQpLiBXcml0ZXMgYGAucmYtYmVuY2gvdHN4LWJhc2VsaW5lcy5qc29uYGAsIHZhbGlkYXRlZCBhZ2FpbnN0IGBgc2NoZW1hcy9iZW5jaC9yZXBvcnQtdjEuanNvbmBgIGJ5",
+        "sha256": "5b93299d60d1dcea582388ea20ba4c4f531f92115fa078e6a6c350762fe47216"
+      },
+      {
+        "site": "tests/bench/test_tsx_baselines.py:161",
+        "textBase64": "UkVQT1JUX05BTUU6IEZpbmFsID0gInRzeC1iYXNlbGluZXMi",
+        "sha256": "628a16408c07bdf5bc0f0eda583c5c4952252e5b5f014aebe0e289b12799b5bb"
+      },
+      {
+        "site": "tests/bench/test_tsx_baselines.py:172-175",
+        "textBase64": "Q09NUE9ORU5UX1NURVBTOiBGaW5hbFt0dXBsZVtpbnQsIC4uLl1dID0gKDEsIDEwLCAxMDApCiIiIkkyMTogY29tcG9uZW50cyBwZXIgcmVuZGVyLCBmb3IgZWFjaCBvZiB0aGUgdGhyZWUgZ3JhcGgga2luZHMuIiIiClJFU09VUkNFX1NURVBTOiBGaW5hbFt0dXBsZVtpbnQsIC4uLl1dID0gKDEsIDEwLCAxMDApCiIiIkkyMTogcmVzb3VyY2VzIHJlcXVlc3RlZCBwZXIgYXR0ZW1wdCAob25lIHBlbmRpbmcgcm91bmQsIHRoZW4gY29tcGxldGUpLiIiIg==",
+        "sha256": "c1824382c9c7ef3769351eae6939ec75fa8abdd6c860a2f65310f69d7c4af3c3"
+      }
+    ],
+    "schema": {
+      "path": "schemas/bench/report-v1.json",
+      "blob": "f36108fce119a9cfde15afe90405347c096f1985",
+      "id": "https://reactive-fiber-cli.dev/schemas/bench/report-v1.json",
+      "slices": [
+        {
+          "pointer": "/required",
+          "textBase64": "WyJuYW1lIiwiZml4dHVyZV9zaGFwZSIsImJhY2tlbmQiLCJjbGlfdmVyc2lvbiIsInNka192ZXJzaW9ucyIsImVudmlyb25tZW50IiwibWV0cmljcyJd",
+          "sha256": "e85c9aac2a085c23f06616d5bcc30517a25ff9a0a5ddb8e8afc962e81bb2387d"
+        },
+        {
+          "pointer": "/$defs/runtime/required",
+          "textBase64": "WyJlbmdpbmUiLCJyb3dzIiwicGVha19yc3Nfa2liIiwiaXBjX2J5dGVzIiwiY2FjaGVfaGl0cyIsInJlbmRlcl9pbnZvY2F0aW9uX2NvdW50Iiwid29ya2VyX3NwYXducyJd",
+          "sha256": "55c051a07ee52b5771ada7fad4183dc4a5e9a00e3b30ee1720f2a93c0aded72f"
+        },
+        {
+          "pointer": "/$defs/runtime_row/required",
+          "textBase64": "WyJuYW1lIiwiZ3JhcGgiLCJjb250ZXh0Iiwic2FtcGxlcyIsImV4aXRfY29kZSIsInNoYXBlIiwid2FsbF9tcyIsImNwdV9tcyIsInBlYWtfcnNzX2tpYiIsImlwY19ieXRlcyIsImNhY2hlX2hpdCIsInJlbmRlcl9pbnZvY2F0aW9uX2NvdW50Iiwid29ya2VyX3NwYXducyJd",
+          "sha256": "d8b068f3a8606038677ef19c130d801f28d5ce96ed083793a792a9df59fb9850"
+        },
+        {
+          "pointer": "/$defs/runtime_row/properties/graph/enum",
+          "textBase64": "WyJweXRob25fb25seSIsImluYWN0aXZlX3RzeCIsImFjdGl2ZV90c3giXQ==",
+          "sha256": "add2aaade40b11799803084e3967d9ebdbd3ef5dd9925f5dfdb360ddc0af1d10"
+        },
+        {
+          "pointer": "/$defs/runtime_shape/required",
+          "textBase64": "WyJjb21wb25lbnRfY291bnQiLCJ0c3hfY29tcG9uZW50X2NvdW50IiwicmVzb3VyY2VfY291bnQiLCJyb3VuZHMiLCJuZXN0aW5nX2RlcHRoIiwiZG9jdW1lbnRfYnl0ZXMiLCJzbmFwc2hvdF9ieXRlcyJd",
+          "sha256": "d85854e43b9a445b0e8fc214b035d1206ed9c0e4e18359c40254f83e09400c5a"
+        }
+      ]
+    }
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "Gate check: the artifact exists upstream and validates against report-v1 with the three instance axes present",
+      "pins": [
+        {
+          "id": "A1",
+          "quote": "Gate check: the artifact exists upstream",
+          "witness": {
+            "claim": "60bc8aaa17ac",
+            "repository": "ReactiveFiberCLI",
+            "pin": "e20f565fd7604c4ca3be7b9a66fd5c3173ea49fa",
+            "listed": 10209,
+            "filtered": 37,
+            "report": "tsx-baselines.json",
+            "state": "ABSENT",
+            "matches": [],
+            "present": [
+              "PRESENT",
+              "PRESENT",
+              "PRESENT"
+            ],
+            "near": [
+              "ABSENT",
+              "ABSENT",
+              "ABSENT",
+              "ABSENT"
+            ],
+            "written": ".rf-bench/tsx-baselines.json",
+            "schema": "schemas/bench/report-v1.json",
+            "residuals": {
+              "R-RENAMED": {
+                "tests/bench/baselines/tsx_baselines.json": "ABSENT",
+                "Tsx-Baselines.json": "ABSENT"
+              },
+              "R-NON-TREE": {
+                "outputIgnored": true,
+                "benchModule": [
+                  "tests/bench/test_tsx_baselines.py"
+                ],
+                "state": "ABSENT"
+              }
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "quote": "and validates against report-v1",
+          "witness": {
+            "claim": "2edbb96125ea",
+            "schema": {
+              "path": "schemas/bench/report-v1.json",
+              "blob": "f36108fce119a9cfde15afe90405347c096f1985",
+              "id": "https://reactive-fiber-cli.dev/schemas/bench/report-v1.json"
+            },
+            "reached": false,
+            "standIn": "constructed from the vendored slices, not a producer report",
+            "standInValid": true,
+            "droppedTop": 7,
+            "droppedRow": 13,
+            "strayGraph": [
+              "/runtime/rows/0/graph"
+            ],
+            "residuals": {
+              "R-SCHEMA-SLICE": []
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "quote": "with the three instance axes present",
+          "witness": {
+            "claim": "25efd807c0bd",
+            "steps": [
+              1,
+              10,
+              100
+            ],
+            "graphs": 3,
+            "reached": false,
+            "full": {
+              "covered": true,
+              "missing": {}
+            },
+            "dropped": {
+              "covered": false,
+              "missing": {
+                "active_tsx": [
+                  100
+                ]
+              }
+            },
+            "bareMissing": 3
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "On landing: a recorded TRACEABILITY comparison row (policy vs N x cold-process cost per axis) and either an explicit 'policies unchanged, adequate because ...' note or a re-derived numeric change citing the baseline",
+      "pins": [
+        {
+          "id": "B1",
+          "quote": "On landing: a recorded TRACEABILITY comparison row (policy vs N x cold-process cost per axis)",
+          "witness": {
+            "claim": "2fe49bc4287c",
+            "live": {
+              "traceabilityLines": 0,
+              "receipt": false
+            },
+            "owed": false,
+            "planted": {
+              "traceabilityLines": 1,
+              "receipt": true
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "quote": "and either an explicit 'policies unchanged, adequate because ...' note or a re-derived numeric change citing the baseline",
+          "witness": {
+            "claim": "864bc419c6bd",
+            "gate": "ABSENT",
+            "note": "policies unchanged, adequate because",
+            "noteControl": [
+              "docs/probe.md:1 anchor+cost+policy: asserted-adequate"
+            ],
+            "liveFindings": 0,
+            "numericChange": false
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "Negative (holds and is testable NOW): no commit changes the :81/:98 numerics citing TSX costs, and no docs/receipt claims TSX-cost adequacy, before the baseline exists",
+      "pins": [
+        {
+          "id": "C1",
+          "quote": "Negative (holds and is testable NOW): no commit changes the :81/:98 numerics citing TSX costs",
+          "witness": {
+            "claim": "94963df331a3",
+            "module": "src/workbench/providers/reactivefiber.ts",
+            "policy": {
+              "deadlines": [
+                60000
+              ],
+              "caps": [
+                {
+                  "stream": "stderr",
+                  "operator": ">",
+                  "bound": 262144
+                },
+                {
+                  "stream": "stdout",
+                  "operator": ">",
+                  "bound": 262144
+                }
+              ]
+            },
+            "stated": {
+              "deadlineMs": 60000,
+              "capBytes": 262144
+            },
+            "changed": {
+              "deadline 30 s": true,
+              "stdout cap 512 KiB": true,
+              "stdout cap inclusive": true,
+              "shared cap 128 KiB": true,
+              "second deadline timer": true,
+              "duplicate deadline timer": true,
+              "runtime deadline": true,
+              "renamed deadline binding": false
+            },
+            "residuals": {
+              "R-OTHER-KILL-PATH": "unchanged"
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "quote": "and no docs/receipt claims TSX-cost adequacy",
+          "witness": {
+            "claim": "b2f95e642564",
+            "floors": {
+              "docs": true,
+              "src": true,
+              "qa": true,
+              "examples": true,
+              ".agents": true
+            },
+            "pages": true,
+            "findings": [],
+            "coverage": [
+              "docs/wb-693.8-coverage-probe.md:1 anchor+cost+policy: asserted-adequate",
+              "docs/wb-693.8-coverage-probe.md:3 anchor+cost+policy: asserted-sufficient"
+            ],
+            "anchors": [
+              1,
+              1,
+              1,
+              1,
+              1,
+              1
+            ],
+            "families": [
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+policy: asserted-adequate",
+              "docs/probe.md:1 anchor+policy: asserted-adequate",
+              "docs/probe.md:1 anchor+policy: asserted-adequate",
+              "docs/probe.md:1 anchor+policy: asserted-adequate"
+            ],
+            "inflections": [
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-adequate",
+              "docs/probe.md:1 anchor+cost: asserted-sufficient",
+              "docs/probe.md:1 anchor+cost: asserted-sufficient",
+              "docs/probe.md:1 anchor+cost: asserted-sufficient",
+              "docs/probe.md:1 anchor+cost: asserted-sufficient",
+              "docs/probe.md:1 anchor+cost: asserted-enough"
+            ],
+            "markers": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ],
+            "cuts": {
+              "period": 0,
+              "semicolon": 0,
+              "blankLine": 0,
+              "tableRow": 0,
+              "listItem": 0,
+              "dataLine": 0,
+              "listItemOutsideMarkdown": 1,
+              "wrappedLine": 1
+            },
+            "walk": {
+              "entries": [
+                "README.md",
+                "docs/tracked.md",
+                "docs/untracked.md"
+              ],
+              "refused": [
+                "docs/link.md"
+              ],
+              "findings": [
+                "README.md:1 anchor+cost: asserted-adequate",
+                "docs/tracked.md:1 anchor+cost: asserted-adequate",
+                "docs/untracked.md:1 anchor+cost: asserted-adequate"
+              ]
+            },
+            "residuals": {
+              "R-UNANCHORED": 0,
+              "R-MARKER-ANYWHERE": 0,
+              "R-SPLIT": 0,
+              "R-PARAPHRASE": 0,
+              "R-LOOKALIKE": [
+                0,
+                0
+              ],
+              "R-OUTSIDE-ROOTS": {
+                "outside": [
+                  false,
+                  false,
+                  false,
+                  false
+                ],
+                "inside": true
+              }
+            }
+          }
+        },
+        {
+          "id": "C3",
+          "quote": "before the baseline exists",
+          "witness": {
+            "claim": "6e32a16b3e14",
+            "gate": "ABSENT",
+            "live": {
+              "state": "armed",
+              "violations": []
+            },
+            "armedViolations": 2,
+            "holding": "PRESENT",
+            "stood": {
+              "state": "stood-down",
+              "violations": []
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "residuals": [
+    {
+      "id": "R-RENAMED",
+      "quietPin": "A1"
+    },
+    {
+      "id": "R-NON-TREE",
+      "quietPin": "A1"
+    },
+    {
+      "id": "R-SCHEMA-SLICE",
+      "quietPin": "A2"
+    },
+    {
+      "id": "R-OTHER-KILL-PATH",
+      "quietPin": "C1"
+    },
+    {
+      "id": "R-UNANCHORED",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-MARKER-ANYWHERE",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-SPLIT",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-PARAPHRASE",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-LOOKALIKE",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-OUTSIDE-ROOTS",
+      "quietPin": "C2"
+    }
+  ]
+}

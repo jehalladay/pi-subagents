@@ -4,7 +4,7 @@
     {
       "table": "TOUCHPOINTS",
       "id": "T-FIELD",
-      "label": "a gp join-value field in code: input_snapshot, graph_digest or canonical_digest, or a camel-case mirror, as a name, a private name, a member, a string, a template part or a regular expression",
+      "label": "a gp join-value field in code: input_snapshot, graph_digest or canonical_digest, or a camel-case mirror, as a name, a private name, a member, a string, a template part or a regular expression, and in text as a whole word wherever it stands: inside a dotted path, or after or before a longer name that holds it",
       "pins": [
         "55c9d40c7f3f5e8379b46e99091ce61420a03ad5bd802fb66f5d92087d47b5a3",
         "c0c679ca23f546d43f052e94836d6b1622d5ec801ec6e1a485deaf691af2b413",
@@ -14,14 +14,17 @@
         "506f3db8f108d090d1e7b108c7a42c69b5d6289c91bf91e08934c21466c8e35c",
         "939c7e131ab06cecb1ecff9991266881b2d6844921fc4e23cfc8e23776c3fbd3",
         "293c5b341fde82047251c74d5aab767f60a0105d0266fd8bc457db54f29efdfd",
-        "8b07aca468a24b4d92aba6c142c695e74ac8844d602568c7b13b46b2c32eaefe"
+        "8b07aca468a24b4d92aba6c142c695e74ac8844d602568c7b13b46b2c32eaefe",
+        "80fcbb5c77e83cd023bcf2de9932c0c0cae99254201204f8dd9ed390264f6b84",
+        "2b6a347ae836476222836d3cfa679c2b63aed4b2db149d67c2ae0f645914dd35",
+        "6fd8af8c638d67f1ab241830e8e864d41a350b17001e7fc135583550fed29fd2"
       ],
       "test": "TOUCHPOINTS T-FIELD"
     },
     {
       "table": "TOUCHPOINTS",
       "id": "T-IDENTITIES",
-      "label": "gp's whole-document identity read as identities.graph: a member chain, an optional chain, an element access, a binding or assignment pattern, or a path string, slashed or dotted",
+      "label": "gp's whole-document identity read as identities.graph: a member chain, an optional chain, an element access, a binding or assignment pattern, or a path string, slashed or dotted, whole or inside a longer path",
       "pins": [
         "be2276f26ef75edcf7f7d06516a09f17da76f67e96188834a4f20298fbcbf2a5",
         "e1b04bff0ba7d1a5fc30848f4fc799d77e8f14c5521ce83b37102540f2631530",
@@ -30,7 +33,9 @@
         "f1dc40a83d5722d7be5a237f7b821593c10dfb2e7f9f9fd345eded13a9a527c5",
         "12bb6df3034f3b0f11f22b161c63c3dd85cb78edb02fb37130bc167a242bca69",
         "857f13e387e59811a766f82e9b8b85c0e090965ab52efa4bf767a3339c65bfe9",
-        "92fa811f6786249481e99e320d7e105f0e5975c00d1d51270a028c88adc91524"
+        "92fa811f6786249481e99e320d7e105f0e5975c00d1d51270a028c88adc91524",
+        "6daff6f4a62e525ff732e1f85456c8a2f589a22eb515f52398c88161f4f40cc1",
+        "8bc5ea47c8c0d675b2260dbbad66b8c58a4415f0ca149d5fa287a0a49c655342"
       ],
       "test": "TOUCHPOINTS T-IDENTITIES"
     },
@@ -48,12 +53,13 @@
     {
       "table": "TOUCHPOINTS",
       "id": "T-SHARED",
-      "label": "snapshotDigest, the name gp's journal and observation records give the join value, or its snake-case mirror, as a member, a private name, a binding or a string",
+      "label": "snapshotDigest, the name gp's journal and observation records give the join value, or its snake-case mirror, as a member, a private name, a binding or a string, whole or inside a dotted path",
       "pins": [
         "27e50baccfdb108e66bb27f312cd7e58a978ae92ca02c34ae1512db6552a9d4d",
         "b06b070c233ac961512ead2cfac6f6aa62327de823ae8023ee06955d16fd0e87",
         "72c91c5ed5b417907ec504b5e134387dcd7e8221efb97abbdbc64e608f62e6a1",
-        "e81f6fe954767e84e17fe004503aabc03b21119c8ae2b9c8a6d75039a49f25df"
+        "e81f6fe954767e84e17fe004503aabc03b21119c8ae2b9c8a6d75039a49f25df",
+        "0b088c88cd964ce5850698c0cc0b1be4c008404c004ca6be2e8ff32e1b924d88"
       ],
       "test": "TOUCHPOINTS T-SHARED"
     },

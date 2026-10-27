@@ -37,10 +37,19 @@
  *    the metadata and blind to it: the rf selectors (id prefix, permission family, contract source) over the native catalog and the
  *    injected registration, and RECONCILE_EVIDENCE_READS.reactivefiber, read the preview alone and no registered descriptor spells
  *    a plan verb or field; everything the two rf registration functions register is the preview alone, so a sibling registered
- *    beside it under a neutral id, permission and contract reds A5; src spells the rf binary name as a whole literal exactly once
- *    (the provider's one spawn); the rf schema (REACTIVE_FIBER_CLI_SCHEMA or its value) is spelled by exactly the three reader
- *    modules; and the provider module's exports are used by exactly the pinned importers, by name (a member read off a provider
- *    namespace by a computed key is no name: R-UNNAMED-RF).
+ *    beside it under a neutral id, permission and contract reds A5; src names the rf binary exactly once (the provider's one spawn),
+ *    where a literal part - a string, a no-substitution template, or a template's head, middle or tail - names it when its leading
+ *    token is rf or a path whose final segment (after the last "/" or "\") is rf, optionally rf.exe or rf.cmd, alone or followed by
+ *    whitespace: the whole literal "rf", a command line such as `rf context plan <id> --json`, a path-qualified binary such as
+ *    /usr/local/bin/rf; a one-token part (a bare name or a path, never prose) names it in any case (the reading wb-ofz4's cut gives
+ *    the rf evaluator-artifact census's launch scan, unlanded at this cut's base b7553f2); the rf schema (REACTIVE_FIBER_CLI_SCHEMA
+ *    or its value) is spelled by exactly the three reader modules; and the provider module's exports are used by exactly the pinned
+ *    importers, by name, where a loader handed a literal naming the provider module - require, a createRequire binding, any call or
+ *    new other than import(), an import-equals require - is a use ("module-load", with every member read off it or off the name it
+ *    is bound to), and so is any other literal naming it outside an import or export declaration ("specifier") (a member read off a
+ *    provider namespace by a computed key is no name: R-UNNAMED-RF). A5's controls hold both readings both ways: every launch form
+ *    and every loader form is read, and an rf directory, an rf-prefixed binary, another final segment, rf prose and a sibling
+ *    provider are not.
  *  B, acceptance (b), over planAfter with result.summary.prediction added (the field rfc-mq7k6.41 names; constructed here, since no
  *    build serves it). B1 each variant differs from the measured plan at that one path, its counts unchanged and the measured
  *    envelope untouched; B2 the registered reading of "conservative" and "observed" surfaces exactly that word, and native evidence
@@ -50,11 +59,16 @@
  *    admits the additive key with counts and decisions unchanged, while a closed-shape control refuses every variant; C2 every
  *    context.plan envelope any test/** fixture holds (this roster's two at least) admits the key the same way and keeps the
  *    eight-key envelope shape every Pi rf reader checks first. C2 reads every file below test/ that is not code (.ts, .js and their
- *    kin): a text that parses as JSON whole, else each of its lines, so a .jsonl fixture is read line by line; its walk holds every
- *    such path git lists below test/. The count of plan fixtures is not pinned, so a sibling fixture landing beside this one changes
- *    nothing here.
- *  D, acceptance (d). D1 a lexical scan of every src module - string, no-substitution, template and regular-expression literals and
- *    every identifier - finds no rf plan decision or count field spelled and so no module joining one with a basis-word literal. A
+ *    kin): a text that parses as JSON whole, else each of its lines, so a .jsonl fixture is read line by line, and a string leaf
+ *    that holds JSON the same way (a captured stdout, once or twice encoded, or a .jsonl capture) is parsed and read in turn; its
+ *    walk holds every such path git lists below test/, and C2's controls hold the string reading (an envelope kept as an object,
+ *    once encoded, twice encoded and as a line of a capture is read; a string opening like JSON that is not is read as nothing).
+ *    The count of plan fixtures is not pinned, so a sibling fixture landing beside this one changes nothing here.
+ *  D, acceptance (d). D1 a lexical scan of every src module - string, no-substitution, template and regular-expression literals,
+ *    every identifier and every class private name (#name) - finds no rf plan decision or count field spelled and so no module
+ *    joining one with a basis-word literal. Each literal and regular-expression literal is read as written and with its escapes
+ *    decoded (\xHH, \uHHHH, \u{H...}, a legacy octal escape, an identity escape of a character that is no letter or digit), so
+ *    /^refresh\x5frequired$/ and new RegExp("^refresh\\u005frequired$") spell refresh_required; class escapes stay as written. A
  *    text spells a field when it holds a PLAN_TOKENS word (by word, any case), is a PLAN_EXACT word whole, holds a multi-word plan
  *    token inside one whitespace-free chunk under a separator or camelCase transform (refresh-required, graph.changed,
  *    refreshRequiredCount), or is nothing but plan words under such a transform (REUSE, "reuse invalidated", "refresh required");
@@ -74,7 +88,10 @@
  * that reached it, and the reach case requires that row A reached every rf surface src holds (each descriptor the two rf
  * registration functions register, and each module spelling the rf schema) for each measured plan, that row B reached each for each
  * word, and that every passing roster pin reached its witness comparison; a row with a red pin is red there already, so it is
- * not held.
+ * not held. THE JUDGE CASES (wb-g81a, the landing-378 gate's F5): the judged-set, reach and registration cases each run the exact
+ * assertion count the roster's judges entry holds for its title (expect.assertions), so an early return past any check reds the
+ * case itself, and the reach case holds the vitest task tree to the roster's tests and run mode as the registration case does, so
+ * either judge deleted or skipped reds the other.
  * THE GATE-OPENING SIGNAL: A1 reads the pin's shape, so a re-measure at a build serving summary.prediction reds A1 by its
  * prediction key - the cue to re-cut this census to the shipped word (B2/B3 already pin the echo). No reader here is closed over the
  * summary (C1), so that red is A1's own claim, not a closed-shape failure.
@@ -89,12 +106,32 @@
  * is invisible to D1, which keeps prose naming a refresh or a reuse quiet (D2 R-PROSE reads 0 and 0, beside the prose quiet
  * control); R-UNNAMED-RF an rf process reached through a binary name composed at runtime or handed in as data, or through a provider
  * export read by a computed key, outside every registration, schema spelling and pinned import name, is invisible to A5 (A5's
- * R-UNNAMED-RF control reads no binary spelling, no schema spelling and no provider import); R-INLINE-FIXTURE C2 reads non-code
- * fixture files, so a plan envelope written inline in a .ts test, or spread over several lines of a text that does not parse as JSON
- * whole, is invisible to it (C2's inline control reads 0 envelopes).
+ * R-UNNAMED-RF control reads no binary spelling, no schema spelling and no provider import); R-EMBEDDED-RF rf launched after another
+ * word of a literal part - a shell line such as "cd /w && rf context plan R1 --json" or a launcher argument such as "npx rf ..." -
+ * is invisible to A5, because reading rf as any delimited word reads the two landed rf-word messages of
+ * src/workbench/reactivefiber-observer.ts ("source must be the strict eight-key rf envelope", "source.diagnostics holds a
+ * malformed rf diagnostic") as launches (A5's R-EMBEDDED-RF control reads no binary spelling); R-CASE-RF a case-variant rf command
+ * line such as "RF context plan R1 --json" is invisible to A5, because a case-blind reading of a part's leading token reads the
+ * sixteen landed "RF ..." messages of providers/reactivefiber.ts and reactivefiber-observer.ts as launches, so only a one-token
+ * part is read in any case (A5's R-CASE-RF control reads no binary spelling); R-INLINE-FIXTURE C2 reads non-code fixture files, so
+ * a plan envelope written inline in a .ts test, or spread over several lines of a text that does not parse as JSON whole, is
+ * invisible to it (C2's inline control reads 0 envelopes). Every residual control is held to its family as well as to its quiet
+ * reading (wb-g81a, F5): a family check reads the control's own parts - the composed key or word, the prose phrase, the outside
+ * vocabulary, the rows read, the imported binding, the binary's composed name, the later rf word, the case-variant leading token,
+ * the inline envelope - so a control emptied or swapped for another family's text reds its row, and each check is read over an
+ * empty text too (false), so a check hollowed to a constant or loosened until any text passes reds its row; and every D2 control's
+ * reading names each field it reads and the channel (literal, pattern or identifier) the field came through, so a control swapped
+ * for another that reads the same counts through another channel reds D2.
  * NOT CLAIMED: below-row-level coordinated edits of this file and its roster that move no reach record and no outside anchor - a pin
  * reaching no surface (A1, A5, B1, C1, C2, D1, D2) removed from both; a word, a plan token or a control removed from both; a check
- * removed with its roster title - and a surface helper recording a reach it did not make.
+ * removed with its roster title; a control swapped for another text of its own family with the roster's reading of it; a judge
+ * case's early return beside its judges count lowered in the roster, or beside its expect.assertions guard removed (the guard is
+ * read by vitest alone, so removing it by itself changes no reading); a residual control changed beside its family reading set to
+ * the expected constant - and a surface helper recording a reach it did not make.
+ * FOLLOW-UP wb-g81a (the wb-411q landing-378 gate's F1-F5, cmd_2ad688d88ea1): A5 reads the command-line, path-qualified and
+ * one-token any-case spellings of the binary (F1: X3, X4) and every loader of the provider module (F3: X6); D1 reads class private
+ * names and decoded escapes (F2: X1, X2); C2 parses string leaves holding JSON (F4: X7); the residual controls are held to their
+ * families, the D2 readings name their fields and channels, and the judge cases run exact assertion counts (F5: X22, X25, X27-X29).
  * SCOPE: the envelopes are producer facts at the installed rf; Pi vendors no rf schema, so a producer change is seen only when a
  * fixture re-measure re-reads them. "Pi source" in (d) is src/, the product modules; qa/ and test/ carry no Pi surface. No reader is
  * added or faked here.
@@ -107,7 +144,7 @@ import { chmodSync, type Dirent, lstatSync, readdirSync, readFileSync, writeFile
 import { dirname, join, posix, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
-import { afterAll, afterEach, describe, expect, it } from "vitest";
+import { afterAll, afterEach, describe, expect, it, type RunnerTask } from "vitest";
 import { type CapabilityDescriptor, CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import { nativeEvidence } from "../src/workbench/native-evidence.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
@@ -142,6 +179,18 @@ const OBSERVER_MODULE = "src/workbench/reactivefiber-observer.ts";
 const EVIDENCE_MODULE = "src/workbench/native-evidence.ts";
 /** The rf binary's name as the provider's one spawn spells it, and the src constant naming the rf schema. */
 const RF_BINARY = "rf";
+/** A literal part naming the rf binary by its leading token: rf, or a path whose final segment (after the last "/" or "\") is rf,
+ * optionally as rf.exe or rf.cmd, alone or followed by whitespace (the command-line form); RF_TOKEN reads a one-token part (no
+ * whitespace: a bare name or a path, never prose) in any case. The reading wb-ofz4's cut gives the rf evaluator-artifact census's
+ * launch scan (unlanded at this cut's base b7553f2), so the two rf-binary censuses read one vocabulary once both land. */
+const RF_LEAD = /^(?:\S*[\\/])?rf(?:\.(?:exe|cmd))?(?:\s|$)/;
+const RF_TOKEN = /^(?:\S*[\\/])?rf(?:\.(?:exe|cmd))?$/i;
+/** rf as a later whitespace-delimited word of a part (R-EMBEDDED-RF), and a case-variant rf leading a command line (R-CASE-RF). */
+const RF_LATER = /\s(?:\S*[\\/])?rf(?:\.(?:exe|cmd))?(?:\s|$)/;
+const RF_LEAD_ANY_CASE = /^(?:\S*[\\/])?rf(?:\.(?:exe|cmd))?\s/i;
+function namesBinary(part: string): boolean {
+  return RF_LEAD.test(part) || RF_TOKEN.test(part);
+}
 const SCHEMA_CONSTANT = "REACTIVE_FIBER_CLI_SCHEMA";
 const GRANTS = ["reactivefiber:render"];
 const RF_VERSION = "0.1.832";
@@ -185,14 +234,18 @@ function fieldForm(text: string): string {
 const PLAN_WORDS: ReadonlySet<string> = new Set([...PLAN_TOKENS, ...PLAN_EXACT].map(fieldForm));
 /** The plan words of more than one word: the ones a separator transform can respell inside a longer chunk. */
 const MULTI_WORD_TOKENS: readonly string[] = [...PLAN_WORDS].filter(word => word.includes("_"));
-/** Whether a field form is nothing but plan words joined by underscores ("reuse", "reuse_invalidated", "refresh_required"). */
+/** The most parts one plan word spans (completeness_forbids_reuse: 3), so no longer run of parts can be one. */
+const MAX_WORD_PARTS = Math.max(...[...PLAN_WORDS].map(word => word.split("_").length));
+/** Whether a field form is nothing but plan words joined by underscores ("reuse", "reuse_invalidated", "refresh_required"). A word
+ * ending at a part starts at most MAX_WORD_PARTS parts back, so a long literal costs linear time (wb-g81a: the decoded reading reads
+ * the few long backslash-holding literals twice). */
 function planWordsOnly(form: string): boolean {
   if (form === "") return false;
   const parts = form.split("_");
   // covered[i]: parts[0..i] split wholly into plan words.
   const covered = parts.map(() => false);
   for (let end = 1; end <= parts.length; end += 1) {
-    for (let start = 0; start < end; start += 1) {
+    for (let start = Math.max(0, end - MAX_WORD_PARTS); start < end; start += 1) {
       const before = start === 0 || covered[start - 1] === true;
       if (before && PLAN_WORDS.has(parts.slice(start, end).join("_"))) covered[end - 1] = true;
     }
@@ -268,6 +321,8 @@ interface Roster {
   readonly envelopes: Readonly<Record<FixtureName, Envelope>>;
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
+  /** Each judge case's title and the exact assertion count it runs (expect.assertions): an early return past any check reds it. */
+  readonly judges: Readonly<Record<string, number>>;
 }
 
 function isObject(value: unknown): value is { [key: string]: unknown } {
@@ -312,9 +367,13 @@ function envelopeOf(value: unknown, name: string): Envelope {
 function readRoster(): Roster {
   const raw: unknown = JSON.parse(readFileSync(ROSTER_PATH, "utf8"));
   if (!isObject(raw) || !Array.isArray(raw.rows) || !isObject(raw.envelopes) || !isObject(raw.exits) || !isObject(raw.schema) ||
-    !isObject(raw.words) || !isObject(raw.planFields)) {
-    throw new Error("roster must be an object with rows, envelopes, exits, schema, words and planFields");
+    !isObject(raw.words) || !isObject(raw.planFields) || !isObject(raw.judges)) {
+    throw new Error("roster must be an object with rows, envelopes, exits, schema, words, planFields and judges");
   }
+  const judges = Object.fromEntries(Object.entries(raw.judges).map(([title, count]) => {
+    if (typeof count !== "number" || !Number.isSafeInteger(count) || count < 1) throw new Error(`roster judges[${title}] must be a positive integer`);
+    return [title, count];
+  }));
   const rows = raw.rows.map((row: unknown, index: number): RosterRow => {
     if (!isObject(row) || typeof row.id !== "string" || typeof row.label !== "string" || !Array.isArray(row.pins)) {
       throw new Error(`roster rows[${index}] needs an id, a label and a pins list`);
@@ -343,7 +402,7 @@ function readRoster(): Roster {
     schema: { sha256: schema.sha256, summaryRequired: strings(schema.summaryRequired, "schema.summaryRequired"), summaryAdditionalProperties: schema.summaryAdditionalProperties, predictionStrings: schema.predictionStrings },
     words: { known: strings(words.known, "words.known"), unknown: strings(words.unknown, "words.unknown") },
     planFields: { tokens: strings(planFields.tokens, "planFields.tokens"), exactWords: strings(planFields.exactWords, "planFields.exactWords") },
-    fixtures, exits, envelopes, rows, tests: strings(raw.tests, "tests"),
+    fixtures, exits, envelopes, rows, tests: strings(raw.tests, "tests"), judges,
   };
 }
 
@@ -354,6 +413,12 @@ function rosterWitness(pin: string): JsonValue {
   const found = ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === pin);
   if (found === undefined) throw new Error(`the roster holds no pin ${pin}`);
   return found.witness;
+}
+/** The exact assertion count the roster holds for a judge case, by its title. */
+function judgeAssertions(title: string): number {
+  const count = ROSTER.judges[title];
+  if (count === undefined) throw new Error(`the roster holds no judge count for ${title}`);
+  return count;
 }
 /** The owner filing's acceptance clauses, read from the BEAD row of the tracked bead export: "(a) ...", "(b) ...", "(c) ...", "(d) ...". */
 function ownerClauses(): string[] {
@@ -492,7 +557,11 @@ function jsonValuesOf(text: string): unknown[] {
     });
   }
 }
-/** Every successful context.plan envelope a fixture text holds, at any depth; a text holding no JSON holds none. */
+/** A string leaf that may hold JSON: the text, or a line of it, opens an object, an array or a JSON string (an encoded one). */
+const ENCODED_JSON = /^\s*["[{]/m;
+/** Every successful context.plan envelope a fixture text holds, at any depth; a text holding no JSON holds none. A string leaf
+ * holding JSON - a captured stdout, encoded once or more, or a .jsonl capture - is parsed and walked in turn (wb-g81a, F4); each
+ * parse is of a strictly shorter text, so the walk ends. */
 function planEnvelopesInText(text: string, name: string): Envelope[] {
   const found: Envelope[] = [];
   const walk = (value: unknown): void => {
@@ -500,10 +569,23 @@ function planEnvelopesInText(text: string, name: string): Envelope[] {
     else if (isObject(value)) {
       if (value.schema === RF_SCHEMA && value.command === PLAN_COMMAND && value.ok === true) found.push(envelopeOf(value, `${name} plan`));
       Object.values(value).forEach(walk);
-    }
+    } else if (typeof value === "string" && ENCODED_JSON.test(value)) jsonValuesOf(value).forEach(walk);
   };
   jsonValuesOf(text).forEach(walk);
   return found;
+}
+/** C2's string-reading controls, over the measured planAfter: the envelope kept as an object, JSON-encoded once and twice in a
+ * captured stdout, and as the second line of a .jsonl capture each read as one envelope; a string opening like JSON that is not
+ * reads as none. */
+function c2Controls(): Record<string, string> {
+  const envelope = ENVELOPES.planAfter;
+  return {
+    object: JSON.stringify({ envelope }),
+    encodedOnce: JSON.stringify({ stdout: JSON.stringify(envelope) }),
+    encodedTwice: JSON.stringify({ stdout: JSON.stringify(JSON.stringify(envelope)) }),
+    jsonlLine: JSON.stringify({ stdout: [JSON.stringify({ event: "start" }), JSON.stringify(envelope), ""].join("\n") }),
+    notJson: JSON.stringify({ stdout: "{ not json, [not json either" }),
+  };
 }
 function planEnvelopesIn(file: string): { file: string; envelope: Envelope }[] {
   return planEnvelopesInText(textOf(file), relative(REPO, file)).map(envelope => ({ file, envelope }));
@@ -512,6 +594,12 @@ function planEnvelopesIn(file: string): { file: string; envelope: Envelope }[] {
 const CODE_FILE = /\.(?:[cm]?[jt]s|[jt]sx)$/;
 /** R-INLINE-FIXTURE's quiet row: a plan envelope written inline in a .ts test is TypeScript, not JSON, so C2 reads none in it. */
 const C2_INLINE = 'export const plan = { schema: "reactive-fiber.cli/v1", ok: true, command: "context.plan", operation_id: "rfo_x", workspace: null, transaction_id: null, result: { summary: {} }, diagnostics: [] };';
+/** R-INLINE-FIXTURE's family check: the control spells a plan envelope's schema and command as TypeScript literals in a text that
+ * holds no JSON, so emptying it or swapping in a JSON text reds C2. */
+function inlineFamily(text: string): boolean {
+  const lexicon = lexiconOf("control.ts", text);
+  return lexicon.literals.includes(RF_SCHEMA) && lexicon.literals.includes(PLAN_COMMAND) && jsonValuesOf(text).length === 0;
+}
 
 /** The row whose pin runs now, so a surface helper records the row that reached it; null between pins. */
 let reachingRow: string | null = null;
@@ -669,13 +757,43 @@ interface Lexicon {
   readonly identifiers: string[];
   /** Its regular-expression literals as written (`/^x$/g`): a field spelled only there is still spelled. */
   readonly patterns: string[];
-  /** How often it spells the rf binary name as a whole string literal. */
+  /** How many of its literal parts name the rf binary (namesBinary: the whole name, a command line, a path, a one-token part). */
   readonly binarySpellings: number;
   /** How often it spells the rf schema: the src constant's identifier, or a literal holding the schema's value. */
   readonly schemaSpellings: number;
-  /** What it uses from the provider module: named imports and re-exports, members read off a namespace or a bound dynamic import of
-   * it, and "dynamic-import" for each dynamic import of it. */
+  /** What it uses from the provider module: named imports and re-exports, members read off a namespace, a bound dynamic import or a
+   * loader's result, "dynamic-import" for each dynamic import of it, "module-load" for each loader handed a literal naming it, and
+   * "specifier" for any other literal naming it outside an import or export declaration. */
   readonly providerNames: string[];
+}
+/** A string literal, a no-substitution template, or a template's head, middle or tail span. */
+type LiteralPart = ts.StringLiteral | ts.NoSubstitutionTemplateLiteral | ts.TemplateHead | ts.TemplateMiddle | ts.TemplateTail;
+function literalPart(node: ts.Node): node is LiteralPart {
+  return ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node);
+}
+/** What a literal naming the provider module makes of it outside an import or export declaration and import() (both read on
+ * their own): handed to a loader - a call or new expression (require, a createRequire binding, new URL) or an import-equals
+ * require - it is "module-load", and the member read off the loader's result, or the name the result is bound to, is kept;
+ * anywhere else it is "specifier" (a specifier held for a later load). */
+function providerLiteralUse(node: ts.StringLiteral | ts.NoSubstitutionTemplateLiteral): { name: string; member: string | null; binding: string | null } {
+  const parent = node.parent;
+  if (ts.isExternalModuleReference(parent)) {
+    const declaration = parent.parent;
+    return { name: "module-load", member: null, binding: ts.isImportEqualsDeclaration(declaration) ? declaration.name.text : null };
+  }
+  if (!((ts.isCallExpression(parent) || ts.isNewExpression(parent)) && (parent.arguments ?? []).some(argument => argument === node))) {
+    return { name: "specifier", member: null, binding: null };
+  }
+  let result: ts.Node = parent;
+  while (ts.isParenthesizedExpression(result.parent) || ts.isAwaitExpression(result.parent) || ts.isAsExpression(result.parent) || ts.isNonNullExpression(result.parent)) {
+    result = result.parent;
+  }
+  const outer = result.parent;
+  return {
+    name: "module-load",
+    member: ts.isPropertyAccessExpression(outer) && outer.expression === result ? outer.name.text : null,
+    binding: ts.isVariableDeclaration(outer) && outer.initializer === result && ts.isIdentifier(outer.name) ? outer.name.text : null,
+  };
 }
 /** Whether an import specifier written in module `fileName` names the provider module. */
 function namesProvider(fileName: string, specifier: string): boolean {
@@ -708,7 +826,8 @@ function declarationUses(node: ts.ImportDeclaration | ts.ExportDeclaration): { n
   return { names: named, namespace: bindings.name.text };
 }
 /** One module's lexicon: its string, no-substitution and template literals (a template's literal parts joined by a space), its
- * regular-expression literals and every identifier, beside its rf binary, rf schema and provider-module uses. */
+ * regular-expression literals, every identifier and every class private name, beside its rf binary, rf schema and provider-module
+ * uses. */
 function lexiconOf(fileName: string, text: string): Lexicon {
   const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const literals: string[] = [];
@@ -720,16 +839,24 @@ function lexiconOf(fileName: string, text: string): Lexicon {
   let binarySpellings = 0;
   let schemaSpellings = 0;
   const visit = (node: ts.Node): void => {
+    if (literalPart(node) && namesBinary(node.text)) binarySpellings += 1;
     if (ts.isStringLiteralLike(node)) {
       literals.push(node.text);
-      if (node.text === RF_BINARY) binarySpellings += 1;
       if (node.text.includes(RF_SCHEMA)) schemaSpellings += 1;
+      const parent = node.parent;
+      const declared = (ts.isImportDeclaration(parent) || ts.isExportDeclaration(parent)) && parent.moduleSpecifier === node;
+      const dynamic = ts.isCallExpression(parent) && parent.expression.kind === ts.SyntaxKind.ImportKeyword;
+      if (!declared && !dynamic && namesProvider(fileName, node.text)) {
+        const use = providerLiteralUse(node);
+        names.push(use.name, ...(use.member === null ? [] : [use.member]));
+        if (use.binding !== null) namespaces.add(use.binding);
+      }
     } else if (ts.isTemplateExpression(node)) {
       const joined = [node.head.text, ...node.templateSpans.map(span => span.literal.text)].join(" ");
       literals.push(joined);
       if (joined.includes(RF_SCHEMA)) schemaSpellings += 1;
     } else if (ts.isRegularExpressionLiteral(node)) patterns.push(node.text);
-    else if (ts.isIdentifier(node)) {
+    else if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) {
       identifiers.push(node.text);
       if (node.text === SCHEMA_CONSTANT) schemaSpellings += 1;
     }
@@ -756,8 +883,38 @@ function lexiconOf(fileName: string, text: string): Lexicon {
 function planField(text: string): boolean {
   return PLAN_TOKEN.test(text) || PLAN_EXACT.includes(text) || chunkSpellsToken(text) || planWordsOnly(fieldForm(text));
 }
+/** A text with its escapes decoded - \xHH, \uHHHH, \u{H...}, a legacy octal escape (\0 to \377) and an identity escape of any
+ * character that is no letter or digit - so the regular-expression literal /^refresh\x5frequired$/, or a RegExp source string
+ * holding the same escape, reads as ^refresh_required$ (wb-g81a, F2). Class escapes (\d, \w, \s, \b, \p{...}) stay as written,
+ * and an escaped backslash is one character, so the text after it is never read as an escape. */
+function decodedEscapes(text: string): string {
+  return text.replace(
+    /\\(?:x([0-9a-fA-F]{2})|u([0-9a-fA-F]{4})|u\{([0-9a-fA-F]+)\}|([0-3][0-7]{0,2}|[4-7][0-7]?)|([^A-Za-z0-9]))/g,
+    (whole: string, hex?: string, unit?: string, braced?: string, octal?: string, identity?: string): string => {
+      const code = hex ?? unit ?? braced;
+      if (code !== undefined) {
+        const value = Number.parseInt(code, 16);
+        return value <= 0x10ffff ? String.fromCodePoint(value) : whole;
+      }
+      if (octal !== undefined) return String.fromCharCode(Number.parseInt(octal, 8));
+      return identity ?? whole;
+    },
+  );
+}
+/** The channel a plan field is read through. */
+type Channel = "literal" | "pattern" | "identifier";
+/** Each plan field a module spells, with its channel: a literal or regular-expression literal spells one as written or decoded, an
+ * identifier or private name as written. Decoding is the identity on a text holding no backslash, so only such a text is read twice. */
+function planFieldReadings(lexicon: Lexicon): { channel: Channel; text: string }[] {
+  const spelled = (item: string): boolean => planField(item) || (item.includes("\\") && planField(decodedEscapes(item)));
+  return [
+    ...lexicon.literals.filter(spelled).map(text => ({ channel: "literal" as const, text })),
+    ...lexicon.patterns.filter(spelled).map(text => ({ channel: "pattern" as const, text })),
+    ...lexicon.identifiers.filter(planField).map(text => ({ channel: "identifier" as const, text })),
+  ];
+}
 function planFieldsOf(lexicon: Lexicon): string[] {
-  return [...lexicon.literals, ...lexicon.patterns, ...lexicon.identifiers].filter(planField);
+  return planFieldReadings(lexicon).map(reading => reading.text);
 }
 function basisLiteralsOf(lexicon: Lexicon): string[] {
   return lexicon.literals.filter(item => basisWords(item).length > 0);
@@ -838,6 +995,17 @@ const D2_FLAGGED: Readonly<Record<string, string>> = {
   spacedWhole: 'export const basis = rows.some(row => row.decision.split("_").join(" ") === "refresh required") ? "conservative" : "observed";',
   camelSuffix: 'const refreshRequiredCount = rows.length; export const basis = refreshRequiredCount > 0 ? "conservative" : "observed";',
   caseVariant: 'export const basis = rows.every(row => row.decision.toUpperCase() === "REUSE") ? "observed" : "conservative";',
+  // wb-g81a, F2: a field spelled only as a class private name, or through an escape in a regular-expression literal or a RegExp
+  // source string.
+  privateName: 'export class Plan { #refresh_required = 0; basis(): string { return this.#refresh_required > 0 ? "conservative" : "observed"; } }',
+  privateMethod: 'export class Plan { #refreshRequired(): number { return 1; } basis(): string { return this.#refreshRequired() > 0 ? "conservative" : "observed"; } }',
+  regexHexEscape: 'export const basis = (key: string) => (/^refresh\\x5frequired$/.test(key) ? "conservative" : "observed");',
+  regexUnicodeEscape: 'export const basis = (key: string) => (/^refresh\\u005frequired$/.test(key) ? "conservative" : "observed");',
+  regexBracedEscape: 'export const basis = (key: string) => (/^refresh\\u{5f}required$/u.test(key) ? "conservative" : "observed");',
+  regexOctalEscape: 'export const basis = (key: string) => (/^refresh\\137required$/.test(key) ? "conservative" : "observed");',
+  regexClassEscape: 'export const basis = (key: string) => (/^refresh[\\x5f]required$/.test(key) ? "conservative" : "observed");',
+  regexWordEscape: 'export const basis = (key: string) => (/^re\\x66resh_required$/.test(key) ? "conservative" : "observed");',
+  regexSource: 'export const basis = (key: string) => (new RegExp("^refresh\\\\u005frequired$").test(key) ? "conservative" : "observed");',
 };
 const D2_QUIET: Readonly<Record<string, string>> = {
   attentionConstant: 'export const report = { basis: "observed", counts: { active: 1 } };',
@@ -845,22 +1013,113 @@ const D2_QUIET: Readonly<Record<string, string>> = {
   echoVerbatim: 'const basis = typeof summary.prediction === "string" ? summary.prediction : null;',
   countsVerbatim: "const shown = { rows: summary.rows, refresh: summary.refresh_required, complete: summary.evidence_complete };",
   prose: 'export const hint = "a refresh is required before the render can reuse the graph"; export const status = "observed";',
+  // wb-g81a, F2: the decoded reading reads no field into an escaped control-character class or past an escaped backslash.
+  escapedControlClass: 'export const clean = (text: string) => text.replace(/[\\x00-\\x1f\\u007f]/g, ""); export const status = "observed";',
+  escapedBackslash: 'export const pattern = /refresh\\\\x5frequired/; export const status = "observed";',
 };
-const D2_RESIDUALS: Readonly<Record<string, string>> = {
-  "R-COMPOSED": 'const key = ["refresh", "required"].join("_"); export const basis = summary[key] ? "conservative" : "observed";',
-  "R-COMPOSED-WORD": 'export const basis = summary.refresh_required ? "conserv" + "ative" : "obs" + "erved";',
-  "R-VOCABULARY": 'export const basis = summary.refresh_required ? "speculative" : "exact";',
-  "R-ROWS-ONLY": 'export const basis = summary.rows > 1 ? "conservative" : "observed";',
-  "R-CROSS-MODULE": 'import { pending } from "./plan-reader.js"; export const basis = pending ? "conservative" : "observed";',
-  "R-PROSE": 'const key = "the refresh required count".split(" ").slice(1, 3).join("_"); export const basis = summary[key] ? "conservative" : "observed";',
+/** Whether two neighbouring parts, neither passing `test` alone, pass it joined by `glue` (a name composed from parts). */
+function partsJoin(parts: readonly string[], glue: string, test: (text: string) => boolean): boolean {
+  return parts.some((part, index) => {
+    const next = parts[index + 1];
+    return next !== undefined && !test(part) && !test(next) && test(`${part}${glue}${next}`);
+  });
+}
+/** A named residual's control: its pinned quiet reading, and the family check that the control still exercises the family it
+ * names (wb-g81a, F5), so a control emptied or swapped for another family's text reds its row. */
+interface ResidualControl {
+  readonly text: string;
+  readonly family: (lexicon: Lexicon) => boolean;
+}
+/** A residual control's family reading: the check over the control (true) and over an empty text (false), so a check that reads
+ * nothing - hollowed to a constant, or loosened until any text passes - reds its row as surely as a control emptied or swapped. */
+function familyReading(control: ResidualControl, fileName: string): { family: boolean; emptyFamily: boolean } {
+  return { family: control.family(lexiconOf(fileName, control.text)), emptyFamily: control.family(lexiconOf(fileName, "")) };
+}
+const D2_RESIDUALS: Readonly<Record<string, ResidualControl>> = {
+  "R-COMPOSED": {
+    text: 'const key = ["refresh", "required"].join("_"); export const basis = summary[key] ? "conservative" : "observed";',
+    family: lexicon => partsJoin(lexicon.literals, "_", planField) && planFieldsOf(lexicon).length === 0,
+  },
+  "R-COMPOSED-WORD": {
+    text: 'export const basis = summary.refresh_required ? "conserv" + "ative" : "obs" + "erved";',
+    family: lexicon => partsJoin(lexicon.literals, "", part => basisWords(part).length > 0) && basisLiteralsOf(lexicon).length === 0,
+  },
+  "R-VOCABULARY": {
+    text: 'export const basis = summary.refresh_required ? "speculative" : "exact";',
+    family: lexicon => planFieldsOf(lexicon).length > 0 && lexicon.literals.length > 0 &&
+      lexicon.literals.every(word => /^[a-z_]+$/i.test(word) && basisWords(word).length === 0),
+  },
+  "R-ROWS-ONLY": {
+    text: 'export const basis = summary.rows > 1 ? "conservative" : "observed";',
+    family: lexicon => lexicon.identifiers.includes("rows") && basisLiteralsOf(lexicon).length > 0 && planFieldsOf(lexicon).length === 0,
+  },
+  "R-CROSS-MODULE": {
+    text: 'import { pending } from "./plan-reader.js"; export const basis = pending ? "conservative" : "observed";',
+    family: lexicon => lexicon.literals.some(specifier => /^\.\.?\//.test(specifier)) && basisLiteralsOf(lexicon).length > 0 &&
+      planFieldsOf(lexicon).length === 0,
+  },
+  "R-PROSE": {
+    text: 'const key = "the refresh required count".split(" ").slice(1, 3).join("_"); export const basis = summary[key] ? "conservative" : "observed";',
+    family: lexicon => lexicon.literals.some(phrase => /\s/.test(phrase) && !planField(phrase) && chunkSpellsToken(phrase.replace(/\s+/g, "_"))),
+  },
 };
-/** R-UNNAMED-RF's quiet row: an rf process reached through a binary name composed at runtime, outside every registration, schema
- * spelling and provider import, spells nothing A5 reads. */
-const A5_UNNAMED_RF = 'const binary = ["r", "f"].join(""); export const plan = (run: (file: string, args: string[]) => unknown) => run(binary, ["context", "plan", "--json"]);';
-/** A control's D1 reading: whether it joins a plan field with a basis word, and how many plan fields it spells. */
+/** The module A5's controls are read as, so a control's "./providers/reactivefiber.js" names the provider module. */
+const CONTROL_MODULE = "src/workbench/control.ts";
+/** A5's binary-reading controls (wb-g81a, F1): each names the rf binary in exactly one literal part. */
+const A5_LAUNCHES: Readonly<Record<string, string>> = {
+  templateCommandLine: ["execSync(`rf context plan $", "{renderId} --json`);"].join(""),
+  pathQualified: 'execFileSync("/usr/local/bin/rf", ["context", "plan", renderId, "--json"]);',
+  stringCommandLine: 'execSync("rf context plan R1 --json");',
+  pathCommandLine: 'execSync("/usr/local/bin/rf context plan R1 --json");',
+  templateSpanPath: ["execFileSync(`$", "{dir}/rf`, argv);"].join(""),
+  windowsExe: 'execFileSync("C:\\\\tools\\\\rf.exe", argv);',
+  npmShim: 'execFileSync("node_modules/.bin/rf.cmd", argv);',
+  oneTokenCase: 'execFileSync("/opt/bin/RF", argv);',
+  wholeName: 'spawn("rf", argv);',
+};
+/** A5's importer-reading controls (wb-g81a, F3): each uses the provider module through a loader or a held specifier. */
+const A5_LOADS: Readonly<Record<string, string>> = {
+  createRequire: 'const load = createRequire(import.meta.url); export const register = load("./providers/reactivefiber.js").registerNativeReactiveFiberRender;',
+  require: 'export const register = require("./providers/reactivefiber.js").registerNativeReactiveFiberRender;',
+  boundLoad: 'const provider = load("./providers/reactivefiber.js"); export const register = provider.registerNativeReactiveFiberRender;',
+  importEquals: 'import provider = require("./providers/reactivefiber.js"); export const register = provider.registerNativeReactiveFiberRender;',
+  url: 'export const providerUrl = new URL("./providers/reactivefiber.js", import.meta.url);',
+  heldSpecifier: 'const spec = "./providers/reactivefiber.js"; export const load = () => import(spec);',
+};
+/** A5's quiet controls: an rf directory, an rf-prefixed binary, another final segment, rf prose, case-variant prose and a sibling
+ * provider loaded the same way name no binary and use no provider export. */
+const A5_QUIET: Readonly<Record<string, string>> = {
+  rfDirectory: 'const lib = "/opt/rf/lib";',
+  rfPrefixed: 'spawn("/usr/local/bin/rf-graph", argv);',
+  otherSegment: 'spawn("./surf", argv);',
+  rfProse: 'const note = "source must be the strict eight-key rf envelope";',
+  caseProse: 'const message = "RF preview cancelled.";',
+  siblingProvider: 'const load = createRequire(import.meta.url); export const forge = load("./providers/forge.js");',
+};
+/** A5's named residuals, each with its pinned quiet row (no binary spelling, no schema spelling, no provider name) and its family
+ * check. R-UNNAMED-RF composes the binary's name from parts beside an rf plan argv; R-EMBEDDED-RF and R-CASE-RF are rf command lines
+ * outside the leading-token reading. */
+const A5_RESIDUALS: Readonly<Record<string, ResidualControl>> = {
+  "R-UNNAMED-RF": {
+    text: 'const binary = ["r", "f"].join(""); export const plan = (run: (file: string, args: string[]) => unknown) => run(binary, ["context", "plan", "--json"]);',
+    family: lexicon => partsJoin(lexicon.literals, "", part => part === RF_BINARY) && lexicon.literals.includes("context") && lexicon.literals.includes("plan"),
+  },
+  "R-EMBEDDED-RF": {
+    text: 'execSync("cd /w && rf context plan R1 --json"); execSync("npx rf context plan R1 --json");',
+    family: lexicon => lexicon.literals.length > 0 && lexicon.literals.every(line => RF_LATER.test(line) && PLAN_VERB.test(line)),
+  },
+  "R-CASE-RF": {
+    text: 'execSync("RF context plan R1 --json");',
+    family: lexicon => lexicon.literals.length > 0 &&
+      lexicon.literals.every(line => RF_LEAD_ANY_CASE.test(line) && !RF_LEAD.test(line) && PLAN_VERB.test(line)),
+  },
+};
+/** A control's D1 reading: whether it joins a plan field with a basis word, how many plan fields it spells, and each field with the
+ * channel it is read through (wb-g81a, F5: a control swapped for another that reads the same counts reds by its fields). */
 function d2Reading(text: string): JsonObject {
   const lexicon = lexiconOf("control.ts", text);
-  return { derivations: derivationOf(lexicon) === null ? 0 : 1, planFields: planFieldsOf(lexicon).length };
+  const fields = planFieldReadings(lexicon).map(reading => `${reading.channel} ${reading.text.slice(0, 80)}`);
+  return { derivations: derivationOf(lexicon) === null ? 0 : 1, planFields: fields.length, fields };
 }
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
@@ -926,19 +1185,31 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const binary = Object.fromEntries(lexica.filter(lexicon => lexicon.binarySpellings > 0).map(lexicon => [lexicon.file, lexicon.binarySpellings]));
     const readers = lexica.filter(lexicon => lexicon.schemaSpellings > 0).map(lexicon => lexicon.file).sort();
     const importers = Object.fromEntries(lexica.filter(lexicon => lexicon.providerNames.length > 0).map(lexicon => [lexicon.file, lexicon.providerNames]));
-    const control = lexiconOf("control.ts", A5_UNNAMED_RF);
-    const residuals = { "R-UNNAMED-RF": { binary: control.binarySpellings, schema: control.schemaSpellings, providerNames: control.providerNames.length } };
+    // The readings' controls (wb-g81a, F1 and F3), and each residual's quiet reading beside its family check (F5).
+    const launches = Object.fromEntries(Object.entries(A5_LAUNCHES).map(([name, text]) => [name, lexiconOf(CONTROL_MODULE, text).binarySpellings]));
+    const loads = Object.fromEntries(Object.entries(A5_LOADS).map(([name, text]) => [name, lexiconOf(CONTROL_MODULE, text).providerNames]));
+    const quiet = Object.fromEntries(Object.entries(A5_QUIET).map(([name, text]) => {
+      const lexicon = lexiconOf(CONTROL_MODULE, text);
+      return [name, { binary: lexicon.binarySpellings, providerNames: lexicon.providerNames }];
+    }));
+    const residuals = Object.fromEntries(Object.entries(A5_RESIDUALS).map(([name, control]) => {
+      const lexicon = lexiconOf(CONTROL_MODULE, control.text);
+      return [name, { binary: lexicon.binarySpellings, schema: lexicon.schemaSpellings, providerNames: lexicon.providerNames.length, ...familyReading(control, CONTROL_MODULE) }];
+    }));
     expect(catalogRead, `native descriptors ${descriptors.length}, rf ${native.length}`).toBe(true);
     expect(native).toStrictEqual([PREVIEW_ID]);
     expect(injectedIds).toStrictEqual([PREVIEW_ID]);
     expect(reconcile).toStrictEqual([PREVIEW_ID]);
     expect(planSpelling, "a registered descriptor spelling an rf plan verb or field").toEqual([]);
     expect(registrations, "a descriptor an rf registration function registers beside the preview").toStrictEqual({ native: [PREVIEW_ID], injected: [PREVIEW_ID] });
-    expect(binary, "src modules spelling the rf binary name as a whole literal").toStrictEqual({ [PROVIDER_MODULE]: 1 });
+    expect(binary, "src modules naming the rf binary: a whole literal, a command line, a path or a one-token part").toStrictEqual({ [PROVIDER_MODULE]: 1 });
     expect(readers, "src modules spelling the rf schema").toStrictEqual([EVIDENCE_MODULE, PROVIDER_MODULE, OBSERVER_MODULE]);
     expect(Object.hasOwn(importers, PROVIDER_MODULE), "the provider module importing itself").toBe(false);
-    expect(residuals).toStrictEqual({ "R-UNNAMED-RF": { binary: 0, schema: 0, providerNames: 0 } });
-    return { catalogRead, native, injected: injectedIds, reconcile, planSpelling, registrations, binary, readers, importers, residuals };
+    expect(Object.values(launches), "a launch control the binary reading does not name once").toEqual(Object.keys(A5_LAUNCHES).map(() => 1));
+    expect(Object.entries(loads).filter(([, used]) => used.length === 0).map(([name]) => name), "a loader control the importer reading does not see").toEqual([]);
+    expect(Object.entries(quiet).filter(([, reading]) => reading.binary !== 0 || reading.providerNames.length > 0).map(([name]) => name), "a quiet control read as a launch or a use").toEqual([]);
+    expect(residuals).toStrictEqual(Object.fromEntries(Object.keys(A5_RESIDUALS).map(name => [name, { binary: 0, schema: 0, providerNames: 0, family: true, emptyFamily: false }])));
+    return { catalogRead, native, injected: injectedIds, reconcile, planSpelling, registrations, binary, readers, importers, residuals, controls: { launches, loads, quiet } };
   },
   B1: async () => {
     const base = ENVELOPES.planAfter;
@@ -1027,10 +1298,13 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(walk, `non-code files below test/ walked ${files.length}, listed by git ${gitFixtures.length}`).toStrictEqual({ filesFloorMet: true, unwalked: [] });
     expect(floorMet, `plan envelopes under test/: ${listed.join(", ")}`).toBe(true);
     expect(ownFound).toEqual(MEASURED.map(() => true));
-    const residuals = { "R-INLINE-FIXTURE": planEnvelopesInText(C2_INLINE, "inline control").length };
+    // The string reading's controls (wb-g81a, F4) and R-INLINE-FIXTURE's quiet reading beside its family check (F5).
+    const controls = Object.fromEntries(Object.entries(c2Controls()).map(([name, text]) => [name, planEnvelopesInText(text, `${name} control`).length]));
+    const residuals = { "R-INLINE-FIXTURE": { envelopes: planEnvelopesInText(C2_INLINE, "inline control").length, family: inlineFamily(C2_INLINE), emptyFamily: inlineFamily("") } };
     expect(refusedBy, "a hermetic plan fixture the additive key breaks").toEqual([]);
-    expect(residuals).toStrictEqual({ "R-INLINE-FIXTURE": 0 });
-    return { floorMet, ownFound, refusedBy, residuals, walk };
+    expect(controls, "C2's string-reading controls").toStrictEqual({ object: 1, encodedOnce: 1, encodedTwice: 1, jsonlLine: 1, notJson: 0 });
+    expect(residuals).toStrictEqual({ "R-INLINE-FIXTURE": { envelopes: 0, family: true, emptyFamily: false } });
+    return { floorMet, ownFound, refusedBy, residuals, walk, controls };
   },
   D1: async () => {
     const gitSrc = gitListed("src");
@@ -1063,16 +1337,22 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   D2: async () => {
     const flagged = Object.fromEntries(Object.entries(D2_FLAGGED).map(([name, text]) => [name, d2Reading(text)]));
     const quiet = Object.fromEntries(Object.entries(D2_QUIET).map(([name, text]) => [name, d2Reading(text)]));
-    const residuals = Object.fromEntries(Object.entries(D2_RESIDUALS).map(([name, text]) => [name, d2Reading(text)]));
+    const residuals = Object.fromEntries(Object.entries(D2_RESIDUALS).map(([name, control]): [string, JsonObject] => [name, { ...d2Reading(control.text), ...familyReading(control, "control.ts") }]));
     expect(Object.values(flagged).map(reading => reading.derivations)).toEqual(Object.keys(D2_FLAGGED).map(() => 1));
     expect(Object.values(quiet).map(reading => reading.derivations)).toEqual(Object.keys(D2_QUIET).map(() => 0));
     expect(Object.values(residuals).map(reading => reading.derivations)).toEqual(Object.keys(D2_RESIDUALS).map(() => 0));
+    expect(Object.entries(residuals).filter(([, reading]) => reading.family !== true || reading.emptyFamily !== false).map(([name]) => name), "a residual control that no longer exercises its family, or a family check an empty text passes").toEqual([]);
     return { flagged, quiet, residuals };
   },
 };
+/** The tests of this file's vitest task tree, in registration order, with their mode. */
+function registeredTests(tasks: readonly RunnerTask[]): { name: string; mode: string }[] {
+  return tasks.flatMap(child => (child.type === "test" ? [{ name: child.name, mode: child.mode }] : child.type === "suite" ? registeredTests(child.tasks) : []));
+}
 
 describe("wb-pfxo.10 rf plan basis echo census (RF-COMPOSITIONAL-ASSEMBLY-R11, gated on rfc-mq7k6.41, until-then leg)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster, the owner's acceptance clauses and the cases agree", () => {
+  it("the judged set: the frozen shape, the out-of-file roster, the owner's acceptance clauses and the cases agree", ({ task }) => {
+    expect.assertions(judgeAssertions(task.name));
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:4", "C:2", "D:2"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
@@ -1098,6 +1378,8 @@ describe("wb-pfxo.10 rf plan basis echo census (RF-COMPOSITIONAL-ASSEMBLY-R11, g
     // Every fixture names the rewritten scratch root, and both plan one committed render.
     expect(MEASURED.map(name => ENVELOPES[name].workspace?.root ?? null)).toEqual([FIXTURE_ROOT, FIXTURE_ROOT]);
     expect(new Set(MEASURED.map(name => String(objectOf(ENVELOPES[name].result, name).render_id))).size).toBe(1);
+    // The judge cases the roster counts are exactly the roster's tests that are no pin (wb-g81a, F5).
+    expect(Object.keys(ROSTER.judges), "the judge cases the roster holds an assertion count for").toEqual(ROSTER.tests.filter(title => !ROWS.some(row => row.pins.includes(title))));
   });
 
   for (const row of ROWS) {
@@ -1121,6 +1403,7 @@ describe("wb-pfxo.10 rf plan basis echo census (RF-COMPOSITIONAL-ASSEMBLY-R11, g
   }
 
   it("reach: rows A and B reached every rf surface src holds, for every measured plan and every word, and every passing pin reached its witness comparison", ({ task }) => {
+    expect.assertions(judgeAssertions(task.name));
     // The surfaces come from src, not from this file: each descriptor the two rf registration functions register, and each module
     // spelling the rf schema. A pin removed from this file and its roster together, or a case that passes without running its
     // helpers, leaves its row short of a surface here. A row with a red pin is red there already and is not held here.
@@ -1142,9 +1425,14 @@ describe("wb-pfxo.10 rf plan basis echo census (RF-COMPOSITIONAL-ASSEMBLY-R11, g
     expect(reached, `the reach of the rows held (${held.join(", ")}) against the rf surfaces src holds`).toEqual(expected);
     const unreached = ROSTER.rows.flatMap(row => row.pins.map(pin => pin.id)).filter(pin => passed(pin) && !REACHED.includes(pin));
     expect(unreached, "a passing pin that never reached its witness comparison").toEqual([]);
+    // The registration case's tree checks, held here too (wb-g81a, F5): either judge deleted or moved out of run mode reds the other.
+    const registered = registeredTests(task.file.tasks);
+    expect(registered.map(entry => entry.name), "every registered test of this file, as the roster lists them").toEqual([...ROSTER.tests]);
+    expect(registered.filter(entry => entry.mode !== "run").map(entry => `${entry.name} | ${entry.mode}`), "a test of this file outside run mode").toEqual([]);
   });
 
   it("registration: every case of this file is registered once, in roster order, in run mode, and ran before this one", ({ task }) => {
+    expect.assertions(judgeAssertions(task.name));
     const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {
       for (const child of tasks) {

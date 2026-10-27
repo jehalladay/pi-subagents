@@ -90,17 +90,32 @@
  * state and keeps the refreshed freshness, so a reader forwarding a notification with a position, or a restarted owner whose
  * counter continues, reads current until a gap (B1 orderedSequence, orderedCursor); R-REFRESH the projection trusts refresh
  * as the accepted read, so a snapshot a reader builds from a notification reads current (B1 refreshTrusted).
+ * QUIET-ROW PAYLOADS (wb-sbh3 F1: a quiet row's witness kept only its reading, so its payload swapped for one that exercises no
+ * mode stayed green): each quiet row records its payload, the reading its family's real reader gives that payload (A1's scan of
+ * a source text, A1's walk of a planted file, a fresh ObservationProjection running a B1 journey's calls) and its family's mode
+ * reading of it, read from the payload alone - R-COMPOSED the terms its string literals spell once joined, R-ENCODED the terms it
+ * spells once its escapes are decoded, R-GENERIC the generic state words and the plain SDK key it spells, R-OUTSIDE the terms the
+ * walk flags in its file moved below the first judged root (its own root unjudged), R-ORDERED the next stream position its final
+ * notification states after the snapshot before it, R-REFRESH the notifications its final accepted snapshot follows. The judged
+ * set re-reads every quiet row the roster holds from its payload: the reading and the mode must be the ones the roster records,
+ * the mode non-empty; each mode reading must read its family's neutral payload (SCAN.neutralPayloads: the family's shape,
+ * exercising no mode) as [], and each family's real reader must read its loud payload (SCAN.loudPayloads: the family's shape, a
+ * term the scan or the walk flags, a journey the projection reads stale or never current) as loud. So a payload swapped for one
+ * that exercises no mode, emptied or dropped - in the census, the roster or both - reds, as does a mode reading or a reader
+ * forced to a constant.
  * NOT CLAIMED: an owner restart or epoch (README.md:45) - the projection keys order on sequence and cursor only; Pi carries a
  * producer's RESYNC_REQUIRED word (row D) and detects no restart itself. Every case of this file skipped at once (a skip on the
  * outer describe, or on every case): vitest then marks the file skipped and runs none of its cases or hooks, so no judge here
  * exists. The judged set and the records case both skipped or deselected: the pins read no registration (a filtered pin run
  * stays green by design), so such a run is held only to its own selection. A guard removed together with the escape only it
- * sees (the judged set's collected-tree reading, the records case's end, the file-end judge or the selection it reads).
+ * sees (the judged set's collected-tree reading, the records case's end, the file-end judge or the selection it reads, a quiet
+ * row's reader or its family's mode reading).
  * Display paths added: none. Test-only: it spawns only the stand-in rf below makeScratch scratch and plants control files there.
  */
 import { chmodSync, type Dirent, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { isDeepStrictEqual } from "node:util";
 import { afterAll, afterEach, beforeEach, describe, expect, it, type RunnerTask } from "vitest";
 import { CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
@@ -161,10 +176,45 @@ const RESIDUAL_ROWS: Readonly<Record<string, ResidualRows>> = {
   "R-ORDERED": { pin: "B1", controls: ["orderedSequence", "orderedCursor"] },
   "R-REFRESH": { pin: "B1", controls: ["refreshTrusted"] },
 };
-/** How a quiet row reads on its pin: A1's scan finds no vocabulary term in it, B1's projection reads its step READY. */
-const QUIET_READINGS: Readonly<Record<string, (value: unknown) => boolean>> = {
-  A1: value => Array.isArray(value) && value.length === 0,
-  B1: value => isObject(value) && value.freshness === "current" && value.completeness === "complete",
+/** How a quiet row's reading reads on its pin: A1's scan finds no vocabulary term in it, B1's projection reads its step READY. */
+const QUIET_READINGS: Readonly<Record<string, (reading: unknown) => boolean>> = {
+  A1: reading => Array.isArray(reading) && reading.length === 0,
+  B1: reading => isObject(reading) && reading.freshness === "current" && reading.completeness === "complete",
+};
+/** The Lenses SDK's Python package name as a bare key, which rf provenance also spells (sdk_versions.reactive_lenses): the key
+ * R-GENERIC reads beside the generic state words. */
+const PLAIN_SDK_KEY = "reactive_lenses";
+/** One payload per residual family, in that family's shape, that exercises no residual mode: each family's mode reading reads its
+ * own as [], so no mode reading can be a constant (wb-sbh3 F1). */
+const NEUTRAL_PAYLOADS: Readonly<Record<string, JsonValue>> = {
+  "R-COMPOSED": 'const name = ["Lens", "Result"].join("");\n',
+  "R-ENCODED": 'const name = "\\u004censResult";\n',
+  "R-GENERIC": 'if (row.status === "observed") read(row);\n',
+  "R-OUTSIDE": { path: "test/reader.ts", body: "export const read = (result: LensResult) => result;\n" },
+  "R-ORDERED": {
+    step: "positioned snapshot",
+    calls: [
+      { call: "refresh", capturedAt: "2026-10-23T00:00:02Z", sequence: 7, ready: false },
+      { call: "refresh", capturedAt: "2026-10-23T00:00:03Z", sequence: 8, ready: true },
+    ],
+  },
+  "R-REFRESH": { step: "snapshot alone", calls: [{ call: "refresh", capturedAt: "2026-10-23T00:00:02Z", ready: true }] },
+};
+/** One payload per residual family, in that family's shape, that its real reader must read loud (a term the scan or the walk
+ * flags, a journey the projection reads stale or never current), so no family's reader can be a constant (wb-sbh3 F1). */
+const LOUD_PAYLOADS: Readonly<Record<string, JsonValue>> = {
+  "R-COMPOSED": 'const name = "SnapshotObservation";\n',
+  "R-ENCODED": 'const name = "ImportBinding";\n',
+  "R-GENERIC": 'if (row.status === "RESYNC_REQUIRED") resync(row);\n',
+  "R-OUTSIDE": { path: "src/reader.ts", body: "export const read = (observation: SnapshotObservation) => observation;\n" },
+  "R-ORDERED": {
+    step: "gapped event",
+    calls: [
+      { call: "refresh", capturedAt: "2026-10-23T00:00:02Z", sequence: 7, ready: false },
+      { call: "ingest", id: "s9", sequence: 9, ready: true },
+    ],
+  },
+  "R-REFRESH": { step: "notification alone", calls: [{ call: "ingest", id: "n1", ready: true }] },
 };
 /** The opening of the census's delivered residual statement in the bead row's notes (appended at landing 315). */
 const DELIVERED_RESIDUALS = "RESIDUALS (named, each with a pinned quiet row in a pin's controls): ";
@@ -182,6 +232,9 @@ const SCAN = {
   floors: FLOORS,
   anchors: ANCHORS,
   freshnessRefusal: FRESHNESS_REFUSAL,
+  plainSdkKey: PLAIN_SDK_KEY,
+  neutralPayloads: NEUTRAL_PAYLOADS,
+  loudPayloads: LOUD_PAYLOADS,
 };
 
 interface Row {
@@ -622,6 +675,130 @@ function transitions(steps: readonly Step[]): { toCurrent: number; valueChanges:
   return { toCurrent, valueChanges };
 }
 
+// ---- The quiet rows (wb-sbh3 F1): each records its payload, its family's real reading of it and its family's mode reading ----
+
+/** A file planted in a scratch tree: its path and its body. */
+interface Plant {
+  readonly path: string;
+  readonly body: string;
+}
+/** One call a B1 journey makes on a fresh projection: an accepted snapshot captured at `capturedAt`, or a notification event `id`,
+ * each with the stream position it states and whether it presents READY. */
+type Call =
+  | { readonly call: "refresh"; readonly capturedAt: string; readonly sequence?: number; readonly cursor?: string; readonly ready: boolean }
+  | { readonly call: "ingest"; readonly id: string; readonly sequence?: number; readonly cursor?: string; readonly previousCursor?: string; readonly ready: boolean };
+/** A B1 quiet row's payload: the step it records and the calls on a fresh projection that lead there. */
+interface Journey {
+  readonly step: string;
+  readonly calls: readonly Call[];
+}
+const integerOrNone = (value: unknown): number | undefined => (typeof value === "number" && Number.isSafeInteger(value) ? value : undefined);
+const textOrNone = (value: unknown): string | undefined => (typeof value === "string" ? value : undefined);
+/** A planted file read back from a payload, or undefined when the payload is none. */
+function plantOf(value: unknown): Plant | undefined {
+  return isObject(value) && typeof value.path === "string" && typeof value.body === "string" ? { path: value.path, body: value.body } : undefined;
+}
+/** A B1 journey read back from a payload, or undefined when it or any of its calls is malformed. */
+function journeyOf(value: unknown): Journey | undefined {
+  if (!isObject(value) || typeof value.step !== "string" || !Array.isArray(value.calls)) return undefined;
+  const calls: Call[] = [];
+  for (const entry of value.calls) {
+    if (!isObject(entry) || typeof entry.ready !== "boolean") return undefined;
+    const position = { sequence: integerOrNone(entry.sequence), cursor: textOrNone(entry.cursor) };
+    if (entry.call === "refresh" && typeof entry.capturedAt === "string") calls.push({ call: "refresh", capturedAt: entry.capturedAt, ...position, ready: entry.ready });
+    else if (entry.call === "ingest" && typeof entry.id === "string") calls.push({ call: "ingest", id: entry.id, ...position, previousCursor: textOrNone(entry.previousCursor), ready: entry.ready });
+    else return undefined;
+  }
+  return { step: value.step, calls };
+}
+/** `fields` without its undefined members, so a call states only the positions its journey gives. */
+function stated<T extends Record<string, string | number | undefined>>(fields: T): Partial<T> {
+  return Object.fromEntries(Object.entries(fields).filter(([, value]) => value !== undefined)) as Partial<T>;
+}
+/** A B1 journey run on a fresh projection: the node after its final call, as the step's record. */
+function runJourney(journey: Journey): Step {
+  const projection = new ObservationProjection();
+  let result = "no call";
+  for (const entry of journey.calls) {
+    if (entry.call === "refresh") result = projection.refresh(snapshotAt(entry.capturedAt, { ...stated({ sequence: entry.sequence, cursor: entry.cursor }), ...(entry.ready ? { node: READY } : {}) }));
+    else result = projection.ingest(notice(entry.id, { ...stated({ sourceSequence: entry.sequence, sourceCursor: entry.cursor, previousCursor: entry.previousCursor }), ...(entry.ready ? { node: { presentation: READY } } : {}) }));
+  }
+  return stepOf(projection, journey.step, result);
+}
+/** The vocabulary terms A1's walk flags in one file planted alone at `path` of a scratch tree. */
+function walkedTerms(path: string, body: string): string[] {
+  return plantedTree({ [path]: body })
+    .findings.filter(finding => finding.startsWith(`${path}:`))
+    .map(finding => finding.slice(path.length + 1));
+}
+/** A source text's reading: A1's scan of it; a payload that is no source text reads null. */
+const scanned = (payload: unknown): JsonValue => (typeof payload === "string" ? termsIn(payload) : null);
+/** A planted file's reading: A1's walk of a scratch tree holding it alone; a payload that is no plant reads null. */
+const walked = (payload: unknown): JsonValue => {
+  const plant = plantOf(payload);
+  return plant === undefined ? null : walkedTerms(plant.path, plant.body);
+};
+/** A journey's reading: the node after its calls on a fresh projection; a payload that is no journey reads null. */
+const journeyed = (payload: unknown): JsonValue => {
+  const journey = journeyOf(payload);
+  return journey === undefined ? null : json(runJourney(journey));
+};
+/** Each residual family's real reader over a quiet row's payload. */
+const QUIET_READERS: Readonly<Record<string, (payload: unknown) => JsonValue>> = {
+  "R-COMPOSED": scanned,
+  "R-ENCODED": scanned,
+  "R-GENERIC": scanned,
+  "R-OUTSIDE": walked,
+  "R-ORDERED": journeyed,
+  "R-REFRESH": journeyed,
+};
+/** The double- or single-quoted string literals of a source text, in order, each body as written. */
+const literalsOf = (source: string): string[] => [...source.matchAll(/"((?:[^"\\\n]|\\.)*)"|'((?:[^'\\\n]|\\.)*)'/g)].map(found => found[1] ?? found[2] ?? "");
+/** A source text with its \u{X...}, \uXXXX and \xXX escapes decoded; an escape naming no code point stays as written. */
+const decoded = (source: string): string =>
+  source.replace(/\\u\{([0-9a-fA-F]{1,6})\}|\\u([0-9a-fA-F]{4})|\\x([0-9a-fA-F]{2})/g, (written: string, braced?: string, four?: string, two?: string) => {
+    const point = Number.parseInt(braced ?? four ?? two ?? "", 16);
+    return Number.isInteger(point) && point <= 0x10ffff ? String.fromCodePoint(point) : written;
+  });
+/** The keys R-GENERIC reads: the BATTERY words no vocabulary term reads (the generic state words), then the plain SDK key. */
+const genericKeys = (): string[] => [...BATTERY.filter(word => termsIn(word).length === 0), PLAIN_SDK_KEY];
+/** Each residual family's mode reading: what in a quiet row's payload exercises the family's residual mode, read from the payload
+ * alone; a payload that exercises none reads []. */
+const MODE_READINGS: Readonly<Record<string, (payload: unknown) => string[]>> = {
+  "R-COMPOSED": payload => (typeof payload === "string" ? termsIn(literalsOf(payload).join("")) : []),
+  "R-ENCODED": payload => (typeof payload === "string" ? termsIn(decoded(payload)) : []),
+  "R-GENERIC": payload => (typeof payload === "string" ? genericKeys().filter(key => new RegExp(`\\b${key}\\b`).test(payload)) : []),
+  "R-OUTSIDE": payload => {
+    const plant = plantOf(payload);
+    return plant === undefined || JUDGED_ROOTS.includes(plant.path.split("/")[0] ?? "") ? [] : walkedTerms(`${JUDGED_ROOTS[0]}/${plant.path}`, plant.body);
+  },
+  "R-ORDERED": payload => {
+    const calls = journeyOf(payload)?.calls ?? [];
+    const snapshot = calls.at(-2);
+    const event = calls.at(-1);
+    if (snapshot?.call !== "refresh" || event?.call !== "ingest") return [];
+    const positions: string[] = [];
+    if (snapshot.sequence !== undefined && event.sequence === snapshot.sequence + 1) positions.push(`sequence ${snapshot.sequence} -> ${event.sequence}`);
+    if (snapshot.cursor !== undefined && event.previousCursor === snapshot.cursor && event.cursor !== undefined && event.cursor !== snapshot.cursor) positions.push(`cursor ${snapshot.cursor} -> ${event.cursor}`);
+    return positions;
+  },
+  "R-REFRESH": payload => {
+    const calls = journeyOf(payload)?.calls ?? [];
+    const notices = calls.slice(0, -1).flatMap(entry => (entry.call === "ingest" ? [`notification ${entry.id}`] : []));
+    return calls.at(-1)?.call === "refresh" && notices.length > 0 && notices.length === calls.length - 1 ? notices : [];
+  },
+};
+/** The residual family whose quiet rows name `control` (RESIDUAL_ROWS). */
+const familyOf = (control: string): string => Object.entries(RESIDUAL_ROWS).find(([, rows]) => rows.controls.includes(control))?.[0] ?? "none";
+/** A quiet row as its pin records it: its payload, its family's real reading of that payload (or the reading the pin took from
+ * a shared tree) and its family's mode reading of it. */
+function quietRow(control: string, payload: unknown, reading?: JsonValue): JsonValue {
+  const family = familyOf(control);
+  return json({ payload, reading: reading ?? QUIET_READERS[family]?.(payload) ?? null, mode: MODE_READINGS[family]?.(payload) ?? [] });
+}
+/** A quiet row's recorded reading, or undefined when the row carries none. */
+const readingOf = (entry: unknown): unknown => (isObject(entry) ? entry.reading : undefined);
+
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
   A1: () => {
@@ -636,15 +813,18 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     expect(floorsMet, `files walked: ${JUDGED_ROOTS.map(root => `${root} ${tree.walks[root]?.files.length ?? 0}`).join(", ")}`).toStrictEqual({ src: true, qa: true, examples: true });
     expect(anchorsRead, "each judged root's anchor file was walked and its token read").toStrictEqual({ src: true, qa: true, examples: true });
     expect({ findings: tree.findings, symlinks: tree.symlinks }, "product files spelling a Lenses notification or owner-state term").toStrictEqual({ findings: [], symlinks: [] });
-    const planted = plantedTree({
+    const plants: Readonly<Record<string, string>> = {
       "src/reader.ts": "export const read = (observation: SnapshotObservation) => observation;\n",
       "qa/reader.sh": "python3 -m reactive_lenses watch --json\n",
       "examples/notes.md": "the owner state reads Resync Required after a restart\n",
       "test/reader.ts": "export const read = (observation: SnapshotObservation) => observation;\n",
       "docs/reader.md": "Pi reads ImportBinding records.\n",
       "src/quiet.ts": "// a snapshot observation of a detached run\nexport const lenses = provenance.sdk_versions.reactive_lenses;\n",
-    });
+    };
+    const planted = plantedTree(plants);
     const flagged = (path: string): string[] => planted.findings.filter(finding => finding.startsWith(`${path}:`)).map(finding => finding.slice(path.length + 1));
+    // R-OUTSIDE's quiet rows: the planted file is the payload, read by this tree's walk (wb-sbh3 F1).
+    const outside = (control: string, path: string): JsonValue => quietRow(control, { path, body: plants[path] ?? null }, flagged(path));
     const controls = {
       pascalAdapter: termsIn("export type Read = (value: SnapshotObservation) => void;\n"),
       camelAdapter: termsIn("const snapshotObservation = read(lens);\n"),
@@ -666,15 +846,15 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       pythonFrom: termsIn("from reactive_lenses.bridge import Bridge\n"),
       propertyPath: termsIn("const observed = snapshot.observation;\n"),
       prose: termsIn("a snapshot observation of the detached run\n"),
-      composed: termsIn('const name = ["Snapshot", "Observation"].join("");\n'),
-      escaped: termsIn('const name = "\\u0053napshotObservation";\n'),
-      genericWords: termsIn('if (row.status === "WITHHELD" || row.status === "STALE" || row.status === "UNAVAILABLE") read(row);\n'),
-      provenanceKey: termsIn("const lenses = provenance.sdk_versions.reactive_lenses;\n"),
+      composed: quietRow("composed", 'const name = ["Snapshot", "Observation"].join("");\n'),
+      escaped: quietRow("escaped", 'const name = "\\u0053napshotObservation";\n'),
+      genericWords: quietRow("genericWords", 'if (row.status === "WITHHELD" || row.status === "STALE" || row.status === "UNAVAILABLE") read(row);\n'),
+      provenanceKey: quietRow("provenanceKey", "const lenses = provenance.sdk_versions.reactive_lenses;\n"),
       plantedSrc: flagged("src/reader.ts"),
       plantedQa: flagged("qa/reader.sh"),
       plantedExamples: flagged("examples/notes.md"),
-      testRoot: flagged("test/reader.ts"),
-      docsRoot: flagged("docs/reader.md"),
+      testRoot: outside("testRoot", "test/reader.ts"),
+      docsRoot: outside("docsRoot", "docs/reader.md"),
       quietSrc: flagged("src/quiet.ts"),
     };
     return done("A1", { floorsMet, anchorsRead, findings: [...tree.findings], symlinks: [...tree.symlinks], controls });
@@ -753,18 +933,32 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     expect([firstBare.freshness, firstReady.freshness, firstBare.completeness, firstReady.completeness], "Pi's own fields never claim the notification").toEqual(["unknown", "unknown", "unknown", "unknown"]);
     expect(journey.map(ready), "READY only after each accepted snapshot").toEqual([true, false, false, true]);
     expect([journey[1]?.freshness, journey[2]?.freshness, journey[2]?.statusText], "a notification after the snapshot marks it stale and keeps its value").toEqual(["stale", "stale", "accepted owner snapshot"]);
+    // The quiet rows: each a journey of calls on a fresh projection, recorded with its payload (wb-sbh3 F1).
     // R-ORDERED: an event stating the next position applies as the ordered next state and keeps the refreshed freshness.
-    const sequenced = new ObservationProjection();
-    sequenced.refresh(snapshotAt("2026-10-23T00:00:02Z", { sequence: 7 }));
-    const orderedSequence = stepOf(sequenced, "positioned event", sequenced.ingest(notice("s8", { sourceSequence: 8, node: { presentation: READY } })));
-    const chained = new ObservationProjection();
-    chained.refresh(snapshotAt("2026-10-23T00:00:02Z", { cursor: "c7" }));
-    const orderedCursor = stepOf(chained, "chained event", chained.ingest(notice("c8", { previousCursor: "c7", sourceCursor: "c8", node: { presentation: READY } })));
+    const positioned: Journey = {
+      step: "positioned event",
+      calls: [
+        { call: "refresh", capturedAt: "2026-10-23T00:00:02Z", sequence: 7, ready: false },
+        { call: "ingest", id: "s8", sequence: 8, ready: true },
+      ],
+    };
+    const chained: Journey = {
+      step: "chained event",
+      calls: [
+        { call: "refresh", capturedAt: "2026-10-23T00:00:02Z", cursor: "c7", ready: false },
+        { call: "ingest", id: "c8", previousCursor: "c7", cursor: "c8", ready: true },
+      ],
+    };
     // R-REFRESH: the projection trusts refresh as the accepted read, whatever the snapshot was built from.
-    const trusting = new ObservationProjection();
-    trusting.ingest(notice("n1"));
-    const refreshTrusted = stepOf(trusting, "snapshot built from a notification", trusting.refresh(snapshotAt("2026-10-23T00:00:02Z", { node: READY })));
-    return done("B1", { firstBare, firstReady, journey, controls: { orderedSequence, orderedCursor, refreshTrusted } });
+    const trusting: Journey = {
+      step: "snapshot built from a notification",
+      calls: [
+        { call: "ingest", id: "n1", ready: false },
+        { call: "refresh", capturedAt: "2026-10-23T00:00:02Z", ready: true },
+      ],
+    };
+    const controls = { orderedSequence: quietRow("orderedSequence", positioned), orderedCursor: quietRow("orderedCursor", chained), refreshTrusted: quietRow("refreshTrusted", trusting) };
+    return done("B1", { firstBare, firstReady, journey, controls });
   },
   B2: () => {
     const projection = new ObservationProjection();
@@ -937,14 +1131,41 @@ describe("wb-4nut.8 Lenses notification and owner-state census (TSX-HARNESS2-REA
     // Each residual family's quiet rows sit in its pin's roster witness and read quiet there (wb-aff9 F2: the witness alone held
     // them, so a quiet row removed from the controls and the witness together stayed green).
     expect(Object.keys(RESIDUAL_ROWS), "every residual family names its quiet rows").toEqual([...RESIDUAL_FAMILIES]);
+    const quietControls = (pin: string): { [key: string]: unknown } => {
+      const witness = rosterWitness(pin);
+      return isObject(witness) && isObject(witness.controls) ? witness.controls : {};
+    };
     const loud = Object.entries(RESIDUAL_ROWS).flatMap(([family, rows]) => {
       if (rows.controls.length === 0) return [`${family}: no quiet row`];
-      const witness = rosterWitness(rows.pin);
-      const controls = isObject(witness) && isObject(witness.controls) ? witness.controls : {};
+      const controls = quietControls(rows.pin);
       const quiet = QUIET_READINGS[rows.pin];
-      return rows.controls.filter(control => quiet === undefined || !Object.hasOwn(controls, control) || !quiet(controls[control])).map(control => `${family}: ${rows.pin} ${control}`);
+      return rows.controls.filter(control => quiet === undefined || !Object.hasOwn(controls, control) || !quiet(readingOf(controls[control]))).map(control => `${family}: ${rows.pin} ${control}`);
     });
     expect(loud, "every residual family's quiet rows sit in its pin's roster witness and read quiet there").toEqual([]);
+    // wb-sbh3 F1: only a quiet row's reading was held, so its payload could be swapped for one that exercises no mode. Each quiet
+    // row the roster holds is re-read from its payload by its family's real reader and mode reading: both must give what the
+    // roster records and the mode must be non-empty; each mode reading must read its family's neutral payload as [], and each
+    // family's real reader must read its loud payload as loud.
+    const vacant = Object.entries(RESIDUAL_ROWS).flatMap(([family, rows]) =>
+      rows.controls.flatMap(control => {
+        const held = quietControls(rows.pin)[control];
+        const reread = quietRow(control, isObject(held) ? held.payload : undefined);
+        const mode = isObject(reread) ? reread.mode : undefined;
+        return [
+          ...(isDeepStrictEqual(reread, held) ? [] : [`${family}: ${rows.pin} ${control} re-reads ${JSON.stringify(reread)}`]),
+          ...(Array.isArray(mode) && mode.length > 0 ? [] : [`${family}: ${rows.pin} ${control} exercises no mode`]),
+        ];
+      }),
+    );
+    expect(vacant, "every quiet row the roster holds, re-read from its payload, keeps its reading and its mode, and exercises the mode").toEqual([]);
+    const constant = RESIDUAL_FAMILIES.filter(family => !isDeepStrictEqual(MODE_READINGS[family]?.(NEUTRAL_PAYLOADS[family]), []));
+    expect(constant, "each family's mode reading reads its neutral payload as []").toEqual([]);
+    const deaf = RESIDUAL_FAMILIES.filter(family => {
+      const quiet = QUIET_READINGS[RESIDUAL_ROWS[family]?.pin ?? ""];
+      const reading = QUIET_READERS[family]?.(LOUD_PAYLOADS[family]) ?? null;
+      return quiet === undefined || reading === null || quiet(reading);
+    });
+    expect(deaf, "each family's real reader reads its loud payload as loud").toEqual([]);
     // The outside anchor: the owner filing's row in the tracked bead export.
     const bead = readBeadRow();
     expect(deliveredResiduals(bead.notes), "the census's delivered residual statement names every family with its pin and quiet rows").toStrictEqual(json(RESIDUAL_ROWS));

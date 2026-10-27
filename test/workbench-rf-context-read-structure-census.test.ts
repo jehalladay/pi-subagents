@@ -25,9 +25,12 @@
  *  A, the trigger, absent today. A1 the launch census: exactly one call of a process launcher (LAUNCHERS) whose first argument
  *    reads the rf binary (folded, or the leading literal piece of a composed shell line), the provider's; in every argv-shaped
  *    array literal (one holding a folded "--" flag, or the argv literal of an rf launch) the element after "context" is "render"; no folded literal spells another context leaf of the measured
- *    rf (context.show, .explain, .plan, .diff, .history, .replay, as `context.<leaf>` or `context <leaf>`); and no line of a text
- *    (backslash continuations joined) names the rf binary as a command word (RF_WORD: a path prefix may lead it) beside another
- *    context leaf - a text line naming a leaf without the binary is not a launch, and is not judged. A2 the readers: a
+ *    rf (context.show, .explain, .plan, .diff, .history, .replay, as `context.<leaf>` or `context <leaf>`); and no logical line of
+ *    a text (backslash continuations joined; a run of one-item YAML list lines read as its items; a line whose brackets stay open
+ *    joined with the lines closing them, at most ARGV_SPAN; its quotes, commas and brackets read as spaces, so an argv list in a
+ *    script, a JSON or a YAML file reads as its words: wb-4hbm F2) names the rf binary as a command word (RF_WORD: a path prefix
+ *    may lead it) beside another context leaf - a text line naming a leaf without the binary is not a launch, and is not judged,
+ *    and a prose bullet list is no argv (its items are not single words). A2 the readers: a
  *    judged module holding the literal "context.render" is an rf READER (measured: native-evidence.ts, the provider, the
  *    adapter); the adapter refuses and the evidence projection ignores an envelope of every other context leaf, and the two rf
  *    registrations (registerReactiveFiberRender and registerNativeReactiveFiberRender, read through catalogSnapshot) register only
@@ -44,9 +47,14 @@
  *    edccd80, after wb-hs2j.1 landed its inclusion leg) the record containers (blocks, components) the READERS read by property
  *    access, element access or binding (a key resolved as KEYS below) are exactly the adapter's result.blocks binding, and every
  *    use of a read container (a bound name is followed to each reference in its function) is a count (.length) or a row-shape
- *    check that reads no field (Array.isArray, or an every() whose callback reads no property and calls no function of its own
- *    module that reads one - the helpers are followed one level, Array.isArray excepted, so the landed record() shape check reads
- *    none); an element access, find, map, loop, spread, pass-through, alias or nested binding is a finding. Behaviour: populating
+ *    check that reads no field (Array.isArray, or an every() whose callback reads no property, asks no presence - an `in` check or
+ *    a for-in over a row, wb-4hbm F3 - and calls no function of its own module that reads one either way - the helpers are followed
+ *    one level, Array.isArray excepted, so the landed record() shape check reads none); an element access, find, map, loop, spread,
+ *    pass-through, alias or nested binding is a finding. Fail-closed (wb-4hbm F1): every element access key and computed binding
+ *    name in a READER that KEYS does not resolve is itself a finding, whatever it would read (a container, a text field, a diff
+ *    key), unless the key is a numeric index or the receiver a lookup table (a name bound to an object literal, or Object.freeze of
+ *    one, of folded strings under named keys: the measured readers' NATIVE_TYPES and SEAM_LABEL reads, pinned as the anchor), so
+ *    the .at() key, the frozen, destructured, imported and reduce-iterated keys and the rebound name all red. Behaviour: populating
  *    both containers with attributed records changes no projection and no evidence field, on a clean render and on one withholding
  *    a judged candidate (so the inclusion note carries no record value either); the planted rows speak the measured rf's own
  *    vocabulary, and the withheld pair keeps the block count the leg reads while differing in every other per-row count (each value
@@ -54,12 +62,17 @@
  *    the note reds; one more block moves only the diagnostics (the inclusion note's count: the read is a count); and no planted
  *    record value reaches any projected string.
  *  KEYS (B1, C2, D2): an element access argument or a computed binding name reads its folded literal; the strings a name of the
- *    module is bound to (a variable declaration of a folded string; names are matched by name, not by scope, so a shadowing
- *    parameter still reads the bound value); an element of a key list (an array literal whose every element folds, or a name bound
- *    to one, as const read through: a literal index reads that element, any other index every element); or, for the first
- *    parameter of an ITERATORS callback (every, some, map, filter, forEach, flatMap and the find family) on a key list or a for-of
- *    variable over one, every key of the list. The landed adapter's INCLUSION_KEYS idiom (reactivefiber-observer.ts :94, a
- *    presence check at :271) is such a list.
+ *    module is bound to (a variable declaration or a plain assignment of a folded string; names are matched by name, not by
+ *    scope, so a shadowing parameter still reads the bound value); an element of a key list (an array literal whose every element
+ *    folds, or a name bound to one, as const read through: a literal index reads that element, any other index every element);
+ *    or, for the first parameter of an ITERATORS callback (every, some, map, filter, forEach, flatMap and the find family) on a key
+ *    list or a for-of variable over one, every key of the list. The landed adapter's INCLUSION_KEYS idiom (reactivefiber-observer.ts
+ *    :94, a presence check at :271) is such a list. Resolution, for C2's fail-closed judge, is read by scope (bindingOf: the
+ *    declaration binding the name where it stands): a key resolves only as a folded literal, a numeric index, an element of a
+ *    resolved key list, or a name, never rebound (written other than by a folded declaration or plain folded assignment - a member
+ *    write or delete, a mutating Array method (MUTATORS) or an Object/Reflect setter (SETTERS) on it included - or declared var),
+ *    that a folded variable declaration binds, or an ITERATORS callback's first parameter or a for-of variable over a resolved key
+ *    list ranges over; values stay read by name, so resolution adds findings and never drops one.
  *  D, acceptance (c), absent today. D1 no judged module spells an rf diff result key (DIFF_KEYS, the snake_case keys of the
  *    measured context.diff result minus the render result's keys) as an identifier or a whole word of a folded literal. D2 no
  *    READER reads a one-word diff key (GENERIC_DIFF_KEYS) by property access, element access or binding (KEYS), and a
@@ -99,13 +112,16 @@
  * dropped from the roster's producer key lists together with a plant of it (Pi captures no rf schema, so those key lists are
  * roster-only measured facts; the version, commit and context leaves are held to the capture, E1); the walk, node's listing and
  * the git reading hollowed together (all three readers live in this file, the git index outside it); a pin or a residual family a
- * later cut adds, removed again from every literal (the floors anchor what was delivered or filed).
+ * later cut adds, removed again from every literal (the floors anchor what was delivered or filed); a key list or lookup table
+ * mutated only through a function it is passed to (C2's fail-closed judge reads the module's own writes, keyBindings).
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
  * not inverted, ran; every pin's case reached its end (REACHED); every witness carries the assertions its test had made when the
  * case returned (asserted, held to the roster with the rest of the witness).
- * RESIDUALS (named families, each with pinned quiet rows in the controls): R-COMPOSED a launch binary, verb, field name, text key or
- * container key composed at run time, or a flagless argv built apart from its launch (A1 composedVerb, composedBinary, argvApart,
- * scriptComposedBinary and scriptArgvApart, B1 computedKey, C1 composedField, C2 composedContainer and objectMemberKey);
+ * RESIDUALS (named families, each with pinned quiet rows in the controls): R-COMPOSED a launch binary, verb or field name composed
+ * at run time, a text key composed outside the READERS, or a flagless argv built apart from its launch (A1 composedVerb,
+ * composedBinary, argvApart, scriptComposedBinary, scriptComposedVerb, scriptArgvApart and jsonArgvApart, B1 computedKey, C1
+ * composedField; a key composed in a READER is refused by C2's fail-closed judge - templateKey, composedContainerJudged,
+ * objectMemberKeyJudged - while C2 composedContainer and objectMemberKey still pin that KEYS resolves neither);
  * R-INDIRECT a row field read by a function a row-shape callback reaches through another function, or by one defined in another
  * module (C2 twoLevelHelper, importedHelper); R-ALIAS document text read through an alias of the output object outside the READERS (B1
  * aliasOutsideReaders), or an rf launch through an aliased launcher with a flagless argv (A1 aliasedLauncher); R-GENERIC-KEY a
@@ -157,8 +173,18 @@ const LAUNCHERS = ["spawn", "spawnSync", "execFile", "execFileSync", "exec", "ex
 const RF_BINARY = "rf";
 /** The rf binary as a command word of a non-module line: a path prefix may lead it, no longer name holds it. */
 const RF_WORD = /(?<![A-Za-z0-9_.-])rf(?![A-Za-z0-9_.-])/;
+/** The most physical lines one logical line of a text joins (an argv list written over several lines). */
+const ARGV_SPAN = 32;
+/** A one-item line of a YAML block sequence: a dash, one scalar (quoted, or a single word), at most a trailing comment. */
+const LIST_ITEM = /^\s*-\s+("[^"]*"|'[^']*'|[^\s"'#]+)\s*(?:#.*)?$/;
+/** The list punctuation an argv list spells between its words (quotes, commas, brackets), read as spaces. */
+const ARGV_PUNCTUATION = /["'`,[\]()]/g;
 /** The array methods whose callback's first parameter ranges over the receiver's elements (a key list's keys). */
 const ITERATORS = ["every", "some", "map", "filter", "forEach", "find", "findIndex", "findLast", "findLastIndex", "flatMap"];
+/** The Array methods that mutate their receiver: a key list one of them is called on is rebound (C2's fail-closed judge). */
+const MUTATORS = ["push", "pop", "shift", "unshift", "splice", "sort", "reverse", "fill", "copyWithin"];
+/** The setters that mutate their first argument: a key list or lookup table passed to one is rebound. */
+const SETTERS = ["Object.assign", "Object.defineProperty", "Object.defineProperties", "Object.setPrototypeOf", "Reflect.set", "Reflect.defineProperty", "Reflect.deleteProperty", "Reflect.setPrototypeOf"];
 /** The rf document text of a render result: result.output.text. */
 const TEXT_OBJECT = "output";
 const TEXT_FIELD = "text";
@@ -483,13 +509,46 @@ function gitListed(): string[] {
   const out = execFileSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard", "--", ...WALK_ROOTS], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 });
   return [...new Set(out.split("\0").filter(path => path !== "" && existsSync(join(REPO, path))))].sort();
 }
-/** A non-module file's rf launch lines (A1): each line, backslash continuations joined, naming the rf binary as a command word and
- * another context leaf of the measured rf. */
+/** The [ and ( a line opens, minus the ] and ) it closes. */
+const bracketDepth = (line: string): number => (line.match(/[[(]/g)?.length ?? 0) - (line.match(/[\])]/g)?.length ?? 0);
+/** A text's logical lines (A1): backslash continuations joined; a run of one-item YAML list lines (LIST_ITEM) read as its items,
+ * space-separated; and a line whose brackets stay open joined with the lines up to the one closing them, at most ARGV_SPAN lines;
+ * so an argv list written in a script, a JSON or a YAML file reads as one line however it is wrapped. */
+function logicalLines(source: string): string[] {
+  const physical = source.replace(/\\\r?\n/g, " ").split(/\r?\n/);
+  const logical: string[] = [];
+  let index = 0;
+  while (index < physical.length) {
+    const items: string[] = [];
+    for (let item = LIST_ITEM.exec(physical[index] ?? ""); item !== null && items.length < ARGV_SPAN; item = LIST_ITEM.exec(physical[index] ?? "")) {
+      items.push(item[1] ?? "");
+      index += 1;
+    }
+    if (items.length > 0) {
+      logical.push(items.join(" "));
+      continue;
+    }
+    let line = physical[index] ?? "";
+    let depth = Math.max(0, bracketDepth(line));
+    index += 1;
+    for (let span = 1; depth > 0 && index < physical.length && span < ARGV_SPAN; span += 1) {
+      const next = physical[index] ?? "";
+      line = `${line} ${next}`;
+      depth = Math.max(0, depth + bracketDepth(next));
+      index += 1;
+    }
+    logical.push(line);
+  }
+  return logical;
+}
+/** A non-module file's rf launch lines (A1): each logical line (logicalLines) that, its list punctuation read as spaces
+ * (ARGV_PUNCTUATION), names the rf binary as a command word and another context leaf of the measured rf. */
 function launchLines(path: string, source: string): string[] {
-  return source
-    .replace(/\\\r?\n/g, " ")
-    .split(/\r?\n/)
-    .filter(line => RF_WORD.test(line) && VERB_FAMILY.test(line))
+  return logicalLines(source)
+    .filter(line => {
+      const words = line.replace(ARGV_PUNCTUATION, " ");
+      return RF_WORD.test(words) && VERB_FAMILY.test(words);
+    })
     .map(line => `${path}: ${line.trim().slice(0, 80)}`);
 }
 
@@ -556,12 +615,16 @@ function bare(node: ts.Expression): ts.Expression {
   }
   return current;
 }
-/** The names one module binds to a key: every variable a declaration (at any depth) binds to a folded string (scalars) or to an
- * array literal whose every element folds (lists, as const read through). A name bound more than once keeps every binding, so a
- * read through it resolves to every value any of them holds. */
+/** The names one module binds to a key: every variable a declaration (at any depth) or a plain assignment binds to a folded string
+ * (scalars) or to an array literal whose every element folds (lists, as const read through). A name bound more than once keeps
+ * every binding, so a read through it resolves to every value any of them holds. A name written any other way - an assignment of
+ * a value that does not fold, a compound assignment, an update, a destructuring or for-in/of target, a var declaration (which
+ * hoists past the scope reading of bindingOf), or a mutation of its list or table (a member write or delete, a MUTATORS method
+ * call on it, or a SETTERS call naming it first) - is rebound: C2's fail-closed judge never reads a key through it as resolved. */
 interface KeyBindings {
   readonly scalars: ReadonlyMap<string, readonly string[]>;
   readonly lists: ReadonlyMap<string, readonly (readonly string[])[]>;
+  readonly rebound: ReadonlySet<string>;
 }
 const foldedList = (node: ts.Expression): string[] | undefined => {
   const value = bare(node);
@@ -569,21 +632,65 @@ const foldedList = (node: ts.Expression): string[] | undefined => {
   const elements = value.elements.map(element => fold(bare(element)));
   return elements.every((element): element is string => element !== undefined) ? elements : undefined;
 };
+/** Every identifier below a write target (a property name included: the over-reading only fails closed). */
+function namesBelow(node: ts.Node): string[] {
+  const names: string[] = [];
+  const visit = (child: ts.Node): void => {
+    if (ts.isIdentifier(child)) names.push(child.text);
+    ts.forEachChild(child, visit);
+  };
+  visit(node);
+  return names;
+}
+const isAssignment = (kind: ts.SyntaxKind): boolean => kind >= ts.SyntaxKind.FirstAssignment && kind <= ts.SyntaxKind.LastAssignment;
+const isUpdate = (node: ts.Node): node is ts.PrefixUnaryExpression | ts.PostfixUnaryExpression =>
+  (ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken);
 function keyBindings(file: ts.SourceFile): KeyBindings {
   const scalars = new Map<string, string[]>();
   const lists = new Map<string, (readonly string[])[]>();
+  const rebound = new Set<string>();
+  /** Records a folded string or key list bound to a name; false when the value folds to neither. */
+  const bind = (name: string, value: ts.Expression): boolean => {
+    const folded = fold(bare(value));
+    const list = foldedList(value);
+    if (folded !== undefined) scalars.set(name, [...(scalars.get(name) ?? []), folded]);
+    else if (list !== undefined) lists.set(name, [...(lists.get(name) ?? []), list]);
+    return folded !== undefined || list !== undefined;
+  };
+  const rebind = (target: ts.Node): void => {
+    for (const name of namesBelow(target)) rebound.add(name);
+  };
+  /** A write to an expression target: a name is rebound, so is every name of a destructuring pattern, and a member write
+   * (NAME.x = ..., NAME[k] = ...) rebinds the name it is a member of: it mutates that name's key list or table. */
+  const written = (target: ts.Expression): void => {
+    const value = bare(target);
+    if (ts.isIdentifier(value)) rebound.add(value.text);
+    else if (ts.isArrayLiteralExpression(value) || ts.isObjectLiteralExpression(value)) rebind(value);
+    else if (ts.isPropertyAccessExpression(value) || ts.isElementAccessExpression(value)) written(value.expression);
+  };
   const visit = (node: ts.Node): void => {
-    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined) {
-      const name = node.name.text;
-      const folded = fold(bare(node.initializer));
-      const list = foldedList(node.initializer);
-      if (folded !== undefined) scalars.set(name, [...(scalars.get(name) ?? []), folded]);
-      else if (list !== undefined) lists.set(name, [...(lists.get(name) ?? []), list]);
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined) bind(node.name.text, node.initializer);
+    if (ts.isVariableDeclarationList(node) && (node.flags & ts.NodeFlags.BlockScoped) === 0) for (const declaration of node.declarations) rebind(declaration.name);
+    if (ts.isBinaryExpression(node) && isAssignment(node.operatorToken.kind)) {
+      const target = bare(node.left);
+      const plain = node.operatorToken.kind === ts.SyntaxKind.EqualsToken && ts.isIdentifier(target);
+      if (!plain || !bind(target.text, node.right)) written(target);
+    }
+    if (isUpdate(node)) written(node.operand);
+    if (ts.isDeleteExpression(node)) written(node.expression);
+    if ((ts.isForOfStatement(node) || ts.isForInStatement(node)) && !ts.isVariableDeclarationList(node.initializer)) written(node.initializer);
+    if (ts.isCallExpression(node)) {
+      const callee = bare(node.expression);
+      const first = node.arguments[0];
+      if (ts.isPropertyAccessExpression(callee) && MUTATORS.includes(callee.name.text)) written(callee.expression);
+      else if (first !== undefined && ts.isPropertyAccessExpression(callee) && ts.isIdentifier(callee.expression) && SETTERS.includes(`${callee.expression.text}.${callee.name.text}`)) {
+        written(first);
+      }
     }
     ts.forEachChild(node, visit);
   };
   visit(file);
-  return { scalars, lists };
+  return { scalars, lists, rebound };
 }
 /** The key lists an expression names: an array literal whose every element folds, or a name bound to one. */
 function listsOf(node: ts.Expression, bindings: KeyBindings): (readonly string[])[] {
@@ -745,12 +852,15 @@ const keyHits = (path: string, reading: ModuleReading, keys: readonly string[]):
 /** C2's and D2's judge: the named keys a READER reads; a module that is no rf reader is not judged (R-GENERIC-KEY). */
 const readerKeyFindings = (path: string, reading: ModuleReading, keys: readonly string[]): string[] => (isReader(reading) ? keyHits(path, reading, keys) : []);
 /** How a module uses a record container it reads (C2): "count" its .length; "check" a row-shape test that reads no field of a row
- * (Array.isArray of it, or an every() whose one callback reads no property and binds no pattern); "other" anything else. */
+ * (Array.isArray of it, or an every() whose one callback reads no property, binds no pattern and asks no presence); "other"
+ * anything else. */
 type ContainerUse = "count" | "check" | "other";
+/** A presence read: the `in` operator (whether a row holds a field), or a for-in over a row's keys. */
+const readsPresence = (node: ts.Node): boolean => (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.InKeyword) || ts.isForInStatement(node);
 const readsAField = (callback: ts.Node): boolean => {
   let found = false;
   const visit = (node: ts.Node): void => {
-    if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node) || ts.isObjectBindingPattern(node) || ts.isArrayBindingPattern(node)) found = true;
+    if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node) || ts.isObjectBindingPattern(node) || ts.isArrayBindingPattern(node) || readsPresence(node)) found = true;
     else ts.forEachChild(node, visit);
   };
   ts.forEachChild(callback, visit);
@@ -779,13 +889,14 @@ function moduleHelpers(file: ts.SourceFile): Map<string, ts.FunctionLikeDeclarat
   HELPERS.set(file, helpers);
   return helpers;
 }
-/** A helper reads a field when its parameters or body hold a property access, an element access or a binding pattern - readsAField's
- * reading, Array.isArray (a global's member, never a row field) excepted, so the landed record() shape check reads none. */
+/** A helper reads a field when its parameters or body hold a property access, an element access, a binding pattern or a presence
+ * read - readsAField's reading, Array.isArray (a global's member, never a row field) excepted, so the landed record() shape check
+ * reads none. */
 const helperReadsAField = (helper: ts.FunctionLikeDeclaration): boolean => {
   let found = false;
   const visit = (node: ts.Node): void => {
     if (ts.isPropertyAccessExpression(node) && isArrayIsArray(node)) return;
-    if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node) || ts.isObjectBindingPattern(node) || ts.isArrayBindingPattern(node)) found = true;
+    if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node) || ts.isObjectBindingPattern(node) || ts.isArrayBindingPattern(node) || readsPresence(node)) found = true;
     else ts.forEachChild(node, visit);
   };
   ts.forEachChild(helper, visit);
@@ -865,6 +976,142 @@ function containerUses(path: string, source: string): string[] {
   return uses;
 }
 const otherUses = (uses: readonly string[]): string[] => uses.filter(use => use.endsWith(" other"));
+/** The declaration that binds an identifier where it stands, read through the enclosing scopes from the inside out: a parameter of
+ * an enclosing function (a binding element when the parameter is a pattern), a function or class expression's own name, a for,
+ * for-in, for-of or catch variable, or a declaration among an enclosing block's, case block's or the module's statements (a
+ * variable - a binding element when it is a pattern -, a function, class or enum, or an import binding); nothing when no scope
+ * binds it (a global, or a name declared only in a nested block: hoisted var names are rebound instead, keyBindings). */
+function bindingOf(name: ts.Identifier): ts.Node | undefined {
+  const text = name.text;
+  const inName = (declared: ts.BindingName, owner: ts.Node): ts.Node | undefined => {
+    if (ts.isIdentifier(declared)) return declared.text === text ? owner : undefined;
+    for (const element of declared.elements) {
+      const found = ts.isOmittedExpression(element) ? undefined : inName(element.name, element);
+      if (found !== undefined) return found;
+    }
+    return undefined;
+  };
+  const inList = (list: ts.VariableDeclarationList): ts.Node | undefined => {
+    for (const declaration of list.declarations) {
+      const found = inName(declaration.name, declaration);
+      if (found !== undefined) return found;
+    }
+    return undefined;
+  };
+  const inStatements = (statements: readonly ts.Statement[]): ts.Node | undefined => {
+    for (const statement of statements) {
+      if (ts.isVariableStatement(statement)) {
+        const found = inList(statement.declarationList);
+        if (found !== undefined) return found;
+      } else if ((ts.isFunctionDeclaration(statement) || ts.isClassDeclaration(statement) || ts.isEnumDeclaration(statement)) && statement.name?.text === text) {
+        return statement;
+      } else if (ts.isImportDeclaration(statement) && statement.importClause !== undefined) {
+        const clause = statement.importClause;
+        const bindings = clause.namedBindings;
+        if (clause.name?.text === text) return clause;
+        if (bindings !== undefined && ts.isNamespaceImport(bindings) && bindings.name.text === text) return bindings;
+        const named = bindings !== undefined && ts.isNamedImports(bindings) ? bindings.elements.find(element => element.name.text === text) : undefined;
+        if (named !== undefined) return named;
+      }
+    }
+    return undefined;
+  };
+  for (let node: ts.Node = name.parent; ; node = node.parent) {
+    let found: ts.Node | undefined;
+    if (ts.isFunctionLike(node)) {
+      found = node.parameters.map(parameter => inName(parameter.name, parameter)).find(binding => binding !== undefined);
+      if (found === undefined && ts.isFunctionExpression(node) && node.name?.text === text) found = node;
+    } else if (ts.isClassExpression(node) && node.name?.text === text) found = node;
+    else if ((ts.isForStatement(node) || ts.isForInStatement(node) || ts.isForOfStatement(node)) && node.initializer !== undefined && ts.isVariableDeclarationList(node.initializer)) {
+      found = inList(node.initializer);
+    } else if (ts.isCatchClause(node) && node.variableDeclaration !== undefined) found = inName(node.variableDeclaration.name, node.variableDeclaration);
+    else if (ts.isBlock(node) || ts.isModuleBlock(node) || ts.isSourceFile(node)) found = inStatements(node.statements);
+    else if (ts.isCaseBlock(node)) found = inStatements(node.clauses.flatMap(clause => [...clause.statements]));
+    if (found !== undefined || ts.isSourceFile(node)) return found;
+  }
+}
+/** The expression a binding ranges over: an ITERATORS callback's first parameter ranges over the call's receiver (the callback is
+ * the call's first argument), a for-of variable over its iterated expression; nothing for any other binding. */
+function iterationOf(declaration: ts.Node): ts.Expression | undefined {
+  if (ts.isParameter(declaration)) {
+    const callback = declaration.parent;
+    const call = callback.parent;
+    const first = (ts.isArrowFunction(callback) || ts.isFunctionExpression(callback)) && callback.parameters[0] === declaration;
+    return first && ts.isCallExpression(call) && call.arguments[0] === callback && ts.isPropertyAccessExpression(call.expression) && ITERATORS.includes(call.expression.name.text)
+      ? call.expression.expression
+      : undefined;
+  }
+  if (!ts.isVariableDeclaration(declaration) || !ts.isVariableDeclarationList(declaration.parent)) return undefined;
+  const loop = declaration.parent.parent;
+  return ts.isForOfStatement(loop) && loop.initializer === declaration.parent ? loop.expression : undefined;
+}
+/** A variable declaration among a block's or the module's statements (not a for, for-in, for-of or catch variable). */
+const statementDeclaration = (declaration: ts.Node): declaration is ts.VariableDeclaration =>
+  ts.isVariableDeclaration(declaration) && ts.isVariableDeclarationList(declaration.parent) && ts.isVariableStatement(declaration.parent.parent);
+/** True when a key list is resolved: an array literal whose every element folds, or a name, never rebound, whose declaration where it
+ * stands binds one. */
+function listResolved(node: ts.Expression, bindings: KeyBindings): boolean {
+  const value = bare(node);
+  if (foldedList(value) !== undefined) return true;
+  if (!ts.isIdentifier(value) || bindings.rebound.has(value.text)) return false;
+  const declaration = bindingOf(value);
+  return declaration !== undefined && statementDeclaration(declaration) && declaration.initializer !== undefined && foldedList(declaration.initializer) !== undefined;
+}
+/** True when KEYS resolves every value a key can hold (C2's fail-closed judge): a folded literal or a numeric index; an element of a
+ * resolved key list (any index); or a name, never rebound, whose declaration where it stands is an ITERATORS callback's first
+ * parameter or a for-of variable over a resolved key list, or a variable declaration of a folded string (without an initializer:
+ * of the folded strings assigned to it). Any other key - a call (.at), a member, a template or concatenation of a name, a name a
+ * pattern, an import, another parameter or a catch binds, or a frozen or imported key list - is unresolved. */
+function keyResolved(node: ts.Expression, bindings: KeyBindings): boolean {
+  const value = bare(node);
+  if (fold(value) !== undefined || ts.isNumericLiteral(value)) return true;
+  if (ts.isElementAccessExpression(value)) return listResolved(value.expression, bindings);
+  if (!ts.isIdentifier(value) || bindings.rebound.has(value.text)) return false;
+  const declaration = bindingOf(value);
+  const iterated = declaration === undefined ? undefined : iterationOf(declaration);
+  if (iterated !== undefined) return listResolved(iterated, bindings);
+  if (declaration === undefined || !statementDeclaration(declaration)) return false;
+  return declaration.initializer === undefined ? bindings.scalars.has(value.text) : fold(bare(declaration.initializer)) !== undefined;
+}
+const isObjectFreeze = (callee: ts.Expression): boolean =>
+  ts.isPropertyAccessExpression(callee) && ts.isIdentifier(callee.expression) && callee.expression.text === "Object" && callee.name.text === "freeze";
+/** True when a receiver is a lookup table: a name, never rebound, whose declaration where it stands binds an object literal (or
+ * Object.freeze of one) every property of which assigns a folded string to a named key, so a read by any key yields one of its
+ * strings and never an rf record. */
+function lookupTable(node: ts.Expression, bindings: KeyBindings): boolean {
+  const value = bare(node);
+  if (!ts.isIdentifier(value) || bindings.rebound.has(value.text)) return false;
+  const declaration = bindingOf(value);
+  if (declaration === undefined || !statementDeclaration(declaration) || declaration.initializer === undefined) return false;
+  const initializer = bare(declaration.initializer);
+  const frozen = ts.isCallExpression(initializer) && isObjectFreeze(initializer.expression) && initializer.arguments.length === 1 ? initializer.arguments[0] : undefined;
+  const table = frozen === undefined ? initializer : bare(frozen);
+  return ts.isObjectLiteralExpression(table) && table.properties.every(property => ts.isPropertyAssignment(property) && !ts.isComputedPropertyName(property.name) && fold(bare(property.initializer)) !== undefined);
+}
+/** C2's fail-closed judge for one READER: `<path> <receiver>[<key>] <class>` for each element access whose key, and each object binding
+ * whose computed name, KEYS does not resolve (keyResolved), in source order; class "table" when the receiver is a lookup table
+ * (lookupTable), else "finding" - whatever the key would read: a container, a text field or a diff key. */
+function unresolvedReads(path: string, source: string): string[] {
+  const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
+  const bindings = keyBindings(file);
+  const spelled = (node: ts.Node): string => node.getText(file).replace(/\s+/g, " ").slice(0, 60);
+  const classOf = (receiver: ts.Expression | undefined): string => (receiver !== undefined && lookupTable(receiver, bindings) ? "table" : "finding");
+  const reads: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isElementAccessExpression(node) && !keyResolved(node.argumentExpression, bindings)) {
+      reads.push(`${path} ${spelled(node.expression)}[${spelled(node.argumentExpression)}] ${classOf(node.expression)}`);
+    } else if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent) && node.propertyName !== undefined && ts.isComputedPropertyName(node.propertyName)) {
+      const key = node.propertyName.expression;
+      const declaration = node.parent.parent;
+      const receiver = ts.isVariableDeclaration(declaration) ? declaration.initializer : undefined;
+      if (!keyResolved(key, bindings)) reads.push(`${path} ${receiver === undefined ? "(pattern)" : spelled(receiver)}[${spelled(key)}] ${classOf(receiver)}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return reads;
+}
+const unresolvedFindings = (reads: readonly string[]): string[] => reads.filter(read => read.endsWith(" finding"));
 
 interface TreeReading {
   readonly walk: Walk;
@@ -1008,6 +1255,16 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       longerName: lines('rfx context show "$1"\nperf context show\n'),
       scriptComposedBinary: lines('RF=rf\n"$RF" context show "$1"\n'),
       scriptArgvApart: lines('set -- context show "$1"\nexec rf "$@"\n'),
+      scriptComposedVerb: lines('LEAF=show\nexec rf context "$LEAF" "$1" --json\n'),
+      pythonArgv: lines('subprocess.run(["rf", "--workspace", sys.argv[1], "context", "show", sys.argv[2], "--json"], check=True)\n'),
+      jsonArgv: lines('{\n  "argv": ["rf", "--workspace", ".", "context", "show", "RENDER", "--json"]\n}\n'),
+      jsonArgvLines: lines('{\n  "argv": [\n    "rf",\n    "context",\n    "show",\n    "RENDER"\n  ]\n}\n'),
+      yamlArgv: lines("probe:\n  argv:\n    - rf\n    - context\n    - show\n    - RENDER\n"),
+      yamlFlowArgv: lines("argv: [rf, context, diff, A, B]\n"),
+      splitArgvList: lines('subprocess.run(["rf",\n                "context", "explain", key])\n'),
+      renderArgvList: lines('{ "argv": ["rf", "context", "render", "--no-commit", "--json"] }\n'),
+      proseBullets: lines("- the rf binary renders\n- a context show verb is unshipped in Pi\n"),
+      jsonArgvApart: lines('{\n  "cmd": "rf",\n  "args": [\n    "context",\n    "show"\n  ]\n}\n'),
     };
     return done("A1", {
       modulesFloorMet,
@@ -1161,6 +1418,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const containerReads = [...tree.modules].flatMap(([path, reading]) => readerKeyFindings(path, reading, CONTAINERS));
     const uses = tree.readers.flatMap(path => containerUses(path, readFileSync(join(REPO, path), "utf8")));
     const useFindings = otherUses(uses);
+    const unresolved = tree.readers.flatMap(path => unresolvedReads(path, readFileSync(join(REPO, path), "utf8")));
+    const unresolvedFound = unresolvedFindings(unresolved);
     // Planted rows in the measured rf's own vocabulary (context.render.schema.json at the roster's rfCommit, the roster's
     // schemaDigests entry): token_cost.kind = token_cost_kind in measured | estimated | unknown (unknown exactly when tokens is
     // null), component status in ok | failed | recovered, source_unavailable a list of lens:<key> refs.
@@ -1248,6 +1507,12 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "src/workbench/reactivefiber-observer.ts blocks count",
     ]);
     expect(useFindings, "a record container read beyond its count and row shape in an rf reader").toEqual([]);
+    expect(unresolved, "every key read in an rf reader that KEYS does not resolve (the non-vacuity anchor): the two lookup tables' reads").toEqual([
+      "src/workbench/native-evidence.ts NATIVE_TYPES[evidence.provider] table",
+      "src/workbench/reactivefiber-observer.ts SEAM_LABEL[host.seam] table",
+      "src/workbench/reactivefiber-observer.ts SEAM_LABEL[host.seam] table",
+    ]);
+    expect(unresolvedFound, "a key read in an rf reader that KEYS does not resolve and no lookup table answers (fail-closed)").toEqual([]);
     expect({ projectionEqual, evidenceEqual }, "attributed records change no projection and no evidence field").toStrictEqual({ projectionEqual: true, evidenceEqual: true });
     expect({ withheldProjectionEqual, withheldEvidenceEqual }, "on a render withholding a judged candidate, attributed records change neither").toStrictEqual({
       withheldProjectionEqual: true,
@@ -1262,6 +1527,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const reader = (body: string): number => readerKeyFindings("c.ts", readModule("c.ts", asReader(body)), CONTAINERS).length;
     const others = (body: string): number => otherUses(containerUses("c.ts", asReader(body))).length;
     const both = (body: string): number => reader(body) + others(body);
+    /** C2's whole verdict on a snippet: the resolved container reads, their uses, and the fail-closed judge's findings. */
+    const judged = (body: string): number => both(body) + unresolvedFindings(unresolvedReads("c.ts", asReader(body))).length;
     const reflective = "const rows = Object.values(result).filter(Array.isArray).length;\n";
     const controls = {
       findBlock: reader("const block = result.blocks.find(row => row.final_index === 0);\n"),
@@ -1294,12 +1561,41 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       objectMemberKey: both('const K = { rows: "blocks" } as const;\nconst rows = result[K.rows];\n'),
       twoLevelHelper: others("const deep = (row) => row.status === 'ok';\nconst live = (row) => deep(row);\nconst { blocks } = result;\nif (!blocks.every(item => live(item))) throw refused();\n"),
       importedHelper: others('import { live } from "./rows.js";\nconst { blocks } = result;\nif (!blocks.every(item => live(item))) throw refused();\n'),
+      atIndexKey: judged("const KEYS = ['blocks', 'necessity'] as const;\nconst key = KEYS.at(0);\nconst rows = key === undefined ? undefined : result[key];\n"),
+      frozenKeyList: judged("const KEYS = Object.freeze(['components'] as const);\nconst rows = result[KEYS[0]];\n"),
+      destructuredKey: judged("const [KEY] = ['components'] as const;\nconst rows = result[KEY];\n"),
+      reduceKey: judged("const KEYS = ['blocks', 'necessity'] as const;\nconst lists = KEYS.reduce((count, key) => count + (Array.isArray(result[key]) ? 1 : 0), 0);\n"),
+      importedKeyList: judged('import { KEYS } from "./keys.js";\nconst rows = result[KEYS[0]];\n'),
+      reassignedKey: judged("let key = 'necessity';\nkey = 'components';\nconst rows = result[key];\n"),
+      reboundKey: judged("let key = 'components';\nkey = pick();\nconst rows = result[key];\n"),
+      templateKey: judged(`const half = 'compo';\nconst rows = result[\`${"$"}{half}nents\`];\n`),
+      shadowingParamKey: judged("const key = 'necessity';\nconst lists = KEYS.reduce((count, key) => count + (Array.isArray(result[key]) ? 1 : 0), 0);\n"),
+      hoistedShadowKey: judged("const KEYS = ['necessity'] as const;\nconst ok = KEYS.every(key => {\n  if (flag) { var key = pick(); }\n  return result[key] !== undefined;\n});\n"),
+      computedBindingKey: judged("const KEYS = ['components', 'blocks'] as const;\nconst { [KEYS.at(0) ?? 'blocks']: rows } = result;\n"),
+      textKey: judged("const parts = output[FIELDS.at(0) ?? 'text'].split(marker);\n"),
+      numericIndex: judged("const first = diagnostics[0];\n"),
+      lookupTable: judged("const LABEL = { 'rf-cli': 'preview', 'injected-fixture': 'fixture' };\nconst label = LABEL[host.seam];\n"),
+      frozenTable: judged('const TYPES = Object.freeze({ forge: "operation", furnace: "run" });\nconst type = TYPES[evidence.provider];\n'),
+      iteratedKey: judged("const KEYS = ['necessity'] as const;\nconst ok = KEYS.every(key => result[key] !== undefined);\n"),
+      forOfKey: judged("for (const key of ['necessity']) use(result[key]);\n"),
+      reboundTable: judged("let LABEL = { a: 'x' };\nLABEL = result;\nconst rows = LABEL[host.seam];\n"),
+      unfoldedTable: judged("const TABLE = { a: pick() };\nconst rows = TABLE[host.seam];\n"),
+      mutatedKeyList: judged("const KEYS = ['necessity'];\nKEYS.push('components');\nconst lists = KEYS.map(key => result[key]);\n"),
+      writtenKeyList: judged("const KEYS = ['necessity'];\nKEYS[0] = 'components';\nconst rows = result[KEYS[0]];\n"),
+      assignedTable: judged("const LABEL = { a: 'x' };\nObject.assign(LABEL, { a: pick() });\nconst label = LABEL[host.seam];\n"),
+      composedContainerJudged: judged('const rows = result[["block", "s"].join("")];\n'),
+      objectMemberKeyJudged: judged('const K = { rows: "blocks" } as const;\nconst rows = result[K.rows];\n'),
+      inPresenceRead: others("const { blocks } = result;\nif (!blocks.every(item => !('kind' in item))) throw refused();\n"),
+      inPresenceHelper: others("const noKind = (row) => !('kind' in row);\nconst { blocks } = result;\nif (!blocks.every(item => noKind(item))) throw refused();\n"),
+      forInRow: others("const { blocks } = result;\nif (!blocks.every(item => { for (const field in item) return false; return true; })) throw refused();\n"),
     };
     return done("C2", {
       containers: [...CONTAINERS],
       containerReads,
       uses,
       useFindings,
+      unresolved,
+      unresolvedFindings: unresolvedFound,
       projectionEqual,
       evidenceEqual,
       withheldProjectionEqual,
@@ -1444,7 +1740,12 @@ describe("wb-hs2j.2 rf context read structure census (RF-REACTIVE-CONTEXT-ASSEMB
         launchers: LAUNCHERS,
         rfBinary: RF_BINARY,
         rfWord: `${RF_WORD.source}/${RF_WORD.flags}`,
+        argvSpan: ARGV_SPAN,
+        listItem: `${LIST_ITEM.source}/${LIST_ITEM.flags}`,
+        argvPunctuation: `${ARGV_PUNCTUATION.source}/${ARGV_PUNCTUATION.flags}`,
         iterators: ITERATORS,
+        mutators: MUTATORS,
+        setters: SETTERS,
         followUp: FOLLOW_UP,
         textRead: `${TEXT_OBJECT}.${TEXT_FIELD}`,
         containers: CONTAINERS,
