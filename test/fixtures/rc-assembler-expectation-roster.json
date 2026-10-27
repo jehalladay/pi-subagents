@@ -1,0 +1,983 @@
+{
+  "bead": "wb-km7q.2",
+  "producer": {
+    "repository": "ReactiveComponentsSDK",
+    "path": "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md",
+    "beadPin": "44b72145b1756908585c94da2327ab8809a3ca9a",
+    "measuredAt": "04e614620b0cb3dc44a4782151ab3f5620d6aa0b",
+    "blob": "45e623203565741f5b205b7e6930406bf21c4ac1",
+    "lines": [
+      {
+        "line": 3,
+        "text": "**Date:** 2026-10-17. **Status:** design only. **Branch:** master. **Program:** [cross-repository design](https://github.com/jehalladay/FiberOpticsResearch/tree/main/docs/research/foa/programs/adaptive-computation-and-control-2026-10-17). **Work packages:** AC-01, AC-08, AC-15.",
+        "sha256": "6269fecfa50f78df44470984125d7de6d01a5bb8089ce2ebbecbcf10726cdfb6"
+      },
+      {
+        "line": 12,
+        "text": "2. Separate `acquire` (does host obtain a resource?), `include` (does assembler include a block?), and `place` (where is it positioned?) decisions. Speculation controls acquisition at the host, not assembler execution.",
+        "sha256": "3c91dfba0bf04ef2d28a93e3a5016717afa5cb49f350f264345cfca3eaa8b94e"
+      },
+      {
+        "line": 38,
+        "text": "No model execution, tool dispatch, global cache or resource acquisition scheduler. Preserve Python component outputs and existing serialization; let host decide temporal freshness. Use local Forge and installed consumer QA; do not replace extant QA or performance programs. No dependency on DevTools, Mechanical packages or MicroPolicyCLI.",
+        "sha256": "748561e84f524814f7c5c4ae4b7c201010ccb9fa96ecf5c685145996262c1170"
+      },
+      {
+        "line": 46,
+        "text": "Acceptance RC-RQ1 immutable verified view projects exact Block; RC-RQ2 unknown not pass; RC-RQ3 changed manifest revokes prior content; RC-RQ4 visibility/audience change prevents cross-scope leakage; RC-RQ5 old keyed/priority/budget behavior unchanged; RC-RQ6 cold-vs-incremental ContextDocument equality; RC-RQ7 no new inference or DevTools dependency. Shared QuerySDK interfaces specified at https://github.com/jehalladay/ReactiveQuerySDK/tree/main/docs/program.",
+        "sha256": "08e60baa2f676a4de16b97fd601d86339ef91de67b4a37e78b6454362f0277dc"
+      }
+    ],
+    "gates": [
+      "RC-RQ1",
+      "RC-RQ2",
+      "RC-RQ3",
+      "RC-RQ4",
+      "RC-RQ5",
+      "RC-RQ6",
+      "RC-RQ7"
+    ],
+    "rcGate": "NOT-PASSED"
+  },
+  "vocabulary": {
+    "subject": [
+      "assembler",
+      "assemblers"
+    ],
+    "subjectPairs": [
+      [
+        "reactive",
+        "components"
+      ],
+      [
+        "rc",
+        "sdk"
+      ]
+    ],
+    "subjectPrefixes": [
+      "reactivecomponent"
+    ],
+    "assembly": [
+      "assembly",
+      "assemblies",
+      "assemble",
+      "assembles",
+      "assembled",
+      "assembling"
+    ],
+    "anchors": [
+      "context",
+      "contexts",
+      "component",
+      "components",
+      "rc",
+      "rf",
+      "fiber"
+    ],
+    "families": {
+      "acquire": [
+        "acquire",
+        "acquires",
+        "acquired",
+        "acquiring",
+        "acquisition",
+        "acquisitions",
+        "obtain",
+        "obtains",
+        "obtained",
+        "obtaining",
+        "speculate",
+        "speculates",
+        "speculated",
+        "speculating",
+        "speculation",
+        "speculations",
+        "speculative",
+        "speculatively"
+      ],
+      "schedule": [
+        "schedule",
+        "schedules",
+        "scheduled",
+        "scheduling",
+        "scheduler",
+        "schedulers",
+        "reschedule",
+        "reschedules",
+        "rescheduled",
+        "rescheduling"
+      ],
+      "freshness": [
+        "fresh",
+        "fresher",
+        "freshest",
+        "freshness",
+        "stale",
+        "staler",
+        "stalest",
+        "staleness"
+      ]
+    },
+    "markers": [
+      "not",
+      "no",
+      "never",
+      "nor",
+      "neither",
+      "without",
+      "cannot",
+      "until",
+      "unless",
+      "gated",
+      "unshipped",
+      "proposed",
+      "none",
+      "nothing"
+    ],
+    "markerPairs": [
+      [
+        "design",
+        "only"
+      ]
+    ]
+  },
+  "constants": {
+    "codeRoots": [
+      "examples",
+      "qa",
+      "src"
+    ],
+    "docRoots": [
+      ".agents",
+      ".pi",
+      "docs",
+      "examples"
+    ],
+    "outside": [
+      ".beads",
+      ".codex",
+      ".github",
+      "media",
+      "new-feedback",
+      "test",
+      "vendor"
+    ],
+    "frozenAt": "dc72a6d6d21b",
+    "docs03": "docs/workbench/03-architecture-and-ownership.md",
+    "filing": "Citations: docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:12@",
+    "capability": "reactivefiber.render.preview"
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "gating census — no Pi code or doc expects the assembler",
+      "pins": [
+        {
+          "id": "A1",
+          "quote": "gating census",
+          "witness": {
+            "gate": "CLOSED",
+            "verdict": "pass",
+            "findings": [],
+            "positives": [
+              "docs/workbench/zz-plant.md:1 acquire",
+              "src/zz-plant.ts:1 access freshness",
+              "README.md.plant.md:1 acquire+schedule",
+              "argv:11 acquire"
+            ],
+            "coverage": {
+              "readAll": true,
+              "codeAndDocs": true
+            },
+            "replica": {
+              "code": [
+                "examples/workflows/plant.js",
+                "qa/plant.mjs",
+                "src/plant-twin.ts",
+                "src/plant.ts",
+                "vitest.plant.config.ts"
+              ],
+              "docs": [
+                ".pi/agents/plant.md",
+                "README.md",
+                "docs/workbench/plant-twin.md",
+                "docs/workbench/plant.md",
+                "examples/plant-twin.md",
+                "examples/plant.md"
+              ],
+              "findings": [
+                ".pi/agents/plant.md:1 acquire",
+                "README.md:1 freshness",
+                "docs/workbench/plant.md:1 acquire+schedule",
+                "examples/plant.md:1 freshness",
+                "examples/workflows/plant.js:1 member freshness",
+                "qa/plant.mjs:1 comment freshness",
+                "src/plant.ts:1 access acquire+schedule",
+                "vitest.plant.config.ts:1 lexeme acquire"
+              ],
+              "verdict": "fail",
+              "standDown": "stand-down"
+            }
+          }
+        },
+        {
+          "id": "A2",
+          "quote": "no Pi code",
+          "witness": {
+            "walkAgreesWithGit": true,
+            "links": [],
+            "unnamedTop": [],
+            "unnamedRootFiles": [],
+            "floors": {
+              "codeModules": true,
+              "srcModules": true,
+              "readings": true,
+              "everyRoot": [
+                true,
+                true,
+                true
+              ],
+              "rootModules": true
+            },
+            "findings": [],
+            "unreadable": [],
+            "frozen": {
+              "revision": "dc72a6d6d21b",
+              "ancestor": true,
+              "modules": 197,
+              "readings": 203803,
+              "named": 0,
+              "findings": [],
+              "quieted": []
+            },
+            "controls": {
+              "lexeme": [
+                "src/plant.ts:1 lexeme freshness",
+                "src/plant.ts:2 lexeme acquire"
+              ],
+              "template": [
+                "src/plant.ts:1 lexeme schedule",
+                "src/plant.ts:2 lexeme freshness"
+              ],
+              "concatenation": [
+                "src/plant.ts:1 lexeme acquire"
+              ],
+              "access": [
+                "src/plant.ts:1 access acquire",
+                "src/plant.ts:2 access schedule"
+              ],
+              "element": [
+                "src/plant.ts:1 access freshness",
+                "src/plant.ts:2 access freshness"
+              ],
+              "member": [
+                "src/plant.ts:1 member freshness",
+                "src/plant.ts:2 member acquire",
+                "src/plant.ts:3 member acquire",
+                "src/plant.ts:4 member acquire"
+              ],
+              "comment": [
+                "src/plant.ts:1 comment acquire",
+                "src/plant.ts:2 comment freshness"
+              ],
+              "javascript": [
+                "qa/plant.cjs:1 member schedule"
+              ],
+              "spelled": [
+                "src/plant.ts:1 lexeme freshness",
+                "src/plant.ts:2 lexeme acquire"
+              ],
+              "destructured": [
+                "src/plant.ts:1 access acquire",
+                "src/plant.ts:2 access freshness"
+              ],
+              "indexedType": [
+                "src/plant.ts:1 access acquire"
+              ],
+              "imported": [
+                "src/plant.ts:1 import acquire",
+                "src/plant.ts:2 import schedule",
+                "src/plant.ts:3 import freshness"
+              ],
+              "optional": [
+                "src/plant.ts:1 access acquire",
+                "src/plant.ts:2 access schedule",
+                "src/plant.ts:3 access freshness"
+              ],
+              "regex": [
+                "src/plant.ts:1 lexeme acquire"
+              ],
+              "emptyBlock": [
+                "src/plant.ts:2 comment acquire",
+                "src/plant.ts:5 comment schedule"
+              ],
+              "templateType": [
+                "src/plant.ts:1 lexeme freshness"
+              ]
+            },
+            "quiet": {
+              "R-INDIRECT": [
+                [],
+                [],
+                []
+              ],
+              "R-COMPOSED": [
+                [],
+                []
+              ]
+            }
+          }
+        },
+        {
+          "id": "A3",
+          "quote": "or doc",
+          "witness": {
+            "floors": {
+              "docPages": true,
+              "rootPages": true,
+              "everyRoot": [
+                true,
+                true,
+                true,
+                true
+              ],
+              "sentences": true,
+              "docs03": true
+            },
+            "findings": [],
+            "frozen": {
+              "revision": "dc72a6d6d21b",
+              "ancestor": true,
+              "pages": 82,
+              "sentences": 12504,
+              "named": 3,
+              "findings": [],
+              "quieted": []
+            },
+            "cuts": [
+              [
+                "1:Intro line.",
+                "1:The assembler acquires;",
+                "1:no other row changed."
+              ],
+              [
+                "1:The assembler acquires resources."
+              ],
+              [
+                "1:| assembler | acquires |",
+                "2:| x | y |"
+              ],
+              [
+                "1:The assembler",
+                "2:- acquires"
+              ],
+              [
+                "1:The assembler",
+                "3:acquires."
+              ],
+              [
+                "1:# The assembler",
+                "2:acquires."
+              ],
+              [
+                "1:The assembler acquires!Next line"
+              ],
+              [
+                "1:Version 0.1.0 of the assembler acquires."
+              ],
+              [
+                "1:The assembler acquires?",
+                "2:Yes."
+              ]
+            ],
+            "judged": [
+              [
+                "docs/plant.md:3 acquire"
+              ],
+              [
+                "docs/plant.md:1 acquire"
+              ],
+              [
+                "docs/plant.md:3 acquire"
+              ],
+              [],
+              [],
+              []
+            ],
+            "quiet": {
+              "R-OUTSIDE-ROOTS": {
+                "read": [
+                  "docs/plant.md"
+                ],
+                "findings": [
+                  "docs/plant.md:1 acquire"
+                ],
+                "unreadWouldFind": [
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1,
+                  1
+                ]
+              },
+              "R-SPLIT": [
+                [],
+                []
+              ]
+            }
+          }
+        },
+        {
+          "id": "A4",
+          "quote": "expects the assembler",
+          "witness": {
+            "subjects": [
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire"
+            ],
+            "notSubjects": [
+              "unanchored",
+              "unanchored",
+              "unanchored",
+              "none",
+              "none",
+              "none",
+              "none"
+            ],
+            "anchors": [
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire"
+            ],
+            "markers": [
+              "marker",
+              "marker",
+              "marker",
+              "marker",
+              "marker",
+              "marker",
+              "marker",
+              "marker",
+              "marker",
+              "marker",
+              "marker",
+              "marker",
+              "marker",
+              "marker",
+              "marker",
+              "marker",
+              "marker"
+            ],
+            "notMarkers": [
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire"
+            ],
+            "expectations": [
+              "acquire",
+              "acquire+schedule",
+              "freshness"
+            ],
+            "quiet": {
+              "R-UNANCHORED": [
+                "unanchored",
+                "unanchored",
+                "unanchored"
+              ],
+              "R-RENDERER": [
+                null,
+                null,
+                null
+              ],
+              "R-SHORT-NAME": [
+                null,
+                null,
+                "none"
+              ],
+              "R-LOOKALIKE": [
+                null,
+                null,
+                null,
+                null
+              ],
+              "R-MARKER-ANYWHERE": [
+                null,
+                null,
+                null
+              ],
+              "R-SYNONYM": [
+                "acquired",
+                "acquires",
+                "acquiring",
+                "acquisitions",
+                "assemble",
+                "assemblers",
+                "assembles",
+                "assemblies",
+                "assembling",
+                "cannot",
+                "contexts",
+                "fresh",
+                "fresher",
+                "freshest",
+                "neither",
+                "none",
+                "nor",
+                "nothing",
+                "obtained",
+                "obtaining",
+                "obtains",
+                "proposed",
+                "reschedule",
+                "rescheduled",
+                "reschedules",
+                "rescheduling",
+                "scheduled",
+                "schedulers",
+                "schedules",
+                "scheduling",
+                "speculate",
+                "speculated",
+                "speculates",
+                "speculating",
+                "speculations",
+                "speculative",
+                "speculatively",
+                "stale",
+                "staleness",
+                "staler",
+                "stalest",
+                "unless",
+                "unshipped",
+                "without"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "to acquire, schedule or judge freshness",
+      "pins": [
+        {
+          "id": "B1",
+          "quote": "to acquire",
+          "witness": {
+            "forms": [
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire",
+              "acquire"
+            ],
+            "code": [
+              [
+                "src/plant.ts:1 access acquire"
+              ],
+              [
+                "src/plant.ts:1 lexeme acquire"
+              ],
+              [
+                "src/plant.ts:1 access acquire"
+              ],
+              [
+                "src/plant.ts:1 member acquire"
+              ]
+            ],
+            "nearMisses": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        },
+        {
+          "id": "B2",
+          "quote": "schedule",
+          "witness": {
+            "forms": [
+              "schedule",
+              "schedule",
+              "schedule",
+              "schedule",
+              "schedule",
+              "schedule",
+              "schedule",
+              "schedule",
+              "schedule",
+              "schedule"
+            ],
+            "code": [
+              [
+                "src/plant.ts:1 access schedule"
+              ],
+              [
+                "src/plant.ts:1 lexeme schedule"
+              ],
+              [
+                "src/plant.ts:1 member schedule"
+              ]
+            ],
+            "nearMisses": [
+              null,
+              null,
+              null,
+              null,
+              null
+            ]
+          }
+        },
+        {
+          "id": "B3",
+          "quote": "or judge freshness",
+          "witness": {
+            "forms": [
+              "freshness",
+              "freshness",
+              "freshness",
+              "freshness",
+              "freshness",
+              "freshness",
+              "freshness",
+              "freshness"
+            ],
+            "code": [
+              [
+                "src/plant.ts:1 access freshness"
+              ],
+              [
+                "src/plant.ts:1 lexeme freshness"
+              ],
+              [
+                "src/plant.ts:1 member freshness"
+              ]
+            ],
+            "nearMisses": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "quiet": {
+              "R-PARAPHRASE": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "until the RC gates pass and an actual Pi seam exists",
+      "pins": [
+        {
+          "id": "C1",
+          "quote": "until the RC gates pass",
+          "witness": {
+            "rcGate": "NOT-PASSED",
+            "recorded": "NOT-PASSED",
+            "hashed": [
+              true,
+              true,
+              true,
+              true
+            ],
+            "lines": [
+              3,
+              12,
+              38,
+              46
+            ],
+            "gates": [
+              "RC-RQ1",
+              "RC-RQ2",
+              "RC-RQ3",
+              "RC-RQ4",
+              "RC-RQ5",
+              "RC-RQ6",
+              "RC-RQ7"
+            ],
+            "readings": [
+              "3: none",
+              "3: none",
+              "3: none",
+              "3: none",
+              "3: none",
+              "12: none",
+              "12: finding",
+              "12: marker",
+              "38: none",
+              "38: none",
+              "38: none",
+              "38: none",
+              "38: none",
+              "38: none",
+              "46: none",
+              "46: none",
+              "46: none",
+              "46: none",
+              "46: none",
+              "46: none",
+              "46: none",
+              "46: none"
+            ],
+            "nearMisses": {
+              "recorded": "CLOSED",
+              "recorded-seam-present": "CLOSED",
+              "accepted-seam-absent": "CLOSED",
+              "accepted-seam-present": "OPEN",
+              "status-uppercase": "CLOSED",
+              "status-hyphenated": "CLOSED",
+              "gate-missing": "CLOSED",
+              "no-status-line": "CLOSED",
+              "no-lines": "CLOSED"
+            },
+            "verdict": "pass"
+          }
+        },
+        {
+          "id": "C2",
+          "quote": "and an actual Pi seam exists",
+          "witness": {
+            "seam": "ABSENT",
+            "rcSites": [],
+            "rcDependencies": [],
+            "rfCapabilities": [
+              [
+                "reactivefiber.render.preview",
+                "read"
+              ]
+            ],
+            "rfLaunchSites": [
+              "src/workbench/providers/reactivefiber.ts spawn"
+            ],
+            "inputNames": [
+              "model",
+              "task",
+              "taskId",
+              "view"
+            ],
+            "argv": {
+              "legacy": [
+                "--workspace",
+                "<root>",
+                "context",
+                "render",
+                "--model",
+                "fixture-model",
+                "--task",
+                "fixture-task",
+                "--no-commit",
+                "--no-input",
+                "--json"
+              ],
+              "legacyOutcome": "returned",
+              "view": [
+                "--workspace",
+                "<root>",
+                "context",
+                "render",
+                "--view",
+                "fixture-view",
+                "--task-id",
+                "fixture-task",
+                "--model",
+                "fixture-model",
+                "--no-commit",
+                "--no-input",
+                "--json"
+              ],
+              "viewOutcome": "returned"
+            },
+            "findings": [],
+            "ownership": {
+              "found": true,
+              "cells": [
+                "Context rendering, necessity and provenance",
+                "ReactiveFiberCLI",
+                "invoke supported API and retain render evidence"
+              ],
+              "reading": "none",
+              "families": []
+            },
+            "controls": {
+              "argv": [
+                [
+                  "argv:11 freshness"
+                ],
+                [
+                  "argv:11 acquire"
+                ],
+                [
+                  "argv:0 acquire"
+                ],
+                [
+                  "argv:0 schedule"
+                ],
+                [
+                  "argv:0 freshness"
+                ]
+              ],
+              "input": [
+                "input:1 freshness",
+                "input:2 acquire",
+                "input:3 schedule"
+              ],
+              "env": [
+                "env:2 freshness",
+                "env:3 acquire"
+              ],
+              "launches": [
+                "src/other.ts fork",
+                "src/plant.ts execFileSync",
+                "src/plant.ts execSync",
+                "src/plant.ts spawn"
+              ],
+              "sites": [
+                "src/plant.ts:1 import",
+                "src/plant.ts:1 lexeme",
+                "src/plant-py.ts:1 lexeme"
+              ],
+              "dependencies": [
+                "@jehalladay/reactive-components"
+              ],
+              "seams": [
+                "ABSENT",
+                "PRESENT",
+                "PRESENT"
+              ]
+            },
+            "quiet": {
+              "R-SEAM-OTHER": [
+                [],
+                []
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "unclaimed": [
+    {
+      "duty": "speculation controls resource acquisition at the Pi host only and never assembler execution",
+      "reason": "armed duty of the title's If-clause: it binds once Pi supplies speculation inputs to ReactiveComponentsSDK assembly; C2 reads no Pi input reaching an assembler (the only seam is the read rf render preview, whose argv and input schema carry no family word), so there is no Pi speculation path to judge"
+    },
+    {
+      "duty": "Pi decides temporal freshness",
+      "reason": "armed duty of the title's If-clause: it binds once Pi supplies freshness inputs to assembly; no Pi freshness input reaches an assembler today (C2), and Pi's reading of the rf observation rows' stated freshness label is the wb-973.9 observer's, outside this clause"
+    }
+  ],
+  "residuals": [
+    {
+      "id": "R-OUTSIDE-ROOTS",
+      "quietPin": "A3"
+    },
+    {
+      "id": "R-INDIRECT",
+      "quietPin": "A2"
+    },
+    {
+      "id": "R-COMPOSED",
+      "quietPin": "A2"
+    },
+    {
+      "id": "R-SPLIT",
+      "quietPin": "A3"
+    },
+    {
+      "id": "R-UNANCHORED",
+      "quietPin": "A4"
+    },
+    {
+      "id": "R-RENDERER",
+      "quietPin": "A4"
+    },
+    {
+      "id": "R-SHORT-NAME",
+      "quietPin": "A4"
+    },
+    {
+      "id": "R-LOOKALIKE",
+      "quietPin": "A4"
+    },
+    {
+      "id": "R-MARKER-ANYWHERE",
+      "quietPin": "A4"
+    },
+    {
+      "id": "R-SYNONYM",
+      "quietPin": "A4"
+    },
+    {
+      "id": "R-PARAPHRASE",
+      "quietPin": "B3"
+    },
+    {
+      "id": "R-SEAM-OTHER",
+      "quietPin": "C2"
+    }
+  ]
+}

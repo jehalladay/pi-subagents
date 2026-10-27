@@ -40,10 +40,15 @@
  *    is the provider's, no literal spells an uncommitted render or a commit-time flag, with controls. A launch is a call of a
  *    launcher - a bare child_process name, a child_process import alias, a variable bound or destructured to a launcher, or a
  *    member or element call such as childProcess.spawn, pi.exec or cp["spawn"] - whose program literal is rf or a path to it
- *    (/usr/local/bin/rf, C:\tools\rf.exe; wb-s4j3 F3), a shell string whose first word is one included; an argv is read through
- *    inline spreads, literal .concat chains, type and non-null assertions, and every later push that completes a declared array
- *    literal in its scope (wb-s4j3 F3), a render is a "context" word with a later "render" word (flags may sit between), and a '+'
- *    chain of string literals is read as one text (wb-w1g3 F1(iv): G15, G17); A2 a stand-in rf on PATH sees --no-commit on both
+ *    (/usr/local/bin/rf, C:\tools\rf.exe; wb-s4j3 F3), a shell string whose first word is one included, its callee, its program
+ *    and a launcher's binding each read through parentheses and type and non-null assertions (wb-29wk F1: spawn("rf" as string,
+ *    argv), (spawn as typeof spawn)("rf", argv), const run = spawn as typeof spawn); an argv is read through inline spreads,
+ *    literal .concat chains, type and non-null assertions, and every later push that completes a declared array literal in its
+ *    scope (wb-s4j3 F3): a .push or ["push"] call, its callee and receiver read through the same wrappers, made on the literal's
+ *    name ((argv as string[]).push, argv!.push) or on a variable declared to that name in its scope after it (const same = argv,
+ *    let and var too, a wrapped initializer, an alias of an alias; wb-29wk F1); a render is a "context" word with a later "render"
+ *    word (flags may sit between), and a '+' chain of string literals is read as one text (wb-w1g3 F1(iv): G15, G17); A2 a
+ *    stand-in rf on PATH sees --no-commit on both
  *    input arms; A3 the rf roster stays the read preview: native and injected registrations selected by id, permission or an rf
  *    contractSource (rf@ release or the reactive-fiber.cli schema), never the id prefix alone (wb-w1g3 F1(iv): G14), and by reach
  *    (wb-s4j3 F2): the rf provider's two registrations are read whole, unfiltered, each the preview alone, and every src reference
@@ -114,12 +119,17 @@
  *   capability A3 binds by neither marker nor reach - one relaying the read preview through the registry, or one reaching the
  *   launcher through a name assembled at runtime - is not selected (quiet rows: A3's registryRelay and assembledName controls);
  *   R-MUTATED-ARGV a render argv completed by a mutation other than a push in its declaring scope (unshift, splice, an index write,
- *   a reassignment) is read as its declared literal alone (quiet row: A1's unshiftArgv control); R-VACUOUS-PAYLOAD a case that
+ *   a reassignment) is read as its declared literal alone (quiet row: A1's unshiftArgv control); R-INDIRECT-PUSH a push reached
+ *   other than as a .push or ["push"] call on the literal's name, a wrapper of it or a variable declared to it - through
+ *   Array.prototype.push.call or .apply, Reflect.apply, a helper the argv is passed to, or an alias made by assignment rather than
+ *   by a declaration - is not folded, so the argv is read as its declared literal alone (quiet row: A1's indirectPush control,
+ *   wb-29wk F1); R-VACUOUS-PAYLOAD a case that
  *   makes its pinned number of assertions on values it never measured and returns a deep copy of its witness, read from the
  *   roster's rows directly or written out as a literal, keeps its reached count and passes the witness guard (quiet row HQ1).
  * NOT CLAIMED: a coordinated edit of this file and the roster that drops a residual the landed note did not name or re-maps a
- * residual to other quiet pins, or that rewrites a pin's assertion count: the tracker export anchors only the eight residuals the
- * landed note named and the clause tags of rows B to D; nor an edit of the per-pin wrapper's own guard lines.
+ * residual to other quiet pins, that drops a control together with its entry in the pin's roster witness (A1's wb-29wk
+ * controls among them), or that rewrites a pin's assertion count: the tracker export anchors only the eight residuals the landed
+ * note named and the clause tags of rows B to D; nor an edit of the per-pin wrapper's own guard lines.
  * SCOPE: the code, metadata shape and record fields are producer facts at the pin; Pi vendors no rf schema, so a producer-side
  * change is seen only when the roster is re-read. The armed half (a committing capability with --idempotency-key and rf operation
  * show reconciliation) is owner-reserved under wb-jwc.5: no committing capability, argv or reader is added here, and the committing
@@ -224,6 +234,7 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-FRESH-RUNON": ["LQ4"],
   "R-RELAYED-REACH": ["A3"],
   "R-MUTATED-ARGV": ["A1"],
+  "R-INDIRECT-PUSH": ["A1"],
   "R-VACUOUS-PAYLOAD": ["HQ1"],
 };
 const JUDGED_TITLE = "the judged set: the frozen shape, the out-of-file roster and the cases agree";
@@ -816,11 +827,14 @@ interface RfScan {
 }
 /** The local names a module binds to a launcher, read in source order: the bare LAUNCHERS, a named child_process import under
  * another name (import { spawn as run }), a variable bound to a launcher or a launcher member (const run = spawn, const run =
- * cp.spawn) and a destructured launcher (const { spawn: run } = childProcess). */
+ * cp.spawn), its initializer read through parentheses and type and non-null assertions (const run = spawn as typeof spawn;
+ * wb-29wk F1), and a destructured launcher (const { spawn: run } = childProcess). */
 function launcherNames(file: ts.SourceFile): Set<string> {
   const names = new Set<string>(LAUNCHERS);
-  const isLauncher = (node: ts.Expression): boolean =>
-    (ts.isIdentifier(node) && names.has(node.text)) || (ts.isPropertyAccessExpression(node) && LAUNCHERS.includes(node.name.text));
+  const isLauncher = (expression: ts.Expression): boolean => {
+    const node = unwrapped(expression);
+    return (ts.isIdentifier(node) && names.has(node.text)) || (ts.isPropertyAccessExpression(node) && LAUNCHERS.includes(node.name.text));
+  };
   const visit = (node: ts.Node): void => {
     if (ts.isImportDeclaration(node) && ts.isStringLiteral(node.moduleSpecifier) && CHILD_PROCESS.includes(node.moduleSpecifier.text)) {
       const bindings = node.importClause?.namedBindings;
@@ -843,19 +857,29 @@ function launcherNames(file: ts.SourceFile): Set<string> {
   return names;
 }
 /** Whether a call launches rf: its callee is a launcher - a bound name, or a member such as childProcess.spawn, pi.exec or
- * cp["spawn"] - and its program literal names rf (a shell command whose first word is rf included). */
+ * cp["spawn"] - and its program literal names rf (a shell command whose first word is rf included); the callee and the program
+ * are each read through parentheses and type and non-null assertions ((spawn as typeof spawn)("rf", argv), spawn("rf" as string,
+ * argv); wb-29wk F1). */
 function launchesRf(call: ts.CallExpression, launchers: ReadonlySet<string>): boolean {
-  const callee = call.expression;
+  const callee = unwrapped(call.expression);
   const launcher = (ts.isIdentifier(callee) && launchers.has(callee.text)) ||
     (ts.isPropertyAccessExpression(callee) && LAUNCHERS.includes(callee.name.text)) ||
     (ts.isElementAccessExpression(callee) && ts.isStringLiteralLike(callee.argumentExpression) && LAUNCHERS.includes(callee.argumentExpression.text));
-  const program = call.arguments[0];
+  const argument = call.arguments[0];
+  const program = argument === undefined ? undefined : unwrapped(argument);
   return launcher && program !== undefined && ts.isStringLiteralLike(program) && RF_PROGRAM.test(program.text);
 }
 /** Whether a node wraps an expression the argv reading sees through: parentheses, a type assertion (as, satisfies, <T>) or a
  * non-null assertion (wb-s4j3 F3). */
 function isWrapper(node: ts.Node): node is ts.ParenthesizedExpression | ts.AsExpression | ts.SatisfiesExpression | ts.TypeAssertion | ts.NonNullExpression {
   return ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node);
+}
+/** The expression inside every wrapper isWrapper sees through (wb-29wk F1): a push call's callee and receiver, an alias's
+ * initializer, a launcher binding's initializer, and a launch's callee and program are each read through it. */
+function unwrapped(node: ts.Expression): ts.Expression {
+  let at = node;
+  while (isWrapper(at)) at = at.expression;
+  return at;
 }
 /** The receiver of a `.concat(...)` call, or undefined when the node is none. */
 function concatReceiver(node: ts.Node): ts.Expression | undefined {
@@ -904,27 +928,51 @@ function scopeOf(node: ts.Node): ts.Node {
   while (!(ts.isBlock(at) || ts.isModuleBlock(at) || ts.isSourceFile(at)) && at.parent !== undefined) at = at.parent;
   return at;
 }
-/** The argvs a push completes (wb-s4j3 F3): each array literal bound to a local name, followed by the words of every later
- * `<name>.push(...)` in the declaring scope, in source order; a pushed part that is no string literal reads null (composed). Any other
- * mutation (unshift, splice, an index write, a reassignment) is not folded: R-MUTATED-ARGV. */
+/** The name a push call is made on (wb-29wk F1): a `.push(...)` or `["push"](...)` call, its callee and its receiver each read
+ * through parentheses and type and non-null assertions ((argv as string[]).push, argv!.push, (argv.push)(...)), when the receiver
+ * is a bare name; undefined for any other call (Array.prototype.push.call(argv, ...) among them: R-INDIRECT-PUSH). */
+function pushReceiver(call: ts.CallExpression): string | undefined {
+  const callee = unwrapped(call.expression);
+  let receiver: ts.Expression | undefined;
+  if (ts.isPropertyAccessExpression(callee) && callee.name.text === "push") receiver = callee.expression;
+  if (ts.isElementAccessExpression(callee) && ts.isStringLiteralLike(callee.argumentExpression) && callee.argumentExpression.text === "push") receiver = callee.expression;
+  if (receiver === undefined) return undefined;
+  const name = unwrapped(receiver);
+  return ts.isIdentifier(name) ? name.text : undefined;
+}
+/** The argvs a push completes (wb-s4j3 F3; wb-29wk F1): each array literal bound to a local name (its initializer read through
+ * wrappers), followed by the words of every later push call on it in the declaring scope, in source order - a pushReceiver call on
+ * the name, or on a variable declared to it after it in that scope (its initializer the name, read through wrappers; let and var
+ * too; an alias of an alias the same way), each alias's pushes read in its own scope after its declaration; a pushed part that is
+ * no string literal reads null (composed). Any other mutation (unshift, splice, an index write, a reassignment) is not folded:
+ * R-MUTATED-ARGV; nor is a push reached any other way (push.call or .apply, Reflect.apply, a helper the argv is passed to, an alias
+ * made by assignment): R-INDIRECT-PUSH. */
 function pushFolded(file: ts.SourceFile): Map<ts.Node, (string | null)[]> {
   const declared: { readonly name: string; readonly scope: ts.Node; readonly end: number; readonly literal: ts.ArrayLiteralExpression }[] = [];
+  const aliases: { readonly name: string; readonly target: string; readonly scope: ts.Node; readonly start: number; readonly end: number }[] = [];
   const pushes: { readonly name: string; readonly call: ts.CallExpression }[] = [];
   const visit = (node: ts.Node): void => {
     if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined) {
-      let literal: ts.Expression = node.initializer;
-      while (isWrapper(literal)) literal = literal.expression;
+      const literal = unwrapped(node.initializer);
       if (ts.isArrayLiteralExpression(literal)) declared.push({ name: node.name.text, scope: scopeOf(node), end: node.end, literal });
+      if (ts.isIdentifier(literal)) aliases.push({ name: node.name.text, target: literal.text, scope: scopeOf(node), start: node.getStart(), end: node.end });
     }
-    if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression) && node.expression.name.text === "push" && ts.isIdentifier(node.expression.expression)) {
-      pushes.push({ name: node.expression.expression.text, call: node });
+    if (ts.isCallExpression(node)) {
+      const receiver = pushReceiver(node);
+      if (receiver !== undefined) pushes.push({ name: receiver, call: node });
     }
     ts.forEachChild(node, visit);
   };
   visit(file);
   const folded = new Map<ts.Node, (string | null)[]>();
   for (const { name, scope, end, literal } of declared) {
-    const later = pushes.filter(push => push.name === name && push.call.getStart() >= end && push.call.end <= scope.end);
+    // The names the literal is reached by, in source order: its own, then every variable declared to one of them in that name's
+    // scope after its declaration (wb-29wk F1).
+    const handles: { readonly name: string; readonly scope: ts.Node; readonly end: number }[] = [{ name, scope, end }];
+    for (const alias of aliases) {
+      if (handles.some(handle => handle.name === alias.target && alias.start >= handle.end && alias.end <= handle.scope.end)) handles.push(alias);
+    }
+    const later = pushes.filter(push => handles.some(handle => push.name === handle.name && push.call.getStart() >= handle.end && push.call.end <= handle.scope.end));
     const head = argvWords(literal);
     if (later.length === 0 || head === undefined) continue;
     const pushed = later.flatMap(({ call }) => call.arguments.flatMap(argument =>
@@ -1223,6 +1271,27 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       pushComposed: control('const argv = ["context"];\nargv.push(verb);\nspawn("rf", argv);'),
       // R-MUTATED-ARGV, its pinned quiet row: a mutation other than a push in the declaring scope is not folded.
       unshiftArgv: control('const argv = ["--workspace", w];\nargv.unshift("context", "render");\nspawn("rf", argv);'),
+      // wb-29wk F1: a push through a wrapped receiver or callee, a ["push"] element call and a push on a declared alias (an alias of
+      // an alias through <T> and satisfies included; a variable aliasing another name, or declared outside the argv's scope, is no
+      // alias of the argv), a launch whose program, callee or launcher binding sits behind a wrapper, then the gate's four double
+      // escapes (G2-F3c, G2-F3c3, G2-F3e, G2-F3f).
+      assertedReceiver: control('const argv = ["--workspace", w, "context"];\n(argv as string[]).push("render", "--model", m, "--json");\nspawn("rf", argv);'),
+      nonNullReceiver: control('const argv = ["context"];\nargv!.push("render", "--json");\nspawn("rf", argv);'),
+      elementPush: control('const argv = ["context"];\nargv["push"]("render", "--json");\nspawn("rf", argv);'),
+      wrappedPushCallee: control('const argv = ["context"];\n(argv.push)("render", "--json");\nspawn("rf", argv);'),
+      aliasPush: control('const argv = ["context"];\nconst same = argv;\nsame.push("render", "--json");\nspawn("rf", argv);'),
+      aliasChain: control('const argv = ["context"];\nlet first = <string[]>argv;\nvar second = (first satisfies string[]);\nsecond.push("render", "--json");\nspawn("rf", argv);'),
+      foreignAlias: control('const argv = ["context"];\nconst other = list;\nother.push("render", "--json");\nspawn("rf", argv);'),
+      scopedAlias: control('{ const argv = ["context"]; spawn("rf", argv); }\nconst same = argv;\nsame.push("render", "--json");'),
+      assertedProgram: control('spawn(("rf" as string), ["context", "render", "--no-commit"]);'),
+      wrappedLauncherCallee: control('(spawn as typeof spawn)("rf", ["context", "render", "--no-commit"]);'),
+      assertedLauncherAlias: control('const run = (spawn as typeof spawn);\nrun("rf", ["context", "render", "--no-commit"]);'),
+      assertedBoth: control('const argv = ["--workspace", w, "context"];\n(argv as string[]).push("render", "--json");\nspawn("rf" as string, argv);'),
+      nonNullBoth: control('const argv = ["--workspace", w, "context"];\nargv!.push("render", "--json");\nspawn("rf" as string, argv);'),
+      constantAsserted: control('const RF = "rf";\nconst argv = ["--workspace", w, "context"];\n(argv as string[]).push("render", "--json");\nspawn(RF, argv);'),
+      constantAlias: control('const RF = "rf";\nconst argv = ["--workspace", w, "context"];\nconst same = argv;\nsame.push("render", "--json");\nspawn(RF, argv);'),
+      // R-INDIRECT-PUSH, its pinned quiet row: a push reached through Array.prototype.push.call is not folded.
+      indirectPush: control('const argv = ["context"];\nArray.prototype.push.call(argv, "render", "--json");\nspawn("rf", argv);'),
     };
     expect(controls).toStrictEqual({
       uncommittedArgv: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, noCommitArgv: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
@@ -1237,6 +1306,15 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       assertedArgv: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, assertedPlus: { render: 0, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
       pushArgv: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
       pushComposed: { render: 0, uncommitted: 0, flags: 0, composed: 1, launches: 1 }, unshiftArgv: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      assertedReceiver: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, nonNullReceiver: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      elementPush: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, wrappedPushCallee: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      aliasPush: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, aliasChain: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      foreignAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, scopedAlias: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      assertedProgram: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      wrappedLauncherCallee: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, assertedLauncherAlias: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      assertedBoth: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, nonNullBoth: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      constantAsserted: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 }, constantAlias: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      indirectPush: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
     });
     return { srcFloorMet, ...found, controls };
   },

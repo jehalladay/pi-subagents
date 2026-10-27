@@ -43,9 +43,11 @@
  *    a computed key), a Map or Set key (the first argument of a COLLECTION_METHODS call), a "+" join to a quoted rf tag, a
  *    computed property key, the key of an array-literal pair a Map, WeakMap or Object.fromEntries is built from, or an element
  *    access other than by a quoted property name (a single- or double-quoted literal, or a template literal with no
- *    interpolation). SRC_FLOOR, RF_SCOPE_FLOOR, RF_TEMPLATE_FLOOR and the anchor make an emptied or misdirected walk red, and
- *    every rf-scope file on disk is read in full: the text each scan matches must open with the file's own text, read from disk
- *    beside the walk.
+ *    interpolation). SRC_FLOOR, RF_SCOPE_FLOOR, RF_TEMPLATE_FLOOR and two token anchors (ANCHORS: the observer's context-preview
+ *    and the provider's REACTIVE_FIBER_CONTRACT_SOURCE, each an rf-scope file whose matched text and whose read through the tree
+ *    must carry its token) make an emptied or misdirected walk red; every rf-scope file but an in-memory plant has its own text
+ *    on disk beside the walk (scopeOnDisk), and every rf-scope file is read in full: the text each scan matches must open with
+ *    that disk text.
  *  B, acceptance (b). B1 the sameWorkspace pair differs in backend_instance_id alone and shares its alias, locator and raw
  *    revision; B2 identityKey separates it, every key in OTHER_KEYS merges it; B3 Pi's real projection holds it as two nodes in
  *    every identity-bearing index (the node index and a ref query, the version index, the evidence index), where the raw counter
@@ -75,7 +77,13 @@
  *    form, each attributed to the planted path; PC5 A4's two-root judgment (judgeReads) reads the two real reads as keyed
  *    differently once each carries a key derived from its own reading's root and no literal locator (the root's sha256 as the
  *    source revision); PC6 and PC7 the A5 and C5 scan reports exactly the PC3 and PC4 plant appended in memory to the live
- *    text of each rf-scope file in turn, attributed to that file, so a scan that reads or matches only some rf-scope files reds.
+ *    text of each rf-scope file in turn, attributed to that file, so a scan that reads or matches only some rf-scope files reds,
+ *    and the control plants into every rf-scope file of the walk and every anchor, bound twice (untargeted, the files and
+ *    anchors it never planted into, and anchorReports, the plant hits it saw per anchor), so a control that plants into only
+ *    some files reds; PC8 the scans' read-in-full check (readRfScope, the reading A5's and C5's instrument judges) reports each
+ *    rf-scope file read one character short through the tree in turn as exactly that file, its anchors still read and every
+ *    file still on disk, so a check that compares nothing, or an empty or partial disk text, reds, its coverage bound twice
+ *    like PC6's and PC7's (untargeted, and anchorsReadShort, the verdict per anchor).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id,
  * label and pins, every pin's witness, IDENTITY_FIELDS, GATING_ARTIFACTS and the five matcher vocabularies, word for word - is
  * held to the out-of-file roster test/fixtures/rf-federated-identity-roster.json, whose producer excerpts are held to the pin by
@@ -103,7 +111,8 @@
  * itself. wb-ldbz (the wb-o4h0.2 gate's follow-up, F1-F4) added rows MV and PC, pins MA9-MA12, QA3, QA4, MC7, MC8 and QC5, A4's
  * digest and stream-position fields, A3's state witness and the five roster vocabularies. wb-jnpc (the wb-ldbz gate's follow-up,
  * F1-F5) added A4's root witness, the scans' read-in-full check, pins MA13, MA14, QA5-QA8, QC6-QC9 and PC5-PC7, the KP1 and KP2
- * spellings and the REACHED tally.
+ * spellings and the REACHED tally. wb-xr81 (the wb-jnpc gate's follow-up, F1 and F2) added the second token anchor, the
+ * scopeOnDisk check, the anchors' witness, PC6 and PC7's untargeted and anchorReports bindings and pin PC8.
  *
  * Display paths added: none. Test-only: nothing is spawned or written; src and this roster are only read.
  */
@@ -188,8 +197,8 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "PC",
-    label: "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and two-root judgment, and the A5 and C5 src scans over a planted file and over each live rf-scope file",
-    pins: ["PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7"],
+    label: "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and two-root judgment, and the A5 and C5 src scans over a planted file, over each live rf-scope file and over each rf-scope file read short",
+    pins: ["PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7", "PC8"],
   },
 ];
 
@@ -491,6 +500,18 @@ const RF_SCOPE_FLOOR = 2;
 const RF_TEMPLATE_FLOOR = 6;
 const ANCHOR_FILE = join(SRC, "workbench", "reactivefiber-observer.ts");
 const ANCHOR_TOKEN = "context-preview";
+/** A token anchor: an rf-scope file a scan must read, held by a token the file carries. */
+interface Anchor {
+  readonly file: string;
+  readonly token: string;
+}
+/** The scans' token anchors, one per rf-scope file at base (wb-xr81 F1): the observer, and the provider with its exported
+ * contract-source carrier, so a tree that reads one rf-scope file in full and another short reds even with the disk reading
+ * hollowed. */
+const ANCHORS: readonly Anchor[] = [
+  { file: ANCHOR_FILE, token: ANCHOR_TOKEN },
+  { file: join(SRC, "workbench", "providers", "reactivefiber.ts"), token: "REACTIVE_FIBER_CONTRACT_SOURCE" },
+];
 /** The rf adapter files: a src script whose name names the rf provider or federation, or carries an "rf" name token. */
 const RF_NAME = /reactivefiber|federat/;
 const SCRIPT = /\.[cm]?[jt]s$/;
@@ -721,6 +742,8 @@ function textOf(path: string): string {
 interface SrcTree {
   readonly files: readonly string[];
   readonly read: (path: string) => string;
+  /** The files the tree holds only in memory (rows PC3 and PC4's plant): the only scoped files with no text on disk. */
+  readonly planted?: readonly string[];
 }
 const liveTree = (): SrcTree => ({ files: filesBelow(SRC), read: textOf });
 /** Rows PC3 and PC4's plant: an rf-scope file that exists only in memory, read beside the live tree; nothing is written. */
@@ -728,7 +751,7 @@ const PLANT_FILE = join(SRC, "workbench", "rf-federated-census-plant.ts");
 function plantedTree(source: string): SrcTree {
   const live = liveTree();
   expect(live.files, `${relative(REPO, PLANT_FILE)} exists on disk, so the plant would shadow it`).not.toContain(PLANT_FILE);
-  return { files: [...live.files, PLANT_FILE], read: path => (path === PLANT_FILE ? source : live.read(path)) };
+  return { files: [...live.files, PLANT_FILE], read: path => (path === PLANT_FILE ? source : live.read(path)), planted: [PLANT_FILE] };
 }
 interface ScopeScan {
   readonly witness: { [key: string]: Json };
@@ -744,16 +767,31 @@ function diskText(path: string): string | undefined {
     return undefined;
   }
 }
-/** Rows A5 and C5's instrument: walks the tree, holds the floors and the anchor, reads each rf-scope file once and holds that
- * read to the file's own text on disk (the matched text must open with it, so an emptied or cut-short read reds, while an
- * in-memory plant may follow it), and returns every matcher hit in the rf scope. The callers judge the hits (none on the live
- * tree, exactly the planted ones on a planted tree), so one walk serves both. */
-function scanRfScope(matcher: (source: string) => string[], tree: SrcTree = liveTree()): ScopeScan {
+/** One reading of the rf scope before any judgment (rows A5 and C5's instrument judges it, row PC8 drives it under short reads):
+ * the scoped files, the floors, the anchors not read (outside the scope, or whose matched text or read through the tree lacks
+ * the token), the scoped files with no text on disk other than the tree's in-memory plants, the scoped files whose matched
+ * text does not open with their own text on disk, and every matcher hit. */
+interface ScopeReading {
+  readonly scoped: readonly string[];
+  readonly floorMet: boolean;
+  readonly scopedFloorMet: boolean;
+  readonly anchorsUnread: readonly string[];
+  readonly offDisk: readonly string[];
+  readonly unread: readonly string[];
+  readonly hits: readonly string[];
+}
+function readRfScope(matcher: (source: string) => string[], tree: SrcTree): ScopeReading {
   const scoped = tree.files.filter(inRfScope);
   const texts = scoped.map(file => tree.read(file));
   const floorMet = tree.files.length >= SRC_FLOOR;
   const scopedFloorMet = scoped.length >= RF_SCOPE_FLOOR;
-  const anchorRead = scoped.includes(ANCHOR_FILE) && tree.read(ANCHOR_FILE).includes(ANCHOR_TOKEN);
+  const anchorsUnread = ANCHORS.filter(anchor => {
+    const index = scoped.indexOf(anchor.file);
+    return index === -1 || !(texts[index] ?? "").includes(anchor.token) || !tree.read(anchor.file).includes(anchor.token);
+  }).map(anchor => relative(REPO, anchor.file));
+  const offDisk = scoped
+    .filter(file => diskText(file) === undefined && !(tree.planted ?? []).includes(file))
+    .map(file => relative(REPO, file));
   const unread = scoped
     .filter((file, index) => {
       const disk = diskText(file);
@@ -761,30 +799,61 @@ function scanRfScope(matcher: (source: string) => string[], tree: SrcTree = live
     })
     .map(file => relative(REPO, file));
   const hits = scoped.flatMap((file, index) => matcher(texts[index] ?? "").map(hit => `${relative(REPO, file)}: ${hit}`));
+  return { scoped, floorMet, scopedFloorMet, anchorsUnread, offDisk, unread, hits };
+}
+/** Rows A5 and C5's instrument: walks the tree, holds the floors and the anchors, reads each rf-scope file once and holds that
+ * read to the file's own text on disk (every file but an in-memory plant has one, and the matched text must open with it, so
+ * an emptied or cut-short read reds, while an in-memory plant may follow it), and returns every matcher hit in the rf scope.
+ * The callers judge the hits (none on the live tree, exactly the planted ones on a planted tree), so one walk serves both. */
+function scanRfScope(matcher: (source: string) => string[], tree: SrcTree = liveTree()): ScopeScan {
+  const { scoped, floorMet, scopedFloorMet, anchorsUnread, offDisk, unread, hits } = readRfScope(matcher, tree);
   expect(floorMet, `src: ${tree.files.length} files walked, floor ${SRC_FLOOR}`).toBe(true);
   expect(scopedFloorMet, `rf scope: ${scoped.length} files, floor ${RF_SCOPE_FLOOR}`).toBe(true);
-  expect(anchorRead, `the anchor ${relative(REPO, ANCHOR_FILE)} was not read with ${ANCHOR_TOKEN}`).toBe(true);
+  expect(anchorsUnread, "token anchors the scan did not read with their token").toEqual([]);
+  expect(offDisk, "rf-scope files with no text on disk beside the walk").toEqual([]);
   expect(unread, "rf-scope files the scan did not read in full from disk").toEqual([]);
-  return { witness: { floorMet, scopedFloorMet, anchorRead, scopeReadInFull: unread.length === 0, hits }, hits, scoped };
+  const anchors = ANCHORS.map(anchor => `${relative(REPO, anchor.file)}: ${anchor.token}`);
+  const witness = {
+    floorMet,
+    scopedFloorMet,
+    anchorRead: anchorsUnread.length === 0,
+    anchors,
+    scopeOnDisk: offDisk.length === 0,
+    scopeReadInFull: unread.length === 0,
+    hits: [...hits],
+  };
+  return { witness, hits, scoped };
 }
 interface AppendedScan {
   readonly reported: readonly string[];
   readonly missed: readonly string[];
+  readonly untargeted: readonly string[];
+  readonly anchorReports: readonly (number | null)[];
 }
+/** The rf-scope files of a walk and the anchors a per-file control never visited (wb-xr81 F2), so a control that visits only
+ * some of them reds. */
+const untargetedOf = (scoped: readonly string[], targets: readonly string[]): string[] =>
+  [...new Set([...scoped, ...ANCHORS.map(anchor => anchor.file)])].filter(file => !targets.includes(file)).map(file => relative(REPO, file));
 /** Rows PC6 and PC7's control: each rf-scope file of the live tree in turn carries the plant appended to its own live text (in
  * memory; nothing is written), and the scan must report exactly the plant's hits, attributed to that file. Returns the distinct
- * hits reported across the files (each one's own path removed, in report order) and the files where the scan did not report
- * exactly the plant's hits, so a scan that reads or matches only some rf-scope files reds. */
+ * hits reported across the files (each one's own path removed, in report order), the files where the scan did not report
+ * exactly the plant's hits, the walked files and anchors it never planted into, and per anchor (ANCHORS order) the count of
+ * plant hits the scan that planted into that anchor attributed to it (null when none did), so a scan that reads or matches
+ * only some rf-scope files reds, and so does a control that plants into only some of them. */
 function appendedScan(matcher: (source: string) => string[], plant: string, plantHits: readonly string[]): AppendedScan {
   const live = liveTree();
   const scoped = live.files.filter(inRfScope);
   expect(scoped.length, `rf scope: ${scoped.length} files, floor ${RF_SCOPE_FLOOR}`).toBeGreaterThanOrEqual(RF_SCOPE_FLOOR);
   const reported: string[] = [];
+  const targets: string[] = [];
+  const attributed = new Map<string, number>();
   const missed = scoped
     .filter(target => {
+      targets.push(target);
       const tree: SrcTree = { files: live.files, read: path => (path === target ? `${live.read(path)}\n${plant}\n` : live.read(path)) };
       const prefix = `${relative(REPO, target)}: `;
       const { hits } = scanRfScope(matcher, tree);
+      attributed.set(target, hits.filter(hit => hit.startsWith(prefix)).length);
       for (const hit of hits) {
         const bare = hit.startsWith(prefix) ? hit.slice(prefix.length) : hit;
         if (!reported.includes(bare)) reported.push(bare);
@@ -792,7 +861,47 @@ function appendedScan(matcher: (source: string) => string[], plant: string, plan
       return !sameHits(hits, plantHits.map(hit => `${prefix}${hit}`));
     })
     .map(file => relative(REPO, file));
-  return { reported, missed };
+  const anchorReports = ANCHORS.map(anchor => attributed.get(anchor.file) ?? null);
+  return { reported, missed, untargeted: untargetedOf(scoped, targets), anchorReports };
+}
+interface ShortReadScan {
+  readonly readings: readonly Json[];
+  readonly missed: readonly string[];
+  readonly untargeted: readonly string[];
+  readonly anchorsReadShort: readonly (boolean | null)[];
+}
+/** Row PC8's control: each rf-scope file of the live tree in turn is read one character short through the tree (in memory;
+ * nothing is written), and the scans' reading (readRfScope, which rows A5 and C5's instrument judges) must report exactly that
+ * file as not read in full, every anchor still read with its token and every file still on disk. Returns the distinct readings
+ * (each one's own path written "own"), the files the reading did not report exactly, the walked files and anchors never read
+ * short, and per anchor (ANCHORS order) whether the reading reported exactly that anchor when it was read short (null when it
+ * never was), so a read-in-full check that compares nothing, or an empty or partial disk text, reds, and so does a control
+ * that reads only some files short. */
+function shortReadScan(): ShortReadScan {
+  const live = liveTree();
+  const scoped = live.files.filter(inRfScope);
+  expect(scoped.length, `rf scope: ${scoped.length} files, floor ${RF_SCOPE_FLOOR}`).toBeGreaterThanOrEqual(RF_SCOPE_FLOOR);
+  const readings: Json[] = [];
+  const targets: string[] = [];
+  const exact = new Map<string, boolean>();
+  const missed = scoped
+    .filter(target => {
+      targets.push(target);
+      const own = relative(REPO, target);
+      const tree: SrcTree = { files: live.files, read: path => (path === target ? live.read(path).slice(0, -1) : live.read(path)) };
+      const reading = readRfScope(locatorHits, tree);
+      const summary: Json = {
+        unread: reading.unread.map(file => (file === own ? "own" : file)),
+        anchorsUnread: [...reading.anchorsUnread],
+        offDisk: [...reading.offDisk],
+      };
+      if (!readings.some(entry => JSON.stringify(entry) === JSON.stringify(summary))) readings.push(summary);
+      exact.set(target, sameHits(reading.unread, [own]));
+      return !(sameHits(reading.unread, [own]) && reading.anchorsUnread.length === 0 && reading.offDisk.length === 0);
+    })
+    .map(file => relative(REPO, file));
+  const anchorsReadShort = ANCHORS.map(anchor => exact.get(anchor.file) ?? null);
+  return { readings, missed, untargeted: untargetedOf(scoped, targets), anchorsReadShort };
 }
 
 const RF_HOST: ReactiveFiberTopologyContext = {
@@ -1262,14 +1371,25 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     return { controlSameKeys: control.sameKeys, plantedSameKeys: judged.sameKeys, plantedLeaked: judged.leaked };
   },
   PC6: () => {
-    const { reported, missed } = appendedScan(locatorHits, LOCATOR_PLANT, LOCATOR_PLANT_HITS);
+    const { reported, missed, untargeted, anchorReports } = appendedScan(locatorHits, LOCATOR_PLANT, LOCATOR_PLANT_HITS);
     expect(missed, "row A5's scan missed a plant appended to the live text of an rf-scope file").toEqual([]);
-    return { reported: [...reported], missed: [...missed] };
+    expect(untargeted, "rf-scope files or anchors row PC6 never planted into").toEqual([]);
+    expect(anchorReports, "an anchor row PC6 did not see the whole plant in").toEqual(ANCHORS.map(() => LOCATOR_PLANT_HITS.length));
+    return { reported: [...reported], missed: [...missed], untargeted: [...untargeted], anchorReports: [...anchorReports] };
   },
   PC7: () => {
-    const { reported, missed } = appendedScan(revisionJoinHits, REVISION_PLANT, REVISION_PLANT_HITS);
+    const { reported, missed, untargeted, anchorReports } = appendedScan(revisionJoinHits, REVISION_PLANT, REVISION_PLANT_HITS);
     expect(missed, "row C5's scan missed a plant appended to the live text of an rf-scope file").toEqual([]);
-    return { reported: [...reported], missed: [...missed] };
+    expect(untargeted, "rf-scope files or anchors row PC7 never planted into").toEqual([]);
+    expect(anchorReports, "an anchor row PC7 did not see the whole plant in").toEqual(ANCHORS.map(() => REVISION_PLANT_HITS.length));
+    return { reported: [...reported], missed: [...missed], untargeted: [...untargeted], anchorReports: [...anchorReports] };
+  },
+  PC8: () => {
+    const { readings, missed, untargeted, anchorsReadShort } = shortReadScan();
+    expect(missed, "the scans' read-in-full check missed an rf-scope file read one character short").toEqual([]);
+    expect(untargeted, "rf-scope files or anchors row PC8 never read short").toEqual([]);
+    expect(anchorsReadShort, "an anchor row PC8 never saw reported as read short").toEqual(ANCHORS.map(() => true));
+    return { readings: [...readings], missed: [...missed], untargeted: [...untargeted], anchorsReadShort: [...anchorsReadShort] };
   },
   ...Object.fromEntries(
     SPELLINGS.map(spelling => [
@@ -1285,7 +1405,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
 
 describe("wb-o4h0.2 federated identity census (RF-FEDERATED-WORKSPACES-R3, absent-today leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:4", "C:5", "MA:23", "MC:17", "MV:5", "PC:7"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:4", "C:5", "MA:23", "MC:17", "MV:5", "PC:8"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );

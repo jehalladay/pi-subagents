@@ -30,15 +30,17 @@
  *    and none naming replay; A2 the rf launch sites of src: every call or construction whose first argument reads as a literal
  *    naming the rf program, whatever its callee or binding, is exactly the provider's spawn (a src floor). The literal is the
  *    argument itself or a module-local const, let or var read through its initializer (wb-3l7x F1 and its PREP F2: every
- *    declaration of the name at any depth, a cycle reading nothing), through parentheses and type assertions, either operand of ??
- *    or ||, either branch of a conditional, or the leading literal piece of a concatenation or template (a span folded while it
- *    reads whole: a literal, a binding, or a fallback or conditional of them); it names rf whole (a bare name or a path) or as the
- *    program word of a shell-command line's first simple command (wb-bstx F1: `execSync("rf --json status")`), read with its
- *    quoting removed (single and double quotes and their $-prefixed forms, backslashes) and raw, so a backslash path separator
- *    stays (wb-3l7x U1 M2: `C:\tools\rf.exe`, `.\rf`), after any opener (a subshell or group, !, if, while, until) and command
- *    prefix (NAME=value assignments, a quoted value included, and redirections), every unquoted operator ending a word (wb-3l7x
- *    F2) while a command or arithmetic substitution, a parameter expansion or a backquoted command stays inside the word it sits
- *    in, its own nested brackets, quoted strings and backslash escapes never closing it (wb-3l7x U1 M1: `RF_HOME=$(pwd) rf ...`).
+ *    declaration of the name at any depth, a cycle reading nothing), through parentheses, type assertions (as, satisfies, angle
+ *    brackets) and non-null marks, either operand of ?? or ||, either branch of a conditional, or the leading literal piece of a
+ *    concatenation or template (a span folded while it reads whole: a literal, a binding, or a fallback or conditional of them);
+ *    it names rf whole (a bare name or a path, an .exe or .cmd suffix included) or as the program word of a shell-command line's
+ *    first simple command (wb-bstx F1: `execSync("rf --json status")`), read with its quoting removed (single and double quotes
+ *    and their $-prefixed forms, backslashes, a backslash-newline joining the lines) and raw, so a backslash path separator stays
+ *    (wb-3l7x U1 M2: `C:\tools\rf.exe`, `.\rf`), after any opener (a subshell or group, !, if, while, until) and command prefix
+ *    (NAME=value assignments, a quoted value included, and redirections), every unquoted operator ending a word (wb-3l7x F2) while
+ *    a command or arithmetic substitution, a parameter expansion or a backquoted command stays inside the word it sits in (wb-3l7x
+ *    U1 M1: `RF_HOME=$(pwd) rf ...`): inside $(...) and ${...} its own nested brackets, quoted strings and backslash escapes never
+ *    close it, and a backquoted command ends at its first backquote that no backslash escapes (wb-kls1, the wb-3l7x gate's F4).
  *    Beside that reading A2 keeps the landed one verbatim (landing 372: the literal through a const bound to a literal or a
  *    template's text to its first span that is no literal, and the text's first whitespace word that is no NAME=value), so the
  *    cut only adds kills to the landed census (wb-3l7x U1). Controls: bare, aliased, namespace, method, template, path and const
@@ -48,7 +50,15 @@
  *    negated, conditioned, redirected, glued and commented shell lines, the substituted env values (command, arithmetic,
  *    templated, const-bound, spaced, quoted, escaped, inside double quotes, backquoted, expanded), the backslash program paths
  *    (absolute, relative, raw only), the landed reading's own kills (a later command after a NAME=value word, a template cut at
- *    its first span) and the let, var and compound-assigned shell lines; A3 no string or template literal of any src module
+ *    its first span), the let, var and compound-assigned shell lines, and one kill per claimed reading that the wb-3l7x gate's or
+ *    this seat's reader mutants found unpinned (wb-kls1, the gate's F3): every declaration of the name at any depth (a var in a
+ *    block, a let in a for-init, a nested second let, a var declared again), a let read through parentheses, satisfies, an
+ *    angle-bracket assertion and a non-null mark, either branch of its conditional and either operand of its || or ??, a let
+ *    span before the program, a span's leading piece, a construction, a spaced path read whole, a .cmd program, the $"..." quote,
+ *    the while and until openers, every redirection prefix (heredoc, tab-stripped heredoc, here-string, input, append,
+ *    read-write, both duplications, clobber, &> and &>>), a backslash-newline outside and inside double quotes, a program glued to
+ *    ;, &&, >, < or a closing parenthesis, and an escaped backquote inside a backquoted env value (F4); A3 no string or template
+ *    literal of any src module
  *    spells an rf replay verb (a template read with its literal and const spans folded in), no array literal or argument list
  *    has "context" before "replay" (a flag between them, a module-local const resolved), and no literal of an rf launch module
  *    (the modules A2 finds) spells the word replay at all, so a push, a concat or a const composing the verb from a literal reds
@@ -491,12 +501,14 @@ function launchReadingsOf(node: ts.Expression | undefined, initializers: Readonl
 /** The index just past the shell expansion that opens at `at` - a command substitution $(...), an arithmetic expansion $((...)), a
  * parameter expansion ${...} or a backquoted command - or `at` itself when none opens there (wb-3l7x U1: the expansion stays inside
  * the word it sits in, so `RF_HOME=$(pwd) rf ...` assigns before its program). Inside $(...) and ${...} a nested pair of its own
- * brackets, a quoted string (quotedEnd) and a backslash escape never close it; a backquoted command ends at its next backquote; an
- * unclosed expansion runs to the end of the text. */
+ * brackets, a quoted string (quotedEnd) and a backslash escape never close it; a backquoted command ends at its next backquote that
+ * no backslash escapes (wb-kls1, the wb-3l7x gate's F4: an env value holding a backquoted command with an escaped backquote inside,
+ * the gate's G22-O08, still prefixes its program); an unclosed expansion runs to the end of the text. */
 function expansionEnd(text: string, at: number): number {
   if (text.charAt(at) === "`") {
-    const end = text.indexOf("`", at + 1);
-    return end < 0 ? text.length : end + 1;
+    let end = at + 1;
+    while (end < text.length && text.charAt(end) !== "`") end += text.charAt(end) === "\\" ? 2 : 1;
+    return Math.min(end + 1, text.length);
   }
   const open = text.charAt(at + 1);
   if (text.charAt(at) !== "$" || (open !== "(" && open !== "{")) return at;
@@ -1102,6 +1114,58 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       letShellLine: control('let CMD = "rf --json status"; execSync(CMD);'),
       varShellLine: control('var CMD = "rf --json status"; execSync(CMD);'),
       letCompound: control('let cmd = "rf --json"; cmd += " status"; execSync(cmd);'),
+      // wb-kls1 (R694 follow-up of the wb-3l7x gate's F3): one kill control per claimed reading that no control pinned, so an
+      // edit narrowing that reading reds A2; each is read by the cut #2 reading alone (launchReadingsOf and the shell reading),
+      // except the construction and the .cmd program, read through what both readings share (rfLaunchSites, RF_PROGRAM). Every
+      // declaration of the name at any depth (the gate's K02, K04, K54 and K55 plants first), a let read through parentheses,
+      // satisfies, an angle-bracket assertion and a non-null mark (K56), either branch of a conditional (K57) and either operand
+      // of || and ??, a let span before the program (K58), a span whose leading piece reads, a construction, a path read whole
+      // and .cmd.
+      varInBlock: control('if (ci) { var CMD = "rf --json status"; } execSync(CMD);'),
+      letForInit: control('for (let CMD = "rf --json status"; ; ) { execSync(CMD); break; }'),
+      letSecondNested: control('let CMD = "echo"; if (ci) { let CMD = "rf --json status"; execSync(CMD); }'),
+      varSecond: control('var CMD = "rf --json status"; execSync(CMD); var CMD = "echo";'),
+      letParenthesized: control('let CMD = ("rf --json status"); execSync(CMD);'),
+      letSatisfies: control('let CMD = "rf --json status" satisfies string; execSync(CMD);'),
+      letTypeAsserted: control('let CMD = <string>"rf --json status"; execSync(CMD);'),
+      letNonNull: control('let CMD = "rf --json status"; execSync(CMD!);'),
+      letConditionalTrue: control('let CMD = ci ? "rf --json status" : "true"; execSync(CMD);'),
+      letConditionalFalse: control('let CMD = ci ? "true" : "rf --json status"; execSync(CMD);'),
+      letOrRight: control('let P = process.env.RF_BIN || "rf"; spawn(P, []);'),
+      letOrLeft: control('let P = "rf" || process.env.RF_BIN; spawn(P, []);'),
+      letCoalesceLeft: control('let P = "rf" ?? process.env.RF_BIN; spawn(P, []);'),
+      letSpanPrefix: control(['let E = "A=1"; execSync(`$', "{E} rf --json status`);"].join("")),
+      spanLeadingPiece: control(["execSync(`$", '{"rf --json " + flag} status`);'].join("")),
+      constructed: control('new Launcher("rf", ["--json", "status"]);'),
+      letSpacedPath: control('let BIN = "/opt/my tools/rf"; spawn(BIN, []);'),
+      cmdProgram: control('spawn("rf.cmd", []);'),
+      // wb-kls1, the shell reading: the $"..." quote, the while and until openers (K26, K59), every redirection prefix (the
+      // heredoc K23 and its tab-stripping form with a spaced delimiter, the here-string, input, append, read-write, both
+      // duplications, clobber, &> K24 and &>>), a backslash-newline joining the program word outside double quotes (K27) and
+      // inside them, and each word-ending operator glued to the program (;, &&, >, < and a closing parenthesis).
+      shellLocaleQuoted: control(`execSync('$"rf" --json status');`),
+      shellWhile: control('execSync("while rf --json status; do sleep 1; done");'),
+      shellUntil: control('execSync("until rf --json status; do sleep 1; done");'),
+      shellHeredoc: control('execSync("<<EOF rf --json status\\nEOF");'),
+      shellHeredocTabbed: control('execSync("<<- EOF rf --json status\\nEOF");'),
+      shellHereString: control('execSync("<<<input rf --json status");'),
+      shellInput: control('execSync("<input rf --json status");'),
+      shellAppended: control('execSync(">>log rf --json status");'),
+      shellReadWrite: control('execSync("<>file rf --json status");'),
+      shellInputDup: control('execSync("<&0 rf --json status");'),
+      shellOutputDup: control('execSync(">&2 rf --json status");'),
+      shellClobber: control('execSync(">|out rf --json status");'),
+      shellAllRedirected: control('execSync("&>/dev/null rf --json status");'),
+      shellAllAppended: control('execSync("&>>log rf --json status");'),
+      shellContinued: control('execSync("r\\\\\\nf --json status");'),
+      shellQuotedContinued: control(`execSync('"r\\\\\\nf" --json status');`),
+      shellGluedSemicolon: control('execSync("rf;echo done");'),
+      shellGluedAnd: control('execSync("rf&&echo ok");'),
+      shellGluedOutput: control('execSync("rf>out");'),
+      shellGluedInput: control('execSync("rf<in");'),
+      shellGluedClose: control('execSync("(rf)");'),
+      // wb-kls1 (the wb-3l7x gate's F4): a backslash-escaped backquote inside a backquoted env value never closes it (G22-O08).
+      shellBackquotedEscaped: control('execSync("A=`echo \\\\`x\\\\`` rf --json status");'),
       // R-WRAPPED quiet rows: rf behind a wrapper program or after another shell command is no A2 site.
       wrappedShell: control('spawn("sh", ["-c", "rf --json status"]);'),
       wrappedEnv: control('spawn("env", ["rf", "--json", "status"]);'),

@@ -1,0 +1,655 @@
+{
+  "bead": "wb-e9dy",
+  "constants": {
+    "requirement": "RF-GRAPH-POLICY-CONTEXT-R1",
+    "tracker": ".beads/",
+    "holders": [
+      "test/workbench-rf-graph-policy-context-census.test.ts",
+      "test/fixtures/rf-graph-policy-context-roster.json"
+    ],
+    "provider": "src/workbench/providers/reactivefiber.ts",
+    "observer": "src/workbench/reactivefiber-observer.ts",
+    "fixtureModule": "test/helpers/rf-render-fixture.ts",
+    "keyRoster": "test/fixtures/rf-result-keys.json",
+    "surfaceRoots": [
+      "src/workbench/providers/reactivefiber.ts",
+      "src/workbench/reactivefiber-observer.ts",
+      "test/helpers/rf-render-fixture.ts"
+    ],
+    "docsScope": "docs/workbench/",
+    "receipts": "docs/workbench/receipts/",
+    "docs03": "docs/workbench/03-architecture-and-ownership.md",
+    "postureSection": "## GraphPolicyCLI boundary",
+    "postureOwner": "GraphPolicyCLI",
+    "postureCell": "nothing today",
+    "postureSentence": "Pi carries no GraphPolicyCLI (gp) integration today.",
+    "piScopes": [
+      "src/",
+      "qa/"
+    ],
+    "pinScopes": [
+      "src/",
+      "test/",
+      "docs/workbench/",
+      "qa/"
+    ],
+    "filingPin": "b21beb0f89ad49500069403c4815d58f2825b414",
+    "previewId": "reactivefiber.render.preview",
+    "grants": [
+      "reactivefiber:render"
+    ],
+    "workspace": "/workspace/wb-e9dy-census",
+    "armed": "If Pi ever reads them they shall never raise coverage, tone or freshness, never surface as values and travel only as bounded receipt-identity refs",
+    "acceptance": "Acceptance, armed on landing (freeze-and-flip like wb-973.13): a fixture envelope carrying hypothetical GP fields on a clean envelope projects byte-identical except at most one bounded rf-gp:<program>:<checkpoint>:<backend> ref and one note; on a flagged, over-budget, fixture-seam or non-observed envelope it stays partial/unknown (one-directional, mirroring wb-693.3 and wb-973.10); the SECRET- leak walk shows no score numeric, embedding or receipt text in any surfaced string.",
+    "untilThen": "Until then: a default-gate census asserts git grep GraphPolicy|GraphDataIR|graph-policy over src, test, docs/workbench and qa is empty and the wb-973.11 fixture record carries no such keys.",
+    "mention": {
+      "source": "graph[^\\p{L}\\p{N}]*(?:policy|data[^\\p{L}\\p{N}]*ir)",
+      "flags": "giu"
+    },
+    "script": "\\.(?:[cm]?[jt]sx?)$",
+    "fieldWords": [
+      "score",
+      "ranking",
+      "embedding",
+      "receipt"
+    ],
+    "floors": {
+      "piFiles": 150,
+      "piScripts": 140,
+      "surfaceFiles": 60,
+      "docsFiles": 20,
+      "envelopeItems": 140,
+      "rosterKeys": 40
+    },
+    "spellings": [
+      "GraphPolicy",
+      "GraphPolicyCLI",
+      "graph-policy",
+      "graph_policy",
+      "graphpolicy",
+      "GRAPH POLICY",
+      "graph.policy",
+      "graph\npolicy",
+      "GraphDataIR",
+      "graph_data_ir",
+      "graph.data.ir"
+    ],
+    "nearWords": [
+      "graph_revision_id",
+      "necessity_policy_revision_id",
+      "graph",
+      "policy",
+      "policy graph",
+      "graph impact",
+      "graph data",
+      "gp",
+      "GP"
+    ],
+    "leak": {
+      "text": "SECRET-GP-",
+      "score": 0.918273645,
+      "embedding": [
+        0.123456789,
+        0.987654321
+      ]
+    },
+    "variants": [
+      "clean",
+      "flagged",
+      "overBudget",
+      "notObserved",
+      "fixtureSeam"
+    ],
+    "piPlants": {
+      "src/workbench/zz-plant-raw.ts": "// reads the GraphPolicy score of a render\nexport const plantRaw = 1;\n",
+      "src/workbench/zz-plant-cooked.ts": "export const plantCooked = \"graph\\u005fpolicy\";\n",
+      "src/workbench/zz-plant-folded.ts": "export const plantFolded = \"Gra\" + \"phPolicy\";\n",
+      "src/workbench/zz-plant-template.ts": "export const plantTemplate = (x: string): string => `\\u0047raphPolicy ${x}`;\n",
+      "qa/zz-plant-escaped.json": "{\"\\u0047raphDataIR\": 1}\n",
+      "qa/zz-plant-entity.md": "Graph&#80;olicy\n",
+      "qa/GraphPolicy-plant.txt": "plain\n"
+    },
+    "claimPlants": {
+      "docs/workbench/zz-plant-claim.md": "Pi reads GraphPolicy scores from the rf render envelope.\n",
+      "docs/workbench/zz-plant-row.md": "| Learned scores | GraphPolicyCLI | read by Pi from the rf render envelope |\n",
+      "test/zz-plant-surface.test.ts": "import { reactivefiberTopology } from \"../src/workbench/reactivefiber-observer.js\";\n// GraphDataIR\nvoid reactivefiberTopology;\n",
+      "test/helpers/zz-plant-helper.ts": "export { fullShapeRf } from \"./rf-render-fixture.js\";\n",
+      "test/zz-plant-transitive.test.ts": "import { fullShapeRf } from \"./helpers/zz-plant-helper.js\";\n// graph-policy\nvoid fullShapeRf;\n",
+      "test/zz-plant-literal.test.ts": "import { fullShapeRf } from \"./helpers/rf-render-fixture.js\";\nexport const claim = \"GraphPolicyCLI predictions read by Pi.\";\nvoid fullShapeRf;\n",
+      "test/zz-plant-respelled.test.ts": "import { fullShapeRf } from \"./helpers/rf-render-fixture.js\";\nexport const key = \"graph_policy predictions\";\nvoid fullShapeRf;\n",
+      "test/zz-plant-owner.test.ts": "import { fullShapeRf } from \"./helpers/rf-render-fixture.js\";\nexport const owner = \"GraphPolicyCLI\";\nvoid fullShapeRf;\n",
+      "test/zz-plant-other-row.test.ts": "import { fullShapeRf } from \"./helpers/rf-render-fixture.js\";\nexport const row = \"GraphPolicyCLI context rendering\";\nvoid fullShapeRf;\n",
+      "test/zz-plant-beside.test.ts": "import { fullShapeRf } from \"./helpers/rf-render-fixture.js\";\nexport const rows = [{ text: \"GraphPolicyCLI predictions and policy distributions.\" }]; // reads graph_policy\nvoid fullShapeRf;\n"
+    },
+    "vocabularyPlants": [
+      "plant:result.blocks[0].component_id",
+      "plant:result.provenance.graphPolicyReceipt",
+      "plant:result.graph_policy",
+      "plant:diagnostics[0].metadata.graph-data-ir",
+      "plant-roster:result.graphpolicy_rank"
+    ],
+    "fieldPlants": [
+      "plant:result.score",
+      "plant:result.rankings",
+      "plant:result.embedding",
+      "plant:diagnostics[0].metadata.gpReceipt",
+      "plant-roster:result.work_metrics.score_count"
+    ],
+    "pinPlant": "docs/workbench/zz-pin-plant.md",
+    "residuals": {
+      "R-HOLDER": "Q1",
+      "R-TRACKER": "Q2",
+      "R-GUARDS": "Q3",
+      "R-POSTURE": "Q4",
+      "R-RECEIPTS": "Q5",
+      "R-ABBREVIATION": "Q6",
+      "R-COMPUTED": "Q7",
+      "R-INTERIOR": "Q8",
+      "R-BINARY": "Q9",
+      "R-RELAY": "Q10",
+      "R-GENERIC": "Q11"
+    }
+  },
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "the outside anchors: the bead's export row binds the rows, the quotes, the armed clause, the field words, the vocabulary, the acceptance and the until-then duty; docs/03 binds the posture homes; the filing pin is a commit",
+    "T1",
+    "T2",
+    "T3",
+    "T4",
+    "Z1",
+    "Z2",
+    "Z3",
+    "Z4",
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8",
+    "Q9",
+    "Q10",
+    "Q11",
+    "the registered tests, the reached pins and the claims equal the roster, in order and both ways"
+  ],
+  "rows": [
+    {
+      "id": "T",
+      "label": "Gating artifact: an installed rf whose context.render envelope or diagnostics carry GraphPolicy outputs (score, ranking, embedding or receipt fields; absent from context.render.schema.json at 82bd879eee52)",
+      "pins": [
+        {
+          "id": "T1",
+          "quote": "Gating artifact",
+          "claims": {
+            "Gating artifact": [
+              "fired",
+              "recordFindings"
+            ]
+          },
+          "witness": {
+            "fired": false,
+            "recordFindings": []
+          }
+        },
+        {
+          "id": "T2",
+          "quote": "an installed rf",
+          "claims": {
+            "an installed": [
+              "source",
+              "receiptIsCommand"
+            ],
+            "rf": [
+              "fixtureMatchesRoster",
+              "contractMatchesRoster"
+            ]
+          },
+          "witness": {
+            "source": "captured",
+            "receiptIsCommand": true,
+            "fixtureMatchesRoster": true,
+            "contractMatchesRoster": true
+          }
+        },
+        {
+          "id": "T3",
+          "quote": "whose context.render envelope or diagnostics carry GraphPolicy outputs",
+          "claims": {
+            "whose context.render envelope": [
+              "envelopeAtFloor",
+              "rosterAtFloor"
+            ],
+            "or diagnostics": [
+              "diagnosticsRead"
+            ],
+            "carry GraphPolicy outputs": [
+              "vocabularyFindings",
+              "vocabularyPlants"
+            ]
+          },
+          "witness": {
+            "envelopeAtFloor": true,
+            "rosterAtFloor": true,
+            "diagnosticsRead": true,
+            "vocabularyFindings": [],
+            "vocabularyPlants": [
+              "plant:result.blocks[0].component_id",
+              "plant:result.provenance.graphPolicyReceipt",
+              "plant:result.graph_policy",
+              "plant:diagnostics[0].metadata.graph-data-ir",
+              "plant-roster:result.graphpolicy_rank"
+            ]
+          }
+        },
+        {
+          "id": "T4",
+          "quote": "score, ranking, embedding or receipt fields; absent from context.render.schema.json at 82bd879eee52",
+          "claims": {
+            "score, ranking, embedding or receipt fields": [
+              "fieldWords",
+              "fieldFindings",
+              "fieldPlants"
+            ],
+            "absent from context.render.schema.json at 82bd879eee52": [
+              "schemaPin"
+            ]
+          },
+          "witness": {
+            "fieldWords": [
+              "score",
+              "ranking",
+              "embedding",
+              "receipt"
+            ],
+            "fieldFindings": [],
+            "fieldPlants": [
+              "plant:result.score",
+              "plant:result.rankings",
+              "plant:result.embedding",
+              "plant:diagnostics[0].metadata.gpReceipt",
+              "plant-roster:result.work_metrics.score_count"
+            ],
+            "schemaPin": "82bd879eee52"
+          }
+        }
+      ]
+    },
+    {
+      "id": "Z",
+      "label": "until then Pi reads and claims nothing about GP",
+      "pins": [
+        {
+          "id": "Z1",
+          "quote": "until then",
+          "claims": {
+            "until then": [
+              "filingPin",
+              "filedAtPin",
+              "absentBeforePin",
+              "pinFiles",
+              "pinFindings",
+              "pinPlant"
+            ]
+          },
+          "witness": {
+            "filingPin": "b21beb0f89ad49500069403c4815d58f2825b414",
+            "filedAtPin": true,
+            "absentBeforePin": true,
+            "pinFiles": 651,
+            "pinFindings": {},
+            "pinPlant": {
+              "docs/workbench/zz-pin-plant.md": [
+                "raw",
+                "decoded"
+              ]
+            }
+          }
+        },
+        {
+          "id": "Z2",
+          "quote": "Pi reads",
+          "claims": {
+            "Pi": [
+              "scope",
+              "filesAtFloor",
+              "scriptsAtFloor"
+            ],
+            "reads": [
+              "piFindings",
+              "piPlants",
+              "readersUnchanged",
+              "variantsLive",
+              "readerControls",
+              "readerLeaks"
+            ]
+          },
+          "witness": {
+            "scope": [
+              "src/",
+              "qa/"
+            ],
+            "filesAtFloor": true,
+            "scriptsAtFloor": true,
+            "piFindings": {},
+            "piPlants": {
+              "src/workbench/zz-plant-raw.ts": [
+                "raw"
+              ],
+              "src/workbench/zz-plant-cooked.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-plant-folded.ts": [
+                "folded"
+              ],
+              "src/workbench/zz-plant-template.ts": [
+                "cooked"
+              ],
+              "qa/zz-plant-escaped.json": [
+                "cooked"
+              ],
+              "qa/zz-plant-entity.md": [
+                "decoded"
+              ],
+              "qa/GraphPolicy-plant.txt": [
+                "path"
+              ]
+            },
+            "readersUnchanged": {
+              "clean": {
+                "topology": true,
+                "evidence": true
+              },
+              "flagged": {
+                "topology": true,
+                "evidence": true
+              },
+              "overBudget": {
+                "topology": true,
+                "evidence": true
+              },
+              "notObserved": {
+                "topology": true,
+                "evidence": true
+              },
+              "fixtureSeam": {
+                "topology": true,
+                "evidence": true
+              }
+            },
+            "variantsLive": true,
+            "readerControls": {
+              "evidence": {
+                "topology": true,
+                "evidence": false
+              },
+              "topology": {
+                "topology": false,
+                "evidence": true
+              },
+              "leaks": [
+                "SECRET-GP-",
+                "0.918273645"
+              ]
+            },
+            "readerLeaks": []
+          }
+        },
+        {
+          "id": "Z3",
+          "quote": "and claims nothing",
+          "claims": {
+            "and claims": [
+              "claimScope",
+              "surfaceAtFloor",
+              "recordRead",
+              "docsAtFloor",
+              "postureStated"
+            ],
+            "nothing": [
+              "claimFindings",
+              "claimPlants"
+            ]
+          },
+          "witness": {
+            "claimScope": {
+              "docs": "docs/workbench/",
+              "unread": [
+                "docs/workbench/receipts/",
+                "## GraphPolicyCLI boundary",
+                "GraphPolicyCLI | nothing today",
+                "docs/workbench/03-architecture-and-ownership.md ownership-row echo"
+              ],
+              "roots": [
+                "src/workbench/providers/reactivefiber.ts",
+                "src/workbench/reactivefiber-observer.ts",
+                "test/helpers/rf-render-fixture.ts"
+              ],
+              "record": [
+                "test/helpers/rf-render-fixture.ts",
+                "test/fixtures/rf-result-keys.json"
+              ]
+            },
+            "surfaceAtFloor": true,
+            "recordRead": true,
+            "docsAtFloor": true,
+            "postureStated": true,
+            "claimFindings": {},
+            "claimPlants": {
+              "test/zz-plant-beside.test.ts": [
+                "raw"
+              ],
+              "test/zz-plant-literal.test.ts": [
+                "raw",
+                "cooked"
+              ],
+              "test/zz-plant-other-row.test.ts": [
+                "raw",
+                "cooked"
+              ],
+              "test/zz-plant-owner.test.ts": [
+                "raw",
+                "cooked"
+              ],
+              "test/zz-plant-respelled.test.ts": [
+                "raw",
+                "cooked"
+              ],
+              "test/zz-plant-surface.test.ts": [
+                "raw"
+              ],
+              "test/zz-plant-transitive.test.ts": [
+                "raw"
+              ],
+              "docs/workbench/zz-plant-claim.md": [
+                "raw",
+                "decoded"
+              ],
+              "docs/workbench/zz-plant-row.md": [
+                "raw",
+                "decoded"
+              ]
+            }
+          }
+        },
+        {
+          "id": "Z4",
+          "quote": "about GP",
+          "claims": {
+            "about": [
+              "untilThenPattern",
+              "patternWords"
+            ],
+            "GP": [
+              "spellingForms",
+              "nearWordsQuiet"
+            ]
+          },
+          "witness": {
+            "untilThenPattern": "GraphPolicy|GraphDataIR|graph-policy",
+            "patternWords": [
+              [
+                "graph",
+                "policy"
+              ],
+              [
+                "graph",
+                "data",
+                "ir"
+              ],
+              [
+                "graph",
+                "policy"
+              ]
+            ],
+            "spellingForms": {
+              "GraphPolicy": true,
+              "GraphPolicyCLI": true,
+              "graph-policy": true,
+              "graph_policy": true,
+              "graphpolicy": true,
+              "GRAPH POLICY": true,
+              "graph.policy": true,
+              "graph\npolicy": true,
+              "GraphDataIR": true,
+              "graph_data_ir": true,
+              "graph.data.ir": true
+            },
+            "nearWordsQuiet": {
+              "graph_revision_id": true,
+              "necessity_policy_revision_id": true,
+              "graph": true,
+              "policy": true,
+              "policy graph": true,
+              "graph impact": true,
+              "graph data": true,
+              "gp": true,
+              "GP": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the residuals: each named family pinned by its quiet row",
+      "pins": [
+        {
+          "id": "Q1",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-HOLDER",
+            "spelled": [
+              true,
+              true
+            ],
+            "read": []
+          }
+        },
+        {
+          "id": "Q2",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-TRACKER",
+            "beadRowSpells": true,
+            "read": []
+          }
+        },
+        {
+          "id": "Q3",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-GUARDS",
+            "inSurface": [],
+            "findings": {}
+          }
+        },
+        {
+          "id": "Q4",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-POSTURE",
+            "inScope": [
+              "docs/workbench/zz-quiet-section.md",
+              "docs/workbench/zz-quiet-row.md",
+              "test/zz-quiet-echo.test.ts"
+            ],
+            "findings": {}
+          }
+        },
+        {
+          "id": "Q5",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-RECEIPTS",
+            "inScope": [],
+            "findings": {}
+          }
+        },
+        {
+          "id": "Q6",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-ABBREVIATION",
+            "findings": {}
+          }
+        },
+        {
+          "id": "Q7",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-COMPUTED",
+            "findings": {}
+          }
+        },
+        {
+          "id": "Q8",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-INTERIOR",
+            "findings": {}
+          }
+        },
+        {
+          "id": "Q9",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-BINARY",
+            "binaries": [
+              "qa/zz-quiet.bin"
+            ],
+            "findings": {}
+          }
+        },
+        {
+          "id": "Q10",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-RELAY",
+            "verbatim": true
+          }
+        },
+        {
+          "id": "Q11",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-GENERIC",
+            "findings": {}
+          }
+        }
+      ]
+    }
+  ]
+}

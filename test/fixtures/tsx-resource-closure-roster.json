@@ -664,8 +664,8 @@
             "pin": "D2",
             "cliVersion": {
               "dropped": [
-                "rf-cli:0.1.784",
-                "producer release from result.provenance.cli_version: rf@0.1.784"
+                "rf-cli:0.1.845",
+                "producer release from result.provenance.cli_version: rf@0.1.845"
               ],
               "otherwiseIdentical": true
             },

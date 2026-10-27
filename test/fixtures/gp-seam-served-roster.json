@@ -1,0 +1,2050 @@
+{
+  "bead": "wb-0lf.7",
+  "producer": {
+    "repository": "https://github.com/jehalladay/Furnace",
+    "pin": "6502737d9e96152162b347c2099b7f054877794a",
+    "beadPin": "0f791db71b9d96ba0c5d85cadbb566e09d3ea986",
+    "measured": "2026-10-26T21:05:40Z",
+    "programs": [
+      {
+        "path": "docs/programs/graph-policy-decision-executor-2026-10-18/README.md",
+        "blob": "73135c2df014e5721fae3e2f82c872da183ae84c",
+        "line": 3,
+        "text": "**2026-10-18, design-only.** Links: [GraphPolicyCLI design](https://github.com/jehalladay/GraphPolicyCLI/tree/main/docs/program) and [Furnace collective-adaptation program](../collective-adaptation-2026-10-16/README.md).",
+        "sha256": "79839d5e45fb9dc72fb16c8b20c6e45bea3804458e170321c182eb807381ece3"
+      },
+      {
+        "path": "docs/programs/graph-policy-executor-decisions-2026-10-18.md",
+        "blob": "8f18240633a96feb441fcce6027e5907278d6fd3",
+        "line": 3,
+        "text": "**2026-10-18; non-normative integration design.** [GraphPolicyCLI](https://github.com/jehalladay/GraphPolicyCLI/tree/main/docs/program).",
+        "sha256": "c709b2a3d7d75732d1a7f5dffd4f20f21924a1cbbc420f079f8a00efae4d54fa"
+      }
+    ],
+    "codeRoots": [
+      "crates",
+      "sdk",
+      "executors",
+      "executor-protocol",
+      "schemas"
+    ],
+    "codeHits": 0,
+    "gate": "ABSENT"
+  },
+  "vocabulary": {
+    "names": [
+      {
+        "id": "N1",
+        "source": "(?<![a-z0-9])graph[-_. ]?policy(?:[-_. ]?cli)?(?![a-z0-9])"
+      },
+      {
+        "id": "N2",
+        "source": "(?<![a-z0-9])gp(?![a-z0-9])"
+      },
+      {
+        "id": "N3",
+        "source": "(?<![a-z0-9])graph[-_. ]?(?:data|function)[-_. ]?ir(?![a-z0-9])"
+      }
+    ],
+    "seam": "(?<![a-z0-9_])(?:seams?|integrations?|capabilit(?:y|ies)|hosts?|clients?|adapters?|providers?|consumers?|gp-adjacent modules?|decision[- ](?:points?|paths?)|executors?|canar(?:y|ies)|advisor(?:y|ies)|adoptions?|pi)(?![a-z0-9_])",
+    "served": "(?<![a-z0-9_])(serv(?:e|es|ed|ing)|ship(?:s|ped|ping)?|integrat(?:e|es|ed)|wir(?:es|ed)|adopt(?:s|ed)?|host(?:s|ed)|register(?:s|ed)?|enabl(?:e|es|ed)|expos(?:e|es|ed)|invokes|live(?:-sdk)?|available|supported|supports|implemented|landed(?:-gated)?|gate-pass|released|deployed|operational)(?![a-z0-9_])",
+    "marker": "(?<![a-z0-9_-])(?:not|no|never|nor|without|until|unless|pending|absent|unshipped|unserved|unimplemented|unregistered|gated|before|if|when|once|whether|future|planned|proposed|design-only|none|nothing|cannot|will|would|could|might|may|shall|should|must)(?![a-z0-9_-])|n['’]t(?![a-z0-9_-])"
+  },
+  "constants": {
+    "roots": [
+      "docs"
+    ],
+    "outside": [
+      ".agents",
+      ".beads",
+      ".codex",
+      ".github",
+      ".pi",
+      "examples",
+      "media",
+      "new-feedback",
+      "qa",
+      "src",
+      "test",
+      "vendor"
+    ],
+    "matrix": "docs/workbench/feature-matrix.md",
+    "ledger": "docs/workbench/TRACEABILITY.md",
+    "docs03": "docs/workbench/03-architecture-and-ownership.md",
+    "frozenAt": "32e0e2d2e514",
+    "designStatus": "design-only|non-normative"
+  },
+  "rows": [
+    {
+      "id": "A",
+      "label": "until the artifact exists, a docs census asserts",
+      "pins": [
+        {
+          "id": "A1",
+          "quote": "until the artifact exists",
+          "witness": {
+            "gate": "ABSENT",
+            "recorded": "ABSENT",
+            "hashed": [
+              true,
+              true
+            ],
+            "statusLines": [
+              "docs/programs/graph-policy-decision-executor-2026-10-18/README.md:3",
+              "docs/programs/graph-policy-executor-decisions-2026-10-18.md:3"
+            ],
+            "nearMisses": {
+              "first-accepted": "PRESENT",
+              "second-accepted": "PRESENT",
+              "code-hit": "PRESENT",
+              "no-programs": "PRESENT",
+              "status-uppercase": "ABSENT"
+            },
+            "piOwnership": [
+              "GraphPolicyCLI",
+              "nothing today (no gp seam is registered)"
+            ],
+            "piOpening": "Pi carries no GraphPolicyCLI (gp) integration today.",
+            "verdict": "pass"
+          }
+        },
+        {
+          "id": "A2",
+          "quote": "a docs census asserts",
+          "witness": {
+            "gate": "ABSENT",
+            "verdict": "pass",
+            "findings": [],
+            "positives": [
+              "docs/workbench/zz-plant.md:1 N2: served-served",
+              "README.md.plant:1 N1: served-ships",
+              "docs/zz-plant.md:1 N2: served-hosts",
+              "docs/zz-plant.md:1 N3: served-registered"
+            ],
+            "coverage": {
+              "readAll": true,
+              "floorsMet": true
+            },
+            "replica": {
+              "read": [
+                "README-twin.md",
+                "README.md",
+                "docs/workbench/TRACEABILITY.md",
+                "docs/workbench/block-end-plant-twin.md",
+                "docs/workbench/block-end-plant.md",
+                "docs/workbench/br-plant-twin.md",
+                "docs/workbench/br-plant.md",
+                "docs/workbench/cross-block-plant-twin.md",
+                "docs/workbench/cross-block-plant.md",
+                "docs/workbench/feature-matrix.md",
+                "docs/workbench/hard-break-plant-twin.md",
+                "docs/workbench/hard-break-plant.md",
+                "docs/workbench/math-plant-twin.md",
+                "docs/workbench/math-plant.md",
+                "docs/workbench/media-plant-twin.md",
+                "docs/workbench/media-plant.md",
+                "docs/workbench/plant-twin.md",
+                "docs/workbench/plant.md",
+                "docs/workbench/receipts/wb-plant-twin.md",
+                "docs/workbench/receipts/wb-plant.md",
+                "docs/workbench/svg-plant-twin.md",
+                "docs/workbench/svg-plant.md"
+              ],
+              "findings": [
+                "README.md:1 N2: served-available",
+                "docs/workbench/TRACEABILITY.md:5 N1: served-live-sdk",
+                "docs/workbench/TRACEABILITY.md:5 ledger-live-sdk",
+                "docs/workbench/block-end-plant.md:3 N2: served-served",
+                "docs/workbench/br-plant.md:1 N2: served-served",
+                "docs/workbench/cross-block-plant.md:1 N2: served-served",
+                "docs/workbench/feature-matrix.md:19 matrix-landed-gated",
+                "docs/workbench/hard-break-plant.md:1 N2: served-served",
+                "docs/workbench/math-plant.md:1 N2: served-served",
+                "docs/workbench/media-plant.md:1 N2: served-served",
+                "docs/workbench/plant.md:1 N2: served-served",
+                "docs/workbench/receipts/wb-plant.md:3 N1: served-live",
+                "docs/workbench/svg-plant.md:1 N2: served-served"
+              ],
+              "verdict": "fail",
+              "standDown": "stand-down"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "no docs/workbench or feature-matrix sentence presents a GP seam as served",
+      "pins": [
+        {
+          "id": "B1",
+          "quote": "no docs/workbench",
+          "witness": {
+            "roots": [
+              true
+            ],
+            "walkAgreesWithGit": true,
+            "links": [],
+            "unnamedTop": [],
+            "workbenchRead": true,
+            "workbenchFloorMet": true,
+            "matrixAndLedgerListed": [
+              true,
+              true
+            ],
+            "frozen": {
+              "revision": "32e0e2d2e514",
+              "ancestor": true,
+              "files": 79,
+              "sentences": 11685,
+              "named": 93,
+              "findings": [],
+              "quieted": [
+                "docs/workbench/03-architecture-and-ownership.md:37 marker:nothing",
+                "docs/workbench/03-architecture-and-ownership.md:75 marker:none",
+                "docs/workbench/03-architecture-and-ownership.md:75 marker:never",
+                "docs/workbench/receipts/wb-1xvp.3.md:1 marker:if",
+                "docs/workbench/receipts/wb-1xvp.3.md:6 marker:no",
+                "docs/workbench/receipts/wb-1xvp.3.md:11 marker:not",
+                "docs/workbench/receipts/wb-1xvp.3.md:13 bare:ships",
+                "docs/workbench/receipts/wb-1xvp.3.md:30 bare:ships",
+                "docs/workbench/receipts/wb-pfxo.1.md:62 bare:landed"
+              ]
+            },
+            "outsideQuiet": [
+              "docs/plant.md:1 N2: served-served"
+            ],
+            "outsideWhenRead": 14
+          }
+        },
+        {
+          "id": "B2",
+          "quote": "or feature-matrix",
+          "witness": {
+            "legend": [
+              "landed-gated",
+              "partial",
+              "in-progress",
+              "planned",
+              "not-started"
+            ],
+            "served": [
+              "landed-gated",
+              "partial"
+            ],
+            "matrix": {
+              "tablesFloorMet": true,
+              "rowsFloorMet": true,
+              "findings": []
+            },
+            "ledger": {
+              "header": true,
+              "rows": 50,
+              "claimStatuses": [
+                "shipped",
+                "gate-pass",
+                "live-sdk"
+              ],
+              "findings": []
+            },
+            "matrixPlants": [
+              "docs/workbench/feature-matrix.md:19 matrix-landed-gated",
+              "docs/workbench/feature-matrix.md:20 matrix-partial",
+              "docs/workbench/feature-matrix.md:24 matrix-landed-gated (see caveats)",
+              "docs/workbench/feature-matrix.md:25 matrix-shipped"
+            ],
+            "matrixOtherFeature": [],
+            "ledgerPlants": [
+              "docs/workbench/TRACEABILITY.md:5 ledger-shipped",
+              "docs/workbench/TRACEABILITY.md:10 ledger-gate-pass",
+              "docs/workbench/TRACEABILITY.md:11 ledger-live-sdk"
+            ],
+            "ledgerOtherRequirement": [],
+            "ledgerEvidenceOnly": [],
+            "elsewhere": [],
+            "quiet": {
+              "R-STATUS-OTHER-CELL": [],
+              "R-OTHER-TABLES": []
+            }
+          }
+        },
+        {
+          "id": "B3",
+          "quote": "sentence",
+          "witness": {
+            "raw": [
+              [
+                "1:Intro line.",
+                "1:The Pi gp seam is served;",
+                "1:no other row changed."
+              ],
+              [
+                "1:The Pi gp seam is served."
+              ],
+              [
+                "1:| gp seam | served |",
+                "2:| x | y |"
+              ],
+              [
+                "1:The gp seam",
+                "2:- is served"
+              ],
+              [
+                "1:The gp seam",
+                "3:is served."
+              ],
+              [
+                "1:# The gp seam",
+                "2:is served."
+              ],
+              [
+                "1:The gp seam is served!Next line"
+              ],
+              [
+                "1:Version 0.1.0 of the gp seam is served."
+              ],
+              [
+                "1:The gp seam is served?",
+                "2:Yes."
+              ]
+            ],
+            "rendered": [
+              [
+                "1:Intro line.",
+                "1:The Pi gp seam is served;",
+                "1:no other row changed."
+              ],
+              [
+                "1:The Pi gp seam is served."
+              ],
+              [
+                "1:The Pi gp seam is served."
+              ],
+              [
+                "1:Feature | Status",
+                "3:gp seam | served",
+                "4:x | y"
+              ],
+              [
+                "1:The gp seam",
+                "2:is served"
+              ],
+              [
+                "1:The gp seam",
+                "3:is served."
+              ],
+              [
+                "1:The gp seam",
+                "2:is served."
+              ],
+              [
+                "1:The gp seam is served!Next line"
+              ],
+              [
+                "1:Version 0.1.0 of the gp seam is served."
+              ],
+              [
+                "1:The gp seam is served?",
+                "2:Yes."
+              ],
+              [
+                "1:The gp seam is served.",
+                "2:Next."
+              ],
+              [
+                "1:The gp seam is served."
+              ],
+              [
+                "1:The gp seam",
+                "3:is served."
+              ],
+              [
+                "1:The gp seam is served.",
+                "3:Next item."
+              ],
+              [
+                "2:The gp seam is served."
+              ],
+              [
+                "5:After the fence."
+              ],
+              [
+                "1:Before.",
+                "5:After the indent."
+              ],
+              [
+                "1:The gp seam is served .",
+                "3:Next."
+              ],
+              [
+                "1:The gp seam is served."
+              ],
+              [
+                "1:The gp seam is served."
+              ],
+              [
+                "1:The gp seam is served.",
+                "1:No rollback is planned."
+              ],
+              [
+                "1:The gp seam is served."
+              ],
+              [
+                "1:a | b",
+                "3:gp seam | is served"
+              ],
+              [
+                "1:The gp seam is",
+                "1:served."
+              ],
+              [
+                "1:The gp seam is",
+                "1:served."
+              ],
+              [
+                "1:The gp seam is",
+                "1:served."
+              ],
+              [
+                "1:The gp seam is",
+                "1:served."
+              ],
+              [
+                "1:The gp seam is",
+                "1:served."
+              ],
+              [
+                "1:The gp seam is served."
+              ],
+              [
+                "1:The gp seam is",
+                "1:served."
+              ],
+              [
+                "1:The gp seam is served."
+              ],
+              [
+                "1:gp seam | served"
+              ],
+              [
+                "1:gp seam | is | served"
+              ],
+              [
+                "2:The gp seam is served."
+              ],
+              [
+                "1:Status."
+              ],
+              [
+                "2:The gp seam is served y ]]>."
+              ],
+              [
+                "1:Status shown."
+              ],
+              [
+                "2:Status shown."
+              ],
+              [
+                "2:Status shown."
+              ],
+              [
+                "2:Status shown."
+              ],
+              [
+                "1:Status shown."
+              ],
+              [
+                "2:The gp seam is",
+                "2:served."
+              ]
+            ],
+            "judged": [
+              [
+                "docs/x.md:3 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:3 N2: served-served"
+              ],
+              [],
+              [],
+              [],
+              [
+                "docs/x.txt:1 N2: served-served"
+              ],
+              [],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:3 N2: served-served"
+              ]
+            ],
+            "breaks": [
+              {
+                "reading": {
+                  "sentences": [
+                    "The gp seam is served."
+                  ],
+                  "findings": [
+                    "N2: served-served"
+                  ]
+                },
+                "html": 6,
+                "same": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ]
+              },
+              {
+                "reading": {
+                  "sentences": [
+                    "The gp seam is served."
+                  ],
+                  "findings": [
+                    "N2: served-served"
+                  ]
+                },
+                "html": 1,
+                "same": [
+                  true,
+                  true
+                ]
+              },
+              {
+                "reading": {
+                  "sentences": [
+                    "The gp seam is served.",
+                    "No rollback is planned."
+                  ],
+                  "findings": [
+                    "N2: served-served"
+                  ]
+                },
+                "html": 1,
+                "same": [
+                  true,
+                  true
+                ]
+              },
+              {
+                "reading": {
+                  "sentences": [
+                    "The gp seam is served no rollback is planned."
+                  ],
+                  "findings": []
+                },
+                "html": 1,
+                "same": [
+                  true,
+                  true
+                ]
+              },
+              {
+                "reading": {
+                  "sentences": [
+                    "The gp seam is served."
+                  ],
+                  "findings": [
+                    "N2: served-served"
+                  ]
+                },
+                "html": 3,
+                "same": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              {
+                "reading": {
+                  "sentences": [
+                    "a | b",
+                    "gp seam | is served"
+                  ],
+                  "findings": [
+                    "N2: served-served"
+                  ]
+                },
+                "html": 2,
+                "same": [
+                  true,
+                  true
+                ]
+              },
+              {
+                "reading": {
+                  "sentences": [
+                    "The gp seam is",
+                    "served."
+                  ],
+                  "findings": []
+                },
+                "html": 3,
+                "same": [
+                  true,
+                  true,
+                  true,
+                  true
+                ]
+              }
+            ],
+            "twins": {
+              "pages": 292,
+              "identical": 292,
+              "same": 292
+            },
+            "markup": {
+              "blocks": [
+                "address",
+                "article",
+                "aside",
+                "blockquote",
+                "center",
+                "dd",
+                "details",
+                "dialog",
+                "dir",
+                "div",
+                "dl",
+                "dt",
+                "fieldset",
+                "figcaption",
+                "figure",
+                "footer",
+                "form",
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "h6",
+                "header",
+                "hgroup",
+                "hr",
+                "legend",
+                "li",
+                "listing",
+                "main",
+                "menu",
+                "nav",
+                "ol",
+                "optgroup",
+                "option",
+                "p",
+                "plaintext",
+                "pre",
+                "search",
+                "section",
+                "summary",
+                "table",
+                "ul",
+                "xmp"
+              ],
+              "table": [
+                "caption",
+                "colgroup",
+                "tbody",
+                "tfoot",
+                "thead",
+                "tr"
+              ],
+              "cells": [
+                "td",
+                "th"
+              ],
+              "unshown": [
+                "datalist",
+                "iframe",
+                "noembed",
+                "noframes",
+                "noscript",
+                "rp",
+                "script",
+                "style",
+                "template",
+                "title"
+              ],
+              "code": [
+                "listing",
+                "pre",
+                "xmp"
+              ],
+              "raw": [
+                "iframe",
+                "noembed",
+                "noframes",
+                "noscript",
+                "script",
+                "style",
+                "title",
+                "xmp"
+              ],
+              "void": [
+                "area",
+                "base",
+                "basefont",
+                "bgsound",
+                "br",
+                "col",
+                "embed",
+                "frame",
+                "hr",
+                "img",
+                "input",
+                "keygen",
+                "link",
+                "meta",
+                "param",
+                "source",
+                "track",
+                "wbr"
+              ],
+              "forms": "<!--(?:-?>|[\\s\\S]*?(?:--!?>|$))|<[!?][^>]*(?:>|$)|<\\/(?:>|[^A-Za-z>][^>]*(?:>|$))|<(\\/?)([A-Za-z][^\\t\\n\\f\\r />]*)"
+            },
+            "blockForms": [
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is"
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is"
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is"
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is"
+              ]
+            ],
+            "crossBlock": [
+              {
+                "sentences": [
+                  "Intro",
+                  "not the gp seam is served."
+                ],
+                "findings": []
+              },
+              {
+                "sentences": [
+                  "Intro",
+                  "not the gp seam is served."
+                ],
+                "findings": []
+              },
+              {
+                "sentences": [
+                  "a | b",
+                  "x | not the gp seam is served"
+                ],
+                "findings": []
+              },
+              {
+                "sentences": [
+                  "Intro",
+                  "not the gp seam is served."
+                ],
+                "findings": []
+              },
+              {
+                "sentences": [
+                  "Intro the gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro the gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro the gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro",
+                  "the gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro the gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro the gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro the gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "a | b",
+                  "x the gp seam is served"
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro",
+                  "x",
+                  "The gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro",
+                  "the gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro Next."
+                ],
+                "findings": []
+              },
+              {
+                "sentences": [
+                  "Intro",
+                  "the gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro the gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro",
+                  "not the gp seam is served."
+                ],
+                "findings": []
+              },
+              {
+                "sentences": [
+                  "Intro",
+                  "not the gp seam is served."
+                ],
+                "findings": []
+              },
+              {
+                "sentences": [
+                  "The gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro",
+                  "The gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro",
+                  "The gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "a | b",
+                  "x | the gp seam is served"
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro",
+                  "The gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro",
+                  "The gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro",
+                  "The gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro",
+                  "The gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro"
+                ],
+                "findings": []
+              },
+              {
+                "sentences": [
+                  "Intro"
+                ],
+                "findings": []
+              },
+              {
+                "sentences": [],
+                "findings": []
+              },
+              {
+                "sentences": [
+                  "Status",
+                  "The gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro",
+                  "not the gp seam is served."
+                ],
+                "findings": []
+              },
+              {
+                "sentences": [
+                  "gp seam is served"
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "The gp seam is served.",
+                  "Done."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              }
+            ],
+            "sameHtml": [
+              {
+                "sentences": [
+                  "The gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "The gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "The gp seam is served"
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "The gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "The gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "The gp seam is served & live."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "The gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "The gp seam isn't served."
+                ],
+                "findings": []
+              },
+              {
+                "sentences": [
+                  "Intro the gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro",
+                  "not the gp seam is served."
+                ],
+                "findings": []
+              },
+              {
+                "sentences": [
+                  "Intro",
+                  "The gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "Intro the gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "gp seam is served"
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              },
+              {
+                "sentences": [
+                  "The gp seam is served."
+                ],
+                "findings": [
+                  "N2: served-served"
+                ]
+              }
+            ],
+            "hiding": {
+              "fallback": [
+                "audio",
+                "video"
+              ],
+              "foreign": [
+                {
+                  "root": "svg",
+                  "tags": [
+                    "desc",
+                    "metadata"
+                  ]
+                },
+                {
+                  "root": "math",
+                  "tags": [
+                    "annotation",
+                    "annotation-xml"
+                  ]
+                }
+              ]
+            },
+            "quiet": {
+              "R-TREE-CONSTRUCTION": [
+                [],
+                []
+              ]
+            },
+            "residualTwins": {
+              "R-TREE-CONSTRUCTION": [
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ]
+              ]
+            },
+            "overRead": [
+              [
+                "docs/x.md:1 N2: served-served"
+              ]
+            ]
+          }
+        },
+        {
+          "id": "B4",
+          "quote": "presents a GP seam",
+          "witness": {
+            "spellings": [
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N2: served-served",
+              "N2: served-served",
+              "N2: served-served",
+              "N2: served-served",
+              "N2: served-served",
+              "N3: served-served",
+              "N3: served-served",
+              "N3: served-served",
+              "N2: served-served",
+              "N2: served-served",
+              "N1: served-served"
+            ],
+            "subjects": [
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-hosts",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1+N2: served-served",
+              "N1+N2: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served",
+              "N1: served-served"
+            ],
+            "notSubjects": [
+              "bare",
+              "bare",
+              "bare",
+              "bare",
+              "bare",
+              "bare"
+            ],
+            "pi": [
+              "N2: served-serves",
+              "N1: served-live",
+              "N3: served-ships"
+            ],
+            "nearMisses": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "quiet": {
+              "R-BARE-NAME": [
+                null,
+                null,
+                null,
+                null
+              ],
+              "R-SPLIT": [
+                [],
+                [],
+                []
+              ],
+              "R-LOOKALIKE": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ]
+            },
+            "twins": {
+              "R-LOOKALIKE": [
+                "N2: served-served",
+                "N1: served-served",
+                "N2: served-served",
+                "N1: served-served",
+                "N2: served-served",
+                "N2: served-served",
+                "N2: served-served",
+                "N2: served-served",
+                "N2: served-served"
+              ]
+            },
+            "realBare": "13 bare"
+          }
+        },
+        {
+          "id": "B5",
+          "quote": "as served",
+          "witness": {
+            "served": [
+              "N2: served-serve",
+              "N2: served-serves",
+              "N2: served-served",
+              "N2: served-serving",
+              "N2: served-ship",
+              "N2: served-ships",
+              "N2: served-shipped",
+              "N2: served-shipping",
+              "N2: served-integrate",
+              "N2: served-integrates",
+              "N2: served-integrated",
+              "N2: served-wires",
+              "N2: served-wired",
+              "N2: served-adopt",
+              "N2: served-adopts",
+              "N2: served-adopted",
+              "N2: served-hosts",
+              "N2: served-hosted",
+              "N2: served-register",
+              "N2: served-registers",
+              "N2: served-registered",
+              "N2: served-enable",
+              "N2: served-enables",
+              "N2: served-enabled",
+              "N2: served-expose",
+              "N2: served-exposes",
+              "N2: served-exposed",
+              "N2: served-invokes",
+              "N2: served-live",
+              "N2: served-live-sdk",
+              "N2: served-available",
+              "N2: served-supported",
+              "N2: served-supports",
+              "N2: served-implemented",
+              "N2: served-landed",
+              "N2: served-landed-gated",
+              "N2: served-gate-pass",
+              "N2: served-released",
+              "N2: served-deployed",
+              "N2: served-operational"
+            ],
+            "bare": [
+              "bare",
+              "bare",
+              "bare",
+              "bare"
+            ],
+            "pi": [
+              "N1: served-integrated",
+              "N1: served-registered",
+              "N1: served-ships",
+              "N1: served-serves"
+            ],
+            "formats": [
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ]
+            ],
+            "ignorables": [
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ]
+            ],
+            "forms": [
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:3 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ]
+            ],
+            "asWritten": [],
+            "hiddenMarkers": [
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:2 N2: served-served"
+              ],
+              [
+                "docs/x.md:2 N2: served-served"
+              ],
+              [
+                "docs/x.md:2 N2: served-served"
+              ],
+              [
+                "docs/x.md:2 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:2 N2: served-served"
+              ],
+              [
+                "docs/x.md:2 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ]
+            ],
+            "foreignScope": [
+              [],
+              [],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [],
+              [
+                "docs/x.md:3 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ]
+            ],
+            "markers": [
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null,
+              null
+            ],
+            "notMarkers": [
+              "N2: served-served",
+              "N2: served-served",
+              "N2: served-served",
+              "N2: served-served",
+              "N2: served-served"
+            ],
+            "bounded": [
+              "N2: served-landed-gated",
+              "N2: served-served",
+              "N2: served-served",
+              "none",
+              "none",
+              "finding"
+            ],
+            "quiet": {
+              "R-MARKER-ANYWHERE": [
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                []
+              ],
+              "R-PARAPHRASE": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+              ],
+              "R-RENDERED-TEXT": [
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                []
+              ]
+            },
+            "twins": {
+              "R-MARKER-ANYWHERE": [
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ]
+              ],
+              "R-RENDERED-TEXT": [
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:2 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:2 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:2 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:3 N2: served-served"
+                ]
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "unclaimed": [
+    {
+      "clause": "on landing, the first GP rows carry status fixture or experimental, the shadow-receipt stage records decisions without executing them, the advisory stage is read-only, and only a measured live receipt (source-owned evidence plus a complete Forge gate on the exact commit) may move a row to live-sdk",
+      "reason": "binds on landing: no Pi GP row or seam stage exists to judge today (B2 reads 0 GP rows in the feature matrix and the status ledger, and docs/workbench/03 registers no gp seam, A1); the cut that lands the seam's first Pi rows owes it"
+    },
+    {
+      "clause": "synthetic coordination fixtures are labelled synthetic in test titles and receipts (carries O15)",
+      "reason": "carries O15, the seam's own non-negotiable test row (Furnace docs/programs/graph-policy-decision-executor-2026-10-18/README.md:25 'Synthetic coordination fixtures are labeled synthetic'); owed by the seam's coordination tests when they exist, none today"
+    }
+  ],
+  "residuals": [
+    {
+      "id": "R-OUTSIDE-ROOTS",
+      "quietPin": "B1"
+    },
+    {
+      "id": "R-STATUS-OTHER-CELL",
+      "quietPin": "B2"
+    },
+    {
+      "id": "R-OTHER-TABLES",
+      "quietPin": "B2"
+    },
+    {
+      "id": "R-BARE-NAME",
+      "quietPin": "B4"
+    },
+    {
+      "id": "R-SPLIT",
+      "quietPin": "B4"
+    },
+    {
+      "id": "R-LOOKALIKE",
+      "quietPin": "B4"
+    },
+    {
+      "id": "R-MARKER-ANYWHERE",
+      "quietPin": "B5"
+    },
+    {
+      "id": "R-PARAPHRASE",
+      "quietPin": "B5"
+    },
+    {
+      "id": "R-RENDERED-TEXT",
+      "quietPin": "B5"
+    },
+    {
+      "id": "R-TREE-CONSTRUCTION",
+      "quietPin": "B3"
+    }
+  ]
+}
