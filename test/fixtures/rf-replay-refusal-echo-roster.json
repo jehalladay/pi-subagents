@@ -1,5 +1,5 @@
 {
-  "provenance": "wb-a9l2.4 census roster (test/workbench-rf-replay-refusal-echo-census.test.ts). envelopes.blob and envelopes.reconstruction are MEASURED: the stdout of `rf context replay RENDER --json` (exit 8) from the installed rf 0.1.832 on 2026-10-22, in a scratch workspace after a committed render lost its evidence (blob: a literal source's capture blob deleted; reconstruction: a git source's recorded commit gone from the repository); only the scratch workspace root was rewritten to /fixture/rf-workspace. envelopes.retention is CONSTRUCTED from the producer's application/replay.py retention_removed builder (message, hint and metadata as it writes them; segment names as the scratch workspace's journal names its files), because rf storage compact --apply removes nothing in that build. rows freeze the judged set: each pin's witness is what its case measures. wb-1s7l (the R694 follow-up of landing 257, 2026-10-23) re-measured every witness at trunk 893fe06 after hardening A1 (call-composed argv), A2 (the rf roster by id prefix, grant and contract carrier), B2/B3/C2 (fresh-copy readings held to a fresh roster read), B6 (binding-aware launchers, network names and literals, non-literal loaders), and adding B7 (the injected seam's 0 production call sites), D3/D4 (the measured refusal shape with its workspace kept), residuals (the named families and their quiet-row pins) and tests (every registered test title, in order); the envelopes are unchanged.",
+  "provenance": "wb-a9l2.4 census roster (test/workbench-rf-replay-refusal-echo-census.test.ts). envelopes.blob and envelopes.reconstruction are MEASURED: the stdout of `rf context replay RENDER --json` (exit 8) from the installed rf 0.1.832 on 2026-10-22, in a scratch workspace after a committed render lost its evidence (blob: a literal source's capture blob deleted; reconstruction: a git source's recorded commit gone from the repository); only the scratch workspace root was rewritten to /fixture/rf-workspace. envelopes.retention is CONSTRUCTED from the producer's application/replay.py retention_removed builder (message, hint and metadata as it writes them; segment names as the scratch workspace's journal names its files), because rf storage compact --apply removes nothing in that build. rows freeze the judged set: each pin's witness is what its case measures. wb-1s7l (the R694 follow-up of landing 257, 2026-10-23) re-measured every witness at trunk 893fe06 after hardening A1 (call-composed argv), A2 (the rf roster by id prefix, grant and contract carrier), B2/B3/C2 (fresh-copy readings held to a fresh roster read), B6 (binding-aware launchers, network names and literals, non-literal loaders), and adding B7 (the injected seam's 0 production call sites), D3/D4 (the measured refusal shape with its workspace kept), residuals (the named families and their quiet-row pins) and tests (every registered test title, in order); the envelopes are unchanged. wb-vxhz (the R694 follow-up of landing 345, 2026-10-25) re-measured the B6 witness at trunk d1d726d after resolving its launchers through child_process-valued expressions (loader-call results, a default, then-callback parameters, destructurings, member and exact-literal element access, createRequire-made requires) and .call/.apply/immediately invoked .bind, and reading code compilers (eval, Function) as dynamic: the closure's own readings are unchanged and 29 control rows are added (24 kills, 5 quiet rows of R-COMPOSED-NAME and R-UNLISTED); every other witness and the envelopes are unchanged.",
   "rfVersion": "0.1.832",
   "replayExit": 8,
   "codes": [
@@ -476,6 +476,225 @@
                 "launches": []
               },
               "unlisted": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "inlineRequire": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "awaitedImport": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "elementLauncher": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "elementConst": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "thenLauncher": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "thenDestructured": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "createRequireLauncher": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "inlineCreateRequire": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "destructuredSpace": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "defaultForms": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl",
+                  "curl",
+                  "curl"
+                ]
+              },
+              "stringKey": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "aliasedSpace": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "assertedSpace": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl",
+                  "curl",
+                  "curl",
+                  "curl"
+                ]
+              },
+              "thenFunction": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "requireAlias": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "memberCreateRequire": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "hoistedBinding": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "callLauncher": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "applyLauncher": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "bindLauncher": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "codeString": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 1,
+                "launches": []
+              },
+              "evalString": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 1,
+                "launches": []
+              },
+              "compilerElement": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 1,
+                "launches": []
+              },
+              "composedRequire": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 2,
+                "launches": []
+              },
+              "storedBind": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "reflectApply": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "promiseChain": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "vmCompile": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": []
+              },
+              "constructorCompile": {
                 "network": 0,
                 "globals": 0,
                 "dynamic": 0,

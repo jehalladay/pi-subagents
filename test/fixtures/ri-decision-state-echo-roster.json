@@ -384,6 +384,10 @@
    "unknownDropped": true,
    "unknownNormalized": true,
    "unknownRaw": true,
+   "unknownAsListed": true,
+   "unlistableDropped": true,
+   "unlistableDecided": true,
+   "unlistableAsListed": true,
    "synonym": true,
    "successInProse": true,
    "totalOnly": true
@@ -1252,7 +1256,7 @@
   },
   {
    "id": "C",
-   "label": "(c) an unknown state word projects as non-choice (counted, verbatim), never as a selection or success (wb-973.10 pattern): the reference quiet over each unknown word and a mixed tally, unknown words read as success, selected, dropped, normalized or echoed raw all refused, and the landed wb-973.10 observer reading quiet under the same rules",
+   "label": "(c) an unknown state word projects as non-choice (counted, verbatim), never as a selection or success (wb-973.10 pattern): the reference quiet over each unknown word and a mixed tally, unknown words read as success, selected, dropped, normalized or echoed raw and the unlistable word shown as anything but the mark all refused, and the landed wb-973.10 observer reading quiet under the same rules",
    "pins": [
     {
      "id": "C1",
@@ -1456,10 +1460,12 @@
         ],
         "awaiting operator review": [
          "counted",
+         "mark:q.route",
          "success"
         ],
         "tally": [
          "counted",
+         "mark:q.t5",
          "slot:q.t1",
          "slot:q.t2",
          "slot:q.t3",
@@ -1490,10 +1496,72 @@
         "malformed": [],
         "Abstain": [],
         "awaiting operator review": [
+         "mark:q.route",
          "raw:q.route"
         ],
         "tally": [
+         "mark:q.t5",
          "raw:q.t5"
+        ]
+       },
+       "unknownAsListed": {
+        "abstained": [
+         "verbatim:q.route"
+        ],
+        "not_a_decision": [
+         "verbatim:q.route"
+        ],
+        "malformed": [
+         "verbatim:q.route"
+        ],
+        "Abstain": [
+         "verbatim:q.route"
+        ],
+        "awaiting operator review": [
+         "mark:q.route"
+        ],
+        "tally": [
+         "mark:q.t5",
+         "verbatim:q.t1",
+         "verbatim:q.t2",
+         "verbatim:q.t3",
+         "verbatim:q.t4"
+        ]
+       },
+       "unlistableDropped": {
+        "abstained": [],
+        "not_a_decision": [],
+        "malformed": [],
+        "Abstain": [],
+        "awaiting operator review": [
+         "mark:q.route"
+        ],
+        "tally": [
+         "mark:q.t5"
+        ]
+       },
+       "unlistableDecided": {
+        "abstained": [],
+        "not_a_decision": [],
+        "malformed": [],
+        "Abstain": [],
+        "awaiting operator review": [
+         "mark:q.route"
+        ],
+        "tally": [
+         "mark:q.t5"
+        ]
+       },
+       "unlistableAsListed": {
+        "abstained": [],
+        "not_a_decision": [],
+        "malformed": [],
+        "Abstain": [],
+        "awaiting operator review": [
+         "mark:q.route"
+        ],
+        "tally": [
+         "mark:q.t5"
         ]
        }
       },
@@ -1696,6 +1764,22 @@
   "D2",
   "D3",
   "D4",
-  "records: every registered test ran once in run mode in roster order, every pin reached its end, and no title spells the engine family"
+  "records: every registered test ran once in run mode in roster order, every pin reached its end, every case made its pinned assertion count, and no title spells the engine family"
+ ],
+ "asserted": [
+  "judged:28",
+  "A1:26",
+  "A2:3",
+  "A3:3",
+  "B1:3",
+  "B2:3",
+  "B3:3",
+  "C1:4",
+  "C2:4",
+  "C3:4",
+  "D1:6",
+  "D2:4",
+  "D3:3",
+  "D4:5"
  ]
 }

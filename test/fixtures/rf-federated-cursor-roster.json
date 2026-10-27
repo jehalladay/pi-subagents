@@ -751,6 +751,10 @@
        "src/workbench/providers:true",
        "src/workflow:true"
       ],
+      "enumeration": {
+       "missing": [],
+       "extra": []
+      },
       "anchorRead": true,
       "anchorMinted": true,
       "real": {
@@ -769,19 +773,41 @@
       },
       "walk": {
        "files": [
+        "src/.peers/watermark.ts",
         "src/plain.ts",
+        "src/workbench/.federation-cache.json",
+        "src/workbench/FEDERATION-NOTES",
         "src/workbench/federation-notes.md",
+        "src/workbench/federation-peer.mjs",
+        "src/workbench/hosts/federation/peer.ts",
+        "src/workflow/peers/archive/2026/q4/watermark-log.json"
+       ],
+       "enumerated": [
+        "src/.peers/watermark.ts",
+        "src/plain.ts",
+        "src/workbench/.federation-cache.json",
+        "src/workbench/FEDERATION-NOTES",
+        "src/workbench/federation-notes.md",
+        "src/workbench/federation-peer.mjs",
         "src/workbench/hosts/federation/peer.ts",
         "src/workflow/peers/archive/2026/q4/watermark-log.json"
        ],
        "scan": {
         "scoped": [
+         "src/.peers/watermark.ts",
+         "src/workbench/.federation-cache.json",
+         "src/workbench/FEDERATION-NOTES",
          "src/workbench/federation-notes.md",
+         "src/workbench/federation-peer.mjs",
          "src/workbench/hosts/federation/peer.ts",
          "src/workflow/peers/archive/2026/q4/watermark-log.json"
         ],
         "hits": [
+         "src/.peers/watermark.ts: latest",
+         "src/workbench/.federation-cache.json: current",
+         "src/workbench/FEDERATION-NOTES: latest",
          "src/workbench/federation-notes.md: current",
+         "src/workbench/federation-peer.mjs: current",
          "src/workbench/hosts/federation/peer.ts: current",
          "src/workflow/peers/archive/2026/q4/watermark-log.json: latest"
         ]

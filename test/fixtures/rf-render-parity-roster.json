@@ -1,7 +1,7 @@
 {
   "bead": "wb-fb2z.1",
   "pin": "76bbbffd9d4a",
-  "basis": "The out-of-file roster of test/workbench-rf-render-parity-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness and the pinned constants, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Witnesses were measured by the cutting seat on trunk fc1534f; fixture identities are named by placeholder (<root>, <graph>, <bundle>, <operation>, <workspace>, <release>), and every producer verdict and variant here is CONSTRUCTED (rf ships no parity verdict at the pin). wb-mymm (R694 follow-up of landing 299, F1-F5) re-measured on trunk ccc8adc: the src and docs walk witnesses gain git's listing (listingSound, unwalked) and T3 the examples anchor (examplesRead); row M gains MC12-MC16 and MD6-MD9, row R gains R9; the constants gain examplesAnchor, gitListing, htmlComment and commentTail.",
+  "basis": "The out-of-file roster of test/workbench-rf-render-parity-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness and the pinned constants, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Witnesses were measured by the cutting seat on trunk fc1534f; fixture identities are named by placeholder (<root>, <graph>, <bundle>, <operation>, <workspace>, <release>), and every producer verdict and variant here is CONSTRUCTED (rf ships no parity verdict at the pin). wb-mymm (R694 follow-up of landing 299, F1-F5) re-measured on trunk ccc8adc: the src and docs walk witnesses gain git's listing (listingSound, unwalked) and T3 the examples anchor (examplesRead); row M gains MC12-MC16 and MD6-MD9, row R gains R9; the constants gain examplesAnchor, gitListing, htmlComment and commentTail. wb-t69k (R694 follow-up of landing 389, F1) re-measured on trunk f6bbba7: T3 reads a sentence's marker from its rendered text as well (marked's inline lexer under the document's link reference definitions); row M gains MD10-MD19, row R gains R10-R12 and its label names R1-R12; the constants and every other witness are unchanged.",
   "constants": {
     "pinnedRoster": [
       "reactivefiber.render.preview"
@@ -867,12 +867,102 @@
               "asserted"
             ]
           }
+        },
+        {
+          "id": "MD10",
+          "witness": {
+            "digest": "443c0d8d344325dd",
+            "outcome": [
+              "asserted"
+            ]
+          }
+        },
+        {
+          "id": "MD11",
+          "witness": {
+            "digest": "271aa08cc9389a20",
+            "outcome": [
+              "asserted"
+            ]
+          }
+        },
+        {
+          "id": "MD12",
+          "witness": {
+            "digest": "3331c6a005e29080",
+            "outcome": [
+              "asserted"
+            ]
+          }
+        },
+        {
+          "id": "MD13",
+          "witness": {
+            "digest": "4c5d61e65daf8ea4",
+            "outcome": [
+              "asserted"
+            ]
+          }
+        },
+        {
+          "id": "MD14",
+          "witness": {
+            "digest": "278eea5659daf3bd",
+            "outcome": [
+              "asserted"
+            ]
+          }
+        },
+        {
+          "id": "MD15",
+          "witness": {
+            "digest": "e48949b6a73f5094",
+            "outcome": [
+              "marked"
+            ]
+          }
+        },
+        {
+          "id": "MD16",
+          "witness": {
+            "digest": "c2cb8d99112d91dc",
+            "outcome": [
+              "marked"
+            ]
+          }
+        },
+        {
+          "id": "MD17",
+          "witness": {
+            "digest": "dfde4cabb915c5c4",
+            "outcome": [
+              "marked"
+            ]
+          }
+        },
+        {
+          "id": "MD18",
+          "witness": {
+            "digest": "63692ae2bbf68cd8",
+            "outcome": [
+              "marked"
+            ]
+          }
+        },
+        {
+          "id": "MD19",
+          "witness": {
+            "digest": "b20ccb4bd0af9ed0",
+            "outcome": [
+              "asserted"
+            ]
+          }
         }
       ]
     },
     {
       "id": "R",
-      "label": "the named residuals R1-R9 stay pinned quiet",
+      "label": "the named residuals R1-R12 stay pinned quiet",
       "pins": [
         {
           "id": "R1",
@@ -941,6 +1031,33 @@
           "witness": {
             "digest": "b0dc3a138a8c1d94",
             "outcome": []
+          }
+        },
+        {
+          "id": "R10",
+          "witness": {
+            "digest": "359ae49a624f9266",
+            "outcome": [
+              "marked"
+            ]
+          }
+        },
+        {
+          "id": "R11",
+          "witness": {
+            "digest": "1fa17ae8a733b9cf",
+            "outcome": [
+              "marked"
+            ]
+          }
+        },
+        {
+          "id": "R12",
+          "witness": {
+            "digest": "2a5109ae8cf5504d",
+            "outcome": [
+              "marked"
+            ]
           }
         }
       ]

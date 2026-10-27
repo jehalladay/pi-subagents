@@ -11,6 +11,11 @@
  * wb-1s7l (the R694 follow-up of landing 257, gate cmd_9623f3438e45) hardens the instruments below against the gate's survivors:
  * F1 B6's port scan, F2 the verbatim readings, F3 A1's call-composed argv, F4 A2's roster selector, F5 the registration and reached
  * records, F6 the nulled workspace (D3, D4), and the F7 seam disclosure (B7).
+ * wb-vxhz (the R694 follow-up of landing 345, gate cmd_938275116d89) cures B6's launcher scan against that gate's survivors: F1 the
+ * five child_process forms planted inside the reader closure (an inline require, an awaited import(), a namespace element access, an
+ * import().then callback, a createRequire-made require) are resolved through any child_process-valued expression, and F2 a launcher
+ * invoked through .call (or .apply, or an immediately invoked .bind) and code compiled from a string are killed; what stays
+ * invisible is named in R-COMPOSED-NAME and R-UNLISTED with its quiet rows.
  *
  * MEASURED AT THE INSTALLED rf (0.1.832 by `rf --json --version` result.version, 2026-10-22; producer rows read from its installed
  * package, read-only): domain/diagnostics.py spells RF_REPLAY_RECONSTRUCTION_UNAVAILABLE (:1023) and
@@ -48,9 +53,15 @@
  *    0; B5 the reader adapter's projection names the code and no field value; B6 the static port census of the reader modules'
  *    transitive src import closure: no network global as an identifier (a property name included) or an exact string literal, no
  *    network module as an exact string literal (a static, dynamic or required specifier, or a part of a concatenation that keeps
- *    the module name whole), no import() or require() of a non-literal specifier, and child_process launchers, however bound (named,
- *    aliased, namespace, default, required, import-equals or dynamically imported; a module-local const program resolved), launch
- *    only "rf"; B7 the seam B2 and B3 read is test-reachable only: no src module but the provider spells registerReactiveFiberRender
+ *    the module name whole), no import(), require() or createRequire-made require of a non-literal specifier, no code compiled from a
+ *    string (an eval or Function global as an identifier, a property name included, or an exact string literal), and child_process
+ *    launchers launch only "rf", however the launcher is bound (named, aliased, namespace, default, required, import-equals or
+ *    dynamically imported) or reached through a child_process-valued expression (a loader call's result - an inline require, an
+ *    awaited import(), a require held in a variable or made by createRequire -, its default, a then-callback parameter, an alias or
+ *    a destructuring of any of these, read through parentheses, awaits and type assertions, a binding read above its declaration
+ *    included) by member or exact-literal element access, and called directly or through .call, .apply or an immediately invoked
+ *    .bind (a module-local const program or element name resolved); B7 the seam B2 and B3 read is test-reachable only: no src module
+ *    but the provider spells registerReactiveFiberRender
  *    (as an identifier, a property name included, or a string literal), while the served registration
  *    registerNativeReactiveFiberRender is spelled outside it (native-modules.ts).
  *  C, acceptance (b). C1 the native typed refusal of each code is that code (both producer shapes of one code, and the other code);
@@ -83,10 +94,13 @@
  * with is not echoed today - the replay envelope is refused as unrecognized (quiet rows A3, A4); R-COMPOSED-ARGV a replay argv
  * whose words come from a non-literal part - a variable, a call, a template substitution, including a push or a concat of one - is
  * invisible to A1 (A1's composedArgv and concatComposed controls stay 0); R-COMPOSED-NAME a port, launcher or seam name assembled
- * at runtime (a concatenation splitting the word across literals, a launcher read into a variable or reached through a wrapper)
- * is invisible to B6 and B7 (their splitName and wrappedLauncher controls stay quiet); R-UNLISTED a port outside the listed
- * network globals, network modules and child_process launchers (a worker, a native addon, process.binding) is not read by B6 (its
- * unlisted control stays quiet); R-UNMARKED-READER an rf reader registered with none of A2's three markers is invisible to A2 (its
+ * at runtime (a concatenation splitting the word across literals; a launcher member read into a variable - const run = cp.spawn, a
+ * stored .bind; a launcher reached through a wrapper - Reflect.apply, a promise chain past its first then, a callback passed by
+ * name) is invisible to B6 and B7 (B6's splitName, wrappedLauncher, storedBind, reflectApply and promiseChain controls and B7's
+ * splitName control stay quiet); R-UNLISTED a port outside the listed network globals, network modules, code compilers and
+ * child_process launchers (a worker, a native addon, process.binding, node:vm, a compiler reached through a function's
+ * constructor) is not read by B6 (its unlisted, vmCompile and constructorCompile controls stay quiet); R-UNMARKED-READER an rf
+ * reader registered with none of A2's three markers is invisible to A2 (its
  * unmarked control stays 0).
  * SCOPE: the codes, fields and shapes are producer facts at the installed rf; Pi vendors no rf schema, so a producer-side change is
  * seen only when a fixture re-measure re-reads them. The armed half (a replay reader echoing the five fields) waits for
@@ -139,6 +153,10 @@ const NETWORK_MODULE = /^(?:node:)?(?:net|http|https|http2|dns|tls|dgram)(?:\/|$
 const NETWORK_GLOBALS = ["fetch", "WebSocket", "EventSource", "XMLHttpRequest"];
 const CHILD_PROCESS = /^(?:node:)?child_process$/;
 const LAUNCHERS = ["spawn", "spawnSync", "exec", "execSync", "execFile", "execFileSync", "fork"];
+/** node:module, whose createRequire makes a require function (wb-vxhz F1). */
+const MODULE_MODULE = /^(?:node:)?module$/;
+/** The globals that compile code from a string, a port named inside the string being invisible to a static scan (wb-vxhz F2). */
+const CODE_COMPILERS = ["eval", "Function"];
 /** The reader modules: the provider and its adapter; B6 walks their src import closure. */
 const READER_MODULES = ["src/workbench/providers/reactivefiber.ts", "src/workbench/reactivefiber-observer.ts"];
 const PROVIDER_MODULE = "src/workbench/providers/reactivefiber.ts";
@@ -591,21 +609,23 @@ interface PortScan {
   readonly launches: string[];
   readonly local: string[];
 }
-/** True for an import() or a require() call. */
-function isLoader(call: ts.CallExpression): boolean {
-  return call.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(call.expression) && call.expression.text === "require");
-}
-/** True for `require("node:child_process")` and `[await] import("node:child_process")`. */
-function loadsChildProcess(node: ts.Expression): boolean {
-  const call = ts.isAwaitExpression(node) ? node.expression : node;
-  if (!ts.isCallExpression(call) || !isLoader(call)) return false;
-  const first = call.arguments[0];
-  return first !== undefined && ts.isStringLiteralLike(first) && CHILD_PROCESS.test(first.text);
+/** An expression with its parentheses, awaits and type assertions (as, satisfies, a non-null or an angle-bracket assertion)
+ * removed. */
+function unwrapped(node: ts.Expression): ts.Expression {
+  let current = node;
+  while (ts.isParenthesizedExpression(current) || ts.isAwaitExpression(current) || ts.isAsExpression(current) || ts.isSatisfiesExpression(current) ||
+    ts.isNonNullExpression(current) || ts.isTypeAssertionExpression(current)) current = current.expression;
+  return current;
 }
 /** One module's ports: every identifier (a property name included) or exact string literal naming a network global; every exact
- * string literal naming a network module; every import() or require() of a non-literal specifier; the program of every
- * child_process launcher call however the launcher is bound (named, aliased, namespace, default, required, import-equals or
- * dynamically imported; a module-local const program resolved, "<composed>" otherwise); and its relative module specifiers. */
+ * string literal naming a network module; as dynamic, every import(), require() or createRequire-made require of a non-literal
+ * specifier and every identifier (a property name included) or exact string literal naming a code compiler (eval, Function); the
+ * program of every child_process launcher call (a module-local const program resolved, "<composed>" otherwise), however the
+ * launcher is bound (named, aliased, namespace, default, required, import-equals or dynamically imported) or reached through a
+ * child_process-valued expression (a loader call's result - an inline require, an awaited import(), a require held in a variable or
+ * made by createRequire -, its default, a then-callback parameter, an alias or a destructuring of any of these, read through
+ * parentheses, awaits and type assertions) by member or exact-literal element access, and called directly or through .call, .apply
+ * or an immediately invoked .bind; and its relative module specifiers (wb-vxhz F1, F2). */
 function scanPorts(fileName: string, text: string): PortScan {
   const source = sourceOf(fileName, text);
   const network: string[] = [];
@@ -613,57 +633,156 @@ function scanPorts(fileName: string, text: string): PortScan {
   const dynamic: string[] = [];
   const launches: string[] = [];
   const local: string[] = [];
+  /** Identifiers bound to a launcher (the local name and the launcher it names), and identifiers holding the child_process module. */
   const bound = new Map<string, string>();
   const spaces = new Set<string>();
+  /** Identifiers naming node:module's createRequire, and identifiers holding a require function. */
+  const makers = new Set<string>(["createRequire"]);
+  const requirers = new Set<string>(["require"]);
   const bindings = constStrings(source);
+  /** The name a member access reads: a property name, or an element access's literal (a module-local const resolved). */
+  const memberName = (node: ts.Expression): string | undefined => {
+    if (ts.isPropertyAccessExpression(node)) return node.name.text;
+    if (ts.isElementAccessExpression(node)) return literalOf(node.argumentExpression, bindings) ?? undefined;
+    return undefined;
+  };
+  const receiverOf = (node: ts.Expression): ts.Expression | undefined =>
+    ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node) ? node.expression : undefined;
+  /** True for a call of createRequire: the bare or an imported name, or a createRequire member of any value. */
+  const makesRequire = (call: ts.CallExpression): boolean => {
+    const callee = unwrapped(call.expression);
+    return ts.isIdentifier(callee) ? makers.has(callee.text) : memberName(callee) === "createRequire";
+  };
+  /** True for an import(), a require() or a call of a createRequire-made require (held in a variable or called in place). */
+  const isLoad = (call: ts.CallExpression): boolean => {
+    if (call.expression.kind === ts.SyntaxKind.ImportKeyword) return true;
+    const callee = unwrapped(call.expression);
+    if (ts.isIdentifier(callee)) return requirers.has(callee.text);
+    return ts.isCallExpression(callee) && makesRequire(callee);
+  };
+  /** True for a child_process-valued expression: an identifier holding the module, a loader call of it, or its default. */
+  const moduleValued = (node: ts.Expression): boolean => {
+    const value = unwrapped(node);
+    if (ts.isIdentifier(value)) return spaces.has(value.text);
+    if (ts.isCallExpression(value)) {
+      const specifier = literalOf(value.arguments[0], bindings);
+      return specifier !== null && CHILD_PROCESS.test(specifier) && isLoad(value);
+    }
+    const receiver = receiverOf(value);
+    return receiver !== undefined && memberName(value) === "default" && moduleValued(receiver);
+  };
+  /** A pattern destructured from the child_process module: its default holds the module, any other property names a launcher. */
+  const destructure = (pattern: ts.ObjectBindingPattern): void => {
+    for (const element of pattern.elements) {
+      if (!ts.isIdentifier(element.name)) continue;
+      const key = element.propertyName;
+      const property = key !== undefined && (ts.isIdentifier(key) || ts.isStringLiteral(key)) ? key.text : element.name.text;
+      if (property === "default") spaces.add(element.name.text);
+      else bound.set(element.name.text, property);
+    }
+  };
   const bind = (node: ts.Node): void => {
     if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference) && ts.isStringLiteralLike(node.moduleReference.expression) &&
       CHILD_PROCESS.test(node.moduleReference.expression.text)) spaces.add(node.name.text);
-    if (ts.isImportDeclaration(node) && ts.isStringLiteralLike(node.moduleSpecifier) && CHILD_PROCESS.test(node.moduleSpecifier.text)) {
+    if (ts.isImportDeclaration(node) && ts.isStringLiteralLike(node.moduleSpecifier)) {
       const clause = node.importClause;
-      if (clause?.name !== undefined) spaces.add(clause.name.text);
       const named = clause?.namedBindings;
-      if (named !== undefined && ts.isNamespaceImport(named)) spaces.add(named.name.text);
-      if (named !== undefined && ts.isNamedImports(named)) for (const element of named.elements) bound.set(element.name.text, (element.propertyName ?? element.name).text);
-    }
-    if (ts.isVariableDeclaration(node) && node.initializer !== undefined && loadsChildProcess(node.initializer)) {
-      if (ts.isIdentifier(node.name)) spaces.add(node.name.text);
-      if (ts.isObjectBindingPattern(node.name)) {
-        for (const element of node.name.elements) {
-          if (!ts.isIdentifier(element.name)) continue;
-          const property = element.propertyName !== undefined && ts.isIdentifier(element.propertyName) ? element.propertyName.text : element.name.text;
-          bound.set(element.name.text, property);
+      const elements = named !== undefined && ts.isNamedImports(named) ? named.elements : [];
+      if (CHILD_PROCESS.test(node.moduleSpecifier.text)) {
+        if (clause?.name !== undefined) spaces.add(clause.name.text);
+        if (named !== undefined && ts.isNamespaceImport(named)) spaces.add(named.name.text);
+        for (const element of elements) {
+          const imported = (element.propertyName ?? element.name).text;
+          if (imported === "default") spaces.add(element.name.text);
+          else bound.set(element.name.text, imported);
         }
+      }
+      if (MODULE_MODULE.test(node.moduleSpecifier.text)) {
+        for (const element of elements) if ((element.propertyName ?? element.name).text === "createRequire") makers.add(element.name.text);
+      }
+    }
+    if (ts.isVariableDeclaration(node) && node.initializer !== undefined) {
+      const value = unwrapped(node.initializer);
+      if (ts.isIdentifier(node.name) && moduleValued(value)) spaces.add(node.name.text);
+      if (ts.isIdentifier(node.name) && ((ts.isCallExpression(value) && makesRequire(value)) || (ts.isIdentifier(value) && requirers.has(value.text)))) {
+        requirers.add(node.name.text);
+      }
+      if (ts.isObjectBindingPattern(node.name) && moduleValued(value)) destructure(node.name);
+    }
+    if (ts.isCallExpression(node)) {
+      const callee = unwrapped(node.expression);
+      const receiver = receiverOf(callee);
+      const callback = node.arguments[0];
+      if (memberName(callee) === "then" && receiver !== undefined && moduleValued(receiver) && callback !== undefined &&
+        (ts.isArrowFunction(callback) || ts.isFunctionExpression(callback))) {
+        const parameter = callback.parameters[0]?.name;
+        if (parameter !== undefined && ts.isIdentifier(parameter)) spaces.add(parameter.text);
+        if (parameter !== undefined && ts.isObjectBindingPattern(parameter)) destructure(parameter);
       }
     }
     ts.forEachChild(node, bind);
   };
-  bind(source);
-  const launcherOf = (callee: ts.Expression): string | undefined => {
+  // A binding can be read above its declaration (imports hoist), so the bindings are read to a fixpoint.
+  const size = (): number => bound.size + spaces.size + makers.size + requirers.size;
+  let before = -1;
+  while (before !== size()) {
+    before = size();
+    bind(source);
+  }
+  /** The launcher a callee names: an identifier bound to (or named as) one, or a launcher member of a child_process-valued
+   * expression. */
+  const launcherOf = (node: ts.Expression): string | undefined => {
+    const callee = unwrapped(node);
     if (ts.isIdentifier(callee)) {
       const name = bound.get(callee.text) ?? callee.text;
       return LAUNCHERS.includes(name) ? name : undefined;
     }
-    if (ts.isPropertyAccessExpression(callee) && ts.isIdentifier(callee.expression) && spaces.has(callee.expression.text)) {
-      return LAUNCHERS.includes(callee.name.text) ? callee.name.text : undefined;
+    const name = memberName(callee);
+    const receiver = receiverOf(callee);
+    return name !== undefined && receiver !== undefined && LAUNCHERS.includes(name) && moduleValued(receiver) ? name : undefined;
+  };
+  /** The program a launcher call runs (undefined for any other call): called directly, through .call or .apply, or through an
+   * immediately invoked .bind (its bound program first, else the call's first argument). */
+  const programOf = (call: ts.CallExpression): string | undefined => {
+    const program = (node: ts.Expression | undefined): string => literalOf(node, bindings) ?? "<composed>";
+    const callee = unwrapped(call.expression);
+    if (launcherOf(callee) !== undefined) return program(call.arguments[0]);
+    const target = receiverOf(callee);
+    const via = memberName(callee);
+    if (target !== undefined && launcherOf(target) !== undefined) {
+      if (via === "call") return program(call.arguments[1]);
+      if (via === "apply") {
+        const list = call.arguments[1];
+        return list !== undefined && ts.isArrayLiteralExpression(list) ? program(list.elements[0]) : "<composed>";
+      }
+    }
+    if (ts.isCallExpression(callee)) {
+      const binder = unwrapped(callee.expression);
+      const bindTarget = receiverOf(binder);
+      if (memberName(binder) === "bind" && bindTarget !== undefined && launcherOf(bindTarget) !== undefined) return program(callee.arguments[1] ?? call.arguments[0]);
     }
     return undefined;
   };
   const visit = (node: ts.Node): void => {
-    if (ts.isIdentifier(node) && NETWORK_GLOBALS.includes(node.text)) globals.push(`${fileName}: ${node.text}`);
+    if (ts.isIdentifier(node)) {
+      if (NETWORK_GLOBALS.includes(node.text)) globals.push(`${fileName}: ${node.text}`);
+      if (CODE_COMPILERS.includes(node.text)) dynamic.push(`${fileName}: ${node.text}`);
+    }
     if (ts.isStringLiteralLike(node)) {
       if (NETWORK_GLOBALS.includes(node.text)) globals.push(`${fileName}: "${node.text}"`);
       if (NETWORK_MODULE.test(node.text)) network.push(`${fileName}: ${node.text}`);
+      if (CODE_COMPILERS.includes(node.text)) dynamic.push(`${fileName}: "${node.text}"`);
     }
     if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier !== undefined && ts.isStringLiteralLike(node.moduleSpecifier) &&
       node.moduleSpecifier.text.startsWith(".")) local.push(node.moduleSpecifier.text);
     if (ts.isCallExpression(node)) {
       const first = node.arguments[0];
-      if (isLoader(node)) {
+      if (isLoad(node)) {
         if (first === undefined || !ts.isStringLiteralLike(first)) dynamic.push(`${fileName}: ${node.getText(source)}`);
         else if (first.text.startsWith(".")) local.push(first.text);
       }
-      if (launcherOf(node.expression) !== undefined) launches.push(literalOf(first, bindings) ?? "<composed>");
+      const program = programOf(node);
+      if (program !== undefined) launches.push(program);
     }
     ts.forEachChild(node, visit);
   };
@@ -908,6 +1027,41 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       splitName: control('await globalThis["fe" + "tch"](producer);'),
       wrappedLauncher: control('import * as cp from "node:child_process"; const run = cp.spawn; run("curl", []);'),
       unlisted: control('process.binding("tcp_wrap");'),
+      // wb-vxhz F1: launchers reached through a child_process-valued expression (the gate's planted N-B6a..N-B6e, then the
+      // resolved neighbours), each a kill.
+      inlineRequire: control('require("node:child_process").execFile("curl", [producer]);'),
+      awaitedImport: control('(await import("node:child_process")).execFile("curl", [producer]);'),
+      elementLauncher: control('import * as cp from "node:child_process"; cp["execFile"]("curl", [producer]);'),
+      elementConst: control('import * as cp from "node:child_process"; const verb = "spawn"; cp[verb]("curl", []);'),
+      thenLauncher: control('import("node:child_process").then(cp => cp.execFile("curl", [producer]));'),
+      thenDestructured: control('import("node:child_process").then(({ spawn: run }) => run("curl", []));'),
+      createRequireLauncher: control('import { createRequire as make } from "node:module"; const load = make(import.meta.url); load("node:child_process").spawn("curl", [producer]);'),
+      inlineCreateRequire: control('import { createRequire } from "node:module"; createRequire(import.meta.url)("node:child_process").spawn("curl", []);'),
+      destructuredSpace: control('import * as cp from "node:child_process"; const { execFile: run } = cp; run("curl", [producer]);'),
+      defaultForms: control('import { default as a } from "node:child_process"; const { default: b } = await import("node:child_process"); a.spawn("curl", []); b.spawn("curl", []); (await import("node:child_process")).default.spawn("curl", []);'),
+      stringKey: control('import * as cp from "node:child_process"; const { "execFile": run } = cp; run("curl", [producer]);'),
+      aliasedSpace: control('import * as cp from "node:child_process"; const alias = cp; alias.spawn("curl", []);'),
+      assertedSpace: control('import * as cp from "node:child_process"; (cp as typeof cp).spawn("curl", []); (cp satisfies object).spawn("curl", []); cp!.spawn("curl", []); (<typeof cp>cp).spawn("curl", []);'),
+      thenFunction: control('import("node:child_process").then(function (cp) { return cp.spawn("curl", []); });'),
+      requireAlias: control('const load = require; load("node:child_process").spawn("curl", []);'),
+      memberCreateRequire: control('import * as mod from "node:module"; const load = mod.createRequire(import.meta.url); load("node:child_process").spawn("curl", []);'),
+      hoistedBinding: control('function go() { const { spawn: run } = alias; return run("curl", []); } const alias = cp; import * as cp from "node:child_process";'),
+      // wb-vxhz F2: a launcher invoked through .call, .apply or an immediately invoked .bind, and code compiled from a string, each a
+      // kill.
+      callLauncher: control('import { execFile as run } from "node:child_process"; run.call(undefined, "curl", [producer]);'),
+      applyLauncher: control('import * as cp from "node:child_process"; cp.spawn.apply(cp, ["curl", [producer]]);'),
+      bindLauncher: control('import { spawn } from "node:child_process"; spawn.bind(undefined, "curl")([producer]);'),
+      codeString: control('new Function("u", "return fetch(u)")(producer);'),
+      evalString: control("eval(code);"),
+      compilerElement: control('globalThis["Function"]("u", "return fetch(u)")(producer);'),
+      composedRequire: control('import { createRequire } from "node:module"; const load = createRequire(import.meta.url); require(moduleName); load(moduleName);'),
+      // wb-vxhz quiet rows: R-COMPOSED-NAME (a launcher member stored, or reached through a wrapper) and R-UNLISTED (a compiler
+      // outside the listed names) stay invisible.
+      storedBind: control('import { spawn } from "node:child_process"; const run = spawn.bind(undefined); run("curl", []);'),
+      reflectApply: control('import * as cp from "node:child_process"; Reflect.apply(cp.spawn, cp, ["curl", []]);'),
+      promiseChain: control('import("node:child_process").then(m => m).then(cp => cp.spawn("curl", []));'),
+      vmCompile: control('import { runInNewContext } from "node:vm"; runInNewContext(code);'),
+      constructorCompile: control('(() => undefined).constructor("u", "return fetch(u)")(producer);'),
     };
     return { closureFloorMet, anchorsRead, unresolved, network: ports.network, globals: ports.globals, dynamic: ports.dynamic, launches, controls };
   },
