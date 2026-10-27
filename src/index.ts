@@ -2870,7 +2870,7 @@ Terse command-style prompts produce shallow, generic work.
     pi.registerTool(defineTool({
       name: "workflow_observe",
       label: "Observe workflow",
-      description: "Read a bounded, redacted workflow projection by task ID: paged nodes (cursor), tone/kind/relations/events selectors, freshness summary, anomalies and a byte cap. Requires workbench:observe; not an execution authority.",
+      description: "Read a bounded, redacted workflow projection by task ID: paged nodes (cursor), tone/kind/relations/events selectors, the scope's typed identity refusals (identityRefusals selector), freshness summary, anomalies and a byte cap. Requires workbench:observe; not an execution authority.",
       parameters: Type.Object({
         taskId: Type.String(),
         limit: Type.Optional(Type.Integer({ minimum: 1, maximum: OBSERVE_MAX_LIMIT })),
@@ -2887,6 +2887,8 @@ Terse command-style prompts produce shallow, generic work.
               projectionEventId: Type.String(),
             })),
           })),
+          // wb-86q: one bounded page of the request scope's typed identity refusals (closed vocabulary, never the refused text).
+          identityRefusals: Type.Optional(Type.Object({ limit: Type.Integer({ minimum: 1, maximum: OBSERVE_MAX_LIMIT }) })),
         })),
       }),
       execute: async (_id, params, _signal, _onUpdate, ctx) => {
