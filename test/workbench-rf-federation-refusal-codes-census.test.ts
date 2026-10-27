@@ -54,9 +54,12 @@
  *    which name no code at all (no diagnostics, a warning primary, exit 0, malformed stdout spelling a family code, a result on a
  *    failure) and one whose family code rides behind a non-family primary; B4 the adapter likewise over the five reading shapes.
  *  C, acceptance (c). C1 an AST scan of every src module and every native descriptor for an rf workspace verb (an argv "workspace"
- *    followed anywhere later by a planned verb - flags between them included - once spreads of array literals and array-literal
- *    .concat calls are flattened and push/unshift argument lists read as argv, or a string or template literal spelling one), with
- *    a floor, a non-vacuity reading of the real render argv, the pinned composed-site list and eleven controls; C2 the rf roster
+ *    followed anywhere later by a planned verb - flags between them included - once spreads of argv expressions are flattened and
+ *    .concat chains (each receiver read recursively), push/unshift argument lists and Array.of, Array() and new Array() argument
+ *    lists are read as one argv, or a string or template literal spelling one), with a floor, a non-vacuity reading of the real
+ *    render argv, the pinned composed-site list, the group-word table (every whole "workspace" string literal in src, each file
+ *    with the syntax kind every one sits in, held to KNOWN_GROUP_WORDS, so the group word spelled as a whole literal anywhere new
+ *    reds whatever argv shape carries it) and twenty-two controls; C2 the rf roster
  *    stays the preview alone (native and injected registrations,
  *    RECONCILE_EVIDENCE_READS.reactivefiber); C3 the native reader refuses a refused workspace.read admission envelope (its
  *    RF_FEDERATION_* code never echoed) and, as the command-gate control, a full-shape success re-pointed to the non-family
@@ -66,9 +69,15 @@
  *  D, the merged CCCA clause. D1 no src or qa file spells a CCCA outcome word or an inconsistency word beyond the two Pi-owned
  *    sites measured at base, each held to its anchor and to its occurrence count per word (KNOWN_SITES), beside the R-PROSE-OUTCOME
  *    quiet control; D2 a refusal whose primary metadata states NO_ADMISSIBLE_VERSION rides the registered reading verbatim, while
- *    the native refusal and the adapter name its code and neither another outcome word (exact, or folded: any case, its parts joined
- *    by any run of whitespace, ".", "_" or "-", or by none) nor an inconsistency word nor a word of the infeasibility synonym set
- *    (INFEASIBILITY), beside the folded matcher's and the synonym set's own controls.
+ *    the native refusal and every string the adapter's reading carries (title, status, notes, evidence references and every other
+ *    field, each object key included) name its code and neither another outcome word (exact, or folded: any case, its parts joined
+ *    by any run of characters that are not ASCII letters or digits, or by none) nor an inconsistency word nor a word of the
+ *    infeasibility synonym set (INFEASIBILITY), and that reading is pinned whole, path by path, so a string added, removed or
+ *    reworded anywhere in it reds whatever it spells; beside them the folded matcher's and the synonym set's own controls and
+ *    R-SYNONYM's quiet rows.
+ *  Every adapter projection A4, A5, B4 and D2 read is every string the adapter's topology carries, the fixture's own workspace
+ *    root masked (a checkout path the census hands the reading and its envelope alike), not only the node title, status text and
+ *    notes (wb-ii3m F3).
  *  M, the matcher rows B1 and B2 read: M1-M8 the spellings familyIn must catch (M8 an escape-sequence spelling, caught decoded);
  *    Q1 the registered non-family code that must stay quiet; Q2-Q5 the pinned quiet rows of its residuals.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id, label
@@ -77,25 +86,33 @@
  * test title in order (tests) and every case's reached record (reached). A pin deleted, relabelled, swapped for another passing
  * case, or removed from every literal here at once still reds against the roster, and every pin's witness is measured by its own
  * case; A2-A6, B3, B4, C3, C4 and D2 are also anchored in src itself (the readers' own outputs).
- * OUTSIDE ANCHORS (wb-iqqy F2): two owner filings in the tracked bead export (.beads/issues.jsonl), each read only where a later
- * lane append cannot reach it. wb-tnz5.3's filing (its first "Acceptance: " line and its first "Cross-program duplicates merged
- * here" line): every acceptance clause marker the Acceptance line carries starts exactly one row label, the merged CCCA clause's
- * parenthesized phrase sits verbatim in exactly one row label, and FAMILIES' stems are the two proposed stems the merged line
- * spells - each derived from the filing's text, never from a list kept here. wb-iqqy's filing (its head: the notes before the
- * first blank line and before the collect step's first DELIVERED line, read the same with a delivery note appended): every gate
- * mutant id it names has a CURES entry whose cases are registered here, and every census pin id it names is a registered pin. So X-COORD-ROW (row D and its cases out of this file and the roster together) reds on the CCCA clause.
+ * OUTSIDE ANCHORS (wb-iqqy F2, wb-ii3m F4): three owner filings in the tracked bead export (.beads/issues.jsonl), each read only
+ * where a later lane append cannot reach it. wb-tnz5.3's filing (its first "Acceptance: " line and its first "Cross-program
+ * duplicates merged here" line): every acceptance clause marker the Acceptance line carries starts exactly one row label, every
+ * fragment of each clause (the clause split at its family-code spellings, an article included, and at its ";" and ","
+ * separators) sits verbatim in that clause's row label, the merged CCCA clause's parenthesized phrase sits verbatim in exactly one
+ * row label, and FAMILIES' stems are the two proposed stems the merged line spells - each derived from the filing's text, never
+ * from a list kept here. The two follow-up filings, each read through its head (the notes before the first blank line and before
+ * the collect step's first DELIVERED line, read the same with a delivery note appended) - wb-iqqy's whole head, and the carried
+ * finding lines ("[leads] ", "[rides] ") of wb-ii3m's: every gate mutant id either names has a CURES entry whose cases are
+ * registered here or a DISCLOSED entry (a hollow NOT CLAIMED below names), every such entry is a mutant one of them names, and
+ * every census pin id either names is a registered pin. So X-COORD-ROW (row D and its cases out of this file and the roster
+ * together) reds on the CCCA clause, and L2-XCOORD-LABEL (row A's label tail out of both) reds on the clause fragments.
  * RECORDS (wb-iqqy F3): the judged-set case, which runs first, reads the collected task tree - every roster title once, in order,
  * every case in run mode and not inverted, the record case included; each pin re-reads the collected modes, records its witness
  * (MEASURED) and, after its roster compare, its reached record with the assertion count it had run by then (REACHED); the
  * judged-set and anchors cases record theirs; the record case, registered last, re-walks the tree (every other case ran),
  * compares MEASURED against the roster a second time and REACHED against the roster's reached list. So X-EACH (one pin per row
  * registered), X-THIRD (a case returning its roster witness before measuring) and X-SKIP (a pin skipped at run time) red.
- * NOT CLAIMED: the matcher row M and any pin neither filing names (A1-A6, B2-B4, C2-C4 and the M and Q pins), removed from ROWS,
- * the frozen literal, IMPL or SPELLINGS, CURES and the roster's rows, tests and reached lists together - the filings anchor rows
- * A-D, the stems, the filing-named pins and the mutant ids, not those pins (X-COORD-PIN as filed, M7 out of ROWS, SPELLINGS, the
- * frozen literal and the roster's rows, reds the record through the roster's tests and reached lists; M7 out of those lists as
- * well stays green); every case of this file skipped or marked todo at once (nothing runs to read it; the gate's delivered-file
- * marker scan, standing rule 10, is the backstop).
+ * NOT CLAIMED: the matcher row M and any pin no filing names (A1-A6, B2-B4, C2-C4 and the M and Q pins), removed from ROWS, the
+ * frozen literal, IMPL or SPELLINGS, CURES and the roster's rows, tests and reached lists together - the filings anchor rows A-D,
+ * the clause fragments, the stems, the filing-named pins and the mutant ids, not those pins (X-COORD-PIN as filed, M7 out of ROWS,
+ * SPELLINGS, the frozen literal and the roster's rows, reds the record through the roster's tests and reached lists; M7 out of
+ * those lists as well, X-COORD-PIN-FULL, stays green: DISCLOSED); a label's own words beyond its clause's fragments (row A's "on
+ * every Pi reader surface", rows B and C past their colon, row D beyond its CCCA phrase and row M's whole label) removed, or words
+ * inserted between the fragments, in this file and the roster together (the anchors case pins the removal's quiet reading beside
+ * the tail hollow it catches); every case of this file skipped or marked todo at once (nothing runs to read it; the gate's
+ * delivered-file marker scan, standing rule 10, is the backstop).
  * RESIDUALS (named, each with a pinned quiet row): R-COMPOSED a family code assembled at runtime from parts is invisible to B1's
  *    text scan (Q2); its backstop is A2-A5 and B3-B4, which hold every code a reader surfaces to the envelope's primary code, on the
  *    reader paths only; R-INTERRUPTED the stem split by a zero-width code point (Q3); R-HOMOGLYPH one letter swapped for a look-alike
@@ -109,11 +126,19 @@
  *    prose control: D1 quiet, D2 hit); R-ADMISSION-UNREAD no Pi reader reads an admission result, so the code an admission refuses with is not echoed today
  *    (C3, C4); R-ACCEPTED-UNBUILT no accepted admission envelope is fixtured (wb-o4h0.3's no-fabrication pin), so the accepted side
  *    is witnessed only through the command gate (C3, C4's non-render-success rows), C1 and C2;
- *    R-COMPOSED-ARGV a group word not spelled as the string literal "workspace" inside the argv itself - assembled by "+", held in
- *    a constant or variable, returned by a call - is never a C1 hit (C1's concatenated and constant-group controls, both quiet);
- *    an argv whose "workspace" element is followed by no planned verb but by a non-literal element, or ends its array literal (the
- *    group with its verb supplied elsewhere: a spread of an identifier, a later push), is a composed site, and C1 pins the list
- *    (one at base, observation.ts assertRef's ["workspace", scope.workspace] validation pair, not an rf argv), so a new one reds.
+ *    R-COMPOSED-ARGV a group word src never spells as the whole string literal "workspace" - assembled by "+" or a template,
+ *    computed by a call at run time (decoded, case-folded, sliced), or imported from outside src - is never a C1 hit and never a
+ *    group-word site (C1's concatenated and templated controls, both quiet; held in a src constant it is a group-word site, the
+ *    constant control); an argv whose
+ *    "workspace" element is followed by no planned verb but by a non-literal element, only by literal flags (wb-ii3m
+ *    L2-C1-flagterm) or by nothing (the group with its verb supplied elsewhere: a spread of an identifier, a later push), is a
+ *    composed site, and C1 pins the list (one at base, observation.ts assertRef's ["workspace", scope.workspace] validation pair,
+ *    not an rf argv), so a new one reds - and every whole "workspace" literal, composed or not, is in the group-word table;
+ *    R-COMPOSED-COMMAND a command string whose group word and verb sit in different literals or expressions ("rf workspace " +
+ *    verb) is never a C1 hit (C1's command control, quiet); R-SYNONYM a relabel spelled by a word outside the INFEASIBILITY set, or
+ *    by a reordered paraphrase of an outcome word, is never a hit of D2's matchers (D2's out-of-set and reordered controls, both
+ *    quiet): D2 still reds on it through its pinned reading, so the blind spot is reached only by a re-measure that re-pins a
+ *    relabelled reading.
  * SCOPE: the codes, verbs and outcome words are producer facts at 6a251bf73af5 and the installed rf; Pi vendors no rf schema, so a
  * producer-side change is seen only when a re-measure re-reads them. The armed half (an admission reader branching on registered
  * codes) waits for rfc-bak67.8 (and rfc-0txnl.1 for the RF_FED_* spelling): no reader is added or faked in src.
@@ -147,9 +172,11 @@ const REPO = join(HERE, "..");
 const ROSTER_PATH = join(HERE, "fixtures", "rf-federation-refusal-codes-roster.json");
 /** The tracked bead export: the two owner filings this census is anchored to outside its own literals and its roster. */
 const EXPORT_PATH = join(REPO, ".beads", "issues.jsonl");
-/** The bead this census pins, and the R694 follow-up bead whose filing names the gate mutants this cut cures. */
+/** The bead this census pins, and the two R694 follow-up beads whose filings name the gate mutants this census cures (wb-iqqy from
+ * landing 274, wb-ii3m from landing 367). */
 const BEAD = "wb-tnz5.3";
 const FOLLOW_UP = "wb-iqqy";
+const SECOND_FOLLOW_UP = "wb-ii3m";
 const ROOT = process.cwd();
 const PREVIEW_ID = "reactivefiber.render.preview";
 const GRANTS = ["reactivefiber:render"];
@@ -215,6 +242,19 @@ const KNOWN_SITES: Readonly<Record<string, { readonly words: Readonly<Record<str
   "qa/workbench/timeline-grouped-core.mjs": { words: { "<inconsistency>": 4 }, anchor: "pass-flag-contradicts-measurement" },
   "src/workbench/designer.ts": { words: { SOURCE_UNAVAILABLE: 1 }, anchor: 'code: "SOURCE_UNAVAILABLE"' },
 };
+/** The whole "workspace" string literals C1 finds in src at base (wb-ii3m F1), each file with the syntax kind every one sits in,
+ * in source order: Pi's own words, none an rf argv - agent-file-toggle.ts's agent-file location (a union member, a value and a
+ * return), forge-observer.ts's workspace node id, observation.ts assertRef's validation pair (the one composed site) and the two
+ * rf envelope key lists (providers/reactivefiber.ts RF_KEYS and reactivefiber-observer.ts ENVELOPE_KEYS). */
+const KNOWN_GROUP_WORDS: Readonly<Record<string, readonly string[]>> = {
+  "src/agent-file-toggle.ts": ["LiteralType", "PropertyAssignment", "ReturnStatement"],
+  "src/workbench/forge-observer.ts": ["VariableDeclaration"],
+  "src/workbench/observation.ts": ["ArrayLiteralExpression"],
+  "src/workbench/providers/reactivefiber.ts": ["ArrayLiteralExpression"],
+  "src/workbench/reactivefiber-observer.ts": ["ArrayLiteralExpression"],
+};
+/** The module files C1 parses: every JavaScript and TypeScript extension, not .ts alone (wb-ii3m F5). */
+const MODULE = /\.(?:[cm]?[jt]s|[jt]sx)$/;
 
 /** Rows B1 and B2's matcher: an RF_FED stem in any affix or case, closed by an underscore (RF_FED_, RF_FEDERATION_, ...). */
 const FAMILY = /RF_FED[A-Z]*_/i;
@@ -224,8 +264,9 @@ const ESCAPE = /\\x([0-9A-Fa-f]{2})|\\u([0-9A-Fa-f]{4})|\\u\{([0-9A-Fa-f]{1,6})\
 const RF_TOKEN = /RF_[A-Z0-9_]+/g;
 /** An inconsistency word in any case. */
 const INCONSISTENCY = /inconsisten/i;
-/** D2's infeasibility synonym set (wb-iqqy G11): a word that relabels an outcome a mathematical inconsistency, in any case. */
-const INFEASIBILITY = /inconsisten|infeasib|contradict|unsatisfiab/i;
+/** D2's infeasibility synonym set (wb-iqqy G11; wb-ii3m L2-D2-syn adds impossib): a word that relabels an outcome a mathematical
+ * inconsistency, in any case. A word outside the set is R-SYNONYM. */
+const INFEASIBILITY = /inconsisten|infeasib|contradict|unsatisfiab|impossib/i;
 /** Row C1's matcher: an rf workspace verb, joined by any run of whitespace, ".", "_" or "-". */
 const WORKSPACE_VERB = new RegExp(`\\bworkspace[\\s._-]+(?:${WORKSPACE_VERBS.join("|")})\\b`, "i");
 /** The registered render-plane code B3 and B4 put in front of a family code (installed rf REGISTRY row). */
@@ -251,7 +292,7 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "B",
-    label: "(b) no federation-family literal is emitted by Pi without a producer envelope behind it: no src or qa file and no registered descriptor spells the family, and every code a Pi refusal names is its envelope's primary code",
+    label: "(b) a grep guard shows no federation-family literal emitted by Pi without a producer envelope behind it (0 in Pi src): no src or qa file and no registered descriptor spells the family, and every code a Pi refusal names is its envelope's primary code",
     pins: ["B1", "B2", "B3", "B4"],
   },
   {
@@ -277,7 +318,7 @@ const ANCHORS = "anchors";
 const RECORD = "record";
 const JUDGED_TITLE = "the judged set: the frozen shape, the out-of-file roster and the cases agree";
 const ANCHORS_TITLE =
-  "the outside anchors: every duty of the wb-tnz5.3 owner filing sits in exactly one row and its two family stems are FAMILIES', and every gate mutant and pin the wb-iqqy filing names is a registered case";
+  "the outside anchors: every duty and clause fragment of the wb-tnz5.3 owner filing sits in its row label and its two family stems are FAMILIES', and every gate mutant and pin the wb-iqqy and wb-ii3m filings name is a registered or disclosed case";
 const RECORD_TITLE = "the record: every registered test is in run mode and ran, every pin's witness matches the roster again, and every case reached its end with its pinned assertion count";
 /** The case each registered title belongs to, for CURES: a pin id, or one of the three cases above. */
 const CASE_TITLES: Readonly<Record<string, string>> = { [JUDGED]: JUDGED_TITLE, [ANCHORS]: ANCHORS_TITLE, [RECORD]: RECORD_TITLE };
@@ -288,7 +329,13 @@ const CASE_TITLES: Readonly<Record<string, string>> = { [JUDGED]: JUDGED_TITLE, 
  * flag between group and verb) red C1, G3 (a \u005f-escaped family code in a src literal) reds B1 through familyIn, with M8 its
  * spelling. F2: X-COORD-ROW (row D and its cases out of this file and the roster) reds the anchors case on the filing's CCCA
  * clause; X-COORD-PIN as filed reds the record (the roster's tests and reached lists still name M7; see NOT CLAIMED). F3: X-EACH,
- * X-THIRD and X-SKIP red the record.
+ * X-THIRD and X-SKIP red the record. And of every gate mutant the wb-ii3m filing names in its carried findings (gate
+ * cmd_09b741c00786 LEG 2 at landing 367): F1 L2-C1-flagterm (a group literal ending on a flag, its verb pushed later) is a composed
+ * site and L2-C1-chain (a concat chain) and L2-C1-arrayof (Array.of) are hits, all three new group-word sites, in C1; F2
+ * L2-D2-syn (impossible) reds the synonym set and L2-D2-slash (a slash joiner) the folded matcher, beside the in-set L2-D2-zwsp
+ * and L2-D2-camel, all in D2; F3 L2-D2-evref (an evidence reference) reds D2 through the whole-topology reading; F4
+ * L2-XCOORD-LABEL (row A's label tail out of this file and the roster together) reds the anchors case's clause fragments, and
+ * X-COORD-PIN-FULL, which the same finding names beside it, is DISCLOSED (NOT CLAIMED).
  */
 const CURES: Readonly<Record<string, readonly string[]>> = {
   G11: ["D2"],
@@ -302,6 +349,19 @@ const CURES: Readonly<Record<string, readonly string[]>> = {
   "X-EACH": [RECORD],
   "X-THIRD": [RECORD],
   "X-SKIP": [RECORD],
+  "L2-C1-flagterm": ["C1"],
+  "L2-C1-chain": ["C1"],
+  "L2-C1-arrayof": ["C1"],
+  "L2-D2-syn": ["D2"],
+  "L2-D2-slash": ["D2"],
+  "L2-D2-zwsp": ["D2"],
+  "L2-D2-camel": ["D2"],
+  "L2-D2-evref": ["D2"],
+  "L2-XCOORD-LABEL": [ANCHORS],
+};
+/** The gate mutants a follow-up filing names that this census does not kill, each with the NOT CLAIMED reading that discloses it. */
+const DISCLOSED: Readonly<Record<string, string>> = {
+  "X-COORD-PIN-FULL": "a pin no filing names (M7) removed from every literal here and every roster list together stays green",
 };
 
 interface Envelope {
@@ -389,9 +449,11 @@ function rosterWitness(pin: string): JsonValue {
   return found.witness;
 }
 
-/** A bead's row in the tracked bead export: its title and notes. */
+let exportLines: string[] | undefined;
+/** A bead's row in the tracked bead export: its title and notes (the export is read once per run, however many rows are read). */
 function exportRow(bead: string): { title: string; notes: string } {
-  for (const line of readFileSync(EXPORT_PATH, "utf8").split("\n")) {
+  exportLines ??= readFileSync(EXPORT_PATH, "utf8").split("\n");
+  for (const line of exportLines) {
     if (!line.includes(`"${bead}"`)) continue;
     const row: unknown = JSON.parse(line);
     if (isObject(row) && row.id === bead && typeof row.title === "string" && typeof row.notes === "string") return { title: row.title, notes: row.notes };
@@ -409,6 +471,42 @@ function filingLine(notes: string, head: string): string {
   const line = notes.split("\n").find(entry => entry.startsWith(head));
   if (line === undefined) throw new Error(`the filing states no line starting ${JSON.stringify(head)}`);
   return line;
+}
+/** The Acceptance line's clauses: each marker "(x) " with its text, from the marker up to the next one (wb-ii3m F4). */
+function clausesOf(acceptance: string): { marker: string; text: string }[] {
+  const found = [...acceptance.matchAll(/\(([a-z])\) /g)];
+  return found.map((match, index) => ({ marker: match[0], text: acceptance.slice(match.index ?? 0, found[index + 1]?.index ?? acceptance.length) }));
+}
+/** A clause's fragments (wb-ii3m F4): its text split at every family-code spelling the filing uses (a stem then "*", with its
+ * article) and at every ";" and ",", each piece trimmed and its closing period dropped, empty pieces skipped. */
+function fragmentsOf(clause: string, stems: readonly string[]): string[] {
+  const spelling = new RegExp(`\\b(?:an? )?(?:${stems.map(stem => stem.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})\\*|[;,]`, "g");
+  return clause.split(spelling).map(piece => piece.trim().replace(/\.$/, "").trim()).filter(piece => piece !== "");
+}
+/** The fragments of a clause that a row label does not carry verbatim. */
+function missingFragments(clause: string, label: string, stems: readonly string[]): string[] {
+  return fragmentsOf(clause, stems).filter(fragment => !label.includes(fragment));
+}
+interface FilingReading {
+  readonly mutants: string[];
+  readonly namedPins: string[];
+}
+/** The gate mutant ids (by `mutant`) and the census pin ids a filing text names, each once. */
+function filingReadingOf(text: string, mutant: RegExp): FilingReading {
+  return {
+    mutants: [...new Set([...text.matchAll(mutant)].map(match => match[0]))],
+    namedPins: [...new Set([...text.matchAll(/\b[A-DM]\d\b/g)].map(match => match[0]))],
+  };
+}
+/** wb-iqqy's filing: its whole head, read for G and X mutant ids. */
+function iqqyReading(notes: string): FilingReading {
+  return filingReadingOf(filingHead(notes), /\b(?:G\d+[a-z]?|X-[A-Z]+(?:-[A-Z]+)*)\b/g);
+}
+/** wb-ii3m's filing: the carried finding lines of its head ("[leads] ", "[rides] "; its not-carried INFO and fold-duty lines
+ * aside), read for L2 and X mutant ids. */
+function ii3mReading(notes: string): FilingReading {
+  const carried = filingHead(notes).split("\n").filter(line => /^\[(?:leads|rides)\] /.test(line)).join("\n");
+  return filingReadingOf(carried, /\b(?:L2-[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*|X-[A-Z]+(?:-[A-Z]+)*)\b/g);
 }
 
 function diagnosticOf(code: string, severity: "info" | "warning" | "error", metadata: JsonObject = {}): JsonObject {
@@ -608,25 +706,43 @@ const OBSERVER_CONTEXT: ReactiveFiberTopologyContext = {
 function readingOf(source: unknown): JsonValue {
   return json({ contract: REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, workspaceRoot: ROOT, source });
 }
+interface Carried {
+  readonly path: string;
+  readonly text: string;
+}
+/** Every string a value carries - each object key and each string value - with the path it sits at (object keys, array indexes;
+ * a key's own entry ends in ":key"), the fixture's own workspace root masked as <root>: a checkout path the census hands the
+ * reading and its envelope alike, so the reading is the same in every checkout. */
+function carriedStrings(value: unknown, path = ""): Carried[] {
+  if (typeof value === "string") return [{ path, text: value.split(ROOT).join("<root>") }];
+  if (Array.isArray(value)) return value.flatMap((item: unknown, index: number) => carriedStrings(item, `${path}[${index}]`));
+  if (value === null || typeof value !== "object") return [];
+  return Object.entries(value).flatMap(([key, item]: [string, unknown]) => {
+    const at = path === "" ? key : `${path}.${key}`;
+    return [{ path: `${at}:key`, text: key }, ...carriedStrings(item, at)];
+  });
+}
 interface Projection {
   readonly tone: string | null;
   readonly coverage: string | null;
   readonly statusText: string;
   readonly notes: string[];
-  /** Every string the projection would surface: the node's title and status text and the diagnostics. */
+  /** Every string the adapter's topology carries (wb-ii3m F3): the node's title and status text, the diagnostics, the evidence
+   * references and every other field, each key included, so no view renders a string of it the census does not read. */
   readonly shown: string[];
+  /** The path of each of those strings, in the same order. */
+  readonly fields: string[];
 }
 /** The adapter's projection of `source` at the rf-cli seam, or its refusal. */
 function projectionOf(source: unknown): { projection: Projection | null; refusal: { category: string; message: string } | null } {
   try {
     const topology = reactivefiberTopology(readingOf(source), OBSERVER_CONTEXT);
     const snapshot = topology.snapshots[0];
-    const statusText = snapshot?.node.statusText ?? "";
-    const notes = [...topology.diagnostics];
+    const carried = carriedStrings(topology);
     return {
       projection: {
-        tone: snapshot?.node.statusTone ?? null, coverage: snapshot?.coverage ?? null, statusText, notes,
-        shown: [snapshot?.node.title ?? "", statusText, ...notes],
+        tone: snapshot?.node.statusTone ?? null, coverage: snapshot?.coverage ?? null, statusText: snapshot?.node.statusText ?? "",
+        notes: [...topology.diagnostics], shown: carried.map(entry => entry.text), fields: carried.map(entry => entry.path),
       },
       refusal: null,
     };
@@ -663,52 +779,94 @@ interface VerbScan {
   readonly argv: string[];
   readonly literals: string[];
   readonly renderArgv: number;
-  /** One entry (the file) per argv whose "workspace" word is followed by no planned verb but by a non-literal element, or ends it. */
+  /** One entry (the file) per argv whose "workspace" word is followed by no planned verb but by a non-literal element, only by
+   * literal flags, or by nothing. */
   readonly composedArgv: string[];
+  /** The syntax kind each whole "workspace" string literal of the module sits in, in source order (wb-ii3m F1). */
+  readonly groupWords: string[];
 }
 /** The array methods whose calls C1 reads as one argv (wb-iqqy G9): concat flattens its receiver and arguments, push and unshift
  * append their arguments. */
 const ARGV_METHODS = ["concat", "push", "unshift"];
-/** An argv's words: a string literal is its text, a spread of an array literal is that literal's words (flattened), anything
+/** An argv word C1 reads as a flag: a literal starting with "-". */
+function isFlag(word: string | null): boolean {
+  return word?.startsWith("-") === true;
+}
+/** A call of one of ARGV_METHODS, with its receiver and method name; undefined for any other node. */
+function argvMethodOf(node: ts.Node): { receiver: ts.Expression; method: string; call: ts.CallExpression } | undefined {
+  if (!ts.isCallExpression(node) || !ts.isPropertyAccessExpression(node.expression) || !ARGV_METHODS.includes(node.expression.name.text)) return undefined;
+  return { receiver: node.expression.expression, method: node.expression.name.text, call: node };
+}
+/** An array construction C1 reads as one argv (wb-ii3m L2-C1-arrayof): Array.of(...), Array(...) or new Array(...). */
+function isArrayConstruction(node: ts.Node): node is ts.CallExpression | ts.NewExpression {
+  if (!ts.isCallExpression(node) && !ts.isNewExpression(node)) return false;
+  const callee = node.expression;
+  if (ts.isIdentifier(callee)) return callee.text === "Array";
+  return ts.isCallExpression(node) && ts.isPropertyAccessExpression(callee) && ts.isIdentifier(callee.expression) && callee.expression.text === "Array" && callee.name.text === "of";
+}
+/** An argv expression's words (null for a non-literal word): an array literal's elements, an array construction's arguments, or a
+ * concat call's receiver - read recursively, so a chain reads as one argv (wb-ii3m L2-C1-chain) - followed by its arguments, each
+ * flattened when it is itself an argv expression; undefined for anything else. */
+function argvOf(node: ts.Expression): (string | null)[] | undefined {
+  if (ts.isArrayLiteralExpression(node)) return argvWords(node.elements);
+  if (isArrayConstruction(node)) return argvWords(node.arguments ?? []);
+  const call = argvMethodOf(node);
+  if (call?.method !== "concat") return undefined;
+  return [...(argvOf(call.receiver) ?? []), ...call.call.arguments.flatMap(argument => argvOf(argument) ?? argvWords([argument]))];
+}
+/** An argv's words: a string literal is its text, a spread of an argv expression is that expression's words (flattened), anything
  * else null. */
 function argvWords(elements: readonly ts.Expression[]): (string | null)[] {
   return elements.flatMap(element => {
-    if (ts.isSpreadElement(element) && ts.isArrayLiteralExpression(element.expression)) return argvWords(element.expression.elements);
+    if (ts.isSpreadElement(element)) return argvOf(element.expression) ?? [null];
     return [ts.isStringLiteralLike(element) ? element.text : null];
   });
 }
-/** True when an array literal is read inside a larger argv: spread into another array literal, or the receiver or an argument of
- * an ARGV_METHODS call. */
-function readInside(node: ts.ArrayLiteralExpression): boolean {
+/** True when an argv expression is read inside a larger argv: spread into an array literal, an ARGV_METHODS call or an array
+ * construction, the receiver of an ARGV_METHODS call, an argument of a concat call, or an array-literal push/unshift argument. */
+function readInside(node: ts.Expression): boolean {
   const parent = node.parent;
-  if (ts.isSpreadElement(parent) && ts.isArrayLiteralExpression(parent.parent)) return true;
-  if (ts.isPropertyAccessExpression(parent) && parent.expression === node && ARGV_METHODS.includes(parent.name.text)) return ts.isCallExpression(parent.parent);
-  return ts.isCallExpression(parent) && parent.arguments.some(argument => argument === node) && ts.isPropertyAccessExpression(parent.expression) && ARGV_METHODS.includes(parent.expression.name.text);
+  if (ts.isSpreadElement(parent)) return ts.isArrayLiteralExpression(parent.parent) || argvMethodOf(parent.parent) !== undefined || isArrayConstruction(parent.parent);
+  if (ts.isPropertyAccessExpression(parent) && parent.expression === node) return argvMethodOf(parent.parent)?.receiver === node;
+  const call = argvMethodOf(parent);
+  if (call === undefined || !call.call.arguments.some(argument => argument === node)) return false;
+  return call.method === "concat" || ts.isArrayLiteralExpression(node);
 }
-/** One module's rf workspace verbs: an argv (an array literal, spreads of array literals flattened, or an ARGV_METHODS call) with
- * "workspace" followed anywhere later by a planned verb, or a string or template literal spelling one. */
+/** The script kind a module's extension names (wb-ii3m F5). */
+function scriptKindOf(fileName: string): ts.ScriptKind {
+  if (fileName.endsWith(".tsx")) return ts.ScriptKind.TSX;
+  if (fileName.endsWith(".jsx")) return ts.ScriptKind.JSX;
+  return /\.[cm]?js$/.test(fileName) ? ts.ScriptKind.JS : ts.ScriptKind.TS;
+}
+/** One module's rf workspace verbs: an argv expression (argvOf) or a push/unshift call with "workspace" followed anywhere later by
+ * a planned verb, or a string or template literal spelling one; beside them, the syntax kind of every whole "workspace" literal. */
 function scanWorkspaceVerbs(fileName: string, text: string): VerbScan {
-  const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, scriptKindOf(fileName));
   const argv: string[] = [];
   const literals: string[] = [];
   let renderArgv = 0;
   const composedArgv: string[] = [];
+  const groupWords: string[] = [];
   const judge = (words: readonly (string | null)[]): void => {
     words.forEach((word, index) => {
       if (word === "context" && words[index + 1] === "render") renderArgv += 1;
       if (word !== "workspace") return;
       const rest = words.slice(index + 1);
       if (rest.some(item => item !== null && WORKSPACE_VERBS.includes(item))) argv.push(`${fileName}: [${words.filter(item => item !== null).join(", ")}]`);
-      else if (rest.length === 0 || rest.includes(null)) composedArgv.push(fileName);
+      else if (rest.includes(null) || rest.every(isFlag)) composedArgv.push(fileName);
     });
   };
   const visit = (node: ts.Node): void => {
-    if (ts.isArrayLiteralExpression(node) && !readInside(node)) judge(argvWords(node.elements));
-    if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression) && ARGV_METHODS.includes(node.expression.name.text)) {
-      const receiver = node.expression.expression;
-      const head = ts.isArrayLiteralExpression(receiver) ? argvWords(receiver.elements) : [];
-      judge([...head, ...node.arguments.flatMap(argument => (ts.isArrayLiteralExpression(argument) ? argvWords(argument.elements) : argvWords([argument])))]);
+    if ((ts.isArrayLiteralExpression(node) || ts.isCallExpression(node) || ts.isNewExpression(node)) && !readInside(node)) {
+      const words = argvOf(node);
+      if (words !== undefined) judge(words);
     }
+    const append = argvMethodOf(node);
+    if (append !== undefined && append.method !== "concat") {
+      const appended = append.call.arguments.flatMap(argument => (ts.isArrayLiteralExpression(argument) ? argvWords(argument.elements) : argvWords([argument])));
+      judge([...(argvOf(append.receiver) ?? []), ...appended]);
+    }
+    if (ts.isStringLiteralLike(node) && node.text === "workspace") groupWords.push(ts.SyntaxKind[node.parent.kind]);
     if (ts.isStringLiteralLike(node) && WORKSPACE_VERB.test(node.text)) literals.push(`${fileName}: ${node.text}`);
     if (ts.isTemplateExpression(node)) {
       const parts = [node.head.text, ...node.templateSpans.map(span => span.literal.text)];
@@ -717,7 +875,7 @@ function scanWorkspaceVerbs(fileName: string, text: string): VerbScan {
     ts.forEachChild(node, visit);
   };
   visit(source);
-  return { argv, literals, renderArgv, composedArgv };
+  return { argv, literals, renderArgv, composedArgv, groupWords };
 }
 
 /** The tokens of `words` a text spells as whole code tokens (no letter, digit or underscore on either side). */
@@ -728,10 +886,11 @@ function wordsIn(text: string, words: readonly string[]): string[] {
 function occurrencesOf(text: string, word: string): number {
   return (text.match(new RegExp(`(?<![A-Za-z0-9_])${word}(?![A-Za-z0-9_])`, "g")) ?? []).length;
 }
-/** The outcome words a text spells folded (wb-iqqy G11, G11d): any case, the word's parts joined by any run of whitespace, ".",
- * "_" or "-", or by none, with no letter or digit on either side. */
+/** The outcome words a text spells folded (wb-iqqy G11, G11d; wb-ii3m L2-D2-slash): any case, the word's parts joined by any run
+ * of characters that are not ASCII letters or digits (whitespace, punctuation, a slash, an invisible code point), or by none, with
+ * no letter or digit on either side. */
 function foldedIn(text: string): string[] {
-  return OUTCOME_WORDS.filter(word => new RegExp(`(?<![A-Za-z0-9])${word.split("_").join("[\\s._-]*")}(?![A-Za-z0-9])`, "i").test(text));
+  return OUTCOME_WORDS.filter(word => new RegExp(`(?<![A-Za-z0-9])${word.split("_").join("[^A-Za-z0-9]*")}(?![A-Za-z0-9])`, "i").test(text));
 }
 /** A text with its literal \x, \u and \u{} escapes decoded to the characters they spell (an out-of-range escape is kept). */
 function decodeEscapes(text: string): string {
@@ -963,12 +1122,15 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     return named;
   },
   C1: async () => {
-    const files = filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts"));
-    const found = files.map(file => scanWorkspaceVerbs(repoPath(file), textOf(file)));
-    const argv = found.flatMap(result => result.argv);
-    const literals = found.flatMap(result => result.literals);
-    const renderArgvSeen = found.reduce((sum, result) => sum + result.renderArgv, 0) >= 1;
-    const composedArgv = found.flatMap(result => result.composedArgv).sort();
+    const files = filesBelow(join(REPO, "src")).filter(file => MODULE.test(file));
+    const found = files.map(file => ({ file: repoPath(file), scan: scanWorkspaceVerbs(repoPath(file), textOf(file)) }));
+    const argv = found.flatMap(({ scan }) => scan.argv);
+    const literals = found.flatMap(({ scan }) => scan.literals);
+    const renderArgvSeen = found.reduce((sum, { scan }) => sum + scan.renderArgv, 0) >= 1;
+    const composedArgv = found.flatMap(({ scan }) => scan.composedArgv).sort();
+    const groupWords = Object.fromEntries(
+      found.filter(({ scan }) => scan.groupWords.length > 0).map(({ file, scan }): [string, string[]] => [file, scan.groupWords]).sort(([left], [right]) => (left < right ? -1 : 1)),
+    );
     const { ids, texts } = await nativeDescriptors();
     const descriptorHits = ids.filter((id, index) => WORKSPACE_VERB.test(texts[index] ?? "") || WORKSPACE_VERB.test(id));
     const srcFloorMet = files.length >= SRC_FLOOR;
@@ -978,9 +1140,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     // R-COMPOSED-ARGV's pinned quiet row: the one composed site at base is observation.ts assertRef's ["workspace", scope.workspace]
     // validation pair, not an rf argv; a new composed "workspace" argv anywhere in src changes this list.
     expect(composedArgv).toStrictEqual(["src/workbench/observation.ts"]);
+    // wb-ii3m F1: every whole "workspace" literal in src is one of the measured Pi-owned sites, by file and syntax kind, so the group
+    // word spelled as a whole literal anywhere new - in an argv shape C1 does not read as well as one it does - reds here.
+    expect(groupWords, "every whole \"workspace\" string literal in src, each file with the syntax kind every one sits in").toStrictEqual(KNOWN_GROUP_WORDS);
     const control = (text: string): JsonValue => {
       const scan = scanWorkspaceVerbs("control.ts", text);
-      return { hits: scan.argv.length + scan.literals.length, composedArgv: scan.composedArgv.length };
+      return { hits: scan.argv.length + scan.literals.length, composedArgv: scan.composedArgv.length, groupWords: scan.groupWords.length };
     };
     const controls = {
       argv: control('spawn("rf", ["workspace", "read", resource, "--json"]);'),
@@ -995,11 +1160,27 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       concat: control('spawn("rf", ["workspace"].concat(["read", resource]));'),
       pushed: control('argv.push("workspace", "subscribe");'),
       terminated: control('const group = ["workspace"]; spawn("rf", [...group, "read"]);'),
-      // R-COMPOSED-ARGV's pinned quiet rows: a group word assembled by "+" or held in a constant is neither a hit nor composed.
+      // wb-ii3m L2-C1-flagterm: a group literal followed only by flags, its verb pushed later, is a composed site; L2-C1-chain and
+      // L2-C1-arrayof: a concat chain and the three array constructions are hits.
+      flagTerminated: control('const argv = ["workspace", "--json"]; argv.push("read", resource);'),
+      chained: control('spawn("rf", ["workspace"].concat(["--quiet"]).concat(["read", resource]));'),
+      arrayOf: control('spawn("rf", Array.of("workspace", "read", resource));'),
+      newArray: control('spawn("rf", new Array("workspace", "inspect", resource));'),
+      arrayCall: control('spawn("rf", Array("workspace", "invoke", resource));'),
+      // The group-word table holds the shapes C1 reads as no argv: a helper's argument list, a flag with a value and an element
+      // write each spell the whole literal.
+      helper: control('runRf("workspace", "read", resource);'),
+      flagValue: control('const argv = ["workspace", "--format", "json"]; argv.push("read");'),
+      elementWrite: control('argv[0] = "workspace"; argv[1] = "read";'),
+      // R-COMPOSED-ARGV's pinned quiet rows: a group word assembled by "+" or by a template is neither a hit, nor composed, nor a
+      // group-word site; held in a src constant, its literal is a group-word site.
       concatenated: control('spawn("rf", ["work" + "space", "read"]);'),
+      templated: control(['spawn("rf", [`work$', '{"space"}`, "read"]);'].join("")),
       constant: control('const group = "workspace"; spawn("rf", [group, "read"]);'),
+      // R-COMPOSED-COMMAND's pinned quiet row: a command string whose verb sits in another expression.
+      command: control('exec("rf workspace " + verb);'),
     };
-    return { srcFloorMet, renderArgvSeen, argv, literals, descriptorHits, composedArgv, controls };
+    return { srcFloorMet, renderArgvSeen, argv, literals, descriptorHits, composedArgv, groupWords, controls };
   },
   C2: async () => {
     const native = (await nativeDescriptors()).ids.filter(id => id.startsWith("reactivefiber."));
@@ -1066,11 +1247,13 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const outcomes = ["NO_ADMISSIBLE_VERSION", "INFEASIBLE_CAUSAL_BOUNDS"];
     const { outcomes: native, spawns } = await nativeOutcomes(Object.fromEntries(outcomes.map(outcome => [outcome, refusalAnswer(outcomeRefusal(outcome))])));
     const surfaced: JsonObject = {};
+    const read: string[][] = [];
     for (const outcome of outcomes) {
       const source = await verbatimReading(outcomeRefusal(outcome));
       const carried = objectOf(primaryOf(source).metadata, "reading metadata").outcome;
       const projection = projected(outcomeRefusal(outcome));
       const message = native[outcome]?.refusal?.message ?? "";
+      // wb-ii3m F3: every string the adapter's topology carries, the evidence references and every other field included.
       const shown = [message, ...projection.shown];
       const named = shown.flatMap(text => wordsIn(text, OUTCOME_WORDS));
       const inconsistency = shown.some(text => INCONSISTENCY.test(text));
@@ -1082,18 +1265,38 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       expect(projection.tone).toBe("failure");
       expect({ named, inconsistency, folded, infeasibility }).toStrictEqual({ named: [], inconsistency: false, folded: [], infeasibility: false });
       surfaced[outcome] = { carried: String(carried), native: message, adapter: projection.statusText, named, inconsistency, folded, infeasibility };
+      read.push(projection.fields.map((field, index) => `${field}=${projection.shown[index] ?? ""}`));
     }
     expect(spawns).toHaveLength(outcomes.length);
+    // Both refusals' readings are the same path by path, the failure snapshot's evidence reference among them (wb-ii3m L2-D2-evref),
+    // and the whole reading is pinned: a string added, removed or reworded anywhere in it reds here, whatever it spells.
+    const reading = read[0] ?? [];
+    expect(read[1]).toStrictEqual(reading);
+    expect(reading.filter(entry => entry.startsWith("snapshots[0].evidenceRefs["))).toStrictEqual([`snapshots[0].evidenceRefs[0]=rf-workspace:${RF_FIXTURE_WORKSPACE_ID}`]);
     // The folded matcher and the synonym set: each relabel spelling is caught, the refusal the readers surface stays quiet.
+    const joiner = String.fromCodePoint(0x200b);
     const controls = {
-      folded: ["infeasible causal bounds", "Infeasible_Causal_Bounds", "no-admissible.version", "NoAdmissibleVersion", "RF render refused: RF_FED_RESOURCE_UNAVAILABLE"].map(text => foldedIn(text)),
-      infeasibility: ["inconsistent", "an infeasibility", "Contradiction", "unsatisfiable", "refused · RF_FED_RESOURCE_UNAVAILABLE"].map(text => INFEASIBILITY.test(text)),
+      folded: [
+        "infeasible causal bounds", "Infeasible_Causal_Bounds", "no-admissible.version", "NoAdmissibleVersion", "RF render refused: RF_FED_RESOURCE_UNAVAILABLE",
+        // wb-ii3m L2-D2-slash and L2-D2-zwsp: a slash and an invisible joiner between the parts; L2-D2-evref: an evidence reference.
+        "No/Admissible/Version", `No${joiner}Admissible${joiner}Version`, "rf-outcome:infeasible-causal-bounds",
+        // R-SYNONYM's pinned quiet row: a reordered paraphrase is no folded outcome word.
+        "no version is admissible",
+      ].map(text => foldedIn(text)),
+      infeasibility: [
+        "inconsistent", "an infeasibility", "Contradiction", "unsatisfiable", "refused · RF_FED_RESOURCE_UNAVAILABLE",
+        // wb-ii3m L2-D2-syn; then R-SYNONYM's pinned quiet row, a synonym outside the set.
+        "causal bounds impossible", "causal bounds unrealizable",
+      ].map(text => INFEASIBILITY.test(text)),
     };
     expect(controls).toStrictEqual({
-      folded: [["INFEASIBLE_CAUSAL_BOUNDS"], ["INFEASIBLE_CAUSAL_BOUNDS"], ["NO_ADMISSIBLE_VERSION"], ["NO_ADMISSIBLE_VERSION"], []],
-      infeasibility: [true, true, true, true, false],
+      folded: [
+        ["INFEASIBLE_CAUSAL_BOUNDS"], ["INFEASIBLE_CAUSAL_BOUNDS"], ["NO_ADMISSIBLE_VERSION"], ["NO_ADMISSIBLE_VERSION"], [],
+        ["NO_ADMISSIBLE_VERSION"], ["NO_ADMISSIBLE_VERSION"], ["INFEASIBLE_CAUSAL_BOUNDS"], [],
+      ],
+      infeasibility: [true, true, true, true, false, true, false],
     });
-    return { surfaced, controls };
+    return { surfaced, reading, controls };
   },
   ...Object.fromEntries(
     SPELLINGS.map(spelling => [
@@ -1177,29 +1380,51 @@ describe("wb-tnz5.3 rf federation refusal codes census (RF-CERTIFIED-FEDERATED-R
     expect(ccca, "the filing's merged line states the CCCA clause's phrase").not.toBe("");
     expect(duties.filter(entry => entry.rows.length !== 1), "every duty of the owner filing sits in exactly one row label").toEqual([]);
     expect(stems, "FAMILIES' stems are the two proposed stems the filing's merged line spells").toEqual(FAMILIES.map(family => family.stem));
-    // wb-iqqy's owner filing: its head (every lane append comes after a blank line and the collect step's DELIVERED line).
-    const reading = (notes: string): { mutants: string[]; namedPins: string[] } => {
-      const head = filingHead(notes);
-      return {
-        mutants: [...new Set([...head.matchAll(/\b(?:G\d+[a-z]?|X-[A-Z]+(?:-[A-Z]+)*)\b/g)].map(match => match[0]))],
-        namedPins: [...new Set([...head.matchAll(/\b[A-DM]\d\b/g)].map(match => match[0]))],
-      };
+    // wb-ii3m F4: every fragment of each acceptance clause sits verbatim in that clause's row label, so a filing phrase hollowed out
+    // of a label in this file and the roster together reds here.
+    const clauses = clausesOf(acceptance);
+    const unanchored = clauses.flatMap(({ marker, text }) => {
+      const label = ROWS.find(row => row.label.startsWith(marker))?.label ?? "";
+      return missingFragments(text, label, stems).map(fragment => `${marker}${fragment}`);
+    });
+    expect(clauses.map(clause => clause.marker), "the clauses are the filing's markers, in order").toEqual(markers);
+    expect(clauses.filter(clause => fragmentsOf(clause.text, stems).length === 0).map(clause => clause.marker), "every clause has fragments").toEqual([]);
+    expect(unanchored, "every fragment of the filing's acceptance clauses sits verbatim in its row label").toEqual([]);
+    // The fragment reading's own controls: row A's label cut before its first ";" (L2-XCOORD-LABEL) misses three fragments; row A's
+    // label without its own elaboration " on every Pi reader surface" misses none - NOT CLAIMED, its pinned quiet reading.
+    const clauseA = clauses[0]?.text ?? "";
+    const labelA = ROWS[0]?.label ?? "";
+    const fragmentControls = {
+      tail: missingFragments(clauseA, labelA.slice(0, Math.max(0, labelA.indexOf(";"))), stems),
+      elaboration: missingFragments(clauseA, labelA.replace(" on every Pi reader surface", ""), stems),
     };
-    const followUpNotes = exportRow(FOLLOW_UP).notes;
-    const { mutants, namedPins } = reading(followUpNotes);
-    // A lane append (the collect step's delivery note, a gate verdict) naming more mutants and pins leaves the reading unchanged.
-    const appendix = "DELIVERED by the orchestrator collect step: G1 G2 G17b X-MATCH2 X-COORD-PIN-FULL D3 M9 Q6.";
-    expect([`${followUpNotes}\n\n${appendix}`, `${followUpNotes.trimEnd()}\n${appendix}`].map(reading), "the follow-up filing reads the same after an appended note").toStrictEqual([{ mutants, namedPins }, { mutants, namedPins }]);
+    expect(fragmentControls).toStrictEqual({ tail: ["an unknown", "code stays unknown", "never mapped to success or another code"], elaboration: [] });
+    // The follow-up filings: wb-iqqy's head and wb-ii3m's carried finding lines (every lane append comes after a blank line and the
+    // collect step's DELIVERED line).
+    const followUps = [
+      { bead: FOLLOW_UP, read: iqqyReading },
+      { bead: SECOND_FOLLOW_UP, read: ii3mReading },
+    ];
+    // A lane append (the collect step's delivery note, a gate verdict) naming more mutants and pins leaves each reading unchanged.
+    const appendix = "DELIVERED by the orchestrator collect step: G1 G2 G17b X-MATCH2 X-COORD-PIN-FULL D3 M9 Q6.\n[leads] - F9 LOW: L2-C1-appended survives on C3 and D4.";
+    const readings = followUps.map(({ bead, read }) => {
+      const notes = exportRow(bead).notes;
+      const reading = read(notes);
+      expect([`${notes}\n\n${appendix}`, `${notes.trimEnd()}\n${appendix}`].map(read), `the ${bead} filing reads the same after an appended note`).toStrictEqual([reading, reading]);
+      expect(reading.mutants.length, `the ${bead} filing names its gate mutants`).toBeGreaterThan(0);
+      expect(reading.namedPins.length, `the ${bead} filing names census pins`).toBeGreaterThan(0);
+      return reading;
+    });
+    const mutants = [...new Set(readings.flatMap(reading => reading.mutants))];
+    const namedPins = [...new Set(readings.flatMap(reading => reading.namedPins))];
     const cases = new Set([...ROWS.flatMap(row => row.pins), ...Object.keys(CASE_TITLES)]);
     const titles = registered(task).map(entry => entry.name);
     const cured = new Set(Object.values(CURES).flat());
-    expect(mutants.length, "the follow-up filing names its gate mutants").toBeGreaterThan(0);
-    expect(mutants.filter(id => !Object.hasOwn(CURES, id)), "every gate mutant the follow-up filing names has a cure entry").toEqual([]);
-    expect(Object.keys(CURES).filter(id => !mutants.includes(id)), "every cure entry is a gate mutant the follow-up filing names").toEqual([]);
+    expect(mutants.filter(id => Object.hasOwn(CURES, id) === Object.hasOwn(DISCLOSED, id)), "every gate mutant a follow-up filing names has a cure entry or a disclosed one, not both").toEqual([]);
+    expect([...Object.keys(CURES), ...Object.keys(DISCLOSED)].filter(id => !mutants.includes(id)), "every cure and disclosed entry is a gate mutant a follow-up filing names").toEqual([]);
     expect(Object.entries(CURES).filter(([, kills]) => kills.length === 0 || kills.some(kill => !cases.has(kill))).map(([id]) => id), "every cure names registered cases").toEqual([]);
     expect([...cured].filter(kill => !titles.includes(CASE_TITLES[kill] ?? kill)), "every cure's case is registered in this file").toEqual([]);
-    expect(namedPins.length, "the follow-up filing names census pins").toBeGreaterThan(0);
-    expect(namedPins.filter(pin => !cases.has(pin)), "every census pin the follow-up filing names is a registered pin").toEqual([]);
+    expect(namedPins.filter(pin => !cases.has(pin)), "every census pin a follow-up filing names is a registered pin").toEqual([]);
     // A row no filing duty sits in holds a cure's pin (the matcher row M holds M8, G3's spelling).
     expect(ROWS.filter(row => !duties.some(entry => entry.rows.includes(row.id)) && !row.pins.some(pin => cured.has(pin))).map(row => row.id), "every row carries a filing duty or a cure's pin").toEqual([]);
     REACHED.push(`${ANCHORS}:${expect.getState().assertionCalls}`);
