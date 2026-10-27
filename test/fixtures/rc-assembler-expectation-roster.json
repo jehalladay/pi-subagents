@@ -200,6 +200,8 @@
               "docs": [
                 ".pi/agents/plant.md",
                 "README.md",
+                "docs/workbench/plant-commented.md",
+                "docs/workbench/plant-hidden.md",
                 "docs/workbench/plant-twin.md",
                 "docs/workbench/plant.md",
                 "examples/plant-twin.md",
@@ -208,6 +210,7 @@
               "findings": [
                 ".pi/agents/plant.md:1 acquire",
                 "README.md:1 freshness",
+                "docs/workbench/plant-hidden.md:1 acquire+schedule",
                 "docs/workbench/plant.md:1 acquire+schedule",
                 "examples/plant.md:1 freshness",
                 "examples/workflows/plant.js:1 member freshness",
@@ -345,14 +348,16 @@
               "docs03": true
             },
             "findings": [],
+            "unrendered": [],
             "frozen": {
               "revision": "dc72a6d6d21b",
               "ancestor": true,
               "pages": 82,
-              "sentences": 12504,
+              "sentences": 12500,
               "named": 3,
               "findings": [],
-              "quieted": []
+              "quieted": [],
+              "unrendered": []
             },
             "cuts": [
               [
@@ -404,10 +409,87 @@
               [],
               []
             ],
+            "rendered": {
+              "hiddenMarker": [
+                [
+                  "docs/plant.md:1 acquire"
+                ],
+                [
+                  "docs/plant.md:1 acquire+schedule"
+                ],
+                [
+                  "docs/plant.md:1 freshness"
+                ]
+              ],
+              "joined": [
+                [
+                  "docs/plant.md:1 acquire"
+                ],
+                [
+                  "docs/plant.md:1 acquire"
+                ],
+                [
+                  "docs/plant.md:1 acquire"
+                ],
+                [
+                  "docs/plant.md:1 acquire"
+                ]
+              ],
+              "lines": [
+                [
+                  "docs/plant.md:4 acquire"
+                ],
+                [
+                  "docs/plant.md:1 acquire"
+                ],
+                [
+                  "docs/plant.md:5 acquire"
+                ]
+              ],
+              "shown": [
+                [],
+                [
+                  "docs/plant.md:1 acquire"
+                ],
+                [
+                  "docs/plant.md:1 acquire"
+                ],
+                [
+                  "docs/plant.md:3 acquire"
+                ],
+                [
+                  "docs/plant.md:1 acquire"
+                ]
+              ],
+              "unplaced": {
+                "findings": [],
+                "quieted": [
+                  "docs/plant.md:3 marker:never"
+                ],
+                "unrendered": [
+                  "docs/plant.md \"<!-- never | x -->\""
+                ]
+              }
+            },
             "quiet": {
               "R-OUTSIDE-ROOTS": {
                 "read": [
                   "docs/plant.md"
+                ],
+                "unread": [
+                  ".beads/plant.md",
+                  ".codex/plant.md",
+                  ".github/plant.md",
+                  "PLANT.txt",
+                  "docs/plant.MD",
+                  "docs/plant.markdown",
+                  "docs/plant.txt",
+                  "media/plant.md",
+                  "new-feedback/plant.md",
+                  "qa/plant.sh",
+                  "src/plant.jsx",
+                  "test/plant.md",
+                  "vendor/plant.md"
                 ],
                 "findings": [
                   "docs/plant.md:1 acquire"
@@ -422,10 +504,20 @@
                   1,
                   1,
                   1,
+                  1,
+                  1,
+                  1,
                   1
                 ]
               },
               "R-SPLIT": [
+                [],
+                [],
+                []
+              ],
+              "R-COMMENT-HIDDEN": [
+                [],
+                [],
                 [],
                 []
               ]
@@ -945,6 +1037,10 @@
     },
     {
       "id": "R-SPLIT",
+      "quietPin": "A3"
+    },
+    {
+      "id": "R-COMMENT-HIDDEN",
       "quietPin": "A3"
     },
     {
