@@ -3,7 +3,7 @@
  "bead": "wb-nqbd",
  "tests": [
   "judges every default-gate member of the family, read from the test directory and vitest.config.ts",
-  "pins the members that import the marked twins: the two suites that drive real hosts, and the helper's own unit rows",
+  "pins the members that import the marked twins: the three suites that drive real hosts, and the helper's own unit rows",
   "%s: G1 drives hosts only through the marked twins, never a raw launch or connect value import",
   "%s: G2 holds no raw timer - a timed wait is pollFor and a held window is holdOpen",
   "%s: G3 holds no fixed-count or clock-deadline poll loop (the pre-cure shape)",
