@@ -91,17 +91,23 @@
  * README.md:42 line and the authority sentence sits in its 02:30 line, the filing's field names are ledger fields, its checkpoint
  * form set is the ledger's, its three method names are CALL_METHODS, its judged scope (clause (c)'s "in src") is a walk root, its
  * comparator name is the reference's, its 'unknown profile' is UNKNOWN_PROFILE, its gating sentence names the roster's code facts,
- * and every residual family its delivery record names (the first sentence opening with DELIVERED_RESIDUALS_HEAD in the row's
- * append-only notes) is still a residual family. OUTSIDE COUNT: git's listing below each walk root (C1). Not claimed: a pin
- * removed from ROWS, the literal, IMPL and the roster together (the bead row anchors rows and clauses, not pins); a residual
- * family added after the delivery record (the record bounds the set from below, the roster alone holds an addition); a control
- * row's source rewritten to another case of its own family (controls are held to the roster); an anchor whose own reader is
- * rewritten (readBeadRow, gitFiles).
+ * every residual family its delivery record names (the first sentence opening with DELIVERED_RESIDUALS_HEAD in the row's
+ * append-only notes) is still a residual family, and every walk root that record names (the module counts and the module floors
+ * of its Non-vacuity sentence, which follows the residual sentence) is still a walk root. OUTSIDE COUNT: git's listing below each
+ * walk root (C1). SELF-ANCHOR: row C's label states exactly WALK_ROOTS (its "no module below <roots> spells" phrase), so a root
+ * leaves the walk only with its claim. Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the bead
+ * row anchors rows and clauses, not pins); a residual family or a walk root added after the delivery record (the record bounds
+ * both sets from below; the roster alone holds an added family, and row C's label must state an added root); a control row's
+ * source rewritten to another case of its own family (controls are held to the roster); an anchor whose own reader is rewritten
+ * (readBeadRow, gitFiles, deliveredResiduals, deliveredRoots, statedRoots).
  * wb-qvwt (the R694 follow-up of landing 326, gate cmd_d6126e5acf7f): F1 clause (c)'s judged scope was self-anchored (src could
  * leave WALK_ROOTS, FLOORS, CALL_FLOOR, OUTSIDE and the roster together); it is read from the filing now, and git's listing
  * holds the walk and its floors. F2 a residual family could leave the census and the roster together; the delivery record now
  * bounds the families from below. F3 the raw scan and the walk's symlink leg had no flagged control; RAW_CONTROLS and
  * WALK_CONTROLS give each leg a flagged and a quiet row.
+ * wb-romn (the R694 follow-up of landing 419, gate cmd_ccf2ab4c4d8c): F10 the walk roots beyond clause (c)'s src were still
+ * self-anchored (qa or examples could leave WALK_ROOTS, FLOORS, the roster and the C1 witness together while row C's label still
+ * claimed them); the delivery record now bounds the walk roots from below, and row C's label states exactly WALK_ROOTS.
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
  * not inverted, ran; every pin's case reached its end (REACHED).
  * RESIDUALS (named families, each with a pinned quiet row in C1's controls): R-ALIAS a gp identity read through two or more aliases
@@ -136,7 +142,8 @@ const DESCRIPTOR_SCHEMA = "graphpolicy.identity.v1";
 const CHECKPOINT_FORMS: readonly string[] = ["program-bound", "theta-words", "cas-blob"];
 /** The filing's three string methods, clause (c). */
 const CALL_METHODS: readonly string[] = ["startsWith", "endsWith", "includes"];
-/** The Pi code paths judged: product sources, QA scripts and shipped examples (every file below them, at any depth). */
+/** The Pi code paths judged: product sources, QA scripts and shipped examples (every file below them, at any depth); row C's label
+ * states exactly these, and the delivery record bounds them from below (wb-romn F10). */
 const WALK_ROOTS: readonly string[] = ["src", "qa", "examples"];
 const MODULE_EXTENSIONS: readonly string[] = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx"];
 /** Each floor sits below the module count measured at base a11b36f (src 115, qa 62, examples 6; the same at 5f3dd4c), and C1 holds
@@ -269,6 +276,8 @@ const VOCABULARY = vocabulary(LEDGER);
 const RESIDUAL_FAMILIES: readonly string[] = ["R-ALIAS", "R-COMPUTED", "R-OTHER-METHOD", "R-COMMENT", "R-UNTYPED-FLOW", "R-NAMESAKE", "R-OUTSIDE"];
 /** The head of the delivery record's residual sentence in the filing row's notes (the record the residual families answer to). */
 const DELIVERED_RESIDUALS_HEAD = "RESIDUALS (named families, each with a pinned quiet row in C1's controls): ";
+/** The head of the delivery record's non-vacuity sentence, which follows its residual sentence (the record the walk roots answer to). */
+const DELIVERED_NON_VACUITY_HEAD = "Non-vacuity: ";
 
 interface Row {
   readonly id: string;
@@ -1058,6 +1067,28 @@ function deliveredResiduals(notes: string): string[] {
 function missingResiduals(delivered: readonly string[], families: readonly string[]): string[] {
   return delivered.filter(family => !families.includes(family));
 }
+/** The walk roots the cut's delivery record names (wb-romn F10): its Non-vacuity sentence, the first after the delivered residual
+ * sentence in the filing row's notes, names each root twice - by its module count ("183 modules (src 115, qa 62, examples 6)") and
+ * by its floor ("module floors src 100 / qa 55 / examples 5"); both lists are returned in record order. The notes are append-only,
+ * so the first such sentence is the delivery record's and a later one cannot displace it; a row without it fails closed. */
+function deliveredRoots(notes: string): { readonly counted: string[]; readonly floored: string[] } {
+  const start = notes.indexOf(DELIVERED_RESIDUALS_HEAD);
+  const at = start < 0 ? -1 : notes.indexOf(DELIVERED_NON_VACUITY_HEAD, start);
+  const sentence = at < 0 ? "" : (notes.slice(at).split("\n")[0] ?? "");
+  const counts = /\bmodules \(([^)]+)\)/.exec(sentence)?.[1];
+  const floors = /; module floors ([^;]+);/.exec(sentence)?.[1];
+  if (counts === undefined || floors === undefined) throw new Error(`${BEAD} notes carry no delivered non-vacuity sentence naming the walk roots`);
+  const rootsOf = (list: string, separator: string): string[] => list.split(separator).map(entry => /^(\S+) \d+$/.exec(entry)?.[1] ?? `unparsed: ${entry}`);
+  return { counted: rootsOf(counts, ", "), floored: rootsOf(floors, " / ") };
+}
+/** The delivered walk roots a root list lacks: the bound F10 holds WALK_ROOTS to (as missingResiduals bounds the families). */
+function missingRoots(delivered: readonly string[], roots: readonly string[]): string[] {
+  return delivered.filter(root => !roots.includes(root));
+}
+/** The walk roots a row label states (wb-romn F10): the list of its "no module below <roots> spells" phrase, split at ", " and " or ". */
+function statedRoots(label: string): string[] | undefined {
+  return /\bno module below (.+?) spells /.exec(label)?.[1]?.split(/, | or /);
+}
 
 const REACHED: string[] = [];
 /** A pin's witness, recorded as reached: only a case that ran to its end returns through here. */
@@ -1378,6 +1409,18 @@ describe("wb-gxd7.1 gp identity census (GPC-FEEDBACK-CONTRACT-AUDIT-R1)", () => 
     // wb-qvwt F1: clause (c)'s judged scope comes from the filing ("... over gp identity strings in src;"), not from WALK_ROOTS.
     const scope = /over gp identity strings in (\S+?);/.exec(clauses[2] ?? "")?.[1];
     expect(WALK_ROOTS, `clause (c)'s judged scope ${JSON.stringify(scope ?? null)} is a walk root`).toContain(scope);
+    // wb-romn F10: every walk root the delivery record names is still a walk root (the record bounds the roots from below, as F2's
+    // bounds the families), and row C's label states exactly the walk roots, so a root leaves the walk only with its claim.
+    const recorded = deliveredRoots(bead.notes);
+    expect(recorded.floored, "the delivery record names the same walk roots by module count and by floor").toEqual(recorded.counted);
+    expect(recorded.floored.length, "the delivery record names its walk roots").toBeGreaterThan(0);
+    expect(missingRoots(recorded.floored, WALK_ROOTS), "every walk root the delivery record names is still a walk root").toEqual([]);
+    expect(
+      recorded.floored.map(root => missingRoots(recorded.floored, WALK_ROOTS.filter(other => other !== root))),
+      "the bound is live: dropping any one delivered root is caught, naming exactly that root",
+    ).toEqual(recorded.floored.map(root => [root]));
+    expect(() => deliveredRoots(bead.notes.slice(0, bead.notes.indexOf(DELIVERED_RESIDUALS_HEAD))), "a row without the delivery record fails closed").toThrow(/carry no delivered non-vacuity sentence/);
+    expect(statedRoots(ROWS.find(row => row.id === "C")?.label ?? ""), "row C's label states exactly the walk roots").toEqual([...WALK_ROOTS]);
     // wb-qvwt F2: every residual family the delivery record names is still a residual family (the record bounds the set from below).
     const delivered = deliveredResiduals(bead.notes);
     expect(delivered.length, "the delivery record names its residual families").toBeGreaterThan(0);

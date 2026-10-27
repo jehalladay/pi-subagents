@@ -24,7 +24,8 @@
  * exact spellings; B2 judges them). B2 every reading is exact; each variant class (major, invisible, compatibility, case,
  * namespace, separator, retired, proposed) is a finding, and a major runs on through every suffix that a run of non-space
  * separators or a plus sign leads (a dotted minor, a pre-release, a build mark), so v1.1 or v1-rc1 is a major variant, never exact
- * (wb-364f F2). B3 src spells nothing and GP_SCHEMA_CARRIERS is empty; the carrier judge
+ * (wb-364f F2); every such word, and the letters right after the major, is read in any script (wb-1du7 F1, enumerated below).
+ * B3 src spells nothing and GP_SCHEMA_CARRIERS is empty; the carrier judge
  * refuses an unregistered, duplicate or stale carrier; GP_SCHEMA_IDS below is this census's one carrier (one spelling per id) and
  * equals the producer's carrier lines. C1 no src module is a GP adapter (constants and names, never comments); GP_SCHEMA_ADAPTERS is
  * empty, and an adapter must land bound to three registered cases, each named by a census-tier judge leg (wb-364f F1): a .census.ts
@@ -41,6 +42,25 @@
  * RESIDUALS, with quiet pins: R-COMPUTED, R-ENCODED, R-CONFUSABLE, R-MARKUP, R-LINE-BREAK (A2); R-ENVELOPE, R-NAMESPACE-ONLY (B1);
  * R-SUFFIX-BOUNDARY (B2); R-BOUND-CASE, R-JUDGE-LEG (C1). The judged set holds every residual to a quiet row of its pin's held
  * witness, and every quiet row to a residual; the B2 and C1 residuals each carry a paired control one change away.
+ * wb-1du7 (hop 3, the last, of the chain wb-ojm5.1 334 -> wb-364f 425 -> wb-1du7: the R694 follow-up of the landing-425 gate's F1
+ * and F4, in the R739 TERMINAL enumerate-the-resolvable form under rules 14 and 19(c)). THE CRITERION: the B2 suffix reading and
+ * the C1 leg locator each claim exactly the classes below, every class pinned by its rows, never the escapes found so far.
+ * B2, F1 CURED: (S1) letters, marks or digits right after the major's digits continue it (major tail, greek tail, arabic-indic
+ * tail); (S2) a run of the non-space separators or a plus sign, then letters, marks or digits, continues it (the nine lead rows,
+ * the cooked and decoded suffixes) unless that word opens a GP namespace; S1 and S2 read a letter, mark or digit of any script
+ * (WORD), so the gate's L2-P15 and L2-P16 spellings read major (greek pre-release, arabic-indic minor; cjk build mark, mark-led word
+ * and tamil number give each property WORD names a row); (S3) whitespace, a lead outside the separators and the plus sign in any
+ * script, a separator run that no letter, mark or digit follows, and a separator-led namespace word each end the reading
+ * (R-SUFFIX-BOUNDARY: its quiet row and its paired control, the U+2010 HYPHEN and U+2192 RIGHTWARDS ARROW members added). The
+ * major's own digits are ASCII; one spelled in another script's digits (an Arabic-Indic one) is a homoglyph R-CONFUSABLE holds.
+ * C1, F4 CURED: a census-tier leg is (L1) a file under test/ (a leg under src/, qa/, docs/workbench/ or a test-prefixed sibling is
+ * none) (L2) named *.census.ts (a -census.ts name is none, nor is a default-tier file) that (L3) statically imports (a dynamic
+ * import is none) (L4) the value judge, aliased or not (no judge, a namespace import, import type or a type-only specifier is
+ * none) (L5) from test/helpers/census.ts by a relative specifier (a bare one is none) resolved from its own directory (another
+ * module or a nested copy is none) with a .js, a .ts or no extension, and (L6) names the case's file and title as string tokens in
+ * that one leg (another file or title, a comment, or a split across legs is none); a leg is never read by its judge call, its case
+ * or its verdicts (R-JUDGE-LEG). CHAIN TERMINAL (R739): a later survivor outside these classes is record-only unless it contradicts
+ * a claim above.
  * NOT CLAIMED: an edit of this census and its roster together (a coordinated hollow with the roster regenerated from the mutant's
  * own witnesses) beyond what the bead-export anchors kill; a mutant that branches on the live source; a body-and-witness swap
  * between pins whose witnesses carry no finding codes (A1-C1).
@@ -171,15 +191,21 @@ interface Reading {
 /** A separator run: horizontal space or one of . _ / : * ` ~ -. A line break ends every reading (R-LINE-BREAK). */
 const SEP = "[ \\t\\f\\v._/:*`~-]";
 /**
- * A suffix that continues the major (wb-364f F2): a run of non-space separators or a plus sign, then letters or digits, unless
- * that word opens a GP namespace (a following id starts there, R-SUFFIX-BOUNDARY). v1.1, v1-rc1 and v1+b5 read as majors.
+ * A letter, mark or digit of any script (wb-1du7 F1: a Greek, CJK or Arabic-Indic word continues a major as an ASCII one does);
+ * the reader is compiled with the u flag so these property escapes hold. The major's own digits stay ASCII (R-CONFUSABLE).
  */
-const SUFFIX = "(?:[._/:*`~+-]+(?!graph|decision)[a-z0-9]+)*";
+const WORD = "[\\p{L}\\p{M}\\p{N}]";
+/**
+ * A suffix that continues the major (wb-364f F2): a run of non-space separators or a plus sign, then letters, marks or digits of
+ * any script (WORD, wb-1du7 F1), unless that word opens a GP namespace (a following id starts there, R-SUFFIX-BOUNDARY). v1.1,
+ * v1-rc1, v1+b5 and v1-<U+03B2>2 read as majors.
+ */
+const SUFFIX = `(?:[._/:*\`~+-]+(?!graph|decision)${WORD}+)*`;
 /** graphpolicy (any joint), the retired namespace graph, or the proposed decision namespace; then a family and a major. */
-const FAMILY_SOURCE = `(graph${SEP}*policy|graph|decision)(${SEP}+)(data|function|factor)(?:${SEP}*v${SEP}*(\\d+)([a-z0-9]*${SUFFIX}))?`;
-const FAMILY = new RegExp(FAMILY_SOURCE, "g");
+const FAMILY_SOURCE = `(graph${SEP}*policy|graph|decision)(${SEP}+)(data|function|factor)(?:${SEP}*v${SEP}*(\\d+)(${WORD}*${SUFFIX}))?`;
+const FAMILY = new RegExp(FAMILY_SOURCE, "gu");
 /** Non-global twin for the quick tests, so no lastIndex is shared with matchAll. */
-const FAMILY_ANY = new RegExp(FAMILY_SOURCE);
+const FAMILY_ANY = new RegExp(FAMILY_SOURCE, "u");
 const FORMAT = /\p{Cf}/u;
 const CODE = /\.(?:[cm]?[jt]s|[jt]sx)$/;
 function asciiOnly(text: string): boolean {
@@ -320,6 +346,9 @@ function variantClass(reading: Reading): string {
 }
 /** A reading described without its spelling, so a roster that records it spells no family member. */
 const described = (reading: Reading): string => `${reading.path}:${reading.line} ${reading.layer} ${reading.family}@${reading.namespace}${reading.major === null ? "" : `#${reading.major}`}`;
+/** A major as a witness records it: each non-ASCII code point written <U+XXXX>, so the roster stays ASCII (wb-1du7 F1). */
+const shown = (major: string | null): string =>
+  [...`${major}`].map(char => ((char.codePointAt(0) ?? 0) > 127 ? `<U+${(char.codePointAt(0) ?? 0).toString(16).toUpperCase().padStart(4, "0")}>` : char)).join("");
 const tally = (readings: readonly Reading[], label: (reading: Reading) => string): string[] => {
   const counts = new Map<string, number>();
   for (const reading of readings) counts.set(label(reading), (counts.get(label(reading)) ?? 0) + 1);
@@ -700,6 +729,18 @@ const plant = (): Tree => {
 
 // ---- the pins ----
 
+/**
+ * The non-ASCII controls of the B2 suffix reading (wb-1du7 F1) and the R-CONFUSABLE digit member, each spelled at run time so this
+ * file stays ASCII: a Greek letter, a CJK letter, a combining mark, an Arabic-Indic digit and a Tamil number continue a major; a
+ * Unicode hyphen leads no suffix and an arrow is no word (R-SUFFIX-BOUNDARY).
+ */
+const GREEK_BETA = String.fromCodePoint(0x03b2);
+const CJK_EDITION = String.fromCodePoint(0x7248);
+const COMBINING_ACUTE = String.fromCodePoint(0x0301);
+const ARABIC_INDIC_ONE = String.fromCodePoint(0x0661);
+const TAMIL_TEN = String.fromCodePoint(0x0bf0);
+const UNICODE_HYPHEN = String.fromCodePoint(0x2010);
+const RIGHTWARDS_ARROW = String.fromCodePoint(0x2192);
 const REACHED = new Set<string>();
 const IMPL: Readonly<Record<string, () => Json>> = {
   A1: () => {
@@ -754,7 +795,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const quiet = {
       "R-COMPUTED": readingsOf("a.ts", 'const id = ["graph", "data", "v1"].join(".");').length,
       "R-ENCODED": readingsOf("notes.md", `${Buffer.from(RETIRED).toString("base64")} ${encodeURIComponent(PROPOSED).replaceAll(".", "%2E")} ${RETIRED.replaceAll(".", "&#46;")}`).length,
-      "R-CONFUSABLE": readingsOf("notes.md", RETIRED.replace("a", String.fromCodePoint(0x0430))).length,
+      "R-CONFUSABLE": readingsOf("notes.md", `${RETIRED.replace("a", String.fromCodePoint(0x0430))} ${RETIRED.replace("1", ARABIC_INDIC_ONE)}`).length,
       "R-MARKUP": readingsOf("notes.md", RETIRED.replace("data", "<b>data</b>")).length,
       "R-LINE-BREAK": readingsOf("notes.md", RETIRED.replace(".", ".\n")).length,
     };
@@ -841,9 +882,9 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       const found = readingsOf("notes.md", `a ${text} b`);
       expect(found, text).toHaveLength(1);
       const [reading] = found;
-      return reading === undefined || isExact(reading) ? "exact" : `${variantClass(reading)}:${reading.major}`;
+      return reading === undefined || isExact(reading) ? "exact" : `${variantClass(reading)}:${shown(reading.major)}`;
     };
-    const layered = (path: string, text: string): string[] => readingsOf(path, text).map(reading => `${reading.layer}:${isExact(reading) ? "exact" : `${variantClass(reading)}:${reading.major}`}`);
+    const layered = (path: string, text: string): string[] => readingsOf(path, text).map(reading => `${reading.layer}:${isExact(reading) ? "exact" : `${variantClass(reading)}:${shown(reading.major)}`}`);
     const suffixes: Json = [
       ["dotted minor", versioned(`${DATA}.1`)],
       ["dotted patch", versioned(`${FUNCTION}.0.1`)],
@@ -860,13 +901,27 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       ["decoded suffix", layered("a.json", `{"schema": "${DATA}\\u002e1"}`)],
       ["listed pair", layered("notes.md", `${DATA}/${FUNCTION}`)],
       ["code span pair", layered("notes.md", `\`${DATA}\`/\`${FUNCTION}\``)],
+      // wb-1du7 F1: every suffix word and the major's own trailing letters are read in any script, the gate's L2-P15 and L2-P16 first.
+      ["greek pre-release", versioned(`${DATA}-${GREEK_BETA}2`)],
+      ["arabic-indic minor", versioned(`${DATA}.${ARABIC_INDIC_ONE}`)],
+      ["cjk build mark", versioned(`${DATA}+${CJK_EDITION}2`)],
+      ["mark-led word", versioned(`${FUNCTION}_${COMBINING_ACUTE}x`)],
+      ["tamil number", versioned(`${DATA}:${TAMIL_TEN}`)],
+      ["greek tail", versioned(`${DATA}${GREEK_BETA}`)],
+      ["arabic-indic tail", versioned(`${FUNCTION}${ARABIC_INDIC_ONE}`)],
     ];
-    /** R-SUFFIX-BOUNDARY: whitespace, a mark outside the separators and +, or a word opening a GP namespace ends the reading. */
-    const boundary = [`${DATA} rc1`, `${DATA}#2`, `${DATA}@2`, `${DATA}(2)`, `${DATA}-graph2`, `${FUNCTION}.decision`];
+    /**
+     * R-SUFFIX-BOUNDARY: whitespace, a lead outside the separators and + in any script (U+2010 HYPHEN), a separator run that no
+     * letter, mark or digit follows (U+2192 RIGHTWARDS ARROW), or a word opening a GP namespace ends the reading (wb-1du7 F1).
+     */
+    const boundary = [`${DATA} rc1`, `${DATA}#2`, `${DATA}@2`, `${DATA}(2)`, `${DATA}-graph2`, `${FUNCTION}.decision`, `${DATA}${UNICODE_HYPHEN}rc1`, `${DATA}-${RIGHTWARDS_ARROW}2`];
     const quiet = { "R-SUFFIX-BOUNDARY": boundary.map(versioned) };
     expect(quiet).toEqual({ "R-SUFFIX-BOUNDARY": boundary.map(() => "exact") });
-    /** Paired control, one change away: each boundary turned into a lead (space, #, @, a bracket, the namespace word) reads major. */
-    const control = { "R-SUFFIX-BOUNDARY": [`${DATA}-rc1`, `${DATA}.2`, `${DATA}+2`, `${DATA}_2)`, `${DATA}-grap2`, `${FUNCTION}.decide`].map(versioned) };
+    /**
+     * Paired control, one change away: each boundary turned into a lead (space, #, @, a bracket, the namespace word, U+2010) or into
+     * a word (the arrow, a Greek letter: the gate's L2-P15 spelling) reads major.
+     */
+    const control = { "R-SUFFIX-BOUNDARY": [`${DATA}-rc1`, `${DATA}.2`, `${DATA}+2`, `${DATA}_2)`, `${DATA}-grap2`, `${FUNCTION}.decide`, `${DATA}-rc1`, `${DATA}-${GREEK_BETA}2`].map(versioned) };
     const planted = plant()
       .readings.filter(reading => !isExact(reading))
       .map(reading => `${reading.path}:${reading.line} ${reading.layer} ${variantClass(reading)}`)
@@ -961,6 +1016,17 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       ["an import type statement", judgedBeside([[LEG_FILE, LEG.replace("import { type CasePin,", "import type { CasePin,")]])],
       ["a type-only judge specifier", judgedBeside([[LEG_FILE, LEG.replace(", judge }", ", type judge }")]])],
       ["a default-tier file importing judge", judgedBeside([["test/workbench-gp-adapter-judge.test.ts", LEG]])],
+      // wb-1du7 F4: a leg is a census-tier file only under test/ and only named *.census.ts; its helper specifier is relative,
+      // with a .js, a .ts or no extension, and statically imported.
+      ["a judge-importing leg under src/", judgedBeside([["src/workbench-gp-adapter.census.ts", LEG.replace("./helpers/census.js", "../test/helpers/census.js")]])],
+      ["a judge-importing leg under qa/", judgedBeside([["qa/workbench-gp-adapter.census.ts", LEG.replace("./helpers/census.js", "../test/helpers/census.js")]])],
+      ["a judge-importing leg under docs/workbench/", judgedBeside([["docs/workbench/workbench-gp-adapter.census.ts", LEG.replace("./helpers/census.js", "../../test/helpers/census.js")]])],
+      ["a judge-importing leg under a test-prefixed sibling", judgedBeside([["tests/workbench-gp-adapter.census.ts", LEG.replace("./helpers/census.js", "../test/helpers/census.js")]])],
+      ["a -census.ts name", judgedBeside([["test/workbench-gp-adapter-census.ts", LEG]])],
+      ["a bare helper specifier", judgedBeside([[LEG_FILE, LEG.replace("./helpers/census.js", "helpers/census.js")]])],
+      ["a .ts helper specifier", judgedBeside([[LEG_FILE, LEG.replace("./helpers/census.js", "./helpers/census.ts")]])],
+      ["an extensionless helper specifier", judgedBeside([[LEG_FILE, LEG.replace("./helpers/census.js", "./helpers/census")]])],
+      ["a dynamic import of the helper", judgedBeside([[LEG_FILE, LEG.replace('import { type CasePin, DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, judge } from "./helpers/census.js";', 'const { DEFAULT_GATE_TIER, DEFAULT_TIER_REPORT, judge } = await import("./helpers/census.js");')]])],
       ["a leg naming another test file", judgedBeside([[LEG_FILE, legSource(refiled("test/workbench-other.test.ts"))]])],
       ["a leg naming another title", judgedBeside([[LEG_FILE, LEG.replace(JSON.stringify(titles.verbatim), JSON.stringify("surfaces the producer refusal"))]])],
       ["a title named only in a comment", judgedBeside([[LEG_FILE, LEG.replace(JSON.stringify(titles.verbatim), `"" /* ${titles.verbatim} */`)]])],

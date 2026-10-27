@@ -79,7 +79,7 @@
  *    F1 also holds row R to the wb-kjg9.1 delivery note in the same export: its RESIDUALS line names exactly row R's pins, in order,
  *    with their residual names (RESIDUALS), and the judged set requires each R case to name its residual. So removing a clause, a key,
  *    a field, a cite, a needle member, a root, a holder pattern, a claim plant or a residual from every literal of this file and the
- *    roster still reds.
+ *    roster still reds; the judged set holds the pins of every row but M to the same delivery note (FROZEN SHAPE).
  *  M, the instruments rows A-C read, pinned member by member: MN the needle members (spellings and near misses), MU the uncovered
  *    matcher, MH the holder classifiers (test classes, receipt titles, docs/03 regions: a heading the rendered view reads as level 1 or
  *    2 ends the boundary region wherever its raw line hides it - setext, indented, tab-separated, empty - and a section the landed
@@ -89,15 +89,23 @@
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and pins,
  * every pin's witness and the vocabularies - is held to the out-of-file roster (ROSTER_FILE); the judged set also reads this file's
  * IMPL block and refuses a roster handle inside it, so a case swapped for its own roster witness reds; a last case reads that every
- * pin's case ran to its end. Row R is anchored outside this file (F1, the export's RESIDUALS line). Not claimed: a pin of row M
- * removed from ROWS, the literal, IMPL and the roster together (no outside source names the instrument pins; F1 and F2 anchor
- * clauses, vocabularies and residuals, not those pins).
+ * pin's case ran to its end. Every row but M is anchored outside this file, in the judged set itself, so no pin's removal removes its
+ * anchor (wb-nljd): the wb-kjg9.1 delivery note in the export gives each clause its row by a range in its ACCEPTANCE MAP ('(a) rows
+ * A1-A5', '(b) rows B1-B3', '(c) rows C1-C4'), opens each part of its ANCHORS line with a pin of row F (F1, F2) and each item of its
+ * RESIDUALS line with a pin of row R (exportedPins); each row it names pins exactly those pins in that order, and the rows it does not
+ * name are exactly UNANCHORED. Row R is also held by F1 (the RESIDUALS line with its names). Not claimed: a pin of row M, or row M
+ * with its UNANCHORED entry, removed from ROWS, the literal, IMPL and the roster together (no outside source names the instrument
+ * pins; the export anchors clauses, vocabularies, rows and residuals, not those pins).
  * FOLLOW-UP wb-xaof (R694, from the wb-kjg9.1 gate cmd_11f5baf475d4 at landing 335): F1 B2 read the docs/03 boundary region from raw
  *   lines (the raw heading line to the next raw '#'/'##' line), so a setext or indented heading after the section left a needle below
  *   it held while the landed docsSection put it outside; the region is now the rendered section (boundaryLines), held to the landed
  *   binding. F2 the site lists stopped two keys deep (one for the SDK document) at the first item of each list; they now read every
  *   object at any depth and every list item. F3 row R's pins were anchored only to this file and the roster; F1 now holds them to the
  *   export. F4 was note honesty and carries no code.
+ * FOLLOW-UP wb-nljd (R694, from the wb-xaof gate cmd_92e1078c686c at landing 426): F1 a pin of row A, B, C or F removed from ROWS, the
+ *   literal, IMPL and the roster together stayed green (every such pin, F1 included, and row F as a whole), because only rows A-C's
+ *   labels and row R's pins were held to the export. The judged set now holds those rows' pins to the delivery note's ACCEPTANCE MAP
+ *   and ANCHORS lines (FROZEN SHAPE), and the map reader is pinned on a planted note (MAP_CONTROL).
  * RESIDUALS (named; each with a pinned quiet row in row R): R1 R-BARE-GP the bare token gp (the GraphPolicyCLI binary) is not a
  *   needle, because src names a local gp for the general-purpose agent (src/agent-types.ts), so a gp launch is invisible to rows B -
  *   the landed wb-1xvp.2 census judges every src gp call site; R2 R-COMPOSED a needle assembled at runtime from parts escapes rows B,
@@ -317,6 +325,13 @@ const RESIDUALS: readonly Residual[] = [
 ];
 /** The lead of the RESIDUALS line in the wb-kjg9.1 delivery note (the export's notes); the line runs to its first sentence end. */
 const RESIDUALS_LEAD = "RESIDUALS (named, each with a pinned quiet row in row R): ";
+/** The leads of the delivery note's ACCEPTANCE MAP and of the ANCHORS line that ends it (wb-nljd): the map gives each clause one line
+ * opening with the range of the row that carries it ('(a) rows A1-A5: '), and each '; '-separated part of the ANCHORS line opens with
+ * a pin of row F. The first occurrence of each lead is read, so a note appended to the bead never moves either span. */
+const MAP_LEAD = "ACCEPTANCE MAP. ";
+const ANCHORS_LEAD = "\nANCHORS: ";
+/** The rows no outside source names: row M, the instruments rows A-C read (the header's 'Not claimed'). */
+const UNANCHORED: readonly string[] = ["M"];
 
 interface Row {
   readonly id: string;
@@ -430,6 +445,9 @@ function constants(): unknown {
     hxModules: HX_MODULES,
     residuals: RESIDUALS,
     residualsLead: RESIDUALS_LEAD,
+    mapLead: MAP_LEAD,
+    anchorsLead: ANCHORS_LEAD,
+    unanchored: UNANCHORED,
     sdkKeeps: SDK_KEEPS,
   };
 }
@@ -814,6 +832,51 @@ function between(text: string, from: string, to: string): string {
   if (start < 0 || end < 0) throw new Error(`the text holds no "${from}" ... "${to}" span`);
   return text.slice(start + from.length, end);
 }
+interface ExportedPins {
+  /** Each ACCEPTANCE MAP line read as '<clause> <row>', or 'unread' when it does not open with a clause and a row range. */
+  readonly clauses: readonly string[];
+  /** The rows the delivery note names, each with its pins in the note's order. */
+  readonly rows: readonly (readonly [string, readonly string[]])[];
+}
+/** The pins the wb-kjg9.1 delivery note names for each row, read from the export's notes (wb-nljd): every pin of each ACCEPTANCE MAP
+ * line's range ('(a) rows A1-A5' gives A1 to A5; rows A, B and C), the pin opening each part of the ANCHORS line (row F) and the id
+ * opening each item of the RESIDUALS line (row R), grouped by the row letter each pin carries, in the note's order. A map line, part or
+ * item that does not open that way reads 'unread', so it never matches a row. */
+function exportedPins(notes: string): ExportedPins {
+  const ranges = between(notes, MAP_LEAD, ANCHORS_LEAD)
+    .split("\n")
+    .map(line => /^\(([a-z])\) rows ([A-Z])([1-9]\d*)-\2([1-9]\d*)[: ]/.exec(line));
+  const mapped = ranges.flatMap(range => {
+    if (range === null) return ["unread"];
+    const [, , row = "", from = "0", to = "0"] = range;
+    return Array.from({ length: Number(to) - Number(from) + 1 }, (_, index) => `${row}${Number(from) + index}`);
+  });
+  const opening = (text: string): string => /^[A-Z][1-9]\d*(?= )/.exec(text)?.[0] ?? "unread";
+  const anchored = between(notes, ANCHORS_LEAD, "\n").split("; ").map(opening);
+  const residual = between(notes, RESIDUALS_LEAD, ". ").split(", ").map(opening);
+  const rows: [string, string[]][] = [];
+  for (const pin of [...mapped, ...anchored, ...residual]) {
+    const id = pin === "unread" ? pin : pin.slice(0, 1);
+    const row = rows.find(([named]) => named === id);
+    if (row === undefined) rows.push([id, [pin]]);
+    else row[1].push(pin);
+  }
+  return { clauses: ranges.map(range => (range === null ? "unread" : `(${range[1]}) ${range[2]}`)), rows };
+}
+/** The map reader's controls (wb-nljd): a planted note whose map, anchors and residuals exercise each branch of exportedPins - a range
+ * line before the map lead, both ends of a range line (': ' and ' ('), a range from a later pin, a range across two rows, a line that
+ * names a range only inside its prose, an anchor part opening with a pin-like word or naming a pin only inside its prose, a residual
+ * item naming one only inside its prose - and a second map after the first that is never read. */
+const MAP_CONTROL = [
+  "(a) rows Z1-Z2: a range line before the map lead.",
+  `${MAP_LEAD}(a) rows A1-A2: the first clause.`,
+  "(b) rows B2-B4 (when shipped): the second, from a later pin.",
+  "(c) rows C1-D2: a range across two rows.",
+  "(d) a clause whose prose names (e) rows E1-E2 inside it.",
+  `${ANCHORS_LEAD.slice(1)}F1 one anchor; F3 a later anchor; F4-like prose; prose naming F9 inside it.`,
+  `${RESIDUALS_LEAD}R1 R-ONE, R2 R-TWO, prose naming R9 inside it. Then prose.`,
+  `${MAP_LEAD}(a) rows A1-A9: a later map is never read.`,
+].join("\n");
 /** A planted docs/03 page: the title, an ownership table with the GraphPolicyCLI row and a second GraphPolicyCLI row whose Pi cell
  * does more, the boundary section with a needle, and a later section with a needle. */
 const PLANTED_DOCS_03 = [
@@ -1580,7 +1643,7 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
 };
 
 describe("wb-kjg9.1 HX GraphPolicy answer-invariance census (HX-GRAPH-POLICY-OPTIMIZATION-R1, gated posture)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster, the cases and their own reads agree", () => {
+  it("the judged set: the frozen shape, the out-of-file roster, the cases and their own reads agree", { timeout: 120_000 }, () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:3", "C:4", "F:2", "M:4", "R:8"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
@@ -1597,6 +1660,28 @@ describe("wb-kjg9.1 HX GraphPolicy answer-invariance census (HX-GRAPH-POLICY-OPT
       RESIDUALS.map(({ id, name }) => [id, (bodies.get(id) ?? "").includes(`"${name}: `)]),
       "each residual's quiet row names its residual",
     ).toStrictEqual(RESIDUALS.map(({ id }) => [id, true]));
+    const exported = exportedPins(exportRow(BEAD).notes);
+    expect(exported.clauses, "the ACCEPTANCE MAP gives each clause to the row whose label carries it, in order").toStrictEqual(
+      ROWS.filter(row => row.label.startsWith("(")).map(row => `${row.label.slice(0, 3)} ${row.id}`),
+    );
+    expect(
+      exported.rows.map(([id]): [string, string[]] => [id, [...(ROWS.find(row => row.id === id)?.pins ?? [])]]),
+      "each row the wb-kjg9.1 delivery note names pins exactly the pins it names, in order (wb-nljd)",
+    ).toStrictEqual(exported.rows);
+    expect(
+      ROWS.map(row => row.id).filter(id => !exported.rows.some(([named]) => named === id)),
+      "the rows no outside source names",
+    ).toStrictEqual([...UNANCHORED]);
+    expect(exportedPins(MAP_CONTROL), "the map reader reads its controls").toStrictEqual({
+      clauses: ["(a) A", "(b) B", "unread", "unread"],
+      rows: [
+        ["A", ["A1", "A2"]],
+        ["B", ["B2", "B3", "B4"]],
+        ["unread", ["unread", "unread", "unread", "unread", "unread"]],
+        ["F", ["F1", "F3"]],
+        ["R", ["R1", "R2"]],
+      ],
+    });
   });
 
   for (const row of ROWS) {

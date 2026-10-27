@@ -410,16 +410,16 @@ function argvOf(argv: readonly string[]): ArgvReading {
 const LAUNCHERS: ReadonlySet<string> = new Set(["spawn", "spawnSync", "execFile", "execFileSync", "exec", "execSync", "fork"]);
 const RF_BINARY = /^(?:\S*[\\/])?rf(?:\.(?:exe|cmd))?(?:\s|$)/i;
 function parsed(file: string, text: string): ts.SourceFile {
-  return ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  return parseOnce(file, text);
 }
 function lineAt(source: ts.SourceFile, node: ts.Node): string {
   return `${source.fileName}:${source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1}`;
 }
-/** A child_process launcher called with the rf binary as its first argument: the landed helper's predicate, read independently. */
+/** A child_process launcher called with the rf binary as its first argument: the landed helper's predicate, read independently (launcherNameOf, wb-1f2w F5). */
 function isRfLaunch(node: ts.Node): node is ts.CallExpression {
   if (!ts.isCallExpression(node)) return false;
   const callee = node.expression;
-  const name = ts.isIdentifier(callee) ? callee.text : ts.isPropertyAccessExpression(callee) ? callee.name.text : undefined;
+  const name = launcherNameOf(callee);
   const first = node.arguments[0];
   return name !== undefined && LAUNCHERS.has(name) && first !== undefined && ts.isStringLiteralLike(first) && RF_BINARY.test(first.text);
 }
@@ -446,7 +446,7 @@ function launchesIn(file: string, text: string): LaunchSite[] {
   return sites;
 }
 /** The module specifiers a module loads at runtime: static imports and export-froms that are not type-only, and a runtime loader
- * call (import(), require(), createRequire(...)() or module.require(); isLoaderCall, wb-roxk F2) of a literal. */
+ * call (import(), require(), createRequire(...)() or module.require(), and their indirect forms; isLoaderCall, wb-roxk F2, wb-1f2w F3) of a literal. */
 function loadsOf(file: string, text: string): string[] {
   const source = parsed(file, text);
   const loads: string[] = [];
@@ -462,7 +462,7 @@ function loadsOf(file: string, text: string): string[] {
   }
   const visit = (node: ts.Node): void => {
     if (ts.isCallExpression(node)) {
-      const first = node.arguments[0];
+      const first = loaderSpecifierOf(node);
       const dynamic = isLoaderCall(node);
       if (dynamic && first !== undefined && ts.isStringLiteralLike(first)) loads.push(first.text);
     }
@@ -657,12 +657,49 @@ const ROWS: readonly Row[] = [
  *  LINE DISCIPLINE: the sibling census test/workbench-ri-decision-seed-claim-census.test.ts admits this file's quotes of the owner
  *    filing at :3, :9 and :614 and the roster's at :222 by path, line and text (its R-SIBLING-QUOTE residual), so this cut keeps
  *    every line above :614 here and above :222 in the roster in place, and spells none of that census's needles anywhere else.
+ * FOLLOW-UP wb-1f2w (the R694 follow-up of landing 411, wb-roxk; gate of record cmd_2fab6b5f755a, its PREP LEG-2 probes P11,
+ *  P12, P03, P04, P08 and P17, the findings F1-F6). Each new reading is pinned by kill controls at its code and bounded by a quiet one:
+ *  F1/F2 env-read: a runtime load of the process module (P11 import("node:process"), P12 require("node:process"), the bare
+ *    specifier, a require createRequire returns, every loader form F3 reads) and a value re-export of it are environment uses
+ *    beside the static value import (C1); its type-only forms stay quiet (C3 processTypes).
+ *  F3 loads: a loader function (require, a require createRequire returns, module.require), read through unwrapped's wrappers
+ *    (parentheses, a comma operand, as, satisfies, a <T> assertion, a non-null !), and one run by its call or apply method or by
+ *    Reflect.apply with the loader as its target (P03), is a runtime load: a literal specifier is a load the closure walk follows,
+ *    any other (or none) is a computed load (C2); the call method and Reflect.apply of a function that is no loader stay quiet
+ *    (C3 nonLoaderCall).
+ *  F5 launches: both launch readings read a callee through launcherOf: by its own name, by a local name its module binds to a
+ *    launcher (an import specifier or a destructuring element keyed by a launcher's name, as an identifier or a quoted key - P08
+ *    renames spawn at its import - and a declaration whose initializer launcherOf reads as a launcher, to a fixed point), as a
+ *    member or by a quoted key, through the same wrappers (C2); a renamed import of no launcher stays quiet (C3 renamedOther). Real
+ *    src binds no such name today, so A4's two launch walks still agree.
+ *  F6 echo guard: each pin's runner refuses a case whose source reads the roster (rosterWitness, ROSTER or readRoster) before the
+ *    case runs, so P17 - A1's case padded to its count and handing back its roster witness - reds whatever its count, and so does
+ *    the F5 NOT CLAIMED echo whose count is edited in the roster with it; the judged set pins the guard on the P17 shape, on one
+ *    echo through each other reader and on R-INLINE-ECHO's quiet row, and the guard's assertion is part of every pin's count.
+ *  F4 is named, not read: R-EVALUATED-LOAD below (P04), the R-EVALUATED-ENV mechanism for loads.
  * RESIDUALS (named families, each with a pinned quiet row in C3): R-ALIASED-LOADER a loader bound to another name (the require a
  * createRequire call returns kept in a variable, an alias of require) is a load neither walk reads, so the closure misses its
  * target; R-VARIABLE-COMMAND a shell command or a wrapper argv held in a variable carries no command text the wrapped reading sees;
  * R-EVALUATED-ENV the environment reached through evaluated text (eval, Function), a computed or quoted key of globalThis, or
- * process named by an object shorthand is no environment use.
+ * process named by an object shorthand is no environment use. wb-1f2w's (quiet rows in C3, R-INLINE-ECHO's in the judged set):
+ * R-EVALUATED-LOAD a loader reached through evaluated text (eval, Function) is no load; R-INDIRECT-LOADER a loader run through any
+ * other expression (bind, an array or object element, a method of Function.prototype) is no load; R-PASSED-LAUNCHER a launcher
+ * reaching its call through an object property, a parameter, a return value, a later assignment or another module's export, or run
+ * by call, apply, bind or Reflect.apply, is no launch; R-INLINE-ECHO a case returning its witness without reading the roster
+ * (copied inline, built by a helper, parsed anew from the roster file) is no echo the guard reads.
  */
+/** Each module text parsed once (wb-1f2w): every control re-reads src with one module replaced, and the widened readings walk each
+ * parse again for its launcher names, so a parse is kept per path and text (the readings never change a parse). */
+const PARSES = new Map<string, Map<string, ts.SourceFile>>();
+function parseOnce(file: string, text: string): ts.SourceFile {
+  const byText = PARSES.get(file) ?? new Map<string, ts.SourceFile>();
+  PARSES.set(file, byText);
+  const cached = byText.get(text);
+  if (cached !== undefined) return cached;
+  const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  byText.set(text, source);
+  return source;
+}
 /** What the launch closure's static wiring holds beyond its launches and loads (wb-roxk F2-F4): each list a module:line reading. */
 interface Wiring {
   /** Runtime loads of the closure whose specifier is no string literal (F2). */
@@ -688,11 +725,12 @@ function commandTexts(node: ts.CallExpression): string[] {
   for (const argument of node.arguments.slice(0, 2)) visit(argument);
   return texts;
 }
-/** A launcher call that runs rf through a shell or a wrapper: no direct rf launch, while one of its command texts names rf (F3). */
+/** A launcher call (launcherNameOf, wb-1f2w F5) that runs rf through a shell or a wrapper: no direct rf launch, while one of its
+ * command texts names rf (F3). */
 function isWrappedRfLaunch(node: ts.Node): node is ts.CallExpression {
   if (!ts.isCallExpression(node)) return false;
   const callee = node.expression;
-  const name = ts.isIdentifier(callee) ? callee.text : ts.isPropertyAccessExpression(callee) ? callee.name.text : undefined;
+  const name = launcherNameOf(callee);
   // The direct predicate is read last: its false branch would narrow the call away.
   return name !== undefined && LAUNCHERS.has(name) && commandTexts(node).some(text => RF_COMMAND.test(text)) && !isRfLaunch(node);
 }
@@ -707,21 +745,104 @@ function wrappedLaunchesIn(file: string, text: string): string[] {
   visit(source);
   return sites;
 }
-/** A runtime loader call: import(), require(), the require a createRequire call returns called in place, or module.require() (F2). */
-function isLoaderCall(node: ts.CallExpression): boolean {
-  const callee = node.expression;
-  if (callee.kind === ts.SyntaxKind.ImportKeyword) return true;
+/** An expression read through its parentheses, type assertions and comma operands: `(0, require)` reads as require (wb-1f2w). */
+function unwrapped(node: ts.Expression): ts.Expression {
+  if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node) || ts.isSatisfiesExpression(node)) {
+    return unwrapped(node.expression);
+  }
+  if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.CommaToken) return unwrapped(node.right);
+  return node;
+}
+/** A loader function, read through unwrapped: require, the require a createRequire call returns, or module.require (F2). */
+function isLoaderFunction(node: ts.Expression): boolean {
+  const callee = unwrapped(node);
   if (ts.isIdentifier(callee)) return callee.text === "require";
   if (ts.isCallExpression(callee)) return ts.isIdentifier(callee.expression) && callee.expression.text === "createRequire";
   return ts.isPropertyAccessExpression(callee) && callee.name.text === "require" && ts.isIdentifier(callee.expression) && callee.expression.text === "module";
 }
-/** The runtime loader calls of a module whose specifier is no string literal (F2). */
+type LoaderForm = "direct" | "call" | "apply" | "reflect";
+/** How a call runs a loader: direct (import(), or a loader function called in place, F2), or through the loader's call or apply
+ * method or Reflect.apply with the loader as its target (wb-1f2w F3); undefined for a call that loads nothing. */
+function loaderFormOf(node: ts.CallExpression): LoaderForm | undefined {
+  const callee = unwrapped(node.expression);
+  if (callee.kind === ts.SyntaxKind.ImportKeyword || isLoaderFunction(callee)) return "direct";
+  if (!ts.isPropertyAccessExpression(callee)) return undefined;
+  const method = callee.name.text;
+  if ((method === "call" || method === "apply") && isLoaderFunction(callee.expression)) return method;
+  const target = node.arguments[0];
+  const reflected = method === "apply" && ts.isIdentifier(callee.expression) && callee.expression.text === "Reflect";
+  return reflected && target !== undefined && isLoaderFunction(target) ? "reflect" : undefined;
+}
+/** A runtime loader call: import(), require(), the require a createRequire call returns called in place, or module.require() (F2),
+ * each also through parentheses or a comma operand, and a loader function run by its call or apply method or by Reflect.apply
+ * (wb-1f2w F3). */
+function isLoaderCall(node: ts.CallExpression): boolean {
+  return loaderFormOf(node) !== undefined;
+}
+/** The specifier a loader call hands over: its first argument (direct), the argument after the receiver (call), or the first
+ * element of a literal argument list (apply, Reflect.apply); undefined when the call names none (wb-1f2w F3). */
+function loaderSpecifierOf(node: ts.CallExpression): ts.Expression | undefined {
+  const form = loaderFormOf(node);
+  if (form === "direct") return node.arguments[0];
+  if (form === "call") return node.arguments[1];
+  const list = form === "apply" ? node.arguments[1] : form === "reflect" ? node.arguments[2] : undefined;
+  return list !== undefined && ts.isArrayLiteralExpression(list) ? list.elements[0] : undefined;
+}
+/** The name an expression gives the launcher it reads, through unwrapped (wb-1f2w F5): an identifier by its own name or by the
+ * launcher an alias of its module is bound to, a member by its name or by a quoted key; undefined for any other expression (the
+ * caller holds the name to LAUNCHERS). Call sites and alias declarations read through it alike. */
+function launcherOf(node: ts.Expression, aliases: ReadonlyMap<string, string>): string | undefined {
+  const target = unwrapped(node);
+  if (ts.isIdentifier(target)) return aliases.get(target.text) ?? target.text;
+  if (ts.isPropertyAccessExpression(target)) return target.name.text;
+  if (ts.isElementAccessExpression(target) && ts.isStringLiteralLike(target.argumentExpression)) return target.argumentExpression.text;
+  return undefined;
+}
+/** The launcher a callee names: launcherOf over its module's aliases (launcherAliasesOf, wb-1f2w F5). */
+function launcherNameOf(node: ts.Expression): string | undefined {
+  return launcherOf(node, launcherAliasesOf(node.getSourceFile()));
+}
+const launcherAliases = new WeakMap<ts.SourceFile, ReadonlyMap<string, string>>();
+/** The local names a module binds to a launcher, each with that launcher's own name (wb-1f2w F5): an import specifier or a
+ * destructuring element keyed by a launcher's name, as an identifier or a quoted key (renamed or not, from any module or
+ * initializer), and a declaration whose initializer launcherOf reads as a launcher, followed to a fixed point (a function-scoped
+ * alias may name a module const declared after it). */
+function launcherAliasesOf(source: ts.SourceFile): ReadonlyMap<string, string> {
+  const cached = launcherAliases.get(source);
+  if (cached !== undefined) return cached;
+  const aliases = new Map<string, string>();
+  const declarations: { readonly name: string; readonly initializer: ts.Expression }[] = [];
+  const keyOf = (node: ts.Node): string | undefined => (ts.isIdentifier(node) || ts.isStringLiteralLike(node) ? node.text : undefined);
+  const collect = (node: ts.Node): void => {
+    if ((ts.isImportSpecifier(node) || ts.isBindingElement(node)) && ts.isIdentifier(node.name)) {
+      const key = keyOf(node.propertyName ?? node.name);
+      if (key !== undefined && LAUNCHERS.has(key)) aliases.set(node.name.text, key);
+    }
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined) declarations.push({ name: node.name.text, initializer: node.initializer });
+    ts.forEachChild(node, collect);
+  };
+  collect(source);
+  let grew = true;
+  while (grew) {
+    grew = false;
+    for (const { name, initializer } of declarations) {
+      const launcher = aliases.has(name) ? undefined : launcherOf(initializer, aliases);
+      if (launcher !== undefined && LAUNCHERS.has(launcher)) {
+        aliases.set(name, launcher);
+        grew = true;
+      }
+    }
+  }
+  launcherAliases.set(source, aliases);
+  return aliases;
+}
+/** The runtime loader calls of a module whose specifier is no string literal (F2; every loader form, wb-1f2w F3). */
 function computedLoadsIn(file: string, text: string): string[] {
   const source = parsed(file, text);
   const sites: string[] = [];
   const visit = (node: ts.Node): void => {
     if (ts.isCallExpression(node) && isLoaderCall(node)) {
-      const first = node.arguments[0];
+      const first = loaderSpecifierOf(node);
       if (first === undefined || !ts.isStringLiteralLike(first)) sites.push(lineAt(source, node));
     }
     ts.forEachChild(node, visit);
@@ -747,18 +868,27 @@ function isProcessEnv(node: ts.Node): boolean {
   if (ts.isElementAccessExpression(node)) return ts.isStringLiteralLike(node.argumentExpression) && node.argumentExpression.text === "env" && isProcessObject(node.expression);
   return false;
 }
+/** The process object's module names (wb-1f2w F1/F2). */
+const PROCESS_MODULES: readonly string[] = ["process", "node:process"];
 /** Every use of the parent environment in a module except the whole process.env handed to the allowlist channel, each with its
  * form (F4): a named or a computed read, any other use of the whole object, process itself used other than as the receiver of a
- * literal member, a computed key of process, and a value import of node:process. */
+ * literal member, a computed key of process, and a value import of node:process - static, a runtime load in any loader form, or a
+ * value re-export (wb-1f2w F1/F2). */
 function environmentUsesIn(file: string, text: string): string[] {
   const source = parsed(file, text);
   const uses: string[] = [];
   for (const statement of source.statements) {
-    if (ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier) && ["process", "node:process"].includes(statement.moduleSpecifier.text) && statement.importClause?.isTypeOnly !== true) {
+    if (ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier) && PROCESS_MODULES.includes(statement.moduleSpecifier.text) && statement.importClause?.isTypeOnly !== true) {
       uses.push(`${lineAt(source, statement)} import`);
+    } else if (ts.isExportDeclaration(statement) && !statement.isTypeOnly && statement.moduleSpecifier !== undefined && ts.isStringLiteral(statement.moduleSpecifier) && PROCESS_MODULES.includes(statement.moduleSpecifier.text)) {
+      // wb-1f2w: a value re-export of the process module hands the environment to every module importing it.
+      uses.push(`${lineAt(source, statement)} re-export`);
     }
   }
   const visit = (node: ts.Node): void => {
+    // wb-1f2w F1/F2: a runtime load of the process module (any loader form isLoaderCall reads) is a value import of it.
+    const specifier = ts.isCallExpression(node) && isLoaderCall(node) ? loaderSpecifierOf(node) : undefined;
+    if (specifier !== undefined && ts.isStringLiteralLike(specifier) && PROCESS_MODULES.includes(specifier.text)) uses.push(`${lineAt(source, node)} load`);
     if (isProcessEnv(node)) {
       const parent = node.parent;
       const channel = ts.isCallExpression(parent) && ts.isIdentifier(parent.expression) && parent.expression.text === ALLOWLIST_CHANNEL && parent.arguments[0] === node;
@@ -975,6 +1105,30 @@ function rosterWitness(pin: string): JsonValue {
   if (found === undefined) throw new Error(`the roster holds no pin ${pin}`);
   return found.witness;
 }
+/** wb-1f2w F6: true when a case's source reads the roster - the witnesses it is held to (rosterWitness), the parsed roster
+ * (ROSTER) or the roster's reader (readRoster). */
+function readsRoster(source: string): boolean {
+  return /\b(?:rosterWitness|ROSTER|readRoster)\b/.test(source);
+}
+/** The echo guard's controls, never run: the gate's P17 echo of pin A1 (three padding assertions, the witness handed back from
+ * the roster), an echo through the parsed roster and one through the roster read anew - one per reader the guard names - and
+ * R-INLINE-ECHO, the P17 echo with its witness copied inline. */
+const ECHOES: Readonly<Record<string, () => Promise<JsonValue>>> = {
+  rosterRowsEcho: async () => ROSTER.rows[0]?.pins[0]?.witness ?? null,
+  rereadEcho: async () => readRoster().rows[0]?.pins[0]?.witness ?? null,
+  rosterEcho: async () => {
+    expect(0).toBe(0);
+    expect(0).toBe(0);
+    expect(0).toBe(0);
+    return rosterWitness("A1");
+  },
+  "R-INLINE-ECHO": async () => {
+    expect(0).toBe(0);
+    expect(0).toBe(0);
+    expect(0).toBe(0);
+    return { files: { floor: true, allTs: true }, groupWord: true, sites: [] };
+  },
+};
 /** What a walked file of this census's own pair holds: walked, its sites and how many of the three placeholders it carries. */
 function ownRead(file: string): JsonObject {
   const scan = scanOf("test");
@@ -1161,11 +1315,19 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       destructuredProcess: environment(`${provider}\nexport function toolsFile(): string | undefined {\n  const { env } = process;\n  return env.PI_TOOLS;\n}\n`),
       globalEnvironment: environment(`${provider}\nexport const toolsFile = (): string | undefined => globalThis.process.env.PI_TOOLS;\n`),
       reflectedEnvironment: environment(`${provider}\nexport const toolsFile = (): unknown => Reflect.get(process, "env");\n`),
+      // wb-1f2w F1/F2: a runtime value load of the process module - the gate's P11 dynamic import and P12 require, the bare
+      // specifier, a require createRequire returns - and a value re-export of it are environment uses.
+      dynamicProcessImport: environment(`${provider}\nexport const p11 = async (): Promise<string | undefined> => (await import("node:process")).env.PI_TOOLS;\n`),
+      requiredProcess: environment(`${provider}\nexport const p12 = (): string | undefined => require("node:process").env.PI_TOOLS;\n`),
+      bareProcessImport: environment(`${provider}\nexport const toolsFile = async (): Promise<string | undefined> => (await import("process")).env.PI_TOOLS;\n`),
+      createRequiredProcess: environment(`import { createRequire } from "node:module";\n${provider}\nexport const toolsFile = (): string | undefined => createRequire(import.meta.url)("node:process").env.PI_TOOLS;\n`),
+      reexportedProcess: environment(`${provider}\nexport { env } from "node:process";\n`),
     };
     expect(witness).toStrictEqual({
       toolsFlag: ["tools"], reachableCall: ["group:inference", "commit", "tools", "flag:--render"], toolsVariable: ["env"], pipedStdin: ["stdin"],
       envGatedFlag: ["env-read"], destructuredRead: ["env-read"], computedRead: ["env-read"], aliasedEnvironment: ["env-read"], importedEnvironment: ["env-read"],
       unscrubbedChild: ["env-read"], destructuredProcess: ["env-read"], globalEnvironment: ["env-read"], reflectedEnvironment: ["env-read"],
+      dynamicProcessImport: ["env-read"], requiredProcess: ["env-read"], bareProcessImport: ["env-read"], createRequiredProcess: ["env-read"], reexportedProcess: ["env-read"],
     });
     return witness;
   },
@@ -1195,6 +1357,28 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       envWrapper: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nexport const again = () => spawn("env", ["rf", "context", "render", "--no-commit"]);\n' }),
       shellCommand: wired({ [SECOND_MODULE]: 'import { execSync } from "node:child_process";\nexport const again = () => execSync("cd /fixture/rf-workspace && rf context render --no-commit");\n' }),
       providerShell: wired({ [PROVIDER]: replaced(provider, DIRECT_SPAWN, 'spawn("sh",["-c",["rf",...argv].join(" ")],') }),
+      // wb-1f2w F3: require called indirectly - the gate's P03 call, apply, Reflect.apply and a comma operand - is a load the walk
+      // follows, and one handing over no literal specifier is a computed load.
+      managerRequireCall: wired({ [PROVIDER]: `${provider}\nexport const p03 = () => require.call(null, "../../agent-manager.js");\n` }),
+      managerRequireApply: wired({ [PROVIDER]: `${provider}\nexport const manager = () => require.apply(null, ["../../agent-manager.js"]);\n` }),
+      managerReflectApply: wired({ [PROVIDER]: `${provider}\nexport const manager = () => Reflect.apply(require, null, ["../../agent-manager.js"]);\n` }),
+      managerCommaCall: wired({ [PROVIDER]: `${provider}\nexport const manager = () => (0, require)("../../agent-manager.js");\n` }),
+      runnerComputedCall: wired({ [PROVIDER]: `${provider}\nconst runnerPath = "../../agent-runner.js";\nexport const runner = () => require.call(null, runnerPath);\n` }),
+      runnerComputedApply: wired({ [PROVIDER]: `${provider}\nconst runnerPaths = ["../../agent-runner.js"];\nexport const runner = () => require.apply(null, runnerPaths);\n` }),
+      // wb-1f2w F5: a launcher renamed at its import (the gate's P08 module), destructured, bound to a declaration, read by a
+      // quoted key or through a comma operand launches rf as the launcher itself does.
+      renamedLauncher: wired({ "src/workbench/providers/p08-alias.ts": 'import { spawn as run } from "node:child_process";\nexport const p08 = () => run("sh", ["-c", "rf context render --no-commit --tools /fixture/tools.json"]);\n' }),
+      renamedDirect: wired({ [SECOND_MODULE]: 'import { spawn as launch } from "node:child_process";\nexport const again = (argv: string[]) => launch("rf", argv);\n' }),
+      destructuredLauncher: wired({ [SECOND_MODULE]: 'const { "execSync": shell } = require("node:child_process");\nexport const again = () => shell("rf context render --no-commit");\n' }),
+      boundLauncher: wired({ [SECOND_MODULE]: 'import * as childProcess from "node:child_process";\nexport function again(argv: string[]) {\n  const run = launch;\n  return run("rf", argv);\n}\nconst launch = childProcess.spawn as typeof childProcess.spawn;\n' }),
+      keyedLauncher: wired({ [SECOND_MODULE]: 'import * as childProcess from "node:child_process";\nexport const again = (argv: string[]) => childProcess["spawn"]("rf", argv);\n' }),
+      commaLauncher: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nexport const again = (argv: string[]) => (0, spawn)("rf", argv);\n' }),
+      memberLauncher: wired({ [SECOND_MODULE]: 'import * as childProcess from "node:child_process";\nexport const again = (argv: string[]) => childProcess.spawn("rf", argv);\n' }),
+      // ...and every wrapper unwrapped reads (parentheses, a comma operand, as, satisfies, a <T> assertion, a non-null !), one chain
+      // per reading, beside module.require (no control pinned it at the base).
+      launcherTypeWrapped: wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nexport const again = (argv: string[]) => (((0, (<typeof spawn>spawn)!) as typeof spawn) satisfies typeof spawn)("rf", argv);\n' }),
+      managerTypeWrapped: wired({ [PROVIDER]: `${provider}\nexport const manager = () => (((0, (<NodeRequire>require)!) as NodeRequire) satisfies NodeRequire)("../../agent-manager.js");\n` }),
+      managerModuleRequire: wired({ [PROVIDER]: `${provider}\nexport const manager = () => module.require("../../agent-manager.js");\n` }),
     };
     // An orchestrator wired in brings its own environment reads into the launch closure (the agent runner's session directory and
     // the agent directory's variable), so F4 reads them beside it.
@@ -1203,6 +1387,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       managerJoined: ["computed-load"], runnerConcatenated: ["computed-load"], managerConcatCall: ["computed-load"], runnerRequired: ["computed-load"],
       managerCreateRequire: ["orchestrator", "env-read"],
       shellLauncher: ["launches", "wrapped"], envWrapper: ["launches", "wrapped"], shellCommand: ["launches", "wrapped"], providerShell: ["wrapped"],
+      managerRequireCall: ["orchestrator", "env-read"], managerRequireApply: ["orchestrator", "env-read"], managerReflectApply: ["orchestrator", "env-read"],
+      managerCommaCall: ["orchestrator", "env-read"], runnerComputedCall: ["computed-load"], runnerComputedApply: ["computed-load"],
+      renamedLauncher: ["launches", "wrapped"], renamedDirect: ["launches"], destructuredLauncher: ["launches"], boundLauncher: ["launches"],
+      keyedLauncher: ["launches"], commaLauncher: ["launches"], memberLauncher: ["launches"], launcherTypeWrapped: ["launches"],
+      managerTypeWrapped: ["orchestrator", "env-read"], managerModuleRequire: ["orchestrator", "env-read"],
     });
     return witness;
   },
@@ -1234,6 +1423,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       "R-ALIASED-LOADER": wired({ [PROVIDER]: `import { createRequire } from "node:module";\n${provider}\nconst load = createRequire(import.meta.url);\nexport const manager = () => load("../../agent-manager.js");\n` }),
       "R-VARIABLE-COMMAND": wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nconst command = ["rf", "context", "render"].join(" ");\nexport const again = () => spawn("sh", ["-c", command]);\n' }),
       "R-EVALUATED-ENV": wired({ [PROVIDER]: `${provider}\nexport const toolsFile = (): unknown => new Function("return process.env.PI_TOOLS")();\n` }),
+      // wb-1f2w quiet controls: the process module in type positions only, the call method and Reflect.apply of a function that is
+      // no loader, and a renamed import of no launcher; then wb-1f2w's residual rows (the HARDENING block).
+      processTypes: wired({ [PROVIDER]: `${provider}\nexport type ProcessModule = typeof import("node:process");\nexport type { Process } from "node:process";\n` }),
+      nonLoaderCall: wired({ [PROVIDER]: `${provider}\nconst echoPath = (path: string): string => path;\nexport const manager = () => echoPath.call(null, "../../agent-manager.js");\nexport const reflected = () => Reflect.apply(echoPath, null, ["../../agent-manager.js"]);\n` }),
+      renamedOther: wired({ [SECOND_MODULE]: 'import { readFileSync as run } from "node:fs";\nexport const again = () => run("rf context render --no-commit");\n' }),
+      "R-EVALUATED-LOAD": wired({ [PROVIDER]: `${provider}\nexport const p04 = () => new Function("return import('../../agent-manager.js')")();\n` }),
+      "R-INDIRECT-LOADER": wired({ [PROVIDER]: `${provider}\nexport const manager = () => require.bind(null)("../../agent-manager.js");\n` }),
+      "R-PASSED-LAUNCHER": wired({ [SECOND_MODULE]: 'import { spawn } from "node:child_process";\nconst launchers = { run: spawn };\nexport const again = (argv: string[]) => launchers.run("rf", argv);\n' }),
     };
     expect(Object.values(witness)).toEqual(Object.keys(witness).map(() => []));
     return witness;
@@ -1263,6 +1460,10 @@ describe("wb-tz4r.5 RI observation authority census (RI-UNIFIED-DECISION-INFEREN
     expect(new Set(SPELLINGS.map(acceptanceText)).size).toBe(3);
     // The plain-dot form of the third alternative is the catalog's leaf path, and the provider's own argv is the render group.
     expect([acceptanceText(SPELLINGS[2] ?? SPELLINGS[0] ?? { placeholder: "", words: ["", ""], separator: "any" }), RENDER_LEAF]).toEqual([LEAF, RENDER_GROUP.join(".")]);
+    // wb-1f2w F6: the echo guard each pin's runner applies reads the gate's P17 shape (a padded case handing back its roster
+    // witness) and an echo through each other roster reader as echoes, and R-INLINE-ECHO (the witness copied inline) as none - its
+    // pinned quiet row.
+    expect(Object.fromEntries(Object.entries(ECHOES).map(([name, echo]) => [name, readsRoster(String(echo))]))).toStrictEqual({ rosterRowsEcho: true, rereadEcho: true, rosterEcho: true, "R-INLINE-ECHO": false });
   });
 
   it("the outside anchor: the owner filing's export row holds the three clauses, the three spellings and every pin's own words", () => {
@@ -1295,6 +1496,8 @@ describe("wb-tz4r.5 RI observation authority census (RI-UNIFIED-DECISION-INFEREN
         it(pin, { timeout: 120_000 }, async () => {
           const impl = IMPL[pin];
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
+          // wb-1f2w F6: a case measures its own witness; one whose source reads the roster echoes the witness it is held to.
+          expect(readsRoster(String(impl)), `${pin}'s case reads the roster's witnesses`).toBe(false);
           const witness = impl === undefined ? null : await impl();
           expect(witness, `witness ${pin}: ${JSON.stringify(witness)}`).toStrictEqual(rosterWitness(pin));
           REACHED.push(`${pin}:${expect.getState().assertionCalls}`);
