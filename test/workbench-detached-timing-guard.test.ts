@@ -32,10 +32,25 @@
  *   G3 also reads a for, while or do loop whose condition joins any relational comparison (<, <=, > or >=, against a
  *      literal, a named constant or any other bound, on either side) with `&&`: a countdown, a reversed or named bound,
  *      a while or do counter. One loop is one finding;
- *   G4 also reads every vitest hook (afterEach, afterAll, beforeEach or beforeAll: by name, through a vitest import
- *      alias, or as a namespace member) whose callback, inline or named, stops hosts itself or through the module-local
- *      functions it calls or names, at any depth; that callback still passes HOST_HOOK_TIMEOUT_MS and calls
- *      reportAfterCleanup itself.
+ *   G4 also reads the hooks afterEach, afterAll, beforeEach and beforeAll (by name, through a vitest import alias, or as
+ *      a namespace member) whose callback, inline or named, stops hosts itself or through the module-local functions it
+ *      calls or names, at any depth; that callback still passes HOST_HOOK_TIMEOUT_MS and calls reportAfterCleanup itself.
+ * wb-vh7c (the R694 follow-up of wb-nqbd landing 491, gate cmd_7cbc36ba6b11: F1 leads, F2 rides) widens G3 and G4 the
+ * same way, beside the readings above, and G3 only where they found nothing:
+ *   G3 also reads a for, while or do loop whose condition joins with `&&` a counter of the loop (the operand of a ++ or
+ *      --, or the target of a += or -=, anywhere in its condition, its incrementor or its body), either compared by an
+ *      equality operator (===, ==, !== or !=, against a literal or a named bound, on either side, under a negation too)
+ *      or read as an operand of the `&&` (n--, --n, n -= 1, a member's step, or n stepped in the loop): an inequality
+ *      bound or a truthiness countdown. One loop is still one finding;
+ *   G4 also reads vitest's other four hooks, onTestFinished, onTestFailed, aroundEach and aroundAll, with the same two
+ *      demands, and every hook through a destructured binding (a test context's ({ onTestFailed: onFail })) or a
+ *      variable bound to it, by name or as a member (const onFail = context.onTestFailed). The hooks it reads by name
+ *      are exactly the vitest module's hook-shaped exports (before*, after*, around* and onTest*), read at run time, so
+ *      a hook of those shapes that vitest adds reds the guard. It also reads every fixture that stops hosts, itself or
+ *      through module-local functions: a call of extend, override or scoped on any receiver, inline, as a [fixture,
+ *      options] tuple or through a builder's onCleanup. vitest runs a fixture's teardown under no timeout (its runner
+ *      awaits each fixture cleanup unbounded), so a fixture cannot stop hosts under HOST_HOOK_TIMEOUT_MS: one that does
+ *      is a finding by itself, and the family stops hosts in a hook.
  * The judged set is read from the test directory and the config, never typed here. The members importing the marked
  * twins (the two suites that drive real hosts, and the helper's own unit rows) are pinned, so a derivation that reads
  * nothing, or a member that leaves the twins, reds. Every widened reading has planted kill controls beside negative
@@ -47,6 +62,8 @@
  * NAMED RESIDUALS (not detected; each has quiet rows, F5):
  *   R-WAIT-LOOP a wait loop whose bound is not in its condition (a for-of over a fixed-length array, a counted loop
  *     that leaves through a break) or that awaits a read with no delay;
+ *   R-COUNTER-ROUTE a count bound whose counter the loop steps only through a plain assignment (i = i + 1) or a
+ *     function it calls, or reads only through a negation or a coercion (!!n--);
  *   R-HOST-ROUTE a host call reached through a re-export, a loader under another name (createRequire), a specifier
  *     that is not one string literal, or the Pi tool (a tool reply's lapse text is marked by the member's reply parser,
  *     jsonReply in the socket-base suite, not here);
@@ -56,6 +73,9 @@
  *     reflectively (Reflect.get);
  *   R-OWNER-ALIAS AbortSignal or Atomics read through an alias of its own;
  *   R-HOOK-ROUTE a hook that stops hosts through an imported function or an object's method;
+ *   R-REGISTRAR-ROUTE a hook registrar reached through an assignment rather than a binding (atEnd = onTestFinished) or a
+ *     computed key (context["onTestFinished"]), a fixture table passed by a variable (test.extend(fixtures)), or a
+ *     fixture that stops hosts through an imported function or an object's method;
  *   R-RAISE-SITE no planted lapse reaches raiseTransportLapse at its call site in socket-base's 60-byte TMPDIR row (the
  *     helper's own unit rows pin what it raises): the family's raiseTransportLapse call rows are pinned to the roster,
  *     and a tool-path read left unraised is a quiet row.
@@ -63,13 +83,15 @@
  * as `forge run detached-control-live`: its until() bound is a receipt-recorded measurement (journeys.*.realised =
  * until().ok), and no landing judge reads its reds. The first case pins that exclusion.
  * NOT CLAIMED: a hollow that removes one planted site from every table it sits in at once (its own table, the roster's
- * entry and the frozen-shape literal's count); a hollow that removes one of the two shape cases from every literal of
- * the shape; a case whose own assertions are weakened in place.
+ * entry and the frozen-shape literal's count), unless it also drops a hook kind from HOOKS, which the hook-kinds row
+ * reads against vitest's own exports; a hollow that removes one of the two shape cases from every literal of the shape;
+ * a case whose own assertions are weakened in place.
  */
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
+import * as vitestExports from "vitest";
 import { describe, expect, it } from "vitest";
 import config from "../vitest.config.js";
 
@@ -92,10 +114,21 @@ const MEMBER_TIMERS: ReadonlyMap<string, ReadonlySet<string>> = new Map([
   ["AbortSignal", new Set(["timeout"])],
   ["Atomics", new Set(["wait", "waitAsync"])],
 ]);
-/** wb-nqbd F3: vitest's hooks; a hook that stops hosts is judged whichever one it is. */
-const HOOKS = new Set(["afterEach", "afterAll", "beforeEach", "beforeAll"]);
+/** wb-nqbd F3, wb-vh7c F2: vitest's hooks, every hook-shaped export of the vitest module (the hook-kinds row reads this
+ * set against them); a hook that stops hosts is judged whichever one it is. */
+const HOOKS = new Set(["afterEach", "afterAll", "beforeEach", "beforeAll", "aroundEach", "aroundAll", "onTestFinished", "onTestFailed"]);
+/** wb-vh7c F2: vitest's fixture registrars, read on any receiver (test.extend, it.extend, an extended test's override). */
+const FIXTURE_CALLS = new Set(["extend", "override", "scoped"]);
+/** wb-vh7c F2: the hook-shaped names of the vitest module's exports (before*, after*, around* and onTest*), which the
+ * hook-kinds row reads against HOOKS. */
+const HOOK_SHAPE = /^(?:before|after|around)[A-Z]\w*$|^onTest[A-Z]\w*$/;
 /** wb-nqbd F2: the relational operators a counted loop's bound compares with. */
 const RELATIONAL = new Set<ts.SyntaxKind>([ts.SyntaxKind.LessThanToken, ts.SyntaxKind.LessThanEqualsToken, ts.SyntaxKind.GreaterThanToken, ts.SyntaxKind.GreaterThanEqualsToken]);
+/** wb-vh7c F1: the equality operators a counted loop can compare its counter with. */
+const EQUALITY = new Set<ts.SyntaxKind>([ts.SyntaxKind.EqualsEqualsEqualsToken, ts.SyntaxKind.EqualsEqualsToken, ts.SyntaxKind.ExclamationEqualsEqualsToken, ts.SyntaxKind.ExclamationEqualsToken]);
+/** wb-vh7c F1: the steps (++ and --) and the counting assignments (+= and -=) that make a value a loop's counter. */
+const STEPS = new Set<ts.SyntaxKind>([ts.SyntaxKind.PlusPlusToken, ts.SyntaxKind.MinusMinusToken]);
+const COUNTING_ASSIGNMENTS = new Set<ts.SyntaxKind>([ts.SyntaxKind.PlusEqualsToken, ts.SyntaxKind.MinusEqualsToken]);
 
 interface ConfigShape {
   test?: { exclude?: readonly string[] };
@@ -152,6 +185,54 @@ function relationalBound(node: ts.Node): boolean {
 function landedCount(node: ts.Node): boolean {
   return ts.isForStatement(node) && node.condition !== undefined && conjunction(node.condition) && fixedBound(node.condition);
 }
+/** wb-vh7c F1: `node` with its parentheses removed. */
+function unparenthesized(node: ts.Expression): ts.Expression {
+  return ts.isParenthesizedExpression(node) ? unparenthesized(node.expression) : node;
+}
+/** wb-vh7c F1: true when `node` is a step, ++ or --, prefix or postfix. */
+function isStep(node: ts.Node): node is ts.PrefixUnaryExpression | ts.PostfixUnaryExpression {
+  return (ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && STEPS.has(node.operator);
+}
+/** wb-vh7c F1: true when `node` is a counting assignment, += or -=. */
+function isCountingAssignment(node: ts.Node): node is ts.BinaryExpression {
+  return ts.isBinaryExpression(node) && COUNTING_ASSIGNMENTS.has(node.operatorToken.kind);
+}
+/** wb-vh7c F1: the counters of `loop`, by text: the operand of every step and the target of every counting assignment in
+ * its condition, its incrementor or its body. */
+function countersOf(loop: ts.Node, source: ts.SourceFile): Set<string> {
+  const found = new Set<string>();
+  const visit = (node: ts.Node): void => {
+    if (isStep(node)) found.add(node.operand.getText(source));
+    if (isCountingAssignment(node)) found.add(node.left.getText(source));
+    ts.forEachChild(node, visit);
+  };
+  visit(loop);
+  return found;
+}
+/** wb-vh7c F1: true when `node`, its parentheses aside, is a step, a counting assignment or one of the loop's counters. */
+function readsCounter(node: ts.Expression, counters: ReadonlySet<string>, source: ts.SourceFile): boolean {
+  const bare = unparenthesized(node);
+  return isStep(bare) || isCountingAssignment(bare) || counters.has(bare.getText(source));
+}
+/** wb-vh7c F1: how `condition` holds a counter of its loop - under an equality operator anywhere in it, or as an operand
+ * of one of its `&&`s, read as its truth value - or undefined when it holds neither. */
+function counterBound(condition: ts.Expression, counters: ReadonlySet<string>, source: ts.SourceFile): string | undefined {
+  let compared = false;
+  let truth = false;
+  const visit = (node: ts.Node): void => {
+    if (ts.isBinaryExpression(node) && (readsCounter(node.left, counters, source) || readsCounter(node.right, counters, source))) {
+      if (EQUALITY.has(node.operatorToken.kind)) compared = true;
+      if (node.operatorToken.kind === ts.SyntaxKind.AmpersandAmpersandToken) truth = true;
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(condition);
+  return compared ? "a counter under an equality operator" : truth ? "a counter read as its truth value" : undefined;
+}
+/** wb-vh7c F1: the form a G3 finding shows `loop` in, around its condition's text. */
+function loopForm(loop: ts.Node, condition: string): string {
+  return ts.isForStatement(loop) ? `for (...; ${condition}; ...)` : ts.isWhileStatement(loop) ? `while (${condition})` : `do ... while (${condition})`;
+}
 /** wb-nqbd F1, F3: "<owner>.<member>" when `owner` names AbortSignal or Atomics (bare, or as a member such as
  * globalThis.AbortSignal) and `member` is one of its timers. */
 function memberTimer(owner: ts.Expression, member: string): string | undefined {
@@ -202,7 +283,9 @@ function roleOf(node: ts.Identifier): string {
   if (ts.isImportSpecifier(parent)) return "through an import";
   return "by name";
 }
-/** wb-nqbd F3: the names `source` binds to vitest's hooks: the hook names, and every vitest import alias of one. */
+/** wb-nqbd F3, wb-vh7c F2: the names `source` binds to vitest's hooks: the hook names, every vitest import alias of one,
+ * every destructured binding of one (a test context's ({ onTestFailed: onFail })), and every variable bound to one by
+ * name or as a member (const onFail = context.onTestFailed), in source order. */
 function hookNames(source: ts.SourceFile): Set<string> {
   const names = new Set(HOOKS);
   for (const statement of source.statements) {
@@ -212,6 +295,18 @@ function hookNames(source: ts.SourceFile): Set<string> {
       if (HOOKS.has((element.propertyName ?? element.name).text)) names.add(element.name.text);
     }
   }
+  const visit = (node: ts.Node): void => {
+    if (ts.isBindingElement(node) && ts.isIdentifier(node.name) && ts.isObjectBindingPattern(node.parent)) {
+      const key = node.propertyName ?? node.name;
+      if ((ts.isIdentifier(key) || ts.isStringLiteralLike(key)) && HOOKS.has(key.text)) names.add(node.name.text);
+    }
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined) {
+      const bound = node.initializer;
+      if ((ts.isIdentifier(bound) && names.has(bound.text)) || (ts.isPropertyAccessExpression(bound) && HOOKS.has(bound.name.text))) names.add(node.name.text);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
   return names;
 }
 /** wb-nqbd F3: true when `callee` registers a vitest hook: by name or alias, or as a member (vitest.afterAll). */
@@ -305,6 +400,14 @@ function readText(name: string, text: string): Reading {
       if (timeout === undefined || !ts.isIdentifier(timeout) || timeout.text !== "HOST_HOOK_TIMEOUT_MS") add("G4", node, `a hook that stops hosts (${hook}) runs without HOST_HOOK_TIMEOUT_MS`);
       if (body === undefined || !calls(body, "reportAfterCleanup")) add("G4", node, `a hook that stops hosts (${hook}) settles its waits without reportAfterCleanup`);
     }
+    // wb-vh7c F2: a fixture that stops hosts, itself or through module-local functions. vitest runs a fixture's teardown
+    // under no timeout, so such a fixture is a finding by itself: the family stops hosts in a hook.
+    if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression) && FIXTURE_CALLS.has(node.expression.name.text)) {
+      const fixtureRoute = node.arguments.map(argument => reachRoute(argument, "kill", locals)).find(found => found !== undefined);
+      if (fixtureRoute !== undefined) {
+        add("G4", node, `a fixture that stops hosts (${node.expression.getText(source)}${fixtureRoute.length > 0 ? ` through ${fixtureRoute.join(" > ")}` : ""}) tears down under no timeout`);
+      }
+    }
     const loopCondition = ts.isForStatement(node) ? node.condition : ts.isWhileStatement(node) || ts.isDoStatement(node) ? node.expression : undefined;
     if (loopCondition !== undefined && readsClock(loopCondition)) add("G3", node, `clock-deadline poll loop: ${loopCondition.getText(source)}`);
     // wb-nqbd F2: a for, while or do loop whose condition joins any relational bound with && - one finding per loop, and
@@ -312,6 +415,12 @@ function readText(name: string, text: string): Reading {
     if (loopCondition !== undefined && !readsClock(loopCondition) && !landedCount(node) && conjunction(loopCondition) && relationalBound(loopCondition)) {
       const condition = loopCondition.getText(source);
       add("G3", node, `fixed-count poll loop: ${ts.isForStatement(node) ? `for (...; ${condition}; ...)` : ts.isWhileStatement(node) ? `while (${condition})` : `do ... while (${condition})`}`);
+    }
+    // wb-vh7c F1: a for, while or do loop whose condition joins with && a counter of the loop, under an equality operator
+    // or read as its truth value - one finding per loop, and only where the readings above found none.
+    if (loopCondition !== undefined && !readsClock(loopCondition) && !landedCount(node) && !relationalBound(loopCondition) && conjunction(loopCondition)) {
+      const bound = counterBound(loopCondition, countersOf(node, source), source);
+      if (bound !== undefined) add("G3", node, `fixed-count poll loop (${bound}): ${loopForm(node, loopCondition.getText(source))}`);
     }
     ts.forEachChild(node, visit);
   };
@@ -323,8 +432,9 @@ const readings = new Map(judged.map(name => [name, readText(name, readFileSync(j
 const shown = (list: readonly Finding[]): string => list.map(finding => `${finding.rule} ${finding.at} ${finding.text}`).join("\n") || "(none)";
 
 /**
- * wb-nqbd: the planted sites, each read as its own member. A kill control is a site of one widened reading (F1, F2, F3)
- * and a negative control a near-miss that must stay quiet (N); what each yields lives in the roster, never here.
+ * wb-nqbd: the planted sites, each read as its own member. A kill control is a site of one widened reading (wb-nqbd's
+ * F1, F2 and F3; wb-vh7c's F1 and F2, here V1 and V2) and a negative control a near-miss that must stay quiet (N); what
+ * each yields lives in the roster, never here.
  */
 const CONTROLS: Readonly<Record<string, string>> = {
   "F1.waitFor": "await vi.waitFor(() => expect(alive()).toBe(false), { timeout: 5_000, interval: 20 });",
@@ -357,6 +467,36 @@ const CONTROLS: Readonly<Record<string, string>> = {
   "F3.deepHelper": "function signal(pid: number) { process.kill(pid); }\nfunction stopHosts() { hosts.forEach(signal); }\nafterEach(() => { stopHosts(); });",
   "F3.aliasedHook": 'import { afterEach as eachCleanup } from "vitest";\neachCleanup(async () => { for (const pid of hosts) process.kill(pid); });',
   "F3.namespaceHook": 'import * as vitest from "vitest";\nvitest.afterAll(() => { for (const pid of hosts) process.kill(pid); });',
+  "V1.inequalityFor": "for (let i = 0; i !== 150 && alive(); i++) await holdOpen(20);",
+  "V1.inequalityStep": "while (alive() && tries++ !== MAX_TRIES) await holdOpen(20);",
+  "V1.reversedInequality": "while (alive() && 150 !== ++n) await holdOpen(20);",
+  "V1.doInequality": "do await holdOpen(20); while (--n !== 0 && alive());",
+  "V1.looseInequality": "for (let i = 0; i != MAX_POLLS && alive(); i += 1) await holdOpen(20);",
+  "V1.negatedEquality": "while (!(n === 0) && alive()) { n -= 1; await holdOpen(20); }",
+  "V1.looseEquality": "do await holdOpen(20); while (!(left-- == 0) && alive());",
+  "V1.truthCountdown": "while (n-- && alive()) await holdOpen(20);",
+  "V1.forCountdown": "for (let n = 150; n-- && alive(); ) await holdOpen(20);",
+  "V1.prefixCountdown": "do await holdOpen(20); while (alive() && --left);",
+  "V1.bodyCountdown": "while (left && alive()) { left--; await holdOpen(20); }",
+  "V1.memberCountdown": "while (alive() && state.left--) await holdOpen(20);",
+  "V1.assignedCountdown": "while ((left -= 1) && alive()) await holdOpen(20);",
+  "V2.finishedHook": "onTestFinished(() => { for (const pid of hosts) process.kill(pid); });",
+  "V2.failedHook": "onTestFailed(async () => { for (const pid of hosts) process.kill(pid); await Promise.all(hosts.map(gone)); }, HOST_HOOK_TIMEOUT_MS);",
+  "V2.aliasedFinished": 'import { onTestFinished as afterTest } from "vitest";\nafterTest(async () => { for (const pid of hosts) process.kill(pid); });',
+  "V2.contextMember": 'it("stops its host", async context => { context.onTestFinished(() => { process.kill(host.pid); }); });',
+  "V2.contextBinding": 'it("stops its host", async ({ onTestFailed: onFail }) => { onFail(() => { process.kill(host.pid); }, HOST_HOOK_TIMEOUT_MS); });',
+  "V2.registrarAlias": "const atEnd = onTestFinished;\natEnd(() => { for (const pid of hosts) process.kill(pid); });",
+  "V2.memberAlias": 'it("stops its host", async context => { const onFail = context.onTestFailed; onFail(() => { process.kill(host.pid); }); });',
+  "V2.aroundEachHook": "aroundEach(async runTest => { await runTest(); for (const pid of hosts) process.kill(pid); });",
+  "V2.aroundAllHook": "function stopHosts() { for (const pid of hosts) process.kill(pid); }\naroundAll(async runSuite => { await runSuite(); stopHosts(); }, HOST_HOOK_TIMEOUT_MS);",
+  "V2.fixture": "const hostTest = test.extend({ hosts: async ({}, use) => { const pids: number[] = []; await use(pids); for (const pid of pids) process.kill(pid); } });",
+  "V2.fixtureTuple":
+    'function stopHosts() { for (const pid of hosts) process.kill(pid); }\nconst hostTest = it.extend({ hosts: [async ({}, use) => { await use(hosts); stopHosts(); }, { scope: "file" }] });',
+  "V2.builderFixture": 'const hostTest = test.extend("hosts", async ({}, { onCleanup }) => { onCleanup(() => { for (const pid of hosts) process.kill(pid); }); return hosts; });',
+  "V2.namedFixture":
+    "async function hostsFixture({}, use: (pids: number[]) => Promise<void>) { await use(hosts); for (const pid of hosts) process.kill(pid); }\nconst hostTest = test.extend({ hosts: hostsFixture });",
+  "V2.overrideFixture": 'hostTest.override("hosts", async ({}, { onCleanup }) => { onCleanup(() => { process.kill(host.pid); }); return [host.pid]; });',
+  "V2.scopedFixture": "hostTest.scoped({ hosts: async ({}, use) => { await use(hosts); for (const pid of hosts) process.kill(pid); } });",
   "N.settledHelper":
     "function stopHosts() { for (const pid of hosts) process.kill(pid); return hosts.map(gone); }\nafterEach(async () => { await reportAfterCleanup(stopHosts(), cleanup); }, HOST_HOOK_TIMEOUT_MS);",
   "N.settledNamed":
@@ -366,6 +506,12 @@ const CONTROLS: Readonly<Record<string, string>> = {
   "N.conjoinedNoBound": "while (alive() && !stopped) await holdOpen(20);",
   "N.textOnly": "const text = \"vi.waitFor(expect.poll) AbortSignal.timeout Atomics.wait globalThis['setTimeout']\"; // afterAll(() => process.kill(pid))",
   "N.otherMember": "const reading = await client.timeout(5_000);\nsession.wait(20);",
+  "N.stateInequality": 'while (alive() && state !== "done") await holdOpen(20);',
+  "N.flagEquality": "while (alive() && ready === false) { attempts++; await holdOpen(20); }",
+  "N.unconjoinedCountdown": "while (n--) queue.pop();",
+  "N.settledFinished":
+    "onTestFinished(async () => { for (const pid of hosts) process.kill(pid); await reportAfterCleanup(hosts.map(gone), cleanup); }, HOST_HOOK_TIMEOUT_MS);",
+  "N.quietFixture": "const dataTest = test.extend({ data: async ({}, use) => { await use(await loadData()); } });",
 };
 
 /** wb-nqbd F5: each named residual's planted members (`<residual>.<member>`), every one a quiet row the guard reads nothing in. */
@@ -373,6 +519,9 @@ const QUIET: Readonly<Record<string, string>> = {
   "R-WAIT-LOOP.forOfBound": "for (const _ of Array.from({ length: 150 })) { if (!alive()) break; await holdOpen(20); }",
   "R-WAIT-LOOP.breakCount": "for (let i = 0; i < 150; i++) { if (!alive()) break; await holdOpen(20); }",
   "R-WAIT-LOOP.noDelay": "while (!(await ready()));",
+  "R-COUNTER-ROUTE.plainStep": "for (let i = 0; i !== MAX_POLLS && alive(); i = i + 1) await holdOpen(20);",
+  "R-COUNTER-ROUTE.calledStep": "const next = () => ++tries;\nwhile (alive() && next() !== MAX_TRIES) await holdOpen(20);",
+  "R-COUNTER-ROUTE.coerced": "while (!!n-- && alive()) await holdOpen(20);",
   "R-HOST-ROUTE.reexport": 'import { launchDetachedWorkflow } from "./helpers/host-reexport.js";',
   "R-HOST-ROUTE.loaderAlias": 'const load = createRequire(import.meta.url);\nconst host = load("../src/workbench/hosts/local-detached.js");',
   "R-HOST-ROUTE.computedSpecifier": "const host = await import(HOST_MODULE_PATH);",
@@ -386,6 +535,12 @@ const QUIET: Readonly<Record<string, string>> = {
   "R-OWNER-ALIAS.atomics": "const shared = Atomics;\nshared.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 20);",
   "R-HOOK-ROUTE.method": "afterEach(async () => { await fixtures.stopAll(); });",
   "R-HOOK-ROUTE.imported": 'import { stopAllHosts } from "./helpers/hosts.js";\nafterEach(stopAllHosts);',
+  "R-REGISTRAR-ROUTE.assignedAlias": "let atEnd: typeof onTestFinished | undefined;\natEnd = onTestFinished;\natEnd(() => { for (const pid of hosts) process.kill(pid); });",
+  "R-REGISTRAR-ROUTE.computedKey": 'it("stops its host", async context => { context["onTestFinished"](() => { process.kill(host.pid); }); });',
+  "R-REGISTRAR-ROUTE.fixtureTable":
+    "const fixtures = { hosts: async ({}, use) => { await use(hosts); for (const pid of hosts) process.kill(pid); } };\nconst hostTest = test.extend(fixtures);",
+  "R-REGISTRAR-ROUTE.importedFixture": 'import { hostsFixture } from "./helpers/host-fixtures.js";\nconst hostTest = test.extend({ hosts: hostsFixture });',
+  "R-REGISTRAR-ROUTE.methodFixture": "const hostTest = test.extend({ hosts: fixtures.hosts });",
   "R-RAISE-SITE.unraised": 'const snapshot = async () => jsonReply("inspect snapshot", await inspect());',
 };
 
@@ -585,16 +740,23 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
       "row",
       "row",
       "row",
+      "row",
+      "row",
+      "row",
       "F1:9",
       "F2:6",
       "F3:14",
-      "N:7",
+      "V1:13",
+      "V2:15",
+      "N:12",
       "R-WAIT-LOOP:3",
+      "R-COUNTER-ROUTE:3",
       "R-HOST-ROUTE:4",
       "R-TIMER-ROUTE:2",
       "R-COMPUTED-KEY:3",
       "R-OWNER-ALIAS:2",
       "R-HOOK-ROUTE:2",
+      "R-REGISTRAR-ROUTE:5",
       "R-RAISE-SITE:1",
     ]);
     expect(ROSTER.bead).toBe("wb-nqbd");
@@ -614,12 +776,31 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
     COMPARED.push("F2");
   });
 
-  it("wb-nqbd F3 kill controls: a timer global by a string key and Atomics.wait read as G2, and every vitest hook that stops hosts - itself or through module-local functions - reads as G4", () => {
+  it("wb-nqbd F3 kill controls: a timer global by a string key and Atomics.wait read as G2, and an afterEach, afterAll, beforeEach or beforeAll hook that stops hosts - itself or through module-local functions, by name, a vitest import alias or a namespace member - reads as G4", () => {
     expect(controlsOf("F3.")).toStrictEqual(rosterControlsOf("F3."));
     COMPARED.push("F3");
   });
 
-  it("wb-nqbd negative controls: a settled hook, a hook that stops nothing, a loop without && or without a relational bound, text alone and another object's members yield no finding; the controls are the roster's, in order", () => {
+  it("wb-vh7c F1 kill controls: a for, while or do loop whose condition joins with && a counter of the loop reads as G3 - compared by ===, ==, !== or != against a literal or a named bound (on either side, under a negation too), or read as its truth value (n--, --n, n -= 1, a member's step, or n stepped in the body)", () => {
+    expect(controlsOf("V1.")).toStrictEqual(rosterControlsOf("V1."));
+    COMPARED.push("V1");
+  });
+
+  it("wb-vh7c F2 kill controls: vitest's other four hooks that stop hosts read as G4 - onTestFinished and onTestFailed (by name, a vitest import alias, a test-context member, a destructured binding, or a variable bound to one by name or as a member), aroundEach and aroundAll - and so does every fixture that stops hosts (extend, override or scoped; inline, as a tuple, through a builder's onCleanup or a module-local function), which no timeout bounds", () => {
+    expect(controlsOf("V2.")).toStrictEqual(rosterControlsOf("V2."));
+    COMPARED.push("V2");
+  });
+
+  it("wb-vh7c F2 hook kinds: the hooks G4 reads by name are exactly vitest's own hook exports (before*, after*, around* and onTest*), read from the vitest module", () => {
+    expect(
+      Object.keys(vitestExports)
+        .filter(name => HOOK_SHAPE.test(name))
+        .sort(),
+      "vitest's hook exports, against the hooks G4 reads by name",
+    ).toEqual([...HOOKS].sort());
+  });
+
+  it("wb-nqbd and wb-vh7c negative controls: a settled hook (an onTestFinished among them), a hook or a fixture that stops nothing, a loop without && (a countdown among them), a loop whose && joins neither a relational bound nor a counter of its own (an inequality on a state, an equality on a flag while another value counts), text alone and another object's members yield no finding; the controls are the roster's, in order", () => {
     expect(controlsOf("N.")).toStrictEqual(rosterControlsOf("N."));
     expect(Object.keys(CONTROLS), "the planted sites are the roster's, in order and both ways").toEqual(Object.keys(ROSTER.controls));
     COMPARED.push("N");
