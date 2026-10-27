@@ -86,6 +86,8 @@
       "request.cwd"
     ],
     "registerMember": "CapabilityRegistry.register",
+    "registryModule": "src/workbench/capability-registry.ts:CapabilityRegistry",
+    "inProcessHost": "src/index.ts",
     "foreignProducer": "forge",
     "executorProviders": [
       "furnace",
@@ -213,7 +215,8 @@
     "R-UNNAMED",
     "R-RUN-TOGETHER",
     "R-SHAPE",
-    "R-INERT-TEXT"
+    "R-INERT-TEXT",
+    "R-PRIVATE-STORE"
   ],
   "rows": [
     {
@@ -326,6 +329,27 @@
                 "src/workbench/native-modules.ts:registerNativeProviders: registerNativeFurnaceRunInspect call",
                 "src/workbench/native-modules.ts:registerNativeProviders: registerNativeHyperUnixFind call",
                 "src/workbench/native-modules.ts:registerNativeProviders: registerNativeReactiveFiberRender call"
+              ],
+              "storeMembers": [
+                "providers"
+              ],
+              "storeReferences": [
+                "src/ui/workflow-inspector.ts:graphModelRows: supernode.providers read",
+                "src/workbench/capability-registry.ts:register: this.providers read",
+                "src/workbench/capability-registry.ts:register: this.providers read",
+                "src/workbench/capability-registry.ts:discover: this.providers read",
+                "src/workbench/capability-registry.ts:catalogSnapshot: this.providers read",
+                "src/workbench/capability-registry.ts:effectClassOf: this.providers read",
+                "src/workbench/capability-registry.ts:dispatch: this.providers read",
+                "src/workbench/hosts/local-detached.ts:validateRequest: \"providers\" literal",
+                "src/workbench/hosts/local-detached.ts:validateRequest: request.providers read",
+                "src/workbench/hosts/local-detached.ts:registryFor: request.providers read",
+                "src/workbench/hosts/local-detached.ts:prepareBoot: request.providers read",
+                "src/workbench/hosts/local-detached.ts:<module>: \"providers\" literal",
+                "src/workbench/hosts/local-detached.ts:providerManifest: \"providers\" literal",
+                "src/workbench/hosts/local-detached.ts:providerManifest: request.providers read",
+                "src/workbench/hosts/local-detached.ts:startDetachedHost: request.providers read",
+                "src/workbench/latency.ts:bounded: item.providers read"
               ]
             },
             "tools": [
@@ -347,7 +371,23 @@
               "onReturned": true,
               "newRegistrar": true,
               "reflectedMember": true,
-              "composedMember": false
+              "composedMember": false,
+              "storeBesideSwitch": true,
+              "storeInProcess": true,
+              "storeInCase": true,
+              "storeOnReturned": true,
+              "storeElement": true,
+              "storeReflected": true,
+              "storeDestructured": true,
+              "storeAssigned": true,
+              "storeInClass": true,
+              "storeKeyed": false,
+              "storeEnumerated": false,
+              "storeEvaluated": false,
+              "composedStore": false,
+              "storeRenamed": true,
+              "storeHashPrivate": true,
+              "storePublicReach": true
             }
           }
         },
