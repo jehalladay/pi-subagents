@@ -256,6 +256,25 @@
         {
          "path": "*.uiFindings",
          "equals": []
+        },
+        {
+         "path": "*.checkoutPaths",
+         "equals": []
+        },
+        {
+         "path": "*.checkoutPlants",
+         "equals": {
+          "launch": [
+           "$.workspace.root",
+           "$.workspace.file://<checkout>/rf.json",
+           "$.diagnostics[0]"
+          ],
+          "repository": [
+           "$.workspace.root",
+           "$.workspace.file://<checkout>/rf.json",
+           "$.diagnostics[0]"
+          ]
+         }
         }
        ]
       }
@@ -277,6 +296,19 @@
         "text"
        ],
        "uiFindings": [],
+       "checkoutPaths": [],
+       "checkoutPlants": {
+        "launch": [
+         "$.workspace.root",
+         "$.workspace.file://<checkout>/rf.json",
+         "$.diagnostics[0]"
+        ],
+        "repository": [
+         "$.workspace.root",
+         "$.workspace.file://<checkout>/rf.json",
+         "$.diagnostics[0]"
+        ]
+       },
        "provider": "admitted/verbatim/spawns 1",
        "adapter": "projected"
       },
@@ -298,6 +330,19 @@
         "path"
        ],
        "uiFindings": [],
+       "checkoutPaths": [],
+       "checkoutPlants": {
+        "launch": [
+         "$.workspace.root",
+         "$.workspace.file://<checkout>/rf.json",
+         "$.diagnostics[0]"
+        ],
+        "repository": [
+         "$.workspace.root",
+         "$.workspace.file://<checkout>/rf.json",
+         "$.diagnostics[0]"
+        ]
+       },
        "provider": "admitted/verbatim/spawns 1",
        "adapter": "projected"
       }

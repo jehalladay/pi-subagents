@@ -32,7 +32,8 @@
  * descriptor profile) has not fired. The census pins:
  *  A, acceptance (a), over BOTH fixtures (validRf read off its declaration in test/workbench-provider-envelope-audit.test.ts by a
  *    literal evaluator, fullShapeRf from the shared helper). A1 each fixture keeps its eight envelope keys and its output key set,
- *    carries no UI word, phrase or HTML tag in any key or string, and both readers admit it (the provider returns it verbatim);
+ *    carries no UI word, phrase or HTML tag and no spelling of the checkout's path in any key or string (THE CHECKOUT PIN), and
+ *    both readers admit it (the provider returns it verbatim);
  *    A2 a block row carrying a kind outside the vocabulary is admitted verbatim and projects exactly as the same row without it
  *    (paired control), the planted kind and content surfacing nowhere, the in-vocabulary kind rftsx.block projecting the same
  *    (R-PRODUCER-VOCABULARY), and rf's own closed-vocabulary refusal (RF_TSX_OUTPUT_INVALID, sdk_code RFTSX_OUTPUT_UNSUPPORTED_NODE,
@@ -69,6 +70,23 @@
  * NOT CLAIMED (the armed half, gated): once Pi reads the descriptor profile (TSX-IF-03), an unregistered descriptor ID or a newer
  * descriptor version must fail as one typed diagnostic in that reader; no such reader is added or faked here. C1's src-wide phrase
  * scan is the tripwire: a src module that names the profile reds C1 until the armed rule ships with it.
+ * THE CHECKOUT PIN (wb-30xx; the wb-j5y6 gate's F3: A1's assertion that no fixture string spells the checkout's path was held by
+ * no pin, so deleting it alone left this file 16/16, PREP LEG 2 probe G4): A1's witness also holds, per fixture, the checkout paths
+ * its scan finds (checkoutPaths, none) and the same scan read live on planted copies (checkoutPlants: each spelling of CHECKOUTS in
+ * turn, the launch directory's and then the repository's, written as file://<checkout>/rf.json at $.workspace.root, as a key beside
+ * it and as the one item of $.diagnostics, is found exactly there and nowhere else, CHECKOUT_PLANTS), both held to the roster
+ * witness and to the "stay unchanged" claim. So a fixture or helper edit that makes a fixture key or string spell the checkout's
+ * path reds A1 at its witness with that assertion deleted too, and a scan hollowed to find nothing, no key, no array item, no
+ * string, or only a whole, a leading or a trailing spelling reds A1 at checkoutPlants. The witness calls the scan apart from the
+ * assertion, so either one deleted or replaced by a literal leaves the other holding, and each planted copy is scanned whole, so a
+ * spelling the fixture carries outside the planted places shows in checkoutPlants too; deleting the assertion alone stays 16/16 by
+ * design (an equivalent mutant). The pin adds no expect call to A1, so no assertion count moves.
+ * NOT CLAIMED (the checkout pin): the assertion deleted and checkoutPaths returned as a literal together (the wb-wtfr gate's
+ * L2-CONST class, a pin case that returns its roster witness as a literal): checkoutPlants then still shows a spelling the fixture
+ * carries outside the planted places, but not one at $.workspace.root or in $.diagnostics, which each planted copy overwrites, and
+ * nothing once it is returned as a literal too; a scan that drops one of CHECKOUTS's two spellings, wherever both name one
+ * directory (a run launched from the repository root plants the same spelling twice); a path spelled otherwise than verbatim
+ * (another case, a relative, escaped or encoded spelling).
  * RESIDUALS (named families, each with a pinned quiet row): R-PRODUCER-VOCABULARY the closed rftsx.* vocabulary is enforced by the
  * producer (the TSX output converter and rf's worker), not by Pi, whose readers are content-blind to block rows (quiet row: A2's
  * in-vocabulary control projects exactly as the outside kinds do); R-ADDITIVE the provider validates the result keys it reads and
@@ -140,6 +158,10 @@ const ROOT = "rf-tsx-closed-vocabulary-census-workspace";
 /** The checkout this file runs in, both spellings (the launch directory and this file's repository): read only to show that no
  * fixture string spells either (A1). */
 const CHECKOUTS: readonly string[] = [...new Set([process.cwd(), REPO])];
+/** Where A1's checkout scan finds each spelling planted in a copy of a fixture (wb-30xx, checkoutPlantsOf): the string value, the
+ * key beside it and the array item, each found path reading the spelling as <checkout>; the same for both spellings. */
+const PLANTS_FOUND = ["$.workspace.root", "$.workspace.file://<checkout>/rf.json", "$.diagnostics[0]"];
+const CHECKOUT_PLANTS = { launch: PLANTS_FOUND, repository: PLANTS_FOUND };
 const ROSTER_FILE = "test/fixtures/rf-tsx-closed-vocabulary-roster.json";
 const BEAD_EXPORT = ".beads/issues.jsonl";
 const BEAD = "wb-if7q.2";
@@ -773,6 +795,18 @@ function checkoutPathsOf(value: JsonValue, path = "$"): string[] {
   if (value === null || typeof value !== "object") return [];
   return Object.entries(value).flatMap(([key, item]) => [...(spells(key) ? [`${path}.${key}`] : []), ...checkoutPathsOf(item, `${path}.${key}`)]);
 }
+/** A1's checkout scan read live on planted copies of one fixture (wb-30xx): for each spelling in turn, where checkoutPathsOf finds
+ * it written as file://<checkout>/rf.json at $.workspace.root, as a key beside it and as the one item of $.diagnostics, the spelling
+ * read back as <checkout> (CHECKOUT_PLANTS). */
+function checkoutPlantsOf(envelope: JsonObject): JsonObject {
+  const workspace = objectOf(envelope.workspace, "workspace");
+  const found = (checkout: string): string[] => {
+    const spelled = `file://${checkout}/rf.json`;
+    const planted: JsonObject = { ...envelope, workspace: { ...workspace, root: spelled, [spelled]: ROOT }, diagnostics: [spelled] };
+    return checkoutPathsOf(planted).map(path => path.split(checkout).join("<checkout>"));
+  };
+  return { launch: found(process.cwd()), repository: found(REPO) };
+}
 
 /** One module's identifiers and literal texts (string, template parts, regular expressions): what a reader can match or read. */
 function tokensOf(fileName: string, source: ts.SourceFile): string[] {
@@ -970,6 +1004,8 @@ const CLAIMS: Readonly<Record<string, readonly Claim[]>> = {
         { path: "validRf.outputKeys", equals: ["text"] },
         { path: "fullShapeRf.outputKeys", equals: ["text", "size_bytes", "digest", "path"] },
         { path: "*.uiFindings", equals: [] },
+        { path: "*.checkoutPaths", equals: [] },
+        { path: "*.checkoutPlants", equals: CHECKOUT_PLANTS },
       ],
     },
   ],
@@ -1253,6 +1289,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         envelopeKeys: Object.keys(fixture.envelope),
         outputKeys: Object.keys(output),
         uiFindings: uiFindings(fixture.envelope),
+        checkoutPaths: checkoutPathsOf(fixture.envelope),
+        checkoutPlants: checkoutPlantsOf(fixture.envelope),
         provider: provided.reading === null ? refusalText(provided.refusals[0]) : `admitted/${verbatim(provided.reading, fixture.envelope) ? "verbatim" : "rewritten"}/spawns ${provided.spawns}`,
         adapter: observed.topology === null ? refusalText(observed.refusal) : "projected",
       };
@@ -1503,7 +1541,7 @@ describe("wb-if7q.2 rf TSX closed-vocabulary census (TSX-NATIVE-INTERFACES-AND-P
     const pins = ROWS.flatMap(row => row.pins);
     expect(Object.keys(CLAIMS), "claims for exactly the pins, in order").toEqual(pins.map(pin => pin.id));
     expect(pins.map(pin => `${pin.id}:${claimsOf(pin.id).map(claim => claim.checks.length).join("+")}`)).toEqual([
-      "A1:3+4",
+      "A1:3+6",
       "A2:1+4",
       "A3:3+1",
       "A4:2+3",
