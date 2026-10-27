@@ -35,8 +35,13 @@
  *   test/workbench-<name>-census.test.ts); (2) the bead's row carries the orchestrator collect step's delivery line
  *   (DELIVERY) at the start of a notes line, on the bead's own machine branch, its scope listing the path; (3) the bead is in
  *   the gate's family: it shares a parent epic with the gate (PARENT_TYPE) or holds a related edge to the gate; (4) a
- *   present file's first bead id (BEAD_ID) is that bead, so the file is the bead's own census. An exemption added to this
- *   file and the roster together therefore binds only through a row the export already carries.
+ *   present file's first bead id (BEAD_ID) is that bead, so the file is the bead's own census. An absent file (the walk read
+ *   no text) is bound by checks (1)-(3) alone. Its controls (wb-j5kr, the wb-rof1 F1 cure: absentFile over a binding store,
+ *   absentFileUnbound failing (1)-(3), absentFileNoBead naming no row) reach bindingOf through a helper with no text
+ *   parameter, never through bind's defaulted header, so a judge that applies (4) to an absent file, adds a reason for one,
+ *   or drops a store check for one reds A1; bindingOf records each reading that read no text (ABSENT_READS) and A1 pins
+ *   exactly those three, so a control that stops reaching the branch reds A1 too. An exemption added to this file and the
+ *   roster together therefore binds only through a row the export already carries.
  * - FAMILIES (case-insensitive): S, the skip word (skip and its inflections) beside component or subtree, in either word order
  *   with at most one word between the noun and the skip word, or two between the skip word and the noun (component-subtree
  *   skipping, component skip, subtree skip, skip unchanged components); K, an assembly or serialization cache (assembly/serialization caches,
@@ -847,9 +852,13 @@ function blocksToGate(rows: readonly BeadRecord[]): string[] {
   const [gate = ""] = gatesOf(rows);
   return rows.filter(row => row.edges.some(edge => edge.dependsOn === gate && edge.type === BLOCKS_TYPE)).map(row => row.id);
 }
+/** BINDING's absent-file readings, `<path>:<bead>` in call order: each bindingOf call that read no file text, so A1 pins
+ * which readings entered the absent-file branch (the wb-rof1 F1 collapse entered none). */
+const ABSENT_READS: string[] = [];
 /** BINDING over a store: the reasons a sibling exemption is not bound, in check order (none when bound). `text` is the
  * exempted file's bytes when a walk read it; an absent file is bound by the store alone. */
 function bindingOf(entry: SiblingExemption, rows: readonly BeadRecord[], text: string | undefined): string[] {
+  if (text === undefined) ABSENT_READS.push(`${entry.path}:${entry.bead}`);
   const reasons: string[] = [];
   if (!new RegExp(CENSUS_PATH_SOURCE).test(entry.path)) reasons.push("not-census-path");
   const row = rows.find(candidate => candidate.id === entry.bead);
@@ -1124,16 +1133,27 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const siblingRow = { id: "wb-sib", notes: `Owner filing.\n${deliveryLine("wb-sib", `test/fixtures/sibling-roster.json ${siblingPath}`)}`, edges: epicEdges };
     const headerOf = (bead: string): string => `/**\n * ${bead} (R1), a sibling census.\n */\n`;
     const sibling: SiblingExemption = { path: siblingPath, bead: "wb-sib" };
-    const bind = (entry: SiblingExemption, row: { readonly id: string; readonly edges?: readonly Edge[]; readonly [field: string]: unknown } = siblingRow, text: string | undefined = headerOf(entry.bead)): string | false => {
+    /** A present file: bindingOf reads `text`, by default the entry bead's own header. */
+    const bind = (entry: SiblingExemption, row: { readonly id: string; readonly edges?: readonly Edge[]; readonly [field: string]: unknown } = siblingRow, text: string = headerOf(entry.bead)): string | false => {
       const reasons = bindingOf(entry, rowsOf([familyGate, row]), text);
+      return reasons.length === 0 ? false : reasons.join(",");
+    };
+    /** An absent file: bindingOf reads no text. It takes no text parameter, so no default can stand in for the missing file
+     * (passing undefined to bind's defaulted header read as bound, the wb-rof1 F1 collapse): check (4) is not applied and
+     * the store alone decides, through checks (1)-(3). */
+    const bindAbsent = (entry: SiblingExemption, row: { readonly id: string; readonly edges?: readonly Edge[]; readonly [field: string]: unknown } = siblingRow): string | false => {
+      const reasons = bindingOf(entry, rowsOf([familyGate, row]), undefined);
       return reasons.length === 0 ? false : reasons.join(",");
     };
     const claimPath = "docs/workbench/zz-claim.md";
     const widenedTree = plantedTree({ [claimPath]: claim }, [...EXEMPT, claimPath]);
     const widenedText = widenedTree.exempt.get(claimPath) ?? "";
+    const absentFrom = ABSENT_READS.length;
     const binding: JsonObject = {
       bound: bind(sibling),
-      absentFile: bind(sibling, siblingRow, undefined),
+      absentFile: bindAbsent(sibling),
+      absentFileUnbound: bindAbsent({ path: claimPath, bead: "wb-sib" }, { ...siblingRow, notes: "Owner filing.", edges: [] }),
+      absentFileNoBead: bindAbsent({ path: siblingPath, bead: "wb-gone" }),
       relatedEdge: bind(sibling, { ...siblingRow, edges: related() }),
       relatesTo: bind(sibling, { ...siblingRow, edges: related("relates-to") }),
       docsPath: bind({ path: claimPath, bead: "wb-sib" }, { ...siblingRow, notes: deliveryLine("wb-sib", claimPath) }),
@@ -1160,7 +1180,9 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         binding: bindingOf({ path: claimPath, bead: "wb-sib" }, rowsOf([familyGate, siblingRow]), widenedText).join(",") || false,
       },
     };
-    return done("A1", { filesFloorMet, rootsFloorMet, anchorsWalked: tree.anchorsWalked, anchoredFloorMet, exemptionsLoadBearing, exemptionsBound, findings, symlinks: tree.walk.symlinks, unreadable: tree.walk.unreadable, controls, plants, binding });
+    /** The binding controls' readings that entered the absent-file branch: exactly the three absent-file controls. */
+    const absentReads = ABSENT_READS.slice(absentFrom);
+    return done("A1", { filesFloorMet, rootsFloorMet, anchorsWalked: tree.anchorsWalked, anchoredFloorMet, exemptionsLoadBearing, exemptionsBound, findings, symlinks: tree.walk.symlinks, unreadable: tree.walk.unreadable, controls, plants, binding: { ...binding, absentReads } });
   },
   A2: () => {
     const { rows, unparsed } = liveStore();

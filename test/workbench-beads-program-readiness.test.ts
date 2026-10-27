@@ -29,12 +29,33 @@
  * WP column of the maps in play and otherwise kept as a stand-in id (another program's bead: outside this program, its status
  * unread). The rulings a map names as governing it (line 7, text in .planning/OWNER-RULINGS.md) are the host's landed-record
  * witnesses, matched to rows by their ruling: label. The reader never sees a map: only the fake bd seams answer it.
+ *
+ * WB-K888 (the R694 follow-up of this bead's landing 381: F2 leads; F14-F17 ride here, F18-F21 in the h2 bead-graph census).
+ * The reader-hygiene block pins each catch arm and bound the landing gate's module mutants read green: a work-reader error that
+ * is not unavailable propagates (GM14), an abort as or while the last seam call answers is transport (GM27), a child under two
+ * epics is one child (GM28), a program epic is never a dispatched child (GM29), the 4,194,304-character read bound holds both
+ * ways (GM30) and a self-edge is neither a premise nor a blocker (GM32). D3 adds the AST reach scan with its kill controls (GM33
+ * and its class). Row B is held to the pinned maps: the B pin naming each map's epic witnessed that map's ready line as the
+ * reader read it, and one B pin the maps' union, so a B body that only reaches its witness (the gate's B2 liveness-only witness)
+ * reds, and so does removing B4.
+ * NAMED RESIDUALS (row R; each pin is the residual's quiet row, its quiet set derived from the run and pinned as its witness):
+ *  R1 R-SHARED-SUBCLAUSE where pins share one acceptance sub-clause and none holds a pinned map or the maps' union, removing one
+ *    from every literal at once (its pin, its ROWS entry, the frozen count) leaves the structural holds green. The quiet set is
+ *    derived from the bead's acceptance text, so a pin whose only partner is gone leaves it: removing A3, A4, A5, A6, C1 or C3
+ *    reds R1 through that text, while B5 (beside the four map-held B pins) and D1, D2 and D3 (one sub-clause, three pins) stay
+ *    quiet.
+ *  R2 R-REFLECTIVE-REACH a member read keyed by a name bound to a composed string (the Function constructor reached as
+ *    Object[door]) is no reach to the scan.
+ *  R3 R-WITNESS-ECHO outside row B's map hold no witnessed value has an anchor outside this file: a body swapped for a case that
+ *    still reaches its witness stays green.
+ * The gate form G08 stays this census's pin of R-NEGATED-PROSE.
  */
 import {createHash} from 'node:crypto';
 import {readFileSync} from 'node:fs';
 import {dirname, join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {inflateRawSync} from 'node:zlib';
+import ts from 'typescript';
 import {describe, expect, it} from 'vitest';
 import {type BeadsShowCall, type BeadsShowResult, readBeadsWork} from '../src/workbench/beads-observer.js';
 import {
@@ -282,14 +303,18 @@ function bd(store: Store, faults: {dependents?: Fault; show?: ReadonlyMap<string
 const SCOPE: ObservationScope = {workspace: '/fixture/rftsx-store', principal: 'operator'};
 const LIMITS = {maxDependencies: 16, maxTitleChars: 120, timeoutMs: 5000};
 const NOW = (): string => '2026-10-23T09:00:00.000Z';
+/** The pin whose body is running (pin() sets it around the body), so each reading is filed under the pin that took it. */
+let running: string | undefined;
+/** Every reading a pin's body took, as its sorted ready set, in call order: row B's witnesses are held to them (wb-k888). */
+const READINGS = new Map<string, string[][]>();
 /** The host's binding of the work reader is wb-752.6's readBeadsWork: the module imports no Beads reader (the landed wb-kku9.3
  * claim re-check census holds that reader's importers under src, qa and examples to an empty set), so the host passes it in. */
-const read = (
+const read = async (
   client: BeadsProgramClient,
   program: BeadsProgram,
   extra: {scope?: ObservationScope; signal?: AbortSignal; limits?: typeof LIMITS; readWork?: BeadsProgramWorkReader} = {},
-): Promise<BeadsProgramReadiness> =>
-  readBeadsProgramReadiness(client, {
+): Promise<BeadsProgramReadiness> => {
+  const reading = await readBeadsProgramReadiness(client, {
     program,
     workspaceRoot: SCOPE.workspace,
     scope: extra.scope ?? SCOPE,
@@ -298,6 +323,9 @@ const read = (
     readWork: extra.readWork ?? readBeadsWork,
     ...(extra.signal ? {signal: extra.signal} : {}),
   });
+  if (running !== undefined) READINGS.set(running, [...(READINGS.get(running) ?? []), sorted(reading.ready)]);
+  return reading;
+};
 const programOf = (map: ProgramMap, extra: Partial<BeadsProgram> = {}): BeadsProgram => ({epics: [map.epic], landedRecords: landedRulings(map), ...extra});
 const sorted = (ids: readonly string[]): string[] => [...ids].sort();
 const child = (reading: BeadsProgramReadiness, id: string) => {
@@ -373,6 +401,104 @@ function gatedStore(map: ProgramMap, packet: string, label: string, form: GateFo
 }
 
 // ---------------------------------------------------------------------------------------------------------------------------
+// D3's reach scan (wb-k888, the F17 class): what the module's code can touch beyond its two imports, read from the TypeScript
+// AST. Comments and type positions never execute, so neither is read. A text ban misses a builtin reached without an import
+// (process.getBuiltinModule through globalThis, the Function constructor, a computed import()), so the scan names them.
+
+/** The language built-ins the reader's code names today; none reaches the host (no process, file system, network or evaluator). */
+const ALLOWED_GLOBALS: readonly string[] = ['Array', 'JSON', 'Map', 'Number', 'Object', 'RegExp', 'Set', 'undefined'];
+interface Reach {
+  /** Every free value name the code reads (a name it never declares), sorted. */
+  globals: string[];
+  /** import() calls and import.meta reads. */
+  dynamicImports: number;
+  /** Member reads named `constructor`, dotted or by a literal key: the door to the Function constructor. */
+  constructorReads: number;
+  /** Member reads whose key is computed from anything but a literal or a name. */
+  computedKeys: number;
+}
+/** A name the node binds (a declaration's own name), never a read. */
+function declaresName(node: ts.Identifier): boolean {
+  const parent = node.parent;
+  return (
+    (ts.isVariableDeclaration(parent) ||
+      ts.isFunctionDeclaration(parent) ||
+      ts.isFunctionExpression(parent) ||
+      ts.isClassDeclaration(parent) ||
+      ts.isParameter(parent) ||
+      ts.isBindingElement(parent) ||
+      ts.isImportSpecifier(parent) ||
+      ts.isImportClause(parent) ||
+      ts.isNamespaceImport(parent) ||
+      ts.isTypeParameterDeclaration(parent)) &&
+    parent.name === node
+  );
+}
+/** A name that keys a member or a label, never a value read: `a.name`, `{name: v}`, a method name, an import alias. */
+function keysMember(node: ts.Identifier): boolean {
+  const parent = node.parent;
+  return (
+    (ts.isPropertyAccessExpression(parent) && parent.name === node) ||
+    (ts.isPropertyAssignment(parent) && parent.name === node) ||
+    (ts.isMethodDeclaration(parent) && parent.name === node) ||
+    (ts.isBindingElement(parent) && parent.propertyName === node) ||
+    (ts.isImportSpecifier(parent) && parent.propertyName === node) ||
+    ts.isLabeledStatement(parent) ||
+    ts.isBreakOrContinueStatement(parent)
+  );
+}
+function reachOf(source: string): Reach {
+  const file = ts.createSourceFile('reader.ts', source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const declared = new Set<string>();
+  const used = new Set<string>();
+  const reach = {dynamicImports: 0, constructorReads: 0, computedKeys: 0};
+  const visit = (node: ts.Node): void => {
+    if (ts.isTypeNode(node) || ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node)) return;
+    if (ts.isIdentifier(node)) {
+      if (declaresName(node)) declared.add(node.text);
+      else if (!keysMember(node)) used.add(node.text);
+    }
+    if ((ts.isCallExpression(node) && node.expression.kind === ts.SyntaxKind.ImportKeyword) || ts.isMetaProperty(node)) reach.dynamicImports += 1;
+    if (ts.isPropertyAccessExpression(node) && node.name.text === 'constructor') reach.constructorReads += 1;
+    if (ts.isElementAccessExpression(node)) {
+      const key = node.argumentExpression;
+      if (ts.isStringLiteralLike(key) && key.text === 'constructor') reach.constructorReads += 1;
+      else if (!ts.isStringLiteralLike(key) && !ts.isNumericLiteral(key) && !ts.isIdentifier(key)) reach.computedKeys += 1;
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return {globals: [...used].filter((name) => !declared.has(name)).sort(), ...reach};
+}
+/** The reach a code text has beyond the allowed built-ins, one entry per kind. */
+function reachViolations(reach: Reach): string[] {
+  return [
+    ...reach.globals.filter((name) => !ALLOWED_GLOBALS.includes(name)).map((name) => `global ${name}`),
+    ...(reach.dynamicImports > 0 ? [`import() x${reach.dynamicImports}`] : []),
+    ...(reach.constructorReads > 0 ? [`constructor read x${reach.constructorReads}`] : []),
+    ...(reach.computedKeys > 0 ? [`computed key x${reach.computedKeys}`] : []),
+  ];
+}
+/** A plant as a module of its own (an exported function holding the code), so each control judges the scan alone. */
+const planted = (code: string): string => `export async function plantedReach(): Promise<void> {\n${code}}\n`;
+/** The gate's GM33 (wb-4nut.5 cut #1, landing-381 F17) and the class members this cut found, each with the reach it must read;
+ * GM34 is the gate's control the text bans already killed. Every plant discards its result: the scan reads reach, not use. */
+const REACH_PLANTS: readonly {id: string; code: string; reads: string}[] = [
+  {
+    id: 'GM33',
+    code: "  try {\n    const host = (globalThis as {process?: {getBuiltinModule?: (id: string) => Record<string, (path: string) => unknown> | undefined}}).process;\n    host?.getBuiltinModule?.(['f', 's'].join(''))?.[['read', 'File', 'Sync'].join('')]?.('package.json');\n  } catch {}\n",
+    reads: 'global globalThis, computed key x1',
+  },
+  {id: 'GM33b', code: '  void (globalThis as {process?: {env?: Record<string, string | undefined>}}).process?.env?.HOME;\n', reads: 'global globalThis'},
+  {id: 'GM33c', code: "  try {\n    void new Function(['return ', 'glob', 'alThis'].join(''))();\n  } catch {}\n", reads: 'global Function'},
+  {id: 'GM33d', code: "  try {\n    void ([] as unknown as {constructor: {constructor: (code: string) => () => unknown}}).constructor.constructor('return this')();\n  } catch {}\n", reads: 'constructor read x2'},
+  {id: 'GM33e', code: "  await import(['node', 'fs'].join(':')).catch(() => undefined);\n", reads: 'import() x1'},
+  {id: 'GM34', code: "  await import('node:fs').catch(() => undefined);\n", reads: 'import() x1'},
+];
+/** R2's quiet row: a member read keyed by a name bound to a composed string reads no reach (R-REFLECTIVE-REACH). */
+const REFLECTIVE_DOOR = "  try {\n    const door = ['constr', 'uctor'].join('');\n    void (Object as unknown as Record<string, (code: string) => () => unknown>)[door]('return this')();\n  } catch {}\n";
+
+// ---------------------------------------------------------------------------------------------------------------------------
 // The judged set: rows A-D quote the bead's acceptance; every pin covers one of its sub-clauses and is registered exactly once.
 
 interface Pin {
@@ -393,6 +519,11 @@ const AC_SNAPSHOT = 'over the pinned snapshot (L19-L29, L56) the ready set equal
 const AC_EDGES = '`bd dep list rftsx-bhmrd` shows related/parent-child edges only';
 const AC_BLOCKS = 'a blocks edge between H2 beads is refused';
 const AC_UNREACHABLE = "with the store unreachable Pi reports 'unknown (store unreachable)', never the snapshot's 'open'";
+/** Row R (wb-k888): the named residuals, each one pin covering its own name, each named in this file's header with its row. */
+const R_SHARED = 'R-SHARED-SUBCLAUSE';
+const R_REFLECTIVE = 'R-REFLECTIVE-REACH';
+const R_ECHO = 'R-WITNESS-ECHO';
+const RESIDUALS_LABEL = 'the named residuals R1-R3 stay pinned quiet';
 const ROWS: readonly Row[] = [
   {
     id: 'A',
@@ -435,19 +566,50 @@ const ROWS: readonly Row[] = [
       {id: 'D3', covers: AC_UNREACHABLE},
     ],
   },
+  {
+    id: 'R',
+    label: RESIDUALS_LABEL,
+    pins: [
+      {id: 'R1', covers: R_SHARED},
+      {id: 'R2', covers: R_REFLECTIVE},
+      {id: 'R3', covers: R_ECHO},
+    ],
+  },
 ];
+/** The judged rows that quote the bead's acceptance (a)-(d); row R holds the named residuals. */
+const acceptanceRows = (): readonly Row[] => ROWS.filter((row) => row.id !== 'R');
 const REGISTERED = new Map<string, string>();
 /** The pins whose body reached its witness compare, in run order; the closing case holds every pin to it. */
 const REACHED: string[] = [];
+/** What each pin's witness compare held (wb-k888): row B's closing case holds these to the pinned maps' ready lines. */
+const WITNESSED = new Map<string, {actual: unknown; expected: unknown}>();
 function witness(id: string, actual: unknown, expected: unknown): void {
   expect(actual).toEqual(expected);
   REACHED.push(id);
+  WITNESSED.set(id, {actual, expected});
 }
 function pin(id: string, title: string, body: () => Promise<void> | void): void {
   if (REGISTERED.has(id)) throw new Error(`pin ${id} registered twice`);
   REGISTERED.set(id, title);
-  it(`${id}: ${title}`, body);
+  it(`${id}: ${title}`, async () => {
+    running = id;
+    try {
+      await body();
+    } finally {
+      running = undefined;
+    }
+  });
 }
+/** A pin's witness held `ids` exactly as the reader read them during that pin (wb-k888): the witnessed actual and expected both
+ * equal the sorted set, and one of the pin's own readings read it. A body that only reaches its witness holds nothing. */
+function heldTo(id: string, ids: readonly string[], witnessed: ReadonlyMap<string, {actual: unknown; expected: unknown}> = WITNESSED, readings: ReadonlyMap<string, string[][]> = READINGS): boolean {
+  const want = JSON.stringify(sorted(ids));
+  const seen = witnessed.get(id);
+  return seen !== undefined && JSON.stringify(seen.actual) === want && JSON.stringify(seen.expected) === want && (readings.get(id) ?? []).some((ready) => JSON.stringify(ready) === want);
+}
+/** Row B's map hold: the B pins whose registered title names a pinned map's epic, and the B pins holding the maps' union. */
+const mapNamed = (map: ProgramMap): string[] => [...REGISTERED].filter(([id, title]) => id.startsWith('B') && title.includes(map.epic)).map(([id]) => id);
+const unionHolders = (): string[] => [...REGISTERED.keys()].filter((id) => id.startsWith('B') && heldTo(id, MAPS.flatMap((map) => map.ready.ids)));
 const notesRead = new Map<string, string>();
 /** A bead's notes as the tracked export carries them, read once per bead: only the lines naming the bead are parsed. */
 function notesOf(bead: string): string {
@@ -483,13 +645,18 @@ const subClauses = (clause: string): string[] => clause.split(/; | (?:and|or) (?
 
 describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-HARNESS2-REACTIVE-EVOLUTION-R5)', () => {
   it('the judged set: frozen shape, the bead acceptance text, the registered pins and the pinned maps agree', () => {
-    expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(['A:6', 'B:5', 'C:3', 'D:3']);
+    expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(['A:6', 'B:5', 'C:3', 'D:3', 'R:3']);
     const clauses = acceptanceClauses();
-    expect(ROWS.map((row) => row.label)).toEqual(clauses);
-    for (const [index, row] of ROWS.entries()) {
+    expect(acceptanceRows().map((row) => row.label)).toEqual(clauses);
+    for (const [index, row] of acceptanceRows().entries()) {
       expect(sorted([...new Set(row.pins.map((entry) => entry.covers))])).toEqual(sorted(subClauses(clauses[index] ?? '')));
       for (const entry of row.pins) expect(entry.id.startsWith(row.id)).toBe(true);
     }
+    // Row R: one pin per named residual, covering its own name, each named with its pin in this file's header comment.
+    const residuals = ROWS.find((row) => row.id === 'R');
+    expect([residuals?.label, residuals?.pins.map((entry) => `${entry.id} ${entry.covers}`)]).toEqual([RESIDUALS_LABEL, [`R1 ${R_SHARED}`, `R2 ${R_REFLECTIVE}`, `R3 ${R_ECHO}`]]);
+    const header = readFileSync(fileURLToPath(import.meta.url), 'utf8').split('*/')[0] ?? '';
+    expect((residuals?.pins ?? []).filter((entry) => !header.includes(`${entry.id} ${entry.covers}`))).toEqual([]);
     expect(sorted([...REGISTERED.keys()])).toEqual(sorted(ROWS.flatMap((row) => row.pins.map((entry) => entry.id))));
     expect(FIXTURE.commit).toBe(PIN);
     expect(FIXTURE.snapshots.map((file) => [file.path, gitBlob(file.text)])).toEqual(Object.entries(BLOBS));
@@ -750,6 +917,12 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
       .replace(/\/\*[\s\S]*?\*\//g, '')
       .replace(/^\s*\/\/.*$/gm, '');
     const specifiers = [...source.matchAll(/^import .* from '([^']+)';$/gm)].map((match) => match[1]);
+    // wb-k888 (F17): nor is a builtin reached without an import. The AST reach scan holds the code's free names to the language
+    // built-ins it names today, with no import(), no constructor read and no computed member key ...
+    const code = readFileSync(MODULE, 'utf8');
+    expect(reachOf(code)).toEqual({globals: [...ALLOWED_GLOBALS], dynamicImports: 0, constructorReads: 0, computedKeys: 0});
+    // ... and each GM33-class plant reads as the reach it has: the scan's kill controls.
+    expect(REACH_PLANTS.map((plant) => `${plant.id}: ${reachViolations(reachOf(planted(plant.code))).join(', ')}`)).toEqual(REACH_PLANTS.map((plant) => `${plant.id}: ${plant.reads}`));
     // No Beads reader is imported in any form: the work reader arrives injected (the wb-kku9.3 claim re-check census contract).
     witness('D3', specifiers, ['./capability-registry.js', './observation.js']);
     for (const banned of [/node:/, /readFile|readdir|existsSync/, /BEADS-|\.md\b/, /child_process|spawn|exec\(/, /\bbd ready\b/]) expect(source).not.toMatch(banned);
@@ -763,8 +936,36 @@ describe('wb-4nut.5 program dispatch readiness over the shared bead store (TSX-H
     ]);
   });
 
+  pin('R1', `${R_SHARED}: a pin that shares its acceptance sub-clause with another pin and holds no pinned map or their union leaves every structural hold green when it is gone; the quiet set is derived from the acceptance text`, () => {
+    const clauses = acceptanceClauses();
+    const stillHolds = (gone: string): boolean =>
+      acceptanceRows().every((row, index) => JSON.stringify(sorted([...new Set(row.pins.filter((entry) => entry.id !== gone).map((entry) => entry.covers))])) === JSON.stringify(sorted(subClauses(clauses[index] ?? '')))) &&
+      MAPS.every((map) => mapNamed(map).some((id) => id !== gone)) &&
+      unionHolders().some((id) => id !== gone);
+    witness('R1', acceptanceRows().flatMap((row) => row.pins.map((entry) => entry.id)).filter(stillHolds), ['A3', 'A4', 'A5', 'A6', 'B5', 'C1', 'C3', 'D1', 'D2', 'D3']);
+  });
+
+  pin('R2', `${R_REFLECTIVE}: a member read keyed by a name bound to a composed string reaches past the reach scan; that door, planted, reads no reach`, () => {
+    witness('R2', reachViolations(reachOf(planted(REFLECTIVE_DOOR))), []);
+  });
+
+  pin('R3', `${R_ECHO}: outside row B's map hold no pin's witnessed value has an anchor outside this file, so a body swapped for a case that still reaches its witness stays green; the unheld pins are derived from the hold`, () => {
+    const held = new Set([...MAPS.flatMap(mapNamed), ...unionHolders()]);
+    witness('R3', acceptanceRows().flatMap((row) => row.pins.map((entry) => entry.id)).filter((id) => !held.has(id)), ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'B5', 'C1', 'C2', 'C3', 'D1', 'D2', 'D3']);
+  });
+
   it('every pin reached its witness compare, once, in roster order', () => {
     expect(REACHED).toEqual(ROWS.flatMap((row) => row.pins.map((entry) => entry.id)));
+  });
+
+  it("row B is held to the pinned maps (wb-k888): the B pin naming each map's epic witnessed that map's ready line as the reader read it, and one B pin the maps' union", () => {
+    expect(MAPS.map((map) => mapNamed(map).map((id) => `${id} ${heldTo(id, map.ready.ids)}`))).toEqual(MAPS.map((map) => mapNamed(map).map((id) => `${id} true`)));
+    expect(MAPS.map((map) => mapNamed(map).length)).toEqual(MAPS.map(() => 1));
+    expect(unionHolders()).toHaveLength(1);
+    // Negative controls: no B pin holds another map's line, and no pin outside row B holds a ready line it never witnessed.
+    expect([heldTo('B1', PERF.ready.ids), heldTo('B2', H2.ready.ids), heldTo('A1', H2.ready.ids)]).toEqual([false, false, false]);
+    // ... and a witness the pin's own readings never read holds nothing: B1's compare, with no reading recorded for it.
+    expect([heldTo('B1', H2.ready.ids), heldTo('B1', H2.ready.ids, WITNESSED, new Map())]).toEqual([true, false]);
   });
 });
 
@@ -887,5 +1088,105 @@ describe('wb-4nut.5 reader hygiene', () => {
   it('the reading is plain structured-cloneable data', async () => {
     const reading = await read(bd(modelStore(MAPS)), {epics: MAPS.map((map) => map.epic), landedRecords: MAPS.flatMap(landedRulings)});
     expect(structuredClone(reading)).toEqual(reading);
+  });
+
+  // wb-k888 (R694 follow-up of wb-4nut.5 landing 381): F2 leads - the gate's GM14 read every work-reader error as
+  // STORE_UNREACHABLE and stayed green; F16 rides - GM27-GM30 and GM32 stayed green. Each case below kills one of them.
+  it('a work reader error that is not unavailable propagates: the reader re-throws it and never reads it as unknown (store unreachable)', async () => {
+    const refused = new CapabilityError('validation', 'the work reader refused the request');
+    const defect = new TypeError('the work reader failed');
+    for (const thrown of [refused, defect]) {
+      const failing: BeadsProgramWorkReader = (seam, request) => (request.workId === 'rftsx-auqdi' ? Promise.reject(thrown) : readBeadsWork(seam, request));
+      await expect(read(bd(modelStore([H2])), programOf(H2), {readWork: failing})).rejects.toBe(thrown);
+    }
+    // Only a store the work reader could not read is unknown: the unavailable arm still reads the child unknown, never ready.
+    const gone: BeadsProgramWorkReader = (seam, request) => (request.workId === 'rftsx-auqdi' ? Promise.reject(new CapabilityError('unavailable', 'the store is gone')) : readBeadsWork(seam, request));
+    const reading = await read(bd(modelStore([H2])), programOf(H2), {readWork: gone});
+    expect(child(reading, 'rftsx-auqdi')).toEqual({id: 'rftsx-auqdi', status: STORE_UNREACHABLE, ready: false, waitingOn: [], partial: false});
+    expect(reading.ready).toEqual(['rftsx-rupqh']);
+  });
+
+  it('a gate read cut short by an abort is transport, never an unknown gate: the seam reads the signal after the call and while it runs', async () => {
+    const {store} = gatedStore(H2, 'TSX-H2-01', 'wp:tsx-h2-01', GATE_FORMS[1] as GateForm);
+    // A gate bead outside the program, so its show is the gate read alone and the last seam call of the read.
+    store.set('rftsx-xgate', {id: 'rftsx-xgate', title: 'outside gate', status: 'closed', issueType: 'decision', priority: 2, labels: [], related: [], blocks: [], notes: 'ruled ADOPT'});
+    for (const during of [false, true]) {
+      const controller = new AbortController();
+      const inner = bd(store);
+      const client: BeadsProgramClient = {
+        dependents: inner.dependents,
+        async show(id, call) {
+          const result = await inner.show(id, call);
+          if (id !== 'rftsx-xgate') return result;
+          controller.abort();
+          if (during) throw new Error('the gate show was interrupted');
+          return result;
+        },
+      };
+      expect(await category(read(client, programOf(H2, {gates: {'TSX-H2-01': 'rftsx-xgate'}}), {signal: controller.signal})), during ? 'aborted while the gate show runs' : 'aborted as the gate show answers').toBe('transport');
+      expect(inner.seen.filter((entry) => entry.id === 'rftsx-xgate')).toHaveLength(1);
+    }
+  });
+
+  it('an abort as the last seam call answers is transport: an epic with no dependents', async () => {
+    const store = modelStore([H2]);
+    store.set('rftsx-lone', {id: 'rftsx-lone', title: 'an epic with no dependents', status: 'open', issueType: 'epic', priority: 2, labels: ['epic'], related: [], blocks: []});
+    const controller = new AbortController();
+    const inner = bd(store);
+    const client: BeadsProgramClient = {
+      show: inner.show,
+      async dependents(id, call) {
+        const result = await inner.dependents(id, call);
+        controller.abort();
+        return result;
+      },
+    };
+    expect(JSON.parse((await inner.dependents('rftsx-lone', {cwd: SCOPE.workspace, timeoutMs: 5000})).stdout)).toEqual([]);
+    expect(await category(read(client, {epics: ['rftsx-lone']}, {signal: controller.signal}))).toBe('transport');
+  });
+
+  it('a child listed under two program epics is one child: read once, listed once and ready once', async () => {
+    const store = modelStore([H2, PERF]);
+    const inner = bd(store);
+    const shared = store.get('rftsx-auqdi');
+    const client: BeadsProgramClient = {
+      show: inner.show,
+      async dependents(id, call) {
+        const result = await inner.dependents(id, call);
+        if (id !== PERF.epic) return result;
+        // The PERF-F epic also lists rftsx-auqdi as one of its parent-child work packages.
+        const listed = JSON.parse(result.stdout) as Record<string, unknown>[];
+        const twin = {id: 'rftsx-auqdi', title: shared?.title, status: 'open', issue_type: 'task', priority: 2, dependency_type: 'parent-child', labels: shared?.labels};
+        return {...result, stdout: JSON.stringify([...listed, twin])};
+      },
+    };
+    const reading = await read(client, {epics: [H2.epic, PERF.epic], landedRecords: [...landedRulings(H2), ...landedRulings(PERF)]});
+    expect(reading.children.filter((entry) => entry.id === 'rftsx-auqdi')).toHaveLength(1);
+    expect(reading.ready.filter((id) => id === 'rftsx-auqdi')).toEqual(['rftsx-auqdi']);
+    expect(inner.seen.filter((entry) => entry.verb === 'show' && entry.id === 'rftsx-auqdi')).toHaveLength(1);
+  });
+
+  it('a program epic that is also a wp-labelled parent-child dependent of another program epic stays an epic, never a dispatched child', async () => {
+    const store = modelStore([H2]);
+    store.set('rftsx-subep', {id: 'rftsx-subep', title: 'an H2 sub-epic', status: 'open', issueType: 'epic', priority: 2, labels: ['wp:tsx-h2-sub', 'epic'], parent: H2.epic, related: [], blocks: []});
+    const reading = await read(bd(store), {epics: [H2.epic, 'rftsx-subep'], landedRecords: landedRulings(H2)});
+    expect(sorted(reading.children.map((entry) => entry.id))).toEqual(sorted(H2.ready.ids));
+    expect(sorted(reading.ready)).toEqual(sorted(H2.ready.ids));
+  });
+
+  it('a seam answer past the read bound of 4,194,304 characters reads unknown (store unreachable); an answer at the bound is read', async () => {
+    const bound = 4_194_304;
+    const padded = (length: number): Fault => ({exit: 0, stdout: `${' '.repeat(length - 2)}[]`, stderr: ''});
+    const store = modelStore([H2]);
+    expect(await read(bd(store, {dependents: padded(bound)}), programOf(H2))).toEqual({store: 'read', ready: [], children: []});
+    expect(await read(bd(store, {dependents: padded(bound + 1)}), programOf(H2))).toEqual({store: STORE_UNREACHABLE, ready: [], children: []});
+  });
+
+  it("a child's dependency on itself is neither a premise nor a blocker", async () => {
+    const base = modelStore([H2]).get('rftsx-rupqh');
+    const related = edit(modelStore([H2]), 'rftsx-rupqh', {related: [...(base?.related ?? []), 'rftsx-rupqh']});
+    expect(child(await read(bd(related), programOf(H2)), 'rftsx-rupqh')).toMatchObject({ready: true, waitingOn: []});
+    const blocks = edit(modelStore([H2]), 'rftsx-rupqh', {blocks: ['rftsx-rupqh']});
+    expect(child(await read(bd(blocks), programOf(H2)), 'rftsx-rupqh')).toMatchObject({ready: true, waitingOn: []});
   });
 });

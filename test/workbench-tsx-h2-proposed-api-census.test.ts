@@ -76,8 +76,13 @@
  * the marker qualifies (A2 markerAnywhere; B2 markerAnywhere); R-COMPOSED a name or binary assembled at runtime (A3 composed; C1
  * aliased); R-COMMENT a src comment is no runtime API (A3 comment); R-OUTSIDE a file below a skipped root, a non-doc file and a
  * test module are outside A1 and A3 (A1 planted skipped roots; A3 testModule); R-HOLLOWED a mapping case whose body asserts
- * nothing still reads registered in run form: the modifier closure reads modes, never a body (C4 hollowedBody; C3 pins the
- * wb-973.14 behaviour live on both arms, so a hollowed mapping body hides no behaviour).
+ * nothing still reads registered in run form: the modifier closure reads modes and skip members, never what a body asserts (C4
+ * hollowedBody; C3 pins the wb-973.14 behaviour live on both arms, so a hollowed mapping body hides no behaviour); R-INDIRECT
+ * (wb-ioto) a skip reached outside a case's own registration text - a hook or a fixture override registered in its scope, a helper
+ * the case hands its context to, a member name the fold does not read, a registration root bound elsewhere than vitest's own
+ * export, or a run-level filter (the vitest config, a CLI filter, a setup file) - reads run form: the closure reads the case's
+ * call, tables, arguments, placement, enclosing suites and function, nothing else (C4 hookSkip, contextHandoff, computedMember; C3
+ * pins the wb-973.14 behaviour live on both arms, so a mapping case skipped that way hides no behaviour).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (id, label, pins), every pin's
  * witness (each carries its pin id), the constants (families, markers, vocabularies, floors, anchors, residuals), the producer
  * facts and the registered test titles are held to the out-of-file roster (test/fixtures/tsx-h2-proposed-api-roster.json).
@@ -101,12 +106,43 @@
  * the qa plant's read stays outside C4, which reads src only), B3 reads PLANTED_PROVIDER from both catalogs, and C4 reads
  * REGISTRATION_PLANT after the wb-973.14 file. Plants live in memory only, count toward no floor (the module and doc floors are
  * the measured counts) and their digests are held to the roster (constants.plants).
- * SKIP MODES (wb-4n55 F2, the title-census modifier closure): registeredTitles reads on every title the SKIP_MODES members along
+ * SKIP MODES (wb-4n55 F2, the title-census modifier closure; widened by wb-ioto below, whose paragraph states the reading exactly):
+ * registeredTitles reads on every title the SKIP_MODES members along
  * its call head, an OPTION_MODES key of an options object that is not literally false (a spread or a computed key read as one),
  * every enclosing describe's modes, and a skip called on a parameter of the case function; C4 refuses a mapping case carrying any
  * (G12 a skipped describe, G12b a skipped case), REGISTRATION_PLANT carries one falsifier per mode and form beside the run forms
  * and R-HOLLOWED's quiet row, and SKIP_MODES and RUN_MEMBERS partition vitest's own registration members (REGISTRATION_MEMBERS
  * of test/helpers/census.ts, pinned against the installed runtime by test/workbench-census-registration-model.test.ts).
+ * wb-ioto (R694 follow-up of wb-4n55 landing 399, gate cmd_8848631c7581: F1 leads; hop 3 of the landing-309 chain wb-4nut.2 ->
+ * wb-4n55 -> wb-ioto, authored in the TERMINAL enumerate-the-resolvable form, R739). The ten forms the filing measured while C4
+ * stayed 15/15 (N01 an enclosing suite skip, N02 an enclosing describe skip titled by a const, N03 options by reference, N04 an
+ * options literal as const, N05 a parenthesized options literal, N06 a skip member by element access, N07 a skip destructured in the
+ * body, N08 an each over an empty table, N09 a case under a false runtime condition, N10 a describe each over an empty table) are
+ * cured red-first, and C4's claim is now EXACTLY this reading, each a mode C4 refuses on a mapping case: (1) a case is a call on a
+ * CASE_ROOTS root and a suite a call on a SUITE_ROOTS root (suite admitted: N01) or a case chain through a SUITE_ROOTS member, the
+ * chain read through property members, literal element accesses and calls; (2) the SKIP_MODES members along that chain; (3) the
+ * table of every each or for call on it, as written or through (4)'s const: an array literal with no element is "empty table" (N08,
+ * N10), any value but a spread-free array literal "table unknown"; (4) every argument after the title, through parentheses, as,
+ * satisfies, non-null and type-assertion wrappers (N04, N05) and, for a name, through the one same-file const declaration (or
+ * function declaration) of it whose every reference is a registration argument (N03): an options object (an OPTION_MODES key not
+ * literally false, a spread or a computed key read as one), a function or a timeout literal, anything else "argument unknown", and a
+ * case with no function "no function"; (5) "placement unknown" unless the call is a statement of the module or of a suite call's
+ * factory (its expression body included) with no return or throw before it there (N09); (6) every enclosing suite call's modes, a
+ * suite whose title does not fold included (N02; its cases then sit in no literal suite); (7) for a case, "context skip" when its
+ * function's own text, parameters and nested functions alike, reads a skip member on any object (a property named skip, an element
+ * access whose key folds to skip: N06) or destructures one (N07). REGISTRATION_PLANT carries the ten forms, one kill control per
+ * further branch (describeSwitch, elementHead, wrappedHead, argumentCall, optionsLet, optionsWritten, optionsShadowed, noFunction,
+ * tableUnknown, emptyTableReference, placementAfterReturn), eight precision controls and R-INDIRECT's quiet rows; READ_MODES lists
+ * the readings beside the skip modes and options keys, the judged set refuses one with no falsifier form, and SUITE_ROOTS are
+ * vitest's own describe switch members (REGISTRATION_MEMBERS). Not claimed: R-INDIRECT and R-HOLLOWED above; a shape outside the
+ * seven readings is record-only unless it contradicts one of them. MEASURED (vitest 4.1.10 under this repository's config, throwaway
+ * modules, 2026-10-25): N01-N07, a beforeEach calling the context's skip, a case handing its context to a helper that skips, a
+ * switch then a skip flag and an element-access skip head each report the case skipped; N08 and N10 register no case, N09 none while
+ * its condition is false; a case with no function reports todo; { skip: false } as const, an each over one row, a plain suite and a
+ * skip flag then a switch run. OVER-READ (disclosed, the conservative direction; each such reading is re-judged, never silenced):
+ * (7) reads a skip member whatever object it belongs to, (4) refuses an argument it cannot resolve, (2) keeps a flag across a
+ * describe switch that vitest drops, (5) refuses a registration in a loop or a branch that vitest does register, and a mapping
+ * describe or case whose title does not fold reads unregistered.
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
  * not inverted, ran; every pin's case reached its end (REACHED); no registered test or suite title spells the hook (the labels
  * name the six other names on purpose: no census reads this file's titles for them).
@@ -250,7 +286,7 @@ const SPAWNERS: readonly string[] = ["spawn", "spawnSync", "execFile", "execFile
 const RF_SITE = "src/workbench/providers/reactivefiber.ts#nativeReactiveFiberRender";
 const SERVED_WORDS: readonly string[] = ["leaves", "served"];
 const RESIDUALS: readonly string[] = [
-  "R-DOTTED", "R-LOOKALIKE", "R-ENCODED", "R-PARAPHRASE", "R-MARKER", "R-COMPOSED", "R-COMMENT", "R-OUTSIDE", "R-HOLLOWED",
+  "R-DOTTED", "R-LOOKALIKE", "R-ENCODED", "R-PARAPHRASE", "R-MARKER", "R-COMPOSED", "R-COMMENT", "R-OUTSIDE", "R-HOLLOWED", "R-INDIRECT",
 ];
 /** C4's modifier closure (wb-4n55 F2): the registration members that leave a case unrun or inverted, on its call head or an
  * enclosing describe's, and the members that leave it running as written; together they are vitest's own (REGISTRATION_MEMBERS). */
@@ -261,6 +297,13 @@ const RUN_MEMBERS: readonly string[] = [
 ];
 /** The options-object keys read as a skip mode when not literally false. */
 const OPTION_MODES: readonly string[] = ["skip", "todo", "only", "fails"];
+/** C4's registration roots (wb-ioto F1, N01): a case is a call on a CASE_ROOTS root, a suite a call on a SUITE_ROOTS root (suite is
+ * vitest's describe) or a case chain through a SUITE_ROOTS member (vitest's it.describe is describe itself). */
+const CASE_ROOTS: readonly string[] = ["it", "test"];
+const SUITE_ROOTS: readonly string[] = ["describe", "suite"];
+/** The readings C4's closure records beside the SKIP_MODES members and the options keys (wb-ioto F1, N03-N10), each with a
+ * falsifier form in REGISTRATION_PLANT. */
+const READ_MODES: readonly string[] = ["argument unknown", "no function", "table unknown", "empty table", "placement unknown", "context skip"];
 const FROZEN_TITLE = "the judged set: the frozen shape, the out-of-file roster and the bead row agree";
 const RECORDS_TITLE = "records: every registered test ran once in run mode in roster order, every pin reached its end, and no title spells the hook";
 
@@ -478,6 +521,9 @@ function constants(): Json {
     skipModes: [...SKIP_MODES],
     runMembers: [...RUN_MEMBERS],
     optionModes: [...OPTION_MODES],
+    caseRoots: [...CASE_ROOTS],
+    suiteRoots: [...SUITE_ROOTS],
+    readModes: [...READ_MODES],
     plants: [
       ...[DOC_PLANT, CLAIM_PLANT, ...SOURCE_PLANTS, REGISTRATION_PLANT].map(plant => `${plant.path}:${digestOf(plant.text)}`),
       `${PLANTED_PROVIDER.descriptor.id}:${digestOf(JSON.stringify(PLANTED_PROVIDER.descriptor))}`,
@@ -1140,77 +1186,188 @@ const REFUSAL: Json = {
 interface RegisteredTitle {
   readonly describe: string | undefined;
   readonly title: string;
-  /** The skip modes read on it (wb-4n55 F2): its call head's, its options', every enclosing describe's, its body's context skip. */
+  /** The skip modes read on it (wb-4n55 F2, widened by wb-ioto F1): its head chain's, its tables', its arguments', its placement's, every
+   * enclosing suite call's and, for a case, its function's own text's. */
   readonly modes: readonly string[];
 }
-/** A test module's registered titles: every it, test or describe call (with any member chain on its head) whose title folds to a
- * literal, each with the innermost describe it sits in and the skip modes read on it (wb-4n55 F2, the title-census modifier
- * closure) - the SKIP_MODES members along its call head, an OPTION_MODES key of an options-object argument that is not literally
- * false (a spread or a computed key read as one), every enclosing describe's modes, and a skip called on a parameter of the case
- * function (a member call, or a destructured skip). */
+type FunctionNode = ts.ArrowFunction | ts.FunctionExpression | ts.FunctionDeclaration;
+const isFunctionNode = (node: ts.Node): node is FunctionNode => ts.isArrowFunction(node) || ts.isFunctionExpression(node) || ts.isFunctionDeclaration(node);
+/** An expression without its parentheses and type-only wrappers: as, satisfies, a non-null mark, a type assertion (wb-ioto N04, N05). */
+function unwrap(node: ts.Expression): ts.Expression {
+  if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isNonNullExpression(node) || ts.isTypeAssertionExpression(node)) return unwrap(node.expression);
+  return node;
+}
+/** A call head read as a chain (wb-ioto): its root name, the members along it (a literal element access read as its member) and the table
+ * of each each or for call on it. */
+interface Chain {
+  readonly root: string;
+  readonly members: readonly string[];
+  readonly tables: readonly ts.Expression[];
+}
+/** The chain of a call head, or undefined when a link is neither a name, a member, a literal element access nor a call. */
+function chainOf(head: ts.Expression): Chain | undefined {
+  const node = unwrap(head);
+  if (ts.isIdentifier(node)) return { root: node.text, members: [], tables: [] };
+  if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) {
+    const member = ts.isPropertyAccessExpression(node) ? node.name.text : fold(node.argumentExpression);
+    const inner = chainOf(node.expression);
+    return member === undefined || inner === undefined ? undefined : { ...inner, members: [...inner.members, member] };
+  }
+  if (ts.isCallExpression(node)) {
+    const inner = chainOf(node.expression);
+    const last = inner?.members.at(-1);
+    const table = node.arguments[0];
+    return inner === undefined || table === undefined || (last !== "each" && last !== "for") ? inner : { ...inner, tables: [...inner.tables, table] };
+  }
+  return undefined;
+}
+type CallKind = "case" | "suite";
+/** What a call registers (wb-ioto N01): a suite on a SUITE_ROOTS root or through a SUITE_ROOTS member, a case on a CASE_ROOTS root. */
+function callKind(chain: Chain): CallKind | undefined {
+  if (SUITE_ROOTS.includes(chain.root) || (CASE_ROOTS.includes(chain.root) && chain.members.some(member => SUITE_ROOTS.includes(member)))) return "suite";
+  return CASE_ROOTS.includes(chain.root) ? "case" : undefined;
+}
+/** A module's names (wb-ioto N03): every declaration of a name and every other reference to it (a member name or a key is neither). */
+interface FileScope {
+  readonly declarations: ReadonlyMap<string, readonly ts.Node[]>;
+  readonly references: ReadonlyMap<string, readonly ts.Identifier[]>;
+}
+function declaresName(parent: ts.Node, node: ts.Identifier): boolean {
+  if (ts.isVariableDeclaration(parent) || ts.isParameter(parent) || ts.isBindingElement(parent) || ts.isEnumDeclaration(parent)) return parent.name === node;
+  if (ts.isFunctionDeclaration(parent) || ts.isFunctionExpression(parent) || ts.isClassDeclaration(parent) || ts.isClassExpression(parent)) return parent.name === node;
+  if (ts.isImportSpecifier(parent) || ts.isImportClause(parent) || ts.isNamespaceImport(parent) || ts.isImportEqualsDeclaration(parent)) return parent.name === node;
+  return false;
+}
+function namesMember(parent: ts.Node, node: ts.Identifier): boolean {
+  if (ts.isPropertyAccessExpression(parent) || ts.isPropertyAssignment(parent) || ts.isMethodDeclaration(parent) || ts.isPropertyDeclaration(parent)) return parent.name === node;
+  if (ts.isPropertySignature(parent) || ts.isMethodSignature(parent) || ts.isGetAccessorDeclaration(parent) || ts.isSetAccessorDeclaration(parent) || ts.isEnumMember(parent)) return parent.name === node;
+  if (ts.isBindingElement(parent) || ts.isImportSpecifier(parent)) return parent.propertyName === node;
+  if (ts.isQualifiedName(parent)) return parent.right === node;
+  return ts.isLabeledStatement(parent) || ts.isBreakOrContinueStatement(parent);
+}
+function scopeOf(file: ts.SourceFile): FileScope {
+  const declarations = new Map<string, ts.Node[]>();
+  const references = new Map<string, ts.Identifier[]>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node)) {
+      if (declaresName(node.parent, node)) declarations.set(node.text, [...(declarations.get(node.text) ?? []), node.parent]);
+      else if (!namesMember(node.parent, node)) references.set(node.text, [...(references.get(node.text) ?? []), node]);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return { declarations, references };
+}
+/** Whether a name stands as a direct argument of a registration call, an each or for call on one included (wb-ioto N03, N08). */
+function isRegistrationArgument(reference: ts.Identifier): boolean {
+  const call = reference.parent;
+  if (!ts.isCallExpression(call) || !call.arguments.some(argument => argument === reference)) return false;
+  const chain = chainOf(call.expression);
+  return chain !== undefined && callKind(chain) !== undefined;
+}
+/** An argument's value (wb-ioto N03-N05): as written through unwrap, or through the one same-file const declaration (or function
+ * declaration) of its name when every reference to that name is a registration argument, so nothing writes or hands it on; undefined
+ * when it cannot be read that way (a let or var, a parameter, an import, a second declaration, another reference, an alias). */
+function argumentValue(argument: ts.Expression, scope: FileScope): ts.Expression | ts.FunctionDeclaration | undefined {
+  const value = unwrap(argument);
+  if (!ts.isIdentifier(value)) return value;
+  const declarations = scope.declarations.get(value.text) ?? [];
+  const [declaration] = declarations;
+  if (declarations.length !== 1 || declaration === undefined || !(scope.references.get(value.text) ?? []).every(isRegistrationArgument)) return undefined;
+  if (ts.isFunctionDeclaration(declaration)) return declaration;
+  if (!ts.isVariableDeclaration(declaration) || declaration.initializer === undefined || !ts.isVariableDeclarationList(declaration.parent)) return undefined;
+  if ((declaration.parent.flags & ts.NodeFlags.BlockScoped) !== ts.NodeFlags.Const) return undefined;
+  const initializer = unwrap(declaration.initializer);
+  return ts.isIdentifier(initializer) ? undefined : initializer;
+}
+/** An options object's skip modes: an OPTION_MODES key that is not literally false, a spread or a computed key read as one. */
+function optionsModesOf(options: ts.ObjectLiteralExpression): string[] {
+  return options.properties.flatMap((property): string[] => {
+    if (ts.isSpreadAssignment(property)) return ["options spread"];
+    if (property.name === undefined || ts.isComputedPropertyName(property.name)) return ["options computed key"];
+    const key = ts.isIdentifier(property.name) || ts.isStringLiteral(property.name) ? property.name.text : undefined;
+    if (key === undefined || !OPTION_MODES.includes(key)) return [];
+    return ts.isPropertyAssignment(property) && property.initializer.kind === ts.SyntaxKind.FalseKeyword ? [] : [`options ${key}`];
+  });
+}
+/** A case or suite call's arguments after its title (wb-ioto N03-N05): each, through argumentValue, an options object (its modes), a function
+ * or a timeout literal, else "argument unknown"; a case with no function at all is "no function" (vitest reports it todo). */
+function argumentsOf(call: ts.CallExpression, kind: CallKind, scope: FileScope): { readonly modes: string[]; readonly functions: FunctionNode[] } {
+  const modes: string[] = [];
+  const functions: FunctionNode[] = [];
+  for (const argument of call.arguments.slice(1)) {
+    const value = argumentValue(argument, scope);
+    if (value !== undefined && isFunctionNode(value)) functions.push(value);
+    else if (value !== undefined && ts.isObjectLiteralExpression(value)) modes.push(...optionsModesOf(value));
+    else if (value === undefined || !ts.isNumericLiteral(value)) modes.push("argument unknown");
+  }
+  if (kind === "case" && functions.length === 0) modes.push("no function");
+  return { modes, functions };
+}
+/** The tables of the each and for calls on a chain (wb-ioto N08, N10), each through argumentValue: an array literal with no element is "empty
+ * table" (vitest registers nothing for it); a value that is no array literal, or one with a spread element, is "table unknown". */
+function tableModes(chain: Chain, scope: FileScope): string[] {
+  return chain.tables.flatMap(table => {
+    const value = argumentValue(table, scope);
+    if (value === undefined || !ts.isArrayLiteralExpression(value) || value.elements.some(element => ts.isSpreadElement(element))) return ["table unknown"];
+    return value.elements.length === 0 ? ["empty table"] : [];
+  });
+}
+/** Whether a statement can leave its block: a return or throw anywhere in it, outside a nested function or class. */
+function exits(node: ts.Node): boolean {
+  if (ts.isReturnStatement(node) || ts.isThrowStatement(node)) return true;
+  if (ts.isFunctionLike(node) || ts.isClassLike(node)) return false;
+  return ts.forEachChild(node, child => (exits(child) ? true : undefined)) === true;
+}
+/** wb-ioto N09: whether a registration runs where it is written - a statement of the module, or of the factory a suite call holds (its
+ * expression body included) with no return or throw before it there. */
+function placed(call: ts.CallExpression, factories: ReadonlySet<ts.Node>): boolean {
+  const parent = call.parent;
+  if (ts.isArrowFunction(parent)) return parent.body === call && factories.has(parent);
+  if (!ts.isExpressionStatement(parent)) return false;
+  const block = parent.parent;
+  if (ts.isSourceFile(block)) return true;
+  return ts.isBlock(block) && factories.has(block.parent) && !block.statements.slice(0, block.statements.indexOf(parent)).some(exits);
+}
+/** wb-ioto N06, N07: whether a case function's own text (its parameters and body, nested functions alike, on any object) reads a skip
+ * member - a property named skip, or an element access whose key folds to skip - or destructures a skip binding. */
+function readsSkip(node: ts.Node): boolean {
+  if (ts.isPropertyAccessExpression(node) && node.name.text === "skip") return true;
+  if (ts.isElementAccessExpression(node) && fold(node.argumentExpression) === "skip") return true;
+  if (ts.isBindingElement(node)) {
+    const key = node.propertyName ?? node.name;
+    const name = ts.isIdentifier(key) || ts.isStringLiteralLike(key) ? key.text : ts.isComputedPropertyName(key) ? fold(key.expression) : undefined;
+    if (name === "skip") return true;
+  }
+  return ts.forEachChild(node, child => (readsSkip(child) ? true : undefined)) === true;
+}
+/** A test module's registered titles (the title-census modifier closure: wb-4n55 F2, widened by wb-ioto F1): every case or suite call
+ * (callKind) whose title folds to a literal, each with the innermost suite it sits in and the skip modes read on it - the SKIP_MODES
+ * members along its head chain; its tables (tableModes); its arguments (argumentsOf); "placement unknown" unless placed; every
+ * enclosing suite call's modes, a suite whose title does not fold included (its cases then sit in no literal suite); and, for a case,
+ * "context skip" when its function's own text reads a skip member (readsSkip). */
 function registeredTitles(path: string, source: string): RegisteredTitle[] {
   const file = sourceOf(path, source);
+  const scope = scopeOf(file);
+  const factories = new Set<ts.Node>();
   const found: RegisteredTitle[] = [];
-  const kindOf = (callee: ts.Expression): string | undefined => {
-    if (ts.isIdentifier(callee)) return callee.text;
-    if (ts.isPropertyAccessExpression(callee)) return kindOf(callee.expression);
-    if (ts.isCallExpression(callee)) return kindOf(callee.expression);
-    return undefined;
-  };
-  const headModes = (callee: ts.Expression): string[] => {
-    if (ts.isPropertyAccessExpression(callee)) return [...headModes(callee.expression), ...(SKIP_MODES.includes(callee.name.text) ? [callee.name.text] : [])];
-    if (ts.isCallExpression(callee)) return headModes(callee.expression);
-    return [];
-  };
-  const optionModes = (call: ts.CallExpression): string[] =>
-    call.arguments.filter(ts.isObjectLiteralExpression).flatMap(options =>
-      options.properties.flatMap((property): string[] => {
-        if (ts.isSpreadAssignment(property)) return ["options spread"];
-        if (property.name === undefined || ts.isComputedPropertyName(property.name)) return ["options computed key"];
-        const key = ts.isIdentifier(property.name) || ts.isStringLiteral(property.name) ? property.name.text : undefined;
-        if (key === undefined || !OPTION_MODES.includes(key)) return [];
-        return ts.isPropertyAssignment(property) && property.initializer.kind === ts.SyntaxKind.FalseKeyword ? [] : [`options ${key}`];
-      }),
-    );
-  const contextModes = (call: ts.CallExpression): string[] => {
-    const body = [...call.arguments].reverse().find(argument => ts.isArrowFunction(argument) || ts.isFunctionExpression(argument));
-    if (body === undefined || !(ts.isArrowFunction(body) || ts.isFunctionExpression(body))) return [];
-    const contexts = new Set<string>();
-    const skippers = new Set<string>();
-    for (const parameter of body.parameters) {
-      if (ts.isIdentifier(parameter.name)) contexts.add(parameter.name.text);
-      else if (ts.isObjectBindingPattern(parameter.name)) {
-        for (const element of parameter.name.elements) {
-          const key = element.propertyName ?? element.name;
-          if (ts.isIdentifier(key) && key.text === "skip" && ts.isIdentifier(element.name)) skippers.add(element.name.text);
-        }
-      }
-    }
-    let skipped = false;
-    const scan = (node: ts.Node): void => {
-      if (ts.isCallExpression(node)) {
-        const callee = node.expression;
-        if (ts.isPropertyAccessExpression(callee) && callee.name.text === "skip" && ts.isIdentifier(callee.expression) && contexts.has(callee.expression.text)) skipped = true;
-        if (ts.isIdentifier(callee) && skippers.has(callee.text)) skipped = true;
-      }
-      ts.forEachChild(node, scan);
-    };
-    scan(body.body);
-    return skipped ? ["context skip"] : [];
-  };
   const visit = (node: ts.Node, inside: string | undefined, inherited: readonly string[]): void => {
     if (ts.isCallExpression(node)) {
-      const kind = kindOf(node.expression);
+      const chain = chainOf(node.expression);
+      const kind = chain === undefined ? undefined : callKind(chain);
       const first = node.arguments[0];
-      const title = first === undefined ? undefined : fold(first);
-      if ((kind === "it" || kind === "test" || kind === "describe") && title !== undefined) {
-        const modes = [...inherited, ...headModes(node.expression), ...optionModes(node)];
-        if (kind === "describe") {
-          found.push({ describe: inside, title, modes });
+      if (chain !== undefined && kind !== undefined && first !== undefined) {
+        const title = fold(first);
+        const read = argumentsOf(node, kind, scope);
+        const head = chain.members.filter(member => SKIP_MODES.includes(member));
+        const modes = [...inherited, ...head, ...tableModes(chain, scope), ...read.modes, ...(placed(node, factories) ? [] : ["placement unknown"])];
+        if (kind === "suite") {
+          for (const factory of read.functions) factories.add(factory);
+          if (title !== undefined) found.push({ describe: inside, title, modes });
           for (const argument of node.arguments) visit(argument, title, modes);
           return;
         }
-        found.push({ describe: inside, title, modes: [...modes, ...contextModes(node)] });
+        if (title !== undefined) found.push({ describe: inside, title, modes: [...modes, ...(read.functions.some(readsSkip) ? ["context skip"] : [])] });
       }
     }
     ts.forEachChild(node, child => visit(child, inside, inherited));
@@ -1241,10 +1398,20 @@ const mappingBlock = (head: string, inner: string, options = ""): string => `${h
 const plantCase = (form: string, head: string, rest = `, ${PLANT_FN}`): string => `  ${head}(${JSON.stringify(`plant ${form}`)}${rest});`;
 const caseForm = (form: string, head: string, modes: readonly string[], rest?: string): RegistrationForm => ({ form, block: mappingBlock("describe", plantCase(form, head, rest)), modes });
 const describeForm = (form: string, head: string, modes: readonly string[], options = ""): RegistrationForm => ({ form, block: mappingBlock(head, plantCase(form, "it"), options), modes });
+/** wb-ioto: a form preceded by module-level declarations of its own (a reference the closure resolves or refuses). */
+const declaredForm = (declaration: string, form: RegistrationForm): RegistrationForm => ({ ...form, block: `${declaration}\n${form.block}` });
+/** wb-ioto: a form whose mapping describe sits in an outer suite call, the call's modes carried down to the case. */
+const wrappedForm = (form: string, head: string, title: string, modes: readonly string[]): RegistrationForm => ({
+  form,
+  block: `${head}(${title}, () => {\n${mappingBlock("describe", plantCase(form, "it"))}\n});`,
+  modes,
+});
+/** wb-ioto: a form whose mapping describe's factory holds `inner` before or around the case. */
+const factoryForm = (form: string, inner: string, modes: readonly string[]): RegistrationForm => ({ form, block: mappingBlock("describe", inner), modes });
 const REGISTRATION_FORMS: readonly RegistrationForm[] = [
   caseForm("runnable", "it", []),
   caseForm("caseSkip", dot("it", "skip"), ["skip"]),
-  caseForm("caseTodo", dot("it", "todo"), ["todo"], ""),
+  caseForm("caseTodo", dot("it", "todo"), ["todo", "no function"], ""),
   caseForm("caseOnly", dot("it", "only"), ["only"]),
   caseForm("caseFails", dot("it", "fails"), ["fails"]),
   caseForm("caseSkipIf", `${dot("it", "skipIf")}${LINUX}`, ["skipIf"]),
@@ -1273,6 +1440,48 @@ const REGISTRATION_FORMS: readonly RegistrationForm[] = [
   caseForm("optionsTimeout", "it", [], `, { timeout: 5_000 }, ${PLANT_FN}`),
   { form: "commented", block: `// ${dot("it", "skip")}("plant commented", () => {});\n${mappingBlock("describe", plantCase("commented", "it"))}`, modes: [] },
   caseForm("hollowedBody", "it", [], ", () => {\n    return;\n    expect(1).toBe(1);\n  }"),
+  // wb-ioto F1: the ten forms the filing measured (N01-N10), each a kill control.
+  wrappedForm("suiteSkipWrapper", dot("suite", "skip"), JSON.stringify("plant suite outer"), ["skip"]),
+  declaredForm(`const PLANT_OUTER_TITLE = ${JSON.stringify("plant const outer")};`, wrappedForm("constTitleWrapper", dot("describe", "skip"), "PLANT_OUTER_TITLE", ["skip"])),
+  declaredForm("const PLANT_SKIPPED_OPTIONS = { skip: true };", caseForm("optionsReference", "it", ["options skip"], `, PLANT_SKIPPED_OPTIONS, ${PLANT_FN}`)),
+  caseForm("optionsAsConst", "it", ["options skip"], `, { skip: true } as const, ${PLANT_FN}`),
+  caseForm("optionsParenthesized", "it", ["options skip"], `, ({ skip: true }), ${PLANT_FN}`),
+  caseForm("contextElementSkip", "it", ["context skip"], ', context => {\n    context["skip"]();\n  }'),
+  caseForm("contextBodyDestructured", "it", ["context skip"], ", context => {\n    const { skip } = context;\n    skip();\n  }"),
+  caseForm("emptyEach", `${dot("it", "each")}([])`, ["empty table"]),
+  factoryForm("conditionalCase", `  if (process.platform === "none") {\n${plantCase("conditionalCase", "it")}\n  }`, ["placement unknown"]),
+  describeForm("emptyDescribeEach", `${dot("describe", "each")}([])`, ["empty table"]),
+  // wb-ioto: one kill control per further branch of the widened closure.
+  wrappedForm("describeSwitch", dot(dot("it", "describe"), "skip"), JSON.stringify("plant switch outer"), ["skip"]),
+  wrappedForm("elementHead", 'describe["skip"]', JSON.stringify("plant element outer"), ["skip"]),
+  caseForm("argumentCall", "it", ["argument unknown"], `, plantOptions(), ${PLANT_FN}`),
+  declaredForm("let PLANT_LET_OPTIONS = { skip: false };", caseForm("optionsLet", "it", ["argument unknown"], `, PLANT_LET_OPTIONS, ${PLANT_FN}`)),
+  declaredForm(
+    `const PLANT_WRITTEN_OPTIONS = { skip: false };\n${dot("PLANT_WRITTEN_OPTIONS", "skip")} = true;`,
+    caseForm("optionsWritten", "it", ["argument unknown"], `, PLANT_WRITTEN_OPTIONS, ${PLANT_FN}`),
+  ),
+  declaredForm(
+    "const PLANT_SHADOWED_OPTIONS = { skip: false };",
+    factoryForm("optionsShadowed", `  const PLANT_SHADOWED_OPTIONS = { skip: true };\n${plantCase("optionsShadowed", "it", `, PLANT_SHADOWED_OPTIONS, ${PLANT_FN}`)}`, ["argument unknown"]),
+  ),
+  caseForm("noFunction", "it", ["no function"], ""),
+  caseForm("wrappedHead", `(${dot("it", "skip")})`, ["skip"]),
+  caseForm("tableUnknown", `${dot("it", "each")}(plantRows())`, ["table unknown"]),
+  declaredForm("const PLANT_EMPTY_ROWS = [];", caseForm("emptyTableReference", `${dot("it", "each")}(PLANT_EMPTY_ROWS)`, ["empty table"])),
+  factoryForm("placementAfterReturn", `  return;\n${plantCase("placementAfterReturn", "it")}`, ["placement unknown"]),
+  // wb-ioto: precision controls, run forms the widened closure must keep clear.
+  describeForm("suitePlain", "suite", []),
+  declaredForm(`const PLANT_PLAIN_TITLE = ${JSON.stringify("plant const plain")};`, wrappedForm("constTitlePlain", "describe", "PLANT_PLAIN_TITLE", [])),
+  declaredForm("const PLANT_TIMEOUT_OPTIONS = { timeout: 5_000 };", caseForm("optionsReferenceTimeout", "it", [], `, PLANT_TIMEOUT_OPTIONS, ${PLANT_FN}`)),
+  caseForm("optionsFalseAsConst", "it", [], `, { skip: false } as const, ${PLANT_FN}`),
+  declaredForm("function plantCaseFunction() {\n  expect(1).toBe(1);\n}", caseForm("functionReference", "it", [], ", plantCaseFunction")),
+  declaredForm("const PLANT_TIMEOUT = 5_000;", caseForm("timeoutReference", "it", [], `, ${PLANT_FN}, PLANT_TIMEOUT`)),
+  declaredForm("const PLANT_ROWS = [1];", caseForm("tableReference", `${dot("it", "each")}(PLANT_ROWS)`, [])),
+  factoryForm("placedAfterDeclarations", `  const local = 1;\n  function helper() {\n    return local;\n  }\n${plantCase("placedAfterDeclarations", "it")}`, []),
+  // wb-ioto: R-INDIRECT's pinned quiet rows - a skip reached outside the case's own registration text reads run form.
+  factoryForm("hookSkip", `  beforeEach(context => {\n    ${dot("context", "skip")}();\n  });\n${plantCase("hookSkip", "it")}`, []),
+  declaredForm(`const skipVia = context => ${dot("context", "skip")}();`, caseForm("contextHandoff", "it", [], ", context => {\n    skipVia(context);\n  }")),
+  declaredForm(`const PLANT_SKIP_MEMBER = ${JSON.stringify("skip")};`, caseForm("computedMember", "it", [], ", context => {\n    context[PLANT_SKIP_MEMBER]();\n  }")),
 ];
 /** C4's plant: every form, in order, in one module read after the wb-973.14 file by the same call. */
 const REGISTRATION_PLANT: Plant = { path: "test/zz-wb-4n55-registration-plant.test.ts", text: `${REGISTRATION_FORMS.map(form => form.block).join("\n")}\n` };
@@ -1683,6 +1892,9 @@ describe("wb-4nut.2 H2 proposed-API census (TSX-HARNESS2-REACTIVE-EVOLUTION-R2, 
     expect(OPTION_MODES.filter(key => !SKIP_MODES.includes(key)), "every options key read is a skip mode").toEqual([]);
     const falsified = REGISTRATION_FORMS.flatMap(form => form.modes);
     expect([...SKIP_MODES.filter(mode => !falsified.includes(mode)), ...OPTION_MODES.filter(key => !falsified.includes(`options ${key}`))], "a skip mode or options key with no falsifier form").toEqual([]);
+    // wb-ioto F1: every further closure reading has a falsifier form, and the suite roots are vitest's own describe switch members.
+    expect(READ_MODES.filter(mode => !falsified.includes(mode)), "a closure reading with no falsifier form").toEqual([]);
+    expect(SUITE_ROOTS.filter(root => !REGISTRATION_MEMBERS.test.includes(root)), "a suite root that is not vitest's describe switch").toEqual([]);
     // The outside anchor: the owner filing's row in the tracked bead export.
     const bead = readBeadRow();
     const clauses = acceptanceClauses(bead.notes);
