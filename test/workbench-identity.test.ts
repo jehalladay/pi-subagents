@@ -34,9 +34,10 @@ import { afterAll, afterEach, beforeEach, describe, expect, it, vi } from "vites
  * budgeted rows copy the package files TEST-SIDE (cpSync in their bodies); src's captureInvocationIdentity hashes by read
  * and makes no S-call. Stated bounds: a file-alone run has no census step (its in-file judges alone decide); code in this
  * file that rewrites the judge's own state or re-wires vitest's it is outside the claim. The residual risk is a copy that
- * BYPASSES S, runtime-invisible by design: read/write composition, subprocess copy, createRequire and getBuiltinModule
- * requisition, and an other-module helper that re-implements the copy without S; the static scan layer and the roster's
- * residual families hold those, each with an id-asserted pinned quiet row and its runtime reading stated per family.
+ * BYPASSES S, runtime-invisible by design: read/write composition, subprocess copy, createRequire, getBuiltinModule and
+ * vi.importActual requisition, and an other-module helper that re-implements the copy without S; the static scan layer
+ * and the roster's residual families hold those, each with an id-asserted pinned quiet row and its runtime reading stated
+ * per family.
  */
 const emitState = vi.hoisted(() => {
   // The unmocked builtins (process.getBuiltinModule bypasses vi.mock, exactly as the R-REQUIRE residual states): the
@@ -207,16 +208,17 @@ type TestApi = { readonly each: boolean; readonly table: ts.Expression | undefin
  * deliberately share a dispatch route). The scan makes no general alias-resolution claim.
  * NAMED RESIDUALS (quiet rows below; every quiet reading is the STATIC SCAN's reading of a frozen source): H5 read+write
  * copy; another module's helper; subprocess copy; hook copy; module-scope copy; captureInvocationIdentity hashing proxy;
- * createRequire requisition; getBuiltinModule requisition. Each family states its RUNTIME reading beside the static one:
- * a hook copy, a module-scope copy and an other-module helper that copies THROUGH S are quiet to the scan but observed as
- * violations by the runtime judge; the hashing proxy makes no S-call at all (src hashes by read; the budgeted rows copy
- * test-side), so a row that only hashes is never a copy; read/write composition, subprocess copy, createRequire and
- * getBuiltinModule requisition (both return the unmocked builtin) and an other-module helper that re-implements the copy
- * without S are quiet to BOTH layers. Those last families are the stated residual risk of scoping to S, accepted and
- * documented here, not a coverage claim. Every family has its own frozen input, exact quiet reading and runtime reading,
- * and the residual table is anchored OUT OF FILE in test/fixtures/hk9l-scan-roster.json (id, family, full source digest,
- * static reading and runtime reading, in table order; the census anchor row enforces order, count and per-row
- * registration exactly). The 320 s synchronous IO-stall remains an instrument residual: no budget cures it.
+ * createRequire requisition; getBuiltinModule requisition; vi.importActual requisition. Each family states its RUNTIME
+ * reading beside the static one: a hook copy, a module-scope copy and an other-module helper that copies THROUGH S are
+ * quiet to the scan but observed as violations by the runtime judge; the hashing proxy makes no S-call at all (src
+ * hashes by read; the budgeted rows copy test-side), so a row that only hashes is never a copy; read/write composition,
+ * subprocess copy, createRequire, getBuiltinModule and vi.importActual requisition (each returns the unmocked builtin)
+ * and an other-module helper that re-implements the copy without S are quiet to BOTH layers. Those last families are the
+ * stated residual risk of scoping to S, accepted and documented here, not a coverage claim. Every family has its own
+ * frozen input, exact quiet reading and runtime reading, and the residual table is anchored OUT OF FILE in
+ * test/fixtures/hk9l-scan-roster.json (id, family, full source digest, static reading and runtime reading, in table
+ * order; the census anchor row enforces order, count and per-row registration exactly). The 320 s synchronous IO-stall
+ * remains an instrument residual: no budget cures it.
  * The route/digest roster, the budget list and the residual roster live in test/fixtures/hk9l-scan-roster.json (R656
  * out-of-file anchor).
  */
@@ -572,6 +574,7 @@ const SCAN_RESIDUALS: readonly ScanResidual[] = [
   {"id": "R-PROXY", "family": "identity hashing proxy", "source": "it(\"row\", () => { captureInvocationIdentity(request); });", "reading": "row quiet", "runtime": "invisible: captureInvocationIdentity hashes by read and makes no S-call (the budgeted rows copy test-side)"},
   {"id": "R-REQUIRE", "family": "createRequire requisition", "source": "const requireFs = createRequire(import.meta.url);\nit(\"row\", () => { requireFs(\"node:fs\")[String(\"cpSync\")](a, b); });", "reading": "row quiet", "runtime": "invisible: createRequire returns the unmocked builtin"},
   {"id": "R-BUILTIN", "family": "getBuiltinModule requisition", "source": "it(\"row\", () => { process.getBuiltinModule(\"node:fs\")[String(\"cpSync\")](a, b); });", "reading": "row quiet", "runtime": "invisible: getBuiltinModule returns the unmocked builtin"},
+  {"id": "R-IMPORTACTUAL", "family": "vi.importActual requisition", "source": "it(\"row\", async () => { const realFs = await vi.importActual(\"node:fs\"); realFs[String(\"cpSync\")](a, b); });", "reading": "row quiet", "runtime": "invisible: vi.importActual returns the unmocked builtin"},
 ];
 
 function fixture() {
@@ -971,6 +974,11 @@ describe(PACKAGE_COPY_SUITE, () => {
     expect(residual.id, "this quiet row judges its own family, never another index").toBe("R-BUILTIN");
     expect(scanRows(residual.source).map(row => `${row.title} ${row.copies ? "copies" : "quiet"}`).join("; ")).toBe(residual.reading);
   });
+  it("wb-hk9l residual R-IMPORTACTUAL: pinned quiet reading", () => {
+    const residual = SCAN_RESIDUALS[8];
+    expect(residual.id, "this quiet row judges its own family, never another index").toBe("R-IMPORTACTUAL");
+    expect(scanRows(residual.source).map(row => `${row.title} ${row.copies ? "copies" : "quiet"}`).join("; ")).toBe(residual.reading);
+  });
 
 
   it("wb-hk9l residual census anchor: the roster fixture's residual list and the registered residual rows match SCAN_RESIDUALS exactly, in order", ({ task }) => {
@@ -979,7 +987,7 @@ describe(PACKAGE_COPY_SUITE, () => {
     };
     expect(SCAN_RESIDUALS.map(row => `${row.id}|${row.family}|${createHash("sha256").update(row.source).digest("hex")}|${row.reading}|${row.runtime}`),
       "the residual table (static reading and runtime reading) is anchored out of file, in order").toEqual(roster.residuals.map(row => `${row.id}|${row.family}|${row.digest}|${row.reading}|${row.runtime}`));
-    expect(roster.residuals, "the anchored residual count").toHaveLength(8);
+    expect(roster.residuals, "the anchored residual count").toHaveLength(9);
     const registered: string[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {
       for (const child of tasks) {
@@ -1132,6 +1140,41 @@ describe(PACKAGE_COPY_SUITE, () => {
       "R-PROXY|identity hashing proxy|row quiet|invisible: captureInvocationIdentity hashes by read and makes no S-call (the budgeted rows copy test-side)|c694895e6b2fdad18a9c99bdc716ce2e4fde4f0dcd2264674c6af621dc9f3b39",
       "R-REQUIRE|createRequire requisition|row quiet|invisible: createRequire returns the unmocked builtin|adfce552cca2b038904b4b85d00ac638d24a787351203098ff427b73170e6622",
       "R-BUILTIN|getBuiltinModule requisition|row quiet|invisible: getBuiltinModule returns the unmocked builtin|1cd588866aa92cffde0b4b5e798b870fb253ef1780f1689f22f9735c978669bd",
+      "R-IMPORTACTUAL|vi.importActual requisition|row quiet|invisible: vi.importActual returns the unmocked builtin|cd8e590e840ebe06999fef348cd32fa8af1e610d69b42551475442107f0eaf9a",
+    ]);
+  });
+  it("wb-hk9l residual pin shape: every quiet row holds exactly its own family's id pin and reading pin, read from this file's AST", () => {
+    // Rule 16 frozen-shape assertion at pin level (wb-unov): the residual shape row freezes each family's table entry; this
+    // row freezes each quiet row's BODY - its two pins (the id pin and the reading pin) in canonical form against its own
+    // table index - so a deleted pin, a pin swapped to another family's page or to an unrelated passing case, or a swapped
+    // index reds here. The canonical body digest is the same for every family by construction.
+    const self = ts.createSourceFile("self.ts", readFileSync(fileURLToPath(import.meta.url), "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    const rows: { id: string; statements: string[] }[] = [];
+    const visit = (node: ts.Node): void => {
+      if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "it") {
+        const [title, body] = node.arguments;
+        const id = title !== undefined && ts.isStringLiteralLike(title) ? /^wb-hk9l residual (R-\S+): pinned quiet reading$/.exec(title.text)?.[1] : undefined;
+        if (id !== undefined) {
+          const block = body !== undefined && ts.isArrowFunction(body) && ts.isBlock(body.body) ? body.body : undefined;
+          rows.push({ id, statements: block?.statements.map(statement => statement.getText(self).replace(/\s+/g, " ")) ?? [] });
+        }
+      }
+      ts.forEachChild(node, visit);
+    };
+    visit(self);
+    const canonical = (row: { id: string; statements: string[] }, index: number): string =>
+      row.statements.join(" ").replace(`SCAN_RESIDUALS[${index}];`, "SCAN_RESIDUALS[<index>];").replace(`.toBe("${row.id}");`, '.toBe("<id>");');
+    expect(rows.map((row, index) => `${row.id}:${row.statements.filter(statement => statement.startsWith("expect(")).length}:${createHash("sha256").update(canonical(row, index)).digest("hex").slice(0, 16)}`),
+      "each quiet row's pin count and canonical body digest, in table order (frozen)").toEqual([
+      "R-H5:2:91c0cc5272af8a01",
+      "R-MODULE:2:91c0cc5272af8a01",
+      "R-PROCESS:2:91c0cc5272af8a01",
+      "R-HOOK:2:91c0cc5272af8a01",
+      "R-SCOPE:2:91c0cc5272af8a01",
+      "R-PROXY:2:91c0cc5272af8a01",
+      "R-REQUIRE:2:91c0cc5272af8a01",
+      "R-BUILTIN:2:91c0cc5272af8a01",
+      "R-IMPORTACTUAL:2:91c0cc5272af8a01",
     ]);
   });
 

@@ -111,6 +111,209 @@
    "residual": "R-SIBLING"
   }
  ],
+ "extension": {
+  "bead": "wb-rdlh.2",
+  "pin": "72d79ed704d884e63c39c3d34e3ea9425b952140",
+  "filing": {
+   "export": ".beads/issues.jsonl",
+   "paragraphs": 7,
+   "sha256": "09d84961d3d8bb24223a70c382f16e73799eb6d5c7b639fe9703f5da50846d66"
+  },
+  "spans": [
+   {
+    "site": "10-stable-observer-progress-and-guarded-admission.md:7",
+    "textBase64": "IyMjIENBQ1N0YWJsZU9ic2VydmVyQ2VydGlmaWNhdGVWMA==",
+    "sha256": "12857156f4f3eee4b027fb2e6be1c3586309fd5bd04ed64f895eeba480e397c7"
+   },
+   {
+    "site": "10-stable-observer-progress-and-guarded-admission.md:10",
+    "textBase64": "IyMjIENBQ09jY3VwYW5jeVJpc2tDZXJ0aWZpY2F0ZVYw",
+    "sha256": "19d7b18d4b3ab8052a94e68a8cd02caad80104d2cef0ae3fac007b5cf2a26920"
+   },
+   {
+    "site": "10-stable-observer-progress-and-guarded-admission.md:13",
+    "textBase64": "IyMjIENBQ1Byb2dyZXNzQ2VydGlmaWNhdGVWMA==",
+    "sha256": "c5c2f7ca38f8d2e59e8979d6b72a1222187f3ae4ab08e51f86dd421ec64bf6ca"
+   },
+   {
+    "site": "10-stable-observer-progress-and-guarded-admission.md:16",
+    "textBase64": "IyMjIENBQ0d1YXJkZWRFZmZlY3RDZXJ0aWZpY2F0ZVYw",
+    "sha256": "f3f5bf936e84c79f3b5c0cc9277c7cdaee06e28fb014812811569f476e584e7d"
+   },
+   {
+    "site": "13-hypergraph-transport-safety-v5.md:11",
+    "textBase64": "MS4gKipEaXN0aW5ndWlzaGFiaWxpdHlIeXBlcmdyYXBoQ2VydGlmaWNhdGVWMToqKiBjb21wbGV0ZSBhZG1pdHRlZCBzb3VyY2UgbW9kZWwvcmV2aXNpb24gYW5kIGlucHV0IGRvbWFpbjsgb2JzZXJ2ZWQgam9pbnQgcmVzdWx0IChvdXRwdXQsIGZpbmFsIFMsIHB1YmxpYyB0cmFjZSk7IGRpc3Rpbmd1aXNoYWJpbGl0eSBoeXBlcmVkZ2VzIM6UKHcsdik7IGV4YWN0IG1pbmltYWwgdHJhbnN2ZXJzYWxzIG9yIGNob3NlbiBoaXR0aW5nIHNldDsgZXhhY3QgzrIoUikgYW5kIHByb29mIG1ldGhvZDsgc291cmNlIHZlcmlmaWNhdGlvbiBzdGF0dXMu",
+    "sha256": "7a533feb8afcb266c4d3d12cf4ced6e9aa3bca00139173da945ddd3fbcb5688d"
+   },
+   {
+    "site": "13-hypergraph-transport-safety-v5.md:12",
+    "textBase64": "Mi4gKipPYnNlcnZlclF1b3RpZW50Q2VydGlmaWNhdGVWMToqKiBpbml0aWFsIHB1YmxpYyBsYWJlbHMsIHN0YWJsZSBwYXJ0aXRpb24gUCosIGFsbCBsZWdhbCBhY3Rpb24ga2VybmVscywgam9pbnQgb3V0cHV0L25leHQtYmxvY2sgZGlzdHJpYnV0aW9ucywgb3JpZ2luYWwtc291cmNlIHZlcnNpb24sIHNvdXJjZS12ZXJpZmllZCBndWFyZHMvYXZhaWxhYmxlIGFjdGlvbnMuIEluY2x1ZGUgdmVyaWZpY2F0aW9uIHRoYXQgb25lLXN0ZXAgcHVibGljIGVxdWl2YWxlbmNlIGlzIHByZXNlcnZlZCB1bmRlciBldmVyeSBjbGllbnQtY29udGludWF0aW9uIGFjdGlvbjsgZ2l2ZSBleHBsaWNpdCBGQUlMIHdpdG5lc3MgZm9yIGZ1dHVyZS1vYnNlcnZhdGlvbiBsZWFrcy4=",
+    "sha256": "e33d3b41edc0ee3d880dad74fb251fd42aba66e73428e018bd4e4b6504c1dc14"
+   },
+   {
+    "site": "13-hypergraph-transport-safety-v5.md:13",
+    "textBase64": "My4gKipDaG9pY2VUcmFuc3BvcnRDZXJ0aWZpY2F0ZVYxOioqIGFjdHVhbCBzZWxlY3RvciBjb25kaXRpb25hbCBicmFuY2ggbGF3cyAobm90IHVuY29uZGl0aW9uZWQgbWFyZ2luYWxzKTsgc2VsZWN0b3Igc291cmNlIHJlYWQgTSBhbmQgdmlzaWJsZSB0cmFjZSBjb250cmFjdDsgdHJhbnNwb3J0IHBsYW4gz4Agd2l0aCBub25uZWdhdGl2ZSBlbnRyaWVzLCB2ZXJpZmllZCByb3cvY29sdW1uIHByb2JhYmlsaXR5IG1hcmdpbmFscywgcmF0aW9uYWwgY2VydGlmaWVkIHBlci1icmFuY2ggVFYgbWF0cml4IEMsIHN1bSDPgEPiiaTOtTsgYWN0aW9uIHBvbGljeS9zb3VyY2UgcmlnaHRzIGFuZCB2ZXJzaW9uIGRlcGVuZGVuY2llcy4gRmVhc2liaWxpdHkgYWxvbmUgY2VydGlmaWVzIGFuIHVwcGVyIGJvdW5kLCBub3Qgb3B0aW1hbGl0eS4=",
+    "sha256": "4cf8ce4f3270417bef3ed81565858cae8e5157fffa7e95f019e9af24b7810e17"
+   },
+   {
+    "site": "13-hypergraph-transport-safety-v5.md:14",
+    "textBase64": "NC4gKipTb3VyY2VTYWZldHlHYW1lQ2VydGlmaWNhdGVWMToqKiBzb3VyY2UgbGVnYWwgYWN0aW9uIG1hcCBBKHcpLCBjb21wbGV0ZSBwb3NzaWJsZSB0cmFuc2l0aW9uIHN1Y2Nlc3NvciBlbnZlbG9wZSBTdWNjKHcsYSksIHNvdXJjZStjaGVja2VyIHBvbGljeSB2YWxpZGl0eSBwcmVkaWNhdGUgRywgZ3JlYXRlc3Qgc2FmZSB3aW5uaW5nIHJlZ2lvbiBXKiwgcGVyLXB1YmxpYy1vYnNlcnZlciByb2J1c3Qtc2FmZSBhY3Rpb24gaW50ZXJzZWN0aW9uIGFuZCBtZW1vcnlsZXNzIHN0cmF0ZWd5IHdpdG5lc3MuIElmIHRoZSBwcm9vZiB1c2VzIGEgcHJvYmFiaWxpc3RpYyBjaGFuY2UgYm91bmQsIGRpc3Rpbmd1aXNoIGl0IGZyb20gc3VyZS1zYWZlLg==",
+    "sha256": "92bdbab5ad351c7120efad390f712af7d78476c3fcaa20065371a28ca2739d0a"
+   },
+   {
+    "site": "13-hypergraph-transport-safety-v5.md:15",
+    "textBase64": "NS4gKipDZXJ0aWZpZWRDb250cm9sbGVyQXNzZXNzbWVudFYxOioqIG9ic2VydmVyK3NvdXJjZSB2ZXJzaW9uLCBoYXJkIHNvdXJjZSBhY2Nlc3MvZXZpZGVuY2UgdmVyZGljdCwgcGVyLXB1YmxpYy1oaXN0b3J5IHNlbGVjdG9yIHRyYW5zcG9ydCBUViBib3VuZHMsIGZpbml0ZSBob3Jpem9uIG4gYW5kIDEtcHJvZHVjdCgxLWVwc2lsb25faSkgZ3VhcmFudGVlLCBzZXBhcmF0ZSBvcHRpb25hbCBUcmFpbmluZ1dvcmtzIHJld2FyZC9yZWdyZXQgcmVwb3J0IGFuZCB2YWxpZGF0aW9uIHRpZXIu",
+    "sha256": "3f69256a74207498c094da62bc9dec1aa6da79d215f38553df56f810225c8c0b"
+   },
+   {
+    "site": "14-belief-transport-approximation-v6.md:15",
+    "textBase64": "KipTb3VyY2VCZWxpZWZTYWZldHlDZXJ0aWZpY2F0ZVYxOioqIHNvdXJjZUlkLCBwb2xpY3lFcG9jaCwgcHJpbmNpcGFsLCB3b3JsZFNjb3BlLCBjb21wbGV0ZVRyYW5zaXRpb25TdXBwb3J0RXZpZGVuY2UsIG9ic2VydmFibGVFdmVudFNjaGVtYSwgaW5pdGlhbEJlbGllZlN1cHBvcnQsIHN1cHBvcnRVcGRhdGUsIGxlZ2FsQWN0aW9uU2V0cywgd2lubmluZ1N1cHBvcnRGaXhlZFBvaW50LCBtZW1vcnlsZXNzV2l0bmVzcywgZ3VhcmRPclJlbHlSZWNlaXB0LCBtb2RlbENvdmVyYWdlLCBwcm9vZlRpZXIsIFBBU1MvRkFJTC9VTktOT1dOLg==",
+    "sha256": "719bda654409f125477e2ddf7ea786615a5654fc32cc150c5d5215ac58f5acd5"
+   },
+   {
+    "site": "14-belief-transport-approximation-v6.md:17",
+    "textBase64": "KipPYnNlcnZlckFwcHJveGltYXRpb25DZXJ0aWZpY2F0ZVYxOioqIHNvdXJjZS9tb2RlbC9vYnNlcnZlciByZXZpc2lvbnMsIHEsIGZ1bGwgcmVzdWx0IHRyYWNlLCBsZWdhbCBhY3Rpb25zLCBzb3VyY2Utd29ybGQgY292ZXJhZ2UsIGFic3RyYWN0IGpvaW50IG5leHQtc3RhdGUga2VybmVsIEcsIHVuaWZvcm0gZGVsdGEodixhKSwgb3B0aW9uYWwgY29uY3JldGUgb2NjdXBhbmN5IHVwcGVyLWJvdW5kIHJlY2VpcHQsIGhvcml6b24sIFRWIGhpc3RvcnkgYm91bmQgYW5kIGV4cGlyeSB0cmlnZ2Vycy4=",
+    "sha256": "7e21615fc83fcda3b0707cf45c2b57c15e5dc22f7343cb6f6aad1e4133a1dbea"
+   },
+   {
+    "site": "14-belief-transport-approximation-v6.md:19",
+    "textBase64": "KipDaG9pY2VUcmFuc3BvcnRFeGFjdG5lc3NWMToqKiBzZWxlY3RvciB3ZWlnaHQgdmVjdG9ycywgYnJhbmNoLWNvbmRpdGlvbmluZyBzdGF0ZW1lbnQsIGNvbmRpdGlvbmFsIGZ1bGwgcmVzdWx0IGRpc3RyaWJ1dGlvbnMsIHRyYW5zcG9ydCBtYXRyaXggd2l0aCByYXRpb25hbCBmZWFzaWJsZSBtYXJnaW5hbHMsIHBlci1wYWlyIGNvc3QgcHJvb2YsIHBlci1vdXRjb21lIHNpZ24td2l0bmVzcywgZXhhY3RuZXNzIGJvb2xlYW4sIGFjdGlvbi1wZXJtaXNzaW9uIHJlZnMsIG1vZGVsL2NoZWNrZXIgcmV2aXNpb25zLg==",
+    "sha256": "99f3edc4422df0238f81249464c37339940d614ee961c3a357a4bd713179a030"
+   },
+   {
+    "site": "14-belief-transport-approximation-v6.md:21",
+    "textBase64": "KipCZWxpZWZDZXJ0aWZpZWRDb21wb3NpdGlvbkFzc2Vzc21lbnRWMToqKiBpbmRlcGVuZGVudCBvd25lciBIYXJkT0sgYW5kIHRpbWUtY3VycmVudG5lc3MgZ2F0ZXMgZm9yIGV2ZXJ5IHNvdXJjZSwgYmVsaWVmIHdpbm5pbmcgc3RhdHVzZXMsIGFkbWl0dGVkIG9ic2VydmVyIGhpc3Rvcmllcywgc291cmNlLXZzLWFic3RyYWN0IGRlbHRhcywgc2VsZWN0b3ItdnMtc2VsZWN0b3IgdHJhbnNwb3J0IGV0YSwgZmluaXRlIGhvcml6b24gbiBhbmQgcHVibGljLWhpc3RvcnkgZXJyb3IgMS1wcm9kdWN0KDEtZXBzaWxvbl90KS4gT25seSByZXR1cm4gUEFTUyB3aGVuIGhhcmQgcmVxdWlyZW1lbnRzIGFuZCBhbGwgcXVhbnRpdGF0aXZlIGFzc3VtcHRpb25zIGFyZSBzZXBhcmF0ZWx5IHZhbGlkYXRlZC4=",
+    "sha256": "672a5baf53744de229fe657bd196a02d6f233e60c6ef819166da67fab714f9ff"
+   },
+   {
+    "site": "15-adaptive-information-acquisition-v7.md:13",
+    "textBase64": "KipOYXRpdmVTZW5zaW5nRWZmZWN0VjE6Kiogc291cmNlIG93bmVyL2lkZW50aXR5LCBhY3R1YWwgcHJpbmNpcGFsLCBpbnB1dC9vdXRwdXQgdHlwZSwgY29tcGxldGUgcGh5c2ljYWwgcmVhZC93cml0ZS9hdWRpdCBmb290cHJpbnQsIHBvc3NpYmxlIHNvdXJjZS1zdGF0ZS9ldmlkZW5jZSBjaGFuZ2VzLCBjdXJyZW50IGd1YXJkLCBuYXRpdmUgdmVyc2lvbi9lcG9jaCwgbGVnYWwvZGVueSBwb2xpY3ksIGF1dGhlbnRpY2F0ZWQgam9pbnQgZXZlbnQvbmV4dC1zdGF0ZSBzdXBwb3J0IGVudmVsb3BlLCB3b3JzdC1jYXNlIHNlbnNpbmcgY29zdCwgbGltaXRhdGlvbnMvdGltZW91dC9yZXRyeSBzZW1hbnRpY3Mu",
+    "sha256": "dc7bb42301dd495d4efb5cea0a105101641a168ec303a496b0dee00e66b20d7e"
+   },
+   {
+    "site": "15-adaptive-information-acquisition-v7.md:15",
+    "textBase64": "KipBZGFwdGl2ZUFjcXVpc2l0aW9uQ2VydGlmaWNhdGVWMToqKiBzb3VyY2UgYm91bmRhcnkgYW5kIHRhc2sgZ29hbDsgaW5pdGlhbCBwb3NzaWJsZSBzb3VyY2Ugc3VwcG9ydDsgc291cmNlLXNhZmUgc2hpZWxkIHJlZmVyZW5jZTsgY2VydGlmaWVkIGNvbXBsZXRpb24tb3BlcmF0aW9uIHNldCBUOyByYW5rIGsgb3IgYm91bmRlZC1yaXNrL3V0aWxpdHkgZ29hbCBsYWJlbDsgcGVyLXdpbm5pbmctYmVsaWVmIGNob3NlbiBzZW5zaW5nIGFjdGlvbiBhbmQgYWxsIG5vbmVtcHR5IG9ic2VydmF0aW9uIHN1Y2Nlc3NvciBjbGFpbXM7IG9wdGlvbmFsIGV4YWN0IG1pbmltYXggY29zdCBieSByZWN1cnJlbmNlOyBzb3VyY2UgZXZpZGVuY2UgZnJlc2huZXNzIGFuZCBjaGVja2VyIGlkZW50aXR5OyBQQVNTfEZBSUx8VU5LTk9XTi4gQSBjZXJ0aWZpY2F0ZSBwcm92ZXMgKnN1cmUgc2FmZSBmaW5pdGUgY29tcGxldGlvbiogb25seSB3aGVuIGV2ZXJ5IHNvdXJjZS1tb2RlbCBwcmVtaXNlIGlzIHZlcmlmaWVkLg==",
+    "sha256": "1340859d9d7525e1e772765609115607a89f6b9920c00dbcd5d90d0fe44b39da"
+   },
+   {
+    "site": "15-adaptive-information-acquisition-v7.md:17",
+    "textBase64": "KipUZW1wb3JhbE9ic2VydmF0aW9uTWVzc2FnZVYxOioqIHNvdXJjZSBhdXRob3JpdHksIGhpc3RvcmljYWwgb2JzZXJ2ZWQgcHJlZGljYXRlL3NldCwgYXV0aGVudGljYXRlZCBvYnNlcnZhdGlvbiBlcG9jaC9jaGVja2VyIHRydXN0LCBjYXVzYWwgdGltZXN0YW1wL3ZlcnNpb24gc2NvcGUsIGFsbG93ZWQgc291cmNlIHRyYW5zaXRpb24vcmV2b2NhdGlvbiBlbnZlbG9wZSB0aHJvdWdoIGN1cnJlbnQgdXNlLCBib3VuZCBvbiB1bm9ic2VydmVkIHRyYW5zaXRpb25zIGlmIGF1dGhlbnRpY2F0ZWQsIGRlcml2ZWQgY3VycmVudCByZWFjaGFiaWxpdHkgc2V0LCBleHBpcnkgY29uZGl0aW9ucyBhbmQgb3BlcmF0aW9uYWwgcG9saWN5IGZvciBzYWZlIHJlamVjdGlvbi4=",
+    "sha256": "9f93c450bcaed05ceb2475f7a2d4b89e13288bb3a7a876849a87d24dcaa02e9a"
+   },
+   {
+    "site": "15-adaptive-information-acquisition-v7.md:19",
+    "textBase64": "KipGZWRlcmF0ZWRTYWZldHlCdW5kbGVWMToqKiBwYXJ0aWNpcGF0aW5nIHNvdXJjZS1sb2NhbCBpbnZhcmlhbnRzIGFuZCBzaGllbGQgcmVmcywgbGVnYWxseSBhZG1pdHRlZCBqb2ludCBhY3Rpb24gY29udHJhY3QsIGNvbXBsZXRlIHByb2plY3Rpb24gb2YgZXZlcnkgcG9zc2libGUgam9pbnQgZXZlbnQgaW50byBlYWNoIGxvY2FsIHNvdXJjZSBlbnZlbG9wZSwgYWRtaXR0ZWQgbG9jYWwgbWVzc2FnZXMsIHNvdXJjZSBndWFyZCByZWNlaXB0cywgb3B0aW9uYWwgY3Jvc3Mtc291cmNlIHJlbGF0aW9uYWwgaW52YXJpYW50IHByb29mIGFuZCBmYWlsdXJlL1VOS05PV04gcG9saWN5LiBNYXkgbm90IGltcGx5IG11bHRpLXByb3ZpZGVyIGF0b21pY2l0eSB3aXRob3V0IGV4cGxpY2l0IG5hdGl2ZSBldmlkZW5jZS4=",
+    "sha256": "cedd49ddd8689765ffbcc179c79d760cae534d3d6d7d108121f4c0205bf3dfec"
+   },
+   {
+    "site": "15-adaptive-information-acquisition-v7.md:21",
+    "textBase64": "KipBY3F1aXNpdGlvblV0aWxpdHlSZXBvcnRWMToqKiB0YXNrIHBlcmZvcm1hbmNlLCBleHBlY3RlZCBvciB3b3JzdC1jYXNlIHNlbnNpbmcgY29zdCwgbnVtYmVyIG9mIHB1YmxpYyBvYnNlcnZhdGlvbnMsIGxhdGVuY3ksIHNhZmUgcmVmdXNhbCByYXRlLCBuYXRpdmUgb3JhY2xlIHN1Y2Nlc3MsIGRpc2Nsb3N1cmUvcHJpdmFjeSBjb25zdHJhaW50cywgY29uZmlkZW5jZS9jb3ZlcmFnZSBhbmQgc291cmNlIHRpZXIuIE5ldmVyIGNvbmZsYXRlcyB0YXNrIHByb2dyZXNzIG9yIGxlYXJuZWQgcmV3YXJkIHdpdGggaGFyZCBzb3VyY2UgcGVybWlzc2lvbnMu",
+    "sha256": "6c33c91b9941eb3eee5a8ac11d0aa778719f2f2f48c8da15d95d4cf08f0ae756"
+   },
+   {
+    "site": "15-conservative-source-envelopes-v6-1.md:15",
+    "textBase64": "IyMgUHJvcG9zZWQgU291cmNlRW52ZWxvcGVDZXJ0aWZpY2F0ZVYy",
+    "sha256": "8a1acdbcee2dd1e6db6cde0f8c7d2047005582313048c16cf8c82bc90fdeb14b"
+   },
+   {
+    "site": "16-decentralized-information-privacy-progress-v8.md:13",
+    "textBase64": "LSBEaXN0cmlidXRlZFByb3RvY29sQ2VydGlmaWNhdGVWMTogYWN0b3ItbG9jYWwgcG9saWN5IG1hcHMsIHB1YmxpYyBtZXNzYWdlcy9kZWNvZGVyLCBzb3VyY2Ugb3duZXJzLCBuYXRpdmUgbGVnYWwgYWN0aW9ucywgb3V0cHV0IGNvcnJlY3RuZXNzLCBmaW5pdGUgaG9yaXpvbiBhbmQgY29tbXVuaWNhdGlvbiBidWRnZXQ7IHZlcmlmaWVyIGNoZWNrcyBldmVyeSBhY3Rpb24gYWdhaW5zdCBlYWNoIHJlYWNoYWJsZSBsb2NhbCBoaXN0b3J5IHJhdGhlciB0aGFuIGEgZ2xvYmFsIHBvbGljeSBtYXAu",
+    "sha256": "49605736e1d0ad1897a435f625075266eb8dab711b68d3c5f74c3a7f9551d2e5"
+   },
+   {
+    "site": "16-decentralized-information-privacy-progress-v8.md:14",
+    "textBase64": "LSBQcml2YWN5VHJhbnNjcmlwdENlcnRpZmljYXRlVjE6IHNlY3JldC1hZGphY2VuY3kgcmVsYXRpb24sIGZ1bGwgYWR2ZXJzYXJ5IHZpc2libGUgdHJhbnNjcmlwdCBpbmNsdWRpbmcgbGVuZ3RoL3RpbWluZy90ZXJtaW5hbCBhY3Rpb24sIHBlci1jb21tb24taGlzdG9yeSBsaWtlbGlob29kIGJvdW5kcywgY3VtdWxhdGl2ZSBlcHNpbG9uL2RlbHRhLCBzb3VyY2UgdHJhbnNtaXQgYXV0aG9yaXphdGlvbiBhbmQgcmVxdWlyZWQgcHVibGljIHRhc2sgYWNjdXJhY3ku",
+    "sha256": "bfed3f343045f20209a6abb30184c83cd0a86ee06ba7e06179dbe0bd6bc9dfa5"
+   },
+   {
+    "site": "16-decentralized-information-privacy-progress-v8.md:15",
+    "textBase64": "LSBSYW5rUHJvZ3Jlc3NDZXJ0aWZpY2F0ZVYxOiBzb3VyY2Utb3duZWQgZ2xvYmFsIHJhbmssIG1vbm90b25pY2l0eSBldmlkZW5jZSwgdGVybWluYWwgb3JhY2xlLCBjb25kaXRpb25hbCBwZXItcm91bmQgcHJvYmFiaWxpdHkgbG93ZXIgcCBvciBzZXBhcmF0ZWx5IHN0YXRlZCBib3VuZGVkL3BlcnNpc3RlbnQgd2VhayBmYWlybmVzcywgZXhhY3QgdGFpbC9leHBlY3RlZCBjb21wbGV0aW9uIGJvdW5kLCB2YWxpZGl0eSBzY29wZS4=",
+    "sha256": "1570f6aa827b0b508f6e7ddf5feb1151279adbd94e00ffaeeab3dc9c70919fb7"
+   },
+   {
+    "site": "16-decentralized-information-privacy-progress-v8.md:16",
+    "textBase64": "LSBGZWRlcmF0ZWRQcm90b2NvbEFzc2Vzc21lbnRWMTogaW5kZXBlbmRlbnRseSBhdXRoZW50aWNhdGVkIHNvdXJjZSBjdXJyZW50bmVzcy9ndWFyZCwgbG9jYWwgc2hpZWxkIHJlY2VpcHRzLCBhY3R1YWwgbmF0aXZlIGpvaW50LWFjdGlvbiBhZG1pc3Npb24sIG9wdGlvbmFsIHJlbGF0aW9uYWwgaW52YXJpYW50LCBzYWZldHksIHByaXZhY3ksIHByb2dyZXNzIGFuZCBjb21tdW5pY2F0aW9uIHZlcmRpY3RzIGluZGVwZW5kZW50bHkgUEFTUy9GQUlML1VOS05PV04u",
+    "sha256": "15f4589bd23ad4e1d057978e767f62710fd855bdbb7fcb285c17f7e90863e954"
+   },
+   {
+    "site": "17-finite-distributed-certification-v9.md:17",
+    "textBase64": "KipTb3VyY2VCb3VuZERpc3RyaWJ1dGVkTW9kZWxWMToqKiBmaXhlZCBzb3VyY2Ugb3duZXIgYW5kIG1vZGVsIHJldmlzaW9uLCBhdXRoZW50aWNhdGVkIGZpbml0ZSBpbnB1dCBzZXQvd29ybGRzLCBjb21wbGV0ZSBsb2NhbCBhY3Rpb24gcGVybWlzc2lvbiB0YWJsZXMsIG5hdGl2ZSBzdGF0ZS9ldmVudCBrZXJuZWxzIHdpdGggcmF0aW9uYWwgcHJvYmFiaWxpdGllcyBvciBjb25zZXJ2YXRpdmUgZXZlbnQgc3VwcG9ydCwgcG9saWN5IGVwb2NoIHRyYW5zaXRpb25zLCBvYnNlcnZlciBwcm9qZWN0aW9uLCBqb2ludC1hY3Rpb24gY29uc3RyYWludHMgYW5kIGFjdHVhbCBoYXJkIHNhZmV0eSBwcmVkaWNhdGVzLg==",
+    "sha256": "6e6f59c9c2f45ce250c29f763094242bcb147d726baf4c7e894fb998715d80bb"
+   },
+   {
+    "site": "17-finite-distributed-certification-v9.md:19",
+    "textBase64": "KipMb2NhbFByb3RvY29sVGFibGVWMToqKiBpbmRlcGVuZGVudCBhY3RvciBpZGVudGlmaWVycywgZmluaXRlIHBlci1hY3RvciBsb2NhbCBoaXN0b3JpZXMsIHN0b2NoYXN0aWMgY2hvaWNlcyBvdmVyIGF1dGhvcml6ZWQgYWN0aW9ucy9tZXNzYWdlcywgc291cmNlLWN1cnJlbnQgZ3VhcmQgcmVmZXJlbmNlcywgYm91bmRlZCBob3Jpem9uIGFuZCBzZWxlY3RlZCBzaGFyZWQtcmFuZG9tbmVzcyBtZWNoYW5pc20uIEEgdGFibGUgaW5kZXhlZCBieSBpbmFjY2Vzc2libGUgZ2xvYmFsIHN0YXRlIGlzIHJlamVjdGVkLg==",
+    "sha256": "60ce8dbb212b310eecd4ca52e94e6b2ffd278f1dd3c970f5c4a795b9db2d66b0"
+   },
+   {
+    "site": "17-finite-distributed-certification-v9.md:21",
+    "textBase64": "KipQcml2YWN5UHJvZmlsZVYxOioqIGFjdHVhbCBhdHRhY2tlciB2aXNpYmxlIGV2ZW50IGFscGhhYmV0IChwYXlsb2FkLCBhYnNlbmNlLCBsZW5ndGgsIGxhdGVuY3ksIGF1ZGl0LCBkZW5pYWwsIHRlcm1pbmFsIHJlc3VsdHMpLCBzb3VyY2UtaGlzdG9yeSBhZGphY2VuY3ksIEw9ZXhwKGVwc2lsb24pIGFzIHJhdGlvbmFsL2FsZ2VicmFpYyBjaGVja2VyIGNvZWZmaWNpZW50LCBhY2NlcHRhYmxlIGRlbHRhLCB0cmFuc2NyaXB0IGRpc3RyaWJ1dGlvbiB0YWJsZSBvciBwcm9iYWJpbGl0eS1wb2x5bm9taWFsIGNlcnRpZmljYXRlcy4gU2VwYXJhdGUgbGF3ZnVsIGRpc2Nsb3N1cmUgYW5kIHByaXZhY3kgb3V0Y29tZXMu",
+    "sha256": "629811fb423a3650dc2c2913ac3afa16cc69d829bd0d3925a0063b6cd87cb2c3"
+   },
+   {
+    "site": "17-finite-distributed-certification-v9.md:23",
+    "textBase64": "KipPbmVXYXlBY3Rpb25Db2xvcmluZ1YxOioqIGZpeGVkIHNlbmRlci9wcml2YXRlIHJlY2VpdmVyIGNvbnRleHQsIGFkbWlzc2libGUgcGFpciBzZXQgRCwgdmFsaWQgc291cmNlIHRlcm1pbmFsLWFjdGlvbiBzZXRzIEMoeCx5KSwgbWluaW1hbCBpbmNvbXBhdGlibGUgY29hbGl0aW9ucywgcHJpdmFjeS1hZGphY2VuY3kgY29tcG9uZW50cywgay1sYWJlbCBjYW5kaWRhdGUgY29sb3JpbmcgYW5kIHJlY2VpdmVyIGFjdGlvbiB3aXRuZXNzIHBlciBsYWJlbC9jb250ZXh0Lg==",
+    "sha256": "6403850b641bea0577c09e798d8bcf3b24999bdcd46177714e1cff16096cda12"
+   },
+   {
+    "site": "17-finite-distributed-certification-v9.md:25",
+    "textBase64": "KipGaW5pdGVQcm90b2NvbFZlcmRpY3RWMToqKiBzZXBhcmF0ZSBQQVNTL0ZBSUwvVU5LTk9XTiBmb3Igc291cmNlL25hdGl2ZSBhdXRob3JpdHk7IGFjdHVhbCBjdXJyZW50bmVzczsgZmluaXRlIHN1cmUtc2FmZSBzZW1hbnRpY3M7IHByb3RvY29sIGxvY2FsLWhpc3RvcnkgcmVhbGl6YWJpbGl0eTsgb3V0cHV0L3Rhc2sgZXJyb3I7IGZ1bGwtdmlldyBwcml2YWN5OyBjb21tdW5pY2F0aW9uL2Nvc3Q7IHJhbmsgcHJvZ3Jlc3MuIFVOS05PV04gd2hlbmV2ZXIgc291cmNlIHBlcm1pc3Npb25zL2Vwb2Nocy90aHJlYXQgb2JzZXJ2ZXIgYXJlIG5vdCBzb3VyY2UgYXR0ZXN0ZWQu",
+    "sha256": "16066f63a3b8009959b03792684cc6c62aeeb2961779fc8d2ea9c9ecb9f25b24"
+   },
+   {
+    "site": "18-proof-carrying-finite-protocol-v10.md:38",
+    "textBase64": "KipGaW5pdGVQcm90b2NvbENsYWltVjEqKjogc291cmNlLW93bmVyIGlkZW50aXR5OyBzb3VyY2Ugb2JqZWN0L3JlZmVyZW5jZS9lcG9jaDsgZml4ZWQgZmluaXRlIGFjdG9yIElEcywgdHVybiBzY2hlZHVsZSwgaG9yaXpvbiBhbmQgbG9jYWwtaGlzdG9yeSBwb2xpY3kgdGFibGVzOyBleGFjdCByYXRpb25hbCBub3JtYWxpemVkIHNvdXJjZSBldmVudCBsYXdzOyBzb3VyY2UtYXV0aG9yZWQgYWxsb3dlZC1vcGVyYXRpb24gYW5kIGhhcmQgc2FmZXR5IHByZWRpY2F0ZTsgZnVsbCBpbnB1dC1zdGF0ZSBkb21haW4gYW5kIG5vbmVtcHR5IHByaXZhY3kgYWRqYWNlbmN5OyB0YXNrIGNvbXBsZXRpb24gc2VtYW50aWNzOyBjb21wbGV0ZSBhdHRhY2tlciBvYnNlcnZhdGlvbjsgZXhhY3QgYm91bmRzIGFuZCBiaW5hcnkvbmF0aXZlIGNvc3QgdW5pdHM7IG1hbmlmZXN0IG9mIGluZGVwZW5kZW50IHNvdXJjZSB0cnVzdCBhbmQgbmF0aXZlIGd1YXJkIGV2aWRlbmNlIChvciBVTktOT1dOKS4=",
+    "sha256": "4ab3e9c0b214be9bfc8bdd47f05d71e7804a5eef84ef1445628c064b2686d4e5"
+   },
+   {
+    "site": "18-proof-carrying-finite-protocol-v10.md:40",
+    "textBase64": "KipGaW5pdGVNb2RlbFZlcmRpY3RWMSoqOiBzdXBwbGllZCBtYW5pZmVzdC9oYXNoLCBtb2RlbCBQQVNTL0ZBSUwvVU5LTk9XTiwgY29tcHV0ZWQgdGFzayBlcnJvciBhbmQgZXhwZWN0ZWQgY29tbXVuaWNhdGlvbiBwZXIgd29ybGQsIGV4YWN0IG1pbmltYWwgZGVsdGEgcGVyIG9yZGVyZWQgYWRqYWNlbnQgcGFpciwgZm9yIEZBSUwgZnVsbCBwb3NpdGl2ZS1tYXNzIGhhcmQtcGF0aCBvciB3b3JzdCBwcml2YWN5IGV2ZW50LXNldCB3aXRuZXNzLCByZXNvdXJjZS1leGhhdXN0aW9uIHJlYXNvbjsgbm8gY2xhaW0gdGhhdCBzb3VyY2UgcG9saWN5IHdhcyBhdXRoZW50aWNhdGVkLg==",
+    "sha256": "6b86f1885faada8e6499dce7428d57dcdc4d06025e7f3b59e749f708bdb309b2"
+   },
+   {
+    "site": "18-proof-carrying-finite-protocol-v10.md:42",
+    "textBase64": "KipTb3VyY2VPd25lZFJlZmluZW1lbnRWMSoqOiBhY3R1YWwgb3duZXItYXV0aG9yaXplZCBjaGVja2VyL2d1YXJkIGFuZCBzb3VyY2UgcmV2aXNpb247IHByb29mL3JlY2VpcHQgdGhhdCByZWFsIG5hdGl2ZSBlZmZlY3RzIHJlZmluZSB0aGUgbW9kZWwgKGNvbnNlcnZhdGl2ZSBzdXBwb3J0IGZvciBoYXJkIHNhZmV0eTsgZXhhY3Qgam9pbnQga2VybmVsIGZvciBleGFjdCBwcm9iYWJpbGl0aWVzOyB1bmlmb3JtIHBlci1zZWNyZXQgZnVsbC1ldmVudCBUViBmb3IgYXBwcm94aW1hdGUgcHJpdmFjeS90YXNrKTsgaW5kZXBlbmRlbnRseSBjaGVja2VkIHNpZ25hdHVyZS9hdXRoZW50aWNhdGlvbiByb290cyBhbmQgZXhwaXJ5L3Jldm9jYXRpb24gcG9saWN5LiBBIGZ1dHVyZSBjb25uZWN0ZWQgYWRhcHRlciBjYW4gY29uc3VtZSB0aGlzLCBidXQgbm9uZSBleGlzdHMgZnJvbSB0aGlzIHJlc2VhcmNoIHBhc3Mu",
+    "sha256": "e357e54cfff3062031dbc753120b9de481456ff51b2b36db68ceba094c191b36"
+   },
+   {
+    "site": "18-proof-carrying-finite-protocol-v10.md:44",
+    "textBase64": "KipKb2ludE9ic2VydmVyUXVvdGllbnRWMSoqOiBzb3VyY2UgZ3VhcmQvYmFzZSBsYWJlbHMsIHBlcm1pc3Npb24gbWFza3MsIGNvbXBsZXRlIGpvaW50IHBlci1hY3RvciBhbmQgYXR0YWNrZXIgb2JzZXJ2YXRpb24sIHRhc2svdGVybWluYWwvY29zdCBmbGFncywgZXhhY3QgbmV4dC1ibG9jayB0cmFuc2l0aW9uIGxhdyBhbmQgc291cmNlLW1vZGVsIHZlcnNpb247IHN0YWJsZSBwYXJ0aXRpb24gcHJvb2YuIE1lcmVseSBlcXVhbCBwZXItYWdlbnQgb3V0cHV0IG1hcmdpbmFscyBkbyBOT1QgcHJvdmUgc291bmQgcXVvdGllbnRpbmcu",
+    "sha256": "8da34b5ec7aa1a83f5b518ec5db0563b0bd561c79b94ee8b7911e43cf97430f1"
+   }
+  ],
+  "citations": [
+   {
+    "site": "README.md:86",
+    "textBase64": "W1ByaW1hcnkgQ0FDLTEwTSBtYXRoZW1hdGljYWwgY29udGludWF0aW9uXShodHRwczovL2dpdGh1Yi5jb20vamVoYWxsYWRheS9yZXNlYXJjaC90cmVlL21haW4vcHJvZ3JhbXMvY29tcG9zaXRpb25hbC1hdXRvbm9tb3VzLWNvbXB1dGF0aW9uL2NhYzEwbSkgY29udGFpbnMgZmluaXRlIHR5cGVkIG1pZ3JhdGlvbiBjZXJ0aWZpY2F0ZXMsIHNvdXJjZS1pbmRlcGVuZGVudCBwdWJsaWMgdHJhY2UgcHJvb2ZzLCBtb2RlbGVkIGd1YXJkZWQgYXV0aG9yaXR5L2N1cnJlbnQgZXZpZGVuY2UsIHN0YXRpb25hcnkgcHJvZ3Jlc3MsIE0xL00yIGhhbmQtcHJvdmVkIHNvdW5kbmVzcy9jb21wb3NpdGlvbiBhbmQgdGhlIE0z4oCTTTggc291cmNlLXRvLW1vZGVsIHJlc2VhcmNoIGZyb250aWVyLiBUaGUgc291cmNlLWlkZW50aWNhbCBleGVjdXRhYmxlIGZpbml0ZSBjaGVja2VyIGlzIGEgKipNT0RFTC1PTkxZKiogb3JhY2xlOyBpdCByZXR1cm5zIGBzb3VyY2VfdG9fbW9kZWw9dW5rbm93bmAgYW5kIGNhbm5vdCBhdXRoZW50aWNhdGUgbGl2ZSBzb3VyY2Ugb3duZXJzLCBwcm92ZSBndWFyZCBsaW5lYXJpemFiaWxpdHkgb3IgY2VydGlmeSBhY3R1YWwgcnVudGltZSBwZXJtaXNzaW9uLiBUaGUgZGV2ZWxvcGVyIGNvbnRyYWN0IGhlcmUgcmVtYWlucyBhbiBvcHRpb25hbCBwZXItcHJvdmlkZXIgcmVzZWFyY2ggaW50ZXJmYWNlLCAqKm5vdCoqIGEgdW5pdmVyc2FsIHJ1bnRpbWUsIFNESyBpbXBsZW1lbnRhdGlvbiwgbmV3IHBlcm1pc3Npb24gYXV0aG9yaXR5IG9yIHNvdXJjZSBvZiBmb3JtYWwgbWF0aGVtYXRpY2FsIHByb29mLiBBIG5hdGl2ZSBwaWxvdCByZXF1aXJlcyBzb3VyY2UgcmV2aXNpb24sIHNvdXJjZS1hdXRob3JpemVkIGVmZmVjdCBtZWRpYXRpb24vaWRlbnRpdHksIGV4YWN0IG9ic2VydmF0aW9uIHByb2plY3Rpb24sIGV4cGxpY2l0IGNoZWNrZXIgcG9saWN5IGFuZCBzb3VyY2UtdG8tbW9kZWwgc2ltdWxhdGlvbiBldmlkZW5jZSBiZWZvcmUgcHJvbW90aW9uLg==",
+    "sha256": "344d7e34c0e134a10f6b1d8adab6119ac7f86e7e2560f3541076b29cedf6dec9"
+   },
+   {
+    "site": "18-proof-carrying-finite-protocol-v10.md:14",
+    "textBase64": "QSBjbGFpbWFudC1zdXBwbGllZCBKU09OIGZsYWcgY2xhaW1pbmcgZXh0ZXJuYWwgdmVyaWZpY2F0aW9uIGlzICoqbm90KiogYW4gYXV0aGVudGljYXRlZCBzb3VyY2UgYXR0ZXN0YXRpb24uIFVudGlsIGFuIGluZGVwZW5kZW50IHNvdXJjZS1vd25lZCB2ZXJpZmllciBpcyBnZW51aW5lbHkgY29ubmVjdGVkLCB0aGUgaGlnaGVzdCBleHRlcm5hbGx5IHJlbGV2YW50IHN0YXR1cyBpcyBPUEVSQVRJT05BTCBVTktOT1dOLCBldmVuIHdoZW4gdGhlIG1hdGhlbWF0aWNhbCBtb2RlbCBwYXNzZXMu",
+    "sha256": "abf79786e5472bfe5d2a64d15f391370f9426eb3452bae907b74bff020af1aa6"
+   },
+   {
+    "site": "18-proof-carrying-finite-protocol-v10.md:25",
+    "textBase64": "LSBNT0RFTCBQQVNTL0ZBSUwvVU5LTk9XTiBhbmQgKipzZXBhcmF0ZSBPUEVSQVRJT05BTCBVTktOT1dOKiogYmVjYXVzZSBzb3VyY2UtbmF0aXZlIHRydXN0IGlzIG5vdCBwcm92ZW4u",
+    "sha256": "3571796d9446b3c6d59c417ed57e3ca9751b5966a1e8e69f64f45eeb4cd73e1a"
+   },
+   {
+    "site": "14-belief-transport-approximation-v6.md:39",
+    "textBase64": "LSBDYXB0dXJlIG1vZGVsIGlucHV0L3NvdXJjZSByZXZpc2lvbnMsIGRldGVybWluaXN0aWMgc2VlZHMsIGV2aWRlbmNlIGxvZ3MsIGV4YWN0LXJhdGlvbmFsIHJlc3VsdHMsIGFuZCBleHBsaWNpdCBkaXN0aW5jdGlvbiBvZiBMT0NBTF9NT0RFTCAvIEhBTkRfUFJPT0YgLyBMRUFOX1BBU1MgLyBOQVRJVkVfUEFTUy4=",
+    "sha256": "e992bd43161bbf5c11469a1526a6aeb2d7b55ac92035bced5b8c40e0d681bc70"
+   },
+   {
+    "site": "11-certified-typed-effects-v3.md:32",
+    "textBase64": "MS4gKipTZW1hbnRpYyBnYXRlOioqIHR5cGVkIHBvcnRzIGFuZCBwcmUvcG9zdCBicmlkZ2UsIHByb3ZlbiBqb2ludCBsb2NhbGl0eSBhbmQgZnJhbWUsIFLiioZELCB0cmFjZSBjb21wbGV0ZW5lc3MsIHNvdXJjZS9vYnNlcnZlciByZXZpc2lvbiBhbGlnbm1lbnQsIGV4YWN0IG9yIHF1YWxpZmllZCBlcnJvciBidWRnZXQuIFByb2R1Y2VzIFNFTUFOVElDX01PREVMX1BBU1Mgb3IgRkFJTC9VTktOT1dOLg==",
+    "sha256": "aa25502c18a4a9408e2ee6f122c6dfa681280420d4e2b8d7acdb06450c81a22f"
+   },
+   {
+    "site": "11-certified-typed-effects-v3.md:33",
+    "textBase64": "Mi4gKipPcGVyYXRpb25hbCBnYXRlOioqIHNvdXJjZS1vd25lZCBwcmluY2lwYWwgYXV0aG9yaXphdGlvbiBmb3IgKmFjdHVhbCogTSBhbmQgUywgY29tcGxldGUgcmVhZC93cml0ZS9hdWRpdCBtZWRpYXRpb24sIGR5bmFtaWMgYXQtdXNlIHBvbGljeS9lcG9jaCB2YWxpZGF0aW9uLCBpZGVtcG90ZW5jeSBhbmQgc291cmNlIGNvbnNpc3RlbmN5LiBQcm9kdWNlcyBOQVRJVkVfQVVUSE9SSVpFRF9BVF9VU0Ugb25seSBvbiBhY3R1YWwgbmF0aXZlIGV2aWRlbmNlLCBvdGhlcndpc2UgVU5LTk9XTi4=",
+    "sha256": "034b5d1f599ffdd131d40cf6490980f86b7651b2b2b7f4a8e21549c281906e3f"
+   }
+  ]
+ },
  "rows": [
   {
    "id": "A",
@@ -143,11 +346,11 @@
      "quote": "asserts zero matches for the identifier set",
      "witness": {
       "claim": "7d6d7f1cf9ff4426",
-      "judged": 30,
+      "judged": 69,
       "families": {
-       "schema": 18,
-       "status": 9,
-       "program": 3
+       "schema": 50,
+       "status": 15,
+       "program": 4
       },
       "excluded": 1,
       "product": 0,
@@ -205,9 +408,9 @@
      "quote": "shown red by a one-identifier mutant",
      "witness": {
       "claim": "567f8d56399ad998",
-      "needles": 30,
+      "needles": 69,
       "sites": 5,
-      "killed": 150,
+      "killed": 345,
       "exact": true
      }
     },
@@ -217,7 +420,7 @@
      "witness": {
       "claim": "7235e01c575d240f",
       "base": 0,
-      "restored": 150,
+      "restored": 345,
       "real": 0
      }
     }
@@ -255,6 +458,134 @@
      }
     }
    ]
+  },
+  {
+   "id": "E",
+   "label": "the wb-zzb4 census vitest (pattern wb-6hb.11/wb-tz2.2) asserts 0 case-sensitive matches for the extended set plus word-boundary \u0043AC over src, test, qa, docs/workbench, examples (0 at d75b68d)",
+   "pins": [
+    {
+     "id": "E1",
+     "quote": "the wb-zzb4 census vitest (pattern wb-6hb.11/wb-tz2.2) asserts 0 case-sensitive matches for the extended set plus word-boundary \u0043AC",
+     "witness": {
+      "claim": "6ba408009f10d5ee",
+      "extension": 39,
+      "judged": 69,
+      "findings": 0,
+      "flipped": 39,
+      "word": true
+     }
+    },
+    {
+     "id": "E2",
+     "quote": "over src, test, qa, docs/workbench, examples (0 at d75b68d)",
+     "witness": {
+      "claim": "61e581e85a3344eb",
+      "roots": [
+       "src",
+       "test",
+       "qa",
+       "docs/workbench",
+       "examples"
+      ],
+      "perTree": {
+       "src": 0,
+       "test": 0,
+       "qa": 0,
+       "docs/workbench": 0,
+       "examples": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "F",
+   "label": "a one-identifier mutant (e.g. \u0046initeModelVerdictV1 in a comment) turns it red, removal green",
+   "pins": [
+    {
+     "id": "F1",
+     "quote": "a one-identifier mutant (e.g. \u0046initeModelVerdictV1 in a comment) turns it red",
+     "witness": {
+      "claim": "ab9a5455ade5f899",
+      "needles": 39,
+      "sites": 5,
+      "killed": 195,
+      "example": "schema"
+     }
+    },
+    {
+     "id": "F2",
+     "quote": "removal green",
+     "witness": {
+      "claim": "efeb2a051da85d5d",
+      "base": 0,
+      "restored": 195,
+      "real": 0
+     }
+    }
+   ]
+  },
+  {
+   "id": "G",
+   "label": "package.json + vendor/dependency-lock.json name no Library/\u0043AC package (only google-auth-library, lock:1703/3473/3475)",
+   "pins": [
+    {
+     "id": "G1",
+     "quote": "package.json + vendor/dependency-lock.json name no Library/\u0043AC package",
+     "witness": {
+      "claim": "0b2db074bd936c92",
+      "manifests": [
+       "package.json",
+       "vendor/dependency-lock.json"
+      ],
+      "findings": 0,
+      "floors": true
+     }
+    },
+    {
+     "id": "G2",
+     "quote": "(only google-auth-library, lock:1703/3473/3475)",
+     "witness": {
+      "claim": "19622ad734c44b5c",
+      "lines": 0,
+      "names": 0,
+      "controls": {
+       "stray": 1,
+       "quiet": 0
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "H",
+   "label": "the list is defined once, recording both shas (72d79ed704d8 derivation, e412851d9ce6 base)",
+   "pins": [
+    {
+     "id": "H1",
+     "quote": "the list is defined once",
+     "witness": {
+      "claim": "2d415b287ca4e31c",
+      "base": 30,
+      "extension": 39,
+      "schema": 32,
+      "members": 7,
+      "files": 8,
+      "citations": 6
+     }
+    },
+    {
+     "id": "H2",
+     "quote": "recording both shas (72d79ed704d8 derivation, e412851d9ce6 base)",
+     "witness": {
+      "claim": "2fd809bd71e57d56",
+      "shas": [
+       "72d79ed704d8",
+       "e412851d9ce6"
+      ]
+     }
+    }
+   ]
   }
  ],
  "residuals": [
@@ -281,6 +612,10 @@
   {
    "id": "R-ALIAS",
    "family": "a Library or program package, provider or evidence read under a name carrying no judged segment escapes the name readings"
+  },
+  {
+   "id": "R-VERSION",
+   "family": "a schema member under another version suffix is another identifier and escapes the exact-name reading"
   }
  ]
 }
