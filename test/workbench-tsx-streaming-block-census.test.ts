@@ -29,7 +29,11 @@
  *    assertion still reds a symlink). judgeStates judges the inventory BEFORE the derivation and each red names its sites: an
  *    inventory red lists every spelling with its file and line, and a derivation red names, for each state it contradicts, the
  *    files and lines that spell it (a spelling the inventory does not judge, prose among them) or that no judged module spells
- *    it; A1's judgingControls pin that order and those messages over planted trees; A2 no judged module or JSON file spells a streaming-block
+ *    it; A1's judgingControls pin that order and those messages over planted trees, and that the needle check reading them
+ *    discriminates: each named control's red, judged again against a needle it does not name (the inventory red and the prose
+ *    derivation red against their planted file at a line that spells nothing, the unspelled-state red against a state its plant
+ *    spells), reads unnamed, so a check that reads every red as named, a needle's file without its line, or a state needle as
+ *    always named, reds (wb-yzic); A2 no judged module or JSON file spells a streaming-block
  *    name (BLOCK_FAMILY: the program's own nouns - streaming blocks, a block stream, a block parser, parsed blocks, a parse
  *    status, content states, a provisional suffix), read by A1's rule; A3 the nearest block readers (NEAREST_READERS) are reached by the reader,
  *    judged, and carry no A1, A2, B1 or B2 finding; A4 each exemption is load-bearing: this file and its roster are walked, are
@@ -905,12 +909,19 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       ]),
     );
     // judgeStates' order and messages (F1): which judgment reds first over a planted tree, and whether its red names the site.
+    // The needle check's negative controls (wb-yzic F1): each named control's plant again, judged against a needle its red does
+    // not name - exactSpelling and proseSpelling against an unplanted site (their planted file at a line that spells nothing),
+    // unspelledState against a state its plant spells - reads unnamed, so a check that reads every red as named, a needle's file
+    // without its line, or a state needle as always named, in either judgment reds A1.
     const settled = { "src/settled.ts": 'export const SETTLED = ["complete", "validated", "invalid", "aborted"];\n' };
     const judgingControls = {
       quiet: stateRed(settled, ""),
       exactSpelling: stateRed({ ...settled, "src/blocks.ts": 'export const PENDING = "provisional";\n' }, "src/blocks.ts:1"),
       proseSpelling: stateRed({ ...settled, "src/notes.ts": 'export const NOTE = "a block still recognizing input";\n' }, "src/notes.ts:1"),
       unspelledState: stateRed({ "src/settled.ts": 'export const SETTLED = ["complete", "validated", "invalid"];\n' }, "aborted"),
+      exactSpellingUnplanted: stateRed({ ...settled, "src/blocks.ts": 'export const PENDING = "provisional";\n' }, "src/blocks.ts:2"),
+      proseSpellingUnplanted: stateRed({ ...settled, "src/notes.ts": 'export const NOTE = "a block still recognizing input";\n' }, "src/notes.ts:2"),
+      unspelledStateSettled: stateRed({ "src/settled.ts": 'export const SETTLED = ["complete", "validated", "invalid"];\n' }, "invalid"),
     };
     return done("A1", {
       floors,

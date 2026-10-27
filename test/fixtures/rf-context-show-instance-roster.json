@@ -29,6 +29,7 @@
    "export": 500
   },
   "followUp": "wb-7uzc",
+  "secondFollowUp": "wb-bf65",
   "globals": {
    "flags": [
     "--json",
@@ -43,8 +44,14 @@
     "--workspace",
     "--actor",
     "--color"
-   ]
-  }
+   ],
+   "endOfOptions": "--"
+  },
+  "walkPins": [
+   "T4",
+   "A3",
+   "B2"
+  ]
  },
  "measured": {
   "rf": {
@@ -1021,6 +1028,209 @@
      "message": "none"
     }
    ]
+  },
+  "endOfOptions": {
+   "build": "0.1.845",
+   "commit": "2a3b55ec661a",
+   "replies": [
+    {
+     "argv": [
+      "context",
+      "--",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--json",
+      "--",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--redact",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--detail",
+      "full",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--workspace",
+      "/fixture/rf-workspace",
+      "--",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--workspace=/fixture/rf-workspace",
+      "--",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "-v",
+      "--",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--color=never",
+      "--",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--actor",
+      "user:fixture",
+      "--",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 3,
+     "command": "context.show",
+     "code": "RF_STORAGE_NOT_FOUND",
+     "message": "render (rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa)"
+    },
+    {
+     "argv": [
+      "context",
+      "--",
+      "--workspace",
+      "/fixture/rf-workspace",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 2,
+     "command": "none",
+     "code": "RF_USAGE_UNKNOWN_COMMAND",
+     "message": "unknown command '--workspace'"
+    },
+    {
+     "argv": [
+      "context",
+      "--",
+      "--json",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa"
+     ],
+     "exit": 2,
+     "command": "none",
+     "code": "RF_USAGE_UNKNOWN_COMMAND",
+     "message": "unknown command '--json'"
+    },
+    {
+     "argv": [
+      "context",
+      "--",
+      "-v",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 2,
+     "command": "none",
+     "code": "RF_USAGE_UNKNOWN_COMMAND",
+     "message": "unknown command '-v'"
+    },
+    {
+     "argv": [
+      "context",
+      "--",
+      "--",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 2,
+     "command": "none",
+     "code": "RF_USAGE_UNKNOWN_COMMAND",
+     "message": "unknown command '--'"
+    },
+    {
+     "argv": [
+      "context",
+      "--",
+      "--redact",
+      "show",
+      "rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "--json"
+     ],
+     "exit": 2,
+     "command": "none",
+     "code": "RF_USAGE_UNKNOWN_COMMAND",
+     "message": "unknown command '--redact'"
+    }
+   ]
   }
  },
  "rows": [
@@ -1749,6 +1959,187 @@
      }
     },
     {
+     "id": "MS17",
+     "witness": {
+      "digest": "26929b351ab26d30",
+      "outcome": {
+       "showArgv": [
+        [],
+        [],
+        [
+         "instance-unserved"
+        ]
+       ],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 1,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MS18",
+     "witness": {
+      "digest": "d3a0b14b33db3340",
+      "outcome": {
+       "showArgv": [
+        [],
+        []
+       ],
+       "renderArgv": 1,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MS19",
+     "witness": {
+      "digest": "f6a9fc803cedcbaa",
+      "outcome": {
+       "showArgv": [
+        [
+         "render-count:0"
+        ],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        []
+       ],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MS20",
+     "witness": {
+      "digest": "7c737e019c9f27da",
+      "outcome": {
+       "showArgv": [
+        [],
+        []
+       ],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MS21",
+     "witness": {
+      "digest": "a403842ea412b25c",
+      "outcome": {
+       "showArgv": [
+        [],
+        []
+       ],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MS22",
+     "witness": {
+      "digest": "a447b2f5cae55a00",
+      "outcome": {
+       "showArgv": [
+        [],
+        [],
+        [
+         "instance-unserved"
+        ]
+       ],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 1,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MS23",
+     "witness": {
+      "digest": "52d298ecd8cacba3",
+      "outcome": {
+       "showArgv": [
+        [],
+        [
+         "render-count:2"
+        ],
+        []
+       ],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "MS24",
+     "witness": {
+      "digest": "04976a96db227b7e",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 6
+      }
+     }
+    },
+    {
+     "id": "MS25",
+     "witness": {
+      "digest": "c376c13e7aa1ebb9",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 4
+      }
+     }
+    },
+    {
+     "id": "MS26",
+     "witness": {
+      "digest": "7c206d89970580a8",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 7
+      }
+     }
+    },
+    {
+     "id": "MS27",
+     "witness": {
+      "digest": "58ac83017ad60f63",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 3
+      }
+     }
+    },
+    {
      "id": "MG1",
      "witness": {
       "build": "0.1.836",
@@ -1800,12 +2191,38 @@
       ],
       "disagree": []
      }
+    },
+    {
+     "id": "MG2",
+     "witness": {
+      "build": "0.1.845",
+      "commit": "2a3b55ec661a",
+      "ran": [
+       "context -- show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --json -- show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "context -- show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --redact --json",
+       "context -- show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --detail full --json",
+       "context --workspace /fixture/rf-workspace -- show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --workspace=/fixture/rf-workspace -- show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context -v -- show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --color=never -- show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context --actor user:fixture -- show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json"
+      ],
+      "refused": [
+       "context -- --workspace /fixture/rf-workspace show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context -- --json show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa",
+       "context -- -v show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context -- -- show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json",
+       "context -- --redact show rfr_aaaaaaaaaaaaaaaaaaaaaaaaaa --json"
+      ],
+      "disagree": []
+     }
     }
    ]
   },
   {
    "id": "R",
-   "label": "the named residuals R1-R10 keep their pinned readings",
+   "label": "the named residuals R1-R13 keep their pinned readings",
    "pins": [
     {
      "id": "R1",
@@ -1931,6 +2348,46 @@
        "instanceReads": 0
       }
      }
+    },
+    {
+     "id": "R11",
+     "witness": {
+      "digest": "c70290fceadb3413",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "R12",
+     "witness": {
+      "digest": "fda871abf576a7e5",
+      "outcome": {
+       "showArgv": [],
+       "renderArgv": 0,
+       "showLiterals": 0,
+       "selectorLiterals": 0,
+       "instanceReads": 0
+      }
+     }
+    },
+    {
+     "id": "R13",
+     "witness": {
+      "residual": "COUNT-MATCHED",
+      "live": [],
+      "countMatchedB3": [],
+      "countMatchedT4": [
+       "walk unread: T4"
+      ],
+      "earlyReturnB3": [
+       "reached B3:2, pinned B3:4"
+      ]
+     }
     }
    ]
   }
@@ -1945,7 +2402,10 @@
   "R7": "UNRESOLVED-BINDING",
   "R8": "SELECTION-ALIAS",
   "R9": "COORDINATED",
-  "R10": "COMPOSED-FRAGMENT"
+  "R10": "COMPOSED-FRAGMENT",
+  "R11": "UNRESOLVED-LOOKUP",
+  "R12": "SELECTION-PARAMETER",
+  "R13": "COUNT-MATCHED"
  },
  "cures": {
   "G13": "MS8",
@@ -1955,7 +2415,21 @@
   "P41": "MS12",
   "G20": "MS13",
   "G21": "MS14",
-  "X-NOTFOUND-ANYEXIT": "MJ5"
+  "X-NOTFOUND-ANYEXIT": "MJ5",
+  "E-DASHDASH": "MS17",
+  "E-ENUM": "MS18",
+  "E-OBJ": "MS19",
+  "E-OBJ-VERB": "MS19",
+  "E-STATIC": "MS20",
+  "E-ELEM": "MS21",
+  "E-VARIADIC": "MS22",
+  "E-ARRAYOF": "MS22",
+  "E-B2-NULLISH": "MS24",
+  "E-B2-DESTRUCT-NULLISH": "MS24",
+  "E-B2-ASSIGN": "MS25",
+  "E-B2-REFLECT": "MS26",
+  "E-B2-PARAM": "MS27",
+  "X-THIRD-COUNTMATCH-T4": "R13"
  },
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster, the landed record, the follow-up's probes and the cases agree",
@@ -2006,7 +2480,19 @@
   "MS14",
   "MS15",
   "MS16",
+  "MS17",
+  "MS18",
+  "MS19",
+  "MS20",
+  "MS21",
+  "MS22",
+  "MS23",
+  "MS24",
+  "MS25",
+  "MS26",
+  "MS27",
   "MG1",
+  "MG2",
   "R1",
   "R2",
   "R3",
@@ -2017,7 +2503,10 @@
   "R8",
   "R9",
   "R10",
-  "the record: every registered test is in run mode and ran, and every pin reached its end with its pinned assertion count"
+  "R11",
+  "R12",
+  "R13",
+  "the record: every registered test is in run mode and ran, every pin reached its end with its pinned assertion count, and every src-walk pin walked src"
  ],
  "reached": [
   "T1:3",
@@ -2067,7 +2556,19 @@
   "MS14:3",
   "MS15:3",
   "MS16:3",
+  "MS17:3",
+  "MS18:3",
+  "MS19:3",
+  "MS20:3",
+  "MS21:3",
+  "MS22:3",
+  "MS23:3",
+  "MS24:3",
+  "MS25:3",
+  "MS26:3",
+  "MS27:3",
   "MG1:3",
+  "MG2:3",
   "R1:3",
   "R2:3",
   "R3:3",
@@ -2077,6 +2578,9 @@
   "R7:3",
   "R8:3",
   "R9:3",
-  "R10:3"
+  "R10:3",
+  "R11:3",
+  "R12:3",
+  "R13:3"
  ]
 }
