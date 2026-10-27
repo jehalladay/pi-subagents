@@ -1,7 +1,7 @@
 {
   "bead": "wb-a9l2.6",
   "pin": "6a251bf73af5",
-  "basis": "The out-of-file roster of test/workbench-rf-evaluator-artifact-context-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the receipt vocabulary and the producer fixture facts, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at ReactiveFiberCLI 6a251bf73af5 (read-only git show): checkIds is the graph.test.schema.json $defs.check_id enum in schema order; receiptFields are the command and the receipt keys only a receipt reader would name; artifactPhrases are the program's own names for its evaluator artifacts (harness2-federated-peer-2026-10-20/README.md:34, :37, :51); receiptSha256 is the sha256 of JSON.stringify of the result object of schemas/fixtures/graph.test/valid/ok_shadow.json as parsed; the two invalid fixtures are each one field away from it (checks[0].status failed; valid false). carriers are constructed additive context.render result keys, named by no shipped rf schema. wb-e9j2 (the follow-up of the wb-a9l2.6 gate's PREP F1 (i)-(v) and F2) adds A6, C4, M10-M14 and Q4, and widens the witnesses of A1 (every invoke member reference; the walk covers every src file git lists), A3 (the whole reconcile frame, its EVIDENCE_GUIDANCE lines included), B4 (the two refusals' reply shapes), C2 (rf read off id, permission and contractSource; the native id set) and C3 (the git-covering walk); row M's label states the matcher's definition. wb-ofz4 (the follow-up of the wb-e9j2 gate's F1-F3, landing 353) adds M15-M18 and row S (Q5-Q9, the pinned quiet rows of the R-KEYED, R-EMBEDDED, R-CASE and R-COMPOSED residuals of the A1 and C4 scans), widens the witnesses of A1 (eleven destructuring and reflective controls, a quiet control) and C4 (seven path-qualified, template-span, extension and one-token case controls, a path quiet control), and row M's label states the full JS string-escape reading.",
+  "basis": "The out-of-file roster of test/workbench-rf-evaluator-artifact-context-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the receipt vocabulary and the producer fixture facts, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at ReactiveFiberCLI 6a251bf73af5 (read-only git show): checkIds is the graph.test.schema.json $defs.check_id enum in schema order; receiptFields are the command and the receipt keys only a receipt reader would name; artifactPhrases are the program's own names for its evaluator artifacts (harness2-federated-peer-2026-10-20/README.md:34, :37, :51); receiptSha256 is the sha256 of JSON.stringify of the result object of schemas/fixtures/graph.test/valid/ok_shadow.json as parsed; the two invalid fixtures are each one field away from it (checks[0].status failed; valid false). carriers are constructed additive context.render result keys, named by no shipped rf schema. wb-e9j2 (the follow-up of the wb-a9l2.6 gate's PREP F1 (i)-(v) and F2) adds A6, C4, M10-M14 and Q4, and widens the witnesses of A1 (every invoke member reference; the walk covers every src file git lists), A3 (the whole reconcile frame, its EVIDENCE_GUIDANCE lines included), B4 (the two refusals' reply shapes), C2 (rf read off id, permission and contractSource; the native id set) and C3 (the git-covering walk); row M's label states the matcher's definition. wb-ofz4 (the follow-up of the wb-e9j2 gate's F1-F3, landing 353) adds M15-M18 and row S (Q5-Q9, the pinned quiet rows of the R-KEYED, R-EMBEDDED, R-CASE and R-COMPOSED residuals of the A1 and C4 scans), widens the witnesses of A1 (eleven destructuring and reflective controls, a quiet control) and C4 (seven path-qualified, template-span, extension and one-token case controls, a path quiet control), and row M's label states the full JS string-escape reading. wb-sfo7 (the follow-up of the wb-ofz4 gate's F1-F6, landing 454) adds M19, M20 and the R-KEYED and R-SHELL quiet rows Q10 and Q11, widens the witnesses of A1 (eleven wrapped-literal, wrapped-key and rest-element controls, a boundary quiet control) and C4 (nineteen whitespace-bearing, any-case, quoted, quote- or operator-ended, escaped-space, after-a-word, raw-text, one-token-case and extension path controls, a boundary quiet control), and records the input digest (sha256, first 16 hex) of every A1, C2 and C4 control, so a census-only edit that swaps a control's text for another reading the same way reds against this file.",
   "checkIds": [
     "graph_schema",
     "compilability",
@@ -121,6 +121,39 @@
               ],
               [
                 "probe.ts:reference"
+              ],
+              [
+                "probe.ts:probe.id"
+              ],
+              [
+                "probe.ts:probe.id"
+              ],
+              [
+                "probe.ts:probe.id"
+              ],
+              [
+                "probe.ts:probe.id"
+              ],
+              [
+                "probe.ts:probe.id"
+              ],
+              [
+                "probe.ts:reference"
+              ],
+              [
+                "probe.ts:reference"
+              ],
+              [
+                "probe.ts:reference"
+              ],
+              [
+                "probe.ts:reference"
+              ],
+              [
+                "probe.ts:reference"
+              ],
+              [
+                "probe.ts:reference"
               ]
             ],
             "quiet": [],
@@ -141,7 +174,38 @@
               ]
             },
             "observerCallers": [],
-            "observerDefined": true
+            "observerDefined": true,
+            "boundaryQuiet": [],
+            "controlDigests": [
+              "80a089ef143c6c7d",
+              "40eca3f682548940",
+              "1ce15829e3a2f4c0",
+              "5b33c7e1ae0406b9",
+              "ad89a6c9898f107e",
+              "cdf1cadb2d1f12d3",
+              "956867d036ce8cb0",
+              "48bda0464ef90a1e",
+              "72e1dc3a17eb6a0d",
+              "2cd3d8c4bbd596fb",
+              "e35ef9d684f129c0",
+              "9caa04ceb961bc0e",
+              "19ca6174f4a290d4",
+              "6e55eba2888ee9ad",
+              "5b0c56e65d45806a",
+              "475aa00776c98064",
+              "1b4196a85a0c7d4f",
+              "429d1635fb59a446",
+              "61ad8f0f587a0381",
+              "19151ab16388a4e4",
+              "ea09cfbeecc83ea1",
+              "0b343ce4ae3725e8",
+              "1321b390d83a06fa",
+              "e16d8b2d5b1b18d2",
+              "f9841dffbfff29ab",
+              "bf5e7871e2ecdcf6"
+            ],
+            "quietDigest": "844c8a9ae5f4de95",
+            "boundaryQuietDigest": "9b0e2528436bf2c7"
           }
         },
         {
@@ -598,7 +662,15 @@
                 "overlay.check",
                 "overlay.sdk"
               ]
-            }
+            },
+            "controlDigests": [
+              "59464a7c6ec37435",
+              "ff68bfc3d0abca5b",
+              "763b5e1fcf43ada5",
+              "7cfa784989f4a0aa",
+              "e1697be32fc66deb",
+              "9b0553222053ceae"
+            ]
           }
         },
         {
@@ -657,9 +729,107 @@
               ],
               [
                 "probe.ts:spawn"
+              ],
+              [
+                "probe.ts:spawn"
+              ],
+              [
+                "probe.ts:spawn"
+              ],
+              [
+                "probe.ts:spawn"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:TaggedTemplateExpression"
+              ],
+              [
+                "probe.ts:spawn"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync"
+              ],
+              [
+                "probe.ts:execSync",
+                "probe.ts:execSync",
+                "probe.ts:execSync",
+                "probe.ts:execSync"
               ]
             ],
-            "pathQuiet": []
+            "pathQuiet": [],
+            "boundaryQuiet": [],
+            "controlDigests": [
+              "4809b5c163ab8537",
+              "3706643addd5489f",
+              "b54843955aeb63a8",
+              "bc29256d861904e1"
+            ],
+            "quietDigest": "e365d816d5ca8c08",
+            "pathControlDigests": [
+              "d432a3f05e56ce7d",
+              "4d9a09ad78942546",
+              "bf358e81f31d7538",
+              "8203a62fd12959a4",
+              "10741e51df3293cc",
+              "38104f6e760eddfe",
+              "af07b059b936ee58",
+              "5da2b5e903cba26e",
+              "2f7b476ec6d78721",
+              "9c44c4deba0c20d9",
+              "eb8195f62a1218d4",
+              "ce1d996420a3aa71",
+              "bb9e411b3564afa7",
+              "b1601f8203fe55b8",
+              "2bde50fc64ad831e",
+              "6b1179015c59f76c",
+              "a0cf3c614c419dc4",
+              "7de76f9120bca0e3",
+              "c7cac3b21b1c4f78",
+              "16196b1da5a6c7a2",
+              "207bbb6f4144aa52",
+              "200f43ce39b7f7c4",
+              "c4e40da6b74cb28f",
+              "72b0792a85d47176",
+              "a2ce5de5c1707ef4",
+              "8492112e8d699587"
+            ],
+            "pathQuietDigest": "74bdb9bd66a11d11",
+            "boundaryQuietDigest": "f2c37b959e854176"
           }
         }
       ]
@@ -795,6 +965,20 @@
           }
         },
         {
+          "id": "M19",
+          "witness": {
+            "digest": "ce7c7e9823d6da8b",
+            "hit": true
+          }
+        },
+        {
+          "id": "M20",
+          "witness": {
+            "digest": "c6a1410ea6c23213",
+            "hit": true
+          }
+        },
+        {
           "id": "Q1",
           "witness": {
             "digest": "4256a644fd172a08",
@@ -826,7 +1010,7 @@
     },
     {
       "id": "S",
-      "label": "the A1 invoke scan and the C4 launch scan leave each named residual pinned quiet: an invoke key held in a variable (R-KEYED), rf after another word of a literal (R-EMBEDDED), a case-variant rf command line (R-CASE), and an invoke key or the rf binary's name assembled at runtime (R-COMPOSED)",
+      "label": "the A1 invoke scan and the C4 launch scan leave each named residual pinned quiet: an invoke key held in a variable or computed by a non-literal expression (R-KEYED), rf by its bare name after another word of a literal (R-EMBEDDED), a case-variant bare rf leading an unquoted command line (R-CASE), a program word the shell assembles from glued, quoted or escaped pieces (R-SHELL), and an invoke key or the rf binary's name assembled at runtime (R-COMPOSED)",
       "pins": [
         {
           "id": "Q5",
@@ -870,6 +1054,24 @@
             "residual": "R-COMPOSED",
             "scan": "launch",
             "digest": "8b72608ef1707d30",
+            "sites": []
+          }
+        },
+        {
+          "id": "Q10",
+          "witness": {
+            "residual": "R-KEYED",
+            "scan": "invoke",
+            "digest": "80240e3517119d2b",
+            "sites": []
+          }
+        },
+        {
+          "id": "Q11",
+          "witness": {
+            "residual": "R-SHELL",
+            "scan": "launch",
+            "digest": "95cf1c5068f34160",
             "sites": []
           }
         }
