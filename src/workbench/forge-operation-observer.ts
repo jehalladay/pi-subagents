@@ -289,7 +289,7 @@ function decodeTestSelection(block: unknown): ForgeTestSelection | "withheld" {
 
 /**
  * The selection blocks a reply's data publishes, or undefined when it publishes neither (a reply with no data block included).
- * `selection: null` is the producer's own value on an unnarrowed run (measured, forge 0.2.1), so it publishes no test universe.
+ * An unnarrowed run publishes no `data.selection` key (measured, forge 0.2.1: absent, not null); a null one decodes the same, to no test universe.
  */
 function decodeForgeRunSelection(data: unknown): ForgeRunSelection | undefined {
   if (!record(data)) return undefined;
