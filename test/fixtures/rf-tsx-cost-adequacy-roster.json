@@ -268,17 +268,93 @@
               "capBytes": 262144
             },
             "changed": {
+              "other timer by name beside a deadline function": false,
+              "other timer bound to a name beside a deadline binding": false,
               "deadline 30 s": true,
               "stdout cap 512 KiB": true,
               "stdout cap inclusive": true,
               "shared cap 128 KiB": true,
               "second deadline timer": true,
+              "second deadline timer by name": true,
+              "second deadline timer by a shadowed name": true,
+              "second deadline timer by call": true,
               "duplicate deadline timer": true,
               "runtime deadline": true,
               "renamed deadline binding": false
             },
+            "refactored": {
+              "deadline bound in its function to the variant's name": {
+                "unchanged": true,
+                "drift": []
+              },
+              "deadline bound at module scope to the variant's name": {
+                "unchanged": true,
+                "drift": []
+              },
+              "deadline bound in its function to another name": {
+                "unchanged": true,
+                "drift": []
+              },
+              "deadline callback bound to a name": {
+                "unchanged": true,
+                "drift": []
+              },
+              "deadline callback declared as a function": {
+                "unchanged": true,
+                "drift": []
+              }
+            },
+            "failClosed": {
+              "cap binding declared with let": {
+                "deadlines": [
+                  60000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": null
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": null
+                  }
+                ]
+              },
+              "stream reason in an unrelated call under a comparison": {
+                "deadlines": [
+                  60000
+                ],
+                "caps": [
+                  {
+                    "stream": "stderr",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 262144
+                  },
+                  {
+                    "stream": "stdout",
+                    "operator": ">",
+                    "bound": 0
+                  }
+                ]
+              }
+            },
+            "fresh": {
+              "free": "A",
+              "nested": "A_2"
+            },
             "residuals": {
-              "R-OTHER-KILL-PATH": "unchanged"
+              "R-OTHER-KILL-PATH": "unchanged",
+              "R-INDIRECT-DEADLINE": [
+                "unchanged",
+                "unchanged"
+              ]
             }
           }
         },
@@ -376,7 +452,8 @@
                 "docs/untracked.md"
               ],
               "refused": [
-                "docs/link.md"
+                "docs/link.md",
+                "docs/screen.png"
               ],
               "findings": [
                 "README.md:1 anchor+cost: asserted-adequate",
@@ -393,8 +470,13 @@
                 0,
                 0
               ],
+              "R-JOINED": [
+                0,
+                0
+              ],
               "R-OUTSIDE-ROOTS": {
                 "outside": [
+                  false,
                   false,
                   false,
                   false,
@@ -444,6 +526,10 @@
       "quietPin": "C1"
     },
     {
+      "id": "R-INDIRECT-DEADLINE",
+      "quietPin": "C1"
+    },
+    {
       "id": "R-UNANCHORED",
       "quietPin": "C2"
     },
@@ -461,6 +547,10 @@
     },
     {
       "id": "R-LOOKALIKE",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-JOINED",
       "quietPin": "C2"
     },
     {

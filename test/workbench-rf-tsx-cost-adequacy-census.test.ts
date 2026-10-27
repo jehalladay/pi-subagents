@@ -26,8 +26,10 @@
  * - RECORD (row B): recordedComparison reads the frozen TRACEABILITY page and the receipts directory for a comparison row of this
  *   bead; none exists, and none is owed while the gate reads ABSENT.
  * - POLICY (rows B and C): policyOf(source) parses the provider module with the TypeScript compiler and reads every setTimeout
- *   whose callback stops with the deadline reason (its delay, constant-folded through const bindings) and every if whose
- *   comparison guards a stop with a stream reason (its bound, folded the same way). An unfoldable value reads null, never a guess.
+ *   whose callback stops with the deadline reason (an arrow or function expression, a call that builds the callback, or a name
+ *   the module declares as a function or binds, every declaration of that name read; its delay, constant-folded through const
+ *   bindings) and every if whose comparison guards a call passing a stream reason (its bound, folded the same way). An unfoldable
+ *   value reads null, never a guess: a let or var binding is never folded.
  * - SCAN (rows B and C): liveEntries() reads every file git lists (tracked or untracked, never ignored) below docs/, src/, qa/,
  *   examples/ and .agents/, and the repository root's .md pages, as UTF-8; a symlink or a file holding a NUL is refused.
  *   scanEntries cuts each text into sentences (after ".", "!", "?" or ";" before white space, at a blank line, before a line
@@ -35,8 +37,8 @@
  *   when it carries the TSX anchor and a cost or policy family; it is a FINDING when it also carries a claim word and no marker,
  *   reported `<path>:<line> <families>: asserted-<claim>`. The live pass carries two known positives that it must find exactly;
  *   each cut rule has its own control (a claim and its subject on either side of the cut read quiet), and the same walker runs
- *   over a scratch git repository whose tracked, untracked, ignored, outside-root and symlinked files it must list, skip and
- *   refuse exactly as it does on Pi's tree.
+ *   over a scratch git repository whose tracked, untracked, ignored, outside-root, root non-.md, NUL-holding and symlinked files
+ *   it must list, skip and refuse exactly as it does on Pi's tree.
  * - ARMING (row C): guardOf(gate, policy, findings) is armed while the gate reads ABSENT and then reports every policy mismatch
  *   and every finding as a violation; on PRESENT it stands down, and the on-landing re-read of row B governs.
  *
@@ -51,8 +53,14 @@
  *    pass finds none, and the policy is unchanged.
  *  C1 the provider's deadline and caps equal the statement's 60 s and 256 KiB, read by AST (planted variants of the live source
  *    each read as changed: another delay, another bound on one stream or on the shared binding, an inclusive comparison, a second
- *    or duplicate deadline timer, an unfoldable delay; a renamed binding reads unchanged); C2 the live scan finds nothing beyond its
- *    known positives, and every family spelling, claim inflection, marker, cut rule and walk rule reads as pinned; C3 the guard is
+ *    or duplicate deadline timer, a second one whose callback is passed by name, by a shadowed name or built by a call, an
+ *    unfoldable delay; a renamed binding, under a name the module never spells, and a timer that kills without the deadline reason
+ *    under a name, beside a function or a binding that does stop with it, read unchanged; REFACTORS that keep the numerics (the
+ *    deadline bound in its function or at module scope, to the name the variant takes or another, the deadline callback replaced by
+ *    a name bound or declared to stop with the deadline reason) each read unchanged and leave every variant reading as it reads on
+ *    the live source; the FAIL-CLOSED pair (a let cap binding, a stream reason passed to an unrelated call under a comparison)
+ *    reads changed, with its reading pinned); C2 the live scan finds nothing beyond its known positives, and every
+ *    family spelling, claim inflection, marker, cut rule and walk rule reads as pinned; C3 the guard is
  *    armed at the pin and reports nothing, reports a planted change while armed, and stands down on a listing that holds the report.
  * OUTSIDE ANCHOR: the owner filing's row of wb-693.8 in the tracked bead export (.beads/issues.jsonl), its description only (its
  * notes are later seats' records). Its ACCEPTANCE items are the labels of rows A-C verbatim and in order, and each row's pin quotes
@@ -65,19 +73,36 @@
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, every row and pin is held to the out-of-file
  * roster (test/fixtures/rf-tsx-cost-adequacy-roster.json) with its witness, each witness carries the digest of its own quote, and
  * a last case reads that every pin ran its own case to the end. SELF-READ: the judged set parses this file's IMPL and requires
- * every entry to name one of READERS and not ROSTER.
+ * every entry to name one of READERS and not ROSTER, and reads every case's explicit budget (the judged set's and each pin's 120 s).
  * RESIDUALS (named; each has a pinned quiet row in the pin named): R-RENAMED (A1) a report under another basename or case reads
  *   ABSENT; R-NON-TREE (A1) a report outside the repository tree (a redirected bench directory, a release asset) is never listed,
  *   and the ignored bench directory keeps a bench run's own report out of the tree; R-SCHEMA-SLICE (A2) only the vendored slices
  *   are read, so a value of the wrong type, pattern or enum outside the graph kinds reads valid; R-OTHER-KILL-PATH (C1) a timer
- *   that ends the child without the deadline reason is not read; R-UNANCHORED (C2) a claim about the policy or a cost that names
- *   no TSX anchor; R-MARKER-ANYWHERE (C2) a marker anywhere in a sentence admits it, whatever it qualifies; R-SPLIT (C2) a claim
- *   and its subject in different sentences; R-PARAPHRASE (C2) a claim outside the claim words; R-LOOKALIKE (C2) a look-alike
- *   letter or an inserted invisible inside a claim word; R-OUTSIDE-ROOTS (C2) test/, new-feedback/, vendor/, .beads/ and every
- *   other unscanned tree.
+ *   that ends the child without the deadline reason is not read; R-INDIRECT-DEADLINE (C1) a timer whose callback reaches the
+ *   deadline reason only through another function it calls or a member it names (a wrapper ()=>onLate(), handlers.deadline) is
+ *   not read; R-UNANCHORED (C2) a claim about the policy or a cost that names no TSX anchor; R-MARKER-ANYWHERE (C2) a marker
+ *   anywhere in a sentence admits it, whatever it qualifies; R-SPLIT (C2) a claim and its subject in different sentences;
+ *   R-PARAPHRASE (C2) a claim outside the claim words; R-LOOKALIKE (C2) a look-alike letter or an inserted invisible inside a claim
+ *   word; R-JOINED (C2) an anchor, family or claim word joined to its neighbour inside an identifier (snake_case tsx_cost,
+ *   camelCase tsxCost); R-OUTSIDE-ROOTS (C2) test/, new-feedback/, vendor/, .beads/ and every other unscanned tree, and every
+ *   root file but the .md pages.
  * NOT CLAIMED: a family alternative, claim word or marker that the filing never spells (overhead, latency, sufficient, enough,
  * and every marker but the three gating words) removed from the vocabulary and the roster together; a scan root beyond docs/
  * (the filing's docs/receipt clause) removed from the walk and the roster together.
+ *
+ * wb-q1a0 (the R694 follow-up the wb-693.8 gate routed at landing 538, gate cmd_9dd9399ce5bc: F1 leads, F2-F6 ride). F1 the
+ * renamed-binding variant binds a name the module never spells (freshName), so a refactor that itself names the deadline after
+ * the variant, in its function or at module scope, reads unchanged and leaves every variant reading as it was (C1 REFACTORS).
+ * F3 a deadline callback passed by name, by a shadowed name or built by a call is read as the deadline timer, and a name resolves to
+ * its own declarations only: the refactor to that form reads unchanged, and a second deadline timer in any of those forms, which
+ * read unchanged on the landed reader, reads changed. Every planted refactor and variant assumes only the deadline timer and the
+ * shared cap binding the landed variants already plant on. The let cap binding and the stream reason in an unrelated call stay
+ * FAIL-CLOSED by design and are pinned with their readings (folding a let would admit a reassignment the reader cannot see, and
+ * reading caps through one stop function only would let a cap stopped by another escape). F2 and the indirect deadline callback
+ * are named residuals (R-JOINED, R-INDIRECT-DEADLINE).
+ * F4 the scratch walk refuses a NUL-holding file beside the symlink. F5 it skips a root non-.md file, and R-OUTSIDE-ROOTS's quiet
+ * row probes one. F6 the judged set runs on the pins' explicit 120 s budget, read from this file (SELF-READ).
+ *
  * Display paths added: none. Test-only: every plant is an in-memory text, listing or report, except C2's one scratch git repository
  * per run, made with makeScratch under the leak guard and removed in the same case; src, docs, the roster and the bead export are
  * only read.
@@ -159,8 +184,8 @@ const ROSTER = JSON.parse(readFileSync(join(REPO, ROSTER_FILE), "utf8")) as Rost
 /** The functions that read the subject; every IMPL entry names one directly (SELF-READ). */
 const READERS: readonly string[] = ["gateOf", "guardOf", "instanceAxes", "liveEntries", "policyOf", "recordedComparison", "scanEntries", "validateReport"];
 const RESIDUALS: readonly string[] = [
-  "R-RENAMED", "R-NON-TREE", "R-SCHEMA-SLICE", "R-OTHER-KILL-PATH", "R-UNANCHORED", "R-MARKER-ANYWHERE", "R-SPLIT", "R-PARAPHRASE", "R-LOOKALIKE",
-  "R-OUTSIDE-ROOTS",
+  "R-RENAMED", "R-NON-TREE", "R-SCHEMA-SLICE", "R-OTHER-KILL-PATH", "R-INDIRECT-DEADLINE", "R-UNANCHORED", "R-MARKER-ANYWHERE", "R-SPLIT", "R-PARAPHRASE",
+  "R-LOOKALIKE", "R-JOINED", "R-OUTSIDE-ROOTS",
 ];
 /** The vendored spans, by the site they were read at. */
 const IGNORE_SITE = ".gitignore:52-53";
@@ -413,10 +438,24 @@ function reasonsIn(node: ts.Node): string[] {
   visit(node);
   return out;
 }
+/** What a timer's callback runs: the callback itself (an arrow or function expression, or a call that builds it, such as
+ * stop.bind(null, reason)), or, for a name, every declaration of it in the module: a function declaration's body or a binding's
+ * initializer, at any depth (wb-q1a0 F3: a callback passed by name was never read). */
+function callbackBodies(callback: ts.Expression): ts.Node[] {
+  if (!ts.isIdentifier(callback)) return [callback];
+  const bodies: ts.Node[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isFunctionDeclaration(node) && node.name?.text === callback.text && node.body !== undefined) bodies.push(node.body);
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === callback.text && node.initializer !== undefined) bodies.push(node.initializer);
+    ts.forEachChild(node, visit);
+  };
+  visit(callback.getSourceFile());
+  return bodies;
+}
 function isDeadlineTimer(node: ts.Node): node is ts.CallExpression {
   if (!ts.isCallExpression(node) || !ts.isIdentifier(node.expression) || node.expression.text !== "setTimeout") return false;
   const callback = node.arguments[0];
-  return callback !== undefined && (ts.isArrowFunction(callback) || ts.isFunctionExpression(callback)) && reasonsIn(callback.body).includes(DEADLINE_REASON);
+  return callback !== undefined && callbackBodies(callback).some((body) => reasonsIn(body).includes(DEADLINE_REASON));
 }
 function capStreams(node: ts.Node): string[] {
   if (!ts.isIfStatement(node) || !ts.isBinaryExpression(node.expression)) return [];
@@ -473,9 +512,8 @@ function statedShape(): Policy {
   return { deadlines: [deadlineMs], caps: STREAMS.map((stream) => ({ stream, operator: ">", bound: capBytes })) };
 }
 const samePolicy = (policy: Policy): boolean => JSON.stringify(policy) === JSON.stringify(statedShape());
-/** The live source with the first node `pick` selects replaced by `text` (an in-memory variant; the module is never written). */
-function plantAt(source: string, pick: (node: ts.Node) => boolean, text: string): string {
-  const file = parse(source);
+/** The first node `pick` selects, depth first from the module itself. */
+function firstNode(file: ts.SourceFile, pick: (node: ts.Node) => boolean): ts.Node | undefined {
   let found: ts.Node | undefined;
   const visit = (node: ts.Node): void => {
     if (found !== undefined) return;
@@ -483,6 +521,12 @@ function plantAt(source: string, pick: (node: ts.Node) => boolean, text: string)
     else ts.forEachChild(node, visit);
   };
   visit(file);
+  return found;
+}
+/** The live source with the first node `pick` selects replaced by `text` (an in-memory variant; the module is never written). */
+function plantAt(source: string, pick: (node: ts.Node) => boolean, text: string): string {
+  const file = parse(source);
+  const found = firstNode(file, pick);
   if (found === undefined) throw new Error("the planted site is missing from the provider module");
   return source.slice(0, found.getStart(file)) + text + source.slice(found.getEnd());
 }
@@ -516,6 +560,90 @@ function isStdoutBinding(source: string): (node: ts.Node) => boolean {
     return parent !== undefined && ts.isVariableDeclaration(parent) && parent.initializer === node && ts.isIdentifier(parent.name) && parent.name.text === name;
   };
 }
+/** The statement that holds a node: its ancestor whose parent is a block or the module itself. */
+function statementOf(node: ts.Node): ts.Node {
+  let at = node;
+  for (let parent = parentOf(at); parent !== undefined && !ts.isBlock(parent) && !ts.isSourceFile(parent); parent = parentOf(at)) at = parent;
+  return at;
+}
+/** A name the module never spells, at any depth: the base, or the base with the first free numeric suffix, so a binding planted
+ * under it can neither double nor shadow a live one (wb-q1a0 F1: a hard-coded variant name collided with a refactor that took it). */
+function freshName(source: string, base: string): string {
+  const spelled = new Set<string>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isIdentifier(node)) spelled.add(node.text);
+    ts.forEachChild(node, visit);
+  };
+  visit(parse(source));
+  let name = base;
+  for (let suffix = 1; spelled.has(name); suffix += 1) name = `${base}_${suffix}`;
+  return name;
+}
+/** The base of the renamed-binding variant's name: the name a refactor that binds the deadline would most likely take. */
+const RENAMED_BASE = "DEADLINE_MS";
+/** A REFACTOR that keeps the numerics: the deadline timer's delay moved under `name`, bound at module scope or just before the
+ * statement that holds the timer (the delay's own text moves into the binding). */
+function namedDeadline(source: string, name: string, scope: "function" | "module"): string {
+  const file = parse(source);
+  const delay = firstNode(file, isDeadlineDelay);
+  if (delay === undefined) throw new Error("the provider module holds no deadline delay to name");
+  const at = scope === "module" ? 0 : statementOf(delay).getStart(file);
+  return `${source.slice(0, at)}const ${name}=${delay.getText(file)};\n${source.slice(at, delay.getStart(file))}${name}${source.slice(delay.getEnd())}`;
+}
+/** A REFACTOR that keeps the numerics: the deadline timer's callback, whatever its form, replaced by `name`, which a const arrow
+ * binding or a function declaration just before the statement that holds the timer stops with the deadline reason. It assumes
+ * only the deadline timer the policy reads, so a module whose own callback is already named reads the same way. */
+function namedCallback(source: string, name: string, form: "binding" | "declaration"): string {
+  const file = parse(source);
+  const timer = firstNode(file, isDeadlineTimer);
+  const callback = timer !== undefined && ts.isCallExpression(timer) ? timer.arguments[0] : undefined;
+  if (timer === undefined || callback === undefined) throw new Error("the provider module holds no deadline timer");
+  const stops = `stop(${JSON.stringify(DEADLINE_REASON)})`;
+  const declared = form === "binding" ? `const ${name}=()=>${stops};` : `function ${name}(){${stops};}`;
+  const at = statementOf(timer).getStart(file);
+  return `${source.slice(0, at)}${declared}\n${source.slice(at, callback.getStart(file))}${name}${source.slice(callback.getEnd())}`;
+}
+/** A FAIL-CLOSED refactor: the stdout cap's binding declared with let, which the reader never folds. */
+function letCapBinding(source: string): string {
+  const file = parse(source);
+  const initializer = firstNode(file, isStdoutBinding(source));
+  const declaration = initializer === undefined ? undefined : parentOf(initializer);
+  const list = declaration === undefined ? undefined : parentOf(declaration);
+  if (list === undefined || !ts.isVariableDeclarationList(list) || !list.getText(file).startsWith("const ")) throw new Error("the stdout cap's binding is no const declaration");
+  const at = list.getStart(file);
+  return `${source.slice(0, at)}let${source.slice(at + "const".length)}`;
+}
+/** The C1 variants of a module: each changes a reading of the policy, except three that read unchanged: the renamed binding, which
+ * moves the deadline under another name, and a timer that kills without the deadline reason under a name, beside a function or a
+ * binding that does stop with it (a callback name resolves to its own declarations only). Every planted name is fresh. */
+function variantsOf(source: string): Record<string, string> {
+  const binding = isStdoutBinding(source);
+  const renamed = freshName(source, RENAMED_BASE);
+  const late = freshName(source, "onLateDeadline");
+  const shadowed = freshName(source, "onShadowedDeadline");
+  const decoy = freshName(source, "onDecoyDeadline");
+  const quiet = freshName(source, "onQuietKill");
+  return {
+    "other timer by name beside a deadline function": `${source}\nfunction ${decoy}(){stop("deadline");}\nfunction ${quiet}(){child.kill("SIGKILL");}\nsetTimeout(${quiet},500);\n`,
+    "other timer bound to a name beside a deadline binding": `${source}\nconst ${decoy}=()=>stop("deadline");\nconst ${quiet}=()=>child.kill("SIGKILL");\nsetTimeout(${quiet},500);\n`,
+    "deadline 30 s": plantAt(source, isDeadlineDelay, "30_000"),
+    "stdout cap 512 KiB": plantAt(source, isStdoutBound, "512*1024"),
+    "stdout cap inclusive": plantAt(source, isStdoutOperator, ">="),
+    "shared cap 128 KiB": plantAt(source, binding, "128*1024"),
+    "second deadline timer": `${source}\nsetTimeout(()=>stop("deadline"),5_000);\n`,
+    "second deadline timer by name": `${source}\nfunction ${late}(){stop("deadline");}\nsetTimeout(${late},5_000);\n`,
+    "second deadline timer by a shadowed name": `${source}\nfunction ${shadowed}(){}\n{const ${shadowed}=()=>stop("deadline");setTimeout(${shadowed},5_000);}\n`,
+    "second deadline timer by call": `${source}\nsetTimeout(stop.bind(null,"deadline"),5_000);\n`,
+    "duplicate deadline timer": `${source}\nsetTimeout(()=>stop("deadline"),60_000);\n`,
+    "runtime deadline": plantAt(source, isDeadlineDelay, "Date.now()"),
+    "renamed deadline binding": `const ${renamed}=60_000;\n${plantAt(source, isDeadlineDelay, renamed)}`,
+  };
+}
+/** Whether each variant of a module reads as a changed policy. */
+const changedOf = (source: string): Record<string, boolean> =>
+  Object.fromEntries(Object.entries(variantsOf(source)).map(([name, text]) => [name, !samePolicy(policyOf(text))]));
+/** A policy as a witness value. */
+const policyJson = (policy: Policy): JsonObject => ({ deadlines: [...policy.deadlines], caps: policy.caps.map((cap) => ({ ...cap })) });
 
 // --- C2: the scan ------------------------------------------------------------------------------------------------------------------
 const DATA_EXTENSIONS: readonly string[] = [".json", ".jsonl", ".yaml", ".yml", ".toml"];
@@ -670,7 +798,8 @@ function cutControls(): Record<string, number> {
 }
 const SCRATCH_CLAIM = "The TSX cost is adequate.";
 /** A scratch repository the walker must read as it reads Pi's tree: tracked and untracked in-scope files, an ignored file, a file
- * outside the roots and a symlink. Returns what the walker listed, what it refused and what the scan found. */
+ * outside the roots, a root file that is no .md page, a file holding a NUL and a symlink. Returns what the walker listed, what it
+ * refused and what the scan found. */
 function scratchWalk(): { entries: string[]; refused: string[]; findings: string[] } {
   const root = makeScratch("wb-693.8-walk-");
   try {
@@ -685,12 +814,14 @@ function scratchWalk(): { entries: string[]; refused: string[]; findings: string
       ["docs/tracked.md", SCRATCH_CLAIM],
       ["docs/untracked.md", SCRATCH_CLAIM],
       ["docs/ignored.md", SCRATCH_CLAIM],
+      ["docs/screen.png", `PNG${String.fromCodePoint(0)}${SCRATCH_CLAIM}`],
       ["test/outside.md", SCRATCH_CLAIM],
       ["README.md", SCRATCH_CLAIM],
+      ["NOTES.txt", SCRATCH_CLAIM],
       [".gitignore", "docs/ignored.md\n"],
     ]) writeFileSync(join(root, path), text);
     symlinkSync("tracked.md", join(root, "docs/link.md"));
-    git("add", "docs/tracked.md", "README.md", ".gitignore");
+    git("add", "docs/tracked.md", "docs/screen.png", "README.md", "NOTES.txt", ".gitignore");
     const { entries, refused } = liveEntries(root);
     return { entries: entries.map((entry) => entry.path), refused, findings: scanEntries(entries) };
   } finally {
@@ -829,38 +960,68 @@ const IMPL: Record<string, () => Json> = {
     const source = readRepo(PROVIDER);
     const policy = policyOf(source);
     expect(policy).toEqual(statedShape());
-    const binding = isStdoutBinding(source);
-    const variants: Record<string, string> = {
-      "deadline 30 s": plantAt(source, isDeadlineDelay, "30_000"),
-      "stdout cap 512 KiB": plantAt(source, isStdoutBound, "512*1024"),
-      "stdout cap inclusive": plantAt(source, isStdoutOperator, ">="),
-      "shared cap 128 KiB": plantAt(source, binding, "128*1024"),
-      "second deadline timer": `${source}\nsetTimeout(()=>stop("deadline"),5_000);\n`,
-      "duplicate deadline timer": `${source}\nsetTimeout(()=>stop("deadline"),60_000);\n`,
-      "runtime deadline": plantAt(source, isDeadlineDelay, "Date.now()"),
-      "renamed deadline binding": `const DEADLINE_MS=60_000;\n${plantAt(source, isDeadlineDelay, "DEADLINE_MS")}`,
-    };
-    const changed = Object.fromEntries(Object.entries(variants).map(([name, text]) => [name, !samePolicy(policyOf(text))]));
+    const changed = changedOf(source);
     expect(changed).toEqual({
+      "other timer by name beside a deadline function": false,
+      "other timer bound to a name beside a deadline binding": false,
       "deadline 30 s": true,
       "stdout cap 512 KiB": true,
       "stdout cap inclusive": true,
       "shared cap 128 KiB": true,
       "second deadline timer": true,
+      "second deadline timer by name": true,
+      "second deadline timer by a shadowed name": true,
+      "second deadline timer by call": true,
       "duplicate deadline timer": true,
       "runtime deadline": true,
       "renamed deadline binding": false,
     });
+    // REFACTORS (wb-q1a0 F1, F3): each keeps the numerics, so it reads unchanged, and no variant reads otherwise over it. The first
+    // two bind the deadline to the very name the renamed variant takes on the live module (the gate's L17 and L17c).
+    const renamed = freshName(source, RENAMED_BASE);
+    const refactors: Record<string, string> = {
+      "deadline bound in its function to the variant's name": namedDeadline(source, renamed, "function"),
+      "deadline bound at module scope to the variant's name": namedDeadline(source, renamed, "module"),
+      "deadline bound in its function to another name": namedDeadline(source, freshName(source, "PREVIEW_DEADLINE_MS"), "function"),
+      "deadline callback bound to a name": namedCallback(source, freshName(source, "onDeadline"), "binding"),
+      "deadline callback declared as a function": namedCallback(source, freshName(source, "onDeadline"), "declaration"),
+    };
+    expect(new Set([source, ...Object.values(refactors)]).size).toBe(Object.keys(refactors).length + 1);
+    const refactored = Object.fromEntries(
+      Object.entries(refactors).map(([name, text]) => {
+        const readings = changedOf(text);
+        return [name, { unchanged: samePolicy(policyOf(text)), drift: Object.keys(changed).filter((variant) => readings[variant] !== changed[variant]) }];
+      }),
+    );
+    expect(refactored).toEqual(Object.fromEntries(Object.keys(refactors).map((name) => [name, { unchanged: true, drift: [] }])));
+    // FAIL-CLOSED (wb-q1a0 F3, by design): each keeps the numerics yet reads changed; the reading itself is pinned.
+    const failClosed = {
+      "cap binding declared with let": policyJson(policyOf(letCapBinding(source))),
+      "stream reason in an unrelated call under a comparison": policyJson(policyOf(`${source}\nif(n>0) console.debug("stdout");\n`)),
+    };
+    expect(Object.values(failClosed).map((reading) => JSON.stringify(reading) === JSON.stringify(statedShape()))).toEqual([false, false]);
+    const fresh = { free: freshName("const B=1;", "A"), nested: freshName("const A=1;\nfunction f(){const A_1=2;}", "A") };
+    expect(fresh).toEqual({ free: "A", nested: "A_2" });
     const otherKill = samePolicy(policyOf(`setTimeout(()=>child.kill("SIGKILL"),30_000);\n${source}`));
     expect(otherKill).toBe(true);
+    const wrapper = freshName(source, "onLate");
+    const handlers = freshName(source, "handlers");
+    const indirect = [
+      `${source}\nconst ${wrapper}=()=>stop("deadline");\nsetTimeout(()=>${wrapper}(),5_000);\n`,
+      `${source}\nconst ${handlers}={deadline:()=>stop("deadline")};\nsetTimeout(${handlers}.deadline,5_000);\n`,
+    ].map((text) => (samePolicy(policyOf(text)) ? "unchanged" : "read"));
+    expect(indirect).toEqual(["unchanged", "unchanged"]);
     JUDGED.add("C1");
     return {
       claim: claim("C1"),
       module: PROVIDER,
-      policy: { deadlines: [...policy.deadlines], caps: policy.caps.map((cap) => ({ ...cap })) },
+      policy: policyJson(policy),
       stated: { deadlineMs: statedPolicy().deadlineMs, capBytes: statedPolicy().capBytes },
       changed,
-      residuals: { "R-OTHER-KILL-PATH": otherKill ? "unchanged" : "read" },
+      refactored,
+      failClosed,
+      fresh,
+      residuals: { "R-OTHER-KILL-PATH": otherKill ? "unchanged" : "read", "R-INDIRECT-DEADLINE": indirect },
     };
   },
   C2: () => {
@@ -879,7 +1040,7 @@ const IMPL: Record<string, () => Json> = {
     expect(cuts).toEqual({ period: 0, semicolon: 0, blankLine: 0, tableRow: 0, listItem: 0, dataLine: 0, listItemOutsideMarkdown: 1, wrappedLine: 1 });
     const walk = scratchWalk();
     expect(walk.entries).toEqual(["README.md", "docs/tracked.md", "docs/untracked.md"]);
-    expect(walk.refused).toEqual(["docs/link.md"]);
+    expect(walk.refused).toEqual(["docs/link.md", "docs/screen.png"]);
     expect(walk.findings).toEqual(walk.entries.map((path) => `${path}:1 anchor+cost: asserted-adequate`));
     const residuals = {
       "R-UNANCHORED": probe("The 60 s deadline is adequate for cold-process costs.").length,
@@ -890,7 +1051,11 @@ const IMPL: Record<string, () => Json> = {
         probe(`The TSX cost is ${String.fromCodePoint(0x0430)}dequate.`).length,
         probe(`The TSX cost is ade${String.fromCodePoint(0x200b)}quate.`).length,
       ],
-      "R-OUTSIDE-ROOTS": { outside: ["test/probe.md", "new-feedback/probe.md", "vendor/README.md", ".beads/issues.jsonl"].map(inScope), inside: inScope("docs/probe.md") },
+      "R-JOINED": [probe("The tsx_cost is adequate.").length, probe("tsxCost: adequate.").length],
+      "R-OUTSIDE-ROOTS": {
+        outside: ["test/probe.md", "new-feedback/probe.md", "vendor/README.md", ".beads/issues.jsonl", "NOTES.txt"].map(inScope),
+        inside: inScope("docs/probe.md"),
+      },
     };
     expect(residuals).toEqual({
       "R-UNANCHORED": 0,
@@ -898,7 +1063,8 @@ const IMPL: Record<string, () => Json> = {
       "R-SPLIT": 0,
       "R-PARAPHRASE": 0,
       "R-LOOKALIKE": [0, 0],
-      "R-OUTSIDE-ROOTS": { outside: [false, false, false, false], inside: true },
+      "R-JOINED": [0, 0],
+      "R-OUTSIDE-ROOTS": { outside: [false, false, false, false, false], inside: true },
     });
     JUDGED.add("C2");
     return {
@@ -932,9 +1098,28 @@ const IMPL: Record<string, () => Json> = {
   },
 };
 
+/** This file's own source, parsed. */
+const selfFile = (): ts.SourceFile => ts.createSourceFile(SELF, readFileSync(HERE, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+/** Every case's explicit timeout, in this file's source order (null: the runner's default budget; wb-q1a0 F6). */
+function caseBudgets(): (number | null)[] {
+  const out: (number | null)[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "it") {
+      const options = node.arguments[1];
+      const timeout =
+        options !== undefined && ts.isObjectLiteralExpression(options)
+          ? options.properties.find((property): property is ts.PropertyAssignment => ts.isPropertyAssignment(property) && ts.isIdentifier(property.name) && property.name.text === "timeout")
+          : undefined;
+      out.push(timeout !== undefined && ts.isNumericLiteral(timeout.initializer) ? Number(timeout.initializer.text) : null);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(selfFile());
+  return out;
+}
 /** The identifiers each IMPL entry names, read from this file's own source. */
 function implReads(): Record<string, string[]> {
-  const file = ts.createSourceFile(SELF, readFileSync(HERE, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const file = selfFile();
   const reads: Record<string, string[]> = {};
   const visit = (node: ts.Node): void => {
     if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === "IMPL" && node.initializer && ts.isObjectLiteralExpression(node.initializer)) {
@@ -956,7 +1141,7 @@ function implReads(): Record<string, string[]> {
 }
 
 describe("wb-693.8 rf TSX cost-adequacy census (RF-TSX-AND-EMBEDDING-R10, the until-then negative; the re-read pending)", () => {
-  it("judged set: frozen shape, roster, the owner filing, the vendored spans and this file's IMPL", () => {
+  it("judged set: frozen shape, roster, the owner filing, the vendored spans and this file's IMPL", { timeout: 120_000 }, () => {
     expect(ROWS.map((row) => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:2", "C:3"]);
     expect(ROWS).toEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map((pin) => ({ id: pin.id, quote: pin.quote })) })));
     expect(Object.keys(IMPL).sort()).toEqual(pinIds());
@@ -990,6 +1175,8 @@ describe("wb-693.8 rf TSX cost-adequacy census (RF-TSX-AND-EMBEDDING-R10, the un
     const reads = implReads();
     expect(Object.keys(reads).sort()).toEqual(pinIds());
     expect(Object.entries(reads).filter(([, found]) => !found.some((name) => READERS.includes(name)) || found.includes("ROSTER")).map(([pin]) => pin)).toEqual([]);
+    // The judged set reads the bead export and parses this file; it runs on the pins' explicit budget, never the runner default.
+    expect(caseBudgets()).toEqual([120_000, 120_000, null]);
   });
 
   for (const row of ROWS)
