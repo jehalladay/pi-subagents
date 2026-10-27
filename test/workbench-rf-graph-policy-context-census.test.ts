@@ -32,6 +32,19 @@
  *   number reaches either (Z2). The provider relays the whole envelope to its caller, additive keys included (R-RELAY).
  * No src, docs or tracker text is edited by this cut.
  *
+ * RECONCILED (cut #2, seat ws-03 of g10-work-s113, 2026-10-27, on trunk df1ce2a; two landed sibling censuses, neither amended):
+ * - wb-e66.5's GP-coordination census (landing 542, test/workbench-mw-gp-coordination-census.test.ts) holds every test file to
+ *   no GraphPolicyCLI or MicroPolicyCLI import and no gp or mp launch beyond a version probe (its S3), reading a call of a member
+ *   named exec whose first argument is a same-file const bound to a string naming the vocabulary as a launch. Cut #1 read
+ *   UNTIL_THEN through RegExp.prototype.exec, which S3 counted as one launch in this file; this file now reads it through
+ *   String.prototype.match (the same result for a pattern without the g flag), so it imports nothing and launches nothing S3
+ *   counts (no gp or mp launch, not even a version probe). Its spelling stays: S3 reads a test file's vocabulary as text (wb-e66.5's
+ *   R-TEST-MENTION). That census reaches no rf root, so it lies outside the rf reading surface and Z3 never reads it.
+ * - wb-grmo.1's speculative-context census (landing 545, test/workbench-rf-speculative-context-census.test.ts) imports the provider
+ *   and the fixture module, so it is an rf reading test, and it spells the vocabulary once: the quiet-control sentence
+ *   "GraphPolicyCLI predictions and policy distributions." of its docs verdict table, which restates docs/03's ownership row.
+ *   R-POSTURE now names that echo and Z3 blanks it (THE JUDGE, RESIDUALS); a literal that adds any other word stays read.
+ *
  * THE JUDGE. A MENTION is the until-then pattern's words in order - "graph" then "policy", or "graph", "data" and "ir" - with any
  * run of characters that are neither letters nor digits between them (none, spaces, newlines, underscores, hyphens, dots, quotes,
  * markup, format characters), in any case: GraphPolicy, GraphPolicyCLI, graph-policy, graph_policy, GRAPH POLICY, GraphDataIR and
@@ -45,7 +58,10 @@
  * result forced empty reds. THE RECORD JUDGE (T) reads the record's items: every key of the fixture envelope at any depth (arrays
  * by index) and every string value, and every key of the roster's four key lists; a key or string value holding a MENTION is a
  * GraphPolicy output, and a key whose words (split at non-letters and camel-case humps) include one of the title's field words
- * (score, ranking, embedding, receipt) or its plural is a GraphPolicy output field.
+ * (score, ranking, embedding, receipt) or its plural is a GraphPolicy output field. Z3 judges each rf reading test with the content
+ * of every ownership-row echo blanked first (R-POSTURE: a string literal naming the owner as docs/03's ownership row spells it, each
+ * of its words a word of that row's owner or subject cell, one of them the subject's alone), and each docs page with its posture
+ * homes blanked.
  *
  * ROWS. T, the gating artifact, one pin per quoted part: T1 the trigger is unfired - ARMED: when the record carries a GraphPolicy
  * output or field, T1 reds naming the acceptance on landing as owed; T2 the record is the installed rf's capture (a captured
@@ -66,7 +82,8 @@
  * semicolon, colon, period, parentheses) between them, and each row's pin quotes tile its label the same way, so a row or a pin
  * removed from ROWS, the literal, QUOTES, CLAIMS, IMPL and the roster together still reds; FIELD_WORDS are the title's own;
  * MENTION is rebuilt from the words of the notes' until-then pattern; ACCEPTANCE and UNTIL_THEN are the notes' own text; docs/03
- * holds the posture section and row R-POSTURE names; the filing pin is a commit of this repository.
+ * holds the posture section and row R-POSTURE names, and the echo's words are read off that row at run time (never a literal
+ * here); the filing pin is a commit of this repository.
  * CLAIMS: each quoted pin carries claims - terms tiling its quote, each naming the witness facts (top-level keys) that show it; a
  * pin's live witness holds exactly its claimed facts, each fact under one term, and no pin's live witness holds another pin's
  * claimed facts (the claims bound), so a case swap reds at the swapped pin's claims beside its roster witness.
@@ -75,7 +92,8 @@
  * outside the rf reading surface - the GraphPolicyCLI program's censuses, rosters and helpers, or one that reaches the rf modules
  * only through a src module - is not read (Q3); R-POSTURE a docs/workbench "## GraphPolicyCLI boundary" section and an
  * ownership row whose owner cell is GraphPolicyCLI and whose Pi cell opens "nothing today" are not read (docs/03 holds one of
- * each) (Q4); R-RECEIPTS docs/workbench/receipts/ records deliveries and is not read (Q5); R-ABBREVIATION "GP" or "gp" alone is no
+ * each), nor is an rf reading test's string literal that only restates docs/03's ownership row (an echo, its words read off the
+ * row: the landed wb-grmo.1 census holds one) (Q4); R-RECEIPTS docs/workbench/receipts/ records deliveries and is not read (Q5); R-ABBREVIATION "GP" or "gp" alone is no
  * MENTION - src names a general-purpose agent gp (Q6); R-COMPUTED a word assembled at run time (a concat call, a template
  * substitution between its parts, a character code) is not read (Q7); R-INTERIOR a character inside a word (a format character,
  * a confusable letter) hides it (Q8); R-BINARY a file holding a NUL byte is not read (Q9); R-RELAY the provider relays the whole
@@ -91,10 +109,14 @@
  * GraphPolicy reader is added or faked here. T1 binds it: the census reds with ACCEPTANCE the moment the record carries one.
  * OVER-READS (disclosed; none today): any "graph ... policy" prose reads as a mention, across a line break or punctuation
  * included ("the dependency graph. Policy ..."), and so does "graph data ir" opening a longer word.
+ * ECHO BOUND (disclosed): an echo literal is blanked whatever its test does with it, so a literal made only of the ownership row's
+ * words ("GraphPolicyCLI learned scores") used as a key or a lookup would go unread by Z3; at df1ce2a the one echo in the surface
+ * is wb-grmo.1's quiet-control sentence. A comment, an identifier, a template with a substitution or a literal that adds any word
+ * outside the row (a verb such as "read") is never an echo.
  * SCOPE: files git ignores (node_modules/, .forge/ and the rest of .gitignore) and files deleted from the worktree are not
  * listed; the installed rf and ReactiveFiberCLI's repository are never read (the default gate is hermetic: the record is Pi's).
  * READS (contacts): every listed src, qa and docs/workbench file and every test module (for its imports; the rf reading surface
- * for its content) (Z2, Z3), git objects at the filing pin (Z1), the tracker export row of wb-e9dy, test/fixtures/
+ * for its content) (Z2, Z3), docs/03's GraphPolicyCLI ownership row for the echo's words (Z3, Q4), git objects at the filing pin (Z1), the tracker export row of wb-e9dy, test/fixtures/
  * rf-result-keys.json, the fixture module's fullShapeRf and the provider's contract source (T); the observer, nativeEvidence and
  * the injected provider registration run in memory (Z2, Q10).
  *
@@ -361,9 +383,11 @@ function wordsOf(term: string): string[] {
     .flatMap(part => part.match(/[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+/g) ?? [])
     .map(word => word.toLowerCase());
 }
-/** The notes' until-then grep pattern, read off UNTIL_THEN. */
+/** The notes' until-then grep pattern, read off UNTIL_THEN. String.prototype.match, never RegExp.prototype.exec: the landed
+ * wb-e66.5 census (test/workbench-mw-gp-coordination-census.test.ts S3) reads an `exec` member call whose argument is a same-file
+ * string const naming the vocabulary as a gp launch, and this file launches nothing. */
 function untilThenPattern(): string {
-  return /git grep (\S+) over /.exec(UNTIL_THEN)?.[1] ?? "-";
+  return UNTIL_THEN.match(/git grep (\S+) over /)?.[1] ?? "-";
 }
 /** MENTION's source, rebuilt from the pattern: its alternatives' distinct word sequences under their shared first word, each word
  * joined to the next by a separator run (the anchor case compares the two). */
@@ -543,6 +567,38 @@ function postureMasked(text: string): string {
     })
     .join("\n");
 }
+/** The ownership row's words (R-POSTURE's echo), read off docs/03 itself: the owner cell's and the subject cell's of every row
+ * whose owner cell is GraphPolicyCLI and whose Pi cell opens "nothing today". */
+const echoWords = lazy((): { readonly owner: readonly string[]; readonly subject: readonly string[] } => {
+  const rows = textOf(DOCS03)
+    .split("\n")
+    .filter(line => line.trimStart().startsWith("|"))
+    .map(line => line.split("|").map(cell => cell.trim()))
+    .filter(cells => cells[2] === POSTURE_OWNER && (cells[3] ?? "").startsWith(POSTURE_CELL));
+  return { owner: sorted(wordsOf(POSTURE_OWNER)), subject: sorted(rows.flatMap(cells => wordsOf(cells[1] ?? ""))) };
+});
+/** A string literal restating the ownership row (an echo): it names the owner as the owner cell spells it, every word of it is a
+ * word of the row's owner or subject cell, and at least one is the subject's alone. */
+function isEcho(text: string): boolean {
+  const { owner, subject } = echoWords();
+  const words = wordsOf(text);
+  return text.includes(POSTURE_OWNER) && words.every(word => owner.includes(word) || subject.includes(word)) && words.some(word => subject.includes(word) && !owner.includes(word));
+}
+/** A script with the content of every echo string literal blanked (its quotes and line breaks kept), so no form reads it; every
+ * other character, a mention outside an echo included, is judged as written. */
+function echoMasked(path: string, text: string): string {
+  if (!SCRIPT.test(path)) return text;
+  const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, scriptKind(path));
+  const spans: { readonly start: number; readonly end: number }[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isStringLiteralLike(node) && isEcho(node.text)) spans.push({ start: node.getStart(source) + 1, end: node.end - 1 });
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  let masked = text;
+  for (const { start, end } of [...spans].reverse()) masked = `${masked.slice(0, start)}${masked.slice(start, end).replace(/[^\n]/g, " ")}${masked.slice(end)}`;
+  return masked;
+}
 function stem(path: string): string {
   return path.replace(SCRIPT, "");
 }
@@ -577,25 +633,34 @@ interface ClaimReading {
   readonly docs: readonly string[];
   readonly verdict: ScopeVerdict;
 }
-/** Z3's reading over the real tree plus `plants` (path to text): the rf reading surface and docs/workbench outside receipts/, each
- * docs file with its posture homes blanked, judged in one call. */
+/** Z3's reading over the real tree plus `plants` (path to text): the rf reading surface, each script with its ownership-row echoes
+ * blanked, and docs/workbench outside receipts/, each docs file with its posture homes blanked, judged in one call. */
 function claimReading(plants: Readonly<Record<string, string>>): ClaimReading {
   const paths = sorted([...listing(), ...Object.keys(plants)]);
   const textFor = (path: string): string => plants[path] ?? textOf(path);
   const scripts = new Map(paths.filter(path => path.startsWith("test/") && SCRIPT.test(path)).map(path => [path, textFor(path)] as const));
   const surface = surfaceOf(scripts).filter(path => !excluded(path));
   const docs = paths.filter(path => path.startsWith(DOCS_SCOPE) && !path.startsWith(RECEIPTS) && !excluded(path));
-  const entries = [...surface.map(path => entry(path, textFor(path))), ...docs.map(path => entry(path, postureMasked(textFor(path))))];
+  const entries = [...surface.map(path => entry(path, echoMasked(path, textFor(path)))), ...docs.map(path => entry(path, postureMasked(textFor(path))))];
   return { surface, docs, verdict: judgeScope(entries) };
 }
-/** Planted claim-scope entries (Z3): a docs sentence, a GraphPolicyCLI ownership row that claims a reading, a surface test and a
- * surface test reaching the observer only through a planted test helper. */
+/** Planted claim-scope entries (Z3): a docs sentence, a GraphPolicyCLI ownership row that claims a reading, a surface test, a
+ * surface test reaching the observer only through a planted test helper, and five surface tests that are no echo, one per clause
+ * of the echo and its blanking: a literal naming the owner and the row's words beside a reading claim, the row's words under
+ * another spelling of the vocabulary than the owner's, the owner alone, the owner beside another docs/03 row's words, and a
+ * mention beside an echo on its line. */
 const CLAIM_PLANTS: Readonly<Record<string, string>> = {
   "docs/workbench/zz-plant-claim.md": "Pi reads GraphPolicy scores from the rf render envelope.\n",
   "docs/workbench/zz-plant-row.md": "| Learned scores | GraphPolicyCLI | read by Pi from the rf render envelope |\n",
   "test/zz-plant-surface.test.ts": 'import { reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";\n// GraphDataIR\nvoid reactivefiberTopology;\n',
   "test/helpers/zz-plant-helper.ts": 'export { fullShapeRf } from "./rf-render-fixture.js";\n',
   "test/zz-plant-transitive.test.ts": 'import { fullShapeRf } from "./helpers/zz-plant-helper.js";\n// graph-policy\nvoid fullShapeRf;\n',
+  "test/zz-plant-literal.test.ts": 'import { fullShapeRf } from "./helpers/rf-render-fixture.js";\nexport const claim = "GraphPolicyCLI predictions read by Pi.";\nvoid fullShapeRf;\n',
+  "test/zz-plant-respelled.test.ts": 'import { fullShapeRf } from "./helpers/rf-render-fixture.js";\nexport const key = "graph_policy predictions";\nvoid fullShapeRf;\n',
+  "test/zz-plant-owner.test.ts": 'import { fullShapeRf } from "./helpers/rf-render-fixture.js";\nexport const owner = "GraphPolicyCLI";\nvoid fullShapeRf;\n',
+  "test/zz-plant-other-row.test.ts": 'import { fullShapeRf } from "./helpers/rf-render-fixture.js";\nexport const row = "GraphPolicyCLI context rendering";\nvoid fullShapeRf;\n',
+  "test/zz-plant-beside.test.ts":
+    'import { fullShapeRf } from "./helpers/rf-render-fixture.js";\nexport const rows = [{ text: "GraphPolicyCLI predictions and policy distributions." }]; // reads graph_policy\nvoid fullShapeRf;\n',
 };
 const claimVerdict = lazy((): ClaimReading => claimReading(CLAIM_PLANTS));
 
@@ -911,7 +976,12 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     const section = docs03.findIndex(line => line.trim() === POSTURE_SECTION);
     const opening = docs03.slice(section + 1).find(line => line.trim() !== "") ?? "";
     return json({
-      claimScope: { docs: DOCS_SCOPE, unread: [RECEIPTS, POSTURE_SECTION, `${POSTURE_OWNER} | ${POSTURE_CELL}`], roots: [...SURFACE_ROOTS], record: [FIXTURE_MODULE, KEY_ROSTER] },
+      claimScope: {
+        docs: DOCS_SCOPE,
+        unread: [RECEIPTS, POSTURE_SECTION, `${POSTURE_OWNER} | ${POSTURE_CELL}`, `${DOCS03} ownership-row echo`],
+        roots: [...SURFACE_ROOTS],
+        record: [FIXTURE_MODULE, KEY_ROSTER],
+      },
       surfaceAtFloor: reading.surface.filter(path => !plants.includes(path)).length >= FLOORS.surfaceFiles,
       recordRead: [FIXTURE_MODULE, KEY_ROSTER].every(path => reading.surface.includes(path)),
       docsAtFloor: reading.docs.filter(path => !plants.includes(path)).length >= FLOORS.docsFiles,
@@ -952,10 +1022,20 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     const plants: Record<string, string> = {
       "docs/workbench/zz-quiet-section.md": `${POSTURE_SECTION}\n\nPi reads GraphPolicy scores from the rf render envelope.\n`,
       "docs/workbench/zz-quiet-row.md": `| Learned scores | ${POSTURE_OWNER} | ${POSTURE_CELL}: GraphPolicy scores are unread |\n`,
+      "test/zz-quiet-echo.test.ts": [
+        'import { fullShapeRf } from "./helpers/rf-render-fixture.js";\n',
+        'const controls = [{ text: "GraphPolicyCLI predictions and policy distributions.", hit: false }];\n',
+        "const echoed = `Graph\\u0050olicyCLI learned scores, embeddings and their receipts`;\n",
+        "void fullShapeRf;\nvoid controls;\nvoid echoed;\n",
+      ].join(""),
     };
     const reading = claimReading(plants);
     const paths = Object.keys(plants);
-    return json({ residual: "R-POSTURE", inScope: paths.filter(path => reading.docs.includes(path)), findings: findingsFor(reading.verdict, paths, true) });
+    return json({
+      residual: "R-POSTURE",
+      inScope: paths.filter(path => reading.docs.includes(path) || reading.surface.includes(path)),
+      findings: findingsFor(reading.verdict, paths, true),
+    });
   },
   Q5: () => {
     const plants: Record<string, string> = { "docs/workbench/receipts/zz-quiet.md": "Pi reads GraphPolicy scores from the rf render envelope.\n" };

@@ -114,7 +114,12 @@
       "docs/workbench/zz-plant-row.md": "| Learned scores | GraphPolicyCLI | read by Pi from the rf render envelope |\n",
       "test/zz-plant-surface.test.ts": "import { reactivefiberTopology } from \"../src/workbench/reactivefiber-observer.js\";\n// GraphDataIR\nvoid reactivefiberTopology;\n",
       "test/helpers/zz-plant-helper.ts": "export { fullShapeRf } from \"./rf-render-fixture.js\";\n",
-      "test/zz-plant-transitive.test.ts": "import { fullShapeRf } from \"./helpers/zz-plant-helper.js\";\n// graph-policy\nvoid fullShapeRf;\n"
+      "test/zz-plant-transitive.test.ts": "import { fullShapeRf } from \"./helpers/zz-plant-helper.js\";\n// graph-policy\nvoid fullShapeRf;\n",
+      "test/zz-plant-literal.test.ts": "import { fullShapeRf } from \"./helpers/rf-render-fixture.js\";\nexport const claim = \"GraphPolicyCLI predictions read by Pi.\";\nvoid fullShapeRf;\n",
+      "test/zz-plant-respelled.test.ts": "import { fullShapeRf } from \"./helpers/rf-render-fixture.js\";\nexport const key = \"graph_policy predictions\";\nvoid fullShapeRf;\n",
+      "test/zz-plant-owner.test.ts": "import { fullShapeRf } from \"./helpers/rf-render-fixture.js\";\nexport const owner = \"GraphPolicyCLI\";\nvoid fullShapeRf;\n",
+      "test/zz-plant-other-row.test.ts": "import { fullShapeRf } from \"./helpers/rf-render-fixture.js\";\nexport const row = \"GraphPolicyCLI context rendering\";\nvoid fullShapeRf;\n",
+      "test/zz-plant-beside.test.ts": "import { fullShapeRf } from \"./helpers/rf-render-fixture.js\";\nexport const rows = [{ text: \"GraphPolicyCLI predictions and policy distributions.\" }]; // reads graph_policy\nvoid fullShapeRf;\n"
     },
     "vocabularyPlants": [
       "plant:result.blocks[0].component_id",
@@ -413,7 +418,8 @@
               "unread": [
                 "docs/workbench/receipts/",
                 "## GraphPolicyCLI boundary",
-                "GraphPolicyCLI | nothing today"
+                "GraphPolicyCLI | nothing today",
+                "docs/workbench/03-architecture-and-ownership.md ownership-row echo"
               ],
               "roots": [
                 "src/workbench/providers/reactivefiber.ts",
@@ -431,6 +437,25 @@
             "postureStated": true,
             "claimFindings": {},
             "claimPlants": {
+              "test/zz-plant-beside.test.ts": [
+                "raw"
+              ],
+              "test/zz-plant-literal.test.ts": [
+                "raw",
+                "cooked"
+              ],
+              "test/zz-plant-other-row.test.ts": [
+                "raw",
+                "cooked"
+              ],
+              "test/zz-plant-owner.test.ts": [
+                "raw",
+                "cooked"
+              ],
+              "test/zz-plant-respelled.test.ts": [
+                "raw",
+                "cooked"
+              ],
               "test/zz-plant-surface.test.ts": [
                 "raw"
               ],
@@ -551,7 +576,8 @@
             "residual": "R-POSTURE",
             "inScope": [
               "docs/workbench/zz-quiet-section.md",
-              "docs/workbench/zz-quiet-row.md"
+              "docs/workbench/zz-quiet-row.md",
+              "test/zz-quiet-echo.test.ts"
             ],
             "findings": {}
           }
