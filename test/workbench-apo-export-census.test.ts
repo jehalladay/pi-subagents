@@ -10,13 +10,13 @@
  * "gated on an APO export surface existing", and the filing's source tag names the program
  * ("gap-mw-adaptive-policy-organizations/apo-pi-wb-03").
  *
- * MEASURED (read-only, by the re-cutting seat, 2026-10-27, at f0acfcf: trunk df1ce2a merged into the branch, this census
- * and its roster tracked there; every count is over the scope the census reads, qa/ included). git lists 1028 files
- * (tracked plus untracked-not-ignored): src/ 116 (all .ts), test/ 692, .beads/ 11 and 209 outside src/, test/ and .beads/.
- * Of those 209 the two dependency locks are excluded by name (R-LOCKFILE: an integrity value in each, at line 4620, splits
- * into the word "Apo") and 207 are judged as docs: 5 binaries (two media files and the three vendored tarballs) and 202
- * text files, 103 of them markdown. By top-level entry the 209 are the root files 27 (package-lock.json among them),
- * .agents/ 2, .codex/ 2, .github/ 2, .pi/ 1, docs/ 76, examples/ 7, media/ 2, new-feedback/ 18, qa/ 67 and vendor/ 5
+ * MEASURED (read-only, by the re-cutting seat, 2026-10-27, at fab8559: trunk 8450d6b merged into the branch, this census
+ * and its roster tracked there; every count is over the scope the census reads, qa/ included). git lists 1036 files
+ * (tracked plus untracked-not-ignored): src/ 116 (all .ts), test/ 699, .beads/ 11 and 210 outside src/, test/ and .beads/.
+ * Of those 210 the two dependency locks are excluded by name (R-LOCKFILE: an integrity value in each, at line 4620, splits
+ * into the word "Apo") and 208 are judged as docs: 5 binaries (two media files and the three vendored tarballs) and 203
+ * text files, 104 of them markdown. By top-level entry the 210 are the root files 27 (package-lock.json among them),
+ * .agents/ 2, .codex/ 2, .github/ 2, .pi/ 1, docs/ 77, examples/ 7, media/ 2, new-feedback/ 18, qa/ 67 and vendor/ 5
  * (vendor/dependency-lock.json among them). No src/ file and no judged doc spells the program in any reading below: the
  * trigger has not fired, so Pi ships no APO trace or evidence export. The tracker export spells it (the bead's own row and
  * its siblings'). At the filing pin b21beb0 (the ledger hop that added the bead to the export: its row is in that commit's
@@ -43,12 +43,14 @@
  * chains by their folded value). A file that opens with a UTF-16 byte-order mark is decoded as UTF-16; any other file holding
  * a NUL byte is binary and only its path is read. judgeScope reads an entry
  * list in one call, so every leg judges its planted entries after the real ones: the findings must be exactly the plants',
- * so a real mention, a hollowed judge or a result forced empty reds; a leg that discards only its real findings reds under
- * the planted probe (PROBES).
+ * so a real mention reds, and so does a judge, a reading or a scope verdict hollowed so that some plant's readings change
+ * (every plant's readings are pinned). Which real findings a leg asserts is not pinned by the plants, and the probes
+ * (PROBES) measure each case's outcome only: a leg, a judge or a listing that drops the findings of some real files and
+ * not the plants', or that tells a probe from the plain run, is NOT CLAIMED (below).
  *
  * ROWS. T, the trigger clause, one pin per quoted part: T1 the src walk (every file git lists under src/, held equal to a
  * filesystem walk minus what git ignores) spells no mention, at a file floor, with a content-liveness anchor read from the
- * bytes the judge consumed (the schema literal "workflow-script/v1" is a cooked string of src/workbench/identity.ts) and a
+ * bytes its verdict records (the schema literal "workflow-script/v1" is a cooked string of src/workbench/identity.ts) and a
  * planted module found by the same call - ARMED: the census reds naming the acceptance as owed the moment src spells the
  * program; T2 the program's identity: the abbreviation is the title's own token and the slug the requirement id's words,
  * every spelling form read, each word-break rule the only reader of at least one form (an ablation: the judge run without
@@ -58,10 +60,12 @@
  * pin per quoted part: Z1 the trigger is unfired today and the same judge over the filing pin's objects reads no mention,
  * the pin being where the row was filed; Z2 every listed Pi doc (every listed file outside src/, test/ and .beads/, the two
  * locks excluded by name; held equal to a filesystem walk minus what git ignores) spells no mention in any reading, with
- * file, markdown and binary floors, the partition (every listed file is judged whole by exactly one of T1's and Z2's scopes
- * or excluded by name: a listed file neither scope judges, and a file judged twice, judged although excluded, judged
- * unlisted or judged with bytes other than its bytes on disk, each reds), content-liveness anchors read from the bytes the
- * judge consumed (every docs/workbench page opens with a level-1 heading in its rendered reading; docs/12's redaction-floor
+ * file, markdown and binary floors, the partition (every listed file is recorded as judged, whole, by exactly one of T1's
+ * and Z2's scope verdicts or excluded by name: a listed file neither verdict records, and a file recorded twice, recorded
+ * although excluded, recorded although unlisted or recorded with bytes other than its bytes on disk, each reds; the
+ * partition compares the files git lists with the paths and bytes each verdict records, so a scope narrowed together with
+ * the partition's own listing is NOT CLAIMED), content-liveness anchors read from the bytes Z2's scope verdict records
+ * (every docs/workbench page opens with a level-1 heading in its rendered reading; docs/12's redaction-floor
  * sentence, the floor the armed clause names, is read) and one planted doc per reading found by the same call (two of them
  * UTF-16 docs, one per byte order); Z3 the claim: every mention counts (OVER-READ below), so a claim, a denial and a bare
  * mention each read; each reader-visible form the raw text splits (inline markup, a link, raw HTML with a quoted ">", a
@@ -78,28 +82,36 @@
  * OUTSIDE ANCHORS (their own registered case): the bead's own export row - its title, read after its requirement-id prefix,
  * is tiled in order by row T's label, the armed clause (ARMED) and row Z's label with nothing but separators (whitespace,
  * comma, semicolon, colon, period, parentheses, DASH) between them, and each row's pin quotes tile its label the same way,
- * so a row or a pin removed from ROWS, the literal, QUOTES, CLAIMS, IMPL, PROBE_OUTCOMES and the roster together still reds
- * (a pin folded into its neighbour does not: R-RETILED); the abbreviation is the title's token after "ships an " and the slug
- * the requirement id's words; the filing's source tag spells both; the owner filing is the notes' first two paragraphs
- * (later notes are appended after them): its source line names the source tag once and ACCEPTANCE is its closing sentence,
- * once, so a weakened filing beside a later note quoting the original reds; docs/12 holds the floor sentence; the filing pin
- * is a commit of this repository (Z1 reads that its export holds the row and its parent's does not).
+ * so row T or Z, or one of their quoted pins, removed from ROWS, the literal, QUOTES, CLAIMS, IMPL, PROBE_OUTCOMES and the
+ * roster together still reds (a pin folded into its neighbour does not: R-RETILED; a residual row is NOT CLAIMED); the
+ * abbreviation is the title's token after "ships an " and the slug the requirement id's words; the filing's source tag
+ * spells both; the owner filing is the notes' first two paragraphs (later notes are appended after them): its source line
+ * names the source tag once and ACCEPTANCE is its closing sentence, once, so a weakened filing beside a later note quoting
+ * the original reds; docs/12 holds the floor sentence; the filing pin is a commit of this repository (Z1 reads that its
+ * export holds the row and its parent's does not).
  * CLAIMS: each quoted pin carries claims - terms tiling its quote, each naming the witness facts (top-level keys) that show
  * it; a pin's live witness holds exactly its claimed facts, each fact under one term, and no pin's live witness holds
  * another pin's claimed facts (the claims bound), so a case swap reds at the swapped pin's claims beside its roster witness.
  * SELF-READ (the judged-set case reads the cases from this file's own syntax tree, so a comment or a string names nothing):
  * no case of IMPL names the roster or its readers (ROSTER, readRoster, rosterWitness; Q2 reads ROSTER_FILE's text only as a
  * test-tree file that spells the program), the probes (probe, PROBES, PROBE_LINE, PROBE_OUTCOMES) or the run records (LIVE,
- * REACHED); every case calls a reader of its subject (READERS); and each residual's quiet row names its family.
+ * REACHED); every case calls one of READERS by name; and each residual's quiet row names its family. The self-read judges
+ * the names in a case's syntax: what a call reads, and whether the witness a case returns comes from what it read, are not
+ * judged (NOT CLAIMED).
  * PROBES (their own registered case, after the rows): every case runs again under each of four probes, each changing one
  * subject the cases read - blind (the judge reads no mention), saturated (the judge reads a mention in every non-empty
  * text), planted (every real file a scope judges, src/, the docs and the filing pin's objects alike, gains the line
  * PROBE_LINE) and untitled (the bead's export row reads with its title cut to the requirement-id prefix) - and its outcome
  * under each probe (throws; changes, its witness differing from its plain run's; or keeps) is held to PROBE_OUTCOMES and the
- * roster, and every case throws or changes under at least one probe. So a case that returns a constant witness reds (it
- * keeps under every probe), and so do T1, Z1 and Z2 when they discard their scope's real findings (each asserts its scope
- * reads no mention, so each must throw under planted); a src or doc file judged with bytes other than its bytes on disk
- * (cut or altered) reds through Z2's partition, not through the probes.
+ * roster, and every case throws or changes under at least one probe. What the probes pin is each case's outcome profile
+ * and nothing more: the census reds when a case's measured outcome under some probe differs from PROBE_OUTCOMES, or
+ * when a case keeps under all four. For example, a case that returns its roster witness as a constant and calls only
+ * readers no probe changes reds (it keeps under every probe), and T1, Z1 or Z2 with its scope's real findings replaced
+ * by an empty set reds (each must throw under planted, and no longer does). The probes do not see which subject a case
+ * reads or which of its findings it asserts: a case whose outcome profile is unchanged while its witness no longer
+ * reads its own subject, in whole or in part, is NOT CLAIMED (below), whether or not it tells the probes from the plain
+ * run. A src or doc file recorded with bytes other than its bytes on disk (cut or altered) reds through Z2's partition,
+ * not through the probes.
  * RESIDUALS (named, each with its pinned quiet row): R-TRACKER the tracker export (.beads/) is not a Pi doc: the bead's own
  * row spells the program (Q1); R-TEST-TREE test/ is not a Pi doc: this census and its roster spell the program there (Q2);
  * R-LOCKFILE the two dependency locks are excluded by name, since an integrity value splits into the word "Apo" (Q3);
@@ -129,10 +141,20 @@
  * claims rewritten with them; a plant or control edited in IMPL and the roster together; a floor or a scope constant changed
  * with the roster; a residual row removed from ROWS, the literal, IMPL, RESIDUALS, PROBE_OUTCOMES and the roster (no outside
  * anchor names the residual families); a pin folded into its neighbour (R-RETILED); a probe or PROBE_OUTCOMES edited with
- * the roster; the outside-anchor case, the probes case or the closing case removed with its roster title. Nor a case written
- * to tell a probe from the plain run through a helper outside its own body (the self-read reads the case's own syntax) and
- * to return a constant only in the plain run; nor a single witness fact forced to its plain value while the case's other
- * facts still read their subject (the probes judge each case's outcome, not each fact).
+ * the roster; the outside-anchor case, the probes case or the closing case removed with its roster title.
+ * Nor, in edits of this file alone, any case, judge, reading, scope or partition edit that keeps every case's outcome
+ * profile and every plant's readings while a case's witness stops reading its own subject, in whole or in part (the
+ * probes pin outcome profiles, the self-read pins names, the plants pin the plants' readings). The known forms: a case
+ * that tells a probe from the plain run and returns a constant, or discards findings, only in the plain run - through a
+ * helper outside its own body, or inside its own body by what its readers return (the judge on a fixed text such as
+ * "an APO view" or "apology", or a judged file's bytes such as docs/12's last line); a case whose witness is a constant
+ * but for facts read from fixed texts or from subjects other than its own, which move under the probes as its own facts
+ * would (a quiet row forcing all but one control; Z3 or Q1, whose outcome profiles hold no "changes", returning the
+ * witness as a constant after asserting what the judge reads in fixed texts); a discard of part of a scope's real
+ * findings - by path (the docs/workbench/ pages), by reading (findings kept only when read raw) or by content - in the
+ * case, in the judge or in a scope's listing narrowed with the partition's, or a scope case asserting another scope's
+ * real findings in place of its own, while under planted some real file it asserts still reads; and a single witness
+ * fact forced to its plain value while the case's other facts still read their subject.
  * ARMED HALF PENDING: the clause ARMED (reproducible, byte-stable for one recorded snapshot from declared inputs only, the
  * docs/12 redaction floor over the whole export, a secret-bearing fixture redacted before write) has nothing to read until
  * an APO export surface exists; no exporter is faked here. T1 binds it: the census reds with ACCEPTANCE the moment src
@@ -146,7 +168,7 @@
  * (the gate is a surface Pi ships).
  * READS (contacts): every listed file outside test/ and .beads/ (T1, Z2), git objects at the filing pin (Z1), the tracker
  * export (its wb-021.3 row; Q1 reads it whole), docs/workbench/12-security.md and src/workbench/identity.ts (liveness, from
- * the bytes the judge consumed), and this file and its roster (Q2; the self-read parses this file).
+ * the bytes the scope verdicts record), and this file and its roster (Q2; the self-read parses this file).
  *
  * Display paths added: none (test-only; src/ is read, never edited). Scratch: none - every plant is an in-memory entry judged
  * by the same call as the real files; nothing is written to disk.
@@ -265,7 +287,7 @@ const RESIDUALS: Readonly<Record<string, string>> = {
   "R-SUFFIXED": "Q17",
   "R-RETILED": "Q18",
 };
-/** The functions that read a subject: every case calls one (SELF-READ: a call in the case's own syntax tree). */
+/** The functions that read a subject: every case calls one by name (SELF-READ: a call in the case's own syntax tree). */
 const READERS: readonly string[] = ["judgeScope", "verdictOf", "readingsOf", "quiet", "mentionsIn", "mentionsWith", "exportRow", "textOf", "git", "listedAll", "srcListing", "docsListing", "srcVerdict", "docsVerdict", "pinVerdict", "scriptUnits"];
 /** The names no case may use (SELF-READ): the roster and its reader, the probes, and the run records. */
 const UNNAMED_IN_CASES: readonly string[] = ["ROSTER", "readRoster", "rosterWitness", "probe", "PROBES", "PROBE_LINE", "PROBE_OUTCOMES", "LIVE", "REACHED"];
@@ -718,7 +740,7 @@ function judgeScope(entries: Iterable<Entry>): ScopeVerdict {
   }
   return { files, markdown, binaries, findings, paths, bytes: judged };
 }
-/** A judged file's text as the judge read it ("" when the scope judged no such path, or judged it as binary). */
+/** A judged file's text, from the bytes its scope verdict records ("" for a path not judged, or judged as binary). */
 function judgedText(verdict: ScopeVerdict, path: string): string {
   const bytes = verdict.bytes.get(path);
   return bytes === undefined ? "" : (decodedBytes(bytes) ?? "");
@@ -1301,7 +1323,7 @@ describe("wb-021.3 APO export census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R3, until
     ).toStrictEqual(pins.map(pin => [pin, []]));
     expect(
       pins.map(pin => [pin, READERS.some(reader => names.get(pin)?.called.has(reader) === true)]),
-      "every case calls a reader of its subject",
+      "every case calls one of READERS by name",
     ).toStrictEqual(pins.map(pin => [pin, true]));
     expect(
       Object.entries(RESIDUALS).map(([family, pin]) => [pin, names.get(pin)?.residuals.includes(family) === true]),
