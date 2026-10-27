@@ -35,8 +35,12 @@
  * it names), bd gate resolve, bd gate check, bd orphans --fix, bd mol squash (the digest's and the molecule root's close reason),
  * bd duplicates --auto-merge (derived: the help names the merged-away issue's closure), bd update to a closing status (the --status
  * flag or a status=<value> pair) and a bd batch close or closing-update op, written before or after the bd word. The roster carries
- * each help line verbatim. The executable surfaces beside SCAN_ROOTS: the repository root's own files (forge.toml's legs,
- * package.json's scripts, the vitest configs) and the tracker's git hooks (.beads/hooks, now a scanned root).
+ * each help line verbatim. wb-s6jw (the flywheel review of wb-zoq7's cut; its notes carry the escape and the replica probes) re-read
+ * every entry the same way under the installed bd 1.1.0-rc.1 (c7aec2c4c; each line the roster carried is byte-identical there) and
+ * adds the two direct close verbs that help documents beside them: bd human respond (a human-needed bead closed with reason
+ * "Responded") and bd human dismiss (closed with a "Dismissed" reason). The executable surfaces beside SCAN_ROOTS: the repository
+ * root's own files (forge.toml's legs, package.json's scripts, the vitest configs) and the tracker's git hooks (.beads/hooks, now a
+ * scanned root).
  *
  * THE CLOSE RULE, ARMED. No Pi closer exists, so the rule is armed on a reference: CLOSE_CASES states each clause of the acceptance
  * as a store state (closed ids, leg runs, landings, recorded verdict texts, ruling texts, the closing-gate receipt) over a program
@@ -53,8 +57,8 @@
  *    closes. A3 the trigger: no file under SCAN_ROOTS or ROOT_FILES launches a bead close (the bd word followed within CLOSE_WINDOW
  *    words by every word of a CLOSE_COMMANDS entry or by an update to status closed or done, or a bd batch with a close or closing-
  *    update op within CLOSE_WINDOW words on either side), with floors, anchors and controls, and every gate plant P06-P13 (wb-zoq7's
- *    notes, verbatim) flagged; the Beads seam offers show alone and its module exports no writer; a module A3 flags must be bound in
- *    BEAD_CLOSERS and every binding must name one (empty both ways today).
+ *    notes, verbatim) and every review probe (wb-s6jw's notes, verbatim) flagged; the Beads seam offers show alone and its module
+ *    exports no writer; a module A3 flags must be bound in BEAD_CLOSERS and every binding must name one (empty both ways today).
  *  B, the epic close, (b). B1 the epic cases: every ungated child closed, a verdict recorded on every gate bead ("ruled ADOPT",
  *    "ruled DEFER" or "ruled REJECT") and a full forge build green on main at a named sha close the epic; rftsx-auqdi open, no
  *    verdict text (a closed gate bead included: closure is never a verdict), text without a verdict, no receipt, a leg receipt, a
@@ -73,9 +77,9 @@
  * every registered test title - is held to the out-of-file roster, and the labels of rows A to C and the carried PERF-F ids to the
  * bead's own notes in the tracker export (.beads/issues.jsonl); A3's vocabulary rides the roster's bd help lines (an entry, the
  * batch op and the status update each, both ways) and the gate's plants P06-P13 ride wb-zoq7's notes in that same export, each
- * flagged by A3. The last case reads the vitest task tree (every registered test, in
- * roster order, in run mode, ran before it) and the set of pins that reached their witness. Not claimed: an edit of this file and
- * the roster together.
+ * flagged by A3, as do the review's probes on wb-s6jw's notes there. The last case reads the vitest task tree (every registered
+ * test, in roster order, in run mode, ran before it) and the set of pins that reached their witness. Not claimed: an edit of this
+ * file and the roster together.
  * RESIDUALS (named, each with its pinned quiet row): R-ARGV a close verb more than CLOSE_WINDOW words after the bd word, or held in a
  * variable, and batch ops read from a file (bd batch -f) or piped from a stream composed elsewhere escape A3 (Q1); R-COMPOSED a bd
  * word assembled at runtime escapes A3 (Q2); R-PARAPHRASE a close stated without the bd word - prose, or a status payload for another
@@ -99,9 +103,10 @@
  * recorded on each of its gate beads (PF:76's gate-bead column; the merged R10 draft: "a verdict token in the gate beads' notes"), a
  * conservative reading. The verdict words are the producer's own ("ruled (ADOPT/DEFER/REJECT)", H2:19); the exact verdict reader is
  * wb-4nut.4's duty and is not re-pinned here. A3 reads no grammar: prose naming the bd word and a close word within the window reds
- * it, and so does a preview (bd epic close-eligible --dry-run, bd import --dry-run) (OVER-READ, disclosed: no executable root or root
- * file spells one today). The producer facts are measured at the pin; Pi vendors no producer file, so a producer change is seen only
- * when the roster is re-measured; likewise the close vocabulary is the installed bd's, re-measured on a bd upgrade.
+ * it, and so does a preview or a help read (bd epic close-eligible --dry-run, bd import --dry-run, bd human respond --help) (OVER-READ,
+ * disclosed: no executable root or root file spells one today). The producer facts are measured at the pin; Pi vendors no producer
+ * file, so a producer change is seen only when the roster is re-measured; likewise the close vocabulary is the installed bd's,
+ * re-measured on a bd upgrade.
  *
  * Display paths added: none. Test-only: src, qa, docs and .beads are only read; nothing is written and no scratch is allocated.
  */
@@ -218,13 +223,13 @@ const CLOSING_STATUS: readonly string[] = ["closed", "done"];
 const INSTRUCTION_FILES: readonly string[] = ["AGENTS.md", ".agents/skills/beads/SKILL.md", ".beads/README.md"];
 /** The follow-up bead whose notes carry the gate's plants (R694 follow-up from wb-4nut.6 landing 308: F1 the vocabulary, F2 the roots). */
 const FOLLOW_UP = "wb-zoq7";
-/** A3's close vocabulary (wb-zoq7 F1), read from the installed bd 1.1.0-rc.1's own help, each entry beside its help line in the roster:
- * a launch is the bd word followed within CLOSE_WINDOW words by every word of one entry, folded as wordsOf folds them (close and its
- * alias done, which also covers todo done; epic close-eligible; duplicate --of; supersede --with; import; gate resolve; gate check;
- * orphans --fix; mol squash; duplicates --auto-merge). */
+/** A3's close vocabulary (wb-zoq7 F1; wb-s6jw the human verbs), read from the installed bd 1.1.0-rc.1's own help, each entry beside
+ * its help line in the roster: a launch is the bd word followed within CLOSE_WINDOW words by every word of one entry, folded as
+ * wordsOf folds them (close and its alias done, which also covers todo done; epic close-eligible; duplicate --of; supersede --with;
+ * import; gate resolve; gate check; orphans --fix; mol squash; duplicates --auto-merge; human respond; human dismiss). */
 const CLOSE_COMMANDS: readonly (readonly string[])[] = [
   ["close"], ["done"], ["closeeligible"], ["duplicate"], ["supersede"], ["import"], ["gate", "resolve"], ["gate", "check"],
-  ["orphans", "fix"], ["mol", "squash"], ["duplicates", "automerge"],
+  ["orphans", "fix"], ["mol", "squash"], ["duplicates", "automerge"], ["human", "respond"], ["human", "dismiss"],
 ];
 /** The gate's plants that stayed green at landing 308, each verbatim from wb-zoq7's notes: F1's six src plants (P06-P11; an argv
  * list rides spawnSync("bd", ...) as the gate planted it) and F2's two root configs (P12 a forge.toml leg, P13 an npm script). */
@@ -237,6 +242,17 @@ const FINDING_PLANTS: Readonly<Record<string, string>> = {
   P11: '["import", "-i", rowsFile]',
   P12: 'command = "bd close rftsx-auqdi"',
   P13: '"zz-close": "bd close rftsx-auqdi"',
+};
+/** The flywheel-review bead whose notes carry the replica probes of the escape it found in wb-zoq7's cut: bd human respond and bd
+ * human dismiss, the installed bd's two direct close verbs that the landed A3 read as quiet. */
+const REVIEW = "wb-s6jw";
+/** The review's replica probes, each verbatim from wb-s6jw's notes, where the landed judge returned [] for every one (a shell spelling
+ * and an argv list for each verb); each is flagged by A3. */
+const REVIEW_PLANTS: Readonly<Record<string, string>> = {
+  respond: 'bd human respond rftsx-auqdi "fixed"',
+  dismiss: "bd human dismiss rftsx-auqdi",
+  respondArgv: 'spawnSync("bd", ["human", "respond", id, text])',
+  dismissArgv: 'spawnSync("bd", ["human", "dismiss", id, "--note", note])',
 };
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-ARGV": ["Q1"],
@@ -946,6 +962,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         "bd duplicates --auto-merge",
         "printf 'update rftsx-auqdi status=closed\\n' | bd batch",
         "bd batch <<EOF\nclose rftsx-auqdi green\nEOF",
+        'bd human respond rftsx-auqdi -r "approved"',
+        'bd human dismiss rftsx-auqdi --reason "no longer applicable"',
+        "execFileSync('bd', ['human', 'respond', id, '--response', text])",
+        "BEADS_ACTOR=machine bd -C /repo human dismiss rftsx-bhmrd",
       ].map(text => closeLaunchesIn(text).length),
       quiet: [
         "bd show rftsx-auqdi --json",
@@ -963,11 +983,17 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         "bd orphans",
         "printf 'create task 2 probe\\n' | bd batch",
         "bd hooks run pre-commit",
+        "bd human list",
+        "bd human stats --json",
       ].map(text => closeLaunchesIn(text).length),
     };
     const followUp = notesOf(FOLLOW_UP);
     const plants = Object.fromEntries(
       Object.entries(FINDING_PLANTS).map(([id, plant]) => [id, { carried: followUp.includes(plant), launches: closeLaunchesIn(launchOf(plant)).length }]),
+    );
+    const review = notesOf(REVIEW);
+    const reviewPlants = Object.fromEntries(
+      Object.entries(REVIEW_PLANTS).map(([id, plant]) => [id, { carried: review.includes(plant), launches: closeLaunchesIn(plant).length }]),
     );
     const exports = Object.keys(beadsObserver).sort();
     expect(launched, "a file under the executable roots or at the root launching a bead close").toEqual([]);
@@ -978,8 +1004,15 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       Object.entries(plants).filter(([, entry]) => !entry.carried || entry.launches === 0).map(([id]) => id),
       `a gate plant ${FOLLOW_UP}'s notes do not carry or A3 misses`,
     ).toEqual([]);
+    expect(
+      Object.entries(reviewPlants).filter(([, entry]) => !entry.carried || entry.launches === 0).map(([id]) => id),
+      `a review probe ${REVIEW}'s notes do not carry or A3 misses`,
+    ).toEqual([]);
     expect(seamMembers(), "the Beads seam offers show alone").toEqual(["show"]);
-    return json({ roots: roots.map(({ root, floor, anchor }) => ({ root, floor, anchor })), root, launched, bound, controls, plants, seam: seamMembers(), exports });
+    return json({
+      roots: roots.map(({ root, floor, anchor }) => ({ root, floor, anchor })), root, launched, bound, controls, plants, reviewPlants,
+      seam: seamMembers(), exports,
+    });
   },
   B1: async () => clauseWitness("b"),
   B2: async () => {
@@ -1126,7 +1159,8 @@ describe("wb-4nut.6 H2 close-condition census (TSX-HARNESS2-REACTIVE-EVOLUTION-R
     expect({
       programShape: PROGRAM_SHAPE, leg: LEG_H2, dispatchClauses: DISPATCH_CLAUSES, carried: CARRIED, closeWindow: CLOSE_WINDOW,
       closingStatus: CLOSING_STATUS, closeCommands: CLOSE_COMMANDS, instructionFiles: INSTRUCTION_FILES, scanRoots: SCAN_ROOTS,
-      rootFiles: ROOT_FILES, followUp: FOLLOW_UP, findingPlants: FINDING_PLANTS, residuals: RESIDUALS,
+      rootFiles: ROOT_FILES, followUp: FOLLOW_UP, findingPlants: FINDING_PLANTS, review: REVIEW, reviewPlants: REVIEW_PLANTS,
+      residuals: RESIDUALS,
       cases: CLOSE_CASES.map(entry => `${entry.clause}:${entry.expect.join(",")}`), mutants: Object.keys(MUTANTS),
     }).toStrictEqual(ROSTER.constants);
     // A3's vocabulary is the installed bd's: every entry, the batch op and the status update ride help lines, one naming the close.

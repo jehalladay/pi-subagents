@@ -22,7 +22,9 @@
  * receipt), and the reader also refuses every list item but a top-level '- ' item, the only list lines U6-U9 read (U12 pins ten
  * such forms), so an altered restatement under another list marker, a marker spaced or indented otherwise, or a nested or quoted
  * item cannot stand beside a bound line unread. Two restatement families stay outside that rule, each a named residual with a
- * quiet row: R-OUTSIDE-LIST (outside every list item) and R-PATTERN-MISS (a top-level '- ' item a row's pattern skips). */
+ * quiet row: R-OUTSIDE-LIST (outside every list item) and R-PATTERN-MISS (a top-level '- ' item a row's pattern skips).
+ * wb-954g: each residual's insertion line is pinned beside its digest, in the frozen literal and in the receipt, and the quiet
+ * rows read U7's own listing pattern. */
 import { createHash } from 'node:crypto';
 import { chmodSync, readFileSync, writeFileSync } from 'node:fs';
 import { basename, join } from 'node:path';
@@ -181,13 +183,17 @@ const LIST_ITEM_FORM_LIST = /^- List item forms the receipt reader refuses \((\d
  * prefix matches; here the Result keys line restated under a respelled label (Result keys, restated). A restatement that keeps a
  * bound line's prefix is not in either family: U10, U11 and U12 require each target prefix to start exactly one line, and U7 reads
  * every raw line, a code block's included. receipts/wb-91yt.md lists the families in this order with the digest of each form's
- * lines. */
+ * lines and, since wb-954g (the wb-xmo2 gate's F1), the line each form is inserted at, the one below the line its after prefix
+ * starts: the digests bind only the inserted lines, so a form moved below another line kept every row green, and R-OUTSIDE-LIST
+ * moved below a heading is a paragraph there, no longer the lazy continuation its family names. */
 const RECEIPT_RESIDUAL_FORMS = [
   ['R-OUTSIDE-LIST', ROSTER_KEYS_RECEIPT, '- Work metrics keys (14): ', '- Result keys (24): ', [[['- Result', 'Result'], [', audience, ', ', audience_kind, ']]]],
   ['R-PATTERN-MISS', ROSTER_KEYS_RECEIPT, '- Work metrics keys (14): ', '- Result keys (24): ', [[['- Result keys (24)', '- Result keys, restated (24)'], [', audience, ', ', audience_kind, ']]]],
 ] as const;
 /** The receipt line that lists those families with their line digests, in table order: `- Named residuals of the list item rule (<count>): <id> <digest>, ...` */
 const RESIDUAL_LIST = /^- Named residuals of the list item rule \((\d+)\): ([A-Z0-9-]+ [0-9a-f]{16}(?:, [A-Z0-9-]+ [0-9a-f]{16})*)\.$/;
+/** The receipt line that states the line each family's form is inserted at, in table order (wb-954g): `- Named residual insertion lines (<count>): <id> <line>, ...` */
+const RESIDUAL_LINE_LIST = /^- Named residual insertion lines \((\d+)\): ([A-Z0-9-]+ \d+(?:, [A-Z0-9-]+ \d+)*)\.$/;
 
 const roster = readRfResultRoster();
 
@@ -290,6 +296,9 @@ function insertedVariant(path: string, after: string, restated: string, pinned: 
   const at = onlyLine(lines, after);
   return { inserted, variant: [...lines.slice(0, at + 1), ...inserted, ...lines.slice(at + 1)].join('\n') };
 }
+/** The line, counted from 1 as U12's cause lines count, that a form inserted below the line of a committed receipt starting with
+ * `after` opens on in its variant. */
+const insertedLine = (path: string, after: string): number => onlyLine(committedReceipt(path).split('\n'), after) + 2;
 /** A form's lines as receipts/wb-91yt.md states them: the first 16 hex digits of the sha256 of their JSON array. */
 const lineDigest = (lines: readonly string[]): string => digestOf(JSON.stringify(lines)).slice(0, 16);
 /** The stated count and the `<name> <digest>` entries of every `pattern` line of receipts/wb-91yt.md, in file order. */
@@ -299,7 +308,9 @@ function statedEntries(pattern: RegExp): { stated: number; entries: string[] }[]
     return match === null ? [] : [{ stated: Number(match[1]), entries: (match[2] ?? '').split(', ') }];
   });
 }
-/** U7's listing pattern, read by the residual quiet rows: the key-list lines U7 binds. */
+/** U7's listing pattern: the key-list lines U7 binds, read by U7 and by the residual quiet rows alike, so the two cannot diverge
+ * (wb-954g, the wb-xmo2 gate's F2: the quiet rows read a byte copy of U7's inline pattern, so widening U7's own to read the
+ * R-PATTERN-MISS line kept every row green). */
 const ROSTER_KEY_LIST = /^- ([A-Z][a-z]+(?: [a-z]+)*) keys \((\d+)\): ([a-z_]+(?:, [a-z_]+)*)\.$/;
 
 /** The diff a fixture whose result drops `key` must produce: that key, plus every roster key of a subtree it takes with it. */
@@ -418,7 +429,7 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
     expect(lines.filter(line => line.startsWith('- Roster of record: ')))
       .toStrictEqual([`- Roster of record: rf ${roster.rfVersion}, source ${roster.source}, capture receipt ${roster.receipt} (${PIN_RECEIPT}).`]);
     const listing = lines.flatMap(line => {
-      const match = /^- ([A-Z][a-z]+(?: [a-z]+)*) keys \((\d+)\): ([a-z_]+(?:, [a-z_]+)*)\.$/.exec(line);
+      const match = ROSTER_KEY_LIST.exec(line);
       return match === null ? [] : [{ label: match[1] ?? '', stated: Number(match[2]), keys: (match[3] ?? '').split(', ') }];
     });
     expect(listing.map(list => list.label)).toStrictEqual(ROSTER_KEY_LIST_LABELS);
@@ -578,15 +589,23 @@ describe('SCG-R11: full-shape offline RF result fixture', () => {
   // The named residuals of U12's rule (wb-xmo2): each family's form, derived in memory from a committed receipt like U12's rows,
   // reads quiet: receiptText returns it unrefused and U7's listing pattern does not match the line it inserts, so a reader that
   // starts refusing the form reds its row (promote the form to U12's table). FROZEN SHAPE (rule 16): two families, in the order
-  // receipts/wb-91yt.md lists them with the digest of each form's lines, an anchor outside this file.
-  it("U12: the residual table names two families with quiet rows, in the order its receipt lists them with the digest of each form's lines", () => {
-    expect(RECEIPT_RESIDUAL_FORMS.map(([id, path, , , lines]) => `${id} ${basename(path)} ${lines.length}`)).toStrictEqual(['R-OUTSIDE-LIST wb-c7ku.md 1', 'R-PATTERN-MISS wb-c7ku.md 1']);
+  // receipts/wb-91yt.md lists them with the digest of each form's lines and, since wb-954g, the line each form is inserted at,
+  // anchors outside this file, so a form moved below another line is red against its literal and against its receipt line.
+  it("U12: the residual table names two families with quiet rows, in the order its receipt lists them with the digest of each form's lines and the line it is inserted at", () => {
+    expect(RECEIPT_RESIDUAL_FORMS.map(([id, path, after, , lines]) => `${id} ${basename(path)} ${lines.length} at line ${insertedLine(path, after)}`)).toStrictEqual([
+      'R-OUTSIDE-LIST wb-c7ku.md 1 at line 18',
+      'R-PATTERN-MISS wb-c7ku.md 1 at line 18',
+    ]);
     const digests = RECEIPT_RESIDUAL_FORMS.map(([id, path, after, restated, lines]) => `${id} ${lineDigest(insertedVariant(path, after, restated, lines).inserted)}`);
     expect(statedEntries(RESIDUAL_LIST)).toStrictEqual([{ stated: RECEIPT_RESIDUAL_FORMS.length, entries: digests }]);
+    const insertedAt = RECEIPT_RESIDUAL_FORMS.map(([id, path, after]) => `${id} ${insertedLine(path, after)}`);
+    expect(statedEntries(RESIDUAL_LINE_LIST)).toStrictEqual([{ stated: RECEIPT_RESIDUAL_FORMS.length, entries: insertedAt }]);
   });
-  it.each(RECEIPT_RESIDUAL_FORMS)('U12 residual %s: its form of a committed receipt reads quiet, returned unrefused and unmatched by U7', (_id, path, after, restated, lines) => {
+  it.each(RECEIPT_RESIDUAL_FORMS)('U12 residual %s: its form of a committed receipt opens on its insertion line and reads quiet, returned unrefused and unmatched by U7', (_id, path, after, restated, lines) => {
     const { inserted, variant } = insertedVariant(path, after, restated, lines);
     expect(variant).not.toBe(committedReceipt(path));
+    const at = insertedLine(path, after);
+    expect(variant.split('\n').slice(at - 1, at - 1 + inserted.length)).toStrictEqual(inserted);
     expect(receiptText(path, variant)).toBe(variant);
     expect(inserted.filter(line => ROSTER_KEY_LIST.test(line))).toStrictEqual([]);
   });

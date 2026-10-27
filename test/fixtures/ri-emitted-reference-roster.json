@@ -211,6 +211,26 @@
    [
     "escape-constructor",
     "const pattern = new RegExp(\"~([01])\", \"g\");"
+   ],
+   [
+    "qualified-constructor",
+    "const pattern = new globalThis.RegExp(\"~([01])\", \"g\");"
+   ],
+   [
+    "indirect-source",
+    "const source = \"~([01])\"; const pattern = new RegExp(source, \"g\");"
+   ],
+   [
+    "reflected-constructor",
+    "const pattern = Reflect.construct(RegExp, [\"~([01])\"]);"
+   ],
+   [
+    "aliased-constructor",
+    "const Pattern = RegExp; const pattern = new Pattern(\"~[01]\");"
+   ],
+   [
+    "tagged-source",
+    "const pattern = new RegExp(String.raw`~([01])`);"
    ]
   ],
   "quietControls": [
@@ -245,12 +265,24 @@
    [
     "other-constructor",
     "const pattern = new RegExp(\"^pw-[0-9]+$\");"
+   ],
+   [
+    "qualified-other",
+    "const pattern = new globalThis.RegExp(\"^pw-[0-9]+$\");"
+   ],
+   [
+    "indirect-other",
+    "const source = \"^~\\\\d+$\"; const pattern = new RegExp(source);"
+   ],
+   [
+    "prose-tilde",
+    "const note = \"rows ~1 to ~9 move\";"
    ]
   ],
   "residualControls": {
    "R-SPAN-WORD": "const part = body.slice(span.start, span.end);",
    "R-NAIVE-WALK": "let node = document; for (const key of path.split(\"/\").slice(1)) node = node[key];",
-   "R-COMPOSED": "const escaped = \"~\" + \"1\"; const pattern = new RegExp(\"~\" + \"[01]\");"
+   "R-COMPOSED": "const escaped = \"~\" + \"1\"; const pattern = new RegExp(\"~\" + \"[01]\"); const loaded = new RegExp(JSON.parse(text).pattern);"
   },
   "nodeTypes": {
    "reactivefiber": "context-preview",
@@ -307,7 +339,75 @@
   "gateProbes": {
    "G07": "peek-first"
   },
-  "followUp": "wb-48r6"
+  "followUp": "wb-48r6",
+  "docs20Rendered": {
+   "title": "20 \u2014 EvidenceLoader contract (workbench.evidence-loader/v1)",
+   "header": [
+    "Producer",
+    "Ref",
+    "Resolution",
+    "Grant"
+   ],
+   "noLoaderRow": [
+    "anything else",
+    "\u2014",
+    "`unavailable: no-loader`, a visible unknown",
+    "\u2014"
+   ],
+   "probes": {
+    "comment-row": "the no-loader row wrapped in an HTML comment block",
+    "blank-line-row": "a blank line before the no-loader row",
+    "comment-rule": "the rules paragraph's later sentences hidden in an inline HTML comment",
+    "second-table": "a second table in the mapping section, mapping a decision reference after the no-loader row",
+    "header-swapped": "the mapping table's Ref and Grant header cells swapped",
+    "comment-note": "an HTML comment added to the mapping section, the table untouched",
+    "rules-list": "a list added to the rules section after its paragraph",
+    "rule-moved": "a sentence put before the no-loader rule in the rules paragraph"
+   }
+  },
+  "terminalFollowUp": "wb-an8d",
+  "terminalFindings": {
+   "F1": {
+    "opening": "[leads] - F1 MEDIUM LEADS: ",
+    "pin": "C3",
+    "probes": {
+     "L2-01": "helper-peek",
+     "L2-02": "roster-peek"
+    },
+    "residual": "R-UNCOUNTED-COPY"
+   },
+   "F2": {
+    "opening": "[rides] - F2 MEDIUM RIDES: ",
+    "pin": "A1",
+    "probes": {
+     "L2-03": "qualified-constructor",
+     "L2-04": "indirect-source"
+    },
+    "residual": "R-COMPOSED"
+   },
+   "F3": {
+    "opening": "[rides] - F3 MEDIUM RIDES: ",
+    "pin": "A2",
+    "probes": {
+     "L2-05": "comment-row",
+     "L2-06": "blank-line-row"
+    },
+    "residual": null
+   },
+   "F4": {
+    "opening": "[rides] - F4 LOW RIDES: ",
+    "pin": "A3",
+    "probes": {
+     "L2-07": "R-RI-UNNAMED"
+    },
+    "residual": null
+   }
+  },
+  "openClass": "survives through new members",
+  "uncountedUses": [
+   "raw-roster",
+   "answer-key"
+  ]
  },
  "fixture": {
   "producerDigest": "c4f1a9e07b3d5268e19f0a7c4b2d6e8f31a5c7e9b0d2f4a6c8e1b3d5f7092a4c",
@@ -458,14 +558,16 @@
   "R-NAIVE-WALK",
   "R-COMPOSED",
   "R-REASON",
-  "R-RI-UNNAMED"
+  "R-RI-UNNAMED",
+  "R-UNCOUNTED-COPY"
  ],
  "residualRows": {
   "R-SPAN-WORD": "A1",
   "R-NAIVE-WALK": "A1",
   "R-COMPOSED": "A1",
   "R-REASON": "C5",
-  "R-RI-UNNAMED": "A3"
+  "R-RI-UNNAMED": "A3",
+  "R-UNCOUNTED-COPY": "C3"
  },
  "rows": [
   {
@@ -506,7 +608,12 @@
         "escape-capture": true,
         "escape-alternation": true,
         "escape-code-point": true,
-        "escape-constructor": true
+        "escape-constructor": true,
+        "qualified-constructor": true,
+        "indirect-source": true,
+        "reflected-constructor": true,
+        "aliased-constructor": true,
+        "tagged-source": true
        },
        "quiet": {
         "approximate-count": 0,
@@ -516,7 +623,10 @@
         "approximate-pattern": 0,
         "home-pattern": 0,
         "wide-pattern": 0,
-        "other-constructor": 0
+        "other-constructor": 0,
+        "qualified-other": 0,
+        "indirect-other": 0,
+        "prose-tilde": 0
        }
       },
       "quiet": {
@@ -563,7 +673,198 @@
         "A loaded entry never upgrades projection freshness and never changes node status text or tone.",
         "Transport success never implies verification."
        ],
-       "pointer": true
+       "pointer": true,
+       "rendered": {
+        "bound": true,
+        "tables": 1,
+        "header": [
+         "Producer",
+         "Ref",
+         "Resolution",
+         "Grant"
+        ],
+        "mapping": [
+         "claude-agent-sdk session",
+         "furnace run",
+         "forge operation",
+         "anything else"
+        ],
+        "last": [
+         "anything else",
+         "\u2014",
+         "`unavailable: no-loader`, a visible unknown",
+         "\u2014"
+        ],
+        "html": {
+         "mapping": false,
+         "rules": false
+        },
+        "kinds": [
+         "paragraph"
+        ],
+        "rules": [
+         "Unknown producer or ref kind: no-loader, ref stays listed sanitized.",
+         "Scope mismatch or missing/revoked exact grant: unauthorized.",
+         "Stale or disconnected owning nodes label loaded evidence stale; a failed read against a disconnected source is transport plus stale.",
+         "A loaded entry never upgrades projection freshness and never changes node status text or tone.",
+         "Transport success never implies verification."
+        ]
+       },
+       "probes": {
+        "comment-row": {
+         "holds": false,
+         "tables": 1,
+         "header": [
+          "Producer",
+          "Ref",
+          "Resolution",
+          "Grant"
+         ],
+         "last": "forge operation",
+         "html": {
+          "mapping": true,
+          "rules": false
+         },
+         "kinds": [
+          "paragraph"
+         ],
+         "first": "Unknown producer or ref kind: no-loader, ref stays listed sanitized."
+        },
+        "blank-line-row": {
+         "holds": false,
+         "tables": 1,
+         "header": [
+          "Producer",
+          "Ref",
+          "Resolution",
+          "Grant"
+         ],
+         "last": "forge operation",
+         "html": {
+          "mapping": false,
+          "rules": false
+         },
+         "kinds": [
+          "paragraph"
+         ],
+         "first": "Unknown producer or ref kind: no-loader, ref stays listed sanitized."
+        },
+        "comment-rule": {
+         "holds": false,
+         "tables": 1,
+         "header": [
+          "Producer",
+          "Ref",
+          "Resolution",
+          "Grant"
+         ],
+         "last": "anything else",
+         "html": {
+          "mapping": false,
+          "rules": true
+         },
+         "kinds": [
+          "paragraph"
+         ],
+         "first": "Unknown producer or ref kind: no-loader, ref stays listed sanitized."
+        },
+        "second-table": {
+         "holds": false,
+         "tables": 2,
+         "header": [
+          "Producer",
+          "Ref",
+          "Resolution",
+          "Grant"
+         ],
+         "last": "anything else",
+         "html": {
+          "mapping": false,
+          "rules": false
+         },
+         "kinds": [
+          "paragraph"
+         ],
+         "first": "Unknown producer or ref kind: no-loader, ref stays listed sanitized."
+        },
+        "header-swapped": {
+         "holds": false,
+         "tables": 1,
+         "header": [
+          "Producer",
+          "Grant",
+          "Resolution",
+          "Ref"
+         ],
+         "last": "anything else",
+         "html": {
+          "mapping": false,
+          "rules": false
+         },
+         "kinds": [
+          "paragraph"
+         ],
+         "first": "Unknown producer or ref kind: no-loader, ref stays listed sanitized."
+        },
+        "comment-note": {
+         "holds": false,
+         "tables": 1,
+         "header": [
+          "Producer",
+          "Ref",
+          "Resolution",
+          "Grant"
+         ],
+         "last": "anything else",
+         "html": {
+          "mapping": true,
+          "rules": false
+         },
+         "kinds": [
+          "paragraph"
+         ],
+         "first": "Unknown producer or ref kind: no-loader, ref stays listed sanitized."
+        },
+        "rules-list": {
+         "holds": false,
+         "tables": 1,
+         "header": [
+          "Producer",
+          "Ref",
+          "Resolution",
+          "Grant"
+         ],
+         "last": "anything else",
+         "html": {
+          "mapping": false,
+          "rules": false
+         },
+         "kinds": [
+          "paragraph",
+          "list"
+         ],
+         "first": "Unknown producer or ref kind: no-loader, ref stays listed sanitized."
+        },
+        "rule-moved": {
+         "holds": false,
+         "tables": 1,
+         "header": [
+          "Producer",
+          "Ref",
+          "Resolution",
+          "Grant"
+         ],
+         "last": "anything else",
+         "html": {
+          "mapping": false,
+          "rules": false
+         },
+         "kinds": [
+          "paragraph"
+         ],
+         "first": "A decision reference is dereferenced at the producer's snapshot."
+        }
+       }
       }
      }
     },
@@ -1017,8 +1318,43 @@
        "read:moved",
        "read:short-id"
       ],
+      "helper-peek": [
+       "read:case-folded",
+       "read:last-nibble",
+       "read:moved",
+       "read:short-id"
+      ],
+      "roster-peek": [
+       "read:case-folded",
+       "read:last-nibble",
+       "read:moved",
+       "read:short-id"
+      ],
       "holders": [],
-      "holderControl": true
+      "holderControl": true,
+      "heldGetter": {
+       "accessor": true,
+       "reads": 1,
+       "value": null
+      },
+      "countedHolders": {
+       "snapshot": true,
+       "listing": true,
+       "probe": true,
+       "own": true,
+       "nested": true,
+       "moved": true,
+       "bases": true,
+       "fixture": true,
+       "roster": true,
+       "parsed": true
+      },
+      "quiet": {
+       "R-UNCOUNTED-COPY": {
+        "raw-roster": [],
+        "answer-key": []
+       }
+      }
      }
     },
     {
@@ -1097,7 +1433,7 @@
  ],
  "counted": [
   "A1:12",
-  "A2:9",
+  "A2:11",
   "A3:9",
   "B1:9",
   "B2:7",
@@ -1105,7 +1441,7 @@
   "B4:6",
   "C1:4",
   "C2:5",
-  "C3:8",
+  "C3:12",
   "C4:7",
   "C5:6"
  ]

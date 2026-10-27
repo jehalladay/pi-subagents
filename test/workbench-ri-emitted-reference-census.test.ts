@@ -44,16 +44,26 @@
  * reference's snapshot digest to the basis it is handed (byte-exact) and refuses a mismatch typed, through the store's own refusal
  * channel (EvidenceRefusal carrying freshness stale), before any read; and THE JUDGE reads every use through the real store: the
  * entry it settles and how often the snapshot was read. A use rule holds the basis's id and digest, and its document only through a
- * getter that counts as a read, so read() and that getter are its only paths to the snapshot and the judge counts both.
+ * getter that counts as a read; and every snapshot document the census holds (the module documents, each basis's, FIXTURE's,
+ * ROSTER's and any readRoster() parse's) is a COUNTED HOLDER, a deep view whose every touch counts wherever the touching code sits
+ * (the rule, a helper it calls, a getter), so the judge counts a read made through read(), through the getter or through any
+ * counted holder (wb-an8d F1). A copy the census holds behind no counted accessor is read uncounted: R-UNCOUNTED-COPY.
  *  A, acceptance (c) and the trigger. A1 a TypeScript-AST census of every src module, the walk held to the paths git lists: no
- *    literal is an RFC 6901 escape token (~0, ~1) and no regular expression carries one (a pattern is read by its spelling and,
- *    compiled, by what it matches, a RegExp constructor's literal pattern included), no literal and no package name carries the
- *    reference word family (pointer, deref, extractive, ptr), and the only identifiers that do are the judged sites, the selection
- *    glyph of three terminal views; floors, flagged controls, quiet controls and the residuals' quiet rows. A2 the host-wired store
+ *    literal is an RFC 6901 escape token (~0, ~1) or, compiled as a pattern, matches one and none of the escape controls, so a
+ *    pattern source is read where it is spelled whatever constructor, callee or binding takes it (wb-an8d F2: a qualified,
+ *    reflected or aliased constructor, a const-held or tagged source); no regular expression carries one (a pattern literal is read
+ *    by its spelling and, compiled, by what it matches, a bare RegExp constructor's literal pattern included); no literal and no
+ *    package name carries the reference word family (pointer, deref, extractive, ptr), and the only identifiers that do are the
+ *    judged sites, the selection glyph of three terminal views; floors, flagged controls, quiet controls and the residuals' quiet
+ *    rows. A2 the host-wired store
  *    answers every form of every reference (its canonical JSON, the bare pointer and the digest#pointer fragment form) on an rf
  *    preview node and on a node of each served provider's own type no-loader, settled at the request itself (no loader takes the
- *    form), and no reader seam is called; docs/20, read by section, keeps its anything-else no-loader row last in the mapping table,
- *    and its refusal-and-freshness section reads as measured, opening with the no-loader rule. A3 the gating envelope is measured
+ *    form), and no reader seam is called; docs/20, read by section as source lines and through its rendered view (test/helpers/
+ *    census.ts: each section bound once under the page title, the mapping section one table whose header is pinned, no HTML in
+ *    either section, the rules one paragraph run; wb-an8d F3), keeps its anything-else no-loader row last in the mapping table, and
+ *    its refusal-and-freshness section reads as measured, opening with the no-loader rule; the gate's two layout probes (the row in
+ *    an HTML comment, a blank line before it) and one probe per check of the rendered reading are applied to an in-memory copy and
+ *    refused. A3 the gating envelope is measured
  *    unshipped: the roster's producer facts, the bead row's gating sentence, and no RI package declared or named: no load specifier
  *    and no src literal (a spawn argument, a resolved name, a dotted module path) spells its root; flagged and quiet controls.
  *  B, acceptance (a). B1 the adoption fixture is well formed: each reference carries the producer's snapshot digest in the request
@@ -66,10 +76,12 @@
  *    quiet: 0 dereferences until the gate opens.
  *  C, acceptance (b). The judge and the rf checker refuse every escape: C1 dereferencing without the digest comparison; C2
  *    dereferencing against the current snapshot when the digests differ (re-bound and labelled stale, the docs/20 load-and-label
- *    idiom, or matched leniently); C3 reading the snapshot before the comparison (through read() or through the basis handle, the
- *    gate's G07), an untyped refusal, and a Pi-minted digest compared in place of the producer's, and no use rule naming a module
- *    binding that holds a snapshot; C4 the rf adapter mutants: a dereference surfaced in the projection, the reference's digest
- *    adopted as an evidence ref or as the snapshot's basis, the reading rewritten; C5 the quiet controls and R-REASON's quiet row.
+ *    idiom, or matched leniently); C3 reading the snapshot before the comparison (through read(), through the basis handle, the
+ *    gate's G07, or through a counted holder a module helper or readRoster() reaches, the gate's L2-01 and L2-02), an untyped
+ *    refusal, and a Pi-minted digest compared in place of the producer's; no use rule naming a module binding that holds a
+ *    snapshot; the held basis's counting getter; every snapshot holder counted; R-UNCOUNTED-COPY's quiet rows; C4 the rf adapter
+ *    mutants: a dereference surfaced in the projection, the reference's digest adopted as an evidence ref or as the snapshot's
+ *    basis, the reading rewritten; C5 the quiet controls and R-REASON's quiet row.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row, every pin's witness, the scan
  * constants, the fixture and the registered test titles are held to the out-of-file roster
  * (test/fixtures/ri-emitted-reference-roster.json). OUTSIDE ANCHORS: the owner filing's row in the tracked bead export
@@ -77,8 +89,12 @@
  * quote, gating and authority lines agree with the roster's producer lines; the cut's landed delivery note in the same row, read off
  * its own words (each row it names judged under its clause with every pin it names, A1's escape tokens and word family read, each
  * residual it names kept with its quiet pin); the follow-up's row (wb-48r6: the gate probe its lead line names is a use mutant C3
- * reads); docs/20's mapping table and refusal rules (A2); the src registry EVIDENCE_LOADER_ROWS (A2's providers); git's listing of
- * src (A1's walk, A3's modules).
+ * reads); the follow-up's landed delivery note in the same wb-48r6 row (its NEW RESIDUAL line: the residual it added, kept with its
+ * quiet pin); the terminal follow-up's filing (wb-an8d: its finding lines are exactly the four findings bound here, each names
+ * exactly the gate probes its finding binds, each probe's member is held in its pin's witness, and a line that leaves its class
+ * open names that class's residual on the same pin); every residual anchored outside both files, by a landed note or by an open
+ * class of the terminal filing; docs/20's mapping table and refusal rules (A2); the src registry EVIDENCE_LOADER_ROWS (A2's
+ * providers); git's listing of src (A1's walk, A3's modules).
  * RECORDS: the last case walks this file's registered tests: each roster title once, in order, in run mode, not inverted, ran; every
  * pin's case reached its end; and each made the assertion count the roster records for it, counted once its witness compare held.
  * UNTIL-THEN: acceptance (a)'s use is NOT implemented in Pi (gated: no reference ships at RI 075ac589d64d); B2-B3 arm it on the
@@ -89,22 +105,34 @@
  * NOT CLAIMED: the reference's key names, its evidence-ref string forms, the resource's placements, the near-miss list and the
  * refusal reason word (transport, docs/20's "a failed read against a disconnected source is transport plus stale") are this
  * fixture's choices, anchored by nothing outside these two files; whether a scheme-prefixed digest (sha256:<hex>) names the same
- * snapshot is the adopter's normalization choice, so no near-miss is one. The flagged and quiet controls, the use mutants other than
- * the follow-up's named probe, the node types and the holder names are anchored only in these two files (the landed note names
- * the mutants in prose, never as members); a case that swaps its own assertions for as many trivial ones and returns its witness as a
- * literal keeps its count; and no docs page but docs/20 is read.
+ * snapshot is the adopter's normalization choice, so no near-miss is one. The flagged and quiet controls, the use mutants and docs
+ * probes other than the follow-ups' named probes, the node types and the holder names are anchored only in these two files (the
+ * landed note names the mutants in prose, never as members); a case that swaps its own assertions for as many trivial ones and
+ * returns its witness as a literal keeps its count; and no docs page but docs/20 is read.
  * RESIDUALS (named families, each with a pinned quiet row): R-SPAN-WORD Pi's own span vocabulary (time intervals, trace spans,
  * redaction ranges) is not read, so a span dereference spelled with span words alone is invisible to A1; R-NAIVE-WALK a pointer
  * walked by split("/") without the escape pair and with no family word is invisible to A1; R-COMPOSED an escape token or a pattern
- * assembled at runtime is invisible to A1's literal reading (A1's quiet rows); R-REASON the judge binds the stale label and the
- * absent read, never the refusal reason, so a typed stale under any reason reads quiet (C5's quiet row); R-RI-UNNAMED an RI load
- * whose literals never spell the package root (a name assembled at runtime, a path or an alias) is invisible to A3 (A3's quiet row).
+ * no literal spells whole (assembled at runtime, or read from data) is invisible to A1's literal reading (A1's quiet rows);
+ * R-REASON the judge binds the stale label and the absent read, never the refusal reason, so a typed stale under any reason reads
+ * quiet (C5's quiet row); R-RI-UNNAMED an RI load whose literals never spell the package root (a name assembled at runtime, a path
+ * or an alias) is invisible to A3 (A3's quiet row); R-UNCOUNTED-COPY snapshot content taken from a copy the census holds behind no
+ * counted accessor (the roster file parsed afresh, the fixture's expected targets or a roster witness, a document re-typed in a
+ * rule or copied plain before the use) is read uncounted, so a use that peeks through one before the comparison reads quiet (C3's
+ * quiet rows, raw-roster and answer-key).
  * FOLLOW-UP wb-48r6 (R694, the landing-318 gate's LEG-2 survivors, gate of record cmd_77500c8a5789): F1 the use rule's basis is
  * {id, digest} plus a counted document getter, G07's shape is C3's peek-first mutant, and the holder guard is C3's; F2 the landed
  * note and the follow-up's row anchor the pins, the escape tokens, the word family, the residuals and the named probe outside these
  * two files; F3 A1 reads a compiled pattern by what it matches; F4 A3 reads every src literal for RI's root; F5 A2 reads docs/20 by
  * section; F6 the walk is held to git's listing in both directions; F7 the per-pin assertion count; F8 A2 reads each entry at its
  * request; F9 the "only a pointer" sentence is attributed to evidence-loader.ts, where it is.
+ * FOLLOW-UP wb-an8d (R694 of wb-48r6 at landing 412, gate of record cmd_86e83443ab66; hop 3 of the chain, the R739 TERMINAL
+ * enumerate-the-resolvable form): F1 every snapshot holder is counted, so C3's helper-peek and roster-peek (the gate's L2-01 and
+ * L2-02) read, and the class's uncountable remainder is the named R-UNCOUNTED-COPY; F2 every literal is also read compiled as a
+ * pattern, so A1's qualified-constructor and indirect-source controls (the gate's L2-03 and L2-04) read, and the class's remainder
+ * is the landed R-COMPOSED; F3 docs/20 is also read through its rendered view, so A2 refuses its comment-row and blank-line-row
+ * probes (the gate's L2-05 and L2-06); F4 the follow-up's landed NEW RESIDUAL line anchors R-RI-UNNAMED (the gate's L2-07).
+ * TERMINAL: the census claims exactly these bound readings; a later survivor outside the four enumerated classes is record-only
+ * unless it contradicts a claim pinned here.
  * SCOPE: the producer facts are read at their pins and Pi vendors no RI source, so a producer change is seen only when a re-probe
  * re-reads them. No reader, loader or provider is added to src, and nothing here is registered in the host.
  *
@@ -124,6 +152,7 @@ import { createWorkbenchEvidenceStore } from "../src/workbench/evidence-wiring.j
 import { type NativeRef, ObservationProjection, type ObservationScope } from "../src/workbench/observation.js";
 import { registerNativeReactiveFiberRender, registerReactiveFiberRender } from "../src/workbench/providers/reactivefiber.js";
 import { type ReactiveFiberSeam, type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
+import { docsSection, sectionTables } from "./helpers/census.js";
 import { fullShapeRf } from "./helpers/rf-render-fixture.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
@@ -172,6 +201,11 @@ const FLAGGED_CONTROLS: readonly (readonly [string, string])[] = [
   ["escape-alternation", 'const token = raw.replace(/~(?:0|1)/g, "");'],
   ["escape-code-point", "const escaped = /\\u007e[01]/.test(raw);"],
   ["escape-constructor", 'const pattern = new RegExp("~([01])", "g");'],
+  ["qualified-constructor", 'const pattern = new globalThis.RegExp("~([01])", "g");'],
+  ["indirect-source", 'const source = "~([01])"; const pattern = new RegExp(source, "g");'],
+  ["reflected-constructor", 'const pattern = Reflect.construct(RegExp, ["~([01])"]);'],
+  ["aliased-constructor", 'const Pattern = RegExp; const pattern = new Pattern("~[01]");'],
+  ["tagged-source", "const pattern = new RegExp(String.raw`~([01])`);"],
 ];
 /** A1's quiet controls: each module text must read no site. */
 const QUIET_CONTROLS: readonly (readonly [string, string])[] = [
@@ -183,19 +217,29 @@ const QUIET_CONTROLS: readonly (readonly [string, string])[] = [
   ["home-pattern", "const home = /^~(?=\\/|$)/;"],
   ["wide-pattern", "const anything = /\\S+/;"],
   ["other-constructor", 'const pattern = new RegExp("^pw-[0-9]+$");'],
+  ["qualified-other", 'const pattern = new globalThis.RegExp("^pw-[0-9]+$");'],
+  ["indirect-other", 'const source = "^~\\\\d+$"; const pattern = new RegExp(source);'],
+  ["prose-tilde", 'const note = "rows ~1 to ~9 move";'],
 ];
 /** The residuals' quiet rows (A1): each module text is a member of its family and reads no site. */
 const RESIDUAL_CONTROLS: Readonly<Record<string, string>> = {
   "R-SPAN-WORD": "const part = body.slice(span.start, span.end);",
   "R-NAIVE-WALK": 'let node = document; for (const key of path.split("/").slice(1)) node = node[key];',
-  "R-COMPOSED": 'const escaped = "~" + "1"; const pattern = new RegExp("~" + "[01]");',
+  "R-COMPOSED": 'const escaped = "~" + "1"; const pattern = new RegExp("~" + "[01]"); const loaded = new RegExp(JSON.parse(text).pattern);',
 };
 /** The residual's quiet row (A3): a module text that loads RI under a name it never spells reads no site. */
 const RI_RESIDUAL_CONTROLS: Readonly<Record<string, string>> = {
   "R-RI-UNNAMED": 'spawn("python3", ["-m", ["reactive", "inference"].join("_")]);',
 };
-const RESIDUAL_FAMILIES: readonly string[] = ["R-SPAN-WORD", "R-NAIVE-WALK", "R-COMPOSED", "R-REASON", "R-RI-UNNAMED"];
-const RESIDUAL_ROWS: Readonly<Record<string, string>> = { "R-SPAN-WORD": "A1", "R-NAIVE-WALK": "A1", "R-COMPOSED": "A1", "R-REASON": "C5", "R-RI-UNNAMED": "A3" };
+const RESIDUAL_FAMILIES: readonly string[] = ["R-SPAN-WORD", "R-NAIVE-WALK", "R-COMPOSED", "R-REASON", "R-RI-UNNAMED", "R-UNCOUNTED-COPY"];
+const RESIDUAL_ROWS: Readonly<Record<string, string>> = {
+  "R-SPAN-WORD": "A1",
+  "R-NAIVE-WALK": "A1",
+  "R-COMPOSED": "A1",
+  "R-REASON": "C5",
+  "R-RI-UNNAMED": "A3",
+  "R-UNCOUNTED-COPY": "C3",
+};
 /** A2: each provider's own node type in src (claude-topology.ts :133, furnace-observer.ts :148, forge-operation-observer.ts :87, the
  * rf observer's preview node), so a served loader's shape check is the only guard a reference meets; a provider without one fails A2. */
 const NODE_TYPES: Readonly<Record<string, string>> = { reactivefiber: "context-preview", "claude-agent-sdk": "session", furnace: "run", forge: "operation" };
@@ -216,11 +260,52 @@ const RI_QUIET_CONTROLS: readonly (readonly [string, string])[] = [
 const DOCS20_MAPPING = "## Producer mapping";
 const DOCS20_RULES = "## Refusal and freshness rules";
 const DOCS20_RULE = "Unknown producer or ref kind: no-loader, ref stays listed sanitized.";
-/** C3 (wb-48r6 F1): the module bindings that hold a snapshot document; no use rule names one, so read() and the held basis's counted
- * getter are a rule's only paths to a snapshot. */
+/** A2 (wb-an8d F3): docs/20 is also read through its rendered view (test/helpers/census.ts, the shared docs binding): both sections
+ * bound once under the page title, the mapping section one table whose header and last row are pinned, the rules section one
+ * paragraph run, and neither section carrying HTML. */
+const DASH = String.fromCodePoint(0x2014);
+const DOCS20_TITLE = `20 ${DASH} EvidenceLoader contract (workbench.evidence-loader/v1)`;
+const DOCS20_HEADER: readonly string[] = ["Producer", "Ref", "Resolution", "Grant"];
+const DOCS20_NO_LOADER_ROW: readonly string[] = ["anything else", DASH, "`unavailable: no-loader`, a visible unknown", DASH];
+/** A2's docs probes: each variant of docs/20 the rendered reading must refuse - the gate's L2-05 and L2-06 edits (wb-an8d F3), and one
+ * more per check of docs20Holds, each refused by that check alone (the bound check is implied by the others). */
+const DOCS20_PROBES: Readonly<Record<string, string>> = {
+  "comment-row": "the no-loader row wrapped in an HTML comment block",
+  "blank-line-row": "a blank line before the no-loader row",
+  "comment-rule": "the rules paragraph's later sentences hidden in an inline HTML comment",
+  "second-table": "a second table in the mapping section, mapping a decision reference after the no-loader row",
+  "header-swapped": "the mapping table's Ref and Grant header cells swapped",
+  "comment-note": "an HTML comment added to the mapping section, the table untouched",
+  "rules-list": "a list added to the rules section after its paragraph",
+  "rule-moved": "a sentence put before the no-loader rule in the rules paragraph",
+};
+/** C3 (wb-48r6 F1): the module bindings that hold a snapshot document; no use rule names one (the lexical guard). A callee or a binding
+ * outside this list reaches a snapshot only through a counted holder, which the judge counts (wb-an8d F1). */
 const SNAPSHOT_HOLDERS = /\b(?:SNAPSHOT_DOCUMENT|MOVED_DOCUMENT|BASES|FIXTURE|ROSTER|resourceOf|placed)\b/;
 /** The gate probes the follow-up's lead line names, each with the use mutant C3 reads for it (wb-48r6 F1, F2). */
 const GATE_PROBES: Readonly<Record<string, string>> = { G07: "peek-first" };
+/** The terminal follow-up (wb-an8d: the R694 carry of wb-48r6 at landing 412, hop 3, the R739 TERMINAL enumerate-the-resolvable
+ * form): its filing names, finding by finding, the gate probes this cut binds. */
+const TERMINAL_FOLLOW_UP = "wb-an8d";
+interface TerminalFinding {
+  /** The filing line's opening; the first line so opening is the filing's own. */
+  readonly opening: string;
+  /** The pin whose roster witness holds each probe's member. */
+  readonly pin: string;
+  /** Each gate probe the line names, with the member that binds it: a C3 use mutant, an A1 flagged control, an A2 docs probe, or
+   * the landed residual whose outside anchor a coordinated hollow of it now meets. */
+  readonly probes: Readonly<Record<string, string>>;
+  /** The named residual holding the class's members the cut does not kill, or null when the cut kills the class it names. */
+  readonly residual: string | null;
+}
+const TERMINAL_FINDINGS: Readonly<Record<string, TerminalFinding>> = {
+  F1: { opening: "[leads] - F1 MEDIUM LEADS: ", pin: "C3", probes: { "L2-01": "helper-peek", "L2-02": "roster-peek" }, residual: "R-UNCOUNTED-COPY" },
+  F2: { opening: "[rides] - F2 MEDIUM RIDES: ", pin: "A1", probes: { "L2-03": "qualified-constructor", "L2-04": "indirect-source" }, residual: "R-COMPOSED" },
+  F3: { opening: "[rides] - F3 MEDIUM RIDES: ", pin: "A2", probes: { "L2-05": "comment-row", "L2-06": "blank-line-row" }, residual: null },
+  F4: { opening: "[rides] - F4 LOW RIDES: ", pin: "A3", probes: { "L2-07": "R-RI-UNNAMED" }, residual: null },
+};
+/** The words with which a filing line leaves its class open beyond the members it names; such a class names its residual. */
+const OPEN_CLASS = "survives through new members";
 /** A3: a name that would be a result, reference, pointer or span type among the module's exports. */
 const RESULT_NAME = /result|reference|pointer|span|envelope/i;
 
@@ -273,21 +358,54 @@ interface Basis {
   readonly document: JsonObject;
 }
 
+/** C3 (wb-an8d F1): touches of a counted holder - a property read, a key listing, an own-property or `in` probe, at any depth -
+ * counted wherever the code that makes them sits: a use rule, a helper it calls, a getter. */
+let holderTouches = 0;
+/** A counted holder: a deep view of a snapshot document whose every touch counts, so a dereference through it is seen whatever path
+ * reached it. The document itself is held by nothing else. */
+function counted<T extends object>(value: T): T {
+  return new Proxy(value, {
+    get: (target, key, receiver) => {
+      holderTouches += 1;
+      const inner: unknown = Reflect.get(target, key, receiver);
+      return typeof inner === "object" && inner !== null ? counted(inner) : inner;
+    },
+    has: (target, key) => {
+      holderTouches += 1;
+      return Reflect.has(target, key);
+    },
+    ownKeys: target => {
+      holderTouches += 1;
+      return Reflect.ownKeys(target);
+    },
+    getOwnPropertyDescriptor: (target, key) => {
+      holderTouches += 1;
+      return Reflect.getOwnPropertyDescriptor(target, key);
+    },
+  });
+}
+/** How many holder touches one piece of code makes. */
+function touchesOf(read: () => unknown): number {
+  const before = holderTouches;
+  read();
+  return holderTouches - before;
+}
+
 /** The producer's snapshot digest, in the request contract's form (64 lowercase hex); stated by the producer, never computed here. */
 const PRODUCER_DIGEST = "c4f1a9e07b3d5268e19f0a7c4b2d6e8f31a5c7e9b0d2f4a6c8e1b3d5f7092a4c";
 const MOVED_DIGEST = "7e2b9d4f61a8c03e5b7d9f1a2c4e6b8d0f3a5c7e9b1d3f5a7c9e2b4d6f8a0c1e";
-const SNAPSHOT_DOCUMENT: JsonObject = {
+const SNAPSHOT_DOCUMENT: JsonObject = counted<JsonObject>({
   observations: [
     { name: "ticket", value: { title: "ref-target-title-1f7c", body: "triage ref-target-span-6a2e done" } },
     { name: "paths", value: { "src/a~b": "ref-target-escaped-9d41" } },
   ],
-};
-const MOVED_DOCUMENT: JsonObject = {
+});
+const MOVED_DOCUMENT: JsonObject = counted<JsonObject>({
   observations: [
     { name: "ticket", value: { title: "moved-target-title-3b90", body: "triage moved-target-span-58c1 done" } },
     { name: "paths", value: { "src/a~b": "moved-target-escaped-27fd" } },
   ],
-};
+});
 const REFERENCES: readonly FixtureReference[] = [
   { id: "pointer", reference: { kind: "pointer", pointer: "/observations/0/value/title", snapshot_digest: PRODUCER_DIGEST }, target: "ref-target-title-1f7c" },
   { id: "escaped-pointer", reference: { kind: "pointer", pointer: "/observations/1/value/src~1a~0b", snapshot_digest: PRODUCER_DIGEST }, target: "ref-target-escaped-9d41" },
@@ -510,7 +628,7 @@ function readRoster(): Roster {
     citation: text(raw.citation, "citation"),
     producer: producerOf(raw.producer),
     scan: json(raw.scan) as JsonObject,
-    fixture: json(raw.fixture) as JsonObject,
+    fixture: counted(json(raw.fixture) as JsonObject),
     residuals: strings(raw.residuals, "residuals"),
     residualRows: json(raw.residualRows) as JsonObject,
     rows,
@@ -591,6 +709,11 @@ function landedNote(notes: string): LandedNote {
     residuals,
   };
 }
+/** The residual a follow-up's landed delivery note added (wb-an8d F4), read off its "NEW RESIDUAL" line: the family and its pin. */
+function addedResiduals(notes: string): Record<string, string> {
+  const parsed = /^NEW RESIDUAL \(named, with a pinned quiet row in ([A-Z][1-9])'s witness\): (R-[A-Z0-9-]+) - /.exec(noteLine(notes, "NEW RESIDUAL "));
+  return parsed === null ? {} : { [parsed[2] ?? ""]: parsed[1] ?? "" };
+}
 /** The filing's acceptance clauses: its "Acceptance: " line, split before each "(x) ", the final period dropped. */
 function acceptanceClauses(notes: string): string[] {
   return noteLine(notes, "Acceptance: ")
@@ -659,11 +782,9 @@ interface ModuleScan {
   /** RFC 6901 escape tokens, `<path>:<line> <kind> <text>`. */
   readonly escapes: string[];
 }
-/** A1: whether a pattern carries an escape token: its source spells one (ESCAPE_IN_PATTERN), or, compiled, it matches an escape
- * token and none of ESCAPE_CONTROLS, so capture groups, alternations, classes and character escapes are read by what they match
- * (wb-48r6 F3). A source that does not compile is read by its spelling alone. */
-function escapePattern(source: string, flags: string): boolean {
-  if (ESCAPE_IN_PATTERN.test(source)) return true;
+/** A1: whether a text, compiled as a pattern, matches an escape token and none of ESCAPE_CONTROLS, so capture groups, alternations,
+ * classes and character escapes are read by what they match (wb-48r6 F3); a text that does not compile reads false. */
+function compiledEscape(source: string, flags: string): boolean {
   let pattern: RegExp;
   try {
     pattern = new RegExp(source, flags.replace(/[gy]/g, ""));
@@ -671,6 +792,11 @@ function escapePattern(source: string, flags: string): boolean {
     return false;
   }
   return ESCAPE_TOKENS.some(token => pattern.test(token)) && !ESCAPE_CONTROLS.some(control => pattern.test(control));
+}
+/** A1: whether a pattern carries an escape token: its source spells one (ESCAPE_IN_PATTERN), or it reads as one compiled. A source
+ * that does not compile is read by its spelling alone. */
+function escapePattern(source: string, flags: string): boolean {
+  return ESCAPE_IN_PATTERN.test(source) || compiledEscape(source, flags);
 }
 /** A RegExp constructor's literal pattern and flags (a string or a template without substitutions), or undefined for any other call. */
 function constructedPattern(node: ts.Node): { readonly source: string; readonly flags: string } | undefined {
@@ -680,7 +806,8 @@ function constructedPattern(node: ts.Node): { readonly source: string; readonly 
   return { source: source.text, flags: flags !== undefined && (ts.isStringLiteral(flags) || ts.isNoSubstitutionTemplateLiteral(flags)) ? flags.text : "" };
 }
 /** One module, parsed under its own script kind: its identifiers, string and template parts and regular expressions. Comments are
- * never read: a comment dereferences nothing. */
+ * never read: a comment dereferences nothing. Every string and template part is also read compiled as a pattern (wb-an8d F2), so a
+ * pattern source is read where it is spelled, whatever constructor, callee or binding later takes it. */
 function scanModule(path: string, source: string): ModuleScan {
   const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
   const identifiers = new Set<string>();
@@ -696,6 +823,7 @@ function scanModule(path: string, source: string): ModuleScan {
       if (REFERENCE_WORD.test(words(node.text))) literals.push(`${path}:${line(node)} pattern ${node.text}`);
     } else if (ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node)) {
       if (ESCAPE_TOKENS.includes(node.text)) escapes.push(`${path}:${line(node)} literal ${JSON.stringify(node.text)}`);
+      else if (compiledEscape(node.text, "")) escapes.push(`${path}:${line(node)} pattern-literal ${JSON.stringify(node.text)}`);
       if (REFERENCE_WORD.test(words(node.text))) literals.push(`${path}:${line(node)} literal ${JSON.stringify(node.text)}`);
     }
     const constructed = constructedPattern(node);
@@ -742,6 +870,72 @@ function sectionOf(page: string, heading: string): string[] | null {
   const next = lines.findIndex((line, index) => index >= start && /^#{1,2} /.test(line));
   return lines.slice(start, next === -1 ? lines.length : next);
 }
+/** A2 (wb-an8d F3): what a reader of docs/20 sees in the two sections A2 pins. */
+interface RenderedDocs20 {
+  readonly bound: boolean;
+  readonly tables: number;
+  readonly header: readonly string[];
+  readonly mapping: readonly string[];
+  readonly last: readonly string[];
+  readonly html: { readonly mapping: boolean; readonly rules: boolean };
+  readonly kinds: readonly string[];
+  readonly rules: readonly string[];
+}
+function renderedDocs20(docs: string): RenderedDocs20 {
+  const heading = (marker: string): string => marker.replace(/^#+ /, "");
+  const tables = sectionTables(docs, heading(DOCS20_MAPPING), 2, [DOCS20_TITLE]);
+  const mapping = docsSection(docs, heading(DOCS20_MAPPING), 2, [DOCS20_TITLE]);
+  const rules = docsSection(docs, heading(DOCS20_RULES), 2, [DOCS20_TITLE]);
+  const grid = tables.grids[0] ?? [];
+  return {
+    bound: tables.ok && mapping.ok && rules.ok,
+    tables: tables.grids.length,
+    header: [...(grid[0] ?? [])],
+    mapping: grid.slice(1).map(row => row[0] ?? ""),
+    last: [...(grid[grid.length - 1] ?? [])],
+    html: { mapping: mapping.hasHtml, rules: rules.hasHtml },
+    kinds: rules.blocks.map(block => block.kind),
+    rules: rules.blocks
+      .flatMap(block => (block.kind === "paragraph" ? [block.text] : []))
+      .join(" ")
+      .split(/(?<=\.) +/)
+      .filter(Boolean),
+  };
+}
+/** Whether a rendered reading of docs/20 holds what A2 pins: one table, its header, the no-loader row last, no HTML in either
+ * section, and the rules one paragraph run opening with the no-loader rule. */
+function docs20Holds(reading: RenderedDocs20): boolean {
+  return (
+    reading.bound &&
+    reading.tables === 1 &&
+    canonical(reading.header) === canonical(DOCS20_HEADER) &&
+    canonical(reading.last) === canonical(DOCS20_NO_LOADER_ROW) &&
+    !reading.html.mapping &&
+    !reading.html.rules &&
+    canonical(reading.kinds) === canonical(["paragraph"]) &&
+    reading.rules[0] === DOCS20_RULE
+  );
+}
+/** docs/20 with one docs probe's edit applied, in memory only. */
+function docs20Variant(docs: string, probe: string): string {
+  const found = docs.split("\n").find(line => line.startsWith("| anything else |"));
+  if (found === undefined) throw new Error(`${DOCS20} carries no anything-else row`);
+  const row = `${found}\n`;
+  if (probe === "comment-row") return docs.replace(row, `<!--\n${row}-->\n`);
+  if (probe === "blank-line-row") return docs.replace(row, `\n${row}`);
+  if (probe === "second-table") {
+    const second = ["| Producer | Ref | Resolution | Grant |", "|---|---|---|---|", `| decision reference | ${DASH} | dereferenced at the producer's snapshot | ${DASH} |`];
+    return docs.replace(row, `${row}\n${second.join("\n")}\n`);
+  }
+  const rules = docs.split("\n").find(line => line.startsWith(`${DOCS20_RULE} `));
+  if (rules === undefined) throw new Error(`${DOCS20} carries no rules paragraph opening with the no-loader rule`);
+  if (probe === "comment-rule") return docs.replace(rules, `${DOCS20_RULE} <!-- ${rules.slice(DOCS20_RULE.length + 1)} -->`);
+  if (probe === "rules-list") return docs.replace(`${rules}\n`, `${rules}\n\n- a decision reference is dereferenced at the producer's snapshot\n`);
+  if (probe === "rule-moved") return docs.replace(rules, `A decision reference is dereferenced at the producer's snapshot. ${rules}`);
+  if (probe === "header-swapped") return docs.replace("| Producer | Ref | Resolution | Grant |", "| Producer | Grant | Resolution | Ref |");
+  if (probe === "comment-note") return docs.replace(row, `${row}\n<!-- decision references are served elsewhere -->\n`);
+  throw new Error(`no docs/20 probe ${probe}`);
+}
 /** Every load specifier of a src module: import, export, import type, dynamic import and require. */
 function specifiersOf(path: string, source: string): string[] {
   const file = ts.createSourceFile(path, source, ts.ScriptTarget.Latest, true, scriptKindOf(path));
@@ -763,7 +957,8 @@ function specifiersOf(path: string, source: string): string[] {
 // B and C: the use, the reference adoption, its mutants and the judge.
 
 /** What a use rule holds of the host's basis (wb-48r6 F1): its id and digest, and its document only through a getter that counts as
- * one snapshot read each time it is touched, so read() and the getter are the two paths to the snapshot and the judge counts both. */
+ * one snapshot read each time it is touched, so read() and the getter are its two paths to the basis's snapshot and the judge counts
+ * both; any other path to a snapshot document runs through a counted holder (wb-an8d F1). */
 interface HeldBasis {
   readonly id: string;
   readonly digest: string;
@@ -797,6 +992,10 @@ const REFERENCE_ADOPTION: UseRule = (reference, basis, read) => {
   return contentOf(dereference(read(), reference), reference.snapshot_digest, "current");
 };
 const looselySame = (left: string, right: string): boolean => left.toLowerCase().slice(0, 12) === right.toLowerCase().slice(0, 12);
+/** The gate's L2-01 helper (wb-an8d F1): the module document a basis id names, reached by a callee no use rule's text names. */
+const snapshotNamed = (id: string): JsonValue => (id === "producer" ? SNAPSHOT_DOCUMENT : MOVED_DOCUMENT);
+/** R-UNCOUNTED-COPY's member: the roster file parsed afresh, raw, so the copies it holds are behind no counted accessor. */
+const rawRosterFixture = (): JsonObject => objectOf(objectOf(JSON.parse(readFileSync(join(REPO, ROSTER_FILE), "utf8")), "raw roster").fixture, "raw fixture");
 /** The escapes (b) names and the others C3 reads, each one edit away from the reference adoption. */
 const USE_MUTANTS: Readonly<Record<string, UseRule>> = {
   unchecked: (reference, _basis, read) => contentOf(dereference(read(), reference), reference.snapshot_digest, "current"),
@@ -829,6 +1028,38 @@ const USE_MUTANTS: Readonly<Record<string, UseRule>> = {
     read();
     return contentOf(value, reference.snapshot_digest, "current");
   },
+  /** The gate's L2-01 (wb-an8d F1): the snapshot the basis id names, through a module helper, before the comparison. */
+  "helper-peek": (reference, basis, read) => {
+    const value = dereference(snapshotNamed(basis.id), reference);
+    if (reference.snapshot_digest !== basis.digest) throw new EvidenceRefusal("transport", "stale");
+    read();
+    return contentOf(value, reference.snapshot_digest, "current");
+  },
+  /** The gate's L2-02 (wb-an8d F1): the roster's copy of that snapshot, through readRoster(), before the comparison. */
+  "roster-peek": (reference, basis, read) => {
+    const fixture = readRoster().fixture;
+    const value = dereference((basis.id === "producer" ? fixture.snapshot : fixture.moved) ?? null, reference);
+    if (reference.snapshot_digest !== basis.digest) throw new EvidenceRefusal("transport", "stale");
+    read();
+    return contentOf(value, reference.snapshot_digest, "current");
+  },
+};
+/** R-UNCOUNTED-COPY's quiet rows (C3): snapshot content taken, before the comparison, from a copy the census holds behind no counted
+ * accessor - the roster file parsed afresh, or the fixture's own expected target - reads quiet. */
+const UNCOUNTED_USES: Readonly<Record<string, UseRule>> = {
+  "raw-roster": (reference, basis, read) => {
+    const fixture = rawRosterFixture();
+    const value = dereference((basis.id === "producer" ? fixture.snapshot : fixture.moved) ?? null, reference);
+    if (reference.snapshot_digest !== basis.digest) throw new EvidenceRefusal("transport", "stale");
+    read();
+    return contentOf(value, reference.snapshot_digest, "current");
+  },
+  "answer-key": (reference, basis, read) => {
+    const value = REFERENCES.find(entry => entry.reference === reference)?.target ?? "";
+    if (reference.snapshot_digest !== basis.digest) throw new EvidenceRefusal("transport", "stale");
+    read();
+    return contentOf(value, reference.snapshot_digest, "current");
+  },
 };
 /** R-REASON's quiet row: a typed stale under another reason word. */
 const OTHER_REASON: UseRule = (reference, basis, read) => {
@@ -848,11 +1079,13 @@ interface UseReading {
   readonly reads: number;
 }
 /** Every reference used at every basis under one rule, each basis through its own real EvidenceStore; reads counts snapshot reads,
- * through read() and through the held basis's document alike. */
+ * through read() and through the held basis's document alike, plus one more when the use touched a counted holder anywhere outside
+ * read() (wb-an8d F1: a module helper, readRoster(), ROSTER or FIXTURE, any depth). */
 async function usesOf(rule: UseRule): Promise<UseReading[]> {
   const readings: UseReading[] = [];
   for (const basis of BASES) {
     const reads = new Map<string, number>();
+    let insideRead = 0;
     const loader: EvidenceLoader = {
       provider: RF_PROVIDER,
       requiredGrant: RF_GRANT,
@@ -862,7 +1095,10 @@ async function usesOf(rule: UseRule): Promise<UseReading[]> {
         if (reference === undefined) throw new EvidenceRefusal("no-loader");
         const read = (): JsonValue => {
           reads.set(request.evidenceRef, (reads.get(request.evidenceRef) ?? 0) + 1);
-          return json(basis.document);
+          const before = holderTouches;
+          const copy = json(basis.document);
+          insideRead += holderTouches - before;
+          return copy;
         };
         return rule(reference, heldBasis(basis, read), read);
       },
@@ -870,8 +1106,11 @@ async function usesOf(rule: UseRule): Promise<UseReading[]> {
     const store = new EvidenceStore({ loaders: [loader], maxEntries: 8, maxBytes: 4096, timeoutMs: 30_000, scope: SCOPE });
     for (const entry of REFERENCES) {
       const ref = canonical(entry.reference);
+      insideRead = 0;
+      const before = holderTouches;
       await store.request(SCOPE, RF_NODE, ref);
-      readings.push({ reference: entry.id, basis: basis.id, entry: entryView(store.get(SCOPE, RF_NODE, ref)), reads: reads.get(ref) ?? 0 });
+      const outside = holderTouches - before - insideRead > 0 ? 1 : 0;
+      readings.push({ reference: entry.id, basis: basis.id, entry: entryView(store.get(SCOPE, RF_NODE, ref)), reads: (reads.get(ref) ?? 0) + outside });
     }
   }
   return readings;
@@ -1028,7 +1267,7 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     const walk = walkAgreement([...files, ...symlinks]);
     expect(floors, "the walk reaches at least the floor of src files and modules").toStrictEqual({ srcFiles: true, srcModules: true });
     expect(walk, "the walk reads exactly the src paths git lists").toStrictEqual({ walkOnly: [], gitOnly: [] });
-    expect(escapes, "no src literal is an RFC 6901 escape token and no pattern carries one").toEqual([]);
+    expect(escapes, "no src literal is an RFC 6901 escape token or reads, compiled, as an escape pattern, and no pattern carries one").toEqual([]);
     expect(literals, "no src literal or pattern carries the reference word family").toEqual([]);
     expect(identifiers, "every family identifier in src is a judged glyph site, and every judged site is still read").toEqual(Object.keys(JUDGED_SITES).sort());
     expect(packages, "no declared package carries the reference word family").toEqual([]);
@@ -1083,6 +1322,17 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       rules: (sectionOf(docs, DOCS20_RULES) ?? []).filter(line => line.trim() !== "").join(" ").split(/(?<=\.) +/).filter(Boolean),
       pointer: readFileSync(join(REPO, "src/workbench/evidence-loader.ts"), "utf8").includes("A reference is only a pointer"),
     };
+    // wb-an8d F3: the same two sections through the rendered view, and every docs probe refused there.
+    const rendered = renderedDocs20(docs);
+    const probes = Object.fromEntries(
+      Object.keys(DOCS20_PROBES).map(probe => {
+        const reading = renderedDocs20(docs20Variant(docs, probe));
+        return [
+          probe,
+          { holds: docs20Holds(reading), tables: reading.tables, header: reading.header, last: reading.last[0] ?? "", html: reading.html, kinds: reading.kinds, first: reading.rules[0] ?? "" },
+        ];
+      }),
+    );
     const noLoader = canonical({ state: "unavailable", reason: "no-loader" });
     expect([...routed], "no loader takes any form: each request settles no-loader at the request itself").toEqual([noLoader]);
     expect([...entries], "every form under every provider settles no-loader").toEqual([noLoader]);
@@ -1091,8 +1341,24 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       { last: docs20.mapping[docs20.mapping.length - 1], anythingElse: docs20.anythingElse, first: docs20.rules[0], pointer: docs20.pointer },
       "docs/20's mapping table ends with its no-loader row and its refusal rules open with the no-loader rule",
     ).toStrictEqual({ last: "anything else", anythingElse: true, first: DOCS20_RULE, pointer: true });
+    expect(
+      { holds: docs20Holds(rendered), mapping: rendered.mapping, rules: rendered.rules },
+      "docs/20's rendered view holds the same table and rules: one table, its header, the no-loader row last, no HTML, the rules one paragraph run",
+    ).toStrictEqual({ holds: true, mapping: docs20.mapping, rules: docs20.rules });
+    expect(
+      Object.entries(probes).filter(([, probe]) => probe.holds).map(([id]) => id),
+      "the rendered reading refuses every docs probe variant (the gate's L2-05 and L2-06, and one per check of the reading)",
+    ).toEqual([]);
     expect(evidenceRefsOf(baseline).some(ref => ref.startsWith("rf-")), "the rf node's own refs are rf's").toBe(true);
-    return done("A2", { nodes: providers.map(provider => `${provider}/${NODE_TYPES[provider] ?? "unjudged"}`), forms: forms.length, requests: providers.length * forms.length, routed: [...routed], entries: [...entries], reads, docs20 });
+    return done("A2", {
+      nodes: providers.map(provider => `${provider}/${NODE_TYPES[provider] ?? "unjudged"}`),
+      forms: forms.length,
+      requests: providers.length * forms.length,
+      routed: [...routed],
+      entries: [...entries],
+      reads,
+      docs20: { ...docs20, rendered, probes },
+    });
   },
   A3: () => {
     const producer = ROSTER.producer;
@@ -1206,17 +1472,75 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     const untyped = useViolations(await usesOf(USE_MUTANTS.untyped ?? REFERENCE_ADOPTION));
     const minted = useViolations(await usesOf(USE_MUTANTS.minted ?? REFERENCE_ADOPTION));
     const peekFirst = useViolations(await usesOf(USE_MUTANTS["peek-first"] ?? REFERENCE_ADOPTION));
+    const helperPeek = useViolations(await usesOf(USE_MUTANTS["helper-peek"] ?? REFERENCE_ADOPTION));
+    const rosterPeek = useViolations(await usesOf(USE_MUTANTS["roster-peek"] ?? REFERENCE_ADOPTION));
     expect(readFirst, "reading before the comparison").toEqual(STALE_BASES.map(id => `read:${id}`).sort());
     expect(peekFirst, "dereferencing through the basis handle before the comparison is a read (G07)").toEqual(STALE_BASES.map(id => `read:${id}`).sort());
+    expect(
+      { "helper-peek": helperPeek, "roster-peek": rosterPeek },
+      "dereferencing a counted holder before the comparison is a read, through a module helper (L2-01) or through readRoster() (L2-02)",
+    ).toStrictEqual({ "helper-peek": STALE_BASES.map(id => `read:${id}`).sort(), "roster-peek": STALE_BASES.map(id => `read:${id}`).sort() });
+    // Every snapshot document the census holds is a counted holder (wb-an8d F1): the module documents, each basis's, FIXTURE's,
+    // ROSTER's and a fresh readRoster() parse's, so a touch of any of them is seen.
+    const nested = MOVED_DOCUMENT.observations ?? null;
+    const countedHolders = {
+      snapshot: touchesOf(() => json(SNAPSHOT_DOCUMENT)) > 0,
+      listing: touchesOf(() => Reflect.ownKeys(SNAPSHOT_DOCUMENT)) > 0,
+      probe: touchesOf(() => "observations" in SNAPSHOT_DOCUMENT) > 0,
+      own: touchesOf(() => Object.hasOwn(SNAPSHOT_DOCUMENT, "observations")) > 0,
+      nested: touchesOf(() => json(nested)) > 0,
+      moved: touchesOf(() => json(MOVED_DOCUMENT)) > 0,
+      bases: BASES.every(basis => touchesOf(() => json(basis.document)) > 0),
+      fixture: touchesOf(() => json(FIXTURE.snapshot ?? null)) > 0 && touchesOf(() => json(FIXTURE.moved ?? null)) > 0,
+      roster: touchesOf(() => json(ROSTER.fixture.snapshot ?? null)) > 0 && touchesOf(() => json(ROSTER.fixture.moved ?? null)) > 0,
+      parsed: touchesOf(() => json(readRoster().fixture.moved ?? null)) > 0,
+    };
+    expect(countedHolders, "every snapshot document the census holds counts each touch, a view taken from one included").toStrictEqual({
+      snapshot: true,
+      listing: true,
+      probe: true,
+      own: true,
+      nested: true,
+      moved: true,
+      bases: true,
+      fixture: true,
+      roster: true,
+      parsed: true,
+    });
+    // The held basis hands its document out only through a getter that counts a read (wb-48r6 F1), whatever the counted holders
+    // also see: an accessor with no value, each touch one read() call.
+    let getterReads = 0;
+    const held = heldBasis(BASES[1] ?? { id: "moved", digest: MOVED_DIGEST, document: MOVED_DOCUMENT }, () => {
+      getterReads += 1;
+      return null;
+    });
+    const descriptor = Object.getOwnPropertyDescriptor(held, "document");
+    const touched = held.document;
+    const heldGetter = { accessor: typeof descriptor?.get === "function" && !Object.hasOwn(descriptor, "value"), reads: getterReads, value: touched };
+    expect(heldGetter, "the held basis hands its document out only through a getter, one read() call per touch").toStrictEqual({ accessor: true, reads: 1, value: null });
+    const uncounted = Object.fromEntries(await Promise.all(Object.entries(UNCOUNTED_USES).map(async ([id, rule]) => [id, useViolations(await usesOf(rule))] as const)));
+    expect(uncounted, "a copy held behind no counted accessor reads quiet (R-UNCOUNTED-COPY)").toStrictEqual({ "raw-roster": [], "answer-key": [] });
     expect(untyped, "an untyped refusal").toEqual(STALE_BASES.map(id => `untyped:${id}`).sort());
     expect(minted, "a Pi-minted digest refuses the producer's own snapshot").toEqual(["fresh-refused", ...STALE_BASES.map(id => `read:${id}`)].sort());
-    // A rule reaches a snapshot only through read() or the held basis's counted getter (wb-48r6 F1): no rule names a module binding
-    // that holds one, and a rule that does is read.
-    const rules: readonly (readonly [string, UseRule])[] = [["adoption", REFERENCE_ADOPTION], ["other-reason", OTHER_REASON], ...Object.entries(USE_MUTANTS)];
+    // The lexical holder guard (wb-48r6 F1): no rule names a module binding that holds a snapshot, and a rule that does is read; a
+    // callee or an unlisted binding meets the counted holders instead (wb-an8d F1, above).
+    const rules: readonly (readonly [string, UseRule])[] = [["adoption", REFERENCE_ADOPTION], ["other-reason", OTHER_REASON], ...Object.entries(USE_MUTANTS), ...Object.entries(UNCOUNTED_USES)];
     const holders = rules.filter(([, rule]) => SNAPSHOT_HOLDERS.test(String(rule))).map(([id]) => id);
     const holderControl = SNAPSHOT_HOLDERS.test(String((reference: EmittedReference): string => dereference(MOVED_DOCUMENT, reference)));
     expect({ holders, holderControl }, "no use rule names a binding that holds a snapshot, and one that does is read").toStrictEqual({ holders: [], holderControl: true });
-    return done("C3", { "read-first": readFirst, untyped, minted, "peek-first": peekFirst, holders, holderControl });
+    return done("C3", {
+      "read-first": readFirst,
+      untyped,
+      minted,
+      "peek-first": peekFirst,
+      "helper-peek": helperPeek,
+      "roster-peek": rosterPeek,
+      holders,
+      holderControl,
+      heldGetter,
+      countedHolders,
+      quiet: { "R-UNCOUNTED-COPY": uncounted },
+    });
   },
   C4: async () => {
     const base = await injectedCarry(carrier());
@@ -1287,9 +1611,14 @@ const SCAN: JsonObject = json({
   snapshotHolders: `${SNAPSHOT_HOLDERS.source}/${SNAPSHOT_HOLDERS.flags}`,
   gateProbes: GATE_PROBES,
   followUp: FOLLOW_UP,
+  docs20Rendered: { title: DOCS20_TITLE, header: DOCS20_HEADER, noLoaderRow: DOCS20_NO_LOADER_ROW, probes: DOCS20_PROBES },
+  terminalFollowUp: TERMINAL_FOLLOW_UP,
+  terminalFindings: TERMINAL_FINDINGS,
+  openClass: OPEN_CLASS,
+  uncountedUses: Object.keys(UNCOUNTED_USES),
 }) as JsonObject;
-/** The constructed fixture, as the roster holds it. */
-const FIXTURE: JsonObject = json({
+/** The constructed fixture, as the roster holds it; a counted holder (wb-an8d F1), compared through plain copies. */
+const FIXTURE: JsonObject = counted(json({
   producerDigest: PRODUCER_DIGEST,
   movedDigest: MOVED_DIGEST,
   snapshot: SNAPSHOT_DOCUMENT,
@@ -1301,7 +1630,7 @@ const FIXTURE: JsonObject = json({
   resource: { tag: RESOURCE_TAG, schemaVersion: RESOURCE_SCHEMA_VERSION, twins: TWINS },
   placements: PLACEMENTS,
   rf: { root: RF_ROOT, provider: RF_PROVIDER, grant: RF_GRANT, preview: PREVIEW_ID, node: RF_NODE },
-}) as JsonObject;
+}) as JsonObject);
 
 /** A describe title: the row id and its label. */
 const titleOf = (row: Row): string => `${row.id} ${row.label}`;
@@ -1311,10 +1640,11 @@ describe("wb-tz4r.6 RI emitted-reference census (RI-UNIFIED-DECISION-INFERENCE-R
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:4", "C:5"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
-    expect({ bead: BEAD, scan: SCAN, fixture: FIXTURE, residuals: RESIDUAL_FAMILIES, residualRows: RESIDUAL_ROWS }).toStrictEqual({
-      bead: ROSTER.bead, scan: ROSTER.scan, fixture: ROSTER.fixture, residuals: [...ROSTER.residuals], residualRows: ROSTER.residualRows,
+    expect({ bead: BEAD, scan: SCAN, fixture: json(FIXTURE), residuals: RESIDUAL_FAMILIES, residualRows: RESIDUAL_ROWS }).toStrictEqual({
+      bead: ROSTER.bead, scan: ROSTER.scan, fixture: json(ROSTER.fixture), residuals: [...ROSTER.residuals], residualRows: ROSTER.residualRows,
     });
-    expect(Object.keys(USE_MUTANTS), "every use mutant the C rows read").toEqual(["unchecked", "rebound", "lenient", "read-first", "untyped", "minted", "peek-first"]);
+    expect(Object.keys(USE_MUTANTS), "every use mutant the C rows read").toEqual(["unchecked", "rebound", "lenient", "read-first", "untyped", "minted", "peek-first", "helper-peek", "roster-peek"]);
+    expect(Object.keys(UNCOUNTED_USES), "every quiet use R-UNCOUNTED-COPY's row reads").toEqual(["raw-roster", "answer-key"]);
     expect(ROSTER.counted.map(entry => entry.slice(0, entry.indexOf(":"))), "the roster counts every pin once, in row order").toEqual(ROWS.flatMap(row => row.pins));
     // Every residual names a pin of the judged set, and that pin's roster witness carries its pinned quiet row.
     const quietRows = RESIDUAL_FAMILIES.map(family => {
@@ -1380,6 +1710,59 @@ describe("wb-tz4r.6 RI emitted-reference census (RI-UNIFIED-DECISION-INFERENCE-R
       Object.values(GATE_PROBES).filter(mutant => !Object.hasOwn(USE_MUTANTS, mutant) || !isObject(c3) || !Object.hasOwn(c3, mutant)),
       "each named probe is a use mutant whose reading C3's witness holds",
     ).toEqual([]);
+    // wb-an8d F4: the follow-up's landed delivery note (wb-48r6) names the residual it added with its quiet pin, so that residual is
+    // anchored outside both files, as the four the owner row's landed note names are.
+    const added = addedResiduals(readBeadRow(FOLLOW_UP).notes);
+    expect(
+      { added: Object.keys(added).length, dropped: Object.entries(added).filter(([family, pin]) => !RESIDUAL_FAMILIES.includes(family) || RESIDUAL_ROWS[family] !== pin).map(([family]) => family) },
+      "the residual the follow-up's landed note added keeps its family and its quiet pin",
+    ).toStrictEqual({ added: 1, dropped: [] });
+    // The terminal follow-up's own filing (wb-an8d, R739 TERMINAL form): its finding lines are exactly the findings bound here; each
+    // names exactly the gate probes its finding binds, each probe's member is held in its pin's roster witness, and a line that
+    // leaves its class open names that class's residual on the same pin.
+    const terminalNotes = readBeadRow(TERMINAL_FOLLOW_UP).notes;
+    const lines = terminalNotes.split("\n");
+    const context = lines.findIndex(line => line.startsWith("Context: "));
+    expect(
+      (context > 0 ? lines.slice(0, context) : []).flatMap(line => /^\[(?:leads|rides)\] - (F\d+) /.exec(line)?.[1] ?? []),
+      "the terminal filing's finding lines are exactly the findings the census binds, in order",
+    ).toEqual(Object.keys(TERMINAL_FINDINGS));
+    const memberHeld = (pin: string, member: string): boolean => {
+      const witness = rosterWitness(pin);
+      if (!isObject(witness)) return false;
+      const { controls, docs20, quiet } = witness;
+      if (pin === "C3") return Object.hasOwn(USE_MUTANTS, member) && Object.hasOwn(witness, member);
+      if (pin === "A1") {
+        const flagged = isObject(controls) ? controls.flagged : undefined;
+        return FLAGGED_CONTROLS.some(([id]) => id === member) && isObject(flagged) && flagged[member] === true;
+      }
+      if (pin === "A2") {
+        const probes = isObject(docs20) ? docs20.probes : undefined;
+        const probe = isObject(probes) ? probes[member] : undefined;
+        return Object.hasOwn(DOCS20_PROBES, member) && isObject(probe) && probe.holds === false;
+      }
+      if (pin === "A3") return Object.hasOwn(added, member) && RESIDUAL_ROWS[member] === pin && isObject(quiet) && Object.hasOwn(quiet, member);
+      return false;
+    };
+    const openClass = (finding: TerminalFinding): boolean => noteLine(terminalNotes, finding.opening).includes(OPEN_CLASS);
+    const terminal = Object.entries(TERMINAL_FINDINGS).map(([id, finding]) => ({
+      id,
+      probes: [...new Set(noteLine(terminalNotes, finding.opening).match(/\bL2-\d{2}\b/g) ?? [])].sort(),
+      unheld: Object.entries(finding.probes)
+        .filter(([, member]) => !memberHeld(finding.pin, member))
+        .map(([probe]) => probe),
+      residual: finding.residual === null ? !openClass(finding) : RESIDUAL_FAMILIES.includes(finding.residual) && RESIDUAL_ROWS[finding.residual] === finding.pin,
+    }));
+    expect(terminal, "each finding names exactly its gate probes, each held in its pin's witness, and an open class names its residual on that pin").toStrictEqual(
+      Object.entries(TERMINAL_FINDINGS).map(([id, finding]) => ({ id, probes: Object.keys(finding.probes).sort(), unheld: [], residual: true })),
+    );
+    // Every residual is anchored outside both files: named by a landed note (the owner row's RESIDUALS line, the follow-up's NEW
+    // RESIDUAL line) or required by an open class of the terminal filing.
+    const required = Object.values(TERMINAL_FINDINGS).flatMap(finding => (finding.residual !== null && openClass(finding) ? [finding.residual] : []));
+    expect(
+      [...new Set([...Object.keys(landed.residuals), ...Object.keys(added), ...required])].sort(),
+      "every residual is anchored outside both files: named by a landed note or required by an open class of the terminal filing",
+    ).toEqual([...RESIDUAL_FAMILIES].sort());
   });
 
   for (const row of ROWS) {

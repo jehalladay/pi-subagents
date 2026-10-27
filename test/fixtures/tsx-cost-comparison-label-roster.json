@@ -232,6 +232,16 @@
        "test",
        "vendor"
       ],
+      "shipped": [
+       "docs",
+       "examples",
+       "qa",
+       "src",
+       "vendor"
+      ],
+      "vendored": [
+       "vendor"
+      ],
       "loaderRoots": [
        "cwd/.pi/skills",
        "cwd/.agents/skills",
@@ -413,7 +423,9 @@
       "coverage": {
        "readAll": true,
        "floorsMet": true,
-       "sentencesFloorMet": true
+       "sentencesFloorMet": true,
+       "listedAll": true,
+       "sentencesAll": true
       },
       "replica": {
        "findings": [
@@ -480,7 +492,8 @@
       },
       "fixtureCopies": [],
       "fixtureScan": {
-       "examinedFloorMet": true
+       "examinedFloorMet": true,
+       "examinedAll": true
       },
       "replicaCopies": [
        "docs/perf/programs/perf-f-2026-10-17/sdk-rfcli-cost-comparison.json",
@@ -750,6 +763,58 @@
           false
          ]
         }
+       },
+       "Status:  partial, two spaces": {
+        "skill": [
+         true,
+         true,
+         true,
+         true
+        ],
+        "display": [
+         true,
+         true,
+         true,
+         false,
+         false
+        ],
+        "rf": [
+         true,
+         true,
+         true,
+         true,
+         true
+        ],
+        "viewer": [
+         true,
+         true
+        ]
+       },
+       "Status:\tpartial, one tab": {
+        "skill": [
+         true,
+         true,
+         true,
+         true
+        ],
+        "display": [
+         false,
+         false,
+         false,
+         false,
+         false
+        ],
+        "rf": [
+         true,
+         true,
+         false,
+         false,
+         false
+        ],
+        "viewer": [
+         false,
+         true
+        ]
        }
       },
       "gaps": {
@@ -1060,7 +1125,8 @@
       "scanned": {
        "parsedAll": true,
        "modulesFloorMet": true,
-       "examinedFloorMet": true
+       "examinedFloorMet": true,
+       "examinedAll": true
       },
       "replica": {
        "hits": [

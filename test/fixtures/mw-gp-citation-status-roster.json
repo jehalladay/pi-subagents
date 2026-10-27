@@ -1,0 +1,1446 @@
+{
+  "bead": "wb-e66.6",
+  "producer": {
+    "mw": {
+      "repository": "MechanicalWorkflows",
+      "sha": "4b8b974ca72bf2ed36b99e315e45857c6181fbe8",
+      "gpc": {
+        "path": "docs/programs/graph-policy-coordination-2026-10-18.md",
+        "blob": "01ff00d480ecd5e5f6999433612f0c713f1f72aa",
+        "line1": "# MechanicalWorkflows \u00d7 GraphPolicyCLI \u2014 graph-conditioned coordination",
+        "line3": "**Status 2026-10-18: research/design, not integrated or verified live.**",
+        "line22": "Versioned projection/decision receipt sidecar, fixture tests, shadow-mode adapter, conformance and authority tests, then opt-in canary with rollback. No existing behavioral guarantees, training-export semantics or coordinator runtime requirements are changed by this document."
+      },
+      "readme": {
+        "path": "docs/programs/graph-policy-coordination-2026-10-18/README.md",
+        "blob": "0dbff582a14c13e4b4b13cb1848a23b935d92697",
+        "line1": "# MechanicalWorkflows \u00d7 GraphPolicyCLI \u2014 graph-conditioned policies",
+        "line3": "**2026-10-18; design-only.** [GraphPolicy program](https://github.com/jehalladay/GraphPolicyCLI/tree/main/docs/program) \u00b7 existing [adaptive organization program](../adaptive-policy-organizations-2026-10-18/README.md). No new native executor, policy compiler or training integration claimed.",
+        "line19": "Generate tiny heterogeneous landing-queue graphs and reuse existing fixture families. Compare FIFO/restack, exact small-instance oracle, graph-feature MLP and GP relational scorer, with capacity resolver unchanged. Evaluate source-revision replay, constraint violations, regret, stable scheduling, tail cost and unseen graph sizes. Document synthetic vs real claims separately."
+      },
+      "readBy": "the cutting seat, read-only git show at the pin, 2026-10-26; the hermetic census never re-reads it"
+    },
+    "filingPin": "758ec18187a5d66ba40b766caad38754b5313558",
+    "measured": {
+      "at": "32e0e2d2e5142fd03eb594cb2fdc9aff01abd3ae",
+      "note": "git grep -i -P over the whole tree outside .beads for the program's spellings (graph-policy-coordination, graph-conditioned, GPC.md, MechanicalWorkflows beside GraphPolicy): 0 files at the filing pin and 0 at this census's base"
+    }
+  },
+  "walkFloor": {
+    "measuredAt": "32e0e2d2e5142fd03eb594cb2fdc9aff01abd3ae",
+    "tracked": 72,
+    "directories": [
+      "docs/workbench",
+      "docs/workbench/receipts"
+    ]
+  },
+  "constants": {
+    "scope": "docs/workbench",
+    "receipts": "docs/workbench/receipts/",
+    "status": [
+      {
+        "id": "l1",
+        "literal": "research/design, not integrated or verified live",
+        "source": "GPC.md:3@4b8b974ca72b"
+      },
+      {
+        "id": "l2",
+        "literal": "No new native executor, policy compiler or training integration claimed",
+        "source": "README.md:3"
+      }
+    ],
+    "slug": "graph-policy-coordination",
+    "subtitles": [
+      "graph-conditioned coordination",
+      "graph-conditioned policies"
+    ],
+    "shorthand": "GPC.md",
+    "names": {
+      "mw": [
+        "MechanicalWorkflows",
+        "MW"
+      ],
+      "gp": [
+        "GraphPolicyCLI",
+        "GraphPolicy",
+        "GP"
+      ],
+      "joiner": "(?:['\u2019]s?)?[\\s_]*(?:[\u00d7xX*+/&\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]|and|with)?[\\s_]*"
+    },
+    "citation": "graph[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*policy[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*coordination|graph[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*conditioned[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*coordination|graph[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*conditioned[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*policies|GPC\\.md|(?<![A-Za-z0-9])(?:Mechanical[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*Workflows|MW)(?:['\u2019]s?)?[\\s_]*(?:[\u00d7xX*+/&\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]|and|with)?[\\s_]*(?:Graph[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*Policy[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*CLI|Graph[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*Policy|GP)(?![A-Za-z0-9])|(?<![A-Za-z0-9])(?:Graph[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*Policy[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*CLI|Graph[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*Policy|GP)(?:['\u2019]s?)?[\\s_]*(?:[\u00d7xX*+/&\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]|and|with)?[\\s_]*(?:Mechanical[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*Workflows|MW)(?![A-Za-z0-9])",
+    "requirementId": "\\bMW-GRAPH-POLICY-COORDINATION-R\\d+\\b",
+    "gpSubject": "(?<![A-Za-z0-9])(?:graph[\\s_-]*policy(?:[\\s_-]*cli)?|gp)(?![A-Za-z0-9])",
+    "number": {
+      "wordBreak": "[\\s()[\\]{},;\"'`*=<>~|!?\u2014\u2013\u2019\u2018\u201c\u201d]+",
+      "shape": "^[+\u00b1\u2212\u00d7-]?(?:\\d{1,3}(?:,\\d{3})+(?:\\.\\d+)?|\\d+(?:\\.\\d+)?|\\.\\d+)(?:[eE][+-]?\\d+)?(?:\\/\\d+(?:\\.\\d+)?)?(?:%|\u00d7|[A-Za-z]{1,3})?$"
+    },
+    "synthetic": "(?<![\\w-])synthetic(?![\\w-])",
+    "receipt": "(?<![\\w-])cmd_[0-9a-f]{12}(?![\\w-])",
+    "negation": [
+      "\\b(?:not|never|nor|no|non|isn't|aren't|wasn't|weren't|formerly|previously)\\b",
+      "^\\W*(?:no longer|no more|any ?more)\\b"
+    ],
+    "live": {
+      "live": "\\b(?:live|production|deployed)\\b",
+      "coordination": "\\b(?:coordinat\\w*|schedul\\w*|assign\\w*|dispatch\\w*|orchestrat\\w*)\\b",
+      "guard": "\\b(?:no|not|never|none|nothing|nor|neither|without|cannot|can't|isn't|aren't|wasn't|weren't|doesn't|don't|didn't|won't|hasn't|haven't|when|whenever|once|if|until|unless|before|would|will|may|might|could|should|proposed|planned|future|yet)\\b",
+      "guardAfter": "^\\s*(?:nowhere|nothing|none|not|never|no)\\b",
+      "clauseBreak": "[,;:()\u2014\u2013]"
+    },
+    "sentenceEnd": "(?<=[.!?])\\s+",
+    "units": [
+      "^\\s*(?:>\\s*)*$",
+      "^\\s*(?:>\\s*)*(?:[-*+]|\\d{1,9}[.)])\\s+",
+      "^\\s{0,3}#{1,6}(?:\\s|$)",
+      "^\\s*\\|",
+      "^\\s{0,3}(?:`{3,}|~{3,})"
+    ],
+    "rendered": {
+      "namedReferences": {
+        "quot": "\"",
+        "amp": "&",
+        "apos": "'",
+        "lt": "<",
+        "gt": ">",
+        "sol": "/",
+        "hyphen": "-",
+        "dash": "-",
+        "lowbar": "_",
+        "colon": ":",
+        "semi": ";",
+        "comma": ",",
+        "period": ".",
+        "nbsp": "\u00a0",
+        "times": "\u00d7",
+        "ndash": "\u2013",
+        "mdash": "\u2014",
+        "lsquo": "\u2018",
+        "rsquo": "\u2019",
+        "ldquo": "\u201c",
+        "rdquo": "\u201d"
+      },
+      "reference": "&(?:#(\\d{1,7})|#[xX]([0-9A-Fa-f]{1,6})|([A-Za-z][A-Za-z0-9]{1,31}));",
+      "hiddenHtml": "<!--(?:-?>|[\\s\\S]*?(?:-->|$))|<[!?][^>]*(?:>|$)|<\\/?[A-Za-z][^<>]*>",
+      "format": "^\\p{Cf}$",
+      "voidElements": [
+        "area",
+        "base",
+        "br",
+        "col",
+        "embed",
+        "hr",
+        "img",
+        "input",
+        "link",
+        "meta",
+        "source",
+        "track",
+        "wbr"
+      ]
+    },
+    "bound": [],
+    "quotes": {
+      "A1": "Any docs/workbench text",
+      "A2": "citing the MechanicalWorkflows \u00d7 GraphPolicyCLI program",
+      "A3": "shall carry its pinned status verbatim",
+      "A4": "'research/design, not integrated or verified live' (GPC.md:3@4b8b974ca72b)",
+      "A5": "'No new native executor, policy compiler or training integration claimed' (README.md:3)",
+      "B1": "label GP numbers",
+      "B2": "synthetic",
+      "B3": "unless a real-system receipt is cited",
+      "C1": "and never present a GP result",
+      "C2": "as live coordination",
+      "D1": "the docs census that binds the citing sentence (wb-cax.25 / docs-07 census style)",
+      "D2": "goes red when a sentence cites the program without both status literals",
+      "D3": "or presents a GP number without a 'synthetic' label or a cited real-system receipt",
+      "E1": "until a citation exists the bead is a standing rule, not a code change"
+    },
+    "plant": {
+      "path": "docs/workbench/zz-wb-e66.6-plant.md",
+      "text": "# Plant\n\nThe MechanicalWorkflows \u00d7 GraphPolicyCLI program is research/design, not integrated or verified live; No new native executor, policy compiler or training integration claimed.\n\nPi reads the graph-policy-coordination-2026-10-18 program.\n\nThe graph-policy-coordination-2026-10-18 program (research/design, not integrated or verified live; No new native executor, policy compiler or training integration claimed) reports a GP regret of 0.12, and GP scores drive live coordination.\n"
+    },
+    "residuals": {
+      "R-SCOPE": [
+        "Q1"
+      ],
+      "R-REQUIREMENT-ID": [
+        "Q2"
+      ],
+      "R-PARAPHRASE-CITE": [
+        "Q3"
+      ],
+      "R-CARRIER-CONTEXT": [
+        "Q4"
+      ],
+      "R-CROSS-SENTENCE": [
+        "Q5"
+      ],
+      "R-DOCUMENT-SCOPE": [
+        "Q6"
+      ],
+      "R-NUMBER-WORDS": [
+        "Q7"
+      ],
+      "R-LIVE-WORDS": [
+        "Q8"
+      ],
+      "R-LIVE-WITHOUT-COORDINATION": [
+        "Q9"
+      ],
+      "R-GUARD-WORD": [
+        "Q10"
+      ],
+      "R-ONE-LABEL": [
+        "Q11"
+      ],
+      "R-ENCODED": [
+        "Q12"
+      ],
+      "R-FILLER": [
+        "Q13"
+      ]
+    }
+  },
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "the outside anchors: the bead's own row binds the rows, the pin quotes, the status literals, the spellings and the vocabulary; the producer block carries the program's lines",
+    "A1",
+    "A2",
+    "A3",
+    "A4",
+    "A5",
+    "B1",
+    "B2",
+    "B3",
+    "C1",
+    "C2",
+    "D1",
+    "D2",
+    "D3",
+    "E1",
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8",
+    "Q9",
+    "Q10",
+    "Q11",
+    "Q12",
+    "Q13",
+    "the registered tests and the reached pins equal the roster, in order and both ways"
+  ],
+  "reached": [
+    "A1:8",
+    "A2:33",
+    "A3:24",
+    "A4:12",
+    "A5:9",
+    "B1:16",
+    "B2:11",
+    "B3:8",
+    "C1:7",
+    "C2:11",
+    "D1:4",
+    "D2:4",
+    "D3:3",
+    "E1:2",
+    "Q1:8",
+    "Q2:1",
+    "Q3:1",
+    "Q4:1",
+    "Q5:1",
+    "Q6:1",
+    "Q7:1",
+    "Q8:1",
+    "Q9:1",
+    "Q10:1",
+    "Q11:1",
+    "Q12:1",
+    "Q13:1"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "Any docs/workbench text citing the MechanicalWorkflows \u00d7 GraphPolicyCLI program shall carry its pinned status verbatim \u2014 'research/design, not integrated or verified live' (GPC.md:3@4b8b974ca72b); 'No new native executor, policy compiler or training integration claimed' (README.md:3)",
+      "pins": [
+        {
+          "id": "A1",
+          "witness": {
+            "root": "docs/workbench",
+            "walkIsGit": true,
+            "floor": {
+              "tracked": 72,
+              "directories": [
+                "docs/workbench",
+                "docs/workbench/receipts"
+              ]
+            },
+            "markdownOnly": true,
+            "openingLines": true,
+            "plantFindings": [
+              "docs/workbench/zz-wb-e66.6-plant.md:3 raw:unbound",
+              "docs/workbench/zz-wb-e66.6-plant.md:5 raw:status-l1",
+              "docs/workbench/zz-wb-e66.6-plant.md:5 raw:status-l2",
+              "docs/workbench/zz-wb-e66.6-plant.md:5 raw:unbound",
+              "docs/workbench/zz-wb-e66.6-plant.md:7 raw:unbound",
+              "docs/workbench/zz-wb-e66.6-plant.md:7 raw:unlabelled-number",
+              "docs/workbench/zz-wb-e66.6-plant.md:7 raw:live-coordination",
+              "docs/workbench/zz-wb-e66.6-plant.md:3 rendered:unbound",
+              "docs/workbench/zz-wb-e66.6-plant.md:5 rendered:status-l1",
+              "docs/workbench/zz-wb-e66.6-plant.md:5 rendered:status-l2",
+              "docs/workbench/zz-wb-e66.6-plant.md:5 rendered:unbound",
+              "docs/workbench/zz-wb-e66.6-plant.md:7 rendered:unbound",
+              "docs/workbench/zz-wb-e66.6-plant.md:7 rendered:unlabelled-number",
+              "docs/workbench/zz-wb-e66.6-plant.md:7 rendered:live-coordination"
+            ]
+          }
+        },
+        {
+          "id": "A2",
+          "witness": {
+            "citation": "graph[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*policy[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*coordination|graph[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*conditioned[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*coordination|graph[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*conditioned[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*policies|GPC\\.md|(?<![A-Za-z0-9])(?:Mechanical[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*Workflows|MW)(?:['\u2019]s?)?[\\s_]*(?:[\u00d7xX*+/&\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]|and|with)?[\\s_]*(?:Graph[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*Policy[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*CLI|Graph[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*Policy|GP)(?![A-Za-z0-9])|(?<![A-Za-z0-9])(?:Graph[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*Policy[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*CLI|Graph[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*Policy|GP)(?:['\u2019]s?)?[\\s_]*(?:[\u00d7xX*+/&\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]|and|with)?[\\s_]*(?:Mechanical[\\s_\u2010\u2011\u2012\u2013\u2014\u2015\u2212-]*Workflows|MW)(?![A-Za-z0-9])",
+            "controls": [
+              {
+                "id": "slug",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "slug-upper",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "slug-underscore",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "slug-spaced",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "slug-glued",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "slug-wrapped",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "slug-unicode-hyphen",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "name-times",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "name-x",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "name-short",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "name-glued",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "name-reverse",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "name-possessive",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "name-and",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "name-dash",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "name-entity",
+                "causes": [
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "subtitle-coordination",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "subtitle-policies",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "shorthand",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "requirement-id",
+                "causes": []
+              },
+              {
+                "id": "requirement-id-lower",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "requirement-id-and-slug",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "other-program",
+                "causes": []
+              },
+              {
+                "id": "gp-alone",
+                "causes": []
+              },
+              {
+                "id": "mw-alone",
+                "causes": []
+              },
+              {
+                "id": "gpu",
+                "causes": []
+              },
+              {
+                "id": "hidden-comment",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2"
+                ]
+              },
+              {
+                "id": "link-target",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2"
+                ]
+              },
+              {
+                "id": "escaped",
+                "causes": [
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "invisible",
+                "causes": [
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "code-span",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "struck",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "alt",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "A3",
+          "witness": {
+            "controls": [
+              {
+                "id": "visible",
+                "causes": []
+              },
+              {
+                "id": "comment",
+                "causes": [
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "comment-one",
+                "causes": [
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "struck",
+                "causes": [
+                  "rendered:status-l1",
+                  "rendered:live-coordination"
+                ]
+              },
+              {
+                "id": "alt",
+                "causes": [
+                  "rendered:status-l1",
+                  "rendered:live-coordination"
+                ]
+              },
+              {
+                "id": "link-title",
+                "causes": [
+                  "rendered:status-l1"
+                ]
+              },
+              {
+                "id": "link-text",
+                "causes": []
+              },
+              {
+                "id": "code-span",
+                "causes": []
+              },
+              {
+                "id": "emphasis",
+                "causes": []
+              },
+              {
+                "id": "element",
+                "causes": [
+                  "rendered:status-l1",
+                  "rendered:live-coordination"
+                ]
+              },
+              {
+                "id": "element-unclosed",
+                "causes": [
+                  "rendered:status-l1",
+                  "rendered:status-l2",
+                  "rendered:live-coordination"
+                ]
+              },
+              {
+                "id": "void-element",
+                "causes": []
+              },
+              {
+                "id": "html-block",
+                "causes": [
+                  "rendered:status-l1",
+                  "rendered:status-l2",
+                  "rendered:live-coordination"
+                ]
+              },
+              {
+                "id": "entity-in-literal",
+                "causes": [
+                  "raw:status-l1"
+                ]
+              },
+              {
+                "id": "escape-in-literal",
+                "causes": [
+                  "raw:status-l1"
+                ]
+              },
+              {
+                "id": "invisible-in-literal",
+                "causes": [
+                  "raw:status-l1"
+                ]
+              },
+              {
+                "id": "heading-status",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "separate-paragraph",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "separate-sentence",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "list-items",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "table-row",
+                "causes": []
+              },
+              {
+                "id": "table-rows-apart",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "blockquote",
+                "causes": []
+              },
+              {
+                "id": "fenced",
+                "causes": [
+                  "raw:status-l1",
+                  "raw:status-l2",
+                  "rendered:status-l1",
+                  "rendered:status-l2"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "A4",
+          "witness": {
+            "literal": "research/design, not integrated or verified live",
+            "controls": [
+              {
+                "id": "both-quoted",
+                "causes": []
+              },
+              {
+                "id": "l1-only",
+                "causes": [
+                  "raw:status-l2",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "wrapped",
+                "causes": []
+              },
+              {
+                "id": "source-line",
+                "causes": []
+              },
+              {
+                "id": "capitalized",
+                "causes": [
+                  "raw:status-l1",
+                  "rendered:status-l1"
+                ]
+              },
+              {
+                "id": "altered-word",
+                "causes": [
+                  "raw:status-l1",
+                  "rendered:status-l1"
+                ]
+              },
+              {
+                "id": "fragment",
+                "causes": [
+                  "raw:status-l1",
+                  "rendered:status-l1"
+                ]
+              },
+              {
+                "id": "spaced-slash",
+                "causes": [
+                  "raw:status-l1",
+                  "rendered:status-l1"
+                ]
+              },
+              {
+                "id": "negated",
+                "causes": [
+                  "raw:status-l1",
+                  "rendered:status-l1"
+                ]
+              },
+              {
+                "id": "no-longer-before",
+                "causes": [
+                  "raw:status-l1",
+                  "rendered:status-l1"
+                ]
+              },
+              {
+                "id": "formerly",
+                "causes": [
+                  "raw:status-l1",
+                  "rendered:status-l1"
+                ]
+              },
+              {
+                "id": "no-longer-after",
+                "causes": [
+                  "raw:status-l1",
+                  "rendered:status-l1"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "A5",
+          "witness": {
+            "literal": "No new native executor, policy compiler or training integration claimed",
+            "controls": [
+              {
+                "id": "l2-only",
+                "causes": [
+                  "raw:status-l1",
+                  "rendered:status-l1"
+                ]
+              },
+              {
+                "id": "final-period",
+                "causes": []
+              },
+              {
+                "id": "wrapped",
+                "causes": []
+              },
+              {
+                "id": "lowercase",
+                "causes": [
+                  "raw:status-l2",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "altered-word",
+                "causes": [
+                  "raw:status-l2",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "fragment",
+                "causes": [
+                  "raw:status-l2",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "reordered",
+                "causes": [
+                  "raw:status-l2",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "design-only",
+                "causes": [
+                  "raw:status-l2",
+                  "rendered:status-l2"
+                ]
+              },
+              {
+                "id": "negated",
+                "causes": [
+                  "raw:status-l2",
+                  "rendered:status-l2"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "label GP numbers synthetic unless a real-system receipt is cited",
+      "pins": [
+        {
+          "id": "B1",
+          "witness": {
+            "number": "^[+\u00b1\u2212\u00d7-]?(?:\\d{1,3}(?:,\\d{3})+(?:\\.\\d+)?|\\d+(?:\\.\\d+)?|\\.\\d+)(?:[eE][+-]?\\d+)?(?:\\/\\d+(?:\\.\\d+)?)?(?:%|\u00d7|[A-Za-z]{1,3})?$",
+            "controls": [
+              {
+                "id": "decimal",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "percent",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "multiplier",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "count",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "minus",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "unit",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "code",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "year",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "next-sentence",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "comment",
+                "causes": [
+                  "raw:unlabelled-number"
+                ]
+              },
+              {
+                "id": "date",
+                "causes": []
+              },
+              {
+                "id": "sha",
+                "causes": []
+              },
+              {
+                "id": "line-references",
+                "causes": []
+              },
+              {
+                "id": "version",
+                "causes": []
+              },
+              {
+                "id": "ids",
+                "causes": []
+              },
+              {
+                "id": "other-paragraph",
+                "causes": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "B2",
+          "witness": {
+            "label": "(?<![\\w-])synthetic(?![\\w-])",
+            "controls": [
+              {
+                "id": "synthetic",
+                "causes": []
+              },
+              {
+                "id": "capital",
+                "causes": []
+              },
+              {
+                "id": "upper",
+                "causes": []
+              },
+              {
+                "id": "non-synthetic",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "not-synthetic",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "synthetically",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "no-longer",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "other-sentence",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "comment",
+                "causes": [
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "struck",
+                "causes": [
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "element",
+                "causes": [
+                  "rendered:unlabelled-number"
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "id": "B3",
+          "witness": {
+            "receipt": "(?<![\\w-])cmd_[0-9a-f]{12}(?![\\w-])",
+            "controls": [
+              {
+                "id": "receipt",
+                "causes": []
+              },
+              {
+                "id": "code",
+                "causes": []
+              },
+              {
+                "id": "bare",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "short",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "long",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "upper",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "other-sentence",
+                "causes": [
+                  "raw:unlabelled-number",
+                  "rendered:unlabelled-number"
+                ]
+              },
+              {
+                "id": "link-target",
+                "causes": [
+                  "rendered:unlabelled-number"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "and never present a GP result as live coordination",
+      "pins": [
+        {
+          "id": "C1",
+          "witness": {
+            "subject": "(?<![A-Za-z0-9])(?:graph[\\s_-]*policy(?:[\\s_-]*cli)?|gp)(?![A-Za-z0-9])",
+            "controls": [
+              {
+                "id": "gp-sentence",
+                "causes": [
+                  "raw:live-coordination",
+                  "rendered:live-coordination"
+                ]
+              },
+              {
+                "id": "citing-sentence",
+                "causes": [
+                  "raw:live-coordination",
+                  "rendered:live-coordination"
+                ]
+              },
+              {
+                "id": "graph-policy",
+                "causes": [
+                  "raw:live-coordination",
+                  "rendered:live-coordination"
+                ]
+              },
+              {
+                "id": "gp-lowercase",
+                "causes": [
+                  "raw:live-coordination",
+                  "rendered:live-coordination"
+                ]
+              },
+              {
+                "id": "no-gp-subject",
+                "causes": []
+              },
+              {
+                "id": "other-paragraph",
+                "causes": []
+              },
+              {
+                "id": "status-literal",
+                "causes": []
+              }
+            ]
+          }
+        },
+        {
+          "id": "C2",
+          "witness": {
+            "live": "\\b(?:live|production|deployed)\\b",
+            "coordination": "\\b(?:coordinat\\w*|schedul\\w*|assign\\w*|dispatch\\w*|orchestrat\\w*)\\b",
+            "guard": [
+              "\\b(?:no|not|never|none|nothing|nor|neither|without|cannot|can't|isn't|aren't|wasn't|weren't|doesn't|don't|didn't|won't|hasn't|haven't|when|whenever|once|if|until|unless|before|would|will|may|might|could|should|proposed|planned|future|yet)\\b",
+              "^\\s*(?:nowhere|nothing|none|not|never|no)\\b"
+            ],
+            "controls": [
+              {
+                "id": "live",
+                "causes": [
+                  "raw:live-coordination",
+                  "rendered:live-coordination"
+                ]
+              },
+              {
+                "id": "production",
+                "causes": [
+                  "raw:live-coordination",
+                  "rendered:live-coordination"
+                ]
+              },
+              {
+                "id": "deployed",
+                "causes": [
+                  "raw:live-coordination",
+                  "rendered:live-coordination"
+                ]
+              },
+              {
+                "id": "not",
+                "causes": []
+              },
+              {
+                "id": "never",
+                "causes": []
+              },
+              {
+                "id": "would",
+                "causes": []
+              },
+              {
+                "id": "guard-after",
+                "causes": []
+              },
+              {
+                "id": "comma-clause",
+                "causes": []
+              },
+              {
+                "id": "comment-guard",
+                "causes": [
+                  "rendered:live-coordination"
+                ]
+              },
+              {
+                "id": "struck-guard",
+                "causes": [
+                  "rendered:live-coordination"
+                ]
+              },
+              {
+                "id": "over-read",
+                "causes": [
+                  "raw:live-coordination",
+                  "rendered:live-coordination"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "the docs census that binds the citing sentence (wb-cax.25 / docs-07 census style) goes red when a sentence cites the program without both status literals or presents a GP number without a 'synthetic' label or a cited real-system receipt",
+      "pins": [
+        {
+          "id": "D1",
+          "witness": {
+            "bound": [],
+            "liveCiting": [],
+            "unbound": [
+              "docs/workbench/zz-d1.md:3 raw:unbound",
+              "docs/workbench/zz-d1.md:3 rendered:unbound"
+            ],
+            "forms": [
+              "The graph-policy-coordination-2026-10-18 program (research/design, not integrated or verified live; No new native executor, policy compiler or training integration claimed)."
+            ],
+            "held": [],
+            "hidden": [
+              "docs/workbench/zz-d1.md:3 raw:unbound"
+            ]
+          }
+        },
+        {
+          "id": "D2",
+          "witness": {
+            "files": [
+              "docs/workbench/mutant.md",
+              "docs/workbench/receipts/wb-mutant.md"
+            ],
+            "flagged": [
+              "docs/workbench/mutant.md:3 raw:status-l1",
+              "docs/workbench/mutant.md:3 raw:status-l2",
+              "docs/workbench/mutant.md:3 raw:unbound",
+              "docs/workbench/mutant.md:3 rendered:status-l1",
+              "docs/workbench/mutant.md:3 rendered:status-l2",
+              "docs/workbench/mutant.md:3 rendered:unbound",
+              "docs/workbench/receipts/wb-mutant.md:3 raw:status-l1",
+              "docs/workbench/receipts/wb-mutant.md:3 raw:status-l2",
+              "docs/workbench/receipts/wb-mutant.md:3 raw:unbound",
+              "docs/workbench/receipts/wb-mutant.md:3 rendered:status-l1",
+              "docs/workbench/receipts/wb-mutant.md:3 rendered:status-l2",
+              "docs/workbench/receipts/wb-mutant.md:3 rendered:unbound"
+            ],
+            "quiet": []
+          }
+        },
+        {
+          "id": "D3",
+          "witness": {
+            "flagged": [
+              "docs/workbench/mutant.md:3 raw:unlabelled-number",
+              "docs/workbench/mutant.md:3 rendered:unlabelled-number"
+            ],
+            "synthetic": [],
+            "receipt": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "E",
+      "label": "until a citation exists the bead is a standing rule, not a code change",
+      "pins": [
+        {
+          "id": "E1",
+          "witness": {
+            "liveCiting": [],
+            "plantCiting": [
+              "docs/workbench/zz-wb-e66.6-plant.md:3 raw",
+              "docs/workbench/zz-wb-e66.6-plant.md:5 raw",
+              "docs/workbench/zz-wb-e66.6-plant.md:7 raw",
+              "docs/workbench/zz-wb-e66.6-plant.md:3 rendered",
+              "docs/workbench/zz-wb-e66.6-plant.md:5 rendered",
+              "docs/workbench/zz-wb-e66.6-plant.md:7 rendered"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the residuals: each named family pinned by its quiet row",
+      "pins": [
+        {
+          "id": "Q1",
+          "witness": {
+            "outside": [
+              "README.md",
+              "CHANGELOG.md",
+              "AGENTS.md",
+              "docs/rpc.md",
+              "src/index.ts",
+              "qa/workbench/receipts-index.mjs",
+              "test/source-hygiene.test.ts"
+            ],
+            "listed": []
+          }
+        },
+        {
+          "id": "Q2",
+          "witness": {
+            "path": "docs/workbench/receipts/wb-e66.5.md",
+            "text": "# wb-e66.5: [MW-GRAPH-POLICY-COORDINATION-R10] Pi shall adopt no GP-conditioned coordination at runtime\n",
+            "causes": []
+          }
+        },
+        {
+          "id": "Q3",
+          "witness": {
+            "path": "docs/workbench/x.md",
+            "text": "Pi reads the MW graph-scoring coordination deposit of 2026-10-18.",
+            "causes": []
+          }
+        },
+        {
+          "id": "Q4",
+          "witness": {
+            "path": "docs/workbench/x.md",
+            "text": "The graph-policy-coordination-2026-10-18 program is not, as of today, research/design, not integrated or verified live; No new native executor, policy compiler or training integration claimed.",
+            "causes": []
+          }
+        },
+        {
+          "id": "Q5",
+          "witness": {
+            "path": "docs/workbench/x.md",
+            "text": "The graph-policy-coordination-2026-10-18 program (research/design, not integrated or verified live; No new native executor, policy compiler or training integration claimed). Its regret fell by 40% under live scheduling.",
+            "causes": []
+          }
+        },
+        {
+          "id": "Q6",
+          "witness": {
+            "path": "docs/workbench/x.md",
+            "text": "The graph-policy-coordination-2026-10-18 program (research/design, not integrated or verified live; No new native executor, policy compiler or training integration claimed).\n\nGP regret 0.12 drives live coordination.",
+            "causes": []
+          }
+        },
+        {
+          "id": "Q7",
+          "witness": {
+            "path": "docs/workbench/x.md",
+            "text": "The graph-policy-coordination-2026-10-18 program (research/design, not integrated or verified live; No new native executor, policy compiler or training integration claimed): GP cut regret by forty percent.",
+            "causes": []
+          }
+        },
+        {
+          "id": "Q8",
+          "witness": {
+            "path": "docs/workbench/x.md",
+            "text": "The graph-policy-coordination-2026-10-18 program (research/design, not integrated or verified live; No new native executor, policy compiler or training integration claimed). GP results are in use and rolled out for coordination.",
+            "causes": []
+          }
+        },
+        {
+          "id": "Q9",
+          "witness": {
+            "path": "docs/workbench/x.md",
+            "text": "The graph-policy-coordination-2026-10-18 program (research/design, not integrated or verified live; No new native executor, policy compiler or training integration claimed). GP results are live.",
+            "causes": []
+          }
+        },
+        {
+          "id": "Q10",
+          "witness": {
+            "path": "docs/workbench/x.md",
+            "text": "The graph-policy-coordination-2026-10-18 program (research/design, not integrated or verified live; No new native executor, policy compiler or training integration claimed). GP that was never tuned drives live coordination.",
+            "causes": []
+          }
+        },
+        {
+          "id": "Q11",
+          "witness": {
+            "path": "docs/workbench/x.md",
+            "text": "The graph-policy-coordination-2026-10-18 program (research/design, not integrated or verified live; No new native executor, policy compiler or training integration claimed): GP regret 0.12 and cost 9.5 (cmd_0123456789ab for the cost only).",
+            "causes": []
+          }
+        },
+        {
+          "id": "Q12",
+          "witness": {
+            "path": "docs/workbench/x.md",
+            "text": "Pi reads graph&minus;policy&minus;coordination.",
+            "causes": []
+          }
+        },
+        {
+          "id": "Q13",
+          "witness": {
+            "path": "docs/workbench/x.md",
+            "text": "Pi reads graph\u3164policy\u3164coordination.",
+            "causes": []
+          }
+        }
+      ]
+    }
+  ]
+}

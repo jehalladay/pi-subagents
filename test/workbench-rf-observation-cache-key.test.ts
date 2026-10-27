@@ -58,6 +58,17 @@
  * authors (BASES), so their fields are held to the additive-slice table of the same receipt (the gate's F3) and, for both
  * diagnostic slices, to the observer's DIAGNOSTIC_KEYS. The note member of both engine entries is planted here as an unread
  * member, not a field the producer writes (the receipt records that read); its two rows stand for any unread engine-entry member.
+ * Both receipt tables are CUT TABLES (wb-bqnj, the wb-l4q7 gate's F2: re-pointing PIN_SECTION, SLICE_SECTION and
+ * RECEIPT_PARENTS at an appended restatement that dropped B5, together with the CT6-B5 hollow, stayed green, because nothing
+ * read the cut-1 table any more): the census reads every "<family>, wb-l4q7 cut <n>" table of the receipt, not only the one
+ * it names. Each family's cuts open with the landed cut 1 and climb in document order; the census's pointer must name the
+ * latest cut; and that table keeps every row of every earlier cut unless a later "<family> removed, wb-l4q7 cut <n>" table,
+ * beside its own cut's table, names the removal with a reason (and names only a row an earlier cut lists and its cut drops). A
+ * heading that names a wb-l4q7 cut in any other spelling, at another level or inside a list item or blockquote is refused. The
+ * receipt-anchor case holds each rule to a planted control (the F2 re-point among them). The earlier tables stand because the
+ * receipt is append-only (standing rule 15: the lane and the gate's IDENTIFY step refuse a removed receipt line). Non-claim: the
+ * chain is the cut tables of the one file RECEIPT_PATH names (its "What binds here" line names this census back); a pointer
+ * moved to another receipt file is an edit of that literal, which this anchor does not see.
  * RESIDUALS (named, each with a pinned quiet row): R-UNSHIPPED-FIELDS rf states no sensitivity and no coverage digest at the pin,
  * so Pi has none to read or key on (Q1); R-ALIASED-PAYLOAD a payload bound to a local name before it is hashed or keyed is
  * invisible to the B3/B4 text-of-argument scans (Q2). Its backstop is bounded (wb-l4q7 narrows it, the o4h0.1 gate's F1): B2's
@@ -69,8 +80,9 @@
  * Display paths added: none. Test-only: no scratch, no spawn; src, the fixtures and the store export are only read.
  */
 import { type Dirent, readdirSync, readFileSync } from "node:fs";
-import { dirname, join, relative } from "node:path";
+import { basename, dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import { marked, type Token, type Tokens } from "marked";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
@@ -109,6 +121,24 @@ const PIN_SECTION = "Judged pins, wb-l4q7 cut 1";
 const PIN_HEADER: readonly string[] = ["Row", "Pin"];
 const SLICE_SECTION = "Additive-slice fields, wb-l4q7 cut 1";
 const SLICE_HEADER: readonly string[] = ["Base", "Field"];
+/** The receipt's bead, read from its file name: the token every cut-table heading carries. */
+const RECEIPT_BEAD = basename(RECEIPT_PATH, ".md");
+/**
+ * wb-bqnj (the wb-l4q7 gate's F2, anchor re-point): a table family of the receipt. A cut that restates a family's table appends
+ * "<stem>, wb-l4q7 cut <n>" under its own entry, and names each row it drops from an earlier cut in that entry's
+ * "<stem> removed, wb-l4q7 cut <n>" table with the reason; the census binds the family's latest cut (bound, under parents).
+ */
+interface ReceiptFamily {
+  readonly stem: string;
+  readonly header: readonly string[];
+  readonly bound: string;
+  readonly parents: readonly string[];
+}
+const PIN_FAMILY: ReceiptFamily = { stem: "Judged pins", header: PIN_HEADER, bound: PIN_SECTION, parents: RECEIPT_PARENTS };
+const SLICE_FAMILY: ReceiptFamily = { stem: "Additive-slice fields", header: SLICE_HEADER, bound: SLICE_SECTION, parents: RECEIPT_PARENTS };
+const RECEIPT_FAMILIES: readonly ReceiptFamily[] = [PIN_FAMILY, SLICE_FAMILY];
+/** The header a family's removal table carries: the family's own columns, then the reason. */
+const removalHeader = (family: ReceiptFamily): readonly string[] => [...family.header, "Why"];
 
 /** A fixed reading root: nothing here touches the filesystem through it. */
 const ROOT = "/workspace/rf-cache-key-census";
@@ -532,23 +562,173 @@ function snapshotOf(source: JsonObject, host: ReactiveFiberTopologyContext = HOS
   if (snapshot === undefined) throw new Error("the topology projected no snapshot");
   return snapshot;
 }
+/** The rows of one table section of the receipt, or why the section is refused. */
+type SectionRead = { readonly ok: true; readonly rows: readonly (readonly string[])[] } | { readonly ok: false; readonly why: string };
 /**
  * The body rows of one table section of the receipt, read through the shared docs reader (test/helpers/census.ts): the section
  * must render exactly one table and nothing else, carry no HTML (a comment or a tag) and keep its header, so a line added to the
  * append-only receipt can neither hide a row (a comment, an HTML block, a code fence) nor split the table and restate it. A cell
  * is the table's source text.
  */
-function receiptTable(heading: string, header: readonly string[]): string[][] {
-  const markdown = readFileSync(RECEIPT_PATH, "utf8");
-  const where = `docs/workbench/receipts/wb-l4q7.md section "${heading}"`;
-  const section = docsSection(markdown, heading, 3, RECEIPT_PARENTS);
-  if (!section.ok) throw new Error(`${where}: ${section.why}`);
-  if (section.hasHtml) throw new Error(`${where} carries HTML, which can hide a row of its table`);
+function sectionRows(markdown: string, heading: string, parents: readonly string[], header: readonly string[]): SectionRead {
+  const where = `docs/workbench/receipts/${RECEIPT_BEAD}.md section "${heading}"`;
+  const section = docsSection(markdown, heading, 3, parents);
+  if (!section.ok) return { ok: false, why: `${where}: ${section.why}` };
+  if (section.hasHtml) return { ok: false, why: `${where} carries HTML, which can hide a row of its table` };
   const kinds = section.blocks.map(block => (block.kind === "other" ? `other:${block.type}` : block.kind));
-  if (!same(kinds, ["other:table"])) throw new Error(`${where} must render exactly one table and nothing else; it renders [${kinds.join(", ")}]`);
-  const [head, ...rows] = sectionTables(markdown, heading, 3, RECEIPT_PARENTS).grids[0] ?? [];
-  if (!same(head, header)) throw new Error(`${where}: its header row is ${JSON.stringify(head ?? null)}; the census binds ${JSON.stringify(header)}`);
-  return rows.map(row => [...row]);
+  if (!same(kinds, ["other:table"])) return { ok: false, why: `${where} must render exactly one table and nothing else; it renders [${kinds.join(", ")}]` };
+  const [head, ...rows] = sectionTables(markdown, heading, 3, parents).grids[0] ?? [];
+  if (!same(head, header)) return { ok: false, why: `${where}: its header row is ${JSON.stringify(head ?? null)}; the census binds ${JSON.stringify(header)}` };
+  return { ok: true, rows: rows.map(row => [...row]) };
+}
+
+/** A rendered heading of the receipt, in document order, with the top-level headings that enclose it (outermost first). */
+interface ReceiptHeading {
+  readonly depth: number;
+  readonly text: string;
+  /** True when a list item or a blockquote holds the heading: it renders, but bounds no section of the receipt. */
+  readonly nested: boolean;
+  readonly parents: readonly string[];
+}
+const tokenText = (token: Token): string => {
+  const value: unknown = (token as { text?: unknown }).text;
+  return typeof value === "string" ? value : "";
+};
+const tokenChildren = (token: Token): readonly Token[] => {
+  const value: unknown = (token as { tokens?: unknown }).tokens;
+  return Array.isArray(value) ? (value as Token[]) : [];
+};
+const isHeadingToken = (token: Token): token is Tokens.Heading => token.type === "heading";
+const isListToken = (token: Token): token is Tokens.List => token.type === "list";
+const blockChildren = (token: Token): readonly Token[] => (isListToken(token) ? token.items.flatMap(item => tokenChildren(item)) : tokenChildren(token));
+const ENTITY_TEXT: Readonly<Record<string, string>> = { "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'", "&#x27;": "'", "&nbsp;": " " };
+/** What a reader sees of inline tokens, by the shared docs reader's rule (test/helpers/census.ts): markup and HTML render no text. */
+function inlineSeen(tokens: readonly Token[]): string {
+  const seen = (token: Token): string => {
+    if (token.type === "html") return "";
+    if (token.type === "br") return "\n";
+    if (tokenChildren(token).length > 0) return inlineSeen(tokenChildren(token));
+    return tokenText(token).replace(/&(?:amp|lt|gt|quot|nbsp|#39|#x27);/g, entity => ENTITY_TEXT[entity] ?? entity);
+  };
+  return tokens.map(seen).join("");
+}
+/** A heading's rendered text, its whitespace collapsed once as the shared docs reader collapses it, so docsSection binds what this sees. */
+const headingText = (heading: Tokens.Heading): string => inlineSeen(tokenChildren(heading)).replace(/\s+/g, " ").trim();
+/** Every rendered heading of the receipt: each top-level heading with its parent path, and each heading a list item or blockquote holds. */
+function receiptHeadings(markdown: string): ReceiptHeading[] {
+  const found: ReceiptHeading[] = [];
+  const open: { readonly depth: number; readonly text: string }[] = [];
+  const nestedIn = (tokens: readonly Token[]): void => {
+    for (const token of tokens) {
+      if (isHeadingToken(token)) found.push({ depth: token.depth, text: headingText(token), nested: true, parents: open.map(entry => entry.text) });
+      nestedIn(blockChildren(token));
+    }
+  };
+  for (const token of marked.lexer(markdown)) {
+    if (!isHeadingToken(token)) {
+      nestedIn(blockChildren(token));
+      continue;
+    }
+    const text = headingText(token);
+    while ((open[open.length - 1]?.depth ?? 0) >= token.depth) open.pop();
+    found.push({ depth: token.depth, text, nested: false, parents: open.map(entry => entry.text) });
+    open.push({ depth: token.depth, text });
+  }
+  return found;
+}
+
+/** The rules of the cut grammar, one refusal code each; the receipt-anchor case holds a planted control to every one. */
+const CUT_REFUSALS = ["spelling", "placement", "start", "order", "latest", "shape", "removal", "kept"] as const;
+type CutRefusal = (typeof CUT_REFUSALS)[number];
+/** A family's verdict over one receipt text: the rows of the table the census binds, or the refusal. */
+type CutVerdict = { readonly ok: true; readonly rows: readonly (readonly string[])[] } | { readonly ok: false; readonly code: CutRefusal; readonly why: string };
+const BEAD_TOKEN = RECEIPT_BEAD.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+/** A heading that names a cut of this receipt, in any spelling: each one must be a cut table the census binds. */
+const CUT_MENTION = new RegExp(`${BEAD_TOKEN}\\W*cut`, "i");
+const CUT_HEADING = new RegExp(`^(.+?)( removed)?, ${BEAD_TOKEN} cut ([1-9][0-9]*)$`);
+interface CutTable {
+  readonly heading: string;
+  readonly stem: string;
+  readonly removal: boolean;
+  readonly cut: number;
+  readonly parents: readonly string[];
+}
+/**
+ * wb-bqnj (the wb-l4q7 gate's F2): every cut table of the family is bound, never only the one the census names. A heading that
+ * names a wb-l4q7 cut must spell a table of a family the census binds and be a level-3 heading of the receipt itself; the
+ * family's cuts open with the landed cut 1 and climb in document order; the census's pointer (bound, parents) names the latest
+ * cut; every table reads through sectionRows; a removal table sits beside its own cut's table and names, with a reason, only a
+ * row an earlier cut lists and its own cut drops; and the latest table keeps every row of every earlier cut unless a later
+ * removal table names it. A re-point to a restated table that drops a row therefore reds unless the receipt names the drop.
+ */
+function cutChain(markdown: string, family: ReceiptFamily): CutVerdict {
+  const refuse = (code: CutRefusal, why: string): CutVerdict => ({ ok: false, code, why });
+  const tables: CutTable[] = [];
+  for (const heading of receiptHeadings(markdown)) {
+    if (!CUT_MENTION.test(heading.text)) continue;
+    const match = CUT_HEADING.exec(heading.text);
+    const stem = match?.[1] ?? "";
+    if (match === null || !RECEIPT_FAMILIES.some(known => known.stem === stem)) {
+      const forms = RECEIPT_FAMILIES.map(known => `"${known.stem}, ${RECEIPT_BEAD} cut <n>" or "${known.stem} removed, ${RECEIPT_BEAD} cut <n>"`);
+      return refuse("spelling", `the heading "${heading.text}" names a ${RECEIPT_BEAD} cut but spells no cut table the census binds (${forms.join("; ")})`);
+    }
+    if (heading.nested || heading.depth !== 3) {
+      return refuse("placement", `the cut table heading "${heading.text}" is ${heading.nested ? "held by a list item or blockquote" : `a level-${heading.depth} heading`}; a cut table is a level-3 heading of the receipt itself`);
+    }
+    tables.push({ heading: heading.text, stem, removal: match[2] !== undefined, cut: Number(match[3]), parents: heading.parents });
+  }
+  const cuts = tables.filter(table => table.stem === family.stem && !table.removal);
+  const removals = tables.filter(table => table.stem === family.stem && table.removal);
+  const first = cuts[0];
+  const latest = cuts[cuts.length - 1];
+  if (first === undefined || latest === undefined || first.cut !== 1) {
+    return refuse("start", `the receipt's "${family.stem}" cut tables must open with the landed cut 1; they read [${cuts.map(table => table.cut).join(", ")}]`);
+  }
+  for (const [index, table] of cuts.entries()) {
+    const before = cuts[index - 1];
+    if (before !== undefined && table.cut <= before.cut) return refuse("order", `"${table.heading}" follows "${before.heading}" in the receipt; cut numbers climb in document order`);
+  }
+  if (latest.heading !== family.bound || !same(latest.parents, family.parents)) {
+    return refuse("latest", `the census binds "${family.bound}" under ${JSON.stringify(family.parents)}, but the receipt's latest "${family.stem}" table is "${latest.heading}" under ${JSON.stringify(latest.parents)}`);
+  }
+  const rowsOf = new Map<string, readonly (readonly string[])[]>();
+  for (const table of [...cuts, ...removals]) {
+    const read = sectionRows(markdown, table.heading, table.parents, table.removal ? removalHeader(family) : family.header);
+    if (!read.ok) return refuse("shape", read.why);
+    if (table.removal && read.rows.some(row => (row[row.length - 1] ?? "").trim() === "")) return refuse("shape", `"${table.heading}" names a removal without its reason`);
+    rowsOf.set(table.heading, read.rows);
+  }
+  const keyOf = (row: readonly string[]): string => JSON.stringify(row);
+  const keysOf = (table: CutTable): ReadonlySet<string> => new Set((rowsOf.get(table.heading) ?? []).map(keyOf));
+  const named: { readonly cut: number; readonly key: string }[] = [];
+  for (const removal of removals) {
+    const own = cuts.find(table => table.cut === removal.cut);
+    if (own === undefined || !same(own.parents, removal.parents)) {
+      return refuse("removal", `"${removal.heading}" sits beside no "${family.stem}, ${RECEIPT_BEAD} cut ${removal.cut}" table of its own entry`);
+    }
+    for (const row of rowsOf.get(removal.heading) ?? []) {
+      const key = keyOf(row.slice(0, -1));
+      const listed = cuts.some(table => table.cut < removal.cut && keysOf(table).has(key));
+      if (!listed || keysOf(own).has(key)) return refuse("removal", `"${removal.heading}" names ${key}, which ${listed ? `cut ${removal.cut} still lists` : "no earlier cut lists"}`);
+      named.push({ cut: removal.cut, key });
+    }
+  }
+  const kept = keysOf(latest);
+  for (const table of cuts.slice(0, -1)) {
+    for (const row of rowsOf.get(table.heading) ?? []) {
+      const key = keyOf(row);
+      if (!kept.has(key) && !named.some(entry => entry.cut > table.cut && entry.key === key)) {
+        return refuse("kept", `"${latest.heading}" drops ${key} of "${table.heading}", and no later "${family.stem} removed, ${RECEIPT_BEAD} cut <n>" table names the removal`);
+      }
+    }
+  }
+  return { ok: true, rows: rowsOf.get(latest.heading) ?? [] };
+}
+/** The rows of the table the census binds for a family, read from the committed receipt through the whole cut chain. */
+function receiptTable(family: ReceiptFamily): string[][] {
+  const verdict = cutChain(readFileSync(RECEIPT_PATH, "utf8"), family);
+  if (!verdict.ok) throw new Error(`docs/workbench/receipts/${RECEIPT_BEAD}.md, the "${family.stem}" cut tables (${verdict.code}): ${verdict.why}`);
+  return verdict.rows.map(row => [...row]);
 }
 
 /** The parts of the projections that differ: snapshot keys, the relations, the diagnostics, the native evidence. */
@@ -1128,7 +1308,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(diagnosticKeys).toStrictEqual(stringConstant(OBSERVER, "DIAGNOSTIC_KEYS"));
     expect(okDiagnosticKeys).toStrictEqual(stringConstant(OBSERVER, "DIAGNOSTIC_KEYS"));
     // wb-l4q7 (the o4h0.1 gate's F3): the additive slices, which this census authors, held to the receipt's slice table.
-    expect(slices, "the additive-slice fields stand in the receipt's slice table").toStrictEqual(receiptTable(SLICE_SECTION, SLICE_HEADER));
+    expect(slices, "the additive-slice fields stand in the receipt's slice table").toStrictEqual(receiptTable(SLICE_FAMILY));
     expect(engineEntries).toStrictEqual(stringConstant(OBSERVER, "ENGINE_KEYS"));
     expect(workKeys).toStrictEqual(stringConstant(OBSERVER, "WORK_KEYS"));
     expect(workKeys).toStrictEqual(roster.workKeys);
@@ -1253,7 +1433,7 @@ describe("wb-o4h0.1 rf observation cache-key census (RF-FEDERATED-WORKSPACES-R1)
   it("the judged set: the frozen shapes, the out-of-file roster, the receipt's judged-pin table, the bead's export row and the cases agree", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:8", "B:8", "C:5", "D:1", "Q:2"]);
     // wb-l4q7 (the o4h0.1 gate's F2): every row's pins, in order, held to the receipt's judged-pin table outside this census.
-    expect(ROWS.flatMap(row => row.pins.map(pin => [row.id, pin])), "the pins stand in the receipt's judged-pin table").toStrictEqual(receiptTable(PIN_SECTION, PIN_HEADER));
+    expect(ROWS.flatMap(row => row.pins.map(pin => [row.id, pin])), "the pins stand in the receipt's judged-pin table").toStrictEqual(receiptTable(PIN_FAMILY));
     expect(ROWS.map(({ id, clause, label, pins }) => ({ id, clause, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, clause, label, pins }) => ({ id, clause, label, pins: pins.map(pin => pin.id) })),
     );
@@ -1266,6 +1446,90 @@ describe("wb-o4h0.1 rf observation cache-key census (RF-FEDERATED-WORKSPACES-R1)
     expect(ROWS.filter(row => row.clause !== "residual").map(row => row.clause)).toStrictEqual(spec.letters);
     expect(Object.values(FAMILIES).map(entry => entry.family).sort()).toStrictEqual(spec.families);
     expect([...ROSTER.families].sort()).toStrictEqual(spec.families);
+  });
+
+  it("the receipt anchor (wb-bqnj, the wb-l4q7 gate's F2): every cut table of both families is bound, and the census's own is the latest cut and keeps every earlier cut's rows unless a removal is named", () => {
+    const real = readFileSync(RECEIPT_PATH, "utf8");
+    const pins = receiptTable(PIN_FAMILY);
+    const fields = receiptTable(SLICE_FAMILY);
+    const [title = ""] = RECEIPT_PARENTS;
+    // Planted receipts, each the committed receipt plus (or edited by) the lines a later cut would write; nothing is written.
+    const entry = "a planted later cut";
+    const later = [title, entry];
+    const cutOf = (family: ReceiptFamily, cut: number, removal = false): string => `${family.stem}${removal ? " removed" : ""}, ${RECEIPT_BEAD} cut ${cut}`;
+    const at = (family: ReceiptFamily, cut: number, parents: readonly string[] = later): ReceiptFamily => ({ ...family, bound: cutOf(family, cut), parents });
+    const table = (header: readonly string[], rows: readonly (readonly string[])[]): string =>
+      [header, header.map(() => "---"), ...rows].map(cells => `| ${cells.join(" | ")} |`).join("\n");
+    const section = (heading: string, body: string): string => `### ${heading}\n\n${body}\n`;
+    const entryOf = (heading: string, ...sections: readonly string[]): string => `\n## ${heading}\n\n- Planted.\n\n${sections.join("\n")}`;
+    const appended = (...entries: readonly string[]): string => `${real.trimEnd()}\n${entries.join("")}`;
+    const removalOf = (rows: readonly (readonly string[])[], why = "planted removal"): string =>
+      section(cutOf(PIN_FAMILY, 2, true), table(removalHeader(PIN_FAMILY), rows.map(row => [...row, why])));
+    const withoutB5 = pins.filter(([row, pin]) => !(row === "B" && pin === "B5"));
+    const withoutNote = fields.filter(([base, field]) => !(base === "engine" && field === "result.provenance.sdk_versions.tsx_sdk.note"));
+    const pins2 = section(cutOf(PIN_FAMILY, 2), table(PIN_HEADER, withoutB5));
+    const f2 = appended(entryOf(entry, pins2, section(cutOf(SLICE_FAMILY, 2), table(SLICE_HEADER, fields))));
+    const firstEntry = real.indexOf("\n## ");
+    expect(firstEntry, "the receipt has a dated entry under its title").toBeGreaterThan(0);
+    const planted: readonly (readonly [string, ReceiptFamily, string])[] = [
+      ["live receipt, pins", PIN_FAMILY, real],
+      ["live receipt, slices", SLICE_FAMILY, real],
+      ["F2 re-point, pins: cut 2 drops B5 and the pointer follows it", at(PIN_FAMILY, 2), f2],
+      ["F2 re-point, slices: the same entry restates every field", at(SLICE_FAMILY, 2), f2],
+      ["named removal: cut 2 names B5's removal with its reason", at(PIN_FAMILY, 2), `${f2}\n${removalOf([["B", "B5"]])}`],
+      ["unreasoned removal: cut 2 names B5's removal with an empty reason", at(PIN_FAMILY, 2), `${f2}\n${removalOf([["B", "B5"]], "")}`],
+      ["phantom removal: cut 2 also names B4, which it still lists", at(PIN_FAMILY, 2), `${f2}\n${removalOf([["B", "B5"], ["B", "B4"]])}`],
+      ["orphan removal: a removal table beside no cut 2 table", PIN_FAMILY, appended(entryOf(entry, removalOf([["B", "B5"]])))],
+      ["slice drop: cut 2 drops the tsx_sdk note and the pointer follows it", at(SLICE_FAMILY, 2), appended(entryOf(entry, section(cutOf(SLICE_FAMILY, 2), table(SLICE_HEADER, withoutNote))))],
+      ["stale pointer: cut 2 restates every pin and the census still binds cut 1", PIN_FAMILY, appended(entryOf(entry, section(cutOf(PIN_FAMILY, 2), table(PIN_HEADER, pins))))],
+      ["misspelt cut heading", PIN_FAMILY, appended(entryOf(entry, section(`${PIN_FAMILY.stem}, ${RECEIPT_BEAD}, cut 2`, table(PIN_HEADER, withoutB5))))],
+      ["unknown family heading", PIN_FAMILY, appended(entryOf(entry, section(`Judged pin set, ${RECEIPT_BEAD} cut 2`, table(PIN_HEADER, withoutB5))))],
+      ["level-4 cut heading", at(PIN_FAMILY, 2), appended(entryOf(entry, `#${pins2}`))],
+      ["blockquoted cut heading", PIN_FAMILY, appended(entryOf(entry, `> ### ${cutOf(PIN_FAMILY, 2)}\n`))],
+      ["inserted above: cut 2's entry sits above the landed cut 1", PIN_FAMILY, `${real.slice(0, firstEntry)}${entryOf(entry, pins2)}${real.slice(firstEntry)}`],
+      ["renumbered landed cut: cut 1's heading reads cut 3", at(PIN_FAMILY, 3, RECEIPT_PARENTS), real.replace(`### ${PIN_SECTION}\n`, `### ${cutOf(PIN_FAMILY, 3)}\n`)],
+      ["out of order: cut 3, then cut 2", at(PIN_FAMILY, 2, [title, `${entry}, again`]), appended(entryOf(entry, section(cutOf(PIN_FAMILY, 3), table(PIN_HEADER, pins))), entryOf(`${entry}, again`, section(cutOf(PIN_FAMILY, 2), table(PIN_HEADER, pins))))],
+      ["hidden row: cut 2's section carries an HTML comment", at(PIN_FAMILY, 2), appended(entryOf(entry, section(cutOf(PIN_FAMILY, 2), `${table(PIN_HEADER, withoutB5)}\n\n<!-- | B | B5 | -->`)))],
+    ];
+    const controls = planted.map(([id, family, markdown]) => [id, family.stem, cutChain(markdown, family)] as const);
+    expect(controls.map(([id, , verdict]) => `${id}: ${verdict.ok ? "ok" : verdict.code}`)).toEqual([
+      "live receipt, pins: ok",
+      "live receipt, slices: ok",
+      "F2 re-point, pins: cut 2 drops B5 and the pointer follows it: kept",
+      "F2 re-point, slices: the same entry restates every field: ok",
+      "named removal: cut 2 names B5's removal with its reason: ok",
+      "unreasoned removal: cut 2 names B5's removal with an empty reason: shape",
+      "phantom removal: cut 2 also names B4, which it still lists: removal",
+      "orphan removal: a removal table beside no cut 2 table: removal",
+      "slice drop: cut 2 drops the tsx_sdk note and the pointer follows it: kept",
+      "stale pointer: cut 2 restates every pin and the census still binds cut 1: latest",
+      "misspelt cut heading: spelling",
+      "unknown family heading: spelling",
+      "level-4 cut heading: placement",
+      "blockquoted cut heading: placement",
+      "inserted above: cut 2's entry sits above the landed cut 1: start",
+      "renumbered landed cut: cut 1's heading reads cut 3: start",
+      "out of order: cut 3, then cut 2: order",
+      "hidden row: cut 2's section carries an HTML comment: shape",
+    ]);
+    // Every rule of the cut grammar refuses at least one planted control, so no rule's only control can go without a red, and
+    // each family both reads a planted later cut and refuses one that drops a row.
+    expect([...new Set(controls.flatMap(([, , verdict]) => (verdict.ok ? [] : [verdict.code])))].sort()).toStrictEqual([...CUT_REFUSALS].sort());
+    for (const family of RECEIPT_FAMILIES) {
+      const outcomes = controls.filter(([id, stem]) => stem === family.stem && !id.startsWith("live receipt")).map(([, , verdict]) => (verdict.ok ? "ok" : verdict.code));
+      expect([...new Set(outcomes)].filter(outcome => outcome === "ok" || outcome === "kept").sort(), `${family.stem}: planted later cuts`).toStrictEqual(["kept", "ok"]);
+    }
+    // An accepted verdict reads the rows it binds: the live tables, the faithful slice restatement, and cut 2 less the named B5.
+    const rowsOf = (id: string): readonly (readonly string[])[] | string => {
+      const verdict = controls.find(([name]) => name.startsWith(id))?.[2];
+      return verdict?.ok === true ? verdict.rows : `${id}: ${verdict === undefined ? "absent" : verdict.why}`;
+    };
+    expect(withoutB5).toHaveLength(pins.length - 1);
+    expect(withoutNote).toHaveLength(fields.length - 1);
+    expect(rowsOf("live receipt, pins")).toStrictEqual(pins);
+    expect(rowsOf("live receipt, slices")).toStrictEqual(fields);
+    expect(rowsOf("F2 re-point, slices")).toStrictEqual(fields);
+    expect(rowsOf("named removal")).toStrictEqual(withoutB5);
   });
 
   for (const row of ROWS) {

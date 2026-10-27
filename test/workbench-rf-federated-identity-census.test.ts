@@ -35,12 +35,17 @@
  *    digest, version, evidence refs) unchanged and equal to the roster's (an alias- or locator-keyed ref splits it); A4 the
  *    shipped rf reader (reactivefiberTopology) keys one envelope read under two locators identically and writes neither locator
  *    into a key-bearing field (KEY_BEARING_FIELDS: the source ref's four parts, the evidence refs, both revisions, the payload
- *    reference, the definition digest and the stream position, cursor and sequence); A5 no rf-scope src file (inRfScope) keys an
- *    rf resource by a locator-named expression in any of seven forms: an rf-tagged template interpolation, a key-like property
- *    (a KEY_NAMES name or a camelCase name ending in a KEY_SUFFIXES suffix, quoted or bare), a Map or Set key (the first argument
- *    of a COLLECTION_METHODS call), a "+" join to a quoted rf tag, a computed property key, the key of an array-literal pair a
- *    Map, WeakMap or Object.fromEntries is built from, or an element access other than by a quoted property name (SRC_FLOOR,
- *    RF_SCOPE_FLOOR, RF_TEMPLATE_FLOOR and the anchor make an emptied or misdirected walk red).
+ *    reference, the definition digest and the stream position, cursor and sequence), and the two reads are of two distinct
+ *    roots: the reader itself authorizes each read's own reading under its own locator and refuses it under the other as
+ *    'authorization' (rootVerdicts, the reader's verdict per root), so reading one root twice reds; A5 no rf-scope src file
+ *    (inRfScope) keys an rf resource by a locator-named expression in any of seven forms: an rf-tagged template interpolation,
+ *    a key-like property (a KEY_NAMES name or a camelCase name ending in a KEY_SUFFIXES suffix, bare, quoted, or quoted inside
+ *    a computed key), a Map or Set key (the first argument of a COLLECTION_METHODS call), a "+" join to a quoted rf tag, a
+ *    computed property key, the key of an array-literal pair a Map, WeakMap or Object.fromEntries is built from, or an element
+ *    access other than by a quoted property name (a single- or double-quoted literal, or a template literal with no
+ *    interpolation). SRC_FLOOR, RF_SCOPE_FLOOR, RF_TEMPLATE_FLOOR and the anchor make an emptied or misdirected walk red, and
+ *    every rf-scope file on disk is read in full: the text each scan matches must open with the file's own text, read from disk
+ *    beside the walk.
  *  B, acceptance (b). B1 the sameWorkspace pair differs in backend_instance_id alone and shares its alias, locator and raw
  *    revision; B2 identityKey separates it, every key in OTHER_KEYS merges it; B3 Pi's real projection holds it as two nodes in
  *    every identity-bearing index (the node index and a ref query, the version index, the evidence index), where the raw counter
@@ -53,12 +58,13 @@
  *    key (opaque revisions may carry the separator) each merge a planted pair; C3 Pi's real projection admits a new epoch's
  *    lower revision under the reference rule and refuses it as out-of-order when the counter rides as a sequence; C4 the
  *    projection's own key is a tuple, never a concatenation; C5 no rf-scope src file joins a revision-named operand to another,
- *    by adjacent interpolations or by "+", either operand optionally scaled by "*" or "<<" and parenthesized (A5's floors and
- *    anchor).
- *  MA and MC, the matchers rows A5 and C5 read: MA1-MA12 and MC1-MC8 the spellings each must catch; QA1-QA4, QS1 and QC1-QC5 the
+ *    by adjacent interpolations or by "+", either operand optionally scaled by "*" or "<<" and parenthesized (A5's floors,
+ *    anchor and read-in-full check).
+ *  MA and MC, the matchers rows A5 and C5 read: MA1-MA14 and MC1-MC8 the spellings each must catch; QA1-QA8, QS1 and QC1-QC9 the
  *    pinned quiet rows of their named residuals.
  *  MV, the matchers' vocabularies one member at a time, each driven from the roster's copy of its list: KP1 every KEY_NAMES name
- *    and KP2 every KEY_SUFFIXES suffix alone makes a key-like property, MK1 every COLLECTION_METHODS method alone a Map or Set key,
+ *    and KP2 every KEY_SUFFIXES suffix alone makes a key-like property in each KEY_SPELLINGS spelling (bare, double- or
+ *    single-quoted, and quoted inside a computed key), MK1 every COLLECTION_METHODS method alone a Map or Set key,
  *    LW1 every LOCATOR_WORDS word alone is caught in each of A5's seven forms (LOCATOR_FORMS), RW1 every REVISION_WORDS word alone
  *    in each of C5's three forms (REVISION_FORMS).
  *  PC, a positive control on each live leg's instrument, driven through the very function the live leg calls: PC1 A3's state
@@ -66,12 +72,17 @@
  *    evidence refs) as exactly that field; PC2 A4's key-bearing projection (keyBearing, locatorIn) sees a locator planted into
  *    each KEY_BEARING_FIELDS field of the shipped reader's real snapshot, and none in the unplanted one; PC3 and PC4 the A5 and C5
  *    scan (scanRfScope) reports exactly the hits of an rf-scope file planted in memory beside the live tree, one spelling per
- *    form, each attributed to the planted path.
+ *    form, each attributed to the planted path; PC5 A4's two-root judgment (judgeReads) reads the two real reads as keyed
+ *    differently once each carries a key derived from its own reading's root and no literal locator (the root's sha256 as the
+ *    source revision); PC6 and PC7 the A5 and C5 scan reports exactly the PC3 and PC4 plant appended in memory to the live
+ *    text of each rf-scope file in turn, attributed to that file, so a scan that reads or matches only some rf-scope files reds.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id,
  * label and pins, every pin's witness, IDENTITY_FIELDS, GATING_ARTIFACTS and the five matcher vocabularies, word for word - is
  * held to the out-of-file roster test/fixtures/rf-federated-identity-roster.json, whose producer excerpts are held to the pin by
  * hash. A pin deleted, relabelled, swapped for another passing case, or removed from every literal here at once still reds
- * against the roster.
+ * against the roster. The last case holds REACHED, the pins that reached their witness compare in run order, to the roster's
+ * pins in row order, so a pin whose test is not registered, is skipped or never reaches its compare reds. Not claimed: an edit
+ * of this file and the roster together, or a case replaced by an echo of its own roster witness.
  * RESIDUALS (named, each with a pinned quiet row): R-INDIRECT a locator under a neutral name (QA1); R-CALL-BUILT an rf ref built
  * by a call such as Array.join (QA2); R-OUTSIDE-SCOPE a key built in a src file outside inRfScope is never scanned (QS1);
  * R-HOST-WORD a locator under the word host, which LOCATOR_WORDS leaves out because the rf reader names its own context object
@@ -79,13 +90,20 @@
  * R-CALLBACK-KEY a collection keyed by a value a callback returns, spelled neither as a pair literal nor as a key method's
  * argument (QA4); R-CALL-JOIN counters joined by a call, Array.join (QC1) or String.prototype.concat (QC4); R-SYNONYM a counter
  * under a name outside REVISION_WORDS (QC2); R-PROSE two interpolations separated by whitespace read as display text, not a key
- * (QC3); R-ARITH-PACKED counters packed without "+", by a bitwise or (QC5). The matchers are lexical (regular expressions over
- * the src text, no parse): a spelling outside every form and residual named here is not claimed.
+ * (QC3); R-ARITH-PACKED counters packed without "+", by a bitwise or (QC5); R-REFLECTIVE-KEY a locator handed to a reflective
+ * write as its property key, Reflect.set (QA5) or Object.defineProperty (QA6); R-MID-TAG an rf tag that does not open its
+ * template literal (QA7); R-SUFFIX-OUTSIDE a camelCase name whose suffix KEY_SUFFIXES leaves out, such as Keys (QA8);
+ * R-CALL-OPERAND a "+" operand that is a call, epoch.toString() (QC6); R-EXPRESSION-SCALE an operand scaled by an expression,
+ * not by an operand or a numeral, such as 2 ** 20 (QC7); R-TEMPLATE-PLUS two template literals joined by "+" (QC8); R-WIDE-GAP
+ * two interpolations a whitespace-free gap of more than eight characters joins (QC9). The matchers are lexical (regular
+ * expressions over the src text, no parse): a spelling outside every form and residual named here is not claimed.
  * SCOPE: the excerpts are producer facts at 6a251bf73af5; Pi vendors no rf source, so a producer-side change is seen only when an
  * rf pin-bump re-reads them. The live legs are A4 (the shipped rf reader), A3, B3, B4, C3 and C4 (Pi's real projection) and A5
  * and C5 (the src tree), and row PC holds the positive controls of their instruments; A2, B2, C1 and C2 hold the reference rule
  * itself. wb-ldbz (the wb-o4h0.2 gate's follow-up, F1-F4) added rows MV and PC, pins MA9-MA12, QA3, QA4, MC7, MC8 and QC5, A4's
- * digest and stream-position fields, A3's state witness and the five roster vocabularies.
+ * digest and stream-position fields, A3's state witness and the five roster vocabularies. wb-jnpc (the wb-ldbz gate's follow-up,
+ * F1-F5) added A4's root witness, the scans' read-in-full check, pins MA13, MA14, QA5-QA8, QC6-QC9 and PC5-PC7, the KP1 and KP2
+ * spellings and the REACHED tally.
  *
  * Display paths added: none. Test-only: nothing is spawned or written; src and this roster are only read.
  */
@@ -94,6 +112,7 @@ import { type Dirent, readdirSync, readFileSync } from "node:fs";
 import { basename, dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
+import { CapabilityError } from "../src/workbench/capability-registry.js";
 import {
   type NativeRef,
   type NativeSnapshot,
@@ -155,12 +174,12 @@ const ROWS: readonly Row[] = [
   {
     id: "MA",
     label: "row A5's locator matcher catches every locator-named rf ref interpolation, key-like property, Map or Set key, rf-tag join, computed key, Map pair and element access, and its named residuals stay pinned quiet",
-    pins: ["MA1", "MA2", "MA3", "MA4", "MA5", "MA6", "MA7", "MA8", "MA9", "MA10", "MA11", "MA12", "QA1", "QA2", "QA3", "QA4", "QS1"],
+    pins: ["MA1", "MA2", "MA3", "MA4", "MA5", "MA6", "MA7", "MA8", "MA9", "MA10", "MA11", "MA12", "MA13", "MA14", "QA1", "QA2", "QA3", "QA4", "QA5", "QA6", "QA7", "QA8", "QS1"],
   },
   {
     id: "MC",
     label: "row C5's revision-join matcher catches every revision-named interpolation pair, plus-join and scaled plus-join, and its named residuals stay pinned quiet",
-    pins: ["MC1", "MC2", "MC3", "MC4", "MC5", "MC6", "MC7", "MC8", "QC1", "QC2", "QC3", "QC4", "QC5"],
+    pins: ["MC1", "MC2", "MC3", "MC4", "MC5", "MC6", "MC7", "MC8", "QC1", "QC2", "QC3", "QC4", "QC5", "QC6", "QC7", "QC8", "QC9"],
   },
   {
     id: "MV",
@@ -169,8 +188,8 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "PC",
-    label: "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and the A5 and C5 src scans",
-    pins: ["PC1", "PC2", "PC3", "PC4"],
+    label: "the live legs' instruments each report a planted violation: A3's state capture, A4's key-bearing projection and two-root judgment, and the A5 and C5 src scans over a planted file and over each live rf-scope file",
+    pins: ["PC1", "PC2", "PC3", "PC4", "PC5", "PC6", "PC7"],
   },
 ];
 
@@ -496,6 +515,15 @@ const KEY_NAMES: readonly string[] = ["id", "scope", "key", "ref", "identity", "
 const KEY_SUFFIXES: readonly string[] = ["Id", "Key", "Ref", "Refs", "Digest"];
 /** Row A5's Map and Set methods whose first argument is a key (row MK1). */
 const COLLECTION_METHODS: readonly string[] = ["set", "get", "has", "delete", "add"];
+/** Rows KP1 and KP2's spellings of a key-like property name: bare, double- or single-quoted, and quoted inside a computed key. */
+const KEY_SPELLINGS: Readonly<Record<string, (name: string) => string>> = {
+  bare: name => name,
+  quoted: name => `"${name}"`,
+  singleQuoted: name => `'${name}'`,
+  computed: name => `["${name}"]`,
+  computedSingle: name => `['${name}']`,
+  computedTemplate: name => `[${TICK}${name}${TICK}]`,
+};
 /** An expression's identifier words, camelCase and snake_case split, lowercased. */
 const words = (expression: string): string[] =>
   expression.replace(/([a-z0-9])([A-Z])/g, "$1 $2").toLowerCase().split(/[^a-z0-9]+/).filter(word => word.length > 0);
@@ -543,8 +571,10 @@ function rfTemplates(source: string): string[][] {
     return expressions;
   });
 }
-/** A key-like property, quoted or bare: a KEY_NAMES name, or any camelCase name ending in a KEY_SUFFIXES suffix. */
-const KEY_PROPERTY = new RegExp(String.raw`\b(?:${KEY_NAMES.join("|")}|[a-z][A-Za-z0-9]*(?:${KEY_SUFFIXES.join("|")}))['"]?\s*:\s*([^,;}\n]*)`, "g");
+/** A key-like property name: a KEY_NAMES name, or any camelCase name ending in a KEY_SUFFIXES suffix. */
+const KEY_NAME = `(?:${KEY_NAMES.join("|")}|[a-z][A-Za-z0-9]*(?:${KEY_SUFFIXES.join("|")}))`;
+/** A key-like property: its name bare or quoted, or quoted inside a computed key (["id"]: ...), and the value it is given. */
+const KEY_PROPERTY = new RegExp(String.raw`(?:\b${KEY_NAME}['"]?|\[\s*(?:'${KEY_NAME}'|"${KEY_NAME}"|${TICK}${KEY_NAME}${TICK})\s*\])\s*:\s*([^,;}\n]*)`, "g");
 /** A Map or Set key: the first argument of a COLLECTION_METHODS call. */
 const MAP_KEY = new RegExp(String.raw`\.(?:${COLLECTION_METHODS.join("|")})\(\s*([^,)\n]+)`, "g");
 /** An rf-tagged ref built by "+": a quoted rf tag and the operand appended to it. */
@@ -553,8 +583,9 @@ const RF_TAG_PLUS = /(['"])rf-[a-z0-9-]+:[^'"\n]*\1\s*\+\s*([^;,)\n]+)/g;
 const COMPUTED_KEY = /[{,]\s*\[\s*([^[\]\n]+?)\s*\]\s*:/g;
 /** An element access: a bracketed expression right after an identifier, a call, an index or "?.". */
 const INDEX_KEY = /(?:[\w$)\]]|\?\.)\[\s*([^[\]\n]+?)\s*\]/g;
-/** A quoted literal in an element access names a property, not a key value. */
-const QUOTED = /^(['"`])[^'"`]*\1$/;
+/** A quoted literal in an element access names a property, not a key value: a single- or double-quoted literal, or a template
+ * literal with no interpolation (an interpolating template is an expression, read like any other). */
+const QUOTED = /^(?:(['"])[^'"`]*\1|`(?:[^'"`$]|\$(?!\{))*`)$/;
 /** The collections built from [key, value] pairs: a Map or WeakMap constructor and Object.fromEntries. */
 const PAIR_OPENER = /\bnew\s+(?:Map|WeakMap)\s*(?:<[^()]*>)?\s*\(|\bObject\.fromEntries\s*\(/g;
 /** The key of an array-literal pair: its first element, up to the first comma. */
@@ -613,6 +644,13 @@ function revisionJoinHits(source: string): string[] {
   return [...templated, ...joined];
 }
 const sameHits = (got: readonly string[], want: readonly string[]): boolean => JSON.stringify(got) === JSON.stringify(want);
+/** Rows KP1 and KP2's reading: each name, in each KEY_SPELLINGS spelling, makes exactly one key-like property hit. */
+const keySpellingMisses = (names: readonly string[]): string[] =>
+  names.flatMap(name =>
+    Object.entries(KEY_SPELLINGS)
+      .filter(([, spell]) => !sameHits(locatorHits(`const ref = { ${spell(name)}: link.locator };`), ["key link.locator"]))
+      .map(([spelling]) => `${name}/${spelling}`),
+  );
 /** Row A5's forms, each spelled around one expression; the hit it must read is `<form> <expression>` (rows LW1 and PC3). */
 const LOCATOR_FORMS: Readonly<Record<string, (expression: string) => string>> = {
   template: expression => `${TICK}rf-link:${interpolate(expression)}${TICK}`,
@@ -697,18 +735,64 @@ interface ScopeScan {
   readonly hits: readonly string[];
   readonly scoped: readonly string[];
 }
-/** Rows A5 and C5's instrument: walks the tree, holds the floors and the anchor, and returns every matcher hit in the rf scope.
- * The callers judge the hits (none on the live tree, exactly the planted ones on a planted tree), so one walk serves both. */
+/** A file's text as the filesystem holds it, read directly and never through a tree (the scans' read-in-full anchor), or
+ * undefined when no such file exists (rows PC3 and PC4's in-memory plant). */
+function diskText(path: string): string | undefined {
+  try {
+    return readFileSync(path, "utf8");
+  } catch {
+    return undefined;
+  }
+}
+/** Rows A5 and C5's instrument: walks the tree, holds the floors and the anchor, reads each rf-scope file once and holds that
+ * read to the file's own text on disk (the matched text must open with it, so an emptied or cut-short read reds, while an
+ * in-memory plant may follow it), and returns every matcher hit in the rf scope. The callers judge the hits (none on the live
+ * tree, exactly the planted ones on a planted tree), so one walk serves both. */
 function scanRfScope(matcher: (source: string) => string[], tree: SrcTree = liveTree()): ScopeScan {
   const scoped = tree.files.filter(inRfScope);
+  const texts = scoped.map(file => tree.read(file));
   const floorMet = tree.files.length >= SRC_FLOOR;
   const scopedFloorMet = scoped.length >= RF_SCOPE_FLOOR;
   const anchorRead = scoped.includes(ANCHOR_FILE) && tree.read(ANCHOR_FILE).includes(ANCHOR_TOKEN);
-  const hits = scoped.flatMap(file => matcher(tree.read(file)).map(hit => `${relative(REPO, file)}: ${hit}`));
+  const unread = scoped
+    .filter((file, index) => {
+      const disk = diskText(file);
+      return disk !== undefined && !(texts[index] ?? "").startsWith(disk);
+    })
+    .map(file => relative(REPO, file));
+  const hits = scoped.flatMap((file, index) => matcher(texts[index] ?? "").map(hit => `${relative(REPO, file)}: ${hit}`));
   expect(floorMet, `src: ${tree.files.length} files walked, floor ${SRC_FLOOR}`).toBe(true);
   expect(scopedFloorMet, `rf scope: ${scoped.length} files, floor ${RF_SCOPE_FLOOR}`).toBe(true);
   expect(anchorRead, `the anchor ${relative(REPO, ANCHOR_FILE)} was not read with ${ANCHOR_TOKEN}`).toBe(true);
-  return { witness: { floorMet, scopedFloorMet, anchorRead, hits }, hits, scoped };
+  expect(unread, "rf-scope files the scan did not read in full from disk").toEqual([]);
+  return { witness: { floorMet, scopedFloorMet, anchorRead, scopeReadInFull: unread.length === 0, hits }, hits, scoped };
+}
+interface AppendedScan {
+  readonly reported: readonly string[];
+  readonly missed: readonly string[];
+}
+/** Rows PC6 and PC7's control: each rf-scope file of the live tree in turn carries the plant appended to its own live text (in
+ * memory; nothing is written), and the scan must report exactly the plant's hits, attributed to that file. Returns the distinct
+ * hits reported across the files (each one's own path removed, in report order) and the files where the scan did not report
+ * exactly the plant's hits, so a scan that reads or matches only some rf-scope files reds. */
+function appendedScan(matcher: (source: string) => string[], plant: string, plantHits: readonly string[]): AppendedScan {
+  const live = liveTree();
+  const scoped = live.files.filter(inRfScope);
+  expect(scoped.length, `rf scope: ${scoped.length} files, floor ${RF_SCOPE_FLOOR}`).toBeGreaterThanOrEqual(RF_SCOPE_FLOOR);
+  const reported: string[] = [];
+  const missed = scoped
+    .filter(target => {
+      const tree: SrcTree = { files: live.files, read: path => (path === target ? `${live.read(path)}\n${plant}\n` : live.read(path)) };
+      const prefix = `${relative(REPO, target)}: `;
+      const { hits } = scanRfScope(matcher, tree);
+      for (const hit of hits) {
+        const bare = hit.startsWith(prefix) ? hit.slice(prefix.length) : hit;
+        if (!reported.includes(bare)) reported.push(bare);
+      }
+      return !sameHits(hits, plantHits.map(hit => `${prefix}${hit}`));
+    })
+    .map(file => relative(REPO, file));
+  return { reported, missed };
 }
 
 const RF_HOST: ReactiveFiberTopologyContext = {
@@ -777,15 +861,45 @@ function plantLocator(snapshot: NativeSnapshot, field: KeyBearingField, locator:
 }
 /** Row A4's judgment of one snapshot: the locator appears in a key-bearing field. */
 const locatorIn = (snapshot: NativeSnapshot, locator: string): boolean => JSON.stringify(keyBearing(snapshot)).includes(locator);
-/** The shipped rf reader's one snapshot of the full-shape envelope, read under an authorized root (rows A4 and PC2). */
-function readUnder(root: string): NativeSnapshot {
-  const topology = reactivefiberTopology(
-    { contract: REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, workspaceRoot: root, source: fullShapeRf(root) },
-    { ...RF_HOST, authorizedRfRoot: root },
-  );
-  const [snapshot] = topology.snapshots;
+/** What the shipped rf reader is handed for one read: the provider output, the full-shape envelope under one root. */
+type RfReading = { readonly contract: string; readonly workspaceRoot: string; readonly source: Json };
+/** One read of the shipped rf reader: the reading it was handed and the one snapshot it read from it. */
+interface RootRead {
+  readonly reading: RfReading;
+  readonly snapshot: NativeSnapshot;
+}
+/** The shipped rf reader's one snapshot of the full-shape envelope, read under an authorized root (rows A4, PC2 and PC5), kept
+ * with the very reading it was handed, so row A4 can ask the reader which root that reading is authorized under. */
+function readUnder(root: string): RootRead {
+  const reading: RfReading = { contract: REACTIVEFIBER_RENDER_PREVIEW_CONTRACT, workspaceRoot: root, source: fullShapeRf(root) };
+  const [snapshot] = reactivefiberTopology(reading, { ...RF_HOST, authorizedRfRoot: root }).snapshots;
   if (snapshot === undefined) throw new Error(`no snapshot read under ${root}`);
-  return snapshot;
+  return { reading, snapshot };
+}
+/** The shipped reader's verdict on one reading under each of LOCATORS as the authorized root: "authorized", or the category of
+ * its refusal (it refuses a reading whose root is not the authorized one as 'authorization'). Row A4's root witness: a reading
+ * is authorized under exactly the root it names. */
+function rootVerdicts(reading: RfReading): string[] {
+  return LOCATORS.map(root => {
+    try {
+      reactivefiberTopology(reading, { ...RF_HOST, authorizedRfRoot: root });
+      return "authorized";
+    } catch (error) {
+      if (error instanceof CapabilityError) return error.category;
+      throw error;
+    }
+  });
+}
+/** Row A4's judgment of the reads of one envelope, one per locator: whether their key-bearing projections agree, and the
+ * locators written into them (row PC5 drives it with planted reads). */
+function judgeReads(snapshots: readonly NativeSnapshot[]): { readonly sameKeys: boolean; readonly leaked: string[] } {
+  const keys = snapshots.map(snapshot => JSON.stringify(keyBearing(snapshot)));
+  const sameKeys = keys.length === LOCATORS.length && new Set(keys).size === 1;
+  const leaked = LOCATORS.filter((root, index) => {
+    const snapshot = snapshots[index];
+    return snapshot !== undefined && locatorIn(snapshot, root);
+  });
+  return { sameKeys, leaked };
 }
 
 interface Spelling {
@@ -794,8 +908,9 @@ interface Spelling {
   readonly source: string;
   readonly hit: boolean;
 }
-/** MA1-MA12 and MC1-MC8 must hit. Quiet rows: QA1 R-INDIRECT, QA2 R-CALL-BUILT, QA3 R-HOST-WORD, QA4 R-CALLBACK-KEY, QC1 and QC4
- * R-CALL-JOIN, QC2 R-SYNONYM, QC3 R-PROSE, QC5 R-ARITH-PACKED. */
+/** MA1-MA14 and MC1-MC8 must hit. Quiet rows: QA1 R-INDIRECT, QA2 R-CALL-BUILT, QA3 R-HOST-WORD, QA4 R-CALLBACK-KEY, QA5 and QA6
+ * R-REFLECTIVE-KEY, QA7 R-MID-TAG, QA8 R-SUFFIX-OUTSIDE, QC1 and QC4 R-CALL-JOIN, QC2 R-SYNONYM, QC3 R-PROSE, QC5 R-ARITH-PACKED,
+ * QC6 R-CALL-OPERAND, QC7 R-EXPRESSION-SCALE, QC8 R-TEMPLATE-PLUS, QC9 R-WIDE-GAP. */
 const SPELLINGS: readonly Spelling[] = [
   { pin: "MA1", matcher: locatorHits, source: `${TICK}rf-workspace:${interpolate("workspace.root")}${TICK}`, hit: true },
   { pin: "MA2", matcher: locatorHits, source: `${TICK}rf-link:${interpolate("link.locator")}${TICK}`, hit: true },
@@ -814,10 +929,16 @@ const SPELLINGS: readonly Spelling[] = [
     hit: true,
   },
   { pin: "MA12", matcher: locatorHits, source: "byLocator[link.locator] = record;", hit: true },
+  { pin: "MA13", matcher: locatorHits, source: `byLocator[${TICK}${interpolate("link.locator")}${TICK}] = record;`, hit: true },
+  { pin: "MA14", matcher: locatorHits, source: 'const ref = { ["id"]: link.locator };', hit: true },
   { pin: "QA1", matcher: locatorHits, source: `${TICK}rf-workspace:${interpolate("where")}${TICK}`, hit: false },
   { pin: "QA2", matcher: locatorHits, source: 'const ref = ["rf-workspace", workspace.root].join(":");', hit: false },
   { pin: "QA3", matcher: locatorHits, source: `${TICK}rf-link:${interpolate("link.host")}${TICK}`, hit: false },
   { pin: "QA4", matcher: locatorHits, source: "const seen = new Set(links.map(link => link.locator));", hit: false },
+  { pin: "QA5", matcher: locatorHits, source: "Reflect.set(index, link.locator, record);", hit: false },
+  { pin: "QA6", matcher: locatorHits, source: "Object.defineProperty(index, link.locator, { value: record });", hit: false },
+  { pin: "QA7", matcher: locatorHits, source: `const ref = ${TICK}prefix/rf-link:${interpolate("link.locator")}${TICK};`, hit: false },
+  { pin: "QA8", matcher: locatorHits, source: "const ref = { sourceKeys: link.locator };", hit: false },
   { pin: "MC1", matcher: revisionJoinHits, source: `${TICK}${interpolate("epoch")}${interpolate("revision")}${TICK}`, hit: true },
   { pin: "MC2", matcher: revisionJoinHits, source: `${TICK}${interpolate("ref.source_epoch")}:${interpolate("ref.source_revision")}${TICK}`, hit: true },
   { pin: "MC3", matcher: revisionJoinHits, source: `${TICK}${interpolate("stream")}/${interpolate("sequence")}${TICK}`, hit: true },
@@ -831,7 +952,14 @@ const SPELLINGS: readonly Spelling[] = [
   { pin: "QC3", matcher: revisionJoinHits, source: `${TICK}${interpolate("epoch")} ${interpolate("revision")}${TICK}`, hit: false },
   { pin: "QC4", matcher: revisionJoinHits, source: 'const key = String(epoch).concat(":", revision);', hit: false },
   { pin: "QC5", matcher: revisionJoinHits, source: "const key = (epoch << 20) | revision;", hit: false },
+  { pin: "QC6", matcher: revisionJoinHits, source: "const key = epoch.toString() + revision;", hit: false },
+  { pin: "QC7", matcher: revisionJoinHits, source: "const key = point.epoch * 2 ** 20 + point.revision;", hit: false },
+  { pin: "QC8", matcher: revisionJoinHits, source: `const key = ${TICK}${interpolate("epoch")}${TICK} + ${TICK}${interpolate("revision")}${TICK};`, hit: false },
+  { pin: "QC9", matcher: revisionJoinHits, source: `const key = ${TICK}${interpolate("epoch")}-separator${interpolate("revision")}${TICK};`, hit: false },
 ];
+
+/** The pins that reached their witness compare, in run order; the last case holds them to the roster's pins (wb-jnpc F5). */
+const REACHED: string[] = [];
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Json>> = {
@@ -881,20 +1009,21 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     };
   },
   A4: () => {
-    const snapshots = LOCATORS.map(root => readUnder(root));
+    const reads = LOCATORS.map(root => readUnder(root));
+    const snapshots = reads.map(read => read.snapshot);
     const keys = snapshots.map(keyBearing);
-    const leaked = LOCATORS.filter((root, index) => {
-      const snapshot = snapshots[index];
-      return snapshot !== undefined && locatorIn(snapshot, root);
-    });
+    const { sameKeys, leaked } = judgeReads(snapshots);
+    const verdicts = reads.map(read => rootVerdicts(read.reading));
     const projection = new ObservationProjection();
     const outcomes = snapshots.map(snapshot => projection.refresh(snapshot));
-    const sameKeys = keys.length === LOCATORS.length && JSON.stringify(keys[0]) === JSON.stringify(keys[1]);
+    expect(verdicts, "the two reads were not each authorized under its own locator alone").toStrictEqual(
+      LOCATORS.map(own => LOCATORS.map(root => (root === own ? "authorized" : "authorization"))),
+    );
     expect(keys[0], "one envelope read under two locators keyed differently").toStrictEqual(keys[1]);
     expect(leaked, "a locator written into a key-bearing field").toEqual([]);
     expect(projection.stats().nodes).toBe(1);
     const evidenceTags = (snapshots[0]?.evidenceRefs ?? []).map(ref => ref.slice(0, ref.indexOf(":")));
-    return { sameKeys, leaked, outcomes, nodes: projection.stats().nodes, evidenceTags };
+    return { sameKeys, leaked, outcomes, nodes: projection.stats().nodes, evidenceTags, rootVerdicts: verdicts };
   },
   A5: () => {
     const { witness, hits, scoped } = scanRfScope(locatorHits);
@@ -1050,14 +1179,14 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     return witness;
   },
   KP1: () => {
-    const missed = ROSTER.keyNames.filter(name => !sameHits(locatorHits(`const ref = { ${name}: link.locator };`), ["key link.locator"]));
-    expect(missed, "a key-like property name row A5 does not read").toEqual([]);
-    return { names: ROSTER.keyNames.length, missed };
+    const missed = keySpellingMisses(ROSTER.keyNames);
+    expect(missed, "a key-like property name row A5 does not read in some spelling").toEqual([]);
+    return { names: ROSTER.keyNames.length, spellings: Object.keys(KEY_SPELLINGS), missed };
   },
   KP2: () => {
-    const missed = ROSTER.keySuffixes.filter(suffix => !sameHits(locatorHits(`const ref = { source${suffix}: link.locator };`), ["key link.locator"]));
-    expect(missed, "a key-like property suffix row A5 does not read").toEqual([]);
-    return { suffixes: ROSTER.keySuffixes.length, missed };
+    const missed = keySpellingMisses(ROSTER.keySuffixes.map(suffix => `source${suffix}`));
+    expect(missed, "a key-like property suffix row A5 does not read in some spelling").toEqual([]);
+    return { suffixes: ROSTER.keySuffixes.length, spellings: Object.keys(KEY_SPELLINGS), missed };
   },
   MK1: () => {
     const missed = ROSTER.collectionMethods.filter(method => !sameHits(locatorHits(`index.${method}(link.locator);`), ["map link.locator"]));
@@ -1102,7 +1231,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
   },
   PC2: () => {
     const [root] = LOCATORS;
-    const snapshot = readUnder(root);
+    const { snapshot } = readUnder(root);
     const clean = !locatorIn(snapshot, root);
     const unseen = KEY_BEARING_FIELDS.filter(field => !locatorIn(plantLocator(snapshot, field, root), root));
     expect(clean, "the unplanted snapshot already carries the locator").toBe(true);
@@ -1121,6 +1250,27 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(hits, "row C5's scan did not report the planted revision joins").toStrictEqual(REVISION_PLANT_HITS.map(hit => `${plant}: ${hit}`));
     return witness;
   },
+  PC5: () => {
+    const reads = LOCATORS.map(root => readUnder(root));
+    /** The reader plant row A4 must catch, written into a copy of each real read: a key derived from the read's own root (its
+     * sha256 as the source revision) that carries no literal locator. */
+    const planted = reads.map(read => ({ ...read.snapshot, sourceRevision: sha256(read.reading.workspaceRoot) }));
+    const control = judgeReads(reads.map(read => read.snapshot));
+    const judged = judgeReads(planted);
+    expect(control.sameKeys, "the unplanted reads already keyed differently").toBe(true);
+    expect(judged, "row A4's judgment missed a key derived from each read's root").toStrictEqual({ sameKeys: false, leaked: [] });
+    return { controlSameKeys: control.sameKeys, plantedSameKeys: judged.sameKeys, plantedLeaked: judged.leaked };
+  },
+  PC6: () => {
+    const { reported, missed } = appendedScan(locatorHits, LOCATOR_PLANT, LOCATOR_PLANT_HITS);
+    expect(missed, "row A5's scan missed a plant appended to the live text of an rf-scope file").toEqual([]);
+    return { reported: [...reported], missed: [...missed] };
+  },
+  PC7: () => {
+    const { reported, missed } = appendedScan(revisionJoinHits, REVISION_PLANT, REVISION_PLANT_HITS);
+    expect(missed, "row C5's scan missed a plant appended to the live text of an rf-scope file").toEqual([]);
+    return { reported: [...reported], missed: [...missed] };
+  },
   ...Object.fromEntries(
     SPELLINGS.map(spelling => [
       spelling.pin,
@@ -1135,7 +1285,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
 
 describe("wb-o4h0.2 federated identity census (RF-FEDERATED-WORKSPACES-R3, absent-today leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:4", "C:5", "MA:17", "MC:13", "MV:5", "PC:4"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:4", "C:5", "MA:23", "MC:17", "MV:5", "PC:7"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -1168,8 +1318,15 @@ describe("wb-o4h0.2 federated identity census (RF-FEDERATED-WORKSPACES-R3, absen
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : impl();
           expect(witness).toStrictEqual(rosterWitness(pin));
+          REACHED.push(pin);
         });
       }
     });
   }
+
+  it("every judged pin reached its witness compare, in the roster's row order", () => {
+    expect(REACHED, "a pin whose test is not registered, is skipped or never reached its witness compare").toEqual(
+      ROSTER.rows.flatMap(row => row.pins.map(pin => pin.id)),
+    );
+  });
 });

@@ -38,13 +38,17 @@
  * READINGS
  * - SCANNED: every regular file below docs/, src/, .agents/ (Pi's installed skills), qa/, test/ and examples/, and the
  *   repository root's .md pages, read as UTF-8; a symlink is refused, never followed. This file and its roster are EXEMPT:
- *   walked, never judged (row A3). The out-of-file rosters of two LANDED SIBLINGS (SIBLING_ROSTERS, row A5) are exempt from
- *   row A only and stay judged by row B: test/fixtures/gp-identity-roster.json (wb-gxd7.1) and
- *   test/fixtures/gp-kind-label-roster.json (wb-gxd7.4) hold the program's lines and their own filings verbatim, and each
- *   sibling census holds those fields to its own bead row, so a citing sentence inside them cannot carry the status literal
- *   without ceasing to be verbatim (residual R22). The walk is held to an INDEPENDENT LISTING (node's recursive readdirSync
- *   over the same roots, a different code path): the walked set equals the listed set exactly, and the judged sets equal the listing minus
- *   the exemptions, counted at run time (no count floor, no frozen count).
+ *   walked, never judged (row A3). The out-of-file rosters of two LANDED SIBLINGS (SIBLING_ROSTERS, row A5) are FIELD-SCOPED
+ *   for row A and read whole by row B: test/fixtures/gp-identity-roster.json (wb-gxd7.1) and
+ *   test/fixtures/gp-kind-label-roster.json (wb-gxd7.4) hold the program's lines and their own filings verbatim, and a citing
+ *   sentence inside a verbatim field cannot carry the status literal without ceasing to be verbatim, so row A skips exactly the
+ *   string leaves SIBLING_ROSTERS names by JSON pointer - each a verbatim mirror of its sibling's bead row, of a producer text
+ *   the sibling measured or of a row label the sibling census pins to its roster - and judges every other string of those
+ *   files, a new field included (residual R22). A skipped leaf is read as white space of its own length, so every line and
+ *   every other byte stay where they were; a pointer spelled twice (a duplicated key, or one below a duplicated key) skips
+ *   nothing. The walk is held to an INDEPENDENT LISTING (node's recursive readdirSync over the same roots, a different code
+ *   path): the walked set equals the listed set exactly, and the judged sets equal the listing minus the exemptions, counted
+ *   at run time (no count floor, no frozen count).
  * - (a) SENTENCE: a file's text cut at a run of white space after ".", "!", "?" or ";", at a blank line and before a line
  *   opening a table row ("|"); a .md file is also cut before a line opening a list item. A code comment's wrapped lines stay
  *   one sentence; the sentence is FLATTENED before it is read (a continuation line's leading "//", "*", "#" or ">" and the
@@ -90,9 +94,13 @@
  *  A, acceptance (a). A1 the walk (exact sets against the independent listing, per-root anchors, the root pages, no symlink,
  *    nothing unreadable); A2 the live census returns no finding; A3 each exemption is load-bearing (this file under rows A and
  *    B, the roster under row A); A4 the acceptance's mutants - one citing plant per scanned root and the root pages, each read
- *    exactly, each marked twin quiet; A5 each landed sibling roster is walked, read by row B and not by row A, load-bearing for
- *    row A, and anchored outside this file and the roster: its own bead and statement fields equal that sibling's row in the
- *    tracked bead export, a child of this bead's parent there whose filing cites the same program directory at the same sha.
+ *    exactly, each marked twin quiet; A5 each landed sibling roster is walked, read by rows A and B and quiet under row A's
+ *    field scope; each skipped leaf resolves to one string, is load-bearing (judged alone it yields a finding) and is anchored
+ *    outside this file and the roster by its mirror class (filing: its sibling's row in the tracked bead export holds the value
+ *    verbatim; producer: it sits in the roster's producer block, measured at the pin, and equals this roster's site wherever
+ *    both measured the same line; row: the sibling census spells it verbatim and row A judges that census), each class refuses
+ *    a plant, and the roster's own bead and statement fields equal that sibling's export row, a child of this bead's parent
+ *    there whose filing cites the same program directory at the same sha.
  *  B, acceptance (b). B1 the live read (every JSON file parses, the landed gp stand-ins of test/helpers/gp-fallback-census.ts
  *    read as gp documents); B2 the live census returns no finding; B3 one plant per member across file kinds, each read
  *    exactly, each unmarked or observed twin quiet.
@@ -140,14 +148,16 @@
  *   R-OBSERVED-SHAPE-BREADTH an observed shape admits its states wherever an object carries exactly its keys; R20
  *   R-FUSED-WORDS a member's word run fused into one word (identityunavailable) in row B; R21 R-TYPE-DECLARATION a member
  *   spelled in a type, an interface or another declaration rather than a literal value (row B reads literals only); R22
- *   R-SIBLING-ROSTER a citing sentence inside a landed sibling roster of row A5 is not judged by row A (row B still reads it).
+ *   R-SIBLING-ROSTER a citing sentence inside one of the verbatim leaves row A5 enumerates is not judged by row A (row B reads
+ *   those files whole, and every other string of them is judged; a producer leaf is anchored by its place, the pin and this
+ *   roster's own measurement where it overlaps, never by re-reading the producer).
  * SCOPE: the vocabularies are this cut's reading of the filing and the program at the pin (another program's RC- label
  * spelled with one of the nine words would read as this program's); the producer facts are measured at
  * the pin and not re-read here (the census is hermetic), so a gp change is seen only when a cut re-measures the roster. The
  * allowlist of (c) is this census's (rows A and B share it). A later census that needs these labels as needles adds its own
  * file to EXEMPT in its cut, beside an A3-style reading, or carries the status literal and a sha in each citing sentence; a
- * landed sibling whose out-of-file roster holds the program's lines and its own filing verbatim enters SIBLING_ROSTERS beside
- * an A5 reading (row A only).
+ * landed sibling whose out-of-file roster holds the program's lines and its own filing verbatim enters SIBLING_ROSTERS with its
+ * citing verbatim leaves named by pointer and mirror class, beside an A5 reading (row A only).
  *
  * Display paths added: none. Test-only: the scanned trees, the plants and the TRACEABILITY stand-ins live in makeScratch
  * scratch; src, docs, qa, the skills and the bead export are only read.
@@ -171,17 +181,65 @@ const BEAD_EXPORT = ".beads/issues.jsonl";
 const TRACE_FILE = "docs/workbench/TRACEABILITY.md";
 const BEAD = "wb-gxd7.2";
 const EXEMPT: readonly string[] = [SELF, ROSTER_FILE];
+/** What a skipped sibling leaf mirrors verbatim, and so where row A5 anchors it outside this file and the roster. */
+type Mirror = "filing" | "producer" | "row";
+interface VerbatimLeaf {
+  /** The JSON pointer of one string leaf of the sibling roster. */
+  readonly pointer: string;
+  /** filing: the sibling's own row of the tracked bead export holds the value verbatim (title or notes); producer: a text the
+   * sibling's cutting seat measured at the producer (a line of its producer lines, head lines or installed lines, or a
+   * producer path), held in the roster's producer block at this census's pin; row: one of the sibling census's own row
+   * labels, which that census spells verbatim and pins to its roster. */
+  readonly mirror: Mirror;
+}
 interface SiblingRoster {
   readonly file: string;
   readonly bead: string;
+  /** The sibling census that pins this roster and spells its row labels. */
+  readonly census: string;
+  /** Row A's field scope (residual R22): exactly these string leaves are skipped, each read as white space of its own length;
+   * every other string of the file is judged. */
+  readonly verbatim: readonly VerbatimLeaf[];
 }
-/** Row A5: the out-of-file rosters of the landed siblings that hold the program's lines and their own filings verbatim; row A
- * reads neither (residual R22), row B reads both. */
+/** Row A5: the out-of-file rosters of the landed siblings that hold the program's lines and their own filings verbatim. Row B
+ * reads both whole; row A reads both with exactly their citing verbatim leaves skipped (residual R22). */
 const SIBLING_ROSTERS: readonly SiblingRoster[] = [
-  { file: "test/fixtures/gp-identity-roster.json", bead: "wb-gxd7.1" },
-  { file: "test/fixtures/gp-kind-label-roster.json", bead: "wb-gxd7.4" },
+  {
+    file: "test/fixtures/gp-identity-roster.json",
+    bead: "wb-gxd7.1",
+    census: "test/workbench-gp-identity-census.test.ts",
+    verbatim: [
+      { pointer: "/statement", mirror: "filing" },
+      { pointer: "/citation", mirror: "filing" },
+      { pointer: "/producer/programDir", mirror: "filing" },
+      { pointer: "/producer/lines/01-finding-inventory.md:9", mirror: "producer" },
+      { pointer: "/producer/lines/01-finding-inventory.md:10", mirror: "producer" },
+      { pointer: "/producer/lines/02-contract-audit.md:30", mirror: "producer" },
+      { pointer: "/producer/lines/02-contract-audit.md:42", mirror: "producer" },
+      { pointer: "/producer/lines/02-contract-audit.md:52", mirror: "producer" },
+      { pointer: "/producer/headLines/docs~1dev~1RULINGS.md:769", mirror: "producer" },
+      { pointer: "/producer/evidence/path", mirror: "producer" },
+    ],
+  },
+  {
+    file: "test/fixtures/gp-kind-label-roster.json",
+    bead: "wb-gxd7.4",
+    census: "test/workbench-gp-kind-label-census.test.ts",
+    verbatim: [
+      { pointer: "/statement", mirror: "filing" },
+      { pointer: "/citation", mirror: "filing" },
+      { pointer: "/piPosture", mirror: "filing" },
+      { pointer: "/codeFacts/3", mirror: "filing" },
+      { pointer: "/rows/1/label", mirror: "row" },
+      { pointer: "/producer/lines/02-contract-audit.md:100", mirror: "producer" },
+      { pointer: "/producer/lines/03-developer-workplan.md:58", mirror: "producer" },
+      { pointer: "/producer/lines/01-finding-inventory.md:19", mirror: "producer" },
+      { pointer: "/producer/installedLines/docs~1dev~1RULINGS.md:778", mirror: "producer" },
+      { pointer: "/producer/installedLines/docs~1dev~1RULINGS.md:800", mirror: "producer" },
+      { pointer: "/producer/installedLines/docs~1dev~1RULINGS.md:810", mirror: "producer" },
+    ],
+  },
 ];
-const SIBLING_FILES: readonly string[] = SIBLING_ROSTERS.map(entry => entry.file);
 
 /** The producer pin and the Pi sha the filing read its 0-hit count at (owner filing). */
 const PIN = "0107c72992f3";
@@ -468,6 +526,51 @@ function rosterWitness(pin: string): Json {
   return found.witness;
 }
 
+/** Where row A5 anchors one sibling's skipped leaves: its export row, its producer pin and its census. */
+interface MirrorContext {
+  /** The sibling's row of the tracked bead export: its title and notes. */
+  readonly filed: string;
+  readonly producerPin: string;
+  readonly census: string;
+  readonly censusJudged: boolean;
+}
+/** This roster's producer sites that measured the same producer line as a sibling's pin-measured line leaf. */
+function measuredSites(pointer: string): Site[] {
+  const key = /^\/producer\/lines\/([^/]+)$/.exec(pointer)?.[1]?.replace(/~1/g, "/").replace(/~0/g, "~");
+  if (key === undefined) return [];
+  return ROSTER.sites.filter(site => `${site.path}:${site.lines}` === key || `${site.path}:${site.lines}`.endsWith(`/${key}`));
+}
+/** Whether `value` at `pointer` is the verbatim mirror its class names (row A5, residual R22). */
+function mirrors(mirror: Mirror, pointer: string, value: unknown, context: MirrorContext): boolean {
+  if (typeof value !== "string" || value.trim() === "") return false;
+  if (mirror === "filing") return context.filed.includes(value);
+  if (mirror === "row") return /^\/rows\/\d+\/label$/.test(pointer) && context.censusJudged && context.census.includes(JSON.stringify(value));
+  return pointer.startsWith("/producer/") && context.producerPin.startsWith(PIN) && measuredSites(pointer).every(site => site.text === value);
+}
+/** A JSON object holding `value` at each of `pointers`, beside `base` (objects all the way down: an array index is spelled as
+ * an object key, which a pointer names the same way). */
+function plantAt(pointers: readonly string[], value: string, base: { readonly [key: string]: Json } = {}): { [key: string]: Json } {
+  const root: { [key: string]: Json } = { ...base };
+  for (const pointer of pointers) {
+    const segments = pointer
+      .slice(1)
+      .split("/")
+      .map(part => part.replace(/~1/g, "/").replace(/~0/g, "~"));
+    let node = root;
+    for (const [index, segment] of segments.entries()) {
+      if (index === segments.length - 1) {
+        node[segment] = value;
+        break;
+      }
+      const next = node[segment];
+      const child: { [key: string]: Json } = next !== null && typeof next === "object" && !Array.isArray(next) ? next : {};
+      node[segment] = child;
+      node = child;
+    }
+  }
+  return root;
+}
+
 /** The constants the roster pins beside the rows. */
 function constants(): Json {
   return {
@@ -475,7 +578,7 @@ function constants(): Json {
     pin: PIN,
     filingRead: FILING_READ,
     exempt: [...EXEMPT],
-    siblingRosters: SIBLING_ROSTERS.map(({ file, bead }) => ({ file, bead })),
+    siblingRosters: SIBLING_ROSTERS.map(({ file, bead, census, verbatim }) => ({ file, bead, census, verbatim: verbatim.map(({ pointer, mirror }) => ({ pointer, mirror })) })),
     traceFile: TRACE_FILE,
     scanRoots: SCAN_ROOTS.map(({ root, anchor, token }) => ({ root, anchor, token })),
     pageAnchor: { ...PAGE_ANCHOR },
@@ -876,6 +979,60 @@ const jsonHits = (path: string, text: string, unparsed: string[]): string[] => r
 const isJsonFile = (path: string): boolean => path.endsWith(".json") || path.endsWith(".jsonl");
 const isModule = (path: string): boolean => MODULE_EXTENSIONS.some(extension => path.endsWith(extension));
 
+/** The value a JSON pointer names inside `root` (RFC 6901, as row B's findings spell it), or undefined. */
+function valueAt(root: unknown, pointer: string): unknown {
+  if (pointer === "") return root;
+  if (!pointer.startsWith("/")) return undefined;
+  let node: unknown = root;
+  for (const segment of pointer.slice(1).split("/").map(part => part.replace(/~1/g, "/").replace(/~0/g, "~"))) {
+    if (Array.isArray(node) && /^(?:0|[1-9]\d*)$/.test(segment)) node = node[Number(segment)];
+    else if (isObject(node) && Object.hasOwn(node, segment)) node = node[segment];
+    else return undefined;
+  }
+  return node;
+}
+/** A JSON text's string leaves by JSON pointer, each with the span of its contents between the quotes. A leaf whose pointer,
+ * or any pointer above it, names two nodes (a duplicated key) is dropped, so it is never skipped; a text that does not parse
+ * as JSON has no leaves. */
+function stringLeaves(path: string, text: string): ReadonlyMap<string, readonly [number, number]> {
+  if (parsedJson(text) === undefined) return new Map();
+  const file = ts.parseJsonText(path, text);
+  const nodes = new Map<string, number>();
+  const strings = new Map<string, readonly [number, number]>();
+  const visit = (node: ts.Node, pointer: string): void => {
+    nodes.set(pointer, (nodes.get(pointer) ?? 0) + 1);
+    if (ts.isObjectLiteralExpression(node)) {
+      for (const property of node.properties) {
+        if (!ts.isPropertyAssignment(property)) continue;
+        const name = propertyName(property.name);
+        if (name !== undefined) visit(property.initializer, `${pointer}/${escapePointer(name)}`);
+      }
+    } else if (ts.isArrayLiteralExpression(node)) {
+      node.elements.forEach((element, index) => {
+        visit(element, `${pointer}/${index}`);
+      });
+    } else if (ts.isStringLiteral(node)) strings.set(pointer, [node.getStart(file) + 1, node.getEnd() - 1]);
+  };
+  for (const statement of file.statements) visit(statement.expression, "");
+  const single = (pointer: string): boolean => {
+    for (let at = pointer; at !== ""; at = at.slice(0, at.lastIndexOf("/"))) if (nodes.get(at) !== 1) return false;
+    return true;
+  };
+  return new Map([...strings].filter(([pointer]) => single(pointer)));
+}
+/** Row A's reading of a sibling roster (residual R22): each skipped leaf's contents become white space of the same length, so
+ * every line and every other byte stay where they were; a pointer that names no single string leaf skips nothing. */
+function maskLeaves(path: string, text: string, pointers: readonly string[]): string {
+  const leaves = stringLeaves(path, text);
+  const spans = pointers
+    .map(pointer => leaves.get(pointer))
+    .filter((span): span is readonly [number, number] => span !== undefined)
+    .sort((left, right) => right[0] - left[0]);
+  let masked = text;
+  for (const [start, end] of spans) masked = `${masked.slice(0, start)}${masked.slice(start, end).replace(/[^\n]/g, " ")}${masked.slice(end)}`;
+  return masked;
+}
+
 /** (c): the table rows of a TRACEABILITY text (a line opening with "|", the header separator aside). */
 function traceRows(text: string): string[] {
   return text.split("\n").filter(line => /^[ \t]*\|/.test(line) && !/^[ \t]*\|[ \t:|-]*$/.test(line));
@@ -946,16 +1103,18 @@ function censusOf(root: string, allowlist: readonly AllowEntry[] = ALLOWLIST): T
     else if (entry.isFile()) pages.push(entry.name);
   }
   const judged = [...walked, ...pages].filter(file => !EXEMPT.includes(file));
-  const judgedA = judged.filter(file => !SIBLING_FILES.includes(file));
+  // Row A reads every judged file, a landed sibling roster with exactly its verbatim leaves skipped (row A5, residual R22).
+  const judgedA = [...judged];
   const judgedB = judged.filter(file => isJsonFile(file) || isModule(file));
-  const readA = new Set(judgedA);
   const readB = new Set(judgedB);
   const unparsed: string[] = [];
   const findings: Finding[] = [];
   const marked: string[] = [];
   for (const file of judged) {
     const text = textOf(join(root, file));
-    if (readA.has(file)) for (const citation of citationsOf(file, text)) findings.push({ row: "A", path: file, members: citation.families, text: citationText(file, citation) });
+    const sibling = SIBLING_ROSTERS.find(entry => entry.file === file);
+    const textA = sibling === undefined ? text : maskLeaves(file, text, sibling.verbatim.map(leaf => leaf.pointer));
+    for (const citation of citationsOf(file, textA)) findings.push({ row: "A", path: file, members: citation.families, text: citationText(file, citation) });
     if (!readB.has(file)) continue;
     const read = isJsonFile(file) ? readJson(file, text, unparsed) : readModule(file, text);
     for (const hit of read.hits) findings.push({ row: "B", path: file, members: [/ (K\d+): /.exec(hit)?.[1] ?? ""], text: hit });
@@ -1229,7 +1388,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const reading = {
       roots,
       pages: { equalsListing: sameSet(census.pages, census.listedPages), anchorRead: census.pages.includes(PAGE_ANCHOR.file) && textOf(join(REPO, PAGE_ANCHOR.file)).includes(PAGE_ANCHOR.token) },
-      judgedA: sameSet(census.judgedA, listed.filter(file => !EXEMPT.includes(file) && !SIBLING_FILES.includes(file))),
+      judgedA: sameSet(census.judgedA, listed.filter(file => !EXEMPT.includes(file))),
       judgedB: sameSet(census.judgedB, listed.filter(file => !EXEMPT.includes(file) && (isJsonFile(file) || isModule(file)))),
       exemptWalked: exemptPresent,
       symlinks: census.symlinks,
@@ -1276,25 +1435,64 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const census = liveCensus();
     const own = exportRow(BEAD);
     const program = programOf(filingStatement(own));
-    const siblings = SIBLING_ROSTERS.map(({ file, bead }) => {
+    const plant = "Pi reads D-STORE-2 as the gp store contract.";
+    const siblings = SIBLING_ROSTERS.map(({ file, bead, census: sibling, verbatim }) => {
       const text = textOf(join(REPO, file));
       const row = exportRow(bead);
       const statement = filingStatement(row);
       const roster = parsedObject(text);
+      const leaves = stringLeaves(file, text);
+      const pointers = verbatim.map(leaf => leaf.pointer);
+      const producer = valueAt(roster, "/producer/pin");
+      const context: MirrorContext = {
+        filed: [row.title, row.notes].filter(part => typeof part === "string").join("\n"),
+        producerPin: typeof producer === "string" ? producer : "",
+        census: textOf(join(REPO, sibling)),
+        censusJudged: census.judgedA.includes(sibling),
+      };
+      // A skipped leaf is load-bearing when judging it alone, the rest of the scope still skipped, yields a row A finding.
+      const loadBearing = (pointer: string): boolean => aFindings(file, maskLeaves(file, text, pointers.filter(other => other !== pointer))).length > 0;
       return {
         file,
         bead,
+        census: sibling,
         walked: census.walked.includes(file),
         readByA: census.judgedA.includes(file),
         readByB: census.judgedB.includes(file),
-        loadBearing: aFindings(file, text).length > 0,
+        quiet: !census.a.some(finding => finding.startsWith(`${file}:`)),
+        leaves: verbatim.map(({ pointer, mirror }) => ({ pointer, mirror, resolved: leaves.has(pointer), loadBearing: loadBearing(pointer), anchored: mirrors(mirror, pointer, valueAt(roster, pointer), context) })),
+        crossMeasured: pointers.filter(pointer => measuredSites(pointer).length > 0),
+        controls: {
+          filing: mirrors("filing", "/note", plant, context),
+          producerPlacement: mirrors("producer", "/note", plant, context),
+          producerMeasured: mirrors("producer", "/producer/lines/02-contract-audit.md:30", plant, context),
+          row: mirrors("row", "/rows/0/label", plant, context),
+          loadBearing: loadBearing("/bead"),
+        },
         sibling: bead !== BEAD && parentOf(row) !== "" && parentOf(row) === parentOf(own),
         sameProgram: program !== "" && programOf(statement) === program,
         verbatimFiling: statement !== "" && roster?.bead === bead && roster?.statement === statement,
       };
     });
-    expect(siblings, "each landed sibling roster: walked, read by row B only, load-bearing, anchored in the bead export").toStrictEqual(
-      SIBLING_ROSTERS.map(({ file, bead }) => ({ file, bead, walked: true, readByA: false, readByB: true, loadBearing: true, sibling: true, sameProgram: true, verbatimFiling: true })),
+    expect(
+      siblings,
+      "each landed sibling roster: walked, read by rows A and B, quiet under the field scope, every skipped leaf load-bearing and anchored by its mirror class, every class refusing a plant, anchored in the bead export",
+    ).toStrictEqual(
+      SIBLING_ROSTERS.map(({ file, bead, census: sibling, verbatim }, index) => ({
+        file,
+        bead,
+        census: sibling,
+        walked: true,
+        readByA: true,
+        readByB: true,
+        quiet: true,
+        leaves: verbatim.map(({ pointer, mirror }) => ({ pointer, mirror, resolved: true, loadBearing: true, anchored: true })),
+        crossMeasured: siblings[index]?.crossMeasured ?? [],
+        controls: { filing: false, producerPlacement: false, producerMeasured: false, row: false, loadBearing: false },
+        sibling: true,
+        sameProgram: true,
+        verbatimFiling: true,
+      })),
     );
     return { siblings };
   },
@@ -1756,13 +1954,40 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const claim = "Pi reads D-STORE-2 as the gp store contract.";
     const reply = { schema: "graphpolicy.cli.v1", ok: true, result: { store_state: "missing" } };
     const twin = "test/fixtures/gp-twin-roster.json";
-    const files: Record<string, string> = Object.fromEntries(SIBLING_FILES.map((file, index) => [file, JSON.stringify(index === 0 ? { note: claim, reply } : { note: claim })]));
-    files[twin] = JSON.stringify({ note: claim });
-    const tree = treeCensus("gp-fca-sibling-", files);
-    const reading = { a: tree.a, b: tree.b };
-    expect(reading, "row A skips exactly the sibling rosters; row B still reads them").toStrictEqual({
-      a: [`${twin}:1 N2: lacks-status+sha`],
-      b: [`${SIBLING_FILES[0] ?? ""}#/reply/result/store_state K6: state store_state="missing"`],
+    const [first, second] = SIBLING_ROSTERS;
+    if (first === undefined || second === undefined) throw new Error("R22 reads two landed siblings");
+    const skipped = (entry: SiblingRoster): string[] => entry.verbatim.map(leaf => leaf.pointer);
+    // The claim inside every skipped leaf is quiet; the same claim in any other field (the L2-01 plant) is judged; row B reads
+    // the sibling rosters whole.
+    const scoped = treeCensus("gp-fca-sibling-", {
+      [first.file]: JSON.stringify(plantAt(skipped(first), claim, { reply })),
+      [second.file]: JSON.stringify(plantAt(skipped(second), claim, { note: claim })),
+      [twin]: JSON.stringify({ note: claim }),
+    });
+    // The scope is leaf-exact, each edge in a tree of its own: a new line whose pointer extends a skipped pointer is judged, and
+    // so is a skipped leaf whose key, or a key above it, is spelled twice (the claim in the copy JSON.parse keeps, a plain value
+    // in the other).
+    const duplicated = second.verbatim[0]?.pointer.slice(1) ?? "";
+    const rest = JSON.stringify(plantAt(skipped(second).filter(pointer => pointer !== `/${duplicated}`), claim, { [duplicated]: "a verbatim mirror" }));
+    const above = JSON.stringify(plantAt(skipped(first), claim));
+    const edges = {
+      extends: treeCensus("gp-fca-sibling-extends-", { [first.file]: JSON.stringify(plantAt([...skipped(first), "/producer/lines/02-contract-audit.md:300"], claim)) }),
+      duplicated: treeCensus("gp-fca-sibling-duplicated-", { [second.file]: `${rest.slice(0, -1)},${JSON.stringify(duplicated)}:${JSON.stringify(claim)}}` }),
+      above: treeCensus("gp-fca-sibling-above-", { [first.file]: `{"producer":{"repo":"a plain value"},${above.slice(1)}` }),
+    };
+    const reading = {
+      scoped: { a: scoped.a, b: scoped.b },
+      edges: Object.fromEntries(Object.entries(edges).map(([edge, tree]) => [edge, { a: tree.a, b: tree.b }])),
+      duplicated,
+    };
+    expect(reading, "row A skips exactly the enumerated leaves of the sibling rosters, leaf by leaf; row B still reads them whole").toStrictEqual({
+      scoped: { a: [`${second.file}:1 N2: lacks-status+sha`, `${twin}:1 N2: lacks-status+sha`], b: [`${first.file}#/reply/result/store_state K6: state store_state="missing"`] },
+      edges: {
+        extends: { a: [`${first.file}:1 N2: lacks-status+sha`], b: [] },
+        duplicated: { a: [`${second.file}:1 N2: lacks-status+sha`], b: [] },
+        above: { a: [`${first.file}:1 N2: lacks-status+sha`], b: [] },
+      },
+      duplicated: "statement",
     });
     return reading;
   },

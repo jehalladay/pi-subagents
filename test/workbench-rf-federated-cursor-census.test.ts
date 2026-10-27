@@ -76,16 +76,19 @@
  *    h or the dirty flag) on the seeded states at accepted cursor MIS_ECHO_AT only, and the instrument counts exactly those
  *    states for each field; a render it cannot parse (each NAIVE_RENDERS member) fails every state.
  *  C2 "a grep guard pins no minted 'latest'/'current' (0 federation hits in Pi src)": every src directory is walked at its floor
- *    (FLOORS, two below the direct-file counts at e8850da, 35/11/49/2/4/14, never under 1), the anchor (observation.ts, the
- *    refresh mint) is read and the mint matcher catches its "current"; no src file is federation-scoped (a file is scoped when its
- *    path or its text carries a FEDERATION_WORDS run) and none mints; the same scanner reports a planted set's two federation
- *    mints (one scoped by its path alone, one by its text alone, in a comment) and holds an unscoped mint out. The walk's own
- *    positive controls (wb-zg8m F1): WALK_PLANT is written under a makeScratch root and read back through the same walk
- *    (srcFilesOf, filesBelow), which returns every planted regular file - a non-.ts file, a .ts file one level below the
- *    deepest FLOORS directory and a non-.ts file three levels deeper than it included - and the scanner reports their three
- *    federation mints and holds the unscoped one out; the floors compare (floorReadings) reads a list holding each FLOORS
- *    directory's floor exactly as every directory at its floor, and that list one direct file short in each directory in turn
- *    as exactly that directory below its floor.
+ *    (FLOORS, two below the direct-file counts at e8850da, 35/11/49/2/4/14, never under 1), and the walk C2 reads (srcFiles) is
+ *    held at the call site to an independent enumeration of src (enumeratedSrcOf: Node's recursive listing, each entry lstat-ed,
+ *    the regular files kept; wb-rmd7 F1/F2): the same paths, none missing and none extra; the anchor (observation.ts, the refresh
+ *    mint) is read and the mint matcher catches its "current"; no src file is federation-scoped (a file is scoped when its path or
+ *    its text carries a FEDERATION_WORDS run) and none mints; the same scanner reports a planted set's two federation mints (one
+ *    scoped by its path alone, one by its text alone, in a comment) and holds an unscoped mint out. The walk's own positive
+ *    controls (wb-zg8m F1, widened by wb-rmd7 F1): WALK_PLANT is written under a makeScratch root and read back through the same
+ *    walk (srcFilesOf, filesBelow) and through the independent enumeration, each of which returns every planted regular file - a
+ *    non-.ts file, a .ts file one level below the deepest FLOORS directory, a non-.ts file three levels deeper than it, a
+ *    dot-named file, a file in a dot-named directory, an extensionless file and a .mjs file included - and the scanner reports
+ *    their seven federation mints and holds the unscoped one out; the floors compare (floorReadings) reads a list holding each
+ *    FLOORS directory's floor exactly as every directory at its floor, and that list one direct file short in each directory in
+ *    turn as exactly that directory below its floor.
  *  M, the matchers C2 reads: MS1-MS4 one pin per FEDERATION_WORDS member, MM1-MM2 one per MINT_WORDS member; each spelling is
  *    caught by its own member only, and each mint pin pins its misses (currently, concurrent, currency and two non-words).
  *  R, the named residuals of C2, each a pinned quiet row: R1 R-VOCABULARY (a mint in a file whose path and text spell no scope
@@ -104,7 +107,11 @@
  * NOT CLAIMED: an edit of the tracked bead export itself (it is machine-written at each ledger hop; a coordinated edit of this
  * file and the roster that removes one R pin together with its RESIDUALS entry reds through the export's RESIDUALS line); a
  * positive control removed or bypassed together with the instrument it controls (WALK_PLANT and the floors list beside
- * filesBelow and floorReadings, MIS_ECHOES beside echoFailuresOf: each control lives in this file).
+ * filesBelow and floorReadings, the independent enumeration beside srcFiles, MIS_ECHOES beside echoFailuresOf: each control
+ * lives in this file); a walk narrowing that keeps every WALK_PLANT shape reads a src tree holding no other shape exactly as the
+ * intact walk does (at base 6e0c3d2: 116 regular files, all .ts, no dot-named entry, no extensionless file, no symlink), and reds
+ * through the enumeration once src holds a file of a shape it drops; a symbolic link to a file is read by neither the walk nor the
+ * enumeration (on Node 24 the enumeration lists the files below a linked directory, which then red C2 as missing from the walk).
  * SCOPE: the guard does not judge negation or context: a federation-scoped file spelling a mint word anywhere reds, a comment
  * stating the prohibition included. The excerpts are producer facts at 6a251bf73af5; Pi vendors no rf source, so a producer-side
  * change is seen only when an rf pin-bump re-reads them. The live legs are A1's rf reader, A2, B1, B2 and C1 (Pi's real
@@ -113,12 +120,16 @@
  * FOLLOW-UP wb-zg8m (R694 from landing 272; gate of record cmd_0ccc268a98b6 composing machine gate cmd_be9ca893214a): F1 the
  * walk and floors positive controls in C2, F2 the echo instrument's per-field control in C1, F3 the residual list's outside
  * anchor in the judged set; the ROWS shape is unchanged.
+ * FOLLOW-UP wb-rmd7 (R694 from landing 366, wb-zg8m; gate of record cmd_8f32da52fe24): F1 the walk held at the C2 call site to
+ * an independent enumeration of src, which the walk plant also controls, and WALK_PLANT widened by a dot-named file, a file in a
+ * dot-named directory, an extensionless file and a .mjs file; F2 the srcFiles() caller, now read against that enumeration at
+ * the same call site; the ROWS shape is unchanged.
  *
  * Display paths added: none. Test-only: nothing is spawned; C2 writes WALK_PLANT under one makeScratch root (leak guard
  * installed) and removes it in the same case; src, the bead export and this roster are only read.
  */
 import { createHash } from "node:crypto";
-import { type Dirent, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { type Dirent, lstatSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterAll, describe, expect, it } from "vitest";
@@ -829,6 +840,14 @@ function textOf(path: string): string {
 /** The walk C2 reads: every regular file below <root>/src, each path relative to the root, with its text. */
 const srcFilesOf = (root: string): SourceFile[] => filesBelow(join(root, "src")).map(file => ({ path: relative(root, file), text: textOf(file) }));
 const srcFiles = (): SourceFile[] => srcFilesOf(REPO);
+/** C2's independent enumeration of <root>/src (wb-rmd7 F1/F2): Node's own recursive listing, every entry lstat-ed and the regular
+ * files kept, each path relative to the root, sorted. It shares no code with filesBelow, srcFilesOf or srcFiles, so a narrowed walk,
+ * or a filter on the reading C2 takes from srcFiles, that drops a real src file reds at the C2 call site. */
+const enumeratedSrcOf = (root: string): string[] =>
+  readdirSync(join(root, "src"), { encoding: "utf8", recursive: true })
+    .map(entry => join("src", entry))
+    .filter(path => lstatSync(join(root, path)).isFile())
+    .sort();
 /** Sorted by path, plain code-point compare. */
 const byPath = (files: readonly SourceFile[]): SourceFile[] => [...files].sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
 /** Each FLOORS directory's reading over a file list: `<directory>:<its direct files reach its floor>`. */
@@ -837,17 +856,24 @@ const floorReadings = (files: readonly SourceFile[]): string[] =>
 /** The floors compare's positive control (wb-zg8m F1): a list holding exactly each FLOORS directory's floor of direct files. */
 const atFloors = (): SourceFile[] =>
   Object.entries(FLOORS).flatMap(([directory, floor]) => Array.from({ length: floor }, (_, at): SourceFile => ({ path: `${directory}/floor-${at}.ts`, text: "" })));
-/** The walk's positive control (wb-zg8m F1), written under a scratch root and read back through srcFilesOf: an unscoped mint at
- * the src root, a federation mint in a non-.ts file, one in a .ts file a level below the deepest FLOORS directory, and one in a
- * non-.ts file three levels deeper than that directory. */
+/** The walk's positive control (wb-zg8m F1, widened by wb-rmd7 F1), written under a scratch root and read back through srcFilesOf
+ * and enumeratedSrcOf: an unscoped mint at the src root, a federation mint in a non-.ts file, one in a .ts file a level below the
+ * deepest FLOORS directory, one in a non-.ts file three levels deeper than that directory, and one each in a dot-named file, a file
+ * in a dot-named directory, an extensionless file and a .mjs file (the shapes the wb-zg8m gate's W-DOTSKIP, W-NOEXT and
+ * W-ALLOWLIST narrowings drop). */
 const WALK_PLANT: readonly SourceFile[] = [
   { path: "src/plain.ts", text: 'export const freshness = "current";\n' },
   { path: "src/workbench/federation-notes.md", text: "The peer view is current.\n" },
   { path: "src/workbench/hosts/federation/peer.ts", text: 'export const label = "current";\n' },
   { path: "src/workflow/peers/archive/2026/q4/watermark-log.json", text: '{ "label": "latest" }\n' },
+  { path: "src/workbench/.federation-cache.json", text: '{ "label": "current" }\n' },
+  { path: "src/.peers/watermark.ts", text: 'export const label = "latest";\n' },
+  { path: "src/workbench/FEDERATION-NOTES", text: "The peer view is latest.\n" },
+  { path: "src/workbench/federation-peer.mjs", text: 'export const label = "current";\n' },
 ];
-/** Writes a plant under a fresh makeScratch root, reads the root back through srcFilesOf (sorted by path) and removes it. */
-function walkPlanted(plant: readonly SourceFile[]): SourceFile[] {
+/** Writes a plant under a fresh makeScratch root, reads the root back through srcFilesOf (sorted by path) and through
+ * enumeratedSrcOf, and removes it. */
+function walkPlanted(plant: readonly SourceFile[]): { walked: SourceFile[]; enumerated: string[] } {
   const root = makeScratch("rf-federated-cursor-walk-");
   try {
     for (const file of plant) {
@@ -855,7 +881,7 @@ function walkPlanted(plant: readonly SourceFile[]): SourceFile[] {
       mkdirSync(dirname(target), { recursive: true });
       writeFileSync(target, file.text);
     }
-    return byPath(srcFilesOf(root));
+    return { walked: byPath(srcFilesOf(root)), enumerated: enumeratedSrcOf(root) };
   } finally {
     removeScratch(root);
   }
@@ -1229,6 +1255,10 @@ const IMPL: Readonly<Record<string, () => Json>> = {
   C2: () => {
     const files = srcFiles();
     const directories = floorReadings(files);
+    const walkedPaths = byPath(files).map(file => file.path);
+    const enumerated = enumeratedSrcOf(REPO);
+    const enumeration = { missing: enumerated.filter(path => !walkedPaths.includes(path)), extra: walkedPaths.filter(path => !enumerated.includes(path)) };
+    expect(walkedPaths, "the walk C2 reads differs from an independent enumeration of src: a narrowed walk or a filtered reading").toStrictEqual(enumerated);
     const anchor = files.find(file => file.path === ANCHOR);
     const anchorRead = anchor?.text.includes(ANCHOR_TOKEN) === true;
     const anchorMinted = anchor === undefined ? false : mintsOf(anchor.text).includes("current");
@@ -1245,12 +1275,31 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       scoped: ["src/workbench/federation-import.ts", "src/workbench/peer-watermark.ts"],
       hits: ["src/workbench/federation-import.ts: latest", "src/workbench/peer-watermark.ts: current"],
     });
-    const walked = walkPlanted(WALK_PLANT);
-    expect(walked, "the walk missed a planted regular file: a non-.ts file or one below the deepest FLOORS directory").toStrictEqual(byPath(WALK_PLANT));
+    const { walked, enumerated: plantEnumerated } = walkPlanted(WALK_PLANT);
+    expect(walked, "the walk missed a planted regular file: a non-.ts, dot-named or extensionless file, or one below the deepest FLOORS directory").toStrictEqual(
+      byPath(WALK_PLANT),
+    );
+    expect(plantEnumerated, "the independent enumeration missed a planted regular file").toStrictEqual(byPath(WALK_PLANT).map(file => file.path));
     const walkScan = scanFiles(walked);
     expect(walkScan, "the guard missed a walked federation mint or scoped the walked unscoped one").toStrictEqual({
-      scoped: ["src/workbench/federation-notes.md", "src/workbench/hosts/federation/peer.ts", "src/workflow/peers/archive/2026/q4/watermark-log.json"],
-      hits: ["src/workbench/federation-notes.md: current", "src/workbench/hosts/federation/peer.ts: current", "src/workflow/peers/archive/2026/q4/watermark-log.json: latest"],
+      scoped: [
+        "src/.peers/watermark.ts",
+        "src/workbench/.federation-cache.json",
+        "src/workbench/FEDERATION-NOTES",
+        "src/workbench/federation-notes.md",
+        "src/workbench/federation-peer.mjs",
+        "src/workbench/hosts/federation/peer.ts",
+        "src/workflow/peers/archive/2026/q4/watermark-log.json",
+      ],
+      hits: [
+        "src/.peers/watermark.ts: latest",
+        "src/workbench/.federation-cache.json: current",
+        "src/workbench/FEDERATION-NOTES: latest",
+        "src/workbench/federation-notes.md: current",
+        "src/workbench/federation-peer.mjs: current",
+        "src/workbench/hosts/federation/peer.ts: current",
+        "src/workflow/peers/archive/2026/q4/watermark-log.json: latest",
+      ],
     });
     const full = atFloors();
     const atFloor = floorReadings(full);
@@ -1260,7 +1309,16 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     });
     expect(atFloor, "a directory holding exactly its floor read below it").toStrictEqual(Object.keys(FLOORS).map(directory => `${directory}:true`));
     expect(oneShort, "a directory one direct file short of its floor read at it, or another directory moved").toStrictEqual(Object.keys(FLOORS).map(directory => [`${directory}:false`]));
-    return { directories, anchorRead, anchorMinted, real, planted, walk: { files: walked.map(file => file.path), scan: walkScan }, floorControl: { atFloor, oneShort } };
+    return {
+      directories,
+      enumeration,
+      anchorRead,
+      anchorMinted,
+      real,
+      planted,
+      walk: { files: walked.map(file => file.path), enumerated: plantEnumerated, scan: walkScan },
+      floorControl: { atFloor, oneShort },
+    };
   },
   ...Object.fromEntries(
     FEDERATION_WORDS.map((run, member) => [
