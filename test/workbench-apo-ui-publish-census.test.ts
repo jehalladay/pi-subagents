@@ -8,15 +8,17 @@
  * Acceptance (the export notes, verbatim): "UI-affordance census plus a falsifier that no APO view handler reaches any
  * publish/promotion path."
  *
- * MEASURED (read-only, by the cutting seat, 2026-10-27, at trunk df1ce2a): git lists 116 files under src/, all TypeScript. The
+ * MEASURED (read-only, by the cutting seat, 2026-10-27, at trunk 6c9d3b3): git lists 116 files under src/, all TypeScript. The
  * extension entry (package.json pi.extensions, ./src/index.ts) reaches 103 of them at run time; the 13 outside its closure
  * include src/workbench/patch-proposal.ts, the operator-only promotion record (recordPromotionDecision: "The workbench never
  * applies a promotion itself"), which no src module imports by any edge. No src text names the program. Nine modules hold UI
  * affordances (rows A and R); the view surface adds the three display modules of src/ui/. src calls the host UI through two
  * handle names: ui (ctx.ui, this.ui, ui) and uiCtx (src/ui/agent-widget.ts stores the handle it is handed by setUICtx(ctx)
- * and calls the display members setStatus and setWidget on it). src spells no name with a unicode escape (0 of its 86,983
- * identifiers and private names), so reading names by nameOf moves no live row. The judge, the edges, the affordance
- * readers and every finding are defined in test/helpers/apo-ui-publish-census.ts, beside the tables.
+ * and calls the display members setStatus and setWidget on it). src spells no name with a unicode escape (0 of its 87,013
+ * identifiers and private names) and none whose TypeScript node.text collapses to pi, so reading names by nameOf moves no
+ * live row. The judge, the edges, the affordance readers and every finding are defined in
+ * test/helpers/apo-ui-publish-census.ts, beside the tables; its header's ESCAPES PINNED paragraph names, in closed form,
+ * every escape shape the census claims.
  *
  * ROWS (rows L, R and G tile the statement in order and rows A and F tile the acceptance, each label a verbatim segment held
  * to the export row by the outside-anchor case; each pin's what names the forms it falsifies - one per pin, or one file,
@@ -34,13 +36,16 @@
  * command and shortcut form (A-readers); every handleInput kind, name form and assignment form beyond them
  * (A-handler-kinds); every handle form and every receiver and callee wrapper (A-handle-forms); the src/ui/agent-widget.ts
  * stored-handle shape (A-stored-alias); every name an affordance reader matches, spelled in the scanner shape
- * (A-escaped-names); and the classification's planted entries (A-unclassified). F: planted APO view handlers reaching a
+ * (A-escaped-names); the pi receiver read by its nameOf name where TypeScript's node.text collapses another name to pi
+ * (A-pi-collapse); and the classification's planted entries (A-unclassified). F: planted APO view handlers reaching a
  * path through every edge kind and form (a template specifier, a wrapped require one store per wrapper, an escaped require
  * callee); the title's vocabulary words, in a literal only or in a name only (a declaration only, a reference only); the
  * folded (parenthesized too), template head, middle and tail, no-substitution template, regular-expression, private-name,
- * letter-digit, acronym, ignorable, mark and width readings; the escaped-name reading, one plant per escape form
- * (four-digit, braced, the scanner shape after each form, a private name), and every escape shape held to the runtime
- * (F-escapes-runtime); a string literal, a no-substitution template and a template part each read with its escape decoded;
+ * letter-digit, acronym, ignorable, mark and width readings; the escaped-name reading, one plant per escape shape
+ * (four-digit, braced, the scanner shape after each form, a private name, a braced escape padded to seven and to twelve
+ * hex digits, an astral code point), and the escape shapes held to the runtime (F-escapes-runtime, F-escapes-runtime-padded
+ * and F-escapes-runtime-astral: exactly the shapes the helper header's ESCAPES PINNED paragraph lists); a string literal,
+ * a no-substitution template and a template part each read with its escape decoded;
  * the ROLE readings, the abbreviation and the slug, each in a literal only and in a name only; the fail-closed computed
  * and missing imports, the unparseable module and the missing entry, the resolution forms (as written, a bare path, a
  * directory) and the package specifiers - each named; the reading pins (every member of the PUBLISH, PROMOTE and OBJECT
@@ -57,10 +62,11 @@
  * reader's four SourceImport kinds, each routed by an F plant; the src AST - the affordance set (the files of rows A and R),
  * each inventory (row A), the view surface (G1), the PATH set (L2), every member src calls on a host UI handle and every pi
  * surface src calls on pi (classified, R0) and src's handle names (R0); the live residuals below; this header's RESIDUALS
- * line, parsed and held to the residual families; and the runtime's own decoding of every escape shape (F-escapes-runtime:
- * every spelling compiled in a fresh node:vm context, one per batch). Anchored in this file and the roster only: the
- * inflections the word lists add beyond the title's words, the import-equals edge kind, the other F plants, the named escape
- * shapes of F-escapes-runtime (spellingsOf generates the exhaustive spellings, and the runtime anchors what each reads), the
+ * line, parsed and held to the residual families; and the runtime's own decoding of the escape shapes the escape pins hold
+ * (F-escapes-runtime, F-escapes-runtime-padded and F-escapes-runtime-astral: every spelling compiled in a fresh node:vm
+ * context, one per batch). Anchored in this file and the roster only: the inflections the word lists add beyond the title's
+ * words, the import-equals edge kind, the other F plants, the A plants (A-readers through A-pi-collapse), the named escape
+ * shapes of the escape pins (spellingsOf generates the exhaustive spellings, and the runtime anchors what each reads), the
  * classified members src does not call, and the residual quiet rows' contents.
  * LIVE IN SRC (each shown from the src AST by the outside-anchor case): R-UNNAMED-PATH (the entry closure writes files under
  * no PATH name), R-PACKAGE (the judged closures import packages, none followed), R-HELPER-KEY (a src key reads computed),
@@ -68,16 +74,18 @@
  * a createRequire result), R-HOST-ALIAS (src/ui/agent-widget.ts holds the handle as its setUICtx parameter ctx, a name
  * without the word ui, and stores it in uiCtx) and R-PI-ALIAS (the entry closure holds pi as a property: { pi } in
  * src/agent-manager.ts and src/index.ts, this.pi in src/schedule.ts). Not measured live: R-COMPUTED-TEXT, R-LOOKALIKE,
- * R-HANDLER-FORM.
+ * R-HANDLER-FORM, R-HANDLER-SETTER, R-FOLD-WRAPPED, R-REGEX-ESCAPE.
  * NOT CLAIMED: the internals of a package (a package specifier is judged by its own words only); effects the vocabulary does
  * not name (R-UNNAMED-PATH); modules loaded at run time by a path or URL value, or through a require no reader names
  * (R-RUNTIME-LOAD); host UI calls through a receiver not named with the word ui or of a member reached indirectly
  * (R-HOST-ALIAS) and pi surfaces through any receiver but the bare identifier pi (R-PI-ALIAS); a handleInput defined
- * through a call or an export alias (R-HANDLER-FORM); a word disguised outside the readings (a look-alike letter:
- * R-LOOKALIKE; a word broken by a digit or punctuation, or run into the next in one case: F-lists-near; an escape inside a
- * regular expression, which is read by its source); callbacks the host passes in and any code outside src/.
+ * through a call or an export alias (R-HANDLER-FORM) or as a setter (R-HANDLER-SETTER); a word disguised outside the
+ * readings (a look-alike letter: R-LOOKALIKE; a word broken by a digit or punctuation, or run into the next in one case:
+ * F-lists-near; an escape inside a regular expression, which is read by its source: R-REGEX-ESCAPE; a + chain operand
+ * behind a type assertion: R-FOLD-WRAPPED); an escape shape the helper header's ESCAPES PINNED paragraph does not list;
+ * the write-call count's escaped spellings (a live statistic); callbacks the host passes in and any code outside src/.
  * RESIDUALS (named, each with its pinned quiet row in row Q): R-COMPUTED-TEXT, R-LOOKALIKE, R-UNNAMED-PATH, R-PACKAGE,
- * R-HELPER-KEY, R-RUNTIME-LOAD, R-HOST-ALIAS, R-PI-ALIAS, R-HANDLER-FORM.
+ * R-HELPER-KEY, R-RUNTIME-LOAD, R-HOST-ALIAS, R-PI-ALIAS, R-HANDLER-FORM, R-HANDLER-SETTER, R-FOLD-WRAPPED, R-REGEX-ESCAPE.
  *
  * Display paths added: none. Test-only: no src change.
  */
@@ -357,7 +365,9 @@ function runtimeNames(spellings: readonly string[], privateName: boolean): strin
 function checkEscape(pin: EscapePin): void {
   const named = Object.entries(pin.escapes);
   const every = spellingsOf(pin.reads);
-  expect(every.length, "spellingsOf spells every letter three ways").toBe(3 ** [...pin.reads].length);
+  expect(every.length, "spellingsOf spells every letter three ways, a letter above U+FFFF two (plain or braced)").toBe(
+    [...pin.reads].reduce((count, letter) => count * ((letter.codePointAt(0) ?? 0) > 0xffff ? 2 : 3), 1),
+  );
   for (const privateName of [false, true]) {
     const name = privateName ? `#${pin.reads}` : pin.reads;
     const kind = privateName ? "private names" : "identifiers";
@@ -451,7 +461,7 @@ describe("APO UI publish census (wb-021.4, MW-ADAPTIVE-POLICY-ORGANIZATIONS-R5)"
   });
 
   it("rule 16: every judged row and the residual families are frozen at their measured shape", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["L:3", "R:13", "G:3", "A:15", "F:64", "Q:9"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["L:3", "R:13", "G:3", "A:16", "F:69", "Q:12"]);
     expect(Object.entries(RESIDUAL_FAMILIES).map(([family, members]) => `${family}:${members.join(",")}`)).toEqual([
       "R-COMPUTED-TEXT:Q R-COMPUTED-TEXT",
       "R-LOOKALIKE:Q R-LOOKALIKE",
@@ -462,6 +472,9 @@ describe("APO UI publish census (wb-021.4, MW-ADAPTIVE-POLICY-ORGANIZATIONS-R5)"
       "R-HOST-ALIAS:Q R-HOST-ALIAS",
       "R-PI-ALIAS:Q R-PI-ALIAS",
       "R-HANDLER-FORM:Q R-HANDLER-FORM",
+      "R-HANDLER-SETTER:Q R-HANDLER-SETTER",
+      "R-FOLD-WRAPPED:Q R-FOLD-WRAPPED",
+      "R-REGEX-ESCAPE:Q R-REGEX-ESCAPE",
     ]);
   });
 

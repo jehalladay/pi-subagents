@@ -158,6 +158,10 @@
         {
           "id": "A-escaped-names",
           "digest": "02c152d06d9965998fcbc4b187c2675a3208540dce0bfcfde4faa134f1df32b1"
+        },
+        {
+          "id": "A-pi-collapse",
+          "digest": "7dff7dcb535d42236d35426ca159e65686a3fb647c8bb9a8e8fb59b446f9c53b"
         }
       ]
     },
@@ -302,8 +306,28 @@
           "digest": "c73459143fb2322f06dd670ded81f3bd396cf634579825c5cd0aef5770cd5fa0"
         },
         {
+          "id": "F-escaped-padded",
+          "digest": "3976da925150e0e01573a3942e5b6264233cceacc92d06a658ce578c96e64e6e"
+        },
+        {
+          "id": "F-escaped-padded-long",
+          "digest": "18003009df9b3e2428e5c8a7f4cf3f40b8ae25cb2b6c244f63067dc4be672954"
+        },
+        {
+          "id": "F-escaped-astral",
+          "digest": "b9c9018d6826b63ad6e881c2e8821d9a40b1dd438e0659048ff34af13f5c23b9"
+        },
+        {
           "id": "F-escapes-runtime",
           "digest": "c5f3fde46b3ed79325977daed738eb1d8b7312c245fd4762802113a556b4c7be"
+        },
+        {
+          "id": "F-escapes-runtime-padded",
+          "digest": "af526f36999818b92cc222d6c32d2cb4d4cbc299f827aec57b0c35aef60a34dd"
+        },
+        {
+          "id": "F-escapes-runtime-astral",
+          "digest": "bfaf6d52494a0623ded93d627d0e25f9de2b0a9ff22e13c54d731e4e762e1199"
         },
         {
           "id": "F-digit-split",
@@ -462,6 +486,18 @@
         {
           "id": "R-HANDLER-FORM",
           "digest": "74a38622dd7e69d90562012872747b86316881cb23f58fcf001feffa399f1aa8"
+        },
+        {
+          "id": "R-HANDLER-SETTER",
+          "digest": "01e0ef0bafa1c86b62215c61f4ae51c5626a002fc21fef9ab42ee2195c18f66c"
+        },
+        {
+          "id": "R-FOLD-WRAPPED",
+          "digest": "a4564fc040868d88630927e402a5c4d0a59206402b4e7b53e92f9f46dfeec5fd"
+        },
+        {
+          "id": "R-REGEX-ESCAPE",
+          "digest": "bf899580299eacea82727b5b36f9cc2148ad9c593cecd9950cad939fa8c7ce8a"
         }
       ]
     }
@@ -501,6 +537,7 @@
     "A A-handle-forms",
     "A A-stored-alias",
     "A A-escaped-names",
+    "A A-pi-collapse",
     "F F-static",
     "F F-reexport-star",
     "F F-reexport-named",
@@ -535,7 +572,12 @@
     "F F-escaped-scanner",
     "F F-escaped-scanner-braced",
     "F F-escaped-private",
+    "F F-escaped-padded",
+    "F F-escaped-padded-long",
+    "F F-escaped-astral",
     "F F-escapes-runtime",
+    "F F-escapes-runtime-padded",
+    "F F-escapes-runtime-astral",
     "F F-digit-split",
     "F F-acronym-split",
     "F F-private-name",
@@ -574,6 +616,9 @@
     "Q R-HOST-ALIAS",
     "Q R-PI-ALIAS",
     "Q R-HANDLER-FORM",
+    "Q R-HANDLER-SETTER",
+    "Q R-FOLD-WRAPPED",
+    "Q R-REGEX-ESCAPE",
     "outside anchors: the export row, the title's vocabulary, the package.json entry, the shared reader's edge kinds and the live affordance set",
     "rule 16: every judged row and the residual families are frozen at their measured shape",
     "roster: the judged rows, the registered tests and the residual families equal test/fixtures/apo-ui-publish-roster.json, in order and both ways"
@@ -605,6 +650,15 @@
     ],
     "R-HANDLER-FORM": [
       "Q R-HANDLER-FORM"
+    ],
+    "R-HANDLER-SETTER": [
+      "Q R-HANDLER-SETTER"
+    ],
+    "R-FOLD-WRAPPED": [
+      "Q R-FOLD-WRAPPED"
+    ],
+    "R-REGEX-ESCAPE": [
+      "Q R-REGEX-ESCAPE"
     ]
   }
 }

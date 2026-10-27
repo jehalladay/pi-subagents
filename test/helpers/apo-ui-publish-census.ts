@@ -16,17 +16,44 @@
  * the program's abbreviation as a word, or its slug's three words in order. A CLICK text holds a CLICK_WORDS word (a
  * pointer input; R0 pins that src holds none). Each of the three readings reads a module's names and its literals alike.
  * NAMES: a module's names are every identifier and every private name, a declaration's and a reference's alike. Every name
- * the judge matches - a name text, a declaration's name, a member, a receiver, a callee, Key and its member - is read by
- * nameOf: the name's source text with every unicode escape decoded (the four-digit form and the braced form, at any
- * position and in any number), which is the name the runtime reads; F-escapes-runtime holds nameOf to the runtime's own
- * decoding for every escape shape, in an identifier and in a private name. No reader matches a name by TypeScript's
- * node.text (the require leg reads it only to know whether the shared reader, which does, has read the call): TypeScript
- * 6.0.3 drops the plain characters between an escape and a later braced escape (the scanner shape: promote spelled with
- * an escaped p, then romot, then a braced escaped e, reads pe).
+ * the judge matches - a name text, a declaration's name, a member, a receiver (a host UI handle, pi), a callee (matchesKey,
+ * require, a write call), Key and its member - is read by nameOf: the name's source text with its unicode escapes decoded
+ * (the four-digit form and the braced form; a code point above U+FFFF read as one character), the name the runtime reads,
+ * for exactly the escape shapes ESCAPES PINNED lists below. No judge reader in this module matches a name by TypeScript's
+ * node.text or ts.idText; the require leg reads node.text only to know whether the shared reader (test/helpers/census.ts),
+ * which matches require by node.text, has read the call. Two readers outside the judge read names by node.text, each over
+ * a fixed source: the census test's outside-anchor readers residualShapes (live src, which spells no name with an escape -
+ * MEASURED) and sharedReaderKinds (test/helpers/census.ts). The write-call count (writes) is a live statistic the
+ * R-UNNAMED-PATH anchor reads on live src, not a finding or an inventory: its callee read is the one matchesKey's plant
+ * holds, and no plant holds an escaped write call's count. TypeScript 6.0.3's node.text drops the plain characters between
+ * an escape and a later braced escape (the scanner shape: promote spelled with an escaped p, then romot, then a braced
+ * escaped e, reads pe), so a name the runtime reads as pXi or plugini can read pi by node.text.
+ * ESCAPES PINNED, in closed form (the escape claim is exactly these rows; any other escape shape is outside it):
+ * F-escapes-runtime holds nameOf to the runtime (the spellings compiled in a fresh node:vm context), as an identifier and
+ * as a private name, for every spelling of promote with each letter plain, a four-digit escape (zero-padded to four
+ * digits) or a braced escape (its shortest hex), 3 ** 7 = 2187 spellings, and for its 20 named shapes: leading-4digit,
+ * leading-braced, trailing-4digit, trailing-braced, middle-4digit, middle-braced, adjacent-4digit, adjacent-braced,
+ * adjacent-4digit-braced, adjacent-braced-4digit, every-4digit, every-braced, later-4digit-after-4digit,
+ * later-4digit-after-braced, scanner-after-4digit, scanner-after-braced, scanner-twice, braced-padded (four hex digits),
+ * upper-hex-4digit and upper-hex-braced. F-escapes-runtime-padded does the same for a braced escape padded past four hex
+ * digits: braced-padded-6, braced-padded-7, braced-padded-12, trailing-braced-padded-7 and trailing-braced-padded-12.
+ * F-escapes-runtime-astral does the same for a name led by U+1D4C5 (MATHEMATICAL SCRIPT SMALL P): every spelling with that
+ * letter plain or braced (no four-digit escape spells a code point above U+FFFF in a name) and each other letter in the
+ * three spellings, 2 * 3 ** 6 = 1458 spellings, and for its named shapes astral-braced, astral-braced-padded-6 and
+ * astral-braced-padded-8. The PATH reading of an escaped name is held, one plant per listed shape and each its trigger's
+ * only spelling, by F-escaped-4digit, F-escaped-braced, F-escaped-scanner, F-escaped-scanner-braced, F-escaped-private,
+ * F-escaped-padded (seven hex digits, leading), F-escaped-padded-long (twelve, after plain characters) and
+ * F-escaped-astral (U+1D4C5, read as p once NFKD-folded). Every judge site that reads a name is held to nameOf by a plant
+ * TypeScript's node.text misreads: the texts reader by F-escaped-scanner, F-escaped-scanner-braced and F-escaped-private;
+ * a declaration's name, the shorthand and variable handler tests, memberOf (an assigned member, a host UI member, a pi
+ * register member), receiverName (a receiver named with the word ui), the callee (matchesKey), Key and its member by
+ * A-escaped-names (the scanner shape at each); the require test by F-require-escaped; and the pi receiver by A-pi-collapse
+ * (a receiver whose node.text collapses to pi while its runtime name is pXi or plugini registers no pi surface).
  * LITERALS: a module's literals are every string literal and every no-substitution template by its value, every template
  * part (its head, each middle and its tail) by its text - each with its escapes decoded by TypeScript - every
- * regular-expression literal by its source, and every chain of "+" whose operands are all string literals, parenthesized
- * or not, by its folded value. Comments are never read.
+ * regular-expression literal by its source (its escapes not decoded: R-REGEX-ESCAPE), and every chain of "+" whose
+ * operands are all string literals, parenthesized or not, by its folded value (an operand behind a type assertion is not
+ * one: R-FOLD-WRAPPED). Comments are never read.
  * EDGES: the shared reader's imports (test/helpers/census.ts sourceStructure: static, export-from, dynamic, require, each
  * with its typeOnly flag) plus what this module reads itself: an import-equals declaration (import x = require("y")), a
  * dynamic import or require whose specifier is not a string-like literal (computed, unresolvable by construction), and a
@@ -41,16 +68,17 @@
  * name; the key as a string literal or a no-substitution template, as Key.<member>, else <computed>), its handleInput
  * implementations (a method, a function declaration, an object property, a class field or a getter, each named by an
  * identifier, a string literal or a computed string literal; a shorthand property; a variable declared by that name; an
- * assignment to a member by =, ??=, ||= or &&=), its interactive host UI calls (<handle>.<member>(...) with a member in
- * UI_MEMBERS.interaction) and its extension interactions (registerCommand and registerShortcut by their first argument -
- * a string-like literal, else <computed> - and on("input")); a member reached by an element access with a string literal
- * reads as its property access.
+ * assignment to a member by =, ??=, ||= or &&=; a setter is not one: R-HANDLER-SETTER), its interactive host UI calls
+ * (<handle>.<member>(...) with a member in UI_MEMBERS.interaction) and its extension interactions (registerCommand and
+ * registerShortcut by their first argument - a string-like literal, else <computed> - and on("input")); a member reached
+ * by an element access with a string literal reads as its property access.
  * A HOST UI HANDLE is a receiver whose name holds the word ui: an identifier (ui, hostUi), a property (ctx.ui, this.ui,
  * this.uiCtx - the src/ui/agent-widget.ts stored handle) or an element access by a string literal; the receiver and
  * every call's callee are read through parentheses, non-null assertions and type assertions (as, satisfies, <T>). A
  * receiver named with the word ui that is not the host's handle reads as one too (fail-closed: an unknown member reds
  * as UNCLASSIFIED); any other receiver (an alias named otherwise, a call result, a container element) and a member
- * reached indirectly (.call, .bind) is R-HOST-ALIAS. A pi surface is a register* or on call on the bare identifier pi;
+ * reached indirectly (.call, .bind) is R-HOST-ALIAS. A pi surface is a register* or on call on the bare identifier pi, by
+ * its nameOf name (a receiver whose node.text collapses to pi while its runtime name differs is not pi: A-pi-collapse);
  * any other receiver (an alias, this.pi, options.pi, pi behind a wrapper) is R-PI-ALIAS. A module with any affordance is
  * an AFFORDANCE module; the VIEW SURFACE is the affordance modules plus every module under src/ui/.
  * FINDINGS (fail-closed, each a line): REACH (an affordance module whose runtime closure holds a PATH module - itself
@@ -528,10 +556,15 @@ const BACKSLASH = String.fromCodePoint(0x5c);
 const u4 = (hex: string): string => `${BACKSLASH}u${hex}`;
 const ub = (hex: string): string => `${BACKSLASH}u{${hex}}`;
 const hexOf = (letter: string): string => (letter.codePointAt(0) ?? 0).toString(16);
-/** Every spelling of a word with each letter plain, a four-digit escape or a braced escape: 3 ** length spellings, every escape shape. */
+/** One letter's spellings in a name: plain, a four-digit escape (up to U+FFFF: no four-digit escape spells an astral letter in a name) and a braced escape. */
+const letterSpellings = (letter: string): string[] => {
+  const hex = hexOf(letter);
+  return hex.length <= 4 ? [letter, u4(hex.padStart(4, "0")), ub(hex)] : [letter, ub(hex)];
+};
+/** Every spelling of a word with each letter plain, a four-digit escape or a braced escape (an astral letter plain or braced): 3 ** length spellings for a word of letters up to U+FFFF, every escape shape. */
 export function spellingsOf(word: string): string[] {
   let spellings = [""];
-  for (const letter of word) spellings = spellings.flatMap(prefix => [prefix + letter, prefix + u4(hexOf(letter).padStart(4, "0")), prefix + ub(hexOf(letter))]);
+  for (const letter of word) spellings = spellings.flatMap(prefix => letterSpellings(letter).map(spelling => prefix + spelling));
   return spellings;
 }
 /** Names in the scanner shape (an escape, plain characters, a later braced escape), which TypeScript's node.text misreads. */
@@ -543,6 +576,14 @@ const KEY_ESC = `${u4("004b")}e${ub("79")}`;
 const TAB_ESC = `${u4("0074")}a${ub("62")}`;
 const REQUIRE_ESC = `${u4("0072")}equir${ub("65")}`;
 const REGISTER_PROVIDER_ESC = `r${u4("0065")}gisterProvid${ub("65")}r`;
+/** Receivers TypeScript's node.text collapses to pi (the scanner shape), while the runtime and nameOf read pXi and plugini. */
+const PI_COLLAPSE = `${u4("0070")}X${ub("69")}`;
+const PI_COLLAPSE2 = `${ub("70")}lugin${ub("69")}`;
+/** A planted extension module calling `call` on its parameter `receiver`. */
+const piExt = (receiver: string, call: string): string =>
+  `export function setup(${receiver}: { registerWidget(): void; on(event: string, fn: () => void): void }): void {\n  ${receiver}.${call};\n}\n`;
+/** MATHEMATICAL SCRIPT SMALL P (U+1D4C5), a letter above U+FFFF that NFKD folds to p. */
+const SCRIPT_P = String.fromCodePoint(0x1d4c5);
 /** The shared reader's reading of the F-unreadable store: TypeScript's own parse diagnostic at the first error. */
 const UNREADABLE_STORE = `UNREADABLE ${S}: the file does not parse: Expression expected. at line 1:21`;
 
@@ -846,6 +887,19 @@ export const ROWS: readonly Row[] = [
           { file: "src/ui/esc-variable.ts", keys: [], handlers: 1, host: {}, extension: [] },
         ],
       },
+      {
+        id: "A-pi-collapse",
+        what: "the pi receiver is read by its nameOf name, never by TypeScript's node.text: two receivers whose node.text collapses to pi while the runtime reads pXi and plugini - an escape, plain characters, a later braced escape, each its only spelling - register no pi surface, by register* (src/ext-collapse.ts, src/ext-collapse2.ts) or by on (src/ext-collapse-on.ts); the controls beside them: the bare pi's unclassified member reds (src/ext-pi.ts), a plain pXi stays quiet (src/ext-pxi.ts) and a receiver spelled Pi, another name to the runtime, stays quiet (src/ext-pi-case.ts)",
+        files: {
+          "src/ext-collapse.ts": piExt(PI_COLLAPSE, "registerWidget()"),
+          "src/ext-collapse2.ts": piExt(PI_COLLAPSE2, "registerWidget()"),
+          "src/ext-collapse-on.ts": piExt(PI_COLLAPSE, 'on("agent_end", () => {})'),
+          "src/ext-pi.ts": piExt("pi", "registerWidget()"),
+          "src/ext-pxi.ts": piExt("pXi", "registerWidget()"),
+          "src/ext-pi-case.ts": piExt("Pi", "registerWidget()"),
+        },
+        findings: ["UNCLASSIFIED src/ext-pi.ts pi.registerWidget"],
+      },
     ],
   },
   {
@@ -1110,6 +1164,24 @@ export const ROWS: readonly Row[] = [
         findings: [PLAIN("promote:promote")],
       },
       {
+        id: "F-escaped-padded",
+        what: "a name spelled with a braced unicode escape padded to seven hex digits, past six - a leading escape, its only spelling in the plant - is read by its unescaped text",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store(`export const run = (): string => "x";\nexport const ${ub("0000070")}romoteSlot = 1;`) },
+        findings: [PLAIN("promote:promote")],
+      },
+      {
+        id: "F-escaped-padded-long",
+        what: "a name spelled with a braced unicode escape padded to twelve hex digits, after plain characters (its only spelling in the plant), is read by its unescaped text",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store(`export const run = (): string => "x";\nexport const promot${ub("000000000065")}Slot = 1;`) },
+        findings: [PLAIN("promote:promote")],
+      },
+      {
+        id: "F-escaped-astral",
+        what: "a name whose braced unicode escape names U+1D4C5 - MATHEMATICAL SCRIPT SMALL P, a code point above U+FFFF that NFKD folds to p, its only spelling in the plant - is read by its unescaped text, one character",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store(`export const run = (): string => "x";\nexport const ${ub("1d4c5")}romoteSlot = 1;`) },
+        findings: [PLAIN("promote:promote")],
+      },
+      {
         id: "F-escapes-runtime",
         what: "nameOf reads every escape shape as the runtime does (the spellings compiled in a new node:vm context), as an identifier and as a private name: every spelling of promote with each letter plain, a four-digit escape or a braced escape (3 ** 7 = 2187 spellings, so every leading, trailing, middle, adjacent, mixed and scanner shape), and the named shapes - a leading, a trailing and a middle escape of each form; two adjacent escapes of each form and of both forms in each order; every letter escaped in each form; an escape then plain characters then a later four-digit escape, after each form; the scanner shape (an escape, plain characters, a later braced escape) after each form and twice in one name; a braced escape padded with zeros; upper-case hex in each form",
         reads: "promote",
@@ -1134,6 +1206,28 @@ export const ROWS: readonly Row[] = [
           "braced-padded": `${ub("0070")}romote`,
           "upper-hex-4digit": `pro${u4("006D")}ote`,
           "upper-hex-braced": `pro${ub("6D")}ote`,
+        },
+      },
+      {
+        id: "F-escapes-runtime-padded",
+        what: "nameOf reads a braced escape padded past four hex digits as the runtime does (the spellings compiled in a new node:vm context), as an identifier and as a private name: promote with its p braced and padded to six, to seven and to twelve hex digits (a leading escape) and with its e braced and padded to seven and to twelve (a trailing escape), beside every spelling of promote (spellingsOf)",
+        reads: "promote",
+        escapes: {
+          "braced-padded-6": `${ub("000070")}romote`,
+          "braced-padded-7": `${ub("0000070")}romote`,
+          "braced-padded-12": `${ub("000000000070")}romote`,
+          "trailing-braced-padded-7": `promot${ub("0000065")}`,
+          "trailing-braced-padded-12": `promot${ub("000000000065")}`,
+        },
+      },
+      {
+        id: "F-escapes-runtime-astral",
+        what: "nameOf reads the braced escape of U+1D4C5, a code point above U+FFFF, as one character, as the runtime does (the spellings compiled in a new node:vm context), as an identifier and as a private name: every spelling of a name led by U+1D4C5 with that letter plain or braced (no four-digit escape spells it in a name) and each other letter plain, a four-digit escape or a braced escape (2 * 3 ** 6 = 1458 spellings), and the named shapes - the astral letter braced, and padded to six and to eight hex digits",
+        reads: `${SCRIPT_P}romote`,
+        escapes: {
+          "astral-braced": `${ub("1d4c5")}romote`,
+          "astral-braced-padded-6": `${ub("01d4c5")}romote`,
+          "astral-braced-padded-8": `${ub("0001d4c5")}romote`,
         },
       },
       {
@@ -1449,6 +1543,28 @@ export const ROWS: readonly Row[] = [
         },
         findings: [],
         inventory: [],
+      },
+      {
+        id: "R-HANDLER-SETTER",
+        what: "a setter named handleInput (set handleInput(fn): it is assigned, never called with input) is not read as a handler",
+        files: { "src/ui/setter.ts": "export class Box {\n  set handleInput(fn: (data: string) => string) {\n    void fn;\n  }\n}\n" },
+        findings: [],
+        inventory: [],
+      },
+      {
+        id: "R-FOLD-WRAPPED",
+        what: "a + chain whose operand sits behind a type assertion (as, satisfies) is not folded, so its parts are read alone and read no PATH text",
+        files: {
+          [V]: view(['import { also, run } from "../ops/store.js";'], "run() + also()"),
+          [S]: store('export const run = (): string => ("pub" as string) + "lish manifest";\nexport const also = (): string => ("pro" satisfies string) + "mote";'),
+        },
+        findings: [],
+      },
+      {
+        id: "R-REGEX-ESCAPE",
+        what: "a PATH word spelled with an escape inside a regular-expression literal (a hex escape, a unicode escape) is read by the literal's source, its escape not decoded, so it reads no PATH text",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store(`export const run = (): string => /pro${BACKSLASH}x6dote/.source + /publish ${BACKSLASH}u006danifest/u.source;`) },
+        findings: [],
       },
     ],
   },
