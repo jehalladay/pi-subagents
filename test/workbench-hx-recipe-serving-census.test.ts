@@ -99,6 +99,29 @@
  *  F6, walk liveness: a served line planted past the end of every population page reads served there (N1
  *    pageFloorMisses: the gate's W-FORGE-NONE-P), beside the longest page's farFloor.
  *
+ * FOLLOW-UP, wb-t1jc (the R694 carry of the wb-ts6.1 landing-574 PASS-WITH-FINDING, gate cmd_1d17b59d455f: F1 leads,
+ * F2-F5 ride; each is cured or pinned where named, and no landed row, pin, plant, control or literal is removed):
+ *  F1, G1's README read (the U2 family): a copy of the roots table the page hides by an attribute is not read. Beyond
+ *    the hidden stretches the read hides the content of an element carrying the hidden attribute, of a dialog without
+ *    its open attribute and of a details element without its open attribute, save its first summary child
+ *    (attributeStretches; a void element, VOID_ELEMENTS, hides nothing), so the gate's G1-DETAILS-COPY and
+ *    G1-HIDDEN-ATTR-COPY read the visible table and red G1 (G1 readmeControls detailsCopy, hiddenAttributeCopy and
+ *    dialogCopy; the controls: an open details element's table is read, its attribute named in any case, a label in a
+ *    closed details element's summary is counted, a summary nested below the details hides with its body, a hidden
+ *    void element hides nothing past its tag, nor does a hidden tag inside a template's inert contents, and a nested
+ *    element of the hidden element's name is counted). A copy the page hides by styling, by scripting or as an
+ *    element's fallback is still read there, a member of R-HTML-RENDERING (Q12's README copies: a style attribute's
+ *    display:none, noscript content and an audio element's content).
+ *  F2-F4, pinned plants in R-HTML-RENDERING (Q12): a datalist or an rp whose stretch a later end tag of its name closes
+ *    past the paragraph end where the page's parser ends it (the gate's H2-DATALIST-LATER-CLOSE and H2-RP-LATER-CLOSE),
+ *    the end-tag text inside a script a template holds (H2-TEMPLATE-SCRIPT-ENDTAG) and a template carrying a
+ *    shadowrootmode attribute, which the page renders as its host's shadow root (H3-SHADOWROOT-P12), each read none,
+ *    and each with its hiding construct taken out reads served (Q12's paired controls).
+ *  F3-F5, claim precision: the hiddenStretches and HIDDEN_ELEMENTS doc comments state the parser fidelity as measured
+ *    (a template that holds a raw-text element, a declarative shadow root, a stretch a later end tag closes) and the
+ *    direction the read of content a page may not show takes for each row (the stricter one for rows N and E, the
+ *    lenient one for G1's README read, which therefore hides the attribute-decided members as well).
+ *
  * THE RENDERED VIEW: a Markdown page of the population (a file whose extension, in any case, is one of
  * MARKDOWN_EXTENSIONS) is read in the rendered view, line by line, by the rules below: this census's own reading of the
  * page's Markdown and HTML, held to marked's own HTML by the hold check, never a browser's drawing of the page.
@@ -138,7 +161,10 @@
  *    finds the default target inside a planted ~/.skills root); README's table is read in its rendered view, the
  *    "Discovery roots" label shown exactly once there and the first table after it that shows text read cell by cell in
  *    the view (readmeControls: a commented copy ahead of a visible table is not read, a label shown twice is counted
- *    twice, and a table inside a template element is not read, the visible table after it is); G2 through the real
+ *    twice, a table inside a template element is not read, the visible table after it is, and the same holds for a
+ *    table inside an element the page hides by an attribute, a closed details element (its summary shown), an element
+ *    carrying the hidden attribute or a dialog without its open attribute, while one inside an open details element is
+ *    read: attributeStretches, wb-t1jc F1); G2 through the real
  *    preloadSkills under a scratch HOME a stand-in hyper-unix skill planted at all ten targets still reads the
  *    not-found placeholder, while the same stand-in planted at each of the five roots in turn is found (the positive
  *    control); G3 the Claude host hands the SDK settingSources [] when none is configured (an injected query records
@@ -230,9 +256,17 @@
  *    element (without controls it renders nothing, with them a box), a dialog without its open attribute (which the
  *    page hides, so the words around it fuse), noscript content (which the page hides when scripting is enabled), a
  *    hidden element left open whose stretch runs to the page's end where the parser ends it sooner (a datalist ended by
- *    its paragraph's end, so the page shows the next paragraph) and the tags inside an element the parser reads as raw
- *    text the page shows (an xmp, which shows a tag's text) each read none, while the same skill sentence written
- *    plainly reads served; Q13 R-OTHER-MARKUP a page whose extension is not a Markdown one is read raw, so another
+ *    its paragraph's end, so the page shows the next paragraph), or one whose stretch a later end tag of its name
+ *    closes past that paragraph end (a datalist or an rp, wb-t1jc F2), the tags inside an element the parser reads as
+ *    raw text the page shows (an xmp, which shows a tag's text), the end-tag text inside a script a template holds
+ *    (script text on the page, so its template runs on, while the stretch ends at it: wb-t1jc F3) and a template
+ *    carrying a shadowrootmode attribute (its host's shadow root, which the page renders: wb-t1jc F4) each read none,
+ *    while the same skill sentence written plainly reads served and each wb-t1jc member with its hiding construct taken
+ *    out reads served (the paired controls); and G1's README read, which hides by an attribute as well
+ *    (attributeStretches), reads a copy of the roots table the page hides by styling (a style attribute's
+ *    display:none), by scripting (noscript content) or as an element's fallback (an audio element's content) in place
+ *    of the visible table after it (the README copies, wb-t1jc F1); Q13 R-OTHER-MARKUP a page whose extension is not a
+ *    Markdown one is read raw, so another
  *    markup's syntax (reStructuredText strong, AsciiDoc strong, an HTML page's tags) and Markdown named .txt or with no
  *    extension are read as written and a command marked up in them reads none, while the same page with the plain
  *    command reads served; Q14 R-SHELL-SPELLING a binary the shell assembles from pieces (a quote inside the name,
@@ -249,10 +283,11 @@
  * each red it.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal. OUTSIDE ANCHORS: the out-of-file
  * roster test/fixtures/hx-recipe-serving-roster.json holds every row's id, label and pins, every pin's witness, the
- * residual names, the vocabularies (NAMED_REFERENCES, SEPARATOR_ELEMENTS, VOID_SEPARATORS, HIDDEN_ELEMENTS,
- * RAW_TEXT_ELEMENTS, TAG_ALIASES and the two extension lists among them), the ordered test titles, the hx capture and
- * the recipe extract, so a pin deleted, relabelled, swapped for another passing case or removed from every literal of
- * this file at once still reds against it; the tracked bead export (.beads/issues.jsonl) holds rows G, N and E's labels
+ * residual names, the vocabularies (NAMED_REFERENCES, SEPARATOR_ELEMENTS, VOID_SEPARATORS, VOID_ELEMENTS,
+ * HIDDEN_ELEMENTS, RAW_TEXT_ELEMENTS, TAG_ALIASES and the two extension lists among them), the ordered test titles,
+ * the hx capture and the recipe extract, so a pin deleted, relabelled, swapped for another passing case or removed
+ * from every literal of this file at once still reds against it; the tracked bead export (.beads/issues.jsonl) holds
+ * rows G, N and E's labels
  * (the wb-ts6.1 title and notes; read against this file's labels and again against the roster's), the W1-W8 range E1
  * holds the recipes to, and the wb-kqx.5 tables G1 holds the roots and targets to; G1-G3 and N1-N3 read src, README,
  * the docs and the loader at run time, and N1 holds the rendered view to marked's own HTML.
@@ -482,13 +517,25 @@ const SEPARATOR_ELEMENTS = [
 /** The separators that are void elements: the parser ignores their end tags, save br's, which it reads as a line break. */
 const VOID_SEPARATORS = ["br", "embed", "hr", "img", "input"];
 /**
+ * The void elements, as the HTML Standard's serialization lists them (the parser reads each as holding no content and
+ * ignores its end tag, save br's): an element of these names that carries the hidden attribute hides nothing past its own
+ * tag in G1's README read (attributeStretches, wb-t1jc F1).
+ */
+const VOID_ELEMENTS = ["area", "base", "basefont", "bgsound", "br", "col", "embed", "frame", "hr", "img", "input", "keygen", "link", "meta", "param", "source", "track", "wbr"];
+/**
  * The elements whose content the view hides, by name (U1 (a), cut #4): the content-holding members of the HTML Standard
- * rendering section 15.3.1's display:none list (datalist, noembed, noframes, rp, script, style, template, whose contents
- * are inert, and title; its void members area, base, basefont, link, meta and param hold no content, and the parser
- * ignores a head tag met in a body, so text between head tags is read) and iframe, whose raw-text content is never
- * rendered. Every other element's content is read as text, content a page may not show among it (the fallback content of
- * canvas, object, audio and video, noscript content when scripting is enabled, a closed details element's body): the
- * stricter direction.
+ * rendering section 15.3.1's display:none list (datalist, noembed, noframes, rp, script, style, template and title; its
+ * void members area, base, basefont, link, meta and param hold no content, and the parser ignores a head tag met in a
+ * body, so text between head tags is read) and iframe, whose raw-text content is never rendered. A template's contents
+ * are inert save a declarative shadow root's: a template carrying a shadowrootmode attribute becomes its host's shadow
+ * root, which the page renders, while the view hides it by name (R-HTML-RENDERING, wb-t1jc F4). Every other element's
+ * content is read as text, content a page may not show among it (the fallback content of canvas, object, audio and
+ * video, noscript content when scripting is enabled, the body of a details element without its open attribute, a
+ * dialog without its open attribute, an element carrying the hidden attribute). For rows N and E that is the stricter
+ * direction, a mention there read rather than hidden (a mention such content splits is R-HTML-RENDERING); for G1's
+ * README read it is the lenient one, a copy of the roots table kept there read in place of the visible table, so that
+ * read hides the attribute-decided members as well (attributeStretches, wb-t1jc F1) and reads the rest
+ * (R-HTML-RENDERING: Q12's README copies).
  */
 const HIDDEN_ELEMENTS = ["datalist", "iframe", "noembed", "noframes", "rp", "script", "style", "template", "title"];
 /** Of them, the elements the parser reads as raw text or RCDATA: no tag inside one is a tag, so the first end tag of its own name ends it. */
@@ -640,20 +687,26 @@ interface Frame {
 }
 /** What each page offset shows: its own character, a decoded reference's value (at the reference's first offset), a space, or nothing. */
 type Shown = string[];
-/** One tag met in raw HTML: its first and last offsets, the element it builds, whether it closes one and whether it separates. */
+/** One tag met in raw HTML: its first and last offsets, the element it builds, whether it closes one, whether it separates, and the attribute names a start tag carries. */
 interface TagMet {
   readonly from: number;
   readonly to: number;
   readonly name: string;
   readonly closing: boolean;
   readonly separator: boolean;
+  readonly attributes: readonly string[];
 }
 /** The tags each painted page met (paintPage registers a page's list; paintHtml appends to it). */
 const TAGS_MET = new WeakMap<Shown, TagMet[]>();
+/** One attribute of a tag matched by HTML_HIDDEN, after the tag's name: its name and its value, if any. */
+const ATTRIBUTE = /\s+([^\s"'>/=]+)(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+))?/g;
 function tagMet(hidden: string, from: number, to: number): TagMet | undefined {
   const tag = TAG_NAME.exec(hidden);
   if (tag === null) return undefined;
-  return { from, to, name: elementOf(tag[2] ?? ""), closing: tag[1] === "/", separator: separates(hidden) };
+  const closing = tag[1] === "/";
+  /** A start tag's attribute names, lower-cased in source order (the parser ignores an end tag's). */
+  const attributes = closing ? [] : [...hidden.slice(tag[0].length).matchAll(ATTRIBUTE)].map(match => (match[1] ?? "").toLowerCase());
+  return { from, to, name: elementOf(tag[2] ?? ""), closing, separator: separates(hidden), attributes };
 }
 interface Stretch {
   readonly from: number;
@@ -664,8 +717,12 @@ interface Stretch {
  * The stretches a page hides (U1 (a)), over its tags in offset order: from the start tag of a HIDDEN_ELEMENTS element
  * through its own end tag (a nested start tag of the same name counted, save in a raw-text or RCDATA element, where no tag
  * is a tag), or to the page's end when no end tag closes it. That is the parser's extent for the raw-text and RCDATA
- * elements and template; the parser can end an open datalist or rp sooner, at its parent's end (R-HTML-RENDERING). A
- * stretch keeps one space at its start when its element separates (iframe).
+ * elements, and for a template that holds none of them: the tags inside a template are read by their names alone, so an
+ * end tag's text inside a script (or another raw-text or RCDATA element) a template holds ends the stretch here, while
+ * the page reads it as that element's text and its template runs on (wb-t1jc F3). The parser can end an open datalist
+ * or rp sooner, at its paragraph's or its parent's end, so the page shows what a stretch hides past that end, whether a
+ * later end tag of its name closes the stretch (wb-t1jc F2) or none does. Both are R-HTML-RENDERING (Q12). A stretch
+ * keeps one space at its start when its element separates (iframe).
  */
 function hiddenStretches(tags: readonly TagMet[], end: number): Stretch[] {
   const stretches: Stretch[] = [];
@@ -692,6 +749,74 @@ function hideStretches(shown: Shown, stretches: readonly Stretch[]): void {
     for (let index = from; index <= to; index += 1) shown[index] = "";
     if (separator) shown[from] = " ";
   }
+}
+/** Whether a start tag's element is one the page hides by an attribute: it carries the hidden attribute, or it is a dialog or a details element without its open attribute. */
+function hidesByAttribute(tag: TagMet): boolean {
+  if (tag.closing || VOID_ELEMENTS.includes(tag.name)) return false;
+  if (tag.attributes.includes("hidden")) return true;
+  return (tag.name === "dialog" || tag.name === "details") && !tag.attributes.includes("open");
+}
+/** The index of the tag that closes the element whose start tag is tags[at] (a nested start tag of its name counted), or -1 when none does. */
+function closerOf(tags: readonly TagMet[], at: number): number {
+  const start = tags[at];
+  let depth = 1;
+  for (let index = at + 1; index < tags.length; index += 1) {
+    const tag = tags[index];
+    if (start === undefined || tag === undefined || tag.name !== start.name) continue;
+    depth += tag.closing ? -1 : 1;
+    if (depth === 0) return index;
+  }
+  return -1;
+}
+/**
+ * The first summary child of the details element whose start tag is tags[at], up to the tag at limit (its end tag, or the
+ * list's end): a summary start tag met while every non-void element opened inside the details is closed again, from its
+ * start tag through its own end tag, or to just before the details' end when none closes it inside.
+ */
+function summaryChildOf(tags: readonly TagMet[], at: number, limit: number, end: number): Stretch | undefined {
+  let depth = 0;
+  for (let index = at + 1; index < limit; index += 1) {
+    const tag = tags[index];
+    if (tag === undefined || VOID_ELEMENTS.includes(tag.name)) continue;
+    if (tag.closing) {
+      depth = Math.max(0, depth - 1);
+      continue;
+    }
+    if (depth === 0 && tag.name === "summary") {
+      const closer = closerOf(tags, index);
+      const to = closer >= 0 && closer < limit ? (tags[closer]?.to ?? end) : (tags[limit]?.from ?? end + 1) - 1;
+      return { from: tag.from, to, separator: tag.separator };
+    }
+    depth += 1;
+  }
+  return undefined;
+}
+/**
+ * The stretches G1's README read hides beyond the view's (wb-t1jc F1), over the page's tags outside the hidden stretches,
+ * in offset order: the content of an element the page hides by an attribute (hidesByAttribute: an element carrying the
+ * hidden attribute, a dialog without its open attribute, and a details element without its open attribute, save its
+ * first summary child, which the page shows), from its start tag through its own end tag (a nested start tag of its name
+ * counted), or to the page's end when no end tag closes it; a void element (VOID_ELEMENTS) holds no content and hides
+ * nothing. The extent is the tags' own, as the hidden stretches' is: the parser's tree context (an implied or misnested
+ * end tag) is R-HTML-RENDERING, and so is content the page hides by styling, by scripting or as an element's fallback,
+ * which this read still reads (Q12's README copies). A stretch keeps one space at its start when its element separates.
+ */
+function attributeStretches(tags: readonly TagMet[], end: number): Stretch[] {
+  const hidden = hiddenStretches(tags, end);
+  const outside = [...tags].filter(tag => !hidden.some(stretch => tag.from >= stretch.from && tag.from <= stretch.to)).sort((left, right) => left.from - right.from);
+  const stretches: Stretch[] = [];
+  outside.forEach((tag, at) => {
+    if (!hidesByAttribute(tag)) return;
+    const closer = closerOf(outside, at);
+    const to = closer < 0 ? end : (outside[closer]?.to ?? end);
+    const summary = tag.name === "details" && !tag.attributes.includes("hidden") ? summaryChildOf(outside, at, closer < 0 ? outside.length : closer, end) : undefined;
+    const parts = summary === undefined ? [{ from: tag.from, to }] : [
+      { from: tag.from, to: summary.from - 1 },
+      { from: summary.to + 1, to },
+    ];
+    for (const part of parts) if (part.from <= part.to) stretches.push({ ...part, separator: tag.separator });
+  });
+  return stretches;
 }
 const lineStartsOf = (text: string): number[] => {
   const starts = [0];
@@ -1330,13 +1455,16 @@ function loaderRootsOf(text: string): string[] {
 const ROOTS_LABEL = "Discovery roots";
 /**
  * README "Skill Preloading" discovery-roots table in the rendered view (U2: the uniqueness check and the extraction read the
- * same view, hidden stretches hidden): the view lines that open with the label, counted (a commented copy, or one inside a
- * hidden element, shows nothing; a label shown twice is counted twice), and the first table after the first of them that
- * shows text (a table inside a template element shows none), one root per row from its Path cell in the view (a row's
- * stated default wins over its variable form).
+ * same view, hidden stretches hidden, and the content the page hides by an attribute hidden as well: attributeStretches,
+ * wb-t1jc F1): the view lines that open with the label, counted (a commented copy, or one inside a hidden element or an
+ * element an attribute hides, shows nothing; a label shown twice is counted twice; a label in a closed details element's
+ * summary shows), and the first table after the first of them that shows text (a table inside a template element, a
+ * details element without its open attribute, a dialog without it or an element carrying the hidden attribute shows
+ * none), one root per row from its Path cell in the view (a row's stated default wins over its variable form).
  */
 function readmeRootsOf(text: string): { readonly labels: number; readonly roots: string[] } {
   const { shown, tokens } = paintPage(text);
+  hideStretches(shown, attributeStretches(TAGS_MET.get(shown) ?? [], text.length - 1));
   const starts = lineStartsOf(text);
   const lineEnd = (index: number): number => (index + 1 < starts.length ? (starts[index + 1] ?? text.length) - 1 : text.length);
   const labelLines = starts.flatMap((start, index) => (folded(shownBetween(shown, start, lineEnd(index))).startsWith(ROOTS_LABEL) ? [index] : []));
@@ -1825,8 +1953,21 @@ const RENDERING_CASES: readonly string[] = [
   "Agents can load hyper<dialog></dialog>-unix before a review.",
   "Agents can load hyper<noscript>x</noscript>-unix before a review.",
   "Agents can load hyper<audio>x</audio>-unix before a review.",
+  "See <datalist>x\n\nAgents can load hyper-unix before a review.\n\ny</datalist> done.",
+  "See <rp>x\n\nAgents can load hyper-unix before a review.\n\ny</rp> done.",
+  "Agents can load hyper<template>a<script>b</template>c</script>d</template>-unix before a review.",
+  '<div><template shadowrootmode="open">Agents can load hyper-unix before a review.</template></div>',
 ];
 const RENDERING_CONTROL = "Agents can load hyper-unix before a review.";
+/**
+ * Row Q12's paired controls (wb-t1jc F2-F4): the last four members with the construct that hides their sentence taken
+ * out (the datalist and the rp, the script inside the template, the template inside the div) each read served.
+ */
+const RENDERING_PAIRED_CONTROLS: readonly string[] = [
+  "See x\n\nAgents can load hyper-unix before a review.\n\ny done.",
+  "Agents can load hyper<template>a</template>-unix before a review.",
+  "<div>Agents can load hyper-unix before a review.</div>",
+];
 /** Row Q13: [page, text] read raw by its name: another markup's syntax, and Markdown named .txt or with no extension. */
 const OTHER_MARKUP_CASES: ReadonlyArray<readonly [string, string]> = [
   ["docs/guide.rst", "Run **hx** git diff $TRUNK $BRANCH to compare the branch with trunk.\n"],
@@ -1876,6 +2017,28 @@ const ROOTS_ROWS = ["| Project | `<cwd>/.pi/skills/` | Pi-standard |", "| User |
 const SIXTH_ROOT = "| User | `~/.skills/` | hx install default |";
 /** G1's template control (U2): the label once, the five-root table inside a template element (inert contents), then a visible table naming the sixth root. */
 const TEMPLATE_COPY = `**${ROOTS_LABEL}** (checked in this order, first match wins):\n\n<template>\n\n| Scope | Path | Source |\n|---|---|---|\n${ROOTS_ROWS.join("\n")}\n\n</template>\n\n| Scope | Path | Source |\n|---|---|---|\n${[SIXTH_ROOT, ...ROOTS_ROWS].join("\n")}\n`;
+/** G1's README copies (wb-t1jc): the label once, the two-row table between an opening and a closing tag, then a visible table naming the sixth root. */
+const wrappedCopy = (open: string, close: string): string =>
+  `**${ROOTS_LABEL}** (checked in this order, first match wins):\n\n${open}\n\n| Scope | Path | Source |\n|---|---|---|\n${ROOTS_ROWS.join("\n")}\n\n${close}\n\n| Scope | Path | Source |\n|---|---|---|\n${[SIXTH_ROOT, ...ROOTS_ROWS].join("\n")}\n`;
+/** G1's attribute controls (wb-t1jc F1): the copy inside an element the page hides by an attribute is not read; the visible table is. */
+const DETAILS_COPY = wrappedCopy("<details><summary>Roots</summary>", "</details>");
+const HIDDEN_ATTRIBUTE_COPY = wrappedCopy("<div hidden>", "</div>");
+const DIALOG_COPY = wrappedCopy("<dialog>", "</dialog>");
+/**
+ * Their controls: an open details element's body is read (the attribute's name in any case); a closed one's summary
+ * shows, the label in it counted, while its body does not; a summary nested below the details is no summary of it and
+ * hides with the body; a void element carrying the hidden attribute hides nothing past its own tag, and nor does a tag
+ * carrying it inside a template's inert contents; a nested element of the hidden element's name is counted, so the
+ * hidden element ends at its own end tag.
+ */
+const OPEN_DETAILS_COPY = wrappedCopy("<details OPEN><summary>Roots</summary>", "</details>");
+const SUMMARY_LABEL_COPY = `<details><summary>\n\n**${ROOTS_LABEL}** (checked in this order, first match wins):\n\n</summary>\n\n| Scope | Path | Source |\n|---|---|---|\n${ROOTS_ROWS.join("\n")}\n\n</details>\n\n| Scope | Path | Source |\n|---|---|---|\n${[SIXTH_ROOT, ...ROOTS_ROWS].join("\n")}\n`;
+const NESTED_SUMMARY_COPY = wrappedCopy("<details><div><summary>", "</summary></div></details>");
+const VOID_HIDDEN_COPY = `<img hidden alt="">\n\n${rootsTable(ROOTS_ROWS)}`;
+const TEMPLATE_HIDDEN_COPY = `<template><div hidden></template>\n\n${rootsTable(ROOTS_ROWS)}`;
+const NESTED_HIDDEN_COPY = wrappedCopy("<div hidden><div>x</div>", "</div>");
+/** Row Q12's README copies (wb-t1jc F1): the copy the page hides by styling, by scripting or as an element's fallback, which G1's read still reads in place of the visible table. */
+const README_RENDERING_COPIES: readonly string[] = [wrappedCopy('<div style="display:none">', "</div>"), wrappedCopy("<noscript>", "</noscript>"), wrappedCopy("<audio>", "</audio>")];
 /** G3's controls: a prose example the view renders (emphasis inside the key, the source spelled with a reference), and one a comment hides. */
 const RENDERED_EXAMPLE = 'Set "setting*Sources*": ["&#117;ser"] to load the user skills.';
 const HIDDEN_EXAMPLE = '<!-- "settingSources": ["user"] -->';
@@ -1900,6 +2063,15 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
         hiddenCopy: readmeRootsOf(`<!--\n${rootsTable(ROOTS_ROWS)}-->\n\n${rootsTable([SIXTH_ROOT, ...ROOTS_ROWS])}`),
         shownTwice: readmeRootsOf(`${rootsTable(ROOTS_ROWS)}\n${rootsTable(ROOTS_ROWS)}`).labels,
         templateCopy: readmeRootsOf(TEMPLATE_COPY),
+        detailsCopy: readmeRootsOf(DETAILS_COPY),
+        hiddenAttributeCopy: readmeRootsOf(HIDDEN_ATTRIBUTE_COPY),
+        dialogCopy: readmeRootsOf(DIALOG_COPY),
+        openDetailsCopy: readmeRootsOf(OPEN_DETAILS_COPY),
+        summaryLabelCopy: readmeRootsOf(SUMMARY_LABEL_COPY),
+        nestedSummaryCopy: readmeRootsOf(NESTED_SUMMARY_COPY),
+        voidHiddenCopy: readmeRootsOf(VOID_HIDDEN_COPY),
+        templateHiddenCopy: readmeRootsOf(TEMPLATE_HIDDEN_COPY),
+        nestedHiddenCopy: readmeRootsOf(NESTED_HIDDEN_COPY),
       };
       const filing = gateFiling();
       const targets = [...roster().installTargets];
@@ -1914,6 +2086,18 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
         labels: 1,
         roots: ["~/.skills", "<cwd>/.pi/skills", "~/.pi/agent/skills"],
       });
+      const visibleTable = { labels: 1, roots: ["~/.skills", "<cwd>/.pi/skills", "~/.pi/agent/skills"] };
+      const copiedTable = { labels: 1, roots: ["<cwd>/.pi/skills", "~/.pi/agent/skills"] };
+      expect(
+        [readmeControls.detailsCopy, readmeControls.hiddenAttributeCopy, readmeControls.dialogCopy],
+        "a table inside an element the page hides by an attribute (a closed details element, the hidden attribute, a dialog without open) is not read; the visible table is",
+      ).toEqual([visibleTable, visibleTable, visibleTable]);
+      expect(readmeControls.openDetailsCopy, "a table inside an open details element is read").toEqual(copiedTable);
+      expect(readmeControls.summaryLabelCopy, "a closed details element's summary shows, its label counted; its body does not").toEqual(visibleTable);
+      expect(readmeControls.nestedSummaryCopy, "a summary nested below the details is no summary of it and hides with the body").toEqual(visibleTable);
+      expect(readmeControls.voidHiddenCopy, "a void element carrying the hidden attribute hides nothing past its own tag").toEqual(copiedTable);
+      expect(readmeControls.templateHiddenCopy, "a tag carrying the hidden attribute inside a template's inert contents hides nothing on the page").toEqual(copiedTable);
+      expect(readmeControls.nestedHiddenCopy, "a nested element of its name is counted, so the hidden element ends at its own end tag").toEqual(visibleTable);
       expect(filing.piRoots).toEqual(roots);
       expect(targets).toEqual(filing.hxTargets);
       expect(inside).toEqual([]);
@@ -2229,9 +2413,15 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
   Q12: () => {
     const quiet = RENDERING_CASES.map(plantChanges);
     const control = plantChanges(RENDERING_CONTROL);
+    const paired = RENDERING_PAIRED_CONTROLS.map(plantChanges);
+    const readme = README_RENDERING_COPIES.map(copy => readmeRootsOf(copy).roots);
     expect(quiet).toEqual(RENDERING_CASES.map(() => []));
     expect(control).toEqual(["served@+1"]);
-    return { quiet, control };
+    expect(paired, "each later member with its hiding construct taken out reads served").toEqual([["served@+3"], ["served@+1"], ["served@+1"]]);
+    expect(readme, "G1's README read reads the copy the page hides by styling, by scripting or as an element's fallback").toEqual(
+      README_RENDERING_COPIES.map(() => ["<cwd>/.pi/skills", "~/.pi/agent/skills"]),
+    );
+    return { quiet, control, paired, readme };
   },
   Q13: () => {
     const quiet = OTHER_MARKUP_CASES.map(([path, text]) => {
@@ -2294,6 +2484,7 @@ describe("wb-ts6.1 hx recipe serving census (HXFS-PI-R5, until-then leg)", () =>
       otherDocumentExtensions: OTHER_DOCUMENT_EXTENSIONS,
       separatorElements: SEPARATOR_ELEMENTS,
       voidSeparators: VOID_SEPARATORS,
+      voidElements: VOID_ELEMENTS,
       hiddenElements: HIDDEN_ELEMENTS,
       rawTextElements: RAW_TEXT_ELEMENTS,
       tagAliases: TAG_ALIASES,
