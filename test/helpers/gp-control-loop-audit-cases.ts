@@ -95,6 +95,16 @@ export const ANNOTATED: ReadonlyArray<readonly [string, string, readonly (readon
   ["a comment on an object property", 'const tool = {\n  // gp-decision-point: DP-05\n  command: "gp",\n};', [["DP-05"]]],
   ["a comment inside the statement, before the literal", 'spawn(\n  // gp-decision-point: DP-06\n  "gp",\n  [],\n);', [["DP-06"]]],
   ["a comment above a statement nested in a block", 'run(() => {\n  // gp-decision-point: DP-07\n  spawn("gp", []);\n});', [["DP-07"]]],
+  // wb-rdv6 (wb-1xvp.3 cut #2 gate F5, the B06 over-refusal): a comment after a token the syntax tree keeps no node for
+  // (a comma, a parenthesis, the = of a declaration, a property's colon, a keyword) was never read, so the rule never saw it.
+  ["a comment after a comma on the literal's own line (gate B06)", 'spawn("gp", // gp-decision-point: DP-01\n  []);', [["DP-01"]]],
+  ["a block comment after a comma on the literal's own line", 'spawn("gp", /* gp-decision-point: DP-01 */ []);', [["DP-01"]]],
+  ["a comment after the call's opening parenthesis, on the line above the literal", 'spawn( // gp-decision-point: DP-06\n  "gp",\n  [],\n);', [["DP-06"]]],
+  ["a block comment between the opening parenthesis and the literal", 'spawn(/* gp-decision-point: DP-01 */ "gp", []);', [["DP-01"]]],
+  ["a comment after the = of a declaration", 'const bin = // gp-decision-point: DP-01\n  "gp";', [["DP-01"]]],
+  ["a comment after a property's colon", 'const tool = {\n  command: // gp-decision-point: DP-05\n    "gp",\n};', [["DP-05"]]],
+  ["a comment after else, above the branch that holds the literal", 'if (x) prepare();\nelse // gp-decision-point: DP-01\n  spawn("gp", []);', [["DP-01"]]],
+  ["a marker after // on a JSDoc tag line, credited once (a JSDoc block is read whole, never entered)", '/**\n * @type {string} // gp-decision-point: DP-01\n */\nconst bin = "gp";', [["DP-01"]]],
 ];
 
 export const UNANNOTATED: readonly Quiet[] = [
@@ -107,6 +117,11 @@ export const UNANNOTATED: readonly Quiet[] = [
   ["a marker inside a nested block, annotating another call (gate A01)", 'run(\n  () => {\n    // gp-decision-point: DP-01\n    prepare();\n  },\n  "gp",\n);'],
   ["a marker trailing a later statement on the literal's line (gate A02)", 'spawn("gp", []); next(); // gp-decision-point: DP-01'],
   ["a marker on the enclosing function (gate A03)", '// gp-decision-point: DP-01\nfunction pick() {\n  spawn("gp", []);\n}'],
+  // wb-rdv6: every comment is read now, and the rule still places each one; these stay unannotated by that rule.
+  ["a marker after a comma on a line after the literal's own line", 'spawn("gp",\n  [], // gp-decision-point: DP-01\n  opts,\n);'],
+  ["a marker after a nested block's opening brace on the literal's line", 'run("gp", () => { // gp-decision-point: DP-01\n  prepare();\n});'],
+  ["a marker trailing the enclosing function's opening line (gate A03, same-line form)", 'function pick() { // gp-decision-point: DP-01\n  spawn("gp", []);\n}'],
+  ["a marker trailing the opening brace of the object literal that holds the property", 'const tool = { // gp-decision-point: DP-05\n  command: "gp",\n};'],
 ];
 
 /**
@@ -118,6 +133,10 @@ export const MISATTRIBUTED: ReadonlyArray<readonly [string, string, readonly (re
   ["RES-13 a marker inside an expression-bodied arrow, annotating its body, is credited to a gp literal later in the same call (gate B01)", 'run(\n  () =>\n    // gp-decision-point: DP-01\n    prepare(),\n  "gp",\n);', [["DP-01"]]],
   ["RES-14 a marker inside a nested call's argument list is credited to a gp literal later in the outer call (gate B02)", 'run(\n  prepare(\n    // gp-decision-point: DP-01\n    x,\n  ),\n  "gp",\n);', [["DP-01"]]],
   ["RES-15 a marker on a ternary's first branch is credited to a gp literal in its second branch (gate B03)", 'const bin = cond\n  // gp-decision-point: DP-01\n  ? prepare()\n  : "gp";', [["DP-01"]]],
+  // wb-rdv6: the cure reads the comments after every token, so these members of the same family, never read before, are credited.
+  ["RES-16 a marker after a nested call's opening parenthesis is credited to a gp literal later in the outer call (wb-rdv6)", 'run(\n  prepare( // gp-decision-point: DP-01\n    x,\n  ),\n  "gp",\n);', [["DP-01"]]],
+  ["RES-17 a marker trailing a preceding argument's comma is credited to a gp literal later in the same call (wb-rdv6)", 'run(\n  prepare(), // gp-decision-point: DP-01\n  "gp",\n);', [["DP-01"]]],
+  ["RES-18 a marker after a nested arrow's parameter-list parenthesis is credited to a gp literal later in the outer call (wb-rdv6)", 'run(( // gp-decision-point: DP-01\n  a) => a, "gp");', [["DP-01"]]],
 ];
 
 // ---- the synthetic gp-wired module and its audit document ----

@@ -358,6 +358,109 @@
     {
       "id": "SHELL-BUILTIN-WRAPPER",
       "family": "a command run through a shell builtin or env option the census does not unwrap, such as eval, command, builtin or env -S"
+    },
+    {
+      "id": "MISREAD-COMMAND-WORD",
+      "family": "a launch whose command word the census misreads, so a bd write reads as another binary or as a read verb: a leading redirection such as >/dev/null or 2>/dev/null, the time, coproc or function keyword, a binary spelled BD.EXE or bd.bat, or a value-taking bd global flag whose value is a read verb, as in bd --actor doctor close",
+      "members": [
+        {
+          "name": "P06 a leading redirection",
+          "named": ">/dev/null",
+          "statement": "execSync(\">/dev/null bd close wb-example\");",
+          "reads": [
+            ">/dev/null bd close wb-example"
+          ],
+          "control": "execSync(\"bd close wb-example >/dev/null\");",
+          "controlWrites": [
+            "bd close wb-example >/dev/null"
+          ]
+        },
+        {
+          "name": "P07 a leading descriptor redirection",
+          "named": "2>/dev/null",
+          "statement": "execSync(\"2>/dev/null bd close wb-example\");",
+          "reads": [
+            "2>/dev/null bd close wb-example"
+          ],
+          "control": "execSync(\"bd close wb-example 2>/dev/null\");",
+          "controlWrites": [
+            "bd close wb-example 2>/dev/null"
+          ]
+        },
+        {
+          "name": "P05 the time keyword",
+          "named": "the time",
+          "statement": "execSync(\"time bd close wb-example\");",
+          "reads": [
+            "time bd close wb-example"
+          ],
+          "control": "execSync(\"bd close wb-example\");",
+          "controlWrites": [
+            "bd close wb-example"
+          ]
+        },
+        {
+          "name": "P32 the coproc keyword",
+          "named": "coproc",
+          "statement": "execSync(\"coproc bd close wb-example\");",
+          "reads": [
+            "coproc bd close wb-example"
+          ],
+          "control": "execSync(\"! bd close wb-example\");",
+          "controlWrites": [
+            "bd close wb-example"
+          ]
+        },
+        {
+          "name": "P08 the function keyword",
+          "named": "function keyword",
+          "statement": "execSync(\"function f { bd close wb-example; }; f\");",
+          "reads": [
+            "function f { bd close wb-example",
+            "f"
+          ],
+          "control": "execSync(\"f() { bd close wb-example; }; f\");",
+          "controlWrites": [
+            "bd close wb-example"
+          ]
+        },
+        {
+          "name": "P11 an upper-case .EXE spelling",
+          "named": "BD.EXE",
+          "statement": "spawnSync(\"BD.EXE\", [\"close\", \"wb-example\"]);",
+          "reads": [
+            "BD.EXE close wb-example"
+          ],
+          "control": "spawnSync(\"bd.exe\", [\"close\", \"wb-example\"]);",
+          "controlWrites": [
+            "bd close wb-example"
+          ]
+        },
+        {
+          "name": "P12 a .bat spelling",
+          "named": "bd.bat",
+          "statement": "spawnSync(\"bd.bat\", [\"close\", \"wb-example\"]);",
+          "reads": [
+            "bd.bat close wb-example"
+          ],
+          "control": "spawnSync(\"bd.cmd\", [\"close\", \"wb-example\"]);",
+          "controlWrites": [
+            "bd close wb-example"
+          ]
+        },
+        {
+          "name": "P17 a global flag value read as the verb",
+          "named": "bd --actor doctor close",
+          "statement": "spawnSync(\"bd\", [\"--actor\", \"doctor\", \"close\", \"wb-example\"]);",
+          "reads": [
+            "bd --actor doctor close wb-example"
+          ],
+          "control": "spawnSync(\"bd\", [\"--actor=doctor\", \"close\", \"wb-example\"]);",
+          "controlWrites": [
+            "bd --actor=doctor close wb-example"
+          ]
+        }
+      ]
     }
   ],
   "detectors": [
@@ -563,6 +666,8 @@
     "D: docs/03 names every residual this census pins quiet, family for family, in the rendered section",
     "D: the docs/03 ownership table names GraphPolicyCLI in exactly the pinned row, read from that section's own table, and the boundary section's definitions cite the bead, its source line and this census",
     "D: the docs/03 ownership table gives the GraphPolicyCLI concern exactly one row - no second row names any of its terms, so none re-assigns it (wb-1ho6 F3, gate LDG4)",
+    "D: the GraphPolicyCLI concern's terms are docs/03's own concern items - CONCERN_TERMS and the plants' terms equal the items read from the ownership row GraphPolicyCLI owns, and every item the cell lists names a census term, so a term dropped or added reds (wb-nh0t F1, gate M16)",
+    "D: every GraphPolicyCLI concern term is live - a second ownership row naming that term alone, planted in memory under the pinned row, is the row the concern check names beside it (wb-nh0t F1, gate D2/D3)",
     "F: a compliant gp integration judges clean - the rules admit a real-interface seam rather than banning gp",
     "F: a compliant gp integration through the GraphPolicyCLI package judges clean - a client that imports graph-policy-cli and never launches gp reaches gp through a real interface (GP-1/a1, wb-1ho6 F2 gate DMG38)",
     "F: comments are not code - every detector reads the same census with gp, train, shell and effect words added in comments",
@@ -614,6 +719,7 @@
     "Q: named residual QUOTED-SUBSTITUTION stays quiet (the pinned blind spot of a token census)",
     "Q: named residual COMPUTED-BD-FLAG stays quiet (the pinned blind spot of a token census)",
     "Q: named residual SHELL-BUILTIN-WRAPPER stays quiet (the pinned blind spot of a token census)",
+    "Q: named residual MISREAD-COMMAND-WORD stays quiet (the pinned blind spot of a token census)",
     "DT: detector specifiers is live on its probe (the exact census signature)",
     "DT: detector launchers is live on its probe (the exact census signature)",
     "DT: detector launcher-bindings is live on its probe (the exact census signature)",
@@ -652,6 +758,6 @@
     "DT: detector private-names is live on its probe (the exact census signature)",
     "DT: detector template-parts is live on its probe (the exact census signature)",
     "DT: detector type-only-launcher is live on its probe (the exact census signature)",
-    "L: each-liveness (rule 16, U5) - every case of this file is set to run, the case count is frozen, each case is registered as the out-of-file roster lists it, each it.each registers exactly its frozen keys, every registered case reached its last assertion, and this tally is the file's last case"
+    "L: each-liveness (rule 16, U5) - every case of this file is set to run, the case count is frozen, each case is registered as the out-of-file roster lists it, each it.each registers exactly its frozen keys, every registered case reached its last assertion, every class-level residual member the roster lists was read, and this tally is the file's last case"
   ]
 }

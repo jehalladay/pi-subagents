@@ -34,7 +34,11 @@
  * the binding's own lex renders the cell), shows no letter, number, punctuation or symbol (BLANK_FILLERS aside), so an
  * empty reference-style link or image is empty (wb-66f7: gate F1 K01-K04 and review P2 of wb-1xvp.3 cut #2).
  * A gp-decision-point comment inside a nested block, or trailing a later statement on the literal's line,
- * annotates that block or statement, not the call site (respin #1: finding F6).
+ * annotates that block or statement, not the call site (respin #1: finding F6). Every comment is read wherever it
+ * stands between tokens, so a marker after a comma, a parenthesis, the = of a declaration, a property's colon or a
+ * keyword is placed by the same rule (wb-rdv6: gate F5, the B06 over-refusal); one that trails code on the line above
+ * the statement - a previous statement, or the opening of the enclosing function, block or literal - annotates that
+ * code, never the statement below it (gate A03).
  * Residuals (named, each pinned by a quiet row in RESIDUALS): a gp binary named only at run time (configuration or
  * environment), a binary name built by concatenation, the caller of a local gp wrapper (the wrapper's own literal
  * is the call site), a gp name the shell assembles from quoted or escaped parts, and shell grammar outside the
@@ -42,7 +46,9 @@
  * closing parenthesis, an IFS expansion, a brace expansion, a PowerShell script block, the caret escape of cmd.exe, a
  * gp.bat shim) are not detected. Attribution residuals (named, each pinned by a row in MISATTRIBUTED that reads
  * today's credit; wb-66f7, gate B01-B03): a marker annotating another expression of the call site's statement (an
- * expression-bodied arrow's body, a nested call's argument, a ternary's first branch) is credited to the call site.
+ * expression-bodied arrow's body, a nested call's argument, a ternary's first branch) is credited to the call site;
+ * wb-rdv6 reads the comments after every token, which adds three members (a nested call's opening parenthesis, a preceding
+ * argument's comma, a nested arrow's parameter list).
  * Rule 16: the judged tables live in test/helpers/gp-control-loop-audit-cases.ts; the frozen-shape row pins every row's
  * table/id:pin count, and the out-of-file anchor test/fixtures/gp-control-loop-audit-roster.json (the hk9l/5jha roster
  * pattern) carries every judged row (table, id, label, the SHA-256 of each pin), the residual families and every
@@ -207,6 +213,14 @@ describe("each gp call site names its audited decision point (gp-decision-point 
   it.each(MISATTRIBUTED)("residual %s (named, not cured: today's credit is pinned)", (_name, text, expected) => {
     expect(pointsOf(text)).toEqual(expected);
   });
+
+  it("reads each module's own comments: the unannotated module read first lends none of its comments to the next (wb-rdv6)", () => {
+    const files = new Map([
+      ["src/a.ts", 'spawn("gp", []);'],
+      ["src/b.ts", '// gp-decision-point: DP-01\nspawn("gp", []);'],
+    ]);
+    expect(callSites(files).map((site) => `${site.file}:${site.decisionPoints.join(",")}`)).toEqual(["src/a.ts:", "src/b.ts:DP-01"]);
+  });
 });
 
 function judge(fixture: Fixture = {}): string[] {
@@ -291,9 +305,9 @@ describe("the audit contract's frozen shape (the document a gp-wiring cut must s
       ["CALL_SITES", CALL_SITES, 32],
       ["NOT_CALL_SITES", NOT_CALL_SITES, 9],
       ["RESIDUALS", RESIDUALS, 12],
-      ["ANNOTATED", ANNOTATED, 7],
-      ["UNANNOTATED", UNANNOTATED, 8],
-      ["MISATTRIBUTED", MISATTRIBUTED, 3],
+      ["ANNOTATED", ANNOTATED, 15],
+      ["UNANNOTATED", UNANNOTATED, 12],
+      ["MISATTRIBUTED", MISATTRIBUTED, 6],
       ["FALSIFIERS", FALSIFIERS, 55],
       ["STAGES", STAGES, 11],
     ];
@@ -308,9 +322,9 @@ describe("the audit contract's frozen shape (the document a gp-wiring cut must s
       "CALL_SITES/CALL_SITES-01:2", "CALL_SITES/CALL_SITES-02:2", "CALL_SITES/CALL_SITES-03:2", "CALL_SITES/CALL_SITES-04:2", "CALL_SITES/CALL_SITES-05:2", "CALL_SITES/CALL_SITES-06:2", "CALL_SITES/CALL_SITES-07:2", "CALL_SITES/CALL_SITES-08:2", "CALL_SITES/CALL_SITES-09:2", "CALL_SITES/CALL_SITES-10:2", "CALL_SITES/CALL_SITES-11:2", "CALL_SITES/CALL_SITES-12:2", "CALL_SITES/CALL_SITES-13:2", "CALL_SITES/CALL_SITES-14:2", "CALL_SITES/CALL_SITES-15:2", "CALL_SITES/CALL_SITES-16:2", "CALL_SITES/CALL_SITES-17:2", "CALL_SITES/CALL_SITES-18:3", "CALL_SITES/CALL_SITES-19:2", "CALL_SITES/CALL_SITES-20:2", "CALL_SITES/CALL_SITES-21:2", "CALL_SITES/CALL_SITES-22:2", "CALL_SITES/CALL_SITES-23:2", "CALL_SITES/CALL_SITES-24:2", "CALL_SITES/CALL_SITES-25:2", "CALL_SITES/CALL_SITES-26:2", "CALL_SITES/CALL_SITES-27:2", "CALL_SITES/CALL_SITES-28:9", "CALL_SITES/CALL_SITES-29:2", "CALL_SITES/CALL_SITES-30:2", "CALL_SITES/CALL_SITES-31:3", "CALL_SITES/CALL_SITES-32:3",
       "NOT_CALL_SITES/NOT_CALL_SITES-01:1", "NOT_CALL_SITES/NOT_CALL_SITES-02:1", "NOT_CALL_SITES/NOT_CALL_SITES-03:1", "NOT_CALL_SITES/NOT_CALL_SITES-04:1", "NOT_CALL_SITES/NOT_CALL_SITES-05:1", "NOT_CALL_SITES/NOT_CALL_SITES-06:1", "NOT_CALL_SITES/NOT_CALL_SITES-07:1", "NOT_CALL_SITES/NOT_CALL_SITES-08:1", "NOT_CALL_SITES/NOT_CALL_SITES-09:1",
       "RESIDUALS/RESIDUALS-01:1", "RESIDUALS/RESIDUALS-02:1", "RESIDUALS/RESIDUALS-03:1", "RESIDUALS/RESIDUALS-04:1", "RESIDUALS/RESIDUALS-05:1", "RESIDUALS/RESIDUALS-06:1", "RESIDUALS/RESIDUALS-07:1", "RESIDUALS/RESIDUALS-08:1", "RESIDUALS/RESIDUALS-09:1", "RESIDUALS/RESIDUALS-10:1", "RESIDUALS/RESIDUALS-11:1", "RESIDUALS/RESIDUALS-12:1",
-      "ANNOTATED/ANNOTATED-01:2", "ANNOTATED/ANNOTATED-02:2", "ANNOTATED/ANNOTATED-03:2", "ANNOTATED/ANNOTATED-04:2", "ANNOTATED/ANNOTATED-05:2", "ANNOTATED/ANNOTATED-06:2", "ANNOTATED/ANNOTATED-07:2",
-      "UNANNOTATED/UNANNOTATED-01:1", "UNANNOTATED/UNANNOTATED-02:1", "UNANNOTATED/UNANNOTATED-03:1", "UNANNOTATED/UNANNOTATED-04:1", "UNANNOTATED/UNANNOTATED-05:1", "UNANNOTATED/UNANNOTATED-06:1", "UNANNOTATED/UNANNOTATED-07:1", "UNANNOTATED/UNANNOTATED-08:1",
-      "MISATTRIBUTED/MISATTRIBUTED-01:2", "MISATTRIBUTED/MISATTRIBUTED-02:2", "MISATTRIBUTED/MISATTRIBUTED-03:2",
+      "ANNOTATED/ANNOTATED-01:2", "ANNOTATED/ANNOTATED-02:2", "ANNOTATED/ANNOTATED-03:2", "ANNOTATED/ANNOTATED-04:2", "ANNOTATED/ANNOTATED-05:2", "ANNOTATED/ANNOTATED-06:2", "ANNOTATED/ANNOTATED-07:2", "ANNOTATED/ANNOTATED-08:2", "ANNOTATED/ANNOTATED-09:2", "ANNOTATED/ANNOTATED-10:2", "ANNOTATED/ANNOTATED-11:2", "ANNOTATED/ANNOTATED-12:2", "ANNOTATED/ANNOTATED-13:2", "ANNOTATED/ANNOTATED-14:2", "ANNOTATED/ANNOTATED-15:2",
+      "UNANNOTATED/UNANNOTATED-01:1", "UNANNOTATED/UNANNOTATED-02:1", "UNANNOTATED/UNANNOTATED-03:1", "UNANNOTATED/UNANNOTATED-04:1", "UNANNOTATED/UNANNOTATED-05:1", "UNANNOTATED/UNANNOTATED-06:1", "UNANNOTATED/UNANNOTATED-07:1", "UNANNOTATED/UNANNOTATED-08:1", "UNANNOTATED/UNANNOTATED-09:1", "UNANNOTATED/UNANNOTATED-10:1", "UNANNOTATED/UNANNOTATED-11:1", "UNANNOTATED/UNANNOTATED-12:1",
+      "MISATTRIBUTED/MISATTRIBUTED-01:2", "MISATTRIBUTED/MISATTRIBUTED-02:2", "MISATTRIBUTED/MISATTRIBUTED-03:2", "MISATTRIBUTED/MISATTRIBUTED-04:2", "MISATTRIBUTED/MISATTRIBUTED-05:2", "MISATTRIBUTED/MISATTRIBUTED-06:2",
       "FALSIFIERS/FALSIFIERS-01:2", "FALSIFIERS/FALSIFIERS-02:2", "FALSIFIERS/FALSIFIERS-03:3", "FALSIFIERS/FALSIFIERS-04:3", "FALSIFIERS/FALSIFIERS-05:3", "FALSIFIERS/FALSIFIERS-06:3", "FALSIFIERS/FALSIFIERS-07:2", "FALSIFIERS/FALSIFIERS-08:3", "FALSIFIERS/FALSIFIERS-09:3", "FALSIFIERS/FALSIFIERS-10:2", "FALSIFIERS/FALSIFIERS-11:3", "FALSIFIERS/FALSIFIERS-12:2", "FALSIFIERS/FALSIFIERS-13:2", "FALSIFIERS/FALSIFIERS-14:2", "FALSIFIERS/FALSIFIERS-15:2", "FALSIFIERS/FALSIFIERS-16:2", "FALSIFIERS/FALSIFIERS-17:2", "FALSIFIERS/FALSIFIERS-18:2", "FALSIFIERS/FALSIFIERS-19:2", "FALSIFIERS/FALSIFIERS-20:2", "FALSIFIERS/FALSIFIERS-21:2", "FALSIFIERS/FALSIFIERS-22:2", "FALSIFIERS/FALSIFIERS-23:2", "FALSIFIERS/FALSIFIERS-24:2", "FALSIFIERS/FALSIFIERS-25:2", "FALSIFIERS/FALSIFIERS-26:2", "FALSIFIERS/FALSIFIERS-27:2", "FALSIFIERS/FALSIFIERS-28:2", "FALSIFIERS/FALSIFIERS-29:2", "FALSIFIERS/FALSIFIERS-30:3", "FALSIFIERS/FALSIFIERS-31:3", "FALSIFIERS/FALSIFIERS-32:3", "FALSIFIERS/FALSIFIERS-33:2", "FALSIFIERS/FALSIFIERS-34:2", "FALSIFIERS/FALSIFIERS-35:2", "FALSIFIERS/FALSIFIERS-36:3", "FALSIFIERS/FALSIFIERS-37:2", "FALSIFIERS/FALSIFIERS-38:3", "FALSIFIERS/FALSIFIERS-39:3", "FALSIFIERS/FALSIFIERS-40:3", "FALSIFIERS/FALSIFIERS-41:3", "FALSIFIERS/FALSIFIERS-42:1", "FALSIFIERS/FALSIFIERS-43:3", "FALSIFIERS/FALSIFIERS-44:1", "FALSIFIERS/FALSIFIERS-45:1", "FALSIFIERS/FALSIFIERS-46:3", "FALSIFIERS/FALSIFIERS-47:3", "FALSIFIERS/FALSIFIERS-48:3", "FALSIFIERS/FALSIFIERS-49:3", "FALSIFIERS/FALSIFIERS-50:3", "FALSIFIERS/FALSIFIERS-51:3", "FALSIFIERS/FALSIFIERS-52:1", "FALSIFIERS/FALSIFIERS-53:1", "FALSIFIERS/FALSIFIERS-54:2", "FALSIFIERS/FALSIFIERS-55:2",
       "STAGES/STAGES-01:1", "STAGES/STAGES-02:1", "STAGES/STAGES-03:1", "STAGES/STAGES-04:1", "STAGES/STAGES-05:1", "STAGES/STAGES-06:1", "STAGES/STAGES-07:1", "STAGES/STAGES-08:1", "STAGES/STAGES-09:1", "STAGES/STAGES-10:1", "STAGES/STAGES-11:1",
     ]);
