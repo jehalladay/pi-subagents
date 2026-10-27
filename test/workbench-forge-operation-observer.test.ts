@@ -365,6 +365,7 @@ const settledReply = (status: string, data?: unknown, disposition = "completed")
  *   P6 the key position of a stated selection - the order twin in terminalOf moves a stated selection key to the other side of
  *      selection_accounting, so the five landed replies that state a non-null selection over MEASURED_FULL (the four malformed
  *      test-selection renders and the inherited-flag render) render again in the landed order: KO1, KO2 (KO3 and KO4 stay killed).
+ *      The U1 P6 case pins the five selections it builds an order twin for, label for label in its own literal (wb-dt6z, F2).
  * CONSTRUCTION (an argument, not a measurement): each landed evaluation behind P1-P6 is re-evaluated as a structural copy of the
  * landed reply - the same own keys in the same order, every value by reference - inside the same terminalOf call (or the U1 class
  * case's explicit reads), after its own reply, and must decode and render exactly as that reply. So a decode that reads each reply
@@ -376,6 +377,11 @@ const settledReply = (status: string, data?: unknown, disposition = "completed")
  *   R-SHARED-VALUES - a decode keyed on the identity of a value the reply carries: every twin carries its reply's values by
  *      reference, so a reading memoized on the reply's accounting block is read back for its twin. Quiet row: "wb-dqhl (U1
  *      residual R-SHARED-VALUES): ...".
+ *   PAGE SET (wb-dt6z, F1): each quiet row also pins the seven pages it reads, page for page (label, twin kind and rendered
+ *      status), each row in its own literal: dropping, emptying, shortening or reordering the page list, or swapping a page for one
+ *      with another label, twin kind or rendered status, reds both rows with or without --expect.requireAssertions. Not pinned:
+ *      what a stated selection inherits (an own-key twin of the inherited-flag selection keeps every column), and no anchor
+ *      outside this file names the pages, so dropping a page from residualPages and from both rows' literals stays green.
  * Outside the class (refusal #3: no row owed): MX6 and MX7 (prototype-chain reads, pre-existing at base) and C5 and C7 (the U3
  * lexical controls).
  */
@@ -776,8 +782,10 @@ describe("wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with
 
   it("wb-dqhl (U1 P6): NOT measured - a reply's order twin is the reply with its stated selection key on the other side of selection_accounting: for the five landed replies that state a non-null selection over MEASURED_FULL it is the reply the landed fixtures built, for MEASURED_ARGS the accounting-first order, and no order twin is built without a stated selection key or an accounting block", () => {
     const inheritedFlag = Object.assign(Object.create({ narrowed: false }) as Record<string, unknown>, { denominator_complete: null });
+    const built: string[] = [];
     for (const selection of [{ narrowed: "yes" }, { narrowed: false, denominator_complete: "no" }, "narrowed", [], inheritedFlag]) {
       const label = JSON.stringify(selection);
+      built.push(label);
       const reply = settledReply("success", { ...MEASURED_FULL, selection });
       expect(dataKeys(reply), label).toStrictEqual(["gate_verdict", "selection_accounting", "selection"]);
       const twin = orderTwin(reply);
@@ -786,6 +794,9 @@ describe("wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with
       expect(dataField(twin, "selection"), label).toBe(selection);
       expect(dataKeys(orderTwin(twin)), label).toStrictEqual(["gate_verdict", "selection_accounting", "selection"]);
     }
+    // wb-dt6z (F2): the five selections the loop builds an order twin for, label for label in this case's own literal: an emptied,
+    // shortened, reordered or relabelled list reds this case whatever --expect.requireAssertions reads; what a selection inherits is not pinned.
+    expect(built).toStrictEqual(['{"narrowed":"yes"}', '{"narrowed":false,"denominator_complete":"no"}', '"narrowed"', "[]", '{"denominator_complete":null}']);
     expect(dataKeys(orderTwin(settledReply("success", MEASURED_ARGS)))).toStrictEqual(["gate_verdict", "selection_accounting", "selection"]);
     // No order twin where the data states no selection key or no accounting block, is not a record, or is absent.
     const noTwin = [MEASURED_FULL, { gate_verdict: "PASS", selection: { narrowed: false, denominator_complete: null } }, { selection: null }, null, "data", [MEASURED_ARGS]];
@@ -794,8 +805,10 @@ describe("wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with
   });
 
   it("wb-dqhl (U1 residual R-SEQUENCE): NOT measured - pinned quiet reading: a decode whose reading of a reply depends on the reads before it stays quiet through the guard, which reads every twin after its reply, while a first read of the landed reply is loud", () => {
+    const read: [string, string, string][] = [];
     for (const [label, page] of residualPages()) {
       const landed = nullTwin(page) ?? orderTwin(page);
+      read.push([label, nullTwin(page) === undefined ? "order twin" : "null twin", terminalOf(page).node.statusText]);
       // The page carries the family: its twin is the reply the landed fixtures built, and the page itself is not.
       expect(dataKeys(landed), label).toStrictEqual(["gate_verdict", "selection", "selection_accounting"]);
       expect(dataKeys(page), label).not.toStrictEqual(["gate_verdict", "selection", "selection_accounting"]);
@@ -806,11 +819,25 @@ describe("wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with
       expect(first === undefined ? undefined : forgeOperationTerminalSnapshot(first, options).node.statusText, label).toBe(loudText(page));
       expect(loudText(page), label).not.toBe(terminalOf(page).node.statusText);
     }
+    // wb-dt6z (F1): the row's page set, page for page (label, twin kind, rendered status), in this row's own literal: a dropped,
+    // emptied, shortened or reordered page list, or a page swapped for one with another label, twin kind or rendered status, reds
+    // the row whatever --expect.requireAssertions reads (the PAGE SET entry above names what it leaves unpinned).
+    expect(read).toStrictEqual([
+      ["the measured full reply", "null twin", "completed · selection complete: 3 of 3 steps selected"],
+      ["the measured --only reply", "null twin", "completed · selection partial: 1 of 3 steps selected"],
+      ['the stated selection {"narrowed":"yes"}', "order twin", "completed · selection complete: 3 of 3 steps selected · tests UNKNOWN"],
+      ['the stated selection {"narrowed":false,"denominator_complete":"no"}', "order twin", "completed · selection complete: 3 of 3 steps selected · tests UNKNOWN"],
+      ['the stated selection "narrowed"', "order twin", "completed · selection complete: 3 of 3 steps selected · tests UNKNOWN"],
+      ["the stated selection []", "order twin", "completed · selection complete: 3 of 3 steps selected · tests UNKNOWN"],
+      ['the stated selection {"denominator_complete":null}', "order twin", "completed · selection complete: 3 of 3 steps selected · tests UNKNOWN"],
+    ]);
   });
 
   it("wb-dqhl (U1 residual R-SHARED-VALUES): NOT measured - pinned quiet reading: a decode memoized on the accounting block a reply carries stays quiet through the guard, whose twins carry their reply's values by reference, while a first read of the landed reply is loud", () => {
+    const read: [string, string, string][] = [];
     for (const [label, page] of residualPages()) {
       const landed = nullTwin(page) ?? orderTwin(page);
+      read.push([label, nullTwin(page) === undefined ? "order twin" : "null twin", terminalOf(page).node.statusText]);
       // The page carries the family: its twin carries the page's own accounting block, by reference.
       expect(typeof dataField(page, "selection_accounting"), label).toBe("object");
       expect(dataField(landed, "selection_accounting"), label).toBe(dataField(page, "selection_accounting"));
@@ -821,6 +848,18 @@ describe("wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with
       expect(first === undefined ? undefined : forgeOperationTerminalSnapshot(first, options).node.statusText, label).toBe(loudText(page));
       expect(loudText(page), label).not.toBe(terminalOf(page).node.statusText);
     }
+    // wb-dt6z (F1): the row's page set, page for page (label, twin kind, rendered status), in this row's own literal: a dropped,
+    // emptied, shortened or reordered page list, or a page swapped for one with another label, twin kind or rendered status, reds
+    // the row whatever --expect.requireAssertions reads (the PAGE SET entry above names what it leaves unpinned).
+    expect(read).toStrictEqual([
+      ["the measured full reply", "null twin", "completed · selection complete: 3 of 3 steps selected"],
+      ["the measured --only reply", "null twin", "completed · selection partial: 1 of 3 steps selected"],
+      ['the stated selection {"narrowed":"yes"}', "order twin", "completed · selection complete: 3 of 3 steps selected · tests UNKNOWN"],
+      ['the stated selection {"narrowed":false,"denominator_complete":"no"}', "order twin", "completed · selection complete: 3 of 3 steps selected · tests UNKNOWN"],
+      ['the stated selection "narrowed"', "order twin", "completed · selection complete: 3 of 3 steps selected · tests UNKNOWN"],
+      ["the stated selection []", "order twin", "completed · selection complete: 3 of 3 steps selected · tests UNKNOWN"],
+      ['the stated selection {"denominator_complete":null}', "order twin", "completed · selection complete: 3 of 3 steps selected · tests UNKNOWN"],
+    ]);
   });
 
   it("wb-dqhl (F1): the decode's doc comment states the measured absence of data.selection on an unnarrowed run and never names null as the producer's own value", () => {

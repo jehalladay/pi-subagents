@@ -365,7 +365,9 @@
               "appendedShippedYes": 1,
               "appendedLowercaseShippedYes": 1,
               "appendedUppercaseShippedYes": 1,
-              "appendedUppercaseShippedNo": 0
+              "appendedUppercaseShippedNo": 0,
+              "appendedShippedNow": 1,
+              "appendedUnshippedNote": 0
             }
           }
         },
@@ -473,6 +475,18 @@
                 "unaccounted": 0
               },
               "angleSuite": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "conditionSuite": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "elementSuite": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "namespaceElementSuite": {
                 "rows": 1,
                 "unaccounted": 0
               },
