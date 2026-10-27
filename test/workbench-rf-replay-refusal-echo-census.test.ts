@@ -22,6 +22,14 @@
  * getBuiltinModule member, a loader through .call, .apply or .bind, a comma, a conditional or a logical operator, and every binding
  * of a literal name), each with a kill control, and every known form it does not resolve is a named residual member with a pinned
  * quiet row (R-FLOWED, R-CROSS-MODULE, and new members of R-COMPOSED-NAME and R-UNLISTED).
+ * wb-13ws cut #2 (refusal #1, U1: a literal-bound let or var name a loop head rewrote read as its literal, so three landed kills
+ * survived) reads every write a name can take - a for-of, for-in or for-await-of head, ++ and --, and every declaration that binds
+ * no string, beside the declarations, parameters, binding elements, assignments, assignment patterns and catch bindings already
+ * read - and keeps the landed readings beside the widened ones (the landed constStrings and literalOf, verbatim, read for every
+ * program; a callee spelled as a launcher name is a launcher call whatever binds it), so a landed kill is never a survivor; each
+ * write form has a kill control whose outer const holds the kept landed reading at "rf". It pins the gate's MU-a..MU-h members
+ * (F1), kills a loader's stored .bind (F2) and names the loader flow (R-FLOWED), a loop head's element name (R-COMPOSED-NAME) and
+ * the scope-blind read (R-SCOPE-BLIND) as residual members with pinned quiet rows.
  *
  * MEASURED AT THE INSTALLED rf (0.1.832 by `rf --json --version` result.version, 2026-10-22; producer rows read from its installed
  * package, read-only): domain/diagnostics.py spells RF_REPLAY_RECONSTRUCTION_UNAVAILABLE (:1023) and
@@ -63,16 +71,23 @@
  *    createRequire call's result or of a require or getBuiltinModule member of any value, made directly, through .call or .apply,
  *    or through an immediately invoked .bind), no code compiled from a string (an eval or Function global as an identifier, a
  *    property name included, or an exact string literal), and every child_process launcher call launches only "rf" - EXACTLY the
- *    launcher, module, loader, binding and value forms scanPorts lists are read, each module on its own: a launcher name or a
- *    launcher member (a property or a resolved element name) of a child_process value (a name bound to the module, a load of a
+ *    launcher, module, loader, binding and value forms scanPorts lists are read, each module on its own: a launcher name (whatever
+ *    a destructuring binds the name to: the landed reading kept) or a launcher member (a property or a resolved element name) of a
+ *    child_process value (a name bound to the module, a load of a
  *    child_process specifier, or its default), called directly, through .call or .apply, or through an immediately invoked .bind;
  *    a name bound to the module or a loader by an import clause or import-equals, a declaration's initializer, a parameter's or
  *    destructured element's default, an assignment (=, ||=, &&= or ??=) to the name or to an object pattern, or a then-callback's
- *    first parameter, at any depth, read to a fixpoint; a name bound to a launcher only by a named import or a destructuring of a
+ *    first parameter, at any depth, read to a fixpoint (a loader's .bind, stored, binds a loader); a name bound to a launcher only
+ *    by a named import or a destructuring of a
  *    child_process value (its default, rest, nested default and computed keys read); every value read through
  *    parentheses, awaits, type assertions, a comma's last operand, either branch of a conditional and either operand of &&, || and
- *    ??; and a program, element name or specifier resolved to every literal any binding of the module gives it (a parameter
- *    shadowing a literal-bound name reads composed); B7 the seam B2 and B3 read is test-reachable only: no src module
+ *    ??; and a program, element name or specifier resolved to every literal any write of the module gives the name - a
+ *    declaration, a parameter or binding element, an assignment or assignment pattern, a for-of, for-in or for-await-of head, a
+ *    catch binding, ++ or --, and a declaration that binds no string (a function, class, enum, enum member or namespace, a named
+ *    function or class expression, an import binding) - every non-literal write composed (a parameter shadowing a literal-bound
+ *    name reads composed), and every program also read as the landed census reads it (the literal its node spells or the last
+ *    const binding of its bare name gives, composed otherwise), so no landed kill is lost; B7 the seam B2 and B3 read is
+ *    test-reachable only: no src module
  *    but the provider spells registerReactiveFiberRender
  *    (as an identifier, a property name included, or a string literal), while the served registration
  *    registerNativeReactiveFiberRender is spelled outside it (native-modules.ts).
@@ -108,17 +123,21 @@
  * invisible to A1 (A1's composedArgv and concatComposed controls stay 0); R-COMPOSED-NAME a port, launcher or seam name assembled
  * at runtime (a concatenation splitting the word across literals; a launcher read into a variable - const run = cp.spawn, const
  * run = spawn, a stored .bind; a launcher reached through a wrapper - Reflect.apply, a promise chain past its first then, a
- * callback passed by name; an element name no binding of the module gives a string literal, a parameter's) is invisible to B6
- * and B7 (B6's splitName, wrappedLauncher, launcherAlias, storedBind, reflectApply, promiseChain, callbackByName and paramElement
- * controls and B7's splitName control stay quiet); R-UNLISTED a port outside the listed network globals, network modules, code
+ * callback passed by name; an element name a write of the module gives no string literal, a parameter's or a loop head's) is
+ * invisible to B6 and B7 (B6's splitName, wrappedLauncher, launcherAlias, storedBind, reflectApply, promiseChain, callbackByName,
+ * paramElement and loopElement controls and B7's splitName control stay quiet); R-UNLISTED a port outside the listed network globals, network modules, code
  * compilers and child_process launchers (a worker, a native addon, process.binding, node:vm, a compiler reached through a
  * function's constructor, a data: URL module) is not read by B6 (its unlisted, vmCompile, constructorCompile and dataImport
- * controls stay quiet); R-FLOWED a child_process value that flows through data or across a call - held in an object or an array (a
- * property, an element, an array destructuring), handed to a function as an argument other than the then-callback parameter B6
- * reads, or returned from one - is not followed by B6 (its objHolder, argument, returned and arrayHeld controls stay quiet);
+ * controls stay quiet); R-FLOWED a child_process value or a loader that flows through data or across a call - held in an object or
+ * an array (a property, an element, an array destructuring), handed to a function as an argument other than the then-callback
+ * parameter B6 reads, or returned from one - is not followed by B6 (its objHolder, argument, returned, arrayHeld, loaderHolder,
+ * loaderReturned and loaderArgument controls stay quiet);
  * R-CROSS-MODULE B6 reads each module on its own, so a launcher or the child_process module reaching a module through another
  * module's export - a re-export from child_process included - is not followed (its reexportFrom and reexportImport controls stay
- * quiet; an imported program name reads composed); R-UNMARKED-READER an rf reader registered with none of A2's three markers is
+ * quiet; an imported program name reads composed); R-SCOPE-BLIND B6 resolves a name through every write of the module whatever
+ * scope reads it, so a name read where no binding of the module encloses it (a global) reads that name's writes elsewhere, a
+ * const's "rf" included (its unscopedConst control stays ["rf"]; the kept landed reading reads a let's composed, the
+ * unscopedLet kill); R-UNMARKED-READER an rf reader registered with none of A2's three markers is
  * invisible to A2 (its unmarked control stays 0).
  * SCOPE: the codes, fields and shapes are producer facts at the installed rf; Pi vendors no rf schema, so a producer-side change is
  * seen only when a fixture re-measure re-reads them. The armed half (a replay reader echoing the five fields) waits for
@@ -231,6 +250,7 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-UNMARKED-READER": ["A2"],
   "R-FLOWED": ["B6"],
   "R-CROSS-MODULE": ["B6"],
+  "R-SCOPE-BLIND": ["B6"],
 };
 
 interface Envelope {
@@ -604,6 +624,37 @@ function scanReplayVerbs(fileName: string, text: string): VerbScan {
   return { argv, literals, renderArgv, composedArgv };
 }
 
+/** The landed program reading, kept verbatim beside the widened one (wb-13ws class-level guard): a program reads the literal its
+ * node spells or the last const binding of its bare name gives, composed otherwise, so a landed kill is never a survivor. */
+/** A module's const string bindings: every `const NAME = "literal"` declaration, at any depth. */
+function constStrings(source: ts.SourceFile): Map<string, string> {
+  const bindings = new Map<string, string>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && ts.isStringLiteralLike(node.initializer) &&
+      ts.isVariableDeclarationList(node.parent) && (node.parent.flags & ts.NodeFlags.Const) !== 0) bindings.set(node.name.text, node.initializer.text);
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return bindings;
+}
+/** The literal an expression spells: a string or no-substitution template literal, or an identifier a const binds to one. */
+function literalOf(node: ts.Node | undefined, bindings: ReadonlyMap<string, string>): string | null {
+  if (node === undefined) return null;
+  if (ts.isStringLiteralLike(node)) return node.text;
+  if (ts.isIdentifier(node)) return bindings.get(node.text) ?? null;
+  return null;
+}
+/** The name a declaration that binds no string writes (wb-13ws class-level guard): a function, class, enum or namespace
+ * declaration, a named function or class expression, an enum member and every import binding (default, namespace, named or
+ * import-equals); undefined for any other node. */
+function nonStringBinding(node: ts.Node): string | undefined {
+  if (ts.isFunctionDeclaration(node) || ts.isClassDeclaration(node) || ts.isFunctionExpression(node) || ts.isClassExpression(node) || ts.isImportClause(node)) {
+    return node.name?.text;
+  }
+  if (ts.isEnumDeclaration(node) || ts.isNamespaceImport(node) || ts.isImportSpecifier(node) || ts.isImportEqualsDeclaration(node)) return node.name.text;
+  if ((ts.isModuleDeclaration(node) || ts.isEnumMember(node)) && ts.isIdentifier(node.name)) return node.name.text;
+  return undefined;
+}
 /** The assignment operators that bind their left side to the value of their right side (wb-13ws F1). */
 const BINDING_ASSIGNMENTS = new Set<ts.SyntaxKind>([
   ts.SyntaxKind.EqualsToken,
@@ -640,10 +691,13 @@ function alternativesOf(node: ts.Expression): ts.Expression[] {
   if (ts.isBinaryExpression(value) && EITHER_OPERAND.has(value.operatorToken.kind)) return [...alternativesOf(value.left), ...alternativesOf(value.right)];
   return [value];
 }
-/** A module's string bindings: for every name, each value every binding gives it, in source order - a declaration's initializer
- * (const, let or var; a declaration without one gives null), a parameter or destructured element (null for the value it is handed,
- * then its default), and an assignment (=, ||=, &&= and ??= give the right side's values, any other assignment operator null; an
- * object or array assignment pattern gives each name it writes null). A value is a string literal, the name it aliases, or null. */
+/** A module's string bindings: for every name, each value every write of the module gives it, in source order - a declaration's
+ * initializer (const, let or var, a for-in or for-of declaration head and a catch binding included; a declaration without one
+ * gives null), a parameter or destructured element (null for the value it is handed, then its default), an assignment (=, ||=, &&=
+ * and ??= give the right side's values, any other assignment operator null; an object or array assignment pattern gives each name
+ * it writes null), a for-of, for-in or for-await-of head that declares nothing (an identifier or an assignment pattern: each name
+ * it writes null, wb-13ws U1), ++ and -- (null), and a declaration that binds no string (nonStringBinding: null). A value is a
+ * string literal, the name it aliases, or null. */
 function stringBindings(source: ts.SourceFile): Map<string, BoundValue[]> {
   const bindings = new Map<string, BoundValue[]>();
   const add = (name: string, values: readonly BoundValue[]): void => {
@@ -676,6 +730,16 @@ function stringBindings(source: ts.SourceFile): Map<string, BoundValue[]> {
       else patternNames(left);
     }
     if (ts.isShorthandPropertyAssignment(node) && node.objectAssignmentInitializer !== undefined) add(node.name.text, valuesOf(node.objectAssignmentInitializer));
+    // wb-13ws U1: a for-of, for-in or for-await-of head that declares nothing writes every name it binds (an identifier or an
+    // assignment pattern) null.
+    if ((ts.isForOfStatement(node) || ts.isForInStatement(node)) && !ts.isVariableDeclarationList(node.initializer)) patternNames(node.initializer);
+    // The class-level guard: ++ and -- write a number to the name they update, and a declaration that binds no string writes null.
+    if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken)) {
+      const operand = unwrapped(node.operand);
+      if (ts.isIdentifier(operand)) add(operand.text, [null]);
+    }
+    const declared = nonStringBinding(node);
+    if (declared !== undefined) add(declared, [null]);
     ts.forEachChild(node, visit);
   };
   visit(source);
@@ -696,14 +760,16 @@ interface PortScan {
  *  - a load is import() or a call of a loader - require, a name bound to a loader, a createRequire call's result, or a require or
  *    getBuiltinModule member of any value - made directly, through .call or .apply, or through an immediately invoked .bind (wb-13ws
  *    F2);
- *  - a launcher call is a call of one of the seven launcher names, of a name bound to a launcher, or of a launcher member (a property
+ *  - a launcher call is a call of one of the seven launcher names (whatever a destructuring binds the name to: the landed reading
+ *    kept, wb-13ws), of a name bound to a launcher, or of a launcher member (a property
  *    or a resolved element name) of a child_process value, made directly, through .call or .apply, or through an immediately invoked
  *    .bind; its programs are the literals its program argument resolves to, "<composed>" for each alternative resolving to none;
  *  - a child_process value is a name bound to the module, a load whose specifier resolves to child_process, or its default;
  *  - a name is bound to the module, a loader or a createRequire by an import clause or import-equals (child_process, or
  *    node:module's createRequire), a declaration's initializer, a parameter's or destructured element's default, an assignment (=,
  *    ||=, &&= or ??=) to the name or to an object pattern, or the first parameter of a then-callback on a child_process value, at any
- *    depth and read to a fixpoint (a binding read above its declaration included) (wb-13ws F1);
+ *    depth and read to a fixpoint (a binding read above its declaration included) (wb-13ws F1); a loader's .bind, stored, binds a
+ *    loader, its call reading its own first argument as the specifier (wb-13ws F2);
  *  - a name is bound to a launcher only by a named import from child_process or by a destructuring of a child_process value, whose
  *    default and rest bind the module (a pattern under default destructures the module again) and whose every other property, a
  *    computed key resolved, binds the launcher it names; a destructuring of any value binds a require or getBuiltinModule property
@@ -711,9 +777,12 @@ interface PortScan {
  *  - every expression is read through parentheses, awaits, type assertions (as, satisfies, a non-null or an angle-bracket assertion),
  *    the last operand of a comma, either branch of a conditional and either operand of &&, || and ?? (wb-13ws F2);
  *  - a program, element name, computed key or specifier resolves to each exact string literal it spells and, for a name, to every value
- *    every binding of the module gives that name (stringBindings, aliases followed), null (composed) for any other value, so a
- *    parameter shadowing a literal-bound name reads composed (wb-13ws F2).
- * What it does not read is named in R-COMPOSED-NAME, R-UNLISTED, R-FLOWED and R-CROSS-MODULE, each with its quiet rows. */
+ *    every write of the module gives that name (stringBindings, aliases followed), null (composed) for any other value, so a
+ *    parameter shadowing a literal-bound name reads composed (wb-13ws F2); a program is also read as the landed census reads it
+ *    (literalOf over constStrings: the literal its node spells or the last const binding of its bare name gives, composed
+ *    otherwise), so no landed kill is lost (wb-13ws U1).
+ * What it does not read is named in R-COMPOSED-NAME, R-UNLISTED, R-FLOWED, R-CROSS-MODULE and R-SCOPE-BLIND, each with its quiet
+ * rows. */
 function scanPorts(fileName: string, text: string): PortScan {
   const source = sourceOf(fileName, text);
   const network: string[] = [];
@@ -728,6 +797,8 @@ function scanPorts(fileName: string, text: string): PortScan {
   const makers = new Set<string>(["createRequire"]);
   const requirers = new Set<string>(["require"]);
   const bindings = stringBindings(source);
+  /** The landed program reading's bindings (constStrings), kept beside the widened ones. */
+  const landedBindings = constStrings(source);
   /** The literals a name resolves to: every value its bindings give it, aliases followed (a name already on the path adds nothing),
    * null for any value that is not a literal; an unbound name is null. */
   const resolved = (name: string, path: ReadonlySet<string>): (string | null)[] => {
@@ -765,6 +836,13 @@ function scanPorts(fileName: string, text: string): PortScan {
     const names = memberNames(leaf);
     return receiverOf(leaf) !== undefined && (names.includes("require") || names.includes("getBuiltinModule"));
   };
+  /** A loader's .bind call: a bind member of a loader, called (wb-13ws F2: stored, it binds a loader). */
+  const bindsLoader = (leaf: ts.Expression): leaf is ts.CallExpression => {
+    if (!ts.isCallExpression(leaf)) return false;
+    const binder = unwrapped(leaf.expression);
+    const loader = receiverOf(binder);
+    return loader !== undefined && memberNames(binder).includes("bind") && alternativesOf(loader).some(isLoader);
+  };
   /** The specifier of a load (undefined for any other call, null for a load with no specifier expression): import(), or a loader
    * called directly, through .call or .apply, or through an immediately invoked .bind. */
   const loadSpecifier = (call: ts.CallExpression): ts.Expression | null | undefined => {
@@ -781,11 +859,7 @@ function scanPorts(fileName: string, text: string): PortScan {
           return list !== undefined && ts.isArrayLiteralExpression(list) ? (list.elements[0] ?? null) : null;
         }
       }
-      if (ts.isCallExpression(leaf)) {
-        const binder = unwrapped(leaf.expression);
-        const loader = receiverOf(binder);
-        if (loader !== undefined && memberNames(binder).includes("bind") && alternativesOf(loader).some(isLoader)) return leaf.arguments[1] ?? call.arguments[0] ?? null;
-      }
+      if (bindsLoader(leaf)) return leaf.arguments[1] ?? call.arguments[0] ?? null;
     }
     return undefined;
   };
@@ -844,7 +918,7 @@ function scanPorts(fileName: string, text: string): PortScan {
     const leaves = alternativesOf(value);
     if (ts.isIdentifier(target)) {
       if (leaves.some(isSpace)) spaces.add(target.text);
-      if (leaves.some(isLoader)) requirers.add(target.text);
+      if (leaves.some(leaf => isLoader(leaf) || bindsLoader(leaf))) requirers.add(target.text);
       if (leaves.some(isMaker)) makers.add(target.text);
     } else destructure(target, leaves.some(isSpace));
   };
@@ -899,6 +973,7 @@ function scanPorts(fileName: string, text: string): PortScan {
       if (ts.isIdentifier(leaf)) {
         const name = bound.get(leaf.text) ?? leaf.text;
         if (LAUNCHERS.includes(name)) return name;
+        if (LAUNCHERS.includes(leaf.text)) return leaf.text;
         continue;
       }
       const receiver = receiverOf(leaf);
@@ -911,7 +986,9 @@ function scanPorts(fileName: string, text: string): PortScan {
   /** The programs a launcher call runs (undefined for any other call): called directly, through .call or .apply, or through an
    * immediately invoked .bind (its bound program first, else the call's first argument). */
   const programOf = (call: ts.CallExpression): string[] | undefined => {
-    const program = (node: ts.Expression | undefined): string[] => [...new Set(literalsOf(node).map(value => value ?? "<composed>"))];
+    const program = (node: ts.Expression | undefined): string[] => [
+      ...new Set([...literalsOf(node).map(value => value ?? "<composed>"), literalOf(node, landedBindings) ?? "<composed>"]),
+    ];
     if (launcherOf(call.expression) !== undefined) return program(call.arguments[0]);
     for (const leaf of alternativesOf(call.expression)) {
       const target = receiverOf(leaf);
@@ -1275,6 +1352,64 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       callbackByName: control('function useIt(cp) { return cp.execFile("curl", []); } import("node:child_process").then(useIt);'),
       paramElement: control('import * as cp from "node:child_process"; function go(verb) { return cp[verb]("curl", []); }'),
       dataImport: control('await import("data:text/javascript,export default 1");'),
+      // wb-13ws U1 (refusal #1, the gate's C01-C06 and P-C01/P-C02/P-C04): a for-of, for-in or for-await-of head writes the names it
+      // binds, so a literal-bound name the head rewrites reads composed - an identifier head and an array or object pattern head, each a
+      // kill; the outer const holds the kept landed reading at "rf", so each control reads the head itself.
+      forOfHead: control('import { spawn } from "node:child_process"; const tool = "rf"; function go(tools) { let tool = "rf"; for (tool of tools) spawn(tool, []); }'),
+      forInHead: control('import { spawn } from "node:child_process"; const tool = "rf"; function go(table) { let tool = "rf"; for (tool in table) spawn(tool, []); }'),
+      forAwaitHead: control('import { spawn } from "node:child_process"; const tool = "rf"; async function go(stream) { let tool = "rf"; for await (tool of stream) spawn(tool, []); }'),
+      arrayHead: control('import { spawn } from "node:child_process"; const tool = "rf"; function go(pairs) { let tool = "rf"; for ([tool] of pairs) spawn(tool, []); }'),
+      objectHead: control('import { spawn } from "node:child_process"; const tool = "rf"; function go(jobs) { let tool = "rf"; for ({ tool } of jobs) spawn(tool, []); }'),
+      // wb-13ws class-level guard: every other write form gives the name it writes a value no literal spells, read composed - ++ and
+      // --, a function, class, enum or namespace declaration, a named function or class expression, an enum member and every import
+      // binding (default, namespace, named, import-equals), each a kill; the const holds the kept landed reading at "rf".
+      prefixUpdate: control('import { spawn } from "node:child_process"; const tool = "rf"; function go() { let tool = "rf"; ++tool; return spawn(tool, []); }'),
+      postfixUpdate: control('import { spawn } from "node:child_process"; const tool = "rf"; function go() { let tool = "rf"; tool--; return spawn(tool, []); }'),
+      functionName: control('import { spawn } from "node:child_process"; const tool = "rf"; function go() { function tool() {} return spawn(tool, []); }'),
+      className: control('import { spawn } from "node:child_process"; const tool = "rf"; function go() { class tool {} return spawn(tool, []); }'),
+      functionExpressionName: control('import { spawn } from "node:child_process"; const tool = "rf"; const go = function tool() { return spawn(tool, []); };'),
+      classExpressionName: control('import { spawn } from "node:child_process"; const tool = "rf"; const Go = class tool { run() { return spawn(tool, []); } };'),
+      enumName: control('import { spawn } from "node:child_process"; const tool = "rf"; function go() { enum tool { a } return spawn(tool, []); }'),
+      namespaceName: control('import { spawn } from "node:child_process"; const tool = "rf"; namespace outer { namespace tool { export const a = 1; } spawn(tool, []); }'),
+      enumMember: control('import { spawn } from "node:child_process"; const tool = "rf"; enum Plan { tool = 1, run = spawn(tool, []).pid }'),
+      importDefaultName: control('import { spawn } from "node:child_process"; import tool from "./tools.js"; function setup() { const tool = "rf"; return tool; } spawn(tool, []);'),
+      importNamespaceName: control('import { spawn } from "node:child_process"; import * as tool from "./tools.js"; function setup() { const tool = "rf"; return tool; } spawn(tool, []);'),
+      importNamedName: control('import { spawn } from "node:child_process"; import { tool } from "./tools.js"; function setup() { const tool = "rf"; return tool; } spawn(tool, []);'),
+      importEqualsName: control('import { spawn } from "node:child_process"; import tool = require("./tools.js"); function setup() { const tool = "rf"; return tool; } spawn(tool, []);'),
+      // wb-13ws F1 (refusal #1, the gate's MU-a..MU-h): one kill control per stated member those mutants reached - ||= and &&= bind
+      // the module, either operand of || and && reads, an object assignment pattern's shorthand default, rest and property default
+      // bind, a declaration without an initializer (a catch binding, a for-of declaration) reads composed, a non-binding assignment
+      // operator reads composed, and an object or array assignment pattern writes its names composed.
+      orAssign: control('let cp; cp ||= require("node:child_process"); cp.spawn("curl", []);'),
+      andAssign: control('let cp = 1; cp &&= require("node:child_process"); cp.spawn("curl", []);'),
+      orOperand: control('import * as cp from "node:child_process"; (cp || other).spawn("curl", []);'),
+      andOperand: control('import * as cp from "node:child_process"; (ready && cp).spawn("curl", []);'),
+      shorthandDefault: control('import * as cp from "node:child_process"; let m; ({ m = cp } = {}); m.spawn("curl", []);'),
+      assignRest: control('import * as cp from "node:child_process"; let rest; ({ ...rest } = cp); rest.spawn("curl", []);'),
+      assignPropertyDefault: control('import * as cp from "node:child_process"; let run; ({ execFile: run = fallback } = cp); run("curl", []);'),
+      catchShadow: control('import { spawn } from "node:child_process"; const tool = "rf"; try { run(); } catch (tool) { spawn(tool, []); }'),
+      forOfDeclShadow: control('import { spawn } from "node:child_process"; const tool = "rf"; for (const tool of tools) spawn(tool, []);'),
+      compoundShadow: control('import { spawn } from "node:child_process"; const tool = "rf"; function go(suffix) { let tool = "rf"; tool += suffix; return spawn(tool, []); }'),
+      objectPatternShadow: control('import { spawn } from "node:child_process"; const tool = "rf"; function go(cfg) { let tool = "rf"; ({ tool } = cfg); return spawn(tool, []); }'),
+      arrayPatternShadow: control('import { spawn } from "node:child_process"; const tool = "rf"; function go(list) { let tool = "rf"; [tool] = list; return spawn(tool, []); }'),
+      // wb-13ws class-level guard, by construction: the landed readings are kept - a program also reads as the landed census reads it
+      // (the literal its node spells or the last const binding of its bare name gives, composed otherwise), and a callee spelled as a
+      // launcher name is a launcher call whatever a destructuring binds it to - so a landed kill is never a survivor: a name a nested
+      // let binds read where no binding encloses it, a wrapped literal and a computed key resolving elsewhere, each a kill.
+      unscopedLet: control('import { spawn } from "node:child_process"; function setup() { let tool = "rf"; return tool; } spawn(tool, []);'),
+      wrappedProgram: control('import { spawn } from "node:child_process"; spawn(("rf"), []);'),
+      launcherNamed: control('import * as cp from "node:child_process"; const verb = "toString"; const { [verb]: spawn } = cp; spawn("curl", []);'),
+      // wb-13ws F2 (refusal #1, the gate's B11 and B12): a loader's stored .bind binds a loader, each a kill.
+      storedBindRequire: control('const load = module.require.bind(module); load("node:child_process").spawn("curl", []);'),
+      storedBindGetBuiltin: control('const load = process.getBuiltinModule.bind(process); load("node:child_process").spawn("curl", []);'),
+      // wb-13ws quiet rows: R-FLOWED's loader flow (a loader held in an object, returned from a function or handed across a call: the
+      // gate's B13, B14 and B15), R-COMPOSED-NAME's composed element name (a loop head's: the gate's C07) and R-SCOPE-BLIND (a name read
+      // where no binding of the module encloses it reads that name's bindings, a const's "rf" included) stay quiet.
+      loaderHolder: control('const holder = { load: require }; holder.load("node:child_process").spawn("curl", []);'),
+      loaderReturned: control('function loader() { return require; } loader()("node:child_process").spawn("curl", []);'),
+      loaderArgument: control('function go(load) { return load("node:child_process").spawn("curl", []); } go(require);'),
+      loopElement: control('import * as cp from "node:child_process"; let verb = "toString"; for (verb of ["spawn"]) cp[verb]("curl", []);'),
+      unscopedConst: control('import { spawn } from "node:child_process"; function setup() { const tool = "rf"; return tool; } spawn(tool, []);'),
     };
     return { closureFloorMet, anchorsRead, unresolved, network: ports.network, globals: ports.globals, dynamic: ports.dynamic, launches, controls };
   },
