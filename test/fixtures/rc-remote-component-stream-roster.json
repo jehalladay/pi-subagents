@@ -33,6 +33,26 @@
     ],
     "gitData": ".git",
     "ignoreFile": ".gitignore",
+    "plantedIgnore": [
+      "# a comment",
+      "#hashed",
+      "",
+      "kept",
+      ".dotted",
+      "/lead",
+      "trail/",
+      "/both/",
+      "  padded  ",
+      "*.glob",
+      "glob*",
+      "gl?b",
+      "[gb]lob",
+      "!negated",
+      "inner/slash",
+      "/inner/both/",
+      "two words",
+      "\\#escaped"
+    ],
     "proseExtensions": [
       ".md"
     ],
@@ -371,11 +391,46 @@
               "vendor": true
             },
             "skipAnchor": {
+              "ignoreNames": [
+                ".DS_Store",
+                ".beads-credential-key",
+                ".claude",
+                ".dolt",
+                ".forge",
+                ".gitnexus",
+                ".idea",
+                ".scratch",
+                ".temp",
+                ".vscode",
+                "CLAUDE.md",
+                "Thumbs.db",
+                "build",
+                "coverage",
+                "dist",
+                "node_modules",
+                "plan",
+                "progress.md"
+              ],
               "unanchored": [],
               "planted": [
                 ".agents",
                 ".pi",
                 "new-feedback"
+              ],
+              "bare": [
+                "node_modules",
+                "dist",
+                "build",
+                "coverage",
+                ".forge"
+              ],
+              "plantedNames": [
+                "kept",
+                ".dotted",
+                "lead",
+                "trail",
+                "both",
+                "padded"
               ]
             },
             "unreadable": {
