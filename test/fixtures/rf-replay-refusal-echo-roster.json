@@ -1307,6 +1307,215 @@
                 "dynamic": 0,
                 "launches": []
               },
+              "rebindAssignPattern": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindParamDefault": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindNestedDefault": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindParamSpace": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindCommaSpace": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindAssignedSpace": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindLogicalAssign": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindElementDefault": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindDeclaration": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindThen": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindDestructured": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindThenBound": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindBeforeLauncher": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "rebindImport": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "computedKeyNames": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "curl"
+                ]
+              },
+              "competingBind": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "curl"
+                ]
+              },
+              "competingCall": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "curl"
+                ]
+              },
+              "competingApply": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "curl"
+                ]
+              },
+              "patternPropertyTarget": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "patternObjectRest": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "patternArraySpread": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "patternDefaultedTarget": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "patternWrappedTarget": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "updateWrappedOperand": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf",
+                  "<composed>"
+                ]
+              },
+              "globalThisWrite": {
+                "network": 0,
+                "globals": 0,
+                "dynamic": 0,
+                "launches": [
+                  "rf"
+                ]
+              },
               "unscopedConst": {
                 "network": 0,
                 "globals": 0,
