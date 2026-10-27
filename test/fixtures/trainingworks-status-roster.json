@@ -291,6 +291,9 @@
    ],
    "R-HTML-TABLE": [
     "Q12"
+   ],
+   "R-COMMENT-BANG": [
+    "Q12"
    ]
   },
   "htmlTable": {
@@ -1377,6 +1380,191 @@
         "tableTags": 1
        },
        {
+        "id": "table-tags-in-strong-opening-a-paragraph",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "a-tag-holding-a-table-tag-opening-a-paragraph",
+        "htmlBlocks": 0,
+        "tableTags": 1
+       },
+       {
+        "id": "table-tags-in-strong-opening-an-item-text",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-in-mixed-case",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "an-html-block-of-hyphens-alone",
+        "htmlBlocks": 1,
+        "tableTags": 0
+       },
+       {
+        "id": "an-html-block-of-digits-alone",
+        "htmlBlocks": 1,
+        "tableTags": 0
+       },
+       {
+        "id": "a-table-tag-between-two-comments-in-one-block",
+        "htmlBlocks": 1,
+        "tableTags": 1
+       },
+       {
+        "id": "a-table-tag-between-two-comments-opening-an-html-block",
+        "htmlBlocks": 1,
+        "tableTags": 1
+       },
+       {
+        "id": "table-tags-in-an-ordered-list-starting-at-3",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-in-an-ordered-list-with-a-paren-delimiter",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-in-an-upper-case-checked-task-item",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-in-a-reference-link-text",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-in-a-reference-image-alt-text",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-in-underscore-strong-text",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-in-single-tilde-strikethrough-text",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "a-table-tag-inside-a-single-quoted-attribute-value",
+        "htmlBlocks": 0,
+        "tableTags": 1
+       },
+       {
+        "id": "a-table-tag-a-comment-splits",
+        "htmlBlocks": 1,
+        "tableTags": 1
+       },
+       {
+        "id": "a-table-tag-inside-a-cdata-section",
+        "htmlBlocks": 1,
+        "tableTags": 1
+       },
+       {
+        "id": "a-table-tag-inside-a-declaration",
+        "htmlBlocks": 1,
+        "tableTags": 1
+       },
+       {
+        "id": "table-tags-inside-an-inline-code-element",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-after-a-form-feed",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "a-table-tag-as-named-references-in-an-attribute-value",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       },
+       {
+        "id": "a-table-tag-in-a-type-7-html-block",
+        "htmlBlocks": 1,
+        "tableTags": 1
+       },
+       {
+        "id": "every-table-element-in-upper-case",
+        "htmlBlocks": 0,
+        "tableTags": 25
+       },
+       {
+        "id": "every-table-element-in-mixed-case",
+        "htmlBlocks": 0,
+        "tableTags": 25
+       },
+       {
+        "id": "an-html-block-of-a-plus-sign-alone",
+        "htmlBlocks": 1,
+        "tableTags": 0
+       },
+       {
+        "id": "an-html-block-of-a-cyrillic-letter-alone",
+        "htmlBlocks": 1,
+        "tableTags": 0
+       },
+       {
+        "id": "table-tags-after-a-vertical-tab-and-a-no-break-space",
+        "htmlBlocks": 0,
+        "tableTags": 4
+       },
+       {
+        "id": "table-tags-in-star-and-plus-bullet-items",
+        "htmlBlocks": 0,
+        "tableTags": 4
+       },
+       {
+        "id": "a-table-tag-inside-a-processing-instruction",
+        "htmlBlocks": 1,
+        "tableTags": 1
+       },
+       {
+        "id": "html-blocks-opening-with-a-processing-instruction-a-declaration-and-a-cdata-section",
+        "htmlBlocks": 3,
+        "tableTags": 3
+       },
+       {
+        "id": "table-tags-as-decimal-and-hex-references-in-attribute-values",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       },
+       {
+        "id": "a-tag-holding-a-table-tag-opening-an-item-text",
+        "htmlBlocks": 0,
+        "tableTags": 1
+       },
+       {
+        "id": "a-table-tag-after-a-comment-opener-in-an-attribute-value-of-an-html-block",
+        "htmlBlocks": 1,
+        "tableTags": 0
+       },
+       {
+        "id": "a-table-in-an-indented-code-block",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       },
+       {
+        "id": "table-tags-inside-script-style-and-textarea-html-blocks",
+        "htmlBlocks": 3,
+        "tableTags": 3
+       },
+       {
+        "id": "table-tags-in-ordered-lists-starting-at-0-and-at-10",
+        "htmlBlocks": 0,
+        "tableTags": 4
+       },
+       {
         "id": "a-table-tag-inside-an-attribute-value",
         "htmlBlocks": 0,
         "tableTags": 1
@@ -1516,7 +1704,15 @@
         "document": "docs/workbench/TRACEABILITY.md",
         "frozenSha256": "8ec4715e5b8cbec7d24e5926c79388c3018cc57780c05251b015d36411e462d4"
        }
-      }
+      },
+      "residuals": [
+       {
+        "family": "R-COMMENT-BANG",
+        "htmlBlocks": 0,
+        "tableTags": 0,
+        "tableTagsOnceCommentsEndAsHtml": 1
+       }
+      ]
      }
     }
    ]
