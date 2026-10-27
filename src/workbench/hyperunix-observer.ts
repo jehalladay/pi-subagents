@@ -248,3 +248,33 @@ export function hyperunixTopology(reading: JsonValue, context: HyperUnixTopology
     kind: 'grouping', provenance: {source: 'hyperunix', observedAt: host.observedAt}}];
   return frozen({snapshots: [snapshot], relations, diagnostics: diagnostics.slice(0, MAX_DIAGNOSTICS).map(text => shown(text, DIAGNOSTIC))});
 }
+
+/** How hyperunixTopology uses one field of the hyperunix.find provider output. 'observed': an evidence field the projection is
+ * built from (the execution kind, the runtime licence, row retention, the operation, each certified batch id, the runtime
+ * identity) that a rewritten query plan must keep; 'rows': the answer rows, read for their count only and never for a row body;
+ * 'envelope': the provider contract, the SDK representation tag and the workspace root, checked for identity and refused at any
+ * other value. */
+export type HyperUnixFieldUse = 'observed' | 'rows' | 'envelope';
+/** One consumed field: a dotted path from the provider output root, '[]' standing for every element of a list. */
+export interface HyperUnixConsumedField {
+  readonly path: string;
+  readonly use: HyperUnixFieldUse;
+}
+/** wb-3ht.1: every provider output field hyperunixTopology reads, deeply frozen. HyperUnix designs a client boundary declaring
+ * which result fields a query plan must keep observable (its query-observer contract, design only); the vendored @hyperunix/sdk
+ * 0.1.0 declares none. Until the SDK ships that declaration, test/workbench-hyperunix-consumed-fields.test.ts pins this set to
+ * the adapter's measured reads both ways: a read outside it, or a listed field the adapter never reads or never lets move its
+ * outcome, fails there. Once it ships, the 'observed' entries are what Pi declares on every find. */
+export const HYPERUNIX_CONSUMED_FIELDS: readonly HyperUnixConsumedField[] = frozen([
+  {path: 'contract', use: 'envelope'},
+  {path: 'source.representation', use: 'envelope'},
+  {path: 'source.execution_status.kind', use: 'observed'},
+  {path: 'source.coverage_summary.licenses_absence', use: 'observed'},
+  {path: 'source.rows', use: 'rows'},
+  {path: 'source.operation', use: 'observed'},
+  {path: 'runtime.binarySha256', use: 'observed'},
+  {path: 'runtime.version', use: 'observed'},
+  {path: 'workspaceRoot', use: 'envelope'},
+  {path: 'source.coverage[].batch_id', use: 'observed'},
+  {path: 'source.rows_retained', use: 'observed'},
+]);

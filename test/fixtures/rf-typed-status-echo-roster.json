@@ -285,7 +285,26 @@
                 "member": 1,
                 "classProperty": 1,
                 "deep": 1,
-                "array": 1
+                "array": 1,
+                "readonlyType": 1,
+                "optionalType": 1,
+                "restType": 1,
+                "namedTuple": 1,
+                "callArgument": 1,
+                "newArgument": 1,
+                "conditional": 1,
+                "conditionalElse": 1,
+                "logical": 1,
+                "arrowBody": 1,
+                "returned": 1,
+                "functionReturn": 1,
+                "methodReturn": 1,
+                "awaited": 1,
+                "spread": 1,
+                "spreadElement": 1
+              },
+              "jsx": {
+                "attribute": 1
               }
             },
             "quiet": {
@@ -295,7 +314,15 @@
               "compoundSnake": 0,
               "aliasedPath": 0,
               "keyedPath": 0,
-              "boundPath": 0
+              "boundPath": 0,
+              "interfaceName": 0,
+              "typeName": 0,
+              "mappedKey": 0
+            },
+            "overread": {
+              "fusedLower": 1,
+              "fusedUpper": 1,
+              "fusedStem": 1
             },
             "walk": {
               "files": {
@@ -734,7 +761,7 @@
                     "rf-graph:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
                     "rf-workspace:rfw_aaaaaaaaaaaaaaaaaaaaaa",
                     "rf-bundle:sha256:2222222222222222222222222222222222222222222222222222222222222222",
-                    "rf-cli:0.1.784"
+                    "rf-cli:0.1.845"
                   ],
                   "sourceVersion": "sha256:2222222222222222222222222222222222222222222222222222222222222222",
                   "sourceRevision": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
@@ -745,7 +772,7 @@
               "diagnostics": [
                 "ephemeral noncommitted preview: render_id null, transaction_id null, 0 authoritative storage writes (envelope storage_write_count)",
                 "context text withheld: referenced by sha256 digest",
-                "producer release from result.provenance.cli_version: rf@0.1.784",
+                "producer release from result.provenance.cli_version: rf@0.1.845",
                 "no native interval supplied"
               ]
             }

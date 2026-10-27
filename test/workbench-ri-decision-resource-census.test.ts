@@ -69,9 +69,10 @@
  *    projection, and row A's matcher on a module typing that result; C4 the checker's quiet controls.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id, label,
  * until-then reading and pins, every pin's witness and covered phrases, the identifiers and their digests, the generative keys, the
- * roots (each with its walkFloors entry, in order), the placements, the resource, the registered tests and each pin's assertion
- * count - is held to the out-of-file roster test/fixtures/ri-decision-resource-roster.json; the last case walks this file's vitest
- * task tree against the roster.
+ * roots (each with its walkFloors entry, in order), the placements, the resource, the registered tests, each pin's assertion count
+ * and this header's Not-claimed lists (wb-gbxz: each Not-claimed sentence below, split at its semicolons, in order) - is held to the
+ * out-of-file roster test/fixtures/ri-decision-resource-roster.json; the last case walks this file's vitest task tree against the
+ * roster.
  * OUTSIDE ANCHOR (respin #1, the gate's F2): the bead's own row in the tracked export (.beads/issues.jsonl at the tree under test).
  * Its first `Acceptance:` line splits into exactly the clauses (a)-(c), and each clause, its four names written as their
  * placeholders, equals its row label; the four names it spells hash to the IDENTIFIERS digests; each pin's covered phrases (COVERS)
@@ -96,8 +97,14 @@
  * commit. Not claimed: a narrowing confined to fewer files than a root has gained since measuredAt (the slack, 0 at the measuring
  * tree) that leaves each measured directory a walked file of its own; a directory created after measuredAt; a hollow that also
  * lowers a floor or drops a directory in the roster (the floors are measured numbers that no in-file source re-derives: the
- * repository's CI checks out at depth 1, so the census reads no git history). A re-cut or fold that re-measures walkFloors
- * restores the margin.
+ * repository's CI checks out at depth 1, so the census reads no git history); a hollow in this file's reading or comparison code
+ * rather than its literals - a reading forged to return what its comparisons expect or re-pointed to a source that always meets
+ * them (the wb-w3tz gate's L2-07 and L2-08 keep G30's two edits and also have trackedOf return a held floor outright or read git's
+ * list in place of the walk's kept files, and its L2-10, one edit, drops scanOf's sites below a ui directory, each green with a
+ * src/ui plant), or a comparison dropped from a case whose assertion count the RECORD does not hold (every case but the pins',
+ * this list's own comparison included): every roster value reaches a case only through comparison code in this file, so wb-gbxz
+ * names the class instead of adding an in-file anchor, which would admit a next-order in-file hollow. A re-cut or fold that
+ * re-measures walkFloors restores the margin.
  * RECORD (the gate's F4): each pin's case records its vitest assertion count after its witness compares equal, and the last case
  * holds the counts to the roster, so a case that hands back a copy of its roster witness without measuring reds.
  * THE GATE-OPENING SIGNAL: when RI ships its typed decision envelope and resource tag (RI-DEC-06/07) and rf surfaces it, a
@@ -332,6 +339,8 @@ interface Roster {
   readonly exit: number;
   readonly envelope: JsonObject;
   readonly rows: readonly RosterRow[];
+  /** The header's Not-claimed lists (wb-gbxz): each Not-claimed sentence of this file's header, in order, as its items. */
+  readonly notClaimed: readonly (readonly string[])[];
   readonly tests: readonly string[];
   /** `${pin}:${assertion count}` for every pin, in row order. */
   readonly reached: readonly string[];
@@ -444,10 +453,13 @@ function readRoster(): Roster {
     typeof raw.tsxPin !== "string" || typeof raw.exit !== "number" || !Number.isSafeInteger(raw.exit)) {
     throw new Error("roster needs bead, rfVersion, riPin, riProbe, tsxPin and an integer exit");
   }
+  if (!Array.isArray(raw.notClaimed)) throw new Error("roster needs a notClaimed list");
+  const notClaimed = raw.notClaimed.map((entry: unknown, index: number): string[] => strings(entry, `notClaimed[${index}]`));
   return {
     bead: raw.bead, rfVersion: raw.rfVersion, riPin: raw.riPin, riProbe: raw.riProbe, tsxPin: raw.tsxPin, identifiers,
     generativeKeys: strings(raw.generativeKeys, "generativeKeys"), scanRoots: strings(raw.scanRoots, "scanRoots"), walkFloors, placements,
     resource: objectOf(json(raw.resource), "roster resource"), exit: raw.exit, envelope: envelopeOf(raw.envelope, "fixture"), rows,
+    notClaimed,
     tests: strings(raw.tests, "tests"),
     reached: strings(raw.reached, "reached"),
   };
@@ -853,6 +865,18 @@ function anchorOf(title: string, notes: string, rows: readonly Row[] = ROWS, cov
   };
 }
 
+/** The Not-claimed lists of a census source's header (its leading block comment, line prefixes dropped): each sentence that opens
+ * with the words "Not claimed" and a colon, read up to its closing period, split at its semicolons, in header order. */
+function notClaimedOf(source: string): string[][] {
+  const end = source.indexOf("*/");
+  const header = (end < 0 ? "" : source.slice(0, end))
+    .split("\n")
+    .map(line => line.replace(/^\s*\/?\*+ ?/, ""))
+    .join(" ")
+    .replace(/\s+/g, " ");
+  return [...header.matchAll(/Not claimed: (.+?)\.(?= [A-Z]|\s*$)/g)].map(match => (match[1] ?? "").split("; "));
+}
+
 /** `${pin}:${assertion count}`, pushed by each pin's case after its witness compares equal; the last case holds it to the roster. */
 const REACHED: string[] = [];
 
@@ -1139,6 +1163,9 @@ describe("wb-tz4r.1 RI decision resource census (RI-UNIFIED-DECISION-INFERENCE-R
     });
     // The tracked floors (wb-w3tz): one roster entry per scan root, in order, so no root's walk goes unanchored outside this file.
     expect(ROSTER.walkFloors.roots.map(floor => floor.root), "one roster walk floor per scan root, in order").toEqual([...SCAN_ROOTS]);
+    // The disclosures (wb-gbxz): every Not-claimed list of this file's header, in order, held to the roster, so a disclosure dropped
+    // from the header, or one added to it without the roster, reds.
+    expect(notClaimedOf(readFileSync(SELF_PATH, "utf8")), "the header's Not-claimed lists against the roster").toStrictEqual(ROSTER.notClaimed.map(list => [...list]));
     // The composed spellings are the acceptance's own names: each digest was taken from the bead's spelling at cut time.
     expect(IDENTIFIERS.map(identifier => sha256(spelled(identifier.words, identifier.canonical)))).toEqual(ROSTER.identifiers.map(entry => entry.sha256));
     expect(SPELLINGS).toHaveLength(12);

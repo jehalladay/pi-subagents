@@ -78,17 +78,23 @@
  *  C2 "a grep guard pins no minted 'latest'/'current' (0 federation hits in Pi src)": every src directory is walked at its floor
  *    (FLOORS, two below the direct-file counts at e8850da, 35/11/49/2/4/14, never under 1), and the walk C2 reads (srcFiles) is
  *    held at the call site to an independent enumeration of src (enumeratedSrcOf: Node's recursive listing, each entry lstat-ed,
- *    the regular files kept; wb-rmd7 F1/F2): the same paths, none missing and none extra; the anchor (observation.ts, the refresh
- *    mint) is read and the mint matcher catches its "current"; no src file is federation-scoped (a file is scoped when its path or
- *    its text carries a FEDERATION_WORDS run) and none mints; the same scanner reports a planted set's two federation mints (one
- *    scoped by its path alone, one by its text alone, in a comment) and holds an unscoped mint out. The walk's own positive
- *    controls (wb-zg8m F1, widened by wb-rmd7 F1): WALK_PLANT is written under a makeScratch root and read back through the same
- *    walk (srcFilesOf, filesBelow) and through the independent enumeration, each of which returns every planted regular file - a
- *    non-.ts file, a .ts file one level below the deepest FLOORS directory, a non-.ts file three levels deeper than it, a
- *    dot-named file, a file in a dot-named directory, an extensionless file and a .mjs file included - and the scanner reports
- *    their seven federation mints and holds the unscoped one out; the floors compare (floorReadings) reads a list holding each
- *    FLOORS directory's floor exactly as every directory at its floor, and that list one direct file short in each directory in
- *    turn as exactly that directory below its floor.
+ *    the regular files kept; wb-rmd7 F1/F2): the same paths, none missing and none extra; the list the guard scans is held there
+ *    by construction (wb-lotb F1): scanRead returns the scan beside the reading of the one list it scanned (each path with the
+ *    sha256/16 of its text), and that reading equals the independent reading of src (enumeratedFilesOf, enumeratedReadingOf: the
+ *    enumeration's paths, each text read by its own call), so a filter, slice or text change on the scanner's argument reds as a
+ *    reading line missing or extra, and the guard holds the independent reading itself to no scoped file and no mint, so a
+ *    verdict taken from a second, narrowed scan reds there too; the anchor (observation.ts, the refresh mint) is read and the mint
+ *    matcher catches its "current"; no src file is federation-scoped (a file is scoped when its path or its text carries a
+ *    FEDERATION_WORDS run) and none mints; the same scanner reports a planted set's three federation mints (one scoped by its path
+ *    alone, one by its path and its text, and one by its text alone, in a comment, under a path that spells no FEDERATION_WORDS
+ *    member: wb-lotb F2) and holds an unscoped mint out. The walk's own positive controls (wb-zg8m F1, widened by wb-rmd7 F1):
+ *    WALK_PLANT is written under a makeScratch root and read back through the same walk (srcFilesOf, filesBelow) and through the
+ *    independent enumeration, each of which returns every planted regular file - a non-.ts file, a .ts file one level below the
+ *    deepest FLOORS directory, a non-.ts file three levels deeper than it, a dot-named file, a file in a dot-named directory, an
+ *    extensionless file and a .mjs file included - scanRead's reading of the walked plant equals the plant's independent reading
+ *    line for line (wb-lotb F1), and the scanner reports their seven federation mints and holds the unscoped one out; the floors
+ *    compare (floorReadings) reads a list holding each FLOORS directory's floor exactly as every directory at its floor, and that
+ *    list one direct file short in each directory in turn as exactly that directory below its floor.
  *  M, the matchers C2 reads: MS1-MS4 one pin per FEDERATION_WORDS member, MM1-MM2 one per MINT_WORDS member; each spelling is
  *    caught by its own member only, and each mint pin pins its misses (currently, concurrent, currency and two non-words).
  *  R, the named residuals of C2, each a pinned quiet row: R1 R-VOCABULARY (a mint in a file whose path and text spell no scope
@@ -107,11 +113,13 @@
  * NOT CLAIMED: an edit of the tracked bead export itself (it is machine-written at each ledger hop; a coordinated edit of this
  * file and the roster that removes one R pin together with its RESIDUALS entry reds through the export's RESIDUALS line); a
  * positive control removed or bypassed together with the instrument it controls (WALK_PLANT and the floors list beside
- * filesBelow and floorReadings, the independent enumeration beside srcFiles, MIS_ECHOES beside echoFailuresOf: each control
- * lives in this file); a walk narrowing that keeps every WALK_PLANT shape reads a src tree holding no other shape exactly as the
- * intact walk does (at base 6e0c3d2: 116 regular files, all .ts, no dot-named entry, no extensionless file, no symlink), and reds
- * through the enumeration once src holds a file of a shape it drops; a symbolic link to a file is read by neither the walk nor the
- * enumeration (on Node 24 the enumeration lists the files below a linked directory, which then red C2 as missing from the walk).
+ * filesBelow and floorReadings, the independent enumeration beside srcFiles, the independent reading and its verdict beside
+ * scanRead - a second, narrowed scan taken beside scanRead's own together with a narrowed or removed independent verdict
+ * included -, MIS_ECHOES beside echoFailuresOf: each control lives in this file); a walk or reading narrowing that keeps every
+ * WALK_PLANT shape reads a src tree holding no other shape exactly as the intact one does (at base 6e0c3d2: 116 regular files, all
+ * .ts, no dot-named entry, no extensionless file, no symlink), and reds through the enumeration or the independent reading once
+ * src holds a file of a shape it drops; a symbolic link to a file is read by neither the walk nor the enumeration (on Node 24 the
+ * enumeration lists the files below a linked directory, which then red C2 as missing from the walk).
  * SCOPE: the guard does not judge negation or context: a federation-scoped file spelling a mint word anywhere reds, a comment
  * stating the prohibition included. The excerpts are producer facts at 6a251bf73af5; Pi vendors no rf source, so a producer-side
  * change is seen only when an rf pin-bump re-reads them. The live legs are A1's rf reader, A2, B1, B2 and C1 (Pi's real
@@ -124,6 +132,11 @@
  * an independent enumeration of src, which the walk plant also controls, and WALK_PLANT widened by a dot-named file, a file in a
  * dot-named directory, an extensionless file and a .mjs file; F2 the srcFiles() caller, now read against that enumeration at
  * the same call site; the ROWS shape is unchanged.
+ * FOLLOW-UP wb-lotb (R694 from landing 460, wb-rmd7; gate of record cmd_8fe7488ca561): F1 the list the guard scans held at the
+ * C2 call site to an independent reading of src by construction (scanRead, enumeratedFilesOf, enumeratedReadingOf; the walk
+ * plant controls both readings), and the guard's verdict held over that independent reading too; F2 a text-alone PLANTED control
+ * whose path spells no FEDERATION_WORDS member, so the scope's text branch has its own positive control; the ROWS shape is
+ * unchanged.
  *
  * Display paths added: none. Test-only: nothing is spawned; C2 writes WALK_PLANT under one makeScratch root (leak guard
  * installed) and removes it in the same case; src, the bead export and this roster are only read.
@@ -842,7 +855,9 @@ const srcFilesOf = (root: string): SourceFile[] => filesBelow(join(root, "src"))
 const srcFiles = (): SourceFile[] => srcFilesOf(REPO);
 /** C2's independent enumeration of <root>/src (wb-rmd7 F1/F2): Node's own recursive listing, every entry lstat-ed and the regular
  * files kept, each path relative to the root, sorted. It shares no code with filesBelow, srcFilesOf or srcFiles, so a narrowed walk,
- * or a filter on the reading C2 takes from srcFiles, that drops a real src file reds at the C2 call site. */
+ * or a filter on the srcFiles() output before the walk compare, that drops a real src file reds at the C2 call site; a filter on
+ * the scanner's own argument comes after that compare, and the reading compare holds it (scanRead, enumeratedReadingOf; wb-lotb
+ * F1). */
 const enumeratedSrcOf = (root: string): string[] =>
   readdirSync(join(root, "src"), { encoding: "utf8", recursive: true })
     .map(entry => join("src", entry))
@@ -850,6 +865,18 @@ const enumeratedSrcOf = (root: string): string[] =>
     .sort();
 /** Sorted by path, plain code-point compare. */
 const byPath = (files: readonly SourceFile[]): SourceFile[] => [...files].sort((a, b) => (a.path < b.path ? -1 : a.path > b.path ? 1 : 0));
+/** A list's reading: one line per file, sorted by path, its path and the sha256/16 of its text. */
+const readingOf = (files: readonly SourceFile[]): string[] => byPath(files).map(file => `${file.path} ${sha256(file.text).slice(0, 16)}`);
+/** The guard with its own reading (wb-lotb F1): the scan of one list beside the reading of that same list, both taken from the one
+ * argument, so a call site holding `read` to an independent reading of src holds the list the guard scans: a filter, slice or text
+ * change on the scanner's argument reds there as a reading line missing or extra. */
+const scanRead = (files: readonly SourceFile[]): { read: string[]; scan: GuardScan } => ({ read: readingOf(files), scan: scanFiles(files) });
+/** C2's independent reading of <root>/src (wb-lotb F1): each enumeratedSrcOf path with its text, read by its own readFileSync call
+ * (not textOf or srcFilesOf). */
+const enumeratedFilesOf = (root: string): SourceFile[] => enumeratedSrcOf(root).map(path => ({ path, text: readFileSync(join(root, path), "utf8") }));
+/** The independent reading's lines, computed apart from readingOf: each path beside the sha256/16 of its text, in the enumeration's
+ * order. */
+const enumeratedReadingOf = (files: readonly SourceFile[]): string[] => files.map(file => `${file.path} ${sha256(file.text).slice(0, 16)}`);
 /** Each FLOORS directory's reading over a file list: `<directory>:<its direct files reach its floor>`. */
 const floorReadings = (files: readonly SourceFile[]): string[] =>
   Object.entries(FLOORS).map(([directory, floor]) => `${directory}:${files.filter(file => dirname(file.path) === directory).length >= floor}`);
@@ -871,9 +898,9 @@ const WALK_PLANT: readonly SourceFile[] = [
   { path: "src/workbench/FEDERATION-NOTES", text: "The peer view is latest.\n" },
   { path: "src/workbench/federation-peer.mjs", text: 'export const label = "current";\n' },
 ];
-/** Writes a plant under a fresh makeScratch root, reads the root back through srcFilesOf (sorted by path) and through
- * enumeratedSrcOf, and removes it. */
-function walkPlanted(plant: readonly SourceFile[]): { walked: SourceFile[]; enumerated: string[] } {
+/** Writes a plant under a fresh makeScratch root, reads the root back through srcFilesOf (sorted by path), through
+ * enumeratedSrcOf and through the independent reading (enumeratedFilesOf, enumeratedReadingOf), and removes it. */
+function walkPlanted(plant: readonly SourceFile[]): { walked: SourceFile[]; enumerated: string[]; reading: string[] } {
   const root = makeScratch("rf-federated-cursor-walk-");
   try {
     for (const file of plant) {
@@ -881,16 +908,18 @@ function walkPlanted(plant: readonly SourceFile[]): { walked: SourceFile[]; enum
       mkdirSync(dirname(target), { recursive: true });
       writeFileSync(target, file.text);
     }
-    return { walked: byPath(srcFilesOf(root)), enumerated: enumeratedSrcOf(root) };
+    return { walked: byPath(srcFilesOf(root)), enumerated: enumeratedSrcOf(root), reading: enumeratedReadingOf(enumeratedFilesOf(root)) };
   } finally {
     removeScratch(root);
   }
 }
-/** C2's positive control: a federation mint scoped by its path alone, one scoped by its text alone (in a comment), and an
- * unscoped mint. */
+/** C2's positive control: a federation mint scoped by its path alone, one scoped by its path and its text, one scoped by its text
+ * alone (in a comment, under a path that spells no FEDERATION_WORDS member, so the scope's text branch has its own control:
+ * wb-lotb F2), and an unscoped mint. */
 const PLANTED: readonly SourceFile[] = [
   { path: "src/workbench/federation-import.ts", text: 'export const label = "owner latest";' },
   { path: "src/workbench/peer-watermark.ts", text: "// the watermark h never renders current\nexport const h = 8;" },
+  { path: "src/workbench/peer-sync.ts", text: "// a federation peer sync never renders current\nexport const synced = true;" },
   { path: "src/workbench/plain.ts", text: 'export const freshness = "current";' },
 ];
 /** Row M's spellings: each scope spelling carries its member's run alone; each mint spelling its word, each miss none. */
@@ -1259,10 +1288,14 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const enumerated = enumeratedSrcOf(REPO);
     const enumeration = { missing: enumerated.filter(path => !walkedPaths.includes(path)), extra: walkedPaths.filter(path => !enumerated.includes(path)) };
     expect(walkedPaths, "the walk C2 reads differs from an independent enumeration of src: a narrowed walk or a filtered reading").toStrictEqual(enumerated);
+    const { read, scan: real } = scanRead(files);
+    const independentFiles = enumeratedFilesOf(REPO);
+    const independent = enumeratedReadingOf(independentFiles);
+    const scanned = { missing: independent.filter(line => !read.includes(line)), extra: read.filter(line => !independent.includes(line)) };
+    expect(read, "the list the guard scans differs from an independent reading of src: a filter, slice or text change on the scanner's argument").toStrictEqual(independent);
     const anchor = files.find(file => file.path === ANCHOR);
     const anchorRead = anchor?.text.includes(ANCHOR_TOKEN) === true;
     const anchorMinted = anchor === undefined ? false : mintsOf(anchor.text).includes("current");
-    const real = scanFiles(files);
     expect(
       directories.filter(entry => entry.endsWith(":false")),
       "a src directory walked below its floor",
@@ -1270,17 +1303,20 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(anchorRead, `the anchor ${ANCHOR} was not read with its token`).toBe(true);
     expect(anchorMinted, "the mint matcher missed Pi's own refresh mint at the anchor").toBe(true);
     expect(real, "a federation-scoped src file, or a minted label in one").toStrictEqual({ scoped: [], hits: [] });
+    const independentScan = scanFiles(independentFiles);
+    expect(independentScan, "a federation-scoped src file, or a minted label in one, in the independent reading of src").toStrictEqual({ scoped: [], hits: [] });
     const planted = scanFiles(PLANTED);
     expect(planted, "the guard missed a planted federation mint or scoped an unscoped file").toStrictEqual({
-      scoped: ["src/workbench/federation-import.ts", "src/workbench/peer-watermark.ts"],
-      hits: ["src/workbench/federation-import.ts: latest", "src/workbench/peer-watermark.ts: current"],
+      scoped: ["src/workbench/federation-import.ts", "src/workbench/peer-watermark.ts", "src/workbench/peer-sync.ts"],
+      hits: ["src/workbench/federation-import.ts: latest", "src/workbench/peer-watermark.ts: current", "src/workbench/peer-sync.ts: current"],
     });
-    const { walked, enumerated: plantEnumerated } = walkPlanted(WALK_PLANT);
+    const { walked, enumerated: plantEnumerated, reading: plantReading } = walkPlanted(WALK_PLANT);
     expect(walked, "the walk missed a planted regular file: a non-.ts, dot-named or extensionless file, or one below the deepest FLOORS directory").toStrictEqual(
       byPath(WALK_PLANT),
     );
     expect(plantEnumerated, "the independent enumeration missed a planted regular file").toStrictEqual(byPath(WALK_PLANT).map(file => file.path));
-    const walkScan = scanFiles(walked);
+    const { read: walkRead, scan: walkScan } = scanRead(walked);
+    expect(walkRead, "the guard's reading of the walked plant differs from the plant's independent reading").toStrictEqual(plantReading);
     expect(walkScan, "the guard missed a walked federation mint or scoped the walked unscoped one").toStrictEqual({
       scoped: [
         "src/.peers/watermark.ts",
@@ -1312,11 +1348,13 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     return {
       directories,
       enumeration,
+      scanned,
       anchorRead,
       anchorMinted,
       real,
+      independentScan,
       planted,
-      walk: { files: walked.map(file => file.path), enumerated: plantEnumerated, scan: walkScan },
+      walk: { files: walked.map(file => file.path), enumerated: plantEnumerated, read: walkRead, scan: walkScan },
       floorControl: { atFloor, oneShort },
     };
   },

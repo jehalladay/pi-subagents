@@ -43,7 +43,12 @@
  *    (record as Rec).publication.state, load().publication.state, const { publication: { state } } = record); and every regular
  *    file below src is read, a module of any MODULE_EXTENSIONS member through its AST by its script kind and any other file whole
  *    as text, while an entry that is neither a file nor a directory reds (iv: a .mts module), the walk held to a planted scratch
- *    tree; A2 the rf roster, selected by id prefix, reactivefiber:
+ *    tree. wb-rgov widened (iii) to the wb-yg70 gate's F2 survivors: the key path also runs through a readonly or other type
+ *    operator, an optional, rest or named tuple member, a call or construction argument, a conditional branch, a ?? || && operand,
+ *    an arrow body, a value returned from an arrow or function expression (a method or accessor names its own key), an await, a
+ *    spread (its members join the object they are spread into) and a JSX attribute's value (the attribute names the key), each
+ *    with its control; and it pinned the fused reading's over-read (the wb-yg70 gate's F3, OVER-READ below);
+ *    A2 the rf roster, selected by id prefix, reactivefiber:
  *    permission or rf@ contractSource, stays the preview alone (native and injected registrations, RECONCILE_EVIDENCE_READS);
  *    A3 the native provider refuses a federation record printed by rf as an unrecognized envelope, in one spawn of the render argv;
  *    A4 the adapter refuses a reading carrying one.
@@ -96,8 +101,20 @@
  * SKIP_MODES member on a chain rooted at it, test, describe or suite (a call head, a conditional, an alias, a renamed or
  * namespace import), a computed member, an options-object mode that is not literally false, or a context skip - each form held
  * to a control (REGISTRATION_CONTROLS), so the F3 pair (the judge and one pin case skipped together, read green before) reds.
- * Non-claim: a registrar reached through any other value (an object holding it, a reflective read) is not read; its control
- * reads no mode. wb-yg70's two residuals are held to the receipt's cut-2 table, after the first entry's residual table.
+ * wb-rgov (the wb-yg70 gate's F1) widened the read: an argument is read through wrappers (parentheses, as, satisfies, non-null,
+ * angle-bracket), both branches of a conditional and both operands of ?? || &&; an argument after a registration's name, or any
+ * argument of a hook call, that is neither an object literal, an inline function nor a plain literal (a name, a member read, a
+ * call) reds as unread, so an options object or a callback held in a variable is never read as clean; every parameter of an
+ * inline callback of a registration or of a hook (HOOKS as imported or as a member of a registrar chain, TEST_HOOKS by name) is
+ * a test context, and so are its aliases (through wrappers, to a fixed point) and its rest bindings - a skip read on one (a
+ * member, a literal element key or a destructured key) reds, as do a computed member and any other use (an argument, an
+ * assignment, a return, a shorthand: a context escape); and an assignment to a task's mode or fails member anywhere in the
+ * module reds. Non-claims: a registrar or hook reached through any other value (an object holding it, a helper it is handed
+ * to, a reflective read) and a reflective or computed-key write (Reflect.set, Object.assign, task[flag] = ...) are not read;
+ * their controls read no mode. wb-yg70's two residuals are held to the receipt's cut-2 table, after the first entry's residual
+ * table. wb-rgov (the wb-yg70 gate's F4): A1 records every control it reads (group, name, reading and the sha256/16 of its text,
+ * the walk's planted tree included) and the hook every registration-mode control (name, modes and text sha256/16); both
+ * records are held to the receipt's cut-3 tables, so a control removed together with its reading, or rewritten, reds.
  * RESIDUALS (named, each with a pinned quiet row): R-UNLISTED the note names at most four distinct not-observed words, so a fifth
  * one and beyond is the marker … and two renders differing only there share a note, while the count and every reading still
  * carry each row (Q1); R-TONE-CLASS the snapshot node's coverage, tone and statusText are Pi presentation classes, so PENDING and
@@ -114,15 +131,21 @@
  * reads a fused field only inside one word: across a split it cannot be told from an English compound (publicStatement,
  * matched_counter) without a dictionary (A1's fused-split and compound controls stay 0); R-SPLIT-PATH (wb-yg70) a path whose
  * links are joined only through a local binding, a key bound elsewhere or a variable's own name
- * (const { publication: p } = record; p.state, record[KEY].state, const publication = { state }) reads quiet to A1, which joins a
- * path's links only within one access chain or one nested pattern, literal or type (A1's aliased, keyed and bound controls stay
- * 0).
+ * (const { publication: p } = record; p.state, record[KEY].state, const publication = { state }), or (wb-rgov, the wb-yg70
+ * gate's F6) through an interface's or a type alias's own name or a mapped-type key, reads quiet to A1, which joins a path's
+ * links only within one access chain or one nested pattern, literal or type (A1's aliased, keyed, bound, interface-name,
+ * type-name and mapped-key controls stay 0). OVER-READ (named and pinned, the false-red direction; wb-rgov, the wb-yg70 gate's
+ * F3): the fused reading takes a single word that holds a matcher's fused words anywhere inside it, so an English compound
+ * written as one word (publicstatement, MATCHEDCOUNTER, a confederation, where the fused federat loses its word start) reads as
+ * a federation field: A1's over-read controls read 1, a src word spelling one reds A1 by design, and narrowing the reading would
+ * lose kills the landed census makes.
  * SCOPE: the vocabularies are producer facts at the installed rf; Pi vendors no rf schema, so a producer change is seen only when a
  * re-measure re-reads them. The armed half (a federation reader echoing PublicState, availability, verdict and the coverage witness)
  * waits for the FW envelopes and FW-18 (rfc-0txnl.22): no reader is added or faked here.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src and the receipt are only read.
  */
+import { createHash } from "node:crypto";
 import { chmodSync, type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -161,6 +184,10 @@ const RECEIPT_PATH = join(REPO, "docs", "workbench", "receipts", "wb-d8io.md");
 const RECEIPT_ENTRY = "2026-10-24 the typed-status echo census judged set, anchored outside the census (wb-o4h0.7 gate F1-F4)";
 /** wb-yg70 (the wb-d8io gate's F1 and F3): the entry its cut appended, whose one table adds residuals after the first entry's. */
 const RECEIPT_CUT_2 = "2026-10-25 the typed-status echo census judged set, cut 2: A1's widened reading, two residuals and the skip-mode hook (wb-yg70, the wb-d8io gate's F1 and F3)";
+/** wb-rgov (the wb-yg70 gate's F1-F4): the entry its cut appended, whose two tables hold every A1 control and every
+ * registration-mode control by name, reading and text. */
+const RECEIPT_CUT_3 =
+  "2026-10-27 the typed-status echo census judged set, cut 3: the registration read through wrappers, branches, held values, aliases and hooks, A1's key paths through more nodes, the fused over-read pinned and every control anchored (wb-rgov, the wb-yg70 gate's F1-F4)";
 /** The table sections, the entry each sits under and the header row each must keep. */
 const RECEIPT_TABLES = {
   pins: { entry: RECEIPT_ENTRY, heading: "Judged pins, wb-d8io cut 1", header: ["Row", "Pin"] },
@@ -168,6 +195,8 @@ const RECEIPT_TABLES = {
   matchers: { entry: RECEIPT_ENTRY, heading: "Federation matchers, wb-d8io cut 1", header: ["Matcher"] },
   words: { entry: RECEIPT_ENTRY, heading: "Absence words, wb-d8io cut 1", header: ["Vocabulary", "Word"] },
   residualAdditions: { entry: RECEIPT_CUT_2, heading: "Residual additions, wb-d8io cut 2", header: ["Residual", "Quiet row"] },
+  readingControls: { entry: RECEIPT_CUT_3, heading: "A1 controls, wb-d8io cut 3", header: ["Group", "Control", "Reads", "Text sha256/16"] },
+  registrationControls: { entry: RECEIPT_CUT_3, heading: "Registration-mode controls, wb-d8io cut 3", header: ["Control", "Modes", "Text sha256/16"] },
 } as const;
 const ROOT = process.cwd();
 const PREVIEW_ID = "reactivefiber.render.preview";
@@ -877,12 +906,31 @@ function memberKey(node: ts.Node): string | undefined {
   if (ts.isBindingElement(node)) return ts.isObjectBindingPattern(node.parent) && node.dotDotDotToken === undefined ? keyText(node.propertyName ?? node.name) : undefined;
   if (ts.isPropertyAssignment(node) || ts.isShorthandPropertyAssignment(node) || ts.isPropertySignature(node) || ts.isPropertyDeclaration(node)) return keyText(node.name);
   if (ts.isMethodDeclaration(node) || ts.isMethodSignature(node) || ts.isGetAccessorDeclaration(node) || ts.isSetAccessorDeclaration(node)) return keyText(node.name);
+  // wb-rgov (the wb-yg70 gate's F2): a JSX attribute names the key of the value it carries.
+  if (ts.isJsxAttribute(node)) return ts.isIdentifier(node.name) ? node.name.text : undefined;
   return undefined;
 }
-/** The nodes a nested object sits in without a key of its own: array patterns and their elements, array literals, the
- * expression wrappers, and array, tuple, union, intersection, parenthesized and generic types. */
-function passesThrough(node: ts.Node): boolean {
+/** The logical operators whose either operand can be the expression's value: a key path runs through both (A1) and the
+ * registration read takes both (wb-rgov). */
+const LOGICAL_OPERATORS: readonly ts.SyntaxKind[] = [ts.SyntaxKind.QuestionQuestionToken, ts.SyntaxKind.BarBarToken, ts.SyntaxKind.AmpersandAmpersandToken];
+/** The nodes a nested object sits in without a key of its own, reached from `child`: array patterns and their elements, array
+ * literals, the expression wrappers, and array, tuple, union, intersection, parenthesized and generic types; wb-rgov (the wb-yg70
+ * gate's F2) adds type operators (readonly), optional, rest and named tuple members, a call's or construction's arguments, a
+ * conditional's branches, a logical operand, an arrow function's body, an await, a spread and a JSX attribute's expression. */
+function passesThrough(node: ts.Node, child: ts.Node): boolean {
+  if (ts.isConditionalExpression(node)) return child !== node.condition;
+  if (ts.isBinaryExpression(node)) return LOGICAL_OPERATORS.includes(node.operatorToken.kind);
+  if (ts.isCallExpression(node) || ts.isNewExpression(node)) return child !== node.expression;
+  if (ts.isArrowFunction(node)) return child === node.body;
   return (
+    ts.isTypeOperatorNode(node) ||
+    ts.isOptionalTypeNode(node) ||
+    ts.isRestTypeNode(node) ||
+    ts.isNamedTupleMember(node) ||
+    ts.isAwaitExpression(node) ||
+    ts.isSpreadElement(node) ||
+    ts.isSpreadAssignment(node) ||
+    ts.isJsxExpression(node) ||
     ts.isArrayBindingPattern(node) ||
     (ts.isBindingElement(node) && ts.isArrayBindingPattern(node.parent)) ||
     ts.isArrayLiteralExpression(node) ||
@@ -900,11 +948,28 @@ function passesThrough(node: ts.Node): boolean {
   );
 }
 /** The keys enclosing an object pattern, object literal or type literal, outermost first (wb-yg70, F1(iii)): the member it is the
- * value or type of, that member's own enclosing keys, and so on, through the pass-through nodes. A variable or parameter name is
- * no key (R-SPLIT-PATH). */
+ * value or type of, that member's own enclosing keys, and so on, through the pass-through nodes. wb-rgov (the wb-yg70 gate's F2):
+ * a spread's members join the object literal they are spread into, and a returned value continues from the arrow function or
+ * function expression it returns from (a method or accessor is itself the member). A variable or parameter name is no key
+ * (R-SPLIT-PATH). */
 function enclosingKeys(container: ts.Node): string[] {
+  let child: ts.Node = container;
   let at: ts.Node | undefined = container.parent;
-  while (at !== undefined && passesThrough(at)) at = at.parent;
+  while (at !== undefined) {
+    if (ts.isReturnStatement(at)) {
+      const returnedFrom: ts.Node | undefined = ts.findAncestor(at.parent, ts.isFunctionLike);
+      if (returnedFrom === undefined || !(ts.isArrowFunction(returnedFrom) || ts.isFunctionExpression(returnedFrom))) {
+        at = returnedFrom;
+        break;
+      }
+      child = returnedFrom;
+      at = returnedFrom.parent;
+      continue;
+    }
+    if (!(ts.isObjectLiteralExpression(at) && ts.isSpreadAssignment(child)) && !passesThrough(at, child)) break;
+    child = at;
+    at = at.parent;
+  }
   const key = at === undefined ? undefined : memberKey(at);
   return at === undefined || key === undefined ? [] : [...enclosingKeys(at.parent), key];
 }
@@ -963,6 +1028,11 @@ function rootless(value: JsonValue): JsonValue {
   if (Array.isArray(value)) return value.map(rootless);
   if (value !== null && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, rootless(item)]));
   return value;
+}
+
+/** A text's sha256/16: how the receipt's cut-3 tables hold each control's text (wb-rgov, the wb-yg70 gate's F4). */
+function shaOf(text: string): string {
+  return createHash("sha256").update(text, "utf8").digest("hex").slice(0, 16);
 }
 
 /**
@@ -1047,29 +1117,44 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(anchorRead, "the anchor providers/reactivefiber.ts was not read with its render argv").toBe(true);
     expect(others, "an src entry that is neither a file nor a directory, which no read vouches for").toEqual([]);
     expect(hits, "a federation field in src code needs the FW envelopes and FW-18 (rfc-0txnl.22)").toEqual([]);
-    const control = (text: string): number => federationHits("control.ts", text).length;
+    const control = (text: string, fileName = "control.ts"): number => federationHits(fileName, text).length;
+    // wb-rgov (the wb-yg70 gate's F4): every control below is read through `group`, which records its group, name, reading and
+    // the sha256/16 of its text; that record stands in the receipt's A1 control table, outside this file and its roster, so a
+    // control removed together with its reading, or rewritten to a text a narrowed reading still catches, reds A1.
+    const ledger: string[][] = [];
+    const group = <Name extends string>(name: string, texts: Readonly<Record<Name, string>>, fileName = "control.ts"): Record<Name, number> => {
+      const counts: Partial<Record<Name, number>> = {};
+      for (const key of Object.keys(texts) as Name[]) {
+        const count = control(texts[key], fileName);
+        ledger.push([name, key, String(count), shaOf(texts[key])]);
+        counts[key] = count;
+      }
+      return counts as Record<Name, number>;
+    };
     // Each matcher's own positive control: its spelling is caught by it alone.
     const members = Object.fromEntries(FEDERATION_SPELLINGS.map(spelling => [spelling, federationHits("control.ts", `const key = "${spelling}";`)]));
     expect(Object.values(members)).toStrictEqual(FEDERATION_MATCHERS.map(matcher => [matcher.source]));
     const controls = {
       members,
-      snake: control("const state = record.publication_state;"),
-      camel: control("const state = record.publicationState;"),
-      quoted: control('const key = "matched_count";'),
-      destructured: control("const { witness_digest: witness } = coverage;"),
-      recordName: control("interface QueryViewRef { availability: string; verdict: string }"),
-      camelRecord: control("const ref = queryViewRef;"),
-      boundaryName: control("type Boundary = OwnerBoundary;"),
-      witnessField: control('const key = "manifest_digest";'),
-      escaped: control('const key = "publication\\u005fstate";'),
-      escapedName: control("const publication\\u005fstate = 1;"),
-      dotted: control('const path = "publication.state";'),
-      chain: control("const value = record.publication.state;"),
-      prefixed: control("const value = readPublicationState(record);"),
-      pattern: control("const reads = /witness_digest/;"),
-      prose: control("// reads a federated query view"),
-      commentOnly: control("/** the federated query view of an OwnerBoundary */\nexport const x = 1;"),
-      composed: control('const key = ["publication", "state"].join("_");'),
+      ...group("controls", {
+        snake: "const state = record.publication_state;",
+        camel: "const state = record.publicationState;",
+        quoted: 'const key = "matched_count";',
+        destructured: "const { witness_digest: witness } = coverage;",
+        recordName: "interface QueryViewRef { availability: string; verdict: string }",
+        camelRecord: "const ref = queryViewRef;",
+        boundaryName: "type Boundary = OwnerBoundary;",
+        witnessField: 'const key = "manifest_digest";',
+        escaped: 'const key = "publication\\u005fstate";',
+        escapedName: "const publication\\u005fstate = 1;",
+        dotted: 'const path = "publication.state";',
+        chain: "const value = record.publication.state;",
+        prefixed: "const value = readPublicationState(record);",
+        pattern: "const reads = /witness_digest/;",
+        prose: "// reads a federated query view",
+        commentOnly: "/** the federated query view of an OwnerBoundary */\nexport const x = 1;",
+        composed: 'const key = ["publication", "state"].join("_");',
+      }),
     };
     // The gate's F3: a comment reads no field, so a comment-only mention is no hit. R-COMPOSED-FIELD's quiet row: a spelling
     // assembled from parts stays invisible to the scan.
@@ -1079,64 +1164,108 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(Object.values(measuredWitnessFields).every(count => count === 1)).toBe(true);
     // wb-yg70 (the wb-d8io gate's F1): a plural name reads singular (i), a field fused inside one word reads through the fused
     // matchers (ii), and an access chain reads through any head, wrapper or literal key while a nested pattern, literal or type
-    // spells its key path (iii): each control is caught, by exactly one matcher.
+    // spells its key path (iii): each control is caught, by exactly one matcher. wb-rgov (the wb-yg70 gate's F2): the key path
+    // also reads through a readonly or other type operator, an optional, rest or named tuple member, a call or construction
+    // argument, a conditional branch, a ?? || && operand, an arrow body, a returned value, an await, a spread and a JSX
+    // attribute's value.
     const widened = {
-      plural: {
-        snake: control("const PUBLIC_STATES = [];"),
-        camel: control("const witnessDigests = [];"),
-        quoted: control('const key = "matched_counts";'),
-        ies: control("const ownerBoundaries = [];"),
-        inner: control("const backendInstanceIds = [];"),
-      },
-      fused: {
-        lower: control("const queryviewref = 1;"),
-        upper: control("const QUERYVIEWREF = 1;"),
-        prefixed: control("const readpublicationstate = 1;"),
-        plural: control("const ownerboundariesref = 1;"),
-        prose: control('const note = "reads the queryviewref field";'),
-      },
-      chains: {
-        element: control('const value = record["publication"]["state"];'),
-        mixed: control('const value = record.publication["state"];'),
-        nonNull: control("const value = record!.publication!.state;"),
-        asserted: control("const value = (record as Rec).publication.state;"),
-        satisfied: control("const value = (record satisfies Rec).publication.state;"),
-        called: control("const value = load().publication.state;"),
-        constructed: control("const value = new Rec().publication.state;"),
-        optional: control('const value = record?.["publication"]?.state;'),
-        templateKey: control("const value = record[`publication`].state;"),
-      },
-      nested: {
-        binding: control("const { publication: { state } } = record;"),
-        parameter: control("function read({ publication: { state } }: Rec) { return state; }"),
-        assignment: control("({ publication: { state } } = record);"),
-        literal: control('const record = { publication: { state: "FAILED" } };'),
-        type: control("type Rec = { publication: { state: string } };"),
-        member: control("interface Rec { publication: { state: string } }"),
-        classProperty: control('class Rec { publication = { state: "FAILED" }; }'),
-        deep: control("const { backend: { instance: { id } } } = record;"),
-        array: control("const { publication: [{ state }] } = record;"),
-      },
+      plural: group("widened.plural", {
+        snake: "const PUBLIC_STATES = [];",
+        camel: "const witnessDigests = [];",
+        quoted: 'const key = "matched_counts";',
+        ies: "const ownerBoundaries = [];",
+        inner: "const backendInstanceIds = [];",
+      }),
+      fused: group("widened.fused", {
+        lower: "const queryviewref = 1;",
+        upper: "const QUERYVIEWREF = 1;",
+        prefixed: "const readpublicationstate = 1;",
+        plural: "const ownerboundariesref = 1;",
+        prose: 'const note = "reads the queryviewref field";',
+      }),
+      chains: group("widened.chains", {
+        element: 'const value = record["publication"]["state"];',
+        mixed: 'const value = record.publication["state"];',
+        nonNull: "const value = record!.publication!.state;",
+        asserted: "const value = (record as Rec).publication.state;",
+        satisfied: "const value = (record satisfies Rec).publication.state;",
+        called: "const value = load().publication.state;",
+        constructed: "const value = new Rec().publication.state;",
+        optional: 'const value = record?.["publication"]?.state;',
+        templateKey: "const value = record[`publication`].state;",
+      }),
+      nested: group("widened.nested", {
+        binding: "const { publication: { state } } = record;",
+        parameter: "function read({ publication: { state } }: Rec) { return state; }",
+        assignment: "({ publication: { state } } = record);",
+        literal: 'const record = { publication: { state: "FAILED" } };',
+        type: "type Rec = { publication: { state: string } };",
+        member: "interface Rec { publication: { state: string } }",
+        classProperty: 'class Rec { publication = { state: "FAILED" }; }',
+        deep: "const { backend: { instance: { id } } } = record;",
+        array: "const { publication: [{ state }] } = record;",
+        readonlyType: "type Rec = { publication: readonly { state: string }[] };",
+        optionalType: "type Rec = { publication: [{ state: string }?] };",
+        restType: "type Rec = { publication: [...{ state: string }[]] };",
+        namedTuple: "type Rec = { publication: [first: { state: string }] };",
+        callArgument: 'const record = { publication: make({ state: "FAILED" }) };',
+        newArgument: 'const record = { publication: new Box({ state: "FAILED" }) };',
+        conditional: 'const record = { publication: flag ? { state: "FAILED" } : null };',
+        conditionalElse: 'const record = { publication: flag ? null : { state: "FAILED" } };',
+        logical: 'const record = { publication: fallback ?? { state: "FAILED" } };',
+        arrowBody: 'const record = { publication: () => ({ state: "FAILED" }) };',
+        returned: 'const record = { publication: () => {\n  return { state: "FAILED" };\n} };',
+        functionReturn: 'const record = { publication: function () {\n  return { state: "FAILED" };\n} };',
+        methodReturn: 'const record = { publication() {\n  return { state: "FAILED" };\n} };',
+        awaited: 'const read = async () => ({ publication: await load({ state: "FAILED" }) });',
+        spread: 'const record = { publication: { ...{ state: "FAILED" } } };',
+        spreadElement: 'const record = { publication: [...[{ state: "FAILED" }]] };',
+      }),
+      jsx: group("widened.jsx", { attribute: 'export const view = <Card publication={{ state: "FAILED" }} />;' }, "control.tsx"),
     };
-    const missed = Object.entries(widened).flatMap(([group, counts]) =>
+    const missed = Object.entries(widened).flatMap(([name, counts]) =>
       Object.entries(counts)
         .filter(([, count]) => count !== 1)
-        .map(([name]) => `${group}.${name}`),
+        .map(([key]) => `${name}.${key}`),
     );
     expect(missed, "a widened reading's control is not caught by exactly one matcher").toEqual([]);
     // R-FUSED-SPLIT's and R-SPLIT-PATH's quiet rows: a field fused into a word that a case hump or a separator splits from its
     // other words, the English compounds that reading would otherwise take, and a path joined only through a local binding, a key
-    // bound elsewhere or a variable's own name all read quiet.
-    const quiet = {
-      fusedSplitCamel: control("const queryViewref = 1;"),
-      fusedSplitSnake: control("const QUERY_VIEWREF = 1;"),
-      compoundCamel: control("const publicStatement = 1;"),
-      compoundSnake: control("const matched_counter = 1;"),
-      aliasedPath: control("const { publication: p } = record;\nconst value = p.state;"),
-      keyedPath: control('const KEY = "publication";\nconst value = record[KEY].state;'),
-      boundPath: control('const publication = { state: "FAILED" };'),
-    };
-    expect(quiet).toStrictEqual({ fusedSplitCamel: 0, fusedSplitSnake: 0, compoundCamel: 0, compoundSnake: 0, aliasedPath: 0, keyedPath: 0, boundPath: 0 });
+    // bound elsewhere or a variable's own name all read quiet; wb-rgov (the wb-yg70 gate's F6) adds R-SPLIT-PATH's type-level
+    // twins: an interface's or a type alias's own name and a mapped-type key.
+    const quiet = group("quiet", {
+      fusedSplitCamel: "const queryViewref = 1;",
+      fusedSplitSnake: "const QUERY_VIEWREF = 1;",
+      compoundCamel: "const publicStatement = 1;",
+      compoundSnake: "const matched_counter = 1;",
+      aliasedPath: "const { publication: p } = record;\nconst value = p.state;",
+      keyedPath: 'const KEY = "publication";\nconst value = record[KEY].state;',
+      boundPath: 'const publication = { state: "FAILED" };',
+      interfaceName: "interface Publication { state: string }",
+      typeName: "type Publication = { state: string };",
+      mappedKey: 'type Rec = { [K in "publication"]: { state: string } };',
+    });
+    expect(quiet).toStrictEqual({
+      fusedSplitCamel: 0,
+      fusedSplitSnake: 0,
+      compoundCamel: 0,
+      compoundSnake: 0,
+      aliasedPath: 0,
+      keyedPath: 0,
+      boundPath: 0,
+      interfaceName: 0,
+      typeName: 0,
+      mappedKey: 0,
+    });
+    // The fused over-read, pinned (wb-rgov, the wb-yg70 gate's F3): a single word holding a matcher's fused words anywhere inside it
+    // is a hit, so an English compound written as one word reads as a federation field - the false-red direction, which only a
+    // dictionary could tell apart; a src word spelling one reds A1 by design.
+    const overread = group("overread", {
+      fusedLower: "const publicstatement = 1;",
+      fusedUpper: "const MATCHEDCOUNTER = 1;",
+      fusedStem: 'const note = "a confederation of shards";',
+    });
+    expect(overread).toStrictEqual({ fusedLower: 1, fusedUpper: 1, fusedStem: 1 });
     // wb-yg70 (F1(iv)): the walk A1 takes of src, over a planted scratch tree - one module per extension in a nested directory, a
     // JSON file and a symbolic link: each file is read (each module by its script kind) and the link is listed, never followed.
     const plantRoot = makeScratch("rf-typed-status-echo-walk-");
@@ -1162,6 +1291,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(Object.keys(walk.files)).toHaveLength(MODULE_EXTENSIONS.length + 1);
     expect(Object.values(walk.files).every(count => count === 1)).toBe(true);
     expect(walk.others).toStrictEqual(["linked.json"]);
+    // wb-rgov (F4): the walk's controls join the record - each planted file with its reading and the sha256/16 of its text, the
+    // listed link and each extension's script kind.
+    for (const [file, count] of Object.entries(walk.files)) ledger.push(["walk.files", file, String(count), shaOf(textOf(join(plantRoot, file)))]);
+    for (const entry of walk.others) ledger.push(["walk.others", entry, "listed", "-"]);
+    for (const [extension, kind] of Object.entries(walk.kinds)) ledger.push(["walk.kinds", extension, kind, "-"]);
+    expect(ledger, "A1's controls (group, name, reading, text) stand in the receipt's A1 control table").toStrictEqual(receiptTable(RECEIPT_TABLES.readingControls));
     return {
       floorMet,
       unitsFloorMet,
@@ -1173,6 +1308,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       fusedMatchers: FUSED_MATCHERS.map(matcher => matcher.source),
       widened,
       quiet,
+      overread,
       walk,
     };
   },
@@ -1535,13 +1671,58 @@ const REGISTRATION_CONTROLS: readonly (readonly [string, string, readonly string
   ["an options spread", 'it("judge", { ...options }, () => {});', ["options spread"]],
   ["a context skip", `it("judge", (context) => {\n  ${dot("context", "skip")}();\n});`, ["context skip"]],
   ["a destructured skip", 'it("judge", ({ skip }) => {\n  skip();\n});', ["context skip"]],
+  // wb-rgov (the wb-yg70 gate's F1): an options argument through a wrapper or a branch, an argument held elsewhere, a context
+  // through an alias, a wrapper, a destructure or a rest binding, a hook's context, and a write to a task's run flags.
+  ["a conditional options object", 'it(pin, pin === "Q6" ? { timeout: 60_000, skip: true } : { timeout: 60_000 }, async () => {});', ["options skip"]],
+  ["a conditional options fallback", 'it(pin, pin === "Q6" ? { timeout: 60_000 } : { timeout: 60_000, todo: true }, async () => {});', ["options todo"]],
+  ["an asserted options object", 'it("judge", { skip: true } as const, () => {});', ["options skip"]],
+  ["a parenthesized options object", 'it("judge", ({ skip: true }), () => {});', ["options skip"]],
+  ["a defaulted options object", "it(pin, options ?? { todo: true }, async () => {});", ["argument unread", "options todo"]],
+  ["a held options object", "it(pin, GATE_OPTIONS[pin] ?? { timeout: 60_000 }, async () => {});", ["argument unread"]],
+  ["a held options member", 'it("judge", GATE_OPTIONS.Q6, () => {});', ["argument unread"]],
+  ["a held callback", 'it("judge", body);', ["argument unread"]],
+  ["a context alias", `it("judge", (context) => {\n  const peer = context;\n  ${dot("peer", "skip")}();\n});`, ["context skip"]],
+  ["a wrapped context", `it("judge", (context) => {\n  ${dot("(context as { skip: () => void })", "skip")}();\n});`, ["context skip"]],
+  ["a body destructure", 'it("judge", (context) => {\n  const { skip } = context;\n  skip();\n});', ["context skip"]],
+  ["a rest context", `it("judge", ({ task, ...rest }) => {\n  ${dot("rest", "skip")}(task.name);\n});`, ["context skip"]],
+  ["a computed context member", 'it("judge", (context) => {\n  context[mode]();\n});', ["context computed member"]],
+  ["a context escape", 'it("judge", (context) => {\n  hide(context);\n});', ["context escape"]],
+  ["an array-pattern context", 'it("judge", ([first]) => {\n  first();\n});', ["context escape"]],
+  ["a hook skip", `import { beforeEach } from "vitest";\nbeforeEach((context) => {\n  ${dot("context", "skip")}();\n});`, ["context skip"]],
+  ["a hook on a registrar", `${dot("it", "beforeEach")}((context) => {\n  ${dot("context", "skip")}();\n});`, ["context skip"]],
+  ["a renamed hook import", `import { beforeEach as setup } from "vitest";\nsetup((context) => {\n  ${dot("context", "skip")}();\n});`, ["context skip"]],
+  ["a namespace hook", `import * as vitest from "vitest";\n${dot("vitest", "afterEach")}((context) => {\n  ${dot("context", "skip")}();\n});`, ["context skip"]],
+  ["a hook alias", `import { beforeEach } from "vitest";\nconst setup = beforeEach;\nsetup((context) => {\n  ${dot("context", "skip")}();\n});`, ["context skip"]],
+  ["a held hook callback", 'import { afterEach } from "vitest";\nafterEach(cleanup);', ["argument unread"]],
+  ["a held hook callback on a registrar", `${dot("it", "afterEach")}(cleanup);`, ["argument unread"]],
+  ["a failure-hook skip", `it("judge", ({ onTestFailed }) => {\n  onTestFailed((context) => ${dot("context", "skip")}());\n});`, ["context skip"]],
+  ["a mode write", 'import { beforeAll } from "vitest";\nbeforeAll((context, suite) => {\n  suite.tasks[0].mode = "skip";\n});', ["task write"]],
+  ["an inverting write", "const invert = (task) => {\n  task.fails = true;\n};", ["task write"]],
   [
     "the run forms",
     'it("judge", () => {});\nit(pin, { timeout: 60_000, skip: false }, async () => {});\ndescribe("row", () => {});\nconst inverted = child.fails === true;',
     [],
   ],
   ["the non-claim", `const api = { it };\n${dot(dot("api", "it"), "skip")}("judge", () => {});`, []],
+  [
+    "the inline run forms",
+    'import { beforeEach } from "vitest";\nit("judge", () => {}, 60_000);\nit(pin, pin === "Q6" ? { timeout: 1 } : { timeout: 2 }, async () => {});\nit("judge", { skip: false } as const, () => {});\nbeforeEach(({ task }) => {\n  task.name;\n});',
+    [],
+  ],
+  [
+    "the non-claims through other values",
+    'import { afterAll } from "vitest";\ninstallGuard(afterAll);\nReflect.set(task, "mode", "skip");\nObject.assign(task, { mode: "skip" });\ntask[flag] = "skip";',
+    [],
+  ],
 ];
+
+/** vitest 4.1.10's hooks, as the module imports them or as a member of a registrar chain (wb-rgov, the wb-yg70 gate's F1): each
+ * beforeEach, afterEach and aroundEach listener receives the test context, so a skip it reads skips the test. */
+const HOOKS: readonly string[] = ["beforeEach", "afterEach", "aroundEach", "beforeAll", "afterAll", "aroundAll"];
+/** The test context's own hooks, read by name wherever they are called (a skip in a failure handler turns the failure skipped). */
+const TEST_HOOKS: readonly string[] = ["onTestFailed", "onTestFinished"];
+/** The run flags of a task: a write to one reruns, skips or inverts a case without a registration member (wb-rgov). */
+const TASK_FLAGS: readonly string[] = ["mode", "fails"];
 
 /**
  * The skip modes a test module's registrations carry, in source order (wb-yg70, the wb-d8io gate's F3): a SKIP_MODES member on a
@@ -1549,18 +1730,29 @@ const REGISTRATION_CONTROLS: readonly (readonly [string, string, readonly string
  * local name, a namespace import its member), or a variable bound to such a chain, to a fixed point - anywhere in the module (a
  * call head, a conditional, an alias, a destructured member), or a computed member on one; an OPTION_MODES key of an
  * options-object argument of a registration call that is not literally false (a spread or a computed key read as one); and a
- * skip read on a parameter of a registration callback (a member of it, or a destructured skip).
+ * skip read on a parameter of a registration callback (a member of it, or a destructured skip). wb-rgov (the wb-yg70 gate's F1):
+ * an argument is read through wrappers, both branches of a conditional and both operands of ?? || &&, and one after a
+ * registration's name (or any argument of a hook call) that is neither an object literal, an inline function nor a plain literal
+ * reads "argument unread"; every parameter of an inline callback of a registration or a hook (HOOKS as imported or on a registrar
+ * chain, TEST_HOOKS by name) is a context, with its aliases and rest bindings to a fixed point, and a skip read on one is a
+ * context skip, a computed member a "context computed member" and any other use a "context escape"; and an assignment to a
+ * TASK_FLAGS member anywhere in the module is a "task write".
  */
 function registrationModes(fileName: string, text: string): string[] {
   const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, scriptKindOf(fileName));
   const registrars = new Set<string>();
+  const hooks = new Set<string>();
   const namespaces = new Set<string>();
   for (const statement of source.statements) {
     if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier) || statement.moduleSpecifier.text !== "vitest") continue;
     const named = statement.importClause?.namedBindings;
     if (named !== undefined && ts.isNamespaceImport(named)) namespaces.add(named.name.text);
     if (named !== undefined && ts.isNamedImports(named)) {
-      for (const element of named.elements) if (REGISTRARS.includes((element.propertyName ?? element.name).text)) registrars.add(element.name.text);
+      for (const element of named.elements) {
+        const imported = (element.propertyName ?? element.name).text;
+        if (REGISTRARS.includes(imported)) registrars.add(element.name.text);
+        if (HOOKS.includes(imported)) hooks.add(element.name.text);
+      }
     }
   }
   const rooted = (node: ts.Expression): boolean => {
@@ -1571,54 +1763,155 @@ function registrationModes(fileName: string, text: string): string[] {
     if (ts.isConditionalExpression(at)) return rooted(at.whenTrue) || rooted(at.whenFalse);
     return false;
   };
+  /** A hook: an imported hook or an alias of one, a namespace's hook member, or a hook member of a registrar chain. */
+  const isHook = (node: ts.Expression): boolean => {
+    const at = unwrapped(node);
+    if (ts.isIdentifier(at)) return hooks.has(at.text);
+    if (ts.isPropertyAccessExpression(at)) return HOOKS.includes(at.name.text) && ((ts.isIdentifier(at.expression) && namespaces.has(at.expression.text)) || rooted(at.expression));
+    return false;
+  };
+  /** A test-context hook, by name: a bare onTestFailed or onTestFinished, or a member so named. */
+  const isTestHook = (node: ts.Expression): boolean => {
+    const at = unwrapped(node);
+    return (ts.isIdentifier(at) && TEST_HOOKS.includes(at.text)) || (ts.isPropertyAccessExpression(at) && TEST_HOOKS.includes(at.name.text));
+  };
   const declarations: ts.VariableDeclaration[] = [];
   const collect = (node: ts.Node): void => {
     if (ts.isVariableDeclaration(node) && node.initializer !== undefined) declarations.push(node);
     ts.forEachChild(node, collect);
   };
   collect(source);
-  // A variable bound to a registrar chain is a registrar too (an alias of an alias included): read to a fixed point.
+  // A variable bound to a registrar chain is a registrar too, and one bound to a hook a hook (an alias of an alias included):
+  // read to a fixed point.
   for (let grew = true; grew; ) {
     grew = false;
     for (const declaration of declarations) {
       const name = declaration.name;
-      if (ts.isIdentifier(name) && !registrars.has(name.text) && declaration.initializer !== undefined && rooted(declaration.initializer)) {
+      if (!ts.isIdentifier(name) || declaration.initializer === undefined) continue;
+      if (!registrars.has(name.text) && rooted(declaration.initializer)) {
         registrars.add(name.text);
+        grew = true;
+      }
+      if (!hooks.has(name.text) && isHook(declaration.initializer)) {
+        hooks.add(name.text);
         grew = true;
       }
     }
   }
   const modes: string[] = [];
-  const optionModes = (call: ts.CallExpression): void => {
-    for (const options of call.arguments.filter(ts.isObjectLiteralExpression)) {
-      for (const property of options.properties) {
-        if (ts.isSpreadAssignment(property)) modes.push("options spread");
-        else if (property.name === undefined || ts.isComputedPropertyName(property.name)) modes.push("options computed key");
-        else {
-          const key = keyText(property.name);
-          const literallyFalse = ts.isPropertyAssignment(property) && property.initializer.kind === ts.SyntaxKind.FalseKeyword;
-          if (key !== undefined && OPTION_MODES.includes(key) && !literallyFalse) modes.push(`options ${key}`);
-        }
+  /** The values an argument can take: through the wrappers, both branches of a conditional and both logical operands. */
+  const valuesOf = (node: ts.Expression): ts.Expression[] => {
+    const at = unwrapped(node);
+    if (ts.isConditionalExpression(at)) return [...valuesOf(at.whenTrue), ...valuesOf(at.whenFalse)];
+    if (ts.isBinaryExpression(at) && LOGICAL_OPERATORS.includes(at.operatorToken.kind)) return [...valuesOf(at.left), ...valuesOf(at.right)];
+    return [at];
+  };
+  /** A literal that carries no run mode: a number, a string, a boolean, null or undefined. */
+  const isPlain = (node: ts.Expression): boolean =>
+    ts.isNumericLiteral(node) ||
+    ts.isStringLiteralLike(node) ||
+    node.kind === ts.SyntaxKind.TrueKeyword ||
+    node.kind === ts.SyntaxKind.FalseKeyword ||
+    node.kind === ts.SyntaxKind.NullKeyword ||
+    (ts.isIdentifier(node) && node.text === "undefined");
+  const optionModes = (options: ts.ObjectLiteralExpression): void => {
+    for (const property of options.properties) {
+      if (ts.isSpreadAssignment(property)) modes.push("options spread");
+      else if (property.name === undefined || ts.isComputedPropertyName(property.name)) modes.push("options computed key");
+      else {
+        const key = keyText(property.name);
+        const literallyFalse = ts.isPropertyAssignment(property) && property.initializer.kind === ts.SyntaxKind.FalseKeyword;
+        if (key !== undefined && OPTION_MODES.includes(key) && !literallyFalse) modes.push(`options ${key}`);
       }
     }
   };
-  const contextModes = (call: ts.CallExpression): void => {
-    for (const callback of call.arguments) {
-      if (!ts.isArrowFunction(callback) && !ts.isFunctionExpression(callback)) continue;
-      const contexts = new Set<string>();
-      for (const parameter of callback.parameters) {
-        if (ts.isIdentifier(parameter.name)) contexts.add(parameter.name.text);
-        else if (ts.isObjectBindingPattern(parameter.name) && parameter.name.elements.some(element => keyText(element.propertyName ?? element.name) === "skip")) modes.push("context skip");
-      }
-      const scan = (node: ts.Node): void => {
-        if ((ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) && ts.isIdentifier(node.expression) && contexts.has(node.expression.text)) {
-          const member = ts.isPropertyAccessExpression(node) ? node.name.text : literalKey(node.argumentExpression);
-          if (member === "skip") modes.push("context skip");
-        }
-        ts.forEachChild(node, scan);
-      };
-      scan(callback.body);
+  /** The context skips one inline callback reads: its parameters are contexts, and so is each name bound to one or to the rest of
+   * one, to a fixed point; every use of a context but a member read or a binding of it is read. */
+  const contextModes = (callback: ts.ArrowFunction | ts.FunctionExpression): void => {
+    const contexts = new Set<string>();
+    const patterns: ts.ObjectBindingPattern[] = [];
+    for (const parameter of callback.parameters) {
+      if (ts.isIdentifier(parameter.name)) contexts.add(parameter.name.text);
+      else if (ts.isObjectBindingPattern(parameter.name)) patterns.push(parameter.name);
+      else modes.push("context escape");
     }
+    const bound: ts.VariableDeclaration[] = [];
+    const collectBound = (node: ts.Node): void => {
+      if (ts.isVariableDeclaration(node) && node.initializer !== undefined) bound.push(node);
+      ts.forEachChild(node, collectBound);
+    };
+    collectBound(callback.body);
+    const isContext = (node: ts.Expression): boolean => {
+      const at = unwrapped(node);
+      return ts.isIdentifier(at) && contexts.has(at.text);
+    };
+    const restOf = (pattern: ts.ObjectBindingPattern): string[] =>
+      pattern.elements.flatMap(element => (element.dotDotDotToken !== undefined && ts.isIdentifier(element.name) ? [element.name.text] : []));
+    for (const pattern of patterns) for (const name of restOf(pattern)) contexts.add(name);
+    const boundPatterns = new Set<ts.ObjectBindingPattern>();
+    for (let grew = true; grew; ) {
+      grew = false;
+      for (const declaration of bound) {
+        if (declaration.initializer === undefined || !isContext(declaration.initializer)) continue;
+        const name = declaration.name;
+        const added = ts.isIdentifier(name) ? [name.text] : ts.isObjectBindingPattern(name) ? restOf(name) : [];
+        if (ts.isObjectBindingPattern(name)) boundPatterns.add(name);
+        for (const alias of added.filter(alias => !contexts.has(alias))) {
+          contexts.add(alias);
+          grew = true;
+        }
+      }
+    }
+    for (const pattern of [...patterns, ...boundPatterns]) {
+      for (const element of pattern.elements) {
+        if (element.dotDotDotToken !== undefined) continue;
+        const key = element.propertyName ?? element.name;
+        if (ts.isComputedPropertyName(key)) modes.push("context computed member");
+        else if (keyText(key) === "skip") modes.push("context skip");
+      }
+    }
+    /** A context name read as a value: not a declared name, a member or key name, or a type position. */
+    const isUse = (id: ts.Identifier): boolean => {
+      const parent = id.parent;
+      if (ts.isPropertyAccessExpression(parent) && parent.name === id) return false;
+      if ((ts.isPropertyAssignment(parent) || ts.isPropertySignature(parent) || ts.isPropertyDeclaration(parent) || ts.isMethodDeclaration(parent)) && parent.name === id) return false;
+      if (ts.isBindingElement(parent) && (parent.name === id || parent.propertyName === id)) return false;
+      if ((ts.isVariableDeclaration(parent) || ts.isParameter(parent) || ts.isFunctionDeclaration(parent) || ts.isFunctionExpression(parent)) && parent.name === id) return false;
+      return ts.findAncestor(id, ts.isTypeNode) === undefined;
+    };
+    const scan = (node: ts.Node): void => {
+      if (ts.isIdentifier(node) && contexts.has(node.text) && isUse(node)) {
+        let use: ts.Node = node;
+        while (
+          (ts.isParenthesizedExpression(use.parent) || ts.isNonNullExpression(use.parent) || ts.isAsExpression(use.parent) || ts.isSatisfiesExpression(use.parent) || ts.isTypeAssertionExpression(use.parent)) &&
+          use.parent.expression === use
+        ) {
+          use = use.parent;
+        }
+        const parent = use.parent;
+        if (ts.isPropertyAccessExpression(parent) && parent.expression === use) {
+          if (parent.name.text === "skip") modes.push("context skip");
+        } else if (ts.isElementAccessExpression(parent) && parent.expression === use) {
+          const member = literalKey(parent.argumentExpression);
+          if (member === undefined) modes.push("context computed member");
+          else if (member === "skip") modes.push("context skip");
+        } else if (!(ts.isVariableDeclaration(parent) && parent.initializer === use && !ts.isArrayBindingPattern(parent.name))) {
+          modes.push("context escape");
+        }
+      }
+      ts.forEachChild(node, scan);
+    };
+    scan(callback.body);
+  };
+  /** One registration or hook call's arguments, read from `from` on for a value held elsewhere (a registration's name aside). */
+  const argumentModes = (call: ts.CallExpression, from: number): void => {
+    call.arguments.forEach((argument, index) => {
+      for (const value of valuesOf(argument)) {
+        if (ts.isObjectLiteralExpression(value)) optionModes(value);
+        else if (ts.isArrowFunction(value) || ts.isFunctionExpression(value)) contextModes(value);
+        else if (index >= from && !isPlain(value)) modes.push("argument unread");
+      }
+    });
   };
   const visit = (node: ts.Node): void => {
     if (ts.isPropertyAccessExpression(node) && SKIP_MODES.includes(node.name.text) && rooted(node.expression)) modes.push(node.name.text);
@@ -1633,9 +1926,14 @@ function registrationModes(fileName: string, text: string): string[] {
         if (member !== undefined && SKIP_MODES.includes(member)) modes.push(member);
       }
     }
-    if (ts.isCallExpression(node) && rooted(node.expression)) {
-      optionModes(node);
-      contextModes(node);
+    if (ts.isCallExpression(node)) {
+      if (isHook(node.expression) || isTestHook(node.expression)) argumentModes(node, 0);
+      else if (rooted(node.expression)) argumentModes(node, 1);
+    }
+    if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment) {
+      const target = unwrapped(node.left);
+      const member = ts.isPropertyAccessExpression(target) ? target.name.text : ts.isElementAccessExpression(target) ? literalKey(target.argumentExpression) : undefined;
+      if (member !== undefined && TASK_FLAGS.includes(member)) modes.push("task write");
     }
     ts.forEachChild(node, visit);
   };
@@ -1752,6 +2050,12 @@ afterAll(() => {
     ([name]) => name,
   );
   if (misread.length > 0) throw new Error(`the registration-mode read misses its controls: ${misread.join("; ")}`);
+  // wb-rgov (the wb-yg70 gate's F4): every control, by name, modes and the sha256/16 of its text, stands in the receipt's
+  // registration-control table, so a reading removed together with its control, or a control rewritten, reds here.
+  const anchored = REGISTRATION_CONTROLS.map(([name, text, modes]) => [name, modes.length === 0 ? "none" : modes.join(", "), shaOf(text)]);
+  if (JSON.stringify(anchored) !== JSON.stringify(receiptTable(RECEIPT_TABLES.registrationControls))) {
+    throw new Error("the registration-mode controls (name, modes, text) do not stand in the receipt's registration-control table");
+  }
   const modes = registrationModes(SELF, readFileSync(SELF, "utf8"));
   if (modes.length > 0) throw new Error(`this census registers a case with a skip mode, which no run of it vouches for: ${modes.join(", ")}`);
   const ran = ROWS.flatMap(row => row.pins).every(pin => REACHED.includes(pin));
