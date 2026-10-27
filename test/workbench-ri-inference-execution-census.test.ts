@@ -51,13 +51,14 @@
  *    type-only import or re-export too) is an exact set read backwards, and the preview contract has exactly one importer (a
  *    type-only re-export counts) and one spelling; the controls read a direct call,
  *    an alias and a member call, an object-destructured member or authority name, a destructuring-assignment member or authority
- *    name (shorthand, aliased, nested, in an array, in a loop head, with a default), a string and a template-literal computed
- *    pattern key, a value re-export closure and a type-only re-export closure, the type-only re-export quiet row, the importer
+ *    name (shorthand, aliased, nested, in an array, in an array's rest element, in a loop head, with a default), a string and a
+ *    template-literal computed pattern key, a value re-export closure and a type-only re-export closure, the type-only re-export
+ *    quiet row, the importer
  *    sets on a type-only re-export, a type-only star re-export and a type-only import of a reader and on a type-only re-export of
  *    the contract, a member called through .call, Reflect.apply, .bind, a non-null or an optional call, a literal
  *    key, a namespace and a dynamic-import namespace, an aliased import, a property name, another receiver's member, an object
- *    literal's key and an object literal assigned as no reference, the R-COMPOSED quiet rows, the consumer reader on the served
- *    leaf, the CLI pair and Pi's argv form with no comment,
+ *    literal's key, an object literal assigned and one spread inside an array literal assigned as no reference, the R-COMPOSED
+ *    quiet rows, the consumer reader on the served leaf, the CLI pair and Pi's argv form with no comment,
  *    two adjacent call arguments, quiet type-inference prose and R-ARGV-SPLIT's reversed and interrupted pairs, and the resolvers
  *    on an export, a local declaration and an exported constant. A2 control is closed to the inference
  *    producer: NATIVE_CONTROL_ACTIONS and the workflow_control executors name the same four producers, never reactivefiber, and
@@ -145,6 +146,13 @@
  *  NOT CLAIMED: an import or re-export whose every specifier is inline-type (`{ type X }`) is followed as a value edge (the closure
  *    can only gain a module, never a false green); a member read through Reflect.get or a property descriptor under a literal
  *    string, and a re-exported registry class, are read by nothing.
+ *
+ * FOLLOW-UP wb-3ji0 (R694, landing 490's gate verdict on wb-7iyv; F1 leads; pinned red-first):
+ *  F1 isAssignmentPattern never read the target of an array-assignment rest element as a pattern position, so
+ *    `[...{ invoke }] = list` read A1 green while its binding form `const [...{ invoke }] = list` read red: a spread element whose
+ *    parent is an assignment-pattern array literal now holds a pattern (A1 controls assignedRest, and assignedRestArray for an
+ *    array pattern in the rest element; spreadLiteral quiet, a spread inside an array literal assigned). With it, wb-7iyv F3's
+ *    "the key of every object pattern" holds at the rest-element position too.
  *
  * Display paths added: none. Test-only: no src file is edited, no scratch is allocated, and the stand-ins live in this file.
  */
@@ -530,13 +538,15 @@ function isDynamicImport(expression: ts.Expression): boolean {
   return ts.isCallExpression(call) && call.expression.kind === ts.SyntaxKind.ImportKeyword;
 }
 /** Whether an object or array literal is a destructuring-assignment target: the left of `=`, the head of a for-of or for-in loop,
- * or nested in one as a property's value or an array element. */
+ * or nested in one as a property's value, an array element or the target of an array's rest element (`[...{ a }] = list`). */
 function isAssignmentPattern(node: ts.Node): boolean {
   if (!ts.isObjectLiteralExpression(node) && !ts.isArrayLiteralExpression(node)) return false;
   const parent = node.parent;
   if (ts.isBinaryExpression(parent)) return parent.operatorToken.kind === ts.SyntaxKind.EqualsToken && parent.left === node;
   if (ts.isForOfStatement(parent) || ts.isForInStatement(parent)) return parent.initializer === node;
   if (ts.isPropertyAssignment(parent)) return parent.initializer === node && isAssignmentPattern(parent.parent);
+  // wb-3ji0: a spread element is a rest element only inside an assignment-pattern array literal, and its target is a pattern there.
+  if (ts.isSpreadElement(parent)) return ts.isArrayLiteralExpression(parent.parent) && isAssignmentPattern(parent.parent);
   return ts.isArrayLiteralExpression(parent) && isAssignmentPattern(parent);
 }
 /** The key an object pattern reads (wb-7iyv F3, cut #1's PREP F2): of an object binding element or of a destructuring-assignment
@@ -1148,11 +1158,16 @@ const IMPL: Record<string, () => Promise<JsonValue>> = {
       assignedElement: control("let invoke;\n[{ invoke }] = list;"),
       assignedLoop: control("let invoke;\nfor ({ invoke } of list) {}"),
       assignedDefault: control("let invoke;\n({ invoke = fallback } = registry);"),
+      // wb-3ji0 (landing 490's F1): an object pattern, or an array pattern holding one, inside an array-assignment rest element.
+      assignedRest: control("let invoke;\n[...{ invoke }] = list;"),
+      assignedRestArray: control("let invoke;\n[...[{ invoke }]] = lists;"),
       computedKey: control('const { ["invoke"]: run } = registry;'),
       templateKey: control("const { [`invoke`]: run } = registry;"),
       // ...and no pattern: an object literal's key, an object literal assigned (the right of `=`), and a computed key (R-COMPOSED).
       literalObjectKey: control("const handlers = { invoke: 1 };"),
       assignedLiteral: control("let handlers;\nhandlers = { invoke: 1 };"),
+      // wb-3ji0: a spread element is a pattern position only inside an assignment pattern, never in an array literal assigned.
+      spreadLiteral: control("let handlers;\nhandlers = [...[{ invoke: 1 }]];"),
       composedBinding: control("const { [invoke]: run } = registry;"),
       // The consumer census flags the served leaf, the CLI pair and Pi's own argv form with no comment to carry them (F3); TypeScript's
       // own type-inference prose and a reversed or interrupted pair stay quiet.
@@ -1189,7 +1204,8 @@ const IMPL: Record<string, () => Promise<JsonValue>> = {
       typeImportImporter: ["src/workbench/virtual-importer.ts <- src/workbench/reactivefiber-observer.ts (type): ReactiveFiberSeam"],
       typeReexportContract: ["src/workbench/virtual-importer.ts"], reexportTypeClosure: ["virtual-reader.ts"],
       assignedMember: 1, assignedAlias: 1, assignedAuthority: 1, assignedNested: 1, assignedElement: 1, assignedLoop: 1, assignedDefault: 1,
-      computedKey: 1, templateKey: 1, literalObjectKey: 0, assignedLiteral: 0, composedBinding: 0, consumerLeaf: 1, consumerCli: 1, consumerArgv: 1,
+      assignedRest: 1, assignedRestArray: 1,
+      computedKey: 1, templateKey: 1, literalObjectKey: 0, assignedLiteral: 0, spreadLiteral: 0, composedBinding: 0, consumerLeaf: 1, consumerCli: 1, consumerArgv: 1,
       consumerArguments: 1, consumerProse: 0, consumerReversed: 0, consumerInterrupted: 0, exported: 1, local: 0, exportReader: 2,
     });
     return { closure: closure.modules, packages: closure.packages, imported, elsewhere, ui: ui.map(repoPath), consumers, anchored, authorityExports, importers, contractImporters, contractSpelled, controls };
