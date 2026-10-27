@@ -31,6 +31,35 @@
  *    21(1)), was read by the cutting seat at its commit dacd58e (sha256 3f9eb0739a8e48b4...): 0 'bd close'; its one bd write
  *    appends a delivery note (update --append-notes-file), which sets no status. That reading rides the delivery note and is
  *    never claimed here.
+ * WB-4TDN (the R694 follow-up of landing 437: F1 leads, F2 rides; cut on trunk fced7bf). Two readings widen; no row, pin, label,
+ * registered title or frozen-shape count changes.
+ *  - The exec reading (C1-C3, M5). A call is an exec construct of git or the tracker when its callee is an exec entry point and one
+ *    command word of its program texts is git or the tracker. The callee: an EXEC_CALLEES name as an identifier, a property or a
+ *    string-keyed element (cp["execFileSync"]), or the identifier an import specifier aliases one to (import { execFileSync as run }:
+ *    an import binding, read by its name like every import binding). The program texts: a string-literal first argument and each
+ *    string-literal element of an array-literal second argument (its argv), a no-substitution template counting as a string literal.
+ *    The command words: each text split at whitespace, a quote (' " `) or a shell operator (; & | ( ) < >), each word read by its
+ *    last path segment (after / or \) with one trailing .exe dropped, so a word that holds the command only as a part (--bd, x=bd,
+ *    bd-helper) names no command. So a path-qualified program (/usr/local/bin/bd, C:\tools\bd.exe), a wrapper's argv (env, sudo), a
+ *    shell line (its first or a later command, sh -c) and an aliased import now read, where the landed reading took only an unaliased
+ *    callee whose first argument was the command itself. M5 pins the gate's filed plant (its L2-3 members, appended to
+ *    claude-control.ts), one kill control per reading (each callee form, program text and word break) and one quiet row per spelling
+ *    left unread, each spelling a src module of its own added in memory. The readings are the same for git; on src they change
+ *    nothing (the classes, the holders, the scopes and C3's git exec modules read as at the landed census, 116 modules at fced7bf).
+ *  - The walk's reach (C1). The walk lists every regular file and every symbolic link below src and follows no link. A file whose
+ *    name ends in one of TypeScript's own source extensions (its public Extension enum, .json and .tsbuildinfo aside: .ts, .tsx,
+ *    .d.ts, .js, .jsx and the .mts and .cts families) that tsconfig.json's program does not hold, or a symbolic link anywhere below
+ *    src, reds C1: the judge reads neither. C1's planted reach control hands the same walk an in-memory tree (a program module, the
+ *    gate's L2-9 .tsx and a .mjs outside its program, the gate's L2-5 link, a markdown note and a JSON file) and pins what it lists.
+ *  - NOT CLAIMED, each a pinned quiet row of M5: an exec entry point carried in a const, a destructuring or a promisify return, and a
+ *    command passed into a wrapper function (R2's values: a module-level const, a return value, a parameter); a command that is no
+ *    string literal at its construct - a const, a concatenation, a template with a substitution, an argv held in a const (R3); an
+ *    entry point held in a variable of the call's own scope, in an object member, or exported by another module under a new name; a
+ *    call through call or apply; a callee in parentheses, after a comma or under a type assertion; a command literal or an argv under
+ *    a type assertion ("bd" as string, [...] as const); a tagged template; an argv as the first argument; a command word spliced from
+ *    quoted or escaped parts, in another letter case, behind another suffix (.cmd) or inside a parameter expansion; a process API
+ *    outside EXEC_CALLEES (execa). Not claimed and not a row: a walk edited to tell the planted entries from the disk's, an edit of
+ *    the disk listing alone (diskEntries) - the plants hold the walk's logic - and a source name in another letter case (x.TS).
  * CUT #3 (owner ruling R766, 2026-10-25; trunk 3a71372 merged INTO the branch): landing 381 added
  * src/workbench/beads-program-readiness.ts, which imports capability-registry.ts and observation.ts only and joins neither class,
  * so the src count moved 115 -> 116 and C1's hand-counted integer read red at landing 384's land-prep - and again through C1's
@@ -38,6 +67,32 @@
  * set to tsconfig.json's program (srcIsProgram, the reading the gp-cache-scope census makes of the same program) and a floor
  * below the count (floorMet, MODULES_FLOOR), never the count itself: a src landing that adds or removes a module of neither class
  * leaves C1 green, while a class, holder, scope or edge change still reds C1-C3, and a walk or program that drifts apart reds C1.
+ * PIN ANCHOR (wb-kku9.5, the review lane's follow-up of cut #1's seat-disclosed finding; trunk 6c0ebdb): before this cut a pin
+ * removed from every literal of this file and from the roster (its ROWS entry, its PIN_TITLES and IMPL entries and its count in
+ * the frozen shape) stayed green here for 27 of the 29 pins, and a whole row did for rows F, M and R (throwaway copies at
+ * 6c0ebdb; F1 and R1 read red only by accident: vitest fails row F's emptied describe, and R7's self-read loses this file's one
+ * provider construct with R1's case). The anchor case now holds the pin set to two records outside this file and its roster: the
+ * docs07 provider-rules census's frozen binding lines (`<half> | <this file> | <title>`: A1-A4, B1, R1 and C1, each by verbatim
+ * title) and the review filing of record, wb-kku9.5's row in the tracked bead export, whose title lists the other pins and the
+ * counts ("22 of 29 pins (B2, C2, C3, D1-D3, F1, M1-M9, R2-R7)"). Every pin a row holds is named by one of them, every pin they
+ * name is held (a docs07-bound pin under its bound title), and the docs07 bindings still cover the 7 pins (29 - 22) the filing
+ * left anchored outside, so a pin or a row removed from every literal here, or a docs07-bound pin removed here and from the docs07
+ * census together, reds the anchor case; the case also shows that it would, for each pin, each row and each docs07-bound pin. No
+ * pin is added: the frozen shape and the docs07 bindings are unchanged.
+ * FORWARD CONTACT (cut #2, curing U1 of refusal #1; trunk fced7bf): a later pin that no outside record names, or that a docs07
+ * binding alone names, reds the anchor case, and the case pins both readings (laterPin). It reads one later pin, one more pin of
+ * row M numbered past its pins (M10 at this cut) under a title of its own. Named by no outside record, it reads as "<pin>: no
+ * outside record names it". Bound by one more docs07 frozen binding line under that title, the rows and the records agree, but the
+ * paired removal of every docs07-bound pin then goes unseen, the later pin's own included (8 of 8 at this cut): the floor is the
+ * review filing's count (29 - 22 = 7), and a later binding leaves it slack. The same two shapes as a real later pin (M10 in ROWS,
+ * PIN_TITLES, IMPL, the frozen shape and the roster, unnamed or docs07-bound) red this case on throwaway copies. A later cut that
+ * adds a pin therefore names it outside this file and, for a docs07 binding, changes the floor derivation in the same cut
+ * (re-pinning laterPin with it).
+ * NAMED RESIDUAL R-WORDING (its pinned quiet reading is in the anchor case, because a new ROWS pin would need an outside name of its
+ * own, and a docs07 binding alone would still red it: see FORWARD CONTACT): the anchor binds which pins exist. The wording of the
+ * 22 filing-named titles and of the labels of rows F, M and R is held by this file and its roster alone: reworded in every literal
+ * here, no outside reading sees it, while a reworded docs07-bound title (this anchor) or row A-D label (F1, against the owner
+ * filing) is seen. The anchor case pins both unseen sets.
  *
  * Rows, each a describe of its pins:
  *  A, acceptance (a). A1 a succeeded Claude SDK run (the claude-host query seam fed SDK messages whose text and result say fixed
@@ -48,7 +103,8 @@
  *  B, acceptance (b). B1 hyperunixTopology over hyperunix.find/v1 readings of every read kind (and one built on the provider's
  *    own SDK path), whose rows name .beads, forge.toml, .furnace and .git paths, carries no beads, forge, furnace or git kind,
  *    reference or edge; B2 the token count of evidence-loader.ts and evidence-wiring.ts.
- *  C, acceptance (c). C1 the module graph, over a walk that is tsconfig.json's program above a floor: the observation class,
+ *  C, acceptance (c). C1 the module graph, over a walk that is tsconfig.json's program above a floor, with no source outside the
+ *    program and no link below src: the observation class,
  *    the authority modules and the holders are exactly the measured rosters and no edge joins the first two outside the
  *    holders; C2 the scopes: the only scopes in src that read an observation-class binding beside an authority binding or
  *    construct are the five pinned composition scopes; C3 no src module spells a bd close or update or execs bd, and the bd
@@ -57,7 +113,8 @@
  *    docs07 provider-rules census quotes both, so each is census-bound (rows A1 and H3 there pin this file's cases).
  *  F, the owner filing: F1 wb-kku9.1's row in the tracked bead export carries the pinned constants and an acceptance whose
  *    "(x) ..." clauses are exactly rows A-D, each label equal to its clause.
- *  M, the judge is live: M1-M9 each add one derivation shape to the real src tree and the judge names it.
+ *  M, the judge is live: M1-M9 each add one derivation shape to the real src tree and the judge names it; M5 also pins the exec
+ *    spellings of its table, the read ones and the unread ones (wb-4tdn).
  *  R, the named residuals, each with a pinned quiet row: R1 R-HOST-OPERATION the HX adapter echoes the operation the host names
  *    (a forge one included) as its display grouping, and no src module calls either topology adapter; R2 R-CROSS-SCOPE a value
  *    carried between scopes (a parameter, return value, closure or module-level const) is not traced; R3 R-COMPOSED a provider
@@ -67,8 +124,9 @@
  *    observation-class module; R6 R-NAMING a module that reads Claude or HX values under another name and imports no
  *    observation-class module is not in the class; R7 R-TEST-TREE only src is walked (tests build authority refs on purpose).
  * OUTSIDE ANCHORS: F1 (the bead export: rows A-D), C1-C3 (the src tree, walked; C1 also tsconfig.json's program), D1-D3 (docs/07 and the docs07 census), A1-A4
- * and B1 (the adapters themselves), B2 (the two files). The out-of-file roster test/fixtures/observation-class-roster.json holds
- * every row's id, label and pins and every pin's witness; FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}`.
+ * and B1 (the adapters themselves), B2 (the two files): each anchors what its case measures. Which pins exist is anchored by the
+ * pin anchor above. The out-of-file roster test/fixtures/observation-class-roster.json holds every row's id, label and pins, every
+ * pin's witness and the anchor case's reading; FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}`.
  * SCOPE: test-only. Nothing is spawned or written; the repository files read are only read.
  *
  * Display paths added: none.
@@ -106,6 +164,11 @@ const DOCS_07_PARENT = "07 — MechanicalWorkflows and ecosystem native SDK inte
 const DOCS07_CENSUS = "test/workbench-docs07-provider-rules.census.ts";
 /** The name the docs07 census pins this file by (its pin() helper composes test/workbench-<name>.test.ts). */
 const PIN_NAME = "observation-class-census";
+/** This file as the docs07 census's frozen binding lines name it (`<half> | test/workbench-<name>.test.ts | <title>`). */
+const SELF = `test/workbench-${PIN_NAME}.test.ts`;
+/** The review filing of record for the pin anchor: wb-kku9.5's title in the tracked bead export lists, as "<n> of <total> pins
+ * (<ids>)", the pins cut #1 held by this file and its roster alone and how many pins the rows held. */
+const PIN_FILING = "wb-kku9.5";
 
 /** The two sentences acceptance (d) adds to docs/07, verbatim; the docs07 census quotes both as its rows A1 and H3. */
 const AGENT_SENTENCE =
@@ -259,6 +322,8 @@ interface RosterRow {
 interface Roster {
   readonly bead: string;
   readonly rows: readonly RosterRow[];
+  /** The anchor case's reading (wb-kku9.5). */
+  readonly anchor: Json;
 }
 const ROSTER = JSON.parse(readFileSync(ROSTER_PATH, "utf8")) as Roster;
 const rosterWitness = (pin: string): Json => {
@@ -275,18 +340,41 @@ interface SourceModule {
   readonly path: string;
   readonly text: string;
 }
-/** Every regular .ts file below a directory, repository-relative with / separators; symlinks are not followed. */
-function tsFilesBelow(root: string): string[] {
-  const out: string[] = [];
+/** The parts of a directory entry the walk reads: node:fs Dirent's own type predicates. */
+interface WalkEntry {
+  readonly name: string;
+  isDirectory(): boolean;
+  isFile(): boolean;
+  isSymbolicLink(): boolean;
+}
+/** A directory's entries as the disk lists them. */
+const diskEntries = (dir: string): readonly WalkEntry[] => readdirSync(dir, { withFileTypes: true });
+interface Listing {
+  /** Every regular file below the root, base-relative with / separators. */
+  readonly files: readonly string[];
+  /** Every symbolic link below the root (wb-4tdn F2): listed, never followed. */
+  readonly links: readonly string[];
+}
+/** Every regular file and every symbolic link below a directory, base-relative with / separators and sorted; a link is listed and
+ * never followed. Every walk reads the disk; C1's planted reach control hands the same walk an in-memory tree instead. */
+function listBelow(base: string, root: string, entriesOf: (dir: string) => readonly WalkEntry[] = diskEntries): Listing {
+  const files: string[] = [];
+  const links: string[] = [];
   const walk = (dir: string): void => {
-    for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    for (const entry of entriesOf(dir)) {
       const path = join(dir, entry.name);
-      if (entry.isDirectory()) walk(path);
-      else if (entry.isFile() && entry.name.endsWith(".ts")) out.push(relative(REPO, path).split(sep).join("/"));
+      const listed = relative(base, path).split(sep).join("/");
+      if (entry.isSymbolicLink()) links.push(listed);
+      else if (entry.isDirectory()) walk(path);
+      else if (entry.isFile()) files.push(listed);
     }
   };
-  walk(join(REPO, root));
-  return out.sort();
+  walk(join(base, root));
+  return { files: files.sort(), links: links.sort() };
+}
+/** Every regular .ts file below a directory, repository-relative with / separators; symlinks are not followed. */
+function tsFilesBelow(root: string): string[] {
+  return listBelow(REPO, root).files.filter(path => path.endsWith(".ts"));
 }
 const WALK_ROOTS: readonly string[] = ["src"];
 const srcModules = (): SourceModule[] => WALK_ROOTS.flatMap(root => tsFilesBelow(root)).map(path => ({ path, text: textOf(path) }));
@@ -310,6 +398,21 @@ function programModules(): string[] {
 /** A floor below the src module count (115 at bff0b3c, 116 at 3a71372; the ri-decision-seed-claim census holds the same src
  * floor), so the walk is never blind; C1 pins this floor and the program, never the count. */
 const MODULES_FLOOR = 105;
+/** The file names TypeScript reads as sources: its own public Extension enum (.ts, .tsx, .d.ts, .js, .jsx and the .mts, .d.mts, .mjs
+ * and .cts, .d.cts, .cjs families), an anchor outside this census, with its two non-source members aside (.json, .tsbuildinfo). */
+const SOURCE_EXTENSIONS: readonly string[] = Object.values(ts.Extension).filter(extension => extension !== ts.Extension.Json && extension !== ts.Extension.TsBuildInfo);
+const isSource = (path: string): boolean => SOURCE_EXTENSIONS.some(extension => path.endsWith(extension));
+interface Reach {
+  /** The source files below the roots that the program does not hold (the judge never reads them). */
+  readonly outsideProgram: readonly string[];
+  /** The links below the roots (the walk follows none). */
+  readonly links: readonly string[];
+}
+/** The walk's reach over listings against a program (wb-4tdn F2): C1 holds src's to neither. */
+const reachOf = (listings: readonly Listing[], program: readonly string[]): Reach => ({
+  outsideProgram: sorted(listings.flatMap(listing => listing.files).filter(path => isSource(path) && !program.includes(path))),
+  links: sorted(listings.flatMap(listing => listing.links)),
+});
 
 /** A package specifier's package (scope and name); a relative one resolved against its module, .js read as the .ts source. */
 function resolveSpecifier(from: string, specifier: string): string {
@@ -326,6 +429,40 @@ const calleeName = (expression: ts.Expression): string =>
 const isFunctionLike = (node: ts.Node): boolean =>
   ts.isFunctionDeclaration(node) || ts.isFunctionExpression(node) || ts.isArrowFunction(node) || ts.isMethodDeclaration(node) ||
   ts.isConstructorDeclaration(node) || ts.isGetAccessorDeclaration(node) || ts.isSetAccessorDeclaration(node);
+/** The local names a module's import specifiers alias an EXEC_CALLEES name to (import { execFileSync as run }): an import binding,
+ * read by its name like every import binding, never a value traced (wb-4tdn F1). */
+function importAliases(sf: ts.SourceFile): ReadonlyMap<string, string> {
+  const aliases = new Map<string, string>();
+  for (const statement of sf.statements) {
+    const named = ts.isImportDeclaration(statement) ? statement.importClause?.namedBindings : undefined;
+    if (named === undefined || !ts.isNamedImports(named)) continue;
+    for (const element of named.elements) {
+      const imported = element.propertyName === undefined ? "" : nameOf(element.propertyName);
+      if (EXEC_CALLEES.includes(imported)) aliases.set(element.name.text, imported);
+    }
+  }
+  return aliases;
+}
+/** A callee's exec name: an identifier's own (or the EXEC_CALLEES name its import specifier aliases), a property's, or a
+ * string-keyed element's (cp["execFileSync"]). */
+function execNameOf(expression: ts.Expression, aliases: ReadonlyMap<string, string>): string {
+  if (ts.isIdentifier(expression)) return aliases.get(expression.text) ?? expression.text;
+  if (ts.isElementAccessExpression(expression)) return ts.isStringLiteralLike(expression.argumentExpression) ? expression.argumentExpression.text : "";
+  return calleeName(expression);
+}
+/** What ends a command word: whitespace, a quote (' " `) or a shell operator (; & | ( ) < >). */
+const COMMAND_BREAK = /[\s'"`;&|()<>]+/;
+/** A text's command words, each read by its last path segment (after / or \) with one trailing .exe dropped. */
+const commandWords = (text: string): string[] => text.split(COMMAND_BREAK).map(word => (word.split(/[/\\]/).at(-1) ?? "").replace(/\.exe$/, ""));
+/** The authority commands an exec call names: a command word of its string-literal first argument, or of a string-literal element of
+ * an array-literal second argument (its argv), that is git or the tracker. */
+function commandsOf(call: ts.CallExpression): string[] {
+  const [first, argv] = call.arguments;
+  const texts = [first, ...(argv !== undefined && ts.isArrayLiteralExpression(argv) ? argv.elements : [])].flatMap(node =>
+    node !== undefined && ts.isStringLiteralLike(node) ? [node.text] : [],
+  );
+  return AUTHORITY_COMMANDS.filter(command => texts.some(text => commandWords(text).includes(command)));
+}
 /** An identifier that names a declaration, a member or an import/export slot rather than reading a binding. */
 function isNamePosition(node: ts.Identifier): boolean {
   const parent = node.parent;
@@ -363,6 +500,7 @@ function parseFresh(module: SourceModule): ParsedModule {
   const bindings = new Map<string, string>();
   const constructs: { kind: string; node: ts.Node }[] = [];
   let writeSpellings = 0;
+  const execAliases = importAliases(sf);
   const visit = (node: ts.Node): void => {
     if ((ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) && node.moduleSpecifier !== undefined && ts.isStringLiteralLike(node.moduleSpecifier)) {
       const target = resolveSpecifier(module.path, node.moduleSpecifier.text);
@@ -384,7 +522,7 @@ function parseFresh(module: SourceModule): ParsedModule {
       const literal = first !== undefined && ts.isStringLiteralLike(first) ? first.text : undefined;
       const loads = node.expression.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(node.expression) && node.expression.text === "require");
       if (literal !== undefined && loads) edges.add(resolveSpecifier(module.path, literal));
-      if (literal !== undefined && EXEC_CALLEES.includes(calleeName(node.expression)) && AUTHORITY_COMMANDS.includes(literal)) constructs.push({ kind: `exec:${literal}`, node });
+      if (EXEC_CALLEES.includes(execNameOf(node.expression, execAliases))) for (const command of commandsOf(node)) constructs.push({ kind: `exec:${command}`, node });
     }
     if (ts.isPropertyAssignment(node) && nameOf(node.name) === "provider" && ts.isStringLiteralLike(node.initializer) && AUTHORITY_PROVIDERS.includes(node.initializer.text)) {
       constructs.push({ kind: `provider:${node.initializer.text}`, node });
@@ -518,6 +656,117 @@ function withModule(path: string, text: string, mode: "add" | "extend"): Analysi
 }
 /** The violations a change adds over the real tree's (which holds none). */
 const added = (analysis: Analysis): string[] => analysis.violations.filter(line => !real().violations.includes(line));
+/** The judge over the real src tree with modules added in memory (nothing is written). */
+const withModules = (extra: readonly SourceModule[]): Analysis => analyze([...srcModules(), ...extra]);
+
+/** C1's planted reach control (wb-4tdn F2): an in-memory tree that listBelow walks exactly as it walks src, these entries handed in
+ * for the disk's: one program module, two source modules outside its program (the gate's L2-9 .tsx, a .mjs), a link (the gate's
+ * L2-5, never followed), a markdown note and a JSON file (neither a source). */
+const REACH_PLANT_BASE = join(sep, "fwg-reach-plants");
+const REACH_PLANTS: Readonly<Record<string, "file" | "link">> = {
+  "src/index.ts": "file",
+  "src/lib/tool.mjs": "file",
+  "src/notes.md": "file",
+  "src/schema.json": "file",
+  "src/workbench/claude-fwg-probe.tsx": "file",
+  "src/workbench/fwg-link.ts": "link",
+};
+const REACH_PLANT_PROGRAM: readonly string[] = ["src/index.ts"];
+/** One directory's entries of the planted tree, in the shape the disk gives them. */
+function plantEntries(dir: string): WalkEntry[] {
+  const at = relative(REACH_PLANT_BASE, dir).split(sep).join("/");
+  const kinds = new Map<string, "file" | "link" | "directory">();
+  for (const [path, kind] of Object.entries(REACH_PLANTS)) {
+    if (!path.startsWith(`${at}/`)) continue;
+    const [name = "", ...below] = path.slice(at.length + 1).split("/");
+    kinds.set(name, below.length > 0 ? "directory" : kind);
+  }
+  return [...kinds].map(([name, kind]) => ({ name, isDirectory: () => kind === "directory", isFile: () => kind === "file", isSymbolicLink: () => kind === "link" }));
+}
+
+/** M5's spellings (wb-4tdn F1): one added src module per spelling, each one exec call of the tracker (show, so no write spelling
+ * joins it). A read spelling is a kill control the judge names as a tracker exec; an unread one is a pinned quiet row (the
+ * header's NOT CLAIMED list, its R2 and R3 members named there). */
+interface ExecSpelling {
+  readonly id: string;
+  readonly read: boolean;
+  readonly text: string;
+}
+const CHILD_IMPORTS = 'import * as cp from "node:child_process";\nimport { execFile, execFileSync, execSync, spawnSync } from "node:child_process";';
+const spelling = (id: string, read: boolean, body: string): ExecSpelling => ({ id, read, text: `${CHILD_IMPORTS}\n${body}` });
+const EXEC_SPELLINGS: readonly ExecSpelling[] = [
+  // Read: the callee, an EXEC_CALLEES name as an identifier, a property, a string-keyed element or an import specifier's alias.
+  spelling("literal", true, `export const run = (id: string) => execFileSync("${BD}", ["show", id]);`),
+  spelling("property", true, `export const run = (id: string) => cp.execFileSync("${BD}", ["show", id]);`),
+  spelling("element", true, `export const run = (id: string) => cp["execFileSync"]("${BD}", ["show", id]);`),
+  spelling("import-alias", true, `import { execFileSync as zzRun } from "node:child_process";\nexport const run = (id: string) => zzRun("${BD}", ["show", id]);`),
+  // Read: the program, a command word of the string-literal first argument.
+  spelling("no-substitution", true, `export const run = (id: string) => execFileSync(\`${BD}\`, ["show", id]);`),
+  spelling("path", true, `export const run = (id: string) => execFileSync("/usr/local/bin/${BD}", ["show", id]);`),
+  spelling("exe", true, `export const run = (id: string) => execFileSync("${BD}.exe", ["show", id]);`),
+  spelling("windows-path", true, `export const run = (id: string) => execFileSync("C:\\\\tools\\\\${BD}.exe", ["show", id]);`),
+  spelling("shell-line", true, `export const run = () => execSync("${BD} show wb-1 --json");`),
+  spelling("shell-later", true, `export const run = () => execSync("cd /tmp && ${BD} show wb-1");`),
+  // Read: the argv, a command word of a string-literal element of an array-literal second argument.
+  spelling("argv-env", true, `export const run = (id: string) => spawnSync("env", ["${BD}", "show", id]);`),
+  spelling("argv-later", true, `export const run = (id: string) => spawnSync("sudo", ["-u", "ops", "${BD}", "show", id]);`),
+  spelling("argv-no-substitution", true, `export const run = (id: string) => spawnSync("env", [\`${BD}\`, "show", id]);`),
+  spelling("argv-shell", true, `export const run = () => spawnSync("sh", ["-c", "${BD} show wb-1"]);`),
+  // Read: each word break alone (a whitespace, a quote or a shell operator on both sides of the command word).
+  spelling("break-tab", true, `export const run = () => execSync("x\\t${BD}\\ty");`),
+  spelling("break-newline", true, `export const run = () => execSync("x\\n${BD}\\ny");`),
+  spelling("break-single-quote", true, `export const run = () => execSync("x'${BD}'y");`),
+  spelling("break-double-quote", true, `export const run = () => execSync('x"${BD}"y');`),
+  spelling("break-backquote", true, `export const run = () => execSync("x\`${BD}\`y");`),
+  spelling("break-semicolon", true, `export const run = () => execSync("x;${BD};y");`),
+  spelling("break-ampersand", true, `export const run = () => execSync("x&${BD}&y");`),
+  spelling("break-pipe", true, `export const run = () => execSync("x|${BD}|y");`),
+  spelling("break-open-paren", true, `export const run = () => execSync("x(${BD}(y");`),
+  spelling("break-close-paren", true, `export const run = () => execSync("x)${BD})y");`),
+  spelling("break-less", true, `export const run = () => execSync("x<${BD}<y");`),
+  spelling("break-greater", true, `export const run = () => execSync("x>${BD}>y");`),
+  // Unread, R2 R-CROSS-SCOPE: an exec entry point carried in a module-level const or a destructuring, or returned by promisify, and
+  // a command passed into a wrapper function's parameter.
+  spelling("const-alias", false, `const zzRun = execFileSync;\nexport const run = (id: string) => zzRun("${BD}", ["show", id]);`),
+  spelling("destructured-alias", false, `const { execFileSync: zzRun } = cp;\nexport const run = (id: string) => zzRun("${BD}", ["show", id]);`),
+  spelling("promisified", false, `import { promisify } from "node:util";\nconst zzRun = promisify(execFile);\nexport const run = (id: string) => zzRun("${BD}", ["show", id]);`),
+  spelling("wrapper-function", false, `const zzRun = (command: string, args: string[]) => execFileSync(command, args);\nexport const run = (id: string) => zzRun("${BD}", ["show", id]);`),
+  // Unread, R3 R-COMPOSED: a command that is not a string literal at its construct.
+  spelling("const-command", false, `const zzCommand = "${BD}";\nexport const run = (id: string) => execFileSync(zzCommand, ["show", id]);`),
+  spelling("concatenated", false, `export const run = (id: string) => execSync("${BD}" + " show " + id);`),
+  spelling("template-command", false, `export const run = (id: string) => execSync(\`${BD} show \${id}\`);`),
+  spelling("argv-held", false, `const zzArgv = ["${BD}", "show"];\nexport const run = () => spawnSync("env", zzArgv);`),
+  // Unread, NOT CLAIMED: the callee, the argument position, the word and the API outside the readings.
+  spelling("local-alias", false, `export const run = (id: string) => {\n  const zzRun = execFileSync;\n  return zzRun("${BD}", ["show", id]);\n};`),
+  spelling("member-held", false, `const zzTools = { zzRun: execFileSync };\nexport const run = (id: string) => zzTools.zzRun("${BD}", ["show", id]);`),
+  spelling("re-exported", false, `import { zzRun } from "./zz-4tdn-exec-helpers.js";\nexport const run = (id: string) => zzRun("${BD}", ["show", id]);`),
+  spelling("call-through", false, `export const run = (id: string) => execFileSync.call(undefined, "${BD}", ["show", id]);`),
+  spelling("apply-through", false, `export const run = (id: string) => execFileSync.apply(undefined, ["${BD}", ["show", id]]);`),
+  spelling("paren-callee", false, `export const run = (id: string) => (execFileSync)("${BD}", ["show", id]);`),
+  spelling("comma-callee", false, `export const run = (id: string) => (0, execFileSync)("${BD}", ["show", id]);`),
+  spelling("typed-callee", false, `export const run = (id: string) => (execFileSync as typeof execFileSync)("${BD}", ["show", id]);`),
+  spelling("typed-literal", false, `export const run = (id: string) => execFileSync("${BD}" as string, ["show", id]);`),
+  spelling("typed-argv", false, `export const run = (id: string) => spawnSync("env", ["${BD}", "show", id] as const);`),
+  spelling("tagged-template", false, `export const run = () => execSync(String.raw\`${BD} show wb-1\`);`),
+  spelling("argv-first", false, `export const run = (id: string) => cp.spawn(["${BD}", "show", id]);`),
+  spelling("spliced", false, `export const run = () => execSync("${BD.charAt(0)}''${BD.charAt(1)} show wb-1");`),
+  spelling("escaped", false, `export const run = () => execSync("${BD.charAt(0)}\\\\${BD.charAt(1)} show wb-1");`),
+  spelling("letter-case", false, `export const run = (id: string) => execFileSync("${BD.toUpperCase()}", ["show", id]);`),
+  spelling("other-suffix", false, `export const run = (id: string) => execFileSync("${BD}.cmd", ["show", id]);`),
+  spelling("expansion", false, `export const run = () => execSync("\${ZZ:-${BD}} show wb-1");`),
+  spelling("word-part", false, `export const run = () => execFileSync("rf", ["--${BD}", "x=${BD}", "${BD}-helper", "${BD}s"]);`),
+  spelling("other-api", false, `import { execa } from "execa";\nexport const run = (id: string) => execa("${BD}", ["show", id]);`),
+];
+const spellingPath = (id: string): string => `src/workbench/zz-4tdn-${id}.ts`;
+/** The filed plant: the gate's L2-3 members (a path-qualified program, a wrapper's argv, an aliased import), appended to the
+ * observation-class claude-control.ts as the finding filed them. */
+const FILED_MODULE = "src/workbench/claude-control.ts";
+const FILED_PLANT = [
+  'import { execFileSync, spawnSync, execFileSync as fwProbeRun } from "node:child_process";',
+  `export const fwProbeByPath = (id: string) => execFileSync("/usr/local/bin/${BD}", ["close", id]);`,
+  `export const fwProbeViaEnv = (id: string) => spawnSync("env", ["${BD}", "close", id]);`,
+  `export const fwProbeAliased = (id: string) => fwProbeRun("${BD}", ["close", id]);`,
+].join("\n");
 
 // --- the Claude fixture -----------------------------------------------------------------------------------------------
 
@@ -696,6 +945,90 @@ function hxProviderReading(): JsonValue {
 }
 const READ_KINDS: readonly string[] = HYPERUNIX_EXECUTION_KINDS.filter(kind => !kind.startsWith("mutation-"));
 
+// --- the outside records: the tracked bead export and the docs07 census's bindings (F1 and the pin anchor) -------------
+
+let exportRows: readonly JsonObject[] | undefined;
+/** A row of the tracked bead export by id, the export read once: the owner filing F1 reads and the review filing the pin anchor reads. */
+function exportRow(id: string): JsonObject | undefined {
+  exportRows ??= readFileSync(BEAD_EXPORT, "utf8")
+    .split("\n")
+    .filter(line => line.trim() !== "")
+    .map(line => JSON.parse(line) as JsonObject);
+  return exportRows.find(entry => entry.id === id);
+}
+/** The owner filing's acceptance clauses, each "(x) ..." without its closing period, in order (F1's reading of its notes). */
+const acceptanceClauses = (notes: string): string[] =>
+  (/Acceptance: ([\s\S]*?)\s*Not P0\/P1:/.exec(notes)?.[1] ?? "").split(/;\s+(?=\([a-z]\) )/).map(clause => clause.replace(/\.$/, ""));
+/** The judged rows (a label that opens with its "(x) " clause) whose label equals that clause, in order (F1's label reading). */
+const labelsEqualOf = (rows: readonly Row[], clauseTexts: readonly string[]): string[] =>
+  rows.filter(entry => /^\([a-z]\) /.test(entry.label)).filter((entry, index) => clauseTexts[index] === entry.label).map(entry => entry.id);
+
+/** A pin id: its row's letter, then its number. */
+const PIN_ID = /^[A-Z]\d+$/;
+/** One item of the filing's pin list with a range ("D1-D3") expanded; any other shape is kept as written and reads as a finding. */
+function expandPinItem(item: string): string[] {
+  const range = /^([A-Z])(\d+)-([A-Z])(\d+)$/.exec(item);
+  if (range === null) return [item];
+  const [, letter = "", first = "", lastLetter = "", last = ""] = range;
+  const from = Number(first);
+  const to = Number(last);
+  if (lastLetter !== letter || to < from) return [item];
+  return Array.from({ length: to - from + 1 }, (_, index) => `${letter}${from + index}`);
+}
+interface OutsidePins {
+  /** [pin id, title] for every frozen binding line of the docs07 census that names this file, in that census's order. */
+  readonly bound: readonly (readonly [string, string])[];
+  /** The pin ids the review filing's title lists, its ranges expanded, in its order. */
+  readonly filed: readonly string[];
+  /** The filing title's own counts, "<filed> of <total> pins" (-1 when the title states none). */
+  readonly stated: { readonly filed: number; readonly total: number };
+}
+let outsideReading: OutsidePins | undefined;
+/** The two records outside this file and its roster that name its pins, read once. */
+function outsidePins(): OutsidePins {
+  if (outsideReading !== undefined) return outsideReading;
+  const census = ts.createSourceFile(DOCS07_CENSUS, textOf(DOCS07_CENSUS), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const marker = ` | ${SELF} | `;
+  const bound: (readonly [string, string])[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isStringLiteralLike(node) && node.text.includes(marker)) {
+      const title = node.text.slice(node.text.indexOf(marker) + marker.length);
+      bound.push([/^([A-Z]\d+)[: ]/.exec(title)?.[1] ?? title, title]);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(census);
+  const filing = exportRow(PIN_FILING);
+  const title = filing !== undefined && typeof filing.title === "string" ? filing.title : "";
+  const counted = /\b(\d+) of (\d+) pins \(([^)]*)\)/.exec(title);
+  const filed = (counted?.[3] ?? "")
+    .split(",")
+    .map(item => item.trim())
+    .filter(item => item !== "")
+    .flatMap(expandPinItem);
+  outsideReading = { bound, filed, stated: { filed: Number(counted?.[1] ?? -1), total: Number(counted?.[2] ?? -1) } };
+  return outsideReading;
+}
+/** Every disagreement between rows (with their titles) and the outside records, each naming the pin and the record. */
+function anchorFindings(rows: readonly Row[], titles: Readonly<Record<string, string>>, outside: OutsidePins): string[] {
+  const findings: string[] = [];
+  const pins = rows.flatMap(row => row.pins);
+  const filing = `the review filing ${PIN_FILING}`;
+  if (outside.filed.length !== outside.stated.filed) findings.push(`${filing} lists ${outside.filed.length} pins, not its stated ${outside.stated.filed}`);
+  for (const id of outside.filed) if (!PIN_ID.test(id)) findings.push(`${filing} lists "${id}", which is no pin id`);
+  if (new Set(outside.filed).size !== outside.filed.length) findings.push(`${filing} lists a pin twice`);
+  const beyond = new Set(outside.bound.map(([id]) => id).filter(id => !outside.filed.includes(id))).size;
+  const leftBound = outside.stated.total - outside.stated.filed;
+  if (beyond < leftBound) findings.push(`the docs07 provider-rules census binds ${beyond} pins beyond ${filing}'s list, fewer than the ${leftBound} (${outside.stated.total} - ${outside.stated.filed}) it left bound outside`);
+  for (const id of outside.filed) if (!pins.includes(id)) findings.push(`${id}: ${filing} names it and no row holds it`);
+  for (const [id, title] of outside.bound) {
+    if (!pins.includes(id)) findings.push(`${id}: the docs07 provider-rules census binds it ("${title}") and no row holds it`);
+    else if (titles[id] !== title) findings.push(`${id}: the docs07 provider-rules census binds the title "${title}", not this file's "${titles[id] ?? ""}"`);
+  }
+  for (const id of pins) if (!outside.filed.includes(id) && !outside.bound.some(([boundId]) => boundId === id)) findings.push(`${id}: no outside record names it`);
+  return findings;
+}
+
 // --- the cases ----------------------------------------------------------------------------------------------------------
 
 const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
@@ -833,16 +1166,29 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const walked = WALK_ROOTS.flatMap(root => tsFilesBelow(root));
     const program = programModules();
     expect(walked, `the src walk (${analysis.modules} modules) reads exactly tsconfig.json's program (${program.length})`).toEqual(program);
+    const reach = reachOf(WALK_ROOTS.map(root => listBelow(REPO, root)), program);
+    const planted = reachOf([listBelow(REACH_PLANT_BASE, "src", plantEntries)], REACH_PLANT_PROGRAM);
     const witness = {
-      modules: { srcIsProgram: isDeepStrictEqual(walked, program), floorMet: analysis.modules >= MODULES_FLOOR },
+      modules: {
+        srcIsProgram: isDeepStrictEqual(walked, program),
+        floorMet: analysis.modules >= MODULES_FLOOR,
+        outsideProgram: [...reach.outsideProgram],
+        links: [...reach.links],
+      },
       observation: [...analysis.observation],
       authority: [...analysis.authority],
       holders: [...analysis.holders],
       violations: [...analysis.violations],
+      reachPlants: { outsideProgram: [...planted.outsideProgram], links: [...planted.links] },
     };
     expect(witness.holders).toEqual([...HOLDERS]);
     expect(witness.observation.filter(path => witness.authority.includes(path))).toEqual([]);
     expect(witness.violations).toEqual([]);
+    expect(reach, "every source file below src is a program module, and src holds no link").toStrictEqual({ outsideProgram: [], links: [] });
+    expect(witness.reachPlants, "the walk names the planted sources outside the program and the planted link").toStrictEqual({
+      outsideProgram: ["src/lib/tool.mjs", "src/workbench/claude-fwg-probe.tsx"],
+      links: ["src/workbench/fwg-link.ts"],
+    });
     return witness;
   },
   C2: async () => {
@@ -886,18 +1232,13 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     return witness;
   },
   F1: async () => {
-    const row = readFileSync(BEAD_EXPORT, "utf8")
-      .split("\n")
-      .filter(line => line.trim() !== "")
-      .map(line => JSON.parse(line) as JsonObject)
-      .find(entry => entry.id === BEAD);
+    const row = exportRow(BEAD);
     const notes = row !== undefined && typeof row.notes === "string" ? row.notes : "";
     expect(notes, `${BEAD} has no notes in the bead export`).not.toBe("");
-    const acceptance = /Acceptance: ([\s\S]*?)\s*Not P0\/P1:/.exec(notes)?.[1] ?? "";
-    const clauseTexts = acceptance.split(/;\s+(?=\([a-z]\) )/).map(clause => clause.replace(/\.$/, ""));
+    const clauseTexts = acceptanceClauses(notes);
     const clauses = clauseTexts.map(clause => /^\(([a-z])\) /.exec(clause)?.[1] ?? "");
     const judged = ROWS.filter(entry => /^\([a-z]\) /.test(entry.label));
-    const labelsEqual = judged.filter((entry, index) => clauseTexts[index] === entry.label).map(entry => entry.id);
+    const labelsEqual = labelsEqualOf(ROWS, clauseTexts);
     const constantsQuoted = FILING_CONSTANTS.filter(constant => notes.includes(constant));
     expect(clauses).toEqual(judged.map(entry => entry.label.charAt(1)));
     expect(labelsEqual).toEqual(judged.map(entry => entry.id));
@@ -917,11 +1258,21 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       withModule("src/index.ts", 'export function settledWork(identity: ClaudeCallIdentity) { return { provider: "beads", type: "work", id: identity.agentId }; }', "extend"),
       "mixed-scope src/index.ts function:settledWork [ClaudeCallIdentity] [provider:beads]",
     ),
-  M5: async () =>
-    hit(
-      withModule("src/workbench/attention.ts", `import { execFileSync } from "node:child_process";\nexport const settle = (id: string) => execFileSync("${BD}", ["close", id]);`, "extend"),
-      "tracker-exec src/workbench/attention.ts",
-    ),
+  M5: async () => {
+    const violation = "tracker-exec src/workbench/attention.ts";
+    const landed = added(withModule("src/workbench/attention.ts", `import { execFileSync } from "node:child_process";\nexport const settle = (id: string) => execFileSync("${BD}", ["close", id]);`, "extend"));
+    // The lines whose subject is the planted module (a consequence on a module that imports it is not this pin's).
+    const filed = sorted(added(withModule(FILED_MODULE, FILED_PLANT, "extend")).filter(line => line.split(" ")[1] === FILED_MODULE));
+    const lines = added(withModules(EXEC_SPELLINGS.map(entry => ({ path: spellingPath(entry.id), text: entry.text }))));
+    const read = EXEC_SPELLINGS.filter(entry => lines.includes(`tracker-exec ${spellingPath(entry.id)}`)).map(entry => entry.id);
+    const unread = EXEC_SPELLINGS.filter(entry => !lines.some(line => line.includes(spellingPath(entry.id)))).map(entry => entry.id);
+    expect(landed).toContain(violation);
+    expect(filed, "the filed plant (the gate's L2-3 members in claude-control.ts) reads as the tracker exec it is").toEqual([`observation-builds-authority ${FILED_MODULE} exec:${BD}`, `tracker-exec ${FILED_MODULE}`]);
+    expect(read, "every read spelling reads as a tracker exec").toEqual(EXEC_SPELLINGS.filter(entry => entry.read).map(entry => entry.id));
+    expect(unread, "every unread spelling stays quiet").toEqual(EXEC_SPELLINGS.filter(entry => !entry.read).map(entry => entry.id));
+    expect(lines, "the spellings add nothing beside their tracker execs").toEqual(read.map(id => `tracker-exec ${spellingPath(id)}`));
+    return { violation, hit: landed.includes(violation), filed, read, unread };
+  },
   M6: async () => hit(withModule("src/workbench/timeline.ts", `export const HINT = "run ${BD} update wb-1 --status closed";`, "extend"), "tracker-write-spelling src/workbench/timeline.ts"),
   M7: async () =>
     hit(withModule("src/workbench/forge-evidence.ts", 'export type { ClaudeEvidenceContent } from "./claude-evidence.js";', "extend"), "authority-imports-observation src/workbench/forge-evidence.ts -> src/workbench/claude-evidence.ts"),
@@ -1025,6 +1376,10 @@ function quiet(analysis: Analysis): Json {
   return { violations: lines };
 }
 
+/** The pin anchor's case (wb-kku9.5): its own registered test beside the judged-set case, never a ROWS pin. */
+const ANCHOR_TITLE =
+  "the pin anchor: every pin is named outside this file and its roster (the docs07 provider-rules census's frozen bindings or the review filing's pin list), so a pin or a row removed from every literal here reds";
+
 describe("wb-kku9.1 observation-class census (MW-CAC-WORKFLOW-COMPOSITION-R1)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:2", "C:3", "D:3", "F:1", "M:9", "R:7"]);
@@ -1035,6 +1390,81 @@ describe("wb-kku9.1 observation-class census (MW-CAC-WORKFLOW-COMPOSITION-R1)", 
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect(Object.keys(PIN_TITLES).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     for (const row of ROWS) for (const pin of row.pins) expect(PIN_TITLES[pin]?.startsWith(`${pin}`), pin).toBe(true);
+  });
+
+  it(ANCHOR_TITLE, { timeout: 60_000 }, () => {
+    const outside = outsidePins();
+    const pins = ROWS.flatMap(row => row.pins);
+    const findings = anchorFindings(ROWS, PIN_TITLES, outside);
+    // Live: each pin, and each row, removed from every literal of this file (its ROWS entry, its title and its case; the
+    // judged-set case holds the roster and the frozen shape to the rows) is named by an outside record.
+    const without = (drop: readonly string[]): Row[] => ROWS.map(row => ({ ...row, pins: row.pins.filter(pin => !drop.includes(pin)) }));
+    const titlesWithout = (drop: readonly string[]): Record<string, string> => Object.fromEntries(Object.entries(PIN_TITLES).filter(([pin]) => !drop.includes(pin)));
+    const unseenPinRemovals = pins.filter(pin => anchorFindings(without([pin]), titlesWithout([pin]), outside).length === 0);
+    const unseenRowRemovals = ROWS.filter(row => anchorFindings(without(row.pins), titlesWithout(row.pins), outside).length === 0).map(row => row.id);
+    // A docs07-bound pin removed here and from the docs07 bindings together is still seen: the filing's counts leave 7 pins to them.
+    const unseenPairedRemovals = outside.bound
+      .map(([id]) => id)
+      .filter(id => anchorFindings(without([id]), titlesWithout([id]), { ...outside, bound: outside.bound.filter(([other]) => other !== id) }).length === 0);
+    // R-WORDING quiet reading: a title or a label reworded in every literal here, as the outside readings see it (this anchor
+    // for the titles; F1's label reading, against the owner filing's clauses, for the labels).
+    const reworded = (text: string): string => `${text}, reworded`;
+    const unseenTitles = pins.filter(pin => anchorFindings(ROWS, { ...PIN_TITLES, [pin]: reworded(PIN_TITLES[pin] ?? pin) }, outside).length === 0);
+    const owner = exportRow(BEAD);
+    const clauseTexts = acceptanceClauses(owner !== undefined && typeof owner.notes === "string" ? owner.notes : "");
+    const labels = labelsEqualOf(ROWS, clauseTexts);
+    const unseenLabels = ROWS.filter(row => isDeepStrictEqual(labelsEqualOf(ROWS.map(other => (other.id === row.id ? { ...other, label: reworded(other.label) } : other)), clauseTexts), labels)).map(
+      row => row.id,
+    );
+    // FORWARD CONTACT (pinned, the header's paragraph): one later pin, one more pin of row M numbered past its pins under a title of
+    // its own, read named by no outside record, then bound by one more docs07 frozen binding line under that title.
+    const later = `M${Math.max(0, ...(ROWS.find(row => row.id === "M")?.pins ?? []).map(pin => Number(pin.slice(1)))) + 1}`;
+    const laterTitle = `${later}: a later pin of row M`;
+    const laterRows = ROWS.map(row => (row.id === "M" ? { ...row, pins: [...row.pins, later] } : row));
+    const laterTitles: Record<string, string> = { ...PIN_TITLES, [later]: laterTitle };
+    const laterBinding: readonly [string, string] = [later, laterTitle];
+    const laterBound: OutsidePins = { ...outside, bound: [...outside.bound, laterBinding] };
+    const laterPin = {
+      pin: later,
+      unnamed: anchorFindings(laterRows, laterTitles, outside),
+      bound: anchorFindings(laterRows, laterTitles, laterBound),
+      boundUnseenPairedRemovals: laterBound.bound
+        .map(([id]) => id)
+        .filter(
+          id =>
+            anchorFindings(
+              laterRows.map(row => ({ ...row, pins: row.pins.filter(pin => pin !== id) })),
+              Object.fromEntries(Object.entries(laterTitles).filter(([pin]) => pin !== id)),
+              { ...laterBound, bound: laterBound.bound.filter(([other]) => other !== id) },
+            ).length === 0,
+        ),
+    };
+    const witness = {
+      filing: PIN_FILING,
+      stated: { ...outside.stated },
+      filed: [...outside.filed],
+      bound: sorted(outside.bound.map(([id]) => id)),
+      findings,
+      unseenPinRemovals,
+      unseenRowRemovals,
+      unseenPairedRemovals,
+      unseenTitles,
+      unseenLabels,
+      laterPin,
+    };
+    expect(findings, "the rows and the outside records agree").toEqual([]);
+    expect(unseenPinRemovals, "pins whose removal from every literal here no outside record would see").toEqual([]);
+    expect(unseenRowRemovals, "rows whose removal from every literal here no outside record would see").toEqual([]);
+    expect(unseenPairedRemovals, "docs07-bound pins whose removal here and from the docs07 bindings together no outside record would see").toEqual([]);
+    expect(unseenTitles, "R-WORDING: the titles no outside reading sees reworded are exactly the filing-named pins'").toEqual(pins.filter(pin => outside.filed.includes(pin)));
+    expect(unseenLabels, "R-WORDING: the labels no outside reading sees reworded are rows F, M and R's").toEqual(["F", "M", "R"]);
+    expect(laterPin.unnamed, "FORWARD CONTACT: a later pin no outside record names reads as unnamed").toEqual([`${later}: no outside record names it`]);
+    expect(laterPin.bound, "FORWARD CONTACT: a later pin a docs07 binding names agrees with the records").toEqual([]);
+    expect(laterPin.boundUnseenPairedRemovals, "FORWARD CONTACT: beside a later docs07 binding, no docs07-bound pin's paired removal is seen (the floor is the filing's count)").toEqual([
+      ...outside.bound.map(([id]) => id),
+      later,
+    ]);
+    expect(witness).toStrictEqual(ROSTER.anchor);
   });
 
   for (const row of ROWS) {

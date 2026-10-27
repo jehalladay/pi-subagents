@@ -54,3 +54,7 @@ D14: Do not automatically rewrite a pinned running workflow after designer chang
 ## Revisit criteria
 
 Any new abstraction that duplicates SDK authority must demonstrate a real second consumer and domain contract equivalence; otherwise remove it. Any broad subsystem not used by VC-1 through VC-5 should remain unimplemented, not treated as an architectural prerequisite.
+
+## Library design programs
+
+CAC is a Library design program — neither a provider, an authority nor an evidence source for Pi; its status words are not consumed.

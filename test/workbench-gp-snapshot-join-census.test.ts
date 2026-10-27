@@ -49,6 +49,13 @@
  * and a FIFO that fails the walk closed. ORACLE pins both answers of the whitespace-only oracle the clause-(c) rows read:
  * false for identical bytes, for a one-field value edit and for a space added inside a string value; true for the file
  * respelled compact.
+ * THE SCAN'S TEXT READINGS (wb-yae1, the landing-417 under-report probes G19, G24 and G25): every landed text pin held its
+ * name at the end of its string, or as the whole string, and named it once, so a scan reading only a suffix or only the
+ * first occurrence stayed green. TOUCHPOINTS now holds each text reading away from the end and past the first occurrence:
+ * the identities path inside a longer path, slashed ("/identities/graph/0", G19) and dotted; a field name inside a dotted
+ * path string ("receipt.input_snapshot.value", G24); a whole-word field after a longer name that holds it
+ * ("xinput_snapshot input_snapshot", G25) and before one (the last-occurrence twin); and the shared name inside a dotted
+ * path.
  * Rule 16: the frozen-shape case pins every table's row and pin shape and the live subjects; the OUT-OF-FILE anchor
  * test/fixtures/gp-snapshot-join-roster.json (the hk9l/5jha roster pattern) carries every judged row (table, id, label, the
  * SHA-256 of each pin), every registered test title and the residual families, and the roster case judges this file against it
@@ -316,10 +323,10 @@ describe("gp snapshot-join census (wb-gxd7.3, GPC-FEEDBACK-CONTRACT-AUDIT-R3)", 
 
   it("rule 16: every judged table and the live subjects are frozen at their measured shape", () => {
     expect(ROWS.map(entry => `${entry.table}/${entry.id}:${entry.pins.length}`)).toEqual([
-      "TOUCHPOINTS/T-FIELD:9",
-      "TOUCHPOINTS/T-IDENTITIES:8",
+      "TOUCHPOINTS/T-FIELD:12",
+      "TOUCHPOINTS/T-IDENTITIES:10",
       "TOUCHPOINTS/T-PREFIX:3",
-      "TOUCHPOINTS/T-SHARED:4",
+      "TOUCHPOINTS/T-SHARED:5",
       "CLEAN/C-PI-OWN:4",
       "CLEAN/C-NEAR-NAMES:5",
       "CLEAN/C-COMMENT:2",

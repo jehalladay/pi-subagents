@@ -25,9 +25,10 @@
  *    token) and no carrier (CARRIERS, read token by token) names REMOTE_FAMILY - a remote component, element, producer or
  *    stream, a component stream, an RftsxElement, a crosswalk or a callback serialization - and the walk reaches its floors (the
  *    whole tree, the modules of src, test, qa and examples, the carriers, and every root entry of ROOT_FLOORS) and anchors,
- *    equals an independent listing of the same tree, meets no symlink (refused, never followed) and no unreadable directory or
- *    file (a file gone between the listing and the read holds nothing); every site found is printed with its file and line. A2
- *    no judged module loads or runs the ReactiveComponents distribution (RC_FAMILY: vibranium-reactive-components or its
+ *    equals an independent listing of the same tree, skips only root entries anchored outside this file (SKIP ANCHOR), meets no
+ *    symlink (refused, never followed) and no unreadable directory or file (a file gone between the listing and the read holds
+ *    nothing); every site found is printed with its file and line. A2 no judged module loads or runs the ReactiveComponents
+ *    distribution (RC_FAMILY: vibranium-reactive-components under every spelling pip installs it by (PEP 503) or its
  *    reactive_components module, through an import or export declaration, an import-equals require, an import type, the first
  *    argument of any call or new expression, or the module after a `-m` in an array literal, each position read through BOUND
  *    VALUES), the loader calls whose specifier is not complete are exactly COMPUTED_LOADS, and no manifest (MANIFEST), no carrier
@@ -60,12 +61,27 @@
  * binaries (BINARY_EXTENSIONS) are walked and never judged. It reads the working tree, so an untracked plant is read. The listing
  * the walk must equal is fs.readdirSync's own recursive mode over each root entry, a second traversal, so a walk that skips a
  * root, a directory or a file is a red, not a lower count above a floor. The walk's two reads (a directory's entries, a file's
- * bytes) go through one Io, so a control makes each fail: an unreadable directory and an unreadable file are recorded, a
- * vanished file (ENOENT) is not.
+ * bytes) go through one Io, so a control makes each fail (wb-yfzf F4: more than one failure each): a directory whose entries
+ * cannot be read is recorded whatever the failure (EACCES, EIO); a file whose bytes cannot be read is recorded unless the
+ * failure is an fs Error with code ENOENT, a file gone between the listing and the read, which holds nothing - another code
+ * (EACCES, EIO), an Error without a code and a thrown value that is no Error (even one carrying an ENOENT code) are each
+ * recorded.
+ * SKIP ANCHOR (wb-yfzf F3): the listing shares SKIPPED_ROOTS with the walk, so each skipped entry is anchored outside this
+ * file and its roster: git's own data (GIT_DATA), the tracker export's root entry (BEAD_EXPORT's first segment), or a root
+ * entry the repository's IGNORE_FILE ignores by name (a pattern with no glob, negation or inner "/"; a leading or trailing "/"
+ * allowed). A skip added to the census and the roster together is a red, not a lower count above a floor. Every root entry
+ * the walk reached at base carries a floor in ROOT_FLOORS.
  * CARRIERS (wb-wxhu F2): every file that is no module, no JSON file, no prose and no binary - a shell or Python script, a TOML,
  * YAML or HTML file, an extensionless file, any type the walk has not met before - is a carrier: judged by default, never skipped
  * by default. A1 reads its tokens; A2 reads its lines, and a line naming RC_FAMILY anywhere (a `python3 -m`, a `pip install`, an
  * import, a comment) is a hit.
+ * PEP 503 (wb-yfzf F1): pip compares distribution names with letters in any case and every run of "-", "_" and "." read as one
+ * "-", so RC_FAMILY reads the distribution in any case with its three words joined by any such run
+ * (vibranium_reactive_components, vibranium.reactive.components, Vibranium__Reactive-.Components), also when a "-" and its
+ * version follow it (an artifact name: a wheel or an sdist). The module stays reactive_components (or reactive-components).
+ * The reading is the landed one widened, never narrowed: every text the landed RC_FAMILY matched, it matches. The words run
+ * together with no separator, or the name continued by another word (vibranium-reactive-components-extra), are another
+ * distribution and are not read.
  * BOUND VALUES (wb-wxhu F1): a load position reads every value its expression can take - a literal or a folded one; a name,
  * through every binding of that name in the module (a const, let or var initializer, a parameter's or a destructured name's
  * default, an assignment, the right side of a compound assignment, the elements of a for-of over an array literal), followed
@@ -92,7 +108,9 @@
  * OVER-READ (disclosed): an identifier or a name-like literal using a family word in another sense - an rf TSX error code such
  * as RFTSX_ELEMENT_INVALID_KEY (a queued sibling census's roster quotes these), or a crosswalk table of some other pair - is
  * read as a finding; none exists outside the instruments today, and such a finding is re-judged, never silenced. So is a carrier
- * or JSON command line naming the distribution in a comment or a note, and a load through a name bound elsewhere (BOUND VALUES).
+ * or JSON command line naming the distribution in a comment or a note, a load through a name bound elsewhere (BOUND VALUES),
+ * and a name followed by "-" and a digit, read as an artifact name (a distribution literally named
+ * vibranium-reactive-components-2 would be read as this one).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (id, label, pins), every pin's
  * witness, the scan constants, the residual families, the mutant assignment and the registered test titles are held to the
  * out-of-file roster (test/fixtures/rc-remote-component-stream-roster.json). OUTSIDE ANCHOR: the owner filing's row in the
@@ -100,13 +118,20 @@
  * trigger in row A's, every row carries one, the quote and citation equal the roster's, A4 reads its Gating, Shipped and
  * Authority sentences, and D2 reads its mutant list from clause (c), so a row or a named mutant removed from every literal of this
  * file and the roster still reds. Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the bead row
- * anchors rows, clauses and the named mutants, not pins); and the armed rows prove the judge, not a Pi consumer (none exists).
+ * anchors rows, clauses and the named mutants, not pins); a ROOT_FLOORS floor removed together with its roster copy (no outside
+ * source lists the root entries without running git; the removal drops no read by itself: the walk still equals the listing
+ * and every skip stays anchored); a skipped root entry the ignore file ignores that still holds files (added past the ignore
+ * file) - the SKIP ANCHOR trusts the ignore file, which no read here can check without running git; and the armed rows prove
+ * the judge, not a Pi consumer (none exists).
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
  * not inverted, ran; every pin's case reached its end (REACHED); no registered test or suite title spells the family (describe
  * titles mask it).
  * RESIDUALS (named families, each with pinned quiet rows in the controls): R-COMPOSED a name or a specifier assembled at runtime
  * (A1 composed; A2 composedSpecifier, composedAppend and composedCommand, while a loader call records it as computed instead,
- * composedComputed and computedAppend); R-RENAMED a consumer bound under names outside the family (A1 renamed); R-PROSE prose
+ * composedComputed and computedAppend), and its carrier members (wb-yfzf F2): a distribution or module name the shell
+ * assembles in a carrier - from a parameter, from adjacent quoted parts or across a backslash line continuation - since a
+ * carrier is read line by line as written (A2 composedCarrier, composedQuotedCarrier, composedContinuedCarrier); R-RENAMED a
+ * consumer bound under names outside the family (A1 renamed); R-PROSE prose
  * files (PROSE_EXTENSIONS), comments and literals or JSON values with white space inside (A1 comment, proseLiteral, jsonProse, the
  * planted docs/notes.md; A2 the planted docs/rc.md); R-INSTRUMENT census instruments, walked and load-judged but never
  * name-judged, their JSON never judged for command lines (A1 the planted test/x-census.test.ts and test/fixtures/x-roster.json; A2
@@ -122,6 +147,10 @@
  * HARDENING (wb-wxhu, the R694 follow-up of landing 323, gate cmd_43323dc31e7f): F1 BOUND VALUES and COMPUTED_LOADS; F2 CARRIERS
  * and JSON command lines; F3 JUDGE LIVENESS, four new B2 mutants and one new C2 mutant; F4 the independent listing, ROOT_FLOORS
  * and the examples module floor; F5 the Io failure controls.
+ * HARDENING (wb-yfzf, the R694 follow-up of landing 413, gate cmd_445161abda19): F1 PEP 503 - RC_FAMILY reads every spelling pip
+ * installs the distribution by, pinned in a carrier, a manifest, a JSON command line and a command string; F2 R-COMPOSED's three
+ * carrier members, named with quiet rows; F3 SKIP ANCHOR and a floor for each of the four root entries that had none; F4 a second
+ * failure for each Io control (EIO for a directory; EIO, an Error without a code and a value that is no Error for a file).
  * Display paths added: none. Test-only: it spawns nothing; the controls plant files in makeScratch scratch only.
  */
 import { type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -144,10 +173,12 @@ const BEAD_EXPORT = ".beads/issues.jsonl";
 const BEAD = "wb-5ltg.3";
 /** A1: what a remote-output consumer names (README.md:15, :21, :24), read over a token's words (wordsOf). */
 const REMOTE_FAMILY = /\b(?:remote (?:components?|elements?|producers?|streams?)|components? streams?|rftsx elements?|crosswalks?|callback seriali[sz]ations?)\b/;
-/** A2: the ReactiveComponents distribution and its Python module, in any load or `-m` position. */
+/** A2: the ReactiveComponents distribution and its Python module, in any load or `-m` position; the distribution under every
+ * spelling pip installs it by (PEP 503: any case, the words joined by any run of "-", "_" or "."), also as an artifact name
+ * followed by "-" and its version. */
 const RC_DISTRIBUTION = "vibranium-reactive-components";
 const RC_MODULE = "reactive_components";
-const RC_FAMILY = /(?<![\w-])(?:vibranium-reactive-components|reactive[_-]components)(?![\w-])/i;
+const RC_FAMILY = /(?<![\w-])(?:vibranium[-_.]+reactive[-_.]+components|reactive[_-]components)(?!\w|-(?!\d))/i;
 /** Census instruments: walked and judged for module loads (A2), never for names (A1) or JSON command lines - a census's needles
  * are not consumption. */
 const CENSUS_INSTRUMENT = /^test\/(?:[^/]+-census\.test\.ts|fixtures\/[^/]+-roster\.json)$/;
@@ -158,14 +189,35 @@ const JSON_EXTENSIONS = [".json"];
 const MANIFEST =
   /(?:^|\/)(?:package(?:-lock)?\.json|npm-shrinkwrap\.json|deno\.jsonc?|import[-_]map\.json|[tj]sconfig[^/]*\.json|pyproject\.toml|requirements[^/]*\.txt)$/i;
 const SKIPPED_ROOTS = [".git", ".beads", "node_modules", "dist", "build", "coverage", ".forge"];
+/** SKIP ANCHOR (wb-yfzf F3): what anchors a skipped root entry outside this file - git's own data, the tracker export's root
+ * entry, or a root entry the repository's ignore file ignores by name. */
+const GIT_DATA = ".git";
+const IGNORE_FILE = ".gitignore";
 /** Walked, never judged (THE WALK): prose (R-PROSE) and binaries (R-BINARY). Every other file is a module, a JSON file or a carrier. */
 const PROSE_EXTENSIONS = [".md"];
 const BINARY_EXTENSIONS = [".png", ".mp4", ".tgz"];
 /** Each floor sits below the count measured at base f8afbef (967 files; src 115, test 510, qa 62, examples 6 modules; 121 JSON;
  * 12 carriers; 4 manifests; root entries . 27, .github 2, docs 73, examples 7, media 2, qa 67, src 115, test 649, vendor 5 files). */
 const FLOORS = { files: 860, modules: { src: 100, test: 450, qa: 55, examples: 5 }, json: 100, carriers: 10, manifests: 4 };
-/** The root entries every walk reaches, each with a floor of files below it (a file at the root counts under "."). */
-const ROOT_FLOORS: Readonly<Record<string, number>> = { ".": 20, ".github": 1, docs: 60, examples: 6, media: 2, qa: 60, src: 100, test: 560, vendor: 3 };
+/** The root entries every walk reaches, each with a floor of files below it (a file at the root counts under "."). wb-yfzf F3: at
+ * base fced7bf the walk reached 13 root entries (. 27, .agents 2, .codex 2, .github 2, .pi 1, docs 74, examples 7, media 2,
+ * new-feedback 18, qa 67, src 116, test 664, vendor 5 files); the four that had no floor (.agents, .codex, .pi, new-feedback)
+ * floor at 1, each floor at or below its count. */
+const ROOT_FLOORS: Readonly<Record<string, number>> = {
+  ".": 20,
+  ".agents": 1,
+  ".codex": 1,
+  ".github": 1,
+  ".pi": 1,
+  docs: 60,
+  examples: 6,
+  media: 2,
+  "new-feedback": 1,
+  qa: 60,
+  src: 100,
+  test: 560,
+  vendor: 3,
+};
 /** Every computed load at base f8afbef (BOUND VALUES), each judged by hand: Pi's own dist modules (the headless census child, the
  * live operator receipt); the detached host's trusted local provider (a digest-pinned module path from the reviewed launch
  * manifest) and its dependency pinner (each relative source literal of that provider, checked just before it is resolved); a
@@ -286,6 +338,8 @@ const SCAN = {
   moduleExtensions: MODULE_EXTENSIONS,
   jsonExtensions: JSON_EXTENSIONS,
   skippedRoots: SKIPPED_ROOTS,
+  gitData: GIT_DATA,
+  ignoreFile: IGNORE_FILE,
   proseExtensions: PROSE_EXTENSIONS,
   binaryExtensions: BINARY_EXTENSIONS,
   floors: FLOORS,
@@ -624,6 +678,19 @@ function listingOf(root: string): string[] {
 }
 /** A file's root entry: its first path segment, or "." for a file at the root. */
 const rootOf = (file: string): string => (file.includes("/") ? file.slice(0, file.indexOf("/")) : ".");
+/** SKIP ANCHOR: the names an ignore file ignores at the root - every pattern with no glob, negation, comment or inner "/" (a
+ * leading "/" or a trailing "/" allowed). */
+function ignoredRootsOf(source: string): string[] {
+  return source.split("\n").flatMap(line => {
+    const name = /^\/?([^\s/*?[\]!#\\][^\s/*?[\]\\]*)\/?$/.exec(line.trim())?.[1];
+    return name === undefined ? [] : [name];
+  });
+}
+/** SKIP ANCHOR: the skipped root entries no outside source anchors - neither git's own data, nor the tracker export's root entry,
+ * nor a root entry the ignore file ignores. */
+function unanchoredSkips(skipped: readonly string[], ignored: readonly string[]): string[] {
+  return skipped.filter(entry => entry !== GIT_DATA && entry !== rootOf(BEAD_EXPORT) && !ignored.includes(entry));
+}
 
 function scriptKindOf(path: string): ts.ScriptKind {
   const extension = extensionOf(path);
@@ -1013,6 +1080,10 @@ const computedIn = (path: string, source: string): boolean => readModule(path, s
 const jsonNames = (source: string): boolean => readJson("c.json", source).names.length > 0;
 /** A2's judge over one manifest text (the path comes first, so no literal naming the distribution sits in a load position). */
 const manifestNames = (path: string, source: string): boolean => MANIFEST.test(path) && RC_FAMILY.test(source);
+/** A2's carrier judge over one carrier text read as `path` (CARRIERS). */
+const carrierHitsIn = (path: string, source: string): boolean => readCarrier(path, source).hits.length > 0;
+/** A2's JSON command-line judge over one JSON text read as `path` (the path comes first, as for manifestNames). */
+const jsonCommandsIn = (path: string, source: string): boolean => readJson(path, source).commands.length > 0;
 
 /* ---------------------------------------------------------------------------------------------------------------------------
  * The armed adoption: Pi-owned registries, a reference adoption, its named mutants and the judge.
@@ -1410,6 +1481,14 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     const rootFloors = Object.fromEntries(Object.entries(ROOT_FLOORS).map(([entry, floor]) => [entry, (rootCounts[entry] ?? 0) >= floor]));
     expect(rootFloors, `files below each root entry: ${JSON.stringify(rootCounts)}`).toStrictEqual(Object.fromEntries(Object.keys(ROOT_FLOORS).map(entry => [entry, true])));
     expect([...tree.walk.files].sort(), "the walk equals an independent listing of the same tree").toStrictEqual(listingOf(REPO));
+    // SKIP ANCHOR (F3): the listing shares SKIPPED_ROOTS, so every skip is anchored outside this file and its roster; a skip of
+    // a root entry nothing outside anchors (the gate's .agents plant, .pi with only an inner ignore pattern, new-feedback) reads.
+    const ignored = ignoredRootsOf(readFileSync(join(REPO, IGNORE_FILE), "utf8"));
+    const skipAnchor = {
+      unanchored: unanchoredSkips(SKIPPED_ROOTS, ignored),
+      planted: unanchoredSkips([".agents", ".pi", "new-feedback"], ignored),
+    };
+    expect(skipAnchor.unanchored, "every skipped root entry is git's data, the tracker export's root entry or ignored by the ignore file").toStrictEqual([]);
     expect(tree.anchorsWalked, "every walk anchor was reached with its token").toBe(true);
     expect({ symlinks: tree.walk.symlinks, unreadable: tree.walk.unreadable }, "the walk meets no symlink and no unreadable file").toStrictEqual({ symlinks: [], unreadable: [] });
     expect(tree.names, "remote-output names outside the census instruments, each with its file and line (the trigger's inventory)").toStrictEqual([]);
@@ -1459,25 +1538,41 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       "qa/run.sh": "exec serve --remote-stream\n",
     });
     // F5: each failing read has a positive control - an unreadable directory and file are recorded, a vanished file is not.
+    // wb-yfzf F4: more than one failure each - a directory under EACCES and EIO; a file under EACCES, EIO, an Error without a
+    // code and a thrown value that is no Error (it carries an ENOENT code, and is still no vanished file).
     const failure = (code: string): Error => Object.assign(new Error(`${code}: a planted read failure`), { code });
     const failing: Io = {
       list: directory => {
         if (posix(directory).endsWith("/src/sealed")) throw failure("EACCES");
+        if (posix(directory).endsWith("/src/faulted")) throw failure("EIO");
         return DISK.list(directory);
       },
       read: path => {
         if (posix(path).endsWith("/src/locked.ts")) throw failure("EACCES");
         if (posix(path).endsWith("/src/gone.ts")) throw failure("ENOENT");
+        if (posix(path).endsWith("/src/faulty.ts")) throw failure("EIO");
+        if (posix(path).endsWith("/src/uncoded.ts")) throw new Error("a planted read failure without a code");
+        if (posix(path).endsWith("/src/foreign.ts")) throw { code: "ENOENT" };
         return DISK.read(path);
       },
     };
     const sealed = plantedTree(
-      { "src/gone.ts": "export {};\n", "src/locked.ts": "export {};\n", "src/open.ts": "export {};\n", "src/sealed/inner.ts": "export {};\n" },
+      {
+        "src/faulted/inner.ts": "export {};\n",
+        "src/faulty.ts": "export {};\n",
+        "src/foreign.ts": "export {};\n",
+        "src/gone.ts": "export {};\n",
+        "src/locked.ts": "export {};\n",
+        "src/open.ts": "export {};\n",
+        "src/sealed/inner.ts": "export {};\n",
+        "src/uncoded.ts": "export {};\n",
+      },
       failing,
     );
     return done("A1", {
       floors,
       rootFloors,
+      skipAnchor,
       anchorsWalked: tree.anchorsWalked,
       names: tree.names,
       controls,
@@ -1579,18 +1674,41 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       memberCommand: loadsIn("c.ts", 'const config = { command: "python3 -m reactive_components serve" };\nexecSync(config.command);\n'),
       callCommand: loadsIn("c.ts", 'const commandFor = (verb: string) => ["python3 -m", "reactive_components", verb].join(" ");\nexecSync(commandFor("serve"));\n'),
       importedCommand: loadsIn("c.ts", 'import { COMMAND } from "./commands.js";\nexecSync(COMMAND);\n'),
+      // PEP 503 (wb-yfzf F1): pip reads the distribution's name in any case with its words joined by any run of "-", "_" or ".",
+      // so each spelling is a hit in each A2 position - the gate's carrier and requirements plants first; an artifact name with
+      // its version is one too; the words run together, or the name continued by another word, are another distribution.
+      pep503Carrier: carrierHitsIn(".github/workflows/gate-pep503.yml", "      - run: pip install vibranium_reactive_components\n"),
+      pep503Requirements: manifestNames("qa/requirements-gate.txt", "vibranium.reactive.components==0.1.1\n"),
+      pep503Case: manifestNames("pyproject.toml", 'dependencies = ["Vibranium-Reactive-Components>=0.1"]\n'),
+      pep503Runs: carrierHitsIn("qa/install.sh", "pip install vibranium__reactive--components\n"),
+      pep503MixedRun: carrierHitsIn("qa/install.sh", "pip install vibranium_-reactive._components\n"),
+      pep503JsonCommand: jsonCommandsIn("c.json", '{"command":"pip install vibranium_reactive_components"}'),
+      pep503CommandString: loadsIn("c.ts", 'execSync("pip install vibranium.reactive.components");\n'),
+      artifactWheel: carrierHitsIn("qa/install.sh", "pip install ./vibranium_reactive_components-0.1.1-py3-none-any.whl\n"),
+      artifactSdist: carrierHitsIn("qa/install.sh", "pip install vibranium-reactive-components-0.1.1.tar.gz\n"),
+      pep503Joined: carrierHitsIn("qa/install.sh", "pip install vibraniumreactivecomponents\n"),
+      pep503OtherDistribution: carrierHitsIn("qa/install.sh", "pip install vibranium-reactive-components-extra\n"),
+      // R-COMPOSED's carrier members (wb-yfzf F2), quiet rows: a carrier is read line by line as written, so a name the shell
+      // assembles from a parameter (the gate's plant), from adjacent quoted parts or across a line continuation is not read.
+      composedCarrier: carrierHitsIn("qa/workbench/gate-compose.sh", `M=reactive_\nexec python3 -m "\${M}components" serve\n`),
+      composedQuotedCarrier: carrierHitsIn("qa/workbench/gate-compose.sh", 'exec python3 -m "reactive_""components" serve\n'),
+      composedContinuedCarrier: carrierHitsIn("qa/workbench/gate-compose.sh", "exec python3 -m reactive_\\\ncomponents serve\n"),
     };
     // CARRIERS (F2): the gate's five carrier plants, an extensionless script and a JSON hook command are hits; prose, a binary and a
-    // JSON sdk_versions echo stay quiet (R-PROSE, R-BINARY, R-JSON-NAME).
+    // JSON sdk_versions echo stay quiet (R-PROSE, R-BINARY, R-JSON-NAME). wb-yfzf: the gate's two PEP 503 plants (a workflow
+    // carrier, a requirements manifest that is a carrier too) are hits end to end; its composed carrier stays quiet (R-COMPOSED).
     const carriers = plantedTree({
       ".codex/hooks.json": '{"hooks":[{"command":"python3 -m reactive_components serve"}]}\n',
+      ".github/workflows/gate-pep503.yml": "jobs:\n  gate:\n    steps:\n      - run: pip install vibranium_reactive_components\n",
       ".github/workflows/rc.yml": "jobs:\n  rc:\n    steps:\n      - run: pip install vibranium-reactive-components\n",
       "bin/rc": "#!/bin/sh\nexec python3 -m reactive_components\n",
       "docs/rc.md": "python3 -m reactive_components\n",
       "examples/rc.html": '<script type="module">import { Element } from "vibranium-reactive-components";</script>\n',
       "forge.toml": '[tasks.rc]\ncommand = "python3 -m reactive_components serve"\n',
       "media/rc.png": "vibranium-reactive-components\n",
+      "qa/requirements-gate.txt": "vibranium.reactive.components==0.1.1\n",
       "qa/tools/rc.py": "import reactive_components\n",
+      "qa/workbench/gate-compose.sh": `#!/bin/sh\nM=reactive_\nexec python3 -m "\${M}components" serve\n`,
       "qa/workbench/rc.sh": "#!/bin/sh\npython3 -m reactive_components serve --remote-stream\n",
       "test/fixtures/broken.json": '{"command": "python3 -m reactive_components",}\n',
       "test/fixtures/sdk.json": '{"sdk_versions":{"reactive_components":"0.1.1"}}\n',
@@ -1604,7 +1722,7 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       computed: tree.computed,
       manifests: tree.manifests,
       controls,
-      carriers: { hits: carriers.carrierHits, jsonCommands: carriers.jsonCommands, instrumentCommands: carriers.instrumentCommands },
+      carriers: { hits: carriers.carrierHits, jsonCommands: carriers.jsonCommands, instrumentCommands: carriers.instrumentCommands, manifestHits: carriers.manifestHits },
     });
   },
   A3: () => {
