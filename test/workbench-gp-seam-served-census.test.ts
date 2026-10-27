@@ -22,6 +22,13 @@
  * CUT #3 (the respin of refusal #2, gate row M:24345): U1 br-split cured in one markup reader (MARKUP) with the CLASS-LEVEL GUARD
  * asserted in B3; F1 the coverage literals (LIVE GUARD); F2 the default-ignorable fold (FOLD) and the SERVED and SEAM look-alike
  * family (R-LOOKALIKE).
+ * CUT #4 (the respin of refusal #3, gate row M:25031; the enumerate-the-resolvable form of rule 19(c), on the frozen shape of cut #3,
+ * which it only adds to): U1 cross-block markup state cured - a page's blocks are read in one markup run, inside the tags marked
+ * writes for each, and a hidden element ends where the tree construction pops it (MARKUP; B3 crossBlock, sameHtml, the A2 replica);
+ * U2 media fallback content and foreign content (svg desc and metadata, math annotations) hidden (MARKUP; B5 hiddenMarkers,
+ * foreignScope, R-RENDERED-TEXT, the A2 replica); the rest of that family named in R-MARKER-ANYWHERE (svg character data, canvas,
+ * object, meter and progress content); NOT CLAIMED restated to the reader-dependent readings, its prose-only families named as
+ * R-TREE-CONSTRUCTION (B3).
  *
  * THE ARTIFACT AT THE PIN (the roster's `producer` block, measured read-only by the cutting seat on 2026-10-26 from a shallow
  * clone of the Furnace repository at 6502737d9e96, removed after the read; this census is hermetic and never re-reads it):
@@ -41,35 +48,54 @@
  *   (symlinks reported, never followed) minus git's ignored set must equal that list, and every top-level directory git
  *   tracks is a root or a named outside directory (B1).
  * - RENDERED VIEW (a Markdown page, a path ending .md; rendered-text truth, 9x5.17): marked 18.0.11 (GFM, the lexer of
- *   test/helpers/census.ts) lexes the page once. A UNIT is a paragraph, a heading, the text of a list item or block quote, a
- *   table row (its cells joined by " | ") or an HTML block, cut again at every block-level tag inside it (MARKUP). A unit shows
- *   its text, code spans and backslash escapes as written and emphasis, strikethrough and link text flattened; an image (its alt
- *   text with it), a link destination, title or reference label, a link reference definition and a task checkbox show nothing;
- *   a code block, fenced or indented, is no unit. A soft wrap or a hard break is one space. Numeric character references and the
- *   NAMED_REFERENCES names are decoded in shown text outside code spans (a code span shows a reference as written: B5 asWritten);
- *   any other named reference stays as written. A listed file that is not a Markdown page (none today) is read as raw text.
- * - MARKUP: an HTML block's source and every inline html token are read by one reader (markupPieces), in the forms the HTML
- *   standard's tokenizer reads: a comment shows nothing ("<!-->" and "<!--->" close at once, any other at its first "-->" or
- *   "--!>", an unclosed one at the end of its block); a bogus comment shows nothing to its first ">" ("<?", "<!" opening no
- *   comment - a declaration, a CDATA section - and "</" before anything but a letter); a tag shows nothing from its "<" through
- *   its attributes to the first ">" outside a quoted value (readTag), and a tag the input ends inside drops with the rest. Each
- *   tag then renders by its element (tagPieces): a br, start or end tag, is one space, as a hard break is; a block-level tag
- *   (BLOCK_TAGS: p, div, li, the headings, hr, blockquote, pre, table, details, summary and the rest the HTML rendering lays out
- *   as blocks) ends the unit as a paragraph break does - an end tag only while its element is open, a stray one dropped as the
- *   standard drops it, save a stray </p>, which opens an empty paragraph; inside a table (a markdown table's cell, or an open
- *   table element) a row or row-group tag ends the unit and a td or th opens a cell, " | " after shown text, while outside one
- *   these tags drop; any other tag shows nothing (ser<b>ved and ser<wbr>ved read served). An element a reader never sees -
- *   script, style, template, title, noscript, noembed, noframes, iframe, datalist, rp, a dialog without its open attribute, and
- *   any element carrying the hidden attribute - shows nothing of what it holds to its end tag, and a pre, listing or xmp element
- *   holds no unit, as a code block holds none; the raw-text ones (script, style, title, noscript, noembed, noframes, iframe,
- *   xmp) end at the first end tag of their name. So a marker a reader does not see - in a comment or a bogus comment, a link
- *   destination, title or label, a tag attribute, alt text or an unshown element - never quiets a shown claim (B5
- *   hiddenMarkers); R-MARKER-ANYWHERE names the markers that count wherever they sit.
- * - CLASS-LEVEL GUARD (refusal #2, rule 19(d); literal in B3, never only the roster): two pages whose marked HTML is identical
- *   read the same. The HTML marked renders a page to is itself a page marked renders unchanged (asserted), and one reader reads
- *   both, so B3 holds every pinned rendered form of B3, B4 and B5 (PINNED_PAGES) to its own HTML page - the same sentences and
- *   the same findings - and every page of a hard-break group (BREAK_GROUPS: the markdown hard breaks, br in its spellings, a br in
- *   an HTML block and in a table cell, a block-level tag met inline) to the reading of the group's first page.
+ *   test/helpers/census.ts) lexes the page once, and its blocks are read in order in one markup run (refusal #3 U1), each inside
+ *   the tags marked writes for it (blockPieces: a paragraph's p, a heading's h1-h6, a list's ul or ol and each item's li, a
+ *   block quote's blockquote, a table's table, thead, tbody, tr, th and td, a code block's pre and a rule's hr), read by
+ *   tagPieces as the page's marked HTML holds them. A UNIT is what lies between two cuts of that run: a paragraph, a heading,
+ *   the text of a list item or block quote, a table row (a cell " | " after text shown in its row) or an HTML block, cut again
+ *   at every block-level tag inside it (MARKUP). A unit shows its text, code spans and backslash escapes as written and
+ *   emphasis, strikethrough and link text flattened; an image (its alt text with it), a link destination, title or reference
+ *   label, a link reference definition and a task checkbox show nothing; a code block, fenced or indented, is no unit. A soft
+ *   wrap or a hard break is one space. Numeric character references and the NAMED_REFERENCES names are decoded in shown text
+ *   outside code spans (a code span shows a reference as written: B5 asWritten); any other named reference stays as written. A
+ *   listed file that is not a Markdown page (none today) is read as raw text.
+ * - MARKUP: an HTML block's source and every inline html token are read by one reader (markupPieces), in the page's one markup
+ *   run, in the forms the HTML standard's tokenizer reads: a comment shows nothing ("<!-->" and "<!--->" close at once, any
+ *   other at its first "-->" or "--!>", an unclosed one at the end of its block); a bogus comment shows nothing to its first ">"
+ *   ("<?", "<!" opening no comment - a declaration, a CDATA section - and "</" before anything but a letter); a tag shows
+ *   nothing from its "<" through its attributes to the first ">" outside a quoted value (readTag), and a tag the input ends
+ *   inside drops with the rest. Each tag then renders by its element (tagPieces): a br, start or end tag, is one space, as a
+ *   hard break is; a block-level tag (BLOCK_TAGS: p, div, li, the headings, hr, blockquote, pre, table, details, summary and the
+ *   rest the HTML rendering lays out as blocks) ends the unit as a paragraph break does - an end tag only while its element is
+ *   open, a stray one dropped as the standard drops it, save a stray </p>, which opens an empty paragraph; inside a table (a
+ *   markdown table's cell, or an open table element) a row or row-group tag ends the unit and a td or th opens a cell, " | "
+ *   after shown text, while outside one these tags drop; any other tag shows nothing (ser<b>ved and ser<wbr>ved read served). An
+ *   element a reader never sees - script, style, template, title, noscript, noembed, noframes, iframe, datalist, rp, a dialog
+ *   without its open attribute, any element carrying the hidden attribute, a media element, whose fallback content a reader is
+ *   never shown (audio, video: FALLBACK_TAGS, refusal #3 U2), and, while an svg or a math element is open, its desc and metadata
+ *   or its annotation and annotation-xml (FOREIGN_UNSHOWN; inside foreign content a self-closing tag, and a self-closing svg or
+ *   math root, opens nothing, as the tree construction closes it at once) - shows nothing of what it holds to its end tag, and a
+ *   pre, listing or xmp element holds no unit, as a code block holds none; the raw-text ones (script, style, title, noscript,
+ *   noembed, noframes, iframe, xmp) end at the first end tag of their name, and the run's block tags inside one are no tags. Any
+ *   other unshown element also ends where the tree construction pops it (encloses, refusal #3 U1): at the end tag of an open
+ *   block, table or cell element that encloses it, or of the svg or math root it sits in - save a template, which only its own
+ *   end tag ends, and a p, which a block-level unshown element closed as it began. So a hidden span or a media element ends with
+ *   the paragraph, list item, table cell, heading or HTML-block element that holds it, while a raw-text or template element
+ *   opened in one block runs on to its own end tag or the end of the page, and a block-level hidden or code element opened
+ *   inside a paragraph runs on past that paragraph's end (B3 crossBlock). So a marker in one of B5's hidden forms
+ *   (hiddenMarkers, each pinned: a comment or a bogus comment, a link destination, title or label, a tag attribute - a quoted
+ *   ">" in one included -, alt text, the hidden attribute, an UNSHOWN_TAGS element, a media element's fallback, an svg desc,
+ *   metadata or title, a math annotation or annotation-xml) never quiets a shown claim, and desc is unshown only inside an open
+ *   svg element (B5 foreignScope); R-MARKER-ANYWHERE names the markers that count wherever they sit, those a reader is not shown
+ *   among them.
+ * - CLASS-LEVEL GUARD (refusal #2, rule 19(d); refusal #3 U1; literal in B3, never only the roster): the HTML marked renders a
+ *   page to is itself a page marked renders unchanged (asserted), and one reader reads both, a Markdown page's blocks inside the
+ *   tags marked writes for them, so B3 holds every pinned page (PINNED_PAGES: the rendered forms of B3, B4 and B5, the cross-block
+ *   forms CROSS_BLOCK and the same-HTML groups) to its own HTML page - the same sentences and the same findings -, every page of a
+ *   same-HTML group (SAME_HTML_GROUPS: spellings with one marked HTML, asserted, a Markdown page beside its single-block HTML form
+ *   among them) to the reading of its first page, and every page of a hard-break group (BREAK_GROUPS: the markdown hard breaks, br
+ *   in its spellings, a br in an HTML block and in a table cell, a block-level tag met inline) to the reading of the group's first
+ *   page. The guard is claimed for those pages, as B3 asserts them.
  * - SENTENCE: a unit, or a raw file's text, is cut after ".", "!", "?" or ";" before white space or its end; a raw file is also
  *   cut at a blank line, around a table row ("|") and a heading line ("#"), and before a list item, a sentence wrapped over
  *   lines kept one. A sentence's line is the source line of its first shown character (B3).
@@ -107,12 +133,14 @@
  *  A "until the artifact exists, a docs census asserts": A1 the gate (producer facts, near misses, the Pi-side docs/03
  *    reading); A2 the live guard - ONE pass over every listed file and in-memory positives must find exactly the positives,
  *    its coverage asserted literally, and the same pass over a scratch git repository finds exactly its plants (a br-split
- *    sentence and its hard-break twin among them).
+ *    sentence and its hard-break twin among them, and refusal #3's live pairs: a claim after a script that spans paragraphs, a
+ *    claim after a hidden span its paragraph's end closes, and a claim beside a marker in video fallback, an svg desc and a math
+ *    annotation).
  *  B "no docs/workbench or feature-matrix sentence presents a GP seam as served": B1 the read set and a frozen pass over the
  *    immutable tree at frozenAt (32e0e2d, cut #1's base; exact counts, every quieted named sentence with its reason); B2 the
- *    status rows; B3 the raw and rendered cutters, the markup forms and the class-level guard; B4 the names and seam subjects;
- *    B5 the served and Pi-side words, the rendered forms, the format characters and default-ignorable code points, the hidden
- *    markers and the markers.
+ *    status rows; B3 the raw and rendered cutters, the markup forms, the class-level guard, the cross-block forms and the
+ *    same-HTML groups; B4 the names and seam subjects; B5 the served and Pi-side words, the rendered forms, the format characters
+ *    and default-ignorable code points, the hidden markers and the foreign scope, and the markers.
  * LIVE GUARD (F1; literal from gateOf, never only the roster): A1's verdict with no finding is pass while the gate reads
  *   ABSENT; A2's pass finds nothing beyond its positives and its verdict is pass while ABSENT, and its replica finds every
  *   planted file and no twin; B1's frozen pass finds nothing. A2's coverage reads {readAll: true, floorsMet: true}, and B1's
@@ -159,9 +187,13 @@
  *   facts, the unclaimed clauses, the residuals and every pin's witness are held to the out-of-file roster
  *   (test/fixtures/gp-seam-served-roster.json); ANCHORS is held to the outside extraction and SELF_ANCHORED to the pinned lists;
  *   a last case reads that every pin ran to its witness. The markup reader's element sets (BLOCK_TAGS, TABLE_TAGS, CELL_TAGS,
- *   UNSHOWN_TAGS, CODE_TAGS, RAW_TAGS, VOID_TAGS) and its MARKUP forms are held to the roster (B3 markup) and through what they
- *   do (B3 blockForms and the pinned forms); no outside text spells them, so a coordinated hollow of one member - its set and
- *   the roster together - stays green: self-anchored and named, never claimed as anchored.
+ *   UNSHOWN_TAGS, CODE_TAGS, RAW_TAGS, VOID_TAGS; refusal #3's FALLBACK_TAGS and FOREIGN_UNSHOWN) and its MARKUP forms are held
+ *   to the roster (B3 markup and hiding) and through what they do (B3 blockForms, crossBlock and the pinned forms); no outside
+ *   text spells them, so a coordinated hollow of one member - its set and the roster together - stays green: self-anchored and
+ *   named, never claimed as anchored. The same holds for a member of CROSS_BLOCK, SAME_HTML_GROUPS, TREE_CONSTRUCTION,
+ *   OVER_READ, FOREIGN_SCOPE and the pinned lists of B3 and B5 removed with its roster entry; what reds such a hollow is a
+ *   literal guard, never the roster: B3's twins and same-HTML literals for a page whose reading stops matching its own marked
+ *   HTML, and A2's replica literal for the reader behaviours refusal #3 cures (its five plants).
  * RESIDUALS (named; each has a pinned quiet row): R-OUTSIDE-ROOTS (B1) a claim in src/, test/, qa/, examples/, the dot
  *   directories, vendor/ or another tracked directory outside docs/, or in a root file that is not a .md page, is not read;
  *   R-STATUS-OTHER-CELL (B2) a GP name only in a feature-matrix Evidence or Caveats cell, or in a status-ledger cell other
@@ -181,7 +213,10 @@
  *   look-alike letter inside a MARKER leaves the marker unread, so its claim reads unquieted (an over-read); R-MARKER-ANYWHERE
  *   (B5) a marker anywhere in a sentence quiets it, whatever it qualifies - the sentence as the census cuts it, so a marker after
  *   a hard break or a br in the same sentence counts, and so does a marker that styling hides (a style attribute or a class:
- *   styling is not read); each member has a live twin, the claim alone, which is a finding (B5 twins); R-PARAPHRASE (B5)
+ *   styling is not read), a marker in svg character data outside a text element, which the SVG rendering never draws, a marker
+ *   in canvas or object fallback content (reader-dependent: shown to a reader without scripting, or when the object fails to
+ *   load) and a marker in a meter or progress element's content, which a renderer draws as a widget (refusal #3 U2's family,
+ *   named); each member has a live twin, the claim alone, which is a finding (B5 twins); R-PARAPHRASE (B5)
  *   a served claim outside the served words (up, ready, in place, working, running; the -ing forms other than serving and
  *   shipping, and the inflections the served words leave out, such as invoked, deploys, implements and releases; the verbs
  *   calls, runs and uses, which docs spell as nouns too: bd calls; and the base verbs wire and host, which these docs spell
@@ -190,15 +225,26 @@
  *   hides the rest of the page), a code block (fenced or indented) and what a pre, listing or xmp element holds, a link
  *   destination, title or reference label and a link reference definition, an HTML tag's attributes (inline or in an HTML
  *   block), an image's alt text and title, what an element a reader never sees holds (script, style, template, title,
- *   noscript, a closed dialog, an element carrying the hidden attribute: MARKUP), and a word broken by a named character
- *   reference outside NAMED_REFERENCES; each quiet row has a live twin, the same claim shown, which is a finding (B5 twins).
- * NOT CLAIMED (the rendered view, beyond MARKUP's readings): styling - a style attribute, a class or a stylesheet can hide or
- *   show any text, and the census reads markup unstyled (R-MARKER-ANYWHERE pins the marker side); the HTML standard's tree
- *   construction beyond MARKUP (implied end tags of phrasing elements, foster parenting, misnested formatting, a select's
- *   options, the head and frameset elements); RCDATA, where a textarea shows the tags it holds as text and the census reads them
- *   as markup; a script element's escape states; markup state carried from one block, list item or table cell into the next,
- *   each read on its own; a reader without scripting, who sees what a noscript element holds; a collapsed details element, whose
- *   content the census reads and a reader opens to see; and a renderer other than marked 18.0.11.
+ *   noscript, a closed dialog, an element carrying the hidden attribute, a media element's fallback content, an svg desc or
+ *   metadata, a math annotation, and a raw-text element that spans paragraphs: MARKUP), and a word broken by a named character
+ *   reference outside NAMED_REFERENCES; each quiet row has a live twin, the same claim shown, which is a finding (B5 twins);
+ *   R-TREE-CONSTRUCTION (B3; refusal #3, named out of NOT CLAIMED) the HTML standard's tree construction and tokenizer states
+ *   beyond MARKUP and encloses are not read - the census reads tags in the order they come, so an end implied by a later start
+ *   tag (a block-level start tag closing an open p and a hidden phrasing element in it, a cell or row start closing an open
+ *   cell), foster parenting, misnested formatting and the head and frameset elements read as written, a textarea's RCDATA is read
+ *   as markup (a hidden tag inside one hides what a reader sees as text), and a script's escape states end at its first </script>
+ *   (B3 overRead, an over-read); each quiet row has a live twin, the same claim with no hiding element, which is a finding (B3
+ *   residualTwins), and a block element opened in a paragraph and ended in the next one reads joined to the text after it (B3
+ *   crossBlock XB13, an over-read).
+ * NOT CLAIMED (refusal #3 restates it to the reader-dependent readings, each with its reason, and pointers to named residuals):
+ *   styling - a style attribute, a class or a stylesheet can hide or show any text, and the census reads markup unstyled
+ *   (R-MARKER-ANYWHERE pins the marker side); the tree construction beyond MARKUP (R-TREE-CONSTRUCTION); a reader without
+ *   scripting, who sees what a noscript or canvas element holds, and a reader whose object fails to load, who sees its fallback
+ *   (R-RENDERED-TEXT and R-MARKER-ANYWHERE pin the census's side); a select's options, which the census reads as block units and a
+ *   reader sees one of at a time; a replaced element between two words (an image, an input, an empty video), which the census
+ *   reads as nothing, as the HTML standard's innerText does, while a reader sees a box between the words; a collapsed details
+ *   element, whose content the census reads and a reader opens to see (B3 crossBlock XU11); and a renderer other than marked
+ *   18.0.11.
  *
  * Display paths added: none. Test-only: the replica trees are scratch git repositories under makeScratch; docs, the bead
  * export, docs/03, the status-ledger module and the frozen tree are only read; nothing is spawned but git.
@@ -576,6 +622,7 @@ const childrenOf = (token: Token): readonly Token[] => {
 };
 const isList = (token: Token): token is Tokens.List => token.type === "list";
 const isTable = (token: Token): token is Tokens.Table => token.type === "table";
+const isHeading = (token: Token): token is Tokens.Heading => token.type === "heading";
 /** Each token with its first source line: its raw is found, in order, inside the container text it was lexed from. */
 function placed(container: string, tokens: readonly Token[], line: number): { readonly token: Token; readonly line: number }[] {
   let cursor = 0;
@@ -611,8 +658,9 @@ const AFTER_SPACE: Readonly<Record<TagState, TagState>> = {
   selfClosing: "attributes",
 };
 /** A tag whose name ends at `from`, read as the standard's tokenizer reads its attributes: where it ends (the index after its ">", which a
- * quoted value does not end; -1 when the input ends first, so the tag drops) and its attribute names in lower case. */
-function readTag(raw: string, from: number): { readonly end: number; readonly attributes: readonly string[] } {
+ * quoted value does not end; -1 when the input ends first, so the tag drops), its attribute names in lower case, and whether it ends
+ * "/>" (self-closing: foreign content closes such an element at once). */
+function readTag(raw: string, from: number): { readonly end: number; readonly attributes: readonly string[]; readonly selfClosing: boolean } {
   const attributes: string[] = [];
   let state: TagState = "attributes";
   let name = "";
@@ -625,7 +673,7 @@ function readTag(raw: string, from: number): { readonly end: number; readonly at
     const space = char === " " || char === "\t" || char === "\n" || char === "\f" || char === "\r";
     if (char === ">" && state !== "double" && state !== "single") {
       take();
-      return { end: at + 1, attributes };
+      return { end: at + 1, attributes, selfClosing: state === "selfClosing" };
     }
     if (state === "double" || state === "single") {
       if (char === (state === "double" ? '"' : "'")) state = "afterQuoted";
@@ -650,7 +698,7 @@ function readTag(raw: string, from: number): { readonly end: number; readonly at
       state = "name";
     }
   }
-  return { end: -1, attributes };
+  return { end: -1, attributes, selfClosing: false };
 }
 const tagSet = (names: string): ReadonlySet<string> => new Set(names.split(" "));
 /** The elements the HTML rendering lays out as blocks: a start tag, or an end tag whose element is open, ends the unit. */
@@ -666,14 +714,24 @@ const CODE_TAGS = tagSet("listing pre xmp");
 /** The raw-text and RCDATA elements among them: no markup inside one counts, and the first end tag of its name ends it. */
 const RAW_TAGS = tagSet("iframe noembed noframes noscript script style title xmp");
 const VOID_TAGS = tagSet("area base basefont bgsound br col embed frame hr img input keygen link meta param source track wbr");
-/** What one run of markup carries from tag to tag: the element whose content is unshown (to its end tag, and how deep in it), the
- * block and table elements open in the run, and whether the run is a markdown table's cell. */
+/** Media elements (refusal #3 U2): a reader is shown the media, never the fallback content it holds (the HTML standard: user agents
+ * should not show it), so that content is unshown to its end tag. */
+const FALLBACK_TAGS = tagSet("audio video");
+/** Foreign content (refusal #3 U2): inside an svg element its desc and metadata, and inside a math element its annotation and
+ * annotation-xml, are never rendered, so their content is unshown to their end tag (an svg title is a title, already unshown). */
+const FOREIGN_UNSHOWN: ReadonlyMap<string, ReadonlySet<string>> = new Map([
+  ["svg", tagSet("desc metadata")],
+  ["math", tagSet("annotation annotation-xml")],
+]);
+/** What a page's one run of markup carries from tag to tag (refusal #3 U1: one run per page, as the page's marked HTML carries it): the
+ * element whose content is unshown (to its end tag, how deep in it, and how many open elements and foreign roots enclose it), the block,
+ * table and cell elements open in the run, and the foreign roots (svg, math) open in it. */
 interface MarkupState {
-  unshown: { readonly name: string; depth: number } | null;
+  unshown: { readonly name: string; depth: number; readonly within: number; readonly foreignDepth: number } | null;
   readonly open: string[];
-  readonly cell: boolean;
+  readonly foreign: string[];
 }
-const runState = (cell = false): MarkupState => ({ unshown: null, open: [], cell });
+const runState = (): MarkupState => ({ unshown: null, open: [], foreign: [] });
 /** A block's end tag: it ends the unit when its element is open (closing what it holds); a stray </p> opens an empty paragraph, and
  * any other stray end tag is dropped, as the standard drops it. */
 function closedBlock(name: string, line: number, state: MarkupState): Piece[] {
@@ -681,32 +739,65 @@ function closedBlock(name: string, line: number, state: MarkupState): Piece[] {
   if (at >= 0) state.open.splice(at);
   return at >= 0 || name === "p" ? [{ text: "", line, mark: "cut" }] : [];
 }
+/** An open element's end: a foreign root leaves the foreign stack, a table cell closes what it holds and cuts nothing, and any other
+ * element ends as closedBlock reads it. */
+function ended(name: string, line: number, state: MarkupState): Piece[] {
+  const root = state.foreign.lastIndexOf(name);
+  if (FOREIGN_UNSHOWN.has(name) && root >= 0) state.foreign.splice(root);
+  if (!CELL_TAGS.has(name)) return closedBlock(name, line, state);
+  const at = state.open.lastIndexOf(name);
+  if (at >= 0) state.open.splice(at);
+  return [];
+}
+/** Whether an end tag ends the unshown element as the tree construction pops it (refusal #3 U1, U2): the tag's element - an open block,
+ * table or cell element, or an open svg or math root - encloses the unshown one; save a raw-text or template element, which only its own
+ * end tag ends, and a p, which a block-level unshown element closed as it began. */
+function encloses(name: string, unshown: { readonly name: string; readonly within: number; readonly foreignDepth: number }, state: MarkupState): boolean {
+  if (RAW_TAGS.has(unshown.name) || unshown.name === "template" || (name === "p" && BLOCK_TAGS.has(unshown.name))) return false;
+  if (FOREIGN_UNSHOWN.has(name)) {
+    const root = state.foreign.lastIndexOf(name);
+    return root >= 0 && root < unshown.foreignDepth;
+  }
+  const at = state.open.lastIndexOf(name);
+  return at >= 0 && at < unshown.within;
+}
 /** What one tag renders (see RENDERED VIEW): a br is one space, a block-level tag a cut, a table cell " | " after shown text, any other
- * tag nothing; an element carrying the hidden attribute, an UNSHOWN_TAGS element and a CODE_TAGS element hide their content. */
-function tagPieces(name: string, end: boolean, attributes: readonly string[], line: number, state: MarkupState): Piece[] {
+ * tag nothing; an element carrying the hidden attribute, an UNSHOWN_TAGS, CODE_TAGS or FALLBACK_TAGS element and a FOREIGN_UNSHOWN
+ * element inside its root hide their content, to their own end tag or the end of an element that encloses them (encloses); inside foreign
+ * content a self-closing tag (and a self-closing svg or math root) opens nothing, as the tree construction closes it at once. */
+function tagPieces(name: string, end: boolean, attributes: readonly string[], line: number, state: MarkupState, selfClosing = false): Piece[] {
   const unshown = state.unshown;
+  const closesAtOnce = selfClosing && !end && (state.foreign.length > 0 || FOREIGN_UNSHOWN.has(name));
   if (unshown !== null) {
-    if (name !== unshown.name) return [];
+    if (name !== unshown.name) {
+      if (!end || !encloses(name, unshown, state)) return [];
+      state.unshown = null;
+      return ended(name, line, state);
+    }
     if (!end) {
-      if (!RAW_TAGS.has(name)) unshown.depth += 1;
+      if (!RAW_TAGS.has(name) && !closesAtOnce) unshown.depth += 1;
       return [];
     }
     unshown.depth -= 1;
     if (unshown.depth > 0) return [];
     state.unshown = null;
-    return closedBlock(name, line, state);
+    return ended(name, line, state);
   }
   const hidden = attributes.includes("hidden") || (name === "dialog" && !attributes.includes("open"));
   if (name === "br") return hidden ? [] : [{ text: " ", line }];
-  const table = state.cell || state.open.includes("table");
+  if (closesAtOnce) return [];
+  const table = state.open.includes("table");
   const block = BLOCK_TAGS.has(name) || (table && TABLE_TAGS.has(name));
-  if (end) return block ? closedBlock(name, line, state) : [];
+  const cell = table && CELL_TAGS.has(name);
+  if (end) return block || cell || FOREIGN_UNSHOWN.has(name) ? ended(name, line, state) : [];
   const out: Piece[] = [];
-  if (block) {
-    out.push({ text: "", line, mark: "cut" });
-    if (!VOID_TAGS.has(name)) state.open.push(name);
-  } else if (table && CELL_TAGS.has(name) && !hidden) out.push({ text: "", line, mark: "cell" });
-  if (!VOID_TAGS.has(name) && (hidden || UNSHOWN_TAGS.has(name) || CODE_TAGS.has(name))) state.unshown = { name, depth: 1 };
+  if (block) out.push({ text: "", line, mark: "cut" });
+  else if (cell && !hidden) out.push({ text: "", line, mark: "cell" });
+  if ((block || cell) && !VOID_TAGS.has(name)) state.open.push(name);
+  const root = state.foreign[state.foreign.length - 1];
+  const foreign = root !== undefined && (FOREIGN_UNSHOWN.get(root)?.has(name) ?? false);
+  if (FOREIGN_UNSHOWN.has(name)) state.foreign.push(name);
+  if (!VOID_TAGS.has(name) && (hidden || UNSHOWN_TAGS.has(name) || CODE_TAGS.has(name) || FALLBACK_TAGS.has(name) || foreign)) state.unshown = { name, depth: 1, within: block || cell ? state.open.length - 1 : state.open.length, foreignDepth: state.foreign.length };
   return out;
 }
 /** Where a raw-text element's content ends: at its end tag ("</" and its name in any case, then white space, "/" or ">"), or the end. */
@@ -748,7 +839,7 @@ function markupPieces(raw: string, line: number, state: MarkupState): Piece[] {
     }
     const tag = readTag(raw, match.index + whole.length);
     if (tag.end < 0) break;
-    out.push(...tagPieces(name.toLowerCase(), slash === "/", tag.attributes, at, state));
+    out.push(...tagPieces(name.toLowerCase(), slash === "/", tag.attributes, at, state, tag.selfClosing));
     at += newlines(raw.slice(match.index, tag.end));
     from = tag.end;
   }
@@ -777,21 +868,61 @@ function splitUnits(pieces: readonly Piece[]): Piece[][] {
   }
   return units;
 }
-/** The units one block token renders (see RENDERED VIEW), each a run of pieces. */
-function unitsOf(token: Token, line: number): Piece[][] {
-  if (token.type === "space" || token.type === "hr" || token.type === "def" || token.type === "code" || token.type === "checkbox") return [];
-  if (token.type === "html") return splitUnits(markupPieces(token.raw, line, runState()));
-  if (isTable(token)) {
-    const row = (cells: readonly Tokens.TableCell[], at: number): Piece[] => cells.flatMap((cell, index) => [...(index === 0 ? [] : [{ text: " | ", line: at }]), ...inlinePieces(cell.text, cell.tokens, at, runState(true))]);
-    return [row(token.header, line), ...token.rows.map((cells, index) => row(cells, line + 2 + index))].flatMap(splitUnits);
+/** What block tokens render, in the page's one markup run (refusal #3 U1): each block's text and markup, inside the tags marked 18.0.11
+ * wraps it in - a paragraph's p, a heading's h1-h6, a list's ul or ol and each item's li, a block quote's blockquote, a table's table,
+ * thead, tbody, tr, th and td, a code block's pre and a rule's hr - each read by tagPieces as the page's marked HTML holds it. */
+function blockPieces(container: string, tokens: readonly Token[], line: number, state: MarkupState): Piece[] {
+  const out: Piece[] = [];
+  for (const { token, line: at } of placed(container, tokens, line)) {
+    const tag = (name: string, end = false, where = at): void => {
+      out.push(...tagPieces(name, end, [], where, state));
+    };
+    if (token.type === "space" || token.type === "def" || token.type === "checkbox") continue;
+    if (token.type === "hr") tag("hr");
+    else if (token.type === "code") {
+      tag("pre");
+      tag("pre", true);
+    } else if (token.type === "html") out.push(...markupPieces(token.raw, at, state));
+    else if (isTable(token)) {
+      const row = (cells: readonly Tokens.TableCell[], where: number, cell: string): void => {
+        tag("tr", false, where);
+        for (const entry of cells) {
+          tag(cell, false, where);
+          out.push(...inlinePieces(entry.text, entry.tokens, where, state));
+          tag(cell, true, where);
+        }
+        tag("tr", true, where);
+      };
+      tag("table");
+      tag("thead");
+      row(token.header, at, "th");
+      tag("thead", true);
+      if (token.rows.length > 0) tag("tbody");
+      for (const [index, cells] of token.rows.entries()) row(cells, at + 2 + index, "td");
+      if (token.rows.length > 0) tag("tbody", true);
+      tag("table", true);
+    } else if (isList(token)) {
+      const list = token.ordered ? "ol" : "ul";
+      tag(list);
+      for (const { token: item, line: where } of placed(token.raw, token.items, at)) {
+        tag("li", false, where);
+        out.push(...blockPieces(textOf(item), childrenOf(item), where, state));
+        tag("li", true, where);
+      }
+      tag(list, true);
+    } else if (token.type === "blockquote") {
+      tag("blockquote");
+      out.push(...blockPieces(textOf(token), childrenOf(token), at, state));
+      tag("blockquote", true);
+    } else {
+      const wrap = token.type === "paragraph" ? "p" : isHeading(token) ? `h${token.depth}` : "";
+      if (wrap !== "") tag(wrap);
+      const children = childrenOf(token);
+      out.push(...(children.length > 0 ? inlinePieces(textOf(token), children, at, state) : textPieces(textOf(token), at)));
+      if (wrap !== "") tag(wrap, true);
+    }
   }
-  if (isList(token)) return placed(token.raw, token.items, line).flatMap(({ token: item, line: at }) => blockUnits(textOf(item), childrenOf(item), at));
-  if (token.type === "blockquote") return blockUnits(textOf(token), childrenOf(token), line);
-  const children = childrenOf(token);
-  return splitUnits(children.length > 0 ? inlinePieces(textOf(token), children, line, runState()) : textPieces(textOf(token), line));
-}
-function blockUnits(container: string, tokens: readonly Token[], line: number): Piece[][] {
-  return placed(container, tokens, line).flatMap(({ token, line: at }) => unitsOf(token, at));
+  return out;
 }
 /** One unit cut into sentences; a sentence's line is the source line of its first visible character. */
 function unitSentences(pieces: readonly Piece[]): Sentence[] {
@@ -809,10 +940,10 @@ function unitSentences(pieces: readonly Piece[]): Sentence[] {
   take(text.length);
   return out;
 }
-/** The rendered cutter: a Markdown page's sentences as a reader sees them. */
+/** The rendered cutter: a Markdown page's sentences as a reader sees them, its blocks read in one markup run (refusal #3 U1). */
 function renderedSentences(markdown: string): Sentence[] {
   const source = markdown.replace(/\r\n?/g, "\n");
-  return blockUnits(source, marked.lexer(source), 1).flatMap(unitSentences);
+  return splitUnits(blockPieces(source, marked.lexer(source), 1, runState())).flatMap(unitSentences);
 }
 const MARKDOWN_PAGE = /\.md$/;
 /** The sentences the census judges in one file: a Markdown page through its rendered view, any other file as raw text. */
@@ -1302,6 +1433,8 @@ const RENDERED_FORMS: readonly string[] = [
   "<div>\nStatus <!--> shown.\n</div>",
   '<div>\nStatus shown. <span title="x\n',
   "Status <span hidden>hidden</span> shown.",
+  // Refusal #3 U1: a paragraph's own p is open in the run, so a stray </p> is met only where no p is open, as in an HTML block.
+  "<div>\nThe gp seam is</p>served.\n</div>",
 ];
 /** B3's judged pages: the cutters through the whole judgment (path, text). */
 const JUDGED_PAGES: readonly (readonly [string, string])[] = [
@@ -1386,6 +1519,32 @@ const HIDDEN_MARKERS: readonly string[] = [
   "<div>\nThe gp seam is served <!-- not --!>.\n</div>",
   "<div>\nThe gp seam is served <?not>.\n</div>",
   '<div>\nThe gp seam is <span title="not>no">served</span>.\n</div>',
+  // Refusal #3 U2: a media element's fallback content (FALLBACK_TAGS) and an svg desc or metadata or a math annotation (FOREIGN_UNSHOWN).
+  "The gp seam is served<video> not</video>.",
+  "The gp seam is served <video>not</video>.",
+  "The gp seam is served<audio> not</audio>.",
+  "The gp seam is served <audio>not</audio>.",
+  "The gp seam is served<svg><desc>not</desc></svg>.",
+  "The gp seam is served <svg><desc>not</desc></svg>.",
+  "The gp seam is served<svg><metadata>not</metadata></svg>.",
+  "The gp seam is served <svg><metadata>not</metadata></svg>.",
+  "<div>\nThe gp seam is served <video>not</video>.\n</div>",
+  "<div>\nThe gp seam is served <svg><desc>not</desc></svg>.\n</div>",
+  "The gp seam is served <math><semantics><mi>x</mi><annotation> not</annotation></semantics></math>.",
+  "The gp seam is served <math><semantics><mi>x</mi><annotation-xml> not</annotation-xml></semantics></math>.",
+  'The gp seam is served <video><source src="x.mp4"> not</video>.',
+  "The gp seam is served <svg><title>not</title></svg>.",
+];
+/** B5's foreign scope (refusal #3 U2): desc is unshown only inside an open svg element - outside one it is an element a reader sees, so a
+ * marker in it counts - and a self-closing tag inside foreign content (or a self-closing svg root) closes at once, so a self-closing desc
+ * hides nothing after it and a desc after a self-closing svg is outside one; the svg's end tag ends a desc left open in it (encloses). */
+const FOREIGN_SCOPE: readonly string[] = [
+  "The gp seam is served <desc>not</desc>.",
+  "The gp seam is served <svg></svg><desc> not</desc>.",
+  "<svg><desc/></svg> The gp seam is served.",
+  "The gp seam is served <svg/><desc> not</desc>.",
+  "<svg><metadata/></svg>\n\nThe gp seam is served.",
+  "<svg><desc>not</svg> The gp seam is served.",
 ];
 /** R-RENDERED-TEXT (B5): each text the rendered view does not show as a sentence, beside its live twin, the same claim shown. */
 const UNRENDERED: readonly (readonly [string, string])[] = [
@@ -1414,6 +1573,14 @@ const UNRENDERED: readonly (readonly [string, string])[] = [
   ["<div hidden>\nThe gp seam is served.\n</div>", "<div>\nThe gp seam is served.\n</div>"],
   ["<dialog>The gp seam is served.</dialog>", "<dialog open>The gp seam is served.</dialog>"],
   ["Status <?php The gp seam is served. ?> ok.", "Status <span>The gp seam is served.</span> ok."],
+  // Refusal #3 U2: a media element's fallback content, an svg desc or metadata and a math annotation; refusal #3 U1: a raw-text element
+  // that spans paragraphs holds what it spans.
+  ["<video>The gp seam is served.</video>", "<span>The gp seam is served.</span>"],
+  ["<audio>The gp seam is served.</audio>", "<span>The gp seam is served.</span>"],
+  ["<svg><desc>The gp seam is served.</desc></svg>", "<span>The gp seam is served.</span>"],
+  ["<svg><metadata>The gp seam is served.</metadata></svg>", "<span>The gp seam is served.</span>"],
+  ["<math><semantics><mi>x</mi><annotation>The gp seam is served.</annotation></semantics></math>", "<span>The gp seam is served.</span>"],
+  ["Intro <script>x\n\nThe gp seam is served.</script> Next.", "Intro x\n\nThe gp seam is served. Next."],
 ];
 /** R-MARKER-ANYWHERE (B5): a marker anywhere in a sentence as the census cuts it quiets it, beside its live twin, the claim alone. */
 const MARKED_ANYWHERE: readonly (readonly [string, string])[] = [
@@ -1422,6 +1589,15 @@ const MARKED_ANYWHERE: readonly (readonly [string, string])[] = [
   ["The gp seam is served\\\nno rollback is planned.", "The gp seam is served."],
   ['The gp seam is served<span style="display:none"> not</span>.', "The gp seam is served."],
   ['The gp seam is served<span class="visually-hidden"> not</span>.', "The gp seam is served."],
+  // Refusal #3 U2 family, named: svg character data outside a text element, which the SVG rendering never draws, is read as shown;
+  // so are canvas and object fallback content (reader-dependent: shown to a reader without scripting, or when the object fails to
+  // load) and a meter or progress element's content (drawn as a widget).
+  ["The gp seam is served<svg> not</svg>.", "The gp seam is served."],
+  ["The gp seam is served <svg><g>not</g></svg>.", "The gp seam is served."],
+  ["The gp seam is served<canvas> not</canvas>.", "The gp seam is served."],
+  ['The gp seam is served<object data="x.svg" type="image/svg+xml"> not</object>.', "The gp seam is served."],
+  ["The gp seam is served<progress> not</progress>.", "The gp seam is served."],
+  ["The gp seam is served<meter> not</meter>.", "The gp seam is served."],
 ];
 /** R-LOOKALIKE (B4): each member beside its live twin, the same sentence in plain letters. */
 const LOOKALIKES: readonly (readonly [string, string])[] = [
@@ -1435,6 +1611,76 @@ const LOOKALIKES: readonly (readonly [string, string])[] = [
   [`The gp seam is serv${codePoint(0x0301)}ed.`, "The gp seam is served."],
   [`The gp seam is ${codePoint(0x202e)}devres${codePoint(0x202c)}.`, "The gp seam is served."],
 ];
+/** B3's cross-block forms (refusal #3 U1, CLASS-LEVEL GUARD): markup one block leaves open, read on in the page's one markup run as its
+ * marked HTML carries it - a raw-text, template, block-level hidden or code element runs on to its own end tag, while a hidden phrasing
+ * element (and a media element) ends with the paragraph, item, cell or heading that holds it (encloses). XB1-XB18 and the controls XBC1
+ * and XBC2 are the refusal's probes, in its order; XU1-XU14 the seat's (an unclosed element, other containers, an empty first cell, a
+ * task item). */
+const CROSS_BLOCK: readonly string[] = [
+  "Intro <span hidden>x\n\nnot</span> the gp seam is served.",
+  "- Intro <span hidden>x\n- not</span> the gp seam is served.",
+  "| a | b |\n| --- | --- |\n| x <span hidden>y | not</span> the gp seam is served |",
+  "> Intro <span hidden>x\n\nnot</span> the gp seam is served.",
+  "Intro <script>x\n\nnot</script> the gp seam is served.",
+  "Intro <style>x\n\nnot</style> the gp seam is served.",
+  "Intro <template>x\n\nnot</template> the gp seam is served.",
+  "Intro <div hidden>x\n\nnot</div> the gp seam is served.",
+  "Intro <title>x\n\nnot</title> the gp seam is served.",
+  "Intro <noscript>x\n\nnot</noscript> the gp seam is served.",
+  "- Intro <script>x\n- not</script> the gp seam is served.",
+  "| a | b |\n| --- | --- |\n| x <script>y | not</script> the gp seam is served |",
+  "Intro <div>x\n\nThe gp seam is </div>served.",
+  "Intro <pre>x\n\nnot</pre> the gp seam is served.",
+  "Intro <script>x\n\nThe gp seam is served.</script> Next.",
+  "Intro <dialog>x\n\nnot</dialog> the gp seam is served.",
+  "Intro <iframe>x\n\nnot</iframe> the gp seam is served.",
+  "# Intro <span hidden>x\n\nnot</span> the gp seam is served.",
+  "Intro <script>x</script>\n\nnot the gp seam is served.",
+  "The gp seam is served.",
+  "Intro <span hidden>x\n\nThe gp seam is served.",
+  "- Intro <span hidden>x\n- The gp seam is served.",
+  "| a | b |\n| --- | --- |\n| x <span hidden>y | the gp seam is served |",
+  "# Intro <span hidden>x\n\nThe gp seam is served.",
+  "<div>\nIntro <span hidden>x\n</div>\n\nThe gp seam is served.",
+  "1. Intro <span hidden>x\n2. The gp seam is served.",
+  "- Intro\n\n  <span hidden>x\n\n- The gp seam is served.",
+  "Intro <script>x\n\nThe gp seam is served.",
+  "Intro <template>x\n\nThe gp seam is served.",
+  "<div hidden>\n\nThe gp seam is served.\n\n</div>",
+  "<details>\n<summary>Status</summary>\n\nThe gp seam is served.\n\n</details>",
+  "Intro <video>x\n\nnot</video> the gp seam is served.",
+  "| | gp seam is served |\n| --- | --- |",
+  "- [ ] The gp seam is served.\n- [x] Done.",
+];
+/** B3's same-HTML groups (refusal #3 U1, CLASS-LEVEL GUARD): each group's pages have identical marked HTML (asserted), and every page of a
+ * group reads as its first. GP1-GP10 are the refusal's pairs, in its order (GP9 and GP10 a Markdown page beside its single-block HTML
+ * form); the rest the seat's. */
+const SAME_HTML_GROUPS: readonly (readonly string[])[] = [
+  ["The gp seam is *served*.", "The gp seam is _served_.", "The gp seam is <em>served</em>."],
+  ["The gp seam is **served**.", "The gp seam is __served__.", "The gp seam is <strong>served</strong>."],
+  ["# The gp seam is served", "The gp seam is served\n===", "<h1>The gp seam is served</h1>"],
+  ["The gp seam is [served](x.md).", 'The gp seam is <a href="x.md">served</a>.'],
+  ["The gp seam is `served`.", "The gp seam is <code>served</code>."],
+  ["The gp seam is served &amp; live.", "The gp seam is served & live."],
+  ["- The gp seam is served.", "* The gp seam is served.", "+ The gp seam is served."],
+  ["The gp seam isn't served.", "The gp seam isn&#39;t served."],
+  ["Intro <script>x\n\nnot</script> the gp seam is served.", "<p>Intro <script>x</p>\n<p>not</script> the gp seam is served.</p>"],
+  ["Intro <span hidden>x\n\nnot</span> the gp seam is served.", "<p>Intro <span hidden>x</p>\n<p>not</span> the gp seam is served.</p>"],
+  ["Intro <span hidden>x\n\nThe gp seam is served.", "<p>Intro <span hidden>x</p>\n<p>The gp seam is served.</p>"],
+  ["- Intro <script>x\n- not</script> the gp seam is served.", "<ul>\n<li>Intro <script>x</li>\n<li>not</script> the gp seam is served.</li>\n</ul>"],
+  ["| | gp seam is served |\n| --- | --- |", "<table>\n<thead>\n<tr>\n<th></th>\n<th>gp seam is served</th>\n</tr>\n</thead>\n</table>"],
+  ["The gp seam is served<video> not</video>.", "<p>The gp seam is served<video> not</video>.</p>"],
+];
+/** R-TREE-CONSTRUCTION (B3; refusal #3's restated NOT CLAIMED, named): the HTML standard's tree construction and tokenizer states beyond
+ * MARKUP and encloses, each member beside its live twin, the same claim with no hiding element - a block-level start tag inside a hidden
+ * phrasing element closes it with the paragraph, so a reader sees what follows, and a textarea shows the tags it holds as text. */
+const TREE_CONSTRUCTION: readonly (readonly [string, string])[] = [
+  ["Intro <span hidden>x<div>The gp seam is served.</div></span>", "Intro <span>x<div>The gp seam is served.</div></span>"],
+  ["<textarea><b hidden>The gp seam is served.</b></textarea>", "<textarea>The gp seam is served.</textarea>"],
+];
+/** R-TREE-CONSTRUCTION's over-read (B3): a script's escape states, which the census ends at the first </script>, so text a reader is never
+ * shown reads as a claim. */
+const OVER_READ: readonly string[] = ["<script><!--<script></script>The gp seam is served.--></script>"];
 /** B5's default-ignorable code points beyond Cf, each inside a served word and a seam word (FOLD drops them; the Hangul fillers some fonts
  * draw as a blank, an over-read). */
 const IGNORABLES: readonly number[] = [0x034f, 0x115f, 0x1160, 0x17b4, 0x180b, 0x180e, 0x3164, 0xfe00, 0xfe0f, 0xffa0, 0xe0041, 0xe0100];
@@ -1449,7 +1695,8 @@ function twinOfPage(page: string): { readonly identical: boolean; readonly same:
     same: JSON.stringify(shown(`${page}\n`)) === JSON.stringify(shown(html)) && JSON.stringify(verdicts(`${page}\n`)) === JSON.stringify(verdicts(html)),
   };
 }
-/** Every pinned rendered form of B3, B4 and B5 that is a docs page (the CLASS-LEVEL GUARD's set). */
+/** Every pinned rendered form of B3, B4 and B5 that is a docs page (the CLASS-LEVEL GUARD's set), the cross-block forms and the same-HTML
+ * groups among them (refusal #3 U1). */
 const PINNED_PAGES: readonly string[] = [
   ...RENDERED_FORMS,
   ...JUDGED_PAGES.filter(([path]) => MARKDOWN_PAGE.test(path)).map(([, text]) => text),
@@ -1461,6 +1708,11 @@ const PINNED_PAGES: readonly string[] = [
   ...MARKED_ANYWHERE.flat(),
   "We added a gp seam. It is served.",
   "Status: served. Subject: the gp seam.",
+  ...CROSS_BLOCK,
+  ...SAME_HTML_GROUPS.flat(),
+  ...FOREIGN_SCOPE,
+  ...TREE_CONSTRUCTION.flat(),
+  ...OVER_READ,
 ];
 const REACHED = new Set<string>();
 const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
@@ -1515,13 +1767,20 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     // LIVE GUARD coverage (F1; literal, never only the roster): the pass read every listed file, above every floor.
     expect(coverage).toEqual({ readAll: true, floorsMet: true });
     // The same guard over a scratch git repository: plants (a sentence, a br-split sentence and its hard-break twin, a feature-matrix
-    // row, a status-ledger row) and their untied twins; through gitList and judgeFiles it must find the plants, and only them.
+    // row, a status-ledger row; refusal #3's live pairs: a claim after a script that spans paragraphs, a claim after a hidden span the
+    // paragraph end closes, and a claim beside a marker in video fallback, an svg desc and a math annotation) and their untied twins;
+    // through gitList and judgeFiles it must find the plants, and only them.
     const plants: Record<string, string> = {
       "docs/workbench/plant.md": `${PLANT}\n`,
       "docs/workbench/receipts/wb-plant.md": "# wb-plant: a receipt\n\n- The GraphPolicyCLI client is live.\n",
       "README.md": "The gp adapter is available.\n",
       "docs/workbench/br-plant.md": "The Pi gp<br>seam is served.\n",
       "docs/workbench/hard-break-plant.md": "The Pi gp\\\nseam is served.\n",
+      "docs/workbench/cross-block-plant.md": "Intro <script>x\n\nnot</script> the Pi gp seam is served.\n",
+      "docs/workbench/block-end-plant.md": "Intro <span hidden>x\n\nThe Pi gp seam is served.\n",
+      "docs/workbench/media-plant.md": "The Pi gp seam is served<video> not</video>.\n",
+      "docs/workbench/svg-plant.md": "The Pi gp seam is served <svg><desc>not</desc></svg>.\n",
+      "docs/workbench/math-plant.md": "The Pi gp seam is served <math><semantics><mi>x</mi><annotation> not</annotation></semantics></math>.\n",
     };
     const files: Record<string, string> = { [CONSTANTS.matrix]: matrixPage([["GraphPolicyCLI decision seam", "landed-gated"]]), [CONSTANTS.ledger]: ledgerPage([["GraphPolicyCLI decision seam", "live-sdk"]]) };
     for (const [path, text] of Object.entries(plants)) {
@@ -1657,11 +1916,38 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect(breaks.flatMap(group => group.same)).toEqual(BREAK_GROUPS.flat().map(() => true));
     const twins = PINNED_PAGES.map(twinOfPage);
     expect(twins.filter(twin => !twin.identical || !twin.same)).toEqual([]);
+    // CLASS-LEVEL GUARD, refusal #3 U1 (literal, never only the roster): every same-HTML group's pages have one marked HTML and read
+    // as its first page; the cross-block forms are pinned pages above, each read as its own HTML page, and their readings are held below.
+    const sameHtml = SAME_HTML_GROUPS.map(group => ({ html: new Set(group.map(page => marked.parse(`${page}\n`, { async: false }))).size, reading: reading(group[0] ?? ""), same: group.map(page => JSON.stringify(reading(page)) === JSON.stringify(reading(group[0] ?? ""))) }));
+    expect(sameHtml.map(group => group.html)).toEqual(SAME_HTML_GROUPS.map(() => 1));
+    expect(sameHtml.flatMap(group => group.same)).toEqual(SAME_HTML_GROUPS.flat().map(() => true));
+    const crossBlock = CROSS_BLOCK.map(reading);
     // The markup reader's element sets and forms (self-anchored, held to the roster), and what each block-level tag met inline
     // does to a claim.
     const markup = { blocks: [...BLOCK_TAGS], table: [...TABLE_TAGS], cells: [...CELL_TAGS], unshown: [...UNSHOWN_TAGS], code: [...CODE_TAGS], raw: [...RAW_TAGS], void: [...VOID_TAGS], forms: MARKUP.source };
     const blockForms = [...BLOCK_TAGS].map(tag => renderedSentences(`The gp seam is<${tag}>served.\n`).map(sentence => sentence.text));
-    return { raw, rendered, judged, breaks, twins: { pages: twins.length, identical: twins.filter(twin => twin.identical).length, same: twins.filter(twin => twin.same).length }, markup, blockForms };
+    // Refusal #3 U2's element sets (self-anchored, held to the roster): the media elements and the foreign roots' unshown elements.
+    const hiding = { fallback: [...FALLBACK_TAGS], foreign: [...FOREIGN_UNSHOWN].map(([root, tags]) => ({ root, tags: [...tags] })) };
+    // R-TREE-CONSTRUCTION quiet rows (named; refusal #3's restated NOT CLAIMED) beside their live twins, and its over-read.
+    const quiet = { "R-TREE-CONSTRUCTION": TREE_CONSTRUCTION.map(([member]) => judgeText("docs/x.md", member)) };
+    expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "B3").map(residual => residual.id));
+    const residualTwins = { "R-TREE-CONSTRUCTION": TREE_CONSTRUCTION.map(([, twin]) => judgeText("docs/x.md", twin)) };
+    const overRead = OVER_READ.map(page => judgeText("docs/x.md", page));
+    return {
+      raw,
+      rendered,
+      judged,
+      breaks,
+      twins: { pages: twins.length, identical: twins.filter(twin => twin.identical).length, same: twins.filter(twin => twin.same).length },
+      markup,
+      blockForms,
+      crossBlock,
+      sameHtml: sameHtml.map(group => group.reading),
+      hiding,
+      quiet,
+      residualTwins,
+      overRead,
+    };
   },
   B4: async () => {
     const spellings = [
@@ -1719,6 +2005,8 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     // A marker counts only where it is shown: one hidden in a comment or a bogus comment, a link destination, title or label, a tag
     // attribute, an image's alt text or an element a reader never sees never quiets a rendered claim.
     const hiddenMarkers = HIDDEN_MARKERS.map(text => judgeText("docs/x.md", text));
+    // Refusal #3 U2: desc is unshown only inside an open svg element; outside one a marker in it counts.
+    const foreignScope = FOREIGN_SCOPE.map(text => judgeText("docs/x.md", text));
     const markers = MARKER_WORDS.map(word => verdict(`The gp seam ${word} served.`));
     const notMarkers = NOT_MARKERS.map(word => verdict(`The gp seam is served (${word}).`));
     // Hyphen- and underscore-bounded words: a status word carrying a marker is no marker, an identifier is one word.
@@ -1737,7 +2025,7 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     };
     expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "B5").map(residual => residual.id));
     const twins = { "R-MARKER-ANYWHERE": MARKED_ANYWHERE.map(([, alone]) => judgeText("docs/x.md", alone)), "R-RENDERED-TEXT": UNRENDERED.map(([, shown]) => judgeText("docs/x.md", shown)) };
-    return { served, bare, pi, formats, ignorables, forms, asWritten, hiddenMarkers, markers, notMarkers, bounded, quiet, twins };
+    return { served, bare, pi, formats, ignorables, forms, asWritten, hiddenMarkers, foreignScope, markers, notMarkers, bounded, quiet, twins };
   },
 };
 
@@ -1823,7 +2111,7 @@ describe("wb-0lf.7 GP seam served-claim census (FURNACE-GRAPH-POLICY-DECISION-EX
     expect(servedStatuses(legend).length).toBeGreaterThan(0);
     expect(servedStatuses(legend).every(status => legend.some(entry => entry.status === status))).toBe(true);
     const pins = ROWS.flatMap(row => row.pins.map(pin => pin.id));
-    expect(ROSTER.residuals.map(residual => residual.id)).toEqual(["R-OUTSIDE-ROOTS", "R-STATUS-OTHER-CELL", "R-OTHER-TABLES", "R-BARE-NAME", "R-SPLIT", "R-LOOKALIKE", "R-MARKER-ANYWHERE", "R-PARAPHRASE", "R-RENDERED-TEXT"]);
+    expect(ROSTER.residuals.map(residual => residual.id)).toEqual(["R-OUTSIDE-ROOTS", "R-STATUS-OTHER-CELL", "R-OTHER-TABLES", "R-BARE-NAME", "R-SPLIT", "R-LOOKALIKE", "R-MARKER-ANYWHERE", "R-PARAPHRASE", "R-RENDERED-TEXT", "R-TREE-CONSTRUCTION"]);
     expect(ROSTER.residuals.every(residual => pins.includes(residual.quietPin))).toBe(true);
   });
   for (const row of ROWS) {
