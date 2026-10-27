@@ -80,6 +80,25 @@
       "node_modules/pkg/index.js:R-OUTSIDE",
       "src/subgraph.ts:quiet",
       "src/apart.ts:quiet"
+    ],
+    "readingTag": "\\([^()]*\\)|[()]/g",
+    "readingPlants": [
+      "G6:B:flagged",
+      "tail:C:flagged",
+      "upper:A:flagged",
+      "roman:B:flagged",
+      "statement:C:flagged",
+      "unclosed:A:flagged",
+      "unopened:B:flagged",
+      "second-colon:A:flagged",
+      "untagged:B:R-UNTAGGED",
+      "bracket:C:R-UNPARENTHESISED",
+      "fullwidth:A:R-UNPARENTHESISED",
+      "numbered:B:R-UNPARENTHESISED"
+    ],
+    "readingResiduals": [
+      "R-UNTAGGED",
+      "R-UNPARENTHESISED"
     ]
   },
   "producer": {

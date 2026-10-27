@@ -75,24 +75,37 @@
  * equal the roster's, the quote sits in the producer's 02:100 line and each authority sentence in its line, clause (a)'s kinds are
  * FIXTURE_KINDS, clause (b)'s code is REFUSAL_CODE, the statement's two document words are POSTURE_WORDS, and the filing names
  * every code fact the roster holds.
- * PINS IN THE FILING (wb-hzwr): every pin covers words of its row's obligation text (COVERS: verbatim spans of the filing - row A
- * clause (a), row B clause (b), row C clause (c) with the posture fact, each clause read without its enumeration): a row's pins
- * cover every word of that text (COVER_STOP aside) and each pin covers a word no other pin of its row covers, so a pin removed
- * from ROWS, the literal, IMPL, COVERS and the roster together leaves words of the filing uncovered; and the follow-up filing's
- * row (wb-hzwr) names the pin its coordinated hollow removed, which ROWS must hold.
- * ECHO GUARD (wb-hzwr): the runner, never the case, records each pin's `${pin}:${assertionCalls}` after its witness comparisons,
- * and the judged set records its own count as `judged:<n>` (ASSERTED, held to the roster's assertions), so a case that returns
- * its roster witness reaches its end with fewer assertions and a judge deleted from the judged set moves its count;
+ * PINS IN THE FILING (wb-hzwr, wb-rxog): every pin covers words of its row's obligation text (COVERS: verbatim spans of the
+ * filing - row A clause (a), row B clause (b), row C clause (c) with the posture fact, each clause read without its
+ * enumeration): a row's pins cover every word of that text, COVER_STOP's function words included (COVER_STOP only keeps such a
+ * word from counting as a pin's own, so a word that joins it still needs a pin), and each pin covers a word no other pin of its
+ * row covers, so a pin removed from ROWS, the literal, IMPL, COVERS and the roster together leaves words of the filing
+ * uncovered unless its phrases move onto a sibling; the follow-up filing's row (wb-hzwr) names the pin its coordinated hollow
+ * removed, which ROWS must hold; and the second follow-up filing's row (wb-rxog, its lead line) names every pin the landing-423
+ * gate's coordinated hollows removed - its phrases moved onto a sibling (P2-MOVE) or its own words stop-listed (P3-STOP) - and
+ * every sibling a phrase moved onto: ROWS must hold each, and each named hollow is replayed on this file's own shape (a move
+ * reads quiet on both readings and is named by the anchor; a stop reads quiet on the landed stop-skipping reading, leaves words
+ * uncovered on this one and is named too), while the reading's own branches - a phrase that is no span of the text, a stop
+ * word no pin covers, a pin whose only words of its own are stop words - are read on a probe text.
+ * ECHO GUARD (wb-hzwr, wb-rxog): the runner, never the case, records each pin's `${pin}:${assertionCalls}` after its witness
+ * comparisons, and the judged set records its own count as `judged:<n>` (ASSERTED, held to the roster's assertions), so a case
+ * that returns its roster witness reaches its end with fewer assertions and a judge deleted from the judged set moves its count;
+ * the runner also seals the roster's witnesses while a case runs (a case that reads its own witness through rosterWitness
+ * throws) and holds the assertions the case makes of its own, counted around it, at OWN_FLOOR or above whatever count the
+ * roster holds (a case that returns a copy of its witness without asserting reds), each check read on a probe in the judged set;
  * and C1's witness carries a LIVE leg the roster cannot hold - each root's module count, the transform calls the scan read and a
  * digest of the walked module inventory, values that move with every module a lander adds - held to the runner's own recount
  * made outside the case (node's recursive readdirSync, a second code path beside walkRoot, and a second transform counter), so
- * an echoed C1 carries no live leg; the follow-up filing's row names the pin its echo probe replaced, which LIVE must hold.
- * Not claimed: which pin covers which words (COVERS is this census's reading of the filing); a case that echoes its roster witness
- * while making its pinned number of assertions (padded, or written through expect.setState) - for C1, while also copying the
- * runner's recount into its live leg, or hollowing that recount and its floor check with it; a walk root removed from
- * WALK_ROOTS, FLOORS, TRANSFORM_FLOOR and the roster together (the floors anchor the roots that are listed, not the list); an
- * assertion removed from the records case itself (it holds the other cases' counts, not its own); an edit of the tracked bead
- * export itself.
+ * an echoed C1 carries no live leg; the follow-up filing's row names the pin its echo probe replaced, which LIVE must hold and
+ * which must itself be a judged pin.
+ * Not claimed: which pin covers which words (COVERS is this census's reading of the filing: a phrase moved between two pins that
+ * both stay judged reads quiet, as the replayed moves pin); a case that copies its roster witness by another path than
+ * rosterWitness while making assertions of its own (padded, or written through expect.setState) - for C1, while also copying the
+ * runner's recount into its live leg, or hollowing that recount and its floor check with it; a check removed from the judged set
+ * or the runner together with the counts it moves in the roster (those counts are held to the roster's assertions alone); a walk
+ * root removed from WALK_ROOTS, FLOORS, TRANSFORM_FLOOR and the roster together (the floors anchor the roots that are listed,
+ * not the list); an assertion removed from the records case itself (it holds the other cases' counts, not its own); an edit of
+ * the tracked bead export itself.
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
  * not inverted, ran; every pin's case reached its end (REACHED) with its pinned assertion count (ASSERTED).
  * RESIDUALS (named families, each with a pinned quiet row in C1's controls): R-UNTYPED-FLOW a kind label reaching a transform
@@ -106,6 +119,12 @@
  * FOLLOW-UP wb-hzwr (the R694 follow-up of landing 325, its F3): the gate's two LEG-2 survivors - L2-01, pin A3 removed from
  * ROWS, the literal, IMPL, the roster rows and the roster titles together, and L2-02, C1's case replaced by one that echoes its
  * roster witness - are killed by the pins in the filing and the echo guard above.
+ * FOLLOW-UP wb-rxog (the R694 follow-up of landing 423, its lead and its rider): the gate's pin moves (P2-MOVE: a pin removed
+ * from ROWS, the literal, IMPL, COVERS and every roster field, its cover phrases appended to a sibling's) and pin stops (P3-STOP:
+ * the same removal, its own words appended to COVER_STOP in census and roster) are killed by the second follow-up's anchor, the
+ * stops also by the coverage reading counting every word; its echo re-pins (P5-ECHO-REPIN: a case returning its roster witness,
+ * its count re-pinned) are killed by the sealed witness and OWN_FLOOR; its positive-control deletion with the judged count
+ * re-pinned (P12-POSCTRL-DEL-REPIN) stays held to the roster's assertions alone, as Not claimed says.
  * Display paths added: none. Test-only: no process is spawned and no file is written; src, qa, examples, the roster and the bead
  * export are only read.
  */
@@ -125,6 +144,12 @@ const BEAD_EXPORT = ".beads/issues.jsonl";
 const BEAD = "wb-gxd7.4";
 /** The follow-up filing whose row names the pins the landing-325 gate's two LEG-2 survivors hollowed (L2-01 and L2-02). */
 const FOLLOW_UP = "wb-hzwr";
+/** The second follow-up filing (the R694 follow-up of landing 423), whose lead line names every pin the landing-423 gate's
+ * coordinated hollows removed: a removed pin's cover phrases moved onto a sibling (P2-MOVE) or its own words stop-listed
+ * (P3-STOP). */
+const SECOND_FOLLOW_UP = "wb-rxog";
+/** The fewest assertions a pin's case makes of its own, counted around it by the runner (the echo guard). */
+const OWN_FLOOR = 1;
 /** The program pin every producer line is read at (GraphPolicyCLI, abbreviated as the filing cites it). */
 const PIN = "0107c72992f3";
 /** Clause (a)'s two kinds. */
@@ -314,7 +339,10 @@ function readRoster(): Roster {
 
 const ROSTER = readRoster();
 
+/** Set while a pin's case runs (runSealed): the roster's witnesses are sealed then, so a case that reads one to return it throws. */
+let witnessSealed = false;
 function rosterWitness(pin: string): Json {
+  if (witnessSealed) throw new Error(`a case read the roster witness of ${pin} while it ran`);
   const found = ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === pin);
   if (found === undefined) throw new Error(`the roster holds no pin ${pin}`);
   return found.witness;
@@ -551,12 +579,15 @@ const ROWS: readonly Row[] = [
     pins: ["C1", "C2"],
   },
 ];
-/** The words a coverage reading skips: articles and conjunctions, which carry no obligation of their own. */
+/** The words no pin may own: function words (articles, conjunctions, prepositions and one demonstrative), which carry no
+ * obligation of their own. A coverage reading still counts each of them as a word some pin must cover, so a word that joins this
+ * list leaves the covered set unchanged and can only take an own word away from a pin. */
 const COVER_STOP: readonly string[] = ["a", "an", "and", "as", "from", "or", "the", "this", "to"];
 /** Each pin's share of the filing: verbatim spans of its row's obligation text (row A clause (a), row B clause (b), row C clause
  * (c) and the posture fact, each clause without its enumeration). A row's pins together cover every word of that text and each
  * covers a word no other pin of its row covers (coverageOf), so a pin removed from every literal of this file and the roster
- * leaves words of the filing uncovered. Which pin covers which words is this census's reading. */
+ * leaves words of the filing uncovered unless its phrases move onto a sibling - the second follow-up's row names every pin
+ * such a move removed. Which pin covers which words is this census's reading. */
 const COVERS: Readonly<Record<string, readonly string[]>> = {
   A1: ["an exporter fixture with kinds `ready-work` and `ready_work`"],
   A2: ["yields two distinct FunctionIR names or a typed collision refusal", "with the source label kept verbatim beside the mapped identifier"],
@@ -566,27 +597,32 @@ const COVERS: Readonly<Record<string, readonly string[]>> = {
   C1: ["census: no exporter code path lowercases or replaces '-' in a kind label", "no Pi exporter exists (0 GraphDataIR hits at d75b68d1)"],
   C2: ["outside a recorded bijection table"],
 };
-/** The words a coverage reading counts: a text split at white space and at the punctuation that separates its parts. */
-function coverWords(text: string): string[] {
-  return text.split(/[\s,;():]+/).filter(word => word.length > 0 && !COVER_STOP.includes(word));
+/** The words of a text: split at white space and at the punctuation that separates its parts. */
+function wordsOf(text: string): string[] {
+  return text.split(/[\s,;():]+/).filter(word => word.length > 0);
+}
+/** The words a pin may own in a text: its words outside a stop list (COVER_STOP unless a replay passes another). */
+function coverWords(text: string, stop: readonly string[] = COVER_STOP): string[] {
+  return wordsOf(text).filter(word => !stop.includes(word));
 }
 interface Coverage {
   /** Cover phrases that are no verbatim span of the text, as `<pin>: <phrase>`. */
   readonly outside: readonly string[];
-  /** Words of the text no pin covers. */
+  /** Words of the text no pin covers, stop-listed words included. */
   readonly uncovered: readonly string[];
   /** Pins covering no word of their own (another pin of the row covers each of their words). */
   readonly withoutOwnWord: readonly string[];
 }
-/** How a row's pins cover the obligation text the row judges. */
-function coverageOf(text: string, pins: readonly string[]): Coverage {
-  const wordsBy = new Map(pins.map(pin => [pin, new Set((COVERS[pin] ?? []).flatMap(coverWords))]));
+/** How a row's pins cover the obligation text the row judges: every word of the text counts toward coverage, and only words
+ * outside the stop list count as a pin's own (the live COVERS and COVER_STOP unless a replay passes others). */
+function coverageOf(text: string, pins: readonly string[], covers: Readonly<Record<string, readonly string[]>> = COVERS, stop: readonly string[] = COVER_STOP): Coverage {
+  const wordsBy = new Map(pins.map(pin => [pin, new Set((covers[pin] ?? []).flatMap(wordsOf))]));
   const covered = new Set([...wordsBy.values()].flatMap(words => [...words]));
-  const outside = pins.flatMap(pin => (COVERS[pin] ?? []).filter(phrase => !text.includes(phrase)).map(phrase => `${pin}: ${phrase}`));
-  const uncovered = [...new Set(coverWords(text).filter(word => !covered.has(word)))];
+  const outside = pins.flatMap(pin => (covers[pin] ?? []).filter(phrase => !text.includes(phrase)).map(phrase => `${pin}: ${phrase}`));
+  const uncovered = [...new Set(wordsOf(text).filter(word => !covered.has(word)))];
   const withoutOwnWord = pins.filter(pin => {
     const others = new Set(pins.filter(other => other !== pin).flatMap(other => [...(wordsBy.get(other) ?? [])]));
-    return [...(wordsBy.get(pin) ?? [])].every(word => others.has(word));
+    return (covers[pin] ?? []).flatMap(phrase => coverWords(phrase, stop)).every(word => others.has(word));
   });
   return { outside, uncovered, withoutOwnWord };
 }
@@ -1205,6 +1241,69 @@ function acceptanceClauses(notes: string): string[] {
   return notes.slice(start + "Acceptance: ".length, end).split(/; (?=\([a-z]\) )/);
 }
 
+/** The coordinated hollows the second follow-up's lead line names, as it lists them (the survivors first, the one the landed
+ * census already killed last): each pin move `<removed>-><sibling>` (P2-MOVE) and each stop-listed pin (P3-STOP). */
+interface NamedHollows {
+  readonly moved: readonly string[];
+  readonly stopped: readonly string[];
+}
+/** The words of the second follow-up's lead line that open its two lists. */
+const MOVE_FRAME = "and reassigns the pin's cover phrases to a sibling in COVERS and the roster: ";
+const STOP_FRAME = "P3-STOP is the same removal plus the pin's own words appended to COVER_STOP in census and roster: ";
+/** Reads the hollows from the first notes line that opens with the lead marker; a list that does not parse refuses by name. */
+function namedHollows(notes: string): NamedHollows {
+  const lead = notes.split("\n").find(line => line.startsWith("[leads] - ")) ?? "";
+  const listAfter = (frame: string, item: string, survived: string): string[] => {
+    const at = lead.indexOf(frame);
+    const found = at < 0 ? null : new RegExp(`^(${item}(?:(?:, | and )${item})*) ${survived}; (${item}) is red=2`).exec(lead.slice(at + frame.length));
+    if (found?.[1] === undefined || found[2] === undefined) throw new Error(`the ${SECOND_FOLLOW_UP} lead line names no list after "${frame.trim()}"`);
+    return [...found[1].split(/, | and /), found[2]];
+  };
+  return { moved: listAfter(MOVE_FRAME, "[A-Z]\\d->[A-Z]\\d", "are each 8/8 green"), stopped: listAfter(STOP_FRAME, "[A-Z]\\d", "are 8/8 green") };
+}
+/** Every pin a named hollow removed or moved a share onto, in first-named order. */
+function hollowPins(hollows: NamedHollows): string[] {
+  return [...new Set([...hollows.moved.flatMap(move => move.split("->")), ...hollows.stopped])];
+}
+/** The named pins the given rows no longer judge. */
+function unjudgedOf(named: readonly string[], rows: readonly Row[]): string[] {
+  return named.filter(pin => !rows.some(row => row.pins.includes(pin)));
+}
+/** A coverage reading in one word: "quiet" (clean), "uncovers" (only words left uncovered) or "broken" (a phrase outside the
+ * text, or a pin owning no word). */
+const readingOf = (coverage: Coverage): string => (coverage.outside.length > 0 || coverage.withoutOwnWord.length > 0 ? "broken" : coverage.uncovered.length > 0 ? "uncovers" : "quiet");
+/** The landed-325 reading's uncovered words, kept only to replay against: words outside the stop list that no pin covers, so a
+ * word that joins the stop list leaves it unseen (the landing-423 gate's stop survived it). */
+function skippingUncovered(text: string, pins: readonly string[], covers: Readonly<Record<string, readonly string[]>>, stop: readonly string[]): string[] {
+  const covered = new Set(pins.flatMap(pin => (covers[pin] ?? []).flatMap(wordsOf)));
+  return [...new Set(coverWords(text, stop).filter(word => !covered.has(word)))];
+}
+interface Replay {
+  readonly hollow: string;
+  /** This census's coverage reading of the replayed row. */
+  readonly reading: string;
+  /** The landed stop-skipping reading of it: "quiet" or "uncovers". */
+  readonly skipping: string;
+  /** The named pins the replayed rows no longer judge. */
+  readonly unjudged: readonly string[];
+}
+/** One named hollow replayed on this file's own shape: the removed pin's row read without it - its cover phrases appended to
+ * the sibling's (a move) or its own words, those no other pin of its row covers, appended to COVER_STOP (a stop) - by both
+ * readings, beside the named pins the replayed rows no longer judge. */
+function replayHollow(hollow: string, obligations: Readonly<Record<string, string>>, named: readonly string[]): Replay {
+  const [removed = "", sibling] = hollow.split("->");
+  const row = ROWS.find(entry => entry.pins.includes(removed));
+  if (row === undefined) throw new Error(`no judged row holds ${removed}`);
+  const pins = row.pins.filter(pin => pin !== removed);
+  const others = new Set(pins.flatMap(pin => (COVERS[pin] ?? []).flatMap(wordsOf)));
+  const ownWords = [...new Set((COVERS[removed] ?? []).flatMap(phrase => coverWords(phrase)).filter(word => !others.has(word)))];
+  const covers = Object.fromEntries(Object.entries(COVERS).flatMap(([pin, phrases]) => (pin === removed ? [] : [[pin, pin === sibling ? [...phrases, ...(COVERS[removed] ?? [])] : phrases]])));
+  const stop = sibling === undefined ? [...COVER_STOP, ...ownWords] : COVER_STOP;
+  const rows = ROWS.map(entry => ({ ...entry, pins: entry.pins.filter(pin => pin !== removed) }));
+  const text = obligations[row.id] ?? "";
+  return { hollow, reading: readingOf(coverageOf(text, pins, covers, stop)), skipping: skippingUncovered(text, pins, covers, stop).length > 0 ? "uncovers" : "quiet", unjudged: unjudgedOf(named, rows) };
+}
+
 const REACHED: string[] = [];
 /** The judged set's assertion count at its end (`judged:<n>`), then each pin's when its case reached its end, both witness
  * comparisons included (`${pin}:${n}`), in run order: the runner records a pin's count, never the case (the echo guard). */
@@ -1262,6 +1361,19 @@ function liveSplit(witness: Json): { readonly held: Json; readonly live: Json | 
   if (!isJsonObject(witness) || !Object.hasOwn(witness, "live")) return { held: witness, live: undefined };
   const { live, ...held } = witness;
   return { held, live };
+}
+/** Whether a case made enough assertions of its own: OWN_FLOOR or more (the runner's check and its probe share it). */
+const ownFloorMet = (own: number): boolean => own >= OWN_FLOOR;
+/** Runs one pin's case as the runner does: the roster's witnesses sealed while it runs, its own assertions counted around it. */
+function runSealed(impl: () => Json): { readonly witness: Json; readonly own: number } {
+  const before = expect.getState().assertionCalls;
+  witnessSealed = true;
+  try {
+    const witness = impl();
+    return { witness, own: expect.getState().assertionCalls - before };
+  } finally {
+    witnessSealed = false;
+  }
 }
 /** A pin's witness, recorded as reached: only a case that ran to its end returns through here. */
 function done(pin: string, witness: JsonObject): Json {
@@ -1472,6 +1584,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
 describe("wb-gxd7.4 gp kind-label census (GPC-FEEDBACK-CONTRACT-AUDIT-R4)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the bead row agree", { timeout: 60_000 }, () => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:2", "C:2"]);
+    const hollows = namedHollows(readBeadRow(SECOND_FOLLOW_UP).notes);
+    const named = hollowPins(hollows);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect({
@@ -1506,6 +1620,10 @@ describe("wb-gxd7.4 gp kind-label census (GPC-FEEDBACK-CONTRACT-AUDIT-R4)", () =
         coverStop: COVER_STOP,
         followUp: FOLLOW_UP,
         livePins: Object.keys(LIVE),
+        secondFollowUp: SECOND_FOLLOW_UP,
+        hollows: json(hollows),
+        hollowPins: named,
+        ownFloor: OWN_FLOOR,
       },
       residuals: RESIDUAL_FAMILIES,
     }).toStrictEqual(json({ bead: ROSTER.bead, scan: ROSTER.scan, residuals: [...ROSTER.residuals] }));
@@ -1533,10 +1651,18 @@ describe("wb-gxd7.4 gp kind-label census (GPC-FEEDBACK-CONTRACT-AUDIT-R4)", () =
     expect(ROWS.filter(row => !coverage.some(ids => ids.includes(row.id))).map(row => row.id), "every row carries a clause of the filing").toEqual([]);
     expect(coverage, "each clause and the posture fact sit verbatim in exactly one row label, every row carrying one").toEqual([["A"], ["B"], ["C"], ["C"]]);
     // The pins in the filing (wb-hzwr, L2-01): each row's obligation text is the clauses and posture fact its label carries, each
-    // clause without its enumeration; every pin covers words of it, every word is covered, each pin covers one of its own.
+    // clause without its enumeration; every pin covers words of it, every word is covered (COVER_STOP's words included), each
+    // pin covers one of its own.
     const sources = [...clauses.map(clause => clause.slice(4)), posture ?? ""];
     const obligations = Object.fromEntries(ROWS.map(row => [row.id, sources.filter((_, index) => coverage[index]?.length === 1 && coverage[index]?.[0] === row.id).join("; ")]));
     expect(Object.keys(COVERS), "every pin holds a share of the filing, in row order").toEqual(ROWS.flatMap(row => row.pins));
+    // The coverage reading's branches, each read on a probe text: a phrase that is no span of the text, a stop word no pin covers
+    // (stop words count toward coverage) and a pin whose only words of its own are stop words (they never count as its own).
+    expect(coverageOf("the fixture as recorded", ["P", "Q", "R"], { P: ["the"], Q: ["fixture"], R: ["recorded", "no such span"] }, ["the", "as"]), "the coverage reading on its probe").toStrictEqual({
+      outside: ["R: no such span"],
+      uncovered: ["as"],
+      withoutOwnWord: ["P"],
+    });
     for (const row of ROWS) {
       const text = obligations[row.id] ?? "";
       expect(coverageOf(text, row.pins), `row ${row.id}: its pins cover every word of its obligation text, each pin a word of its own`).toStrictEqual({ outside: [], uncovered: [], withoutOwnWord: [] });
@@ -1547,6 +1673,25 @@ describe("wb-gxd7.4 gp kind-label census (GPC-FEEDBACK-CONTRACT-AUDIT-R4)", () =
     const probed = probedPins(readBeadRow(FOLLOW_UP).title);
     expect(ROWS.flatMap(row => row.pins), "the follow-up's coordinated hollow removed a pin ROWS still holds").toContain(probed.hollowed);
     expect(Object.keys(LIVE), "the pin whose case the follow-up's echo probe replaced carries the live leg").toEqual([probed.echoed]);
+    expect(unjudgedOf(Object.keys(LIVE), ROWS), "the live-leg pin is a judged pin").toEqual([]);
+    // The second follow-up filing (wb-rxog): every pin its coordinated hollows removed, or moved a share onto, is still judged, so
+    // a pin removed from every literal of this file and the roster reds here even when its phrases move onto a sibling or its
+    // words join COVER_STOP. Each named hollow replayed on this shape: a move reads quiet on both readings (which pin covers which
+    // words is not claimed) and the anchor names its removed pin; a stop reads quiet on the landed stop-skipping reading and
+    // uncovers words on this one, since COVER_STOP never uncovers a word, and the anchor names it too.
+    expect(unjudgedOf(named, ROWS), "every pin the second follow-up's hollows removed, or moved a share onto, is still judged").toEqual([]);
+    expect(
+      [...hollows.moved, ...hollows.stopped].map(hollow => replayHollow(hollow, obligations, named)),
+      "each named hollow replayed on this shape: a move reads quiet and is named, a stop is seen only by the every-word reading and is named",
+    ).toStrictEqual([
+      ...hollows.moved.map(hollow => ({ hollow, reading: "quiet", skipping: "quiet", unjudged: [hollow.split("->")[0]] })),
+      ...hollows.stopped.map(hollow => ({ hollow, reading: "uncovers", skipping: "quiet", unjudged: [hollow] })),
+    ]);
+    // The echo guard's runner checks, each read on a probe: a case that reads its own roster witness throws, and a case that returns a
+    // copy of its witness without asserting counts fewer own assertions than OWN_FLOOR.
+    const probe = ROWS[0]?.pins[0] ?? "";
+    expect(() => runSealed(() => rosterWitness(probe)), "a sealed witness read throws").toThrow(`a case read the roster witness of ${probe} while it ran`);
+    expect(ownFloorMet(runSealed(() => json({ pin: probe })).own), "a copied witness asserts nothing of its own, below OWN_FLOOR").toBe(false);
     expect(bead.notes, "the filing states the roster's statement").toContain(`Full statement (title trimmed to bd's 500-character limit): ${ROSTER.statement}`);
     expect(bead.notes, "the filing quotes the roster's quote at the roster's citation").toContain(`Quote: '${ROSTER.quote}' ${ROSTER.citation};`);
     expect(bead.notes, "the filing's authority sentences and Pi's posture are the roster's").toContain(`Authority: ${ROSTER.authority.map(entry => `${entry.ref} '${entry.quote}'`).join("; ")}; ${ROSTER.piPosture}`);
@@ -1567,7 +1712,8 @@ describe("wb-gxd7.4 gp kind-label census (GPC-FEEDBACK-CONTRACT-AUDIT-R4)", () =
         it(pin, { timeout: 120_000 }, () => {
           const impl = IMPL[pin];
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
-          const witness = impl === undefined ? null : impl();
+          const { witness, own } = impl === undefined ? { witness: null, own: 0 } : runSealed(impl);
+          expect(ownFloorMet(own), `${pin}: the case asserts its own outcome before it returns its witness (${own} of its own)`).toBe(true);
           const { held, live } = liveSplit(witness);
           expect(held).toStrictEqual(rosterWitness(pin));
           const recount = LIVE[pin];

@@ -211,6 +211,9 @@
     ],
     "rfBinary": "rf",
     "rfWord": "(?<![A-Za-z0-9_.-])rf(?![A-Za-z0-9_.-])/",
+    "argvSpan": 32,
+    "listItem": "^\\s*-\\s+(\"[^\"]*\"|'[^']*'|[^\\s\"'#]+)\\s*(?:#.*)?$/",
+    "argvPunctuation": "[\"'`,[\\]()]/g",
     "iterators": [
       "every",
       "some",
@@ -222,6 +225,27 @@
       "findLast",
       "findLastIndex",
       "flatMap"
+    ],
+    "mutators": [
+      "push",
+      "pop",
+      "shift",
+      "unshift",
+      "splice",
+      "sort",
+      "reverse",
+      "fill",
+      "copyWithin"
+    ],
+    "setters": [
+      "Object.assign",
+      "Object.defineProperty",
+      "Object.defineProperties",
+      "Object.setPrototypeOf",
+      "Reflect.set",
+      "Reflect.defineProperty",
+      "Reflect.deleteProperty",
+      "Reflect.setPrototypeOf"
     ],
     "followUp": "wb-lcs3",
     "textRead": "output.text",
@@ -384,7 +408,17 @@
               "proseLeaf": 0,
               "longerName": 0,
               "scriptComposedBinary": 0,
-              "scriptArgvApart": 0
+              "scriptArgvApart": 0,
+              "scriptComposedVerb": 0,
+              "pythonArgv": 1,
+              "jsonArgv": 1,
+              "jsonArgvLines": 1,
+              "yamlArgv": 1,
+              "yamlFlowArgv": 1,
+              "splitArgvList": 1,
+              "renderArgvList": 0,
+              "proseBullets": 0,
+              "jsonArgvApart": 0
             },
             "asserted": 12
           }
@@ -600,6 +634,12 @@
               "src/workbench/reactivefiber-observer.ts blocks count"
             ],
             "useFindings": [],
+            "unresolved": [
+              "src/workbench/native-evidence.ts NATIVE_TYPES[evidence.provider] table",
+              "src/workbench/reactivefiber-observer.ts SEAM_LABEL[host.seam] table",
+              "src/workbench/reactivefiber-observer.ts SEAM_LABEL[host.seam] table"
+            ],
+            "unresolvedFindings": [],
             "projectionEqual": true,
             "evidenceEqual": true,
             "withheldProjectionEqual": true,
@@ -643,9 +683,36 @@
               "composedContainer": 0,
               "objectMemberKey": 0,
               "twoLevelHelper": 0,
-              "importedHelper": 0
+              "importedHelper": 0,
+              "atIndexKey": 1,
+              "frozenKeyList": 1,
+              "destructuredKey": 1,
+              "reduceKey": 1,
+              "importedKeyList": 1,
+              "reassignedKey": 2,
+              "reboundKey": 3,
+              "templateKey": 1,
+              "shadowingParamKey": 1,
+              "hoistedShadowKey": 1,
+              "computedBindingKey": 1,
+              "textKey": 1,
+              "numericIndex": 0,
+              "lookupTable": 0,
+              "frozenTable": 0,
+              "iteratedKey": 0,
+              "forOfKey": 0,
+              "reboundTable": 1,
+              "unfoldedTable": 1,
+              "inPresenceRead": 1,
+              "inPresenceHelper": 1,
+              "forInRow": 1,
+              "composedContainerJudged": 1,
+              "objectMemberKeyJudged": 1,
+              "mutatedKeyList": 1,
+              "writtenKeyList": 1,
+              "assignedTable": 1
             },
-            "asserted": 9
+            "asserted": 11
           }
         }
       ]

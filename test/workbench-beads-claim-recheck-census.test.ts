@@ -43,7 +43,8 @@
  *  B, the boundary census, (b). B1 no file under SCAN_ROOTS, and no root manifest (ROOT_MANIFESTS), claims a Beads task (the bd
  *    word with a claim verb, or an update to status in progress, within CLAIM_WINDOW words), with floors, anchors and controls; the
  *    Beads seam offers show alone (every declaration of it under IMPORT_ROOTS read by the TypeScript parser, with spelling
- *    controls); a module B1 flags must be bound in BEAD_EXECUTORS and every binding must name one (empty both ways today). B2 the
+ *    controls; every code file there is parsed and judged on the name the parser reads, with selection controls); a module B1
+ *    flags must be bound in BEAD_EXECUTORS and every binding must name one (empty both ways today). B2 the
  *    reader holds no readiness: its source keeps no module-scope let or var and writes no module-scope container, and two reads of
  *    one id issue two shows whose readings follow their own envelopes and stamps. B3 no file under IMPORT_ROOTS imports the reader
  *    (an exact set, empty today) or spells a bd readiness read (READ_VERBS) outside it, with matcher controls and positive floors
@@ -73,9 +74,11 @@
  * generation, outside this repository, not cured here); R-ASSIGNEE the reader retains no assignee, so a task whose claim passed to
  * another holder reads in progress and runs (Q2); R-WINDOW the re-read and the native verb are two steps, so a close landing between
  * them is not seen (Q3); R-COMPOSED a bd word assembled at runtime or held in a named constant spawned past the window, a claim flag
- * held in a variable or a claim verb more than CLAIM_WINDOW words after the bd word escapes B1, and an import specifier composed at
- * runtime escapes B3 (Q4); R-INSTRUCTION AGENTS.md, .agents/skills/beads/SKILL.md and .beads/README.md teach a generic bd claim for
- * this repository's own store in their rendered text: instruction text outside B1's executable roots (Q5); R-CONTROLLER the
+ * held in a variable or a claim verb more than CLAIM_WINDOW words after the bd word escapes B1, and an import specifier composed,
+ * selected or held at runtime (a template substitution, a concatenation, a conditional, a named constant), or one passed to the
+ * require createRequire returns (called on the spot or through a binding not named require), escapes B3 (Q4); R-INSTRUCTION
+ * AGENTS.md, .agents/skills/beads/SKILL.md and .beads/README.md teach a generic bd claim for this repository's own store in their
+ * rendered text (as marked renders them): instruction text outside B1's executable roots (Q5); R-CONTROLLER the
  * VC-4 tier's launcher starts a Furnace Run whose Work is claimed and executed by Furnace's authority in a disposable store, and B1
  * reads the launcher as no claim site (Q6); R-ALIAS B2's static scan reads a write spelled on the module-scope name, so a write
  * through an alias escapes it (the two-read case still sees a cache that changes a reading) (Q7); R-REMEASURE the generation is
@@ -87,8 +90,11 @@
  * grammar: prose naming the bd word and a claim word within the window reds it (OVER-READ, disclosed: no executable root spells one
  * today). B3's read judge reads no grammar either: a comment or a message naming the bd word and a read verb within the window reds
  * it (OVER-READ, disclosed by the gate's F7 and pinned by B3's last flagged read control; the reader's own messages are its floor).
- * B4 reads the carried text by command (a `;`-separated segment), so a flag in a later command is never attributed to an earlier bd
- * word.
+ * B1's seam reader resolves no module either: it reads every SEAM_INTERFACE declaration a code file under IMPORT_ROOTS spells,
+ * merged or not, so a same-named interface or type alias TypeScript never merges into the reader's seam (a module-local declaration
+ * in another module) reds B1 too (OVER-READ, disclosed by the wb-xogu gate's F5 and pinned by B1's unmergedLocal selection control;
+ * no such declaration exists today). B4 reads the carried text by command (a `;`-separated segment), so a flag in a later command
+ * is never attributed to an earlier bd word.
  *
  * wb-xogu (the R694 follow-up the wb-kku9.3 gate routed at landing 340: F1 leads, F2-F7 ride, F8 shared). F1 the seam is read by
  * the TypeScript parser, so the gate's G16a optional method, G16b readonly optional property and G16d generic method red B1 beside
@@ -99,6 +105,15 @@
  * F5 and F7 are disclosed in SCOPE. F6 Q5 judges the instruction files on their rendered text (HTML comments dropped), with a
  * control. F8 the pin set and the residual families are held to the delivery statement in the notes (FROZEN SHAPE).
  *
+ * wb-dugi (the R694 follow-up the wb-xogu gate routed at landing 435: F1 leads, F2-F5 ride). F1 the seam reader parses every code
+ * file under IMPORT_ROOTS and judges the name the parser reads, with no raw-text prefilter, so an interface whose name is spelled
+ * through a unicode escape (the gate's P3: an augmenting `declare module` that never spells the name plainly) reds B1 (selection
+ * controls). F2 importsOf reads a specifier past comments, inside parentheses and before a second argument (the gate's P11 and
+ * P11b; import controls); a specifier selected or held at runtime, or passed to the require createRequire returns, joins
+ * R-COMPOSED (Q4). F3 and F4 Q5 reads the instruction files as marked renders them (renderedOf): code renders literally, so an HTML
+ * comment inside a fence hides nothing (P13), while a link reference definition renders nothing (P12); rendering controls. F5 is
+ * disclosed in SCOPE.
+ *
  * Display paths added: none. Test-only: src, qa, examples, the root manifests, the instruction files and .beads are only read;
  * nothing is written and no scratch is allocated.
  */
@@ -106,6 +121,7 @@ import { createHash } from "node:crypto";
 import { type Dirent, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import { Marked } from "marked";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import * as beadsObserver from "../src/workbench/beads-observer.js";
@@ -421,27 +437,43 @@ function moduleState(text: string): ModuleState {
   return { lets, containers, writes };
 }
 
+/** What importsOf reads past between the parts of an import form (wb-dugi F2): whitespace, a block comment (to its first closing
+ * delimiter, so a comment never runs on into the code after it) and a line comment (through its newline). */
+const IMPORT_GAP = "(?:\\s|/\\*[^*]*\\*+(?:[^/*][^*]*\\*+)*/|//[^\\n]*(?:\\n|$))*";
+/** A call's opening parenthesis, then any parentheses wrapped around its argument, each past a gap. */
+const CALL_OPEN = `\\(${IMPORT_GAP}(?:\\(${IMPORT_GAP})*`;
+/** A quoted or template-literal specifier, then the end of the argument: the call's closing parenthesis or a second argument. */
+const CALL_SPECIFIER = `["'\`]([^"'\`]+)["'\`]${IMPORT_GAP}[,)]`;
+const IMPORT_FORMS = new RegExp(
+  `\\b(?:from|import)${IMPORT_GAP}["']([^"']+)["']|\\brequire${IMPORT_GAP}${CALL_OPEN}${CALL_SPECIFIER}|\\bimport${IMPORT_GAP}${CALL_OPEN}${CALL_SPECIFIER}`,
+  "g",
+);
 /** The import specifiers a code text names (static, re-export, require and dynamic forms; the require and dynamic forms read a
- * quoted or a template-literal specifier, wb-xogu F4 - a specifier composed at runtime names no module, R-COMPOSED, Q4). */
+ * quoted or a template-literal specifier, wb-xogu F4; every form reads past comments, and the call forms through parentheses
+ * around the specifier and before a second argument, wb-dugi F2 - a specifier composed, selected or held at runtime names no
+ * module, R-COMPOSED, Q4). */
 function importsOf(text: string): string[] {
-  return [
-    ...text.matchAll(/\b(?:from|import)\s*["']([^"']+)["']|\brequire\s*\(\s*["'`]([^"'`]+)["'`]\s*\)|\bimport\s*\(\s*["'`]([^"'`]+)["'`]\s*\)/g),
-  ].map(match => match[1] ?? match[2] ?? match[3] ?? "");
+  return [...text.matchAll(IMPORT_FORMS)].map(match => match[1] ?? match[2] ?? match[3] ?? "");
 }
 const CODE_FILE = /\.(?:[cm]?ts|[cm]?js)$/;
 /** True when a specifier names the module whose file stem is `stem`, with or without an extension. */
 function namesModule(specifier: string, stem: string): boolean {
   return new RegExp(`(?:^|/)${stem}(?:\\.[cm]?[jt]s)?$`).test(specifier);
 }
-/** Every Beads seam member declared under IMPORT_ROOTS: the reader's own declaration and any a code file merges into it (an
- * augmenting `declare module` or a same-named declaration), read by seamMembersOf over each code file that names the seam. */
+/** The Beads seam members a set of module texts declares: every text is parsed and judged by seamMembersOf on the name the
+ * parser reads, with no raw-text prefilter, so an interface whose name is spelled through a unicode escape is read (wb-dugi F1).
+ * Read merged or not: the reader's own declaration, an augmenting `declare module`, and a same-named declaration TypeScript never
+ * merges into the reader's seam (the OVER-READ SCOPE discloses, wb-dugi F5). */
+function seamMembersIn(texts: readonly string[]): string[] {
+  return texts.flatMap(text => seamMembersOf(text)).sort();
+}
+/** Every Beads seam member declared under IMPORT_ROOTS: seamMembersIn over every code file there. */
 const seamMembers = (): string[] =>
-  IMPORT_ROOTS.flatMap(root => filesBelow(join(REPO, root)))
-    .filter(file => CODE_FILE.test(file))
-    .map(file => textOf(file))
-    .filter(text => text.includes(SEAM_INTERFACE))
-    .flatMap(text => seamMembersOf(text))
-    .sort();
+  seamMembersIn(
+    IMPORT_ROOTS.flatMap(root => filesBelow(join(REPO, root)))
+      .filter(file => CODE_FILE.test(file))
+      .map(file => textOf(file)),
+  );
 function importersOf(stem: string, roots: readonly string[]): string[] {
   return roots
     .flatMap(root => filesBelow(join(REPO, root)))
@@ -469,9 +501,32 @@ function rootManifests(): string[] {
 function scannedByB1(file: string): boolean {
   return SCAN_ROOTS.some(scan => file.startsWith(`${scan.root}/`)) || (!file.includes("/") && new RegExp(ROOT_MANIFESTS.pattern).test(file));
 }
-/** A Markdown text as rendered for its reader: HTML comments dropped (wb-xogu F6), every other byte kept. */
+/** marked, the repository's CommonMark and GFM renderer (a devDependency), as an instance of its own, so no other case's options
+ * reach it. */
+const MARKDOWN = new Marked();
+/** The named entities an HTML text carries here (marked escapes &, <, >, " and ' in code and text), beside the numeric ones. */
+const NAMED_ENTITIES: Readonly<Record<string, string>> = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " " };
+/** An HTML text with its entities decoded, so an escaped character reads as the character the page shows. */
+function decodeEntities(html: string): string {
+  return html.replace(/&(?:#(\d+)|#[xX]([0-9a-fA-F]+)|([A-Za-z]+));/g, (entity: string, decimal?: string, hex?: string, name?: string): string => {
+    const point = decimal !== undefined ? Number.parseInt(decimal, 10) : hex !== undefined ? Number.parseInt(hex, 16) : undefined;
+    if (point !== undefined) return point <= 0x10ffff ? String.fromCodePoint(point) : entity;
+    return (name === undefined ? undefined : NAMED_ENTITIES[name]) ?? entity;
+  });
+}
+/** A Markdown text as its reader sees it rendered (wb-dugi F3 and F4; wb-xogu F6): marked renders it to HTML, where code (a fence,
+ * an indented block, an inline span) is escaped text, so an HTML comment inside code renders literally and is kept; then the
+ * page's own HTML comments (an unclosed one runs to the end) and the bodies of script, style and template elements are dropped,
+ * every tag is dropped with its attributes (a link's destination and title among them), and the entities are decoded. A link
+ * reference definition renders nothing; the text inside an HTML element is kept, as a browser shows it. */
 function renderedOf(text: string): string {
-  return text.replace(/<!--[\s\S]*?-->/g, " ");
+  const html = MARKDOWN.parse(text, { async: false });
+  return decodeEntities(
+    html
+      .replace(/<!--[\s\S]*?(?:-->|$)/g, " ")
+      .replace(/<(script|style|template)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, " ")
+      .replace(/<[^>]*>/g, " "),
+  );
 }
 
 interface StepReading {
@@ -996,7 +1051,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(claimingModules.filter(module => !bound.includes(module)), "a claiming module not bound in BEAD_EXECUTORS").toEqual([]);
     expect(bound.filter(module => !claimingModules.includes(module) && !importersOf("beads-observer", IMPORT_ROOTS).includes(module)), "a binding naming no claiming module or importer").toEqual([]);
     expect(controls.flagged.every(count => count > 0) && controls.quiet.every(count => count === 0), "the judge's controls").toBe(true);
-    expect(seamMembers(), "the Beads seam offers show alone").toEqual(["show"]);
+    const seam = seamMembers();
+    expect(seam, "the Beads seam offers show alone").toEqual(["show"]);
     const seamControl = seamMembersOf("export interface BeadsReadClient {\n  show(id: string): Promise<R>;\n  claim(id: string): Promise<R>;\n}");
     expect(seamControl, "the seam reader's control: a declared claim member is read").toEqual(["claim", "show"]);
     // The seam reader's spelling controls (wb-xogu F1): the wb-kku9.3 gate's G16 plants - an optional method (G16a), a readonly
@@ -1037,18 +1093,40 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       typeAlias: ["claim", "show"],
       aliasOfAnother: ["type ClaimingClient"],
     });
-    const readerSeam = seamMembersOf(textOf(join(REPO, READER_MODULE)));
+    const readerText = textOf(join(REPO, READER_MODULE));
+    const readerSeam = seamMembersOf(readerText);
     expect(readerSeam, "the reader's own declaration offers show alone").toEqual(["show"]);
+    // The seam reader's selection controls (wb-dugi F1 and F5), each over the reader's own text beside one more module: every
+    // module is parsed, so an interface whose name the raw text spells through a unicode escape - four hex digits (the wb-xogu
+    // gate's P3) or a braced code point - reads as the seam, as the name spelled plainly does; another name is not the seam; and a
+    // same-named interface TypeScript never merges (the gate's P5) reads too, the OVER-READ SCOPE discloses.
+    const augmenting = (name: string): string => `declare module "./beads-observer.js" {\n  interface ${name} {\n    claim(id: string): Promise<unknown>;\n  }\n}\nexport {};\n`;
+    const selections: Readonly<Record<string, string>> = {
+      escapedName: augmenting("Beads\\u0052eadClient"),
+      escapedCodePoint: augmenting("\\u{42}eadsReadClient"),
+      plainName: augmenting(SEAM_INTERFACE),
+      otherName: augmenting("BeadsWriteClient"),
+      unmergedLocal: "interface BeadsReadClient {\n  list(): string[];\n}\nexport const names = (client: BeadsReadClient): string[] => client.list();\n",
+    };
+    const seamSelection = Object.fromEntries(Object.entries(selections).map(([name, text]) => [name, seamMembersIn([readerText, text])]));
+    expect(seamSelection, "the seam reader's selection controls: every module is parsed and judged on the name the parser reads").toStrictEqual({
+      escapedName: ["claim", "show"],
+      escapedCodePoint: ["claim", "show"],
+      plainName: ["claim", "show"],
+      otherName: ["show"],
+      unmergedLocal: ["list", "show"],
+    });
     return json({
       roots: roots.map(({ root, floor, anchor }) => ({ root, floor, anchor })),
       manifests: { floor: manifests.length >= ROOT_MANIFESTS.floor, anchors: manifestAnchors },
       launched,
       bound,
       controls,
-      seam: seamMembers(),
+      seam,
       readerSeam,
       seamControl,
       seamSpellings,
+      seamSelection,
       exports,
     });
   },
@@ -1112,6 +1190,17 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         'const beads = await import("./beads-observer.mjs");',
         "const beads = await import(`./beads-observer.js`);",
         "const beads = require(`../workbench/beads-observer.js`);",
+        // wb-dugi F2: past a comment (the wb-xogu gate's P11) and before a second argument (its P11b); past a line comment to a
+        // trailing comma, through a parenthesized specifier, past a comment before the require or the import call's parenthesis,
+        // and in the static and re-export forms past a block or a line comment.
+        'const beads = await import(/* reader */ "./beads-observer.js");',
+        'export const loadReader = () => import("../../src/workbench/beads-observer.js", {});',
+        "const beads = await import(\n  // the reader\n  './beads-observer.js',\n);",
+        "const beads = await import(('./beads-observer.js'));",
+        'const beads = require /* the reader */ (/* its module */ "./beads-observer.js");',
+        "const beads = await import /* the reader */ ('./beads-observer.js');",
+        'import /* the reader */ * as beads from /* its module */ "./beads-observer.js";',
+        "export * from // the reader\n  './beads-observer.js';",
       ].map(text => importsOf(text).filter(specifier => namesModule(specifier, "beads-observer")).length),
       quiet: [
         'import {sanitizeWorkbenchText} from "./redaction.js";',
@@ -1119,6 +1208,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         'import {notes} from "./beads-observer-notes.js";',
         'import {x} from "./my-beads-observer.js";',
         "const notes = await import(`./beads-observer-notes.js`);",
+        // wb-dugi F2: a comment is read past, never read as the specifier, and ends at its first closing delimiter (never running
+        // on to a later comment's, past code, to a specifier-shaped string after the first argument).
+        'const redaction = await import(/* "./beads-observer.js" */ "./redaction.js");',
+        "const loaded = await import(/* ./beads-observer.js */ loaderPath);",
+        "const loaded = await import(/* a */ loaderPath, /* b */ './beads-observer.js');",
       ].map(text => importsOf(text).filter(specifier => namesModule(specifier, "beads-observer")).length),
     };
     const bound = BEAD_EXECUTORS.map(binding => binding.module);
@@ -1250,12 +1344,31 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const edge = claimLaunchesIn(`bd ${"x ".repeat(CLAIM_WINDOW - 1)}claim`).length;
     // The same family at B3: an import specifier composed at runtime names no module the matcher can read.
     const composedImport = importsOf(`const stem = "beads-observer";\nconst beads = await import(\`./\${stem}.js\`);`).filter(specifier => namesModule(specifier, "beads-observer")).length;
-    expect({ quiet, edge, composedImport }, "composed, held and far claims read quiet; the window's last word still counts; a composed specifier reads quiet").toStrictEqual({
+    // wb-dugi F2: a specifier concatenated, selected by a condition or held in a named constant, and one passed to the require
+    // createRequire returns (on the spot, or through a binding not named require) - each names no module the matcher reads; the
+    // loader's control: bound to the name require, the same call reads (B3 reads the require form).
+    const readerImports = (text: string): number => importsOf(text).filter(specifier => namesModule(specifier, "beads-observer")).length;
+    const runtimeImports = Object.fromEntries(
+      Object.entries({
+        concatenated: 'const beads = await import("./beads-" + "observer.js");',
+        selected: 'const beads = await import(useReader ? "./beads-observer.js" : "./redaction.js");',
+        held: 'const READER = "./beads-observer.js";\nconst beads = await import(READER);',
+        loaderCall: 'const beads = createRequire(import.meta.url)("./beads-observer.js");',
+        loaderBinding: 'const load = createRequire(import.meta.url);\nconst beads = load("./beads-observer.js");',
+      }).map(([name, text]) => [name, readerImports(text)]),
+    );
+    const loaderControl = readerImports('const require = createRequire(import.meta.url);\nconst beads = require("./beads-observer.js");');
+    expect(
+      { quiet, edge, composedImport, runtimeImports, loaderControl },
+      "composed, held and far claims read quiet; the window's last word still counts; composed, selected, held and loader-passed specifiers read quiet; the loader bound as require reads",
+    ).toStrictEqual({
       quiet: [0, 0, 0, 0],
       edge: 1,
       composedImport: 0,
+      runtimeImports: { concatenated: 0, selected: 0, held: 0, loaderCall: 0, loaderBinding: 0 },
+      loaderControl: 1,
     });
-    return json({ quiet, edge, composedImport, composedControl: claimLaunchesIn(compose("bd", "update", WORK_ID, "--claim")).length });
+    return json({ quiet, edge, composedImport, runtimeImports, loaderControl, composedControl: claimLaunchesIn(compose("bd", "update", WORK_ID, "--claim")).length });
   },
   Q5: async () => {
     const files = INSTRUCTION_FILES.map(file => ({ file, claims: claimLaunchesIn(renderedOf(textOf(join(REPO, file)))).length > 0, scanned: scannedByB1(file) }));
@@ -1264,7 +1377,58 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const hidden = "Claim work:\n<!--\nbd update <id> --claim\n-->\nthen run it.";
     const controls = { hidden: claimLaunchesIn(renderedOf(hidden)).length, shown: claimLaunchesIn(renderedOf(hidden.replace("<!--", "").replace("-->", ""))).length };
     expect(controls, "a claim inside an HTML comment reads quiet; the same claim uncommented reads").toStrictEqual({ hidden: 0, shown: 1 });
-    return json({ files, controls });
+    // wb-dugi F4 and F3, read as marked renders them: code renders literally, so a comment inside a backtick or tilde fence (the
+    // wb-xogu gate's P13 shape), a fence in a list item, an indented block or an inline span hides nothing, an escaped character
+    // (a named, decimal or hex reference) reads as the one the page shows, a reference past the last code point and an unknown name
+    // show as written, and an HTML element's text shows; a link reference definition (its P12 shape), a link's title, an
+    // attribute, a comment around a whole fence, an inline comment past a '>', an unclosed comment, and a script, style or template
+    // body show nothing.
+    const rendering: Readonly<Record<string, string>> = {
+      fencedComment: "Claim work:\n\n```bash\n<!-- bd update <id> --claim -->\n```\n",
+      tildeFencedComment: "Claim work:\n\n~~~\n<!-- bd update <id> --claim -->\n~~~\n",
+      listFencedComment: "1. Claim work:\n\n   ```bash\n   <!-- bd update <id> --claim -->\n   ```\n",
+      indentedComment: "Claim work:\n\n    <!-- bd update <id> --claim -->\n",
+      inlineCodeComment: "Claim with `<!-- bd update <id> --claim -->` first.",
+      escapedWindow: "Claim with `bd update <a> <b> <c> --claim` first.",
+      escapedQuotes: "Claim with `bd update 'a' 'b' 'c' --claim` first.",
+      hexEncoded: "Claim with &#x62;&#x64; update fx-run.1 --claim first.",
+      outOfRange: "Claim &#9999999; with bd update fx-run.1 --claim first.",
+      unknownEntities: "Claim with bd &zz; &zz; &zz; &zz; &zz; &zz; &zz; update fx-run.1 --claim first.",
+      elementText: "<div>\nbd update fx-run.1 --claim\n</div>\n",
+      linkDefinition: 'Read the docs.\n\n[beads-claim]: <https://example.invalid/beads> "bd update <id> --claim"\n',
+      linkTitle: '[the queue](https://example.invalid "bd update <id> --claim")',
+      attribute: '<div title="bd update fx-run.1 --claim"></div>\n',
+      commentAroundFence: "<!--\n```bash\ncd repo >/dev/null\nbd update fx-run.1 --claim\n```\n-->\n",
+      inlineComment: "Run <!-- a > b: bd update fx-run.1 --claim --> it.",
+      unclosedComment: "Claim work:\n\n<!-- maintainers only\n\nbd update fx-run.1 --claim\n",
+      scriptBody: "<script>\nbd update fx-run.1 --claim\n</script>\n",
+      styleBody: "<style>\nbd update fx-run.1 --claim\n</style>\n",
+      templateBody: "<template>\nbd update fx-run.1 --claim\n</template>\n",
+    };
+    const renderedClaims = Object.fromEntries(Object.entries(rendering).map(([name, text]) => [name, claimLaunchesIn(renderedOf(text)).length]));
+    expect(renderedClaims, "the rendering controls: code shows its text literally; a definition, a title, an attribute and a hidden comment show nothing").toStrictEqual({
+      fencedComment: 1,
+      tildeFencedComment: 1,
+      listFencedComment: 1,
+      indentedComment: 1,
+      inlineCodeComment: 1,
+      escapedWindow: 1,
+      escapedQuotes: 1,
+      hexEncoded: 1,
+      outOfRange: 1,
+      unknownEntities: 0,
+      elementText: 1,
+      linkDefinition: 0,
+      linkTitle: 0,
+      attribute: 0,
+      commentAroundFence: 0,
+      inlineComment: 0,
+      unclosedComment: 0,
+      scriptBody: 0,
+      styleBody: 0,
+      templateBody: 0,
+    });
+    return json({ files, controls, rendering: renderedClaims });
   },
   Q6: async () => {
     const text = textOf(join(REPO, VC4_LAUNCHER));

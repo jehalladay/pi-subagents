@@ -432,6 +432,13 @@
       "binding": {
        "bound": false,
        "absentFile": false,
+       "absentFileUnbound": "not-census-path,not-delivered,outside-family",
+       "absentFileNoBead": "bead-absent",
+       "absentReads": [
+        "test/workbench-sibling-census.test.ts:wb-sib",
+        "docs/workbench/zz-claim.md:wb-sib",
+        "test/workbench-sibling-census.test.ts:wb-gone"
+       ],
        "relatedEdge": false,
        "relatesTo": false,
        "docsPath": "not-census-path",
