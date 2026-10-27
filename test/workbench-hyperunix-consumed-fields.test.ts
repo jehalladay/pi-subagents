@@ -1,13 +1,13 @@
-/** wb-3ht.1 (HX-CAC-EVIDENCE-PROJECTION-R5, program-triage-2026-10-18): the consumed-field manifest of the HyperUnix reader
- * adapter. Statement (the owner filing's title): "When @hyperunix/sdk ships the query-observer boundary declaration (B=(q,h);
- * 01-query-observer-contract.md:12@694570cd00c2, unshipped), Pi shall declare as observed every hyperunix.find result field
- * hyperunixTopology consumes beyond rows (kind, licence, retention, operation, coverage batch ids, runtime identity) so plan
- * rewrites must preserve them; until then a test pins that consumed-field set." Standing acceptance (the filing's notes, default
- * tier): "one exported frozen consumed-field manifest in hyperunix-observer.ts and a test that fails when the adapter reads a field
- * outside it or the manifest names a field the adapter ignores (mutant: drop the coverage batch-id read -> red)". This file is that
- * test over src/workbench/hyperunix-observer.ts HYPERUNIX_CONSUMED_FIELDS. The filing's on-landing clauses (the declaration built
- * from the manifest on every find, a dropped observable reading partial or refused) wait for the SDK's boundary declaration: the
- * vendored @hyperunix/sdk 0.1.0 declares none.
+/** wb-3ht.1 (HyperUnix evidence-projection requirement R5, program-triage-2026-10-18): the consumed-field manifest of the HyperUnix reader
+ * adapter. Statement (the owner filing's title, its opening clause restated and the rest verbatim): when @hyperunix/sdk ships the
+ * boundary declaration B=(q,h) of its query-observer contract (01-query-observer-contract.md:12@694570cd00c2, unshipped), "Pi shall
+ * declare as observed every hyperunix.find result field hyperunixTopology consumes beyond rows (kind, licence, retention,
+ * operation, coverage batch ids, runtime identity) so plan rewrites must preserve them; until then a test pins that consumed-field
+ * set." Standing acceptance (the filing's notes, default tier): "one exported frozen consumed-field manifest in hyperunix-observer.ts
+ * and a test that fails when the adapter reads a field outside it or the manifest names a field the adapter ignores (mutant: drop
+ * the coverage batch-id read -> red)". This file is that test over src/workbench/hyperunix-observer.ts HYPERUNIX_CONSUMED_FIELDS.
+ * The filing's on-landing clauses (the declaration built from the manifest on every find, a dropped observable reading partial or
+ * refused) wait for the SDK's boundary declaration: the vendored @hyperunix/sdk 0.1.0 declares none.
  *
  * THE INSTRUMENT. traced() wraps a provider output in proxies that record each field read through them as a dotted path from the
  * output root: an object member is '<path>.<key>' (a member the value lacks included), any element of a list is '<path>[]', a
@@ -30,10 +30,15 @@
  *     path, its top level is the envelope FILING_READS is read against, and the adapter reads exactly the manifest from it, no row
  *     body included.
  *  M6 hxLiveInvariant, the live tier's verdict over the same output, reads only manifest fields.
- *  M7 the instrument itself: stand-in readers touching a row body, a producer diagnostic code or a key set read outside the
- *     manifest, one skipping the batch ids leaves that field unread, and a reader of exactly the manifest is quiet.
+ *  M7 the instrument itself: stand-in readers touching a row body, a producer diagnostic code or a key set, or testing a member
+ *     the manifest does not name with an `in` check, read outside the manifest; one skipping the batch ids leaves that field
+ *     unread, and a reader of exactly the manifest is quiet.
  *
- * Display paths added: none. Test-only: no file, process, clock or network access; the provider row injects its reader.
+ * Display paths added: none. Test-only: the one file read is the adapter module's own source (refusalSites, read-only, for M3);
+ * no write, process, clock or network access; the provider row injects its reader. SPELLING (two landed censuses read this file):
+ * the requirement id is cited by this bead's id and never spelled whole, since its program acronym is a needle the wb-zzb4 absence
+ * census reads in a test file outside a census module; and the title's opening clause is restated rather than quoted, since the
+ * title's own words for that declaration are a mention the wb-dqf.1 census's Z2 judge reads in every Pi file outside its holders.
  */
 import {readFileSync} from 'node:fs';
 import {resultFromJson} from '@hyperunix/sdk';
@@ -274,7 +279,7 @@ async function providerOutput(): Promise<JsonValue> {
   return registry.invoke('hyperunix.find', {kind: 'hx.fs/regular-file', root: 'src'}, {grants: ['hyperunix:read'], signal: new AbortController().signal});
 }
 
-describe('wb-3ht.1 HyperUnix consumed-field manifest (HX-CAC-EVIDENCE-PROJECTION-R5, standing tier)', () => {
+describe('wb-3ht.1 HyperUnix consumed-field manifest (evidence-projection R5, standing tier)', () => {
   it("M1: the manifest is deeply frozen, pinned in order, equal to the filing's measured read list and, rows apart, to the title's observed list", () => {
     expect(HYPERUNIX_CONSUMED_FIELDS.map(field => `${field.path}:${field.use}`)).toStrictEqual([
       'contract:envelope', 'source.representation:envelope', 'source.execution_status.kind:observed',
@@ -420,6 +425,9 @@ describe('wb-3ht.1 HyperUnix consumed-field manifest (HX-CAC-EVIDENCE-PROJECTION
     const keySet = run(value => readAll(value, 'source').map(item => isJsonRecord(item) ? Object.keys(item) : []));
     expect(outside(keySet)).toContain('source.*');
     expect(outside(keySet)).toContain('source.digest');
+    // An `in` check is a read: testing a member the manifest does not name reads outside it.
+    const membership = run(value => readAll(value, 'source').map(item => isJsonRecord(item) && 'execution_id' in item));
+    expect(outside(membership)).toStrictEqual(['source.execution_id']);
     const serialized = run(value => JSON.stringify(value));
     expect(outside(serialized)).toContain('source.coverage[].body');
     const noBatchIds = run(value => PATHS.filter(path => path !== 'source.coverage[].batch_id').map(path => readAll(value, path)));
