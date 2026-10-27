@@ -10,21 +10,27 @@
  * "gated on an APO export surface existing", and the filing's source tag names the program
  * ("gap-mw-adaptive-policy-organizations/apo-pi-wb-03").
  *
- * MEASURED (read-only, by the cutting seat, 2026-10-27, at d183c0d and again at this census's base 48d01cc, trunk merged
- * into the branch; landings 480-488 between them touched test/ and .beads/ only). git lists 999 files (tracked plus
- * untracked-not-ignored, this cut's two excluded). src/ holds 116 (all .ts) and none spells the program in any reading
- * below: the trigger has not fired, so Pi ships no APO trace or evidence export. Outside src/, test/ and .beads/ git lists
- * 140 files: the two dependency locks (excluded by name, R-LOCKFILE: an integrity value in each, at line 4620, splits into
- * the word "Apo"), 5 binaries (two media files and the three vendored tarballs) and 133 text files, 101 of them markdown;
- * none spells the program in any reading. The tracker export spells it (the bead's own row and its siblings'). At the
- * filing pin b21beb0 (the ledger hop that added the bead to the export: its row is in that commit's export and not in its
- * parent's) the 293 files of both scopes spell it nowhere either. No src, docs or tracker text is edited by this cut.
+ * MEASURED (read-only, by the re-cutting seat, 2026-10-27, at f0acfcf: trunk df1ce2a merged into the branch, this census
+ * and its roster tracked there; every count is over the scope the census reads, qa/ included). git lists 1028 files
+ * (tracked plus untracked-not-ignored): src/ 116 (all .ts), test/ 692, .beads/ 11 and 209 outside src/, test/ and .beads/.
+ * Of those 209 the two dependency locks are excluded by name (R-LOCKFILE: an integrity value in each, at line 4620, splits
+ * into the word "Apo") and 207 are judged as docs: 5 binaries (two media files and the three vendored tarballs) and 202
+ * text files, 103 of them markdown. By top-level entry the 209 are the root files 27 (package-lock.json among them),
+ * .agents/ 2, .codex/ 2, .github/ 2, .pi/ 1, docs/ 76, examples/ 7, media/ 2, new-feedback/ 18, qa/ 67 and vendor/ 5
+ * (vendor/dependency-lock.json among them). No src/ file and no judged doc spells the program in any reading below: the
+ * trigger has not fired, so Pi ships no APO trace or evidence export. The tracker export spells it (the bead's own row and
+ * its siblings'). At the filing pin b21beb0 (the ledger hop that added the bead to the export: its row is in that commit's
+ * export and not in its parent's) the 293 files of both scopes (src/ 115 and 178 docs, qa/ 67 of them) spell it nowhere
+ * either. No src, docs or tracker text is edited by this cut.
  *
  * THE JUDGE. A MENTION is either spelling of the program: the abbreviation (the title's "APO") as a whole alphanumeric run
- * in any case (APO, apo, aPo, each run of apo_pi_wb_03), as a word of a run split at its case changes and letter-digit
- * boundaries (renderApoGraph, getAPOExport, APO2) or as the acronym plural "APOs"; or the slug (the requirement id's three
- * words: adaptive, then policy or policies, then organization or organisation in either number) as three consecutive words,
- * or joined into one run (adaptivepolicyorganizations). Each file is read in several READINGS, and a file's forms are the
+ * in any case (APO, apo, aPo, each run of apo_pi_wb_03), as a word of a run split by the word-break rules (WORD_BREAKS: a
+ * lower-to-upper case change, renderApoGraph; an upper-case letter before a capitalized word of two or more lower-case
+ * letters, readAPOUsage; an upper-case letter before an upper-case one and a lower-case letter other than s, getAPOId, so an
+ * acronym's plural keeps its s; a letter-digit boundary, APO2; a digit-letter boundary, 020APO) or as the acronym plural
+ * "APOs" (two APOs, readAPOsList); or the slug (the requirement id's three words: adaptive, then policy or policies, then
+ * organization or organisation in either number) as three consecutive words, or joined into one run
+ * (adaptivepolicyorganizations). Each file is read in several READINGS, and a file's forms are the
  * readings that found a mention: "path" (its own path); "raw" (its text as written); "normalized" (what a reader's eye
  * resolves: compatibility forms folded by NFKC, combining marks dropped, default-ignorable and format code points removed);
  * "decoded" (numeric character references, with or without the closing semicolon, the named references NAMED_REFERENCES
@@ -37,62 +43,96 @@
  * chains by their folded value). A file that opens with a UTF-16 byte-order mark is decoded as UTF-16; any other file holding
  * a NUL byte is binary and only its path is read. judgeScope reads an entry
  * list in one call, so every leg judges its planted entries after the real ones: the findings must be exactly the plants',
- * so a real mention, a hollowed judge or a result forced empty reds.
+ * so a real mention, a hollowed judge or a result forced empty reds; a leg that discards only its real findings reds under
+ * the planted probe (PROBES).
  *
  * ROWS. T, the trigger clause, one pin per quoted part: T1 the src walk (every file git lists under src/, held equal to a
- * filesystem walk minus what git ignores) spells no mention, at a file floor, with a content-liveness anchor (the schema
- * literal "workflow-script/v1" is a cooked string of src/workbench/identity.ts) and a planted module found by the same call -
- * ARMED: the census reds naming the acceptance as owed the moment src spells the program; T2 the program's identity: the
- * abbreviation is the title's own token and the slug the requirement id's words, every spelling form read and the quiet
- * words (apology, capo, apollo, &apos; and the slug's words incomplete or out of order) not read; T3 the forms a trace or
- * evidence export surface takes in src (a declaration, a capability id, an escape-spelled string, a folded literal, a
- * template and a path), each found in its readings. Z, the until-then duty, one pin per quoted part: Z1 the trigger is
- * unfired today and the same judge over the filing pin's objects reads no mention, the pin being where the row was filed;
- * Z2 every listed Pi doc (every listed file outside src/, test/ and .beads/, the two locks excluded by name; held equal to a
- * filesystem walk minus what git ignores) spells no mention in any reading, with file, markdown and binary floors,
- * content-liveness anchors (every docs/workbench page opens with a level-1 heading in its rendered reading; docs/12's
- * redaction-floor sentence, the floor the armed clause names, is read) and one planted doc per reading found by the same
- * call (two of them UTF-16 docs, one per byte order); Z3 the claim: every mention counts (OVER-READ below), so a claim, a denial and a bare mention each read, and each
- * reader-visible form the raw text splits (inline markup, a link, raw HTML with a quoted ">", a comment, an HTML block,
- * character references, a styled or accented letter's reference, a soft hyphen, invisible code points, compatibility
- * forms, combining marks, a backslash escape, a percent-encoded byte) is read in its readings. Q, the residuals' pinned
- * quiet rows.
+ * filesystem walk minus what git ignores) spells no mention, at a file floor, with a content-liveness anchor read from the
+ * bytes the judge consumed (the schema literal "workflow-script/v1" is a cooked string of src/workbench/identity.ts) and a
+ * planted module found by the same call - ARMED: the census reds naming the acceptance as owed the moment src spells the
+ * program; T2 the program's identity: the abbreviation is the title's own token and the slug the requirement id's words,
+ * every spelling form read, each word-break rule the only reader of at least one form (an ablation: the judge run without
+ * that one rule leaves the form unread), and the quiet words (apology, capo, apollo, &apos; and the slug's words incomplete
+ * or out of order) not read; T3 the forms a trace or evidence export surface takes in src (a declaration, a capability id,
+ * an escape-spelled string, a folded literal, a template and a path), each found in its readings. Z, the until-then duty, one
+ * pin per quoted part: Z1 the trigger is unfired today and the same judge over the filing pin's objects reads no mention,
+ * the pin being where the row was filed; Z2 every listed Pi doc (every listed file outside src/, test/ and .beads/, the two
+ * locks excluded by name; held equal to a filesystem walk minus what git ignores) spells no mention in any reading, with
+ * file, markdown and binary floors, the partition (every listed file is judged whole by exactly one of T1's and Z2's scopes
+ * or excluded by name: a listed file neither scope judges, and a file judged twice, judged although excluded, judged
+ * unlisted or judged with bytes other than its bytes on disk, each reds), content-liveness anchors read from the bytes the
+ * judge consumed (every docs/workbench page opens with a level-1 heading in its rendered reading; docs/12's redaction-floor
+ * sentence, the floor the armed clause names, is read) and one planted doc per reading found by the same call (two of them
+ * UTF-16 docs, one per byte order); Z3 the claim: every mention counts (OVER-READ below), so a claim, a denial and a bare
+ * mention each read; each reader-visible form the raw text splits (inline markup, a link, raw HTML with a quoted ">", a
+ * comment, an HTML block, a list item, a table cell, a block quote, character references, a styled or accented letter's
+ * reference, a soft hyphen, a zero-width space, a word joiner, a default-ignorable filler and a format control that is not
+ * default-ignorable, compatibility forms, a combining mark, a precomposed accented letter, the backslash escapes \uXXXX,
+ * \u{X...} and \xHH, a percent-encoded byte, and in an HTML page a comment closed at once ("<!-->", "<!--->") or by "--!>")
+ * is read in its readings; and two forms are read in no reading: an HTML page whose unclosed comment hides the rest of it,
+ * and a named reference rendering a visible character between the letters ("A&amp;PO"). Q, the residuals' pinned quiet
+ * rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and
- * pins, every pin's quote, claims and witness, the constants and every registered test title - is held to the out-of-file
- * roster (test/fixtures/apo-export-roster.json).
+ * pins, every pin's quote, claims and witness, the constants (PROBE_OUTCOMES among them) and every registered test title - is
+ * held to the out-of-file roster (test/fixtures/apo-export-roster.json).
  * OUTSIDE ANCHORS (their own registered case): the bead's own export row - its title, read after its requirement-id prefix,
  * is tiled in order by row T's label, the armed clause (ARMED) and row Z's label with nothing but separators (whitespace,
  * comma, semicolon, colon, period, parentheses, DASH) between them, and each row's pin quotes tile its label the same way,
- * so a row or a pin removed from ROWS, the literal, QUOTES, CLAIMS, IMPL and the roster together still reds; the
- * abbreviation is the title's token after "ships an " and the slug the requirement id's words; the filing's source tag
- * spells both; the owner filing is the notes' first two paragraphs (later notes are appended after them): its source line
- * names the source tag once and ACCEPTANCE is its closing sentence, once, so a weakened filing beside a later note quoting
- * the original reds; docs/12 holds the floor sentence; the filing pin is a commit of this repository (Z1 reads that its
- * export holds the row and its parent's does not).
+ * so a row or a pin removed from ROWS, the literal, QUOTES, CLAIMS, IMPL, PROBE_OUTCOMES and the roster together still reds
+ * (a pin folded into its neighbour does not: R-RETILED); the abbreviation is the title's token after "ships an " and the slug
+ * the requirement id's words; the filing's source tag spells both; the owner filing is the notes' first two paragraphs
+ * (later notes are appended after them): its source line names the source tag once and ACCEPTANCE is its closing sentence,
+ * once, so a weakened filing beside a later note quoting the original reds; docs/12 holds the floor sentence; the filing pin
+ * is a commit of this repository (Z1 reads that its export holds the row and its parent's does not).
  * CLAIMS: each quoted pin carries claims - terms tiling its quote, each naming the witness facts (top-level keys) that show
  * it; a pin's live witness holds exactly its claimed facts, each fact under one term, and no pin's live witness holds
  * another pin's claimed facts (the claims bound), so a case swap reds at the swapped pin's claims beside its roster witness.
- * SELF-READ: no case reads the roster, every case names a reader of its subject (READERS), so a case returning a constant
- * witness reds, and each residual's quiet row names its family.
+ * SELF-READ (the judged-set case reads the cases from this file's own syntax tree, so a comment or a string names nothing):
+ * no case of IMPL names the roster or its readers (ROSTER, readRoster, rosterWitness; Q2 reads ROSTER_FILE's text only as a
+ * test-tree file that spells the program), the probes (probe, PROBES, PROBE_LINE, PROBE_OUTCOMES) or the run records (LIVE,
+ * REACHED); every case calls a reader of its subject (READERS); and each residual's quiet row names its family.
+ * PROBES (their own registered case, after the rows): every case runs again under each of four probes, each changing one
+ * subject the cases read - blind (the judge reads no mention), saturated (the judge reads a mention in every non-empty
+ * text), planted (every real file a scope judges, src/, the docs and the filing pin's objects alike, gains the line
+ * PROBE_LINE) and untitled (the bead's export row reads with its title cut to the requirement-id prefix) - and its outcome
+ * under each probe (throws; changes, its witness differing from its plain run's; or keeps) is held to PROBE_OUTCOMES and the
+ * roster, and every case throws or changes under at least one probe. So a case that returns a constant witness reds (it
+ * keeps under every probe), and so do T1, Z1 and Z2 when they discard their scope's real findings (each asserts its scope
+ * reads no mention, so each must throw under planted); a src or doc file judged with bytes other than its bytes on disk
+ * (cut or altered) reds through Z2's partition, not through the probes.
  * RESIDUALS (named, each with its pinned quiet row): R-TRACKER the tracker export (.beads/) is not a Pi doc: the bead's own
  * row spells the program (Q1); R-TEST-TREE test/ is not a Pi doc: this census and its roster spell the program there (Q2);
  * R-LOCKFILE the two dependency locks are excluded by name, since an integrity value splits into the word "Apo" (Q3);
  * R-BINARY a file holding a NUL byte and no UTF-16 byte-order mark is read by its path only, so text inside an image, an
- * archive or a mark-less UTF-16 file is not read (Q4);
+ * archive or a mark-less UTF-16 file is not read, and a UTF-32 file (its mark opens with UTF-16's) is decoded as UTF-16, its
+ * letters read apart (Q4);
  * R-PARAPHRASE a description of the program that spells neither name is not read (Q5); R-LETTERED the abbreviation spelled
  * letter by letter with separators is not read (Q6); R-CONFUSABLE a letter from another script, a small capital, an emoji
  * letter (a negative squared letter, a regional indicator, a shortcode) or a digit standing for a letter is not read (Q7);
  * R-BIDI display reordering is not applied: a spelling reversed under a right-to-left override reads as written (Q8);
- * R-STYLE presentation a style sheet or a script applies is not applied: generated content, hidden text that joins the
- * letters around it, text a script writes (Q9); R-INFLECTED inflections other than "APOs" (Apos, apos, APOes) are not read
- * (Q10); R-JOINED the abbreviation joined to another word with no case change or separator is not read (Q11); R-COMPUTED a
- * script's spelling assembled at runtime (a template substitution, a join, a computed character) is not read (Q12);
- * R-UNNAMED-SURFACE an export surface that spells neither name is invisible to T (Q13); R-OTHER-MARKUP markup of another
- * language (reStructuredText, AsciiDoc) is not rendered (Q14).
+ * R-STYLE presentation that markup, a style sheet or a script applies is not applied: generated content (in a style element
+ * or a style-sheet file), hidden text that joins the letters around it (a display:none span, a hidden attribute, a
+ * template), a ruby annotation's text read inline between the letters, text a script writes (Q9); R-INFLECTED inflections
+ * other than "APOs" (Apos, apos, APOes, APOS) are not read (Q10); R-JOINED the abbreviation joined to another word with no
+ * case change or separator (apoexport, APOV1) is not read (Q11); R-COMPUTED a script's spelling assembled at runtime (a
+ * template substitution, a join, a computed character) is not read (Q12); R-UNNAMED-SURFACE an export surface that spells
+ * neither name is invisible to T (Q13); R-OTHER-MARKUP markup of another language (reStructuredText, AsciiDoc) and a
+ * notebook's markdown cells are not rendered (Q14); R-NAMED-REFERENCE a named reference outside NAMED_REFERENCES and the
+ * styled and accented letter families renders nothing, though a browser renders a letter for some (&angst;, &order;,
+ * &ordf;, &ordm;) (Q15); R-OTHER-ESCAPE escape syntaxes outside \uXXXX, \u{X...}, \xHH and percent bytes are not decoded
+ * (a YAML or TOML \U00000041, a Python \N{...} name, a shell octal \101) (Q16); R-SUFFIXED the abbreviation followed by a
+ * lower-case suffix with no separator (APOv1, APOx) is not read: the case change reads as a capitalized word's first letter,
+ * so the run splits as AP and Ov1 (Q17); R-RETILED the outside anchors bind the order and the words of the T and Z quotes,
+ * not where one quote ends: a pin folded into its neighbour (removed, the neighbour re-quoted over both quotes and its claim
+ * terms re-tiled, in this file and the roster together) still tiles the title (Q18).
  * NOT CLAIMED (edits of this file and the roster together): a pin's case and its roster witness re-authored together, its
- * claims rewritten with them; a plant or control edited in IMPL and the roster together; a floor lowered with the roster; a
- * residual row removed from ROWS, the literal, IMPL, RESIDUALS and the roster (no outside anchor names the residual
- * families); the outside-anchor case or the closing case removed with its roster title.
+ * claims rewritten with them; a plant or control edited in IMPL and the roster together; a floor or a scope constant changed
+ * with the roster; a residual row removed from ROWS, the literal, IMPL, RESIDUALS, PROBE_OUTCOMES and the roster (no outside
+ * anchor names the residual families); a pin folded into its neighbour (R-RETILED); a probe or PROBE_OUTCOMES edited with
+ * the roster; the outside-anchor case, the probes case or the closing case removed with its roster title. Nor a case written
+ * to tell a probe from the plain run through a helper outside its own body (the self-read reads the case's own syntax) and
+ * to return a constant only in the plain run; nor a single witness fact forced to its plain value while the case's other
+ * facts still read their subject (the probes judge each case's outcome, not each fact).
  * ARMED HALF PENDING: the clause ARMED (reproducible, byte-stable for one recorded snapshot from declared inputs only, the
  * docs/12 redaction floor over the whole export, a secret-bearing fixture redacted before write) has nothing to read until
  * an APO export surface exists; no exporter is faked here. T1 binds it: the census reds with ACCEPTANCE the moment src
@@ -105,8 +145,8 @@
  * rest of .gitignore) and files deleted from the worktree are not listed; MechanicalWorkflows' own repository is never read
  * (the gate is a surface Pi ships).
  * READS (contacts): every listed file outside test/ and .beads/ (T1, Z2), git objects at the filing pin (Z1), the tracker
- * export (its wb-021.3 row; Q1 reads it whole), docs/workbench/12-security.md and src/workbench/identity.ts (liveness), and
- * this file and its roster (Q2).
+ * export (its wb-021.3 row; Q1 reads it whole), docs/workbench/12-security.md and src/workbench/identity.ts (liveness, from
+ * the bytes the judge consumed), and this file and its roster (Q2; the self-read parses this file).
  *
  * Display paths added: none (test-only; src/ is read, never edited). Scratch: none - every plant is an in-memory entry judged
  * by the same call as the real files; nothing is written to disk.
@@ -156,8 +196,19 @@ const SLUG: readonly string[] = ["adaptive", "policy", "organizations"];
 /** Each slug word's accepted inflections (the anchor case holds each to the requirement id's own word). */
 const SLUG_FORMS: readonly RegExp[] = [/^adaptive$/, /^polic(?:y|ies)$/, /^organi[sz]ations?$/];
 const JOINED_SLUG = /adaptivepolic(?:y|ies)organi[sz]ations?/i;
-/** A run's word boundaries: a lower-to-upper case change, an upper-case letter opening a capitalized word (an acronym's plural s stays on it), a letter-digit boundary. */
-const WORD_BREAK = /(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z]{2,})|(?<=[A-Z])(?=[A-Z][a-rt-z])|(?<=[A-Za-z])(?=[0-9])|(?<=[0-9])(?=[A-Za-z])/;
+/** A run's word-break rules by name (THE JUDGE); T2's ablation holds each the only reader of some spelling form. */
+const WORD_BREAKS: Readonly<Record<string, RegExp>> = {
+  lowerUpper: /(?<=[a-z])(?=[A-Z])/,
+  acronymBeforeWord: /(?<=[A-Z])(?=[A-Z][a-z]{2,})/,
+  acronymBeforeLetter: /(?<=[A-Z])(?=[A-Z][a-rt-z])/,
+  letterDigit: /(?<=[A-Za-z])(?=[0-9])/,
+  digitLetter: /(?<=[0-9])(?=[A-Za-z])/,
+};
+/** Word-break rules joined into one pattern: a run's word boundaries. */
+function wordBreakOf(rules: Readonly<Record<string, RegExp>>): RegExp {
+  return new RegExp(Object.values(rules).map(rule => rule.source).join("|"));
+}
+const WORD_BREAK = wordBreakOf(WORD_BREAKS);
 const SCRIPT = /\.(?:[cm]?[jt]sx?)$/i;
 const JSON_FILE = /\.json$/i;
 const MARKDOWN = /\.(?:md|markdown|mdown|mkdn|mkd|mdwn|mdx)$/i;
@@ -173,7 +224,7 @@ interface Row {
 const ROWS: readonly Row[] = [
   { id: "T", label: "If Pi ships an APO workbench trace/evidence export", pins: ["T1", "T2", "T3"] },
   { id: "Z", label: "until then no Pi doc claims an APO export exists", pins: ["Z1", "Z2", "Z3"] },
-  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13", "Q14"] },
+  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13", "Q14", "Q15", "Q16", "Q17", "Q18"] },
 ];
 /** Each judged pin's quote: the quotes of a row tile its label (the anchor case). */
 const QUOTES: Readonly<Record<string, string>> = {
@@ -187,11 +238,11 @@ const QUOTES: Readonly<Record<string, string>> = {
 /** Each quoted pin's claims: terms tiling its quote, each naming the witness facts that show it. */
 const CLAIMS: Readonly<Record<string, Readonly<Record<string, readonly string[]>>>> = {
   T1: { If: ["fired", "srcMentions"], Pi: ["scope", "walkEqualsGit", "srcAtFloor", "liveness"], ships: ["srcPlants"] },
-  T2: { "an APO": ["abbreviation", "abbreviationForms", "quietWords"], workbench: ["slugWords", "slugForms"] },
+  T2: { "an APO": ["abbreviation", "abbreviationForms", "breakRules", "quietWords"], workbench: ["slugWords", "slugForms"] },
   T3: { "trace/evidence export": ["surfaceForms"] },
   Z1: { "until then": ["triggerFired", "filingPin", "filedAtPin", "absentBeforePin", "pinFilesAtFloor", "pinMentions", "pinPlant"] },
-  Z2: { no: ["docMentions"], Pi: ["docScope", "excludedByName", "docWalkEqualsGit"], doc: ["docsAtFloor", "markdownAtFloor", "binariesAtFloor", "docLiveness", "docPlants"] },
-  Z3: { claims: ["overRead"], "an APO export exists": ["readerForms", "pageForms"] },
+  Z2: { no: ["docMentions"], Pi: ["docScope", "excludedByName", "docWalkEqualsGit", "listedPartition"], doc: ["docsAtFloor", "markdownAtFloor", "binariesAtFloor", "docLiveness", "docPlants"] },
+  Z3: { claims: ["overRead"], "an APO export exists": ["readerForms", "pageForms", "quietForms"] },
 };
 /** Each residual family and its quiet row. */
 const RESIDUALS: Readonly<Record<string, string>> = {
@@ -209,9 +260,52 @@ const RESIDUALS: Readonly<Record<string, string>> = {
   "R-COMPUTED": "Q12",
   "R-UNNAMED-SURFACE": "Q13",
   "R-OTHER-MARKUP": "Q14",
+  "R-NAMED-REFERENCE": "Q15",
+  "R-OTHER-ESCAPE": "Q16",
+  "R-SUFFIXED": "Q17",
+  "R-RETILED": "Q18",
 };
-/** The functions that read a subject: every case must name one, so a case returning a constant witness reds. */
-const READERS: readonly string[] = ["judgeScope", "verdictOf", "readingsOf", "quiet", "mentionsIn", "exportRow", "textOf", "git", "srcListing", "docsListing", "srcVerdict", "docsVerdict", "pinVerdict", "scriptUnits"];
+/** The functions that read a subject: every case calls one (SELF-READ: a call in the case's own syntax tree). */
+const READERS: readonly string[] = ["judgeScope", "verdictOf", "readingsOf", "quiet", "mentionsIn", "mentionsWith", "exportRow", "textOf", "git", "listedAll", "srcListing", "docsListing", "srcVerdict", "docsVerdict", "pinVerdict", "scriptUnits"];
+/** The names no case may use (SELF-READ): the roster and its reader, the probes, and the run records. */
+const UNNAMED_IN_CASES: readonly string[] = ["ROSTER", "readRoster", "rosterWitness", "probe", "PROBES", "PROBE_LINE", "PROBE_OUTCOMES", "LIVE", "REACHED"];
+
+/** The probes (PROBES): each changes one subject the cases read, and the probes case re-runs every case under each. */
+type Probe = "blind" | "saturated" | "planted" | "untitled";
+const PROBES: readonly Probe[] = ["blind", "saturated", "planted", "untitled"];
+/** The planted probe's line: appended to every real file a scope judges while that probe is in force. */
+const PROBE_LINE = "\nPi ships an APO export.\n";
+/** The probe in force while the probes case re-runs the cases; undefined in the plain run. */
+let probe: Probe | undefined;
+/** A case's outcome under a probe: it throws, its witness differs from its plain run's, or it keeps that witness. */
+type Outcome = "throws" | "changes" | "keeps";
+/** Each case's outcome under each probe, as the probes case measures it (held to the roster with the constants). */
+const PROBE_OUTCOMES: Readonly<Record<string, Readonly<Record<Probe, Outcome>>>> = {
+  T1: { blind: "changes", saturated: "throws", planted: "throws", untitled: "keeps" },
+  T2: { blind: "throws", saturated: "throws", planted: "keeps", untitled: "changes" },
+  T3: { blind: "throws", saturated: "changes", planted: "keeps", untitled: "keeps" },
+  Z1: { blind: "changes", saturated: "throws", planted: "throws", untitled: "keeps" },
+  Z2: { blind: "changes", saturated: "throws", planted: "throws", untitled: "keeps" },
+  Z3: { blind: "throws", saturated: "throws", planted: "keeps", untitled: "keeps" },
+  Q1: { blind: "throws", saturated: "keeps", planted: "keeps", untitled: "keeps" },
+  Q2: { blind: "changes", saturated: "keeps", planted: "keeps", untitled: "keeps" },
+  Q3: { blind: "changes", saturated: "changes", planted: "keeps", untitled: "keeps" },
+  Q4: { blind: "keeps", saturated: "changes", planted: "keeps", untitled: "keeps" },
+  Q5: { blind: "keeps", saturated: "changes", planted: "keeps", untitled: "keeps" },
+  Q6: { blind: "keeps", saturated: "changes", planted: "keeps", untitled: "keeps" },
+  Q7: { blind: "keeps", saturated: "changes", planted: "keeps", untitled: "keeps" },
+  Q8: { blind: "keeps", saturated: "changes", planted: "keeps", untitled: "keeps" },
+  Q9: { blind: "keeps", saturated: "changes", planted: "keeps", untitled: "keeps" },
+  Q10: { blind: "keeps", saturated: "changes", planted: "keeps", untitled: "keeps" },
+  Q11: { blind: "keeps", saturated: "changes", planted: "keeps", untitled: "keeps" },
+  Q12: { blind: "keeps", saturated: "changes", planted: "keeps", untitled: "keeps" },
+  Q13: { blind: "keeps", saturated: "changes", planted: "keeps", untitled: "keeps" },
+  Q14: { blind: "keeps", saturated: "changes", planted: "keeps", untitled: "keeps" },
+  Q15: { blind: "keeps", saturated: "changes", planted: "keeps", untitled: "keeps" },
+  Q16: { blind: "keeps", saturated: "changes", planted: "keeps", untitled: "keeps" },
+  Q17: { blind: "keeps", saturated: "changes", planted: "keeps", untitled: "keeps" },
+  Q18: { blind: "keeps", saturated: "keeps", planted: "keeps", untitled: "changes" },
+};
 
 interface RosterPin {
   readonly id: string;
@@ -283,6 +377,18 @@ function lazy<T>(make: () => T): () => T {
     return held.value;
   };
 }
+/** A value computed once per probe in force (the plain run included): the scope verdicts the probes change. */
+function lazyPerProbe<T>(make: () => T): () => T {
+  const held = new Map<string, T>();
+  return () => {
+    const key = probe ?? "plain";
+    const cached = held.get(key);
+    if (cached !== undefined) return cached;
+    const value = make();
+    held.set(key, value);
+    return value;
+  };
+}
 function git(args: readonly string[], input?: string): Buffer {
   return execFileSync("git", ["-C", REPO, ...args], { input, maxBuffer: 1024 * 1024 * 1024 });
 }
@@ -300,12 +406,15 @@ interface ExportRow {
   readonly title: string;
   readonly notes: string;
 }
-/** One row of the tracker export (one JSON object per line), found by its id. */
+/** One row of the tracker export (one JSON object per line), found by its id; the untitled probe cuts its title to the requirement-id prefix. */
 function exportRow(id: string, text: string = textOf(EXPORT)): ExportRow {
   for (const line of text.split("\n")) {
     if (!line.includes(id)) continue;
     const parsed: unknown = JSON.parse(line);
-    if (isObject(parsed) && parsed.id === id && typeof parsed.title === "string") return { title: parsed.title, notes: typeof parsed.notes === "string" ? parsed.notes : "" };
+    if (isObject(parsed) && parsed.id === id && typeof parsed.title === "string") {
+      const title = probe === "untitled" ? (/^\[[^\]]*\]/.exec(parsed.title)?.[0] ?? "") : parsed.title;
+      return { title, notes: typeof parsed.notes === "string" ? parsed.notes : "" };
+    }
   }
   throw new Error(`the tracker export holds no row ${id}`);
 }
@@ -332,15 +441,21 @@ const TITLE_SEPARATORS = new RegExp(`^(?:[\\s,;:.()]|${escaped(DASH)})*$`);
 // ---------------------------------------------------------------------------------------------------------------------
 // THE JUDGE.
 
-/** The mentions a text spells (THE JUDGE), each as spelled, sorted. */
+/** The mentions a text spells (THE JUDGE), each as spelled, sorted; the blind and saturated probes replace the judge. */
 function mentionsIn(text: string): string[] {
+  if (probe === "blind") return [];
+  if (probe === "saturated") return text === "" ? [] : [ABBREVIATION];
+  return mentionsWith(text, WORD_BREAK);
+}
+/** THE JUDGE with the given word-break rules (T2's ablation runs it with one rule removed). */
+function mentionsWith(text: string, wordBreak: RegExp): string[] {
   const found = new Set<string>();
   const words: string[] = [];
   const isAbbreviation = (word: string): boolean => word.toLowerCase() === ABBREVIATION.toLowerCase() || word === `${ABBREVIATION}s`;
   for (const run of text.match(/[A-Za-z0-9]+/g) ?? []) {
     if (isAbbreviation(run)) found.add(run);
     if (JOINED_SLUG.test(run)) found.add(run.toLowerCase());
-    for (const word of run.split(WORD_BREAK)) {
+    for (const word of run.split(wordBreak)) {
       if (isAbbreviation(word)) found.add(word);
       words.push(word.toLowerCase());
     }
@@ -579,6 +694,10 @@ interface ScopeVerdict {
   readonly markdown: number;
   readonly binaries: readonly string[];
   readonly findings: { readonly [path: string]: readonly Reading[] };
+  /** Every path judged, in the order judged (a path judged twice appears twice). */
+  readonly paths: readonly string[];
+  /** The bytes judged for each path (the liveness anchors and the partition read them). */
+  readonly bytes: ReadonlyMap<string, Buffer>;
 }
 /** Judges an entry list in one call: the real entries first, then any planted ones. */
 function judgeScope(entries: Iterable<Entry>): ScopeVerdict {
@@ -586,14 +705,23 @@ function judgeScope(entries: Iterable<Entry>): ScopeVerdict {
   let markdown = 0;
   const binaries: string[] = [];
   const findings: { [path: string]: Reading[] } = {};
+  const paths: string[] = [];
+  const judged = new Map<string, Buffer>();
   for (const { path, bytes } of entries) {
     files += 1;
+    paths.push(path);
+    judged.set(path, bytes);
     const verdict = verdictOf(path, bytes);
     if (verdict.readings.length > 0) findings[path] = [...verdict.readings];
     if (verdict.binary) binaries.push(path);
     else if (MARKDOWN.test(path)) markdown += 1;
   }
-  return { files, markdown, binaries, findings };
+  return { files, markdown, binaries, findings, paths, bytes: judged };
+}
+/** A judged file's text as the judge read it ("" when the scope judged no such path, or judged it as binary). */
+function judgedText(verdict: ScopeVerdict, path: string): string {
+  const bytes = verdict.bytes.get(path);
+  return bytes === undefined ? "" : (decodedBytes(bytes) ?? "");
 }
 function findingsFor(verdict: ScopeVerdict, paths: readonly string[], within: boolean): { [path: string]: Reading[] } {
   return Object.fromEntries(Object.entries(verdict.findings).filter(([path]) => paths.includes(path) === within).map(([path, readings]) => [path, [...readings]]));
@@ -652,8 +780,12 @@ const docsListing = lazy((): Listing => {
   const ignored = ignoredOf(walk);
   return { paths, excluded, walkEqualsGit: isDeepStrictEqual(walk.filter(path => !ignored.has(path) && !LOCKFILES.includes(path)), paths) };
 });
+/** The real entries a scope judges: under the planted probe each gains PROBE_LINE. */
+function asJudged(entries: Entry[]): Entry[] {
+  return probe === "planted" ? entries.map(({ path, bytes }) => ({ path, bytes: Buffer.concat([bytes, Buffer.from(PROBE_LINE, "utf8")]) })) : entries;
+}
 function realEntries(paths: readonly string[]): Entry[] {
-  return paths.map(path => ({ path, bytes: readFileSync(join(REPO, path)) }));
+  return asJudged(paths.map(path => ({ path, bytes: readFileSync(join(REPO, path)) })));
 }
 
 /** T1's plant: one module of the source tree spelling the program, judged after the real ones. */
@@ -668,7 +800,7 @@ const SURFACE_PLANTS: Readonly<Record<string, string>> = {
   path: "export {};\n",
 };
 const surfacePath = (form: string): string => (form === "path" ? "src/apo/zz-export.ts" : `src/workbench/zz-surface-${form}.ts`);
-const srcVerdict = lazy((): ScopeVerdict =>
+const srcVerdict = lazyPerProbe((): ScopeVerdict =>
   judgeScope([
     ...realEntries(srcListing().paths),
     entry(SRC_PLANT, 'export const NOTE = "Pi ships an APO export.";\n'),
@@ -698,13 +830,31 @@ function utf16Entry(path: string, order: "utf16le" | "utf16be"): Entry {
   return order === "utf16le" ? { path, bytes: Buffer.concat([Buffer.from([0xff, 0xfe]), body]) } : { path, bytes: Buffer.concat([Buffer.from([0xfe, 0xff]), Buffer.from(body).swap16()]) };
 }
 const docPlantPaths = (): string[] => [...Object.keys(DOC_PLANTS), ...Object.keys(UTF16_PLANTS)];
-const docsVerdict = lazy((): ScopeVerdict =>
+const docsVerdict = lazyPerProbe((): ScopeVerdict =>
   judgeScope([
     ...realEntries(docsListing().paths),
     ...Object.entries(DOC_PLANTS).map(([path, text]) => entry(path, text)),
     ...Object.entries(UTF16_PLANTS).map(([path, order]) => utf16Entry(path, order)),
   ]),
 );
+
+/** The partition (Z2): every listed file is judged whole by exactly one of T1's and Z2's scopes, or excluded by name. */
+function listedPartition(): JsonValue {
+  const plants = new Set([...srcPlantPaths(), ...docPlantPaths()]);
+  const scopes = [srcVerdict(), docsVerdict()];
+  const judged = scopes.flatMap(verdict => verdict.paths.filter(path => !plants.has(path)));
+  const judgedSet = new Set(judged);
+  const listed = new Set(listedAll().filter(path => existsSync(join(REPO, path))));
+  const byName = (path: string): boolean => outside(path) || LOCKFILES.includes(path);
+  const bytesOf = (path: string): Buffer | undefined => scopes.find(verdict => verdict.bytes.has(path))?.bytes.get(path);
+  return json({
+    unjudged: [...listed].filter(path => !judgedSet.has(path) && !byName(path)),
+    judgedTwice: sorted(judged.filter((path, index) => judged.indexOf(path) !== index)),
+    judgedExcluded: judged.filter(byName),
+    judgedUnlisted: judged.filter(path => !listed.has(path)),
+    judgedAltered: judged.filter(path => listed.has(path) && bytesOf(path)?.equals(readFileSync(join(REPO, path))) !== true),
+  });
+}
 
 /** The blobs of a commit's paths, read through one git cat-file --batch call. */
 function blobsAt(commit: string, paths: readonly string[]): Entry[] {
@@ -720,11 +870,11 @@ function blobsAt(commit: string, paths: readonly string[]): Entry[] {
     entries.push({ path, bytes: Buffer.from(out.subarray(end + 1, end + 1 + size)) });
     at = end + 1 + size + 1;
   }
-  return entries;
+  return asJudged(entries);
 }
 const PIN_PLANT = "docs/workbench/zz-pin-plant.md";
 /** Both scopes at the filing pin: every file of the pin's tree outside test/ and .beads/, the locks excluded by name. */
-const pinVerdict = lazy((): ScopeVerdict => {
+const pinVerdict = lazyPerProbe((): ScopeVerdict => {
   const paths = git(["ls-tree", "-r", "-z", "--name-only", FILING_PIN])
     .toString("utf8")
     .split("\0")
@@ -753,7 +903,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const verdict = srcVerdict();
     const real = findingsFor(verdict, srcPlantPaths(), false);
     expect(real, `ARMED: src now spells the APO program; if the module is an APO trace or evidence export, the until-then duty of ${BEAD} ends and the acceptance is owed - ${ACCEPTANCE}`).toEqual({});
-    const identity = listing.paths.includes(IDENTITY) ? scriptUnits(IDENTITY, textOf(IDENTITY)) : [];
+    const identity = scriptUnits(IDENTITY, judgedText(verdict, IDENTITY));
     return json({
       fired: Object.keys(real).length > 0,
       srcMentions: real,
@@ -773,16 +923,19 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       lower: "the apo export",
       anyCase: "aPo",
       camel: "renderApoGraph()",
-      acronymInCamel: "getAPOExport()",
+      acronymBeforeWord: "readAPOUsage()",
+      acronymBeforeLetter: "getAPOId()",
       plural: "two APOs",
+      pluralInCamel: "readAPOsList()",
       possessive: "the APO's export",
-      digits: "APO-020 and APO2",
+      letterDigit: "APO2",
+      digitLetter: "020APO",
       snake: "apo_pi_wb_03",
       prefixed: "MW-APO",
     };
     const slugForms: Readonly<Record<string, string>> = {
       programName: "adaptive-policy-organizations-2026-10-18",
-      camel: "class AdaptivePolicyOrganization {}",
+      camel: "AdaptivePolicy-Organization",
       screaming: "ADAPTIVE_POLICY_ORGANISATIONS",
       plural: "adaptive policies organizations",
       requirementId: REQUIREMENT,
@@ -803,7 +956,15 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const slugRead = read(slugForms);
     expect(Object.entries({ ...abbreviationRead, ...slugRead }).filter(([, found]) => found.length === 0), "every spelling form of the program is read").toEqual([]);
     expect(Object.entries(read(quietWords)).filter(([, found]) => found.length > 0), "no quiet word is read as a mention").toEqual([]);
-    return json({ abbreviation, abbreviationForms: abbreviationRead, quietWords: read(quietWords), slugWords, slugForms: slugRead });
+    const forms = [...Object.entries(abbreviationForms).map(([form, text]) => [`abbreviation.${form}`, text] as const), ...Object.entries(slugForms).map(([form, text]) => [`slug.${form}`, text] as const)];
+    const breakRules = Object.fromEntries(
+      Object.keys(WORD_BREAKS).map(rule => {
+        const without = wordBreakOf(Object.fromEntries(Object.entries(WORD_BREAKS).filter(([name]) => name !== rule)));
+        return [rule, forms.filter(([, text]) => mentionsIn(text).length > 0 && mentionsWith(text, without).length === 0).map(([form]) => form)];
+      }),
+    );
+    expect(Object.entries(breakRules).filter(([, sole]) => sole.length === 0), "every word-break rule is the only reader of some spelling form").toEqual([]);
+    return json({ abbreviation, abbreviationForms: abbreviationRead, breakRules, quietWords: read(quietWords), slugWords, slugForms: slugRead });
   },
   T3: () => {
     const verdict = srcVerdict();
@@ -815,13 +976,15 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const trigger = findingsFor(srcVerdict(), srcPlantPaths(), false);
     const holds = (text: string): boolean => text.split("\n").some(line => line.includes(`"id":"${BEAD}"`));
     const verdict = pinVerdict();
+    const pinMentions = findingsFor(verdict, [PIN_PLANT], false);
+    expect(pinMentions, `the same judge reads no mention in the filing pin's objects (${FILING_PIN.slice(0, 12)})`).toEqual({});
     return json({
       triggerFired: Object.keys(trigger).length > 0,
       filingPin: FILING_PIN.slice(0, 12),
       filedAtPin: holds(git(["show", `${FILING_PIN}:${EXPORT}`]).toString("utf8")),
       absentBeforePin: !holds(git(["show", `${FILING_PIN}^:${EXPORT}`]).toString("utf8")),
       pinFilesAtFloor: verdict.files - 1 >= FLOORS.pinFiles,
-      pinMentions: findingsFor(verdict, [PIN_PLANT], false),
+      pinMentions,
       pinPlant: findingsFor(verdict, [PIN_PLANT], true),
     });
   },
@@ -837,15 +1000,16 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     expect(real, `until an APO export surface exists, no Pi doc spells the program (${BEAD})`).toEqual({});
     const pages = listing.paths.filter(path => path.startsWith(DOCS_PAGES) && MARKDOWN.test(path) && !path.slice(DOCS_PAGES.length).includes("/"));
     const opensWithHeading = (path: string): boolean => {
-      const first = marked.lexer(textOf(path)).find(token => token.type !== "space");
+      const first = marked.lexer(judgedText(verdict, path)).find(token => token.type !== "space");
       return first?.type === "heading" && (first as Tokens.Heading).depth === 1;
     };
-    const floor = listing.paths.includes(DOCS12) ? normalizedText(decodedText(renderedText(DOCS12, textOf(DOCS12)))).replace(/\s+/g, " ") : "";
+    const floor = normalizedText(decodedText(renderedText(DOCS12, judgedText(verdict, DOCS12)))).replace(/\s+/g, " ");
     return json({
       docMentions: real,
       docScope: "every listed file outside src/, test/ and .beads/ (tracked plus untracked-not-ignored)",
       excludedByName: [...LOCKFILES],
       docWalkEqualsGit: listing.walkEqualsGit,
+      listedPartition: listedPartition(),
       docsAtFloor: listing.paths.length >= FLOORS.docs,
       markdownAtFloor: verdict.markdown - plantPaths.filter(path => MARKDOWN.test(path)).length >= FLOORS.markdown,
       binariesAtFloor: verdict.binaries.length >= FLOORS.binaries,
@@ -878,10 +1042,15 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       softHyphenReference: "A&shy;PO",
       invisible: `A${String.fromCodePoint(0x200b)}PO`,
       wordJoiner: `A${String.fromCodePoint(0x2060)}PO`,
+      defaultIgnorable: `A${String.fromCodePoint(0x3164)}PO`,
+      formatControl: `A${String.fromCodePoint(0xfff9)}PO`,
       fullwidth: String.fromCodePoint(0xff21, 0xff30, 0xff2f),
       mathBold: String.fromCodePoint(0x1d400, 0x1d40f, 0x1d40e),
       combiningMark: `A${String.fromCodePoint(0x301)}PO`,
+      precomposedAccent: `${String.fromCodePoint(0xc0)}PO`,
       backslashEscape: "\\u0041PO",
+      bracedEscape: "\\u{41}PO",
+      hexEscape: "\\x41PO",
       percentEncoded: "%41PO",
     };
     const readerForms = Object.fromEntries(Object.entries(forms).map(([form, text]) => [form, readingsOf(doc, `Pi ships an ${text} export.\n`)]));
@@ -889,11 +1058,26 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       htmlBlockBogusComment: [doc, "<div>\nA<?x>PO export\n</div>\n"],
       htmlBlockSlashAttribute: [doc, '<div>\nA<span/title=">">P</span>O export\n</div>\n'],
       htmlPageUnquotedAttribute: ["docs/zz-page.html", "<p>A<span title=x>P</span>O export</p>\n"],
+      htmlPageAbruptComment: ["docs/zz-page.html", "<p>A<!-->PO export</p>\n"],
+      htmlPageAbruptDashComment: ["docs/zz-page.html", "<p>A<!--->PO export</p>\n"],
+      htmlPageBangComment: ["docs/zz-page.html", "<p>A<!-- x --!>PO export</p>\n"],
       svgCdata: ["docs/zz-figure.svg", "<svg><text><![CDATA[A]]><![CDATA[PO]]> export</text></svg>\n"],
+      listItem: [doc, "- Pi ships an A**P**O export.\n"],
+      tableCell: [doc, "| a | b |\n| - | - |\n| Pi ships an A**P**O export. | x |\n"],
+      blockQuote: [doc, "> Pi ships an A**P**O export.\n"],
     };
     const pageForms = Object.fromEntries(Object.entries(pages).map(([form, [path, text]]) => [form, readingsOf(path, text)]));
     expect(Object.entries({ ...readerForms, ...pageForms }).filter(([, readings]) => readings.length === 0), "every reader-visible form is read").toEqual([]);
-    return json({ overRead, readerForms, pageForms });
+    const hidden: Readonly<Record<string, readonly [string, string]>> = {
+      htmlPageUnclosedComment: ["docs/zz-page.html", "<p>A<!--PO export</p>\n"],
+      visibleReference: [doc, "Pi ships an A&amp;PO export.\n"],
+    };
+    const quietForms = Object.fromEntries(Object.entries(hidden).map(([form, [path, text]]) => [form, readingsOf(path, text)]));
+    expect(
+      Object.entries(quietForms).filter(([, readings]) => readings.length > 0),
+      "an unclosed comment hiding the rest of a page, and a reference rendering a visible character between the letters, are read in no reading",
+    ).toEqual([]);
+    return json({ overRead, readerForms, pageForms, quietForms });
   },
   Q1: () => {
     const exportMentions = mentionsIn(textOf(EXPORT)).length;
@@ -919,11 +1103,13 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const plant = Buffer.concat([Buffer.from([0]), Buffer.from(" Pi ships an APO export. ", "utf8")]);
     const verdict = verdictOf("media/zz-plant.bin", plant);
     const markless = verdictOf("docs/zz-markless-utf16.md", Buffer.from("Pi ships an APO export.\n", "utf16le"));
+    const utf32 = verdictOf("docs/zz-utf32.md", Buffer.concat([Buffer.from([0xff, 0xfe, 0, 0]), Buffer.from([..."Pi ships an APO export.\n"].flatMap(letter => [letter.charCodeAt(0), 0, 0, 0]))]));
     return json({
       residual: "R-BINARY",
       plantBinary: verdict.binary,
       plantReadings: [...verdict.readings],
       marklessUtf16: { binary: markless.binary, readings: [...markless.readings] },
+      utf32: { binary: utf32.binary, readings: [...utf32.readings] },
       realBinariesAtFloor: docsVerdict().binaries.length >= FLOORS.binaries,
     });
   },
@@ -957,13 +1143,17 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
         {
           styleEscape: '<style>p::before { content: "\\41 PO"; }</style>',
           hiddenText: 'A<span style="display:none">x</span>PO',
+          hiddenAttribute: "A<span hidden>x</span>PO",
+          template: "A<template>x</template>PO",
+          rubyAnnotation: "A<ruby>P<rt>x</rt></ruby>O",
           scriptWrite: '<script>document.write("A" + "PO");</script>',
         },
         "docs/workbench/zz.md",
       ),
+      styleSheet: quiet({ generatedContent: 'p::before { content: "\\41 PO"; }\n' }, "docs/workbench/zz.css"),
     }),
-  Q10: () => json({ residual: "R-INFLECTED", quiet: quiet({ camelPlural: "renderAposList", lowerPlural: "the apos", esPlural: "APOes" }, "docs/workbench/zz.md") }),
-  Q11: () => json({ residual: "R-JOINED", quiet: quiet({ before: "apoexport", after: "exportapo", inside: "theapoexport" }, "docs/workbench/zz.md") }),
+  Q10: () => json({ residual: "R-INFLECTED", quiet: quiet({ camelPlural: "renderAposList", lowerPlural: "the apos", esPlural: "APOes", capsPlural: "APOS" }, "docs/workbench/zz.md") }),
+  Q11: () => json({ residual: "R-JOINED", quiet: quiet({ before: "apoexport", after: "exportapo", inside: "theapoexport", capsJoined: "APOV1" }, "docs/workbench/zz.md") }),
   Q12: () =>
     json({
       residual: "R-COMPUTED",
@@ -977,7 +1167,43 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       ),
     }),
   Q13: () => json({ residual: "R-UNNAMED-SURFACE", quiet: quiet({ unnamedExport: "export function exportPolicyOrganizationTrace(snapshot: unknown): string {\n  return JSON.stringify(snapshot);\n}\n" }, "src/workbench/zz.ts") }),
-  Q14: () => json({ residual: "R-OTHER-MARKUP", quiet: { restructuredText: quiet({ text: "A\\ *P*\\ O export" }, "docs/workbench/zz.rst").text, asciiDoc: quiet({ text: "A**P**O export" }, "docs/workbench/zz.adoc").text } }),
+  Q14: () =>
+    json({
+      residual: "R-OTHER-MARKUP",
+      quiet: {
+        restructuredText: quiet({ text: "A\\ *P*\\ O export" }, "docs/workbench/zz.rst").text,
+        asciiDoc: quiet({ text: "A**P**O export" }, "docs/workbench/zz.adoc").text,
+        notebook: quiet({ text: '{"cells": [{"cell_type": "markdown", "source": ["A**P**O export"]}]}\n' }, "examples/zz.ipynb").text,
+      },
+    }),
+  Q15: () => json({ residual: "R-NAMED-REFERENCE", quiet: quiet({ angstrom: "&angst;PO", scriptSmallO: "AP&order;", ordinals: "&ordf;p&ordm;" }, "docs/workbench/zz.md") }),
+  Q16: () =>
+    json({
+      residual: "R-OTHER-ESCAPE",
+      quiet: {
+        yamlLongEscape: quiet({ text: 'note: "\\U00000041PO export"\n' }, "examples/zz.yaml").text,
+        tomlLongEscape: quiet({ text: 'note = "\\U00000041PO export"\n' }, "examples/zz.toml").text,
+        pythonNamedEscape: quiet({ text: 'NOTE = "\\N{LATIN CAPITAL LETTER A}PO export"\n' }, "qa/zz.py").text,
+        shellOctalEscape: quiet({ text: "printf '\\101PO export'\n" }, "scripts/zz.sh").text,
+      },
+    }),
+  Q17: () => json({ residual: "R-SUFFIXED", quiet: quiet({ versionSuffix: "the APOv1 export", letterSuffix: "the APOx export" }, "docs/workbench/zz.md") }),
+  Q18: () => {
+    const statement = exportRow(BEAD).title.replace(/^\[[^\]]*\] /, "");
+    const quotesOf = (id: string): string[] => (ROWS.find(row => row.id === id)?.pins ?? []).map(pin => QUOTES[pin] ?? "");
+    const folds: Record<string, boolean> = {};
+    for (const id of ["T", "Z"]) {
+      const pins = ROWS.find(row => row.id === id)?.pins ?? [];
+      for (let at = 0; at + 1 < pins.length; at += 1) {
+        const folded = (row: string): string[] => {
+          const quotes = quotesOf(row);
+          return row === id ? [...quotes.slice(0, at), `${quotes[at] ?? ""} ${quotes[at + 1] ?? ""}`, ...quotes.slice(at + 2)] : quotes;
+        };
+        folds[`${pins[at] ?? ""}+${pins[at + 1] ?? ""}`] = tiles(statement, [...folded("T"), ARMED, ...folded("Z")], TITLE_SEPARATORS);
+      }
+    }
+    return json({ residual: "R-RETILED", quiet: folds });
+  },
 };
 
 /** The constants the roster holds, read in one place (the judged-set case compares them). */
@@ -988,6 +1214,7 @@ function constants(): JsonValue {
     slugForms: SLUG_FORMS.map(form => form.source),
     joinedSlug: { source: JOINED_SLUG.source, flags: JOINED_SLUG.flags },
     wordBreak: WORD_BREAK.source,
+    wordBreaks: Object.fromEntries(Object.entries(WORD_BREAKS).map(([name, rule]) => [name, rule.source])),
     readings: { script: SCRIPT.source, json: JSON_FILE.source, markdown: MARKDOWN.source, markup: MARKUP.source },
     namedReferences: NAMED_REFERENCES,
     styledLetter: STYLED_LETTER.source,
@@ -1015,18 +1242,43 @@ function constants(): JsonValue {
     pinPlant: PIN_PLANT,
     residuals: RESIDUALS,
     readers: [...READERS],
+    unnamedInCases: [...UNNAMED_IN_CASES],
+    probes: [...PROBES],
+    probeLine: PROBE_LINE,
+    probeOutcomes: PROBE_OUTCOMES,
   });
 }
-/** The text between two markers of this file (the self-read of the judged-set case). */
-function between(text: string, start: string, end: string): string {
-  const from = text.indexOf(start);
-  const to = from < 0 ? -1 : text.indexOf(end, from + start.length);
-  return from < 0 || to < 0 ? "" : text.slice(from + start.length, to);
+/** The cases of IMPL by pin, read from this file's own syntax tree (the self-read: a comment or a string names nothing). */
+function caseNodes(): Map<string, ts.Node> {
+  const source = ts.createSourceFile(SELF, readFileSync(SELF, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const found = new Map<string, ts.Node>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.name.text === "IMPL" && node.initializer !== undefined && ts.isObjectLiteralExpression(node.initializer)) {
+      for (const property of node.initializer.properties) if (ts.isPropertyAssignment(property) && ts.isIdentifier(property.name)) found.set(property.name.text, property.initializer);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return found;
+}
+/** What a case's syntax names: every identifier, every bare-name callee, and every `residual` property's string value. */
+function namesIn(node: ts.Node): { readonly named: ReadonlySet<string>; readonly called: ReadonlySet<string>; readonly residuals: readonly string[] } {
+  const named = new Set<string>();
+  const called = new Set<string>();
+  const residuals: string[] = [];
+  const visit = (child: ts.Node): void => {
+    if (ts.isIdentifier(child)) named.add(child.text);
+    if (ts.isCallExpression(child) && ts.isIdentifier(child.expression)) called.add(child.expression.text);
+    if (ts.isPropertyAssignment(child) && ts.isIdentifier(child.name) && child.name.text === "residual" && ts.isStringLiteral(child.initializer)) residuals.push(child.initializer.text);
+    ts.forEachChild(child, visit);
+  };
+  visit(node);
+  return { named, called, residuals };
 }
 
 describe("wb-021.3 APO export census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R3, until-then leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster, the cases and their own reads agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:3", "Z:3", "Q:14"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["T:3", "Z:3", "Q:18"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     const quoted = ROWS.filter(row => row.id !== "Q").flatMap(row => row.pins);
@@ -1039,14 +1291,20 @@ describe("wb-021.3 APO export census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R3, until
     expect(Object.values(RESIDUALS).sort(), "every residual family has its own quiet row").toEqual([...(ROWS.find(row => row.id === "Q")?.pins ?? [])].sort());
     expect(ROSTER.bead).toBe(BEAD);
     expect(constants()).toStrictEqual(ROSTER.constants);
-    const block = between(readFileSync(SELF, "utf8"), "const IMPL: Readonly<Record<string, () => JsonValue>> = {", "\n};\n");
-    expect({ rosterWitness: /\brosterWitness\b/.test(block), roster: /\bROSTER\b|readRoster/.test(block) }, "no case reads its own roster witness").toStrictEqual({ rosterWitness: false, roster: false });
-    const cases = block.split(/\n {2}(?=[A-Z][A-Z0-9]*: \(\) =>)/).slice(1);
-    const named = cases.map(body => [body.slice(0, body.indexOf(":")), READERS.some(reader => new RegExp(`\\b${reader}\\(`).test(body))]);
-    expect(named, "every case names a reader of the subject").toStrictEqual(ROWS.flatMap(row => row.pins).map(pin => [pin, true]));
-    const bodies = new Map(cases.map(body => [body.slice(0, body.indexOf(":")), body] as const));
+    const pins = ROWS.flatMap(row => row.pins);
+    const nodes = caseNodes();
+    expect([...nodes.keys()].sort(), "every case of IMPL is read from this file's own syntax tree").toEqual([...pins].sort());
+    const names = new Map([...nodes].map(([pin, node]) => [pin, namesIn(node)] as const));
     expect(
-      Object.entries(RESIDUALS).map(([family, pin]) => [pin, (bodies.get(pin) ?? "").includes(`residual: "${family}"`)]),
+      pins.map(pin => [pin, UNNAMED_IN_CASES.filter(name => names.get(pin)?.named.has(name) === true)]),
+      "no case names the roster or its reader, the probes or the run records",
+    ).toStrictEqual(pins.map(pin => [pin, []]));
+    expect(
+      pins.map(pin => [pin, READERS.some(reader => names.get(pin)?.called.has(reader) === true)]),
+      "every case calls a reader of its subject",
+    ).toStrictEqual(pins.map(pin => [pin, true]));
+    expect(
+      Object.entries(RESIDUALS).map(([family, pin]) => [pin, names.get(pin)?.residuals.includes(family) === true]),
       "each residual's quiet row names its residual",
     ).toStrictEqual(Object.values(RESIDUALS).map(pin => [pin, true]));
   });
@@ -1098,6 +1356,28 @@ describe("wb-021.3 APO export census (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R3, until
       }
     });
   }
+
+  it("the probes: every case re-run under each probe throws, changes or keeps its witness as PROBE_OUTCOMES holds", { timeout: 900_000 }, () => {
+    const pins = ROWS.flatMap(row => row.pins);
+    expect(pins.filter(pin => !LIVE.has(pin)), "every case ran plainly before the probes").toEqual([]);
+    const outcomeOf = (pin: string, each: Probe): Outcome => {
+      probe = each;
+      try {
+        const impl = IMPL[pin];
+        if (impl === undefined) throw new Error(`no case for ${pin}`);
+        return isDeepStrictEqual(json(impl()), LIVE.get(pin)) ? "keeps" : "changes";
+      } catch {
+        return "throws";
+      } finally {
+        probe = undefined;
+      }
+    };
+    const measured = Object.fromEntries(pins.map(pin => [pin, Object.fromEntries(PROBES.map(each => [each, outcomeOf(pin, each)]))]));
+    expect(probe, "the plain run is restored after the probes").toBeUndefined();
+    expect(Object.keys(PROBE_OUTCOMES), "PROBE_OUTCOMES holds every case, in row order").toEqual(pins);
+    expect(measured, "each case's outcome under each probe").toStrictEqual(PROBE_OUTCOMES);
+    expect(pins.filter(pin => PROBES.every(each => PROBE_OUTCOMES[pin]?.[each] === "keeps")), "every case throws or changes under at least one probe").toEqual([]);
+  });
 
   it("the registered tests, the reached pins and the claims equal the roster, in order and both ways", ({ task }) => {
     const walkedTests: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
