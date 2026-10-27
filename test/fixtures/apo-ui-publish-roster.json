@@ -25,7 +25,15 @@
       "pins": [
         {
           "id": "R0-kinds",
-          "digest": "17e0f42d0a07c9977d2b714dfd0509891da7bacd58c2bc1b59620a4c19dbf0db"
+          "digest": "6f42301cda05ffffa0135b6fbfdee246c9f7c64b5cd9eada8fe78500a0357710"
+        },
+        {
+          "id": "R0-click-words",
+          "digest": "4deb24cd55c4a6ddd7ef9829f470bbee0bd1f2584117314f4f82d2fb174f3800"
+        },
+        {
+          "id": "R0-click-view",
+          "digest": "4f35306ee46d60422b66e21370b85f7548d8ff208aa79c551d483e094afedbe5"
         },
         {
           "id": "R-src/index.ts",
@@ -130,6 +138,18 @@
         {
           "id": "A-unclassified",
           "digest": "af31cf4982eea06c510a5668137270078ed4e785e764b5dcd7273567022a338c"
+        },
+        {
+          "id": "A-handler-kinds",
+          "digest": "ab755aa0a1cf44eb248ba8d697c3bd74028f90eff6aeebc42f95abc6d6455aca"
+        },
+        {
+          "id": "A-handle-forms",
+          "digest": "f55174cff93b3c5b56e0a8745a2532b89d30bd75b8428fae702d573f0668da2d"
+        },
+        {
+          "id": "A-stored-alias",
+          "digest": "2c2e1ceb84a65ee494bad8c136f0285b69bbfe7eac94c5c8b68595d4e0a8f3f7"
         }
       ]
     },
@@ -158,6 +178,10 @@
           "digest": "f36063a8918b6bf8e15b52741a937a9450a9fa53da50604fa5468c4a864e8657"
         },
         {
+          "id": "F-require-wrapped",
+          "digest": "089afb21b8852c2fcca405c7b04f84c0de68f9e0a36adc000f4260e7e8a801bf"
+        },
+        {
           "id": "F-import-equals",
           "digest": "e8eb03192e8961905434ce28455b43a884afaf8ee6869782a9be0b9ba73e8c75"
         },
@@ -184,6 +208,18 @@
         {
           "id": "F-missing",
           "digest": "cc30b74ae608667636a723faf2f0fc40e01cf231cd5f0f1869b363f61b654291"
+        },
+        {
+          "id": "F-bare-paths",
+          "digest": "0a92ff00baac01ebc76a1087c79e377b7257d0c955e9ada858800e464802c3a2"
+        },
+        {
+          "id": "F-unreadable",
+          "digest": "b183e931d57e512389d2650a1ea84a1784066e641868a7d97590021ad6491239"
+        },
+        {
+          "id": "F-missing-entry",
+          "digest": "7a188d6a092df8b11903c092fba6997c12fc6b972e04f4ef9cc4cff523c6a641"
         },
         {
           "id": "F-package-path",
@@ -223,7 +259,27 @@
         },
         {
           "id": "F-escaped-name",
-          "digest": "d9c12418337108846d7e6117f3de88d494a6081b5cba5991e4dd5d5bd5d4996d"
+          "digest": "0f07306f977c1a0074009f08848f92088cdefbafe91fb1147a1d7188322b2749"
+        },
+        {
+          "id": "F-digit-split",
+          "digest": "974021a7fdfc6fb995f871993a13f03c848566ff8c57f599cc9040cf6bd573fb"
+        },
+        {
+          "id": "F-acronym-split",
+          "digest": "52bb82f8856eaa0842954f3e214dd7644590cccab95dfa9ed500f2e390bf76f1"
+        },
+        {
+          "id": "F-private-name",
+          "digest": "4f6e0b8e71b57536d79f0f55784c13c885d94c6e7c8090e49c80812c1bf3e5f3"
+        },
+        {
+          "id": "F-nosub-template",
+          "digest": "9e472994f3612c2bd9419906331f89540391ad3acd7c77409ce52d1a9619fddb"
+        },
+        {
+          "id": "F-folded-parens",
+          "digest": "8ee3a8bb51f97dce48619b648f36b8aa568504e04212607ba80760847ff094cc"
         },
         {
           "id": "F-ignorable",
@@ -317,11 +373,11 @@
         },
         {
           "id": "R-HOST-ALIAS",
-          "digest": "b90fee29f49c74fa1b1cf18c1db99335a1c5a6768f517c56eb32fbaea7b672d7"
+          "digest": "4702f989eccd27b26913ad896c1128e87f7188c6dc092f566f866aa4c5cd9d66"
         },
         {
           "id": "R-PI-ALIAS",
-          "digest": "74650a7b6addd6b7b6ef30415be4b95884067f6a080db2adc8d020ee4031ef58"
+          "digest": "805d0d5071c717480c42b3c994595a2847abba573c0c84396671ab1bdaa1bb01"
         }
       ]
     }
@@ -331,6 +387,8 @@
     "L L2-paths",
     "L L3-roles",
     "R R0-kinds",
+    "R R0-click-words",
+    "R R0-click-view",
     "R R-src/index.ts",
     "R R-src/ui/conversation-viewer.ts",
     "R R-src/ui/fleet-list.ts",
@@ -354,11 +412,15 @@
     "A A-src/ui/workflow-menu.ts",
     "A A-readers",
     "A A-unclassified",
+    "A A-handler-kinds",
+    "A A-handle-forms",
+    "A A-stored-alias",
     "F F-static",
     "F F-reexport-star",
     "F F-reexport-named",
     "F F-dynamic",
     "F F-require",
+    "F F-require-wrapped",
     "F F-import-equals",
     "F F-side-effect",
     "F F-transitive",
@@ -366,6 +428,9 @@
     "F F-computed-import",
     "F F-computed-require",
     "F F-missing",
+    "F F-bare-paths",
+    "F F-unreadable",
+    "F F-missing-entry",
     "F F-package-path",
     "F F-package-role",
     "F F-word-publish",
@@ -376,6 +441,11 @@
     "F F-template-part",
     "F F-regex",
     "F F-escaped-name",
+    "F F-digit-split",
+    "F F-acronym-split",
+    "F F-private-name",
+    "F F-nosub-template",
+    "F F-folded-parens",
     "F F-ignorable",
     "F F-mark",
     "F F-width",

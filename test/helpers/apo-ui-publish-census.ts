@@ -7,28 +7,39 @@
  * dropped, then each run of letters and digits is split at a case change (camel, Pascal, an acronym before a capitalized
  * word) and at a letter-digit boundary, and lower-cased. A PATH text holds a PROMOTE word, or a PUBLISH word beside an
  * OBJECT word (the title's own vocabulary: publish, publishes, publication; promotion; graph, manifest, checkpoint, each
- * with its inflections). A ROLE text holds the program's abbreviation as a word, or its slug's three words in order. A
- * module's texts are every identifier (declarations and references, by their unescaped text), every string-like literal by
- * its cooked value, every template part by its cooked text, every regular-expression literal by its source, and every chain
- * of "+" whose operands are all string literals by its folded value. Comments are never read.
+ * with its inflections). A ROLE text holds the program's abbreviation as a word, or its slug's three words in order. A CLICK
+ * text holds a CLICK_WORDS word (a pointer input; R0 pins that src holds none). A module's texts are every identifier and
+ * private name (declarations and references, by their unescaped text), every string-like literal (a no-substitution
+ * template included) by its cooked value, every template part by its cooked text, every regular-expression literal by its
+ * source, and every chain of "+" whose operands are all string literals, parenthesized or not, by its folded value.
+ * Comments are never read.
  * EDGES: the shared reader's imports (test/helpers/census.ts sourceStructure: static, export-from, dynamic, require, each
- * with its typeOnly flag) plus two this module reads itself: an import-equals declaration (import x = require("y")) and a
- * dynamic import or require whose specifier is not a string literal (computed, unresolvable by construction). A runtime
- * edge is one that is not typeOnly. A relative specifier resolves inside the judged tree (.js to .ts, a bare path to .ts or
- * to index.ts); one that resolves nowhere, and every computed one, is UNRESOLVED (fail-closed). A bare specifier is a
- * package: it is not followed, and its specifier's own words are judged.
- * AFFORDANCES: a module's UI interaction entry points - its matchesKey reads (the key as a literal, as Key.<member>, else
- * <computed>), its handleInput implementations (a method, a function, a property, a class field or a getter, named by an
- * identifier, a string literal or a computed string literal), its interactive host UI calls (<x>.ui.<member>(...) or
- * ui.<member>(...), members in UI_MEMBERS.interaction) and its extension interactions (registerCommand and registerShortcut
- * by literal name, on("input")); a member or the ui handle reached by an element access with a string literal reads as its
- * property access. A module with any of them is an AFFORDANCE module; the VIEW SURFACE is the affordance modules plus every
- * module under src/ui/.
+ * with its typeOnly flag) plus three this module reads itself: an import-equals declaration (import x = require("y")), a
+ * dynamic import or require whose specifier is not a string literal (computed, unresolvable by construction), and a require
+ * whose callee is wrapped (parentheses, a non-null or a type assertion: (require)("y")), read as a require edge. A runtime
+ * edge is one that is not typeOnly. A relative specifier resolves inside the judged tree (as written, .js to .ts, a bare
+ * path to .ts or to index.ts); one that resolves nowhere, every computed one and a named entry missing from the tree are
+ * UNRESOLVED (fail-closed). A bare specifier is a package: it is not followed, and its specifier's own words are judged.
+ * AFFORDANCES: a module's UI interaction entry points - its matchesKey reads (the key as a literal, as Key.<member>,
+ * else <computed>), its handleInput implementations (a method, a function declaration, an object property, a class
+ * field or a getter, each named by an identifier, a string literal or a computed string literal; a shorthand property;
+ * a variable declared by that name; an = assignment to a member), its interactive host UI calls (<handle>.<member>(...)
+ * with a member in UI_MEMBERS.interaction) and its extension interactions (registerCommand and registerShortcut by
+ * literal name, on("input")); a member reached by an element access with a string literal reads as its property access.
+ * A HOST UI HANDLE is a receiver whose name holds the word ui: an identifier (ui, hostUi), a property (ctx.ui, this.ui,
+ * this.uiCtx - the src/ui/agent-widget.ts stored handle) or an element access by a string literal; the receiver and
+ * every call's callee are read through parentheses, non-null assertions and type assertions (as, satisfies, <T>). A
+ * receiver named with the word ui that is not the host's handle reads as one too (fail-closed: an unknown member reds
+ * as UNCLASSIFIED); any other receiver (an alias named otherwise, a call result, a container element) is R-HOST-ALIAS.
+ * A pi surface is a register* or on call on the identifier pi; any other receiver (an alias, this.pi, options.pi) is
+ * R-PI-ALIAS. A module with any affordance is an AFFORDANCE module; the VIEW SURFACE is the affordance modules plus
+ * every module under src/ui/.
  * FINDINGS (fail-closed, each a line): REACH (an affordance module whose runtime closure holds a PATH module - itself
  * included - tagged [APO view] when the module holds a ROLE text), ENTRY (the entry's runtime closure holds a PATH module),
  * OFFER (a PATH text inside a view-surface module), PACKAGE (a package specifier in a judged closure whose words read as a
- * PATH or a ROLE), UNRESOLVED (a computed or unresolvable import in a judged closure), UNREADABLE (a judged file the
- * readers cannot read or parse) and UNCLASSIFIED (a ui member or a pi register/on member outside the classification).
+ * PATH or a ROLE), UNRESOLVED (a computed or unresolvable import in a judged closure, or a missing entry), UNREADABLE (a
+ * judged file the readers cannot read or parse) and UNCLASSIFIED (a member called on a host UI handle, or a pi register/on
+ * member, outside the classification). ROLE and CLICK modules are tags, not findings: L3 and R0 pin that src holds none.
  *
  * Display paths added: none. This module is test-only.
  */
@@ -47,19 +58,22 @@ export const SLUG: readonly (readonly string[])[] = [["adaptive"], ["policy", "p
 /** The shared reader's import kinds plus the one this module reads itself; the census holds the first four to census.ts. */
 export const EDGE_KINDS: readonly string[] = ["static", "export-from", "dynamic", "require", "import-equals"];
 
-/** Every member a host UI handle is called with in src, classified; any other member is UNCLASSIFIED. */
+/**
+ * Every member src calls on a host UI handle (a receiver named with the word ui, see the module header), classified: an
+ * interaction member makes an affordance, a display member does not; any other member called on a handle is UNCLASSIFIED.
+ */
 export const UI_MEMBERS = {
   interaction: ["addAutocompleteProvider", "confirm", "custom", "editor", "input", "onTerminalInput", "select"],
-  display: ["getEditorText", "notify", "setWidget"],
+  display: ["getEditorText", "notify", "setStatus", "setWidget"],
 } as const;
 
-/** Every surface the extension registers with the host through pi (register* members, on events), classified. */
+/** Every surface src registers with the host on the identifier pi (register* members, on events), classified; any other receiver is R-PI-ALIAS. */
 export const PI_SURFACES = {
   interaction: ["on:input", "registerCommand", "registerShortcut"],
   other: ["on:session_before_switch", "on:session_shutdown", "on:session_start", "on:tool_execution_start", "registerEntryRenderer", "registerFlag", "registerMessageRenderer", "registerTool"],
 } as const;
 
-/** The words of a pointer (click) input: R0 pins that no src text holds one (Pi's TUI reads no pointer input). */
+/** The words of a pointer (click) input: R0 pins that no src text holds one (Pi's TUI reads no pointer input); R0-click-words reads each. */
 export const CLICK_WORDS: readonly string[] = ["click", "clicked", "clicking", "clicks", "mouse"];
 
 /** File-system write calls: the R-UNNAMED-PATH anchor counts them inside the entry closure (effects the vocabulary does not name). */
@@ -98,6 +112,12 @@ export function roleReading(text: string): string | undefined {
   return undefined;
 }
 
+/** A CLICK reading: "click:<word>"; undefined when the text holds no CLICK_WORDS word. */
+export function clickReading(text: string): string | undefined {
+  const click = wordsOf(text).find(word => CLICK_WORDS.includes(word));
+  return click === undefined ? undefined : `click:${click}`;
+}
+
 export interface Reading {
   readonly line: number;
   readonly source: "name" | "literal";
@@ -122,8 +142,10 @@ export interface ModuleFacts {
   readonly clicks: readonly Reading[];
   readonly keys: readonly string[];
   readonly handlers: number;
-  /** Every host UI member called, with its count. */
+  /** Every member called on a host UI handle, with its count. */
   readonly host: Readonly<Record<string, number>>;
+  /** The receiver names read as host UI handles (ui, uiCtx, ...). */
+  readonly handles: readonly string[];
   readonly extension: readonly string[];
   /** Every pi register* member and on:<event> called. */
   readonly piSurfaces: readonly string[];
@@ -137,9 +159,21 @@ const memberOf = (node: ts.Expression): { readonly member: string; readonly rece
   return undefined;
 };
 
-const calleeName = (call: ts.CallExpression): string | undefined => (ts.isIdentifier(call.expression) ? call.expression.text : memberOf(call.expression)?.member);
+/** An expression without its parentheses, non-null assertions and type assertions (as, satisfies, <T>). */
+export const unwrap = (node: ts.Expression): ts.Expression => {
+  let current = node;
+  while (ts.isParenthesizedExpression(current) || ts.isNonNullExpression(current) || ts.isAsExpression(current) || ts.isSatisfiesExpression(current) || ts.isTypeAssertionExpression(current)) current = current.expression;
+  return current;
+};
 
-const isUiHandle = (node: ts.Expression): boolean => (ts.isIdentifier(node) && node.text === "ui") || memberOf(node)?.member === "ui";
+/** A receiver's name, read through wrappers: an identifier, or the member a property or string-literal element access reads. */
+const receiverName = (node: ts.Expression): string | undefined => {
+  const bare = unwrap(node);
+  return ts.isIdentifier(bare) ? bare.text : memberOf(bare)?.member;
+};
+
+/** A host UI handle: a receiver whose name holds the word ui (see the module header). */
+export const isUiHandle = (node: ts.Expression): boolean => wordsOf(receiverName(node) ?? "").includes("ui");
 
 /** The folded value of a "+" chain whose operands are all string literals, else undefined. */
 function foldedLiteral(node: ts.Expression): string | undefined {
@@ -161,12 +195,18 @@ const nameText = (name: ts.PropertyName | undefined): string | undefined => {
   if (ts.isComputedPropertyName(name) && ts.isStringLiteralLike(name.expression)) return name.expression.text;
   return undefined;
 };
-const isHandler = (node: ts.Node): boolean =>
-  (ts.isMethodDeclaration(node) || ts.isFunctionDeclaration(node) || ts.isPropertyAssignment(node) || ts.isPropertyDeclaration(node) || ts.isGetAccessorDeclaration(node)) && nameText(node.name) === HANDLER;
+/** A handleInput implementation (see the module header): a named method, function, object property, class field or getter, a shorthand property, a variable declared by that name, or an = assignment to a member. */
+const isHandler = (node: ts.Node): boolean => {
+  if (ts.isMethodDeclaration(node) || ts.isFunctionDeclaration(node) || ts.isPropertyAssignment(node) || ts.isPropertyDeclaration(node) || ts.isGetAccessorDeclaration(node)) return nameText(node.name) === HANDLER;
+  if (ts.isShorthandPropertyAssignment(node)) return node.name.text === HANDLER;
+  if (ts.isVariableDeclaration(node)) return ts.isIdentifier(node.name) && node.name.text === HANDLER;
+  if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken) return memberOf(node.left)?.member === HANDLER;
+  return false;
+};
 
 /** Every fact the census reads from one module (see the module header); an unreadable or unparseable module fails closed. */
 export function moduleFacts(root: string, file: string): ModuleFacts {
-  const empty = { edges: [], paths: [], roles: [], clicks: [], keys: [], handlers: 0, host: {}, extension: [], piSurfaces: [], writes: 0 };
+  const empty = { edges: [], paths: [], roles: [], clicks: [], keys: [], handlers: 0, host: {}, handles: [], extension: [], piSurfaces: [], writes: 0 };
   const structure = sourceStructure(root, file);
   if (!structure.ok) return { file, ok: false, why: structure.why, ...empty };
   let text: string;
@@ -184,6 +224,7 @@ export function moduleFacts(root: string, file: string): ModuleFacts {
   const keys = new Set<string>();
   let handlers = 0;
   const host: Record<string, number> = {};
+  const handles = new Set<string>();
   const extension: string[] = [];
   const piSurfaces: string[] = [];
   let writes = 0;
@@ -192,8 +233,8 @@ export function moduleFacts(root: string, file: string): ModuleFacts {
     if (path !== undefined) paths.push({ line: lineOf(node), source, text: value, reading: path });
     const role = roleReading(value);
     if (role !== undefined) roles.push({ line: lineOf(node), source, text: value, reading: role });
-    const click = wordsOf(value).find(word => CLICK_WORDS.includes(word));
-    if (click !== undefined) clicks.push({ line: lineOf(node), source, text: value, reading: `click:${click}` });
+    const click = clickReading(value);
+    if (click !== undefined) clicks.push({ line: lineOf(node), source, text: value, reading: click });
   };
   const visit = (node: ts.Node): void => {
     if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) read("name", node.text, node);
@@ -208,12 +249,17 @@ export function moduleFacts(root: string, file: string): ModuleFacts {
     }
     if (isHandler(node)) handlers += 1;
     if (ts.isCallExpression(node)) {
-      const name = calleeName(node);
+      const callee = unwrap(node.expression);
+      const name = ts.isIdentifier(callee) ? callee.text : memberOf(callee)?.member;
       const first = node.arguments[0];
       const literal = first !== undefined && ts.isStringLiteralLike(first) ? first.text : undefined;
       const dynamic = node.expression.kind === ts.SyntaxKind.ImportKeyword;
-      if ((dynamic || (ts.isIdentifier(node.expression) && node.expression.text === "require")) && literal === undefined) {
+      const isRequire = ts.isIdentifier(callee) && callee.text === "require";
+      if ((dynamic || isRequire) && literal === undefined) {
         edges.push({ kind: dynamic ? "dynamic" : "require", specifier: undefined, typeOnly: false, line: lineOf(node) });
+      } else if (isRequire && callee !== node.expression) {
+        // a wrapped require callee ((require)("y")): the shared reader reads only the bare identifier
+        edges.push({ kind: "require", specifier: literal, typeOnly: false, line: lineOf(node) });
       }
       if (name === "matchesKey") {
         const key = node.arguments[1];
@@ -221,10 +267,13 @@ export function moduleFacts(root: string, file: string): ModuleFacts {
         else if (key !== undefined && ts.isPropertyAccessExpression(key) && ts.isIdentifier(key.expression) && key.expression.text === "Key") keys.add(`Key.${key.name.text}`);
         else keys.add("<computed>");
       }
-      const access = memberOf(node.expression);
+      const access = memberOf(callee);
       if (access !== undefined) {
         const { member, receiver } = access;
-        if (isUiHandle(receiver)) host[member] = (host[member] ?? 0) + 1;
+        if (isUiHandle(receiver)) {
+          host[member] = (host[member] ?? 0) + 1;
+          handles.add(receiverName(receiver) ?? "");
+        }
         if (member === "registerCommand") extension.push(`command:${literal ?? "<computed>"}`);
         if (member === "registerShortcut") extension.push(`shortcut:${literal ?? "<computed>"}`);
         if (member === "on" && literal === "input") extension.push("on:input");
@@ -235,7 +284,7 @@ export function moduleFacts(root: string, file: string): ModuleFacts {
     ts.forEachChild(node, visit);
   };
   visit(sf);
-  return { file, ok: true, why: "", edges, paths, roles, clicks, keys: [...keys].sort(), handlers, host, extension: extension.sort(), piSurfaces: piSurfaces.sort(), writes };
+  return { file, ok: true, why: "", edges, paths, roles, clicks, keys: [...keys].sort(), handlers, host, handles: [...handles].sort(), extension: extension.sort(), piSurfaces: piSurfaces.sort(), writes };
 }
 
 /** The interactive host UI members a module calls, with their counts (display members left out). */
@@ -276,6 +325,8 @@ export interface Judgment {
   readonly surface: readonly string[];
   readonly pathModules: readonly string[];
   readonly roleModules: readonly string[];
+  /** The modules holding a CLICK text (a tag, like roleModules: R0 pins src holds none). */
+  readonly clickModules: readonly string[];
   readonly entryClosure: readonly string[];
   /** The bare specifiers the judged closures import (packages are never followed). */
   readonly packages: readonly string[];
@@ -333,6 +384,7 @@ export function judgeTree(tree: Tree): Judgment {
   const surface = files.filter(file => affordances.includes(file) || file.startsWith("src/ui/"));
   const pathModules = files.filter(file => factsOf(file).paths.length > 0);
   const roleModules = files.filter(file => factsOf(file).roles.length > 0);
+  const clickModules = files.filter(file => factsOf(file).clicks.length > 0);
   for (const start of affordances) {
     const role = factsOf(start).roles.length > 0 ? " [APO view]" : "";
     for (const [module, route] of closure(start)) {
@@ -357,7 +409,7 @@ export function judgeTree(tree: Tree): Judgment {
     for (const member of Object.keys(entry.host)) if (!classifiedUi.includes(member)) findings.add(`UNCLASSIFIED ${entry.file} ui.${member}`);
     for (const surfaceName of entry.piSurfaces) if (!classifiedPi.includes(surfaceName)) findings.add(`UNCLASSIFIED ${entry.file} pi.${surfaceName}`);
   }
-  return { facts, affordances, surface, pathModules, roleModules, entryClosure, packages: [...packages].sort(), findings: [...findings].sort() };
+  return { facts, affordances, surface, pathModules, roleModules, clickModules, entryClosure, packages: [...packages].sort(), findings: [...findings].sort() };
 }
 
 /** A row's pin as the roster holds it: the SHA-256 of the pin as written (its JSON). */
@@ -383,10 +435,12 @@ export interface PlantPin {
   readonly findings: readonly string[];
   /** The planted tree's ROLE modules (default: none). */
   readonly roles?: readonly string[];
+  /** The planted tree's CLICK modules (default: none). */
+  readonly clicks?: readonly string[];
   /** The planted tree's affordance inventories (default: not judged). */
   readonly inventory?: readonly Inventory[];
 }
-/** A reading pin: texts judged by the word judge alone, each with its expected readings (PATH then ROLE, joined) or null. */
+/** A reading pin: texts judged by the word judge alone, each with its expected readings (PATH, ROLE then CLICK, joined) or null. */
 export interface ReadingPin {
   readonly id: string;
   readonly what: string;
@@ -396,8 +450,8 @@ export type Pin = LivePin | PlantPin | ReadingPin;
 export const isLive = (pin: Pin): pin is LivePin => "live" in pin;
 export const isReading = (pin: Pin): pin is ReadingPin => "readings" in pin;
 export const isPlant = (pin: Pin): pin is PlantPin => !isLive(pin) && !isReading(pin);
-/** The readings of one text as a reading pin holds them: the PATH and the ROLE reading, joined by a space, or null. */
-export const readingsOf = (text: string): string | null => [pathReading(text), roleReading(text)].filter((reading): reading is string => reading !== undefined).join(" ") || null;
+/** The readings of one text as a reading pin holds them: the PATH, the ROLE and the CLICK reading, joined by a space, or null. */
+export const readingsOf = (text: string): string | null => [pathReading(text), roleReading(text), clickReading(text)].filter((reading): reading is string => reading !== undefined).join(" ") || null;
 export interface Row {
   readonly id: string;
   readonly label: string;
@@ -424,6 +478,8 @@ const COMBINING_ACUTE = String.fromCodePoint(0x0301);
 const FULLWIDTH_P = String.fromCodePoint(0xff50);
 const CYRILLIC_I = String.fromCodePoint(0x0456);
 const BACKSLASH = String.fromCodePoint(0x5c);
+/** The shared reader's reading of the F-unreadable store: TypeScript's own parse diagnostic at the first error. */
+const UNREADABLE_STORE = `UNREADABLE ${S}: the file does not parse: Expression expected. at line 1:21`;
 
 const AFFORDANCE_FILES: readonly Inventory[] = [
   { file: "src/index.ts", keys: ["Key.enter", "down", "up"], handlers: 2, host: { addAutocompleteProvider: 1, confirm: 5, custom: 3, editor: 3, input: 8, select: 9 }, extension: ["command:agents", "on:input"] },
@@ -483,9 +539,21 @@ export const ROWS: readonly Row[] = [
     pins: [
       {
         id: "R0-kinds",
-        what: "every host UI member and every pi register/on surface src calls is classified, no src text holds a click or mouse word (the view-click surface is empty), and every affordance and view-surface module sits in the entry closure, so its render (refresh) path is judged with the module",
+        what: "every member src calls on a host UI handle (src's handles are ui and uiCtx, the src/ui/agent-widget.ts stored handle) and every pi register/on surface src calls on pi is classified, no src text holds a click or mouse word (the view-click surface is empty), and every affordance and view-surface module sits in the entry closure, so its render (refresh) path is judged with the module",
         live: true,
-        expect: { unclassified: [], clicks: [] },
+        expect: { unclassified: [], clicks: [], handles: ["ui", "uiCtx"] },
+      },
+      {
+        id: "R0-click-words",
+        what: "every CLICK_WORDS word reads as a click, inside a name too, and near-words read nothing",
+        readings: { click: "click:click", clicked: "click:clicked", clicking: "click:clicking", clicks: "click:clicks", mouse: "click:mouse", onDoubleClick: "click:click", clickable: null, mousetrap: null },
+      },
+      {
+        id: "R0-click-view",
+        what: "a planted pointer handler is read as a CLICK module, so the first click word in src reds R0",
+        files: { [V]: view([], '"ok"', ['export const onMouseDown = (): string => "click";']) },
+        findings: [],
+        clicks: [V],
       },
       ...AFFORDANCE_FILES.map((inventory): LivePin => ({ id: `R-${inventory.file}`, what: `the runtime closure of ${inventory.file} holds no PATH module (no REACH finding)`, live: true, expect: { file: inventory.file, reach: [] } })),
     ],
@@ -570,6 +638,83 @@ export const ROWS: readonly Row[] = [
         },
         findings: ["UNCLASSIFIED src/ext.ts pi.on:model_select", "UNCLASSIFIED src/ext.ts pi.registerProvider", "UNCLASSIFIED src/ui/footer.ts ui.setFooter"],
       },
+      {
+        id: "A-handler-kinds",
+        what: "each handleInput kind A-readers does not plant is read: a function declaration, a class field, a shorthand property, a variable declared by that name and an = assignment to a member",
+        files: {
+          "src/ui/fn-handler.ts": "export function handleInput(data: string): string {\n  return data;\n}\n",
+          "src/ui/field-handler.ts": "export class Field {\n  handleInput = (data: string): string => data;\n}\n",
+          "src/ui/shorthand-handler.ts": "export const wrap = (handleInput: (data: string) => string): { handleInput: (data: string) => string } => ({ handleInput });\n",
+          "src/ui/const-handler.ts": "export const handleInput = (data: string): string => data;\n",
+          "src/ui/assign-handler.ts": "export function attach(component: { handleInput?: (data: string) => string }): void {\n  component.handleInput = data => data;\n}\n",
+        },
+        findings: [],
+        inventory: [
+          { file: "src/ui/assign-handler.ts", keys: [], handlers: 1, host: {}, extension: [] },
+          { file: "src/ui/const-handler.ts", keys: [], handlers: 1, host: {}, extension: [] },
+          { file: "src/ui/field-handler.ts", keys: [], handlers: 1, host: {}, extension: [] },
+          { file: "src/ui/fn-handler.ts", keys: [], handlers: 1, host: {}, extension: [] },
+          { file: "src/ui/shorthand-handler.ts", keys: [], handlers: 1, host: {}, extension: [] },
+        ],
+      },
+      {
+        id: "A-handle-forms",
+        what: "a host UI handle is read by the word ui in its name (a stored this.uiCtx field, a hostUi binding) and through parentheses, a non-null assertion, as, satisfies and an angle-bracket assertion, and a parenthesized callee is read",
+        files: {
+          "src/ui/wrapped.ts": [
+            "type Ui = { select(t: string): string; confirm(t: string): string; input(t: string): string; editor(t: string): string; custom(t: string): string; onTerminalInput(t: string): string };",
+            "export function ask(ctx: { ui: Ui }): string[] {",
+            '  return [ctx.ui!.select("a"), (ctx.ui).confirm("b"), (ctx.ui as Ui).input("c"), (ctx.ui satisfies Ui).editor("d"), (<Ui>ctx.ui).custom("e"), (ctx.ui.onTerminalInput)("f")];',
+            "}",
+            "",
+          ].join("\n"),
+          "src/ui/stored.ts": [
+            "type Ui = { select(t: string): string; confirm(t: string): string };",
+            "export class Widget {",
+            "  private uiCtx: Ui | undefined;",
+            "  attach(ctx: Ui): void {",
+            "    this.uiCtx = ctx;",
+            "  }",
+            "  ask(): string | undefined {",
+            '    return this.uiCtx?.select("x");',
+            "  }",
+            "}",
+            "export function confirmHost(ctx: { ui: Ui }): string {",
+            "  const hostUi = ctx.ui;",
+            '  return hostUi.confirm("y");',
+            "}",
+            "",
+          ].join("\n"),
+        },
+        findings: [],
+        inventory: [
+          { file: "src/ui/stored.ts", keys: [], handlers: 0, host: { confirm: 1, select: 1 }, extension: [] },
+          { file: "src/ui/wrapped.ts", keys: [], handlers: 0, host: { confirm: 1, custom: 1, editor: 1, input: 1, onTerminalInput: 1, select: 1 }, extension: [] },
+        ],
+      },
+      {
+        id: "A-stored-alias",
+        what: "the src/ui/agent-widget.ts shape: a handle stored in a this.uiCtx field is read; its display members setStatus and setWidget stay quiet and an unclassified member reds as UNCLASSIFIED",
+        files: {
+          "src/ui/widget.ts": [
+            "type UICtx = { setStatus(k: string, t: string | undefined): void; setWidget(k: string, c: undefined): void; setFooter(t: string): void };",
+            "export class Widget {",
+            "  private uiCtx: UICtx | undefined;",
+            "  setUICtx(ctx: UICtx): void {",
+            "    this.uiCtx = ctx;",
+            "  }",
+            "  clear(): void {",
+            '    this.uiCtx?.setWidget("w", undefined);',
+            '    this.uiCtx?.setStatus("s", undefined);',
+            '    this.uiCtx?.setFooter("f");',
+            "  }",
+            "}",
+            "",
+          ].join("\n"),
+        },
+        findings: ["UNCLASSIFIED src/ui/widget.ts ui.setFooter"],
+        inventory: [],
+      },
     ],
   },
   {
@@ -608,6 +753,13 @@ export const ROWS: readonly Row[] = [
         id: "F-require",
         what: "through require",
         files: { [AV]: view([], '(require("../ops/store.js") as { run(): string }).run()', [APO_TITLE]), [S]: STORE },
+        findings: [ROUTE(`${AV} -require-> ${S}`)],
+        roles: [AV],
+      },
+      {
+        id: "F-require-wrapped",
+        what: "through a require whose callee is wrapped in parentheses (the shared reader reads only the bare identifier)",
+        files: { [AV]: view([], '((require)("../ops/store.js") as { run(): string }).run()', [APO_TITLE]), [S]: STORE },
         findings: [ROUTE(`${AV} -require-> ${S}`)],
         roles: [AV],
       },
@@ -669,6 +821,31 @@ export const ROWS: readonly Row[] = [
         roles: [AV],
       },
       {
+        id: "F-bare-paths",
+        what: "a relative specifier resolves as written, as a bare path to its .ts file and as a directory to its index.ts",
+        files: {
+          [AV]: view(['import { run } from "../ops";', 'import { label } from "../ops/label.ts";'], "run() + label", [APO_TITLE]),
+          "src/ops/index.ts": 'export * from "./store";\n',
+          "src/ops/label.ts": 'export const label = "x";\n',
+          [S]: STORE,
+        },
+        findings: [ROUTE(`${AV} -static-> src/ops/index.ts -export-from-> ${S}`)],
+        roles: [AV],
+      },
+      {
+        id: "F-unreadable",
+        what: "a judged module that does not parse fails closed as UNREADABLE",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store("export const run = (: string => 1;") },
+        findings: [UNREADABLE_STORE],
+      },
+      {
+        id: "F-missing-entry",
+        what: "a named entry missing from the tree fails closed as UNRESOLVED",
+        files: { [V]: view([], '"ok"') },
+        entry: "src/index.ts",
+        findings: ["UNRESOLVED entry src/index.ts"],
+      },
+      {
         id: "F-package-path",
         what: "a package whose specifier names a publication is a PACKAGE finding, and the module naming it a path module",
         files: { [V]: view(['import { run } from "../ops/client.js";'], "run()"), "src/ops/client.ts": 'export { run } from "@mw/graph-publish";\n' },
@@ -725,8 +902,38 @@ export const ROWS: readonly Row[] = [
       },
       {
         id: "F-escaped-name",
-        what: "an identifier written with a unicode escape is read by its unescaped text",
-        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store(`export const run = (): string => ${BACKSLASH}u0070ublishManifest();\nfunction publishManifest(): string {\n  return "x";\n}`) },
+        what: "an identifier written only with unicode escapes (the four-digit and the braced form, no plain-text copy anywhere in the plant) is read by its unescaped text",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store(`export const run = (): string => ${BACKSLASH}u0070ublishManifest();\nfunction ${BACKSLASH}u{70}ublishManifest(): string {\n  return "x";\n}`) },
+        findings: [PLAIN("publish:publish+manifest")],
+      },
+      {
+        id: "F-digit-split",
+        what: "a letter-digit boundary splits a name: publish2Graph reads publish beside graph",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store('export const run = (): string => publish2Graph();\nfunction publish2Graph(): string {\n  return "x";\n}') },
+        findings: [PLAIN("publish:publish+graph")],
+      },
+      {
+        id: "F-acronym-split",
+        what: "an acronym before a capitalized word splits: PUBLISHManifest reads publish beside manifest",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store('export const PUBLISHManifest = "x";\nexport const run = (): string => PUBLISHManifest;') },
+        findings: [PLAIN("publish:publish+manifest")],
+      },
+      {
+        id: "F-private-name",
+        what: "a private name is read: #promoteCheckpoint reads promote",
+        files: { [V]: view(['import { Store } from "../ops/store.js";'], "new Store().run()"), [S]: store('export class Store {\n  run(): string {\n    return this.#promoteCheckpoint();\n  }\n  #promoteCheckpoint(): string {\n    return "x";\n  }\n}') },
+        findings: [PLAIN("promote:promote")],
+      },
+      {
+        id: "F-nosub-template",
+        what: "a template literal with no substitution is read by its cooked text",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store("export const run = (): string => `publish manifest`;") },
+        findings: [PLAIN("publish:publish+manifest")],
+      },
+      {
+        id: "F-folded-parens",
+        what: "a + chain of string literals is folded through its parentheses",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store('export const run = (): string => ("pub" + "lish") + " manifest";') },
         findings: [PLAIN("publish:publish+manifest")],
       },
       {
@@ -896,15 +1103,19 @@ export const ROWS: readonly Row[] = [
       },
       {
         id: "R-HOST-ALIAS",
-        what: "a host UI call through an alias of the ui handle is not an affordance read (the entry leg still judges its module)",
-        files: { [V]: 'export async function pick(ctx: { ui: { select(t: string): Promise<string> } }): Promise<string> {\n  const handle = ctx.ui;\n  return handle.select("x");\n}\n' },
+        what: "a host UI call through a receiver not named with the word ui (an alias named otherwise, a call result, a container element) is not read (the entry leg still judges its module)",
+        files: {
+          [V]: 'export async function pick(ctx: { ui: { select(t: string): Promise<string> } }): Promise<string[]> {\n  const handle = ctx.ui;\n  const current = () => ctx.ui;\n  const held = [ctx.ui];\n  return [await handle.select("x"), await current().select("y"), await held[0].select("z")];\n}\n',
+        },
         findings: [],
         inventory: [],
       },
       {
         id: "R-PI-ALIAS",
-        what: "a pi surface registered through an alias of pi is not classified, so an unknown one stays quiet",
-        files: { "src/ext.ts": 'export function wire(pi: { registerProvider(n: string): void }): void {\n  const api = pi;\n  api.registerProvider("x");\n}\n' },
+        what: "a pi surface registered through any receiver but the identifier pi (an alias, this.pi, options.pi) is not classified, so an unknown one stays quiet",
+        files: {
+          "src/ext.ts": 'type Pi = { registerProvider(n: string): void };\nexport class Wire {\n  private pi: Pi;\n  constructor(pi: Pi) {\n    this.pi = pi;\n  }\n  run(options: { pi: Pi }): void {\n    const api = this.pi;\n    api.registerProvider("x");\n    this.pi.registerProvider("y");\n    options.pi.registerProvider("z");\n  }\n}\n',
+        },
         findings: [],
       },
     ],
