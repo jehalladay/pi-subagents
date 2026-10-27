@@ -59,8 +59,8 @@
  *    object the carrier states; D3 a default anywhere else and every verbatim rewrite or merge are refused; D4 the quiet controls
  *    and the residuals' quiet rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row (each pin with its quote),
- * every pin's witness, the constants, the carrier, the native result, the placements, the probes, the registered test titles and
- * each pin's assertion count are held to the out-of-file roster (test/fixtures/ri-decision-provenance-echo-roster.json). OUTSIDE
+ * every pin's witness, the constants, the harness, the carrier, the native result, the placements, the probes, the registered test
+ * titles and each pin's assertion count are held to the out-of-file roster (test/fixtures/ri-decision-provenance-echo-roster.json). OUTSIDE
  * ANCHOR: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-tz4r.3): each acceptance clause is
  * exactly one row label, the trigger sits in row A's, and the quote pin, the quote and the gating artifacts are in its notes.
  * PIN ANCHOR (wb-3xmr F1): each row's pin quotes, in pin order, tile its owner text with separator-only gaps (the wb-if7q.2 and
@@ -68,19 +68,33 @@
  * B-D's their clauses - so a pin removed from ROWS, the frozen literal, IMPL and the roster together leaves its part of the
  * owner's words untiled and the judged set reds (the wb-tz4r.3 gate's G1, D3 removed so, stayed 17/17 on the first cut); the
  * judged set also drops each quote in turn and finds its row untiled.
- * SELF-READ (wb-3xmr F2): the judged set parses this file's source (the TypeScript AST). Outside the describe block, whose cases
- * compare the witnesses: every IMPL case names one of READERS; rosterWitness, MEASURED and REACHED are named only where declared,
- * ROSTER_PATH only in readRoster and readRoster only for ROSTER; a roster pin's witness member is read only in readRoster and
- * rosterWitness; and ROSTER is read only through its subject members (its rows only in rosterWitness). So a case that hands back
- * its own roster witness through any of those names reds, whether directly (the wb-tz4r.3 gate's G3 and G3b, which kept their
- * pinned assertion counts and stayed 18/18), through a helper or after measuring; four planted cases pin each refusal. A case that
- * reaches it without naming them is R-UNMEASURED.
+ * SELF-READ (wb-3xmr F2, wb-hiwv F1): the judged set parses this file's source (the TypeScript AST). Outside the describe block:
+ * every IMPL case names one of READERS; IMPL, rosterWitness, MEASURED and REACHED are named only where declared, ROSTER_PATH only
+ * in readRoster and readRoster only for ROSTER; a roster pin's witness member is read only in readRoster and rosterWitness; and
+ * ROSTER is read only through its subject members (its rows only in rosterWitness). So a case that hands back its own roster
+ * witness through any of those names reds, whether directly (the wb-tz4r.3 gate's G3 and G3b, which kept their pinned assertion
+ * counts and stayed 18/18), through a helper or after measuring, and so does a case replaced at run time (Object.assign(IMPL,
+ * ...)); five planted sources pin each refusal. Inside the describe block (wb-hiwv F1: the wb-3xmr gate's
+ * L2-HARNESS-D3-substituted, a harness that handed D3 its roster witness in place of its measurement and kept D3's pinned count,
+ * stayed 18/18): every pin case (each it(...) registration besides the judged set and the record; any other registration call is
+ * read as scaffolding) is the HARNESS statement for statement, held to the roster - its witness is its own case's measurement,
+ * recorded in MEASURED and compared once against rosterWitness(pin) - and outside the pin cases rosterWitness, ROSTER_PATH and
+ * readRoster are never named, IMPL is named only by the judged set, MEASURED and REACHED only by the record, ROSTER is read only
+ * by those two, and a witness member only by the record. So a harness that hands a pin its roster witness or a literal, or drops
+ * its comparison, reds, as do a rosterWitness alias bound in the describe callback (the wb-3xmr gate's L2-SELF-DESCRIBE-BOUND,
+ * 18/18 there), the roster witness read there or the roster read afresh, a measurement recorded through an aliased registration,
+ * a case replaced from the block or through a pin case's parameter default or options, and the judged set or the record naming
+ * what belongs to the other; eleven planted describe blocks pin each refusal, and a twelfth, the harness laid over two lines,
+ * reads clean. A case that reaches its witness without naming any of those is R-UNMEASURED.
  * RECORDS: the last case walks this file's registered tests: each roster title once, in order, in run mode, not inverted, ran;
  * every pin's witness again, no two pins sharing one (so a case moved under another pin's id, its roster witness rewritten to
  * match, reds); every pin reached its end with its pinned assertion count.
  * NOT CLAIMED: the three placements, the probe lists and the reference adoption's kinds and member names are this fixture's
  * choices (no producer placement, default or slot exists), so a placement or probe removed from the roster and from every
  * witness together is anchored by nothing outside these two files; the four fields are anchored (the quote's words, clause (a)).
+ * Likewise the HARNESS: a pin case edited together with HARNESS and the roster's harness is a deliberate change these two files
+ * make, and nothing outside them reads it (each alone, or the case with HARNESS, reds the judged set; with all three, the record
+ * still compares every pin's witness against the roster a second time).
  * RESIDUALS (named families, each with a pinned quiet row: D4's for the first five, A1's for R-READ-SITE): R-COINCIDENT a
  * "default" that restates the value today's projection already holds at that path is no change and reads quiet; R-KIND the
  * judge binds a field to its value, never to a ref kind or member name (those are the adopter's to choose), so two fields filed
@@ -88,7 +102,8 @@
  * from every literal while a neighbour's quote is widened over its part tiles the owner text again - the anchor reads that every
  * word has a pin, not which pin proves it (D4: D3 dropped and D4's quote widened over D3's part, clause (c) reads tiled);
  * R-UNMEASURED a case that names a reader yet hands back a value it did not measure - a literal standing in for its witness, or a
- * witness reached, in the case or a helper it calls, without naming its member (the roster file parsed afresh and read by
+ * witness reached, in the case or a helper it calls (wherever the helper is declared or bound, the describe callback included),
+ * without naming its member (the roster file parsed afresh and read by
  * position, a member name composed at run time) - is beyond the SELF-READ (D4: a planted constant case naming BASE reads clean); R-READ-SITE a src reader that reaches a
  * native result only through spellings A1 does not read - the endpoint key (src spells the word for graph edges), the fields in
  * spaced prose, Pi's own native-evidence spellings, a computed key - and feeds neither projection is invisible to row A (A1: an
@@ -274,6 +289,7 @@ interface Roster {
   readonly revisionProbes: readonly JsonValue[];
   readonly policyProbes: readonly JsonValue[];
   readonly rows: readonly RosterRow[];
+  readonly harness: readonly string[];
   readonly tests: readonly string[];
   readonly reached: readonly string[];
 }
@@ -365,6 +381,7 @@ function readRoster(): Roster {
     revisionProbes: revisionProbes.map(json),
     policyProbes: policyProbes.map(json),
     rows,
+    harness: strings(raw.harness, "harness"),
     tests: strings(raw.tests, "tests"),
     reached: strings(raw.reached, "reached"),
   };
@@ -835,6 +852,7 @@ const READERS: readonly string[] = ["filesBelow", "dependencyNames", "registerRe
 const SUBJECT_MEMBERS: readonly string[] = ["carrier", "native", "placements", "producer", "rfVersion", "revisionProbes", "policyProbes"];
 /** Names that outside the describe block occur only at their declarations, or inside the declarations listed beside them. */
 const CONFINED: readonly { readonly name: string; readonly within: readonly string[] }[] = [
+  { name: "IMPL", within: [] },
   { name: "rosterWitness", within: [] },
   { name: "MEASURED", within: [] },
   { name: "REACHED", within: [] },
@@ -844,8 +862,56 @@ const CONFINED: readonly { readonly name: string; readonly within: readonly stri
 /** The declarations outside the describe block that may read a roster pin's witness member. */
 const WITNESS_READERS: readonly string[] = ["readRoster", "rosterWitness"];
 const WITNESS_MEMBER = "witness";
-/** R-UNMEASURED's quiet row: a case that names a reader and returns a literal standing in for its roster witness. */
-const UNMEASURED_CASE = 'const IMPL = {\n  D3: async () => {\n    expect(BASE).toBeDefined();\n    return { pasted: "a literal equal to the roster witness" };\n  },\n};\n';
+/**
+ * R-UNMEASURED's quiet row: a case that names a reader and returns a literal standing in for its roster witness, and one that
+ * returns a literal handed to it through a helper the describe callback binds (wb-hiwv).
+ */
+const UNMEASURED_CASE = [
+  "let HANDED: () => unknown = () => null;",
+  "const IMPL = {",
+  "  D3: async () => {",
+  "    expect(BASE).toBeDefined();",
+  '    return { pasted: "a literal equal to the roster witness" };',
+  "  },",
+  "  D4: async () => {",
+  "    expect(BASE).toBeDefined();",
+  "    return HANDED();",
+  "  },",
+  "};",
+  'describe("planted", () => {',
+  '  HANDED = () => ({ pasted: "a literal handed through a helper the describe callback binds" });',
+  "});",
+  "",
+].join("\n");
+/**
+ * THE HARNESS (wb-hiwv F1): every pin case's statements, whitespace-normalized, held to the roster. A pin's witness is its own
+ * case's measurement, recorded in MEASURED, then compared once against the roster's; the case's end is recorded in REACHED.
+ */
+const HARNESS: readonly string[] = [
+  "const impl = IMPL[pin];",
+  `expect(impl, \`no case for \${pin}\`).toBeTypeOf("function");`,
+  "const witness = impl === undefined ? null : await impl();",
+  "MEASURED[pin] = witness;",
+  "expect(witness).toStrictEqual(rosterWitness(pin));",
+  `REACHED.push(\`\${pin}:\${expect.getState().assertionCalls}\`);`,
+];
+/**
+ * A planted describe block for the SELF-READ: `scaffold` before a loop over row D whose pin case, registered with `options` when
+ * given, takes `parameters` and runs `lines`.
+ */
+function plantedBlock(lines: readonly string[], scaffold: readonly string[] = [], parameters = "", options = ""): string {
+  return [
+    'describe("planted", () => {',
+    ...scaffold.map(line => `  ${line}`),
+    "  for (const { id: pin } of ROWS[3]?.pins ?? []) {",
+    `    it(pin, ${options === "" ? "" : `${options}, `}async (${parameters}) => {`,
+    ...lines.map(line => `      ${line}`),
+    "    });",
+    "  }",
+    "});",
+    "",
+  ].join("\n");
+}
 
 /** Whether an identifier is the name its own declaration binds (a function, a variable). */
 function declares(node: ts.Identifier): boolean {
@@ -885,11 +951,79 @@ function refusedReads(owner: string, root: ts.Node): string[] {
   visit(root);
   return found;
 }
+/** The describe block's regions outside its pin cases: its scaffolding, the judged set and the record. */
+type Region = "describe" | "the judged set" | "the record";
+/** Outside the pin cases, the names the describe block uses only in the regions listed beside them (none listed: never). */
+const DESCRIBE_NAMES: readonly { readonly name: string; readonly within: readonly Region[] }[] = [
+  { name: "rosterWitness", within: [] },
+  { name: "ROSTER_PATH", within: [] },
+  { name: "readRoster", within: [] },
+  { name: "IMPL", within: ["the judged set"] },
+  { name: "MEASURED", within: ["the record"] },
+  { name: "REACHED", within: ["the record"] },
+  { name: "ROSTER", within: ["the judged set", "the record"] },
+];
+/** A statement's text with every whitespace run read as one space, so its layout over lines does not matter. */
+function normalized(text: string): string {
+  return text.replace(/\s+/g, " ");
+}
+type Runner = ts.ArrowFunction | ts.FunctionExpression;
+function isRunner(node: ts.Node): node is Runner {
+  return ts.isArrowFunction(node) || ts.isFunctionExpression(node);
+}
 /**
- * THE SELF-READ (wb-3xmr F2) over a source text, this file's or a planted one. Outside the describe block (whose cases compare the
- * witnesses): every IMPL case names one of READERS; rosterWitness, MEASURED and REACHED are named only where declared, ROSTER_PATH
- * only in readRoster and readRoster only for ROSTER; a witness member is read only in readRoster and rosterWitness; and ROSTER is read
- * only through SUBJECT_MEMBERS (its rows in rosterWitness alone). Returns the refused reads, by declaration (an IMPL case as IMPL.<pin>).
+ * A test registration: a call of it whose last argument is the function it runs. Any other call (a modifier form of it, a call
+ * of test, an alias of it) is read as scaffolding, so the function it runs is held to the scaffolding's names.
+ */
+function registrationOf(node: ts.Node): { readonly call: ts.CallExpression; readonly run: Runner } | undefined {
+  if (!ts.isCallExpression(node) || !ts.isIdentifier(node.expression) || node.expression.text !== "it") return undefined;
+  const run = node.arguments[node.arguments.length - 1];
+  return run !== undefined && isRunner(run) ? { call: node, run } : undefined;
+}
+/**
+ * THE SELF-READ inside a describe block (wb-hiwv F1). A registration titled JUDGED_TITLE runs the judged set and one titled
+ * RECORD_TITLE the record; every other registration is a pin case, whose statements must be the HARNESS (its title, options and
+ * parameters are read as scaffolding). Outside the pin cases each DESCRIBE_NAMES name is used only in its listed regions, and a
+ * witness member is read only by the record. Returns the refused reads, by region (a pin case as it(<title>)).
+ */
+function describeReads(file: ts.SourceFile, block: ts.CallExpression): string[] {
+  const found: string[] = [];
+  const visit = (node: ts.Node, region: Region): void => {
+    const registration = registrationOf(node);
+    if (registration !== undefined) {
+      const [title] = registration.call.arguments;
+      const titled = title !== undefined && ts.isIdentifier(title) ? title.text : undefined;
+      for (const argument of registration.call.arguments) if (argument !== registration.run) visit(argument, region);
+      if (titled === "JUDGED_TITLE" || titled === "RECORD_TITLE") {
+        visit(registration.run, titled === "JUDGED_TITLE" ? "the judged set" : "the record");
+        return;
+      }
+      for (const parameter of registration.run.parameters) visit(parameter, region);
+      const body = registration.run.body;
+      const statements = ts.isBlock(body) ? body.statements.map(statement => normalized(statement.getText(file))) : [normalized(body.getText(file))];
+      if (JSON.stringify(statements) !== JSON.stringify(HARNESS)) found.push(`it(${title === undefined ? "" : normalized(title.getText(file))}) is not the harness`);
+      return;
+    }
+    if (ts.isIdentifier(node)) {
+      const rule = DESCRIBE_NAMES.find(entry => entry.name === node.text);
+      if (rule !== undefined && !rule.within.includes(region)) {
+        const parent = node.parent;
+        const member = ts.isPropertyAccessExpression(parent) && parent.expression === node ? `.${parent.name.text}` : "";
+        found.push(node.text === "ROSTER" ? `${region} reads ROSTER${member}` : `${region} names ${node.text}`);
+      }
+    }
+    if (readsWitness(node) && region !== "the record") found.push(`${region} reads a ${WITNESS_MEMBER}`);
+    ts.forEachChild(node, child => visit(child, region));
+  };
+  visit(block, "describe");
+  return found;
+}
+/**
+ * THE SELF-READ (wb-3xmr F2, wb-hiwv F1) over a source text, this file's or a planted one. Outside the describe block: every IMPL
+ * case names one of READERS; IMPL, rosterWitness, MEASURED and REACHED are named only where declared, ROSTER_PATH only in readRoster
+ * and readRoster only for ROSTER; a witness member is read only in readRoster and rosterWitness; and ROSTER is read only through
+ * SUBJECT_MEMBERS (its rows in rosterWitness alone). Inside it, describeReads. Returns the refused reads, by declaration (an IMPL
+ * case as IMPL.<pin>) or by region.
  */
 function selfRead(text: string): string[] {
   const file = ts.createSourceFile("self-read.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
@@ -897,7 +1031,10 @@ function selfRead(text: string): string[] {
   for (const statement of file.statements) {
     if (ts.isInterfaceDeclaration(statement) || ts.isTypeAliasDeclaration(statement) || ts.isImportDeclaration(statement)) continue;
     const call = ts.isExpressionStatement(statement) && ts.isCallExpression(statement.expression) ? statement.expression : undefined;
-    if (call !== undefined && ts.isIdentifier(call.expression) && call.expression.text === "describe") continue;
+    if (call !== undefined && ts.isIdentifier(call.expression) && call.expression.text === "describe") {
+      found.push(...describeReads(file, call));
+      continue;
+    }
     const impl = ts.isVariableStatement(statement) ? statement.declarationList.declarations.find(entry => ts.isIdentifier(entry.name) && entry.name.text === "IMPL") : undefined;
     if (impl?.initializer === undefined || !ts.isObjectLiteralExpression(impl.initializer)) {
       found.push(...refusedReads(ownerOf(statement), statement));
@@ -1246,9 +1383,10 @@ describe("wb-tz4r.3 RI native result provenance echo census (RI-UNIFIED-DECISION
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins.map(pin => pin.id)).sort());
     expect({
       bead: BEAD, quotePin: QUOTE_PIN, quote: QUOTE, gatingArtifacts: GATING_ARTIFACTS, fields: FIELDS, refKinds: REF_KIND, members: MEMBER, invocation: INVOCATION,
+      harness: HARNESS,
     }).toStrictEqual({
       bead: ROSTER.bead, quotePin: ROSTER.quotePin, quote: ROSTER.quote, gatingArtifacts: [...ROSTER.gatingArtifacts], fields: [...ROSTER.fields],
-      refKinds: ROSTER.refKinds, members: ROSTER.members, invocation: ROSTER.invocation,
+      refKinds: ROSTER.refKinds, members: ROSTER.members, invocation: ROSTER.invocation, harness: [...ROSTER.harness],
     });
     // The anchor outside this file and its roster: the owner filing in the tracked bead export.
     const { title, notes } = exportRow();
@@ -1288,6 +1426,51 @@ describe("wb-tz4r.3 RI native result provenance echo census (RI-UNIFIED-DECISION
       "the witness through a helper": ["handed names rosterWitness"],
       "the witness read after measuring": ["IMPL.D3 reads a witness", "IMPL.D3 reads ROSTER.rows"],
       "a constant naming no reader": ["IMPL.D3 names no reader"],
+    });
+    // THE SELF-READ inside the describe block (wb-hiwv F1): planted blocks show each refusal, beside the harness reading clean.
+    const rewritten = (at: number, line: string): string[] => HARNESS.map((entry, index) => (index === at ? line : entry));
+    const blocks: Record<string, string> = {
+      "the harness, one statement laid over two lines (control)": plantedBlock(rewritten(2, "const witness =\n        impl === undefined ? null : await impl();")),
+      "a harness handing D3 its roster witness (wb-3xmr L2-HARNESS-D3-substituted)": plantedBlock(
+        rewritten(2, 'const witness = impl === undefined ? null : pin === "D3" ? (expect(pin).toBe("D3"), rosterWitness(pin)) : await impl();'),
+      ),
+      "a harness handing D3 a literal": plantedBlock(rewritten(2, 'const witness = impl === undefined ? null : pin === "D3" ? { pasted: true } : await impl();')),
+      "a harness without its comparison": plantedBlock(HARNESS.filter((_, index) => index !== 4)),
+      "a rosterWitness alias bound in the describe callback (wb-3xmr L2-SELF-DESCRIBE-BOUND)": `let HANDED: (pin: string) => unknown = () => null;\n${plantedBlock(HARNESS, ["HANDED = rosterWitness;"])}`,
+      "the roster witness read in the describe callback": `let HANDED: () => unknown = () => null;\n${plantedBlock(HARNESS, ["HANDED = () => ROSTER.rows[3]?.pins[2]?.witness;"])}`,
+      "the roster read afresh in the describe callback": `let HANDED: () => unknown = () => null;\n${plantedBlock(HARNESS, ['HANDED = () => [readRoster(), JSON.parse(readFileSync(ROSTER_PATH, "utf8"))];'])}`,
+      "a measurement recorded through an aliased registration": plantedBlock(HARNESS, ["const check = it;", 'check("D3", async () => {', "  MEASURED.D3 = { pasted: true };", '  REACHED.push("D3:3");', "});"]),
+      "a case replaced from the describe callback": plantedBlock(HARNESS, ["Object.assign(IMPL, { D3: async () => ({ pasted: true }) });"]),
+      "a case replaced through a pin case's parameter default": plantedBlock(HARNESS, [], "_context, _unused = Object.assign(IMPL, { D3: async () => ({ pasted: true }) })"),
+      "a case replaced through a pin case's options": plantedBlock(HARNESS, [], "", "{ timeout: (Object.assign(IMPL, { D3: async () => ({ pasted: true }) }), 60_000) }"),
+      "the judged set and the record out of their regions": [
+        'describe("planted", () => {',
+        "  it(JUDGED_TITLE, () => {",
+        "    MEASURED.D3 = ROSTER.rows[3]?.pins[2]?.witness ?? null;",
+        '    REACHED.push("D3:3");',
+        "  });",
+        "  it(RECORD_TITLE, () => {",
+        "    expect(Object.keys(IMPL)).toHaveLength(16);",
+        "  });",
+        "});",
+        "",
+      ].join("\n"),
+      "a case replaced at the top level": "Object.assign(IMPL, { D3: async () => ({ pasted: true }) });\n",
+    };
+    expect(Object.fromEntries(Object.entries(blocks).map(([name, source]) => [name, selfRead(source)]))).toStrictEqual({
+      "the harness, one statement laid over two lines (control)": [],
+      "a harness handing D3 its roster witness (wb-3xmr L2-HARNESS-D3-substituted)": ["it(pin) is not the harness"],
+      "a harness handing D3 a literal": ["it(pin) is not the harness"],
+      "a harness without its comparison": ["it(pin) is not the harness"],
+      "a rosterWitness alias bound in the describe callback (wb-3xmr L2-SELF-DESCRIBE-BOUND)": ["describe names rosterWitness"],
+      "the roster witness read in the describe callback": ["describe reads a witness", "describe reads ROSTER.rows"],
+      "the roster read afresh in the describe callback": ["describe names readRoster", "describe names ROSTER_PATH"],
+      "a measurement recorded through an aliased registration": ["describe names MEASURED", "describe names REACHED"],
+      "a case replaced from the describe callback": ["describe names IMPL"],
+      "a case replaced through a pin case's parameter default": ["describe names IMPL"],
+      "a case replaced through a pin case's options": ["describe names IMPL"],
+      "the judged set and the record out of their regions": ["the judged set names MEASURED", "the judged set reads a witness", "the judged set names REACHED", "the record names IMPL"],
+      "a case replaced at the top level": ["<statement> names IMPL"],
     });
   });
 

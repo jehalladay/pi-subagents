@@ -53,6 +53,7 @@
       "directory": ".agents/skills",
       "member": "SKILL.md"
     },
+    "clauseRoots": "\\bcensus over Pi (\\S+) \\(/",
     "families": [
       {
         "id": "N1",
@@ -1125,7 +1126,9 @@
             ],
             "tierClaims": [],
             "receiptsFloorMet": true,
-            "naming": [],
+            "naming": [
+              "docs/workbench/receipts/wb-693.7.md"
+            ],
             "receiptClaims": [],
             "controls": {
               "title": 1,
@@ -1242,6 +1245,22 @@
                 "scannedBy": "test"
               }
             ],
+            "rootParse": {
+              "parsed": true,
+              "count": 5,
+              "restated": true
+            },
+            "parseControls": {
+              "list": [
+                "alpha",
+                "beta",
+                "gamma"
+              ],
+              "single": [
+                "docs"
+              ],
+              "absent": null
+            },
             "rootControls": {
               "unscanned": {
                 "word": "outside",

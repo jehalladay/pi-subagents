@@ -39,14 +39,19 @@
  *  A, the trigger, absent today. A1 an AST scan of every src module: the one rf render argv carries --no-commit, the one rf launch
  *    is the provider's, no literal spells an uncommitted render or a commit-time flag, with controls. A launch is a call of a
  *    launcher - a bare child_process name, a child_process import alias, a variable bound or destructured to a launcher, or a
- *    member or element call such as childProcess.spawn, pi.exec or cp["spawn"] - whose program literal is rf (a shell string
- *    whose first word is rf included); an argv is read through inline spreads and literal .concat chains, a render is a "context"
- *    word with a later "render" word (flags may sit between), and a '+' chain of string literals is read as one text (wb-w1g3
- *    F1(iv): G15, G17); A2 a stand-in rf on PATH sees --no-commit on both input arms; A3 the rf roster stays the read preview:
- *    native and injected registrations selected by id, permission or an rf contractSource (rf@ release or the reactive-fiber.cli
- *    schema), never the id prefix alone (wb-w1g3 F1(iv): G14), the carrier contractSource, RECONCILE_EVIDENCE_READS.reactivefiber
- *    at src/workflow/reconcile.ts:67; A4 no src or qa file spells the pin-change vocabulary, read raw and with its escape
- *    sequences decoded (wb-w1g3 F2: G18), floors and anchors per root.
+ *    member or element call such as childProcess.spawn, pi.exec or cp["spawn"] - whose program literal is rf or a path to it
+ *    (/usr/local/bin/rf, C:\tools\rf.exe; wb-s4j3 F3), a shell string whose first word is one included; an argv is read through
+ *    inline spreads, literal .concat chains, type and non-null assertions, and every later push that completes a declared array
+ *    literal in its scope (wb-s4j3 F3), a render is a "context" word with a later "render" word (flags may sit between), and a '+'
+ *    chain of string literals is read as one text (wb-w1g3 F1(iv): G15, G17); A2 a stand-in rf on PATH sees --no-commit on both
+ *    input arms; A3 the rf roster stays the read preview: native and injected registrations selected by id, permission or an rf
+ *    contractSource (rf@ release or the reactive-fiber.cli schema), never the id prefix alone (wb-w1g3 F1(iv): G14), and by reach
+ *    (wb-s4j3 F2): the rf provider's two registrations are read whole, unfiltered, each the preview alone, and every src reference
+ *    to the function enclosing src's rf launch (nativeReactiveFiberRender) is pinned - the preview registration's invoke and the
+ *    legacy nativeReactiveFiberPreview wrapper, which no src module references - so a capability carrying no rf marker that drives
+ *    the launcher shows; the carrier contractSource, RECONCILE_EVIDENCE_READS.reactivefiber at src/workflow/reconcile.ts:67; A4 no
+ *    src or qa file spells the pin-change vocabulary, read raw and with its escape sequences and line continuations decoded
+ *    (wb-w1g3 F2: G18; wb-s4j3 F4), floors and anchors per root.
  *  B, acceptance (a). B1 the fixture: the code, the analogue's metadata keys, r1 at expected_revision, r2 at current_revision, exit
  *    4 and the unshipped status ride the roster; B2 the native typed refusal at exit 4 names the code verbatim, one spawn, no
  *    reading; B3 it is held to a nonzero exit (exit 0 is a contradiction, exit 7 reads as exit 4); B4 a stand-in that would answer
@@ -63,17 +68,22 @@
  *    it; D3 the noncommitted relay probe comes back byte for byte through both seams, pinnedReceiptIdentity r1, r2 nowhere, the
  *    reading keyed exactly contract, source, workspaceRoot; D4 no reader surface these rows reach (both projections, the typed
  *    refusal, both aborts, every part a relayed reading adds outside its source and every key or string a relay adds inside it,
- *    the host root spelled <root>) carries a freshness word, nothing is added inside a relayed source, the quiet control reads the
+ *    the host root spelled <root>) carries a freshness word, read raw and with its identifier joints opened (wb-s4j3 F1:
+ *    fresh_output, isFresh, rendered_live_now), nothing is added inside a relayed source, the quiet control reads the
  *    seam label the probe projection surfaces (never a hard-coded copy), and the projection of the relay probe names neither
  *    receipt.
- *  M, the vocabulary matcher A4 reads, raw and decoded: M1-M15 the spellings it catches (an escape inside the code per decoder
- *    branch, the partial PIN_CHANGED token and the two forms the landed Q1 and Q3 rows held among them, wb-w1g3 F2: G18, G19),
- *    Q1-Q3 the quiet rows of its named residuals.
- *  L, the freshness matcher D4 reads (wb-w1g3 F1(ii): inflections and synonyms, G11, G12): L1-L12 the spellings it catches beside
- *    D4's five base controls, LQ1-LQ3 the quiet rows of its named residuals.
+ *  M, the vocabulary matcher A4 reads, raw and decoded: M1-M17 the spellings it catches (an escape inside the code per decoder
+ *    branch, the partial PIN_CHANGED token and the two forms the landed Q1 and Q3 rows held among them, wb-w1g3 F2: G18, G19; M16
+ *    and M17 a line continuation inside the code, LF and CRLF, wb-s4j3 F4), Q1-Q3 the quiet rows of its named residuals.
+ *  L, the freshness matcher D4 reads, raw and with identifier joints opened (wb-w1g3 F1(ii): inflections and synonyms, G11, G12;
+ *    wb-s4j3 F1: joined identifiers): L1-L12 the spellings it catches beside D4's five base controls, L13-L17 a family word joined
+ *    into an identifier, one per joint (L13 and L15 a snake underscore, L14 a camel hump, L16 an acronym's end, L17 a letter-digit
+ *    seam), L18 the capitalised inflection only the raw reading keeps, LQ1-LQ4 the quiet rows of its named residuals.
  *  N, the receipt-naming matcher C2, C3, D1 and D4 read (wb-w1g3 F1(iii)): a receipt is named in full or by the first 8 hex digits
  *    of its digest, bare or prefixed (G13), the record id and the producer message by their full text; N1-N5 the texts it names,
  *    each a positive control (X-NAMED, X-NAMED1), NQ1-NQ2 its quiet rows.
+ *  H, the witness guard every pin's case runs under (wb-s4j3 F5): a case that reads a roster witness is refused, and so is a case
+ *    handing back an object the roster holds; H1 its positive controls, HQ1 the quiet row of its named residual.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id, label
  * and pins, every pin's witness, the code, exit, gating artifacts, conflict keys, publication fields, spellings, residuals, the
  * registered test titles and each pin's own assertion count - is held to the out-of-file roster, whose envelopes, receipts and
@@ -83,7 +93,8 @@
  * roster quotes and the Acceptance line whose clause tags (a), (b), (c) are exactly the tags rows B to D carry) and the delivered
  * note's RESIDUALS paragraph (every residual it names is named here with its quiet pins judged). The last case reads the vitest
  * task tree: every registered test, in roster order, in run mode, not inverted, ran before it, and every pin reached its witness
- * compare after its own pinned number of assertions (wb-w1g3 F3: X-EACH, X-THIRD).
+ * compare after its own pinned number of assertions (wb-w1g3 F3: X-EACH, X-THIRD), having handed back its own reading, never a
+ * roster witness (wb-s4j3 F5: row H).
  * RESIDUALS (named, each with a pinned quiet row): R-WITHHELD the typed refusal and the projection carry the code but withhold the
  *   witness, so r1 rides only the relayed reading (quiet rows C2, C3); R-EXIT-UNREAD Pi reads rf's exit as zero or nonzero only, so
  *   an exit-4 and an exit-7 refusal read alike and no surface names the class (quiet row B3); R-RESUME-REREAD a resume re-runs a
@@ -98,10 +109,17 @@
  *   counted as a launch (quiet rows: A1's wrappedLaunch and constantProgram controls; their literal argv is still read, and A3
  *   holds every registered capability); R-FRESH-PARAPHRASE a freshness claim worded outside every family (quiet row LQ1), R-FRESH-HOMOGLYPH (LQ2) and
  *   R-FRESH-INTERRUPTED (LQ3) a homoglyph letter or an invisible split hiding a family word, escape the freshness matcher;
- *   R-SHORT-PREFIX a receipt abbreviated below 8 hex digits is not read as naming it (quiet row NQ2).
- * NOT CLAIMED: a coordinated edit of this file and the roster that drops a residual this cut adds or re-maps a residual to other
- * quiet pins, or that rewrites a pin's assertion count: the tracker export anchors only the eight residuals the landed note named
- * and the clause tags of rows B to D.
+ *   R-SHORT-PREFIX a receipt abbreviated below 8 hex digits is not read as naming it (quiet row NQ2); R-FRESH-RUNON a freshness
+ *   word run into another word with no joint (isfresh) escapes the freshness matcher (quiet row LQ4); R-RELAYED-REACH an rf
+ *   capability A3 binds by neither marker nor reach - one relaying the read preview through the registry, or one reaching the
+ *   launcher through a name assembled at runtime - is not selected (quiet rows: A3's registryRelay and assembledName controls);
+ *   R-MUTATED-ARGV a render argv completed by a mutation other than a push in its declaring scope (unshift, splice, an index write,
+ *   a reassignment) is read as its declared literal alone (quiet row: A1's unshiftArgv control); R-VACUOUS-PAYLOAD a case that
+ *   makes its pinned number of assertions on values it never measured and returns a deep copy of its witness, read from the
+ *   roster's rows directly or written out as a literal, keeps its reached count and passes the witness guard (quiet row HQ1).
+ * NOT CLAIMED: a coordinated edit of this file and the roster that drops a residual the landed note did not name or re-maps a
+ * residual to other quiet pins, or that rewrites a pin's assertion count: the tracker export anchors only the eight residuals the
+ * landed note named and the clause tags of rows B to D; nor an edit of the per-pin wrapper's own guard lines.
  * SCOPE: the code, metadata shape and record fields are producer facts at the pin; Pi vendors no rf schema, so a producer-side
  * change is seen only when the roster is re-read. The armed half (a committing capability with --idempotency-key and rf operation
  * show reconciliation) is owner-reserved under wb-jwc.5: no committing capability, argv or reader is added here, and the committing
@@ -175,8 +193,9 @@ const COMMIT_FLAGS = ["--idempotency-key", "--strict"];
 const LAUNCHERS = ["spawn", "spawnSync", "exec", "execSync", "execFile", "execFileSync", "fork"];
 /** The modules whose named imports bind a launcher under another local name (import { spawn as run }). */
 const CHILD_PROCESS = ["child_process", "node:child_process"];
-/** A program literal naming rf: the bare program, or a shell command whose first word is rf. */
-const RF_PROGRAM = /^\s*rf(?:\s|$)/;
+/** A program literal naming rf: the bare program or a path whose last segment is rf (rf.exe included, wb-s4j3 F3), or a shell command
+ * whose first word is one. */
+const RF_PROGRAM = /^\s*(?:\S*[\\/])?rf(?:\.exe)?(?:\s|$)/;
 /** A literal spelling an rf render: `context` then `render`, flag words allowed between (wb-w1g3 F1(iv): interleaved argv). */
 const SPACED_RENDER = /\bcontext(?:\s+--?[A-Za-z][\w-]*(?:=\S*)?)*\s+render\b/;
 /** rf's CLI schema family: a contractSource naming it (or an rf@ release) states an rf-driving capability, whatever its id. */
@@ -202,6 +221,10 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-FRESH-HOMOGLYPH": ["LQ2"],
   "R-FRESH-INTERRUPTED": ["LQ3"],
   "R-SHORT-PREFIX": ["NQ2"],
+  "R-FRESH-RUNON": ["LQ4"],
+  "R-RELAYED-REACH": ["A3"],
+  "R-MUTATED-ARGV": ["A1"],
+  "R-VACUOUS-PAYLOAD": ["HQ1"],
 };
 const JUDGED_TITLE = "the judged set: the frozen shape, the out-of-file roster and the cases agree";
 const REGISTRATION_TITLE = "the registered tests and the reached pins equal the roster, in order and both ways";
@@ -237,18 +260,23 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "M",
-    label: "the pin-change vocabulary matcher A4 reads, raw and with escape sequences decoded: the spellings it catches (M1-M15) and the pinned quiet rows of its named residuals (Q1 R-INTERRUPTED, Q2 R-HOMOGLYPH, Q3 R-COMPOSED)",
-    pins: ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11", "M12", "M13", "M14", "M15", "Q1", "Q2", "Q3"],
+    label: "the pin-change vocabulary matcher A4 reads, raw and with escape sequences and line continuations decoded: the spellings it catches (M1-M17) and the pinned quiet rows of its named residuals (Q1 R-INTERRUPTED, Q2 R-HOMOGLYPH, Q3 R-COMPOSED)",
+    pins: ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "M8", "M9", "M10", "M11", "M12", "M13", "M14", "M15", "M16", "M17", "Q1", "Q2", "Q3"],
   },
   {
     id: "L",
-    label: "the freshness matcher D4 reads: the inflections and synonyms it catches (L1-L12) and the pinned quiet rows of its named residuals (LQ1 R-FRESH-PARAPHRASE, LQ2 R-FRESH-HOMOGLYPH, LQ3 R-FRESH-INTERRUPTED)",
-    pins: ["L1", "L2", "L3", "L4", "L5", "L6", "L7", "L8", "L9", "L10", "L11", "L12", "LQ1", "LQ2", "LQ3"],
+    label: "the freshness matcher D4 reads, raw and with identifier joints opened: the inflections and synonyms it catches (L1-L12), the joined spellings it opens (L13-L17), the capitalised inflection only its raw reading keeps (L18), and the pinned quiet rows of its named residuals (LQ1 R-FRESH-PARAPHRASE, LQ2 R-FRESH-HOMOGLYPH, LQ3 R-FRESH-INTERRUPTED, LQ4 R-FRESH-RUNON)",
+    pins: ["L1", "L2", "L3", "L4", "L5", "L6", "L7", "L8", "L9", "L10", "L11", "L12", "L13", "L14", "L15", "L16", "L17", "L18", "LQ1", "LQ2", "LQ3", "LQ4"],
   },
   {
     id: "N",
     label: "the receipt-naming matcher C2, C3, D1 and D4 read: a receipt named in full or by an 8-hex prefix of its digest, the record id and the producer message (N1-N5, each a positive control) and the pinned quiet rows (NQ1 a digest that is no receipt, NQ2 R-SHORT-PREFIX)",
     pins: ["N1", "N2", "N3", "N4", "N5", "NQ1", "NQ2"],
+  },
+  {
+    id: "H",
+    label: "the witness guard every pin's case runs under: a case reading a roster witness, or handing back an object the roster holds, is refused (H1, the guard's positive controls), and the pinned quiet row of its named residual (HQ1 R-VACUOUS-PAYLOAD)",
+    pins: ["H1", "HQ1"],
   },
 ];
 
@@ -276,6 +304,8 @@ const SPELLINGS: readonly Spelling[] = [
   { pin: "M13", text: 'if (primary.code.endsWith("_PIN_CHANGED")) return;', hit: true },
   { pin: "M14", text: 'const code = "RF_FEDERATION_" + "PIN_CHANGED";', hit: true },
   { pin: "M15", text: `RF_FEDERATION${String.fromCodePoint(0x200b)}_PIN_CHANGED`, hit: true },
+  { pin: "M16", text: 'export const CODE = "RF_FEDERATION_PIN_\\\nCHANGED";', hit: true },
+  { pin: "M17", text: 'export const CODE = "RF_FEDERATION_PIN_\\\r\nCHANGED";', hit: true },
   { pin: "Q1", text: `RF_FEDERATION_PIN${String.fromCodePoint(0x200b)}_CHANGED`, hit: false },
   { pin: "Q2", text: `pinn${String.fromCodePoint(0x0435)}dReceiptIdentity`, hit: false },
   { pin: "Q3", text: 'const code = ["RF", "FEDERATION", "PIN", "CHANGED"].join("_");', hit: false },
@@ -295,9 +325,16 @@ const FRESH_SPELLINGS: readonly Spelling[] = [
   { pin: "L10", text: "a recent render", hit: true },
   { pin: "L11", text: "recently rendered", hit: true },
   { pin: "L12", text: "freshness", hit: true },
+  { pin: "L13", text: "fresh_output", hit: true },
+  { pin: "L14", text: "isFresh", hit: true },
+  { pin: "L15", text: "rendered_live_now", hit: true },
+  { pin: "L16", text: "LIVEPreview", hit: true },
+  { pin: "L17", text: "fresh2render", hit: true },
+  { pin: "L18", text: "the NEWest receipt", hit: true },
   { pin: "LQ1", text: "rendered as of now", hit: false },
   { pin: "LQ2", text: `fr${String.fromCodePoint(0x0435)}sh output`, hit: false },
   { pin: "LQ3", text: `fre${String.fromCodePoint(0x200b)}sh output`, hit: false },
+  { pin: "LQ4", text: "isfresh", hit: false },
 ];
 
 interface RosterPin {
@@ -411,10 +448,18 @@ const ROSTER = readRoster();
 const R1 = ROSTER.receipts.pinned;
 const R2 = ROSTER.receipts.accepted;
 
+/** The pin whose case is running, while it runs (wb-s4j3 F5): a case measures its witness, so rosterWitness refuses a read from
+ * inside one. */
+let runningCase: string | null = null;
 function rosterWitness(pin: string): JsonValue {
+  if (runningCase !== null) throw new Error(`${runningCase}'s case read the roster witness of ${pin}: a case measures its witness, never reads it`);
   const found = ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === pin);
   if (found === undefined) throw new Error(`the roster holds no pin ${pin}`);
   return found.witness;
+}
+/** A pin's witness object as the roster holds it, read from its rows directly (row H's controls): never a case's own reading. */
+function heldWitness(pin: string): JsonValue {
+  return ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === pin)?.witness ?? null;
 }
 
 /** The roster's refusal envelope with its workspace at this run's root, the root the native reader and the adapter read under. */
@@ -807,6 +852,11 @@ function launchesRf(call: ts.CallExpression, launchers: ReadonlySet<string>): bo
   const program = call.arguments[0];
   return launcher && program !== undefined && ts.isStringLiteralLike(program) && RF_PROGRAM.test(program.text);
 }
+/** Whether a node wraps an expression the argv reading sees through: parentheses, a type assertion (as, satisfies, <T>) or a
+ * non-null assertion (wb-s4j3 F3). */
+function isWrapper(node: ts.Node): node is ts.ParenthesizedExpression | ts.AsExpression | ts.SatisfiesExpression | ts.TypeAssertion | ts.NonNullExpression {
+  return ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node);
+}
 /** The receiver of a `.concat(...)` call, or undefined when the node is none. */
 function concatReceiver(node: ts.Node): ts.Expression | undefined {
   return ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression) && node.expression.name.text === "concat" ? node.expression.expression : undefined;
@@ -814,7 +864,7 @@ function concatReceiver(node: ts.Node): ts.Expression | undefined {
 /** The words of an argv expression: a string literal by its text, an inline array spread and a literal .concat chain flattened, any
  * other part null (composed); undefined when the expression is no argv. */
 function argvWords(node: ts.Expression): (string | null)[] | undefined {
-  if (ts.isParenthesizedExpression(node)) return argvWords(node.expression);
+  if (isWrapper(node)) return argvWords(node.expression);
   if (ts.isArrayLiteralExpression(node)) {
     return node.elements.flatMap(element => {
       if (ts.isSpreadElement(element)) return argvWords(element.expression) ?? [null];
@@ -830,7 +880,7 @@ function argvWords(node: ts.Expression): (string | null)[] | undefined {
 /** Whether an argv expression is part of a larger one (an inline spread, or a .concat receiver or argument), so it is read there. */
 function insideArgv(node: ts.Node): boolean {
   let at: ts.Node = node;
-  while (ts.isParenthesizedExpression(at.parent)) at = at.parent;
+  while (isWrapper(at.parent)) at = at.parent;
   const parent = at.parent;
   if (ts.isSpreadElement(parent) && ts.isArrayLiteralExpression(parent.parent)) return true;
   if (ts.isPropertyAccessExpression(parent) && parent.expression === at && ts.isCallExpression(parent.parent) && concatReceiver(parent.parent) !== undefined) {
@@ -841,12 +891,47 @@ function insideArgv(node: ts.Node): boolean {
 }
 /** The literal texts of a '+' chain, or undefined when any part is not a string literal. */
 function plusLiterals(node: ts.Expression): string[] | undefined {
-  if (ts.isParenthesizedExpression(node)) return plusLiterals(node.expression);
+  if (isWrapper(node)) return plusLiterals(node.expression);
   if (ts.isStringLiteralLike(node)) return [node.text];
   if (!ts.isBinaryExpression(node) || node.operatorToken.kind !== ts.SyntaxKind.PlusToken) return undefined;
   const left = plusLiterals(node.left);
   const right = plusLiterals(node.right);
   return left === undefined || right === undefined ? undefined : [...left, ...right];
+}
+/** The block, module block or source file a declaration's name is visible in. */
+function scopeOf(node: ts.Node): ts.Node {
+  let at: ts.Node = node;
+  while (!(ts.isBlock(at) || ts.isModuleBlock(at) || ts.isSourceFile(at)) && at.parent !== undefined) at = at.parent;
+  return at;
+}
+/** The argvs a push completes (wb-s4j3 F3): each array literal bound to a local name, followed by the words of every later
+ * `<name>.push(...)` in the declaring scope, in source order; a pushed part that is no string literal reads null (composed). Any other
+ * mutation (unshift, splice, an index write, a reassignment) is not folded: R-MUTATED-ARGV. */
+function pushFolded(file: ts.SourceFile): Map<ts.Node, (string | null)[]> {
+  const declared: { readonly name: string; readonly scope: ts.Node; readonly end: number; readonly literal: ts.ArrayLiteralExpression }[] = [];
+  const pushes: { readonly name: string; readonly call: ts.CallExpression }[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined) {
+      let literal: ts.Expression = node.initializer;
+      while (isWrapper(literal)) literal = literal.expression;
+      if (ts.isArrayLiteralExpression(literal)) declared.push({ name: node.name.text, scope: scopeOf(node), end: node.end, literal });
+    }
+    if (ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression) && node.expression.name.text === "push" && ts.isIdentifier(node.expression.expression)) {
+      pushes.push({ name: node.expression.expression.text, call: node });
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  const folded = new Map<ts.Node, (string | null)[]>();
+  for (const { name, scope, end, literal } of declared) {
+    const later = pushes.filter(push => push.name === name && push.call.getStart() >= end && push.call.end <= scope.end);
+    const head = argvWords(literal);
+    if (later.length === 0 || head === undefined) continue;
+    const pushed = later.flatMap(({ call }) => call.arguments.flatMap(argument =>
+      ts.isSpreadElement(argument) ? (argvWords(argument.expression) ?? [null]) : [ts.isStringLiteralLike(argument) ? argument.text : null]));
+    folded.set(literal, [...head, ...pushed]);
+  }
+  return folded;
 }
 function isPlus(node: ts.Node): boolean {
   return ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken;
@@ -857,6 +942,7 @@ function isPlus(node: ts.Node): boolean {
 function scanRf(fileName: string, source: string): RfScan {
   const file = ts.createSourceFile(fileName, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const launchers = launcherNames(file);
+  const folded = pushFolded(file);
   const scan: RfScan = { renderSites: [], uncommitted: [], uncommittedLiterals: [], commitFlags: [], rfLaunches: [], composedArgv: 0 };
   let composed = 0;
   const readArgv = (words: readonly (string | null)[]): void => {
@@ -868,7 +954,7 @@ function scanRf(fileName: string, source: string): RfScan {
   };
   const visit = (node: ts.Node): void => {
     if ((ts.isArrayLiteralExpression(node) || ts.isCallExpression(node)) && !insideArgv(node)) {
-      const words = argvWords(node);
+      const words = folded.get(node) ?? argvWords(node);
       if (words !== undefined) readArgv(words);
     }
     if (ts.isStringLiteralLike(node)) {
@@ -906,11 +992,13 @@ const VOCABULARY_ROOTS: readonly ScanRoot[] = [
   { root: "src", floor: 100, anchorFile: "workbench/providers/reactivefiber.ts", anchorToken: "RF render refused" },
   { root: "qa", floor: 50, anchorFile: "workbench/receipts-index.mjs", anchorToken: "docs/workbench/receipts" },
 ];
-/** A text with its JavaScript and JSON escape sequences decoded - \u{...}, \uXXXX, \xXX and an identity escape such as \_ - so an
+/** A text with its JavaScript and JSON escape sequences decoded - \u{...}, \uXXXX, \xXX, a line continuation (a backslash before a
+ * line break - LF, CRLF, CR, U+2028 or U+2029 - which a string literal drops, wb-s4j3 F4) and an identity escape such as \_ - so an
  * escaped spelling reads as the value a runtime builds from it (wb-w1g3 F2: G18); an escaped backslash stays one backslash. */
 function decodeEscapes(value: string): string {
-  return value.replace(/\\(?:u\{([0-9a-fA-F]{1,6})\}|u([0-9a-fA-F]{4})|x([0-9a-fA-F]{2})|([^0-9A-Za-z\r\n]))/g, (whole: string, ...groups: unknown[]) => {
-    const [braced, unicode, hex, identity] = groups.slice(0, 4).map(group => (typeof group === "string" ? group : undefined));
+  return value.replace(/\\(?:u\{([0-9a-fA-F]{1,6})\}|u([0-9a-fA-F]{4})|x([0-9a-fA-F]{2})|(\r\n|[\r\n\u2028\u2029])|([^0-9A-Za-z\r\n]))/g, (whole: string, ...groups: unknown[]) => {
+    const [braced, unicode, hex, continuation, identity] = groups.slice(0, 5).map(group => (typeof group === "string" ? group : undefined));
+    if (continuation !== undefined) return "";
     if (identity !== undefined) return identity;
     const point = Number.parseInt(braced ?? unicode ?? hex ?? "", 16);
     return Number.isInteger(point) && point <= 0x10ffff ? String.fromCodePoint(point) : whole;
@@ -919,6 +1007,22 @@ function decodeEscapes(value: string): string {
 /** The vocabulary reading A4 and row M share: a text spells the pin-change vocabulary raw or with its escapes decoded. */
 function vocabularyHit(value: string): boolean {
   return PIN_VOCABULARY.test(value) || PIN_VOCABULARY.test(decodeEscapes(value));
+}
+/** A text with its identifier joints opened into word breaks (wb-s4j3 F1): a snake underscore, a camel hump (a lower-case letter or a
+ * digit before a capital), an acronym's end (a capital run before a capitalised word, LIVEPreview) and a letter-digit seam, so a
+ * freshness word joined into an identifier (fresh_output, isFresh, rendered_live_now) reads as a word. A word run into another with no
+ * joint (isfresh) stays one word: R-FRESH-RUNON. */
+function identifierWords(value: string): string {
+  return value
+    .replace(/_/g, " ")
+    .replace(/([a-z0-9])(?=[A-Z])/g, "$1 ")
+    .replace(/([A-Z])(?=[A-Z][a-z])/g, "$1 ")
+    .replace(/([A-Za-z])(?=[0-9])|([0-9])(?=[A-Za-z])/g, "$1$2 ");
+}
+/** The freshness reading D4 and row L share: a text carries a freshness word raw, or with its identifier joints opened. The raw
+ * reading stays beside it, since opening an acronym's end splits a capitalised inflection (NEWest reads "NE West", L18). */
+function freshLabelled(value: string): boolean {
+  return FRESH_LABEL.test(value) || FRESH_LABEL.test(identifierWords(value));
 }
 function scanVocabulary(scan: ScanRoot): JsonValue {
   const base = join(REPO, scan.root);
@@ -946,6 +1050,92 @@ function descriptorShape(descriptor: CapabilityDescriptor): JsonValue {
     carrier: descriptor.contractSource === REACTIVE_FIBER_CONTRACT_SOURCE,
     noCommitSource: (descriptor.contractSource ?? "").endsWith("context.render --no-commit"),
   };
+}
+
+/** The rf provider's two registrations, native and injected, as A3's whole reads run them. */
+function nativeRegistration(registry: CapabilityRegistry): void {
+  registerNativeReactiveFiberRender(registry, ROOT);
+}
+function injectedRegistration(registry: CapabilityRegistry): void {
+  registerReactiveFiberRender(registry, () => Promise.reject(new Error("the injected reader is never invoked here")), ROOT);
+}
+/** A registration read whole (wb-s4j3 F2): every descriptor the registry holds once it ran, unfiltered, after any it already held. */
+function wholeRead(registration: (registry: CapabilityRegistry) => void, registry: CapabilityRegistry = new CapabilityRegistry()): CapabilityDescriptor[] {
+  registration(registry);
+  return registry.catalogSnapshot().map(entry => entry.descriptor);
+}
+/** A registry already holding a test-only stand-in for the UNMARKED capability (never invoked; src registers none): the control
+ * each whole read runs on. */
+function unmarkedRegistry(): CapabilityRegistry {
+  const registry = new CapabilityRegistry();
+  registry.register({
+    descriptor: { ...UNMARKED, version: "1.0.0", description: "Test-only unmarked stand-in (wb-s4j3 F2); src registers none", inputSchema: COMMIT_INPUT, effectClass: "write", supportedModes: ["invoke"] },
+    invoke: () => Promise.reject(new Error("the unmarked stand-in is never invoked")),
+  });
+  return registry;
+}
+/** The wb-w1g3 L2-04 probe's descriptor: a write-class capability carrying no rf marker in its id, permission or contractSource. */
+const UNMARKED = { id: "context.render.commit", permissions: ["context:commit"], contractSource: "local:context.render" };
+interface Reach {
+  readonly launchers: string[];
+  readonly sites: string[];
+  readonly wrappers: string[];
+  readonly wrapperSites: string[];
+}
+function parsed(fileName: string, source: string): ts.SourceFile {
+  return ts.createSourceFile(fileName, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+}
+const MODULE_SCOPE = "<module>";
+/** The name a node sits under: the nearest named function declaration, a function bound to a variable, or a class method
+ * (Class.method), looking through object-literal members; MODULE_SCOPE at module scope. */
+function enclosingName(node: ts.Node): string {
+  for (let at: ts.Node | undefined = node.parent; at !== undefined; at = at.parent) {
+    if (ts.isFunctionDeclaration(at) && at.name !== undefined) return at.name.text;
+    if ((ts.isArrowFunction(at) || ts.isFunctionExpression(at)) && ts.isVariableDeclaration(at.parent) && ts.isIdentifier(at.parent.name)) return at.parent.name.text;
+    if (ts.isMethodDeclaration(at) && ts.isClassDeclaration(at.parent) && at.parent.name !== undefined && ts.isIdentifier(at.name)) return `${at.parent.name.text}.${at.name.text}`;
+  }
+  return MODULE_SCOPE;
+}
+/** The functions enclosing each rf launch A1 counts in a module: the launchers src's reach is read from (wb-s4j3 F2). */
+function launchingFunctions(file: ts.SourceFile): string[] {
+  const launchers = launcherNames(file);
+  const found: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node) && launchesRf(node, launchers)) found.push(enclosingName(node));
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return found;
+}
+/** Every reference a module makes to one of the named functions - an identifier (a call, an alias, an import or export specifier,
+ * a namespace member) or a string literal spelling the name (a literal member) - as "<module path> > <enclosing name>"; a function's
+ * own declared name is no reference. */
+function referenceSites(fileName: string, file: ts.SourceFile, names: readonly string[]): string[] {
+  const sites: string[] = [];
+  const visit = (node: ts.Node): void => {
+    const named = (ts.isIdentifier(node) || ts.isStringLiteralLike(node)) && names.includes(node.text);
+    const declared = ts.isFunctionDeclaration(node.parent) && node.parent.name === node;
+    if (named && !declared) sites.push(`${fileName} > ${enclosingName(node)}`);
+    ts.forEachChild(node, visit);
+  };
+  ts.forEachChild(file, visit);
+  return sites;
+}
+/** Where src reaches rf's launch (wb-s4j3 F2): the launchers are the functions enclosing an rf launch; their sites are every src
+ * reference to one; the wrappers are the functions those sites sit in, other than the rf provider's two registrations (read whole
+ * by A3); and the wrapper sites are every src reference to a wrapper. */
+function rfReach(): Reach {
+  const modules = filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts")).map(file => {
+    const name = relative(REPO, file);
+    return { name, file: parsed(name, textOf(file)) };
+  });
+  const launchers = [...new Set(modules.flatMap(({ file }) => launchingFunctions(file)))].sort();
+  const sites = modules.flatMap(({ name, file }) => referenceSites(name, file, launchers)).sort();
+  const registrations = [registerNativeReactiveFiberRender.name, registerReactiveFiberRender.name];
+  const wrappers = [...new Set(sites.map(site => site.slice(site.indexOf(" > ") + " > ".length)))]
+    .filter(name => name !== MODULE_SCOPE && !registrations.includes(name)).sort();
+  const wrapperSites = modules.flatMap(({ name, file }) => referenceSites(name, file, wrappers)).sort();
+  return { launchers, sites, wrappers, wrapperSites };
 }
 
 const PIN_REFUSAL: Refusal = { category: "unavailable", message: `RF render refused: ${PIN_CHANGED}` };
@@ -1024,6 +1214,15 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       // name held in a constant is no program literal; both argv literals are still read.
       wrappedLaunch: control('function launch(program: string, argv: string[]) { return spawn(program, argv); }\nlaunch("rf", ["context", "render", "--no-commit"]);'),
       constantProgram: control('const RF = "rf";\nspawn(RF, ["context", "render", "--no-commit"]);'),
+      // wb-s4j3 F3: a program spelled as a path to rf, an argv behind a type assertion, and an argv a push completes.
+      absolutePath: control('spawn("/usr/local/bin/rf", ["--workspace", w, "context", "render", "--no-commit", "--json"]);'),
+      windowsPath: control('execFile("C:\\\\tools\\\\rf.exe", ["context", "render", "--no-commit"]);'),
+      assertedArgv: control('spawn("rf", ["context", "render", "--json"] as string[]);'),
+      assertedPlus: control('const cmd = "rf context " + ("render --model m" as string);'),
+      pushArgv: control('const argv = ["--workspace", w, "context"];\nargv.push("render", "--model", m, "--json");\nspawn("rf", argv);'),
+      pushComposed: control('const argv = ["context"];\nargv.push(verb);\nspawn("rf", argv);'),
+      // R-MUTATED-ARGV, its pinned quiet row: a mutation other than a push in the declaring scope is not folded.
+      unshiftArgv: control('const argv = ["--workspace", w];\nargv.unshift("context", "render");\nspawn("rf", argv);'),
     };
     expect(controls).toStrictEqual({
       uncommittedArgv: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, noCommitArgv: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
@@ -1034,6 +1233,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       elementSpread: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, piExec: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
       shellString: { render: 0, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, plusLiteral: { render: 0, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
       wrappedLaunch: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 0 }, constantProgram: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 0 },
+      absolutePath: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 1 }, windowsPath: { render: 1, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
+      assertedArgv: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 }, assertedPlus: { render: 0, uncommitted: 1, flags: 0, composed: 0, launches: 0 },
+      pushArgv: { render: 1, uncommitted: 1, flags: 0, composed: 0, launches: 1 },
+      pushComposed: { render: 0, uncommitted: 0, flags: 0, composed: 1, launches: 1 }, unshiftArgv: { render: 0, uncommitted: 0, flags: 0, composed: 0, launches: 1 },
     });
     return { srcFloorMet, ...found, controls };
   },
@@ -1055,23 +1258,48 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A3: async () => {
     // wb-w1g3 F1(iv): the roster is every descriptor that reaches rf by id, permission or contractSource, not the id prefix alone.
     const native = (await nativeDescriptors()).filter(drivesRf);
-    const injectedRegistry = new CapabilityRegistry();
-    registerReactiveFiberRender(injectedRegistry, () => Promise.reject(new Error("the injected reader is never invoked here")), ROOT);
-    const injected = injectedRegistry.catalogSnapshot().map(entry => entry.descriptor).filter(drivesRf);
+    // wb-s4j3 F2: and by reach - the rf provider's two registrations are read whole, unfiltered, and src's references to its rf
+    // launcher are pinned, so a capability carrying no rf marker that drives the launcher shows.
+    const provider = wholeRead(nativeRegistration);
+    const injected = wholeRead(injectedRegistration);
     const reconcile = [...(RECONCILE_EVIDENCE_READS.reactivefiber ?? [])];
+    const reach = rfReach();
     const shape = { id: PREVIEW_ID, effectClass: "read", permissions: PREVIEW_GRANTS, modes: ["invoke"], carrier: true, noCommitSource: true };
     expect(native.map(descriptorShape)).toStrictEqual([shape]);
+    expect(provider.map(descriptorShape)).toStrictEqual([shape]);
     expect(injected.map(descriptorShape)).toStrictEqual([shape]);
     expect(reconcile).toStrictEqual([PREVIEW_ID]);
+    expect(reach, "src reaches rf's launch only through the preview's registration and the uncalled legacy wrapper").toStrictEqual({
+      launchers: ["nativeReactiveFiberRender"],
+      sites: ["src/workbench/providers/reactivefiber.ts > nativeReactiveFiberPreview", "src/workbench/providers/reactivefiber.ts > registerNativeReactiveFiberRender"],
+      wrappers: ["nativeReactiveFiberPreview"], wrapperSites: [],
+    });
+    const reachControl = (source: string): string[] => referenceSites("control.ts", parsed("control.ts", source), reach.launchers);
     const controls = {
       otherIdRfRelease: drivesRf({ id: "rf.render.commit", permissions: ["rf:commit"], contractSource: "rf@0.1.784:reactive-fiber.cli/v1 context.render" }),
       otherIdSchemaOnly: drivesRf({ id: "render.commit", permissions: [], contractSource: "local:reactive-fiber.cli/v2 context.render" }),
       otherIdPermissionOnly: drivesRf({ id: "render.commit", permissions: ["reactivefiber:commit"] }),
       prefixOnly: drivesRf({ id: "reactivefiber.render.commit", permissions: [] }),
       forgeQuiet: drivesRf({ id: "forge.gate.status", permissions: ["forge:read"], contractSource: "@forge/sdk@0.1.0:ServerConnection.request(gate.status)" }),
+      // The marker reading alone misses the unmarked capability (wb-s4j3 F2); each whole read, run on a registry already holding
+      // it, sees it beside the preview.
+      unmarkedMarker: drivesRf(UNMARKED),
+      nativeWholeWithUnmarked: wholeRead(nativeRegistration, unmarkedRegistry()).map(descriptor => descriptor.id),
+      injectedWholeWithUnmarked: wholeRead(injectedRegistration, unmarkedRegistry()).map(descriptor => descriptor.id),
+      importedCall: reachControl('import { nativeReactiveFiberRender } from "./providers/reactivefiber.js";\nexport function commitRender(w: string) {\n  return nativeReactiveFiberRender({ model: "m", task: "t" }, w);\n}'),
+      namespaceCall: reachControl('import * as rf from "./providers/reactivefiber.js";\nexport const commitRender = (w: string) => rf.nativeReactiveFiberRender({ model: "m", task: "t" }, w);'),
+      literalMember: reachControl('export async function commitRender(w: string) {\n  const rf = await import("./providers/reactivefiber.js");\n  return rf["nativeReactiveFiberRender"]({ model: "m", task: "t" }, w);\n}'),
+      // R-RELAYED-REACH, its pinned quiet rows: a capability relaying the read preview through the registry, and one reaching the
+      // launcher through a name assembled at runtime, leave no reference A3 can bind.
+      registryRelay: reachControl('export function commitRender(registry: CapabilityRegistry, context: InvocationContext) {\n  return registry.invoke("reactivefiber.render.preview", { model: "m", task: "t" }, context);\n}'),
+      assembledName: reachControl('export async function commitRender(w: string) {\n  const rf = await import("./providers/reactivefiber.js");\n  const name = ["native", "ReactiveFiber", "Render"].join("");\n  return rf[name]({ model: "m", task: "t" }, w);\n}'),
     };
-    expect(controls).toStrictEqual({ otherIdRfRelease: true, otherIdSchemaOnly: true, otherIdPermissionOnly: true, prefixOnly: true, forgeQuiet: false });
-    return { native: native.map(descriptorShape), injected: injected.map(descriptorShape), reconcile, controls };
+    expect(controls).toStrictEqual({
+      otherIdRfRelease: true, otherIdSchemaOnly: true, otherIdPermissionOnly: true, prefixOnly: true, forgeQuiet: false, unmarkedMarker: false,
+      nativeWholeWithUnmarked: [UNMARKED.id, PREVIEW_ID], injectedWholeWithUnmarked: [UNMARKED.id, PREVIEW_ID], importedCall: ["control.ts > <module>", "control.ts > commitRender"],
+      namespaceCall: ["control.ts > commitRender"], literalMember: ["control.ts > commitRender"], registryRelay: [], assembledName: [],
+    });
+    return { native: native.map(descriptorShape), provider: provider.map(descriptorShape), injected: injected.map(descriptorShape), reconcile, reach: { ...reach }, controls };
   },
   A4: async () => ({ roots: VOCABULARY_ROOTS.map(scanVocabulary) }),
   B1: async () => {
@@ -1318,7 +1546,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       injectedRefusalSource: sourceAddedParts(injectedRefusal.reading, refusalEnvelope),
     };
     const labelled = Object.entries({ ...surfaces, ...added }).flatMap(([name, texts]) =>
-      rootless(texts).filter(item => FRESH_LABEL.test(item)).map(item => `${name}: ${item}`));
+      rootless(texts).filter(item => freshLabelled(item)).map(item => `${name}: ${item}`));
     // Non-vacuity: every surface judged holds at least one non-empty text; the in-source readings are empty by design, so their
     // control plants a label in place and reads it back.
     const everySurfaceRead = Object.values(surfaces).every(texts => texts.some(item => item.length > 0));
@@ -1327,7 +1555,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const labelledCopy = pinChanged();
     metadataOf(labelledCopy).freshness = "current";
     const addedControl = sourceAddedParts(previewReading(labelledCopy), refusalEnvelope);
-    expect({ addedControl, read: addedControl.every(item => FRESH_LABEL.test(item)) }).toStrictEqual({ addedControl: ["freshness", "current"], read: true });
+    expect({ addedControl, read: addedControl.every(item => freshLabelled(item)) }).toStrictEqual({ addedControl: ["freshness", "current"], read: true });
     const probeNamed = namedIn(probe.shown);
     const snapshot = probe.topology.snapshots[0];
     expect(labelled).toEqual([]);
@@ -1337,8 +1565,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const seamLabel = (snapshot?.node.statusText ?? "").split(` ${String.fromCodePoint(0x00b7)} `)[0] ?? "";
     expect(seamLabel.length).toBeGreaterThan(0);
     const controls = {
-      fresh: FRESH_LABEL.test("fresh output"), current: FRESH_LABEL.test("the current owner read"), latest: FRESH_LABEL.test("latest render"),
-      upToDate: FRESH_LABEL.test("up-to-date"), newest: FRESH_LABEL.test("newest receipt"), quiet: FRESH_LABEL.test(seamLabel),
+      fresh: freshLabelled("fresh output"), current: freshLabelled("the current owner read"), latest: freshLabelled("latest render"),
+      upToDate: freshLabelled("up-to-date"), newest: freshLabelled("newest receipt"), quiet: freshLabelled(seamLabel),
     };
     expect(controls).toStrictEqual({ fresh: true, current: true, latest: true, upToDate: true, newest: true, quiet: false });
     return {
@@ -1346,6 +1574,25 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       probe: { coverage: snapshot?.coverage ?? null, statusTone: snapshot?.node.statusTone ?? null, namesPinned: probeNamed.namesPinned, namesAccepted: probeNamed.namesAccepted },
       seamLabel, controls,
     };
+  },
+  H1: async () => {
+    // wb-s4j3 F5: a case measures; it never reads a roster witness, and it never hands back an object the roster holds.
+    let readRefused = false;
+    try {
+      rosterWitness("B4");
+    } catch {
+      readRefused = true;
+    }
+    const held = heldWitness("B4");
+    const guard = { readRefused, heldFlagged: sharesObject(held, ROSTER), nestedFlagged: sharesObject({ copy: [held] }, ROSTER) };
+    expect(guard).toStrictEqual({ readRefused: true, heldFlagged: true, nestedFlagged: true });
+    return guard;
+  },
+  HQ1: async () => {
+    // R-VACUOUS-PAYLOAD, its pinned quiet row: a deep copy of a witness read from the roster's rows shares no object with the roster.
+    const copyFlagged = sharesObject(json(heldWitness("B4")), ROSTER);
+    expect(copyFlagged).toBe(false);
+    return { copyFlagged };
   },
   ...Object.fromEntries(
     SPELLINGS.map(spelling => [
@@ -1361,7 +1608,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     FRESH_SPELLINGS.map(spelling => [
       spelling.pin,
       async (): Promise<JsonValue> => {
-        const hit = FRESH_LABEL.test(spelling.text);
+        const hit = freshLabelled(spelling.text);
         expect(hit).toBe(spelling.hit);
         return { form: printable(spelling.text), hit };
       },
@@ -1381,7 +1628,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 
 describe("wb-tnz5.5 rf federation pin-changed census (RF-CERTIFIED-FEDERATED-REACTIVE-REFINEMENT-R6, absent-today leg)", () => {
   it(JUDGED_TITLE, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:9", "C:3", "D:4", "M:18", "L:15", "N:7"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:9", "C:3", "D:4", "M:20", "L:22", "N:7", "H:2"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
@@ -1428,8 +1675,16 @@ describe("wb-tnz5.5 rf federation pin-changed census (RF-CERTIFIED-FEDERATED-REA
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           // wb-w1g3 F3: the case's own assertions are counted around it, so a case returning its witness early counts short.
           const before = expect.getState().assertionCalls;
-          const witness = impl === undefined ? null : await impl();
+          runningCase = pin;
+          let witness: JsonValue = null;
+          try {
+            witness = impl === undefined ? null : await impl();
+          } finally {
+            runningCase = null;
+          }
           const asserted = expect.getState().assertionCalls - before;
+          // wb-s4j3 F5: the witness a case hands back is its own reading, never an object the roster holds (row H).
+          expect(sharesObject(witness, ROSTER), `${pin}'s case handed back an object the roster holds`).toBe(false);
           expect(witness).toStrictEqual(rosterWitness(pin));
           REACHED.push(`${pin}:${asserted}`);
         });

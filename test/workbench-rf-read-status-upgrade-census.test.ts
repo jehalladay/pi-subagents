@@ -22,12 +22,18 @@
  * replayed, which can only demote. Pi has no show, history, replay or assembly reader, so the trigger has not fired; the census
  * pins that state, and every surface the obligation already reaches, over THE WALK (every file below WALK_ROOTS: a module parsed by
  * the TypeScript compiler, whose comments are not read; any other file, a shell script, a JSON receipt or a markdown page, read
- * whole as one text) and over the readings, projections and inspector lines the readers produce:
+ * whole as one text, and for A1's assembly verb also as its JSON string arrays and its shell reading) and over the readings,
+ * projections and inspector lines the readers produce:
  *  A, the trigger, absent today. A1 no judged file spells an rf read-side replay field, a replayability class or a replay
  *    outcome (VOCABULARY: the measured snake_case names and their camelCase forms, case aside) as an identifier or a whole word of
- *    a literal (a regular expression's pattern words, and strings folded through the module's const bindings, included), nor an rf
- *    assembly verb (argv or literal, flags between the group and its subverb aside), with floors, a module and a text anchor, the
- *    tree anchor and twenty-two controls. A2 the producer's three status
+ *    a literal (a regular expression's pattern words, read with its group delimiters both blanked and removed, a RegExp constructor's
+ *    folded pattern read the same way, and strings folded through the module's bindings, included: a const, a let or var the module
+ *    never assigns again whose name no const of the module declares (constBeatsLet), an enum member, a named class's static field,
+ *    and a dotted or literal-keyed member of an object or array literal one of them binds), nor an rf assembly verb (argv or
+ *    literal, flags between the group and its subverb aside; a module's argv reads a spread of a bound array literal in place; in a
+ *    non-module file the argv is each JSON string array it spells and the literal is the whole text or, where that spells none, its
+ *    shell reading: backslash line continuations joined and quote characters dropped), with floors, a module and a text anchor, the
+ *    tree anchor and fifty-one controls. A2 the producer's three status
  *    envelopes (a context.show and a context.history read stating replayable_exact, a context.replay outcome reproduced) are
  *    refused by the adapter, project no native evidence and are refused by the native provider in one spawn.
  *  B, acceptance (a). B1 a preview carrying a replayability claim (each measured class, with its reasons, on additive result keys)
@@ -81,12 +87,17 @@
  * filing's row in the tracked bead export (.beads/issues.jsonl, row wb-hs2j.8): each acceptance clause and the trigger sit verbatim
  * in exactly one row label, every row carries one of them, and its statement, quotes, citations, authority restriction and gating
  * sentence equal the roster's, so a row removed from every literal of this file and the roster still reds. TREE ANCHOR: the
- * repository's top-level directories (dot directories aside) are read beside the walk, and each one holding a module must be a walk
- * root or one of OUTSIDE_ROOTS, so a root dropped from every literal of this file and the roster that names or reads below it
- * (WALK_ROOTS, FLOORS, TEXT_ANCHOR) still reds (A1, B3, C2, D2). Not claimed: a pin removed from ROWS, the literal, IMPL and the
- * roster together (the bead row anchors rows and clauses, not pins); a walk root moved into OUTSIDE_ROOTS, with those literals, in
- * this file and the roster together (the tree anchors that every directory holding a module is walked or named outside, not on
- * which side it is named).
+ * repository's top-level directories (dot directories aside) are read beside the walk: each one holding a module must be a walk root
+ * or one of OUTSIDE_ROOTS, and each one holding any other file must be one of those, the docs root or one of TEXT_OUTSIDE_ROOTS (a
+ * module below a TEXT_OUTSIDE_ROOTS directory still counts as a module), so a root dropped from every literal of this file and the
+ * roster that names or reads below it (WALK_ROOTS, FLOORS, TEXT_ANCHOR) still reds (A1, B3, C2, D2), and so does a new top-level
+ * directory holding a text alone (a shell script under scripts/; A1 textRoot). Not claimed: a pin removed from ROWS, the literal,
+ * IMPL and the roster together (the bead row anchors rows and clauses, not pins); a walk root moved into OUTSIDE_ROOTS, with those
+ * literals, in this file and the roster together (the tree anchors that every directory holding a module is walked or named outside,
+ * not on which side it is named); a directory holding no module named in TEXT_OUTSIDE_ROOTS, in this file and the roster together
+ * (likewise); the records case, or the judged-set case, deleted together with its title in the roster's tests (wb-jze3 F2: a meta
+ * case's only anchor is that list, the census's own out-of-file literal; either one deleted alone still reds, the judged set reading
+ * the records case's registration and the records case the judged set's).
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
  * not inverted, ran; every pin's case reached its end (REACHED). The judged set reads the same task tree at registration
  * (collection precedes every case), so the records case deleted, skipped or inverted still reds there.
@@ -94,27 +105,38 @@
  * journal's own replay, a packaging note, a wizard hint) reds as an rf claim would; B3 journalNative, C2 packagingNote and D2
  * wizardHint pin that breadth, so narrowing a family changes a witness and is never silent.
  * RESIDUALS (named families, each with a pinned quiet row): R-COMPOSED a field name or verb assembled at run time (from a
- * parameter, an import, a call or a computed member, or through a name the module binds to two values) is invisible to the walk (A1
- * composed, importedConstant); R-COMMENT a comment naming a field is not read in a module (A1 comment; a non-module file is read
- * whole); R-GENERIC-WORD the one-word replay outcome
+ * parameter, an import, a call, a member whose key does not fold or whose holder memberOf does not resolve, a name a destructuring
+ * pattern binds, through a name the module binds to two values or a let or var it assigns after its declaration, and, in a non-module
+ * file, through a shell variable, a command substitution or standard input) is invisible to the walk (A1 composed, importedConstant,
+ * reassignedLet, computedProperty, destructured, shellVariable; memberCycle pins that a member read through itself folds to none);
+ * R-COMMENT a comment naming a field is not read in a module (A1 comment;
+ * a non-module file is read whole); R-GENERIC-WORD the one-word replay outcome
  * "reproduced" (and the replay output's nested classification key) is a common word, so it is not scanned in modules, only in
  * projected strings (A1 genericOutcome); R-LABEL-UNRENDERED
  * the adapter renders no replayability label at all, neither claimed nor verified, so a claim reaches a reader only through the
  * registered reading (B2's identical projections); R-ROWS-SILENT the observation leg states nothing about an empty or an absent
  * observation list, so for the render's own rows Pi distinguishes neither (E1 rowsSilent; the render's own list is rf's record of
  * that render, not a coverage status); R-OUTSIDE a file outside WALK_ROOTS is not judged: test helpers and fixtures (they plant rf
- * envelopes), the dependency tree, the ignored build, plan and coverage outputs, dot directories and the repository root's own files;
+ * envelopes), the dependency tree, the ignored build, plan and coverage outputs, the TEXT_OUTSIDE_ROOTS texts (the media, the feedback
+ * inbox and the vendored tarballs; A1 textOutside), dot directories and the repository root's own files;
  * R-SPELLING a member rendered with spaces or hyphens is not the member (A1 spelled, "Replayable exact"); R-PARAPHRASE a
  * verified-replay, byte-exactness or no-context claim worded outside its family is not matched (B3, C2 and D2 paraphrase).
  * FOLLOW-UP (wb-15hl, R694 from landing 291, gate cmd_325acc1f0c97): the gate's A1 trigger escapes are read (P01 a regular
  * expression literal, P02 an upper-case literal, P03 argv through named constants, P04 an interleaved flag, P05 an rf assembly call
  * in a qa shell script), the B3, C2 and D2 wording escapes are matched (P10a-d, P11a-b, P12a-b), the walk-root hollow reds through
  * the tree anchor (G03), the records case is read from the judged set (G10), the families' breadth is pinned (F5) and row C's
- * label states C2's scope (F6).
+ * label states C2's scope (F6). FOLLOW-UP (wb-jze3, R694 from landing 382, gate cmd_f096f1e23530): the gate's remaining A1 escapes are
+ * read, in texts a JSON string array argv (N02), a backslash line continuation (N03) and quoted words (N04), in modules a
+ * single-assignment let binding (N06), an object literal's properties (N07), a spread of a bound prefix array (N08) and a group that
+ * splits a pattern word (N09), each with its siblings (single quotes, an interleaved JSON flag, a var template, literal-keyed,
+ * nested, array, enum and class static members, inline spreads, named groups, a RegExp constructor's pattern); N05 (a shell
+ * variable) is named in R-COMPOSED with a pinned quiet row; the tree anchor reaches a top-level directory holding a text alone (N01,
+ * F3); the coordinated meta hollows G10c and G11c are stated under Not claimed (F2). Every landed reading is kept, so each reading
+ * this cut adds is a superset of the landed one.
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, qa, examples, docs, the repository's
  * top-level directories, the captured registry and the bead export are only read.
  */
-import { chmodSync, type Dirent, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, type Dirent, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -144,6 +166,10 @@ const WALK_ROOTS = ["src", "qa", "examples"];
  * tree and the outputs .gitignore ignores (build, dist and plan, coverage). Every other top-level directory holding a module (dot
  * directories aside) must be a walk root: the repository tree, read beside the walk, is the anchor. */
 const OUTSIDE_ROOTS = ["build", "coverage", "dist", "node_modules", "plan", "test"];
+/** The top-level directories holding no module whose files the walk also leaves out (R-OUTSIDE): the README's media, the upstream
+ * feedback inbox and the vendored dependency tarballs. A module below one still reds through the tree anchor, and every other top-level
+ * directory holding a file of any kind (dot directories aside) must be a walk root, the docs root or one of OUTSIDE_ROOTS. */
+const TEXT_OUTSIDE_ROOTS = ["media", "new-feedback", "vendor"];
 /** The documentation tree C2 also reads as text: a docs table could map the five labels before any module reads one. */
 const DOC_ROOT = "docs";
 const MODULE_EXTENSIONS = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx"];
@@ -411,8 +437,9 @@ function textOf(path: string): string {
     return "";
   }
 }
-/** Every regular file below a root, repository-relative with "/" separators, in name order; symlinks are never followed. */
-function filesBelow(root: string): string[] {
+/** Every regular file below a root of `base` (the repository unless a control names a scratch tree), base-relative with "/"
+ * separators, in name order; symlinks are never followed. */
+function filesBelow(root: string, base: string = REPO): string[] {
   const files: string[] = [];
   const visit = (directory: string): void => {
     let entries: Dirent[];
@@ -425,10 +452,10 @@ function filesBelow(root: string): string[] {
     for (const entry of entries) {
       const path = join(directory, entry.name);
       if (entry.isDirectory()) visit(path);
-      else if (entry.isFile()) files.push(posix(relative(REPO, path)));
+      else if (entry.isFile()) files.push(posix(relative(base, path)));
     }
   };
-  visit(join(REPO, root));
+  visit(join(base, root));
   return files;
 }
 
@@ -439,20 +466,118 @@ function scriptKindOf(path: string): ts.ScriptKind {
   if (extension === ".jsx") return ts.ScriptKind.JSX;
   return ts.ScriptKind.JS;
 }
-/** A module's `const NAME = <initializer>` declarations, at any depth, by name. */
+/** A module's bindings by name, each with every initializer the module gives it: `const NAME = <initializer>` at any depth; for a
+ * name no const declares, `let` or `var NAME = <initializer>` when the module never assigns that name again (a single-assignment
+ * binding); and, by `Holder.member`, every enum member and every static field of a named class that has an initializer. */
 type Bindings = ReadonlyMap<string, readonly ts.Expression[]>;
-function constBindings(source: ts.SourceFile): Bindings {
-  const found = new Map<string, ts.Expression[]>();
+/** A property, enum member or element key that reads as one text: an identifier, a string or number literal, or a computed literal. */
+function keyOf(name: ts.Node): string | undefined {
+  if (ts.isIdentifier(name) || ts.isStringLiteralLike(name) || ts.isNumericLiteral(name)) return name.text;
+  if (ts.isComputedPropertyName(name) && (ts.isStringLiteralLike(name.expression) || ts.isNumericLiteral(name.expression))) return name.expression.text;
+  return undefined;
+}
+/** Every name the module assigns after its declaration: an assignment's target (any operator, destructuring targets included), a
+ * `++` or `--` operand, and a for-in or for-of loop's bare target. */
+function assignedNames(source: ts.SourceFile): ReadonlySet<string> {
+  const names = new Set<string>();
+  const target = (node: ts.Node): void => {
+    if (ts.isIdentifier(node)) names.add(node.text);
+    else if (ts.isParenthesizedExpression(node) || ts.isSpreadElement(node) || ts.isSpreadAssignment(node)) target(node.expression);
+    else if (ts.isArrayLiteralExpression(node)) for (const element of node.elements) target(element);
+    else if (ts.isObjectLiteralExpression(node)) for (const property of node.properties) target(ts.isPropertyAssignment(property) ? property.initializer : property);
+    else if (ts.isShorthandPropertyAssignment(node)) names.add(node.name.text);
+    else if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken) target(node.left);
+  };
   const visit = (node: ts.Node): void => {
-    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && ts.isVariableDeclarationList(node.parent) &&
-      (node.parent.flags & ts.NodeFlags.Const) !== 0) found.set(node.name.text, [...(found.get(node.name.text) ?? []), node.initializer]);
+    if (ts.isBinaryExpression(node) && node.operatorToken.kind >= ts.SyntaxKind.FirstAssignment && node.operatorToken.kind <= ts.SyntaxKind.LastAssignment) target(node.left);
+    else if ((ts.isPrefixUnaryExpression(node) || ts.isPostfixUnaryExpression(node)) && (node.operator === ts.SyntaxKind.PlusPlusToken || node.operator === ts.SyntaxKind.MinusMinusToken)) target(node.operand);
+    else if ((ts.isForInStatement(node) || ts.isForOfStatement(node)) && !ts.isVariableDeclarationList(node.initializer)) target(node.initializer);
     ts.forEachChild(node, visit);
   };
   visit(source);
+  return names;
+}
+function bindingsOf(source: ts.SourceFile): Bindings {
+  const found = new Map<string, ts.Expression[]>();
+  const mutable = new Map<string, ts.Expression[]>();
+  const add = (into: Map<string, ts.Expression[]>, name: string, initializer: ts.Expression): void => {
+    into.set(name, [...(into.get(name) ?? []), initializer]);
+  };
+  const visit = (node: ts.Node): void => {
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && ts.isVariableDeclarationList(node.parent))
+      add((node.parent.flags & ts.NodeFlags.Const) !== 0 ? found : mutable, node.name.text, node.initializer);
+    else if (ts.isEnumDeclaration(node)) {
+      for (const member of node.members) {
+        const key = keyOf(member.name);
+        if (key !== undefined && member.initializer !== undefined) add(found, `${node.name.text}.${key}`, member.initializer);
+      }
+    } else if ((ts.isClassDeclaration(node) || ts.isClassExpression(node)) && node.name !== undefined) {
+      for (const member of node.members) {
+        const key = ts.isPropertyDeclaration(member) ? keyOf(member.name) : undefined;
+        const isStatic = ts.isPropertyDeclaration(member) && member.modifiers?.some(modifier => modifier.kind === ts.SyntaxKind.StaticKeyword) === true;
+        if (key !== undefined && isStatic && ts.isPropertyDeclaration(member) && member.initializer !== undefined) add(found, `${node.name.text}.${key}`, member.initializer);
+      }
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  const assigned = assignedNames(source);
+  for (const [name, initializers] of mutable) if (!found.has(name) && !assigned.has(name)) found.set(name, initializers);
   return found;
 }
-/** A string literal, a parenthesized, `as` or `satisfies` one, a `+` concatenation or a template of foldable parts, or an identifier
- * every const declaration of this module binds to one foldable value (a name bound to two values folds to none). */
+/** A node's identity for the cycle guard of a member read (identifiers are guarded by name). */
+const markOf = (node: ts.Node): string => `@${node.pos}:${node.end}:${node.kind}`;
+/** The literal of one kind (an object or an array literal) an expression stands for: the literal, a parenthesized, `as`, `satisfies`
+ * or non-null one, an identifier every binding of this module gives that one literal, or a member that stands for one (a cycle reads
+ * none). */
+function literalOf<T extends ts.Node>(node: ts.Node, bindings: Bindings, seen: ReadonlySet<string>, kind: (candidate: ts.Node) => candidate is T): T | undefined {
+  if (kind(node)) return node;
+  if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node) || ts.isNonNullExpression(node)) return literalOf(node.expression, bindings, seen, kind);
+  if (ts.isIdentifier(node)) {
+    if (seen.has(node.text)) return undefined;
+    const next = new Set([...seen, node.text]);
+    const found = new Set((bindings.get(node.text) ?? []).map(initializer => literalOf(initializer, bindings, next, kind)));
+    return found.size === 1 ? [...found][0] : undefined;
+  }
+  const mark = markOf(node);
+  if (seen.has(mark)) return undefined;
+  const member = memberOf(node, bindings, seen);
+  return member === undefined ? undefined : literalOf(member, bindings, new Set([...seen, mark]), kind);
+}
+/** The initializer a member read stands for: `Holder.key` or `Holder["key"]` (a literal key) of an object literal (its last own
+ * property of that key, unless a spread follows it; a shorthand property stands for its identifier), `Holder[0]` of an array literal
+ * (the element at a literal index, unless a spread comes before it), or a member of a named enum or class (its one initializer). */
+function memberOf(node: ts.Node, bindings: Bindings, seen: ReadonlySet<string>): ts.Expression | undefined {
+  const access = ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.name)
+    ? { holder: node.expression, key: node.name.text }
+    : ts.isElementAccessExpression(node) && (ts.isStringLiteralLike(node.argumentExpression) || ts.isNumericLiteral(node.argumentExpression))
+      ? { holder: node.expression, key: node.argumentExpression.text }
+      : undefined;
+  if (access === undefined) return undefined;
+  if (ts.isIdentifier(access.holder)) {
+    const declared = bindings.get(`${access.holder.text}.${access.key}`) ?? [];
+    if (declared.length === 1) return declared[0];
+  }
+  const object = literalOf(access.holder, bindings, seen, ts.isObjectLiteralExpression);
+  if (object !== undefined) {
+    let found: ts.Expression | undefined;
+    for (const property of object.properties) {
+      if (ts.isSpreadAssignment(property)) found = undefined;
+      else if (ts.isPropertyAssignment(property) && keyOf(property.name) === access.key) found = property.initializer;
+      else if (ts.isShorthandPropertyAssignment(property) && property.name.text === access.key) found = property.name;
+    }
+    return found;
+  }
+  const array = literalOf(access.holder, bindings, seen, ts.isArrayLiteralExpression);
+  const index = Number(access.key);
+  if (array === undefined || !Number.isSafeInteger(index) || index < 0) return undefined;
+  const before = array.elements.slice(0, index + 1);
+  const element = before.some(entry => ts.isSpreadElement(entry)) ? undefined : before[index];
+  return element === undefined || ts.isOmittedExpression(element) ? undefined : element;
+}
+/** A string literal, a parenthesized, `as` or `satisfies` one, a `+` concatenation or a template of foldable parts, an identifier every
+ * binding of this module gives one foldable value (a name bound to two values folds to none), or a member read standing for a
+ * foldable initializer (memberOf; a cycle folds to none). */
 function fold(node: ts.Node, bindings: Bindings, seen: ReadonlySet<string> = new Set()): string | undefined {
   if (ts.isStringLiteralLike(node)) return node.text;
   if (ts.isParenthesizedExpression(node) || ts.isAsExpression(node) || ts.isSatisfiesExpression(node)) return fold(node.expression, bindings, seen);
@@ -474,23 +599,74 @@ function fold(node: ts.Node, bindings: Bindings, seen: ReadonlySet<string> = new
     const values = new Set((bindings.get(node.text) ?? []).map(initializer => fold(initializer, bindings, new Set([...seen, node.text]))));
     return values.size === 1 ? [...values][0] : undefined;
   }
+  if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) {
+    const mark = markOf(node);
+    if (seen.has(mark)) return undefined;
+    const member = memberOf(node, bindings, seen);
+    return member === undefined ? undefined : fold(member, bindings, new Set([...seen, mark]));
+  }
   return undefined;
+}
+/** An array literal as its word list: each element folded (null when it does not fold), and a spread of an array literal the module's
+ * bindings resolve read in place, its elements the same way (a spread that resolves to none, or a cycle, reads one null). */
+function wordsOf(node: ts.ArrayLiteralExpression, bindings: Bindings, seen: ReadonlySet<string> = new Set()): (string | null)[] {
+  return node.elements.flatMap(element => {
+    if (!ts.isSpreadElement(element)) return [fold(element, bindings) ?? null];
+    const mark = markOf(element);
+    const spread = seen.has(mark) ? undefined : literalOf(element.expression, bindings, seen, ts.isArrayLiteralExpression);
+    return spread === undefined ? [null] : wordsOf(spread, bindings, new Set([...seen, mark]));
+  });
 }
 /** A regular expression literal's pattern with every escape sequence and syntax character blanked, so the words it names read as
  * whole words: /"replayability"\s*:/ reads `"replayability"  :`. */
 const patternWords = (text: string): string => text.slice(1, text.lastIndexOf("/")).replace(/\\./g, " ").replace(/[\^$.|?*+()[\]{}]/g, " ");
+/** The same pattern with its group delimiters removed first (an opening parenthesis with its `?:`, `?=`, `?!`, `?<=`, `?<!` or `?<name>`,
+ * and a closing one, outside a character class and unescaped), then blanked as patternWords blanks: a word a group splits reads whole,
+ * /"replay(?:ability)"\s*:/ reads `"replayability"  :`. */
+function patternJoined(text: string): string {
+  const body = text.slice(1, text.lastIndexOf("/"));
+  let joined = "";
+  let inClass = false;
+  for (let index = 0; index < body.length; index += 1) {
+    const char = body[index] ?? "";
+    if (char === "\\") {
+      joined += body.slice(index, index + 2);
+      index += 1;
+    } else if (inClass) {
+      inClass = char !== "]";
+      joined += char;
+    } else if (char === "(") index += (/^\((?:\?(?:[:=!]|<[=!]|<[A-Za-z_$][\w$]*>))?/.exec(body.slice(index))?.[0].length ?? 1) - 1;
+    else if (char !== ")") {
+      inClass = char === "[";
+      joined += char;
+    }
+  }
+  return patternWords(`/${joined}/`);
+}
+/** A pattern's one literal reading: patternWords, then, when removing its group delimiters reads differently, " | " and patternJoined
+ * (the bar breaks every family's phrase across the two readings, so one pattern stays one literal). */
+function patternReading(text: string): string {
+  const blanked = patternWords(text);
+  const joined = patternJoined(text);
+  return joined === blanked ? blanked : `${blanked} | ${joined}`;
+}
+const isRegExpCall = (node: ts.Node): node is ts.NewExpression | ts.CallExpression =>
+  (ts.isNewExpression(node) || ts.isCallExpression(node)) && ts.isIdentifier(node.expression) && node.expression.text === "RegExp";
 
 interface Reading {
   readonly identifiers: readonly string[];
   readonly literals: readonly string[];
   readonly argvs: readonly (readonly (string | null)[])[];
+  /** A non-module file's shell reading (shellViewOf); a module has none. */
+  readonly shell: readonly string[];
 }
 /** One module as the compiler reads it: every identifier, every literal text (string, template parts joined, regular expression
- * pattern words, folded `+` chains and templates, through the module's const string bindings) and every array literal as its word
- * list (an element folded the same way, null when it does not fold). Comments are not nodes, so not read. */
+ * pattern words, both blanked and with their group delimiters removed, for a pattern literal and for a RegExp constructor's folded
+ * pattern, folded `+` chains and templates, through the module's bindings and member reads, bindingsOf and memberOf) and every array
+ * literal as its word list (wordsOf). Comments are not nodes, so not read. */
 function readSource(fileName: string, text: string): Reading {
   const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, scriptKindOf(fileName));
-  const bindings = constBindings(source);
+  const bindings = bindingsOf(source);
   const identifiers: string[] = [];
   const literals: string[] = [];
   const argvs: (string | null)[][] = [];
@@ -498,17 +674,22 @@ function readSource(fileName: string, text: string): Reading {
     if (ts.isIdentifier(node)) identifiers.push(node.text);
     else if (ts.isPrivateIdentifier(node)) identifiers.push(node.text.slice(1));
     else if (ts.isStringLiteralLike(node)) literals.push(node.text);
-    else if (ts.isRegularExpressionLiteral(node)) literals.push(patternWords(node.text));
+    else if (ts.isRegularExpressionLiteral(node)) literals.push(patternReading(node.text));
     else if (ts.isTemplateExpression(node)) literals.push([node.head.text, ...node.templateSpans.map(span => span.literal.text)].join(" "));
     if ((ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken) || ts.isTemplateExpression(node)) {
       const folded = fold(node, bindings);
       if (folded !== undefined) literals.push(folded);
     }
-    if (ts.isArrayLiteralExpression(node)) argvs.push(node.elements.map(element => fold(element, bindings) ?? null));
+    if (isRegExpCall(node)) {
+      const first = node.arguments?.[0];
+      const pattern = first === undefined ? undefined : fold(first, bindings);
+      if (pattern !== undefined) literals.push(patternReading(`/${pattern}/`));
+    }
+    if (ts.isArrayLiteralExpression(node)) argvs.push(wordsOf(node, bindings));
     ts.forEachChild(node, visit);
   };
   visit(source);
-  return { identifiers, literals, argvs };
+  return { identifiers, literals, argvs, shell: [] };
 }
 
 interface Tree {
@@ -525,22 +706,44 @@ interface Tree {
   /** The top-level directories holding a module that are neither walked nor named outside: none, unless the walk lost a root. */
   readonly unjudged: readonly string[];
 }
+/** A JSON array of string literals, anywhere in a non-module file: a receipt or a script that records an argv. */
+const JSON_STRING_ARRAY = /\[\s*"(?:[^"\\]|\\.)*"(?:\s*,\s*"(?:[^"\\]|\\.)*")*\s*\]/g;
+/** Every JSON array of strings a non-module file spells, as its word list (a bracketed list that does not parse is not one). */
+function jsonArraysOf(text: string): string[][] {
+  const arrays: string[][] = [];
+  for (const match of text.matchAll(JSON_STRING_ARRAY)) {
+    try {
+      const value: unknown = JSON.parse(match[0]);
+      if (Array.isArray(value) && value.every(item => typeof item === "string")) arrays.push(value);
+    } catch {
+      // Not JSON (a shell test bracket or a markdown link): no word list.
+    }
+  }
+  return arrays;
+}
+/** A non-module file's shell reading: every backslash line continuation joined and every quote character (double, single and back
+ * quote) dropped, so the words a shell line quotes or continues read as plain words: rf "assembly" (a backslash, a newline) coverage
+ * reads rf assembly  coverage. */
+const shellViewOf = (text: string): string => text.replace(/\\\r?\n/g, " ").replace(/["'`]/g, "");
 /** A non-module file as one text: its whole content is one literal, comments included (a shell script or a JSON file has no
- * compiler reading, so every word of it is read). */
-const readText = (text: string): Reading => ({ identifiers: [], literals: [text], argvs: [] });
-/** Every top-level directory of the repository (dot directories aside) that holds a module and is neither a walk root nor named in
- * OUTSIDE_ROOTS, by name: the repository tree, not a literal of this file or the roster, says which directories hold modules. */
-function unjudgedRoots(): string[] {
+ * compiler reading, so every word of it is read), its JSON string arrays are its argvs and shellViewOf is its shell reading. */
+const readText = (text: string): Reading => ({ identifiers: [], literals: [text], argvs: jsonArraysOf(text), shell: [shellViewOf(text)] });
+/** Every top-level directory of the repository (dot directories aside) that is neither a walk root nor named in OUTSIDE_ROOTS and holds
+ * a module, or holds any other file and is neither the docs root nor named in TEXT_OUTSIDE_ROOTS, by name: the repository tree, not a
+ * literal of this file or the roster, says which directories hold files. */
+function unjudgedRoots(base: string = REPO): string[] {
   let entries: Dirent[];
   try {
-    entries = readdirSync(REPO, { withFileTypes: true });
+    entries = readdirSync(base, { withFileTypes: true });
   } catch {
     return ["<the repository root is unreadable>"];
   }
+  const unaccounted = (name: string, files: readonly string[]): boolean =>
+    files.some(path => MODULE_EXTENSIONS.includes(extensionOf(path))) || (files.length > 0 && name !== DOC_ROOT && !TEXT_OUTSIDE_ROOTS.includes(name));
   return entries
     .filter(entry => entry.isDirectory() && !entry.name.startsWith(".") && !WALK_ROOTS.includes(entry.name) && !OUTSIDE_ROOTS.includes(entry.name))
     .map(entry => entry.name)
-    .filter(name => filesBelow(name).some(path => MODULE_EXTENSIONS.includes(extensionOf(path))))
+    .filter(name => unaccounted(name, filesBelow(name, base)))
     .sort();
 }
 let walked: Tree | undefined;
@@ -595,13 +798,17 @@ function familyHits(path: string, reading: Reading, family: RegExp, identifierFa
     ...reading.literals.filter(text => family.test(text)).map(text => `${path} literal ${text.slice(0, 80)}`),
   ]);
 }
-/** An rf assembly verb: an argv word list with "assembly" before one of its subverbs (flags and expressions between them aside), or
- * a literal spelling one. */
+/** An rf assembly verb: an argv word list (a module's array literal, a text's JSON string array) with "assembly" before one of its
+ * subverbs (flags and expressions between them aside), a literal spelling one, or a text's shell reading spelling one where its whole
+ * text does not (one spelling, one hit). */
 function assemblyHits(path: string, reading: Reading): string[] {
   const argv = reading.argvs.filter(words => words.some((word, index) => word === "assembly" && words.slice(index + 1).some(later => later !== null && ASSEMBLY_SUBVERBS.includes(later))));
+  const literal = reading.literals.filter(text => ASSEMBLY_VERB.test(text));
+  const shell = literal.length > 0 ? [] : reading.shell.filter(text => ASSEMBLY_VERB.test(text));
   return unique([
     ...argv.map(words => `${path} argv [${words.map(word => word ?? "<expr>").join(", ")}]`),
-    ...reading.literals.filter(text => ASSEMBLY_VERB.test(text)).map(text => `${path} literal ${text.slice(0, 80)}`),
+    ...literal.map(text => `${path} literal ${text.slice(0, 80)}`),
+    ...shell.map(text => `${path} shell ${text.slice(0, 80)}`),
   ]);
 }
 
@@ -732,6 +939,16 @@ afterEach(() => {
   else process.env.PATH = oldPath;
   removeScratch(...scratches.splice(0));
 });
+/** The tree anchor over a scratch repository holding exactly `files` (path to text): how many top-level directories it flags. */
+function unjudgedIn(files: Readonly<Record<string, string>>): number {
+  const base = makeScratch("rf-read-status-tree-");
+  scratches.push(base);
+  for (const [path, text] of Object.entries(files)) {
+    mkdirSync(join(base, dirname(path)), { recursive: true });
+    writeFileSync(join(base, path), text);
+  }
+  return unjudgedRoots(base).length;
+}
 /** A stand-in `rf` first on PATH: it appends one JSON argv line per spawn to the returned log, prints `answer` and exits `exit`. */
 function standInRf(answer: JsonValue, exit: number): string {
   const folder = makeScratch("rf-read-status-upgrade-");
@@ -833,6 +1050,38 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       shellScript: count(readText('rf --workspace "$PWD" assembly coverage --json >/dev/null || true\n')),
       importedConstant: control('import { VERB } from "./verbs.js";\nspawn("rf", ["assembly", VERB]);'),
       spelled: control('const label = "Replayable exact";'),
+      // wb-jze3 F1, the texts leg: an argv a non-module file spells as a JSON string array or as shell words.
+      jsonArgv: count(readText('{\n  "argv": ["rf", "--workspace", ".", "assembly", "coverage", "--json"]\n}\n')),
+      jsonInterleaved: count(readText('["rf", "assembly", "--json", "coverage"]\n')),
+      lineContinuation: count(readText('rf --workspace "$PWD" assembly \\\n  coverage --json >/dev/null || true\n')),
+      quotedWords: count(readText('rf --workspace "$PWD" "assembly" "coverage" --json >/dev/null || true\n')),
+      singleQuoted: count(readText(`rf --workspace "$PWD" 'assembly' --json 'coverage'\n`)),
+      shellVariable: count(readText('RF_VERB=coverage\nrf --workspace "$PWD" assembly "$RF_VERB" --json >/dev/null || true\n')),
+      // wb-jze3 F1, the module leg: the fold through let and var bindings, object literal members, array spreads and pattern groups.
+      letBinding: control('let RF_VERB = "coverage";\nconst argv = ["--workspace", ".", "assembly", RF_VERB, "--json"];'),
+      varTemplate: control(`var GROUP = "assembly";\nconst line = \`rf \${GROUP} coverage\`;`),
+      reassignedLet: control('let verb = "inspect";\nverb = "coverage";\nspawn("rf", ["assembly", verb]);'),
+      constBeatsLet: control('const VERB = "coverage";\nfunction other() {\n  let VERB = "inspect";\n  return VERB;\n}\nspawn("rf", ["assembly", VERB]);'),
+      objectProperty: control('const RF = { group: "assembly", verb: "coverage" };\nconst argv = ["--workspace", ".", RF.group, RF.verb, "--json"];'),
+      objectElement: control('const RF = { verb: "coverage" } as const;\nconst argv = ["assembly", RF["verb"]];'),
+      nestedProperty: control(`const RF = { argv: { group: "assembly" } };\nconst line = \`rf \${RF.argv.group} coverage\`;`),
+      propertyTemplate: control(`const RF = { stem: "replay" };\nconst claim = result[\`\${RF.stem}ability\`];`),
+      computedProperty: control('const RF = { verb: "coverage" };\nspawn("rf", ["assembly", RF[key]]);'),
+      destructured: control('const { verb } = { verb: "coverage" };\nspawn("rf", ["assembly", verb]);'),
+      arrayElement: control('const WORDS = ["coverage", "inspect"];\nspawn("rf", ["assembly", WORDS[0]]);'),
+      enumMember: control('enum Rf {\n  Verb = "coverage",\n}\nspawn("rf", ["assembly", Rf.Verb]);'),
+      classStatic: control('class Rf {\n  static readonly VERB = "coverage";\n}\nspawn("rf", ["assembly", Rf.VERB]);'),
+      memberCycle: control('const RF = { verb: RF.verb };\nspawn("rf", ["assembly", RF.verb]);'),
+      spreadPrefix: control('const RF_GROUP_ARGV = ["--workspace", ".", "assembly"];\nconst argv = [...RF_GROUP_ARGV, "coverage", "--json"];'),
+      spreadInline: control('spawn("rf", [...["--workspace", root], "assembly", ...["coverage"]]);'),
+      regexGroup: control('const pattern = /"replay(?:ability)"\\s*:/;'),
+      regexNamedGroup: control("const pattern = /replay(?<rest>ability)/;"),
+      regexConstructor: control('const pattern = new RegExp("replay(?:ability)");'),
+      // wb-jze3 F3, the tree anchor over scratch repositories: a directory holding a text, a module, or only the named texts.
+      textRoot: unjudgedIn({ "src/a.ts": "", "scripts/rf-coverage.sh": "rf assembly coverage\n" }),
+      moduleRoot: unjudgedIn({ "src/a.ts": "", "tools/run.mjs": "" }),
+      moduleInTextOutside: unjudgedIn({ "src/a.ts": "", "vendor/sdk.js": "" }),
+      textOutside: unjudgedIn({ "src/a.ts": "", "docs/a.md": "", "media/a.png": "", "new-feedback/a.md": "", "vendor/a.tgz": "" }),
     };
     return done("A1", { floorsMet: live.floorsMet, anchorRead: live.anchorRead, textAnchorRead: live.textAnchorRead, unjudged: [...live.unjudged], hits: { vocabulary, assembly }, controls });
   },
@@ -1133,7 +1382,7 @@ describe("wb-hs2j.8 rf read-side status upgrade census (RF-REACTIVE-CONTEXT-ASSE
     expect({
       bead: BEAD,
       scan: {
-        walkRoots: WALK_ROOTS, outsideRoots: OUTSIDE_ROOTS, docRoot: DOC_ROOT, moduleExtensions: MODULE_EXTENSIONS, floors: FLOORS, anchor: ANCHOR,
+        walkRoots: WALK_ROOTS, outsideRoots: OUTSIDE_ROOTS, textOutsideRoots: TEXT_OUTSIDE_ROOTS, docRoot: DOC_ROOT, moduleExtensions: MODULE_EXTENSIONS, floors: FLOORS, anchor: ANCHOR,
         textAnchor: TEXT_ANCHOR, vocabularyFlags: VOCABULARY_FLAGS,
         assemblySubverbs: ASSEMBLY_SUBVERBS, emptyPageLine: EMPTY_PAGE_LINE, coverageUnknown: COVERAGE_UNKNOWN,
         families: {

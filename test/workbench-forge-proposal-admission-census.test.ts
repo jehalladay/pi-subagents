@@ -55,7 +55,11 @@
  *    outputs: no success tone, no PASS qualifier and no complete coverage, with and without every plant (counted per base,
  *    surface and snapshot index, beside the unplanted reading); the receipt control shows all three. The one reading that broke
  *    clause (b) at the wb-6ps1.1 cut - the workspace snapshot of the empty package list, complete while every() ran over zero
- *    packages - reads partial since wb-bbnl: forge-observer.ts derives that coverage from the judged guard its tone reads.
+ *    packages - reads partial since wb-bbnl: forge-observer.ts derives that coverage from the judged guard its tone reads. Since
+ *    wb-9akv B5's judge reads its own controls through the same judged() closure: the receipt family (the receipt read, a passed
+ *    step, a successful reply, the passed observed run) gives each of its three legs a positive witness, the FAIL family shows
+ *    the PASS qualifier on no FAIL reading (the success tone only on the current success package beside a failure), and every
+ *    judged reading is counted per surface (topology, evidence, operation, observed) for the planted, unplanted and control runs.
  *  C, acceptance (c), gated on the facet. C1 Pi's observation model and its Forge reader outputs hold no facet slot: no member
  *    of the judged interfaces names a FACET word or a needle. C2 FAIL readings (gate.status current failure, current error and a
  *    mixed workspace; the operation family's failed step, error and usage_error replies; the observed gate.run end to end) with
@@ -65,7 +69,10 @@
  *    finished step without an outcome; replies: no disposition, another operation; the observed gate.run whose reply settles
  *    nothing; gate.status without packages or under another protocol method), with every plant: outputs, refusal categories and
  *    messages unchanged; and the READER ENUMERATION: every function the three reader files export is driven by D1 or named in
- *    NOT_DRIVEN with a reason the census checks on the function's own body. D2 the VERDICT vocabulary is read off the readers
+ *    NOT_DRIVEN with a reason the census checks on the function's own body. wb-4ap.17 added the gate.run basis reader
+ *    (decodeForgeRunBasis, forgeGateRunReading): D1 drives it over the same no-receipt replies plus one reply on the result
+ *    contract whose pin is the producer's null, with every plant, and records its outputs unchanged and its tones (never success).
+ *    D2 the VERDICT vocabulary is read off the readers
  *    (the receipt and FAIL controls' tones and qualifiers), and no D1, B2 or B3 output carries a verdict tone or qualifier.
  * FACET words: clause (b)'s facet labels and clause (a)'s token, singular or plural (and the token's inflections), plus facet(s).
  * PLANT keys: every needle in five spellings (snake, camel, kebab, joined, Pascal), the facet labels, the token and the
@@ -80,7 +87,9 @@
  * each walk of row A to git's tracked list. Each pin's witness carries what its own quote names (a row-A pin's subject - its
  * scope or reader file - and every single-quoted word of the quote), asserted in the pin case before the roster comparison, so a
  * swap of two pins' cases and witnesses together reds. The judging predicates are held to their own controls: tiles() to four
- * refusals, D1's reason check to three negative controls, the readings to the planted rows, the differential to its twins.
+ * refusals, D1's reason check to three negative controls, the readings to the planted rows, the differential to its twins, and
+ * B5's judge - its success, complete and passed legs - to the receipt and FAIL families read through the same closure, with the
+ * surface of every judged reading counted, so a leg forced quiet or a judged surface dropped reds B5.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; rows, constants and every pin's witness are
  * held to the out-of-file roster. SELF-READ: every case of IMPL names one of READERS and none of ROSTER_NAMES (direct identifiers
  * only). The record case walks this file's vitest task tree against the roster, compares every measured witness a second time
@@ -122,8 +131,11 @@ import { forgeGateTopology } from "../src/workbench/forge-observer.js";
 import {
   decodeForgeOperationFrame,
   decodeForgeOperationTerminal,
+  decodeForgeRunBasis,
+  FORGE_RESULT_CONTRACT,
   type ForgeOperationConnection,
   type ForgeOperationFrame,
+  forgeGateRunReading,
   forgeGateStepTopology,
   forgeOperationStartedSnapshot,
   forgeOperationTerminalSnapshot,
@@ -1073,6 +1085,17 @@ function replyOutput(value: JsonValue, drive: Drive): JsonValue {
   const terminal = drive.call(decodeForgeOperationTerminal)(value, OPERATION, AT);
   return terminal === undefined ? null : json(drive.call(forgeOperationTerminalSnapshot)(terminal, OPTIONS));
 }
+/** wb-4ap.17: a settled reply on the result contract whose run-start pin is the producer's null (no repository): no native receipt. */
+const REPLY_UNPINNED: JsonObject = {
+  operation_id: OPERATION, status: "success", terminal_disposition: "completed", contract_version: FORGE_RESULT_CONTRACT,
+  data: { gate_verdict: null, gated_commit: null, gated_tree: null },
+};
+/** wb-4ap.17: one gate.run reply through the basis decoder and the basis reader, with no host head (a census reply is no checkout's). */
+function basisOutput(value: JsonValue, drive: Drive): JsonValue {
+  const basis = drive.call(decodeForgeRunBasis)(value);
+  const reading = drive.call(forgeGateRunReading)(value, OPERATION, { ...OPTIONS, observedAt: AT, observedHead: undefined });
+  return json({ basis, reading: reading ?? null });
+}
 /** A dedicated connection that, when gate.run is requested, delivers `frames` to every sink and answers `reply`. */
 function scriptedConnection(frames: readonly JsonObject[], reply: JsonValue): ForgeOperationConnection {
   const sinks = new Set<(frame: ForgeOperationFrame) => void>();
@@ -1123,19 +1146,24 @@ const FAIL_OPERATION: readonly OperationEntry[] = [
   { id: "reply-error", kind: "reply", value: REPLY_ERROR },
   { id: "reply-usage-error", kind: "reply", value: REPLY_USAGE },
 ];
+/** The operation family's receipts: a passed step and a successful reply (B5's receipt control). */
+const RECEIPT_OPERATION: readonly OperationEntry[] = [
+  { id: "step-passed", kind: "frame", value: STEP_PASSED },
+  { id: "reply-success", kind: "reply", value: REPLY_SUCCESS },
+];
 interface OperationDifferential {
   readonly cases: number;
   readonly planted: number;
   readonly divergent: string[];
   readonly outputs: { readonly label: string; readonly entry: string; readonly output: JsonValue }[];
 }
-function operationDifferential(entries: readonly OperationEntry[], variants: readonly Variant[], drive: Drive): OperationDifferential {
+function operationDifferential(entries: readonly OperationEntry[], variants: readonly Variant[], drive: Drive, readReply = replyOutput): OperationDifferential {
   let cases = 0;
   let planted = 0;
   const divergent: string[] = [];
   const outputs: OperationDifferential["outputs"] = [];
   for (const entry of entries) {
-    const read = (value: JsonObject): JsonValue => (entry.kind === "frame" ? frameOutput(value, drive) : replyOutput(value, drive));
+    const read = (value: JsonObject): JsonValue => (entry.kind === "frame" ? frameOutput(value, drive) : readReply(value, drive));
     const baseline = read(entry.value);
     const positions = entry.kind === "frame" ? FRAME_POSITIONS : REPLY_POSITIONS;
     for (const position of positionsOf(positions)) {
@@ -1254,8 +1282,19 @@ function tally(labels: readonly string[]): string[] {
   for (const label of labels) counts.set(label, (counts.get(label) ?? 0) + 1);
   return [...counts].map(([label, count]) => `${label} x${count}`);
 }
+/** One run of B5's judge: each leg's findings (named by surface and snapshot index) and the surface of every reading it judged. */
+interface Judged {
+  readonly success: string[];
+  readonly complete: string[];
+  readonly passed: string[];
+  readonly reads: string[];
+  readonly judge: (where: string, value: JsonValue) => void;
+}
 /** B5: the no-receipt outputs never show the success tone, complete coverage or the PASS qualifier; the receipt control does. Each
- * finding is named by base, surface and snapshot index, counted over the planted readings and read again on the unplanted ones. */
+ * finding is named by base, surface and snapshot index, counted over the planted readings and read again on the unplanted ones.
+ * The judge is held to its own controls (wb-9akv): the receipt family (the receipt read, a passed step, a successful reply, the
+ * passed observed run) and the FAIL family go through the same judged() closure, so each leg has a positive witness and the PASS
+ * qualifier stays off every FAIL reading; every judged reading is counted per surface, so no judged surface drops out unseen. */
 async function noReceiptReading(): Promise<JsonObject> {
   const drive = new Drive();
   const gate = await gateDifferential(NO_RECEIPT, ALL_VARIANTS, drive);
@@ -1263,18 +1302,20 @@ async function noReceiptReading(): Promise<JsonObject> {
   const observed = await observedDifferential(OPEN_RUN, ALL_VARIANTS, drive);
   const receipt = await receiptReading();
   const passQualifier = String(receipt.qualifier);
-  const judged = (): { success: string[]; complete: string[]; passed: string[]; judge: (where: string, value: JsonValue) => void } => {
+  const judged = (): Judged => {
     const success: string[] = [];
     const complete: string[] = [];
     const passed: string[] = [];
+    const reads: string[] = [];
     const judge = (where: string, value: JsonValue): void => {
+      reads.push(where.slice(where.lastIndexOf(" ") + 1));
       presentations(value).forEach((entry, index) => {
         if (entry.tone === SUCCESS_TONE) success.push(`${where} ${index}`);
         if (entry.coverage === COVERAGE_WORD) complete.push(`${where} ${index}`);
       });
       if (textsOf(value).some(text => text.includes(passQualifier))) passed.push(where);
     };
-    return { success, complete, passed, judge };
+    return { success, complete, passed, reads, judge };
   };
   const planted = judged();
   for (const { base, outputs } of gate.outputs) {
@@ -1291,6 +1332,21 @@ async function noReceiptReading(): Promise<JsonObject> {
   }
   for (const entry of NO_RECEIPT_OPERATION) unplanted.judge(`${entry.id} operation`, entry.kind === "frame" ? frameOutput(entry.value, drive) : replyOutput(entry.value, drive));
   unplanted.judge(`${OPEN_RUN.id} observed`, observed.baseline);
+  // The judge's own controls, unplanted, over the same surfaces as above: the gate read, the operation family, the observed run.
+  const control = async (bases: readonly GateBase[], entries: readonly OperationEntry[], run: ObservedRun): Promise<Judged> => {
+    const reading = judged();
+    for (const base of bases) {
+      const outputs = await gateOutputs(base.method, base.source, drive);
+      reading.judge(`${base.id} topology`, outputs.topology);
+      reading.judge(`${base.id} evidence`, outputs.evidence);
+    }
+    for (const entry of entries) reading.judge(`${entry.id} operation`, entry.kind === "frame" ? frameOutput(entry.value, drive) : replyOutput(entry.value, drive));
+    reading.judge(`${run.id} observed`, await observedOutput(run, drive));
+    return reading;
+  };
+  const receiptControl = await control([RECEIPT], RECEIPT_OPERATION, PASSED_RUN);
+  const failControl = await control(FAIL, FAIL_OPERATION, FAILED_RUN);
+  const legs = (reading: Judged): JsonObject => ({ success: reading.success, complete: reading.complete, passed: reading.passed });
   return {
     readings: gate.planted + operation.planted + observed.outputs.length,
     success: tally(planted.success),
@@ -1298,6 +1354,8 @@ async function noReceiptReading(): Promise<JsonObject> {
     passed: tally(planted.passed),
     unplanted: { success: unique(unplanted.success), complete: unique(unplanted.complete), passed: unique(unplanted.passed) },
     receipt: { tone: receipt.tone ?? "", coverage: receipt.coverage ?? "", qualifier: receipt.qualifier ?? "" },
+    controls: { receipt: legs(receiptControl), fail: legs(failControl) },
+    reads: { planted: tally(planted.reads), unplanted: tally(unplanted.reads), receipt: tally(receiptControl.reads), fail: tally(failControl.reads) },
     driven: drive.list(),
   };
 }
@@ -1418,6 +1476,10 @@ async function receiptlessReading(): Promise<JsonObject> {
   const drive = new Drive();
   const gate = await gateDifferential(REFUSED, ALL_VARIANTS, drive);
   const operation = operationDifferential(NO_RECEIPT_OPERATION, ALL_VARIANTS, drive);
+  // wb-4ap.17: the basis reader over the no-receipt replies and one on-contract reply whose pin is null, with every plant.
+  const basisEntries: readonly OperationEntry[] = [...NO_RECEIPT_OPERATION.filter(entry => entry.kind === "reply"), { id: "reply-unpinned", kind: "reply", value: REPLY_UNPINNED }];
+  const basis = operationDifferential(basisEntries, ALL_VARIANTS, drive, basisOutput);
+  const basisOutputs = [...basisEntries.map(entry => basisOutput(entry.value, drive)), ...basis.outputs.map(item => item.output)];
   const observed = await observedDifferential(OPEN_RUN, ALL_VARIANTS, drive);
   const nullReply = replyOutput(null, drive);
   const receipts = { step: presentations(frameOutput(STEP_PASSED, drive))[0]?.tone ?? "", terminal: presentations(replyOutput(REPLY_SUCCESS, drive))[0]?.tone ?? "" };
@@ -1449,6 +1511,10 @@ async function receiptlessReading(): Promise<JsonObject> {
   return {
     gate: { bases: REFUSED.map(base => base.id), cases: gate.cases, planted: gate.planted, divergent: gate.divergent, echoInexact: gate.echoInexact },
     operation: { entries: NO_RECEIPT_OPERATION.map(entry => entry.id), cases: operation.cases, planted: operation.planted, divergent: operation.divergent },
+    basis: {
+      entries: basisEntries.map(entry => entry.id), cases: basis.cases, planted: basis.planted, divergent: basis.divergent,
+      tones: unique(basisOutputs.flatMap(output => presentations(output).map(entry => entry.tone))).sort(),
+    },
     observed: { variants: ALL_VARIANTS.length, divergent: observed.divergent, settled: isObject(observed.baseline) ? (observed.baseline.settled ?? null) : null, tones: presentations(observed.baseline).map(entry => entry.tone) },
     nullReply,
     reasonControls,

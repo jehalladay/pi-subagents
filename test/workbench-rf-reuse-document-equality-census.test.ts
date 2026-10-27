@@ -13,6 +13,20 @@
  * each family's remainder is a named residual with a quiet row), F3 (the docs roots take .agents/, .beads/, .pi/ and vendor/, and no
  * other top-level directory may hold markdown) and F6 (B3's whole-file tripwire keeps its conservative reading and gains a code-token
  * reading beside it, so a comment-only spelling is told from a code read).
+ * wb-pwlq (the R694 follow-up of landing 371, gate record cmd_df784d322826) cures F1 (an HTML comment renders nothing, so one inside a
+ * word joins its halves: C2 intrawordComment), F2 (a link's tail is read as CommonMark parses it - a bare destination with balanced
+ * parentheses and backslash escapes, a destination in angle brackets, an optional title - its text may hold balanced brackets, and a
+ * parenthesized span that is no link tail reads as text: C2 balancedLinkTarget, escapedLinkTarget, pointyLinkTarget, titledLinkTarget,
+ * nestedLinkText and invalidLinkTarget), F3 (C2 hexReference, namedReference and codeSpan pin the hexadecimal and named reference
+ * branches and the code-span marker), F4 (B1 and C2 fieldPreceded, fieldUnderscore and fieldDigit pin a letter before, and an
+ * underscore or a digit after, a producer field), F5 (B3 propertyChain and regexLiteral pin the property-access chain and the
+ * regular-expression literal readings), F6 (A7's counter controls exercise both REUSE_COUNTER spellings and a comment-only one) and F7
+ * (string literals joined by + are read together: each run of adjacent literals in a + chain is one value to the code-token reading,
+ * after any other operand too, and a chain holding two or more literals is one unit to the literal scan, any other operand a space:
+ * B1 composedLiteral and composedAround, B3 composedLiteral and composedAfterVariable, A7 composedLiteral; a spelling assembled from
+ * anything else is the named residual R-COMPOSED-READ, quiet rows B3 and A7 composedVariable). R-MARKUP names the forms the reading still resolves unlike CommonMark: an HTML tag carrying attribute words, a
+ * bracket inside a code span or inside angle-bracket markup within a link's text, and a reference label no definition carries (C2
+ * htmlTagAttributes, codeSpanLinkText, angleLinkText and undefinedLabel).
  *
  * MEASURED BY THE CUTTING SEAT (2026-10-23, installed rf 0.1.832 by `rf --json --version` result.version; a scratch workspace outside
  * every repository; only the scratch root is rewritten to /fixture/rf-workspace in the roster): `rf init`; two pure declarative
@@ -56,16 +70,19 @@
  *   C2 negationOtherWording), and is restated with a DENIALS phrase or a producer field.
  * - (a) every string Pi adds to a reading, every string the adapter surfaces and every string native-evidence projects carries no
  *   equality claim at all (no admission).
- * - (b) every string literal, no-substitution template and template expression (its literal parts joined by a space) of every .ts,
- *   .mjs and .js file under src/ and qa/: an equality claim that is not admitted is a finding unless the roster exempts its file and
- *   window (each exemption carries its reason; the live scan reports every exemption it applied).
+ * - (b) every string literal, no-substitution template, template expression (its literal parts joined by a space) and + chain
+ *   holding two or more string literals (read like a template expression - its literals in order, adjacent ones concatenated and any
+ *   other operand a space - beside each literal) of every .ts, .mjs and .js file under src/ and qa/: an equality claim that is not
+ *   admitted is a finding unless the roster exempts its file and window (each exemption carries its reason; the live scan reports
+ *   every exemption it applied).
  * - (c) every .md file under DOC_ROOTS (docs/, examples/, new-feedback/, .agents/, .beads/, .pi/, vendor/) and at the repository
  *   root, and no other top-level directory (dot directories aside) outside test/, dist/ and node_modules/ holds one (C1): blocks
  *   are maximal runs of non-blank lines, a block's lines are joined by a space and read RENDERED (an HTML comment renders nothing,
- *   an inline link or image and a reference link render their text alone, emphasis and code-span markers render no letter, a
- *   decimal, hexadecimal or named (&amp; &lt; &gt; &quot; &apos; &nbsp;) character reference renders its character), then split
- *   after ., ! or ? followed by white space; a sentence carrying a REUSE_TERMS term and an equality claim that is not admitted is a
- *   finding.
+ *   inside a word too; an inline link or image - its text with balanced brackets, then a destination bare with balanced parentheses
+ *   or in angle brackets and an optional title, a backslash escape taken whole - and a full or collapsed reference link render their
+ *   text alone, while brackets followed by no link tail render as text; emphasis and code-span markers render no letter; a decimal,
+ *   hexadecimal or named (&amp; &lt; &gt; &quot; &apos; &nbsp;) character reference renders its character), then split after ., !
+ *   or ? followed by white space; a sentence carrying a REUSE_TERMS term and an equality claim that is not admitted is a finding.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}`; the whole judged set (every row's id, label and pins, every pin's
  * witness, the reading's vocabularies, the exemptions and the residuals) is held to the out-of-file roster
  * test/fixtures/rf-reuse-document-equality-roster.json, whose measured envelopes anchor the fixture facts outside this file. The
@@ -78,17 +95,24 @@
  * invisible; fullwidth letters fold to ASCII and are read, C2 fullwidth); R-SPLIT a reuse term and an equality claim in different
  * sentences are never paired (C2 split); R-ADMIT-ANYWHERE a denial or a producer field anywhere in the unit admits it, whatever it
  * qualifies (C2 denialElsewhere and fieldElsewhere); R-COMPOSED a src or qa claim assembled at runtime from non-literal parts is
- * invisible to the literal scan (B1 composed; A3 and A6 still read the composed text the adapter and native-evidence surface);
+ * invisible to the literal scan (B1 composed; a + chain's string literals are read together like a template expression's literal
+ * parts, B1 composedLiteral and composedAround; A3 and A6 still read the composed text the adapter and native-evidence surface);
  * R-TREES files outside the scanned trees (test/, dist/, node_modules/ and every dot directory but .agents/, .beads/ and .pi/:
  * .github/, .codex/, tool state such as .forge/) and files of other extensions (qa's four .sh and one .json, any .cjs or .tsx) are
  * not judged (C1 and B1 name their roots); R-TEXT-REF the adapter's rf-output reference is a plain-text digest, so two equal
  * references are equal text only, the strictly weaker equality of README.md:51 - no Pi surface compares two references today and the
  * lexical legs would not see a comparison that states no equality word (A4); R-MARKUP markup the rendered reading does not resolve
- * (an inline HTML tag inside a word, un<b>changed</b>; a named character reference outside the six, docu&shy;ment) splits or hides a
- * word (C2 htmlTag and softHyphen); R-REUSE-VOCABULARY a reuse synonym outside REUSE_TERMS (memoized, served from the cache, carried
- * over) leaves the sentence out of (c) (C2 memoized); R-READER-GUARD a module that reads an rf envelope without spelling the schema
- * guard in code (the REACTIVE_FIBER_CLI_SCHEMA constant or its value), checking only the context.render command for instance, is
- * outside A6's reader set (A6 commandOnly).
+ * as CommonMark renders it (an inline HTML tag, inside a word, un<b>changed</b>, or carrying attribute words between two words; a
+ * named character reference outside the six, docu&shy;ment; a bracket inside a code span or inside angle-bracket markup - an HTML
+ * tag, an autolink - within a link's text, which CommonMark keeps inside the text; a full or collapsed reference link whose label no
+ * definition carries, which CommonMark shows with its label while the reading drops the label) splits, hides, adds or drops a word
+ * (C2 htmlTag, htmlTagAttributes, softHyphen, codeSpanLinkText, angleLinkText and undefinedLabel); R-REUSE-VOCABULARY a reuse synonym outside
+ * REUSE_TERMS (memoized, served from the cache, carried over) leaves the sentence out of (c) (C2 memoized); R-READER-GUARD a module
+ * that reads an rf envelope without spelling the schema guard in code (the REACTIVE_FIBER_CLI_SCHEMA constant or its value), checking
+ * only the context.render command for instance, is outside A6's reader set (A6 commandOnly); R-COMPOSED-READ a producer-field or
+ * counter read whose spelling is assembled at runtime from anything but adjacent string literals in one + chain (a variable, a call, a
+ * template substitution) is invisible to B3's and A7's spelling readings, code tokens and whole-file alike (B3 and A7
+ * composedVariable).
  * THE TRIGGER, ABSENT TODAY: Pi reads no result.work_metrics counter, reused_component_count among them (A3's and A6's zero-reuse
  * twins project identically; A7 finds neither work_metrics nor reused_component_count spelled in src or qa), no plan, no replay and no
  * diff (A5 and B3 refuse the other envelopes; B3 finds neither producer field spelled in src or qa, by its whole-file tripwire or its
@@ -579,8 +603,42 @@ function nativeDescriptors(): Promise<{ ids: string[]; texts: string[] }> {
   return nativeDescriptorTexts;
 }
 
+/** Whether `node` joins two operands with +. */
+function isJoin(node: ts.Node): node is ts.BinaryExpression {
+  return ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken;
+}
+/** Whether `node` is a + chain that is no operand of a wider + chain (parentheses looked through). */
+function outermostJoin(node: ts.Node): boolean {
+  if (!isJoin(node)) return false;
+  let parent = node.parent;
+  while (ts.isParenthesizedExpression(parent)) parent = parent.parent;
+  return !isJoin(parent);
+}
+/** A + chain's operands in source order, parentheses looked through. */
+function joinOperands(node: ts.Node): ts.Node[] {
+  if (ts.isParenthesizedExpression(node)) return joinOperands(node.expression);
+  return isJoin(node) ? [...joinOperands(node.left), ...joinOperands(node.right)] : [node];
+}
+/** A + chain's string-literal operands read in order: adjacent ones concatenated into one run, a run ended by any other operand. */
+function literalRuns(node: ts.Node): { runs: string[]; literals: number } {
+  const runs: string[] = [];
+  let literals = 0;
+  let run: string | undefined;
+  for (const operand of joinOperands(node)) {
+    if (ts.isStringLiteralLike(operand)) {
+      literals += 1;
+      run = (run ?? "") + operand.text;
+    } else if (run !== undefined) {
+      runs.push(run);
+      run = undefined;
+    }
+  }
+  if (run !== undefined) runs.push(run);
+  return { runs, literals };
+}
 /** Every code token of a module, comments excluded: each identifier, the text of each string, template and regular-expression
- * literal, and each property-access chain with its white space removed. */
+ * literal, each run of adjacent string literals in a + chain concatenated ("work_" + "metrics" reads work_metrics, after any other
+ * operand too), and each property-access chain with its white space removed. */
 function codeTokens(fileName: string, source: string): string[] {
   const kind = extname(fileName) === ".ts" ? ts.ScriptKind.TS : ts.ScriptKind.JS;
   const tree = ts.createSourceFile(fileName, source, ts.ScriptTarget.Latest, true, kind);
@@ -591,6 +649,7 @@ function codeTokens(fileName: string, source: string): string[] {
       tokens.push(node.text);
     }
     if (ts.isPropertyAccessExpression(node)) tokens.push(node.getText(tree).replace(/\s+/g, ""));
+    if (outermostJoin(node)) tokens.push(...literalRuns(node).runs);
     ts.forEachChild(node, visit);
   };
   visit(tree);
@@ -634,7 +693,9 @@ interface LiteralScan {
   readonly findings: string[];
   readonly exempted: string[];
 }
-/** One module's literals judged by the claim reading: a claim that is neither admitted nor exempted (file and window) is a finding. */
+/** One module's literals judged by the claim reading: a claim that is neither admitted nor exempted (file and window) is a finding. A
+ * + chain holding two or more string literals is judged as one unit beside each literal, read like a template expression: its
+ * literals in order, adjacent ones concatenated and any other operand read as a space. */
 function scanLiterals(fileName: string, source: string): LiteralScan {
   const kind = extname(fileName) === ".ts" ? ts.ScriptKind.TS : ts.ScriptKind.JS;
   const tree = ts.createSourceFile(fileName, source, ts.ScriptTarget.Latest, true, kind);
@@ -650,6 +711,10 @@ function scanLiterals(fileName: string, source: string): LiteralScan {
     }
   };
   const visit = (node: ts.Node): void => {
+    if (outermostJoin(node)) {
+      const { runs, literals: parts } = literalRuns(node);
+      if (parts >= 2) judge(runs.join(" "));
+    }
     if (ts.isStringLiteralLike(node)) judge(node.text);
     else if (ts.isTemplateExpression(node)) judge([node.head.text, ...node.templateSpans.map(span => span.literal.text)].join(" "));
     ts.forEachChild(node, visit);
@@ -698,13 +763,85 @@ const NAMED_REFERENCES: Readonly<Record<string, string>> = { amp: "&", lt: "<", 
 function referenced(codePoint: number): string {
   return Number.isSafeInteger(codePoint) && codePoint >= 0 && codePoint <= 0x10ffff ? String.fromCodePoint(codePoint) : " ";
 }
-/** A markdown block as its rendered view reads: an HTML comment renders nothing, an inline link or image and a reference link render
- * their text alone, emphasis and code-span markers render no letter, and a character reference renders its character. */
+/** The index past the bracketed span opening at `open` (brackets balanced, a backslash escape taken whole), or -1 when it never closes. */
+function bracketEnd(text: string, open: number): number {
+  let depth = 0;
+  for (let at = open; at < text.length; at += 1) {
+    const character = text.charAt(at);
+    if (character === "\\") at += 1;
+    else if (character === "[") depth += 1;
+    else if (character === "]") {
+      depth -= 1;
+      if (depth === 0) return at + 1;
+    }
+  }
+  return -1;
+}
+/** The index past a bare link destination starting at `at` (it ends at a space, an ASCII control character or an unmatched ")";
+ * parentheses balance, a backslash escape is taken whole), or -1 when a parenthesis stays open. */
+function bareDestinationEnd(text: string, at: number): number {
+  let depth = 0;
+  let index = at;
+  for (; index < text.length; index += 1) {
+    const character = text.charAt(index);
+    const code = character.charCodeAt(0);
+    if (code <= 0x20 || code === 0x7f) break;
+    if (character === "\\") index += 1;
+    else if (character === "(") depth += 1;
+    else if (character === ")") {
+      if (depth === 0) break;
+      depth -= 1;
+    }
+  }
+  return depth === 0 ? Math.min(index, text.length) : -1;
+}
+/** Optional blanks. */
+const BLANKS = /[ \t]*/y;
+/** A destination in angle brackets: no line ending and no unescaped angle bracket inside. */
+const POINTY_DESTINATION = /<(?:[^<>\\\n]|\\[\s\S])*>/y;
+/** An optional blank-led title (double-quoted, single-quoted or parenthesized, a backslash escape taken whole), optional blanks and
+ * the closing parenthesis of an inline link's tail. */
+const TITLE_AND_CLOSE = /(?:[ \t]+(?:"(?:[^"\\]|\\[\s\S])*"|'(?:[^'\\]|\\[\s\S])*'|\((?:[^()\\]|\\[\s\S])*\)))?[ \t]*\)/y;
+/** A full or collapsed reference link's label: no unescaped bracket inside. */
+const REFERENCE_LABEL = /\[(?:[^[\]\\]|\\[\s\S])*\]/y;
+/** The index past the match of the sticky `pattern` at `at`, or -1. */
+function stickyEnd(pattern: RegExp, text: string, at: number): number {
+  pattern.lastIndex = at;
+  return pattern.test(text) ? pattern.lastIndex : -1;
+}
+/** The index past a link tail starting at `at` - an inline destination and title in parentheses, or a reference label - or -1. A
+ * destination opening with "<" is read in angle brackets or not at all (a bare destination never starts with one). */
+function linkTailEnd(text: string, at: number): number {
+  if (text.charAt(at) === "[") return stickyEnd(REFERENCE_LABEL, text, at);
+  if (text.charAt(at) !== "(") return -1;
+  const start = stickyEnd(BLANKS, text, at + 1);
+  const destination = text.charAt(start) === "<" ? stickyEnd(POINTY_DESTINATION, text, start) : bareDestinationEnd(text, start);
+  return destination < 0 ? -1 : stickyEnd(TITLE_AND_CLOSE, text, destination);
+}
+/** `text` with every inline link or image and every full or collapsed reference link replaced by its text, read the same way (an
+ * image inside a link's text renders its own text); brackets followed by no link tail stay as they are. */
+function renderLinks(text: string): string {
+  let out = "";
+  let at = 0;
+  while (at < text.length) {
+    const textEnd = text.charAt(at) === "[" ? bracketEnd(text, at) : -1;
+    const tailEnd = textEnd < 0 ? -1 : linkTailEnd(text, textEnd);
+    if (tailEnd >= 0) {
+      out = `${out.endsWith("!") ? out.slice(0, -1) : out}${renderLinks(text.slice(at + 1, textEnd - 1))}`;
+      at = tailEnd;
+    } else {
+      const step = text.charAt(at) === "\\" ? 2 : 1;
+      out += text.slice(at, at + step);
+      at += step;
+    }
+  }
+  return out;
+}
+/** A markdown block as its rendered view reads: an HTML comment renders nothing (inside a word too), an inline link or image and a
+ * full or collapsed reference link render their text alone, emphasis and code-span markers render no letter, and a character
+ * reference renders its character. */
 function rendered(block: string): string {
-  return block
-    .replace(/<!--[\s\S]*?-->/g, " ")
-    .replace(/!?\[([^\]]*)\]\([^)]*\)/g, "$1")
-    .replace(/\[([^\]]*)\]\[[^\]]*\]/g, "$1")
+  return renderLinks(block.replace(/<!--[\s\S]*?-->/g, ""))
     .replace(/[*`]/g, "")
     .replace(/&#x([0-9a-f]{1,6});/gi, (_, hex: string) => referenced(Number.parseInt(hex, 16)))
     .replace(/&#([0-9]{1,7});/g, (_, decimal: string) => referenced(Number.parseInt(decimal, 10)))
@@ -730,7 +867,8 @@ function scanSentences(fileName: string, source: string): SentenceScan {
 }
 /** The markdown the docs census reads: every .md below DOC_ROOTS and every .md at the repository root. C1's floors sit below the
  * counts measured at base 2390203 (89 files, 7542 sentences, 40 reuse sentences); wb-9cyp added the agent, bead-store, Pi agent and
- * vendor trees (3 files at base 27ae04e, 0 reuse sentences). */
+ * vendor trees (4 files at base 27ae04e, one per root: .agents/skills/beads/SKILL.md, .beads/README.md, .pi/agents/auditor.md and
+ * vendor/README.md; 0 reuse sentences - the R649 correction of the earlier "3" recorded at landing 371). */
 const DOC_ROOTS = ["docs", "examples", "new-feedback", ".agents", ".beads", ".pi", "vendor"];
 /** Top-level directories that never hold a judged document: the census's own tree, build output and installed packages. */
 const UNJUDGED_DIRECTORIES = ["test", "dist", "node_modules"];
@@ -872,13 +1010,15 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     }
     const claims = stringLeaves(evidence).flatMap(equalityClaims);
     const readers = spellersOf(codeModules(), SCHEMA_GUARD).code;
-    // The reader set's reach: a code spelling of the guard makes a reader, a comment does not, and a command-only check is R-READER-GUARD.
+    // The reader set's reach: a code spelling of the guard makes a reader (string literals joined by + spell it too, wb-pwlq), a comment
+    // does not, and a command-only check is R-READER-GUARD.
     const guard = (source: string): number => spellersOf([probeModule(source)], SCHEMA_GUARD).code.length;
     const guardControls = {
       schemaConstant: guard('import { REACTIVE_FIBER_CLI_SCHEMA } from "./providers/reactivefiber.js";\nexport const isRf = (value: { schema: string }) => value.schema === REACTIVE_FIBER_CLI_SCHEMA;'),
       schemaValue: guard('export const isRf = (value: { schema: string }) => value.schema === "reactive-fiber.cli/v1";'),
       commentOnly: guard("// reads a reactive-fiber.cli/v1 envelope\nexport const none = 0;"),
       commandOnly: guard('export const isRender = (value: { command: string }) => value.command === "context.render";'),
+      schemaJoined: guard('export const isRf = (value: { schema: string }) => value.schema === "reactive-fiber.cli" + "/v1";'),
     };
     expect(readers).toStrictEqual(RF_READERS);
     expect(claims).toEqual([]);
@@ -902,10 +1042,23 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       observationReuseMovesProjection[seam] = JSON.stringify(json(projectionOf(OBSERVED_REUSE, seam))) !== JSON.stringify(json(projectionOf(fresh, seam)));
     }
     const counter = spellersOf(codeModules(), REUSE_COUNTER);
+    // The tripwire's reach (wb-pwlq, gate F6 and F7): each REUSE_COUNTER spelling read in code makes a speller and a comment only a
+    // whole-file one; literals joined by + read as one value, while a spelling assembled from a variable is R-COMPOSED-READ.
+    const speller = (source: string): { code: number; wholeFile: number } => {
+      const found = spellersOf([probeModule(source)], REUSE_COUNTER);
+      return { code: found.code.length, wholeFile: found.wholeFile.length };
+    };
+    const counterControls = {
+      workMetrics: speller("export const metrics = (result: { work_metrics: object }) => result.work_metrics;"),
+      reusedCount: speller("export const reused = (metrics: { reused_component_count: number }) => metrics.reused_component_count;"),
+      commentOnly: speller("// work_metrics.reused_component_count is the producer's counter; Pi reads neither.\nexport const none = 0;"),
+      composedLiteral: speller('export const metrics = (result: Record<string, object>) => result["work_" + "metrics"];'),
+      composedVariable: speller('const head = "work_";\nexport const metrics = (result: Record<string, object>) => result[head + "metrics"];'),
+    };
     expect(claims).toEqual([]);
     expect(Object.values(observationReuseMovesProjection).every(Boolean)).toBe(true);
     expect(counter).toStrictEqual({ code: [], wholeFile: [] });
-    return { surfaced, observationReuseMovesProjection, claims, counterSpellers: counter };
+    return { surfaced, observationReuseMovesProjection, claims, counterSpellers: counter, counterControls };
   },
   B1: async () => {
     const roots = CODE_ROOTS.map(scanCodeRoot);
@@ -924,6 +1077,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       composed: control("control.ts", 'const state = "unchanged"; const note = "the document " + state;'),
       noun: control("control.ts", 'const note = "reuse keeps the rendered text identical";'),
       fieldPrefix: control("control.ts", 'const note = "rf context differs: reused, the document is unchanged";'),
+      fieldPreceded: control("control.ts", 'const note = "xcontext.diff: reused, the document is unchanged";'),
+      fieldUnderscore: control("control.ts", 'const note = "final_document_digest_v0: reused, the document is unchanged";'),
+      fieldDigit: control("control.ts", 'const note = "context.diff2: reused, the document is unchanged";'),
+      composedLiteral: control("control.ts", 'const note = "reused components: the document " + "is unchanged";'),
+      composedAround: control("control.ts", 'const note = "reused components: the document " + count + " is unchanged";'),
     };
     return { roots, controls };
   },
@@ -965,6 +1123,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       propertyRead: control("export const digest = (result: { final_document_digest: string }) => result.final_document_digest;"),
       literalRead: control('export const command = "context.diff";'),
       commentOnly: control("// final_document_digest is the producer's digest; Pi reads none.\nexport const none = 0;"),
+      propertyChain: control("export const diff = (result: { context: { diff: string } }) => result.context.diff;"),
+      regexLiteral: control("export const field = /final_document_digest/;"),
+      composedLiteral: control('export const digest = (result: Record<string, string>) => result["final_document" + "_digest"];'),
+      composedVariable: control('const head = "final_document";\nexport const digest = (result: Record<string, string>) => result[head + "_digest"];'),
+      composedAfterVariable: control('export const digest = (result: Record<string, string>, prefix: string) => result[prefix + "final_document" + "_digest"];'),
     };
     expect([REPLAY.command, DIFF.command]).toEqual(["context.replay", "context.diff"]);
     expect(replay.outcome).toBe("reproduced");
@@ -1035,6 +1198,26 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       htmlTag: control("Reuse means the document is un<b>changed</b>."),
       softHyphen: control("Reuse means the docu&shy;ment is unchanged."),
       memoized: control("A memoized component leaves the document unchanged."),
+      // wb-pwlq: a comment inside a word, the link tails CommonMark admits (and a parenthesized span that is none), the reference
+      // branches, the code-span marker and the whole-token field clauses; codeSpanLinkText, undefinedLabel, htmlTagAttributes and
+      // angleLinkText are R-MARKUP quiet rows.
+      intrawordComment: control("Reuse leaves the document un<!-- measured -->changed."),
+      balancedLinkTarget: control("Reuse leaves the document [x](https://example.com/a(b)c/d/e/f) unchanged."),
+      escapedLinkTarget: control("Reuse leaves the document [x](https://example.com/a\\)b/c/d/e) unchanged."),
+      pointyLinkTarget: control("Reuse leaves the document [x](<https://example.com/a)b c/d/e>) unchanged."),
+      titledLinkTarget: control('Reuse leaves the document [x](https://example.com "as (measured at the pin") unchanged.'),
+      nestedLinkText: control("Reuse leaves the document [[x]](https://example.com/a/b/c) unchanged."),
+      invalidLinkTarget: control("Reuse leaves the [text](document is unchanged)."),
+      hexReference: control("Reuse means the document is &#x75;nchanged."),
+      namedReference: control("Reuse means the document is now&nbsp;unchanged."),
+      codeSpan: control("Reuse means the document is un`changed`."),
+      fieldPreceded: control("Per xcontext.diff, reuse leaves the document unchanged."),
+      fieldUnderscore: control("Per final_document_digest_v0, reuse leaves the document unchanged."),
+      fieldDigit: control("Per context.diff2, reuse leaves the document unchanged."),
+      codeSpanLinkText: control("Reuse leaves the document [`]`](https://example.com/a/b/c) unchanged."),
+      undefinedLabel: control("Reuse leaves the [x][document is unchanged]."),
+      htmlTagAttributes: control('Reuse leaves the document <span class="as measured">unchanged</span>.'),
+      angleLinkText: control('Reuse leaves the document [<b title="]">x</b>](https://example.com/a/b/c) unchanged.'),
     };
   },
   C3: async () => {
@@ -1065,7 +1248,7 @@ describe("wb-pfxo.4 rf reuse is never document equality census (RF-COMPOSITIONAL
     const pins = ROWS.flatMap(row => row.pins);
     expect(ROSTER.residuals.map(residual => residual.id)).toEqual([
       "R-NOUN", "R-WINDOW", "R-VOCABULARY", "R-LOOKALIKE", "R-SPLIT", "R-ADMIT-ANYWHERE", "R-COMPOSED", "R-TREES", "R-TEXT-REF", "R-MARKUP", "R-REUSE-VOCABULARY",
-      "R-READER-GUARD",
+      "R-READER-GUARD", "R-COMPOSED-READ",
     ]);
     expect(ROSTER.residuals.every(residual => residual.quietPins.length > 0 && residual.quietPins.every(pin => pins.includes(pin)))).toBe(true);
   });

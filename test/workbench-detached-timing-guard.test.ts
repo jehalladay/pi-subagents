@@ -20,14 +20,51 @@
  *   G4 a hook that stops hosts (an afterEach that calls process.kill) passes HOST_HOOK_TIMEOUT_MS and settles its waits
  *      through reportAfterCleanup, so a host-exit lapse is reported only after the cleanup has run, and before vitest's
  *      hook timeout could leave that cleanup to finish late, during a later test.
+ * wb-nqbd (the R694 follow-up of wb-maza landing 395, gate cmd_d35d53e6a40a: F1 leads, F2-F5 ride) widens G2, G3 and
+ * G4. Each widened reading runs beside the landed one, which is unchanged, and only where the landed one found nothing,
+ * so every landed finding still stands:
+ *   G2 also reads vitest's own wait helpers, waitFor, waitUntil and poll (vi.waitFor, vi.waitUntil, expect.poll), by
+ *      name on any receiver or binding, since test/helpers/detached-timing.ts names their lapses as marker-less ("Timed
+ *      out in waitFor!", "Timed out in waitUntil!", an AssertionError); a timer global or wait helper named by a string
+ *      key (globalThis["setTimeout"]); and the timers behind two host objects, read on AbortSignal or Atomics by name,
+ *      bare or as a member, through a member, a string key or a destructured binding: AbortSignal.timeout (a signal that
+ *      aborts on a timer, as in once(..., { signal })) and Atomics.wait / Atomics.waitAsync (a sleep);
+ *   G3 also reads a for, while or do loop whose condition joins any relational comparison (<, <=, > or >=, against a
+ *      literal, a named constant or any other bound, on either side) with `&&`: a countdown, a reversed or named bound,
+ *      a while or do counter. One loop is one finding;
+ *   G4 also reads every vitest hook (afterEach, afterAll, beforeEach or beforeAll: by name, through a vitest import
+ *      alias, or as a namespace member) whose callback, inline or named, stops hosts itself or through the module-local
+ *      functions it calls or names, at any depth; that callback still passes HOST_HOOK_TIMEOUT_MS and calls
+ *      reportAfterCleanup itself.
  * The judged set is read from the test directory and the config, never typed here. The members importing the marked
  * twins (the two suites that drive real hosts, and the helper's own unit rows) are pinned, so a derivation that reads
- * nothing, or a member that leaves the twins, reds.
- * NAMED RESIDUALS (not detected): a wait loop built on holdOpen or on an awaited read with no delay; a host call
- * reached through a re-export or through the Pi tool (a tool reply's lapse text is marked by the member's reply parser,
- * jsonReply in the socket-base suite, not here); and test/workbench-detached-control-live.test.ts. That last suite is
- * excluded from the default gate and runs only as `forge run detached-control-live`: its until() bound is a
- * receipt-recorded measurement (journeys.*.realised = until().ok), and no landing judge reads its reds.
+ * nothing, or a member that leaves the twins, reds. Every widened reading has planted kill controls beside negative
+ * controls, and every named residual has planted quiet rows (a member the guard leaves quiet). What each one yields, as
+ * each finding's rule and text, is held in the out-of-file roster test/fixtures/detached-timing-guard-roster.json,
+ * beside this file's frozen shape. The first wb-nqbd case and the last case read that shape against the collected test
+ * tree, and the last one also reads that every planted table reached its own compare (F4: a deleted case or row block
+ * reds).
+ * NAMED RESIDUALS (not detected; each has quiet rows, F5):
+ *   R-WAIT-LOOP a wait loop whose bound is not in its condition (a for-of over a fixed-length array, a counted loop
+ *     that leaves through a break) or that awaits a read with no delay;
+ *   R-HOST-ROUTE a host call reached through a re-export, a loader under another name (createRequire), a specifier
+ *     that is not one string literal, or the Pi tool (a tool reply's lapse text is marked by the member's reply parser,
+ *     jsonReply in the socket-base suite, not here);
+ *   R-TIMER-ROUTE a timer reached through a function imported from another module, or a timers module reached through
+ *     a loader under another name;
+ *   R-COMPUTED-KEY a timer or wait helper named by a computed key that is not one string literal, or by a string read
+ *     reflectively (Reflect.get);
+ *   R-OWNER-ALIAS AbortSignal or Atomics read through an alias of its own;
+ *   R-HOOK-ROUTE a hook that stops hosts through an imported function or an object's method;
+ *   R-RAISE-SITE no planted lapse reaches raiseTransportLapse at its call site in socket-base's 60-byte TMPDIR row (the
+ *     helper's own unit rows pin what it raises): the family's raiseTransportLapse call rows are pinned to the roster,
+ *     and a tool-path read left unraised is a quiet row.
+ * test/workbench-detached-control-live.test.ts is not judged either. It is excluded from the default gate and runs only
+ * as `forge run detached-control-live`: its until() bound is a receipt-recorded measurement (journeys.*.realised =
+ * until().ok), and no landing judge reads its reds. The first case pins that exclusion.
+ * NOT CLAIMED: a hollow that removes one planted site from every table it sits in at once (its own table, the roster's
+ * entry and the frozen-shape literal's count); a hollow that removes one of the two shape cases from every literal of
+ * the shape; a case whose own assertions are weakened in place.
  */
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -48,6 +85,17 @@ const CLOCKS = new Set(["Date.now", "performance.now"]);
 /** Where the marked twins live, as the members import them. */
 const TWINS_MODULE = "./helpers/detached-timing.js";
 const TWINS = new Set(["launchDetachedMarked", "connectDetachedMarked"]);
+/** wb-nqbd F1: vitest's own wait helpers (vi.waitFor, vi.waitUntil, expect.poll), read by name on any receiver or binding. */
+const WAIT_HELPERS = new Set(["waitFor", "waitUntil", "poll"]);
+/** wb-nqbd F1, F3: the timers behind two host objects, read on the object by name: AbortSignal.timeout, Atomics.wait, Atomics.waitAsync. */
+const MEMBER_TIMERS: ReadonlyMap<string, ReadonlySet<string>> = new Map([
+  ["AbortSignal", new Set(["timeout"])],
+  ["Atomics", new Set(["wait", "waitAsync"])],
+]);
+/** wb-nqbd F3: vitest's hooks; a hook that stops hosts is judged whichever one it is. */
+const HOOKS = new Set(["afterEach", "afterAll", "beforeEach", "beforeAll"]);
+/** wb-nqbd F2: the relational operators a counted loop's bound compares with. */
+const RELATIONAL = new Set<ts.SyntaxKind>([ts.SyntaxKind.LessThanToken, ts.SyntaxKind.LessThanEqualsToken, ts.SyntaxKind.GreaterThanToken, ts.SyntaxKind.GreaterThanEqualsToken]);
 
 interface ConfigShape {
   test?: { exclude?: readonly string[] };
@@ -95,12 +143,93 @@ function readsClock(node: ts.Node): boolean {
   if (ts.isPropertyAccessExpression(node) && ts.isIdentifier(node.expression) && CLOCKS.has(`${node.expression.text}.${node.name.text}`)) return true;
   return ts.forEachChild(node, readsClock) === true;
 }
+/** wb-nqbd F2: true when `node` holds a relational comparison (<, <=, > or >=), whatever its bound and on either side. */
+function relationalBound(node: ts.Node): boolean {
+  if (ts.isBinaryExpression(node) && RELATIONAL.has(node.operatorToken.kind)) return true;
+  return ts.forEachChild(node, relationalBound) === true;
+}
+/** The landed G3 reading's own test: a counted `for` that joins a numeric literal under `<` or `<=` with `&&`. */
+function landedCount(node: ts.Node): boolean {
+  return ts.isForStatement(node) && node.condition !== undefined && conjunction(node.condition) && fixedBound(node.condition);
+}
+/** wb-nqbd F1, F3: "<owner>.<member>" when `owner` names AbortSignal or Atomics (bare, or as a member such as
+ * globalThis.AbortSignal) and `member` is one of its timers. */
+function memberTimer(owner: ts.Expression, member: string): string | undefined {
+  const name = ts.isIdentifier(owner) ? owner.text : ts.isPropertyAccessExpression(owner) ? owner.name.text : undefined;
+  return name !== undefined && MEMBER_TIMERS.get(name)?.has(member) === true ? `${name}.${member}` : undefined;
+}
+/** wb-nqbd F3: the module-local functions of `source` by name: function declarations, and variables bound to an arrow
+ * function or a function expression. */
+function localFunctions(source: ts.SourceFile): Map<string, ts.Node> {
+  const found = new Map<string, ts.Node>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isFunctionDeclaration(node) && node.name !== undefined) found.set(node.name.text, node);
+    if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && (ts.isArrowFunction(node.initializer) || ts.isFunctionExpression(node.initializer))) {
+      found.set(node.name.text, node.initializer);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return found;
+}
+/** wb-nqbd F3: the route by which `node` calls `name`: [] when it calls it itself, the module-local functions it calls or
+ * names on the way (at any depth) when it reaches it through them, undefined when it never does. */
+function reachRoute(node: ts.Node, name: string, locals: ReadonlyMap<string, ts.Node>, seen: Set<string> = new Set()): string[] | undefined {
+  if (calls(node, name)) return [];
+  let route: string[] | undefined;
+  const through = (child: ts.Node): boolean => {
+    if (ts.isIdentifier(child) && !seen.has(child.text)) {
+      const local = locals.get(child.text);
+      if (local !== undefined) {
+        seen.add(child.text);
+        const rest = reachRoute(local, name, locals, seen);
+        if (rest !== undefined) {
+          route = [child.text, ...rest];
+          return true;
+        }
+      }
+    }
+    return ts.forEachChild(child, through) === true;
+  };
+  through(node);
+  return route;
+}
+/** wb-nqbd F1: how an identifier is read: as a member, through a destructured binding, through an import, or by name. */
+function roleOf(node: ts.Identifier): string {
+  const parent = node.parent;
+  if (ts.isPropertyAccessExpression(parent) && parent.name === node) return "as a member";
+  if (ts.isBindingElement(parent)) return "through a destructured binding";
+  if (ts.isImportSpecifier(parent)) return "through an import";
+  return "by name";
+}
+/** wb-nqbd F3: the names `source` binds to vitest's hooks: the hook names, and every vitest import alias of one. */
+function hookNames(source: ts.SourceFile): Set<string> {
+  const names = new Set(HOOKS);
+  for (const statement of source.statements) {
+    const bindings = ts.isImportDeclaration(statement) && moduleText(statement.moduleSpecifier) === "vitest" ? statement.importClause?.namedBindings : undefined;
+    if (bindings === undefined || !ts.isNamedImports(bindings)) continue;
+    for (const element of bindings.elements) {
+      if (HOOKS.has((element.propertyName ?? element.name).text)) names.add(element.name.text);
+    }
+  }
+  return names;
+}
+/** wb-nqbd F3: true when `callee` registers a vitest hook: by name or alias, or as a member (vitest.afterAll). */
+function hookCallee(callee: ts.Expression, names: ReadonlySet<string>): boolean {
+  return (ts.isIdentifier(callee) && names.has(callee.text)) || (ts.isPropertyAccessExpression(callee) && HOOKS.has(callee.name.text));
+}
+/** The landed G4 reading's own test: an afterEach whose own callback calls kill. */
+function landedHook(node: ts.CallExpression): boolean {
+  return ts.isIdentifier(node.expression) && node.expression.text === "afterEach" && node.arguments[0] !== undefined && calls(node.arguments[0], "kill");
+}
 
 /** One member's text read as a syntax tree: every G1-G3 finding, and the marked twins it imports. */
 function readText(name: string, text: string): Reading {
   const source = ts.createSourceFile(name, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const found: Finding[] = [];
   const twins: string[] = [];
+  const locals = localFunctions(source);
+  const hooks = hookNames(source);
   const at = (node: ts.Node): string => `${name}:${source.getLineAndCharacterOfPosition(node.getStart(source)).line + 1}`;
   const add = (rule: Finding["rule"], node: ts.Node, text: string): void => {
     found.push({ rule, at: at(node), text });
@@ -135,6 +264,28 @@ function readText(name: string, text: string): Reading {
       if (loader && first !== undefined && TIMER_MODULES.has(first)) add("G2", node, `loads ${first} at run time`);
     }
     if (ts.isIdentifier(node) && TIMER_GLOBALS.has(node.text)) add("G2", node, `uses ${node.text}`);
+    // wb-nqbd F1, F3: vitest's wait helpers by name; a timer global or wait helper by a string key; and the timers behind
+    // AbortSignal and Atomics, as a member, a string key or a destructured binding.
+    if (ts.isIdentifier(node) && WAIT_HELPERS.has(node.text)) add("G2", node, `uses vitest's ${node.text} ${roleOf(node)}`);
+    if (ts.isElementAccessExpression(node) && ts.isStringLiteralLike(node.argumentExpression)) {
+      const key = node.argumentExpression.text;
+      const timer = memberTimer(node.expression, key);
+      if (TIMER_GLOBALS.has(key) || WAIT_HELPERS.has(key)) add("G2", node, `uses ${key} by a string key`);
+      if (timer !== undefined) add("G2", node, `uses ${node.expression.getText(source)}.${key} by a string key`);
+    }
+    if (ts.isPropertyAccessExpression(node)) {
+      const timer = memberTimer(node.expression, node.name.text);
+      if (timer !== undefined) add("G2", node, `uses ${node.getText(source)}`);
+    }
+    if (ts.isVariableDeclaration(node) && ts.isObjectBindingPattern(node.name) && node.initializer !== undefined) {
+      for (const element of node.name.elements) {
+        const key = element.propertyName ?? element.name;
+        const name = ts.isIdentifier(key) || ts.isStringLiteralLike(key) ? key.text : undefined;
+        const timer = name === undefined ? undefined : memberTimer(node.initializer, name);
+        if (timer !== undefined) add("G2", element, `destructures ${node.initializer.getText(source)}.${name}`);
+        if (name !== undefined && ts.isStringLiteralLike(key) && (TIMER_GLOBALS.has(name) || WAIT_HELPERS.has(name))) add("G2", element, `destructures ${name} by a string key`);
+      }
+    }
     if (ts.isForStatement(node) && node.condition !== undefined && conjunction(node.condition) && fixedBound(node.condition)) {
       add("G3", node, `fixed-count poll loop: for (...; ${node.condition.getText(source)}; ...)`);
     }
@@ -143,8 +294,25 @@ function readText(name: string, text: string): Reading {
       if (timeout === undefined || !ts.isIdentifier(timeout) || timeout.text !== "HOST_HOOK_TIMEOUT_MS") add("G4", node, "a hook that stops hosts runs without HOST_HOOK_TIMEOUT_MS");
       if (!calls(node.arguments[0], "reportAfterCleanup")) add("G4", node, "a hook that stops hosts settles its waits without reportAfterCleanup");
     }
+    // wb-nqbd F3: every vitest hook whose callback stops hosts itself or through module-local functions it calls or names;
+    // the landed reading above judges an afterEach whose own callback calls kill, and this one every other such hook.
+    const route = ts.isCallExpression(node) && hookCallee(node.expression, hooks) && !landedHook(node) && node.arguments[0] !== undefined ? reachRoute(node.arguments[0], "kill", locals) : undefined;
+    if (route !== undefined && ts.isCallExpression(node)) {
+      const callback = node.arguments[0];
+      const body = callback !== undefined && ts.isIdentifier(callback) ? locals.get(callback.text) : callback;
+      const hook = `${node.expression.getText(source)}${route.length > 0 ? ` through ${route.join(" > ")}` : ""}`;
+      const timeout = node.arguments[1];
+      if (timeout === undefined || !ts.isIdentifier(timeout) || timeout.text !== "HOST_HOOK_TIMEOUT_MS") add("G4", node, `a hook that stops hosts (${hook}) runs without HOST_HOOK_TIMEOUT_MS`);
+      if (body === undefined || !calls(body, "reportAfterCleanup")) add("G4", node, `a hook that stops hosts (${hook}) settles its waits without reportAfterCleanup`);
+    }
     const loopCondition = ts.isForStatement(node) ? node.condition : ts.isWhileStatement(node) || ts.isDoStatement(node) ? node.expression : undefined;
     if (loopCondition !== undefined && readsClock(loopCondition)) add("G3", node, `clock-deadline poll loop: ${loopCondition.getText(source)}`);
+    // wb-nqbd F2: a for, while or do loop whose condition joins any relational bound with && - one finding per loop, and
+    // only where the landed readings above found none.
+    if (loopCondition !== undefined && !readsClock(loopCondition) && !landedCount(node) && conjunction(loopCondition) && relationalBound(loopCondition)) {
+      const condition = loopCondition.getText(source);
+      add("G3", node, `fixed-count poll loop: ${ts.isForStatement(node) ? `for (...; ${condition}; ...)` : ts.isWhileStatement(node) ? `while (${condition})` : `do ... while (${condition})`}`);
+    }
     ts.forEachChild(node, visit);
   };
   visit(source);
@@ -153,6 +321,171 @@ function readText(name: string, text: string): Reading {
 
 const readings = new Map(judged.map(name => [name, readText(name, readFileSync(join(ROOT, "test", name), "utf8"))] as const));
 const shown = (list: readonly Finding[]): string => list.map(finding => `${finding.rule} ${finding.at} ${finding.text}`).join("\n") || "(none)";
+
+/**
+ * wb-nqbd: the planted sites, each read as its own member. A kill control is a site of one widened reading (F1, F2, F3)
+ * and a negative control a near-miss that must stay quiet (N); what each yields lives in the roster, never here.
+ */
+const CONTROLS: Readonly<Record<string, string>> = {
+  "F1.waitFor": "await vi.waitFor(() => expect(alive()).toBe(false), { timeout: 5_000, interval: 20 });",
+  "F1.waitUntil": "await vi.waitUntil(() => !alive(), { timeout: 5_000 });",
+  "F1.poll": "await expect.poll(() => alive(), { timeout: 5_000 }).toBe(false);",
+  "F1.helperBinding": "const { waitFor: settle } = vi;\nawait settle(() => expect(alive()).toBe(false));",
+  "F1.helperKey": 'await expect["poll"](() => alive()).toBe(false);',
+  "F1.signalTimeout": 'await once(host, "exit", { signal: AbortSignal.timeout(5_000) });',
+  "F1.signalGlobal": 'await once(host, "exit", { signal: globalThis.AbortSignal.timeout(5_000) });',
+  "F1.signalKey": 'await once(host, "exit", { signal: AbortSignal["timeout"](5_000) });',
+  "F1.signalBinding": 'const { timeout: deadline } = AbortSignal;\nawait once(host, "exit", { signal: deadline(5_000) });',
+  "F2.countdown": "for (let i = 150; i > 0 && alive(); i--) await holdOpen(20);",
+  "F2.reversedBound": "for (let i = 0; 150 > i && alive(); i++) await holdOpen(20);",
+  "F2.namedBound": "for (let i = 0; i < MAX_POLLS && alive(); i++) await holdOpen(20);",
+  "F2.whileCounter": "while (n++ < 150 && alive()) await holdOpen(20);",
+  "F2.doCounter": "do await holdOpen(20); while (alive() && ++n <= 150);",
+  "F2.atLeast": "while (alive() && budget-- >= 1) await holdOpen(20);",
+  "F3.timerKey": 'await new Promise(resolve => globalThis["setTimeout"](resolve, 20));',
+  "F3.timerTemplateKey": "globalThis[`setInterval`](tick, 20);",
+  "F3.timerBindingKey": 'const { "setTimeout": later } = globalThis;\nlater(tick, 20);',
+  "F3.atomicsWait": "Atomics.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 20);",
+  "F3.atomicsWaitAsync": "await Atomics.waitAsync(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 20).value;",
+  "F3.afterAllHook": "afterAll(async () => { for (const pid of hosts) process.kill(pid); await Promise.all(hosts.map(gone)); });",
+  "F3.beforeEachHook": "beforeEach(() => { for (const pid of leftovers) process.kill(pid); });",
+  "F3.beforeAllHook": "beforeAll(() => { for (const pid of leftovers) process.kill(pid); }, HOST_HOOK_TIMEOUT_MS);",
+  "F3.helperStop": "function stopHosts() { for (const pid of hosts) process.kill(pid); }\nafterEach(async () => { stopHosts(); await Promise.all(hosts.map(gone)); });",
+  "F3.arrowHelper": "const stopHosts = () => { for (const pid of hosts) process.kill(pid); };\nafterEach(async () => { stopHosts(); }, HOST_HOOK_TIMEOUT_MS);",
+  "F3.namedCallback":
+    "async function stopAll() { for (const pid of hosts) process.kill(pid); await Promise.all(hosts.map(gone)); }\nafterEach(stopAll, HOST_HOOK_TIMEOUT_MS);",
+  "F3.deepHelper": "function signal(pid: number) { process.kill(pid); }\nfunction stopHosts() { hosts.forEach(signal); }\nafterEach(() => { stopHosts(); });",
+  "F3.aliasedHook": 'import { afterEach as eachCleanup } from "vitest";\neachCleanup(async () => { for (const pid of hosts) process.kill(pid); });',
+  "F3.namespaceHook": 'import * as vitest from "vitest";\nvitest.afterAll(() => { for (const pid of hosts) process.kill(pid); });',
+  "N.settledHelper":
+    "function stopHosts() { for (const pid of hosts) process.kill(pid); return hosts.map(gone); }\nafterEach(async () => { await reportAfterCleanup(stopHosts(), cleanup); }, HOST_HOOK_TIMEOUT_MS);",
+  "N.settledNamed":
+    "async function stopAll() { for (const pid of hosts) process.kill(pid); await reportAfterCleanup(hosts.map(gone), cleanup); }\nafterAll(stopAll, HOST_HOOK_TIMEOUT_MS);",
+  "N.quietHook": "beforeEach(() => { savedEnv = { ...process.env }; });",
+  "N.unconjoined": "while (queue.length > 0) queue.pop();",
+  "N.conjoinedNoBound": "while (alive() && !stopped) await holdOpen(20);",
+  "N.textOnly": "const text = \"vi.waitFor(expect.poll) AbortSignal.timeout Atomics.wait globalThis['setTimeout']\"; // afterAll(() => process.kill(pid))",
+  "N.otherMember": "const reading = await client.timeout(5_000);\nsession.wait(20);",
+};
+
+/** wb-nqbd F5: each named residual's planted members (`<residual>.<member>`), every one a quiet row the guard reads nothing in. */
+const QUIET: Readonly<Record<string, string>> = {
+  "R-WAIT-LOOP.forOfBound": "for (const _ of Array.from({ length: 150 })) { if (!alive()) break; await holdOpen(20); }",
+  "R-WAIT-LOOP.breakCount": "for (let i = 0; i < 150; i++) { if (!alive()) break; await holdOpen(20); }",
+  "R-WAIT-LOOP.noDelay": "while (!(await ready()));",
+  "R-HOST-ROUTE.reexport": 'import { launchDetachedWorkflow } from "./helpers/host-reexport.js";',
+  "R-HOST-ROUTE.loaderAlias": 'const load = createRequire(import.meta.url);\nconst host = load("../src/workbench/hosts/local-detached.js");',
+  "R-HOST-ROUTE.computedSpecifier": "const host = await import(HOST_MODULE_PATH);",
+  "R-HOST-ROUTE.piTool": 'await tool.execute("launch", { action: "launch", invocationId: "quiet" }, undefined, undefined, context);',
+  "R-TIMER-ROUTE.importedSleep": 'import { sleep } from "./helpers/time.js";\nawait sleep(20);',
+  "R-TIMER-ROUTE.loaderAlias": 'const load = createRequire(import.meta.url);\nconst timers = load("node:timers/promises");',
+  "R-COMPUTED-KEY.concatenated": 'globalThis["set" + "Timeout"](resolve, 20);',
+  "R-COMPUTED-KEY.named": "await vi[WAIT_HELPER](() => !alive());",
+  "R-COMPUTED-KEY.reflected": 'Reflect.get(globalThis, "setTimeout")(resolve, 20);',
+  "R-OWNER-ALIAS.signal": 'const signals = AbortSignal;\nawait once(host, "exit", { signal: signals.timeout(20) });',
+  "R-OWNER-ALIAS.atomics": "const shared = Atomics;\nshared.wait(new Int32Array(new SharedArrayBuffer(4)), 0, 0, 20);",
+  "R-HOOK-ROUTE.method": "afterEach(async () => { await fixtures.stopAll(); });",
+  "R-HOOK-ROUTE.imported": 'import { stopAllHosts } from "./helpers/hosts.js";\nafterEach(stopAllHosts);',
+  "R-RAISE-SITE.unraised": 'const snapshot = async () => jsonReply("inspect snapshot", await inspect());',
+};
+
+/** wb-nqbd: the out-of-file roster - what every planted site yields, the residuals' quiet rows, the raise rows and this
+ * file's frozen shape (its test titles in order, "%s: " opening a per-member rule row). */
+const ROSTER_PATH = join(ROOT, "test", "fixtures", "detached-timing-guard-roster.json");
+interface Roster {
+  readonly bead: string;
+  readonly tests: readonly string[];
+  readonly controls: Readonly<Record<string, readonly string[]>>;
+  readonly residuals: Readonly<Record<string, readonly string[]>>;
+  readonly raiseRows: readonly string[];
+}
+function stringsOf(value: unknown, field: string): string[] {
+  if (!Array.isArray(value) || !value.every((entry): entry is string => typeof entry === "string")) throw new Error(`roster field ${field} is not a list of strings`);
+  return [...value];
+}
+function tableOf(value: unknown, field: string): Record<string, string[]> {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) throw new Error(`roster field ${field} is not a table`);
+  return Object.fromEntries(Object.entries(value).map(([key, entry]) => [key, stringsOf(entry, `${field}.${key}`)]));
+}
+function readRoster(): Roster {
+  const raw: unknown = JSON.parse(readFileSync(ROSTER_PATH, "utf8"));
+  if (typeof raw !== "object" || raw === null || Array.isArray(raw)) throw new Error("the roster is not a table");
+  const fields = new Map(Object.entries(raw));
+  const bead = fields.get("bead");
+  if (typeof bead !== "string") throw new Error("roster field bead is not a string");
+  return {
+    bead,
+    tests: stringsOf(fields.get("tests"), "tests"),
+    controls: tableOf(fields.get("controls"), "controls"),
+    residuals: tableOf(fields.get("residuals"), "residuals"),
+    raiseRows: stringsOf(fields.get("raiseRows"), "raiseRows"),
+  };
+}
+const ROSTER = readRoster();
+/** This file's own text: its header names the residuals. */
+const SELF = readFileSync(fileURLToPath(import.meta.url), "utf8");
+
+/** The findings ("<rule> <text>") each planted site `prefix` names yields, read as its own member, by site id. */
+function controlsOf(prefix: string): Record<string, string[]> {
+  return Object.fromEntries(
+    Object.entries(CONTROLS)
+      .filter(([id]) => id.startsWith(prefix))
+      .map(([id, text]) => [id, readText(`${id}.test.ts`, text).findings.map(finding => `${finding.rule} ${finding.text}`)]),
+  );
+}
+/** wb-nqbd F4: each planted table's case records its table once its compare held; the last case reads the record. */
+const COMPARED: string[] = [];
+/** The roster's findings for the planted sites `prefix` names. */
+function rosterControlsOf(prefix: string): Record<string, readonly string[]> {
+  return Object.fromEntries(Object.entries(ROSTER.controls).filter(([id]) => id.startsWith(prefix)));
+}
+/** A vitest task as this file reads it (wb-nqbd F4): a test, or a suite holding tasks. */
+interface TaskNode {
+  readonly type: string;
+  readonly name: string;
+  readonly mode: string;
+  readonly fails?: boolean;
+  readonly result?: { readonly state?: string };
+  readonly tasks?: readonly TaskNode[];
+}
+/** The tests of a vitest task tree, in registration order. */
+function testsOf(tasks: readonly TaskNode[], into: TaskNode[] = []): TaskNode[] {
+  for (const child of tasks) {
+    if (child.type === "test") into.push(child);
+    else if (child.type === "suite") testsOf(child.tasks ?? [], into);
+  }
+  return into;
+}
+/** The roster's test titles, each per-member rule row ("%s: ") expanded over the judged set. */
+function rosterTests(): string[] {
+  return ROSTER.tests.flatMap(title => (title.startsWith("%s: ") ? judged.map(name => title.replace("%s", name)) : [title]));
+}
+/** wb-nqbd F5: the residual ids (R-<NAME>) the leading comment of `text` names, in order of first mention. */
+function headerResiduals(text: string): string[] {
+  const header = text.slice(0, text.indexOf("*/"));
+  return [...new Set([...header.matchAll(/\bR-[A-Z]+(?:-[A-Z]+)*\b/g)].map(match => match[0]))];
+}
+/** True when `callee` registers a test row: it, test, or a member or table form of either (it.each(...)). */
+function registersTest(callee: ts.Expression): boolean {
+  const root = ts.isCallExpression(callee) ? callee.expression : callee;
+  const head = ts.isPropertyAccessExpression(root) ? root.expression : root;
+  return ts.isIdentifier(head) && (head.text === "it" || head.text === "test");
+}
+/** wb-nqbd F5 (R-RAISE-SITE): each test row of `text` that calls raiseTransportLapse, as "<name>: <row title>". */
+function raiseRowsOf(name: string, text: string): string[] {
+  const source = ts.createSourceFile(name, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const rows = new Set<string>();
+  const visit = (node: ts.Node): void => {
+    if (ts.isCallExpression(node) && ts.isIdentifier(node.expression) && node.expression.text === "raiseTransportLapse") {
+      const row = ts.findAncestor(node.parent, (up): up is ts.CallExpression => ts.isCallExpression(up) && registersTest(up.expression) && up.arguments[0] !== undefined && ts.isStringLiteralLike(up.arguments[0]));
+      const title = row?.arguments[0];
+      rows.add(`${name}: ${title !== undefined && ts.isStringLiteralLike(title) ? title.text : "(outside every test row)"}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return [...rows];
+}
 
 describe("wb-maza: the detached-* family keeps its strict timing markers (owner R721, R723)", () => {
   it("judges every default-gate member of the family, read from the test directory and vitest.config.ts", () => {
@@ -166,6 +499,7 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
     const importers = [...readings].filter(([, reading]) => reading.twins.length > 0).map(([name, reading]) => `${name}:${reading.twins.join("+")}`);
     expect(importers).toEqual([
       "workbench-detached-child-environ.test.ts:launchDetachedMarked",
+      "workbench-detached-hostile-child.test.ts:connectDetachedMarked+launchDetachedMarked",
       "workbench-detached-socket-base.test.ts:connectDetachedMarked+launchDetachedMarked",
       "workbench-detached-timing.test.ts:connectDetachedMarked+launchDetachedMarked",
     ]);
@@ -226,5 +560,99 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
       "G4 planted.test.ts:11",
     ]);
     expect(reading.twins).toEqual(["connectDetachedMarked"]);
+  });
+
+  it("wb-nqbd F4 frozen shape, as collected: this file's tests equal the roster's, expanded over the judged set, in order and in run mode, and the roster's shape equals the frozen-shape literal", ({ task }) => {
+    // The frozen-shape literal (AC1-style): the roster's rows, its planted sites by group and its quiet rows by residual.
+    const groups = [...new Set(Object.keys(ROSTER.controls).map(id => id.slice(0, id.indexOf("."))))];
+    expect([
+      ...ROSTER.tests.map(title => (title.startsWith("%s: ") ? `each:${title.slice(4, 6)}` : "row")),
+      ...groups.map(group => `${group}:${Object.keys(ROSTER.controls).filter(id => id.startsWith(`${group}.`)).length}`),
+      ...Object.entries(ROSTER.residuals).map(([residual, ids]) => `${residual}:${ids.length}`),
+    ]).toEqual([
+      "row",
+      "row",
+      "each:G1",
+      "each:G2",
+      "each:G3",
+      "each:G4",
+      "row",
+      "row",
+      "row",
+      "row",
+      "row",
+      "row",
+      "row",
+      "row",
+      "row",
+      "F1:9",
+      "F2:6",
+      "F3:14",
+      "N:7",
+      "R-WAIT-LOOP:3",
+      "R-HOST-ROUTE:4",
+      "R-TIMER-ROUTE:2",
+      "R-COMPUTED-KEY:3",
+      "R-OWNER-ALIAS:2",
+      "R-HOOK-ROUTE:2",
+      "R-RAISE-SITE:1",
+    ]);
+    expect(ROSTER.bead).toBe("wb-nqbd");
+    // As collected, before any case runs: the last case checks the same tree again, so deleting either one reds the other.
+    const collected = testsOf(task.file.tasks);
+    expect(collected.map(entry => entry.name), "every collected test of this file, exactly and in roster order").toEqual(rosterTests());
+    expect(collected.filter(entry => entry.mode !== "run" || entry.fails === true).map(entry => `${entry.name} | ${entry.mode}`), "a collected test not in run mode, or inverted").toEqual([]);
+  });
+
+  it("wb-nqbd F1 kill controls: vitest's wait helpers and AbortSignal.timeout read as G2 - by name on any receiver, by a string key or through a destructured binding", () => {
+    expect(controlsOf("F1.")).toStrictEqual(rosterControlsOf("F1."));
+    COMPARED.push("F1");
+  });
+
+  it("wb-nqbd F2 kill controls: a for, while or do loop whose condition joins any relational bound with && reads as G3 - a countdown, a reversed or named bound, a while or do counter", () => {
+    expect(controlsOf("F2.")).toStrictEqual(rosterControlsOf("F2."));
+    COMPARED.push("F2");
+  });
+
+  it("wb-nqbd F3 kill controls: a timer global by a string key and Atomics.wait read as G2, and every vitest hook that stops hosts - itself or through module-local functions - reads as G4", () => {
+    expect(controlsOf("F3.")).toStrictEqual(rosterControlsOf("F3."));
+    COMPARED.push("F3");
+  });
+
+  it("wb-nqbd negative controls: a settled hook, a hook that stops nothing, a loop without && or without a relational bound, text alone and another object's members yield no finding; the controls are the roster's, in order", () => {
+    expect(controlsOf("N.")).toStrictEqual(rosterControlsOf("N."));
+    expect(Object.keys(CONTROLS), "the planted sites are the roster's, in order and both ways").toEqual(Object.keys(ROSTER.controls));
+    COMPARED.push("N");
+  });
+
+  it("wb-nqbd F5 named residuals: every residual the header names has quiet rows in the roster, and each quiet row's planted member yields no finding", () => {
+    const quiet = Object.entries(QUIET).map(([id, text]) => ({ id, found: readText(`${id}.test.ts`, text).findings }));
+    expect(quiet.filter(row => row.found.length > 0).map(row => `${row.id}: ${shown(row.found)}`), "a quiet row yields a finding").toEqual([]);
+    const residualOf = (id: string): string => id.slice(0, id.indexOf("."));
+    const residuals = [...new Set(quiet.map(row => residualOf(row.id)))];
+    expect(Object.fromEntries(residuals.map(residual => [residual, quiet.filter(row => residualOf(row.id) === residual).map(row => row.id)])), "the quiet rows by residual are the roster's").toStrictEqual(ROSTER.residuals);
+    expect(headerResiduals(SELF), "the residuals this file's header names are the roster's, in order").toEqual(Object.keys(ROSTER.residuals));
+    COMPARED.push("residuals");
+  });
+
+  it("wb-nqbd F5 R-RAISE-SITE: the family's raiseTransportLapse call rows equal the roster's - socket-base's 60-byte TMPDIR row and the helper's own unit row", () => {
+    const rows = judged.flatMap(name => raiseRowsOf(name, readFileSync(join(ROOT, "test", name), "utf8")));
+    expect(rows).toEqual([...ROSTER.raiseRows]);
+    COMPARED.push("raiseRows");
+  });
+
+  it("wb-nqbd F4 frozen shape, as run: this file's tests equal the roster's, expanded over the judged set, and every other test ran before this last case", ({ task }) => {
+    const walked = testsOf(task.file.tasks);
+    expect(walked.map(entry => entry.name), "every collected test of this file, exactly and in roster order").toEqual(rosterTests());
+    const here = walked.indexOf(task);
+    expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
+    const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
+    expect(
+      walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails === true || !ran(entry.result?.state))).map(entry => `${entry.name} | ${entry.mode} | ${entry.result?.state ?? "no result"}`),
+      "every other test is in run mode, not inverted, and ran before this case",
+    ).toEqual([]);
+    // Each planted table reached its own compare: a case deleted from every literal of the shape still leaves its table here.
+    const tables = [...new Set(Object.keys(CONTROLS).map(id => id.slice(0, id.indexOf("."))))];
+    expect(COMPARED, "every planted table reached its compare, in order").toEqual([...tables, ...(Object.keys(QUIET).length > 0 ? ["residuals"] : []), ...(ROSTER.raiseRows.length > 0 ? ["raiseRows"] : [])]);
   });
 });

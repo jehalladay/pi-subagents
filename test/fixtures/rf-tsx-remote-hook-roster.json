@@ -227,6 +227,9 @@
               "chosenSpecifier": false,
               "logicalSpecifier": false,
               "assertedSpecifier": true,
+              "satisfiesSpecifier": true,
+              "nonNullSpecifier": true,
+              "angleSpecifier": true,
               "sequencedSpecifier": true,
               "manifestDependency": true,
               "manifestAlias": true,
@@ -359,7 +362,10 @@
             "beadSaysUnshipped": true,
             "shippedOtherwise": [],
             "controls": {
-              "appendedShippedYes": 1
+              "appendedShippedYes": 1,
+              "appendedLowercaseShippedYes": 1,
+              "appendedUppercaseShippedYes": 1,
+              "appendedUppercaseShippedNo": 0
             }
           }
         },
@@ -427,6 +433,46 @@
                 "unaccounted": 0
               },
               "nestedSuites": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "parenthesizedRow": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "nonNullRow": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "asRow": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "satisfiesRow": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "angleRow": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "parenthesizedSuite": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "nonNullSuite": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "asSuite": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "satisfiesSuite": {
+                "rows": 1,
+                "unaccounted": 0
+              },
+              "angleSuite": {
                 "rows": 1,
                 "unaccounted": 0
               },

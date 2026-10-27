@@ -92,3 +92,38 @@ Results, measured by the cutting seat on trunk 92e5ae2 with this cut. Each plant
   - The probes of Q9, Q10 and Q11 stay quiet, as the residuals state.
 - CT-BATTERY v2: CT1 red=2; CT1b red=2; CT2 red=2; CT3 red=1; CT4 red=2; CT5 red=2; CT6 red=2. CT5 dies through this listing and the wb-pdee export row, CT6 (S3 removed from every literal) through this listing, and CT2 through both. Two extra probes also die through this listing: the same coordinated hollow of residual Q9, and CT5 on the landed row M.
 - Before S6, the catalogSnapshot edit was called from A4, B1 and C9 with the host PATH, on which an rf is installed. The installed rf (0.1.836) gives that leaf two required options, the edit candidate and the expected head (cli/parser.py:2116), so a bare invocation is refused while its arguments are parsed. No file under graphs/ or state/ of either ancestor rf workspace changed. Whether that rf ran is not verified.
+
+## 2026-10-25 terminal follow-up receipt (wb-7thm): wrapped callees, normalized path segments, quoted leaf words, the rendered listing and the landing-263 riders (trunk b887fa2)
+
+- Bead: wb-7thm, the R694 follow-up of landing 362 (gate of record cmd_593bb938a609; F1 leads; F2, F3, F6 and F7 ride). It is hop 3 of this receipt's chain, cut in the terminal enumerate-the-resolvable form: each enumerated item is bound by a row below, and the census claims exactly the pinned set. This entry adds rows to the census and continues its anchor listing. No line above is changed.
+- F1, cured by row U. A1 now reads a callee after removing its outer-expression wrappers at any depth: parentheses, a non-null assertion, an as or angle-bracket type assertion, satisfies, and a comma expression's last operand. K4 to K8 hold one form each, nested forms included, beside the gate's G-ST7 (K4), G-ST8 (K5), G-ST9 (K6) and G-ST10 (K8).
+- F2, cured by row P. B2 now reads every literal and every joined segment run both as written and through path.posix.normalize. D4 holds a trailing slash, a dot segment, an empty segment, a ".." inside a segment and a double slash, beside the gate's G-DP1, G-DP2, G-DP4 and G-DP5, and keeps a ".." that leaves graphs/ clean.
+- F3, cured by row H. A2 now also reads each string and template literal with its shell quoting removed (backslash escapes, a "$" opening a quote, and every quote character), as spelled and option-elided. An argv array element reaches rf verbatim, so it is never unquoted. I4 holds the gate's G-ST13 beside six quoting spellings of each mutating leaf, and Q11 stays quiet.
+- F6, cured in the census. The witness table names the trunk each row group was measured on: rows A, B, C, M and R at base 0b2a80f, rows S, I, K, D and N on trunk 92e5ae2 (cut on 61dac63), and the rows of this entry on trunk b887fa2.
+- F7, cured by rows X and W. Row X restores the dropped X5 rider: the census now refuses this receipt when marked 18 lexes any html token in it (a complete or an unclosed comment, an HTML block, an inline tag), since each renders nothing. X5 replays the gate's X5 edit and three siblings in memory and reads the committed receipt clean. Row W restores the landing-263 W11/W12/W13a-c rider: W11 holds committingCount to descriptor sets with committing members, W12 holds SRC_FLOOR to its value and to refusing an empty walk, and W13 holds the src walk to node's own recursive listing of src, module by module and byte for byte.
+- Residuals that this entry names (row T), each a pinned quiet row:
+  - Q12 R-OTHER-CALLEE: a callee written through any other expression (a conditional, a logical operator such as `||` or `??`, an instantiation expression) is no site to A1.
+  - Q13 R-SHELL-EXPANSION: a leaf word that only a shell expansion spells (brace expansion, a parameter expansion's literal default, an ANSI-C escape sequence) hides the leaf from A2.
+- Owner anchor: the wb-7thm row of the tracked bead export (.beads/issues.jsonl) states F1's, F2's and F3's cure shapes and F7's two riders, and rows U, P, H, X and W hold their labels to them verbatim.
+- Anchor listing, continued. The census reads every listing line of this file in order, so the rows below follow row N.
+
+- Row U (pins K4, K5, K6, K7, K8): calleeOf unwraps outer expressions (ts.skipOuterExpressions, or a loop over parenthesized, non-null, as, satisfies and comma-tail forms) with one K pin per form
+- Row P (pins D4): B2 reads path.posix.normalize of the joined literal segments, and of each literal, before the GRAPH_DOCUMENT check, with one D pin
+- Row H (pins I4): shell-unquote string literals before leafPattern runs
+- Row X (pins X5): restore the dropped X5 rider
+- Row W (pins W11, W12, W13): the landing-263 W11/W12/W13a-c rider
+- Row T (pins Q12, Q13): the terminal follow-up's named residuals, each a pinned quiet row that reds when its escape stops being quiet
+- Residual Q12: R-OTHER-CALLEE
+- Residual Q13: R-SHELL-EXPANSION
+
+Results, measured by the cutting seat on trunk b887fa2 with this cut. Each planted edit was applied in place and restored byte-identical (sha256 checked):
+
+- The census reads 65 of 65 green. Written before any matcher change, with the rows, the pins, the witnesses, the wb-7thm anchors and this listing in place, the new rows read 10 failed of 65: K4, K5, K6, K7, K8, D4, I4, X5, and the positive controls of Q12 and Q13. W11, W12 and W13 were green there: each is a control that reds only under its mutant.
+- Against the landed census and receipt (b887fa2), each enumerated member reads 52 of 52, as the gate measured: G-ST7, G-ST8, G-ST9, G-ST10, G-DP1, G-DP2, G-DP4, G-DP5, G-ST13 and the X5 edit. So do the landing-263 riders, which no gate had re-measured: W11 (committingCount counts zero), W12 (SRC_FLOOR set to 0), and W13a, W13b and W13c (the walk skips src/ui, src/workflow or src/workbench/hosts). So do the seat's siblings G-ST9s (satisfies), G-ST9t (an angle-bracket assertion), G-DPdd (a ".." inside a segment) and G-DPss (a double slash).
+- Against this cut, each of them is red:
+  - Each callee plant, as a new src module: A1. Each path plant: B2. G-ST13 and its double-quoted and template siblings: A2.
+  - The X5 edit, in place: the judged-set case, Q5 and X5.
+  - W11, and four hollows that each drop one clause of committingCount (the prefix, the render, the mutating leaf, the document): W11. W12: W12. W13a, W13b, W13c and W13t (a walk that reads src/ui as empty text): W13.
+- A Q12 member planted as a new src module (a callee written through `||`) reads 65 of 65, as the residual states.
+- CT-BATTERY v2: CT1 red=3; CT1b red=3; CT2 red=3; CT3 red=1; CT4 red=3; CT5 red=2; CT6 red=3. CT5 (row X and its frozen-shape element deleted) dies through this listing and the wb-7thm export row, CT6 (K7 removed from every literal) through this listing, and CT2 through both: shortened in the census and in this listing together, it still reds through the export row.
+- After this cut merged trunk 6e0c3d2 (landings 396 to 399, which change no src and no note of the three export rows the census reads), the census reads 65 of 65 green again.

@@ -47,15 +47,21 @@
  *    exactly the producer's and the unchanged block whose sources moved stays unchanged; C4 no Pi reader re-derives a row: the native
  *    reader and the adapter refuse each diff.
  *  D, acceptance (c). D1 every sentence unit of every docs/workbench file (all markdown at base), with floors and an anchor, pairs
- *    no source-change with a block-change, read twice: as written (references decoded) and as rendered (comments and element tags
- *    dropped, link and image syntax read as its text, the * ~ ` delimiters dropped, the text NFKD-folded and every combining mark,
- *    format and default-ignorable code point dropped), so intraword markup or an invisible character splits no word; and no unit,
- *    its tag attributes and link targets included, carries a bidi control, a letter outside ASCII once folded, or a symbol or number
- *    outside ASCII beside an ASCII letter, so a reversed display, a homoglyph (a Cyrillic o for a Latin one) or a look-alike symbol
- *    (U+222A for u) hides no word; D2 the detector's controls: the flagged paraphrases (each rendered-text form among them:
- *    intraword emphasis, code span, strikethrough, HTML and link, a zero-width or soft-hyphen reference, a raw zero-width, a
- *    combining mark, fullwidth letters, three homoglyphs (one in a tag attribute), a bidi override and two look-alike symbols), the
- *    quiet negatives, the window edges and the named residual and precision rows.
+ *    no source-change with a block-change, read twice: as written (references decoded) and as rendered (every raw HTML form the
+ *    installed marked 18.0.11 passes through inline dropped by its tag rule's own grammar - a comment, the <!--> and <!---> forms
+ *    included, an open tag whose double- or single-quoted attribute values are read whole (a '>' or '<' inside one ends no tag), a
+ *    closing tag, a processing instruction, a declaration and a CDATA section; inline, full and collapsed link and image syntax read
+ *    as its text; the * ~ ` delimiters dropped; the text NFKD-folded and every combining mark, format and default-ignorable code
+ *    point dropped), so none of those forms and no invisible character splits a word inside one unit (the residuals below name the
+ *    forms read otherwise); and no unit, its tag attributes and link targets included, carries a bidi control, a letter outside
+ *    ASCII once folded, or a symbol or number outside ASCII beside an ASCII letter, so a reversed display, a homoglyph (a Cyrillic o
+ *    for a Latin one) or a look-alike symbol (U+222A for u) hides no word; D2 the detector's controls: the flagged paraphrases (each
+ *    rendered-text form among them: intraword emphasis, code span, strikethrough, HTML and link, the raw HTML forms - a double- or a
+ *    single-quoted attribute value holding '>', a quoted value holding '<' after a spaced '=', a '_' tag name, a ':' closing-tag
+ *    name, a processing instruction, a declaration, a CDATA section and the <!--> and <!---> comments - a zero-width or soft-hyphen
+ *    reference, a raw zero-width, a combining mark, fullwidth letters, three homoglyphs (one in a tag attribute), a bidi override and
+ *    two look-alike symbols), the quiet negatives, the window edges, the named residual and precision rows, and the four finding
+ *    forms read from the bead export (below).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id, label and
  * pins, every pin's witness, the vocabularies, the window, the fixtures, their exits, the reader map, the clause fixtures, the
  * registered tests and each pin's reached assertion count - is held to the out-of-file roster, whose measured envelopes anchor the
@@ -65,11 +71,15 @@
  * clause with a leading "fixture: " dropped; src holds the reader cells - every function the rf provider and observer modules export
  * is in the reader map (native, registered or adapter), and the last case requires every fixture a clause names judged by every
  * reader surface and for its own facts, the measured previews through the ObservationProjection src exports where the clause names
- * any Pi surface, and the docs/workbench walk where the clause names a docs census. REACHED: each pin records its vitest assertion
- * count after its witness assertion, held to the roster, so a case that returns its witness before asserting reds. The window edges
- * (a pair at exactly WINDOW words, flagged, and at WINDOW + 1, quiet) are asserted in this file for A1 and D2.
- * NOT CLAIMED: a coordinated edit of this file and the roster that removes A1, A2, A3 or D2 (no text outside the census names those
- * pins), or that also rewrites the reader map or the cell rule.
+ * any Pi surface, and the docs/workbench walk where the clause names a docs census; and the same export's wb-njna row (the landing-377
+ * gate finding this census's raw HTML reading cures) holds D2's finding forms - the four raw HTML forms its filed F1 leads line
+ * quotes, each read 1 by D1 planted in that line's own sentence. REACHED: each pin records its vitest assertion count after its
+ * witness assertion, held to the roster, so a case that returns its witness before asserting reds. The window edges (a pair at
+ * exactly WINDOW words, flagged, and at WINDOW + 1, quiet) are asserted in this file for A1 and D2.
+ * NOT CLAIMED: a coordinated edit of this file and the roster that removes A1, A2, A3 or D2, or one of their controls other than the
+ * four finding forms (no text outside the census names those pins or controls), or hollows one of those pins (its case returns the
+ * roster witness before reading, the roster's reached count edited to the count that early return reaches - A1:7 to A1:2, say), or
+ * that also rewrites the reader map, the cell rule or the finding reader (findingFormsOf and the four-form count D2 expects).
  * RESIDUALS (named, each with a pinned quiet row): R-NO-DIFF-READER no Pi reader reads a context.diff (or plan, explain or impact)
  * envelope, so the producer's block rows ride only the injected registered reading (quiet rows B2, B4, C4); R-COMPOSED a claim, verb or
  * field composed from non-literal parts, spelled through an alias, or an argv assembled at run time (pushed onto an array), is
@@ -80,10 +90,17 @@
  * two sentence units is invisible to D1 (quiet control in D2); R-ENCODED an encoding outside the decoded HTML character references
  * (percent, backslash or octal escapes, or a named reference outside the six decoded, &shy; for one) is invisible to D1 (quiet
  * controls R-ENCODED and R-ENCODED-NAMED in D2); R-SPACED a word split by a space character, however thin (a hair space, U+200A),
- * reads as two words (quiet control in D2). PRECISION (not an escape): D1 also reds on a sentence that denies the implication (the
- * denial control in D2 reads 1) and on any unit it cannot read - a letter outside ASCII, or a symbol outside ASCII beside a letter,
- * in a sentence that claims nothing (the foreign letter and symbol controls in D2, a Greek lambda and an arrow, each read 1); A2
- * also reds on a verb word that may be a flag's value (its precisionFlagValue control reads 1); each is judged by hand.
+ * reads as two words (quiet control in D2); R-HIDDEN-CONTENT element content a browser hides (a style or script body, a hidden
+ * element) is read as text, so it splits the word it sits in (quiet control in D2); R-SPLIT-MARKUP a sentence end or a cell bar
+ * inside raw HTML (a quoted attribute value 'a. b') still ends the unit there, so the word that markup splits is read as two pieces
+ * in two units (quiet control in D2); R-SHORTCUT-LINK a shortcut reference link ([sou]rce, resolved by a definition elsewhere on the
+ * page) is read with its brackets, so they split the word (quiet control in D2; docs/workbench holds no link reference definition at
+ * base). PRECISION (not an escape): D1 also reds on a sentence that denies the implication (the denial control in D2 reads 1) and
+ * on any unit it cannot read - a letter outside ASCII, or a symbol outside ASCII beside a letter, in a sentence that claims nothing
+ * (the foreign letter and symbol controls in D2, a Greek lambda and an arrow, each read 1); its rendered reading drops raw HTML
+ * inside a code span too, where marked prints it as text (no control; the docs code spans holding a placeholder such as
+ * <operation_id> are among the units that read no hit at base); A2 also reds on a verb word that may be a flag's value (its
+ * precisionFlagValue control reads 1); each is judged by hand.
  * SCOPE: the envelopes are producer facts at the installed rf; Pi vendors no rf schema, so a producer change is seen only when a
  * fixture re-measure re-reads them. No reader is added or faked here.
  *
@@ -118,6 +135,12 @@ const ROSTER_PATH = join(HERE, "fixtures", "rf-source-change-block-claim-roster.
 /** The tracked bead export, whose wb-pfxo.2 Acceptance line anchors rows B-D outside this file and its roster. */
 const BEADS_EXPORT = join(REPO, ".beads", "issues.jsonl");
 const BEAD = "wb-pfxo.2";
+/** The gate finding whose raw HTML forms D2 reads (wb-njna F1, the landing-377 follow-up of wb-sekx): its filed leads line in the
+ * same export quotes them, an anchor outside this file and its roster. */
+const FINDING_BEAD = "wb-njna";
+const FINDING_LEADS = "[leads] - F1 MEDIUM LEADS: D1's rendered reading misses CommonMark raw-HTML forms inside a word";
+/** The sentence the finding planted each form it quotes as a word in. */
+const FINDING_SENTENCE = "Each changed source implies a changed block.";
 const ROOT = process.cwd();
 /** The root every roster envelope names: the measured scratch root, rewritten. */
 const FIXTURE_ROOT = "/fixture/rf-workspace";
@@ -353,6 +376,28 @@ function acceptanceOf(exported: string): string {
   }
   throw new Error(`the bead export holds no Acceptance line for ${BEAD}`);
 }
+let findingRead: string[] | undefined;
+/** The raw HTML forms the finding's leads line quotes - each quoted span whose markup splits "sou" from "rce" - in line order; read
+ * once from the tracked bead export. */
+function findingForms(): string[] {
+  findingRead ??= findingFormsOf(readFileSync(BEADS_EXPORT, "utf8"));
+  return findingRead;
+}
+function findingFormsOf(exported: string): string[] {
+  const marker = `"id":"${FINDING_BEAD}"`;
+  for (const line of exported.split("\n")) {
+    if (!line.includes(marker)) continue;
+    const parsed: unknown = JSON.parse(line);
+    if (!isObject(parsed) || parsed.id !== FINDING_BEAD || typeof parsed.notes !== "string") continue;
+    const leads = parsed.notes.split("\n").find(note => note.startsWith(FINDING_LEADS));
+    if (leads !== undefined) return [...leads.matchAll(/'([^']*sou<[^']*>rce[^']*)'/g)].map(match => match[1] ?? "");
+  }
+  throw new Error(`the bead export holds no F1 leads line for ${FINDING_BEAD}`);
+}
+/** A finding form as D2 reads it: a quoted sentence as it stands, a quoted word planted in the finding's sentence. */
+function plantedOf(form: string): string {
+  return form.endsWith(".") ? form : FINDING_SENTENCE.replace("source", form);
+}
 /** The clauses of an Acceptance line: "(a) text; (b) text; ...". */
 function clausesOf(acceptance: string): Clause[] {
   const pieces = acceptance.split(/(?:^|; )\(([a-z])\) /);
@@ -485,18 +530,34 @@ function unitsOf(text: string): string[] {
     .map(unit => unit.replace(/\s+/g, " ").trim())
     .filter(unit => unit.length > 0);
 }
-const ELEMENT_TAG = /<\/?[a-z][a-z0-9-]*(?:\s[^<>]*)?\/?>/gi;
+/** One attribute of an open tag by the installed marked's inline tag rule: a name, then an optional value - double-quoted or
+ * single-quoted (read whole, so a '>' or '<' inside it ends no tag) or unquoted. */
+const TAG_ATTRIBUTE = String.raw`\s+[a-z:_][\w.:-]*(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>\x60]+))?`;
+/** Every raw HTML form the installed marked (18.0.11) passes through inline, by its tag rule's own grammar: a comment (the <!--> and
+ * <!---> forms included), a closing tag, an open tag with its attributes, a processing instruction, a declaration and a CDATA
+ * section. */
+const RAW_HTML = new RegExp(
+  [
+    String.raw`<!--(?:-?>|[\s\S]*?-->)`,
+    String.raw`<\/[a-z][\w:-]*\s*>`,
+    String.raw`<[a-z][\w-]*(?:${TAG_ATTRIBUTE})*\s*\/?>`,
+    String.raw`<\?[\s\S]*?\?>`,
+    String.raw`<![a-z]+\s[\s\S]*?>`,
+    String.raw`<!\[CDATA\[[\s\S]*?\]\]>`,
+  ].join("|"),
+  "gi",
+);
 /** A text with its references decoded, NFKD-folded, and every combining mark, format and default-ignorable code point dropped. */
 function foldedOf(text: string): string {
   return decoded(text).normalize("NFKD").replace(/[\p{M}\p{Cf}\p{Default_Ignorable_Code_Point}]/gu, "");
 }
-/** A unit as a reader sees it rendered: comments and element tags dropped, link and image syntax read as its text, the emphasis,
- * strikethrough and code-span delimiters (* ~ `) dropped, then folded, so intraword markup or an invisible character splits no word. */
+/** A unit as a reader sees it rendered: its raw HTML dropped (RAW_HTML), inline, full and collapsed link and image syntax read as
+ * its text, the emphasis, strikethrough and code-span delimiters (* ~ `) dropped, then folded, so none of those forms and no invisible
+ * character splits a word inside the unit. */
 function renderedOf(unit: string): string {
   return foldedOf(
     decoded(unit)
-      .replace(/<!--[\s\S]*?-->/g, "")
-      .replace(ELEMENT_TAG, "")
+      .replace(RAW_HTML, "")
       .replace(/!?\[([^\]]*)\](?:\([^)]*\)|\[[^\]]*\])/g, "$1")
       .replace(/[*~`]/g, ""),
   );
@@ -869,6 +930,16 @@ const D2_FLAGGED: Readonly<Record<string, string>> = {
   intrawordStrike: "A changed sou~~rce~~ implies a changed block.",
   intrawordHtml: "A changed sou<span>rce</span> implies a changed block.",
   intrawordLink: "A changed [sou](09-observation-and-provenance.md)rce implies a changed block.",
+  intrawordHtmlQuoted: 'Each changed sou<span title="x>y">rce</span> implies a changed block.',
+  intrawordHtmlSingleQuoted: "Each changed sou<span title='x>y'>rce</span> implies a changed block.",
+  intrawordHtmlQuotedLt: 'Each changed sou<span title = "a<b">rce</span> implies a changed block.',
+  intrawordTagName: "Each changed sou<x_y>rce implies a changed block.",
+  intrawordClosingTagName: "Each changed sou</x:y>rce implies a changed block.",
+  intrawordProcessing: "Each changed sou<?pi?>rce implies a changed block.",
+  intrawordDeclaration: "Each changed sou<!x y>rce implies a changed block.",
+  intrawordCdata: "Each changed sou<![CDATA[]]>rce implies a changed block.",
+  intrawordEmptyComment: "Each changed sou<!-->rce implies a changed block.",
+  intrawordEmptyCommentDash: "Each changed sou<!--->rce implies a changed block.",
   zeroWidthReference: "A changed sou&#8203;rce implies a changed block.",
   softHyphenReference: "A changed sou&#xAD;rce implies a changed block.",
   zeroWidthRaw: `A changed sou${ZERO_WIDTH_SPACE}rce implies a changed block.`,
@@ -894,6 +965,9 @@ const D2_RESIDUALS: Readonly<Record<string, string>> = {
   "R-ENCODED": "a changed%20source implies a changed%20block",
   "R-ENCODED-NAMED": "a changed sou&shy;rce implies a changed block",
   "R-SPACED": `A changed sou${HAIR_SPACE}rce implies a changed block.`,
+  "R-HIDDEN-CONTENT": "A changed sou<style>x</style>rce implies a changed block.",
+  "R-SPLIT-MARKUP": 'A changed sou<span title="a. b">rce</span> implies a changed block.',
+  "R-SHORTCUT-LINK": "A changed [sou]rce implies a changed block.",
 };
 const D2_DENIAL = "A changed source never implies a changed block.";
 /** PRECISION rows of the unreadable reading: a letter outside ASCII, and a symbol outside ASCII beside a letter, in sentences that
@@ -1099,12 +1173,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const residuals = Object.fromEntries(Object.entries(D2_RESIDUALS).map(([name, text]) => [name, d1Reading(text)]));
     const denial = d1Reading(D2_DENIAL);
     const foreign = Object.fromEntries(Object.entries(D2_FOREIGN).map(([name, text]) => [name, d1Reading(text)]));
+    const finding = Object.fromEntries(findingForms().map(form => [form, d1Reading(plantedOf(form))]));
     expect(Object.values(flagged).every(count => count === 1)).toBe(true);
     expect(Object.values(quiet).every(count => count === 0)).toBe(true);
     expect(Object.values(residuals).every(count => count === 0)).toBe(true);
     expect(denial).toBe(1);
     expect(Object.values(foreign).every(count => count === 1)).toBe(true);
-    return { flagged, quiet, residuals, denial, foreign };
+    expect(Object.values(finding), `the ${FINDING_BEAD} F1 forms, each planted, read as claims`).toEqual([1, 1, 1, 1]);
+    return { flagged, quiet, residuals, denial, foreign, finding };
   },
 };
 

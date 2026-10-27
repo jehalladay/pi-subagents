@@ -50,7 +50,8 @@
  *  E, acceptance (d). E1 the decision enum is anchored on the producer (the measured summary's decision keys) and the registered
  *    reading carries every decision value at its producer path byte for byte; E2 no src or qa file respells a distinctive
  *    decision (refresh_required, non_reusable) in raw text or a cooked literal; E3 neither appears byte-exact in src or qa today.
- *  M, the matchers rows A to E read: M1-M6 the spellings each must catch and the ones it must pass; Q1-Q6 the pinned quiet rows.
+ *  M, the matchers rows A to E read: M1-M6 the spellings each must catch and the ones it must pass; M7 the judged-record anchor
+ *    (wb-b1rq F1) naming exactly what a hollow judge left; Q1-Q6 the pinned quiet rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id,
  * label and pins, every pin's witness, the decision enum, the summary keys, the citations and the registered test titles - is
  * held to the out-of-file roster (every pin's reached assertion count included, wb-nrbk F2), whose measured envelopes anchor the
@@ -58,8 +59,10 @@
  * literal here at once still reds against the roster, and the enum removed from every literal here still reds against the
  * measured summary keys. Not claimed: an edit of this file and the roster together.
  * RESIDUALS (named, each with a pinned quiet row): R-HOMOGLYPH a decision spelled with a look-alike letter, or split by a
- * separator outside SEP (a middle dot), is not caught (Q1); R-PARAPHRASE an equation reworded without a plan term or an executed
- * term is not caught, a plan named in the possessive of a producer other than rf included (Q2); R-SPLIT-SENTENCE an equation
+ * separator outside SEP (a middle dot), or rf's plan with an apostrophe outside APOSTROPHE_CODES (U+02BE modifier letter right
+ * half ring), is not caught (Q1); R-PARAPHRASE an equation reworded without a plan term or an executed term is not caught, a plan
+ * named in the possessive of a producer other than rf, and rf's plan with a word between the possessive and the plan (rf's own
+ * plan), included (Q2); R-SPLIT-SENTENCE an equation
  * split across two sentences escapes D1 and is caught by D2 alone (Q3); R-COMPOSED-ARGV a plan argv built from non-literal parts
  * is invisible to A1 (Q4); R-ENGLISH-DECISIONS 'reuse' and 'invalidated' are ordinary words that src spells today, so E2/E3 read
  * only the two distinctive decisions while C6 keeps the reader modules free of every decision token (Q5); R-SCOPE test/,
@@ -78,15 +81,33 @@
  * records `${pin}:${assertionCalls}` after its witness comparison, and the registration case holds that record, and every
  * measured witness a second time, to the roster (the federation-stamps pattern), so a case that returns before its assertions
  * (G1) or returns its witness as a constant (G2) reds. SEPARATORS AND POSSESSIVES (F3) - SEP and GAP read the dash look-alikes
- * of "-" (DASHES) and every possessive reads an ASCII, U+2019 or U+02BC apostrophe (POSSESSIVE), and PLAN_TERM names rf's own
+ * of "-" (DASHES) and every possessive reads an ASCII, U+2019 or U+02BC apostrophe (POSSESSIVE, widened by wb-b1rq F2), and PLAN_TERM names rf's own
  * plan in the possessive, so the gate's S7 (a U+2011 separator) and S18 (a bare rf's plan beside an executed term) are caught
  * (M1, M3, M4, M5, M6); what still escapes is named in R-HOMOGLYPH and R-PARAPHRASE with pinned quiet members (Q1, Q2). COUNTS
  * (F5) - the root comments state the counts measured at base cbe3588. Not claimed: a coordinated edit of a walk and its git
  * anchor in this file.
+ * wb-b1rq (R694 follow-up of landing 374, the wb-nrbk gate of record cmd_1bff20cd3bda; F1 leads, F2 rides): JUDGED RECORDS (F1) -
+ * a walk's read record proves a name was visited, not that its file was judged (the gate's P1 empty scan for src/workflow/**, P2
+ * no view judged under src/ui/** and P3 no sentence for feature-matrix.md each kept read == gitListed at 32/32 over a live plant),
+ * so each judge now records, per file, what it judged: the TypeScript scan the text its visitor reached at the root (A1, and the
+ * cooked view of E2 and E3); codeSpellings the raw view it judged, the text its module scan parsed and the views it judged against
+ * the literals cooked (E2, E3); the docs matchers each page's raw and normalized units, unspaced and joined (D1, D2: SENTENCE_BREAK
+ * and the unit trim remove whitespace only, so they spell the page unspaced). Every record is held to git's own reading of the
+ * listed file (gitReadings: git hash-object --no-filters --stdin-paths reads the bytes and answers the blob id, and a text is the
+ * reading only when its bytes hash to that id), so a judge that skips a file, a directory, a view or a cooked literal, or judges an
+ * emptied text, names that file in its case's `unjudged` and reds; M7 holds the anchor itself to the P1-P3 shapes as controls
+ * (each hollow named exactly, a full record named nowhere), so an anchor emptied to name nothing reds there. POSSESSIVES AND PLURALS
+ * (F2) - POSSESSIVE reads every apostrophe of APOSTROPHE_CODES (the gate's P6 U+2018 among them), OWNED lets separator, emphasis or
+ * code marks stand between a name and its possessive (`rf`'s plan), and PLAN_TERM's context-plan and rf/ReactiveFiber alternatives
+ * read the plural (the gate's P9 rf's plans), pinned in M4, M5 and M6 (P6 and P9 verbatim in M6); what still escapes is named in
+ * R-HOMOGLYPH and R-PARAPHRASE with pinned quiet members (Q1 possessive, Q2 interposed). Not claimed: a judge edited to drop the
+ * verdict on a unit it recorded, or to record a text it did not judge (the record proves that each listed file's text reached its
+ * judge, not that every verdict on it was kept), nor a coordinated edit of a judge's record and gitReadings or M7 in this file.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, qa and docs are only read.
  */
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { chmodSync, type Dirent, lstatSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -145,9 +166,16 @@ const DASHES = [0x2010, 0x2011, 0x2012, 0x2013, 0x2014, 0x2015, 0x2212, 0xfe58, 
 const SEP = `[\\s_.\\\\*\`~${DASHES}-]*`;
 /** One or more separators: the gap between two whole words. */
 const GAP = `[\\s_.\\\\*\`~${DASHES}-]+`;
-/** A possessive 's in any apostrophe spelling (wb-nrbk F3, the gate's S18): ASCII, U+2019 right single quotation mark and U+02BC
- * modifier letter apostrophe. */
-const POSSESSIVE = `(?:['${String.fromCodePoint(0x2019, 0x02bc)}]s)`;
+/** The apostrophes of a possessive 's (wb-nrbk F3, the gate's S18: ASCII, U+2019 right single quotation mark, U+02BC modifier
+ * letter apostrophe; wb-b1rq F2, the gate's P6: U+2018 left single quotation mark, and the look-alikes U+201B single
+ * high-reversed-9 quotation mark, U+2032 prime, U+02B9 modifier letter prime, U+02BB modifier letter turned comma, U+02BD
+ * modifier letter reversed comma, U+0060 grave accent, U+00B4 acute accent and U+FF07 fullwidth apostrophe), as code points;
+ * M4 spells rf's plan with each one past U+2019. */
+const APOSTROPHE_CODES = [0x0027, 0x2019, 0x02bc, 0x2018, 0x201b, 0x2032, 0x02b9, 0x02bb, 0x02bd, 0x0060, 0x00b4, 0xff07];
+/** A possessive 's in any apostrophe spelling of APOSTROPHE_CODES (wb-nrbk F3, widened by wb-b1rq F2). */
+const POSSESSIVE = `(?:[${APOSTROPHE_CODES.map(code => String.fromCodePoint(code)).join("")}]s)`;
+/** A name's optional possessive, with separator, emphasis or code marks allowed before it (`rf`'s plan, wb-b1rq F2). */
+const OWNED = `(?:${SEP}${POSSESSIVE})?`;
 /** (a) a claim that an instance was refreshed, reused, recomputed, re-rendered or served from a cache. */
 const CLAIM = new RegExp(
   `\\b(?:re${SEP}fresh(?:ed|es|ing)?|re${SEP}us(?:e|ed|es|ing)|re${SEP}comput(?:e|ed|es|ing)|re${SEP}render(?:ed|s|ing)?|cache${SEP}hits?|served${GAP}from${GAP}(?:the${GAP})?cache)\\b`,
@@ -162,11 +190,11 @@ const DECISION_FAMILY = `refresh${SEP}required|non${SEP}reusable`;
 /** An rf plan verb in an argv-free literal: context plan, context.plan, context-plan. */
 const PLAN_VERB = /\bcontext[\s._-]+plan\b/i;
 /** (c) an rf plan term in docs: the verb, rf's plan (in the possessive too), a plan row or decision, a planner, a prediction of
- * reuse, a distinctive decision. */
+ * reuse, a distinctive decision; the verb and rf's plan read the plural too (wb-b1rq F2, the gate's P9). */
 const PLAN_TERM = new RegExp(
   [
-    `\\bcontext${SEP}plan\\b`,
-    `\\b(?:rf|reactive${SEP}fiber)${POSSESSIVE}?${GAP}plan\\b`,
+    `\\bcontext${SEP}plans?\\b`,
+    `\\b(?:rf|reactive${SEP}fiber)${OWNED}${GAP}plans?\\b`,
     `\\bplan(?:${POSSESSIVE}|s)?${GAP}(?:rows?|decisions?|predictions?|forecasts?|verdicts?|words?|outcomes?)\\b`,
     `\\bplanners?${POSSESSIVE}?\\b`,
     `\\b(?:predict|forecast)\\w*${GAP}(?:\\w+${GAP}){0,2}re${SEP}us\\w*`,
@@ -182,7 +210,7 @@ const EXECUTED_TERM = new RegExp(
     `\\b(?:reused|rendered|invalidated)${SEP}component${SEP}count\\b`,
     `\\bcomponent${SEP}render${SEP}count\\b`,
     `\\bobservation${SEP}(?:reused|executed)${SEP}count\\b`,
-    `\\b(?:executor|execution|executed|render(?:s|ed|er|ers|ing)?|component|observation|freshness)${POSSESSIVE}?${GAP}(?:\\w+${GAP}){0,2}(?:re${SEP}us(?:e|ed|es|ing)|re${SEP}comput\\w*|re${SEP}render\\w*)\\b`,
+    `\\b(?:executor|execution|executed|render(?:s|ed|er|ers|ing)?|component|observation|freshness)${OWNED}${GAP}(?:\\w+${GAP}){0,2}(?:re${SEP}us(?:e|ed|es|ing)|re${SEP}comput\\w*|re${SEP}render\\w*)\\b`,
     `\\bre${SEP}us(?:e|ed|es|ing)${GAP}(?:\\w+${GAP}){0,2}(?:components?|instances?|outputs?|observations?)\\b`,
     `\\bcache${SEP}hits?\\b`,
     `\\bserved${GAP}from${GAP}(?:the${GAP})?cache\\b`,
@@ -231,8 +259,8 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "M",
-    label: "the matchers rows A to E read: M1-M6 the spellings each must catch and pass, Q1-Q6 the pinned quiet rows of the named residuals",
-    pins: ["M1", "M2", "M3", "M4", "M5", "M6", "Q1", "Q2", "Q3", "Q4", "Q5", "Q6"],
+    label: "the matchers rows A to E read: M1-M6 the spellings each must catch and pass, M7 the judged-record anchor naming what a hollow judge left, Q1-Q6 the pinned quiet rows of the named residuals",
+    pins: ["M1", "M2", "M3", "M4", "M5", "M6", "M7", "Q1", "Q2", "Q3", "Q4", "Q5", "Q6"],
   },
 ];
 
@@ -444,6 +472,49 @@ function sameList(read: readonly string[], listed: readonly string[]): boolean {
   const sorted = [...read].sort();
   return sorted.length === listed.length && sorted.every((path, index) => path === listed[index]);
 }
+/** A file's bytes, or null for a path that vanished. */
+function bytesOf(path: string): Buffer | null {
+  try {
+    return readFileSync(path);
+  } catch {
+    return null;
+  }
+}
+/** Git's own reading of each listed path (wb-b1rq F1): `git hash-object --no-filters --stdin-paths` reads every file's bytes and
+ * answers its blob id, so the reading comes from git and never from a walk of this census. A path maps to its text when the bytes
+ * read here hash to git's id (sha1, or sha256 for a 64-hex id), and to null when they do not: a file that changed under the run
+ * is no reading any judge can hold. */
+function gitReadings(paths: readonly string[]): Map<string, string | null> {
+  const readings = new Map<string, string | null>();
+  if (paths.length === 0) return readings;
+  const multiline = paths.filter(path => path.includes("\n"));
+  if (multiline.length > 0) throw new Error(`git hash-object --stdin-paths cannot read a path holding a newline: ${multiline.join(", ")}`);
+  const ids = execFileSync("git", ["hash-object", "--no-filters", "--stdin-paths"], { cwd: REPO, encoding: "utf8", input: `${paths.join("\n")}\n`, maxBuffer: 64 * 1024 * 1024 })
+    .split("\n")
+    .filter(id => id !== "");
+  if (ids.length !== paths.length) throw new Error(`git hash-object answered ${ids.length} ids for ${paths.length} paths`);
+  paths.forEach((path, index) => {
+    const id = ids[index] ?? "";
+    const bytes = bytesOf(join(REPO, path));
+    const object = bytes === null ? "" : createHash(id.length === 64 ? "sha256" : "sha1").update(`blob ${bytes.length}\0`).update(bytes).digest("hex");
+    readings.set(path, bytes !== null && object === id ? bytes.toString("utf8") : null);
+  });
+  return readings;
+}
+/** The listed files a judge left unjudged (wb-b1rq F1): every listed path must hold the judge's own record of what it judged, and
+ * `holds` must read that record as git's reading of the file (gitReadings); a path with no record, with a record that differs, or
+ * whose file git's reading does not vouch for is named. */
+function unjudged<T>(listed: readonly string[], judged: ReadonlyMap<string, T>, holds: (record: T, text: string, path: string) => boolean): string[] {
+  const readings = gitReadings(listed);
+  return listed.filter(path => {
+    const text = readings.get(path);
+    const record = judged.get(path);
+    return typeof text !== "string" || record === undefined || !holds(record, text, path);
+  });
+}
+/** A text without its whitespace: SENTENCE_BREAK and the unit trim remove whitespace only, so a page's units, unspaced and joined in
+ * order, spell the page unspaced (wb-b1rq F1). */
+const unspaced = (text: string): string => text.replace(/\s+/g, "");
 
 interface LiteralScan {
   /** Every string literal's cooked value and every template's literal parts joined by "<expr>". */
@@ -452,19 +523,27 @@ interface LiteralScan {
   readonly argv: string[];
   readonly renderArgv: number;
   readonly composedArgv: number;
+  /** The text the visitor reached at the root, the whole source the parser read; null for a file that is not parsed (wb-b1rq F1). */
+  readonly judged: string | null;
 }
 const SCRIPT_KINDS: Readonly<Record<string, ts.ScriptKind>> = { ".ts": ts.ScriptKind.TS, ".mjs": ts.ScriptKind.JS, ".js": ts.ScriptKind.JS, ".cjs": ts.ScriptKind.JS };
-/** One module's literals and its argv arrays, read through the TypeScript parser so an escape is read as the value it cooks to. */
+/** The script kind a file is parsed as, by its extension; undefined for a file that is not parsed. */
+function scriptKindOf(fileName: string): ts.ScriptKind | undefined {
+  return SCRIPT_KINDS[fileName.slice(fileName.lastIndexOf("."))];
+}
+/** One module's literals and its argv arrays, read through the TypeScript parser so an escape is read as the value it cooks to; it
+ * records the text its visitor reached at the root (wb-b1rq F1). */
 function scanLiterals(fileName: string, text: string): LiteralScan {
-  const extension = fileName.slice(fileName.lastIndexOf("."));
-  const kind = SCRIPT_KINDS[extension];
-  if (kind === undefined) return { literals: [], argv: [], renderArgv: 0, composedArgv: 0 };
+  const kind = scriptKindOf(fileName);
+  if (kind === undefined) return { literals: [], argv: [], renderArgv: 0, composedArgv: 0, judged: null };
   const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, kind);
   const literals: string[] = [];
   const argv: string[] = [];
   let renderArgv = 0;
   let composedArgv = 0;
+  let judged: string | null = null;
   const visit = (node: ts.Node): void => {
+    if (node === source) judged = source.getFullText();
     if (ts.isArrayLiteralExpression(node)) {
       const words = node.elements.map(element => (ts.isStringLiteralLike(element) ? element.text : null));
       words.forEach((word, index) => {
@@ -480,7 +559,7 @@ function scanLiterals(fileName: string, text: string): LiteralScan {
     ts.forEachChild(node, visit);
   };
   visit(source);
-  return { literals, argv, renderArgv, composedArgv };
+  return { literals, argv, renderArgv, composedArgv, judged };
 }
 
 interface ScanRoot {
@@ -502,25 +581,43 @@ const CODE_ROOTS: readonly ScanRoot[] = [
  * its base); a walk that drops a page reds against gitListed (wb-nrbk F1). */
 const DOCS_ROOT = { root: "docs/workbench", floor: 60, sentenceFloor: 4000, anchorFile: "docs/workbench/receipts/wb-c7ku.md", anchorToken: "reused_component_count" };
 
-/** A code root's distinctive-decision spellings: raw text and cooked literals of every file, with its floor and anchor read. */
-function codeSpellings(scan: ScanRoot): { files: number; floorMet: boolean; anchorRead: boolean; read: string[]; producer: string[]; respelled: string[] } {
+/** What codeSpellings judged of one file (wb-b1rq F1): the raw view it judged (null for none), the text the module scan parsed, the
+ * views it judged and the literals the scan cooked (each cooked literal is one view after the raw one). */
+interface CodeRecord {
+  readonly raw: string | null;
+  readonly parsed: string | null;
+  readonly views: number;
+  readonly literals: number;
+}
+/** A code record holds git's reading of its file: the raw view is the file, a parsed module's scan read the file (an unparsed one
+ * reads null), and every cooked literal was judged. */
+const codeJudged = (record: CodeRecord, text: string, path: string): boolean =>
+  record.raw === text && record.parsed === (scriptKindOf(path) === undefined ? null : text) && record.views === record.literals + 1;
+/** A code root's distinctive-decision spellings: raw text and cooked literals of every file, with its floor and anchor read and
+ * each file's judged record (wb-b1rq F1). */
+function codeSpellings(scan: ScanRoot): {
+  files: number; floorMet: boolean; anchorRead: boolean; read: string[]; judged: Map<string, CodeRecord>; producer: string[]; respelled: string[];
+} {
   const files = filesBelow(join(REPO, scan.root));
   const read: string[] = [];
+  const judged = new Map<string, CodeRecord>();
   const producer: string[] = [];
   const respelled: string[] = [];
   for (const file of files) {
     const text = textOf(file);
     const name = relative(REPO, file);
     read.push(name);
-    const views = [text, ...scanLiterals(name, text).literals];
-    const found = views.map(familySpellings);
+    const cooked = scanLiterals(name, text);
+    const views = [text, ...cooked.literals];
+    const found = views.map(view => ({ view, ...familySpellings(view) }));
+    judged.set(name, { raw: found[0]?.view ?? null, parsed: cooked.judged, views: found.length, literals: cooked.literals.length });
     if (found.some(entry => entry.producer.length > 0)) producer.push(name);
     const respellings = [...new Set(found.flatMap(entry => entry.respelled))];
     if (respellings.length > 0) respelled.push(`${name}: ${respellings.join(", ")}`);
   }
   const anchor = join(REPO, scan.anchorFile);
   return {
-    files: files.length, floorMet: files.length >= scan.floor, anchorRead: files.includes(anchor) && textOf(anchor).includes(scan.anchorToken), read, producer, respelled,
+    files: files.length, floorMet: files.length >= scan.floor, anchorRead: files.includes(anchor) && textOf(anchor).includes(scan.anchorToken), read, judged, producer, respelled,
   };
 }
 
@@ -541,6 +638,21 @@ function docsSentences(): { floorMet: boolean; sentenceFloorMet: boolean; anchor
     executedSentences: sentences.some(entry => entry.file === DOCS_ROOT.anchorFile && EXECUTED_TERM.test(entry.sentence)), read, sentences,
   };
 }
+/** Each listed page's judged record from the units a matcher read (wb-b1rq F1): its raw units and its normalized units, unspaced and
+ * joined in order; a page the matcher read no unit of records empty texts. */
+function pageRecords(listed: readonly string[], units: readonly { file: string; view: string; sentence: string }[]): Map<string, { raw: string; normalized: string }> {
+  const records = new Map(listed.map(page => [page, { raw: "", normalized: "" }]));
+  for (const unit of units) {
+    const record = records.get(unit.file);
+    if (record === undefined) continue;
+    if (unit.view === "raw") record.raw += unspaced(unit.sentence);
+    else if (unit.view === "normalized") record.normalized += unspaced(unit.sentence);
+  }
+  return records;
+}
+/** A page record holds git's reading of its page: both views of the page, unspaced, are what the units spell. */
+const pageJudged = (record: { raw: string; normalized: string }, text: string): boolean =>
+  record.raw === unspaced(text) && record.normalized === unspaced(normalized(text));
 
 const oldPath = process.env.PATH;
 const scratches: string[] = [];
@@ -716,6 +828,10 @@ const NB_HYPHEN = String.fromCodePoint(0x2011);
 const EN_DASH = String.fromCodePoint(0x2013);
 const RIGHT_QUOTE = String.fromCodePoint(0x2019);
 const MIDDLE_DOT = String.fromCodePoint(0x00b7);
+/** wb-b1rq F2: the gate's P6 apostrophe, and the R-HOMOGLYPH apostrophe outside APOSTROPHE_CODES (U+02BE modifier letter right half
+ * ring). */
+const LEFT_QUOTE = String.fromCodePoint(0x2018);
+const HALF_RING = String.fromCodePoint(0x02be);
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
@@ -725,21 +841,23 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const found = files.map(file => {
       const name = relative(REPO, file);
       read.push(name);
-      return scanLiterals(name, textOf(file));
+      return { name, scan: scanLiterals(name, textOf(file)) };
     });
-    const argv = found.flatMap(result => result.argv);
-    const literals = found.flatMap(result => result.literals).filter(text => PLAN_VERB.test(text));
-    const renderArgvSeen = found.reduce((sum, result) => sum + result.renderArgv, 0) >= 1;
+    const argv = found.flatMap(({ scan }) => scan.argv);
+    const literals = found.flatMap(({ scan }) => scan.literals).filter(text => PLAN_VERB.test(text));
+    const renderArgvSeen = found.reduce((sum, { scan }) => sum + scan.renderArgv, 0) >= 1;
     const { ids, texts } = await nativeDescriptors();
     const descriptorHits = ids.filter((id, index) => PLAN_VERB.test(texts[index] ?? "") || /(?:^|[._-])plan(?:$|[._-])/i.test(id));
     const srcFloorMet = files.length >= 100;
     const listed = gitListed("src", ".ts");
     const walkAgreesWithGit = sameList(read, listed);
+    const unjudgedModules = unjudged(listed, new Map(found.map(({ name, scan }) => [name, scan.judged])), (judged, text) => judged === text);
     expect(srcFloorMet, `src modules walked: ${files.length}`).toBe(true);
     expect([...read].sort(), "the A1 walk read exactly git's own listing of src/**/*.ts (wb-nrbk F1)").toStrictEqual(listed);
+    expect(unjudgedModules, "every src .ts module git lists was judged: its scan reached git's own reading of it (wb-b1rq F1)").toEqual([]);
     expect(renderArgvSeen).toBe(true);
     expect({ argv, literals, descriptorHits }, "an rf plan reader is a new cut: this census binds it").toStrictEqual({ argv: [], literals: [], descriptorHits: [] });
-    return { srcFloorMet, walkAgreesWithGit, renderArgvSeen, argv, literals, descriptorHits };
+    return { srcFloorMet, walkAgreesWithGit, unjudged: unjudgedModules, renderArgvSeen, argv, literals, descriptorHits };
   },
   A2: async () => {
     const injected = new CapabilityRegistry();
@@ -908,12 +1026,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const docs = docsSentences();
     const listed = gitListed(DOCS_ROOT.root, ".md");
     const walkAgreesWithGit = sameList(docs.read, listed);
-    const hits = docs.sentences.filter(entry => equates(entry.sentence)).map(entry => `${entry.file} (${entry.view}): ${entry.sentence.slice(0, 160)}`);
+    const verdicts = docs.sentences.map(entry => ({ ...entry, hit: equates(entry.sentence) }));
+    const hits = verdicts.filter(entry => entry.hit).map(entry => `${entry.file} (${entry.view}): ${entry.sentence.slice(0, 160)}`);
+    const unjudgedPages = unjudged(listed, pageRecords(listed, verdicts), pageJudged);
     expect(docs.floorMet && docs.sentenceFloorMet && docs.anchorRead && docs.executedSentences).toBe(true);
     expect([...docs.read].sort(), "the D walk read exactly git's own listing of docs/workbench/**/*.md (wb-nrbk F1)").toStrictEqual(listed);
+    expect(unjudgedPages, "every docs/workbench page git lists was judged: its units, in both views, spell git's own reading of it (wb-b1rq F1)").toEqual([]);
     expect(hits).toEqual([]);
     return {
-      floorMet: docs.floorMet, sentenceFloorMet: docs.sentenceFloorMet, anchorRead: docs.anchorRead, executedSentences: docs.executedSentences, walkAgreesWithGit, hits,
+      floorMet: docs.floorMet, sentenceFloorMet: docs.sentenceFloorMet, anchorRead: docs.anchorRead, executedSentences: docs.executedSentences, walkAgreesWithGit,
+      unjudged: unjudgedPages, hits,
     };
   },
   D2: async () => {
@@ -921,13 +1043,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const listed = gitListed(DOCS_ROOT.root, ".md");
     const walkAgreesWithGit = sameList(docs.read, listed);
     const allowed = new Set(ROSTER.docsPlanSentences);
-    const named = docs.sentences.filter(entry => PLAN_TERM.test(entry.sentence));
+    const verdicts = docs.sentences.map(entry => ({ ...entry, named: PLAN_TERM.test(entry.sentence) }));
+    const named = verdicts.filter(entry => entry.named);
     const hits = [...new Set(named.filter(entry => !allowed.has(entry.sentence)).map(entry => `${entry.file}: ${entry.sentence.slice(0, 160)}`))];
+    const unjudgedPages = unjudged(listed, pageRecords(listed, verdicts), pageJudged);
     expect(docs.floorMet && docs.sentenceFloorMet && docs.anchorRead).toBe(true);
     expect([...docs.read].sort(), "the D walk read exactly git's own listing of docs/workbench/**/*.md (wb-nrbk F1)").toStrictEqual(listed);
+    expect(unjudgedPages, "every docs/workbench page git lists was judged: its units, in both views, spell git's own reading of it (wb-b1rq F1)").toEqual([]);
     expect(ROSTER.docsPlanSentences).toEqual([]);
     expect(hits).toEqual([]);
-    return { floorMet: docs.floorMet, walkAgreesWithGit, allowed: [...allowed], hits };
+    return { floorMet: docs.floorMet, walkAgreesWithGit, unjudged: unjudgedPages, allowed: [...allowed], hits };
   },
   E1: async () => {
     const summaryDecisions = Object.keys(objectOf(objectOf(PLAN.result, "plan result").summary, "plan summary")).filter(key => key !== "rows" && key !== "evidence_complete");
@@ -946,11 +1071,13 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       const found = codeSpellings(scan);
       const listed = gitListed(scan.root, "");
       const walkAgreesWithGit = sameList(found.read, listed);
+      const unjudgedFiles = unjudged(listed, found.judged, codeJudged);
       expect(found.floorMet, `${scan.root}: ${found.files} files walked, floor ${scan.floor}`).toBe(true);
       expect([...found.read].sort(), `${scan.root}: the walk read exactly git's own listing of ${scan.root}/** (wb-nrbk F1)`).toStrictEqual(listed);
+      expect(unjudgedFiles, `${scan.root}: every file git lists was judged, its raw view and every cooked literal (wb-b1rq F1)`).toEqual([]);
       expect(found.anchorRead, `${scan.root}: the anchor ${scan.anchorFile} was not read with ${scan.anchorToken}`).toBe(true);
       expect(found.respelled, `respelled plan decisions under ${scan.root}`).toEqual([]);
-      return { root: scan.root, floorMet: found.floorMet, walkAgreesWithGit, anchorRead: found.anchorRead, respelled: found.respelled };
+      return { root: scan.root, floorMet: found.floorMet, walkAgreesWithGit, unjudged: unjudgedFiles, anchorRead: found.anchorRead, respelled: found.respelled };
     });
     return { roots };
   },
@@ -959,10 +1086,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       const found = codeSpellings(scan);
       const listed = gitListed(scan.root, "");
       const walkAgreesWithGit = sameList(found.read, listed);
+      const unjudgedFiles = unjudged(listed, found.judged, codeJudged);
       expect(found.floorMet && found.anchorRead).toBe(true);
       expect([...found.read].sort(), `${scan.root}: the walk read exactly git's own listing of ${scan.root}/** (wb-nrbk F1)`).toStrictEqual(listed);
+      expect(unjudgedFiles, `${scan.root}: every file git lists was judged, its raw view and every cooked literal (wb-b1rq F1)`).toEqual([]);
       expect(found.producer, `files spelling ${DISTINCTIVE.join(" or ")} under ${scan.root}: a plan reader is a new cut this census binds`).toEqual([]);
-      return { root: scan.root, walkAgreesWithGit, producer: found.producer };
+      return { root: scan.root, walkAgreesWithGit, unjudged: unjudgedFiles, producer: found.producer };
     });
     return { distinctive: DISTINCTIVE, roots };
   },
@@ -1027,6 +1156,11 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       { text: "rf's plan named the row.", hit: true },
       { text: `rf${RIGHT_QUOTE}s plan named the row.`, hit: true },
       { text: "The ReactiveFiber plan named the row.", hit: true },
+      ...APOSTROPHE_CODES.slice(2).map(code => ({ text: `rf${String.fromCodePoint(code)}s plan named the row.`, hit: true })),
+      { text: "rf's plans named the row.", hit: true },
+      { text: "The ReactiveFiber's plans named the rows.", hit: true },
+      { text: "The rf context plans named the rows.", hit: true },
+      { text: "`rf`'s plan named the row.", hit: true },
       { text: "The implementation plan lists the beads.", hit: false },
       { text: "It contradicts its M2.3 prediction.", hit: false },
       { text: "Disposable cache-plane writes may occur.", hit: false },
@@ -1043,6 +1177,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       { text: "A cache hit.", hit: true },
       { text: "Served from the cache.", hit: true },
       { text: `The executor${RIGHT_QUOTE}s output was reused.`, hit: true },
+      { text: `The executor${LEFT_QUOTE}s output was reused.`, hit: true },
+      { text: "The `executor`'s output was reused.", hit: true },
       { text: "A resume reuses the transcript.", hit: false },
       { text: "Disposable cache-plane writes may occur.", hit: false },
     ]),
@@ -1053,17 +1189,62 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       { text: "A non-reusable row means the executor recomputed the component.", hit: true },
       { text: "The context.plan reuse decision is the render's reuse.", hit: true },
       { text: "rf's plan matched what the executor reused.", hit: true },
+      { text: `rf${LEFT_QUOTE}s plan matched what the executor reused.`, hit: true },
+      { text: "rf's plans matched what the executor reused.", hit: true },
+      { text: "`rf`'s plan matched what the executor reused.", hit: true },
       { text: "The plan row said refresh_required.", hit: false },
       { text: "The executor reused the component.", hit: false },
     ]),
+  M7: async () => {
+    // The judged-record anchor names exactly what a hollow judge left (the gate's P1-P3 shapes, wb-b1rq F1), and nothing of a full one.
+    const srcRoot = CODE_ROOTS.find(scan => scan.root === "src");
+    if (srcRoot === undefined) throw new Error("CODE_ROOTS holds no src root");
+    const modules = gitListed("src", ".ts");
+    const scans = new Map(modules.map(path => [path, scanLiterals(path, textOf(join(REPO, path))).judged]));
+    const moduleJudged = (judged: string | null, text: string): boolean => judged === text;
+    const files = gitListed("src", "");
+    const code = codeSpellings(srcRoot).judged;
+    const pages = gitListed(DOCS_ROOT.root, ".md");
+    const units = docsSentences().sentences;
+    const workflow = modules.filter(path => path.startsWith("src/workflow/"));
+    const ui = files.filter(path => path.startsWith("src/ui/"));
+    const uiCooked = ui.filter(path => (code.get(path)?.literals ?? 0) > 0);
+    const matrix = `${DOCS_ROOT.root}/feature-matrix.md`;
+    const hollow = <T>(records: ReadonlyMap<string, T>, paths: readonly string[], left: (record: T) => T): Map<string, T> =>
+      new Map([...records].map(([path, record]) => [path, paths.includes(path) ? left(record) : record]));
+    const named = {
+      full: { modules: unjudged(modules, scans, moduleJudged), code: unjudged(files, code, codeJudged), pages: unjudged(pages, pageRecords(pages, units), pageJudged) },
+      workflowScan: unjudged(modules, hollow(scans, workflow, () => null), moduleJudged),
+      workflowText: unjudged(modules, hollow(scans, workflow, () => ""), moduleJudged),
+      uiViews: unjudged(files, hollow(code, ui, record => ({ ...record, raw: null, views: 0 })), codeJudged),
+      uiLiterals: unjudged(files, hollow(code, ui, record => ({ ...record, views: 1 })), codeJudged),
+      matrixSentences: unjudged(pages, pageRecords(pages, units.filter(unit => unit.file !== matrix)), pageJudged),
+    };
+    expect({ workflow: workflow.length > 0, ui: ui.length > 0, uiCooked: uiCooked.length > 0, matrix: pages.includes(matrix) }, "each control hollows a part git lists").toStrictEqual({
+      workflow: true, ui: true, uiCooked: true, matrix: true,
+    });
+    expect(named).toStrictEqual({
+      full: { modules: [], code: [], pages: [] }, workflowScan: workflow, workflowText: workflow, uiViews: ui, uiLiterals: uiCooked, matrixSentences: [matrix],
+    });
+    return {
+      full: named.full,
+      hollows: {
+        workflowScan: sameList(named.workflowScan, workflow), workflowText: sameList(named.workflowText, workflow), uiViews: sameList(named.uiViews, ui),
+        uiLiterals: sameList(named.uiLiterals, uiCooked), matrixSentences: sameList(named.matrixSentences, [matrix]),
+      },
+    };
+  },
   Q1: async () => {
     const read = (text: string): { planTerm: boolean; family: number } => {
       const spelled = familySpellings(normalized(text));
       return { planTerm: sentencesOf(text).some(entry => PLAN_TERM.test(entry.sentence)), family: spelled.producer.length + spelled.respelled.length };
     };
-    const verdict = { letter: read(`The row is refresh_requ${CYRILLIC_I}red.`), separator: read(`The row is refresh${MIDDLE_DOT}required.`) };
-    expect(verdict, "R-HOMOGLYPH: a look-alike letter or a separator outside SEP still hides the decision; a matcher that now catches either re-reads this residual").toStrictEqual({
-      letter: { planTerm: false, family: 0 }, separator: { planTerm: false, family: 0 },
+    const verdict = {
+      letter: read(`The row is refresh_requ${CYRILLIC_I}red.`), separator: read(`The row is refresh${MIDDLE_DOT}required.`),
+      possessive: read(`rf${HALF_RING}s plan matched what the executor reused.`),
+    };
+    expect(verdict, "R-HOMOGLYPH: a look-alike letter, a separator outside SEP or an apostrophe outside APOSTROPHE_CODES still hides the decision or rf's plan; a matcher that now catches one re-reads this residual").toStrictEqual({
+      letter: { planTerm: false, family: 0 }, separator: { planTerm: false, family: 0 }, possessive: { planTerm: false, family: 0 },
     });
     return verdict;
   },
@@ -1074,9 +1255,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const verdict = {
       reworded: read("What rf expected would need a fresh read, the render then took from its own store."),
       otherPossessor: read("The producer's plan matched what the executor reused."),
+      interposed: read("rf's own plan matched what the executor reused."),
     };
-    expect(verdict, "R-PARAPHRASE: a reworded equation, or a plan in another producer's possessive, names no plan term").toStrictEqual({
-      reworded: { d1: false, d2: false }, otherPossessor: { d1: false, d2: false },
+    expect(verdict, "R-PARAPHRASE: a reworded equation, a plan in another producer's possessive, or rf's plan with a word between the possessive and the plan, names no plan term").toStrictEqual({
+      reworded: { d1: false, d2: false }, otherPossessor: { d1: false, d2: false }, interposed: { d1: false, d2: false },
     });
     return verdict;
   },
@@ -1129,7 +1311,7 @@ const REACHED: string[] = [];
 
 describe("wb-pfxo.6 rf plan prediction census (RF-COMPOSITIONAL-ASSEMBLY-R7, posture leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:3", "C:6", "D:2", "E:3", "M:12"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:3", "C:6", "D:2", "E:3", "M:13"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
