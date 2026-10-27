@@ -1,0 +1,629 @@
+{
+  "bead": "wb-dqf.1",
+  "constants": {
+    "record": "FurnaceObserverBoundaryV0",
+    "siblingRecord": "FurnaceAttemptCapabilityV0",
+    "mention": {
+      "source": "observer(?:s|['\\u2019]s|s['\\u2019])?[^\\p{L}\\p{N}]*boundar(?:y|ies)",
+      "flags": "giu"
+    },
+    "script": "\\.(?:[cm]?[jt]sx?)$",
+    "dash": "\\u2014",
+    "recordedStatus": "a proposed source-owned reference, not shipped",
+    "acceptance": "Acceptance on landing: a hermetic fixture feeds a boundary record through the Furnace observer and asserts only the exposed fields/counters are projected, non-exposed fields are withheld as typed absence (never invented), and client decisions honour the stated visibility policy; a docs-07 Furnace-provider sentence names the boundary and joins the wb-6hb.11-style census.",
+    "armed": "Pi's Furnace observer shall consume it as an admitted observer strictly within the boundary \\u2014 reading only the attempt state/log fields and resource counters it exposes, under its stated visibility policy for admitted client decisions",
+    "tracker": ".beads/",
+    "holders": [
+      "test/workbench-furnace-observer-boundary-census.test.ts",
+      "test/fixtures/furnace-observer-boundary-roster.json"
+    ],
+    "observer": "src/workbench/furnace-observer.ts",
+    "control": "src/workbench/furnace-control.ts",
+    "identity": "src/workbench/identity.ts",
+    "schemaLiteral": "workflow-script/v1",
+    "docs09": "docs/workbench/09-observation-and-provenance.md",
+    "docs09Section": "## Experimental projection implementation",
+    "sdk": "@furnace/sdk",
+    "tarball": "vendor/furnace-sdk-0.1.0.tgz",
+    "lockKey": "node_modules/@furnace/sdk",
+    "filingPin": "b21beb0f89ad49500069403c4815d58f2825b414",
+    "floors": {
+      "piFiles": 900,
+      "piScripts": 650,
+      "piBinaries": 3,
+      "sdkEntries": 100,
+      "pinFiles": 700
+    },
+    "sdkPlants": {
+      "declaration": {
+        "path": "package/dist/src/zz-plant-declaration.d.ts",
+        "text": "export interface FurnaceObserverBoundaryV0 {\n  readonly exposedFields: readonly string[];\n}\n"
+      },
+      "runtimeExport": {
+        "path": "package/dist/src/zz-plant-runtime.js",
+        "text": "export const OBSERVER_BOUNDARY_V0 = Object.freeze({ version: 0 });\n"
+      },
+      "schemaId": {
+        "path": "package/contract/registry/zz-boundary.json",
+        "text": "{ \"$id\": \"furnace.observer-boundary.v0\" }\n"
+      },
+      "registryKey": {
+        "path": "package/contract/zz-manifest.json",
+        "text": "{ \"records\": { \"observerBoundaryV0\": { \"shipped\": true } } }\n"
+      },
+      "docsHeading": {
+        "path": "package/zz-README.md",
+        "text": "## Observer boundary (V0)\n\nThe record an admitted observer reads.\n"
+      },
+      "escapedString": {
+        "path": "package/dist/src/zz-escaped.js",
+        "text": "export const NAME = \"\\u004fbserverBoundaryV0\";\n"
+      },
+      "escapedJson": {
+        "path": "package/contract/zz-escaped.json",
+        "text": "{ \"$id\": \"furnace.\\u006fbserver-boundary.v0\" }\n"
+      }
+    },
+    "piPlants": {
+      "src/workbench/zz-boundary-escaped.ts": "export const RECORD_NAME = \"\\u0046urnaceObserver\\u0042oundaryV0\";\n",
+      "src/workbench/zz-boundary-split.ts": "export const SPELLED = \"Furnace\" + \"Obs\" + \"erverBoundaryV0\";\n",
+      "docs/workbench/zz-boundary.md": "# Plant\n\nThe Furnace observer boundary record is consumed here.\n",
+      "test/fixtures/zz-boundary.json": "{ \"record\": \"furnace_observer_boundary_v0\" }\n",
+      "qa/zz-boundary.mjs": "// reads FurnaceObserverBoundaryV0\nexport {};\n",
+      "test/fixtures/zz-boundary-escaped.json": "{ \"record\": \"Furnace\\u004fbserver\\u0042oundaryV0\" }\n",
+      "docs/workbench/zz-boundary-entity.md": "The Furnace &#79;bserver&#32;Boundary record.\n",
+      "docs/workbench/zz-observer-boundary.md": "# Plant\n\nThis page's text names nothing.\n"
+    },
+    "pinPlant": "docs/workbench/zz-pin-plant.md",
+    "residuals": {
+      "R-TRACKER": "Q1",
+      "R-HOLDER": "Q2",
+      "R-BINARY": "Q3",
+      "R-PARAPHRASE": "Q4",
+      "R-WORD-ORDER": "Q5",
+      "R-INTERIOR": "Q6",
+      "R-COMPUTED": "Q7",
+      "R-OTHER-MODULE": "Q8",
+      "R-COMPUTED-ACCESS": "Q9"
+    }
+  },
+  "tests": [
+    "the judged set: the frozen shape, the out-of-file roster and the cases agree",
+    "the outside anchors: the bead's export row binds the rows, the quotes, the record, the armed clause, the status and the acceptance; docs/09 binds the reads and the verbs; the filing pin and the sibling row bind their readings",
+    "T1",
+    "T2",
+    "T3",
+    "W1",
+    "W2",
+    "W3",
+    "Z1",
+    "Z2",
+    "Z3",
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4",
+    "Q5",
+    "Q6",
+    "Q7",
+    "Q8",
+    "Q9",
+    "the registered tests, the reached pins and the claims equal the roster, in order and both ways"
+  ],
+  "rows": [
+    {
+      "id": "T",
+      "label": "When Furnace ships FurnaceObserverBoundaryV0 (proposed, not shipped)",
+      "pins": [
+        {
+          "id": "T1",
+          "quote": "When Furnace ships",
+          "claims": {
+            "When": [
+              "fired",
+              "sdkMentions"
+            ],
+            "Furnace": [
+              "package",
+              "version",
+              "observerTypesDeclared"
+            ],
+            "ships": [
+              "entriesAtFloor",
+              "skippedEntries",
+              "binaryEntries",
+              "sdkPlant"
+            ]
+          },
+          "witness": {
+            "fired": false,
+            "sdkMentions": {},
+            "package": "@furnace/sdk",
+            "version": "0.1.0",
+            "observerTypesDeclared": true,
+            "entriesAtFloor": true,
+            "skippedEntries": [],
+            "binaryEntries": [],
+            "sdkPlant": {
+              "package/dist/src/zz-plant-declaration.d.ts": [
+                "raw"
+              ]
+            }
+          }
+        },
+        {
+          "id": "T2",
+          "quote": "FurnaceObserverBoundaryV0",
+          "claims": {
+            "FurnaceObserverBoundaryV0": [
+              "record",
+              "releaseForms"
+            ]
+          },
+          "witness": {
+            "record": "FurnaceObserverBoundaryV0",
+            "releaseForms": {
+              "declaration": [
+                "raw"
+              ],
+              "runtimeExport": [
+                "raw"
+              ],
+              "schemaId": [
+                "cooked",
+                "raw"
+              ],
+              "registryKey": [
+                "cooked",
+                "raw"
+              ],
+              "docsHeading": [
+                "decoded",
+                "raw"
+              ],
+              "escapedString": [
+                "cooked"
+              ],
+              "escapedJson": [
+                "cooked"
+              ]
+            }
+          }
+        },
+        {
+          "id": "T3",
+          "quote": "(proposed, not shipped)",
+          "claims": {
+            "proposed": [
+              "recordedStatus"
+            ],
+            "not shipped": [
+              "spec",
+              "lockResolved",
+              "lockVersion",
+              "lockIntegrityMatches",
+              "tarballName",
+              "tarballVersion",
+              "tarballSha256"
+            ]
+          },
+          "witness": {
+            "recordedStatus": "a proposed source-owned reference, not shipped",
+            "spec": "file:vendor/furnace-sdk-0.1.0.tgz",
+            "lockResolved": "file:vendor/furnace-sdk-0.1.0.tgz",
+            "lockVersion": "0.1.0",
+            "lockIntegrityMatches": true,
+            "tarballName": "@furnace/sdk",
+            "tarballVersion": "0.1.0",
+            "tarballSha256": "aaa57dcfb1c205ec"
+          }
+        }
+      ]
+    },
+    {
+      "id": "W",
+      "label": "never widening today's bounded read-only polling",
+      "pins": [
+        {
+          "id": "W1",
+          "quote": "never widening",
+          "claims": {
+            "never": [
+              "widenedPlant"
+            ],
+            "widening": [
+              "interfaceName",
+              "interfaceDeclarations",
+              "interfaceExtends",
+              "clientParameterTypes",
+              "readPaths",
+              "docsReads",
+              "pairs"
+            ]
+          },
+          "witness": {
+            "interfaceName": "FurnaceObserverClient",
+            "interfaceDeclarations": 1,
+            "interfaceExtends": [],
+            "clientParameterTypes": [
+              "FurnaceObserverClient"
+            ],
+            "readPaths": [
+              "attempts.list",
+              "logs.read",
+              "runs.get.status"
+            ],
+            "docsReads": [
+              "status",
+              "attempt",
+              "log-reference"
+            ],
+            "pairs": [
+              [
+                "status",
+                "runs.get.status"
+              ],
+              [
+                "attempt",
+                "attempts.list"
+              ],
+              [
+                "log-reference",
+                "logs.read"
+              ]
+            ],
+            "widenedPlant": [
+              "runs.get.events"
+            ]
+          }
+        },
+        {
+          "id": "W2",
+          "quote": "today's bounded",
+          "claims": {
+            "today's": [
+              "calls"
+            ],
+            "bounded": [
+              "pollBounds",
+              "unboundedPlant"
+            ]
+          },
+          "witness": {
+            "calls": [
+              {
+                "path": "runs.get.status",
+                "timeoutMs": "limits.callTimeoutMs",
+                "limit": null
+              },
+              {
+                "path": "attempts.list",
+                "timeoutMs": "limits.callTimeoutMs",
+                "limit": "limits.attemptLimit"
+              },
+              {
+                "path": "logs.read",
+                "timeoutMs": "limits.callTimeoutMs",
+                "limit": "limits.logBytes"
+              }
+            ],
+            "pollBounds": [
+              "limits.maxElapsedMs",
+              "limits.maxPolls"
+            ],
+            "unboundedPlant": {
+              "calls": [
+                "runs.get.status"
+              ],
+              "pollBounds": [
+                "limits.maxPolls"
+              ]
+            }
+          }
+        },
+        {
+          "id": "W3",
+          "quote": "read-only polling",
+          "claims": {
+            "read-only": [
+              "clientChains",
+              "unchainedClientUses",
+              "sdkRuntimeImports",
+              "closeReads",
+              "excludedVerbs",
+              "excludedVerbCalls",
+              "controlPlant"
+            ],
+            "polling": [
+              "ownership"
+            ]
+          },
+          "witness": {
+            "clientChains": [
+              "attempts.list",
+              "logs.read",
+              "runs.get.status"
+            ],
+            "unchainedClientUses": 0,
+            "sdkRuntimeImports": [],
+            "closeReads": [],
+            "excludedVerbs": [
+              "create",
+              "resume",
+              "stop"
+            ],
+            "excludedVerbCalls": [],
+            "controlPlant": {
+              "clientChains": [
+                "attempts.list",
+                "logs.read",
+                "runs.get.status",
+                "runs.get.stop"
+              ],
+              "closeReads": [
+                "runs.get.stop"
+              ],
+              "excludedVerbCalls": [
+                "stop"
+              ]
+            },
+            "ownership": [
+              "external"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Z",
+      "label": "until then zero Pi mentions of the record",
+      "pins": [
+        {
+          "id": "Z1",
+          "quote": "until then",
+          "claims": {
+            "until then": [
+              "triggerFired",
+              "filingPin",
+              "filedAtPin",
+              "absentBeforePin",
+              "pinFilesAtFloor",
+              "pinMentions",
+              "pinPlant"
+            ]
+          },
+          "witness": {
+            "triggerFired": false,
+            "filingPin": "b21beb0f89ad",
+            "filedAtPin": true,
+            "absentBeforePin": true,
+            "pinFilesAtFloor": true,
+            "pinMentions": {},
+            "pinPlant": {
+              "docs/workbench/zz-pin-plant.md": [
+                "decoded",
+                "raw"
+              ]
+            }
+          }
+        },
+        {
+          "id": "Z2",
+          "quote": "zero Pi mentions",
+          "claims": {
+            "zero": [
+              "piMentions"
+            ],
+            "Pi": [
+              "scope",
+              "filesAtFloor",
+              "scriptsAtFloor",
+              "binariesAtFloor",
+              "liveness"
+            ],
+            "mentions": [
+              "piPlants"
+            ]
+          },
+          "witness": {
+            "piMentions": {},
+            "scope": "listed files minus the tracker export and the holders",
+            "filesAtFloor": true,
+            "scriptsAtFloor": true,
+            "binariesAtFloor": true,
+            "liveness": {
+              "identitySchemaLiteral": true,
+              "docs09Polling": true,
+              "observerClient": true
+            },
+            "piPlants": {
+              "src/workbench/zz-boundary-escaped.ts": [
+                "cooked"
+              ],
+              "src/workbench/zz-boundary-split.ts": [
+                "folded"
+              ],
+              "docs/workbench/zz-boundary.md": [
+                "decoded",
+                "raw"
+              ],
+              "test/fixtures/zz-boundary.json": [
+                "cooked",
+                "raw"
+              ],
+              "qa/zz-boundary.mjs": [
+                "raw"
+              ],
+              "test/fixtures/zz-boundary-escaped.json": [
+                "cooked"
+              ],
+              "docs/workbench/zz-boundary-entity.md": [
+                "decoded"
+              ],
+              "docs/workbench/zz-observer-boundary.md": [
+                "path"
+              ]
+            }
+          }
+        },
+        {
+          "id": "Z3",
+          "quote": "of the record",
+          "claims": {
+            "of the record": [
+              "recordWords",
+              "spellingForms",
+              "piIdentifiersQuiet",
+              "siblingQuiet"
+            ]
+          },
+          "witness": {
+            "recordWords": [
+              "Furnace",
+              "Observer",
+              "Boundary",
+              "V0"
+            ],
+            "spellingForms": {
+              "camel": true,
+              "snake": true,
+              "kebab": true,
+              "dotted": true,
+              "spaced": true,
+              "upper": true,
+              "family": true,
+              "laterVersion": true,
+              "stem": true,
+              "possessive": true,
+              "plural": true,
+              "markup": true,
+              "lineBreak": true,
+              "formJoined": true
+            },
+            "piIdentifiersQuiet": true,
+            "siblingQuiet": [
+              "FurnaceAttemptCapabilityV0"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "the residuals: each named family pinned by its quiet row",
+      "pins": [
+        {
+          "id": "Q1",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-TRACKER",
+            "exportSpellsRecord": true,
+            "exportListed": false,
+            "trackerExcluded": true
+          }
+        },
+        {
+          "id": "Q2",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-HOLDER",
+            "holders": [
+              "test/workbench-furnace-observer-boundary-census.test.ts",
+              "test/fixtures/furnace-observer-boundary-roster.json"
+            ],
+            "holdersSpellRecord": [
+              true,
+              true
+            ],
+            "holdersListed": []
+          }
+        },
+        {
+          "id": "Q3",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-BINARY",
+            "plantBinary": true,
+            "plantForms": [],
+            "realBinariesAtFloor": true
+          }
+        },
+        {
+          "id": "Q4",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-PARAPHRASE",
+            "constructedQuiet": [
+              true,
+              true
+            ],
+            "realParaphrasesQuiet": true
+          }
+        },
+        {
+          "id": "Q5",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-WORD-ORDER",
+            "quiet": [
+              true,
+              true
+            ]
+          }
+        },
+        {
+          "id": "Q6",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-INTERIOR",
+            "quiet": {
+              "formCharacter": true,
+              "confusable": true,
+              "entityOutsideMarkup": true,
+              "markup": true
+            }
+          }
+        },
+        {
+          "id": "Q7",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-COMPUTED",
+            "quiet": {
+              "substitution": true,
+              "runtimeJoin": true,
+              "charCode": true
+            }
+          }
+        },
+        {
+          "id": "Q8",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-OTHER-MODULE",
+            "judgedModule": "src/workbench/furnace-observer.ts",
+            "otherModuleCallsExcludedVerbs": true
+          }
+        },
+        {
+          "id": "Q9",
+          "quote": null,
+          "claims": null,
+          "witness": {
+            "residual": "R-COMPUTED-ACCESS",
+            "reads": 3,
+            "unchained": 0
+          }
+        }
+      ]
+    }
+  ]
+}
