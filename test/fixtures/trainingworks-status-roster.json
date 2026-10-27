@@ -1080,6 +1080,103 @@
         "findings": 1
        }
       ],
+      "routes": [
+       {
+        "id": "html-matrix-subject-landed-gated",
+        "htmlBlocks": 1,
+        "tableTags": 1
+       },
+       {
+        "id": "html-matrix-hx-speedup-without-a-receipt",
+        "htmlBlocks": 1,
+        "tableTags": 1
+       },
+       {
+        "id": "html-ledger-subject-shipped",
+        "htmlBlocks": 1,
+        "tableTags": 1
+       },
+       {
+        "id": "table-tags-inline-in-a-paragraph",
+        "htmlBlocks": 0,
+        "tableTags": 8
+       },
+       {
+        "id": "html-table-inside-a-list-item",
+        "htmlBlocks": 1,
+        "tableTags": 1
+       },
+       {
+        "id": "markdown-matrix-subject-landed-gated",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       },
+       {
+        "id": "markdown-matrix-hx-speedup-without-a-receipt",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       },
+       {
+        "id": "markdown-ledger-subject-shipped",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       },
+       {
+        "id": "a-div-html-block",
+        "htmlBlocks": 1,
+        "tableTags": 0
+       },
+       {
+        "id": "a-table-html-block-with-no-visible-text",
+        "htmlBlocks": 0,
+        "tableTags": 1
+       },
+       {
+        "id": "table-tags-inline-in-a-heading",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-inline-in-a-later-list-item",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-inline-in-header-and-body-cells",
+        "htmlBlocks": 0,
+        "tableTags": 4
+       },
+       {
+        "id": "table-tags-inline-in-a-blockquote",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-in-upper-case",
+        "htmlBlocks": 0,
+        "tableTags": 8
+       },
+       {
+        "id": "every-table-element-inline-in-a-paragraph",
+        "htmlBlocks": 0,
+        "tableTags": 25
+       },
+       {
+        "id": "a-table-inside-a-complete-comment",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       },
+       {
+        "id": "a-table-tag-inside-an-inline-comment",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       },
+       {
+        "id": "a-custom-element-named-like-a-table-tag",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       }
+      ],
       "documents": [
        {
         "path": "docs/workbench/TRACEABILITY.md",

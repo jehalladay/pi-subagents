@@ -24,6 +24,17 @@
  * gate-level guards that close the route for them: the W10 stamped-claim guard's page check on the matrix and the TRACEABILITY
  * freeze. The follow-up is test-only: it edits no product, docs, ledger or matrix text.
  *
+ * FOLLOW-UP (wb-325x, the R694 follow-up of the landing-473 gate's F1): Q12's closure reading - htmlTableRoutes: the HTML blocks a
+ * page renders and its html tokens naming a table element outside a comment (htmlRaws) - ran only on the two judged documents,
+ * which read 0/0, so a reader returning 0/0, dropping either count, the table-cell, list-item or inline-children descent, or the
+ * comment exception stayed green (the gate's mutants GM1-GM7). Q12 now holds that reading to flagged and quiet controls, each with
+ * its counts pinned in the roster: every control that hides a table from clause (b) is flagged (an HTML table block, table tags
+ * inline in a paragraph, a table inside a list item) and every markdown table row is quiet; flagged besides are a div block (an
+ * HTML block alone), a table block with no visible text (a table tag alone: it renders no block), and table tags inline in a
+ * heading, in a later list item, in header and body cells, in a blockquote and in upper case, and every table element inline in one
+ * paragraph (one html token per tag, so an element dropped from TABLE_TAG reads fewer table tags); quiet are a table inside a
+ * complete comment, a table tag inside an inline comment and a custom element whose name begins with tr. Test-only: census, roster.
+ *
  * MEASURED (read-only, by the cutting seats, 2026-10-23 and 2026-10-24; the producer facts ride the roster with their blob ids):
  * each deposit's README.md:3 at its pin is its status line, and DEPOSITS holds that line's status clause verbatim: HX "no new HX
  * code implemented", Forge "proposed additive source adapter, not implemented", Furnace "no simulator or policy hooks implemented by
@@ -42,7 +53,8 @@
  * fixture side, "live", Furnace or Beads and a success word together. The 71 tracked docs pages hold no HTML comment, no HTML
  * block, no image and no character reference; their raw HTML is seven inline placeholders (<id>, <TBD>, ...), which render nothing.
  * Re-measured for R-HTML-TABLE (wb-9chv, at trunk 799eebe): TRACEABILITY.md holds no html token and feature-matrix.md two, the
- * inline <id> placeholders of its invoke:<id> cells; neither renders an HTML block or holds a table tag.
+ * inline <id> placeholders of its invoke:<id> cells; neither renders an HTML block or holds a table tag. Re-measured for wb-325x (at
+ * trunk 215c025, marked 18.0.11): both documents still read 0 HTML blocks and 0 table tags.
  *
  * RENDERED VIEW. What a reader sees of a markdown page, read through marked's lexer (the repository's marked devDependency, 18.0.11
  * at this cut, the renderer the refusal's readings used). A PIECE is one rendered block: a heading, a paragraph, a list item's own
@@ -99,7 +111,7 @@
  *    the guard through the product module - each claim status refused on fixture-tier receipts alone (live cell or a labelled cmd_
  *    clause), a mixed row and non-claim rows accepted, the live ledger clean; C2 the real docs walk (git-tracked, exact) - no
  *    finding - and the sentence judge on controls (with two adjacent list items and a heading line, and the rendered view). Q, the
- *    residuals' pinned quiet rows (RESIDUALS).
+ *    residuals' pinned quiet rows (RESIDUALS); Q12 also pins its closure reading on flagged and quiet controls.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and pins,
  * every pin's witness, the constants and every registered test title - is held to the out-of-file roster
  * (test/fixtures/trainingworks-status-roster.json). OUTSIDE ANCHORS (their own registered case): the bead's own row in the tracker
@@ -112,8 +124,9 @@
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and the
  * roster (the bead text anchors rows, not pins); a control removed while every remaining control still holds; a pin's case
  * replaced by one that echoes its roster witness; the outside-anchor case or the closing case removed with its roster title; a
- * constant narrowed in both, such as an element dropped from TABLE_TAG (td dropped from both with a <td> tag planted in a matrix
- * cell: 22 of 22 pass) or a cited guard's spelling rewritten in both.
+ * constant narrowed in both, such as a cited guard's spelling rewritten in both, or the comment pattern narrowed to complete
+ * comments in both. (Until wb-325x an element dropped from TABLE_TAG in both was the example - td dropped from both with a <td> tag
+ * planted in a matrix cell: 22 of 22 pass; Q12's every-element closure control now reads fewer table tags for any element dropped.)
  * RESIDUALS (named, each with its pinned quiet row): R-ATTRIBUTED-FILE a GraphPolicy mention without a family mark in a page that
  * names the graph-policy-machine-control program is attributed to that program, so an HX x GP citation spelled there without its
  * directory, title or "HX GP" is not held to "design only" (Q1); R-UNPINNED a TrainingWorks citation pinning no deposit sha is held
@@ -144,8 +157,8 @@
  * byte-exact, so its source and rendered views cannot drift apart without reddening the landed freeze test. No docs, ledger or
  * matrix text is edited by this cut; the guard is the only product change. Q12 reads a document's HTML blocks in the rendered view (a
  * complete comment renders nothing and is no HTML block there) and its table tags in every html token at any depth, a table tag
- * inside a comment excepted; it reads the two guards it cites by their source spellings, so a cut renaming the W10 guard's page
- * check or the freeze's target or hash constant re-measures Q12 in the same commit.
+ * inside a comment excepted, a reading its own controls pin (wb-325x); it reads the two guards it cites by their source spellings,
+ * so a cut renaming the W10 guard's page check or the freeze's target or hash constant re-measures Q12 in the same commit.
  *
  * Display paths added: none (the receipt-tier detail is a qa/workbench CLI receipt string; src/ is untouched). Test-only otherwise:
  * no scratch is allocated; docs, .beads, qa and the two guard files Q12 cites are only read.
@@ -1169,6 +1182,32 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       if (control.quiet) expect([rows.length, tableLineCount(control.text)], `${control.id}: no row in the rendered read or the source count`).toEqual([0, 0]);
       return { id: control.id, rows: rows.length, findings: findings.length };
     });
+    const routeControls: { id: string; text: string; flagged: boolean }[] = [
+      ...controls.map(control => ({ id: control.id, text: control.text, flagged: control.quiet })),
+      { id: "a-div-html-block", text: `<div>${subject}: landed-gated</div>`, flagged: true },
+      { id: "a-table-html-block-with-no-visible-text", text: "<table>\n<tr><td></td></tr>\n</table>", flagged: true },
+      { id: "table-tags-inline-in-a-heading", text: `## ${subject} <td>landed-gated</td>`, flagged: true },
+      { id: "table-tags-inline-in-a-later-list-item", text: `- A quiet first item\n- ${subject} <td>landed-gated</td>`, flagged: true },
+      { id: "table-tags-inline-in-header-and-body-cells", text: tableOf("| Feature | <th>Status</th> |", [`| ${subject} | <td>landed-gated</td> |`]), flagged: true },
+      { id: "table-tags-inline-in-a-blockquote", text: `> ${subject} <td>landed-gated</td>`, flagged: true },
+      { id: "table-tags-in-upper-case", text: `Pi notes <TABLE><TR><TD>${subject}</TD><TD>landed-gated</TD></TR></TABLE>`, flagged: true },
+      {
+        id: "every-table-element-inline-in-a-paragraph",
+        text: "Pi notes <table><caption>c</caption><colgroup><col></colgroup><thead><tr><th>h</th></tr></thead><tbody><tr><td>d</td></tr></tbody><tfoot><tr><td>f</td></tr></tfoot></table>",
+        flagged: true,
+      },
+      { id: "a-table-inside-a-complete-comment", text: `<!-- <table><tr><td>${subject}</td><td>landed-gated</td></tr></table> -->`, flagged: false },
+      { id: "a-table-tag-inside-an-inline-comment", text: "Pi notes <!-- <td>landed-gated</td> --> nothing more", flagged: false },
+      { id: "a-custom-element-named-like-a-table-tag", text: "Pi notes <tr-note>landed-gated</tr-note> here", flagged: false },
+    ];
+    const routes = routeControls.map(control => {
+      const reading = htmlTableRoutes(control.text);
+      expect(
+        reading.htmlBlocks + reading.tableTags > 0,
+        `${control.id} is ${control.flagged ? "flagged by the closure reading: an HTML block or a table tag" : "quiet for the closure reading: no HTML block and no table tag"}`,
+      ).toBe(control.flagged);
+      return { id: control.id, ...reading };
+    });
     const documents = [LEDGER, MATRIX].map(path => ({ path, ...htmlTableRoutes(textOf(path)) }));
     expect(documents, "neither judged document renders an HTML block or holds a table tag, so every table row they render is a marked table row").toEqual(
       [LEDGER, MATRIX].map(path => ({ path, htmlBlocks: 0, tableTags: 0 })),
@@ -1184,7 +1223,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     expect(guards.matrix.pageChecks, "and applies its raw-HTML page check to it once").toBe(1);
     expect(guards.ledger.document, "the TRACEABILITY freeze reads the ledger").toBe(LEDGER);
     expect(guards.ledger.frozenSha256, "and its pinned hash is the ledger's sha256").toBe(sha256Of(LEDGER));
-    return { controls: readings, documents, guards };
+    return { controls: readings, routes, documents, guards };
   },
 };
 
