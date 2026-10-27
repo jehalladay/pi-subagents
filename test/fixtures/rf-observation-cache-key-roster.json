@@ -631,17 +631,17 @@
     {
      "id": "C1",
      "witness": {
-      "rows": 93,
+      "rows": 102,
       "byBase": {
-       "full": 64,
+       "full": 73,
        "failure": 6,
        "diagnostic": 6,
        "observed": 5,
        "view": 6,
        "engine": 6
       },
-      "resultKeys": 24,
-      "rosterRfVersion": "0.1.784",
+      "resultKeys": 27,
+      "rosterRfVersion": "0.1.845",
       "envelopeKeys": [
        "command",
        "diagnostics",
@@ -1087,6 +1087,46 @@
         "factors": true
        },
        {
+        "id": "full:result.judge_context.task_digest",
+        "why": "J-REQUEST-ECHO",
+        "factors": true
+       },
+       {
+        "id": "full:result.judge_context.task_tags",
+        "why": "J-REQUEST-ECHO",
+        "factors": true
+       },
+       {
+        "id": "full:result.judge_context.agent_id",
+        "why": "J-REQUEST-ECHO",
+        "factors": true
+       },
+       {
+        "id": "full:result.judge_context.agent_role",
+        "why": "J-REQUEST-ECHO",
+        "factors": true
+       },
+       {
+        "id": "full:result.judge_context.session_id",
+        "why": "J-REQUEST-ECHO",
+        "factors": true
+       },
+       {
+        "id": "full:result.judge_context.explicit_requests",
+        "why": "J-REQUEST-ECHO",
+        "factors": true
+       },
+       {
+        "id": "full:result.judge_context.workspace_facts",
+        "why": "J-REQUEST-ECHO",
+        "factors": true
+       },
+       {
+        "id": "full:result.judge_context_layers",
+        "why": "J-REQUEST-ECHO",
+        "factors": true
+       },
+       {
         "id": "full:result.attempts",
         "why": "J-WORK-COUNTERS",
         "factors": true
@@ -1104,6 +1144,11 @@
        {
         "id": "full:result.fiber_transaction_refs",
         "why": "J-STRUCTURE",
+        "factors": true
+       },
+       {
+        "id": "full:result.replay_of_operation_id",
+        "why": "J-REQUEST-ECHO",
         "factors": true
        },
        {
@@ -1200,7 +1245,7 @@
       "J-PAYLOAD-RESTATED": 3,
       "J-POLICY-REVISION": 1,
       "J-PROVENANCE-AUX": 9,
-      "J-REQUEST-ECHO": 3,
+      "J-REQUEST-ECHO": 12,
       "J-ROW-AUX": 1,
       "J-STRUCTURE": 5,
       "J-VIEW-AUX": 1,
@@ -1302,10 +1347,19 @@
   "full:result.bundle_revision_id:projected",
   "full:result.observations:projected",
   "full:result.necessity:projected",
+  "full:result.judge_context.task_digest:omitted:J-REQUEST-ECHO",
+  "full:result.judge_context.task_tags:omitted:J-REQUEST-ECHO",
+  "full:result.judge_context.agent_id:omitted:J-REQUEST-ECHO",
+  "full:result.judge_context.agent_role:omitted:J-REQUEST-ECHO",
+  "full:result.judge_context.session_id:omitted:J-REQUEST-ECHO",
+  "full:result.judge_context.explicit_requests:omitted:J-REQUEST-ECHO",
+  "full:result.judge_context.workspace_facts:omitted:J-REQUEST-ECHO",
+  "full:result.judge_context_layers:omitted:J-REQUEST-ECHO",
   "full:result.attempts:omitted:J-WORK-COUNTERS",
   "full:result.superseded_transaction_ids:omitted:J-STRUCTURE",
   "full:result.retry_work:omitted:J-WORK-COUNTERS",
   "full:result.fiber_transaction_refs:omitted:J-STRUCTURE",
+  "full:result.replay_of_operation_id:omitted:J-REQUEST-ECHO",
   "full:result.render_id:fenced",
   "full:result.ephemeral:fenced",
   "full:result.commit_seq:fenced",
@@ -1350,7 +1404,7 @@
   "J-WORK-COUNTERS": "execution counters other than necessity_eval_count and tsx_worker_spawns: validated where fenced, read by no cache, query or view",
   "J-PROVENANCE-AUX": "auxiliary provenance (creation time, schema versions, storage, sibling SDK entries, wire format): ordering uses the host capture and observation instants, the version cohort the bundle or graph digest, the engine identity only the TSX entries",
   "J-POLICY-REVISION": "the necessity policy revision is no Pi version cohort: the cohort is the bundle digest, else the graph digest (owner ruling G-A, wb-973.8), and equal-payload renders under two policies stay distinct cache entries by their operation ids",
-  "J-REQUEST-ECHO": "request echoes (audience, session id, a non-view scope): the host's own scope and invocation id key the cache and the viewport; no Pi operation reads rf's echo",
+  "J-REQUEST-ECHO": "request echoes (audience, session id, a non-view scope, the judge's inputs and their lens layers, a replayed request key's operation): the host's own scope and invocation id key the cache and the viewport; no Pi operation reads rf's echo",
   "J-DIAGNOSTIC-TEXT": "diagnostic message, hint, source and metadata: withheld from every surfaced string; status reads only severity (ok form) or the primary code (failure form)",
   "J-DIAGNOSTIC-CODE": "a code in an ok envelope: only severity moves coverage; a code is surfaced only as a refusal's primary code",
   "J-ROW-AUX": "observation-row fields beyond status, freshness, replayed and degraded: the demotion note carries only status words and counts",
