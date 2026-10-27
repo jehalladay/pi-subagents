@@ -789,7 +789,7 @@
     {
      "id": "B3",
      "witness": {
-      "carrier": "rf@0.1.784:reactive-fiber.cli/v1 context.render --no-commit",
+      "carrier": "rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit",
       "descriptors": [
        {
         "id": "reactivefiber.render.preview",
@@ -801,7 +801,7 @@
         "supportedModes": [
          "invoke"
         ],
-        "contractSource": "rf@0.1.784:reactive-fiber.cli/v1 context.render --no-commit"
+        "contractSource": "rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit"
        },
        {
         "id": "reactivefiber.render.preview",
@@ -813,7 +813,7 @@
         "supportedModes": [
          "invoke"
         ],
-        "contractSource": "rf@0.1.784:reactive-fiber.cli/v1 context.render --no-commit"
+        "contractSource": "rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit"
        }
       ],
       "reconcile": [
