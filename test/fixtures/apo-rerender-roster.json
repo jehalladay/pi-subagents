@@ -1,0 +1,386 @@
+{
+  "comment": "wb-021.5 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R7; the hk9l/5jha/1xvp.4/o4h0.3 roster pattern): the OUT-OF-FILE anchor of test/workbench-apo-rerender-census.test.ts. rows: every judged row of test/helpers/apo-rerender-census.ts in census order (SURFACES, ADMISSION, INVOCATION, EFFECT, IDENTITY, QUIET, READERS, ABSENCE) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and, for a plant, its expected reading) and the registered test. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its registered tests (vitest task tree, run modes and timeouts) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. The outside anchors are src (the view-module coverage, the projection's public methods, the registry's effect classes and the dialog's actions) and the bead's own export row (.beads/issues.jsonl, wb-021.5), so a SURFACES row, an admission plant, an effect-class plant or a dialog-action plant removed from the census and this file together still reds.",
+  "rows": [
+    {
+      "table": "SURFACES",
+      "id": "GRAPH-VIEW",
+      "label": "the graph-view model, built and rebuilt by its cached builder, reads quiet over N refreshes",
+      "pins": [
+        "f803f4e932e10f393b3b91d05bcfaecd1634105eae7852d0620506519b5ec8c2",
+        "d798d4167c55bc3ee18b05bf7b699f0e640d3cbbd90562ec178d984165f8283c",
+        "cbe0fabdfe8898e33009f2eb58c89aba9329fa77913fc5648f9a2d66f50d5dce"
+      ],
+      "test": "SURFACES GRAPH-VIEW"
+    },
+    {
+      "table": "SURFACES",
+      "id": "TIMELINE",
+      "label": "the timeline lanes at two zoom and pan settings read quiet over N refreshes",
+      "pins": [
+        "72ec94c2a259a40c6777992a62731c4ad92782ddade8b5d3cbe5e1b66d9d0970",
+        "f5c4d386baaa2ccd45e7a37894f4588d9d84e64a10d61976d5f90e88132c7058"
+      ],
+      "test": "SURFACES TIMELINE"
+    },
+    {
+      "table": "SURFACES",
+      "id": "OBSERVE",
+      "label": "the model-facing observe reply, bare and with relations and events, reads quiet over N refreshes",
+      "pins": [
+        "da6969e3e2d15c4ae4e478abf41f69ed79064f062060ee1957533b39739396ea",
+        "7f8f7f5818ba727c49179a7c8104f88e5c541841907d68a747a9e4c524e2fe64"
+      ],
+      "test": "SURFACES OBSERVE"
+    },
+    {
+      "table": "SURFACES",
+      "id": "TOPOLOGY",
+      "label": "the linked topology slice of two focused nodes reads quiet over N refreshes",
+      "pins": [
+        "a13e77a06d42e2c06541b9a4580532779aeac5da0576c3e0c8c6ab8b9932fc3c",
+        "2685c8851ef4b48f882c7eb86ffe94b32edb52c5fb4d5f2848af82029352f86b"
+      ],
+      "test": "SURFACES TOPOLOGY"
+    },
+    {
+      "table": "SURFACES",
+      "id": "ATTENTION",
+      "label": "the attention report at two bottleneck caps reads quiet over N refreshes",
+      "pins": [
+        "c33194c9226c25036858343e00d29c47f15cd16d92d113ca4a8da94fba49f864",
+        "b041014bb904015235c26e1a53ea14df5a595431099ddc6fe05fcb2159fbc379"
+      ],
+      "test": "SURFACES ATTENTION"
+    },
+    {
+      "table": "SURFACES",
+      "id": "LATENCY",
+      "label": "the latency decomposition reads quiet over N refreshes",
+      "pins": [
+        "057c348786f6801e2cf571dc0f2c5fd8fafd9edc904ed92fe0d1e98e6c820a48"
+      ],
+      "test": "SURFACES LATENCY"
+    },
+    {
+      "table": "SURFACES",
+      "id": "TELEMETRY",
+      "label": "the operations telemetry report reads quiet over N refreshes",
+      "pins": [
+        "93298a199fe4fb2d516c89975315af8ae0048f618c9b4d902013e7f976f24f79"
+      ],
+      "test": "SURFACES TELEMETRY"
+    },
+    {
+      "table": "SURFACES",
+      "id": "INSPECTOR",
+      "label": "the inspector layout of each of the four views reads quiet over N redraws",
+      "pins": [
+        "7a584b7ba9d8714cd2e0a31ce9c37f0b10754accd37a276f363ed2806e9ed897",
+        "b467719b0489c3a017a6558e155d69d966fe39ff47d9b7b809dcc230bbeb42af",
+        "e6f7c8f058dde1d109bea33801b026fd09bb0dde6a15e9a6b0876ac4c26742f5",
+        "d5fd619e6e42f37792ff72ba70d6b149ef21cdc62b08071e6243c066a12724ac"
+      ],
+      "test": "SURFACES INSPECTOR"
+    },
+    {
+      "table": "SURFACES",
+      "id": "DIALOG",
+      "label": "the real host seam's dialog redraw of each of the four views, its per-redraw model builders included, reads quiet over N redraws",
+      "pins": [
+        "c84376bd2b177868ddb7f80e5196855b659b98d4c1f0b5c23a11a36cb2c1d460",
+        "dd0cd7567d8925f83fc2e175f24d59ffd2b300049921e85223d89e6261f335cd",
+        "39af2e67623ffd4364e88cc0215b739da04ac87f0c93329ed35419304a7f3b21",
+        "677357f966e7d4f36e5a758fb9633c943ba54b35bdc767af9aa30f66340b300b"
+      ],
+      "test": "SURFACES DIALOG"
+    },
+    {
+      "table": "SURFACES",
+      "id": "REPROJECTION",
+      "label": "each read member of the projection itself reads quiet over N re-projections",
+      "pins": [
+        "db4966bb96e5e196e1eaf02def91962b02f07fb281a67477c9478386470be562",
+        "23f0fb552905e0c429bd7e0923e060ad7bb5f7fd8407b909daf6de387a9b1357",
+        "7b8d2fccb31a8116f2ce6a2253ad8bdb84a8b184ddaa0d9d53d56bb10a9900dd",
+        "d49af9fd2c622f29780e137373313388a1a70489d3ae2100263072acd1609005",
+        "bdab7952fc40a88642a8fff80330f38c4fe1c286e51480c69492be4eb4696952",
+        "46eb36dec67f12f44dd32a6cdf283b9d13a929804a7d5de9f9ca2364252efa2a",
+        "ee1646bb780884bacf40ce58be08448a74a6e99646f85c138a9dbe902cb01876",
+        "cb85f5574d067a366f62043bd1d96fb48c29f06bfcd557a9b070402299358fc8",
+        "81b06d77b58177604f167f0ea56e5210d7cd29b9242fd5617313d8f24c4619bc",
+        "8afbb794d50e9acf11466713047d10803ccf0e7dc52a0dff794f3d4f6d7aa2e9",
+        "b30f4e6e7a2d077cea4e55877388cad625c970ca677b9173e4846666f2008ff3",
+        "4a58a61dc54b6191629226f5dd498296539960c57b7e409d2512af917e123378"
+      ],
+      "test": "SURFACES REPROJECTION"
+    },
+    {
+      "table": "ADMISSION",
+      "id": "EVERY-ADMISSION-MEMBER",
+      "label": "a render that calls any admission member of the projection is read by the tap and by the state digest",
+      "pins": [
+        "0b894c02d9e39da362ba53ad3b8cf5f1312c398a513c57c3d388285dd1364cd5",
+        "6b6ccd2d586398c9d116d0e9ea8c97444e99d8808bffa4a19c361298408c1b61",
+        "1339881ac30125e7efadfd0794d6850a5354c82a5b3dbd728279fe994e662130",
+        "4754136e718915b776aff6e43ab00639068267c8bde6fdcdee01a4bc5aaee90e",
+        "babe84737150dd3df02f651d144722c024a840f127045517daa455f0a29869ca",
+        "f22a07324e85ffd5b1b43ae034b4a5401e6c987bc86263c8637e18a23e912129"
+      ],
+      "test": "ADMISSION EVERY-ADMISSION-MEMBER"
+    },
+    {
+      "table": "ADMISSION",
+      "id": "WRITE-ANY-ROUTE",
+      "label": "a property written through the tap, and a write that bypasses the tap, are each read",
+      "pins": [
+        "9188dd3577367d40056f2031c9ced62d5ad73a6ee3c0fd27de5210a3d87c8252",
+        "3aea9ee3f0157e198aa5937726f58558434c445f487d2f7406bdde2ca3b4dd0d"
+      ],
+      "test": "ADMISSION WRITE-ANY-ROUTE"
+    },
+    {
+      "table": "INVOCATION",
+      "id": "EVERY-EFFECT-CLASS",
+      "label": "a render that invokes a capability of any effect class is read as an attempt, a provider call and a registry admission",
+      "pins": [
+        "d8f38085fd07c0e2ebae9d53d4a7f42b318aeac1379c9375f409d19ab685d04f",
+        "13f827149c71fdfd19dbac4a8f7b67a4655a828f80de992b970ae09d30305039",
+        "409c0f9e7045e91d51aca81c789e3b359a3666eaa6861526eed093f4b3f427d0",
+        "39ff82715118022c59e04ee8af797bdb4deed4ff8e41167538caaba8c708dd46"
+      ],
+      "test": "INVOCATION EVERY-EFFECT-CLASS"
+    },
+    {
+      "table": "INVOCATION",
+      "id": "OTHER-ROUTES",
+      "label": "an inspect, an invoke of an unregistered capability, an evidence load and an invoke deferred to the next immediate, each started by a render, are read",
+      "pins": [
+        "b66252c574424523d7b0d6c746631aacc66adab7892227712d045bb6820a64d4",
+        "fc85956ec778f5a89c2f5b559baa29860dadaf2061c1ca4bfb51cc937c551b62",
+        "09b3dc3c77b67181ddabd639527f99bff635a0196268ff8e4a8bac64722b6cc6",
+        "c24862c20fd5025403536c268bfcf5a29fa45c56b1fbe7278839dccce11181e1"
+      ],
+      "test": "INVOCATION OTHER-ROUTES"
+    },
+    {
+      "table": "INVOCATION",
+      "id": "R-DEFERRED-EFFECT",
+      "label": "residual: an invocation a render schedules past the judge's settle window reads quiet",
+      "pins": [
+        "6e0151e70dc99ff3075fac5110764031468b66dcee9af4b85c64b1f4d05e4ad5"
+      ],
+      "test": "INVOCATION R-DEFERRED-EFFECT"
+    },
+    {
+      "table": "EFFECT",
+      "id": "EVERY-DIALOG-ACTION",
+      "label": "a render that performs the host effect of any dialog action is read",
+      "pins": [
+        "80d9be5dac3aa36d3cc3b787dca7c5017654829ed4aea5c9bb7263088fcbe9c3",
+        "3681e57335373c2bf933955e0c9b3943b3ebbf359e503b5e03266541f0c89633",
+        "54bfda61de67ddf29371b90287d8dfcfb483284973fc0be195aac79baacb8dcd",
+        "61acb19a62342164d38bcbd373bc2b29701c35a6d28b1c65443cff3b0238b4b3",
+        "eb3fe77dd02234d061f485d90082172e637b8b9a32f95148b4a5f47b7fbefc66",
+        "660afce262aabfce09ffcb254f4ce0221d8ba85392fa0553b792c0f19276009d"
+      ],
+      "test": "EFFECT EVERY-DIALOG-ACTION"
+    },
+    {
+      "table": "EFFECT",
+      "id": "EVIDENCE-ABORTS",
+      "label": "a render that aborts one evidence load or every load is read",
+      "pins": [
+        "ba01651e187efdf2f024e873c27535dbb5558779da013d8971802a6dcd3c9040",
+        "c01d0f96d99d525ef88539709f0fc572fe80316f3035456cb4b56b2216b0d90a"
+      ],
+      "test": "EFFECT EVIDENCE-ABORTS"
+    },
+    {
+      "table": "EFFECT",
+      "id": "R-SIDE-CHANNEL",
+      "label": "residual: an effect through a channel the world does not hold reads quiet",
+      "pins": [
+        "104c3a02e56550d1490f36c361bd0cd579271261d98c768772d1a7607694a0ee"
+      ],
+      "test": "EFFECT R-SIDE-CHANNEL"
+    },
+    {
+      "table": "IDENTITY",
+      "id": "DRIFT-FOUND",
+      "label": "renders that carry a frame counter, reorder their keys or carry a random token are read as not byte-identical",
+      "pins": [
+        "a42d0caf4baa55b42563d58a3ec3a4c018025b59b64495890df802c9bf802b63",
+        "dee3e6835e69969675472aba1efc9af37f4c9c63ed0d561fe57310982b1b6ea0",
+        "5621407e24107ec697cb2f3fdfe50b196457bb2e5f5ca3f601c208e173997163"
+      ],
+      "test": "IDENTITY DRIFT-FOUND"
+    },
+    {
+      "table": "IDENTITY",
+      "id": "R-LATE-DRIFT",
+      "label": "residual: drift that first appears after N renders reads quiet",
+      "pins": [
+        "6ad7d1d9cc0ebdb4ecc8c05fb60b7a25741a1102e61a15eae0457734a66ecbfb"
+      ],
+      "test": "IDENTITY R-LATE-DRIFT"
+    },
+    {
+      "table": "QUIET",
+      "id": "READ-ONLY-RENDERS",
+      "label": "a constant render, a window read and a render that calls every read member read quiet",
+      "pins": [
+        "3e5852774a99e84a7ad241168756e1b6e3860027bb704446cf1335cd57ae84a8",
+        "10744a81db06cc492021870310b99b79a037d59fe29a933bf57c6898a1b3dbb0",
+        "05f24c4ce4e8c07a744fdd1234da977a7daafb353b94c7c7477a6cc760cf4ead"
+      ],
+      "test": "QUIET READ-ONLY-RENDERS"
+    },
+    {
+      "table": "READERS",
+      "id": "READ-ONLY-PICKS",
+      "label": "a typed reader that picks read members only, alone, partial or intersected, reads no writer",
+      "pins": [
+        "b665e0e67f3ac33dff9d77c5f4609a547fb50b891f5bc322027c28ae726c18f8",
+        "6daab52d5203da359723688c0f9717fb80875a93584f906417b395be94ca69a5",
+        "33b8d26fb11c1e1fa28f8c16c88c17a512e76fcfc0bdbbcc6f41061cc9863814"
+      ],
+      "test": "READERS READ-ONLY-PICKS"
+    },
+    {
+      "table": "READERS",
+      "id": "WRITER-PICKS",
+      "label": "a typed reader that keeps an admission member is read as a writer, through Partial, an interface or a qualified name",
+      "pins": [
+        "1710788189694cefaef41646153fdb9ad2ade4479c30232143c071a5411032e3",
+        "e54869aff5d4f16e56ab01dbb1c076500b3593c5439f3d43e361b6fb4c6f4f51",
+        "7af2c356e30667d286634857e155561e9ab31d6756243bf26519f1e87a18af08",
+        "38c814d3e094054c49b39619fd26d7ae4360a3fbab0f1a107f27d38b928aaea2"
+      ],
+      "test": "READERS WRITER-PICKS"
+    },
+    {
+      "table": "READERS",
+      "id": "OMIT-AND-UNRESOLVED",
+      "label": "an Omit keeps every admission member it does not name, and keys that are not literals fail closed",
+      "pins": [
+        "5f521a6c10f00d35a91c5d051e8d31bb5842ad0be356e25c2c6720e39f7f2125",
+        "86b195d170eb3837579937003d82bb8398ea3b3a5d7e323a90ed1bdd8c00efc2",
+        "889df0355d148c2c10a160868a6082e86f99f32ee1e043c786cdf9ee1a2cfd62"
+      ],
+      "test": "READERS OMIT-AND-UNRESOLVED"
+    },
+    {
+      "table": "READERS",
+      "id": "R-FULL-TYPE",
+      "label": "residual: a parameter typed as the whole projection is not a typed reader to this scan",
+      "pins": [
+        "6a956187eb3044ac438ad4cabfbeb422707463aecde41e38d7cb22bcb1ec38d0"
+      ],
+      "test": "READERS R-FULL-TYPE"
+    },
+    {
+      "table": "READERS",
+      "id": "R-ALIASED-CLASS",
+      "label": "residual: a Pick over an alias of the projection class is not read",
+      "pins": [
+        "42ee1c5058ff1737c9bbc3cb982b8f515c8ba4f04c888ae954744b5dbd1503db"
+      ],
+      "test": "READERS R-ALIASED-CLASS"
+    },
+    {
+      "table": "ABSENCE",
+      "id": "MENTION-FOUND",
+      "label": "the abbreviation as a word, inside an identifier or before a digit, and the slug in any case or separator, are mentions",
+      "pins": [
+        "ebb4909c42031c59538cc70fe5ef6910aad2c612a18c745891c632fb6d4533f0",
+        "543b7c4cee3e9bda7fed435cd7de4db9cf4914cd7862fd143e4415d5a38cf240",
+        "1d84aac367cb48835ea8a2a3c797b56f0cb33bca32a353011df45d72c484bbfb",
+        "15bb827d5354b9029e033253ebd6e2ab7b36e2aa374c2f908cfe40bc0b267dc7",
+        "bb44fe70dba5d56f2f1e0adc10c48a9cadeb6bcf33d86506b7cdf52adf3c068c",
+        "e1f76ca41d1aa81876691c45440334b45c4c6bf331520f420c6696053c278489"
+      ],
+      "test": "ABSENCE MENTION-FOUND"
+    },
+    {
+      "table": "ABSENCE",
+      "id": "NOT-MENTIONS",
+      "label": "words that only contain the letters, and the slug's words incomplete or out of order, are not mentions",
+      "pins": [
+        "304202b35e060a88d69a6c473134b8c7f12f29283d0c6eb84c2587e04d9e69d6",
+        "695f885a08b4b5f42cb58dc122a9bec6693bd54e78e10fc784412dbd6321505b",
+        "b1de617fe47a4448ac3f48d0e99204c4b3b3a26741a687c5ca30f01aebdbea42"
+      ],
+      "test": "ABSENCE NOT-MENTIONS"
+    },
+    {
+      "table": "ABSENCE",
+      "id": "R-PARAPHRASE",
+      "label": "residual: a paraphrase of the program and the abbreviation spelled with separators are not mentions",
+      "pins": [
+        "ad59b98f4dff6a6f07df8a68c3a2c6d3223f8202f224af5c1bf3a3e0024c19a6",
+        "4d2d3321c642116cced298f20ac24a4216c899d77b34ae56e4d4231fa8838449"
+      ],
+      "test": "ABSENCE R-PARAPHRASE"
+    }
+  ],
+  "tests": [
+    "SURFACES GRAPH-VIEW",
+    "SURFACES TIMELINE",
+    "SURFACES OBSERVE",
+    "SURFACES TOPOLOGY",
+    "SURFACES ATTENTION",
+    "SURFACES LATENCY",
+    "SURFACES TELEMETRY",
+    "SURFACES INSPECTOR",
+    "SURFACES DIALOG",
+    "SURFACES REPROJECTION",
+    "ADMISSION EVERY-ADMISSION-MEMBER",
+    "ADMISSION WRITE-ANY-ROUTE",
+    "INVOCATION EVERY-EFFECT-CLASS",
+    "INVOCATION OTHER-ROUTES",
+    "INVOCATION R-DEFERRED-EFFECT",
+    "EFFECT EVERY-DIALOG-ACTION",
+    "EFFECT EVIDENCE-ABORTS",
+    "EFFECT R-SIDE-CHANNEL",
+    "IDENTITY DRIFT-FOUND",
+    "IDENTITY R-LATE-DRIFT",
+    "QUIET READ-ONLY-RENDERS",
+    "READERS READ-ONLY-PICKS",
+    "READERS WRITER-PICKS",
+    "READERS OMIT-AND-UNRESOLVED",
+    "READERS R-FULL-TYPE",
+    "READERS R-ALIASED-CLASS",
+    "ABSENCE MENTION-FOUND",
+    "ABSENCE NOT-MENTIONS",
+    "ABSENCE R-PARAPHRASE",
+    "live: no typed reader in any src module keeps an admission member; the walk is every src module and reaches graph-view's reader",
+    "live (armed): every src module that reads the projection is a SURFACES row or a named non-render reader",
+    "live: the projection's public methods are exactly the read and admission members, each planted or re-projected",
+    "live: the invocation plants invoke every effect class the registry's descriptor declares",
+    "live: the effect plants perform every WorkflowDialogActions member",
+    "live: no src module spells the program, by path or text; the walk is every src module",
+    "anchor: every table quote is the bead's own text and the quotes tile its statement and acceptance (.beads/issues.jsonl, wb-021.5)",
+    "rule 16: every judged row, the residual families and the member sets are frozen at their measured shape",
+    "roster: the judged rows, the registered tests and the residual families equal test/fixtures/apo-rerender-roster.json, in order and both ways"
+  ],
+  "residuals": {
+    "R-DEFERRED-EFFECT": [
+      "INVOCATION R-DEFERRED-EFFECT"
+    ],
+    "R-SIDE-CHANNEL": [
+      "EFFECT R-SIDE-CHANNEL"
+    ],
+    "R-LATE-DRIFT": [
+      "IDENTITY R-LATE-DRIFT"
+    ],
+    "R-FULL-TYPE": [
+      "READERS R-FULL-TYPE"
+    ],
+    "R-ALIASED-CLASS": [
+      "READERS R-ALIASED-CLASS"
+    ],
+    "R-PARAPHRASE": [
+      "ABSENCE R-PARAPHRASE"
+    ]
+  }
+}
