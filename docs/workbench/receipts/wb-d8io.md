@@ -132,3 +132,168 @@
 | --- | --- |
 | R-FUSED-SPLIT | A1 |
 | R-SPLIT-PATH | A1 |
+
+## 2026-10-27 the typed-status echo census judged set, cut 3: the registration read through wrappers, branches, held values, aliases and hooks, A1's key paths through more nodes, the fused over-read pinned and every control anchored (wb-rgov, the wb-yg70 gate's F1-F4)
+
+- What binds here: test/workbench-rf-typed-status-echo-census.test.ts reads the two tables below through the same shared docs reader and refusals as the earlier tables (each table is the only block of its section, the section holds no HTML, the header row reads as below). A1 holds its record of every control it reads, in order, to the first table; the file-level hook holds its registration-mode controls to the second. Each control stands there by name, reading and the sha256/16 of its text.
+- F1, the registration read: an argument of a registration call after its name, and every argument of a hook call, is read through parentheses and the `as`, `satisfies`, non-null and angle-bracket wrappers, both branches of a conditional and both operands of `??`, `||` and `&&`. An object literal there is read as before: an options skip, todo, only or fails that is not literally false, a spread or a computed key reds the run. A number, string, boolean, `null` or `undefined` reads nothing, and an inline function is read as a callback. Any other argument (a name, a member read, a call) reads as an unread argument and reds, so an options object or a callback held in a variable is never read as clean.
+- F1, contexts and hooks: every parameter of a callback read so is a test context, and so is each name bound to one (an alias, through wrappers, to a fixed point) or to the rest of one. A skip read on a context (a member, a literal element key or a destructured key, through wrappers) is a context skip; a computed member reds as a context computed member; any other use of a context (an argument, an assignment, a return, a shorthand) reds as a context escape. The hooks read are vitest's beforeEach, afterEach, aroundEach, beforeAll, afterAll and aroundAll as the module imports them (a renamed or namespace import, an alias) or as a member of a registrar chain, and onTestFailed and onTestFinished by name. A write to a task's run flags (an assignment to a `mode` or `fails` member anywhere in the module) reds as a task write.
+- F1, the gate's shapes: G-F3-1 (a conditional and an asserted options object), G-F3-2 (a held options object and a held options member), G-F3-4 (a context alias), G-F3-5 (a wrapped context) and G-F3-6 (a body destructure) each have a control, beside the parenthesized options object G-F3-3 and the hook, rest, escape, computed-member and task-write forms. Non-claims: a registrar or hook reached through any other value (an object holding it, a helper it is handed to) and a reflective or computed-key write (`Reflect.set`, `Object.assign`, a computed member) are not read; their controls read no mode.
+- F2, A1's key paths: the key path of a nested object pattern, literal or type also runs through a `readonly` or other type operator, an optional, rest or named tuple member, a call or construction argument, a conditional branch, a `??`, `||` or `&&` operand, an arrow body, a value returned from an arrow or function expression (a method or accessor names its own key), an `await`, a spread (whose members join the object they are spread into) and a JSX attribute's value (the attribute names the key). The wb-yg70 gate's survivors G-A1-03 (a readonly array type), G-A1-04 (a call argument), G-A1-05 (a conditional branch), G-A1-06 (an arrow body) and G-A1-16 (a spread) each have a control, beside eight same-class siblings. R-SPLIT-PATH also names its type-level twins, each with a quiet control: an interface's or a type alias's own name and a mapped-type key (the wb-yg70 gate's F6).
+- F3, the fused over-read: A1's fused reading takes a single word that holds a matcher's fused words anywhere inside it, so an English compound written as one word reads as a federation field (`publicstatement`, `MATCHEDCOUNTER`, and `confederation`, where the fused `federat` loses its word start). That false-red direction is pinned, not cured: its three controls read 1, a src word spelling one reds A1 by design, and telling such a word from a fused field needs a dictionary, as for R-FUSED-SPLIT. Narrowing the fused reading would lose kills the landed census makes, so it is not narrowed.
+- F4, the anchoring: the first table holds every A1 control (the landed wb-d8io controls, the wb-yg70 widened readings and quiet rows, this cut's additions and the walk's planted tree) by group, name, reading and text, and the second every registration-mode control by name, modes and text. A control removed together with its reading (the gate's G-H-01 and G-Q-02 hollows), or rewritten to a text that a narrowed reading still catches, now reds the census.
+- Red first, measured on base 570ebfd: RED-1 (this cut's controls, roster witness values and tables, with A1's key-path reader and registrationModes at their landed bytes) read 2 failed of 26 (A1 at its widened-reading assertion, 14 key-path controls at 0, and the roster judge), and the file-level hook refused 18 registration controls. The RED-2 reconstruction of the final bytes (the same readers spliced back to their landed bytes) reads 2 failed of 26, with A1's 17 key-path controls at 0 and 24 registration controls misread; only the hook on a registrar already reads under the landed reader. The landed census and roster, run as throwaway copies beside the cut in one vitest invocation under each plant (every plant restored byte-identical), read 26 of 26 under the gate's G-A1-03, G-A1-04, G-A1-05, G-A1-06 and G-A1-16 and ten same-class siblings. They read 24 passed with 2 skipped and exit 0 under the gate's G-F3-1, G-F3-2, G-F3-4, G-F3-5 and G-F3-6 pairs and three seat pairs (a beforeEach context skip, a rest context, a beforeAll mode write).
+- Green, measured on the cut at trunk 570ebfd: the census reads 26 of 26, and A1 reads 0 hits over 116 src modules. Each F2 plant above fails A1 and the roster judge (2 failed of 26), and each F1 pair fails the run through the registration read (an options skip, an unread argument, a context skip or a task write); the controls P24, G-F3-3 and G-F3-7 fail on both censuses. The over-read plants G-A1-12, G-A1-13 and G-A1-23 fail A1 on both censuses, and the type-level twins G-A1-10, G-A1-22 and G-A1-24 read 26 of 26 on both. The gate's G-H-01 and G-Q-02 hollows, applied to the cut and its roster, now fail A1 at this entry's first table, and so does a text swap of the plural controls under a narrowed singular reading; an alias reading hollowed with its control removed, or with its control rewritten, fails the run at the second table. 19 key-path and 24 registration-read class mutants, one per new branch, each red; a control copy reads 26 of 26. A differential read over the 116 src modules finds every landed code unit among the cut's, or as the tail of a longer cut key path (48 such); over 1751 registration forms, every landed mode is among the cut's.
+- CT-BATTERY v2 (measured on the cut at 570ebfd): CT1 red=2; CT1b red=2; CT2 red=1; CT3 red=2; CT4 red=2; CT5 red=2; CT6 red=2 (CT5 and CT6 kill through the first entry's judged-pin table, outside the census and its literals).
+- Non-claims: this cut changes no src file and no shared helper or fixture beyond this census's roster; TRACEABILITY.md is frozen and untouched; the producer vocabularies are the wb-o4h0.7 cut's reads of the installed rf, not re-read here; the residual families named here and in the earlier entries are named, not closed.
+
+### A1 controls, wb-d8io cut 3
+
+| Group | Control | Reads | Text sha256/16 |
+| --- | --- | --- | --- |
+| controls | snake | 1 | 96d7647788f6bc8b |
+| controls | camel | 1 | ecc200f03dd3f68d |
+| controls | quoted | 1 | a181f896456d7e52 |
+| controls | destructured | 1 | a85e476d700d342a |
+| controls | recordName | 1 | 349196682ae1cd95 |
+| controls | camelRecord | 1 | de6728c139d53e17 |
+| controls | boundaryName | 1 | fd74f31950cf17bf |
+| controls | witnessField | 1 | 2b89b847dd7fd561 |
+| controls | escaped | 1 | 35d01da4260d8581 |
+| controls | escapedName | 1 | 96acc6284c1e813b |
+| controls | dotted | 1 | a93721d245b3146d |
+| controls | chain | 1 | c709b4e9e7ff61f7 |
+| controls | prefixed | 1 | 6712c012f3197451 |
+| controls | pattern | 1 | 782d3101a7777a99 |
+| controls | prose | 0 | 875cda426abeaceb |
+| controls | commentOnly | 0 | f4dc0e147ed1d4cb |
+| controls | composed | 0 | 02c7fc1d59cdee9b |
+| widened.plural | snake | 1 | 4942cb4dca2feaf8 |
+| widened.plural | camel | 1 | ec20ff0de9926389 |
+| widened.plural | quoted | 1 | 4441978dd2a6d648 |
+| widened.plural | ies | 1 | 7fcb0ef514b41060 |
+| widened.plural | inner | 1 | ace4dc0b7e678a93 |
+| widened.fused | lower | 1 | a0404a8be4df1039 |
+| widened.fused | upper | 1 | 9188664cb0b45d5d |
+| widened.fused | prefixed | 1 | 04b5838870803d56 |
+| widened.fused | plural | 1 | e7aa163c1b1a4157 |
+| widened.fused | prose | 1 | 4e3e1785b3f9d40e |
+| widened.chains | element | 1 | f8662abba9be9869 |
+| widened.chains | mixed | 1 | 3adf50519001f330 |
+| widened.chains | nonNull | 1 | 9d2af2e1afc09179 |
+| widened.chains | asserted | 1 | e879160f23b00f66 |
+| widened.chains | satisfied | 1 | 415e661e3447a74f |
+| widened.chains | called | 1 | 1a8118c969779c5b |
+| widened.chains | constructed | 1 | 7e8df2c02a8d43ff |
+| widened.chains | optional | 1 | 3512ac41c01c7f6c |
+| widened.chains | templateKey | 1 | 75c5ce9480209d0c |
+| widened.nested | binding | 1 | bd6f98e1f51f6378 |
+| widened.nested | parameter | 1 | 86f83f25c8db5c53 |
+| widened.nested | assignment | 1 | 5e7c4dcab3fcd716 |
+| widened.nested | literal | 1 | 37e16dfaa1dbe1bd |
+| widened.nested | type | 1 | 58e77202b9f3b3fd |
+| widened.nested | member | 1 | 095b485f14633286 |
+| widened.nested | classProperty | 1 | 383fada4698dc99d |
+| widened.nested | deep | 1 | 0c40d463a7b845e4 |
+| widened.nested | array | 1 | f853931e02c390e4 |
+| widened.nested | readonlyType | 1 | 3c31474ee6c0ba4e |
+| widened.nested | optionalType | 1 | 4dbb0ce92a05f95b |
+| widened.nested | restType | 1 | 303f510911d6260a |
+| widened.nested | namedTuple | 1 | f20701e2bf7205f8 |
+| widened.nested | callArgument | 1 | 6dabe3238eac92bd |
+| widened.nested | newArgument | 1 | edb9694bda4bab23 |
+| widened.nested | conditional | 1 | 9b7180599b1fa032 |
+| widened.nested | conditionalElse | 1 | 941b5627808759e8 |
+| widened.nested | logical | 1 | 87eb1536a4657226 |
+| widened.nested | arrowBody | 1 | a14161448a019749 |
+| widened.nested | returned | 1 | 4d04dff91ecad0f3 |
+| widened.nested | functionReturn | 1 | 329bedc4fba1c507 |
+| widened.nested | methodReturn | 1 | 482c18e0939e2778 |
+| widened.nested | awaited | 1 | e70cc1d8714a3382 |
+| widened.nested | spread | 1 | 69989860d5d827b7 |
+| widened.nested | spreadElement | 1 | 3fa88aa1ceb7e3d1 |
+| widened.jsx | attribute | 1 | ffd1f2c4187da552 |
+| quiet | fusedSplitCamel | 0 | c11fd90c1fdff99b |
+| quiet | fusedSplitSnake | 0 | 77996ca81e4ae3b6 |
+| quiet | compoundCamel | 0 | 91dac9dc5d7b27c2 |
+| quiet | compoundSnake | 0 | e687b4303df209dd |
+| quiet | aliasedPath | 0 | 8e2a6a6842ac9add |
+| quiet | keyedPath | 0 | 147a76dedf0d2cbf |
+| quiet | boundPath | 0 | ad8fa339f333ee49 |
+| quiet | interfaceName | 0 | 6a95711dff7a4556 |
+| quiet | typeName | 0 | ff7445d7fffb3183 |
+| quiet | mappedKey | 0 | 90d90d41b6889423 |
+| overread | fusedLower | 1 | 6aa9f7d57b39d962 |
+| overread | fusedUpper | 1 | cfa69526e1c58cda |
+| overread | fusedStem | 1 | a658e91954b007ad |
+| walk.files | data.json | 1 | afd578e79fc6fac7 |
+| walk.files | nested/plant.cjs | 1 | 0165da397be65fb2 |
+| walk.files | nested/plant.cts | 1 | 0165da397be65fb2 |
+| walk.files | nested/plant.js | 1 | 0165da397be65fb2 |
+| walk.files | nested/plant.jsx | 1 | 70c883e92e216e11 |
+| walk.files | nested/plant.mjs | 1 | 0165da397be65fb2 |
+| walk.files | nested/plant.mts | 1 | 0165da397be65fb2 |
+| walk.files | nested/plant.ts | 1 | 0165da397be65fb2 |
+| walk.files | nested/plant.tsx | 1 | 70c883e92e216e11 |
+| walk.others | linked.json | listed | - |
+| walk.kinds | .ts | TS | - |
+| walk.kinds | .mts | TS | - |
+| walk.kinds | .cts | TS | - |
+| walk.kinds | .tsx | TSX | - |
+| walk.kinds | .js | JSX | - |
+| walk.kinds | .mjs | JSX | - |
+| walk.kinds | .cjs | JSX | - |
+| walk.kinds | .jsx | JSX | - |
+
+### Registration-mode controls, wb-d8io cut 3
+
+| Control | Modes | Text sha256/16 |
+| --- | --- | --- |
+| the F3 pair | skip, skip | 145be990a199492b |
+| a todo | todo | abc47801617ffd36 |
+| an inverted case | fails | 5654fe21b0377e38 |
+| a focused case | only | f318cbee7133d30f |
+| a conditional skip | skipIf | 249e7fd5e6eb40e9 |
+| a conditional run | runIf | a323260e973ec308 |
+| a skipped row | skip | ec9d311947ffc756 |
+| a flag after a flag | skip | cb88217de089caf4 |
+| a literal member | skip | e27442c40b286834 |
+| a computed member | computed member | 70598d1952f43304 |
+| an alias | skip | 29579b92793d0083 |
+| a destructured member | skip | b8fc4f858b139823 |
+| a renamed import | skip | c06aeb72ae2897f1 |
+| a namespace import | skip | 51a1d50fcd7f4ca7 |
+| an options skip | options skip | 73aae7fe7cf4cdb4 |
+| an options todo | options todo | 009244c9d7c939ef |
+| an options spread | options spread | 8f1d68193f15ff9a |
+| a context skip | context skip | 040cdce1266d163c |
+| a destructured skip | context skip | 8135896623b78557 |
+| a conditional options object | options skip | 04459d03ebc5ce1f |
+| a conditional options fallback | options todo | af1e7213e3c69f50 |
+| an asserted options object | options skip | 283200bb05a54663 |
+| a parenthesized options object | options skip | 79defbf854347db1 |
+| a defaulted options object | argument unread, options todo | de530acea484eb32 |
+| a held options object | argument unread | b685a6cc38880170 |
+| a held options member | argument unread | 178705e8783528f5 |
+| a held callback | argument unread | d6e7456c23eeeef2 |
+| a context alias | context skip | e2099182af4aa061 |
+| a wrapped context | context skip | 8f520a3c6bedf0db |
+| a body destructure | context skip | 7a9ab8bde83357fc |
+| a rest context | context skip | 57b4ce11542720d6 |
+| a computed context member | context computed member | 61c8b9e132f89f8b |
+| a context escape | context escape | d53a7a9171fc8678 |
+| an array-pattern context | context escape | 0d0a628d74b06c8f |
+| a hook skip | context skip | 07cd6455c44e31d4 |
+| a hook on a registrar | context skip | 6b9ea48d6b57047e |
+| a renamed hook import | context skip | 5626d375e5a26e85 |
+| a namespace hook | context skip | 9017c5c487d1ccf1 |
+| a hook alias | context skip | d32bd02ea7caca2a |
+| a held hook callback | argument unread | 920a138f2b005a6c |
+| a held hook callback on a registrar | argument unread | f65189761e641f9a |
+| a failure-hook skip | context skip | 54d559782166ba69 |
+| a mode write | task write | 70a20fb118a43273 |
+| an inverting write | task write | b46e02708fcec763 |
+| the run forms | none | 9393a5037070fda2 |
+| the non-claim | none | 4ced0a794ef4ce06 |
+| the inline run forms | none | 58538dd6fc496183 |
+| the non-claims through other values | none | 7df2865db04effd6 |
