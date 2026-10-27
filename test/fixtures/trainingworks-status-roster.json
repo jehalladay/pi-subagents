@@ -1175,7 +1175,321 @@
         "id": "a-custom-element-named-like-a-table-tag",
         "htmlBlocks": 0,
         "tableTags": 0
+       },
+       {
+        "id": "table-tags-in-strong-and-link-text",
+        "htmlBlocks": 0,
+        "tableTags": 4
+       },
+       {
+        "id": "table-tags-in-a-nested-list-item",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-in-a-nested-blockquote",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "a-table-in-a-comment-inside-a-div-block",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       },
+       {
+        "id": "an-empty-table-inside-a-div-block",
+        "htmlBlocks": 0,
+        "tableTags": 1
+       },
+       {
+        "id": "table-tags-in-emphasis-text",
+        "htmlBlocks": 0,
+        "tableTags": 4
+       },
+       {
+        "id": "table-tags-in-strikethrough-text",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-in-an-image-alt-text",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-in-the-first-and-last-header-cells-rows-and-cells",
+        "htmlBlocks": 0,
+        "tableTags": 12
+       },
+       {
+        "id": "table-tags-first-and-last-in-inline-markup",
+        "htmlBlocks": 0,
+        "tableTags": 20
+       },
+       {
+        "id": "table-tags-first-and-last-in-a-heading",
+        "htmlBlocks": 0,
+        "tableTags": 4
+       },
+       {
+        "id": "table-tags-in-the-first-and-last-list-items",
+        "htmlBlocks": 0,
+        "tableTags": 4
+       },
+       {
+        "id": "table-tags-in-the-first-and-last-blocks-of-a-list-item",
+        "htmlBlocks": 0,
+        "tableTags": 4
+       },
+       {
+        "id": "table-tags-in-the-first-and-last-blocks-of-a-blockquote",
+        "htmlBlocks": 0,
+        "tableTags": 4
+       },
+       {
+        "id": "table-tags-in-the-first-and-last-blocks-of-a-page",
+        "htmlBlocks": 0,
+        "tableTags": 4
+       },
+       {
+        "id": "table-tags-after-a-page-longer-than-either-judged-document",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "two-html-blocks-on-later-lines",
+        "htmlBlocks": 2,
+        "tableTags": 1
+       },
+       {
+        "id": "an-html-table-block-in-a-later-list-item",
+        "htmlBlocks": 1,
+        "tableTags": 1
+       },
+       {
+        "id": "a-table-tag-inside-an-unterminated-comment-block",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       },
+       {
+        "id": "table-tags-inside-two-comments-in-one-block",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       },
+       {
+        "id": "a-table-tag-beside-a-complete-comment-in-one-block",
+        "htmlBlocks": 0,
+        "tableTags": 1
+       },
+       {
+        "id": "a-table-tag-after-an-abrupt-empty-comment",
+        "htmlBlocks": 0,
+        "tableTags": 1
+       },
+       {
+        "id": "a-table-tag-after-an-abrupt-dash-comment",
+        "htmlBlocks": 0,
+        "tableTags": 1
+       },
+       {
+        "id": "table-tags-with-attributes-after-a-space-a-tab-and-a-line-break",
+        "htmlBlocks": 0,
+        "tableTags": 6
+       },
+       {
+        "id": "self-closing-col-tags",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "an-unclosed-table-tag-ending-an-html-block",
+        "htmlBlocks": 1,
+        "tableTags": 1
+       },
+       {
+        "id": "table-tags-in-a-code-span",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       },
+       {
+        "id": "a-table-in-a-fenced-code-block",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       },
+       {
+        "id": "escaped-table-tags",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       },
+       {
+        "id": "table-tags-as-character-references",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       },
+       {
+        "id": "a-malformed-table-tag-marked-keeps-as-text",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       },
+       {
+        "id": "table-tags-in-an-ordered-list-item",
+        "htmlBlocks": 0,
+        "tableTags": 2
+       },
+       {
+        "id": "table-tags-in-unchecked-and-checked-task-items",
+        "htmlBlocks": 0,
+        "tableTags": 4
+       },
+       {
+        "id": "table-tags-in-headings-of-every-level-atx-and-setext",
+        "htmlBlocks": 0,
+        "tableTags": 16
+       },
+       {
+        "id": "table-tags-in-aligned-cells",
+        "htmlBlocks": 0,
+        "tableTags": 12
+       },
+       {
+        "id": "a-table-inside-a-pre-html-block",
+        "htmlBlocks": 1,
+        "tableTags": 1
+       },
+       {
+        "id": "a-table-tag-after-a-comment-opening-an-html-block",
+        "htmlBlocks": 1,
+        "tableTags": 1
+       },
+       {
+        "id": "a-thousand-table-tags-in-a-paragraph",
+        "htmlBlocks": 0,
+        "tableTags": 1000
+       },
+       {
+        "id": "a-hundred-html-table-blocks",
+        "htmlBlocks": 100,
+        "tableTags": 100
+       },
+       {
+        "id": "a-table-tag-deep-inside-a-long-html-block",
+        "htmlBlocks": 1,
+        "tableTags": 1
+       },
+       {
+        "id": "a-table-tag-inside-an-attribute-value",
+        "htmlBlocks": 0,
+        "tableTags": 1
        }
+      ],
+      "matrix": [
+       "paragraph: page/paragraph 0/2",
+       "paragraph>strong: page/paragraph/strong 0/2",
+       "paragraph>em: page/paragraph/em 0/2",
+       "paragraph>del: page/paragraph/del 0/2",
+       "paragraph>link: page/paragraph/link 0/2",
+       "paragraph>image: page/paragraph/image 0/2",
+       "heading: page/heading 0/2",
+       "heading>strong: page/heading/strong 0/2",
+       "heading>em: page/heading/em 0/2",
+       "heading>del: page/heading/del 0/2",
+       "heading>link: page/heading/link 0/2",
+       "heading>image: page/heading/image 0/2",
+       "tight-item: page/list/list_item/text 0/2",
+       "tight-item>strong: page/list/list_item/text/strong 0/2",
+       "tight-item>em: page/list/list_item/text/em 0/2",
+       "tight-item>del: page/list/list_item/text/del 0/2",
+       "tight-item>link: page/list/list_item/text/link 0/2",
+       "tight-item>image: page/list/list_item/text/image 0/2",
+       "header-cell: page/table/header-cell 0/2",
+       "header-cell>strong: page/table/header-cell/strong 0/2",
+       "header-cell>em: page/table/header-cell/em 0/2",
+       "header-cell>del: page/table/header-cell/del 0/2",
+       "header-cell>link: page/table/header-cell/link 0/2",
+       "header-cell>image: page/table/header-cell/image 0/2",
+       "body-cell: page/table/body-cell 0/2",
+       "body-cell>strong: page/table/body-cell/strong 0/2",
+       "body-cell>em: page/table/body-cell/em 0/2",
+       "body-cell>del: page/table/body-cell/del 0/2",
+       "body-cell>link: page/table/body-cell/link 0/2",
+       "body-cell>image: page/table/body-cell/image 0/2",
+       "paragraph>strong>strong: page/paragraph/strong/strong 0/2",
+       "paragraph>strong>em: page/paragraph/strong/em 0/2",
+       "paragraph>strong>del: page/paragraph/strong/del 0/2",
+       "paragraph>strong>link: page/paragraph/strong/link 0/2",
+       "paragraph>strong>image: page/paragraph/strong/image 0/2",
+       "paragraph>em>strong: page/paragraph/em/strong 0/2",
+       "paragraph>em>em: page/paragraph/em/em 0/2",
+       "paragraph>em>del: page/paragraph/em/del 0/2",
+       "paragraph>em>link: page/paragraph/em/link 0/2",
+       "paragraph>em>image: page/paragraph/em/image 0/2",
+       "paragraph>del>strong: page/paragraph/del/strong 0/2",
+       "paragraph>del>em: page/paragraph/del/em 0/2",
+       "paragraph>del>del: page/paragraph/del/del 0/2",
+       "paragraph>del>link: page/paragraph/del/link 0/2",
+       "paragraph>del>image: page/paragraph/del/image 0/2",
+       "paragraph>link>strong: page/paragraph/link/strong 0/2",
+       "paragraph>link>em: page/paragraph/link/em 0/2",
+       "paragraph>link>del: page/paragraph/link/del 0/2",
+       "paragraph>link>image: page/paragraph/link/image 0/2",
+       "paragraph>image>strong: page/paragraph/image/strong 0/2",
+       "paragraph>image>em: page/paragraph/image/em 0/2",
+       "paragraph>image>del: page/paragraph/image/del 0/2",
+       "paragraph>image>link: page/paragraph/image/link 0/2",
+       "paragraph>image>image: page/paragraph/image/image 0/2",
+       "html-block: page 1/1",
+       "blockquote>paragraph: page/blockquote/paragraph 0/2",
+       "blockquote>heading: page/blockquote/heading 0/2",
+       "blockquote>tight-item: page/blockquote/list/list_item/text 0/2",
+       "blockquote>header-cell: page/blockquote/table/header-cell 0/2",
+       "blockquote>body-cell: page/blockquote/table/body-cell 0/2",
+       "blockquote>html-block: page/blockquote 1/1",
+       "blockquote>blockquote>paragraph: page/blockquote/blockquote/paragraph 0/2",
+       "blockquote>blockquote>heading: page/blockquote/blockquote/heading 0/2",
+       "blockquote>blockquote>tight-item: page/blockquote/blockquote/list/list_item/text 0/2",
+       "blockquote>blockquote>header-cell: page/blockquote/blockquote/table/header-cell 0/2",
+       "blockquote>blockquote>body-cell: page/blockquote/blockquote/table/body-cell 0/2",
+       "blockquote>blockquote>html-block: page/blockquote/blockquote 1/1",
+       "blockquote>list-item>paragraph: page/blockquote/list/list_item/paragraph 0/2",
+       "blockquote>list-item>heading: page/blockquote/list/list_item/heading 0/2",
+       "blockquote>list-item>tight-item: page/blockquote/list/list_item/list/list_item/text 0/2",
+       "blockquote>list-item>header-cell: page/blockquote/list/list_item/table/header-cell 0/2",
+       "blockquote>list-item>body-cell: page/blockquote/list/list_item/table/body-cell 0/2",
+       "blockquote>list-item>html-block: page/blockquote/list/list_item 1/1",
+       "list-item>paragraph: page/list/list_item/paragraph 0/2",
+       "list-item>heading: page/list/list_item/heading 0/2",
+       "list-item>tight-item: page/list/list_item/list/list_item/text 0/2",
+       "list-item>header-cell: page/list/list_item/table/header-cell 0/2",
+       "list-item>body-cell: page/list/list_item/table/body-cell 0/2",
+       "list-item>html-block: page/list/list_item 1/1",
+       "list-item>blockquote>paragraph: page/list/list_item/blockquote/paragraph 0/2",
+       "list-item>blockquote>heading: page/list/list_item/blockquote/heading 0/2",
+       "list-item>blockquote>tight-item: page/list/list_item/blockquote/list/list_item/text 0/2",
+       "list-item>blockquote>header-cell: page/list/list_item/blockquote/table/header-cell 0/2",
+       "list-item>blockquote>body-cell: page/list/list_item/blockquote/table/body-cell 0/2",
+       "list-item>blockquote>html-block: page/list/list_item/blockquote 1/1",
+       "list-item>list-item>paragraph: page/list/list_item/list/list_item/paragraph 0/2",
+       "list-item>list-item>heading: page/list/list_item/list/list_item/heading 0/2",
+       "list-item>list-item>tight-item: page/list/list_item/list/list_item/list/list_item/text 0/2",
+       "list-item>list-item>header-cell: page/list/list_item/list/list_item/table/header-cell 0/2",
+       "list-item>list-item>body-cell: page/list/list_item/list/list_item/table/body-cell 0/2",
+       "list-item>list-item>html-block: page/list/list_item/list/list_item 1/1",
+       "chain: page/blockquote/list/list_item/blockquote/list/list_item/blockquote/list/list_item/paragraph/strong/em/del/link 0/2",
+       "long:blockquote-blocks: page/blockquote/paragraph 0/2",
+       "long:list-items: page/list/list_item/text 0/2",
+       "long:item-blocks: page/list/list_item/paragraph 0/2",
+       "long:header-cells: page/table/header-cell 0/2",
+       "long:body-rows: page/table/body-cell 0/2",
+       "long:row-cells: page/table/body-cell 0/2",
+       "long:paragraph-children: page/paragraph 0/2",
+       "long:heading-children: page/heading 0/2",
+       "long:item-text-children: page/list/list_item/text 0/2",
+       "long:cell-children: page/table/header-cell 0/2",
+       "long:strong-children: page/paragraph/strong 0/2",
+       "long:em-children: page/paragraph/em 0/2",
+       "long:del-children: page/paragraph/del 0/2",
+       "long:link-children: page/paragraph/link 0/2",
+       "long:image-children: page/paragraph/image 0/2"
       ],
       "documents": [
        {

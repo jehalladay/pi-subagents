@@ -25,15 +25,28 @@
  * freeze. The follow-up is test-only: it edits no product, docs, ledger or matrix text.
  *
  * FOLLOW-UP (wb-325x, the R694 follow-up of the landing-473 gate's F1): Q12's closure reading - htmlTableRoutes: the HTML blocks a
- * page renders and its html tokens naming a table element outside a comment (htmlRaws) - ran only on the two judged documents,
- * which read 0/0, so a reader returning 0/0, dropping either count, the table-cell, list-item or inline-children descent, or the
- * comment exception stayed green (the gate's mutants GM1-GM7). Q12 now holds that reading to flagged and quiet controls, each with
- * its counts pinned in the roster: every control that hides a table from clause (b) is flagged (an HTML table block, table tags
- * inline in a paragraph, a table inside a list item) and every markdown table row is quiet; flagged besides are a div block (an
- * HTML block alone), a table block with no visible text (a table tag alone: it renders no block), and table tags inline in a
- * heading, in a later list item, in header and body cells, in a blockquote and in upper case, and every table element inline in one
- * paragraph (one html token per tag, so an element dropped from TABLE_TAG reads fewer table tags); quiet are a table inside a
- * complete comment, a table tag inside an inline comment and a custom element whose name begins with tr. Test-only: census, roster.
+ * page renders and its html tokens naming a table element outside a comment (htmlRaws) - ran only on the two judged documents, which
+ * read 0/0, so a reader returning 0/0, dropping either count, the table-cell, list-item or inline-children descent, or the comment
+ * exception stayed green (the gate's mutants GM1-GM7). Q12 now holds that reading, as far as SCOPE states it and no further, to
+ * flagged and quiet controls, each with its counts pinned in the roster: every control that hides a table from clause (b) is flagged
+ * (an HTML table block, table tags inline in a paragraph, a table inside a list item) and every markdown table row is quiet; flagged
+ * besides are a div block (an HTML block alone), a table block with no visible text (a table tag alone: it renders no block), and
+ * table tags inline in a heading, in a later list item, in header and body cells, in a blockquote and in upper case, and every table
+ * element inline in one paragraph (one html token per tag, so an element dropped from TABLE_TAG reads fewer table tags); quiet are a
+ * table inside a complete comment, a table tag inside an inline comment and a custom element whose name begins with tr. Test-only:
+ * census, roster.
+ *
+ * RESPIN 1 (wb-325x cut #2, curing refusal #1 of cut #1, U1): cut #1's SCOPE said its controls pin the reading, yet five census-only
+ * class mutants of the reader stayed green: L2-01 no strong, em, del or link descent, L2-02 no nested-list descent, L2-06 no
+ * nested-blockquote descent, L2-03 the comment exception only for a token that begins with a comment, L2-04 a table tag counted only
+ * where it begins its token. Q12 adds the gate's control for each (table tags in strong and link text, in a nested list item and in
+ * a nested blockquote; an empty table inside a div block; quiet, a table in a comment inside a div block) and, under the bead's
+ * class-level guard, the CLOSURE MATRIX (closureMatrix: a table-tag pair planted between quiet words in every container pair it
+ * names and in long collections, each document's html tokens held to their container path by htmlPaths, a generic walk of marked's
+ * token tree that never calls htmlRaws, and its reading to the planted counts) and controls for the members beside them: each inline
+ * wrapper alone, the first and the last element of each collection, variants of a token type, comment and tag shapes, tokens that
+ * hold no html, large counts, a long page and a deep offset. SCOPE claims exactly what they pin; NOT CLAIMED names the bounds past
+ * them, each measured.
  *
  * MEASURED (read-only, by the cutting seats, 2026-10-23 and 2026-10-24; the producer facts ride the roster with their blob ids):
  * each deposit's README.md:3 at its pin is its status line, and DEPOSITS holds that line's status clause verbatim: HX "no new HX
@@ -111,7 +124,7 @@
  *    the guard through the product module - each claim status refused on fixture-tier receipts alone (live cell or a labelled cmd_
  *    clause), a mixed row and non-claim rows accepted, the live ledger clean; C2 the real docs walk (git-tracked, exact) - no
  *    finding - and the sentence judge on controls (with two adjacent list items and a heading line, and the rendered view). Q, the
- *    residuals' pinned quiet rows (RESIDUALS); Q12 also pins its closure reading on flagged and quiet controls.
+ *    residuals' pinned quiet rows (RESIDUALS); Q12 also pins its closure reading on flagged and quiet controls and a matrix.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the judged set - every row's id, label and pins,
  * every pin's witness, the constants and every registered test title - is held to the out-of-file roster
  * (test/fixtures/trainingworks-status-roster.json). OUTSIDE ANCHORS (their own registered case): the bead's own row in the tracker
@@ -122,11 +135,17 @@
  * helper, binds MATRIX_LEGEND and MATRIX_CLAIMS. The last case reads the vitest task tree (every registered test, in roster order,
  * in run mode, ran before it) and the pins reached.
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and the
- * roster (the bead text anchors rows, not pins); a control removed while every remaining control still holds; a pin's case
- * replaced by one that echoes its roster witness; the outside-anchor case or the closing case removed with its roster title; a
- * constant narrowed in both, such as a cited guard's spelling rewritten in both, or the comment pattern narrowed to complete
- * comments in both. (Until wb-325x an element dropped from TABLE_TAG in both was the example - td dropped from both with a <td> tag
- * planted in a matrix cell: 22 of 22 pass; Q12's every-element closure control now reads fewer table tags for any element dropped.)
+ * roster (the bead text anchors rows, not pins); a control removed while every remaining control still holds; a pin's case replaced
+ * by one that echoes its roster witness; the outside-anchor case or the closing case removed with its roster title; a constant
+ * narrowed in both, such as a cited guard's spelling rewritten in both. (Until wb-325x an element dropped from TABLE_TAG in both was
+ * the example - td dropped from both with a <td> tag planted in a matrix cell: 22 of 22 pass; Q12's every-element closure control
+ * now reads fewer table tags for any element dropped. Until its cut #2 the comment pattern narrowed to complete comments in both was
+ * one too, 22 of 22; Q12's unterminated-comment control now reads a table tag under it.) Of Q12's closure reading, the bounds past
+ * what SCOPE claims (each measured: a reader that stops just past one stays 22 of 22, and each sits above both judged documents): a
+ * nesting deeper than the chain's (htmlRaws recursion depth 11; the documents reach 2); a collection longer than its long case (100
+ * items, blocks, rows or a row's cells, 203 inline children, 202 in a cell; the documents' largest is a 50-row table); more than
+ * 1,000 table-tag tokens or 100 HTML blocks in one page (the documents hold none); a page longer than the long-page control, and a
+ * table tag later in one token than the deep-block control's, both built at run time past the longer judged document.
  * RESIDUALS (named, each with its pinned quiet row): R-ATTRIBUTED-FILE a GraphPolicy mention without a family mark in a page that
  * names the graph-policy-machine-control program is attributed to that program, so an HX x GP citation spelled there without its
  * directory, title or "HX GP" is not held to "design only" (Q1); R-UNPINNED a TrainingWorks citation pinning no deposit sha is held
@@ -155,10 +174,28 @@
  * none today) reads as an equation. The 400-character window counts UTF-16 code units of the rendered text. A row's subject and
  * claim words are read anywhere in its rendered cells. The product guard reads the ledger's source cells: TRACEABILITY.md is frozen
  * byte-exact, so its source and rendered views cannot drift apart without reddening the landed freeze test. No docs, ledger or
- * matrix text is edited by this cut; the guard is the only product change. Q12 reads a document's HTML blocks in the rendered view (a
- * complete comment renders nothing and is no HTML block there) and its table tags in every html token at any depth, a table tag
- * inside a comment excepted, a reading its own controls pin (wb-325x); it reads the two guards it cites by their source spellings,
- * so a cut renaming the W10 guard's page check or the freeze's target or hash constant re-measures Q12 in the same commit.
+ * matrix text is edited by this cut; the guard is the only product change.
+ * Q12 reads a document's HTML blocks in the rendered view (a complete comment renders nothing and is no HTML block there) and its
+ * table tags in the html tokens htmlRaws collects, a table tag inside a comment excepted. What its controls and its closure matrix
+ * pin of that reading (wb-325x) is this, and no more. DESCENT: an html token is read in a paragraph, a heading, the middle item of a
+ * tight list, a header cell and a body cell, each alone and inside strong, em, del, a link's text and an image's alt text; in each
+ * of those five wrappers inside each of the five in a paragraph, but a link in a link (marked never nests one); in each holder and
+ * in an HTML block inside a blockquote and inside the later block of a loose list's middle item, one or two deep in either order;
+ * along one fourteen-container chain; and in an ordered list, unchecked and checked task items, headings of every level (ATX and
+ * setext), aligned cells, a pre block and a block that opens with a comment. POSITION: besides the middle ones the matrix uses, in
+ * the first and the last of a page's, a blockquote's and a list item's blocks, a list's items, a table's header cells, body rows and
+ * a row's cells, and a heading's and each inline wrapper's children (a paragraph or an item's text never begins with a table tag:
+ * one opening a line starts an HTML block); after 99 quiet elements of each of those collections and of a paragraph's, an item
+ * text's and a cell's children; and in the last block of a page longer than either judged document. COUNT: one per html token, for
+ * every table element, in any case, followed by white space (a space, a tab or a line break), "/", ">" or the token's end, at any
+ * offset of the token up to the deep block's (past the longer judged document), to 1,000 tokens in a paragraph; excepted inside a
+ * complete comment, an abrupt one (<!--> or <!--->), an unterminated one and each of two comments in one token, and read beside one;
+ * a custom element whose name begins like a table element's, and a malformed tag marked keeps as text, are none; code spans, fenced
+ * code, escaped tags and character references hold no html token. Three readings go past what renders and are pinned as read: a
+ * table tag in an image's alt text, in another tag's attribute value, and an unclosed tag ending an HTML block (read as a table tag
+ * and as visible text). HTML BLOCKS: each block with visible text, two on later lines and a hundred in one page, in a blockquote and
+ * in a later list item; none for a block of tags or comments alone. It reads the two guards it cites by their source spellings, so a
+ * cut renaming the W10 guard's page check or the freeze's target or hash constant re-measures Q12 in the same commit.
  *
  * Display paths added: none (the receipt-tier detail is a qa/workbench CLI receipt string; src/ is untouched). Test-only otherwise:
  * no scratch is allocated; docs, .beads, qa and the two guard files Q12 cites are only read.
@@ -558,7 +595,7 @@ function renderInto(tokens: readonly Token[], line: number, kind: "paragraph" | 
     }
   }
 }
-/** The raw text of every html token at any depth (block or inline; in table cells, list items, block quotes and inline children). */
+/** The raw text of the html tokens below the given tokens (block or inline; through table cells, list items, block quotes and inline children): Q12's closure reading, pinned as far as SCOPE states (wb-325x). */
 function htmlRaws(tokens: readonly Token[]): string[] {
   return tokens.flatMap(token => {
     if (token.type === "html") return [token.raw];
@@ -573,6 +610,124 @@ function htmlTableRoutes(markdown: string): { htmlBlocks: number; tableTags: num
     htmlBlocks: rendered(markdown).pieces.filter(piece => piece.kind === "html").length,
     tableTags: htmlRaws(marked.lexer(markdown)).filter(raw => TABLE_TAG.test(raw.replace(HTML_COMMENT, ""))).length,
   };
+}
+/** The ancestor path of every html token in a page: "page", then the type of each token down to it, a table cell named header-cell or body-cell (a generic walk over every value of marked's token tree, never htmlRaws; Q12's closure matrix checks the structure of its documents with it). */
+function htmlPaths(markdown: string): string[] {
+  const paths: string[] = [];
+  const walk = (node: unknown, path: readonly string[]): void => {
+    if (Array.isArray(node)) {
+      for (const child of node) walk(child, path);
+      return;
+    }
+    if (node === null || typeof node !== "object") return;
+    const record = node as Record<string, unknown>;
+    if (record.type === "html") {
+      paths.push(path.join("/"));
+      return;
+    }
+    const label = typeof record.type === "string" ? record.type : typeof record.header === "boolean" ? (record.header ? "header-cell" : "body-cell") : undefined;
+    const below = label === undefined ? path : [...path, label];
+    for (const value of Object.values(record)) if (value !== null && typeof value === "object") walk(value, below);
+  };
+  walk(marked.lexer(markdown), ["page"]);
+  return paths;
+}
+/** Q12's closure matrix (wb-325x cut #2): CLOSURE_LEAF, a table-tag pair (two inline html tokens), planted between quiet words in every container pair below, and CLOSURE_HTML_BLOCK, an HTML block holding it (one block html token with visible text). */
+const CLOSURE_LEAF = "<td>landed-gated</td>";
+const CLOSURE_HTML_BLOCK = `<div>\n${CLOSURE_LEAF}\n</div>`;
+type ClosureWrap = (inner: string) => string;
+/** The inline wrappers, each holding its inner text between two quiet words. */
+const CLOSURE_INLINE: readonly (readonly [string, ClosureWrap])[] = [
+  ["strong", inner => `**a ${inner} b**`],
+  ["em", inner => `_a ${inner} b_`],
+  ["del", inner => `~~a ${inner} b~~`],
+  ["link", inner => `[a ${inner} b](https://e.x)`],
+  ["image", inner => `![a ${inner} b](https://e.x)`],
+];
+/** The blocks holding inline text, with the token path down to that text: a paragraph, a heading, the middle item of a tight list, the middle header cell, the middle cell of the middle body row. */
+const CLOSURE_HOLDERS: readonly (readonly [string, string, ClosureWrap])[] = [
+  ["paragraph", "paragraph", inner => `Pi notes ${inner} here`],
+  ["heading", "heading", inner => `## Pi notes ${inner} here`],
+  ["tight-item", "list/list_item/text", inner => `- quiet\n- Pi notes ${inner} here\n- quiet`],
+  ["header-cell", "table/header-cell", inner => `| a | Pi ${inner} | c |\n| --- | --- | --- |\n| d | e | f |`],
+  ["body-cell", "table/body-cell", inner => `| a | b | c |\n| --- | --- | --- |\n| d | e | f |\n| g | Pi ${inner} | i |\n| j | k | l |`],
+];
+/** The blocks holding blocks, with their token path: a blockquote (its middle block) and the middle item of a loose list (the item's later block). */
+const CLOSURE_BLOCKS: readonly (readonly [string, string, ClosureWrap])[] = [
+  ["blockquote", "blockquote", inner => ["quiet", "", ...inner.split("\n"), "", "quiet"].map(line => (line === "" ? ">" : `> ${line}`)).join("\n")],
+  ["list-item", "list/list_item", inner => ["- quiet", "- quiet lead", "", ...inner.split("\n").map(line => (line === "" ? "" : `  ${line}`)), "", "- quiet"].join("\n")],
+];
+interface ClosureReading {
+  readonly htmlBlocks: number;
+  readonly tableTags: number;
+}
+interface ClosureCase {
+  readonly id: string;
+  readonly text: string;
+  readonly path: string;
+  readonly planted: ClosureReading;
+}
+/** Q12's closure matrix: each holder alone and around each inline wrapper; the inline wrappers around each other in a paragraph, but no link in a link (marked never nests one, as CommonMark reads it); the HTML block on the page; each block wrapper around each holder and the HTML block, alone and two deep in either order; one chain of fourteen containers (a blockquote, a list and its item, three times, then a paragraph, strong, em, del and a link); and the long cases, each collection with the pair after 99 quiet elements (a blockquote's, a list item's and a list's blocks or items, a table's header cells, body rows and a row's cells, and the inline children of a paragraph, a heading, an item's text, a cell and each inline wrapper). */
+function closureMatrix(): ClosureCase[] {
+  const pair: ClosureReading = { htmlBlocks: 0, tableTags: 2 };
+  const block: ClosureReading = { htmlBlocks: 1, tableTags: 1 };
+  const cases: ClosureCase[] = [];
+  const add = (id: string, text: string, containers: readonly string[], planted: ClosureReading): void => {
+    cases.push({ id, text, path: ["page", ...containers].join("/"), planted });
+  };
+  for (const [holder, holderPath, hold] of CLOSURE_HOLDERS) {
+    add(holder, hold(CLOSURE_LEAF), [holderPath], pair);
+    for (const [wrapper, wrap] of CLOSURE_INLINE) add(`${holder}>${wrapper}`, hold(wrap(CLOSURE_LEAF)), [holderPath, wrapper], pair);
+  }
+  for (const [outer, wrapOuter] of CLOSURE_INLINE) {
+    for (const [inner, wrapInner] of CLOSURE_INLINE) {
+      if (outer !== "link" || inner !== "link") add(`paragraph>${outer}>${inner}`, `Pi notes ${wrapOuter(wrapInner(CLOSURE_LEAF))} here`, ["paragraph", outer, inner], pair);
+    }
+  }
+  add("html-block", CLOSURE_HTML_BLOCK, [], block);
+  const leaves = [
+    ...CLOSURE_HOLDERS.map(([id, holderPath, hold]) => ({ id, text: hold(CLOSURE_LEAF), containers: [holderPath], planted: pair })),
+    { id: "html-block", text: CLOSURE_HTML_BLOCK, containers: [], planted: block },
+  ];
+  for (const [outer, outerPath, wrapOuter] of CLOSURE_BLOCKS) {
+    for (const leaf of leaves) add(`${outer}>${leaf.id}`, wrapOuter(leaf.text), [outerPath, ...leaf.containers], leaf.planted);
+    for (const [inner, innerPath, wrapInner] of CLOSURE_BLOCKS) {
+      for (const leaf of leaves) add(`${outer}>${inner}>${leaf.id}`, wrapOuter(wrapInner(leaf.text)), [outerPath, innerPath, ...leaf.containers], leaf.planted);
+    }
+  }
+  const inlineChain = CLOSURE_INLINE.filter(([name]) => name !== "image");
+  let text = `Pi notes ${inlineChain.reduceRight((inner, [, wrap]) => wrap(inner), CLOSURE_LEAF)} here`;
+  let containers = ["paragraph", ...inlineChain.map(([name]) => name)];
+  for (let round = 0; round < 3; round += 1) {
+    for (const [, blockPath, wrap] of [...CLOSURE_BLOCKS].reverse()) {
+      text = wrap(text);
+      containers = [blockPath, ...containers];
+    }
+  }
+  add("chain", text, containers, pair);
+  const run = (count: number, unit: string): string => unit.repeat(count);
+  const quietInline = run(99, "**q** ");
+  const longCases: readonly (readonly [string, string, readonly string[]])[] = [
+    ["blockquote-blocks", `${run(99, "> quiet\n>\n")}> Pi notes ${CLOSURE_LEAF} here`, ["blockquote", "paragraph"]],
+    ["list-items", `${run(99, "- quiet\n")}- Pi notes ${CLOSURE_LEAF} here`, ["list", "list_item", "text"]],
+    ["item-blocks", `- quiet\n${run(98, "\n  quiet\n")}\n  Pi notes ${CLOSURE_LEAF} here`, ["list", "list_item", "paragraph"]],
+    ["header-cells", `|${run(99, " q |")} Pi ${CLOSURE_LEAF} |\n|${run(100, " --- |")}\n|${run(100, " q |")}`, ["table", "header-cell"]],
+    ["body-rows", `| a | b | c |\n| --- | --- | --- |\n${run(99, "| q | q | q |\n")}| q | q | Pi ${CLOSURE_LEAF} |`, ["table", "body-cell"]],
+    ["row-cells", `|${run(100, " h |")}\n|${run(100, " --- |")}\n|${run(99, " q |")} Pi ${CLOSURE_LEAF} |`, ["table", "body-cell"]],
+    ["paragraph-children", `Pi ${quietInline}${CLOSURE_LEAF} here`, ["paragraph"]],
+    ["heading-children", `## Pi ${quietInline}${CLOSURE_LEAF} here`, ["heading"]],
+    ["item-text-children", `- Pi ${quietInline}${CLOSURE_LEAF} here`, ["list", "list_item", "text"]],
+    ["cell-children", `| a | Pi ${quietInline}${CLOSURE_LEAF} |\n| --- | --- |\n| b | c |`, ["table", "header-cell"]],
+    ...CLOSURE_INLINE.map(
+      ([name, wrap]): readonly [string, string, readonly string[]] => [
+        `${name}-children`,
+        `Pi notes ${wrap(`${run(99, name === "strong" ? "_q_ " : "**q** ")}${CLOSURE_LEAF}`)} here`,
+        ["paragraph", name],
+      ],
+    ),
+  ];
+  for (const [id, longText, longContainers] of longCases) add(`long:${id}`, longText, longContainers, pair);
+  return cases;
 }
 const VIEWS = new Map<string, Rendered>();
 /** A markdown page's rendered view (memoized by its text). */
@@ -1182,6 +1337,17 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       if (control.quiet) expect([rows.length, tableLineCount(control.text)], `${control.id}: no row in the rendered read or the source count`).toEqual([0, 0]);
       return { id: control.id, rows: rows.length, findings: findings.length };
     });
+    const judged = [LEDGER, MATRIX].map(path => textOf(path));
+    const longest = Math.max(...judged.map(page => page.length));
+    const quietBlock = "A quiet paragraph of a long page.\n\n";
+    const longPage = `${quietBlock.repeat(Math.ceil(longest / quietBlock.length) + 1)}Pi notes <td>landed-gated</td>`;
+    const quietTag = "<p>quiet</p>\n";
+    const deepBlock = `<div>\n${quietTag.repeat(Math.ceil(longest / quietTag.length) + 1)}<td>landed-gated</td>\n</div>`;
+    expect(
+      judged.every(page => page.length < longPage.length && page.split("\n").length < longPage.split("\n").length),
+      "the long page is longer than either judged document, in characters and in lines",
+    ).toBe(true);
+    expect(deepBlock.indexOf("<td>"), "the deep block's table tag sits past the longer judged document's length").toBeGreaterThan(longest);
     const routeControls: { id: string; text: string; flagged: boolean }[] = [
       ...controls.map(control => ({ id: control.id, text: control.text, flagged: control.quiet })),
       { id: "a-div-html-block", text: `<div>${subject}: landed-gated</div>`, flagged: true },
@@ -1199,6 +1365,59 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "a-table-inside-a-complete-comment", text: `<!-- <table><tr><td>${subject}</td><td>landed-gated</td></tr></table> -->`, flagged: false },
       { id: "a-table-tag-inside-an-inline-comment", text: "Pi notes <!-- <td>landed-gated</td> --> nothing more", flagged: false },
       { id: "a-custom-element-named-like-a-table-tag", text: "Pi notes <tr-note>landed-gated</tr-note> here", flagged: false },
+      { id: "table-tags-in-strong-and-link-text", text: "Pi notes **<td>landed-gated</td>** and [<td>x</td>](https://e.x)", flagged: true },
+      { id: "table-tags-in-a-nested-list-item", text: `- A quiet first item\n  - ${subject} <td>landed-gated</td>`, flagged: true },
+      { id: "table-tags-in-a-nested-blockquote", text: `> > ${subject} <td>landed-gated</td>`, flagged: true },
+      { id: "a-table-in-a-comment-inside-a-div-block", text: "<div>\n<!-- <table><tr><td>x</td></tr></table> -->\n</div>", flagged: false },
+      { id: "an-empty-table-inside-a-div-block", text: "<div>\n<table><tr><td></td></tr></table>\n</div>", flagged: true },
+      { id: "table-tags-in-emphasis-text", text: "Pi notes *<td>landed-gated</td>* and _<td>x</td>_", flagged: true },
+      { id: "table-tags-in-strikethrough-text", text: "Pi notes ~~<td>landed-gated</td>~~ here", flagged: true },
+      { id: "table-tags-in-an-image-alt-text", text: "Pi notes ![<td>landed-gated</td>](https://e.x) here", flagged: true },
+      {
+        id: "table-tags-in-the-first-and-last-header-cells-rows-and-cells",
+        text: tableOf("| <th>a</th> | b | <th>c</th> |", ["| <td>d</td> | e | <td>f</td> |", "| g | h | i |", "| <td>j</td> | k | <td>l</td> |"]),
+        flagged: true,
+      },
+      {
+        id: "table-tags-first-and-last-in-inline-markup",
+        text: "Pi notes **<td>a</td> b <td>c</td>** and _<td>d</td> e <td>f</td>_ and ~~<td>g</td> h <td>i</td>~~ and [<td>j</td> k <td>l</td>](https://e.x) and ![<td>m</td> n <td>o</td>](https://e.x)",
+        flagged: true,
+      },
+      { id: "table-tags-first-and-last-in-a-heading", text: "## <td>a</td> heading <td>b</td>", flagged: true },
+      { id: "table-tags-in-the-first-and-last-list-items", text: "- Pi <td>a</td>\n- quiet\n- Pi <td>b</td>", flagged: true },
+      { id: "table-tags-in-the-first-and-last-blocks-of-a-list-item", text: "- Pi <td>a</td>\n\n  quiet\n\n  Pi <td>b</td>", flagged: true },
+      { id: "table-tags-in-the-first-and-last-blocks-of-a-blockquote", text: "> Pi <td>a</td>\n>\n> quiet\n>\n> Pi <td>b</td>", flagged: true },
+      { id: "table-tags-in-the-first-and-last-blocks-of-a-page", text: "Pi <td>a</td>\n\nquiet\n\nPi <td>b</td>", flagged: true },
+      { id: "table-tags-after-a-page-longer-than-either-judged-document", text: longPage, flagged: true },
+      { id: "two-html-blocks-on-later-lines", text: `A quiet paragraph\n\n<div>${subject}</div>\n\nA quiet paragraph\n\n<table><tr><td>landed-gated</td></tr></table>`, flagged: true },
+      { id: "an-html-table-block-in-a-later-list-item", text: `- A quiet first item\n- <table><tr><td>${subject}</td><td>landed-gated</td></tr></table>`, flagged: true },
+      { id: "a-table-tag-inside-an-unterminated-comment-block", text: `<!-- ${subject} <td>landed-gated</td>`, flagged: false },
+      { id: "table-tags-inside-two-comments-in-one-block", text: "<div>\n<!-- <td>a</td> --><!-- <td>b</td> -->\n</div>", flagged: false },
+      { id: "a-table-tag-beside-a-complete-comment-in-one-block", text: "<div>\n<!-- quiet --><td></td>\n</div>", flagged: true },
+      { id: "a-table-tag-after-an-abrupt-empty-comment", text: "<div>\n<!--><td></td>\n</div>", flagged: true },
+      { id: "a-table-tag-after-an-abrupt-dash-comment", text: "<div>\n<!---><td></td>\n</div>", flagged: true },
+      { id: "table-tags-with-attributes-after-a-space-a-tab-and-a-line-break", text: 'Pi notes <td class="x">a</td> <th\tscope="row">b</th> <td\nclass="y">c</td>', flagged: true },
+      { id: "self-closing-col-tags", text: "Pi notes <col/> and <col />", flagged: true },
+      { id: "an-unclosed-table-tag-ending-an-html-block", text: "<div>\n<td", flagged: true },
+      { id: "table-tags-in-a-code-span", text: "Pi notes `<td>landed-gated</td>` as code", flagged: false },
+      { id: "a-table-in-a-fenced-code-block", text: "```html\n<table><tr><td>landed-gated</td></tr></table>\n```", flagged: false },
+      { id: "escaped-table-tags", text: "Pi notes \\<td>landed-gated\\</td> here", flagged: false },
+      { id: "table-tags-as-character-references", text: "Pi notes &lt;td&gt;landed-gated&lt;/td&gt; here", flagged: false },
+      { id: "a-malformed-table-tag-marked-keeps-as-text", text: 'Pi notes <td x=">landed-gated here', flagged: false },
+      { id: "table-tags-in-an-ordered-list-item", text: `1. A quiet first item\n2. ${subject} <td>landed-gated</td>`, flagged: true },
+      { id: "table-tags-in-unchecked-and-checked-task-items", text: `- [ ] ${subject} <td>landed-gated</td>\n- [x] ${subject} <td>landed-gated</td>`, flagged: true },
+      {
+        id: "table-tags-in-headings-of-every-level-atx-and-setext",
+        text: "# a <td>1</td>\n\n## b <td>2</td>\n\n### c <td>3</td>\n\n#### d <td>4</td>\n\n##### e <td>5</td>\n\n###### f <td>6</td>\n\nSetext one <td>7</td>\n===\n\nSetext two <td>8</td>\n---",
+        flagged: true,
+      },
+      { id: "table-tags-in-aligned-cells", text: "| <th>a</th> | <th>b</th> | <th>c</th> |\n| :--- | :---: | ---: |\n| <td>d</td> | <td>e</td> | <td>f</td> |", flagged: true },
+      { id: "a-table-inside-a-pre-html-block", text: "<pre>\n<table><tr><td>landed-gated</td></tr></table>\n</pre>", flagged: true },
+      { id: "a-table-tag-after-a-comment-opening-an-html-block", text: "<!-- quiet --><td>landed-gated</td>", flagged: true },
+      { id: "a-thousand-table-tags-in-a-paragraph", text: `Pi notes ${"<td>x</td> ".repeat(500)}here`, flagged: true },
+      { id: "a-hundred-html-table-blocks", text: "<table><tr><td>x</td></tr></table>\n\n".repeat(100), flagged: true },
+      { id: "a-table-tag-deep-inside-a-long-html-block", text: deepBlock, flagged: true },
+      { id: "a-table-tag-inside-an-attribute-value", text: 'Pi notes <img alt="<td>landed-gated</td>"> here', flagged: true },
     ];
     const routes = routeControls.map(control => {
       const reading = htmlTableRoutes(control.text);
@@ -1207,6 +1426,13 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
         `${control.id} is ${control.flagged ? "flagged by the closure reading: an HTML block or a table tag" : "quiet for the closure reading: no HTML block and no table tag"}`,
       ).toBe(control.flagged);
       return { id: control.id, ...reading };
+    });
+    const matrix = closureMatrix().map(entry => {
+      const reading = htmlTableRoutes(entry.text);
+      const paths = htmlPaths(entry.text);
+      expect(paths.length > 0 && paths.every(path => path === entry.path), `${entry.id}: every html token sits at ${entry.path}`).toBe(true);
+      expect(reading, `${entry.id}: the closure reading reads the planted tags at ${entry.path}`).toEqual(entry.planted);
+      return `${entry.id}: ${entry.path} ${reading.htmlBlocks}/${reading.tableTags}`;
     });
     const documents = [LEDGER, MATRIX].map(path => ({ path, ...htmlTableRoutes(textOf(path)) }));
     expect(documents, "neither judged document renders an HTML block or holds a table tag, so every table row they render is a marked table row").toEqual(
@@ -1223,7 +1449,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     expect(guards.matrix.pageChecks, "and applies its raw-HTML page check to it once").toBe(1);
     expect(guards.ledger.document, "the TRACEABILITY freeze reads the ledger").toBe(LEDGER);
     expect(guards.ledger.frozenSha256, "and its pinned hash is the ledger's sha256").toBe(sha256Of(LEDGER));
-    return { controls: readings, routes, documents, guards };
+    return { controls: readings, routes, matrix, documents, guards };
   },
 };
 
