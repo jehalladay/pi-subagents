@@ -14,18 +14,18 @@
    "readme12": "[Compositional Autonomous Computation](https://github.com/jehalladay/research/tree/main/programs/compositional-autonomous-computation) provides finite contract/refinement vocabulary. Claims about asynchronous attempt semantics are *targets for proof/measurement* and are not established by finite sequential theorems.",
    "contracts3": "## Proposed source-owned references (not shipped)",
    "contracts4": "\\`FurnaceAttemptCapabilityV0\\`: formula/task ref and Beads authority ID, attempt ID, executor identity and version, scope/principal, invocation environment and input digest, supervision/retry/idempotency assumptions, resource and time budget, emitted logs/events, outcome/uncertainty, native records and version.",
-   "contracts6": "\\`FurnaceObserverBoundaryV0\\`: which attempt state/log fields are exposed, resource counters, admitted client decisions and visibility policy. Distinguish attempt success from **verified task correctness**; a zero exit code alone may not prove the task's semantic goal."
+   "contracts6": "\\`{{record-2:spelling}}\\`: which attempt state/log fields are exposed, resource counters, admitted client decisions and visibility policy. Distinguish attempt success from **verified task correctness**; a zero exit code alone may not prove the task's semantic goal."
   }
  },
  "constants": {
   "needles": [
-   "FurnaceObserverBoundary",
+   "{{record-2:stem}}",
    "FurnaceAttemptCapability",
    "cac-execution",
    "execution-assurance"
   ],
   "program": "cac-execution-assurance-2026-10-18",
-  "citation": "Furnace[\\s_-]*Observer[\\s_-]*Boundary|Furnace[\\s_-]*Attempt[\\s_-]*Capability|cac[\\s_-]*execution|execution[\\s_-]*assurance",
+  "citation": "{{record-2:pattern}}|Furnace[\\s_-]*Attempt[\\s_-]*Capability|cac[\\s_-]*execution|execution[\\s_-]*assurance",
   "requirementId": "\\bFURNACE-CAC-EXECUTION-ASSURANCE-R\\d+\\b",
   "designOnly": "design-only",
   "recordStatus": [
@@ -56,9 +56,9 @@
     "pattern": "Furnace[\\s_-]*Attempt[\\s_-]*Capability(?:[\\s_-]*V0)?"
    },
    {
-    "id": "observer-boundary",
-    "spelling": "FurnaceObserverBoundaryV0",
-    "pattern": "Furnace[\\s_-]*Observer[\\s_-]*Boundary(?:[\\s_-]*V0)?"
+    "id": "{{record-2:id}}",
+    "spelling": "{{record-2:spelling}}",
+    "pattern": "{{record-2:pattern}}(?:[\\s_-]*V0)?"
    }
   ],
   "cacRecord": {
@@ -149,14 +149,14 @@
    "A4": "shall carry its recorded status verbatim",
    "B1": "design-only",
    "B2": "FurnaceAttemptCapabilityV0",
-   "B3": "and FurnaceObserverBoundaryV0",
+   "B3": "and {{record-2:spelling}}",
    "B4": "proposed, not shipped",
    "B5": "asynchronous-attempt-semantics claims",
    "B6": "targets for proof/measurement",
    "B7": "never established results",
    "Z1": "until such a citation exists",
    "Z2": "zero mentions stays the passing state",
-   "M1": "git grep for FurnaceObserverBoundary / FurnaceAttemptCapability / cac-execution / execution-assurance",
+   "M1": "git grep for {{record-2:stem}} / FurnaceAttemptCapability / cac-execution / execution-assurance",
    "M2": "over the working tree returns zero hits",
    "D1": "any future Pi citation",
    "D2": "docs/workbench rows",
@@ -188,18 +188,18 @@
   "plants": {
    "documents": {
     "path": "docs/workbench/zz-wb-dqf.2-plant.md",
-    "text": "# Plant\n\nThe Furnace cac-execution-assurance-2026-10-18 program is design-only.\n\nPi reads the cac-execution-assurance-2026-10-18 program.\n\nFurnaceObserverBoundaryV0 (design-only) ships in Pi.\n\n| cac-execution-assurance-2026-10-18 | design-only |\n\nThe cac-execution-assurance-2026-10-18 program (design-only) proved its asynchronous attempt semantics.\n"
+    "text": "# Plant\n\nThe Furnace cac-execution-assurance-2026-10-18 program is design-only.\n\nPi reads the cac-execution-assurance-2026-10-18 program.\n\n{{record-2:spelling}} (design-only) ships in Pi.\n\n| cac-execution-assurance-2026-10-18 | design-only |\n\nThe cac-execution-assurance-2026-10-18 program (design-only) proved its asynchronous attempt semantics.\n"
    },
    "receipts": {
     "path": "docs/workbench/receipts/zz-wb-dqf.2-plant.md",
-    "text": "# Plant\n\nThe Furnace cac-execution-assurance-2026-10-18 program is design-only.\n\nPi reads the cac-execution-assurance-2026-10-18 program.\n\nFurnaceObserverBoundaryV0 (design-only) ships in Pi.\n\n| cac-execution-assurance-2026-10-18 | design-only |\n\nThe cac-execution-assurance-2026-10-18 program (design-only) proved its asynchronous attempt semantics.\n"
+    "text": "# Plant\n\nThe Furnace cac-execution-assurance-2026-10-18 program is design-only.\n\nPi reads the cac-execution-assurance-2026-10-18 program.\n\n{{record-2:spelling}} (design-only) ships in Pi.\n\n| cac-execution-assurance-2026-10-18 | design-only |\n\nThe cac-execution-assurance-2026-10-18 program (design-only) proved its asynchronous attempt semantics.\n"
    },
    "strings": {
     "path": "src/zz-wb-dqf.2-plant.ts",
-    "text": "// The Furnace cac-execution-assurance-2026-10-18 program is design-only.\nexport const NOTE = \"Pi reads the cac-execution-assurance-2026-10-18 program.\";\nexport const CLAIM = \"FurnaceObserverBoundaryV0 (design-only) ships in Pi.\";\nexport type FurnaceAttemptCapabilityV0 = { readonly attempt: string };\n"
+    "text": "// The Furnace cac-execution-assurance-2026-10-18 program is design-only.\nexport const NOTE = \"Pi reads the cac-execution-assurance-2026-10-18 program.\";\nexport const CLAIM = \"{{record-2:spelling}} (design-only) ships in Pi.\";\nexport type FurnaceAttemptCapabilityV0 = { readonly attempt: string };\n"
    }
   },
-  "compliant": "Pi cites the cac-execution-assurance-2026-10-18 program (design-only): FurnaceObserverBoundaryV0 is proposed, not shipped, and its asynchronous attempt semantics are targets for proof/measurement.",
+  "compliant": "Pi cites the cac-execution-assurance-2026-10-18 program (design-only): {{record-2:spelling}} is proposed, not shipped, and its asynchronous attempt semantics are targets for proof/measurement.",
   "qualifier": "(design-only; proposed, not shipped)",
   "bound": [],
   "residuals": {
@@ -244,6 +244,19 @@
    ],
    "R-CARRIER-PLACEMENT": [
     "Q14"
+   ]
+  },
+  "secondRecord": {
+   "sha256": "1c0769bbbe60b3db2262951f9239f28ecded7785247417e461f4a01956935ae2",
+   "token": "\\{\\{record-2:([a-z]+)\\}\\}",
+   "forms": [
+    "spelling",
+    "stem",
+    "pattern",
+    "id",
+    "words",
+    "head",
+    "tail"
    ]
   }
  },
@@ -325,7 +338,7 @@
       "findings": [
        "docs/workbench/zz-wb-dqf.2-plant.md:5 unqualified",
        "docs/workbench/zz-wb-dqf.2-plant.md:7 record-status",
-       "docs/workbench/zz-wb-dqf.2-plant.md:7 exists:observer-boundary",
+       "docs/workbench/zz-wb-dqf.2-plant.md:7 exists:{{record-2:id}}",
        "docs/workbench/zz-wb-dqf.2-plant.md:9 unlabelled",
        "docs/workbench/zz-wb-dqf.2-plant.md:11 async-status",
        "docs/workbench/zz-wb-dqf.2-plant.md:11 established:async-semantics"
@@ -361,7 +374,7 @@
       "findings": [
        "src/zz-wb-dqf.2-plant.ts:2 unqualified",
        "src/zz-wb-dqf.2-plant.ts:3 record-status",
-       "src/zz-wb-dqf.2-plant.ts:3 exists:observer-boundary",
+       "src/zz-wb-dqf.2-plant.ts:3 exists:{{record-2:id}}",
        "src/zz-wb-dqf.2-plant.ts:4 code"
       ]
      }
@@ -371,7 +384,7 @@
      "witness": {
       "program": "cac-execution-assurance-2026-10-18",
       "needles": [
-       "FurnaceObserverBoundary",
+       "{{record-2:stem}}",
        "FurnaceAttemptCapability",
        "cac-execution",
        "execution-assurance"
@@ -535,7 +548,7 @@
   },
   {
    "id": "B",
-   "label": "design-only; FurnaceAttemptCapabilityV0 and FurnaceObserverBoundaryV0 proposed, not shipped; asynchronous-attempt-semantics claims targets for proof/measurement, never established results",
+   "label": "design-only; FurnaceAttemptCapabilityV0 and {{record-2:spelling}} proposed, not shipped; asynchronous-attempt-semantics claims targets for proof/measurement, never established results",
    "pins": [
     {
      "id": "B1",
@@ -745,8 +758,8 @@
     {
      "id": "B3",
      "witness": {
-      "subject": "FurnaceObserverBoundaryV0",
-      "id": "observer-boundary",
+      "subject": "{{record-2:spelling}}",
+      "id": "{{record-2:id}}",
       "controls": [
        {
         "id": "graded",
@@ -1074,18 +1087,18 @@
   },
   {
    "id": "M",
-   "label": "git grep for FurnaceObserverBoundary / FurnaceAttemptCapability / cac-execution / execution-assurance over the working tree returns zero hits",
+   "label": "git grep for {{record-2:stem}} / FurnaceAttemptCapability / cac-execution / execution-assurance over the working tree returns zero hits",
    "pins": [
     {
      "id": "M1",
      "witness": {
       "needles": [
-       "FurnaceObserverBoundary",
+       "{{record-2:stem}}",
        "FurnaceAttemptCapability",
        "cac-execution",
        "execution-assurance"
       ],
-      "citation": "Furnace[\\s_-]*Observer[\\s_-]*Boundary|Furnace[\\s_-]*Attempt[\\s_-]*Capability|cac[\\s_-]*execution|execution[\\s_-]*assurance",
+      "citation": "{{record-2:pattern}}|Furnace[\\s_-]*Attempt[\\s_-]*Capability|cac[\\s_-]*execution|execution[\\s_-]*assurance",
       "controls": [
        {
         "id": "spaced-record",
@@ -1115,7 +1128,7 @@
         ]
        },
        {
-        "id": "observer-boundary-alone",
+        "id": "{{record-2:id}}-alone",
         "causes": []
        },
        {
@@ -1135,7 +1148,7 @@
       "plantFindings": [
        "5 unqualified",
        "7 record-status",
-       "7 exists:observer-boundary",
+       "7 exists:{{record-2:id}}",
        "9 unlabelled",
        "11 async-status",
        "11 established:async-semantics"
@@ -1155,18 +1168,18 @@
        [
         "docs/workbench/TRACEABILITY.md:3 unqualified",
         "docs/workbench/TRACEABILITY.md:3 record-status",
-        "docs/workbench/TRACEABILITY.md:3 exists:observer-boundary",
+        "docs/workbench/TRACEABILITY.md:3 exists:{{record-2:id}}",
         "docs/workbench/future.md:3 unqualified",
         "docs/workbench/future.md:3 record-status",
-        "docs/workbench/future.md:3 exists:observer-boundary",
+        "docs/workbench/future.md:3 exists:{{record-2:id}}",
         "docs/workbench/receipts/wb-future.md:3 unqualified",
         "docs/workbench/receipts/wb-future.md:3 record-status",
-        "docs/workbench/receipts/wb-future.md:3 exists:observer-boundary"
+        "docs/workbench/receipts/wb-future.md:3 exists:{{record-2:id}}"
        ],
        [
         "src/future.ts:1 unqualified",
         "src/future.ts:1 record-status",
-        "src/future.ts:1 exists:observer-boundary"
+        "src/future.ts:1 exists:{{record-2:id}}"
        ]
       ],
       "quiet": [
@@ -1217,7 +1230,7 @@
       "plantFindings": [
        "5 unqualified",
        "7 record-status",
-       "7 exists:observer-boundary",
+       "7 exists:{{record-2:id}}",
        "9 unlabelled",
        "11 async-status",
        "11 established:async-semantics"
@@ -1279,14 +1292,14 @@
      "witness": {
       "subjects": [
        "FurnaceAttemptCapabilityV0",
-       "FurnaceObserverBoundaryV0",
+       "{{record-2:spelling}}",
        "a CAC record"
       ],
       "controls": [
        {
         "id": "available",
         "causes": [
-         "exists:observer-boundary"
+         "exists:{{record-2:id}}"
         ]
        },
        {
@@ -1308,7 +1321,7 @@
        {
         "id": "graded-then-wired",
         "causes": [
-         "exists:observer-boundary"
+         "exists:{{record-2:id}}"
         ]
        },
        {
@@ -1331,7 +1344,7 @@
        }
       ],
       "findings": [
-       "docs/workbench/zz-e1.md:1 exists:observer-boundary"
+       "docs/workbench/zz-e1.md:1 exists:{{record-2:id}}"
       ]
      }
     },
@@ -1551,7 +1564,7 @@
      "witness": {
       "row": {
        "path": "docs/workbench/07-native-integrations.md",
-       "text": "Pi reads FurnaceObserverBoundaryV0 refs (design-only; proposed, not shipped)."
+       "text": "Pi reads {{record-2:spelling}} refs (design-only; proposed, not shipped)."
       },
       "cases": {
        "same": 0,
@@ -1595,7 +1608,7 @@
      "id": "Q3",
      "witness": {
       "path": "docs/workbench/x.md",
-      "text": "Pi reads Furnace's 2026-10-18 CAC design deposit for attempts and its observer boundary.",
+      "text": "Pi reads Furnace's 2026-10-18 CAC design deposit for attempts and its {{record-2:words}}.",
       "causes": []
      }
     },
@@ -1611,7 +1624,7 @@
      "id": "Q5",
      "witness": {
       "path": "docs/workbench/x.md",
-      "text": "FurnaceObserverBoundaryV0 (design-only; proposed, not shipped) gates every attempt read Pi makes.",
+      "text": "{{record-2:spelling}} (design-only; proposed, not shipped) gates every attempt read Pi makes.",
       "causes": []
      }
     },
@@ -1619,7 +1632,7 @@
      "id": "Q6",
      "witness": {
       "path": "docs/workbench/x.md",
-      "text": "If anything, FurnaceObserverBoundaryV0 (design-only; proposed, not shipped) is wired.",
+      "text": "If anything, {{record-2:spelling}} (design-only; proposed, not shipped) is wired.",
       "causes": []
      }
     },
@@ -1627,7 +1640,7 @@
      "id": "Q7",
      "witness": {
       "path": "docs/workbench/x.md",
-      "text": "FurnaceObserverBoundaryV0 is design-only and proposed, not shipped. It is wired anyway.",
+      "text": "{{record-2:spelling}} is design-only and proposed, not shipped. It is wired anyway.",
       "causes": []
      }
     },
@@ -1643,7 +1656,7 @@
      "id": "Q9",
      "witness": {
       "path": "src/x.ts",
-      "text": "export const A = \"FurnaceObserver\" + \"BoundaryV0\";",
+      "text": "export const A = \"{{record-2:head}}\" + \"{{record-2:tail}}\";",
       "causes": []
      }
     },
@@ -1683,7 +1696,7 @@
      "id": "Q14",
      "witness": {
       "path": "docs/workbench/x.md",
-      "text": "cac-execution-assurance-2026-10-18 (design-only) names FurnaceObserverBoundaryV0 and FurnaceAttemptCapabilityV0; the second is proposed, not shipped.",
+      "text": "cac-execution-assurance-2026-10-18 (design-only) names {{record-2:spelling}} and FurnaceAttemptCapabilityV0; the second is proposed, not shipped.",
       "causes": []
      }
     }

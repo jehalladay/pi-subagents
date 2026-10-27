@@ -1,9 +1,10 @@
 /**
  * wb-dqf.2 (FURNACE-CAC-EXECUTION-ASSURANCE-R7, program-triage-2026-10-18), the Furnace cac-execution-assurance citation-status
  * census.
- * Statement (bead title; its two separators are the six characters backslash-u-2014 in the tracked export): "Any Pi document or
+ * Statement (bead title; its two separators are the six characters backslash-u-2014 in the tracked export; "[the second record]"
+ * stands for the title's second record, which this file and its roster never spell - THE SECOND RECORD below): "Any Pi document or
  * surfaced string citing Furnace's cac-execution-assurance-2026-10-18 program shall carry its recorded status verbatim - design-only;
- * FurnaceAttemptCapabilityV0 and FurnaceObserverBoundaryV0 proposed, not shipped; asynchronous-attempt-semantics claims targets for
+ * FurnaceAttemptCapabilityV0 and [the second record] proposed, not shipped; asynchronous-attempt-semantics claims targets for
  * proof/measurement, never established results - until such a citation exists, zero mentions stays the passing state."
  * Owner filing (bead notes, the "Program status at the pin" paragraph): "Duty: any future Pi citation (docs/workbench rows,
  * TRACEABILITY entries, descriptor or receipt strings) carries the design-only / proposed-not-shipped / targets-for-proof grading
@@ -19,12 +20,29 @@
  * (blob 2fb1fb0d) and 01-contract-qa.md (blob ab9dbc00); README.md:3 opens "**2026-10-18 · Design-only adapter and correctness
  * investigation.**"; README.md:12 reads "Claims about asynchronous attempt semantics are *targets for proof/measurement* and are not
  * established by finite sequential theorems."; 01-contract-qa.md:3 is the heading "## Proposed source-owned references (not
- * shipped)" over the two records (:4 FurnaceAttemptCapabilityV0, :6 FurnaceObserverBoundaryV0); the vendored @furnace/sdk 0.1.0
- * names neither record. Pi: git grep -i -P over the filing's four needles (FurnaceObserverBoundary, FurnaceAttemptCapability,
+ * shipped)" over the two records (:4 FurnaceAttemptCapabilityV0, :6 the second record); the vendored @furnace/sdk 0.1.0
+ * names neither record. Pi: git grep -i -P over the filing's four needles (the second record's stem, FurnaceAttemptCapability,
  * cac-execution, execution-assurance, each read with separator runs) finds no tracked line outside .beads/ (rc 1), at the base and at
  * the filing pin b21beb0 (the export commit that files this bead: its row is absent from b21beb0's parent); git's lists hold 102
  * tracked documents (.md outside test/: 25 docs/workbench pages outside receipts/, 47 receipts, 30 more) and 116 src files. So zero
  * mentions holds today, as filed.
+ *
+ * THE SECOND RECORD (cut #2, the orchestrator's respin order at the landing-535 batch red under standing rule 22). The landed
+ * wb-dqf.1 census (landing 536) holds every listed Pi file outside .beads/ and its own two holders to zero mentions of the status
+ * segment's second record until Furnace ships it (its until-then leg Z2: the record's two middle words with any non-alphanumeric run
+ * between them, in any case, read in raw text, paths, cooked and folded script literals and parsed JSON). The record has not
+ * shipped - wb-dqf.1's gate is a released Furnace surface Pi vendors, and the vendored @furnace/sdk 0.1.0 names neither record
+ * (re-measured by this cut: a grep over the tarball's entries, rc 1) - so this cut ships nothing, flips nothing and carries no
+ * mention. SECOND_RECORD is read at module load from this bead's own tracker-export title, which wb-dqf.1 does not judge (its
+ * R-TRACKER residual); SECOND_RECORD_SHA256 pins that token (the outside anchors case), so a renamed record reds instead of being
+ * followed; formsOf derives every form the judges, controls and witnesses use (spelling, stem, word-reading pattern, id, spaced
+ * words and the R-SPLIT-SOURCE split) by the one function whose output the judged-set case pins as literals for the first record,
+ * and subjectOf builds the second record's subject by the function that rebuilds the first record's literal subject; the roster
+ * writes each form as a token, {{record-2:<form>}}, that readRoster resolves before any case reads it. So at run time every label,
+ * quote, witness and test title, and every constant cut #1 pinned, reads exactly as cut #1 spelled it; the roster adds one constant,
+ * secondRecord (the sha256, the token's pattern and the form names). The judged-set case reds when this file or the roster spells
+ * any form of the record or its first middle word; wb-dqf.1's Z2 stays the reading of record (its cooked, folded and decoded forms
+ * included).
  *
  * THE UNITS. A unit is the smallest text the judges read as one "paragraph". Markdown (every document is .md): a blank-line-delimited
  * block, where a heading, a table row and each line inside a code fence are units of their own and a list item starts a new unit (its
@@ -82,9 +100,10 @@
  * tracker export (.beads/issues.jsonl) - each of its eight sliced clauses (the statement's three segments, the measurement, the duty's
  * three clauses, the acceptance) is exactly one row's label, and each row's pin quotes tile its clause with nothing but separators
  * between them, so a pin or a row removed from ROWS, the literal, IMPL, QUOTES and the roster together still reds; CITATION is
- * derived from the measurement's needles; the program name, the two records, the three gradings, the subjects, the scopes, the
- * labels and the predicate anchor words are read from the bead text; the label list also from the live docs/02 line; the producer
- * block carries the filing's three quoted status lines; the bead's own title read as a receipt heading is a content-quiet citation;
+ * derived from the measurement's needles; the program name, the two records (the second also pinned by its sha256), the three
+ * gradings, the subjects, the scopes, the labels and the predicate anchor words are read from the bead text; the label list also
+ * from the live docs/02 line; the producer block carries the filing's three quoted status lines; the bead's own title read as a
+ * receipt heading is a content-quiet citation;
  * and every anchored term a pin's quote names is carried by that pin's roster witness (the wb-3cql F4 reading), so a re-tiling that
  * folds a naming pin into a neighbour reds. The last case reads the vitest task tree (every registered test, in roster order, in run
  * mode, ran before it) and REACHED (every pin reached its witness compare, and each compare's own result).
@@ -96,7 +115,9 @@
  * are held by git's list and the floor only); a seat-added vocabulary member (of EXISTS, ESTABLISHED, GUARD or the negation lists)
  * removed with every control naming it, in IMPL and the roster together (only the bead text's words are anchored outside); NFR-08's
  * "with exact source of evidence" tail (R-EVIDENCE-TAIL); "any violation found earlier is corrected append-only in the wb-lrz.3
- * style" (no violation exists: zero mentions); the outside-anchor case or the closing case removed with its roster title.
+ * style" (no violation exists: zero mentions); the outside-anchor case or the closing case removed with its roster title; an
+ * escape-spelled or concatenated form of the second record in this file (the judged-set guard reads this file's raw text and the
+ * roster's raw and parsed strings; wb-dqf.1's Z2 reads the cooked and folded forms).
  * RESIDUALS (named, each with its pinned quiet row): R-SCOPE only the documents and src are judged - qa/, test/ (fixtures included),
  * configuration and other non-.md files are not (Q1); R-REQUIREMENT-ID a unit whose only matches sit in a requirement-id spelling
  * does not cite (Q2); R-PARAPHRASE-CITE a citation spelling none of the needles' words in order does not cite (Q3);
@@ -118,6 +139,7 @@
  * guard installed; docs, src, .beads and git objects are otherwise only read.
  */
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -179,8 +201,6 @@ const FLOORS = {
 const PIN_PATHS = 707;
 const PIN_UNITS = 106318;
 
-/** The filing's grep needles (row M's quote); the anchor case reads them from the bead row. */
-const NEEDLES = ["FurnaceObserverBoundary", "FurnaceAttemptCapability", "cac-execution", "execution-assurance"];
 const PROGRAM = "cac-execution-assurance-2026-10-18";
 const SEPARATOR_RUN = "[\\s_-]*";
 function escaped(text: string): string {
@@ -196,6 +216,50 @@ function wordsOf(literal: string): string[] {
 function citationSource(literals: readonly string[]): string {
   return literals.map(literal => wordsOf(literal).map(escaped).join(SEPARATOR_RUN)).join("|");
 }
+/** The status segment's first record: spelled here, since no landed Pi census holds its mentions to zero. */
+const FIRST_RECORD = "FurnaceAttemptCapabilityV0";
+/**
+ * The status segment's second record (THE SECOND RECORD): read at module load from this bead's own tracker-export title - the token
+ * between the first record's "and " and " proposed, not shipped;" - and spelled nowhere in this file or its roster.
+ */
+const SECOND_RECORD = new RegExp(`; ${FIRST_RECORD} and (\\w+) proposed, not shipped;`).exec(beadRow(BEAD).title)?.[1] ?? "";
+if (SECOND_RECORD === "") throw new Error(`${BEAD}'s tracker-export title names no second record after "${FIRST_RECORD} and "`);
+/** The second record's token pinned without spelling it: the sha256 of its UTF-8 bytes (the outside anchors case), so a renamed record reds. */
+const SECOND_RECORD_SHA256 = "1c0769bbbe60b3db2262951f9239f28ecded7785247417e461f4a01956935ae2";
+/** A record's forms as the judges, the controls and the witnesses read them. */
+interface RecordForms {
+  /** The record as the statement spells it. */
+  readonly spelling: string;
+  /** Without its V0 suffix: the filing's grep needle. */
+  readonly stem: string;
+  /** The stem's word-reading: its words with separator runs between them, as CITATION reads a needle. */
+  readonly pattern: string;
+  /** Its words after "Furnace", lowercased and hyphenated: the subject id a finding names. */
+  readonly id: string;
+  /** The same words, lowercased and spaced. */
+  readonly words: string;
+  /** The spelling split before its last word: the two literals of the R-SPLIT-SOURCE probe. */
+  readonly head: string;
+  readonly tail: string;
+}
+/** Every form of a record from its spelling alone; the judged-set case pins the first record's forms as literals. */
+function formsOf(spelling: string): RecordForms {
+  const stem = spelling.replace(/V0$/, "");
+  const words = wordsOf(stem);
+  const head = words.slice(0, -1).join("");
+  return {
+    spelling,
+    stem,
+    pattern: words.map(escaped).join(SEPARATOR_RUN),
+    id: words.slice(1).join("-").toLowerCase(),
+    words: words.slice(1).join(" ").toLowerCase(),
+    head,
+    tail: spelling.slice(head.length),
+  };
+}
+const SECOND = formsOf(SECOND_RECORD);
+/** The filing's grep needles (row M's quote); the anchor case reads them from the bead row. */
+const NEEDLES = [SECOND.stem, "FurnaceAttemptCapability", "cac-execution", "execution-assurance"];
 const CITATION = new RegExp(citationSource(NEEDLES), "gi");
 /** The bead family's own requirement-id spelling (derived from this bead's title in the anchor case). */
 const REQUIREMENT_ID = /\bFURNACE-CAC-EXECUTION-ASSURANCE-R\d+\b/g;
@@ -220,9 +284,13 @@ interface Subject {
   readonly spelling: string;
   readonly pattern: RegExp;
 }
+/** A record subject from its forms: its id, its spelling, and its word-reading with an optional V0 (the judges read either). */
+function subjectOf(forms: RecordForms): Subject {
+  return { id: forms.id, spelling: forms.spelling, pattern: new RegExp(`${forms.pattern}(?:${SEPARATOR_RUN}V0)?`, "i") };
+}
 const RECORDS: readonly Subject[] = [
   { id: "attempt-capability", spelling: "FurnaceAttemptCapabilityV0", pattern: /Furnace[\s_-]*Attempt[\s_-]*Capability(?:[\s_-]*V0)?/i },
-  { id: "observer-boundary", spelling: "FurnaceObserverBoundaryV0", pattern: /Furnace[\s_-]*Observer[\s_-]*Boundary(?:[\s_-]*V0)?/i },
+  subjectOf(SECOND),
 ];
 const CAC_RECORD: Subject = { id: "cac-record", spelling: "a CAC record", pattern: /\bCAC[\s_-]+records?\b/i };
 const ASYNC: Subject = { id: "async-semantics", spelling: "asynchronous-attempt-semantics claims", pattern: /\b(?:asynchronous|async)(?:[\s_-]+attempts?)?[\s_-]+semantics\b/i };
@@ -282,14 +350,13 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "B",
-    label:
-      "design-only; FurnaceAttemptCapabilityV0 and FurnaceObserverBoundaryV0 proposed, not shipped; asynchronous-attempt-semantics claims targets for proof/measurement, never established results",
+    label: `design-only; FurnaceAttemptCapabilityV0 and ${SECOND.spelling} proposed, not shipped; asynchronous-attempt-semantics claims targets for proof/measurement, never established results`,
     pins: ["B1", "B2", "B3", "B4", "B5", "B6", "B7"],
   },
   { id: "Z", label: "until such a citation exists, zero mentions stays the passing state", pins: ["Z1", "Z2"] },
   {
     id: "M",
-    label: "git grep for FurnaceObserverBoundary / FurnaceAttemptCapability / cac-execution / execution-assurance over the working tree returns zero hits",
+    label: `git grep for ${SECOND.stem} / FurnaceAttemptCapability / cac-execution / execution-assurance over the working tree returns zero hits`,
     pins: ["M1", "M2"],
   },
   {
@@ -315,14 +382,14 @@ const QUOTES: Readonly<Record<string, string>> = {
   A4: "shall carry its recorded status verbatim",
   B1: "design-only",
   B2: "FurnaceAttemptCapabilityV0",
-  B3: "and FurnaceObserverBoundaryV0",
+  B3: `and ${SECOND.spelling}`,
   B4: "proposed, not shipped",
   B5: "asynchronous-attempt-semantics claims",
   B6: "targets for proof/measurement",
   B7: "never established results",
   Z1: "until such a citation exists",
   Z2: "zero mentions stays the passing state",
-  M1: "git grep for FurnaceObserverBoundary / FurnaceAttemptCapability / cac-execution / execution-assurance",
+  M1: `git grep for ${SECOND.stem} / FurnaceAttemptCapability / cac-execution / execution-assurance`,
   M2: "over the working tree returns zero hits",
   D1: "any future Pi citation",
   D2: "docs/workbench rows",
@@ -371,9 +438,32 @@ function objectOf(value: unknown, field: string): { [key: string]: JsonValue } {
   if (!isObject(parsed)) throw new Error(`${field} must be an object`);
   return parsed as { [key: string]: JsonValue };
 }
-/** Parses the roster, refusing any field of the wrong shape by name, so no case can read a malformed roster. */
+/** Every string of a parsed JSON value, its object keys included. */
+function stringsOf(value: unknown): string[] {
+  if (typeof value === "string") return [value];
+  if (Array.isArray(value)) return value.flatMap(stringsOf);
+  if (isObject(value)) return Object.entries(value).flatMap(([key, member]) => [key, ...stringsOf(member)]);
+  return [];
+}
+/** A second-record token of the roster, {{record-2:<form>}}: the roster spells the record only this way (THE SECOND RECORD). */
+const RECORD_TOKEN = /\{\{record-2:([a-z]+)\}\}/g;
+const SECOND_FORMS: ReadonlyMap<string, string> = new Map(Object.entries(SECOND));
+/** A parsed roster value with every token resolved from SECOND, refusing a token that names no form (object keys hold none). */
+function resolved(value: unknown): unknown {
+  if (typeof value === "string") {
+    return value.replace(RECORD_TOKEN, (token: string, form: string) => {
+      const text = SECOND_FORMS.get(form);
+      if (text === undefined) throw new Error(`roster token ${token} names no form of the second record`);
+      return text;
+    });
+  }
+  if (Array.isArray(value)) return value.map(resolved);
+  if (isObject(value)) return Object.fromEntries(Object.entries(value).map(([key, member]) => [key, resolved(member)]));
+  return value;
+}
+/** Parses the roster, resolves its tokens and refuses any field of the wrong shape by name, so no case can read a malformed roster. */
 function readRoster(): Roster {
-  const raw: unknown = JSON.parse(readFileSync(ROSTER_PATH, "utf8"));
+  const raw: unknown = resolved(JSON.parse(readFileSync(ROSTER_PATH, "utf8")));
   if (!isObject(raw) || typeof raw.bead !== "string" || !Array.isArray(raw.rows) || !Array.isArray(raw.tests)) {
     throw new Error("roster must be an object with bead, rows and tests");
   }
@@ -763,7 +853,7 @@ const PLANT_MD = [
   "",
   `Pi reads the ${PROGRAM} program.`,
   "",
-  "FurnaceObserverBoundaryV0 (design-only) ships in Pi.",
+  `${SECOND.spelling} (design-only) ships in Pi.`,
   "",
   `| ${PROGRAM} | design-only |`,
   "",
@@ -773,7 +863,7 @@ const PLANT_MD = [
 const PLANT_TS = [
   `// The Furnace ${PROGRAM} program is design-only.`,
   `export const NOTE = "Pi reads the ${PROGRAM} program.";`,
-  'export const CLAIM = "FurnaceObserverBoundaryV0 (design-only) ships in Pi.";',
+  `export const CLAIM = "${SECOND.spelling} (design-only) ships in Pi.";`,
   "export type FurnaceAttemptCapabilityV0 = { readonly attempt: string };",
   "",
 ].join("\n");
@@ -877,7 +967,7 @@ function tiles(clause: string, quotes: readonly string[]): boolean {
 const REACHED: { pin: string; same: boolean }[] = [];
 
 /** A compliant citation of every subject: the program, both records, the asynchronous-attempt-semantics claims. */
-const COMPLIANT = `Pi cites the ${PROGRAM} program (design-only): FurnaceObserverBoundaryV0 is proposed, not shipped, and its asynchronous attempt semantics are targets for proof/measurement.`;
+const COMPLIANT = `Pi cites the ${PROGRAM} program (design-only): ${SECOND.spelling} is proposed, not shipped, and its asynchronous attempt semantics are targets for proof/measurement.`;
 const QUALIFIER = "(design-only; proposed, not shipped)";
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
@@ -915,7 +1005,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "line-wrapped", text: "The cac-execution-\nassurance program.", causes: ["unqualified"] },
       { id: "cac-execution-alone", text: "The CAC execution notes.", causes: ["unqualified"] },
       { id: "execution-assurance-alone", text: "Furnace's execution assurance design.", causes: ["unqualified"] },
-      { id: "record-without-v0", text: `The FurnaceObserverBoundary record ${QUALIFIER}.`, causes: [] },
+      { id: "record-without-v0", text: `The ${SECOND.stem} record ${QUALIFIER}.`, causes: [] },
       { id: "requirement-id", text: "FURNACE-CAC-EXECUTION-ASSURANCE-R7 binds Pi.", causes: [] },
       { id: "requirement-id-and-program", text: `FURNACE-CAC-EXECUTION-ASSURANCE-R7 names ${PROGRAM}.`, causes: ["unqualified"] },
       { id: "lowercase-id", text: "The furnace-cac-execution-assurance-r7 slug.", causes: ["unqualified"] },
@@ -930,9 +1020,9 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const controls: Control[] = [
       { id: "every-grading", text: COMPLIANT, causes: [] },
       { id: "design-paraphrase", text: `${PROGRAM} is a design program only.`, causes: ["unqualified"] },
-      { id: "record-paraphrase", text: "FurnaceObserverBoundaryV0 (design-only) is unreleased.", causes: ["record-status"] },
-      { id: "record-half-proposed", text: "FurnaceObserverBoundaryV0 (design-only) is proposed.", causes: ["record-status"] },
-      { id: "record-half-not-shipped", text: "FurnaceObserverBoundaryV0 (design-only) is not shipped.", causes: ["record-status"] },
+      { id: "record-paraphrase", text: `${SECOND.spelling} (design-only) is unreleased.`, causes: ["record-status"] },
+      { id: "record-half-proposed", text: `${SECOND.spelling} (design-only) is proposed.`, causes: ["record-status"] },
+      { id: "record-half-not-shipped", text: `${SECOND.spelling} (design-only) is not shipped.`, causes: ["record-status"] },
       { id: "async-paraphrase", text: `${PROGRAM} (design-only): asynchronous attempt semantics are open research.`, causes: ["async-status"] },
       { id: "async-half", text: `${PROGRAM} (design-only): asynchronous attempt semantics are targets for proof.`, causes: ["async-status"] },
       { id: "every-grading-missing", text: "Pi reads FurnaceAttemptCapabilityV0 and its asynchronous attempt semantics.", causes: ["unqualified", "record-status", "async-status"] },
@@ -975,7 +1065,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
   B2: () => recordCase(0),
   B3: () => recordCase(1),
   B4: () => {
-    const record = "FurnaceObserverBoundaryV0 (design-only)";
+    const record = `${SECOND.spelling} (design-only)`;
     const controls: Control[] = [
       { id: "statement-form", text: `${record} is proposed, not shipped.`, causes: [] },
       { id: "wrapped", text: `${record} is proposed,\nnot shipped.`, causes: [] },
@@ -1064,12 +1154,12 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     expect(CITATION.flags, "read case-insensitively").toBe("gi");
     for (const needle of NEEDLES) expect(citations(needle), `${needle} cites once`).toHaveLength(1);
     const controls: Control[] = [
-      { id: "spaced-record", text: `The Furnace observer boundary ${QUALIFIER}.`, causes: [] },
+      { id: "spaced-record", text: `The Furnace ${SECOND.words} ${QUALIFIER}.`, causes: [] },
       { id: "snake-record", text: `The furnace_attempt_capability ${QUALIFIER}.`, causes: [] },
-      { id: "spaced-record-bare", text: "The Furnace observer boundary.", causes: ["unqualified", "record-status"] },
+      { id: "spaced-record-bare", text: `The Furnace ${SECOND.words}.`, causes: ["unqualified", "record-status"] },
       { id: "cac-execution", text: "CAC-Execution notes.", causes: ["unqualified"] },
       { id: "execution-assurance", text: "Execution Assurance notes.", causes: ["unqualified"] },
-      { id: "observer-boundary-alone", text: "An observer boundary for Pi.", causes: [] },
+      { id: `${SECOND.id}-alone`, text: `An ${SECOND.words} for Pi.`, causes: [] },
       { id: "attempt-capability-alone", text: "An attempt capability for Pi.", causes: [] },
     ];
     return json({ needles: NEEDLES, citation: CITATION.source, controls: controlsHold(controls) });
@@ -1100,8 +1190,8 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
         mkdirSync(dirname(join(root, path)), { recursive: true });
         writeFileSync(join(root, path), text);
       };
-      const mutant = "Pi consumes the shipped FurnaceObserverBoundaryV0 record.";
-      const twin = `Pi consumes nothing from FurnaceObserverBoundaryV0 ${QUALIFIER}.`;
+      const mutant = `Pi consumes the shipped ${SECOND.spelling} record.`;
+      const twin = `Pi consumes nothing from ${SECOND.spelling} ${QUALIFIER}.`;
       const paths = { page: "docs/workbench/future.md", traceability: TRACEABILITY, receipt: "docs/workbench/receipts/wb-future.md", source: "src/future.ts" } as const;
       const files = (text: string): Readonly<Record<keyof typeof paths, string>> => ({
         page: `# Future\n\n${text}\n`,
@@ -1196,10 +1286,10 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
   },
   D6: () => {
     const controls: Control[] = [
-      { id: "duty-forms", text: `${PROGRAM} (design-only): FurnaceObserverBoundaryV0 is proposed-not-shipped; asynchronous attempt semantics are targets-for-proof.`, causes: [] },
+      { id: "duty-forms", text: `${PROGRAM} (design-only): ${SECOND.spelling} is proposed-not-shipped; asynchronous attempt semantics are targets-for-proof.`, causes: [] },
       { id: "slash-list", text: `${PROGRAM}: design-only / proposed-not-shipped / targets-for-proof.`, causes: [] },
-      { id: "record-and", text: `${PROGRAM} (design-only): FurnaceObserverBoundaryV0 is proposed and not shipped.`, causes: ["record-status"] },
-      { id: "record-underscore", text: `${PROGRAM} (design-only): FurnaceObserverBoundaryV0 is proposed_not_shipped.`, causes: ["record-status"] },
+      { id: "record-and", text: `${PROGRAM} (design-only): ${SECOND.spelling} is proposed and not shipped.`, causes: ["record-status"] },
+      { id: "record-underscore", text: `${PROGRAM} (design-only): ${SECOND.spelling} is proposed_not_shipped.`, causes: ["record-status"] },
       { id: "async-of", text: `${PROGRAM} (design-only): asynchronous attempt semantics are targets of proof.`, causes: ["async-status"] },
       { id: "async-spaced", text: `${PROGRAM} (design-only): asynchronous attempt semantics are targets for proof.`, causes: ["async-status"] },
     ];
@@ -1207,19 +1297,19 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
   },
   E1: () => {
     const controls: Control[] = [
-      { id: "available", text: `FurnaceObserverBoundaryV0 ${QUALIFIER} is available in Pi.`, causes: ["exists:observer-boundary"] },
-      { id: "not-available", text: `FurnaceObserverBoundaryV0 ${QUALIFIER} is not available in Pi.`, causes: [] },
+      { id: "available", text: `${SECOND.spelling} ${QUALIFIER} is available in Pi.`, causes: [`exists:${SECOND.id}`] },
+      { id: "not-available", text: `${SECOND.spelling} ${QUALIFIER} is not available in Pi.`, causes: [] },
       { id: "implemented", text: `FurnaceAttemptCapabilityV0 ${QUALIFIER} is implemented in Pi.`, causes: ["exists:attempt-capability"] },
       { id: "vendored", text: `Pi vendored FurnaceAttemptCapabilityV0 ${QUALIFIER}.`, causes: ["exists:attempt-capability"] },
-      { id: "graded-then-wired", text: "FurnaceObserverBoundaryV0 (design-only, proposed, not shipped) is wired into Pi.", causes: ["exists:observer-boundary"] },
+      { id: "graded-then-wired", text: `${SECOND.spelling} (design-only, proposed, not shipped) is wired into Pi.`, causes: [`exists:${SECOND.id}`] },
       { id: "cac-record", text: `${PROGRAM} (design-only): a CAC record ships with Pi.`, causes: ["exists:cac-record"] },
       { id: "cac-record-negated", text: `${PROGRAM} (design-only): no CAC record ships with Pi.`, causes: [] },
-      { id: "when", text: `When Furnace ships FurnaceObserverBoundaryV0 ${QUALIFIER}, Pi reads it.`, causes: [] },
-      { id: "nowhere", text: `FurnaceObserverBoundaryV0 ${QUALIFIER} exists nowhere in Pi.`, causes: [] },
+      { id: "when", text: `When Furnace ships ${SECOND.spelling} ${QUALIFIER}, Pi reads it.`, causes: [] },
+      { id: "nowhere", text: `${SECOND.spelling} ${QUALIFIER} exists nowhere in Pi.`, causes: [] },
     ];
-    const plant: FileText = { path: "docs/workbench/zz-e1.md", text: `FurnaceObserverBoundaryV0 ${QUALIFIER} is wired into Pi.\n` };
+    const plant: FileText = { path: "docs/workbench/zz-e1.md", text: `${SECOND.spelling} ${QUALIFIER} is wired into Pi.\n` };
     const reading = readScope(REPO, SCOPES.documents, [plant]);
-    expect(reading.findings, "the documents walk judges the planted claim and nothing else").toEqual([`${plant.path}:1 exists:observer-boundary`]);
+    expect(reading.findings, "the documents walk judges the planted claim and nothing else").toEqual([`${plant.path}:1 exists:${SECOND.id}`]);
     return json({ subjects: [...RECORDS, CAC_RECORD].map(subject => subject.spelling), controls: controlsHold(controls), findings: reading.findings });
   },
   E2: () => {
@@ -1239,13 +1329,13 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
   E3: () => {
     const exists = ["shipped", "ships", "exists", "existing", "wired", "implemented", "available", "landed", "released", "published", "live", "supported", "consumed", "vendored", "exported", "runs", "enforced"];
     const established = ["established", "proven", "proved", "verified", "guaranteed", "demonstrated", "confirmed"];
-    const readsExists = exists.filter(word => causesOf("docs/workbench/x.md", `FurnaceObserverBoundaryV0 ${QUALIFIER} is ${word} here.`).includes("exists:observer-boundary"));
+    const readsExists = exists.filter(word => causesOf("docs/workbench/x.md", `${SECOND.spelling} ${QUALIFIER} is ${word} here.`).includes(`exists:${SECOND.id}`));
     const readsEstablished = established.filter(word =>
       causesOf("docs/workbench/x.md", `${PROGRAM} (design-only): asynchronous attempt semantics are ${word} here (targets for proof/measurement).`).includes("established:async-semantics"),
     );
     expect(readsExists, "EXISTS reads every word of its vocabulary").toEqual(exists);
     expect(readsEstablished, "ESTABLISHED reads every word of its vocabulary").toEqual(established);
-    const outside = ["projected", "described", "named", "cited"].filter(word => causesOf("docs/workbench/x.md", `FurnaceObserverBoundaryV0 ${QUALIFIER} is ${word} here.`).length > 0);
+    const outside = ["projected", "described", "named", "cited"].filter(word => causesOf("docs/workbench/x.md", `${SECOND.spelling} ${QUALIFIER} is ${word} here.`).length > 0);
     expect(outside, "a predicate outside the vocabularies is not read").toEqual([]);
     return json({ anchors: ["shipped", "established"], exists: readsExists, established: readsEstablished, outside });
   },
@@ -1272,7 +1362,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       { id: "shipped-and-planned", text: `| ${PROGRAM} | design-only | shipped, planned |`, causes: ["label:shipped"] },
       { id: "other-status", text: `| ${PROGRAM} | design-only | landed-gated |`, causes: ["unlabelled"] },
       { id: "negated-label", text: `| ${PROGRAM} | design-only | not planned |`, causes: ["unlabelled"] },
-      { id: "graded-only", text: "| FurnaceObserverBoundaryV0 | design-only; proposed, not shipped | none |", causes: ["unlabelled"] },
+      { id: "graded-only", text: `| ${SECOND.spelling} | design-only; proposed, not shipped | none |`, causes: ["unlabelled"] },
       { id: "label-in-comment", text: `| ${PROGRAM} | design-only | <!-- planned --> |`, causes: ["unlabelled"] },
       { id: "non-citing-row", text: "| Forge gate | shipped |", causes: [] },
     ];
@@ -1284,8 +1374,8 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       const reading = judgeFiles([{ path, text: `${text}\n` }]);
       return { causes: reading.findings.map(finding => finding.slice(finding.indexOf(" ") + 1)), unbound: unboundOf(reading.bindings, bound).length };
     };
-    const unworded = "Pi reads FurnaceObserverBoundaryV0 refs.";
-    const worded = `Pi reads FurnaceObserverBoundaryV0 refs ${QUALIFIER}.`;
+    const unworded = `Pi reads ${SECOND.spelling} refs.`;
+    const worded = `Pi reads ${SECOND.spelling} refs ${QUALIFIER}.`;
     const row: Binding = { path, text: squeezed(worded) };
     const readings = { unworded: variant(unworded, BOUND), worded: variant(worded, BOUND), wordedAndBound: variant(worded, [...BOUND, row]) };
     expect(readings.unworded, "without its wording the change fails its gradings and is unbound").toEqual({ causes: ["unqualified", "record-status"], unbound: 1 });
@@ -1295,7 +1385,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
   },
   K2: () => {
     const path = "docs/workbench/07-native-integrations.md";
-    const text = `Pi reads FurnaceObserverBoundaryV0 refs ${QUALIFIER}.`;
+    const text = `Pi reads ${SECOND.spelling} refs ${QUALIFIER}.`;
     const citing = judgeFiles([{ path, text: `${text}\n` }]).bindings;
     const row: Binding = { path, text: squeezed(text) };
     const cases = {
@@ -1325,18 +1415,18 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
       "# wb-dqf.1: [FURNACE-CAC-EXECUTION-ASSURANCE-R4] When Furnace ships the boundary record, Pi reads it\n",
       "a unit whose only matches are requirement ids does not cite",
     ),
-  Q3: () => quiet("docs/workbench/x.md", "Pi reads Furnace's 2026-10-18 CAC design deposit for attempts and its observer boundary.", "a paraphrased citation does not cite"),
+  Q3: () => quiet("docs/workbench/x.md", `Pi reads Furnace's 2026-10-18 CAC design deposit for attempts and its ${SECOND.words}.`, "a paraphrased citation does not cite"),
   Q4: () => quiet("docs/workbench/x.md", `${PROGRAM} is not, as of today, design-only.`, "a negation three words away does not cancel the carrier"),
-  Q5: () => quiet("docs/workbench/x.md", `FurnaceObserverBoundaryV0 ${QUALIFIER} gates every attempt read Pi makes.`, "predicates outside EXISTS are not read"),
-  Q6: () => quiet("docs/workbench/x.md", `If anything, FurnaceObserverBoundaryV0 ${QUALIFIER} is wired.`, "a guard word before the predicate silences it"),
-  Q7: () => quiet("docs/workbench/x.md", "FurnaceObserverBoundaryV0 is design-only and proposed, not shipped. It is wired anyway.", "a subject and its predicate across a sentence end are not read"),
+  Q5: () => quiet("docs/workbench/x.md", `${SECOND.spelling} ${QUALIFIER} gates every attempt read Pi makes.`, "predicates outside EXISTS are not read"),
+  Q6: () => quiet("docs/workbench/x.md", `If anything, ${SECOND.spelling} ${QUALIFIER} is wired.`, "a guard word before the predicate silences it"),
+  Q7: () => quiet("docs/workbench/x.md", `${SECOND.spelling} is design-only and proposed, not shipped. It is wired anyway.`, "a subject and its predicate across a sentence end are not read"),
   Q8: () =>
     quiet(
       "docs/workbench/x.md",
       `${PROGRAM} (design-only): the Furnace boundary record is wired, and the attempt capability record ships.`,
       "subjects spelled outside the subject patterns are not read",
     ),
-  Q9: () => quiet("src/x.ts", 'export const A = "FurnaceObserver" + "BoundaryV0";', "a citation split across a concatenation does not cite"),
+  Q9: () => quiet("src/x.ts", `export const A = "${SECOND.head}" + "${SECOND.tail}";`, "a citation split across a concatenation does not cite"),
   Q10: () => quiet("docs/workbench/x.md", "The CAC\\-execution\\-assurance program and cac&#45;execution&#45;assurance.", "escaped and entity spellings do not cite"),
   Q11: () =>
     quiet(
@@ -1349,7 +1439,7 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
   Q14: () =>
     quiet(
       "docs/workbench/x.md",
-      `${PROGRAM} (design-only) names FurnaceObserverBoundaryV0 and FurnaceAttemptCapabilityV0; the second is proposed, not shipped.`,
+      `${PROGRAM} (design-only) names ${SECOND.spelling} and FurnaceAttemptCapabilityV0; the second is proposed, not shipped.`,
       "one grading anywhere in the unit grades every subject of the unit",
     ),
 };
@@ -1410,6 +1500,7 @@ function constants(): JsonValue {
     qualifier: QUALIFIER,
     bound: [...BOUND],
     residuals: RESIDUALS,
+    secondRecord: { sha256: SECOND_RECORD_SHA256, token: RECORD_TOKEN.source, forms: [...SECOND_FORMS.keys()] },
   });
 }
 
@@ -1431,6 +1522,20 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
     }
     const readers: readonly ((...args: never[]) => unknown)[] = [...Object.values(IMPL), recordCase, scopeLeg, controlsHold, quiet, readScope, judgeFiles, judgeUnit];
     for (const reader of readers) expect(/\bROSTER\b|rosterWitness|readRoster/.test(reader.toString()), `${reader.name || "a case"} reads no roster (SELF-READ)`).toBe(false);
+    expect(formsOf(FIRST_RECORD), "formsOf reads the first record's forms as spelled (the second record's come from the same function)").toEqual({
+      spelling: "FurnaceAttemptCapabilityV0",
+      stem: "FurnaceAttemptCapability",
+      pattern: "Furnace[\\s_-]*Attempt[\\s_-]*Capability",
+      id: "attempt-capability",
+      words: "attempt capability",
+      head: "FurnaceAttempt",
+      tail: "CapabilityV0",
+    });
+    expect(subjectOf(formsOf(FIRST_RECORD)), "subjectOf rebuilds the first record's literal subject (the second record's subject is built the same way)").toEqual(RECORDS[0]);
+    const spelled = (text: string): string[] => [wordsOf(SECOND.stem)[1] ?? "-", ...Object.values(SECOND)].filter(form => text.toLowerCase().includes(form.toLowerCase()));
+    expect(spelled(readFileSync(fileURLToPath(import.meta.url), "utf8")), "this file spells the second record in no form, its first middle word included (the landed wb-dqf.1 until-then leg)").toEqual([]);
+    const rosterSource = readFileSync(ROSTER_PATH, "utf8");
+    expect(spelled(`${rosterSource}\n${stringsOf(JSON.parse(rosterSource)).join("\n")}`), "the roster spells it only through its tokens, raw or parsed").toEqual([]);
   });
 
   it("the outside anchors: the bead's own row binds the rows, the pin quotes, the needles, the program, the records, the gradings, the subjects, the scopes, the labels and the predicate words; the producer block carries the filing's status lines", { timeout: 60_000 }, () => {
@@ -1480,6 +1585,7 @@ describe("wb-dqf.2 Furnace cac-execution-assurance citation-status census (FURNA
     expect(/^(design-only); /.exec(b)?.[1], "the program grading opens the status segment").toBe(DESIGN_ONLY);
     const records = /; (\w+) and (\w+) proposed, not shipped;/.exec(b)?.slice(1) ?? [];
     expect(records, "the records are the status segment's").toEqual(RECORDS.map(record => record.spelling));
+    expect(createHash("sha256").update(SECOND_RECORD).digest("hex"), "the second record read from the title is the pinned token").toBe(SECOND_RECORD_SHA256);
     for (const record of RECORDS) expect(record.pattern.test(record.spelling), `${record.id} reads its own spelling`).toBe(true);
     expect(/ and \w+ (proposed, not shipped);/.exec(b)?.[1], "the record grading is the status segment's").toBe(RECORD_STATUS[0]);
     expect(/; (asynchronous-attempt-semantics claims) /.exec(b)?.[1], "the asynchronous subject is the status segment's").toBe(ASYNC.spelling);
