@@ -135,14 +135,21 @@
  *    over arrays: L2-SWAPQ-MUTATE@RS-fix, L2-SWAPQ-MUTATE-rev@RB-fix), or a part produce() derived (M-PART-MUTATE@RS-fix); a case
  *    that rewrites the roster witness it is compared against (M-ROSTER-WRITE@RS-fix), replaces a seam for a later case
  *    (M-SEAM-REPLACE@RS-fix) or swaps a PARTS derivation for its own produce() (M-PARTS-REPLACE@RS-fix); a case that re-enters
- *    run() so that its run counts only the reads made after (M-RUN-REENTRY@RS-fix); and a case whose witness holds a value no
- *    part it produced supplies, such as its roster witness read directly beside parts padded to their pinned count
- *    (M-PAD-ROSTER@RS-fix). Cure: every value a seam returns or throws and every part produce() derives is deep-frozen; each
- *    reading reads one frozen deep copy (structuredClone) of its result, taken at the read; every module-level value a case or a
- *    seam reads (the roster, the judged rows, the case table, the derivations, the host context, the shared inputs) and the seams
- *    object are frozen at load; run() refuses re-entry; and each pin's witness must be composed of the parts its case produced,
- *    by value - the witness is one of them, or an object each of whose entries is an entry of an object part or is itself so
- *    composed. Re-pinned, each true over this class: the seams() doc (a case reaches the record only through the seams and the
+ *    run() so that its run counts only the reads made after (M-RUN-REENTRY@RS-fix); a case whose witness holds a value no part it
+ *    produced supplies, such as its roster witness read directly beside parts padded to their pinned count (M-PAD-ROSTER@RS-fix);
+ *    and (cut #2, the cut #1 gate's U1) a case whose witness hands the composition checks one value and the roster compare
+ *    another: entries that are accessors returning the case's own parts until the checks have read them and its roster witness
+ *    after, switching on the public expect.getState().assertionCalls or on the lookup counter (G-GETTER-assert@RS,
+ *    G-GETTER-lookups@RS, G-GETTER-C1-assert@RK, G-GETTER-C1-lookups@RK), the same accessors one level down
+ *    (S2-GETTER-deep-A3@ND) or a Proxy (S2-PROXY@RS), the last two found by the cut #2 seat (RS = RS-fix, RK = RK-summary, ND =
+ *    the not-diagnosed note reworded, which A3 alone reads). Cure: every value a seam returns or throws and every part produce()
+ *    derives is deep-frozen; each reading reads one frozen deep copy (structuredClone) of its result, taken at the read; every
+ *    module-level value a case or a seam reads (the roster, the judged rows, the case table, the derivations, the host context,
+ *    the shared inputs) and the seams object are frozen at load; run() refuses re-entry and reads the witness its case returns
+ *    once, as one frozen deep copy (structuredClone: each accessor is read once, a Proxy is refused), which the composition checks
+ *    and the roster compare both read; and each pin's witness must be composed of the parts its case produced, by value - the
+ *    witness is one of them, or an object each of whose entries is an entry of an object part or is itself so composed.
+ *    Re-pinned, each true over this class: the seams() doc (a case reaches the record only through the seams and the
  *    pin harness, so it can neither hand it a value of its own nor move its counts, short of a NOT CLAIMED write of the file's
  *    own bookkeeping or edit of its environment); wb-dwa9 F2 (each quiet row produces the counts of the very result it read,
  *    whatever the case does to its own input after the read); and wb-v2um F3's lookup guard, which sees rosterWitness() only - a
@@ -162,8 +169,13 @@
  * own function declarations at run time). Outside wb-aodo's two classes: a run-time write of the file's own bookkeeping (the
  * reached list, the judge's flags, the run flag, the selection, the lookup counter) or of the vitest task tree (a task's mode or
  * result), which the record and the file-end judge trust; an edit of the environment the census runs in - a built-in or a global
- * (Object.freeze, structuredClone), or a src module's exported object or class - which the freezes and the snapshot rely on; and
- * which derivation supplied a witness entry, since the composition rule matches values.
+ * (Object.freeze, structuredClone), the test framework's expect or its matchers, or a src module's exported object or class -
+ * which the freezes, the snapshots and the compares rely on; which derivation supplied a witness entry, since the composition
+ * rule matches values (the cut #1 gate's G-C1-SUBST@RK+CBS), and which seam's value a derivation read when two seams return
+ * values of one type (its G-C1-XSRC@RK: summaryKey over the src walk); and the landing-383 F2 swap class beyond Q1 and Q2, whose
+ * input counts cure it there: which of a pin's inputs an entry was read from when two of its readings reach one value (its
+ * G-D2-SWAP@QSTR: a D2 cell that reads another cell's input with the same refusal text - the D2 witness holds each cell's outcome
+ * and the record its read count, not the input each cell read).
  *
  * Display paths added: one, the inclusion leg's note, routed through the reader adapter's shown() helper, which is
  * sanitizeWorkbenchText(text, 200, 'label') with the NAMED label layout (the landed path of every other leg's note); it carries
@@ -577,10 +589,11 @@ type Part = keyof typeof PARTS;
 /** The seams a pin's case reads through, closed over what they record (wb-v2um F3, wb-dwa9 F3, wb-aodo F1): each reading, read of
  * the captured result roster and src walk counts once; every value one returns or throws is deep-frozen and registered under the
  * running pin with the result it was read from, itself a frozen copy taken at the read; produce() computes a part only from a value
- * so registered, and freezes it; and run() takes one case at a time. With the pin harness, which holds each witness to be composed
- * of the parts its case produced, a case reaches the record only through these, so it can neither hand it a value of its own nor
- * move its counts - short of a run-time write of the file's own bookkeeping or an edit of the environment it runs in (NOT
- * CLAIMED). */
+ * so registered, and freezes it; and run() takes one case at a time and reads the witness its case returns once, as one frozen deep
+ * copy (structuredClone), so the pin harness's checks and its roster compare read one value. With the pin harness, which holds that
+ * witness to be composed of the parts its case produced, a case reaches the record only through these, so it can neither hand it a
+ * value of its own nor move its counts - short of a run-time write of the file's own bookkeeping or an edit of the environment it
+ * runs in (NOT CLAIMED). */
 function seams() {
   const origins = new WeakMap<object, SeamRead>();
   let pin = '';
@@ -600,7 +613,9 @@ function seams() {
       reads = 0;
       parts.splice(0);
       try {
-        const witness = body();
+        // wb-aodo F1 (cut #2, the cut #1 gate's U1): the witness is read once, here, as one frozen deep copy, so the pin harness's
+        // composition checks and its roster compare read one value - an accessor or a proxy cannot hand them different ones.
+        const witness = frozen(structuredClone(body()));
         return { witness, reads, parts: [...parts] };
       } finally {
         pin = '';
