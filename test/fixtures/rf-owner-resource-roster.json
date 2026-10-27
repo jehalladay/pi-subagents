@@ -51,12 +51,12 @@
       "id": "B",
       "label": "(b) 0 Pi strings label an rf federation row as a FiberOptics <FO_DESCRIPTOR> descriptor (h2fp-C020 REFUTED): src, test, docs, qa, every other top-level entry of the repo and every served native descriptor",
       "pins": [
-        {"id": "B1", "witness": {"pin": "B1", "family": "019263b5ad484158", "root": "src", "floor": 100, "anchorFile": "workflow/reconcile.ts", "anchorToken": "RECONCILE_EVIDENCE_READS", "floorMet": true, "anchorRead": true, "unwalked": [], "links": [], "hits": []}},
-        {"id": "B2", "witness": {"pin": "B2", "family": "019263b5ad484158", "root": "test", "floor": 400, "anchorFile": "helpers/rf-render-fixture.ts", "anchorToken": "RF_FIXTURE_RELEASE", "floorMet": true, "anchorRead": true, "unwalked": [], "links": [], "hits": []}},
-        {"id": "B3", "witness": {"pin": "B3", "family": "019263b5ad484158", "root": "docs", "floor": 50, "anchorFile": "workbench/13-contracts-and-config.md", "anchorToken": "reactivefiber.render.preview", "floorMet": true, "anchorRead": true, "unwalked": [], "links": [], "hits": []}},
-        {"id": "B4", "witness": {"pin": "B4", "family": "019263b5ad484158", "root": "qa", "floor": 50, "anchorFile": "workbench/receipts-index.mjs", "anchorToken": "docs/workbench/receipts", "floorMet": true, "anchorRead": true, "unwalked": [], "links": [], "hits": []}},
+        {"id": "B1", "witness": {"pin": "B1", "family": "019263b5ad484158", "root": "src", "floor": 100, "anchorFile": "workflow/reconcile.ts", "anchorToken": "RECONCILE_EVIDENCE_READS", "floorMet": true, "anchorRead": true, "unwalked": [], "unreadWhole": [], "links": [], "hits": []}},
+        {"id": "B2", "witness": {"pin": "B2", "family": "019263b5ad484158", "root": "test", "floor": 400, "anchorFile": "helpers/rf-render-fixture.ts", "anchorToken": "RF_FIXTURE_RELEASE", "floorMet": true, "anchorRead": true, "unwalked": [], "unreadWhole": [], "links": [], "hits": []}},
+        {"id": "B3", "witness": {"pin": "B3", "family": "019263b5ad484158", "root": "docs", "floor": 50, "anchorFile": "workbench/13-contracts-and-config.md", "anchorToken": "reactivefiber.render.preview", "floorMet": true, "anchorRead": true, "unwalked": [], "unreadWhole": [], "links": [], "hits": []}},
+        {"id": "B4", "witness": {"pin": "B4", "family": "019263b5ad484158", "root": "qa", "floor": 50, "anchorFile": "workbench/receipts-index.mjs", "anchorToken": "docs/workbench/receipts", "floorMet": true, "anchorRead": true, "unwalked": [], "unreadWhole": [], "links": [], "hits": []}},
         {"id": "B5", "witness": {"pin": "B5", "family": "019263b5ad484158", "descriptorFloorMet": true, "hits": []}},
-        {"id": "B6", "witness": {"pin": "B6", "family": "019263b5ad484158", "excluded": [".git", "node_modules", ".beads/issues.jsonl", ".beads/interactions.jsonl"], "floor": {"entries": 25, "files": 55}, "floorMet": true, "anchorsRead": true, "unwalked": [], "links": [], "hits": []}}
+        {"id": "B6", "witness": {"pin": "B6", "family": "019263b5ad484158", "excluded": [".git", "node_modules", ".beads/issues.jsonl", ".beads/interactions.jsonl"], "floor": {"entries": 25, "files": 55}, "floorMet": true, "anchorsRead": true, "unwalked": [], "unreadWhole": [], "links": [], "hits": []}}
       ]
     },
     {
@@ -72,7 +72,7 @@
       "id": "D",
       "label": "(d) until the surface ships (rfc-0txnl.17, rfc-0txnl.25, FW-06 ADR rfc-0txnl.3), 0 hits for backend_instance_id in Pi src, served native descriptors included",
       "pins": [
-        {"id": "D1", "witness": {"pin": "D1", "family": "9d7859ee83709d14", "root": "src", "floor": 100, "anchorFile": "workflow/reconcile.ts", "anchorToken": "RECONCILE_EVIDENCE_READS", "floorMet": true, "anchorRead": true, "unwalked": [], "links": [], "hits": []}},
+        {"id": "D1", "witness": {"pin": "D1", "family": "9d7859ee83709d14", "root": "src", "floor": 100, "anchorFile": "workflow/reconcile.ts", "anchorToken": "RECONCILE_EVIDENCE_READS", "floorMet": true, "anchorRead": true, "unwalked": [], "unreadWhole": [], "links": [], "hits": []}},
         {"id": "D2", "witness": {"pin": "D2", "family": "9d7859ee83709d14", "descriptorFloorMet": true, "hits": []}}
       ]
     },
@@ -122,13 +122,14 @@
     },
     {
       "id": "P",
-      "label": "the scan primitives rows B and D compose read whole file content and whole served JSON text, refuse symbolic links, read NUL-bearing files and hold each walk to git's listing, each shown by a must-hit control",
+      "label": "the scan primitives rows B and D compose read each listed file and each served JSON text whole (every file read proven whole and scanned), refuse symbolic links, read NUL-bearing files and hold each walk to git's listing, each shown by a must-hit control, and R-DECOUPLED stays pinned quiet",
       "pins": [
-        {"id": "P1", "witness": {"family": "9d7859ee83709d14", "reportsCensus": true, "reportsRoster": true, "readWhole": ["test/workbench-rf-owner-resource-census.test.ts", "test/fixtures/rf-owner-resource-roster.json"]}},
+        {"id": "P1", "witness": {"family": "9d7859ee83709d14", "reportsCensus": true, "reportsRoster": true, "everyFileReported": ["src", "test", "docs", "qa", "rest"], "lastByteDropped": ["test/workbench-rf-owner-resource-census.test.ts", "test/fixtures/rf-owner-resource-roster.json"], "cappedAt32KiB": ["test/workbench-rf-owner-resource-census.test.ts"], "skipped": ["test/workbench-rf-owner-resource-census.test.ts"]}},
         {"id": "P2", "witness": {"descriptorFloorMet": true, "everyTextRead": true, "wholeDescriptors": true, "nonIdKeysRead": ["description", "inputSchema"]}},
         {"id": "P3", "witness": {"files": ["a.ts"], "links": ["zz-link", "d/inner"]}},
         {"id": "P4", "witness": {"utf16le": true, "utf16be": true, "utf32le": true, "utf8DecodingAlone": false}},
-        {"id": "P5", "witness": {"argv": ["ls-files", "-z", "--cached", "--others", "--exclude-standard"], "read": ["a.ts"], "unwalked": ["d/b.ts"], "failed": {"read": [], "unwalked": ["<git ls-files failed>"]}, "listsCensus": true}}
+        {"id": "P5", "witness": {"argv": ["ls-files", "-z", "--cached", "--others", "--exclude-standard"], "read": ["a.ts"], "unwalked": ["d/b.ts"], "failed": {"read": [], "unwalked": ["<git ls-files failed>"]}, "listsCensus": true}},
+        {"id": "QP1", "witness": {"readWhole": [], "reported": ["test/workbench-rf-owner-resource-census.test.ts"], "decoupledReported": [], "readerCapped": ["test/workbench-rf-owner-resource-census.test.ts"]}}
       ]
     },
     {
@@ -139,7 +140,7 @@
         {"id": "X2", "witness": {"pin": "B3", "gaps": []}},
         {"id": "X3", "witness": {"bead": "wb-a9l2.3", "respaced": true, "sameAcceptance": true}},
         {"id": "X4", "witness": {"C3": ["(c) a key on alias alone fails: no pin"], "D1": ["(d) until the surface ships: no pin"], "MB3": ["MB /"], "MB4": ["MB -"], "MB5": ["MB _"], "MB6": ["MB direct", "MB mixed"], "MB7": ["MB upper"], "MB8": ["MB ,", "MB and"], "MB9": ["MB ."], "MB10": ["MB &"], "MB11": ["MB :"], "MB12": ["MB |"], "MB13": ["MB U+2013"], "MB14": ["MB U+2014"], "MD2": ["MD direct", "MD mixed"], "MD3": ["MD upper"], "MD4": ["MD -"], "MD5": ["MD whitespace"], "MD6": ["MD ."], "MD7": ["MD /"], "MD8": ["MD :"]}},
-        {"id": "X5", "witness": {"quiet": ["A1", "A2", "A3", "A4", "A5", "B1", "B2", "B3", "B4", "B5", "B6", "C1", "C2", "D2", "MB1", "MB2", "QB1", "QB2", "QB3", "QB4", "QB5", "MD1", "QD1", "QD2", "QD3", "QD4", "QD5", "P1", "P2", "P3", "P4", "P5", "X1", "X2", "X3", "X4", "X5"], "narrowed": {"dropsDot": true, "gaps": []}}}
+        {"id": "X5", "witness": {"quiet": ["A1", "A2", "A3", "A4", "A5", "B1", "B2", "B3", "B4", "B5", "B6", "C1", "C2", "D2", "MB1", "MB2", "QB1", "QB2", "QB3", "QB4", "QB5", "MD1", "QD1", "QD2", "QD3", "QD4", "QD5", "P1", "P2", "P3", "P4", "P5", "QP1", "X1", "X2", "X3", "X4", "X5"], "narrowed": {"dropsDot": true, "gaps": []}}}
       ]
     }
   ]

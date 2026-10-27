@@ -11,6 +11,13 @@
  * rendered-text family (F2's splits and F3's hidden marker) and R-COORDINATED the coordinated census + roster hollow (F4), each
  * with its pinned quiet row (R11, R12).
  *
+ * FOLLOW-UP wb-crmt (the R694 follow-up of the landing-449 gate verdict: F1 leads). MS1 pinned the page selector at its
+ * predicate only, so reverting either use of it in the docs walk to a lowercase .md test (G9 the root filter, G10 the DOC_DIRS
+ * filter) left the census green beside a root .MARKDOWN or a vendor .Markdown page that the unmutated census reds. MS1 now runs
+ * docFiles itself, the walk rows A and B read, over a constructed tree (FileTree: a root, a lister and a reader, never the
+ * disk; PAGE_TREE lists its entries), so each use, the root's name order, the walk's order, depth and entry kinds and the
+ * DOC_DIRS set decide its outcome; R11's unread pages go through the same walk.
+ *
  * THE PLACEHOLDERS. Acceptance (c)'s grep has three alternatives: <DE> is the producer's typed decision module (two words, one
  * underscore), <NDB> its native backend class (three words, Pascal case) and <DI> the bead's own two prose words (one space).
  * This file and its roster never spell one: NEEDLE_PARTS holds the words, NEEDLES composes each alternative at runtime by array
@@ -43,7 +50,9 @@
  * (FILING_ROWS), and every string value that names one carries a marker and the pin; the epic wb-tz4r, wb-tz4r.7 and the
  * residuals bead wb-nzdh name the program only (R-PROGRAM). The live store read the same, with the delivery notes the next
  * export carries. RE-MEASURED AT b1ce8c1 (landing 392, the wb-p46r cut): 98 docs pages, every one .md (0 .markdown, 0 under
- * another markdown extension), 46 receipts and 814 export rows; rows A and B read 0 docs mentions.
+ * another markdown extension), 46 receipts and 814 export rows; rows A and B read 0 docs mentions. RE-MEASURED AT 6a61219
+ * (landing 454, the wb-crmt cut): 102 docs pages, every one .md, 47 receipts and 869 export lines; the root's pages are A1's
+ * five; rows A and B read 0 docs mentions.
  *
  * READINGS
  * - MENTIONS, matched in any case: M1 <DI>, its two words joined directly or by any run of white space, "_", "." or "-", except
@@ -81,8 +90,9 @@
  *  M, the matchers' controls on constructed inputs, each the very function its row reads: MM1-MV1 the mention, marker, pin,
  *    window, export, citation and echo readers; MN1 the needle detector C1, C2 and records share finds each NEEDLE once; MD1
  *    A4's descriptor scan finds a family in a description and in a schema key; MQ1 the quote partition and verbatim reading on
- *    a constructed tree and filing; MS1 the page selector rows A and B share reads .md and .markdown names in any case and no
- *    other name. R, the residuals' pinned quiet rows.
+ *    a constructed tree and filing; MS1 docFiles itself, the walk rows A and B read, over a constructed tree (PAGE_TREE): it
+ *    selects the .md and .markdown pages in any case directly in the root, in name order, and below every DOC_DIRS directory at
+ *    any depth, in walk order, and no other name, directory, symlink or root. R, the residuals' pinned quiet rows.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every row's id, label and pins, every pin's
  * witness, the constants and the registered test titles are held to the out-of-file roster
  * test/fixtures/ri-decision-seed-claim-roster.json, and the records case walks this file's vitest task tree against it, so a pin
@@ -109,7 +119,8 @@
  * the pin or a receipt
  * citation that only an HTML comment carries still counts on the mention's lines (R-LINE reads the source, so the landing-351
  * gate's hidden-marker plant reads admitted, caught only by A2's and B1's pinned zero counts); and a markdown page named other
- * than .md or .markdown (.mdown, .mkd, .mkdn, .mdwn, .mdx) is read by neither row; R11 pins each member quiet. R-COORDINATED a
+ * than .md or .markdown (.mdown, .mkd, .mkdn, .mdwn, .mdx) is read by neither row (R11 reads them through docFiles on a
+ * constructed tree); R11 pins each member quiet. R-COORDINATED a
  * pin, a row or a constant removed or rewritten in this file and its roster at once agrees with itself in both, so only a
  * reading outside the two files can see it: the filing, whose F1 reading counts its clauses against the judged rows A-C and
  * compares their labels, and the real tree (C1 and R10 need the needle detector and the quote partition to find wb-tz4r.5's
@@ -124,7 +135,7 @@
  * scratch is made.
  */
 import { createHash } from "node:crypto";
-import { type Dirent, readdirSync, readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
@@ -420,20 +431,39 @@ function textOf(path: string): string {
     return "";
   }
 }
-/** Every regular file below a directory, in name order; symlinks are listed apart and never followed. */
-function walk(directory: string, files: string[], symlinks: string[]): void {
-  let entries: Dirent[];
+/** A directory entry as the walks read it: fs.Dirent satisfies it, and so does a constructed tree's entry. */
+interface TreeEntry {
+  readonly name: string;
+  isFile(): boolean;
+  isDirectory(): boolean;
+  isSymbolicLink(): boolean;
+}
+/** A tree the walks read: its root, a lister that throws for a directory it cannot read (as readdirSync does) and a page reader. */
+interface FileTree {
+  readonly root: string;
+  readonly list: (directory: string) => readonly TreeEntry[];
+  readonly read: (path: string) => string;
+}
+/** The repository on disk, the tree rows A, B and C read. */
+const DISK: FileTree = {
+  root: REPO,
+  list: directory => readdirSync(directory, { withFileTypes: true }),
+  read: path => textOf(join(REPO, path)),
+};
+/** Every regular file below a directory of a tree, in name order; symlinks are listed apart and never followed. */
+function walk(directory: string, files: string[], symlinks: string[], from: FileTree): void {
+  let entries: TreeEntry[];
   try {
-    entries = readdirSync(directory, { withFileTypes: true });
+    entries = [...from.list(directory)];
   } catch {
     return;
   }
   entries.sort((left, right) => (left.name < right.name ? -1 : left.name > right.name ? 1 : 0));
   for (const entry of entries) {
     const path = join(directory, entry.name);
-    if (entry.isSymbolicLink()) symlinks.push(posix(relative(REPO, path)));
-    else if (entry.isDirectory()) walk(path, files, symlinks);
-    else if (entry.isFile()) files.push(posix(relative(REPO, path)));
+    if (entry.isSymbolicLink()) symlinks.push(posix(relative(from.root, path)));
+    else if (entry.isDirectory()) walk(path, files, symlinks, from);
+    else if (entry.isFile()) files.push(posix(relative(from.root, path)));
   }
 }
 
@@ -441,22 +471,68 @@ interface SourceFile {
   readonly path: string;
   readonly text: string;
 }
-let docsCache: SourceFile[] | undefined;
-/** DOC_ROOTS: the root's own markdown files, then every markdown file below DOC_DIRS. */
-function docFiles(): SourceFile[] {
-  if (docsCache === undefined) {
-    const paths = readdirSync(REPO, { withFileTypes: true })
-      .filter(entry => entry.isFile() && isMarkdownPage(entry.name))
-      .map(entry => entry.name)
-      .sort();
-    for (const directory of DOC_DIRS) {
-      const files: string[] = [];
-      walk(join(REPO, directory), files, []);
-      paths.push(...files.filter(isMarkdownPage));
-    }
-    docsCache = paths.map(path => ({ path, text: textOf(join(REPO, path)) }));
+const docsCache = new WeakMap<FileTree, SourceFile[]>();
+/**
+ * DOC_ROOTS of a tree with each page's text: the root's own markdown files in name order, then every markdown file below
+ * DOC_DIRS in walk order. Rows A and B read the disk (cached per tree); MS1 and R11 run this very function over constructed
+ * trees, so both of its page-selector uses are pinned where rows A and B read them.
+ */
+function docFiles(from: FileTree = DISK): SourceFile[] {
+  const cached = docsCache.get(from);
+  if (cached !== undefined) return cached;
+  const paths = from
+    .list(from.root)
+    .filter(entry => entry.isFile() && isMarkdownPage(entry.name))
+    .map(entry => entry.name)
+    .sort();
+  for (const directory of DOC_DIRS) {
+    const files: string[] = [];
+    walk(join(from.root, directory), files, [], from);
+    paths.push(...files.filter(isMarkdownPage));
   }
-  return docsCache;
+  const pages = paths.map(path => ({ path, text: from.read(path) }));
+  docsCache.set(from, pages);
+  return pages;
+}
+type EntryKind = "file" | "directory" | "symlink";
+const treeEntry = (name: string, kind: EntryKind): TreeEntry => ({
+  name,
+  isFile: () => kind === "file",
+  isDirectory: () => kind === "directory",
+  isSymbolicLink: () => kind === "symlink",
+});
+/**
+ * A constructed tree, never on disk (MS1, R11): one line per entry in listing order, a root-relative path naming a file, with a
+ * trailing "/" a directory and with " -> <target>" a symlink (the walks never follow one); each parent directory is listed where
+ * it first appears, and every page reads as empty text.
+ */
+function constructedTree(lines: readonly string[]): FileTree {
+  const root = join(sep, "constructed-tree");
+  const listing = new Map<string, TreeEntry[]>([[root, []]]);
+  for (const line of lines) {
+    const arrow = line.indexOf(" -> ");
+    const spec = arrow >= 0 ? line.slice(0, arrow) : line;
+    const kind: EntryKind = arrow >= 0 ? "symlink" : spec.endsWith("/") ? "directory" : "file";
+    const names = spec.split("/").filter(name => name !== "");
+    let parent = root;
+    for (const [index, name] of names.entries()) {
+      const entryKind: EntryKind = index === names.length - 1 ? kind : "directory";
+      const entries = listing.get(parent) ?? [];
+      if (!entries.some(entry => entry.name === name)) entries.push(treeEntry(name, entryKind));
+      listing.set(parent, entries);
+      parent = join(parent, name);
+      if (entryKind === "directory" && !listing.has(parent)) listing.set(parent, []);
+    }
+  }
+  return {
+    root,
+    list: directory => {
+      const entries = listing.get(directory);
+      if (entries === undefined) throw new Error(`the constructed tree has no directory ${directory}`);
+      return entries;
+    },
+    read: () => "",
+  };
 }
 const isReceipt = (path: string): boolean => path.startsWith(`${RECEIPTS}/`);
 /** The real receipts by file name. */
@@ -654,7 +730,7 @@ function tree(): TreeReading {
     const walked = new Set<string>();
     for (const root of SCAN_ROOTS) {
       const below: string[] = [];
-      walk(join(REPO, root), below, symlinks);
+      walk(join(REPO, root), below, symlinks, DISK);
       files.set(root, below.length);
       for (const path of below) {
         walked.add(path);
@@ -782,6 +858,38 @@ const MEASURING_RECEIPT = [
   `- ${caps(DI)} stays proposed beyond that seed.`,
 ].join("\n");
 const exportLine = (row: Record<string, string>): string => JSON.stringify(row);
+/**
+ * MS1's constructed tree (constructedTree), one entry per line in listing order: pages and non-pages directly in the root,
+ * a root directory and a root symlink named like pages, a page at some depth below every DOC_DIRS directory (two docs
+ * entries listed out of name order, a nested page and a symlink among them), and two code roots outside DOC_DIRS that hold
+ * pages. docFiles reads it as rows A and B read the disk, so both page-selector uses, the root's name order, the walk's
+ * order, depth and entry kinds and the DOC_DIRS set each decide MS1's outcome.
+ */
+const PAGE_TREE: readonly string[] = [
+  "README.md",
+  "AGENTS.MD",
+  "NOTES.MARKDOWN",
+  "draft.mdx",
+  "page.md.txt",
+  "notes.md/",
+  "index.md -> README.md",
+  "docs/b.Markdown",
+  "docs/a.markdown",
+  "docs/c.md.txt",
+  "docs/d.txt",
+  "docs/e.mdown",
+  "docs/f.mdx",
+  "docs/workbench/g.MD",
+  "docs/link.md -> a.markdown",
+  "new-feedback/h.md",
+  ".agents/i.md",
+  ".pi/j.Md",
+  ".beads/k.md",
+  "examples/deep/l.markdown",
+  "vendor/m.Markdown",
+  "src/n.md",
+  "qa/o.MARKDOWN",
+];
 /** M judges the matchers on constructed texts, R the residuals' quiet rows, B2-B7 constructed docs lines. */
 const CASES: readonly Case[] = [
   { pin: "B2", kind: "receipt", texts: [`${caps(DI)} stays proposed at ${RI_PIN}.`], outcome: ["doc.md:1 M1: receipt-absent"] },
@@ -886,8 +994,11 @@ const CASES: readonly Case[] = [
   {
     pin: "MS1",
     kind: "page",
-    texts: [["README.md", "AGENTS.MD", "docs/a.markdown", "docs/b.Markdown", "docs/c.md.txt", "docs/d.txt", "docs/e.mdown", "docs/f.mdx"].join("\n")],
-    outcome: ["README.md", "AGENTS.MD", "docs/a.markdown", "docs/b.Markdown"],
+    texts: [PAGE_TREE.join("\n")],
+    outcome: [
+      "AGENTS.MD", "NOTES.MARKDOWN", "README.md", "docs/a.markdown", "docs/b.Markdown", "docs/workbench/g.MD", "new-feedback/h.md",
+      ".agents/i.md", ".pi/j.Md", ".beads/k.md", "examples/deep/l.markdown", "vendor/m.Markdown",
+    ],
   },
   { pin: "R1", kind: "mention", texts: [`${caps(DI)} serves Pi today; the seed only preflight at ${RI_PIN} is older.`], outcome: ["M1:1:admitted"] },
   {
@@ -932,7 +1043,7 @@ function outcomeOf(kind: CaseKind, texts: readonly string[]): string[] {
     return receiptFindings([{ path: "doc.md", text }], receipts);
   }
   if (kind === "cite") return citedReceipts(text);
-  if (kind === "page") return text.split("\n").filter(isMarkdownPage);
+  if (kind === "page") return docFiles(constructedTree(text.split("\n"))).map(file => file.path);
   if (kind === "needle") {
     const sites = needleSites("x.ts", text);
     const mentions = mentionsOf(text).map(mention => mention.family);
