@@ -70,10 +70,11 @@
  *    name a flagged module (empty both ways today), with the cache detector's floor, its anchor (the evidence store, quiet, and
  *    its cacheKey scope-keyed) and flagged and quiet controls; D2 every bound cache passes every rule (none bound today; the same
  *    judge over the reference and the mutants is the non-vacuity control: the reference passes, every mutant is refused, the
- *    two liveness mutants by H-AFTER); D3 the judges' reading of the reference's choices (CHOICES): each choice is held to the
- *    rules that refuse the ADOPTERS making it otherwise - independent designs (opaque-token or record keys, no subject part, no
- *    kind check at put, no purge, a stale key read as miss) run through every rule - so the provenance triple reads bound by
- *    A-PROVENANCE and every other choice free (see SCOPE).
+ *    two liveness mutants by H-AFTER); D3 the judges' reading of the reference's choices (CHOICES): every one of the ADOPTERS
+ *    making a choice otherwise is held to the rules that refuse it - independent designs (opaque-token or record keys, no subject
+ *    part, no kind check at put, no purge, a stale key read as miss, a provenance field read leniently) run through every rule -
+ *    so the provenance triple reads bound by A-PROVENANCE exactly as far as PROVENANCE_CASES reads it, and the fields' type and
+ *    every other choice free (see SCOPE).
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * OUTSIDE ANCHOR (the tracked bead export, .beads/issues.jsonl row wb-ojm5.2, read only through the OWNER FILING: the row's
  * notes through their first "Not P0:" line, so a lane's delivery or refusal note appended later changes nothing read, which the
@@ -92,8 +93,13 @@
  * three by the census's cutting seat; and, by wb-yco1's seat, a residual family removed from every literal of this file and of
  * the roster together (its RESIDUALS entry, its quiet pin in ROWS, IMPL and the literal, and the roster's rows, tests and
  * constants.residuals: R-NON-MODULE with Q8 stays green), a D1 control removed from CONTROLS and the roster's D1 witness
- * together, and an adopter or a choice removed from ADOPTERS or CHOICES (and from the choices naming it) and the roster together
- * - nothing outside the two files names a residual family, a control, an adopter or a choice.
+ * together, and an adopter or a choice removed from ADOPTERS or CHOICES (and from the choices naming it) and the roster together;
+ * and, by wb-ne7z's seat, the member grain of the same hollow: a reading removed from a pin's IMPL witness and the roster's
+ * witness together, a residual member's quiet reading among them (the gate's P-Q7SUB, digitInside removed from IMPL Q7 and the
+ * roster's Q7 witness, stays green, as do Q7's zeroWidth, zeroWidthInside, kind and kindZeroWidth), and one PROVENANCE_CASES
+ * member filtered out of the grid with A2's roster refusal for it (green for each member but receipt absent, which D3 reds; a
+ * whole half of the grid so removed reds D3) - nothing outside the two files names a residual family, a member reading, a grid
+ * member, a control, an adopter or a choice.
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode,
  * not inverted, ran; every pin's case reached its witness compare with the witness equal to the roster's (REACHED: a guarded
  * early return or a swapped matcher leaves a pin unreached, the wb-csbt.3 F2 class).
@@ -112,15 +118,18 @@
  * drives it through the judges, or re-measures this census), and score is read even where it is Pi's own (OVER-READ, disclosed:
  * no Pi module spelling it holds a cache shape today). The reference fixes choices the filing leaves open (CHOICES, judged by D3
  * over the ADOPTERS), and the judges BIND one of them: the provenance fields (producer, checkpoint, receipt, after GLLM-103 at
- * 01:15). A-PROVENANCE refuses an object without provenance, without its producer or its checkpoint, or with an empty receipt
- * (PROVENANCE_CASES), so the first GP cache must require that triple to bind - a narrower reading than clause (a)'s "carries
- * provenance": an adopter requiring the producer only, or the producer and the receipt, is refused by exactly A-PROVENANCE, and
- * the same design requiring the triple passes every rule. The judges require none of the others: the subject part, a kind check
- * at put, invalidated as the prior key's reading, a refusal of even a complete hand-built key, frozen keys the cache minted and a
- * purge at the change. NOT CLAIMED: a revision rolled back to an earlier value (the filing does not say whether its slot may
- * serve again; the reference purged it at the bump, D3's token adopter serves it again, and the judges accept both), a
- * permission basis re-granted under its old name (the reference keeps it revoked), and anything about GP's own caches. No GP
- * cache is added to src and none is faked there.
+ * 01:15). A-PROVENANCE refuses an object without provenance, and one whose producer, checkpoint or receipt is absent or the empty
+ * string (PROVENANCE_CASES, seven cases), so the first GP cache binds only if it refuses each of those - a narrower reading than
+ * clause (a)'s "carries provenance": an adopter requiring the producer only, or the producer and the receipt, or accepting an
+ * absent receipt (the landing-427 PREP probe's G-receipt-absent-ok), or empty producer and checkpoint keys (its G-keys-present),
+ * or every field empty, is refused by exactly A-PROVENANCE, and the same design requiring the triple passes every rule. The
+ * judges bind presence and non-emptiness, not type: an adopter accepting any present value but the empty string (null, a number)
+ * passes every rule where the reference refuses it (D3, the choice "a string in each provenance field"). The judges require none
+ * of the others: the subject part, a kind check at put, invalidated as the prior key's reading, a refusal of even a complete
+ * hand-built key, frozen keys the cache minted and a purge at the change. NOT CLAIMED: a revision rolled back to an earlier value
+ * (the filing does not say whether its slot may serve again; the reference purged it at the bump, D3's token adopter serves it
+ * again, and the judges accept both), a permission basis re-granted under its old name (the reference keeps it revoked), and
+ * anything about GP's own caches. No GP cache is added to src and none is faked there.
  *
  * wb-yco1 (the R694 follow-up of landing 336; seat ws-03, run g10-work-s87, 2026-10-25, base 24e0d5b): F1 the header said the
  * judges require none of the reference's choices, the provenance fields among them; D3 made that claim executable and it read red
@@ -131,6 +140,21 @@
  * at the pin reads "all receipts include graph schema/revision/scope digest, function/checkpoint digest, numerical profile,
  * backend and target provenance where applicable" (01-requirements-decisions.md:15, blob 407b1ae4b96e, read with git show, no
  * fetch): it names the checkpoint digest and the receipt, not a producer field, so the triple stays the reference's reading.
+ *
+ * wb-ne7z (hop 3, the last, of the chain wb-ojm5.2 336 -> wb-yco1 427 -> wb-ne7z: the R694 follow-up of the landing-427 gate's
+ * F1 and F2, in the R739 TERMINAL enumerate-the-resolvable form under rules 14 and 19(c); seat ws-02, run g10-work-s103,
+ * 2026-10-26, base fced7bf). THE CRITERION: A-PROVENANCE and D3's two provenance choices claim exactly the classes below, every
+ * class pinned by its rows, never the escapes found so far. F1 CURED: an object (P1) without provenance, or whose producer,
+ * checkpoint or receipt is (P2) absent or (P3) the empty string, is refused - PROVENANCE_CASES reads that grid over
+ * PROVENANCE_FIELDS (A2's seven refusals), so the gate's two designs are now refused (D3's adopters "an absent receipt accepted"
+ * and "empty producer and checkpoint accepted", each by exactly A-PROVENANCE, their readings serving the object their choice
+ * lets through), and either half of the grid removed with its roster refusals reds D3 ((P2) through "an absent receipt
+ * accepted", (P3) through "empty fields accepted", which only the empty half refuses); (P4) the fields' type is free - an adopter
+ * accepting any present value but the empty string passes every rule (D3's "a string in each provenance field", bound to no
+ * rule, beside the reference refusing a numeric receipt). D3 holds every adopter of a choice to its bound rules, not only one
+ * of them (the landed check read their union), and refuses a choice naming no adopter. F2 DISCLOSED: the member grain of the
+ * coordinated hollow is named in the non-claim above; nothing outside the two files names a member reading to anchor it. CHAIN
+ * TERMINAL (R739): a later survivor outside these classes is record-only unless it contradicts a claim above.
  *
  * Display paths added: none. Test-only: no process is spawned and no file is written; src, qa, examples, tsconfig.json, the
  * roster and the bead export are only read.
@@ -487,11 +511,18 @@ const FORGERIES = (): Readonly<Record<string, unknown>> => ({
   "no source revision": omit(partsOf(), "sourceRevision"),
   "no permission basis": omit(partsOf(), "permissionBasis"),
 });
+/**
+ * Each way an object lacks the provenance triple: provenance absent, and every field of PROVENANCE_FIELDS both absent and empty
+ * (wb-ne7z F1: the landed four cases left a receipt absent and an empty producer or checkpoint unread). put refuses every one.
+ */
 const PROVENANCE_CASES = (): Readonly<Record<string, unknown>> => ({
   "provenance absent": omit(objectOf(), "provenance"),
-  "producer absent": { ...objectOf(), provenance: omit(objectOf().provenance, "producer") },
-  "checkpoint absent": { ...objectOf(), provenance: omit(objectOf().provenance, "checkpoint") },
-  "receipt empty": { ...objectOf(), provenance: { ...objectOf().provenance, receipt: "" } },
+  ...Object.fromEntries(
+    PROVENANCE_FIELDS.flatMap(field => [
+      [`${field} absent`, { ...objectOf(), provenance: omit(objectOf().provenance, field) }],
+      [`${field} empty`, { ...objectOf(), provenance: { ...objectOf().provenance, [field]: "" } }],
+    ]),
+  ),
 });
 const TENANT_CASES = (): Readonly<Record<string, unknown>> => ({
   "tenant scope absent": omit(objectOf(), "tenantScope"),
@@ -657,22 +688,50 @@ function mutantTable(clauses: readonly Clause[]): { readonly reference: string[]
 // ---- independent adopters: the judges' reading of the reference's choices (row D3) ----
 
 type ProvenanceField = (typeof PROVENANCE_FIELDS)[number];
+/**
+ * A provenance field an adopter's put reads more leniently than filled, named by the values it refuses (any other value passes):
+ * "absent" refuses only a missing key (an empty string passes), "empty" refuses only the empty string (a missing key passes) and
+ * "absent or empty" refuses both (null or a number passes).
+ */
+type LenientReading = "absent" | "empty" | "absent or empty";
 /** An adopter's design. Each adopter is written apart from the reference, not as the reference with a guard off. */
 interface AdopterDesign {
   /** Opaque string tokens, or plain records any caller may build (the reference mints frozen records only it accepts). */
   readonly keys: "token" | "record";
-  /** The provenance fields put requires (the reference requires the triple). */
+  /** The provenance fields put requires filled (the reference requires the triple). */
   readonly provenance: readonly ProvenanceField[];
+  /** The fields put reads leniently instead (wb-ne7z), each with its reading; a field in neither list is not read. */
+  readonly lenient?: Readonly<Partial<Record<ProvenanceField, LenientReading>>>;
+}
+/** Whether a lenient reading passes one field: it refuses exactly the values the reading names. */
+function passesLeniently(provenance: Record<string, unknown>, field: ProvenanceField, reading: LenientReading): boolean {
+  const absent = !Object.hasOwn(provenance, field);
+  const empty = provenance[field] === "";
+  if (reading === "absent") return !absent;
+  if (reading === "empty") return !empty;
+  return !absent && !empty;
 }
 /**
  * The adopters D3 judges: the wb-ojm5.2 gate's J10 (token keys, the triple), J11 (token keys, the producer only) and J12 (the
- * producer and the receipt, no checkpoint) designs, and a record-keyed design that serves a complete hand-built key.
+ * producer and the receipt, no checkpoint) designs, and a record-keyed design that serves a complete hand-built key; and, by
+ * wb-ne7z, the landing-427 PREP probe's G-receipt-absent-ok (the producer and the checkpoint filled, a receipt refused only when
+ * empty) and G-keys-present (the producer and checkpoint keys present, empty strings passing, a receipt refused only when empty)
+ * designs, a keys-present design (each field refused only when absent, so it is refused only by the grid's empty half) and a
+ * design that reads no type (each field refused only when absent or empty).
  */
 const ADOPTERS: Readonly<Record<string, AdopterDesign>> = {
   "token keys, the provenance triple": { keys: "token", provenance: ["producer", "checkpoint", "receipt"] },
   "token keys, the producer only": { keys: "token", provenance: ["producer"] },
   "token keys, the producer and the receipt": { keys: "token", provenance: ["producer", "receipt"] },
   "record keys, the provenance triple": { keys: "record", provenance: ["producer", "checkpoint", "receipt"] },
+  "token keys, an absent receipt accepted": { keys: "token", provenance: ["producer", "checkpoint"], lenient: { receipt: "empty" } },
+  "token keys, empty producer and checkpoint accepted": { keys: "token", provenance: [], lenient: { producer: "absent", checkpoint: "absent", receipt: "empty" } },
+  "token keys, empty fields accepted": { keys: "token", provenance: [], lenient: { producer: "absent", checkpoint: "absent", receipt: "absent" } },
+  "token keys, provenance values of any type": {
+    keys: "token",
+    provenance: [],
+    lenient: { producer: "absent or empty", checkpoint: "absent or empty", receipt: "absent or empty" },
+  },
 };
 /** A key as an adopter keeps it: no subject part (its design). */
 type AdopterKey = Omit<GpKeyParts, "subject">;
@@ -724,6 +783,11 @@ class AdopterGpCache implements GpCache {
     if (!isRecord(object)) throw new Error("adopter: no object");
     const provenance: Record<string, unknown> = isRecord(object.provenance) ? object.provenance : {};
     if (this.design.provenance.some(field => !filled(provenance[field]))) throw new Error("adopter: no provenance");
+    const lenient = this.design.lenient ?? {};
+    for (const field of PROVENANCE_FIELDS) {
+      const reading = lenient[field];
+      if (reading !== undefined && !passesLeniently(provenance, field, reading)) throw new Error("adopter: no provenance");
+    }
     const tenant: Record<string, unknown> = isRecord(object.tenantScope) ? object.tenantScope : {};
     if (tenant.workspace !== parts.scope.workspace || tenant.principal !== parts.scope.principal) throw new Error("adopter: no tenant scope");
     this.objects.set(this.slotOf(parts), structuredClone(object) as unknown as GpCachedObject);
@@ -759,7 +823,18 @@ interface Choice {
 }
 /** The choices the reference fixes and the filing leaves open, each held by D3 to the rules that refuse its adopters. */
 const CHOICES: readonly Choice[] = [
-  { choice: "the provenance fields (producer, checkpoint, receipt)", adopters: ["token keys, the producer only", "token keys, the producer and the receipt"], bound: ["A-PROVENANCE"] },
+  {
+    choice: "the provenance fields (producer, checkpoint, receipt)",
+    adopters: [
+      "token keys, the producer only",
+      "token keys, the producer and the receipt",
+      "token keys, an absent receipt accepted",
+      "token keys, empty producer and checkpoint accepted",
+      "token keys, empty fields accepted",
+    ],
+    bound: ["A-PROVENANCE"],
+  },
+  { choice: "a string in each provenance field", adopters: ["token keys, provenance values of any type"], bound: [] },
   { choice: "the subject part", adopters: ["token keys, the provenance triple"], bound: [] },
   { choice: "a kind check at put", adopters: ["token keys, the provenance triple"], bound: [] },
   { choice: "invalidated as the prior key's reading", adopters: ["token keys, the provenance triple"], bound: [] },
@@ -1046,7 +1121,15 @@ const CONSTANTS: JsonObject = {
   cacheName: CACHE_NAME.source,
   cacheConstructors: [...CACHE_CONSTRUCTORS],
   residuals: Object.fromEntries(Object.entries(RESIDUALS).map(([family, rows]) => [family, [...rows]])),
-  adopters: Object.fromEntries(Object.entries(ADOPTERS).map(([name, design]) => [name, { keys: design.keys, provenance: [...design.provenance] }])),
+  adopters: Object.fromEntries(
+    Object.entries(ADOPTERS).map(([name, design]) => {
+      const lenient = PROVENANCE_FIELDS.flatMap(field => {
+        const reading = design.lenient?.[field];
+        return reading === undefined ? [] : [[field, reading] as const];
+      });
+      return [name, { keys: design.keys, provenance: [...design.provenance], ...(lenient.length === 0 ? {} : { lenient: Object.fromEntries(lenient) }) }];
+    }),
+  ),
   choices: CHOICES.map(({ choice, adopters, bound }) => ({ choice, adopters: [...adopters], bound: [...bound] })),
 };
 
@@ -1264,11 +1347,16 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const refusals = new Map(Object.entries(ADOPTERS).map(([name, design]) => [name, violations(() => new AdopterGpCache(design))] as const));
     const choices: JsonObject = {};
     for (const { choice, adopters, bound } of CHOICES) {
-      const refusing = RULES.map(rule => rule.id).filter(id => adopters.some(name => refusals.get(name)?.includes(id) === true));
-      if (adopters.some(name => !refusals.has(name)) || !isDeepStrictEqual(refusing, [...bound])) {
-        throw new Error(`CHOICES: "${choice}" claims [${bound.join(", ")}]; its adopters (${adopters.join("; ")}) are refused by [${refusing.join(", ")}]`);
+      if (adopters.length === 0) throw new Error(`CHOICES: "${choice}" names no adopter`);
+      // Each adopter, not only one of them (wb-ne7z F1): every design making the choice otherwise is refused by exactly the bound rules.
+      for (const name of adopters) {
+        const refusing = refusals.get(name);
+        if (refusing === undefined) throw new Error(`CHOICES: "${choice}" names the adopter "${name}", which ADOPTERS does not define`);
+        if (!isDeepStrictEqual(refusing, [...bound])) {
+          throw new Error(`CHOICES: "${choice}" claims [${bound.join(", ")}]; its adopter "${name}" is refused by [${refusing.join(", ")}]`);
+        }
       }
-      choices[choice] = refusing;
+      choices[choice] = RULES.map(rule => rule.id).filter(id => adopters.some(name => refusals.get(name)?.includes(id) === true));
     }
     const design = (name: string): AdopterDesign => {
       const found = ADOPTERS[name];
@@ -1290,6 +1378,22 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     const record = new AdopterGpCache(design("record keys, the provenance triple"));
     record.put(record.key(partsOf()), objectOf());
     readings["record keys: a complete hand-built key"] = reading(() => record.get(S, { ...partsOf() }));
+    // Each provenance design stores and serves the object its choice lets through (wb-ne7z); the reference refuses it.
+    const served = (cache: GpCache, provenance: Record<string, unknown>): string =>
+      reading(() => {
+        const key = cache.key(partsOf());
+        cache.put(key, { ...objectOf(), provenance });
+        return cache.get(S, key);
+      });
+    const triple = (): Record<string, unknown> => ({ ...objectOf().provenance });
+    readings["an absent receipt accepted: an object without its receipt"] = served(new AdopterGpCache(design("token keys, an absent receipt accepted")), omit(triple(), "receipt"));
+    readings["empty producer and checkpoint accepted: both empty, no receipt"] = served(new AdopterGpCache(design("token keys, empty producer and checkpoint accepted")), {
+      producer: "",
+      checkpoint: "",
+    });
+    readings["empty fields accepted: every field empty"] = served(new AdopterGpCache(design("token keys, empty fields accepted")), { producer: "", checkpoint: "", receipt: "" });
+    readings["provenance values of any type: a numeric receipt"] = served(new AdopterGpCache(design("token keys, provenance values of any type")), { ...triple(), receipt: 7 });
+    readings["the reference: a numeric receipt"] = served(new ReferenceGpCache(), { ...triple(), receipt: 7 });
     return { adopters: Object.fromEntries(refusals), choices, readings };
   },
   Q1: () =>

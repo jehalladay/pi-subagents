@@ -17,6 +17,13 @@
  * riders are pinned controls: F3 a 7-hex sha pin and an "HX GP" mark in an attributed file (A2); F4 a bare and a short cmd_ token
  * (B2), two adjacent list items and a heading line (C2).
  *
+ * FOLLOW-UP (wb-9chv, the R694 follow-up of the landing-376 gate's F1): clause (b) reads the rows of marked table tokens, so a
+ * table written in raw HTML - an HTML block, table tags inline in a paragraph, a table inside a list item - renders no table row
+ * and is not read. The R-HTML-TABLE residual names that with its pinned quiet row Q12, which also holds both judged documents to
+ * render no HTML block and to hold no table tag (so every table row they render is a marked table row) and cites the two
+ * gate-level guards that close the route for them: the W10 stamped-claim guard's page check on the matrix and the TRACEABILITY
+ * freeze. The follow-up is test-only: it edits no product, docs, ledger or matrix text.
+ *
  * MEASURED (read-only, by the cutting seats, 2026-10-23 and 2026-10-24; the producer facts ride the roster with their blob ids):
  * each deposit's README.md:3 at its pin is its status line, and DEPOSITS holds that line's status clause verbatim: HX "no new HX
  * code implemented", Forge "proposed additive source adapter, not implemented", Furnace "no simulator or policy hooks implemented by
@@ -34,6 +41,8 @@
  * the matrix has a row naming TrainingWorks, the HX x GP program, gp beside hx, or an hx speedup, and no docs sentence spells a
  * fixture side, "live", Furnace or Beads and a success word together. The 71 tracked docs pages hold no HTML comment, no HTML
  * block, no image and no character reference; their raw HTML is seven inline placeholders (<id>, <TBD>, ...), which render nothing.
+ * Re-measured for R-HTML-TABLE (wb-9chv, at trunk 799eebe): TRACEABILITY.md holds no html token and feature-matrix.md two, the
+ * inline <id> placeholders of its invoke:<id> cells; neither renders an HTML block or holds a table tag.
  *
  * RENDERED VIEW. What a reader sees of a markdown page, read through marked's lexer (the repository's marked devDependency, 18.0.11
  * at this cut, the renderer the refusal's readings used). A PIECE is one rendered block: a heading, a paragraph, a list item's own
@@ -58,9 +67,11 @@
  * and the family tells them apart), or, pinning none, any phrase of the family; the phrase must sit within 400 characters of the
  * match (the characters strictly between the two). A match citing neither family is a namesake: attributed when its page's
  * rendered text names the graph-policy-machine-control program (its program id or its directory), otherwise owed some deposit's
- * phrase within the window like any citation. (b) Every rendered table row of TRACEABILITY.md and feature-matrix.md is read with
- * the Status cell of its table. A row names a subject when it spells TrainingWorks or graph-policy-optimization, or gp, GraphPolicy
- * or GraphDataIR beside hx or HyperUnix; it presents the subject as shipped when its status is one of the three words (b) quotes or
+ * phrase within the window like any citation. (b) Every rendered table row of TRACEABILITY.md and feature-matrix.md - each row of a
+ * marked table token; a table written in raw HTML renders no table token and is not read (R-HTML-TABLE), and Q12 holds both
+ * documents to render no HTML block and no table tag - is read with the Status cell of its table. A row names a subject when it
+ * spells TrainingWorks or graph-policy-optimization, or gp, GraphPolicy or GraphDataIR beside hx or HyperUnix; it presents the
+ * subject as shipped when its status is one of the three words (b) quotes or
  * a matrix status whose legend definition is or names landed-gated (landed-gated, partial), or when its text spells one of the
  * three words. A row spelling hx or HyperUnix beside a speedup word owes a cmd_ receipt in the row. (c) The guard is the product's:
  * qa/workbench/status-ledger.mjs refuses (integrity rule receipt-tier) a shipped, gate-pass or live-sdk row whose receipt clauses -
@@ -100,7 +111,9 @@
  * in run mode, ran before it) and the pins reached.
  * NOT CLAIMED (edits of this file and the roster together below row level): a pin removed from ROWS, the literal, IMPL and the
  * roster (the bead text anchors rows, not pins); a control removed while every remaining control still holds; a pin's case
- * replaced by one that echoes its roster witness; the outside-anchor case or the closing case removed with its roster title.
+ * replaced by one that echoes its roster witness; the outside-anchor case or the closing case removed with its roster title; a
+ * constant narrowed in both, such as an element dropped from TABLE_TAG (td dropped from both with a <td> tag planted in a matrix
+ * cell: 22 of 22 pass) or a cited guard's spelling rewritten in both.
  * RESIDUALS (named, each with its pinned quiet row): R-ATTRIBUTED-FILE a GraphPolicy mention without a family mark in a page that
  * names the graph-policy-machine-control program is attributed to that program, so an HX x GP citation spelled there without its
  * directory, title or "HX GP" is not held to "design only" (Q1); R-UNPINNED a TrainingWorks citation pinning no deposit sha is held
@@ -116,18 +129,29 @@
  * NAMED_REFERENCES ("&hyphen;") is not folded, so the spelling is no match (Q9); R-LINK-TARGET a link destination renders no text,
  * so a deposit sha carried only there pins nothing and the citation is held to its family (Q10); R-HIDDEN-HTML an element a browser
  * hides (the hidden attribute, a display:none style, template, script, style) still renders its text in this view, so a phrase
- * hidden that way satisfies its citation (Q11).
+ * hidden that way satisfies its citation (Q11); R-HTML-TABLE a table written in raw HTML (an HTML block, table tags inline in a
+ * paragraph, a table inside a list item) renders no marked table token, so clause (b) reads none of its rows: an HTML row
+ * presenting a TrainingWorks subject as landed-gated or shipped, or an hx speedup without a cmd_ receipt, reads no finding, while
+ * the same row as a markdown table row is flagged (Q12). The route is closed for the two judged documents outside this census -
+ * the W10 stamped-claim guard (test/workbench-w10-stamped-claim-guard.test.ts) refuses every raw HTML token on the matrix but a
+ * complete comment, and the TRACEABILITY freeze (test/workbench-traceability-freeze.test.ts) pins the ledger byte-exact - and Q12
+ * cites both (the guard's page check applied to the matrix; the freeze's pinned hash equal to the ledger's sha256) and holds both
+ * documents to render no HTML block and no table tag.
  * SCOPE: the tier is read from the ledger's own words, never from the producer: a receipt's tier is what its clause says. The
  * sentence judge reads words, not meaning: an affirmative sentence that names both sides around a copula (OVER-READ, disclosed;
  * none today) reads as an equation. The 400-character window counts UTF-16 code units of the rendered text. A row's subject and
  * claim words are read anywhere in its rendered cells. The product guard reads the ledger's source cells: TRACEABILITY.md is frozen
  * byte-exact, so its source and rendered views cannot drift apart without reddening the landed freeze test. No docs, ledger or
- * matrix text is edited by this cut; the guard is the only product change.
+ * matrix text is edited by this cut; the guard is the only product change. Q12 reads a document's HTML blocks in the rendered view (a
+ * complete comment renders nothing and is no HTML block there) and its table tags in every html token at any depth, a table tag
+ * inside a comment excepted; it reads the two guards it cites by their source spellings, so a cut renaming the W10 guard's page
+ * check or the freeze's target or hash constant re-measures Q12 in the same commit.
  *
  * Display paths added: none (the receipt-tier detail is a qa/workbench CLI receipt string; src/ is untouched). Test-only otherwise:
- * no scratch is allocated; docs, .beads and qa are only read.
+ * no scratch is allocated; docs, .beads, qa and the two guard files Q12 cites are only read.
  */
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
 import { readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -281,6 +305,15 @@ const LEGEND_HEADING = "Status legend";
 const LEGEND_PARENTS = ["Workbench release feature matrix"];
 const LEGEND_LEAD = "Status vocabulary (exactly one per row):";
 const LEGEND_ITEM = /^([a-z-]+): (.*)$/;
+/** R-HTML-TABLE (Q12): a table-structure tag, a comment (no tag inside one counts), and each judged document's gate-level guard with the source spellings Q12 cites it by. */
+const TABLE_TAG = /<\/?(?:table|caption|colgroup|col|thead|tbody|tfoot|tr|th|td)(?=[\s/>]|$)/i;
+const HTML_COMMENT = /<!--(?:-?>|[\s\S]*?(?:-->|$))/g;
+const W10_GUARD = "test/workbench-w10-stamped-claim-guard.test.ts";
+const W10_MATRIX = /^const MATRIX = "([^"\n]+)";$/m;
+const W10_PAGE_CHECK = "htmlRefusals(tokens, MATRIX,";
+const FREEZE_GUARD = "test/workbench-traceability-freeze.test.ts";
+const FREEZE_TARGET = /new URL\("\.\.\/([^"\n]+)", import\.meta\.url\)/;
+const FREEZE_HASH = /^const FROZEN_SHA256 = "([0-9a-f]{64})";$/m;
 
 const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-ATTRIBUTED-FILE": ["Q1"],
@@ -294,6 +327,7 @@ const RESIDUALS: Readonly<Record<string, readonly string[]>> = {
   "R-ENCODED": ["Q9"],
   "R-LINK-TARGET": ["Q10"],
   "R-HIDDEN-HTML": ["Q11"],
+  "R-HTML-TABLE": ["Q12"],
 };
 
 interface Row {
@@ -320,7 +354,7 @@ const ROWS: readonly Row[] = [
       "(c) validateLedger refuses a 'shipped'/'gate-pass'/'live-sdk' row backed only by a hermetic or fixture receipt (new guard), and no docs or TRACEABILITY sentence equates a fixture run with live Furnace/Beads success",
     pins: ["C1", "C2"],
   },
-  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11"] },
+  { id: "Q", label: "the residuals: each named family pinned by its quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12"] },
 ];
 
 interface RosterPin {
@@ -399,6 +433,13 @@ function trackedMarkdown(directory: string): string[] {
     .split("\n")
     .filter(path => path.endsWith(".md"))
     .sort();
+}
+/** Whether git tracks a repo path. */
+function tracked(path: string): boolean {
+  return execFileSync("git", ["ls-files", "--", path], { cwd: REPO, encoding: "utf8" }).split("\n").includes(path);
+}
+function sha256Of(path: string): string {
+  return createHash("sha256").update(readFileSync(join(REPO, path))).digest("hex");
 }
 function escaped(text: string): string {
   return text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -503,6 +544,22 @@ function renderInto(tokens: readonly Token[], line: number, kind: "paragraph" | 
       push("other", here, childrenOf(token).length > 0 ? inlineOf(childrenOf(token)) : referencesDecoded(tokenText(token)));
     }
   }
+}
+/** The raw text of every html token at any depth (block or inline; in table cells, list items, block quotes and inline children). */
+function htmlRaws(tokens: readonly Token[]): string[] {
+  return tokens.flatMap(token => {
+    if (token.type === "html") return [token.raw];
+    if (isTable(token)) return [...token.header, ...token.rows.flat()].flatMap(cell => htmlRaws(cell.tokens));
+    if (isList(token)) return token.items.flatMap(item => htmlRaws(childrenOf(item)));
+    return htmlRaws(childrenOf(token));
+  });
+}
+/** R-HTML-TABLE's closure reading of a page: the HTML blocks it renders (pieces of the rendered view) and the html tokens naming a table element outside a comment. */
+function htmlTableRoutes(markdown: string): { htmlBlocks: number; tableTags: number } {
+  return {
+    htmlBlocks: rendered(markdown).pieces.filter(piece => piece.kind === "html").length,
+    tableTags: htmlRaws(marked.lexer(markdown)).filter(raw => TABLE_TAG.test(raw.replace(HTML_COMMENT, ""))).length,
+  };
 }
 const VIEWS = new Map<string, Rendered>();
 /** A markdown page's rendered view (memoized by its text). */
@@ -1085,11 +1142,55 @@ const IMPL: Readonly<Record<string, () => JsonValue>> = {
     expect(reading.findings, "a phrase in an element a browser hides still renders in this view").toEqual([]);
     return { citations: reading.citations, findings: reading.findings.length };
   },
+  Q12: () => {
+    const html = (header: readonly string[], row: readonly string[]): string =>
+      `<table>\n<tr>${header.map(cell => `<th>${cell}</th>`).join("")}</tr>\n<tr>${row.map(cell => `<td>${cell}</td>`).join("")}</tr>\n</table>`;
+    const markdown = (header: readonly string[], row: readonly string[]): string => tableOf(`| ${header.join(" | ")} |`, [`| ${row.join(" | ")} |`]);
+    const matrixHeader = cellsOf(MATRIX_HEADER);
+    const ledgerHeader = ["Requirement", "Status"];
+    const subject = "TrainingWorks Forge export adapter (proposed additive source adapter, not implemented)";
+    const subjectRow = [subject, "landed-gated", "test/x.test.ts", DASH];
+    const speedupRow = ["hx query planning", "landed-gated", "hx answers 3x faster", DASH];
+    const shippedRow = ["TrainingWorks export adapter (no code, test or task-store mutation)", "shipped"];
+    const controls: { id: string; text: string; quiet: boolean }[] = [
+      { id: "html-matrix-subject-landed-gated", text: html(matrixHeader, subjectRow), quiet: true },
+      { id: "html-matrix-hx-speedup-without-a-receipt", text: html(matrixHeader, speedupRow), quiet: true },
+      { id: "html-ledger-subject-shipped", text: html(ledgerHeader, shippedRow), quiet: true },
+      { id: "table-tags-inline-in-a-paragraph", text: `Pi notes <table><tr><td>${subject}</td><td>landed-gated</td></tr></table>`, quiet: true },
+      { id: "html-table-inside-a-list-item", text: `- <table><tr><td>${subject}</td><td>landed-gated</td></tr></table>`, quiet: true },
+      { id: "markdown-matrix-subject-landed-gated", text: markdown(matrixHeader, subjectRow), quiet: false },
+      { id: "markdown-matrix-hx-speedup-without-a-receipt", text: markdown(matrixHeader, speedupRow), quiet: false },
+      { id: "markdown-ledger-subject-shipped", text: markdown(ledgerHeader, shippedRow), quiet: false },
+    ];
+    const readings = controls.map(control => {
+      const rows = tableRows("docs/workbench/x.md", control.text);
+      const findings = rowFindings(rows);
+      expect(findings.length === 0, `${control.id} is ${control.quiet ? "quiet: a table in raw HTML renders no table row for clause (b)" : "flagged as a markdown table row"}`).toBe(control.quiet);
+      if (control.quiet) expect([rows.length, tableLineCount(control.text)], `${control.id}: no row in the rendered read or the source count`).toEqual([0, 0]);
+      return { id: control.id, rows: rows.length, findings: findings.length };
+    });
+    const documents = [LEDGER, MATRIX].map(path => ({ path, ...htmlTableRoutes(textOf(path)) }));
+    expect(documents, "neither judged document renders an HTML block or holds a table tag, so every table row they render is a marked table row").toEqual(
+      [LEDGER, MATRIX].map(path => ({ path, htmlBlocks: 0, tableTags: 0 })),
+    );
+    const w10 = textOf(W10_GUARD);
+    const freeze = textOf(FREEZE_GUARD);
+    const guards = {
+      matrix: { guard: W10_GUARD, tracked: tracked(W10_GUARD), document: W10_MATRIX.exec(w10)?.[1] ?? "", pageChecks: w10.split(W10_PAGE_CHECK).length - 1 },
+      ledger: { guard: FREEZE_GUARD, tracked: tracked(FREEZE_GUARD), document: FREEZE_TARGET.exec(freeze)?.[1] ?? "", frozenSha256: FREEZE_HASH.exec(freeze)?.[1] ?? "" },
+    };
+    expect([guards.matrix.tracked, guards.ledger.tracked], "both cited guards are git-tracked test files").toEqual([true, true]);
+    expect(guards.matrix.document, "the W10 stamped-claim guard reads the matrix").toBe(MATRIX);
+    expect(guards.matrix.pageChecks, "and applies its raw-HTML page check to it once").toBe(1);
+    expect(guards.ledger.document, "the TRACEABILITY freeze reads the ledger").toBe(LEDGER);
+    expect(guards.ledger.frozenSha256, "and its pinned hash is the ledger's sha256").toBe(sha256Of(LEDGER));
+    return { controls: readings, documents, guards };
+  },
 };
 
 describe("wb-4wmu.1 TrainingWorks status census (BEADS-TRAININGWORKS-R1)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:3", "C:2", "Q:11"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:3", "C:2", "Q:12"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect(ROSTER.bead).toBe(BEAD);
@@ -1116,6 +1217,13 @@ describe("wb-4wmu.1 TrainingWorks status census (BEADS-TRAININGWORKS-R1)", () =>
         rendered: { namedReferences: NAMED_REFERENCES, reference: REFERENCE.source, hiddenHtml: HIDDEN_HTML.source, format: FORMAT.source, phraseSpace: PHRASE_SPACE },
         legend: { heading: LEGEND_HEADING, parents: LEGEND_PARENTS, lead: LEGEND_LEAD, item: LEGEND_ITEM.source },
         residuals: RESIDUALS,
+        htmlTable: {
+          tableTag: TABLE_TAG.source,
+          comment: HTML_COMMENT.source,
+          guards: [W10_GUARD, FREEZE_GUARD],
+          w10: [W10_MATRIX.source, W10_PAGE_CHECK],
+          freeze: [FREEZE_TARGET.source, FREEZE_HASH.source],
+        },
       }),
     ).toStrictEqual(ROSTER.constants);
     for (const members of Object.values(RESIDUALS)) for (const member of members) expect(ROWS.flatMap(row => row.pins), `${member} is a judged pin`).toContain(member);

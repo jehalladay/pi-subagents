@@ -2,6 +2,8 @@
  * wb-a3s: a Forge operation this host starts becomes an observed, owned node of the session projection, read only off the
  * issuing connection's own frames and reply, so the control decision core admits it; everything else stays not-admitted.
  */
+import { readFileSync } from "node:fs";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import { CapabilityError } from "../src/workbench/capability-registry.js";
 import { decideControl } from "../src/workbench/control.js";
@@ -11,10 +13,14 @@ import { createRetainedForgeControlExecutor, lookupForgeOperation, releaseForgeO
 import {
   decodeForgeOperationFrame,
   decodeForgeOperationTerminal,
+  decodeForgeRunBasis,
   FORGE_GATE_STEP_KIND,
   FORGE_OPERATION_KIND,
+  FORGE_RESULT_CONTRACT,
+  type ForgeObservedHead,
   type ForgeOperationConnection,
   type ForgeOperationFrame,
+  forgeGateRunReading,
   forgeGateStepRef,
   forgeGateStepTopology,
   forgeOperationRef,
@@ -292,10 +298,12 @@ describe("the live observer over the issuing connection", () => {
  * (status success, gate_verdict PASS), `forge gate --json --only alpha` (status partial, gate_verdict COULD_NOT_JUDGE) and
  * `forge gate --json -- --extra-arg` (status success, gate_verdict null, gate_passed false). The served gate.run reply is that
  * same serialized envelope with the operation fields beside it (Forge src/forge/application/gate_methods.py run_gate_method).
+ * Only the narrowed `-- <args>` arm publishes a `data.selection` key: the full and the --only arm carry none (the key is
+ * absent, not null), so neither of their blocks states one (wb-dqhl; re-measured 2026-10-25 with forge 0.2.1 rev
+ * 40c9ca729f7e, where the gate_verdict, selection and selection_accounting readings of all three arms equal these blocks).
  */
 const MEASURED_FULL = {
   gate_verdict: "PASS",
-  selection: null,
   selection_accounting: {
     counts: { declared: 3, executed: 3, explicitly_narrowed: 0, not_run: 0, replayed: null, resume_attested: 0, resume_unattested: 0, selected: 3, unaffected: 0, unknown: 0 },
     not_applicable: ["replayed"], policy: "impacted/v2", selected_steps_passed: true, unit: "step",
@@ -308,7 +316,6 @@ const MEASURED_FULL = {
 };
 const MEASURED_ONLY_ALPHA = {
   gate_verdict: "COULD_NOT_JUDGE",
-  selection: null,
   selection_accounting: {
     counts: { declared: 3, executed: 1, explicitly_narrowed: 2, not_run: 0, replayed: null, resume_attested: 0, resume_unattested: 0, selected: 1, unaffected: 0, unknown: 0 },
     not_applicable: ["replayed"], policy: "impacted/v2", selected_steps_passed: true, unit: "step",
@@ -341,13 +348,169 @@ const DOCUMENTED_MEMBERS_UNAFFECTED = {
 };
 const settledReply = (status: string, data?: unknown, disposition = "completed"): Record<string, unknown> =>
   ({ operation_id: OP, status, terminal_disposition: disposition, lifecycle_state: "TERMINAL", ...(data !== undefined ? { data } : {}) });
-const terminalOf = (reply: unknown) => {
-  const terminal = decodeForgeOperationTerminal(reply, OP, T2);
+/*
+ * wb-dqhl cut #4: THE U1 CLASS GUARD, in the enumerate-the-resolvable form (rule 19(c)/(d); refusal #3, U2). The class: the kills
+ * the landed test file (blob ced0bb61) drew from the `selection: null` that MEASURED_FULL and MEASURED_ONLY_ALPHA carried, and from
+ * the key slot it held in front of selection_accounting, lost when wb-dqhl cut #1 dropped that null from the measured fixtures.
+ * PINNED SET: each dimension, the parts of this guard that pin it, and the members (src mutants, named as the gate and seat
+ * batteries on wb-dqhl name them) it kills. Nothing outside these six dimensions is claimed.
+ *   P1 block shape - a null selection beside each of the 20 accounting blocks this file builds (the null twin in terminalOf, the
+ *      U1 case's 20-block loop): GW1, GW1b, GW1c, GW3, N1, N2, N3, N5, N7, N8, N9, N10, N11, Q1, Q2, Q4, Q7, Q8.
+ *   P2 gate_verdict, status and disposition - each null twin keeps its reply's own (the null twin in terminalOf): Z1, Z2, Z3, Z4,
+ *      Z7, Q5.
+ *   P3 the observer path - the three observed gate.run replies against their null twins (the U1 class case): Z5, Q6.
+ *   P4 inherited data - the landed inherited data block against its null twin (the U1 class case): Z6.
+ *   P5 the null key's slot - the null twin inserts the key just before the accounting block, at the landed key count (the null
+ *      twin in terminalOf): Z8, Q3.
+ *   P6 the key position of a stated selection - the order twin in terminalOf moves a stated selection key to the other side of
+ *      selection_accounting, so the five landed replies that state a non-null selection over MEASURED_FULL (the four malformed
+ *      test-selection renders and the inherited-flag render) render again in the landed order: KO1, KO2 (KO3 and KO4 stay killed).
+ * CONSTRUCTION (an argument, not a measurement): each landed evaluation behind P1-P6 is re-evaluated as a structural copy of the
+ * landed reply - the same own keys in the same order, every value by reference - inside the same terminalOf call (or the U1 class
+ * case's explicit reads), after its own reply, and must decode and render exactly as that reply. So a decode that reads each reply
+ * on its own keys and values alone is killed here wherever the landed file killed it.
+ * NAMED RESIDUALS: the known-unpinned families of the class, each with a pinned quiet row (a case that reds when its family stops
+ * reading quiet through this guard, or when its page stops carrying the family).
+ *   R-SEQUENCE - a decode whose reading of a reply depends on the reads before it: the guard reads every twin after its reply, so
+ *      no landed reply is ever a first read here. Quiet row: "wb-dqhl (U1 residual R-SEQUENCE): ...".
+ *   R-SHARED-VALUES - a decode keyed on the identity of a value the reply carries: every twin carries its reply's values by
+ *      reference, so a reading memoized on the reply's accounting block is read back for its twin. Quiet row: "wb-dqhl (U1
+ *      residual R-SHARED-VALUES): ...".
+ * Outside the class (refusal #3: no row owed): MX6 and MX7 (prototype-chain reads, pre-existing at base) and C5 and C7 (the U3
+ * lexical controls).
+ */
+/**
+ * wb-dqhl (U1 class guard): a reply's null twin - the same reply whose own data record, stating no selection key, gains
+ * `selection: null` just before its accounting block, where MEASURED_FULL and MEASURED_ONLY_ALPHA carried it until wb-dqhl cut #1
+ * (NOT measured: forge 0.2.1 omits the key, see the fixture comment above). Every other own field is kept in its order, so the twin
+ * of a reply built from those fixtures is the reply the landed fixtures built. Undefined when the reply has no own data record or
+ * its data already states a selection.
+ */
+const nullTwin = (reply: unknown): Record<string, unknown> | undefined => {
+  if (typeof reply !== "object" || reply === null || !Object.hasOwn(reply, "data")) return undefined;
+  const { data } = reply as { data: unknown };
+  if (typeof data !== "object" || data === null || Array.isArray(data) || Object.hasOwn(data, "selection")) return undefined;
+  const fields: [string, unknown][] = Object.entries(data);
+  const at = fields.findIndex(([key]) => key === "selection_accounting");
+  fields.splice(at === -1 ? fields.length : at, 0, ["selection", null]);
+  return { ...reply, data: Object.fromEntries(fields) };
+};
+/**
+ * wb-dqhl cut #4 (U1 class guard, P6): a reply's order twin - the same reply whose own data record states a selection key and an
+ * accounting block, with the selection key moved to the other side of selection_accounting (just after it when it came first,
+ * just before it when it came after). Every other own field keeps its order and every value is kept by reference, so the order
+ * twin of a reply built as { ...MEASURED_FULL, selection } is the reply the landed fixtures built ([gate_verdict, selection,
+ * selection_accounting]). Undefined when the reply has no own data record or its data states no selection key or no accounting block.
+ */
+const orderTwin = (reply: unknown): Record<string, unknown> | undefined => {
+  if (typeof reply !== "object" || reply === null || !Object.hasOwn(reply, "data")) return undefined;
+  const { data } = reply as { data: unknown };
+  if (typeof data !== "object" || data === null || Array.isArray(data)) return undefined;
+  const fields: [string, unknown][] = Object.entries(data);
+  const from = fields.findIndex(([key]) => key === "selection");
+  const anchor = fields.findIndex(([key]) => key === "selection_accounting");
+  if (from === -1 || anchor === -1) return undefined;
+  const moved = fields.splice(from, 1);
+  const at = fields.findIndex(([key]) => key === "selection_accounting");
+  fields.splice(from < anchor ? at + 1 : at, 0, ...moved);
+  return { ...reply, data: Object.fromEntries(fields) };
+};
+/** A reply's own data record's own keys, in order (none when the reply has no own data record). */
+const dataKeys = (reply: unknown): string[] => {
+  if (typeof reply !== "object" || reply === null || !Object.hasOwn(reply, "data")) return [];
+  const { data } = reply as { data: unknown };
+  return typeof data === "object" && data !== null && !Array.isArray(data) ? Object.keys(data) : [];
+};
+/** One own field of a reply's own data record, or undefined. */
+const dataField = (reply: unknown, key: string): unknown => {
+  if (typeof reply !== "object" || reply === null || !Object.hasOwn(reply, "data")) return undefined;
+  const { data } = reply as { data: unknown };
+  return typeof data === "object" && data !== null && Object.hasOwn(data, key) ? (data as Record<string, unknown>)[key] : undefined;
+};
+type TerminalDecode = typeof decodeForgeOperationTerminal;
+/**
+ * wb-dqhl cut #4 (the residual quiet rows): how a residual family's decode misreads a reply of a landed shape - GW1's reading of a
+ * null selection beside the accounting block (a withheld test block) and KO1's of a withheld selection that precedes it (no test
+ * block); any other reply keeps the real decode's reading.
+ */
+const misread = (reply: unknown, terminal: ReturnType<TerminalDecode>): ReturnType<TerminalDecode> => {
+  const keys = dataKeys(reply);
+  if (terminal === undefined || terminal.selection === undefined || !keys.includes("selection") || !keys.includes("selection_accounting")) return terminal;
+  const { units, tests } = terminal.selection;
+  const kept = units !== undefined ? { units } : {};
+  if (dataField(reply, "selection") === null) return { ...terminal, selection: { ...kept, tests: "withheld" as const } };
+  if (tests === "withheld" && keys.indexOf("selection") < keys.indexOf("selection_accounting")) return { ...terminal, selection: kept };
+  return terminal;
+};
+/** R-SEQUENCE's family as a decode: its first read misreads a reply of a landed shape, and every later read is the real decode's. */
+const firstReadDecode = (): TerminalDecode => {
+  let reads = 0;
+  return (reply, operationId, observedAt) => {
+    reads += 1;
+    const terminal = decodeForgeOperationTerminal(reply, operationId, observedAt);
+    return reads === 1 ? misread(reply, terminal) : terminal;
+  };
+};
+/** R-SHARED-VALUES's family as a decode: its reading is memoized on the accounting block a reply carries, and its first reading of a block misreads a reply of a landed shape. */
+const blockMemoDecode = (): TerminalDecode => {
+  const readings = new Map<unknown, ReturnType<TerminalDecode>>();
+  return (reply, operationId, observedAt) => {
+    const block = dataField(reply, "selection_accounting");
+    if (block !== undefined && readings.has(block)) return readings.get(block);
+    const reading = misread(reply, decodeForgeOperationTerminal(reply, operationId, observedAt));
+    if (block !== undefined) readings.set(block, reading);
+    return reading;
+  };
+};
+/**
+ * The reply's terminal node. wb-dqhl (U1 class guard): every render here also renders the reply's null twin and requires it to
+ * decode and render exactly as the reply, so each reply a case builds keeps the null reading the landed fixtures gave it - with
+ * its own gate_verdict, status and disposition - derived from the replies the cases build, never from a list of them.
+ * wb-dqhl cut #4 (P6): it renders the reply's order twin the same way, and it reads the reply and its twins through `decode` - the
+ * real decode, except in the two residual quiet rows, which pass their family's decode.
+ */
+const terminalOf = (reply: unknown, decode: TerminalDecode = decodeForgeOperationTerminal) => {
+  const terminal = decode(reply, OP, T2);
   if (terminal === undefined) throw new Error("the reply names no terminal for the operation");
-  return forgeOperationTerminalSnapshot(terminal, options);
+  const snapshot = forgeOperationTerminalSnapshot(terminal, options);
+  const twin = nullTwin(reply);
+  if (twin !== undefined) {
+    const twinTerminal = decode(twin, OP, T2);
+    expect(twinTerminal, "wb-dqhl (U1): the reply's null twin decodes as the reply").toStrictEqual(terminal);
+    expect(twinTerminal === undefined ? undefined : forgeOperationTerminalSnapshot(twinTerminal, options), "wb-dqhl (U1): the reply's null twin renders as the reply").toStrictEqual(snapshot);
+  }
+  const moved = orderTwin(reply);
+  if (moved !== undefined) {
+    const movedTerminal = decode(moved, OP, T2);
+    expect(movedTerminal, "wb-dqhl (U1 P6): the reply's order twin decodes as the reply").toStrictEqual(terminal);
+    expect(movedTerminal === undefined ? undefined : forgeOperationTerminalSnapshot(movedTerminal, options), "wb-dqhl (U1 P6): the reply's order twin renders as the reply").toStrictEqual(snapshot);
+  }
+  return snapshot;
+};
+/**
+ * The pages of the two residual quiet rows: replies the landed cases build whose twin is the reply the landed fixtures built - the
+ * two measured unnarrowed replies (a null twin) and the five replies that state a non-null selection over MEASURED_FULL (an order twin).
+ */
+const residualPages = (): [string, Record<string, unknown>][] => {
+  const inheritedFlag = Object.assign(Object.create({ narrowed: false }) as Record<string, unknown>, { denominator_complete: null });
+  return [
+    ["the measured full reply", settledReply("success", MEASURED_FULL)],
+    ["the measured --only reply", settledReply("partial", MEASURED_ONLY_ALPHA)],
+    ...[{ narrowed: "yes" }, { narrowed: false, denominator_complete: "no" }, "narrowed", [], inheritedFlag].map((selection): [string, Record<string, unknown>] => [
+      `the stated selection ${JSON.stringify(selection)}`,
+      settledReply("success", { ...MEASURED_FULL, selection }),
+    ]),
+  ];
+};
+/** A residual page's loud reading: the statusText a first read of its landed reply gives under the family's misreading. */
+const loudText = (page: Record<string, unknown>): string => {
+  const text = terminalOf(page).node.statusText;
+  return nullTwin(page) !== undefined ? `${text} · tests UNKNOWN` : text.replace(/ · tests UNKNOWN$/, "");
 };
 const withUnits = (change: Record<string, unknown>) => ({ ...MEASURED_FULL, selection_accounting: { ...MEASURED_FULL.selection_accounting, ...change } });
 const [ROW_ALPHA, ROW_BETA, ROW_GAMMA] = MEASURED_FULL.selection_accounting.units;
+/** A doc comment's text with its delimiters, leading stars and line breaks folded to single spaces, so a wrapped sentence reads whole. */
+const commentText = (raw: string): string => raw.replace(/^\/\*\*|\*\/$/g, "").replace(/\n\s*\*/g, " ").replace(/\s+/g, " ").trim();
 
 describe("wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with the gate.run verdict", () => {
   it("wb-6ps1.2 (a): the measured complete selection (3 of 3 steps) travels with the verdict as its own facet, complete coverage, and the command status keeps its tone", () => {
@@ -522,5 +685,468 @@ describe("wb-6ps1.2 (R2 (a)): the selected-versus-complete universe travels with
       expect(node?.presentation.statusTone, `${outcome}/${status}`).toBe(operationTone);
       expect(node?.presentation.statusText, `${outcome}/${status}`).toBe("completed · selection complete: 3 of 3 steps selected");
     }
+  });
+
+  it("wb-dqhl (F1): the measured unnarrowed arms (forge gate --json, --only alpha) carry no data.selection key - forge 0.2.1 omits it, absent rather than null - and only the narrowed -- <args> arm carries one", () => {
+    // A fixture labelled MEASURED states only what the producer published: null is not a value forge 0.2.1 wrote on those arms.
+    expect(Object.keys(MEASURED_FULL).sort()).toStrictEqual(["gate_verdict", "selection_accounting"]);
+    expect(Object.keys(MEASURED_ONLY_ALPHA).sort()).toStrictEqual(["gate_verdict", "selection_accounting"]);
+    expect(Object.keys(MEASURED_ARGS).sort()).toStrictEqual(["gate_verdict", "selection", "selection_accounting"]);
+  });
+
+  it("wb-dqhl (U1): NOT measured - a constructed reply with a null data.selection beside the measured full accounting block decodes to the unit universe only (no tests facet): selection complete, complete coverage, the success tone kept - and beside every accounting block this file pins, a null key reads exactly as an absent one", () => {
+    // A null key is not what forge 0.2.1 writes (it omits the key on an unnarrowed run, see the fixture comment above). This reply is
+    // built, not captured: it keeps the decode's null clause beside an accounting block pinned now that no measured fixture carries one.
+    const nullBeside = { ...MEASURED_FULL, selection: null };
+    expect(decodeForgeOperationTerminal(settledReply("success", nullBeside), OP, T2)).toStrictEqual({
+      operationId: OP, status: "success", terminalDisposition: "completed", observedAt: T2, selection: { units: { unit: "step", selected: 3, declared: 3 } },
+    });
+    const nullSnapshot = terminalOf(settledReply("success", nullBeside));
+    expect(nullSnapshot.node).toStrictEqual({ title: `Forge operation ${OP}`, type: "workflow", statusText: "completed · selection complete: 3 of 3 steps selected", statusTone: "success" });
+    expect(nullSnapshot.coverage).toBe("complete");
+    // wb-dqhl cut #3: the six blocks the landed cases build through withUnits, each built here exactly as its case builds it (withUnits
+    // spreads MEASURED_FULL, so each carried a null selection until cut #1): one row, short of complete by each unselected state, the
+    // empty declared universe and an inherited row selection.
+    const counts = MEASURED_FULL.selection_accounting.counts;
+    const inheritedRow = Object.assign(Object.create({ selection: "selected" }) as Record<string, unknown>, { ref: "gamma", outcome: "executed", basis: ROW_GAMMA.basis });
+    const constructed: [string, ReturnType<typeof withUnits>][] = [
+      ["the one-row block (1 of 1 step)", withUnits({ units: [ROW_ALPHA], counts: { ...counts, declared: 1, selected: 1, executed: 1 } })],
+      ...(["unaffected", "explicitly_narrowed", "unknown"] as const).map((state): [string, ReturnType<typeof withUnits>] => [
+        `the block short of complete by ${state} (2 of 3 steps)`,
+        withUnits({ units: [ROW_ALPHA, ROW_BETA, { ...ROW_GAMMA, selection: state, outcome: null }], counts: { ...counts, selected: 2, [state]: 1, executed: 2 } }),
+      ]),
+      ["the empty declared universe (0 of 0 steps)", withUnits({ units: [], counts: { ...counts, declared: 0, selected: 0, executed: 0 } })],
+      ["the block with an inherited row selection", withUnits({ units: [ROW_ALPHA, ROW_BETA, inheritedRow] })],
+    ];
+    const blocks: [string, unknown][] = [
+      ["the measured full block", MEASURED_FULL.selection_accounting],
+      ["the measured --only block", MEASURED_ONLY_ALPHA.selection_accounting],
+      ["the documented member block", DOCUMENTED_MEMBERS_UNAFFECTED.selection_accounting],
+      ...malformedUnits,
+      ...constructed.map(([label, data]): [string, unknown] => [label, data.selection_accounting]),
+    ];
+    for (const [label, block] of blocks) {
+      for (const status of ["success", "partial", "error"]) {
+        const absent = settledReply(status, { gate_verdict: null, selection_accounting: block });
+        const nulled = settledReply(status, { gate_verdict: null, selection_accounting: block, selection: null });
+        expect(decodeForgeOperationTerminal(nulled, OP, T2), `${label}/${status}`).toStrictEqual(decodeForgeOperationTerminal(absent, OP, T2));
+        expect(terminalOf(nulled), `${label}/${status}`).toStrictEqual(terminalOf(absent));
+      }
+    }
+  });
+
+  it("wb-dqhl (U1 class): NOT measured - a reply's null twin is the reply the landed fixtures built (selection: null where MEASURED_FULL and MEASURED_ONLY_ALPHA carried it, nothing else changed), and the inherited data block and the three observed gate.run replies read exactly as their null twins", async () => {
+    // The twin terminalOf also renders: for each measured unnarrowed reply it is the landed reply, field for field and in order.
+    for (const [fixture, verdict] of [[MEASURED_FULL, "PASS"], [MEASURED_ONLY_ALPHA, "COULD_NOT_JUDGE"]] as const) {
+      const twin = nullTwin(settledReply("partial", fixture, "late"));
+      expect(twin, verdict).toStrictEqual({ ...settledReply("partial", undefined, "late"), data: { gate_verdict: verdict, selection: null, selection_accounting: fixture.selection_accounting } });
+      expect(Object.keys(twin?.data ?? {}), verdict).toStrictEqual(["gate_verdict", "selection", "selection_accounting"]);
+    }
+    // No twin where the data already states a selection, is not a record, or is absent.
+    for (const data of [MEASURED_ARGS, { selection: null }, null, "data", [MEASURED_FULL]]) expect(nullTwin(settledReply("success", data)), JSON.stringify(data)).toBeUndefined();
+    expect(nullTwin(settledReply("success"))).toBeUndefined();
+    // The landed inherited case's data block, inherited with its null twin: it publishes no selection either.
+    const nullOnlyAlpha = nullTwin(settledReply("success", MEASURED_ONLY_ALPHA))?.data;
+    expect(nullOnlyAlpha).toStrictEqual({ ...MEASURED_ONLY_ALPHA, selection: null });
+    const inheritedTwin = Object.assign(Object.create({ data: nullOnlyAlpha }) as Record<string, unknown>, settledReply("success"));
+    expect(decodeForgeOperationTerminal(inheritedTwin, OP, T2)).toStrictEqual({ operationId: OP, status: "success", terminalDisposition: "completed", observedAt: T2 });
+    // The three replies the live-observer cases settle: each leaves the projection its null twin leaves.
+    const observed = async (reply: unknown, steps: [string, Record<string, unknown>][]) => {
+      const projection = new ObservationProjection();
+      const fake = fakeConnection();
+      const pending = observeForgeGateRun(fake.connection, deps(projection).deps);
+      fake.frame("operation.started", { operation_id: OP, request_id: "2" });
+      const observer = await pending;
+      for (const [method, params] of steps) fake.frame(method, params);
+      fake.reply(reply);
+      expect(await observer.settled).toBe("settled");
+      return projection.query({ scope: SCOPE, limit: 10 });
+    };
+    const runs: [string, Record<string, unknown>, [string, Record<string, unknown>][]][] = [
+      ["the --only reply", settledReply("partial", MEASURED_ONLY_ALPHA), [["gate.step_started", { operation_id: OP, seq: 1, step: "alpha" }], ["gate.step_finished", { operation_id: OP, seq: 2, step: "alpha", outcome: "passed", exit_code: 0 }]]],
+      ["the full reply over a failed step", settledReply("success", MEASURED_FULL), [["gate.step_finished", { operation_id: OP, seq: 1, step: "beta", outcome: "failed", exit_code: 1 }]]],
+      ["the full error reply over a passed step", settledReply("error", MEASURED_FULL), [["gate.step_finished", { operation_id: OP, seq: 1, step: "beta", outcome: "passed", exit_code: 0 }]]],
+    ];
+    for (const [label, reply, steps] of runs) {
+      const absent = await observed(reply, steps);
+      expect(absent.nodes.filter(node => node.presentation.statusText.includes(" · selection ")), label).toHaveLength(1);
+      expect(await observed(nullTwin(reply), steps), label).toStrictEqual(absent);
+    }
+  });
+
+  it("wb-dqhl (U1 P6): NOT measured - a reply's order twin is the reply with its stated selection key on the other side of selection_accounting: for the five landed replies that state a non-null selection over MEASURED_FULL it is the reply the landed fixtures built, for MEASURED_ARGS the accounting-first order, and no order twin is built without a stated selection key or an accounting block", () => {
+    const inheritedFlag = Object.assign(Object.create({ narrowed: false }) as Record<string, unknown>, { denominator_complete: null });
+    for (const selection of [{ narrowed: "yes" }, { narrowed: false, denominator_complete: "no" }, "narrowed", [], inheritedFlag]) {
+      const label = JSON.stringify(selection);
+      const reply = settledReply("success", { ...MEASURED_FULL, selection });
+      expect(dataKeys(reply), label).toStrictEqual(["gate_verdict", "selection_accounting", "selection"]);
+      const twin = orderTwin(reply);
+      expect(twin, label).toStrictEqual({ ...settledReply("success"), data: { gate_verdict: "PASS", selection, selection_accounting: MEASURED_FULL.selection_accounting } });
+      expect(dataKeys(twin), label).toStrictEqual(["gate_verdict", "selection", "selection_accounting"]);
+      expect(dataField(twin, "selection"), label).toBe(selection);
+      expect(dataKeys(orderTwin(twin)), label).toStrictEqual(["gate_verdict", "selection_accounting", "selection"]);
+    }
+    expect(dataKeys(orderTwin(settledReply("success", MEASURED_ARGS)))).toStrictEqual(["gate_verdict", "selection_accounting", "selection"]);
+    // No order twin where the data states no selection key or no accounting block, is not a record, or is absent.
+    const noTwin = [MEASURED_FULL, { gate_verdict: "PASS", selection: { narrowed: false, denominator_complete: null } }, { selection: null }, null, "data", [MEASURED_ARGS]];
+    for (const data of noTwin) expect(orderTwin(settledReply("success", data)), JSON.stringify(data)).toBeUndefined();
+    expect(orderTwin(settledReply("success"))).toBeUndefined();
+  });
+
+  it("wb-dqhl (U1 residual R-SEQUENCE): NOT measured - pinned quiet reading: a decode whose reading of a reply depends on the reads before it stays quiet through the guard, which reads every twin after its reply, while a first read of the landed reply is loud", () => {
+    for (const [label, page] of residualPages()) {
+      const landed = nullTwin(page) ?? orderTwin(page);
+      // The page carries the family: its twin is the reply the landed fixtures built, and the page itself is not.
+      expect(dataKeys(landed), label).toStrictEqual(["gate_verdict", "selection", "selection_accounting"]);
+      expect(dataKeys(page), label).not.toStrictEqual(["gate_verdict", "selection", "selection_accounting"]);
+      // Quiet through the guard, read first and as terminalOf reads it: the page, then its twin, which the same decode reads as the real decode does.
+      expect(terminalOf(page, firstReadDecode()), label).toStrictEqual(terminalOf(page));
+      // Then loud on a first read: the family's decode misreads the landed reply read on its own.
+      const first = firstReadDecode()(landed, OP, T2);
+      expect(first === undefined ? undefined : forgeOperationTerminalSnapshot(first, options).node.statusText, label).toBe(loudText(page));
+      expect(loudText(page), label).not.toBe(terminalOf(page).node.statusText);
+    }
+  });
+
+  it("wb-dqhl (U1 residual R-SHARED-VALUES): NOT measured - pinned quiet reading: a decode memoized on the accounting block a reply carries stays quiet through the guard, whose twins carry their reply's values by reference, while a first read of the landed reply is loud", () => {
+    for (const [label, page] of residualPages()) {
+      const landed = nullTwin(page) ?? orderTwin(page);
+      // The page carries the family: its twin carries the page's own accounting block, by reference.
+      expect(typeof dataField(page, "selection_accounting"), label).toBe("object");
+      expect(dataField(landed, "selection_accounting"), label).toBe(dataField(page, "selection_accounting"));
+      // Quiet through the guard, read first and as terminalOf reads it: the page's own reading is memoized on its block and read back for its twin.
+      expect(terminalOf(page, blockMemoDecode()), label).toStrictEqual(terminalOf(page));
+      // Then loud on a first read: the family's decode misreads the landed reply read on its own.
+      const first = blockMemoDecode()(landed, OP, T2);
+      expect(first === undefined ? undefined : forgeOperationTerminalSnapshot(first, options).node.statusText, label).toBe(loudText(page));
+      expect(loudText(page), label).not.toBe(terminalOf(page).node.statusText);
+    }
+  });
+
+  it("wb-dqhl (F1): the decode's doc comment states the measured absence of data.selection on an unnarrowed run and never names null as the producer's own value", () => {
+    const text = readFileSync(new URL("../src/workbench/forge-operation-observer.ts", import.meta.url), "utf8");
+    const file = ts.createSourceFile("forge-operation-observer.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+    const decode = file.statements.filter(ts.isFunctionDeclaration).filter(fn => fn.name?.text === "decodeForgeRunSelection");
+    expect(decode, "exactly one module-level decodeForgeRunSelection()").toHaveLength(1);
+    const docs = (ts.getLeadingCommentRanges(text, decode[0].getFullStart()) ?? []).map(range => commentText(text.slice(range.pos, range.end)));
+    expect(docs, "exactly one doc comment above decodeForgeRunSelection()").toHaveLength(1);
+    expect(docs[0]).toContain("An unnarrowed run publishes no `data.selection` key (measured, forge 0.2.1: absent, not null)");
+    expect(docs[0]).not.toMatch(/`selection: null` is the producer's own value/);
+    // wb-dqhl (U3): "never names null" holds for any wording, not only the one landed false sentence: every null the comment names
+    // (any case, plurals included) sits inside its one pinned honest sentence, and no invisible format character splits a word out
+    // of that reading. The reading is the comment's source text, folded as commentText folds it.
+    const honest = "An unnarrowed run publishes no `data.selection` key (measured, forge 0.2.1: absent, not null); a null one decodes the same, to no test universe.";
+    expect(docs[0]).toContain(honest);
+    expect(docs[0].split(honest).join(" "), "a null named outside the pinned honest sentence").not.toMatch(/null/i);
+    expect(docs[0], "an invisible format character in the doc comment").not.toMatch(/\p{Cf}/u);
+  });
+
+  it("wb-dqhl (F8): a withheld unit block beside a narrowed test block renders selection UNKNOWN and tests narrowed with partial coverage, and never lets a success tone stand", () => {
+    // Both narrowed forms of the measured test block: narrowed true, and denominator_complete false alone.
+    for (const tests of [MEASURED_ARGS.selection, { ...MEASURED_ARGS.selection, narrowed: false }]) {
+      for (const [label, block] of malformedUnits) {
+        const data = { ...MEASURED_ARGS, selection: tests, selection_accounting: block };
+        expect(decodeForgeOperationTerminal(settledReply("success", data), OP, T2)?.selection, label).toStrictEqual({ units: "withheld", tests: { narrowed: true } });
+        for (const [status, tone] of [["success", "unknown"], ["partial", "unknown"], ["error", "failure"]] as const) {
+          const snapshot = terminalOf(settledReply(status, data));
+          expect(snapshot.node.statusText, `${label}/${status}`).toBe("completed · selection UNKNOWN · tests narrowed");
+          expect(snapshot.node.statusTone, `${label}/${status}`).toBe(tone);
+          expect(snapshot.coverage, `${label}/${status}`).toBe("partial");
+        }
+      }
+    }
+  });
+});
+
+/**
+ * wb-4ap.17 (COLLECTIVE-ADAPTATION-R17): Pi's gate.run consumer treats the reply's own run-start pin (data.gated_commit and
+ * data.gated_tree) as the verdict's basis. The four replies below were MEASURED on 2026-10-26 with the installed forge 0.2.1
+ * (rev c0f93b3c5d18) through the served app-server, on the path providers/forge.ts opens (ServerConnection.spawn("forge"),
+ * initialize, request("gate.run", { root })), over scratch packages: a clean git checkout whose gate is alpha, beta, gamma
+ * (gated_commit is that checkout's HEAD, gated_tree its HEAD^{tree}); the same commit with an uncommitted README edit (gated_tree
+ * "", the producer's dirty-run value); a directory in no repository (gated_commit and gated_tree null, the producer's honest
+ * absent values); and a one-step gate cancelled through operation.cancel while its step ran (status partial, cancelled-established,
+ * and a data block that publishes no pin at all). Only the fields the reader reads are kept, each verbatim; the clean and dirty
+ * runs' selection_accounting equals MEASURED_FULL's block above. LATER_HEAD is the clean checkout's HEAD after one more commit
+ * landed in it, read with git rev-parse HEAD and HEAD^{tree}.
+ */
+const PIN_COMMIT = "8d8cad68921f6f76e5cbd09328ebb7c65a5a78f7";
+const PIN_TREE = "807acb352b0b497f74cd24c5074caacbb3bed6c2";
+const DIRTY_OVERLAY = "sha256:170d8e1b32c9b0f4510062c73c04f6366d9b113270de76a5465de5278ddbff52";
+const MEASURED_HEAD: ForgeObservedHead = { commit: PIN_COMMIT, tree: PIN_TREE };
+const LATER_HEAD: ForgeObservedHead = { commit: "d8f5eec8a31e691f8f7860c7915d5fab2764e246", tree: "05b6df91ea9f1c5aafb57be6e6a2da796972c174" };
+const MEASURED_CLEAN_RUN = {
+  operation_id: "op-e0aea7ede755423389aaa3114b3c90d0", status: "success", terminal_disposition: "completed", lifecycle_state: "TERMINAL",
+  terminal_fact: "completed", contract_version: "result-envelope/v1",
+  data: { gate_verdict: "PASS", gate_passed: true, gated_commit: PIN_COMMIT, gated_tree: PIN_TREE, source_snapshot_id: PIN_TREE, selection_accounting: MEASURED_FULL.selection_accounting },
+};
+const MEASURED_DIRTY_RUN = {
+  operation_id: "op-f341b66d16eb48fabd0f5629129b80d6", status: "success", terminal_disposition: "completed", lifecycle_state: "TERMINAL",
+  terminal_fact: "completed", contract_version: "result-envelope/v1",
+  data: {
+    gate_verdict: "PASS", gate_passed: true, gated_commit: PIN_COMMIT, gated_tree: "", source_snapshot_id: `dirty-tree/v1:${PIN_TREE}:${DIRTY_OVERLAY}`,
+    selection_accounting: MEASURED_FULL.selection_accounting,
+    identity_closure: {
+      dirty_end: true, dirty_start: true, execution_isolated: false, head_moved_paths: [], head_tree_end: PIN_TREE, head_tree_start: PIN_TREE,
+      mode: "observed-boundaries/v2", overlay_dirty_at_start_paths: ["README.md"], overlay_end: DIRTY_OVERLAY, overlay_moved: false, overlay_moved_paths: [],
+      overlay_new_untracked_paths: [], overlay_start: DIRTY_OVERLAY, overlay_untracked_at_start_paths: [], reason: "dirty-at-start",
+      stable_at_observed_boundaries: false, tree_end: null, tree_start: null,
+    },
+  },
+};
+const MEASURED_UNREPOSITORIED_RUN = {
+  operation_id: "op-3fc8d4cfa88943b08eedb04c3a4e2215", status: "success", terminal_disposition: "completed", lifecycle_state: "TERMINAL",
+  terminal_fact: "completed", contract_version: "result-envelope/v1",
+  data: { gate_verdict: "PASS", gate_passed: true, gated_commit: null, gated_tree: null, source_snapshot_id: null, selection_accounting: MEASURED_FULL.selection_accounting },
+};
+const MEASURED_CANCELLED_RUN = {
+  operation_id: "op-a6143d99b2704572989a4a0579d9ae8c", status: "partial", terminal_disposition: "cancelled-established", lifecycle_state: "TERMINAL",
+  terminal_fact: "cancelled-established", contract_version: "result-envelope/v1",
+  data: {
+    answered: true, cancel_requested: true, cancellation: { establishment: "CANCELLED_CONFIRMED", requested: true },
+    delivery: { complete: true, dropped_count: 0, first_dropped_class: null }, label: "gate.run", operation_id: "op-a6143d99b2704572989a4a0579d9ae8c",
+    outcome_class: "cancelled-established", request_id: "2", terminal_disposition: "cancelled-established",
+  },
+};
+/** The a3s + wb-6ps1.2 text of the measured clean, dirty and unrepositoried runs, which the basis word follows. */
+const MEASURED_TEXT = "completed · selection complete: 3 of 3 steps selected";
+/** The distinct reason each withheld or missing pin names in its one diagnostic. */
+const REASONS = {
+  contract: "is not a result-envelope/v1 result",
+  data: "carries no data object",
+  commit: "gated_commit that is not a git object id",
+  tree: "gated_tree that is neither a git object id nor",
+  null: "gated_commit null",
+  absent: "published no gated_commit",
+  unobserved: "read no HEAD",
+} as const;
+
+/** A reply as these cases hand it to the reader: the operation's own id beside any other fields. */
+type MeasuredReply = { readonly operation_id: string; readonly [field: string]: unknown };
+function readingOf(reply: MeasuredReply, observedHead: ForgeObservedHead | undefined) {
+  const reading = forgeGateRunReading(reply, reply.operation_id, { ...options, observedAt: T2, observedHead });
+  if (reading === undefined) throw new Error("the reply names no terminal for its own operation");
+  return reading;
+}
+function withData(reply: { readonly operation_id: string; readonly data: object }, change: Record<string, unknown>) {
+  return { ...reply, data: { ...reply.data, ...change } };
+}
+
+describe("wb-4ap.17 (R17): the gate.run reply's own run-start pin is the verdict's basis", () => {
+  it("wb-4ap.17 (R17 a): the measured clean reply's subjectBasis echoes data.gated_commit verbatim, and data.gated_tree is read separately as the pin's second half", () => {
+    expect(FORGE_RESULT_CONTRACT).toBe(MEASURED_CLEAN_RUN.contract_version);
+    const reading = readingOf(MEASURED_CLEAN_RUN, MEASURED_HEAD);
+    expect(reading.snapshot.subjectBasis).toBe(MEASURED_CLEAN_RUN.data.gated_commit);
+    expect(reading.basis).toStrictEqual({ state: "pinned", commit: MEASURED_CLEAN_RUN.data.gated_commit, tree: MEASURED_CLEAN_RUN.data.gated_tree });
+    expect(decodeForgeRunBasis(MEASURED_DIRTY_RUN)).toStrictEqual({ state: "pinned", commit: MEASURED_DIRTY_RUN.data.gated_commit, tree: MEASURED_DIRTY_RUN.data.gated_tree });
+    // The basis is the reply's own pin: neither the host's head nor the run's source_snapshot_id ever stands in for it.
+    expect(readingOf(MEASURED_CLEAN_RUN, LATER_HEAD).snapshot.subjectBasis).toBe(PIN_COMMIT);
+    expect(readingOf(MEASURED_CLEAN_RUN, undefined).snapshot.subjectBasis).toBe(PIN_COMMIT);
+    expect(readingOf(MEASURED_DIRTY_RUN, MEASURED_HEAD).snapshot.subjectBasis).toBe(PIN_COMMIT);
+  });
+
+  it("wb-4ap.17 (R17 b): statusText says current only when the pin equals the supplied observed head, and stale when the head moved on, its tree differs or the run gated a dirty tree", () => {
+    const current = readingOf(MEASURED_CLEAN_RUN, MEASURED_HEAD);
+    expect(current.freshness).toBe("current");
+    expect(current.snapshot.node).toStrictEqual({ title: `Forge operation ${MEASURED_CLEAN_RUN.operation_id}`, type: "workflow", statusText: `${MEASURED_TEXT} · basis current`, statusTone: "success" });
+    expect(current.diagnostics).toStrictEqual([]);
+    const moved = readingOf(MEASURED_CLEAN_RUN, LATER_HEAD);
+    expect(moved.freshness).toBe("stale");
+    expect(moved.snapshot.node.statusText).toBe(`${MEASURED_TEXT} · basis stale`);
+    expect(moved.snapshot.node.statusTone).toBe("unknown");
+    expect(moved.diagnostics).toStrictEqual([]);
+    // The tree is compared on its own: an equal commit beside another tree is not current.
+    expect(readingOf(MEASURED_CLEAN_RUN, { commit: PIN_COMMIT, tree: LATER_HEAD.tree }).freshness).toBe("stale");
+    // A dirty run's "" tree is never the commit's, so the measured dirty run at its own commit is stale.
+    const dirty = readingOf(MEASURED_DIRTY_RUN, MEASURED_HEAD);
+    expect(dirty.freshness).toBe("stale");
+    expect(dirty.snapshot.node.statusText).toBe(`${MEASURED_TEXT} · basis stale`);
+    expect(dirty.snapshot.node.statusTone).toBe("unknown");
+    for (const reading of [moved, dirty]) expect(reading.snapshot.node.statusText).not.toContain("current");
+  });
+
+  it("wb-4ap.17 (R17 c): the measured null pin (a directory in no repository) yields no subjectBasis, one diagnostic naming the missing pin, basis indeterminate and never a success tone", () => {
+    for (const head of [MEASURED_HEAD, LATER_HEAD, undefined]) {
+      const reading = readingOf(MEASURED_UNREPOSITORIED_RUN, head);
+      const label = head?.commit ?? "no head";
+      expect("subjectBasis" in reading.snapshot, label).toBe(false);
+      expect(reading.basis, label).toStrictEqual({ state: "missing", cause: "null" });
+      expect(reading.freshness, label).toBe("indeterminate");
+      expect(reading.diagnostics, label).toHaveLength(1);
+      expect(reading.diagnostics[0], label).toContain(REASONS.null);
+      expect(reading.snapshot.node.statusText, label).toBe(`${MEASURED_TEXT} · basis indeterminate`);
+      expect(reading.snapshot.node.statusTone, label).toBe("unknown");
+    }
+  });
+
+  it("wb-4ap.17 (R17 c): the measured cancelled reply publishes no pin at all, so it reads indeterminate and never current, and the command status never moves the basis", () => {
+    for (const [status, tone] of [["partial", "unknown"], ["error", "failure"], ["success", "unknown"]] as const) {
+      const reading = readingOf({ ...MEASURED_CANCELLED_RUN, status }, MEASURED_HEAD);
+      expect(reading.basis, status).toStrictEqual({ state: "missing", cause: "absent" });
+      expect(reading.freshness, status).toBe("indeterminate");
+      expect("subjectBasis" in reading.snapshot, status).toBe(false);
+      expect(reading.diagnostics, status).toHaveLength(1);
+      expect(reading.diagnostics[0], status).toContain(REASONS.absent);
+      expect(reading.snapshot.node.statusText, status).toBe("cancelled-established · basis indeterminate");
+      expect(reading.snapshot.node.statusTone, status).toBe(tone);
+    }
+  });
+
+  it("wb-4ap.17 (R17 c): an inherited pin is no pin - a data block whose gated_commit and gated_tree come only from its prototype reads absent, never pinned", () => {
+    const inherited = Object.assign(Object.create({ gated_commit: PIN_COMMIT, gated_tree: PIN_TREE }) as Record<string, unknown>, MEASURED_CANCELLED_RUN.data);
+    const reading = readingOf({ ...MEASURED_CANCELLED_RUN, data: inherited }, MEASURED_HEAD);
+    expect(reading.basis).toStrictEqual({ state: "missing", cause: "absent" });
+    expect(reading.freshness).toBe("indeterminate");
+    expect("subjectBasis" in reading.snapshot).toBe(false);
+    expect(reading.diagnostics).toStrictEqual([expect.stringContaining(REASONS.absent)]);
+  });
+
+  it("wb-4ap.17 (R17 d, FGC-06): on a current pin a gate verdict that is not PASS, or a partial status, never renders success, and a failure stays a failure", () => {
+    const { gate_verdict: _verdict, ...noVerdict } = MEASURED_CLEAN_RUN.data;
+    const cases: readonly (readonly [string, MeasuredReply, string])[] = [
+      ["gate_verdict null", withData(MEASURED_CLEAN_RUN, { gate_verdict: null }), "unknown"],
+      ["no gate_verdict", { ...MEASURED_CLEAN_RUN, data: noVerdict }, "unknown"],
+      ["COULD_NOT_JUDGE under status partial", { ...withData(MEASURED_CLEAN_RUN, { gate_verdict: "COULD_NOT_JUDGE" }), status: "partial" }, "unknown"],
+      ["status partial beside a PASS verdict", { ...MEASURED_CLEAN_RUN, status: "partial" }, "unknown"],
+      ["FAIL under status error", { ...withData(MEASURED_CLEAN_RUN, { gate_verdict: "FAIL", gate_passed: false }), status: "error" }, "failure"],
+    ];
+    for (const [label, reply, tone] of cases) {
+      const reading = readingOf(reply, MEASURED_HEAD);
+      expect(reading.freshness, label).toBe("current");
+      expect(reading.snapshot.node.statusText, label).toBe(`${MEASURED_TEXT} · basis current`);
+      expect(reading.snapshot.node.statusTone, label).toBe(tone);
+    }
+  });
+
+  const { contract_version: _contract, ...offContract } = MEASURED_CLEAN_RUN;
+  const { gated_tree: _tree, ...noTree } = MEASURED_CLEAN_RUN.data;
+  const withheldPins: [string, unknown, string][] = [
+    ["a reply with no contract_version", offContract, REASONS.contract],
+    ["a reply on another result contract", { ...MEASURED_CLEAN_RUN, contract_version: "result-envelope/v2" }, REASONS.contract],
+    ["an inherited contract_version", Object.assign(Object.create({ contract_version: "result-envelope/v1" }) as Record<string, unknown>, offContract), REASONS.contract],
+    ["a null data block", { ...MEASURED_CLEAN_RUN, data: null }, REASONS.data],
+    ["a string data block", { ...MEASURED_CLEAN_RUN, data: "data" }, REASONS.data],
+    ["an array data block", { ...MEASURED_CLEAN_RUN, data: [MEASURED_CLEAN_RUN.data] }, REASONS.data],
+    ["an empty gated_commit", withData(MEASURED_CLEAN_RUN, { gated_commit: "" }), REASONS.commit],
+    ["a numeric gated_commit", withData(MEASURED_CLEAN_RUN, { gated_commit: 8 }), REASONS.commit],
+    ["a symbolic gated_commit", withData(MEASURED_CLEAN_RUN, { gated_commit: "HEAD" }), REASONS.commit],
+    ["an upper-case gated_commit", withData(MEASURED_CLEAN_RUN, { gated_commit: PIN_COMMIT.toUpperCase() }), REASONS.commit],
+    ["a truncated gated_commit", withData(MEASURED_CLEAN_RUN, { gated_commit: PIN_COMMIT.slice(0, 39) }), REASONS.commit],
+    ["a content digest in place of the commit", withData(MEASURED_CLEAN_RUN, { gated_commit: DIRTY_OVERLAY }), REASONS.commit],
+    ["the dirty-tree snapshot id in place of the commit", withData(MEASURED_CLEAN_RUN, { gated_commit: MEASURED_DIRTY_RUN.data.source_snapshot_id }), REASONS.commit],
+    ["an inherited gated_commit", { ...MEASURED_CLEAN_RUN, data: Object.assign(Object.create({ gated_commit: PIN_COMMIT }) as Record<string, unknown>, { gated_commit: 8, gated_tree: PIN_TREE }) }, REASONS.commit],
+    ["a commit beside a null gated_tree", withData(MEASURED_CLEAN_RUN, { gated_tree: null }), REASONS.tree],
+    ["a commit with no gated_tree", { ...MEASURED_CLEAN_RUN, data: noTree }, REASONS.tree],
+    ["an inherited gated_tree", { ...MEASURED_CLEAN_RUN, data: Object.assign(Object.create({ gated_tree: PIN_TREE }) as Record<string, unknown>, noTree) }, REASONS.tree],
+    ["a symbolic gated_tree", withData(MEASURED_CLEAN_RUN, { gated_tree: "HEAD^{tree}" }), REASONS.tree],
+    ["a numeric gated_tree", withData(MEASURED_CLEAN_RUN, { gated_tree: 0 }), REASONS.tree],
+  ];
+  it.each(withheldPins)("wb-4ap.17 (R17 e): %s yields no subjectBasis, exactly one diagnostic naming the reason, basis UNKNOWN, never a bare current and never a success tone", (_label, reply, reason) => {
+    for (const head of [MEASURED_HEAD, undefined]) {
+      const reading = forgeGateRunReading(reply, MEASURED_CLEAN_RUN.operation_id, { ...options, observedAt: T2, observedHead: head });
+      if (reading === undefined) throw new Error("a withheld pin still settles its operation");
+      expect("subjectBasis" in reading.snapshot).toBe(false);
+      expect(reading.basis.state).toBe("withheld");
+      expect(reading.freshness).toBe("UNKNOWN");
+      expect(reading.diagnostics).toHaveLength(1);
+      expect(reading.diagnostics[0]).toContain(reason);
+      expect(reading.snapshot.node.statusText).toMatch(/ · basis UNKNOWN$/);
+      expect(reading.snapshot.node.statusText).not.toMatch(/current/);
+      expect(reading.snapshot.node.statusTone).not.toBe("success");
+    }
+  });
+
+  it("wb-4ap.17 (R17 f): with no observed head, or a head reading that is no git object id pair, a pinned verdict keeps its subjectBasis but reads indeterminate, never current and never success, with one diagnostic", () => {
+    const unobserved: readonly (ForgeObservedHead | undefined)[] = [
+      undefined, { commit: "HEAD", tree: PIN_TREE }, { commit: PIN_COMMIT.toUpperCase(), tree: PIN_TREE }, { commit: PIN_COMMIT, tree: "" },
+    ];
+    for (const head of unobserved) {
+      const reading = readingOf(MEASURED_CLEAN_RUN, head);
+      const label = JSON.stringify(head ?? null);
+      expect(reading.snapshot.subjectBasis, label).toBe(PIN_COMMIT);
+      expect(reading.freshness, label).toBe("indeterminate");
+      expect(reading.snapshot.node.statusText, label).toBe(`${MEASURED_TEXT} · basis indeterminate`);
+      expect(reading.snapshot.node.statusTone, label).toBe("unknown");
+      expect(reading.diagnostics, label).toHaveLength(1);
+      expect(reading.diagnostics[0], label).toContain(REASONS.unobserved);
+    }
+    // A head reading whose tree is empty never meets a dirty run's "" tree as an equal.
+    expect(readingOf(MEASURED_DIRTY_RUN, { commit: PIN_COMMIT, tree: "" }).freshness).toBe("indeterminate");
+  });
+
+  it("wb-4ap.17 (R17 g): identity_closure path lists are disclosure only - planted or removed, they move neither the basis nor anything the reading shows", () => {
+    const closure = MEASURED_DIRTY_RUN.data.identity_closure;
+    const planted = {
+      ...closure, head_moved_paths: ["README.md"], overlay_moved_paths: ["src/a.ts"], overlay_new_untracked_paths: ["new.txt"],
+      overlay_dirty_at_start_paths: [], overlay_untracked_at_start_paths: ["untracked.txt"], overlay_moved: true, reason: "overlay-moved",
+    };
+    const { identity_closure: _closure, ...noClosure } = MEASURED_DIRTY_RUN.data;
+    const dirty = readingOf(MEASURED_DIRTY_RUN, MEASURED_HEAD);
+    expect(readingOf(withData(MEASURED_DIRTY_RUN, { identity_closure: planted }), MEASURED_HEAD)).toStrictEqual(dirty);
+    expect(readingOf({ ...MEASURED_DIRTY_RUN, data: noClosure }, MEASURED_HEAD)).toStrictEqual(dirty);
+    const clean = readingOf(MEASURED_CLEAN_RUN, MEASURED_HEAD);
+    expect(readingOf(withData(MEASURED_CLEAN_RUN, { identity_closure: planted }), MEASURED_HEAD)).toStrictEqual(clean);
+    expect(clean.freshness).toBe("current");
+  });
+
+  it("wb-4ap.17 (R17 h): the reading settles only its own operation, and it is the a3s reading of the same reply plus the basis, which the a3s building blocks never read", () => {
+    expect(forgeGateRunReading(MEASURED_CLEAN_RUN, OP, { ...options, observedAt: T2, observedHead: MEASURED_HEAD })).toBeUndefined();
+    const { terminal_disposition: _disposition, ...noDisposition } = MEASURED_CLEAN_RUN;
+    expect(forgeGateRunReading(noDisposition, MEASURED_CLEAN_RUN.operation_id, { ...options, observedAt: T2, observedHead: MEASURED_HEAD })).toBeUndefined();
+    const terminal = decodeForgeOperationTerminal(MEASURED_CLEAN_RUN, MEASURED_CLEAN_RUN.operation_id, T2);
+    if (terminal === undefined) throw new Error("the measured reply names its own terminal");
+    const a3s = forgeOperationTerminalSnapshot(terminal, options);
+    expect(a3s.node.statusText).toBe(MEASURED_TEXT);
+    expect("subjectBasis" in a3s).toBe(false);
+    const { subjectBasis, node, ...rest } = readingOf(MEASURED_CLEAN_RUN, MEASURED_HEAD).snapshot;
+    const { node: a3sNode, ...a3sRest } = a3s;
+    expect(subjectBasis).toBe(PIN_COMMIT);
+    expect(rest).toStrictEqual(a3sRest);
+    expect({ ...node, statusText: a3sNode.statusText }).toStrictEqual(a3sNode);
+  });
+
+  it("wb-4ap.17 (R17 i): through the live observer the host's head seam is read when the reply settles - equal settles current with the pinned subjectBasis, a later head stale, no head indeterminate", async () => {
+    const cases = [[MEASURED_HEAD, "current", "success"], [LATER_HEAD, "stale", "unknown"], [undefined, "indeterminate", "unknown"]] as const;
+    for (const [head, word, tone] of cases) {
+      const projection = new ObservationProjection();
+      const fake = fakeConnection();
+      let reads = 0;
+      const observedHead = (): ForgeObservedHead | undefined => { reads += 1; return head; };
+      const pending = observeForgeGateRun(fake.connection, { ...deps(projection).deps, observedHead });
+      fake.frame("operation.started", { operation_id: MEASURED_CLEAN_RUN.operation_id, request_id: "2" });
+      const observer = await pending;
+      fake.frame("gate.step_finished", { operation_id: MEASURED_CLEAN_RUN.operation_id, seq: 1, step: "alpha", outcome: "passed", exit_code: 0 });
+      expect(reads, word).toBe(0);
+      fake.reply(MEASURED_CLEAN_RUN);
+      expect(await observer.settled, word).toBe("settled");
+      expect(reads, word).toBe(1);
+      const node = projection.query({ scope: SCOPE, ref: forgeOperationRef(MEASURED_CLEAN_RUN.operation_id), limit: 1 }).nodes[0];
+      expect(node?.presentation.statusText, word).toBe(`${MEASURED_TEXT} · basis ${word}`);
+      expect(node?.presentation.statusTone, word).toBe(tone);
+      expect(node?.subjectBasis, word).toBe(PIN_COMMIT);
+    }
+  });
+
+  it("wb-4ap.17 (R17 i): a head seam that throws settles the node indeterminate and the settlement never rejects; without the seam the observer keeps the a3s reading", async () => {
+    const projection = new ObservationProjection();
+    const fake = fakeConnection();
+    const pending = observeForgeGateRun(fake.connection, { ...deps(projection).deps, observedHead: () => { throw new Error("git unavailable"); } });
+    fake.frame("operation.started", { operation_id: MEASURED_CLEAN_RUN.operation_id, request_id: "2" });
+    const observer = await pending;
+    fake.reply(MEASURED_CLEAN_RUN);
+    expect(await observer.settled).toBe("settled");
+    const node = projection.query({ scope: SCOPE, ref: forgeOperationRef(MEASURED_CLEAN_RUN.operation_id), limit: 1 }).nodes[0];
+    expect(node?.presentation.statusText).toBe(`${MEASURED_TEXT} · basis indeterminate`);
+    expect(node?.presentation.statusTone).toBe("unknown");
+    const legacy = new ObservationProjection();
+    const plain = fakeConnection();
+    const started = observeForgeGateRun(plain.connection, deps(legacy).deps);
+    plain.frame("operation.started", { operation_id: MEASURED_CLEAN_RUN.operation_id, request_id: "2" });
+    const a3s = await started;
+    plain.reply(MEASURED_CLEAN_RUN);
+    expect(await a3s.settled).toBe("settled");
+    const a3sNode = legacy.query({ scope: SCOPE, ref: forgeOperationRef(MEASURED_CLEAN_RUN.operation_id), limit: 1 }).nodes[0];
+    expect(a3sNode?.presentation.statusText).toBe(MEASURED_TEXT);
+    expect(a3sNode?.subjectBasis).toBeUndefined();
   });
 });

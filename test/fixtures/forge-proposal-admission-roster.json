@@ -372,12 +372,74 @@
               "coverage": "complete",
               "qualifier": "current gate passed"
             },
+            "controls": {
+              "receipt": {
+                "success": [
+                  "current-success topology 0",
+                  "current-success topology 1",
+                  "step-passed operation 0",
+                  "reply-success operation 0",
+                  "observed-passed observed 0",
+                  "observed-passed observed 1"
+                ],
+                "complete": [
+                  "current-success topology 0",
+                  "current-success topology 1"
+                ],
+                "passed": [
+                  "current-success topology",
+                  "current-success evidence"
+                ]
+              },
+              "fail": {
+                "success": [
+                  "mixed topology 1"
+                ],
+                "complete": [
+                  "current-failure topology 0",
+                  "current-failure topology 1",
+                  "current-error topology 0",
+                  "current-error topology 1",
+                  "mixed topology 0",
+                  "mixed topology 1",
+                  "mixed topology 2"
+                ],
+                "passed": []
+              }
+            },
+            "reads": {
+              "planted": [
+                "topology x288",
+                "evidence x288",
+                "operation x99",
+                "observed x9"
+              ],
+              "unplanted": [
+                "topology x5",
+                "evidence x5",
+                "operation x5",
+                "observed x1"
+              ],
+              "receipt": [
+                "topology x1",
+                "evidence x1",
+                "operation x2",
+                "observed x1"
+              ],
+              "fail": [
+                "topology x3",
+                "evidence x3",
+                "operation x3",
+                "observed x1"
+              ]
+            },
             "driven": [
               "decodeForgeOperationFrame",
               "decodeForgeOperationTerminal",
               "forgeGateStepTopology",
               "forgeGateTopology",
               "forgeOperationStartedSnapshot",
+              "forgeOperationTerminalSnapshot",
               "nativeEvidence",
               "observeForgeGateRun",
               "readForgeOperationEvidence",
@@ -524,6 +586,19 @@
               "planted": 99,
               "divergent": []
             },
+            "basis": {
+              "entries": [
+                "reply-open",
+                "reply-other-operation",
+                "reply-unpinned"
+              ],
+              "cases": 27,
+              "planted": 27,
+              "divergent": [],
+              "tones": [
+                "unknown"
+              ]
+            },
             "observed": {
               "variants": 9,
               "divergent": [],
@@ -556,6 +631,8 @@
                 "forgeOperationTerminalSnapshot",
                 "decodeForgeOperationFrame",
                 "decodeForgeOperationTerminal",
+                "decodeForgeRunBasis",
+                "forgeGateRunReading",
                 "observeForgeGateRun"
               ],
               "providers/forge.ts": [
@@ -568,6 +645,8 @@
             "driven": [
               "decodeForgeOperationFrame",
               "decodeForgeOperationTerminal",
+              "decodeForgeRunBasis",
+              "forgeGateRunReading",
               "forgeGateStepTopology",
               "forgeGateTopology",
               "forgeOperationStartedSnapshot",

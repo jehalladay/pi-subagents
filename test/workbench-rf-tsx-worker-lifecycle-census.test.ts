@@ -174,10 +174,16 @@
  * signature parameters: a member typed by a package's type (or one declared outside src/) is not followed (quiet row `packaged`: its
  * package type declares a worker pool in a declaration file the reading never loads), a property every declaration of which sits in a
  * lib file is no settings name (an Array's or a String's own members; quiet row `browser`: typed by the lib's Navigator, whose
- * serviceWorker names a worker), and a callback setting's parameter types are not read (quiet row `configure`, the cut-#2 gate's F42 /
- * G20 shape: a callback whose parameter's type holds workerCount). Each quiet row is a one-member WorkbenchSettings page read ALONE
+ * serviceWorker names a worker), a callback setting's parameter types are not read (quiet row `configure`, the cut-#2 gate's F42 /
+ * G20 shape: a callback whose parameter's type holds workerCount), and a signature's TYPE parameters are not expanded (wb-z78y, the
+ * landing-438 gate's F63): a type parameter is no object type, so a call-signature return that is one never has its constraint read
+ * (quiet row `make`, the gate's GA12 shape: make?: <T extends { workerCount?: number }>() => T), and a conditional type deferred on a
+ * type parameter is never resolved to either branch (quiet row `pick`, GA12b: pick?: <T>(value: T) => T extends string ?
+ * { workerCount?: number } : never). Each quiet row is a one-member WorkbenchSettings page read ALONE
  * through the same reading (TYPE_FLOW_QUIET), and C1's quiet witness pins what each reads - the member itself and no FAMILY name - so a
- * silenced page or a reading that moves past the bound changes it. R-VOCABULARY (wb-jdpn U3) FAMILY holds each knob word and its -s form only:
+ * silenced page or a reading that moves past the bound changes it; a page neutered with its member kept (its own FAMILY-named property
+ * renamed away, workerCount to note) reads the same witness and is NOT CLAIMED (a self-hollow of the page, no subject mode).
+ * R-VOCABULARY (wb-jdpn U3) FAMILY holds each knob word and its -s form only:
  * another inflection or a synonym (pooling, a thread count) escapes the C1, C3 and C4 name reads (quiet rows: NAME_CONTROLS's
  * poolingMode and threadCount read false).
  * R-ALL-SKIP (owner ruling R762: a member of refusal #1's U1 class, the whole-file skips) every task skipped at collection - one suite
@@ -368,15 +374,20 @@ const SETTINGS_CONTROLS: Readonly<Record<string, string>> = {
   "src/augment.ts": 'declare module "./settings.js" {\n  interface WorkbenchSettings {\n    residentMode?: boolean;\n  }\n}\nexport {};\n',
   "node_modules/census-absent-package/index.d.ts": "export interface PackageKnobs {\n  workerPool?: number;\n}\n",
 };
-/** The R-TYPE-FLOW quiet rows (wb-jdpn U2; cut #3 adds the signature-parameter row, the cut-#2 gate's F42 / G20 shape), each a settings
- * page whose WorkbenchSettings holds that one member, read ALONE: the package's type (declared in a file the reading never loads), the
- * lib's Navigator (whose serviceWorker names a worker in a lib file) and a callback whose PARAMETER's type names a FAMILY property (the
- * reading follows call-signature returns, never parameters). C1 pins what each reads: the member itself, and no FAMILY name. */
+/** The R-TYPE-FLOW quiet rows (wb-jdpn U2; cut #3 adds the signature-parameter row, the cut-#2 gate's F42 / G20 shape; wb-z78y adds the
+ * two type-parameter rows, the landing-438 gate's F63 GA12 / GA12b shapes), each a settings page whose WorkbenchSettings holds that one
+ * member, read ALONE: the package's type (declared in a file the reading never loads), the lib's Navigator (whose serviceWorker names a
+ * worker in a lib file), a callback whose PARAMETER's type names a FAMILY property (the reading follows call-signature returns, never
+ * parameters), a call-signature return that is a TYPE PARAMETER whose constraint names one (a type parameter is no object type, so its
+ * constraint is never read) and a return that is a conditional type deferred on a type parameter, whose true branch names one (never
+ * resolved to either branch). C1 pins what each reads: the member itself, and no FAMILY name. */
 const TYPE_FLOW_QUIET: Readonly<Record<string, string>> = Object.fromEntries(
   [
     ["packaged", 'import type { PackageKnobs } from "census-absent-package";\n', "  packaged?: PackageKnobs;"],
     ["browser", "", "  browser?: Navigator;"],
     ["configure", "", "  configure?: (knobs: { workerCount?: number }) => void;"],
+    ["make", "", "  make?: <T extends { workerCount?: number }>() => T;"],
+    ["pick", "", "  pick?: <T>(value: T) => T extends string ? { workerCount?: number } : never;"],
   ].map(([member, imports, line]) => [member, `${imports}export interface SubagentsSettings {\n  workbench?: WorkbenchSettings;\n}\nexport interface WorkbenchSettings {\n${line}\n}\n`]),
 );
 
@@ -805,8 +816,10 @@ function srcProgram(): { options: ts.CompilerOptions; roots: string[] } {
  * of SubagentsSettings and WorkbenchSettings and, transitively, of every object type a property's type resolves to (union and
  * intersection members, type arguments, index signatures and call- and construct-signature returns included, a template-literal
  * index key's literal text read as a name), however the type is referenced,
- * except a property every declaration of which sits in a lib file; declaring: the files that declare them; workbenchMembers: the
- * checker's WorkbenchSettings properties; sanitizeKeys: the string members of the key set sanitize() checks workbench keys against. */
+ * except a property every declaration of which sits in a lib file (a type parameter, its constraint included, and a conditional type
+ * deferred on one are no object type and are not expanded: R-TYPE-FLOW, quiet rows make and pick); declaring: the files that declare
+ * them; workbenchMembers: the checker's WorkbenchSettings properties; sanitizeKeys: the string members of the key set sanitize() checks
+ * workbench keys against. */
 function settingsSurface(read: (path: string) => string | undefined, roots: readonly string[]): { members: string[]; workbenchMembers: string[]; sanitizeKeys: string[]; declaring: string[] } {
   const { options } = srcProgram();
   const libDir = dirname(ts.getDefaultLibFilePath(options));
