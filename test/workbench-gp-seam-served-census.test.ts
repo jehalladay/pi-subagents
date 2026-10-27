@@ -16,6 +16,9 @@
  * - no Pi GP row or seam stage exists to judge (B2 reads 0 GP rows in the feature matrix and the status ledger); clause (3) is
  * the seam's own non-negotiable test row (Furnace README.md:25 "Synthetic coordination fixtures are labeled synthetic"), owed
  * by the seam's tests when they exist.
+ * CUT #2 (the respin of refusal #1, gate row M:23480): U1 the outside anchors (OUTSIDE ANCHORS), U2 the forms the readings name
+ * (SEAM, SERVED), U3 the rendered view (RENDERED VIEW), F1 the literal guard (LIVE GUARD), F2 the format-character fold (FOLD),
+ * F3 the self-anchored members named (OUTSIDE ANCHORS).
  *
  * THE ARTIFACT AT THE PIN (the roster's `producer` block, measured read-only by the cutting seat on 2026-10-26 from a shallow
  * clone of the Furnace repository at 6502737d9e96, removed after the read; this census is hermetic and never re-reads it):
@@ -34,25 +37,41 @@
  *   with it, a superset of the clause's surface - and the repository root's .md pages, read as UTF-8. An independent walk
  *   (symlinks reported, never followed) minus git's ignored set must equal that list, and every top-level directory git
  *   tracks is a root or a named outside directory (B1).
- * - SENTENCE: a page's text cut after ".", "!", "?" or ";" before white space or the line end, at a blank line, around a
- *   table row ("|") and a heading line ("#"), and before a list item; a sentence wrapped over lines stays one (B3).
- * - FOLD: NFKC, lower case, the inline markup characters * ` ~ and \ dropped, so **served** and `gp` read as written words;
- *   everything else is raw text, an HTML comment included. WORDS: a NAME sits between non-alphanumeric boundaries, so an
- *   underscore separates it (GP_CLI_, graph_policy); a SEAM or SERVED word sits between boundaries that also count the
- *   underscore as a letter, so an identifier is one word (beads_calls is not calls); a MARKER sits between boundaries that
- *   count the underscore and the hyphen as letters, so landed-gated, not-started and not_found carry no marker.
+ * - RENDERED VIEW (a Markdown page, a path ending .md; rendered-text truth, 9x5.17): marked 18.0.11 (GFM, the lexer of
+ *   test/helpers/census.ts) lexes the page once. A UNIT is a paragraph, a heading, the text of a list item or block quote, a
+ *   table row (its cells joined by " | ") or an HTML block. A unit shows its text, code spans and backslash escapes as written
+ *   and emphasis, strikethrough and link text flattened; an inline HTML comment or tag, an image (its alt text with it), a
+ *   link destination, title or reference label, a link reference definition and a task checkbox show nothing; an HTML block
+ *   shows its source with comments (an unclosed one to its end) and tags removed; a code block, fenced or indented, is no
+ *   unit. Numeric character references and the NAMED_REFERENCES names are decoded outside code spans (a code span shows a
+ *   reference as written: B5 asWritten); any other named reference stays as written. A soft wrap or a hard break is one space. So a claim and a marker each count only where a
+ *   reader sees them (B5 hiddenMarkers: a marker hidden in a comment, a link destination, title or label, a tag attribute or
+ *   alt text never quiets a shown claim). A listed file that is not a Markdown page (none today) is read as raw text.
+ * - SENTENCE: a unit, or a raw file's text, is cut after ".", "!", "?" or ";" before white space or its end; a raw file is also
+ *   cut at a blank line, around a table row ("|") and a heading line ("#"), and before a list item, a sentence wrapped over
+ *   lines kept one. A sentence's line is the source line of its first shown character (B3).
+ * - FOLD: NFKC, format characters (Unicode Cf: the zero-width characters, the soft hyphen, the word joiner, the byte-order mark)
+ *   dropped, lower case, and the characters * ` ~ and \ dropped (in a raw file, the inline markup), so ser<U+200B>ved, **served**
+ *   and `gp` read as written words. WORDS: a NAME sits between non-alphanumeric boundaries, so an underscore separates it
+ *   (GP_CLI_, graph_policy); a SEAM or SERVED word sits between boundaries that also count the underscore as a letter, so an
+ *   identifier is one word (beads_calls is not calls); a MARKER sits between boundaries that count the underscore and the
+ *   hyphen as letters, so landed-gated, not-started and not_found carry no marker.
  * - NAMES: N1 graph and policy with an optional -, _, dot or space between and an optional cli after the same separator
  *   (GraphPolicyCLI, graph-policy-cli, graphpolicy); N2 the word gp; N3 graph, data or function and ir with the same
  *   separators (GraphDataIR, GraphFunctionIR).
  * - SEAM (what a GP seam is, by the bead's and docs/03's own words): seam, integration, capability, host, client, adapter,
- *   provider, consumer, gp-adjacent module, decision point, decision path, executor, canary, advisory and adoption, singular
- *   or plural, and the subject Pi itself.
- * - SERVED: serve, ship, integrate, wire, adopt, host, register, enable and expose with their -s and -ed forms (serving and
- *   shipping too), invokes, live, live-sdk, available, supported, supports, implemented, landed, landed-gated,
- *   gate-pass, released, deployed and operational.
+ *   provider, consumer, gp-adjacent module, decision point, decision path, executor, canary, advisory and adoption, each
+ *   singular or plural (SUBJECTS, all thirty pinned in B4), and the subject Pi itself.
+ * - SERVED: serve, ship, integrate, adopt, register, enable and expose, each with its -s and -ed forms (serving and shipping
+ *   too); wires, wired, hosts and hosted (the base forms wire and host are nouns in these docs - gp's wire vocabulary, this
+ *   host, the seam noun host - and are never read as served words); invokes, live, live-sdk, available, supported, supports,
+ *   implemented, landed, landed-gated, gate-pass, released, deployed and operational (SERVED_FORMS, all forty pinned in B5).
+ *   Any other wording of a served claim is R-PARAPHRASE.
  * - FINDING: a sentence that carries a NAME, a SERVED word and a SEAM word (or Pi), and no MARKER (a negating, gating,
  *   conditional or modal word, or the n't contraction); reported `<path>:<line> <names>: served-<word>` (B4, B5). A NAME and
  *   a SERVED word with no SEAM word and no Pi is BARE: the producer's own statement, never a seam claim (R-BARE-NAME).
+ *   classify and verdict read one sentence of the judged view as plain text and render nothing themselves; a docs page is
+ *   judged through judgeText/survey on its path, so a probe of the docs judgment runs judgeText on a .md path.
  * - STATUS ROWS (B2), read whatever their caveats say: a feature-matrix row whose Feature cell carries a NAME and whose Status
  *   cell is a served status - a legend status whose own legend line names landed-gated work (landed-gated, partial), derived
  *   from the matrix's "## Status legend" - or a status outside the legend, reported `matrix-<status>`; a status-ledger row of
@@ -64,35 +83,74 @@
  *    reading); A2 the live guard - ONE pass over every listed file and in-memory positives must find exactly the positives,
  *    with coverage floors, and the same pass over a scratch git repository finds exactly its plants.
  *  B "no docs/workbench or feature-matrix sentence presents a GP seam as served": B1 the read set and a frozen pass over the
- *    immutable tree at the cut's base (exact counts, every quieted named sentence with its reason); B2 the status rows;
- *    B3 the sentence cutter; B4 the names and seam subjects; B5 the served and Pi-side words and the markers.
- * OUTSIDE ANCHORS (the judged-set case): the owner filing's row of wb-0lf.7 in the tracked bead export (.beads/issues.jsonl):
- *   its acceptance's clause (1) is the two labels joined, each label tiled by its pins, clauses (2) and (3) are the unclaimed
- *   clauses; the title's "GP capability, host or docs presenting GP as served" yields seam words and a served word read from
- *   the text, its canary and shipped yield a seam and a served word, the clause's seam, served and until yield a seam, a served
- *   word and a marker, and clause (2)'s live-sdk is a served word; the filing's quoted status phrases sit inside the recorded
- *   status lines and its Furnace pin is the recorded bead pin. docs/workbench/03's GraphPolicyCLI boundary section: every
- *   Graph-prefixed CamelCase word, every -cli package name and the parenthesised short name read as NAMES, and every term its
- *   definition sentence defines ("A gp client is ...") reads as a SEAM subject. qa/workbench/status-ledger.mjs: each of its
- *   CLAIM_STATUSES reads as a served word. The feature matrix's legend yields the served matrix statuses. So a name family,
- *   seam word, served word or marker the bead or docs/03 spells, removed from every literal of this file and the roster, still
- *   reds, and so does a row or a pin removed with its frozen-shape element.
+ *    immutable tree at frozenAt (32e0e2d, cut #1's base; exact counts, every quieted named sentence with its reason); B2 the
+ *    status rows; B3 the raw and rendered cutters; B4 the names and seam subjects; B5 the served and Pi-side words, the
+ *    rendered forms, the format characters, the hidden markers and the markers.
+ * LIVE GUARD (F1; literal from gateOf, never only the roster): A1's verdict with no finding is pass while the gate reads
+ *   ABSENT; A2's pass finds nothing beyond its positives and its verdict is pass while ABSENT, and its replica finds every
+ *   planted file and no twin; B1's frozen pass finds nothing. So a roster regenerated over a violating tree, or from a reader
+ *   hollowed until a real sentence's marker no longer quiets it, cannot bless a finding.
+ * OUTSIDE ANCHORS (the judged-set case). Each anchored member is read from a text outside this file and the roster BY ITS
+ *   POSITION in that text - outsideAnchors captures it from the words around it, never by its own spelling - and must read in
+ *   its class (readsAs): a NAME is a name family; a SEAM word makes "The gp <w> is served." a finding; a SERVED word makes "The
+ *   gp seam is <w>." a finding; a MARKER quiets "The gp seam <w> served." with itself as the reason; an UNMARKED word leaves
+ *   "The gp seam is served (<w>)." a finding. ANCHORS is the extraction, exactly:
+ *   - the bead title (the tracked export .beads/issues.jsonl): its program tag's EXECUTOR (seam), GraphPolicyCLI (name), seam,
+ *     design-only (marker), Pi (the seam subject), no (marker), served, until (marker), seam, advisory, the listed things
+ *     capability and host (seam; the last thing, docs, is a root), adoption, canary, experimental and fixture (unmarked),
+ *     never (marker) and shipped;
+ *   - the owner filing (the export's first note, through its "Tracked gate" line): clause (1)'s until, no, seam and served;
+ *     clause (2)'s fixture, experimental, without, advisory, only, live, may and live-sdk; and its citation's advisory, only
+ *     and integrate ("optional read-only advisory mode; only integrate after"), integration ("non-normative integration
+ *     design"), never and shipped ("never represented as shipped"), and must and shipped ("must also be shipped upstream");
+ *   - docs/workbench/03's GraphPolicyCLI boundary section, through the landed docs binding: the opening sentence's Pi, no,
+ *     GraphPolicyCLI, gp and integration; future ("binds any future gp seam"); registers and none (the gp client definition);
+ *     never and implemented ("never re-implemented here"); not ("does not claim complete"); and its ownership row's nothing,
+ *     no, gp, seam and registered ("nothing today (no gp seam is registered)");
+ *   - qa/workbench/status-ledger.mjs: each CLAIM_STATUSES value (shipped, gate-pass, live-sdk) as a served word.
+ *   Beside ANCHORS: every Graph-prefixed CamelCase word, every -cli package name and the parenthesised short name of docs/03's
+ *   section read as NAMES (GraphPolicyCLI, GraphDataIR, graph-policy-cli and gp: N1, N3 and N2), every term its definition
+ *   sentence defines (gp client, gp-adjacent module, decision path, execution seam) reads as a SEAM subject, the filing's
+ *   quoted status phrases sit inside the recorded program status lines, the title's pin is the bead pin, and the feature
+ *   matrix's legend yields the served matrix statuses. So a coordinated hollow of an ANCHORED member - its reading removed
+ *   from every literal of this file and the roster (a vocabulary alternative and its pinned entry, or for an UNMARKED word a
+ *   marker made of it), the roster regenerated - still reds the judged set through the outside text (readsAs), and so does a
+ *   row or a pin removed with its frozen-shape element.
+ *   SELF-ANCHORED (named, never claimed as anchored; the 6ze.39 class at member level): a pinned member no outside text spells
+ *   is held only by this file's literals and the roster, so its coordinated hollow stays green. SELF_ANCHORED lists them, and
+ *   the judged set holds it equal to SUBJECTS, SERVED_FORMS, MARKER_WORDS and NOT_MARKERS minus the anchored members: the
+ *   seam words adapter, provider, consumer and decision point and every plural form; the served words serve, serves,
+ *   serving, ship, ships, shipping, integrates, integrated, wires, wired, adopt, adopts, adopted, hosts, hosted,
+ *   register, enable, enables, enabled, expose, exposes, exposed, invokes, available, supported, supports, landed,
+ *   landed-gated, released, deployed and operational; the markers nor, unless, pending, absent, unshipped, unserved,
+ *   unimplemented, unregistered, gated, before, if, when, once, whether, planned, proposed, cannot, will, would, could,
+ *   might, shall, should and the n't contraction; the no-marker words synthetic and today; and the NAME families' other
+ *   separator variants.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; rows, vocabulary, constants, the producer
  *   facts, the unclaimed clauses, the residuals and every pin's witness are held to the out-of-file roster
- *   (test/fixtures/gp-seam-served-roster.json); a last case reads that every pin ran to its witness.
+ *   (test/fixtures/gp-seam-served-roster.json); ANCHORS is held to the outside extraction and SELF_ANCHORED to the pinned lists;
+ *   a last case reads that every pin ran to its witness.
  * RESIDUALS (named; each has a pinned quiet row): R-OUTSIDE-ROOTS (B1) a claim in src/, test/, qa/, examples/, the dot
  *   directories, vendor/ or another tracked directory outside docs/, or in a root file that is not a .md page, is not read;
  *   R-STATUS-OTHER-CELL (B2) a GP name only in a feature-matrix Evidence or Caveats cell, or in a status-ledger cell other
- *   than Requirement, leaves the status unread structurally (its sentence reading still applies); R-OTHER-TABLES (B2) a status cell of any other docs table is read only
- *   as a sentence, so a marker anywhere in its row quiets it; R-BARE-NAME (B4) a GP name beside a served word with no seam
- *   word and no Pi is the producer's own statement (GraphPolicyCLI ships the npm package graph-policy-cli, the landed
- *   wb-1xvp.3 receipt's line 13), never read as a seam claim; R-SPLIT (B4) a claim and its seam in different sentences;
- *   R-LOOKALIKE (B4) a look-alike letter or an inserted invisible inside a name (NFKC folds the fullwidth forms, which are
- *   read); R-MARKER-ANYWHERE (B5) a marker anywhere in a sentence quiets it, whatever it qualifies; R-PARAPHRASE (B5) a
- *   served claim outside the served words (up, ready, in place, working, running, and the verbs calls, runs and uses,
- *   which docs spell as nouns too: bd calls); R-RENDERED-TEXT (B5) a character reference, an HTML tag or underscore
- *   emphasis inside or around a word leaves it unread, while the markup characters * ` ~ and \ are dropped and a claim
- *   inside an HTML comment, which no reader sees, is still found.
+ *   than Requirement, leaves the status unread structurally (its sentence reading still applies); R-OTHER-TABLES (B2) a
+ *   status cell of any other docs table is read only as a sentence, so a marker anywhere in its row quiets it; R-BARE-NAME
+ *   (B4) a GP name beside a served word with no seam word and no Pi is the producer's own statement (GraphPolicyCLI ships
+ *   the npm package graph-policy-cli, the landed wb-1xvp.3 receipt's line 13), never read as a seam claim - and so is a
+ *   claim whose seam is named by a word outside the SEAM words (the gp bridge, plugin or connector); R-SPLIT (B4) a claim
+ *   and its seam in different sentences; R-LOOKALIKE (B4) a look-alike letter or punctuation inside a name (a Cyrillic er
+ *   for p, the Unicode hyphen U+2010 between graph and policy), or a name run into a longer word (GPCLI, GraphPolicyCLIs),
+ *   leaves it unread, while NFKC folds the fullwidth forms and the fold drops format characters, so those are read (B4
+ *   spellings); R-MARKER-ANYWHERE (B5) a marker anywhere in a sentence quiets it, whatever it qualifies; R-PARAPHRASE (B5)
+ *   a served claim outside the served words (up, ready, in place, working, running; the -ing forms other than serving and
+ *   shipping, and the inflections the served words leave out, such as invoked, deploys, implements and releases; the verbs
+ *   calls, runs and uses, which docs spell as nouns too: bd calls; and the base verbs wire and host, which these docs spell
+ *   as nouns: gp's wire vocabulary, this host); R-RENDERED-TEXT (B5) text the rendered view does not show as a sentence is
+ *   not read, whatever it says: an HTML comment (a block or inline; an unclosed one opening an HTML block hides the rest of
+ *   the page), a code block (fenced or indented), a link destination, title or reference label and a link reference
+ *   definition, an HTML tag's attributes (inline or in an HTML block), an image's alt text and title, and a word broken by
+ *   a named character reference outside NAMED_REFERENCES; each quiet row has a live twin, the same claim shown, which is a
+ *   finding (B5 twins).
  *
  * Display paths added: none. Test-only: the replica trees are scratch git repositories under makeScratch; docs, the bead
  * export, docs/03, the status-ledger module and the frozen tree are only read; nothing is spawned but git.
@@ -102,6 +160,7 @@ import { createHash } from "node:crypto";
 import { existsSync, lstatSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { marked, type Token, type Tokens } from "marked";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
 import { CLAIM_STATUSES, EXPECTED_HEADER, parseLedger } from "../qa/workbench/status-ledger.mjs";
 import { docsSection, sectionTables } from "./helpers/census.js";
@@ -165,6 +224,10 @@ interface Roster {
   readonly unclaimed: readonly { readonly clause: string; readonly reason: string }[];
   readonly residuals: readonly { readonly id: string; readonly quietPin: string }[];
 }
+interface Sentence {
+  readonly line: number;
+  readonly text: string;
+}
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
@@ -187,9 +250,9 @@ const VOCABULARY: Vocabulary = {
     { id: "N2", source: "(?<![a-z0-9])gp(?![a-z0-9])" },
     { id: "N3", source: "(?<![a-z0-9])graph[-_. ]?(?:data|function)[-_. ]?ir(?![a-z0-9])" },
   ],
-  seam: "(?<![a-z0-9_])(?:seams?|integrations?|capabilit(?:y|ies)|hosts?|clients?|adapters?|providers?|consumers?|gp-adjacent modules?|decision[- ](?:points?|paths?)|executors?|canar(?:y|ies)|advisory|adoptions?|pi)(?![a-z0-9_])",
+  seam: "(?<![a-z0-9_])(?:seams?|integrations?|capabilit(?:y|ies)|hosts?|clients?|adapters?|providers?|consumers?|gp-adjacent modules?|decision[- ](?:points?|paths?)|executors?|canar(?:y|ies)|advisor(?:y|ies)|adoptions?|pi)(?![a-z0-9_])",
   served:
-    "(?<![a-z0-9_])(serv(?:e|es|ed|ing)|ship(?:s|ped|ping)?|integrat(?:es|ed)|wir(?:es|ed)|adopt(?:s|ed)|host(?:s|ed)|register(?:s|ed)|enabl(?:es|ed)|expos(?:es|ed)|invokes|live(?:-sdk)?|available|supported|supports|implemented|landed(?:-gated)?|gate-pass|released|deployed|operational)(?![a-z0-9_])",
+    "(?<![a-z0-9_])(serv(?:e|es|ed|ing)|ship(?:s|ped|ping)?|integrat(?:e|es|ed)|wir(?:es|ed)|adopt(?:s|ed)?|host(?:s|ed)|register(?:s|ed)?|enabl(?:e|es|ed)|expos(?:e|es|ed)|invokes|live(?:-sdk)?|available|supported|supports|implemented|landed(?:-gated)?|gate-pass|released|deployed|operational)(?![a-z0-9_])",
   marker:
     "(?<![a-z0-9_-])(?:not|no|never|nor|without|until|unless|pending|absent|unshipped|unserved|unimplemented|unregistered|gated|before|if|when|once|whether|future|planned|proposed|design-only|none|nothing|cannot|will|would|could|might|may|shall|should|must)(?![a-z0-9_-])|n['\u2019]t(?![a-z0-9_-])",
 };
@@ -220,6 +283,123 @@ const OWNERSHIP_HEADING = "Ownership boundaries";
 const LEGEND_HEADING = "## Status legend";
 /** A served matrix status: its legend line names landed-gated work. */
 const LANDED_WORK = "landed-gated";
+/** B4's seam subjects: every SEAM word, singular and plural (the subject Pi is B4's own row). */
+const SUBJECTS: readonly string[] = [
+  "seam",
+  "seams",
+  "integration",
+  "integrations",
+  "capability",
+  "capabilities",
+  "host",
+  "hosts",
+  "client",
+  "clients",
+  "adapter",
+  "adapters",
+  "provider",
+  "providers",
+  "consumer",
+  "consumers",
+  "gp-adjacent module",
+  "gp-adjacent modules",
+  "decision point",
+  "decision points",
+  "decision path",
+  "decision paths",
+  "executor",
+  "executors",
+  "canary",
+  "canaries",
+  "advisory",
+  "advisories",
+  "adoption",
+  "adoptions",
+];
+/** B5's served words: every SERVED form the header names. */
+const SERVED_FORMS: readonly string[] = [
+  "serve",
+  "serves",
+  "served",
+  "serving",
+  "ship",
+  "ships",
+  "shipped",
+  "shipping",
+  "integrate",
+  "integrates",
+  "integrated",
+  "wires",
+  "wired",
+  "adopt",
+  "adopts",
+  "adopted",
+  "hosts",
+  "hosted",
+  "register",
+  "registers",
+  "registered",
+  "enable",
+  "enables",
+  "enabled",
+  "expose",
+  "exposes",
+  "exposed",
+  "invokes",
+  "live",
+  "live-sdk",
+  "available",
+  "supported",
+  "supports",
+  "implemented",
+  "landed",
+  "landed-gated",
+  "gate-pass",
+  "released",
+  "deployed",
+  "operational",
+];
+/** B5's markers: every MARKER word, and the n't contraction with either apostrophe. */
+const MARKER_WORDS: readonly string[] = [
+  "not",
+  "no",
+  "never",
+  "nor",
+  "without",
+  "until",
+  "unless",
+  "pending",
+  "absent",
+  "unshipped",
+  "unserved",
+  "unimplemented",
+  "unregistered",
+  "gated",
+  "before",
+  "if",
+  "when",
+  "once",
+  "whether",
+  "future",
+  "planned",
+  "proposed",
+  "design-only",
+  "none",
+  "nothing",
+  "cannot",
+  "will",
+  "would",
+  "could",
+  "might",
+  "may",
+  "shall",
+  "should",
+  "must",
+  "isn't",
+  "isn\u2019t",
+];
+/** B5's words that are no marker: a claim labelled with one is still a claim. */
+const NOT_MARKERS: readonly string[] = ["experimental", "fixture", "synthetic", "only", "today"];
 
 // ---------------------------------------------------------------------------------------------------------------- the scanner
 const compile = (source: string, flags = ""): RegExp => new RegExp(source, flags);
@@ -228,8 +408,10 @@ const SEAM = compile(VOCABULARY.seam);
 const SERVED = compile(VOCABULARY.served);
 const MARKER = compile(VOCABULARY.marker);
 const DESIGN = compile(CONSTANTS.designStatus, "i");
-/** NFKC and lower case, the inline markup characters * ` ~ and \ dropped. */
-const fold = (text: string): string => text.normalize("NFKC").toLowerCase().replace(/[*`~\\]/g, "");
+/** Format characters (Cf): the zero-width characters, the soft hyphen, the word joiner, the byte-order mark. */
+const FORMAT = /\p{Cf}/gu;
+/** NFKC, format characters dropped, lower case, and the characters * ` ~ and \ dropped. */
+const fold = (text: string): string => text.normalize("NFKC").replace(FORMAT, "").toLowerCase().replace(/[*`~\\]/g, "");
 const namesOf = (folded: string): string[] => NAMES.filter(family => family.rx.test(folded)).map(family => family.id);
 /** One sentence naming GP beside a SERVED word: a finding, quiet by a marker, or bare (no seam word and no Pi); else none. */
 function classify(sentence: string): { readonly kind: "finding" | "marker" | "bare" | "none"; readonly reason: string } {
@@ -251,8 +433,9 @@ const TABLE_ROW = /^\s*\|/;
 const LIST_ITEM = /^\s*(?:[-+*]|\d+[.)])\s/;
 const HEADING = /^\s{0,3}#{1,6}(?:\s|$)/;
 const TERMINATOR = /[.!?;](?=\s|$)/g;
-function sentences(text: string): { readonly line: number; readonly text: string }[] {
-  const out: { line: number; text: string }[] = [];
+/** The raw cutter, for a file that is not a Markdown page (see SENTENCE). */
+function sentences(text: string): Sentence[] {
+  const out: Sentence[] = [];
   let buffer = "";
   let start = 0;
   const flush = (): void => {
@@ -286,6 +469,133 @@ function sentences(text: string): { readonly line: number; readonly text: string
   flush();
   return out;
 }
+
+// ---------------------------------------------------------------------------------------------------------- the rendered view
+const codePoint = (code: number): string => String.fromCodePoint(code);
+/** The named character references the rendered view decodes; any other named reference stays as written (R-RENDERED-TEXT). */
+const NAMED_REFERENCES: ReadonlyMap<string, string> = new Map([
+  ["amp", "&"],
+  ["lt", "<"],
+  ["gt", ">"],
+  ["quot", '"'],
+  ["apos", "'"],
+  ["nbsp", codePoint(0xa0)],
+  ["ensp", codePoint(0x2002)],
+  ["emsp", codePoint(0x2003)],
+  ["thinsp", codePoint(0x2009)],
+  ["hairsp", codePoint(0x200a)],
+  ["shy", codePoint(0xad)],
+  ["ZeroWidthSpace", codePoint(0x200b)],
+  ["zwnj", codePoint(0x200c)],
+  ["zwj", codePoint(0x200d)],
+  ["NoBreak", codePoint(0x2060)],
+  ["hyphen", codePoint(0x2010)],
+  ["dash", codePoint(0x2010)],
+  ["ndash", codePoint(0x2013)],
+  ["mdash", codePoint(0x2014)],
+  ["minus", codePoint(0x2212)],
+  ["period", "."],
+  ["excl", "!"],
+  ["quest", "?"],
+  ["comma", ","],
+  ["colon", ":"],
+  ["semi", ";"],
+]);
+const REFERENCE = /&(?:#(\d{1,7})|#[xX]([0-9a-fA-F]{1,6})|([A-Za-z][A-Za-z0-9]{1,31}));/g;
+/** `text` with every numeric character reference and each NAMED_REFERENCES name decoded. */
+function decodeReferences(text: string): string {
+  return text.replace(REFERENCE, (whole: string, decimal?: string, hex?: string, name?: string) => {
+    const code = decimal !== undefined ? Number.parseInt(decimal, 10) : hex !== undefined ? Number.parseInt(hex, 16) : undefined;
+    if (code !== undefined) return code <= 0x10ffff ? codePoint(code) : whole;
+    return NAMED_REFERENCES.get(name ?? "") ?? whole;
+  });
+}
+const HTML_COMMENT = /<!--[\s\S]*?(?:-->|$)/g;
+const HTML_TAG = /<\/?[A-Za-z][A-Za-z0-9-]*(?:\s[^>]*)?\/?>/g;
+/** Rendered text with the source line it starts on. */
+interface Piece {
+  readonly text: string;
+  readonly line: number;
+}
+const newlines = (text: string): number => text.split("\n").length - 1;
+const textOf = (token: Token): string => {
+  const value: unknown = (token as { text?: unknown }).text;
+  return typeof value === "string" ? value : "";
+};
+const childrenOf = (token: Token): readonly Token[] => {
+  const value: unknown = (token as { tokens?: unknown }).tokens;
+  return Array.isArray(value) ? (value as Token[]) : [];
+};
+const isList = (token: Token): token is Tokens.List => token.type === "list";
+const isTable = (token: Token): token is Tokens.Table => token.type === "table";
+/** Each token with its first source line: its raw is found, in order, inside the container text it was lexed from. */
+function placed(container: string, tokens: readonly Token[], line: number): { readonly token: Token; readonly line: number }[] {
+  let cursor = 0;
+  let current = line;
+  return tokens.map(token => {
+    const found = container.indexOf(token.raw, cursor);
+    if (found < 0) return { token, line: current };
+    current += newlines(container.slice(cursor, found));
+    const placement = { token, line: current };
+    current += newlines(token.raw);
+    cursor = found + token.raw.length;
+    return placement;
+  });
+}
+/** Plain text, one piece per source line, references decoded; a soft wrap reads as one space. */
+const textPieces = (text: string, line: number): Piece[] => text.split("\n").map((part, index) => ({ text: `${index === 0 ? "" : " "}${decodeReferences(part)}`, line: line + index }));
+/** What a reader sees of inline tokens (see RENDERED VIEW). */
+function inlinePieces(container: string, tokens: readonly Token[], line: number): Piece[] {
+  return placed(container, tokens, line).flatMap(({ token, line: at }) => {
+    if (token.type === "html" || token.type === "image" || token.type === "checkbox") return [];
+    if (token.type === "br") return [{ text: " ", line: at }];
+    if (token.type === "codespan" || token.type === "escape") return [{ text: textOf(token), line: at }];
+    const children = childrenOf(token);
+    return children.length > 0 ? inlinePieces(textOf(token), children, at) : textPieces(textOf(token), at);
+  });
+}
+/** An HTML block's visible text: its source with comments (an unclosed one to its end) and tags removed, lines kept. */
+const htmlPieces = (raw: string, line: number): Piece[] => textPieces(raw.replace(HTML_COMMENT, hidden => "\n".repeat(newlines(hidden))).replace(HTML_TAG, hidden => "\n".repeat(newlines(hidden))), line);
+/** The units one block token renders (see RENDERED VIEW), each a run of pieces. */
+function unitsOf(token: Token, line: number): Piece[][] {
+  if (token.type === "space" || token.type === "hr" || token.type === "def" || token.type === "code" || token.type === "checkbox") return [];
+  if (token.type === "html") return [htmlPieces(token.raw, line)];
+  if (isTable(token)) {
+    const row = (cells: readonly Tokens.TableCell[], at: number): Piece[] => cells.flatMap((cell, index) => [...(index === 0 ? [] : [{ text: " | ", line: at }]), ...inlinePieces(cell.text, cell.tokens, at)]);
+    return [row(token.header, line), ...token.rows.map((cells, index) => row(cells, line + 2 + index))];
+  }
+  if (isList(token)) return placed(token.raw, token.items, line).flatMap(({ token: item, line: at }) => blockUnits(textOf(item), childrenOf(item), at));
+  if (token.type === "blockquote") return blockUnits(textOf(token), childrenOf(token), line);
+  const children = childrenOf(token);
+  return [children.length > 0 ? inlinePieces(textOf(token), children, line) : textPieces(textOf(token), line)];
+}
+function blockUnits(container: string, tokens: readonly Token[], line: number): Piece[][] {
+  return placed(container, tokens, line).flatMap(({ token, line: at }) => unitsOf(token, at));
+}
+/** One unit cut into sentences; a sentence's line is the source line of its first visible character. */
+function unitSentences(pieces: readonly Piece[]): Sentence[] {
+  const text = pieces.map(piece => piece.text).join("");
+  const lines = pieces.flatMap(piece => Array.from({ length: piece.text.length }, () => piece.line));
+  const out: Sentence[] = [];
+  let from = 0;
+  const take = (to: number): void => {
+    const slice = text.slice(from, to);
+    const lead = slice.search(/\S/);
+    if (lead >= 0) out.push({ line: lines[from + lead] ?? 0, text: slice.replace(/\s+/g, " ").trim() });
+    from = to;
+  };
+  for (const match of text.matchAll(TERMINATOR)) take((match.index ?? 0) + 1);
+  take(text.length);
+  return out;
+}
+/** The rendered cutter: a Markdown page's sentences as a reader sees them. */
+function renderedSentences(markdown: string): Sentence[] {
+  const source = markdown.replace(/\r\n?/g, "\n");
+  return blockUnits(source, marked.lexer(source), 1).flatMap(unitSentences);
+}
+const MARKDOWN_PAGE = /\.md$/;
+/** The sentences the census judges in one file: a Markdown page through its rendered view, any other file as raw text. */
+const sentencesOf = (path: string, text: string): Sentence[] => (MARKDOWN_PAGE.test(path) ? renderedSentences(text) : sentences(text));
 
 // ------------------------------------------------------------------------------------------------------------ the status rows
 const cellsOf = (line: string): string[] => {
@@ -346,7 +656,7 @@ function ledgerFindings(path: string, text: string): string[] {
 // --------------------------------------------------------------------------------------------------------------- the judgment
 /** One file's judgment: its findings (sentences, then status rows), the sentences it judged and those naming GP. */
 function survey(path: string, text: string): { readonly findings: string[]; readonly sentences: number; readonly named: number } {
-  const cut = sentences(text);
+  const cut = sentencesOf(path, text);
   const findings = cut.flatMap(sentence => {
     const found = verdict(sentence.text);
     return found === null ? [] : [`${path}:${sentence.line} ${found}`];
@@ -500,6 +810,200 @@ function docs03(): { readonly ownership: readonly string[]; readonly boundary: r
   return { ownership, boundary, opening };
 }
 
+
+// ---------------------------------------------------------------------------------------------------------- the outside anchors
+type Role = "name" | "seam" | "served" | "marker" | "unmarked";
+interface Anchor {
+  readonly source: "title" | "filing" | "docs03" | "ledger";
+  readonly role: Role;
+  readonly word: string;
+}
+/** The bead title, read by position: the program tag's last word, the subject name, the seam noun, the design status and the pin. */
+const TITLE_HEAD = /^\[[A-Z]+(?:-[A-Z]+)*-([A-Z]+)-R\d+\] Gating artifact: the (\S+) decision (\S+) \((\S+) at Furnace ([0-9a-f]{12})\)\. /;
+/** The title's claim: subject, negation, the listed things, the claim, the gating word, the seam noun, the last stage word. */
+const TITLE_CLAIM = / (\S+) adds (\S+) GP (.+?) presenting GP as (\S+) (\S+) the (\S+) exists and has passed .+? (\S+) stages with /;
+/** The title's adoption sentence: the adoption noun, the canary noun, the two labels, the negation and the claim. */
+const TITLE_CANARY = /; (\S+) is an opt-in (\S+) labelled (\S+) or (\S+), (\S+) (\S+) on hermetic evidence\.$/;
+/** The owner filing block: the export's first note, from its opening words to the end of its "Tracked gate" line. */
+const FILING = /^(Owner filing \([\s\S]+?Tracked gate, [^\n]+)/;
+const ACCEPTANCE = /Acceptance: (.*?)\. Tracked gate/;
+const CLAUSE_ONE = /^(\S+) the artifact exists, a docs census asserts (\S+) docs\/workbench or feature-matrix sentence presents a GP (\S+) as (\S+)$/;
+const CLAUSE_TWO =
+  /^on landing, the first GP rows carry status (\S+) or (\S+), the shadow-receipt stage records decisions (\S+) executing them, the (\S+) stage is read-only, and (\S+) a measured (\S+) receipt \(.+\) (\S+) move a row to (\S+)$/;
+const CITATION_MODE = /optional read-only (\S+) mode; (\S+) (\S+) after native Furnace correctness/;
+const CITATION_DESIGN = /decisions:3 '\S+ (\S+) design'\)/;
+const CITATION_RULE = /unfinished dependencies are (\S+) represented as (\S+) \(/;
+const CITATION_UPSTREAM = /\(slices 1-4\) (\S+) also be (\S+) upstream first/;
+const DOCS03_OPENING = /^(\S+) carries (\S+) (\S+) \((\S+)\) (\S+) today\.$/;
+const DOCS03_BINDS = /binds any (\S+) gp seam to the four rules below/;
+const DOCS03_DEFINES = /A gp client is a src module the census (\S+) as one \((\S+) today\)/;
+const DOCS03_ITSELF = /added to GraphPolicyCLI itself, (\S+) re-(\S+) here\./;
+const DOCS03_COMPLETE = /a list it does (\S+) claim complete\./;
+const DOCS03_OWNERSHIP = /^(\S+) today \((\S+) (\S+) (\S+) is (\S+)\)$/;
+/** The anchored members, exactly as outsideAnchors reads them (see OUTSIDE ANCHORS). */
+const ANCHORS: readonly Anchor[] = [
+  { source: "title", role: "seam", word: "EXECUTOR" },
+  { source: "title", role: "name", word: "GraphPolicyCLI" },
+  { source: "title", role: "seam", word: "seam" },
+  { source: "title", role: "marker", word: "design-only" },
+  { source: "title", role: "seam", word: "Pi" },
+  { source: "title", role: "marker", word: "no" },
+  { source: "title", role: "served", word: "served" },
+  { source: "title", role: "marker", word: "until" },
+  { source: "title", role: "seam", word: "seam" },
+  { source: "title", role: "seam", word: "advisory" },
+  { source: "title", role: "seam", word: "capability" },
+  { source: "title", role: "seam", word: "host" },
+  { source: "title", role: "seam", word: "adoption" },
+  { source: "title", role: "seam", word: "canary" },
+  { source: "title", role: "unmarked", word: "experimental" },
+  { source: "title", role: "unmarked", word: "fixture" },
+  { source: "title", role: "marker", word: "never" },
+  { source: "title", role: "served", word: "shipped" },
+  { source: "filing", role: "marker", word: "until" },
+  { source: "filing", role: "marker", word: "no" },
+  { source: "filing", role: "seam", word: "seam" },
+  { source: "filing", role: "served", word: "served" },
+  { source: "filing", role: "unmarked", word: "fixture" },
+  { source: "filing", role: "unmarked", word: "experimental" },
+  { source: "filing", role: "marker", word: "without" },
+  { source: "filing", role: "seam", word: "advisory" },
+  { source: "filing", role: "unmarked", word: "only" },
+  { source: "filing", role: "served", word: "live" },
+  { source: "filing", role: "marker", word: "may" },
+  { source: "filing", role: "served", word: "live-sdk" },
+  { source: "filing", role: "seam", word: "advisory" },
+  { source: "filing", role: "unmarked", word: "only" },
+  { source: "filing", role: "served", word: "integrate" },
+  { source: "filing", role: "seam", word: "integration" },
+  { source: "filing", role: "marker", word: "never" },
+  { source: "filing", role: "served", word: "shipped" },
+  { source: "filing", role: "marker", word: "must" },
+  { source: "filing", role: "served", word: "shipped" },
+  { source: "docs03", role: "seam", word: "Pi" },
+  { source: "docs03", role: "marker", word: "no" },
+  { source: "docs03", role: "name", word: "GraphPolicyCLI" },
+  { source: "docs03", role: "name", word: "gp" },
+  { source: "docs03", role: "seam", word: "integration" },
+  { source: "docs03", role: "marker", word: "future" },
+  { source: "docs03", role: "served", word: "registers" },
+  { source: "docs03", role: "marker", word: "none" },
+  { source: "docs03", role: "marker", word: "never" },
+  { source: "docs03", role: "served", word: "implemented" },
+  { source: "docs03", role: "marker", word: "not" },
+  { source: "docs03", role: "marker", word: "nothing" },
+  { source: "docs03", role: "marker", word: "no" },
+  { source: "docs03", role: "name", word: "gp" },
+  { source: "docs03", role: "seam", word: "seam" },
+  { source: "docs03", role: "served", word: "registered" },
+  { source: "ledger", role: "served", word: "shipped" },
+  { source: "ledger", role: "served", word: "gate-pass" },
+  { source: "ledger", role: "served", word: "live-sdk" },
+];
+/** The pinned members no outside text spells (see OUTSIDE ANCHORS): the pinned lists minus the anchored members. */
+const SELF_ANCHORED = {
+  seam: [
+    "seams",
+    "integrations",
+    "capabilities",
+    "hosts",
+    "clients",
+    "adapter",
+    "adapters",
+    "provider",
+    "providers",
+    "consumer",
+    "consumers",
+    "gp-adjacent modules",
+    "decision point",
+    "decision points",
+    "decision paths",
+    "executors",
+    "canaries",
+    "advisories",
+    "adoptions",
+  ],
+  served: [
+    "serve",
+    "serves",
+    "serving",
+    "ship",
+    "ships",
+    "shipping",
+    "integrates",
+    "integrated",
+    "wires",
+    "wired",
+    "adopt",
+    "adopts",
+    "adopted",
+    "hosts",
+    "hosted",
+    "register",
+    "enable",
+    "enables",
+    "enabled",
+    "expose",
+    "exposes",
+    "exposed",
+    "invokes",
+    "available",
+    "supported",
+    "supports",
+    "landed",
+    "landed-gated",
+    "released",
+    "deployed",
+    "operational",
+  ],
+  marker: ["nor", "unless", "pending", "absent", "unshipped", "unserved", "unimplemented", "unregistered", "gated", "before", "if", "when", "once", "whether", "planned", "proposed", "cannot", "will", "would", "could", "might", "shall", "should", "isn't", "isn\u2019t"],
+  unmarked: ["synthetic", "today"],
+};
+/** Every member the outside texts spell, read by position (never by its own spelling), in ANCHORS order. */
+function outsideAnchors(title: string, filing: string, clauses: readonly string[]): Anchor[] {
+  const anchors: Anchor[] = [];
+  const read = (source: Anchor["source"], pattern: RegExp, text: string, roles: readonly (Role | "")[]): void => {
+    const match = pattern.exec(text);
+    roles.forEach((role, index) => {
+      if (role !== "") anchors.push({ source, role, word: match?.[index + 1] ?? "" });
+    });
+  };
+  read("title", TITLE_HEAD, title, ["seam", "name", "seam", "marker", ""]);
+  read("title", TITLE_CLAIM, title, ["seam", "marker", "", "served", "marker", "seam", "seam"]);
+  const things = (TITLE_CLAIM.exec(title)?.[3] ?? "").split(/, | or /);
+  for (const thing of things.slice(0, -1)) anchors.push({ source: "title", role: "seam", word: thing });
+  read("title", TITLE_CANARY, title, ["seam", "seam", "unmarked", "unmarked", "marker", "served"]);
+  read("filing", CLAUSE_ONE, clauses[0] ?? "", ["marker", "marker", "seam", "served"]);
+  read("filing", CLAUSE_TWO, clauses[1] ?? "", ["unmarked", "unmarked", "marker", "seam", "unmarked", "served", "marker", "served"]);
+  read("filing", CITATION_MODE, filing, ["seam", "unmarked", "served"]);
+  read("filing", CITATION_DESIGN, filing, ["seam"]);
+  read("filing", CITATION_RULE, filing, ["marker", "served"]);
+  read("filing", CITATION_UPSTREAM, filing, ["marker", "served"]);
+  const pi = docs03();
+  const paragraph = pi.boundary[0] ?? "";
+  read("docs03", DOCS03_OPENING, pi.opening, ["seam", "marker", "name", "name", "seam"]);
+  read("docs03", DOCS03_BINDS, paragraph, ["marker"]);
+  read("docs03", DOCS03_DEFINES, paragraph, ["served", "marker"]);
+  read("docs03", DOCS03_ITSELF, paragraph, ["marker", "served"]);
+  read("docs03", DOCS03_COMPLETE, paragraph, ["marker"]);
+  read("docs03", DOCS03_OWNERSHIP, (pi.ownership[2] ?? "").split("; ")[0] ?? "", ["marker", "marker", "name", "seam", "served"]);
+  for (const status of CLAIM_STATUSES) anchors.push({ source: "ledger", role: "served", word: status });
+  return anchors;
+}
+/** Whether an anchored member reads in its class through the census's own reading (see OUTSIDE ANCHORS). */
+function readsAs(anchor: Anchor): boolean {
+  const word = fold(anchor.word);
+  if (word === "") return false;
+  if (anchor.role === "name") return namesOf(word).length > 0;
+  if (anchor.role === "seam") return verdict(`The gp ${word} is served.`) === "N2: served-served";
+  if (anchor.role === "served") return verdict(`The gp seam is ${word}.`) === `N2: served-${word}`;
+  if (anchor.role === "marker") {
+    const reading = classify(`The gp seam ${word} served.`);
+    return reading.kind === "marker" && reading.reason === word;
+  }
+  return verdict(`The gp seam is served (${word}).`) === "N2: served-served";
+}
+
 // ------------------------------------------------------------------------------------------------------------------- the pins
 const PLANT = "The Pi gp seam is served.";
 const untie = (text: string): string => text.replace(/ is /, " is not ");
@@ -547,15 +1051,18 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       "status-uppercase": gateOf({ ...producer, programs: producer.programs.map(program => ({ ...program, text: program.text.toUpperCase() })) }),
     };
     const pi = docs03();
+    const gate = gateOf(producer);
+    // LIVE GUARD (literal, never only the roster): the gate's verdict with no finding is pass while ABSENT, stand-down on PRESENT.
+    expect(guard(gate, [])).toBe(gate === "ABSENT" ? "pass" : "stand-down");
     return {
-      gate: gateOf(producer),
+      gate,
       recorded: producer.gate,
       hashed,
       statusLines: producer.programs.map(program => `${program.path}:${program.line}`),
       nearMisses,
       piOwnership: pi.ownership.slice(1).map(cell => cell.split("; ")[0] ?? ""),
       piOpening: pi.opening,
-      verdict: guard(gateOf(producer), []),
+      verdict: guard(gate, []),
     };
   },
   A2: async () => {
@@ -574,6 +1081,9 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const pass = judgeAll([...listed.map(path => [path, readFileSync(join(REPO, path), "utf8")] as const), ...positives]);
     expect(pass.findings).toEqual([...real.findings, ...alone]);
     const outside = pass.findings.filter(finding => !alone.includes(finding));
+    // LIVE GUARD (literal from gateOf, never only the roster): while the gate reads ABSENT the pass finds nothing beyond the
+    // positives and the verdict is pass, so a roster regenerated over a violating tree or a hollowed reader cannot bless it.
+    expect({ verdict: guard(gate, outside), findings: outside }).toEqual(gate === "ABSENT" ? { verdict: "pass", findings: [] } : { verdict: "stand-down", findings: outside });
     const coverage = { readAll: JSON.stringify(real.read) === JSON.stringify(listed) && real.unreadable.length === 0, floorsMet: floorsMetBy(real.read, real) };
     // The same guard over a scratch git repository: plants (a sentence, a feature-matrix row, a status-ledger row) and their
     // untied twins; through gitList and judgeFiles it must find the plants, and only them.
@@ -588,6 +1098,8 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       files[twinOf(path)] = untie(text);
     }
     const mirror = liveScan(gitReplica("0lf7-live-", files));
+    // The replica's findings, literal: every planted file and no twin.
+    expect([...new Set(mirror.findings.map(finding => finding.slice(0, finding.indexOf(":"))))].sort(byName)).toEqual([CONSTANTS.matrix, CONSTANTS.ledger, ...Object.keys(plants)].sort(byName));
     return {
       gate,
       verdict: guard(gate, outside),
@@ -605,8 +1117,8 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const trackedTop = trackedTopDirectories(REPO);
     const unnamedTop = trackedTop.filter(name => !CONSTANTS.roots.includes(name) && !CONSTANTS.outside.includes(name));
     const workbenchTracked = execFileSync("git", ["ls-files", "-z", "--cached", "--", "docs/workbench"], { cwd: REPO, encoding: "utf8" }).split("\0").filter(path => path !== "");
-    // The frozen pass: the immutable tree at the cut's base, read from git objects, judged in one pass - exact counts, no
-    // finding, and every sentence that names GP beside a served or Pi-side word, with the reason it is quiet.
+    // The frozen pass: the immutable tree at frozenAt, read from git objects, judged in one pass - exact counts, no finding,
+    // and every sentence that names GP beside a served or Pi-side word, with the reason it is quiet.
     const ancestor = spawnSync("git", ["merge-base", "--is-ancestor", CONSTANTS.frozenAt, "HEAD"], { cwd: REPO }).status === 0;
     const listing = execFileSync("git", ["ls-tree", "-r", "-z", "--full-tree", CONSTANTS.frozenAt], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 });
     const entries = listing
@@ -620,8 +1132,10 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       .filter(entry => entry.type === "blob" && entry.mode !== "120000" && (CONSTANTS.roots.some(root => entry.path.startsWith(`${root}/`)) || PAGE.test(entry.path)));
     const texts = readBlobs([...new Set(entries.map(entry => entry.id))]);
     const frozen = judgeAll(entries.map(entry => [entry.path, texts.get(entry.id) ?? ""] as const));
+    // LIVE GUARD (literal, never only the roster): the immutable tree read no finding.
+    expect(frozen.findings).toEqual([]);
     const quieted = entries.flatMap(entry =>
-      sentences(texts.get(entry.id) ?? "").flatMap(sentence => {
+      sentencesOf(entry.path, texts.get(entry.id) ?? "").flatMap(sentence => {
         const reading = classify(sentence.text);
         return reading.kind === "marker" || reading.kind === "bare" ? [`${entry.path}:${sentence.line} ${reading.kind}:${reading.reason}`] : [];
       }),
@@ -684,7 +1198,8 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     };
   },
   B3: async () => {
-    const cuts = [
+    // The raw cutter (a file that is not a Markdown page).
+    const raw = [
       sentences("Intro line. The Pi gp seam is served; no other row changed."),
       sentences("The Pi gp seam\nis served."),
       sentences("| gp seam | served |\n| x | y |"),
@@ -695,6 +1210,28 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       sentences("Version 0.1.0 of the gp seam is served."),
       sentences("The gp seam is served?\r\nYes."),
     ].map(cut => cut.map(sentence => `${sentence.line}:${sentence.text}`));
+    // The rendered cutter (a Markdown page): units, soft wraps joined, terminators, and the source line of each sentence.
+    const rendered = [
+      "Intro line. The Pi gp seam is served; no other row changed.",
+      "The Pi gp seam\nis served.",
+      "The Pi gp seam  \nis served.",
+      "| Feature | Status |\n| --- | --- |\n| gp seam | served |\n| x | y |",
+      "The gp seam\n- is served",
+      "The gp seam\n\nis served.",
+      "# The gp seam\nis served.",
+      "The gp seam is served!Next line",
+      "Version 0.1.0 of the gp seam is served.",
+      "The gp seam is served?\r\nYes.",
+      "The gp seam is served. \nNext.",
+      "> The gp seam\n> is served.",
+      "> The gp seam\n>\n> is served.",
+      "- The gp seam\n  is served.\n- Next item.",
+      "<div>\nThe gp seam\nis served.\n</div>",
+      "```\nThe gp seam is served.\n```\n\nAfter the fence.",
+      "Before.\n\n    The gp seam is served.\n\nAfter the indent.",
+      "The gp seam is served <!-- not\nhere -->.\nNext.",
+      "The [gp seam](x.md) is *served*.",
+    ].map(text => renderedSentences(text).map(sentence => `${sentence.line}:${sentence.text}`));
     const judged = [
       judgeText("docs/x.md", "Intro line.\n\nThe Pi gp seam is served; no other row changed."),
       judgeText("docs/x.md", "The Pi gp seam\nis served."),
@@ -702,8 +1239,12 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       judgeText("docs/x.md", "The gp seam\n- is served"),
       judgeText("docs/x.md", "The gp seam\n\nis served."),
       judgeText("docs/x.md", "# The gp seam\nis served."),
+      judgeText("docs/x.txt", "The Pi gp seam\nis served."),
+      judgeText("docs/x.txt", "The gp seam is served <!-- not -->."),
+      judgeText("docs/x.md", "- The Pi gp seam\n  is served."),
+      judgeText("docs/x.md", "Line one.\n\n> The Pi gp seam\n> is served."),
     ];
-    return { cuts, judged };
+    return { raw, rendered, judged };
   },
   B4: async () => {
     const spellings = [
@@ -722,8 +1263,10 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       "The GraphFunctionIR seam is served.",
       "The graph-data-ir seam is served.",
       "The \uff27\uff30 seam is served.",
+      `The g${codePoint(0x200b)}p seam is served.`,
+      `The Graph${codePoint(0xad)}PolicyCLI seam is served.`,
     ];
-    const subjects = ["seam", "seams", "integration", "capability", "capabilities", "host", "client", "adapter", "provider", "consumer", "gp-adjacent module", "decision point", "decision path", "executor", "canary", "advisory", "adoption"].map(word => verdict(`The GraphPolicyCLI ${word} is served.`));
+    const subjects = SUBJECTS.map(word => verdict(`The GraphPolicyCLI ${word} is served.`));
     const notSubjects = ["module", "census", "test", "receipt", "worker", "binary"].map(word => classify(`The GraphPolicyCLI ${word} is served.`).kind);
     const pi = [verdict("Pi serves gp decisions."), verdict("Pi's GraphPolicyCLI reading is live."), verdict("pi-subagents ships GraphDataIR exports.")];
     const nearMisses = ["gpu", "gpt", "gpg", "gp2", "graph policies", "graphical policy", "graph-data"].map(word => verdict(`The ${word} seam is served.`));
@@ -732,97 +1275,54 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
         verdict("GraphPolicyCLI ships the npm package graph-policy-cli, and its Python mirror is graphpolicy), or a package named gp;"),
         verdict("GraphPolicyCLI is served."),
         verdict("The installed gp is available on PATH."),
+        verdict("The gp bridge is live."),
       ],
       "R-SPLIT": [judgeText("docs/x.md", "We added a gp seam. It is served."), judgeText("docs/x.md", "Status: served. Subject: the gp seam.")],
-      "R-LOOKALIKE": [verdict(`The g${String.fromCodePoint(0x0440)} seam is served.`), verdict(`The g${String.fromCodePoint(0x200b)}p seam is served.`), verdict(`The Graph${String.fromCodePoint(0x2010)}Policy seam is served.`)],
+      "R-LOOKALIKE": [verdict(`The g${codePoint(0x0440)} seam is served.`), verdict(`The Graph${codePoint(0x2010)}Policy seam is served.`), verdict("The GPCLI seam is served."), verdict("The GraphPolicyCLIs seam is served.")],
     };
     expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "B4").map(residual => residual.id));
     // The real R-BARE-NAME member: the landed wb-1xvp.3 receipt states it at line 13, and it reads bare.
     const receipt = readFileSync(join(REPO, "docs/workbench/receipts/wb-1xvp.3.md"), "utf8");
-    const bareLine = sentences(receipt).find(sentence => sentence.text.startsWith("GraphPolicyCLI ships the npm package"));
+    const bareLine = sentencesOf("docs/workbench/receipts/wb-1xvp.3.md", receipt).find(sentence => sentence.text.startsWith("GraphPolicyCLI ships the npm package"));
     return { spellings: spellings.map(verdict), subjects, notSubjects, pi, nearMisses, quiet, realBare: bareLine === undefined ? null : `${bareLine.line} ${classify(bareLine.text).kind}` };
   },
   B5: async () => {
-    const served = [
-      "serve",
-      "serves",
-      "served",
-      "serving",
-      "ship",
-      "ships",
-      "shipped",
-      "shipping",
-      "integrates",
-      "integrated",
-      "wires",
-      "wired",
-      "adopts",
-      "adopted",
-      "hosts",
-      "hosted",
-      "registers",
-      "registered",
-      "enables",
-      "enabled",
-      "exposes",
-      "exposed",
-      "invokes",
-      "live",
-      "live-sdk",
-      "available",
-      "supported",
-      "supports",
-      "implemented",
-      "landed",
-      "landed-gated",
-      "gate-pass",
-      "released",
-      "deployed",
-      "operational",
-    ].map(word => verdict(`The gp seam: ${word}.`));
+    const served = SERVED_FORMS.map(word => verdict(`The gp seam: ${word}.`));
     // A served word needs a seam word or Pi: the same words beside GraphPolicyCLI alone read bare, beside Pi they are findings.
     const bare = ["integrated", "registered", "ships", "serves"].map(word => classify(`GraphPolicyCLI ${word} its package.`).kind);
     const pi = ["integrated", "registered", "ships", "serves"].map(word => verdict(`Pi ${word} GraphPolicyCLI.`));
-    const forms = ["The gp seam is **served**.", "The gp seam is `served`.", "The gp seam is ser**ved**.", "The gp seam is SERVED.", "<!-- The gp seam is served. -->", "The gp seam is \u201cserved\u201d."].map(verdict);
-    const markers = [
-      "not",
-      "no",
-      "never",
-      "nor",
-      "without",
-      "until",
-      "unless",
-      "pending",
-      "absent",
-      "unshipped",
-      "unserved",
-      "unimplemented",
-      "unregistered",
-      "gated",
-      "before",
-      "if",
-      "when",
-      "once",
-      "whether",
-      "future",
-      "planned",
-      "proposed",
-      "design-only",
-      "none",
-      "nothing",
-      "cannot",
-      "will",
-      "would",
-      "could",
-      "might",
-      "may",
-      "shall",
-      "should",
-      "must",
-      "isn't",
-      "isn\u2019t",
-    ].map(word => verdict(`The gp seam ${word} served.`));
-    const notMarkers = ["experimental", "fixture", "synthetic", "only", "today"].map(word => verdict(`The gp seam is served (${word}).`));
+    // A format character inside a word is dropped by the fold, so the word reads.
+    const formats = [0x200b, 0xad, 0x2060, 0xfeff].map(code => [verdict(`The gp seam is ser${codePoint(code)}ved.`), verdict(`The gp se${codePoint(code)}am is served.`)]);
+    // A served word read through the rendered view of a docs page: inline markup, references and link text render as words.
+    const forms = [
+      "The gp seam is **served**.",
+      "The gp seam is `served`.",
+      "The gp seam is ser**ved**.",
+      "The gp seam is SERVED.",
+      "The gp seam is \u201cserved\u201d.",
+      "The gp seam is _served_.",
+      "The gp seam is __served__.",
+      "The gp seam is ~~served~~.",
+      "The gp seam is ser<b>ved</b>.",
+      "The gp seam is serv&#101;d.",
+      "The gp seam is serv&#x65;d.",
+      "The gp seam is ser&shy;ved.",
+      "The gp seam is [served](x.md).",
+    ].map(text => judgeText("docs/x.md", text));
+    // A code span shows a character reference as written, so the word it would spell is not read.
+    const asWritten = judgeText("docs/x.md", "The gp seam is `serv&#101;d`.");
+    // A marker counts only where a reader sees it: one hidden in a comment, a link destination, title or label, a tag
+    // attribute or an image's alt text never quiets a rendered claim.
+    const hiddenMarkers = [
+      "The gp seam is served <!-- not -->.",
+      "The gp seam is [served](not.md).",
+      'The gp seam is [served](x.md "not").',
+      "The gp seam is served [here][not].\n\n[not]: x.md",
+      'The gp seam is <span title="not">served</span>.',
+      "The gp seam is served ![not](x.png).",
+    ].map(text => judgeText("docs/x.md", text));
+    const markers = MARKER_WORDS.map(word => verdict(`The gp seam ${word} served.`));
+    const notMarkers = NOT_MARKERS.map(word => verdict(`The gp seam is served (${word}).`));
     // Hyphen- and underscore-bounded words: a status word carrying a marker is no marker, an identifier is one word.
     const bounded = [
       verdict("The gp seam is landed-gated."),
@@ -832,13 +1332,31 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       classify("The gp seam reads served_count and is_live.").kind,
       classify("GP_CLI_UNKNOWN_COMMAND is served by the gp client.").kind,
     ];
+    // R-RENDERED-TEXT: each text the rendered view does not show as a sentence, beside its live twin, the same claim shown.
+    const unrendered: readonly (readonly [string, string])[] = [
+      ["<!-- The gp seam is served. -->", "The gp seam is served."],
+      ["<!-- an unclosed comment\nThe gp seam is served.\n\nNext paragraph.", "The gp seam is served."],
+      ["Status: <!-- the gp seam is served -->ok.", "Status: the gp seam is served."],
+      ["```\nThe gp seam is served.\n```", "The gp seam is served."],
+      ["    The gp seam is served.", "The gp seam is served."],
+      ["See [the page](the-gp-seam-is-served.md).", "See [the gp seam is served](x.md)."],
+      ['See [the page](x.md "The gp seam is served").', "See [the gp seam is served](x.md)."],
+      ["See [the page][the gp seam is served].\n\n[the gp seam is served]: x.md", "See [the gp seam is served][1].\n\n[1]: x.md"],
+      ['See [the page][1].\n\n[1]: x.md "The gp seam is served"', "The gp seam is served."],
+      ['<span title="The gp seam is served.">Status</span>', "<span>The gp seam is served.</span>"],
+      ['<div title="The gp seam is served.">\nStatus\n</div>', "<div>\nThe gp seam is served.\n</div>"],
+      ["![The gp seam is served](x.png)", "The gp seam is served."],
+      ['![x](x.png "The gp seam is served")', "The gp seam is served."],
+      ["The gp seam is ser&foo;ved.", "The gp seam is ser&shy;ved."],
+    ];
     const quiet = {
       "R-MARKER-ANYWHERE": verdict("The gp seam is served and no rollback is planned."),
-      "R-PARAPHRASE": [...["up", "ready", "in place", "working", "running"].map(word => verdict(`The gp seam is ${word}.`)), verdict("Pi calls gp in its decision loop."), verdict("The gp seam runs."), verdict("Pi uses the gp seam.")],
-      "R-RENDERED-TEXT": [verdict("The gp seam is serv&#101;d."), verdict("The gp seam is ser<b>ved</b>."), verdict("The gp seam is _served_.")],
+      "R-PARAPHRASE": [...["up", "ready", "in place", "working", "running"].map(word => verdict(`The gp seam is ${word}.`)), verdict("Pi calls gp in its decision loop."), verdict("The gp seam runs."), verdict("Pi uses the gp seam."), verdict("The gp adapters wire into the Pi decision path."), verdict("Pi and its gp clients host the decision path."), ...["Pi is integrating the gp seam.", "Pi invoked the gp client.", "Pi deploys the gp adapter.", "Pi implements the gp seam.", "Pi releases the gp adapter."].map(verdict)],
+      "R-RENDERED-TEXT": unrendered.map(([hidden]) => judgeText("docs/x.md", hidden)),
     };
     expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "B5").map(residual => residual.id));
-    return { served, bare, pi, forms, markers, notMarkers, bounded, quiet };
+    const twins = { "R-RENDERED-TEXT": unrendered.map(([, shown]) => judgeText("docs/x.md", shown)) };
+    return { served, bare, pi, formats, forms, asWritten, hiddenMarkers, markers, notMarkers, bounded, quiet, twins };
   },
 };
 
@@ -868,35 +1386,31 @@ describe("wb-0lf.7 GP seam served-claim census (FURNACE-GRAPH-POLICY-DECISION-EX
     expect(ROSTER.bead).toBe(BEAD);
     expect(ROSTER.vocabulary).toEqual(VOCABULARY);
     expect(ROSTER.constants).toEqual(CONSTANTS);
-    // The acceptance, cut into its clauses: clause (1) is the two labels joined, each tiled by its pins; (2) and (3) are unclaimed.
+    // The owner filing (the export's first note) and its acceptance, cut into its clauses: clause (1) is the two labels
+    // joined, each tiled by its pins; (2) and (3) are unclaimed.
     const { title, notes } = beadRow();
-    const acceptance = /Acceptance: (.*?)\. Tracked gate/.exec(notes)?.[1] ?? "";
+    const filing = FILING.exec(notes)?.[1] ?? "";
+    // The filing block is the export's first note: the next note follows it after a blank line.
+    expect(notes.slice(filing.length, filing.length + 2)).toBe("\n\n");
+    const acceptance = ACCEPTANCE.exec(filing)?.[1] ?? "";
     const clauses = acceptance.split("; ");
     expect(clauses.length).toBe(3);
     expect(clauses[0]).toBe(ROWS.map(row => row.label).join(" "));
     expect(ROWS.map(row => tiled(row.label, row.pins.map(pin => pin.quote)))).toEqual(ROWS.map(() => true));
     expect(clauses.slice(1)).toEqual(ROSTER.unclaimed.map(entry => entry.clause));
     expect(ROSTER.unclaimed.every(entry => entry.reason.length > 0)).toBe(true);
-    // The title's subject list and claim: each listed GP thing but the presenting docs is a seam word, docs is a root, the claim is served.
-    const subject = /Pi adds no GP (.+?) presenting GP as (\S+) until /.exec(title);
-    const things = (subject?.[1] ?? "").split(/, | or /);
-    const presenting = things[things.length - 1] ?? "";
+    // The title's listed GP things: each but the last is an anchored seam word, the last (the presenting docs) is a root.
+    const things = (TITLE_CLAIM.exec(title)?.[3] ?? "").split(/, | or /);
     expect(things.length).toBeGreaterThanOrEqual(3);
-    expect(things.slice(0, -1).map(word => verdict(`The gp ${word} is ${subject?.[2] ?? ""}.`))).toEqual(things.slice(0, -1).map(() => `N2: served-${subject?.[2] ?? ""}`));
-    expect(CONSTANTS.roots.includes(presenting)).toBe(true);
-    const canary = /adoption is an opt-in (\S+) labelled .+?, never (\S+) on hermetic evidence/.exec(title);
-    expect(verdict(`The gp ${canary?.[1] ?? ""} is ${canary?.[2] ?? ""}.`)).toBe(`N2: served-${canary?.[2] ?? ""}`);
-    // Clause (1)'s own words: its seam noun and claim read as a seam and a served word, its gating word is a marker.
-    const own = /presents a GP (\S+) as (\S+)$/.exec(clauses[0] ?? "");
-    expect(verdict(`The gp ${own?.[1] ?? ""} is ${own?.[2] ?? ""}.`)).toBe(`N2: served-${own?.[2] ?? ""}`);
-    const gating = (clauses[0] ?? "").split(" ")[0] ?? "";
-    expect(MARKER.test(fold(gating))).toBe(true);
-    const liveStatus = /may move a row to (\S+)$/.exec(clauses[1] ?? "")?.[1] ?? "";
-    expect(verdict(`The gp seam is ${liveStatus}.`)).toBe(`N2: served-${liveStatus}`);
+    expect(CONSTANTS.roots.includes(things[things.length - 1] ?? "")).toBe(true);
+    // OUTSIDE ANCHORS: every member the outside texts spell, read by position, reads in its class.
+    const anchors = outsideAnchors(title, filing, clauses);
+    expect(anchors).toEqual(ANCHORS);
+    expect(anchors.filter(anchor => !readsAs(anchor))).toEqual([]);
     // The producer facts: the filing's quoted status phrases sit inside the recorded status lines; its pin is the bead pin.
-    const quoted = /\(README\.md:3 '([^']+)'; decisions:3 '([^']+)'\)/.exec(notes);
+    const quoted = /\(README\.md:3 '([^']+)'; decisions:3 '([^']+)'\)/.exec(filing);
     expect([quoted?.[1], quoted?.[2]].map((phrase, index) => phrase !== undefined && (ROSTER.producer.programs[index]?.text ?? "").includes(phrase))).toEqual([true, true]);
-    const pinned = /design-only at Furnace ([0-9a-f]{12})\)/.exec(title)?.[1] ?? "";
+    const pinned = TITLE_HEAD.exec(title)?.[5] ?? "";
     expect(pinned.length).toBe(12);
     expect(ROSTER.producer.beadPin.startsWith(pinned)).toBe(true);
     expect(ROSTER.producer.gate).toBe(gateOf(ROSTER.producer));
@@ -910,8 +1424,19 @@ describe("wb-0lf.7 GP seam served-claim census (FURNACE-GRAPH-POLICY-DECISION-EX
     const defined = [...boundary.matchAll(/(?:^|; |\. )an? ((?:gp[- ][a-z]+|[a-z]+) [a-z]+) is an? /gim)].map(match => match[1] ?? "");
     expect(defined.length).toBeGreaterThanOrEqual(4);
     expect(defined.map(term => SEAM.test(fold(term)))).toEqual(defined.map(() => true));
-    // The status ledger's claim statuses are served words; the matrix legend yields the served matrix statuses.
-    expect(CLAIM_STATUSES.map(status => verdict(`The gp seam is ${status}.`))).toEqual(CLAIM_STATUSES.map(status => `N2: served-${status}`));
+    // SELF-ANCHORED, named: the pinned lists minus the anchored members (the defined terms anchor their seam words).
+    const anchoredAs = (role: Role): Set<string> => new Set(anchors.filter(anchor => anchor.role === role).map(anchor => fold(anchor.word)));
+    const seamAnchored = new Set([...anchoredAs("seam"), ...defined.map(term => SEAM.exec(fold(term))?.[0] ?? "")]);
+    const servedAnchored = anchoredAs("served");
+    const markerAnchored = anchoredAs("marker");
+    const unmarkedAnchored = anchoredAs("unmarked");
+    expect({
+      seam: SUBJECTS.filter(word => !seamAnchored.has(word)),
+      served: SERVED_FORMS.filter(word => !servedAnchored.has(word)),
+      marker: MARKER_WORDS.filter(word => !markerAnchored.has(word)),
+      unmarked: NOT_MARKERS.filter(word => !unmarkedAnchored.has(word)),
+    }).toEqual(SELF_ANCHORED);
+    // The matrix legend yields the served matrix statuses.
     const legend = legendOf(readFileSync(join(REPO, CONSTANTS.matrix), "utf8"));
     expect(servedStatuses(legend).length).toBeGreaterThan(0);
     expect(servedStatuses(legend).every(status => legend.some(entry => entry.status === status))).toBe(true);
