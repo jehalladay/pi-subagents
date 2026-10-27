@@ -36,7 +36,10 @@
  *   more Pi surfaces (the root pages, examples/). This file and its roster are EXEMPT: walked, never judged (row A3). The
  *   five trees are bound to the filing (F1): every root its clause (a) names ("docs/src/skills/qa/test") is a directory of
  *   the live tree, holding files, that a SCAN_ROOTS root covers - a root word read as the directory of that name, skills as
- *   Pi's installed skills (SKILLS_ROOT: .agents/skills, which must hold a SKILL.md).
+ *   Pi's installed skills (SKILLS_ROOT: .agents/skills, which must hold a SKILL.md). The root list is CLAUSE_ROOTS's match
+ *   in the clause (clauseRootsOf): it must parse - a clause without the list reads null, never an empty list - hold a root
+ *   and, rejoined with "/", restate the export row's own list, so an empty or partial parse reds; the parse carries its own
+ *   positive controls (a list, a single root, a clause without the list).
  * - SENTENCE: a file's text cut at a run of white space after ".", "!", "?" or ";", at a blank line and before a line opening a
  *   table row ("|"); a .md file is also cut before a line opening a list item ("-", "+", "*", "1." or "1)" then a space). A code
  *   comment's wrapped lines stay one sentence.
@@ -92,14 +95,18 @@
  * coverage reader carries its own positive controls); each claim word of the statement and clause (a) diagnoses as itself;
  * its gating sentence's symbols, exports, file count, ADR slug and version are held by SYMBOLS, GATED_EXPORTS, TSX_IO_FILES,
  * ADR_SLUG and the roster's producer version; and every root its clause (a) names is walked (READINGS (a); the root reader
- * carries its own controls), so a filing root removed from SCAN_ROOTS, A4's plants and the roster together still reds.
+ * carries its own controls), so a filing root removed from SCAN_ROOTS, A4's plants and the roster together still reds. The
+ * root parse is held to the row itself (its list parses, holds a root and restates the row's list) and to its own positive
+ * controls, so a parse hollowed - it never matches, reads part of the list, drops a root, is fed an empty clause or reads a
+ * miss as an empty list - in this file and the roster together still reds.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the judged set - every row's id, label
  * and pins, every pin's witness, the vocabularies and the probe constants - is held to the out-of-file roster
  * (test/fixtures/tsx-unshipped-surface-roster.json). A last case reads that every pin's case ran to its end. Not claimed: a
  * pin of rows M or R removed from ROWS, the literal, IMPL and the roster together (F1 anchors clauses, roots and
  * vocabulary, not those pins); examples/ or the root pages - the two surfaces beyond the filing's roots, which nothing
  * outside this file names - removed from the walk, A4's plants and the roster together; SKILLS_ROOT moved, in this file and
- * the roster together, to another covered directory that holds a SKILL.md.
+ * the roster together, to another covered directory that holds a SKILL.md; the root parse hollowed together with its own
+ * expected values (the liveness expectation and the parse controls' literals) in this file and the roster.
  * RESIDUALS (named; each has a pinned quiet row in row R): R1 R-MARKER-ANYWHERE a marker anywhere in a sentence (a table row
  *   included) admits it, whatever the marker qualifies; R2 R-UNANCHORED a CONTEXT word in a sentence without the anchor (Pi
  *   says parity, data output and dogfood in other senses); R3 R-SPLIT a claim carried by a later sentence that names no
@@ -120,6 +127,9 @@
  * wb-5uq7 (R694 follow-up of landing 293, gate cmd_85b0111446dc): F1 binds row A's walk to the filing's clause (a) roots
  * (the L2-09 survivor), C1 reads its ROSTER_SITE line from the file (F5) and R15 names the markup-inside-a-name escape
  * (L2-14, F2).
+ * wb-4azw (R694 follow-up of landing 387, gate cmd_24c598497967): F1's clause (a) root parse gets a liveness floor held to
+ * the export row and positive controls of its own (CLAUSE_ROOTS, clauseRootsOf; the HOLLOW-PARSE-COORD and
+ * HOLLOW-PARSE-COORD+L2-09 survivors).
  *
  * Display paths added: none. Test-only: the stand-in rf, the scanned trees and the pin replicas live in makeScratch scratch;
  * src, docs, qa, the skills, the receipts directory and the bead export are only read.
@@ -181,6 +191,8 @@ interface SkillsRoot {
 }
 /** F1: the directory clause (a)'s "skills" names - Pi's installed skills, which must hold a SKILL.md (A1's anchor is one). */
 const SKILLS_ROOT: SkillsRoot = { word: "skills", directory: ".agents/skills", member: "SKILL.md" };
+/** F1: the root list clause (a) names ("a census over Pi docs/src/skills/qa/test (0 hits ..."), read by clauseRootsOf. */
+const CLAUSE_ROOTS = /\bcensus over Pi (\S+) \(/;
 
 /** The separator class between two words of a name: any run of white space, "_" or "-". */
 const SEP = "[\\s_-]*";
@@ -425,6 +437,7 @@ function constants(): Json {
     scanRoots: SCAN_ROOTS.map(({ root, floor, anchor, token }) => ({ root, floor, anchor, token })),
     pagesFloor: PAGES_FLOOR,
     skillsRoot: { ...SKILLS_ROOT },
+    clauseRoots: `${CLAUSE_ROOTS.source}/${CLAUSE_ROOTS.flags}`,
     families: FAMILIES.map(({ id, context, source, spellings }) => ({ id, context, source, spellings: [...spellings] })),
     anchor: `${ANCHOR.source}/${ANCHOR.flags}`,
     markers: [...MARKERS],
@@ -924,6 +937,12 @@ type RootReading = {
   readonly held: boolean;
   readonly scannedBy: string | null;
 };
+/** F1: a clause's root words (CLAUSE_ROOTS split at "/"), or null when it carries no root list - a miss reads as a miss,
+ * never as an empty list. */
+function clauseRootsOf(clause: string): string[] | null {
+  const list = CLAUSE_ROOTS.exec(clause)?.[1];
+  return list === undefined ? null : list.split("/").filter(Boolean);
+}
 /** F1: one clause (a) root word read in `tree`: its directory (skills through SKILLS_ROOT), whether that directory holds a
  * regular file (for skills, a SKILL.md) and the SCAN_ROOTS root that covers it (null when none does). */
 function rootReading(tree: string, word: string): RootReading {
@@ -1188,7 +1207,8 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       .filter(Boolean);
     const claimsRead = [...new Set(claimWords)].map(word => ({ word, diagnosis: findingsOf("x.ts", `// ReactiveWebInterfaceSDK ${word}.\n`)[0] ?? "" }));
     const gating = /^Gating: (.*)$/m.exec(notes)?.[1] ?? "";
-    const filingRoots = (/\bcensus over Pi (\S+) \(/.exec(acceptance)?.[1] ?? "").split("/").filter(Boolean);
+    const parsedRoots = clauseRootsOf(acceptance);
+    const filingRoots = parsedRoots ?? [];
     const controlTree = scratch("tsx-unshipped-roots-");
     writeTree(controlTree, { "outside/x.md": "x\n", ".agents/skills/plain/README.md": "x\n" });
     const filingSymbols = between(gating, `at ${PIN} `, " hit 0").split("/").filter(Boolean);
@@ -1206,6 +1226,15 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       version: gating.includes(`${TSX_VERSION} exports`) && ROSTER.producer.version === TSX_VERSION,
       pins: [PIN, FILING_READ].filter(token => notes.includes(token)),
       roots: filingRoots.map(word => rootReading(REPO, word)),
+      // The root parse's liveness floor, held to the export row itself: clause (a)'s list parses, holds a root and, rejoined,
+      // restates the row's own list - so an empty or partial parse reds whatever the roster holds.
+      rootParse: { parsed: parsedRoots !== null, count: filingRoots.length, restated: acceptance.includes(`census over Pi ${filingRoots.join("/")} (`) },
+      // The root parse's positive controls: a list, a single root and a clause without the list (a miss reads null, never []).
+      parseControls: {
+        list: clauseRootsOf("(a) a census over Pi alpha/beta/gamma (0 hits) finds nothing"),
+        single: clauseRootsOf("(a) a census over Pi docs (0 hits) finds nothing"),
+        absent: clauseRootsOf("(a) a census over the docs finds nothing"),
+      },
       // The root reader's positive controls: an unscanned directory, a covered but empty one and skills without a SKILL.md.
       rootControls: { unscanned: rootReading(controlTree, "outside"), missing: rootReading(controlTree, "docs"), kind: rootReading(controlTree, "skills") },
       // The coverage reader's positive controls: an unknown word stays uncovered, a STOP word and a claim word never count.
@@ -1219,6 +1248,8 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     expect(reading.exportsHeld).toEqual(filingExports);
     expect({ sixFiles: reading.sixFiles, adrSlug: reading.adrSlug, version: reading.version, pins: reading.pins }).toStrictEqual({ sixFiles: true, adrSlug: true, version: true, pins: [PIN, FILING_READ] });
     expect(reading.controls).toStrictEqual({ unknown: ["quantum", "widget"], stopAndClaim: [], covered: [] });
+    expect({ parsed: reading.rootParse.parsed, nonEmpty: reading.rootParse.count > 0, restated: reading.rootParse.restated }, "clause (a)'s root list parses, holds a root and restates the export row's list").toStrictEqual({ parsed: true, nonEmpty: true, restated: true });
+    expect(reading.parseControls, "the root parse reads a list, a single root and a clause without the list").toStrictEqual({ list: ["alpha", "beta", "gamma"], single: ["docs"], absent: null });
     expect(reading.roots.filter(root => !root.held || root.scannedBy === null).map(root => root.word), "clause (a) roots row A does not walk").toEqual([]);
     expect(reading.rootControls).toStrictEqual({
       unscanned: { word: "outside", directory: "outside", held: true, scannedBy: null },
