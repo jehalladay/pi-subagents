@@ -21,6 +21,69 @@
     "gateStep": "TSX-IF-04",
     "purityClaim": "paint(?:[\\s/_-]*frame)?[\\s_-]*callbacks?|frame[\\s_-]*callbacks?|component[\\s_-]*invocations?|mounted[\\s_-]*fixture[\\s_-]*trees?|incidental[\\s_-]*render[\\s_-]*effects?/i",
     "atomicityClaim": "evaluation[\\s_-]*generations?|staged[\\s_-]*(?:commit|mutation)s?|pre-?evaluation|accepted[\\s_-]*evaluation|mid-?evaluation/i",
+    "purityWords": [
+      [
+        "paint",
+        "callback"
+      ],
+      [
+        "frame",
+        "callback"
+      ],
+      [
+        "component",
+        "invocation"
+      ],
+      [
+        "mounted",
+        "fixture",
+        "tree"
+      ],
+      [
+        "incidental",
+        "render",
+        "effect"
+      ]
+    ],
+    "atomicityWords": [
+      [
+        "evaluation",
+        "generation"
+      ],
+      [
+        "staged",
+        "commit"
+      ],
+      [
+        "staged",
+        "mutation"
+      ],
+      [
+        "accepted",
+        "evaluation"
+      ]
+    ],
+    "separators": {
+      "space": " ",
+      "hyphen": "-",
+      "underscore": "_",
+      "none": "",
+      "run": " -_ "
+    },
+    "hyphenOptional": [
+      [
+        "pre",
+        "evaluation"
+      ],
+      [
+        "mid",
+        "evaluation"
+      ]
+    ],
+    "optionalHyphen": {
+      "hyphen": "-",
+      "none": ""
+    },
     "registrars": [
       "it",
       "test",
@@ -104,8 +167,10 @@
       "A2:otherPackage",
       "B1:measured",
       "B1:docsSiteAdded",
+      "B1:armedMeasured",
       "B2:measured",
-      "B2:docsSiteAdded"
+      "B2:docsSiteAdded",
+      "B2:armedMeasured"
     ]
   },
   "residuals": [
@@ -279,6 +344,8 @@
             "references": [],
             "symlinks": [],
             "unreadable": [],
+            "walkListed": true,
+            "plantedListed": true,
             "controls": {
               "namedImport": true,
               "aliasImport": true,
@@ -343,7 +410,13 @@
               "build/host.ts": false,
               "coverage/host.ts": false,
               ".forge/host.ts": false,
-              ".beads/host.ts": false
+              ".beads/host.ts": false,
+              "deep/a/b/c/host.ts": true,
+              "deep/a/b/c/d/host.ts": true,
+              ".agents/host.ts": true,
+              "test/.pi/host.mts": true,
+              ".host.ts": true,
+              "src/.host.ts": true
             }
           }
         },
@@ -396,6 +469,14 @@
               "jsdocImportTypeInJs": true,
               "manifestEntry": true,
               "manifestMapped": true,
+              "casedEntry": true,
+              "emptyVersion": true,
+              "bracedUnicodeEscape": true,
+              "unicodeEscape": true,
+              "hexEscape": true,
+              "hexReference": true,
+              "decimalReference": true,
+              "percentEscape": true,
               "rootEntry": false,
               "otherSubpath": false,
               "otherPackage": false,
@@ -418,7 +499,17 @@
               "docs/host.md": false,
               "node_modules/pkg/index.js": false,
               "dist/host.mjs": false,
-              "bin/run-host": false
+              "bin/run-host": false,
+              "lock/package-lock.json": true,
+              "lock/npm-shrinkwrap.json": true,
+              "deno/deno.json": true,
+              "deno/deno.jsonc": true,
+              "map/import-map.json": true,
+              "map/import_map.json": true,
+              "tsconfig.json": true,
+              "web/jsconfig.json": true,
+              "web/tsconfig.base.json": true,
+              "cased/Package.JSON": true
             }
           }
         }
@@ -463,6 +554,8 @@
               "publishedDocsSite": true,
               "mappedKey": true,
               "mappedValue": true,
+              "publishedDirSite": true,
+              "docsLikeSite": true,
               "titles": [
                 "t1",
                 "t2",
@@ -491,7 +584,53 @@
               "incidentalRenderEffect": true,
               "ownFrame": false,
               "ownPaint": false,
-              "ownWidget": false
+              "ownWidget": false,
+              "casedVocabulary": true,
+              "paint-callback@1:space": true,
+              "paint-callback@1:hyphen": true,
+              "paint-callback@1:underscore": true,
+              "paint-callback@1:none": true,
+              "paint-callback@1:run": true,
+              "frame-callback@1:space": true,
+              "frame-callback@1:hyphen": true,
+              "frame-callback@1:underscore": true,
+              "frame-callback@1:none": true,
+              "frame-callback@1:run": true,
+              "component-invocation@1:space": true,
+              "component-invocation@1:hyphen": true,
+              "component-invocation@1:underscore": true,
+              "component-invocation@1:none": true,
+              "component-invocation@1:run": true,
+              "mounted-fixture-tree@1:space": true,
+              "mounted-fixture-tree@1:hyphen": true,
+              "mounted-fixture-tree@1:underscore": true,
+              "mounted-fixture-tree@1:none": true,
+              "mounted-fixture-tree@1:run": true,
+              "mounted-fixture-tree@2:space": true,
+              "mounted-fixture-tree@2:hyphen": true,
+              "mounted-fixture-tree@2:underscore": true,
+              "mounted-fixture-tree@2:none": true,
+              "mounted-fixture-tree@2:run": true,
+              "incidental-render-effect@1:space": true,
+              "incidental-render-effect@1:hyphen": true,
+              "incidental-render-effect@1:underscore": true,
+              "incidental-render-effect@1:none": true,
+              "incidental-render-effect@1:run": true,
+              "incidental-render-effect@2:space": true,
+              "incidental-render-effect@2:hyphen": true,
+              "incidental-render-effect@2:underscore": true,
+              "incidental-render-effect@2:none": true,
+              "incidental-render-effect@2:run": true,
+              "armedMeasured": false,
+              "armedPinSite": true,
+              "armedPinPublished": true,
+              "armedPinExport": true,
+              "armedPinSrcPython": true,
+              "armedMappedExport": true,
+              "armedMappedSrcPython": true,
+              "armedMappedEntry": true,
+              "armedMappedSite": true,
+              "armedClaim": true
             }
           }
         },
@@ -529,6 +668,8 @@
               "publishedDocsSite": true,
               "mappedKey": true,
               "mappedValue": true,
+              "publishedDirSite": true,
+              "docsLikeSite": true,
               "atomicityClause": true,
               "stagedMutation": true,
               "evaluationGeneration": true,
@@ -538,7 +679,42 @@
               "acceptedEvaluation": true,
               "midEvaluation": true,
               "ownAtomicWrite": false,
-              "ownGeneration": false
+              "ownGeneration": false,
+              "casedVocabulary": true,
+              "evaluation-generation@1:space": true,
+              "evaluation-generation@1:hyphen": true,
+              "evaluation-generation@1:underscore": true,
+              "evaluation-generation@1:none": true,
+              "evaluation-generation@1:run": true,
+              "staged-commit@1:space": true,
+              "staged-commit@1:hyphen": true,
+              "staged-commit@1:underscore": true,
+              "staged-commit@1:none": true,
+              "staged-commit@1:run": true,
+              "staged-mutation@1:space": true,
+              "staged-mutation@1:hyphen": true,
+              "staged-mutation@1:underscore": true,
+              "staged-mutation@1:none": true,
+              "staged-mutation@1:run": true,
+              "accepted-evaluation@1:space": true,
+              "accepted-evaluation@1:hyphen": true,
+              "accepted-evaluation@1:underscore": true,
+              "accepted-evaluation@1:none": true,
+              "accepted-evaluation@1:run": true,
+              "pre-evaluation@1:hyphen": true,
+              "pre-evaluation@1:none": true,
+              "mid-evaluation@1:hyphen": true,
+              "mid-evaluation@1:none": true,
+              "armedMeasured": false,
+              "armedPinSite": true,
+              "armedPinPublished": true,
+              "armedPinExport": true,
+              "armedPinSrcPython": true,
+              "armedMappedExport": true,
+              "armedMappedSrcPython": true,
+              "armedMappedEntry": true,
+              "armedMappedSite": true,
+              "armedClaim": true
             }
           }
         }

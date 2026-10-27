@@ -85,8 +85,8 @@
  * and no other pin's claims accept it, while C3's own claims refuse it).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` and CLAIMS each pin's claim and check counts as literals; every
  * row (id, label, pins with their quotes), every pin's claims and witness (each witness carries its pin id), the scan constants, the
- * residual families and the registered test titles are held to the out-of-file roster (test/fixtures/rf-tsx-closed-vocabulary-
- * roster.json). OUTSIDE ANCHOR: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-if7q.2): each
+ * residual families, the registered test titles and THE RECORD are held to the out-of-file roster (test/fixtures/rf-tsx-closed-
+ * vocabulary-roster.json). OUTSIDE ANCHOR: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-if7q.2): each
  * acceptance clause sits verbatim in exactly one row label, and the row's pin quotes, in order, tile that clause with separator-only
  * gaps, so a row or a pin removed from every literal of this file and the roster still reds; its quote and citation equal the
  * roster's, and its Gating line names the vocabulary sites and the gate.
@@ -103,6 +103,24 @@
  * leaves its own term idle. B4's (wb-973.11) claim reads the wb-973.11 roster's own file.
  * RECORDS: the last case walks this file's registered tests (vitest's task tree): each roster title once, in order, in run mode, not
  * inverted, ran; every pin reached its witness and claims assertions (REACHED).
+ * THE RECORD (wb-g8uk; the wb-wtfr gate's F1: the claims-bound case had no assertion-reached leg, so a guarded return after its first
+ * assertion (L2-E1), its cross-pin acceptance assertion deleted (L2-E2) or its R-REAUTHORED quiet-row assertion deleted (L2-QR)
+ * stayed green, the first two also beside the forged-claims swap H7F that only that acceptance assertion kills, and the judged set
+ * carried the same partial hollowing (L2-JS-E1)): every case records its end in ENDS as `${id}:${count}` as its last statement - the
+ * judged set, each pin after its claims assertions, the claims-bound case and the records case - where count is vitest's tally of
+ * the expect calls the case made (expect.getState().assertionCalls), so a case that returns early leaves its end absent and a case
+ * that loses an assertion statement leaves its count short. The judged set, registered first, holds the collected task tree to the
+ * roster's tests (every title once, in roster order, set to run and not inverted, the records case last), so a records case deleted
+ * (with its roster title or without), renamed, skipped or inverted at collection reds there. The records case holds ENDS to the
+ * roster's reached list (the judged set, the pins in row order, the claims-bound case, each at its pinned count), then records its
+ * own end; the file-end judge (afterAll) holds that end at the roster's recordsEnd whenever the records case was selected to run
+ * (read from the collected tree before the first case runs), so a records case that returns early, loses an assertion statement or
+ * skips itself at run time reds after it has run.
+ * NOT CLAIMED (the record): an assertion statement removed together with its pinned count in the roster's record; an expect call
+ * whose matcher is dropped or weakened (the tally counts calls to expect, not matchers); a case that keeps its assertions but returns
+ * its witness as a literal (the wb-wtfr gate's L2-CONST); the file-end judge, or the selection it reads, removed (no claim rides them
+ * alone: the records case still holds every other case's end); every case of the file skipped at once (no case runs to read the
+ * tree).
  * CONTACT: the queued wb-hs2j.1 cut adds an inclusion leg to the adapter (it reads result.blocks' length and result.necessity's
  * include flags) and gives fullShapeRf one block row and one decision record. No witness here depends on either: block mutants
  * keep the fixture's block count against a paired control, A1 pins shapes rather than bytes and C4 selects its note by prefix.
@@ -116,7 +134,7 @@ import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import ts from "typescript";
-import { afterAll, afterEach, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeEach, describe, expect, it, type RunnerTask } from "vitest";
 import { CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
 import { nativeReactiveFiberRender, REACTIVEFIBER_RENDER_PREVIEW_CONTRACT } from "../src/workbench/providers/reactivefiber.js";
 import { type ReactiveFiberProjectionTopology, type ReactiveFiberTopologyContext, reactivefiberTopology } from "../src/workbench/reactivefiber-observer.js";
@@ -294,6 +312,9 @@ interface Roster {
   readonly residuals: readonly { readonly id: string; readonly quietRow: string }[];
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
+  /** THE RECORD: every case's end before the records case's, as `${id}:${count}`, and the records case's own. */
+  readonly reached: readonly string[];
+  readonly recordsEnd: string;
 }
 
 function isObject(value: unknown): value is { [key: string]: unknown } {
@@ -387,6 +408,8 @@ function readRoster(): Roster {
     residuals,
     rows,
     tests: stringList(raw.tests, "tests"),
+    reached: stringList(raw.reached, "reached"),
+    recordsEnd: text(raw.recordsEnd, "recordsEnd"),
   };
 }
 
@@ -1490,8 +1513,62 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 const REACHED = new Set<string>();
 const titleOf = (row: Row): string => `${row.id} ${row.label}`;
 
+const JUDGED_TITLE = "the judged set: the frozen shape, the out-of-file roster, the outside anchor and the cases agree";
+const CLAIMS_TITLE = "claims bound: each pin's claims refuse every other pin's live witness, and a re-authored pin stays quiet (R-REAUTHORED)";
+const RECORDS_TITLE = "records: every registered test ran once in run mode in roster order, every pin reached its witness, and every case reached its end at its pinned assertion count";
+/** The record's ids of the three cases that are not pins (a pin's is its own id). */
+const JUDGED_ID = "judged";
+const CLAIMS_ID = "claims";
+const RECORDS_ID = "records";
+
+/** THE RECORD (wb-g8uk): each case's end, in run order, as `${id}:${count}`, where count is vitest's tally of the case's expect calls
+ * (expect.getState().assertionCalls, reset at each try); a case pushes it as its last statement, so a case that stops early pushes
+ * none and a case that lost an assertion statement pushes a short count. */
+const ENDS: string[] = [];
+/** The titles selected to run, read from the collected task tree before any case runs (a test-name filter deselects the rest). */
+const SELECTED: string[] = [];
+/** A case's end as the record holds it. */
+const endOf = (id: string): string => `${id}:${expect.getState().assertionCalls}`;
+
+interface Registered {
+  readonly name: string;
+  readonly mode: string;
+  readonly fails: boolean;
+  readonly state: string | undefined;
+  readonly self: boolean;
+}
+/** Every test a task tree holds, in registration order; self marks the case doing the reading. */
+function registered(tasks: readonly RunnerTask[], self?: RunnerTask): Registered[] {
+  const walked: Registered[] = [];
+  for (const child of tasks) {
+    if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === self });
+    else if (child.type === "suite") walked.push(...registered(child.tasks, self));
+  }
+  return walked;
+}
+/** A registered test's title with its collected mode, "+fails" marking an inverted one. */
+const modeLine = (entry: Registered): string => `${entry.name} | ${entry.mode}${entry.fails ? "+fails" : ""}`;
+
+// The selection, read once from the collected tree before the first case runs (no case has run, so every mode is the collected one).
+beforeEach(({ task }) => {
+  if (SELECTED.length === 0) SELECTED.push(...registered(task.file.tasks).filter(entry => entry.mode === "run").map(entry => entry.name));
+});
+// The file-end judge: a records case selected to run reached its own end, after every other case's, at its pinned count.
+afterAll(() => {
+  if (!SELECTED.includes(RECORDS_TITLE)) return;
+  expect(ENDS, "every case of this file reached its end, the records case last").toEqual([...ROSTER.reached, ROSTER.recordsEnd]);
+});
+
 describe("wb-if7q.2 rf TSX closed-vocabulary census (TSX-NATIVE-INTERFACES-AND-PORTABLE-TSX-R2, posture leg)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster, the outside anchor and the cases agree", () => {
+  it(JUDGED_TITLE, ({ task }) => {
+    // The collected cases (vitest's task tree), read before any other case runs: a records case deleted, renamed, skipped or
+    // inverted reds here.
+    const collected = registered(task.file.tasks, task);
+    const names = collected.map(entry => entry.name);
+    expect(names, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual([...ROSTER.tests]);
+    expect(names[names.length - 1], "the records case is registered last").toBe(RECORDS_TITLE);
+    expect(collected.findIndex(entry => entry.self), "this case finds itself by task identity, registered first").toBe(0);
+    expect(collected.filter(entry => entry.mode !== "run" || entry.fails).map(modeLine), "every registered test is set to run and not inverted").toEqual([]);
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:4", "B:5", "C:4"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => ({ id: pin.id, quote: pin.quote })) }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => ({ id: pin.id, quote: pin.quote })) })),
@@ -1549,6 +1626,7 @@ describe("wb-if7q.2 rf TSX closed-vocabulary census (TSX-NATIVE-INTERFACES-AND-P
     const gating = bead.notes.split("\n").find(line => line.startsWith("Gating: ")) ?? "";
     expect(gating.includes("output-nodes.ts :149-155") && gating.includes("TSX-IF-03"), "the Gating line names the vocabulary constants and the unshipped gate").toBe(true);
     expect(ROSTER.producer.vocabularySites[0]?.endsWith(":149-155"), "the roster's first vocabulary site is the Gating line's").toBe(true);
+    ENDS.push(endOf(JUDGED_ID));
   });
 
   for (const row of ROWS) {
@@ -1564,12 +1642,13 @@ describe("wb-if7q.2 rf TSX closed-vocabulary census (TSX-NATIVE-INTERFACES-AND-P
           expect(unclaimedOf(claimsOf(pin.id), witness), `every fact of ${pin.id}'s witness sits under a term of its quote`).toEqual([]);
           expect(idleTermsOf(claimsOf(pin.id), witness), `every term of ${pin.id}'s quote shows a fact of its own`).toEqual([]);
           REACHED.add(pin.id);
+          ENDS.push(endOf(pin.id));
         });
       }
     });
   }
 
-  it("claims bound: each pin's claims refuse every other pin's live witness, and a re-authored pin stays quiet (R-REAUTHORED)", () => {
+  it(CLAIMS_TITLE, () => {
     const ids = ROWS.flatMap(row => row.pins.map(pin => pin.id));
     expect(ids.filter(id => !LIVE.has(id)), "every pin's case returned a live witness").toEqual([]);
     const accepted = ids.flatMap(claimer => ids.filter(other => other !== claimer && claimMisses(claimer, LIVE.get(other) ?? null).length === 0).map(other => `${claimer} accepts ${other}`));
@@ -1585,17 +1664,11 @@ describe("wb-if7q.2 rf TSX closed-vocabulary census (TSX-NATIVE-INTERFACES-AND-P
       acceptedBy: ids.filter(id => id !== "C3" && claimMisses(id, reauthored).length === 0),
       refusedByC3: claimMisses("C3", reauthored).length > 0,
     }).toStrictEqual({ shows: [], unclaimed: [], idle: [], acceptedBy: [], refusedByC3: true });
+    ENDS.push(endOf(CLAIMS_ID));
   });
 
-  it("records: every registered test ran once in run mode in roster order, and every pin reached its witness", ({ task }) => {
-    const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
-    const walk = (tasks: typeof task.file.tasks): void => {
-      for (const child of tasks) {
-        if (child.type === "test") walked.push({ name: child.name, mode: child.mode, fails: child.fails === true, state: child.result?.state, self: child === task });
-        else if (child.type === "suite") walk(child.tasks);
-      }
-    };
-    walk(task.file.tasks);
+  it(RECORDS_TITLE, ({ task }) => {
+    const walked = registered(task.file.tasks, task);
     const titles = walked.map(entry => entry.name);
     expect(titles, "every registered test of this file, exactly and in roster order").toEqual([...ROSTER.tests]);
     expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice").toEqual([]);
@@ -1604,5 +1677,13 @@ describe("wb-if7q.2 rf TSX closed-vocabulary census (TSX-NATIVE-INTERFACES-AND-P
     const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";
     expect(walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(entry => entry.name), "every other test ran in run mode, not inverted").toEqual([]);
     expect([...REACHED].sort(), "every judged pin reached its witness assertion").toEqual(ROWS.flatMap(row => row.pins.map(pin => pin.id)).sort());
+    // THE RECORD: every case before this one reached its end - the judged set first, each pin after its claims assertions in row
+    // order, then the claims-bound case - at its pinned assertion count.
+    expect(ENDS, "every case before this one reached its end, in run order, at its pinned assertion count").toEqual([...ROSTER.reached]);
+    expect(
+      ENDS.map(entry => entry.slice(0, entry.lastIndexOf(":"))),
+      "the ends recorded are the judged set's, the rows' pins' and the claims-bound case's",
+    ).toEqual([JUDGED_ID, ...ROWS.flatMap(row => row.pins.map(pin => pin.id)), CLAIMS_ID]);
+    ENDS.push(endOf(RECORDS_ID));
   });
 });
