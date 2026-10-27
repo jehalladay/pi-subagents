@@ -9,13 +9,19 @@
  *
  * ROWS (labels = the owner filing's acceptance clauses (a)-(c), read from the bead export; frozen shape ["A:3", "B:1", "C:4"]):
  * - A, clause (a), the MINT half: no caption/status path emits the label today.
- *   A1 the judge. LABEL is the title's quoted label. A text holds it when, after NFKC, the label's words occur in order,
+ *   A1 the judge. LABEL is the title's quoted label. Each judge takes two readings of a text, the text itself and Pi's label
+ *     display of it (sanitizeWorkbenchText's label layout with no length bound: default-ignorables vanish, controls and
+ *     separators become a space, whitespace collapses; wb-530q F2), each after NFKC, and a text holds what either reading
+ *     holds. A reading holds the label when the label's words occur in it in order,
  *     separated by any run of whitespace, hyphens or underscores (or by nothing), case-insensitively, with no letter or digit
- *     just before or just after. WORD is the label's first word under grep -w semantics: after NFKC, case-sensitive, with no
+ *     just before or just after. WORD is the label's first word under grep -w semantics: case-sensitive, with no
  *     ASCII letter, digit or underscore just before or just after (the filing's 0-hits reading). The module judge reads every
  *     string literal, no-substitution template and template head, middle and tail text (the cooked text) of a module through
  *     the TypeScript parser; comments and identifiers are not judged. A1's witness carries every planted text and module with
- *     its two readings, and the residual table is checked against them (each quiet row reads 0, each twin 1).
+ *     its two readings, and the residual table is checked against them (each quiet row reads 0, each twin 1). The display
+ *     plants (a zero-width space or a soft hyphen inside the first word, a word joiner between the words, and the zero-width
+ *     plant as a module literal) read 1 and 1 only through the display reading, and the witness's beyondBound reading puts
+ *     the zero-width plant after the helper's default bound, so a bounded display reading reds it.
  *   A2 the source walk. The module judge reads every src/**\/*.ts module git lists (tracked or untracked, never ignored), and a
  *     planted label modules last: a small one, and one longer than every real module with the label in its last literal. The
  *     judged list must equal that listing plus the two plants, a filesystem walk must list the same modules, no symlink may
@@ -55,16 +61,24 @@
  * Each pin's witness carries its own inputs (planted texts and modules, the judged and scanned module lists, renderer:fixture
  * tags with the fixture digest, base and field keys, the planted keys and words) beside its readings, so serving one pin with another pin's case, or one planted
  * input with another's, changes the witness and reds the compare. A pin rewritten to return its roster witness as a constant
- * is not detected by the compare.
+ * is not detected by the compare, and neither is a pin removed together with a matching widening of its row's not-due span
+ * in NOT_DUE, its frozen literal and the roster (three literals edited, not removed).
  *
  * OUTSIDE ANCHOR: the wb-b9n.3 row of the tracked bead export (.beads/issues.jsonl). The first "Acceptance: (a) ... . Not P0:"
  * span of its notes holds exactly the clauses (a)-(c), each equal to its row label, and every pin's quote is a substring of its
  * row label. LABEL and the gating artifact are parsed from its title. The census reads that row's title and that one span of
  * its notes, nothing else of it: a title whose quoted label or gating artifact changes, or a filing whose acceptance clauses
  * change, reds the judged set by design; appended notes and status writes do not.
- * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; rows, constants, residuals and every pin's
- * witness are held to the out-of-file roster test/fixtures/forge-cac-label-roster.json; the last case reads that every
- * registered pin ran to the compare with its roster witness.
+ * PIN MEMBERSHIP (wb-530q F1), read against that clause text, never the row labels: each pin's quote sits in its clause
+ * exactly once at word boundaries, the pins of a row leave unquoted exactly the row's NOT-DUE spans (NOT_DUE: none of (a);
+ * every word of (b) after its trigger B1's quote, (b) being not due; "or receipt" in (c), the receipt half B1 holds back),
+ * and every pin is load-bearing: without it, a word of its row goes unquoted. A pin removed from ROWS, IMPL, the frozen shape
+ * and the roster together therefore leaves its words unquoted and the clause reds it (the wb-b9n.3 gate's G7a and G7b
+ * hollows, which this anchor did not bind before), and so does a quote shortened inside its span.
+ * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal and NOT_DUE pins `${id}:${unquoted words}`
+ * as another; rows, constants, residuals, the not-due spans and every pin's witness are held to the out-of-file roster
+ * test/fixtures/forge-cac-label-roster.json; the last case reads that every registered pin ran to the compare with its
+ * roster witness.
  * RESIDUALS (named; each has a pinned quiet row and a live twin in the witness of the pin named):
  *   R-COMPOSED (A1) a label assembled at run time from pieces no single literal spells (quiet: "CA" + "C verified"; twin: one
  *     literal). A3 sees such a label only in the outputs of the renderers it drives.
@@ -83,6 +97,10 @@
  * docs/programs/cac-evidence-assurance-2026-10-18/01-contract-qa.md; the installed forge 0.2.1 (rev c0f93b3c5d18) spells it
  * nowhere. The word-level absence census over src, test, qa and docs/workbench is wb-zzb4's; this census judges the label in
  * caption material and in rendered outputs.
+ * MEASURED AT THE wb-530q CUT (base bda6c2a, read-only; seat records, not assertions): on the landed census the gate's G7a (C2)
+ * and G7b (A2) coordinated hollows read 0 failed of 9, and a src literal 'C', U+200B, 'AC verified' (its G3d) read 10 of 10; on
+ * this one G7a and G7b red the judged set through the clause, and G3d reds A2. The display reading adds no src site: A2's
+ * label and word lists are still the two plants'.
  *
  * Display paths added: none. Test-only: every fixture lives in memory (no scratch; the only spawn is git ls-files); src and
  * the bead export are only read.
@@ -105,6 +123,7 @@ import {
   forgeOperationTerminalSnapshot,
 } from "../src/workbench/forge-operation-observer.js";
 import { nativeEvidence } from "../src/workbench/native-evidence.js";
+import { sanitizeWorkbenchText, WORKBENCH_TEXT_LIMIT } from "../src/workbench/redaction.js";
 import type { WorkflowNodeEntry } from "../src/workflow/progress.js";
 
 interface Pin { readonly id: string; readonly quote: string }
@@ -115,6 +134,7 @@ interface Roster {
   readonly bead: string;
   readonly constants: Constants;
   readonly residuals: readonly Residual[];
+  readonly notDue: Readonly<Record<string, readonly string[]>>;
   readonly rows: readonly { readonly id: string; readonly label: string; readonly pins: readonly (Pin & { readonly witness: JsonValue })[] }[];
 }
 type Json = { [key: string]: JsonValue };
@@ -181,14 +201,76 @@ const ROW = beadRow();
 const LABEL = labelOf(ROW.title);
 const GATING = gatingOf(ROW.title);
 
+// ------------------------------------------------------------------------------------------------------- pin membership
+/**
+ * The NOT-DUE spans (wb-530q F1): by row, the words of its acceptance clause that no pin quotes. Clause (b) is not due, so its
+ * trigger B1 quotes its opening words alone; in clause (c) the receipt alternative is not due (B1 again), the gate.status
+ * half is quoted whole; clause (a) is quoted whole.
+ */
+const NOT_DUE: Readonly<Record<string, readonly string[]>> = {
+  A: [],
+  B: [
+    "fixtures with checker identity+version AND source-version evidence may surface the producer's label with those fields cited beside it, while fixtures missing either render FAIL/UNKNOWN with the label refused and a diagnostic naming the missing evidence",
+  ],
+  C: ["or receipt"],
+};
+/** Each place a quote sits in a clause at word boundaries: it starts a word and ends one (a trailing comma, semicolon or full stop aside). */
+function quoteStarts(body: string, quote: string): number[] {
+  const starts: number[] = [];
+  if (quote.length === 0) return starts;
+  for (let at = body.indexOf(quote); at >= 0; at = body.indexOf(quote, at + 1)) {
+    const end = at + quote.length;
+    if ((at === 0 || /\s/.test(body.charAt(at - 1))) && /^[,;.]?(?:\s|$)/.test(body.slice(end, end + 2))) starts.push(at);
+  }
+  return starts;
+}
+/**
+ * One clause read against its row's pin quotes: the words no quote covers, as maximal runs of the clause's own text (the
+ * "(x) " marker is not a word; a word is quoted when a quote covers any of it), and every quote that does not sit in the
+ * clause exactly once at word boundaries.
+ */
+function unquoted(clause: string, quotes: readonly string[]): { runs: string[]; misplaced: string[] } {
+  const body = clause.replace(/^\([a-z]\) /, "");
+  const words = [...body.matchAll(/\S+/g)].map(match => ({ start: match.index, end: match.index + match[0].length }));
+  const quoted = words.map(() => false);
+  const misplaced: string[] = [];
+  for (const quote of quotes) {
+    const starts = quoteStarts(body, quote);
+    const start = starts[0];
+    if (starts.length !== 1 || start === undefined) {
+      misplaced.push(quote);
+      continue;
+    }
+    for (const [index, word] of words.entries()) if (word.start < start + quote.length && word.end > start) quoted[index] = true;
+  }
+  const runs: string[] = [];
+  let open: number | undefined;
+  for (const [index, word] of words.entries()) {
+    if (!quoted[index]) open ??= word.start;
+    else if (open !== undefined) {
+      runs.push(body.slice(open, words[index - 1]?.end));
+      open = undefined;
+    }
+  }
+  if (open !== undefined) runs.push(body.slice(open, words.at(-1)?.end));
+  return { runs, misplaced };
+}
+
 // --------------------------------------------------------------------------------------------------------------- the judge
 const escaped = (word: string): string => word.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 /** The label family: the title's label words in order, any run of whitespace, hyphens or underscores (or none) between them. */
 const LABEL_PATTERN = new RegExp(`(?<![\\p{L}\\p{N}])${LABEL.split(/\s+/).map(escaped).join("[\\s_-]*")}(?![\\p{L}\\p{N}])`, "iu");
 /** The filing's 0-hits word: the label's first word under grep -w semantics (case-sensitive; underscore is a word character). */
 const WORD_PATTERN = new RegExp(`(?<![A-Za-z0-9_])${escaped(LABEL.split(/\s+/)[0] ?? "")}(?![A-Za-z0-9_])`, "u");
-const isLabel = (text: string): boolean => LABEL_PATTERN.test(text.normalize("NFKC"));
-const isWord = (text: string): boolean => WORD_PATTERN.test(text.normalize("NFKC"));
+/**
+ * The two readings each judge takes of a text (wb-530q F2): the text itself and Pi's label display of it, the shared helper's
+ * label layout with no length bound (default-ignorables vanish, controls and separators become a space, whitespace collapses),
+ * each after NFKC. A text holds the label or the word when either reading does, so an invisible Pi's display removes from
+ * inside or between the label's words is read as the display shows it, and nothing the plain reading finds is lost.
+ */
+const readingsOf = (text: string): string[] => [text, sanitizeWorkbenchText(text, Number.POSITIVE_INFINITY, "label")].map(reading => reading.normalize("NFKC"));
+const isLabel = (text: string): boolean => readingsOf(text).some(reading => LABEL_PATTERN.test(reading));
+const isWord = (text: string): boolean => readingsOf(text).some(reading => WORD_PATTERN.test(reading));
 
 /** Every string literal, no-substitution template and template head, middle and tail text of one module. */
 function literalTexts(path: string, text: string): string[] {
@@ -246,6 +328,10 @@ const PLANTED_TEXTS: Readonly<Record<string, string>> = {
   verifiedBy: "verified by CAC",
   cyrillic: `${fromCodePoints(0x421, 0x410, 0x421)} verified`,
   embedded: "isCACVerified",
+  // Pi's label display drops default-ignorables (wb-530q F2): inside the first word, inside it again, and between the words.
+  zeroWidth: `C${fromCodePoints(0x200b)}AC verified`,
+  softHyphen: `CA${fromCodePoints(0xad)}C verified`,
+  wordJoiner: `CAC${fromCodePoints(0x2060)}verified`,
 };
 const PLANTED_MODULES: Readonly<Record<string, string>> = {
   composed: 'export const shown = "CA" + "C verified";\n',
@@ -254,6 +340,7 @@ const PLANTED_MODULES: Readonly<Record<string, string>> = {
   nameTwin: 'export const LABELS = { "CAC verified": true } as const;\n',
   comment: "// a CAC verified label is never shown\nexport const shown = 1;\n",
   template: "export const shown = (state: string) => `CAC verified: $" + "{state}`;\n",
+  zeroWidthLiteral: `export const shown = "C${fromCodePoints(0x200b)}AC verified";\n`,
 };
 const PLANT = "src/workbench/forge-cac-label-plant.ts";
 const PLANT_BIG = "src/workbench/forge-cac-label-plant-big.ts";
@@ -452,7 +539,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     }
     const texts = Object.fromEntries(Object.entries(PLANTED_TEXTS).map(([id, text]) => [id, `label=${isLabel(text) ? 1 : 0} word=${isWord(text) ? 1 : 0} ${shownText(text)}`]));
     const modules = Object.fromEntries(Object.entries(PLANTED_MODULES).map(([id, text]) => [id, `${plantedReading(text)} ${shownText(text)}`]));
-    return { texts, modules };
+    // The display reading has no length bound: the zero-width plant after the helper's default bound is still read.
+    const filler = "x ".repeat(WORKBENCH_TEXT_LIMIT / 2);
+    const beyond = `${filler}${PLANTED_TEXTS.zeroWidth ?? ""}`;
+    return { texts, modules, beyondBound: `label=${isLabel(beyond) ? 1 : 0} word=${isWord(beyond) ? 1 : 0} after ${filler.length} units` };
   },
   A2: async () => {
     const listed = gitModules();
@@ -565,6 +655,18 @@ describe("wb-b9n.3 Forge CAC label census (FORGE-CAC-EVIDENCE-ASSURANCE-R7)", ()
     expect(clauses).toHaveLength(3);
     expect(ROWS.map(row => row.label)).toEqual(clauses);
     expect(ROWS.flatMap(row => row.pins.filter(pin => !row.label.includes(pin.quote)).map(pin => pin.id))).toEqual([]);
+    // Outside anchor for pin membership (wb-530q F1), read against the export's clause text, never the row labels: each pin
+    // quote sits in its clause once at word boundaries, the pins of a row leave unquoted exactly its not-due spans, and every
+    // pin is load-bearing (without it, a word of its row goes unquoted). A pin removed from ROWS, IMPL, the frozen shape and
+    // the roster together leaves its words unquoted, so the clause reds it.
+    const quotesOf = (row: Row, without?: Pin): string[] => row.pins.filter(pin => pin !== without).map(pin => pin.quote);
+    const readings = ROWS.map((row, index) => unquoted(clauses[index] ?? "", quotesOf(row)));
+    expect(ROWS.flatMap((row, index) => (readings[index]?.misplaced ?? []).map(quote => `${row.id}:${quote}`))).toEqual([]);
+    expect(Object.fromEntries(ROWS.map((row, index) => [row.id, readings[index]?.runs]))).toEqual(NOT_DUE);
+    const idle = (row: Row, index: number, pin: Pin): boolean => JSON.stringify(unquoted(clauses[index] ?? "", quotesOf(row, pin)).runs) === JSON.stringify(NOT_DUE[row.id]);
+    expect(ROWS.flatMap((row, index) => row.pins.filter(pin => idle(row, index, pin)).map(pin => pin.id))).toEqual([]);
+    expect(ROSTER.notDue).toEqual(NOT_DUE);
+    expect(Object.entries(NOT_DUE).map(([id, runs]) => `${id}:${runs.flatMap(run => run.split(/\s+/)).length}`)).toEqual(["A:0", "B:35", "C:2"]);
     // The title's own label is a claim and its gating artifact is not, so neither reading is vacuous.
     expect([isLabel(ROW.title), isLabel(GATING), GATING.length > 0, LABEL.length > 0]).toEqual([true, false, true, true]);
     expect(isLabel(NEUTRAL) || isWord(NEUTRAL)).toBe(false);
