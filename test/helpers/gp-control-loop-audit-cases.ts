@@ -122,12 +122,25 @@ export const UNANNOTATED: readonly Quiet[] = [
   ["a marker after a nested block's opening brace on the literal's line", 'run("gp", () => { // gp-decision-point: DP-01\n  prepare();\n});'],
   ["a marker trailing the enclosing function's opening line (gate A03, same-line form)", 'function pick() { // gp-decision-point: DP-01\n  spawn("gp", []);\n}'],
   ["a marker trailing the opening brace of the object literal that holds the property", 'const tool = { // gp-decision-point: DP-05\n  command: "gp",\n};'],
+  // wb-lx6m: the attribution family's member-list boundary - a marker inside a type literal or a class body nested in the
+  // statement annotates that list's own members, as one inside a nested block or object literal does.
+  ["a marker inside a nested type literal of a preceding argument (wb-lx6m)", 'run(x as { /* gp-decision-point: DP-01 */ a: T }, "gp");'],
+  ["a marker inside a nested class expression's body in a preceding argument (wb-lx6m)", 'run(class { /* gp-decision-point: DP-01 */ }, "gp");'],
 ];
 
 /**
- * The named attribution residuals (wb-66f7, wb-1xvp.3 cut #2 gate F3): a marker that annotates another expression inside
- * the call site's statement, which the attachment rule credits to the call site. Each pins today's credited reading, so
- * a cut that changes the rule reds the row and retires the residual in the open.
+ * The named attribution residuals (wb-66f7, wb-1xvp.3 cut #2 gate F3), one mechanism-level family (wb-lx6m, wb-rdv6
+ * gate F1 and F7): the attachment rule credits a call site with every marker in the unit that holds it - its leading
+ * comments, and any comment after a token or before a node of that statement, class member or object property, up to
+ * the literal's own line - unless the marker sits in a block, class body, object literal or type literal nested in the
+ * unit, trails code on the line above the unit, or trails a later statement; the rule never asks which expression or
+ * sub-statement the marker annotates. So a marker that annotates ANOTHER expression or sub-statement of the unit,
+ * before the literal or after it on its line, is credited to the call site. Each row pins today's credited reading of
+ * one measured member - RES-13..15 the wb-1xvp.3 gate's B01-B03, RES-16..18 wb-rdv6's, RES-19..43 the wb-rdv6 gate's
+ * PREP LEG 2 probes verbatim (with RES-13..15, which are that corpus's B01-B03, every probe of the corpus that reads a
+ * misattribution and is credited), RES-44..58 seat-found kinds - so a cut that changes the rule reds the row and
+ * retires the residual in the open. The family's boundary is pinned in UNANNOTATED: a marker inside a block, class
+ * body, object literal or type literal nested in the unit annotates that list's own members.
  */
 export const MISATTRIBUTED: ReadonlyArray<readonly [string, string, readonly (readonly string[])[]]> = [
   ["RES-13 a marker inside an expression-bodied arrow, annotating its body, is credited to a gp literal later in the same call (gate B01)", 'run(\n  () =>\n    // gp-decision-point: DP-01\n    prepare(),\n  "gp",\n);', [["DP-01"]]],
@@ -137,6 +150,53 @@ export const MISATTRIBUTED: ReadonlyArray<readonly [string, string, readonly (re
   ["RES-16 a marker after a nested call's opening parenthesis is credited to a gp literal later in the outer call (wb-rdv6)", 'run(\n  prepare( // gp-decision-point: DP-01\n    x,\n  ),\n  "gp",\n);', [["DP-01"]]],
   ["RES-17 a marker trailing a preceding argument's comma is credited to a gp literal later in the same call (wb-rdv6)", 'run(\n  prepare(), // gp-decision-point: DP-01\n  "gp",\n);', [["DP-01"]]],
   ["RES-18 a marker after a nested arrow's parameter-list parenthesis is credited to a gp literal later in the outer call (wb-rdv6)", 'run(( // gp-decision-point: DP-01\n  a) => a, "gp");', [["DP-01"]]],
+  // wb-lx6m (wb-rdv6 gate F1): the member kinds the token-level reading credits that no row named, each its PREP LEG 2
+  // probe verbatim; each read [] before wb-rdv6 and is credited since.
+  ["RES-19 a marker after a nested array literal's opening bracket is credited to a gp literal later in the outer call (wb-rdv6 gate P24)", 'run([ /* gp-decision-point: DP-01 */ x ], "gp");', [["DP-01"]]],
+  ["RES-20 a line comment after a nested array literal's opening bracket, on a line above the gp literal, is credited to it (wb-rdv6 gate P32)", 'run([ // gp-decision-point: DP-01\n  x,\n], "gp");', [["DP-01"]]],
+  ["RES-21 a marker after a comma inside a nested array literal is credited to a gp literal later in the outer call (wb-rdv6 gate P47)", 'run([a, /* gp-decision-point: DP-01 */ b], "gp");', [["DP-01"]]],
+  ["RES-22 a marker after a parenthesized preceding argument's opening parenthesis is credited to a gp literal later in the same call (wb-rdv6 gate P33)", 'run(( /* gp-decision-point: DP-01 */ x), "gp");', [["DP-01"]]],
+  ["RES-23 a marker after the as keyword of a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P34)", 'run(x as /* gp-decision-point: DP-01 */ T, "gp");', [["DP-01"]]],
+  ["RES-24 a marker after an element access's opening bracket in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P35)", 'run(xs[ /* gp-decision-point: DP-01 */ 0], "gp");', [["DP-01"]]],
+  ["RES-25 a marker after a property access's dot in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P36)", 'run(a. /* gp-decision-point: DP-01 */ b, "gp");', [["DP-01"]]],
+  ["RES-26 a marker after the opening angle bracket of a nested call's type arguments is credited to a gp literal later in the outer call (wb-rdv6 gate P37)", 'run(make< /* gp-decision-point: DP-01 */ T>(), "gp");', [["DP-01"]]],
+  ["RES-27 a marker after the new keyword of a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P40)", 'run(new /* gp-decision-point: DP-01 */ Thing(), "gp");', [["DP-01"]]],
+  ["RES-28 a marker after typeof in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P42)", 'run(typeof /* gp-decision-point: DP-01 */ x, "gp");', [["DP-01"]]],
+  ["RES-29 a marker after a prefix ! in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P43)", 'run(! /* gp-decision-point: DP-01 */ x, "gp");', [["DP-01"]]],
+  ["RES-30 a marker after a nested function expression's parameter-list parenthesis is credited to a gp literal later in the outer call (wb-rdv6 gate P45)", 'run(function ( /* gp-decision-point: DP-01 */ a) { return a; }, "gp");', [["DP-01"]]],
+  ["RES-31 a marker after await in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P46)", 'async function f() {\n  await run(await /* gp-decision-point: DP-01 */ prepare(), "gp");\n}', [["DP-01"]]],
+  ["RES-32 a marker after a spread token in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P50)", 'run(.../* gp-decision-point: DP-01 */ xs, "gp");', [["DP-01"]]],
+  ["RES-33 a marker trailing an if condition, annotating its blockless then branch, is credited to a gp literal in the else branch (wb-rdv6 gate P53)", 'if (x) // gp-decision-point: DP-01\n  prepare();\nelse spawn("gp", []);', [["DP-01"]]],
+  // wb-lx6m: members of the RES-14, RES-16, RES-17 and RES-18 kinds that the token-level reading credits in other forms.
+  ["RES-34 a marker after a nested call's opening parenthesis on the gp literal's own line is credited to it (wb-rdv6 gate P22)", 'run(prepare( /* gp-decision-point: DP-01 */ x), "gp");', [["DP-01"]]],
+  ["RES-35 a marker after a comma inside a nested call's argument list is credited to a gp literal later in the outer call (wb-rdv6 gate P38)", 'run(prepare(a, /* gp-decision-point: DP-01 */ b), "gp");', [["DP-01"]]],
+  ["RES-36 a marker after a destructuring brace in a nested arrow's parameter list is credited to a gp literal later in the outer call (wb-rdv6 gate P39)", 'run(({ /* gp-decision-point: DP-01 */ a }) => a, "gp");', [["DP-01"]]],
+  ["RES-37 a marker trailing a preceding argument's comma on the call's first line is credited to a gp literal on the next line (wb-rdv6 gate P49)", 'run(prepare(), // gp-decision-point: DP-01\n  "gp");', [["DP-01"]]],
+  // wb-lx6m (wb-rdv6 gate F7, and the corpus's P31, P41, P44): members credited before wb-rdv6 too, read at node boundaries.
+  ["RES-38 a marker trailing a blockless then branch on the if line is credited to a gp literal in the else branch on the next line (wb-rdv6 gate P60)", 'if (x) prepare(); // gp-decision-point: DP-01\nelse spawn("gp", []);', [["DP-01"]]],
+  ["RES-39 a marker after a ternary's question mark, annotating its first branch, is credited to a gp literal in the second branch on the same line (wb-rdv6 gate P21)", 'const bin = cond ? /* gp-decision-point: DP-01 */ prepare() : "gp";', [["DP-01"]]],
+  ["RES-40 a marker after an expression-bodied arrow argument's arrow token, annotating its body, is credited to a gp literal later in the same call (wb-rdv6 gate P23)", 'run(() => /* gp-decision-point: DP-01 */ prepare(), "gp");', [["DP-01"]]],
+  ["RES-41 a marker on its own line inside a multi-line nested array literal is credited to a gp literal later in the outer call (wb-rdv6 gate P31)", 'run([\n  // gp-decision-point: DP-01\n  x,\n], "gp");', [["DP-01"]]],
+  ["RES-42 a marker after a template literal's substitution opening in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P41)", `run(\`a${slot(" /* gp-decision-point: DP-01 */ b")}\`, "gp");`, [["DP-01"]]],
+  ["RES-43 a marker after a binary + in a preceding argument is credited to a gp literal later in the same call (wb-rdv6 gate P44)", 'run(a + /* gp-decision-point: DP-01 */ b, "gp");', [["DP-01"]]],
+  // wb-lx6m: seat-found member kinds before the literal; each read [] before wb-rdv6 and is credited since.
+  ["RES-44 a marker after satisfies in a preceding argument is credited to a gp literal later in the same call (wb-lx6m)", 'run(x satisfies /* gp-decision-point: DP-01 */ T, "gp");', [["DP-01"]]],
+  ["RES-45 a marker after void in a preceding argument is credited to a gp literal later in the same call (wb-lx6m)", 'run(void /* gp-decision-point: DP-01 */ x, "gp");', [["DP-01"]]],
+  ["RES-46 a marker after delete in a preceding argument is credited to a gp literal later in the same call (wb-lx6m)", 'run(delete /* gp-decision-point: DP-01 */ o.k, "gp");', [["DP-01"]]],
+  ["RES-47 a marker after an angle-bracket type assertion's closing bracket in a preceding argument is credited to a gp literal later in the same call (wb-lx6m)", 'run(<T> /* gp-decision-point: DP-01 */ x, "gp");', [["DP-01"]]],
+  ["RES-48 a marker after yield in a preceding argument is credited to a gp literal later in the same call (wb-lx6m)", 'function* g() {\n  run(yield /* gp-decision-point: DP-01 */ x, "gp");\n}', [["DP-01"]]],
+  ["RES-49 a marker after a nested arrow parameter's type-annotation colon is credited to a gp literal later in the outer call (wb-lx6m)", 'run((a: /* gp-decision-point: DP-01 */ T) => a, "gp");', [["DP-01"]]],
+  ["RES-50 a marker after the = of a nested arrow parameter's default value is credited to a gp literal later in the outer call (wb-lx6m)", 'run((a = /* gp-decision-point: DP-01 */ 1) => a, "gp");', [["DP-01"]]],
+  ["RES-51 a marker after the dot of import.meta in a preceding argument is credited to a gp literal later in the same call (wb-lx6m)", 'run(import. /* gp-decision-point: DP-01 */ meta, "gp");', [["DP-01"]]],
+  ["RES-52 a marker inside a preceding declarator's call is credited to a gp literal in a later declarator of the same statement (wb-lx6m)", 'const a = prepare( /* gp-decision-point: DP-01 */ ), bin = "gp";', [["DP-01"]]],
+  ["RES-53 a marker annotating a do statement's blockless body is credited to a gp literal in its while condition on a later line (wb-lx6m)", 'do // gp-decision-point: DP-01\n  prepare();\nwhile (spawn("gp", []));', [["DP-01"]]],
+  // wb-lx6m: seat-found members after the literal on its own line (RES-54 and RES-55 read [] before wb-rdv6; RES-56 was credited before too).
+  ["RES-54 a marker inside a nested array literal after the gp literal, on the literal's own line, is credited to it (wb-lx6m)", 'spawn("gp", [ /* gp-decision-point: DP-01 */ "rpc"]);', [["DP-01"]]],
+  ["RES-55 a marker inside a nested call's argument list after the gp literal, on the literal's own line, is credited to it (wb-lx6m)", 'spawn("gp", opts( /* gp-decision-point: DP-01 */ ));', [["DP-01"]]],
+  ["RES-56 a marker after an expression-bodied arrow's arrow token after the gp literal, on the literal's own line, is credited to it (wb-lx6m)", 'run("gp", () => /* gp-decision-point: DP-01 */ prepare());', [["DP-01"]]],
+  // wb-lx6m: seat-found members at the other two unit kinds, a class member and an object property; each read [] before wb-rdv6.
+  ["RES-57 a marker inside a class property initializer's nested call is credited to a gp literal later in the same initializer (wb-lx6m)", 'class A {\n  bin = prepare( /* gp-decision-point: DP-01 */ ) || "gp";\n}', [["DP-01"]]],
+  ["RES-58 a marker inside an object property value's nested call is credited to a gp literal later in the same value (wb-lx6m)", 'const tool = {\n  command: prepare( /* gp-decision-point: DP-01 */ ) ?? "gp",\n};', [["DP-01"]]],
 ];
 
 // ---- the synthetic gp-wired module and its audit document ----

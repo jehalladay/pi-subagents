@@ -1,7 +1,8 @@
 /**
- * wb-a9l2.3 (RF-HARNESS2-FEDERATED-PEER-R3), the absent-today leg, hardened by wb-a09z (the PREP F1-F9 survivors of landing 256)
- * and by wb-4nvi (the landing-349 verdict's F1-F7: P2 and P1 read whole texts, A5's bound value, the walks held to git, the
- * matchers' classes read from their own source, the export read whatever its spacing, R-COORDINATED enumerated).
+ * wb-a9l2.3 (RF-HARNESS2-FEDERATED-PEER-R3), the absent-today leg, hardened by wb-a09z (the PREP F1-F9 survivors of landing 256),
+ * by wb-4nvi (the landing-349 verdict's F1-F7: P2 and P1 read whole texts, A5's bound value, the walks held to git, the
+ * matchers' classes read from their own source, the export read whatever its spacing, R-COORDINATED enumerated) and by wb-sxdx
+ * (the landing-448 verdict's F1-F2: every file a scan reads is proven read whole and scanned; the class is enumerated below).
  * Statement (bead notes; the refuted descriptor is written as the placeholder): "If Pi ever surfaces an rf federation owner
  * descriptor or multi-owner resources, it shall echo rf's seven OwnerResource fields verbatim and in rf's order, never synthesize,
  * rename or alias them to a FiberOptics <FO_DESCRIPTOR> descriptor (h2fp-C020 REFUTED), and never alias rows sharing a local
@@ -45,6 +46,12 @@
  *    walk never reached reds its pin, so a walk that skips a directory reds while its floor still holds; a scan reads only
  *    listed files, so a local output a .gitignore names at any depth (.beads/backup, .pi/readcache, test/perf/.results) is
  *    never read, and the floors and anchors count read files.
+ *    READ WHOLE (B1-B4, B6 and D1, wb-sxdx): each scan's witness carries unreadWhole, the read files its family's reader did not
+ *    read whole. The reader (readerOf) is one execution per text that matches the family anywhere and consumes the whole text it
+ *    is handed, and each text it consumed must hash (sha256) to what an independent read of the file yields (wholeDigests:
+ *    readFileSync apart from bytesOf, textsOf and the scan, held to the file's lstat size; the UTF-8 text and, for a NUL-bearing
+ *    file, its other bytes), so a file read short of its end, read altered or never read is named. The proof, like the walk's
+ *    hold, reads a quiescent tree: a file written between the two reads is named too.
  *  C, acceptance (c). C1 pins the shapes of the fixture sets neg01 (one alias, records differing in backend_instance_id
  *    alone), sameRecord (two aliases, one record) and perField (one record per field, differing from neg01[0] in that field
  *    alone); C2 ownerIdentity, the reference projection (rf's whole record, every field verbatim in rf's order; the alias is
@@ -58,20 +65,33 @@
  *    as a separator, "direct" when a run between two words may be empty, and the lower, upper and mixed case forms under its
  *    "i" flag), and the judged set refuses a member or case form that no must-hit spelling exercises (classGaps).
  *  P, the scan primitives' positive controls: P1 the content scan reports this file and its roster for BACKEND_FAMILY over
- *    test, and reads each whole (wholeTextOf: a family matching only a text of the file's exact length that opens and closes
- *    with its first and last 64 characters hits it, so a prefix, a suffix or any shortened read misses); P2 the served scan
+ *    test; EVERY_TEXT, a family matching every text, reports every file each scan reads, through the same measurement (src,
+ *    test, docs, qa and the rest), so a hit dropped for any file reds; and the read-whole proof is live - a read one byte short
+ *    names this file and its roster, a read capped at 32 KiB names this file alone (the roster is shorter), and a handed file
+ *    the scan never reads is named; P2 the served scan
  *    reads each descriptor's whole JSON text, never its id or a projection of it (every text is JSON.stringify of the
  *    descriptor an independent registration serves, and the description and inputSchema keys, which no id carries, hit every
  *    text); P3 the walk records a symbolic link (and every real scan refuses one); P4 the reader sees a spelling stored as
  *    UTF-16LE, UTF-16BE or UTF-32LE; P5 the walk is held to git's listing (heldToGit over a planted walk and listing: a file
  *    git does not list is never read, a listed file the walk never reached is reported, an unreadable listing reads nothing
- *    and reports itself), and the listing's argv is GIT_LISTING.
+ *    and reports itself), and the listing's argv is GIT_LISTING. QP1 is R-DECOUPLED's pinned quiet row (see RESIDUALS).
  *  X, the anchors outside the pin literals: X1 a pin removed with its roster entry is still caught when it alone judges an
  *    ACCEPTANCE part (C3); X2 the first pinned quiet row of R-COORDINATED (B3); X3 the export reader finds this bead's record
  *    whatever its JSON spacing (the record re-serialized with spaced separators reads the same Acceptance text); X4 every pin
  *    whose removal from every literal at once (rows, parts and spellings) an anchor reports, with the report - the export for
  *    a pin that alone judges an ACCEPTANCE part, the matcher's own class for a must-hit that alone exercises a member or case
  *    form; X5 every other pin, enumerated: R-COORDINATED's quiet set, with its member one level up (a narrowed matcher).
+ * THE LANDING-448 F1/F2 CLASS, ENUMERATED (wb-sxdx; hop 3 of the wb-a9l2.3 -> wb-a09z -> wb-4nvi chain, the R739 terminal
+ * enumerate-the-resolvable form): a content scan that reads a listed file short of its end, or never reads one, while a
+ * positive control over named files holds (the landing-349 class "a positive control satisfied by a filtered primitive"; its
+ * landing-448 members: F1 a read capped at 128 KiB in the scan or inside bytesOf, F2 a scan skipping every .md file). PINNED,
+ * and nothing broader: (i) READ WHOLE - in B1-B4, B6 and D1, every read file whose reader consumed a text other than an
+ * independent read's, at any site before the reader's execution (bytesOf, the scan's buffer, textsOf, the text handed to the
+ * reader: a cap at any length, a byte or character dropped or changed), and every handed file left without a reading by any
+ * predicate (name, extension, directory, size), is named in unreadWhole; (ii) a hit dropped inside the measurement by any
+ * predicate on the file reds P1, where EVERY_TEXT must be reported for every read file through measured's own scan and hit
+ * list; (iii) the proof is live (P1: a read one byte short, a read capped at 32 KiB, a handed file never read). The class's
+ * residual is R-DECOUPLED (QP1, see RESIDUALS). No other member of the class is claimed absent.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the whole judged set - every row's id,
  * label and pins, every pin's witness, SEVEN_FIELDS and GATING_ARTIFACTS - is held to the out-of-file roster
  * test/fixtures/rf-owner-resource-roster.json; no two pins carry the same witness, so swapping two cases reds. ACCEPTANCE is
@@ -84,10 +104,15 @@
  * value (rfi_ plus 26 base32 letters) carries no field name (QD3); R-COMPOSED a spelling assembled at runtime from parts, this
  * file's own mechanism, is invisible to any text scan (QB4, QD4), and B5 and D2 are the runtime backstop for served descriptor
  * text only; R-ENCODED a spelling held only in an encoded form (base64, an archive) carries no readable word (QB5, QD5);
+ * R-DECOUPLED (wb-sxdx) a scan whose reported hits are not its reader's - a hit decided by a second execution over another
+ * text, dropped after the measurement returns, or dropped by a predicate keyed to the judged family - is invisible to the
+ * read-whole proof, which holds what the reader consumed, and to EVERY_TEXT, which holds the measurement's own hit list (QP1:
+ * a judge over the first 64 characters of this file reports nothing while the proof reads the file whole, beside the
+ * positive: the same 64-byte cap on the reader's own text is named);
  * R-COORDINATED a pin removed from this file and its roster at once is quiet unless an anchor outside the pin literals names it
  * (X4). X5 enumerates the quiet pins: each pin of rows A-D while another pin still judges its ACCEPTANCE part (B3 is X2's
  * row), each must-hit while other must-hits still exercise every member and case form it exercises, and every quiet,
- * control and anchor pin (QB, QD, P and X), which no anchor names. A matcher narrowed at once with its must-hit, the roster's
+ * control and anchor pin (QB, QD, P, QP and X), which no anchor names. A matcher narrowed at once with its must-hit, the roster's
  * family ids and these literals is the same class one level up, pinned quiet in X5 too (row B's bracket without "." while MB9
  * goes with it reads no class gap).
  * SCOPE: the excerpt, the fields and the grammars are producer facts at 6a251bf73af5; Pi vendors no rf source, so a
@@ -205,8 +230,8 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "P",
-    label: "the scan primitives rows B and D compose read whole file content and whole served JSON text, refuse symbolic links, read NUL-bearing files and hold each walk to git's listing, each shown by a must-hit control",
-    pins: ["P1", "P2", "P3", "P4", "P5"],
+    label: "the scan primitives rows B and D compose read each listed file and each served JSON text whole (every file read proven whole and scanned), refuse symbolic links, read NUL-bearing files and hold each walk to git's listing, each shown by a must-hit control, and R-DECOUPLED stays pinned quiet",
+    pins: ["P1", "P2", "P3", "P4", "P5", "QP1"],
   },
   {
     id: "X",
@@ -401,17 +426,53 @@ function bytesOf(path: string): Buffer {
     return Buffer.alloc(0);
   }
 }
-/** The files whose content the family matches, repo-relative: the one hit predicate every file scan composes. */
-const hitsIn = (files: readonly string[], family: RegExp): string[] =>
-  files.filter(file => textsOf(bytesOf(file)).some(text => family.test(text))).map(file => relative(REPO, file));
-const escapeRegExp = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-/** A family that matches one file's whole text and nothing shorter or longer (P1, PREP F2): its exact length, and its first and
- * last 64 characters in place (a literal of the whole text overruns the engine's pattern size limit). */
-function wholeTextOf(path: string): RegExp {
-  const text = readFileSync(path, "utf8");
-  if (text.length <= 128) return new RegExp(`^${escapeRegExp(text)}$`);
-  return new RegExp(`^(?=[\\s\\S]{${text.length}}$)${escapeRegExp(text.slice(0, 64))}[\\s\\S]*${escapeRegExp(text.slice(-64))}$`);
+type ByteReader = (path: string) => Buffer;
+/** A family's reader (wb-sxdx): one execution that matches the family anywhere in a text (group 1) and consumes the whole text
+ * it is handed (the match itself), so what the family read is the match, never a second reading beside it. */
+const readerOf = (family: RegExp): RegExp => new RegExp(`^(?:[\\s\\S]*?(${family.source}))?[\\s\\S]*$`, family.flags.replace(/[gy]/g, ""));
+const digestOf = (text: string): string => createHash("sha256").update(text).digest("hex");
+/** One file as the content scan read it: the sha256 of each text its family's reader consumed, and whether the family matched
+ * in any of them. */
+interface Reading {
+  readonly file: string;
+  readonly consumed: readonly string[];
+  readonly hit: boolean;
 }
+/** The one content scan every file scan composes: each handed file's texts (textsOf over its bytes), each read by one execution
+ * of the family's reader. P1 and QP1 hand it a planted byte reader; every real scan reads through bytesOf. */
+function contentScan(files: readonly string[], family: RegExp, read: ByteReader = bytesOf): Reading[] {
+  const reader = readerOf(family);
+  return files.map(file => {
+    const matches = textsOf(read(file)).map(text => reader.exec(text));
+    return { file, consumed: matches.map(match => digestOf(match?.[0] ?? "")), hit: matches.some(match => match?.[1] !== undefined) };
+  });
+}
+/** The files the readings report, repo-relative and in reading order: every file whose family matched. */
+const hitsOf = (readings: readonly Reading[]): string[] => readings.filter(reading => reading.hit).map(reading => relative(REPO, reading.file));
+/** What an independent read of a file yields, apart from bytesOf, textsOf and the scan: its bytes (readFileSync, held to the
+ * file's lstat size) as the UTF-8 text and, when they hold a NUL, the other bytes as latin1, each by its sha256; a file that
+ * cannot be read whole yields a marker no reading consumes. */
+function wholeDigests(file: string): string[] {
+  try {
+    const bytes = readFileSync(file);
+    const size = lstatSync(file).size;
+    if (bytes.length !== size) return [`<read ${bytes.length} of ${size} bytes>`];
+    const digests = [digestOf(bytes.toString("utf8"))];
+    if (bytes.indexOf(0) !== -1) digests.push(digestOf(Buffer.from(bytes.filter(byte => byte !== 0)).toString("latin1")));
+    return digests;
+  } catch {
+    return ["<unreadable>"];
+  }
+}
+/** The handed files a scan did not read whole, repo-relative (wb-sxdx; the landing-448 F1 and F2): each file with no reading,
+ * or whose reader consumed texts other than an independent read's - a read short of its end at any length, a byte or character
+ * dropped or changed before the reader ran, or a file left unread by any predicate. */
+function unreadWhole(files: readonly string[], readings: readonly Reading[]): string[] {
+  const consumed = new Map(readings.map(reading => [reading.file, reading.consumed]));
+  return files.filter(file => !sameList(consumed.get(file) ?? [], wholeDigests(file))).map(file => relative(REPO, file));
+}
+/** A family that matches every text: through the same measurement it must report every file a scan reads (P1). */
+const EVERY_TEXT = /$/;
 
 /** git's listing of a root: its tracked files and the untracked ones git does not ignore (every .gitignore rule at every
  * depth, as git applies it), NUL-separated. */
@@ -466,20 +527,38 @@ const SCAN_ROOTS: readonly ScanRoot[] = [
 /** Acceptance (d) reads src alone, with B1's floor and anchor. */
 const SRC_ROOT: ScanRoot = { pin: "D1", root: "src", floor: 100, anchorFile: "workflow/reconcile.ts", anchorToken: "RECONCILE_EVIDENCE_READS" };
 
+/** What a scan measures before any judgment (wb-sxdx): the walked files git lists (the only files read), the listed files the
+ * walk never reached, the links it recorded (repo-relative), the read files its family's reader did not read whole, and the
+ * files its family hit - one content scan behind the last two. */
+interface Measured {
+  readonly read: string[];
+  readonly unwalked: string[];
+  readonly links: string[];
+  readonly unreadWhole: string[];
+  readonly hits: string[];
+}
+function measured(walked: Walked, listed: ReadonlySet<string> | undefined, family: RegExp): Measured {
+  const { read, unwalked } = heldToGit(REPO, walked.files, listed);
+  const readings = contentScan(read, family);
+  return { read, unwalked, links: walked.links.map(link => relative(REPO, link)), unreadWhole: unreadWhole(read, readings), hits: hitsOf(readings) };
+}
+/** A SCAN_ROOTS root, walked and held to git's listing of it, as its scan measures it. */
+function measureRoot(root: string, family: RegExp): Measured {
+  const base = join(REPO, root);
+  return measured(walk(base, new Set()), gitListed(base), family);
+}
 function scanRoot(scan: ScanRoot, family: RegExp, spelled: string): Json {
-  const base = join(REPO, scan.root);
-  const { files, links } = walk(base, new Set());
-  const { read, unwalked } = heldToGit(REPO, files, gitListed(base));
+  const { read, unwalked, links, unreadWhole: notWhole, hits } = measureRoot(scan.root, family);
   const floorMet = read.length >= scan.floor;
-  const hits = hitsIn(read, family);
-  const anchor = join(base, scan.anchorFile);
+  const anchor = join(REPO, scan.root, scan.anchorFile);
   const anchorRead = read.includes(anchor) && bytesOf(anchor).toString("utf8").includes(scan.anchorToken);
   expect(floorMet, `${scan.root}: ${read.length} listed files read, floor ${scan.floor}`).toBe(true);
   expect(anchorRead, `${scan.root}: the anchor ${scan.anchorFile} was not read with ${scan.anchorToken}`).toBe(true);
   expect(unwalked, `${scan.root}: files git lists that the walk never reached`).toEqual([]);
-  expect(links.map(link => relative(REPO, link)), `symbolic links under ${scan.root} (refused, never followed)`).toEqual([]);
+  expect(notWhole, `${scan.root}: read files the family's reader did not read whole`).toEqual([]);
+  expect(links, `symbolic links under ${scan.root} (refused, never followed)`).toEqual([]);
   expect(hits, `files spelling ${spelled} under ${scan.root}`).toEqual([]);
-  return { pin: scan.pin, family: familyId(family), root: scan.root, floor: scan.floor, anchorFile: scan.anchorFile, anchorToken: scan.anchorToken, floorMet, anchorRead, unwalked, links: [], hits };
+  return { pin: scan.pin, family: familyId(family), root: scan.root, floor: scan.floor, anchorFile: scan.anchorFile, anchorToken: scan.anchorToken, floorMet, anchorRead, unwalked, unreadWhole: notWhole, links: [], hits };
 }
 
 /** Never read by row B: the object store, installed third-party code, and the tracker's record files (bead text and its change
@@ -504,37 +583,41 @@ function gitignoredTopLevel(names: readonly string[]): string[] {
     .map(line => new RegExp(`^${line.replace(/[.+^${}()|[\]\\]/g, "\\$&").replace(/\*/g, "[^/]*").replace(/\?/g, "[^/]")}$`));
   return names.filter(name => matchers.some(matcher => matcher.test(name)));
 }
-function scanRest(family: RegExp, spelled: string): Json {
+/** The rest of the repo as B6 measures it: every top-level entry outside SCAN_ROOTS, EXCLUDED and the local outputs, walked and
+ * held to git's listing of the same set, with the count of entries kept. */
+function measureRest(family: RegExp): Measured & { readonly entries: number } {
   const roots = new Set(SCAN_ROOTS.map(scan => scan.root));
   const top = listDisk(REPO).filter(entry => !roots.has(entry.name));
   const local = new Set(gitignoredTopLevel(top.map(entry => entry.name)));
   const kept = top.filter(entry => !local.has(entry.name) && !EXCLUDED.includes(entry.name));
   const skip = new Set(EXCLUDED.map(path => join(REPO, path)));
-  const files: string[] = [];
-  const links: string[] = [];
+  const walked: Walked = { files: [], links: [] };
   for (const entry of kept) {
     const path = join(REPO, entry.name);
-    if (entry.isSymbolicLink()) links.push(path);
+    if (entry.isSymbolicLink()) walked.links.push(path);
     else if (entry.isDirectory()) {
       const below = walk(path, skip);
-      files.push(...below.files);
-      links.push(...below.links);
-    } else if (entry.isFile()) files.push(path);
+      walked.files.push(...below.files);
+      walked.links.push(...below.links);
+    } else if (entry.isFile()) walked.files.push(path);
   }
   const listed = gitListed(REPO);
   const under = (path: string, entry: string): boolean => path === join(REPO, entry) || path.startsWith(`${join(REPO, entry)}${sep}`);
   const outside = [...roots, ...EXCLUDED];
   const rest = listed === undefined ? undefined : new Set([...listed].filter(path => !outside.some(entry => under(path, entry))));
-  const { read, unwalked } = heldToGit(REPO, files, rest);
-  const floorMet = kept.length >= REST_FLOOR.entries && read.length >= REST_FLOOR.files;
+  return { ...measured(walked, rest, family), entries: kept.length };
+}
+function scanRest(family: RegExp, spelled: string): Json {
+  const { entries, read, unwalked, links, unreadWhole: notWhole, hits } = measureRest(family);
+  const floorMet = entries >= REST_FLOOR.entries && read.length >= REST_FLOOR.files;
   const anchorsRead = REST_ANCHORS.every(([file, token]) => read.includes(join(REPO, file)) && bytesOf(join(REPO, file)).toString("utf8").includes(token));
-  const hits = hitsIn(read, family);
-  expect(floorMet, `${kept.length} top-level entries and ${read.length} listed files read, floors ${REST_FLOOR.entries} and ${REST_FLOOR.files}`).toBe(true);
+  expect(floorMet, `${entries} top-level entries and ${read.length} listed files read, floors ${REST_FLOOR.entries} and ${REST_FLOOR.files}`).toBe(true);
   expect(anchorsRead, `the anchors ${REST_ANCHORS.map(([file]) => file).join(", ")} were not all read`).toBe(true);
   expect(unwalked, "files git lists outside SCAN_ROOTS and EXCLUDED that the walk never reached").toEqual([]);
-  expect(links.map(link => relative(REPO, link)), "symbolic links outside SCAN_ROOTS (refused, never followed)").toEqual([]);
+  expect(notWhole, "read files outside SCAN_ROOTS that the family's reader did not read whole").toEqual([]);
+  expect(links, "symbolic links outside SCAN_ROOTS (refused, never followed)").toEqual([]);
   expect(hits, `files spelling ${spelled} outside SCAN_ROOTS`).toEqual([]);
-  return { pin: "B6", family: familyId(family), excluded: [...EXCLUDED], floor: { ...REST_FLOOR }, floorMet, anchorsRead, unwalked, links: [], hits };
+  return { pin: "B6", family: familyId(family), excluded: [...EXCLUDED], floor: { ...REST_FLOOR }, floorMet, anchorsRead, unwalked, unreadWhole: notWhole, links: [], hits };
 }
 
 interface Served {
@@ -887,14 +970,31 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     ]),
   ),
   P1: async () => {
-    const hits = hitsIn(walk(join(REPO, "test"), new Set()).files, BACKEND_FAMILY);
-    const readWhole = [CENSUS_FILE, ROSTER_FILE].filter(file => hitsIn([join(REPO, file)], wholeTextOf(join(REPO, file))).length === 1);
-    const witness = { family: familyId(BACKEND_FAMILY), reportsCensus: hits.includes(CENSUS_FILE), reportsRoster: hits.includes(ROSTER_FILE), readWhole };
-    expect(witness, "the content scan does not report this file and its roster, which spell backend_instance_id, or reads either short of its end").toStrictEqual({
+    const census = join(REPO, CENSUS_FILE);
+    const roster = join(REPO, ROSTER_FILE);
+    const pair = [census, roster];
+    const testHits = measureRoot("test", BACKEND_FAMILY).hits;
+    const everyText: readonly (readonly [string, Measured])[] = [
+      ...SCAN_ROOTS.map(scan => [scan.root, measureRoot(scan.root, EVERY_TEXT)] as const),
+      ["rest", measureRest(EVERY_TEXT)] as const,
+    ];
+    const witness = {
+      family: familyId(BACKEND_FAMILY),
+      reportsCensus: testHits.includes(CENSUS_FILE),
+      reportsRoster: testHits.includes(ROSTER_FILE),
+      everyFileReported: everyText.filter(([, found]) => found.read.length > 0 && sameList(found.hits, found.read.map(file => relative(REPO, file)))).map(([root]) => root),
+      lastByteDropped: unreadWhole(pair, contentScan(pair, BACKEND_FAMILY, path => bytesOf(path).subarray(0, -1))),
+      cappedAt32KiB: unreadWhole(pair, contentScan(pair, BACKEND_FAMILY, path => bytesOf(path).subarray(0, 32 * 1024))),
+      skipped: unreadWhole(pair, contentScan([roster], BACKEND_FAMILY)),
+    };
+    expect(witness, "the content scan does not report this file and its roster, drops a hit of a read file, or its read-whole proof misses a short read or an unread file").toStrictEqual({
       family: familyId(BACKEND_FAMILY),
       reportsCensus: true,
       reportsRoster: true,
-      readWhole: [CENSUS_FILE, ROSTER_FILE],
+      everyFileReported: [...SCAN_ROOTS.map(scan => scan.root), "rest"],
+      lastByteDropped: [CENSUS_FILE, ROSTER_FILE],
+      cappedAt32KiB: [CENSUS_FILE],
+      skipped: [CENSUS_FILE],
     });
     return witness;
   },
@@ -952,6 +1052,25 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       unwalked: ["d/b.ts"],
       failed: { read: [], unwalked: ["<git ls-files failed>"] },
       listsCensus: true,
+    });
+    return witness;
+  },
+  QP1: async () => {
+    const census = [join(REPO, CENSUS_FILE)];
+    const readings = contentScan(census, BACKEND_FAMILY);
+    // R-DECOUPLED's member: the hit decided by a second execution, over the first 64 characters, beside the reader's whole reading.
+    const decoupled = census.filter(file => textsOf(bytesOf(file)).some(text => BACKEND_FAMILY.test(text.slice(0, 64)))).map(file => relative(REPO, file));
+    const witness = {
+      readWhole: unreadWhole(census, readings),
+      reported: hitsOf(readings),
+      decoupledReported: decoupled,
+      readerCapped: unreadWhole(census, contentScan(census, BACKEND_FAMILY, path => bytesOf(path).subarray(0, 64))),
+    };
+    expect(witness, "R-DECOUPLED: the read-whole proof reads this file whole while a judge over its first 64 characters reports nothing, and the same cap on the reader's own text is named").toStrictEqual({
+      readWhole: [],
+      reported: [CENSUS_FILE],
+      decoupledReported: [],
+      readerCapped: [CENSUS_FILE],
     });
     return witness;
   },
@@ -1015,7 +1134,7 @@ const REGISTERED = "the registered tests: every pin registered once under its ro
 
 describe("wb-a9l2.3 OwnerResource seven-field census (RF-HARNESS2-FEDERATED-PEER-R3, absent-today leg)", () => {
   it(JUDGED_SET, () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:6", "C:3", "D:2", "MB:19", "MD:13", "P:5", "X:5"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:5", "B:6", "C:3", "D:2", "MB:19", "MD:13", "P:6", "X:5"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
     );
