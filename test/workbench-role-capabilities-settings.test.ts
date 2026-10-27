@@ -42,9 +42,12 @@ it("rejects wildcard role capabilities",()=>{
 // reader (U1), a reader's sentence is never split after a listed abbreviation or before a lower-case continuation (U2),
 // and serve in every form is the served claim (U3). Refusal #3 engaged the loop cap (rule 19(c)), so cut #4 keeps that
 // shape frozen and is written in the enumerate-the-resolvable form: each negative case title claims exactly the set its
-// plants pin, the rendered leg cures the refusal's lead-in, table-row and raw-HTML members, and every family member
-// neither leg reads is a NAMED RESIDUAL with pinned quiet rows (a page that renders exactly its pinned sentences, stays
-// quiet, and is flagged by the family's named cure), so silencing a quiet page reds its case.
+// plants pin, the rendered leg cures the refusal's lead-in, table-row and raw-HTML members, and every family member the
+// cut knows neither leg reads is a NAMED RESIDUAL with pinned quiet rows (a page that renders exactly its pinned
+// sentences, stays quiet, and is flagged by the family's named cure), so silencing a quiet page reds its case. Cut #5
+// (refusal #4, the same form) cures the refusal's reference, lead-in and continuation members, pins the list-item lead-in,
+// names a raw img's alt text, a mark that ends a name and a marked continuation as residuals, widens R-HIDDEN-CONTENT and
+// R-CONFUSABLE to the gate's members, and anchors the residual rows in the out-of-file roster.
 // ---------------------------------------------------------------------------------------------
 installScratchLeakGuard();
 
@@ -235,20 +238,28 @@ const abbreviationEndOf = (abbreviations: readonly string[]): RegExp =>
 /** A text that ends with one of ABBREVIATIONS as a word of its own. */
 const ABBREVIATION_END = abbreviationEndOf(ABBREVIATIONS);
 /**
- * The sentences of one unit, for both legs (refusal #2 U2): the unit splits after ".", "!" or "?" that white space
- * follows, except where the text before ends with one of ABBREVIATIONS or the text after opens with a lower-case letter
- * (the reader's sentence goes on: an ellipsis, a full stop that ends a code span, an abbreviation outside the list before a
- * lower-case word), so a reader's single sentence is judged as one through those forms; a terminal mark inside an open
- * parenthetical or quotation, and an abbreviation outside the list before a capital or a digit, are the named residuals
- * R-ENCLOSED-STOP and R-UNLISTED-ABBREVIATION. `abbreviationEnd` (ABBREVIATION_END unless given) lets
- * R-UNLISTED-ABBREVIATION's named cure re-split with an abbreviation added.
+ * A CONTINUATION (refusal #4 U2(b)): text whose first letter is lower-case after any run of opening brackets (Ps), initial
+ * and final punctuation (Pi, Pf), dashes (Pd and the Dash property), quotation marks (the Quotation_Mark property) and
+ * white space, so the sentence before it goes on ("leaf... (is) served", "leaf... - is served").
  */
-function splitSentences(unit: string, abbreviationEnd: RegExp = ABBREVIATION_END): string[] {
+const CONTINUATION = /^[\p{Ps}\p{Pi}\p{Pf}\p{Pd}\p{Dash}\p{Quotation_Mark}\s]*\p{Ll}/u;
+/**
+ * The sentences of one unit, for both legs (refusal #2 U2, refusal #4 U2(b)): the unit splits after ".", "!" or "?" that
+ * white space follows, except where the text before ends with one of ABBREVIATIONS or the text after is a CONTINUATION (the
+ * reader's sentence goes on: an ellipsis, a full stop that ends a code span, an abbreviation outside the list before a
+ * lower-case word, a lower-case word opened by an opening bracket, a quotation mark or a dash), so a reader's single sentence is
+ * judged as one through those forms; a terminal mark inside an open parenthetical or quotation, an abbreviation outside the
+ * list or a mark that ends a name before a word that is no CONTINUATION, and a continuation opened by a digit or another
+ * mark are the named residuals R-ENCLOSED-STOP, R-UNLISTED-ABBREVIATION, R-MARK-IN-NAME and R-MARKED-CONTINUATION.
+ * `abbreviationEnd` (ABBREVIATION_END unless given) and `continuation` (CONTINUATION unless given) let the named cures of
+ * those residuals re-split with an abbreviation or a name added, or with every mark and digit read past.
+ */
+function splitSentences(unit: string, abbreviationEnd: RegExp = ABBREVIATION_END, continuation: RegExp = CONTINUATION): string[] {
   const sentences: string[] = [];
   let start = 0;
   for (const gap of unit.matchAll(/(?<=[.!?])\s+/gu)) {
     const end = gap.index + gap[0].length;
-    if (abbreviationEnd.test(unit.slice(start, gap.index)) || /^\p{Ll}/u.test(unit.slice(end))) continue;
+    if (abbreviationEnd.test(unit.slice(start, gap.index)) || continuation.test(unit.slice(end))) continue;
     sentences.push(unit.slice(start, gap.index));
     start = end;
   }
@@ -281,55 +292,79 @@ const servedLeafSentences = (base: string, dir: string): string[] =>
   );
 
 // RENDERED LEG (refusal #1 U2, the rendered-text docs truth floor of wb-9x5.17; widened by refusal #2's class-level guard,
-// then cured and enumerated by cut #4 in the rule 19(c) form bound at refusal #3), every markdown page below the walked
-// directory (any other file renders as its source text: its sentencesIn sentences, folded as below, no reference decoded):
-// marked 18.0.11 (the lexer test/helpers/census.ts uses, GFM) lexes the page once into READINGS (blockUnits): each sentence
-// of a paragraph, a heading, a code block or the text of a list item or block quote, and, judged whole and never split
-// (refusal #3 U1(a), the gate's G06), each table row (the header row, and each body row read after its header row, cells
-// joined by a space) and each HTML block. LEAD-IN (refusal #3 U1(a)): a paragraph whose last reading is not ended by ".",
-// "!" or "?" (one ending in ":", say) is read before every reading of the next block of its container that renders a
-// reading (a list item by item, a table, an HTML block, a code block, a block quote, a paragraph or a heading), and stays
-// in place across the blocks that render none (such as a blank line, a comment, a link definition or a thematic break).
-// A unit renders its text, code spans and backslash escapes as written, and emphasis, strong, strikethrough, link text and
-// image alt text flattened (a link destination or title is never read); a task checkbox renders nothing; a soft wrap or a
-// hard break renders as white space; raw HTML, an inline HTML token or an HTML block's source, renders by the HTML
-// tokenizer's rules (renderHtml; refusal #2 U1, refusal #3 U1(b)): a comment (<!-->, <!---> or to the first --> or --!>,
-// an unclosed one to its end), a markup declaration, CDATA section or processing instruction (a bogus comment, <! or <? to
-// the first >) and an end tag opener followed by > or by a character other than a letter (to the first >) render
-// nothing, and a tag (its name, then everything to its >, a quoted attribute value read whole) renders as white space when
-// it names one of BREAK_ELEMENTS and as nothing otherwise. Numeric character references and the names in NAMED_REFERENCES
-// are decoded outside code; any other named reference is recorded, and the live pages must carry none. The FOLDED KEY then
-// applies: NFKD with combining marks dropped, format code points (Cf) dropped, every white-space run one space, control
-// code points (Cc) dropped, every dash (Pd) and the minus sign read as "-". A unit splits into sentences by splitSentences
-// (after ".", "!" or "?" that white space follows, never after one of ABBREVIATIONS or before a lower-case letter; refusal
-// #2 U2), and a reading naming a leaf and a served word (SERVED_WORD, serve in every form; refusal #2 U3) is a served
-// sentence. RESIDUALS, each a named family whose planted quiet rows below are read and stay quiet, each with the named cure
-// that flags them: R-ANAPHORA, the served word in a later sentence that points back to the leaf ("It is served."; cure: a
-// sentence opening with It, This or That is also read after the sentence before it); R-HEADING-SCOPE, the served word in a
-// heading over any block of its section that names the leaf ("## Served leaves" over "- graph impact" or over a table;
-// cure: read each reading of a section after its heading); R-PARAPHRASE, the leaf named in other words ("the impact leaf
-// of rf graph"; cure: read the leaf words in either order within a clause); R-SYNONYM, the claim in other words than serve
-// ("available", "implemented"; cure: widen SERVED_WORD); R-CSS-PRESENTATION, an element a style displays as a block
-// ('graph<span style="display:block">impact</span>'; the leg reads HTML by element, never by style; cure: read a block
-// display style as a break); R-UNLISTED-ABBREVIATION, the full stop of an abbreviation outside ABBREVIATIONS (an unlisted
-// one such as "Ref." or "Fig.", a spaced spelling of a listed one such as "e. g.", or an initial such as "J.") before a
-// word that does not open with a lower-case letter, a capitalized word or a digit ("(Ref. Pi) is served.", "see Fig. 2,
-// is served."; cure: add it to ABBREVIATIONS). Cut #4's residuals (refusal #3; the enumeration case): R-ENCLOSED-STOP, a
-// ".", "!" or "?" inside a parenthetical or quotation still open in its sentence (parentheses, brackets, straight or curly
-// quotation marks, guillemets) before a word that does not open with a lower-case letter ("(ready? Yes)" and '"Phase 2.
-// Final"', the gate's G30 and G31; cure: keep a unit whole while an enclosure opened in it is open; that cure also reads
-// the frozen R-UNLISTED-ABBREVIATION quiet row "(Ref. Pi)" whole, so curing the family would re-scope a frozen quiet row,
-// and cut #4 names it instead); R-LEAD-IN-ACROSS-CONTAINER, a lead-in that ends a container (a block quote, a list item)
-// over the block after that container (cure: read a reading not ended by ".", "!" or "?" before the reading after it);
-// R-HIDDEN-CONTENT, text a reader never sees (the content of a display:none element of the rendering section, such as
-// script, or of an element carrying hidden) glued between the leaf words (cure: drop that content); R-LEAF-SPELLING, the
-// leaf words run together, in camel case, or joined by a slash or a colon ("graph/impact", "graphImpact"; cure: read
-// those spellings as the leaf); R-CONFUSABLE, a letter that renders like a Latin one (a Cyrillic or Greek a, e, o, p, c,
-// i, x or y, which NFKD keeps; cure: read it as that Latin letter); R-ELLIPSIS, the served word opening a later sentence
-// whose subject the sentence before names ("The rf graph impact leaf. Served by this build."; cure: read a sentence that
-// opens with the served word after the sentence before it).
+// then cured and enumerated by cut #4 and cut #5 in the rule 19(c) form bound at refusal #3), every markdown page below the
+// walked directory (any other file renders as its source text: its sentencesIn sentences, folded as below, no reference
+// decoded): marked 18.0.11 (the lexer test/helpers/census.ts uses, GFM) lexes the page once into READINGS (blockUnits):
+// each sentence of a paragraph, a heading, a code block or the text of a list item or block quote, and, judged whole and
+// never split (refusal #3 U1(a), the gate's G06), each table row (the header row, and each body row read after its header
+// row, cells joined by a space) and each HTML block. LEAD-IN (refusal #3 U1(a); refusal #4 U2(a) adds the HTML block): a
+// paragraph, the text of a list item or an HTML block whose last reading is not ended by ".", "!" or "?" (one ending in
+// ":", say) is read before every reading of the next block of its container that renders a reading (a list item by item,
+// a table, an HTML block, a code block, a block quote, a paragraph or a heading), and stays in place across the blocks
+// that render none (such as a blank line, a comment, a link definition or a thematic break). A unit renders its text, code
+// spans and backslash escapes as written, and emphasis, strong, strikethrough, link text and image alt text flattened (a
+// link's destination and title are never read, except where the destination is the link's text, as in an autolink); a
+// task checkbox renders nothing; a soft wrap or a hard break renders as white space; raw HTML, an inline HTML token or an
+// HTML block's source, renders by these rules (renderHtml; refusal #2 U1, refusal #3 U1(b)): a comment (<!-->, <!---> or
+// to the first --> or --!>, an unclosed one to its end), a markup declaration, CDATA section or processing instruction (a
+// bogus comment, <! or <? to the first >) and an end tag opener followed by > or by a character other than a letter (to
+// the first >) render nothing, and a tag (its name, then everything to its first > outside an attribute value its
+// quotation mark closes) renders as white space when it names one of BREAK_ELEMENTS and as nothing otherwise. REFERENCES
+// (refusal #4 U1), outside code: in markdown text a reference of CommonMark's form, closed by ";" (1 to 7 decimal digits,
+// 1 to 6 hexadecimal digits, or a name of 2 to 32 letters and digits), decodes, a numeric one by numericReference (the
+// HTML tokenizer's numeric end state: U+0000, a surrogate or a value past U+10FFFF reads U+FFFD, and a C1 code point in
+// C1_REMAP reads as its windows-1252 character; marked passes such a reference to the page as written) and a named one by
+// NAMED_REFERENCES, while any other "&" stays as written (marked escapes an unterminated reference, the gate's P01m; the
+// forms it passes as written, a name that opens with a digit, has one letter or runs past 32, either stay as written for a
+// reader or decode only a legacy name glued to the rest of its run, which completes no leaf word); in raw HTML a
+// numeric reference with or
+// without its semicolon and of any length decodes by numericReference, and a letters-and-digits run that is no closed name
+// of 2 to 32 decodes by the longest legacy name it opens with (LEGACY_REFERENCES, the 106 names the tokenizer's table also
+// lists without a semicolon; a run that opens with none stays as written), each as the HTML tokenizer decodes it, while a
+// closed name of 2 to 32 decodes by NAMED_REFERENCES. In either, a closed named reference outside NAMED_REFERENCES is
+// recorded, and the live pages must carry none. The FOLDED KEY then applies: NFKD with combining marks dropped, format code
+// points (Cf) dropped, every white-space run one space, control code points (Cc) dropped, every dash (Pd) and the minus
+// sign read as "-". A unit splits into sentences by splitSentences (after ".", "!" or "?" that white space follows, never
+// after one of ABBREVIATIONS or before a CONTINUATION, text whose first letter is lower-case after any run of opening
+// brackets, initial and final punctuation, dashes, quotation marks and white space; refusal #2 U2, refusal #4 U2(b)), and
+// a reading naming a leaf and a served word
+// (SERVED_WORD, serve in every form; refusal #2 U3) is a served sentence. RESIDUALS, each a named family whose planted
+// quiet rows below are read and stay quiet, each with the named cure that flags them: R-ANAPHORA, the served word in a
+// later sentence that points back to the leaf ("It is served."; cure: a sentence opening with It, This or That is also
+// read after the sentence before it); R-HEADING-SCOPE, the served word in a heading over any block of its section that
+// names the leaf ("## Served leaves" over "- graph impact" or over a table; cure: read each reading of a section after its
+// heading); R-PARAPHRASE, the leaf named in other words ("the impact leaf of rf graph"; cure: read the leaf words in either
+// order within a clause); R-SYNONYM, the claim in other words than serve ("available", "implemented"; cure: widen
+// SERVED_WORD); R-CSS-PRESENTATION, an element a style displays as a block ('graph<span style="display:block">impact</span>';
+// the leg reads HTML by element, never by style; cure: read a block display style as a break); R-UNLISTED-ABBREVIATION,
+// the full stop of an abbreviation outside ABBREVIATIONS (an unlisted one such as "Ref." or "Fig.", a spaced spelling of a
+// listed one such as "e. g.", or an initial such as "J.") before a word that is no CONTINUATION, a capitalized word or a
+// digit ("(Ref. Pi) is served.", "see Fig. 2, is served."; cure: add it to ABBREVIATIONS). Cut #4's residuals (refusal #3;
+// the enumeration case): R-ENCLOSED-STOP, a ".", "!" or "?" inside a parenthetical or quotation still open in its sentence
+// (parentheses, brackets, straight or curly quotation marks, guillemets) before a word that is no CONTINUATION ("(ready?
+// Yes)" and '"Phase 2. Final"', the gate's G30 and G31; cure: keep a unit whole while an enclosure opened in it is open;
+// that cure also reads the frozen R-UNLISTED-ABBREVIATION quiet row "(Ref. Pi)" whole, so curing the family would re-scope
+// a frozen quiet row, and cut #4 names it instead); R-LEAD-IN-ACROSS-CONTAINER, a lead-in that ends a container (a block
+// quote, a list item) over the block after that container (cure: read a reading not ended by ".", "!" or "?" before the
+// reading after it); R-HIDDEN-CONTENT, text a reader never sees, such as the content of a display:none element of the
+// rendering section (script), of an element carrying hidden, or (cut #5, the gate's P07) of an element whose inline style
+// declares display:none or visibility:hidden, glued between the leaf words (cure: drop that content); R-LEAF-SPELLING,
+// the leaf words run together, in camel case, or joined by a slash or a colon ("graph/impact", "graphImpact"; cure: read
+// those spellings as the leaf); R-CONFUSABLE, a letter of another script that renders like a Latin one and that NFKD
+// keeps, such as a Cyrillic or Greek a, e, o, p, c, i, x or y or (cut #5, the gate's P09) an Armenian o (cure: read it as
+// that Latin letter, by CONFUSABLE); R-ELLIPSIS, the served word opening a later sentence whose subject the sentence before
+// names ("The rf graph impact leaf. Served by this build."; cure: read a sentence that opens with the served word after
+// the sentence before it). Cut #5's residuals (refusal #4; the enumeration case): R-RAW-ALT-TEXT, the alt text of a raw
+// HTML img, which the leg reads as white space although it reads a markdown image's alt text, the same rendered view
+// ('graph <img src="x.png" alt="impact"> leaf', the gate's P04; cure: read a raw img as its alt text); R-MARK-IN-NAME, a
+// ".", "!" or "?" that ends a name inside its sentence (Yahoo!, the gate's P06) before a word that is no CONTINUATION
+// (cure: add the name to ABBREVIATIONS); R-MARKED-CONTINUATION, a continuation whose first letter is lower-case but which
+// opens with a digit or with a mark CONTINUATION does not read past (any but the Ps, Pi, Pf and Pd marks, the Dash and
+// Quotation_Mark characters and white space), such as an arrow ("leaf... -> is served" with a U+2192 arrow) or a count
+// ("leaf... 2 builds serve it")
+// (cure: read past every mark and digit before the continuation's first letter).
 const at = (code: number): string => String.fromCodePoint(code);
-/** The named character references the rendered leg decodes; any other named reference is recorded as unreadable. */
+/** The names the rendered leg decodes in a reference closed by ";"; any other closed named reference is recorded as unreadable. */
 const NAMED_REFERENCES: ReadonlyMap<string, string> = new Map([
   ["amp", "&"],
   ["lt", "<"],
@@ -360,6 +395,76 @@ const NAMED_REFERENCES: ReadonlyMap<string, string> = new Map([
   ["semi", ";"],
 ]);
 const REFERENCE = /&(?:#(\d{1,7})|#[xX]([0-9a-fA-F]{1,6})|([A-Za-z][A-Za-z0-9]{1,31}));/g;
+/** The C1 code points the HTML tokenizer's numeric end state remaps, each to its windows-1252 character (&#150; an en dash). */
+const C1_REMAP: ReadonlyMap<number, number> = new Map([
+  [0x80, 0x20ac],
+  [0x82, 0x201a],
+  [0x83, 0x192],
+  [0x84, 0x201e],
+  [0x85, 0x2026],
+  [0x86, 0x2020],
+  [0x87, 0x2021],
+  [0x88, 0x2c6],
+  [0x89, 0x2030],
+  [0x8a, 0x160],
+  [0x8b, 0x2039],
+  [0x8c, 0x152],
+  [0x8e, 0x17d],
+  [0x91, 0x2018],
+  [0x92, 0x2019],
+  [0x93, 0x201c],
+  [0x94, 0x201d],
+  [0x95, 0x2022],
+  [0x96, 0x2013],
+  [0x97, 0x2014],
+  [0x98, 0x2dc],
+  [0x99, 0x2122],
+  [0x9a, 0x161],
+  [0x9b, 0x203a],
+  [0x9c, 0x153],
+  [0x9e, 0x17e],
+  [0x9f, 0x178],
+]);
+/** A numeric reference's character by the HTML tokenizer's numeric end state: U+FFFD for U+0000, a surrogate or a value past U+10FFFF, C1_REMAP's character for a remapped C1 code point, else the code point. */
+const numericReference = (code: number): string =>
+  code === 0 || code > 0x10ffff || (code >= 0xd800 && code <= 0xdfff) ? at(0xfffd) : at(C1_REMAP.get(code) ?? code);
+/** The legacy names from U+00A0 to U+00FF, in code point order. */
+const LATIN1_LEGACY_NAMES: readonly string[] = (
+  "nbsp iexcl cent pound curren yen brvbar sect uml copy ordf laquo not shy reg macr deg plusmn sup2 sup3 acute micro para " +
+  "middot cedil sup1 ordm raquo frac14 frac12 frac34 iquest Agrave Aacute Acirc Atilde Auml Aring AElig Ccedil Egrave Eacute " +
+  "Ecirc Euml Igrave Iacute Icirc Iuml ETH Ntilde Ograve Oacute Ocirc Otilde Ouml times Oslash Ugrave Uacute Ucirc Uuml Yacute " +
+  "THORN szlig agrave aacute acirc atilde auml aring aelig ccedil egrave eacute ecirc euml igrave iacute icirc iuml eth ntilde " +
+  "ograve oacute ocirc otilde ouml divide oslash ugrave uacute ucirc uuml yacute thorn yuml"
+).split(" ");
+/**
+ * The legacy names: the 106 names the HTML named character reference table also lists without a semicolon (the 96 from
+ * U+00A0 to U+00FF, and amp, AMP, lt, LT, gt, GT, quot, QUOT, COPY and REG), which the tokenizer decodes in text whatever
+ * follows them, by name.
+ */
+const LEGACY_REFERENCES: ReadonlyMap<string, string> = new Map<string, string>([
+  ...LATIN1_LEGACY_NAMES.map((name, index): [string, string] => [name, at(0xa0 + index)]),
+  ["amp", "&"],
+  ["AMP", "&"],
+  ["lt", "<"],
+  ["LT", "<"],
+  ["gt", ">"],
+  ["GT", ">"],
+  ["quot", '"'],
+  ["QUOT", '"'],
+  ["COPY", at(0xa9)],
+  ["REG", at(0xae)],
+]);
+const LEGACY_LONGEST = Math.max(...[...LEGACY_REFERENCES.keys()].map(name => name.length));
+/** The longest legacy name `run` opens with, or undefined: the tokenizer matches the longest name it can. */
+function legacyPrefix(run: string): string | undefined {
+  for (let length = Math.min(run.length, LEGACY_LONGEST); length >= 2; length -= 1) {
+    const name = run.slice(0, length);
+    if (LEGACY_REFERENCES.has(name)) return name;
+  }
+  return undefined;
+}
+/** A reference in raw HTML: hexadecimal or decimal digits with an optional semicolon, a closed name of 2 to 32, or a letters-and-digits run. */
+const RAW_REFERENCE = /&(?:#[xX]([0-9a-fA-F]+);?|#(\d+);?|([A-Za-z][A-Za-z0-9]{1,31});|([A-Za-z][A-Za-z0-9]*))/g;
 /** The folded key's rewrites after NFKD and dropping combining marks, in order. */
 const FOLD: ReadonlyArray<readonly [RegExp, string]> = [
   [/\p{Cf}/gu, ""],
@@ -369,11 +474,11 @@ const FOLD: ReadonlyArray<readonly [RegExp, string]> = [
   [/ {2,}/g, " "],
 ];
 /**
- * Raw HTML by the HTML tokenizer's rules (refusal #3 U1(b)), tried in this order at each "<": a comment (<!--> and <!--->
- * are empty, any other runs to the first --> or --!>, an unclosed one to its end); a markup declaration, CDATA section or
- * processing instruction, read as the bogus comment the tokenizer makes of it (<! or <? to the first >); an end tag opener
- * followed by > or by a character other than a letter (to the first >); and a tag, whose name (group 1) runs to white
- * space, "/" or ">" and which then runs to its >, a quoted attribute value read whole (an unclosed tag to its end).
+ * Raw HTML's markup (refusal #3 U1(b)), tried in this order at each "<": a comment (<!--> and <!---> are empty, any other
+ * runs to the first --> or --!>, an unclosed one to its end); a markup declaration, CDATA section or processing
+ * instruction, read as a bogus comment (<! or <? to the first >); an end tag opener followed by > or by a character other
+ * than a letter (to the first >); and a tag, whose name (group 1) runs to white space, "/" or ">" and which then runs to
+ * its first > outside an attribute value its quotation mark closes (an unclosed tag to its end).
  */
 const HTML_MARKUP =
   /<!--(?:-?>|[\s\S]*?(?:--!?>|$))|<[!?][^>]*(?:>|$)|<\/(?:>|[^A-Za-z>][^>]*(?:>|$))|<\/?([A-Za-z][^\t\n\f\r />]*)(?:\s*=\s*(?:"[^"]*"|'[^']*')|[^>])*?(?:>|$)/g;
@@ -393,19 +498,39 @@ const BREAK_ELEMENTS: ReadonlySet<string> = new Set([
   "thead", "title", "tr", "track", "ul", "hgroup", "listing", "plaintext", "xmp", "audio", "button", "canvas", "embed", "image",
   "img", "input", "marquee", "meter", "object", "progress", "select", "svg", "textarea", "video",
 ]);
-/** Raw HTML as a reader sees it (see HTML_MARKUP): a tag of BREAK_ELEMENTS renders one space, any other markup nothing. */
+/** Raw HTML's markup rendered (see HTML_MARKUP): a tag of BREAK_ELEMENTS renders one space, any other markup nothing. */
 const renderHtml = (raw: string): string =>
   raw.replace(HTML_MARKUP, (_markup: string, tag?: string) => (tag !== undefined && BREAK_ELEMENTS.has(tag.toLowerCase()) ? " " : ""));
 const MARKDOWN_PAGE = /\.(?:md|markdown)$/i;
 
-/** `text` with every numeric reference and each NAMED_REFERENCES name decoded; any other named reference stays as written and is recorded in `unknown`. */
+/** Markdown text with each reference of CommonMark's form decoded (numericReference, NAMED_REFERENCES); any other closed named reference stays as written and is recorded in `unknown`. */
 function decodeReferences(text: string, unknown: string[]): string {
   return text.replace(REFERENCE, (whole: string, decimal?: string, hex?: string, name?: string) => {
     const code = decimal !== undefined ? Number.parseInt(decimal, 10) : hex !== undefined ? Number.parseInt(hex, 16) : undefined;
-    if (code !== undefined) return code <= 0x10ffff ? at(code) : whole;
+    if (code !== undefined) return numericReference(code);
     const value = NAMED_REFERENCES.get(name ?? "");
     if (value === undefined) unknown.push(whole);
     return value ?? whole;
+  });
+}
+/**
+ * Raw HTML text (an HTML block, or the text an inline HTML token carries) with its references decoded (refusal #4 U1): a
+ * numeric reference with or without its semicolon and of any length by numericReference, and a letters-and-digits run
+ * that is no closed name of 2 to 32 by the longest legacy name it opens with (the rest of the run as written), each as the
+ * HTML tokenizer decodes it; a closed name of 2 to 32 by NAMED_REFERENCES, any other recorded in `unknown` as written.
+ */
+function decodeRawHtmlReferences(text: string, unknown: string[]): string {
+  return text.replace(RAW_REFERENCE, (whole: string, hex?: string, decimal?: string, closed?: string, run?: string) => {
+    if (hex !== undefined) return numericReference(Number.parseInt(hex, 16));
+    if (decimal !== undefined) return numericReference(Number.parseInt(decimal, 10));
+    if (closed !== undefined) {
+      const value = NAMED_REFERENCES.get(closed);
+      if (value === undefined) unknown.push(whole);
+      return value ?? whole;
+    }
+    const letters = run ?? "";
+    const name = legacyPrefix(letters);
+    return name === undefined ? whole : `${LEGACY_REFERENCES.get(name) ?? ""}${letters.slice(name.length)}`;
   });
 }
 /** The FOLDED KEY of rendered text (see the RENDERED LEG). */
@@ -429,7 +554,7 @@ function inlineText(tokens: readonly Token[], unknown: string[]): string {
   let out = "";
   for (const token of tokens) {
     if (token.type === "checkbox") continue;
-    if (token.type === "html") out += decodeReferences(renderHtml(token.raw), unknown);
+    if (token.type === "html") out += decodeRawHtmlReferences(renderHtml(token.raw), unknown);
     else if (token.type === "br") out += " ";
     else if (token.type === "codespan" || token.type === "escape") out += tokenText(token);
     else if (tokenChildren(token).length > 0) out += inlineText(tokenChildren(token), unknown);
@@ -446,7 +571,7 @@ const readingsOf = (unit: string, whole: boolean): string[] => {
 /** The readings one block token renders (see the RENDERED LEG), in page order. */
 function tokenReadings(token: Token, unknown: string[]): string[] {
   if (token.type === "space" || token.type === "hr" || token.type === "def" || token.type === "checkbox") return [];
-  if (token.type === "html") return readingsOf(decodeReferences(renderHtml(token.raw), unknown), true);
+  if (token.type === "html") return readingsOf(decodeRawHtmlReferences(renderHtml(token.raw), unknown), true);
   if (token.type === "code") return readingsOf(tokenText(token), false);
   if (isTableToken(token)) {
     const header = token.header.map(cell => inlineText(cell.tokens, unknown)).join(" ");
@@ -459,9 +584,9 @@ function tokenReadings(token: Token, unknown: string[]): string[] {
   return readingsOf(children.length > 0 ? inlineText(children, unknown) : decodeReferences(tokenText(token), unknown), false);
 }
 /**
- * The READINGS a run of block tokens renders, in order (see the RENDERED LEG): a paragraph whose last reading is not ended
- * by ".", "!" or "?" is a lead-in, read before every reading of the next block that renders one, and a block that renders
- * none leaves it in place.
+ * The READINGS a run of block tokens renders, in order (see the RENDERED LEG): a paragraph, the text of a list item or an
+ * HTML block whose last reading is not ended by ".", "!" or "?" is a lead-in, read before every reading of the next block
+ * that renders one, and a block that renders none leaves it in place.
  */
 function blockUnits(tokens: readonly Token[], unknown: string[]): string[] {
   const out: string[] = [];
@@ -472,7 +597,7 @@ function blockUnits(tokens: readonly Token[], unknown: string[]): string[] {
     const lead = leadIn;
     const readings = lead === "" ? own : own.map(reading => `${lead} ${reading}`);
     out.push(...readings);
-    const last = token.type === "paragraph" || token.type === "text" ? (readings.at(-1) ?? "") : "";
+    const last = token.type === "paragraph" || token.type === "text" || token.type === "html" ? (readings.at(-1) ?? "") : "";
     leadIn = /[.!?]$/.test(last) ? "" : last;
   }
   return out;
@@ -540,16 +665,19 @@ const headingScopeCure: ResidualCure = sentences => sentences.slice(1).some(sent
 /** R-LEAD-IN-ACROSS-CONTAINER: a reading not ended by ".", "!" or "?" read before the reading after it. */
 const containerLeadInCure: ResidualCure = sentences =>
   sentences.some((sentence, index) => index > 0 && !/[.!?]$/.test(sentences[index - 1] ?? "") && servedLeaf(`${sentences[index - 1]} ${sentence}`));
-/** The content of an element a reader never sees: a display:none element of the rendering section, or one carrying hidden. */
+/**
+ * The content of an element a reader never sees: a display:none element of the rendering section, one carrying hidden, or
+ * (cut #5) one whose inline style declares display:none or visibility:hidden.
+ */
 const HIDDEN_CONTENT =
-  /<(script|style|template|title|head|noembed|noframes|datalist|rp)\b[^>]*>[\s\S]*?<\/\1\s*>|<([A-Za-z][\w-]*)\b[^>]*\shidden\b[^>]*>[\s\S]*?<\/\2\s*>/gi;
+  /<(script|style|template|title|head|noembed|noframes|datalist|rp)\b[^>]*>[\s\S]*?<\/\1\s*>|<([A-Za-z][\w-]*)\b[^>]*\shidden\b[^>]*>[\s\S]*?<\/\2\s*>|<([A-Za-z][\w-]*)\b[^>]*\sstyle\s*=\s*(?:"[^"]*\b(?:display\s*:\s*none|visibility\s*:\s*hidden)\b[^"]*"|'[^']*\b(?:display\s*:\s*none|visibility\s*:\s*hidden)\b[^']*')[^>]*>[\s\S]*?<\/\3\s*>/gi;
 /** R-HIDDEN-CONTENT: the page with that content dropped, then read by the leg. */
 const hiddenContentCure: ResidualCure = (_sentences, page) => blockUnits(marked.lexer(page.replace(HIDDEN_CONTENT, "")), []).some(servedLeaf);
 /** The leaf words run together, in camel case, or joined by a slash or a colon. */
 const LEAF_SPELLING = /\b(?:graph[/:]?(?:impact|candidate)|(?:optic|view)[/:]?list)\b/i;
 /** R-LEAF-SPELLING: a reading naming the leaf in one of those spellings and a served word. */
 const leafSpellingCure: ResidualCure = sentences => sentences.some(sentence => LEAF_SPELLING.test(sentence) && SERVED_WORD.test(sentence));
-/** Cyrillic and Greek letters that render like a Latin one, which NFKD keeps, by the Latin letter. */
+/** Letters of another script that render like a Latin one, which NFKD keeps, by the Latin letter: Cyrillic, Greek and (cut #5) Armenian. */
 const CONFUSABLE: ReadonlyMap<string, string> = new Map([
   [at(0x430), "a"],
   [at(0x435), "e"],
@@ -561,6 +689,7 @@ const CONFUSABLE: ReadonlyMap<string, string> = new Map([
   [at(0x456), "i"],
   [at(0x3b1), "a"],
   [at(0x3bf), "o"],
+  [at(0x585), "o"],
 ]);
 /** R-CONFUSABLE: each reading with those letters read as their Latin letter. */
 const confusableCure: ResidualCure = sentences => sentences.some(sentence => servedLeaf([...sentence].map(letter => CONFUSABLE.get(letter) ?? letter).join("")));
@@ -569,6 +698,30 @@ const SERVED_OPENING = /^serv(?:e|es|ed|ing)\b/i;
 /** R-ELLIPSIS: a reading that opens with the served word read after the reading before it. */
 const ellipsisCure: ResidualCure = sentences =>
   sentences.some((sentence, index) => index > 0 && SERVED_OPENING.test(sentence) && servedLeaf(`${sentences[index - 1]} ${sentence}`));
+// Cut #5 residual cures (refusal #4, rule 19(c)), read over their quiet rows only, like cut #4's; neither leg applies one.
+/** A raw img tag that carries an alt attribute, its value double-quoted, single-quoted or bare. */
+const RAW_ALT_TAG = /<img\b[^>]*?\salt\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+))[^>]*>/gi;
+/** R-RAW-ALT-TEXT: the page with each raw img read as its alt text, as the leg reads a markdown image, then read by the leg. */
+const rawAltTextCure: ResidualCure = (_sentences, page) =>
+  blockUnits(marked.lexer(page.replace(RAW_ALT_TAG, (_tag: string, double?: string, single?: string, bare?: string) => double ?? single ?? bare ?? "")), []).some(
+    servedLeaf,
+  );
+/** R-MARK-IN-NAME: the page's rendered text re-split with `name` (a name that ends in a mark, such as Yahoo!) added to ABBREVIATIONS. */
+const markInNameCure = (name: string): ResidualCure => abbreviationCure(name);
+/** R-MARKED-CONTINUATION: the page's rendered text re-split reading past every mark and digit before a continuation's first letter. */
+const markedContinuationCure: ResidualCure = sentences => splitSentences(sentences.join(" "), ABBREVIATION_END, /^[^\p{L}]*\p{Ll}/u).some(servedLeaf);
+/** The out-of-file roster whose residualRows anchor the residual enumeration's row list (refusal #4 F7). */
+const RESIDUAL_ROSTER = "test/fixtures/docs19-scg-worker-role-roster.json";
+/** Every residual family (R-...) a text names, once each, sorted. */
+const familiesNamed = (text: string): string[] => [...new Set(text.match(/\bR-[A-Z]+(?:-[A-Z]+)*\b/g) ?? [])].sort();
+/** This file's RENDERED LEG comment: the leg's own statement of its rules and of its named residuals. */
+function renderedLegComment(): string {
+  const lines = readFileSync(fileURLToPath(import.meta.url), "utf8").split("\n");
+  const start = lines.findIndex(line => line.startsWith("// RENDERED LEG"));
+  const end = lines.findIndex((line, index) => index > start && !line.startsWith("//"));
+  if (start < 0 || end < 0) throw new Error("this file carries no RENDERED LEG comment");
+  return lines.slice(start, end).join("\n");
+}
 
 describe(WORKER_SUITE, () => {
   it("SCG-R15 R1: the page's block declares exactly one Claude role, whose tools carry Bash and whose prompt names the installed rf skill and SWARM_RF_WORKSPACE", () => {
@@ -815,7 +968,7 @@ describe(NEGATIVES_SUITE, () => {
     ]);
   });
 
-  it("SCG-R15 negative, refusal #2 class guard (U1-U3): br in its five pinned spellings and the pinned block-level tags (p, div, h2, and table, tr and td) read as white space, a listed abbreviation or a lower-case continuation never ends a reader's sentence, and serve, serves, served and serving are the served claim", () => {
+  it("SCG-R15 negative, refusal #2 class guard (U1-U3): br in its five pinned spellings and the pinned block-level tags (p, div, h2, and table, tr and td) read as white space, a listed abbreviation or a stop directly before a lower-case letter (after an ellipsis, a code span's full stop, a question mark in parentheses) never ends a reader's sentence, and serve, serves, served and serving are the served claim", () => {
     const base = plantRoot("scg-r15-class-guard-");
     // (i) Rendered text (refusal #2 U1): a tag a reader sees as white space or a line break, br in five spellings of case,
     // self-closing form and attributes, and a block-level tag met inline, in a paragraph, a table cell or an HTML block
@@ -977,7 +1130,7 @@ describe(NEGATIVES_SUITE, () => {
     ]);
   });
 
-  it("SCG-R15 negative, refusal #3 cures (cut #4): a lead-in is read before every reading of the next block, a table row and an HTML block are judged whole, and raw HTML renders by the HTML tokenizer's rules, so the 27 pinned served plants red and the 4 pinned quiet plants stay quiet", () => {
+  it("SCG-R15 negative, refusal #3 cures (cut #4): the 27 pinned served plants red (a paragraph lead-in over a table, an HTML list, a code block, a quote, a paragraph or a heading, kept across a comment, a link definition and a thematic break and read before each reading of an item; a table row and an HTML table row judged whole; a quoted '>' in an attribute, hgroup, listing, xmp, plaintext, img and button, a processing instruction, a CDATA section and a declaration, an empty comment, a --!> close, a bogus end tag, a stray solidus and the text after a bogus comment's first '>') and the 4 pinned quiet plants stay quiet", () => {
     const base = plantRoot("scg-r15-cut4-cures-");
     // U1(a) lead-in structure (a01 to a05 are the gate's G01 to G05) and the whole table row (a06 is G06), with the further
     // members cut #4 reads: a lead-in over a paragraph or a heading, kept across blocks that render nothing, read before
@@ -1070,7 +1223,97 @@ describe(NEGATIVES_SUITE, () => {
     ]);
   });
 
-  it("SCG-R15 negative, refusal #3 residual enumeration (cut #4, rule 19(c)): R-ENCLOSED-STOP, R-LEAD-IN-ACROSS-CONTAINER, R-HIDDEN-CONTENT, R-LEAF-SPELLING, R-CONFUSABLE and R-ELLIPSIS, with the widened R-UNLISTED-ABBREVIATION and R-HEADING-SCOPE scopes, are read and stay quiet, and each named cure flags its quiet rows", () => {
+  it("SCG-R15 negative, refusal #4 cures (cut #5): the 16 pinned served plants red (in raw HTML a numeric reference without its semicolon, decimal, hexadecimal or of twelve digits, and a legacy named reference without one, by longest match; a C1 numeric reference remapped as the HTML tokenizer remaps it, in raw HTML or in markdown text; the text an inline HTML token carries; an HTML block lead-in over a list or a table; a list item's lead-in over its nested list; a lower-case continuation opened by an opening bracket, a quotation mark or a dash; a markdown image's alt text) and the 4 pinned quiet plants stay quiet", () => {
+    const base = plantRoot("scg-r15-cut5-cures-");
+    // U1 (refusal #4; c01 to c03 are the gate's P01, P01h and P02): in raw HTML, an HTML block or the text an inline HTML
+    // token carries, references decode as the HTML tokenizer decodes them: a numeric reference with or without its
+    // semicolon and of any length, a legacy named reference without one by longest match (gr&aacuteph reads graph), and a
+    // C1 code point remapped by the tokenizer's table (&#150 reads an en dash, which the folded key reads "-"); in markdown
+    // text, where marked passes a terminated reference to the page as written, the C1 remap applies too.
+    plantFile(base, "docs/c01-numeric-no-semicolon.md", "<div>\nThe rf graph&#32impact leaf is served by this build.\n</div>\n");
+    plantFile(base, "docs/c02-hex-no-semicolon.md", "<div>\nThe rf graph&#x20impact leaf is served by this build.\n</div>\n");
+    plantFile(base, "docs/c03-legacy-no-semicolon.md", "<div>\nThe rf graph&nbspimpact leaf is served by this build.\n</div>\n");
+    plantFile(base, "docs/c04-legacy-longest-match.md", "<div>\nThe rf gr&aacuteph impact leaf is served by this build.\n</div>\n");
+    plantFile(base, "docs/c05-raw-c1-remap.md", "<div>\nThe rf graph&#150impact leaf is served by this build.\n</div>\n");
+    plantFile(base, "docs/c06-markdown-c1-remap.md", "The rf graph&#151;impact leaf is served by this build.\n");
+    plantFile(base, "docs/c07-markdown-hex-c1-remap.md", "The rf view&#x96;list leaf is served by this build.\n");
+    plantFile(base, "docs/c08-raw-twelve-digits.md", "<p>The rf graph&#000000000032impact leaf is served by this build.</p>\n");
+    plantFile(base, "docs/c09-inline-raw-text.md", "The rf <?x >graph&#32impact?> leaf is served.\n");
+    // U2(a) (c10 is the gate's P03): an HTML block whose reading is not ended by ".", "!" or "?" leads the next block, as a
+    // paragraph does (c10 renders as the gate's red control G00).
+    plantFile(base, "docs/c10-html-paragraph-lead-in.md", "<p>The leaves this build serves:</p>\n\n- graph impact\n");
+    plantFile(base, "docs/c11-html-div-lead-in.md", "<div>The rf graph impact leaf, by status:</div>\n\n| Status |\n| --- |\n| served |\n");
+    // U2(b) (c12 is the gate's P05): a continuation whose first letter is lower-case after an opening bracket, a quotation
+    // mark or a dash goes on with the sentence before it.
+    plantFile(base, "docs/c12-bracket-continuation.md", "The rf graph impact leaf... (is) served by this build.\n");
+    plantFile(base, "docs/c13-quote-continuation.md", 'The rf optic list leaf... "is" served by this build.\n');
+    plantFile(base, "docs/c14-dash-continuation.md", `The rf view list leaf... ${at(0x2014)} is served by this build.\n`);
+    // F6 (c15 is the gate's P10): a list item's text leads its nested list, the path the gate's falsifier X3 removes.
+    plantFile(base, "docs/c15-list-item-lead-in.md", "- The leaves this build serves:\n  - graph impact\n");
+    // c16 is the gate's P04c: a markdown image's alt text is read (R-RAW-ALT-TEXT names the raw img that renders the same).
+    plantFile(base, "docs/c16-markdown-image-alt.md", "The rf graph ![impact](x.png) leaf is served by this build.\n");
+    // Quiet: an unterminated reference in markdown text, which marked escapes, so a reader sees it as written (the gate's
+    // P01m); a terminated named reference outside NAMED_REFERENCES in raw HTML, recorded; an unterminated name that is no
+    // legacy name, which the tokenizer leaves as written; and an HTML paragraph ended by a full stop, which leads nothing.
+    plantFile(base, "docs/cq1-markdown-unterminated.md", "The rf graph&#32impact leaf is served by this build.\n");
+    plantFile(base, "docs/cq2-raw-unknown-terminated.md", "<div>\nThe rf graph&rarr;impact leaf is served.\n</div>\n");
+    plantFile(base, "docs/cq3-raw-non-legacy-unterminated.md", "<div>\nThe rf graph&rarrimpact leaf is served.\n</div>\n");
+    plantFile(base, "docs/cq4-closed-html-paragraph.md", "<p>The leaves this build serves.</p>\n\n- graph impact\n");
+    const unknown: string[] = [];
+    expect(renderedServedLeafSentences(base, "docs", unknown)).toEqual([
+      "docs/c01-numeric-no-semicolon.md: The rf graph impact leaf is served by this build.",
+      "docs/c02-hex-no-semicolon.md: The rf graph impact leaf is served by this build.",
+      "docs/c03-legacy-no-semicolon.md: The rf graph impact leaf is served by this build.",
+      "docs/c04-legacy-longest-match.md: The rf graph impact leaf is served by this build.",
+      "docs/c05-raw-c1-remap.md: The rf graph-impact leaf is served by this build.",
+      "docs/c06-markdown-c1-remap.md: The rf graph-impact leaf is served by this build.",
+      "docs/c07-markdown-hex-c1-remap.md: The rf view-list leaf is served by this build.",
+      "docs/c08-raw-twelve-digits.md: The rf graph impact leaf is served by this build.",
+      "docs/c09-inline-raw-text.md: The rf graph impact?> leaf is served.",
+      "docs/c10-html-paragraph-lead-in.md: The leaves this build serves: graph impact",
+      "docs/c11-html-div-lead-in.md: The rf graph impact leaf, by status: Status served",
+      "docs/c12-bracket-continuation.md: The rf graph impact leaf... (is) served by this build.",
+      'docs/c13-quote-continuation.md: The rf optic list leaf... "is" served by this build.',
+      "docs/c14-dash-continuation.md: The rf view list leaf... - is served by this build.",
+      "docs/c15-list-item-lead-in.md: The leaves this build serves: graph impact",
+      "docs/c16-markdown-image-alt.md: The rf graph impact leaf is served by this build.",
+    ]);
+    expect(unknown).toEqual(["docs/cq2-raw-unknown-terminated.md: &rarr;"]);
+    // The quiet pages are read: each renders exactly these readings.
+    const read = renderedSentencesBelow(base, "docs", []);
+    const readingsOfPage = (path: string): string[] => read.filter(([page]) => page === path).map(([, sentence]) => sentence);
+    expect(["cq1-markdown-unterminated", "cq2-raw-unknown-terminated", "cq3-raw-non-legacy-unterminated", "cq4-closed-html-paragraph"].map(name => readingsOfPage(`docs/${name}.md`))).toEqual([
+      ["The rf graph&#32impact leaf is served by this build."],
+      ["The rf graph&rarr;impact leaf is served."],
+      ["The rf graph&rarrimpact leaf is served."],
+      ["The leaves this build serves.", "graph impact"],
+    ]);
+    // The source leg shares the sentence units, so it flags the three continuations; it reads references and HTML as the
+    // source spells them, so it flags no other plant.
+    expect(servedLeafSentences(base, "docs")).toEqual([
+      "docs/c12-bracket-continuation.md: The rf graph impact leaf... (is) served by this build.",
+      'docs/c13-quote-continuation.md: The rf optic list leaf... "is" served by this build.',
+      `docs/c14-dash-continuation.md: The rf view list leaf... ${at(0x2014)} is served by this build.`,
+    ]);
+    // The tokenizer's two tables, whole: the 106 legacy names (each decodes in raw HTML without its semicolon) and the 27
+    // C1 remaps; and the numeric end state's other branches: U+0000, a surrogate and a value past U+10FFFF read U+FFFD, the
+    // first and last remapped C1 code points their characters, and a C1 code point the table does not remap itself.
+    expect([LEGACY_REFERENCES.size, C1_REMAP.size]).toEqual([106, 27]);
+    expect([0, 0xd800, 0xdfff, 0x110000, 0x80, 0x9f, 0x81].map(numericReference)).toEqual([
+      at(0xfffd),
+      at(0xfffd),
+      at(0xfffd),
+      at(0xfffd),
+      at(0x20ac),
+      at(0x178),
+      at(0x81),
+    ]);
+    expect(decodeRawHtmlReferences([...LEGACY_REFERENCES.keys()].map(name => `&${name} `).join(""), [])).toBe(
+      [...LEGACY_REFERENCES.values()].map(value => `${value} `).join(""),
+    );
+  });
+
+  it("SCG-R15 negative, residual enumeration (rule 19(c); cut #4 for refusal #3, cut #5 for refusal #4): R-ENCLOSED-STOP, R-LEAD-IN-ACROSS-CONTAINER, R-HIDDEN-CONTENT, R-LEAF-SPELLING, R-CONFUSABLE, R-ELLIPSIS, R-RAW-ALT-TEXT, R-MARK-IN-NAME and R-MARKED-CONTINUATION, with the widened R-UNLISTED-ABBREVIATION, R-HEADING-SCOPE, R-HIDDEN-CONTENT and R-CONFUSABLE scopes, are read and stay quiet, each named cure flags its quiet rows, and the out-of-file roster, this title and the RENDERED LEG comment anchor the row list", ({ task }) => {
     const base = plantRoot("scg-r15-cut4-residual-");
     // [family, page path, page text, the page's rendered sentences, the family's named cure]
     const ROWS: ReadonlyArray<readonly [string, string, string, readonly string[], ResidualCure]> = [
@@ -1099,6 +1342,32 @@ describe(NEGATIVES_SUITE, () => {
       ["R-LEAF-SPELLING", "docs/r-leaf-spelling-camel.md", "The rf graphImpact leaf is served.", ["The rf graphImpact leaf is served."], leafSpellingCure],
       ["R-CONFUSABLE", "docs/r-confusable.md", `The rf gr${at(0x430)}ph impact leaf is served.`, [`The rf gr${at(0x430)}ph impact leaf is served.`], confusableCure],
       ["R-ELLIPSIS", "docs/r-ellipsis.md", "The rf graph impact leaf. Served by this build.", ["The rf graph impact leaf.", "Served by this build."], ellipsisCure],
+      // Cut #5 (refusal #4): R-RAW-ALT-TEXT (the gate's P04), R-MARK-IN-NAME (P06) and R-MARKED-CONTINUATION, and the
+      // widened R-HIDDEN-CONTENT (P07, an inline style) and R-CONFUSABLE (P09, an Armenian letter) scopes.
+      ["R-RAW-ALT-TEXT", "docs/r-raw-alt-text.md", 'The rf graph <img src="x.png" alt="impact"> leaf is served by this build.', ["The rf graph leaf is served by this build."], rawAltTextCure],
+      [
+        "R-MARK-IN-NAME",
+        "docs/r-mark-in-name.md",
+        "The rf graph impact leaf is, per the Yahoo! Search team, served by this build.",
+        ["The rf graph impact leaf is, per the Yahoo!", "Search team, served by this build."],
+        markInNameCure("Yahoo!"),
+      ],
+      [
+        "R-MARKED-CONTINUATION",
+        "docs/r-marked-continuation-arrow.md",
+        `The rf graph impact leaf... ${at(0x2192)} is served by this build.`,
+        ["The rf graph impact leaf...", `${at(0x2192)} is served by this build.`],
+        markedContinuationCure,
+      ],
+      ["R-MARKED-CONTINUATION", "docs/r-marked-continuation-digit.md", "The rf view list leaf... 2 builds serve it.", ["The rf view list leaf...", "2 builds serve it."], markedContinuationCure],
+      [
+        "R-HIDDEN-CONTENT",
+        "docs/r-hidden-style.md",
+        'The rf graph<span style="display:none">x</span> impact leaf is served by this build.',
+        ["The rf graphx impact leaf is served by this build."],
+        hiddenContentCure,
+      ],
+      ["R-CONFUSABLE", "docs/r-confusable-armenian.md", `The rf ${at(0x585)}ptic list leaf is served by this build.`, [`The rf ${at(0x585)}ptic list leaf is served by this build.`], confusableCure],
     ];
     for (const [, path, page] of ROWS) plantFile(base, path, `${page}\n`);
     plantFile(base, "docs/control.md", "The rf graph impact leaf is served.\n");
@@ -1122,6 +1391,12 @@ describe(NEGATIVES_SUITE, () => {
       "R-LEAF-SPELLING docs/r-leaf-spelling-camel.md",
       "R-CONFUSABLE docs/r-confusable.md",
       "R-ELLIPSIS docs/r-ellipsis.md",
+      "R-RAW-ALT-TEXT docs/r-raw-alt-text.md",
+      "R-MARK-IN-NAME docs/r-mark-in-name.md",
+      "R-MARKED-CONTINUATION docs/r-marked-continuation-arrow.md",
+      "R-MARKED-CONTINUATION docs/r-marked-continuation-digit.md",
+      "R-HIDDEN-CONTENT docs/r-hidden-style.md",
+      "R-CONFUSABLE docs/r-confusable-armenian.md",
     ]);
     // Each quiet row's page is read (it renders exactly its pinned sentences), and only the control reds, on both legs.
     const read = renderedSentencesBelow(base, "docs", []);
@@ -1132,5 +1407,15 @@ describe(NEGATIVES_SUITE, () => {
     // Each family's named cure flags every quiet row of its family (the quiet inputs are members), and the leg flags none.
     expect(ROWS.map(([family, path, page, , cure]) => `${family} ${path}:${cure(sentencesOfPage(path), page)}`)).toEqual(ROWS.map(([family, path]) => `${family} ${path}:true`));
     expect(ROWS.map(([family, path]) => `${family} ${path}:${sentencesOfPage(path).some(servedLeaf)}`)).toEqual(ROWS.map(([family, path]) => `${family} ${path}:false`));
+    // The row list's anchors outside this case's literals (refusal #4 F7, the rule 16 CT5/CT6 kill shape): the out-of-file
+    // roster's residualRows equal it row for row, the families this title names are exactly its families, and the families
+    // the RENDERED LEG comment names are exactly those the residual cases' titles name, so a row deleted from ROWS and from
+    // the row-list literal above, or a family deleted from every literal here, still reds.
+    const roster: unknown = JSON.parse(readFileSync(join(ROOT, RESIDUAL_ROSTER), "utf8"));
+    const rosterRows: unknown = roster !== null && typeof roster === "object" && "residualRows" in roster ? roster.residualRows : undefined;
+    expect(ROWS.map(([family, path]) => `${family} ${path}`), `${RESIDUAL_ROSTER} residualRows, the anchor outside this file`).toEqual(rosterRows);
+    expect(familiesNamed(ROWS.map(([family]) => family).join(" "))).toEqual(familiesNamed(task.name));
+    const residualTitles = (task.suite?.tasks ?? []).map(sibling => sibling.name).filter(name => /\bresiduals?\b/.test(name));
+    expect(familiesNamed(renderedLegComment())).toEqual(familiesNamed(residualTitles.join(" ")));
   });
 });
