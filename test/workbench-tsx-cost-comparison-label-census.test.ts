@@ -28,13 +28,19 @@
  * - COVERAGE (wb-3or6, the landing-306 follow-up): every real-tree scan carries known positives in the SAME pass and must
  *   find exactly them - the live pass (A3) the exempt pair's own claims, the d75b68d judgment (A4) two in-memory claim texts,
  *   the writer scan (C3) the five control writes, the fixture-copy scan (B1) two planted copy paths - so a pass that reads
- *   nothing reds, and so does any finding the real tree adds. Each pass also returns what it visited, and its witness pins
- *   the visit: the live pass read exactly the listed files, at A1's per-root floors and a sentence floor; the d75b68d pass
- *   judged exactly the files and sentences the roster holds (an immutable tree, so exact counts); the writer pass parsed
- *   every src module git lists and examined their write calls (at a floor); the copy pass examined the git listing (at a
- *   floor of 650 paths). The same scan function then runs over a scratch git repository (git init, files left untracked,
- *   so gitList reads it as it reads Pi's tree) holding plants it must find, so a scan that reads less than the tree also
- *   reds.
+ *   nothing reds, and so does any finding the real tree adds. Each pass also returns what it visited, counted as it visits,
+ *   and its witness pins the visit: the live pass read exactly the listed files, at A1's per-root floors and a sentence
+ *   floor; the d75b68d pass judged exactly the files and sentences the roster holds (an immutable tree, so exact counts);
+ *   the writer pass parsed every src module git lists and examined their write calls (at a floor of 15); the copy pass
+ *   examined the git listing (at a floor of 650 paths). The same scan function then runs over a scratch git repository
+ *   (git init, files left untracked, so gitList reads it as it reads Pi's tree) holding plants it must find, so a scan that
+ *   reads less than the tree also reds.
+ * - EXACT COVERAGE (wb-vp5l, the landing-398 follow-up): a floor alone admits a partial read above it, so every moving count
+ *   of a real-tree pass is also held equal to a recount made outside the pass, from a fresh git listing and a fresh read of
+ *   each file: the live pass's listing equals a fresh gitList and the sentences it judged equal a per-file recount of that
+ *   listing (A3); the copy pass examined exactly a fresh gitList plus the two plants (B1); the write calls the writer pass
+ *   examined equal an independent count of the write calls in a fresh read of every src module (C3). The floors stay, so an
+ *   equality between two empty readings still reds.
  * - SENTENCE: a file's text cut after ".", "!", "?" or ";" before white space or the line end, at a blank line, around a line
  *   opening a table row ("|"), in a .md file before a line opening a list item, and in a data file (.json, .jsonl, .yaml,
  *   .yml, .toml) at every line end, so one key and its value are one sentence. A code comment's wrapped lines stay one.
@@ -52,7 +58,10 @@
  *   PATH, the injected registry, the curated MCP reply and the shared JSON sanitizer and its text form) and VIEWER
  *   (src/ui/conversation-viewer.ts, Pi's Markdown renderer, with the markdown mode on and off). The producer's file does not
  *   exist, so the document is a CONSTRUCTED STAND-IN that says so; B1 pins that no copy named after the gating files exists
- *   in Pi's tree while the gate reads ABSENT, so the real copy arrives only by a re-cut.
+ *   in Pi's tree while the gate reads ABSENT, so the real copy arrives only by a re-cut. B3 reads every carrier's render of
+ *   each producer label, with the next label as the label-axis control; the two R-DISPLAY-GAPS labels are its carrier-axis
+ *   negative rows (wb-vp5l): the carriers that render a gap do not hold them byte for byte, so a cell that reads the input
+ *   document instead of its carrier's render reds.
  * - (c) REFRESH PATH: Pi has no rf/TSX skill copy installed; its only skill reader is preloadSkills, called only by
  *   src/agent-runner.ts on each run; it re-reads the installed file every call (no cache), its only transform is trim, and no
  *   src module writes into a skill root (a writer scan over every src module, with planted positive controls).
@@ -67,15 +76,23 @@
  * ROOTS AND MARKERS, ANCHORED OUTSIDE THIS FILE (wb-3or6): the filing's shipped-status sentence names the trees it grepped
  * (docs, src and test) and the skill root it found absent (.claude/skills), and each must be scanned (the judged set);
  * src/skill-loader.ts names the project skill roots Pi loads from (its join(cwd, ...) calls), and each must be scanned
- * (A1); every top-level directory git tracks must be a scanned root or a named outside directory, so a dropped root or a
- * new top-level directory reds (A1). The statement gates its claim with one word followed by a condition ("until the
- * producer publishes it with measured evidence"): that gating word must admit the statement's own claim, and no word of
- * the condition may be a marker - each, appended to the claim as a qualifier, keeps it a finding (the judged set).
+ * (A1); every top-level directory git tracks must be a scanned root or a named outside directory, so a root dropped from
+ * both lists or a new top-level directory reds (A1). SHIPPED ROOTS (wb-vp5l): the packaged artifact's boundary
+ * (qa/workbench/package-boundary.mjs TOP_LEVEL_ALLOWLIST) names what Pi ships, and every top-level directory it admits that
+ * git tracks must be scanned, except the directory package.json's file: dependencies resolve into (vendor/, where the
+ * vendored SDK tarballs live, an R-OUTSIDE-ROOTS member), so a shipped root such as qa or examples reclassified as outside in
+ * this file and the roster together still reds (A1). The statement gates its claim with one word followed by a condition
+ * ("until the producer publishes it with measured evidence"): that gating word must admit the statement's own claim, and no
+ * word of the condition may be a marker - each, appended to the claim as a qualifier, keeps it a finding (the judged set).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; rows, vocabulary, constants and every pin's
  * witness are held to the out-of-file roster (test/fixtures/tsx-cost-comparison-label-roster.json); a last case reads that
  * every pin ran to its witness. Not claimed: a family alternative or inflection that the bead text never spells (for example
  * reactivefibercli, benchmark or finished) removed from the vocabulary, the roster and A2's probe together; a marker word the
- * statement's condition never spells (for example verified) added to the vocabulary and the roster together.
+ * statement's condition never spells (for example verified) added to the vocabulary and the roster together; a primitive
+ * that a pass and its recount share (gitList, sentences, WRITE_APIS) hollowed for both sides of an EXACT COVERAGE equality at
+ * once (A1's walk, A2's cutter rows, A4's exact counts at d75b68d and C3's five controls read those primitives too); a pass
+ * that visits a path, a sentence or a write call and then drops its verdict (the EXACT COVERAGE counts are visits, not
+ * verdicts; the in-pass positives and the replica plants judge verdicts only where they sit).
  * RESIDUALS (named; each has a pinned quiet row): R-OUTSIDE-ROOTS (A1) a claim in new-feedback/, vendor/, media/, .beads/,
  *   dist/, node_modules/, .codex/ or .github/, in a root file that is not a .md page (package.json, forge.toml, LICENSE and
  *   the like), or in one of the three user-level skill roots src/skill-loader.ts reads (getAgentDir()/skills,
@@ -109,6 +126,7 @@ import { Client } from "@modelcontextprotocol/sdk/client/index.js";
 import { InMemoryTransport } from "@modelcontextprotocol/sdk/inMemory.js";
 import ts from "typescript";
 import { afterAll, afterEach, describe, expect, it } from "vitest";
+import { TOP_LEVEL_ALLOWLIST } from "../qa/workbench/package-boundary.mjs";
 import { buildAgentPrompt } from "../src/prompts.js";
 import { preloadSkills } from "../src/skill-loader.js";
 import type { AgentConfig, AgentRecord, EnvInfo } from "../src/types.js";
@@ -255,10 +273,15 @@ function sentences(text: string, kind: TextKind): { readonly line: number; reado
   flush();
   return out;
 }
-/** One file's judgment: its findings and the number of sentences it judged (the scan's own coverage). */
+/** One file's judgment: its findings and the number of sentences it judged (the scan's own coverage, counted as it judges). */
 function survey(path: string, text: string): { readonly findings: string[]; readonly sentences: number } {
-  const cut = sentences(text, kindOf(path));
-  return { findings: cut.flatMap(sentence => { const found = verdict(sentence.text); return found === null ? [] : [`${path}:${sentence.line} ${found}`]; }), sentences: cut.length };
+  let judged = 0;
+  const findings = sentences(text, kindOf(path)).flatMap(sentence => {
+    judged += 1;
+    const found = verdict(sentence.text);
+    return found === null ? [] : [`${path}:${sentence.line} ${found}`];
+  });
+  return { findings, sentences: judged };
 }
 function judgeText(path: string, text: string): string[] {
   return survey(path, text).findings;
@@ -342,9 +365,18 @@ function liveScan(base: string): Pass {
 }
 /** A pass's findings outside the exempt pair (the guard's input; the replica runs it too). */
 const outside = (pass: Pass): string[] => pass.findings.filter(finding => ownerOf(finding) === undefined);
-/** The fixture-copy scan over a listing: every path whose file name is a gating file's, with how many paths it examined. */
+/** The sentences of `paths` recounted outside any pass (wb-vp5l): each file read afresh and cut, nothing judged. */
+function sentenceRecount(base: string, paths: readonly string[]): number {
+  return paths.reduce((total, path) => total + sentences(readFileSync(join(base, path), "utf8"), kindOf(path)).length, 0);
+}
+/** The fixture-copy scan over a listing: every path whose file name is a gating file's, with how many paths it examined (counted as it examines). */
 function copiesAmong(listing: readonly string[]): { readonly copies: string[]; readonly examined: number } {
-  return { copies: listing.filter(path => CONSTANTS.gate.files.includes(path.slice(path.lastIndexOf("/") + 1))), examined: listing.length };
+  let examined = 0;
+  const copies = listing.filter(path => {
+    examined += 1;
+    return CONSTANTS.gate.files.includes(path.slice(path.lastIndexOf("/") + 1));
+  });
+  return { copies, examined };
 }
 /** The top-level directories git tracks: the repository's own listing, which the scanned and outside roots must partition. */
 function trackedTopDirectories(base: string): string[] {
@@ -366,6 +398,11 @@ function loaderRoots(): string[] {
   };
   visit(source);
   return roots;
+}
+/** The top-level directories package.json's file: dependencies resolve into (where the vendored SDK tarballs live). */
+function vendoredDirectories(): string[] {
+  const manifest = JSON.parse(readFileSync(join(REPO, "package.json"), "utf8")) as { readonly dependencies?: Readonly<Record<string, string>> };
+  return [...new Set(Object.values(manifest.dependencies ?? {}).filter(spec => spec.startsWith("file:")).map(spec => spec.slice("file:".length).split("/")[0] ?? ""))].sort(byName);
 }
 function gateOf(entries: readonly TreeEntry[]): Gate {
   const blobs = new Set(entries.filter(entry => entry.kind === "blob").map(entry => entry.path));
@@ -616,6 +653,21 @@ function writerPass(sources: readonly (readonly [string, string])[]): { readonly
   }
   return { hits, parsed, examined };
 }
+/** The write calls in `sources` counted outside the writer pass (wb-vp5l): a walk of its own, every call naming a write API, no skill predicate. */
+function writeCallCount(sources: readonly (readonly [string, string])[]): number {
+  let count = 0;
+  for (const [path, text] of sources) {
+    const visit = (node: ts.Node): void => {
+      if (ts.isCallExpression(node)) {
+        const callee = node.expression;
+        if (WRITE_APIS.has(ts.isIdentifier(callee) ? callee.text : ts.isPropertyAccessExpression(callee) ? callee.name.text : "")) count += 1;
+      }
+      ts.forEachChild(node, visit);
+    };
+    visit(ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS));
+  }
+  return count;
+}
 function imports(path: string, text: string): string[] {
   const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   return source.statements.flatMap(statement => (ts.isImportDeclaration(statement) && ts.isStringLiteral(statement.moduleSpecifier) ? [statement.moduleSpecifier.text] : []));
@@ -663,6 +715,12 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     // outside directory, and every project skill root src/skill-loader.ts loads from is scanned.
     const trackedTop = trackedTopDirectories(REPO);
     expect(trackedTop.filter(name => !CONSTANTS.roots.includes(name) && !CONSTANTS.outside.includes(name))).toEqual([]);
+    // The shipped roots, anchored outside this file (wb-vp5l): every tracked top-level directory the packaged artifact ships
+    // (qa/workbench/package-boundary.mjs TOP_LEVEL_ALLOWLIST) is scanned, except the directory package.json's file:
+    // dependencies resolve into (vendor/, an R-OUTSIDE-ROOTS member), so a shipped root reclassified as outside reds.
+    const shipped = trackedTop.filter(name => TOP_LEVEL_ALLOWLIST.includes(name));
+    const vendored = vendoredDirectories();
+    expect(shipped.filter(name => !vendored.includes(name) && !CONSTANTS.roots.includes(name))).toEqual([]);
     const loaded = loaderRoots();
     const projectSkillRoots = loaded.filter(root => root.startsWith("cwd/")).map(root => root.slice("cwd/".length));
     expect(projectSkillRoots.length).toBeGreaterThan(0);
@@ -686,7 +744,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       whenRead: judgeFiles(home, Object.values(USER_PLANTS)).findings,
       livePass: liveScan(project).findings,
     }));
-    return { roots: Object.fromEntries(CONSTANTS.roots.map(root => [root, existsSync(join(REPO, root))])), floorsMet, anchorsListed: anchors.filter(path => !listed.includes(path)), walkAgreesWithGit, links: walked.links, unreadable, outsideQuiet, replicaFiles: replicaWalk.files, trackedTop, loaderRoots: loaded, outsideWhenRead, userLevel };
+    return { roots: Object.fromEntries(CONSTANTS.roots.map(root => [root, existsSync(join(REPO, root))])), floorsMet, anchorsListed: anchors.filter(path => !listed.includes(path)), walkAgreesWithGit, links: walked.links, unreadable, outsideQuiet, replicaFiles: replicaWalk.files, trackedTop, shipped, vendored, loaderRoots: loaded, outsideWhenRead, userLevel };
   },
   A2: async () => {
     const spellings = [
@@ -734,7 +792,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(live.findings).toEqual(pair);
     expect(outside(live)).toEqual([]);
     const exemptionsLoadBearing = CONSTANTS.exempt.map(path => (live.exempt[path] ?? 0) > 0);
-    const coverage = { readAll: JSON.stringify(live.read) === JSON.stringify(live.listed) && live.unreadable.length === 0, floorsMet: floorsMetBy(live.read), sentencesFloorMet: live.sentences >= SENTENCE_FLOOR };
+    // Exact coverage (wb-vp5l): the listing equals a fresh git listing and the sentences judged equal a recount of it made
+    // outside the pass, so a partial read above the floors reds; the floors stay as non-vacuity guards.
+    const listing = gitList(REPO);
+    const coverage = { readAll: JSON.stringify(live.read) === JSON.stringify(live.listed) && live.unreadable.length === 0, floorsMet: floorsMetBy(live.read), sentencesFloorMet: live.sentences >= SENTENCE_FLOOR, listedAll: JSON.stringify(live.listed) === JSON.stringify(listing), sentencesAll: live.sentences === sentenceRecount(REPO, listing) };
     const plants: readonly (readonly [string, string])[] = [
       ["docs/workbench/plant.md", PLANT],
       ["src/workbench/plant.ts", 'const label = "TSX-PF-05: done";'],
@@ -788,13 +849,15 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       ["case-variant", [...tree, at(md.toUpperCase(), "blob"), at(json.toUpperCase(), "blob")]],
       ["root-level", [...tree, at(md, "blob", "docs/perf"), at(json, "blob", "docs/perf")]],
     ];
-    // ONE pass over the listing and two planted copy paths (wb-3or6): it must find exactly the planted pair.
+    // ONE pass over the listing and two planted copy paths (wb-3or6): it must find exactly the planted pair, and it must have
+    // examined exactly a fresh git listing plus the plants (wb-vp5l), so a partial listing above the floor of 650 reds.
     const planted = [`test/fixtures/${md}`, `${CONSTANTS.gate.directory}/${json}`];
     const pass = copiesAmong([...gitList(REPO), ...planted]);
     expect(pass.copies).toEqual(planted);
+    const examinedAll = pass.examined === gitList(REPO).length + planted.length;
     // The same scan over a scratch git repository holding two copies named after the gating files and three near names.
     const mirror = copiesAmong(gitList(gitReplica("csbt4-copies-", { [`test/fixtures/${md}`]: "copy\n", [`${CONSTANTS.gate.directory}/${json}`]: "{}\n", [`test/fixtures/${md.toUpperCase()}`]: "case variant\n", [`test/fixtures/${md}.bak`]: "suffixed\n", [`docs/${md.replace(".md", "-notes.md")}`]: "longer name\n" })));
-    return { pin: gateOf(tree), programs: tree.filter(entry => entry.kind === "tree" && /^docs\/perf\/programs\/[^/]+$/.test(entry.path)).map(entry => entry.path), present: gateOf(both), nearMisses: Object.fromEntries(nearMisses.map(([name, entries]) => [name, gateOf(entries)])), fixtureCopies: pass.copies.filter(path => !planted.includes(path)), fixtureScan: { examinedFloorMet: pass.examined - planted.length >= 650 }, replicaCopies: mirror.copies };
+    return { pin: gateOf(tree), programs: tree.filter(entry => entry.kind === "tree" && /^docs\/perf\/programs\/[^/]+$/.test(entry.path)).map(entry => entry.path), present: gateOf(both), nearMisses: Object.fromEntries(nearMisses.map(([name, entries]) => [name, gateOf(entries)])), fixtureCopies: pass.copies.filter(path => !planted.includes(path)), fixtureScan: { examinedFloorMet: pass.examined - planted.length >= 650, examinedAll }, replicaCopies: mirror.copies };
   },
   B2: async () => {
     const doc = standIn(BASE_LABEL);
@@ -817,10 +880,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       // carry, holds it nowhere (the last display cell is the label layout's identity on that label, so it stays true).
       matrix[label] = { ...holds(label), foreign: holds(LABELS[(index + 1) % LABELS.length] ?? "") };
     }
+    const gapLabels = ["Status:  partial, two spaces", "Status:\tpartial, one tab"];
+    // Carrier-axis negative rows (wb-vp5l): each R-DISPLAY-GAPS label read through the same reader over its own document. The
+    // carriers that render a gap do not hold it byte for byte, so a cell that reads the input document reds here.
+    for (const label of gapLabels) matrix[label] = (await holdersOf(standIn(label)))(label);
     // R-DISPLAY-GAPS quiet row: a run of spaces or a tab in the label line is rendered as a gap by the display layouts and the
     // shared JSON sanitizer (bytes change, words do not); the byte carriers keep it.
     const gaps: Record<string, JsonValue> = {};
-    for (const label of ["Status:  partial, two spaces", "Status:\tpartial, one tab"]) {
+    for (const label of gapLabels) {
       const carried = await rfCarried(standIn(label));
       gaps[label] = { label: carriage(label, sanitizeWorkbenchText(label, WORKBENCH_TEXT_LIMIT, "label")), text: carriage(label, sanitizeWorkbenchText(label, WORKBENCH_TEXT_LIMIT, "text")), rf: Object.fromEntries(Object.entries(carried).map(([name, value]) => [name, value.output.includes(label)])) };
     }
@@ -920,7 +987,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     // and a test module writing into a skill root (outside src) are not.
     const plant = 'writeFileSync(join(cwd, ".agents", "skills", "rf", "SKILL.md"), label);\n';
     const mirror = writerPass(srcSources(gitReplica("csbt4-writers-", { "src/plant.ts": plant, "src/quiet.ts": 'writeFileSync(join(cwd, "out.txt"), text);\n', "test/plant.ts": plant })));
-    const scanned = { parsedAll: JSON.stringify(pass.parsed) === JSON.stringify([...srcModules(), ...named.map(([path]) => path)]), modulesFloorMet: pass.parsed.length - named.length >= 100, examinedFloorMet: pass.examined - alone.examined >= 15 };
+    // Exact coverage (wb-vp5l): the write calls the pass examined equal an independent count over a fresh read of every src
+    // module, so a pass that skips write calls above the floor of 15 reds; the floors stay as non-vacuity guards.
+    const scanned = { parsedAll: JSON.stringify(pass.parsed) === JSON.stringify([...srcModules(), ...named.map(([path]) => path)]), modulesFloorMet: pass.parsed.length - named.length >= 100, examinedFloorMet: pass.examined - alone.examined >= 15, examinedAll: pass.examined - alone.examined === writeCallCount(srcSources(REPO)) };
     return { trimOnly, writers: pass.hits.filter(hit => !alone.hits.includes(hit)), controls, quiet, scanned, replica: mirror };
   },
 };

@@ -48,8 +48,10 @@
  *    Pi reads names those producers, are never read. E2 a lexical scan of every src module (literals and identifiers, camelCase split)
  *    finds no H2 record term and no distinctive state word, with a floor and three anchors (the observer, the registry,
  *    telemetry.ts) scanned and quiet. E1's and E2's walks each equal an independent recursive listing of src (node:fs readdirSync
- *    recursive, not filesBelow), so a walk narrowed by a subtree or a file reds whatever the floor's margin. E3 the detector's
- *    controls: flagged lines (every term and word flags one), quiet lines and the residuals' quiet rows.
+ *    recursive, not filesBelow) and git's own listing of src (GIT_LISTING, a roster constant: tracked or untracked files, ignored
+ *    ones included, regular files only), so a walk narrowed by a subtree or a file reds whatever the floor's margin, and so does a
+ *    walk narrowed together with the in-file listing. E3 the detector's controls: flagged lines (every term and word flags one),
+ *    quiet lines and the residuals' quiet rows.
  * MEASURED PRODUCER FACTS (roster `producers`, read-only git show on the local checkouts, 2026-10-23): the program README at the four
  * pins the epic wb-4nut names (FiberOpticsSDK e803f66c5fb9, ReactiveFiberTSXSDK 76bbbffd9d4a, ReactiveInferenceSDK 485f3615db1e,
  * ReactiveLensesSDK bfe1f4ac7fa0), its blob and every line the filing cites (FO 25, 27, 35, 36, 44, 47; TSX 37, 48; RI 23, 24, 34,
@@ -72,13 +74,18 @@
  * holds that end, so a registration case that returns early or skips itself at run time reds after it has run. The judge reads
  * which cases were selected to run from the collected tree before the first case runs (beforeEach, once): under a test-name filter
  * that deselects the registration case it holds nothing.
+ * THE WALK ANCHOR (wb-cd1r, the landing-400 gate's F1: filesBelow and the in-file listing narrowed by the same subtree, src/workflow,
+ * kept the census green, the two equal and the walk above the floor): the in-file listing is this file's own code, so it binds a
+ * walk narrowed alone, never one narrowed with it; git's listing comes from git's own walk of the checkout, so a walk and the
+ * in-file listing narrowed together still differ from it, and its arguments are held to the roster, so a narrowed pathspec reds.
  * Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the filing anchors rows, clauses and words, not
  * pins); an assertion removed from this file together with its pinned count in the roster; the file-end judge or the selection it
  * reads removed (no claim rides them alone: the registration case still holds the record); every case of the file skipped at once
  * (no case runs to read the tree, and vitest runs no hook for a file with nothing to run); the native provider seam
  * (providers/reactivefiber.ts isPreviewEnvelope, which refuses the same committed shapes before a reading exists) and the control
  * adapters' executions (claude-control.ts, detached-control.ts: their exported outcome tables are read here, their suites execute
- * them).
+ * them); this file's filter of git's output narrowed together with both walks by the same path (an edit of all three sites that
+ * no in-file check reads).
  * RESIDUALS (named families, each with a pinned quiet row): R-FOREIGN-VALUE the observer knows rf's two observed words only, so a
  * producer VALUE reads not observed, verbatim (A1's VALUE reading); R-LISTED-FOUR the observations note lists at most four distinct
  * words, a fifth is counted and marked, never renamed (A2's five-word note); R-REFUSED-FLAG a missing flag is refused rather than
@@ -93,10 +100,11 @@
  * spells a record term or state word: the reader FO-H2-02/03, TSX-H2-04, RI-H2-04/05 or RL-H2-04 calls for reds this census first,
  * and its cut re-pins (a) to (d) at that reader's own display.
  *
- * Display paths added: none. Test-only: no file is written and no process is spawned; src, package.json, node_modules' directory
- * names and the tracker export are only read.
+ * Display paths added: none. Test-only: no file is written and the one process spawned is `git ls-files` (a read-only listing below
+ * src); src, package.json, node_modules' directory names and the tracker export are only read.
  */
-import { type Dirent, readdirSync, readFileSync } from "node:fs";
+import { execFileSync } from "node:child_process";
+import { type Dirent, lstatSync, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
@@ -181,6 +189,9 @@ const STATE = new RegExp(`(?<![A-Za-z0-9])(?:${STATE_WORDS.join("|")})(?![A-Za-z
 const ANCHORS: readonly string[] = ["src/workbench/reactivefiber-observer.ts", "src/workbench/capability-registry.ts", "src/workbench/telemetry.ts"];
 /** Sits below the count measured at base 282caa0: 115 src files, every one a .ts module. */
 const MODULE_FLOOR = 100;
+/** The listing E1's and E2's walks are also held to (wb-cd1r): git's own list of the files below src, tracked or untracked with
+ * ignored ones included, so it names every file the walk reads, from a walk this file does not compute. */
+const GIT_LISTING: readonly string[] = ["ls-files", "-z", "--cached", "--others", "--"];
 const RESIDUAL_FAMILIES: readonly string[] = [
   "R-FOREIGN-VALUE", "R-LISTED-FOUR", "R-REFUSED-FLAG", "R-OPTIONAL-COMMIT-SEQ", "R-READ-TIMEOUT", "R-COUNT-NOT-WORD", "R-COMPOSED",
   "R-GENERIC-WORD", "R-COMMENT",
@@ -603,6 +614,20 @@ function listedSrc(): string[] {
     .map(entry => relative(REPO, join(entry.parentPath, entry.name)).split("\\").join("/"))
     .sort();
 }
+/** Whether a repo-relative path is a regular file now (a symlink, a directory or a vanished path is not). */
+function regularFile(path: string): boolean {
+  try {
+    return lstatSync(join(REPO, path)).isFile();
+  } catch {
+    return false;
+  }
+}
+/** Every regular file git lists below src (GIT_LISTING), sorted: read from git, never from a walk of this file, so a walk and the
+ * in-file listing narrowed together still differ from it; a tracked path deleted from the checkout is no file. */
+function gitListedSrc(): string[] {
+  const out = execFileSync("git", [...GIT_LISTING, "src"], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 });
+  return [...new Set(out.split("\0").filter(path => path !== "" && regularFile(path)))].sort();
+}
 function walkedFiles(modules: readonly { readonly file: string }[]): string[] {
   return modules.map(({ file }) => file).sort();
 }
@@ -832,7 +857,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const installed = installedPackages().filter(name => H2_PACKAGE.test(name));
     const modules = srcModules();
     const listed = listedSrc();
+    const gitListed = gitListedSrc();
     expect(walkedFiles(modules), "E1's walk is every file below src (an independent recursive listing)").toEqual(listed);
+    expect(walkedFiles(modules), "E1's walk is every file git lists below src (tracked or untracked, ignored ones included)").toEqual(gitListed);
     const named = modules.flatMap(({ file, items }) => items.filter(item => H2_PACKAGE.test(item)).map(item => `${file}: ${item}`));
     expect(declared, "an H2 producer package in package.json").toEqual([]);
     expect(installed, "an H2 producer package in node_modules").toEqual([]);
@@ -849,12 +876,17 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       }),
     ]);
     expect(unread, "every sibling entry, changed and removed, is unread").toEqual(SIBLING_ENTRIES.flatMap(() => [true, true]));
-    return json({ pin: "E1", declared, installed, named, siblingEntries: SIBLING_ENTRIES.length, unread: unread.every(Boolean), walkComplete: isDeepStrictEqual(walkedFiles(modules), listed) });
+    return json({
+      pin: "E1", declared, installed, named, siblingEntries: SIBLING_ENTRIES.length, unread: unread.every(Boolean), walkComplete: isDeepStrictEqual(walkedFiles(modules), listed),
+      walkGitListed: isDeepStrictEqual(walkedFiles(modules), gitListed),
+    });
   },
   E2: async () => {
     const modules = srcModules();
     const listed = listedSrc();
+    const gitListed = gitListedSrc();
     expect(walkedFiles(modules), "E2's walk is every file below src (an independent recursive listing)").toEqual(listed);
+    expect(walkedFiles(modules), "E2's walk is every file git lists below src (tracked or untracked, ignored ones included)").toEqual(gitListed);
     const nonModules = modules.filter(({ file }) => !file.endsWith(".ts")).map(({ file }) => file);
     const hits = modules.flatMap(({ file, items }) => hitsOf(items).map(hit => `${file}: ${hit}`));
     expect(nonModules, "a src file that is not a .ts module").toEqual([]);
@@ -865,7 +897,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       return { file, scanned: found !== undefined && found.items.length > 0, hits: found === undefined ? null : hitsOf(found.items).length };
     });
     expect(anchors.map(anchor => anchor.scanned), "every anchor module was scanned").toEqual(ANCHORS.map(() => true));
-    return json({ pin: "E2", aboveFloor: modules.length >= MODULE_FLOOR, walkComplete: isDeepStrictEqual(walkedFiles(modules), listed), nonModules, hits, anchors });
+    return json({
+      pin: "E2", aboveFloor: modules.length >= MODULE_FLOOR, walkComplete: isDeepStrictEqual(walkedFiles(modules), listed),
+      walkGitListed: isDeepStrictEqual(walkedFiles(modules), gitListed), nonModules, hits, anchors,
+    });
   },
   E3: async () => {
     const lexicon = (text: string): string[] => lexiconOf("control.ts", text);
@@ -959,7 +994,7 @@ describe("wb-4nut.10 H2 state-promotion census (TSX-HARNESS2-REACTIVE-EVOLUTION-
       bead: BEAD, publicationWords: PUBLICATION_WORDS, nonTerminal: NON_TERMINAL, controlWord: CONTROL_WORD, reportCarriers: REPORT_CARRIERS, bareFlag: BARE_FLAG,
       committedShapes: COMMITTED_SHAPES, requiredFlags: REQUIRED_FLAGS, optionalFlag: OPTIONAL_FLAG, effectful: EFFECTFUL, deadlineMs: DEADLINE_MS,
       outcomeKeys: OUTCOME_KEYS, h2Packages: H2_PACKAGES, siblingEntries: SIBLING_ENTRIES, recordTerms: RECORD_TERMS, stateWords: STATE_WORDS,
-      anchors: ANCHORS, moduleFloor: MODULE_FLOOR, residuals: RESIDUAL_FAMILIES,
+      anchors: ANCHORS, moduleFloor: MODULE_FLOOR, gitListing: GIT_LISTING, residuals: RESIDUAL_FAMILIES,
     }).toStrictEqual({ bead: ROSTER.bead, ...ROSTER.constants, residuals: [...ROSTER.residuals] });
     // The producer facts: the program README at the four pins, each with its blob and the cited lines.
     expect(ROSTER.producers.map(entry => [entry.short, entry.sha.length, entry.path, entry.blob.length, Object.keys(entry.lines)])).toEqual([
