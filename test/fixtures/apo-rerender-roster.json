@@ -1,5 +1,5 @@
 {
-  "comment": "wb-021.5 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R7; the hk9l/5jha/1xvp.4/o4h0.3 roster pattern): the OUT-OF-FILE anchor of test/workbench-apo-rerender-census.test.ts (cut #2). rows: every judged row of test/helpers/apo-rerender-census.ts in census order (SURFACES, ADMISSION, INVOCATION, EFFECT, IDENTITY, QUIET, READERS, ABSENCE, REACH, NAMES) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and its expected reading) and the registered test. nonRender: the named non-render readers, each with its measured member references (value, type) and its reason. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its non-render readers, its registered tests (vitest task tree, run modes and timeouts) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. The outside anchors are src (the modules that reach the projection, the non-render readers' member references and runtime closure, the render modules' references, the projection's public members, the registry's effect classes and the dialog's actions) and the bead's own export row (.beads/issues.jsonl, wb-021.5: the title and the owner filing), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class plant or a dialog-action plant removed from the census and this file together still reds.",
+  "comment": "wb-021.5 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R7; the hk9l/5jha/1xvp.4/o4h0.3 roster pattern): the OUT-OF-FILE anchor of test/workbench-apo-rerender-census.test.ts (cut #3). rows: every judged row of test/helpers/apo-rerender-census.ts in census order (SURFACES, ADMISSION, INVOCATION, EFFECT, IDENTITY, QUIET, READERS, ABSENCE, REACH, NAMES) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and its expected reading) and the registered test. nonRender: the named non-render readers, each with its measured member references (value, type) and its reason. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its non-render readers, its registered tests (vitest task tree, run modes and timeouts) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. The outside anchors are src (the modules that reach the projection, the non-render readers' member references and runtime closure, the render modules' references, the projection's public members, the registry's effect classes and the dialog's actions) and the bead's own export row (.beads/issues.jsonl, wb-021.5: the title and the owner filing, each pinned byte for byte, and the judged statement the table quotes and their pinned junctions compose), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class plant or a dialog-action plant removed from the census and this file together still reds.",
   "rows": [
     {
       "table": "SURFACES",
@@ -165,9 +165,11 @@
     {
       "table": "INVOCATION",
       "id": "R-DEFERRED-EFFECT",
-      "label": "residual: an invocation a render schedules past the judge's settle window reads quiet",
+      "label": "residual: an invocation, an admission or a host effect a render schedules past the judge's settle window reads quiet",
       "pins": [
-        "6e0151e70dc99ff3075fac5110764031468b66dcee9af4b85c64b1f4d05e4ad5"
+        "6e0151e70dc99ff3075fac5110764031468b66dcee9af4b85c64b1f4d05e4ad5",
+        "864c05e4aacd019a78c49f2e06cf6fa0b313a617ff408e4424157c56ab5c948b",
+        "aeeea238bf9eddfeb97afc35157e4eee02c1ab995d161913bd8deb6ce3536a1f"
       ],
       "test": "INVOCATION R-DEFERRED-EFFECT"
     },
@@ -245,11 +247,12 @@
     {
       "table": "IDENTITY",
       "id": "R-OPAQUE-STATE",
-      "label": "residual: drift held where neither encoding reads - behind a getter neither invokes (a prototype accessor, a non-enumerable own accessor), in a closure's captured state - reads quiet",
+      "label": "residual: drift held where neither encoding reads - behind a getter neither invokes (a prototype accessor, a non-enumerable own accessor), in a closure's captured state, in a #private field a method moves - reads quiet",
       "pins": [
         "38917c98bbbda68a2744d0a68c02a0fa8ec93602dbe55af6a4416677614fbd12",
         "676feb39919525f9855ef77280dc6a3ef24041fbd171cf0fdd0d60f42e459190",
-        "a5f659faaf1f2265197a22b146ba56970d04b0fcc3c64c4d21d4a0f289f96fc5"
+        "a5f659faaf1f2265197a22b146ba56970d04b0fcc3c64c4d21d4a0f289f96fc5",
+        "948ca4e44f66334b393cb31ab5f50078e1f68e8f6e4fe8d5dc9ef2dbc37a97b2"
       ],
       "test": "IDENTITY R-OPAQUE-STATE"
     },
@@ -395,7 +398,7 @@
     {
       "table": "REACH",
       "id": "RENDER-MODELS",
-      "label": "a module that never names the class but holds it through what carries it - a render model's member call, a pass-through, an optional chain, a call's result, a container (an array, a keyed map), a function or a getter that yields it - reaches the projection",
+      "label": "a module that never names the class but holds it through what carries it - a render model's member call, a pass-through, an optional chain, a call's result, a container (an array, a keyed map), a function or a getter that yields it, the instance four wrappers deep and a typed reader three deep (the depth bound's inside) - reaches the projection",
       "pins": [
         "013e6f4b3279f27f15376bd1fc37042dab5d61ee1905f1ccb5d6f8e7cc1be0cc",
         "13e0fd8513d2a95a7270da3eded225b584d63fb2ea42163b6809ed5bd50c1e86",
@@ -404,7 +407,9 @@
         "200b73ed23af159ec844a4d290388961f30c10603496850d8d4d41fd3c4ca612",
         "33c17d997cdd5516b203eedca21559fe5c5a44d30a390466984e4ca465a8a90d",
         "26a3e51e5fd5ccb0dc4c31284f0fabc6a2730e27331dfdfb3686683d69062ac6",
-        "6147d1c9826e61d6f8cc086c8a801ba1fb817148651a45b6300bdd5ece09edae"
+        "6147d1c9826e61d6f8cc086c8a801ba1fb817148651a45b6300bdd5ece09edae",
+        "d1044f1f7fd632aca8c5b2495e8d59655a2055b3e9032a5be99150508efcdcaf",
+        "8692f6ec0864c0469fe74c0dcf935c3d6d4c24d326592a6c015dcf52a74c16c6"
       ],
       "test": "REACH RENDER-MODELS"
     },
@@ -424,15 +429,88 @@
     },
     {
       "table": "REACH",
+      "id": "KEY-FORMS",
+      "label": "an element access or a destructuring keyed by what the checker types as a literal - a const identifier, a for-of variable over an as-const tuple, a parenthesized, as-cast or template literal, an enum member, an optional access on a possibly-undefined holder, a computed binding (literal or const), a string binding, an assignment pattern's computed or string key, a conditional key, a keyof key - reads its member, a literal union member by member",
+      "pins": [
+        "420002be8c6b73956d9ff36ab888821d7eff870e65ba3e3bfacd135d369f2d7b",
+        "5677dc48171129fc806317b518ff3a7be158511b954dee6dee7c43dbeb1748f5",
+        "b9c81ee040726cc521f0c2c5f405010611f2abc19bb4090f2ed1532c18e88830",
+        "b86b2d9539ed4eef3ab4eb6606b508d97f820292e8e58b720d40a80246c8f2c1",
+        "99065157b6f691f52b4525839418061af2a2cf852cc0c6a84f337a0903ce8a7a",
+        "22ec6a7992f8fadc44126d2e7cc711d8ee1f6f42b6adbef5ba2b6f79b4a25ff5",
+        "9b401146dd4e780de8c338730d147b2eb8db96faa80a5dd6309db845ebe190e6",
+        "c331ebabeb46075528fa08234fc38c67065e033a38089dee002531c8ec3216d6",
+        "45c76c85835380d03941a329a0268ccf8b8d4af0a7bd7e81f6b66f6124ed1c51",
+        "9caca3fbea34dc429deb2f2b9ca4db4d5da3d91906b473bd14ed1aff2e82ea50",
+        "e1bd9797e41a2114ab84b2c9b7823f0153866a5f07c73df1e7bddcfa4495345c",
+        "954d3658f7e4615c7589712c1ffbd49d659a1283e418c27867a123bd4b044e58",
+        "4c47490be02c6869013361b577091f45bce86ff1868249a9ea3a940e0ac38a40",
+        "d5782e4345dff23485a9225b8108720b2ea8e3118fbae46f9e44e5337a17767d",
+        "1b40242615d00182b4e8d23d58b555d43bbfd598eda24534e004761632b4a9a6"
+      ],
+      "test": "REACH KEY-FORMS"
+    },
+    {
+      "table": "REACH",
+      "id": "KEY-HOLDERS",
+      "label": "a literal key over each holder shape - a render model's projection, a nested binding or assignment pattern through it, an intersection, a generic holder, a for-of binding over a container, a parameter binding - and in a type position (an indexed access through an aliased class and key, a typeof query indexed by a typeof key) reads its member",
+      "pins": [
+        "a4015d98e2cf3fb7cb661301457f66092df8ab66b3bc91685543b52facaa7f0e",
+        "e2a4dcbe7becf0a3504ec1aee82c71745229249394b3a5aa42198ccdd21a36f3",
+        "baef9c27f68dfa07ac76e69787e3cb331ecfb4af07345da1d94de3777432ea12",
+        "f65f6ea53e650350b05253281316653f7380c86fbac57434bd55b639cb0a81b0",
+        "9a354388a26e5d4ffef0d28976ab18c52e60581298eeb288e802b9467d92be70",
+        "2f14b51574084bcfca21fbe949c72b25c3043f736633729af1612947a8ff3bae",
+        "aafb53261165ebc05d9011dd6381e80bdc7521af851f9b07aaf8c3607fb56573",
+        "ea9c9a43e9147ed438fe208bff5cae92bfb5a677aa491aafb14db5bde6cd5655",
+        "373c0563df840566397f3ba121bfe5232502b10229c802a787a9e07c450e9386"
+      ],
+      "test": "REACH KEY-HOLDERS"
+    },
+    {
+      "table": "REACH",
+      "id": "UNRESOLVED-KEYS",
+      "label": "a key that resolves to no literal member set over a value that exposes the class's members - a type parameter, a string parameter, a widened let, a string key over a union holder or a typed reader, a symbol, a concatenation, a for-in variable, a mapped type's key - fails closed as <unresolved-key>",
+      "pins": [
+        "ca266954ca695dd8a2fbd3950bfd0540a6325db50b9ad839cbf4b652781cd685",
+        "a950f42553915f1ead490c61d54e7e59567328603dfa4a9fdaa1314628ffc14b",
+        "657a60f1892645302410d7003f59bce6200732cc9f44050c7a9fe1c1cebd574b",
+        "356be6c2a39bbe196fd0144d803fb27d983dbd71432c0bc9e9911837c9c182a5",
+        "36399d338d14c177aefd638f899cb90ded7001453317d3e688802453e3c2394c",
+        "1dae81203503156f1b25c1bfc6a93a75e0e98c68beece81752c5af36072bd44f",
+        "5bce60cc20b2daae20cc4396be259765468f0a6fc112e0e78729c2371bffd7c9",
+        "da1361cdd28c3bb6b07e1415d8e6edf98000661eb77a0903c80bd1591ae5c364",
+        "d9079c5157d8a44b32b6ee00946a7f57b3c494af260f2e04577817a7c1368599"
+      ],
+      "test": "REACH UNRESOLVED-KEYS"
+    },
+    {
+      "table": "REACH",
       "id": "R-ERASED-ACCESS",
-      "label": "residual: a module that reaches the projection only through an erased or structural type - a cast from unknown, a structural interface of its own, Reflect, an any - reads as reaching nothing",
+      "label": "residual: a module that reaches the projection only through an erased or structural type - a cast from unknown, a structural interface of its own, Reflect, an any - reads as reaching nothing, and a typed holder's member reached through Reflect, a cast through unknown, a cast to any, a prototype lookup or an Object property call reads as the holder alone",
       "pins": [
         "7c8f4b98f150562aa4a21652bd1a328d547fa9d96a8eec2093b36645725f2552",
         "38ee071f31135fb6b5f4b0e1e8c63eb039a84fcdb709ca6bb49e1a77a86bbd77",
         "d85903355575985c70f455fddf1103b95ef1d230f2c17009cc3676b05b12d98b",
-        "90dbad16e8483c6844193798ce1938d7857c64ccfbe25c567f1397cf5f5e48be"
+        "90dbad16e8483c6844193798ce1938d7857c64ccfbe25c567f1397cf5f5e48be",
+        "14b654e1bf21cdca9221d78d08391dadd97865580c6b9f8b10cf39ef9d0c761c",
+        "7aa69c141b3115160cc38ad9c7aae309c02801ffd0773604f570fca5d18939ee",
+        "0d6565fc5ea41e84db3d964d1544b3a38e303f6a085bd8e102cf2740fc84c9d7",
+        "b5785453f928afb6c1d8b7904b91c80bf81b6e43e95487808e3d76998ce3ac47",
+        "253590628fa10e1b59335c86fe68adb283c71aba0859eef203a5390115b0cb8c"
       ],
       "test": "REACH R-ERASED-ACCESS"
+    },
+    {
+      "table": "REACH",
+      "id": "R-DEEP-CARRIER",
+      "label": "residual: a module that only relays a value whose carrier nests past the depth bound (the instance five wrappers deep, a typed reader four deep; CARRIER_DEPTH 3) or an object type whose property holds the projection reads as reaching nothing",
+      "pins": [
+        "cf56819079b461938e5e682127d83f0d4e3baa30d7ec26f6a0a8b07f9ec7b55f",
+        "e84cfd935a724de36ae4ce59b7aabbe0f9d9834f4aa9444fc7cc073c9e86d932",
+        "f6be84d0324f9fd37166d9820347344bd38896436a9d5812fa6a1cacc1be0682"
+      ],
+      "test": "REACH R-DEEP-CARRIER"
     },
     {
       "table": "NAMES",
@@ -467,6 +545,24 @@
     },
     {
       "table": "NAMES",
+      "id": "CLASS-MEMBER-SHAPES",
+      "label": "a public member is read in each declaration shape planted here - a declared field, an optional method, an overloaded method, an abstract member a base declares, a setter alone, a getter alone, an auto-accessor, an override, a readonly field, a computed accessor",
+      "pins": [
+        "9d4c8246c9d250d37ea87e2451a5dedbf8a77c2404e255798917ee58a5c9f121",
+        "d66cc74d54b3bf2fe96bf1dc5b58e317b856605404e71e378e4d8bd128927014",
+        "3348e31e3bf8f3034a2fa0ee628eb355265d78480a85df54856d7d3ab051835a",
+        "a799c9de9429425e8f817a1c1e8f327f3432af5af07c6ab903906f6f90abb4ba",
+        "1f9ad87a9cefe38b0b4bf806d9e9db9b9749ed4fa95043d6b444261d95268718",
+        "6f9e4ee3d584c08a11abf55f3a94ea175a8703fc96829dff4806fc5631e07acf",
+        "a463a27fe4cd1359cc2b7bccf6a4ccf34ab3854de1dd7b51e9608440291bac20",
+        "63fef60c847b9246a84c4531d20de2a6d953bf10043e7148708d2661f9813364",
+        "918e5158b2c5fb3c5b900b7be2ffe74922eb194f6e0b85a80ce7476eab770f14",
+        "6b6da5a2bc641af553026dfcd56e07f4c78e0e52dad826733920a725bab52e6a"
+      ],
+      "test": "NAMES CLASS-MEMBER-SHAPES"
+    },
+    {
+      "table": "NAMES",
       "id": "INTERFACE-FORMS",
       "label": "every member of the actions interface is read under any name form, inherited and merged members included, and a call, construct or index signature fails closed",
       "pins": [
@@ -482,6 +578,19 @@
         "83b16fc046b1df1959afd7c858e93768ba17b11e6caa3972130c7042c1355017"
       ],
       "test": "NAMES INTERFACE-FORMS"
+    },
+    {
+      "table": "NAMES",
+      "id": "INTERFACE-HERITAGE",
+      "label": "an actions member is read through each heritage and signature shape planted here - a generic base, an Omit base, a type-alias base, a getter signature, a readonly property",
+      "pins": [
+        "36a2eec6d25af615cc24b2b8be7a6d16a1f59661857f0acced66a106a37cf9a5",
+        "be40e6501f36ee23e682c66221b0734371f591d395a3ddeb1047b6d038dbc3ca",
+        "7b047b2f7b4978cbbeaabf3aa5b36732852b08cc5b34f165bdb79ce3c27e344a",
+        "7f3a734b83a1b49da95bda216a82a57b5b5c31dbcaa59d4f562a9da94b952d34",
+        "5127ec2c361b2ac7cd5dad790206e7ad62d6e310055b1d0a2a4cfbcb4068c5a6"
+      ],
+      "test": "NAMES INTERFACE-HERITAGE"
     },
     {
       "table": "NAMES",
@@ -641,21 +750,27 @@
     "REACH IMPORT-FORMS",
     "REACH RENDER-MODELS",
     "REACH ACCESS-FORMS",
+    "REACH KEY-FORMS",
+    "REACH KEY-HOLDERS",
+    "REACH UNRESOLVED-KEYS",
     "REACH R-ERASED-ACCESS",
+    "REACH R-DEEP-CARRIER",
     "NAMES CLASS-NAME-FORMS",
     "NAMES CLASS-MEMBER-KINDS",
+    "NAMES CLASS-MEMBER-SHAPES",
     "NAMES INTERFACE-FORMS",
+    "NAMES INTERFACE-HERITAGE",
     "NAMES R-RUNTIME-MEMBER",
     "live: no typed reader (a Pick, an Omit or an indexed access over the class) in any src module keeps an admission member; the walk is every src module and reaches graph-view's reader",
     "live (armed): every src module that reaches the projection - it names the class, references a member or holds a declaration that carries it, as the checker resolves names - is a SURFACES module or a named non-render reader",
     "live (armed): each named non-render reader references exactly the members its entry names, and none is in the runtime import closure of the SURFACES modules",
-    "live: the SURFACES modules reference read members of the projection only, in value and type positions, as the checker resolves them",
-    "live: the projection's public instance members, as the checker reads the class (every member kind and name form), are exactly the read and admission members, each planted or re-projected",
+    "live: the SURFACES modules reference read members of the projection only, in value and type positions, as the checker resolves them (every key through its type, an unresolved key failing closed)",
+    "live: the projection's public instance members, as the checker reads the class (the member kinds, declaration shapes and name forms NAMES plants), are exactly the read and admission members, each planted or re-projected",
     "live: the invocation plants invoke every effect class the registry's descriptor declares",
-    "live: the effect plants perform every WorkflowDialogActions member, as the checker reads the interface (every name form, inherited and merged members; signatures fail closed)",
+    "live: the effect plants perform every WorkflowDialogActions member, as the checker reads the interface (the name forms, heritage and signature shapes NAMES plants; signatures fail closed)",
     "live: no src module spells the program, by path or text; the walk is every src module",
-    "anchor: every table quote stands once in its section of the bead's export row (the title, or the owner filing, pinned byte for byte) and the quotes tile its statement and acceptance (.beads/issues.jsonl, wb-021.5)",
-    "rule 16: every judged row, the non-render readers, the residual families and the member sets are frozen at their measured shape",
+    "anchor: every table quote stands once in its section of the bead's export row (the title or the owner filing, each pinned byte for byte), the quotes with every junction between them pinned compose the judged statement contiguously after the requirement id, and the quotes tile the acceptance (.beads/issues.jsonl, wb-021.5)",
+    "rule 16: every judged row, the non-render readers, the residual families, the member sets and the reach scan's depth bound and marker are frozen at their measured shape",
     "roster: the judged rows, the non-render readers, the registered tests and the residual families equal test/fixtures/apo-rerender-roster.json, in order and both ways"
   ],
   "residuals": {
@@ -682,6 +797,9 @@
     ],
     "R-ERASED-ACCESS": [
       "REACH R-ERASED-ACCESS"
+    ],
+    "R-DEEP-CARRIER": [
+      "REACH R-DEEP-CARRIER"
     ],
     "R-RUNTIME-MEMBER": [
       "NAMES R-RUNTIME-MEMBER"

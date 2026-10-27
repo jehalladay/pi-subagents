@@ -520,6 +520,8 @@ export type PlantCase =
   | { readonly plant: "load-evidence" }
   | { readonly plant: "immediate-invoke" }
   | { readonly plant: "deferred-invoke" }
+  | { readonly plant: "deferred-admit" }
+  | { readonly plant: "deferred-effect" }
   | { readonly plant: "abort-evidence"; readonly all: boolean }
   | { readonly plant: "action"; readonly action: DialogAction }
   | { readonly plant: "side-channel" }
@@ -540,6 +542,7 @@ export type PlantCase =
   | { readonly plant: "getter-state" }
   | { readonly plant: "closure-state" }
   | { readonly plant: "accessor-state" }
+  | { readonly plant: "private-state" }
   | { readonly plant: "pure" }
   | { readonly plant: "read-window" }
   | { readonly plant: "read-all" };
@@ -552,6 +555,13 @@ class RowFrame {}
 class CountingFrame {
   #frame = 0;
   get frame(): number {
+    return this.#frame++;
+  }
+}
+/** A frame whose drift lives in a #private field a method moves: neither encoding reads a private field (R-OPAQUE-STATE). */
+class PrivateFrame {
+  #frame = 0;
+  tick(): number {
     return this.#frame++;
   }
 }
@@ -628,6 +638,18 @@ export function plantSubject(item: PlantCase): Subject {
     case "deferred-invoke":
       return world => () => {
         const timer = setTimeout(() => quietly(world.registry.invoke(capabilityId("write"), {}, invocationContext())), 60_000);
+        world.cleanups.push(() => clearTimeout(timer));
+        return DRAWN;
+      };
+    case "deferred-admit":
+      return world => () => {
+        const timer = setTimeout(() => admit(world.projection, "markStale"), 60_000);
+        world.cleanups.push(() => clearTimeout(timer));
+        return DRAWN;
+      };
+    case "deferred-effect":
+      return world => () => {
+        const timer = setTimeout(() => world.record(ACTION_EFFECTS.onKill), 60_000);
         world.cleanups.push(() => clearTimeout(timer));
         return DRAWN;
       };
@@ -738,6 +760,14 @@ export function plantSubject(item: PlantCase): Subject {
         let frame = 0;
         const view = Object.defineProperty({}, "frame", { get: () => frame++, enumerable: false });
         return () => view;
+      };
+    case "private-state":
+      return () => {
+        const frame = new PrivateFrame();
+        return () => {
+          frame.tick();
+          return { frame };
+        };
       };
     case "pure":
       return () => () => DRAWN;
@@ -878,13 +908,24 @@ export function sourceProgram(root: string, modules: readonly string[], plants: 
   return ts.createProgram({ rootNames: [...modules.map(rel => join(root, rel)), ...planted.keys()], options, host });
 }
 
+/**
+ * The marker a key reads as when it resolves to no literal member set over a value that exposes the class's members (a
+ * string or symbol key, a type parameter, any other non-literal type): it is no read member, so RENDER TOUCHES and
+ * NON-RENDER red on it - the key fails closed.
+ */
+export const UNRESOLVED_KEY = "<unresolved-key>";
 /** How one module reaches the projection class, as the checker resolves its names. */
 export interface Reach {
   /** It names the class: an import of any form, an alias, a re-export or a qualified name. */
   readonly names: boolean;
-  /** Public class members it references in a value position: a call, an access, an element access, a destructuring (sorted). */
+  /**
+   * Public class members it references in a value position (sorted): a property access, an element access and a
+   * destructuring, binding or assignment. A key is read through the checker's type of it (an identifier key by its name):
+   * a string or number literal reads its member, a literal union member by member; any other key over a value that
+   * exposes the class's members reads as UNRESOLVED_KEY.
+   */
   readonly value: readonly string[];
-  /** Public class members it references in a type position: an indexed access, a typeof query, a statement or result type (Parameters, ReturnType) (sorted). */
+  /** Public class members it references in a type position (sorted): a typeof query, a statement or result type (Parameters, ReturnType), and an indexed access, its index read as a key is. */
   readonly type: readonly string[];
   /**
    * Declarations that carry the projection, that it declares or references, by name (sorted): a property, variable,
@@ -897,6 +938,12 @@ export interface Reach {
 const HIDDEN = ts.ModifierFlags.Private | ts.ModifierFlags.Protected;
 /** The symbols a holder can be: a value (property, variable, parameter), an accessor, a method or a function. */
 const HOLDER_FLAGS = ts.SymbolFlags.Property | ts.SymbolFlags.Variable | ts.SymbolFlags.Accessor | ts.SymbolFlags.Method | ts.SymbolFlags.Function;
+/**
+ * How far the reach scan unwraps a carrier (a union or intersection part, a container's type argument, an index signature
+ * or a call's result, one inside another): the class instance is found inside at most CARRIER_DEPTH + 1 nested wrappers,
+ * a typed reader of it inside at most CARRIER_DEPTH; past that the type reads as no carrier (R-DEEP-CARRIER).
+ */
+export const CARRIER_DEPTH = 3;
 function publicProperties(checker: ts.TypeChecker, type: ts.Type): ts.Symbol[] {
   return checker
     .getPropertiesOfType(type)
@@ -905,12 +952,28 @@ function publicProperties(checker: ts.TypeChecker, type: ts.Type): ts.Symbol[] {
 function declarationOf<T extends ts.ClassDeclaration | ts.InterfaceDeclaration>(source: ts.SourceFile | undefined, test: (statement: ts.Statement) => statement is T, name: string): T | undefined {
   return source?.statements.find((statement): statement is T => test(statement) && statement.name?.text === name);
 }
+/** The member names a key type selects: a string or number literal, or a union of them; undefined when any part is another type. */
+function keyNames(key: ts.Type): string[] | undefined {
+  const names: string[] = [];
+  for (const part of key.isUnion() ? key.types : [key]) {
+    if (part.isStringLiteral()) names.push(part.value);
+    else if (part.isNumberLiteral()) names.push(String(part.value));
+    else return undefined;
+  }
+  return names;
+}
 /**
  * Reads, for each given module, how it reaches the class declared in classModule (Reach); modules that reach nothing are
  * absent from the result, and the class's own module is never read. Names resolve through the checker, so an alias, a
  * namespace, a re-export chain and a render model, container, getter or function that carries the projection are all
- * followed, in value and type positions alike; a value whose type was erased (a cast from unknown, a structural type of the
- * module's own, Reflect, an any) is not (the R-ERASED-ACCESS residual).
+ * followed, in value and type positions alike. A carrier is followed to the depth bound CARRIER_DEPTH states (the
+ * instance inside at most four nested wrappers, a typed reader inside at most three), and an object type whose property
+ * holds the projection is no carrier itself: a module that only relays such a value reads as reaching nothing
+ * (R-DEEP-CARRIER), while any access through it exposes its holder. Every key - an element access, an indexed access
+ * type, a binding or an assignment destructuring under every key form (identifier, string, numeric, computed) - is read
+ * through the checker's type of it (keyNames), failing closed as UNRESOLVED_KEY over a value that exposes the class's
+ * members. A member reached through an erasing step (a cast from unknown or of a holder, a structural type of the
+ * module's own, Reflect, an any, a prototype lookup, an Object property call) is not read (the R-ERASED-ACCESS residual).
  */
 export function projectionReach(program: ts.Program, root: string, classModule: string, className: string, modules: readonly string[]): Map<string, Reach> {
   const checker = program.getTypeChecker();
@@ -922,7 +985,7 @@ export function projectionReach(program: ts.Program, root: string, classModule: 
   const isMember = (candidate: ts.Symbol): boolean => (candidate.declarations ?? []).some(item => members.has(item));
   const carries = (type: ts.Type, depth: number): boolean => {
     if (type === instance) return true;
-    if (depth > 3) return false;
+    if (depth > CARRIER_DEPTH) return false;
     if (type.isUnionOrIntersection()) return type.types.some(part => carries(part, depth + 1));
     if ((type.flags & ts.TypeFlags.Object) === 0) return false;
     const properties = type.getProperties();
@@ -952,6 +1015,18 @@ export function projectionReach(program: ts.Program, root: string, classModule: 
     const reference = (candidate: ts.Symbol | undefined, inType: boolean): void => {
       if (candidate && isMember(candidate)) (inType ? type : value).add(candidate.name);
     };
+    /** A key over a holder type: its literal names read member by member on every part; any other key over a type that exposes the class's members fails closed. */
+    const keyed = (holder: ts.Type, names: readonly string[] | undefined, inType: boolean): void => {
+      const parts = holder.isUnionOrIntersection() ? holder.types : [holder];
+      if (!parts.some(part => checker.getPropertiesOfType(part).some(isMember))) return;
+      if (names === undefined) (inType ? type : value).add(UNRESOLVED_KEY);
+      else for (const name of names) for (const part of parts) reference(checker.getPropertyOfType(part, name), inType);
+    };
+    /** The names a property key selects: an identifier, a string or a numeric literal by its text, a computed key through the checker's type of its expression; any other key (a bigint) names no literal and fails closed. */
+    const namesOf = (key: ts.PropertyName): string[] | undefined => {
+      if (ts.isComputedPropertyName(key)) return keyNames(checker.getTypeAtLocation(key.expression));
+      return ts.isIdentifier(key) || ts.isPrivateIdentifier(key) || ts.isStringLiteral(key) || ts.isNoSubstitutionTemplateLiteral(key) || ts.isNumericLiteral(key) ? [key.text] : undefined;
+    };
     const visit = (node: ts.Node, inType: boolean): void => {
       const typed = inType || ts.isTypeNode(node);
       if (ts.isIdentifier(node) || ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) {
@@ -960,22 +1035,19 @@ export function projectionReach(program: ts.Program, root: string, classModule: 
         if (resolved === symbol) names = true;
         else if (resolved && isMember(resolved)) reference(resolved, typed);
         else if (resolved && isHolder(resolved)) holders.add(resolved.name);
-        // A destructuring assignment target (({ stats } = projection), nested or in a for-of) names its property only through the checker's own lookup.
-        if (
-          ts.isIdentifier(node) &&
-          (ts.isShorthandPropertyAssignment(node.parent) || ts.isPropertyAssignment(node.parent)) &&
-          node.parent.name === node &&
-          ts.isObjectLiteralExpression(node.parent.parent) &&
-          isAssignmentPattern(node.parent.parent)
-        ) {
-          reference(checker.getPropertySymbolOfDestructuringAssignment(node), typed);
-        }
       }
-      // A binding element (const { stats } = projection) names the property of the pattern's type, not a symbol of its own.
-      if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent)) {
+      // A binding element (const { stats } = projection) names the property of the pattern's type, not a symbol of its own: every key form (identifier, string, numeric, computed).
+      if (ts.isBindingElement(node) && ts.isObjectBindingPattern(node.parent) && !node.dotDotDotToken) {
         const key = node.propertyName ?? node.name;
-        if (ts.isIdentifier(key) || ts.isStringLiteral(key)) reference(checker.getTypeAtLocation(node.parent).getProperty(key.text), typed);
+        if (!ts.isObjectBindingPattern(key) && !ts.isArrayBindingPattern(key)) keyed(checker.getTypeAtLocation(node.parent), namesOf(key), typed);
       }
+      // A property of an assignment pattern (({ [key]: stale } = projection), nested or in a for-of) under every key form, read on the type the pattern destructures.
+      if ((ts.isPropertyAssignment(node) || ts.isShorthandPropertyAssignment(node)) && ts.isObjectLiteralExpression(node.parent) && isAssignmentPattern(node.parent)) {
+        keyed(checker.getTypeOfAssignmentPattern(node.parent), namesOf(node.name), typed);
+      }
+      // An element access (projection[key], projection?.[key]) and an indexed access type (Projection[Key]): the key through the checker's type of it.
+      if (ts.isElementAccessExpression(node)) keyed(checker.getTypeAtLocation(node.expression), keyNames(checker.getTypeAtLocation(node.argumentExpression)), typed);
+      if (ts.isIndexedAccessTypeNode(node)) keyed(checker.getTypeFromTypeNode(node.objectType), keyNames(checker.getTypeFromTypeNode(node.indexType)), true);
       ts.forEachChild(node, child => visit(child, typed));
     };
     visit(source, false);
@@ -1260,8 +1332,12 @@ export const INVOCATION: Table<PlantItem> = {
     },
     {
       id: "R-DEFERRED-EFFECT",
-      label: "residual: an invocation a render schedules past the judge's settle window reads quiet",
-      cases: [{ subject: { plant: "deferred-invoke" }, expect: QUIET }],
+      label: "residual: an invocation, an admission or a host effect a render schedules past the judge's settle window reads quiet",
+      cases: [
+        { subject: { plant: "deferred-invoke" }, expect: QUIET },
+        { subject: { plant: "deferred-admit" }, expect: QUIET },
+        { subject: { plant: "deferred-effect" }, expect: QUIET },
+      ],
     },
   ],
 };
@@ -1322,11 +1398,13 @@ export const IDENTITY: Table<PlantItem> = {
     },
     {
       id: "R-OPAQUE-STATE",
-      label: "residual: drift held where neither encoding reads - behind a getter neither invokes (a prototype accessor, a non-enumerable own accessor), in a closure's captured state - reads quiet",
+      label:
+        "residual: drift held where neither encoding reads - behind a getter neither invokes (a prototype accessor, a non-enumerable own accessor), in a closure's captured state, in a #private field a method moves - reads quiet",
       cases: [
         { subject: { plant: "getter-state" }, expect: QUIET },
         { subject: { plant: "closure-state" }, expect: QUIET },
         { subject: { plant: "accessor-state" }, expect: QUIET },
+        { subject: { plant: "private-state" }, expect: QUIET },
       ],
     },
   ],
@@ -1509,7 +1587,7 @@ export const REACH: Table<ReachItem> = {
     {
       id: "RENDER-MODELS",
       label:
-        "a module that never names the class but holds it through what carries it - a render model's member call, a pass-through, an optional chain, a call's result, a container (an array, a keyed map), a function or a getter that yields it - reaches the projection",
+        "a module that never names the class but holds it through what carries it - a render model's member call, a pass-through, an optional chain, a call's result, a container (an array, a keyed map), a function or a getter that yields it, the instance four wrappers deep and a typed reader three deep (the depth bound's inside) - reaches the projection",
       cases: [
         reach("src/ui/census-reach-pane.ts", `${MODEL}export const paneRevision = (model: InspectorModel): number => model.projection.relationRevision();\n`, reached(false, ["relationRevision"], [], ["projection"])),
         reach("src/ui/census-reach-relay.ts", `${MODEL}export const relay = (model: InspectorModel) => model.projection;\n`, reached(false, [], [], ["projection", "relay"])),
@@ -1534,6 +1612,12 @@ export const REACH: Table<ReachItem> = {
         }),
         reach("src/ui/census-reach-getter.ts", 'import type { Lens } from "./census-reach-lens.js";\nexport const relayLens = (lens: Lens) => lens.current;\n', reached(false, [], [], ["current", "relayLens"]), {
           "src/ui/census-reach-lens.ts": `${OBS_UI}export class Lens {\n  constructor(private readonly source: ObservationProjection) {}\n  get current(): ObservationProjection {\n    return this.source;\n  }\n}\n`,
+        }),
+        reach("src/ui/census-reach-deep4.ts", 'import type { Deep4 } from "./census-reach-deep4-type.js";\nexport const relayDeep4 = (views: Deep4) => views;\n', reached(false, [], [], ["views"]), {
+          "src/ui/census-reach-deep4-type.ts": `${OBS_UI}export type Deep4 = ReadonlyMap<string, ReadonlyMap<string, ReadonlyMap<string, ReadonlyMap<string, ObservationProjection>>>>;\n`,
+        }),
+        reach("src/ui/census-reach-reader3.ts", 'import type { Reader3 } from "./census-reach-reader3-type.js";\nexport const relayReader3 = (views: Reader3) => views;\n', reached(false, [], [], ["views"]), {
+          "src/ui/census-reach-reader3-type.ts": `${OBS_UI}export type Reader3 = ReadonlyMap<string, ReadonlyMap<string, ReadonlyMap<string, Pick<ObservationProjection, "query">>>>;\n`,
         }),
       ],
     },
@@ -1563,13 +1647,191 @@ export const REACH: Table<ReachItem> = {
       ],
     },
     {
+      id: "KEY-FORMS",
+      label:
+        "an element access or a destructuring keyed by what the checker types as a literal - a const identifier, a for-of variable over an as-const tuple, a parenthesized, as-cast or template literal, an enum member, an optional access on a possibly-undefined holder, a computed binding (literal or const), a string binding, an assignment pattern's computed or string key, a conditional key, a keyof key - reads its member, a literal union member by member",
+      cases: [
+        reach("src/ui/census-reach-key-const.ts", `${OBS_UI}const FORGET = "markStale" as const;\nexport const forget = (projection: ObservationProjection): unknown => projection[FORGET];\n`, reached(true, ["markStale"], [], ["projection"])),
+        reach(
+          "src/ui/census-reach-key-loop.ts",
+          `${OBS_UI}export function drop(projection: ObservationProjection): void {\n  for (const member of ["disconnect", "reconnect"] as const) void projection[member];\n}\n`,
+          reached(true, ["disconnect", "reconnect"], [], ["projection"]),
+        ),
+        reach("src/ui/census-reach-key-paren.ts", `${OBS_UI}export const forget = (projection: ObservationProjection): unknown => projection[("markStale")];\n`, reached(true, ["markStale"], [], ["projection"])),
+        reach("src/ui/census-reach-key-cast.ts", `${OBS_UI}export const forget = (projection: ObservationProjection): unknown => projection["markStale" as const];\n`, reached(true, ["markStale"], [], ["projection"])),
+        reach(
+          "src/ui/census-reach-key-template.ts",
+          `${OBS_UI}export const forget = (projection: ObservationProjection): unknown => projection[\`mark\${"Stale"}\` as const];\n`,
+          reached(true, ["markStale"], [], ["projection"]),
+        ),
+        reach("src/ui/census-reach-key-plain-template.ts", `${OBS_UI}export const forget = (projection: ObservationProjection): unknown => projection[\`markStale\`];\n`, reached(true, ["markStale"], [], ["projection"])),
+        reach(
+          "src/ui/census-reach-key-enum.ts",
+          `${OBS_UI}enum Member {\n  Drop = "disconnect",\n}\nexport const drop = (projection: ObservationProjection): unknown => projection[Member.Drop];\n`,
+          reached(true, ["disconnect"], [], ["projection"]),
+        ),
+        reach("src/ui/census-reach-key-optional.ts", `${OBS_UI}export const forget = (projection: ObservationProjection | undefined): unknown => projection?.["markStale"];\n`, reached(true, ["markStale"], [], ["projection"])),
+        reach(
+          "src/ui/census-reach-key-bind-literal.ts",
+          `${OBS_UI}export function link(projection: ObservationProjection): unknown {\n  const { ["relate"]: relate } = projection;\n  return relate;\n}\n`,
+          reached(true, ["relate"], [], ["projection"]),
+        ),
+        reach(
+          "src/ui/census-reach-key-bind-const.ts",
+          `${OBS_UI}const ADMIT = "ingest" as const;\nexport function admit(projection: ObservationProjection): unknown {\n  const { [ADMIT]: ingest } = projection;\n  return ingest;\n}\n`,
+          reached(true, ["ingest"], [], ["projection"]),
+        ),
+        reach(
+          "src/ui/census-reach-key-bind-string.ts",
+          `${OBS_UI}export function stale(projection: ObservationProjection): unknown {\n  const { "markStale": forget } = projection;\n  return forget;\n}\n`,
+          reached(true, ["markStale"], [], ["projection"]),
+        ),
+        reach(
+          "src/ui/census-reach-key-assign-const.ts",
+          `${OBS_UI}const VERDICT = "refresh" as const;\nexport function verdict(projection: ObservationProjection): unknown {\n  let refresh: unknown;\n  ({ [VERDICT]: refresh } = projection);\n  return refresh;\n}\n`,
+          reached(true, ["refresh"], [], ["projection"]),
+        ),
+        reach(
+          "src/ui/census-reach-key-assign-string.ts",
+          `${OBS_UI}export function peek(projection: ObservationProjection): unknown {\n  let events: unknown;\n  ({ "events": events } = projection);\n  return events;\n}\n`,
+          reached(true, ["events"], [], ["projection"]),
+        ),
+        reach(
+          "src/ui/census-reach-key-conditional.ts",
+          `${OBS_UI}export const either = (projection: ObservationProjection, wide: boolean): unknown => projection[wide ? "stats" : "ingest"];\n`,
+          reached(true, ["ingest", "stats"], [], ["projection"]),
+        ),
+        reach(
+          "src/ui/census-reach-key-keyof.ts",
+          `${OBS_UI}export const call = (projection: ObservationProjection, member: keyof ObservationProjection): unknown => projection[member];\n`,
+          reached(true, [...READ_MEMBERS, ...ADMISSION_MEMBERS].sort(), [], ["projection"]),
+        ),
+      ],
+    },
+    {
+      id: "KEY-HOLDERS",
+      label:
+        "a literal key over each holder shape - a render model's projection, a nested binding or assignment pattern through it, an intersection, a generic holder, a for-of binding over a container, a parameter binding - and in a type position (an indexed access through an aliased class and key, a typeof query indexed by a typeof key) reads its member",
+      cases: [
+        reach("src/ui/census-reach-key-model.ts", `${MODEL}const FORGET = "markStale" as const;\nexport const forget = (model: InspectorModel): unknown => model.projection[FORGET];\n`, reached(false, ["markStale"], [], ["projection"])),
+        reach(
+          "src/ui/census-reach-key-nested-bind.ts",
+          `${MODEL}const FORGET = "markStale" as const;\nexport function nested(model: InspectorModel): unknown {\n  const { projection: { [FORGET]: stale } } = model;\n  return stale;\n}\n`,
+          reached(false, ["markStale"], [], ["projection"]),
+        ),
+        reach(
+          "src/ui/census-reach-key-nested-assign.ts",
+          `${MODEL}const FORGET = "markStale" as const;\nexport function nested(model: InspectorModel): unknown {\n  let stale: unknown;\n  ({ projection: { [FORGET]: stale } } = model);\n  return stale;\n}\n`,
+          reached(false, ["markStale"], [], []),
+        ),
+        reach(
+          "src/ui/census-reach-key-intersection.ts",
+          `${OBS_UI}const FORGET = "markStale" as const;\nexport const forget = (holder: ObservationProjection & { tag: string }): unknown => holder[FORGET];\n`,
+          reached(true, ["markStale"], [], ["holder"]),
+        ),
+        reach(
+          "src/ui/census-reach-key-generic.ts",
+          `${OBS_UI}const FORGET = "markStale" as const;\nexport const forget = <T extends ObservationProjection>(holder: T): unknown => holder[FORGET];\n`,
+          reached(true, ["markStale"], [], []),
+        ),
+        reach(
+          "src/ui/census-reach-key-forof-bind.ts",
+          `${OBS_UI}const FORGET = "markStale" as const;\nexport function each(views: readonly ObservationProjection[]): void {\n  for (const { [FORGET]: stale } of views) void stale;\n}\n`,
+          reached(true, ["markStale"], [], ["views"]),
+        ),
+        reach(
+          "src/ui/census-reach-key-param-bind.ts",
+          `${OBS_UI}const FORGET = "markStale" as const;\nexport const forget = ({ [FORGET]: stale }: ObservationProjection): unknown => stale;\n`,
+          reached(true, ["markStale"], [], []),
+        ),
+        reach("src/ui/census-reach-key-type-alias.ts", `${OBS_UI}type View = ObservationProjection;\ntype Sinks = "relate";\nexport type Sink = View[Sinks];\n`, reached(true, [], ["relate"], [])),
+        reach(
+          "src/ui/census-reach-key-typeof.ts",
+          `${OBS_UI}const FORGET = "markStale" as const;\ndeclare const projection: ObservationProjection;\nexport type Forget = (typeof projection)[typeof FORGET];\n`,
+          reached(true, [], ["markStale"], ["projection"]),
+        ),
+      ],
+    },
+    {
+      id: "UNRESOLVED-KEYS",
+      label: `a key that resolves to no literal member set over a value that exposes the class's members - a type parameter, a string parameter, a widened let, a string key over a union holder or a typed reader, a symbol, a concatenation, a for-in variable, a mapped type's key - fails closed as ${UNRESOLVED_KEY}`,
+      cases: [
+        reach(
+          "src/ui/census-reach-unresolved-type-parameter.ts",
+          `${OBS_UI}export const pick = <K extends keyof ObservationProjection>(projection: ObservationProjection, member: K): unknown => projection[member];\n`,
+          reached(true, [UNRESOLVED_KEY], [], ["projection"]),
+        ),
+        reach(
+          "src/ui/census-reach-unresolved-string.ts",
+          `${OBS_UI}export const named = (projection: ObservationProjection, member: string): unknown => projection[member];\n`,
+          reached(true, [UNRESOLVED_KEY], [], ["projection"]),
+        ),
+        reach(
+          "src/ui/census-reach-unresolved-let.ts",
+          `${OBS_UI}let member = "markStale";\nexport const forget = (projection: ObservationProjection): unknown => projection[member];\n`,
+          reached(true, [UNRESOLVED_KEY], [], ["projection"]),
+        ),
+        reach(
+          "src/ui/census-reach-unresolved-union.ts",
+          `${OBS_UI}export const pick = (holder: ObservationProjection | { other(): void }, member: string): unknown => holder[member];\n`,
+          reached(true, [UNRESOLVED_KEY], [], ["holder"]),
+        ),
+        reach(
+          "src/ui/census-reach-unresolved-reader.ts",
+          `${OBS_UI}export const named = (reader: Pick<ObservationProjection, "query">, member: string): unknown => reader[member];\n`,
+          reached(true, [UNRESOLVED_KEY], [], ["reader"]),
+        ),
+        reach("src/ui/census-reach-unresolved-symbol.ts", `${OBS_UI}export const iterate = (projection: ObservationProjection): unknown => projection[Symbol.iterator];\n`, reached(true, [UNRESOLVED_KEY], [], ["projection"])),
+        reach("src/ui/census-reach-unresolved-concat.ts", `${OBS_UI}export const forget = (projection: ObservationProjection): unknown => projection["mark" + "Stale"];\n`, reached(true, [UNRESOLVED_KEY], [], ["projection"])),
+        reach(
+          "src/ui/census-reach-unresolved-for-in.ts",
+          `${OBS_UI}export function each(projection: ObservationProjection): void {\n  for (const key in projection) void projection[key];\n}\n`,
+          reached(true, [UNRESOLVED_KEY], [], ["projection"]),
+        ),
+        reach(
+          "src/ui/census-reach-unresolved-mapped.ts",
+          `${OBS_UI}export type Every = { [K in keyof ObservationProjection]: ObservationProjection[K] };\n`,
+          reached(true, [], [UNRESOLVED_KEY], []),
+        ),
+      ],
+    },
+    {
       id: "R-ERASED-ACCESS",
-      label: "residual: a module that reaches the projection only through an erased or structural type - a cast from unknown, a structural interface of its own, Reflect, an any - reads as reaching nothing",
+      label:
+        "residual: a module that reaches the projection only through an erased or structural type - a cast from unknown, a structural interface of its own, Reflect, an any - reads as reaching nothing, and a typed holder's member reached through Reflect, a cast through unknown, a cast to any, a prototype lookup or an Object property call reads as the holder alone",
       cases: [
         reach("src/ui/census-reach-cast.ts", "export const forget = (value: unknown): void => (value as { markStale(input: unknown): void }).markStale({});\n", null),
         reach("src/ui/census-reach-structural.ts", "interface Counts {\n  stats(): { nodes: number };\n}\nexport const nodes = (source: Counts): number => source.stats().nodes;\n", null),
         reach("src/ui/census-reach-reflect.ts", 'export const admit = (value: object): unknown => Reflect.get(value, "refresh");\n', null),
         reach("src/ui/census-reach-any.ts", "export const stale = (value: any): void => value.markStale({});\n", null),
+        reach("src/ui/census-reach-erased-reflect.ts", `${OBS_UI}export const admit = (projection: ObservationProjection): unknown => Reflect.get(projection, "refresh");\n`, reached(true, [], [], ["projection"])),
+        reach(
+          "src/ui/census-reach-erased-cast.ts",
+          `${OBS_UI}export const forget = (projection: ObservationProjection): void => (projection as unknown as { markStale(input: unknown): void }).markStale({});\n`,
+          reached(true, [], [], ["projection"]),
+        ),
+        reach("src/ui/census-reach-erased-any.ts", `${OBS_UI}export const forget = (projection: ObservationProjection): void => (projection as any).markStale({});\n`, reached(true, [], [], ["projection"])),
+        reach("src/ui/census-reach-erased-prototype.ts", `${OBS_UI}export const forget = (projection: ObservationProjection): unknown => Object.getPrototypeOf(projection).markStale;\n`, reached(true, [], [], ["projection"])),
+        reach(
+          "src/ui/census-reach-erased-define.ts",
+          `${OBS_UI}export const patch = (projection: ObservationProjection): unknown => Object.defineProperty(projection, "refresh", { value: () => "applied" });\n`,
+          reached(true, [], [], ["projection"]),
+        ),
+      ],
+    },
+    {
+      id: "R-DEEP-CARRIER",
+      label: `residual: a module that only relays a value whose carrier nests past the depth bound (the instance five wrappers deep, a typed reader four deep; CARRIER_DEPTH ${CARRIER_DEPTH}) or an object type whose property holds the projection reads as reaching nothing`,
+      cases: [
+        reach("src/ui/census-reach-deep5.ts", 'import type { Deep5 } from "./census-reach-deep5-type.js";\nexport const relayDeep5 = (views: Deep5) => views;\n', null, {
+          "src/ui/census-reach-deep5-type.ts": `${OBS_UI}export type Deep5 = ReadonlyMap<string, ReadonlyMap<string, ReadonlyMap<string, ReadonlyMap<string, ReadonlyMap<string, ObservationProjection>>>>>;\n`,
+        }),
+        reach("src/ui/census-reach-reader4.ts", 'import type { Reader4 } from "./census-reach-reader4-type.js";\nexport const relayReader4 = (views: Reader4) => views;\n', null, {
+          "src/ui/census-reach-reader4-type.ts": `${OBS_UI}export type Reader4 = ReadonlyMap<string, ReadonlyMap<string, ReadonlyMap<string, ReadonlyMap<string, Pick<ObservationProjection, "query">>>>>;\n`,
+        }),
+        reach("src/ui/census-reach-box.ts", 'import type { Box } from "./census-reach-box-type.js";\nexport const relayBox = (box: Box) => box;\n', null, {
+          "src/ui/census-reach-box-type.ts": `${OBS_UI}export interface Box {\n  readonly inner: { readonly projection: ObservationProjection };\n}\n`,
+        }),
       ],
     },
   ],
@@ -1630,6 +1892,23 @@ export const NAMES: Table<NameItem> = {
       ],
     },
     {
+      id: "CLASS-MEMBER-SHAPES",
+      label:
+        "a public member is read in each declaration shape planted here - a declared field, an optional method, an overloaded method, an abstract member a base declares, a setter alone, a getter alone, an auto-accessor, an override, a readonly field, a computed accessor",
+      cases: [
+        klass("declare", "  declare rewind: () => void;\n", ["query", "rewind"]),
+        klass("optional", "  rewind?(): void;\n", ["query", "rewind"]),
+        klass("overload", "  rewind(): void;\n  rewind(steps?: number): void {\n    void steps;\n  }\n", ["query", "rewind"]),
+        named("abstract", "class", "abstract class Base {\n  abstract rewind(): void;\n}\nexport abstract class ObservationProjection extends Base {\n  query(): void {}\n}\n", ["query", "rewind"]),
+        klass("setter", "  set rewind(value: number) {\n    void value;\n  }\n", ["query", "rewind"]),
+        klass("getter", "  get rewind(): number {\n    return 0;\n  }\n", ["query", "rewind"]),
+        klass("auto-accessor", "  accessor rewind = 0;\n", ["query", "rewind"]),
+        klass("override", "  override rewind(): void {}\n", ["query", "rewind"], "class Base {\n  rewind(): void {}\n}\n", " extends Base"),
+        klass("readonly", "  readonly rewind: number = 0;\n", ["query", "rewind"]),
+        klass("computed-accessor", '  get ["rewind"](): number {\n    return 0;\n  }\n', ["query", "rewind"]),
+      ],
+    },
+    {
       id: "INTERFACE-FORMS",
       label: "every member of the actions interface is read under any name form, inherited and merged members included, and a call, construct or index signature fails closed",
       cases: [
@@ -1643,6 +1922,17 @@ export const NAMES: Table<NameItem> = {
         actions("actions-call", "  (): void;\n", ["<call-signature>", "onKill"]),
         actions("actions-construct", "  new (): object;\n", ["<construct-signature>", "onKill"]),
         actions("actions-index", "  [action: string]: (() => void) | undefined;\n", ["<index-signature>", "onKill"]),
+      ],
+    },
+    {
+      id: "INTERFACE-HERITAGE",
+      label: "an actions member is read through each heritage and signature shape planted here - a generic base, an Omit base, a type-alias base, a getter signature, a readonly property",
+      cases: [
+        actions("actions-generic", "", ["onArchive", "onKill"], "interface Extra<T> {\n  onArchive?(value: T): void;\n}\n", " extends Extra<string>"),
+        actions("actions-omit", "", ["onArchive", "onKill"], "interface All {\n  onKill?(): void;\n  onArchive?(): void;\n}\n", " extends Omit<All, never>"),
+        actions("actions-alias", "", ["onArchive", "onKill"], "type Archive = { onArchive?(): void };\n", " extends Archive"),
+        actions("actions-getter", "  get onArchive(): () => void;\n", ["onArchive", "onKill"]),
+        actions("actions-readonly", "  readonly onArchive?: () => void;\n", ["onArchive", "onKill"]),
       ],
     },
     {
@@ -1730,6 +2020,7 @@ export const RESIDUAL_FAMILIES: Readonly<Record<string, readonly string[]>> = {
   "R-ALIASED-CLASS": ["READERS R-ALIASED-CLASS"],
   "R-PARAPHRASE": ["ABSENCE R-PARAPHRASE"],
   "R-ERASED-ACCESS": ["REACH R-ERASED-ACCESS"],
+  "R-DEEP-CARRIER": ["REACH R-DEEP-CARRIER"],
   "R-RUNTIME-MEMBER": ["NAMES R-RUNTIME-MEMBER"],
 };
 

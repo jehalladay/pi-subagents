@@ -25,13 +25,29 @@
  * is closed by U2's reader, F3 (identity read through JSON only) by the structural encoding, F4 (indexed-access readers) by
  * the type scan; F1 is the base below.
  *
- * MEASURED (read-only, by the cutting seat, 2026-10-27, at trunk 3223843; the later trunk merges up to the base this cut
- * records change no src file, and that src tree differs from e811dbb, cut #1's base, only by the wb-86q landing, which
- * adds observe-query's identityRefusals reader): src holds 116 TypeScript modules and none spells the program (the mention judge below:
+ * CUT #3 (the respin of refusal #2, gate run g10-gate-s116, under its class-level guard). U1 (the reference side): every key
+ * the reach scan meets - an element access (optional or not), an indexed access type, a binding or an assignment
+ * destructuring under every key form (identifier, string, numeric, computed) - is read through the checker's type of it: a
+ * literal reads its member, a literal union member by member, and any other key over a value that exposes the class's
+ * members fails closed as the marker <unresolved-key>, which RENDER TOUCHES and NON-RENDER red on (KEY-FORMS, KEY-HOLDERS,
+ * UNRESOLVED-KEYS). U2 (the title side): the judged statement is read contiguously, the quotes with every junction between
+ * them pinned, right after the requirement id, and the title is pinned byte for byte as the filing is. F1: R-OPAQUE-STATE
+ * names a #private field and pins it. F2: R-DEFERRED-EFFECT names a deferred admission and a deferred host effect and pins
+ * each with its own 60-second timer, never another surface's timing. F3: the carrier depth bound is CARRIER_DEPTH, stated
+ * below and pinned (RENDER-MODELS inside it, R-DEEP-CARRIER past it). The guard's universals are narrowed to what is
+ * measured: the REACH and NAMES paragraphs below name each planted form, and what the scans do not read is named
+ * (R-ERASED-ACCESS widened to a typed holder's erasing cast, Reflect, prototype lookup and Object property call; R-DEEP-CARRIER).
+ *
+ * MEASURED (read-only, by the cutting seat, 2026-10-27, at trunk 79dadb2 and before it at db2d796; trunk e61eaec, the base
+ * this cut records, changes no src file after 79dadb2; src there differs from 3223843, cut #2's measured trunk, by the wb-4ap.17 landing (src/index.ts,
+ * src/workbench/forge-operation-observer.ts), the wb-jwc.4 landing (src/workbench/providers/reactivefiber.ts) and the wb-3ht.1
+ * landing (src/workbench/hyperunix-observer.ts: a consumed-fields table that references no projection member), and the live
+ * reach map over every src module reads byte for byte the same under cut #2's reach scan and this cut's, at both trunks): src holds 116 TypeScript modules and none spells the program (the mention judge below:
  * 0 findings), so APO state has no Pi surface today and the posture binds the surfaces that present native state. 24 src
  * modules reach the projection as the checker resolves their names: the 10 SURFACES modules and the 14 NON_RENDER readers
  * (the extension entry, the control decision, the control tool and the detached control seam, and the observers and
- * adapters that state what the host admits), none of which a SURFACES module runs. Twelve typed readers (Pick<ObservationProjection,
+ * adapters that state what the host admits), none of which a SURFACES module runs; no key in src reads as <unresolved-key>.
+ * Twelve typed readers (Pick<ObservationProjection,
  * ...>) sit in eight modules, each keeping read members only, and the eight indexed accesses into the class in src are each
  * the argument of Parameters or ReturnType (a statement or a result type: the type scan reads them as keeping no member,
  * the reach scan as type references of relate and refresh). ObservationProjection's public
@@ -71,57 +87,77 @@
  * is not effect authorization" (the type half, syntactic): a Pick or an Omit over the class (in a type or a heritage clause,
  * the class through parentheses, an import type or an intersection) or an indexed access into it, keeping an admission
  * member, is read as a writer; non-literal keys fail closed; a member's Parameters or ReturnType keeps none. ABSENCE, "of
- * APO/native state": the mention judge finds the program's abbreviation and slug in every spelling form and nothing else.
- * REACH, "observation re-projection of APO/native state": planted modules (held in memory, never on disk) prove the reach
- * scan follows every import form, every carrier (a render model, a container, a function, a getter) and every access form,
- * statement and result types included. NAMES, "issues no event admission and no invocation": planted classes and interfaces prove the member readers
- * read every name form and member kind and fail closed on signatures.
+ * APO/native state": the mention judge finds the program's abbreviation and slug in the spelling forms MENTION-FOUND plants
+ * and none of the NOT-MENTIONS words. REACH, "observation re-projection of APO/native state": planted modules (held in
+ * memory, never on disk) measure the reach scan form by form - the import forms IMPORT-FORMS plants (a namespace, an
+ * aliased and a plain import, a re-export chain); the carriers RENDER-MODELS plants (a render model, a pass-through, an
+ * optional chain, a call's result, an array, a keyed map, a function, a getter), to the depth bound: the class instance is
+ * found inside at most CARRIER_DEPTH + 1 = 4 nested wrappers (a union or intersection part, a container's type argument, an
+ * index signature, a call's result) and a typed reader inside at most CARRIER_DEPTH = 3, and an object type whose property
+ * holds the projection is no carrier itself (R-DEEP-CARRIER past the bound); the access forms ACCESS-FORMS plants (a binding
+ * or assignment destructuring, an element access, a typeof query, an indexed access, a statement or result type); the key
+ * forms KEY-FORMS and KEY-HOLDERS plant, each read through the checker's type of the key; and the keys UNRESOLVED-KEYS
+ * plants, each failing closed as <unresolved-key>. What it does not read is named: R-ERASED-ACCESS and R-DEEP-CARRIER.
+ * NAMES, "issues no event admission and no invocation": planted classes and interfaces measure the member readers on the
+ * name forms CLASS-NAME-FORMS plants, the member kinds CLASS-MEMBER-KINDS plants, the declaration shapes CLASS-MEMBER-SHAPES
+ * plants, the interface forms INTERFACE-FORMS plants and the heritage and signature shapes INTERFACE-HERITAGE plants, and
+ * they fail closed on call, construct and index signatures.
  * LIVE ROWS. READER WALK: every src module (git's list, held equal to a filesystem walk) is scanned by the type scan, no
  * typed reader keeps a writer, at a site floor and through a liveness anchor (graph-view's reader). COVERAGE (armed): the
  * src modules that reach the projection, as the checker resolves their names (they name the class, reference a public
  * member of it in a value or a type position, or declare or reference a declaration that carries it: typed as it, as a
- * reader of it, or as a container, a getter, a method or a function that yields it), are exactly the SURFACES modules
+ * reader of it, or as a container, a getter, a method or a function that yields it, to the depth bound), are exactly the SURFACES modules
  * and the NON_RENDER readers, so the first new module that reaches the projection through a typed name (an APO view
  * included) reds here until a SURFACES row judges it or NON_RENDER names and reasons it. NON-RENDER (armed): each
- * NON_RENDER reader references exactly the members its entry names, and none is in the runtime import closure of the
+ * NON_RENDER reader references exactly the members its entry names (a key read through its type, an unresolved one as
+ * <unresolved-key>, which no entry names), and none is in the runtime import closure of the
  * SURFACES modules (the imports that run a module, static or literal dynamic, followed transitively; type-only ones run
  * nothing). RENDER TOUCHES: the SURFACES modules reference read members only, in value and type positions, as the checker
- * resolves them (the static half of the SURFACES rows' runtime reading). MEMBERS: the projection's public instance members,
+ * resolves them, every key through its type and <unresolved-key> failing closed (the static half of the SURFACES rows'
+ * runtime reading). MEMBERS: the projection's public instance members,
  * as the checker reads the class, are exactly READ_MEMBERS and ADMISSION_MEMBERS, the ADMISSION row plants every admission
  * member and REPROJECTION reads every read member. EFFECT CLASSES: the plants invoke every effect class the registry's
  * CapabilityDescriptor declares (its union read literally; any other shape reads none and reds). DIALOG ACTIONS: the plants
  * perform every WorkflowDialogActions member, as the checker reads the interface. ABSENCE WALK: no src module (path and
  * text) spells the program, at a file floor.
  * OUTSIDE ANCHORS (each a source of truth outside this file and its roster): src (COVERAGE, NON-RENDER, RENDER TOUCHES,
- * MEMBERS, EFFECT CLASSES, DIALOG ACTIONS) and the bead's export row (every table quote, the filing's bytes, the two tilings,
- * the program's two spellings in the title), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class
+ * MEMBERS, EFFECT CLASSES, DIALOG ACTIONS) and the bead's export row (every table quote, the filing's bytes, the title's
+ * bytes, the judged statement the quotes and their pinned junctions compose right after the requirement id, the two
+ * tilings, the program's two spellings in the title), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class
  * plant or a dialog-action plant removed from the helper, the frozen literal and the roster together still reds.
- * RESIDUALS (named, each with its pinned quiet row): R-DEFERRED-EFFECT an invocation a render schedules past the settle
- * window (INVOCATION); R-SIDE-CHANNEL an effect through a channel the world does not hold - a module global, a file,
+ * RESIDUALS (named, each with its pinned quiet row): R-DEFERRED-EFFECT an invocation, an admission or a host effect a
+ * render schedules past the settle window - three rounds of immediates, so a timer of any delay, 0 ms included, can land
+ * past it while an immediate does not - each pinned with its own timer (INVOCATION); R-SIDE-CHANNEL an effect through a channel the world does not hold - a module global, a file,
  * the network, or the body of a real host callback the census world replaces with a recorder or a stub (the DIALOG
  * row's deps; the host's own wiring in src/index.ts is not rendered) (EFFECT); R-LATE-DRIFT drift that first appears
  * after N renders (IDENTITY); R-OPAQUE-STATE drift held where neither encoding reads - behind a getter neither invokes
- * (a prototype accessor, a non-enumerable own accessor), in a closure's captured state (IDENTITY); R-FULL-TYPE a
+ * (a prototype accessor, a non-enumerable own accessor), in a closure's captured state, in a #private field a method
+ * moves (IDENTITY); R-FULL-TYPE a
  * parameter typed as the whole projection, or a typeof query over a value that holds it, is not a typed reader to the
  * type scan - COVERAGE and RENDER TOUCHES read such modules instead (READERS); R-ALIASED-CLASS a Pick over an alias of
  * the class or its instance type, or through an alias of the utility, is not read by the type scan (READERS);
  * R-PARAPHRASE a paraphrase of the program or its abbreviation spelled with separators is not a mention (ABSENCE);
  * R-ERASED-ACCESS a module that reaches the projection only through an erased or structural type - a cast from unknown,
  * a structural interface of its own, Reflect, an any - reads as reaching nothing to the reach scan (REACH): COVERAGE
- * does not list it, and only a SURFACES row's runtime reading would judge it; R-RUNTIME-MEMBER a member patched onto
+ * does not list it; and a typed holder's member reached through an erasing step - Reflect, a cast through unknown, a cast
+ * to any, a prototype lookup, an Object property call - is no member reference: the module reaches through its holder alone, so RENDER TOUCHES and
+ * NON-RENDER do not see the member; only a SURFACES row's runtime reading would judge either; R-DEEP-CARRIER a module that
+ * only relays a value whose carrier nests past the depth bound, or an object type whose property holds the projection,
+ * reads as reaching nothing (REACH; any access through such a value exposes its holder); R-RUNTIME-MEMBER a member patched onto
  * the class's prototype at run time is not read by the member readers, which read the declared class and interface
  * (NAMES).
  * NOT CLAIMED (edits of this file, its helper and the roster together): a plant row of IDENTITY, QUIET,
  * WRITE-ANY-ROUTE, OTHER-ROUTES, EVIDENCE-ABORTS, a READERS, REACH or NAMES row or a residual row removed with its
  * frozen-literal element and roster entry (no outside anchor names those plants); a case and its expected reading
- * re-authored together; an assertion narrowed in this file (the SURFACES rows' QUIET comparison cut to fewer fields
+ * re-authored together; the reach scan's key reading or its marker removed from the helper together with the REACH rows
+ * that plant them (the src plants recorded with the cut are their falsifiers); an assertion narrowed in this file (the SURFACES rows' QUIET comparison cut to fewer fields
  * stays green, since every real surface reads QUIET on every field, and the anchor's section reading widened back to
  * the whole row stays green on the clean export: the src and export plants recorded with the cut are those readings'
  * falsifiers); a NON_RENDER reason's prose (its member references and the closure are measured, its words are not); the
  * legacy (non-inspector) dialog frame, whose spinner and elapsed time read a clock by design and which reads no
  * observation beyond the window total.
  * FROZEN SHAPE (standing rule 16): the rule-16 row pins `${table}/${id}:${pins.length}` for every judged row, the NON_RENDER
- * entries, the residual families and the member sets as literals; test/fixtures/apo-rerender-roster.json holds every judged
+ * entries, the residual families, the member sets, CARRIER_DEPTH and the marker as literals; test/fixtures/apo-rerender-roster.json holds every judged
  * row (table, id, label, SHA-256 of each case, test), the NON_RENDER entries, every registered test title and the residual
  * families, judged by this file's last row in order and both ways.
  *
@@ -140,6 +176,7 @@ import {
   ADMISSION,
   ADMISSION_MEMBERS,
   type AdmissionMember,
+  CARRIER_DEPTH,
   classMembers,
   type DialogAction,
   EFFECT,
@@ -171,6 +208,7 @@ import {
   sourceProgram,
   surfaceSubject,
   TABLE_QUOTES,
+  UNRESOLVED_KEY,
 } from "./helpers/apo-rerender-census.js";
 
 const HERE = dirname(fileURLToPath(import.meta.url));
@@ -194,19 +232,29 @@ const SHOWS_FIXTURE = /Furnace attempt F|furnace\/operation\/F|"F"|"examined":\{
 const FILING_HEADER = "Owner filing (2026-10-19, program-triage-2026-10-18; ";
 const FILING_CITATION = "03-operational-semantics.md:7@4b8b974ca72b ";
 const FILING_SHA256 = "cf70b312fb62e564f1deb2b2bdcf983af326e7a2eef87961372b066bc3d35008";
+/** The title opens with the requirement id and the merge target, then the judged statement; its bytes digest to TITLE_SHA256 (as filed at b21beb0). */
+const TITLE_PREFIX = "[MW-ADAPTIVE-POLICY-ORGANIZATIONS-R7] (merge into R6) ";
+const TITLE_SHA256 = "24ad168bd95def0f2803babe15a865003e6cc6141741b096d156ea33cabd6e44";
+/** The export spells the statement's dash as six characters: backslash, u, 2, 0, 1, 4. */
+const DASH = "\\u2014";
+/** The judged statement, from "Rerender" through "no invocation;": the table quotes (even places) and every junction between them (odd places), in order. */
+const STATEMENT_PARTS: readonly string[] = [READERS.quote, ": ", SURFACES.quote, " ", ABSENCE.quote, " ", EFFECT.quote, ` ${DASH} `, ADMISSION.quote, " ", INVOCATION.quote, ";"];
+const STATEMENT = STATEMENT_PARTS.join("");
 const READER_WALK =
   "live: no typed reader (a Pick, an Omit or an indexed access over the class) in any src module keeps an admission member; the walk is every src module and reaches graph-view's reader";
 const COVERAGE =
   "live (armed): every src module that reaches the projection - it names the class, references a member or holds a declaration that carries it, as the checker resolves names - is a SURFACES module or a named non-render reader";
 const NON_RENDER_ROW = "live (armed): each named non-render reader references exactly the members its entry names, and none is in the runtime import closure of the SURFACES modules";
-const RENDER_TOUCHES = "live: the SURFACES modules reference read members of the projection only, in value and type positions, as the checker resolves them";
+const RENDER_TOUCHES =
+  "live: the SURFACES modules reference read members of the projection only, in value and type positions, as the checker resolves them (every key through its type, an unresolved key failing closed)";
 const MEMBERS =
-  "live: the projection's public instance members, as the checker reads the class (every member kind and name form), are exactly the read and admission members, each planted or re-projected";
+  "live: the projection's public instance members, as the checker reads the class (the member kinds, declaration shapes and name forms NAMES plants), are exactly the read and admission members, each planted or re-projected";
 const CLASSES = "live: the invocation plants invoke every effect class the registry's descriptor declares";
-const ACTIONS = "live: the effect plants perform every WorkflowDialogActions member, as the checker reads the interface (every name form, inherited and merged members; signatures fail closed)";
+const ACTIONS =
+  "live: the effect plants perform every WorkflowDialogActions member, as the checker reads the interface (the name forms, heritage and signature shapes NAMES plants; signatures fail closed)";
 const ABSENCE_WALK = "live: no src module spells the program, by path or text; the walk is every src module";
 const ANCHOR =
-  "anchor: every table quote stands once in its section of the bead's export row (the title, or the owner filing, pinned byte for byte) and the quotes tile its statement and acceptance (.beads/issues.jsonl, wb-021.5)";
+  "anchor: every table quote stands once in its section of the bead's export row (the title or the owner filing, each pinned byte for byte), the quotes with every junction between them pinned compose the judged statement contiguously after the requirement id, and the quotes tile the acceptance (.beads/issues.jsonl, wb-021.5)";
 const SLOW = new Set(["SURFACES INSPECTOR", "SURFACES DIALOG", "SURFACES REPROJECTION", READER_WALK, COVERAGE, NON_RENDER_ROW, RENDER_TOUCHES, MEMBERS, ACTIONS, ABSENCE_WALK]);
 const READ_SET: ReadonlySet<string> = new Set(READ_MEMBERS);
 
@@ -429,20 +477,29 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
     expect(filing.startsWith(FILING_HEADER), "the owner filing's header paragraph opens the notes").toBe(true);
     expect(filing.split("\n\n")[1]?.startsWith(FILING_CITATION), "its second paragraph is the acceptance, opened by the authority citation").toBe(true);
     expect(createHash("sha256").update(filing).digest("hex"), "the owner filing, byte for byte as filed").toBe(FILING_SHA256);
+    expect(createHash("sha256").update(row.title).digest("hex"), "the title, byte for byte as filed").toBe(TITLE_SHA256);
     const sections = { title: row.title, filing };
     for (const { table, source, quote } of TABLE_QUOTES) expect(occurrences(sections[source], quote), `${table}: "${quote}" stands once in the ${source}`).toBe(1);
+    expect(row.title.startsWith(`${TITLE_PREFIX}${STATEMENT} `), "the requirement id, the merge target, then the judged statement: its quotes contiguous, every junction between them pinned").toBe(true);
+    expect(occurrences(row.title, STATEMENT), "the judged statement stands once in the title").toBe(1);
     expect(occurrences(row.title, `${SURFACES.quote} ${ABSENCE.quote} ${EFFECT.quote}`), "the statement: surfaces, state, authorization").toBe(1);
     expect(occurrences(row.title, `${ADMISSION.quote} ${INVOCATION.quote};`), "the statement: admission, invocation").toBe(1);
     expect(occurrences(filing, `(${QUIETS.quote} ${IDENTITY.quote})`), "the acceptance: zero invocations and admissions, byte-identical reads, once in the owner filing").toBe(1);
-    expect(row.title.startsWith("[MW-ADAPTIVE-POLICY-ORGANIZATIONS-R7] (merge into R6) "), "the requirement id and the merge target").toBe(true);
+    expect(row.title.startsWith(TITLE_PREFIX), "the requirement id and the merge target").toBe(true);
     expect(mentions(row.title), "the title spells the program both ways the mention judge reads").toEqual(["adaptive policy organizations", "apo"]);
     expect(RENDERS >= 2, "N renders compare at least two").toBe(true);
     // Non-vacuity: a weakened filing whose acceptance a later note re-quotes reads as weakened - the re-quote is outside the filing.
     const weakened = `${FILING_HEADER}plant).\n\n${FILING_CITATION}(refresh N times yields zero admissions)\n\nLATER NOTE (${QUIETS.quote} ${IDENTITY.quote})`;
     expect(occurrences(filingOf(weakened), `(${QUIETS.quote} ${IDENTITY.quote})`), "a later note's re-quote").toBe(0);
+    // Non-vacuity: a qualifier inserted at any junction (after the requirement id, between two quotes, before the closing ;) reads as a different statement.
+    for (const at of STATEMENT_PARTS.keys()) {
+      if (at !== 0 && at % 2 === 0) continue;
+      const planted = `${TITLE_PREFIX}${[...STATEMENT_PARTS.slice(0, at), " unless a host approves it", ...STATEMENT_PARTS.slice(at)].join("")} plant`;
+      expect(planted.startsWith(`${TITLE_PREFIX}${STATEMENT} `), `a qualifier at junction ${at}`).toBe(false);
+    }
   });
 
-  it("rule 16: every judged row, the non-render readers, the residual families and the member sets are frozen at their measured shape", () => {
+  it("rule 16: every judged row, the non-render readers, the residual families, the member sets and the reach scan's depth bound and marker are frozen at their measured shape", () => {
     expect(ROWS.map(entry => `${entry.table}/${entry.id}:${entry.pins.length}`)).toEqual([
       "SURFACES/GRAPH-VIEW:3",
       "SURFACES/TIMELINE:2",
@@ -458,14 +515,14 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "ADMISSION/WRITE-ANY-ROUTE:2",
       "INVOCATION/EVERY-EFFECT-CLASS:4",
       "INVOCATION/OTHER-ROUTES:4",
-      "INVOCATION/R-DEFERRED-EFFECT:1",
+      "INVOCATION/R-DEFERRED-EFFECT:3",
       "EFFECT/EVERY-DIALOG-ACTION:6",
       "EFFECT/EVIDENCE-ABORTS:2",
       "EFFECT/R-SIDE-CHANNEL:1",
       "IDENTITY/DRIFT-FOUND:3",
       "IDENTITY/HIDDEN-DRIFT:10",
       "IDENTITY/R-LATE-DRIFT:1",
-      "IDENTITY/R-OPAQUE-STATE:3",
+      "IDENTITY/R-OPAQUE-STATE:4",
       "QUIET/READ-ONLY-RENDERS:3",
       "READERS/READ-ONLY-PICKS:3",
       "READERS/WRITER-PICKS:4",
@@ -478,12 +535,18 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "ABSENCE/NOT-MENTIONS:3",
       "ABSENCE/R-PARAPHRASE:2",
       "REACH/IMPORT-FORMS:4",
-      "REACH/RENDER-MODELS:8",
+      "REACH/RENDER-MODELS:10",
       "REACH/ACCESS-FORMS:6",
-      "REACH/R-ERASED-ACCESS:4",
+      "REACH/KEY-FORMS:15",
+      "REACH/KEY-HOLDERS:9",
+      "REACH/UNRESOLVED-KEYS:9",
+      "REACH/R-ERASED-ACCESS:9",
+      "REACH/R-DEEP-CARRIER:3",
       "NAMES/CLASS-NAME-FORMS:6",
       "NAMES/CLASS-MEMBER-KINDS:9",
+      "NAMES/CLASS-MEMBER-SHAPES:10",
       "NAMES/INTERFACE-FORMS:10",
+      "NAMES/INTERFACE-HERITAGE:5",
       "NAMES/R-RUNTIME-MEMBER:1",
     ]);
     expect(Object.entries(NON_RENDER).map(([module, entry]) => `${module}:${entry.value.length}+${entry.type.length}`)).toEqual([
@@ -511,14 +574,17 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "R-ALIASED-CLASS:READERS R-ALIASED-CLASS",
       "R-PARAPHRASE:ABSENCE R-PARAPHRASE",
       "R-ERASED-ACCESS:REACH R-ERASED-ACCESS",
+      "R-DEEP-CARRIER:REACH R-DEEP-CARRIER",
       "R-RUNTIME-MEMBER:NAMES R-RUNTIME-MEMBER",
     ]);
-    expect([READ_MEMBERS.join(","), ADMISSION_MEMBERS.join(","), EFFECT_CLASSES.join(","), Object.keys(ACTION_EFFECTS).join(","), String(RENDERS)]).toEqual([
+    expect([READ_MEMBERS.join(","), ADMISSION_MEMBERS.join(","), EFFECT_CLASSES.join(","), Object.keys(ACTION_EFFECTS).join(","), String(RENDERS), String(CARRIER_DEPTH), UNRESOLVED_KEY]).toEqual([
       "aggregate,aggregateStats,events,identityRefusals,indexOf,query,relationRevision,relations,relationsPage,stats,truncation,window",
       "disconnect,ingest,markStale,reconnect,refresh,relate",
       "read,write,external,unknown",
       "onKill,onPause,onResume,onSkipAgent,onRetryAgent,onOpenAgent",
       "4",
+      "3",
+      "<unresolved-key>",
     ]);
   });
 
