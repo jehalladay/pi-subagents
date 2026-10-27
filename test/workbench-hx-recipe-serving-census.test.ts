@@ -21,17 +21,18 @@
  * roster's hxInstall block, and the same ten the wb-kqx.5 filing names. The installed skill's references/agent-workflows.md
  * teaches W1, W2, W3 and W5 as task sections (:309, :336, :361, :386), so the recipes are served wherever that skill loads.
  *
- * MEASURED AT BASE (f381c52, landing 443; re-read at 52812a1, landing 456, for cut #2, and at b7851c4, landing 472, for
- * cut #3): src/skill-loader.ts resolves five roots (<cwd>/.pi/skills, <cwd>/.agents/skills, getAgentDir()/skills =
- * ~/.pi/agent/skills by default, ~/.agents/skills, ~/.pi/skills), README's discovery-roots table and the wb-kqx.5
- * filing state the same five, and none holds an hx install target; every src site that hands settingSources on is [] or
- * a ?? [] default (src/index.ts twice, src/workbench/claude-host.ts, src/workbench/hosts/local-detached.ts) but the
- * operator's own value passed through src/settings.ts, and docs/workbench/13's representative config names ["project"];
- * src's 116 modules launch git, forge and rf by literal command, never hx, and no src literal names a recipe; the only
- * HX surface Pi registers is hyperunix.find, effectClass read, over @hyperunix/sdk; the 107-file Pi document population
- * (100 Markdown files, six .js and one .yaml under docs, examples, new-feedback, .agents and .pi, with the five
- * repo-root Markdown files) holds no hx command and no recipe mention in its rendered view but one line, the wb-kqx.5
- * receipt in the byte-frozen TRACEABILITY.md (:236), which names the hx installer and states the skill not found.
+ * MEASURED AT BASE (f381c52, landing 443; re-read at 52812a1, landing 456, for cut #2, at b7851c4, landing 472, for cut
+ * #3, and at 1fba5bb, landing 494, for cut #4): src/skill-loader.ts resolves five roots (<cwd>/.pi/skills,
+ * <cwd>/.agents/skills, getAgentDir()/skills = ~/.pi/agent/skills by default, ~/.agents/skills, ~/.pi/skills), README's
+ * discovery-roots table and the wb-kqx.5 filing state the same five, and none holds an hx install target; every src
+ * site that hands settingSources on is [] or a ?? [] default (src/index.ts twice, src/workbench/claude-host.ts,
+ * src/workbench/hosts/local-detached.ts) but the operator's own value passed through src/settings.ts, and
+ * docs/workbench/13's representative config names ["project"]; src's 116 modules launch git, forge and rf by literal
+ * command, never hx, and no src literal names a recipe; the only HX surface Pi registers is hyperunix.find, effectClass
+ * read, over @hyperunix/sdk; the 107-file Pi document population (100 Markdown files, six .js and one .yaml under docs,
+ * examples, new-feedback, .agents and .pi, with the five repo-root Markdown files) holds no hx command and no recipe
+ * mention in its rendered view but one line, the wb-kqx.5 receipt in the byte-frozen TRACEABILITY.md (:236), which
+ * names the hx installer and states the skill not found.
  *
  * RESPIN, CUT #2 (refusal #1 of cut #1 6d6a56c3 at PREP F, bound 2026-10-27 by gate-prep-8 of g10-gate-s112; each unmet
  * item and riding finding is cured where named):
@@ -74,30 +75,60 @@
  *    R-OUTSIDE-POPULATION (Q3).
  *  F6, G3's examples are read in each document's view as well as in its raw source (G3-EM, G3-ENT; G3 renderedControl).
  *
+ * RESPIN, CUT #4 (refusal #3 of cut #3 94504c9d at PREP F, bound 2026-10-27 by gate-prep-4 of g10-gate-s114; the loop
+ * cap engaged under rule 19(c), so this cut takes the enumerate-the-resolvable form on the frozen cut #3 shape: no row,
+ * pin, witness, plant, quiet row, control, vocabulary entry or literal is removed, narrowed or re-scoped, and every
+ * mode below is cured or a named residual with a pinned quiet row):
+ *  U1 (a) HIDDEN CONTENT, cured: the view and the hold check alike paint nothing for the content of a HIDDEN_ELEMENTS
+ *    element (hiddenStretches, over the page's tags and over the rendered HTML's own tags), so the gate's
+ *    H-SCRIPT-NAME, H-STYLE-SLUG, H-TEMPLATE-CMD, H-TITLE-CLASS, H-DATALIST-PAGE, H-NOEMBED-NUMBER, H-RP-NAME and
+ *    H-NOFRAMES-CMD read served or named (M7), and H-SCRIPT-HIDES-CMD, a command inside script content, reads none
+ *    (Q9).
+ *  U1 (b) SEPARATORS, cured: a tag is read by the element its name builds (TAG_ALIASES: an image tag builds img, the
+ *    gate's S-IMAGE-ALIAS), and the ruby annotation elements rt and rtc separate (S-RUBY-RT) (M5).
+ *  U1 (c) A MENTION JOINED ACROSS A SOURCE LINE END by a hidden construct, a named residual: R-JOINED-MENTION (Q15: the
+ *    gate's J-NAME-COMMENT, J-CLASS-COMMENT, J-SLUG-COMMENT and J-NAME-TAG2, with the recipe page, a recipe number and
+ *    hidden content spanning the line end; its control is J-NAME-COMMENT-C, the comment on one line).
+ *  U1 (iii) CLAIMS: the view is stated as this census's own procedure, held to marked's HTML reduced by the same rules
+ *    (THE RENDERED VIEW below, htmlShown, viewHeld); Q9 names the source the view paints nothing for. The members met
+ *    at cut #4 that a page's attributes, styling, scripting or parser context decide are named in R-HTML-RENDERING
+ *    (Q12: the hidden attribute, display:none styling, an audio element with and without controls, a dialog without its
+ *    open attribute, noscript content, an open datalist's extent and an xmp's raw text).
+ *  U2, G1's README read: the hidden stretches are hidden there too, and the discovery-roots table is the first table
+ *    after the label that shows text (G1 readmeControls templateCopy: the gate's G1-TEMPLATE-COPY).
+ *  F6, walk liveness: a served line planted past the end of every population page reads served there (N1
+ *    pageFloorMisses: the gate's W-FORGE-NONE-P), beside the longest page's farFloor.
+ *
  * THE RENDERED VIEW: a Markdown page of the population (a file whose extension, in any case, is one of
- * MARKDOWN_EXTENSIONS) is read as its page shows it, line by line. marked's lexer (the repo's pin, 18.0.11, the landed
- * docs censuses' own) cuts the page, and each source line keeps only what renders on it: emphasis, strong,
- * strike-through and link delimiters, code-span backticks, block-quote and list markers, the table delimiter row, and
- * every comment, processing instruction, declaration and CDATA section render nothing; a tag renders one space when its
- * element renders apart from the text around it (SEPARATOR_ELEMENTS: the line break br, its end tag included; the
- * block-level and table elements; the replaced elements that render a box, img and input among them, so a Markdown
- * image and a task checkbox render one space too), save the end tag of a void element other than br, which the parser
- * ignores, and every other tag renders nothing; a table pipe renders one space, so two cells never fuse; a link's
- * destination and title, an image's alt text, a fence line with its info string and a link reference definition render
- * nothing; code-block text renders verbatim, and code-span text too, save one space dropped from each end when both
- * ends hold one (CommonMark's rule, which marked applies); a character reference decodes in text and HTML (a numeric
- * one by code point, the 77 WHATWG named references whose value is ASCII, white space or a folded character by
- * NAMED_REFERENCES, any other name as written: no name of the standard's table holds a matcher token, and any other
- * value is one visible non-ASCII glyph). Every judged line, rendered or raw, is then FOLDED: default-ignorable, format
- * and non-white-space control characters dropped, every white-space run one space. A file that is not Markdown keeps
- * the raw read. The view is held to marked's own HTML: for every Markdown page of the population the folded lines are,
- * in order, the stretches of marked's rendered HTML reduced to its visible text and folded (hidden HTML dropped, every
- * separator tag one space, references decoded), with one space or none between two lines and the white space inside a
- * line as the page shows it, so a view that fuses two words the page shows apart inside a line does not hold (N1
- * viewMismatches; M5's fused controls); a page whose tokens the walk cannot map is read raw and named (N1 unmapped), so
- * a mapping failure is always loud: the measured shapes are CR LF line ends, which marked's lexer rewrites, and a
- * block-quoted list followed by a lazy HTML line, whose raw marked rebuilds with an added blank line; the population
- * holds neither.
+ * MARKDOWN_EXTENSIONS) is read in the rendered view, line by line, by the rules below: this census's own reading of the
+ * page's Markdown and HTML, held to marked's own HTML by the hold check, never a browser's drawing of the page.
+ * marked's lexer (the repo's pin, 18.0.11, the landed docs censuses' own) cuts the page, and each source line keeps
+ * only what the rules paint on it: emphasis, strong, strike-through and link delimiters, code-span backticks,
+ * block-quote and list markers, the table delimiter row, and every comment, processing instruction, declaration and
+ * CDATA section paint nothing; a tag paints one space when the element its name builds (in any case, renamed as the
+ * parser renames it: TAG_ALIASES, so an image tag builds img) is one of SEPARATOR_ELEMENTS (the line break br, its end
+ * tag included; the block-level and table elements; the ruby annotation elements rt and rtc; the replaced elements that
+ * render a box, img and input among them, so a Markdown image and a task checkbox paint one space too), save the end
+ * tag of a void element other than br, which the parser ignores, and every other tag paints nothing; the content of a
+ * HIDDEN_ELEMENTS element paints nothing from its start tag through its own end tag, or to the page's end when no end
+ * tag closes it (a nested start tag of its name counted, save in the RAW_TEXT_ELEMENTS, where no tag is a tag; an
+ * iframe keeps the one space its start tag paints), and every other element's content is read as text; a table pipe
+ * paints one space, so two cells never fuse; a link's destination and title, an image's alt text, a fence line with its
+ * info string and a link reference definition paint nothing; code-block text paints verbatim, and code-span text too,
+ * save one space dropped from each end when both ends hold one (CommonMark's rule, which marked applies); a character
+ * reference decodes in text and HTML (a numeric one by code point, the 77 WHATWG named references whose value is ASCII,
+ * white space or a folded character by NAMED_REFERENCES, any other name as written: no name of the standard's table
+ * holds a matcher token, and any other value is one visible non-ASCII glyph). Every judged line, rendered or raw, is
+ * then FOLDED: default-ignorable, format and non-white-space control characters dropped, every white-space run one
+ * space. A file that is not Markdown keeps the raw read. The view is held to marked's own HTML: for every Markdown page
+ * of the population the folded lines are, in order, the stretches of marked's rendered HTML reduced by the same rules
+ * and folded (htmlShown: the hidden HTML dropped, every separator tag one space, the hidden stretches over the rendered
+ * HTML's own tags dropped, references decoded), with one space or none between two lines and the white space inside a
+ * line as that reduced HTML holds it, so a view that fuses two words inside a line that the reduced HTML keeps apart
+ * does not hold (N1 viewMismatches; M5's fused controls; M7's hold controls); a page whose tokens the walk cannot map
+ * is read raw and named (N1 unmapped), so a mapping failure is always loud: the measured shapes are CR LF line ends,
+ * which marked's lexer rewrites, and a block-quoted list followed by a lazy HTML line, whose raw marked rebuilds with
+ * an added blank line; the population holds neither.
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label; the labels of G, N and E are the owner
  * filing's own clauses, verbatim from the tracked bead export):
@@ -105,12 +136,13 @@
  *    measured under a scratch HOME, both in the witness) equal the roster's five, README's table and the wb-kqx.5
  *    filing's, the roster's ten hx targets equal the filing's ten, and no target lies inside a root (the same predicate
  *    finds the default target inside a planted ~/.skills root); README's table is read in its rendered view, the
- *    "Discovery roots" label shown exactly once there and the table after it read cell by cell as the page shows it
- *    (readmeControls: a commented copy ahead of a visible table is not read, a label shown twice is counted twice); G2
- *    through the real preloadSkills under a scratch HOME a stand-in hyper-unix skill planted at all ten targets still
- *    reads the not-found placeholder, while the same stand-in planted at each of the five roots in turn is found (the
- *    positive control); G3 the Claude host hands the SDK settingSources [] when none is configured (an injected query
- *    records the options), every src settingSources site is [] or a ?? [] default but the operator passthrough in
+ *    "Discovery roots" label shown exactly once there and the first table after it that shows text read cell by cell in
+ *    the view (readmeControls: a commented copy ahead of a visible table is not read, a label shown twice is counted
+ *    twice, and a table inside a template element is not read, the visible table after it is); G2 through the real
+ *    preloadSkills under a scratch HOME a stand-in hyper-unix skill planted at all ten targets still reads the
+ *    not-found placeholder, while the same stand-in planted at each of the five roots in turn is found (the positive
+ *    control); G3 the Claude host hands the SDK settingSources [] when none is configured (an injected query records
+ *    the options), every src settingSources site is [] or a ?? [] default but the operator passthrough in
  *    src/settings.ts, docs/13's example is ["project"], and no Pi document example names the user source in an inline
  *    array literal, read in the document's view (a fenced example shows verbatim there, emphasis and references render)
  *    and in its raw source alike (the same reader finds it in a planted example, and in a planted prose example spelled
@@ -123,7 +155,8 @@
  *    them, and nothing inside those trees, in another dot directory or without a document extension; the repo-root
  *    documents are the documents at its root), every line judged (the recorded verdicts counted against the
  *    population's own line count) and judged to the end of the longest page (farFloor: a served line planted past it
- *    reads served), every Markdown page mapped and its view held to marked's HTML; no line reads served or named
+ *    reads served) and of every page (pageFloorMisses: a served line planted past the end of each population page reads
+ *    served there), every Markdown page mapped and its view held to marked's HTML; no line reads served or named
  *    (lineVerdict) and the TRACEABILITY.md:236 floor reads negated; N2 the repo's own skill and agent roots serve no
  *    hyper-unix skill: preloadSkills from the repo root reads the placeholder for it while beads, the one tracked
  *    project skill, is read, and no tracked .pi agent and no default agent declares it (the same predicate reads a
@@ -149,12 +182,19 @@
  *    lines of a marked-up page do not hold to marked's HTML while its rendered view does, and a page whose tokens
  *    cannot be mapped (CR LF line ends, which marked rewrites) is named unmapped and read raw; M5 the separators on
  *    blocks planted on the same page: br in every spelling, case and self-closing form (its end tag included),
- *    block-level and table elements met inline or in a block, and the replaced elements (a raw img or input, a Markdown
- *    image) keep the skill name, a slug, a decision class, the recipe page and the hx command apart from the next word,
- *    so each reads served or named and its view holds, while the fused view of the same page does not hold; the
- *    controls: an inline element (span, b) and a void separator's end tag still render nothing, so a word split by one
- *    reads whole; M6 the page names: a page holding the T4 form under every Markdown extension spelling, in lower,
- *    upper and mixed case, is judged in the rendered view and reads served, while the same page named .txt is read raw.
+ *    block-level and table elements met inline or in a block, the replaced elements (a raw img or input, a Markdown
+ *    image, and an image tag, which builds img), and the ruby annotation elements rt and rtc (an rp's content hidden)
+ *    keep the skill name, a slug, a decision class, the recipe page and the hx command apart from the next word, so
+ *    each reads served or named and its view holds, while the fused view of the same page does not hold; the controls:
+ *    an inline element (span, b) and a void separator's end tag still render nothing, so a word split by one reads
+ *    whole; M6 the page names: a page holding the T4 form under every Markdown extension spelling, in lower, upper and
+ *    mixed case, is judged in the rendered view and reads served, while the same page named .txt is read raw; M7 the
+ *    hidden content on blocks planted on the same page: the content of a HIDDEN_ELEMENTS element paints nothing (each
+ *    of the nine elements; a script in upper case, with an attribute and holding tags; nested templates; a script in a
+ *    table cell, a style in a list item, a template in a block quote and a title in a heading), so the skill name, a
+ *    slug, a decision class, the recipe page, a recipe number and the hx command it splits read served or named and
+ *    each view holds; a page's text after a closed hidden block is read, an unclosed script hides the rest of the page,
+ *    and the views that read the hidden content as text do not hold.
  *  R, the named residuals, each a pinned quiet row (the escape stays uncaught; the row reds when that changes): Q1
  *    R-PARAPHRASE a recipe retold without its slug, page, number, decision class, skill name or an hx command reads
  *    none; Q2 R-SPLIT-COMMAND an hx command broken across source lines before its first option or verb reads none on
@@ -171,24 +211,37 @@
  *    filing's positive, not measured here) outside every default and document this census reads; Q7 R-HEADLESS-BODY a
  *    recipe body line copied without its heading and holding no mention or command (W7 step 3) reads none; Q8
  *    R-BOUND-LAUNCH a launch whose command arrives through a binding or an expression is not seen by N3's literal scan;
- *    Q9 R-HIDDEN-SOURCE what the page hides is not read: a comment (T13's comment-only command, and a comment block), a
- *    fence's info string, an image's alt text, a link's title, a tag's attribute and a link reference definition each
- *    read none, while the same command as an element's text reads served; Q10 R-EXAMPLE-SHAPE a settingSources example
- *    written as a YAML block list or bound through a name (the gate's G3-Y and G3-B) is not read by G3, while the
- *    multi-line JSON array (G3-J) is; Q11 R-CONFUSABLE a token spelled with look-alike or compatibility characters
- *    (fullwidth, Cyrillic, mathematical double-struck, a combining mark inside it) reads none: the fold drops
- *    invisibles, never compatibility or look-alike forms; Q12 R-HTML-RENDERING a tag is read by its element's name
- *    alone (SEPARATOR_ELEMENTS or not), never by the parser's context, the tag's attributes or styling (the page's, or
+ *    Q9 R-HIDDEN-SOURCE the source the view paints nothing for is not read, so a recipe copy kept there is not seen: a
+ *    comment (T13's comment-only command, and a comment block), a fence's info string, an image's alt text, a link's
+ *    title, a tag's attribute, a link reference definition and a HIDDEN_ELEMENTS element's content (a command inside
+ *    script content, the gate's H-SCRIPT-HIDES-CMD, and a template block holding one) each read none, while the same
+ *    command as an element's text reads served; Q10 R-EXAMPLE-SHAPE a settingSources example written as a YAML block
+ *    list or bound through a name (the gate's G3-Y and G3-B) is not read by G3, while the multi-line JSON array (G3-J)
+ *    is; Q11 R-CONFUSABLE a token spelled with look-alike or compatibility characters (fullwidth, Cyrillic,
+ *    mathematical double-struck, a combining mark inside it) reads none: the fold drops invisibles, never compatibility
+ *    or look-alike forms; Q12 R-HTML-RENDERING a tag is read by the element its name builds alone (SEPARATOR_ELEMENTS,
+ *    HIDDEN_ELEMENTS or neither; a hidden stretch ends at its own end tag), never by the parser's tree context (its
+ *    open elements and insertion modes), the user agent's scripting, the tag's attributes or styling (the page's, or
  *    the content a default style generates): a block-level end tag with no open element of its name and a table cell
  *    outside a table (both ignored by the page's parser, so the page fuses the words around them), a separator element
  *    an attribute hides (an input of type hidden), an inline element styled to render apart (style="display:block"),
- *    the quotation marks a q element's default style generates and the text an attribute shows (an input's value
- *    holding an hx command) each read none, while the same skill sentence written plainly reads served; Q13
- *    R-OTHER-MARKUP a page whose extension is not a Markdown one is read raw, so another markup's syntax
- *    (reStructuredText strong, AsciiDoc strong, an HTML page's tags) and Markdown named .txt or with no extension are
- *    read as written and a command marked up in them reads none, while the same page with the plain command reads
- *    served; Q14 R-SHELL-SPELLING a binary the shell assembles from pieces (a quote inside the name, h"x", 'h'x or
- *    h''x, or an escaped letter, h\x) reads none, while the wholly quoted binary reads served.
+ *    the quotation marks a q element's default style generates, the text an attribute shows (an input's value holding
+ *    an hx command), content an attribute or styling hides (the hidden attribute, style="display:none"), an audio
+ *    element (without controls it renders nothing, with them a box), a dialog without its open attribute (which the
+ *    page hides, so the words around it fuse), noscript content (which the page hides when scripting is enabled), a
+ *    hidden element left open whose stretch runs to the page's end where the parser ends it sooner (a datalist ended by
+ *    its paragraph's end, so the page shows the next paragraph) and the tags inside an element the parser reads as raw
+ *    text the page shows (an xmp, which shows a tag's text) each read none, while the same skill sentence written
+ *    plainly reads served; Q13 R-OTHER-MARKUP a page whose extension is not a Markdown one is read raw, so another
+ *    markup's syntax (reStructuredText strong, AsciiDoc strong, an HTML page's tags) and Markdown named .txt or with no
+ *    extension are read as written and a command marked up in them reads none, while the same page with the plain
+ *    command reads served; Q14 R-SHELL-SPELLING a binary the shell assembles from pieces (a quote inside the name,
+ *    h"x", 'h'x or h''x, or an escaped letter, h\x) reads none, while the wholly quoted binary reads served; Q15
+ *    R-JOINED-MENTION a skill name, slug, decision class, recipe page or recipe number broken across a source line end
+ *    that a hidden construct spans (a comment, a tag whose attributes run onto the next line, or a hidden element's
+ *    content), which the page shows whole on one line, reads none on each line: the view judges source lines, never a
+ *    joined paragraph (Q2's mechanism, which Q2 names for the hx command), while the same comment on one line reads
+ *    served.
  * THE RECORD (F2): every pin's case pushes its id to REACHED after its witness compare, and the last case walks
  * vitest's own task tree: every registered test title equals the roster's ordered tests list, none registered twice,
  * the record registered last, every other test in run mode, not inverted and run, and REACHED equals ROWS' pins in row
@@ -196,13 +249,13 @@
  * each red it.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal. OUTSIDE ANCHORS: the out-of-file
  * roster test/fixtures/hx-recipe-serving-roster.json holds every row's id, label and pins, every pin's witness, the
- * residual names, the vocabularies (NAMED_REFERENCES, SEPARATOR_ELEMENTS, VOID_SEPARATORS and the two extension lists
- * among them), the ordered test titles, the hx capture and the recipe extract, so a pin deleted, relabelled, swapped
- * for another passing case or removed from every literal of this file at once still reds against it; the tracked bead
- * export (.beads/issues.jsonl) holds rows G, N and E's labels (the wb-ts6.1 title and notes; read against this file's
- * labels and again against the roster's), the W1-W8 range E1 holds the recipes to, and the wb-kqx.5 tables G1 holds the
- * roots and targets to; G1-G3 and N1-N3 read src, README, the docs and the loader at run time, and N1 holds the
- * rendered view to marked's own HTML.
+ * residual names, the vocabularies (NAMED_REFERENCES, SEPARATOR_ELEMENTS, VOID_SEPARATORS, HIDDEN_ELEMENTS,
+ * RAW_TEXT_ELEMENTS, TAG_ALIASES and the two extension lists among them), the ordered test titles, the hx capture and
+ * the recipe extract, so a pin deleted, relabelled, swapped for another passing case or removed from every literal of
+ * this file at once still reds against it; the tracked bead export (.beads/issues.jsonl) holds rows G, N and E's labels
+ * (the wb-ts6.1 title and notes; read against this file's labels and again against the roster's), the W1-W8 range E1
+ * holds the recipes to, and the wb-kqx.5 tables G1 holds the roots and targets to; G1-G3 and N1-N3 read src, README,
+ * the docs and the loader at run time, and N1 holds the rendered view to marked's own HTML.
  * SCOPE: the recipe extract and the hx capture are producer and host facts at 694570cd00c2 and hx 0.1.0; Pi vendors no hx
  * source, so a producer change is seen only when the roster is re-captured. The parent Pi session's own skill discovery
  * belongs to @earendil-works/pi-coding-agent and is not read here. The armed half - a serving Pi doc/example bound to the
@@ -351,10 +404,13 @@ const MARKDOWN_EXTENSIONS = ["livemd", "markdown", "md", "mdown", "mdtext", "mdt
 /** The other document extensions, read in any case and read raw (R-OTHER-MARKUP): plain text, HTML and the other markups. */
 const OTHER_DOCUMENT_EXTENSIONS = ["adoc", "asc", "asciidoc", "creole", "htm", "html", "mediawiki", "org", "pod", "rdoc", "rest", "rst", "scd", "text", "textile", "txt", "wiki"];
 /**
- * The elements a page renders apart from the text around them: the line break, the block-level and table elements (the
- * HTML rendering's block, list-item and table display types; the column elements, which hold no text, left out) and the
- * replaced elements that render a box. Each of their tags renders one space in the view, so the words either side never
- * fuse; every other tag renders nothing. The tag's name alone decides (R-HTML-RENDERING).
+ * The elements a page renders apart from the text around them (a dialog the page hides without its open attribute, and an
+ * input of type hidden, are R-HTML-RENDERING): the line break, the block-level and table elements (the
+ * HTML rendering's block, list-item and table display types; the column elements, which hold no text, left out), the ruby
+ * annotation elements rt and rtc (display: ruby-text and ruby-text-container, set apart from their base) and the replaced
+ * elements that render a box. Each of their tags renders one space in the view (outside a hidden stretch), so the words
+ * either side never fuse; every other tag renders nothing. The element's name alone decides, the name the parser gives
+ * it (TAG_ALIASES) (R-HTML-RENDERING).
  */
 const SEPARATOR_ELEMENTS = [
   "address",
@@ -404,6 +460,8 @@ const SEPARATOR_ELEMENTS = [
   "plaintext",
   "pre",
   "progress",
+  "rt",
+  "rtc",
   "search",
   "section",
   "select",
@@ -423,6 +481,20 @@ const SEPARATOR_ELEMENTS = [
 ];
 /** The separators that are void elements: the parser ignores their end tags, save br's, which it reads as a line break. */
 const VOID_SEPARATORS = ["br", "embed", "hr", "img", "input"];
+/**
+ * The elements whose content the view hides, by name (U1 (a), cut #4): the content-holding members of the HTML Standard
+ * rendering section 15.3.1's display:none list (datalist, noembed, noframes, rp, script, style, template, whose contents
+ * are inert, and title; its void members area, base, basefont, link, meta and param hold no content, and the parser
+ * ignores a head tag met in a body, so text between head tags is read) and iframe, whose raw-text content is never
+ * rendered. Every other element's content is read as text, content a page may not show among it (the fallback content of
+ * canvas, object, audio and video, noscript content when scripting is enabled, a closed details element's body): the
+ * stricter direction.
+ */
+const HIDDEN_ELEMENTS = ["datalist", "iframe", "noembed", "noframes", "rp", "script", "style", "template", "title"];
+/** Of them, the elements the parser reads as raw text or RCDATA: no tag inside one is a tag, so the first end tag of its own name ends it. */
+const RAW_TEXT_ELEMENTS = ["iframe", "noembed", "noframes", "script", "style", "title"];
+/** The tag names the in-body parser renames before it builds the element (the HTML Standard: an image start tag builds img; its end tag matches no open element and is ignored), as name=element. */
+const TAG_ALIASES = ["image=img"];
 /**
  * The named character references the rendered view decodes, as name=code points: every WHATWG named reference whose value
  * is ASCII, white space or a character the fold drops (77 of the standard's 2125 names with the semicolon, read from its
@@ -516,10 +588,10 @@ const NAMED_REFERENCES: ReadonlyMap<string, string> = new Map(
 );
 
 /* ---------------------------------------------------------------------------------------------------------------------------
- * The rendered view (U1): what each source line of a Markdown page shows, the one view rows N and E judge a page in.
+ * The rendered view (U1): what the rules paint on each source line of a Markdown page, the one view rows N and E judge a page in.
  * ------------------------------------------------------------------------------------------------------------------------- */
 
-/** Default-ignorable, format and non-white-space control characters: the page shows none of them, so the fold drops them. */
+/** Default-ignorable, format and non-white-space control characters: none is a letter, a digit or white space, so the fold drops them. */
 const INVISIBLE = /[\p{Default_Ignorable_Code_Point}\p{Cf}]|[^\P{Cc}\t\n\v\f\r]/gu;
 /** One judged line as the reader compares it: the invisibles dropped, then every white-space run one space, trimmed. */
 const folded = (line: string): string => line.replace(INVISIBLE, "").replace(/\s+/g, " ").trim();
@@ -540,14 +612,23 @@ const HTML_HIDDEN =
   /<!--[\s\S]*?(?:-->|$)|<\?[\s\S]*?(?:\?>|$)|<![A-Za-z][\s\S]*?(?:>|$)|<!\[CDATA\[[\s\S]*?(?:\]\]>|$)|<\/?[A-Za-z][A-Za-z0-9-]*(?:\s+[^\s"'>/=]+(?:\s*=\s*(?:"[^"]*"|'[^']*'|[^\s"'=<>`]+))?)*\s*\/?>/g;
 /** A tag's closing slash and element name (a comment, an instruction, a declaration or CDATA has none). */
 const TAG_NAME = /^<(\/?)([A-Za-z][A-Za-z0-9-]*)/;
+const ALIASES: ReadonlyMap<string, string> = new Map(
+  TAG_ALIASES.map(entry => {
+    const [name = "", element = ""] = entry.split("=");
+    return [name, element] as const;
+  }),
+);
+/** The element a tag name builds: the name lower-cased, then renamed as the parser renames it (TAG_ALIASES). */
+const elementOf = (name: string): string => ALIASES.get(name.toLowerCase()) ?? name.toLowerCase();
 /**
- * Whether one hidden-HTML match renders apart from the text around it (one space): a tag of a SEPARATOR_ELEMENTS element
- * in any case, save the end tag of a void separator other than br, which the page's parser ignores.
+ * Whether one hidden-HTML match renders apart from the text around it (one space): a tag that builds a SEPARATOR_ELEMENTS
+ * element (any case; an aliased name read as its element), save the end tag of a void separator other than br, which the
+ * page's parser ignores.
  */
 function separates(hidden: string): boolean {
   const tag = TAG_NAME.exec(hidden);
   if (tag === null) return false;
-  const name = (tag[2] ?? "").toLowerCase();
+  const name = elementOf(tag[2] ?? "");
   if (!SEPARATOR_ELEMENTS.includes(name)) return false;
   return tag[1] !== "/" || name === "br" || !VOID_SEPARATORS.includes(name);
 }
@@ -559,6 +640,59 @@ interface Frame {
 }
 /** What each page offset shows: its own character, a decoded reference's value (at the reference's first offset), a space, or nothing. */
 type Shown = string[];
+/** One tag met in raw HTML: its first and last offsets, the element it builds, whether it closes one and whether it separates. */
+interface TagMet {
+  readonly from: number;
+  readonly to: number;
+  readonly name: string;
+  readonly closing: boolean;
+  readonly separator: boolean;
+}
+/** The tags each painted page met (paintPage registers a page's list; paintHtml appends to it). */
+const TAGS_MET = new WeakMap<Shown, TagMet[]>();
+function tagMet(hidden: string, from: number, to: number): TagMet | undefined {
+  const tag = TAG_NAME.exec(hidden);
+  if (tag === null) return undefined;
+  return { from, to, name: elementOf(tag[2] ?? ""), closing: tag[1] === "/", separator: separates(hidden) };
+}
+interface Stretch {
+  readonly from: number;
+  readonly to: number;
+  readonly separator: boolean;
+}
+/**
+ * The stretches a page hides (U1 (a)), over its tags in offset order: from the start tag of a HIDDEN_ELEMENTS element
+ * through its own end tag (a nested start tag of the same name counted, save in a raw-text or RCDATA element, where no tag
+ * is a tag), or to the page's end when no end tag closes it. That is the parser's extent for the raw-text and RCDATA
+ * elements and template; the parser can end an open datalist or rp sooner, at its parent's end (R-HTML-RENDERING). A
+ * stretch keeps one space at its start when its element separates (iframe).
+ */
+function hiddenStretches(tags: readonly TagMet[], end: number): Stretch[] {
+  const stretches: Stretch[] = [];
+  let open: { readonly start: TagMet; depth: number } | undefined;
+  for (const tag of [...tags].sort((left, right) => left.from - right.from)) {
+    if (open === undefined) {
+      if (!tag.closing && HIDDEN_ELEMENTS.includes(tag.name)) open = { start: tag, depth: 1 };
+    } else if (tag.name === open.start.name && !tag.closing) {
+      if (!RAW_TEXT_ELEMENTS.includes(tag.name)) open.depth += 1;
+    } else if (tag.name === open.start.name) {
+      open.depth -= 1;
+      if (open.depth === 0) {
+        stretches.push({ from: open.start.from, to: tag.to, separator: open.start.separator });
+        open = undefined;
+      }
+    }
+  }
+  if (open !== undefined) stretches.push({ from: open.start.from, to: end, separator: open.start.separator });
+  return stretches;
+}
+/** Hides each stretch: every offset in it shows nothing, save one space at the start of a separating element's stretch. */
+function hideStretches(shown: Shown, stretches: readonly Stretch[]): void {
+  for (const { from, to, separator } of stretches) {
+    for (let index = from; index <= to; index += 1) shown[index] = "";
+    if (separator) shown[from] = " ";
+  }
+}
 const lineStartsOf = (text: string): number[] => {
   const starts = [0];
   for (let index = 0; index < text.length; index += 1) if (text[index] === "\n") starts.push(index + 1);
@@ -633,12 +767,14 @@ function paintText(shown: Shown, frame: Frame, at: number, raw: string): void {
   }
   paintVerbatim(shown, frame, at + last, raw.slice(last));
 }
-/** Raw HTML (a block, or an inline tag or comment): a separator tag shows one space, the other hidden parts nothing, the rest is text. */
+/** Raw HTML (a block, or an inline tag or comment): a separator tag shows one space, the other hidden parts nothing, the rest is text; each tag is logged for the hidden stretches. */
 function paintHtml(shown: Shown, frame: Frame, at: number, raw: string): void {
   let last = 0;
   for (const match of raw.matchAll(HTML_HIDDEN)) {
     paintText(shown, frame, at + last, raw.slice(last, match.index));
     if (separates(match[0])) shown[frame.at(at + match.index)] = " ";
+    const tag = tagMet(match[0], frame.at(at + match.index), frame.at(at + match.index + match[0].length - 1));
+    if (tag !== undefined) TAGS_MET.get(shown)?.push(tag);
     last = match.index + match[0].length;
   }
   paintText(shown, frame, at + last, raw.slice(last));
@@ -760,30 +896,50 @@ function paintToken(shown: Shown, token: Token, frame: Frame, at: number): void 
       throw new Error(`no rendered map for a ${token.type} token`);
   }
 }
-/** What each offset of a Markdown page shows, and the page's top-level tokens; throws where a token cannot be mapped to its source. */
+/** What each offset of a Markdown page shows in the view, the hidden stretches hidden, and the page's top-level tokens; throws where a token cannot be mapped to its source. */
 function paintPage(text: string): { readonly shown: Shown; readonly tokens: readonly Token[] } {
   const tokens = marked.lexer(text);
   if (tokens.map(token => token.raw).join("") !== text) throw new Error("the lexed tokens do not rebuild the page");
   const shown: Shown = new Array<string>(text.length).fill("");
+  const tags: TagMet[] = [];
+  TAGS_MET.set(shown, tags);
   paintTokens(shown, tokens, { text, at: offset => offset });
+  hideStretches(shown, hiddenStretches(tags, text.length - 1));
   return { shown, tokens };
 }
 /** The stretch of a painted page from one offset to another, as shown. */
 const shownBetween = (shown: Shown, from: number, to: number): string => shown.slice(from, to).join("");
-/** Each source line of a Markdown page as the page shows it, one entry per line; throws where a token cannot be mapped to its source. */
+/** Each source line of a Markdown page in the rendered view, one entry per line; throws where a token cannot be mapped to its source. */
 function renderedLines(text: string): string[] {
   const { shown } = paintPage(text);
   const starts = lineStartsOf(text);
   return starts.map((start, index) => shownBetween(shown, start, index + 1 < starts.length ? (starts[index + 1] ?? text.length) - 1 : text.length));
 }
-/** marked's own rendering of the page reduced to what a reader sees: each separator tag one space, the other hidden HTML dropped, references decoded. */
-const htmlShown = (text: string): string =>
-  decodeReferences(marked.parse(text, { async: false }).replace(HTML_HIDDEN, (hidden: string) => (separates(hidden) ? " " : "")));
 /**
- * A line view of a page is marked's rendered HTML as its reader sees it: both folded, each non-empty view line is in order
- * the next stretch of the page's text, and between two lines the page shows one space or none (a source line end shows
- * one; a hidden construct that swallows it, none: R-SPLIT-COMMAND). Inside a line the white space must be the page's, so a
- * view that fuses two words the page shows apart, or parts two it shows joined, does not hold.
+ * marked's own rendering of the page reduced by the view's rules (each separator tag one space, the other hidden HTML
+ * dropped, the stretches hiddenStretches finds over the rendered HTML's own tags dropped, references decoded): the text
+ * the hold check compares the view with.
+ */
+function htmlShown(text: string): string {
+  const html = marked.parse(text, { async: false });
+  const shown: Shown = html.split("");
+  const tags: TagMet[] = [];
+  for (const match of html.matchAll(HTML_HIDDEN)) {
+    const to = match.index + match[0].length - 1;
+    for (let index = match.index; index <= to; index += 1) shown[index] = "";
+    if (separates(match[0])) shown[match.index] = " ";
+    const tag = tagMet(match[0], match.index, to);
+    if (tag !== undefined) tags.push(tag);
+  }
+  hideStretches(shown, hiddenStretches(tags, html.length - 1));
+  return decodeReferences(shown.join(""));
+}
+/**
+ * A line view of a page holds to marked's rendered HTML reduced by the view's rules (htmlShown): both folded, each
+ * non-empty view line is in order the next stretch of that text, and between two lines it holds one space or none (a
+ * source line end holds one; a hidden construct that spans it, none: R-SPLIT-COMMAND, R-JOINED-MENTION). Inside a line
+ * the white space must be that text's, so a view that fuses two words it keeps apart, or parts two it keeps joined, does
+ * not hold.
  */
 function viewHeld(lines: readonly string[], text: string): boolean {
   const page = folded(htmlShown(text));
@@ -920,12 +1076,12 @@ const ROWS: readonly Row[] = [
   {
     id: "M",
     label: "the matchers rows G, N and E read catch every spelling family they name and leave the near misses clean",
-    pins: ["M1", "M2", "M3", "M4", "M5", "M6"],
+    pins: ["M1", "M2", "M3", "M4", "M5", "M6", "M7"],
   },
   {
     id: "R",
     label: "the named residuals, each a pinned quiet row that reds when its escape stops being quiet",
-    pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13", "Q14"],
+    pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8", "Q9", "Q10", "Q11", "Q12", "Q13", "Q14", "Q15"],
   },
 ];
 const RESIDUALS: Readonly<Record<string, string>> = {
@@ -943,6 +1099,7 @@ const RESIDUALS: Readonly<Record<string, string>> = {
   Q12: "R-HTML-RENDERING",
   Q13: "R-OTHER-MARKUP",
   Q14: "R-SHELL-SPELLING",
+  Q15: "R-JOINED-MENTION",
 };
 
 /* ---------------------------------------------------------------------------------------------------------------------------
@@ -1169,13 +1326,14 @@ function loaderRootsOf(text: string): string[] {
   visit(parse("skill-loader.ts", text));
   return roots;
 }
-/** The label README's discovery-roots table opens with, as its page shows it. */
+/** The label README's discovery-roots table opens with, in the rendered view. */
 const ROOTS_LABEL = "Discovery roots";
 /**
- * README "Skill Preloading" discovery-roots table as its page shows it (U2: the uniqueness check and the extraction read
- * the same, rendered, view): the rendered lines that open with the label, counted (a commented copy shows nothing, a label
- * shown twice is counted twice), and the first table after the first of them, one root per row from its Path cell as the
- * page shows it (a row's stated default wins over its variable form).
+ * README "Skill Preloading" discovery-roots table in the rendered view (U2: the uniqueness check and the extraction read the
+ * same view, hidden stretches hidden): the view lines that open with the label, counted (a commented copy, or one inside a
+ * hidden element, shows nothing; a label shown twice is counted twice), and the first table after the first of them that
+ * shows text (a table inside a template element shows none), one root per row from its Path cell in the view (a row's
+ * stated default wins over its variable form).
  */
 function readmeRootsOf(text: string): { readonly labels: number; readonly roots: string[] } {
   const { shown, tokens } = paintPage(text);
@@ -1187,7 +1345,7 @@ function readmeRootsOf(text: string): { readonly labels: number; readonly roots:
   let offset = 0;
   let table: { readonly at: number; readonly token: Tokens.Table } | undefined;
   for (const token of tokens) {
-    if (table === undefined && offset > (starts[first] ?? 0) && isTable(token)) table = { at: offset, token };
+    if (table === undefined && offset > (starts[first] ?? 0) && isTable(token) && /\S/.test(shownBetween(shown, offset, offset + token.raw.length))) table = { at: offset, token };
     offset += token.raw.length;
   }
   if (table === undefined) throw new Error(`README shows no table after its ${ROOTS_LABEL} label`);
@@ -1550,6 +1708,8 @@ const HIDDEN_CASES: readonly string[] = [
   '[census](https://example.invalid/hx "hx git diff $TRUNK $BRANCH")',
   '<span title="hx git diff $TRUNK $BRANCH">census</span>',
   '\n[census]: https://example.invalid/hx "hx git diff $TRUNK $BRANCH"',
+  "Agents read <script>hx git diff $TRUNK $BRANCH</script> nothing here.",
+  "<template>\nRun hx git diff $TRUNK $BRANCH\n</template>",
 ];
 const HIDDEN_CONTROL = "<span>hx git diff $TRUNK $BRANCH</span>";
 /** Row Q10: the gate's G3-B (a binding through a name) and G3-Y (a YAML block list); its control G3-J (a multi-line JSON array). */
@@ -1591,6 +1751,11 @@ const SEPARATOR_CASES: ReadonlyArray<readonly [string, string, readonly string[]
   ["IMG-INLINE", 'Agents can load hyper-unix<img src="census.png" alt="">before a review.', ["served@+1"]],
   ["INPUT-INLINE", "Agents can load hyper-unix<input>before a review.", ["served@+1"]],
   ["IMAGE-MARKDOWN", "Agents can load hyper-unix![](census.png)before a review.", ["served@+1"]],
+  ["S-IMAGE-ALIAS", 'Agents can load hyper-unix<image src="census.png">before a review.', ["served@+1"]],
+  ["S-IMAGE-UPPER", "Agents can load hyper-unix<IMAGE>before a review.", ["served@+1"]],
+  ["S-RUBY-RT", "Agents can load <ruby>hyper-unix<rt>x</rt></ruby> before a review.", ["served@+1"]],
+  ["S-RUBY-RTC", "Agents can load <ruby>hyper-unix<rtc>x</rtc></ruby> before a review.", ["served@+1"]],
+  ["S-RUBY-RP", "Agents can load <ruby>hyper-unix<rp>(</rp><rt>x</rt><rp>)</rp></ruby> before a review.", ["served@+1"]],
 ];
 /** Row M5's fusing controls: [block, the judged lines it adds]: an inline element and a void separator's end tag render nothing, so the word they split reads whole. */
 const FUSING_CASES: ReadonlyArray<readonly [string, readonly string[]]> = [
@@ -1605,12 +1770,46 @@ const FUSED_VIEWS: ReadonlyArray<readonly [string, string]> = [
   ["Agents can load hyper-unix<div>before a review.</div>\n", "Agents can load hyper-unixbefore a review."],
   ["<table><tr><td>Agents can load hyper-unix</td><td>before a review.</td></tr></table>\n", "Agents can load hyper-unixbefore a review."],
   ["Agents can load hyper-unix![](census.png)before a review.\n", "Agents can load hyper-unixbefore a review."],
+  ['Agents can load hyper-unix<image src="census.png">before a review.\n', "Agents can load hyper-unixbefore a review."],
+  ["Agents can load <ruby>hyper-unix<rt>x</rt></ruby> before a review.\n", "Agents can load hyper-unixx before a review."],
+];
+/**
+ * Row M7: [id (the gate's survivor ids where they apply), block planted on PLANT_PAGE, the judged lines it must add]: the
+ * content of a HIDDEN_ELEMENTS element, from its start tag through its own end tag (or to the page's end), is not read, so
+ * the words either side join; a page's text after the end tag is read.
+ */
+const HIDDEN_CONTENT_CASES: ReadonlyArray<readonly [string, string, readonly string[]]> = [
+  ["H-SCRIPT-NAME", "Agents can load hyper<script>x</script>-unix before a review.", ["served@+1"]],
+  ["H-STYLE-SLUG", "The worktree-lane<style>x</style>-census recipe is served to every Pi agent.", ["served@+1"]],
+  ["H-TEMPLATE-CMD", "Run h<template>-</template>x git diff $TRUNK $BRANCH to compare the branch with trunk.", ["served@+1"]],
+  ["H-TITLE-CLASS", "Outcome: KNOWN<title>x</title>_PRESENT for the queried path.", ["named@+1"]],
+  ["H-DATALIST-PAGE", "See 06-workflow<datalist>x</datalist>-recipes for the served steps.", ["served@+1"]],
+  ["H-NOEMBED-NUMBER", "The HX recipe W<noembed>x</noembed>3 is served to every Pi agent.", ["served@+1"]],
+  ["H-RP-NAME", "Agents can load hyper<rp>x</rp>-unix before a review.", ["served@+1"]],
+  ["H-NOFRAMES-CMD", "Run h<noframes>-</noframes>x git diff $TRUNK $BRANCH", ["served@+1"]],
+  ["H-IFRAME-NAME", "Agents can load hyper-unix<iframe>x</iframe>before a review.", ["served@+1"]],
+  ["H-SCRIPT-UPPER", "Agents can load hyper<SCRIPT>x</SCRIPT>-unix before a review.", ["served@+1"]],
+  ["H-SCRIPT-ATTRIBUTE", 'Agents can load hyper<script type="text/plain">x</script>-unix before a review.', ["served@+1"]],
+  ["H-SCRIPT-RAW-TAGS", "Agents can load hyper<script>a<b>c</b></script>-unix before a review.", ["served@+1"]],
+  ["H-SCRIPT-NESTED-TEXT", "Agents can load hyper<script>a<script>b</script>-unix before a review.", ["served@+1"]],
+  ["H-TEMPLATE-NESTED", "Run h<template>a<template>b</template>c</template>x git diff $TRUNK $BRANCH", ["served@+1"]],
+  ["H-CELL-SCRIPT", "| step |\n| --- |\n| Agents can load hyper<script>x</script>-unix before a review. |", ["served@+3"]],
+  ["H-ITEM-STYLE", "- The worktree-lane<style>x</style>-census recipe is served to every Pi agent.", ["served@+1"]],
+  ["H-QUOTE-TEMPLATE", "> Run h<template>-</template>x git diff $TRUNK $BRANCH", ["served@+1"]],
+  ["H-HEADING-TITLE", "## Outcome: KNOWN<title>x</title>_PRESENT", ["named@+1"]],
+  ["H-BLOCK-THEN-SHOWN", "<script>\nx\n</script>\n\nRun hx git diff $TRUNK $BRANCH", ["served@+5"]],
+  ["H-UNCLOSED-SCRIPT", "Agents read <script>hx git diff $TRUNK $BRANCH", []],
+];
+/** Row M7's hold controls: [page, its view with the hidden content read as text]: that view of a page that hides the content does not hold. */
+const HIDDEN_SHOWN_VIEWS: ReadonlyArray<readonly [string, string]> = [
+  ["Agents can load hyper<script>x</script>-unix before a review.\n", "Agents can load hyperx-unix before a review."],
+  ["Run h<template>-</template>x git diff $TRUNK $BRANCH\n", "Run h-x git diff $TRUNK $BRANCH"],
 ];
 /** Row M6: the page each Markdown extension spelling is judged on, the T4 form on its third line. */
 const NAMED_PAGE = "# Guide\n\nRun **hx** git diff $TRUNK $BRANCH to compare the branch with trunk.\n";
 /** Row M6: mixed-case spellings beside each extension's lower and upper case. */
 const MIXED_SPELLINGS = ["Md", "Markdown"];
-/** Row Q12: blocks whose rendering the tag's name does not decide (the parser's context, an attribute, styling or a default style's generated content): each reads none. */
+/** Row Q12: blocks whose rendering the element's name does not decide (the parser's context, scripting, an attribute, styling or a default style's generated content): each reads none. */
 const RENDERING_CASES: readonly string[] = [
   "Agents can load hyper</div>-unix before a review.",
   "Agents can load hyper<td>-unix before a review.",
@@ -1618,6 +1817,14 @@ const RENDERING_CASES: readonly string[] = [
   'Agents can load hyper-unix<span style="display:block">before a review.</span>',
   "Agents can load hyper-unix<q>before a review.</q>",
   'Run <input value="hx git diff $TRUNK $BRANCH"> to compare the branch with trunk.',
+  "Agents can load hyper<span hidden>x</span>-unix before a review.",
+  'Agents can load hyper<span style="display:none">x</span>-unix before a review.',
+  "Agents can load hyper-unix<audio controls></audio>before a review.",
+  "See <datalist>x\n\nRun hx git diff $TRUNK $BRANCH to compare the branch with trunk.",
+  "<xmp>W3 <recipe></xmp>",
+  "Agents can load hyper<dialog></dialog>-unix before a review.",
+  "Agents can load hyper<noscript>x</noscript>-unix before a review.",
+  "Agents can load hyper<audio>x</audio>-unix before a review.",
 ];
 const RENDERING_CONTROL = "Agents can load hyper-unix before a review.";
 /** Row Q13: [page, text] read raw by its name: another markup's syntax, and Markdown named .txt or with no extension. */
@@ -1637,6 +1844,17 @@ const SHELL_SPELLING_CASES: readonly string[] = [
   "Run h\\x git diff $TRUNK $BRANCH",
 ];
 const SHELL_SPELLING_CONTROL = 'Run "hx" git diff $TRUNK $BRANCH';
+/** Row Q15: blocks whose mention a hidden construct joins across a source line end (a comment, a tag or hidden content spanning it); the control keeps the comment on one line. */
+const JOINED_CASES: readonly string[] = [
+  "Agents can load hyper<!--\n-->-unix before a review.",
+  "Outcome: KNOWN<!--\n-->_PRESENT for the queried path.",
+  "The worktree-lane<!--\n-->-census recipe is served to every Pi agent.",
+  'Agents can load hyper<span\nclass="x">-unix before a review.',
+  "See 06-workflow<!--\n-->-recipes for the served steps.",
+  "The HX recipe W<!--\n-->3 is served to every Pi agent.",
+  "Agents can load hyper<script>\n</script>-unix before a review.",
+];
+const JOINED_CONTROL = "Agents can load hyper<!-- -->-unix before a review.";
 /** N1's walk control: [path, a document the independent walk must reach] in a scratch checkout of the repo's shape. */
 const WALK_TREE: ReadonlyArray<readonly [string, boolean]> = [
   ["docs/guide.md", true],
@@ -1656,6 +1874,8 @@ const WALK_TREE: ReadonlyArray<readonly [string, boolean]> = [
 const rootsTable = (rows: readonly string[]): string => `**${ROOTS_LABEL}** (checked in this order, first match wins):\n\n| Scope | Path | Source |\n|---|---|---|\n${rows.join("\n")}\n`;
 const ROOTS_ROWS = ["| Project | `<cwd>/.pi/skills/` | Pi-standard |", "| User | `$PI_CODING_AGENT_DIR/skills/` (default `~/.pi/agent/skills/`) | Pi-standard |"];
 const SIXTH_ROOT = "| User | `~/.skills/` | hx install default |";
+/** G1's template control (U2): the label once, the five-root table inside a template element (inert contents), then a visible table naming the sixth root. */
+const TEMPLATE_COPY = `**${ROOTS_LABEL}** (checked in this order, first match wins):\n\n<template>\n\n| Scope | Path | Source |\n|---|---|---|\n${ROOTS_ROWS.join("\n")}\n\n</template>\n\n| Scope | Path | Source |\n|---|---|---|\n${[SIXTH_ROOT, ...ROOTS_ROWS].join("\n")}\n`;
 /** G3's controls: a prose example the view renders (emphasis inside the key, the source spelled with a reference), and one a comment hides. */
 const RENDERED_EXAMPLE = 'Set "setting*Sources*": ["&#117;ser"] to load the user skills.';
 const HIDDEN_EXAMPLE = '<!-- "settingSources": ["user"] -->';
@@ -1679,6 +1899,7 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       const readmeControls = {
         hiddenCopy: readmeRootsOf(`<!--\n${rootsTable(ROOTS_ROWS)}-->\n\n${rootsTable([SIXTH_ROOT, ...ROOTS_ROWS])}`),
         shownTwice: readmeRootsOf(`${rootsTable(ROOTS_ROWS)}\n${rootsTable(ROOTS_ROWS)}`).labels,
+        templateCopy: readmeRootsOf(TEMPLATE_COPY),
       };
       const filing = gateFiling();
       const targets = [...roster().installTargets];
@@ -1689,6 +1910,10 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       expect(readme.roots).toEqual(roots);
       expect(readmeControls.hiddenCopy, "a commented copy is not read; the visible table is").toEqual({ labels: 1, roots: ["~/.skills", "<cwd>/.pi/skills", "~/.pi/agent/skills"] });
       expect(readmeControls.shownTwice, "a label shown twice is counted twice").toBe(2);
+      expect(readmeControls.templateCopy, "a table inside a template element is not read; the visible table is").toEqual({
+        labels: 1,
+        roots: ["~/.skills", "<cwd>/.pi/skills", "~/.pi/agent/skills"],
+      });
       expect(filing.piRoots).toEqual(roots);
       expect(targets).toEqual(filing.hxTargets);
       expect(inside).toEqual([]);
@@ -1752,6 +1977,9 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     const farFloor = plantChangesOn(farPage, farText, T10);
     const farLine = farText.split("\n").length;
     const farBeyondAll = texts.every(([, text]) => text.split("\n").length <= farLine);
+    const pageFloors = texts.map(([path, text]) => plantChangesOn(path, text, T10));
+    const pageFloorMisses = texts.filter((_, index) => JSON.stringify(pageFloors[index]) !== JSON.stringify(["served@+1"])).map(([path]) => path);
+    const pageFloorsAll = pageFloors.length === texts.length && pageFloors.length >= 100;
     const walkControl = onScratchCheckout(
       WALK_TREE.map(([path]) => path),
       `${T10}\n`,
@@ -1767,6 +1995,8 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     expect(floor.map(entry => entry.verdict)).toEqual(DOC_FLOOR.map(() => "negated"));
     expect(farFloor, `a served line planted past the end of ${farPage}, the longest page`).toEqual(["served@+1"]);
     expect(farBeyondAll).toBe(true);
+    expect(pageFloorsAll, "every population page is floored").toBe(true);
+    expect(pageFloorMisses, "a served line planted past the end of each population page reads served there").toEqual([]);
     expect(walkControl.outside, "the independent walk on a scratch checkout").toEqual(WALK_TREE.filter(([, reached]) => reached).map(([path]) => path).sort());
     expect(walkControl.rootDocuments).toEqual(["NOTES.mdown"]);
     expect(judged.named).toEqual([]);
@@ -1783,6 +2013,8 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
       floor,
       farFloor,
       farBeyondAll,
+      pageFloorsAll,
+      pageFloorMisses,
       walkControl,
       named: judged.named,
       served: judged.served,
@@ -1910,6 +2142,16 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     expect(raw, "a .txt page is read raw").toEqual([]);
     return { spellings, served: served.map(entries => entries.length), raw };
   },
+  M7: () => {
+    const hidden = HIDDEN_CONTENT_CASES.map(([id, block, expected]) => ({ id, changes: plantChanges(block), held: viewHolds(`${block}\n`), expected: [...expected] }));
+    const shownHeld = HIDDEN_SHOWN_VIEWS.map(([page, shown]) => viewHeld([shown], page));
+    for (const entry of hidden) {
+      expect(entry.changes, `${entry.id}: the hidden content is not read`).toEqual(entry.expected);
+      expect(entry.held, `${entry.id}: the line view is marked's HTML reduced by the same rules`).toBe(true);
+    }
+    expect(shownHeld, "a view that reads the hidden content does not hold").toEqual(HIDDEN_SHOWN_VIEWS.map(() => false));
+    return { hidden: hidden.map(({ id, changes }) => [id, ...changes]), shownHeld };
+  },
   Q1: () => {
     const verdict = lineVerdict("To check whether trunk already carries a branch, ask HyperUnix for the merge base, the ancestry and the changed paths.");
     expect(verdict).toBe("none");
@@ -2008,6 +2250,13 @@ const IMPL: Readonly<Record<string, () => Json | Promise<Json>>> = {
     expect(control).toBe("served");
     return { quiet, control };
   },
+  Q15: () => {
+    const quiet = JOINED_CASES.map(plantChanges);
+    const control = plantChanges(JOINED_CONTROL);
+    expect(quiet).toEqual(JOINED_CASES.map(() => []));
+    expect(control).toEqual(["served@+1"]);
+    return { quiet, control };
+  },
 };
 
 /** The pins whose case ran to its end and matched its roster witness, in run order (the record case reads it). */
@@ -2015,7 +2264,7 @@ const REACHED: string[] = [];
 
 describe("wb-ts6.1 hx recipe serving census (HXFS-PI-R5, until-then leg)", () => {
   it("the frozen shape (standing rule 16): every judged row and its pin count", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["G:3", "N:3", "E:2", "M:6", "R:14"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["G:3", "N:3", "E:2", "M:7", "R:15"]);
   });
   it("the owner filing's gate, until-then and falsifier clauses in the tracked bead export are rows G, N and E's labels", () => {
     expect(ROWS.slice(0, 3).map(row => row.label)).toEqual(exportClauses());
@@ -2045,6 +2294,9 @@ describe("wb-ts6.1 hx recipe serving census (HXFS-PI-R5, until-then leg)", () =>
       otherDocumentExtensions: OTHER_DOCUMENT_EXTENSIONS,
       separatorElements: SEPARATOR_ELEMENTS,
       voidSeparators: VOID_SEPARATORS,
+      hiddenElements: HIDDEN_ELEMENTS,
+      rawTextElements: RAW_TEXT_ELEMENTS,
+      tagAliases: TAG_ALIASES,
     }).toStrictEqual(Object.fromEntries(Object.entries(roster().vocabulary).map(([name, words]) => [name, [...words]])));
   });
   for (const row of ROWS) {

@@ -1,7 +1,7 @@
 {
  "bead": "wb-ts6.1",
  "pin": "694570cd00c2",
- "basis": "The out-of-file roster of test/workbench-hx-recipe-serving-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the residual names and the vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at HyperUnix-CLI 694570cd00c2 (read-only git show): docs/programs/feedback-query-skill-factory-2026-10-16/06-workflow-recipes.md:3 (the operator contract) and the eight recipe headings W1-W8 with the fifteen hx command lines and spans they hold (recipes[].source and commandLines; W5 and W7 hold none), verbatim. Host facts: hxInstall, the installed hx 0.1.0 install-skill --list under an empty scratch HOME. The hx verb vocabulary is the COMMANDS (V1) inventory of the installed hx 0.1.0 --help plus its help dispatcher. Pi facts measured at base f381c52 (landing 443). Matcher witnesses carry the first 16 hex of sha256 over each case's UTF-8 text, never the text. Cut #2 (the respin of refusal #1, rendered-text docs truth): the rendered view's matcher pin M4, the residuals Q9-Q11 (R-HIDDEN-SOURCE, R-EXAMPLE-SHAPE, R-CONFUSABLE), the named-reference vocabulary (the 77 names of the WHATWG table, read from Python 3.12's html.entities.html5, whose value is ASCII, white space or a folded character) and the ordered test titles the record case reads; Pi facts re-read at 52812a1 (landing 456). Cut #3 (the respin of refusal #2, the class-level guard on rows N and E): the separator matcher pin M5 and the page-name pin M6, the residuals Q12-Q14 (R-HTML-RENDERING, R-OTHER-MARKUP, R-SHELL-SPELLING), the vocabularies markdownExtensions, otherDocumentExtensions, separatorElements and voidSeparators, and the witnesses of G1, G3, N1 and M2 re-read for the rendered README read, the two-view example read, the document walks and the quoted binary; Pi facts re-read at b7851c4 (landing 472).",
+ "basis": "The out-of-file roster of test/workbench-hx-recipe-serving-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the residual names and the vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at HyperUnix-CLI 694570cd00c2 (read-only git show): docs/programs/feedback-query-skill-factory-2026-10-16/06-workflow-recipes.md:3 (the operator contract) and the eight recipe headings W1-W8 with the fifteen hx command lines and spans they hold (recipes[].source and commandLines; W5 and W7 hold none), verbatim. Host facts: hxInstall, the installed hx 0.1.0 install-skill --list under an empty scratch HOME. The hx verb vocabulary is the COMMANDS (V1) inventory of the installed hx 0.1.0 --help plus its help dispatcher. Pi facts measured at base f381c52 (landing 443). Matcher witnesses carry the first 16 hex of sha256 over each case's UTF-8 text, never the text. Cut #2 (the respin of refusal #1, rendered-text docs truth): the rendered view's matcher pin M4, the residuals Q9-Q11 (R-HIDDEN-SOURCE, R-EXAMPLE-SHAPE, R-CONFUSABLE), the named-reference vocabulary (the 77 names of the WHATWG table, read from Python 3.12's html.entities.html5, whose value is ASCII, white space or a folded character) and the ordered test titles the record case reads; Pi facts re-read at 52812a1 (landing 456). Cut #3 (the respin of refusal #2, the class-level guard on rows N and E): the separator matcher pin M5 and the page-name pin M6, the residuals Q12-Q14 (R-HTML-RENDERING, R-OTHER-MARKUP, R-SHELL-SPELLING), the vocabularies markdownExtensions, otherDocumentExtensions, separatorElements and voidSeparators, and the witnesses of G1, G3, N1 and M2 re-read for the rendered README read, the two-view example read, the document walks and the quoted binary; Pi facts re-read at b7851c4 (landing 472). Cut #4 (the respin of refusal #3, the loop cap engaged under rule 19(c): the enumerate-the-resolvable form on the frozen cut #3 shape): the hidden-content matcher pin M7 and the residual Q15 (R-JOINED-MENTION), the vocabularies hiddenElements, rawTextElements and tagAliases, separatorElements extended by rt and rtc, and the witnesses of G1, N1, M5, Q9 and Q12 extended (each a superset of its cut #3 witness) for the template README control, the per-page far floors, the image alias and ruby separators, the commands hidden content holds and the attribute, styling, scripting and parser-context members; Pi facts re-read at 1fba5bb (landing 494).",
  "hxInstall": {
   "hxVersion": "0.1.0",
   "binarySha256": "8fddc7cc2e6c65d9773f0e35713af9b939031f9229e61c64d1ca7781678aa790",
@@ -467,6 +467,8 @@
    "plaintext",
    "pre",
    "progress",
+   "rt",
+   "rtc",
    "search",
    "section",
    "select",
@@ -490,6 +492,28 @@
    "hr",
    "img",
    "input"
+  ],
+  "hiddenElements": [
+   "datalist",
+   "iframe",
+   "noembed",
+   "noframes",
+   "rp",
+   "script",
+   "style",
+   "template",
+   "title"
+  ],
+  "rawTextElements": [
+   "iframe",
+   "noembed",
+   "noframes",
+   "script",
+   "style",
+   "title"
+  ],
+  "tagAliases": [
+   "image=img"
   ]
  },
  "residuals": {
@@ -506,7 +530,8 @@
   "Q11": "R-CONFUSABLE",
   "Q12": "R-HTML-RENDERING",
   "Q13": "R-OTHER-MARKUP",
-  "Q14": "R-SHELL-SPELLING"
+  "Q14": "R-SHELL-SPELLING",
+  "Q15": "R-JOINED-MENTION"
  },
  "rows": [
   {
@@ -541,7 +566,15 @@
          "~/.pi/agent/skills"
         ]
        },
-       "shownTwice": 2
+       "shownTwice": 2,
+       "templateCopy": {
+        "labels": 1,
+        "roots": [
+         "~/.skills",
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       }
       },
       "targets": [
        "~/.skills/hyper-unix",
@@ -636,6 +669,8 @@
        "served@+1"
       ],
       "farBeyondAll": true,
+      "pageFloorsAll": true,
+      "pageFloorMisses": [],
       "walkControl": {
        "outside": [
         ".pi/agents/reviewer.md",
@@ -1316,6 +1351,26 @@
        [
         "IMAGE-MARKDOWN",
         "served@+1"
+       ],
+       [
+        "S-IMAGE-ALIAS",
+        "served@+1"
+       ],
+       [
+        "S-IMAGE-UPPER",
+        "served@+1"
+       ],
+       [
+        "S-RUBY-RT",
+        "served@+1"
+       ],
+       [
+        "S-RUBY-RTC",
+        "served@+1"
+       ],
+       [
+        "S-RUBY-RP",
+        "served@+1"
        ]
       ],
       "fusing": [
@@ -1337,6 +1392,8 @@
        ]
       ],
       "fusedHeld": [
+       false,
+       false,
        false,
        false,
        false,
@@ -1416,6 +1473,96 @@
        1
       ],
       "raw": []
+     }
+    },
+    {
+     "id": "M7",
+     "witness": {
+      "hidden": [
+       [
+        "H-SCRIPT-NAME",
+        "served@+1"
+       ],
+       [
+        "H-STYLE-SLUG",
+        "served@+1"
+       ],
+       [
+        "H-TEMPLATE-CMD",
+        "served@+1"
+       ],
+       [
+        "H-TITLE-CLASS",
+        "named@+1"
+       ],
+       [
+        "H-DATALIST-PAGE",
+        "served@+1"
+       ],
+       [
+        "H-NOEMBED-NUMBER",
+        "served@+1"
+       ],
+       [
+        "H-RP-NAME",
+        "served@+1"
+       ],
+       [
+        "H-NOFRAMES-CMD",
+        "served@+1"
+       ],
+       [
+        "H-IFRAME-NAME",
+        "served@+1"
+       ],
+       [
+        "H-SCRIPT-UPPER",
+        "served@+1"
+       ],
+       [
+        "H-SCRIPT-ATTRIBUTE",
+        "served@+1"
+       ],
+       [
+        "H-SCRIPT-RAW-TAGS",
+        "served@+1"
+       ],
+       [
+        "H-SCRIPT-NESTED-TEXT",
+        "served@+1"
+       ],
+       [
+        "H-TEMPLATE-NESTED",
+        "served@+1"
+       ],
+       [
+        "H-CELL-SCRIPT",
+        "served@+3"
+       ],
+       [
+        "H-ITEM-STYLE",
+        "served@+1"
+       ],
+       [
+        "H-QUOTE-TEMPLATE",
+        "served@+1"
+       ],
+       [
+        "H-HEADING-TITLE",
+        "named@+1"
+       ],
+       [
+        "H-BLOCK-THEN-SHOWN",
+        "served@+5"
+       ],
+       [
+        "H-UNCLOSED-SCRIPT"
+       ]
+      ],
+      "shownHeld": [
+       false,
+       false
+      ]
      }
     }
    ]
@@ -1497,6 +1644,8 @@
        [],
        [],
        [],
+       [],
+       [],
        []
       ],
       "shown": [
@@ -1537,6 +1686,14 @@
        [],
        [],
        [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
        []
       ],
       "control": [
@@ -1570,6 +1727,23 @@
       ],
       "control": "served"
      }
+    },
+    {
+     "id": "Q15",
+     "witness": {
+      "quiet": [
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       []
+      ],
+      "control": [
+       "served@+1"
+      ]
+     }
     }
    ]
   }
@@ -1593,6 +1767,7 @@
   "M4",
   "M5",
   "M6",
+  "M7",
   "Q1",
   "Q2",
   "Q3",
@@ -1607,6 +1782,7 @@
   "Q12",
   "Q13",
   "Q14",
+  "Q15",
   "the record: every registered test and every reached pin equal the roster, in order and both ways"
  ]
 }
