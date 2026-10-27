@@ -47,13 +47,48 @@
  * (a static import, a dynamic import, a vitest importActual) and TITLE_ANCHOR (the rf-tsx tier's success row) keep each reader
  * non-vacuous on the real tree, and the planted controls keep each position live; A1's planted tree carries a module at its
  * root (host.ts, beside the root symlink link.ts) as well as below it, so a walk that stops listing depth-0 modules reds.
+ * CROSS-CHECK (wb-ril9 F3): listingOf, node's own recursive readdir (independent of walkTree's code, nothing below a symlink
+ * kept), is taken just before and just after each walk. On the live tree every file both listings hold must have been walked
+ * (a file written or removed during the walk is in at most one of them, so it is not judged); on each planted tree the walk
+ * and the listing agree exactly. A1's planted tree also carries modules at depths 4 and 5, below a root-level and a nested
+ * dot-directory, and as a root-level and a nested dot-file. So a walk that drops a depth, a dot-directory, a dot-file or any
+ * other name a walked or planted tree holds reds; a walk that stops below depth 5 reads every tree the same today (no planted
+ * file sits deeper, and the walked tree's deepest file sits at depth 4), so it is not claimed until a file sits there.
  * POLARITY (wb-ab0i F1, asserted in code on each pin's live witness before the roster compare): every planted control and
  * plant reads true unless a quiet row (QUIET) or a negative control (NEGATIVE_CONTROLS: the near misses each reader must leave
- * alone, and the gate's closed readings - the measured facts and a site added under docs/) names it, and those read false;
- * B1's registrar titles are exactly REGISTRAR_TITLES; POLARITY_COUNTS pins each pin's true/false counts, so a control dropped
- * beside its reader reds. Each vocabulary alternative, each gate condition and each side of an import-map entry carries a
- * control of its own, so a reader's predicate hollowed together with a roster regenerated from its own witnesses and
- * constants reds in code.
+ * alone, and the gate's closed readings - the measured facts, a site added under docs/, and the armed reading over the
+ * measured facts) names it, and those read false; B1's registrar titles are exactly REGISTRAR_TITLES; POLARITY_COUNTS pins
+ * each pin's true/false counts, so a control dropped beside its reader reds. Each vocabulary alternative, each gate condition
+ * and each side of an import-map entry carries a control of its own (wb-ab0i F1), and so does each member of the RESOLVABLE
+ * CLASSES below (wb-ril9): a reader's predicate hollowed at one of those members, together with a roster regenerated from its
+ * own witnesses and constants, reds in code - at that granularity and no finer.
+ * RESOLVABLE CLASSES (wb-ril9, the R739 terminal enumerate-the-resolvable form at hop 3 of the wb-if7q.3 chain; this list is
+ * the criterion, and it names the members the controls bind):
+ *  (1) FLAG: the i flag of each scan pattern the roster holds by source and flags (PURITY_CLAIM, ATOMICITY_CLAIM,
+ *      ENTRY_FAMILY, MANIFEST) - a cased control or plant each.
+ *  (2) SEPARATOR: each position between two words of an armed vocabulary alternative (PURITY_WORDS, ATOMICITY_WORDS) reads
+ *      each SEPARATORS member (a space, a hyphen, an underscore, none, a run of all three), and pre- and mid- read each
+ *      OPTIONAL_HYPHEN member (the hyphen, none) - a control each, every word singular.
+ *  (3) NARROWING: every other narrowing of one of those four patterns by one feature (an alternative dropped, an optional
+ *      part made required or dropped, a * narrowed to + or ? or dropped, a member dropped from a character class) reds
+ *      through the controls above, the alternative controls, an unversioned, an empty and a multi-character version
+ *      (ENTRY_FAMILY), and one positive manifest per MANIFEST alternative, optional part and class member (one at the root,
+ *      one cased). Two kinds read as the pattern does under every search and carry no control (equivalent): a change inside
+ *      alternative 1's optional frame group (whatever it admits also matches the frame alternative) and an alternative's
+ *      trailing optional plural dropped (its singular prefix matches). A widening - an anchor, a lookahead, or a member of a
+ *      negated class or of a lookahead's class dropped - reads more and hides nothing: it is outside this class, and the
+ *      negative controls pin their named near misses only.
+ *  (4) DECODER: each escape form decodeEscapes decodes (a braced and a four-digit unicode escape, a two-digit hex escape, a
+ *      hex and a decimal reference, a percent escape), read in a manifest's text - a control each (a form's own digit counts
+ *      and optional semicolon are outside this class).
+ *  (5) GATE CONDITION: both sides of the published-file clause (a docs/ site in a published file, and one below a published
+ *      directory) and the docs/ prefix read whole (a site under docsite/ is no docs site) - a control each, beside the landed
+ *      gate controls.
+ *  (6) GATE INPUT: each producer fact the gate reads (the program pin's sites, files, exports and src/python files; the mapped
+ *      version's sites, exports, src/python files and import map), planted alone on a copy of the measured facts and read
+ *      through armedReading itself, plus one module titled in the leg's vocabulary planted for its claims - a control each,
+ *      the measured facts reading closed.
+ *  (7) WALK: the cross-check and the plants above.
  * MEASURED PRODUCER FACTS (roster `producer`, read-only, 2026-10-23): ReactiveFiberTSXSDK at the program pin 76bbbffd9d4a
  * (package 0.1.668; origin/main of the local clone at its last fetch): `git grep -n -E 'InterfaceHost|InterfaceEvaluation'`
  * gives three sites, all under docs/ and none in code (01-runtime-contracts.md:11 and :13, 02-implementation.md:13); `git grep -l -E
@@ -87,12 +122,16 @@
  * file below a skipped root entry; R-OWN-HOST Pi's own render and write vocabulary (its TUI frames, its store's atomic rename),
  * which names no TSX host; R-COMPUTED-TITLE a title computed at runtime, or registered through another registrar (a test.extend
  * result, a node:test subtest's t.test), which no static reader reads.
- * NOT CLAIMED (wb-ab0i F2, the live verdicts): A1's references, A2's loads and manifest hits and the armed legs' claims are
- * aggregated over a clean tree, so replacing one of those aggregations by a constant empty list stays green - the planted
- * controls run the same readers over planted trees, but no canary reaches a live aggregation, so only a dirty tree tells a
- * hollowed aggregation from a clean one. NOT CLAIMED either (the polarity literals): which control reads true is this file's
- * own literal, so a reader's predicate hollowed together with every polarity literal (its flipped controls moved into QUIET
- * or NEGATIVE_CONTROLS, POLARITY_COUNTS and REGISTRAR_TITLES rewritten to match) and a regenerated roster stays green.
+ * NOT CLAIMED (wb-ab0i F2, the live verdicts): A1's references and A2's loads and manifest hits are aggregated over a clean
+ * tree, and each armed leg's live reading is one armedReading call over the measured facts and the walked tree (armedLive),
+ * so replacing one of those aggregations, or that call's result, by its clean value stays green - the planted controls run
+ * the same readers over planted trees, and armedReading itself runs over planted producer facts and a planted titled tree
+ * (wb-ril9 F4), but no canary reaches a live aggregation or the live call, so only a dirty tree or a re-measured producer
+ * tells a hollowed one from a clean one. NOT CLAIMED either (this file's own literals and code): which control reads true is
+ * this file's own literal, and so are the controls' texts, the tables they are built from and the cross-check's listing, so
+ * a reader's predicate hollowed together with every polarity literal (its flipped controls moved into QUIET or
+ * NEGATIVE_CONTROLS, POLARITY_COUNTS and REGISTRAR_TITLES rewritten to match), with the texts or tables that exercise it
+ * rewritten to stop, or with the listing rewritten to follow the walk, and a regenerated roster, stays green.
  * Display paths added: none. Test-only: it spawns nothing; the controls plant files in makeScratch scratch only.
  */
 import { type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -133,6 +172,29 @@ const PURITY_CLAIM =
   /paint(?:[\s/_-]*frame)?[\s_-]*callbacks?|frame[\s_-]*callbacks?|component[\s_-]*invocations?|mounted[\s_-]*fixture[\s_-]*trees?|incidental[\s_-]*render[\s_-]*effects?/i;
 /** What a registered title claiming (c) would have to name: the acceptance's atomicity vocabulary. */
 const ATOMICITY_CLAIM = /evaluation[\s_-]*generations?|staged[\s_-]*(?:commit|mutation)s?|pre-?evaluation|accepted[\s_-]*evaluation|mid-?evaluation/i;
+/** Each armed vocabulary's alternatives as their words, singular and in match order (wb-ril9 F1): one separator position sits
+ * between each two words, and SEPARATORS names what each position reads. */
+const PURITY_WORDS: readonly (readonly string[])[] = [
+  ["paint", "callback"],
+  ["frame", "callback"],
+  ["component", "invocation"],
+  ["mounted", "fixture", "tree"],
+  ["incidental", "render", "effect"],
+];
+const ATOMICITY_WORDS: readonly (readonly string[])[] = [
+  ["evaluation", "generation"],
+  ["staged", "commit"],
+  ["staged", "mutation"],
+  ["accepted", "evaluation"],
+];
+/** The separator members a position reads: a space, a hyphen, an underscore, none, and a run of all three. */
+const SEPARATORS: Readonly<Record<string, string>> = { space: " ", hyphen: "-", underscore: "_", none: "", run: " -_ " };
+/** The atomicity vocabulary's two prefixes whose hyphen is optional, and the two members their position reads. */
+const HYPHEN_OPTIONAL: readonly (readonly string[])[] = [
+  ["pre", "evaluation"],
+  ["mid", "evaluation"],
+];
+const OPTIONAL_HYPHEN: Readonly<Record<string, string>> = { hyphen: "-", none: "" };
 /** The registration roots a title is read from, through any modifier chain (concurrent, each, for, fails, sequential...). */
 const REGISTRARS: readonly string[] = ["it", "test", "describe", "suite", "bench"];
 /** vitest's module verbs: each names a module by its first argument. */
@@ -229,11 +291,20 @@ const VI_MOCK = ["vi", "mock"].join(".");
 const SHIPPED_NO = "Shipped: no - ";
 /** The controls that read false and name no residual (wb-ab0i F1): the near misses each reader must leave alone, and the
  * gate's closed readings (the measured facts, and a site added under docs/). Every other planted control and plant reads true. */
-const NEGATIVE_CONTROLS: readonly string[] = ["A1:nearMiss", "A2:otherPackage", "B1:measured", "B1:docsSiteAdded", "B2:measured", "B2:docsSiteAdded"];
+const NEGATIVE_CONTROLS: readonly string[] = [
+  "A1:nearMiss",
+  "A2:otherPackage",
+  "B1:measured",
+  "B1:docsSiteAdded",
+  "B1:armedMeasured",
+  "B2:measured",
+  "B2:docsSiteAdded",
+  "B2:armedMeasured",
+];
 /** The titles B1's registrar snippet registers, in order: one per t-line, none for an n-line. */
 const REGISTRAR_TITLES: readonly string[] = ["t1", "t2", "t3", "t4 %s", "t5", "t6", "t7", "t8", "t9", "t10", "t11", "t12", "t13", "t14", "t15"];
 /** Each pin's planted controls and plants by polarity, `<reading true>/<reading false>` (B1's registrar titles aside). */
-const POLARITY_COUNTS: Readonly<Record<string, string>> = { A1: "40/22", A2: "41/19", B1: "16/8", B2: "18/4" };
+const POLARITY_COUNTS: Readonly<Record<string, string>> = { A1: "46/22", A2: "59/19", B1: "63/9", B2: "54/5" };
 
 interface Row {
   readonly id: string;
@@ -698,9 +769,40 @@ function walkTree(root: string): Walk {
   visit(root, 0);
   return { files, symlinks, unreadable };
 }
+/** The walk's cross-check (wb-ril9 F3): node's own recursive readdir below `root`, independent of walkTree's code, as
+ * root-relative `file:` and `symlink:` entries. SKIPPED_ROOTS are dropped at the root; readdir follows a symlinked directory,
+ * so nothing below a symlink is kept; a root directory gone before its listing holds nothing. */
+function listingOf(root: string): Set<string> {
+  const held = new Set<string>();
+  for (const top of readdirSync(root, { withFileTypes: true })) {
+    if (SKIPPED_ROOTS.includes(top.name)) continue;
+    let entries: Dirent[] = [top];
+    if (top.isDirectory()) {
+      try {
+        entries = [top, ...readdirSync(join(root, top.name), { recursive: true, withFileTypes: true })];
+      } catch (error) {
+        if (error instanceof Error && "code" in error && error.code === "ENOENT") continue;
+        throw error;
+      }
+    }
+    const pathOf = (entry: Dirent): string => posix(relative(root, join(entry.parentPath, entry.name)));
+    const links = entries.filter(entry => entry.isSymbolicLink()).map(pathOf);
+    for (const entry of entries) {
+      const path = pathOf(entry);
+      if (links.some(link => path.startsWith(`${link}/`))) continue;
+      if (entry.isSymbolicLink()) held.add(`symlink:${path}`);
+      else if (entry.isFile()) held.add(`file:${path}`);
+    }
+  }
+  return held;
+}
 
 interface TreeReading {
   readonly walk: Walk;
+  /** What both listings, taken just before and just after the walk, hold and the walk did not list (wb-ril9 F3). */
+  readonly unlisted: string[];
+  /** What the walk listed and neither listing holds. */
+  readonly unheld: string[];
   readonly judged: string[];
   readonly modules: Map<string, ModuleReading>;
   readonly manifests: string[];
@@ -709,7 +811,12 @@ interface TreeReading {
 }
 /** The walk of `root` and every reader over it: each module, each manifest and each walk anchor is read (EXEMPT is empty). */
 function readTree(root: string): TreeReading {
+  const before = listingOf(root);
   const walk = walkTree(root);
+  const after = listingOf(root);
+  const walked = new Set([...walk.files.map(file => `file:${file}`), ...walk.symlinks.map(link => `symlink:${link}`)]);
+  const unlisted = [...before].filter(entry => after.has(entry) && !walked.has(entry)).sort();
+  const unheld = [...walked].filter(entry => !before.has(entry) && !after.has(entry)).sort();
   const judged = walk.files.filter(file => !EXEMPT.includes(file));
   const modules = new Map<string, ModuleReading>();
   const manifests: string[] = [];
@@ -736,7 +843,7 @@ function readTree(root: string): TreeReading {
     if (anchor !== undefined) anchors.set(file, buffer.includes(anchor[1]));
   }
   const anchorsWalked = WALK_ANCHORS.every(([path]) => anchors.get(path) === true);
-  return { walk, judged, modules, manifests, manifestHits, anchorsWalked };
+  return { walk, unlisted, unheld, judged, modules, manifests, manifestHits, anchorsWalked };
 }
 let live: TreeReading | undefined;
 /** The repository's own reading, taken once. */
@@ -815,13 +922,35 @@ function gateControls(symbol: string): JsonObject {
     publishedDocsSite: opens({ pinSites: [...base.pinSites, "docs/published.md:3"], files: [...base.files, "docs/published.md"] }),
     mappedKey: opens({ importMap: { ...base.importMap, [HOST_ENTRY]: "./vendor/host.js" } }),
     mappedValue: opens({ importMap: { ...base.importMap, "#ui": `npm:${SDK}@0.1.669/ui` } }),
+    // wb-ril9 F2: the published-file clause's directory side (a docs/ site below a published directory), and the docs/
+    // prefix read whole (a site under docsite/ is no docs site).
+    publishedDirSite: opens({ pinSites: [...base.pinSites, "docs/api/host.md:3"], files: [...base.files, "docs/api"] }),
+    docsLikeSite: opens({ pinSites: [...base.pinSites, "docsite/host.md:3"] }),
   };
 }
-/** Pins B1 and B2 share this reading: the type's gate from the roster's producer facts, the bead row's Gating sentence, and
- * the walked tree's registration titles against the leg's vocabulary. */
-function armedReading(pin: string, symbol: string, vocabulary: RegExp): JsonObject {
-  const tree = liveTree();
-  const facts = factsOf(ROSTER.producer, symbol);
+/** One armed leg's reading: the type's gate from the producer facts, the bead row's Gating sentence and the tree's claims. */
+interface ArmedWitness {
+  readonly anchor: string;
+  readonly symbol: string;
+  readonly gateOpen: boolean;
+  readonly docsOnly: boolean;
+  readonly pinSites: string[];
+  readonly sitesInPackage: string[];
+  readonly entryExported: boolean;
+  readonly entryMapped: boolean;
+  readonly srcPython: string[];
+  readonly mappedSites: string[];
+  readonly mappedVersion: boolean;
+  readonly beadSaysAbsent: boolean;
+  readonly titlesFloorMet: boolean;
+  readonly titleAnchorRead: boolean;
+  readonly claims: string[];
+}
+/** Pins B1 and B2 share this reading over `producer` (the roster's measured facts, or a control's planted ones) and `tree` (the
+ * walked tree, or a control's planted one): the type's gate from the producer facts, the bead row's Gating sentence, and the
+ * tree's registration titles against the leg's vocabulary. It asserts nothing; armedLive asserts the live reading. */
+function armedReading(pin: string, symbol: string, vocabulary: RegExp, producer: Producer, tree: TreeReading): { readonly titlesRead: number; readonly witness: ArmedWitness } {
+  const facts = factsOf(producer, symbol);
   const gate = gateOf(facts);
   const gating = noteLine(readBeadRow().notes, "Gating: ");
   const beadSaysAbsent = gating.includes(symbol) && gating.includes(GATE_STEP) && gating.includes(SHIPPED_NO);
@@ -829,29 +958,75 @@ function armedReading(pin: string, symbol: string, vocabulary: RegExp): JsonObje
   const claims = titles.filter(({ title }) => vocabulary.test(title)).map(({ path, title }) => `${path}: ${title}`);
   const titlesFloorMet = titles.length >= FLOORS.titles;
   const titleAnchorRead = tree.modules.get(TITLE_ANCHOR[0])?.titles.includes(TITLE_ANCHOR[1]) === true;
-  const mapped = ROSTER.producer.mapped;
+  const mapped = producer.mapped;
   const mappedVersion = mapped.importMap[SDK] === `npm:${SDK}@${mapped.distribution.version}`;
-  expect(beadSaysAbsent, `the bead row ${BEAD} names ${symbol} in its Gating sentence with ${GATE_STEP} and the absence facts`).toBe(true);
-  expect({ titlesFloorMet, titleAnchorRead }, `registration titles read: ${titles.length}`).toStrictEqual({ titlesFloorMet: true, titleAnchorRead: true });
-  expect(gate.open, `${symbol}'s gate is open: ${pin}'s armed leg is owed with this re-measure (${BEAD})`).toBe(false);
-  expect(claims, `registered titles naming ${pin}'s armed vocabulary while its gate is closed`).toEqual([]);
   return {
-    anchor: anchorOf(pin),
-    symbol,
-    gateOpen: gate.open,
-    docsOnly: gate.docsOnly,
-    pinSites: [...facts.pinSites],
-    sitesInPackage: gate.sitesInPackage,
-    entryExported: gate.entryExported,
-    entryMapped: gate.entryMapped,
-    srcPython: [...facts.srcPython],
-    mappedSites: [...facts.mappedSites],
-    mappedVersion,
-    beadSaysAbsent,
-    titlesFloorMet,
-    titleAnchorRead,
-    claims,
+    titlesRead: titles.length,
+    witness: {
+      anchor: anchorOf(pin),
+      symbol,
+      gateOpen: gate.open,
+      docsOnly: gate.docsOnly,
+      pinSites: [...facts.pinSites],
+      sitesInPackage: gate.sitesInPackage,
+      entryExported: gate.entryExported,
+      entryMapped: gate.entryMapped,
+      srcPython: [...facts.srcPython],
+      mappedSites: [...facts.mappedSites],
+      mappedVersion,
+      beadSaysAbsent,
+      titlesFloorMet,
+      titleAnchorRead,
+      claims,
+    },
   };
+}
+/** The armed leg's live reading - the roster's measured facts over the walked tree - asserted closed and unclaimed. */
+function armedLive(pin: string, symbol: string, vocabulary: RegExp): ArmedWitness {
+  const { titlesRead, witness } = armedReading(pin, symbol, vocabulary, ROSTER.producer, liveTree());
+  const { beadSaysAbsent, titlesFloorMet, titleAnchorRead, gateOpen, claims } = witness;
+  expect(beadSaysAbsent, `the bead row ${BEAD} names ${symbol} in its Gating sentence with ${GATE_STEP} and the absence facts`).toBe(true);
+  expect({ titlesFloorMet, titleAnchorRead }, `registration titles read: ${titlesRead}`).toStrictEqual({ titlesFloorMet: true, titleAnchorRead: true });
+  expect(gateOpen, `${symbol}'s gate is open: ${pin}'s armed leg is owed with this re-measure (${BEAD})`).toBe(false);
+  expect(claims, `registered titles naming ${pin}'s armed vocabulary while its gate is closed`).toEqual([]);
+  return witness;
+}
+/** The armed reading's own controls (wb-ril9 F4): each producer fact the gate reads, planted alone on a copy of the measured
+ * facts and read through armedReading itself (factsOf, then gateOf), and one module titled with the leg's vocabulary planted
+ * for its claims; the measured facts read closed. */
+function armedControls(pin: string, symbol: string, vocabulary: RegExp, title: string): JsonObject {
+  const measured = ROSTER.producer;
+  const tree = liveTree();
+  const opens = (programPin: Partial<PinFacts>, mapped: Partial<MappedFacts>): boolean =>
+    armedReading(pin, symbol, vocabulary, { programPin: { ...measured.programPin, ...programPin }, mapped: { ...measured.mapped, ...mapped } }, tree).witness.gateOpen;
+  const pinSites = measured.programPin.sites[symbol] ?? [];
+  const titled = plantedTree({ "test/armed.test.ts": `it(${JSON.stringify(title)}, () => {});\n` });
+  return {
+    armedMeasured: opens({}, {}),
+    armedPinSite: opens({ sites: { ...measured.programPin.sites, [symbol]: [...pinSites, "src/host/interface.ts:3"] } }, {}),
+    armedPinPublished: opens({ files: [...measured.programPin.files, "docs/programs"] }, {}),
+    armedPinExport: opens({ exports: [...measured.programPin.exports, "./host"] }, {}),
+    armedPinSrcPython: opens({ srcPythonFiles: ["src/host/interface.ts"] }, {}),
+    armedMappedExport: opens({}, { exports: [...measured.mapped.exports, "./ui"] }),
+    armedMappedSrcPython: opens({}, { srcPythonFiles: ["python/reactive_fiber/host.py"] }),
+    armedMappedEntry: opens({}, { importMap: { ...measured.mapped.importMap, [HOST_ENTRY]: `npm:${SDK}@${measured.mapped.distribution.version}/host` } }),
+    armedMappedSite: opens({}, { sites: { ...measured.mapped.sites, [symbol]: ["dist/host.js:1"] } }),
+    armedClaim: armedReading(pin, symbol, vocabulary, measured, titled).witness.claims.length > 0,
+  };
+}
+/** A vocabulary's separator controls (wb-ril9 F1): for each alternative's words and each position between two of them, each
+ * member at that position (a space at every other position), read by the vocabulary; keyed `<words>@<position>:<member>`. */
+function separatorControls(vocabulary: RegExp, alternatives: readonly (readonly string[])[], members: Readonly<Record<string, string>>): JsonObject {
+  const controls: JsonObject = {};
+  for (const words of alternatives) {
+    for (let at = 1; at < words.length; at += 1) {
+      for (const [member, separator] of Object.entries(members)) {
+        const text = words.map((word, index) => (index === 0 ? "" : index === at ? separator : " ") + word).join("");
+        controls[`${words.join("-")}@${at}:${member}`] = vocabulary.test(text);
+      }
+    }
+  }
+  return controls;
 }
 
 const REACHED: string[] = [];
@@ -889,6 +1064,10 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       symlinks: [],
       unreadable: [],
     });
+    // wb-ril9 F3: every file both independent listings hold around the live walk was walked (a file written or removed during
+    // the walk is in at most one of them, so it is not judged here).
+    const walkListed = tree.unlisted.length === 0;
+    expect(tree.unlisted, "files below the root node's recursive readdir lists that the walk did not").toEqual([]);
     const controls = {
       namedImport: named("c.ts", `import { ${HOST_TYPE} } from "${SDK}";\n`),
       aliasImport: named("c.ts", `import { ${HOST_TYPE} as Host } from "${HOST_ENTRY}";\n`),
@@ -955,7 +1134,16 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "coverage/host.ts": plant,
       ".forge/host.ts": plant,
       ".beads/host.ts": plant,
+      "deep/a/b/c/host.ts": plant,
+      "deep/a/b/c/d/host.ts": plant,
+      ".agents/host.ts": plant,
+      "test/.pi/host.mts": plant,
+      ".host.ts": plant,
+      "src/.host.ts": plant,
     });
+    // wb-ril9 F3: on the planted tree the walk and the listing agree exactly (nothing else writes there).
+    const plantedListed = planted.unlisted.length === 0 && planted.unheld.length === 0;
+    expect({ unlisted: planted.unlisted, unheld: planted.unheld }, "the planted tree's walk against node's recursive readdir").toStrictEqual({ unlisted: [], unheld: [] });
     const flagged = (path: string): boolean => (planted.modules.get(path)?.references.length ?? 0) > 0 || planted.walk.symlinks.includes(path);
     const plants = Object.fromEntries(
       [
@@ -974,6 +1162,12 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         "coverage/host.ts",
         ".forge/host.ts",
         ".beads/host.ts",
+        "deep/a/b/c/host.ts",
+        "deep/a/b/c/d/host.ts",
+        ".agents/host.ts",
+        "test/.pi/host.mts",
+        ".host.ts",
+        "src/.host.ts",
       ].map(path => [path, flagged(path)]),
     );
     return done("A1", {
@@ -988,6 +1182,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       references,
       symlinks: tree.walk.symlinks,
       unreadable: tree.walk.unreadable,
+      walkListed,
+      plantedListed,
       controls,
       plants,
     });
@@ -1040,6 +1236,14 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       jsdocImportTypeInJs: loadsEntry("c.mjs", `/** @type {import("${HOST_ENTRY}").Target} */\nexport let target;\n`),
       manifestEntry: namesEntry(`{"imports":{"#host":"${HOST_ENTRY}"}}`),
       manifestMapped: namesEntry(`{"imports":{"${UI_ENTRY}":"npm:${SDK}@0.1.668/ui"}}`),
+      casedEntry: loadsEntry("c.ts", 'import { mount } from "@Reactive-Fiber/TSX/Host";\n'),
+      emptyVersion: loadsEntry("c.ts", `import { mount } from "npm:${SDK}@/host";\n`),
+      bracedUnicodeEscape: namesEntry(`{"imports":{"#host":"${SDK}/\\u{68}ost"}}`),
+      unicodeEscape: namesEntry(`{"imports":{"#host":"${SDK}/\\u0068ost"}}`),
+      hexEscape: namesEntry(`{"imports":{"#host":"${SDK}/\\x68ost"}}`),
+      hexReference: namesEntry(`{"imports":{"#host":"${SDK}/&#x68;ost"}}`),
+      decimalReference: namesEntry(`{"imports":{"#host":"${SDK}/&#104;ost"}}`),
+      percentEscape: namesEntry(`{"imports":{"#host":"${SDK}/%68ost"}}`),
       rootEntry: loadsEntry("c.ts", `import { render } from "${SDK}";\n`),
       otherSubpath: loadsEntry("c.ts", `import { jsx } from "${SDK}/jsx-runtime";\nimport { embed } from "${SDK}/embedding";\n`),
       otherPackage: loadsEntry("c.ts", `import { mount } from "${SDK}-host";\nimport { x } from "${SDK}/hosts";\n`),
@@ -1055,6 +1259,20 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       hostPackage: loadsEntry("c.ts", 'import { mount } from "native-terminal-host-kit";\n'),
       manifestRoot: namesEntry(`{"dependencies":{"${SDK}":"0.1.668"}}`),
     };
+    // wb-ril9 F1: one positive manifest per MANIFEST alternative, optional part and class member, one at the root, one cased.
+    const manifest = `{"imports":{"#host":"${HOST_ENTRY}"}}\n`;
+    const manifests = [
+      "lock/package-lock.json",
+      "lock/npm-shrinkwrap.json",
+      "deno/deno.json",
+      "deno/deno.jsonc",
+      "map/import-map.json",
+      "map/import_map.json",
+      "tsconfig.json",
+      "web/jsconfig.json",
+      "web/tsconfig.base.json",
+      "cased/Package.JSON",
+    ];
     const planted = plantedTree({
       "src/host.ts": `import * as host from "${HOST_ENTRY}";\nexport { host };\n`,
       "app/package.json": `{"name":"app","imports":{"#host":"${HOST_ENTRY}"}}\n`,
@@ -1063,13 +1281,16 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       "node_modules/pkg/index.js": `require("${HOST_ENTRY}");\n`,
       "dist/host.mjs": `import "${HOST_ENTRY}";\n`,
       "bin/run-host": `#!/usr/bin/env node\nrequire("${HOST_ENTRY}");\n`,
+      ...Object.fromEntries(manifests.map(path => [path, manifest])),
     });
     const flagged = (path: string): boolean => (planted.modules.get(path)?.hostLoads.length ?? 0) > 0 || planted.manifestHits.includes(path);
-    const plants = Object.fromEntries(["src/host.ts", "app/package.json", "app/import_map.json", "docs/host.md", "node_modules/pkg/index.js", "dist/host.mjs", "bin/run-host"].map(path => [path, flagged(path)]));
+    const plants = Object.fromEntries(
+      ["src/host.ts", "app/package.json", "app/import_map.json", "docs/host.md", "node_modules/pkg/index.js", "dist/host.mjs", "bin/run-host", ...manifests].map(path => [path, flagged(path)]),
+    );
     return done("A2", { anchor: anchorOf("A2"), loadsRead, manifestsFloorMet, hostLoads, manifestHits: tree.manifestHits, controls, plants });
   },
   B1: () => {
-    const reading = armedReading("B1", HOST_TYPE, PURITY_CLAIM);
+    const reading = armedLive("B1", HOST_TYPE, PURITY_CLAIM);
     const titles = readModule(
       "c.test.ts",
       [
@@ -1109,11 +1330,15 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       ownFrame: PURITY_CLAIM.test("a rendered frame touches no filesystem"),
       ownPaint: PURITY_CLAIM.test("emits zero diff bytes for an identical frame and the whole frame for a cold paint"),
       ownWidget: PURITY_CLAIM.test("AgentWidget.render (per TUI frame)"),
+      // wb-ril9 F1: the i flag, and each separator member at each position of each alternative.
+      casedVocabulary: PURITY_CLAIM.test("Paint Callback"),
+      ...separatorControls(PURITY_CLAIM, PURITY_WORDS, SEPARATORS),
+      ...armedControls("B1", HOST_TYPE, PURITY_CLAIM, "N paint callbacks run no component"),
     };
     return done("B1", { ...reading, controls });
   },
   B2: () => {
-    const reading = armedReading("B2", EVALUATION_TYPE, ATOMICITY_CLAIM);
+    const reading = armedLive("B2", EVALUATION_TYPE, ATOMICITY_CLAIM);
     const clause = acceptanceClauses(readBeadRow().notes)[2] ?? "";
     const controls = {
       ...gateControls(EVALUATION_TYPE),
@@ -1127,6 +1352,11 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       midEvaluation: ATOMICITY_CLAIM.test("injected mid-evaluation"),
       ownAtomicWrite: ATOMICITY_CLAIM.test("uses atomic temp+rename: write produces final file, no .tmp leftover"),
       ownGeneration: ATOMICITY_CLAIM.test("blocks code generation from strings"),
+      // wb-ril9 F1: the i flag, each separator member at each position, and pre- and mid- with and without their hyphen.
+      casedVocabulary: ATOMICITY_CLAIM.test("Evaluation Generation"),
+      ...separatorControls(ATOMICITY_CLAIM, ATOMICITY_WORDS, SEPARATORS),
+      ...separatorControls(ATOMICITY_CLAIM, HYPHEN_OPTIONAL, OPTIONAL_HYPHEN),
+      ...armedControls("B2", EVALUATION_TYPE, ATOMICITY_CLAIM, "commits once per accepted evaluation generation"),
     };
     return done("B2", { ...reading, controls });
   },
@@ -1188,6 +1418,11 @@ function scanConstants(): Json {
       gateStep: GATE_STEP,
       purityClaim: `${PURITY_CLAIM.source}/${PURITY_CLAIM.flags}`,
       atomicityClaim: `${ATOMICITY_CLAIM.source}/${ATOMICITY_CLAIM.flags}`,
+      purityWords: PURITY_WORDS,
+      atomicityWords: ATOMICITY_WORDS,
+      separators: SEPARATORS,
+      hyphenOptional: HYPHEN_OPTIONAL,
+      optionalHyphen: OPTIONAL_HYPHEN,
       registrars: REGISTRARS,
       viVerbs: VI_VERBS,
       constructedLoaders: CONSTRUCTED_LOADERS,
