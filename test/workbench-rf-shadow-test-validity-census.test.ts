@@ -61,8 +61,9 @@
  * test/fixtures/rf-shadow-test-validity-roster.json.
  * OUTSIDE ANCHORS. Rows: the owner filing's row in the tracked bead export (.beads/issues.jsonl, row wb-hs2j.5) - each acceptance
  * clause equals a bounded claim of exactly one row label and the statement one of row A's, and the labels claim nothing else
- * (claimsOf: a label's text before its first ": ", split as the filing's clauses are; equality, never containment, since wb-ykl9), its quote and
- * citation equal the roster's, and B1, B3, C1 and C2 read their facts from it - so a row removed from every literal of this file
+ * (claimsOf: a label's text before its first ": ", split as the filing's clauses are; equality, never containment, since wb-ykl9;
+ * and the reading after that ": ", which claimsOf never binds, holds no parenthesis, so no tagged claim sits there unbound, since
+ * wb-2gzp: READING below), its quote and citation equal the roster's, and B1, B3, C1 and C2 read their facts from it - so a row removed from every literal of this file
  * and the roster still reds, and so does a clause or the statement truncated in the bead row. Pins: the records case
  * derives one obligation set from outside sources (the repository's top-level listing, a fresh native registration, the src
  * modules holding the context.render literal, and the bead row's pair, verdict fields, code and Shipped sentence) and requires each
@@ -77,6 +78,18 @@
  * (base64); R-LOOKALIKE a non-ASCII look-alike letter or an inserted invisible code point; R-OUTSIDE a file below an OUTSIDE_ROOTS
  * entry or a root file ROOT_CONFIG does not name (docs and receipts quote provisioning commands, tests use the verbs as needles,
  * vendor is third-party, feedback is prose to upstream tools).
+ * READING (wb-2gzp): a row label's reading, its text after the first ": ", is the measured reading, prose no clause binds, so the
+ * judged set refuses every tag in it: READING_TAG reads a parenthesised run or a lone "(" or ")", since every tag the bounded
+ * binding knows is parenthesised (the filing's clause tags "(a) " to "(c) ", which acceptanceClauses and claimsOf split on, and
+ * STATEMENT_TAG), and so is any other tag of that shape: "(z) ", "(Z) ", "(ii) ", an unclosed "(z" or an unopened "z)". Its
+ * controls, READING_PLANTS, each put one claim into one row's reading, past the first ": ", so the row's bounded claims stay its
+ * bead-row text (asserted per control) and only this check can see it: the flagged ones are that escape, gate probe G6 first
+ * (row B reading 'never valid: (z) Pi also mints a structural verdict; the pair is the producer's'), at the reading's start, at
+ * its end and between its first and a second ": "; beside them, the controls anchored in the bead row: each acceptance clause
+ * and the statement, tag included, put into every row's reading in the same three places, reads flagged. READING RESIDUALS
+ * (named families, each with pinned quiet rows in READING_PLANTS): R-UNTAGGED an untagged claim in a reading (prose, which by
+ * design reads as the measured reading); R-UNPARENTHESISED a tag written without an ASCII parenthesis (square brackets,
+ * full-width parentheses, a bare "z. ").
  * SCOPE: the observer's render coverage is a reading of a context render, not of graph validity; its handling of a warning row
  * (shape-checked and never surfaced: the counts it reports are the summary's) stays with its own pins. The producer facts are read at 6a251bf73af5 and rf 0.1.832; Pi vendors no
  * rf schema, so a producer change is seen only when a cut re-measures the roster.
@@ -147,6 +160,12 @@ const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-ENCODED", "R-LOOKALIKE", "R-OUTSIDE"
 const STATEMENT_TAG = "(statement, absent today) ";
 const CYRILLIC_A = String.fromCodePoint(0x0430);
 const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
+/** A tag in a row label's reading (wb-2gzp): a parenthesised run, or a lone "(" or ")". */
+const READING_TAG = /\([^()]*\)|[()]/g;
+/** The reading residual families (wb-2gzp), each with pinned quiet rows in READING_PLANTS. */
+const READING_RESIDUALS = ["R-UNTAGGED", "R-UNPARENTHESISED"];
+const FULLWIDTH_OPEN = String.fromCodePoint(0xff08);
+const FULLWIDTH_CLOSE = String.fromCodePoint(0xff09);
 
 interface Row {
   readonly id: string;
@@ -413,13 +432,71 @@ function statementOf(notes: string): string {
  * A row label's claims, bounded on both sides (wb-ykl9): the label's text before its first ": " (the measured reading follows
  * it), split where acceptanceClauses splits the filing (a "; " before a "(x) "), with STATEMENT_TAG dropped from the claim it
  * opens. A bead-row clause binds a row only by equalling one of these whole, so a clause or statement truncated in the bead row,
- * or a label claim extended, prefixed or added, no longer binds.
+ * or a label claim extended, prefixed or added, no longer binds. The reading after the first ": " is never a claim, so a tagged
+ * claim placed there would escape this binding: the judged set refuses every tag in it (readingTagsOf, wb-2gzp).
  */
 function claimsOf(label: string): string[] {
   const reading = label.indexOf(": ");
   const head = reading < 0 ? label : label.slice(0, reading);
   return head.split(/; (?=\([a-z]\) )/).map(claim => (claim.startsWith(STATEMENT_TAG) ? claim.slice(STATEMENT_TAG.length) : claim));
 }
+/** A row label's reading: its text after the first ": ", where claimsOf ends the label's claims ("" when it has none). */
+function labelReadingOf(label: string): string {
+  const reading = label.indexOf(": ");
+  return reading < 0 ? "" : label.slice(reading + 2);
+}
+/** The tags a row label's reading holds (READING_TAG), in order (wb-2gzp). */
+function readingTagsOf(label: string): string[] {
+  return [...labelReadingOf(label).matchAll(READING_TAG)].map(match => match[0]);
+}
+interface ReadingPlant {
+  readonly id: string;
+  /** The row whose label it edits. */
+  readonly row: string;
+  /** Text put at the start of the row's reading, and text put after its end. */
+  readonly before: string;
+  readonly after: string;
+  readonly flagged: boolean;
+  /** The reading residual family a quiet plant pins. */
+  readonly residual?: string;
+}
+/** The judged set's reading controls (wb-2gzp): each puts one claim into one row label's reading, so the row's bounded claims stay
+ * its bead-row text; the flagged ones are the tagged-claim escape of the bounded binding (G6 is the gate's probe), the quiet ones
+ * pin the reading residuals. */
+const READING_PLANTS: readonly ReadingPlant[] = [
+  { id: "G6", row: "B", before: "(z) Pi also mints a structural verdict; ", after: "", flagged: true },
+  { id: "tail", row: "C", before: "", after: "; (d) Pi accepts a shadow result as structural validity", flagged: true },
+  { id: "upper", row: "A", before: "", after: "; (Z) a Pi gate accepts a shadow result as structural validity", flagged: true },
+  { id: "roman", row: "B", before: "", after: "; (ii) Pi mints a structural verdict", flagged: true },
+  { id: "statement", row: "C", before: `${STATEMENT_TAG}Pi mints a structural verdict; `, after: "", flagged: true },
+  { id: "unclosed", row: "A", before: "(z Pi mints a structural verdict; ", after: "", flagged: true },
+  { id: "unopened", row: "B", before: "z) Pi mints a structural verdict; ", after: "", flagged: true },
+  { id: "second-colon", row: "A", before: "(e) Pi mints a structural verdict: ", after: "", flagged: true },
+  { id: "untagged", row: "B", before: "Pi also mints a structural verdict; ", after: "", flagged: false, residual: "R-UNTAGGED" },
+  { id: "bracket", row: "C", before: "[z] Pi mints a structural verdict; ", after: "", flagged: false, residual: "R-UNPARENTHESISED" },
+  { id: "fullwidth", row: "A", before: `${FULLWIDTH_OPEN}z${FULLWIDTH_CLOSE} Pi mints a structural verdict; `, after: "", flagged: false, residual: "R-UNPARENTHESISED" },
+  { id: "numbered", row: "B", before: "z. Pi mints a structural verdict; ", after: "", flagged: false, residual: "R-UNPARENTHESISED" },
+];
+/** A judged row's label, by id. */
+function rowLabel(id: string): string {
+  const row = ROWS.find(entry => entry.id === id);
+  if (row === undefined) throw new Error(`no judged row ${id}`);
+  return row.label;
+}
+/** `label` with `before` put after its first ": " (at the start of its reading) and `after` put after its end. */
+function plantInto(label: string, before: string, after: string): string {
+  const reading = label.indexOf(": ") + 2;
+  return `${label.slice(0, reading)}${before}${label.slice(reading)}${after}`;
+}
+/** The label a reading control plants into its row. */
+const plantedLabel = (plant: ReadingPlant): string => plantInto(rowLabel(plant.row), plant.before, plant.after);
+/** The tags in the readings of `rows`' labels, each as "<row id>: <tag>": the judged set reads ROWS through it, every control a
+ * copy of ROWS with one label planted. */
+function taggedReadings(rows: readonly Row[]): string[] {
+  return rows.flatMap(row => readingTagsOf(row.label).map(tag => `${row.id}: ${tag}`));
+}
+/** ROWS with row `id`'s label replaced by `label`. */
+const withLabel = (id: string, label: string): Row[] => ROWS.map(row => (row.id === id ? { ...row, label } : row));
 /** The filing's "Shipped:" sentence on its Gating artifact line. */
 function shippedOf(notes: string): string {
   return /^Gating artifact: .*?(Shipped: [^;]+);/m.exec(notes)?.[1] ?? "";
@@ -992,6 +1069,9 @@ describe("wb-hs2j.5 rf shadow-test validity census (RF-REACTIVE-CONTEXT-ASSEMBLY
         walkAnchors: WALK_ANCHORS.map(([path, token]) => `${path}:${token}`),
         readers: READERS,
         plants: PLANTS.map(plant => `${plant.path}:${plant.flagged ? "flagged" : (plant.residual ?? "quiet")}`),
+        readingTag: `${READING_TAG.source}/${READING_TAG.flags}`,
+        readingPlants: READING_PLANTS.map(plant => `${plant.id}:${plant.row}:${plant.flagged ? "flagged" : (plant.residual ?? "quiet")}`),
+        readingResiduals: READING_RESIDUALS,
       },
       residuals: RESIDUAL_FAMILIES,
     }).toStrictEqual({ bead: ROSTER.bead, scan: ROSTER.scan, residuals: [...ROSTER.residuals] });
@@ -1008,6 +1088,32 @@ describe("wb-hs2j.5 rf shadow-test validity census (RF-REACTIVE-CONTEXT-ASSEMBLY
       ROWS.map(row => claimsOf(row.label)),
       "every row label claims exactly its bead-row text, bounded on both sides: no claim truncated, extended, prefixed or added",
     ).toEqual([[statement, clauses[0]], [clauses[1]], [clauses[2]]]);
+    // The reading past each label's first ": " is prose no clause binds (wb-2gzp): it holds no tag, so no tagged claim sits there unbound.
+    expect(taggedReadings(ROWS), "tags in a row label's reading: a tagged claim past the first ': ' would claim beyond the label's bead-row text unbound").toEqual([]);
+    expect(
+      Object.fromEntries(READING_PLANTS.map(plant => [plant.id, taggedReadings(withLabel(plant.row, plantedLabel(plant))).length > 0])),
+      "each reading control reads as declared",
+    ).toStrictEqual(Object.fromEntries(READING_PLANTS.map(plant => [plant.id, plant.flagged])));
+    expect(
+      READING_PLANTS.filter(plant => JSON.stringify(claimsOf(plantedLabel(plant))) !== JSON.stringify(claimsOf(rowLabel(plant.row)))).map(plant => plant.id),
+      "reading controls that change their row's bounded claims: each must pass the bounded binding, so only the reading check sees it",
+    ).toEqual([]);
+    // The controls anchored in the bead row: its clauses and statement, tag included, put into every row's reading at its start, at
+    // its end and before a second ": ".
+    const filed = ROWS.flatMap(row =>
+      [...clauses, `${STATEMENT_TAG}${statement}`].flatMap(claim =>
+        [plantInto(row.label, `${claim}; `, ""), plantInto(row.label, "", `; ${claim}`), plantInto(row.label, `${claim}: `, "")].map(label => ({ row, label })),
+      ),
+    );
+    expect(filed.length, "every row reads each filed claim in three places").toBe(ROWS.length * (clauses.length + 1) * 3);
+    expect(
+      filed
+        .filter(({ row, label }) => taggedReadings(withLabel(row.id, label)).length === 0 || JSON.stringify(claimsOf(label)) !== JSON.stringify(claimsOf(row.label)))
+        .map(({ label }) => label),
+      "the bead row's clauses and statement, tag included, in a row's reading: each passes the bounded binding and reads flagged",
+    ).toEqual([]);
+    const quietReadings = [...new Set(READING_PLANTS.flatMap(plant => (plant.residual === undefined || plant.flagged ? [] : [plant.residual])))];
+    expect(quietReadings, "every reading residual family has a pinned quiet row").toEqual(READING_RESIDUALS);
     expect({ quote: quote?.[2], citation: quote?.[1] }).toStrictEqual({ quote: ROSTER.quote, citation: ROSTER.citation });
     expect(bead.title.endsWith(ROSTER.citation), "the title cites the roster's citation").toBe(true);
     expect(ROSTER.citation.endsWith(`@${ROSTER.producer.programPin.slice(0, 12)}`), "the citation pins the program sha the roster measured").toBe(true);
