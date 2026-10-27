@@ -47,7 +47,12 @@ it("rejects wildcard role capabilities",()=>{
 // sentences, stays quiet, and is flagged by the family's named cure), so silencing a quiet page reds its case. Cut #5
 // (refusal #4, the same form) cures the refusal's reference, lead-in and continuation members, pins the list-item lead-in,
 // names a raw img's alt text, a mark that ends a name and a marked continuation as residuals, widens R-HIDDEN-CONTENT and
-// R-CONFUSABLE to the gate's members, and anchors the residual rows in the out-of-file roster.
+// R-CONFUSABLE to the gate's members, and anchors the residual rows in the out-of-file roster. Cut #6 (the orchestrator's
+// respin by reference at landing 576, ruling R-B31) keeps all of that and rewrites only the worked example: the landed
+// wb-ts6.1 census (test/workbench-hx-recipe-serving-census.test.ts, row G) reds a Pi document example that names the user
+// source in a settingSources array, so the page's file now sets no settingSources and names no install target in a Pi
+// loader root; Pi hands its sessions settingSources [] and the worker reads the recipe at the installed skill's path with
+// its Read tool, which R4a, R5 and R7 measure.
 // ---------------------------------------------------------------------------------------------
 installScratchLeakGuard();
 
@@ -57,8 +62,10 @@ const DOCS_PARENT = "19 — Worked usage examples and expected outcomes";
 const WORKER_SECTION = "Claude role as a swarm context graph worker";
 const WORKER_SUITE = "wb-973.15 SCG-R15: the docs/19 swarm context graph worker role";
 const NEGATIVES_SUITE = "wb-973.15 SCG-R15 negatives in force now";
-/** Where rf install-skill --agent claude writes the skill (rf install-skill --list --json, rf 0.1.845, measured 2026-10-26). */
+/** Where rf install-skill --agent claude writes the skill (rf install-skill --list --json, rf 0.1.845, measured 2026-10-26, re-measured 2026-10-27 for cut #6). */
 const INSTALLED_SKILL = "~/.claude/skills/rf";
+/** The skill file that holds the swarm recipe, at the installed skill's path (the same measurement: the bundle's references/swarm-integration.md). */
+const INSTALLED_RECIPE = `${INSTALLED_SKILL}/references/swarm-integration.md`;
 /**
  * rf's top-level commands, measured with rf --json --version (cli 0.1.845: 79 leaves under 18 top-level commands,
  * 2026-10-26), less install-skill, the one command the page names. A rendered `rf <command>`, global flags allowed
@@ -764,11 +771,14 @@ describe(WORKER_SUITE, () => {
     ]);
   });
 
-  it("SCG-R15 R4a: Pi loads the page's .pi/subagents.json as written, settingSources a workbench key", () => {
+  it("SCG-R15 R4a: Pi loads the page's .pi/subagents.json as written, and the file sets no settingSources, a workbench key", () => {
     const file = workerFile();
     const workbench = loadWorkbench(file);
     expect(workbench).toStrictEqual(file.workbench);
-    expect(workbench.settingSources).toEqual(["user"]);
+    expect(Object.hasOwn(workbench, "settingSources")).toBe(false);
+    // settingSources is a workbench key: the same file with a source set beside the roles loads it there.
+    const configured = loadWorkbench(editedFile(file => { file.settingSources = ["project"]; }));
+    expect(configured.settingSources).toEqual(["project"]);
   });
 
   it("SCG-R15 R4b: a role that declares settingSources itself is refused, never read", () => {
@@ -779,14 +789,15 @@ describe(WORKER_SUITE, () => {
     expect(() => loadWorkbench(file)).toThrow(/workbench\.roles\.[\w-]+ must declare prompt with optional tools\/capabilities\/model\/effort\./);
   });
 
-  it("SCG-R15 R5: the Claude host passes every session the configured settingSources, the page's user, and [] when the key is absent", async () => {
+  it("SCG-R15 R5: with the key absent, as on the page, the Claude host passes settingSources [] to every session it starts, and a configured value when one is set", async () => {
     const workbench = loadWorkbench(workerFile());
     const { name } = workerRole(workbench);
-    expect((await embeddedSession(workbench, name)).settingSources).toEqual(["user"]);
-    expect((await embeddedSession(workbench, "general-purpose")).settingSources).toEqual(["user"]);
-    const without = loadWorkbench(editedFile(file => { Reflect.deleteProperty(file, "settingSources"); }));
-    expect(without.settingSources).toBeUndefined();
-    expect((await embeddedSession(without, name)).settingSources).toEqual([]);
+    expect(workbench.settingSources).toBeUndefined();
+    expect((await embeddedSession(workbench, name)).settingSources).toEqual([]);
+    expect((await embeddedSession(workbench, "general-purpose")).settingSources).toEqual([]);
+    // The host reads the key: the same file with a source configured hands that source on, so the [] above is the absent key's reading.
+    const configured = loadWorkbench(editedFile(file => { file.settingSources = ["project"]; }));
+    expect((await embeddedSession(configured, name)).settingSources).toEqual(["project"]);
     // The embedded host is built from the loaded settings this way, its one call site in src/index.ts.
     expect(callObjectProperty("src/index.ts", "createClaudeWorkflowHost", "settingSources")).toEqual(["settings.settingSources ?? []"]);
   });
@@ -801,12 +812,14 @@ describe(WORKER_SUITE, () => {
     expect(types).toContain("export declare type SettingSource = 'user' | 'project' | 'local';");
   });
 
-  it("SCG-R15 R7: the role's tools replace the workbench-wide tools for its sessions, so Bash reaches the worker", async () => {
+  it("SCG-R15 R7: the role's tools replace the workbench-wide tools for its sessions, so Bash and Read reach the worker, whose prompt names the recipe at the installed skill's path", async () => {
     const workbench = loadWorkbench(editedFile(file => { file.tools = ["Read", "Grep"]; }));
     const { name, role } = workerRole(workbench);
     const options = await embeddedSession(workbench, name);
     expect(options.tools).toEqual(role.tools);
     expect(options.tools).toContain("Bash");
+    expect(options.tools).toContain("Read");
+    expect(role.prompt).toContain(INSTALLED_RECIPE);
     // A session outside the role keeps the workbench-wide list, so the role's list is a replacement, not a merge.
     expect((await embeddedSession(workbench, "general-purpose")).tools).toEqual(["Read", "Grep"]);
     expect(callObjectProperty("src/index.ts", "createClaudeWorkflowHost", "tools")).toEqual(["settings.tools ?? []"]);

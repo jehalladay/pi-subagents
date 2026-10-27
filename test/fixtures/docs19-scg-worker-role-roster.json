@@ -1,6 +1,6 @@
 {
   "bead": "wb-973.15",
-  "basis": "The out-of-file roster of test/workbench-docs19-scg-worker-role.census.ts (standing rule 16 anchor): every judged row's id, paragraph, quote, status and pins (or reason), so a row or pin removed from the census and from every literal in it still reds here. Written by the cutting seat (ws-01, g10-work-s110) at the cut, 2026-10-26.",
+  "basis": "The out-of-file roster of test/workbench-docs19-scg-worker-role.census.ts (standing rule 16 anchor): every judged row's id, paragraph, quote, status and pins (or reason), so a row or pin removed from the census and from every literal in it still reds here. Written by the cutting seat (ws-01, g10-work-s110) at the cut, 2026-10-26; the R4, R5, R6, R7 and R10 quotes and the R4a, R5 and R7 titles restated by the cutting seat (ws-01, g10-work-s118) at cut #6, 2026-10-27, for ruling R-B31.",
   "doc": "docs/workbench/19-worked-examples.md",
   "section": "Claude role as a swarm context graph worker",
   "census": "test/workbench-docs19-scg-worker-role.census.ts",
@@ -81,12 +81,12 @@
     {
       "id": "R4",
       "paragraph": 2,
-      "quote": "Pi loads this `.pi/subagents.json` as written, with `settingSources` a `workbench` key and never a role key.",
+      "quote": "Pi loads this `.pi/subagents.json` as written, and the file sets no `settingSources`, which is a `workbench` key and never a role key.",
       "status": "pinned",
       "pins": [
         {
           "file": "test/workbench-role-capabilities-settings.test.ts",
-          "title": "SCG-R15 R4a: Pi loads the page's .pi/subagents.json as written, settingSources a workbench key",
+          "title": "SCG-R15 R4a: Pi loads the page's .pi/subagents.json as written, and the file sets no settingSources, a workbench key",
           "suite": [
             "wb-973.15 SCG-R15: the docs/19 swarm context graph worker role"
           ]
@@ -103,12 +103,12 @@
     {
       "id": "R5",
       "paragraph": 2,
-      "quote": "Pi's Claude host passes every session it starts the configured `settingSources`, here `user`, and passes `[]` when the key is absent.",
+      "quote": "With the key absent, Pi's Claude host passes `[]` as the `settingSources` of every session it starts.",
       "status": "pinned",
       "pins": [
         {
           "file": "test/workbench-role-capabilities-settings.test.ts",
-          "title": "SCG-R15 R5: the Claude host passes every session the configured settingSources, the page's user, and [] when the key is absent",
+          "title": "SCG-R15 R5: with the key absent, as on the page, the Claude host passes settingSources [] to every session it starts, and a configured value when one is set",
           "suite": [
             "wb-973.15 SCG-R15: the docs/19 swarm context graph worker role"
           ]
@@ -118,7 +118,7 @@
     {
       "id": "R6",
       "paragraph": 2,
-      "quote": "The installed Agent SDK documents `user` as the global user settings in `~/.claude/settings.json` and `[]` as disabling filesystem settings.",
+      "quote": "The installed Agent SDK documents `[]` as disabling filesystem settings.",
       "status": "pinned",
       "pins": [
         {
@@ -133,12 +133,12 @@
     {
       "id": "R7",
       "paragraph": 2,
-      "quote": "The role's `tools` replace the workbench-wide `tools` for its sessions, so `Bash` is the shell tool the worker runs `rf` through.",
+      "quote": "The role's `tools` replace the workbench-wide `tools` for its sessions, so `Bash` is the shell tool the worker runs `rf` through and `Read` the tool it reads the recipe with.",
       "status": "pinned",
       "pins": [
         {
           "file": "test/workbench-role-capabilities-settings.test.ts",
-          "title": "SCG-R15 R7: the role's tools replace the workbench-wide tools for its sessions, so Bash reaches the worker",
+          "title": "SCG-R15 R7: the role's tools replace the workbench-wide tools for its sessions, so Bash and Read reach the worker, whose prompt names the recipe at the installed skill's path",
           "suite": [
             "wb-973.15 SCG-R15: the docs/19 swarm context graph worker role"
           ]
@@ -178,7 +178,7 @@
     {
       "id": "R10",
       "paragraph": 2,
-      "quote": "The detached host starts its Claude sessions with `settingSources` `[]` whatever this file sets, so there the `user` source is not loaded.",
+      "quote": "The detached host starts its Claude sessions with `settingSources` `[]` as well, whatever reaches it.",
       "status": "pinned",
       "pins": [
         {

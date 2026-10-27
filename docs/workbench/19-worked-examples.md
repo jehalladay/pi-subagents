@@ -104,10 +104,9 @@ A swarm context graph worker is a Claude role that runs `rf` through its shell t
 {
   "workbench": {
     "workflowAgentBackend": "claude",
-    "settingSources": ["user"],
     "roles": {
       "scg-worker": {
-        "prompt": "Work as a swarm context graph worker: follow the swarm recipe of the rf skill installed at ~/.claude/skills/rf, and pass the directory SWARM_RF_WORKSPACE names as --workspace to every rf command.",
+        "prompt": "Work as a swarm context graph worker: read the swarm recipe of the installed rf skill at ~/.claude/skills/rf/references/swarm-integration.md, follow it, and pass the directory SWARM_RF_WORKSPACE names as --workspace to every rf command.",
         "tools": ["Bash", "Read"]
       }
     }
@@ -115,4 +114,4 @@ A swarm context graph worker is a Claude role that runs `rf` through its shell t
 }
 ```
 
-Pi loads this `.pi/subagents.json` as written, with `settingSources` a `workbench` key and never a role key. Pi's Claude host passes every session it starts the configured `settingSources`, here `user`, and passes `[]` when the key is absent. The installed Agent SDK documents `user` as the global user settings in `~/.claude/settings.json` and `[]` as disabling filesystem settings. The role's `tools` replace the workbench-wide `tools` for its sessions, so `Bash` is the shell tool the worker runs `rf` through. The role declares no `capabilities`, so its sessions expose no Pi provider tool and need no capability grant. The worker learns the swarm workspace from `RF_WORKSPACE` and `SWARM_RF_WORKSPACE`, and the role adds no environment of its own: its sessions start with no `env` override, and the detached host's launch allowlist carries both names. The detached host starts its Claude sessions with `settingSources` `[]` whatever this file sets, so there the `user` source is not loaded.
+Pi loads this `.pi/subagents.json` as written, and the file sets no `settingSources`, which is a `workbench` key and never a role key. With the key absent, Pi's Claude host passes `[]` as the `settingSources` of every session it starts. The installed Agent SDK documents `[]` as disabling filesystem settings. The role's `tools` replace the workbench-wide `tools` for its sessions, so `Bash` is the shell tool the worker runs `rf` through and `Read` the tool it reads the recipe with. The role declares no `capabilities`, so its sessions expose no Pi provider tool and need no capability grant. The worker learns the swarm workspace from `RF_WORKSPACE` and `SWARM_RF_WORKSPACE`, and the role adds no environment of its own: its sessions start with no `env` override, and the detached host's launch allowlist carries both names. The detached host starts its Claude sessions with `settingSources` `[]` as well, whatever reaches it.

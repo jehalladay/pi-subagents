@@ -27,6 +27,15 @@
  * and the bead's two negatives in force now (no rf skill copy tracked, no docs/workbench sentence listing the four rf leaves
  * as served) are measured by their own cases and bound to no row here, except that row R3's second clause is the
  * skill-copy case.
+ *
+ * CUT #6 (the orchestrator's respin by reference at landing 576, ruling R-B31): the landed wb-ts6.1 census
+ * (test/workbench-hx-recipe-serving-census.test.ts, row G) reds any Pi document example that names the user source in a
+ * settingSources array, and cut #5's settings block set ["user"]. The worked example is rewritten so the page states no
+ * operator settingSources and no install target in a Pi loader root: the block sets no settingSources (rows R4 and R5: Pi
+ * hands every session []), R6 keeps the SDK's documented [] reading, R7 adds the Read tool the worker reads the recipe
+ * with at the installed skill's path its prompt names, and R10 reads the detached host's [] as the same reading. The row
+ * ids, statuses and pin counts are unchanged, so FROZEN_SHAPE and FROZEN_JUDGED keep their literals; the quotes of R4,
+ * R5, R6, R7 and R10, the titles of R4a, R5 and R7 and the settings block are restated, here and in the roster alike.
  */
 import { readFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
@@ -112,33 +121,42 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
   {
     id: "R4",
     paragraph: 2,
-    quote: "Pi loads this `.pi/subagents.json` as written, with `settingSources` a `workbench` key and never a role key.",
+    quote: "Pi loads this `.pi/subagents.json` as written, and the file sets no `settingSources`, which is a `workbench` key and never a role key.",
     status: "pinned",
     pins: [
-      pin("SCG-R15 R4a: Pi loads the page's .pi/subagents.json as written, settingSources a workbench key"),
+      pin("SCG-R15 R4a: Pi loads the page's .pi/subagents.json as written, and the file sets no settingSources, a workbench key"),
       pin("SCG-R15 R4b: a role that declares settingSources itself is refused, never read"),
     ],
   },
   {
     id: "R5",
     paragraph: 2,
-    quote: "Pi's Claude host passes every session it starts the configured `settingSources`, here `user`, and passes `[]` when the key is absent.",
+    quote: "With the key absent, Pi's Claude host passes `[]` as the `settingSources` of every session it starts.",
     status: "pinned",
-    pins: [pin("SCG-R15 R5: the Claude host passes every session the configured settingSources, the page's user, and [] when the key is absent")],
+    pins: [
+      pin(
+        "SCG-R15 R5: with the key absent, as on the page, the Claude host passes settingSources [] to every session it starts, and a configured value when one is set",
+      ),
+    ],
   },
   {
     id: "R6",
     paragraph: 2,
-    quote: "The installed Agent SDK documents `user` as the global user settings in `~/.claude/settings.json` and `[]` as disabling filesystem settings.",
+    quote: "The installed Agent SDK documents `[]` as disabling filesystem settings.",
     status: "pinned",
     pins: [pin("SCG-R15 R6: the installed Agent SDK documents user as the global ~/.claude/settings.json source and [] as disabling filesystem settings")],
   },
   {
     id: "R7",
     paragraph: 2,
-    quote: "The role's `tools` replace the workbench-wide `tools` for its sessions, so `Bash` is the shell tool the worker runs `rf` through.",
+    quote:
+      "The role's `tools` replace the workbench-wide `tools` for its sessions, so `Bash` is the shell tool the worker runs `rf` through and `Read` the tool it reads the recipe with.",
     status: "pinned",
-    pins: [pin("SCG-R15 R7: the role's tools replace the workbench-wide tools for its sessions, so Bash reaches the worker")],
+    pins: [
+      pin(
+        "SCG-R15 R7: the role's tools replace the workbench-wide tools for its sessions, so Bash and Read reach the worker, whose prompt names the recipe at the installed skill's path",
+      ),
+    ],
   },
   {
     id: "R8",
@@ -162,7 +180,7 @@ const TABLE: readonly Row[] = freezeDeep<readonly Row[]>([
   {
     id: "R10",
     paragraph: 2,
-    quote: "The detached host starts its Claude sessions with `settingSources` `[]` whatever this file sets, so there the `user` source is not loaded.",
+    quote: "The detached host starts its Claude sessions with `settingSources` `[]` as well, whatever reaches it.",
     status: "pinned",
     pins: [pin("SCG-R15 R10: the detached host starts its Claude sessions with settingSources [] whatever reaches it")],
   },
@@ -181,10 +199,9 @@ const completed = new Set<string>();
 const SETTINGS_BLOCK = `{
   "workbench": {
     "workflowAgentBackend": "claude",
-    "settingSources": ["user"],
     "roles": {
       "scg-worker": {
-        "prompt": "Work as a swarm context graph worker: follow the swarm recipe of the rf skill installed at ~/.claude/skills/rf, and pass the directory SWARM_RF_WORKSPACE names as --workspace to every rf command.",
+        "prompt": "Work as a swarm context graph worker: read the swarm recipe of the installed rf skill at ~/.claude/skills/rf/references/swarm-integration.md, follow it, and pass the directory SWARM_RF_WORKSPACE names as --workspace to every rf command.",
         "tools": ["Bash", "Read"]
       }
     }
