@@ -51,13 +51,16 @@
  *    case's own predicate, which must read it as a site (anchorRead: its fixture records carry RECORD_KEYS), and B4 pins
  *    its positive real src reading through siteCensus, the modules one record key short of the arm (oneRecordKey: the
  *    eight that spell one position key), so a dead predicate, an unfed one, an emptied text read or a walk that loses one
- *    of the eight reds B4. Three synthetic readers exercise the checker, and twenty controls pin the armed reading: snake
+ *    of the eight reds B4. Three synthetic readers exercise the checker, and twenty-six controls pin the armed reading: snake
  *    and camel (the vocabulary), recordShape, recordRead, recordQuoted, recordDestructured, recordCamel, recordOptional
  *    and recordDefaulted (one key spelling each: declared, read, quoted, destructured, camelCase, declared optional,
- *    destructured with a default), watermarkFold, watermarkFoldReversed, watermarkFoldPlural, watermarkFoldApply and
- *    watermarkFoldDestructured (max() before or after the position, over plural positions, through .apply, over a
- *    destructured element) read as sites; bareWord, singleKey, comparisonFold, aliasFold, splitFold and nestedFold do not
- *    (R-VOCABULARY).
+ *    destructured with a default), watermarkFold, watermarkFoldReversed, watermarkFoldPlural, watermarkFoldApply,
+ *    watermarkFoldCall and watermarkFoldDestructured (max() before or after the position, over plural positions, through
+ *    .apply, through .call, over a destructured element) read as sites; bareWord, singleKey, comparisonFold, aliasFold,
+ *    splitFold, splitFoldForward, splitFoldBlock, splitFoldBlockReversed, nestedFold, nestedFoldReversed and
+ *    blockExitFold do not (R-VOCABULARY). wb-38z6 adds six of them: watermarkFoldCall pins MAX_CALL's .call alternative,
+ *    and the five quiet ones complete the pins of IN_EXPRESSION's four clauses on both fold branches (its JSDoc names
+ *    each pair).
  *  C, acceptance (c). C1 the provider carries accepted's resource_revision and cursor as two fields, verbatim; C2 the reader
  *    adapter takes neither as its sourceRevision or sourceVersion (those stay the graph and bundle digests) and its
  *    topology equals the one without the fixture; C3 every src module that spells CURSOR_WORDS or holds a position key
@@ -89,8 +92,10 @@
  * them), a fold written as a comparison rather than max() (comparisonFold), a max() reached as a value rather than called
  * by name (an alias such as const top = Math.max, or Reflect.apply(Math.max, ...): aliasFold; an arm reading max as a
  * value across statements binds src/index.ts, src/workflow/task.ts and src/workflow/tool-description.ts, which read no rf
- * stream, measured at b1ce8c1), a max( and a position in two statements (splitFold) or split by braces nested two deep
- * (nestedFold), a notification word outside NOTIFICATION_WORDS (bareWord), a revision beside no position key (C3 control
+ * stream, measured at b1ce8c1), a max( and a position in two statements in either order (splitFold, splitFoldForward),
+ * across a block body between them in either order (splitFoldBlock, splitFoldBlockReversed), split by braces nested two
+ * deep in either order (nestedFold, nestedFoldReversed) or with the max() inside a block and the position after it
+ * (blockExitFold), a notification word outside NOTIFICATION_WORDS (bareWord), a revision beside no position key (C3 control
  * bareWords), a renamed record key (renamedKey) or a position projected into a version field (versionField) is not seen;
  * each is pinned false in its row's witness, so an arm widened to catch one reds that pin until this residual is re-read.
  * SCOPE: the phrase guard does not judge negation: any spelling reds, a sentence stating the prohibition included. Both
@@ -160,10 +165,15 @@ function recordKey(key: string): RegExp {
 }
 const RECORD_KEY_PATTERNS = RECORD_KEYS.map(recordKey);
 const POSITION_KEY = recordKey("position");
-/** A max( call, direct or reached through .apply or .call (Math.max.apply(null, positions)). */
+/** A max( call, direct or reached through .apply or .call (Math.max.apply(null, positions)); B4 controls watermarkFoldApply
+ * and watermarkFoldCall pin the two alternatives. */
 const MAX_CALL = "\\bmax\\s*(?:\\.\\s*(?:apply|call)\\s*)?\\(";
 /** One expression's span: no ";", and a brace only as a group one deep with no ";" inside (a destructured element such as
- * ({ position }) => position, or an object literal), so a fold never reads across a statement or out of a block. */
+ * ({ position }) => position, or an object literal), so a fold never reads across a statement or out of a block. Both
+ * branches of WATERMARK_FOLD compose it, and B4 pins each clause on each branch with a quiet control (max() first, then
+ * the position first): the bare ";" splitFoldForward and splitFold; a ";" inside a one-deep group (a block body)
+ * splitFoldBlock and splitFoldBlockReversed; a bare "{" (into a block) nestedFold and nestedFoldReversed; a bare "}" (out
+ * of a block) blockExitFold and nestedFold, whose parameter type closes two braces between the position and the max(. */
 const IN_EXPRESSION = "(?:[^;{}]|\\{[^;{}]*\\})*?";
 /** The producer's watermark fold (federation_boundary.py:191, a max() over the notified position): a MAX_CALL and a position
  * in one expression, in either order. */
@@ -676,12 +686,18 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       watermarkFoldReversed: notificationSite("const lastSeen = (positions: number[]) => positions.reduce((last, next) => Math.max(last, next), 0);"),
       watermarkFoldPlural: notificationSite("const lastSeen = (state: { positions: number[] }) => Math.max(0, ...state.positions);"),
       watermarkFoldApply: notificationSite("const lastSeen = (stream: { position: number }[]) => Math.max.apply(null, stream.map(item => item.position));"),
+      watermarkFoldCall: notificationSite("const lastSeen = (stream: { position: number }[]) => Math.max.call(null, 0, ...stream.map(item => item.position));"),
       watermarkFoldDestructured: notificationSite("const lastSeen = (stream: { position: number }[]) => Math.max(0, ...stream.map(({ position }) => position));"),
       singleKey: notificationSite("const at = (item: { position: number }) => item.position;"),
       comparisonFold: notificationSite("const lastSeen = (stream: { position: number }[]) => stream.reduce((last, item) => (item.position > last ? item.position : last), 0);"),
       aliasFold: notificationSite("const top = Math.max; const lastSeen = (stream: { position: number }[]) => top(0, ...stream.map(item => item.position));"),
       splitFold: notificationSite("const values = stream.map(item => item.position); const lastSeen = Math.max(0, ...values);"),
+      splitFoldForward: notificationSite("const lastSeen = Math.max(0, ...values); const values = stream.map(item => item.position);"),
+      splitFoldBlock: notificationSite("const lastSeen = (stream: { position: number }[]) => Math.max(0, ...stream.map(item => { const seen = item; return seen; }).map(item => item.position));"),
+      splitFoldBlockReversed: notificationSite("const lastSeen = (positions: number[]) => positions.map(next => { const seen = next; return seen; }).reduce((last, next) => Math.max(last, next), 0);"),
       nestedFold: notificationSite("const lastSeen = (stream: { cursor: { position: number } }[]) => Math.max(0, ...stream.map(({ cursor: { position } }) => position));"),
+      nestedFoldReversed: notificationSite("const lastSeen = (positions: number[]) => positions.map(at => ({ seen: { top: Math.max(0, at) } }));"),
+      blockExitFold: notificationSite("const lastSeen = (stream: { position: number }[]) => stream.map(item => { return Math.max(0, item.seq) }).map(item => item.position);"),
     };
     return { srcFloorMet: census.srcFloorMet, anchorRead: census.anchorRead, sites: census.sites, oneRecordKey, bound, stale: census.stale, synthetic, controls };
   },
