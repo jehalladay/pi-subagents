@@ -1,0 +1,432 @@
+{
+  "comment": "wb-021.4 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R5): the OUT-OF-FILE anchor of test/workbench-apo-ui-publish-census.test.ts (the hk9l/5jha roster pattern). rows: every judged row of test/helpers/apo-ui-publish-census.ts in census order (L, R, G, A, F, Q) - id, label and, per pin, its id and the SHA-256 of the pin as written (its JSON: a live pin's expected values; a plant's planted files, entry and expected findings, roles and inventories; a reading pin's texts and readings). tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its rows, its registered tests (vitest task tree, run modes) and its residual families against this file at test time, in order and both ways.",
+  "rows": [
+    {
+      "id": "L",
+      "label": "No Pi workbench UI interaction shall silently publish an APO graph manifest or checkpoint:",
+      "pins": [
+        {
+          "id": "L1-entry",
+          "digest": "397c976ec8c457cbc6c1b52dc176f9f17e5885b6b78700fd20aa36ed4e00e47e"
+        },
+        {
+          "id": "L2-paths",
+          "digest": "828ee8f79d11797175f3d464276f31d052567060084a7af9373fa23b4b4afa12"
+        },
+        {
+          "id": "L3-roles",
+          "digest": "73e575b3724147d6898af14dcec702f92158c37cb56bd3d1430639ef3cd02319"
+        }
+      ]
+    },
+    {
+      "id": "R",
+      "label": "a view click, refresh, or keybinding never publishes ('No UI click silently publishes a graph');",
+      "pins": [
+        {
+          "id": "R0-kinds",
+          "digest": "17e0f42d0a07c9977d2b714dfd0509891da7bacd58c2bc1b59620a4c19dbf0db"
+        },
+        {
+          "id": "R-src/index.ts",
+          "digest": "3684c2b89485ff896be78d740c4ca2860d5958b24eaf835c77893751cf3d51ff"
+        },
+        {
+          "id": "R-src/ui/conversation-viewer.ts",
+          "digest": "87dfebacf38215a606592c11bc666199a27fd3da9772c633d5630acddd4b20a4"
+        },
+        {
+          "id": "R-src/ui/fleet-list.ts",
+          "digest": "f1d217cbfcab29cc342c13872f15a19bf60de83c353066986bc682a9888adfb6"
+        },
+        {
+          "id": "R-src/ui/schedule-menu.ts",
+          "digest": "30326aaa6f1ce1d40cea39ec50fd1bf9676bcf9541ba756ff1b09d2765db2037"
+        },
+        {
+          "id": "R-src/ui/select-item.ts",
+          "digest": "1f4159adb4c74d14a728e002f3abc0efad6b8b4efae2d0cff7312b71ee79a6fb"
+        },
+        {
+          "id": "R-src/ui/viewer-keys.ts",
+          "digest": "12ce17b627b1f173baff53f02d2e31680b83aa302c49294365f31d971ba497f0"
+        },
+        {
+          "id": "R-src/ui/workflow-dialog.ts",
+          "digest": "14eef02beaaed8b2d565ff0ba37c7bd1be91b1953ef8438ba2a63bb0cc2f200d"
+        },
+        {
+          "id": "R-src/ui/workflow-inspector.ts",
+          "digest": "c80353b1dafe1bb29b4a5f7bb9f0c816747ff4fba5a9972b9dc1f947fb6a00ef"
+        },
+        {
+          "id": "R-src/ui/workflow-menu.ts",
+          "digest": "c272e54633a293ba19167ff0cd45263c1eaaf9d175a05b6e05abc8d04de8f5f3"
+        }
+      ]
+    },
+    {
+      "id": "G",
+      "label": "if a publish/promotion affordance ever appears it is an explicit, confirmed, governed operation outside the view surface, delegating to the owner's revision-guarded CAS promotion ('publication is governed').",
+      "pins": [
+        {
+          "id": "G1-surface",
+          "digest": "7496a3025c4c59e5d3bcd382c18ded4780704f73e9e03c24b8b879620d7be765"
+        },
+        {
+          "id": "G2-offer",
+          "digest": "b837c21ed9d0ced7845425359635d9b8142c07212883c5cfcd83a9aafaabceed"
+        },
+        {
+          "id": "G3-outside",
+          "digest": "cc8a1586596570eed0d969ae60581b252cbaa48dfe6f25c2106aaa39796237d1"
+        }
+      ]
+    },
+    {
+      "id": "A",
+      "label": "UI-affordance census",
+      "pins": [
+        {
+          "id": "A-src/index.ts",
+          "digest": "9fd07398dc3d97010fd6f34888eafe4e79e7e2338fd7f533ba4fbbe4e04bfb40"
+        },
+        {
+          "id": "A-src/ui/conversation-viewer.ts",
+          "digest": "bd22ed20800202bd1fc1ed6bfe6d5b91499351d054024bb492324d248a54193d"
+        },
+        {
+          "id": "A-src/ui/fleet-list.ts",
+          "digest": "295310073f76f39beea37fb64c09d7f750d53384298643282a8209ae7bc89b86"
+        },
+        {
+          "id": "A-src/ui/schedule-menu.ts",
+          "digest": "ba1e763b6421bcc25fde1c6de25dde43e4604c2d48f692e78b08ffa9a1ed31a5"
+        },
+        {
+          "id": "A-src/ui/select-item.ts",
+          "digest": "3830b0b76d9f7acccf5f6acf6f5f50095f7a465b3bc4cf01f4ae8fa0e665d119"
+        },
+        {
+          "id": "A-src/ui/viewer-keys.ts",
+          "digest": "4dc0d9827b67b4ca1f774eea6795911b4ed6f4583244b35da5d186f69114a4be"
+        },
+        {
+          "id": "A-src/ui/workflow-dialog.ts",
+          "digest": "781ffabc7c29e407bf90f063c0afb3d6d5dcf29fdddc38d9335305ea8e0890d5"
+        },
+        {
+          "id": "A-src/ui/workflow-inspector.ts",
+          "digest": "7e537eb9e6af719315be73ff279bf68307339dce3491e5e0cb3799fc8fa7ac40"
+        },
+        {
+          "id": "A-src/ui/workflow-menu.ts",
+          "digest": "add9f0249b2181de1598e65ccabe23ba7240331e45c24047cbd0b5b143480047"
+        },
+        {
+          "id": "A-readers",
+          "digest": "a6bcb6f1089d050bed550f28ded30846f1f7d3b589ea511a31bfdbe2b751fd46"
+        },
+        {
+          "id": "A-unclassified",
+          "digest": "af31cf4982eea06c510a5668137270078ed4e785e764b5dcd7273567022a338c"
+        }
+      ]
+    },
+    {
+      "id": "F",
+      "label": "plus a falsifier that no APO view handler reaches any publish/promotion path.",
+      "pins": [
+        {
+          "id": "F-static",
+          "digest": "7398390006393dff1f315b6fd240a28a0ff238854632ddb5b641932a13d08768"
+        },
+        {
+          "id": "F-reexport-star",
+          "digest": "40fd48661e00b1bd326f5f7547b6139778de5406c529f8c65df3df9de195d5b9"
+        },
+        {
+          "id": "F-reexport-named",
+          "digest": "7180c0cba72e35b574754c5fb03b7cba34e9ca3b54598af1f974f6b71dcb5b4d"
+        },
+        {
+          "id": "F-dynamic",
+          "digest": "69488184d4530c868f0dfe214639bd49469f21ce1418d9fdb2242b82c9bbff5f"
+        },
+        {
+          "id": "F-require",
+          "digest": "f36063a8918b6bf8e15b52741a937a9450a9fa53da50604fa5468c4a864e8657"
+        },
+        {
+          "id": "F-import-equals",
+          "digest": "e8eb03192e8961905434ce28455b43a884afaf8ee6869782a9be0b9ba73e8c75"
+        },
+        {
+          "id": "F-side-effect",
+          "digest": "ce604c0496ea21d2212bf34d40e0305c45c5ece16b6e6137cb4030fe0bb04998"
+        },
+        {
+          "id": "F-transitive",
+          "digest": "822e9f97c762da20f706d333d25210646979fa7ace685dcad8bf18682153296f"
+        },
+        {
+          "id": "F-local",
+          "digest": "e59f5edf6fccfeae9f0c44089d511ea099e5012a4c0bf90b86855224e6559461"
+        },
+        {
+          "id": "F-computed-import",
+          "digest": "6faed209f87f1c154450f48bef374ebdd4beaa135d30edbfc49f7d837de24de6"
+        },
+        {
+          "id": "F-computed-require",
+          "digest": "cf27cd5ccd05833c55e950f9db657f0ab5800d1a767bd609864bd692ec06b84f"
+        },
+        {
+          "id": "F-missing",
+          "digest": "cc30b74ae608667636a723faf2f0fc40e01cf231cd5f0f1869b363f61b654291"
+        },
+        {
+          "id": "F-package-path",
+          "digest": "37f281992e234649a7a0932906987f8b796103342fc01805bd23260bbc3ff27b"
+        },
+        {
+          "id": "F-package-role",
+          "digest": "dff03ccfcbcb22d3992b5c52b7eb79b5f76682725cfb2e71bbd9ccb233edfb26"
+        },
+        {
+          "id": "F-word-publish",
+          "digest": "4bd30e65536aa0b5da41cdd2915056063123110a1226a544acdda77169df7081"
+        },
+        {
+          "id": "F-word-publishes",
+          "digest": "8231fcc514ff853051dc38f1f8307ee868e93b8ba45c23f08f130c83e3c818cd"
+        },
+        {
+          "id": "F-word-publication",
+          "digest": "bf96b5b293c59bd22958ccf48abde7571433d0c306d1a61a9c2580c765b4a20e"
+        },
+        {
+          "id": "F-word-promotion",
+          "digest": "6acc1daed2ee5626463142c4133fbead99ca69b518072dc5740723b4ed3dbb3d"
+        },
+        {
+          "id": "F-folded",
+          "digest": "728339480b9e7ef105a9e1a6fe084f901d61c58afc4b0efadcb5114574b3617d"
+        },
+        {
+          "id": "F-template-part",
+          "digest": "074383dc6e2ccc5854b944414d583c1a8c0dd92a39729fffbd9f863f352d0704"
+        },
+        {
+          "id": "F-regex",
+          "digest": "5fa199f3d7e7dc3d9b7bb3cdde5e528d3d344475510145962bce2d2afb618112"
+        },
+        {
+          "id": "F-escaped-name",
+          "digest": "d9c12418337108846d7e6117f3de88d494a6081b5cba5991e4dd5d5bd5d4996d"
+        },
+        {
+          "id": "F-ignorable",
+          "digest": "e8bb1d355759f4a2d25764da32ae52a1abb969ed57fcc9cd8325f36de1ec722e"
+        },
+        {
+          "id": "F-mark",
+          "digest": "1cc03c58ae874e58e0c750f85cb6714816d36fecc95f41a88106370ded2c458a"
+        },
+        {
+          "id": "F-width",
+          "digest": "2f613c473ac489853b1b1d954f25dc01aa4167d98eac454a2ce507c1c4d53af4"
+        },
+        {
+          "id": "F-slug",
+          "digest": "0488c0f83f93aca2db3f41bc64407044828b07b11b6e7c2dff4a95aa11bb21f7"
+        },
+        {
+          "id": "F-lists-publish",
+          "digest": "390ee97505a4ca60e9846c55b8758b92f228748a6c38daa1e908776a2e04de78"
+        },
+        {
+          "id": "F-lists-promote",
+          "digest": "ca92804c6d57836ab9eb3d9f7f6a84a09cad195ccfe5d55a8b487ba90ea1b9b1"
+        },
+        {
+          "id": "F-lists-object",
+          "digest": "4146ee9be803c252ea6ce32e8e2cc7b012b96b4fd60744b1152c3bb07254617c"
+        },
+        {
+          "id": "F-lists-role",
+          "digest": "8ee4507f436eee5472367595b3a686ea7e46b27f49d714b33dbae60b52b031fa"
+        },
+        {
+          "id": "F-lists-near",
+          "digest": "50a7a15dc6cc9a10f20d757972569ee4b6c952d62eea7670103293099b48361a"
+        },
+        {
+          "id": "F-quiet-type-only",
+          "digest": "6df636ce2f822cbad1a63495cf8d21fbe7358fe4355ef0f4134e70babf5485b8"
+        },
+        {
+          "id": "F-quiet-type-specifiers",
+          "digest": "de136eefeb065a92dde458f3bbff7eef2c8bc3bde29b4814cb5544b5af65247f"
+        },
+        {
+          "id": "F-quiet-comment",
+          "digest": "a542b11770105232f21a29e7a30166d16fa904877b7c56a4b3955d3d67af7394"
+        },
+        {
+          "id": "F-quiet-near-name",
+          "digest": "ba3fd97c17d45a4ec656edcbfd89beeea0c4e363fa2912c7a306da92ca7b2103"
+        },
+        {
+          "id": "F-quiet-unreached",
+          "digest": "bcda5a32b3739d35e8d1c0b43e981322edfe693f7858cc016b26bc250069ff54"
+        },
+        {
+          "id": "F-quiet-read-only-view",
+          "digest": "b8832dc6ef24b0bc7b436f2b9563c05bd9ffb8443274a4312a79f8aa3588f4ad"
+        }
+      ]
+    },
+    {
+      "id": "Q",
+      "label": "named residuals, each a family with its pinned quiet row (outside the bead's text)",
+      "pins": [
+        {
+          "id": "R-COMPUTED-TEXT",
+          "digest": "bedf20dc6dd8eb9be64f77e979acf5138813b206101ba583fd03bf28a5b66c2b"
+        },
+        {
+          "id": "R-LOOKALIKE",
+          "digest": "ff7f072aa0521f87101373c2f0d3ff3399958c5ec8f78cf1542e676f6e8571df"
+        },
+        {
+          "id": "R-UNNAMED-PATH",
+          "digest": "f7dfea98e07bba0d5b3970f827d98ff7640e47fe18723cd894d542966d46e2e8"
+        },
+        {
+          "id": "R-PACKAGE",
+          "digest": "0e510030e8436dc28662298e78ada34b969e09e6fcd5b935fc21fe842438a8e0"
+        },
+        {
+          "id": "R-HELPER-KEY",
+          "digest": "d6354508f8fddbbb7b72d30278f4b8b8e275006b31082ff7481997108783bd1f"
+        },
+        {
+          "id": "R-RUNTIME-LOAD",
+          "digest": "d4e7fb224b8a15b13aa6740af2e5bb2c6e8772e13bcdf0688dd84bcf2416abba"
+        },
+        {
+          "id": "R-HOST-ALIAS",
+          "digest": "b90fee29f49c74fa1b1cf18c1db99335a1c5a6768f517c56eb32fbaea7b672d7"
+        },
+        {
+          "id": "R-PI-ALIAS",
+          "digest": "74650a7b6addd6b7b6ef30415be4b95884067f6a080db2adc8d020ee4031ef58"
+        }
+      ]
+    }
+  ],
+  "tests": [
+    "L L1-entry",
+    "L L2-paths",
+    "L L3-roles",
+    "R R0-kinds",
+    "R R-src/index.ts",
+    "R R-src/ui/conversation-viewer.ts",
+    "R R-src/ui/fleet-list.ts",
+    "R R-src/ui/schedule-menu.ts",
+    "R R-src/ui/select-item.ts",
+    "R R-src/ui/viewer-keys.ts",
+    "R R-src/ui/workflow-dialog.ts",
+    "R R-src/ui/workflow-inspector.ts",
+    "R R-src/ui/workflow-menu.ts",
+    "G G1-surface",
+    "G G2-offer",
+    "G G3-outside",
+    "A A-src/index.ts",
+    "A A-src/ui/conversation-viewer.ts",
+    "A A-src/ui/fleet-list.ts",
+    "A A-src/ui/schedule-menu.ts",
+    "A A-src/ui/select-item.ts",
+    "A A-src/ui/viewer-keys.ts",
+    "A A-src/ui/workflow-dialog.ts",
+    "A A-src/ui/workflow-inspector.ts",
+    "A A-src/ui/workflow-menu.ts",
+    "A A-readers",
+    "A A-unclassified",
+    "F F-static",
+    "F F-reexport-star",
+    "F F-reexport-named",
+    "F F-dynamic",
+    "F F-require",
+    "F F-import-equals",
+    "F F-side-effect",
+    "F F-transitive",
+    "F F-local",
+    "F F-computed-import",
+    "F F-computed-require",
+    "F F-missing",
+    "F F-package-path",
+    "F F-package-role",
+    "F F-word-publish",
+    "F F-word-publishes",
+    "F F-word-publication",
+    "F F-word-promotion",
+    "F F-folded",
+    "F F-template-part",
+    "F F-regex",
+    "F F-escaped-name",
+    "F F-ignorable",
+    "F F-mark",
+    "F F-width",
+    "F F-slug",
+    "F F-lists-publish",
+    "F F-lists-promote",
+    "F F-lists-object",
+    "F F-lists-role",
+    "F F-lists-near",
+    "F F-quiet-type-only",
+    "F F-quiet-type-specifiers",
+    "F F-quiet-comment",
+    "F F-quiet-near-name",
+    "F F-quiet-unreached",
+    "F F-quiet-read-only-view",
+    "Q R-COMPUTED-TEXT",
+    "Q R-LOOKALIKE",
+    "Q R-UNNAMED-PATH",
+    "Q R-PACKAGE",
+    "Q R-HELPER-KEY",
+    "Q R-RUNTIME-LOAD",
+    "Q R-HOST-ALIAS",
+    "Q R-PI-ALIAS",
+    "outside anchors: the export row, the title's vocabulary, the package.json entry, the shared reader's edge kinds and the live affordance set",
+    "rule 16: every judged row and the residual families are frozen at their measured shape",
+    "roster: the judged rows, the registered tests and the residual families equal test/fixtures/apo-ui-publish-roster.json, in order and both ways"
+  ],
+  "residuals": {
+    "R-COMPUTED-TEXT": [
+      "Q R-COMPUTED-TEXT"
+    ],
+    "R-LOOKALIKE": [
+      "Q R-LOOKALIKE"
+    ],
+    "R-UNNAMED-PATH": [
+      "Q R-UNNAMED-PATH"
+    ],
+    "R-PACKAGE": [
+      "Q R-PACKAGE"
+    ],
+    "R-HELPER-KEY": [
+      "Q R-HELPER-KEY"
+    ],
+    "R-RUNTIME-LOAD": [
+      "Q R-RUNTIME-LOAD"
+    ],
+    "R-HOST-ALIAS": [
+      "Q R-HOST-ALIAS"
+    ],
+    "R-PI-ALIAS": [
+      "Q R-PI-ALIAS"
+    ]
+  }
+}
