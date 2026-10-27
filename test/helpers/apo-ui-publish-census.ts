@@ -1,39 +1,58 @@
 /**
  * wb-021.4 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R5, program-triage-2026-10-18): the judge, the tables and the plants of the
  * APO UI publish census (test/workbench-apo-ui-publish-census.test.ts, whose header states the claims). One module so the
- * census and its roster are written from the same rows.
+ * census and its roster are written from the same rows. PER FORM: every reading below is falsified per form - by a pin of
+ * its own, or by a file, a store or a member of its own inside a multi-form pin, each with its own expected finding or
+ * inventory entry - and every pin's what names its forms. A plant spells each trigger once (one form, one source kind), or
+ * gives each spelling a finding of its own (F-local's call and declaration each OFFER); a route plant's trigger is its edge
+ * (STORE, the path module it reaches, is its target). So a reader blind to one form reds a pin that names it.
  *
- * THE JUDGE. wordsOf(text): default-ignorable code points are dropped, the text is NFKD-folded and its combining marks are
- * dropped, then each run of letters and digits is split at a case change (camel, Pascal, an acronym before a capitalized
- * word) and at a letter-digit boundary, and lower-cased. A PATH text holds a PROMOTE word, or a PUBLISH word beside an
- * OBJECT word (the title's own vocabulary: publish, publishes, publication; promotion; graph, manifest, checkpoint, each
- * with its inflections). A ROLE text holds the program's abbreviation as a word, or its slug's three words in order. A CLICK
- * text holds a CLICK_WORDS word (a pointer input; R0 pins that src holds none). A module's texts are every identifier and
- * private name (declarations and references, by their unescaped text), every string-like literal (a no-substitution
- * template included) by its cooked value, every template part by its cooked text, every regular-expression literal by its
- * source, and every chain of "+" whose operands are all string literals, parenthesized or not, by its folded value.
- * Comments are never read.
+ * THE JUDGE. wordsOf(text): default-ignorable code points are dropped, the text is NFKD-folded (a compatibility letter
+ * reads as its plain letter) and its combining marks are dropped; then each run of letters and digits is split at a
+ * lower-to-upper case change (camelCase and PascalCase), before the last capital of a capital run that a lower-case
+ * letter follows (an acronym before a capitalized word), at a letter-digit and at a digit-letter boundary, and each part
+ * is lower-cased. A PATH text holds a PROMOTE word, or a PUBLISH word beside an OBJECT word (the title's own vocabulary:
+ * publish, publishes, publication; promotion; graph, manifest, checkpoint, each with its inflections). A ROLE text holds
+ * the program's abbreviation as a word, or its slug's three words in order. A CLICK text holds a CLICK_WORDS word (a
+ * pointer input; R0 pins that src holds none). Each of the three readings reads a module's names and its literals alike.
+ * NAMES: a module's names are every identifier and every private name, a declaration's and a reference's alike. Every name
+ * the judge matches - a name text, a declaration's name, a member, a receiver, a callee, Key and its member - is read by
+ * nameOf: the name's source text with every unicode escape decoded (the four-digit form and the braced form, at any
+ * position and in any number), which is the name the runtime reads; F-escapes-runtime holds nameOf to the runtime's own
+ * decoding for every escape shape, in an identifier and in a private name. No reader matches a name by TypeScript's
+ * node.text (the require leg reads it only to know whether the shared reader, which does, has read the call): TypeScript
+ * 6.0.3 drops the plain characters between an escape and a later braced escape (the scanner shape: promote spelled with
+ * an escaped p, then romot, then a braced escaped e, reads pe).
+ * LITERALS: a module's literals are every string literal and every no-substitution template by its value, every template
+ * part (its head, each middle and its tail) by its text - each with its escapes decoded by TypeScript - every
+ * regular-expression literal by its source, and every chain of "+" whose operands are all string literals, parenthesized
+ * or not, by its folded value. Comments are never read.
  * EDGES: the shared reader's imports (test/helpers/census.ts sourceStructure: static, export-from, dynamic, require, each
- * with its typeOnly flag) plus three this module reads itself: an import-equals declaration (import x = require("y")), a
- * dynamic import or require whose specifier is not a string literal (computed, unresolvable by construction), and a require
- * whose callee is wrapped (parentheses, a non-null or a type assertion: (require)("y")), read as a require edge. A runtime
- * edge is one that is not typeOnly. A relative specifier resolves inside the judged tree (as written, .js to .ts, a bare
- * path to .ts or to index.ts); one that resolves nowhere, every computed one and a named entry missing from the tree are
- * UNRESOLVED (fail-closed). A bare specifier is a package: it is not followed, and its specifier's own words are judged.
- * AFFORDANCES: a module's UI interaction entry points - its matchesKey reads (the key as a literal, as Key.<member>,
- * else <computed>), its handleInput implementations (a method, a function declaration, an object property, a class
- * field or a getter, each named by an identifier, a string literal or a computed string literal; a shorthand property;
- * a variable declared by that name; an = assignment to a member), its interactive host UI calls (<handle>.<member>(...)
- * with a member in UI_MEMBERS.interaction) and its extension interactions (registerCommand and registerShortcut by
- * literal name, on("input")); a member reached by an element access with a string literal reads as its property access.
+ * with its typeOnly flag) plus what this module reads itself: an import-equals declaration (import x = require("y")), a
+ * dynamic import or require whose specifier is not a string-like literal (computed, unresolvable by construction), and a
+ * require the shared reader does not read - its callee wrapped (parentheses, a non-null assertion, as, satisfies or <T>:
+ * (require)("y")) or its name spelled in a shape the shared reader's node.text misreads (the scanner shape) - read as a
+ * require edge. A runtime edge is one that is not typeOnly
+ * (an import type, an import whose every specifier is type-only, an export type, an import type x = require(...)). A
+ * relative specifier resolves inside the judged tree (as written, .js to .ts, a bare path to .ts or to index.ts); one
+ * that resolves nowhere, every computed one and a named entry missing from the tree are UNRESOLVED (fail-closed). A bare
+ * specifier is a package: it is not followed, and its specifier's own words are judged.
+ * AFFORDANCES: a module's UI interaction entry points - its matchesKey reads (a call of matchesKey or of a member of that
+ * name; the key as a string literal or a no-substitution template, as Key.<member>, else <computed>), its handleInput
+ * implementations (a method, a function declaration, an object property, a class field or a getter, each named by an
+ * identifier, a string literal or a computed string literal; a shorthand property; a variable declared by that name; an
+ * assignment to a member by =, ??=, ||= or &&=), its interactive host UI calls (<handle>.<member>(...) with a member in
+ * UI_MEMBERS.interaction) and its extension interactions (registerCommand and registerShortcut by their first argument -
+ * a string-like literal, else <computed> - and on("input")); a member reached by an element access with a string literal
+ * reads as its property access.
  * A HOST UI HANDLE is a receiver whose name holds the word ui: an identifier (ui, hostUi), a property (ctx.ui, this.ui,
  * this.uiCtx - the src/ui/agent-widget.ts stored handle) or an element access by a string literal; the receiver and
  * every call's callee are read through parentheses, non-null assertions and type assertions (as, satisfies, <T>). A
  * receiver named with the word ui that is not the host's handle reads as one too (fail-closed: an unknown member reds
- * as UNCLASSIFIED); any other receiver (an alias named otherwise, a call result, a container element) is R-HOST-ALIAS.
- * A pi surface is a register* or on call on the identifier pi; any other receiver (an alias, this.pi, options.pi) is
- * R-PI-ALIAS. A module with any affordance is an AFFORDANCE module; the VIEW SURFACE is the affordance modules plus
- * every module under src/ui/.
+ * as UNCLASSIFIED); any other receiver (an alias named otherwise, a call result, a container element) and a member
+ * reached indirectly (.call, .bind) is R-HOST-ALIAS. A pi surface is a register* or on call on the bare identifier pi;
+ * any other receiver (an alias, this.pi, options.pi, pi behind a wrapper) is R-PI-ALIAS. A module with any affordance is
+ * an AFFORDANCE module; the VIEW SURFACE is the affordance modules plus every module under src/ui/.
  * FINDINGS (fail-closed, each a line): REACH (an affordance module whose runtime closure holds a PATH module - itself
  * included - tagged [APO view] when the module holds a ROLE text), ENTRY (the entry's runtime closure holds a PATH module),
  * OFFER (a PATH text inside a view-surface module), PACKAGE (a package specifier in a judged closure whose words read as a
@@ -152,9 +171,23 @@ export interface ModuleFacts {
   readonly writes: number;
 }
 
+/** A four-digit (\uXXXX) or a braced (\u{...}) unicode escape: the only escapes a name may hold. */
+const UNICODE_ESCAPE = /\\u(?:\{([0-9A-Fa-f]+)\}|([0-9A-Fa-f]{4}))/gu;
+
+/** A name's source text with every unicode escape decoded, at any position and in any number (an out-of-range escape is kept as written). */
+export function unescapeName(raw: string): string {
+  return raw.replace(UNICODE_ESCAPE, (written: string, braced: string | undefined, fourDigit: string | undefined) => {
+    const code = Number.parseInt(braced ?? fourDigit ?? "", 16);
+    return code <= 0x10ffff ? String.fromCodePoint(code) : written;
+  });
+}
+
+/** A name as the runtime reads it (see the module header: NAMES): its source text, unescaped; never TypeScript's node.text. */
+export const nameOf = (node: ts.Identifier | ts.PrivateIdentifier): string => unescapeName(node.getText());
+
 /** A member access: a property access by name, or an element access by a string literal (read as its property access). */
 const memberOf = (node: ts.Expression): { readonly member: string; readonly receiver: ts.Expression } | undefined => {
-  if (ts.isPropertyAccessExpression(node)) return { member: node.name.text, receiver: node.expression };
+  if (ts.isPropertyAccessExpression(node)) return { member: nameOf(node.name), receiver: node.expression };
   if (ts.isElementAccessExpression(node) && ts.isStringLiteralLike(node.argumentExpression)) return { member: node.argumentExpression.text, receiver: node.expression };
   return undefined;
 };
@@ -169,7 +202,7 @@ export const unwrap = (node: ts.Expression): ts.Expression => {
 /** A receiver's name, read through wrappers: an identifier, or the member a property or string-literal element access reads. */
 const receiverName = (node: ts.Expression): string | undefined => {
   const bare = unwrap(node);
-  return ts.isIdentifier(bare) ? bare.text : memberOf(bare)?.member;
+  return ts.isIdentifier(bare) ? nameOf(bare) : memberOf(bare)?.member;
 };
 
 /** A host UI handle: a receiver whose name holds the word ui (see the module header). */
@@ -188,19 +221,22 @@ function foldedLiteral(node: ts.Expression): string | undefined {
 }
 
 const HANDLER = "handleInput";
+/** The assignments that implement a handler on a member: =, ??=, ||= and &&=. */
+const ASSIGNMENTS: readonly ts.SyntaxKind[] = [ts.SyntaxKind.EqualsToken, ts.SyntaxKind.QuestionQuestionEqualsToken, ts.SyntaxKind.BarBarEqualsToken, ts.SyntaxKind.AmpersandAmpersandEqualsToken];
 /** A declaration's name as text: an identifier, a string literal or a computed string literal; else undefined. */
 const nameText = (name: ts.PropertyName | undefined): string | undefined => {
   if (name === undefined) return undefined;
-  if (ts.isIdentifier(name) || ts.isStringLiteral(name)) return name.text;
+  if (ts.isIdentifier(name)) return nameOf(name);
+  if (ts.isStringLiteral(name)) return name.text;
   if (ts.isComputedPropertyName(name) && ts.isStringLiteralLike(name.expression)) return name.expression.text;
   return undefined;
 };
-/** A handleInput implementation (see the module header): a named method, function, object property, class field or getter, a shorthand property, a variable declared by that name, or an = assignment to a member. */
+/** A handleInput implementation (see the module header): a named method, function, object property, class field or getter, a shorthand property, a variable declared by that name, or an assignment to a member by =, ??=, ||= or &&=. */
 const isHandler = (node: ts.Node): boolean => {
   if (ts.isMethodDeclaration(node) || ts.isFunctionDeclaration(node) || ts.isPropertyAssignment(node) || ts.isPropertyDeclaration(node) || ts.isGetAccessorDeclaration(node)) return nameText(node.name) === HANDLER;
-  if (ts.isShorthandPropertyAssignment(node)) return node.name.text === HANDLER;
-  if (ts.isVariableDeclaration(node)) return ts.isIdentifier(node.name) && node.name.text === HANDLER;
-  if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken) return memberOf(node.left)?.member === HANDLER;
+  if (ts.isShorthandPropertyAssignment(node)) return nameOf(node.name) === HANDLER;
+  if (ts.isVariableDeclaration(node)) return ts.isIdentifier(node.name) && nameOf(node.name) === HANDLER;
+  if (ts.isBinaryExpression(node) && ASSIGNMENTS.includes(node.operatorToken.kind)) return memberOf(node.left)?.member === HANDLER;
   return false;
 };
 
@@ -237,7 +273,7 @@ export function moduleFacts(root: string, file: string): ModuleFacts {
     if (click !== undefined) clicks.push({ line: lineOf(node), source, text: value, reading: click });
   };
   const visit = (node: ts.Node): void => {
-    if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) read("name", node.text, node);
+    if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node)) read("name", nameOf(node), node);
     else if (ts.isStringLiteralLike(node) || ts.isTemplateHead(node) || ts.isTemplateMiddle(node) || ts.isTemplateTail(node) || ts.isRegularExpressionLiteral(node)) read("literal", node.text, node);
     if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.PlusToken && !(ts.isBinaryExpression(node.parent) && node.parent.operatorToken.kind === ts.SyntaxKind.PlusToken)) {
       const folded = foldedLiteral(node);
@@ -250,21 +286,23 @@ export function moduleFacts(root: string, file: string): ModuleFacts {
     if (isHandler(node)) handlers += 1;
     if (ts.isCallExpression(node)) {
       const callee = unwrap(node.expression);
-      const name = ts.isIdentifier(callee) ? callee.text : memberOf(callee)?.member;
+      const name = ts.isIdentifier(callee) ? nameOf(callee) : memberOf(callee)?.member;
       const first = node.arguments[0];
       const literal = first !== undefined && ts.isStringLiteralLike(first) ? first.text : undefined;
       const dynamic = node.expression.kind === ts.SyntaxKind.ImportKeyword;
-      const isRequire = ts.isIdentifier(callee) && callee.text === "require";
+      const isRequire = ts.isIdentifier(callee) && nameOf(callee) === "require";
+      // the shared reader's own test (a bare identifier whose node.text is require): a call it reads is not read twice
+      const sharedRequire = ts.isIdentifier(node.expression) && node.expression.text === "require";
       if ((dynamic || isRequire) && literal === undefined) {
         edges.push({ kind: dynamic ? "dynamic" : "require", specifier: undefined, typeOnly: false, line: lineOf(node) });
-      } else if (isRequire && callee !== node.expression) {
-        // a wrapped require callee ((require)("y")): the shared reader reads only the bare identifier
+      } else if (isRequire && !sharedRequire) {
+        // a require the shared reader does not read: a wrapped callee ((require)("y")) or a name spelled with an escape
         edges.push({ kind: "require", specifier: literal, typeOnly: false, line: lineOf(node) });
       }
       if (name === "matchesKey") {
         const key = node.arguments[1];
         if (key !== undefined && ts.isStringLiteralLike(key)) keys.add(key.text);
-        else if (key !== undefined && ts.isPropertyAccessExpression(key) && ts.isIdentifier(key.expression) && key.expression.text === "Key") keys.add(`Key.${key.name.text}`);
+        else if (key !== undefined && ts.isPropertyAccessExpression(key) && ts.isIdentifier(key.expression) && nameOf(key.expression) === "Key") keys.add(`Key.${nameOf(key.name)}`);
         else keys.add("<computed>");
       }
       const access = memberOf(callee);
@@ -277,7 +315,7 @@ export function moduleFacts(root: string, file: string): ModuleFacts {
         if (member === "registerCommand") extension.push(`command:${literal ?? "<computed>"}`);
         if (member === "registerShortcut") extension.push(`shortcut:${literal ?? "<computed>"}`);
         if (member === "on" && literal === "input") extension.push("on:input");
-        if (ts.isIdentifier(receiver) && receiver.text === "pi" && (member === "on" || member.startsWith("register"))) piSurfaces.push(member === "on" ? `on:${literal ?? "<computed>"}` : member);
+        if (ts.isIdentifier(receiver) && nameOf(receiver) === "pi" && (member === "on" || member.startsWith("register"))) piSurfaces.push(member === "on" ? `on:${literal ?? "<computed>"}` : member);
       }
       if (name !== undefined && WRITE_CALLS.includes(name)) writes += 1;
     }
@@ -446,10 +484,18 @@ export interface ReadingPin {
   readonly what: string;
   readonly readings: Readonly<Record<string, string | null>>;
 }
-export type Pin = LivePin | PlantPin | ReadingPin;
+/** An escape pin: name spellings, each read by nameOf and by the runtime as an identifier and as a private name, every one expected to read `reads` - the named shapes, and every spelling of `reads` (spellingsOf). */
+export interface EscapePin {
+  readonly id: string;
+  readonly what: string;
+  readonly reads: string;
+  readonly escapes: Readonly<Record<string, string>>;
+}
+export type Pin = LivePin | PlantPin | ReadingPin | EscapePin;
 export const isLive = (pin: Pin): pin is LivePin => "live" in pin;
 export const isReading = (pin: Pin): pin is ReadingPin => "readings" in pin;
-export const isPlant = (pin: Pin): pin is PlantPin => !isLive(pin) && !isReading(pin);
+export const isEscape = (pin: Pin): pin is EscapePin => "escapes" in pin;
+export const isPlant = (pin: Pin): pin is PlantPin => !isLive(pin) && !isReading(pin) && !isEscape(pin);
 /** The readings of one text as a reading pin holds them: the PATH, the ROLE and the CLICK reading, joined by a space, or null. */
 export const readingsOf = (text: string): string | null => [pathReading(text), roleReading(text), clickReading(text)].filter((reading): reading is string => reading !== undefined).join(" ") || null;
 export interface Row {
@@ -478,6 +524,25 @@ const COMBINING_ACUTE = String.fromCodePoint(0x0301);
 const FULLWIDTH_P = String.fromCodePoint(0xff50);
 const CYRILLIC_I = String.fromCodePoint(0x0456);
 const BACKSLASH = String.fromCodePoint(0x5c);
+/** A four-digit and a braced unicode escape of the given hex, the backslash built at run time (the file holds no escape). */
+const u4 = (hex: string): string => `${BACKSLASH}u${hex}`;
+const ub = (hex: string): string => `${BACKSLASH}u{${hex}}`;
+const hexOf = (letter: string): string => (letter.codePointAt(0) ?? 0).toString(16);
+/** Every spelling of a word with each letter plain, a four-digit escape or a braced escape: 3 ** length spellings, every escape shape. */
+export function spellingsOf(word: string): string[] {
+  let spellings = [""];
+  for (const letter of word) spellings = spellings.flatMap(prefix => [prefix + letter, prefix + u4(hexOf(letter).padStart(4, "0")), prefix + ub(hexOf(letter))]);
+  return spellings;
+}
+/** Names in the scanner shape (an escape, plain characters, a later braced escape), which TypeScript's node.text misreads. */
+const HANDLE_INPUT_ESC = `h${u4("0061")}ndleInp${ub("75")}t`;
+const SELECT_ESC = `s${u4("0065")}l${ub("65")}ct`;
+const HOST_UI_ESC = `h${u4("006f")}stU${ub("69")}`;
+const MATCHES_KEY_ESC = `m${u4("0061")}tchesK${ub("65")}y`;
+const KEY_ESC = `${u4("004b")}e${ub("79")}`;
+const TAB_ESC = `${u4("0074")}a${ub("62")}`;
+const REQUIRE_ESC = `${u4("0072")}equir${ub("65")}`;
+const REGISTER_PROVIDER_ESC = `r${u4("0065")}gisterProvid${ub("65")}r`;
 /** The shared reader's reading of the F-unreadable store: TypeScript's own parse diagnostic at the first error. */
 const UNREADABLE_STORE = `UNREADABLE ${S}: the file does not parse: Expression expected. at line 1:21`;
 
@@ -549,9 +614,16 @@ export const ROWS: readonly Row[] = [
         readings: { click: "click:click", clicked: "click:clicked", clicking: "click:clicking", clicks: "click:clicks", mouse: "click:mouse", onDoubleClick: "click:click", clickable: null, mousetrap: null },
       },
       {
-        id: "R0-click-view",
-        what: "a planted pointer handler is read as a CLICK module, so the first click word in src reds R0",
-        files: { [V]: view([], '"ok"', ['export const onMouseDown = (): string => "click";']) },
+        id: "R0-click-name",
+        what: "a planted pointer handler holding a click word in its name only (onMouseDown; no literal holds one) is read as a CLICK module, so the first click name in src reds R0",
+        files: { [V]: view([], '"ok"', ['export const onMouseDown = (): string => "ok";']) },
+        findings: [],
+        clicks: [V],
+      },
+      {
+        id: "R0-click-literal",
+        what: "a planted hint holding a click word in a literal only (no name holds one) is read as a CLICK module, so the first click literal in src reds R0",
+        files: { [V]: view([], '"ok"', ['export const hint = (): string => "double click to open";']) },
         findings: [],
         clicks: [V],
       },
@@ -610,23 +682,30 @@ export const ROWS: readonly Row[] = [
       ...AFFORDANCE_FILES.map((inventory): LivePin => ({ id: `A-${inventory.file}`, what: `the affordance inventory of ${inventory.file}`, live: true, expect: inventory })),
       {
         id: "A-readers",
-        what: "every affordance reader names its planted entry: a literal key, a Key member, a computed key, a handleInput method, getter and computed-literal method, an interactive ui call through ctx.ui, through ui and through element access, a command (by property and by element access), a shortcut and the input event",
+        what: "every affordance reader names its planted entry: a key as a string literal, as a no-substitution template, as a Key member and computed, a matchesKey member call, a handleInput method, getter and computed-literal method, an interactive ui call through ctx.ui, through ui and through element access, a command by a string literal, by element access, by a no-substitution template and computed, a shortcut by a string literal and computed, and the input event",
         files: {
-          "src/ui/keys.ts": [TUI, 'import { Key } from "@earendil-works/pi-tui";', "export const k = (d: string, x: string): boolean => matchesKey(d, \"a\") || matchesKey(d, Key.tab) || matchesKey(d, x);", ""].join("\n"),
+          "src/ui/keys.ts": [
+            TUI,
+            'import { Key } from "@earendil-works/pi-tui";',
+            "export const k = (d: string, x: string): boolean => matchesKey(d, \"a\") || matchesKey(d, Key.tab) || matchesKey(d, x) || matchesKey(d, `b`);",
+            'export const m = (tui: { matchesKey(d: string, key: string): boolean }, d: string): boolean => tui.matchesKey(d, "c");',
+            "",
+          ].join("\n"),
           "src/ui/input.ts": "export class Box {\n  handleInput(data: string): string {\n    return data;\n  }\n}\n",
           "src/ui/accessor.ts": 'export class Lazy {\n  get handleInput(): (data: string) => string {\n    return data => data;\n  }\n}\nexport class Named {\n  ["handleInput"](data: string): string {\n    return data;\n  }\n}\n',
           "src/ui/host-element.ts": 'export async function pick(ctx: { ui: { select(t: string): Promise<string> } }): Promise<string> {\n  return ctx["ui"]["select"]("z");\n}\n',
           "src/ui/host.ts": 'export async function ask(ctx: { ui: { confirm(t: string): Promise<boolean> } }, ui: { select(t: string): Promise<string> }): Promise<unknown> {\n  return [await ctx.ui.confirm("x"), await ui.select("y")];\n}\n',
-          "src/ext.ts": 'export function wire(pi: { registerCommand(n: string): void; registerShortcut(n: string): void; on(e: string): void }): void {\n  pi.registerCommand("go");\n  pi["registerCommand"]("go-element");\n  pi.registerShortcut("ctrl+p");\n  pi.on("input");\n}\n',
+          "src/ext.ts":
+            'export function wire(pi: { registerCommand(n: string): void; registerShortcut(n: string): void; on(e: string): void }, name: string): void {\n  pi.registerCommand("go");\n  pi["registerCommand"]("go-element");\n  pi.registerCommand(`go-template`);\n  pi.registerCommand(name);\n  pi.registerShortcut("ctrl+p");\n  pi.registerShortcut(name);\n  pi.on("input");\n}\n',
         },
         findings: [],
         inventory: [
-          { file: "src/ext.ts", keys: [], handlers: 0, host: {}, extension: ["command:go", "command:go-element", "on:input", "shortcut:ctrl+p"] },
+          { file: "src/ext.ts", keys: [], handlers: 0, host: {}, extension: ["command:<computed>", "command:go", "command:go-element", "command:go-template", "on:input", "shortcut:<computed>", "shortcut:ctrl+p"] },
           { file: "src/ui/accessor.ts", keys: [], handlers: 2, host: {}, extension: [] },
           { file: "src/ui/host-element.ts", keys: [], handlers: 0, host: { select: 1 }, extension: [] },
           { file: "src/ui/host.ts", keys: [], handlers: 0, host: { confirm: 1, select: 1 }, extension: [] },
           { file: "src/ui/input.ts", keys: [], handlers: 1, host: {}, extension: [] },
-          { file: "src/ui/keys.ts", keys: ["<computed>", "Key.tab", "a"], handlers: 0, host: {}, extension: [] },
+          { file: "src/ui/keys.ts", keys: ["<computed>", "Key.tab", "a", "b", "c"], handlers: 0, host: {}, extension: [] },
         ],
       },
       {
@@ -640,26 +719,38 @@ export const ROWS: readonly Row[] = [
       },
       {
         id: "A-handler-kinds",
-        what: "each handleInput kind A-readers does not plant is read: a function declaration, a class field, a shorthand property, a variable declared by that name and an = assignment to a member",
+        what: "each handleInput kind and name form A-readers does not plant is read: a function declaration, a class field, an object property, an object property named by a string literal, a shorthand property, a variable declared by that name, and an assignment to a member by =, by ??=, by ||= and by &&=, and by = to a member reached by element access",
         files: {
           "src/ui/fn-handler.ts": "export function handleInput(data: string): string {\n  return data;\n}\n",
           "src/ui/field-handler.ts": "export class Field {\n  handleInput = (data: string): string => data;\n}\n",
+          "src/ui/prop-handler.ts": "export const box = { handleInput: (data: string): string => data };\n",
+          "src/ui/string-handler.ts": 'export const box = { "handleInput": (data: string): string => data };\n',
           "src/ui/shorthand-handler.ts": "export const wrap = (handleInput: (data: string) => string): { handleInput: (data: string) => string } => ({ handleInput });\n",
           "src/ui/const-handler.ts": "export const handleInput = (data: string): string => data;\n",
           "src/ui/assign-handler.ts": "export function attach(component: { handleInput?: (data: string) => string }): void {\n  component.handleInput = data => data;\n}\n",
+          "src/ui/nullish-handler.ts": "export function attach(component: { handleInput?: (data: string) => string }): void {\n  component.handleInput ??= data => data;\n}\n",
+          "src/ui/or-handler.ts": "export function attach(component: { handleInput?: (data: string) => string }): void {\n  component.handleInput ||= data => data;\n}\n",
+          "src/ui/and-handler.ts": "export function attach(component: { handleInput?: (data: string) => string }): void {\n  component.handleInput &&= data => data;\n}\n",
+          "src/ui/element-handler.ts": 'export function attach(component: { handleInput?: (data: string) => string }): void {\n  component["handleInput"] = data => data;\n}\n',
         },
         findings: [],
         inventory: [
-          { file: "src/ui/assign-handler.ts", keys: [], handlers: 1, host: {}, extension: [] },
-          { file: "src/ui/const-handler.ts", keys: [], handlers: 1, host: {}, extension: [] },
-          { file: "src/ui/field-handler.ts", keys: [], handlers: 1, host: {}, extension: [] },
-          { file: "src/ui/fn-handler.ts", keys: [], handlers: 1, host: {}, extension: [] },
-          { file: "src/ui/shorthand-handler.ts", keys: [], handlers: 1, host: {}, extension: [] },
-        ],
+          "src/ui/and-handler.ts",
+          "src/ui/assign-handler.ts",
+          "src/ui/const-handler.ts",
+          "src/ui/element-handler.ts",
+          "src/ui/field-handler.ts",
+          "src/ui/fn-handler.ts",
+          "src/ui/nullish-handler.ts",
+          "src/ui/or-handler.ts",
+          "src/ui/prop-handler.ts",
+          "src/ui/shorthand-handler.ts",
+          "src/ui/string-handler.ts",
+        ].map((file): Inventory => ({ file, keys: [], handlers: 1, host: {}, extension: [] })),
       },
       {
         id: "A-handle-forms",
-        what: "a host UI handle is read by the word ui in its name (a stored this.uiCtx field, a hostUi binding) and through parentheses, a non-null assertion, as, satisfies and an angle-bracket assertion, and a parenthesized callee is read",
+        what: "a host UI handle is read by the word ui in its name (a stored this.uiCtx field, a this.ui field, a hostUi binding) and through parentheses, a non-null assertion, as, satisfies and an angle-bracket assertion; and a call's callee is read through parentheses, a non-null assertion, as, satisfies and an angle-bracket assertion",
         files: {
           "src/ui/wrapped.ts": [
             "type Ui = { select(t: string): string; confirm(t: string): string; input(t: string): string; editor(t: string): string; custom(t: string): string; onTerminalInput(t: string): string };",
@@ -668,8 +759,16 @@ export const ROWS: readonly Row[] = [
             "}",
             "",
           ].join("\n"),
+          "src/ui/callee.ts": [
+            "type Ask = (t: string) => string;",
+            "type Ui = { select: Ask; confirm: Ask; input: Ask; editor: Ask };",
+            "export function ask(ctx: { ui: Ui }): string[] {",
+            '  return [ctx.ui.select!("a"), (ctx.ui.confirm as Ask)("b"), (ctx.ui.input satisfies Ask)("c"), (<Ask>ctx.ui.editor)("d")];',
+            "}",
+            "",
+          ].join("\n"),
           "src/ui/stored.ts": [
-            "type Ui = { select(t: string): string; confirm(t: string): string };",
+            "type Ui = { select(t: string): string; confirm(t: string): string; input(t: string): string };",
             "export class Widget {",
             "  private uiCtx: Ui | undefined;",
             "  attach(ctx: Ui): void {",
@@ -683,12 +782,22 @@ export const ROWS: readonly Row[] = [
             "  const hostUi = ctx.ui;",
             '  return hostUi.confirm("y");',
             "}",
+            "export class Panel {",
+            "  private ui: Ui;",
+            "  constructor(ui: Ui) {",
+            "    this.ui = ui;",
+            "  }",
+            "  ask(): string {",
+            '    return this.ui.input("z");',
+            "  }",
+            "}",
             "",
           ].join("\n"),
         },
         findings: [],
         inventory: [
-          { file: "src/ui/stored.ts", keys: [], handlers: 0, host: { confirm: 1, select: 1 }, extension: [] },
+          { file: "src/ui/callee.ts", keys: [], handlers: 0, host: { confirm: 1, editor: 1, input: 1, select: 1 }, extension: [] },
+          { file: "src/ui/stored.ts", keys: [], handlers: 0, host: { confirm: 1, input: 1, select: 1 }, extension: [] },
           { file: "src/ui/wrapped.ts", keys: [], handlers: 0, host: { confirm: 1, custom: 1, editor: 1, input: 1, onTerminalInput: 1, select: 1 }, extension: [] },
         ],
       },
@@ -714,6 +823,28 @@ export const ROWS: readonly Row[] = [
         },
         findings: ["UNCLASSIFIED src/ui/widget.ts ui.setFooter"],
         inventory: [],
+      },
+      {
+        id: "A-escaped-names",
+        what: "every name an affordance reader matches is read by nameOf, so each spelled in the scanner shape (an escape, plain characters, a later braced escape) is read: a handleInput method name, a shorthand property, a variable and an assigned member; a host UI member and a receiver named with the word ui; a matchesKey callee, Key and its member; and a pi register member (an unclassified one reds)",
+        files: {
+          "src/ui/esc-method.ts": `export class Box {\n  ${HANDLE_INPUT_ESC}(data: string): string {\n    return data;\n  }\n}\n`,
+          "src/ui/esc-shorthand.ts": `export const wrap = (${HANDLE_INPUT_ESC}: (data: string) => string): object => ({ ${HANDLE_INPUT_ESC} });\n`,
+          "src/ui/esc-variable.ts": `export const ${HANDLE_INPUT_ESC} = (data: string): string => data;\n`,
+          "src/ui/esc-assign.ts": `export function attach(component: { handleInput?: (data: string) => string }): void {\n  component.${HANDLE_INPUT_ESC} = data => data;\n}\n`,
+          "src/ui/esc-host.ts": `type Ui = { select(t: string): string; confirm(t: string): string };\nexport function ask(ctx: { ui: Ui }, ${HOST_UI_ESC}: Ui): string[] {\n  return [ctx.ui.${SELECT_ESC}("x"), ${HOST_UI_ESC}.confirm("y")];\n}\n`,
+          "src/ui/esc-keys.ts": `import { Key, matchesKey } from "@earendil-works/pi-tui";\nexport const k = (d: string): boolean => ${MATCHES_KEY_ESC}(d, "q") || matchesKey(d, ${KEY_ESC}.${TAB_ESC});\n`,
+          "src/esc-ext.ts": `export function wire(pi: { registerProvider(n: string): void }): void {\n  pi.${REGISTER_PROVIDER_ESC}("x");\n}\n`,
+        },
+        findings: ["UNCLASSIFIED src/esc-ext.ts pi.registerProvider"],
+        inventory: [
+          { file: "src/ui/esc-assign.ts", keys: [], handlers: 1, host: {}, extension: [] },
+          { file: "src/ui/esc-host.ts", keys: [], handlers: 0, host: { confirm: 1, select: 1 }, extension: [] },
+          { file: "src/ui/esc-keys.ts", keys: ["Key.tab", "q"], handlers: 0, host: {}, extension: [] },
+          { file: "src/ui/esc-method.ts", keys: [], handlers: 1, host: {}, extension: [] },
+          { file: "src/ui/esc-shorthand.ts", keys: [], handlers: 1, host: {}, extension: [] },
+          { file: "src/ui/esc-variable.ts", keys: [], handlers: 1, host: {}, extension: [] },
+        ],
       },
     ],
   },
@@ -750,6 +881,13 @@ export const ROWS: readonly Row[] = [
         roles: [AV],
       },
       {
+        id: "F-template-specifier",
+        what: "through a dynamic import whose specifier is a no-substitution template (a string-like literal, so not computed)",
+        files: { [AV]: asyncView([], ["const mod = await import(`../ops/store.js`);", "return mod.run();"], [APO_TITLE]), [S]: STORE },
+        findings: [ROUTE(`${AV} -dynamic-> ${S}`)],
+        roles: [AV],
+      },
+      {
         id: "F-require",
         what: "through require",
         files: { [AV]: view([], '(require("../ops/store.js") as { run(): string }).run()', [APO_TITLE]), [S]: STORE },
@@ -758,8 +896,37 @@ export const ROWS: readonly Row[] = [
       },
       {
         id: "F-require-wrapped",
-        what: "through a require whose callee is wrapped in parentheses (the shared reader reads only the bare identifier)",
-        files: { [AV]: view([], '((require)("../ops/store.js") as { run(): string }).run()', [APO_TITLE]), [S]: STORE },
+        what: "through a require whose callee is wrapped, one store per wrapper form: parentheses, a non-null assertion, as, satisfies and an angle-bracket assertion (the shared reader reads only the bare identifier)",
+        files: {
+          [AV]: [
+            TUI,
+            APO_TITLE,
+            "type Store = { run(): string };",
+            "type Load = (id: string) => Store;",
+            "export function handleKey(data: string): string {",
+            '  if (!matchesKey(data, "p")) return "";',
+            '  const paren = (require)("../ops/paren.js") as Store;',
+            '  const nonNull = require!("../ops/non-null.js") as Store;',
+            '  const asserted = (require as Load)("../ops/as.js");',
+            '  const satisfied = (require satisfies NodeRequire)("../ops/satisfies.js") as Store;',
+            '  const angled = (<Load>require)("../ops/angle.js");',
+            "  return [paren, nonNull, asserted, satisfied, angled].map(store => store.run()).join();",
+            "}",
+            "",
+          ].join("\n"),
+          "src/ops/paren.ts": STORE,
+          "src/ops/non-null.ts": STORE,
+          "src/ops/as.ts": STORE,
+          "src/ops/satisfies.ts": STORE,
+          "src/ops/angle.ts": STORE,
+        },
+        findings: ["src/ops/angle.ts", "src/ops/as.ts", "src/ops/non-null.ts", "src/ops/paren.ts", "src/ops/satisfies.ts"].map(store => `REACH ${AV} [APO view] -> ${store} (promote:promote) via ${AV} -require-> ${store}`),
+        roles: [AV],
+      },
+      {
+        id: "F-require-escaped",
+        what: "through a require whose callee is spelled in the scanner shape (an escape, plain characters, a later braced escape): the shared reader's node.text misses it and nameOf reads it",
+        files: { [AV]: view([], `(${REQUIRE_ESC}("../ops/store.js") as { run(): string }).run()`, [APO_TITLE]), [S]: STORE },
         findings: [ROUTE(`${AV} -require-> ${S}`)],
         roles: [AV],
       },
@@ -872,14 +1039,14 @@ export const ROWS: readonly Row[] = [
       },
       {
         id: "F-word-publication",
-        what: "the title's word publication beside manifest, in a name",
-        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store('export const publicationManifest = (): string => "x";\nexport const run = publicationManifest;') },
+        what: "the title's word publication beside manifest, in a name only, a declaration (no reference spells it)",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store('export const publicationManifest = (): string => "x";\nexport const run = (): string => "y";') },
         findings: [PLAIN("publish:publication+manifest")],
       },
       {
         id: "F-word-promotion",
-        what: "the title's word promotion, in a name",
-        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store('export const promotionSlot = "open";\nexport const run = (): string => promotionSlot;') },
+        what: "the title's word promotion, in a name only, a reference (no declaration spells it)",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store("export const run = (): string => String(promotionSlot);") },
         findings: [PLAIN("promote:promotion")],
       },
       {
@@ -889,9 +1056,21 @@ export const ROWS: readonly Row[] = [
         findings: [PLAIN("publish:publish+manifest")],
       },
       {
-        id: "F-template-part",
-        what: "a template part is read by its cooked text",
+        id: "F-template-head",
+        what: "a template head is read by its text",
         files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store(`export const run = (n: number): string => \`promoted \${n}\`;`) },
+        findings: [PLAIN("promote:promoted")],
+      },
+      {
+        id: "F-template-middle",
+        what: "a template middle is read by its text",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store(`export const run = (n: number): string => \`a \${n} promoted \${n} b\`;`) },
+        findings: [PLAIN("promote:promoted")],
+      },
+      {
+        id: "F-template-tail",
+        what: "a template tail is read by its text",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store(`export const run = (n: number): string => \`a \${n} promoted\`;`) },
         findings: [PLAIN("promote:promoted")],
       },
       {
@@ -901,27 +1080,78 @@ export const ROWS: readonly Row[] = [
         findings: [PLAIN("publish:publish+manifest")],
       },
       {
-        id: "F-escaped-name",
-        what: "an identifier written only with unicode escapes (the four-digit and the braced form, no plain-text copy anywhere in the plant) is read by its unescaped text",
-        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store(`export const run = (): string => ${BACKSLASH}u0070ublishManifest();\nfunction ${BACKSLASH}u{70}ublishManifest(): string {\n  return "x";\n}`) },
-        findings: [PLAIN("publish:publish+manifest")],
+        id: "F-escaped-4digit",
+        what: "a name spelled with a four-digit unicode escape (its only spelling in the plant) is read by its unescaped text",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store(`export const run = (): string => "x";\nexport const ${u4("0070")}romoteSlot = 1;`) },
+        findings: [PLAIN("promote:promote")],
+      },
+      {
+        id: "F-escaped-braced",
+        what: "a name spelled with a braced unicode escape (its only spelling in the plant) is read by its unescaped text",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store(`export const run = (): string => "x";\nexport const ${ub("70")}romoteSlot = 1;`) },
+        findings: [PLAIN("promote:promote")],
+      },
+      {
+        id: "F-escaped-scanner",
+        what: "a name spelled in the scanner shape - a four-digit escape, plain characters, a later braced escape (its only spelling in the plant) - is read by its unescaped text, though TypeScript's node.text drops the plain characters",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store(`export const run = (): string => "x";\nexport const ${u4("0070")}romot${ub("65")}Slot = 1;`) },
+        findings: [PLAIN("promote:promote")],
+      },
+      {
+        id: "F-escaped-scanner-braced",
+        what: "a name spelled in the scanner shape with braced escapes only - a braced escape, plain characters, a later braced escape (its only spelling in the plant) - is read by its unescaped text",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store(`export const run = (): string => "x";\nexport const ${ub("70")}romot${ub("65")}Slot = 1;`) },
+        findings: [PLAIN("promote:promote")],
+      },
+      {
+        id: "F-escaped-private",
+        what: "a private name spelled in the scanner shape (a private field, its only spelling in the plant) is read by its unescaped text",
+        files: { [V]: view(['import { Store } from "../ops/store.js";'], "new Store().run()"), [S]: store(`export class Store {\n  #${u4("0070")}romot${ub("65")}Slot = 1;\n  run(): string {\n    return "x";\n  }\n}`) },
+        findings: [PLAIN("promote:promote")],
+      },
+      {
+        id: "F-escapes-runtime",
+        what: "nameOf reads every escape shape as the runtime does (the spellings compiled in a new node:vm context), as an identifier and as a private name: every spelling of promote with each letter plain, a four-digit escape or a braced escape (3 ** 7 = 2187 spellings, so every leading, trailing, middle, adjacent, mixed and scanner shape), and the named shapes - a leading, a trailing and a middle escape of each form; two adjacent escapes of each form and of both forms in each order; every letter escaped in each form; an escape then plain characters then a later four-digit escape, after each form; the scanner shape (an escape, plain characters, a later braced escape) after each form and twice in one name; a braced escape padded with zeros; upper-case hex in each form",
+        reads: "promote",
+        escapes: {
+          "leading-4digit": `${u4("0070")}romote`,
+          "leading-braced": `${ub("70")}romote`,
+          "trailing-4digit": `promot${u4("0065")}`,
+          "trailing-braced": `promot${ub("65")}`,
+          "middle-4digit": `pro${u4("006d")}ote`,
+          "middle-braced": `pro${ub("6d")}ote`,
+          "adjacent-4digit": `pro${u4("006d")}${u4("006f")}te`,
+          "adjacent-braced": `pro${ub("6d")}${ub("6f")}te`,
+          "adjacent-4digit-braced": `pro${u4("006d")}${ub("6f")}te`,
+          "adjacent-braced-4digit": `pro${ub("6d")}${u4("006f")}te`,
+          "every-4digit": [..."promote"].map(letter => u4(hexOf(letter).padStart(4, "0"))).join(""),
+          "every-braced": [..."promote"].map(letter => ub(hexOf(letter))).join(""),
+          "later-4digit-after-4digit": `${u4("0070")}romot${u4("0065")}`,
+          "later-4digit-after-braced": `${ub("70")}romot${u4("0065")}`,
+          "scanner-after-4digit": `${u4("0070")}romot${ub("65")}`,
+          "scanner-after-braced": `${ub("70")}romot${ub("65")}`,
+          "scanner-twice": `${u4("0070")}ro${ub("6d")}ot${ub("65")}`,
+          "braced-padded": `${ub("0070")}romote`,
+          "upper-hex-4digit": `pro${u4("006D")}ote`,
+          "upper-hex-braced": `pro${ub("6D")}ote`,
+        },
       },
       {
         id: "F-digit-split",
-        what: "a letter-digit boundary splits a name: publish2Graph reads publish beside graph",
-        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store('export const run = (): string => publish2Graph();\nfunction publish2Graph(): string {\n  return "x";\n}') },
+        what: "a letter-digit boundary splits a name: publish2Graph (a declaration, its only spelling) reads publish beside graph",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store('export const publish2Graph = (): string => "x";\nexport const run = (): string => "y";') },
         findings: [PLAIN("publish:publish+graph")],
       },
       {
         id: "F-acronym-split",
-        what: "an acronym before a capitalized word splits: PUBLISHManifest reads publish beside manifest",
-        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store('export const PUBLISHManifest = "x";\nexport const run = (): string => PUBLISHManifest;') },
+        what: "an acronym before a capitalized word splits: PUBLISHManifest (a declaration, its only spelling) reads publish beside manifest",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store('export const PUBLISHManifest = "x";\nexport const run = (): string => "y";') },
         findings: [PLAIN("publish:publish+manifest")],
       },
       {
         id: "F-private-name",
-        what: "a private name is read: #promoteCheckpoint reads promote",
-        files: { [V]: view(['import { Store } from "../ops/store.js";'], "new Store().run()"), [S]: store('export class Store {\n  run(): string {\n    return this.#promoteCheckpoint();\n  }\n  #promoteCheckpoint(): string {\n    return "x";\n  }\n}') },
+        what: "a private name is read: #promoteSlot (a private field, its only spelling) reads promote",
+        files: { [V]: view(['import { Store } from "../ops/store.js";'], "new Store().run()"), [S]: store('export class Store {\n  #promoteSlot = 1;\n  run(): string {\n    return "x";\n  }\n}') },
         findings: [PLAIN("promote:promote")],
       },
       {
@@ -935,6 +1165,24 @@ export const ROWS: readonly Row[] = [
         what: "a + chain of string literals is folded through its parentheses",
         files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store('export const run = (): string => ("pub" + "lish") + " manifest";') },
         findings: [PLAIN("publish:publish+manifest")],
+      },
+      {
+        id: "F-literal-escape",
+        what: "a string literal is read by its value, its escape decoded: promote spelled with a four-digit escape",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store(`export const run = (): string => "${u4("0070")}romote";`) },
+        findings: [PLAIN("promote:promote")],
+      },
+      {
+        id: "F-nosub-escape",
+        what: "a no-substitution template is read by its value, its escape decoded: publish spelled with a braced escape",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store(`export const run = (): string => \`${ub("70")}ublish manifest\`;`) },
+        findings: [PLAIN("publish:publish+manifest")],
+      },
+      {
+        id: "F-template-escape",
+        what: "a template part is read by its text, its escape decoded: promoted spelled with a four-digit escape in a template head",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()"), [S]: store(`export const run = (n: number): string => \`${u4("0070")}romoted \${n}\`;`) },
+        findings: [PLAIN("promote:promoted")],
       },
       {
         id: "F-ignorable",
@@ -956,8 +1204,29 @@ export const ROWS: readonly Row[] = [
       },
       {
         id: "F-slug",
-        what: "the program's slug words in order tag the view as an APO view",
+        what: "the program's slug words in order, in a literal only, tag the view as an APO view",
         files: { [V]: view(['import { run } from "../ops/store.js";'], "run()", ['export const TITLE = "adaptive-policy-organizations view";']), [S]: STORE },
+        findings: [`REACH ${V} [APO view] -> ${S} (promote:promote) via ${V} -static-> ${S}`],
+        roles: [V],
+      },
+      {
+        id: "F-slug-name",
+        what: "the program's slug words in order, in a name only, tag the view as an APO view",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()", ["export const adaptivePolicyOrganizationsPanel = 1;"]), [S]: STORE },
+        findings: [`REACH ${V} [APO view] -> ${S} (promote:promote) via ${V} -static-> ${S}`],
+        roles: [V],
+      },
+      {
+        id: "F-role-literal",
+        what: "the program's abbreviation, in a literal only, tags the view as an APO view",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()", ['export const TITLE = "APO panel";']), [S]: STORE },
+        findings: [`REACH ${V} [APO view] -> ${S} (promote:promote) via ${V} -static-> ${S}`],
+        roles: [V],
+      },
+      {
+        id: "F-role-name",
+        what: "the program's abbreviation, in a name only, tags the view as an APO view",
+        files: { [V]: view(['import { run } from "../ops/store.js";'], "run()", ["export const apoPanel = 1;"]), [S]: STORE },
         findings: [`REACH ${V} [APO view] -> ${S} (promote:promote) via ${V} -static-> ${S}`],
         roles: [V],
       },
@@ -1003,8 +1272,20 @@ export const ROWS: readonly Row[] = [
         },
       },
       {
+        id: "F-lists-case",
+        what: "each split reads alone: a lower-to-upper change (camelCase, PascalCase), an acronym before a capitalized word, a letter-digit boundary, a digit-letter boundary, and a capital run is lower-cased",
+        readings: {
+          publishManifest: "publish:publish+manifest",
+          PublishManifest: "publish:publish+manifest",
+          PUBLISHManifest: "publish:publish+manifest",
+          promote2: "promote:promote",
+          "2promote": "promote:promote",
+          PROMOTE: "promote:promote",
+        },
+      },
+      {
         id: "F-lists-near",
-        what: "QUIET: near-words, words out of order and words inside longer words read nothing",
+        what: "QUIET: near-words, words out of order, words inside longer words, a word broken by a digit or by punctuation, and a word run into the next in one case read nothing",
         readings: {
           "public graph": null,
           "publisher graph": null,
@@ -1014,6 +1295,9 @@ export const ROWS: readonly Row[] = [
           "apostrophe view": null,
           "adaptive organizations policy": null,
           "publish": null,
+          "pr0mote": null,
+          "pro-mote": null,
+          "PUBLISHMANIFEST": null,
         },
       },
       {
@@ -1027,6 +1311,20 @@ export const ROWS: readonly Row[] = [
         id: "F-quiet-type-specifiers",
         what: "QUIET: an import whose every specifier is type-only reaches nothing",
         files: { [AV]: view(['import { type Receipt } from "../ops/store.js";'], '"ok"', [APO_TITLE, "export type Seen = Receipt;"]), [S]: `${STORE}export interface Receipt {\n  readonly at: string;\n}\n` },
+        findings: [],
+        roles: [AV],
+      },
+      {
+        id: "F-quiet-type-export",
+        what: "QUIET: an export type from a path module is erased at run time and reaches nothing",
+        files: { [AV]: view(['export type { Receipt } from "../ops/store.js";'], '"ok"', [APO_TITLE]), [S]: `${STORE}export interface Receipt {\n  readonly at: string;\n}\n` },
+        findings: [],
+        roles: [AV],
+      },
+      {
+        id: "F-quiet-type-import-equals",
+        what: "QUIET: an import type x = require(...) of a path module is erased at run time and reaches nothing",
+        files: { [AV]: view(['import type ops = require("../ops/store.js");'], '"ok"', [APO_TITLE, "export type Seen = ops.Receipt;"]), [S]: `${STORE}export interface Receipt {\n  readonly at: string;\n}\n` },
         findings: [],
         roles: [AV],
       },
@@ -1097,26 +1395,60 @@ export const ROWS: readonly Row[] = [
       },
       {
         id: "R-RUNTIME-LOAD",
-        what: "a module loaded at run time by a path or URL value (a worker, a fork, a vm script) is not an edge",
-        files: { [V]: view(['import { Worker } from "node:worker_threads";'], 'String(new Worker(new URL("../ops/store.js", import.meta.url)).threadId)'), [S]: STORE },
+        what: "a module loaded at run time by a path or URL value - a worker, a fork, a vm script, a createRequire result - or through a require no reader names (behind a comma expression, through an alias) is not an edge",
+        files: {
+          [V]: [
+            TUI,
+            'import { fork } from "node:child_process";',
+            'import { readFileSync } from "node:fs";',
+            'import { createRequire } from "node:module";',
+            'import { runInThisContext } from "node:vm";',
+            'import { Worker } from "node:worker_threads";',
+            "type Store = { run(): string };",
+            "const load = require;",
+            "export function handleKey(data: string): string {",
+            '  if (!matchesKey(data, "p")) return "";',
+            '  const worker = new Worker(new URL("../ops/store.js", import.meta.url));',
+            '  const child = fork(new URL("../ops/store.js", import.meta.url));',
+            '  const script = runInThisContext(readFileSync(new URL("../ops/store.js", import.meta.url), "utf8")) as Store;',
+            '  const created = createRequire(import.meta.url)("../ops/store.js") as Store;',
+            '  const viaComma = (0, require)("../ops/store.js") as Store;',
+            '  const viaAlias = load("../ops/store.js") as Store;',
+            "  return [String(worker.threadId), String(child.pid), script.run(), created.run(), viaComma.run(), viaAlias.run()].join();",
+            "}",
+            "",
+          ].join("\n"),
+          [S]: STORE,
+        },
         findings: [],
       },
       {
         id: "R-HOST-ALIAS",
-        what: "a host UI call through a receiver not named with the word ui (an alias named otherwise, a call result, a container element) is not read (the entry leg still judges its module)",
+        what: "a host UI call through a receiver not named with the word ui (an alias named otherwise, a call result, a container element), or of a member reached indirectly (.call, .bind), is not read (the entry leg still judges its module)",
         files: {
-          [V]: 'export async function pick(ctx: { ui: { select(t: string): Promise<string> } }): Promise<string[]> {\n  const handle = ctx.ui;\n  const current = () => ctx.ui;\n  const held = [ctx.ui];\n  return [await handle.select("x"), await current().select("y"), await held[0].select("z")];\n}\n',
+          [V]: 'export async function pick(ctx: { ui: { select(t: string): Promise<string> } }): Promise<string[]> {\n  const handle = ctx.ui;\n  const current = () => ctx.ui;\n  const held = [ctx.ui];\n  const bound = ctx.ui.select.bind(ctx.ui);\n  return [await handle.select("x"), await current().select("y"), await held[0].select("z"), await ctx.ui.select.call(ctx.ui, "w"), await bound("v")];\n}\n',
         },
         findings: [],
         inventory: [],
       },
       {
         id: "R-PI-ALIAS",
-        what: "a pi surface registered through any receiver but the identifier pi (an alias, this.pi, options.pi) is not classified, so an unknown one stays quiet",
+        what: "a pi surface registered through any receiver but the bare identifier pi (an alias, this.pi, options.pi, and pi behind parentheses, a non-null assertion, as, satisfies or an angle-bracket assertion) is not classified, so an unknown one stays quiet",
         files: {
-          "src/ext.ts": 'type Pi = { registerProvider(n: string): void };\nexport class Wire {\n  private pi: Pi;\n  constructor(pi: Pi) {\n    this.pi = pi;\n  }\n  run(options: { pi: Pi }): void {\n    const api = this.pi;\n    api.registerProvider("x");\n    this.pi.registerProvider("y");\n    options.pi.registerProvider("z");\n  }\n}\n',
+          "src/ext.ts":
+            'type Pi = { registerProvider(n: string): void };\nexport class Wire {\n  private pi: Pi;\n  constructor(pi: Pi) {\n    this.pi = pi;\n  }\n  run(options: { pi: Pi }): void {\n    const api = this.pi;\n    api.registerProvider("x");\n    this.pi.registerProvider("y");\n    options.pi.registerProvider("z");\n  }\n}\nexport function wrapped(pi: Pi): void {\n  (pi).registerProvider("a");\n  pi!.registerProvider("b");\n  (pi as Pi).registerProvider("c");\n  (pi satisfies Pi).registerProvider("d");\n  (<Pi>pi).registerProvider("e");\n}\n',
         },
         findings: [],
+      },
+      {
+        id: "R-HANDLER-FORM",
+        what: "a handleInput defined through a call or an export alias (Object.defineProperty, Reflect.set, export { h as handleInput }) is not read as a handler (the entry leg still judges its module)",
+        files: {
+          "src/ui/define.ts": 'export function attach(component: object): void {\n  Object.defineProperty(component, "handleInput", { value: (data: string): string => data });\n  Reflect.set(component, "handleInput", (data: string): string => data);\n}\n',
+          "src/ui/alias.ts": "const h = (data: string): string => data;\nexport { h as handleInput };\n",
+        },
+        findings: [],
+        inventory: [],
       },
     ],
   },

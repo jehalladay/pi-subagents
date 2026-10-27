@@ -32,8 +32,12 @@
           "digest": "4deb24cd55c4a6ddd7ef9829f470bbee0bd1f2584117314f4f82d2fb174f3800"
         },
         {
-          "id": "R0-click-view",
-          "digest": "4f35306ee46d60422b66e21370b85f7548d8ff208aa79c551d483e094afedbe5"
+          "id": "R0-click-name",
+          "digest": "d441f5926922c37e5dc6ef1b6c397593af85676fcf47a9fa3e614bc0e58063f1"
+        },
+        {
+          "id": "R0-click-literal",
+          "digest": "fa88f6d26a7c07758aeceddc2883b245df812ed6d8aee6559d5683df531e8a01"
         },
         {
           "id": "R-src/index.ts",
@@ -133,7 +137,7 @@
         },
         {
           "id": "A-readers",
-          "digest": "a6bcb6f1089d050bed550f28ded30846f1f7d3b589ea511a31bfdbe2b751fd46"
+          "digest": "942b4aaa7bf11346689e98a4492f2846a36950c4cdde8488f7af68f2c5cfee3a"
         },
         {
           "id": "A-unclassified",
@@ -141,15 +145,19 @@
         },
         {
           "id": "A-handler-kinds",
-          "digest": "ab755aa0a1cf44eb248ba8d697c3bd74028f90eff6aeebc42f95abc6d6455aca"
+          "digest": "2cd4f4825536d36f2ab02171924404eac4f66efccf94e17e28cc0b090d036b25"
         },
         {
           "id": "A-handle-forms",
-          "digest": "f55174cff93b3c5b56e0a8745a2532b89d30bd75b8428fae702d573f0668da2d"
+          "digest": "9a1844950a4c1fb9a7f807cf756323508d4b735b05491992aa071a7d6cad5e01"
         },
         {
           "id": "A-stored-alias",
           "digest": "2c2e1ceb84a65ee494bad8c136f0285b69bbfe7eac94c5c8b68595d4e0a8f3f7"
+        },
+        {
+          "id": "A-escaped-names",
+          "digest": "02c152d06d9965998fcbc4b187c2675a3208540dce0bfcfde4faa134f1df32b1"
         }
       ]
     },
@@ -174,12 +182,20 @@
           "digest": "69488184d4530c868f0dfe214639bd49469f21ce1418d9fdb2242b82c9bbff5f"
         },
         {
+          "id": "F-template-specifier",
+          "digest": "26237fefd165cc0b23e345f760f87f37490dfafb3029047c8d83cc9707dc34db"
+        },
+        {
           "id": "F-require",
           "digest": "f36063a8918b6bf8e15b52741a937a9450a9fa53da50604fa5468c4a864e8657"
         },
         {
           "id": "F-require-wrapped",
-          "digest": "089afb21b8852c2fcca405c7b04f84c0de68f9e0a36adc000f4260e7e8a801bf"
+          "digest": "d36bca548228383dd9d446f8e5bbffdfa50c85de1ab9a761262f77ed169fb3d3"
+        },
+        {
+          "id": "F-require-escaped",
+          "digest": "c9e9c6bbca3b73140f84c637c64151833c3c0e699c7896fb8ef9d85493019e7a"
         },
         {
           "id": "F-import-equals",
@@ -239,39 +255,67 @@
         },
         {
           "id": "F-word-publication",
-          "digest": "bf96b5b293c59bd22958ccf48abde7571433d0c306d1a61a9c2580c765b4a20e"
+          "digest": "41c1ae8de42d0f32470a94977f2ca70e16bb70bccd6a640e89dbab431aff87f2"
         },
         {
           "id": "F-word-promotion",
-          "digest": "6acc1daed2ee5626463142c4133fbead99ca69b518072dc5740723b4ed3dbb3d"
+          "digest": "613775334e15283024cea00ca58bf9508959a4ed86eef3d7a5d779cc5666eb51"
         },
         {
           "id": "F-folded",
           "digest": "728339480b9e7ef105a9e1a6fe084f901d61c58afc4b0efadcb5114574b3617d"
         },
         {
-          "id": "F-template-part",
-          "digest": "074383dc6e2ccc5854b944414d583c1a8c0dd92a39729fffbd9f863f352d0704"
+          "id": "F-template-head",
+          "digest": "f9a400f34b79fc6179b46f519dfcc86e4d04b4e3ffc72ca42e27198a464ae046"
+        },
+        {
+          "id": "F-template-middle",
+          "digest": "e9567479a5da12a06020d5943e503cf72e0be2d16099797a7609b02034560e2a"
+        },
+        {
+          "id": "F-template-tail",
+          "digest": "5e037336cf9266f86abd18d526bc4fac7a2b34da3fe1c4b1c03130820c808cd0"
         },
         {
           "id": "F-regex",
           "digest": "5fa199f3d7e7dc3d9b7bb3cdde5e528d3d344475510145962bce2d2afb618112"
         },
         {
-          "id": "F-escaped-name",
-          "digest": "0f07306f977c1a0074009f08848f92088cdefbafe91fb1147a1d7188322b2749"
+          "id": "F-escaped-4digit",
+          "digest": "019c458472d900399e5dafe7bb812ad6b7d1a116ad55a7866611400d995e3ce6"
+        },
+        {
+          "id": "F-escaped-braced",
+          "digest": "48a2e5f6cb2bee407d129626dec0845c752323b85496503364e64ca807078943"
+        },
+        {
+          "id": "F-escaped-scanner",
+          "digest": "1a6dd8976b244a68b5cfe61223c2295f246455782e688eadb90bf88f64905a3a"
+        },
+        {
+          "id": "F-escaped-scanner-braced",
+          "digest": "6941782a18523283d53e9ba68645be27e2d5089353a5355eb4c2e585043ee9cb"
+        },
+        {
+          "id": "F-escaped-private",
+          "digest": "c73459143fb2322f06dd670ded81f3bd396cf634579825c5cd0aef5770cd5fa0"
+        },
+        {
+          "id": "F-escapes-runtime",
+          "digest": "c5f3fde46b3ed79325977daed738eb1d8b7312c245fd4762802113a556b4c7be"
         },
         {
           "id": "F-digit-split",
-          "digest": "974021a7fdfc6fb995f871993a13f03c848566ff8c57f599cc9040cf6bd573fb"
+          "digest": "91272a6f971e57f7fb5753d275520bf302c3e7f5a303430d7234882ea856d627"
         },
         {
           "id": "F-acronym-split",
-          "digest": "52bb82f8856eaa0842954f3e214dd7644590cccab95dfa9ed500f2e390bf76f1"
+          "digest": "031eee746080fbcd797dbbc4d3606fb441c4cd5c622c6e9f7a144fea62385ce5"
         },
         {
           "id": "F-private-name",
-          "digest": "4f6e0b8e71b57536d79f0f55784c13c885d94c6e7c8090e49c80812c1bf3e5f3"
+          "digest": "4a640ee65f5a7e1a0a35486bbfacf4f9b4ab8b0c7335b3ee9a9ff8e1cb0f2346"
         },
         {
           "id": "F-nosub-template",
@@ -280,6 +324,18 @@
         {
           "id": "F-folded-parens",
           "digest": "8ee3a8bb51f97dce48619b648f36b8aa568504e04212607ba80760847ff094cc"
+        },
+        {
+          "id": "F-literal-escape",
+          "digest": "7fdd0f5ba74c7a7039902c07da26df144b6b9d740b838debb8b8c1f4f4d77b4d"
+        },
+        {
+          "id": "F-nosub-escape",
+          "digest": "364ed8aac25f643c5108d4fab57e6cb00f87571b65a68fe96df64b6c308d0fee"
+        },
+        {
+          "id": "F-template-escape",
+          "digest": "08fe1742a738aaac2c24686009db986e486037138b9a05978ef476beb142e879"
         },
         {
           "id": "F-ignorable",
@@ -295,7 +351,19 @@
         },
         {
           "id": "F-slug",
-          "digest": "0488c0f83f93aca2db3f41bc64407044828b07b11b6e7c2dff4a95aa11bb21f7"
+          "digest": "dc4c1a3676dcac603af3b781d40c2f5e0bd72918a04511a94265473ea2c7ffe2"
+        },
+        {
+          "id": "F-slug-name",
+          "digest": "71680c19360db0245202861bdb00add5ec87f0275580dd8dc1a05e2f983140cd"
+        },
+        {
+          "id": "F-role-literal",
+          "digest": "0ed96cbe1a6ed060a97b567b7a3d730ee7285c85490cc27a2d643c2d64930ce9"
+        },
+        {
+          "id": "F-role-name",
+          "digest": "16fed110a09f60edb6f701baaa7e1eded2494ee1ff31e86fb97ead0eea5664af"
         },
         {
           "id": "F-lists-publish",
@@ -314,8 +382,12 @@
           "digest": "8ee4507f436eee5472367595b3a686ea7e46b27f49d714b33dbae60b52b031fa"
         },
         {
+          "id": "F-lists-case",
+          "digest": "0e2fefc497db355c7f165bdfcc9db8a4b02cdbe3e164204518e0c75ff6ccedb8"
+        },
+        {
           "id": "F-lists-near",
-          "digest": "50a7a15dc6cc9a10f20d757972569ee4b6c952d62eea7670103293099b48361a"
+          "digest": "8c3df5a2973c55cc07eaae731542beaac716f31cd10c0785a442b222f022883e"
         },
         {
           "id": "F-quiet-type-only",
@@ -324,6 +396,14 @@
         {
           "id": "F-quiet-type-specifiers",
           "digest": "de136eefeb065a92dde458f3bbff7eef2c8bc3bde29b4814cb5544b5af65247f"
+        },
+        {
+          "id": "F-quiet-type-export",
+          "digest": "1c2a58a5a2d75eb584df307118fd29882dbfbe61b8cbd051475eb46517e979b5"
+        },
+        {
+          "id": "F-quiet-type-import-equals",
+          "digest": "691a0f5d9a0e8128f06de99944a22162b39cfc19cffbf718553ea40b0f5fef3a"
         },
         {
           "id": "F-quiet-comment",
@@ -369,15 +449,19 @@
         },
         {
           "id": "R-RUNTIME-LOAD",
-          "digest": "d4e7fb224b8a15b13aa6740af2e5bb2c6e8772e13bcdf0688dd84bcf2416abba"
+          "digest": "b076ae8cb3bc7114c126dbc4d9e17779923b5b17bada66cb53118507b616aa83"
         },
         {
           "id": "R-HOST-ALIAS",
-          "digest": "4702f989eccd27b26913ad896c1128e87f7188c6dc092f566f866aa4c5cd9d66"
+          "digest": "d527802a1e66e9037aef8330cdeee4cb34427a2bfc3af0db533243387444fb9a"
         },
         {
           "id": "R-PI-ALIAS",
-          "digest": "805d0d5071c717480c42b3c994595a2847abba573c0c84396671ab1bdaa1bb01"
+          "digest": "b6f1112caa7e44ed83287a916ed54f2c5bce94ad85d6c9386a792f56c7dbd418"
+        },
+        {
+          "id": "R-HANDLER-FORM",
+          "digest": "74a38622dd7e69d90562012872747b86316881cb23f58fcf001feffa399f1aa8"
         }
       ]
     }
@@ -388,7 +472,8 @@
     "L L3-roles",
     "R R0-kinds",
     "R R0-click-words",
-    "R R0-click-view",
+    "R R0-click-name",
+    "R R0-click-literal",
     "R R-src/index.ts",
     "R R-src/ui/conversation-viewer.ts",
     "R R-src/ui/fleet-list.ts",
@@ -415,12 +500,15 @@
     "A A-handler-kinds",
     "A A-handle-forms",
     "A A-stored-alias",
+    "A A-escaped-names",
     "F F-static",
     "F F-reexport-star",
     "F F-reexport-named",
     "F F-dynamic",
+    "F F-template-specifier",
     "F F-require",
     "F F-require-wrapped",
+    "F F-require-escaped",
     "F F-import-equals",
     "F F-side-effect",
     "F F-transitive",
@@ -438,25 +526,41 @@
     "F F-word-publication",
     "F F-word-promotion",
     "F F-folded",
-    "F F-template-part",
+    "F F-template-head",
+    "F F-template-middle",
+    "F F-template-tail",
     "F F-regex",
-    "F F-escaped-name",
+    "F F-escaped-4digit",
+    "F F-escaped-braced",
+    "F F-escaped-scanner",
+    "F F-escaped-scanner-braced",
+    "F F-escaped-private",
+    "F F-escapes-runtime",
     "F F-digit-split",
     "F F-acronym-split",
     "F F-private-name",
     "F F-nosub-template",
     "F F-folded-parens",
+    "F F-literal-escape",
+    "F F-nosub-escape",
+    "F F-template-escape",
     "F F-ignorable",
     "F F-mark",
     "F F-width",
     "F F-slug",
+    "F F-slug-name",
+    "F F-role-literal",
+    "F F-role-name",
     "F F-lists-publish",
     "F F-lists-promote",
     "F F-lists-object",
     "F F-lists-role",
+    "F F-lists-case",
     "F F-lists-near",
     "F F-quiet-type-only",
     "F F-quiet-type-specifiers",
+    "F F-quiet-type-export",
+    "F F-quiet-type-import-equals",
     "F F-quiet-comment",
     "F F-quiet-near-name",
     "F F-quiet-unreached",
@@ -469,6 +573,7 @@
     "Q R-RUNTIME-LOAD",
     "Q R-HOST-ALIAS",
     "Q R-PI-ALIAS",
+    "Q R-HANDLER-FORM",
     "outside anchors: the export row, the title's vocabulary, the package.json entry, the shared reader's edge kinds and the live affordance set",
     "rule 16: every judged row and the residual families are frozen at their measured shape",
     "roster: the judged rows, the registered tests and the residual families equal test/fixtures/apo-ui-publish-roster.json, in order and both ways"
@@ -497,6 +602,9 @@
     ],
     "R-PI-ALIAS": [
       "Q R-PI-ALIAS"
+    ],
+    "R-HANDLER-FORM": [
+      "Q R-HANDLER-FORM"
     ]
   }
 }

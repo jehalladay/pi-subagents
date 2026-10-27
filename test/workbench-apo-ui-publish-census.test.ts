@@ -8,60 +8,76 @@
  * Acceptance (the export notes, verbatim): "UI-affordance census plus a falsifier that no APO view handler reaches any
  * publish/promotion path."
  *
- * MEASURED (read-only, by the cutting seat, 2026-10-27, at trunk 48d01cc): git lists 116 files under src/, all TypeScript. The
+ * MEASURED (read-only, by the cutting seat, 2026-10-27, at trunk df1ce2a): git lists 116 files under src/, all TypeScript. The
  * extension entry (package.json pi.extensions, ./src/index.ts) reaches 103 of them at run time; the 13 outside its closure
  * include src/workbench/patch-proposal.ts, the operator-only promotion record (recordPromotionDecision: "The workbench never
  * applies a promotion itself"), which no src module imports by any edge. No src text names the program. Nine modules hold UI
  * affordances (rows A and R); the view surface adds the three display modules of src/ui/. src calls the host UI through two
  * handle names: ui (ctx.ui, this.ui, ui) and uiCtx (src/ui/agent-widget.ts stores the handle it is handed by setUICtx(ctx)
- * and calls the display members setStatus and setWidget on it). The judge, the edges, the affordance readers and every
- * finding are defined in test/helpers/apo-ui-publish-census.ts, beside the tables.
+ * and calls the display members setStatus and setWidget on it). src spells no name with a unicode escape (0 of its 86,983
+ * identifiers and private names), so reading names by nameOf moves no live row. The judge, the edges, the affordance
+ * readers and every finding are defined in test/helpers/apo-ui-publish-census.ts, beside the tables.
  *
  * ROWS (rows L, R and G tile the statement in order and rows A and F tile the acceptance, each label a verbatim segment held
- * to the export row by the outside-anchor case). L: the entry closure holds no PATH module and no UNRESOLVED or PACKAGE
- * finding (L1); src holds exactly the one PATH module, unreached by any edge (L2); no src text names the program (L3) -
- * ARMED: the first mention reds L3 and rows R, G and F bind it. R: every member src calls on a host UI handle and every pi
- * register/on surface src calls on pi is classified, src's handle names are ui and uiCtx, and no src text holds a click
- * word (R0); the click reader reads every CLICK_WORDS word (R0-click-words) and tags a planted pointer handler
- * (R0-click-view); each affordance module's runtime closure, its render (refresh) path included, holds no PATH module (one
- * pin per module). G: no view-surface module holds a PATH text (G1); a planted promotion hint reds as OFFER (G2); a planted
- * governed publish operation outside every view reds the ENTRY leg, so it is re-judged here and never admitted silently
- * (G3). A: each affordance module's inventory (keys, handlers, interactive host calls, extension interactions), one pin per
- * module; the readers' planted entries (A-readers), every handleInput kind beyond them (A-handler-kinds), every handle form -
- * the word ui in a stored field or a binding name, each wrapper, a parenthesized callee (A-handle-forms) - and the
- * src/ui/agent-widget.ts stored-handle shape (A-stored-alias); and the classification's planted entries (A-unclassified). F:
- * planted APO view handlers reaching a path through every edge kind; the title's vocabulary words and the folded
- * (parenthesized too), template, no-substitution template, regular-expression, escaped-name (escapes only), private-name,
- * letter-digit, acronym, ignorable, mark and width readings; the fail-closed computed and missing imports, the unparseable
- * module and the missing entry, the resolution forms (as written, a bare path, a directory) and the package specifiers -
- * each named; the reading pins (every member of the PUBLISH, PROMOTE and OBJECT lists and every slug form, each written out,
- * and the near-words that read nothing); and the quiet controls (type-only imports, a comment, a near-name, an unreached
- * path module, a read-only APO view). Q: the residuals.
+ * to the export row by the outside-anchor case; each pin's what names the forms it falsifies - one per pin, or one file,
+ * store or member per form in a multi-form pin - and a plant spells each trigger once or gives each spelling a finding of its
+ * own). L: the entry closure holds no PATH module and no UNRESOLVED or PACKAGE finding (L1); src holds exactly the
+ * one PATH module, unreached by any edge (L2); no src text names the program (L3) - ARMED: the first mention reds L3 and rows
+ * R, G and F bind it. R: every member src calls on a host UI handle and every pi register/on surface src calls on pi is
+ * classified, src's handle names are ui and uiCtx, and no src text holds a click word (R0); the click reader reads every
+ * CLICK_WORDS word (R0-click-words) and tags a planted pointer handler by a click word in a name only (R0-click-name) and a
+ * planted hint by a click word in a literal only (R0-click-literal); each affordance module's runtime closure, its render
+ * (refresh) path included, holds no PATH module (one pin per module). G: no view-surface module holds a PATH text (G1); a
+ * planted promotion hint reds as OFFER (G2); a planted governed publish operation outside every view reds the ENTRY leg,
+ * so it is re-judged here and never admitted silently (G3). A: each affordance module's inventory (keys, handlers,
+ * interactive host calls, extension interactions), one pin per module; the readers' planted entries, each key, callee,
+ * command and shortcut form (A-readers); every handleInput kind, name form and assignment form beyond them
+ * (A-handler-kinds); every handle form and every receiver and callee wrapper (A-handle-forms); the src/ui/agent-widget.ts
+ * stored-handle shape (A-stored-alias); every name an affordance reader matches, spelled in the scanner shape
+ * (A-escaped-names); and the classification's planted entries (A-unclassified). F: planted APO view handlers reaching a
+ * path through every edge kind and form (a template specifier, a wrapped require one store per wrapper, an escaped require
+ * callee); the title's vocabulary words, in a literal only or in a name only (a declaration only, a reference only); the
+ * folded (parenthesized too), template head, middle and tail, no-substitution template, regular-expression, private-name,
+ * letter-digit, acronym, ignorable, mark and width readings; the escaped-name reading, one plant per escape form
+ * (four-digit, braced, the scanner shape after each form, a private name), and every escape shape held to the runtime
+ * (F-escapes-runtime); a string literal, a no-substitution template and a template part each read with its escape decoded;
+ * the ROLE readings, the abbreviation and the slug, each in a literal only and in a name only; the fail-closed computed
+ * and missing imports, the unparseable module and the missing entry, the resolution forms (as written, a bare path, a
+ * directory) and the package specifiers - each named; the reading pins (every member of the PUBLISH, PROMOTE and OBJECT
+ * lists, every slug form and every split, each written out, and the near-words that read nothing); and the quiet controls
+ * (an import type, type-only specifiers, an export type, an import type x = require(...), a comment, a near-name, an
+ * unreached path module, a read-only APO view). Q: the residuals.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every row's id, label and pin digests, the
  * registered test titles and the residual families are held to the out-of-file roster
  * (test/fixtures/apo-ui-publish-roster.json).
- * OUTSIDE ANCHORS (their own case, plus the live pins): the export row - rows L, R and G tile its statement and rows A and F
- * its acceptance, its requirement id carries the slug and its statement the abbreviation, which is the slug's initials; the
- * title's words of the PATH families (measured: publish, publishes, publication, promotion, graph, manifest, checkpoint),
- * each in the judge's lists and each read by an F plant; package.json's entry; the shared reader's four SourceImport kinds,
- * each routed by an F plant; the src AST - the affordance set (the files of rows A and R), each inventory (row A), the view
- * surface (G1), the PATH set (L2), every member src calls on a host UI handle and every pi surface src calls on pi
- * (classified, R0) and src's handle names (R0); the live residuals below; and this header's RESIDUALS line, parsed and held
- * to the residual families. Anchored in this file and the roster only: the inflections the word lists add beyond the
- * title's words, the import-equals edge kind, the other F plants, the classified members src does not call, and the
- * residual quiet rows' contents.
+ * OUTSIDE ANCHORS (their own case, plus the live pins and F-escapes-runtime): the export row - rows L, R and G tile its
+ * statement and rows A and F its acceptance, its requirement id carries the slug and its statement the abbreviation, which
+ * is the slug's initials; the title's words of the PATH families (measured: publish, publishes, publication, promotion,
+ * graph, manifest, checkpoint), each in the judge's lists and each read by an F plant; package.json's entry; the shared
+ * reader's four SourceImport kinds, each routed by an F plant; the src AST - the affordance set (the files of rows A and R),
+ * each inventory (row A), the view surface (G1), the PATH set (L2), every member src calls on a host UI handle and every pi
+ * surface src calls on pi (classified, R0) and src's handle names (R0); the live residuals below; this header's RESIDUALS
+ * line, parsed and held to the residual families; and the runtime's own decoding of every escape shape (F-escapes-runtime:
+ * every spelling compiled in a fresh node:vm context, one per batch). Anchored in this file and the roster only: the
+ * inflections the word lists add beyond the title's words, the import-equals edge kind, the other F plants, the named escape
+ * shapes of F-escapes-runtime (spellingsOf generates the exhaustive spellings, and the runtime anchors what each reads), the
+ * classified members src does not call, and the residual quiet rows' contents.
  * LIVE IN SRC (each shown from the src AST by the outside-anchor case): R-UNNAMED-PATH (the entry closure writes files under
  * no PATH name), R-PACKAGE (the judged closures import packages, none followed), R-HELPER-KEY (a src key reads computed),
  * R-RUNTIME-LOAD (src/workflow/runtime.ts builds a Worker from a source value, src/workbench/hosts/local-detached.ts calls
  * a createRequire result), R-HOST-ALIAS (src/ui/agent-widget.ts holds the handle as its setUICtx parameter ctx, a name
  * without the word ui, and stores it in uiCtx) and R-PI-ALIAS (the entry closure holds pi as a property: { pi } in
- * src/agent-manager.ts and src/index.ts, this.pi in src/schedule.ts). Not measured live: R-COMPUTED-TEXT, R-LOOKALIKE.
+ * src/agent-manager.ts and src/index.ts, this.pi in src/schedule.ts). Not measured live: R-COMPUTED-TEXT, R-LOOKALIKE,
+ * R-HANDLER-FORM.
  * NOT CLAIMED: the internals of a package (a package specifier is judged by its own words only); effects the vocabulary does
- * not name (R-UNNAMED-PATH); modules loaded at run time by a path or URL value (R-RUNTIME-LOAD); host UI calls through a
- * receiver not named with the word ui (R-HOST-ALIAS) and pi surfaces through any receiver but pi (R-PI-ALIAS); callbacks
- * the host passes in and any code outside src/.
+ * not name (R-UNNAMED-PATH); modules loaded at run time by a path or URL value, or through a require no reader names
+ * (R-RUNTIME-LOAD); host UI calls through a receiver not named with the word ui or of a member reached indirectly
+ * (R-HOST-ALIAS) and pi surfaces through any receiver but the bare identifier pi (R-PI-ALIAS); a handleInput defined
+ * through a call or an export alias (R-HANDLER-FORM); a word disguised outside the readings (a look-alike letter:
+ * R-LOOKALIKE; a word broken by a digit or punctuation, or run into the next in one case: F-lists-near; an escape inside a
+ * regular expression, which is read by its source); callbacks the host passes in and any code outside src/.
  * RESIDUALS (named, each with its pinned quiet row in row Q): R-COMPUTED-TEXT, R-LOOKALIKE, R-UNNAMED-PATH, R-PACKAGE,
- * R-HELPER-KEY, R-RUNTIME-LOAD, R-HOST-ALIAS, R-PI-ALIAS.
+ * R-HELPER-KEY, R-RUNTIME-LOAD, R-HOST-ALIAS, R-PI-ALIAS, R-HANDLER-FORM.
  *
  * Display paths added: none. Test-only: no src change.
  */
@@ -69,13 +85,16 @@ import { execFileSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { runInNewContext } from "node:vm";
 import ts from "typescript";
 import { afterAll, describe, expect, it } from "vitest";
 import {
   ABBREVIATION,
   EDGE_KINDS,
   ENTRY_FLOOR,
+  type EscapePin,
   inventoryOf,
+  isEscape,
   isLive,
   isPlant,
   isReading,
@@ -84,6 +103,7 @@ import {
   judgeTree,
   type LivePin,
   type ModuleFacts,
+  nameOf,
   OBJECT,
   type PlantPin,
   PROMOTE,
@@ -98,6 +118,7 @@ import {
   roleReading,
   SLUG,
   SRC_FLOOR,
+  spellingsOf,
   titleOf,
   unwrap,
   wordsOf,
@@ -311,6 +332,50 @@ function checkLive(pin: LivePin): void {
   throw new Error(`live pin ${pin.id} has no check`);
 }
 
+/** nameOf's reading of each spelling, in one parsed source: function declaration names, or private method names. */
+function namesRead(spellings: readonly string[], privateName: boolean): string[] {
+  const source = spellings.map(spelling => (privateName ? `export class Holder {\n  #${spelling}(): void {}\n}\n` : `export function ${spelling}(): void {}\n`)).join("");
+  const sf = ts.createSourceFile("names.ts", source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const names: string[] = [];
+  for (const statement of sf.statements) {
+    if (!privateName && ts.isFunctionDeclaration(statement) && statement.name !== undefined) names.push(nameOf(statement.name));
+    if (privateName && ts.isClassDeclaration(statement)) for (const member of statement.members) if (member.name !== undefined && ts.isPrivateIdentifier(member.name)) names.push(nameOf(member.name));
+  }
+  return names;
+}
+
+/** The runtime's name for each spelling, all compiled in one new node:vm context: a function's name, or a private method's name. */
+function runtimeNames(spellings: readonly string[], privateName: boolean): string[] {
+  const expressions = spellings.map(spelling =>
+    privateName ? `(() => { class Holder { #${spelling}() {} static read(holder) { return holder.#${spelling}.name; } } return Holder.read(new Holder()); })()` : `(function ${spelling}() {}).name`,
+  );
+  const names: unknown = runInNewContext(`[${expressions.join(",\n")}]`);
+  return Array.isArray(names) ? names.map(String) : [];
+}
+
+/** Every named shape and every spelling of the pin's name, as an identifier and as a private name: nameOf and the runtime each read exactly that name. */
+function checkEscape(pin: EscapePin): void {
+  const named = Object.entries(pin.escapes);
+  const every = spellingsOf(pin.reads);
+  expect(every.length, "spellingsOf spells every letter three ways").toBe(3 ** [...pin.reads].length);
+  for (const privateName of [false, true]) {
+    const name = privateName ? `#${pin.reads}` : pin.reads;
+    const kind = privateName ? "private names" : "identifiers";
+    const read = namesRead(named.map(([, spelling]) => spelling), privateName);
+    const runtime = runtimeNames(named.map(([, spelling]) => spelling), privateName);
+    expect(Object.fromEntries(named.map(([shape], index) => [shape, { nameOf: read[index], runtime: runtime[index] }])), `${pin.what} (${kind}: the named shapes)`).toEqual(
+      Object.fromEntries(named.map(([shape]) => [shape, { nameOf: name, runtime: name }])),
+    );
+    const everyRead = namesRead(every, privateName);
+    const everyRuntime = runtimeNames(every, privateName);
+    expect([everyRead.length, everyRuntime.length], `${kind}: one reading per spelling`).toEqual([every.length, every.length]);
+    expect(
+      every.filter((_spelling, index) => everyRead[index] !== name || everyRuntime[index] !== name),
+      `${pin.what} (${kind}: all ${every.length} spellings)`,
+    ).toEqual([]);
+  }
+}
+
 function checkReading(pin: ReadingPin): void {
   expect(Object.fromEntries(Object.keys(pin.readings).map(text => [text, readingsOf(text)])), pin.what).toEqual(pin.readings);
 }
@@ -341,6 +406,7 @@ describe("APO UI publish census (wb-021.4, MW-ADAPTIVE-POLICY-ORGANIZATIONS-R5)"
     for (const pin of row.pins) {
       if (isLive(pin)) it(titleOf(row, pin), { timeout: LIVE_BUDGET_MS }, () => checkLive(pin));
       else if (isReading(pin)) it(titleOf(row, pin), () => checkReading(pin));
+      else if (isEscape(pin)) it(titleOf(row, pin), () => checkEscape(pin));
       else it(titleOf(row, pin), () => checkPlant(pin));
     }
   }
@@ -385,7 +451,7 @@ describe("APO UI publish census (wb-021.4, MW-ADAPTIVE-POLICY-ORGANIZATIONS-R5)"
   });
 
   it("rule 16: every judged row and the residual families are frozen at their measured shape", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["L:3", "R:12", "G:3", "A:14", "F:46", "Q:8"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["L:3", "R:13", "G:3", "A:15", "F:64", "Q:9"]);
     expect(Object.entries(RESIDUAL_FAMILIES).map(([family, members]) => `${family}:${members.join(",")}`)).toEqual([
       "R-COMPUTED-TEXT:Q R-COMPUTED-TEXT",
       "R-LOOKALIKE:Q R-LOOKALIKE",
@@ -395,6 +461,7 @@ describe("APO UI publish census (wb-021.4, MW-ADAPTIVE-POLICY-ORGANIZATIONS-R5)"
       "R-RUNTIME-LOAD:Q R-RUNTIME-LOAD",
       "R-HOST-ALIAS:Q R-HOST-ALIAS",
       "R-PI-ALIAS:Q R-PI-ALIAS",
+      "R-HANDLER-FORM:Q R-HANDLER-FORM",
     ]);
   });
 
