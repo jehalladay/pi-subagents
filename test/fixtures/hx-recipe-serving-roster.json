@@ -1,7 +1,7 @@
 {
  "bead": "wb-ts6.1",
  "pin": "694570cd00c2",
- "basis": "The out-of-file roster of test/workbench-hx-recipe-serving-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the residual names and the vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at HyperUnix-CLI 694570cd00c2 (read-only git show): docs/programs/feedback-query-skill-factory-2026-10-16/06-workflow-recipes.md:3 (the operator contract) and the eight recipe headings W1-W8 with the fifteen hx command lines and spans they hold (recipes[].source and commandLines; W5 and W7 hold none), verbatim. Host facts: hxInstall, the installed hx 0.1.0 install-skill --list under an empty scratch HOME. The hx verb vocabulary is the COMMANDS (V1) inventory of the installed hx 0.1.0 --help plus its help dispatcher. Pi facts measured at base f381c52 (landing 443). Matcher witnesses carry the first 16 hex of sha256 over each case's UTF-8 text, never the text. Cut #2 (the respin of refusal #1, rendered-text docs truth): the rendered view's matcher pin M4, the residuals Q9-Q11 (R-HIDDEN-SOURCE, R-EXAMPLE-SHAPE, R-CONFUSABLE), the named-reference vocabulary (the 77 names of the WHATWG table, read from Python 3.12's html.entities.html5, whose value is ASCII, white space or a folded character) and the ordered test titles the record case reads; Pi facts re-read at 52812a1 (landing 456).",
+ "basis": "The out-of-file roster of test/workbench-hx-recipe-serving-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the residual names and the vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at HyperUnix-CLI 694570cd00c2 (read-only git show): docs/programs/feedback-query-skill-factory-2026-10-16/06-workflow-recipes.md:3 (the operator contract) and the eight recipe headings W1-W8 with the fifteen hx command lines and spans they hold (recipes[].source and commandLines; W5 and W7 hold none), verbatim. Host facts: hxInstall, the installed hx 0.1.0 install-skill --list under an empty scratch HOME. The hx verb vocabulary is the COMMANDS (V1) inventory of the installed hx 0.1.0 --help plus its help dispatcher. Pi facts measured at base f381c52 (landing 443). Matcher witnesses carry the first 16 hex of sha256 over each case's UTF-8 text, never the text. Cut #2 (the respin of refusal #1, rendered-text docs truth): the rendered view's matcher pin M4, the residuals Q9-Q11 (R-HIDDEN-SOURCE, R-EXAMPLE-SHAPE, R-CONFUSABLE), the named-reference vocabulary (the 77 names of the WHATWG table, read from Python 3.12's html.entities.html5, whose value is ASCII, white space or a folded character) and the ordered test titles the record case reads; Pi facts re-read at 52812a1 (landing 456). Cut #3 (the respin of refusal #2, the class-level guard on rows N and E): the separator matcher pin M5 and the page-name pin M6, the residuals Q12-Q14 (R-HTML-RENDERING, R-OTHER-MARKUP, R-SHELL-SPELLING), the vocabularies markdownExtensions, otherDocumentExtensions, separatorElements and voidSeparators, and the witnesses of G1, G3, N1 and M2 re-read for the rendered README read, the two-view example read, the document walks and the quoted binary; Pi facts re-read at b7851c4 (landing 472).",
  "hxInstall": {
   "hxVersion": "0.1.0",
   "binarySha256": "8fddc7cc2e6c65d9773f0e35713af9b939031f9229e61c64d1ca7781678aa790",
@@ -382,6 +382,114 @@
    "vert=007C",
    "zwj=200D",
    "zwnj=200C"
+  ],
+  "markdownExtensions": [
+   "livemd",
+   "markdown",
+   "md",
+   "mdown",
+   "mdtext",
+   "mdtxt",
+   "mdwn",
+   "mdx",
+   "mkd",
+   "mkdn",
+   "mkdown",
+   "qmd",
+   "rmd",
+   "ronn",
+   "workbook"
+  ],
+  "otherDocumentExtensions": [
+   "adoc",
+   "asc",
+   "asciidoc",
+   "creole",
+   "htm",
+   "html",
+   "mediawiki",
+   "org",
+   "pod",
+   "rdoc",
+   "rest",
+   "rst",
+   "scd",
+   "text",
+   "textile",
+   "txt",
+   "wiki"
+  ],
+  "separatorElements": [
+   "address",
+   "article",
+   "aside",
+   "blockquote",
+   "br",
+   "button",
+   "canvas",
+   "caption",
+   "center",
+   "dd",
+   "details",
+   "dialog",
+   "dir",
+   "div",
+   "dl",
+   "dt",
+   "embed",
+   "fieldset",
+   "figcaption",
+   "figure",
+   "footer",
+   "form",
+   "h1",
+   "h2",
+   "h3",
+   "h4",
+   "h5",
+   "h6",
+   "header",
+   "hgroup",
+   "hr",
+   "iframe",
+   "img",
+   "input",
+   "legend",
+   "li",
+   "listing",
+   "main",
+   "menu",
+   "meter",
+   "nav",
+   "object",
+   "ol",
+   "p",
+   "plaintext",
+   "pre",
+   "progress",
+   "search",
+   "section",
+   "select",
+   "summary",
+   "svg",
+   "table",
+   "tbody",
+   "td",
+   "textarea",
+   "tfoot",
+   "th",
+   "thead",
+   "tr",
+   "ul",
+   "video",
+   "xmp"
+  ],
+  "voidSeparators": [
+   "br",
+   "embed",
+   "hr",
+   "img",
+   "input"
   ]
  },
  "residuals": {
@@ -395,7 +503,10 @@
   "Q8": "R-BOUND-LAUNCH",
   "Q9": "R-HIDDEN-SOURCE",
   "Q10": "R-EXAMPLE-SHAPE",
-  "Q11": "R-CONFUSABLE"
+  "Q11": "R-CONFUSABLE",
+  "Q12": "R-HTML-RENDERING",
+  "Q13": "R-OTHER-MARKUP",
+  "Q14": "R-SHELL-SPELLING"
  },
  "rows": [
   {
@@ -420,6 +531,18 @@
        "~/.agents/skills",
        "~/.pi/skills"
       ],
+      "readmeLabels": 1,
+      "readmeControls": {
+       "hiddenCopy": {
+        "labels": 1,
+        "roots": [
+         "~/.skills",
+         "<cwd>/.pi/skills",
+         "~/.pi/agent/skills"
+        ]
+       },
+       "shownTwice": 2
+      },
       "targets": [
        "~/.skills/hyper-unix",
        "~/.claude/skills/hyper-unix",
@@ -471,6 +594,12 @@
       "userExamples": [],
       "userControl": [
        "control.md"
+      ],
+      "renderedControl": [
+       "control.md"
+      ],
+      "hiddenControl": [
+       "control.md"
       ]
      }
     }
@@ -490,7 +619,7 @@
       "unread": [],
       "unmapped": [],
       "viewMismatches": [],
-      "rootMarkdown": [
+      "rootDocuments": [
        "AGENTS.md",
        "CHANGELOG.md",
        "CONTRIBUTING.md",
@@ -503,6 +632,23 @@
         "verdict": "negated"
        }
       ],
+      "farFloor": [
+       "served@+1"
+      ],
+      "farBeyondAll": true,
+      "walkControl": {
+       "outside": [
+        ".pi/agents/reviewer.md",
+        "NOTES.mdown",
+        "docs/guide.md",
+        "guides/notes.txt",
+        "guides/recipes.MD",
+        "guides/recipes.markdown"
+       ],
+       "rootDocuments": [
+        "NOTES.mdown"
+       ]
+      },
       "named": [],
       "served": []
      }
@@ -815,6 +961,42 @@
       [
        "0625420a0a030710",
        false
+      ],
+      [
+       "61afd1c5084bee23",
+       true
+      ],
+      [
+       "e06d16ba40335c59",
+       true
+      ],
+      [
+       "17b2d05a3d2a59d9",
+       true
+      ],
+      [
+       "0b723eb652b0f643",
+       true
+      ],
+      [
+       "ce4316df651e7468",
+       true
+      ],
+      [
+       "7d8c060ef8702067",
+       false
+      ],
+      [
+       "a98b6599d06dc010",
+       false
+      ],
+      [
+       "f9cce676d3b182ee",
+       false
+      ],
+      [
+       "9be9437819b9c2b8",
+       false
       ]
      ]
     },
@@ -1034,6 +1216,207 @@
        ]
       }
      }
+    },
+    {
+     "id": "M5",
+     "witness": {
+      "separated": [
+       [
+        "BR-NAME",
+        "served@+1"
+       ],
+       [
+        "BR-NAME-SELF",
+        "served@+1"
+       ],
+       [
+        "BR-NAME-UPPER",
+        "served@+1"
+       ],
+       [
+        "BR-SPACED-SELF",
+        "served@+1"
+       ],
+       [
+        "BR-ATTRIBUTE",
+        "served@+1"
+       ],
+       [
+        "BR-END",
+        "served@+1"
+       ],
+       [
+        "BR-SKILL",
+        "served@+1"
+       ],
+       [
+        "BR-SLUG",
+        "served@+1"
+       ],
+       [
+        "BR-CLASS",
+        "named@+1"
+       ],
+       [
+        "BR-PAGE",
+        "served@+1"
+       ],
+       [
+        "BR-RECIPE-NUMBER",
+        "served@+1"
+       ],
+       [
+        "V-BR",
+        "served@+1"
+       ],
+       [
+        "DIV-INLINE-NAME",
+        "served@+1"
+       ],
+       [
+        "P-INLINE",
+        "served@+1"
+       ],
+       [
+        "P-END",
+        "served@+1"
+       ],
+       [
+        "HR-INLINE",
+        "served@+1"
+       ],
+       [
+        "LI-INLINE",
+        "served@+1"
+       ],
+       [
+        "HEADING-INLINE",
+        "served@+1"
+       ],
+       [
+        "SECTION-INLINE",
+        "served@+1"
+       ],
+       [
+        "CELL-BLOCK",
+        "served@+1"
+       ],
+       [
+        "DIV-BLOCK-COMMAND",
+        "served@+1"
+       ],
+       [
+        "IMG-INLINE",
+        "served@+1"
+       ],
+       [
+        "INPUT-INLINE",
+        "served@+1"
+       ],
+       [
+        "IMAGE-MARKDOWN",
+        "served@+1"
+       ]
+      ],
+      "fusing": [
+       [
+        "e53a333d0f1c22f8",
+        "served@+1"
+       ],
+       [
+        "9d572aaa55d92dad",
+        "served@+1"
+       ],
+       [
+        "4358a3ff2f70d866",
+        "served@+1"
+       ],
+       [
+        "a3bc9b15cbd5bbe9",
+        "served@+1"
+       ]
+      ],
+      "fusedHeld": [
+       false,
+       false,
+       false,
+       false
+      ]
+     }
+    },
+    {
+     "id": "M6",
+     "witness": {
+      "spellings": [
+       "livemd",
+       "LIVEMD",
+       "markdown",
+       "MARKDOWN",
+       "md",
+       "MD",
+       "mdown",
+       "MDOWN",
+       "mdtext",
+       "MDTEXT",
+       "mdtxt",
+       "MDTXT",
+       "mdwn",
+       "MDWN",
+       "mdx",
+       "MDX",
+       "mkd",
+       "MKD",
+       "mkdn",
+       "MKDN",
+       "mkdown",
+       "MKDOWN",
+       "qmd",
+       "QMD",
+       "rmd",
+       "RMD",
+       "ronn",
+       "RONN",
+       "workbook",
+       "WORKBOOK",
+       "Md",
+       "Markdown"
+      ],
+      "served": [
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1,
+       1
+      ],
+      "raw": []
+     }
     }
    ]
   },
@@ -1144,6 +1527,49 @@
       ],
       "control": "served"
      }
+    },
+    {
+     "id": "Q12",
+     "witness": {
+      "quiet": [
+       [],
+       [],
+       [],
+       [],
+       [],
+       []
+      ],
+      "control": [
+       "served@+1"
+      ]
+     }
+    },
+    {
+     "id": "Q13",
+     "witness": {
+      "quiet": [
+       [],
+       [],
+       [],
+       [],
+       []
+      ],
+      "control": [
+       "docs/guide.rst:1"
+      ]
+     }
+    },
+    {
+     "id": "Q14",
+     "witness": {
+      "quiet": [
+       "none",
+       "none",
+       "none",
+       "none"
+      ],
+      "control": "served"
+     }
     }
    ]
   }
@@ -1165,6 +1591,8 @@
   "M2",
   "M3",
   "M4",
+  "M5",
+  "M6",
   "Q1",
   "Q2",
   "Q3",
@@ -1176,6 +1604,9 @@
   "Q9",
   "Q10",
   "Q11",
+  "Q12",
+  "Q13",
+  "Q14",
   "the record: every registered test and every reached pin equal the roster, in order and both ways"
  ]
 }
