@@ -2,7 +2,7 @@
   "bead": "wb-tnz5.3",
   "pin": "6a251bf73af5",
   "installedRf": "0.1.832",
-  "basis": "The out-of-file roster of test/workbench-rf-federation-refusal-codes-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness and the five vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at ReactiveFiberCLI 6a251bf73af5 (read-only git show): docs/programs/certified-federated-reactive-refinement-2026-10-18/BEADS-2026-10-21.md:22 (rfc-bak67.8, FW-CFRR-02b: refusals are RF_FEDERATION_* codes) and :46 (RF_FEDERATION_PIN_CHANGED, exit 4 class, rfc-bak67.14), README.md:32, 02-concrete-contract-and-verification-gates.md:26, 04-typed-acceptance-slice-and-protected-storage-plan.md:13; federated-workspaces-2026-10-18/04-cli-api.md:104 (the eleven RF_FED_* codes) and :8-18 (the planned rf workspace verbs), BEADS-2026-10-21.md:13 (rfc-0txnl.1, FW-04a), 10-ccca-optimal-snapshot-acquisition-contract.md:15-19 (the outcome words; :17 NO_ADMISSIBLE_VERSION is never relabelled a mathematical inconsistency). Installed rf 0.1.832 (rf --json --version, 2026-10-22; read-only import of reactive_fiber_cli.domain.diagnostics): REGISTRY holds 304 codes, none starting RF_FED; RF_COMPONENT_INSTANCE_UNFED is the one registered code containing FED. Pi facts measured at base e8850da. Every refusal envelope, admission envelope and outcome-bearing metadata is CONSTRUCTED (no rf emits a federation code today). Matcher digests are the first 16 hex of sha256 over the UTF-8 spelling; the Q3 and Q4 spellings carry U+200B and U+0415 and are never written raw here. wb-iqqy (R694 follow-up of landing 274, gate cmd_7e522e1cbb46 LEG 2; measured at base 3c9c7ac): B1 reads each text raw and with its literal \\x, \\u and \\u{} escapes decoded, its decoded control included (G3); C1 flattens spreads of array literals and array-literal concat calls, reads push/unshift argument lists as argv and takes a planned verb anywhere after the group word, with seven added controls (G9, G9c; R-COMPOSED-ARGV's concatenated and constant-group quiet rows); D1 pins each known site's occurrence count per word and R-PROSE-OUTCOME's quiet control (G17); D2 adds the folded outcome-word matcher and the infeasibility synonym set with their controls (G11, G11d); M8 (an escaped family spelling) and Q5 (R-ENCODED, a legacy octal escape) join row M. tests holds every registered title in order and reached every case's reached record (case:assertion count) - the record case compares both.",
+  "basis": "The out-of-file roster of test/workbench-rf-federation-refusal-codes-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness and the five vocabularies, so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. Producer facts read at ReactiveFiberCLI 6a251bf73af5 (read-only git show): docs/programs/certified-federated-reactive-refinement-2026-10-18/BEADS-2026-10-21.md:22 (rfc-bak67.8, FW-CFRR-02b: refusals are RF_FEDERATION_* codes) and :46 (RF_FEDERATION_PIN_CHANGED, exit 4 class, rfc-bak67.14), README.md:32, 02-concrete-contract-and-verification-gates.md:26, 04-typed-acceptance-slice-and-protected-storage-plan.md:13; federated-workspaces-2026-10-18/04-cli-api.md:104 (the eleven RF_FED_* codes) and :8-18 (the planned rf workspace verbs), BEADS-2026-10-21.md:13 (rfc-0txnl.1, FW-04a), 10-ccca-optimal-snapshot-acquisition-contract.md:15-19 (the outcome words; :17 NO_ADMISSIBLE_VERSION is never relabelled a mathematical inconsistency). Installed rf 0.1.832 (rf --json --version, 2026-10-22; read-only import of reactive_fiber_cli.domain.diagnostics): REGISTRY holds 304 codes, none starting RF_FED; RF_COMPONENT_INSTANCE_UNFED is the one registered code containing FED. Pi facts measured at base e8850da. Every refusal envelope, admission envelope and outcome-bearing metadata is CONSTRUCTED (no rf emits a federation code today). Matcher digests are the first 16 hex of sha256 over the UTF-8 spelling; the Q3 and Q4 spellings carry U+200B and U+0415 and are never written raw here. wb-iqqy (R694 follow-up of landing 274, gate cmd_7e522e1cbb46 LEG 2; measured at base 3c9c7ac): B1 reads each text raw and with its literal \\x, \\u and \\u{} escapes decoded, its decoded control included (G3); C1 flattens spreads of array literals and array-literal concat calls, reads push/unshift argument lists as argv and takes a planned verb anywhere after the group word, with seven added controls (G9, G9c; R-COMPOSED-ARGV's concatenated and constant-group quiet rows); D1 pins each known site's occurrence count per word and R-PROSE-OUTCOME's quiet control (G17); D2 adds the folded outcome-word matcher and the infeasibility synonym set with their controls (G11, G11d); M8 (an escaped family spelling) and Q5 (R-ENCODED, a legacy octal escape) join row M. tests holds every registered title in order and reached every case's reached record (case:assertion count) - the record case compares both. wb-ii3m (R694 follow-up of landing 367, gate cmd_09b741c00786 LEG 2; measured at base 6e0c3d2): C1 reads a concat chain through every receiver and Array.of, Array() and new Array() argument lists as argv (L2-C1-chain, L2-C1-arrayof), counts a group word followed only by literal flags as a composed site (L2-C1-flagterm), parses every JavaScript and TypeScript module extension under src (F5) and pins the group-word table (every whole \"workspace\" string literal in src, each file with the syntax kind every one sits in), with ten added controls and a group-word count on every control; D2 joins folded outcome-word parts by any run of characters that are not ASCII letters or digits (L2-D2-slash), adds impossib to the synonym set (L2-D2-syn), reads every string the adapter topology carries, each object key and each string value, with the whole outcome-refusal reading pinned path by path in reading (L2-D2-evref), and adds six controls, R-SYNONYM's two quiet rows among them; row B's label carries its acceptance clause's own words, and the anchors case holds every clause fragment to its row label (L2-XCOORD-LABEL) and reads wb-ii3m's carried findings beside wb-iqqy's head.",
   "families": [
     {
       "stem": "RF_FED_",
@@ -267,7 +267,7 @@
     },
     {
       "id": "B",
-      "label": "(b) no federation-family literal is emitted by Pi without a producer envelope behind it: no src or qa file and no registered descriptor spells the family, and every code a Pi refusal names is its envelope's primary code",
+      "label": "(b) a grep guard shows no federation-family literal emitted by Pi without a producer envelope behind it (0 in Pi src): no src or qa file and no registered descriptor spells the family, and every code a Pi refusal names is its envelope's primary code",
       "pins": [
         {
           "id": "B1",
@@ -391,54 +391,135 @@
             "composedArgv": [
               "src/workbench/observation.ts"
             ],
+            "groupWords": {
+              "src/agent-file-toggle.ts": [
+                "LiteralType",
+                "PropertyAssignment",
+                "ReturnStatement"
+              ],
+              "src/workbench/forge-observer.ts": [
+                "VariableDeclaration"
+              ],
+              "src/workbench/observation.ts": [
+                "ArrayLiteralExpression"
+              ],
+              "src/workbench/providers/reactivefiber.ts": [
+                "ArrayLiteralExpression"
+              ],
+              "src/workbench/reactivefiber-observer.ts": [
+                "ArrayLiteralExpression"
+              ]
+            },
             "controls": {
               "argv": {
                 "hits": 1,
-                "composedArgv": 0
+                "composedArgv": 0,
+                "groupWords": 1
               },
               "spaced": {
                 "hits": 1,
-                "composedArgv": 0
+                "composedArgv": 0,
+                "groupWords": 0
               },
               "dotted": {
                 "hits": 1,
-                "composedArgv": 0
+                "composedArgv": 0,
+                "groupWords": 0
               },
               "template": {
                 "hits": 1,
-                "composedArgv": 0
+                "composedArgv": 0,
+                "groupWords": 0
               },
               "composedArgv": {
                 "hits": 0,
-                "composedArgv": 1
+                "composedArgv": 1,
+                "groupWords": 1
               },
               "spread": {
                 "hits": 1,
-                "composedArgv": 0
+                "composedArgv": 0,
+                "groupWords": 1
               },
               "flagged": {
                 "hits": 1,
-                "composedArgv": 0
+                "composedArgv": 0,
+                "groupWords": 1
               },
               "concat": {
                 "hits": 1,
-                "composedArgv": 0
+                "composedArgv": 0,
+                "groupWords": 1
               },
               "pushed": {
                 "hits": 1,
-                "composedArgv": 0
+                "composedArgv": 0,
+                "groupWords": 1
               },
               "terminated": {
                 "hits": 0,
-                "composedArgv": 1
+                "composedArgv": 1,
+                "groupWords": 1
+              },
+              "flagTerminated": {
+                "hits": 0,
+                "composedArgv": 1,
+                "groupWords": 1
+              },
+              "chained": {
+                "hits": 1,
+                "composedArgv": 0,
+                "groupWords": 1
+              },
+              "arrayOf": {
+                "hits": 1,
+                "composedArgv": 0,
+                "groupWords": 1
+              },
+              "newArray": {
+                "hits": 1,
+                "composedArgv": 0,
+                "groupWords": 1
+              },
+              "arrayCall": {
+                "hits": 1,
+                "composedArgv": 0,
+                "groupWords": 1
+              },
+              "helper": {
+                "hits": 0,
+                "composedArgv": 0,
+                "groupWords": 1
+              },
+              "flagValue": {
+                "hits": 0,
+                "composedArgv": 0,
+                "groupWords": 1
+              },
+              "elementWrite": {
+                "hits": 0,
+                "composedArgv": 0,
+                "groupWords": 1
               },
               "concatenated": {
                 "hits": 0,
-                "composedArgv": 0
+                "composedArgv": 0,
+                "groupWords": 0
+              },
+              "templated": {
+                "hits": 0,
+                "composedArgv": 0,
+                "groupWords": 0
               },
               "constant": {
                 "hits": 0,
-                "composedArgv": 0
+                "composedArgv": 0,
+                "groupWords": 1
+              },
+              "command": {
+                "hits": 0,
+                "composedArgv": 0,
+                "groupWords": 0
               }
             }
           }
@@ -567,6 +648,47 @@
                 "infeasibility": false
               }
             },
+            "reading": [
+              "snapshots:key=snapshots",
+              "snapshots[0].source:key=source",
+              "snapshots[0].source.provider:key=provider",
+              "snapshots[0].source.provider=reactivefiber",
+              "snapshots[0].source.type:key=type",
+              "snapshots[0].source.type=context-preview",
+              "snapshots[0].source.id:key=id",
+              "snapshots[0].source.id=rfo_aaaaaaaaaaaaaaaaaaaaaa",
+              "snapshots[0].source.scope:key=scope",
+              "snapshots[0].source.scope=<root>",
+              "snapshots[0].scope:key=scope",
+              "snapshots[0].scope.workspace:key=workspace",
+              "snapshots[0].scope.workspace=<root>",
+              "snapshots[0].scope.principal:key=principal",
+              "snapshots[0].scope.principal=local-operator:tester",
+              "snapshots[0].capturedAt:key=capturedAt",
+              "snapshots[0].capturedAt=2026-10-22T00:00:00Z",
+              "snapshots[0].observedAt:key=observedAt",
+              "snapshots[0].observedAt=2026-10-22T00:00:01Z",
+              "snapshots[0].coverage:key=coverage",
+              "snapshots[0].coverage=unknown",
+              "snapshots[0].node:key=node",
+              "snapshots[0].node.title:key=title",
+              "snapshots[0].node.title=RF context preview rfo_aaaaaaaaaaaaaaaaaaaaaa",
+              "snapshots[0].node.type:key=type",
+              "snapshots[0].node.type=sdk-operation",
+              "snapshots[0].node.statusText:key=statusText",
+              "snapshots[0].node.statusText=refused · RF_FED_RESOURCE_UNAVAILABLE",
+              "snapshots[0].node.statusTone:key=statusTone",
+              "snapshots[0].node.statusTone=failure",
+              "snapshots[0].kind:key=kind",
+              "snapshots[0].kind=reactivefiber.render.preview.snapshot",
+              "snapshots[0].evidenceRefs:key=evidenceRefs",
+              "snapshots[0].evidenceRefs[0]=rf-workspace:rfw_aaaaaaaaaaaaaaaaaaaaaa",
+              "relations:key=relations",
+              "diagnostics:key=diagnostics",
+              "diagnostics[0]=render refused with RF_FED_RESOURCE_UNAVAILABLE",
+              "diagnostics[1]=diagnostic message, hint and metadata withheld",
+              "diagnostics[2]=no native interval supplied"
+            ],
             "controls": {
               "folded": [
                 [
@@ -581,12 +703,24 @@
                 [
                   "NO_ADMISSIBLE_VERSION"
                 ],
+                [],
+                [
+                  "NO_ADMISSIBLE_VERSION"
+                ],
+                [
+                  "NO_ADMISSIBLE_VERSION"
+                ],
+                [
+                  "INFEASIBLE_CAUSAL_BOUNDS"
+                ],
                 []
               ],
               "infeasibility": [
                 true,
                 true,
                 true,
+                true,
+                false,
                 true,
                 false
               ]
@@ -695,7 +829,7 @@
   ],
   "tests": [
     "the judged set: the frozen shape, the out-of-file roster and the cases agree",
-    "the outside anchors: every duty of the wb-tnz5.3 owner filing sits in exactly one row and its two family stems are FAMILIES', and every gate mutant and pin the wb-iqqy filing names is a registered case",
+    "the outside anchors: every duty and clause fragment of the wb-tnz5.3 owner filing sits in its row label and its two family stems are FAMILIES', and every gate mutant and pin the wb-iqqy and wb-ii3m filings name is a registered or disclosed case",
     "A1",
     "A2",
     "A3",
@@ -729,7 +863,7 @@
   ],
   "reached": [
     "judged:7",
-    "anchors:14",
+    "anchors:21",
     "A1:8",
     "A2:28",
     "A3:63",
@@ -740,12 +874,12 @@
     "B2:6",
     "B3:18",
     "B4:8",
-    "C1:7",
+    "C1:8",
     "C2:6",
     "C3:8",
     "C4:7",
     "D1:10",
-    "D2:21",
+    "D2:23",
     "M1:4",
     "M2:4",
     "M3:4",

@@ -90,6 +90,10 @@
  * wb-ucav (the R694 follow-up of landing 271: gate finding F1 with riders F2-F5) added A2's later-argument, directive and JSDoc
  * positions, C2's head, placement and closure reading, C1's SHIPPED_OTHERWISE leg, B2's odd-offset row, R-HELPER, row A's
  * load wording and the Not-claimed scope.
+ * wb-q9z5 (the R694 follow-up of landing 370: gate finding F1 with rider F2) added one control per see-through arm: A2's
+ * satisfies, non-null and angle-bracket specifiers beside as (fold()), C2's row and suite heads seen through parentheses
+ * and the as, satisfies, non-null and angle-bracket assertions (headOf(), suiteReference()), and C1's lowercase, uppercase
+ * and uppercase-no notes for SHIPPED_OTHERWISE's letter case.
  * Display paths added: none. Test-only: it spawns nothing; the controls plant files in makeScratch scratch only.
  */
 import { type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
@@ -152,7 +156,7 @@ const ROW_REGISTRARS = ["it", "test"];
 const SUITE_REGISTRARS = ["describe", "suite"];
 const TABLE_FACTORIES = ["each", "for"];
 const API_FACTORIES = ["extend", "scoped"];
-/** A Shipped: in the bead row's notes that reads other than no (any letter case). */
+/** A Shipped: in the bead row's notes that reads other than no, the key and the no each in any letter case (C1's controls). */
 const SHIPPED_OTHERWISE = /\bshipped:(?!\s*no\b)\s*\S*/gi;
 const RESIDUAL_FAMILIES = ["R-COMPOSED", "R-ENCODED", "R-LOOKALIKE", "R-PROSE", "R-OUTSIDE", "R-HELPER"];
 const CYRILLIC_IE = String.fromCodePoint(0x0435);
@@ -606,7 +610,8 @@ interface TierReading {
 const COMPUTED = "<computed>";
 type HeadStep = { readonly member: string } | { readonly call: ts.CallExpression };
 /** The head a registrar reference starts: each member access it is the object of (a property, or an element whose key folds)
- * and each call it is the callee of, in order, seen through parentheses and type assertions. */
+ * and each call it is the callee of, in order, seen through parentheses and type assertions (as, satisfies, non-null and
+ * angle-bracket; C2 holds a row control and a suite control per arm). */
 function headOf(reference: ts.Expression): HeadStep[] {
   const steps: HeadStep[] = [];
   let current = reference;
@@ -699,7 +704,8 @@ function memberOf(node: ts.Identifier): { readonly access: ts.Expression; readon
   if (ts.isElementAccessExpression(parent) && parent.expression === node) return { access: parent, name: fold(parent.argumentExpression) ?? COMPUTED };
   return undefined;
 }
-/** The suite registrar a callee descends to (a suite binding, or a vitest namespace's suite member), if any. */
+/** The suite registrar a callee descends to (a suite binding, or a vitest namespace's suite member), if any, seen through
+ * parentheses and the type assertions headOf sees through (C2 holds a suite control per arm). */
 function suiteReference(callee: ts.Expression, bindings: RegistrarBindings): ts.Expression | undefined {
   let current = callee;
   for (;;) {
@@ -875,8 +881,12 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       fieldSpecifier: importsSdk("c.mjs", `const sdk = await load({ specifier: "${SDK}" });\n`),
       chosenSpecifier: importsSdk("c.cjs", `const sdk = require(process.env.TSX ? "${SDK}" : "./local.cjs");\n`),
       logicalSpecifier: importsSdk("c.cjs", `const sdk = require(process.env.TSX_SDK || "${SDK}");\n`),
-      // A type-asserted literal and a comma sequence's last operand fold like a bare literal.
+      // A type-asserted literal (one control per fold() arm: as, satisfies, non-null, angle-bracket; gate F1 of landing 370)
+      // and a comma sequence's last operand fold like a bare literal.
       assertedSpecifier: importsSdk("c.ts", `const sdk = require("${SDK}" as string);\n`),
+      satisfiesSpecifier: importsSdk("c.ts", `const sdk = require("${SDK}" satisfies string);\n`),
+      nonNullSpecifier: importsSdk("c.ts", `const sdk = require("${SDK}"!);\n`),
+      angleSpecifier: importsSdk("c.ts", `const sdk = require(<string>"${SDK}");\n`),
       sequencedSpecifier: importsSdk("c.cjs", `const sdk = require((0, "${SDK}"));\n`),
       manifestDependency: namesSdk(`{"dependencies":{"${SDK}":"0.1.649"}}`),
       manifestAlias: namesSdk(`{"dependencies":{"tsx-sdk":"npm:${SDK}@0.1.649"}}`),
@@ -1027,8 +1037,14 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       sdkMapped: producer.importMap[SDK] === `npm:${SDK}@${producer.distribution.version}`,
       beadSaysUnshipped,
       shippedOtherwise: saysOtherwise,
-      // A note appended beside the owner's sentence is read, not only the sentence itself.
-      controls: { appendedShippedYes: shippedOtherwise(`${notes}\nShipped: yes, the hook is exported`).length },
+      // A note appended beside the owner's sentence is read, not only the sentence itself: its key in any letter case, and
+      // a no in any letter case still reads as no (gate F2 of landing 370).
+      controls: {
+        appendedShippedYes: shippedOtherwise(`${notes}\nShipped: yes, the hook is exported`).length,
+        appendedLowercaseShippedYes: shippedOtherwise(`${notes}\nshipped: yes, the hook is exported`).length,
+        appendedUppercaseShippedYes: shippedOtherwise(`${notes}\nSHIPPED: YES, the hook is exported`).length,
+        appendedUppercaseShippedNo: shippedOtherwise(`${notes}\nSHIPPED: NO, still docs only`).length,
+      },
     });
   },
   C2: () => {
@@ -1062,6 +1078,18 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       renamedImport: rowsIn('import { it as row } from "vitest";\nrow("r1", () => {});\n'),
       namespaceImport: rowsIn('import * as vt from "vitest";\nvt.describe("s", () => {\n  vt.it("r1", () => {});\n});\n'),
       nestedSuites: rowsIn(`${vitest}describe("a", () => {\n  ${chain("describe", "concurrent")}("b", () => {\n    it("r1", () => {});\n  });\n});\n`),
+      // A row or suite registrar seen through parentheses and each type assertion: one control per arm of headOf() and of
+      // suiteReference() (a suite control needs both readers' arm).
+      parenthesizedRow: rowsIn(`${vitest}(it)("r1", () => {});\n`),
+      nonNullRow: rowsIn(`${vitest}it!("r1", () => {});\n`),
+      asRow: rowsIn(`${vitest}(it as Api)("r1", () => {});\n`),
+      satisfiesRow: rowsIn(`${vitest}(it satisfies Api)("r1", () => {});\n`),
+      angleRow: rowsIn(`${vitest}(<Api>it)("r1", () => {});\n`),
+      parenthesizedSuite: rowsIn(`${vitest}(describe)("s", () => {\n  it("r1", () => {});\n});\n`),
+      nonNullSuite: rowsIn(`${vitest}describe!("s", () => {\n  it("r1", () => {});\n});\n`),
+      asSuite: rowsIn(`${vitest}(describe as Api)("s", () => {\n  it("r1", () => {});\n});\n`),
+      satisfiesSuite: rowsIn(`${vitest}(describe satisfies Api)("s", () => {\n  it("r1", () => {});\n});\n`),
+      angleSuite: rowsIn(`${vitest}(<Api>describe)("s", () => {\n  it("r1", () => {});\n});\n`),
       table: rowsIn(`${vitest}${chain("it", "each")}([1, 2])("r %s", () => {});\n`),
       forTable: rowsIn(`${vitest}${chain("test", "for")}([1, 2])("r %s", () => {});\n`),
       tableSuite: rowsIn(`${vitest}${chain("describe", "each")}([1, 2])("s %s", () => {\n  it("r1", () => {});\n});\n`),
