@@ -1177,7 +1177,7 @@
        "rf-graph:sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
        "rf-workspace:rfw_aaaaaaaaaaaaaaaaaaaaaa",
        "rf-bundle:sha256:2222222222222222222222222222222222222222222222222222222222222222",
-       "rf-cli:0.1.784"
+       "rf-cli:0.1.845"
       ],
       "carries": [
        {
