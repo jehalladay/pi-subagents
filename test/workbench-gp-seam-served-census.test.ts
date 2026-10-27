@@ -19,6 +19,9 @@
  * CUT #2 (the respin of refusal #1, gate row M:23480): U1 the outside anchors (OUTSIDE ANCHORS), U2 the forms the readings name
  * (SEAM, SERVED), U3 the rendered view (RENDERED VIEW), F1 the literal guard (LIVE GUARD), F2 the format-character fold (FOLD),
  * F3 the self-anchored members named (OUTSIDE ANCHORS).
+ * CUT #3 (the respin of refusal #2, gate row M:24345): U1 br-split cured in one markup reader (MARKUP) with the CLASS-LEVEL GUARD
+ * asserted in B3; F1 the coverage literals (LIVE GUARD); F2 the default-ignorable fold (FOLD) and the SERVED and SEAM look-alike
+ * family (R-LOOKALIKE).
  *
  * THE ARTIFACT AT THE PIN (the roster's `producer` block, measured read-only by the cutting seat on 2026-10-26 from a shallow
  * clone of the Furnace repository at 6502737d9e96, removed after the read; this census is hermetic and never re-reads it):
@@ -39,20 +42,42 @@
  *   tracks is a root or a named outside directory (B1).
  * - RENDERED VIEW (a Markdown page, a path ending .md; rendered-text truth, 9x5.17): marked 18.0.11 (GFM, the lexer of
  *   test/helpers/census.ts) lexes the page once. A UNIT is a paragraph, a heading, the text of a list item or block quote, a
- *   table row (its cells joined by " | ") or an HTML block. A unit shows its text, code spans and backslash escapes as written
- *   and emphasis, strikethrough and link text flattened; an inline HTML comment or tag, an image (its alt text with it), a
- *   link destination, title or reference label, a link reference definition and a task checkbox show nothing; an HTML block
- *   shows its source with comments (an unclosed one to its end) and tags removed; a code block, fenced or indented, is no
- *   unit. Numeric character references and the NAMED_REFERENCES names are decoded outside code spans (a code span shows a
- *   reference as written: B5 asWritten); any other named reference stays as written. A soft wrap or a hard break is one space. So a claim and a marker each count only where a
- *   reader sees them (B5 hiddenMarkers: a marker hidden in a comment, a link destination, title or label, a tag attribute or
- *   alt text never quiets a shown claim). A listed file that is not a Markdown page (none today) is read as raw text.
+ *   table row (its cells joined by " | ") or an HTML block, cut again at every block-level tag inside it (MARKUP). A unit shows
+ *   its text, code spans and backslash escapes as written and emphasis, strikethrough and link text flattened; an image (its alt
+ *   text with it), a link destination, title or reference label, a link reference definition and a task checkbox show nothing;
+ *   a code block, fenced or indented, is no unit. A soft wrap or a hard break is one space. Numeric character references and the
+ *   NAMED_REFERENCES names are decoded in shown text outside code spans (a code span shows a reference as written: B5 asWritten);
+ *   any other named reference stays as written. A listed file that is not a Markdown page (none today) is read as raw text.
+ * - MARKUP: an HTML block's source and every inline html token are read by one reader (markupPieces), in the forms the HTML
+ *   standard's tokenizer reads: a comment shows nothing ("<!-->" and "<!--->" close at once, any other at its first "-->" or
+ *   "--!>", an unclosed one at the end of its block); a bogus comment shows nothing to its first ">" ("<?", "<!" opening no
+ *   comment - a declaration, a CDATA section - and "</" before anything but a letter); a tag shows nothing from its "<" through
+ *   its attributes to the first ">" outside a quoted value (readTag), and a tag the input ends inside drops with the rest. Each
+ *   tag then renders by its element (tagPieces): a br, start or end tag, is one space, as a hard break is; a block-level tag
+ *   (BLOCK_TAGS: p, div, li, the headings, hr, blockquote, pre, table, details, summary and the rest the HTML rendering lays out
+ *   as blocks) ends the unit as a paragraph break does - an end tag only while its element is open, a stray one dropped as the
+ *   standard drops it, save a stray </p>, which opens an empty paragraph; inside a table (a markdown table's cell, or an open
+ *   table element) a row or row-group tag ends the unit and a td or th opens a cell, " | " after shown text, while outside one
+ *   these tags drop; any other tag shows nothing (ser<b>ved and ser<wbr>ved read served). An element a reader never sees -
+ *   script, style, template, title, noscript, noembed, noframes, iframe, datalist, rp, a dialog without its open attribute, and
+ *   any element carrying the hidden attribute - shows nothing of what it holds to its end tag, and a pre, listing or xmp element
+ *   holds no unit, as a code block holds none; the raw-text ones (script, style, title, noscript, noembed, noframes, iframe,
+ *   xmp) end at the first end tag of their name. So a marker a reader does not see - in a comment or a bogus comment, a link
+ *   destination, title or label, a tag attribute, alt text or an unshown element - never quiets a shown claim (B5
+ *   hiddenMarkers); R-MARKER-ANYWHERE names the markers that count wherever they sit.
+ * - CLASS-LEVEL GUARD (refusal #2, rule 19(d); literal in B3, never only the roster): two pages whose marked HTML is identical
+ *   read the same. The HTML marked renders a page to is itself a page marked renders unchanged (asserted), and one reader reads
+ *   both, so B3 holds every pinned rendered form of B3, B4 and B5 (PINNED_PAGES) to its own HTML page - the same sentences and
+ *   the same findings - and every page of a hard-break group (BREAK_GROUPS: the markdown hard breaks, br in its spellings, a br in
+ *   an HTML block and in a table cell, a block-level tag met inline) to the reading of the group's first page.
  * - SENTENCE: a unit, or a raw file's text, is cut after ".", "!", "?" or ";" before white space or its end; a raw file is also
  *   cut at a blank line, around a table row ("|") and a heading line ("#"), and before a list item, a sentence wrapped over
  *   lines kept one. A sentence's line is the source line of its first shown character (B3).
- * - FOLD: NFKC, format characters (Unicode Cf: the zero-width characters, the soft hyphen, the word joiner, the byte-order mark)
- *   dropped, lower case, and the characters * ` ~ and \ dropped (in a raw file, the inline markup), so ser<U+200B>ved, **served**
- *   and `gp` read as written words. WORDS: a NAME sits between non-alphanumeric boundaries, so an underscore separates it
+ * - FOLD: NFKC; format characters (Unicode Cf: the zero-width characters, the soft hyphen, the word joiner, the byte-order
+ *   mark, the bidirectional controls) and every other default-ignorable code point (Default_Ignorable_Code_Point: the combining
+ *   grapheme joiner, the variation selectors, the Mongolian free variation selectors, and the Hangul fillers, which some fonts
+ *   draw as a blank - an over-read, never an escape) dropped (B5 formats and ignorables); lower case; and the characters * ` ~ and
+ *   \ dropped (in a raw file, the inline markup), so ser<U+200B>ved, ser<U+034F>ved, **served** and `gp` read as written words. WORDS: a NAME sits between non-alphanumeric boundaries, so an underscore separates it
  *   (GP_CLI_, graph_policy); a SEAM or SERVED word sits between boundaries that also count the underscore as a letter, so an
  *   identifier is one word (beads_calls is not calls); a MARKER sits between boundaries that count the underscore and the
  *   hyphen as letters, so landed-gated, not-started and not_found carry no marker.
@@ -81,15 +106,19 @@
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label; each pin's witness is held to the roster):
  *  A "until the artifact exists, a docs census asserts": A1 the gate (producer facts, near misses, the Pi-side docs/03
  *    reading); A2 the live guard - ONE pass over every listed file and in-memory positives must find exactly the positives,
- *    with coverage floors, and the same pass over a scratch git repository finds exactly its plants.
+ *    its coverage asserted literally, and the same pass over a scratch git repository finds exactly its plants (a br-split
+ *    sentence and its hard-break twin among them).
  *  B "no docs/workbench or feature-matrix sentence presents a GP seam as served": B1 the read set and a frozen pass over the
  *    immutable tree at frozenAt (32e0e2d, cut #1's base; exact counts, every quieted named sentence with its reason); B2 the
- *    status rows; B3 the raw and rendered cutters; B4 the names and seam subjects; B5 the served and Pi-side words, the
- *    rendered forms, the format characters, the hidden markers and the markers.
+ *    status rows; B3 the raw and rendered cutters, the markup forms and the class-level guard; B4 the names and seam subjects;
+ *    B5 the served and Pi-side words, the rendered forms, the format characters and default-ignorable code points, the hidden
+ *    markers and the markers.
  * LIVE GUARD (F1; literal from gateOf, never only the roster): A1's verdict with no finding is pass while the gate reads
  *   ABSENT; A2's pass finds nothing beyond its positives and its verdict is pass while ABSENT, and its replica finds every
- *   planted file and no twin; B1's frozen pass finds nothing. So a roster regenerated over a violating tree, or from a reader
- *   hollowed until a real sentence's marker no longer quiets it, cannot bless a finding.
+ *   planted file and no twin; B1's frozen pass finds nothing. A2's coverage reads {readAll: true, floorsMet: true}, and B1's
+ *   roots, walkAgreesWithGit, workbenchRead and workbenchFloorMet read true, literally, so a pass that read nothing, or less than
+ *   the roots, reds whatever the roster holds (refusal #2 F1: VR1, VR2). So a roster regenerated over a violating tree, or from
+ *   a reader hollowed until a real sentence's marker no longer quiets it, cannot bless a finding.
  * OUTSIDE ANCHORS (the judged-set case). Each anchored member is read from a text outside this file and the roster BY ITS
  *   POSITION in that text - outsideAnchors captures it from the words around it, never by its own spelling - and must read in
  *   its class (readsAs): a NAME is a name family; a SEAM word makes "The gp <w> is served." a finding; a SERVED word makes "The
@@ -129,7 +158,10 @@
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; rows, vocabulary, constants, the producer
  *   facts, the unclaimed clauses, the residuals and every pin's witness are held to the out-of-file roster
  *   (test/fixtures/gp-seam-served-roster.json); ANCHORS is held to the outside extraction and SELF_ANCHORED to the pinned lists;
- *   a last case reads that every pin ran to its witness.
+ *   a last case reads that every pin ran to its witness. The markup reader's element sets (BLOCK_TAGS, TABLE_TAGS, CELL_TAGS,
+ *   UNSHOWN_TAGS, CODE_TAGS, RAW_TAGS, VOID_TAGS) and its MARKUP forms are held to the roster (B3 markup) and through what they
+ *   do (B3 blockForms and the pinned forms); no outside text spells them, so a coordinated hollow of one member - its set and
+ *   the roster together - stays green: self-anchored and named, never claimed as anchored.
  * RESIDUALS (named; each has a pinned quiet row): R-OUTSIDE-ROOTS (B1) a claim in src/, test/, qa/, examples/, the dot
  *   directories, vendor/ or another tracked directory outside docs/, or in a root file that is not a .md page, is not read;
  *   R-STATUS-OTHER-CELL (B2) a GP name only in a feature-matrix Evidence or Caveats cell, or in a status-ledger cell other
@@ -138,19 +170,35 @@
  *   (B4) a GP name beside a served word with no seam word and no Pi is the producer's own statement (GraphPolicyCLI ships
  *   the npm package graph-policy-cli, the landed wb-1xvp.3 receipt's line 13), never read as a seam claim - and so is a
  *   claim whose seam is named by a word outside the SEAM words (the gp bridge, plugin or connector); R-SPLIT (B4) a claim
- *   and its seam in different sentences; R-LOOKALIKE (B4) a look-alike letter or punctuation inside a name (a Cyrillic er
- *   for p, the Unicode hyphen U+2010 between graph and policy), or a name run into a longer word (GPCLI, GraphPolicyCLIs),
- *   leaves it unread, while NFKC folds the fullwidth forms and the fold drops format characters, so those are read (B4
- *   spellings); R-MARKER-ANYWHERE (B5) a marker anywhere in a sentence quiets it, whatever it qualifies; R-PARAPHRASE (B5)
+ *   and its seam in different sentences, and a claim a block-level tag cuts into two units (The gp seam is<p>served.</p> reads
+ *   as the paragraph break does, The gp seam is, then served.: BREAK_GROUPS); R-LOOKALIKE (B4) a look-alike letter or
+ *   punctuation inside a name (a Cyrillic er for p, the Unicode hyphen U+2010 between graph and policy), a name run into a
+ *   longer word (GPCLI, GraphPolicyCLIs), a look-alike letter inside a SERVED or SEAM word (a Cyrillic ie in served or seam, a
+ *   Cyrillic a in adapter), a combining mark on one of its letters (serv, U+0301, ed) and a word a right-to-left override shows
+ *   reversed (devres between U+202E and U+202C, read as written) leave it unread, while NFKC folds the fullwidth forms and the
+ *   fold drops format characters and default-ignorable code points, so those are read (B4 spellings, B5 formats and
+ *   ignorables); each member has a live twin, the same sentence in plain letters, which is a finding (B4 twins), and a
+ *   look-alike letter inside a MARKER leaves the marker unread, so its claim reads unquieted (an over-read); R-MARKER-ANYWHERE
+ *   (B5) a marker anywhere in a sentence quiets it, whatever it qualifies - the sentence as the census cuts it, so a marker after
+ *   a hard break or a br in the same sentence counts, and so does a marker that styling hides (a style attribute or a class:
+ *   styling is not read); each member has a live twin, the claim alone, which is a finding (B5 twins); R-PARAPHRASE (B5)
  *   a served claim outside the served words (up, ready, in place, working, running; the -ing forms other than serving and
  *   shipping, and the inflections the served words leave out, such as invoked, deploys, implements and releases; the verbs
  *   calls, runs and uses, which docs spell as nouns too: bd calls; and the base verbs wire and host, which these docs spell
  *   as nouns: gp's wire vocabulary, this host); R-RENDERED-TEXT (B5) text the rendered view does not show as a sentence is
- *   not read, whatever it says: an HTML comment (a block or inline; an unclosed one opening an HTML block hides the rest of
- *   the page), a code block (fenced or indented), a link destination, title or reference label and a link reference
- *   definition, an HTML tag's attributes (inline or in an HTML block), an image's alt text and title, and a word broken by
- *   a named character reference outside NAMED_REFERENCES; each quiet row has a live twin, the same claim shown, which is a
- *   finding (B5 twins).
+ *   not read, whatever it says: an HTML comment or a bogus comment (a block or inline; an unclosed comment opening an HTML block
+ *   hides the rest of the page), a code block (fenced or indented) and what a pre, listing or xmp element holds, a link
+ *   destination, title or reference label and a link reference definition, an HTML tag's attributes (inline or in an HTML
+ *   block), an image's alt text and title, what an element a reader never sees holds (script, style, template, title,
+ *   noscript, a closed dialog, an element carrying the hidden attribute: MARKUP), and a word broken by a named character
+ *   reference outside NAMED_REFERENCES; each quiet row has a live twin, the same claim shown, which is a finding (B5 twins).
+ * NOT CLAIMED (the rendered view, beyond MARKUP's readings): styling - a style attribute, a class or a stylesheet can hide or
+ *   show any text, and the census reads markup unstyled (R-MARKER-ANYWHERE pins the marker side); the HTML standard's tree
+ *   construction beyond MARKUP (implied end tags of phrasing elements, foster parenting, misnested formatting, a select's
+ *   options, the head and frameset elements); RCDATA, where a textarea shows the tags it holds as text and the census reads them
+ *   as markup; a script element's escape states; markup state carried from one block, list item or table cell into the next,
+ *   each read on its own; a reader without scripting, who sees what a noscript element holds; a collapsed details element, whose
+ *   content the census reads and a reader opens to see; and a renderer other than marked 18.0.11.
  *
  * Display paths added: none. Test-only: the replica trees are scratch git repositories under makeScratch; docs, the bead
  * export, docs/03, the status-ledger module and the frozen tree are only read; nothing is spawned but git.
@@ -408,9 +456,10 @@ const SEAM = compile(VOCABULARY.seam);
 const SERVED = compile(VOCABULARY.served);
 const MARKER = compile(VOCABULARY.marker);
 const DESIGN = compile(CONSTANTS.designStatus, "i");
-/** Format characters (Cf): the zero-width characters, the soft hyphen, the word joiner, the byte-order mark. */
-const FORMAT = /\p{Cf}/gu;
-/** NFKC, format characters dropped, lower case, and the characters * ` ~ and \ dropped. */
+/** Format characters (Cf: the zero-width characters, the soft hyphen, the word joiner, the byte-order mark) and the other default-ignorable
+ * code points (the combining grapheme joiner, the variation selectors, the Hangul fillers, the Mongolian free variation selectors). */
+const FORMAT = /[\p{Cf}\p{Default_Ignorable_Code_Point}]/gu;
+/** NFKC, format characters and default-ignorable code points dropped, lower case, and the characters * ` ~ and \ dropped. */
 const fold = (text: string): string => text.normalize("NFKC").replace(FORMAT, "").toLowerCase().replace(/[*`~\\]/g, "");
 const namesOf = (folded: string): string[] => NAMES.filter(family => family.rx.test(folded)).map(family => family.id);
 /** One sentence naming GP beside a SERVED word: a finding, quiet by a marker, or bare (no seam word and no Pi); else none. */
@@ -510,12 +559,11 @@ function decodeReferences(text: string): string {
     return NAMED_REFERENCES.get(name ?? "") ?? whole;
   });
 }
-const HTML_COMMENT = /<!--[\s\S]*?(?:-->|$)/g;
-const HTML_TAG = /<\/?[A-Za-z][A-Za-z0-9-]*(?:\s[^>]*)?\/?>/g;
-/** Rendered text with the source line it starts on. */
+/** Rendered text with the source line it starts on; a cut ends its unit (a block-level tag) and a cell opens a table cell. */
 interface Piece {
   readonly text: string;
   readonly line: number;
+  readonly mark?: "cut" | "cell";
 }
 const newlines = (text: string): number => text.split("\n").length - 1;
 const textOf = (token: Token): string => {
@@ -544,30 +592,203 @@ function placed(container: string, tokens: readonly Token[], line: number): { re
 }
 /** Plain text, one piece per source line, references decoded; a soft wrap reads as one space. */
 const textPieces = (text: string, line: number): Piece[] => text.split("\n").map((part, index) => ({ text: `${index === 0 ? "" : " "}${decodeReferences(part)}`, line: line + index }));
-/** What a reader sees of inline tokens (see RENDERED VIEW). */
-function inlinePieces(container: string, tokens: readonly Token[], line: number): Piece[] {
+/** The HTML standard's markup forms, as its tokenizer reads them (see RENDERED VIEW, MARKUP): a comment, which "<!-->" and "<!--->"
+ * close at once and any other at its first "-->" or "--!>" (an unclosed one runs to the end); a bogus comment to its first ">" or the
+ * end ("<?", "<!" that opens no comment - a declaration or a CDATA section - and "</" before anything but a letter; "</>" alone drops);
+ * and the opening of a start or end tag with its name, whose end readTag reads. */
+const MARKUP = /<!--(?:-?>|[\s\S]*?(?:--!?>|$))|<[!?][^>]*(?:>|$)|<\/(?:>|[^A-Za-z>][^>]*(?:>|$))|<(\/?)([A-Za-z][^\t\n\f\r />]*)/g;
+type TagState = "attributes" | "name" | "afterName" | "beforeValue" | "double" | "single" | "unquoted" | "afterQuoted" | "selfClosing";
+/** The tag state white space leaves each tag state in (an attribute name or an unquoted value ends; inside a quoted value nothing changes). */
+const AFTER_SPACE: Readonly<Record<TagState, TagState>> = {
+  attributes: "attributes",
+  name: "afterName",
+  afterName: "afterName",
+  beforeValue: "beforeValue",
+  double: "double",
+  single: "single",
+  unquoted: "attributes",
+  afterQuoted: "attributes",
+  selfClosing: "attributes",
+};
+/** A tag whose name ends at `from`, read as the standard's tokenizer reads its attributes: where it ends (the index after its ">", which a
+ * quoted value does not end; -1 when the input ends first, so the tag drops) and its attribute names in lower case. */
+function readTag(raw: string, from: number): { readonly end: number; readonly attributes: readonly string[] } {
+  const attributes: string[] = [];
+  let state: TagState = "attributes";
+  let name = "";
+  const take = (): void => {
+    if (name !== "") attributes.push(name.toLowerCase());
+    name = "";
+  };
+  for (let at = from; at < raw.length; at++) {
+    const char = raw[at] ?? "";
+    const space = char === " " || char === "\t" || char === "\n" || char === "\f" || char === "\r";
+    if (char === ">" && state !== "double" && state !== "single") {
+      take();
+      return { end: at + 1, attributes };
+    }
+    if (state === "double" || state === "single") {
+      if (char === (state === "double" ? '"' : "'")) state = "afterQuoted";
+    } else if (state === "unquoted") {
+      if (space) state = "attributes";
+    } else if (state === "beforeValue") {
+      if (char === '"') state = "double";
+      else if (char === "'") state = "single";
+      else if (!space) state = "unquoted";
+    } else if (char === "/") {
+      take();
+      state = "selfClosing";
+    } else if (space) {
+      if (state === "name") take();
+      state = AFTER_SPACE[state];
+    } else if (char === "=" && (state === "name" || state === "afterName")) {
+      take();
+      state = "beforeValue";
+    } else {
+      if (state !== "name") take();
+      name += char;
+      state = "name";
+    }
+  }
+  return { end: -1, attributes };
+}
+const tagSet = (names: string): ReadonlySet<string> => new Set(names.split(" "));
+/** The elements the HTML rendering lays out as blocks: a start tag, or an end tag whose element is open, ends the unit. */
+const BLOCK_TAGS = tagSet("address article aside blockquote center dd details dialog dir div dl dt fieldset figcaption figure footer form h1 h2 h3 h4 h5 h6 header hgroup hr legend li listing main menu nav ol optgroup option p plaintext pre search section summary table ul xmp");
+/** Inside a table (a markdown table's cell, or an open table element) a row or a row group ends the unit and a cell opens; outside one
+ * the standard drops these tags. */
+const TABLE_TAGS = tagSet("caption colgroup tbody tfoot thead tr");
+const CELL_TAGS = tagSet("td th");
+/** Elements whose content a reader never sees, each to its end tag: the rendering's display: none ones and the inert template, and the
+ * code elements, whose content is no unit, as a code block is none. */
+const UNSHOWN_TAGS = tagSet("datalist iframe noembed noframes noscript rp script style template title");
+const CODE_TAGS = tagSet("listing pre xmp");
+/** The raw-text and RCDATA elements among them: no markup inside one counts, and the first end tag of its name ends it. */
+const RAW_TAGS = tagSet("iframe noembed noframes noscript script style title xmp");
+const VOID_TAGS = tagSet("area base basefont bgsound br col embed frame hr img input keygen link meta param source track wbr");
+/** What one run of markup carries from tag to tag: the element whose content is unshown (to its end tag, and how deep in it), the
+ * block and table elements open in the run, and whether the run is a markdown table's cell. */
+interface MarkupState {
+  unshown: { readonly name: string; depth: number } | null;
+  readonly open: string[];
+  readonly cell: boolean;
+}
+const runState = (cell = false): MarkupState => ({ unshown: null, open: [], cell });
+/** A block's end tag: it ends the unit when its element is open (closing what it holds); a stray </p> opens an empty paragraph, and
+ * any other stray end tag is dropped, as the standard drops it. */
+function closedBlock(name: string, line: number, state: MarkupState): Piece[] {
+  const at = state.open.lastIndexOf(name);
+  if (at >= 0) state.open.splice(at);
+  return at >= 0 || name === "p" ? [{ text: "", line, mark: "cut" }] : [];
+}
+/** What one tag renders (see RENDERED VIEW): a br is one space, a block-level tag a cut, a table cell " | " after shown text, any other
+ * tag nothing; an element carrying the hidden attribute, an UNSHOWN_TAGS element and a CODE_TAGS element hide their content. */
+function tagPieces(name: string, end: boolean, attributes: readonly string[], line: number, state: MarkupState): Piece[] {
+  const unshown = state.unshown;
+  if (unshown !== null) {
+    if (name !== unshown.name) return [];
+    if (!end) {
+      if (!RAW_TAGS.has(name)) unshown.depth += 1;
+      return [];
+    }
+    unshown.depth -= 1;
+    if (unshown.depth > 0) return [];
+    state.unshown = null;
+    return closedBlock(name, line, state);
+  }
+  const hidden = attributes.includes("hidden") || (name === "dialog" && !attributes.includes("open"));
+  if (name === "br") return hidden ? [] : [{ text: " ", line }];
+  const table = state.cell || state.open.includes("table");
+  const block = BLOCK_TAGS.has(name) || (table && TABLE_TAGS.has(name));
+  if (end) return block ? closedBlock(name, line, state) : [];
+  const out: Piece[] = [];
+  if (block) {
+    out.push({ text: "", line, mark: "cut" });
+    if (!VOID_TAGS.has(name)) state.open.push(name);
+  } else if (table && CELL_TAGS.has(name) && !hidden) out.push({ text: "", line, mark: "cell" });
+  if (!VOID_TAGS.has(name) && (hidden || UNSHOWN_TAGS.has(name) || CODE_TAGS.has(name))) state.unshown = { name, depth: 1 };
+  return out;
+}
+/** Where a raw-text element's content ends: at its end tag ("</" and its name in any case, then white space, "/" or ">"), or the end. */
+function closingTag(raw: string, from: number, name: string): number {
+  const close = new RegExp(`</${name}(?=[\\t\\n\\f\\r />])`, "gi");
+  close.lastIndex = from;
+  return close.exec(raw)?.index ?? raw.length;
+}
+/** Markup as a reader sees it (an HTML block's source, or one inline html token): text references decoded, a comment or bogus comment
+ * nothing, each tag as tagPieces reads it, an unshown element's content nothing, and a tag the input ends inside dropped with the rest. */
+function markupPieces(raw: string, line: number, state: MarkupState): Piece[] {
+  const out: Piece[] = [];
+  let at = line;
+  let from = 0;
+  const shown = (chunk: string): void => {
+    if (chunk !== "" && state.unshown === null) out.push(...textPieces(chunk, at));
+    at += newlines(chunk);
+  };
+  while (from < raw.length) {
+    const unshown = state.unshown;
+    if (unshown !== null && RAW_TAGS.has(unshown.name)) {
+      const close = closingTag(raw, from, unshown.name);
+      at += newlines(raw.slice(from, close));
+      from = close;
+      if (from >= raw.length) break;
+    }
+    MARKUP.lastIndex = from;
+    const match = MARKUP.exec(raw);
+    if (match === null) {
+      shown(raw.slice(from));
+      break;
+    }
+    shown(raw.slice(from, match.index));
+    const [whole, slash, name] = match;
+    if (name === undefined) {
+      at += newlines(whole);
+      from = match.index + whole.length;
+      continue;
+    }
+    const tag = readTag(raw, match.index + whole.length);
+    if (tag.end < 0) break;
+    out.push(...tagPieces(name.toLowerCase(), slash === "/", tag.attributes, at, state));
+    at += newlines(raw.slice(match.index, tag.end));
+    from = tag.end;
+  }
+  return out;
+}
+/** What a reader sees of inline tokens (see RENDERED VIEW); one run's markup state carries from token to token. */
+function inlinePieces(container: string, tokens: readonly Token[], line: number, state: MarkupState): Piece[] {
   return placed(container, tokens, line).flatMap(({ token, line: at }) => {
-    if (token.type === "html" || token.type === "image" || token.type === "checkbox") return [];
+    if (token.type === "html") return markupPieces(token.raw, at, state);
+    const children = childrenOf(token);
+    if (state.unshown !== null) return children.length > 0 ? inlinePieces(textOf(token), children, at, state) : [];
+    if (token.type === "image" || token.type === "checkbox") return [];
     if (token.type === "br") return [{ text: " ", line: at }];
     if (token.type === "codespan" || token.type === "escape") return [{ text: textOf(token), line: at }];
-    const children = childrenOf(token);
-    return children.length > 0 ? inlinePieces(textOf(token), children, at) : textPieces(textOf(token), at);
+    return children.length > 0 ? inlinePieces(textOf(token), children, at, state) : textPieces(textOf(token), at);
   });
 }
-/** An HTML block's visible text: its source with comments (an unclosed one to its end) and tags removed, lines kept. */
-const htmlPieces = (raw: string, line: number): Piece[] => textPieces(raw.replace(HTML_COMMENT, hidden => "\n".repeat(newlines(hidden))).replace(HTML_TAG, hidden => "\n".repeat(newlines(hidden))), line);
+/** A run of pieces cut into units at each cut; a cell reads " | " after text shown in its unit, else nothing. */
+function splitUnits(pieces: readonly Piece[]): Piece[][] {
+  const units: Piece[][] = [[]];
+  for (const piece of pieces) {
+    const unit = units[units.length - 1] ?? [];
+    if (piece.mark === "cut") units.push([]);
+    else if (piece.mark !== "cell") unit.push(piece);
+    else if (unit.some(shown => /\S/.test(shown.text))) unit.push({ text: " | ", line: piece.line });
+  }
+  return units;
+}
 /** The units one block token renders (see RENDERED VIEW), each a run of pieces. */
 function unitsOf(token: Token, line: number): Piece[][] {
   if (token.type === "space" || token.type === "hr" || token.type === "def" || token.type === "code" || token.type === "checkbox") return [];
-  if (token.type === "html") return [htmlPieces(token.raw, line)];
+  if (token.type === "html") return splitUnits(markupPieces(token.raw, line, runState()));
   if (isTable(token)) {
-    const row = (cells: readonly Tokens.TableCell[], at: number): Piece[] => cells.flatMap((cell, index) => [...(index === 0 ? [] : [{ text: " | ", line: at }]), ...inlinePieces(cell.text, cell.tokens, at)]);
-    return [row(token.header, line), ...token.rows.map((cells, index) => row(cells, line + 2 + index))];
+    const row = (cells: readonly Tokens.TableCell[], at: number): Piece[] => cells.flatMap((cell, index) => [...(index === 0 ? [] : [{ text: " | ", line: at }]), ...inlinePieces(cell.text, cell.tokens, at, runState(true))]);
+    return [row(token.header, line), ...token.rows.map((cells, index) => row(cells, line + 2 + index))].flatMap(splitUnits);
   }
   if (isList(token)) return placed(token.raw, token.items, line).flatMap(({ token: item, line: at }) => blockUnits(textOf(item), childrenOf(item), at));
   if (token.type === "blockquote") return blockUnits(textOf(token), childrenOf(token), line);
   const children = childrenOf(token);
-  return [children.length > 0 ? inlinePieces(textOf(token), children, line) : textPieces(textOf(token), line)];
+  return splitUnits(children.length > 0 ? inlinePieces(textOf(token), children, line, runState()) : textPieces(textOf(token), line));
 }
 function blockUnits(container: string, tokens: readonly Token[], line: number): Piece[][] {
   return placed(container, tokens, line).flatMap(({ token, line: at }) => unitsOf(token, at));
@@ -1036,6 +1257,211 @@ function ledgerPage(rows: readonly (readonly [string, string, string?])[]): stri
     "",
   ].join("\n");
 }
+/** B3's rendered forms: units, soft wraps joined, terminators, the source line of each sentence, and each markup form as tagPieces and
+ * markupPieces read it (a br, a block-level tag met inline, a stray end tag, table tags in and out of a table, a pre element, a quoted
+ * ">" in an attribute, a CDATA section). */
+const RENDERED_FORMS: readonly string[] = [
+  "Intro line. The Pi gp seam is served; no other row changed.",
+  "The Pi gp seam\nis served.",
+  "The Pi gp seam  \nis served.",
+  "| Feature | Status |\n| --- | --- |\n| gp seam | served |\n| x | y |",
+  "The gp seam\n- is served",
+  "The gp seam\n\nis served.",
+  "# The gp seam\nis served.",
+  "The gp seam is served!Next line",
+  "Version 0.1.0 of the gp seam is served.",
+  "The gp seam is served?\r\nYes.",
+  "The gp seam is served. \nNext.",
+  "> The gp seam\n> is served.",
+  "> The gp seam\n>\n> is served.",
+  "- The gp seam\n  is served.\n- Next item.",
+  "<div>\nThe gp seam\nis served.\n</div>",
+  "```\nThe gp seam is served.\n```\n\nAfter the fence.",
+  "Before.\n\n    The gp seam is served.\n\nAfter the indent.",
+  "The gp seam is served <!-- not\nhere -->.\nNext.",
+  "The [gp seam](x.md) is *served*.",
+  "The gp seam is<br>served.",
+  "The gp seam is served.<br>No rollback is planned.",
+  "<div>The gp seam is<br>served.</div>",
+  "| a | b |\n| --- | --- |\n| gp seam | is<br>served |",
+  "The gp seam is<p>served.</p>",
+  "The gp seam is<div>served.</div>",
+  "The gp seam is<li>served.",
+  "The gp seam is<hr>served.",
+  "The gp seam is<h2>served.</h2>",
+  "The gp seam is </div>served.",
+  "The gp seam is</p>served.",
+  "The gp seam is <tr>served.",
+  "<table><tr><td>gp seam</td><td>served</td></tr></table>",
+  "| gp seam | is<td>served |\n| --- | --- |",
+  '<div>\nThe gp seam is <span\ntitle="a>b">served</span>.\n</div>',
+  "Status.<pre>The gp seam is served.</pre>",
+  "<div>\nThe gp seam is served <![CDATA[ x > y ]]>.\n</div>",
+  "Status <script><script></script> shown.",
+  "<div>\nStatus <!-- x --!> shown.\n</div>",
+  "<div>\nStatus <!--> shown.\n</div>",
+  '<div>\nStatus shown. <span title="x\n',
+  "Status <span hidden>hidden</span> shown.",
+];
+/** B3's judged pages: the cutters through the whole judgment (path, text). */
+const JUDGED_PAGES: readonly (readonly [string, string])[] = [
+  ["docs/x.md", "Intro line.\n\nThe Pi gp seam is served; no other row changed."],
+  ["docs/x.md", "The Pi gp seam\nis served."],
+  ["docs/x.md", "| Feature | Status |\n| --- | --- |\n| gp seam | served |\n| gp seam | not served |"],
+  ["docs/x.md", "The gp seam\n- is served"],
+  ["docs/x.md", "The gp seam\n\nis served."],
+  ["docs/x.md", "# The gp seam\nis served."],
+  ["docs/x.txt", "The Pi gp seam\nis served."],
+  ["docs/x.txt", "The gp seam is served <!-- not -->."],
+  ["docs/x.md", "- The Pi gp seam\n  is served."],
+  ["docs/x.md", "Line one.\n\n> The Pi gp seam\n> is served."],
+];
+/** The hard-break groups (CLASS-LEVEL GUARD): each group's pages render to the same marked HTML, or to the same element (br, br/, br />,
+ * </br> and BR are one br; an HTML block's soft wrap and a br are one space), and every page of a group reads as its first. */
+const BREAK_GROUPS: readonly (readonly string[])[] = [
+  [
+    "The gp seam is\\\nserved.",
+    "The gp seam is  \nserved.",
+    "The gp seam is<br>served.",
+    "The gp seam is<br/>served.",
+    "The gp seam is<br />served.",
+    "The gp seam is</br>served.",
+    "The gp seam is<BR>served.",
+    '<p>The gp seam is<br class="x">served.</p>',
+  ],
+  ["The gp\\\nseam is served.", "The gp<br>seam is served."],
+  ["The gp seam is served.\\\nNo rollback is planned.", "The gp seam is served.<br>No rollback is planned."],
+  ["The gp seam is served\\\nno rollback is planned.", "The gp seam is served<br>no rollback is planned."],
+  ["<div>The gp seam is\nserved.</div>", "<div>The gp seam is<br>served.</div>", "<div>The gp seam is<br/>served.</div>"],
+  ["| a | b |\n| --- | --- |\n| gp seam | is served |", "| a | b |\n| --- | --- |\n| gp seam | is<br>served |"],
+  ["The gp seam is\n\nserved.", "The gp seam is<p>served.</p>", "<p>The gp seam is<p>served.</p></p>", "The gp seam is<div>served.</div>"],
+];
+/** B5's rendered forms: a served word read through the rendered view of a docs page - inline markup, references, link text and a br
+ * beside it render as words (a wbr inside a word is no break). */
+const SHOWN_FORMS: readonly string[] = [
+  "The gp seam is **served**.",
+  "The gp seam is `served`.",
+  "The gp seam is ser**ved**.",
+  "The gp seam is SERVED.",
+  "The gp seam is \u201cserved\u201d.",
+  "The gp seam is _served_.",
+  "The gp seam is __served__.",
+  "The gp seam is ~~served~~.",
+  "The gp seam is ser<b>ved</b>.",
+  "The gp seam is serv&#101;d.",
+  "The gp seam is serv&#x65;d.",
+  "The gp seam is ser&shy;ved.",
+  "The gp seam is [served](x.md).",
+  "The gp seam is<br>served.",
+  "The gp seam is ser<wbr>ved.",
+  "The gp seam is served.<br>No rollback is planned.",
+  "<div>The gp seam is<br>served.</div>",
+  "| a | b |\n| --- | --- |\n| gp seam | is<br>served |",
+  "The gp seam is ser<br hidden>ved.",
+];
+/** B5's code span: it shows a character reference as written, so the word it would spell is not read. */
+const AS_WRITTEN = "The gp seam is `serv&#101;d`.";
+/** B5's hidden markers: a marker a reader does not see - in a comment or bogus comment, a link destination, title or label, a tag
+ * attribute (a quoted ">" inside one included), alt text, or an element a reader never sees - never quiets a shown claim. */
+const HIDDEN_MARKERS: readonly string[] = [
+  "The gp seam is served <!-- not -->.",
+  "The gp seam is [served](not.md).",
+  'The gp seam is [served](x.md "not").',
+  "The gp seam is served [here][not].\n\n[not]: x.md",
+  'The gp seam is <span title="not">served</span>.',
+  "The gp seam is served ![not](x.png).",
+  "The gp seam is served<span hidden> not</span>.",
+  "The gp seam is served<script>not</script>.",
+  "The gp seam is served<style>not</style>.",
+  "The gp seam is served<template>not</template>.",
+  "The gp seam is served<title>not</title>.",
+  "The gp seam is served<noscript>not</noscript>.",
+  "The gp seam is served<rp> not</rp>.",
+  "The gp seam is served<datalist>not</datalist>.",
+  "The gp seam is served<iframe>not</iframe>.",
+  "The gp seam is served<noembed>not</noembed>.",
+  "The gp seam is served<noframes>not</noframes>.",
+  "The gp seam is served <![CDATA[ not ]]>.",
+  "<div>\nThe gp seam is served <span hidden>not</span>.\n</div>",
+  "<div>\nThe gp seam is served <!-- not --!>.\n</div>",
+  "<div>\nThe gp seam is served <?not>.\n</div>",
+  '<div>\nThe gp seam is <span title="not>no">served</span>.\n</div>',
+];
+/** R-RENDERED-TEXT (B5): each text the rendered view does not show as a sentence, beside its live twin, the same claim shown. */
+const UNRENDERED: readonly (readonly [string, string])[] = [
+  ["<!-- The gp seam is served. -->", "The gp seam is served."],
+  ["<!-- an unclosed comment\nThe gp seam is served.\n\nNext paragraph.", "The gp seam is served."],
+  ["Status: <!-- the gp seam is served -->ok.", "Status: the gp seam is served."],
+  ["```\nThe gp seam is served.\n```", "The gp seam is served."],
+  ["    The gp seam is served.", "The gp seam is served."],
+  ["See [the page](the-gp-seam-is-served.md).", "See [the gp seam is served](x.md)."],
+  ['See [the page](x.md "The gp seam is served").', "See [the gp seam is served](x.md)."],
+  ["See [the page][the gp seam is served].\n\n[the gp seam is served]: x.md", "See [the gp seam is served][1].\n\n[1]: x.md"],
+  ['See [the page][1].\n\n[1]: x.md "The gp seam is served"', "The gp seam is served."],
+  ['<span title="The gp seam is served.">Status</span>', "<span>The gp seam is served.</span>"],
+  ['<div title="The gp seam is served.">\nStatus\n</div>', "<div>\nThe gp seam is served.\n</div>"],
+  ["![The gp seam is served](x.png)", "The gp seam is served."],
+  ['![x](x.png "The gp seam is served")', "The gp seam is served."],
+  ["The gp seam is ser&foo;ved.", "The gp seam is ser&shy;ved."],
+  ["<pre>\nThe gp seam is served.\n</pre>", "<div>\nThe gp seam is served.\n</div>"],
+  ["Status.<pre>The gp seam is served.</pre>", "Status. <span>The gp seam is served.</span>"],
+  ["<script>The gp seam is served.</script>", "<span>The gp seam is served.</span>"],
+  ["<style>The gp seam is served.</style>", "<span>The gp seam is served.</span>"],
+  ["<template>The gp seam is served.</template>", "<span>The gp seam is served.</span>"],
+  ["<title>The gp seam is served.</title>", "<span>The gp seam is served.</span>"],
+  ["<noscript>The gp seam is served.</noscript>", "<span>The gp seam is served.</span>"],
+  ["<span hidden>The gp seam is served.</span>", "<span>The gp seam is served.</span>"],
+  ["<div hidden>\nThe gp seam is served.\n</div>", "<div>\nThe gp seam is served.\n</div>"],
+  ["<dialog>The gp seam is served.</dialog>", "<dialog open>The gp seam is served.</dialog>"],
+  ["Status <?php The gp seam is served. ?> ok.", "Status <span>The gp seam is served.</span> ok."],
+];
+/** R-MARKER-ANYWHERE (B5): a marker anywhere in a sentence as the census cuts it quiets it, beside its live twin, the claim alone. */
+const MARKED_ANYWHERE: readonly (readonly [string, string])[] = [
+  ["The gp seam is served and no rollback is planned.", "The gp seam is served."],
+  ["The gp seam is served<br>no rollback is planned.", "The gp seam is served."],
+  ["The gp seam is served\\\nno rollback is planned.", "The gp seam is served."],
+  ['The gp seam is served<span style="display:none"> not</span>.', "The gp seam is served."],
+  ['The gp seam is served<span class="visually-hidden"> not</span>.', "The gp seam is served."],
+];
+/** R-LOOKALIKE (B4): each member beside its live twin, the same sentence in plain letters. */
+const LOOKALIKES: readonly (readonly [string, string])[] = [
+  [`The g${codePoint(0x0440)} seam is served.`, "The gp seam is served."],
+  [`The Graph${codePoint(0x2010)}Policy seam is served.`, "The Graph-Policy seam is served."],
+  ["The GPCLI seam is served.", "The GP CLI seam is served."],
+  ["The GraphPolicyCLIs seam is served.", "The GraphPolicyCLI seam is served."],
+  [`The gp seam is s${codePoint(0x0435)}rved.`, "The gp seam is served."],
+  [`The gp s${codePoint(0x0435)}am is served.`, "The gp seam is served."],
+  [`The gp ad${codePoint(0x0430)}pter is served.`, "The gp adapter is served."],
+  [`The gp seam is serv${codePoint(0x0301)}ed.`, "The gp seam is served."],
+  [`The gp seam is ${codePoint(0x202e)}devres${codePoint(0x202c)}.`, "The gp seam is served."],
+];
+/** B5's default-ignorable code points beyond Cf, each inside a served word and a seam word (FOLD drops them; the Hangul fillers some fonts
+ * draw as a blank, an over-read). */
+const IGNORABLES: readonly number[] = [0x034f, 0x115f, 0x1160, 0x17b4, 0x180b, 0x180e, 0x3164, 0xfe00, 0xfe0f, 0xffa0, 0xe0041, 0xe0100];
+/** A page beside its own HTML page: marked's output for it, which marked renders unchanged, so the two have identical marked HTML; the
+ * CLASS-LEVEL GUARD holds that they read the same - the same sentences and the same findings. */
+function twinOfPage(page: string): { readonly identical: boolean; readonly same: boolean } {
+  const html = marked.parse(`${page}\n`, { async: false });
+  const shown = (text: string): string[] => renderedSentences(text).map(sentence => sentence.text);
+  const verdicts = (text: string): string[] => judgeText("docs/x.md", text).map(finding => finding.slice(finding.indexOf(" ") + 1));
+  return {
+    identical: marked.parse(html, { async: false }) === html,
+    same: JSON.stringify(shown(`${page}\n`)) === JSON.stringify(shown(html)) && JSON.stringify(verdicts(`${page}\n`)) === JSON.stringify(verdicts(html)),
+  };
+}
+/** Every pinned rendered form of B3, B4 and B5 that is a docs page (the CLASS-LEVEL GUARD's set). */
+const PINNED_PAGES: readonly string[] = [
+  ...RENDERED_FORMS,
+  ...JUDGED_PAGES.filter(([path]) => MARKDOWN_PAGE.test(path)).map(([, text]) => text),
+  ...BREAK_GROUPS.flat(),
+  ...SHOWN_FORMS,
+  AS_WRITTEN,
+  ...HIDDEN_MARKERS,
+  ...UNRENDERED.flat(),
+  ...MARKED_ANYWHERE.flat(),
+  "We added a gp seam. It is served.",
+  "Status: served. Subject: the gp seam.",
+];
 const REACHED = new Set<string>();
 const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   A1: async () => {
@@ -1067,8 +1493,9 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
   },
   A2: async () => {
     const gate = gateOf(ROSTER.producer);
-    // ONE pass over every listed file and the in-memory positives: it must find exactly what the positives find alone, so a
-    // pass that read nothing reds, and it must find nothing else.
+    // ONE pass over every listed file and the in-memory positives: it must find exactly the real tree's findings, then what the
+    // positives find alone, so nothing else reaches the pass. A pass that read nothing satisfies that equality too ([] then the
+    // positives); the coverage literal below is what reds it (F1).
     const listed = gitList(REPO);
     const positives: readonly (readonly [string, string])[] = [
       ["docs/workbench/zz-plant.md", `${PLANT}\n`],
@@ -1085,12 +1512,16 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     // positives and the verdict is pass, so a roster regenerated over a violating tree or a hollowed reader cannot bless it.
     expect({ verdict: guard(gate, outside), findings: outside }).toEqual(gate === "ABSENT" ? { verdict: "pass", findings: [] } : { verdict: "stand-down", findings: outside });
     const coverage = { readAll: JSON.stringify(real.read) === JSON.stringify(listed) && real.unreadable.length === 0, floorsMet: floorsMetBy(real.read, real) };
-    // The same guard over a scratch git repository: plants (a sentence, a feature-matrix row, a status-ledger row) and their
-    // untied twins; through gitList and judgeFiles it must find the plants, and only them.
+    // LIVE GUARD coverage (F1; literal, never only the roster): the pass read every listed file, above every floor.
+    expect(coverage).toEqual({ readAll: true, floorsMet: true });
+    // The same guard over a scratch git repository: plants (a sentence, a br-split sentence and its hard-break twin, a feature-matrix
+    // row, a status-ledger row) and their untied twins; through gitList and judgeFiles it must find the plants, and only them.
     const plants: Record<string, string> = {
       "docs/workbench/plant.md": `${PLANT}\n`,
       "docs/workbench/receipts/wb-plant.md": "# wb-plant: a receipt\n\n- The GraphPolicyCLI client is live.\n",
       "README.md": "The gp adapter is available.\n",
+      "docs/workbench/br-plant.md": "The Pi gp<br>seam is served.\n",
+      "docs/workbench/hard-break-plant.md": "The Pi gp\\\nseam is served.\n",
     };
     const files: Record<string, string> = { [CONSTANTS.matrix]: matrixPage([["GraphPolicyCLI decision seam", "landed-gated"]]), [CONSTANTS.ledger]: ledgerPage([["GraphPolicyCLI decision seam", "live-sdk"]]) };
     for (const [path, text] of Object.entries(plants)) {
@@ -1117,6 +1548,12 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const trackedTop = trackedTopDirectories(REPO);
     const unnamedTop = trackedTop.filter(name => !CONSTANTS.roots.includes(name) && !CONSTANTS.outside.includes(name));
     const workbenchTracked = execFileSync("git", ["ls-files", "-z", "--cached", "--", "docs/workbench"], { cwd: REPO, encoding: "utf8" }).split("\0").filter(path => path !== "");
+    const roots = CONSTANTS.roots.map(root => existsSync(join(REPO, root)));
+    const workbenchRead = workbenchTracked.every(path => listed.includes(path));
+    const workbenchFloorMet = workbenchTracked.length >= FLOORS.workbenchFiles;
+    // LIVE GUARD coverage (F1; literal, never only the roster): every root exists, the walk agrees with git, and docs/workbench is
+    // read whole, above its floor.
+    expect({ roots, walkAgreesWithGit, workbenchRead, workbenchFloorMet }).toEqual({ roots: CONSTANTS.roots.map(() => true), walkAgreesWithGit: true, workbenchRead: true, workbenchFloorMet: true });
     // The frozen pass: the immutable tree at frozenAt, read from git objects, judged in one pass - exact counts, no finding,
     // and every sentence that names GP beside a served or Pi-side word, with the reason it is quiet.
     const ancestor = spawnSync("git", ["merge-base", "--is-ancestor", CONSTANTS.frozenAt, "HEAD"], { cwd: REPO }).status === 0;
@@ -1151,12 +1588,12 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
     const replicaWalk = walkTree(replica);
     const outsideWhenRead = judgeFiles(replica, [...CONSTANTS.outside.map(directory => `${directory}/plant.md`), "PLANT.txt", "plant.json"]).findings.length;
     return {
-      roots: CONSTANTS.roots.map(root => existsSync(join(REPO, root))),
+      roots,
       walkAgreesWithGit,
       links: walked.links,
       unnamedTop,
-      workbenchRead: workbenchTracked.every(path => listed.includes(path)),
-      workbenchFloorMet: workbenchTracked.length >= FLOORS.workbenchFiles,
+      workbenchRead,
+      workbenchFloorMet,
       matrixAndLedgerListed: [CONSTANTS.matrix, CONSTANTS.ledger].map(path => listed.includes(path)),
       frozen: { revision: CONSTANTS.frozenAt, ancestor, files: frozen.read.length, sentences: frozen.sentences, named: frozen.named, findings: frozen.findings, quieted },
       outsideQuiet: judgeFiles(replica, replicaWalk.files).findings,
@@ -1210,41 +1647,21 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       sentences("Version 0.1.0 of the gp seam is served."),
       sentences("The gp seam is served?\r\nYes."),
     ].map(cut => cut.map(sentence => `${sentence.line}:${sentence.text}`));
-    // The rendered cutter (a Markdown page): units, soft wraps joined, terminators, and the source line of each sentence.
-    const rendered = [
-      "Intro line. The Pi gp seam is served; no other row changed.",
-      "The Pi gp seam\nis served.",
-      "The Pi gp seam  \nis served.",
-      "| Feature | Status |\n| --- | --- |\n| gp seam | served |\n| x | y |",
-      "The gp seam\n- is served",
-      "The gp seam\n\nis served.",
-      "# The gp seam\nis served.",
-      "The gp seam is served!Next line",
-      "Version 0.1.0 of the gp seam is served.",
-      "The gp seam is served?\r\nYes.",
-      "The gp seam is served. \nNext.",
-      "> The gp seam\n> is served.",
-      "> The gp seam\n>\n> is served.",
-      "- The gp seam\n  is served.\n- Next item.",
-      "<div>\nThe gp seam\nis served.\n</div>",
-      "```\nThe gp seam is served.\n```\n\nAfter the fence.",
-      "Before.\n\n    The gp seam is served.\n\nAfter the indent.",
-      "The gp seam is served <!-- not\nhere -->.\nNext.",
-      "The [gp seam](x.md) is *served*.",
-    ].map(text => renderedSentences(text).map(sentence => `${sentence.line}:${sentence.text}`));
-    const judged = [
-      judgeText("docs/x.md", "Intro line.\n\nThe Pi gp seam is served; no other row changed."),
-      judgeText("docs/x.md", "The Pi gp seam\nis served."),
-      judgeText("docs/x.md", "| Feature | Status |\n| --- | --- |\n| gp seam | served |\n| gp seam | not served |"),
-      judgeText("docs/x.md", "The gp seam\n- is served"),
-      judgeText("docs/x.md", "The gp seam\n\nis served."),
-      judgeText("docs/x.md", "# The gp seam\nis served."),
-      judgeText("docs/x.txt", "The Pi gp seam\nis served."),
-      judgeText("docs/x.txt", "The gp seam is served <!-- not -->."),
-      judgeText("docs/x.md", "- The Pi gp seam\n  is served."),
-      judgeText("docs/x.md", "Line one.\n\n> The Pi gp seam\n> is served."),
-    ];
-    return { raw, rendered, judged };
+    // The rendered cutter (a Markdown page): units, soft wraps joined, terminators, the source line of each sentence, the markup forms.
+    const rendered = RENDERED_FORMS.map(text => renderedSentences(text).map(sentence => `${sentence.line}:${sentence.text}`));
+    const judged = JUDGED_PAGES.map(([path, text]) => judgeText(path, text));
+    // CLASS-LEVEL GUARD (refusal #2, rule 19(d); literal, never only the roster): every page of a hard-break group reads as its first,
+    // and every pinned rendered form reads as its own HTML page, which has the same marked HTML.
+    const reading = (page: string): Json => ({ sentences: renderedSentences(`${page}\n`).map(sentence => sentence.text), findings: judgeText("docs/x.md", `${page}\n`).map(finding => finding.slice(finding.indexOf(" ") + 1)) });
+    const breaks = BREAK_GROUPS.map(group => ({ reading: reading(group[0] ?? ""), html: new Set(group.map(page => marked.parse(`${page}\n`, { async: false }))).size, same: group.map(page => JSON.stringify(reading(page)) === JSON.stringify(reading(group[0] ?? ""))) }));
+    expect(breaks.flatMap(group => group.same)).toEqual(BREAK_GROUPS.flat().map(() => true));
+    const twins = PINNED_PAGES.map(twinOfPage);
+    expect(twins.filter(twin => !twin.identical || !twin.same)).toEqual([]);
+    // The markup reader's element sets and forms (self-anchored, held to the roster), and what each block-level tag met inline
+    // does to a claim.
+    const markup = { blocks: [...BLOCK_TAGS], table: [...TABLE_TAGS], cells: [...CELL_TAGS], unshown: [...UNSHOWN_TAGS], code: [...CODE_TAGS], raw: [...RAW_TAGS], void: [...VOID_TAGS], forms: MARKUP.source };
+    const blockForms = [...BLOCK_TAGS].map(tag => renderedSentences(`The gp seam is<${tag}>served.\n`).map(sentence => sentence.text));
+    return { raw, rendered, judged, breaks, twins: { pages: twins.length, identical: twins.filter(twin => twin.identical).length, same: twins.filter(twin => twin.same).length }, markup, blockForms };
   },
   B4: async () => {
     const spellings = [
@@ -1277,50 +1694,31 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
         verdict("The installed gp is available on PATH."),
         verdict("The gp bridge is live."),
       ],
-      "R-SPLIT": [judgeText("docs/x.md", "We added a gp seam. It is served."), judgeText("docs/x.md", "Status: served. Subject: the gp seam.")],
-      "R-LOOKALIKE": [verdict(`The g${codePoint(0x0440)} seam is served.`), verdict(`The Graph${codePoint(0x2010)}Policy seam is served.`), verdict("The GPCLI seam is served."), verdict("The GraphPolicyCLIs seam is served.")],
+      "R-SPLIT": [judgeText("docs/x.md", "We added a gp seam. It is served."), judgeText("docs/x.md", "Status: served. Subject: the gp seam."), judgeText("docs/x.md", "The gp seam is<p>served.</p>")],
+      "R-LOOKALIKE": LOOKALIKES.map(([member]) => verdict(member)),
     };
     expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "B4").map(residual => residual.id));
+    const twins = { "R-LOOKALIKE": LOOKALIKES.map(([, plain]) => verdict(plain)) };
     // The real R-BARE-NAME member: the landed wb-1xvp.3 receipt states it at line 13, and it reads bare.
     const receipt = readFileSync(join(REPO, "docs/workbench/receipts/wb-1xvp.3.md"), "utf8");
     const bareLine = sentencesOf("docs/workbench/receipts/wb-1xvp.3.md", receipt).find(sentence => sentence.text.startsWith("GraphPolicyCLI ships the npm package"));
-    return { spellings: spellings.map(verdict), subjects, notSubjects, pi, nearMisses, quiet, realBare: bareLine === undefined ? null : `${bareLine.line} ${classify(bareLine.text).kind}` };
+    return { spellings: spellings.map(verdict), subjects, notSubjects, pi, nearMisses, quiet, twins, realBare: bareLine === undefined ? null : `${bareLine.line} ${classify(bareLine.text).kind}` };
   },
   B5: async () => {
     const served = SERVED_FORMS.map(word => verdict(`The gp seam: ${word}.`));
     // A served word needs a seam word or Pi: the same words beside GraphPolicyCLI alone read bare, beside Pi they are findings.
     const bare = ["integrated", "registered", "ships", "serves"].map(word => classify(`GraphPolicyCLI ${word} its package.`).kind);
     const pi = ["integrated", "registered", "ships", "serves"].map(word => verdict(`Pi ${word} GraphPolicyCLI.`));
-    // A format character inside a word is dropped by the fold, so the word reads.
+    // A format character inside a word is dropped by the fold, so the word reads; so is every other default-ignorable code point.
     const formats = [0x200b, 0xad, 0x2060, 0xfeff].map(code => [verdict(`The gp seam is ser${codePoint(code)}ved.`), verdict(`The gp se${codePoint(code)}am is served.`)]);
-    // A served word read through the rendered view of a docs page: inline markup, references and link text render as words.
-    const forms = [
-      "The gp seam is **served**.",
-      "The gp seam is `served`.",
-      "The gp seam is ser**ved**.",
-      "The gp seam is SERVED.",
-      "The gp seam is \u201cserved\u201d.",
-      "The gp seam is _served_.",
-      "The gp seam is __served__.",
-      "The gp seam is ~~served~~.",
-      "The gp seam is ser<b>ved</b>.",
-      "The gp seam is serv&#101;d.",
-      "The gp seam is serv&#x65;d.",
-      "The gp seam is ser&shy;ved.",
-      "The gp seam is [served](x.md).",
-    ].map(text => judgeText("docs/x.md", text));
+    const ignorables = IGNORABLES.map(code => [verdict(`The gp seam is ser${codePoint(code)}ved.`), verdict(`The gp se${codePoint(code)}am is served.`)]);
+    // A served word read through the rendered view of a docs page: inline markup, references, link text and a br render as words.
+    const forms = SHOWN_FORMS.map(text => judgeText("docs/x.md", text));
     // A code span shows a character reference as written, so the word it would spell is not read.
-    const asWritten = judgeText("docs/x.md", "The gp seam is `serv&#101;d`.");
-    // A marker counts only where a reader sees it: one hidden in a comment, a link destination, title or label, a tag
-    // attribute or an image's alt text never quiets a rendered claim.
-    const hiddenMarkers = [
-      "The gp seam is served <!-- not -->.",
-      "The gp seam is [served](not.md).",
-      'The gp seam is [served](x.md "not").',
-      "The gp seam is served [here][not].\n\n[not]: x.md",
-      'The gp seam is <span title="not">served</span>.',
-      "The gp seam is served ![not](x.png).",
-    ].map(text => judgeText("docs/x.md", text));
+    const asWritten = judgeText("docs/x.md", AS_WRITTEN);
+    // A marker counts only where it is shown: one hidden in a comment or a bogus comment, a link destination, title or label, a tag
+    // attribute, an image's alt text or an element a reader never sees never quiets a rendered claim.
+    const hiddenMarkers = HIDDEN_MARKERS.map(text => judgeText("docs/x.md", text));
     const markers = MARKER_WORDS.map(word => verdict(`The gp seam ${word} served.`));
     const notMarkers = NOT_MARKERS.map(word => verdict(`The gp seam is served (${word}).`));
     // Hyphen- and underscore-bounded words: a status word carrying a marker is no marker, an identifier is one word.
@@ -1332,33 +1730,17 @@ const IMPL: Readonly<Record<string, () => Promise<Json>>> = {
       classify("The gp seam reads served_count and is_live.").kind,
       classify("GP_CLI_UNKNOWN_COMMAND is served by the gp client.").kind,
     ];
-    // R-RENDERED-TEXT: each text the rendered view does not show as a sentence, beside its live twin, the same claim shown.
-    const unrendered: readonly (readonly [string, string])[] = [
-      ["<!-- The gp seam is served. -->", "The gp seam is served."],
-      ["<!-- an unclosed comment\nThe gp seam is served.\n\nNext paragraph.", "The gp seam is served."],
-      ["Status: <!-- the gp seam is served -->ok.", "Status: the gp seam is served."],
-      ["```\nThe gp seam is served.\n```", "The gp seam is served."],
-      ["    The gp seam is served.", "The gp seam is served."],
-      ["See [the page](the-gp-seam-is-served.md).", "See [the gp seam is served](x.md)."],
-      ['See [the page](x.md "The gp seam is served").', "See [the gp seam is served](x.md)."],
-      ["See [the page][the gp seam is served].\n\n[the gp seam is served]: x.md", "See [the gp seam is served][1].\n\n[1]: x.md"],
-      ['See [the page][1].\n\n[1]: x.md "The gp seam is served"', "The gp seam is served."],
-      ['<span title="The gp seam is served.">Status</span>', "<span>The gp seam is served.</span>"],
-      ['<div title="The gp seam is served.">\nStatus\n</div>', "<div>\nThe gp seam is served.\n</div>"],
-      ["![The gp seam is served](x.png)", "The gp seam is served."],
-      ['![x](x.png "The gp seam is served")', "The gp seam is served."],
-      ["The gp seam is ser&foo;ved.", "The gp seam is ser&shy;ved."],
-    ];
     const quiet = {
-      "R-MARKER-ANYWHERE": verdict("The gp seam is served and no rollback is planned."),
+      "R-MARKER-ANYWHERE": MARKED_ANYWHERE.map(([withMarker]) => judgeText("docs/x.md", withMarker)),
       "R-PARAPHRASE": [...["up", "ready", "in place", "working", "running"].map(word => verdict(`The gp seam is ${word}.`)), verdict("Pi calls gp in its decision loop."), verdict("The gp seam runs."), verdict("Pi uses the gp seam."), verdict("The gp adapters wire into the Pi decision path."), verdict("Pi and its gp clients host the decision path."), ...["Pi is integrating the gp seam.", "Pi invoked the gp client.", "Pi deploys the gp adapter.", "Pi implements the gp seam.", "Pi releases the gp adapter."].map(verdict)],
-      "R-RENDERED-TEXT": unrendered.map(([hidden]) => judgeText("docs/x.md", hidden)),
+      "R-RENDERED-TEXT": UNRENDERED.map(([hidden]) => judgeText("docs/x.md", hidden)),
     };
     expect(Object.keys(quiet)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "B5").map(residual => residual.id));
-    const twins = { "R-RENDERED-TEXT": unrendered.map(([, shown]) => judgeText("docs/x.md", shown)) };
-    return { served, bare, pi, formats, forms, asWritten, hiddenMarkers, markers, notMarkers, bounded, quiet, twins };
+    const twins = { "R-MARKER-ANYWHERE": MARKED_ANYWHERE.map(([, alone]) => judgeText("docs/x.md", alone)), "R-RENDERED-TEXT": UNRENDERED.map(([, shown]) => judgeText("docs/x.md", shown)) };
+    return { served, bare, pi, formats, ignorables, forms, asWritten, hiddenMarkers, markers, notMarkers, bounded, quiet, twins };
   },
 };
+
 
 function beadRow(): { readonly title: string; readonly notes: string } {
   for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {

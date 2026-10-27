@@ -130,7 +130,11 @@
                 "README-twin.md",
                 "README.md",
                 "docs/workbench/TRACEABILITY.md",
+                "docs/workbench/br-plant-twin.md",
+                "docs/workbench/br-plant.md",
                 "docs/workbench/feature-matrix.md",
+                "docs/workbench/hard-break-plant-twin.md",
+                "docs/workbench/hard-break-plant.md",
                 "docs/workbench/plant-twin.md",
                 "docs/workbench/plant.md",
                 "docs/workbench/receipts/wb-plant-twin.md",
@@ -140,7 +144,9 @@
                 "README.md:1 N2: served-available",
                 "docs/workbench/TRACEABILITY.md:5 N1: served-live-sdk",
                 "docs/workbench/TRACEABILITY.md:5 ledger-live-sdk",
+                "docs/workbench/br-plant.md:1 N2: served-served",
                 "docs/workbench/feature-matrix.md:19 matrix-landed-gated",
+                "docs/workbench/hard-break-plant.md:1 N2: served-served",
                 "docs/workbench/plant.md:1 N2: served-served",
                 "docs/workbench/receipts/wb-plant.md:3 N1: served-live"
               ],
@@ -357,6 +363,80 @@
               ],
               [
                 "1:The gp seam is served."
+              ],
+              [
+                "1:The gp seam is served."
+              ],
+              [
+                "1:The gp seam is served.",
+                "1:No rollback is planned."
+              ],
+              [
+                "1:The gp seam is served."
+              ],
+              [
+                "1:a | b",
+                "3:gp seam | is served"
+              ],
+              [
+                "1:The gp seam is",
+                "1:served."
+              ],
+              [
+                "1:The gp seam is",
+                "1:served."
+              ],
+              [
+                "1:The gp seam is",
+                "1:served."
+              ],
+              [
+                "1:The gp seam is",
+                "1:served."
+              ],
+              [
+                "1:The gp seam is",
+                "1:served."
+              ],
+              [
+                "1:The gp seam is served."
+              ],
+              [
+                "1:The gp seam is",
+                "1:served."
+              ],
+              [
+                "1:The gp seam is served."
+              ],
+              [
+                "1:gp seam | served"
+              ],
+              [
+                "1:gp seam | is | served"
+              ],
+              [
+                "2:The gp seam is served."
+              ],
+              [
+                "1:Status."
+              ],
+              [
+                "2:The gp seam is served y ]]>."
+              ],
+              [
+                "1:Status shown."
+              ],
+              [
+                "2:Status shown."
+              ],
+              [
+                "2:Status shown."
+              ],
+              [
+                "2:Status shown."
+              ],
+              [
+                "1:Status shown."
               ]
             ],
             "judged": [
@@ -381,6 +461,408 @@
               ],
               [
                 "docs/x.md:3 N2: served-served"
+              ]
+            ],
+            "breaks": [
+              {
+                "reading": {
+                  "sentences": [
+                    "The gp seam is served."
+                  ],
+                  "findings": [
+                    "N2: served-served"
+                  ]
+                },
+                "html": 6,
+                "same": [
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true,
+                  true
+                ]
+              },
+              {
+                "reading": {
+                  "sentences": [
+                    "The gp seam is served."
+                  ],
+                  "findings": [
+                    "N2: served-served"
+                  ]
+                },
+                "html": 1,
+                "same": [
+                  true,
+                  true
+                ]
+              },
+              {
+                "reading": {
+                  "sentences": [
+                    "The gp seam is served.",
+                    "No rollback is planned."
+                  ],
+                  "findings": [
+                    "N2: served-served"
+                  ]
+                },
+                "html": 1,
+                "same": [
+                  true,
+                  true
+                ]
+              },
+              {
+                "reading": {
+                  "sentences": [
+                    "The gp seam is served no rollback is planned."
+                  ],
+                  "findings": []
+                },
+                "html": 1,
+                "same": [
+                  true,
+                  true
+                ]
+              },
+              {
+                "reading": {
+                  "sentences": [
+                    "The gp seam is served."
+                  ],
+                  "findings": [
+                    "N2: served-served"
+                  ]
+                },
+                "html": 3,
+                "same": [
+                  true,
+                  true,
+                  true
+                ]
+              },
+              {
+                "reading": {
+                  "sentences": [
+                    "a | b",
+                    "gp seam | is served"
+                  ],
+                  "findings": [
+                    "N2: served-served"
+                  ]
+                },
+                "html": 2,
+                "same": [
+                  true,
+                  true
+                ]
+              },
+              {
+                "reading": {
+                  "sentences": [
+                    "The gp seam is",
+                    "served."
+                  ],
+                  "findings": []
+                },
+                "html": 3,
+                "same": [
+                  true,
+                  true,
+                  true,
+                  true
+                ]
+              }
+            ],
+            "twins": {
+              "pages": 176,
+              "identical": 176,
+              "same": 176
+            },
+            "markup": {
+              "blocks": [
+                "address",
+                "article",
+                "aside",
+                "blockquote",
+                "center",
+                "dd",
+                "details",
+                "dialog",
+                "dir",
+                "div",
+                "dl",
+                "dt",
+                "fieldset",
+                "figcaption",
+                "figure",
+                "footer",
+                "form",
+                "h1",
+                "h2",
+                "h3",
+                "h4",
+                "h5",
+                "h6",
+                "header",
+                "hgroup",
+                "hr",
+                "legend",
+                "li",
+                "listing",
+                "main",
+                "menu",
+                "nav",
+                "ol",
+                "optgroup",
+                "option",
+                "p",
+                "plaintext",
+                "pre",
+                "search",
+                "section",
+                "summary",
+                "table",
+                "ul",
+                "xmp"
+              ],
+              "table": [
+                "caption",
+                "colgroup",
+                "tbody",
+                "tfoot",
+                "thead",
+                "tr"
+              ],
+              "cells": [
+                "td",
+                "th"
+              ],
+              "unshown": [
+                "datalist",
+                "iframe",
+                "noembed",
+                "noframes",
+                "noscript",
+                "rp",
+                "script",
+                "style",
+                "template",
+                "title"
+              ],
+              "code": [
+                "listing",
+                "pre",
+                "xmp"
+              ],
+              "raw": [
+                "iframe",
+                "noembed",
+                "noframes",
+                "noscript",
+                "script",
+                "style",
+                "title",
+                "xmp"
+              ],
+              "void": [
+                "area",
+                "base",
+                "basefont",
+                "bgsound",
+                "br",
+                "col",
+                "embed",
+                "frame",
+                "hr",
+                "img",
+                "input",
+                "keygen",
+                "link",
+                "meta",
+                "param",
+                "source",
+                "track",
+                "wbr"
+              ],
+              "forms": "<!--(?:-?>|[\\s\\S]*?(?:--!?>|$))|<[!?][^>]*(?:>|$)|<\\/(?:>|[^A-Za-z>][^>]*(?:>|$))|<(\\/?)([A-Za-z][^\\t\\n\\f\\r />]*)"
+            },
+            "blockForms": [
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is"
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is"
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is"
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is",
+                "served."
+              ],
+              [
+                "The gp seam is"
               ]
             ]
           }
@@ -471,13 +953,32 @@
               ],
               "R-SPLIT": [
                 [],
+                [],
                 []
               ],
               "R-LOOKALIKE": [
                 null,
                 null,
                 null,
+                null,
+                null,
+                null,
+                null,
+                null,
                 null
+              ]
+            },
+            "twins": {
+              "R-LOOKALIKE": [
+                "N2: served-served",
+                "N1: served-served",
+                "N2: served-served",
+                "N1: served-served",
+                "N2: served-served",
+                "N2: served-served",
+                "N2: served-served",
+                "N2: served-served",
+                "N2: served-served"
               ]
             },
             "realBare": "13 bare"
@@ -559,6 +1060,56 @@
                 "N2: served-served"
               ]
             ],
+            "ignorables": [
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ],
+              [
+                "N2: served-served",
+                "N2: served-served"
+              ]
+            ],
             "forms": [
               [
                 "docs/x.md:1 N2: served-served"
@@ -598,6 +1149,24 @@
               ],
               [
                 "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:3 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
               ]
             ],
             "asWritten": [],
@@ -619,6 +1188,54 @@
               ],
               [
                 "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:1 N2: served-served"
+              ],
+              [
+                "docs/x.md:2 N2: served-served"
+              ],
+              [
+                "docs/x.md:2 N2: served-served"
+              ],
+              [
+                "docs/x.md:2 N2: served-served"
+              ],
+              [
+                "docs/x.md:2 N2: served-served"
               ]
             ],
             "markers": [
@@ -675,7 +1292,13 @@
               "finding"
             ],
             "quiet": {
-              "R-MARKER-ANYWHERE": null,
+              "R-MARKER-ANYWHERE": [
+                [],
+                [],
+                [],
+                [],
+                []
+              ],
               "R-PARAPHRASE": [
                 null,
                 null,
@@ -707,10 +1330,38 @@
                 [],
                 [],
                 [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
                 []
               ]
             },
             "twins": {
+              "R-MARKER-ANYWHERE": [
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ]
+              ],
               "R-RENDERED-TEXT": [
                 [
                   "docs/x.md:1 N2: served-served"
@@ -747,6 +1398,39 @@
                 ],
                 [
                   "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:2 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:1 N2: served-served"
+                ],
+                [
+                  "docs/x.md:2 N2: served-served"
                 ],
                 [
                   "docs/x.md:1 N2: served-served"
