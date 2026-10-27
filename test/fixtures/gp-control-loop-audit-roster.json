@@ -1,5 +1,5 @@
 {
-  "comment": "wb-1xvp.3 (RF-GRAPH-POLICY-MACHINE-CONTROL-R2; the hk9l/5jha roster pattern, as wb-1xvp.4 uses it; extended by wb-66f7): the OUT-OF-FILE anchor of test/workbench-gp-control-loop-audit.test.ts. rows: every judged row of test/helpers/gp-control-loop-audit-cases.ts in table order (CALL_SITES, NOT_CALL_SITES, RESIDUALS, ANNOTATED, UNANNOTATED, MISATTRIBUTED, FALSIFIERS, STAGES) - table, positional id, label and the SHA-256 of each pin as written (each input and each expectation). residuals: the named residual families, each pinned by its row (the RESIDUALS quiet rows, then the MISATTRIBUTED rows that read today's credit). tests: every test the suite registers, in order. Written from the rows and the registered tests as measured at the cut; the suite judges its tables, its residual families and its registered tests (vitest task tree, run modes) against this file at test time, in order and both ways.",
+  "comment": "wb-1xvp.3 (RF-GRAPH-POLICY-MACHINE-CONTROL-R2; the hk9l/5jha roster pattern, as wb-1xvp.4 uses it; extended by wb-66f7 and wb-rdv6): the OUT-OF-FILE anchor of test/workbench-gp-control-loop-audit.test.ts. rows: every judged row of test/helpers/gp-control-loop-audit-cases.ts in table order (CALL_SITES, NOT_CALL_SITES, RESIDUALS, ANNOTATED, UNANNOTATED, MISATTRIBUTED, FALSIFIERS, STAGES) - table, positional id, label and the SHA-256 of each pin as written (each input and each expectation). residuals: the named residual families, each pinned by its row (the RESIDUALS quiet rows, then the MISATTRIBUTED rows that read today's credit). tests: every test the suite registers, in order. Written from the rows and the registered tests as measured at the cut; the suite judges its tables, its residual families and its registered tests (vitest task tree, run modes) against this file at test time, in order and both ways.",
   "rows": [
     {
       "table": "CALL_SITES",
@@ -531,6 +531,78 @@
       ]
     },
     {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-08",
+      "label": "a comment after a comma on the literal's own line (gate B06)",
+      "pins": [
+        "396e5cf6ce3c293cf6c7f7684968cf2ac38d4bc5a13f5f4ebf1a1116122052f2",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-09",
+      "label": "a block comment after a comma on the literal's own line",
+      "pins": [
+        "bc603cfae1569a1121493fb0f018ca266b418023e0b2d6a6e18ba05bc4b833e9",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-10",
+      "label": "a comment after the call's opening parenthesis, on the line above the literal",
+      "pins": [
+        "401b41c3702553a689fab9f5b88d11de07e313e780582e9a1a56e34014ce2886",
+        "3dfd1086820426278724a7b67aeb393ac40ebbd01de37e6d9b0c9b786c44c94d"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-11",
+      "label": "a block comment between the opening parenthesis and the literal",
+      "pins": [
+        "ab59ffd7785b7ac91f27b183b19b4aca1fecf4009936182ef47aa58c57cee3d7",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-12",
+      "label": "a comment after the = of a declaration",
+      "pins": [
+        "af50bd2ec785505a76fd4924a7c713753b5d4a7f267babbcceabcd2ef6da51b1",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-13",
+      "label": "a comment after a property's colon",
+      "pins": [
+        "007bc96ce76556b714c483e024d27f051b34713402b8e14e7403142db30a3b67",
+        "0d71172cc23d6cbc819a353a8f9c63a598fd6d32bb2fd37bd4b1bb7bf1472f30"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-14",
+      "label": "a comment after else, above the branch that holds the literal",
+      "pins": [
+        "4b84a9ab7942ca8cd4d5cfd8c67566cb772be6ca5843c4c432fc80046ffbd832",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "ANNOTATED",
+      "id": "ANNOTATED-15",
+      "label": "a marker after // on a JSDoc tag line, credited once (a JSDoc block is read whole, never entered)",
+      "pins": [
+        "d5c84eca454f7b0e4a1147d3226fbfc43e53d525e14e95688308ab6d16b09f94",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
       "table": "UNANNOTATED",
       "id": "UNANNOTATED-01",
       "label": "no comment at all",
@@ -595,6 +667,38 @@
       ]
     },
     {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-09",
+      "label": "a marker after a comma on a line after the literal's own line",
+      "pins": [
+        "2f950acba00db040229282f01316e3a4a8af97ebf048ddffac496db1be3f0879"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-10",
+      "label": "a marker after a nested block's opening brace on the literal's line",
+      "pins": [
+        "75c5bd23788c2c45dedebe63a8addea2fa5eec5c47ab554821450f3580776da6"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-11",
+      "label": "a marker trailing the enclosing function's opening line (gate A03, same-line form)",
+      "pins": [
+        "cd7b0023c754f3cdf62a6f2f6b5c713e28ef8f231dd7e6250288b5d54e3f6ed3"
+      ]
+    },
+    {
+      "table": "UNANNOTATED",
+      "id": "UNANNOTATED-12",
+      "label": "a marker trailing the opening brace of the object literal that holds the property",
+      "pins": [
+        "16100d30775a8104951b11aec993d5267dd98f6bb04aa6a2720ffa9db06bfb24"
+      ]
+    },
+    {
       "table": "MISATTRIBUTED",
       "id": "MISATTRIBUTED-01",
       "label": "RES-13 a marker inside an expression-bodied arrow, annotating its body, is credited to a gp literal later in the same call (gate B01)",
@@ -618,6 +722,33 @@
       "label": "RES-15 a marker on a ternary's first branch is credited to a gp literal in its second branch (gate B03)",
       "pins": [
         "9bb4910b7ec2be6d8de110d9ff8a2bd31243f4b283ecb62152896b5349a89bea",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-04",
+      "label": "RES-16 a marker after a nested call's opening parenthesis is credited to a gp literal later in the outer call (wb-rdv6)",
+      "pins": [
+        "520e9649409b02e6bf7264e50b6338198566c2c335831e760b8a647ea9d055fa",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-05",
+      "label": "RES-17 a marker trailing a preceding argument's comma is credited to a gp literal later in the same call (wb-rdv6)",
+      "pins": [
+        "0261b984b8cbb270b40978455cb0a2d36fe6f00eb8e0e04a0f295939ff574e92",
+        "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
+      ]
+    },
+    {
+      "table": "MISATTRIBUTED",
+      "id": "MISATTRIBUTED-06",
+      "label": "RES-18 a marker after a nested arrow's parameter-list parenthesis is credited to a gp literal later in the outer call (wb-rdv6)",
+      "pins": [
+        "9033c4ef7b73ea296b53dd19ef987474a410d77d95e67399df5f35a05d75089d",
         "36a82c75b4177397267e72099dfe2128f23c879b655c50878b1ade05d6e26fd1"
       ]
     },
@@ -1237,7 +1368,10 @@
     "RES-12 a gp shim whose extension is not .exe, .cmd or .ps1, such as gp.bat (gate E18)",
     "RES-13 a marker inside an expression-bodied arrow, annotating its body, is credited to a gp literal later in the same call (gate B01)",
     "RES-14 a marker inside a nested call's argument list is credited to a gp literal later in the outer call (gate B02)",
-    "RES-15 a marker on a ternary's first branch is credited to a gp literal in its second branch (gate B03)"
+    "RES-15 a marker on a ternary's first branch is credited to a gp literal in its second branch (gate B03)",
+    "RES-16 a marker after a nested call's opening parenthesis is credited to a gp literal later in the outer call (wb-rdv6)",
+    "RES-17 a marker trailing a preceding argument's comma is credited to a gp literal later in the same call (wb-rdv6)",
+    "RES-18 a marker after a nested arrow's parameter-list parenthesis is credited to a gp literal later in the outer call (wb-rdv6)"
   ],
   "tests": [
     "src/ carries no gp call site: the census over every src module is empty",
@@ -1306,6 +1440,14 @@
     "a comment on an object property names it",
     "a comment inside the statement, before the literal names it",
     "a comment above a statement nested in a block names it",
+    "a comment after a comma on the literal's own line (gate B06) names it",
+    "a block comment after a comma on the literal's own line names it",
+    "a comment after the call's opening parenthesis, on the line above the literal names it",
+    "a block comment between the opening parenthesis and the literal names it",
+    "a comment after the = of a declaration names it",
+    "a comment after a property's colon names it",
+    "a comment after else, above the branch that holds the literal names it",
+    "a marker after // on a JSDoc tag line, credited once (a JSDoc block is read whole, never entered) names it",
     "no comment at all does not name one",
     "a marker inside a string on the line above does not name one",
     "a marker trailing the previous statement does not name one",
@@ -1314,9 +1456,17 @@
     "a marker inside a nested block, annotating another call (gate A01) does not name one",
     "a marker trailing a later statement on the literal's line (gate A02) does not name one",
     "a marker on the enclosing function (gate A03) does not name one",
+    "a marker after a comma on a line after the literal's own line does not name one",
+    "a marker after a nested block's opening brace on the literal's line does not name one",
+    "a marker trailing the enclosing function's opening line (gate A03, same-line form) does not name one",
+    "a marker trailing the opening brace of the object literal that holds the property does not name one",
     "residual RES-13 a marker inside an expression-bodied arrow, annotating its body, is credited to a gp literal later in the same call (gate B01) (named, not cured: today's credit is pinned)",
     "residual RES-14 a marker inside a nested call's argument list is credited to a gp literal later in the outer call (gate B02) (named, not cured: today's credit is pinned)",
     "residual RES-15 a marker on a ternary's first branch is credited to a gp literal in its second branch (gate B03) (named, not cured: today's credit is pinned)",
+    "residual RES-16 a marker after a nested call's opening parenthesis is credited to a gp literal later in the outer call (wb-rdv6) (named, not cured: today's credit is pinned)",
+    "residual RES-17 a marker trailing a preceding argument's comma is credited to a gp literal later in the same call (wb-rdv6) (named, not cured: today's credit is pinned)",
+    "residual RES-18 a marker after a nested arrow's parameter-list parenthesis is credited to a gp literal later in the outer call (wb-rdv6) (named, not cured: today's credit is pinned)",
+    "reads each module's own comments: the unannotated module read first lends none of its comments to the next (wb-rdv6)",
     "control: an audit covering all eleven stages, with an annotated call site, an exported entrypoint, the measured gp version, the schema's keys, a fallback and a two-status inventory, reads no finding",
     "an audit beside a tree with no call site is still judged: the control reads clean, and a defect in it is a finding before any wiring",
     "with no audit document and no call site there is nothing to read: no finding, and neither gp nor the settings schema is read",
