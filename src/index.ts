@@ -76,7 +76,7 @@ import { executeDetachedControl } from "./workbench/detached-control.js";
 import { createWorkbenchEvidenceStore } from "./workbench/evidence-wiring.js";
 import { createWorkflowExecuteTool, type ExecuteLaunch } from "./workbench/execute-tool.js";
 import { createRetainedForgeControlExecutor, retainForgeOperation } from "./workbench/forge-control-retention.js";
-import { type ForgeOperationObserver, observeForgeGateRun } from "./workbench/forge-operation-observer.js";
+import { type ForgeObservedHead, type ForgeOperationObserver, observeForgeGateRun } from "./workbench/forge-operation-observer.js";
 import { executeFurnaceControl } from "./workbench/furnace-control.js";
 import { FurnaceObserver } from "./workbench/furnace-observer.js";
 import { captureInvocationIdentity, type IdentityCaptureInput, identityDigest, verifyInvocationIdentity, WORKFLOW_SCRIPT_SCHEMA_VERSION } from "./workbench/identity.js";
@@ -396,6 +396,22 @@ function workspaceCandidateBasis(cwd: string): { sourceBasis: string; state: "me
     }
     return { sourceBasis: identityDigest("git-candidate", { root, tree, index: `sha256:${createHash("sha256").update(index).digest("hex")}`, files }), state: "measured" };
   } catch { return unavailable; }
+}
+
+/**
+ * wb-4ap.17: the host's own reading of a package repository's HEAD at a gate.run root (`git rev-parse HEAD` and `HEAD^{tree}`),
+ * which the forge_gate_run observer compares with the reply's run-start pin when the reply settles. Undefined when git cannot
+ * answer (no repository, an unborn branch, git unavailable); a reading is never repaired.
+ */
+export function observedPackageHead(root: string): ForgeObservedHead | undefined {
+  const revision = (spec: string): string => execFileSync("git", ["-C", root, "rev-parse", "--verify", "--quiet", spec], {
+    timeout: 5_000, maxBuffer: 64 * 1024, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"],
+  }).trim();
+  try {
+    return { commit: revision("HEAD"), tree: revision("HEAD^{tree}") };
+  } catch {
+    return undefined;
+  }
 }
 
 /**
@@ -2813,6 +2829,8 @@ Terse command-style prompts produce shallow, generic work.
             root, projection, scope, now: controlNow, timeoutMs: 30_000,
             // wb-cra.1: the issuing connection is retained under the server's operation id, so workflow_control's forge leg can reach it.
             retain: (operationId, issuing) => retainForgeOperation(operationId, { operations: issuing.operations, connection: issuing, workspaceRoot: scope.workspace }),
+            // wb-4ap.17: the reply's run-start pin is the verdict's basis, compared with the host's own HEAD reading when the reply settles.
+            observedHead: () => observedPackageHead(root),
           });
           liveForgeOperations.set(observer.operationId, observer);
           void observer.settled.then(() => { liveForgeOperations.delete(observer.operationId); });
