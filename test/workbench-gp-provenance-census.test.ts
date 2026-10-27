@@ -38,11 +38,12 @@
  * and :18 and wb-1xvp.5.md:11 - and are pinned by line text sha256 as disclosed findings; any other citation reds.
  * RESIDUALS (named, each with a pinned quiet row): R-SPLIT-LINE, R-ENCODED, R-PARAPHRASE, R-NON-MARKDOWN, R-SHAPE-ONLY,
  * R-LISTED-NOT-SERVED, R-STATIC-RECEIPT, R-CAPTURE-REPLAY, R-LEXICAL-GROUNDING, R-JSONL.
- * Rule 16: the frozen-shape case pins every table's row and pin shape, the residual families, the known set and the
- * clause map; the OUT-OF-FILE anchors are test/fixtures/gp-provenance-roster.json (every judged row with the SHA-256 of
- * each pin, every registered test title, the residual families and the known set; the roster case judges this file
- * against it in order and both ways, with each test's run mode), the captured roster (every captured rpc op and cli word
- * is a judged case) and the bead's export row in .beads/issues.jsonl (the four clauses).
+ * Rule 16: the frozen-shape case pins every table's row and pin shape, the residual families, the known set, the clause
+ * map and (wb-pzbq) the standalone cases by key; the OUT-OF-FILE anchors are test/fixtures/gp-provenance-roster.json (every
+ * judged row with the SHA-256 of each pin, every registered test title, the residual families, the known set and, since
+ * wb-pzbq, the clause map; the roster case judges this file against it in order and both ways, with each test's run mode),
+ * the captured roster (every captured rpc op and cli word is a judged case) and the bead's export row in .beads/issues.jsonl
+ * (the four clauses).
  * OUTSIDE ANCHORS (wb-atq9, the wb-gxd7.5 gate's F1 and F2): the roster is a same-cut literal, so a coordinated hollow of
  * this file, the helper and the roster together stayed green below the capture and the docs walk. Three readers anchor the
  * census outside all three. (1) The append-only receipt docs/workbench/receipts/wb-atq9.md, read through the shared docs
@@ -56,22 +57,37 @@
  * clause's sha256 pinned in the roster; and the landed delivery paragraph's RESIDUALS line, every family of which stays a
  * named residual here. (3) The vocabularies case proves each verdict word and code, capability noun, revision key, claim
  * status and missing prerequisite is read by its judge, so a list and the judge built from it cannot part.
- * NOT CLAIMED: the receipt anchors membership, never order (the roster and the frozen-shape literal hold order and counts);
- * the walk exclusions are anchored as members only (no case reads them behaviourally); a coordinated edit of the ledger's
- * family names or FOLLOW_UP together with an appended receipt section re-points the anchor, a visible docs append.
+ * CASE AND CLAUSE ANCHORS (wb-pzbq, the wb-atq9 gate's F1 and F2): the standalone cases (every registered test that is no
+ * judged row's) were held only by the roster's tests list and the clause map only by its rule-16 literal, so a reader case
+ * deleted with its roster title, or a table moved out of a clause with its literal, stayed green. The receipt's cut-2 anchor
+ * families hold both: Cases, each standalone case by key (its title before the first ": ") with its title's digest, read
+ * against this file's vitest task tree both ways by the receipt anchors case and the roster case and by key in the rule 16
+ * case; Clause tables, each clause's tables, read by the receipt anchors case and the bead case. Deleting or retitling a
+ * case, a reader case included, or moving a table out of a clause, takes a named Removed cases or Removed clause tables line.
+ * PERMISSIVE VOCABULARIES (wb-pzbq, the wb-atq9 gate's F3): an appended Vocabularies table adds a member by its digest, and
+ * three lists only loosen their judge or walk when they grow, so each is grounded outside itself: the claim statuses and
+ * missing prerequisites equal what the reference readers mint from the capture, and every walk exclusion is the VCS
+ * directory or a directory the root .gitignore names, below which git tracks no file.
+ * NOT CLAIMED: the receipt anchors membership, never order (the roster and the frozen-shape literals hold order and counts);
+ * a member appended to a list that can only add findings (verdict words and codes, capability nouns, revision keys) still
+ * needs only its digest, and an exclusion naming another ignored directory with nothing tracked below it passes, since it
+ * skips nothing git tracks; deleting all three readers of the Cases family at once (the receipt anchors, rule 16 and roster
+ * cases) with their titles leaves no case to read it; a coordinated edit of the ledger's family names or FOLLOW_UP together
+ * with an appended receipt section re-points the anchor, a visible docs append.
  *
- * Display paths added: none. Test-only: no src change, no gp seam. No scratch is allocated: every case is in memory, and
- * the live leg passes the receipt to gp on stdin.
+ * Display paths added: none. Test-only: no src change, no gp seam. No scratch is allocated: every case is in memory, the
+ * live leg passes the receipt to gp on stdin, and the walk-exclusion ground reads git ls-files.
  */
 import { spawnSync } from "node:child_process";
 import { readFileSync, realpathSync, statSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { marked, type Tokens } from "marked";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, type RunnerTask, type RunnerTestCase } from "vitest";
 import { docsSection, sectionTables } from "./helpers/census.js";
 import {
   ACCEPTANCE,
+  anchorEntryTables,
   applyEdits,
   BEAD,
   CAPABILITY,
@@ -81,6 +97,7 @@ import {
   CLAIM_STATUSES,
   CLAUSE_TABLES,
   capabilityOf,
+  caseKey,
   claimFindings,
   DELIVERED_HEAD,
   DELIVERED_RESIDUALS_HEAD,
@@ -94,8 +111,11 @@ import {
   FOLLOW_UP,
   filesBelow,
   filingClauses,
+  foldAnchors,
   foldLedger,
   type HostFs,
+  ignoredDirectories,
+  judgedAnchors,
   judgedLedger,
   KNOWN_UNGROUNDED,
   LEDGER_HEADERS,
@@ -104,6 +124,7 @@ import {
   ledgerHeading,
   MISSING,
   memoryHost,
+  mintedVocabularies,
   NOUNS,
   namesGp,
   ownerFiling,
@@ -112,6 +133,7 @@ import {
   RECEIPT_DOC,
   RECEIPT_FIXTURE,
   RECEIPT_MUTANTS,
+  REFUSED_CODE,
   RESIDUAL_FAMILIES,
   RESIDUALS,
   RESOLVE,
@@ -127,8 +149,12 @@ import {
   revisionOf,
   rosterOf,
   ruleOf,
+  SKIP_DIRS,
   STATIC_RECEIPT_EDITS,
   sha256,
+  standaloneTitles,
+  trackedBelow,
+  VCS_DIR,
   VENDORED_RECEIPTS,
   VERDICT_CODES,
   VERDICT_WORDS,
@@ -141,6 +167,8 @@ const ROOT = join(dirname(fileURLToPath(import.meta.url)), "..");
 /** The tree holds well over these many markdown and JSON files; fewer means a walk found nothing. */
 const MIN_DOC_FILES = 100;
 const MIN_JSON_FILES = 50;
+/** git tracks well over these many files here; fewer means the listing read no tree (wb-pzbq, the walk-exclusion ground). */
+const MIN_TRACKED_FILES = 500;
 /** The live leg's bound: four short gp processes, each under its own 60 s timeout, on a loaded host. */
 const LIVE_TIMEOUT_MS = 240_000;
 
@@ -162,6 +190,8 @@ interface Roster {
   readonly clauses: unknown;
   /** wb-atq9: the census's vocabularies, each in its judge's order. */
   readonly vocabularies: unknown;
+  /** wb-pzbq: the clause map, each clause's judged tables in clause order. */
+  readonly clauseTables: unknown;
 }
 const readRoster = (): Roster => readJson(ROSTER_FIXTURE) as Roster;
 
@@ -211,6 +241,18 @@ function receiptSections(markdown: string): SectionsReading {
 function receiptLedger(markdown: string): ReturnType<typeof foldLedger> {
   const reading = receiptSections(markdown);
   return reading.ok ? foldLedger(reading.sections) : reading;
+}
+/** A receipt's anchors (wb-pzbq): its Cases and Clause tables sections folded, or why it cannot be read. */
+function receiptAnchors(markdown: string): ReturnType<typeof foldAnchors> {
+  const reading = receiptSections(markdown);
+  return reading.ok ? foldAnchors(reading.sections) : reading;
+}
+/** The anchors the committed receipt states, or why it cannot be read. */
+const committedAnchors = (): ReturnType<typeof foldAnchors> => receiptAnchors(readFileSync(join(ROOT, RECEIPT_DOC), "utf8"));
+
+/** Every registered test of this file in the vitest task tree, in registration order. */
+function registered(tasks: readonly RunnerTask[]): RunnerTestCase[] {
+  return tasks.flatMap((child): RunnerTestCase[] => (child.type === "test" ? [child] : child.type === "suite" ? registered(child.tasks) : []));
 }
 
 /** The real host the live leg resolves gp on. */
@@ -355,6 +397,10 @@ describe("gp provenance census (wb-gxd7.5, GPC-FEEDBACK-CONTRACT-AUDIT-R5)", () 
     expect(filingClauses("Owner filing (x). Acceptance: (a) one. Acceptance: (a) two.")).toEqual([]);
     expect(filingClauses("Owner filing (x). No acceptance sentence.")).toEqual([]);
     expect(ownerFiling("a statement\n\nnot the filing\n\nOwner filing (x). Acceptance: (a) one.")).toBe("");
+    // wb-pzbq (the wb-atq9 gate's F2): the clause map is held outside the census as well - each clause's judged tables
+    // stand in the receipt's Clause tables ledger, so a table moved out of a clause needs a named removal there.
+    const anchors = committedAnchors();
+    expect(anchors.ok ? anchors.anchors.clauses : anchors.why, "each clause's judged tables equal the receipt's Clause tables ledger").toEqual(judgedAnchors([]).clauses);
   });
 
   it("landed note: every residual family the landed wb-gxd7.5 delivery named stays a named residual here, read from its append-only delivered paragraph", () => {
@@ -512,6 +558,36 @@ describe("gp provenance census (wb-gxd7.5, GPC-FEEDBACK-CONTRACT-AUDIT-R5)", () 
     expect(claimFindings({ surface: "cli", verb: "eval", status: "prerequisite-missing", missing: "network" }, undefined).map(ruleOf), "network").toEqual(["C-MISSING"]);
   });
 
+  it("permissive vocabularies: every claim status and missing prerequisite is one the reference readers mint from the capture, and every walk exclusion is the VCS directory or a .gitignore directory below which git tracks no file, so an appended member that loosens the claim judge or narrows a walk is red", () => {
+    // wb-pzbq (the wb-atq9 gate's F3): the receipt holds each member by digest, so an appended Vocabularies table admits a
+    // member; these three lists only loosen their judge or walk when they grow, so each member is grounded outside them.
+    const captured = capture();
+    const minted = mintedVocabularies(captured);
+    expect([...CLAIM_STATUSES].sort(), "the claim statuses are exactly the statuses the reference readers mint").toEqual(minted.statuses);
+    expect([...MISSING].sort(), "the missing prerequisites are exactly the ones the reference readers name").toEqual(minted.missing);
+    // The mint is read from the readers over the capture, never a fixed answer: without the hello's refusals no case is
+    // refused, and the no-binary case alone mints one status and one prerequisite.
+    const withoutRefusals: Capture = { ...captured, hello: { ...captured.hello, replies: captured.hello.replies.filter((line) => !line.includes(REFUSED_CODE)) } };
+    expect(mintedVocabularies(withoutRefusals).statuses, "a capture without refusals mints no refused").toEqual(["listed", "prerequisite-missing", "served", "unlisted"]);
+    expect(mintedVocabularies(captured, [{ reader: "no-binary", surface: "rpc", verb: "sample", status: "prerequisite-missing", expect: [] }])).toEqual({ statuses: ["prerequisite-missing"], missing: ["binary"] });
+    const ignored = ignoredDirectories(readFileSync(join(ROOT, ".gitignore"), "utf8"));
+    expect(
+      SKIP_DIRS.filter((dir) => dir !== VCS_DIR && !ignored.includes(dir)),
+      "walk exclusions the root .gitignore does not ignore",
+    ).toEqual([]);
+    const listing = spawnSync("git", ["ls-files", "-z"], { cwd: ROOT, encoding: "utf8", maxBuffer: 1 << 26 });
+    expect(listing.status, "git ls-files read the tracked tree").toBe(0);
+    const tracked = listing.stdout.split("\0").filter((path) => path !== "");
+    expect(tracked.length).toBeGreaterThanOrEqual(MIN_TRACKED_FILES);
+    expect(trackedBelow(tracked, SKIP_DIRS), "tracked files below a walk exclusion").toEqual([]);
+    // The grounds' controls: they read what they are given. qa/ holds tracked files, so excluding it would be read; a name
+    // .gitignore does not ignore is read; only plain "<name>/" lines ignore a directory at every depth.
+    expect(trackedBelow(tracked, ["qa"]).length, "qa/ holds tracked files").toBeGreaterThan(0);
+    expect(trackedBelow(["qa/a.mjs", "docs/b.md", "c/build/d.json", "build"], ["qa", "build"])).toEqual(["qa/a.mjs", "c/build/d.json"]);
+    expect(["qa", "vendor-cache"].filter((dir) => !ignored.includes(dir))).toEqual(["qa", "vendor-cache"]);
+    expect(ignoredDirectories("node_modules/\n# dist/\n!keep/\n*.log\n/anchored/\ntest/perf/.results/\n  plan/  \n")).toEqual(["node_modules", "plan"]);
+  });
+
   it("receipt ledger: every judged row (its label and each pin) and every vocabulary member stands in the append-only receipt docs/workbench/receipts/wb-atq9.md, read through every cut's tables, so a member leaves only by a named removal", () => {
     const reading = receiptLedger(readFileSync(join(ROOT, RECEIPT_DOC), "utf8"));
     if (!reading.ok) throw new Error(`${RECEIPT_DOC}: ${reading.why}`);
@@ -550,7 +626,51 @@ describe("gp provenance census (wb-gxd7.5, GPC-FEEDBACK-CONTRACT-AUDIT-R5)", () 
     expect(read(receipt(ledgerEntryTables(1)))).toEqual(judgedLedger());
   });
 
-  it("rule 16: every judged table, the residual families, the known set and the clause map are frozen at their measured shape", () => {
+  it("receipt anchors: every standalone case of this file (its key and its title) and every acceptance clause's judged tables stand in the append-only receipt docs/workbench/receipts/wb-atq9.md, read through every cut's Cases and Clause tables, so deleting or retitling a case, or moving a table out of a clause, needs a named removal", ({ task }) => {
+    // wb-pzbq (the wb-atq9 gate's F1 and F2): the standalone titles were held only by the roster's tests list and the clause
+    // map only by its rule-16 literal, so a reader case deleted with its roster title, or a table moved between clauses with
+    // its literal, stayed green. Both are read here against the vitest task tree and CLAUSE_TABLES, both ways.
+    const reading = committedAnchors();
+    if (!reading.ok) throw new Error(`${RECEIPT_DOC}: ${reading.why}`);
+    const titles = registered(task.file.tasks).map((entry) => entry.name);
+    const standalone = standaloneTitles(titles);
+    expect(standalone.filter((title) => caseKey(title) === ""), "standalone titles without a case key").toEqual([]);
+    expect(new Set(standalone.map(caseKey)).size, "each standalone case has its own key").toBe(standalone.length);
+    expect(reading.anchors, "the standalone cases and the clause map equal the receipt's anchors, both ways").toEqual(judgedAnchors(titles));
+    // The anchor reader's controls on synthetic receipts: it reads what it is given, never a fixed answer.
+    const [title1, title2, title3] = ["1", "2", "3"].map((digit) => digit.repeat(16));
+    const section = (family: string, cut: number, lines: readonly string[]): string => {
+      const header = family === "Cases" || family === "Removed cases" ? ["Case", "Title"] : ["Clause", "Tables"];
+      return [`### ${family}, ${FOLLOW_UP} cut ${cut}`, "", `| ${header.join(" | ")} |`, `| ${header.map(() => "---").join(" | ")} |`, ...lines, ""].join("\n");
+    };
+    const receipt = (...entries: readonly string[]): string => [`# ${FOLLOW_UP}: synthetic`, "", ...entries.map((body, index) => `## 2026-01-0${index + 1} entry ${index + 1}\n\n${body}`)].join("\n");
+    const read = (markdown: string): unknown => {
+      const folded = receiptAnchors(markdown);
+      return folded.ok ? folded.anchors : folded.why;
+    };
+    const cut1 = ledgerEntryTables(1);
+    const cut2 = `${section("Cases", 2, [`| one | ${title1} |`, `| live (a) | ${title2} |`])}\n${section("Clause tables", 2, ["| (a) | ONE |", "| (b) | TWO THREE |"])}`;
+    const stated = { cases: { one: [title1], "live (a)": [title2] }, clauses: { "(a)": ["ONE"], "(b)": ["THREE", "TWO"] } };
+    expect(read(receipt(cut1, cut2))).toEqual(stated);
+    // A later cut that restates the tables without a member removes nothing; a named removal does.
+    const restated = `${section("Cases", 3, [`| one | ${title1} |`])}\n${section("Clause tables", 3, ["| (a) | ONE |", "| (b) | TWO |"])}`;
+    expect(read(receipt(cut1, cut2, restated))).toEqual(stated);
+    const removed = `${section("Removed cases", 3, [`| live (a) | ${title2} |`])}\n${section("Removed clause tables", 3, ["| (b) | THREE |"])}`;
+    expect(read(receipt(cut1, cut2, removed))).toEqual({ cases: { one: [title1] }, clauses: { "(a)": ["ONE"], "(b)": ["TWO"] } });
+    // A retitle without the old title's removal, a removal of a member that does not stand or of a clause no cut added, two
+    // titles on one line, a malformed key or member, and an unbound anchor section are each no reading.
+    expect(read(receipt(cut1, cut2, section("Cases", 3, [`| one | ${title3} |`])))).toBe("case one stands with 2 titles");
+    expect(read(receipt(cut1, cut2, section("Removed cases", 3, [`| one | ${title3} |`])))).toBe(`cut 3 Removed cases: the removal names ${title3} of one, which does not stand`);
+    expect(read(receipt(cut1, cut2, section("Removed clause tables", 3, ["| (c) | ONE |"])))).toBe("cut 3 Removed clause tables: the removal names (c), which no cut added");
+    expect(read(receipt(cut1, section("Cases", 2, [`| one | ${title1} ${title2} |`])))).toBe("cut 2 Cases: case one states 2 titles");
+    expect(read(receipt(cut1, section("Cases", 2, [`| One | ${title1} |`])))).toBe('cut 2 Cases: case key "One" is malformed');
+    expect(read(receipt(cut1, section("Clause tables", 2, ["| (a) | one |"])))).toBe("cut 2 Clause tables: (a) carries a member that is not a table name");
+    expect(read(receipt(cut1, section("Cases v2", 2, [`| one | ${title1} |`])))).toBe(`the level-3 section "Cases v2, ${FOLLOW_UP} cut 2" is no ledger section`);
+    // The census's own anchors, rendered as a cut states them beside cut 1's tables, read back as its anchors.
+    expect(read(receipt(cut1, anchorEntryTables(2, titles)))).toEqual(judgedAnchors(titles));
+  });
+
+  it("rule 16: every judged table, the residual families, the known set and the clause map are frozen at their measured shape", ({ task }) => {
     expect(ROWS.map((entry) => `${entry.table}/${entry.id}:${entry.pins.length}`)).toEqual([
       "PROVENANCE/P-ACCEPT:3",
       "PROVENANCE/P-VERSION-LINE:4",
@@ -620,6 +740,12 @@ describe("gp provenance census (wb-gxd7.5, GPC-FEEDBACK-CONTRACT-AUDIT-R5)", () 
       "receipt fields:17",
       "walk exclusions:6",
     ]);
+    // wb-pzbq (the wb-atq9 gate's F1): the standalone cases by key, in registration order; the receipt's Cases ledger holds
+    // the same keys, so a case deleted together with its element of this literal is red here as well.
+    const keys = standaloneTitles(registered(task.file.tasks).map((entry) => entry.name)).map(caseKey);
+    expect(keys).toEqual(["bead", "landed note", "live (a)", "live (b)", "live (c)", "live (d)", "live leg", "vocabularies", "permissive vocabularies", "receipt ledger", "receipt anchors", "rule 16", "roster"]);
+    const anchors = committedAnchors();
+    expect(anchors.ok ? Object.keys(anchors.anchors.cases).sort() : anchors.why, "the receipt's Cases ledger holds exactly these keys").toEqual([...keys].sort());
   });
 
   it("roster: the judged rows, the registered tests, the residual families and the known set equal test/fixtures/gp-provenance-roster.json, in order and both ways", ({ task }) => {
@@ -629,6 +755,7 @@ describe("gp provenance census (wb-gxd7.5, GPC-FEEDBACK-CONTRACT-AUDIT-R5)", () 
     expect(KNOWN_UNGROUNDED, "the known ungrounded lines equal the roster's").toEqual(roster.known);
     expect(ACCEPTANCE.map((clause) => sha256(clause)), "each acceptance clause's sha256 equals the roster's").toEqual(roster.clauses);
     expect(VOCABULARIES, "the vocabularies, each in its judge's order, equal the roster's").toEqual(roster.vocabularies);
+    expect(CLAUSE_TABLES, "the clause map, clause by clause, equals the roster's").toEqual(roster.clauseTables);
     for (const member of Object.values(RESIDUAL_FAMILIES).flat()) expect(ROWS.some((entry) => entry.test === member), `${member} is a judged row`).toBe(true);
     const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {
@@ -642,6 +769,11 @@ describe("gp provenance census (wb-gxd7.5, GPC-FEEDBACK-CONTRACT-AUDIT-R5)", () 
     expect(titles, "every registered test of this file (vitest task tree), exactly and in roster order").toEqual(roster.tests);
     expect(roster.tests.slice(0, ROWS.length), "each judged row registers its own test, in row order").toEqual(ROWS.map((entry) => entry.test));
     expect(titles.filter((name, index) => titles.indexOf(name) !== index), "titles registered twice (an alias or a decoy)").toEqual([]);
+    // wb-pzbq (the wb-atq9 gate's F1): the roster's tests list is a same-cut literal, so every standalone case this walk
+    // registered also stands in the receipt's Cases ledger with its title, both ways: a case deleted together with its
+    // roster title is red here as well as in the receipt anchors case.
+    const anchors = committedAnchors();
+    expect(anchors.ok ? anchors.anchors.cases : anchors.why, "the standalone cases registered here equal the receipt's Cases ledger, both ways").toEqual(judgedAnchors(titles).cases);
     const here = walked.findIndex((entry) => entry.self);
     expect(here, "this case finds itself by task identity, registered last").toBe(walked.length - 1);
     const ran = (state: string | undefined): boolean => state === "pass" || state === "fail";

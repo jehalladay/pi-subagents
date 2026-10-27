@@ -76,7 +76,80 @@
         "token": "{{typeList}}"
       }
     },
-    "freshnessRefusal": "validation: ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused."
+    "freshnessRefusal": "validation: ReactiveFiber topology refused: every result.observations row must state freshness captured_at_render or reused.",
+    "plainSdkKey": "reactive_lenses",
+    "neutralPayloads": {
+      "R-COMPOSED": "const name = [\"Lens\", \"Result\"].join(\"\");\n",
+      "R-ENCODED": "const name = \"\\u004censResult\";\n",
+      "R-GENERIC": "if (row.status === \"observed\") read(row);\n",
+      "R-OUTSIDE": {
+        "path": "test/reader.ts",
+        "body": "export const read = (result: LensResult) => result;\n"
+      },
+      "R-ORDERED": {
+        "step": "positioned snapshot",
+        "calls": [
+          {
+            "call": "refresh",
+            "capturedAt": "2026-10-23T00:00:02Z",
+            "sequence": 7,
+            "ready": false
+          },
+          {
+            "call": "refresh",
+            "capturedAt": "2026-10-23T00:00:03Z",
+            "sequence": 8,
+            "ready": true
+          }
+        ]
+      },
+      "R-REFRESH": {
+        "step": "snapshot alone",
+        "calls": [
+          {
+            "call": "refresh",
+            "capturedAt": "2026-10-23T00:00:02Z",
+            "ready": true
+          }
+        ]
+      }
+    },
+    "loudPayloads": {
+      "R-COMPOSED": "const name = \"SnapshotObservation\";\n",
+      "R-ENCODED": "const name = \"ImportBinding\";\n",
+      "R-GENERIC": "if (row.status === \"RESYNC_REQUIRED\") resync(row);\n",
+      "R-OUTSIDE": {
+        "path": "src/reader.ts",
+        "body": "export const read = (observation: SnapshotObservation) => observation;\n"
+      },
+      "R-ORDERED": {
+        "step": "gapped event",
+        "calls": [
+          {
+            "call": "refresh",
+            "capturedAt": "2026-10-23T00:00:02Z",
+            "sequence": 7,
+            "ready": false
+          },
+          {
+            "call": "ingest",
+            "id": "s9",
+            "sequence": 9,
+            "ready": true
+          }
+        ]
+      },
+      "R-REFRESH": {
+        "step": "notification alone",
+        "calls": [
+          {
+            "call": "ingest",
+            "id": "n1",
+            "ready": true
+          }
+        ]
+      }
+    }
   },
   "producer": {
     "repo": "ReactiveLensesSDK",
@@ -257,10 +330,36 @@
               ],
               "propertyPath": [],
               "prose": [],
-              "composed": [],
-              "escaped": [],
-              "genericWords": [],
-              "provenanceKey": [],
+              "composed": {
+                "payload": "const name = [\"Snapshot\", \"Observation\"].join(\"\");\n",
+                "reading": [],
+                "mode": [
+                  "snapshot-observation"
+                ]
+              },
+              "escaped": {
+                "payload": "const name = \"\\u0053napshotObservation\";\n",
+                "reading": [],
+                "mode": [
+                  "snapshot-observation"
+                ]
+              },
+              "genericWords": {
+                "payload": "if (row.status === \"WITHHELD\" || row.status === \"STALE\" || row.status === \"UNAVAILABLE\") read(row);\n",
+                "reading": [],
+                "mode": [
+                  "STALE",
+                  "UNAVAILABLE",
+                  "WITHHELD"
+                ]
+              },
+              "provenanceKey": {
+                "payload": "const lenses = provenance.sdk_versions.reactive_lenses;\n",
+                "reading": [],
+                "mode": [
+                  "reactive_lenses"
+                ]
+              },
               "plantedSrc": [
                 "snapshot-observation"
               ],
@@ -270,8 +369,26 @@
               "plantedExamples": [
                 "resync-state"
               ],
-              "testRoot": [],
-              "docsRoot": [],
+              "testRoot": {
+                "payload": {
+                  "path": "test/reader.ts",
+                  "body": "export const read = (observation: SnapshotObservation) => observation;\n"
+                },
+                "reading": [],
+                "mode": [
+                  "snapshot-observation"
+                ]
+              },
+              "docsRoot": {
+                "payload": {
+                  "path": "docs/reader.md",
+                  "body": "Pi reads ImportBinding records.\n"
+                },
+                "reading": [],
+                "mode": [
+                  "import-binding"
+                ]
+              },
               "quietSrc": []
             }
           }
@@ -459,25 +576,90 @@
             ],
             "controls": {
               "orderedSequence": {
-                "step": "positioned event",
-                "result": "applied",
-                "freshness": "current",
-                "completeness": "complete",
-                "statusText": "READY"
+                "payload": {
+                  "step": "positioned event",
+                  "calls": [
+                    {
+                      "call": "refresh",
+                      "capturedAt": "2026-10-23T00:00:02Z",
+                      "sequence": 7,
+                      "ready": false
+                    },
+                    {
+                      "call": "ingest",
+                      "id": "s8",
+                      "sequence": 8,
+                      "ready": true
+                    }
+                  ]
+                },
+                "reading": {
+                  "step": "positioned event",
+                  "result": "applied",
+                  "freshness": "current",
+                  "completeness": "complete",
+                  "statusText": "READY"
+                },
+                "mode": [
+                  "sequence 7 -> 8"
+                ]
               },
               "orderedCursor": {
-                "step": "chained event",
-                "result": "applied",
-                "freshness": "current",
-                "completeness": "complete",
-                "statusText": "READY"
+                "payload": {
+                  "step": "chained event",
+                  "calls": [
+                    {
+                      "call": "refresh",
+                      "capturedAt": "2026-10-23T00:00:02Z",
+                      "cursor": "c7",
+                      "ready": false
+                    },
+                    {
+                      "call": "ingest",
+                      "id": "c8",
+                      "previousCursor": "c7",
+                      "cursor": "c8",
+                      "ready": true
+                    }
+                  ]
+                },
+                "reading": {
+                  "step": "chained event",
+                  "result": "applied",
+                  "freshness": "current",
+                  "completeness": "complete",
+                  "statusText": "READY"
+                },
+                "mode": [
+                  "cursor c7 -> c8"
+                ]
               },
               "refreshTrusted": {
-                "step": "snapshot built from a notification",
-                "result": "applied",
-                "freshness": "current",
-                "completeness": "complete",
-                "statusText": "READY"
+                "payload": {
+                  "step": "snapshot built from a notification",
+                  "calls": [
+                    {
+                      "call": "ingest",
+                      "id": "n1",
+                      "ready": false
+                    },
+                    {
+                      "call": "refresh",
+                      "capturedAt": "2026-10-23T00:00:02Z",
+                      "ready": true
+                    }
+                  ]
+                },
+                "reading": {
+                  "step": "snapshot built from a notification",
+                  "result": "applied",
+                  "freshness": "current",
+                  "completeness": "complete",
+                  "statusText": "READY"
+                },
+                "mode": [
+                  "notification n1"
+                ]
               }
             }
           }

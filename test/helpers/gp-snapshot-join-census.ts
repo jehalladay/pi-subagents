@@ -687,7 +687,7 @@ export const TOUCHPOINTS: readonly (SourceRow & { readonly kind: TouchKind })[] 
     id: "T-FIELD",
     kind: "FIELD",
     label:
-      "a gp join-value field in code: input_snapshot, graph_digest or canonical_digest, or a camel-case mirror, as a name, a private name, a member, a string, a template part or a regular expression",
+      "a gp join-value field in code: input_snapshot, graph_digest or canonical_digest, or a camel-case mirror, as a name, a private name, a member, a string, a template part or a regular expression, and in text as a whole word wherever it stands: inside a dotted path, or after or before a longer name that holds it",
     pins: [
       'if (receipt.input_snapshot !== exported) throw new Error("mismatch");',
       "const { graph_digest } = reply.result.decision;",
@@ -698,12 +698,16 @@ export const TOUCHPOINTS: readonly (SourceRow & { readonly kind: TouchKind })[] 
       ["const path = `decision.$", "{port}.graph_digest`;"].join(""),
       "const shaped = /canonicalDigest/.test(line);",
       'class Receipt { #inputSnapshot = ""; }',
+      'const path = "receipt.input_snapshot.value";',
+      'const text = "xinput_snapshot input_snapshot";',
+      'const text = "input_snapshot, not input_snapshots";',
     ],
   },
   {
     id: "T-IDENTITIES",
     kind: "IDENTITIES",
-    label: "gp's whole-document identity read as identities.graph: a member chain, an optional chain, an element access, a binding or assignment pattern, or a path string, slashed or dotted",
+    label:
+      "gp's whole-document identity read as identities.graph: a member chain, an optional chain, an element access, a binding or assignment pattern, or a path string, slashed or dotted, whole or inside a longer path",
     pins: [
       "const id = envelope.identities.graph;",
       "const id = check.identities?.graph;",
@@ -713,6 +717,8 @@ export const TOUCHPOINTS: readonly (SourceRow & { readonly kind: TouchKind })[] 
       "({ graph: documentId } = check.identities);",
       'const pointer = "/identities/graph";',
       'const id = get(check, "identities.graph");',
+      'const pointer = "/identities/graph/0";',
+      'const path = "check.identities.graph.value";',
     ],
   },
   {
@@ -724,8 +730,14 @@ export const TOUCHPOINTS: readonly (SourceRow & { readonly kind: TouchKind })[] 
   {
     id: "T-SHARED",
     kind: "SHARED",
-    label: "snapshotDigest, the name gp's journal and observation records give the join value, or its snake-case mirror, as a member, a private name, a binding or a string",
-    pins: ["if (reply.snapshotDigest !== exported) refuse();", 'const value = record["snapshotDigest"];', "const { snapshot_digest } = row;", 'class Host { #snapshotDigest = ""; }'],
+    label: "snapshotDigest, the name gp's journal and observation records give the join value, or its snake-case mirror, as a member, a private name, a binding or a string, whole or inside a dotted path",
+    pins: [
+      "if (reply.snapshotDigest !== exported) refuse();",
+      'const value = record["snapshotDigest"];',
+      "const { snapshot_digest } = row;",
+      'class Host { #snapshotDigest = ""; }',
+      'const path = "record.snapshotDigest.value";',
+    ],
   },
 ];
 

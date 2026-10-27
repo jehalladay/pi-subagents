@@ -450,10 +450,40 @@
                   "text:exact",
                   "text:exact"
                 ]
+              ],
+              [
+                "greek pre-release",
+                "major:1-<U+03B2>2"
+              ],
+              [
+                "arabic-indic minor",
+                "major:1.<U+0661>"
+              ],
+              [
+                "cjk build mark",
+                "major:1+<U+7248>2"
+              ],
+              [
+                "mark-led word",
+                "major:1_<U+0301>x"
+              ],
+              [
+                "tamil number",
+                "major:1:<U+0BF0>"
+              ],
+              [
+                "greek tail",
+                "major:1<U+03B2>"
+              ],
+              [
+                "arabic-indic tail",
+                "major:1<U+0661>"
               ]
             ],
             "quiet": {
               "R-SUFFIX-BOUNDARY": [
+                "exact",
+                "exact",
                 "exact",
                 "exact",
                 "exact",
@@ -469,7 +499,9 @@
                 "major:1+2",
                 "major:1_2",
                 "major:1-grap2",
-                "major:1.decide"
+                "major:1.decide",
+                "major:1-rc1",
+                "major:1-<U+03B2>2"
               ]
             },
             "planted": [
@@ -736,6 +768,70 @@
                 ]
               ],
               [
+                "a judge-importing leg under src/",
+                [
+                  "src/workbench/providers/graphpolicy.ts: refusal case \"refuses a non-pinned schema id\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)",
+                  "src/workbench/providers/graphpolicy.ts: verbatim case \"surfaces the producer namespace refusal verbatim\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)",
+                  "src/workbench/providers/graphpolicy.ts: noRetry case \"never retries under an altered namespace\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)"
+                ]
+              ],
+              [
+                "a judge-importing leg under qa/",
+                [
+                  "src/workbench/providers/graphpolicy.ts: refusal case \"refuses a non-pinned schema id\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)",
+                  "src/workbench/providers/graphpolicy.ts: verbatim case \"surfaces the producer namespace refusal verbatim\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)",
+                  "src/workbench/providers/graphpolicy.ts: noRetry case \"never retries under an altered namespace\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)"
+                ]
+              ],
+              [
+                "a judge-importing leg under docs/workbench/",
+                [
+                  "src/workbench/providers/graphpolicy.ts: refusal case \"refuses a non-pinned schema id\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)",
+                  "src/workbench/providers/graphpolicy.ts: verbatim case \"surfaces the producer namespace refusal verbatim\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)",
+                  "src/workbench/providers/graphpolicy.ts: noRetry case \"never retries under an altered namespace\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)"
+                ]
+              ],
+              [
+                "a judge-importing leg under a test-prefixed sibling",
+                [
+                  "src/workbench/providers/graphpolicy.ts: refusal case \"refuses a non-pinned schema id\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)",
+                  "src/workbench/providers/graphpolicy.ts: verbatim case \"surfaces the producer namespace refusal verbatim\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)",
+                  "src/workbench/providers/graphpolicy.ts: noRetry case \"never retries under an altered namespace\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)"
+                ]
+              ],
+              [
+                "a -census.ts name",
+                [
+                  "src/workbench/providers/graphpolicy.ts: refusal case \"refuses a non-pinned schema id\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)",
+                  "src/workbench/providers/graphpolicy.ts: verbatim case \"surfaces the producer namespace refusal verbatim\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)",
+                  "src/workbench/providers/graphpolicy.ts: noRetry case \"never retries under an altered namespace\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)"
+                ]
+              ],
+              [
+                "a bare helper specifier",
+                [
+                  "src/workbench/providers/graphpolicy.ts: refusal case \"refuses a non-pinned schema id\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)",
+                  "src/workbench/providers/graphpolicy.ts: verbatim case \"surfaces the producer namespace refusal verbatim\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)",
+                  "src/workbench/providers/graphpolicy.ts: noRetry case \"never retries under an altered namespace\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)"
+                ]
+              ],
+              [
+                "a .ts helper specifier",
+                []
+              ],
+              [
+                "an extensionless helper specifier",
+                []
+              ],
+              [
+                "a dynamic import of the helper",
+                [
+                  "src/workbench/providers/graphpolicy.ts: refusal case \"refuses a non-pinned schema id\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)",
+                  "src/workbench/providers/graphpolicy.ts: verbatim case \"surfaces the producer namespace refusal verbatim\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)",
+                  "src/workbench/providers/graphpolicy.ts: noRetry case \"never retries under an altered namespace\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)"
+                ]
+              ],
+              [
                 "a leg naming another test file",
                 [
                   "src/workbench/providers/graphpolicy.ts: refusal case \"refuses a non-pinned schema id\" of test/workbench-gp-adapter.test.ts is judged by no census-tier leg (a test/**/*.census.ts file importing judge from test/helpers/census.ts that names the case's file and title)",
@@ -995,7 +1091,7 @@
     {
       "id": "R-CONFUSABLE",
       "quietPin": "A2",
-      "family": "a homoglyph or combining-mark spelling (a Cyrillic letter for a Latin one) is not folded to Latin"
+      "family": "a homoglyph or combining-mark spelling (a Cyrillic letter for a Latin one, an Arabic-Indic digit for the major's ASCII one) is not folded to Latin or ASCII; the major's own digits are ASCII after NFKC (wb-1du7)"
     },
     {
       "id": "R-MARKUP",
@@ -1020,7 +1116,7 @@
     {
       "id": "R-SUFFIX-BOUNDARY",
       "quietPin": "B2",
-      "family": "a suffix set off by whitespace, or led by a mark outside the separators and the plus sign (#, @, a bracket), and a separator-led word that opens another GP namespace (a following id) each end the reading, so the id before it reads exact; a pre-release written after a space reads as prose"
+      "family": "a suffix set off by whitespace, or led by a mark outside the separators and the plus sign in any script (#, @, a bracket, U+2010 HYPHEN), a separator run that no letter, mark or digit follows (a sentence stop, U+2192 RIGHTWARDS ARROW), and a separator-led word that opens another GP namespace (a following id) each end the reading, so the id before it reads exact; a pre-release written after a space reads as prose; a letter, mark or digit of any script continues the major (wb-1du7 F1)"
     },
     {
       "id": "R-BOUND-CASE",
