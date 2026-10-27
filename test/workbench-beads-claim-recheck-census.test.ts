@@ -40,15 +40,16 @@
  *    decides on the claim from one that reads nothing). A4 no longer ready otherwise: the claim released (open), a blocked, deferred
  *    or unknown status, a cut dependency page, and an unreadable re-read (a nonzero exit, a non-JSON body, another work id, a
  *    throwing seam) each refuse with their typed code.
- *  B, the boundary census, (b). B1 no file under SCAN_ROOTS claims a Beads task (the bd word with a claim verb, or an update to
- *    status in progress, within CLAIM_WINDOW words), with floors, anchors and controls; the Beads seam offers show alone; a module
- *    B1 flags must be bound in BEAD_EXECUTORS and every binding must name one (empty both ways today). B2 the reader holds no
- *    readiness: its source keeps no module-scope let or var and writes no module-scope container, and two reads of one id issue two
- *    shows whose readings follow their own envelopes and stamps. B3 no file under IMPORT_ROOTS imports the reader (an exact set,
- *    empty today) or spells a bd readiness read (READ_VERBS) outside it, with matcher controls and positive floors (the import
- *    matcher finds the reader's own import of redaction.ts; the read judge reads the seam's own bd show). B4
- *    the bead machine's generation: in the carried claim step, a bd show read and the status requirement precede the claim-lock and
- *    the claim write, a second bd show follows the claim write, all of them precede the first execution step, and no bd close is
+ *  B, the boundary census, (b). B1 no file under SCAN_ROOTS, and no root manifest (ROOT_MANIFESTS), claims a Beads task (the bd
+ *    word with a claim verb, or an update to status in progress, within CLAIM_WINDOW words), with floors, anchors and controls; the
+ *    Beads seam offers show alone (every declaration of it under IMPORT_ROOTS read by the TypeScript parser, with spelling
+ *    controls); a module B1 flags must be bound in BEAD_EXECUTORS and every binding must name one (empty both ways today). B2 the
+ *    reader holds no readiness: its source keeps no module-scope let or var and writes no module-scope container, and two reads of
+ *    one id issue two shows whose readings follow their own envelopes and stamps. B3 no file under IMPORT_ROOTS imports the reader
+ *    (an exact set, empty today) or spells a bd readiness read (READ_VERBS) outside it, with matcher controls and positive floors
+ *    (the import matcher finds the reader's own import of redaction.ts; the read judge reads the seam's own bd show). B4 the bead
+ *    machine's generation: in the carried claim step, a bd show read and the status requirement precede the claim-lock and the
+ *    claim write, a second bd show follows the claim write, all of them precede the first execution step, and no bd close is
  *    spelled.
  *  C, the mutants, (c). C1 STALE-CLAIM (decides on the reading the claim step saw) runs the native verb on every A1 and A2 case and
  *    never re-reads. C2 every other mutant breaks at least one case of its own clause, and honest meets every case. C3 every bound
@@ -56,38 +57,56 @@
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the whole judged set - every row's id, label and
  * pins, every pin's witness (each case's sha256 among them), the constants and every registered test title - is held to the
- * out-of-file roster; rows A to C are held to the bead's own notes in the tracker export (.beads/issues.jsonl) both ways (every label
- * is one of the acceptance clauses the notes state, every stated clause is a row, in order), the cited line to the same notes, the
- * cases to the reader's own vocabulary (every status its STATUS_TONES maps and both dependency types it edges are exercised by a
- * case's re-read), and the carried generation texts to their sha256 literals here and to the fragment of the claim step the filing
- * itself quotes. The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it) and
- * the set of pins that reached their witness. Not claimed: an edit of this file and the roster together - a row removed from both
- * reds through the notes, and a case removed from both reds when it was the only case of a status or edged type the reader maps,
- * but a pin, a residual or any other case removed from both stays green (no source outside this cut holds those sets).
+ * out-of-file roster; rows A to C are held to the bead's own notes in the tracker export (.beads/issues.jsonl) both ways (every
+ * label is one of the acceptance clauses the notes state, every stated clause is a row, in order), the pin set and the residual
+ * families to the delivery statement in the same notes (its "19 pins A1-A4 B1-B4 C1-C3 Q1-Q8" run and its RESIDUALS list, in order;
+ * a later cut that adds a pin or a family restates it outside first), the cited line to the same notes, the cases to the reader's
+ * own vocabulary (every status its STATUS_TONES maps and both dependency types it edges are exercised by a case's re-read), and the
+ * carried generation texts to their sha256 literals here and to the fragment of the claim step the filing itself quotes. The last
+ * case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it) and the set of pins that
+ * reached their witness. Not claimed: an edit of this file, the roster and the notes together. An edit of this file and the roster
+ * alone reds through the notes when it removes a row, a pin or a residual family (the X-PIN and X-Q hollows of the wb-kku9.3 gate,
+ * F8), and through the reader's vocabulary when it removes the only case of a status or edged type the reader maps; any other case,
+ * a control or a constant's member removed from both stays green (no source outside this cut holds those).
  * RESIDUALS (named, each with its pinned quiet row): R-RESUME the generation's RESUME clause skips the claim step and spells neither a
  * bd show read nor a status requirement, so a resumed seat continues on the dispatch-time claim (Q1; a finding about the flywheel
  * generation, outside this repository, not cured here); R-ASSIGNEE the reader retains no assignee, so a task whose claim passed to
  * another holder reads in progress and runs (Q2); R-WINDOW the re-read and the native verb are two steps, so a close landing between
- * them is not seen (Q3); R-COMPOSED a bd word assembled at runtime, a claim flag held in a variable or a claim verb more than
- * CLAIM_WINDOW words after the bd word escapes B1 (Q4); R-INSTRUCTION AGENTS.md, .agents/skills/beads/SKILL.md and .beads/README.md
- * teach a generic bd claim for this repository's own store: instruction text outside B1's executable roots (Q5); R-CONTROLLER the
+ * them is not seen (Q3); R-COMPOSED a bd word assembled at runtime or held in a named constant spawned past the window, a claim flag
+ * held in a variable or a claim verb more than CLAIM_WINDOW words after the bd word escapes B1, and an import specifier composed at
+ * runtime escapes B3 (Q4); R-INSTRUCTION AGENTS.md, .agents/skills/beads/SKILL.md and .beads/README.md teach a generic bd claim for
+ * this repository's own store in their rendered text: instruction text outside B1's executable roots (Q5); R-CONTROLLER the
  * VC-4 tier's launcher starts a Furnace Run whose Work is claimed and executed by Furnace's authority in a disposable store, and B1
  * reads the launcher as no claim site (Q6); R-ALIAS B2's static scan reads a write spelled on the module-scope name, so a write
  * through an alias escapes it (the two-read case still sees a cache that changes a reading) (Q7); R-REMEASURE the generation is
  * carried at its blob and never read live: a generation change is seen only when the roster is re-measured (Q8).
  * SCOPE: the readiness `honest` requires is judged on the reader's own fields (status, dependency statuses and types, completeness);
- * an execution path may be stricter, never looser. A3 to A4 and B2 to B3 go past the acceptance's literal cases to the statement's
- * "never act on the claim or cached readiness alone". B1 reads no grammar: prose naming the bd word and a claim word within the
- * window reds it (OVER-READ, disclosed: no executable root spells one today). B4 reads the carried text by command (a `;`-separated
- * segment), so a flag in a later command is never attributed to an earlier bd word.
+ * an execution path may be stricter, never looser - but C3 binds only an executor that meets honest's outcome on every case, so a
+ * stricter executor needs C3 widened before it can bind (the wb-kku9.3 gate's F5, disclosed; none is bound today). A3 to A4 and B2
+ * to B3 go past the acceptance's literal cases to the statement's "never act on the claim or cached readiness alone". B1 reads no
+ * grammar: prose naming the bd word and a claim word within the window reds it (OVER-READ, disclosed: no executable root spells one
+ * today). B3's read judge reads no grammar either: a comment or a message naming the bd word and a read verb within the window reds
+ * it (OVER-READ, disclosed by the gate's F7 and pinned by B3's last flagged read control; the reader's own messages are its floor).
+ * B4 reads the carried text by command (a `;`-separated segment), so a flag in a later command is never attributed to an earlier bd
+ * word.
  *
- * Display paths added: none. Test-only: src, qa, examples, the instruction files and .beads are only read; nothing is written and no
- * scratch is allocated.
+ * wb-xogu (the R694 follow-up the wb-kku9.3 gate routed at landing 340: F1 leads, F2-F7 ride, F8 shared). F1 the seam is read by
+ * the TypeScript parser, so the gate's G16a optional method, G16b readonly optional property and G16d generic method red B1 beside
+ * the plain G16c, as do an accessor, a quoted name, a same-line member, a member after a nested brace, a merged or augmenting
+ * declaration, an index signature, an extends clause and an alias of another type (B1's spelling controls). F2 B1 also reads the
+ * root manifests (npm scripts, Forge step commands, every root config module) and the Beads git hooks. F3 a bd word held in a named
+ * constant joins R-COMPOSED (Q4), beside an import specifier composed at runtime. F4 importsOf reads a template-literal specifier.
+ * F5 and F7 are disclosed in SCOPE. F6 Q5 judges the instruction files on their rendered text (HTML comments dropped), with a
+ * control. F8 the pin set and the residual families are held to the delivery statement in the notes (FROZEN SHAPE).
+ *
+ * Display paths added: none. Test-only: src, qa, examples, the root manifests, the instruction files and .beads are only read;
+ * nothing is written and no scratch is allocated.
  */
 import { createHash } from "node:crypto";
 import { type Dirent, readdirSync, readFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
+import ts from "typescript";
 import { describe, expect, it } from "vitest";
 import * as beadsObserver from "../src/workbench/beads-observer.js";
 import { CapabilityError, type JsonValue } from "../src/workbench/capability-registry.js";
@@ -152,8 +171,8 @@ interface ScanRoot {
   readonly anchorToken: string;
 }
 /** The executable surfaces B1 reads (the h2-close-condition roots); each floor sits below the count measured at trunk caad951 (src
- * 115, qa 67, examples 7, .pi 1, .codex 2, .github 2 files). Each anchor is read and quiet; the src, qa and .codex anchors spell the
- * bd word itself. */
+ * 115, qa 67, examples 7, .pi 1, .codex 2, .github 2 files) and, for the Beads git hooks wb-xogu adds (F2), at trunk 3a71372 (5
+ * files). Each anchor is read and quiet; the src, qa, .codex and .beads/hooks anchors spell the bd word itself. */
 const SCAN_ROOTS: readonly ScanRoot[] = [
   { root: "src", floor: 100, anchorFile: "src/workbench/beads-observer.ts", anchorToken: "bd show" },
   { root: "qa", floor: 50, anchorFile: "qa/workbench/live-furnace-vc4-launch.mjs", anchorToken: "spawnSync('bd', ['init'" },
@@ -161,7 +180,21 @@ const SCAN_ROOTS: readonly ScanRoot[] = [
   { root: ".pi", floor: 1, anchorFile: ".pi/agents/auditor.md", anchorToken: "max_turns" },
   { root: ".codex", floor: 2, anchorFile: ".codex/hooks.json", anchorToken: "bd codex-hook" },
   { root: ".github", floor: 2, anchorFile: ".github/workflows/ci.yml", anchorToken: "setup-node" },
+  { root: ".beads/hooks", floor: 4, anchorFile: ".beads/hooks/pre-commit", anchorToken: "bd hooks run" },
 ];
+/** The repository-root files B1 reads beside SCAN_ROOTS (wb-xogu F2): the npm manifest (its scripts), Forge's manifest (its step
+ * commands) and every root config module a tool loads, matched by name; the floor sits below the 15 files measured at trunk 3a71372
+ * (the two manifests and 13 vitest configs), and each anchor is read and quiet. */
+const ROOT_MANIFESTS = {
+  pattern: "^(?:package\\.json|forge\\.toml|[\\w.-]+\\.config\\.[cm]?[jt]s)$",
+  floor: 12,
+  anchors: [
+    { file: "package.json", token: '"scripts"' },
+    { file: "forge.toml", token: "[build.commands]" },
+  ],
+} as const;
+/** The Beads seam's interface name: every declaration of it is read (seamMembersOf). */
+const SEAM_INTERFACE = "BeadsReadClient";
 /** The code roots B3 reads for an importer of the reader and for a bd readiness read outside it. */
 const IMPORT_ROOTS: readonly string[] = ["src", "qa", "examples"];
 const READER_MODULE = "src/workbench/beads-observer.ts";
@@ -335,12 +368,36 @@ function bdReadsIn(text: string): string[] {
 function compose(...words: string[]): string {
   return words.join(" ");
 }
-/** The members of the Beads seam interface a module text declares. */
-function seamMembersOf(text: string): string[] {
-  const body = /export interface BeadsReadClient \{([^}]*)\}/.exec(text)?.[1] ?? "";
-  return [...body.matchAll(/^\s*(\w+)\s*[(:]/gm)].map(match => match[1] ?? "").sort();
+/** The name a seam member reads as: its spelled name (an identifier, a quoted or numeric name, a private or a computed one, as
+ * written), or the kind of a member that carries none (a call, construct or index signature), so no member reads as absent. */
+function memberName(member: ts.TypeElement, source: ts.SourceFile): string {
+  if (ts.isCallSignatureDeclaration(member)) return "(call signature)";
+  if (ts.isConstructSignatureDeclaration(member)) return "(construct signature)";
+  if (ts.isIndexSignatureDeclaration(member)) return "(index signature)";
+  const name = member.name;
+  if (name === undefined) return "(unnamed member)";
+  return ts.isComputedPropertyName(name) ? name.getText(source) : name.text;
 }
-const seamMembers = (): string[] => seamMembersOf(textOf(join(REPO, READER_MODULE)));
+/** The members of the Beads seam a module text declares, read by the TypeScript parser over every SEAM_INTERFACE declaration in it -
+ * an interface (exported, merged, nested or inside an augmenting `declare module`) or a type alias - so an optional, readonly,
+ * generic, accessor, quoted or same-line member, or one after a nested brace, reads by name (wb-xogu F1); an extends clause and an
+ * alias of another type read as members of their own, so neither passes as show alone. */
+function seamMembersOf(text: string): string[] {
+  const source = ts.createSourceFile("seam.ts", text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const members: string[] = [];
+  const visit = (node: ts.Node): void => {
+    if (ts.isInterfaceDeclaration(node) && node.name.text === SEAM_INTERFACE) {
+      for (const clause of node.heritageClauses ?? []) for (const type of clause.types) members.push(`extends ${type.getText(source)}`);
+      for (const member of node.members) members.push(memberName(member, source));
+    } else if (ts.isTypeAliasDeclaration(node) && node.name.text === SEAM_INTERFACE) {
+      if (ts.isTypeLiteralNode(node.type)) for (const member of node.type.members) members.push(memberName(member, source));
+      else members.push(`type ${node.type.getText(source)}`);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return members.sort();
+}
 
 interface ModuleState {
   readonly lets: readonly string[];
@@ -364,10 +421,11 @@ function moduleState(text: string): ModuleState {
   return { lets, containers, writes };
 }
 
-/** The import specifiers a code text names (static, re-export, require and dynamic forms). */
+/** The import specifiers a code text names (static, re-export, require and dynamic forms; the require and dynamic forms read a
+ * quoted or a template-literal specifier, wb-xogu F4 - a specifier composed at runtime names no module, R-COMPOSED, Q4). */
 function importsOf(text: string): string[] {
   return [
-    ...text.matchAll(/\b(?:from|import)\s*["']([^"']+)["']|\brequire\s*\(\s*["']([^"']+)["']\s*\)|\bimport\s*\(\s*["']([^"']+)["']\s*\)/g),
+    ...text.matchAll(/\b(?:from|import)\s*["']([^"']+)["']|\brequire\s*\(\s*["'`]([^"'`]+)["'`]\s*\)|\bimport\s*\(\s*["'`]([^"'`]+)["'`]\s*\)/g),
   ].map(match => match[1] ?? match[2] ?? match[3] ?? "");
 }
 const CODE_FILE = /\.(?:[cm]?ts|[cm]?js)$/;
@@ -375,6 +433,15 @@ const CODE_FILE = /\.(?:[cm]?ts|[cm]?js)$/;
 function namesModule(specifier: string, stem: string): boolean {
   return new RegExp(`(?:^|/)${stem}(?:\\.[cm]?[jt]s)?$`).test(specifier);
 }
+/** Every Beads seam member declared under IMPORT_ROOTS: the reader's own declaration and any a code file merges into it (an
+ * augmenting `declare module` or a same-named declaration), read by seamMembersOf over each code file that names the seam. */
+const seamMembers = (): string[] =>
+  IMPORT_ROOTS.flatMap(root => filesBelow(join(REPO, root)))
+    .filter(file => CODE_FILE.test(file))
+    .map(file => textOf(file))
+    .filter(text => text.includes(SEAM_INTERFACE))
+    .flatMap(text => seamMembersOf(text))
+    .sort();
 function importersOf(stem: string, roots: readonly string[]): string[] {
   return roots
     .flatMap(root => filesBelow(join(REPO, root)))
@@ -382,6 +449,29 @@ function importersOf(stem: string, roots: readonly string[]): string[] {
     .map(file => relative(REPO, file))
     .filter(file => file !== READER_MODULE || stem !== "beads-observer")
     .filter(file => importsOf(textOf(join(REPO, file))).some(specifier => namesModule(specifier, stem)));
+}
+
+/** The repository-root files B1 reads (ROOT_MANIFESTS), in name order. */
+function rootManifests(): string[] {
+  const pattern = new RegExp(ROOT_MANIFESTS.pattern);
+  let entries: Dirent[];
+  try {
+    entries = readdirSync(REPO, { withFileTypes: true });
+  } catch {
+    return [];
+  }
+  return entries
+    .filter(entry => entry.isFile() && pattern.test(entry.name))
+    .sort(byName)
+    .map(entry => join(REPO, entry.name));
+}
+/** True when B1 reads a repository path: one under a SCAN_ROOTS directory, or a root manifest. */
+function scannedByB1(file: string): boolean {
+  return SCAN_ROOTS.some(scan => file.startsWith(`${scan.root}/`)) || (!file.includes("/") && new RegExp(ROOT_MANIFESTS.pattern).test(file));
+}
+/** A Markdown text as rendered for its reader: HTML comments dropped (wb-xogu F6), every other byte kept. */
+function renderedOf(text: string): string {
+  return text.replace(/<!--[\s\S]*?-->/g, " ");
 }
 
 interface StepReading {
@@ -459,6 +549,30 @@ function acceptanceClauses(notes: string): string[] {
     .slice(start + "Acceptance: ".length, end)
     .replace(/\.$/, "")
     .split(/; (?=\([a-z]\) )/);
+}
+/** The delivery statement's opening of its residual list in the notes (wb-kku9.3's cut, appended by the collector). */
+const RESIDUAL_STATEMENT = "RESIDUALS (named, each with its pinned quiet row): ";
+/** The pin set the delivery statement in the notes names: the first "<n> pins <ranges>" run ("19 pins A1-A4 B1-B4 C1-C3 Q1-Q8"),
+ * each range expanded in order (a range across two letters is kept as spelled, so it never matches a pin), beside the count. */
+function statedPins(notes: string): { readonly count: number; readonly pins: readonly string[] } {
+  const match = /(\d+) pins ([A-Z]\d+(?:-[A-Z]\d+)?(?: [A-Z]\d+(?:-[A-Z]\d+)?)*)/.exec(notes);
+  if (match === null) return { count: -1, pins: [] };
+  const pins = (match[2] ?? "").split(" ").flatMap(range => {
+    const [from = "", to = from] = range.split("-");
+    const letter = from.slice(0, 1);
+    if (to.slice(0, 1) !== letter) return [range];
+    const first = Number(from.slice(1));
+    return Array.from({ length: Math.max(0, Number(to.slice(1)) - first + 1) }, (_, index) => `${letter}${first + index}`);
+  });
+  return { count: Number(match[1]), pins };
+}
+/** The residual list the delivery statement in the notes names: the RESIDUAL_STATEMENT paragraph, each "<pin> <family>" pair in
+ * order, read as "<family>:<pin>". */
+function statedResiduals(notes: string): string[] {
+  const start = notes.indexOf(RESIDUAL_STATEMENT);
+  if (start < 0) return [];
+  const end = notes.indexOf("\n", start);
+  return [...notes.slice(start, end < 0 ? notes.length : end).matchAll(/\b(Q\d+) (R-[A-Z]+)\b/g)].map(match => `${match[2]}:${match[1]}`);
 }
 
 // The reference execution path and its fixtures. ------------------------------------------------------------------------------
@@ -771,7 +885,9 @@ function constantsOf(): JsonValue {
     claimWindow: CLAIM_WINDOW,
     readVerbs: READ_VERBS,
     scanRoots: SCAN_ROOTS,
+    rootManifests: ROOT_MANIFESTS,
     importRoots: IMPORT_ROOTS,
+    seamInterface: SEAM_INTERFACE,
     readerModule: READER_MODULE,
     instructionFiles: INSTRUCTION_FILES,
     vc4Launcher: VC4_LAUNCHER,
@@ -780,6 +896,7 @@ function constantsOf(): JsonValue {
     mutants: Object.entries(MUTANTS).map(([name, mutant]) => `${name}:${mutant.clauses.join(",")}`),
     executors: BEAD_EXECUTORS.map(binding => binding.module),
     generationDigests: GENERATION_DIGESTS,
+    residualStatement: RESIDUAL_STATEMENT,
     contract: beadsObserver.BEADS_WORK_CONTRACT,
   });
 }
@@ -843,7 +960,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       expect(anchorRead, `${scan.root}: the anchor ${scan.anchorFile} was read and is quiet`).toBe(true);
       return { root: scan.root, floor: files.length >= scan.floor, anchor: anchorRead, files };
     });
-    const launched = roots.flatMap(scan => scan.files.flatMap(file => claimLaunchesIn(textOf(file)).map(found => `${relative(REPO, file)}: ${found}`)));
+    const manifests = rootManifests();
+    const manifestAnchors = ROOT_MANIFESTS.anchors.map(anchor => {
+      const path = join(REPO, anchor.file);
+      return manifests.includes(path) && textOf(path).includes(anchor.token) && claimLaunchesIn(textOf(path)).length === 0;
+    });
+    expect(manifests.length >= ROOT_MANIFESTS.floor, `the root manifests: ${manifests.length} read, floor ${ROOT_MANIFESTS.floor}`).toBe(true);
+    expect(manifestAnchors, "each root manifest anchor was read and is quiet").toEqual(ROOT_MANIFESTS.anchors.map(() => true));
+    const launched = [...roots.flatMap(scan => scan.files), ...manifests].flatMap(file => claimLaunchesIn(textOf(file)).map(found => `${relative(REPO, file)}: ${found}`));
     const claimingModules = [...new Set(launched.map(entry => entry.slice(0, entry.indexOf(":"))))];
     const bound = BEAD_EXECUTORS.map(binding => binding.module);
     const controls = {
@@ -875,7 +999,58 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(seamMembers(), "the Beads seam offers show alone").toEqual(["show"]);
     const seamControl = seamMembersOf("export interface BeadsReadClient {\n  show(id: string): Promise<R>;\n  claim(id: string): Promise<R>;\n}");
     expect(seamControl, "the seam reader's control: a declared claim member is read").toEqual(["claim", "show"]);
-    return json({ roots: roots.map(({ root, floor, anchor }) => ({ root, floor, anchor })), launched, bound, controls, seam: seamMembers(), seamControl, exports });
+    // The seam reader's spelling controls (wb-xogu F1): the wb-kku9.3 gate's G16 plants - an optional method (G16a), a readonly
+    // optional property (G16b) and a generic method (G16d) beside the plain member (G16c) - and the shapes a line regex misses. Each
+    // declared member reads by name, an index signature by its kind, an extends clause and a non-literal alias as members of their own.
+    const show = "show(id: string, call: BeadsShowCall): Promise<BeadsShowResult>;";
+    const declared = (...members: string[]): string => `export interface BeadsReadClient {\n${members.map(member => `  ${member}\n`).join("")}}`;
+    const spellings: Readonly<Record<string, string>> = {
+      plain: declared(show, "claim(id: string, call: BeadsShowCall): Promise<BeadsShowResult>;"),
+      optionalMethod: declared(show, "claim?(id: string, call: BeadsShowCall): Promise<BeadsShowResult>;"),
+      readonlyProperty: declared(show, "readonly claim?: (id: string, call: BeadsShowCall) => Promise<BeadsShowResult>;"),
+      genericMethod: declared(show, "claim<T = BeadsShowResult>(id: string, call: BeadsShowCall): Promise<T>;"),
+      accessor: declared(show, "get claim(): (id: string) => Promise<BeadsShowResult>;"),
+      quotedName: declared(show, "'claim'(id: string): Promise<BeadsShowResult>;"),
+      sameLine: `export interface BeadsReadClient { ${show} claim(id: string): Promise<BeadsShowResult> }`,
+      afterNestedBrace: declared("show(id: string, call: { cwd: string; timeoutMs: number }): Promise<BeadsShowResult>;", "claim(id: string): Promise<BeadsShowResult>;"),
+      mergedDeclaration: `${declared(show)}\ninterface BeadsReadClient {\n  claim(id: string): Promise<BeadsShowResult>;\n}`,
+      augmentation: 'declare module "./beads-observer.js" {\n  interface BeadsReadClient {\n    claim(id: string): Promise<unknown>;\n  }\n}',
+      indexSignature: declared(show, "[verb: string]: (id: string, call: BeadsShowCall) => Promise<BeadsShowResult>;"),
+      heritage: `export interface BeadsReadClient extends ClaimClient {\n  ${show}\n}`,
+      typeAlias: `export type BeadsReadClient = { ${show} claim(id: string): Promise<BeadsShowResult> };`,
+      aliasOfAnother: "export type BeadsReadClient = ClaimingClient;",
+    };
+    const seamSpellings = Object.fromEntries(Object.entries(spellings).map(([name, text]) => [name, seamMembersOf(text)]));
+    expect(seamSpellings, "the seam reader's spelling controls: every member a declaration spells is read").toStrictEqual({
+      plain: ["claim", "show"],
+      optionalMethod: ["claim", "show"],
+      readonlyProperty: ["claim", "show"],
+      genericMethod: ["claim", "show"],
+      accessor: ["claim", "show"],
+      quotedName: ["claim", "show"],
+      sameLine: ["claim", "show"],
+      afterNestedBrace: ["claim", "show"],
+      mergedDeclaration: ["claim", "show"],
+      augmentation: ["claim"],
+      indexSignature: ["(index signature)", "show"],
+      heritage: ["extends ClaimClient", "show"],
+      typeAlias: ["claim", "show"],
+      aliasOfAnother: ["type ClaimingClient"],
+    });
+    const readerSeam = seamMembersOf(textOf(join(REPO, READER_MODULE)));
+    expect(readerSeam, "the reader's own declaration offers show alone").toEqual(["show"]);
+    return json({
+      roots: roots.map(({ root, floor, anchor }) => ({ root, floor, anchor })),
+      manifests: { floor: manifests.length >= ROOT_MANIFESTS.floor, anchors: manifestAnchors },
+      launched,
+      bound,
+      controls,
+      seam: seamMembers(),
+      readerSeam,
+      seamControl,
+      seamSpellings,
+      exports,
+    });
   },
   B2: async () => {
     const reader = moduleState(textOf(join(REPO, READER_MODULE)));
@@ -935,12 +1110,15 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
         'import type {BeadsWorkReading} from "../workbench/beads-observer";',
         'const beads = require("./beads-observer.js");',
         'const beads = await import("./beads-observer.mjs");',
+        "const beads = await import(`./beads-observer.js`);",
+        "const beads = require(`../workbench/beads-observer.js`);",
       ].map(text => importsOf(text).filter(specifier => namesModule(specifier, "beads-observer")).length),
       quiet: [
         'import {sanitizeWorkbenchText} from "./redaction.js";',
         "// beads-observer.js stays a reader",
         'import {notes} from "./beads-observer-notes.js";',
         'import {x} from "./my-beads-observer.js";',
+        "const notes = await import(`./beads-observer-notes.js`);",
       ].map(text => importsOf(text).filter(specifier => namesModule(specifier, "beads-observer")).length),
     };
     const bound = BEAD_EXECUTORS.map(binding => binding.module);
@@ -955,9 +1133,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const bypass = codeFiles.filter(file => file !== READER_MODULE && bdReadsIn(textOf(join(REPO, file))).length > 0);
     const seamReads = bdReadsIn(textOf(join(REPO, READER_MODULE))).length > 0;
     const readControls = {
-      flagged: ["bd show fx-run.1 --json", 'spawnSync("bd", ["ready", "--json"])', "execFileSync('bd', ['list', '--status', 'open'])", "bd blocked --json"].map(
-        text => bdReadsIn(text).length,
-      ),
+      // The last flagged control is the disclosed OVER-READ (wb-xogu F7): prose naming a read verb reds the judge, as in B1.
+      flagged: [
+        "bd show fx-run.1 --json",
+        'spawnSync("bd", ["ready", "--json"])',
+        "execFileSync('bd', ['list', '--status', 'open'])",
+        "bd blocked --json",
+        "// Operators inspect the queue with bd list --status open before a run.",
+      ].map(text => bdReadsIn(text).length),
       quiet: ["bd init --non-interactive --prefix fx", "bd codex-hook SessionStart", "showReady(list)"].map(text => bdReadsIn(text).length),
     };
     expect(bypass, "a code file reading bd readiness outside the seam").toEqual([]);
@@ -1061,20 +1244,32 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       'const tool = ["b", "d"].join("");\nspawnSync(tool, ["update", id, "--claim"]);',
       'const flag = "--claim";\nspawnSync("bd", ["update", id, flag]);',
       `bd ${"x ".repeat(CLAIM_WINDOW)}claim`,
+      // wb-xogu F3: a bd word held in a named constant and spawned past the window from its declaration.
+      'const BEADS_CLI = "bd";\nconst TIMEOUT_MS = 30_000;\nconst RETRIES = 3;\nconst ATTEMPT_LIMIT = 5;\nfunction claimTask(id) {\n  return spawnSync(BEADS_CLI, ["update", id, "--claim"], { timeout: TIMEOUT_MS * RETRIES });\n}',
     ].map(text => claimLaunchesIn(text).length);
     const edge = claimLaunchesIn(`bd ${"x ".repeat(CLAIM_WINDOW - 1)}claim`).length;
-    expect({ quiet, edge }, "composed, held and far claims read quiet; the window's last word still counts").toStrictEqual({ quiet: [0, 0, 0], edge: 1 });
-    return json({ quiet, edge, composedControl: claimLaunchesIn(compose("bd", "update", WORK_ID, "--claim")).length });
+    // The same family at B3: an import specifier composed at runtime names no module the matcher can read.
+    const composedImport = importsOf(`const stem = "beads-observer";\nconst beads = await import(\`./\${stem}.js\`);`).filter(specifier => namesModule(specifier, "beads-observer")).length;
+    expect({ quiet, edge, composedImport }, "composed, held and far claims read quiet; the window's last word still counts; a composed specifier reads quiet").toStrictEqual({
+      quiet: [0, 0, 0, 0],
+      edge: 1,
+      composedImport: 0,
+    });
+    return json({ quiet, edge, composedImport, composedControl: claimLaunchesIn(compose("bd", "update", WORK_ID, "--claim")).length });
   },
   Q5: async () => {
-    const files = INSTRUCTION_FILES.map(file => ({ file, claims: claimLaunchesIn(textOf(join(REPO, file))).length > 0, scanned: SCAN_ROOTS.some(scan => file.startsWith(`${scan.root}/`)) }));
+    const files = INSTRUCTION_FILES.map(file => ({ file, claims: claimLaunchesIn(renderedOf(textOf(join(REPO, file)))).length > 0, scanned: scannedByB1(file) }));
     expect(files, "each instruction file teaches a claim and lies outside every scanned root").toStrictEqual(INSTRUCTION_FILES.map(file => ({ file, claims: true, scanned: false })));
-    return json(files);
+    // wb-xogu F6: a claim inside an HTML comment teaches nothing - the reading's control, beside the same text uncommented.
+    const hidden = "Claim work:\n<!--\nbd update <id> --claim\n-->\nthen run it.";
+    const controls = { hidden: claimLaunchesIn(renderedOf(hidden)).length, shown: claimLaunchesIn(renderedOf(hidden.replace("<!--", "").replace("-->", ""))).length };
+    expect(controls, "a claim inside an HTML comment reads quiet; the same claim uncommented reads").toStrictEqual({ hidden: 0, shown: 1 });
+    return json({ files, controls });
   },
   Q6: async () => {
     const text = textOf(join(REPO, VC4_LAUNCHER));
     const quiet = {
-      underRoot: SCAN_ROOTS.some(scan => VC4_LAUNCHER.startsWith(`${scan.root}/`)),
+      underRoot: scannedByB1(VC4_LAUNCHER),
       claims: claimLaunchesIn(text).length,
       startsRun: text.includes("'run', 'start'"),
       initsStore: text.includes("spawnSync('bd', ['init'"),
@@ -1135,6 +1330,13 @@ describe("wb-kku9.3 Beads claim re-check census (MW-CAC-WORKFLOW-COMPOSITION-R3)
     expect(vocabulary, "the reader's vocabulary was read").toStrictEqual({ statuses: ["in_progress", "open", "blocked", "deferred", "closed"], edgeTypes: ["blocks", "parent-child"] });
     expect(vocabulary.statuses.filter(status => !rows.some(row => row.status === status)), "a status the reader maps that no case's re-read returns").toEqual([]);
     expect(vocabulary.edgeTypes.filter(type => !rows.some(row => row.deps.some(dep => dep.type === type))), "an edged dependency type no case's re-read carries").toEqual([]);
+    // The pin set and the residual families, held to the delivery statement in the same notes (wb-xogu F8): a source outside this
+    // file and the roster, so a pin or a residual family removed from both reds (the X-PIN and X-Q coordinated hollows).
+    const pins = ROWS.flatMap(row => row.pins);
+    expect(statedPins(notes), "the delivery statement's pin run names every pin, in row order, at its stated count").toStrictEqual({ count: pins.length, pins });
+    expect(statedResiduals(notes), "the delivery statement's residual list is RESIDUALS, family by pin, in order").toEqual(
+      Object.entries(RESIDUALS).flatMap(([family, members]) => members.map(member => `${family}:${member}`)),
+    );
     expect(notes, "the notes quote the cited line").toContain(PROGRAM_LINE);
     expect(notes, "the notes quote the claim step's fragment").toContain(FILED_GENERATION_FACT);
     expect(notes, "the notes name the generation file").toContain(`${ROSTER.generation.path.split("/").pop()}:${ROSTER.generation.claimStep.line}`);

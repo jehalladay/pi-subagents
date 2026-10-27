@@ -59,7 +59,7 @@
  "rows": [
   {
    "id": "T",
-   "labelDigest": "f7761e692012ecc59a86fa79a03a3c0876fbbef619741bb1f0ac6ddd1fc1a735",
+   "labelDigest": "0a4eca692113ce4f24ccf7c21d9bb45cb0fd4eae37353cbfe6414bb18824e569",
    "pins": [
     {
      "id": "T1",
@@ -124,7 +124,68 @@
        "testExtensions": true
       },
       "keyHits": [],
-      "labelHits": []
+      "labelHits": [],
+      "unscanned": [],
+      "liveness": {
+       "strict": {
+        "whole": true,
+        "empty": true,
+        "blank": false,
+        "oneShort": false,
+        "cutShort": false,
+        "cutWithReplacement": false,
+        "substituted": false,
+        "decidedLossy": false,
+        "carryingWhole": true,
+        "carryingDecidedLossy": false
+       },
+       "lossy": {
+        "whole": true,
+        "blank": false,
+        "cutShort": false,
+        "cutWithReplacement": false,
+        "decidedLossy": true
+       },
+       "consumed": {
+        "whole": true,
+        "keyCut": false,
+        "labelCut": false,
+        "bothBlank": false,
+        "keySubstituted": false,
+        "keyIsItsPasses": true,
+        "labelIsItsParts": true
+       },
+       "disk": {
+        "lossyFile": {
+         "lossy": true,
+         "whole": true
+        },
+        "keyPlant": 1,
+        "labelPlant": 1,
+        "farPlants": {
+         ".json": {
+          "keyPairs": 1,
+          "labels": 1,
+          "whole": true
+         },
+         ".md": {
+          "keyPairs": 1,
+          "labels": 1,
+          "whole": true
+         },
+         ".mjs": {
+          "keyPairs": 1,
+          "labels": 1,
+          "whole": true
+         },
+         ".ts": {
+          "keyPairs": 1,
+          "labels": 1,
+          "whole": true
+         }
+        }
+       }
+      }
      }
     },
     {
@@ -194,7 +255,12 @@
        "gradeList": 0,
        "composedParts": 0,
        "aliasRead": 0,
-       "longSeparator": 0
+       "longSeparator": 0,
+       "escapeSpelled": 0
+      },
+      "walker": {
+       "linkRead": 0,
+       "targetHits": 1
       }
      }
     }
@@ -430,6 +496,8 @@
         "value": 0,
         "seam": "rf-cli",
         "blind": true,
+        "diverges": true,
+        "seesDivergence": true,
         "coverage": "complete",
         "labels": [],
         "keyPairs": 0,
@@ -440,6 +508,8 @@
         "value": 0,
         "seam": "injected-fixture",
         "blind": true,
+        "diverges": true,
+        "seesDivergence": true,
         "coverage": "partial",
         "labels": [],
         "keyPairs": 0,
@@ -450,6 +520,8 @@
         "value": 3,
         "seam": "rf-cli",
         "blind": true,
+        "diverges": true,
+        "seesDivergence": true,
         "coverage": "complete",
         "labels": [],
         "keyPairs": 0,
@@ -460,6 +532,8 @@
         "value": 3,
         "seam": "injected-fixture",
         "blind": true,
+        "diverges": true,
+        "seesDivergence": true,
         "coverage": "partial",
         "labels": [],
         "keyPairs": 0,
@@ -470,6 +544,8 @@
         "value": 0,
         "seam": "rf-cli",
         "blind": true,
+        "diverges": true,
+        "seesDivergence": true,
         "coverage": "complete",
         "labels": [],
         "keyPairs": 0,
@@ -480,6 +556,8 @@
         "value": 0,
         "seam": "injected-fixture",
         "blind": true,
+        "diverges": true,
+        "seesDivergence": true,
         "coverage": "partial",
         "labels": [],
         "keyPairs": 0,
@@ -490,6 +568,8 @@
         "value": 3,
         "seam": "rf-cli",
         "blind": true,
+        "diverges": true,
+        "seesDivergence": true,
         "coverage": "complete",
         "labels": [],
         "keyPairs": 0,
@@ -500,6 +580,8 @@
         "value": 3,
         "seam": "injected-fixture",
         "blind": true,
+        "diverges": true,
+        "seesDivergence": true,
         "coverage": "partial",
         "labels": [],
         "keyPairs": 0,
@@ -517,6 +599,8 @@
         "kind": "sdk",
         "value": 0,
         "blind": true,
+        "diverges": true,
+        "seesDivergence": true,
         "keys": [
          "nativeId",
          "producerRelease",
@@ -531,6 +615,8 @@
         "kind": "sdk",
         "value": 3,
         "blind": true,
+        "diverges": true,
+        "seesDivergence": true,
         "keys": [
          "nativeId",
          "producerRelease",
@@ -545,6 +631,8 @@
         "kind": "rf",
         "value": 0,
         "blind": true,
+        "diverges": true,
+        "seesDivergence": true,
         "keys": [
          "nativeId",
          "producerRelease",
@@ -559,6 +647,8 @@
         "kind": "rf",
         "value": 3,
         "blind": true,
+        "diverges": true,
+        "seesDivergence": true,
         "keys": [
          "nativeId",
          "producerRelease",
@@ -624,6 +714,8 @@
        {
         "seam": "rf-cli",
         "blind": true,
+        "diverges": true,
+        "seesDivergence": true,
         "labels": [],
         "keyPairs": 0,
         "figureWords": []
@@ -631,6 +723,8 @@
        {
         "seam": "injected-fixture",
         "blind": true,
+        "diverges": true,
+        "seesDivergence": true,
         "labels": [],
         "keyPairs": 0,
         "figureWords": []
@@ -638,6 +732,8 @@
       ],
       "evidence": {
        "blind": true,
+       "diverges": true,
+       "seesDivergence": true,
        "labels": [],
        "keyPairs": 0,
        "figureWords": []
@@ -689,6 +785,244 @@
    ]
   }
  ],
+ "bound": {
+  "trigger": [
+   {
+    "term": "whether the field reaches the rf envelope is unknown today",
+    "pins": [
+     "T2"
+    ]
+   },
+   {
+    "term": "Pi's rf reader reads no components key",
+    "pins": [
+     "T1"
+    ]
+   }
+  ],
+  "surfaces": [
+   {
+    "surface": "src/workbench/claude-capability-tools.ts#capability_invoke",
+    "pins": [
+     "B3"
+    ]
+   },
+   {
+    "surface": "src/workbench/native-evidence.ts#nativeEvidence",
+    "pins": [
+     "B5"
+    ]
+   },
+   {
+    "surface": "src/workbench/providers/reactivefiber.ts#registerNativeReactiveFiberRender",
+    "pins": [
+     "B2"
+    ]
+   },
+   {
+    "surface": "src/workbench/providers/reactivefiber.ts#registerReactiveFiberRender",
+    "pins": [
+     "B1"
+    ]
+   },
+   {
+    "surface": "src/workbench/reactivefiber-observer.ts#reactivefiberTopology",
+    "pins": [
+     "B4"
+    ]
+   }
+  ],
+  "derivation": {
+   "readersAtFloor": true,
+   "envelopeReaders": [
+    "src/workbench/native-evidence.ts",
+    "src/workbench/providers/reactivefiber.ts",
+    "src/workbench/reactivefiber-observer.ts"
+   ],
+   "kinds": {
+    "registrations": 2,
+    "tools": 1,
+    "projections": 2
+   }
+  },
+  "unbound": [],
+  "stale": [],
+  "reached": [
+   {
+    "pin": "T1",
+    "symbols": [
+     "components key"
+    ]
+   },
+   {
+    "pin": "T2",
+    "symbols": [
+     "rf envelope"
+    ]
+   },
+   {
+    "pin": "B1",
+    "symbols": [
+     "registerReactiveFiberRender"
+    ]
+   },
+   {
+    "pin": "B2",
+    "symbols": [
+     "registerNativeReactiveFiberRender"
+    ]
+   },
+   {
+    "pin": "B3",
+    "symbols": [
+     "capability_invoke",
+     "registerReactiveFiberRender"
+    ]
+   },
+   {
+    "pin": "B4",
+    "symbols": [
+     "reactivefiberTopology"
+    ]
+   },
+   {
+    "pin": "B5",
+    "symbols": [
+     "nativeEvidence"
+    ]
+   }
+  ],
+  "controls": {
+   "registerLiteral": [
+    "#registerProbe"
+   ],
+   "registerModuleConst": [
+    "#registerProbe"
+   ],
+   "registerHeldDescriptor": [
+    "#registerProbe"
+   ],
+   "registerShorthand": [
+    "#registerProbe"
+   ],
+   "registerComputedName": [
+    "#registerProbe"
+   ],
+   "registerArrow": [
+    "#registerProbe"
+   ],
+   "registerListed": [
+    "#registerProbe"
+   ],
+   "registerInModule": [
+    "#(module)"
+   ],
+   "registerComposedId": [],
+   "registerImportedId": [],
+   "registerClassField": [],
+   "registerAssignedId": [],
+   "toolNamed": [
+    "#probe_invoke"
+   ],
+   "toolAliased": [
+    "#probe_invoke"
+   ],
+   "toolNamespace": [
+    "#probe_invoke"
+   ],
+   "toolDefaultImport": [
+    "#probe_invoke"
+   ],
+   "toolRebound": [
+    "#probe_invoke"
+   ],
+   "toolDestructured": [
+    "#probe_invoke"
+   ],
+   "toolAssigned": [
+    "#probe_invoke"
+   ],
+   "toolAssignedLogical": [
+    "#probe_invoke"
+   ],
+   "toolNamespaceElement": [
+    "#probe_invoke"
+   ],
+   "toolHandlerReference": [
+    "#probe_invoke"
+   ],
+   "toolHandlerFunction": [
+    "#probe_invoke"
+   ],
+   "toolHandlerIndirect": [
+    "#probe_invoke"
+   ],
+   "toolHandlerMember": [
+    "#probe_invoke"
+   ],
+   "toolNameConst": [
+    "#probe_invoke"
+   ],
+   "toolNameComposed": [
+    "#(unnamed)"
+   ],
+   "toolInvokeElement": [
+    "#probe_invoke"
+   ],
+   "toolInvokeBinding": [
+    "#probe_invoke"
+   ],
+   "toolInspectOnly": [],
+   "toolPiDefineTool": [],
+   "toolSdkReexport": [],
+   "toolDynamicImport": [],
+   "toolImportedHandler": [],
+   "toolInvokeComposed": [],
+   "toolDestructuringAssignment": [],
+   "toolHelperCall": [],
+   "toolHelperChosen": [],
+   "toolSdkSubpath": [],
+   "projectModifier": [
+    "#project"
+   ],
+   "projectConstValue": [
+    "#project"
+   ],
+   "projectListed": [
+    "#project"
+   ],
+   "projectListedAlias": [
+    "#projectAlias"
+   ],
+   "projectDefault": [
+    "#default"
+   ],
+   "projectDefaultValue": [
+    "#default"
+   ],
+   "projectRebound": [
+    "#used"
+   ],
+   "projectImportAlias": [
+    "#project"
+   ],
+   "projectTypeAlias": [
+    "#project"
+   ],
+   "projectParenthesized": [
+    "#project"
+   ],
+   "projectUnexported": [],
+   "projectScalar": [],
+   "projectOptionalReading": [],
+   "projectMember": [],
+   "projectReexport": [],
+   "projectSchemaLiteral": [],
+   "projectQualifiedType": [],
+   "projectContextualType": [],
+   "projectAssignedValue": []
+  }
+ },
  "tests": [
   "the judged set: the frozen shape, the out-of-file roster, the owner's acceptance clauses and the cases agree",
   "T1",
@@ -704,6 +1038,7 @@
   "C1",
   "C2",
   "C3",
+  "bound: every pin of rows T and B holds one term of the export title's absent-today note or one reading surface src derives",
   "registration: every case of this file is registered once, in roster order, in run mode, and ran before this one"
  ]
 }

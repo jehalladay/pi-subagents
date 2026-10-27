@@ -56,6 +56,24 @@
  *   or a single comparison beside one indexed receipt; R-OUTSIDE-SRC a composition outside src/**\/*.ts (qa, examples, test,
  *   scripts) is not judged (the filing scopes src modules).
  *
+ * FOLLOW-UP wb-0kfa (R694, the landing-341 gate cmd_3422feebe799 PASS-WITH-FINDING; F1 leads, F2 rides):
+ *  F1 the residual family list's anchor outside this file and its roster: the wb-kku9.4 export row carries the landed
+ *    delivery record, whose RESIDUALS line names every residual with its quiet pin and the witness key that pin holds it
+ *    under (B3 residuals at 0 sites, B1 judgedOf). The residual anchor case holds the roster's residuals, RESIDUAL_SHAPES
+ *    and the B3 witness keys to that line, so the gate's G15 (R-SET-SHAPE removed from every literal of this file and its
+ *    roster at once, green 12/12 on the landed census) reds against text no census cut edits.
+ *  F2 C2 reads the docs sentence's receipt list (a Forge gate status, a Furnace attempt, Beads readiness, a Git revision)
+ *    and maps each receipt to the producer it names. Forge and Furnace are row A's receipts. Beads readiness is read
+ *    through its producer's own reader (readBeadsWork over a fake bd show envelope of a closed task, then
+ *    projectBeadsWork), projected beside them, keeps its own producer-stated status (closed reads unknown, never success)
+ *    and composes nothing with them. A Git revision names a producer no src module spells as a provider (a provider
+ *    property or signature, or a constant whose name says provider, through every string literal of its value and the
+ *    module's string constants it names; one planted control per form), so the Git clause holds vacuously. Whatever the
+ *    roster holds, C2 throws when the list's producers are not the statement's, when a root's presentation is not the one
+ *    its producer stated, or when src spells a listed producer as a provider and no receipt of it is projected here (a
+ *    src Git projector therefore reds C2 until this census reads its receipt). The reading follows spellings only and
+ *    claims no more: a provider assembled at run time, or imported under a name that does not say provider, is outside it.
+ *
  * Display paths added: none. Test-only plus one docs sentence: every fixture lives in memory (no scratch); src, docs and the
  * bead export are only read; git is only read (ls-files, show, ls-tree, cat-file).
  */
@@ -65,6 +83,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
 import { describe, expect, it } from "vitest";
+import { type BeadsReadClient, projectBeadsWork, readBeadsWork } from "../src/workbench/beads-observer.js";
 import type { CapabilityRegistry, JsonValue } from "../src/workbench/capability-registry.js";
 import { createWorkbenchEvidenceStore } from "../src/workbench/evidence-wiring.js";
 import { forgeGateTopology } from "../src/workbench/forge-observer.js";
@@ -475,6 +494,16 @@ async function receipts(): Promise<{ forge: Receipts; furnace: Receipts }> {
     observer.close();
   }
 }
+/** wb-0kfa F2: the Beads readiness receipt - a closed task read through the producer's own reader over a fake bd show envelope. */
+const BEADS_WORK = "wb-kku9-receipt";
+const BEADS_CLIENT: BeadsReadClient = {
+  show: async (id: string) => ({ exit: 0, stdout: JSON.stringify([{ id, title: "Receipt composition probe", status: "closed", issue_type: "task", priority: 2, dependencies: [] }]), stderr: "" }),
+};
+async function beadsReceipt(): Promise<Receipts> {
+  const reading = await readBeadsWork(BEADS_CLIENT, { workId: BEADS_WORK, workspaceRoot: SCOPE.workspace, scope: SCOPE, limits: { maxDependencies: 4, maxTitleChars: 80, timeoutMs: 2000 }, now: () => NOW });
+  const projected = projectBeadsWork(reading, SCOPE);
+  return { snapshots: [projected.snapshot], relations: projected.relations };
+}
 function project(all: readonly Receipts[]): { view: ObservationProjection; refreshed: string[] } {
   const view = new ObservationProjection({ maxQuery: 50 });
   const refreshed = all.flatMap(part => part.snapshots.map(snapshot => view.refresh(snapshot)));
@@ -550,6 +579,69 @@ const RESIDUAL_SHAPES: Readonly<Record<string, string>> = {
 const PLANT = "src/workbench/receipt-composition-plant.ts";
 const plantedFindings = (text: string): string[] => judge([{ path: PLANT, text }], CONSTANTS.exempt).findings;
 
+// ------------------------------------------------------------------------------------------- the docs receipt list (wb-0kfa F2)
+/** The receipts the docs sentence lists: "each receipt (<receipt>, <receipt>, ...) is projected". */
+const receiptPhrases = (sentence: string): string[] => (/each receipt \(([^)]+)\) is projected/.exec(sentence)?.[1] ?? "").split(/,\s*/).filter(phrase => phrase !== "");
+/** The vocabulary producers a phrase names by one of their spellings. */
+const producersIn = (phrase: string): string[] => Object.entries(VOCABULARY.producers).filter(([, spellings]) => tokens(phrase).some(token => spellings.includes(token))).map(([name]) => name);
+const nameText = (name: ts.PropertyName): string | undefined => (ts.isIdentifier(name) || ts.isStringLiteral(name) ? name.text : undefined);
+/** The string a constant's initializer can hold: a literal, either branch of a condition or either side of ?? and ||. */
+function constantValues(node: ts.Expression): string[] {
+  const at = unparen(node);
+  if (ts.isAsExpression(at) || ts.isSatisfiesExpression(at)) return constantValues(at.expression);
+  if (ts.isConditionalExpression(at)) return [...constantValues(at.whenTrue), ...constantValues(at.whenFalse)];
+  if (ts.isBinaryExpression(at) && (at.operatorToken.kind === ts.SyntaxKind.QuestionQuestionToken || at.operatorToken.kind === ts.SyntaxKind.BarBarToken)) return [...constantValues(at.left), ...constantValues(at.right)];
+  const text = literalText(at);
+  return text === undefined ? [] : [text];
+}
+/**
+ * The producers src modules spell as a provider: a property or signature named provider, or a constant whose camel-case
+ * words include provider, read through every string literal of its value and the module's string constants an identifier
+ * in it names (a member name is not a reference).
+ */
+function providersSpelled(modules: readonly { readonly path: string; readonly text: string }[]): Set<string> {
+  const found = new Set<string>();
+  for (const module of modules) {
+    const source = ts.createSourceFile(module.path, module.text, ts.ScriptTarget.Latest, true);
+    const constants = new Map<string, string[]>();
+    walk(source, node => {
+      if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && node.initializer !== undefined && (ts.getCombinedNodeFlags(node) & ts.NodeFlags.Const) !== 0) {
+        const values = constantValues(node.initializer);
+        if (values.length > 0) constants.set(node.name.text, values);
+      }
+      return true;
+    });
+    const valuesOf = (value: ts.Node): string[] => {
+      const out: string[] = [];
+      walk(value, inner => {
+        const text = literalText(inner);
+        if (text !== undefined) out.push(text);
+        if (ts.isIdentifier(inner) && !(ts.isPropertyAccessExpression(inner.parent) && inner.parent.name === inner)) out.push(...(constants.get(inner.text) ?? []));
+        return true;
+      });
+      return out;
+    };
+    const spelled: string[] = [];
+    walk(source, node => {
+      if (ts.isPropertyAssignment(node) && nameText(node.name) === "provider") spelled.push(...valuesOf(node.initializer));
+      if (ts.isShorthandPropertyAssignment(node) && node.name.text === "provider") spelled.push(...(constants.get("provider") ?? []));
+      if (ts.isPropertySignature(node) && nameText(node.name) === "provider" && node.type !== undefined) spelled.push(...valuesOf(node.type));
+      if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name) && camelWords(node.name.text).includes("provider")) spelled.push(...(constants.get(node.name.text) ?? []));
+      return true;
+    });
+    for (const value of spelled) for (const [name, spellings] of Object.entries(VOCABULARY.producers)) if (tokens(value).some(token => spellings.includes(token))) found.add(name);
+  }
+  return found;
+}
+/** One planted Git projector per form the provider reading follows; each must read as spelling git. */
+const GIT_PLANTS: Readonly<Record<string, string>> = {
+  literal: 'export const revision = { provider: "git", type: "revision", id: "4f2a9c1" };',
+  constant: 'const SOURCE = "git"; export const revision = { provider: SOURCE, type: "revision", id: "4f2a9c1" };',
+  typed: 'export interface GitRevisionRef { provider: "git"; type: "revision"; id: string }',
+  named: 'export const GIT_PROVIDER = "git";',
+  conditional: 'export const revision = (local: boolean) => ({ provider: local ? "git" : "forge", type: "revision", id: "4f2a9c1" });',
+};
+
 // ------------------------------------------------------------------------------------------------------------- the bead row
 function beadNotes(): string {
   for (const line of readFileSync(join(REPO, BEAD_EXPORT), "utf8").split("\n")) {
@@ -576,7 +668,62 @@ function citationOf(notes: string): { file: string; from: number; to: number; qu
   return { file: match?.[1] ?? "", from: Number(match?.[2] ?? "0"), to: Number(match?.[3] ?? "0"), qualifier: match?.[4] ?? "" };
 }
 
+/** wb-0kfa F1: the landed delivery record's residual line in the wb-kku9.4 export row, the anchor outside this file and its roster. */
+const DELIVERED_RESIDUALS = "RESIDUALS (named, each with a pinned quiet row): ";
+interface ResidualGroup { readonly pin: string; readonly key: string; readonly sites: number | undefined; readonly ids: readonly string[] }
+/** Each residual id the line names, grouped under the quiet pin parenthesis that follows it ("(B3 residuals, each 0 sites)"). */
+function deliveredResiduals(notes: string): { lines: number; groups: ResidualGroup[]; unpinned: string[] } {
+  const lines = notes.split("\n").filter(line => line.startsWith(DELIVERED_RESIDUALS));
+  const groups: ResidualGroup[] = [];
+  let pending: string[] = [];
+  for (const match of (lines[0] ?? "").slice(DELIVERED_RESIDUALS.length).matchAll(/\b(R-[A-Z]+(?:-[A-Z]+)*)\b|\(([A-Z]\d) (\w+)(?:, each (\d+) sites)?/g)) {
+    const [, id, pin, key, sites] = match;
+    if (id !== undefined) pending.push(id);
+    else if (pin !== undefined && key !== undefined) {
+      groups.push({ pin, key, sites: sites === undefined ? undefined : Number(sites), ids: pending });
+      pending = [];
+    }
+  }
+  return { lines: lines.length, groups, unpinned: pending };
+}
+const fieldOf = (value: JsonValue | undefined, key: string): JsonValue | undefined => (value !== null && typeof value === "object" && !Array.isArray(value) ? value[key] : undefined);
+
 // ----------------------------------------------------------------------------------------------------------- the pin bodies
+/**
+ * wb-0kfa F2: each receipt the docs sentence lists, mapped to the producer it names - its roots in one projection of the
+ * Forge, Furnace and Beads receipts (each producer's own reader), and whether a src module spells that producer as a provider.
+ */
+async function receiptList(sentence: string, statementProducers: readonly string[]) {
+  const { forge, furnace } = await receipts();
+  const parts = [forge, furnace, await beadsReceipt()];
+  const { view } = project(parts);
+  const stated = new Map(parts.flatMap(part => part.snapshots).map(snapshot => [ref(snapshot.source), snapshot.node]));
+  const roots = rootsOf(view);
+  const spelled = providersSpelled(headModules());
+  const listed = receiptPhrases(sentence).map(phrase => {
+    const named = producersIn(phrase);
+    const own = roots.filter(node => named.includes(node.nativeRef.provider));
+    return {
+      phrase,
+      producers: named,
+      roots: own.map(node => ({ ref: ref(node.nativeRef), tone: node.presentation.statusTone, text: node.presentation.statusText, own: JSON.stringify(node.presentation) === JSON.stringify(stated.get(ref(node.nativeRef))) })),
+      spelled: named.some(name => spelled.has(name)),
+    };
+  });
+  // Whatever the roster holds: the list names the statement's producers in order, every root keeps the presentation its
+  // producer stated, and a listed producer src spells as a provider has a receipt projected here.
+  const listedProducers = listed.flatMap(row => row.producers);
+  const statement = statementProducers.map(name => name.toLowerCase());
+  if (JSON.stringify(listedProducers) !== JSON.stringify(statement)) throw new Error(`the docs receipt list names ${listedProducers.join(", ") || "no producer"}, the statement ${statement.join(", ")}`);
+  const disowned = listed.flatMap(row => row.roots.filter(root => !root.own).map(root => root.ref));
+  if (disowned.length > 0) throw new Error(`receipts projected without their producer's own presentation: ${disowned.join(", ")}`);
+  const unread = listed.filter(row => row.spelled && row.roots.length === 0).map(row => row.phrase);
+  if (unread.length > 0) throw new Error(`src spells a provider for ${unread.join(", ")} but this census projects no such receipt`);
+  const gitControls = Object.fromEntries(Object.entries(GIT_PLANTS).map(([name, text]) => [name, providersSpelled([{ path: PLANT, text }]).has("git")]));
+  const quiet = Object.entries(gitControls).filter(([, found]) => !found).map(([name]) => name);
+  if (quiet.length > 0) throw new Error(`the provider reading misses its planted Git projector forms: ${quiet.join(", ")}`);
+  return { receipts: listed, composed: composition(view, parts), gitControls };
+}
 const REACHED = new Set<string>();
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
@@ -715,6 +862,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       exact: holder[0] === DOC_SENTENCE,
       startsWithClause: folded(holder[0] ?? "").startsWith(folded(clause)),
       producersNamed: producers.map(producer => (holder[0] ?? "").includes(producer)),
+      ...(await receiptList(holder[0] ?? "", producers)),
     };
   },
 };
@@ -749,6 +897,19 @@ describe("wb-kku9.4 receipt composition census (MW-CAC-WORKFLOW-COMPOSITION-R4, 
     expect(ROSTER.residuals.map(residual => residual.id)).toEqual(["R-HELPER-SPLIT", "R-NAMED-CALLBACK", "R-COMPUTED-WORD", "R-FAILURE-SIDE", "R-SET-SHAPE", "R-OUTSIDE-SRC"]);
     expect(ROSTER.residuals.every(residual => pins.includes(residual.quietPin))).toBe(true);
     expect(Object.keys(RESIDUAL_SHAPES)).toEqual(ROSTER.residuals.filter(residual => residual.quietPin === "B3").map(residual => residual.id));
+  });
+  it("residual anchor (wb-0kfa F1): the landed delivery record in the wb-kku9.4 export row names every residual with its quiet pin; the roster, RESIDUAL_SHAPES and the quiet pins' witnesses hold exactly that set", () => {
+    const record = deliveredResiduals(beadNotes());
+    expect(record.lines, "the export row carries one landed RESIDUALS line").toBe(1);
+    expect(record.unpinned, "every residual the line names has a quiet pin").toEqual([]);
+    expect(ROSTER.residuals.map(residual => `${residual.id}:${residual.quietPin}`)).toEqual(record.groups.flatMap(group => group.ids.map(id => `${id}:${group.pin}`)));
+    expect(Object.keys(RESIDUAL_SHAPES)).toEqual(record.groups.filter(group => group.sites !== undefined).flatMap(group => group.ids));
+    const witnessOf = (pin: string): JsonValue | undefined => ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === pin)?.witness;
+    for (const group of record.groups) {
+      const held = fieldOf(witnessOf(group.pin), group.key);
+      expect(held, `${group.pin} holds ${group.key}`).toBeDefined();
+      if (group.sites !== undefined) expect(held).toEqual(Object.fromEntries(group.ids.map(id => [id, group.sites])));
+    }
   });
   for (const row of ROWS) {
     describe(`${row.id} ${row.label}`, () => {

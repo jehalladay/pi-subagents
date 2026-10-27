@@ -288,6 +288,25 @@
    ],
    "R-HIDDEN-HTML": [
     "Q11"
+   ],
+   "R-HTML-TABLE": [
+    "Q12"
+   ]
+  },
+  "htmlTable": {
+   "tableTag": "<\\/?(?:table|caption|colgroup|col|thead|tbody|tfoot|tr|th|td)(?=[\\s/>]|$)",
+   "comment": "<!--(?:-?>|[\\s\\S]*?(?:-->|$))",
+   "guards": [
+    "test/workbench-w10-stamped-claim-guard.test.ts",
+    "test/workbench-traceability-freeze.test.ts"
+   ],
+   "w10": [
+    "^const MATRIX = \"([^\"\\n]+)\";$",
+    "htmlRefusals(tokens, MATRIX,"
+   ],
+   "freeze": [
+    "new URL\\(\"\\.\\.\\/([^\"\\n]+)\", import\\.meta\\.url\\)",
+    "^const FROZEN_SHA256 = \"([0-9a-f]{64})\";$"
    ]
   }
  },
@@ -312,6 +331,7 @@
   "Q9",
   "Q10",
   "Q11",
+  "Q12",
   "the registered tests and the reached pins equal the roster, in order and both ways"
  ],
  "rows": [
@@ -1013,6 +1033,79 @@
      "witness": {
       "citations": 1,
       "findings": 0
+     }
+    },
+    {
+     "id": "Q12",
+     "witness": {
+      "controls": [
+       {
+        "id": "html-matrix-subject-landed-gated",
+        "rows": 0,
+        "findings": 0
+       },
+       {
+        "id": "html-matrix-hx-speedup-without-a-receipt",
+        "rows": 0,
+        "findings": 0
+       },
+       {
+        "id": "html-ledger-subject-shipped",
+        "rows": 0,
+        "findings": 0
+       },
+       {
+        "id": "table-tags-inline-in-a-paragraph",
+        "rows": 0,
+        "findings": 0
+       },
+       {
+        "id": "html-table-inside-a-list-item",
+        "rows": 0,
+        "findings": 0
+       },
+       {
+        "id": "markdown-matrix-subject-landed-gated",
+        "rows": 1,
+        "findings": 1
+       },
+       {
+        "id": "markdown-matrix-hx-speedup-without-a-receipt",
+        "rows": 1,
+        "findings": 1
+       },
+       {
+        "id": "markdown-ledger-subject-shipped",
+        "rows": 1,
+        "findings": 1
+       }
+      ],
+      "documents": [
+       {
+        "path": "docs/workbench/TRACEABILITY.md",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       },
+       {
+        "path": "docs/workbench/feature-matrix.md",
+        "htmlBlocks": 0,
+        "tableTags": 0
+       }
+      ],
+      "guards": {
+       "matrix": {
+        "guard": "test/workbench-w10-stamped-claim-guard.test.ts",
+        "tracked": true,
+        "document": "docs/workbench/feature-matrix.md",
+        "pageChecks": 1
+       },
+       "ledger": {
+        "guard": "test/workbench-traceability-freeze.test.ts",
+        "tracked": true,
+        "document": "docs/workbench/TRACEABILITY.md",
+        "frozenSha256": "8ec4715e5b8cbec7d24e5926c79388c3018cc57780c05251b015d36411e462d4"
+       }
+      }
      }
     }
    ]

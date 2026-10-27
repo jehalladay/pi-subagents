@@ -32,7 +32,9 @@
  *    non-authoritative, the agent's read counts the same five, and a producer-stated hypothesis from the debug ref to the component
  *    reads inferred-hypothesis, non-authoritative, hypothesis-only. A3 the trigger: no src or qa file spells the mapping VOCABULARY
  *    (folded; ReactiveFiber's own spellings removed first), with floors, anchors and controls; a module spelling it must be bound in
- *    MAPPING_READERS and every binding must name such a module (empty both ways today).
+ *    MAPPING_READERS and every binding must name such a module (empty both ways today). Its positive control is PLANTED (wb-u29w
+ *    F1): each flagged control in a scratch module of its own, beside a quiet anchor module holding every quiet control, goes
+ *    through the one scan src and qa go through (vocabularyScan), which spells for each plant exactly the tokens its text spells.
  *  B, the refusal, (b). B1 relate() refuses every identity spelling a mapping claim would state ("Unknown relationship kind.") and the
  *    ownership form without the owner's own confirmation, each with no effect. B2 a reader serving the claim as a stored row: the
  *    slice reads it as an unknown-relation-kind reference, never an edge, and the agent's read counts nothing and flags partial. B3 the
@@ -47,7 +49,10 @@
  *    vendor) read in block units (a paragraph, list item, table row, heading or fence line with its continuation lines): no unit
  *    couples the visual family (screenshot, React debug id, devtools, UI element) with a Fiber word (FiberOptics, Fiber ref or
  *    identity; rf's own ReactiveFiber spellings excluded), with floors, every named root and file read, and anchors on both families.
- *    C2 the judge's controls.
+ *    Its positive control is PLANTED (wb-u29w F1): each C2 control in a scratch markdown file of its own, and a flagged one below
+ *    every DOC_SKIP root and a nested node_modules, go through the one scan the repository goes through (docScan, whose claim judge
+ *    is claimUnitsOf, the one C2 controls through claimUnitsIn): it reads exactly the flagged and quiet plants, and its claims are
+ *    exactly the flagged controls. C2 the judge's controls.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the whole judged set - every row's id, label and
  * pins, every pin's witness, the constants, the vocabularies and the residual families and every registered test title - is held to
@@ -55,9 +60,18 @@
  * bead's own acceptance text in its owner filing, the first paragraph of its notes in the tracker export (.beads/issues.jsonl). No
  * case reads the whole notes: the lane appends a note after every cut and every gate and a ledger hop exports each one, so every
  * reading of the export goes through the owner filing, which the append-only notes keep byte-stable (Q6 holds its own reading to an
- * appended note). The last case reads the vitest task tree (every registered test, in roster order, in run mode, ran before it) and
- * the set of pins that reached their witness. Not claimed: an edit of this file and the roster together - the bead text anchors
- * only the labels of rows A to C.
+ * appended note). The first case also reads the vitest task tree as collected (every registered test, the last case included, in
+ * roster order, in run mode, not inverted); the last case reads it as run (each other test in run mode, ran before it), and the two
+ * records every pin's case keeps (wb-u29w F2): COMPARED, each pin whose compare read the roster's witness (rosterWitness records
+ * every read), once and in row order, and REACHED, each pin that passed its compare with the witness it compared, held again to a
+ * fresh read of the roster - so a compare weakened to read no expected witness, or skipped behind a return with a forged record,
+ * reds the last case. Not claimed: an edit of this file and the roster together - the bead text anchors only the labels of rows A
+ * to C; a scan edited to tell the planted scratch from the repository (by its base or a plant's path) - the plants prove that A3's
+ * and C1's scans read text and judge it, not that they read the repository the way they read the plants; a case dropping or
+ * filtering its own scan's result after the scan ran; the DOC_SKIP set itself (the skip plants follow it; Q6 holds it to the
+ * roster); a pin's compare weakened together with a REACHED record of the roster's own witness in place of the one its case
+ * computed; a last case that skips itself at run time, is weakened in place, or is removed together with the first case's
+ * collected-tree check.
  * RESIDUALS (named, each with its pinned quiet row): R-VOCABULARY a mapping reader reading only generic keys spells no vocabulary
  * token (Q1); R-PARAPHRASE a doc claim worded outside one family (no visual word, or no Fiber word) is not a coupled unit (Q2);
  * R-COMPOSED a token assembled from three or more parts at runtime is invisible to A3 (two-part joins are read: Q3); R-INTERRUPTED a
@@ -76,12 +90,13 @@
  * named parts, since the producer ships none. No mapping reader is added or faked here: a reader's own cut binds itself in
  * MAPPING_READERS and meets B4.
  *
- * Display paths added: none. Test-only: src, docs, qa and .beads are only read; nothing is written.
+ * Display paths added: none. Test-only: src, docs, qa and .beads are only read; the planted controls are written to makeScratch
+ * scratch only.
  */
-import { type Dirent, readdirSync, readFileSync } from "node:fs";
+import { type Dirent, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import type { JsonValue } from "../src/workbench/capability-registry.js";
 import { type ClaudeProjectionTopology, projectClaudeTopology } from "../src/workbench/claude-topology.js";
 import { buildGraphView } from "../src/workbench/graph-view.js";
@@ -96,6 +111,10 @@ import {
 import { type ObserveReader, observeInvocation } from "../src/workbench/observe-query.js";
 import { type LinkedTopology, selectLinkedTopology, TOPOLOGY_RELATION_CLASSES } from "../src/workbench/topology-slice.js";
 import type { ClaudeNativeObservation } from "../src/workflow/progress.js";
+import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
+
+// The planted positive controls live in makeScratch scratch (wb-u29w F1); the guard registers through the helper's own afterAll.
+installScratchLeakGuard();
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
@@ -238,10 +257,20 @@ function readRoster(): Roster {
 
 const ROSTER = readRoster();
 
-function rosterWitness(pin: string): JsonValue {
-  const found = ROSTER.rows.flatMap(row => row.pins).find(entry => entry.id === pin);
+/** A pin's witness in a roster read. */
+function witnessIn(roster: Roster, pin: string): JsonValue {
+  const found = roster.rows.flatMap(row => row.pins).find(entry => entry.id === pin);
   if (found === undefined) throw new Error(`the roster holds no pin ${pin}`);
   return found.witness;
+}
+/** The pins whose witness compare read the roster's witness, in run order (wb-u29w F2): rosterWitness records every call, so a
+ * compare that no longer reads the roster (weakened to toBeDefined) or is skipped behind a return leaves its pin out, and a second
+ * read of the same pin doubles it. */
+const COMPARED: string[] = [];
+/** The roster's witness for a pin, as the pin's compare reads it; each read is recorded in COMPARED. */
+function rosterWitness(pin: string): JsonValue {
+  COMPARED.push(pin);
+  return witnessIn(ROSTER, pin);
 }
 function producerPart(name: string): { [key: string]: JsonValue } {
   return objectOf(ROSTER.producer[name], `roster producer.${name}`);
@@ -280,8 +309,9 @@ function filesBelow(directory: string): string[] {
 }
 /** Top-level directories C1 never enters: dependencies, git, the test tree (R-SCOPE) and build or report output. */
 const DOC_SKIP: ReadonlySet<string> = new Set(["node_modules", ".git", "test", "dist", ".forge", "coverage"]);
-/** Every markdown file of the repository outside DOC_SKIP, repo-relative and sorted; node_modules is skipped at every depth. */
-function markdownFiles(directory: string = REPO): string[] {
+/** Every markdown file below `base` (the repository, or C1's planted scratch) outside DOC_SKIP, relative to `base` and sorted;
+ * node_modules is skipped at every depth. */
+function markdownFiles(base: string, directory: string = base): string[] {
   let entries: Dirent[];
   try {
     entries = readdirSync(directory, { withFileTypes: true });
@@ -292,9 +322,9 @@ function markdownFiles(directory: string = REPO): string[] {
   for (const entry of entries.sort(byName)) {
     const path = join(directory, entry.name);
     if (entry.isDirectory()) {
-      if (entry.name === "node_modules" || (directory === REPO && DOC_SKIP.has(entry.name))) continue;
-      files.push(...markdownFiles(path));
-    } else if (entry.isFile() && entry.name.endsWith(".md")) files.push(relative(REPO, path));
+      if (entry.name === "node_modules" || (directory === base && DOC_SKIP.has(entry.name))) continue;
+      files.push(...markdownFiles(base, path));
+    } else if (entry.isFile() && entry.name.endsWith(".md")) files.push(relative(base, path));
   }
   return files;
 }
@@ -345,9 +375,14 @@ function unitsOf(text: string): string[] {
 }
 const isVisual = (unit: string): boolean => tokensIn(unit, VISUAL).length > 0;
 const isFiber = (unit: string): boolean => fiberWordsIn(unit).length > 0;
-/** The units that couple a visual-family word with a Fiber word: C1's claim judge. */
+/** The units that couple a visual-family word with a Fiber word: C1's claim judge, which C1's scan calls on every file's units and
+ * C2 controls through claimUnitsIn (wb-u29w F1). */
+function claimUnitsOf(units: readonly string[]): string[] {
+  return units.filter(unit => isVisual(unit) && isFiber(unit));
+}
+/** A text's coupled units: C1's judge over the text's units. */
 function claimUnitsIn(text: string): string[] {
-  return unitsOf(text).filter(unit => isVisual(unit) && isFiber(unit));
+  return claimUnitsOf(unitsOf(text));
 }
 /** Words joined at runtime, so a composed control never sits on one source line. */
 function compose(...words: string[]): string {
@@ -366,6 +401,82 @@ const SCAN_ROOTS: readonly ScanRoot[] = [
   { root: "src", floor: 100, anchorFile: "src/workbench/reactivefiber-observer.ts", anchorToken: "reactivefiberTopology" },
   { root: "qa", floor: 50, anchorFile: "qa/workbench/receipts-index.mjs", anchorToken: "docs/workbench/receipts" },
 ];
+
+/** A3's scan of one root below `base` (the repository, or A3's planted scratch): the files below the root, held to its floor and its
+ * quiet anchor file, and every vocabulary token each file's text spells, as `<path below base>: <token>`. src, qa and the planted
+ * positive control go through this one scan, so a scan that reads no text, or reads none into a token, reds on the plants (wb-u29w F1). */
+function vocabularyScan(base: string, scan: ScanRoot): { reading: { root: string; floor: boolean; anchor: boolean }; spelled: string[] } {
+  const files = filesBelow(join(base, scan.root));
+  const anchor = join(base, scan.anchorFile);
+  const anchorRead = files.includes(anchor) && textOf(anchor).includes(scan.anchorToken) && vocabularyIn(textOf(anchor)).length === 0;
+  expect(files.length >= scan.floor, `${scan.root}: ${files.length} files walked, floor ${scan.floor}`).toBe(true);
+  expect(anchorRead, `${scan.root}: the anchor ${scan.anchorFile} was read and is quiet`).toBe(true);
+  const spelled = files.flatMap(file => vocabularyIn(textOf(file)).map(token => `${relative(base, file)}: ${token}`));
+  return { reading: { root: scan.root, floor: files.length >= scan.floor, anchor: anchorRead }, spelled };
+}
+/** A3's controls: each flagged text spells at least one vocabulary token, each quiet text none. */
+const A3_FLAGGED: readonly string[] = [
+  "const id = fiber.debugId;", 'node["__reactFiber$x9"]', 'import { NodeRef } from "fiber_optics/refs";', "// take a screenshot first",
+  'const tool = "React DevTools";', "uiElement.publicRef", "const MAPPING_TOKEN = 1;", "fiberIdentity(ref)", "props._debugSource",
+  "a debugging id", "screen capture", "FiberRef.parse(value)",
+];
+const A3_QUIET: readonly string[] = ["ReactiveFiber", "reactivefiber-observer", "reactive_fiber_tsx", "reactiveFiberRef", "nodeRef", "witness", "a debug build", "devtool", "Fiber"];
+/** The root the plants sit below in their scratch. */
+const PLANT_ROOT = "plants";
+/** Scratch directories the cases planted; each is removed after its case. */
+const scratches: string[] = [];
+afterEach(() => {
+  removeScratch(...scratches.splice(0));
+});
+function plantScratch(prefix: string): string {
+  const folder = makeScratch(prefix);
+  scratches.push(folder);
+  return folder;
+}
+function plantFile(folder: string, path: string, text: string): void {
+  mkdirSync(dirname(join(folder, path)), { recursive: true });
+  writeFileSync(join(folder, path), `${text}\n`);
+}
+/** A3's planted positive control (wb-u29w F1): in scratch, each flagged control in a module of its own below the planted root, beside
+ * the quiet anchor module holding every quiet control, read through vocabularyScan as src and qa are: the scan reads every plant and
+ * spells, for each flagged module, exactly the tokens its text spells read alone, and nothing for the anchor. */
+function plantedVocabulary(): { reading: { root: string; floor: boolean; anchor: boolean }; spelled: string[] } {
+  const folder = plantScratch("fiber-debug-identity-a3-");
+  const flagged = A3_FLAGGED.map((text, index) => ({ path: `${PLANT_ROOT}/flagged-${String(index).padStart(2, "0")}.ts`, text }));
+  for (const plant of flagged) plantFile(folder, plant.path, plant.text);
+  plantFile(folder, `${PLANT_ROOT}/quiet.ts`, A3_QUIET.join("\n"));
+  const scan = vocabularyScan(folder, { root: PLANT_ROOT, floor: flagged.length + 1, anchorFile: `${PLANT_ROOT}/quiet.ts`, anchorToken: A3_QUIET[0] ?? "" });
+  expect(scan.spelled, "each flagged plant spells its own tokens through the scan, the quiet anchor none").toEqual(
+    flagged.flatMap(plant => vocabularyIn(plant.text).map(token => `${plant.path}: ${token}`)),
+  );
+  return scan;
+}
+/** C1's scan of every markdown file below `base` (the repository, or C1's planted scratch) outside DOC_SKIP: each file's block units,
+ * and the units among them claimUnitsOf judges coupled, as `<path below base>: <unit>`. The repository and the planted positive control
+ * go through this one scan, so a scan that reads no text, splits none into units or whose claim judge never matches reds on the plants
+ * (wb-u29w F1). */
+function docScan(base: string): { files: string[]; units: { file: string; units: string[] }[]; claims: string[] } {
+  const files = markdownFiles(base);
+  const units = files.map(file => ({ file, units: unitsOf(textOf(join(base, file))) }));
+  const claims = units.flatMap(entry => claimUnitsOf(entry.units).map(unit => `${entry.file}: ${unit.slice(0, 160)}`));
+  return { files, units, claims };
+}
+/** C1's planted positive control (wb-u29w F1): in scratch, each flagged C2 control in a markdown file of its own one directory down,
+ * each quiet C2 control in one at the top, and a flagged control below every DOC_SKIP root and below a nested node_modules, read
+ * through docScan as the repository is: the scan reads exactly the flagged and quiet files, and its claims are exactly the flagged
+ * controls, one unit each. */
+function plantedDocs(): { files: string[]; claims: string[] } {
+  const folder = plantScratch("fiber-debug-identity-c1-");
+  const flagged = C2_FLAGGED.map((text, index) => ({ path: `docs/flagged-${index}.md`, text }));
+  const quiet = C2_QUIET.map((text, index) => ({ path: `quiet-${index}.md`, text }));
+  const skipped = [...[...DOC_SKIP].sort().map(root => `${root}/skipped.md`), "docs/node_modules/skipped.md"];
+  for (const plant of [...flagged, ...quiet]) plantFile(folder, plant.path, plant.text);
+  for (const path of skipped) plantFile(folder, path, C2_FLAGGED[0] ?? "");
+  const scan = docScan(folder);
+  expect(scan.files, "the scan reads every flagged and quiet plant and no skipped one").toEqual([...flagged, ...quiet].map(plant => plant.path));
+  expect(scan.claims, "each flagged plant is one coupled unit through the scan, each quiet plant none").toEqual(flagged.map(plant => `${plant.path}: ${plant.text}`));
+  return { files: scan.files, claims: scan.claims };
+}
 
 /** A mapping reader reads a claim that a UI/debug ref is a FiberOptics component or port. */
 interface MappingWitness {
@@ -612,8 +723,9 @@ const C2_QUIET: readonly string[] = [
   "Reactive Fiber is not shown in a screenshot.",
 ];
 
-/** The pins that reached their witness compare, in run order; the last case holds it to every pin. */
-const REACHED: string[] = [];
+/** The pins that passed their witness compare, each with the witness it compared, in run order; the last case holds the pins to every
+ * pin and each witness to a fresh read of the roster, so a compare weakened in a pin's case still reds there (wb-u29w F2). */
+const REACHED: { readonly pin: string; readonly witness: JsonValue }[] = [];
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
@@ -679,30 +791,18 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     });
   },
   A3: async () => {
-    const roots = SCAN_ROOTS.map(scan => {
-      const files = filesBelow(join(REPO, scan.root));
-      const anchor = join(REPO, scan.anchorFile);
-      const anchorRead = files.includes(anchor) && textOf(anchor).includes(scan.anchorToken) && vocabularyIn(textOf(anchor)).length === 0;
-      expect(files.length >= scan.floor, `${scan.root}: ${files.length} files walked, floor ${scan.floor}`).toBe(true);
-      expect(anchorRead, `${scan.root}: the anchor ${scan.anchorFile} was read and is quiet`).toBe(true);
-      return { root: scan.root, floor: files.length >= scan.floor, anchor: anchorRead, files };
-    });
-    const spelled = roots.flatMap(scan => scan.files.flatMap(file => vocabularyIn(textOf(file)).map(token => `${relative(REPO, file)}: ${token}`)));
+    const scans = SCAN_ROOTS.map(scan => vocabularyScan(REPO, scan));
+    const spelled = scans.flatMap(scan => scan.spelled);
     const spellingModules = [...new Set(spelled.map(entry => entry.slice(0, entry.indexOf(":"))))];
     const bound = MAPPING_READERS.map(binding => binding.module);
-    const controls = {
-      flagged: [
-        "const id = fiber.debugId;", 'node["__reactFiber$x9"]', 'import { NodeRef } from "fiber_optics/refs";', "// take a screenshot first",
-        'const tool = "React DevTools";', "uiElement.publicRef", "const MAPPING_TOKEN = 1;", "fiberIdentity(ref)", "props._debugSource",
-        "a debugging id", "screen capture", "FiberRef.parse(value)",
-      ].map(vocabularyIn),
-      quiet: ["ReactiveFiber", "reactivefiber-observer", "reactive_fiber_tsx", "reactiveFiberRef", "nodeRef", "witness", "a debug build", "devtool", "Fiber"].map(vocabularyIn),
-    };
+    const controls = { flagged: A3_FLAGGED.map(vocabularyIn), quiet: A3_QUIET.map(vocabularyIn) };
+    // wb-u29w F1: the planted positive control goes through the scan src and qa went through.
+    const planted = plantedVocabulary();
     expect(spelled, "a src or qa file spelling the mapping vocabulary").toEqual([]);
     expect(spellingModules.filter(module => !bound.includes(module)), "a spelling module not bound in MAPPING_READERS").toEqual([]);
     expect(bound.filter(module => !spellingModules.includes(module)), "a binding naming no spelling module").toEqual([]);
     expect(controls.flagged.every(found => found.length > 0) && controls.quiet.every(found => found.length === 0), "the scan's controls").toBe(true);
-    return json({ roots: roots.map(({ root, floor, anchor }) => ({ root, floor, anchor })), spelled, bound, controls });
+    return json({ roots: scans.map(scan => scan.reading), spelled, bound, controls, planted });
   },
   B1: async () => {
     const { projection } = visualFixture();
@@ -781,10 +881,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     return json({ bound, synthetic });
   },
   C1: async () => {
-    const files = markdownFiles();
-    const units = files.map(file => ({ file, units: unitsOf(textOf(join(REPO, file))) }));
+    const { files, units, claims } = docScan(REPO);
     const all = units.flatMap(entry => entry.units);
-    const claims = units.flatMap(entry => entry.units.filter(unit => isVisual(unit) && isFiber(unit)).map(unit => `${entry.file}: ${unit.slice(0, 160)}`));
     const anchor = (file: string, family: (unit: string) => boolean): boolean => (units.find(entry => entry.file === file)?.units ?? []).some(family);
     const floors = { files: files.length >= 90, units: all.length >= 4500, visual: all.filter(isVisual).length >= 4, fiber: all.filter(isFiber).length >= 10 };
     const roots = Object.fromEntries(DOC_ROOTS.map(root => [root, files.some(file => rootOf(file) === root)]));
@@ -797,7 +895,9 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(floors, `markdown files ${files.length}, units ${all.length}`).toStrictEqual({ files: true, units: true, visual: true, fiber: true });
     expect(Object.values(roots).every(Boolean) && Object.values(named).every(Boolean) && Object.values(anchors).every(Boolean), "every named root, file and anchor is read").toBe(true);
     expect(claims, "a Pi doc unit coupling a visual-family word with a Fiber word").toEqual([]);
-    return json({ floors, roots, named, anchors, claims });
+    // wb-u29w F1: the planted positive control goes through the scan the repository went through.
+    const planted = plantedDocs();
+    return json({ floors, roots, named, anchors, claims, planted });
   },
   C2: async () => {
     const flagged = C2_FLAGGED.map(text => claimUnitsIn(text).length);
@@ -875,7 +975,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
 };
 
 describe("wb-4nut.1 Fiber debug identity census (TSX-HARNESS2-REACTIVE-EVOLUTION-R1)", () => {
-  it("the judged set: the frozen shape, the out-of-file roster, the bead's acceptance text and the cases agree", () => {
+  it("the judged set: the frozen shape, the out-of-file roster, the bead's acceptance text and the cases agree", ({ task }) => {
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:5", "C:2", "Q:8"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(
       ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })),
@@ -898,6 +998,18 @@ describe("wb-4nut.1 Fiber debug identity census (TSX-HARNESS2-REACTIVE-EVOLUTION
     const filing = ownerFiling(notes);
     expect(filing.startsWith("Owner filing ("), "the notes' first paragraph is the owner filing").toBe(true);
     for (const row of ROWS.filter(entry => entry.id !== "Q")) expect(filing, `row ${row.id} quotes the owner filing's acceptance`).toContain(quoteOf(row.label));
+    // wb-u29w F2: the records live in the last case, so this case, run first, holds the tree as collected to the roster's tests - a
+    // test removed, renamed, added or skipped at collection (the last case included) reds here, before the last case could miss it.
+    const collected: { readonly name: string; readonly mode: string; readonly fails: boolean }[] = [];
+    const collect = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") collected.push({ name: child.name, mode: child.mode, fails: child.fails === true });
+        else if (child.type === "suite") collect(child.tasks);
+      }
+    };
+    collect(task.file.tasks);
+    expect(collected.map(entry => entry.name), "the collected tests, exactly and in roster order").toEqual([...ROSTER.tests]);
+    expect(collected.filter(entry => entry.mode !== "run" || entry.fails).map(entry => `${entry.name} | ${entry.mode}`), "a collected test not in run mode, or inverted").toEqual([]);
   });
 
   for (const row of ROWS) {
@@ -908,7 +1020,7 @@ describe("wb-4nut.1 Fiber debug identity census (TSX-HARNESS2-REACTIVE-EVOLUTION
           expect(impl, `no case for ${pin}`).toBeTypeOf("function");
           const witness = impl === undefined ? null : await impl();
           expect(witness).toStrictEqual(rosterWitness(pin));
-          REACHED.push(pin);
+          REACHED.push({ pin, witness });
         });
       }
     });
@@ -938,6 +1050,10 @@ describe("wb-4nut.1 Fiber debug identity census (TSX-HARNESS2-REACTIVE-EVOLUTION
       walked.filter((entry, index) => index !== here && (entry.mode !== "run" || entry.fails || !ran(entry.state))).map(read),
       "every other test is in run mode, not inverted, and ran before this case",
     ).toEqual([]);
-    expect(REACHED, "every pin reached its witness compare, in row order").toEqual(ROWS.flatMap(row => row.pins));
+    const pins = ROWS.flatMap(row => row.pins);
+    expect(COMPARED, "every pin's compare read the roster's witness once, in row order").toEqual(pins);
+    expect(REACHED.map(entry => entry.pin), "every pin reached its witness compare, in row order").toEqual(pins);
+    const fresh = readRoster();
+    expect(REACHED.map(entry => entry.witness), "every reached witness equals a fresh read of the roster").toStrictEqual(pins.map(pin => witnessIn(fresh, pin)));
   });
 });

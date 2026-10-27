@@ -28,7 +28,15 @@
  *   is refused, never followed; a failed read is a finding (a file or directory gone between its listing and its read is
  *   skipped). EXEMPT files are walked, never judged: this file and its roster (they carry every family as needles) and the
  *   wb-csbt.2 census, landed at landing 303 (it carries the skip family as needles; its roster is judged); A1 reads each
- *   present exemption load-bearing (judged, each yields findings), this file and its roster always present.
+ *   present exemption load-bearing (judged, each yields findings), this file and its roster always present, and each
+ *   sibling exemption bound (BINDING).
+ * - BINDING (wb-rof1, the R-EXEMPT-SCOPE cure): a sibling exemption names its path and its census bead, and A1 holds the pair
+ *   to the tracked bead export, never to a literal of this file or of the roster: (1) the path is a census file (CENSUS_PATH:
+ *   test/workbench-<name>-census.test.ts); (2) the bead's row carries the orchestrator collect step's delivery line
+ *   (DELIVERY) at the start of a notes line, on the bead's own machine branch, its scope listing the path; (3) the bead is in
+ *   the gate's family: it shares a parent epic with the gate (PARENT_TYPE) or holds a related edge to the gate; (4) a
+ *   present file's first bead id (BEAD_ID) is that bead, so the file is the bead's own census. An exemption added to this
+ *   file and the roster together therefore binds only through a row the export already carries.
  * - FAMILIES (case-insensitive): S, the skip word (skip and its inflections) beside component or subtree, in either word order
  *   with at most one word between the noun and the skip word, or two between the skip word and the noun (component-subtree
  *   skipping, component skip, subtree skip, skip unchanged components); K, an assembly or serialization cache (assembly/serialization caches,
@@ -70,8 +78,9 @@
  *
  * JUDGED ROWS (ROWS; one test per pin, titled by the pin id under its row's label with the families replaced):
  *  A, the statement and acceptance (a). A1 the walk (floors, anchors, no symlink, nothing unreadable, each exemption
- *    load-bearing), the live reading (no finding) and the reader's controls; A2 the store reading (no line unparsed, no
- *    finding, the two posture titles of the filing family read and admitted) and its controls.
+ *    load-bearing, each sibling exemption bound), the live reading (no finding), the reader's controls and the binding's
+ *    controls; A2 the store reading (no line unparsed, no finding, the two posture titles of the filing family read and
+ *    admitted) and its controls.
  *  B, acceptance (b). B1 the walked summaries (none today) and the status rule's controls; B2 the never rule over the walked
  *    summaries and the store (the epic and its children read as citations) and its controls.
  *  C, acceptance (c). C1 the gate and the wording rule (KNOWN) with controls; C2 the edge rule (KNOWN), no blocks edge to the
@@ -101,11 +110,16 @@
  * attached to an identifier part or a path (a requirement tag, a dated slug, a prefixed name, a locator) is a citation, not a
  * summary, whatever its block says; R-ROW-STATUS a bead row naming the program
  * is held to B2 only, never to B1 (a filing cites the program, it does not summarize it); R-WORDING-ANYWHERE a deferral word
- * anywhere in an ADR-0032 sentence counts as the wording, whatever it qualifies.
+ * anywhere in an ADR-0032 sentence counts as the wording, whatever it qualifies; R-EXEMPTED a sentence inside an exempted
+ * file (this file, its roster, a bound sibling census) is never judged: BINDING decides which files may be exempted, never
+ * what an exempted file says (its quiet rows plant the claim at each exempted path of a planted tree).
  * SCOPE: the families, markers, anchor, fields and the gate's identity are this cut's reading of the filing (the Pi store holds
  * no bead for the unshipped packet, so the gate is the row naming it); the producer facts are measured at the pin and not
  * re-read here (the census is hermetic), so a producer change is seen only when a cut re-measures the roster. A later census
- * that needs these terms as needles adds its own file to EXEMPT in its cut, beside an A1-style load-bearing reading. C reads
+ * that needs these terms as needles composes them at run time (as PAST is composed below), or a later cut adds it to
+ * SIBLING_EXEMPT with its bead once the export binds it (BINDING), beside an A1-style load-bearing reading: a cut cannot bind
+ * its own census, whose delivery line the collect step writes after the cut, and the binding moves with the export, so a
+ * ledger hop that drops the bead's delivery line or its family edge reds A1. C reads
  * every text field of every anchored row, notes and comments included, and KNOWN pins its exceptions exactly, so the store's
  * evolution moves the reading in either direction at the ledger hop that exports a change: a note or comment added later to
  * an anchored row can admit a known row (an ADR-0032 sentence with a deferral word takes it out of C1, as wb-csbt.2's
@@ -135,11 +149,28 @@ const SELF = "test/workbench-tsx-skip-cache-deferral-census.test.ts";
 const ROSTER_FILE = "test/fixtures/tsx-skip-cache-deferral-roster.json";
 const BEAD_EXPORT = ".beads/issues.jsonl";
 const BEAD = "wb-csbt.1";
+/** A sibling exemption: a census file that carries the families as needles, and the bead whose census it is. */
+interface SiblingExemption {
+  readonly path: string;
+  readonly bead: string;
+}
 /** The wb-csbt.2 census (landing 303): it carries the skip family as needles. Its roster is judged (it yields no finding, so
- * exempting it would bear no load). */
-const SIBLING_EXEMPT: readonly string[] = ["test/workbench-rf-fiber-node-reuse-echo-census.test.ts"];
-/** Walked, never judged (A1 reads each present exemption load-bearing; this file and its roster are always present). */
-const EXEMPT: readonly string[] = [SELF, ROSTER_FILE, ...SIBLING_EXEMPT];
+ * exempting it would bear no load). Each entry names its census bead, and A1 holds it to the tracked export (BINDING). */
+const SIBLING_EXEMPT: readonly SiblingExemption[] = [
+  { path: "test/workbench-rf-fiber-node-reuse-echo-census.test.ts", bead: "wb-csbt.2" },
+];
+/** Walked, never judged (A1 reads each present exemption load-bearing and binds each sibling; this file and its roster are
+ * always present). */
+const EXEMPT: readonly string[] = [SELF, ROSTER_FILE, ...SIBLING_EXEMPT.map(entry => entry.path)];
+/** BINDING (1): a sibling exemption's path is a census file. */
+const CENSUS_PATH_SOURCE = String.raw`^test\/workbench-[a-z0-9]+(?:-[a-z0-9]+)*-census\.test\.ts$`;
+/** BINDING (2): the orchestrator collect step's delivery line, at the start of a notes line: the machine branch it pushed
+ * (group 1) and the scope it committed (group 2, paths joined by one space). */
+const DELIVERY_SOURCE = String.raw`^DELIVERED by the orchestrator collect step \([^)\n]*\): commit [0-9a-f]{40} on branch machine\/flywheel\/(\S+), base [0-9a-f]+, scope (.+)\.$`;
+/** BINDING (3): the edge type that joins a row to its epic. */
+const PARENT_TYPE = "parent-child";
+/** BINDING (4): a bead id as the export spells one; the first an exempted file spells is the bead its header names. */
+const BEAD_ID_SOURCE = String.raw`\bwb-[a-z0-9]+(?:\.[0-9]+)*\b`;
 
 /** S: the skip word beside a component or a subtree (either order; one word may stand between the noun and the skip word, two after it). */
 const SKIP_SOURCE = String.raw`\b(?:components?|subtrees?)(?:[\s_/-]+[a-z]+)?[\s_/-]+skip(?:s|ped|ping)?\b|\bskip(?:s|ped|ping)?(?:[\s_/-]+[a-z]+){0,2}[\s_/-]+(?:components?|subtrees?)\b`;
@@ -234,6 +265,7 @@ const RESIDUAL_FAMILIES: readonly string[] = [
   "R-CITATION",
   "R-ROW-STATUS",
   "R-WORDING-ANYWHERE",
+  "R-EXEMPTED",
 ];
 /** Each residual's pinned quiet rows: `<pin>:<control>` or `<pin>:plant:<path>`, each read as false in the roster witness. */
 const QUIET: Readonly<Record<string, readonly string[]>> = {
@@ -259,6 +291,11 @@ const QUIET: Readonly<Record<string, readonly string[]>> = {
   "R-CITATION": ["B1:citationOnly", "B1:tagOnly", "B1:datedSlug", "B1:prefixedName", "B2:citationImplemented", "B2:tagImplemented"],
   "R-ROW-STATUS": ["B1:rowWithoutStatus"],
   "R-WORDING-ANYWHERE": ["C1:wordingAnywhere"],
+  "R-EXEMPTED": [
+    "A1:plant:test/workbench-tsx-skip-cache-deferral-census.test.ts",
+    "A1:plant:test/fixtures/tsx-skip-cache-deferral-roster.json",
+    "A1:plant:test/workbench-rf-fiber-node-reuse-echo-census.test.ts",
+  ],
 };
 /** The skip word's past tense, composed so that no line of this file spells it beside a noun (the wb-csbt.2 census reads every
  * src and test text for that label). */
@@ -640,7 +677,7 @@ interface TreeReading {
   readonly anchorsWalked: boolean;
 }
 /** The walk of `root`: each file read once; a binary file is set aside, an exempt file kept apart (read, never judged). */
-function readTree(root: string): TreeReading {
+function readTree(root: string, exemptPaths: readonly string[] = EXEMPT): TreeReading {
   const walk = walkTree(root);
   const texts = new Map<string, string>();
   const exempt = new Map<string, string>();
@@ -661,7 +698,7 @@ function readTree(root: string): TreeReading {
       binary.push(file);
       continue;
     }
-    (EXEMPT.includes(file) ? exempt : texts).set(file, buffer.toString("utf8"));
+    (exemptPaths.includes(file) ? exempt : texts).set(file, buffer.toString("utf8"));
   }
   return { walk, texts, exempt, binary, anchorsWalked: WALK_ANCHORS.every(([path]) => anchors.get(path) === true) };
 }
@@ -675,8 +712,9 @@ function liveTree(): TreeReading {
 const treeFindings = (tree: TreeReading): string[] => [...tree.texts].flatMap(([path, source]) => readFile(path, source).findings);
 const rootOf = (file: string): string => (file.includes("/") ? file.slice(0, file.indexOf("/")) : "");
 
-/** Plants `files` in a fresh scratch root (a null content is a symlink to the root's first file) and reads that tree. */
-function plantedTree(files: Readonly<Record<string, string | Buffer | null>>): TreeReading {
+/** Plants `files` in a fresh scratch root (a null content is a symlink to the root's first file) and reads that tree with
+ * `exemptPaths` exempted. */
+function plantedTree(files: Readonly<Record<string, string | Buffer | null>>, exemptPaths: readonly string[] = EXEMPT): TreeReading {
   const root = makeScratch("tsx-skip-cache-");
   try {
     for (const [path, content] of Object.entries(files)) {
@@ -685,7 +723,7 @@ function plantedTree(files: Readonly<Record<string, string | Buffer | null>>): T
       if (content === null) symlinkSync(join(root, Object.keys(files)[0] ?? ""), target);
       else writeFileSync(target, content);
     }
-    return readTree(root);
+    return readTree(root, exemptPaths);
   } finally {
     removeScratch(root);
   }
@@ -808,6 +846,24 @@ function edgeFindings(rows: readonly BeadRecord[]): string[] {
 function blocksToGate(rows: readonly BeadRecord[]): string[] {
   const [gate = ""] = gatesOf(rows);
   return rows.filter(row => row.edges.some(edge => edge.dependsOn === gate && edge.type === BLOCKS_TYPE)).map(row => row.id);
+}
+/** BINDING over a store: the reasons a sibling exemption is not bound, in check order (none when bound). `text` is the
+ * exempted file's bytes when a walk read it; an absent file is bound by the store alone. */
+function bindingOf(entry: SiblingExemption, rows: readonly BeadRecord[], text: string | undefined): string[] {
+  const reasons: string[] = [];
+  if (!new RegExp(CENSUS_PATH_SOURCE).test(entry.path)) reasons.push("not-census-path");
+  const row = rows.find(candidate => candidate.id === entry.bead);
+  if (row === undefined) reasons.push("bead-absent");
+  else {
+    const deliveries = [...fieldOf(row, "notes").matchAll(new RegExp(DELIVERY_SOURCE, "gm"))];
+    if (!deliveries.some(match => match[1] === entry.bead && (match[2] ?? "").split(" ").includes(entry.path))) reasons.push("not-delivered");
+    const [gate = ""] = gatesOf(rows);
+    const epics = (rows.find(candidate => candidate.id === gate)?.edges ?? []).filter(edge => edge.type === PARENT_TYPE).map(edge => edge.dependsOn);
+    const family = row.edges.some(edge => (edge.type === PARENT_TYPE && epics.includes(edge.dependsOn)) || (edge.dependsOn === gate && RELATED_TYPES.includes(edge.type)));
+    if (!family) reasons.push("outside-family");
+  }
+  if (text !== undefined && new RegExp(BEAD_ID_SOURCE).exec(text)?.[0] !== entry.bead) reasons.push("header-names-other");
+  return reasons;
 }
 
 interface BeadRow {
@@ -947,14 +1003,24 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     const selfPresent = [SELF, ROSTER_FILE].every(file => tree.exempt.has(file));
     const notLoadBearing = EXEMPT.filter(file => tree.exempt.has(file) && !loadBearing(file));
     const exemptionsLoadBearing = selfPresent && notLoadBearing.length === 0;
+    /** BINDING, read live: each sibling exemption against the tracked export and the file the walk read. */
+    const notBound = SIBLING_EXEMPT.flatMap(entry => {
+      const reasons = bindingOf(entry, liveStore().rows, tree.exempt.get(entry.path));
+      return reasons.length === 0 ? [] : [`${entry.path}:${entry.bead} ${reasons.join(",")}`];
+    });
+    const exemptionsBound = notBound.length === 0;
     expect(filesFloorMet, `files walked: ${tree.walk.files.length}`).toBe(true);
     expect(rootsFloorMet, `files per root: ${JSON.stringify(counts)}`).toBe(true);
     expect(tree.anchorsWalked, "every walk anchor was reached with its token").toBe(true);
     expect(anchoredFloorMet, `anchored judged files: ${anchored}`).toBe(true);
-    expect({ exempt: [...EXEMPT], selfPresent, notLoadBearing }, "the exemptions: this file, its roster and the wb-csbt.2 census; each present one, judged, yields findings").toStrictEqual({
-      exempt: [SELF, ROSTER_FILE, ...SIBLING_EXEMPT],
+    expect(
+      { exempt: [...EXEMPT], selfPresent, notLoadBearing, notBound },
+      "the exemptions: this file, its roster and the wb-csbt.2 census; each present one, judged, yields findings, and each sibling binds to the export (BINDING)",
+    ).toStrictEqual({
+      exempt: [SELF, ROSTER_FILE, ...SIBLING_EXEMPT.map(entry => entry.path)],
       selfPresent: true,
       notLoadBearing: [],
+      notBound: [],
     });
     expect({ findings, symlinks: tree.walk.symlinks, unreadable: tree.walk.unreadable }, "walked sentences naming a skip or cache family without a posture marker").toStrictEqual({ findings: [], symlinks: [], unreadable: [] });
     const controls: JsonObject = {
@@ -1021,6 +1087,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       ".git/notes.md": claim,
       ".beads/notes.md": claim,
       "media/blob.bin": Buffer.concat([Buffer.from(claim), Buffer.from([0])]),
+      ...Object.fromEntries(EXEMPT.map((path): [string, string] => [path, claim])),
     });
     const flagged = new Set([...treeFindings(planted).map(finding => finding.slice(0, finding.indexOf(":"))), ...planted.walk.symlinks]);
     const plants = Object.fromEntries(
@@ -1045,9 +1112,55 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         ".git/notes.md",
         ".beads/notes.md",
         "media/blob.bin",
+        ...EXEMPT,
       ].map((path): [string, boolean] => [path, flagged.has(path)]),
     );
-    return done("A1", { filesFloorMet, rootsFloorMet, anchorsWalked: tree.anchorsWalked, anchoredFloorMet, exemptionsLoadBearing, findings, symlinks: tree.walk.symlinks, unreadable: tree.walk.unreadable, controls, plants });
+    /** BINDING's controls over a constructed store: the gate (a child of wb-epic) and one sibling row that delivered its census. */
+    const deliveryLine = (branch: string, scope: string): string =>
+      `DELIVERED by the orchestrator collect step (2026-10-24T00:00:00Z; g10.1): commit ${"0".repeat(40)} on branch machine/flywheel/${branch}, base 0000000, scope ${scope}.`;
+    const epicEdges: Edge[] = [{ dependsOn: "wb-epic", type: PARENT_TYPE }];
+    const familyGate = { ...GATE_ROW, edges: epicEdges };
+    const siblingPath = "test/workbench-sibling-census.test.ts";
+    const siblingRow = { id: "wb-sib", notes: `Owner filing.\n${deliveryLine("wb-sib", `test/fixtures/sibling-roster.json ${siblingPath}`)}`, edges: epicEdges };
+    const headerOf = (bead: string): string => `/**\n * ${bead} (R1), a sibling census.\n */\n`;
+    const sibling: SiblingExemption = { path: siblingPath, bead: "wb-sib" };
+    const bind = (entry: SiblingExemption, row: { readonly id: string; readonly edges?: readonly Edge[]; readonly [field: string]: unknown } = siblingRow, text: string | undefined = headerOf(entry.bead)): string | false => {
+      const reasons = bindingOf(entry, rowsOf([familyGate, row]), text);
+      return reasons.length === 0 ? false : reasons.join(",");
+    };
+    const claimPath = "docs/workbench/zz-claim.md";
+    const widenedTree = plantedTree({ [claimPath]: claim }, [...EXEMPT, claimPath]);
+    const widenedText = widenedTree.exempt.get(claimPath) ?? "";
+    const binding: JsonObject = {
+      bound: bind(sibling),
+      absentFile: bind(sibling, siblingRow, undefined),
+      relatedEdge: bind(sibling, { ...siblingRow, edges: related() }),
+      relatesTo: bind(sibling, { ...siblingRow, edges: related("relates-to") }),
+      docsPath: bind({ path: claimPath, bead: "wb-sib" }, { ...siblingRow, notes: deliveryLine("wb-sib", claimPath) }),
+      rosterPath: bind({ path: "test/fixtures/sibling-roster.json", bead: "wb-sib" }),
+      nestedPath: bind({ path: "test/deep/workbench-sibling-census.test.ts", bead: "wb-sib" }, { ...siblingRow, notes: deliveryLine("wb-sib", "test/deep/workbench-sibling-census.test.ts") }),
+      beadAbsent: bind({ path: siblingPath, bead: "wb-gone" }),
+      mentionOnly: bind(sibling, { ...siblingRow, notes: `The census ${siblingPath} carries the needles.` }),
+      otherScope: bind(sibling, { ...siblingRow, notes: deliveryLine("wb-sib", "test/workbench-other-census.test.ts") }),
+      otherBranch: bind(sibling, { ...siblingRow, notes: deliveryLine("wb-other", siblingPath) }),
+      scopeLonger: bind(sibling, { ...siblingRow, notes: deliveryLine("wb-sib", `${siblingPath}.bak`) }),
+      midLine: bind(sibling, { ...siblingRow, notes: `Copied: ${deliveryLine("wb-sib", siblingPath)}` }),
+      inDescription: bind(sibling, { id: "wb-sib", description: deliveryLine("wb-sib", siblingPath), edges: epicEdges }),
+      outsideFamily: bind(sibling, { ...siblingRow, edges: [{ dependsOn: "wb-other-epic", type: PARENT_TYPE }] }),
+      blocksGate: bind(sibling, { ...siblingRow, edges: [{ dependsOn: GATE_ROW.id, type: BLOCKS_TYPE }] }),
+      relatedElsewhere: bind(sibling, { ...siblingRow, edges: related("related", "wb-other") }),
+      noEdge: bind(sibling, { ...siblingRow, edges: [] }),
+      headerOther: bind(sibling, siblingRow, headerOf("wb-other")),
+      headerNone: bind(sibling, siblingRow, "// a census that names no bead\n"),
+      headerSecond: bind(sibling, siblingRow, `${headerOf("wb-other")}// wb-sib\n`),
+      widened: {
+        exempted: widenedTree.exempt.has(claimPath),
+        judgedFindings: treeFindings(widenedTree).length,
+        loadBearing: readFile(claimPath, widenedText).findings.length > 0,
+        binding: bindingOf({ path: claimPath, bead: "wb-sib" }, rowsOf([familyGate, siblingRow]), widenedText).join(",") || false,
+      },
+    };
+    return done("A1", { filesFloorMet, rootsFloorMet, anchorsWalked: tree.anchorsWalked, anchoredFloorMet, exemptionsLoadBearing, exemptionsBound, findings, symlinks: tree.walk.symlinks, unreadable: tree.walk.unreadable, controls, plants, binding });
   },
   A2: () => {
     const { rows, unparsed } = liveStore();
@@ -1259,6 +1372,11 @@ function scanConstants(): Json {
       mentionFields: MENTION_FIELDS,
       skippedRoots: SKIPPED_ROOTS,
       exempt: EXEMPT,
+      siblingExempt: SIBLING_EXEMPT.map(entry => `${entry.path}:${entry.bead}`),
+      censusPath: CENSUS_PATH_SOURCE,
+      delivery: DELIVERY_SOURCE,
+      parentType: PARENT_TYPE,
+      beadId: BEAD_ID_SOURCE,
       floors: FLOORS,
       walkAnchors: WALK_ANCHORS.map(([path, token]) => `${path}:${token}`),
       postureAnchors: POSTURE_ANCHORS,

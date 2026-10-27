@@ -1,0 +1,3917 @@
+{
+ "bead": "wb-x0xu.2",
+ "constants": {
+  "bead": "wb-x0xu.2",
+  "sibling": "wb-x0xu.1",
+  "pin": "0091719d0288",
+  "pinCommit": "0091719d02887910fa0c2fb6693a32723e243600",
+  "dossier": "test/fixtures/hx-sio-design-status-dossier.md",
+  "surfaces": [
+   {
+    "id": "D07",
+    "path": "docs/workbench/07-native-integrations.md",
+    "directory": false,
+    "floor": 1,
+    "anchor": {
+     "file": "docs/workbench/07-native-integrations.md",
+     "token": "MechanicalWorkflows and ecosystem native SDK integration"
+    }
+   },
+   {
+    "id": "D14",
+    "path": "docs/workbench/14-qa-and-benchmarks.md",
+    "directory": false,
+    "floor": 1,
+    "anchor": {
+     "file": "docs/workbench/14-qa-and-benchmarks.md",
+     "token": "Test strategy, conformance suite, benchmark and adversarial controls"
+    }
+   },
+   {
+    "id": "TRC",
+    "path": "docs/workbench/TRACEABILITY.md",
+    "directory": false,
+    "floor": 1,
+    "anchor": {
+     "file": "docs/workbench/TRACEABILITY.md",
+     "token": "Workbench requirement traceability and release evidence"
+    }
+   },
+   {
+    "id": "RCP",
+    "path": "docs/workbench/receipts",
+    "directory": true,
+    "floor": 40,
+    "anchor": {
+     "file": "docs/workbench/receipts/wb-tz2.14.md",
+     "token": "# wb-tz2.14: "
+    }
+   },
+   {
+    "id": "DOS",
+    "path": "test/fixtures/hx-sio-design-status-dossier.md",
+    "directory": false,
+    "floor": 1,
+    "anchor": {
+     "file": "test/fixtures/hx-sio-design-status-dossier.md",
+     "token": "# wb-x0xu.2 dossier: "
+    }
+   }
+  ],
+  "wideRoots": [
+   {
+    "root": "docs",
+    "floor": 60,
+    "anchor": {
+     "file": "docs/workbench/09-observation-and-provenance.md",
+     "token": "Reader adapters"
+    }
+   },
+   {
+    "root": "src",
+    "floor": 100,
+    "anchor": {
+     "file": "src/workbench/hyperunix-observer.ts",
+     "token": "HyperUnix hyperunix.find reader adapter"
+    }
+   },
+   {
+    "root": ".agents",
+    "floor": 1,
+    "anchor": {
+     "file": ".agents/skills/beads/SKILL.md",
+     "token": "name: beads"
+    }
+   },
+   {
+    "root": ".pi",
+    "floor": 1,
+    "anchor": {
+     "file": ".pi/agents/auditor.md",
+     "token": "description: Security Code Reviewer"
+    }
+   },
+   {
+    "root": "qa",
+    "floor": 50,
+    "anchor": {
+     "file": "qa/workbench/boot-import-census.mjs",
+     "token": "boot-import-census.mjs"
+    }
+   },
+   {
+    "root": "examples",
+    "floor": 5,
+    "anchor": {
+     "file": "examples/agent-tool-description.md",
+     "token": "Launch a new agent to handle complex, multi-step tasks autonomously"
+    }
+   }
+  ],
+  "pagesFloor": 5,
+  "pageAnchor": {
+   "file": "README.md",
+   "token": "pi-subagents"
+  },
+  "statementSurfaces": [
+   [
+    "adapter",
+    "src"
+   ],
+   [
+    "docs",
+    "docs"
+   ],
+   [
+    "triage output",
+    "test/fixtures/hx-sio-design-status-dossier.md"
+   ],
+   [
+    "skill text Pi serves",
+    ".agents"
+   ]
+  ],
+  "names": [
+   {
+    "id": "HXSI",
+    "prefix": "HXSI-",
+    "source": "HXSI-01..06, SIO 04-admission-and-semantics.md:22-32"
+   },
+   {
+    "id": "TI",
+    "prefix": "TI-",
+    "source": "TI-*, SIO 08-theorem-crosswalk.md:7-18, :30-32, :44-48, :58-61, :66-72"
+   },
+   {
+    "id": "HXOPTIM",
+    "prefix": "hx.optim.",
+    "source": "the proposed hx.optim.spoke.exchange.v1 law, CSO README.md:27"
+   }
+  ],
+  "claims": [
+   {
+    "id": "admitted",
+    "source": "acceptance (a); statement 'a registered or admitted runtime law'",
+    "forms": [
+     "admitted",
+     "admit",
+     "admits",
+     "admitting",
+     "admission",
+     "admissions"
+    ]
+   },
+   {
+    "id": "registered",
+    "source": "acceptance (a); statement",
+    "forms": [
+     "registered",
+     "register",
+     "registers",
+     "registering",
+     "registration",
+     "registrations"
+    ]
+   },
+   {
+    "id": "verified",
+    "source": "acceptance (a); statement 'an admission or verification status'",
+    "forms": [
+     "verified",
+     "verify",
+     "verifies",
+     "verifying",
+     "verification",
+     "verifications"
+    ]
+   },
+   {
+    "id": "graduated",
+    "source": "acceptance (a)",
+    "forms": [
+     "graduated",
+     "graduate",
+     "graduates",
+     "graduating",
+     "graduation"
+    ]
+   },
+   {
+    "id": "benchmarked",
+    "source": "acceptance (a); statement",
+    "forms": [
+     "benchmarked",
+     "benchmark",
+     "benchmarks",
+     "benchmarking"
+    ]
+   },
+   {
+    "id": "elaborated",
+    "source": "statement 'Lean-elaborated'",
+    "forms": [
+     "elaborated",
+     "elaboration"
+    ]
+   },
+   {
+    "id": "plan-route",
+    "source": "statement 'a selected hx plan route'",
+    "forms": [
+     "plan route",
+     "plan routes"
+    ]
+   },
+   {
+    "id": "checked",
+    "source": "acceptance (b)'s token list",
+    "forms": [
+     "checked"
+    ]
+   }
+  ],
+  "qualifiers": [
+   {
+    "id": "design-only",
+    "source": "statement; SIO README.md:3, CSO README.md:3",
+    "forms": [
+     "design only"
+    ]
+   },
+   {
+    "id": "not-implemented",
+    "source": "statement",
+    "forms": [
+     "not implemented"
+    ]
+   },
+   {
+    "id": "human-proof",
+    "source": "statement 'human proof'; SIO 08:72 'human-proved'",
+    "forms": [
+     "human proof",
+     "human proved"
+    ]
+   },
+   {
+    "id": "source-authored-only",
+    "source": "statement 'Lean source authored only'; SIO 08:58 'source-authored only'",
+    "forms": [
+     "source authored only"
+    ]
+   },
+   {
+    "id": "no-runtime-law-admitted",
+    "source": "CSO README.md:3",
+    "forms": [
+     "no runtime law admitted"
+    ]
+   },
+   {
+    "id": "law-admissions-blocked",
+    "source": "CSO README.md:83",
+    "forms": [
+     "law admissions remain blocked"
+    ]
+   }
+  ],
+  "statusLines": [
+   {
+    "cite": "CSO README.md:3",
+    "path": "docs/programs/certified-structural-optimization-2026-10-18/README.md:3",
+    "sha256": "cf89230862cf684d39c517c33e670ed29300000d897a1e0f818df04b93245f26"
+   },
+   {
+    "cite": "SIO README.md:3",
+    "path": "docs/programs/structural-information-optimization-2026-10-17/README.md:3",
+    "sha256": "410d36ba22c0376fbc6312e82ad3d05df65c1cac2744c92aa9ccb5e5f27ad553"
+   }
+  ],
+  "lawId": "hx.optim.spoke.exchange.v1",
+  "certificateRefs": [
+   "TI-23"
+  ],
+  "tokens": [
+   "admitted",
+   "registered",
+   "verified",
+   "checked"
+  ],
+  "lawFields": [
+   "law_id",
+   "lawId",
+   "certificate_refs",
+   "certificateRefs"
+  ],
+  "sdkDeclarationsFloor": 10,
+  "hxModules": [
+   "src/workbench/providers/hyperunix.ts",
+   "src/workbench/hyperunix-observer.ts",
+   "src/workbench/native-evidence.ts"
+  ],
+  "dossierText": {
+   "title": "wb-x0xu.2 dossier: hx-sio-cso-design-status-words-never-relabelled",
+   "sections": [
+    "Status rows",
+    "Named IDs",
+    "What Pi says about them"
+   ],
+   "intro": [
+    "The Pi-side dossier of the program-triage-2026-10-22 group behind wb-x0xu.2 (HX-STRUCTURAL-INFORMATION-OPTIMIZATION-R2), from the owner filing on that bead. It records the status words of two HyperUnix-CLI design programs at the filing's pin, HyperUnix-CLI commit 0091719d02887910fa0c2fb6693a32723e243600, read with read-only git show. CSO is docs/programs/certified-structural-optimization-2026-10-18 and SIO is docs/programs/structural-information-optimization-2026-10-17.",
+    "test/workbench-hx-sio-design-status-census.test.ts judges every sentence here beside the pages it judges, and holds each status row to its program line byte for byte."
+   ],
+   "idHeader": [
+    "Named IDs",
+    "Program rows at the pin",
+    "Status words Pi echoes"
+   ],
+   "idRows": [
+    [
+     "HXSI-01 to HXSI-06",
+     "SIO 04-admission-and-semantics.md:22-32, the applicable laws",
+     "DESIGN ONLY; not implemented (SIO README.md:3)"
+    ],
+    [
+     "TI-01 to TI-12",
+     "SIO 08-theorem-crosswalk.md:7-18, the runtime-opportunity matrix",
+     "DESIGN ONLY (SIO README.md:3): \"conditional human derivations, externally stated paper theorems and open Lean/semantics bridges\" (SIO 08-theorem-crosswalk.md:20)"
+    ],
+    [
+     "TI-18 to TI-20",
+     "SIO 08-theorem-crosswalk.md:30-32, the 2026-10-18 proof-source update",
+     "DESIGN ONLY (SIO README.md:3): \"source-authored, not Lean-elaborated\" theorem terms (SIO 08-theorem-crosswalk.md:26), \"No physical law was registered\" (SIO 08-theorem-crosswalk.md:36), and for TI-20 \"Positive-rational global sorting remains a human proof awaiting Lean elaboration\" (SIO 08-theorem-crosswalk.md:32)"
+    ],
+    [
+     "TI-21 to TI-23",
+     "SIO 08-theorem-crosswalk.md:44-48, the factorized evidence and rational exchange proof cut",
+     "DESIGN ONLY (SIO README.md:3): \"source-authored conditional Lean theorem terms, not compiler elaboration receipts\" (SIO 08-theorem-crosswalk.md:50), and for TI-23 global sorting \"Full unconditional rank normalization **not yet proved in Lean**\" (SIO 08-theorem-crosswalk.md:48)"
+    ],
+    [
+     "TI-24, TI-29 and TI-30",
+     "SIO 08-theorem-crosswalk.md:58-61, the 2026-10-18 repair ledger",
+     "DESIGN ONLY (SIO README.md:3): for TI-24 global finite spoke ordering \"Human proof\" and Lean \"source-authored only\" (SIO 08-theorem-crosswalk.md:58), for the TI-24 pairwise total-preorder \"Refuted by zero-cost rational counterexample\" (SIO 08-theorem-crosswalk.md:59), for TI-29 \"Lean source authored only\" (SIO 08-theorem-crosswalk.md:60) and for TI-30 \"Human theorem\" and \"Lean source authored only\" (SIO 08-theorem-crosswalk.md:61)"
+    ],
+    [
+     "TI-31 to TI-52",
+     "SIO 08-theorem-crosswalk.md:66-72, the next theorem results and admissibility limits",
+     "DESIGN ONLY (SIO README.md:3): \"Do not relabel these newly human-proved results as verified Lean modules\" (SIO 08-theorem-crosswalk.md:72)"
+    ],
+    [
+     "hx.optim.spoke.exchange.v1",
+     "CSO README.md:23-39, the proposed law record: a data model, not existing API",
+     "DESIGN ONLY; no runtime law admitted (CSO README.md:3)"
+    ]
+   ],
+   "posture": [
+    "Pi never presents HXSI-01 to HXSI-06, a TI- row or hx.optim.spoke.exchange.v1 as a registered or admitted runtime law, a selected hx plan route, Lean-elaborated or benchmarked: the programs call them DESIGN ONLY, not implemented, human proof and Lean source authored only.",
+    "The proposed hx.optim.spoke.exchange.v1 record names certificate_refs TI-23, and CSO README.md:83 reads that all law admissions remain blocked.",
+    "If an HX result ever carries law_id or certificate_refs, Pi echoes them byte for byte and mints no admission or verification status. Today the vendored @hyperunix/sdk 0.1.0 keeps them only in its extensions sidecar, which the hyperunix.find provider output echoes verbatim and the reader adapter never reads."
+   ],
+   "sha256": "8de32dcbdf46459ce6282c8cdd2ecc171aa34dd287936e11eb3ddeb0b7e1d98f"
+  },
+  "rendering": {
+   "markdown": "\\.(?:md|markdown|mdx)$",
+   "htmlPage": "\\.html?$",
+   "reference": "&(?:#(\\d{1,7})|#[xX]([0-9a-fA-F]{1,6})|(\\w+));",
+   "namedReferences": [
+    [
+     "Tab",
+     [
+      9
+     ]
+    ],
+    [
+     "NewLine",
+     [
+      10
+     ]
+    ],
+    [
+     "excl",
+     [
+      33
+     ]
+    ],
+    [
+     "ast",
+     [
+      42
+     ]
+    ],
+    [
+     "midast",
+     [
+      42
+     ]
+    ],
+    [
+     "period",
+     [
+      46
+     ]
+    ],
+    [
+     "semi",
+     [
+      59
+     ]
+    ],
+    [
+     "quest",
+     [
+      63
+     ]
+    ],
+    [
+     "lowbar",
+     [
+      95
+     ]
+    ],
+    [
+     "UnderBar",
+     [
+      95
+     ]
+    ],
+    [
+     "fjlig",
+     [
+      102,
+      106
+     ]
+    ],
+    [
+     "nbsp",
+     [
+      160
+     ]
+    ],
+    [
+     "NonBreakingSpace",
+     [
+      160
+     ]
+    ],
+    [
+     "shy",
+     [
+      173
+     ]
+    ],
+    [
+     "ensp",
+     [
+      8194
+     ]
+    ],
+    [
+     "emsp",
+     [
+      8195
+     ]
+    ],
+    [
+     "emsp13",
+     [
+      8196
+     ]
+    ],
+    [
+     "emsp14",
+     [
+      8197
+     ]
+    ],
+    [
+     "numsp",
+     [
+      8199
+     ]
+    ],
+    [
+     "puncsp",
+     [
+      8200
+     ]
+    ],
+    [
+     "thinsp",
+     [
+      8201
+     ]
+    ],
+    [
+     "ThinSpace",
+     [
+      8201
+     ]
+    ],
+    [
+     "hairsp",
+     [
+      8202
+     ]
+    ],
+    [
+     "VeryThinSpace",
+     [
+      8202
+     ]
+    ],
+    [
+     "ZeroWidthSpace",
+     [
+      8203
+     ]
+    ],
+    [
+     "NegativeVeryThinSpace",
+     [
+      8203
+     ]
+    ],
+    [
+     "NegativeThinSpace",
+     [
+      8203
+     ]
+    ],
+    [
+     "NegativeMediumSpace",
+     [
+      8203
+     ]
+    ],
+    [
+     "NegativeThickSpace",
+     [
+      8203
+     ]
+    ],
+    [
+     "zwnj",
+     [
+      8204
+     ]
+    ],
+    [
+     "zwj",
+     [
+      8205
+     ]
+    ],
+    [
+     "lrm",
+     [
+      8206
+     ]
+    ],
+    [
+     "rlm",
+     [
+      8207
+     ]
+    ],
+    [
+     "MediumSpace",
+     [
+      8287
+     ]
+    ],
+    [
+     "ThickSpace",
+     [
+      8287,
+      8202
+     ]
+    ],
+    [
+     "NoBreak",
+     [
+      8288
+     ]
+    ],
+    [
+     "af",
+     [
+      8289
+     ]
+    ],
+    [
+     "ApplyFunction",
+     [
+      8289
+     ]
+    ],
+    [
+     "it",
+     [
+      8290
+     ]
+    ],
+    [
+     "InvisibleTimes",
+     [
+      8290
+     ]
+    ],
+    [
+     "ic",
+     [
+      8291
+     ]
+    ],
+    [
+     "InvisibleComma",
+     [
+      8291
+     ]
+    ],
+    [
+     "amp",
+     [
+      38
+     ]
+    ],
+    [
+     "AMP",
+     [
+      38
+     ]
+    ],
+    [
+     "lt",
+     [
+      60
+     ]
+    ],
+    [
+     "LT",
+     [
+      60
+     ]
+    ],
+    [
+     "gt",
+     [
+      62
+     ]
+    ],
+    [
+     "GT",
+     [
+      62
+     ]
+    ],
+    [
+     "quot",
+     [
+      34
+     ]
+    ],
+    [
+     "QUOT",
+     [
+      34
+     ]
+    ],
+    [
+     "apos",
+     [
+      39
+     ]
+    ],
+    [
+     "hyphen",
+     [
+      8208
+     ]
+    ],
+    [
+     "dash",
+     [
+      8208
+     ]
+    ],
+    [
+     "ndash",
+     [
+      8211
+     ]
+    ],
+    [
+     "mdash",
+     [
+      8212
+     ]
+    ],
+    [
+     "horbar",
+     [
+      8213
+     ]
+    ],
+    [
+     "minus",
+     [
+      8722
+     ]
+    ]
+   ],
+   "blockTags": [
+    "address",
+    "article",
+    "aside",
+    "base",
+    "basefont",
+    "blockquote",
+    "body",
+    "caption",
+    "center",
+    "col",
+    "colgroup",
+    "dd",
+    "details",
+    "dialog",
+    "dir",
+    "div",
+    "dl",
+    "dt",
+    "fieldset",
+    "figcaption",
+    "figure",
+    "footer",
+    "form",
+    "frame",
+    "frameset",
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "head",
+    "header",
+    "hr",
+    "html",
+    "iframe",
+    "legend",
+    "li",
+    "link",
+    "main",
+    "menu",
+    "menuitem",
+    "meta",
+    "nav",
+    "noframes",
+    "ol",
+    "optgroup",
+    "option",
+    "p",
+    "param",
+    "pre",
+    "script",
+    "search",
+    "section",
+    "source",
+    "style",
+    "summary",
+    "table",
+    "tbody",
+    "td",
+    "textarea",
+    "tfoot",
+    "th",
+    "thead",
+    "title",
+    "tr",
+    "track",
+    "ul"
+   ],
+   "htmlMarkup": "<!--(?:-?>|[\\s\\S]*?(?:--!?>|$))|<[!?][^>]*(?:>|$)|<\\/(?:>|[^A-Za-z>][^>]*(?:>|$))|<(\\/?)([A-Za-z][^\\t\\n\\f\\r />]*)",
+   "rcdata": [
+    "textarea",
+    "title"
+   ],
+   "rawText": [
+    "script",
+    "style",
+    "xmp",
+    "iframe",
+    "noembed",
+    "noframes",
+    "noscript",
+    "plaintext"
+   ],
+   "unseen": "[\\p{Default_Ignorable_Code_Point}\\p{Cc}]",
+   "unread": "[\\u{115f}\\u{1160}\\u{3164}\\u{ffa0}\\u{2029}\\u{fffc}]|[^\\P{Cc}\\t\\n\\r]",
+   "bidi": "\\p{Bidi_Control}"
+  }
+ },
+ "rows": [
+  {
+   "id": "A",
+   "label": "(a) a census over docs/workbench/07-native-integrations.md, 14-qa-and-benchmarks.md, TRACEABILITY.md, receipts/ and this group's dossier asserts no sentence names HXSI-, TI- or hx.optim. as admitted/registered/verified/graduated/benchmarked without the programs' qualifier",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "walked": [
+       {
+        "id": "D07",
+        "floorMet": true,
+        "anchorRead": true
+       },
+       {
+        "id": "D14",
+        "floorMet": true,
+        "anchorRead": true
+       },
+       {
+        "id": "TRC",
+        "floorMet": true,
+        "anchorRead": true
+       },
+       {
+        "id": "RCP",
+        "floorMet": true,
+        "anchorRead": true
+       },
+       {
+        "id": "DOS",
+        "floorMet": true,
+        "anchorRead": true
+       }
+      ],
+      "symlinks": [],
+      "walker": {
+       "synthetic": {
+        "files": [
+         "r/.dot/d.md",
+         "r/.hidden.md",
+         "r/b.md",
+         "r/sub/c.md"
+        ],
+        "symlinks": [
+         "r/link.md"
+        ]
+       },
+       "kinds": [
+        "file",
+        "directory",
+        "symlink",
+        "other"
+       ],
+       "hiddenListed": [
+        ".agents:directory",
+        ".gitignore:file"
+       ]
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "findings": [],
+      "judged": [
+       {
+        "id": "D07",
+        "files": true
+       },
+       {
+        "id": "D14",
+        "files": true
+       },
+       {
+        "id": "TRC",
+        "files": true
+       },
+       {
+        "id": "RCP",
+        "files": true
+       },
+       {
+        "id": "DOS",
+        "files": true
+       }
+      ]
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "raw": {
+       "sentences": 34,
+       "mentions": 9,
+       "claimed": 5,
+       "qualified": 5,
+       "names": [
+        "HXSI",
+        "TI",
+        "HXOPTIM"
+       ],
+       "findings": []
+      },
+      "rendered": {
+       "sentences": 33,
+       "mentions": 9,
+       "claimed": 5,
+       "qualified": 5,
+       "names": [
+        "HXSI",
+        "TI",
+        "HXOPTIM"
+       ],
+       "findings": []
+      },
+      "html": {
+       "sentences": 0,
+       "mentions": 0,
+       "claimed": 0,
+       "qualified": 0,
+       "names": [],
+       "findings": []
+      }
+     }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "planted": [
+       "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered",
+       "docs/workbench/07-native-integrations.md:1 HXSI: unqualified-registered",
+       "docs/workbench/14-qa-and-benchmarks.md:1 TI: rendered-unqualified-benchmarked",
+       "docs/workbench/14-qa-and-benchmarks.md:1 TI: unqualified-benchmarked",
+       "docs/workbench/TRACEABILITY.md:1 HXOPTIM: rendered-unqualified-admitted",
+       "docs/workbench/TRACEABILITY.md:1 HXOPTIM: unqualified-admitted",
+       "docs/workbench/receipts/wb-plant.md:3 TI: rendered-unqualified-verified",
+       "docs/workbench/receipts/wb-plant.md:3 TI: unqualified-verified",
+       "test/fixtures/hx-sio-design-status-dossier.md:1 HXSI: rendered-unqualified-graduated",
+       "test/fixtures/hx-sio-design-status-dossier.md:1 HXSI: unqualified-graduated"
+      ],
+      "quiet": []
+     }
+    },
+    {
+     "id": "A5",
+     "witness": {
+      "roots": [
+       {
+        "root": "docs",
+        "floorMet": true,
+        "anchorRead": true
+       },
+       {
+        "root": "src",
+        "floorMet": true,
+        "anchorRead": true
+       },
+       {
+        "root": ".agents",
+        "floorMet": true,
+        "anchorRead": true
+       },
+       {
+        "root": ".pi",
+        "floorMet": true,
+        "anchorRead": true
+       },
+       {
+        "root": "qa",
+        "floorMet": true,
+        "anchorRead": true
+       },
+       {
+        "root": "examples",
+        "floorMet": true,
+        "anchorRead": true
+       }
+      ],
+      "pages": {
+       "floorMet": true,
+       "anchorRead": true
+      },
+      "symlinks": [],
+      "findings": [],
+      "pageNames": [
+       [
+        "X.MD",
+        true
+       ],
+       [
+        "x.Markdown",
+        true
+       ],
+       [
+        "x.mdx",
+        true
+       ],
+       [
+        "x.HTML",
+        true
+       ],
+       [
+        "x.htm",
+        true
+       ],
+       [
+        "x.md.txt",
+        false
+       ],
+       [
+        "x.rst",
+        false
+       ],
+       [
+        "LICENSE",
+        false
+       ]
+      ]
+     }
+    },
+    {
+     "id": "A6",
+     "witness": {
+      "kinds": [
+       ".ts",
+       ".yaml",
+       ".mjs"
+      ],
+      "planted": [
+       ".agents/skills/beads/agents/openai.yaml:1 TI: unqualified-benchmarked",
+       "qa/workbench/boot-import-census.mjs:1 HXOPTIM: unqualified-admitted",
+       "src/workbench/providers/hyperunix.ts:1 HXSI: unqualified-registered"
+      ],
+      "quiet": []
+     }
+    },
+    {
+     "id": "A7",
+     "witness": {
+      "plants": [
+       {
+        "id": "GA1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA1r",
+        "findings": [
+         "docs/workbench/receipts/wb-gp2-plant.md:3 TI: rendered-unqualified-verified"
+        ]
+       },
+       {
+        "id": "GA2",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA2r",
+        "findings": [
+         "docs/workbench/receipts/wb-gp2-plant.md:3 TI: rendered-unqualified-verified",
+         "docs/workbench/receipts/wb-gp2-plant.md:3 TI: unqualified-verified"
+        ]
+       },
+       {
+        "id": "GA3",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA4",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA5",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA6",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA7",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA8",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA9",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: html-unqualified-registered",
+         "docs/workbench/07-native-integrations.md:1 HXSI: unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA10",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered",
+         "docs/workbench/07-native-integrations.md:1 HXSI: unqualified-registered"
+        ]
+       },
+       {
+        "id": "GA11",
+        "findings": []
+       },
+       {
+        "id": "RV1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV2",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV3",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:2 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV4",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV5",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV6",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 TI: html-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV7",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 TI: html-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV8",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV9",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV10",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV11",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXOPTIM: rendered-unqualified-admitted"
+        ]
+       },
+       {
+        "id": "RV12",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV13",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV14",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-plan-route"
+        ]
+       },
+       {
+        "id": "RV15",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV16",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV17",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV18",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV19",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV20",
+        "findings": []
+       },
+       {
+        "id": "RV21",
+        "findings": []
+       },
+       {
+        "id": "RV22",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV23",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "RV24",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       }
+      ],
+      "anchors": {
+       "red": [
+        "GA1",
+        "GA1r",
+        "GA2",
+        "GA7",
+        "GA8"
+       ],
+       "redRead": [
+        true,
+        true,
+        true,
+        true,
+        true
+       ],
+       "controls": [
+        "GA10 (plain claim, red) and GA11 (visible qualifier, quiet)",
+        true,
+        true
+       ],
+       "quoted": [
+        [
+         "GA1",
+         true
+        ],
+        [
+         "GA2",
+         true
+        ],
+        [
+         "GA1r",
+         true
+        ],
+        [
+         "GA7",
+         true
+        ],
+        [
+         "GA8",
+         true
+        ],
+        [
+         "GA3",
+         true
+        ],
+        [
+         "GA5",
+         true
+        ],
+        [
+         "GA6",
+         true
+        ],
+        [
+         "GA4",
+         true
+        ]
+       ]
+      }
+     }
+    },
+    {
+     "id": "A8",
+     "witness": {
+      "plants": [
+       {
+        "id": "HB1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "HB2",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "HB3",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "HB4",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "HB5r",
+        "findings": [
+         "docs/workbench/receipts/wb-gate19-plant.md:3 TI: rendered-unqualified-verified"
+        ]
+       },
+       {
+        "id": "HB7",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "HB8",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "TA1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "IC1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "PI1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "CD1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "HF1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 U+3164: unread-code-point"
+        ]
+       },
+       {
+        "id": "HF2",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 U+3164: unread-code-point"
+        ]
+       },
+       {
+        "id": "HF3",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 U+FFA0: unread-code-point"
+        ]
+       },
+       {
+        "id": "HF4",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 U+115F: unread-code-point"
+        ]
+       },
+       {
+        "id": "HF5",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 U+1160: unread-code-point"
+        ]
+       },
+       {
+        "id": "HF6r",
+        "findings": [
+         "docs/workbench/receipts/wb-gate19-plant.md:3 U+3164: unread-code-point"
+        ]
+       },
+       {
+        "id": "HF7ts",
+        "findings": [
+         "src/workbench/providers/hyperunix.ts:1 U+3164: unread-code-point"
+        ]
+       },
+       {
+        "id": "HBC1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered"
+        ]
+       },
+       {
+        "id": "HBC2",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: html-unqualified-registered",
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered",
+         "docs/workbench/07-native-integrations.md:1 HXSI: unqualified-registered"
+        ]
+       },
+       {
+        "id": "HC2",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered",
+         "docs/workbench/07-native-integrations.md:1 HXSI: unqualified-registered"
+        ]
+       },
+       {
+        "id": "HC3",
+        "findings": []
+       },
+       {
+        "id": "HO1",
+        "findings": [
+         "docs/workbench/07-native-integrations.md:1 HXSI: rendered-unqualified-registered",
+         "docs/workbench/07-native-integrations.md:1 HXSI: unqualified-registered",
+         "docs/workbench/07-native-integrations.md:1 U+3164: unread-code-point"
+        ]
+       }
+      ],
+      "anchors": {
+       "survivors": 18,
+       "graded": [
+        [
+         "HB1",
+         true,
+         true
+        ],
+        [
+         "HB2",
+         true,
+         true
+        ],
+        [
+         "HB3",
+         true,
+         true
+        ],
+        [
+         "HB4",
+         true,
+         true
+        ],
+        [
+         "HB5r",
+         true,
+         true
+        ],
+        [
+         "HB8",
+         true,
+         true
+        ],
+        [
+         "TA1",
+         true,
+         true
+        ],
+        [
+         "IC1",
+         true,
+         true
+        ],
+        [
+         "PI1",
+         true,
+         true
+        ],
+        [
+         "HF1",
+         true,
+         true
+        ],
+        [
+         "HF2",
+         true,
+         true
+        ],
+        [
+         "HF3",
+         true,
+         true
+        ],
+        [
+         "HF4",
+         true,
+         true
+        ],
+        [
+         "HF5",
+         true,
+         true
+        ],
+        [
+         "HF6r",
+         true,
+         true
+        ],
+        [
+         "HF7ts",
+         true,
+         true
+        ],
+        [
+         "CD1",
+         true,
+         true
+        ],
+        [
+         "HB7",
+         true,
+         true
+        ]
+       ],
+       "red": [
+        [
+         "HB1",
+         true
+        ],
+        [
+         "HB2",
+         true
+        ],
+        [
+         "HB3",
+         true
+        ],
+        [
+         "HB8",
+         true
+        ],
+        [
+         "TA1",
+         true
+        ],
+        [
+         "IC1",
+         true
+        ],
+        [
+         "PI1",
+         true
+        ],
+        [
+         "HF1",
+         true
+        ]
+       ],
+       "controls": [
+        [
+         "HBC1",
+         true
+        ],
+        [
+         "HBC2",
+         true
+        ]
+       ],
+       "keep": [
+        [
+         "HC2",
+         "red",
+         true
+        ],
+        [
+         "HC3",
+         "quiet",
+         true
+        ]
+       ],
+       "adapter": true
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "(b) a reader test with law_id 'hx.optim.spoke.exchange.v1' and certificate_refs ['TI-23'] asserts they never surface today (H5 observer.test.ts:453) and are echoed byte-for-byte on landing with no added admitted/registered/verified/checked token",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "sites": [
+       "top",
+       "source",
+       "source.execution_status",
+       "source.coverage_summary",
+       "source.coverage[0]",
+       "source.evidence",
+       "source.extensions",
+       "runtime"
+      ],
+      "rows": [
+       {
+        "kind": "complete",
+        "licensed": false,
+        "outcome": "partial/unknown",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "complete",
+        "licensed": true,
+        "outcome": "complete/success",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "complete-empty",
+        "licensed": false,
+        "outcome": "partial/unknown",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "complete-empty",
+        "licensed": true,
+        "outcome": "complete/success",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "incomplete",
+        "licensed": false,
+        "outcome": "partial/unknown",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "incomplete",
+        "licensed": true,
+        "outcome": "partial/unknown",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "budget-exhausted",
+        "licensed": false,
+        "outcome": "partial/unknown",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "budget-exhausted",
+        "licensed": true,
+        "outcome": "partial/unknown",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "cancelled",
+        "licensed": false,
+        "outcome": "partial/unknown",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "cancelled",
+        "licensed": true,
+        "outcome": "partial/unknown",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "view-invalidated",
+        "licensed": false,
+        "outcome": "partial/unknown",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "view-invalidated",
+        "licensed": true,
+        "outcome": "partial/unknown",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "provider-failed",
+        "licensed": false,
+        "outcome": "unknown/failure",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "provider-failed",
+        "licensed": true,
+        "outcome": "unknown/failure",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "schema-failed",
+        "licensed": false,
+        "outcome": "unknown/failure",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "schema-failed",
+        "licensed": true,
+        "outcome": "unknown/failure",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "internal-failed",
+        "licensed": false,
+        "outcome": "unknown/failure",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "internal-failed",
+        "licensed": true,
+        "outcome": "unknown/failure",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "protocol-failed",
+        "licensed": false,
+        "outcome": "unknown/failure",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "protocol-failed",
+        "licensed": true,
+        "outcome": "unknown/failure",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "usage-error",
+        "licensed": false,
+        "outcome": "unknown/failure",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "usage-error",
+        "licensed": true,
+        "outcome": "unknown/failure",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "mutation-rejected",
+        "licensed": false,
+        "outcome": "refused",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "mutation-rejected",
+        "licensed": true,
+        "outcome": "refused",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "mutation-partial",
+        "licensed": false,
+        "outcome": "refused",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       },
+       {
+        "kind": "mutation-partial",
+        "licensed": true,
+        "outcome": "refused",
+        "sites": 8,
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0,
+        "addedTokens": []
+       }
+      ],
+      "controls": {
+       "surfaced": true,
+       "tokens": [
+        "admitted",
+        "registered",
+        "verified",
+        "checked"
+       ]
+      }
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "baseServed": [
+       "find",
+       "runtime"
+      ],
+      "baseTokens": [],
+      "baseSurfaced": false,
+      "sites": [
+       {
+        "site": "top",
+        "carried": true,
+        "served": [
+         "find",
+         "runtime"
+        ],
+        "reading": "dropped",
+        "projectionIdentical": true,
+        "addedTokens": []
+       },
+       {
+        "site": "coverage[0]",
+        "carried": true,
+        "served": [
+         "find",
+         "runtime"
+        ],
+        "reading": "dropped",
+        "projectionIdentical": true,
+        "addedTokens": []
+       },
+       {
+        "site": "status",
+        "carried": true,
+        "served": [
+         "find",
+         "runtime"
+        ],
+        "reading": "dropped",
+        "projectionIdentical": true,
+        "addedTokens": []
+       },
+       {
+        "site": "execution_status",
+        "carried": true,
+        "served": [
+         "find",
+         "runtime"
+        ],
+        "reading": "dropped",
+        "projectionIdentical": true,
+        "addedTokens": []
+       },
+       {
+        "site": "transport",
+        "carried": true,
+        "served": [
+         "find",
+         "runtime"
+        ],
+        "reading": "dropped",
+        "projectionIdentical": true,
+        "addedTokens": []
+       },
+       {
+        "site": "coverage_summary",
+        "carried": true,
+        "served": [
+         "find",
+         "runtime"
+        ],
+        "reading": "dropped",
+        "projectionIdentical": true,
+        "addedTokens": []
+       },
+       {
+        "site": "evidence",
+        "carried": true,
+        "served": [
+         "find",
+         "runtime"
+        ],
+        "reading": "dropped",
+        "projectionIdentical": true,
+        "addedTokens": []
+       },
+       {
+        "site": "extensions",
+        "carried": true,
+        "served": [
+         "find",
+         "runtime"
+        ],
+        "reading": "echoed",
+        "projectionIdentical": true,
+        "addedTokens": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "B3",
+     "witness": {
+      "rows": [
+       {
+        "kind": "complete",
+        "licensed": false,
+        "domainStatus": "complete",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "complete",
+        "licensed": true,
+        "domainStatus": "complete",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "complete-empty",
+        "licensed": false,
+        "domainStatus": "complete-empty",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "complete-empty",
+        "licensed": true,
+        "domainStatus": "complete-empty",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "incomplete",
+        "licensed": false,
+        "domainStatus": "incomplete",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "incomplete",
+        "licensed": true,
+        "domainStatus": "incomplete",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "budget-exhausted",
+        "licensed": false,
+        "domainStatus": "budget-exhausted",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "budget-exhausted",
+        "licensed": true,
+        "domainStatus": "budget-exhausted",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "cancelled",
+        "licensed": false,
+        "domainStatus": "cancelled",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "cancelled",
+        "licensed": true,
+        "domainStatus": "cancelled",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "view-invalidated",
+        "licensed": false,
+        "domainStatus": "view-invalidated",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "view-invalidated",
+        "licensed": true,
+        "domainStatus": "view-invalidated",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "provider-failed",
+        "licensed": false,
+        "domainStatus": "provider-failed",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "provider-failed",
+        "licensed": true,
+        "domainStatus": "provider-failed",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "schema-failed",
+        "licensed": false,
+        "domainStatus": "schema-failed",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "schema-failed",
+        "licensed": true,
+        "domainStatus": "schema-failed",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "internal-failed",
+        "licensed": false,
+        "domainStatus": "internal-failed",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "internal-failed",
+        "licensed": true,
+        "domainStatus": "internal-failed",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "protocol-failed",
+        "licensed": false,
+        "domainStatus": "protocol-failed",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "protocol-failed",
+        "licensed": true,
+        "domainStatus": "protocol-failed",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "usage-error",
+        "licensed": false,
+        "domainStatus": "usage-error",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "usage-error",
+        "licensed": true,
+        "domainStatus": "usage-error",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "mutation-rejected",
+        "licensed": false,
+        "domainStatus": "mutation-rejected",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "mutation-rejected",
+        "licensed": true,
+        "domainStatus": "mutation-rejected",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "mutation-partial",
+        "licensed": false,
+        "domainStatus": "mutation-partial",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       },
+       {
+        "kind": "mutation-partial",
+        "licensed": true,
+        "domainStatus": "mutation-partial",
+        "evidenceRefs": [
+         "support-1"
+        ],
+        "carried": 8,
+        "identical": 8,
+        "surfaced": 0
+       }
+      ]
+     }
+    },
+    {
+     "id": "B4",
+     "witness": {
+      "rows": [
+       {
+        "kind": "complete",
+        "licensed": false,
+        "holds": true,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "complete",
+        "licensed": true,
+        "holds": true,
+        "absenceLicensed": true,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "complete-empty",
+        "licensed": false,
+        "holds": true,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "complete-empty",
+        "licensed": true,
+        "holds": true,
+        "absenceLicensed": true,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "incomplete",
+        "licensed": false,
+        "holds": true,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "incomplete",
+        "licensed": true,
+        "holds": false,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "budget-exhausted",
+        "licensed": false,
+        "holds": true,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "budget-exhausted",
+        "licensed": true,
+        "holds": false,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "cancelled",
+        "licensed": false,
+        "holds": true,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "cancelled",
+        "licensed": true,
+        "holds": false,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "view-invalidated",
+        "licensed": false,
+        "holds": true,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "view-invalidated",
+        "licensed": true,
+        "holds": false,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "provider-failed",
+        "licensed": false,
+        "holds": true,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "provider-failed",
+        "licensed": true,
+        "holds": false,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "schema-failed",
+        "licensed": false,
+        "holds": true,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "schema-failed",
+        "licensed": true,
+        "holds": false,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "internal-failed",
+        "licensed": false,
+        "holds": true,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "internal-failed",
+        "licensed": true,
+        "holds": false,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "protocol-failed",
+        "licensed": false,
+        "holds": true,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "protocol-failed",
+        "licensed": true,
+        "holds": false,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "usage-error",
+        "licensed": false,
+        "holds": true,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "usage-error",
+        "licensed": true,
+        "holds": false,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "mutation-rejected",
+        "licensed": false,
+        "holds": false,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "mutation-rejected",
+        "licensed": true,
+        "holds": false,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "mutation-partial",
+        "licensed": false,
+        "holds": false,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       },
+       {
+        "kind": "mutation-partial",
+        "licensed": true,
+        "holds": false,
+        "absenceLicensed": false,
+        "carried": 8,
+        "identical": 8,
+        "tokens": []
+       }
+      ]
+     }
+    },
+    {
+     "id": "B5",
+     "witness": {
+      "sdkVersion": "0.1.0",
+      "declarationsFloorMet": true,
+      "sidecarDeclared": true,
+      "hits": [],
+      "controls": [
+       [
+        "law_id"
+       ],
+       [
+        "lawId"
+       ],
+       [
+        "certificate_refs"
+       ],
+       [
+        "certificateRefs"
+       ]
+      ],
+      "mentions": [
+       [
+        "certificate_refs"
+       ],
+       [
+        "law_id"
+       ],
+       [
+        "lawId"
+       ],
+       [
+        "certificateRefs"
+       ],
+       []
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "(c) the dossier rows carry CSO README.md:3 and SIO README.md:3 verbatim",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "rows": [
+       {
+        "cite": "CSO README.md:3",
+        "path": "docs/programs/certified-structural-optimization-2026-10-18/README.md:3",
+        "sha256": "cf89230862cf"
+       },
+       {
+        "cite": "SIO README.md:3",
+        "path": "docs/programs/structural-information-optimization-2026-10-17/README.md:3",
+        "sha256": "410d36ba22c0"
+       }
+      ],
+      "controls": [
+       {
+        "id": "S4",
+        "codes": [
+         "section"
+        ]
+       },
+       {
+        "id": "S5",
+        "codes": [
+         "verbatim"
+        ]
+       },
+       {
+        "id": "S7",
+        "codes": [
+         "section"
+        ]
+       },
+       {
+        "id": "S9",
+        "codes": [
+         "section",
+         "verbatim"
+        ]
+       }
+      ],
+      "hollow": [
+       "sha256"
+      ]
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "rows": [
+       {
+        "names": [
+         "HXSI"
+        ],
+        "cited": true,
+        "qualifiers": [
+         "design-only",
+         "not-implemented"
+        ]
+       },
+       {
+        "names": [
+         "TI"
+        ],
+        "cited": true,
+        "qualifiers": [
+         "design-only"
+        ]
+       },
+       {
+        "names": [
+         "TI"
+        ],
+        "cited": true,
+        "qualifiers": [
+         "design-only",
+         "human-proof"
+        ]
+       },
+       {
+        "names": [
+         "TI"
+        ],
+        "cited": true,
+        "qualifiers": [
+         "design-only"
+        ]
+       },
+       {
+        "names": [
+         "TI"
+        ],
+        "cited": true,
+        "qualifiers": [
+         "design-only",
+         "human-proof",
+         "source-authored-only"
+        ]
+       },
+       {
+        "names": [
+         "TI"
+        ],
+        "cited": true,
+        "qualifiers": [
+         "design-only",
+         "human-proof"
+        ]
+       },
+       {
+        "names": [
+         "HXOPTIM"
+        ],
+        "cited": true,
+        "qualifiers": [
+         "design-only",
+         "no-runtime-law-admitted"
+        ]
+       }
+      ],
+      "controls": [
+       {
+        "id": "S1",
+        "codes": [
+         "section"
+        ]
+       },
+       {
+        "id": "S2",
+        "codes": [
+         "blocks",
+         "tables"
+        ]
+       },
+       {
+        "id": "S3",
+        "codes": [
+         "blocks",
+         "rows",
+         "row-status",
+         "row-status",
+         "row-status",
+         "row-status",
+         "row-status",
+         "row-status",
+         "row-status"
+        ]
+       },
+       {
+        "id": "S6",
+        "codes": [
+         "section"
+        ]
+       },
+       {
+        "id": "S8",
+        "codes": [
+         "blocks",
+         "tables"
+        ]
+       },
+       {
+        "id": "S10",
+        "codes": [
+         "blocks"
+        ]
+       },
+       {
+        "id": "S11",
+        "codes": [
+         "rows",
+         "row-cite"
+        ]
+       },
+       {
+        "id": "S12",
+        "codes": [
+         "rows"
+        ]
+       }
+      ],
+      "hollows": [
+       {
+        "id": "CH1",
+        "codes": [
+         "row-status"
+        ]
+       },
+       {
+        "id": "CH2",
+        "codes": [
+         "row-cite"
+        ]
+       },
+       {
+        "id": "CH3",
+        "codes": [
+         "row-family"
+        ]
+       },
+       {
+        "id": "CH4",
+        "codes": [
+         "families"
+        ]
+       },
+       {
+        "id": "CH5",
+        "codes": [
+         "blocks"
+        ]
+       }
+      ]
+     }
+    },
+    {
+     "id": "C3",
+     "witness": {
+      "sha256": "8de32dcbdf46",
+      "headings": [
+       "1 wb-x0xu.2 dossier: hx-sio-cso-design-status-words-never-relabelled",
+       "2 Status rows",
+       "3 CSO README.md:3",
+       "3 SIO README.md:3",
+       "2 Named IDs",
+       "2 What Pi says about them"
+      ],
+      "anchors": {
+       "claimSpan": true,
+       "statusWords": [
+        true,
+        true,
+        true,
+        true
+       ],
+       "lawPair": true,
+       "minted": true,
+       "pin": true
+      },
+      "controls": [
+       {
+        "id": "S1",
+        "codes": [
+         "headings",
+         "section:Named IDs"
+        ]
+       },
+       {
+        "id": "S2",
+        "codes": [
+         "headings",
+         "section:Named IDs"
+        ]
+       },
+       {
+        "id": "S3",
+        "codes": [
+         "headings",
+         "section:Named IDs"
+        ]
+       },
+       {
+        "id": "S4",
+        "codes": [
+         "headings",
+         "section:Status rows"
+        ]
+       },
+       {
+        "id": "S5",
+        "codes": [
+         "section:What Pi says about them"
+        ]
+       },
+       {
+        "id": "S6",
+        "codes": [
+         "headings",
+         "section:wb-x0xu.2 dossier: hx-sio-cso-design-status-words-never-relabelled",
+         "section:Named IDs",
+         "section:What Pi says about them"
+        ]
+       },
+       {
+        "id": "S7",
+        "codes": [
+         "headings",
+         "section:wb-x0xu.2 dossier: hx-sio-cso-design-status-words-never-relabelled",
+         "section:Status rows"
+        ]
+       },
+       {
+        "id": "S8",
+        "codes": [
+         "section:Named IDs"
+        ]
+       },
+       {
+        "id": "S9",
+        "codes": [
+         "section:Status rows"
+        ]
+       },
+       {
+        "id": "S10",
+        "codes": [
+         "section:Named IDs"
+        ]
+       },
+       {
+        "id": "S13",
+        "codes": [
+         "title"
+        ]
+       },
+       {
+        "id": "S14",
+        "codes": [
+         "headings"
+        ]
+       }
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "F",
+   "label": "the owner filing row of wb-x0xu.2 in the tracked bead export states each clause rows A-C cover and carries every surface, name, claim word, status word, planted value and cited status row the census reads",
+   "pins": [
+    {
+     "id": "F1",
+     "witness": {
+      "clauses": [
+       {
+        "clause": "(a)",
+        "equalsLabel": true
+       },
+       {
+        "clause": "(b)",
+        "equalsLabel": true
+       },
+       {
+        "clause": "(c)",
+        "equalsLabel": true
+       }
+      ],
+      "surfaces": [
+       {
+        "item": "docs/workbench/07-native-integrations.md",
+        "surface": "D07",
+        "covers": true
+       },
+       {
+        "item": "14-qa-and-benchmarks.md",
+        "surface": "D14",
+        "covers": true
+       },
+       {
+        "item": "TRACEABILITY.md",
+        "surface": "TRC",
+        "covers": true
+       },
+       {
+        "item": "receipts/",
+        "surface": "RCP",
+        "covers": true
+       },
+       {
+        "item": "this group's dossier",
+        "surface": "DOS",
+        "covers": true
+       }
+      ],
+      "prefixes": [
+       "HXSI-",
+       "TI-",
+       "hx.optim."
+      ],
+      "statementSurfaces": [
+       {
+        "item": "adapter",
+        "judged": "src",
+        "read": true
+       },
+       {
+        "item": "docs",
+        "judged": "docs",
+        "read": true
+       },
+       {
+        "item": "triage output",
+        "judged": "test/fixtures/hx-sio-design-status-dossier.md",
+        "read": true
+       },
+       {
+        "item": "skill text Pi serves",
+        "judged": ".agents",
+        "read": true
+       }
+      ],
+      "clauseClaims": [
+       [
+        "admitted",
+        "admitted"
+       ],
+       [
+        "registered",
+        "registered"
+       ],
+       [
+        "verified",
+        "verified"
+       ],
+       [
+        "graduated",
+        "graduated"
+       ],
+       [
+        "benchmarked",
+        "benchmarked"
+       ]
+      ],
+      "statementClaims": [
+       [
+        "registered",
+        "registered"
+       ],
+       [
+        "admitted runtime law",
+        "admitted"
+       ],
+       [
+        "a selected hx plan route",
+        "plan-route"
+       ],
+       [
+        "Lean-elaborated",
+        "elaborated"
+       ],
+       [
+        "benchmarked",
+        "benchmarked"
+       ]
+      ],
+      "tokens": [
+       [
+        "admitted",
+        "admitted"
+       ],
+       [
+        "registered",
+        "registered"
+       ],
+       [
+        "verified",
+        "verified"
+       ],
+       [
+        "checked",
+        "checked"
+       ]
+      ],
+      "statusWords": [
+       [
+        "DESIGN ONLY",
+        [
+         "design-only"
+        ]
+       ],
+       [
+        "not implemented",
+        [
+         "not-implemented"
+        ]
+       ],
+       [
+        "human proof",
+        [
+         "human-proof"
+        ]
+       ],
+       [
+        "Lean source authored only",
+        [
+         "source-authored-only"
+        ]
+       ]
+      ],
+      "lawId": "hx.optim.spoke.exchange.v1",
+      "certificateRefs": [
+       "TI-23"
+      ],
+      "cites": [
+       "CSO README.md:3",
+       "SIO README.md:3"
+      ],
+      "programQuotes": [
+       {
+        "cite": "CSO README.md:3",
+        "qualifiers": [
+         "design-only",
+         "no-runtime-law-admitted"
+        ],
+        "claims": [
+         {
+          "claim": "admitted",
+          "qualifiers": [
+           "no-runtime-law-admitted"
+          ]
+         }
+        ]
+       },
+       {
+        "cite": "CSO README.md:83",
+        "qualifiers": [
+         "law-admissions-blocked"
+        ],
+        "claims": [
+         {
+          "claim": "admitted",
+          "qualifiers": [
+           "law-admissions-blocked"
+          ]
+         }
+        ]
+       },
+       {
+        "cite": "08-theorem-crosswalk.md:72",
+        "qualifiers": [
+         "human-proof"
+        ],
+        "claims": [
+         {
+          "claim": "verified",
+          "qualifiers": [
+           "human-proof"
+          ]
+         }
+        ]
+       }
+      ],
+      "csoQuote": true,
+      "sioQuote": true,
+      "pin": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "M",
+   "label": "the sentence cutter, the name, claim and qualifier matchers, the finding format, the name mask, the rendered reading, its HTML markup forms and the unread code points judge their pinned inputs in order",
+   "pins": [
+    {
+     "id": "MS1",
+     "witness": {
+      "kind": "cut",
+      "outcome": [
+       [
+        "One names a.",
+        "Two names b!",
+        "Three?",
+        "Four;",
+        "five"
+       ]
+      ]
+     }
+    },
+    {
+     "id": "MS2",
+     "witness": {
+      "kind": "cut",
+      "outcome": [
+       [
+        "para one",
+        "para two",
+        "| a | b |",
+        "| c | d |"
+       ]
+      ]
+     }
+    },
+    {
+     "id": "MS3",
+     "witness": {
+      "kind": "cutMarkdown",
+      "outcome": [
+       [
+        "# Head",
+        "- one",
+        "> two",
+        "1. three",
+        "2) four",
+        "## Next"
+       ]
+      ]
+     }
+    },
+    {
+     "id": "MS4",
+     "witness": {
+      "kind": "cut",
+      "outcome": [
+       [
+        "The hx.optim. laws stay whole.",
+        "1. one\nlist number.",
+        "HX.OPTIM. x"
+       ]
+      ]
+     }
+    },
+    {
+     "id": "MN1",
+     "witness": {
+      "kind": "names",
+      "outcome": [
+       [
+        "HXSI"
+       ],
+       [
+        "HXSI"
+       ],
+       [
+        "HXSI"
+       ],
+       [
+        "HXSI"
+       ],
+       [
+        "HXSI"
+       ],
+       [],
+       [],
+       [],
+       [],
+       []
+      ]
+     }
+    },
+    {
+     "id": "MN2",
+     "witness": {
+      "kind": "names",
+      "outcome": [
+       [
+        "TI"
+       ],
+       [
+        "TI"
+       ],
+       [
+        "TI"
+       ],
+       [
+        "TI"
+       ],
+       [
+        "TI"
+       ],
+       [],
+       [],
+       [],
+       [],
+       [],
+       []
+      ]
+     }
+    },
+    {
+     "id": "MN3",
+     "witness": {
+      "kind": "names",
+      "outcome": [
+       [
+        "HXOPTIM"
+       ],
+       [
+        "HXOPTIM"
+       ],
+       [
+        "HXOPTIM"
+       ],
+       [
+        "HXOPTIM"
+       ],
+       [],
+       [],
+       [],
+       [],
+       []
+      ]
+     }
+    },
+    {
+     "id": "MC",
+     "witness": {
+      "kind": "raw",
+      "outcome": [
+       [
+        "x.md:1 HXSI: unqualified-admitted"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-admitted"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-admitted"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-admitted"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-admitted"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-admitted"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-verified"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-verified"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-verified"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-verified"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-verified"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-verified"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-graduated"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-graduated"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-graduated"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-graduated"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-graduated"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-benchmarked"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-benchmarked"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-benchmarked"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-benchmarked"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-elaborated"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-elaborated"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-plan-route"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-plan-route"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-checked"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-registered"
+       ],
+       []
+      ]
+     }
+    },
+    {
+     "id": "MQ",
+     "witness": {
+      "kind": "raw",
+      "outcome": [
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       [
+        "x.md:1 TI: unqualified-registered"
+       ],
+       [
+        "x.md:1 TI: unqualified-registered"
+       ],
+       [
+        "x.md:1 TI: unqualified-registered"
+       ],
+       [
+        "x.md:1 TI: unqualified-registered"
+       ]
+      ]
+     }
+    },
+    {
+     "id": "MF",
+     "witness": {
+      "kind": "raw",
+      "outcome": [
+       [
+        "x.md:3 TI: unqualified-benchmarked"
+       ],
+       [
+        "x.md:1 HXSI+TI: unqualified-registered"
+       ],
+       [
+        "x.md:1 TI: unqualified-admitted"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-registered",
+        "x.md:3 TI: unqualified-verified"
+       ]
+      ]
+     }
+    },
+    {
+     "id": "MK",
+     "witness": {
+      "kind": "raw",
+      "outcome": [
+       [],
+       [
+        "x.md:1 HXOPTIM: unqualified-verified"
+       ],
+       [],
+       [
+        "x.md:1 HXSI: unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI+TI: unqualified-registered"
+       ],
+       [
+        "x.md:1 TI: unqualified-registered"
+       ]
+      ]
+     }
+    },
+    {
+     "id": "MR1",
+     "witness": {
+      "kind": "rendered",
+      "outcome": [
+       [
+        "1 HXSI-01 is a registered runtime law . | html"
+       ],
+       [
+        "1 HXSI-01 is a registered runtime law. | html"
+       ],
+       [
+        "1 HXSI-01 is a registered runtime law.",
+        "1 a design only title"
+       ],
+       [
+        "1 DESIGN ONLY HXSI-01 is DESIGN ONLY registered. | plain ########### HXSI-01 is ########### registered.",
+        "1 an image title"
+       ],
+       [
+        "1 HXSI-01 is a registered runtime law, DESIGN ONLY. | html"
+       ],
+       [
+        "1 HXSI-01 HXSI-02 hx.optim.x registered plan<U+00A0>route # &#00000045;",
+        "1 &shy # \ufffd &lt;"
+       ],
+       [
+        "1 HXSI&#45;01 and HXSI-01 code"
+       ],
+       [
+        "1 HXSI-01 registered xyz"
+       ],
+       [
+        "1 line one\nline two\nthree."
+       ],
+       [
+        "1 DESIGN ONLY: x | html",
+        "1 HXSI-01 is registered. | html",
+        "1 plan\nroute | html"
+       ],
+       [
+        "1 <!-- design only --> stays visible."
+       ],
+       [
+        "2 HXSI-01 is registered.",
+        "2 a reference title"
+       ],
+       [
+        "1 HXSI-01 is a registered law, DESIGN ONLY. | plain #########################################"
+       ],
+       [
+        "1 deretsiger si HXSI-01 | plain #####################"
+       ],
+       [
+        "1 x a bc d y z. | plain #############"
+       ]
+      ]
+     }
+    },
+    {
+     "id": "MR2",
+     "witness": {
+      "kind": "rendered",
+      "outcome": [
+       [
+        "1 Title HXSI-01",
+        "3 para one\nwrapped.",
+        "4 Second sentence.",
+        "6 item one",
+        "7 item two",
+        "8 nested three",
+        "10 quote four\nfive",
+        "13 h1 | h2",
+        "15 c1 | c2",
+        "16 c3 | c4",
+        "19 code six",
+        "22 indented seven",
+        "25 block eight HXSI-02 | plain ###################",
+        "32 Setext nine",
+        "35 ordered ten",
+        "36 ordered eleven"
+       ]
+      ]
+     }
+    },
+    {
+     "id": "MR3",
+     "witness": {
+      "kind": "md",
+      "kinds": [
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "html",
+       "html"
+      ],
+      "outcome": [
+       [
+        "x.md:1 HXSI: unqualified-registered",
+        "x.md:1 HXSI: rendered-unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI: rendered-unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI: unqualified-registered",
+        "x.md:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "x.md:1 TI: html-unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI: rendered-unqualified-registered"
+       ],
+       [
+        "x.md:1 HXSI: rendered-unqualified-registered"
+       ],
+       [
+        "x.md:1 HXOPTIM: rendered-unqualified-admitted"
+       ],
+       [],
+       [
+        "x.md:3 HXSI: unqualified-registered",
+        "x.md:3 HXSI: rendered-unqualified-registered"
+       ],
+       [],
+       [
+        "x.html:1 HXSI: rendered-unqualified-registered",
+        "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       []
+      ]
+     }
+    },
+    {
+     "id": "MR4",
+     "witness": {
+      "kind": "rendered",
+      "outcome": [
+       [
+        "1 one HXSI-01 two. | plain ################"
+       ],
+       [
+        "1 two | plain ###"
+       ],
+       [
+        "1 three | plain #####"
+       ],
+       [],
+       [
+        "1 five | plain ####"
+       ],
+       [
+        "1 six ?> | plain ######"
+       ],
+       [
+        "1 seven | plain #####"
+       ],
+       [
+        "1 eight ]]> | plain #########"
+       ],
+       [
+        "1 nine ten | plain ########"
+       ],
+       [
+        "1 registered eleven twelve | plain ########################"
+       ],
+       [
+        "1 <!-- a --> <b>thirteen</b> - | plain ############################"
+       ],
+       [
+        "1 fourteen <i>x</i> | plain #################"
+       ],
+       [
+        "1 // <!-- a --> fifteen &#45; | plain ###########################"
+       ],
+       [
+        "2 <b>sixteen</b> | plain ##############"
+       ],
+       [
+        "2 <b>x</b> seventeen | plain ##################"
+       ],
+       [
+        "1 eighteen | plain ########"
+       ],
+       [
+        "1 Note  nineteen --> | plain Note ############# | html"
+       ],
+       [
+        "1 Note  twenty ?> | plain Note ########## | html"
+       ],
+       [
+        "1 Note  twentyone ]]> | plain Note ############## | html"
+       ],
+       [
+        "1 Note twentytwo | html"
+       ],
+       [
+        "1 twentythree | plain ###########"
+       ],
+       [
+        "1 a</textareax> b | plain ###############"
+       ],
+       [
+        "1 twentyfour | plain ##########",
+        "1 twentyfive | plain ##########"
+       ],
+       [
+        "1 twentysix\">y | plain ############"
+       ],
+       [
+        "1 twentyseven | plain ###########"
+       ],
+       [
+        "1 twentyeight | plain ###########"
+       ]
+      ]
+     }
+    },
+    {
+     "id": "MU",
+     "witness": {
+      "kind": "md",
+      "kinds": [
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "ts"
+      ],
+      "outcome": [
+       [
+        "x.md:1 U+115F: unread-code-point"
+       ],
+       [
+        "x.md:1 U+1160: unread-code-point"
+       ],
+       [
+        "x.md:1 U+3164: unread-code-point"
+       ],
+       [
+        "x.md:1 U+FFA0: unread-code-point"
+       ],
+       [
+        "x.md:3 U+000C+U+0007: unread-code-point"
+       ],
+       [
+        "x.md:1 U+007F+U+0085+U+001B: unread-code-point"
+       ],
+       [
+        "x.md:1 U+2029+U+FFFC: unread-code-point"
+       ],
+       [],
+       [],
+       [
+        "x.ts:1 U+3164: unread-code-point"
+       ]
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "R",
+   "label": "the named residuals R1-R11 stay pinned quiet",
+   "pins": [
+    {
+     "id": "R1",
+     "witness": {
+      "kind": "md",
+      "outcome": [
+       [],
+       [],
+       [],
+       [],
+       [],
+       []
+      ]
+     }
+    },
+    {
+     "id": "R2",
+     "witness": {
+      "kind": "md",
+      "outcome": [
+       [],
+       []
+      ]
+     }
+    },
+    {
+     "id": "R3",
+     "witness": {
+      "kind": "md",
+      "outcome": [
+       [],
+       []
+      ]
+     }
+    },
+    {
+     "id": "R4",
+     "witness": {
+      "kind": "md",
+      "kinds": [
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "md",
+       "ts"
+      ],
+      "outcome": [
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       []
+      ]
+     }
+    },
+    {
+     "id": "R5",
+     "witness": {
+      "kind": "md",
+      "kinds": [
+       "md",
+       "ts",
+       "ts"
+      ],
+      "outcome": [
+       [],
+       [],
+       []
+      ]
+     }
+    },
+    {
+     "id": "R6",
+     "witness": {
+      "kind": "ts",
+      "outcome": [
+       [],
+       []
+      ]
+     }
+    },
+    {
+     "id": "R7",
+     "witness": {
+      "kind": "ts",
+      "outcome": [
+       []
+      ]
+     }
+    },
+    {
+     "id": "R8",
+     "witness": {
+      "outside": [
+       "test/x.md",
+       "vendor/x.md",
+       "node_modules/x/README.md",
+       ".beads/issues.jsonl",
+       "new-feedback/x.md",
+       "media/x.md",
+       "dist/x.js",
+       "docs.md.d/x.md",
+       ".codex/config.toml",
+       ".github/workflows/ci.yml",
+       "forge.toml",
+       "package.json",
+       "biome.json",
+       "tsconfig.json",
+       "vitest.config.ts",
+       "LICENSE",
+       ".gitignore"
+      ],
+      "judged": [],
+      "exportFindings": true
+     }
+    },
+    {
+     "id": "R9",
+     "witness": {
+      "kind": "fields",
+      "outcome": [
+       []
+      ]
+     }
+    },
+    {
+     "id": "R10",
+     "witness": {
+      "kind": "md",
+      "outcome": [
+       [],
+       []
+      ]
+     }
+    },
+    {
+     "id": "R11",
+     "witness": {
+      "kind": "md",
+      "outcome": [
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       [],
+       []
+      ]
+     }
+    }
+   ]
+  }
+ ]
+}

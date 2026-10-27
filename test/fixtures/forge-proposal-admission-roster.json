@@ -360,15 +360,11 @@
           "witness": {
             "readings": 396,
             "success": [],
-            "complete": [
-              "empty topology 0 x36"
-            ],
+            "complete": [],
             "passed": [],
             "unplanted": {
               "success": [],
-              "complete": [
-                "empty topology 0"
-              ],
+              "complete": [],
               "passed": []
             },
             "receipt": {

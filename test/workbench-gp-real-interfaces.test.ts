@@ -66,6 +66,17 @@
  * residuals (QUOTED-SUBSTITUTION, SHELL-BUILTIN-WRAPPER). F5: a DT probe for each detector arm the gate found unprobed
  * (DMG1-DMG4, DMG8, DMG15, DMG16, DMG25, DMG49), and DMG50, a judge arm, by an a1 F row.
  *
+ * THE wb-nh0t FOLLOW-UP (R694 of landing 361; gate of record cmd_9700cae0b883, PREP F1 leads, F2 rides). F1: the
+ * concern's term list is held complete, not only contained. CONCERN_TERMS equals the items docs/03's concern cell lists
+ * (concernTermsOf, read from the ownership row GraphPolicyCLI owns: an anchor outside this file), and every term has its
+ * own in-memory falsifier (CONCERN_PLANTS: a second ownership row naming that term alone is the row the concern check
+ * names), so gate mutant M16 (a term dropped from the list) and D3 (M16 plus a second Embeddings row) red. F2: the d2
+ * shapes the gate measured quiet are one class-level named residual, MISREAD-COMMAND-WORD. Its quiet row plants every
+ * measured member - a leading redirection (P06, P07), the time, coproc and function keywords (P05, P32, P08), the BD.EXE
+ * and bd.bat spellings (P11, P12) and a value-taking bd global flag whose value is a read verb (P17) - and pins each
+ * member's frozen reading beside a paired control one change away that the census does read as a bd write; the closing
+ * tally holds the members read to the out-of-file roster.
+ *
  * Display paths added: none. No scratch directory is allocated: the synthetic trees live in memory.
  */
 import { createHash } from "node:crypto";
@@ -92,8 +103,35 @@ const OWNERSHIP_CELLS: readonly string[] = [
   "GraphPolicyCLI",
   "nothing today (no gp seam is registered); a future seam reaches gp only through its CLI, SDK or `gp rpc --stdio`, under the GraphPolicyCLI boundary below",
 ];
-/** The pinned concern's own terms: a table row naming any of them speaks for that concern, so only the pinned row may (wb-1ho6 F3). */
+/**
+ * The pinned concern's own terms: a table row naming any of them speaks for that concern, so only the pinned row may (wb-1ho6
+ * F3). Held complete against docs/03's concern cell (concernTermsOf) and each falsified by its CONCERN_PLANTS row (wb-nh0t F1).
+ */
 const CONCERN_TERMS: readonly string[] = ["graph-function representation", "numerical evaluation", "learned score", "embedding", "prediction", "policy distribution"];
+/**
+ * The concern's terms as docs/03's concern cell lists them: its comma-separated items, lower-cased, each without its plural
+ * s. The closing "and their receipts" clause is dropped: it names the receipts of the listed items, not an item of its own.
+ */
+const concernTermsOf = (cell: string): string[] =>
+  cell
+    .toLowerCase()
+    .replace(/ and their receipts$/, "")
+    .split(", ")
+    .map(item => item.replace(/s$/, ""));
+/**
+ * One in-memory falsifier per concern term (wb-nh0t F1, gate D2): the concern cell of a second ownership row that names that
+ * term alone and gives it to Workbench. Held to docs/03's concern items term for term, so a plant dropped with its term reds.
+ */
+const CONCERN_PLANTS: readonly { readonly term: string; readonly concern: string }[] = [
+  { term: "graph-function representation", concern: "Graph-function representations of workflow routes" },
+  { term: "numerical evaluation", concern: "Numerical evaluation of workflow graphs" },
+  { term: "learned score", concern: "Learned scores for workflow ranking" },
+  { term: "embedding", concern: "Embeddings for workflow ranking" },
+  { term: "prediction", concern: "Predictions of workflow outcomes" },
+  { term: "policy distribution", concern: "Policy distributions over workflow actions" },
+];
+/** The re-assigning row each plant adds: Workbench as the owner, a local computation as what Workbench may do. */
+const PLANT_CELLS = (concern: string): string[] => [concern, "Workbench", "compute and cache locally"];
 /** A table cell naming GraphPolicyCLI or gp: exactly one ownership row may carry one, the pinned row. */
 const NAMES_GP = /GraphPolicyCLI|graph[-_ ]?policy|\bgp\b/i;
 /** The boundary section's definitions paragraph, verbatim (it carries the bead, its source line and this census's path). */
@@ -1112,13 +1150,107 @@ function judgeContext(ctx: JudgeContext): string[] {
 }
 const judge = (tree: SourceTree, seams: readonly GpSeam[]): string[] => judgeContext(contextOf(tree, seams));
 
+/**
+ * One measured member of a class-level residual (wb-nh0t F2): the statement its quiet row plants, the census's frozen
+ * reading of it, and a paired control one change away that the census does read as a bd write, so a member read quiet by
+ * a hollowed reader reds at its control.
+ */
+interface ResidualMember {
+  /** The gate LEG-2 probe that measured the member (gate s73 PREP leg2), then the member's shape. */
+  readonly name: string;
+  /** The words naming the member in its residual's family, so the docs/03 residual line names every member. */
+  readonly named: string;
+  readonly statement: string;
+  /** The member's launches as the census reads them (binary, then argv): the command word misread, no bd write found. */
+  readonly reads: readonly string[];
+  readonly control: string;
+  /** The control's bd writes as the census reports them. */
+  readonly controlWrites: readonly string[];
+}
+
 /** A blind spot of the token census: a NAMED family whose representative source the census reports quiet (pinned). */
 interface Residual {
   readonly id: string;
   /** The family, verbatim as the docs/03 residual line states it. */
   readonly family: string;
   readonly apply: (fixture: Fixture) => Fixture;
+  /** A class-level residual's measured members, each pinned by its own frozen reading and control; a single-shape residual has none. */
+  readonly members?: readonly ResidualMember[];
 }
+
+/** The launchers a residual member's statement calls, imported as a gp-adjacent module would. */
+const MEMBER_HEAD = 'import { execSync, spawnSync } from "node:child_process";';
+/**
+ * MISREAD-COMMAND-WORD's members: the eight d2 shapes gate s73 measured quiet (wb-1ho6 PREP F2, leg2 P05-P32). Each is a bd
+ * write whose command word the census misreads - shell syntax ahead of the binary read as the binary, a binary spelling
+ * outside the lowercase name and its .exe or .cmd suffix, a global flag's value read as the bd verb.
+ */
+const MISREAD_MEMBERS: readonly ResidualMember[] = [
+  {
+    name: "P06 a leading redirection",
+    named: ">/dev/null",
+    statement: 'execSync(">/dev/null bd close wb-example");',
+    reads: [">/dev/null bd close wb-example"],
+    control: 'execSync("bd close wb-example >/dev/null");',
+    controlWrites: ["bd close wb-example >/dev/null"],
+  },
+  {
+    name: "P07 a leading descriptor redirection",
+    named: "2>/dev/null",
+    statement: 'execSync("2>/dev/null bd close wb-example");',
+    reads: ["2>/dev/null bd close wb-example"],
+    control: 'execSync("bd close wb-example 2>/dev/null");',
+    controlWrites: ["bd close wb-example 2>/dev/null"],
+  },
+  {
+    name: "P05 the time keyword",
+    named: "the time",
+    statement: 'execSync("time bd close wb-example");',
+    reads: ["time bd close wb-example"],
+    control: 'execSync("bd close wb-example");',
+    controlWrites: ["bd close wb-example"],
+  },
+  {
+    name: "P32 the coproc keyword",
+    named: "coproc",
+    statement: 'execSync("coproc bd close wb-example");',
+    reads: ["coproc bd close wb-example"],
+    control: 'execSync("! bd close wb-example");',
+    controlWrites: ["bd close wb-example"],
+  },
+  {
+    name: "P08 the function keyword",
+    named: "function keyword",
+    statement: 'execSync("function f { bd close wb-example; }; f");',
+    reads: ["function f { bd close wb-example", "f"],
+    control: 'execSync("f() { bd close wb-example; }; f");',
+    controlWrites: ["bd close wb-example"],
+  },
+  {
+    name: "P11 an upper-case .EXE spelling",
+    named: "BD.EXE",
+    statement: 'spawnSync("BD.EXE", ["close", "wb-example"]);',
+    reads: ["BD.EXE close wb-example"],
+    control: 'spawnSync("bd.exe", ["close", "wb-example"]);',
+    controlWrites: ["bd close wb-example"],
+  },
+  {
+    name: "P12 a .bat spelling",
+    named: "bd.bat",
+    statement: 'spawnSync("bd.bat", ["close", "wb-example"]);',
+    reads: ["bd.bat close wb-example"],
+    control: 'spawnSync("bd.cmd", ["close", "wb-example"]);',
+    controlWrites: ["bd close wb-example"],
+  },
+  {
+    name: "P17 a global flag value read as the verb",
+    named: "bd --actor doctor close",
+    statement: 'spawnSync("bd", ["--actor", "doctor", "close", "wb-example"]);',
+    reads: ["bd --actor doctor close wb-example"],
+    control: 'spawnSync("bd", ["--actor=doctor", "close", "wb-example"]);',
+    controlWrites: ["bd --actor=doctor close wb-example"],
+  },
+];
 
 const RESIDUALS: readonly Residual[] = [
   {
@@ -1199,6 +1331,14 @@ const RESIDUALS: readonly Residual[] = [
     family: "a command run through a shell builtin or env option the census does not unwrap, such as eval, command, builtin or env -S",
     apply: fixture =>
       editModule(fixture, DECISION, text => `import { execSync } from "node:child_process";\n${text}\nexport const closeBead = (): Buffer => execSync('eval "bd close wb-example"');`),
+  },
+  {
+    id: "MISREAD-COMMAND-WORD",
+    family:
+      "a launch whose command word the census misreads, so a bd write reads as another binary or as a read verb: a leading redirection such as >/dev/null or 2>/dev/null, the time, coproc or function keyword, a binary spelled BD.EXE or bd.bat, or a value-taking bd global flag whose value is a read verb, as in bd --actor doctor close",
+    members: MISREAD_MEMBERS,
+    apply: fixture =>
+      editModule(fixture, DECISION, text => `${MEMBER_HEAD}\n${text}\nexport function misreadLaunches(): void {\n${MISREAD_MEMBERS.map(member => `  ${member.statement}`).join("\n")}\n}`),
   },
 ];
 
@@ -1849,7 +1989,7 @@ const Q_TITLE = "Q: named residual %s stays quiet (the pinned blind spot of a to
 const DT_TITLE = "DT: detector %s is live on its probe (the exact census signature)";
 const titleOf = (template: string, key: string): string => template.replace("%s", key);
 const TALLY_TITLE =
-  "L: each-liveness (rule 16, U5) - every case of this file is set to run, the case count is frozen, each case is registered as the out-of-file roster lists it, each it.each registers exactly its frozen keys, every registered case reached its last assertion, and this tally is the file's last case";
+  "L: each-liveness (rule 16, U5) - every case of this file is set to run, the case count is frozen, each case is registered as the out-of-file roster lists it, each it.each registers exactly its frozen keys, every registered case reached its last assertion, every class-level residual member the roster lists was read, and this tally is the file's last case";
 
 /**
  * EACH-LIVENESS (U5): the case keys each it.each table registers, frozen literally at this cut - never derived from ROWS,
@@ -1904,6 +2044,7 @@ const REGISTERED = {
     "QUOTED-SUBSTITUTION",
     "COMPUTED-BD-FLAG",
     "SHELL-BUILTIN-WRAPPER",
+    "MISREAD-COMMAND-WORD",
   ],
   DT: [
     "specifiers",
@@ -1946,10 +2087,12 @@ const REGISTERED = {
     "type-only-launcher",
   ],
 } as const satisfies Readonly<Record<"F" | "Q" | "DT", readonly string[]>>;
-/** Every case this file registers: 16 fixed cases, the three it.each tables and the closing tally. */
-const FILE_CASES = 100;
+/** Every case this file registers: 18 fixed cases, the three it.each tables and the closing tally. */
+const FILE_CASES = 103;
 /** What this run's it.each cases did, recorded by each case at its last line; the closing tally pins every list. */
 const RAN: Record<"F" | "Q" | "DT", string[]> = { F: [], Q: [], DT: [] };
+/** The class-level residual members the Q rows read this run (residual/member), each recorded after its control (wb-nh0t F2). */
+const MEMBERS_READ: string[] = [];
 
 /** One node of vitest's task tree, as far as the tally reads it. */
 interface TaskNode {
@@ -2003,11 +2146,16 @@ const boundarySection = (): ReturnType<typeof docsSection> => docsSection(readRe
 const RESIDUAL_ENTRY = /([A-Z][A-Z-]*[A-Z]) \(([^)]+)\)/g;
 
 /** The census tables as the roster lists them: rows with pins, clauses and falsifier expectations, residuals, detector probes by SHA-256. */
+interface RosterResidual {
+  readonly id: string;
+  readonly family: string;
+  readonly members?: readonly { readonly name: string }[];
+}
 interface Roster {
   readonly census: string;
   readonly bead: string;
   readonly rows: readonly unknown[];
-  readonly residuals: readonly unknown[];
+  readonly residuals: readonly RosterResidual[];
   readonly detectors: readonly unknown[];
   readonly registered: readonly string[];
 }
@@ -2015,7 +2163,17 @@ const readRoster = (): Roster => JSON.parse(readRepo(ROSTER)) as Roster;
 const sha256 = (value: unknown): string => createHash("sha256").update(JSON.stringify(value)).digest("hex");
 const rosterRows = (): unknown[] =>
   ROWS.map(row => ({ id: row.id, label: row.label, pins: row.pins.map(pin => ({ id: pin.id, clause: pin.clause, falsifiers: pin.falsifiers.map(falsifier => ({ name: falsifier.name, expected: falsifier.expected })) })) }));
-const rosterResiduals = (): unknown[] => RESIDUALS.map(residual => ({ id: residual.id, family: residual.family }));
+const rosterResiduals = (): unknown[] =>
+  RESIDUALS.map(residual => ({
+    id: residual.id,
+    family: residual.family,
+    ...(residual.members === undefined ? {} : { members: residual.members.map(member => ({ ...member })) }),
+  }));
+/** The ownership rows that speak for the GraphPolicyCLI concern: each body row with a cell naming one of CONCERN_TERMS. */
+function concernRows(page: string): { readonly why: string; readonly rows: readonly (readonly string[])[] } {
+  const tables = sectionTables(page, OWNERSHIP_HEADING, 2, [PAGE_TITLE]);
+  return { why: tables.why, rows: tables.grids.flatMap(grid => grid.slice(1).filter(row => row.some(cell => CONCERN_TERMS.some(term => cell.toLowerCase().includes(term))))) };
+}
 const rosterDetectors = (): unknown[] => DETECTORS.map(probe => ({ key: probe.key, member: probe.member, probe: sha256({ source: probe.source, signature: probe.signature }) }));
 
 const FALSIFIER_CASES = ROWS.flatMap(row => row.pins.flatMap(pin => pin.falsifiers.map(falsifier => [`${row.id}/${pin.id} ${falsifier.name}`, `${row.id}/${pin.id}`, falsifier] as const)));
@@ -2092,6 +2250,16 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
       "GP-4:d1x4,d2x7,d3x4",
     ]);
     expect(RESIDUALS.map(residual => residual.id)).toEqual(REGISTERED.Q);
+    expect(RESIDUALS.flatMap(residual => (residual.members ?? []).map(member => `${residual.id}/${member.name}`)), "class-level residual members").toEqual([
+      "MISREAD-COMMAND-WORD/P06 a leading redirection",
+      "MISREAD-COMMAND-WORD/P07 a leading descriptor redirection",
+      "MISREAD-COMMAND-WORD/P05 the time keyword",
+      "MISREAD-COMMAND-WORD/P32 the coproc keyword",
+      "MISREAD-COMMAND-WORD/P08 the function keyword",
+      "MISREAD-COMMAND-WORD/P11 an upper-case .EXE spelling",
+      "MISREAD-COMMAND-WORD/P12 a .bat spelling",
+      "MISREAD-COMMAND-WORD/P17 a global flag value read as the verb",
+    ]);
     expect(DETECTORS.map(probe => probe.key)).toEqual(REGISTERED.DT);
     expect(ROWS.flatMap(row => row.pins.filter(pin => pin.falsifiers.length === 0).map(pin => `${row.id}/${pin.id}`)), "pins no falsifier proves live").toEqual([]);
   });
@@ -2132,12 +2300,52 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
   });
 
   it("D: the docs/03 ownership table gives the GraphPolicyCLI concern exactly one row - no second row names any of its terms, so none re-assigns it (wb-1ho6 F3, gate LDG4)", () => {
-    const tables = sectionTables(readRepo(DOCS_03), OWNERSHIP_HEADING, 2, [PAGE_TITLE]);
-    expect(tables.why).toBe("");
+    const found = concernRows(readRepo(DOCS_03));
+    expect(found.why).toBe("");
     const concern = (OWNERSHIP_CELLS[0] ?? "").toLowerCase();
     for (const term of CONCERN_TERMS) expect(concern, term).toContain(term);
-    const concernRows = tables.grids.flatMap(grid => grid.slice(1).filter(row => row.some(cell => CONCERN_TERMS.some(term => cell.toLowerCase().includes(term)))));
-    expect(concernRows).toEqual([OWNERSHIP_CELLS]);
+    expect(found.rows).toEqual([OWNERSHIP_CELLS]);
+  });
+
+  it("D: the GraphPolicyCLI concern's terms are docs/03's own concern items - CONCERN_TERMS and the plants' terms equal the items read from the ownership row GraphPolicyCLI owns, and every item the cell lists names a census term, so a term dropped or added reds (wb-nh0t F1, gate M16)", () => {
+    const tables = sectionTables(readRepo(DOCS_03), OWNERSHIP_HEADING, 2, [PAGE_TITLE]);
+    expect(tables.why).toBe("");
+    const owned = tables.grids.flatMap(grid => grid.slice(1).filter(row => row[1] === "GraphPolicyCLI"));
+    expect(owned, "the ownership rows GraphPolicyCLI owns").toHaveLength(1);
+    const items = concernTermsOf(owned[0]?.[0] ?? "");
+    expect(items, "docs/03's concern items").toHaveLength(6);
+    expect(CONCERN_TERMS, "the census's term list").toEqual(items);
+    expect(
+      CONCERN_PLANTS.map(plant => plant.term),
+      "one plant per docs/03 concern item",
+    ).toEqual(items);
+    // The reverse reading, made without concernTermsOf: every item the docs/03 cell lists names a census term.
+    const listed = (owned[0]?.[0] ?? "")
+      .toLowerCase()
+      .split(", ")
+      .flatMap(part => part.split(" and "))
+      .filter(part => part !== "their receipts");
+    expect(listed, "the cell's listed items, read without concernTermsOf").toHaveLength(6);
+    for (const part of listed) expect(CONCERN_TERMS.some(term => part.includes(term)), `${part}: names a census term`).toBe(true);
+  });
+
+  it("D: every GraphPolicyCLI concern term is live - a second ownership row naming that term alone, planted in memory under the pinned row, is the row the concern check names beside it (wb-nh0t F1, gate D2/D3)", () => {
+    const page = readRepo(DOCS_03);
+    const pinned = `| ${OWNERSHIP_CELLS.join(" | ")} |\n`;
+    expect(page.split(pinned), "the pinned row's source line, once").toHaveLength(2);
+    const planted: string[] = [];
+    for (const plant of CONCERN_PLANTS) {
+      const cells = PLANT_CELLS(plant.concern);
+      expect(
+        CONCERN_TERMS.filter(term => plant.concern.toLowerCase().includes(term)),
+        `${plant.term}: the plant names its own term alone`,
+      ).toEqual([plant.term]);
+      const found = concernRows(page.replace(pinned, `${pinned}| ${cells.join(" | ")} |\n`));
+      expect(found.why, plant.term).toBe("");
+      expect(found.rows, plant.term).toEqual([OWNERSHIP_CELLS, cells]);
+      planted.push(plant.term);
+    }
+    expect(planted, "every plant read").toEqual(CONCERN_TERMS);
   });
 
   it("F: a compliant gp integration judges clean - the rules admit a real-interface seam rather than banning gp", () => {
@@ -2242,6 +2450,22 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
     const mutated = residual.apply(CLEAN);
     expect(mutated).not.toEqual(CLEAN);
     expect(judge(treeOf(mutated), mutated.seams)).toEqual([]);
+    for (const member of residual.members ?? []) {
+      expect(residual.family, `${member.name}: named in the family`).toContain(member.named);
+      expect(mutated.modules[DECISION], `${member.name}: planted by the quiet row`).toContain(member.statement);
+      const quiet = moduleCensus("src/workbench/probe.ts", `${MEMBER_HEAD}\n${member.statement}`);
+      expect(
+        quiet.launches.map(launch => [launch.binary, ...launch.argv].join(" ")),
+        `${member.name}: the frozen reading`,
+      ).toEqual(member.reads);
+      expect(quiet.bdWrite, `${member.name}: no bd write found`).toEqual([]);
+      const control = moduleCensus("src/workbench/probe.ts", `${MEMBER_HEAD}\n${member.control}`);
+      expect(
+        control.bdWrite.map(found => found.text),
+        `${member.name}: the control one change away is read`,
+      ).toEqual(member.controlWrites);
+      MEMBERS_READ.push(`${key}/${member.name}`);
+    }
     RAN.Q.push(key);
   });
 
@@ -2268,5 +2492,9 @@ describe("wb-1xvp.2: Pi reaches GraphPolicyCLI only through its real interfaces 
     registered(Q_TITLE, REGISTERED.Q);
     registered(DT_TITLE, REGISTERED.DT);
     expect(RAN, "the it.each cases that reached their last assertion this run, in registration order").toEqual({ F: [...REGISTERED.F], Q: [...REGISTERED.Q], DT: [...REGISTERED.DT] });
+    expect(
+      MEMBERS_READ,
+      "every class-level residual member read this run, as the out-of-file roster lists it",
+    ).toEqual(readRoster().residuals.flatMap(residual => (residual.members ?? []).map(member => `${residual.id}/${member.name}`)));
   });
 });

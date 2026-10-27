@@ -79,6 +79,13 @@
    "test/fixtures/tsx-skip-cache-deferral-roster.json",
    "test/workbench-rf-fiber-node-reuse-echo-census.test.ts"
   ],
+  "siblingExempt": [
+   "test/workbench-rf-fiber-node-reuse-echo-census.test.ts:wb-csbt.2"
+  ],
+  "censusPath": "^test\\/workbench-[a-z0-9]+(?:-[a-z0-9]+)*-census\\.test\\.ts$",
+  "delivery": "^DELIVERED by the orchestrator collect step \\([^)\\n]*\\): commit [0-9a-f]{40} on branch machine\\/flywheel\\/(\\S+), base [0-9a-f]+, scope (.+)\\.$",
+  "parentType": "parent-child",
+  "beadId": "\\bwb-[a-z0-9]+(?:\\.[0-9]+)*\\b",
   "floors": {
    "files": 750,
    "roots": {
@@ -138,7 +145,8 @@
   "R-UNNAMED-SUMMARY",
   "R-CITATION",
   "R-ROW-STATUS",
-  "R-WORDING-ANYWHERE"
+  "R-WORDING-ANYWHERE",
+  "R-EXEMPTED"
  ],
  "quiet": {
   "R-MARKER-ANYWHERE": [
@@ -202,6 +210,11 @@
   ],
   "R-WORDING-ANYWHERE": [
    "C1:wordingAnywhere"
+  ],
+  "R-EXEMPTED": [
+   "A1:plant:test/workbench-tsx-skip-cache-deferral-census.test.ts",
+   "A1:plant:test/fixtures/tsx-skip-cache-deferral-roster.json",
+   "A1:plant:test/workbench-rf-fiber-node-reuse-echo-census.test.ts"
   ]
  },
  "producer": {
@@ -289,6 +302,7 @@
       "anchorsWalked": true,
       "anchoredFloorMet": true,
       "exemptionsLoadBearing": true,
+      "exemptionsBound": true,
       "findings": [],
       "symlinks": [],
       "unreadable": [],
@@ -410,7 +424,39 @@
        ".forge/notes.md": false,
        ".git/notes.md": false,
        ".beads/notes.md": false,
-       "media/blob.bin": false
+       "media/blob.bin": false,
+       "test/workbench-tsx-skip-cache-deferral-census.test.ts": false,
+       "test/fixtures/tsx-skip-cache-deferral-roster.json": false,
+       "test/workbench-rf-fiber-node-reuse-echo-census.test.ts": false
+      },
+      "binding": {
+       "bound": false,
+       "absentFile": false,
+       "relatedEdge": false,
+       "relatesTo": false,
+       "docsPath": "not-census-path",
+       "rosterPath": "not-census-path",
+       "nestedPath": "not-census-path",
+       "beadAbsent": "bead-absent",
+       "mentionOnly": "not-delivered",
+       "otherScope": "not-delivered",
+       "otherBranch": "not-delivered",
+       "scopeLonger": "not-delivered",
+       "midLine": "not-delivered",
+       "inDescription": "not-delivered",
+       "outsideFamily": "outside-family",
+       "blocksGate": "outside-family",
+       "relatedElsewhere": "outside-family",
+       "noEdge": "outside-family",
+       "headerOther": "header-names-other",
+       "headerNone": "header-names-other",
+       "headerSecond": "header-names-other",
+       "widened": {
+        "exempted": true,
+        "judgedFindings": 0,
+        "loadBearing": true,
+        "binding": "not-census-path,not-delivered,header-names-other"
+       }
       }
      }
     },

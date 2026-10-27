@@ -1,10 +1,10 @@
 {
-  "comment": "wb-gxd7.3 (GPC-FEEDBACK-CONTRACT-AUDIT-R3; the hk9l/5jha roster pattern): the OUT-OF-FILE anchor of test/workbench-gp-snapshot-join-census.test.ts. rows: every judged row of test/helpers/gp-snapshot-join-census.ts in census order (TOUCHPOINTS, CLEAN, RESIDUALS, CAPTURES, FIXTURE, CASES, MUTANTS, SITE_CASES) - table, id, label, the SHA-256 of each pin as written (a source; a capture's argv, frame, path, value and recompute; the capture provenance; a case's clause, presentation, producer and expected outcome; a mutant's case, full recipe and expected rules; a site case's registrations, listings, files and expected rules) and the registered test. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its registered tests (vitest task tree, run modes) and its residual families against this file at test time, in order and both ways.",
+  "comment": "wb-gxd7.3 (GPC-FEEDBACK-CONTRACT-AUDIT-R3; the hk9l/5jha roster pattern): the OUT-OF-FILE anchor of test/workbench-gp-snapshot-join-census.test.ts. rows: every judged row of test/helpers/gp-snapshot-join-census.ts in census order (TOUCHPOINTS, CLEAN, RESIDUALS, CAPTURES, FIXTURE, CASES, MUTANTS, SITE_CASES, WALKS, ORACLE) - table, id, label, the SHA-256 of each pin as written (a source; a capture's argv, frame, path, value and recompute; the capture provenance; a case's clause, presentation, producer and expected outcome; a mutant's case, full recipe and expected rules; a site case's registrations, listings, files and expected rules; a walk row's planted tree and the listing or refusal srcFiles must return; an oracle row's original, presented text and the answer whitespaceOnly must give) and the registered test. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its registered tests (vitest task tree, run modes) and its residual families against this file at test time, in order and both ways.",
   "rows": [
     {
       "table": "TOUCHPOINTS",
       "id": "T-FIELD",
-      "label": "a gp join-value field in code: input_snapshot, graph_digest or canonical_digest, or a camel-case mirror, as a name, a member, a string, a template part or a regular expression",
+      "label": "a gp join-value field in code: input_snapshot, graph_digest or canonical_digest, or a camel-case mirror, as a name, a private name, a member, a string, a template part or a regular expression",
       "pins": [
         "55c9d40c7f3f5e8379b46e99091ce61420a03ad5bd802fb66f5d92087d47b5a3",
         "c0c679ca23f546d43f052e94836d6b1622d5ec801ec6e1a485deaf691af2b413",
@@ -13,14 +13,15 @@
         "4cedcfd855e4340216da1fb4908c4725a82f02d3250f0c384db02e126f9226e2",
         "506f3db8f108d090d1e7b108c7a42c69b5d6289c91bf91e08934c21466c8e35c",
         "939c7e131ab06cecb1ecff9991266881b2d6844921fc4e23cfc8e23776c3fbd3",
-        "293c5b341fde82047251c74d5aab767f60a0105d0266fd8bc457db54f29efdfd"
+        "293c5b341fde82047251c74d5aab767f60a0105d0266fd8bc457db54f29efdfd",
+        "8b07aca468a24b4d92aba6c142c695e74ac8844d602568c7b13b46b2c32eaefe"
       ],
       "test": "TOUCHPOINTS T-FIELD"
     },
     {
       "table": "TOUCHPOINTS",
       "id": "T-IDENTITIES",
-      "label": "gp's whole-document identity read as identities.graph: a member chain, an optional chain, an element access, a binding or assignment pattern, or a path string",
+      "label": "gp's whole-document identity read as identities.graph: a member chain, an optional chain, an element access, a binding or assignment pattern, or a path string, slashed or dotted",
       "pins": [
         "be2276f26ef75edcf7f7d06516a09f17da76f67e96188834a4f20298fbcbf2a5",
         "e1b04bff0ba7d1a5fc30848f4fc799d77e8f14c5521ce83b37102540f2631530",
@@ -28,7 +29,8 @@
         "c1c35d140b3cbe152ee8cbd38a5d4f6d5d36d4b2d3c5f19435b6175ef1b15d74",
         "f1dc40a83d5722d7be5a237f7b821593c10dfb2e7f9f9fd345eded13a9a527c5",
         "12bb6df3034f3b0f11f22b161c63c3dd85cb78edb02fb37130bc167a242bca69",
-        "857f13e387e59811a766f82e9b8b85c0e090965ab52efa4bf767a3339c65bfe9"
+        "857f13e387e59811a766f82e9b8b85c0e090965ab52efa4bf767a3339c65bfe9",
+        "92fa811f6786249481e99e320d7e105f0e5975c00d1d51270a028c88adc91524"
       ],
       "test": "TOUCHPOINTS T-IDENTITIES"
     },
@@ -46,11 +48,12 @@
     {
       "table": "TOUCHPOINTS",
       "id": "T-SHARED",
-      "label": "snapshotDigest, the name gp's journal and observation records give the join value, or its snake-case mirror, as a member, a binding or a string",
+      "label": "snapshotDigest, the name gp's journal and observation records give the join value, or its snake-case mirror, as a member, a private name, a binding or a string",
       "pins": [
         "27e50baccfdb108e66bb27f312cd7e58a978ae92ca02c34ae1512db6552a9d4d",
         "b06b070c233ac961512ead2cfac6f6aa62327de823ae8023ee06955d16fd0e87",
-        "72c91c5ed5b417907ec504b5e134387dcd7e8221efb97abbdbc64e608f62e6a1"
+        "72c91c5ed5b417907ec504b5e134387dcd7e8221efb97abbdbc64e608f62e6a1",
+        "e81f6fe954767e84e17fe004503aabc03b21119c8ae2b9c8a6d75039a49f25df"
       ],
       "test": "TOUCHPOINTS T-SHARED"
     },
@@ -839,6 +842,132 @@
         "8537b9782ef52a1bf4031c79cb288b976a1b24761f75052347eabbc81e598d8a"
       ],
       "test": "SITE_CASES R-DRIVE-BYPASS"
+    },
+    {
+      "table": "WALKS",
+      "id": "W-HIDDEN",
+      "label": "a hidden file and a hidden directory's file are walked",
+      "pins": [
+        "098a3b8e59c93e81eda2dd84470e038970ad91fbe4b0b91f64fd861a343497a4"
+      ],
+      "test": "WALKS W-HIDDEN"
+    },
+    {
+      "table": "WALKS",
+      "id": "W-EXTENSIONLESS",
+      "label": "an extensionless file in a nested directory is walked",
+      "pins": [
+        "0be6f40e14fc016c460a43431e860e09db376cfb3a324dfdeacb01304586b9ab"
+      ],
+      "test": "WALKS W-EXTENSIONLESS"
+    },
+    {
+      "table": "WALKS",
+      "id": "W-SYMLINKED-FILE",
+      "label": "a symlinked file is followed and listed under its link path, beside its target",
+      "pins": [
+        "3415f97f1107c27348107bc6fdb5fa070921b2e2d91ca3f58ef1395a2f194ac0"
+      ],
+      "test": "WALKS W-SYMLINKED-FILE"
+    },
+    {
+      "table": "WALKS",
+      "id": "W-LINKED-DIRECTORY",
+      "label": "a directory symlink is followed: a directory outside the scan root is walked under the link's path",
+      "pins": [
+        "71a09457ebdbb3f194f4ea6119ad48fd1e29c226aa28bfdf87cdcb250981ea42"
+      ],
+      "test": "WALKS W-LINKED-DIRECTORY"
+    },
+    {
+      "table": "WALKS",
+      "id": "W-DIRECTORY-ALIAS",
+      "label": "a second link to a real directory already walked is not walked again",
+      "pins": [
+        "dd7c8384c5b84b9eb28e3f4ed93612dcd95a9183a6b63ca50d310d1b98d2980c"
+      ],
+      "test": "WALKS W-DIRECTORY-ALIAS"
+    },
+    {
+      "table": "WALKS",
+      "id": "W-DIRECTORY-LOOP",
+      "label": "a directory symlink back to the walked directory ends the walk",
+      "pins": [
+        "276fd879bae0829cbad2880f0cd663b4e3de0d817f81a2c27418e98792a37edb"
+      ],
+      "test": "WALKS W-DIRECTORY-LOOP"
+    },
+    {
+      "table": "WALKS",
+      "id": "W-SCOPE",
+      "label": "only the tree under root/src is walked: a root file and another root directory are not",
+      "pins": [
+        "6526423c1966e134e27857b22c73697d33a1e7bc81a283b429556afde7609eb2"
+      ],
+      "test": "WALKS W-SCOPE"
+    },
+    {
+      "table": "WALKS",
+      "id": "W-SORTED",
+      "label": "the listing is in srcFiles' own sort order (UTF-16 code units), not the UTF-8 byte order readdirSync returns names in",
+      "pins": [
+        "cd72b8a42a1a77c34072d566c78865ffdb8e38e6a4004a3f14be41ffdc3dd9e0"
+      ],
+      "test": "WALKS W-SORTED"
+    },
+    {
+      "table": "WALKS",
+      "id": "W-DEPTH-FIRST",
+      "label": "a directory's files are listed at its name's place among its siblings: src/a/x.ts before src/a-b.ts, which a plain sort of the paths puts first",
+      "pins": [
+        "7e2b989711938987aeede4c11e5eab6a2ff4ab28dbbdad3ff0e7c647dae0a230"
+      ],
+      "test": "WALKS W-DEPTH-FIRST"
+    },
+    {
+      "table": "WALKS",
+      "id": "W-FIFO",
+      "label": "a FIFO is neither a regular file nor a directory, so the walk fails closed",
+      "pins": [
+        "39c06a2c86dae39a4f81b7929d1e466e4023b1115119237812cb159d2154b751"
+      ],
+      "test": "WALKS W-FIFO"
+    },
+    {
+      "table": "ORACLE",
+      "id": "O-UNCHANGED",
+      "label": "the presented file as written: no byte differs, so it is not a whitespace-only edit",
+      "pins": [
+        "a6e4a8e31e28dd13d98c4a0cec1a95e508a63967c30d802b0d66a3475d9bb03f"
+      ],
+      "test": "ORACLE O-UNCHANGED"
+    },
+    {
+      "table": "ORACLE",
+      "id": "O-RESPELLED",
+      "label": "the file respelled compact: the same value in different bytes is a whitespace-only edit",
+      "pins": [
+        "4f8bd169f2180ca73049100e81ac2a3d7fcc77723eec137498ae36614938c993"
+      ],
+      "test": "ORACLE O-RESPELLED"
+    },
+    {
+      "table": "ORACLE",
+      "id": "O-VALUE-EDIT",
+      "label": "a one-field value edit (the non-ASCII variant, spelled compact) changes the value, so it is not a whitespace-only edit",
+      "pins": [
+        "fe579ee7d298f19e2bc3d365324c02c892da2ceb841ff200004546f154b0ac6c"
+      ],
+      "test": "ORACLE O-VALUE-EDIT"
+    },
+    {
+      "table": "ORACLE",
+      "id": "O-SPACE-IN-STRING",
+      "label": "a space added inside a string value changes that value, so it is not a whitespace-only edit",
+      "pins": [
+        "393e22dc753fd412d92516d8e6ff45fc6746cdeb46122b7f0da2ff0121687ac5"
+      ],
+      "test": "ORACLE O-SPACE-IN-STRING"
     }
   ],
   "tests": [
@@ -932,6 +1061,20 @@
     "SITE_CASES S-NEAR-REASON",
     "SITE_CASES R-SHARED-NAME",
     "SITE_CASES R-DRIVE-BYPASS",
+    "WALKS W-HIDDEN",
+    "WALKS W-EXTENSIONLESS",
+    "WALKS W-SYMLINKED-FILE",
+    "WALKS W-LINKED-DIRECTORY",
+    "WALKS W-DIRECTORY-ALIAS",
+    "WALKS W-DIRECTORY-LOOP",
+    "WALKS W-SCOPE",
+    "WALKS W-SORTED",
+    "WALKS W-DEPTH-FIRST",
+    "WALKS W-FIFO",
+    "ORACLE O-UNCHANGED",
+    "ORACLE O-RESPELLED",
+    "ORACLE O-VALUE-EDIT",
+    "ORACLE O-SPACE-IN-STRING",
     "live: the scan walks every regular file under src/ and reads Pi's own snapshotDigest members there",
     "live: no src module joins against a gp receipt today, and the registry and the listing match the touched modules",
     "live (a)+(b)+(c): every JOIN_SITES entry reports a conforming outcome on every CASES row",

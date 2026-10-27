@@ -142,7 +142,17 @@ type JsonObject = { [key: string]: JsonValue };
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const REPO = join(HERE, "..");
-const ROOT = process.cwd();
+/**
+ * The workspace root every seam and projection is told (wb-j5y6): a census identity, never the checkout's path. Every key and
+ * string of a projection is word-scanned (A3), and a checkout's name is a host input like the clock: land-prep checks each try out
+ * at mktemp -d /tmp/fw-landprep-<bead>-XXXX, landing 373's try 1 drew the suffix edUi, whose case boundary splits off the control
+ * word ui, and A3 found it at scope.workspace and source.scope of every bare twin and variant, while try 2 (suffix vBqv, the same
+ * tree) read quiet. It holds no "/", so no checkout's absolute path is a substring of it; the roster holds it (readingRoot).
+ */
+const ROOT = "rc-context-block-census-workspace";
+/** The checkout this file runs in, both spellings (the launch directory and this file's repository): read only to show that no
+ * projection spells either (A3). */
+const CHECKOUTS: readonly string[] = [...new Set([process.cwd(), REPO])];
 const ROSTER_PATH = join(HERE, "fixtures", "rc-context-block-roster.json");
 const EXPORT_FILE = ".beads/issues.jsonl";
 const BEAD = "wb-5ltg.1";
@@ -1265,12 +1275,14 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const metadataKeys = new Set<string>();
     const shape: string[] = [];
     const tokens: string[] = [];
+    const hosted: string[] = [];
     for (const { id, bare, variant } of variantsOf()) {
       for (const [which, envelope] of [["bare", bare], ["variant", variant]] as const) {
         const projected = projections(envelope);
         for (const surface of SURFACES) {
           shape.push(...shapeFindings(surface, projected[surface]).map(finding => `${id}/${which}/${surface} ${finding}`));
           tokens.push(...tokenFindings(projected[surface]).map(finding => `${id}/${which}/${surface} ${finding}`));
+          hosted.push(...surfacedOf(projected[surface]).filter(entry => CHECKOUTS.some(checkout => entry.text.includes(checkout))).map(entry => `${id}/${which}/${surface} ${entry.path}`));
           if (surface === "metadata") {
             for (const key of Object.keys(objectOf(projected.metadata, "metadata"))) metadataKeys.add(key);
             continue;
@@ -1287,6 +1299,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const sourceKinds = [...new Set([...source.matchAll(/`(rf-[a-z-]+):/g)].map(match => match[1] ?? ""))].sort();
     expect(sourceKinds.filter(kind => kind !== "rf-output"), "REF_KINDS are the kinds the observer source builds").toStrictEqual([...REF_KINDS]);
     expect(shape, "every projection holds today's shape").toStrictEqual([]);
+    expect(hosted, "no projection spells the checkout's path: every seam and projection reads the census's own root").toStrictEqual([]);
     expect(tokens, "no sentinel and no control word reaches a surface").toStrictEqual([]);
     return { snapshotKeys: [...snapshotKeys], nodeKeys: [...nodeKeys], refKinds: [...refKinds].sort(), sourceKinds, metadataKeys: [...metadataKeys], shape, tokens };
   },
@@ -1714,6 +1727,7 @@ function constants(): JsonValue {
     markers: MARKERS,
     changes: CHANGES,
     mutants: Object.keys(MUTANTS),
+    readingRoot: ROOT,
   });
 }
 
