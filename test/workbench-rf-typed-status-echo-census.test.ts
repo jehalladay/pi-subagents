@@ -29,12 +29,21 @@
  * the registered reading (the injected-reader seam), the native reading (a stand-in rf first on PATH), the shared display form
  * every registered tool output routes through (sanitizeWorkbenchJson, src/workbench/redaction.ts) and the adapter's projection
  * (the snapshot node and its notes).
- *  A, the trigger, absent today. A1 a TypeScript AST scan of every src module's code units - identifiers and private names, plain
- *    name chains (record.publication.state) and string, template and regular-expression literal texts, escapes decoded; comments
- *    are never units (wb-d8io, the gate's F3) - each unit read as spelled and as its words (camel humps and separators split), for
- *    the federation boundary and query-view field and record names (FEDERATION_MATCHERS), with a floor, a units floor, an anchor,
- *    one positive control per matcher and the spelling, comment and composed controls (wb-d8io, the gate's F1(ii): QueryViewRef,
- *    OwnerBoundary, manifest_digest, escaped and dotted spellings); A2 the rf roster, selected by id prefix, reactivefiber:
+ *  A, the trigger, absent today. A1 a TypeScript AST scan of the code units of every src file - identifiers and private names,
+ *    access chains, nested key paths and string, template, regular-expression and JSX text literal texts, escapes decoded;
+ *    comments are never units (wb-d8io, the gate's F3) - each unit read as spelled, as its words (camel humps and separators
+ *    split) and as its words singular, and each of its single words read against the matchers fused, for the federation boundary
+ *    and query-view field and record names (FEDERATION_MATCHERS), with a floor, a units floor, an anchor, one positive control per
+ *    matcher and the spelling, comment and composed controls (wb-d8io, the gate's F1(ii): QueryViewRef, OwnerBoundary,
+ *    manifest_digest, escaped and dotted spellings). wb-yg70 widened that reading to the wb-d8io gate's F1 survivor families,
+ *    each with its controls: a plural name reads singular (i: PUBLIC_STATES, witnessDigests, matched_counts, ownerBoundaries); a
+ *    field fused inside one word reads through the fused matchers (ii: queryviewref, QUERYVIEWREF); an access chain reads
+ *    through any head, wrapper or string-literal element key, and the key path of every object pattern, object literal and type
+ *    literal nested under a member is a unit (iii: record["publication"]["state"], record!.publication!.state,
+ *    (record as Rec).publication.state, load().publication.state, const { publication: { state } } = record); and every regular
+ *    file below src is read, a module of any MODULE_EXTENSIONS member through its AST by its script kind and any other file whole
+ *    as text, while an entry that is neither a file nor a directory reds (iv: a .mts module), the walk held to a planted scratch
+ *    tree; A2 the rf roster, selected by id prefix, reactivefiber:
  *    permission or rf@ contractSource, stays the preview alone (native and injected registrations, RECONCILE_EVIDENCE_READS);
  *    A3 the native provider refuses a federation record printed by rf as an unrecognized envelope, in one spawn of the render argv;
  *    A4 the adapter refuses a reading carrying one.
@@ -80,8 +89,15 @@
  * append-only receipt docs/workbench/receipts/wb-d8io.md (wb-d8io, the gate's F2: a pin or a residual removed from every literal
  * of this file and from the roster together still stands there, and a receipt sheds no line, standing rule 15). The last case
  * holds every registered test title, its run mode and every pin's reached record to the roster, and records its own end; a
- * file-level hook reds a run in which every pin case reached its witness while the judge neither finished nor failed (wb-d8io,
- * the gate's F4: a skip modifier, a todo, an early return or a deleted judge).
+ * file-level hook reds a run in which every pin case reached its witness, or every registered test was selected to run as
+ * written, while the judge neither finished nor failed (wb-d8io, the gate's F4: a skip modifier, a todo, an early return or a
+ * deleted judge; wb-yg70, the wb-d8io gate's F3: an early return in a pin case beside one in the judge). The same hook first
+ * reads this file's own registrations through the TypeScript AST (registrationModes) and reds on any skip mode one carries - a
+ * SKIP_MODES member on a chain rooted at it, test, describe or suite (a call head, a conditional, an alias, a renamed or
+ * namespace import), a computed member, an options-object mode that is not literally false, or a context skip - each form held
+ * to a control (REGISTRATION_CONTROLS), so the F3 pair (the judge and one pin case skipped together, read green before) reds.
+ * Non-claim: a registrar reached through any other value (an object holding it, a reflective read) is not read; its control
+ * reads no mode. wb-yg70's two residuals are held to the receipt's cut-2 table, after the first entry's residual table.
  * RESIDUALS (named, each with a pinned quiet row): R-UNLISTED the note names at most four distinct not-observed words, so a fifth
  * one and beyond is the marker … and two renders differing only there share a note, while the count and every reading still
  * carry each row (Q1); R-TONE-CLASS the snapshot node's coverage, tone and statusText are Pi presentation classes, so PENDING and
@@ -93,18 +109,25 @@
  * word lists on a src literal) reads quiet to D3 and D4, while D1 holds the empty and absent renders whole (Q5); R-UNENUMERATED-FIELD
  * a federation record read only through a field FEDERATION_MATCHERS does not enumerate - a generic word, or a name Pi already
  * spells for its own records (definition_digest, contract_digest, query_id, failure_code) - is invisible to A1; the constructed
- * records' fields are partitioned between the matchers and UNENUMERATED_FIELDS (Q6).
+ * records' fields are partitioned between the matchers and UNENUMERATED_FIELDS (Q6); R-FUSED-SPLIT (wb-yg70) a field fused
+ * into a word that a case hump or a separator splits from its other words (queryViewref, QUERY_VIEWREF) reads quiet to A1, which
+ * reads a fused field only inside one word: across a split it cannot be told from an English compound (publicStatement,
+ * matched_counter) without a dictionary (A1's fused-split and compound controls stay 0); R-SPLIT-PATH (wb-yg70) a path whose
+ * links are joined only through a local binding, a key bound elsewhere or a variable's own name
+ * (const { publication: p } = record; p.state, record[KEY].state, const publication = { state }) reads quiet to A1, which joins a
+ * path's links only within one access chain or one nested pattern, literal or type (A1's aliased, keyed and bound controls stay
+ * 0).
  * SCOPE: the vocabularies are producer facts at the installed rf; Pi vendors no rf schema, so a producer change is seen only when a
  * re-measure re-reads them. The armed half (a federation reader echoing PublicState, availability, verdict and the coverage witness)
  * waits for the FW envelopes and FW-18 (rfc-0txnl.22): no reader is added or faked here.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src and the receipt are only read.
  */
-import { chmodSync, type Dirent, readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { chmodSync, type Dirent, mkdirSync, readdirSync, readFileSync, symlinkSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
-import { afterAll, afterEach, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeEach, describe, expect, it, type RunnerTestFile } from "vitest";
 import { CapabilityError, CapabilityRegistry, type JsonValue } from "../src/workbench/capability-registry.js";
 import { loadWorkbenchNative } from "../src/workbench/native-modules.js";
 import {
@@ -127,19 +150,24 @@ installScratchLeakGuard(afterAll);
 
 type JsonObject = { [key: string]: JsonValue };
 
-const HERE = dirname(fileURLToPath(import.meta.url));
+/** This census's own source: the file-level hook reads its registrations (wb-yg70, the wb-d8io gate's F3). */
+const SELF = fileURLToPath(import.meta.url);
+const HERE = dirname(SELF);
 const REPO = join(HERE, "..");
 const ROSTER_PATH = join(HERE, "fixtures", "rf-typed-status-echo-roster.json");
-/** wb-d8io (the o4h0.7 gate's F2): the append-only receipt whose four tables anchor this census's judged set from outside it. */
+/** wb-d8io (the o4h0.7 gate's F2): the append-only receipt whose tables anchor this census's judged set from outside it. */
 const RECEIPT_PATH = join(REPO, "docs", "workbench", "receipts", "wb-d8io.md");
 /** The receipt's entry heading the four table sections sit under (the receipt's title, its first line, sits above it). */
 const RECEIPT_ENTRY = "2026-10-24 the typed-status echo census judged set, anchored outside the census (wb-o4h0.7 gate F1-F4)";
-/** The four table sections and the header row each must keep. */
+/** wb-yg70 (the wb-d8io gate's F1 and F3): the entry its cut appended, whose one table adds residuals after the first entry's. */
+const RECEIPT_CUT_2 = "2026-10-25 the typed-status echo census judged set, cut 2: A1's widened reading, two residuals and the skip-mode hook (wb-yg70, the wb-d8io gate's F1 and F3)";
+/** The table sections, the entry each sits under and the header row each must keep. */
 const RECEIPT_TABLES = {
-  pins: { heading: "Judged pins, wb-d8io cut 1", header: ["Row", "Pin"] },
-  residuals: { heading: "Residuals, wb-d8io cut 1", header: ["Residual", "Quiet row"] },
-  matchers: { heading: "Federation matchers, wb-d8io cut 1", header: ["Matcher"] },
-  words: { heading: "Absence words, wb-d8io cut 1", header: ["Vocabulary", "Word"] },
+  pins: { entry: RECEIPT_ENTRY, heading: "Judged pins, wb-d8io cut 1", header: ["Row", "Pin"] },
+  residuals: { entry: RECEIPT_ENTRY, heading: "Residuals, wb-d8io cut 1", header: ["Residual", "Quiet row"] },
+  matchers: { entry: RECEIPT_ENTRY, heading: "Federation matchers, wb-d8io cut 1", header: ["Matcher"] },
+  words: { entry: RECEIPT_ENTRY, heading: "Absence words, wb-d8io cut 1", header: ["Vocabulary", "Word"] },
+  residualAdditions: { entry: RECEIPT_CUT_2, heading: "Residual additions, wb-d8io cut 2", header: ["Residual", "Quiet row"] },
 } as const;
 const ROOT = process.cwd();
 const PREVIEW_ID = "reactivefiber.render.preview";
@@ -215,6 +243,18 @@ const FEDERATION_SPELLINGS: readonly string[] = [
   "OwnerBoundary",
   "federated",
 ];
+/** wb-yg70 (the wb-d8io gate's F1(ii)): each matcher with its word boundaries and separators taken out, read inside one word of
+ * a code unit (and that word with -ies read -y), so a field fused into a single word (queryviewref, QUERYVIEWREF) is caught. */
+const FUSED_MATCHERS: readonly RegExp[] = FEDERATION_MATCHERS.map(matcher => new RegExp(matcher.source.split("\\b").join("").split("[\\s_.-]?").join(""), "i"));
+/** wb-yg70 (F1(iv)): the module extensions A1 and D4 read through the TypeScript AST, each by its script kind (scriptKindOf); A1
+ * reads any other regular file below src whole as text. */
+const MODULE_EXTENSIONS: readonly string[] = [".ts", ".mts", ".cts", ".tsx", ".js", ".mjs", ".cjs", ".jsx"];
+/** wb-yg70 (the wb-d8io gate's F3): the registration members that leave a case unrun or inverted (vitest 4.1.10's flags and
+ * methods, as test/workbench-tsx-worker-document-census.test.ts reads them), the options-object keys read as one unless
+ * literally false, and the registration functions they ride on. */
+const SKIP_MODES: readonly string[] = ["skip", "todo", "only", "fails", "skipIf", "runIf"];
+const OPTION_MODES: readonly string[] = ["skip", "todo", "only", "fails"];
+const REGISTRARS: readonly string[] = ["it", "test", "describe", "suite"];
 /** The constructed federation records' fields no matcher catches (R-UNENUMERATED-FIELD, Q6): generic words, and names Pi already
  * spells for its own records (definition_digest, contract_digest, query_id, failure_code: measured in src at trunk 92e5ae2). */
 const UNENUMERATED_FIELDS: readonly string[] = [
@@ -269,7 +309,7 @@ const OBSERVATION_ABSENCE = new RegExp(
   `\\b(?:${OBSERVATION_ABSENCE_BEFORE.join("|")})\\b[^.;]{0,40}\\bobservations?\\b|\\bobservations?\\b[^.;]{0,20}\\b(?:${OBSERVATION_ABSENCE_AFTER.join("|")})\\b`,
   "i",
 );
-/** Each residual and its pinned quiet row. */
+/** Each residual and its pinned quiet row; wb-yg70 added the last two, held to the receipt's cut-2 table. */
 const RESIDUALS: Readonly<Record<string, string>> = {
   "R-UNLISTED": "Q1",
   "R-TONE-CLASS": "Q2",
@@ -278,6 +318,8 @@ const RESIDUALS: Readonly<Record<string, string>> = {
   "R-COMPOSED-FIELD": "A1",
   "R-ABSENCE-VOCABULARY": "Q5",
   "R-UNENUMERATED-FIELD": "Q6",
+  "R-FUSED-SPLIT": "A1",
+  "R-SPLIT-PATH": "A1",
 };
 
 interface Row {
@@ -291,7 +333,7 @@ const ROWS: readonly Row[] = [
   {
     id: "A",
     label:
-      "(trigger, absent today) Pi reads no rf federation status record: no src module's code (identifiers, plain name chains and literals; comments are never read) spells a federation boundary or query-view field or record name FEDERATION_MATCHERS enumerates, the rf roster stays reactivefiber.render.preview alone, and both readers refuse a federation record as an envelope",
+      "(trigger, absent today) Pi reads no rf federation status record: no src file's code (identifiers, access chains, nested key paths and literals, each read as spelled, as its words, singular and fused within one word; a non-module file whole; comments are never read) spells a federation boundary or query-view field or record name FEDERATION_MATCHERS enumerates, the rf roster stays reactivefiber.render.preview alone, and both readers refuse a federation record as an envelope",
     pins: ["A1", "A2", "A3", "A4"],
   },
   {
@@ -606,21 +648,27 @@ function viewFields(source: JsonObject): string[] {
   });
 }
 
-/** Every regular file below a root (symlinks are not followed); a path that vanishes mid-walk holds nothing. */
-function filesBelow(directory: string): string[] {
+/** Every regular file below a root, and every entry that is neither a file nor a directory - a symbolic link (never followed) or
+ * a socket, which no read vouches for (wb-yg70, the wb-d8io gate's F1(iv)); a path that vanishes mid-walk holds nothing. */
+function entriesBelow(directory: string): { files: string[]; others: string[] } {
   let entries: Dirent[];
   try {
     entries = readdirSync(directory, { withFileTypes: true });
   } catch {
-    return [];
+    return { files: [], others: [] };
   }
   const files: string[] = [];
+  const others: string[] = [];
   for (const entry of entries) {
     const path = join(directory, entry.name);
-    if (entry.isDirectory()) files.push(...filesBelow(path));
-    else if (entry.isFile()) files.push(path);
+    if (entry.isDirectory()) {
+      const below = entriesBelow(path);
+      files.push(...below.files);
+      others.push(...below.others);
+    } else if (entry.isFile()) files.push(path);
+    else others.push(path);
   }
-  return files;
+  return { files, others };
 }
 function textOf(path: string): string {
   try {
@@ -629,8 +677,19 @@ function textOf(path: string): string {
     return "";
   }
 }
+/** Whether a file is a module A1 and D4 read through the TypeScript AST (MODULE_EXTENSIONS). */
+function isModule(path: string): boolean {
+  return MODULE_EXTENSIONS.some(extension => path.endsWith(extension));
+}
+/** The script kind a module parses as: TSX for .tsx, TS for .ts, .mts and .cts, and JSX (a superset of JS) for the rest. */
+function scriptKindOf(path: string): ts.ScriptKind {
+  if (path.endsWith(".tsx")) return ts.ScriptKind.TSX;
+  if (path.endsWith(".ts") || path.endsWith(".mts") || path.endsWith(".cts")) return ts.ScriptKind.TS;
+  return ts.ScriptKind.JSX;
+}
+/** The src modules D4 reads: every module below src, of any MODULE_EXTENSIONS member (wb-yg70; .ts alone before). */
 function srcModules(): string[] {
-  return filesBelow(join(REPO, "src")).filter(file => file.endsWith(".ts"));
+  return entriesBelow(join(REPO, "src")).files.filter(isModule);
 }
 
 const oldPath = process.env.PATH;
@@ -741,7 +800,7 @@ function isRfDescriptor(descriptor: { id: string; permissions: readonly string[]
 
 /** The string and template literal texts of one module (no comments). */
 function literalTexts(fileName: string, text: string): string[] {
-  const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, scriptKindOf(fileName));
   const found: string[] = [];
   const visit = (node: ts.Node): void => {
     if (ts.isStringLiteralLike(node)) found.push(node.text);
@@ -762,37 +821,133 @@ function wordsOf(unit: string): string {
     .trim()
     .toLowerCase();
 }
-/** The names of a property-access chain whose every link is a plain name (record.publication.state); a chain on any other
- * expression (a call, a literal, an element access) has none and reads only through its own units. */
-function nameChain(node: ts.Expression): string[] | undefined {
-  if (ts.isIdentifier(node)) return [node.text];
-  if (node.kind === ts.SyntaxKind.ThisKeyword) return ["this"];
-  if (!ts.isPropertyAccessExpression(node)) return undefined;
-  const head = nameChain(node.expression);
-  return head === undefined ? undefined : [...head, node.name.text];
+/** A word's singular (wb-yg70, the wb-d8io gate's F1(i)): a trailing -ies reads -y and a trailing -s, never -ss, is dropped. */
+function singularOf(word: string): string {
+  if (word.length > 3 && word.endsWith("ies")) return `${word.slice(0, -3)}y`;
+  return word.length > 1 && word.endsWith("s") && !word.endsWith("ss") ? word.slice(0, -1) : word;
 }
-/** The code units of one module by its TypeScript AST (A1): every identifier and private name, every string, template and
- * regular-expression literal text (escapes decoded by the parser) and every plain-name property chain joined by dots. Comments
- * are trivia, never units (wb-d8io, the gate's F3: a comment reads no field). */
+/** A code unit's words, each singular, so PUBLIC_STATES, witnessDigests, matched_counts and ownerBoundaries read as the field's
+ * own words. */
+function singularWords(unit: string): string {
+  return wordsOf(unit).split(" ").map(singularOf).join(" ");
+}
+/** A code unit's single words, each also with -ies read -y, which the fused matchers read whole (wb-yg70, F1(ii)): a word no case
+ * hump or separator splits can carry a field fused inside it (queryviewref, QUERYVIEWREF, readpublicationstate). */
+function fusedWords(unit: string): string[] {
+  return wordsOf(unit)
+    .split(" ")
+    .flatMap(word => [word, word.split("ies").join("y")]);
+}
+/** An expression with its wrappers taken off: parentheses, a non-null assertion and the as, satisfies and angle-bracket type
+ * assertions, none of which changes the record a chain reads. */
+function unwrapped(node: ts.Expression): ts.Expression {
+  let at = node;
+  while (ts.isParenthesizedExpression(at) || ts.isNonNullExpression(at) || ts.isAsExpression(at) || ts.isSatisfiesExpression(at) || ts.isTypeAssertionExpression(at)) at = at.expression;
+  return at;
+}
+/** The names of an access chain (wb-yg70, the wb-d8io gate's F1(iii)): its head when an identifier or this, then each property
+ * name and string-literal element key along it, through the wrappers above and the callee of a call, so
+ * record["publication"]["state"], record!.publication!.state, (record as Rec).publication.state and load().publication.state
+ * each name publication and state in order. Any other head names nothing, and a computed key that is not a literal adds no name
+ * (R-SPLIT-PATH). */
+function chainNames(node: ts.Expression): string[] {
+  const at = unwrapped(node);
+  if (ts.isIdentifier(at)) return [at.text];
+  if (at.kind === ts.SyntaxKind.ThisKeyword) return ["this"];
+  if (ts.isPropertyAccessExpression(at)) return [...chainNames(at.expression), at.name.text];
+  if (ts.isElementAccessExpression(at)) {
+    const key = unwrapped(at.argumentExpression);
+    return [...chainNames(at.expression), ...(ts.isStringLiteralLike(key) ? [key.text] : [])];
+  }
+  if (ts.isCallExpression(at)) return chainNames(at.expression);
+  return [];
+}
+/** A member key's text: an identifier, private name, string or numeric literal; a computed key has none. */
+function keyText(name: ts.Node | undefined): string | undefined {
+  if (name !== undefined && (ts.isIdentifier(name) || ts.isPrivateIdentifier(name) || ts.isStringLiteralLike(name) || ts.isNumericLiteral(name))) return name.text;
+  return undefined;
+}
+/** An element key's literal text: a string or numeric literal; any other key (an identifier, an expression) is computed. */
+function literalKey(node: ts.Expression): string | undefined {
+  const key = unwrapped(node);
+  return ts.isStringLiteralLike(key) || ts.isNumericLiteral(key) ? key.text : undefined;
+}
+/** The key of a member of an object pattern, object literal, type literal, interface or class; a rest element has none. */
+function memberKey(node: ts.Node): string | undefined {
+  if (ts.isBindingElement(node)) return ts.isObjectBindingPattern(node.parent) && node.dotDotDotToken === undefined ? keyText(node.propertyName ?? node.name) : undefined;
+  if (ts.isPropertyAssignment(node) || ts.isShorthandPropertyAssignment(node) || ts.isPropertySignature(node) || ts.isPropertyDeclaration(node)) return keyText(node.name);
+  if (ts.isMethodDeclaration(node) || ts.isMethodSignature(node) || ts.isGetAccessorDeclaration(node) || ts.isSetAccessorDeclaration(node)) return keyText(node.name);
+  return undefined;
+}
+/** The nodes a nested object sits in without a key of its own: array patterns and their elements, array literals, the
+ * expression wrappers, and array, tuple, union, intersection, parenthesized and generic types. */
+function passesThrough(node: ts.Node): boolean {
+  return (
+    ts.isArrayBindingPattern(node) ||
+    (ts.isBindingElement(node) && ts.isArrayBindingPattern(node.parent)) ||
+    ts.isArrayLiteralExpression(node) ||
+    ts.isParenthesizedExpression(node) ||
+    ts.isAsExpression(node) ||
+    ts.isSatisfiesExpression(node) ||
+    ts.isTypeAssertionExpression(node) ||
+    ts.isNonNullExpression(node) ||
+    ts.isArrayTypeNode(node) ||
+    ts.isTupleTypeNode(node) ||
+    ts.isUnionTypeNode(node) ||
+    ts.isIntersectionTypeNode(node) ||
+    ts.isParenthesizedTypeNode(node) ||
+    ts.isTypeReferenceNode(node)
+  );
+}
+/** The keys enclosing an object pattern, object literal or type literal, outermost first (wb-yg70, F1(iii)): the member it is the
+ * value or type of, that member's own enclosing keys, and so on, through the pass-through nodes. A variable or parameter name is
+ * no key (R-SPLIT-PATH). */
+function enclosingKeys(container: ts.Node): string[] {
+  let at: ts.Node | undefined = container.parent;
+  while (at !== undefined && passesThrough(at)) at = at.parent;
+  const key = at === undefined ? undefined : memberKey(at);
+  return at === undefined || key === undefined ? [] : [...enclosingKeys(at.parent), key];
+}
+/** The code units of one module by its TypeScript AST (A1): every identifier and private name, every string, template,
+ * regular-expression and JSX text literal (escapes decoded by the parser), every access chain of two names or more joined by
+ * dots (chainNames), and the key path of every member of an object pattern, object literal or type literal nested under a member
+ * (wb-yg70: const { publication: { state } } = record reads publication.state). Comments are trivia, never units (wb-d8io, the
+ * gate's F3: a comment reads no field). */
 function codeUnits(fileName: string, text: string): string[] {
-  const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, false, ts.ScriptKind.TS);
+  const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, scriptKindOf(fileName));
   const units: string[] = [];
   const visit = (node: ts.Node): void => {
-    if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node) || ts.isStringLiteralLike(node) || ts.isRegularExpressionLiteral(node)) units.push(node.text);
+    if (ts.isIdentifier(node) || ts.isPrivateIdentifier(node) || ts.isStringLiteralLike(node) || ts.isRegularExpressionLiteral(node) || ts.isJsxText(node)) units.push(node.text);
     else if (ts.isTemplateExpression(node)) units.push([node.head.text, ...node.templateSpans.map(span => span.literal.text)].join("<expr>"));
-    if (ts.isPropertyAccessExpression(node)) {
-      const chain = nameChain(node);
-      if (chain !== undefined) units.push(chain.join("."));
+    if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) {
+      const chain = chainNames(node);
+      if (chain.length > 1) units.push(chain.join("."));
+    }
+    if (ts.isObjectBindingPattern(node) || ts.isObjectLiteralExpression(node) || ts.isTypeLiteralNode(node)) {
+      const outer = enclosingKeys(node);
+      const members: readonly ts.Node[] = ts.isObjectBindingPattern(node) ? node.elements : ts.isObjectLiteralExpression(node) ? node.properties : node.members;
+      const keys = outer.length === 0 ? [] : members.map(memberKey).filter((key): key is string => key !== undefined);
+      for (const key of keys) units.push([...outer, key].join("."));
     }
     ts.forEachChild(node, visit);
   };
   visit(source);
   return units;
 }
-/** The FEDERATION_MATCHERS a module's code units spell, by source in matcher order: in a unit as spelled or in its words. */
+/** A file's code units (A1): a module's through its AST, any other file's whole text as one unit (wb-yg70, F1(iv)). */
+function fileUnits(file: string): string[] {
+  const text = textOf(file);
+  return isModule(file) ? codeUnits(relative(REPO, file), text) : [text];
+}
+/** The FEDERATION_MATCHERS a module's code units spell, by source in matcher order: in a unit as spelled, in its words or in its
+ * words singular, or (that matcher fused) inside one of its single words. */
 function matcherHits(units: readonly string[]): string[] {
-  const spelled = [...units, ...units.map(wordsOf)];
-  return FEDERATION_MATCHERS.filter(matcher => spelled.some(unit => matcher.test(unit))).map(matcher => matcher.source);
+  const unique = [...new Set(units)];
+  const spelled = [...unique, ...unique.map(wordsOf), ...unique.map(singularWords)];
+  const words = [...new Set(unique.flatMap(fusedWords))];
+  return FEDERATION_MATCHERS.filter((matcher, index) => spelled.some(unit => matcher.test(unit)) || words.some(word => FUSED_MATCHERS[index]?.test(word) === true)).map(
+    matcher => matcher.source,
+  );
 }
 /** The FEDERATION_MATCHERS one module's code spells: A1's controls and Q6 read planted modules through it. */
 function federationHits(fileName: string, text: string): string[] {
@@ -814,11 +969,11 @@ function rootless(value: JsonValue): JsonValue {
  * The body rows of one table section of the receipt, read through the shared docs reader (test/helpers/census.ts): the section
  * must render exactly one table and nothing else, carry no HTML (a comment or a tag) and keep its header, so a line added to the
  * append-only receipt can neither hide a row (a comment, an HTML block, a code fence) nor split the table and restate it. A cell
- * is the table's source text. The title heading the entry sits under is the receipt's own first line.
+ * is the table's source text. The title heading each table's entry sits under is the receipt's own first line.
  */
-function receiptTable(table: { readonly heading: string; readonly header: readonly string[] }): string[][] {
+function receiptTable(table: { readonly entry: string; readonly heading: string; readonly header: readonly string[] }): string[][] {
   const markdown = readFileSync(RECEIPT_PATH, "utf8");
-  const parents = [(markdown.split("\n")[0] ?? "").replace(/^# /, ""), RECEIPT_ENTRY];
+  const parents = [(markdown.split("\n")[0] ?? "").replace(/^# /, ""), table.entry];
   const where = `docs/workbench/receipts/wb-d8io.md section "${table.heading}"`;
   const section = docsSection(markdown, table.heading, 3, parents);
   if (!section.ok) throw new Error(`${where}: ${section.why}`);
@@ -870,7 +1025,9 @@ function battery(): { name: string; source: JsonObject }[] {
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
 const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   A1: async () => {
-    const files = srcModules();
+    // wb-yg70 (the wb-d8io gate's F1(iv)): every regular file below src, a module through its AST and any other file whole.
+    const tree = entriesBelow(join(REPO, "src"));
+    const files = tree.files;
     const anchor = join(REPO, "src", "workbench", "providers", "reactivefiber.ts");
     const anchorUnits = files.includes(anchor) ? codeUnits(relative(REPO, anchor), textOf(anchor)) : [];
     // The anchor is read twice over: its text carries the render argv and its code units carry both verb words.
@@ -879,14 +1036,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     let units = 0;
     const hits: string[] = [];
     for (const file of files) {
-      const fileUnits = codeUnits(relative(REPO, file), textOf(file));
-      units += fileUnits.length;
-      for (const source of matcherHits(fileUnits)) hits.push(`${relative(REPO, file)}: ${source}`);
+      const read = fileUnits(file);
+      units += read.length;
+      for (const source of matcherHits(read)) hits.push(`${relative(REPO, file)}: ${source}`);
     }
     const unitsFloorMet = units >= 50_000;
-    expect(floorMet, `src modules walked: ${files.length}`).toBe(true);
+    const others = tree.others.map(entry => relative(REPO, entry));
+    expect(floorMet, `src files walked: ${files.length}`).toBe(true);
     expect(unitsFloorMet, `src code units read: ${units}`).toBe(true);
     expect(anchorRead, "the anchor providers/reactivefiber.ts was not read with its render argv").toBe(true);
+    expect(others, "an src entry that is neither a file nor a directory, which no read vouches for").toEqual([]);
     expect(hits, "a federation field in src code needs the FW envelopes and FW-18 (rfc-0txnl.22)").toEqual([]);
     const control = (text: string): number => federationHits("control.ts", text).length;
     // Each matcher's own positive control: its spelling is caught by it alone.
@@ -918,7 +1077,104 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     // The measured coverage witness fields (query_view.py:181, the roster's vocabulary) are each caught.
     const measuredWitnessFields = Object.fromEntries(MEASURED.witnessFields.map(field => [field, control(`const key = "${field}";`)]));
     expect(Object.values(measuredWitnessFields).every(count => count === 1)).toBe(true);
-    return { floorMet, unitsFloorMet, anchorRead, hits, controls, measuredWitnessFields };
+    // wb-yg70 (the wb-d8io gate's F1): a plural name reads singular (i), a field fused inside one word reads through the fused
+    // matchers (ii), and an access chain reads through any head, wrapper or literal key while a nested pattern, literal or type
+    // spells its key path (iii): each control is caught, by exactly one matcher.
+    const widened = {
+      plural: {
+        snake: control("const PUBLIC_STATES = [];"),
+        camel: control("const witnessDigests = [];"),
+        quoted: control('const key = "matched_counts";'),
+        ies: control("const ownerBoundaries = [];"),
+        inner: control("const backendInstanceIds = [];"),
+      },
+      fused: {
+        lower: control("const queryviewref = 1;"),
+        upper: control("const QUERYVIEWREF = 1;"),
+        prefixed: control("const readpublicationstate = 1;"),
+        plural: control("const ownerboundariesref = 1;"),
+        prose: control('const note = "reads the queryviewref field";'),
+      },
+      chains: {
+        element: control('const value = record["publication"]["state"];'),
+        mixed: control('const value = record.publication["state"];'),
+        nonNull: control("const value = record!.publication!.state;"),
+        asserted: control("const value = (record as Rec).publication.state;"),
+        satisfied: control("const value = (record satisfies Rec).publication.state;"),
+        called: control("const value = load().publication.state;"),
+        constructed: control("const value = new Rec().publication.state;"),
+        optional: control('const value = record?.["publication"]?.state;'),
+        templateKey: control("const value = record[`publication`].state;"),
+      },
+      nested: {
+        binding: control("const { publication: { state } } = record;"),
+        parameter: control("function read({ publication: { state } }: Rec) { return state; }"),
+        assignment: control("({ publication: { state } } = record);"),
+        literal: control('const record = { publication: { state: "FAILED" } };'),
+        type: control("type Rec = { publication: { state: string } };"),
+        member: control("interface Rec { publication: { state: string } }"),
+        classProperty: control('class Rec { publication = { state: "FAILED" }; }'),
+        deep: control("const { backend: { instance: { id } } } = record;"),
+        array: control("const { publication: [{ state }] } = record;"),
+      },
+    };
+    const missed = Object.entries(widened).flatMap(([group, counts]) =>
+      Object.entries(counts)
+        .filter(([, count]) => count !== 1)
+        .map(([name]) => `${group}.${name}`),
+    );
+    expect(missed, "a widened reading's control is not caught by exactly one matcher").toEqual([]);
+    // R-FUSED-SPLIT's and R-SPLIT-PATH's quiet rows: a field fused into a word that a case hump or a separator splits from its
+    // other words, the English compounds that reading would otherwise take, and a path joined only through a local binding, a key
+    // bound elsewhere or a variable's own name all read quiet.
+    const quiet = {
+      fusedSplitCamel: control("const queryViewref = 1;"),
+      fusedSplitSnake: control("const QUERY_VIEWREF = 1;"),
+      compoundCamel: control("const publicStatement = 1;"),
+      compoundSnake: control("const matched_counter = 1;"),
+      aliasedPath: control("const { publication: p } = record;\nconst value = p.state;"),
+      keyedPath: control('const KEY = "publication";\nconst value = record[KEY].state;'),
+      boundPath: control('const publication = { state: "FAILED" };'),
+    };
+    expect(quiet).toStrictEqual({ fusedSplitCamel: 0, fusedSplitSnake: 0, compoundCamel: 0, compoundSnake: 0, aliasedPath: 0, keyedPath: 0, boundPath: 0 });
+    // wb-yg70 (F1(iv)): the walk A1 takes of src, over a planted scratch tree - one module per extension in a nested directory, a
+    // JSON file and a symbolic link: each file is read (each module by its script kind) and the link is listed, never followed.
+    const plantRoot = makeScratch("rf-typed-status-echo-walk-");
+    scratches.push(plantRoot);
+    mkdirSync(join(plantRoot, "nested"));
+    for (const extension of MODULE_EXTENSIONS) {
+      const jsx = extension.endsWith("x");
+      writeFileSync(join(plantRoot, "nested", `plant${extension}`), jsx ? "export const view = <b>publication state</b>;\n" : 'export const key = "publication_state";\n');
+    }
+    writeFileSync(join(plantRoot, "data.json"), '{ "publication_state": "FAILED" }\n');
+    symlinkSync(join(plantRoot, "data.json"), join(plantRoot, "linked.json"));
+    const walked = entriesBelow(plantRoot);
+    const walk = {
+      files: Object.fromEntries(
+        walked.files
+          .map(file => relative(plantRoot, file))
+          .sort()
+          .map(file => [file, matcherHits(fileUnits(join(plantRoot, file))).length]),
+      ),
+      others: walked.others.map(entry => relative(plantRoot, entry)),
+      kinds: Object.fromEntries(MODULE_EXTENSIONS.map(extension => [extension, ts.ScriptKind[scriptKindOf(`plant${extension}`)]])),
+    };
+    expect(Object.keys(walk.files)).toHaveLength(MODULE_EXTENSIONS.length + 1);
+    expect(Object.values(walk.files).every(count => count === 1)).toBe(true);
+    expect(walk.others).toStrictEqual(["linked.json"]);
+    return {
+      floorMet,
+      unitsFloorMet,
+      anchorRead,
+      hits,
+      others,
+      controls,
+      measuredWitnessFields,
+      fusedMatchers: FUSED_MATCHERS.map(matcher => matcher.source),
+      widened,
+      quiet,
+      walk,
+    };
   },
   A2: async () => {
     const injected = new CapabilityRegistry();
@@ -1253,6 +1509,154 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
   },
 };
 
+/** `${root}.${member}`, composed so that this file's own text spells no registration member a marker scan would read. */
+const dot = (root: string, member: string): string => `${root}.${member}`;
+/** The vitest import every registration control is read under. */
+const PLANT_IMPORT = 'import { describe, it, test } from "vitest";\n';
+/** One control per skip-mode form registrationModes reads (wb-yg70, the wb-d8io gate's F3), the run forms it must leave alone,
+ * and the non-claim: a registrar reached through an object holding it is not read. */
+const REGISTRATION_CONTROLS: readonly (readonly [string, string, readonly string[]])[] = [
+  ["the F3 pair", `(pin === "Q6" ? ${dot("it", "skip")} : it)(pin, () => {});\n${dot("it", "skip")}("judge", () => {});`, ["skip", "skip"]],
+  ["a todo", `${dot("it", "todo")}("judge");`, ["todo"]],
+  ["an inverted case", `${dot("test", "fails")}("judge", () => {});`, ["fails"]],
+  ["a focused case", `${dot("it", "only")}("judge", () => {});`, ["only"]],
+  ["a conditional skip", `${dot("it", "skipIf")}(true)("judge", () => {});`, ["skipIf"]],
+  ["a conditional run", `${dot("describe", "runIf")}(false)("row", () => {});`, ["runIf"]],
+  ["a skipped row", `${dot("describe", "skip")}("row", () => {});`, ["skip"]],
+  ["a flag after a flag", `${dot(dot("it", "concurrent"), "skip")}("judge", () => {});`, ["skip"]],
+  ["a literal member", 'it["skip"]("judge", () => {});', ["skip"]],
+  ["a computed member", 'it[mode]("judge", () => {});', ["computed member"]],
+  ["an alias", `const run = it;\n${dot("run", "skip")}("judge", () => {});`, ["skip"]],
+  ["a destructured member", 'const { skip: pass } = it;\npass("judge", () => {});', ["skip"]],
+  ["a renamed import", `import { it as check } from "vitest";\n${dot("check", "skip")}("judge", () => {});`, ["skip"]],
+  ["a namespace import", `import * as vitest from "vitest";\n${dot(dot("vitest", "it"), "skip")}("judge", () => {});`, ["skip"]],
+  ["an options skip", 'it("judge", { skip: true }, () => {});', ["options skip"]],
+  ["an options todo", 'test("judge", { todo: pin === "Q6" }, () => {});', ["options todo"]],
+  ["an options spread", 'it("judge", { ...options }, () => {});', ["options spread"]],
+  ["a context skip", `it("judge", (context) => {\n  ${dot("context", "skip")}();\n});`, ["context skip"]],
+  ["a destructured skip", 'it("judge", ({ skip }) => {\n  skip();\n});', ["context skip"]],
+  [
+    "the run forms",
+    'it("judge", () => {});\nit(pin, { timeout: 60_000, skip: false }, async () => {});\ndescribe("row", () => {});\nconst inverted = child.fails === true;',
+    [],
+  ],
+  ["the non-claim", `const api = { it };\n${dot(dot("api", "it"), "skip")}("judge", () => {});`, []],
+];
+
+/**
+ * The skip modes a test module's registrations carry, in source order (wb-yg70, the wb-d8io gate's F3): a SKIP_MODES member on a
+ * chain rooted at a registrar - it, test, describe or suite as the module imports them from vitest (a renamed import keeps its
+ * local name, a namespace import its member), or a variable bound to such a chain, to a fixed point - anywhere in the module (a
+ * call head, a conditional, an alias, a destructured member), or a computed member on one; an OPTION_MODES key of an
+ * options-object argument of a registration call that is not literally false (a spread or a computed key read as one); and a
+ * skip read on a parameter of a registration callback (a member of it, or a destructured skip).
+ */
+function registrationModes(fileName: string, text: string): string[] {
+  const source = ts.createSourceFile(fileName, text, ts.ScriptTarget.Latest, true, scriptKindOf(fileName));
+  const registrars = new Set<string>();
+  const namespaces = new Set<string>();
+  for (const statement of source.statements) {
+    if (!ts.isImportDeclaration(statement) || !ts.isStringLiteral(statement.moduleSpecifier) || statement.moduleSpecifier.text !== "vitest") continue;
+    const named = statement.importClause?.namedBindings;
+    if (named !== undefined && ts.isNamespaceImport(named)) namespaces.add(named.name.text);
+    if (named !== undefined && ts.isNamedImports(named)) {
+      for (const element of named.elements) if (REGISTRARS.includes((element.propertyName ?? element.name).text)) registrars.add(element.name.text);
+    }
+  }
+  const rooted = (node: ts.Expression): boolean => {
+    const at = unwrapped(node);
+    if (ts.isIdentifier(at)) return registrars.has(at.text);
+    if (ts.isPropertyAccessExpression(at)) return (ts.isIdentifier(at.expression) && namespaces.has(at.expression.text) && REGISTRARS.includes(at.name.text)) || rooted(at.expression);
+    if (ts.isElementAccessExpression(at) || ts.isCallExpression(at)) return rooted(at.expression);
+    if (ts.isConditionalExpression(at)) return rooted(at.whenTrue) || rooted(at.whenFalse);
+    return false;
+  };
+  const declarations: ts.VariableDeclaration[] = [];
+  const collect = (node: ts.Node): void => {
+    if (ts.isVariableDeclaration(node) && node.initializer !== undefined) declarations.push(node);
+    ts.forEachChild(node, collect);
+  };
+  collect(source);
+  // A variable bound to a registrar chain is a registrar too (an alias of an alias included): read to a fixed point.
+  for (let grew = true; grew; ) {
+    grew = false;
+    for (const declaration of declarations) {
+      const name = declaration.name;
+      if (ts.isIdentifier(name) && !registrars.has(name.text) && declaration.initializer !== undefined && rooted(declaration.initializer)) {
+        registrars.add(name.text);
+        grew = true;
+      }
+    }
+  }
+  const modes: string[] = [];
+  const optionModes = (call: ts.CallExpression): void => {
+    for (const options of call.arguments.filter(ts.isObjectLiteralExpression)) {
+      for (const property of options.properties) {
+        if (ts.isSpreadAssignment(property)) modes.push("options spread");
+        else if (property.name === undefined || ts.isComputedPropertyName(property.name)) modes.push("options computed key");
+        else {
+          const key = keyText(property.name);
+          const literallyFalse = ts.isPropertyAssignment(property) && property.initializer.kind === ts.SyntaxKind.FalseKeyword;
+          if (key !== undefined && OPTION_MODES.includes(key) && !literallyFalse) modes.push(`options ${key}`);
+        }
+      }
+    }
+  };
+  const contextModes = (call: ts.CallExpression): void => {
+    for (const callback of call.arguments) {
+      if (!ts.isArrowFunction(callback) && !ts.isFunctionExpression(callback)) continue;
+      const contexts = new Set<string>();
+      for (const parameter of callback.parameters) {
+        if (ts.isIdentifier(parameter.name)) contexts.add(parameter.name.text);
+        else if (ts.isObjectBindingPattern(parameter.name) && parameter.name.elements.some(element => keyText(element.propertyName ?? element.name) === "skip")) modes.push("context skip");
+      }
+      const scan = (node: ts.Node): void => {
+        if ((ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) && ts.isIdentifier(node.expression) && contexts.has(node.expression.text)) {
+          const member = ts.isPropertyAccessExpression(node) ? node.name.text : literalKey(node.argumentExpression);
+          if (member === "skip") modes.push("context skip");
+        }
+        ts.forEachChild(node, scan);
+      };
+      scan(callback.body);
+    }
+  };
+  const visit = (node: ts.Node): void => {
+    if (ts.isPropertyAccessExpression(node) && SKIP_MODES.includes(node.name.text) && rooted(node.expression)) modes.push(node.name.text);
+    if (ts.isElementAccessExpression(node) && rooted(node.expression)) {
+      const member = literalKey(node.argumentExpression);
+      if (member === undefined) modes.push("computed member");
+      else if (SKIP_MODES.includes(member)) modes.push(member);
+    }
+    if (ts.isVariableDeclaration(node) && ts.isObjectBindingPattern(node.name) && node.initializer !== undefined && rooted(node.initializer)) {
+      for (const element of node.name.elements) {
+        const member = keyText(element.propertyName ?? element.name);
+        if (member !== undefined && SKIP_MODES.includes(member)) modes.push(member);
+      }
+    }
+    if (ts.isCallExpression(node) && rooted(node.expression)) {
+      optionModes(node);
+      contextModes(node);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(source);
+  return modes;
+}
+/** Every registered test's run mode, read through the file task; an inverted case reads as such. */
+function selectedModes(tasks: RunnerTestFile["tasks"]): string[] {
+  const modes: string[] = [];
+  for (const child of tasks) {
+    if (child.type === "test") modes.push(child.fails === true ? `${child.mode}+fails` : child.mode);
+    else if (child.type === "suite") modes.push(...selectedModes(child.tasks));
+  }
+  return modes;
+}
+/** The file task, captured by the first case to run: the file-level hook reads every registered test's run mode through it. */
+const CAPTURED: { file: RunnerTestFile | undefined } = { file: undefined };
+beforeEach(({ task }) => {
+  CAPTURED.file ??= task.file;
+});
+
 /** The pins whose case ran to its witness comparison and past it, in run order (the reached record). */
 const REACHED: string[] = [];
 /** The roster judge's run record (wb-d8io, the gate's F4): failed by its onTestFailed hook, finished as its last statement. */
@@ -1264,7 +1668,10 @@ describe("wb-o4h0.7 rf typed-status echo census (RF-FEDERATED-WORKSPACES-R9, sta
     // wb-d8io (the gate's F2): the pins row by row, the residual map, the matchers and the absence words stand in the append-only
     // receipt's tables, outside this file and its roster.
     expect(ROWS.flatMap(row => row.pins.map(pin => [row.id, pin])), "the pins stand in the receipt's judged-pin table").toStrictEqual(receiptTable(RECEIPT_TABLES.pins));
-    expect(Object.entries(RESIDUALS), "the residual map stands in the receipt's residual table").toStrictEqual(receiptTable(RECEIPT_TABLES.residuals));
+    expect(Object.entries(RESIDUALS), "the residual map stands in the receipt's residual table, then in its cut-2 additions").toStrictEqual([
+      ...receiptTable(RECEIPT_TABLES.residuals),
+      ...receiptTable(RECEIPT_TABLES.residualAdditions),
+    ]);
     expect(FEDERATION_MATCHERS.map(matcher => [`\`${matcher.source}\``]), "the matchers stand in the receipt's matcher table").toStrictEqual(receiptTable(RECEIPT_TABLES.matchers));
     const words = [
       ...ABSENCE_WORDS.map(word => ["surfaced", word]),
@@ -1337,9 +1744,20 @@ describe("wb-o4h0.7 rf typed-status echo census (RF-FEDERATED-WORKSPACES-R9, sta
 
 // wb-d8io (the o4h0.7 gate's F4): a skip modifier, a todo, an early return or a deleted judge leaves the judge's run record
 // unfinished; when every pin case reached past its witness comparison (an unfiltered run), that reds the file here, outside it.
+// wb-yg70 (the wb-d8io gate's F3): so does a run in which every registered test was selected to run as written (an early return
+// in a pin case beside one in the judge), and this file's own registrations are read for a skip mode first, each form held to
+// its control: the judge and one pin case skipped together (the F3 pair) left neither run condition met and read green.
 afterAll(() => {
+  const misread = REGISTRATION_CONTROLS.filter(([, text, modes]) => JSON.stringify(registrationModes("plant.test.ts", `${PLANT_IMPORT}${text}`)) !== JSON.stringify(modes)).map(
+    ([name]) => name,
+  );
+  if (misread.length > 0) throw new Error(`the registration-mode read misses its controls: ${misread.join("; ")}`);
+  const modes = registrationModes(SELF, readFileSync(SELF, "utf8"));
+  if (modes.length > 0) throw new Error(`this census registers a case with a skip mode, which no run of it vouches for: ${modes.join(", ")}`);
   const ran = ROWS.flatMap(row => row.pins).every(pin => REACHED.includes(pin));
-  if (ran && !JUDGE.finished && !JUDGE.failed) {
-    throw new Error("the roster judge did not run to its end while every pin case reached its witness: the registration judge is skipped, emptied or gone");
+  const selected = CAPTURED.file === undefined ? [] : selectedModes(CAPTURED.file.tasks);
+  const unfiltered = selected.length > 0 && selected.every(mode => mode === "run");
+  if ((ran || unfiltered) && !JUDGE.finished && !JUDGE.failed) {
+    throw new Error("the roster judge did not run to its end while every pin case reached its witness or every test was selected to run: the registration judge is skipped, emptied or gone");
   }
 });
