@@ -83,7 +83,11 @@
  *    sha256/16 of its text), and that reading equals the independent reading of src (enumeratedFilesOf, enumeratedReadingOf: the
  *    enumeration's paths, each text read by its own call), so a filter, slice or text change on the scanner's argument reds as a
  *    reading line missing or extra, and the guard holds the independent reading itself to no scoped file and no mint, so a
- *    verdict taken from a second, narrowed scan reds there too; the anchor (observation.ts, the refresh mint) is read and the mint
+ *    verdict taken from a second, narrowed scan reds there too; the independent reading is also held to no file the independent
+ *    scope reading scopes (independentScoped, wb-1no5: federationScoped's reading rebuilt with no code shared with it,
+ *    membersHitting, words or scanFiles, the path and the text read apart), so the guard's scope narrowed alone, inside row S's
+ *    classes or outside them, reds C2 once src holds a file the narrowing drops, and that reading scopes exactly the planted set's
+ *    and the walk plant's federation files; the anchor (observation.ts, the refresh mint) is read and the mint
  *    matcher catches its "current"; no src file is federation-scoped (a file is scoped when its path or its text carries a
  *    FEDERATION_WORDS run) and none mints; the same scanner reports a planted set's three federation mints (one scoped by its path
  *    alone, one by its path and its text, and one by its text alone, in a comment, under a path that spells no FEDERATION_WORDS
@@ -102,6 +106,36 @@
  *    R-COMPOSED (a label assembled at run time), R3 R-PARAPHRASE (newest, up to date), R4 R-INTERRUPTED (a zero-width code point
  *    inside a scope or mint word), R5 R-OUTSIDE-SRC (a federation file outside src: qa/, test/ and every other root), R6 R-INDIRECT
  *    (a federation file minting through ObservationProjection.refresh carries no mint word; C1 pins that hazard live).
+ *  S, the resolvable narrowing classes of C2's scope (wb-1no5 F1, the R739 TERMINAL form: the criterion is exactly S1-S6, each
+ *    bound by its pin, and a narrowing in one reds at its own controls on today's tree, no src plant needed). A scope control is a
+ *    file one branch of federationScoped scopes alone, through one spelling, beside its twin (that spelling NEUTRAL) that neither
+ *    branch scopes; in every pin the guard scopes each control and hits its mint, the independent scope reading scopes each
+ *    control, and neither scopes a twin. S1 S-TEXT-WINDOW (F1's class): the text branch reading one contiguous window of the text -
+ *    of its lines, characters or words, from either end or between two points, each bound a count or a fraction of the text taken
+ *    from one end, F1's first line and the smallest margins at either end among them - drops line-two (the bead's shape, the scope
+ *    word on line 2), deep-head (the scope word after more lines, characters and words than any real src file holds), deep-tail
+ *    (the scope word before as many), opening (the scope word opening the text, its first character, word and line, before as
+ *    many) or closing (the scope word closing the text, its last character, word and line, with no trailing newline, after as
+ *    many, and spelled watermark, a whole member, so no character of it is slack; opening and closing: wb-1no5 respin 1, U1); the
+ *    depth is built from src at each run and read back against each real src file, and each control's edges and slack are read
+ *    back, so a window that keeps all five opens at the start of every real src file and closes at its end, reading it whole.
+ *    S2 S-TEXT-CONTEXT: the text branch reading
+ *    only some lexical contexts (comments, code, string literals, identifiers), or skipping one kind of comment (line, block, doc),
+ *    of string (double-quoted, single-quoted, template) or plain prose, drops the control whose spelling sits there (contextOf
+ *    reads each control's context back). S3 S-SPELLING: a branch accepting only some FEDERATION_WORDS members, or reading a row M
+ *    spelling otherwise than membersHitting does, drops a text-alone or a path-alone control (every SCOPE_SPELLINGS spelling, each
+ *    branch). S4 S-PATH-WINDOW: the path branch reading only part of the path - its basename, its directories, its extension or
+ *    the path without it, or one contiguous run of its segments, characters or words from either end or between two points, each
+ *    bound a count or a fraction of the path taken from one end, the smallest margins at either end among them - drops the
+ *    basename, extension, deep-path-head, deep-path-tail (the scope word opening the path right after its src/ prefix) or closing
+ *    (the scope word closing the path, its last character and word, an extensionless basename spelled watermark, a whole member,
+ *    so no character of it is slack: wb-1no5 respin 1, U2) control (the depth built and read back as S1's, against each real src
+ *    path, and each control's edges and slack read back); a window opening inside the src/ prefix is no narrowing (the prefix
+ *    spells no member, and the guard tests it apart), so a window that keeps deep-path-tail and closing reads every real src
+ *    path's members whole. S5 S-FILE-GATE: a branch consulted only for some files - by extension (.ts, .md, .json, .mjs, extensionless,
+ *    dot-named), by directory (each FLOORS directory, one below the deepest, a dot-named one) or by size (a one-line file, or one
+ *    past every real src file) - or the src/ prefix narrowed, drops a control of the kind it skips (each branch alone at each; the
+ *    controls of one branch share no word but src). S6 S-BRANCH: a branch dropped, or the two joined by and, drops its control.
  * ANCHORS OUTSIDE THE CENSUS (rule 16 CT5/CT6): the tracked bead export (ACCEPTANCE is held to its Acceptance line, each row A-C
  * label to its clause, each clause's part count to its row's pin count; the scope words it names, "federation" and "watermark",
  * and the producer's watermark field and accepted class name must each be caught by exactly one FEDERATION_WORDS member and every
@@ -115,11 +149,22 @@
  * positive control removed or bypassed together with the instrument it controls (WALK_PLANT and the floors list beside
  * filesBelow and floorReadings, the independent enumeration beside srcFiles, the independent reading and its verdict beside
  * scanRead - a second, narrowed scan taken beside scanRead's own together with a narrowed or removed independent verdict
- * included -, MIS_ECHOES beside echoFailuresOf: each control lives in this file); a walk or reading narrowing that keeps every
- * WALK_PLANT shape reads a src tree holding no other shape exactly as the intact one does (at base 6e0c3d2: 116 regular files, all
- * .ts, no dot-named entry, no extensionless file, no symlink), and reds through the enumeration or the independent reading once
- * src holds a file of a shape it drops; a symbolic link to a file is read by neither the walk nor the enumeration (on Node 24 the
- * enumeration lists the files below a linked directory, which then red C2 as missing from the walk).
+ * included -, the independent scope reading beside the guard's scope - the same narrowing made in both, or independentScoped
+ * rebuilt from the guard's own code, together with every row S control that narrowing drops -, a row S control's depth, edges,
+ * slack, context or twin beside the check that reads it back, or removed together with its read-back and its roster entry,
+ * MIS_ECHOES beside echoFailuresOf: each control lives in this file); a walk or reading
+ * narrowing that keeps every WALK_PLANT shape reads a src tree holding no other shape exactly as the intact one does (at base
+ * 6e0c3d2: 116 regular files, all .ts, no dot-named entry, no extensionless file, no symlink), and reds through the enumeration
+ * or the independent reading once src holds a file of a shape it drops; a scope narrowing that keeps every scope control - outside
+ * row S's classes: a text or path window skipping interior lines, words, characters or segments, or reading a non-contiguous
+ * set of them, or bounded otherwise than by a count or a fraction taken from one end (a bound found by searching the text or the
+ * path, or a margin that shrinks as the file grows), a lexical context S2 does not
+ * name (a regular expression literal, an HTML comment in markdown), a spelling row M does not list, a gate S5 does not vary (one
+ * skipping files that spell a word no control of the branch spells, an extension or a directory no control names, two file
+ * properties paired) - reads today's src exactly as the intact scope does, since no src file is scoped, and reds C2 only through
+ * the independent scope reading, once src holds a file it drops; a mint narrowing is no escape (C2 holds the scope to no file, so
+ * a scoped src file reds with or without a mint); a symbolic link to a file is read by neither the walk nor the enumeration (on
+ * Node 24 the enumeration lists the files below a linked directory, which then red C2 as missing from the walk).
  * SCOPE: the guard does not judge negation or context: a federation-scoped file spelling a mint word anywhere reds, a comment
  * stating the prohibition included. The excerpts are producer facts at 6a251bf73af5; Pi vendors no rf source, so a producer-side
  * change is seen only when an rf pin-bump re-reads them. The live legs are A1's rf reader, A2, B1, B2 and C1 (Pi's real
@@ -137,6 +182,19 @@
  * plant controls both readings), and the guard's verdict held over that independent reading too; F2 a text-alone PLANTED control
  * whose path spells no FEDERATION_WORDS member, so the scope's text branch has its own positive control; the ROWS shape is
  * unchanged.
+ * FOLLOW-UP wb-1no5 (R694 from landing 561, wb-lotb; gate of record cmd_075902998ded; hop 5 of the chain wb-tnz5.2 -> wb-zg8m ->
+ * wb-rmd7 -> wb-lotb, in the R739 TERMINAL enumerate-the-resolvable form): F1 (a first-line-only narrowing of federationScoped's
+ * text branch kept every PLANTED and WALK_PLANT shape, each carrying its scope word on line 1) is S1's member: line-two and
+ * deep-head red it on today's tree, and the independent scope reading reds it beside a real src file; the criterion is row S's
+ * six classes, each cured at its own controls, and outside them the independent scope reading holds a narrowing made alone; a
+ * later survivor outside S1-S6 is record-only unless it contradicts a pinned claim. The ROWS shape gains row S (S:6). Respin 1
+ * (refusal #1 of cut 1, U1 in S1 and U2 in S4: the small-margin windows text.slice(1), text.slice(3), text.slice(0, -3),
+ * text.slice(0, -7), every word but the last and path.slice(0, -3) kept every S1 and S4 control, since each text control's scope
+ * word sat 3 or more characters after the text's start and a word and 8 or more characters before its end, and each path
+ * control's either ended 3 or more characters before the path's end or was federation, whose last 3 characters are slack): S1
+ * gains opening and closing and S4 gains closing, each past the real src depth with its edges and slack read back, so a window
+ * trimming the text's first or last characters, words or lines, or the path's last characters or words, reds at its own class
+ * pin; the ROWS shape is unchanged.
  *
  * Display paths added: none. Test-only: nothing is spawned; C2 writes WALK_PLANT under one makeScratch root (leak guard
  * installed) and removes it in the same case; src, the bead export and this roster are only read.
@@ -292,6 +350,7 @@ const ROWS: readonly Row[] = [
   },
   { id: "M", label: "row C2's scope and mint matchers catch each vocabulary member, one pin per member", pins: ["MS1", "MS2", "MS3", "MS4", "MM1", "MM2"] },
   { id: "R", label: "each named residual of row C2's guard stays a pinned quiet row", pins: ["R1", "R2", "R3", "R4", "R5", "R6"] },
+  { id: "S", label: "each resolvable narrowing class of row C2's scope branches reds at its own controls, one pin per class", pins: ["S1", "S2", "S3", "S4", "S5", "S6"] },
 ];
 
 interface Owner {
@@ -827,6 +886,19 @@ function scanFiles(files: readonly SourceFile[]): GuardScan {
     }),
   };
 }
+/** C2's independent scope reading (wb-1no5): federationScoped's reading rebuilt with no code shared with it, membersHitting, words
+ * or scanFiles - its own src/ prefix test, its own token line (each camelCase boundary spaced, lowercased, every other character
+ * run one space, a space at each end) and one regular expression per FEDERATION_WORDS run (each part a token prefix, the parts
+ * adjacent tokens), the path and the text read apart. C2 holds the independent reading of src to no file it scopes, so the guard's
+ * scope narrowed alone reds C2 as soon as src holds a file the narrowing drops; row S holds it to scope every scope control. */
+const INDEPENDENT_RUNS: readonly RegExp[] = FEDERATION_WORDS.map(run => new RegExp(` ${run.join("[a-z0-9]* ")}`));
+const tokenLine = (source: string): string =>
+  ` ${source
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, " ")} `;
+const independentScoped = (file: SourceFile): boolean =>
+  file.path.slice(0, 4) === "src/" && [file.path, file.text].map(tokenLine).some(line => INDEPENDENT_RUNS.some(run => run.test(line)));
 /** Every regular file below a root (symlinks are not followed); a path that vanishes mid-walk holds nothing tracked. */
 function filesBelow(directory: string): string[] {
   let entries: Dirent[];
@@ -936,6 +1008,215 @@ const MINT_SPELLINGS: readonly { readonly hits: readonly string[]; readonly miss
 const ZERO_WIDTH = String.fromCodePoint(0x200b);
 const residualName = (pin: string): string => RESIDUALS.find(residual => residual.pin === pin)?.name ?? "";
 
+// Row S: the resolvable narrowing classes of C2's scope branches (wb-1no5, the R739 TERMINAL form).
+/** Row S's classes, one pin each. */
+const SCOPE_CLASSES: readonly { readonly pin: string; readonly name: string }[] = [
+  { pin: "S1", name: "S-TEXT-WINDOW" },
+  { pin: "S2", name: "S-TEXT-CONTEXT" },
+  { pin: "S3", name: "S-SPELLING" },
+  { pin: "S4", name: "S-PATH-WINDOW" },
+  { pin: "S5", name: "S-FILE-GATE" },
+  { pin: "S6", name: "S-BRANCH" },
+];
+const scopeClassName = (pin: string): string => SCOPE_CLASSES.find(entry => entry.pin === pin)?.name ?? "";
+/** The word a twin carries in place of its control's one scope spelling; it spells no FEDERATION_WORDS member. */
+const NEUTRAL = "neutral";
+/** A scope control: a file one branch of federationScoped scopes alone, through one spelling, beside its twin (that spelling
+ * NEUTRAL), which neither branch scopes, so the control's scope rests on the spelling where its shape puts it. */
+interface ScopeControl {
+  readonly branch: "path" | "text";
+  readonly shape: string;
+  readonly spelling: string;
+  readonly file: SourceFile;
+  readonly twin: SourceFile;
+}
+const textAlone = (shape: string, path: string, text: string, spelling: string): ScopeControl => ({
+  branch: "text",
+  shape,
+  spelling,
+  file: { path, text },
+  twin: { path, text: text.replace(spelling, NEUTRAL) },
+});
+const pathAlone = (shape: string, path: string, text: string, spelling: string): ScopeControl => ({
+  branch: "path",
+  shape,
+  spelling,
+  file: { path, text },
+  twin: { path: path.replace(spelling, NEUTRAL), text },
+});
+/** A scope control's mint, on a line that spells no FEDERATION_WORDS member. */
+const MINT_LINE = 'export const label = "current";\n';
+/** The extent a window narrowing must cover to read every real src file whole: the longest text's lines (newline-split),
+ * characters and words, and the deepest and longest path's segments, characters and words. */
+interface Extent {
+  readonly lines: number;
+  readonly characters: number;
+  readonly words: number;
+  readonly segments: number;
+  readonly pathCharacters: number;
+  readonly pathWords: number;
+}
+const extentOf = (files: readonly SourceFile[]): Extent => ({
+  lines: Math.max(0, ...files.map(file => file.text.split("\n").length)),
+  characters: Math.max(0, ...files.map(file => file.text.length)),
+  words: Math.max(0, ...files.map(file => words(file.text).length)),
+  segments: Math.max(0, ...files.map(file => file.path.split("/").length)),
+  pathCharacters: Math.max(0, ...files.map(file => file.path.length)),
+  pathWords: Math.max(0, ...files.map(file => words(file.path).length)),
+});
+/** Filler past an extent in lines, characters and words; each line, `const filler<n> = <n>;`, spells three words, none a
+ * FEDERATION_WORDS member or a MINT_WORDS word. */
+function fillerPast(extent: Extent): string {
+  const lines: string[] = [];
+  let characters = 0;
+  while (lines.length <= extent.lines || characters <= extent.characters || 3 * lines.length <= extent.words) {
+    const line = `const filler${lines.length} = ${lines.length};\n`;
+    lines.push(line);
+    characters += line.length;
+  }
+  return lines.join("");
+}
+/** Directory segments past an extent in segments, characters and words; each `level<n>` spells one word and no member. */
+function levelsPast(extent: Extent): string {
+  const levels: string[] = [];
+  while (levels.length <= extent.segments || levels.join("/").length <= extent.pathCharacters || levels.length <= extent.pathWords) {
+    levels.push(`level${levels.length}`);
+  }
+  return levels.join("/");
+}
+/** Whether a part of a text runs past every given file's text in lines, characters and words alike; each file is read here and
+ * not through extentOf, so an extent read short leaves a depth control short of a real src file and reds. */
+function textPastEvery(part: string, files: readonly SourceFile[]): boolean {
+  const lines = part.split("\n").length - 1;
+  const count = words(part).length;
+  return files.length > 0 && files.every(file => lines > file.text.split("\n").length && part.length > file.text.length && count > words(file.text).length);
+}
+/** Whether a part of a path runs past every given file's path in segments, characters and words alike. */
+function pathPastEvery(part: string, files: readonly SourceFile[]): boolean {
+  const segments = part.split("/").length - 1;
+  const count = words(part).length;
+  return files.length > 0 && files.every(file => segments > file.path.split("/").length && part.length > file.path.length && count > words(file.path).length);
+}
+/** How many trailing characters of a spelling a trim may drop while the guard's matcher still catches it: 3 for federation
+ * (federat is its member's prefix), 0 for watermark (a whole member), so a closing control spelled with no slack is dropped by a
+ * trim of the text's or the path's last character (wb-1no5 respin 1). */
+function endSlackOf(spelling: string): number {
+  let slack = 0;
+  while (slack < spelling.length && membersHitting(spelling.slice(0, spelling.length - slack - 1)).length > 0) {
+    slack += 1;
+  }
+  return slack;
+}
+/** S1 (S-TEXT-WINDOW, F1's class): the bead's own shape (the scope word on line 2), two depth controls, the scope word after
+ * `filler` (deep-head) and before it (deep-tail), and two edge controls past the same depth (wb-1no5 respin 1, U1): the scope
+ * word opening the text, its first character, word and line (opening), and closing it, its last character, word and line with no
+ * trailing newline, spelled as a whole member so no character of it is slack (closing). */
+const textWindowControls = (filler: string): ScopeControl[] => [
+  textAlone("line-two", "src/workflow/relay-note.ts", "export const relayNote = 1;\n// a federation relay note renders current\n", "federation"),
+  textAlone("deep-head", "src/workbench/deep-head.ts", `${filler}// a federation ledger never renders current\n`, "federation"),
+  textAlone("deep-tail", "src/workbench/deep-tail.ts", `// a federation journal never renders current\n${filler}`, "federation"),
+  textAlone("opening", "src/workbench/opening.ts", `federation peers never render current\n${filler}`, "federation"),
+  textAlone("closing", "src/workbench/closing.ts", `${filler}// a peer view never renders current; it reads the watermark`, "watermark"),
+];
+/** S2 (S-TEXT-CONTEXT): the scope word in one lexical context each. */
+const textContextControls = (): ScopeControl[] => [
+  textAlone("line-comment", "src/workbench/line-note.ts", `// the federation peer\n${MINT_LINE}`, "federation"),
+  textAlone("block-comment", "src/workbench/block-note.ts", `/* the federation peer */\n${MINT_LINE}`, "federation"),
+  textAlone("doc-comment", "src/workbench/doc-note.ts", `/** the federation peer */\n${MINT_LINE}`, "federation"),
+  textAlone("double-quoted", "src/workbench/double-note.ts", `export const note = "the federation peer";\n${MINT_LINE}`, "federation"),
+  textAlone("single-quoted", "src/workbench/single-note.ts", `export const note = 'the federation peer';\n${MINT_LINE}`, "federation"),
+  textAlone("template", "src/workbench/template-note.ts", `export const note = \`the federation peer\`;\n${MINT_LINE}`, "federation"),
+  textAlone("identifier", "src/workbench/identifier-note.ts", `export const federationPeer = 1;\n${MINT_LINE}`, "federation"),
+  textAlone("prose", "src/workbench/prose-note.md", "The federation peer view is current.\n", "federation"),
+];
+/** The lexical context of a text control's one spelling, read from the line carrying it: S2's check that each control sits in
+ * the context its shape names. */
+function contextOf(control: ScopeControl): string {
+  if (control.file.path.endsWith(".md")) return "prose";
+  const line = control.file.text.split("\n").find(entry => entry.includes(control.spelling)) ?? "";
+  const before = line.slice(0, line.indexOf(control.spelling));
+  if (before.startsWith("/**")) return "doc-comment";
+  if (before.startsWith("/*")) return "block-comment";
+  if (before.includes("//")) return "line-comment";
+  const quote = ['"', "'", "`"].find(mark => before.split(mark).length % 2 === 0);
+  return quote === '"' ? "double-quoted" : quote === "'" ? "single-quoted" : quote === "`" ? "template" : "identifier";
+}
+/** S3 (S-SPELLING): every row M spelling, scoped by the text alone and by the path alone. */
+const spellingControls = (): ScopeControl[] =>
+  SCOPE_SPELLINGS.flatMap((spellings, member) =>
+    spellings.flatMap((spelling, at) => [
+      textAlone(`text:MS${member + 1}:${at + 1}`, `src/workbench/spelling-${member + 1}-${at + 1}.ts`, `// ${spelling}\n${MINT_LINE}`, spelling),
+      pathAlone(`path:MS${member + 1}:${at + 1}`, `src/workbench/${spelling}.ts`, MINT_LINE, spelling),
+    ]),
+  );
+/** S4 (S-PATH-WINDOW): the scope word in the basename alone and in the extension alone, two depth controls, the scope word after
+ * `levels` (deep-path-head) and before them, opening the path right after its src/ prefix (deep-path-tail), and one edge control
+ * past the same depth (wb-1no5 respin 1, U2): the scope word closing the path, its last character and word, an extensionless
+ * basename spelled as a whole member so no character of it is slack (closing). */
+const pathWindowControls = (levels: string): ScopeControl[] => [
+  pathAlone("basename", "src/workbench/federation-basename.ts", MINT_LINE, "federation"),
+  pathAlone("extension", "src/workbench/peer.federation", MINT_LINE, "federation"),
+  pathAlone("deep-path-head", `src/${levels}/federation-head.ts`, MINT_LINE, "federation"),
+  pathAlone("deep-path-tail", `src/federation-tail/${levels}/peer.ts`, MINT_LINE, "federation"),
+  pathAlone("closing", `src/${levels}/watermark`, MINT_LINE, "watermark"),
+];
+/** S5 (S-FILE-GATE): each branch alone at every walk-plant extension (.ts, .md, .json, .mjs, extensionless, dot-named), in every
+ * FLOORS directory, below the deepest one and in a dot-named one, at one line and past the real src extent (`filler`), the
+ * members, basenames and texts varied so the controls of one branch share no word but src. */
+const fileGateControls = (filler: string): ScopeControl[] => [
+  textAlone("text:src", "src/relay.ts", 'export const relay = "current"; // federation relay\n', "federation"),
+  textAlone("text:src/ui:.md", "src/ui/notes.md", "The watermark view is current.\n", "watermark"),
+  textAlone("text:src/workbench:.json", "src/workbench/cache.json", '{ "notified_position": 8, "label": "current" }\n', "notified_position"),
+  textAlone("text:src/workbench/hosts:.mjs", "src/workbench/hosts/host.mjs", '// the accepted boundary\nexport const label = "latest";\n', "accepted boundary"),
+  textAlone("text:src/workbench/providers:extensionless", "src/workbench/providers/NOTES", "The FEDERATION peer is latest.\n", "FEDERATION"),
+  textAlone("text:src/workflow:dot-named", "src/workflow/.state.json", '{ "watermark": 8, "label": "current" }\n', "watermark"),
+  textAlone("text:deep-directory", "src/workflow/runs/archive/2026/q4/log.ts", 'export const label = "latest";\n// a federated log\n', "federated"),
+  textAlone("text:dot-directory", "src/.cache/sync.ts", `export const notifiedPosition = 8;\n${MINT_LINE}`, "notifiedPosition"),
+  textAlone("text:large", "src/workbench/ledger.ts", `// the federation ledger is current\n${filler}`, "federation"),
+  pathAlone("path:src", "src/federation.ts", MINT_LINE, "federation"),
+  pathAlone("path:src/ui:.md", "src/ui/watermark-notes.md", "The view is current.\n", "watermark"),
+  pathAlone("path:src/workbench:.json", "src/workbench/notified-position.json", '{ "label": "current" }\n', "notified-position"),
+  pathAlone("path:src/workbench/hosts:.mjs", "src/workbench/hosts/accepted-boundary.mjs", 'export const label = "latest";\n', "accepted-boundary"),
+  pathAlone("path:src/workbench/providers:extensionless", "src/workbench/providers/FEDERATION", "The peer is latest.\n", "FEDERATION"),
+  pathAlone("path:src/workflow:dot-named", "src/workflow/.watermark.json", '{ "label": "current" }\n', "watermark"),
+  pathAlone("path:deep-directory", "src/workflow/runs/archive/2026/q4/notified_position.ts", MINT_LINE, "notified_position"),
+  pathAlone("path:dot-directory", "src/.federated/sync.ts", MINT_LINE, "federated"),
+  pathAlone("path:large", "src/workbench/accepted-boundaries.ts", `${filler}${MINT_LINE}`, "accepted-boundaries"),
+];
+/** S6 (S-BRANCH): one control per branch. */
+const branchControls = (): ScopeControl[] => [
+  textAlone("text", "src/workbench/branch-text.ts", `// the federation branch\n${MINT_LINE}`, "federation"),
+  pathAlone("path", "src/workbench/federation-branch.ts", MINT_LINE, "federation"),
+];
+/** A control as a row S witness entry holds it. */
+const entryOf = (control: ScopeControl): { branch: string; shape: string; path: string; spelling: string } => ({
+  branch: control.branch,
+  shape: control.shape,
+  path: control.file.path,
+  spelling: control.spelling,
+});
+/** A row S case's reading: the guard scopes every control and hits its mint, the independent scope reading scopes every control,
+ * and neither scopes a twin. */
+function readScope(pin: string, controls: readonly ScopeControl[]): { scoped: number; independent: number; unscopedTwins: number } {
+  const name = scopeClassName(pin);
+  const files = controls.map(control => control.file);
+  const twins = controls.map(control => control.twin);
+  const scan = scanFiles(files);
+  expect(scan, `${name}: the guard's scope dropped a control, or a control carries no mint`).toStrictEqual({
+    scoped: files.map(file => file.path),
+    hits: files.map(file => `${file.path}: ${mintsOf(file.text).join(",")}`),
+  });
+  const independent = files.filter(independentScoped).map(file => file.path);
+  expect(independent, `${name}: the independent scope reading dropped a control`).toStrictEqual(files.map(file => file.path));
+  const twinScan = scanFiles(twins);
+  const twinIndependent = twins.filter(independentScoped).map(file => file.path);
+  expect({ twinScan, twinIndependent }, `${name}: a twin scoped, so a control's scope does not rest on its one spelling`).toStrictEqual({
+    twinScan: { scoped: [], hits: [] },
+    twinIndependent: [],
+  });
+  return { scoped: scan.scoped.length, independent: independent.length, unscopedTwins: twins.filter(twin => !federationScoped(twin) && !independentScoped(twin)).length };
+}
+
 /** Every census constant, as the roster holds it. */
 const constantsOf = (): Json => ({
   identifiers: [...IDENTIFIERS],
@@ -953,6 +1234,7 @@ const constantsOf = (): Json => ({
   naiveImports: NAIVE_IMPORTS.map(naive => naive.name),
   naiveRenders: NAIVE_RENDERS.map(naive => naive.name),
   misEchoes: MIS_ECHOES.map(misEcho => misEcho.name),
+  scopeClasses: SCOPE_CLASSES.map(entry => ({ pin: entry.pin, name: entry.name })),
 });
 
 /** Each pin's case: it asserts its own outcome and returns the witness the roster holds for it. */
@@ -1305,11 +1587,19 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(real, "a federation-scoped src file, or a minted label in one").toStrictEqual({ scoped: [], hits: [] });
     const independentScan = scanFiles(independentFiles);
     expect(independentScan, "a federation-scoped src file, or a minted label in one, in the independent reading of src").toStrictEqual({ scoped: [], hits: [] });
+    const independentScope = independentFiles.filter(independentScoped).map(file => file.path);
+    expect(independentScope, "a federation-scoped src file in the independent scope reading of src: the guard's scope narrowed").toStrictEqual([]);
     const planted = scanFiles(PLANTED);
     expect(planted, "the guard missed a planted federation mint or scoped an unscoped file").toStrictEqual({
       scoped: ["src/workbench/federation-import.ts", "src/workbench/peer-watermark.ts", "src/workbench/peer-sync.ts"],
       hits: ["src/workbench/federation-import.ts: latest", "src/workbench/peer-watermark.ts: current", "src/workbench/peer-sync.ts: current"],
     });
+    const independentPlanted = PLANTED.filter(independentScoped).map(file => file.path);
+    expect(independentPlanted, "the independent scope reading missed a planted federation file or scoped the unscoped one").toStrictEqual([
+      "src/workbench/federation-import.ts",
+      "src/workbench/peer-watermark.ts",
+      "src/workbench/peer-sync.ts",
+    ]);
     const { walked, enumerated: plantEnumerated, reading: plantReading } = walkPlanted(WALK_PLANT);
     expect(walked, "the walk missed a planted regular file: a non-.ts, dot-named or extensionless file, or one below the deepest FLOORS directory").toStrictEqual(
       byPath(WALK_PLANT),
@@ -1337,6 +1627,8 @@ const IMPL: Readonly<Record<string, () => Json>> = {
         "src/workflow/peers/archive/2026/q4/watermark-log.json: latest",
       ],
     });
+    const walkIndependent = walked.filter(independentScoped).map(file => file.path);
+    expect(walkIndependent, "the independent scope reading missed a walked federation file or scoped the walked unscoped one").toStrictEqual(walkScan.scoped);
     const full = atFloors();
     const atFloor = floorReadings(full);
     const oneShort = Object.keys(FLOORS).map(directory => {
@@ -1353,8 +1645,10 @@ const IMPL: Readonly<Record<string, () => Json>> = {
       anchorMinted,
       real,
       independentScan,
+      independentScope,
       planted,
-      walk: { files: walked.map(file => file.path), enumerated: plantEnumerated, read: walkRead, scan: walkScan },
+      independentPlanted,
+      walk: { files: walked.map(file => file.path), enumerated: plantEnumerated, read: walkRead, scan: walkScan, independent: walkIndependent },
       floorControl: { atFloor, oneShort },
     };
   },
@@ -1432,11 +1726,107 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(witness, "R-INDIRECT: a refresh call read as a mint").toStrictEqual({ name: "R-INDIRECT", scan: { scoped: [file.path], hits: [] } });
     return witness;
   },
+  S1: () => {
+    const files = enumeratedFilesOf(REPO);
+    const controls = textWindowControls(fillerPast(extentOf(files)));
+    const entries = controls.map(control => {
+      const at = control.file.text.indexOf(control.spelling);
+      const before = control.file.text.slice(0, at);
+      const after = control.file.text.slice(at + control.spelling.length);
+      return {
+        ...entryOf(control),
+        belowLineOne: before.includes("\n"),
+        pastStart: textPastEvery(before, files),
+        pastEnd: textPastEvery(after, files),
+        opens: before === "",
+        closes: after === "",
+        endSlack: endSlackOf(control.spelling),
+      };
+    });
+    expect(
+      entries.map(({ shape, belowLineOne, pastStart, pastEnd, opens, closes, endSlack }) => ({ shape, belowLineOne, pastStart, pastEnd, opens, closes, endSlack })),
+      "S-TEXT-WINDOW: line-two's spelling sits below line 1, deep-head's after and deep-tail's before more lines, characters and words than the longest real src file holds, opening's opens the text before as many and closing's closes it after as many, with no character slack",
+    ).toStrictEqual([
+      { shape: "line-two", belowLineOne: true, pastStart: false, pastEnd: false, opens: false, closes: false, endSlack: 3 },
+      { shape: "deep-head", belowLineOne: true, pastStart: true, pastEnd: false, opens: false, closes: false, endSlack: 3 },
+      { shape: "deep-tail", belowLineOne: false, pastStart: false, pastEnd: true, opens: false, closes: false, endSlack: 3 },
+      { shape: "opening", belowLineOne: false, pastStart: false, pastEnd: true, opens: true, closes: false, endSlack: 3 },
+      { shape: "closing", belowLineOne: true, pastStart: true, pastEnd: false, opens: false, closes: true, endSlack: 0 },
+    ]);
+    return { name: scopeClassName("S1"), controls: entries, ...readScope("S1", controls) };
+  },
+  S2: () => {
+    const controls = textContextControls();
+    expect(controls.map(contextOf), "S-TEXT-CONTEXT: a control whose spelling sits in another context than its shape names").toStrictEqual(
+      controls.map(control => control.shape),
+    );
+    return { name: scopeClassName("S2"), controls: controls.map(entryOf), ...readScope("S2", controls) };
+  },
+  S3: () => {
+    const controls = spellingControls();
+    const perMember = FEDERATION_WORDS.map((_, member) => ({
+      text: controls.filter(control => control.branch === "text" && membersHitting(control.spelling).includes(member)).length,
+      path: controls.filter(control => control.branch === "path" && membersHitting(control.spelling).includes(member)).length,
+    }));
+    expect(perMember, "S-SPELLING: a member without a text-alone and a path-alone control for each of its row M spellings").toStrictEqual(
+      SCOPE_SPELLINGS.map(spellings => ({ text: spellings.length, path: spellings.length })),
+    );
+    return { name: scopeClassName("S3"), perMember, ...readScope("S3", controls) };
+  },
+  S4: () => {
+    const files = enumeratedFilesOf(REPO);
+    const controls = pathWindowControls(levelsPast(extentOf(files)));
+    const named = pathWindowControls("<levels>");
+    const entries = controls.map((control, index) => {
+      const at = control.file.path.indexOf(control.spelling);
+      const before = control.file.path.slice(0, at);
+      const after = control.file.path.slice(at + control.spelling.length);
+      return {
+        ...entryOf(named[index] ?? control),
+        inBasename: !after.includes("/"),
+        inExtension: before.slice(before.lastIndexOf("/") + 1).includes("."),
+        pastStart: pathPastEvery(before, files),
+        pastEnd: pathPastEvery(after, files),
+        opens: before === "src/",
+        closes: after === "",
+        endSlack: endSlackOf(control.spelling),
+      };
+    });
+    expect(
+      entries.map(({ shape, inBasename, inExtension, pastStart, pastEnd, opens, closes, endSlack }) => ({ shape, inBasename, inExtension, pastStart, pastEnd, opens, closes, endSlack })),
+      "S-PATH-WINDOW: the basename and extension controls' spelling sits in the basename, deep-path-head's after and deep-path-tail's before more segments, characters and words than the deepest and longest real src path holds, deep-path-tail's right after the src/ prefix, and closing's closes the path after as many, with no character slack",
+    ).toStrictEqual([
+      { shape: "basename", inBasename: true, inExtension: false, pastStart: false, pastEnd: false, opens: false, closes: false, endSlack: 3 },
+      { shape: "extension", inBasename: true, inExtension: true, pastStart: false, pastEnd: false, opens: false, closes: true, endSlack: 3 },
+      { shape: "deep-path-head", inBasename: true, inExtension: false, pastStart: true, pastEnd: false, opens: false, closes: false, endSlack: 3 },
+      { shape: "deep-path-tail", inBasename: false, inExtension: false, pastStart: false, pastEnd: true, opens: true, closes: false, endSlack: 3 },
+      { shape: "closing", inBasename: true, inExtension: false, pastStart: true, pastEnd: false, opens: false, closes: true, endSlack: 0 },
+    ]);
+    return { name: scopeClassName("S4"), controls: entries, ...readScope("S4", controls) };
+  },
+  S5: () => {
+    const files = enumeratedFilesOf(REPO);
+    const controls = fileGateControls(fillerPast(extentOf(files)));
+    const entries = controls.map(control => ({ ...entryOf(control), large: textPastEvery(control.file.text, files) }));
+    expect(
+      entries.filter(entry => entry.large).map(entry => entry.shape),
+      "S-FILE-GATE: the large controls, one per branch, past the real src extent",
+    ).toStrictEqual(["text:large", "path:large"]);
+    return { name: scopeClassName("S5"), controls: entries, ...readScope("S5", controls) };
+  },
+  S6: () => {
+    const controls = branchControls();
+    expect(
+      controls.map(control => control.branch),
+      "S-BRANCH: one control per branch",
+    ).toStrictEqual(["text", "path"]);
+    return { name: scopeClassName("S6"), controls: controls.map(entryOf), ...readScope("S6", controls) };
+  },
 };
 
 describe("wb-tnz5.2 federated cursor census (RF-CERTIFIED-FEDERATED-REACTIVE-REFINEMENT-R3, absent-today leg)", () => {
   it("the judged set: the frozen shape, the out-of-file roster, the bead export and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:2", "C:2", "M:6", "R:6"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:2", "B:2", "C:2", "M:6", "R:6", "S:6"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect(constantsOf(), "a census constant against the roster").toStrictEqual(ROSTER.constants);
@@ -1457,6 +1847,7 @@ describe("wb-tnz5.2 federated cursor census (RF-CERTIFIED-FEDERATED-REACTIVE-REF
     const pinsOf = (id: string): string[] => [...(ROWS.find(row => row.id === id)?.pins ?? [])];
     expect(pinsOf("M"), "row M: one pin per vocabulary member").toEqual([...FEDERATION_WORDS.map((_, index) => `MS${index + 1}`), ...MINT_WORDS.map((_, index) => `MM${index + 1}`)]);
     expect(pinsOf("R"), "row R: one pin per named residual").toEqual(RESIDUALS.map(residual => residual.pin));
+    expect(pinsOf("S"), "row S: one pin per resolvable narrowing class of the scope").toEqual(SCOPE_CLASSES.map(entry => entry.pin));
     expect(
       RESIDUALS.map(({ pin, name }) => ({ pin, name })),
       "RESIDUALS against the first cut's declared residual list in the tracked bead export",
