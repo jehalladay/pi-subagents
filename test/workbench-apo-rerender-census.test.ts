@@ -82,8 +82,9 @@
  * refused). A class element of a kind outside the roster a scan is given is never skipped: both scans read it, and readForms
  * refuses it with an unlisted-class-element row, so the census reds (REACH CLASS-ELEMENT-KINDS plants every listed kind as
  * an instance and as a static element and narrows the roster to read the refusal). A member standing in for a base member
- * is judged by its kind's STAND_IN reading - a method by its own parameters, a field by its function-like initializer's, a
- * getter by those of the function it returns, a setter by its parameter; a constructor, a static block, an index signature
+ * is judged by its kind's STAND_IN reading - a method by its own parameters, a field and a getter through their types (cut #6
+ * restates both readings: a field was read by its function-like initializer's, a getter by the function it returns; see
+ * below), a setter by its parameter; a constructor, a static block, an index signature
  * and a semicolon stand in for no named member - matched to the base member its symbol names under any name form (a
  * computed key the checker resolves to no name, against every base member), an instance element against the base's
  * instance side and the implemented interfaces, a static one against the extended class's static side; an object
@@ -92,23 +93,49 @@
  * and the live reach map and src's forms and refused uses read byte for byte the same under this cut's scans as under cut
  * #4's.
  *
+ * CUT #6 (the respin of refusal #5, gate run g10-gate-s128; the CUT #4 FORM, ruling R-B33 and ruling R-B41 kept). Cut #5's
+ * shape stands: 0 pins removed or changed; one row (STAND-IN-RECEIVERS) and one NON_RENDER entry (collective-event) are added,
+ * READER WALK restates its title, and cut #5's sentence on the field and getter readings is restated above. U1 (the field
+ * kind's stand-in reading was syntactic: a field was judged only through a bare function-like initializer, so a field
+ * initialized by a parenthesized or a cast arrow, by a function's name or by a call's result, or an ambient annotated field,
+ * stood in unjudged): a stand-in receives what its base member hands it position by position, read through the checker - a
+ * field through its own type, declared or inferred, and a getter through the type it returns, as every call signature of
+ * each union part takes it (never a union's combined signature, whose parameters intersect its parts'), each parameter as
+ * the checker instantiates it; a method by its own declared parameters, a this parameter skipped; a rest parameter, the
+ * stand-in's or the base's, at and past its own position. A field or a getter whose type has no call signature while its
+ * base member hands it the projection (typed any) is refused with an unresolved-stand-in row: fail closed (REACH
+ * STAND-IN-RECEIVERS). The forms judge reads a callback that flows into a type handing it the projection the same way - every
+ * call signature of each union part, by position (cut #5 read its first signature's declared parameters): a callback typed by
+ * a union or an overload set, or whose rest parameter hides the projection past its position, is refused (REACH
+ * CALLBACK-RECEIVERS); a callback chosen by a conditional or a ?? operand is judged by that expression's type, which subtype
+ * reduction narrows to the branch that keeps the projection, so a hiding branch reads quiet: named, R-NARROWED-BRANCH (one
+ * row and one residual family added). Trunk e81d2b0, merged INTO the branch, added src/workbench/collective-event.ts (landing 644,
+ * wb-4ap.15), the MechanicalWorkflows collective-event boundary, which reaches the projection off the render path and keeps
+ * ingest in a typed reader, so cut #5's census read 2 of 71 red on the merged tree (READER WALK and COVERAGE): NON_RENDER
+ * names it with its typed writer, and READER WALK holds src's typed writers to exactly the writers the NON_RENDER entries
+ * name. Measured on src: the live reach map and src's forms and refused uses read byte for byte the same under this cut's
+ * scans as under cut #5's (25 modules each, at e81d2b0).
+ *
  * MEASURED (read-only, by the cutting seats, 2026-10-27: cut #3 at trunk 79dadb2 and before it at db2d796; cut #4 re-measured at
  * trunk b92d7a1, and it merged b92d7a1, bda6c2a and 88086c9, none of which changes a src file after e61eaec and so none after
  * 79dadb2; cut #5 re-measured 2026-10-28 at trunk cf56481, and it merged cf56481 and df37dac, neither of which changes a src file after
- * 88086c9; src there differs from 3223843, cut #2's measured trunk, by the wb-4ap.17 landing (src/index.ts,
+ * 88086c9; cut #6 re-measured 2026-10-28 at trunk e81d2b0, merged, where src differs from df37dac by the wb-4ap.15 landing
+ * (src/workbench/collective-event.ts, added) and the wb-gwr.2 landing (src/workbench/hyperunix-observer.ts, its reach
+ * unchanged); src there differs from 3223843, cut #2's measured trunk, by those, the wb-4ap.17 landing (src/index.ts,
  * src/workbench/forge-operation-observer.ts), the wb-jwc.4 landing (src/workbench/providers/reactivefiber.ts) and the wb-3ht.1
  * landing (src/workbench/hyperunix-observer.ts: a consumed-fields table that references no projection member), and the live
- * reach map over every src module reads byte for byte the same under cut #2's reach scan and this cut's, at both trunks): src holds 116 TypeScript modules and none spells the program (the mention judge below:
- * 0 findings), so APO state has no Pi surface today and the posture binds the surfaces that present native state. 24 src
- * modules reach the projection as the checker resolves their names: the 10 SURFACES modules and the 14 NON_RENDER readers
- * (the extension entry, the control decision, the control tool and the detached control seam, and the observers and
- * adapters that state what the host admits), none of which a SURFACES module runs; no key in src reads as <unresolved-key>.
- * Twelve typed readers (Pick<ObservationProjection,
- * ...>) sit in eight modules, each keeping read members only, and the eight indexed accesses into the class in src are each
- * the argument of Parameters or ReturnType (a statement or a result type: the type scan reads them as keeping no member,
- * the reach scan as type references of relate and refresh). ObservationProjection's public
+ * reach map over every src module reads byte for byte the same under cut #2's reach scan and cut #5's, at both of cut #5's trunks): src holds 117 TypeScript modules and none spells the program (the mention judge below:
+ * 0 findings), so APO state has no Pi surface today and the posture binds the surfaces that present native state. 25 src
+ * modules reach the projection as the checker resolves their names: the 10 SURFACES modules and the 15 NON_RENDER readers
+ * (the extension entry, the control decision, the control tool and the detached control seam, the collective-event
+ * boundary, and the observers and adapters that state what the host admits), none of which a SURFACES module runs; no key
+ * in src reads as <unresolved-key>. Thirteen typed readers (Pick<ObservationProjection,
+ * ...>) sit in nine modules: twelve keep read members only, and one, the collective-event boundary's sink, keeps ingest (the
+ * one typed writer, named in its NON_RENDER entry); the ten indexed accesses into the class in src are each the argument of
+ * Parameters or ReturnType (a statement or a result type: the type scan reads them as keeping no member, the reach scan as
+ * type references of relate, refresh and ingest). ObservationProjection's public
  * instance members are its 18 methods: twelve copy-out reads and six admissions (disconnect, ingest, markStale, reconnect,
- * refresh, relate). The forms judge reads the same 24 modules, each in the forms LIVE_FORMS pins (annotation, argument,
+ * refresh, relate). The forms judge reads the same 25 modules, each in the forms LIVE_FORMS pins (annotation, argument,
  * callee, indexed, initializer, lib-generic, member, property, statement, type-part), and refuses four uses, all four in
  * detached-control (above); the class's own module reads nothing outside its instance members, whose declaration holds no
  * static element, decorator or computed name. No src file is edited by this cut.
@@ -162,14 +189,17 @@
  * class module of its own and reads a module function, a static member, a static block and an instance member's decorator
  * and computed name while the instance members' own code reads nothing (cut #5); CLASS-ELEMENT-KINDS plants every listed
  * class-element kind, instance and static, and a narrowed roster's refusal; STAND-IN-KINDS plants each kind's stand-in
- * reading, refused and quiet. What
- * neither scan reads is named: R-ERASED-ACCESS and R-DEEP-CARRIER.
+ * reading, refused and quiet; STAND-IN-RECEIVERS plants how a field, a getter and a method receive what the base hands them,
+ * position by position through the checker, refused, failing closed and quiet, and CALLBACK-RECEIVERS how a callback flowing
+ * into a type that hands it the projection receives it, refused and quiet (cut #6). What
+ * neither scan reads is named: R-ERASED-ACCESS, R-DEEP-CARRIER and R-NARROWED-BRANCH.
  * NAMES, "issues no event admission and no invocation": planted classes and interfaces measure the member readers on the
  * name forms CLASS-NAME-FORMS plants, the member kinds CLASS-MEMBER-KINDS plants, the declaration shapes CLASS-MEMBER-SHAPES
  * plants, the interface forms INTERFACE-FORMS plants and the heritage and signature shapes INTERFACE-HERITAGE plants, and
  * they fail closed on call, construct and index signatures.
  * LIVE ROWS. READER WALK: every src module (git's list, held equal to a filesystem walk) is scanned by the type scan, no
- * typed reader keeps a writer, at a site floor and through a liveness anchor (graph-view's reader). COVERAGE (armed): the
+ * typed reader keeps an admission member but the writers the NON_RENDER entries name (the collective-event boundary's sink:
+ * ingest), at a site floor and through a liveness anchor (graph-view's reader). COVERAGE (armed): the
  * src modules that reach the projection, as the checker resolves their names (they name the class, reference a public
  * member of it in a value or a type position, or declare or reference a declaration that carries it: typed as it, as a
  * reader of it, or as a container, a getter, a method or a function that yields it, to the depth bound), are exactly the SURFACES modules
@@ -227,7 +257,10 @@
  * signature, a call's result), each ending at a carrier the reach scan's test reads, and judges no flow of a value whose
  * projection sits past that (the instance nine wrappers deep: R-DEEP-CARRIER's fourth case); R-RUNTIME-MEMBER a member patched onto
  * the class's prototype at run time is not read by the member readers, which read the declared class and interface
- * (NAMES).
+ * (NAMES); R-NARROWED-BRANCH a callback or a holder that does not itself expose the projection, chosen by a conditional or a
+ * ?? operand, is judged by that expression's type, which subtype reduction narrows to the branch that keeps the projection, so
+ * a conditional or a ?? choosing a callback that hides it reads quiet to the forms judge, while the hiding callback's own
+ * flow is refused (REACH).
  * NOT CLAIMED. In src: an instance member's own code - its body, initializer, parameters and types - is not read statically
  * (REPROJECTION's runtime reading and MEMBERS judge it), nor is a parameter decorator (the compiler refuses one under the
  * repo's standard decorators, TS1206). As edits of this file, its helper and the roster together: a plant row of IDENTITY, QUIET,
@@ -246,7 +279,7 @@
  * legacy (non-inspector) dialog frame, whose spinner and elapsed time read a clock by design and which reads no
  * observation beyond the window total.
  * FROZEN SHAPE (standing rule 16): the rule-16 row pins `${table}/${id}:${pins.length}` for every judged row, the NON_RENDER
- * entries and their refused uses, the residual families, the member sets, CARRIER_DEPTH, the marker, RESOLVABLE_FORMS,
+ * entries, their refused uses and their typed writers, the residual families, the member sets, CARRIER_DEPTH, the marker, RESOLVABLE_FORMS,
  * REQUIREMENT_FIELDS, LIVE_FORMS and CLASS_ELEMENT_KINDS with each kind's SyntaxKind and STAND_IN reading as literals; test/fixtures/apo-rerender-roster.json holds every judged
  * row (table, id, label, SHA-256 of each case, test), the NON_RENDER entries, every registered test title and the residual
  * families, judged by this file's last row in order and both ways.
@@ -318,9 +351,9 @@ const CLASS_MODULE = "src/workbench/observation.ts";
 const CLASS_NAME = "ObservationProjection";
 /** The budget the walking, checker and dialog rows register: each reads every src module, builds a checker program or opens a real dialog per case. */
 const WALK_BUDGET_MS = 120_000;
-/** The src floor: 116 modules at the base; a walk narrowed below 100 reds. */
+/** The src floor: 117 modules at the base (116 before the wb-4ap.15 landing); a walk narrowed below 100 reds. */
 const SRC_FLOOR = 100;
-/** The typed-reader floor: 12 sites at the base (11 before the wb-86q landing); a scan that loses three reds. */
+/** The typed-reader floor: 13 sites at the base (12 before the wb-4ap.15 landing, 11 before wb-86q); a scan that loses four reds. */
 const READER_FLOOR = 10;
 /** The liveness anchor of the reader walk: graph-view's reader, as the scan writes it. */
 const READER_ANCHOR = "src/workbench/graph-view.ts: relationRevision,relationsPage,window";
@@ -339,7 +372,7 @@ const DASH = "\\u2014";
 const STATEMENT_PARTS: readonly string[] = [READERS.quote, ": ", SURFACES.quote, " ", ABSENCE.quote, " ", EFFECT.quote, ` ${DASH} `, ADMISSION.quote, " ", INVOCATION.quote, ";"];
 const STATEMENT = STATEMENT_PARTS.join("");
 const READER_WALK =
-  "live: no typed reader (a Pick, an Omit or an indexed access over the class) in any src module keeps an admission member; the walk is every src module and reaches graph-view's reader";
+  "live: no typed reader (a Pick, an Omit or an indexed access over the class) in any src module keeps an admission member but the writers the named non-render readers' entries name (the collective-event boundary's sink keeps ingest); the walk is every src module and reaches graph-view's reader";
 const COVERAGE =
   "live (armed): every src module that reaches the projection - it names the class, references a member or holds a declaration that carries it, as the checker resolves names, or makes a use the forms judge refuses - is a SURFACES module or a named non-render reader";
 const NON_RENDER_ROW =
@@ -547,7 +580,9 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
   it(READER_WALK, { timeout: WALK_BUDGET_MS }, () => {
     const scans = srcModules().map(rel => ({ rel, ...scanReaders(rel, read(rel)) }));
     const sites = scans.flatMap(scan => scan.readers.map(reader => `${scan.rel}: ${reader}`));
-    expect(scans.flatMap(scan => scan.writers.map(writer => `${scan.rel}: ${writer}`)), "typed readers keeping an admission member").toEqual([]);
+    expect(scans.flatMap(scan => scan.writers.map(writer => `${scan.rel}: ${writer}`)), "typed readers keeping an admission member: exactly the named non-render readers' writers").toEqual(
+      Object.entries(NON_RENDER).flatMap(([module, entry]) => (entry.writers ?? []).map(writer => `${module}: ${writer}`)),
+    );
     expect(sites.length >= READER_FLOOR, `${sites.length} typed reader sites, floor ${READER_FLOOR}`).toBe(true);
     expect(sites, "the walk reached graph-view's reader").toContain(READER_ANCHOR);
     // Non-vacuity: the same scan reads a writer in a planted module, after the real ones.
@@ -748,6 +783,9 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "REACH/UNLISTED-FORMS:10",
       "REACH/CLASS-ELEMENT-KINDS:4",
       "REACH/STAND-IN-KINDS:8",
+      "REACH/STAND-IN-RECEIVERS:23",
+      "REACH/CALLBACK-RECEIVERS:6",
+      "REACH/R-NARROWED-BRANCH:2",
       "NAMES/CLASS-NAME-FORMS:6",
       "NAMES/CLASS-MEMBER-KINDS:9",
       "NAMES/CLASS-MEMBER-SHAPES:10",
@@ -760,6 +798,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "src/workbench/beads-observer.ts:0+1",
       "src/workbench/claude-control-observer.ts:2+0",
       "src/workbench/claude-topology.ts:0+1",
+      "src/workbench/collective-event.ts:1+2",
       "src/workbench/control-tool.ts:2+0",
       "src/workbench/control.ts:2+0",
       "src/workbench/detached-control.ts:0+0",
@@ -772,6 +811,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "src/workbench/reactivefiber-observer.ts:0+1",
     ]);
     expect(Object.entries(NON_RENDER).flatMap(([module, entry]) => (entry.refused ? [`${module}:${entry.refused.length}`] : []))).toEqual(["src/workbench/detached-control.ts:4"]);
+    expect(Object.entries(NON_RENDER).flatMap(([module, entry]) => (entry.writers ? [`${module}:${entry.writers.join(",")}`] : []))).toEqual(["src/workbench/collective-event.ts:ingest"]);
     expect(Object.entries(RESIDUAL_FAMILIES).map(([family, members]) => `${family}:${members.join(",")}`)).toEqual([
       "R-DEFERRED-EFFECT:INVOCATION R-DEFERRED-EFFECT",
       "R-SIDE-CHANNEL:EFFECT R-SIDE-CHANNEL",
@@ -783,6 +823,7 @@ describe("rerender-authority census (wb-021.5, MW-ADAPTIVE-POLICY-ORGANIZATIONS-
       "R-ERASED-ACCESS:REACH R-ERASED-ACCESS",
       "R-DEEP-CARRIER:REACH R-DEEP-CARRIER",
       "R-RUNTIME-MEMBER:NAMES R-RUNTIME-MEMBER",
+      "R-NARROWED-BRANCH:REACH R-NARROWED-BRANCH",
     ]);
     expect([
       READ_MEMBERS.join(","),

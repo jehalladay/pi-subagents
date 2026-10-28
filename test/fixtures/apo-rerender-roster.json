@@ -1,5 +1,5 @@
 {
-  "comment": "wb-021.5 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R7; the hk9l/5jha/1xvp.4/o4h0.3 roster pattern): the OUT-OF-FILE anchor of test/workbench-apo-rerender-census.test.ts (cut #5). rows: every judged row of test/helpers/apo-rerender-census.ts in census order (SURFACES, ADMISSION, INVOCATION, EFFECT, IDENTITY, QUIET, READERS, ABSENCE, REACH, NAMES) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and its expected reading) and the registered test. nonRender: the named non-render readers, each with its measured member references (value, type), its reason and, where the forms judge refuses a use in it, those refused uses site by site. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its non-render readers, its registered tests (vitest task tree, run modes and timeouts) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. The outside anchors are src (the modules that reach the projection, the non-render readers' member references, refused uses and runtime closure, the render modules' references and forms, the forms src's nodes stand in, the class's own declaration's element kinds, the projection's public members, the registry's effect classes and the dialog's actions), the pinned typescript's declaration file (the ClassElement kinds and their SyntaxKinds) and the bead's own export row (.beads/issues.jsonl, wb-021.5: the title and the owner filing, each pinned byte for byte, and the judged statement the table quotes and their pinned junctions compose), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class plant, a dialog-action plant or a class-element kind removed from the census and this file together still reds.",
+  "comment": "wb-021.5 (MW-ADAPTIVE-POLICY-ORGANIZATIONS-R7; the hk9l/5jha/1xvp.4/o4h0.3 roster pattern): the OUT-OF-FILE anchor of test/workbench-apo-rerender-census.test.ts (cut #6). rows: every judged row of test/helpers/apo-rerender-census.ts in census order (SURFACES, ADMISSION, INVOCATION, EFFECT, IDENTITY, QUIET, READERS, ABSENCE, REACH, NAMES) - table, id, label, the SHA-256 of each case as written (JSON of the case: its input and its expected reading) and the registered test. nonRender: the named non-render readers, each with its measured member references (value, type), its reason and, where the forms judge refuses a use in it, those refused uses site by site, and where a typed reader in it keeps an admission member, those writers. tests: every test the census file registers, in order. residuals: the named residual families and their pinned quiet rows. Written from the rows as measured at the cut; the census judges its tables, its non-render readers, its registered tests (vitest task tree, run modes and timeouts) and its residual families against this file at test time, in order and both ways. It is a literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. The outside anchors are src (the modules that reach the projection, the non-render readers' member references, refused uses, typed writers and runtime closure, the render modules' references and forms, the forms src's nodes stand in, the class's own declaration's element kinds, the projection's public members, the registry's effect classes and the dialog's actions), the pinned typescript's declaration file (the ClassElement kinds and their SyntaxKinds) and the bead's own export row (.beads/issues.jsonl, wb-021.5: the title and the owner filing, each pinned byte for byte, and the judged statement the table quotes and their pinned junctions compose), so a SURFACES row, a NON_RENDER entry, an admission plant, an effect-class plant, a dialog-action plant or a class-element kind removed from the census and this file together still reds.",
   "rows": [
     {
       "table": "SURFACES",
@@ -688,6 +688,61 @@
       "test": "REACH STAND-IN-KINDS"
     },
     {
+      "table": "REACH",
+      "id": "STAND-IN-RECEIVERS",
+      "label": "a stand-in receives what its base member hands it position by position, read through the checker (cut #6): a field through its own type, declared or inferred, and a getter through the type it returns - every call signature of each union part, each parameter as instantiated - and a method by its own declared parameters, a this parameter skipped; a rest parameter, the stand-in's or the base's, is read as its element at and past its own position: a field initialized by a bare, a parenthesized or a cast arrow, by a function's name or by a call's result, an ambient annotated field, a static field override by name, a field typed by an overload set or a union and a getter returning a union one of whose signatures hides the projection, a field's and a method's rest parameter that hides it past its position, a method's and a field's parameter that hides it where the base's rest parameter hands it, and a method with a this parameter that hides it are refused; a field and a getter typed any (no call signature) while the base hands the projection fail closed (unresolved-stand-in); a field that keeps the projection (a library generic's instantiation included), a method with a this parameter that keeps it, rests of holders that keep it (a method's, a field's and a base's), a method and a field that never receive it, and an any-typed field the base hands no projection read quiet",
+      "pins": [
+        "ef8338075621b4957da460e726e3cf51f64f07c77e27e61bbd02a50033dc4f53",
+        "d3ef0a266bb33ebd944d222224c651b43fe8c5b52fb4be6c2a4b3550b4ee76b3",
+        "e0c0c80f856fd6496d917b66ef0fa65911df20ea4b790d37b1177ed80ae12b34",
+        "0e519c6b44517591e2048cdf2b79ff1aaad374b1b93ab976f610a54ac4ca8a9b",
+        "361f2cef4743e67b92617c9c615ca7ce66b156789e83cab5180773537af38149",
+        "8c5d1e38870983d609127ad4dbc8c2daa39bae882b2ff732b1e19ed3c573c3d8",
+        "dd341594b328a0f67b7b92c8278ddda6972ec0371e3b66d3349a7ad5c6fe4527",
+        "73045306ee485c1049282eae1f4761597e76df7cc1b0d12e2990f6f78d04ea83",
+        "d526b918739fae1a7ed081fa323d859fd9d44b6661153fcab2409abbccb65e47",
+        "c1ec2d325f7bba9d8d8a174e0a277862cb3f09eaccc665d9cffe881a91f9dc52",
+        "0c68230c7d25a302b42b27f34ba85bb8d02657de998c7da921fcf3136da86b48",
+        "cf596af66df831c5f33671d78f853fa62bc4f93cd5062d5e9f78af98b198a2e2",
+        "845d54180726fdbadd925386d900ecd3ce7a9e93b3d18aef84a624e6bdcf020e",
+        "4f95126dfa97100ab1d37a5ddf7c96db841eb3137989f0d047e9707f9c82727c",
+        "e9d9227b2d959da8b29ebfcb95f01a2c11a4f1d5340453f3dcb9f9814ca323f9",
+        "14c61e4753f1aeb2cdf0d2c9f5eec3e4595357ddf668fac9ad4e6625bab11922",
+        "fcbc412bbdb6ef8ae140b4fc25c90a300faaabd80f2e17727e0ab5351cbe8d2e",
+        "5fdd7ecc5ca6870325e9bbebb9404951d0b7789ec6315e1f29dff6c8b09813ce",
+        "8d90c25eee270ee7a1996ba99ae50fe3a6597c0c1afefc7157c7836f196df48a",
+        "4218d8bf6601879a680d5a40eef1ed6e2f374916872f203b435a6a093ad58eca",
+        "7e7be5b2c6286d84bdeb5319241d3d8a4f5d008f548b2dbdc54779f98d92203b",
+        "8bbcaf5243e2117dcba35bd071471271fabe6176fe7bdf8f343acf84457e7786",
+        "cd418244c9ee018f0117dd55ed2470bb1c5e277e960d29be3f261e1d018a18a1"
+      ],
+      "test": "REACH STAND-IN-RECEIVERS"
+    },
+    {
+      "table": "REACH",
+      "id": "CALLBACK-RECEIVERS",
+      "label": "a callback flowing into a type that hands it the projection receives it as a stand-in does (cut #6): every call signature of each union part, by position, a this parameter receiving nothing - a callback typed by a union or an overload set one of whose signatures hides the projection, and one whose rest parameter hides it past its position (a map's key), are refused, as a plain hiding callback is; a callback typed by a union whose parts keep it, and one with a this parameter that keeps it, read quiet",
+      "pins": [
+        "a4c11df24ae2de37a1d0668e3cbac08e3db3c18d835cd0699fd69d3b58118741",
+        "6c029e25ce2aa01935fed323c0bb20c39d280a673b4e0a00e8a6a9ad231a0e44",
+        "9a726a14448bd112888c1eba9ffe71f007b8c3c85ea910b05d0f796125cc7f7b",
+        "c594f96d299d2928d3c87479d371525c1e21f08f5b6a3014a21f1b5756856364",
+        "a8882c8759f59d4bfc01dee1d854fb955ac80f85539c44432b6df0dda30ab88c",
+        "83eedccf2355a4c2c0124f89f5ed0e736c22a4bdb694d00409f384169fb35733"
+      ],
+      "test": "REACH CALLBACK-RECEIVERS"
+    },
+    {
+      "table": "REACH",
+      "id": "R-NARROWED-BRANCH",
+      "label": "residual: a callback or a holder that does not itself expose the projection, chosen by a conditional or a ?? operand, is judged by that expression's type, which subtype reduction narrows to the branch that keeps the projection - a conditional or a ?? choosing a callback that hides it reads quiet to the forms judge (the hiding callback's own flow is refused: CALLBACK-RECEIVERS)",
+      "pins": [
+        "470582956f35e3d88c978c869b9a92c9e00f640a6e15a36328fff7201ba8942e",
+        "24b21c0158572fd119c143e482b6913ec3491f88d08badf483b18538f3f1cc4d"
+      ],
+      "test": "REACH R-NARROWED-BRANCH"
+    },
+    {
       "table": "NAMES",
       "id": "CLASS-NAME-FORMS",
       "label": "a public member of the class is read under any name form - a string or numeric literal, a computed literal, template or constant, a symbol",
@@ -809,6 +864,19 @@
         "relate"
       ],
       "reason": "the Claude topology adapter: it references the class only in the statement type relate accepts (Parameters<ObservationProjection['relate']>[0]), never in a value position; the host admits what it states"
+    },
+    "src/workbench/collective-event.ts": {
+      "value": [
+        "ingest"
+      ],
+      "type": [
+        "ingest",
+        "relate"
+      ],
+      "reason": "the MechanicalWorkflows collective-event boundary (wb-4ap.15): ingestCollectiveEvent admits an accepted collective.event.v1 envelope through its sink's ingest - a typed writer, Pick<ObservationProjection, \"ingest\">, the one READER WALK names - and returns the hypothesis statements its caller applies with relate, whose type and ingest's result type it spells; no src module imports it",
+      "writers": [
+        "ingest"
+      ]
     },
     "src/workbench/control-tool.ts": {
       "value": [
@@ -947,13 +1015,16 @@
     "REACH UNLISTED-FORMS",
     "REACH CLASS-ELEMENT-KINDS",
     "REACH STAND-IN-KINDS",
+    "REACH STAND-IN-RECEIVERS",
+    "REACH CALLBACK-RECEIVERS",
+    "REACH R-NARROWED-BRANCH",
     "NAMES CLASS-NAME-FORMS",
     "NAMES CLASS-MEMBER-KINDS",
     "NAMES CLASS-MEMBER-SHAPES",
     "NAMES INTERFACE-FORMS",
     "NAMES INTERFACE-HERITAGE",
     "NAMES R-RUNTIME-MEMBER",
-    "live: no typed reader (a Pick, an Omit or an indexed access over the class) in any src module keeps an admission member; the walk is every src module and reaches graph-view's reader",
+    "live: no typed reader (a Pick, an Omit or an indexed access over the class) in any src module keeps an admission member but the writers the named non-render readers' entries name (the collective-event boundary's sink keeps ingest); the walk is every src module and reaches graph-view's reader",
     "live (armed): every src module that reaches the projection - it names the class, references a member or holds a declaration that carries it, as the checker resolves names, or makes a use the forms judge refuses - is a SURFACES module or a named non-render reader",
     "live (armed): each named non-render reader references exactly the members its entry names and makes exactly the refused uses its entry names, site by site, and none is in the runtime import closure of the SURFACES modules",
     "live: the SURFACES modules, the class's own module outside its instance members included, reference read members of the projection only, in the forms the reach scan reads (every key through its type, an unresolved key failing closed), and make no use the forms judge refuses",
@@ -997,6 +1068,9 @@
     ],
     "R-RUNTIME-MEMBER": [
       "NAMES R-RUNTIME-MEMBER"
+    ],
+    "R-NARROWED-BRANCH": [
+      "REACH R-NARROWED-BRANCH"
     ]
   }
 }
