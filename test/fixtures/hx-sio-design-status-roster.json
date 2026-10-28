@@ -809,7 +809,29 @@
    ],
    "unseen": "[\\p{Default_Ignorable_Code_Point}\\p{Cc}]",
    "unread": "[\\u{115f}\\u{1160}\\u{3164}\\u{ffa0}\\u{2029}\\u{fffc}]|[^\\P{Cc}\\t\\n\\r]",
-   "bidi": "\\p{Bidi_Control}"
+   "bidi": "\\p{Bidi_Control}",
+   "inlineSpace": [
+    11,
+    160,
+    5760,
+    8192,
+    8193,
+    8194,
+    8195,
+    8196,
+    8197,
+    8198,
+    8199,
+    8200,
+    8201,
+    8202,
+    8232,
+    8233,
+    8239,
+    8287,
+    12288,
+    65279
+   ]
   }
  },
  "rows": [
@@ -4072,7 +4094,79 @@
        "html",
        "html",
        "html",
-       "html"
+       "html",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered",
+       "rendered"
       ],
       "outcome": [
        [
@@ -5421,6 +5515,222 @@
        [
         "x.html:1 HXSI: unqualified-registered",
         "x.html:1 HXSI: html-unqualified-registered"
+       ],
+       [
+        "6 xx/<U+0009>x'<U+00A0>/>inlinecellao | plain #####################"
+       ],
+       [
+        "2 '<U+00A0>>inlinecellap | plain ###############"
+       ],
+       [
+        "4 >x<U+0009>xx'>inlinecellaq | plain ###################"
+       ],
+       [
+        "3 x\"<U+00A0><U+00A0>x='=\"='/>inlinecellar | plain #########################"
+       ],
+       [
+        "3 x\"=\" /'<U+00A0>/>inlinecellas | plain ######################"
+       ],
+       [
+        "2 x=x '<U+00A0><U+00A0>x=\"x'=  <U+0009>\"<U+00A0>>inlinecellat | plain ###############################"
+       ],
+       [
+        "4 inlinecellau | plain ############"
+       ],
+       [
+        "3 >\">inlinecellav | plain ###############"
+       ],
+       [
+        "2 \"/>inlinecellaw | plain ###############"
+       ],
+       [
+        "3 inlinecellax | plain ############"
+       ],
+       [
+        "2 inlinecellay | plain ############"
+       ],
+       [
+        "2 '<U+0009>'<U+00A0>x\"<U+00A0>>inlinecellaz | plain ####################"
+       ],
+       [
+        "3 inlinecellba | plain ############"
+       ],
+       [
+        "2 inlinecellbb | plain ############"
+       ],
+       [
+        "2 inlinecellbc | plain ############"
+       ],
+       [
+        "3 inlinecellbd | plain ############"
+       ],
+       [
+        "1 inlinecellbe | plain ############"
+       ],
+       [
+        "2 inlinecellbf | plain ############"
+       ],
+       [
+        "2 x<U+00A0>'<U+00A0><U+00A0>x=' <U+00A0> \"x<U+0009>\"'<U+00A0>/>inlinecellbg | plain ###############################"
+       ],
+       [
+        "2 '<U+00A0>/>inlinecellbh | plain ################"
+       ],
+       [
+        "2 ' x=\"=\" >inlinecellbi | plain #####################"
+       ],
+       [
+        "1 inlinecellbj | plain ############"
+       ],
+       [
+        "4 inlinecellbk | plain ############"
+       ],
+       [
+        "1 inlinecellbl | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 '>spaceclass | plain ############"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 Note \">runon | plain Note ##runon | html"
+       ],
+       [
+        "1 z\">namedq | plain #########"
+       ],
+       [
+        "1 z'>namesq | plain #########"
+       ],
+       [
+        "1 z\">nameeq | plain #########"
+       ],
+       [
+        "1 z\">namelt | plain #########"
+       ],
+       [
+        "1 z\">namenonascii | plain ###############"
+       ],
+       [
+        "2 crpageaa | plain ########"
+       ],
+       [
+        "2 crpageab | plain ########"
+       ],
+       [
+        "2 crpageac | plain ########"
        ]
       ],
       "everyTag": {
@@ -5459,9 +5769,48 @@
         "inline noframes start tag",
         "inline noscript start tag"
        ],
-       "texts": 138,
-       "readings": 6952,
-       "sha256": "957871de2ff248b4cc594310a72fac087d61c5f92086d6d6f26a5576fef7608d"
+       "texts": 185,
+       "readings": 9977,
+       "sha256": "3a70578dff9d9f020fd45fbd220a1f2420aafa394da005e5cc24b3fcb78f4b39"
+      },
+      "runOn": {
+       "kinds": [
+        "p",
+        "textarea",
+        "title",
+        "script",
+        "style",
+        "xmp",
+        "iframe",
+        "noembed",
+        "noframes",
+        "noscript",
+        "plaintext"
+       ],
+       "members": [
+        11,
+        160,
+        5760,
+        8192,
+        8193,
+        8194,
+        8195,
+        8196,
+        8197,
+        8198,
+        8199,
+        8200,
+        8201,
+        8202,
+        8232,
+        8233,
+        8239,
+        8287,
+        12288,
+        65279
+       ],
+       "readings": 220,
+       "sha256": "f1dabb7232831c9b89230105a88d0defa7b4cbff394fddda4f9a2b961bb9d60f"
       }
      }
     },
@@ -5515,7 +5864,7 @@
   },
   {
    "id": "R",
-   "label": "the named residuals R1-R11 stay pinned quiet",
+   "label": "the named residuals R1-R12 stay pinned quiet",
    "pins": [
     {
      "id": "R1",
@@ -5695,6 +6044,18 @@
        [],
        [],
        []
+      ]
+     }
+    },
+    {
+     "id": "R12",
+     "witness": {
+      "kind": "md",
+      "outcome": [
+       [],
+       [
+        "x.md:1 HXSI: rendered-unqualified-registered"
+       ]
       ]
      }
     }
