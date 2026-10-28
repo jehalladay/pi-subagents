@@ -56,7 +56,11 @@ it("rejects wildcard role capabilities",()=>{
 // The wb-3jun cut (the R694 follow-up of landing 578: F1 leads, F2 to F5 ride) keeps all of that: the rendered leg
 // decodes each run of letters, digits and underscores closed by ";" that marked passes to the page as written as the
 // tokenizer decodes it (F1), and a second enumeration case names F2 and F3's families as residuals and pins F4 and F5's
-// members of four named cures widened to their stated scopes, anchored in the roster's followUpResidualRows.
+// members as quiet rows of four named cures widened to flag them, anchored in the roster's followUpResidualRows. Its
+// cut #2 (refusal #1 U1 and U2: eight gate-authored members escaped those cures, which the cut's title, note and
+// comments over-claimed) states each cure's own rule and claims only the rows it pins: it
+// widens the hidden-content and raw-alt cures to flag those eight members and pins each as a quiet row, adds refusal
+// #1's F3 to F5 members the same way, and reads a markdown image as the alt text marked writes for it (F1 and F2).
 // ---------------------------------------------------------------------------------------------
 installScratchLeakGuard();
 
@@ -313,9 +317,9 @@ const servedLeafSentences = (base: string, dir: string): string[] =>
 // ":", say) is read before every reading of the next block of its container that renders a reading (a list item by item,
 // a table, an HTML block, a code block, a block quote, a paragraph or a heading), and stays in place across the blocks
 // that render none (such as a blank line, a comment, a link definition or a thematic break). A unit renders its text, code
-// spans and backslash escapes as written, and emphasis, strong, strikethrough, link text and image alt text flattened (a
-// link's destination and title are never read, except where the destination is the link's text, as in an autolink); a
-// task checkbox renders nothing; a soft wrap or a hard break renders as white space; raw HTML, an inline HTML token or an
+// spans and backslash escapes as written, and emphasis, strong, strikethrough and link text flattened (a link's
+// destination and title are never read, except where the destination is the link's text, as in an autolink), and an
+// image as the alt text marked writes for it (see REFERENCES); a task checkbox renders nothing; a soft wrap or a hard break renders as white space; raw HTML, an inline HTML token or an
 // HTML block's source, renders by these rules (renderHtml; refusal #2 U1, refusal #3 U1(b)): a comment (<!-->, <!---> or
 // to the first --> or --!>, an unclosed one to its end), a markup declaration, CDATA section or processing instruction (a
 // bogus comment, <! or <? to the first >) and an end tag opener followed by > or by a character other than a letter (to
@@ -331,8 +335,12 @@ const servedLeafSentences = (base: string, dir: string): string[] =>
 // \w+;, so the run reaches the page as written, and it decodes as the tokenizer decodes it, by the longest legacy name it
 // opens with (LEGACY_REFERENCES), the rest of the run as written (wb-3jun F1, the gate's N01: vi&eacutew_list; reads vi,
 // an e acute and w_list;, which folds to the leaf view_list), while a run that opens with no legacy name stays as
-// written, and in a markdown image's alt text, an attribute value, such a legacy name decodes only when no letter or
-// digit follows it (the tokenizer's attribute clause); in raw HTML a
+// written. A markdown image renders the alt text marked writes for it (wb-3jun cut #2, refusal #1 F1 and F2): its child
+// tokens' text joined as marked's text renderer joins them (each token's text as marked lexed it, for emphasis, strong,
+// strikethrough, a link or an image its source text and for inline HTML its markup as written, and a hard break as
+// nothing), decoded once by these rules as an attribute value, where such a legacy name decodes only when no letter or
+// digit follows it (the tokenizer's attribute clause), so a reference marked joins across an escape, a code span or a
+// hard break decodes; in raw HTML a
 // numeric reference with or
 // without its semicolon and of any length decodes by numericReference, and a letters-and-digits run that is no closed name
 // of 2 to 32 decodes by the longest legacy name it opens with (LEGACY_REFERENCES, the 106 names the tokenizer's table also
@@ -382,22 +390,34 @@ const servedLeafSentences = (base: string, dir: string): string[] =>
 // Quotation_Mark characters and white space), such as an arrow ("leaf... -> is served" with a U+2192 arrow) or a count
 // ("leaf... 2 builds serve it")
 // (cure: read past every mark and digit before the continuation's first letter).
-// wb-3jun's residuals (the R694 follow-up of landing 578; its enumeration case): R-SPLIT-HTML-ROW, an HTML table row
-// whose cells sit in two HTML blocks a blank line separates, which a reader sees as one row while the leg judges each
-// HTML block whole (the gate's N04; cure: read an HTML block that opens with a row or cell tag as one block with the HTML
-// block before it); R-BLANK-GLYPH, U+2800 BRAILLE PATTERN BLANK between the leaf words, which renders as a blank cell
-// but is no white space, Cf or Cc, so the folded key keeps it (the gate's N02; cure: read it as white space);
-// R-CONTROL-VALUE, the value or placeholder attribute of a raw input, which a reader sees inside the control while the
-// leg reads the input as white space (the gate's N03b, and the placeholder beside it; cure: read a raw input as its
-// value, or as its placeholder while the value is empty). wb-3jun F5 also reads four named cures over their whole
-// stated scopes, whose members the gate's N20 to N24, with a reversed guillemet pair and a noscript beside them, are
-// quiet rows of that case: R-ENCLOSED-STOP's
-// (an open punctuation mark, Ps, other than a low-9 quotation mark is open until as many close ones, Pe, follow, and
-// each kind of quotation mark, straight double, straight single, curly or low-9 double, curly or low-9 single, double
-// guillemets and single guillemets, is open while its count is odd, so a quotation reads in either direction);
-// R-HIDDEN-CONTENT's (a dialog without open, which the rendering section displays as none, and a noscript, which a
-// reader whose browser runs scripts never sees, join the elements whose content it drops); R-CONFUSABLE's (above); and R-RAW-ALT-TEXT's (a raw img is read to its first ">" outside a quoted
-// attribute value, so a ">" inside its src value no longer hides its alt text).
+// wb-3jun's residuals (the R694 follow-up of landing 578 and its cut #2 for refusal #1; its enumeration case):
+// R-SPLIT-HTML-ROW, an HTML table row whose cells sit in two HTML blocks a blank line separates, which a reader sees as
+// one row while the leg judges each HTML block whole (the gate's N04; cure: read an HTML block that opens with a row or
+// cell tag as one block with the HTML block before it); R-BLANK-GLYPH, a character between the leaf words that renders
+// blank but is no white space, Cf or Cc, so the folded key keeps it: U+2800 BRAILLE PATTERN BLANK (the gate's N02, and
+// cut #2's two of them and one beside a space, refusal #1's F3) or a Hangul filler, U+115F, U+1160, U+3164 or U+FFA0
+// (cut #2, refusal #1's F5; cure: read each run of those characters and white space as one space); R-CONTROL-VALUE, what
+// a reader sees inside a raw form control while the leg reads the control as white space: an input's value attribute,
+// or its placeholder while the value is empty (the gate's N03b and the placeholder beside it, and cut #2's placeholder
+// right after a quoted value, refusal #1's F4), or the placeholder of a textarea that holds no text (cut #2, refusal
+// #1's F5; cure: read the control as that text, its start tag read as the HTML tokenizer reads it). wb-3jun widens four
+// named cures of cut #4's and cut #5's families to flag the members pinned as quiet rows of that case, and each reads
+// only what follows (cut #2 states each cure's own rule and claims no more than the rows it pins, refusal #1 U2):
+// R-ENCLOSED-STOP's (an
+// open punctuation mark, Ps, other than a low-9 quotation mark, or the left bracket of one of the six Pi and Pf bracket
+// pairs, U+2E02 and U+2E03, U+2E04 and U+2E05, U+2E09 and U+2E0A, U+2E0C and U+2E0D, U+2E1C and U+2E1D, U+2E20 and
+// U+2E21, is open until as many close ones, Pe or the right bracket of such a pair, follow, and each kind of quotation
+// mark, straight double, straight single, curly or low-9 double, curly or low-9 single, double guillemets and single
+// guillemets, is open while its count is odd, so a quotation reads in either direction); R-HIDDEN-CONTENT's (an element
+// the rendering section displays as none, a dialog without open, an element carrying hidden or one whose inline style
+// declares display:none or visibility:hidden is dropped with its content, its start tag read as the HTML tokenizer
+// reads it, so a quoted ">" in an earlier attribute value never ends it, up to the end tag that closes it: for a
+// script, style, title, noembed, noframes or noscript the first end tag of its name, and for any other the end tag of
+// its name that balances the start and end tags of that name inside it, while a comment, a raw-text element's text and
+// a template's content inside it are passed over whole, so an end tag inside them closes nothing; an element that no
+// end tag closes is kept); R-CONFUSABLE's (above); and R-RAW-ALT-TEXT's (a raw img is read as its alt attribute, its
+// start tag read as the HTML tokenizer reads it, so a ">" inside a quoted value, an attribute right after a quoted
+// value and one after a solidus all read).
 const at = (code: number): string => String.fromCodePoint(code);
 /** The names the rendered leg decodes in a reference closed by ";"; any other closed named reference is recorded as unreadable. */
 const NAMED_REFERENCES: ReadonlyMap<string, string> = new Map([
@@ -595,16 +615,26 @@ const tokenChildren = (token: Token): readonly Token[] => {
 const isListToken = (token: Token): token is Tokens.List => token.type === "list";
 const isTableToken = (token: Token): token is Tokens.Table => token.type === "table";
 
-/** What a reader sees of inline tokens (see the RENDERED LEG); a link destination or title is never read, and an image's alt text is read as an attribute value. */
-function inlineText(tokens: readonly Token[], unknown: string[], attribute = false): string {
+/**
+ * The alt text marked writes for a markdown image (wb-3jun cut #2, refusal #1 F1 and F2): its child tokens' text joined as
+ * marked's text renderer joins them, each token's text as marked lexed it (for emphasis, strong, strikethrough, a link or
+ * an image its source text, for inline HTML its markup as written), and a hard break as nothing.
+ */
+const imageAltText = (image: Token): string =>
+  tokenChildren(image)
+    .map(child => (child.type === "br" ? "" : tokenText(child)))
+    .join("");
+/** What a reader sees of inline tokens (see the RENDERED LEG); a link destination or title is never read, and an image renders the alt text marked writes for it (imageAltText), decoded once as an attribute value. */
+function inlineText(tokens: readonly Token[], unknown: string[]): string {
   let out = "";
   for (const token of tokens) {
     if (token.type === "checkbox") continue;
     if (token.type === "html") out += decodeRawHtmlReferences(renderHtml(token.raw), unknown);
     else if (token.type === "br") out += " ";
     else if (token.type === "codespan" || token.type === "escape") out += tokenText(token);
-    else if (tokenChildren(token).length > 0) out += inlineText(tokenChildren(token), unknown, attribute || token.type === "image");
-    else out += decodeReferences(tokenText(token), unknown, attribute || token.type === "image");
+    else if (token.type === "image") out += decodeReferences(imageAltText(token), unknown, true);
+    else if (tokenChildren(token).length > 0) out += inlineText(tokenChildren(token), unknown);
+    else out += decodeReferences(tokenText(token), unknown);
   }
   return out;
 }
@@ -682,12 +712,21 @@ type ResidualCure = (sentences: readonly string[], page: string) => boolean;
  * single guillemets.
  */
 const QUOTATION_KINDS: readonly RegExp[] = [/"/g, /'/g, /[\u{201c}-\u{201f}]/gu, /[\u{2018}-\u{201b}]/gu, /[\u{ab}\u{bb}]/gu, /[\u{2039}\u{203a}]/gu];
+/**
+ * The left and right brackets of the six initial and final punctuation (Pi, Pf) bracket pairs outside QUOTATION_KINDS
+ * (wb-3jun cut #2, refusal #1 F5, the gate's E06): the substitution, dotted substitution, transposition, raised omission
+ * and low paraphrase brackets and the vertical bars with quill.
+ */
+const LEFT_BRACKET = /[\u{2e02}\u{2e04}\u{2e09}\u{2e0c}\u{2e1c}\u{2e20}]/gu;
+const RIGHT_BRACKET = /[\u{2e03}\u{2e05}\u{2e0a}\u{2e0d}\u{2e1d}\u{2e21}]/gu;
 /** Whether a parenthesis, bracket or quotation opened in `text` is still open (an apostrophe inside a word is no quotation mark). */
 function enclosureOpen(text: string): boolean {
   const bare = text.replace(/(?<=\p{L})['\u{2019}](?=\p{L})/gu, "");
   const count = (pattern: RegExp): number => bare.match(pattern)?.length ?? 0;
-  // An open punctuation mark (Ps) other than a low-9 quotation mark against a close one (Pe), and each kind of quotation mark.
-  return count(/(?![\u{201a}\u{201e}])\p{Ps}/gu) > count(/\p{Pe}/gu) || QUOTATION_KINDS.some(kind => count(kind) % 2 === 1);
+  // An open punctuation mark (Ps) other than a low-9 quotation mark, or a left bracket of those pairs, against a close one
+  // (Pe, or a right bracket of those pairs), and each kind of quotation mark.
+  const opens = count(/(?![\u{201a}\u{201e}])\p{Ps}/gu) + count(LEFT_BRACKET);
+  return opens > count(/\p{Pe}/gu) + count(RIGHT_BRACKET) || QUOTATION_KINDS.some(kind => count(kind) % 2 === 1);
 }
 /** R-ENCLOSED-STOP: the sentences re-joined while an enclosure opened before a split is still open. */
 const enclosedCure: ResidualCure = sentences => {
@@ -712,14 +751,145 @@ const headingScopeCure: ResidualCure = sentences => sentences.slice(1).some(sent
 /** R-LEAD-IN-ACROSS-CONTAINER: a reading not ended by ".", "!" or "?" read before the reading after it. */
 const containerLeadInCure: ResidualCure = sentences =>
   sentences.some((sentence, index) => index > 0 && !/[.!?]$/.test(sentences[index - 1] ?? "") && servedLeaf(`${sentences[index - 1]} ${sentence}`));
+/** A start or end tag, a comment or another unit of raw HTML's markup, as nextMarkup reads it (wb-3jun cut #2, refusal #1 U1). */
+interface Markup {
+  readonly kind: "start" | "end" | "other";
+  /** A tag's name, lower-cased; "" for other markup. */
+  readonly name: string;
+  /** A tag's attributes, each lower-cased name to its value as written (the first of a repeated name kept). */
+  readonly attributes: ReadonlyMap<string, string>;
+  readonly start: number;
+  readonly end: number;
+}
+/** HTML's white space inside a tag: tab, line feed, form feed, carriage return and space. */
+const isTagSpace = (character: string): boolean => character === "\t" || character === "\n" || character === "\f" || character === "\r" || character === " ";
 /**
- * The content of an element a reader never sees: a display:none element of the rendering section, one carrying hidden, or
- * (cut #5) one whose inline style declares display:none or visibility:hidden.
+ * The tag that opens at `from` ("<" or "</", then a letter), read as the HTML tokenizer's tag states read it (wb-3jun cut #2,
+ * refusal #1 U1): its name runs to white space, "/" or ">"; each attribute name (whose first character may be "=") runs to
+ * white space, "/", ">" or "=", and an optional value follows "=", double-quoted, single-quoted or bare to white space or
+ * ">"; white space or a solidus separates attributes, and none is needed after a quoted value; the tag ends at the first
+ * ">" outside a quoted value, or at the text's end. Undefined when no tag opens there.
  */
-const HIDDEN_CONTENT =
-  /<dialog\b(?![^>]*\sopen\b)[^>]*>[\s\S]*?<\/dialog\s*>|<(script|style|template|title|head|noembed|noframes|noscript|datalist|rp)\b[^>]*>[\s\S]*?<\/\1\s*>|<([A-Za-z][\w-]*)\b[^>]*\shidden\b[^>]*>[\s\S]*?<\/\2\s*>|<([A-Za-z][\w-]*)\b[^>]*\sstyle\s*=\s*(?:"[^"]*\b(?:display\s*:\s*none|visibility\s*:\s*hidden)\b[^"]*"|'[^']*\b(?:display\s*:\s*none|visibility\s*:\s*hidden)\b[^']*')[^>]*>[\s\S]*?<\/\3\s*>/gi;
-/** R-HIDDEN-CONTENT: the page with that content dropped, then read by the leg. */
-const hiddenContentCure: ResidualCure = (_sentences, page) => blockUnits(marked.lexer(page.replace(HIDDEN_CONTENT, "")), []).some(servedLeaf);
+function readTag(text: string, from: number): Markup | undefined {
+  const opened = /^<(\/?)([A-Za-z][^\t\n\f\r />]*)/.exec(text.slice(from));
+  if (opened === null) return undefined;
+  const attributes = new Map<string, string>();
+  const tag = (end: number): Markup => ({ kind: opened[1] === "/" ? "end" : "start", name: (opened[2] ?? "").toLowerCase(), attributes, start: from, end });
+  let at = from + opened[0].length;
+  while (at < text.length) {
+    const character = text.charAt(at);
+    if (character === ">") return tag(at + 1);
+    if (isTagSpace(character) || character === "/") {
+      at += 1;
+      continue;
+    }
+    let nameEnd = at + 1;
+    while (nameEnd < text.length && !isTagSpace(text.charAt(nameEnd)) && !"/>=".includes(text.charAt(nameEnd))) nameEnd += 1;
+    const name = text.slice(at, nameEnd).toLowerCase();
+    let next = nameEnd;
+    while (next < text.length && isTagSpace(text.charAt(next))) next += 1;
+    let value = "";
+    at = nameEnd;
+    if (text.charAt(next) === "=") {
+      next += 1;
+      while (next < text.length && isTagSpace(text.charAt(next))) next += 1;
+      const quote = text.charAt(next);
+      if (quote === '"' || quote === "'") {
+        const close = text.indexOf(quote, next + 1);
+        value = text.slice(next + 1, close < 0 ? text.length : close);
+        at = close < 0 ? text.length : close + 1;
+      } else {
+        at = next;
+        while (at < text.length && !isTagSpace(text.charAt(at)) && text.charAt(at) !== ">") at += 1;
+        value = text.slice(next, at);
+      }
+    }
+    if (!attributes.has(name)) attributes.set(name, value);
+  }
+  return tag(text.length);
+}
+/** Raw HTML's markup other than a tag, tried at a "<" before a tag (as HTML_MARKUP orders them): a comment, a bogus comment, and an end tag opener followed by ">" or by a character other than a letter. */
+const OTHER_MARKUP = /^(?:<!--(?:-?>|[\s\S]*?(?:--!?>|$))|<[!?][^>]*(?:>|$)|<\/(?:>|[^A-Za-z>][^>]*(?:>|$)))/;
+/** The first unit of markup at or after `from`: other markup (OTHER_MARKUP) or a tag (readTag); undefined when none follows. */
+function nextMarkup(text: string, from: number): Markup | undefined {
+  for (let at = text.indexOf("<", from); at >= 0; at = text.indexOf("<", at + 1)) {
+    const other = OTHER_MARKUP.exec(text.slice(at));
+    if (other !== null) return { kind: "other", name: "", attributes: new Map(), start: at, end: at + other[0].length };
+    const tag = readTag(text, at);
+    if (tag !== undefined) return tag;
+  }
+  return undefined;
+}
+/** The elements the rendering section's style sheet displays as none (cut #4), whose content a reader never sees. */
+const DISPLAY_NONE: ReadonlySet<string> = new Set(["script", "style", "template", "title", "head", "noembed", "noframes", "noscript", "datalist", "rp"]);
+/** The elements whose content the tokenizer reads as text to their own end tag (a noscript read as with scripting enabled). */
+const RAW_TEXT: ReadonlySet<string> = new Set(["script", "style", "title", "textarea", "xmp", "iframe", "noembed", "noframes", "noscript"]);
+/** The void elements, which hold no content. */
+const VOID_ELEMENTS: ReadonlySet<string> = new Set(["area", "base", "br", "col", "embed", "hr", "img", "input", "link", "meta", "source", "track", "wbr"]);
+/**
+ * Whether a start tag opens an element a reader never sees: a display:none element of the rendering section, a dialog
+ * without open (wb-3jun F5), one carrying hidden, or (cut #5) one whose inline style declares display:none or
+ * visibility:hidden.
+ */
+const hidesContent = (tag: Markup): boolean =>
+  DISPLAY_NONE.has(tag.name) ||
+  (tag.name === "dialog" && !tag.attributes.has("open")) ||
+  tag.attributes.has("hidden") ||
+  /\b(?:display\s*:\s*none|visibility\s*:\s*hidden)\b/i.test(tag.attributes.get("style") ?? "");
+/** The end tag that closes a raw-text element: the first "</" after it with its name, then white space, "/" or ">"; undefined when none does. */
+function rawTextClose(text: string, tag: Markup): Markup | undefined {
+  const close = new RegExp(`</${tag.name}(?=[\\t\\n\\f\\r />])`, "gi");
+  close.lastIndex = tag.end;
+  const found = close.exec(text);
+  return found === null ? undefined : readTag(text, found.index);
+}
+/**
+ * The index past the end tag that closes the element `tag` opens (wb-3jun cut #2, refusal #1 U1): for a raw-text element
+ * its closing end tag (rawTextClose); for any other, the end tag of its name that balances the start and end tags of that
+ * name after it, while a comment, the text of a raw-text element and the content of a template inside it are passed over
+ * whole, so an end tag inside them closes nothing. Undefined when no end tag closes it.
+ */
+function elementEnd(text: string, tag: Markup): number | undefined {
+  if (RAW_TEXT.has(tag.name)) return rawTextClose(text, tag)?.end;
+  let depth = 1;
+  let markup = nextMarkup(text, tag.end);
+  while (markup !== undefined) {
+    let from = markup.end;
+    if (markup.kind === "start" && markup.name !== tag.name && (RAW_TEXT.has(markup.name) || markup.name === "template")) {
+      const passed = elementEnd(text, markup);
+      if (passed === undefined) return undefined;
+      from = passed;
+    } else if (markup.name === tag.name && markup.kind === "start") depth += 1;
+    else if (markup.name === tag.name && markup.kind === "end") {
+      depth -= 1;
+      if (depth === 0) return markup.end;
+    }
+    markup = nextMarkup(text, from);
+  }
+  return undefined;
+}
+/**
+ * The page with each element a reader never sees (hidesContent) dropped with its content to the end tag that closes it
+ * (elementEnd; a void one alone; one that no end tag closes is kept), the rest as written, the text of a raw-text element
+ * passed over whole.
+ */
+function withoutHiddenContent(page: string): string {
+  let out = "";
+  let kept = 0;
+  let markup = nextMarkup(page, 0);
+  while (markup !== undefined) {
+    const passed = markup.kind === "start" && RAW_TEXT.has(markup.name) ? (elementEnd(page, markup) ?? page.length) : markup.end;
+    const dropped = markup.kind === "start" && hidesContent(markup) ? (VOID_ELEMENTS.has(markup.name) ? markup.end : elementEnd(page, markup)) : undefined;
+    if (dropped !== undefined) {
+      out += page.slice(kept, markup.start);
+      kept = dropped;
+    }
+    markup = nextMarkup(page, dropped ?? passed);
+  }
+  return out + page.slice(kept);
+}
+/** R-HIDDEN-CONTENT: the page with that content dropped (withoutHiddenContent), then read by the leg. */
+const hiddenContentCure: ResidualCure = (_sentences, page) => blockUnits(marked.lexer(withoutHiddenContent(page)), []).some(servedLeaf);
 /** The leaf words run together, in camel case, or joined by a slash or a colon. */
 const LEAF_SPELLING = /\b(?:graph[/:]?(?:impact|candidate)|(?:optic|view)[/:]?list)\b/i;
 /** R-LEAF-SPELLING: a reading naming the leaf in one of those spellings and a served word. */
@@ -739,18 +909,21 @@ const SERVED_OPENING = /^serv(?:e|es|ed|ing)\b/i;
 const ellipsisCure: ResidualCure = sentences =>
   sentences.some((sentence, index) => index > 0 && SERVED_OPENING.test(sentence) && servedLeaf(`${sentences[index - 1]} ${sentence}`));
 // Cut #5 residual cures (refusal #4, rule 19(c)), read over their quiet rows only, like cut #4's; neither leg applies one.
-/** A raw start tag named `name`, to its first ">" outside an attribute value its quotation mark closes, as HTML_MARKUP reads a tag. */
-const rawStartTag = (name: string): RegExp => new RegExp(`<${name}\\b(?:\\s*=\\s*(?:"[^"]*"|'[^']*')|[^>])*>`, "gi");
-/** The value of the attribute `name` that a raw start tag carries, double-quoted, single-quoted or bare, or undefined. */
-function attributeValue(tag: string, name: string): string | undefined {
-  for (const [, attribute, double, single, bare] of tag.matchAll(/\s([^\s"'>/=]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g)) {
-    if (attribute?.toLowerCase() === name) return double ?? single ?? bare ?? "";
+/** The page with each raw start tag named `name` (found by nextMarkup, read by readTag) replaced by `replace`'s text for it, or kept where it gives none. */
+function replaceStartTags(page: string, name: string, replace: (tag: Markup, page: string) => string | undefined): string {
+  let out = "";
+  let kept = 0;
+  for (let markup = nextMarkup(page, 0); markup !== undefined; markup = nextMarkup(page, markup.end)) {
+    const text = markup.kind === "start" && markup.name === name ? replace(markup, page) : undefined;
+    if (text === undefined) continue;
+    out += `${page.slice(kept, markup.start)}${text}`;
+    kept = markup.end;
   }
-  return undefined;
+  return out + page.slice(kept);
 }
-/** R-RAW-ALT-TEXT: the page with each raw img read as its alt text, as the leg reads a markdown image, then read by the leg. */
+/** R-RAW-ALT-TEXT: the page with each raw img read as its alt attribute (wb-3jun cut #2: its start tag read by readTag), as the leg reads a markdown image, then read by the leg. */
 const rawAltTextCure: ResidualCure = (_sentences, page) =>
-  blockUnits(marked.lexer(page.replace(rawStartTag("img"), tag => attributeValue(tag, "alt") ?? tag)), []).some(servedLeaf);
+  blockUnits(marked.lexer(replaceStartTags(page, "img", tag => tag.attributes.get("alt"))), []).some(servedLeaf);
 /** R-MARK-IN-NAME: the page's rendered text re-split with `name` (a name that ends in a mark, such as Yahoo!) added to ABBREVIATIONS. */
 const markInNameCure = (name: string): ResidualCure => abbreviationCure(name);
 /** R-MARKED-CONTINUATION: the page's rendered text re-split reading past every mark and digit before a continuation's first letter. */
@@ -760,16 +933,27 @@ const markedContinuationCure: ResidualCure = sentences => splitSentences(sentenc
 /** R-SPLIT-HTML-ROW: the page with each HTML block that opens with a row or cell tag read as one block with the HTML block before it, then read by the leg. */
 const splitHtmlRowCure: ResidualCure = (_sentences, page) =>
   blockUnits(marked.lexer(page.replace(/\n[ \t]*\n(?=[ \t]*<\/?(?:tr|td|th)\b)/gi, "\n")), []).some(servedLeaf);
-/** R-BLANK-GLYPH: each reading with U+2800 BRAILLE PATTERN BLANK read as white space. */
-const blankGlyphCure: ResidualCure = sentences => sentences.some(sentence => servedLeaf(sentence.replaceAll(at(0x2800), " ")));
+/**
+ * The characters that render blank but are no white space, Cf or Cc, so the folded key keeps them: U+2800 BRAILLE PATTERN
+ * BLANK and (wb-3jun cut #2, refusal #1 F5, the gate's BL1) the Hangul fillers U+115F, U+1160, U+3164 and U+FFA0, the last
+ * two of which NFKD reads as U+1160; a run of them and white space.
+ */
+const BLANK_GLYPHS = /[\s\u{2800}\u{115f}\u{1160}\u{3164}\u{ffa0}]+/gu;
+/** R-BLANK-GLYPH: each reading with every run of those characters and white space read as one space (wb-3jun cut #2, refusal #1 F3: two of them, or one beside a space). */
+const blankGlyphCure: ResidualCure = sentences => sentences.some(sentence => servedLeaf(sentence.replace(BLANK_GLYPHS, " ")));
 /** What a reader sees inside a raw input: its value, or its placeholder while the value is empty; undefined when it carries neither. */
-function controlText(tag: string): string | undefined {
-  const value = attributeValue(tag, "value");
-  return value === undefined || value === "" ? (attributeValue(tag, "placeholder") ?? value) : value;
+function controlText(tag: Markup): string | undefined {
+  const value = tag.attributes.get("value");
+  return value === undefined || value === "" ? (tag.attributes.get("placeholder") ?? value) : value;
 }
-/** R-CONTROL-VALUE: the page with each raw input read as what a reader sees inside it, then read by the leg. */
+/** What a reader sees inside a raw textarea (wb-3jun cut #2, refusal #1 F5, the gate's V04): its placeholder while it holds no text (a line feed right after its start tag is none); undefined otherwise. */
+function textareaText(tag: Markup, page: string): string | undefined {
+  const content = page.slice(tag.end, rawTextClose(page, tag)?.start ?? page.length);
+  return content.replace(/^\r?\n/, "") === "" ? tag.attributes.get("placeholder") : undefined;
+}
+/** R-CONTROL-VALUE: the page with each raw input, and each raw textarea that holds no text, read as what a reader sees inside it (each start tag read by readTag), then read by the leg. */
 const controlValueCure: ResidualCure = (_sentences, page) =>
-  blockUnits(marked.lexer(page.replace(rawStartTag("input"), tag => controlText(tag) ?? tag)), []).some(servedLeaf);
+  blockUnits(marked.lexer(replaceStartTags(replaceStartTags(page, "input", controlText), "textarea", textareaText)), []).some(servedLeaf);
 /** The out-of-file roster whose residualRows anchor the residual enumeration's row list (refusal #4 F7). */
 const RESIDUAL_ROSTER = "test/fixtures/docs19-scg-worker-role-roster.json";
 /** Every residual family (R-...) a text names, once each, sorted. */
@@ -1485,7 +1669,7 @@ describe(NEGATIVES_SUITE, () => {
     expect(familiesNamed(renderedLegComment())).toEqual(familiesNamed(residualTitles.join(" ")));
   });
 
-  it("SCG-R15 negative, wb-3jun cures (the R694 follow-up of landing 578, F1): the 3 pinned served plants red (in markdown text a legacy named reference glued to an underscore run, which marked passes to the page as written and the HTML tokenizer decodes by longest match, and in a markdown image's alt text one an underscore follows), the 5 pinned quiet plants stay quiet, and 10 pinned runs read as the tokenizer reads them, as text and as an attribute value", () => {
+  it("SCG-R15 negative, wb-3jun cures (landing 578's R694 F1; cut #2: refusal #1 F1 and F2): the 8 pinned served plants red (in text or an image's alt text a legacy named reference glued to an underscore run, which marked passes as written and the tokenizer decodes, and in alt text a reference marked joins across an escape, a code span or a hard break), the 6 pinned quiet plants stay quiet, and 10 pinned runs read as the tokenizer reads them, as text and as an attribute value", () => {
     const base = plantRoot("scg-r15-3jun-cures-");
     // F1 (w01 and w02 are the gate's N01 and N01b): marked's escape keeps "&" before \w+; and \w holds "_", so a run of
     // letters, digits and underscores closed by ";" reaches the page as written, and the HTML tokenizer decodes the longest
@@ -1495,6 +1679,15 @@ describe(NEGATIVES_SUITE, () => {
     plantFile(base, "docs/w01-underscore-run.md", "The rf vi&eacutew_list; leaf is served by this build.\n");
     plantFile(base, "docs/w02-underscore-run-opening.md", "The rf &oumlptic_list; leaf is served by this build.\n");
     plantFile(base, "docs/w03-image-alt-underscore.md", "The rf ![view&shy_list;](x.png) leaf is served by this build.\n");
+    // Cut #2 (refusal #1 F1 and F2; w04 to w07 are the gate's B03, B04, B09 and B05, w08 a seat-added hard break): marked
+    // writes an image's alt text from its child tokens' text joined (an escape as its character, a code span as its text,
+    // a hard break as nothing), so a reference split across those tokens reaches the alt attribute whole and the tokenizer
+    // decodes it there (&shy before an underscore reads a soft hyphen, &#32; a space).
+    plantFile(base, "docs/w04-image-alt-escape.md", "The rf ![view&shy\\_list;](x.png) leaf is served by this build.\n");
+    plantFile(base, "docs/w05-image-alt-code-span.md", "The rf ![view&shy`_`list;](x.png) leaf is served by this build.\n");
+    plantFile(base, "docs/w06-image-alt-code-span-semicolon.md", "The rf ![view&shy_list`;`](x.png) leaf is served by this build.\n");
+    plantFile(base, "docs/w07-image-alt-escaped-semicolon.md", "The rf ![graph&#32\\;impact](x.png) leaf is served by this build.\n");
+    plantFile(base, "docs/w08-image-alt-hard-break.md", "The rf ![graph&#3\\\n2;impact](x.png) leaf is served by this build.\n");
     // Quiet: runs the tokenizer leaves as written (one that opens with a digit, one that opens with no legacy name, a single
     // letter), a run past 32 that decodes only its legacy name, and, in an image's alt text, a legacy name a letter follows,
     // which the attribute leaves as written.
@@ -1503,21 +1696,30 @@ describe(NEGATIVES_SUITE, () => {
     plantFile(base, "docs/wq3-one-letter.md", "The rf graph&a; impact leaf is served by this build.\n");
     plantFile(base, "docs/wq4-run-past-32.md", `The rf gr&aacute${"x".repeat(30)}; leaf is served by this build.\n`);
     plantFile(base, "docs/wq5-image-alt-letter.md", "The rf ![vi&eacutew_list;](x.png) leaf is served by this build.\n");
+    // Cut #2: an alt text joined across a code span still reads by the attribute clause, so a legacy name a letter follows
+    // stays as written.
+    plantFile(base, "docs/wq6-image-alt-joined-letter.md", "The rf ![vi&eacute`w`_list;](x.png) leaf is served by this build.\n");
     const unknown: string[] = [];
     expect(renderedServedLeafSentences(base, "docs", unknown)).toEqual([
       "docs/w01-underscore-run.md: The rf view_list; leaf is served by this build.",
       "docs/w02-underscore-run-opening.md: The rf optic_list; leaf is served by this build.",
       "docs/w03-image-alt-underscore.md: The rf view_list; leaf is served by this build.",
+      "docs/w04-image-alt-escape.md: The rf view_list; leaf is served by this build.",
+      "docs/w05-image-alt-code-span.md: The rf view_list; leaf is served by this build.",
+      "docs/w06-image-alt-code-span-semicolon.md: The rf view_list; leaf is served by this build.",
+      "docs/w07-image-alt-escaped-semicolon.md: The rf graph impact leaf is served by this build.",
+      "docs/w08-image-alt-hard-break.md: The rf graph impact leaf is served by this build.",
     ]);
     expect(unknown).toEqual([]);
     // The quiet pages are read: each renders exactly these readings.
     const read = renderedSentencesBelow(base, "docs", []);
     const readingsOfPage = (path: string): string[] => read.filter(([page]) => page === path).map(([, sentence]) => sentence);
-    expect(["wq1-digit-run", "wq2-no-legacy-run", "wq3-one-letter", "wq4-run-past-32", "wq5-image-alt-letter"].map(name => readingsOfPage(`docs/${name}.md`))).toEqual([
+    expect(["wq1-digit-run", "wq2-no-legacy-run", "wq3-one-letter", "wq4-run-past-32", "wq5-image-alt-letter", "wq6-image-alt-joined-letter"].map(name => readingsOfPage(`docs/${name}.md`))).toEqual([
       ["The rf graph&1_impact; leaf is served by this build."],
       ["The rf graph&zz_impact; leaf is served by this build."],
       ["The rf graph&a; impact leaf is served by this build."],
       [`The rf gra${"x".repeat(30)}; leaf is served by this build.`],
+      ["The rf vi&eacutew_list; leaf is served by this build."],
       ["The rf vi&eacutew_list; leaf is served by this build."],
     ]);
     // The source leg reads every reference as the source spells it, so it flags none of these plants.
@@ -1552,7 +1754,7 @@ describe(NEGATIVES_SUITE, () => {
     ]);
   });
 
-  it("SCG-R15 negative, wb-3jun residuals (the R694 follow-up of landing 578, F2 to F5): R-SPLIT-HTML-ROW, R-BLANK-GLYPH and R-CONTROL-VALUE, and members of R-ENCLOSED-STOP, R-HIDDEN-CONTENT, R-CONFUSABLE (its scope widened) and R-RAW-ALT-TEXT whose named cures now read their whole scopes, are read and stay quiet, each named cure flags its quiet rows, and the out-of-file roster and this title anchor the row list", ({ task }) => {
+  it("SCG-R15 negative, wb-3jun residuals (the R694 follow-up of landing 578, F2 to F5; cut #2 for refusal #1 U1, F3, F4 and F5): the pinned quiet rows of R-SPLIT-HTML-ROW, R-BLANK-GLYPH, R-CONTROL-VALUE, R-ENCLOSED-STOP, R-HIDDEN-CONTENT, R-CONFUSABLE and R-RAW-ALT-TEXT are read and stay quiet, each family's named cure, as this bead widens it, flags every pinned row of its family, and the out-of-file roster and this title anchor the row list", ({ task }) => {
     const base = plantRoot("scg-r15-3jun-residual-");
     // [family, page path, page text, the page's rendered sentences, the family's named cure]
     const ROWS: ReadonlyArray<readonly [string, string, string, readonly string[], ResidualCure]> = [
@@ -1599,6 +1801,37 @@ describe(NEGATIVES_SUITE, () => {
       ["R-HIDDEN-CONTENT", "docs/r-hidden-noscript.md", "The rf graph<noscript>x</noscript> impact leaf is served by this build.", ["The rf graphx impact leaf is served by this build."], hiddenContentCure],
       ["R-CONFUSABLE", "docs/r-confusable-cyrillic-h.md", `The rf grap${at(0x4bb)} impact leaf is served by this build.`, [`The rf grap${at(0x4bb)} impact leaf is served by this build.`], confusableCure],
       ["R-RAW-ALT-TEXT", "docs/r-raw-alt-quoted-gt.md", 'The rf graph <img src="a>b.png" alt="impact"> leaf is served by this build.', ["The rf graph leaf is served by this build."], rawAltTextCure],
+      // Cut #2 (refusal #1 U1; the gate's H01 to H03 and H07 to H09, and two seat-added rows beside them): hidden content
+      // whose end tag is found only by counting its name's tags (a same-name span, a template or an open dialog inside it),
+      // a hiding tag whose earlier attribute value holds a quoted ">", and end tags inside a template's content or a
+      // script's text, which close nothing.
+      ["R-HIDDEN-CONTENT", "docs/r-hidden-nested-span.md", "The rf graph<span hidden>x<span>y</span>z</span> impact leaf is served by this build.", ["The rf graphxyz impact leaf is served by this build."], hiddenContentCure],
+      ["R-HIDDEN-CONTENT", "docs/r-hidden-nested-template.md", "The rf graph<template>x<template>y</template>z</template> impact leaf is served by this build.", ["The rf graphxyz impact leaf is served by this build."], hiddenContentCure],
+      ["R-HIDDEN-CONTENT", "docs/r-hidden-dialog-holding-open.md", "The rf graph<dialog>x<dialog open>y</dialog>z</dialog> impact leaf is served by this build.", ["The rf graph x y z impact leaf is served by this build."], hiddenContentCure],
+      ["R-HIDDEN-CONTENT", "docs/r-hidden-style-nested-span.md", 'The rf graph<span style="display:none">x<span>y</span>z</span> impact leaf is served by this build.', ["The rf graphxyz impact leaf is served by this build."], hiddenContentCure],
+      ["R-HIDDEN-CONTENT", "docs/r-hidden-quoted-gt.md", 'The rf graph<span title=">" hidden>x</span> impact leaf is served by this build.', ["The rf graphx impact leaf is served by this build."], hiddenContentCure],
+      ["R-HIDDEN-CONTENT", "docs/r-hidden-style-quoted-gt.md", 'The rf graph<span title=">" style="display:none">x</span> impact leaf is served by this build.', ["The rf graphx impact leaf is served by this build."], hiddenContentCure],
+      ["R-HIDDEN-CONTENT", "docs/r-hidden-template-content.md", "The rf graph<span hidden>x<template></span>y</template>z</span> impact leaf is served by this build.", ["The rf graphxyz impact leaf is served by this build."], hiddenContentCure],
+      ["R-HIDDEN-CONTENT", "docs/r-hidden-raw-text-end-tag.md", "The rf graph<span hidden>x<script></span></script>z</span> impact leaf is served by this build.", ["The rf graphxz impact leaf is served by this build."], hiddenContentCure],
+      // Cut #2 (refusal #1 U1 and F4; the gate's R01, R02 and V03b): an attribute the tokenizer reads right after a quoted
+      // value with no white space, or after a solidus.
+      ["R-RAW-ALT-TEXT", "docs/r-raw-alt-glued-attribute.md", '<div>\nThe rf graph <img src="x.png"alt="impact"> leaf is served by this build.\n</div>', ["The rf graph leaf is served by this build."], rawAltTextCure],
+      ["R-RAW-ALT-TEXT", "docs/r-raw-alt-after-solidus.md", '<div>\nThe rf graph <img/alt="impact"> leaf is served by this build.\n</div>', ["The rf graph leaf is served by this build."], rawAltTextCure],
+      ["R-CONTROL-VALUE", "docs/r-control-glued-placeholder.md", '<div>\nThe rf <input value=""placeholder="graph&#32;impact"> leaf is served by this build.\n</div>', ["The rf leaf is served by this build."], controlValueCure],
+      // Cut #2 (refusal #1 F3; the gate's BL2 and BL3): two U+2800 between the leaf words, and one after a space.
+      ["R-BLANK-GLYPH", "docs/r-blank-glyph-pair.md", `The rf graph${at(0x2800)}${at(0x2800)}impact leaf is served by this build.`, [`The rf graph${at(0x2800)}${at(0x2800)}impact leaf is served by this build.`], blankGlyphCure],
+      ["R-BLANK-GLYPH", "docs/r-blank-glyph-after-space.md", `The rf graph ${at(0x2800)}impact leaf is served by this build.`, [`The rf graph ${at(0x2800)}impact leaf is served by this build.`], blankGlyphCure],
+      // Cut #2 (refusal #1 F5; the gate's BL1, V04 and E06, each family's stated scope widened to it): U+3164 HANGUL FILLER,
+      // which NFKD reads as U+1160; the placeholder of a textarea that holds no text; and a substitution bracket pair.
+      ["R-BLANK-GLYPH", "docs/r-blank-glyph-hangul-filler.md", `The rf graph${at(0x3164)}impact leaf is served by this build.`, [`The rf graph${at(0x1160)}impact leaf is served by this build.`], blankGlyphCure],
+      ["R-CONTROL-VALUE", "docs/r-control-textarea-placeholder.md", 'The rf <textarea placeholder="graph&#32;impact"></textarea> leaf is served by this build.', ["The rf leaf is served by this build."], controlValueCure],
+      [
+        "R-ENCLOSED-STOP",
+        "docs/r-enclosed-substitution-bracket.md",
+        `The rf graph impact leaf, which the plan calls ${at(0x2e02)}Phase 2. Final${at(0x2e03)}, is served.`,
+        [`The rf graph impact leaf, which the plan calls ${at(0x2e02)}Phase 2.`, `Final${at(0x2e03)}, is served.`],
+        enclosedCure,
+      ],
     ];
     for (const [, path, page] of ROWS) plantFile(base, path, `${page}\n`);
     plantFile(base, "docs/control.md", "The rf graph impact leaf is served.\n");
@@ -1616,6 +1849,22 @@ describe(NEGATIVES_SUITE, () => {
       "R-HIDDEN-CONTENT docs/r-hidden-noscript.md",
       "R-CONFUSABLE docs/r-confusable-cyrillic-h.md",
       "R-RAW-ALT-TEXT docs/r-raw-alt-quoted-gt.md",
+      "R-HIDDEN-CONTENT docs/r-hidden-nested-span.md",
+      "R-HIDDEN-CONTENT docs/r-hidden-nested-template.md",
+      "R-HIDDEN-CONTENT docs/r-hidden-dialog-holding-open.md",
+      "R-HIDDEN-CONTENT docs/r-hidden-style-nested-span.md",
+      "R-HIDDEN-CONTENT docs/r-hidden-quoted-gt.md",
+      "R-HIDDEN-CONTENT docs/r-hidden-style-quoted-gt.md",
+      "R-HIDDEN-CONTENT docs/r-hidden-template-content.md",
+      "R-HIDDEN-CONTENT docs/r-hidden-raw-text-end-tag.md",
+      "R-RAW-ALT-TEXT docs/r-raw-alt-glued-attribute.md",
+      "R-RAW-ALT-TEXT docs/r-raw-alt-after-solidus.md",
+      "R-CONTROL-VALUE docs/r-control-glued-placeholder.md",
+      "R-BLANK-GLYPH docs/r-blank-glyph-pair.md",
+      "R-BLANK-GLYPH docs/r-blank-glyph-after-space.md",
+      "R-BLANK-GLYPH docs/r-blank-glyph-hangul-filler.md",
+      "R-CONTROL-VALUE docs/r-control-textarea-placeholder.md",
+      "R-ENCLOSED-STOP docs/r-enclosed-substitution-bracket.md",
     ]);
     // Each quiet row's page is read (it renders exactly its pinned sentences), and only the control reds, on both legs.
     const read = renderedSentencesBelow(base, "docs", []);
