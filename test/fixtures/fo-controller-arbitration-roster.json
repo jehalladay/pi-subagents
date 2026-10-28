@@ -1,0 +1,704 @@
+{
+  "bead": "wb-km7q.1",
+  "producer": {
+    "repository": "FiberOpticsSDK",
+    "beadPin": "dcc5b57c4aed5fa2daa5333ec0b39c0916a508d7",
+    "measuredAt": "2026-10-28",
+    "master": "2099f193cccff7e35d0e618f4aab805b481e1983",
+    "files": [
+      {
+        "path": "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md",
+        "blob": "929c1651755628b7b1645846ac32141492dbb781",
+        "lines": [
+          {
+            "line": 7,
+            "text": "Keep FiberOpticsSDK the authoritative reactive substrate for signal propagation, graph identity, invalidation, deterministic transactions and scheduled work. `src/fiber_optics/fiber.py` already defines lanes `IMMEDIATE`, `AGENT_CRITICAL`, `USER_VISIBLE`, `BACKGROUND`, `SPECULATIVE` and `TRACE_ONLY`, plus bounded feedback/termination. `src/fiber_optics/scheduler.py` already implements deterministic priority dequeue, coalescing, pending `abort_speculative(key)` across all lanes. `src/fiber_optics/events.py` already has `ControlHook`, `ControlDirective.abort_speculative_key` and event sinks. Preserve all of these.",
+            "sha256": "a724545f5938880b0b3d9c134ccc1193c202e291548abcb605c6701ea408c9e1"
+          },
+          {
+            "line": 20,
+            "text": "`SignalOperator<TIn,TOut>` has `operator_id`, bounded state spec (if stateful), `sample(value, sampleTime, state) -> (value, state, diagnostics)`, deterministic serialization and data-quality behavior. Temporal controller proposal `(controller_id, observed_versions, state_epoch, actuator_id, requested_range, reason, min_interval)` remains data until a host arbiter applies it.",
+            "sha256": "3919f8cf576a5b358464215e27b8da782a1ae8f3c34a4f3a9661f1f95706bcb9"
+          },
+          {
+            "line": 22,
+            "text": "No direct provider I/O or LLM inference, no global controller auto-registration from import, no controller state mutation during `FiberRuntime.emit` reentrant callbacks. Existing `ControlDirective` is a narrow initial extension seam, not a second controller engine.",
+            "sha256": "2e027d70a171ed6268f13a36fbc2feb06d9da4b83dc575bda8ee487f091e253e"
+          },
+          {
+            "line": 40,
+            "text": "FO-AC1 temporal operators with golden deterministic outcomes; FO-AC2 versioned event contract/host consumer; FO-AC3 bounded controller emission and proposal arbitration integration in one host; FO-AC4 performance/no-regression and current public API documentation. No effect on default consumer behavior until these gates pass.",
+            "sha256": "6532b18d3a205390612b1579310789b36abf7597b765b1eb227103e7023d2b5a"
+          }
+        ]
+      },
+      {
+        "path": "src/fiber_optics/control.py",
+        "blob": "be06b96664bb92e020fb8c13fa7914cd84c4720e",
+        "lines": [
+          {
+            "line": 430,
+            "text": "class ControllerProposal:",
+            "sha256": "bc73b285a3c53fb315c10fe062d520739a5d2de00b4c37dba94f5dd5e40b279d"
+          },
+          {
+            "line": 441,
+            "text": "    controller_id: str",
+            "sha256": "dda4379b5d5ccf38561bac262f9dfec44220ac1ca5153a90741345e2ac7a8664"
+          },
+          {
+            "line": 442,
+            "text": "    observed_versions: Mapping[str, int]",
+            "sha256": "97d6dbb9b004a108a6ee7b50ee9e7c8ef6165387ebcf843a57e0aa42a48d30ef"
+          },
+          {
+            "line": 443,
+            "text": "    state_epoch: int",
+            "sha256": "9044eb985bba59304dbbf95d5ecad3941463a9cab073d69b82cb8817943053e2"
+          },
+          {
+            "line": 444,
+            "text": "    actuator_id: str",
+            "sha256": "a14ca2626fff717a9bfb9282bbfd8f0074fff5693d374fbb979d3367d0e17a80"
+          },
+          {
+            "line": 445,
+            "text": "    requested_range: tuple[float, float]",
+            "sha256": "dad984eef6c8c67142c84296ce7e15a734570ad0d1266beb9026aec31a7aa780"
+          },
+          {
+            "line": 446,
+            "text": "    reason: str",
+            "sha256": "bcc596e3ce441c38139faabd67ed849ff6685dbaf6c1228967dfbe5cc520fde1"
+          },
+          {
+            "line": 447,
+            "text": "    min_interval_ns: int",
+            "sha256": "231fa04ff0e88f78b7e1b31f6d792ae1839ff122f456a97177547cac335d15ae"
+          },
+          {
+            "line": 448,
+            "text": "    sample_time_ns: int",
+            "sha256": "44bc8206879c76678bf2f945183d0869bea5b6505d28e6bcdfc2a6286373a357"
+          }
+        ]
+      },
+      {
+        "path": "src/fiber_optics/events.py",
+        "blob": "fe331ce3770fe285d87f63919b0c3afec1332ba2",
+        "lines": [
+          {
+            "line": 142,
+            "text": "@dataclass(frozen=True, slots=True)",
+            "sha256": "82399edd6959ada1e2809026a8c2ed033a8edbe6bd168e5c99d1ecc57eb8e0b5"
+          },
+          {
+            "line": 143,
+            "text": "class ControlDirective:",
+            "sha256": "d13cc3ad36e9b419e2acb84c7615d6462b77a0bd455596af93bd928214bdd97a"
+          },
+          {
+            "line": 151,
+            "text": "    abort_speculative_key: str | None = None",
+            "sha256": "e0ffe9550595b6a92d582a7c22f2715a647eed291483da934f31c36c67430000"
+          }
+        ]
+      }
+    ],
+    "masterFacts": [
+      "docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md at origin/master is blob 929c1651755628b7b1645846ac32141492dbb781, the pin's blob",
+      "src/fiber_optics/control.py at origin/master is blob f8ed92aca4396771b2b66a4eb45aaeb5c2e61c4b: class ControllerProposal at :513, its eight field lines :524-:531 the same text as the pin's :441-:448",
+      "src/fiber_optics/events.py at origin/master is blob 5afb4ee3391c19dfa92c20d72862c7f2de87eeaf: class ControlDirective at :143, its one field abort_speculative_key at :151, the same text as the pin's"
+    ]
+  },
+  "constants": {
+    "codeRoots": [
+      "examples",
+      "qa",
+      "src"
+    ],
+    "codeKinds": [
+      ".cjs",
+      ".cts",
+      ".js",
+      ".jsx",
+      ".mjs",
+      ".mts",
+      ".py",
+      ".sh",
+      ".ts",
+      ".tsx"
+    ],
+    "rootFiles": [
+      "package.json"
+    ],
+    "floors": {
+      "examples": 5,
+      "qa": 50,
+      "root": 10,
+      "src": 100
+    },
+    "filing": "Citations: docs/programs/reactive-fiber-adaptive-computation-and-control-2026-10-17.md:20@",
+    "commonFields": [
+      "reason",
+      "min_interval"
+    ],
+    "seamVerbs": [
+      "apply",
+      "arbitrate",
+      "commit",
+      "propose",
+      "step"
+    ]
+  },
+  "terms": [
+    {
+      "id": "abort-speculative-key",
+      "words": [
+        "abort",
+        "speculative",
+        "key"
+      ]
+    },
+    {
+      "id": "actuator-id",
+      "words": [
+        "actuator",
+        "id"
+      ]
+    },
+    {
+      "id": "committed-controller",
+      "words": [
+        "committed",
+        "controller"
+      ]
+    },
+    {
+      "id": "control-directive",
+      "words": [
+        "control",
+        "directive"
+      ]
+    },
+    {
+      "id": "controller-id",
+      "words": [
+        "controller",
+        "id"
+      ]
+    },
+    {
+      "id": "controller-proposal",
+      "words": [
+        "controller",
+        "proposal"
+      ]
+    },
+    {
+      "id": "controller-registry",
+      "words": [
+        "controller",
+        "registry"
+      ]
+    },
+    {
+      "id": "fiber-optics",
+      "words": [
+        "fiber",
+        "optics"
+      ]
+    },
+    {
+      "id": "fiber-runtime",
+      "words": [
+        "fiber",
+        "runtime"
+      ]
+    },
+    {
+      "id": "fiberoptics",
+      "words": [
+        "fiberoptics"
+      ]
+    },
+    {
+      "id": "fo-ac3",
+      "words": [
+        "fo",
+        "ac3"
+      ]
+    },
+    {
+      "id": "host-arbiter",
+      "words": [
+        "host",
+        "arbiter"
+      ]
+    },
+    {
+      "id": "observed-versions",
+      "words": [
+        "observed",
+        "versions"
+      ]
+    },
+    {
+      "id": "proposal-arbitration",
+      "words": [
+        "proposal",
+        "arbitration"
+      ]
+    },
+    {
+      "id": "proposal-disposition",
+      "words": [
+        "proposal",
+        "disposition"
+      ]
+    },
+    {
+      "id": "requested-range",
+      "words": [
+        "requested",
+        "range"
+      ]
+    },
+    {
+      "id": "state-epoch",
+      "words": [
+        "state",
+        "epoch"
+      ]
+    },
+    {
+      "id": "temporal-controller",
+      "words": [
+        "temporal",
+        "controller"
+      ]
+    }
+  ],
+  "proposalFields": [
+    "controller_id",
+    "observed_versions",
+    "state_epoch",
+    "actuator_id",
+    "requested_range",
+    "reason",
+    "min_interval"
+  ],
+  "shippedFields": [
+    "controller_id",
+    "observed_versions",
+    "state_epoch",
+    "actuator_id",
+    "requested_range",
+    "reason",
+    "min_interval_ns",
+    "sample_time_ns"
+  ],
+  "directiveMembers": [
+    "abort_speculative_key"
+  ],
+  "rows": [
+    {
+      "id": "A",
+      "label": "adoption-time falsifier",
+      "pins": [
+        {
+          "id": "A1",
+          "quote": "adoption-time",
+          "witness": {
+            "live": {
+              "findings": [],
+              "unreadable": [],
+              "links": [],
+              "whole": true
+            },
+            "plants": {
+              "read": [
+                "examples/zz-long-middle.js",
+                "examples/zz-row.js",
+                "package.json",
+                "qa/zz-arbiter.py",
+                "qa/zz-helper.mjs",
+                "qa/zz-long-first.mjs",
+                "qa/zz-run.sh",
+                "src/a/b/c/zz-nested.ts",
+                "src/zz-comment.ts",
+                "src/zz-composed.ts",
+                "src/zz-fullwidth.ts",
+                "src/zz-host.ts",
+                "src/zz-long-last.ts",
+                "src/zz-long-line.ts",
+                "src/zz-lookalike.ts",
+                "src/zz-mixed.ts",
+                "src/zz-pi-words.ts",
+                "src/zz-rf.ts",
+                "src/zz-string.ts",
+                "src/zz-template.ts",
+                "src/zz-types.ts",
+                "zz-root.mjs"
+              ],
+              "findings": [
+                "examples/zz-long-middle.js state-epoch",
+                "examples/zz-row.js controller-id",
+                "examples/zz-row.js state-epoch",
+                "examples/zz-row.js observed-versions",
+                "package.json fiber-optics",
+                "qa/zz-arbiter.py controller-proposal",
+                "qa/zz-arbiter.py fiber-optics",
+                "qa/zz-long-first.mjs host-arbiter",
+                "qa/zz-run.sh fiber-optics",
+                "src/a/b/c/zz-nested.ts abort-speculative-key",
+                "src/zz-comment.ts fo-ac3",
+                "src/zz-fullwidth.ts fiber-optics",
+                "src/zz-host.ts fiber-runtime",
+                "src/zz-long-last.ts fiber-runtime",
+                "src/zz-long-line.ts controller-proposal",
+                "src/zz-mixed.ts actuator-id",
+                "src/zz-mixed.ts proposal-arbitration",
+                "src/zz-mixed.ts control-directive",
+                "src/zz-mixed.ts fiberoptics",
+                "src/zz-string.ts temporal-controller",
+                "src/zz-template.ts requested-range",
+                "src/zz-types.ts committed-controller",
+                "src/zz-types.ts controller-registry",
+                "src/zz-types.ts proposal-disposition",
+                "zz-root.mjs host-arbiter"
+              ],
+              "residuals": {
+                "R-OUTSIDE-ROOTS": [
+                  "test/zz-host.test.ts unread",
+                  "docs/zz-page.md unread",
+                  "vendor/zz-vendored.ts unread",
+                  "ignored/zz-ignored.ts unread",
+                  "src/zz-skip.local.ts unread",
+                  "forge.toml unread",
+                  "src/zz-data.json unread"
+                ],
+                "R-COMMON-WORD": [
+                  "src/zz-pi-words.ts read-quiet"
+                ],
+                "R-COMPOSED": [
+                  "src/zz-composed.ts read-quiet"
+                ],
+                "R-LOOKALIKE": [
+                  "src/zz-lookalike.ts read-quiet"
+                ],
+                "R-RENDERER-HOST": [
+                  "src/zz-rf.ts read-quiet"
+                ],
+                "R-SUBPROCESS": [
+                  "qa/zz-helper.mjs read-quiet"
+                ]
+              }
+            },
+            "wholeControl": {
+              "read": [
+                "src/zz-link.ts"
+              ],
+              "findings": [
+                "src/zz-link.ts:1 control-directive"
+              ],
+              "whole": false,
+              "links": [
+                "src/zz-link.ts"
+              ]
+            },
+            "synonyms": [
+              "abort-speculative-key",
+              "committed-controller",
+              "controller-registry",
+              "fiberoptics",
+              "proposal-disposition"
+            ]
+          }
+        },
+        {
+          "id": "A2",
+          "quote": "falsifier",
+          "witness": {
+            "live": {
+              "unbound": [],
+              "stale": [],
+              "violations": {}
+            },
+            "synthetic": {
+              "unbound": [
+                "src/zz-unbound.ts"
+              ],
+              "stale": [
+                "src/zz-gone.ts"
+              ],
+              "violations": {
+                "src/zz-gone.ts": [],
+                "src/zz-honest.ts": [],
+                "src/zz-lax.ts": [
+                  "applied-at-submit"
+                ]
+              }
+            },
+            "adapterTrust": {
+              "violations": [],
+              "heldMovedAtSubmit": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "label": "that a proposal row is applied only via the host arbiter seam",
+      "pins": [
+        {
+          "id": "B1",
+          "quote": "that a proposal row",
+          "witness": {
+            "fields": [
+              "controller_id",
+              "observed_versions",
+              "state_epoch",
+              "actuator_id",
+              "requested_range",
+              "reason",
+              "min_interval"
+            ],
+            "shippedAs": [
+              "controller_id",
+              "observed_versions",
+              "state_epoch",
+              "actuator_id",
+              "requested_range",
+              "reason",
+              "min_interval_ns"
+            ],
+            "shapes": {
+              "admissible": "ok",
+              "shipped": "ok",
+              "missing:controller_id": "missing:controller_id",
+              "missing:observed_versions": "missing:observed_versions",
+              "missing:state_epoch": "missing:state_epoch",
+              "missing:actuator_id": "missing:actuator_id",
+              "missing:requested_range": "missing:requested_range",
+              "missing:reason": "missing:reason",
+              "missing:min_interval": "missing:min_interval",
+              "extra:apply": "extra:apply",
+              "not-data:reason": "not-data:reason"
+            },
+            "hosts": {
+              "honest": [],
+              "lax-shape": [
+                "malformed-applied:missing:controller_id",
+                "malformed-applied:missing:observed_versions",
+                "malformed-applied:missing:state_epoch",
+                "malformed-applied:missing:actuator_id",
+                "malformed-applied:missing:requested_range",
+                "malformed-applied:missing:reason",
+                "malformed-applied:missing:min_interval",
+                "malformed-applied:extra:apply",
+                "malformed-applied:not-data:reason"
+              ]
+            }
+          }
+        },
+        {
+          "id": "B2",
+          "quote": "is applied only via the host arbiter seam",
+          "witness": {
+            "hosts": {
+              "honest": [],
+              "apply-at-submit": [
+                "applied-at-submit"
+              ],
+              "timer-apply": [
+                "applied-at-submit"
+              ],
+              "mutates-row": [
+                "row-mutated",
+                "malformed-applied:missing:reason",
+                "malformed-applied:not-data:reason"
+              ],
+              "flush-on-emit": [
+                "state-mutated-in-emit",
+                "arbiter-applied-nothing"
+              ],
+              "inert-arbiter": [
+                "arbiter-applied-nothing"
+              ]
+            },
+            "lateApply": {
+              "violations": [],
+              "appliesAfterTheTimer": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "label": "and a mutation attempted inside a FiberRuntime.emit reentrant callback is refused,",
+      "pins": [
+        {
+          "id": "C1",
+          "quote": "and a mutation attempted inside a FiberRuntime.emit reentrant callback",
+          "witness": {
+            "probe": {
+              "ran": true,
+              "inside": true,
+              "refused": true
+            },
+            "hosts": {
+              "honest": [],
+              "swallow-callback": [
+                "emit-skipped-callback"
+              ],
+              "defer-callback": [
+                "callback-not-reentrant"
+              ]
+            }
+          }
+        },
+        {
+          "id": "C2",
+          "quote": "is refused,",
+          "witness": {
+            "refusal": {
+              "kind": "refused",
+              "code": "COMMIT_IN_EMIT"
+            },
+            "hosts": {
+              "honest": [],
+              "apply-in-emit": [
+                "reentrant-attempt-not-refused",
+                "state-mutated-in-emit",
+                "arbiter-applied-nothing"
+              ],
+              "untyped-throw": [
+                "reentrant-attempt-not-refused"
+              ]
+            },
+            "anyCode": {
+              "violations": [],
+              "probe": {
+                "ran": true,
+                "inside": true,
+                "refused": true
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "label": "with ControlDirective never grown into a second controller engine",
+      "pins": [
+        {
+          "id": "D1",
+          "quote": "with ControlDirective never grown",
+          "witness": {
+            "members": [
+              "abort_speculative_key"
+            ],
+            "hosts": {
+              "honest": [],
+              "camel-directive": [],
+              "grown-directive": [
+                "directive-grown:priority_hint"
+              ]
+            },
+            "payload": {
+              "violations": [],
+              "spells": [
+                "actuator-id",
+                "requested-range"
+              ]
+            }
+          }
+        },
+        {
+          "id": "D2",
+          "quote": "into a second controller engine",
+          "witness": {
+            "engine": {
+              "fields": [
+                "controller_id",
+                "observed_versions",
+                "state_epoch",
+                "actuator_id",
+                "requested_range",
+                "reason",
+                "min_interval"
+              ],
+              "verbs": [
+                "apply",
+                "arbitrate",
+                "commit",
+                "propose",
+                "step"
+              ],
+              "shipped": [],
+              "grown": []
+            },
+            "hosts": {
+              "engine-directive": [
+                "directive-grown:requested_range",
+                "directive-engine:requested_range",
+                "directive-grown:arbitrate",
+                "directive-engine:arbitrate"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "residuals": [
+    {
+      "id": "R-OUTSIDE-ROOTS",
+      "quietPin": "A1"
+    },
+    {
+      "id": "R-COMMON-WORD",
+      "quietPin": "A1"
+    },
+    {
+      "id": "R-COMPOSED",
+      "quietPin": "A1"
+    },
+    {
+      "id": "R-LOOKALIKE",
+      "quietPin": "A1"
+    },
+    {
+      "id": "R-RENDERER-HOST",
+      "quietPin": "A1"
+    },
+    {
+      "id": "R-SUBPROCESS",
+      "quietPin": "A1"
+    },
+    {
+      "id": "R-SYNONYM",
+      "quietPin": "A1"
+    },
+    {
+      "id": "R-ADAPTER-TRUST",
+      "quietPin": "A2"
+    },
+    {
+      "id": "R-LATE-APPLY",
+      "quietPin": "B2"
+    },
+    {
+      "id": "R-ANY-CODE",
+      "quietPin": "C2"
+    },
+    {
+      "id": "R-DIRECTIVE-PAYLOAD",
+      "quietPin": "D1"
+    }
+  ]
+}
