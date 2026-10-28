@@ -31,14 +31,20 @@
  *    a comma or any other expression) is computed and not part of it - every nested key path of object keys, type members and
  *    binding patterns, and every regex literal's pattern, each character escape (\x2E, \u002E, \u{2E}) read as the character it
  *    names and every other escape (a class, property, back-reference, assertion, control or digit escape, each read whole) and
- *    the pattern syntax as separators, an escaped character as itself; camelCase split, separators folded; comments are no
- *    reader) finds no gating work package (WORK_PACKAGE_TERMS) and no H2 identity-record word (IDENTITY_TERMS) beyond its one
- *    measured known spelling (KNOWN_SPELLINGS), every hit passing the one finding step its own controls drive
- *    (FINDING_CONTROLS: a flagged term beside the known spelling is a finding, and the known spelling in another module is one),
- *    with floors, the six judged sites as anchors, the four derived caches scanned quiet, the detector's controls, one per term
- *    and one per reading (the chain, key-path and regex readings and the reading controls: wb-flt6, the landing-316 gate's F3;
- *    the wrapper, indexed-access-type, type-query and escape readings and the finding step's controls: wb-3wcm, the landing-405
- *    gate's F1, F2, F3 and F6) and the TOKEN ANCHOR (wb-3wcm F4): the TypeScript compiler, outside this cut, is the anchor of
+ *    the pattern syntax (a brace quantifier with its counts read whole) as separators, an escaped character (an identity-escaped
+ *    letter, \E, included) as itself; camelCase split, separators folded; comments are no reader) finds no gating work package
+ *    (WORK_PACKAGE_TERMS) and no H2 identity-record word (IDENTITY_TERMS) beyond its one measured known spelling
+ *    (KNOWN_SPELLINGS), through ONE finding step (findingStep): A2's one call over the src read yields both the findings it gates
+ *    on and the known spelling it holds, so a src read emptied at that call loses the known spelling, and the step's own
+ *    controls make the same call over their own scans (FINDING_CONTROLS: a flagged term beside the known spelling is a finding,
+ *    and the known spelling in another module is one; each control's findings and known spellings held), with floors, the six
+ *    judged sites as anchors, the four derived caches scanned quiet, the detector's controls, one per term and one per reading
+ *    (the chain, key-path and regex readings and the reading controls: wb-flt6, the landing-316 gate's F3; the wrapper,
+ *    indexed-access-type, type-query and escape readings and the finding step's controls: wb-3wcm, the landing-405 gate's F1,
+ *    F2, F3 and F6; a control per chain root - a type name, a type query of a name and of a qualified name, each root carrying a
+ *    term word, and this and the this type - each reading control's SPELLING (the text its own reading read) held in A2's
+ *    witness beside its reading, the identity-escape and brace-quantifier regex readings and the one finding step: wb-3w79, the
+ *    landing-501 gate's F1, F3 and F4) and the TOKEN ANCHOR (wb-3wcm F4): the TypeScript compiler, outside this cut, is the anchor of
  *    the token readings - every node of a src module's syntax tree that carries its own text (an identifier, a private name, a
  *    string, a template part, a regex, a number) must be one a token reading read, so a token reading removed together with its
  *    controls, the roster's scan and A2's witness reds (a text-carrying kind no reading reads, JSX text today, is the anchor's
@@ -92,20 +98,29 @@
  * witness drift, kept every count and the file green): the judged set parses this file with the TypeScript compiler and holds each
  * witness comparison (COMPARISONS: the pin case's and the records case's) to one expression statement spelled exactly so and
  * standing directly in its case's body (no try, condition, loop or nested function around it), the list itself held to the
- * roster's, so a comparison weakened, guarded or caught in place reds before any pin runs.
+ * roster's, so a comparison weakened, guarded or caught in place reds before any pin runs. It holds the statements that give each
+ * comparison its OPERAND the same way (OPERANDS; wb-3w79, the landing-501 gate's F2: the pin case's witness rerouted in place to
+ * the roster's own witness kept both comparisons comparing the roster against itself): the pin case's lookup of its IMPL entry,
+ * the echo check over that entry's source, its witness declaration and its MEASURED record, each one statement spelled exactly
+ * so and standing directly in the pin case's body, the list held to the roster's.
  * Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the filing anchors rows and clauses, not pins); a
  * term removed from IDENTITY_TERMS or WORK_PACKAGE_TERMS together with its controls, the roster's scan and A2's witness (the
  * filing anchors rows and clauses, not words, and no source outside this cut lists the vocabulary); an assertion removed from this
  * file together with its pinned count in the roster's record; a case that keeps its own assertions but returns its witness as a
  * literal, or reads the roster through an alias; the file-end judge or the selection it reads removed (no claim rides them alone:
  * the records case still holds the record); every case of the file skipped at once (no case runs to read the tree, and vitest runs
- * no hook for a file with nothing to run); a composite reading (the chain or the key-path reading) removed from scanModule together
- * with its reading controls, the roster's scan and A2's witness - and, for the chain reading, the known spelling - (the token
- * anchor holds tokens, not composites, and no source outside this cut lists the composite readings); a token reading kept in place
- * but made to read nothing, or a token marked read whose text no reading passes on, together with its controls (the anchor holds
- * that every token is read, not what is read from it); a witness comparison weakened in place together with its COMPARISONS
- * entry and the roster's, or hollowed through its matcher, an expect.extend override (the SELF-READ holds the spelling and the
- * place, and no source outside this cut lists the comparisons).
+ * no hook for a file with nothing to run); a composite reading (the chain or the key-path reading), or one link or root kind of the
+ * chain reading, removed from scanModule together with its reading controls, the roster's scan and A2's witness - and, for the
+ * chain reading, the known spelling - (the token anchor holds tokens, not composites, and no source outside this cut lists the
+ * composite readings); a token reading kept in place but made to read nothing, or a token marked read whose text no reading passes
+ * on, together with its controls (the anchor holds that every token is read, not what is read from it); a regex term whose
+ * letters the pattern syntax splits - a class's contents, a quantifier or a group standing between two letters of one word
+ * (/owner[E]poch/, /ownerE?poch/) - read as separate words (the pattern syntax reads as separators and a class's contents as text);
+ * A2's src read narrowed, where it is declared or at the finding step's call, to the known spelling's own hits (the step then
+ * holds the known spelling and finds nothing else; the token anchor holds tokens, not hits); a witness comparison or an operand
+ * statement weakened in place together with its COMPARISONS or OPERANDS entry and the roster's, or a comparison hollowed
+ * through its matcher, an expect.extend override (the SELF-READ holds the spelling and the place, and no source outside this cut
+ * lists the comparisons or the operands).
  * THE GATE-OPENING SIGNAL: A1 reds when an H2 producer package is declared, installed, loaded or named, and A2 when a src module
  * names a gating work package or an identity-record word: the H2 reader RL-H2-01/02, FO-H2-01/02, RC-H2-02 or RI-H2-02 calls for
  * reds this census first, and its cut re-pins (a) to (d) at that reader's own keys (B to E already pin the sites it would use).
@@ -211,7 +226,10 @@ const QUIET_CONTROLS: readonly string[] = [
 const COMPOSED_CONTROL = 'const word = ["owner", "epoch"].join(" ");';
 /** One control per reading of the scan (wb-flt6, the 316 gate's F3: G08 dropped the private-name reading and the file stayed green):
  * [label, the reading that must spell READING_TERM, the source], each source spelled by that reading alone, so a reading dropped
- * from scanModule reds its control. */
+ * from scanModule reds its control. A2's witness also holds each control's SPELLING, the text its own reading read (wb-3w79, the
+ * landing-501 gate's F1: the indexed-access-type and type-query controls spelled the term in their keys, so a chain read without
+ * its root kept them true): a reading that still finds the term from another text reds. Each chain root has its own control, and
+ * a type-name or type-query root carries a term word, so a root that is no longer read loses the term. */
 const READING_CONTROLS: readonly (readonly [string, string, string])[] = [
   ["identifier", "identifier", "let ownerEpoch = 0;"],
   ["private name", "identifier", "class Holder { #ownerEpoch = 0; }"],
@@ -244,14 +262,25 @@ const READING_CONTROLS: readonly (readonly [string, string, string])[] = [
   ["regex digit escape", "regex", "const r = /owner\\0epoch/;"],
   ["regex property escape", "regex", "const r = /owner\\p{P}epoch/u;"],
   ["regex named back-reference", "regex", "const r = /(?<dot>\\.)owner\\k<dot>epoch/;"],
+  ["type name root", "chain", 'type E = Owner["epoch"];'],
+  ["type query name root", "chain", 'type E = (typeof owner)["epoch"];'],
+  ["type query qualified root", "chain", 'type E = (typeof record.owner)["epoch"];'],
+  ["this root", "chain", "class Holder { e = this.owner.epoch; }"],
+  ["this type root", "chain", 'interface Holder { e: this["owner"]["epoch"]; }'],
+  ["regex identity escape", "regex", "const r = /owner\\Epoch/;"],
+  ["regex count quantifier", "regex", "const r = /owner.{1}epoch/;"],
+  ["regex range quantifier", "regex", "const r = /owner.{0,2}epoch/;"],
+  ["regex open quantifier", "regex", "const r = /owner.{1,}epoch/;"],
 ];
 const READING_TERM = "owner epochs?";
 /** R-OWN-FIELD: the one spelling A2 reads in src and holds as known (`${path} ${reading} ${value}`): the local detached contract's
  * snapshot field, read through the chain reading. */
 const KNOWN_SPELLINGS: readonly string[] = ["src/workbench/detached-observer.ts chain snapshot.observation"];
 /** The finding step's own controls (wb-3wcm, the landing-405 gate's F6): [the module path a source is scanned under, the source,
- * the one term its hits must leave as a finding], each scanned and passed through findingsOf, so a finding step that drops a hit
- * reds: the known spelling beside a flagged term at the known module, and the known spelling at another module. */
+ * the one term its hits must leave as a finding], each scanned and passed through findingStep, the one step A2's src call makes
+ * too (wb-3w79, the landing-501 gate's F4), so a finding step that drops a hit reds: the known spelling beside a flagged term at
+ * the known module, and the known spelling at another module. Each control's known spellings are held as well (the known module's
+ * one, and none at the other), so a step that answers the known spelling without reading it reds. */
 const FINDING_CONTROLS: readonly (readonly [string, string, string])[] = [
   ["src/workbench/detached-observer.ts", "const seen = snapshot.observation; const ownerEpoch = 1;", "owner epochs?"],
   ["src/workbench/detached-observer-copy.ts", "const seen = snapshot.observation;", "snapshot observations?"],
@@ -262,6 +291,15 @@ const TOKEN_CONTROL: readonly [string, string] = ["control.tsx", "const view = <
 const COMPARISONS: readonly string[] = [
   "expect(witness).toStrictEqual(rosterWitness(pin));",
   `expect(MEASURED, "every pin's measured witness, compared against the roster a second time").toStrictEqual(Object.fromEntries(pins.map(pin => [pin, rosterWitness(pin)])));`,
+];
+/** SELF-READ (wb-3w79, the landing-501 gate's F2): the statements that give each witness comparison its operand, as the pin case
+ * spells them - its IMPL entry's lookup, the echo check over that entry's source, its witness declaration and its MEASURED record -
+ * so a witness rerouted in place, or an echo check weakened in place, reds. */
+const OPERANDS: readonly string[] = [
+  "const impl = IMPL[pin];",
+  `expect(String(impl), \`\${pin}'s case reads the roster's witnesses\`).not.toMatch(/\\brosterWitness\\b|\\bROSTER\\.rows\\b/);`,
+  "const witness = impl === undefined ? null : await impl();",
+  "MEASURED[pin] = witness;",
 ];
 /** R-SPLIT-NAMES' quiet row: a term split across two names that form no chain and no key path. */
 const SPLIT_CONTROLS: readonly string[] = [
@@ -360,6 +398,8 @@ interface Roster {
   readonly residualRows: JsonObject;
   /** The SELF-READ's witness comparisons. */
   readonly comparisons: readonly string[];
+  /** The SELF-READ's operand statements. */
+  readonly operands: readonly string[];
   readonly rows: readonly RosterRow[];
   readonly tests: readonly string[];
   /** The ends every case before the records case records, in run order (`${id}:${count}`). */
@@ -420,6 +460,7 @@ function readRoster(): Roster {
     residuals: strings(raw.residuals, "residuals"),
     residualRows: json(raw.residualRows) as JsonObject,
     comparisons: strings(raw.comparisons, "comparisons"),
+    operands: strings(raw.operands, "operands"),
     rows,
     tests: strings(raw.tests, "tests"),
     reached: strings(raw.reached, "reached"),
@@ -513,20 +554,34 @@ function scriptKindOf(path: string): ts.ScriptKind {
   if (extension === ".ts" || extension === ".mts" || extension === ".cts") return ts.ScriptKind.TS;
   return ts.ScriptKind.JSX;
 }
-/** One spelling of a vocabulary term: its module and line, the reading that read it, the term and the text it was read in. */
+/** One spelling of a vocabulary term: its module and line, the reading that read it, the term, the text it was read in (value) and
+ * that text as the vocabulary read it (read: a regex literal's pattern as patternOf reads it, otherwise the value). */
 interface Hit {
   readonly path: string;
   readonly line: number;
   readonly reading: string;
   readonly term: string;
   readonly value: string;
+  readonly read: string;
 }
 const shownHit = (hit: Hit): string => `${hit.path}:${hit.line} ${hit.reading} ${hit.term}: ${hit.value}`;
 /** A hit as KNOWN_SPELLINGS names it: its module, its reading and its text, never its line. */
 const spellingOf = (hit: Hit): string => `${hit.path} ${hit.reading} ${hit.value}`;
-/** A2's one finding step (R-OWN-FIELD): a hit KNOWN_SPELLINGS names (by module, reading and text) is held as known; every other hit
- * is a finding. FINDING_CONTROLS drive it with hits of their own. */
-const findingsOf = (read: readonly Hit[]): Hit[] => read.filter(hit => !KNOWN_SPELLINGS.includes(spellingOf(hit)));
+/** What A2's one finding step yields from one read: every hit KNOWN_SPELLINGS does not name, shown and by term, and the known
+ * spellings it held. */
+interface FindingStep {
+  readonly findings: string[];
+  readonly terms: string[];
+  readonly known: string[];
+}
+/** A2's one finding step (R-OWN-FIELD; wb-3w79, the landing-501 gate's F4): a hit KNOWN_SPELLINGS names (by module, reading and
+ * text) is held as known; every other hit is a finding. One call over one read yields both, so A2's src call and FINDING_CONTROLS'
+ * calls drive the same step, and a src read emptied at A2's call loses the known spelling A2 holds. */
+function findingStep(read: readonly Hit[]): FindingStep {
+  const isKnown = (hit: Hit): boolean => KNOWN_SPELLINGS.includes(spellingOf(hit));
+  const found = read.filter(hit => !isKnown(hit));
+  return { findings: found.map(shownHit), terms: found.map(hit => hit.term), known: [...new Set(read.filter(isKnown).map(spellingOf))].sort() };
+}
 interface ModuleScan {
   readonly identifiers: Set<string>;
   readonly literals: Set<string>;
@@ -620,17 +675,20 @@ function keyPathOf(node: Keyed): string[] {
   }
   return keys;
 }
-/** A regex literal's escapes as the vocabulary reads them (wb-3wcm, the landing-405 gate's F3): a character escape (\x2E, \u002E,
+/** A regex literal's pieces as the vocabulary reads them (wb-3wcm, the landing-405 gate's F3): a character escape (\x2E, \u002E,
  * \u{2E}) is the character it names; a property escape (\p{P}), a named back-reference (\k<name>), a control escape (\cJ), a
- * digit escape (\0, a back-reference \1) and a letter escape (\s, \d, \b) are each one separator, read whole; any other
- * escaped character (\., \/) is itself. */
-const REGEX_ESCAPE = /\\x([0-9a-fA-F]{2})|\\u([0-9a-fA-F]{4})|\\u\{([0-9a-fA-F]{1,6})\}|\\[pP]\{[^}]*\}|\\k<[^>]*>|\\c[a-zA-Z]|\\[0-9]+|\\[a-zA-Z]|\\(.)/g;
+ * digit escape (\0, a back-reference \1), a class escape (\d, \D, \s, \S, \w, \W), an assertion (\b, \B) and a control
+ * character escape (\f, \n, \r, \t, \v) are each one separator, read whole; any other escaped character - \., \/ or an
+ * identity-escaped letter such as \E (wb-3w79, the landing-501 gate's F3: /owner\Epoch/ matches ownerEpoch) - is itself. A brace
+ * quantifier ({1}, {0,2}, {1,}) is pattern syntax read whole with its counts, so no count stands between two words (F3:
+ * /owner.{1}epoch/ matches owner.epoch); the one left-to-right pass reads an escaped brace as an escape, never as a quantifier. */
+const REGEX_PIECE = /\\x([0-9a-fA-F]{2})|\\u([0-9a-fA-F]{4})|\\u\{([0-9a-fA-F]{1,6})\}|\\[pP]\{[^}]*\}|\\k<[^>]*>|\\c[a-zA-Z]|\\[0-9]+|\\[dDsSwWbBfnrtv]|\\(.)|\{[0-9]+(?:,[0-9]*)?\}/g;
 /** A regex literal as the vocabulary reads it: each character escape read as the character it names, every other escape (a class,
- * property, back-reference, assertion, control or digit escape) and every pattern-syntax character a separator, an escaped
- * character itself. */
+ * property, back-reference, assertion, control or digit escape), each brace quantifier and every pattern-syntax character a
+ * separator, an escaped character (an identity-escaped letter included) itself. */
 const patternOf = (literal: string): string =>
   literal
-    .replace(REGEX_ESCAPE, (_escape: string, two?: string, four?: string, braced?: string, escaped?: string): string => {
+    .replace(REGEX_PIECE, (_piece: string, two?: string, four?: string, braced?: string, escaped?: string): string => {
       const code = two ?? four ?? braced;
       if (code !== undefined) {
         const point = Number.parseInt(code, 16);
@@ -656,7 +714,7 @@ function scanModule(path: string, source: string): ModuleScan {
   const tokens = new Set<ts.Node>();
   const line = (node: ts.Node): number => file.getLineAndCharacterOfPosition(node.getStart(file)).line + 1;
   const spelled = (node: ts.Node, reading: string, value: string, read: string = value): void => {
-    for (const term of termsIn(read)) hits.push({ path, line: line(node), reading, term, value });
+    for (const term of termsIn(read)) hits.push({ path, line: line(node), reading, term, value, read });
   };
   const load = (node: ts.Node | undefined): void => {
     const value = literalOf(node);
@@ -971,9 +1029,9 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
   A2: () => {
     const scan = srcScan();
     const read = [...scan.modules.values()].flatMap(scanned => scanned.hits);
-    // R-OWN-FIELD: a hit KNOWN_SPELLINGS names (by module, reading and text) is held as known; every other hit is a finding.
-    const hits = findingsOf(read).map(shownHit);
-    const known = [...new Set(read.filter(hit => KNOWN_SPELLINGS.includes(spellingOf(hit))).map(spellingOf))].sort();
+    // R-OWN-FIELD: the one finding step - its one call over the src read yields the findings A2 gates on and the known spelling it
+    // holds, each read straight from the step where it is used.
+    const step = findingStep(read);
     const nonModules = scan.files.filter(path => !MODULE_EXTENSIONS.includes(extensionOf(path)));
     const anchors = Object.entries(ANCHORS).map(([path, identifier]) => `${path}:${scan.modules.get(path)?.identifiers.has(identifier) === true}`);
     const literalAnchors = Object.entries(LITERAL_ANCHORS).map(([path, literal]) => `${path}:${scan.modules.get(path)?.literals.has(literal) === true}`);
@@ -982,19 +1040,22 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
       return `${path}:${scanned?.identifiers.has(identifier) === true}:${scanned?.hits.length ?? -1}`;
     });
     const flagged = FLAGGED_CONTROLS.map(([source, term]) => `${term}:${scanModule("control.ts", source).hits.some(hit => hit.term === term)}`);
-    const readings = READING_CONTROLS.map(([label, reading, source]) => `${label}:${scanModule("control.ts", source).hits.some(hit => hit.reading === reading && hit.term === READING_TERM)}`);
+    // Each reading control's hits of the term by its own reading: the reading holds that some hit exists, the spelling holds the
+    // text that reading read (wb-3w79 F1), so a reading that finds the term from another text - a chain without its root - reds.
+    const readHits = READING_CONTROLS.map(([, reading, source]) => scanModule("control.ts", source).hits.filter(hit => hit.reading === reading && hit.term === READING_TERM));
+    const readings = READING_CONTROLS.map(([label], index) => `${label}:${(readHits[index] ?? []).length > 0}`);
+    const spellings = READING_CONTROLS.map(([label], index) => `${label}: ${(readHits[index] ?? []).map(hit => hit.read).join(" | ")}`);
     const quietControls = QUIET_CONTROLS.map(source => scanModule("control.ts", source).hits.length);
     const composed = scanModule("control.ts", COMPOSED_CONTROL).hits.length;
     const split = SPLIT_CONTROLS.map(source => scanModule("control.ts", source).hits.length);
-    // The finding step's own controls: each one's hits pass findingsOf and leave exactly its one owed term as a finding.
-    const controlFindings = FINDING_CONTROLS.map(([path, source]) => findingsOf(scanModule(path, source).hits));
-    const findingControls = controlFindings.map(found => found.map(shownHit));
-    const findingTerms = controlFindings.map(found => found.map(hit => hit.term));
+    // The finding step's own controls: each one's hits pass the same step A2's src call makes, leave exactly its one owed term as
+    // a finding and hold the known spellings that step held (wb-3w79 F4).
+    const controlSteps = FINDING_CONTROLS.map(([path, source]) => findingStep(scanModule(path, source).hits));
     // THE TOKEN ANCHOR: every src node the compiler gives its own text was read by a token reading; its control lists JSX text.
     const unreadTokens = [...scan.modules.values()].flatMap(scanned => scanned.unread);
     const tokenControl = scanModule(TOKEN_CONTROL[0], TOKEN_CONTROL[1]).unread;
-    expect(hits, "a src module names a gating work package or an H2 identity-record word").toEqual([]);
-    expect(known, "the known spelling is read where it stands, so the chain reading is live on src").toEqual([...KNOWN_SPELLINGS]);
+    expect(step.findings, "a src module names a gating work package or an H2 identity-record word").toEqual([]);
+    expect(step.known, "the known spelling is read where it stands, so the chain reading is live on src").toEqual([...KNOWN_SPELLINGS]);
     expect(scan.files.length, "src files above the floor").toBeGreaterThanOrEqual(FLOORS.srcFiles);
     expect(scan.modules.size, "src modules above the floor").toBeGreaterThanOrEqual(FLOORS.srcModules);
     expect({ nonModules, symlinks: scan.symlinks }, "every src file is a module the compiler parses").toStrictEqual({ nonModules: [], symlinks: [] });
@@ -1004,13 +1065,13 @@ const IMPL: Readonly<Record<string, () => JsonValue | Promise<JsonValue>>> = {
     expect(flagged.every(entry => entry.endsWith(":true")), "each flagged control reads its own term").toBe(true);
     expect(readings.every(entry => entry.endsWith(":true")), "each reading control is spelled by its own reading").toBe(true);
     expect(quietControls, "the quiet controls read nothing").toEqual(QUIET_CONTROLS.map(() => 0));
-    expect(findingTerms, "each finding control leaves exactly its owed term as a finding").toEqual(FINDING_CONTROLS.map(([, , term]) => [term]));
+    expect(controlSteps.map(found => found.terms), "each finding control leaves exactly its owed term as a finding").toEqual(FINDING_CONTROLS.map(([, , term]) => [term]));
     expect(unreadTokens, "every src node the compiler gives its own text is read by a token reading").toEqual([]);
     expect(tokenControl, "the token anchor lists a text-carrying node no token reading reads").toEqual([`${TOKEN_CONTROL[0]}:1: owner epoch`]);
     return json({
-      hits, floorsMet: { srcFiles: scan.files.length >= FLOORS.srcFiles, srcModules: scan.modules.size >= FLOORS.srcModules }, nonModules, anchors, literalAnchors, flagged, readings,
-      quietControls, findingControls, unreadTokens, tokenControl,
-      quiet: { "R-COMPOSED": composed, "R-UNJUDGED-SITES": quietSites, "R-OWN-FIELD": known, "R-SPLIT-NAMES": split },
+      hits: step.findings, floorsMet: { srcFiles: scan.files.length >= FLOORS.srcFiles, srcModules: scan.modules.size >= FLOORS.srcModules }, nonModules, anchors, literalAnchors, flagged,
+      readings, spellings, quietControls, findingControls: controlSteps.map(found => found.findings), findingKnown: controlSteps.map(found => found.known), unreadTokens, tokenControl,
+      quiet: { "R-COMPOSED": composed, "R-UNJUDGED-SITES": quietSites, "R-OWN-FIELD": step.known, "R-SPLIT-NAMES": split },
     });
   },
   A3: () => {
@@ -1419,14 +1480,14 @@ function inCaseBody(statement: ts.Statement): boolean {
   const call = callback.parent;
   return ts.isCallExpression(call) && ts.isIdentifier(call.expression) && call.expression.text === "it" && call.arguments.at(-1) === callback;
 }
-/** SELF-READ: every expression statement standing directly in a test case's callback body, as the TypeScript compiler parses
- * this file, whitespace dropped. */
+/** SELF-READ: every expression or variable statement standing directly in a test case's callback body, as the TypeScript compiler
+ * parses this file, whitespace dropped. */
 function selfStatements(): string[] {
   const path = fileURLToPath(import.meta.url);
   const file = ts.createSourceFile(path, readFileSync(path, "utf8"), ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
   const statements: string[] = [];
   const visit = (node: ts.Node): void => {
-    if (ts.isExpressionStatement(node) && inCaseBody(node)) statements.push(squeezed(node.getText(file)));
+    if ((ts.isExpressionStatement(node) || ts.isVariableStatement(node)) && inCaseBody(node)) statements.push(squeezed(node.getText(file)));
     ts.forEachChild(node, visit);
   };
   visit(file);
@@ -1482,12 +1543,14 @@ describe("wb-4nut.9 H2 identity and reuse census (TSX-HARNESS2-REACTIVE-EVOLUTIO
     expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:3", "B:2", "C:3", "D:2", "E:2"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
-    expect({ bead: BEAD, scan: SCAN, residuals: RESIDUAL_FAMILIES, residualRows: RESIDUAL_ROWS, comparisons: COMPARISONS }).toStrictEqual({
-      bead: ROSTER.bead, scan: ROSTER.scan, residuals: [...ROSTER.residuals], residualRows: ROSTER.residualRows, comparisons: [...ROSTER.comparisons],
+    expect({ bead: BEAD, scan: SCAN, residuals: RESIDUAL_FAMILIES, residualRows: RESIDUAL_ROWS, comparisons: COMPARISONS, operands: OPERANDS }).toStrictEqual({
+      bead: ROSTER.bead, scan: ROSTER.scan, residuals: [...ROSTER.residuals], residualRows: ROSTER.residualRows, comparisons: [...ROSTER.comparisons], operands: [...ROSTER.operands],
     });
-    // SELF-READ: each witness comparison is one statement standing directly in a case's body, spelled exactly so.
+    // SELF-READ: each witness comparison, and each statement that gives a comparison its operand, is one statement standing
+    // directly in a case's body, spelled exactly so.
     const statements = selfStatements();
     expect(COMPARISONS.map(comparison => statements.filter(statement => statement === squeezed(comparison)).length), "each witness comparison is spelled once, strict, directly in its case's body").toEqual(COMPARISONS.map(() => 1));
+    expect(OPERANDS.map(operand => statements.filter(statement => statement === squeezed(operand)).length), "each witness comparison's operand is spelled once, directly in the pin case's body").toEqual(OPERANDS.map(() => 1));
     // Every residual names a pin of the judged set, and that pin's roster witness carries its pinned quiet row.
     const quietRows = RESIDUAL_FAMILIES.map(family => {
       const pin = RESIDUAL_ROWS[family] ?? "";

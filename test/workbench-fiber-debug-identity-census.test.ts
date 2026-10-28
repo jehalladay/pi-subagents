@@ -39,17 +39,19 @@
  *    an export line, a double-quoted, a single-quoted and a template string, a whole-line and a trailing line comment, a whole-line
  *    and a trailing one-line block comment, a plain and a JSDoc block across three lines and lines indented by spaces and by a tab;
  *    three long plants whose control sits last, first or in the middle of filler runs each longer than the longest src or qa text in
- *    characters and in lines; and a long-line plant whose control sits in the middle of one line, between filler runs each longer than
- *    the longest src or qa line (wb-52pt cut #2) - beside a quiet anchor module holding every quiet control, goes through the one scan
- *    src and qa go through (vocabularyScan), which spells for each plant exactly the tokens its control spells. What the listing and
- *    the plants prove, and no more (wb-52pt cut #2, answering the cut #1 refusal U1): a scan reds that walks less than the listed
- *    tree, or whose judge keeps of each file only a head window, a tail window or a head-and-tail pair of a fixed number of lines or
- *    of characters, cuts each line to such a window of characters, or skips files or drops lines longer than a fixed length, whenever
- *    the window (each window of the pair) or the length is shorter than the longest src or qa text or line - as it is whenever the
- *    read hides any part of one; and so does a judge that drops or blanks any one of these: whole-line or trailing line comments,
- *    block comments on one line (whole-line or trailing) or across lines (plain or JSDoc) or their continuation lines; double-quoted,
- *    single-quoted or template strings; import or export lines; lines indented by spaces or by a tab; every other line (either
- *    parity). Any other partial read is not claimed (Not claimed, below).
+ *    characters, in UTF-8 bytes and in lines; and a long-line plant whose control sits in the middle of one line, between filler runs
+ *    each longer than the longest src or qa line in characters and in bytes (wb-52pt cut #2; bytes since wb-y4c9 F2, each run checked
+ *    against both measures) - beside a quiet anchor module holding every quiet control, goes through the one scan src and qa go
+ *    through (vocabularyScan), which spells for each plant exactly the tokens its control spells. What the listing and the plants
+ *    prove, and no more (wb-52pt cut #2, answering the cut #1 refusal U1): a scan reds that walks less than the listed tree, or whose
+ *    judge keeps of each file only a head window, a tail window or a head-and-tail pair of a fixed number of lines or of characters
+ *    (or of bytes, wb-y4c9 F2), cuts each line to such a window of characters (or of bytes), or skips files or drops lines longer
+ *    than a fixed length (in characters or in bytes), whenever the window (each window of the pair) or the length is shorter than the
+ *    longest src or qa text or line in its measure - as it is whenever the read hides any part of one; and so does a judge that drops
+ *    or blanks any one of these: whole-line or trailing line comments, block comments on one line (whole-line or trailing) or across
+ *    lines (plain or JSDoc) or their continuation lines; double-quoted, single-quoted or template strings; import or export lines;
+ *    lines indented by spaces or by a tab; every other line (either parity). Any other partial read is not claimed (Not claimed,
+ *    below).
  *  B, the refusal, (b). B1 relate() refuses every identity spelling a mapping claim would state ("Unknown relationship kind.") and the
  *    ownership form without the owner's own confirmation, each with no effect. B2 a reader serving the claim as a stored row: the
  *    slice reads it as an unknown-relation-kind reference, never an edge, and the agent's read counts nothing and flags partial. B3 the
@@ -68,18 +70,20 @@
  *    markdown file of its own - each flagged one at 1 to 6 path segments (Pi docs reach 4) and alone, first, between quiet units or
  *    last, the flagged ones units of every kind (paragraphs, one of them on two lines, a bullet and a numbered list item, a table row,
  *    a heading, a fence line with its continuation, a quote and an HTML unit); three long plants whose flagged unit sits last, first
- *    or in the middle of filler runs each longer than the longest Pi doc in characters and in units; and a long-unit plant, one unit
- *    whose coupled sentence sits in its middle, between filler runs each longer than the longest Pi doc unit (wb-52pt cut #2) - and a
- *    flagged one below every DOC_SKIP root and two nested node_modules, go through the one scan the repository goes through (docScan,
- *    whose claim judge is claimUnitsOf, the one C2 controls through claimUnitsIn): it reads exactly the flagged and quiet plants, its
- *    claims are exactly the flagged controls' coupled units (one each, as C2 reads them), and the skip plants are on disk and unread
- *    (skipped, held to the roster: wb-52pt F2). What the plants prove, and no more (wb-52pt cut #2, answering the cut #1 refusal U1b):
- *    a docScan whose read or claim judge keeps of each file only a head window, a tail window or a head-and-tail pair of a fixed
- *    number of units or of characters, cuts each unit to such a window of characters, or skips files or drops units longer than a
- *    fixed length reds, whenever the window (each window of the pair) or the length is shorter than the longest Pi doc or unit - as it
- *    is whenever the read hides any part of one; and so does one that drops paragraphs, headings, fence lines, quotes, HTML units,
- *    table rows, bullet or numbered list items or every other unit (either parity), or joins no continuation line. Any other partial
- *    read is not claimed (Not claimed, below). C2 the judge's controls.
+ *    or in the middle of filler runs each longer than the longest Pi doc in characters, in UTF-8 bytes and in units; and a long-unit
+ *    plant, one unit whose coupled sentence sits in its middle, between filler runs each longer than the longest Pi doc unit in
+ *    characters and in bytes (wb-52pt cut #2; bytes since wb-y4c9 F2, each run checked against both measures) - and a flagged one
+ *    below every DOC_SKIP root and two nested node_modules, go through the one scan the repository goes through (docScan, whose claim
+ *    judge is claimUnitsOf, the one C2 controls through claimUnitsIn): it reads exactly the flagged and quiet plants, its claims are
+ *    exactly the flagged controls' coupled units (one each, as C2 reads them), and the skip plants are on disk and unread (skipped,
+ *    held to the roster: wb-52pt F2). What the plants prove, and no more (wb-52pt cut #2, answering the cut #1 refusal U1b): a
+ *    docScan whose read or claim judge keeps of each file only a head window, a tail window or a head-and-tail pair of a fixed number
+ *    of units or of characters (or of bytes, wb-y4c9 F2), cuts each unit to such a window of characters (or of bytes), or skips files
+ *    or drops units longer than a fixed length (in characters or in bytes) reds, whenever the window (each window of the pair) or the
+ *    length is shorter than the longest Pi doc or unit in its measure - as it is whenever the read hides any part of one; and so does
+ *    one that drops paragraphs, headings, fence lines, quotes, HTML units, table rows, bullet or numbered list items or every other
+ *    unit (either parity), or joins no continuation line. Any other partial read is not claimed (Not claimed, below). C2 the judge's
+ *    controls.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; the whole judged set - every row's id, label and
  * pins, every pin's witness, the constants, the vocabularies and the residual families and every registered test title - is held to
@@ -97,19 +101,21 @@
  * partial reads rows A3 and C1 name, not that the scans read whole texts, nor that they read the repository the way they read the
  * plants; any partial read of another shape (wb-52pt cut #2, the cut #1 refusal U1 and U1b), among them a window sized as a share of
  * each file, line or unit (a head-and-tail pair of shares can reach a middle control), a sampling of lines or units other than every
- * other one, a judge that skips by path or by name a file the walk listed (no plant path names a repository directory), a read keyed
- * on any syntax, word or text no plant holds, and a cut inside a reader the expectations share (tokensIn, wordsOf, unitsOf,
- * claimUnitsOf; there only the in-case control checks stand guard); a case dropping or filtering its own scan's result after the
- * scan ran; a read keeping only the lines or units the plants' controls sit on (the first, the fourth, the fifth - the JSDoc
- * control's text line - the last and the long middle plants' middle one); a depth limit at or past every depth the plants and the
- * repository reach (A3's plants 5 directories, src and qa 3; C1's plants 6 segments, Pi docs 4), which hides nothing today; a file
- * reached only through a symlinked directory (neither the walks nor the listing follow one, and src, qa and the docs hold none
- * today); a wb-52pt guard edited together with the cut it guards - whole (or its listing) with a walk cut short that no plant shows,
- * a long plant's, the long line's or the long unit's reach (their sizing) with a read cut short past every other plant's control,
- * the skipped record taken from the plant list with the skip plants unplanted; the DOC_SKIP set itself (the skip plants follow it;
- * Q6 holds it to the roster); a pin's compare weakened together with a REACHED record of the roster's own witness in place of the
- * one its case computed; a last case that skips itself at run time, is weakened in place, or is removed together with the first
- * case's collected-tree check.
+ * other one, a judge that skips by path or by name a file the walk listed (no A3 plant path names a repository directory; C1's plants
+ * sit under docs/, docs/workbench/ and docs/workbench/receipts/, so a C1 judge that skips a file below one of those by path reds:
+ * wb-y4c9 F1), a read keyed on any syntax, word or text no plant holds, and a cut inside a reader the expectations share (tokensIn,
+ * wordsOf, unitsOf, claimUnitsOf; there only the in-case control checks stand guard); a case dropping or filtering its own scan's
+ * result after the scan ran; a read keeping only the lines or units the plants' controls sit on (the first, the second - the plain
+ * block control's text line, wb-y4c9 F1 - the fourth, the fifth - the JSDoc control's text line - the last and the long middle
+ * plants' middle one); a depth limit at or past every depth the plants and the repository reach (A3's plants 5 directories, src and
+ * qa 3; C1's plants 6 segments, Pi docs 4), which hides nothing today; a file reached only through a symlinked directory (neither the
+ * walks nor the listing follow one, and src, qa and the docs hold none today); a wb-52pt guard edited together with the cut it
+ * guards - whole (or its listing) with a walk cut short that no plant shows, a long plant's, the long line's or the long unit's reach
+ * (their sizing, together with the outreach check beside it since wb-y4c9 F2) with a read cut short past every other plant's control,
+ * the skipped record taken from the plant list with the skip plants unplanted; the DOC_SKIP set itself (the skip plants follow it; Q6
+ * holds it to the roster); a pin's compare weakened together with a REACHED record of the roster's own witness in place of the one
+ * its case computed; a last case that skips itself at run time, is weakened in place, or is removed together with the first case's
+ * collected-tree check.
  * RESIDUALS (named, each with its pinned quiet row): R-VOCABULARY a mapping reader reading only generic keys spells no vocabulary
  * token (Q1); R-PARAPHRASE a doc claim worded outside one family (no visual word, or no Fiber word) is not a coupled unit (Q2);
  * R-COMPOSED a token assembled from three or more parts at runtime is invisible to A3 (two-part joins are read: Q3); R-INTERRUPTED a
@@ -520,12 +526,39 @@ function placed(control: string, place: Place, filler: string, separator: string
 /** Where a long plant sets its control among its filler runs (wb-52pt F1): after one run, before one, or between two. */
 type LongPlace = "first" | "middle" | "last";
 const LONG_PLACES: readonly LongPlace[] = ["first", "middle", "last"];
+/** A length in both measures a fixed-size read can count: UTF-16 characters (a string's length) and UTF-8 bytes (wb-y4c9 F2). */
+interface Reach {
+  readonly chars: number;
+  readonly bytes: number;
+}
+/** The longest of some texts in each measure on its own: a text holding characters past ASCII is longer in bytes than in characters,
+ * so it can be the longest in bytes and not in characters (wb-y4c9 F2). */
+function longestOf(texts: Iterable<string>): Reach {
+  let chars = 0;
+  let bytes = 0;
+  for (const text of texts) {
+    chars = Math.max(chars, text.length);
+    bytes = Math.max(bytes, Buffer.byteLength(text));
+  }
+  return { chars, bytes };
+}
+/** The filler runs beside a long plant's control: its text split at the control, without the empty side of a first or last one. */
+function runsBeside(text: string, control: string): string[] {
+  return text.split(control).filter(run => run.length > 0);
+}
+/** Whether every run outreaches `longest` in both measures, so a fixed window of either measure that hides any part of the longest
+ * text (line, unit) hides the control beyond the run as well (wb-y4c9 F2). */
+function outreaches(runs: readonly string[], longest: Reach): boolean {
+  return runs.length > 0 && runs.every(run => run.length > longest.chars && Buffer.byteLength(run) > longest.bytes);
+}
 /** A long plant's text: its control after a run of filler (last), before one (first) or between two (middle), each run longer than
- * `longest` - the longest text the repository scan read - in both of the measures given (wb-52pt F1, cut #2). So a judge keeping only a
- * head window of fixed size misses a last control, a tail window a first one, and a head-and-tail pair a middle one, whenever the
- * window (each window of the pair) is shorter than the longest repository text - which it is whenever it would hide any part of one. */
-function pastLongest(control: string, filler: string, separator: string, longest: { readonly chars: number; readonly count: number }, place: LongPlace): string {
-  const count = Math.max(longest.count, Math.ceil(longest.chars / (filler.length + separator.length))) + 1;
+ * `longest` - the longest text the repository scan read - in each of the measures given (wb-52pt F1, cut #2): the count of lines or
+ * units, the characters and, since wb-y4c9 F2, the UTF-8 bytes. So a judge keeping only a head window of fixed size misses a last
+ * control, a tail window a first one, and a head-and-tail pair a middle one, whenever the window (each window of the pair) is shorter
+ * than the longest repository text in its own measure - which it is whenever it would hide any part of one. */
+function pastLongest(control: string, filler: string, separator: string, longest: Reach & { readonly count: number }, place: LongPlace): string {
+  const step: Reach = { chars: filler.length + separator.length, bytes: Buffer.byteLength(filler + separator) };
+  const count = Math.max(longest.count, Math.ceil(longest.chars / step.chars), Math.ceil(longest.bytes / step.bytes)) + 1;
   const run = Array.from({ length: count }, () => filler);
   return (place === "first" ? [control, ...run] : place === "middle" ? [...run, control, ...run] : [...run, control]).join(separator);
 }
@@ -550,11 +583,12 @@ function plantFile(folder: string, path: string, text: string): void {
 /** A3's planted positive control (wb-u29w F1, nested and multi-line since wb-52pt F1): in scratch, each flagged control in a module
  * of its own, 1 to 5 directories below the planted root and alone, first, between quiet lines or last; three long plants whose control
  * sits last (long.ts), first (long-first.ts) or in the middle (long-middle.ts) of filler runs each longer than `longest` (the longest
- * src or qa text, in characters and lines); and a long-line plant (long-line.ts) whose control sits in the middle of one line, between
- * filler runs each longer than the longest src or qa line (wb-52pt cut #2) - beside the quiet anchor module holding every quiet
+ * src or qa text, in characters, bytes and lines); and a long-line plant (long-line.ts) whose control sits in the middle of one line,
+ * between filler runs each longer than the longest src or qa line in characters and in bytes (wb-52pt cut #2; bytes and the outreach
+ * check since wb-y4c9 F2) - beside the quiet anchor module holding every quiet
  * control, read through vocabularyScan as src and qa are: the scan reads every plant and spells, for each flagged module, exactly the
  * tokens its control spells read alone, and nothing for the anchor. */
-function plantedVocabulary(longest: { readonly chars: number; readonly lines: number; readonly line: number }): { reading: ScanReading; spelled: string[] } {
+function plantedVocabulary(longest: { readonly text: Reach; readonly lines: number; readonly line: Reach }): { reading: ScanReading; spelled: string[] } {
   const folder = plantScratch("fiber-debug-identity-a3-");
   const flagged = A3_FLAGGED.map((control, index) => ({
     path: `${PLANT_ROOT}/${A3_DIRS[index % A3_DIRS.length] ?? ""}flagged-${String(index).padStart(2, "0")}.ts`,
@@ -565,9 +599,13 @@ function plantedVocabulary(longest: { readonly chars: number; readonly lines: nu
   const long = LONG_PLACES.map(place => ({
     path: `${PLANT_ROOT}/${place === "last" ? "long" : `long-${place}`}.ts`,
     control,
-    text: pastLongest(control, A3_FILLER, "\n", { chars: longest.chars, count: longest.lines }, place),
+    text: pastLongest(control, A3_FILLER, "\n", { ...longest.text, count: longest.lines }, place),
   }));
-  const longLine = { path: `${PLANT_ROOT}/long-line.ts`, control, text: pastLongest(control, A3_FILLER, " ", { chars: longest.line, count: 0 }, "middle") };
+  const longLine = { path: `${PLANT_ROOT}/long-line.ts`, control, text: pastLongest(control, A3_FILLER, " ", { ...longest.line, count: 0 }, "middle") };
+  // wb-y4c9 F2: every filler run beside a long plant's control outreaches the longest src or qa text, and the long line's the longest
+  // line, in characters and in bytes, so a fixed window of either measure that hides any part of one hides the control too.
+  expect(long.map(plant => outreaches(runsBeside(plant.text, control), longest.text)), "each long plant's filler runs outreach the longest src or qa text in characters and in bytes").toEqual([true, true, true]);
+  expect(outreaches(runsBeside(longLine.text, control), longest.line), "the long line's filler runs outreach the longest src or qa line in characters and in bytes").toBe(true);
   const plants = [...flagged, ...long, longLine].sort((left, right) => walkOrder(left.path, right.path));
   for (const plant of plants) plantFile(folder, plant.path, plant.text);
   plantFile(folder, `${PLANT_ROOT}/quiet.ts`, A3_QUIET.join("\n"));
@@ -596,12 +634,13 @@ const C1_DIRS: readonly string[] = ["docs/", "docs/workbench/", "docs/workbench/
 /** C1's planted positive control (wb-u29w F1, nested and multi-unit since wb-gy3t and wb-52pt F1): in scratch, each flagged C2 control
  * in a markdown file of its own at 1 to 6 path segments and alone, first, between quiet units or last; three long plants whose flagged
  * unit sits last (long.md), first (long-first.md) or in the middle (long-middle.md) of filler runs each longer than `longest` (the
- * longest Pi doc, in characters and units); a long-unit plant (long-unit.md), one unit whose coupled sentence sits in its middle,
- * between filler runs each longer than the longest Pi doc unit (wb-52pt cut #2); each quiet C2 control in one at the top; and a
+ * longest Pi doc, in characters, bytes and units); a long-unit plant (long-unit.md), one unit whose coupled sentence sits in its
+ * middle, between filler runs each longer than the longest Pi doc unit in characters and in bytes (wb-52pt cut #2; bytes and the
+ * outreach check since wb-y4c9 F2); each quiet C2 control in one at the top; and a
  * flagged control below every DOC_SKIP root and below two nested node_modules - read through docScan as the repository is: the scan
  * reads exactly the flagged and quiet files, its claims are exactly the flagged controls' own coupled units (each control is one, as
  * C2 reads it), and the skip plants are on disk and unread - the skipped record, held to the roster (wb-52pt F2). */
-function plantedDocs(longest: { readonly chars: number; readonly units: number; readonly unit: number }): { files: string[]; claims: string[]; skipped: string[] } {
+function plantedDocs(longest: { readonly text: Reach; readonly units: number; readonly unit: Reach }): { files: string[]; claims: string[]; skipped: string[] } {
   const folder = plantScratch("fiber-debug-identity-c1-");
   const flagged = C2_FLAGGED.map((control, index) => ({
     path: `${C1_DIRS[index % C1_DIRS.length] ?? ""}flagged-${index}.md`,
@@ -612,10 +651,14 @@ function plantedDocs(longest: { readonly chars: number; readonly units: number; 
   const long = LONG_PLACES.map(place => ({
     path: `docs/${place === "last" ? "long" : `long-${place}`}.md`,
     control,
-    text: pastLongest(control, C1_FILLER, "\n\n", { chars: longest.chars, count: longest.units }, place),
+    text: pastLongest(control, C1_FILLER, "\n\n", { ...longest.text, count: longest.units }, place),
   }));
   // The long unit is one line, so one unit, and it is its own control: its coupled sentence sits in its middle (wb-52pt cut #2).
-  const unit = pastLongest(control, C1_FILLER, " ", { chars: longest.unit, count: 0 }, "middle");
+  const unit = pastLongest(control, C1_FILLER, " ", { ...longest.unit, count: 0 }, "middle");
+  // wb-y4c9 F2: every filler run beside a long plant's flagged unit outreaches the longest Pi doc, and the long unit's runs beside its
+  // coupled sentence the longest Pi doc unit, in characters and in bytes.
+  expect(long.map(plant => outreaches(runsBeside(plant.text, control), longest.text)), "each long plant's filler runs outreach the longest Pi doc in characters and in bytes").toEqual([true, true, true]);
+  expect(outreaches(runsBeside(unit, control), longest.unit), "the long unit's filler runs outreach the longest Pi doc unit in characters and in bytes").toBe(true);
   const coupled = [...flagged, ...long, { path: "docs/long-unit.md", control: unit, text: unit }].sort((left, right) => walkOrder(left.path, right.path));
   const quiet = C2_QUIET.map((text, index) => ({ path: `quiet-${index}.md`, text }));
   const skipped = [...[...DOC_SKIP].sort().map(root => `${root}/skipped.md`), "docs/node_modules/skipped.md", "docs/workbench/receipts/node_modules/skipped.md"];
@@ -959,12 +1002,13 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     const bound = MAPPING_READERS.map(binding => binding.module);
     const controls = { flagged: A3_FLAGGED.map(vocabularyIn), quiet: A3_QUIET.map(vocabularyIn) };
     // wb-u29w F1: the planted positive control goes through the scan src and qa went through; wb-52pt F1: its long plants reach past
-    // the longest text below either root, and its long line past the longest line (cut #2), by an independent read of every listed file.
+    // the longest text below either root, and its long line past the longest line (cut #2), by an independent read of every listed file,
+    // in characters and in bytes (wb-y4c9 F2).
     const texts = SCAN_ROOTS.flatMap(scan => listedBelow(join(REPO, scan.root)).map(file => textOf(join(REPO, scan.root, file))));
     const planted = plantedVocabulary({
-      chars: Math.max(0, ...texts.map(text => text.length)),
+      text: longestOf(texts),
       lines: Math.max(0, ...texts.map(text => text.split("\n").length)),
-      line: texts.reduce((most, text) => Math.max(most, ...text.split("\n").map(line => line.length)), 0),
+      line: longestOf(texts.flatMap(text => text.split("\n"))),
     });
     expect(spelled, "a src or qa file spelling the mapping vocabulary").toEqual([]);
     expect(spellingModules.filter(module => !bound.includes(module)), "a spelling module not bound in MAPPING_READERS").toEqual([]);
@@ -1064,12 +1108,13 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(Object.values(roots).every(Boolean) && Object.values(named).every(Boolean) && Object.values(anchors).every(Boolean), "every named root, file and anchor is read").toBe(true);
     expect(claims, "a Pi doc unit coupling a visual-family word with a Fiber word").toEqual([]);
     // wb-u29w F1: the planted positive control goes through the scan the repository went through; wb-52pt F1: its long plants reach
-    // past the longest markdown file that scan read, in characters (an independent read) and in units, and its long unit past the
-    // longest unit (cut #2, an independent read).
+    // past the longest markdown file that scan read, in characters and in bytes (an independent read; bytes since wb-y4c9 F2) and in
+    // units, and its long unit past the longest unit in both measures (cut #2, an independent read).
+    const texts = files.map(file => textOf(join(REPO, file)));
     const planted = plantedDocs({
-      chars: Math.max(0, ...files.map(file => textOf(join(REPO, file)).length)),
+      text: longestOf(texts),
       units: Math.max(0, ...units.map(entry => entry.units.length)),
-      unit: files.reduce((most, file) => Math.max(most, ...unitsOf(textOf(join(REPO, file))).map(found => found.length)), 0),
+      unit: longestOf(texts.flatMap(text => unitsOf(text))),
     });
     return json({ floors, roots, named, anchors, claims, planted });
   },

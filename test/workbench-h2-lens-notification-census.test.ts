@@ -103,13 +103,24 @@
  * term the scan or the walk flags, a journey the projection reads stale or never current) as loud. So a payload swapped for one
  * that exercises no mode, emptied or dropped - in the census, the roster or both - reds, as does a mode reading or a reader
  * forced to a constant.
+ * PAYLOAD TABLES (wb-oxug F1: a family's neutral payload removed from both literals, or set to null in both, fed its mode reading
+ * undefined or null, which every mode reading's shape guard reads as [], so the neutral end held nothing and a mode reading forced
+ * constant on every string stayed green): the judged set holds the keys of SCAN.neutralPayloads and SCAN.loudPayloads to
+ * RESIDUAL_FAMILIES, each family once and in order (the bead row's delivered residual statement anchors the families from outside
+ * this file and the roster), and each family's real reader must read its neutral payload as one of its own shape - a source text
+ * for A1's scan, a planted file for A1's walk, a journey of calls for the projection, never null - and quiet, as its quiet rows
+ * read. So a payload of either table removed, set to null or swapped for another shape, a neutral payload its reader reads loud,
+ * a loud payload its reader reads quiet, or a key added to either table - in the census, the roster or both - reds.
  * NOT CLAIMED: an owner restart or epoch (README.md:45) - the projection keys order on sequence and cursor only; Pi carries a
  * producer's RESYNC_REQUIRED word (row D) and detects no restart itself. Every case of this file skipped at once (a skip on the
  * outer describe, or on every case): vitest then marks the file skipped and runs none of its cases or hooks, so no judge here
  * exists. The judged set and the records case both skipped or deselected: the pins read no registration (a filtered pin run
  * stays green by design), so such a run is held only to its own selection. A guard removed together with the escape only it
  * sees (the judged set's collected-tree reading, the records case's end, the file-end judge or the selection it reads, a quiet
- * row's reader or its family's mode reading).
+ * row's reader or its family's mode reading, a payload table's key hold or the neutral-end reading). A neutral payload swapped in
+ * both literals for a degenerate one of its family's own shape that reads quiet (an empty source text, for one) together with
+ * that family's mode reading rewritten to read [] there alone: the neutral end holds each payload's presence, shape and
+ * quietness, not how nearly it exercises its family's mode.
  * Display paths added: none. Test-only: it spawns only the stand-in rf below makeScratch scratch and plants control files there.
  */
 import { chmodSync, type Dirent, existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -1158,6 +1169,18 @@ describe("wb-4nut.8 Lenses notification and owner-state census (TSX-HARNESS2-REA
       }),
     );
     expect(vacant, "every quiet row the roster holds, re-read from its payload, keeps its reading and its mode, and exercises the mode").toEqual([]);
+    // wb-oxug F1: a neutral payload removed from both literals, or set to null in both, fed its mode reading undefined or null,
+    // which every mode reading's shape guard reads as [], so the neutral end held nothing. Both payload tables are held to the
+    // residual families by key, in order (RESIDUAL_FAMILIES is anchored outside this file by the bead row's delivered residual
+    // statement), and each family's real reader must read its neutral payload as one of its own shape (non-null) and quiet.
+    expect(Object.keys(NEUTRAL_PAYLOADS), "the neutral payloads name every residual family once, in order").toEqual([...RESIDUAL_FAMILIES]);
+    expect(Object.keys(LOUD_PAYLOADS), "the loud payloads name every residual family once, in order").toEqual([...RESIDUAL_FAMILIES]);
+    const unshaped = RESIDUAL_FAMILIES.filter(family => {
+      const quiet = QUIET_READINGS[RESIDUAL_ROWS[family]?.pin ?? ""];
+      const reading = QUIET_READERS[family]?.(NEUTRAL_PAYLOADS[family]) ?? null;
+      return quiet === undefined || reading === null || !quiet(reading);
+    });
+    expect(unshaped, "each family's real reader reads its neutral payload as non-null and quiet").toEqual([]);
     const constant = RESIDUAL_FAMILIES.filter(family => !isDeepStrictEqual(MODE_READINGS[family]?.(NEUTRAL_PAYLOADS[family]), []));
     expect(constant, "each family's mode reading reads its neutral payload as []").toEqual([]);
     const deaf = RESIDUAL_FAMILIES.filter(family => {

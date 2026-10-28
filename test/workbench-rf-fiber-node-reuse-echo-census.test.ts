@@ -116,7 +116,8 @@
  * rf envelope is unknown today" (the one rf envelope Pi reads is the preview's). B's pins hold the reading surfaces src derives,
  * never restated (surfaceDerivation, one module at a time through moduleSurfaces), each keyed <module>#<name> by the name the
  * module exports it under. A name resolves as TypeScript resolves it inside the module (a one-file program: the module's own
- * scopes, its imports unresolved). The derivations read exactly these spellings, each with a positive row in DERIVATION_CONTROLS:
+ * scopes, its imports unresolved). The derivations read exactly these spellings, each alternative with a positive row of its own
+ * in DERIVATION_CONTROLS (POSITIVE ROWS below; NOT CLAIMED (4) bounds their combinations):
  * (i) in a Pi rf reader, every property id - a plain, string or computed-literal name, or a shorthand - whose value is the preview
  *   id (the literal, or a const of the module holding it: its initializer the literal or, followed transitively, another such
  *   const - wb-23d1, the landing-431 gate's F4), wherever the object sits (inline in a register call, behind a type assertion or
@@ -136,14 +137,22 @@
  *   directly, through an import alias of it, or through a type alias of the module naming it (directly or through another such
  *   alias), each inside any parentheses, at the parameter or in an alias's own type (cut #3, the gate's D4) (B4
  *   reactivefiberTopology, B5 nativeEvidence).
- * POSITIVE ROWS (wb-23d1, the R694 follow-up of the wb-5618 landing-431 gate's F1, owner reading (a)): each alternative the list
- *   above names has a positive row in DERIVATION_CONTROLS, and each row added here reds the bound case under a census-only
- *   derivation mutant that drops its alternative - the landing gate's four unpinned spellings (||= toolAssignedOrOr, &&=
+ * POSITIVE ROWS (wb-23d1, the R694 follow-up of the wb-5618 landing-431 gate's F1, owner reading (a); re-pinned by wb-esaw, the
+ *   R694 follow-up of the wb-23d1 landing-525 gate's F1, in the terminal enumerate-the-resolvable form): each alternative the
+ *   list above names, read on its own, has a positive row in DERIVATION_CONTROLS, and so does each interaction or quantifier
+ *   spelling named here; each row added by wb-23d1 or wb-esaw reds the bound case under a census-only derivation mutant that
+ *   drops its alternative. wb-23d1 added the landing-431 gate's four unpinned spellings (||= toolAssignedOrOr, &&=
  *   toolAssignedAndAnd, a string name registerStringName, a default-import destructuring toolDestructuredDefault), its alias inside
  *   parentheses (projectParenthesizedAlias) and its export default holder (registerDefaultExport), the other named alternatives
  *   that had no row (registerDefaultFunction, toolReboundMember, toolAssignedInModule, projectDefaultArrow,
  *   projectParenthesizedImportAlias), and the chains the derivations follow (registerConstChain, toolNameConstChain,
- *   toolReboundChain, projectTypeAliasChain).
+ *   toolReboundChain, projectTypeAliasChain). wb-esaw adds a row for each of the four interaction or quantifier spellings the
+ *   landing-525 gate measured without one (its G-E01..G-E04), and for one sibling each of G-E01 and G-E04: parentheses inside
+ *   parentheses, at the parameter (projectNestedParenthesized, G-E01) and in an alias's own type
+ *   (projectNestedParenthesizedAlias); a string element access of a default import (toolDefaultImportElement, G-E02); an
+ *   assignment in a function other than the variable's own scope, a module variable assigned inside an exported function
+ *   (toolAssignedInFunction, G-E03); and an assignment binding the variable to a member of a namespace import (toolAssignedMember,
+ *   G-E04) or to another such variable (toolAssignedChain).
  * The bound witness holds T1's reader floor, not an exact reader count, so a new rf reader adding no surface stays green as it does
  * at T1. Each binding is also proven as its case runs: reach() records the src function a B case called, by that function's own
  * name, or the agent tool it called, and the term a T case judged (T1 the components key it reads every rf reader for, T2 the rf
@@ -166,9 +175,17 @@
  * after it consumed the text (scanFile handing back no KEY pair or LABEL for a file both readings consumed whole, keyed to such a
  * path - the wb-5618 landing-431 gate's L2-DISC-TEST, L2-DISC-REPO and L2-DISC-TESTb, equal in effect to the archived H02: the
  * walk's own per-file reading rewritten, and no plant anchors it, since makeScratch scratch lies outside the repository and a
- * walked path carries no hit); a control's expected value edited in this file and the roster together; and a derivation's
- * reading weakened together with its controls in both files (the wb-5618 gate's K-CTRL).
+ * walked path carries no hit); a control's expected value edited, or a DERIVATION_CONTROLS row removed, in this file and the
+ * roster together (the control set has no anchor outside the two: wb-esaw measured each of its seven rows, and the landed
+ * toolAssignedOrOr and registerLetId rows, removed from both reading 0|16); and a derivation's reading weakened together with
+ * its controls in both files (the wb-5618 gate's K-CTRL).
  * NOT CLAIMED (3): a spelling (i)-(iii) do not read, beyond the named residuals of the derivations, is not claimed.
+ * NOT CLAIMED (4), the scope of POSITIVE ROWS (wb-esaw): a combination of two or more alternatives beyond the interaction rows
+ *   POSITIVE ROWS names - for example a string element access, or a member of a default import, bound to a variable by its
+ *   initializer or by an assignment - has no positive row of its own: the derivations are written to read it as their
+ *   alternatives compose, but no row pins it, so a census-only mutant that drops that combination alone, every named row's
+ *   spelling still read, is not claimed to red; nor is a reading of (iii)'s parentheses that takes them off to a fixed depth of
+ *   two levels or more (the rows nest them one and two deep).
  * RESIDUALS (named, each with a pinned quiet row in A3's QUIET_CONTROLS unless named otherwise): R-FEATURE-WORDS skip, skips and
  * skipping beside the nouns are not read - they name ADR-0032's deferred skip feature (the wb-csbt.1 posture's subject), not a
  * figure Pi states as done (featureSkipping, featureSkipPredicate, featureWholeSubtree); R-VOCABULARY a synonym outside SKIP_WORDS
@@ -226,7 +243,8 @@
  * (ii) (toolHelperParameter); R-QUALIFIED-TYPE gains JsonValue named through an import type, the registry module's path then
  * .JsonValue (projectImportType); R-OPTIONAL-READING gains a type parameter constrained by JsonValue, the parameter typed by it
  * (projectTypeParameter); R-MUTABLE-ID a preview id held by a let or a var of the module rather than a const is not read by (i)
- * (registerLetId); R-DESCRIPTOR-SHAPE gains an accessor stating the id, a getter named id returning it (registerGetterId).
+ * (registerLetId; the var member registerVarId, wb-esaw, the landing-525 gate's F2); R-DESCRIPTOR-SHAPE gains an accessor stating
+ * the id, a getter named id returning it (registerGetterId).
  * PRECISION (not escapes): the bare third segment is never a needle - the adapter's observation-freshness note ("observations: <n>
  * rows, <r> ...", wb-973.9) and rf's own counters (reused_component_count, observation_reused_count) read quiet (bareWord,
  * rfInstanceCounter, rfObservationCounter), and A1 reads the adapter and the fixture helper that spell them.
@@ -1181,11 +1199,12 @@ const NAMED_TOOL = `import { tool } from "${AGENT_SDK}";`;
 const INVOKING = 'async () => registry.invoke("x", {}, {} as never)';
 const READER_HEAD = `import type { JsonValue } from "./capability-registry.js";\nimport { ${ENVELOPE_SCHEMA_CONSTANT} } from "./providers/reactivefiber.js";\nexport const schema = ${ENVELOPE_SCHEMA_CONSTANT};\n`;
 const PROJECTING = "{\n  return JSON.stringify(value);\n}";
-/** BOUND (respin #1, cut #3, wb-23d1): the derivation's own controls, each a module source read through moduleSurfaces as
- * CONTROL_MODULE - a positive row for every spelling (i)-(iii) read (cut #3 adds toolAssigned, toolAssignedLogical and
- * projectParenthesized; wb-23d1 adds the fifteen POSITIVE ROWS the header names), precision rows for what they must not read,
- * and one quiet row per named residual of the derivations (registerComposedId, registerImportedId, registerLetId,
- * registerClassField, registerAssignedId, registerGetterId, toolPiDefineTool, toolSdkReexport, toolDynamicImport,
+/** BOUND (respin #1, cut #3, wb-23d1, wb-esaw): the derivation's own controls, each a module source read through moduleSurfaces
+ * as CONTROL_MODULE - a positive row for every alternative (i)-(iii) read, on its own, and for each interaction or quantifier
+ * spelling POSITIVE ROWS names (cut #3 adds toolAssigned, toolAssignedLogical and projectParenthesized; wb-23d1 and wb-esaw
+ * add the rows POSITIVE ROWS names for each), precision rows for what they must not read, and one quiet row per named residual
+ * of the derivations (registerComposedId, registerImportedId, registerLetId, registerVarId, registerClassField,
+ * registerAssignedId, registerGetterId, toolPiDefineTool, toolSdkReexport, toolDynamicImport,
  * toolImportedHandler, toolInvokeComposed, toolDestructuringAssignment, toolHelperCall, toolHelperChosen, toolHelperComma,
  * toolHelperCallComma, toolHelperChained, toolHelperParameter, toolSdkSubpath, projectOptionalReading, projectTypeParameter,
  * projectMember, projectReexport, projectSchemaLiteral, projectQualifiedType, projectImportType, projectContextualType,
@@ -1206,6 +1225,7 @@ const DERIVATION_CONTROLS: Readonly<Record<string, string>> = {
   registerComposedId: `${REGISTRAR}export function registerProbe(registry: CapabilityRegistry): void {\n  ${registers(`${JSON.stringify(PREVIEW_ID.split("."))}.join(".")`)}\n}\n`,
   registerImportedId: `${REGISTRAR}import { PREVIEW } from "./preview-id.js";\nexport function registerProbe(registry: CapabilityRegistry): void {\n  ${registers("PREVIEW")}\n}\n`,
   registerLetId: `${REGISTRAR}let preview = ${PREVIEW};\nexport function registerProbe(registry: CapabilityRegistry): void {\n  ${registers("preview")}\n}\nexport function trimProbe(): void {\n  preview = preview.trim();\n}\n`,
+  registerVarId: `${REGISTRAR}var preview = ${PREVIEW};\nexport function registerProbe(registry: CapabilityRegistry): void {\n  ${registers("preview")}\n}\nexport function trimProbe(): void {\n  preview = preview.trim();\n}\n`,
   registerClassField: `${REGISTRAR}class Descriptor {\n  id = ${PREVIEW};\n}\nexport function registerProbe(registry: CapabilityRegistry): void {\n  registry.register({ descriptor: new Descriptor() } as never);\n}\n`,
   registerAssignedId: `${REGISTRAR}export function registerProbe(registry: CapabilityRegistry): void {\n  const descriptor: Record<string, unknown> = {};\n  descriptor.id = ${PREVIEW};\n  registry.register({ descriptor } as never);\n}\n`,
   registerGetterId: `${REGISTRAR}export function registerProbe(registry: CapabilityRegistry): void {\n  registry.register({ descriptor: { get id() {\n    return ${PREVIEW};\n  } } } as never);\n}\n`,
@@ -1223,7 +1243,11 @@ const DERIVATION_CONTROLS: Readonly<Record<string, string>> = {
   toolAssignedOrOr: toolModule(NAMED_TOOL, `  let make: typeof tool | undefined;\n  make ||= tool;\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
   toolAssignedAndAnd: toolModule(NAMED_TOOL, `  let make: typeof tool | undefined;\n  make &&= tool;\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
   toolAssignedInModule: toolModule(`${NAMED_TOOL}\nlet make: typeof tool | undefined;\nmake = tool;`, `  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolAssignedInFunction: toolModule(`${NAMED_TOOL}\nlet make: typeof tool | undefined;\nexport function initProbe(): void {\n  make = tool;\n}`, `  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolAssignedMember: toolModule(`import * as sdk from "${AGENT_SDK}";`, `  let make: typeof sdk.tool | undefined;\n  make = sdk.tool;\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolAssignedChain: toolModule(NAMED_TOOL, `  const other = tool;\n  let make: typeof tool | undefined;\n  make = other;\n  return [make("probe_invoke", "probe", {}, ${INVOKING})];`),
   toolNamespaceElement: toolModule(`import * as sdk from "${AGENT_SDK}";`, `  return [sdk["tool"]("probe_invoke", "probe", {}, ${INVOKING})];`),
+  toolDefaultImportElement: toolModule(`import sdk from "${AGENT_SDK}";`, `  return [sdk["tool"]("probe_invoke", "probe", {}, ${INVOKING})];`),
   toolHandlerReference: toolModule(NAMED_TOOL, `  const handler = ${INVOKING};\n  return [tool("probe_invoke", "probe", {}, handler as never)];`),
   toolHandlerFunction: toolModule(NAMED_TOOL, '  async function handler() {\n    return registry.invoke("x", {}, {} as never);\n  }\n  return [tool("probe_invoke", "probe", {}, handler)];'),
   toolHandlerIndirect: toolModule(NAMED_TOOL, `  const read = ${INVOKING};\n  const handler = async () => read();\n  return [tool("probe_invoke", "probe", {}, handler)];`),
@@ -1261,6 +1285,8 @@ const DERIVATION_CONTROLS: Readonly<Record<string, string>> = {
   projectParenthesized: `${READER_HEAD}export function project(value: (JsonValue)): string ${PROJECTING}\n`,
   projectParenthesizedAlias: `${READER_HEAD}type Reading = (JsonValue);\nexport function project(value: Reading): string ${PROJECTING}\n`,
   projectParenthesizedImportAlias: `import type { JsonValue as Reading } from "./capability-registry.js";\nimport { ${ENVELOPE_SCHEMA_CONSTANT} } from "./providers/reactivefiber.js";\nexport const schema = ${ENVELOPE_SCHEMA_CONSTANT};\nexport function project(value: (Reading)): string ${PROJECTING}\n`,
+  projectNestedParenthesized: `${READER_HEAD}export function project(value: ((JsonValue))): string ${PROJECTING}\n`,
+  projectNestedParenthesizedAlias: `${READER_HEAD}type Reading = ((JsonValue));\nexport function project(value: Reading): string ${PROJECTING}\n`,
   projectUnexported: `${READER_HEAD}function project(value: JsonValue): string ${PROJECTING}\nexport const projected = project({});\n`,
   projectScalar: `${READER_HEAD}export function project(value: string): string ${PROJECTING}\n`,
   projectOptionalReading: `${READER_HEAD}export function project(value: JsonValue | undefined): string ${PROJECTING}\n`,

@@ -77,15 +77,21 @@
  * THE WALK ANCHOR (wb-cd1r, the landing-400 gate's F1: filesBelow and the in-file listing narrowed by the same subtree, src/workflow,
  * kept the census green, the two equal and the walk above the floor): the in-file listing is this file's own code, so it binds a
  * walk narrowed alone, never one narrowed with it; git's listing comes from git's own walk of the checkout, so a walk and the
- * in-file listing narrowed together still differ from it, and its arguments are held to the roster, so a narrowed pathspec reds.
+ * in-file listing narrowed together still differ from it. Git runs with GIT_LISTING as it stands, its whole argv with the src
+ * pathspec in it, and the judged set holds GIT_LISTING to the roster, so an argument of it narrowed, dropped or added reds there
+ * whatever the walks do (wb-fugf, the landing-494 gate's F1: the src pathspec was in-file code at gitListedSrc's call site, which
+ * the roster did not hold).
  * Not claimed: a pin removed from ROWS, the literal, IMPL and the roster together (the filing anchors rows, clauses and words, not
  * pins); an assertion removed from this file together with its pinned count in the roster; the file-end judge or the selection it
  * reads removed (no claim rides them alone: the registration case still holds the record); every case of the file skipped at once
  * (no case runs to read the tree, and vitest runs no hook for a file with nothing to run); the native provider seam
  * (providers/reactivefiber.ts isPreviewEnvelope, which refuses the same committed shapes before a reading exists) and the control
  * adapters' executions (claude-control.ts, detached-control.ts: their exported outcome tables are read here, their suites execute
- * them); this file's filter of git's output narrowed together with both walks by the same path (an edit of all three sites that
- * no in-file check reads).
+ * them); gitListedSrc's own code narrowed together with filesBelow and the in-file listing by the same path, whichever of its parts
+ * carries the edit: an argument added at its call site, its filter of git's output (regularFile included) or the result it
+ * returns, there or where E1 or E2 reads it (an edit of three sites that no in-file check reads: the declared filter form and the
+ * landing-494 gate's G7 and G10); GIT_LISTING narrowed in this file and the roster together with filesBelow and the in-file
+ * listing (the roster moving with the census, an edit of four sites visible in any diff: that gate's G4).
  * RESIDUALS (named families, each with a pinned quiet row): R-FOREIGN-VALUE the observer knows rf's two observed words only, so a
  * producer VALUE reads not observed, verbatim (A1's VALUE reading); R-LISTED-FOUR the observations note lists at most four distinct
  * words, a fifth is counted and marked, never renamed (A2's five-word note); R-REFUSED-FLAG a missing flag is refused rather than
@@ -190,8 +196,9 @@ const ANCHORS: readonly string[] = ["src/workbench/reactivefiber-observer.ts", "
 /** Sits below the count measured at base 282caa0: 115 src files, every one a .ts module. */
 const MODULE_FLOOR = 100;
 /** The listing E1's and E2's walks are also held to (wb-cd1r): git's own list of the files below src, tracked or untracked with
- * ignored ones included, so it names every file the walk reads, from a walk this file does not compute. */
-const GIT_LISTING: readonly string[] = ["ls-files", "-z", "--cached", "--others", "--"];
+ * ignored ones included, so it names every file the walk reads, from a walk this file does not compute. It is git's whole argv,
+ * the src pathspec included, so the roster holds every argument git runs with (wb-fugf). */
+const GIT_LISTING: readonly string[] = ["ls-files", "-z", "--cached", "--others", "--", "src"];
 const RESIDUAL_FAMILIES: readonly string[] = [
   "R-FOREIGN-VALUE", "R-LISTED-FOUR", "R-REFUSED-FLAG", "R-OPTIONAL-COMMIT-SEQ", "R-READ-TIMEOUT", "R-COUNT-NOT-WORD", "R-COMPOSED",
   "R-GENERIC-WORD", "R-COMMENT",
@@ -623,9 +630,10 @@ function regularFile(path: string): boolean {
   }
 }
 /** Every regular file git lists below src (GIT_LISTING), sorted: read from git, never from a walk of this file, so a walk and the
- * in-file listing narrowed together still differ from it; a tracked path deleted from the checkout is no file. */
+ * in-file listing narrowed together still differ from it; a tracked path deleted from the checkout is no file. Git runs with
+ * GIT_LISTING as it stands, nothing added at this call site (wb-fugf). */
 function gitListedSrc(): string[] {
-  const out = execFileSync("git", [...GIT_LISTING, "src"], { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 });
+  const out = execFileSync("git", GIT_LISTING, { cwd: REPO, encoding: "utf8", maxBuffer: 1 << 26 });
   return [...new Set(out.split("\0").filter(path => path !== "" && regularFile(path)))].sort();
 }
 function walkedFiles(modules: readonly { readonly file: string }[]): string[] {
