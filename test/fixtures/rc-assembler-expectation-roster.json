@@ -444,9 +444,12 @@
                 ],
                 [
                   "docs/plant.md:5 acquire"
+                ],
+                [
+                  "docs/plant.md:1 acquire"
                 ]
               ],
-              "shown": [
+              "unlexed": [
                 [],
                 [
                   "docs/plant.md:1 acquire"
@@ -464,6 +467,12 @@
               "containers": [
                 [],
                 [],
+                [
+                  "docs/plant.md:1 acquire"
+                ],
+                [
+                  "docs/plant.md:1 acquire"
+                ],
                 [
                   "docs/plant.md:1 acquire"
                 ],
@@ -489,6 +498,67 @@
                   "unplaced": [
                     "docs/plant.md \"<!-- never -->\""
                   ]
+                },
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:1 marker:not"
+                  ],
+                  "unplaced": [
+                    "docs/plant.md \"<!-- not\\nnever -->\""
+                  ]
+                },
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:1 marker:not"
+                  ],
+                  "unplaced": [
+                    "docs/plant.md \"<!-- not\\nnever -->\""
+                  ]
+                },
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:1 marker:not"
+                  ],
+                  "unplaced": [
+                    "docs/plant.md \"<!-- not\\n  never -->\""
+                  ]
+                },
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  "unplaced": [
+                    "docs/plant.md \"<!--never-->\""
+                  ]
+                },
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:3 marker:never"
+                  ],
+                  "unplaced": [
+                    "docs/plant.md \"<!-- never -->\""
+                  ]
+                },
+                {
+                  "findings": [],
+                  "quieted": [
+                    "docs/plant.md:5 marker:never"
+                  ],
+                  "unplaced": [
+                    "docs/plant.md \"<!-- never -->\""
+                  ]
+                },
+                {
+                  "findings": [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  "quieted": [],
+                  "unplaced": []
                 }
               ]
             },
@@ -542,6 +612,56 @@
                 [],
                 []
               ],
+              "R-COMMENT-BLOCK": {
+                "trailing": [
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 acquire"
+                  ]
+                ],
+                "second": [
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 acquire"
+                  ]
+                ],
+                "quoted": [
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 acquire"
+                  ]
+                ],
+                "listed": [
+                  [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  [
+                    "docs/plant.md:2 acquire"
+                  ],
+                  []
+                ]
+              },
               "R-SOURCE-AS-WRITTEN": {
                 "markers": [
                   [
@@ -588,9 +708,33 @@
                   ],
                   [
                     "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
                   ]
                 ],
                 "claims": [
+                  [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  [
+                    "docs/plant.md:1 acquire"
+                  ],
                   [
                     "docs/plant.md:1 acquire"
                   ],
@@ -609,6 +753,64 @@
                   [],
                   [
                     "docs/plant.md:1 acquire"
+                  ]
+                ],
+                "references": [
+                  [],
+                  [],
+                  [],
+                  [],
+                  [],
+                  []
+                ],
+                "lines": [
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  [
+                    "docs/plant.md:1 acquire"
+                  ],
+                  [
+                    "docs/plant.md:1 marker:never"
+                  ],
+                  [
+                    "docs/plant.md:3 acquire"
                   ]
                 ]
               }
@@ -1132,6 +1334,10 @@
     },
     {
       "id": "R-COMMENT-HIDDEN",
+      "quietPin": "A3"
+    },
+    {
+      "id": "R-COMMENT-BLOCK",
       "quietPin": "A3"
     },
     {
