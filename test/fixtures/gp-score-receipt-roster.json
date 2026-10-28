@@ -41,12 +41,13 @@
       "id": "E",
       "label": "a receipt replayed from the audit never issues a verb (wb-pjj look-alike test pattern)",
       "pins": [
-        "E1"
+        "E1",
+        "E2"
       ]
     },
     {
       "id": "Q",
-      "label": "named residual quiet boundaries",
+      "label": "the residuals' pinned quiet rows",
       "pins": [
         "Q1",
         "Q2"
@@ -60,97 +61,207 @@
     "B1": "a deterministic reply records keyed scores verbatim",
     "C1": "the mapped host action is recorded as a separate field beside the symbolic proposal",
     "D1": "a proposal naming an action outside the exported support is refused, never mapped by nearest match",
-    "E1": "a receipt replayed from the audit never issues a verb (wb-pjj look-alike test pattern)",
-    "Q1": "R-OTHER-REPLY",
-    "Q2": "R-MISSING-SEAM"
+    "E1": "a receipt replayed from the audit never issues a verb",
+    "E2": "(wb-pjj look-alike test pattern)",
+    "Q1": "R-SYNTHETIC-DETERMINISTIC",
+    "Q2": "R-UNREAD-CONSUMER"
   },
   "residuals": {
     "Q1": [
-      "gp eval output has no sampled-decision receipt and the synthetic deterministic scores are not gp output"
+      "synthetic-keyed-scores"
     ],
     "Q2": [
-      "no Pi GP decision point or production mapping exists; this census arms a fixture-only contract"
+      "handed-scores",
+      "composed-launch",
+      "abbreviated-client"
     ]
   },
   "witnesses": {
     "T1": {
-      "hits": [],
       "bound": [],
-      "countFloor": true,
-      "control": [
-        "GraphPolicyCLI",
-        "GraphDataIR",
-        "graphpolicy.receipt.decision.v1",
-        "sampled-decision",
-        "log_probabilities",
-        "log_probability",
-        "chosen_id"
-      ],
-      "quiet": []
+      "hits": [],
+      "srcFloor": true,
+      "readsCore": true,
+      "rfLaunchRead": true,
+      "plants": {
+        "eval-consumer": {
+          "sites": [
+            "1:binary:gp",
+            "3:named:graphpolicy.cli.v1"
+          ],
+          "family": [
+            "graphpolicy"
+          ],
+          "tokens": []
+        },
+        "rpc-reply": {
+          "sites": [
+            "1:named:graphpolicy.rpc.v1",
+            "1:named:gp.rpc.reply/v1"
+          ],
+          "family": [
+            "graphpolicy"
+          ],
+          "tokens": []
+        },
+        "module-import": {
+          "sites": [
+            "1:module:graph-policy-cli",
+            "2:module:gp/sdk"
+          ],
+          "family": [
+            "graph-policy"
+          ],
+          "tokens": []
+        },
+        "client-name": {
+          "sites": [],
+          "family": [
+            "graph policy",
+            "graphPolicy",
+            "graph_data_ir"
+          ],
+          "tokens": []
+        },
+        "receipt-member": {
+          "sites": [],
+          "family": [],
+          "tokens": [
+            "log_probability",
+            "chosen_id"
+          ]
+        },
+        "near-tokens": {
+          "sites": [],
+          "family": [],
+          "tokens": []
+        }
+      }
     },
     "A1": {
-      "rawSame": true,
+      "honest": {
+        "compact": {
+          "bytes": true,
+          "choice": true
+        },
+        "indented": {
+          "bytes": true,
+          "choice": true
+        }
+      },
+      "reserialized": {
+        "compact": {
+          "bytes": true,
+          "choice": true
+        },
+        "indented": {
+          "bytes": false,
+          "choice": true
+        }
+      },
       "support": [
         "exec-a1-t1",
         "exec-a1-t2",
         "exec-a2-t2"
       ],
       "supportOrder": "graphpolicy.policy.support-order.codepoint.v1",
-      "logProbability": "bf5e8cf0"
-    },
-    "A2": {
-      "original": "exec-a1-t1",
-      "changed": [
-        {
-          "kind": "M-RESAMPLE",
-          "same": true,
-          "proposal": "exec-a1-t2"
-        },
-        {
-          "kind": "M-ARGMAX",
-          "same": true,
-          "proposal": "exec-a1-t1"
-        },
-        {
-          "kind": "M-RECOMPUTE",
-          "same": false,
-          "proposal": "exec-a1-t1"
-        }
-      ]
-    },
-    "B1": {
-      "kind": "synthetic-deterministic-scores",
-      "result": {
-        "outcome": "scores-only",
-        "keyedScores": [
-          [
-            "exec-a1-t1",
-            "3fe00000"
-          ],
-          [
-            "exec-a1-t2",
-            "3fa00000"
-          ],
-          [
-            "exec-a2-t2",
-            "3fc00000"
-          ]
-        ]
-      },
-      "mutated": [
+      "logProbability": "bf5e8cf0",
+      "keyedScores": [
         [
           "exec-a1-t1",
-          "3FE00000"
+          "3fe00000"
         ],
         [
           "exec-a1-t2",
-          "3FA00000"
+          "3fa00000"
         ],
         [
           "exec-a2-t2",
-          "3FC00000"
+          "3fc00000"
         ]
       ]
+    },
+    "A2": {
+      "no renormalization": {
+        "mutant": "M-RENORMALIZE",
+        "honest": {
+          "bytes": true,
+          "choice": true
+        },
+        "mutated": {
+          "bytes": false,
+          "choice": true
+        }
+      },
+      "no re-sampling": {
+        "mutant": "M-RESAMPLE",
+        "honest": {
+          "bytes": true,
+          "choice": true
+        },
+        "mutated": {
+          "bytes": true,
+          "choice": false
+        }
+      },
+      "no host-side argmax over scores": {
+        "mutant": "M-ARGMAX",
+        "honest": {
+          "bytes": true,
+          "choice": true
+        },
+        "mutated": {
+          "bytes": true,
+          "choice": false
+        }
+      }
+    },
+    "B1": {
+      "honest": {
+        "reply": {
+          "outcome": "scores-only",
+          "keyedScores": [
+            [
+              "exec-a1-t1",
+              "3fe00000"
+            ],
+            [
+              "exec-a1-t2",
+              "3fa00000"
+            ],
+            [
+              "exec-a2-t2",
+              "3fc00000"
+            ]
+          ]
+        },
+        "reversed": {
+          "outcome": "scores-only",
+          "keyedScores": [
+            [
+              "exec-a2-t2",
+              "3fc00000"
+            ],
+            [
+              "exec-a1-t2",
+              "3fa00000"
+            ],
+            [
+              "exec-a1-t1",
+              "3fe00000"
+            ]
+          ]
+        }
+      },
+      "caught": {
+        "M-SCORES": [
+          "reply",
+          "reversed"
+        ],
+        "M-SORTED": [
+          "reversed"
+        ]
+      }
     },
     "C1": {
       "proposal": "exec-a1-t1",
@@ -164,38 +275,151 @@
           "scope": "/work/gp-score-receipt"
         }
       },
-      "permit": "permitted"
-    },
-    "D1": {
-      "wrong": {
-        "outcome": "refused",
-        "field": "support",
-        "proposal": "exec-outside-export"
-      },
-      "nearest": {
-        "proposal": "exec-a1-t1",
-        "hostAction": "stop",
+      "permitted": {
+        "action": "stop",
         "target": {
           "provider": "furnace",
           "type": "run",
           "id": "frn-run-score-fixture",
           "scope": "/work/gp-score-receipt"
+        },
+        "grant": "control:furnace.stop"
+      },
+      "denied": {
+        "other-control-grant": {
+          "outcome": "refused",
+          "field": "authority",
+          "policy": "missing-exact-grant",
+          "mapped": false,
+          "permit": false
+        },
+        "observer-only": {
+          "outcome": "refused",
+          "field": "authority",
+          "policy": "observer-only",
+          "mapped": false,
+          "permit": false
         }
       }
     },
+    "D1": {
+      "proposals": {
+        "unknown": "exec-outside-export",
+        "letter-case": "EXEC-A1-T1",
+        "prefix": "exec-a1-t",
+        "extension": "exec-a1-t1x",
+        "padding": " exec-a1-t1",
+        "widened-support": "exec-outside-export"
+      },
+      "honest": {
+        "unknown": "refused:support",
+        "letter-case": "refused:support",
+        "prefix": "refused:support",
+        "extension": "refused:support",
+        "padding": "refused:support",
+        "widened-support": "refused:support"
+      },
+      "nearestMatch": {
+        "unknown": "mapped:exec-a1-t1",
+        "letter-case": "mapped:exec-a1-t1",
+        "prefix": "mapped:exec-a1-t1",
+        "extension": "mapped:exec-a1-t1",
+        "padding": "mapped:exec-a1-t1",
+        "widened-support": "mapped:exec-a1-t1"
+      },
+      "replySupport": {
+        "unknown": "refused:support",
+        "letter-case": "refused:support",
+        "prefix": "refused:support",
+        "extension": "refused:support",
+        "padding": "refused:support",
+        "widened-support": "mapped:exec-outside-export"
+      }
+    },
     "E1": {
-      "minted": false,
-      "refusal": "unvetted-decision",
-      "issued": 0,
-      "replay": "refused"
+      "replays": {
+        "deep-frozen JSON round-trip (a decision replayed from the audit or the journal)": {
+          "minted": false,
+          "outcome": "refused",
+          "refusal": "unvetted-decision",
+          "category": "validation",
+          "message": "decision was not minted by the decision core",
+          "policy": null,
+          "calls": 0
+        },
+        "JSON round-trip": {
+          "minted": false,
+          "outcome": "refused",
+          "refusal": "unvetted-decision",
+          "category": "validation",
+          "message": "decision was not minted by the decision core",
+          "policy": null,
+          "calls": 0
+        },
+        "double JSON round-trip": {
+          "minted": false,
+          "outcome": "refused",
+          "refusal": "unvetted-decision",
+          "category": "validation",
+          "message": "decision was not minted by the decision core",
+          "policy": null,
+          "calls": 0
+        }
+      },
+      "shapeExact": {
+        "deep-frozen JSON round-trip (a decision replayed from the audit or the journal)": true,
+        "JSON round-trip": false,
+        "double JSON round-trip": false
+      },
+      "genuine": {
+        "outcome": "resolved",
+        "status": "uncertain",
+        "reason": "seam-failure",
+        "calls": 1
+      },
+      "trustReplay": {
+        "outcome": "refused",
+        "field": "provenance",
+        "mapped": false
+      }
+    },
+    "E2": {
+      "suite": "test/workbench-control-provenance.test.ts",
+      "forms": {
+        "deep-frozen JSON round-trip (a decision replayed from the audit or the journal)": [
+          "deepFreeze",
+          "jsonRoundTrip"
+        ],
+        "JSON round-trip": [
+          "jsonRoundTrip"
+        ],
+        "double JSON round-trip": [
+          "jsonRoundTrip",
+          "jsonRoundTrip"
+        ]
+      }
     },
     "Q1": {
-      "deterministic": "scores-only",
-      "receipt": null
+      "outcome": "scores-only",
+      "receipt": null,
+      "fromReceipt": true,
+      "evalHelp": [
+        "  gp eval <program> --graph @FILE --checkpoint ID [--json]"
+      ]
     },
     "Q2": {
-      "sourceNames": [],
-      "bound": []
+      "handed-scores": {
+        "member": false,
+        "twin": true
+      },
+      "composed-launch": {
+        "member": false,
+        "twin": true
+      },
+      "abbreviated-client": {
+        "member": false,
+        "twin": true
+      }
     }
   },
   "tests": [
@@ -205,11 +429,12 @@
     "B1: a deterministic reply records keyed scores verbatim",
     "C1: the mapped host action is recorded as a separate field beside the symbolic proposal",
     "D1: a proposal naming an action outside the exported support is refused, never mapped by nearest match",
-    "E1: a receipt replayed from the audit never issues a verb (wb-pjj look-alike test pattern)",
-    "Q1: R-OTHER-REPLY",
-    "Q2: R-MISSING-SEAM",
-    "rule 16: rows, quotes, residuals, source bindings and mutant names have the frozen measured shape",
-    "outside anchors: owner filing, producer receipt, snapshot and control pin bind every acceptance row",
+    "E1: a receipt replayed from the audit never issues a verb",
+    "E2: (wb-pjj look-alike test pattern)",
+    "Q1: R-SYNTHETIC-DETERMINISTIC",
+    "Q2: R-UNREAD-CONSUMER",
+    "rule 16: rows, quotes, residuals, mutants, prohibitions, replay forms, near misses, plants, grant sets, tokens and bindings have the frozen measured shape",
+    "outside anchors: the owner filing, the control core at the Pi pin and the vendored receipt bind every row the census reads",
     "roster: every judged pin and registered test ran, and every witness was compared"
   ]
 }
