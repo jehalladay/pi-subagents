@@ -1,0 +1,1044 @@
+{
+ "bead": "wb-pyel.1",
+ "producer": {
+  "repository": "FiberOpticsSDK",
+  "path": "docs/programs/evidence-directed-computation-2026-10-18.md",
+  "line": 17,
+  "pin": "dcc5b57c4aed",
+  "pinFull": "dcc5b57c4aed5fa2daa5333ec0b39c0916a508d7",
+  "blob": "afb2326eb90760cc8d210a89c75208d38c071ab9",
+  "text": "7. Preserve render/prepare/commit/dispatch. Host-originated publication remains explicitly flushed; no automatic effect or inference when query changes.",
+  "sha256": "9db7b51647058378bd0ac02e6adb907650f36f83bdc284cdbca402e5373b01c8",
+  "status": {
+   "line": 3,
+   "text": "**Date:** 2026-10-18. **Status:** DESIGN, not shipped. **Owner:** FiberOpticsSDK. [Cross-program](https://github.com/jehalladay/FiberOpticsResearch/tree/main/docs/research/foa/programs/evidence-directed-computation-2026-10-18).",
+   "sha256": "6cd0a39418904b112aa259ad03bc977f5ed7fdf3d7d3ceade8bcffa1b250486f"
+  },
+  "unchangedAt": {
+   "rev": "2099f193cccff7e35d0e618f4aab805b481e1983",
+   "blob": "afb2326eb90760cc8d210a89c75208d38c071ab9"
+  },
+  "hostContract": {
+   "runtime": {
+    "path": "src/fiber_optics/runtime.py",
+    "blob": "d7acf3c8947998ba9faa11728b836d52f32a61d5",
+    "FiberRuntime": 668,
+    "request_rerender": 838,
+    "flush_requested_renders": 922,
+    "queue_value_publication": 1233,
+    "flush_value_publications": 1355
+   },
+   "packageRoot": {
+    "path": "src/fiber_optics/__init__.py",
+    "blob": "6c6985fede2df8766faeeca11b9294d0a85f8078",
+    "FiberGraph": 67,
+    "FiberRuntime": 118,
+    "FiberScheduler": 119
+   },
+   "distributions": {
+    "pyproject.toml": {
+     "blob": "61127515aa7f9d19e5a4a2e8a3a1e690cfa8d0bd",
+     "name": "FiberOpticsSDK",
+     "packages": [
+      "src/FiberOpticsSDK",
+      "src/fiber_optics",
+      "src/fiber_optics_research"
+     ]
+    },
+    "rust/replay_observer/Cargo.toml": {
+     "blob": "9303180552d72ffbbdbaacd5563817ac724856d8",
+     "name": "fiber-optics-replay-observer"
+    }
+   }
+  }
+ },
+ "constants": {
+  "stem": "fiberoptics",
+  "distributions": [
+   "FiberOpticsSDK",
+   "fiber_optics",
+   "fiber_optics_research",
+   "fiber-optics-replay-observer"
+  ],
+  "hostedClasses": [
+   "FiberRuntime",
+   "FiberGraph",
+   "FiberScheduler"
+  ],
+  "publicationEntries": [
+   "queue_value_publication",
+   "flush_value_publications",
+   "request_rerender",
+   "flush_requested_renders"
+  ],
+  "noCommit": "--no-commit",
+  "artifact": "a registered Pi Fiber-hosting or Fiber-publishing capability (none exists)",
+  "reactiveWords": [
+   "subscribe",
+   "observe",
+   "watch",
+   "listen",
+   "notify",
+   "emit",
+   "react",
+   "stream",
+   "poll",
+   "schedule"
+  ],
+  "launchers": [
+   "spawn",
+   "spawnSync",
+   "execFile",
+   "execFileSync",
+   "exec",
+   "execSync",
+   "fork"
+  ],
+  "settleMs": 3000,
+  "lateMs": 600000,
+  "floors": {
+   "modules": 100,
+   "texts": 60000,
+   "manifestTexts": 80,
+   "lockPackages": 300
+  },
+  "scriptKinds": [
+   ".ts",
+   ".mts",
+   ".cts",
+   ".tsx",
+   ".js",
+   ".mjs",
+   ".cjs",
+   ".jsx"
+  ],
+  "requiredDescriptors": [
+   "forge.gate.status",
+   "furnace.run.inspect",
+   "hyperunix.find",
+   "reactivefiber.render.preview"
+  ],
+  "sourceAnchors": [
+   "rf",
+   "--no-commit",
+   "nativeReactiveFiberRender",
+   "fiber_signal_count"
+  ],
+  "manifestControls": {
+   "dependencies": {
+    "dependencies": {
+     "fiber-optics": "^0.1.0"
+    }
+   },
+   "devDependencies": {
+    "devDependencies": {
+     "@fiber-optics/sdk": "0.1.0"
+    }
+   },
+   "peerDependencies": {
+    "peerDependencies": {
+     "FiberOpticsSDK": "*"
+    }
+   },
+   "optionalDependencies": {
+    "optionalDependencies": {
+     "fiber_optics_research": "*"
+    }
+   },
+   "bundleDependencies": {
+    "bundleDependencies": [
+     "fiber-optics-replay-observer"
+    ]
+   },
+   "nestedValue": {
+    "overrides": {
+     "reactive-fiber-cli": {
+      "engine": "npm:fiber-optics@0.1.0"
+     }
+    }
+   },
+   "nearMissRf": {
+    "dependencies": {
+     "reactive-fiber-cli": "1.0.0"
+    }
+   },
+   "nearMissSplit": {
+    "keywords": [
+     "fiber",
+     "optics"
+    ]
+   }
+  },
+  "lockControls": {
+   "lockPath": {
+    "packages": {
+     "node_modules/fiber-optics": {
+      "version": "0.1.0"
+     }
+    }
+   },
+   "lockName": {
+    "packages": {
+     "node_modules/alias": {
+      "name": "FiberOpticsSDK",
+      "version": "0.1.0"
+     }
+    }
+   },
+   "lockQuiet": {
+    "packages": {
+     "node_modules/reactive-fiber": {
+      "version": "1.0.0"
+     }
+    }
+   }
+  },
+  "shadowedManifest": "{ \"dependencies\": { \"fiber-optics\": \"1.0.0\" }, \"dependencies\": {} }",
+  "sourceControls": {
+   "importFrom": {
+    "module": "import-from.ts",
+    "source": "import { open } from \"fiber_optics\";\nopen();\n"
+   },
+   "dynamicImport": {
+    "module": "dynamic-import.ts",
+    "source": "export const sdk = await import(\"@fiber-optics/sdk\");\n"
+   },
+   "requireCall": {
+    "module": "require-call.cjs",
+    "source": "const sdk = require(\"fiber-optics\");\nmodule.exports = sdk;\n"
+   },
+   "sidecarArgv": {
+    "module": "sidecar.ts",
+    "source": "import { spawn } from \"node:child_process\";\nspawn(\"python3\", [\"-c\", \"import fiber_optics\"]);\n"
+   },
+   "runtimeClass": {
+    "module": "runtime-class.ts",
+    "source": "declare const config: unknown;\nexport const runtime = new FiberRuntime(config);\n"
+   },
+   "graphType": {
+    "module": "graph-type.ts",
+    "source": "export let graph: FiberGraph | undefined;\n"
+   },
+   "schedulerTemplate": {
+    "module": "scheduler-template.ts",
+    "source": "declare const prefix: string;\nexport const name = `${prefix}FiberScheduler`;\n"
+   },
+   "regexPattern": {
+    "module": "regex-pattern.ts",
+    "source": "export const sdk = /fiber[-_]?optics/i;\n"
+   },
+   "privateName": {
+    "module": "private-name.ts",
+    "source": "export class Host {\n  #fiberOptics = 1;\n  read(): number {\n    return this.#fiberOptics;\n  }\n}\n"
+   },
+   "jsxText": {
+    "module": "jsx-text.tsx",
+    "source": "export const view = <p>FiberOptics</p>;\n"
+   },
+   "nearMiss": {
+    "module": "near-miss.ts",
+    "source": "export const reactivefiber = 1;\nexport const fiber_signal_count = 0;\nexport const optics = \"fiber\";\n"
+   }
+  },
+  "entryControls": {
+   "snakeCall": {
+    "module": "snake-call.ts",
+    "source": "declare const runtime: { queue_value_publication(port: string, value: number): void };\nruntime.queue_value_publication(\"port\", 1);\n"
+   },
+   "camelCall": {
+    "module": "camel-call.ts",
+    "source": "declare const runtime: { flushValuePublications(): Promise<void> };\nawait runtime.flushValuePublications();\n"
+   },
+   "stringKey": {
+    "module": "string-key.ts",
+    "source": "declare const host: Record<string, (node: string) => void>;\nhost[\"request_rerender\"](\"node\");\n"
+   },
+   "destructured": {
+    "module": "destructured.ts",
+    "source": "declare const runtime: Record<string, () => void>;\nconst { flush_requested_renders: drain } = runtime;\ndrain();\n"
+   },
+   "nearMiss": {
+    "module": "entry-near-miss.ts",
+    "source": "declare const queue: { flush(): void };\ndeclare function publish(value: number): void;\ndeclare function render(): void;\ndeclare function requestRender(): void;\nqueue.flush();\npublish(1);\nrender();\nrequestRender();\n"
+   }
+  },
+  "launchControls": {
+   "spawnRf": {
+    "module": "spawn-rf.ts",
+    "source": "import { spawn } from \"node:child_process\";\nspawn(\"rf\", [\"graph\", \"show\"]);\n"
+   },
+   "execFileSyncRf": {
+    "module": "exec-rf.ts",
+    "source": "import { execFileSync } from \"node:child_process\";\nexecFileSync(\"rf\", [\"--version\"]);\n"
+   },
+   "memberSpawnRf": {
+    "module": "member-spawn-rf.ts",
+    "source": "import * as cp from \"node:child_process\";\ncp.spawn(\"rf\", [\"context\", \"show\"]);\n"
+   },
+   "otherBinary": {
+    "module": "spawn-rg.ts",
+    "source": "import { spawn } from \"node:child_process\";\nspawn(\"rg\", [\"-n\", \"rf\"]);\n"
+   }
+  },
+  "descriptorControls": {
+   "runtimeHost": {
+    "version": "1.0.0",
+    "description": "planted",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "external",
+    "permissions": [
+     "fiber:host"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "fiber.runtime.host",
+    "contractSource": "fiber_optics FiberRuntime"
+   },
+   "valueFlush": {
+    "version": "1.0.0",
+    "description": "planted",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "write",
+    "permissions": [
+     "fiberoptics:flush"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "fiberoptics.value.flush"
+   },
+   "commitRender": {
+    "version": "1.0.0",
+    "description": "planted",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "write",
+    "permissions": [
+     "reactivefiber:commit"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "reactivefiber.render.commit",
+    "contractSource": "rf@0.1.845:reactive-fiber.cli/v1 context.render"
+   },
+   "observePreview": {
+    "version": "1.0.0",
+    "description": "planted",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "read",
+    "permissions": [
+     "reactivefiber:render"
+    ],
+    "supportedModes": [
+     "invoke",
+     "observe"
+    ],
+    "id": "reactivefiber.render.preview",
+    "contractSource": "rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit"
+   },
+   "rfContract": {
+    "version": "1.0.0",
+    "description": "planted",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "read",
+    "permissions": [
+     "context:render"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "context.render.preview",
+    "contractSource": "rf@0.1.845:context.render"
+   },
+   "entryDescription": {
+    "version": "1.0.0",
+    "description": "queue_value_publication, then flush_value_publications",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "write",
+    "permissions": [
+     "planted:read"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "workbench.value.queue"
+   },
+   "previewShape": {
+    "version": "1.0.0",
+    "description": "planted",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "read",
+    "permissions": [
+     "reactivefiber:render"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "reactivefiber.render.preview",
+    "contractSource": "rf@0.1.845:reactive-fiber.cli/v1 context.render --no-commit"
+   },
+   "nestedSchema": {
+    "version": "1.0.0",
+    "description": "planted",
+    "inputSchema": {
+     "type": "object",
+     "properties": {
+      "handle": {
+       "type": "string",
+       "description": "a FiberRuntime handle"
+      }
+     }
+    },
+    "effectClass": "read",
+    "permissions": [
+     "planted:read"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "workbench.handle.read"
+   },
+   "neutral": {
+    "version": "1.0.0",
+    "description": "planted",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "read",
+    "permissions": [
+     "forge:gate:status"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "forge.gate.status"
+   }
+  },
+  "committedForms": [
+   "transaction_id",
+   "render_id",
+   "ephemeral",
+   "commit_seq",
+   "storage_write_count"
+  ],
+  "unreadForms": [
+   "wouldCommit",
+   "effects"
+  ],
+  "workspaceFiles": {
+   ".reactive-fiber/graphs/context.toml": "id = \"context\"\n",
+   ".reactive-fiber/components/summary.toml": "id = \"summary\"\n",
+   "notes/source.md": "# source\n"
+  },
+  "composed": {
+   "module": "composed.ts",
+   "source": "export const name = \"fiber\" + \"_optics\";\nexport const entry = [\"flush\", \"value\", \"publications\"].join(\"_\");\nexport const host = \"Fiber\" + \"Runtime\";\n"
+  },
+  "comment": {
+   "module": "comment.ts",
+   "source": "// new FiberRuntime() over fiber_optics\n/* flush_value_publications */\nexport {};\n"
+  },
+  "otherVocabulary": [
+   {
+    "module": "other-vocabulary.ts",
+    "source": "import { Runtime } from \"@reactive/fo-runtime\";\nconst runtime = new Runtime();\nruntime.enqueue(1);\nruntime.drain();\nexport const fibre = \"fibre optics\";\n"
+   },
+   {
+    "version": "1.0.0",
+    "description": "hosts the value runtime and drains its queue",
+    "inputSchema": {
+     "type": "object"
+    },
+    "effectClass": "write",
+    "permissions": [
+     "planted:read"
+    ],
+    "supportedModes": [
+     "invoke"
+    ],
+    "id": "context.engine.host"
+   }
+  ],
+  "residuals": {
+   "R-COMPOSED": [
+    "Q1"
+   ],
+   "R-NON-CODE": [
+    "Q2"
+   ],
+   "R-OUTSIDE-SRC": [
+    "Q3"
+   ],
+   "R-INJECTED-RELAY": [
+    "Q4"
+   ],
+   "R-UNREAD-MARKER": [
+    "Q5"
+   ],
+   "R-LATE-REACTION": [
+    "Q6"
+   ],
+   "R-OTHER-VOCABULARY": [
+    "Q7"
+   ]
+  }
+ },
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the bead's title, notes and acceptance and the cases agree",
+  "A1",
+  "A2",
+  "A3",
+  "A4",
+  "B1",
+  "B2",
+  "C1",
+  "C2",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "Q7",
+  "the registered tests and the reached pins equal the roster, in order and both ways"
+ ],
+ "rows": [
+  {
+   "id": "A",
+   "label": "before any Fiber-hosting capability registers",
+   "pins": [
+    {
+     "id": "A1",
+     "witness": {
+      "surface": "manifests",
+      "manifestTextsAboveFloor": true,
+      "packageJson": [],
+      "lockPackagesAboveFloor": true,
+      "lock": [],
+      "manifestControls": {
+       "dependencies": 1,
+       "devDependencies": 1,
+       "peerDependencies": 1,
+       "optionalDependencies": 1,
+       "bundleDependencies": 1,
+       "nestedValue": 1,
+       "nearMissRf": 0,
+       "nearMissSplit": 0
+      },
+      "shadowedKey": {
+       "parsed": 0,
+       "raw": 1
+      },
+      "lockControls": {
+       "lockPath": 1,
+       "lockName": 1,
+       "lockQuiet": 0
+      }
+     }
+    },
+    {
+     "id": "A2",
+     "witness": {
+      "surface": "src",
+      "modulesAboveFloor": true,
+      "textsAboveFloor": true,
+      "symlinks": [],
+      "onlyWalked": [],
+      "onlyTracked": [],
+      "providerRead": true,
+      "anchors": {
+       "rf": true,
+       "--no-commit": true,
+       "nativeReactiveFiberRender": true,
+       "fiber_signal_count": true
+      },
+      "hosting": [],
+      "controls": {
+       "importFrom": [
+        "import-from.ts:1: fiberoptics"
+       ],
+       "dynamicImport": [
+        "dynamic-import.ts:1: fiberoptics"
+       ],
+       "requireCall": [
+        "require-call.cjs:1: fiberoptics"
+       ],
+       "sidecarArgv": [
+        "sidecar.ts:2: fiberoptics"
+       ],
+       "runtimeClass": [
+        "runtime-class.ts:2: fiberruntime"
+       ],
+       "graphType": [
+        "graph-type.ts:1: fibergraph"
+       ],
+       "schedulerTemplate": [
+        "scheduler-template.ts:2: fiberscheduler"
+       ],
+       "regexPattern": [
+        "regex-pattern.ts:1: fiberoptics"
+       ],
+       "privateName": [
+        "private-name.ts:2: fiberoptics",
+        "private-name.ts:4: fiberoptics"
+       ],
+       "jsxText": [
+        "jsx-text.tsx:1: fiberoptics"
+       ],
+       "nearMiss": []
+      }
+     }
+    },
+    {
+     "id": "A3",
+     "witness": {
+      "surface": "registered capabilities",
+      "artifact": "a registered Pi Fiber-hosting or Fiber-publishing capability (none exists)",
+      "native": {
+       "missing": [],
+       "hosting": [],
+       "family": [
+        {
+         "id": "reactivefiber.render.preview",
+         "effectClass": "read",
+         "supportedModes": [
+          "invoke"
+         ],
+         "permissions": [
+          "reactivefiber:render"
+         ],
+         "carrier": true,
+         "description": "RF noncommitted context with native provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)",
+         "publishing": []
+        }
+       ]
+      },
+      "injected": {
+       "missing": [],
+       "hosting": [],
+       "family": [
+        {
+         "id": "reactivefiber.render.preview",
+         "effectClass": "read",
+         "supportedModes": [
+          "invoke"
+         ],
+         "permissions": [
+          "reactivefiber:render"
+         ],
+         "carrier": true,
+         "description": "Preview native RF context with provenance; no authoritative or journal store write (disposable, reconstructible cache-plane writes may occur)",
+         "publishing": []
+        }
+       ]
+      },
+      "controls": {
+       "runtimeHost": {
+        "family": true,
+        "publishing": [
+         "effectClass external",
+         "contract without --no-commit"
+        ],
+        "needles": [
+         "fiberruntime",
+         "fiberoptics"
+        ]
+       },
+       "valueFlush": {
+        "family": true,
+        "publishing": [
+         "effectClass write",
+         "contract without --no-commit"
+        ],
+        "needles": [
+         "fiberoptics"
+        ]
+       },
+       "commitRender": {
+        "family": true,
+        "publishing": [
+         "effectClass write",
+         "contract without --no-commit"
+        ],
+        "needles": []
+       },
+       "observePreview": {
+        "family": true,
+        "publishing": [
+         "mode observe"
+        ],
+        "needles": []
+       },
+       "rfContract": {
+        "family": true,
+        "publishing": [
+         "contract without --no-commit"
+        ],
+        "needles": []
+       },
+       "entryDescription": {
+        "family": false,
+        "publishing": [],
+        "needles": [
+         "queuevaluepublication",
+         "flushvaluepublications"
+        ]
+       },
+       "previewShape": {
+        "family": true,
+        "publishing": [],
+        "needles": []
+       },
+       "nestedSchema": {
+        "family": false,
+        "publishing": [],
+        "needles": [
+         "fiberruntime"
+        ]
+       },
+       "neutral": {
+        "family": false,
+        "publishing": [],
+        "needles": []
+       }
+      }
+     }
+    },
+    {
+     "id": "A4",
+     "witness": {
+      "surface": "rf launch",
+      "flag": "--no-commit",
+      "launchRoster": [
+       "src/workbench/providers/reactivefiber.ts: spawn"
+      ],
+      "launchControls": {
+       "spawnRf": [
+        "spawn-rf.ts: spawn"
+       ],
+       "execFileSyncRf": [
+        "exec-rf.ts: execFileSync"
+       ],
+       "memberSpawnRf": [
+        "member-spawn-rf.ts: spawn"
+       ],
+       "otherBinary": []
+      },
+      "arms": {
+       "legacy": "returned",
+       "view": "returned"
+      },
+      "spawns": [
+       [
+        "--workspace",
+        "<root>",
+        "context",
+        "render",
+        "--model",
+        "model-fixture",
+        "--task",
+        "task-fixture",
+        "--no-commit",
+        "--no-input",
+        "--json"
+       ],
+       [
+        "--workspace",
+        "<root>",
+        "context",
+        "render",
+        "--view",
+        "swarm.worker",
+        "--task-id",
+        "bead-fixture-000",
+        "--no-commit",
+        "--no-input",
+        "--json"
+       ]
+      ],
+      "everyLaunchNoCommit": true
+     }
+    }
+   ]
+  },
+  {
+   "id": "B",
+   "label": "a falsifier proves publication happens only through an explicit host flush call",
+   "pins": [
+    {
+     "id": "B1",
+     "witness": {
+      "surface": "native preview",
+      "forms": {
+       "transaction_id": {
+        "legacy": "transport: RF preview returned an unrecognized or contradictory envelope.",
+        "view": "transport: RF preview returned an unrecognized or contradictory envelope."
+       },
+       "render_id": {
+        "legacy": "transport: RF preview returned an unrecognized or contradictory envelope.",
+        "view": "transport: RF preview returned an unrecognized or contradictory envelope."
+       },
+       "ephemeral": {
+        "legacy": "transport: RF preview returned an unrecognized or contradictory envelope.",
+        "view": "transport: RF preview returned an unrecognized or contradictory envelope."
+       },
+       "commit_seq": {
+        "legacy": "transport: RF preview returned an unrecognized or contradictory envelope.",
+        "view": "transport: RF preview returned an unrecognized or contradictory envelope."
+       },
+       "storage_write_count": {
+        "legacy": "transport: RF preview returned an unrecognized or contradictory envelope.",
+        "view": "transport: RF preview returned an unrecognized or contradictory envelope."
+       }
+      },
+      "control": {
+       "legacy": {
+        "transaction_id": null,
+        "render_id": null,
+        "ephemeral": true,
+        "commit_seq": null,
+        "storage_write_count": 0
+       },
+       "view": {
+        "transaction_id": null,
+        "render_id": null,
+        "ephemeral": true,
+        "commit_seq": null,
+        "storage_write_count": 0
+       }
+      },
+      "spawns": 12
+     }
+    },
+    {
+     "id": "B2",
+     "witness": {
+      "surface": "src",
+      "walkHeldToGit": true,
+      "entries": [],
+      "controls": {
+       "snakeCall": [
+        "snake-call.ts:1: queuevaluepublication",
+        "snake-call.ts:2: queuevaluepublication"
+       ],
+       "camelCall": [
+        "camel-call.ts:1: flushvaluepublications",
+        "camel-call.ts:2: flushvaluepublications"
+       ],
+       "stringKey": [
+        "string-key.ts:2: requestrerender"
+       ],
+       "destructured": [
+        "destructured.ts:2: flushrequestedrenders"
+       ],
+       "nearMiss": []
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "C",
+   "label": "a query change alone produces zero publication or inference side effects",
+   "pins": [
+    {
+     "id": "C1",
+     "witness": {
+      "registryServes": [
+       "invoke",
+       "inspect"
+      ],
+      "reactive": [],
+      "providers": {
+       "native": [
+        [
+         "descriptor",
+         "invoke"
+        ]
+       ],
+       "injected": [
+        [
+         "descriptor",
+         "invoke"
+        ]
+       ]
+      },
+      "registration": {
+       "native": [],
+       "injected": []
+      },
+      "controls": {
+       "subscribingRegistry": [
+        "SubscribingRegistry.subscribe: subscribe"
+       ],
+       "inheritingRegistry": [
+        "InheritingRegistry.subscribe: subscribe"
+       ],
+       "pollingProvider": [
+        "Timeout+1"
+       ]
+      }
+     }
+    },
+    {
+     "id": "C2",
+     "witness": {
+      "native": {
+       "registration": [],
+       "changes": [],
+       "spawnsAfterChange": 0,
+       "invoked": [
+        [
+         "--workspace",
+         "<root>",
+         "context",
+         "render",
+         "--model",
+         "model-fixture",
+         "--task",
+         "task-after",
+         "--no-commit",
+         "--no-input",
+         "--json"
+        ]
+       ],
+       "value": {
+        "transaction_id": null,
+        "render_id": null,
+        "ephemeral": true,
+        "commit_seq": null,
+        "storage_write_count": 0
+       },
+       "secondChange": [],
+       "spawnsAfterSecondChange": 1
+      },
+      "injected": {
+       "callsAfterChange": 0,
+       "callsAfterInvoke": 1,
+       "callsAfterSecondChange": 1,
+       "spawns": 0
+      },
+      "reactiveControl": {
+       "registration": [
+        "Timeout+1"
+       ],
+       "spawnsAfterChange": 1
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals: each named family pinned by its quiet row",
+   "pins": [
+    {
+     "id": "Q1",
+     "witness": {
+      "residual": "R-COMPOSED",
+      "hosting": [],
+      "entries": []
+     }
+    },
+    {
+     "id": "Q2",
+     "witness": {
+      "residual": "R-NON-CODE",
+      "hosting": [],
+      "entries": []
+     }
+    },
+    {
+     "id": "Q3",
+     "witness": {
+      "residual": "R-OUTSIDE-SRC",
+      "walked": [
+       "src/clean.ts"
+      ],
+      "hits": [],
+      "outside": [
+       {
+        "path": "qa/host.mjs",
+        "walked": false,
+        "needles": 4
+       },
+       {
+        "path": "examples/host.ts",
+        "walked": false,
+        "needles": 1
+       }
+      ]
+     }
+    },
+    {
+     "id": "Q4",
+     "witness": {
+      "residual": "R-INJECTED-RELAY",
+      "returned": {
+       "transaction_id": "rft_bbbbbbbbbbbbbbbbbbbbbb",
+       "render_id": null,
+       "ephemeral": true,
+       "commit_seq": null,
+       "storage_write_count": 0
+      }
+     }
+    },
+    {
+     "id": "Q5",
+     "witness": {
+      "residual": "R-UNREAD-MARKER",
+      "forms": {
+       "wouldCommit": {
+        "legacy": "returned",
+        "view": "returned"
+       },
+       "effects": {
+        "legacy": "returned",
+        "view": "returned"
+       }
+      }
+     }
+    },
+    {
+     "id": "Q6",
+     "witness": {
+      "residual": "R-LATE-REACTION",
+      "registration": [
+       "Timeout+1"
+      ],
+      "spawnsAfterChange": 0
+     }
+    },
+    {
+     "id": "Q7",
+     "witness": {
+      "residual": "R-OTHER-VOCABULARY",
+      "hosting": [],
+      "launches": [],
+      "manifest": [],
+      "descriptor": {
+       "family": false,
+       "publishing": [],
+       "needles": []
+      }
+     }
+    }
+   ]
+  }
+ ]
+}
