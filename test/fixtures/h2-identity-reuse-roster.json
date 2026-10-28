@@ -1,6 +1,6 @@
 {
  "bead": "wb-4nut.9",
- "basis": "The out-of-file roster of test/workbench-h2-identity-reuse-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the scan constants, the residual families and the pin carrying each one's quiet row, every registered test title, and the record (wb-flt6: reached, each case's end before the records case, in run order, with its assertion count; recordsEnd, the records case's own end), so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. producer: read-only git rev-parse/show/grep on the local checkouts below /workplace/jehallad/AgentEcosystem/ForgeWorkspaces/PrimaryInstallation/src at the cited shas (no fetch; the checkouts' HEADs predate the pins, so only the cited shas are read): each source's file blob, the cited lines verbatim, the gating work packages its table rows name, and srcProbe = git grep -l -E <pattern> <sha> -- src (none at every pin). The TSX-FED-01 row is held to its first three cells (heldCells 3): its program cell spells the rf source kind the landed wb-a9l2.2 census keeps out of every file under test/. wb-3wcm (the landing-405 gate's F1-F6): scan.readingControls gains the wrapper, parenthesized-key, indexed-access-type, parenthesized-type and type-query chain readings and the hex, unicode, code point, escaped-letter, control and digit regex escape readings; scan.findingControls (the finding step's own controls) and scan.tokenControl (the token anchor's own control) join the scan, comparisons (the SELF-READ's witness comparisons) joins the roster, and A2's witness gains findingControls, unreadTokens (the compiler-anchored token census: every src node that carries its own text read by a token reading) and tokenControl.",
+ "basis": "The out-of-file roster of test/workbench-h2-identity-reuse-census.test.ts (standing rule 16): every judged row's id, label and pins, every pin's witness, the scan constants, the residual families and the pin carrying each one's quiet row, every registered test title, and the record (wb-flt6: reached, each case's end before the records case, in run order, with its assertion count; recordsEnd, the records case's own end), so a census edit that deletes, relabels, swaps or coordinated-removes a member reds against this file. producer: read-only git rev-parse/show/grep on the local checkouts below /workplace/jehallad/AgentEcosystem/ForgeWorkspaces/PrimaryInstallation/src at the cited shas (no fetch; the checkouts' HEADs predate the pins, so only the cited shas are read): each source's file blob, the cited lines verbatim, the gating work packages its table rows name, and srcProbe = git grep -l -E <pattern> <sha> -- src (none at every pin). The TSX-FED-01 row is held to its first three cells (heldCells 3): its program cell spells the rf source kind the landed wb-a9l2.2 census keeps out of every file under test/. wb-3wcm (the landing-405 gate's F1-F6): scan.readingControls gains the wrapper, parenthesized-key, indexed-access-type, parenthesized-type and type-query chain readings and the hex, unicode, code point, escaped-letter, control and digit regex escape readings; scan.findingControls (the finding step's own controls) and scan.tokenControl (the token anchor's own control) join the scan, comparisons (the SELF-READ's witness comparisons) joins the roster, and A2's witness gains findingControls, unreadTokens (the compiler-anchored token census: every src node that carries its own text read by a token reading) and tokenControl. wb-3w79 (the landing-501 gate's F1-F4): scan.readingControls gains a control per chain root (a type name, a type query of a name and of a qualified name, this and the this type) and the identity-escape and count, range and open brace-quantifier regex readings; A2's witness gains spellings (each reading control's text as its own reading read it) and findingKnown (each finding control's known spellings, from the one finding step A2's src call makes too); operands (the SELF-READ's operand statements: the pin case's IMPL lookup, the echo check over that entry's source, its witness declaration and its MEASURED record) joins the roster.",
  "quote": "Restart changes source owner epoch; matching sequence counter cannot authorize reuse.",
  "citation": "RL docs/programs/harness2-reactive-evolution-2026-10-20/README.md:45@bfe1f4ac7fa0",
  "scan": {
@@ -285,6 +285,51 @@
     "regex named back-reference",
     "regex",
     "const r = /(?<dot>\\.)owner\\k<dot>epoch/;"
+   ],
+   [
+    "type name root",
+    "chain",
+    "type E = Owner[\"epoch\"];"
+   ],
+   [
+    "type query name root",
+    "chain",
+    "type E = (typeof owner)[\"epoch\"];"
+   ],
+   [
+    "type query qualified root",
+    "chain",
+    "type E = (typeof record.owner)[\"epoch\"];"
+   ],
+   [
+    "this root",
+    "chain",
+    "class Holder { e = this.owner.epoch; }"
+   ],
+   [
+    "this type root",
+    "chain",
+    "interface Holder { e: this[\"owner\"][\"epoch\"]; }"
+   ],
+   [
+    "regex identity escape",
+    "regex",
+    "const r = /owner\\Epoch/;"
+   ],
+   [
+    "regex count quantifier",
+    "regex",
+    "const r = /owner.{1}epoch/;"
+   ],
+   [
+    "regex range quantifier",
+    "regex",
+    "const r = /owner.{0,2}epoch/;"
+   ],
+   [
+    "regex open quantifier",
+    "regex",
+    "const r = /owner.{1,}epoch/;"
    ]
   ],
   "readingTerm": "owner epochs?",
@@ -526,6 +571,12 @@
   "expect(witness).toStrictEqual(rosterWitness(pin));",
   "expect(MEASURED, \"every pin's measured witness, compared against the roster a second time\").toStrictEqual(Object.fromEntries(pins.map(pin => [pin, rosterWitness(pin)])));"
  ],
+ "operands": [
+  "const impl = IMPL[pin];",
+  "expect(String(impl), `${pin}'s case reads the roster's witnesses`).not.toMatch(/\\brosterWitness\\b|\\bROSTER\\.rows\\b/);",
+  "const witness = impl === undefined ? null : await impl();",
+  "MEASURED[pin] = witness;"
+ ],
  "rows": [
   {
    "id": "A",
@@ -628,7 +679,58 @@
        "regex control escape:true",
        "regex digit escape:true",
        "regex property escape:true",
-       "regex named back-reference:true"
+       "regex named back-reference:true",
+       "type name root:true",
+       "type query name root:true",
+       "type query qualified root:true",
+       "this root:true",
+       "this type root:true",
+       "regex identity escape:true",
+       "regex count quantifier:true",
+       "regex range quantifier:true",
+       "regex open quantifier:true"
+      ],
+      "spellings": [
+       "identifier: ownerEpoch",
+       "private name: #ownerEpoch",
+       "string: owner epoch",
+       "template part:  owner epoch ",
+       "property access: record.owner.epoch",
+       "computed root: owner.epoch",
+       "element access: record.owner.epoch",
+       "qualified name: Owner.Epoch",
+       "object keys: owner.epoch",
+       "type members: owner.epoch",
+       "binding pattern: owner.epoch",
+       "regex literal: /owner.epoch/",
+       "regex escape: /owner.epoch/",
+       "regex class: /owner ._- epoch/i",
+       "non-null link: record.owner.epoch",
+       "parenthesized link: record.owner.epoch",
+       "as link: record.owner.epoch",
+       "satisfies link: record.owner.epoch",
+       "type assertion link: record.owner.epoch",
+       "parenthesized key: record.owner.epoch",
+       "indexed access type: Rec.owner.epoch",
+       "parenthesized type: Rec.owner.epoch",
+       "type query root: record.owner.epoch",
+       "regex hex escape: /owner.epoch/",
+       "regex unicode escape: /owner.epoch/",
+       "regex code point escape: /owner.epoch/u",
+       "regex escaped letter: /ownerEpoch/",
+       "regex control escape: /owner epoch/",
+       "regex digit escape: /owner epoch/",
+       "regex property escape: /owner epoch/u",
+       "regex named back-reference: /  <dot>. owner epoch/",
+       "type name root: Owner.epoch",
+       "type query name root: owner.epoch",
+       "type query qualified root: record.owner.epoch",
+       "this root: this.owner.epoch",
+       "this type root: this.owner.epoch",
+       "regex identity escape: /ownerEpoch/",
+       "regex count quantifier: /owner. epoch/",
+       "regex range quantifier: /owner. epoch/",
+       "regex open quantifier: /owner. epoch/"
       ],
       "quietControls": [
        0,
@@ -643,6 +745,12 @@
        [
         "src/workbench/detached-observer-copy.ts:1 chain snapshot observations?: snapshot.observation"
        ]
+      ],
+      "findingKnown": [
+       [
+        "src/workbench/detached-observer.ts chain snapshot.observation"
+       ],
+       []
       ],
       "unreadTokens": [],
       "tokenControl": [
@@ -1313,7 +1421,7 @@
   "records: every case of this file is registered once, in roster order, in run mode, ran before this one and reached its end with its pinned assertion count"
  ],
  "reached": [
-  "judged:17",
+  "judged:18",
   "A1:12",
   "A2:17",
   "A3:8",

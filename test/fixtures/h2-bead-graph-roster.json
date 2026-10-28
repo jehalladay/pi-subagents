@@ -489,6 +489,25 @@
     ],
     "named": "candidates"
    }
+  ],
+  "endCarryRows": [
+   "N"
+  ],
+  "endCures": [
+   {
+    "finding": "F1",
+    "pins": [
+     "L2-DRRET",
+     "L2-JSRET"
+    ],
+    "named": {
+     "ids": "L2-[A-Z]+RET"
+    }
+   }
+  ],
+  "endElsewhere": [
+   "F2",
+   "F3"
   ]
  },
  "rows": [
@@ -1791,7 +1810,9 @@
         "G-1",
         "G-2",
         "G-3",
-        "TR1"
+        "TR1",
+        "L2-DRRET",
+        "L2-JSRET"
        ],
        "drive": [
         "A4",
@@ -1896,7 +1917,7 @@
     {
      "id": "M1",
      "witness": [
-      "mode:skip x98"
+      "mode:skip x100"
      ]
     },
     {
@@ -1913,7 +1934,7 @@
     {
      "id": "M4",
      "witness": [
-      "unregistered x84"
+      "unregistered x85"
      ]
     },
     {
@@ -1984,13 +2005,13 @@
     {
      "id": "V1",
      "witness": [
-      "invoked-unreached x98"
+      "invoked-unreached x100"
      ]
     },
     {
      "id": "V2",
      "witness": [
-      "invoked-unreached x98",
+      "invoked-unreached x100",
       "fresh-witness x1"
      ]
     }
@@ -2160,6 +2181,40 @@
        ".beads/README.md",
        ".beads/config.yaml",
        ".beads/metadata.json"
+      ]
+     }
+    }
+   ]
+  },
+  {
+   "id": "N",
+   "label": "the end judge the closing case and the afterAll hook apply, and the end shape this file's harness keeps, flag a constructed model of each guarded return wb-52th's filing names: the harness case it cuts short reads unended, and its end record moved above the return reads out of place",
+   "pins": [
+    {
+     "id": "L2-DRRET",
+     "witness": {
+      "closing": [
+       "unended drive record"
+      ],
+      "afterAll": [
+       "unended drive record"
+      ],
+      "moved": [
+       "DRIVE_RECORD end not last"
+      ]
+     }
+    },
+    {
+     "id": "L2-JSRET",
+     "witness": {
+      "closing": [
+       "unended judged set"
+      ],
+      "afterAll": [
+       "unended judged set"
+      ],
+      "moved": [
+       "JUDGED_SET end not last"
       ]
      }
     }

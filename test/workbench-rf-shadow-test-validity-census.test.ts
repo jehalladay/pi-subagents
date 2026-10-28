@@ -90,6 +90,21 @@
  * (named families, each with pinned quiet rows in READING_PLANTS): R-UNTAGGED an untagged claim in a reading (prose, which by
  * design reads as the measured reading); R-UNPARENTHESISED a tag written without an ASCII parenthesis (square brackets,
  * full-width parentheses, a bare "z. ").
+ * CONTROL TEXT (wb-7rz9): a control is held out of file by its planted text, not only by its name: the roster holds the digest of
+ * every A1 plant's text (plantDigests) and of every reading control's text before and after (readingPlantDigests) - a digest, so
+ * no planted needle is copied into a file whole-tree readers judge - so a control whose text is swapped reds even while the judge
+ * or READING_TAG still flags it. Each reading control is also judged from its own text: tagShapeOf reads its ASCII parentheses, never
+ * READING_TAG, and the roster holds each control's shape (readingShapes); the flagged controls together show every shape
+ * READING_TAG's alternatives read (TAG_SHAPES: parenthesised, unclosed, unopened) and no other, and no quiet control's text holds an
+ * ASCII parenthesis. Beside the hand controls the two lone shapes are anchored in the bead row: each filed claim with its tag's ")"
+ * removed ("(a a Pi ..."), and apart with its "(" removed ("a) a Pi ..."), put into every row's reading in the same three places,
+ * passes the bounded binding and READING_TAG reads its lone parenthesis there (72 forms, counted), so dropping the lone "(" or the
+ * lone ")" alternative reds on bead-row text even when the hand control, its roster entries and TAG_SHAPES are edited with it.
+ * NOT CLAIMED: a control's text re-pinned together with its roster digest (for a reading control, with its roster shape too), the
+ * roster-moves-with-census path visible in any diff - an A1 plant has no shape check of its own, so a plant re-pinned that way and
+ * a judge narrowing only it exercised survive together; an edit of loneFormsOf together with the count beside it; and a narrowing
+ * of READING_TAG, the roster's readingTag edited to match, that still reads a lone parenthesis where the controls write one (a
+ * lower-case letter after the "(", one before the ")").
  * SCOPE: the observer's render coverage is a reading of a context render, not of graph validity; its handling of a warning row
  * (shape-checked and never surfaced: the counts it reports are the summary's) stays with its own pins. The producer facts are read at 6a251bf73af5 and rf 0.1.832; Pi vendors no
  * rf schema, so a producer change is seen only when a cut re-measures the roster.
@@ -164,6 +179,8 @@ const ZERO_WIDTH_SPACE = String.fromCodePoint(0x200b);
 const READING_TAG = /\([^()]*\)|[()]/g;
 /** The reading residual families (wb-2gzp), each with pinned quiet rows in READING_PLANTS. */
 const READING_RESIDUALS = ["R-UNTAGGED", "R-UNPARENTHESISED"];
+/** The tag shapes READING_TAG's alternatives read (wb-7rz9), as tagShapeOf names them: a parenthesised run, a lone "(" and a lone ")". */
+const TAG_SHAPES = ["parenthesised", "unclosed", "unopened"];
 const FULLWIDTH_OPEN = String.fromCodePoint(0xff08);
 const FULLWIDTH_CLOSE = String.fromCodePoint(0xff09);
 
@@ -497,6 +514,40 @@ function taggedReadings(rows: readonly Row[]): string[] {
 }
 /** ROWS with row `id`'s label replaced by `label`. */
 const withLabel = (id: string, label: string): Row[] => ROWS.map(row => (row.id === id ? { ...row, label } : row));
+/** The text a reading control plants: what it puts before the reading's start and after the label's end (wb-7rz9). */
+const plantedText = (plant: ReadingPlant): string => `${plant.before}${plant.after}`;
+/**
+ * A planted text's tag shape (wb-7rz9), read from its own ASCII parentheses and never through READING_TAG, so a control's text and
+ * the detector are judged apart: "parenthesised" when a "(" has a ")" after it, "unclosed" when it holds a "(" and no ")",
+ * "unopened" when it holds a ")" and no "(", "none" when it holds neither, and "mixed" when every ")" comes before the first "(".
+ */
+function tagShapeOf(text: string): string {
+  const open = text.indexOf("(");
+  const close = text.lastIndexOf(")");
+  if (open < 0) return close < 0 ? "none" : "unopened";
+  if (close < 0) return "unclosed";
+  return close > open ? "parenthesised" : "mixed";
+}
+interface LoneForm {
+  /** The tag shape this form writes (TAG_SHAPES' "unclosed" or "unopened"). */
+  readonly shape: string;
+  /** The filed claim with its tag rewritten. */
+  readonly claim: string;
+  /** The lone parenthesis READING_TAG must read in it. */
+  readonly lone: string;
+}
+/** A filed claim's opening tag "(x) " in its two lone shapes (wb-7rz9): its ")" removed ("(x ") and its "(" removed ("x) "); none
+ * when the claim opens with no parenthesised tag, which the count beside the check reads. */
+function loneFormsOf(claim: string): LoneForm[] {
+  const tag = /^\(([^()]*)\) /.exec(claim);
+  if (tag === null) return [];
+  const inner = tag[1] ?? "";
+  const rest = claim.slice(tag[0].length);
+  return [
+    { shape: "unclosed", claim: `(${inner} ${rest}`, lone: "(" },
+    { shape: "unopened", claim: `${inner}) ${rest}`, lone: ")" },
+  ];
+}
 /** The filing's "Shipped:" sentence on its Gating artifact line. */
 function shippedOf(notes: string): string {
   return /^Gating artifact: .*?(Shipped: [^;]+);/m.exec(notes)?.[1] ?? "";
@@ -1072,6 +1123,11 @@ describe("wb-hs2j.5 rf shadow-test validity census (RF-REACTIVE-CONTEXT-ASSEMBLY
         readingTag: `${READING_TAG.source}/${READING_TAG.flags}`,
         readingPlants: READING_PLANTS.map(plant => `${plant.id}:${plant.row}:${plant.flagged ? "flagged" : (plant.residual ?? "quiet")}`),
         readingResiduals: READING_RESIDUALS,
+        // Each control's planted text, held out of file by digest (wb-7rz9), so no planted needle is copied into the roster.
+        plantDigests: PLANTS.map(plant => `${plant.path}:${sha256(plant.text)}`),
+        readingPlantDigests: READING_PLANTS.map(plant => `${plant.id}:${sha256([plant.before, plant.after])}`),
+        readingShapes: READING_PLANTS.map(plant => `${plant.id}:${tagShapeOf(plantedText(plant))}`),
+        tagShapes: TAG_SHAPES,
       },
       residuals: RESIDUAL_FAMILIES,
     }).toStrictEqual({ bead: ROSTER.bead, scan: ROSTER.scan, residuals: [...ROSTER.residuals] });
@@ -1111,6 +1167,34 @@ describe("wb-hs2j.5 rf shadow-test validity census (RF-REACTIVE-CONTEXT-ASSEMBLY
         .filter(({ row, label }) => taggedReadings(withLabel(row.id, label)).length === 0 || JSON.stringify(claimsOf(label)) !== JSON.stringify(claimsOf(row.label)))
         .map(({ label }) => label),
       "the bead row's clauses and statement, tag included, in a row's reading: each passes the bounded binding and reads flagged",
+    ).toEqual([]);
+    // Each reading control is judged from its own text too (wb-7rz9): its tag shape is read off its own parentheses, never through
+    // READING_TAG, so a control whose text is swapped to another shape reds even where READING_TAG still flags it.
+    expect(
+      [...new Set(READING_PLANTS.filter(plant => plant.flagged).map(plant => tagShapeOf(plantedText(plant))))].sort(),
+      "the flagged reading controls' own tag shapes: every shape READING_TAG reads has a control of that shape, and no other shape occurs",
+    ).toEqual([...TAG_SHAPES].sort());
+    expect(
+      READING_PLANTS.filter(plant => !plant.flagged && tagShapeOf(plantedText(plant)) !== "none").map(plant => plant.id),
+      "quiet reading controls whose text holds an ASCII parenthesis: a quiet row pins a residual only while its text holds none",
+    ).toEqual([]);
+    // The lone shapes anchored in the bead row (wb-7rz9): each filed claim with its tag's ")" removed and, apart, with its "("
+    // removed, put into every row's reading in the same three places, passes the bounded binding and READING_TAG reads its lone
+    // parenthesis there, so the lone "(" and lone ")" alternatives each rest on the bead row's own clause tags, which no literal of
+    // this file holds.
+    const lone = ROWS.flatMap(row =>
+      [...clauses, `${STATEMENT_TAG}${statement}`].flatMap(claim =>
+        loneFormsOf(claim).flatMap(form =>
+          [plantInto(row.label, `${form.claim}; `, ""), plantInto(row.label, "", `; ${form.claim}`), plantInto(row.label, `${form.claim}: `, "")].map(label => ({ row, label, form })),
+        ),
+      ),
+    );
+    expect(lone.length, "every row reads each filed claim's two lone-tag forms in three places").toBe(ROWS.length * (clauses.length + 1) * 2 * 3);
+    expect(
+      lone
+        .filter(({ row, label, form }) => !taggedReadings(withLabel(row.id, label)).includes(`${row.id}: ${form.lone}`) || JSON.stringify(claimsOf(label)) !== JSON.stringify(claimsOf(row.label)))
+        .map(({ form, label }) => `${form.shape}: ${label}`),
+      "the bead row's claims with a lone tag in a row's reading: each passes the bounded binding and READING_TAG reads its lone parenthesis",
     ).toEqual([]);
     const quietReadings = [...new Set(READING_PLANTS.flatMap(plant => (plant.residual === undefined || plant.flagged ? [] : [plant.residual])))];
     expect(quietReadings, "every reading residual family has a pinned quiet row").toEqual(READING_RESIDUALS);

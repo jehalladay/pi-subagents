@@ -1,0 +1,1100 @@
+{
+ "bead": "wb-021.3",
+ "constants": {
+  "abbreviation": "APO",
+  "slug": [
+   "adaptive",
+   "policy",
+   "organizations"
+  ],
+  "slugForms": [
+   "^adaptive$",
+   "^polic(?:y|ies)$",
+   "^organi[sz]ations?$"
+  ],
+  "joinedSlug": {
+   "source": "adaptivepolic(?:y|ies)organi[sz]ations?",
+   "flags": "i"
+  },
+  "wordBreak": "(?<=[a-z])(?=[A-Z])|(?<=[A-Z])(?=[A-Z][a-z]{2,})|(?<=[A-Z])(?=[A-Z][a-rt-z])|(?<=[A-Za-z])(?=[0-9])|(?<=[0-9])(?=[A-Za-z])",
+  "wordBreaks": {
+   "lowerUpper": "(?<=[a-z])(?=[A-Z])",
+   "acronymBeforeWord": "(?<=[A-Z])(?=[A-Z][a-z]{2,})",
+   "acronymBeforeLetter": "(?<=[A-Z])(?=[A-Z][a-rt-z])",
+   "letterDigit": "(?<=[A-Za-z])(?=[0-9])",
+   "digitLetter": "(?<=[0-9])(?=[A-Za-z])"
+  },
+  "readings": {
+   "script": "\\.(?:[cm]?[jt]sx?)$",
+   "json": "\\.json$",
+   "markdown": "\\.(?:md|markdown|mdown|mkdn|mkd|mdwn|mdx)$",
+   "markup": "\\.(?:html?|xhtml|svg|xml)$"
+  },
+  "namedReferences": {
+   "amp": "&",
+   "lt": "<",
+   "gt": ">",
+   "quot": "\"",
+   "apos": "'",
+   "nbsp": "\u00a0",
+   "shy": "\u00ad",
+   "ZeroWidthSpace": "\u200b",
+   "zwnj": "\u200c",
+   "zwj": "\u200d",
+   "lrm": "\u200e",
+   "rlm": "\u200f",
+   "NoBreak": "\u2060",
+   "ApplyFunction": "\u2061",
+   "InvisibleTimes": "\u2062",
+   "InvisibleComma": "\u2063"
+  },
+  "styledLetter": "^([A-Za-z])(?:opf|scr|fr)$",
+  "accentedLetter": "^([A-Za-z])(?:acute|grave|circ|tilde|uml|ring|cedil|caron|macr|breve|ogon|dot|dblac|slash|strok)$",
+  "dash": "\\u2014",
+  "requirement": "MW-ADAPTIVE-POLICY-ORGANIZATIONS-R3",
+  "sourceTag": "gap-mw-adaptive-policy-organizations/apo-pi-wb-03",
+  "acceptance": "Acceptance: double-export byte-equality on one recorded snapshot plus a planted-credential redaction falsifier; gated on an APO export surface existing.",
+  "armed": "the export shall be reproducible \\u2014 byte-stable for the same recorded snapshot/basis, declared inputs only \\u2014 and shall contain no secret data: the docs/12 redaction floor (credentials, token prefixes, sensitive key/values) applies to the whole export, proven by a secret-bearing fixture redacted before write",
+  "src": "src/",
+  "outside": [
+   "test/",
+   ".beads/"
+  ],
+  "lockfiles": [
+   "package-lock.json",
+   "vendor/dependency-lock.json"
+  ],
+  "identity": "src/workbench/identity.ts",
+  "schemaLiteral": "workflow-script/v1",
+  "docs12": "docs/workbench/12-security.md",
+  "floorSentence": "redact recognized bearer/basic credentials, common API-token prefixes and sensitive plain or JSON-quoted key/value fields",
+  "docsPages": "docs/workbench/",
+  "filingPin": "b21beb0f89ad49500069403c4815d58f2825b414",
+  "floors": {
+   "srcFiles": 100,
+   "docs": 120,
+   "markdown": 90,
+   "binaries": 3,
+   "pages": 20,
+   "pinFiles": 250
+  },
+  "srcPlant": "src/workbench/zz-plant.ts",
+  "surfacePlants": {
+   "declaration": "export function exportApoTrace(snapshot: unknown): string {\n  return JSON.stringify(snapshot);\n}\n",
+   "capabilityId": "export const CAPABILITY = \"apo.evidence.export\";\n",
+   "escapedString": "export const LABEL = \"\\u0041PO trace export\";\n",
+   "foldedLiteral": "export const LABEL = \"A\" + \"PO evidence export\";\n",
+   "template": "export const label = (kind: string): string => `APO ${kind} export`;\n",
+   "path": "export {};\n"
+  },
+  "docPlants": {
+   "docs/workbench/zz-apo-export.md": "# Plant\n\nThis page names nothing.\n",
+   "docs/workbench/zz-raw.md": "# Plant\n\nPi ships an APO export.\n",
+   "new-feedback/zz-invisible.txt": "Pi ships an A\u200bPO export.\n",
+   "docs/zz-reference.md": "Pi ships an &#65;PO export.\n",
+   "docs/workbench/zz-markup.md": "Pi ships an A**P**O export.\n",
+   "docs/zz-page.html": "<p>Pi ships an A<b>P</b>O export.</p>\n",
+   "examples/zz-config.json": "{ \"note\": \"Pi ships an \\u0041PO export.\" }\n",
+   "examples/zz-example.ts": "export const NOTE = \"Pi ships an \\u0041PO export.\";\n",
+   "examples/zz-folded.ts": "export const NOTE = \"Pi ships an A\" + \"PO export.\";\n",
+   "qa/zz-plant.mjs": "// Pi ships an APO export.\nexport {};\n"
+  },
+  "utf16Plants": {
+   "docs/zz-utf16le.md": "utf16le",
+   "docs/zz-utf16be.md": "utf16be"
+  },
+  "utf16Text": "Pi ships an APO export.\n",
+  "pinPlant": "docs/workbench/zz-pin-plant.md",
+  "residuals": {
+   "R-TRACKER": "Q1",
+   "R-TEST-TREE": "Q2",
+   "R-LOCKFILE": "Q3",
+   "R-BINARY": "Q4",
+   "R-PARAPHRASE": "Q5",
+   "R-LETTERED": "Q6",
+   "R-CONFUSABLE": "Q7",
+   "R-BIDI": "Q8",
+   "R-STYLE": "Q9",
+   "R-INFLECTED": "Q10",
+   "R-JOINED": "Q11",
+   "R-COMPUTED": "Q12",
+   "R-UNNAMED-SURFACE": "Q13",
+   "R-OTHER-MARKUP": "Q14",
+   "R-NAMED-REFERENCE": "Q15",
+   "R-OTHER-ESCAPE": "Q16",
+   "R-SUFFIXED": "Q17",
+   "R-RETILED": "Q18"
+  },
+  "readers": [
+   "judgeScope",
+   "verdictOf",
+   "readingsOf",
+   "quiet",
+   "mentionsIn",
+   "mentionsWith",
+   "exportRow",
+   "textOf",
+   "git",
+   "listedAll",
+   "srcListing",
+   "docsListing",
+   "srcVerdict",
+   "docsVerdict",
+   "pinVerdict",
+   "scriptUnits"
+  ],
+  "unnamedInCases": [
+   "ROSTER",
+   "readRoster",
+   "rosterWitness",
+   "probe",
+   "PROBES",
+   "PROBE_LINE",
+   "PROBE_OUTCOMES",
+   "LIVE",
+   "REACHED"
+  ],
+  "probes": [
+   "blind",
+   "saturated",
+   "planted",
+   "untitled"
+  ],
+  "probeLine": "\nPi ships an APO export.\n",
+  "probeOutcomes": {
+   "T1": {
+    "blind": "changes",
+    "saturated": "throws",
+    "planted": "throws",
+    "untitled": "keeps"
+   },
+   "T2": {
+    "blind": "throws",
+    "saturated": "throws",
+    "planted": "keeps",
+    "untitled": "changes"
+   },
+   "T3": {
+    "blind": "throws",
+    "saturated": "changes",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Z1": {
+    "blind": "changes",
+    "saturated": "throws",
+    "planted": "throws",
+    "untitled": "keeps"
+   },
+   "Z2": {
+    "blind": "changes",
+    "saturated": "throws",
+    "planted": "throws",
+    "untitled": "keeps"
+   },
+   "Z3": {
+    "blind": "throws",
+    "saturated": "throws",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Q1": {
+    "blind": "throws",
+    "saturated": "keeps",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Q2": {
+    "blind": "changes",
+    "saturated": "keeps",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Q3": {
+    "blind": "changes",
+    "saturated": "changes",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Q4": {
+    "blind": "keeps",
+    "saturated": "changes",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Q5": {
+    "blind": "keeps",
+    "saturated": "changes",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Q6": {
+    "blind": "keeps",
+    "saturated": "changes",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Q7": {
+    "blind": "keeps",
+    "saturated": "changes",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Q8": {
+    "blind": "keeps",
+    "saturated": "changes",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Q9": {
+    "blind": "keeps",
+    "saturated": "changes",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Q10": {
+    "blind": "keeps",
+    "saturated": "changes",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Q11": {
+    "blind": "keeps",
+    "saturated": "changes",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Q12": {
+    "blind": "keeps",
+    "saturated": "changes",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Q13": {
+    "blind": "keeps",
+    "saturated": "changes",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Q14": {
+    "blind": "keeps",
+    "saturated": "changes",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Q15": {
+    "blind": "keeps",
+    "saturated": "changes",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Q16": {
+    "blind": "keeps",
+    "saturated": "changes",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Q17": {
+    "blind": "keeps",
+    "saturated": "changes",
+    "planted": "keeps",
+    "untitled": "keeps"
+   },
+   "Q18": {
+    "blind": "keeps",
+    "saturated": "keeps",
+    "planted": "keeps",
+    "untitled": "changes"
+   }
+  }
+ },
+ "tests": [
+  "the judged set: the frozen shape, the out-of-file roster, the cases and their own reads agree",
+  "the outside anchors: the bead's export row binds the rows, the quotes, the program's spellings and the armed clause, its owner filing the acceptance; docs/12 holds the floor; the filing pin is a commit",
+  "T1",
+  "T2",
+  "T3",
+  "Z1",
+  "Z2",
+  "Z3",
+  "Q1",
+  "Q2",
+  "Q3",
+  "Q4",
+  "Q5",
+  "Q6",
+  "Q7",
+  "Q8",
+  "Q9",
+  "Q10",
+  "Q11",
+  "Q12",
+  "Q13",
+  "Q14",
+  "Q15",
+  "Q16",
+  "Q17",
+  "Q18",
+  "the probes: every case re-run under each probe throws, changes or keeps its witness as PROBE_OUTCOMES holds",
+  "the registered tests, the reached pins and the claims equal the roster, in order and both ways"
+ ],
+ "rows": [
+  {
+   "id": "T",
+   "label": "If Pi ships an APO workbench trace/evidence export",
+   "pins": [
+    {
+     "id": "T1",
+     "quote": "If Pi ships",
+     "claims": {
+      "If": [
+       "fired",
+       "srcMentions"
+      ],
+      "Pi": [
+       "scope",
+       "walkEqualsGit",
+       "srcAtFloor",
+       "liveness"
+      ],
+      "ships": [
+       "srcPlants"
+      ]
+     },
+     "witness": {
+      "fired": false,
+      "srcMentions": {},
+      "scope": "every listed file under src/ (tracked plus untracked-not-ignored)",
+      "walkEqualsGit": true,
+      "srcAtFloor": true,
+      "liveness": {
+       "identitySchemaLiteral": true
+      },
+      "srcPlants": {
+       "src/workbench/zz-plant.ts": [
+        "cooked",
+        "decoded",
+        "normalized",
+        "raw"
+       ]
+      }
+     }
+    },
+    {
+     "id": "T2",
+     "quote": "an APO workbench",
+     "claims": {
+      "an APO": [
+       "abbreviation",
+       "abbreviationForms",
+       "breakRules",
+       "quietWords"
+      ],
+      "workbench": [
+       "slugWords",
+       "slugForms"
+      ]
+     },
+     "witness": {
+      "abbreviation": "APO",
+      "abbreviationForms": {
+       "upper": [
+        "APO"
+       ],
+       "lower": [
+        "apo"
+       ],
+       "anyCase": [
+        "aPo"
+       ],
+       "camel": [
+        "Apo"
+       ],
+       "acronymBeforeWord": [
+        "APO"
+       ],
+       "acronymBeforeLetter": [
+        "APO"
+       ],
+       "plural": [
+        "APOs"
+       ],
+       "pluralInCamel": [
+        "APOs"
+       ],
+       "possessive": [
+        "APO"
+       ],
+       "letterDigit": [
+        "APO"
+       ],
+       "digitLetter": [
+        "APO"
+       ],
+       "snake": [
+        "apo"
+       ],
+       "prefixed": [
+        "APO"
+       ]
+      },
+      "breakRules": {
+       "lowerUpper": [
+        "abbreviation.camel",
+        "abbreviation.acronymBeforeWord",
+        "abbreviation.acronymBeforeLetter",
+        "abbreviation.pluralInCamel",
+        "slug.camel"
+       ],
+       "acronymBeforeWord": [
+        "abbreviation.acronymBeforeWord"
+       ],
+       "acronymBeforeLetter": [
+        "abbreviation.acronymBeforeLetter"
+       ],
+       "letterDigit": [
+        "abbreviation.letterDigit"
+       ],
+       "digitLetter": [
+        "abbreviation.digitLetter"
+       ]
+      },
+      "quietWords": {
+       "containsLetters": [],
+       "reference": [],
+       "otherAbbreviation": [],
+       "slugIncomplete": [],
+       "slugTail": [],
+       "slugOutOfOrder": [],
+       "slugInterrupted": []
+      },
+      "slugWords": [
+       "adaptive",
+       "policy",
+       "organizations"
+      ],
+      "slugForms": {
+       "programName": [
+        "adaptive policy organizations"
+       ],
+       "camel": [
+        "adaptive policy organization"
+       ],
+       "screaming": [
+        "adaptive policy organisations"
+       ],
+       "plural": [
+        "adaptive policies organizations"
+       ],
+       "requirementId": [
+        "adaptive policy organizations"
+       ],
+       "joined": [
+        "adaptivepolicyorganizations"
+       ],
+       "lineBroken": [
+        "adaptive policy organisations"
+       ]
+      }
+     }
+    },
+    {
+     "id": "T3",
+     "quote": "trace/evidence export",
+     "claims": {
+      "trace/evidence export": [
+       "surfaceForms"
+      ]
+     },
+     "witness": {
+      "surfaceForms": {
+       "declaration": [
+        "decoded",
+        "normalized",
+        "raw"
+       ],
+       "capabilityId": [
+        "cooked",
+        "decoded",
+        "normalized",
+        "raw"
+       ],
+       "escapedString": [
+        "cooked",
+        "decoded"
+       ],
+       "foldedLiteral": [
+        "folded"
+       ],
+       "template": [
+        "cooked",
+        "decoded",
+        "normalized",
+        "raw"
+       ],
+       "path": [
+        "path"
+       ]
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "Z",
+   "label": "until then no Pi doc claims an APO export exists",
+   "pins": [
+    {
+     "id": "Z1",
+     "quote": "until then",
+     "claims": {
+      "until then": [
+       "triggerFired",
+       "filingPin",
+       "filedAtPin",
+       "absentBeforePin",
+       "pinFilesAtFloor",
+       "pinMentions",
+       "pinPlant"
+      ]
+     },
+     "witness": {
+      "triggerFired": false,
+      "filingPin": "b21beb0f89ad",
+      "filedAtPin": true,
+      "absentBeforePin": true,
+      "pinFilesAtFloor": true,
+      "pinMentions": {},
+      "pinPlant": {
+       "docs/workbench/zz-pin-plant.md": [
+        "decoded",
+        "normalized",
+        "raw",
+        "rendered"
+       ]
+      }
+     }
+    },
+    {
+     "id": "Z2",
+     "quote": "no Pi doc",
+     "claims": {
+      "no": [
+       "docMentions"
+      ],
+      "Pi": [
+       "docScope",
+       "excludedByName",
+       "docWalkEqualsGit",
+       "listedPartition"
+      ],
+      "doc": [
+       "docsAtFloor",
+       "markdownAtFloor",
+       "binariesAtFloor",
+       "docLiveness",
+       "docPlants"
+      ]
+     },
+     "witness": {
+      "docMentions": {},
+      "docScope": "every listed file outside src/, test/ and .beads/ (tracked plus untracked-not-ignored)",
+      "excludedByName": [
+       "package-lock.json",
+       "vendor/dependency-lock.json"
+      ],
+      "docWalkEqualsGit": true,
+      "listedPartition": {
+       "unjudged": [],
+       "judgedTwice": [],
+       "judgedExcluded": [],
+       "judgedUnlisted": [],
+       "judgedAltered": []
+      },
+      "docsAtFloor": true,
+      "markdownAtFloor": true,
+      "binariesAtFloor": true,
+      "docLiveness": {
+       "pagesRead": true,
+       "everyPageOpensWithLevel1Heading": true,
+       "docs12FloorSentence": true
+      },
+      "docPlants": {
+       "docs/workbench/zz-apo-export.md": [
+        "path"
+       ],
+       "docs/workbench/zz-raw.md": [
+        "decoded",
+        "normalized",
+        "raw",
+        "rendered"
+       ],
+       "new-feedback/zz-invisible.txt": [
+        "decoded",
+        "normalized"
+       ],
+       "docs/zz-reference.md": [
+        "decoded",
+        "rendered"
+       ],
+       "docs/workbench/zz-markup.md": [
+        "rendered"
+       ],
+       "docs/zz-page.html": [
+        "rendered"
+       ],
+       "examples/zz-config.json": [
+        "cooked",
+        "decoded"
+       ],
+       "examples/zz-example.ts": [
+        "cooked",
+        "decoded"
+       ],
+       "examples/zz-folded.ts": [
+        "folded"
+       ],
+       "qa/zz-plant.mjs": [
+        "decoded",
+        "normalized",
+        "raw"
+       ],
+       "docs/zz-utf16le.md": [
+        "decoded",
+        "normalized",
+        "raw",
+        "rendered"
+       ],
+       "docs/zz-utf16be.md": [
+        "decoded",
+        "normalized",
+        "raw",
+        "rendered"
+       ]
+      }
+     }
+    },
+    {
+     "id": "Z3",
+     "quote": "claims an APO export exists",
+     "claims": {
+      "claims": [
+       "overRead"
+      ],
+      "an APO export exists": [
+       "readerForms",
+       "pageForms",
+       "quietForms"
+      ]
+     },
+     "witness": {
+      "overRead": {
+       "claim": true,
+       "denial": true,
+       "bareMention": true
+      },
+      "readerForms": {
+       "strong": [
+        "rendered"
+       ],
+       "emphasis": [
+        "rendered"
+       ],
+       "codeSpan": [
+        "rendered"
+       ],
+       "link": [
+        "rendered"
+       ],
+       "inlineTag": [
+        "rendered"
+       ],
+       "quotedGreaterThan": [
+        "rendered"
+       ],
+       "comment": [
+        "rendered"
+       ],
+       "htmlBlock": [
+        "rendered"
+       ],
+       "decimalReference": [
+        "decoded",
+        "rendered"
+       ],
+       "hexReference": [
+        "decoded",
+        "rendered"
+       ],
+       "unterminatedReference": [
+        "decoded",
+        "rendered"
+       ],
+       "styledLetter": [
+        "decoded",
+        "rendered"
+       ],
+       "accentedLetter": [
+        "decoded",
+        "rendered"
+       ],
+       "softHyphenReference": [
+        "decoded",
+        "rendered"
+       ],
+       "invisible": [
+        "decoded",
+        "normalized",
+        "rendered"
+       ],
+       "wordJoiner": [
+        "decoded",
+        "normalized",
+        "rendered"
+       ],
+       "defaultIgnorable": [
+        "decoded",
+        "normalized",
+        "rendered"
+       ],
+       "formatControl": [
+        "decoded",
+        "normalized",
+        "rendered"
+       ],
+       "fullwidth": [
+        "decoded",
+        "normalized",
+        "rendered"
+       ],
+       "mathBold": [
+        "decoded",
+        "normalized",
+        "rendered"
+       ],
+       "combiningMark": [
+        "decoded",
+        "normalized",
+        "rendered"
+       ],
+       "precomposedAccent": [
+        "decoded",
+        "normalized",
+        "rendered"
+       ],
+       "backslashEscape": [
+        "decoded",
+        "rendered"
+       ],
+       "bracedEscape": [
+        "decoded",
+        "rendered"
+       ],
+       "hexEscape": [
+        "decoded",
+        "rendered"
+       ],
+       "percentEncoded": [
+        "decoded",
+        "rendered"
+       ]
+      },
+      "pageForms": {
+       "htmlBlockBogusComment": [
+        "rendered"
+       ],
+       "htmlBlockSlashAttribute": [
+        "rendered"
+       ],
+       "htmlPageUnquotedAttribute": [
+        "rendered"
+       ],
+       "htmlPageAbruptComment": [
+        "rendered"
+       ],
+       "htmlPageAbruptDashComment": [
+        "rendered"
+       ],
+       "htmlPageBangComment": [
+        "rendered"
+       ],
+       "svgCdata": [
+        "rendered"
+       ],
+       "listItem": [
+        "rendered"
+       ],
+       "tableCell": [
+        "rendered"
+       ],
+       "blockQuote": [
+        "rendered"
+       ]
+      },
+      "quietForms": {
+       "htmlPageUnclosedComment": [],
+       "visibleReference": []
+      }
+     }
+    }
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals: each named family pinned by its quiet row",
+   "pins": [
+    {
+     "id": "Q1",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-TRACKER",
+      "exportSpellsProgram": true,
+      "exportListed": true,
+      "trackerExcluded": true
+     }
+    },
+    {
+     "id": "Q2",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-TEST-TREE",
+      "holdersSpellProgram": [
+       true,
+       true
+      ],
+      "testTreeInDocScope": false,
+      "testTreeInSrcScope": false
+     }
+    },
+    {
+     "id": "Q3",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-LOCKFILE",
+      "excludedByName": [
+       true,
+       true
+      ],
+      "integrityValueReadsAsMention": [
+       "Apo"
+      ]
+     }
+    },
+    {
+     "id": "Q4",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-BINARY",
+      "plantBinary": true,
+      "plantReadings": [],
+      "marklessUtf16": {
+       "binary": true,
+       "readings": []
+      },
+      "utf32": {
+       "binary": false,
+       "readings": []
+      },
+      "realBinariesAtFloor": true
+     }
+    },
+    {
+     "id": "Q5",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-PARAPHRASE",
+      "quiet": {
+       "policyOrganization": true,
+       "adaptiveOrganizations": true,
+       "described": true
+      }
+     }
+    },
+    {
+     "id": "Q6",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-LETTERED",
+      "quiet": {
+       "periods": true,
+       "spaces": true,
+       "hyphens": true,
+       "middleDots": true
+      }
+     }
+    },
+    {
+     "id": "Q7",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-CONFUSABLE",
+      "quiet": {
+       "cyrillic": true,
+       "greek": true,
+       "smallCapitals": true,
+       "negativeSquared": true,
+       "regionalIndicators": true,
+       "emojiShortcodes": true,
+       "digitForLetter": true
+      }
+     }
+    },
+    {
+     "id": "Q8",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-BIDI",
+      "quiet": {
+       "rightToLeftOverride": true
+      }
+     }
+    },
+    {
+     "id": "Q9",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-STYLE",
+      "quiet": {
+       "styleEscape": true,
+       "hiddenText": true,
+       "hiddenAttribute": true,
+       "template": true,
+       "rubyAnnotation": true,
+       "scriptWrite": true
+      },
+      "styleSheet": {
+       "generatedContent": true
+      }
+     }
+    },
+    {
+     "id": "Q10",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-INFLECTED",
+      "quiet": {
+       "camelPlural": true,
+       "lowerPlural": true,
+       "esPlural": true,
+       "capsPlural": true
+      }
+     }
+    },
+    {
+     "id": "Q11",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-JOINED",
+      "quiet": {
+       "before": true,
+       "after": true,
+       "inside": true,
+       "capsJoined": true
+      }
+     }
+    },
+    {
+     "id": "Q12",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-COMPUTED",
+      "quiet": {
+       "substitution": true,
+       "runtimeJoin": true,
+       "charCode": true
+      }
+     }
+    },
+    {
+     "id": "Q13",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-UNNAMED-SURFACE",
+      "quiet": {
+       "unnamedExport": true
+      }
+     }
+    },
+    {
+     "id": "Q14",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-OTHER-MARKUP",
+      "quiet": {
+       "restructuredText": true,
+       "asciiDoc": true,
+       "notebook": true
+      }
+     }
+    },
+    {
+     "id": "Q15",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-NAMED-REFERENCE",
+      "quiet": {
+       "angstrom": true,
+       "scriptSmallO": true,
+       "ordinals": true
+      }
+     }
+    },
+    {
+     "id": "Q16",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-OTHER-ESCAPE",
+      "quiet": {
+       "yamlLongEscape": true,
+       "tomlLongEscape": true,
+       "pythonNamedEscape": true,
+       "shellOctalEscape": true
+      }
+     }
+    },
+    {
+     "id": "Q17",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-SUFFIXED",
+      "quiet": {
+       "versionSuffix": true,
+       "letterSuffix": true
+      }
+     }
+    },
+    {
+     "id": "Q18",
+     "quote": null,
+     "claims": null,
+     "witness": {
+      "residual": "R-RETILED",
+      "quiet": {
+       "T1+T2": true,
+       "T2+T3": true,
+       "Z1+Z2": true,
+       "Z2+Z3": true
+      }
+     }
+    }
+   ]
+  }
+ ]
+}
