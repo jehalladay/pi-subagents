@@ -863,10 +863,11 @@
     "Q3: R-RESOURCE",
     "Q4: R-SIDE-PATH",
     "rule 16: the rows, the residual families, the fields, the causes, the checks, the mutants, the fixtures, the field tokens and the admitters are frozen at their measured shape",
-    "the outside anchors: the bead's row binds row labels and tiled quote text, fields, causes and producer lines; pin partitions and Q quotes remain unbound",
-    "respin scope: outside anchors bind labels and selected atoms, not merged pin partitions or residual quotes",
+    "the outside anchors: the bead's row binds the labels and quote tiling of rows T, A, B and C, the fields and causes by count and containment and the citation's two quotes in the roster's producer lines; the receipt, the runs, Pi's source and wb-gxd7.3 bind the pinned ids, the frame schema id, two words and A3's quote; row Q and pin partitions are unbound",
+    "respin scope: the header restricts the outside anchors to rows T, A, B and C and names C6-mA, C6-mT, C6-mB, C6-mC and C6-quoteQ under NOT CLAIMED",
     "respin scope: armed checks state the measured fixture boundary and all G1-G12 survivors",
-    "respin scope: T1 claims case-sensitive spelled vocabulary only, with escaped and vocabulary-free residuals",
+    "respin scope: T1 claims the spelled vocabulary only (GraphPolicyCLI's names in any case, the field tokens case-sensitive), with escaped and vocabulary-free residuals",
+    "respin scope: the outside-anchor titles and the header carry the cut-3 restatements (rows T, A, B and C; the citation's two quotes; C6-labelQ, PL1, PL2 and PL4; the T1, T3, A2, frame, row-removal and wb-0lf.1 sentences)",
     "roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-reply-admission-roster.json, in order and both ways; every pin reached its witness compare"
   ],
   "producer": {

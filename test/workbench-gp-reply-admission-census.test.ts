@@ -11,85 +11,122 @@
  * timeout, non-zero exit or malformed stdout yields typed unavailable and no receipt row claims success (carries O11's GP
  * case)". Row T's label is the title's trigger, verbatim: its parenthetical names the two gating artifacts.
  *
- * MEASURED (read-only, by the cutting seat, 2026-10-28, at base ade68d6534cc). Producer (the local Furnace checkout, git show;
- * the roster's producer block holds the three lines and the blob, and this census never re-reads the producer): at the bead's
- * pin 0f791db71b9d, docs/programs/graph-policy-decision-executor-2026-10-18/README.md (blob 73135c2df014) line 13 opens
- * "Furnace host checks schema, source freshness, actor scope, action support and resource constraints independently.", line
- * 11 lists the reply ("Reply: schema and checkpoint identity, snapshot digest, ..."), line 25 carries "no fabricated success on
- * worker timeout, model crash or retry", and line 3 opens "**2026-10-18, design-only.**". The reply schema half of the gate is
- * released: test/fixtures/gp-sample-receipt.json (vendored by wb-gxd7.5) holds gp sample's own result.decision at
- * GraphPolicyCLI 3f7d52cd17397d8e, a graphpolicy.receipt.decision.v1 sampled-decision receipt that gp inspect decision
- * accepted, and its graph_digest is the SHA-256 of test/fixtures/gp-host-adapter-snapshot.json's bytes (the producer's
- * host-adapter snapshot, vendored byte for byte; wb-gxd7.3 captured the same value as P-SAMPLE-FILE). The gp CLI frame is
- * measured in test/fixtures/gp-kind-label-roster.json's producer runs (wb-gxd7.4, the same build): exit 0 writes
+ * MEASURED (read-only, by the cutting seats: cut 1 at base ade68d6534cc; the producer lines and the src facts re-read by cut 3
+ * at base f5ffe68513ef). Producer (the local Furnace checkout, git show; the roster's producer block holds the three lines and
+ * the blob, and this census never re-reads the producer): at the bead's pin 0f791db71b9d,
+ * docs/programs/graph-policy-decision-executor-2026-10-18/README.md (blob 73135c2df014) line 13 opens "Furnace host checks
+ * schema, source freshness, actor scope, action support and resource constraints independently.", line 11 lists the reply
+ * ("Reply: schema and checkpoint identity, snapshot digest, ..."), line 25 carries "no fabricated success on worker timeout,
+ * model crash or retry", and line 3 opens "**2026-10-18, design-only.**". The reply schema half of the gate is released:
+ * test/fixtures/gp-sample-receipt.json (vendored by wb-gxd7.5) holds gp sample's own result.decision at GraphPolicyCLI
+ * 3f7d52cd17397d8e, a graphpolicy.receipt.decision.v1 sampled-decision receipt that gp inspect decision accepted, and its
+ * graph_digest is the SHA-256 of test/fixtures/gp-host-adapter-snapshot.json's bytes (the producer's host-adapter snapshot,
+ * vendored byte for byte; wb-gxd7.3 captured the same value as P-SAMPLE-FILE). The gp CLI frame is measured in
+ * test/fixtures/gp-kind-label-roster.json's producer runs (wb-gxd7.4, the same build): exit 0 writes
  * {"schema":"graphpolicy.cli.v1","ok":true,"result":...} and the run "ready-work" exits 2 with an ok:false GP_CLI_ error
- * envelope; wb-gxd7.3 measured the receipt's path in gp sample's stdout as result.decision. The Pi decision point half is
- * unbuilt: at the base no src module (116 files) spells a GraphPolicyCLI name or a receipt identity field as a whole token
- * (the one near miss is src/workbench/reactivefiber-observer.ts's GRAPH_DIGEST, an rf constant), NATIVE_CONTROL_ACTIONS
- * registers no GraphPolicyCLI provider (so decideControl denies a gp target as unknown-action before it reads the
- * projection), and the decision point of wb-0lf.1 has not landed.
+ * envelope; wb-gxd7.3 measured the receipt's path in gp sample's stdout as result.decision (its P-SAMPLE-FILE capture). The Pi
+ * decision point half is unbuilt: at base f5ffe68513ef no src module (117 files; 116 at ade68d6534cc) spells a GraphPolicyCLI
+ * name (anywhere, in any case) or a receipt identity field (as a whole case-sensitive token), and the one near miss is
+ * src/workbench/reactivefiber-observer.ts's GRAPH_DIGEST, an rf constant; NATIVE_CONTROL_ACTIONS registers no GraphPolicyCLI
+ * provider (so decideControl denies a gp target as unknown-action before it reads the projection); and no src decision point
+ * exists (wb-0lf.1 landed at landing 648 as a test-only census of that absence).
  *
- * Pi admits no GP reply by the case-sensitive spelled-vocabulary and control-provider readings below. Row T1 pins the listed
- * case-sensitive spelled vocabulary in src, not all ways a module can admit a reply. Rows A to C exercise the synthetic
+ * By the two readings below, Pi admits no GP reply today: no src module spells the reply vocabulary (T1) and the control core
+ * registers no GraphPolicyCLI provider (T3). Row T1 pins the listed spelled vocabulary in src (GraphPolicyCLI's names in any
+ * case, the field tokens case-sensitive), not all ways a module can admit a reply. Rows A to C exercise the synthetic
  * admitters on the listed inputs; they do not certify a future host implementation without a new fixture review.
- *  T, the trigger. T1 (spelled reply vocabulary): no src module spells the reply vocabulary (GraphPolicyCLI's names in any case,
- *    the receipt's identity fields graph_digest, checkpoint_digest and chosen_id and their camel-case spellings, each a whole
- *    case-sensitive token), and the src modules that spell those tokens are exactly the bound admitters in
- *    GP_REPLY_ADMITTERS (empty both ways today), the reader shown reading its planted controls, quiet on the near miss's
- *    real text, holding at least SRC_FLOOR files and the control core's real text. T2 (the released reply schema): the vendored receipt is gp sample's
- *    accepted output, its schema the pinned reply schema, carrying every field the checks read. T3 (a Pi decision point): the
- *    control core has no GraphPolicyCLI provider.
+ *  T, the trigger. T1 (spelled reply vocabulary): no src module spells the reply vocabulary, which is GraphPolicyCLI's names
+ *    (graph and policy joined or split by a hyphen, underscore, dot or space, and GraphDataIR, matched anywhere in any case;
+ *    another gp name such as GraphFunctionIR is not read) and the receipt's identity fields graph_digest, checkpoint_digest and
+ *    chosen_id and their camel-case spellings (each a whole case-sensitive token); src is git's would-commit listing under src/
+ *    (tracked and untracked files present in the tree, never ignored ones). The src modules that spell any of it are exactly
+ *    the bound admitters
+ *    in GP_REPLY_ADMITTERS (empty both ways today); the reader is shown reading its planted controls and quiet on the near
+ *    miss's real text, and the listing holding at least SRC_FLOOR files and the control core's real text. T2 (the released
+ *    reply schema): the vendored receipt is gp sample's accepted output, its schema the pinned reply schema, carrying every
+ *    field the checks read. T3 (a Pi decision point): the control core registers none of the provider spellings gp,
+ *    graphpolicy and graph-policy-cli, decideControl denies a gp target as unknown-action, and the roster pins the core's
+ *    provider list.
  *  A, B, C, fixture-scoped on landing. The armed judge measures the fifteen listed fixtures and 23 listed mutants, not
  *    every possible admitter or input.
  *    For a future decision point, repeat the admission review against its real code and the then-current exported basis.
  *    The synthetic judge reads an admitter as one function over the call: the snapshot bytes Pi
  *    presented, the pinned reply schemas and checkpoints, the actor scope, the exported support, and the worker's result
  *    (timed out, exit code, stdout). It yields typed results ({outcome: admitted, decision}, {outcome: refused, field},
- *    {outcome: unavailable, cause}) and records receipt rows ({outcome, tone}, tone a Pi statusTone). Fifteen fixtures, each
- *    built from the vendored receipt and snapshot, run every admitter: F-ADMIT (the reply as gp wrote it); one fixture per
- *    field, each violating that field alone (F-SCHEMA gp's shipped runtime receipt schema in place of the decision receipt's,
- *    F-CHECKPOINT a prefix-sharing checkpoint id outside the pinned set, F-DIGEST-COMPACT / -NEWLINE / -CRLF the snapshot
- *    presented under wb-gxd7.3's whitespace-only edits, F-DIGEST-MOVED a snapshot whose content moved, F-ACTOR a scope without
- *    the proposal's worker, F-SUPPORT a proposal the reply's own candidates claim and Pi never offered); and six worker
- *    fixtures (F-TIMEOUT and F-EXIT-CRASH with a complete valid reply on stdout, F-EXIT-ERROR the measured exit-2 envelope
- *    verbatim, F-MALFORMED-TRUNCATED / -EMPTY / -NO-DECISION). Eleven CHECKS judge each journal: admitted-<field> (a reply
- *    violating that field was admitted), refusal-count (a violating reply did not yield exactly one result, a refusal),
- *    refusal-field (a refusal names another field or anything beside the field), refusal-decision (a result of a violating
- *    reply carries a decision: an admitted result, a decision key, or the reply's proposal at any depth), unavailable (a worker
- *    fixture did not yield exactly one unavailable result of its cause), success-row (a non-admitted call recorded a row of
- *    tone success, or of an outcome other than refused and unavailable) and decision-kept (the valid reply was not admitted
- *    exactly once with its proposal and its receipt verbatim). The census's reference admitter (HONEST) passes every fixture;
- *    each of the 23 MUTANTS fails at least one check, and every check fires.
- *  A1 the bound admitters (none) and the synthetic ones over every listed fixture. A2 on F-SCHEMA and F-CHECKPOINT,
- *    exact-set membership refuses gp's shipped runtime schema and one longer prefix-sharing checkpoint; the judge does not
- *    distinguish every other receipt-family or prefix membership bug. A3 on the listed presentation fixtures, byte hashing
- *    refuses the four changed snapshots and re-serialization admits exactly the three whitespace-only presentations;
- *    decoded-text hashing on other byte inputs is not measured. A4 on F-ACTOR, one valid relation has a worker omitted from
- *    the caller's scope; a relation with two workers is not measured. A5 on F-SUPPORT, one valid relation is unoffered by Pi
- *    but claimed in the reply's candidates; a substring of a supported id is not measured. B1 exactly one refusal on the
- *    listed single-field violations; B2 the refusal's own keys are outcome and field (in any order); B3 no result of a
- *    violating reply carries a decision. C1 each worker fixture yields exactly one unavailable of its cause; C2 no row of a
- *    refused or unavailable call claims success.
+ *    {outcome: unavailable, cause}) and records receipt rows ({outcome, tone}, tone a Pi statusTone). Fifteen fixtures run
+ *    every admitter; each call presents the vendored snapshot's bytes or one of the four digest presentations below, and each
+ *    worker stdout is the vendored receipt in the CLI frame at result.decision (edited where named), that stdout truncated, the
+ *    measured exit-2 envelope, the frame with an empty result, or empty: F-ADMIT (the reply as gp wrote it); eight
+ *    single-field fixtures, each violating one field alone (one each for schema, checkpoint, actor and support, four for
+ *    snapshotDigest: F-SCHEMA gp's shipped runtime receipt schema in place of the decision receipt's, F-CHECKPOINT a
+ *    same-length checkpoint id outside the pinned set sharing the pinned id's form prefix, F-DIGEST-COMPACT / -NEWLINE / -CRLF
+ *    the snapshot presented under wb-gxd7.3's whitespace-only edits, F-DIGEST-MOVED a snapshot whose content moved, F-ACTOR a
+ *    scope without the proposal's worker, F-SUPPORT a proposal the reply's own candidates claim and Pi never offered); and six
+ *    worker fixtures (F-TIMEOUT and F-EXIT-CRASH with a complete valid reply on stdout, F-EXIT-ERROR the measured exit-2
+ *    envelope verbatim, F-MALFORMED-TRUNCATED / -EMPTY / -NO-DECISION). Eleven CHECKS judge each journal: admitted-<field> (a
+ *    reply violating that field was admitted), refusal-count (a violating reply did not yield exactly one result, a refusal),
+ *    refusal-field (a refusal's own keys are not exactly outcome and field, or its field is not the one violated),
+ *    refusal-decision (a result of a violating reply carries a decision by its own properties: an admitted outcome, an own
+ *    decision key, or the reply's proposal anywhere among its own properties; a prototype is never read), unavailable (a
+ *    worker fixture did not yield exactly one unavailable result of its cause), success-row (a non-admitted call recorded a
+ *    row of tone success, or of an outcome other than refused and unavailable) and decision-kept (the valid reply was not
+ *    admitted exactly once with its proposal and its receipt verbatim). The census's reference admitter (HONEST) passes every
+ *    fixture; each of the 23 MUTANTS fails at least one check, and every check fires.
+ *  A1 drives the bound admitters (none) and the synthetic ones over every listed fixture. A2 on F-SCHEMA and F-CHECKPOINT,
+ *    exact-set membership refuses gp's shipped runtime schema and one same-length checkpoint id sharing the pinned id's form
+ *    prefix, and M-SCHEMA-FAMILY and M-CHECKPOINT-PREFIX admit them; other membership bugs (G1 to G4 below) pass the judge.
+ *    A3 on the four digest fixtures, byte hashing refuses each presentation the reply did not hash, and M-DIGEST-RESERIALIZED
+ *    fails the judge on exactly the three whitespace-only ones (it admits them); hashing decoded text (G12) passes the judge.
+ *    A4 on F-ACTOR, the proposal's worker (read from the presented snapshot's can_execute relation) is outside the scope and
+ *    the reply is refused naming actor; a relation with two workers (G8) passes the judge. A5 on F-SUPPORT, a relation Pi
+ *    never offered but the reply's own candidates claim is refused naming support, and M-SUPPORT-FROM-REPLY admits it; a
+ *    substring of a supported id (G7) passes the judge. B1 on the eight single-field fixtures, each violates exactly its one
+ *    field and HONEST yields exactly one result; B2 that result's own keys are exactly outcome and field (the judge accepts
+ *    either order); B3 no such result carries a decision by its own properties (a decision on a prototype, G9, passes the
+ *    judge). C1 on the six worker fixtures, HONEST yields exactly one unavailable of its cause; a frame of another schema
+ *    (G5), a truthy non-boolean ok (G6), a decision salvaged from the last stdout line (G10) and a null exit code read as
+ *    success (G11) pass the judge. C2 on the fourteen non-admit fixtures, HONEST records no row of tone success and no row
+ *    outcome other than refused or unavailable.
  *  Q, the residuals' pinned quiet rows (RESIDUALS).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and each residual family's member
  * count as literals, beside the fields, the causes, the checks, the mutants, the fixtures, the field tokens and the admitters;
  * the judged set (every row's id, label and pins, every pin's quote and witness, the residual members, every registered test
- * title) is held to the out-of-file roster test/fixtures/gp-reply-admission-roster.json. OUTSIDE ANCHORS (their own case): the
- * bead's own row in the tracker export (.beads/issues.jsonl): the title opens with the requirement tag and row T's label is
- * its trigger; each acceptance clause of the owner filing's citation line is exactly one row's label (C without its carry
- * note); each row's pin quotes tile its label; the five fields are clause (a)'s requirement list and the three causes are
- * clause (c)'s, member for member; the citation's two quoted producer lines sit in the roster's producer lines at the cited
- * pin; every reading is taken from the filing's own citation line, so a note appended later changes none. The vendored receipt
- * and the measured runs bind the pinned ids and the CLI frame, Pi's own source binds the words unavailable (capability
- * registry) and success (statusTone), and the wb-gxd7.3 census binds row A3's quote. The outside anchors bind the labels and
- * concatenated quote text of rows T, A, B and C, the five fields, the three causes and A3's quote; they do not bind a
- * row's pin partition or row Q's quotes.
- * A whole row, field or cause removed from every literal and the roster reds by those outside readings, but a quote re-homed
- * into a sibling pin need not. The last case reads the vitest task tree (every
+ * title) is held to the out-of-file roster test/fixtures/gp-reply-admission-roster.json. The roster is cut with the census, so
+ * an edit made to both passes these roster comparisons.
+ * OUTSIDE ANCHORS (their own case; each reading compares a literal with a file outside the census and its roster): (1) the
+ * bead's own row in the tracker export (.beads/issues.jsonl): the roster's statement equals the title; the title opens with
+ * the requirement tag and its trigger equals row T's label; the owner filing's citation line holds exactly three acceptance
+ * clauses, equal to the labels of rows A, B and C in order (C without its carry note, the only note); each of rows T, A, B and
+ * C has pin quotes that tile its label in order with only separators between; clause (a) splits into five requirements, the
+ * i-th containing the i-th field, and each field's pin quote contains that field; clause (c) splits into three failures, the
+ * i-th containing the i-th cause, and names typed unavailable; the citation quotes README.md lines 13 and 25, each quote is
+ * contained in the roster's producer line of that number, and the cited pin opens the roster's producer sha. Every reading of
+ * the notes is taken from the filing's own citation line (the first notes line opening "Citation: "), so a note appended
+ * later changes
+ * none (measured: an appended note, and an appended note carrying its own Citation line). (2) The vendored receipt binds the
+ * pinned schema and checkpoint ids. (3) The measured runs bind the frame's schema id: a measured exit-0 run writes it with ok
+ * true and an object result, and the measured exit-2 envelope carries it. (4) Pi's own source binds the words unavailable
+ * (CapabilityErrorCategory) and success (statusTone). (5) The wb-gxd7.3 census binds row A3's quote. So the outside anchors
+ * bind the labels and concatenated quote text of rows T, A, B and C, the count and containment of the five fields and the
+ * three causes, A3's quote, the citation's two quotes in the roster's producer lines, the pinned ids, the frame's schema id
+ * and the two words; they do not bind a row's pin partition, row Q's label, pins or quotes, the residual members, the
+ * witnesses, the test titles, or the roster's producer block beyond the two quotes and the sha's pin prefix. Row T, A, B or C
+ * removed whole from every literal and the roster reds by those readings, and so does one of the five
+ * fields or three causes; a quote re-homed into a sibling pin need not. The last case reads the vitest task tree (every
  * registered test, in roster order, in run mode, ran before it) and REACHED (every pin reached its witness compare).
  * NOT CLAIMED (known non-equivalent survivors on the merged trunk; no assertion below certifies their absence):
  * C6-mA, C6-mT, C6-mB and C6-mC: each pin merges into a sibling with its quote re-homed and the census stays green.
  * C6-quoteQ: Q3's quote changes in both the census and roster while the census stays green.
+ * C6-labelQ: row Q's label changes in both the census and the roster while the census stays green.
+ * PL1, PL2 and PL4: the roster's producer line 11 edited, text appended to line 13 outside its quote, and the producer blob id
+ * changed each leave the census green.
+ * C6-frame: the frame's decision key renamed in both the census's frame reader and its fixture writer leaves the census green
+ * (the measured runs bind the frame's schema id only).
+ * H10: the respin-scope cases are header-text guards held by the roster: the G1-G12 case, the T1 case or the last respin-scope
+ * case removed from the file and the roster's tests list together leaves the census green (the last case also counts the
+ * first one's title, so removing the first reds it).
+ * No outside anchor reads the outcome words admitted and refused, the check, mutant and fixture names, or the residual
+ * family names.
  * G1: schema substring membership; G2: reverse checkpoint prefix; G3: schema compared case-insensitively;
  * G4: any version of the decision receipt, including one gp has not shipped (no unshipped schema fixture is committed);
  * G5: CLI frame schema ignored; G6: CLI ok coerced truthy; G7: support searched as a substring of joined ids;
@@ -97,7 +134,8 @@
  * G10: a last-line salvage after noisy stdout; G11: null exit status treated as success; G12: digest of decoded UTF-8 text.
  * Each G1-G12 passes all fifteen fixtures and diverges from HONEST on its own gate-authored input (D1-D12); their survival
  * limits the synthetic judge, not the independently specified host admission requirement. The first future admitter must
- * add inputs for these cases or explicitly re-scope its own claim. No action outside that review is admitted by this census.
+ * add inputs for these cases or explicitly re-scope its own claim. A bound admitter is run over the fifteen fixtures (A1) and
+ * must be a module that spells the vocabulary (T1); binding one also changes the frozen admitter literal (rule 16).
  * The label-tiling outside anchor cannot prove pin counts after a coordinated pin merge, and no tracker/source anchor binds
  * the names of residual families; C6-Q4, C6-Q and C6-member also survive coordinated removal.
  * qa/, test/ and docs/ (a test names the vocabulary as the text it judges, this census included); the decision
@@ -112,7 +150,9 @@
  * fallback record echoes the producer's refusal code verbatim); only those two are judged.
  * RESIDUALS (named families, each member a pinned quiet row; an instrument that starts reading a member reds its row):
  * R-SPELLING (Q1, a receipt field the vocabulary reader does not read: composed from parts at run time, concatenated,
- * a Unicode-escaped identifier P3, or the upper-case constant of another producer; a vocabulary-free admitter (P4), including a gp-spawning one (P5), is outside T1's text trigger; both are pinned as quiet input text here, not as a complete call-site audit), R-MULTI-VIOLATION (Q2, a reply violating two fields: the judge accepts a refusal
+ * a Unicode-escaped identifier P3, or the upper-case constant of another producer; a vocabulary-free admitter (P4),
+ * including a gp-spawning one (P5), is outside T1's text trigger; both are pinned as quiet input text here, not as a
+ * complete call-site audit), R-MULTI-VIOLATION (Q2, a reply violating two fields: the judge accepts a refusal
  * naming either), R-RESOURCE (Q3, the statement's "resource constraints": no acceptance clause names one, the armed call
  * carries no exported budget and no check reads the reply's runtime_budget) and R-SIDE-PATH (Q4, an admitter that reports a
  * refused reply's proposal outside its journal: the armed check reads the returned results and rows only).
@@ -727,7 +767,7 @@ const IMPL: Readonly<Record<string, () => Json>> = {
     expect(named, "no src module spells a GraphPolicyCLI name or a receipt identity field").toEqual([]);
     expect(
       reading.map(entry => entry.path),
-      "the src modules that spell the case-sensitive reply vocabulary are exactly the bound admitters",
+      "the src modules that spell the reply vocabulary (names in any case, field tokens case-sensitive) are exactly the bound admitters",
     ).toEqual(bound);
     expect(src.length, "the src floor").toBeGreaterThanOrEqual(SRC_FLOOR);
     const readsCore = src.find(entry => entry.path === CONTROL)?.text.includes("export function decideControl(") === true;
@@ -1112,7 +1152,7 @@ describe(SUITE, () => {
     expect(SRC_FLOOR).toBe(100);
   });
 
-  it("the outside anchors: the bead's row binds row labels and tiled quote text, fields, causes and producer lines; pin partitions and Q quotes remain unbound", { timeout: LIVE_BUDGET_MS }, () => {
+  it("the outside anchors: the bead's row binds the labels and quote tiling of rows T, A, B and C, the fields and causes by count and containment and the citation's two quotes in the roster's producer lines; the receipt, the runs, Pi's source and wb-gxd7.3 bind the pinned ids, the frame schema id, two words and A3's quote; row Q and pin partitions are unbound", { timeout: LIVE_BUDGET_MS }, () => {
     const row = beadRow(BEAD);
     expect(row, `${BEAD}'s row was read from the tracker export`).toBeDefined();
     const title = row?.title ?? "";
@@ -1184,10 +1224,12 @@ describe(SUITE, () => {
     expect(textOf(JOIN_CENSUS), "wb-gxd7.3's clause (c) names row A3's check").toContain(`wb-0lf.3's '${QUOTES.A3}' check is pinned to this byte-exact form`);
   });
 
-  it("respin scope: outside anchors bind labels and selected atoms, not merged pin partitions or residual quotes", () => {
+  it("respin scope: the header restricts the outside anchors to rows T, A, B and C and names C6-mA, C6-mT, C6-mB, C6-mC and C6-quoteQ under NOT CLAIMED", () => {
     const header = textOf("test/workbench-gp-reply-admission-census.test.ts").split("*/", 1)[0] ?? "";
     const normalized = header.replace(/\s*\*\s*/g, " ").replace(/\s+/g, " ");
-    expect(normalized).toContain("The outside anchors bind the labels and concatenated quote text of rows T, A, B and C, the five fields, the three causes and A3's quote; they do not bind a row's pin partition or row Q's quotes.");
+    expect(normalized).toContain(
+      "So the outside anchors bind the labels and concatenated quote text of rows T, A, B and C, the count and containment of the five fields and the three causes, A3's quote, the citation's two quotes in the roster's producer lines, the pinned ids, the frame's schema id and the two words; they do not bind a row's pin partition, row Q's label, pins or quotes, the residual members, the witnesses, the test titles, or the roster's producer block beyond the two quotes and the sha's pin prefix.",
+    );
     expect(header).toContain("C6-mA, C6-mT, C6-mB and C6-mC: each pin merges into a sibling with its quote re-homed and the census stays green.");
     expect(header).toContain("C6-quoteQ: Q3's quote changes in both the census and roster while the census stays green.");
     expect(header).not.toContain("So a field, a cause, a pin or a row removed");
@@ -1201,13 +1243,48 @@ describe(SUITE, () => {
     expect(header).not.toContain("that binds the first admitter to come");
   });
 
-  it("respin scope: T1 claims case-sensitive spelled vocabulary only, with escaped and vocabulary-free residuals", () => {
+  it("respin scope: T1 claims the spelled vocabulary only (GraphPolicyCLI's names in any case, the field tokens case-sensitive), with escaped and vocabulary-free residuals", () => {
     const header = textOf("test/workbench-gp-reply-admission-census.test.ts").split("*/", 1)[0] ?? "";
     const normalized = header.replace(/\s*\*\s*/g, " ").replace(/\s+/g, " ");
-    expect(normalized).toContain("Row T1 pins the listed case-sensitive spelled vocabulary in src, not all ways a module can admit a reply.");
+    expect(normalized).toContain(
+      "Row T1 pins the listed spelled vocabulary in src (GraphPolicyCLI's names in any case, the field tokens case-sensitive), not all ways a module can admit a reply.",
+    );
     expect(normalized).toContain("a vocabulary-free admitter (P4), including a gp-spawning one (P5), is outside T1's text trigger");
     expect(replyVocabulary(`reply.graph${String.fromCodePoint(0x5c)}u005fdigest`)).toEqual([]);
     expect(header).not.toContain("The census pins that (row T) and an ARMED contract");
+  });
+
+  it("respin scope: the outside-anchor titles and the header carry the cut-3 restatements (rows T, A, B and C; the citation's two quotes; C6-labelQ, PL1, PL2 and PL4; the T1, T3, A2, frame, row-removal and wb-0lf.1 sentences)", ({ task }) => {
+    const header = textOf("test/workbench-gp-reply-admission-census.test.ts").split("*/", 1)[0] ?? "";
+    const normalized = header.replace(/\s*\*\s*/g, " ").replace(/\s+/g, " ");
+    const titles: string[] = [];
+    const walk = (tasks: typeof task.file.tasks): void => {
+      for (const child of tasks) {
+        if (child.type === "test") titles.push(child.name);
+        else if (child.type === "suite") walk(child.tasks);
+      }
+    };
+    walk(task.file.tasks);
+    const anchorTitles = titles.filter(title => title.includes("outside anchors"));
+    expect(anchorTitles.length, "two case titles speak for the outside anchors").toBe(2);
+    for (const title of anchorTitles) {
+      expect(title, "an outside-anchor title names the rows whose labels the anchors read").toContain("rows T, A, B and C");
+      expect(title, "and claims no label beyond them").not.toMatch(/\b(?:row|bind) labels\b/);
+    }
+    const anchorCase = anchorTitles.find(title => title.startsWith("the outside anchors: ")) ?? "";
+    expect(anchorCase, "the producer reading is the citation's two quotes").toContain("the citation's two quotes in the roster's producer lines");
+    expect(anchorCase, "never the producer lines themselves").not.toContain("and producer lines");
+    expect(normalized).toContain("C6-labelQ: row Q's label changes in both the census and the roster while the census stays green.");
+    expect(normalized).toContain("PL1, PL2 and PL4: the roster's producer line 11 edited, text appended to line 13 outside its quote, and the producer blob id changed each leave the census green.");
+    expect(normalized).toContain("Row T, A, B or C removed whole from every literal and the roster reds by those readings, and so does one of the five fields or three causes; a quote re-homed into a sibling pin need not.");
+    expect(normalized).toContain("one same-length checkpoint id sharing the pinned id's form prefix");
+    expect(normalized).toContain("The measured runs bind the frame's schema id");
+    expect(normalized).toContain("the control core registers none of the provider spellings gp, graphpolicy and graph-policy-cli");
+    expect(normalized).not.toContain("the listed case-sensitive spelled vocabulary");
+    expect(normalized).not.toContain("one longer prefix-sharing checkpoint");
+    expect(normalized).not.toContain("A whole row, field or cause removed from every literal");
+    expect(normalized).not.toContain("bind the pinned ids and the CLI frame");
+    expect(normalized).not.toContain("the decision point of wb-0lf.1 has not landed");
   });
 
   it("roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/gp-reply-admission-roster.json, in order and both ways; every pin reached its witness compare", ({ task }) => {
