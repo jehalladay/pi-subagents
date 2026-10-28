@@ -1,0 +1,441 @@
+{
+ "bead": "wb-4ap.16",
+ "rows": [
+  {
+   "id": "T",
+   "label": "when MW publishes a host ABI for admitted intents (or Pi decides to host coordination policies)",
+   "pins": [
+    "T1",
+    "T2"
+   ]
+  },
+  {
+   "id": "A",
+   "label": "On landing: a host test drives an M0 intent through the Pi host and asserts no native verb is invoked unless decideControl returned 'permitted' with a core-minted receipt (isCoreMintedDecision)",
+   "pins": [
+    "A1",
+    "A2",
+    "A3"
+   ]
+  },
+  {
+   "id": "B",
+   "label": "An intent whose expected source revision differs from the observed node basis is reported as a conflict receipt, not applied",
+   "pins": [
+    "B1",
+    "B2",
+    "B3"
+   ]
+  },
+  {
+   "id": "C",
+   "label": "The resolver receipt is journaled as a native evidence reference and the four MW outcome variants are preserved",
+   "pins": [
+    "C1",
+    "C2"
+   ]
+  },
+  {
+   "id": "Q",
+   "label": "the residuals' pinned quiet rows",
+   "pins": [
+    "Q1",
+    "Q2",
+    "Q3",
+    "Q4"
+   ]
+  }
+ ],
+ "quotes": {
+  "T1": "when MW publishes a host ABI for admitted intents",
+  "T2": "or Pi decides to host coordination policies",
+  "A1": "On landing: a host test drives an M0 intent through the Pi host",
+  "A2": "and asserts no native verb is invoked unless decideControl returned 'permitted'",
+  "A3": "with a core-minted receipt (isCoreMintedDecision)",
+  "B1": "An intent whose expected source revision differs from the observed node basis",
+  "B2": "is reported as a conflict receipt",
+  "B3": "not applied",
+  "C1": "The resolver receipt is journaled as a native evidence reference",
+  "C2": "and the four MW outcome variants are preserved",
+  "Q1": "R-SPELLING",
+  "Q2": "R-COMPUTED-SPECIFIER",
+  "Q3": "R-SIDE-PATH",
+  "Q4": "R-REJECTED-PERMIT"
+ },
+ "residuals": {
+  "Q1": [
+   "snake-case",
+   "pascal-case",
+   "composed"
+  ],
+  "Q2": [
+   "concatenated-specifier",
+   "template-substitution",
+   "create-require"
+  ],
+  "Q3": [
+   "side-path-host"
+  ],
+  "Q4": [
+   "rejected-permit-host"
+  ]
+ },
+ "witnesses": {
+  "T1": {
+   "manifest": [],
+   "lock": [],
+   "imports": [],
+   "srcFloor": true,
+   "readsCore": true,
+   "controls": {
+    "manifest": [
+     "devDependencies:@mechanical/workflows-coordination",
+     "peerDependencies:@mechanical/workflows-development"
+    ],
+    "lock": [
+     "node_modules/@mechanical/workflows-coordination",
+     "node_modules/a/node_modules/@mechanical/b"
+    ],
+    "imports": {
+     "import": [
+      "@mechanical/workflows-coordination"
+     ],
+     "export-from": [
+      "@mechanical/workflows-coordination"
+     ],
+     "import-equals": [
+      "@mechanical/workflows-coordination"
+     ],
+     "require": [
+      "@mechanical/workflows-coordination"
+     ],
+     "dynamic-import": [
+      "@mechanical/workflows-coordination"
+     ],
+     "quiet": []
+    },
+    "nonCode": []
+   }
+  },
+  "T2": {
+   "named": [],
+   "bound": [],
+   "controls": {
+    "code": [
+     "INTENT_BASIS_STALE"
+    ],
+    "member": [
+     "expectedRevision"
+    ],
+    "all": [
+     "INTENT_BASIS_STALE",
+     "INTENT_SCOPE_PROTECTED",
+     "INTENT_WRITE_CONFLICT",
+     "INTENT_BUDGET_EXCEEDED",
+     "INTENT_DUPLICATE",
+     "INTENT_AUTHORITY_EXCEEDED",
+     "expectedRevision",
+     "workflows-coordination"
+    ],
+    "quiet": []
+   }
+  },
+  "A1": {
+   "bound": [],
+   "fixtures": [
+    "F1",
+    "F2",
+    "F3",
+    "F4",
+    "F5"
+   ],
+   "honest": {
+    "F1": [],
+    "F2": [],
+    "F3": [],
+    "F4": [],
+    "F5": []
+   },
+   "honestCalls": {
+    "F1": 1,
+    "F2": 0,
+    "F3": 0,
+    "F4": 4,
+    "F5": 0
+   },
+   "fired": [
+    "verb-unpermitted",
+    "verb-unminted",
+    "verb-stale",
+    "stale-receipt",
+    "resolver-ref",
+    "variant"
+   ],
+   "quiet": []
+  },
+  "A2": {
+   "registered": false,
+   "denial": {
+    "decision": "denied",
+    "policy": "unknown-action",
+    "category": "validation"
+   },
+   "M-DENIED": {
+    "F1": [],
+    "F2": [],
+    "F3": [
+     "verb-unpermitted",
+     "verb-unminted",
+     "variant"
+    ],
+    "F4": [],
+    "F5": []
+   }
+  },
+  "A3": {
+   "truth": {
+    "minted": true,
+    "spread": false,
+    "json": false,
+    "denial": false,
+    "intent": false,
+    "rejection": false,
+    "resolution": false
+   },
+   "M-LOOKALIKE": {
+    "F1": [
+     "verb-unminted"
+    ],
+    "F2": [],
+    "F3": [
+     "verb-unminted"
+    ],
+    "F4": [
+     "verb-unminted"
+    ],
+    "F5": []
+   },
+   "M-COPY": {
+    "F1": [
+     "verb-unminted"
+    ],
+    "F2": [],
+    "F3": [],
+    "F4": [
+     "verb-unminted"
+    ],
+    "F5": []
+   }
+  },
+  "B1": {
+   "expected": "6666666666666666666666666666666666666666",
+   "observed": "7777777777777777777777777777777777777777",
+   "resolverBasis": "6666666666666666666666666666666666666666",
+   "stale": [
+    "I2"
+   ],
+   "honest": [
+    {
+     "intentId": "I2",
+     "status": "conflict",
+     "code": "INTENT_BASIS_STALE"
+    }
+   ],
+   "honestCalls": 0
+  },
+  "B2": {
+   "honest": [
+    {
+     "intentId": "I2",
+     "status": "conflict",
+     "code": "INTENT_BASIS_STALE"
+    }
+   ],
+   "M-STALE-DENIED": {
+    "F1": [],
+    "F2": [
+     "stale-receipt"
+    ],
+    "F3": [],
+    "F4": [],
+    "F5": []
+   },
+   "M-STALE-APPLIED": {
+    "F1": [],
+    "F2": [
+     "verb-stale",
+     "stale-receipt"
+    ],
+    "F3": [],
+    "F4": [],
+    "F5": []
+   }
+  },
+  "B3": {
+   "honestCalls": 0,
+   "appliedCalls": 1,
+   "appliedMinted": [
+    true
+   ],
+   "M-STALE-APPLIED": {
+    "F1": [],
+    "F2": [
+     "verb-stale",
+     "stale-receipt"
+    ],
+    "F3": [],
+    "F4": [],
+    "F5": []
+   }
+  },
+  "C1": {
+   "refs": {
+    "F1": [
+     "mw-resolution:f1"
+    ],
+    "F2": [
+     "mw-resolution:f2"
+    ],
+    "F3": [
+     "mw-resolution:f3"
+    ],
+    "F4": [
+     "mw-resolution:f4"
+    ],
+    "F5": [
+     "mw-resolution:f5"
+    ]
+   },
+   "M-REF-DROPPED": {
+    "F1": [
+     "resolver-ref"
+    ],
+    "F2": [
+     "resolver-ref"
+    ],
+    "F3": [
+     "resolver-ref"
+    ],
+    "F4": [
+     "resolver-ref"
+    ],
+    "F5": [
+     "resolver-ref"
+    ]
+   },
+   "M-REF-REWRITTEN": {
+    "F1": [
+     "resolver-ref"
+    ],
+    "F2": [
+     "resolver-ref"
+    ],
+    "F3": [
+     "resolver-ref"
+    ],
+    "F4": [
+     "resolver-ref"
+    ],
+    "F5": [
+     "resolver-ref"
+    ]
+   }
+  },
+  "C2": {
+   "variants": [
+    "verified_candidate",
+    "verification_failed",
+    "needs_evidence",
+    "indeterminate"
+   ],
+   "M-VARIANT-COLLAPSED": {
+    "F1": [],
+    "F2": [],
+    "F3": [],
+    "F4": [
+     "variant"
+    ],
+    "F5": []
+   },
+   "M-VARIANT-BOOLEAN": {
+    "F1": [
+     "variant"
+    ],
+    "F2": [],
+    "F3": [],
+    "F4": [
+     "variant"
+    ],
+    "F5": []
+   },
+   "M-FABRICATED": {
+    "F1": [
+     "variant"
+    ],
+    "F2": [],
+    "F3": [],
+    "F4": [
+     "variant"
+    ],
+    "F5": []
+   }
+  },
+  "Q1": {
+   "snake-case": [],
+   "pascal-case": [],
+   "composed": []
+  },
+  "Q2": {
+   "concatenated-specifier": [],
+   "template-substitution": [],
+   "create-require": []
+  },
+  "Q3": {
+   "violations": {
+    "F1": [],
+    "F2": [],
+    "F3": [],
+    "F4": [],
+    "F5": []
+   },
+   "side": 5
+  },
+  "Q4": {
+   "violations": {
+    "F1": [],
+    "F2": [],
+    "F3": [],
+    "F4": [],
+    "F5": []
+   },
+   "rejectedCalls": 6
+  }
+ },
+ "tests": [
+  "T1: when MW publishes a host ABI for admitted intents",
+  "T2: or Pi decides to host coordination policies",
+  "A1: On landing: a host test drives an M0 intent through the Pi host",
+  "A2: and asserts no native verb is invoked unless decideControl returned 'permitted'",
+  "A3: with a core-minted receipt (isCoreMintedDecision)",
+  "B1: An intent whose expected source revision differs from the observed node basis",
+  "B2: is reported as a conflict receipt",
+  "B3: not applied",
+  "C1: The resolver receipt is journaled as a native evidence reference",
+  "C2: and the four MW outcome variants are preserved",
+  "Q1: R-SPELLING",
+  "Q2: R-COMPUTED-SPECIFIER",
+  "Q3: R-SIDE-PATH",
+  "Q4: R-REJECTED-PERMIT",
+  "rule 16: the rows, the residual families, the vocabulary, the variants, the checks, the hosts and the fixtures are frozen at their measured shape",
+  "the outside anchors: the bead's own row binds the rows, the pin quotes, the codes, the vocabulary and the stale code; the docs and wb-w12 bind the variants; the citations resolve",
+  "roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/mw-intent-host-roster.json, in order and both ways; every pin reached its witness compare"
+ ],
+ "producer": {
+  "repo": "MechanicalWorkflows",
+  "sha": "b8264aac5ef103814433b2c5083ed2c571f11d74",
+  "path": "docs/programs/collective-adaptation-2026-10-16/02-architecture.md",
+  "blob": "18d48f80787851f617701a825f8913cd9747643a",
+  "line": 48,
+  "text": "Duplicate events are idempotent; stale revisions yield conflicts; unavailable services stay unavailable; unrecognized capabilities fail closed. An observation cannot unilaterally execute, publish or certify a downstream effect. The caller owns effect retries and lifecycle unless native ownership says otherwise."
+ }
+}
