@@ -1366,7 +1366,7 @@ it(JUDGED_TITLE, { timeout: 60_000 }, ({ task }) => {
 });
 
 /** The census suite: the rows, each pin's case. Its collector is held in no binding (wb-wf9m: the census tier's judge refuses a
- * describe's collector that escapes into a declaration); the backstop below reads the file task vitest hands a file-level hook. */
+ * describe's collector that escapes into a declaration); the backstop below takes no argument and reads only FINISHED and ENDED. */
 describe(CENSUS_TITLE, () => {
   for (const row of ROWS) {
     describe(`${row.id} ${row.label}`, () => {

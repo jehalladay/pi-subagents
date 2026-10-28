@@ -1,5 +1,5 @@
 {
-  "provenance": "wb-kku9.3 census roster, cut by ws-03 (run g10-work-s64) on trunk caad9514303e63d9bd771bcc2462e12ad39adb2d (the landing-310 ledger hop). Producer facts: read-only git show at the pins named below - the MechanicalWorkflows line verbatim, and two verbatim excerpts of the flywheel work-lane generation (generations/g10-work.js blob 21587f9b, the generationBlob of the dispatch args), each beside its sha256. Pin witnesses: measured by test/workbench-beads-claim-recheck-census.test.ts on caad951 plus the cut, each reviewed against the bead's acceptance before it was written here. A literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. Re-measured for wb-xogu (the R694 follow-up of the wb-kku9.3 gate) by ws-03 (run g10-work-s86) on trunk 3a713726f28dea84a57981d1bc65443a7424bc6d (the landing-383 ledger hop): the constants (scanRoots gains .beads/hooks; rootManifests, seamInterface and residualStatement are added) and the B1, B3, Q4 and Q5 witnesses, measured by the census on 3a71372 plus the cut and each reviewed against the wb-xogu notes (F1-F8) before it was written here; every other witness, the producer texts and the test titles are unchanged from the wb-kku9.3 cut. Re-measured for wb-dugi (the R694 follow-up of the wb-xogu gate) by ws-01 (run g10-work-s104) on trunk fced7bfda63e6975d331fd4f31ff4463b2c9136e (the landing-439 ledger hop): the B1, B3, Q4 and Q5 witnesses, measured by the census on fced7bf plus the cut and each reviewed against the wb-dugi notes (F1-F5) before it was written here; every other witness, the constants, the producer texts and the test titles are unchanged from the wb-xogu cut.",
+  "provenance": "wb-kku9.3 census roster, cut by ws-03 (run g10-work-s64) on trunk caad9514303e63d9bd771bcc2462e12ad39adb2d (the landing-310 ledger hop). Producer facts: read-only git show at the pins named below - the MechanicalWorkflows line verbatim, and two verbatim excerpts of the flywheel work-lane generation (generations/g10-work.js blob 21587f9b, the generationBlob of the dispatch args), each beside its sha256. Pin witnesses: measured by test/workbench-beads-claim-recheck-census.test.ts on caad951 plus the cut, each reviewed against the bead's acceptance before it was written here. A literal authored in the same cut, not a source of truth: a hollow that also edits this file is not caught here. Re-measured for wb-xogu (the R694 follow-up of the wb-kku9.3 gate) by ws-03 (run g10-work-s86) on trunk 3a713726f28dea84a57981d1bc65443a7424bc6d (the landing-383 ledger hop): the constants (scanRoots gains .beads/hooks; rootManifests, seamInterface and residualStatement are added) and the B1, B3, Q4 and Q5 witnesses, measured by the census on 3a71372 plus the cut and each reviewed against the wb-xogu notes (F1-F8) before it was written here; every other witness, the producer texts and the test titles are unchanged from the wb-kku9.3 cut. Re-measured for wb-dugi (the R694 follow-up of the wb-xogu gate) by ws-01 (run g10-work-s104) on trunk fced7bfda63e6975d331fd4f31ff4463b2c9136e (the landing-439 ledger hop): the B1, B3, Q4 and Q5 witnesses, measured by the census on fced7bf plus the cut and each reviewed against the wb-dugi notes (F1-F5) before it was written here; every other witness, the constants, the producer texts and the test titles are unchanged from the wb-xogu cut. Re-measured for wb-dcsb (the R694 follow-up of the wb-dugi gate) by ws-02 (run g10-work-s118) on trunk b92d7a12a2926cb12ed1e5b5e680117840f85dc3 (the landing-578..580 ledger hop): the constants (tsconfig, voidElements, rawTextElements and hidingElements are added) and the B1, B3, Q4 and Q5 witnesses (each gains its wb-dcsb fields; every landed field and constant was measured unchanged), measured by the census on b92d7a1 plus the cut and each reviewed against the wb-dcsb notes (F1-F4) before it was written here; every other witness, the producer texts and the test titles are unchanged from the wb-dugi cut.",
   "bead": "wb-kku9.3",
   "programPin": "5ce2a07f891f5b165125d26739ec79720c295dd1",
   "producer": {
@@ -178,6 +178,75 @@
       "resume": "0e7b0f0049893e2ba1a3530a297144dfdd54a60aa77d7d0cda0998b42dd4d7aa"
     },
     "residualStatement": "RESIDUALS (named, each with its pinned quiet row): ",
+    "tsconfig": "tsconfig.json",
+    "voidElements": [
+      "area",
+      "base",
+      "basefont",
+      "bgsound",
+      "br",
+      "col",
+      "embed",
+      "frame",
+      "hr",
+      "image",
+      "img",
+      "input",
+      "keygen",
+      "link",
+      "meta",
+      "param",
+      "source",
+      "track",
+      "wbr"
+    ],
+    "rawTextElements": {
+      "noscript": {
+        "shown": false,
+        "decoded": false
+      },
+      "noembed": {
+        "shown": false,
+        "decoded": false
+      },
+      "noframes": {
+        "shown": false,
+        "decoded": false
+      },
+      "iframe": {
+        "shown": false,
+        "decoded": false
+      },
+      "title": {
+        "shown": false,
+        "decoded": true
+      },
+      "textarea": {
+        "shown": true,
+        "decoded": true
+      },
+      "xmp": {
+        "shown": true,
+        "decoded": false
+      },
+      "plaintext": {
+        "shown": true,
+        "decoded": false
+      }
+    },
+    "hidingElements": [
+      "template",
+      "datalist",
+      "rp",
+      "video",
+      "audio",
+      "canvas",
+      "object",
+      "select",
+      "svg",
+      "math",
+      "bdo"
+    ],
     "contract": "beads.work.readiness/v1"
   },
   "tests": [
@@ -723,6 +792,104 @@
                 "show"
               ]
             },
+            "seamClasses": {
+              "classAugmentation": [
+                "claim"
+              ],
+              "classProperty": [
+                "claim"
+              ],
+              "classAccessor": [
+                "claim"
+              ],
+              "parameterProperty": [
+                "claim"
+              ],
+              "classIndexSignature": [
+                "(index signature)"
+              ],
+              "classHeritage": [
+                "extends ClaimingBase"
+              ],
+              "staticMember": [],
+              "otherClass": []
+            },
+            "linkControl": {
+              "isLink": true,
+              "walked": true,
+              "readThrough": true
+            },
+            "codeFiles": {
+              "named": [
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true,
+                true
+              ],
+              "other": [
+                false,
+                false,
+                false,
+                false
+              ],
+              "tsxSeam": [
+                "claim"
+              ]
+            },
+            "cookedClaims": {
+              "flagged": [
+                1,
+                1,
+                1,
+                1,
+                1,
+                1
+              ],
+              "quiet": [
+                0,
+                0,
+                0
+              ]
+            },
+            "merged": {
+              "members": [
+                "show"
+              ],
+              "signatures": {
+                "index": 0,
+                "call": 0,
+                "construct": 0
+              },
+              "bases": [],
+              "declarations": [
+                "src/workbench/beads-observer.ts:InterfaceDeclaration"
+              ]
+            },
+            "mergedControl": {
+              "members": [
+                "claimViaClass",
+                "claimViaInterface",
+                "show"
+              ],
+              "signatures": {
+                "index": 0,
+                "call": 0,
+                "construct": 0
+              },
+              "bases": [],
+              "declarations": [
+                "src/workbench/beads-observer.ts:InterfaceDeclaration",
+                "src/workbench/zz-census-class-merge.ts:ClassDeclaration",
+                "src/workbench/zz-census-interface-merge.ts:InterfaceDeclaration"
+              ]
+            },
             "exports": [
               "BEADS_WORK_CONTRACT",
               "projectBeadsWork",
@@ -808,6 +975,29 @@
                 0
               ]
             },
+            "parserImports": {
+              "unicodeEscape": 1,
+              "bracedEscape": 1,
+              "hexEscape": 1,
+              "identifierEscape": 1,
+              "lineContinuation": 1,
+              "querySuffix": 1,
+              "fragmentSuffix": 1,
+              "percentEncoded": 1,
+              "carriageReturn": 1,
+              "lineSeparator": 1,
+              "paragraphSeparator": 1,
+              "importType": 1,
+              "importEquals": 1,
+              "parenthesizedCallee": 1,
+              "commaCallee": 1,
+              "optionalCall": 1,
+              "memberRequire": 1,
+              "referencePath": 1,
+              "referenceTypes": 1,
+              "amdDependency": 1,
+              "resolveOnly": 0
+            },
             "bypass": [],
             "seamReads": true,
             "readControls": {
@@ -821,6 +1011,15 @@
               "quiet": [
                 0,
                 0,
+                0
+              ]
+            },
+            "cookedReads": {
+              "flagged": [
+                1,
+                1
+              ],
+              "quiet": [
                 0
               ]
             }
@@ -1075,6 +1274,17 @@
               "loaderBinding": 0
             },
             "loaderControl": 1,
+            "indirectLoads": {
+              "requireCall": 0,
+              "worker": 0,
+              "importsMap": 0
+            },
+            "otherSyntaxes": {
+              "shellQuotes": 0,
+              "shellBackslash": 0,
+              "yamlEscape": 0,
+              "tomlEscape": 0
+            },
             "composedControl": 1
           }
         },
@@ -1123,6 +1333,46 @@
               "scriptBody": 0,
               "styleBody": 0,
               "templateBody": 0
+            },
+            "hiding": {
+              "hiddenAttribute": 0,
+              "hiddenUntilFound": 0,
+              "hiddenNested": 0,
+              "hiddenSelfClosing": 0,
+              "popoverElement": 0,
+              "attributeGt": 0,
+              "attributeGtSingle": 0,
+              "unclosedTag": 0,
+              "closedDialog": 0,
+              "closedDetails": 0,
+              "titleElement": 0,
+              "videoFallback": 0,
+              "objectFallback": 0,
+              "selectOption": 0,
+              "svgContent": 0,
+              "bdoElement": 0,
+              "unclosedScript": 0,
+              "scriptEscaped": 0,
+              "afterScript": 0,
+              "eventHandler": 0,
+              "styleElement": 0,
+              "styleAttribute": 0,
+              "stylesheetLink": 0,
+              "metaRefresh": 0,
+              "hiddenBody": 0,
+              "bidiOverride": 0,
+              "afterHidden": 1,
+              "openDialog": 1,
+              "openDetails": 1,
+              "textareaText": 1,
+              "commentedScript": 1,
+              "textareaScript": 1,
+              "otherLink": 1
+            },
+            "unmodeled": {
+              "presentationalColour": 1,
+              "impliedEnd": 0,
+              "closedSummary": 0
             }
           }
         },
