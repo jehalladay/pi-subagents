@@ -349,6 +349,7 @@
                 "src/workbench/hosts/local-detached.ts:providerManifest: \"providers\" literal",
                 "src/workbench/hosts/local-detached.ts:providerManifest: request.providers read",
                 "src/workbench/hosts/local-detached.ts:startDetachedHost: request.providers read",
+                "src/workbench/hyperunix-observer.ts:resultFacets: summary.providers read",
                 "src/workbench/latency.ts:bounded: item.providers read"
               ]
             },
