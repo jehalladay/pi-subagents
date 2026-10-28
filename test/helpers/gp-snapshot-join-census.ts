@@ -687,6 +687,13 @@ export interface SourceRow {
  */
 const BOUNDARY_CHARS: readonly string[] = Array.from({ length: 0x7f - 0x20 }, (_, offset) => String.fromCharCode(0x20 + offset)).filter(char => !/[A-Za-z0-9_$]/.test(char));
 
+/**
+ * One ASCII word character of each class, in this order: a lower-case letter, an upper-case letter, a digit, _ and $.
+ * C-LONGER-NAMES puts each directly before and directly after a field and the shared name, so a scan that reads any class as a
+ * boundary, or that reads text with no whole-word test, over-reports.
+ */
+const WORD_CLASS_CHARS: readonly string[] = ["x", "X", "7", "_", "$"];
+
 /** One row per touch kind; every pin is a source the scan must report exactly once, under that kind only. */
 export const TOUCHPOINTS: readonly (SourceRow & { readonly kind: TouchKind })[] = [
   {
@@ -719,7 +726,7 @@ export const TOUCHPOINTS: readonly (SourceRow & { readonly kind: TouchKind })[] 
     id: "T-IDENTITIES",
     kind: "IDENTITIES",
     label:
-      "gp's whole-document identity read as identities.graph: a member chain, an optional chain, an element access, a binding or assignment pattern, or a path string, slashed or dotted, as the whole string or at the start, inside or at the end of a longer path",
+      "gp's whole-document identity read as identities.graph: a member chain, an optional chain, an element access, a binding or assignment pattern, or a path string, slashed or dotted, as the whole string or at the start, inside or at the end of a longer path, or a path in a template head, middle or tail or a template without substitutions",
     pins: [
       "const id = envelope.identities.graph;",
       "const id = check.identities?.graph;",
@@ -735,6 +742,10 @@ export const TOUCHPOINTS: readonly (SourceRow & { readonly kind: TouchKind })[] 
       'const pointer = "identities/graph/0";',
       'const path = "identities.graph.value";',
       'const path = "check.identities.graph";',
+      ["const pointer = `/identities/graph/$", "{index}`;"].join(""),
+      ["const path = `$", "{root}.identities.graph.$", "{key}`;"].join(""),
+      ["const pointer = `$", "{base}/identities/graph`;"].join(""),
+      "const path = `check.identities.graph`;",
     ],
   },
   {
@@ -746,13 +757,18 @@ export const TOUCHPOINTS: readonly (SourceRow & { readonly kind: TouchKind })[] 
   {
     id: "T-SHARED",
     kind: "SHARED",
-    label: "snapshotDigest, the name gp's journal and observation records give the join value, or its snake-case mirror, as a member, a private name, a binding or a string, whole or inside a dotted path",
+    label:
+      "snapshotDigest, the name gp's journal and observation records give the join value, or its snake-case mirror, as a member, a private name, a binding or a string, whole or inside a dotted path, or in a template head, middle or tail or a template without substitutions",
     pins: [
       "if (reply.snapshotDigest !== exported) refuse();",
       'const value = record["snapshotDigest"];',
       "const { snapshot_digest } = row;",
       'class Host { #snapshotDigest = ""; }',
       'const path = "record.snapshotDigest.value";',
+      ["const path = `record.snapshotDigest.$", "{part}`;"].join(""),
+      ["const path = `$", "{a}.snapshot_digest.$", "{b}`;"].join(""),
+      ["const path = `record.$", "{key}.snapshotDigest`;"].join(""),
+      "const path = `record.snapshotDigest`;",
     ],
   },
 ];
@@ -773,6 +789,14 @@ export const CLEAN: readonly SourceRow[] = [
     id: "C-NEAR-NAMES",
     label: "near names: another identities member, the members in the other order, prose with spaces, a longer name, the bare graphpolicy.snapshot words",
     pins: ["const id = envelope.identities.program;", "const graph = envelope.graph.identities;", 'const text = "the input snapshot and the graph digest";', "const graph_digests = [];", 'const kind = "graphpolicy.snapshot";'],
+  },
+  {
+    id: "C-LONGER-NAMES",
+    label:
+      "a field or the shared name in text only inside a longer name: one ASCII word character of each class (a lower-case letter, an upper-case letter, a digit, _ and $) directly before it or directly after it, the other side a dot, so no occurrence stands as a whole word",
+    pins: ["input_snapshot", "snapshotDigest"].flatMap(name =>
+      WORD_CLASS_CHARS.flatMap(char => [`const text = ${JSON.stringify(`receipt.${char}${name}.value`)};`, `const text = ${JSON.stringify(`receipt.${name}${char}.value`)};`]),
+    ),
   },
   {
     id: "C-COMMENT",
