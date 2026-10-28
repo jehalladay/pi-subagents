@@ -1,5 +1,5 @@
 {
-  "comment": "wb-e66.1 (MW-GRAPH-POLICY-COORDINATION-R2): the out-of-file roster of test/workbench-mw-gp-support-census.test.ts (standing rule 16). It holds every judged row (id, label, pins), every pin's quote, witness and assertion count, the residual members, the mutants with their declared checks and every registered test title, in order; the census compares each with its own by equality. The producer block holds the four MechanicalWorkflows lines the filing cites, read with git show at the bead's pin from the local MechanicalWorkflows checkout by the cutting seat on 2026-10-28 (re-read equal by the seat of cut #2); the census never re-reads the producer.",
+  "comment": "wb-e66.1 (MW-GRAPH-POLICY-COORDINATION-R2): the out-of-file roster of test/workbench-mw-gp-support-census.test.ts (standing rule 16). It holds every judged row (id, label, pins), every pin's quote, witness and assertion count, the residual members, the mutants with their declared checks and every registered test title, in order; the census compares each with its own by equality. The producer block holds the four MechanicalWorkflows lines the filing cites, read with git show at the bead's pin from the local MechanicalWorkflows checkout by the cutting seat on 2026-10-28 (re-read equal by the seats of cuts #2 and #3); the census never re-reads the producer.",
   "bead": "wb-e66.1",
   "rows": [
     {
@@ -99,7 +99,8 @@
       "homoglyph",
       "joined",
       "slashed",
-      "middle-dot"
+      "middle-dot",
+      "minus-sign"
     ],
     "Q2": [
       "capacity",
@@ -1217,7 +1218,8 @@
         "homoglyph",
         "joined",
         "slashed",
-        "middle-dot"
+        "middle-dot",
+        "minus-sign"
       ],
       "findings": []
     },

@@ -10,22 +10,22 @@
  * the gate, src untouched." The statement's last clause is row A5's label. The filing: "Zero Pi change owed until the
  * conjoint gate (GP shadow-mode adapter + Pi hosting) fires."
  *
- * MEASURED (read-only, by the seat of cut #2, 2026-10-28, at trunk e81d2b0 merged into the branch and again at 5fbe25e,
- * whose delta from e81d2b0 holds no src or docs path). Producer (the local MechanicalWorkflows checkout, git show at the
- * bead's pin 4b8b974ca72bf2ed36b99e315e45857c6181fbe8; the roster's producer block holds the four cited lines and their
- * blobs, re-read equal at cut #2, and this census never re-reads the producer):
- * docs/programs/graph-policy-coordination-2026-10-18.md
- * (blob 01ff00d480ec) :8 ends "and does not reinterpret mw.training-export.v1 post-proposal admission as the policy's
- * pre-sampling eligible support." and :12 reads "2. A trusted adapter enumerates a finite, typed, legal **pre-sampling**
- * assignment support under hard known capacity/permissions, and exports a bounded role-aware GraphDataIR."; its README.md
- * (blob 0dbff582a14c) :9 opens the host's flow "Host: obtain bounded typed graph and **pre-sampling** legal candidates" and
- * :15 holds "Post-proposal admission is **not** original sampler support." Pi: git's src listing holds 117 files, all .ts,
- * and the vocabulary reader below reads none of them. The filing's other two search words are Pi's own words with other
- * meanings: "capacity" in src/ui/workflow-dialog.ts, src/ui/workflow-inspector.ts and src/workbench/claude-control-observer.ts,
+ * MEASURED (read-only, by the seat of cut #3, 2026-10-28, at trunk 014d116 merged into the branch and again at c843ed5,
+ * whose deltas from cut #2's trunk 5fbe25e hold no src or docs path). Producer (the local MechanicalWorkflows checkout,
+ * git show at the bead's pin 4b8b974ca72bf2ed36b99e315e45857c6181fbe8; the roster's producer block holds the four cited
+ * lines and their blobs, re-read equal at cut #3, and this census never re-reads the producer):
+ * docs/programs/graph-policy-coordination-2026-10-18.md (blob 01ff00d480ec) :8 ends "and does not reinterpret
+ * mw.training-export.v1 post-proposal admission as the policy's pre-sampling eligible support." and :12 reads "2. A
+ * trusted adapter enumerates a finite, typed, legal **pre-sampling** assignment support under hard known
+ * capacity/permissions, and exports a bounded role-aware GraphDataIR."; its README.md (blob 0dbff582a14c) :9 opens the
+ * host's flow "Host: obtain bounded typed graph and **pre-sampling** legal candidates" and :15 holds "Post-proposal
+ * admission is **not** original sampler support." Pi: git's src listing holds 117 files, all .ts, and the vocabulary
+ * reader below reads none of them. The filing's other two search words are Pi's own words with other meanings:
+ * "capacity" in src/ui/workflow-dialog.ts, src/ui/workflow-inspector.ts and src/workbench/claude-control-observer.ts,
  * "eligible" in src/agent-manager.ts, src/ui/agent-widget.ts and src/workflow/journal-compat.ts. docs/workbench/06 is
- * byte-identical at the filing pin 758ec18187a5 and at 5fbe25e (git diff --quiet rc 0); its :5, :15 and :73 are the filing's
- * citations, and the routing-hint sentence the filing paraphrases is its :28. No src module names the vocabulary: the gate
- * has not fired.
+ * byte-identical at the filing pin 758ec18187a5, at 014d116 and at c843ed5 (git diff --quiet rc 0); its :5, :15 and :73
+ * are the filing's citations, and the routing-hint sentence the filing paraphrases is its :28. No src module names the
+ * vocabulary: the gate has not fired.
  *
  * READINGS.
  * - THE MODEL (this file; test-only, src untouched): a pre-sampling basis (a revision, agents with a capacity and grants,
@@ -70,11 +70,22 @@
  *   deleted, the line edited, the line wrapped in an HTML comment, the line moved under a new trailing section) and the
  *   text read at the pinned page's next line. The comment and the move keep the raw line whole, so only the section reading
  *   refuses them.
- * - THE ECHO GUARD (the runner, never the case): while a pin's case runs, the roster's witnesses are sealed (a case that
- *   reads one throws), and the assertions the case makes are counted around it and must number at least one; after the
- *   witness compare, the runner records the pin's assertion count, and the last case holds those counts, in row order, to
- *   the roster's. So a case that returns its roster witness, a case that returns a copied witness without asserting, and a
- *   case that gains or loses an assertion while the roster's counts stand each red.
+ * - THE ECHO GUARD (the runner, never the case). The suite parses the roster file once, inside its own callback, into a
+ *   view whose witnesses are sealed (sealedRoster): a property get or a property descriptor taken through them
+ *   (Object.keys and Object.entries take one per key) throws, except inside the suite's read (readWitnesses: the
+ *   runner's witness compare and the roster case's key read; neither calls a case, though a builtin a case patched runs
+ *   inside them, under NOT CLAIMED), and no unsealed copy of the witnesses is kept. Every pin's case is declared
+ *   outside the suite (IMPL), so a case that names the roster or its read throws a ReferenceError when it runs, or at
+ *   module load if it reads the name there. The runner copies a case's returned value (copyOf, a JSON round trip) while
+ *   the witnesses are sealed, so a read deferred into that value (a getter or toJSON) throws too. The assertions a case
+ *   makes are read as the growth of vitest's assertion count (expect.getState().assertionCalls) across its run and must
+ *   number at least OWN_FLOOR (one); after the witness compare the runner records the pin's assertion count, and the
+ *   last case holds those counts, in row order, to the roster's. So these each red: a case that reads its roster
+ *   witness through the view, by name or deferred into its returned value; a case whose run leaves vitest's count
+ *   unmoved (it returns a witness, copied or not, without asserting); and a case that gains or loses an assertion,
+ *   writing no count of its own, while the roster's counts stand. The roster case reads the seal (a get and a
+ *   descriptor read inside a case, a get outside any case, a read deferred into a toJSON) and the floor on probes. What
+ *   the guard does not bind is under NOT CLAIMED.
  *
  * ROWS. A1-A4, the acceptance's four clauses; A5, the statement's last clause; S, the filing's authority slice (the registry
  * authorizes: the reference's permission bit is the registry's dispatch decision for every agent and task, and the
@@ -84,8 +95,9 @@
  * registry permits, so the support only narrows the registry decision; wb-6hb.4 is closed in the tracker export and its
  * parity test keeps the narrowing sentence); Q, the residuals' pinned quiet rows.
  * RESIDUALS (named families, each member a pinned quiet row; a reading that starts reading a member reds its row):
- * R-COMPOSED (Q1, seven members: a word whose parts are split by something other than the reading's separators - an
- * operator, a comment, a quote, a slash, a middle dot - or that is escaped, spelled with a homoglyph or joined at run time),
+ * R-COMPOSED (Q1, eight members: a word whose parts are split by something other than the reading's separators - an
+ * operator, a comment, a quote, a slash, a middle dot, a minus sign (U+2212, Sm) - or that is escaped, spelled with a
+ * homoglyph or joined at run time),
  * R-SHARED-WORD (Q2: the filing's search words "capacity" and "eligible", Pi words with other meanings), R-UNNAMED-ADAPTER
  * (Q3: an enumerator whose path and text name no vocabulary word: what a support enumeration means without the words is
  * outside a text reading) and R-JOINT-CAPACITY (Q4: the support is per pair; three load-1 pairs of one capacity-2 agent all
@@ -98,7 +110,7 @@
  * sentence's first clause (the support is the host adapter's duty, never GP's and never MW reconcile's: A2 judges the
  * reconcile half, and the GP half has no Pi subject before the gate); that a producer line reads the same past the pin; the
  * producer block's line texts beyond the two quotes the source citations carry (the seats read them equal at the pin; the
- * census never re-reads the producer); that R-COMPOSED's seven members exhaust the ways a text reading misses a word. Nor
+ * census never re-reads the producer); that R-COMPOSED's eight members exhaust the ways a text reading misses a word. Nor
  * does it claim that these removals red when made in every literal of this file and the roster together (the self-anchored
  * CT6 / 6ze.39 class): row Q (its label, its pins Q1-Q4, its residual families and their members), which no source outside
  * this file names; a pin merge (a pin's case deleted and its quote re-homed into a neighbouring pin of its row), since the
@@ -106,7 +118,16 @@
  * by no anchor outside this file; the :28 docs line's own entry and reading (not a citation; the section equality of :15,
  * which shares its section, still holds its text); a docs line's text cut to another substring that stands once in the
  * pinned page (the text only finds the line); a case, a record, a mutant, a residual member, a capacity kind or a
- * vocabulary control; and a case's assertions changed together with the roster's count.
+ * vocabulary control; and a case's assertions changed together with the roster's count. Nor does it claim the echo guard
+ * against a case that returns its pin's roster witness obtained by a route that does not read the suite's view - the
+ * roster file read again (fs, an import, or sealedRoster called on a fresh parse) or the witness pasted as a literal -
+ * while it makes assertions of its own (padded) or writes vitest's assertion count itself (expect.setState, or any route
+ * to vitest's matcher state); such a case stands in for its pin's case, so the pin's subject is read by nothing (beside a
+ * live plant the unmodified census reds, such as a src module naming the vocabulary or a docs/workbench/06 line wrapped
+ * in an HTML comment, it stays green). Nor against a case that patches a global, a builtin or a vitest API the census or
+ * the runner calls (Proxy, Reflect, JSON, Array.prototype, expect's matchers or state) to obtain a witness or to pass its
+ * compare. Nor that a change to the guard's own code reds: the roster or its read declared where a case can name them
+ * (no probe reads their scope), or a trap, the copy or the floor hollowed together with the probe that reads it.
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS, one quote and one case per
  * pin in row order, and as literals the shape of the capabilities, the tasks, the cases, the records, the mutants, the
  * residual families and members, the vocabulary, the shared words, the docs lines, the capacity kinds and the
@@ -708,6 +729,8 @@ const NON_BREAKING_HYPHEN = String.fromCodePoint(0x2011);
 const EN_DASH = String.fromCodePoint(0x2013);
 /** MIDDLE DOT (Po): none of the reading's separators. */
 const MIDDLE_DOT = String.fromCodePoint(0xb7);
+/** MINUS SIGN (Sm): none of the reading's separators. */
+const MINUS_SIGN = String.fromCodePoint(0x2212);
 /** The reading's controls: each label with its text, read for the words it names. */
 const VOCABULARY_CONTROLS: readonly (readonly [string, string])[] = [
   ["camel", "export type GraphDataIR = unknown;"],
@@ -943,6 +966,7 @@ const RESIDUALS: readonly Residual[] = [
       { id: "joined", text: 'export const name = ["training", "export"].join("-");\n' },
       { id: "slashed", text: 'export const at = "graph/data/ir";\n' },
       { id: "middle-dot", text: `export const name = "graph${MIDDLE_DOT}data${MIDDLE_DOT}ir";\n` },
+      { id: "minus-sign", text: `export const name = "Graph${MINUS_SIGN}Data${MINUS_SIGN}IR";\n` },
     ],
   },
   {
@@ -992,19 +1016,41 @@ interface Roster {
     readonly lines: readonly { readonly path: string; readonly blob: string; readonly line: number; readonly text: string }[];
   };
 }
-const ROSTER_FILE = JSON.parse(textOf(ROSTER_PATH)) as Roster;
-/** Set by the runner while a pin's case runs: the roster's witnesses are then sealed (the echo guard). */
-let witnessSealed = false;
-/** The roster, its witnesses read through a seal: a read while a case runs throws. */
-const ROSTER: Roster = {
-  ...ROSTER_FILE,
-  witnesses: new Proxy(ROSTER_FILE.witnesses, {
+interface SealedRoster {
+  /** The parsed roster file, its witnesses a sealed view. */
+  readonly roster: Roster;
+  /** The suite's read of the witnesses: the view opens while the reader runs (synchronously) and at no other time. */
+  readonly read: <T>(reader: (witnesses: Roster["witnesses"]) => T) => T;
+}
+/** The echo guard's refusal: a roster witness read outside the runner's own reads. */
+const sealError = (property: string | symbol): Error => new Error(`the roster witness ${String(property)} was read outside the runner's own reads (the echo guard)`);
+/**
+ * A parsed roster file, sealed (the echo guard): a property get or a property descriptor taken through its witnesses
+ * throws unless the returned read is running, and no unsealed copy of the witnesses is kept. The suite calls it once,
+ * inside its own callback, so no pin's case (IMPL, declared outside the suite) can name the roster or its read.
+ */
+function sealedRoster(file: Roster): SealedRoster {
+  let open = false;
+  const witnesses = new Proxy(file.witnesses, {
     get: (target, property, receiver): unknown => {
-      if (witnessSealed) throw new Error(`a case read the roster witness ${String(property)} while it ran`);
+      if (!open) throw sealError(property);
       return Reflect.get(target, property, receiver);
     },
-  }),
-};
+    getOwnPropertyDescriptor: (target, property): PropertyDescriptor | undefined => {
+      if (!open) throw sealError(property);
+      return Reflect.getOwnPropertyDescriptor(target, property);
+    },
+  });
+  function read<T>(reader: (view: Roster["witnesses"]) => T): T {
+    open = true;
+    try {
+      return reader(witnesses);
+    } finally {
+      open = false;
+    }
+  }
+  return { roster: { ...file, witnesses }, read };
+}
 const mutantLine = (mutant: Mutant): string => `${mutant.id}:${mutant.name}:${mutant.refusedBy.join("+")}`;
 
 // ---- the pins ----
@@ -1322,29 +1368,28 @@ const REACHED: { readonly pin: string; readonly same: boolean }[] = [];
 const ASSERTED: string[] = [];
 /** The assertions a pin's case must make of its own. */
 const OWN_FLOOR = 1;
-/** Runs a pin's case as the runner does: the roster's witnesses sealed while it runs, the assertions it makes counted around it. */
-async function runSealed(implementation: () => unknown): Promise<{ readonly raw: unknown; readonly own: number }> {
+/** The runner's copy of a case's returned value (a JSON round trip; undefined copies as null): the witness it compares. */
+const copyOf = (raw: unknown): unknown => (raw === undefined ? null : JSON.parse(JSON.stringify(raw)));
+/** Runs a pin's case as the runner does: the assertions it makes counted around it (the roster's witnesses stay sealed throughout; only the suite's read opens them). */
+async function runCase(implementation: () => unknown): Promise<{ readonly raw: unknown; readonly own: number }> {
   const before = expect.getState().assertionCalls;
-  witnessSealed = true;
-  try {
-    const raw: unknown = await implementation();
-    return { raw, own: expect.getState().assertionCalls - before };
-  } finally {
-    witnessSealed = false;
-  }
+  const raw: unknown = await implementation();
+  return { raw, own: expect.getState().assertionCalls - before };
 }
 
 describe(SUITE, () => {
+  /** The roster file, parsed once here, inside the suite: no pin's case (IMPL, declared outside) can name it or its read. */
+  const { roster: ROSTER, read: readWitnesses } = sealedRoster(JSON.parse(textOf(ROSTER_PATH)) as Roster);
   for (const row of ROWS) {
     for (const pin of row.pins) {
       it(`${pin}: ${QUOTES[pin] ?? ""}`, { timeout: LIVE_BUDGET_MS }, async () => {
         const implementation = IMPL[pin];
         expect(implementation, `${pin} has a case`).toBeDefined();
-        const { raw, own } = implementation === undefined ? { raw: undefined, own: 0 } : await runSealed(implementation);
+        const { raw, own } = implementation === undefined ? { raw: undefined, own: 0 } : await runCase(implementation);
         expect(own, `${pin}'s case asserts its own outcome before it returns its witness`).toBeGreaterThanOrEqual(OWN_FLOOR);
         expect(raw, `${pin} returns a witness`).not.toBeUndefined();
-        const witness: unknown = raw === undefined ? null : JSON.parse(JSON.stringify(raw));
-        const expected = ROSTER.witnesses[pin];
+        const witness = copyOf(raw);
+        const expected = readWitnesses(witnesses => witnesses[pin]);
         REACHED.push({ pin, same: isDeepStrictEqual(witness, expected) });
         expect(witness, `${pin}'s witness equals the roster's`).toStrictEqual(expected);
         ASSERTED.push(`${pin}:${expect.getState().assertionCalls}`);
@@ -1395,7 +1440,7 @@ describe(SUITE, () => {
       "M21:unsafe-integer-capacity:K-LEGAL",
       "M22:invoke-grant-overrides-permissions:K-LEGAL",
     ]);
-    expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:7", "Q2:2", "Q3:1", "Q4:1"]);
+    expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:8", "Q2:2", "Q3:1", "Q4:1"]);
     expect(RESIDUALS.map(family => `${family.id}:${family.name}`)).toEqual(["Q1:R-COMPOSED", "Q2:R-SHARED-WORD", "Q3:R-UNNAMED-ADAPTER"]);
     expect(VOCABULARY.map(word => `${word.id}:${word.spelling}`)).toEqual(["V1:sampler", "V2:training-export", "V3:GraphDataIR", "V4:PRE-SAMPLING"]);
     expect(SHARED_WORDS).toEqual(["capacity", "eligible"]);
@@ -1470,13 +1515,29 @@ describe(SUITE, () => {
     expect(RESIDUAL_MEMBERS, "the residual members equal the roster's").toEqual(ROSTER.residuals);
     expect(Object.keys(RESIDUAL_MEMBERS), "in the roster's order").toEqual(Object.keys(ROSTER.residuals));
     expect(MUTANTS.map(mutantLine), "the mutants and their declared checks equal the roster's").toEqual(ROSTER.mutants);
-    expect(Object.keys(ROSTER.witnesses), "one roster witness per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
+    expect(
+      readWitnesses(witnesses => Object.keys(witnesses)),
+      "one roster witness per pin, in row order",
+    ).toEqual(ROWS.flatMap(row => row.pins));
     expect(ROSTER.assertions.map(entry => entry.split(":")[0]), "one roster assertion count per pin, in row order").toEqual(ROWS.flatMap(row => row.pins));
     await expect(
-      runSealed(() => ROSTER.witnesses.A1a),
-      "the echo guard: a case that reads its roster witness throws",
-    ).rejects.toThrow("a case read the roster witness A1a while it ran");
-    expect((await runSealed(() => ({ copied: true }))).own, "the echo guard: a case returning a copied witness makes no assertion of its own").toBeLessThan(OWN_FLOOR);
+      runCase(() => ROSTER.witnesses.A1a),
+      "the echo guard: a case that reads its roster witness through the view throws",
+    ).rejects.toThrow("the roster witness A1a was read outside the runner's own reads");
+    expect((await runCase(() => ({ copied: true }))).own, "the echo guard: a case returning a copied witness makes no assertion of its own").toBeLessThan(OWN_FLOOR);
+    await expect(
+      runCase(() => Object.getOwnPropertyDescriptor(ROSTER.witnesses, "A1a")),
+      "the echo guard: a case that reads a witness's property descriptor through the view throws",
+    ).rejects.toThrow("the roster witness A1a was read outside the runner's own reads");
+    expect(
+      () => ROSTER.witnesses.A1a,
+      "the echo guard: the view is sealed outside the runner's own reads, so a read at module load or between cases throws",
+    ).toThrow("the roster witness A1a was read outside the runner's own reads");
+    const deferred = await runCase(() => ({ toJSON: () => ROSTER.witnesses.A1a }));
+    expect(
+      () => copyOf(deferred.raw),
+      "the echo guard: a read deferred into the returned value (its toJSON), which the runner's copy calls, throws",
+    ).toThrow("the roster witness A1a was read outside the runner's own reads");
     const walked: { readonly name: string; readonly mode: string; readonly fails: boolean; readonly state: string | undefined; readonly self: boolean }[] = [];
     const walk = (tasks: typeof task.file.tasks): void => {
       for (const child of tasks) {
