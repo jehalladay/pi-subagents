@@ -256,7 +256,7 @@ describe("wb-ksz slice 3: docs/12 hostile cases against the real detached host c
     expectNothingSecret(snapshot);
   }, 30_000);
 
-  it("H2: Host-side deny even when the script crafts raw RPC: the child's host side refuses forged authority, forged options and nested resolution, and only the granted call reaches the provider", async () => {
+  it("H2: Host-side deny even when the script crafts raw RPC: the child's host side refuses forged authority and nested resolution, the VM refuses a forged principal option, and only the granted call reaches the provider", async () => {
     const f = fixture();
     const receipt = await launch(
       f,
