@@ -1,5 +1,5 @@
 {
-  "comment": "wb-e66.5 (MW-GRAPH-POLICY-COORDINATION-R10; the hk9l/5jha roster pattern): the OUT-OF-FILE anchor of test/workbench-mw-gp-coordination-census.test.ts. rows: every judged row of test/helpers/gp-mw-coordination-census.ts in census order (id, label, pins). quotes: each pin's quote (the quotes of a row tile its label). witnesses: each pin's witness as measured at the cut (the census compares every pin's witness with this one). residuals: the members of each named residual family (each a pinned quiet row; R-COORDINATED's (Q7) members are the hollows of the judged set Q7 applies, by id, wb-5esj F1). tests: every test the census file registers, in order. producer: MechanicalWorkflows docs/programs/graph-policy-coordination-2026-10-18/README.md line 23 at the bead's pin, read with git show from the local checkout (the census never re-reads the producer). wb-5esj cut #2 (its refusal #1): B1 adds the opening and bound controls, B2 the shown-text controls, S2 and S3 the wrapped-callee and wrapped version-probe controls, Q2 four R-COMPUTED-LAUNCH members.",
+  "comment": "wb-e66.5 (MW-GRAPH-POLICY-COORDINATION-R10; the hk9l/5jha roster pattern): the OUT-OF-FILE anchor of test/workbench-mw-gp-coordination-census.test.ts. rows: every judged row of test/helpers/gp-mw-coordination-census.ts in census order (id, label, pins). quotes: each pin's quote (the quotes of a row tile its label). witnesses: each pin's witness as measured at the cut (the census compares every pin's witness with this one). residuals: the members of each named residual family (each a pinned quiet row; R-COORDINATED's (Q7) members are the hollows of the judged set Q7 applies, by id, wb-5esj F1). tests: every test the census file registers, in order. producer: MechanicalWorkflows docs/programs/graph-policy-coordination-2026-10-18/README.md line 23 at the bead's pin, read with git show from the local checkout (the census never re-reads the producer). wb-5esj cut #2 (its refusal #1): B1 adds the opening and bound controls, B2 the shown-text controls, S2 and S3 the wrapped-callee and wrapped version-probe controls, Q2 four R-COMPUTED-LAUNCH members. wb-5esj cut #3 (its refusal #2, the third-cut enumerate-the-resolvable form): row Q gains Q8 R-HTML-COMMENT (its residuals entry lists its members by label, its witness each member's block and its admission); a text family's witness holds each member's leg, path and text (refusal #2 F2); Q7's witness holds each seen control's and each export-row edit's report label by label (refusal #1 F4); B1's between controls, B2's shown controls and the S2 and S3 controls gain the cut-3 forms.",
   "bead": "wb-e66.5",
   "rows": [
     {
@@ -47,7 +47,8 @@
         "Q4",
         "Q5",
         "Q6",
-        "Q7"
+        "Q7",
+        "Q8"
       ]
     }
   ],
@@ -69,7 +70,8 @@
     "Q4": "R-OTHER-LAUNCHER",
     "Q5": "R-TEST-MENTION",
     "Q6": "R-LOCAL-SCORER",
-    "Q7": "R-COORDINATED"
+    "Q7": "R-COORDINATED",
+    "Q8": "R-HTML-COMMENT"
   },
   "witnesses": {
     "A1": {
@@ -78,7 +80,7 @@
         "test/**/*.test.ts"
       ],
       "excluded": false,
-      "pinCases": 18
+      "pinCases": 19
     },
     "A2": {
       "src": [],
@@ -200,397 +202,1023 @@
       "a record and its hidden copy": [],
       "a record quoting the path at a sentence's end": [],
       "a record of the path followed by an accented letter": [],
+      "a record of the path followed by a comma": [],
+      "a record of the path followed by '#'": [],
       "opening": {
-        "a dated heading in a list item": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: record-missing docs/workbench/receipts/wb-zz1.md"
-        ],
-        "a dated heading indented one space": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: record-missing docs/workbench/receipts/wb-zz1.md"
-        ],
-        "a dated heading with a tab after its number signs": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: record-missing docs/workbench/receipts/wb-zz1.md"
-        ],
-        "a date joined to a colon": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: record-missing docs/workbench/receipts/wb-zz1.md"
-        ],
-        "a comment and a space before the date": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: record-missing docs/workbench/receipts/wb-zz1.md"
-        ],
-        "a dated heading holding an HTML heading tag": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: record-missing docs/workbench/receipts/wb-zz1.md"
-        ],
-        "a day the calendar lacks (2026-02-29)": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: record-missing docs/workbench/receipts/wb-zz1.md"
-        ],
-        "a leap day (2028-02-29)": [],
-        "an emphasized date": []
+        "a dated heading in a list item": {
+          "heading": "- ## 2026-11-02 GP adoption of src/workbench/gp-shadow.ts (shadow)",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: record-missing docs/workbench/receipts/wb-zz1.md"
+          ]
+        },
+        "a dated heading indented one space": {
+          "heading": " ## 2026-11-02 GP adoption of src/workbench/gp-shadow.ts (shadow)",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: record-missing docs/workbench/receipts/wb-zz1.md"
+          ]
+        },
+        "a dated heading with a tab after its number signs": {
+          "heading": "##\t2026-11-02 GP adoption of src/workbench/gp-shadow.ts (shadow)",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: record-missing docs/workbench/receipts/wb-zz1.md"
+          ]
+        },
+        "a date joined to a colon": {
+          "heading": "## 2026-11-02: GP adoption of src/workbench/gp-shadow.ts (shadow)",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: record-missing docs/workbench/receipts/wb-zz1.md"
+          ]
+        },
+        "a comment and a space before the date": {
+          "heading": "## <!-- draft --> 2026-11-02 GP adoption of src/workbench/gp-shadow.ts (shadow)",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: record-missing docs/workbench/receipts/wb-zz1.md"
+          ]
+        },
+        "a dated heading holding an HTML heading tag": {
+          "heading": "## 2026-11-02 GP adoption of src/workbench/gp-shadow.ts (shadow) <h2>x</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: record-missing docs/workbench/receipts/wb-zz1.md"
+          ]
+        },
+        "a day the calendar lacks (2026-02-29)": {
+          "heading": "## 2026-02-29 GP adoption of src/workbench/gp-shadow.ts (shadow)",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: record-missing docs/workbench/receipts/wb-zz1.md"
+          ]
+        },
+        "a leap day (2028-02-29)": {
+          "heading": "## 2028-02-29 GP adoption of src/workbench/gp-shadow.ts (shadow)",
+          "findings": []
+        },
+        "an emphasized date": {
+          "heading": "## *2026-11-02* GP adoption of src/workbench/gp-shadow.ts (shadow)",
+          "findings": []
+        }
       },
       "between": {
-        "a level-2 heading in a block quote (U1 B1)": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "a level-2 heading in a list item (U1 B2)": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "a level-1 heading in a block quote (U1 B3)": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "a level-2 heading (T1)": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "a setext level-2 heading (T2)": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "a level-1 heading (T3)": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "a setext level-1 heading": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "a level-2 heading indented three spaces": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "a level-2 heading with a tab after its number signs": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "a level-2 heading in an ordered list item": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "a level-2 heading in a list item in a block quote": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "a level-2 heading in a block quote in a list item": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "a level-2 heading in a nested block quote": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "a level-2 heading in a nested list item": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "a setext level-2 heading in a block quote": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "a setext level-1 heading in a list item": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "a level-2 heading as a loose list item's second block": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "an HTML level-2 heading": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "an HTML level-1 heading, upper case, with an attribute": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "an inline HTML level-2 heading in a paragraph": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "an HTML level-2 heading in a list item": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "an inline HTML level-2 heading in a table cell": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "an inline HTML level-2 heading inside emphasis": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "an inline HTML level-2 heading in a level-3 heading": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "an HTML level-2 heading in a block quote": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "a level-2 heading tag in an HTML attribute value (fail closed)": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
-          "src/workbench/gp-shadow.ts: term-uncited pure GP call",
-          "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
-          "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
-          "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
-          "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
-          "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
-          "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
-          "src/workbench/gp-shadow.ts: shadow-run-uncited"
-        ],
-        "a level-3 heading (the section-bound control)": [],
-        "a level-3 heading in a block quote": [],
-        "a level-3 heading in a list item": [],
-        "a level-6 heading": [],
-        "an HTML level-3 heading": [],
-        "an HTML level-6 heading": [],
-        "a comment holding an HTML level-2 heading": [],
-        "a level-2 heading's end tag alone": [],
-        "a level-2 heading tag in a code span": [],
-        "a heading line in a fenced block": [],
-        "a heading line in an HTML block": [],
-        "a heading line as a task item's text": [],
-        "a thematic break": []
+        "a level-2 heading in a block quote (U1 B1)": {
+          "block": "> ## 2026-11-03 another entry",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a level-2 heading in a list item (U1 B2)": {
+          "block": "- ## 2026-11-03 another entry",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a level-1 heading in a block quote (U1 B3)": {
+          "block": "> # another document",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a level-2 heading (T1)": {
+          "block": "## 2026-11-03 another entry",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a setext level-2 heading (T2)": {
+          "block": "2026-11-03 another entry\n---",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a level-1 heading (T3)": {
+          "block": "# another document",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a setext level-1 heading": {
+          "block": "another document\n===",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a level-2 heading indented three spaces": {
+          "block": "   ## another entry",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a level-2 heading with a tab after its number signs": {
+          "block": "##\tanother entry",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a level-2 heading in an ordered list item": {
+          "block": "1. ## another entry",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a level-2 heading in a list item in a block quote": {
+          "block": "> - ## another entry",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a level-2 heading in a block quote in a list item": {
+          "block": "- > ## another entry",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a level-2 heading in a nested block quote": {
+          "block": "> > ## another entry",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a level-2 heading in a nested list item": {
+          "block": "- an item\n  - ## another entry",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a setext level-2 heading in a block quote": {
+          "block": "> another entry\n> ---",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a setext level-1 heading in a list item": {
+          "block": "- another document\n  ===",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a level-2 heading as a loose list item's second block": {
+          "block": "- an item\n\n  ## another entry",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an HTML level-2 heading": {
+          "block": "<h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an HTML level-1 heading, upper case, with an attribute": {
+          "block": "<H1 class=\"title\">another document</H1>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an inline HTML level-2 heading in a paragraph": {
+          "block": "see <h2>another entry</h2> below",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an HTML level-2 heading in a list item": {
+          "block": "- <h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an inline HTML level-2 heading in a table cell": {
+          "block": "| heading |\n| --- |\n| <h2>another entry</h2> |",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an inline HTML level-2 heading inside emphasis": {
+          "block": "see *<h2>another entry</h2>* below",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an inline HTML level-2 heading in a level-3 heading": {
+          "block": "### a subsection <h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an HTML level-2 heading in a block quote": {
+          "block": "> <h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a level-2 heading tag in an HTML attribute value (fail closed)": {
+          "block": "<div title=\"<h2>\">a note</div>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a closed comment before an HTML level-2 heading (FT1)": {
+          "block": "<!-- a note --> <h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a closed comment before an HTML level-1 heading": {
+          "block": "<!-- a note --> <h1>another document</h1>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a closed comment before an HTML level-2 heading in a list item": {
+          "block": "- <!-- a note --> <h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a closed comment before an HTML level-2 heading in a nested list item": {
+          "block": "- an item\n  - <!-- a note --> <h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a closed comment before an HTML level-2 heading in a block quote in a list item": {
+          "block": "- > <!-- a note --> <h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an HTML level-2 heading between two closed comments": {
+          "block": "<!-- a --> <h2>another entry</h2> <!-- b -->",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an attribute value before an HTML level-2 heading (FT2)": {
+          "block": "<div title=\"a note\"><h2>another entry</h2></div>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an attribute value before an HTML level-2 heading on the next line": {
+          "block": "<div data-note=\"a note\">\n<h2>another entry</h2>\n</div>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a single-quoted attribute value before an HTML level-2 heading": {
+          "block": "<div title='a note'><h2>another entry</h2></div>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an unquoted attribute value before an HTML level-2 heading": {
+          "block": "<div title=note><h2>another entry</h2></div>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an attribute value before an HTML level-2 heading in a list item (FT7)": {
+          "block": "- <div title=\"a note\"><h2>another entry</h2></div>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an attribute value before an HTML level-2 heading in a block quote (FT8)": {
+          "block": "> <div title=\"a note\"><h2>another entry</h2></div>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "script content before an HTML level-2 heading (FT6)": {
+          "block": "<script>const a = \"x\";</script><h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "style content before an HTML level-2 heading": {
+          "block": "<style>p { color: red; }</style><h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "textarea content before an HTML level-2 heading": {
+          "block": "<textarea>a note</textarea><h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "title content before an HTML level-2 heading": {
+          "block": "<title>a title</title><h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "iframe content before an HTML level-2 heading": {
+          "block": "<iframe></iframe><h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "noframes content before an HTML level-2 heading": {
+          "block": "<noframes></noframes><h2>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an inline HTML level-2 heading in a list item's text": {
+          "block": "* see <h2>another entry</h2> below",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an inline empty comment before an inline HTML level-2 heading (FT3)": {
+          "block": "see <!--> <h2>another entry</h2> below",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an inline tag whose attribute holds '<!--' before an inline HTML level-2 heading (FT4)": {
+          "block": "see <span title=\"<!--\">a note</span> <h2>another entry</h2> below",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a self-closing HTML level-2 heading tag": {
+          "block": "<h2/>another entry",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a level-2 heading tag in a declaration (fail closed)": {
+          "block": "<!DOCTYPE <h2>>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a level-2 heading tag in a processing instruction (fail closed)": {
+          "block": "<? <h2> ?>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a level-2 heading tag in CDATA (fail closed)": {
+          "block": "<![CDATA[ <h2> ]]>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an HTML level-2 heading a browser hides (fail closed)": {
+          "block": "<h2 hidden>another entry</h2>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an HTML level-2 heading in a hidden element (fail closed)": {
+          "block": "<div hidden><h2>another entry</h2></div>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "an HTML level-2 heading in a template (fail closed)": {
+          "block": "<template><h2>another entry</h2></template>",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged",
+            "src/workbench/gp-shadow.ts: term-uncited pure GP call",
+            "src/workbench/gp-shadow.ts: term-uncited exact source ID mapping",
+            "src/workbench/gp-shadow.ts: term-uncited original behavior probability",
+            "src/workbench/gp-shadow.ts: term-uncited no native-effect bypass",
+            "src/workbench/gp-shadow.ts: term-uncited stale result rejection",
+            "src/workbench/gp-shadow.ts: term-uncited evidence sidecar parity",
+            "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests",
+            "src/workbench/gp-shadow.ts: shadow-run-uncited"
+          ]
+        },
+        "a level-3 heading (the section-bound control)": {
+          "block": "### a subsection",
+          "findings": []
+        },
+        "a level-3 heading in a block quote": {
+          "block": "> ### a subsection",
+          "findings": []
+        },
+        "a level-3 heading in a list item": {
+          "block": "- ### a subsection",
+          "findings": []
+        },
+        "a level-4 heading": {
+          "block": "#### a minor heading",
+          "findings": []
+        },
+        "a level-5 heading": {
+          "block": "##### a minor heading",
+          "findings": []
+        },
+        "a level-6 heading": {
+          "block": "###### a minor heading",
+          "findings": []
+        },
+        "an HTML level-3 heading": {
+          "block": "<h3>a subsection</h3>",
+          "findings": []
+        },
+        "an HTML level-4 heading": {
+          "block": "<h4>a minor heading</h4>",
+          "findings": []
+        },
+        "an HTML level-5 heading": {
+          "block": "<h5>a minor heading</h5>",
+          "findings": []
+        },
+        "an HTML level-6 heading": {
+          "block": "<h6>a minor heading</h6>",
+          "findings": []
+        },
+        "a comment holding an HTML level-2 heading": {
+          "block": "<!-- <h2>an old heading</h2> -->",
+          "findings": []
+        },
+        "a level-2 heading's end tag alone": {
+          "block": "</h2>",
+          "findings": []
+        },
+        "a level-2 heading tag in a code span": {
+          "block": "the `<h2>` tag is quoted",
+          "findings": []
+        },
+        "a heading line in a fenced block": {
+          "block": "```\n## not a heading\n```",
+          "findings": []
+        },
+        "a heading line in an HTML block": {
+          "block": "<div>\n## not a heading\n</div>",
+          "findings": []
+        },
+        "a heading line as a task item's text": {
+          "block": "- [ ] ## not a heading",
+          "findings": []
+        },
+        "a thematic break": {
+          "block": "---",
+          "findings": []
+        },
+        "an <h2x> element": {
+          "block": "<h2x>another entry</h2x>",
+          "findings": []
+        },
+        "an HTML block's comment left open before a heading tag": {
+          "block": "<div><!-- a draft <h2>another entry</h2></div>",
+          "findings": []
+        },
+        "an HTML block's <title> left open": {
+          "block": "<title>a draft",
+          "findings": []
+        },
+        "an HTML block's attribute quote left open": {
+          "block": "<div title=\"a draft",
+          "findings": []
+        }
       }
     },
     "B2": {
@@ -666,61 +1294,131 @@
         "src/workbench/gp-shadow.ts: term-uncited Forge-installed integration tests"
       ],
       "shown": {
-        "a reference only a tag's attribute carries": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
-        ],
-        "a reference only an image's alt text carries": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
-        ],
-        "a reference only a link's target carries": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
-        ],
-        "a reference only a link's title carries": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
-        ],
-        "a reference only a link reference definition carries": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
-        ],
-        "a reference after a hard line break": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
-        ],
-        "a reference after a soft line break": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
-        ],
-        "a reference in a comment inside emphasis": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
-        ],
-        "a citation after a comment's close on an HTML block's line": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
-        ],
-        "a reference spelled with a character reference": [
-          "src/workbench/gp-shadow.ts: names GraphPolicy",
-          "src/workbench/gp-shadow.ts: imports graph-policy-cli",
-          "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
-        ],
-        "a reference in a code span": [],
-        "an autolink's URL": [],
-        "a table row": [],
-        "a block quote": [],
-        "a list after a blank line inside <details>": []
+        "a reference only a tag's attribute carries": {
+          "line": "- <span title=\"MechanicalWorkflows@1a2b3c40 (cmd_0123456789a0)\">original Policy/reconcile laws unchanged</span>",
+          "block": null,
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
+          ]
+        },
+        "a reference only an image's alt text carries": {
+          "line": "- original Policy/reconcile laws unchanged ![MechanicalWorkflows@1a2b3c40 (cmd_0123456789a0)](receipt.png)",
+          "block": null,
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
+          ]
+        },
+        "a reference only a link's target carries": {
+          "line": "- [original Policy/reconcile laws unchanged](https://example.invalid/cmd_0123456789a0)",
+          "block": null,
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
+          ]
+        },
+        "a reference only a link's title carries": {
+          "line": "- [original Policy/reconcile laws unchanged](https://example.invalid/receipt \"cmd_0123456789a0\")",
+          "block": null,
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
+          ]
+        },
+        "a reference only a link reference definition carries": {
+          "line": "- [original Policy/reconcile laws unchanged][r]",
+          "block": "[r]: https://example.invalid/cmd_0123456789a0 \"original Policy/reconcile laws unchanged\"",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
+          ]
+        },
+        "a reference after a hard line break": {
+          "line": "- original Policy/reconcile laws unchanged:\\\n  MechanicalWorkflows@1a2b3c40 (cmd_0123456789a0)",
+          "block": null,
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
+          ]
+        },
+        "a reference after a soft line break": {
+          "line": "- original Policy/reconcile laws unchanged:\n  MechanicalWorkflows@1a2b3c40 (cmd_0123456789a0)",
+          "block": null,
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
+          ]
+        },
+        "a reference in a comment inside emphasis": {
+          "line": "- *original Policy/reconcile laws unchanged <!-- MechanicalWorkflows@1a2b3c40 (cmd_0123456789a0) -->*",
+          "block": null,
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
+          ]
+        },
+        "a citation after a comment's close on an HTML block's line": {
+          "line": null,
+          "block": "<!-- a note --> original Policy/reconcile laws unchanged: MechanicalWorkflows@1a2b3c40 (cmd_0123456789a0)",
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
+          ]
+        },
+        "a reference spelled with a character reference": {
+          "line": "- original Policy/reconcile laws unchanged: cmd&#95;0123456789a0",
+          "block": null,
+          "findings": [
+            "src/workbench/gp-shadow.ts: names GraphPolicy",
+            "src/workbench/gp-shadow.ts: imports graph-policy-cli",
+            "src/workbench/gp-shadow.ts: term-uncited original Policy/reconcile laws unchanged"
+          ]
+        },
+        "a reference in a code span": {
+          "line": "- original Policy/reconcile laws unchanged: `MechanicalWorkflows@1a2b3c40 (cmd_0123456789a0)`",
+          "block": null,
+          "findings": []
+        },
+        "a reference with an escaped underscore": {
+          "line": "- original Policy/reconcile laws unchanged: cmd\\_0123456789a0",
+          "block": null,
+          "findings": []
+        },
+        "an autolink's URL": {
+          "line": "- original Policy/reconcile laws unchanged: <https://example.invalid/cmd_0123456789a0>",
+          "block": null,
+          "findings": []
+        },
+        "a table row": {
+          "line": null,
+          "block": "| term | receipt |\n| --- | --- |\n| original Policy/reconcile laws unchanged | MechanicalWorkflows@1a2b3c40 (cmd_0123456789a0) |",
+          "findings": []
+        },
+        "a block quote": {
+          "line": null,
+          "block": "> - original Policy/reconcile laws unchanged: MechanicalWorkflows@1a2b3c40 (cmd_0123456789a0)",
+          "findings": []
+        },
+        "a list after a blank line inside <details>": {
+          "line": null,
+          "block": "<details>\n\n- original Policy/reconcile laws unchanged: MechanicalWorkflows@1a2b3c40 (cmd_0123456789a0)\n\n</details>",
+          "findings": []
+        },
+        "a list after a blank line inside <div hidden>": {
+          "line": null,
+          "block": "<div hidden>\n\n- original Policy/reconcile laws unchanged: MechanicalWorkflows@1a2b3c40 (cmd_0123456789a0)\n\n</div>",
+          "findings": []
+        }
       },
       "terms": 8
     },
@@ -863,106 +1561,247 @@
       }
     },
     "S2": {
-      "an import of graph-policy-cli": [
-        "src/workbench/zz.ts: names GraphPolicy",
-        "src/workbench/zz.ts: imports graph-policy-cli"
-      ],
-      "an export from @micro-policy/core": [
-        "src/workbench/zz.ts: names MicroPolicy",
-        "src/workbench/zz.ts: imports @micro-policy/core"
-      ],
-      "a require of gp": [
-        "src/workbench/zz.ts: imports gp"
-      ],
-      "an import-equals of gp": [
-        "src/workbench/zz.ts: imports gp"
-      ],
-      "a dynamic import of mp/core": [
-        "src/workbench/zz.ts: imports mp/core"
-      ],
-      "spawn gp": [
-        "src/workbench/zz.ts: launches gp"
-      ],
-      "a shell line gp rpc": [
-        "src/workbench/zz.ts: launches gp rpc --stdio"
-      ],
-      "a Windows path to gp.exe": [
-        "src/workbench/zz.ts: launches C:\\tools\\gp.exe"
-      ],
-      "an absolute path to gp": [
-        "src/workbench/zz.ts: launches /opt/bin/gp"
-      ],
-      "a member call of mp": [
-        "src/workbench/zz.ts: launches mp"
-      ],
-      "a template program": [
-        "src/workbench/zz.ts: launches gp"
-      ],
-      "a const-bound program": [
-        "src/workbench/zz.ts: launches gp"
-      ],
-      "a version probe in src": [
-        "src/workbench/zz.ts: launches gp"
-      ],
-      "a fork of a GraphPolicyCLI module": [
-        "src/workbench/zz.ts: names GraphPolicy",
-        "src/workbench/zz.ts: launches node_modules/graph-policy-cli/dist/main.js"
-      ],
-      "a const bound to an as const program": [
-        "src/workbench/zz.ts: launches gp"
-      ],
-      "a parenthesized program": [
-        "src/workbench/zz.ts: launches gp"
-      ],
-      "an as-asserted program": [
-        "src/workbench/zz.ts: launches gp"
-      ],
-      "a const bound to a satisfies program": [
-        "src/workbench/zz.ts: launches gp"
-      ],
-      "an angle-bracket-asserted program": [
-        "src/workbench/zz.ts: launches gp"
-      ],
-      "a non-null-asserted program": [
-        "src/workbench/zz.ts: launches gp"
-      ],
-      "a parenthesized require": [
-        "src/workbench/zz.ts: imports gp"
-      ],
-      "a parenthesized launcher (W1)": [
-        "src/workbench/zz.ts: launches gp"
-      ],
-      "a non-null-asserted launcher (W2)": [
-        "src/workbench/zz.ts: launches gp"
-      ],
-      "an as-asserted member launcher (W3)": [
-        "src/workbench/zz.ts: launches gp"
-      ],
-      "a comma-form member launcher (W4)": [
-        "src/workbench/zz.ts: launches gp"
-      ],
-      "a parenthesized require callee (W5)": [
-        "src/workbench/zz.ts: imports gp"
-      ],
-      "the CommonJS emit's comma form (W16)": [
-        "src/workbench/zz.ts: launches gp"
-      ],
-      "a satisfies-wrapped launcher (W21)": [
-        "src/workbench/zz.ts: launches gp"
-      ],
-      "an angle-bracket-asserted launcher (W22)": [
-        "src/workbench/zz.ts: launches gp"
-      ],
-      "a parenthesized member shell launcher (W23)": [
-        "src/workbench/zz.ts: launches gp rpc --stdio"
-      ],
-      "a comma-form program": [
-        "src/workbench/zz.ts: launches gp"
-      ],
-      "git (quiet)": [],
-      "gpg (quiet)": [],
-      "mpv (quiet)": [],
-      "a graph-view module (quiet)": []
+      "an import of graph-policy-cli": {
+        "text": "import { sample } from \"graph-policy-cli\";\n",
+        "findings": [
+          "src/workbench/zz.ts: names GraphPolicy",
+          "src/workbench/zz.ts: imports graph-policy-cli"
+        ]
+      },
+      "an export from @micro-policy/core": {
+        "text": "export { decide } from \"@micro-policy/core\";\n",
+        "findings": [
+          "src/workbench/zz.ts: names MicroPolicy",
+          "src/workbench/zz.ts: imports @micro-policy/core"
+        ]
+      },
+      "a require of gp": {
+        "text": "const gp = require(\"gp\");\n",
+        "findings": [
+          "src/workbench/zz.ts: imports gp"
+        ]
+      },
+      "an import-equals of gp": {
+        "text": "import gp = require(\"gp\");\n",
+        "findings": [
+          "src/workbench/zz.ts: imports gp"
+        ]
+      },
+      "a dynamic import of mp/core": {
+        "text": "export const load = () => import(\"mp/core\");\n",
+        "findings": [
+          "src/workbench/zz.ts: imports mp/core"
+        ]
+      },
+      "spawn gp": {
+        "text": "spawn(\"gp\", [\"sample\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "a shell line gp rpc": {
+        "text": "execSync(\"gp rpc --stdio\");\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp rpc --stdio"
+        ]
+      },
+      "a Windows path to gp.exe": {
+        "text": "execFileSync(\"C:\\\\tools\\\\gp.exe\", [\"eval\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches C:\\tools\\gp.exe"
+        ]
+      },
+      "an absolute path to gp": {
+        "text": "execFile(\"/opt/bin/gp\", [\"eval\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches /opt/bin/gp"
+        ]
+      },
+      "a member call of mp": {
+        "text": "childProcess.spawnSync(\"mp\", [\"decide\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches mp"
+        ]
+      },
+      "a template program": {
+        "text": "spawn(`gp ${verb}`, []);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "a const-bound program": {
+        "text": "const GP_BIN = \"gp\";\nspawn(GP_BIN, [\"sample\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "a version probe in src": {
+        "text": "execFileSync(\"gp\", [\"--version\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "a fork of a GraphPolicyCLI module": {
+        "text": "fork(\"node_modules/graph-policy-cli/dist/main.js\");\n",
+        "findings": [
+          "src/workbench/zz.ts: names GraphPolicy",
+          "src/workbench/zz.ts: launches node_modules/graph-policy-cli/dist/main.js"
+        ]
+      },
+      "a const bound to an as const program": {
+        "text": "const GP = \"gp\" as const;\nspawn(GP, [\"sample\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "a parenthesized program": {
+        "text": "spawn((\"gp\"), [\"sample\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "an as-asserted program": {
+        "text": "spawnSync(\"gp\" as string, [\"sample\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "a const bound to a satisfies program": {
+        "text": "const GP = \"gp\" satisfies string;\nspawn(GP, [\"sample\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "an angle-bracket-asserted program": {
+        "text": "execFileSync(<string>\"gp\", [\"eval\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "a non-null-asserted program": {
+        "text": "spawn(\"gp\"!, [\"sample\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "a parenthesized require": {
+        "text": "const gp = require((\"gp\"));\n",
+        "findings": [
+          "src/workbench/zz.ts: imports gp"
+        ]
+      },
+      "a parenthesized launcher (W1)": {
+        "text": "(spawn)(\"gp\", [\"sample\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "a non-null-asserted launcher (W2)": {
+        "text": "spawn!(\"gp\", [\"sample\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "an as-asserted member launcher (W3)": {
+        "text": "(cp.spawn as typeof cp.spawn)(\"gp\", [\"sample\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "a comma-form member launcher (W4)": {
+        "text": "(0, cp.spawn)(\"gp\", [\"sample\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "a parenthesized require callee (W5)": {
+        "text": "const gp = (require)(\"gp\");\n",
+        "findings": [
+          "src/workbench/zz.ts: imports gp"
+        ]
+      },
+      "the CommonJS emit's comma form (W16)": {
+        "text": "(0, import_node_child_process.spawn)(\"gp\", [\"sample\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "a satisfies-wrapped launcher (W21)": {
+        "text": "(execFileSync satisfies typeof execFileSync)(\"gp\", [\"eval\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "an angle-bracket-asserted launcher (W22)": {
+        "text": "(<typeof spawn>spawn)(\"gp\", [\"sample\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "a parenthesized member shell launcher (W23)": {
+        "text": "(cp.execSync)(\"gp rpc --stdio\");\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp rpc --stdio"
+        ]
+      },
+      "a comma-form program": {
+        "text": "spawn((0, \"gp\"), [\"sample\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "an instantiation-expression launcher (M1)": {
+        "text": "(spawn<string>)(\"gp\", [\"sample\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "an instantiation-expression member launcher": {
+        "text": "(cp.spawn<string>)(\"gp\", [\"sample\"]);\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "a member require (M3)": {
+        "text": "const gp = module.require(\"gp\");\n",
+        "findings": [
+          "src/workbench/zz.ts: imports gp"
+        ]
+      },
+      "an import in a type position (M11)": {
+        "text": "export type Gp = typeof import(\"gp\");\n",
+        "findings": [
+          "src/workbench/zz.ts: imports gp"
+        ]
+      },
+      "an upper-case bare specifier": {
+        "text": "const gp = require(\"GP\");\n",
+        "findings": [
+          "src/workbench/zz.ts: imports GP"
+        ]
+      },
+      "a RegExp's exec (fail closed)": {
+        "text": "const RE = /x/;\nRE.exec(\"gp\");\n",
+        "findings": [
+          "src/workbench/zz.ts: launches gp"
+        ]
+      },
+      "git (quiet)": {
+        "text": "spawn(\"git\", [\"status\"]);\n",
+        "findings": []
+      },
+      "gpg (quiet)": {
+        "text": "spawn(\"gpg\", [\"--verify\"]);\n",
+        "findings": []
+      },
+      "mpv (quiet)": {
+        "text": "execSync(\"mpv video.mkv\");\n",
+        "findings": []
+      },
+      "a graph-view module (quiet)": {
+        "text": "import { renderGraph } from \"./graph-view.js\";\n",
+        "findings": []
+      }
     },
     "S3": {
       "findings": [],
@@ -983,45 +1822,114 @@
       ],
       "listing": true,
       "plants": {
-        "an import of graph-policy-cli": [
-          "test/zz.test.ts: imports graph-policy-cli"
-        ],
-        "spawn gp sample": [
-          "test/zz.test.ts: launches gp"
-        ],
-        "a shell line gp eval": [
-          "test/zz.test.ts: launches gp eval --json"
-        ],
-        "a version probe, file form": [],
-        "a version probe, shell line": [],
-        "a version probe with a second argument": [
-          "test/zz.test.ts: launches gp"
-        ],
-        "a const bound to an as const program": [
-          "test/zz.test.ts: launches gp"
-        ],
-        "a parenthesized program": [
-          "test/zz.test.ts: launches gp"
-        ],
-        "an as-asserted program": [
-          "test/zz.test.ts: launches gp"
-        ],
-        "a const bound to a satisfies program": [
-          "test/zz.test.ts: launches gp"
-        ],
-        "a parenthesized launcher (W1)": [
-          "test/zz.test.ts: launches gp"
-        ],
-        "a comma-form member launcher (W4)": [
-          "test/zz.test.ts: launches gp"
-        ],
-        "a version probe, wrapped program and list (W19)": [],
-        "a version probe, as const list (W18)": [],
-        "a version probe, wrapped element": [],
-        "a version probe through a parenthesized launcher": [],
-        "a version probe with a name-bound list": [
-          "test/zz.test.ts: launches gp"
-        ]
+        "an import of graph-policy-cli": {
+          "text": "import { sample } from \"graph-policy-cli\";\n",
+          "findings": [
+            "test/zz.test.ts: imports graph-policy-cli"
+          ]
+        },
+        "spawn gp sample": {
+          "text": "spawnSync(\"gp\", [\"sample\"]);\n",
+          "findings": [
+            "test/zz.test.ts: launches gp"
+          ]
+        },
+        "a shell line gp eval": {
+          "text": "execSync(\"gp eval --json\");\n",
+          "findings": [
+            "test/zz.test.ts: launches gp eval --json"
+          ]
+        },
+        "a version probe, file form": {
+          "text": "execFileSync(\"gp\", [\"--version\"], { encoding: \"utf8\" });\n",
+          "findings": []
+        },
+        "a version probe, shell line": {
+          "text": "execSync(\"mp --version\");\n",
+          "findings": []
+        },
+        "a version probe with a second argument": {
+          "text": "execFileSync(\"gp\", [\"--version\", \"--json\"]);\n",
+          "findings": [
+            "test/zz.test.ts: launches gp"
+          ]
+        },
+        "a const bound to an as const program": {
+          "text": "const GP = \"gp\" as const;\nspawn(GP, [\"sample\"]);\n",
+          "findings": [
+            "test/zz.test.ts: launches gp"
+          ]
+        },
+        "a parenthesized program": {
+          "text": "spawn((\"gp\"), [\"sample\"]);\n",
+          "findings": [
+            "test/zz.test.ts: launches gp"
+          ]
+        },
+        "an as-asserted program": {
+          "text": "spawnSync(\"gp\" as string, [\"sample\"]);\n",
+          "findings": [
+            "test/zz.test.ts: launches gp"
+          ]
+        },
+        "a const bound to a satisfies program": {
+          "text": "const GP = \"gp\" satisfies string;\nspawn(GP, [\"sample\"]);\n",
+          "findings": [
+            "test/zz.test.ts: launches gp"
+          ]
+        },
+        "a parenthesized launcher (W1)": {
+          "text": "(spawn)(\"gp\", [\"sample\"]);\n",
+          "findings": [
+            "test/zz.test.ts: launches gp"
+          ]
+        },
+        "a comma-form member launcher (W4)": {
+          "text": "(0, cp.spawn)(\"gp\", [\"sample\"]);\n",
+          "findings": [
+            "test/zz.test.ts: launches gp"
+          ]
+        },
+        "a version probe, wrapped program and list (W19)": {
+          "text": "execFileSync((\"gp\"), ([\"--version\"]));\n",
+          "findings": []
+        },
+        "a version probe, as const list (W18)": {
+          "text": "execFileSync(\"gp\", [\"--version\"] as const);\n",
+          "findings": []
+        },
+        "a version probe, wrapped element": {
+          "text": "execFileSync(\"gp\", [(\"--version\")]);\n",
+          "findings": []
+        },
+        "a version probe through a parenthesized launcher": {
+          "text": "(execFileSync)(\"gp\", [\"--version\"]);\n",
+          "findings": []
+        },
+        "a version probe with a name-bound list": {
+          "text": "const ARGS = [\"--version\"];\nexecFileSync(\"gp\", ARGS);\n",
+          "findings": [
+            "test/zz.test.ts: launches gp"
+          ]
+        },
+        "an instantiation-expression launcher (M1)": {
+          "text": "(spawn<string>)(\"gp\", [\"sample\"]);\n",
+          "findings": [
+            "test/zz.test.ts: launches gp"
+          ]
+        },
+        "a member require (M3)": {
+          "text": "const gp = module.require(\"gp\");\n",
+          "findings": [
+            "test/zz.test.ts: imports gp"
+          ]
+        },
+        "an import in a type position (M11)": {
+          "text": "export type Gp = typeof import(\"gp\");\n",
+          "findings": [
+            "test/zz.test.ts: imports gp"
+          ]
+        }
       },
       "scratch": {
         "listed": {
@@ -1045,56 +1953,181 @@
     },
     "Q1": {
       "members": [
-        "src/workbench/q1-concat.ts",
-        "src/workbench/q1-escape.ts",
-        "src/workbench/q1-codes.ts",
-        "src/workbench/q1-nbsp.ts"
+        {
+          "leg": "src",
+          "path": "src/workbench/q1-concat.ts",
+          "text": "export const NAME = \"Graph\" + \"Policy\";\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q1-escape.ts",
+          "text": "export const NAME = \"\\u0047raphDataIR\";\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q1-codes.ts",
+          "text": "export const NAME = String.fromCharCode(71, 114, 97, 112, 104) + \"Policy\";\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q1-nbsp.ts",
+          "text": "export const NAME = \"Graph\u00a0Policy\";\n"
+        }
       ],
       "findings": []
     },
     "Q2": {
       "members": [
-        "src/workbench/q2-joined.ts",
-        "src/workbench/q2-env.ts",
-        "src/workbench/q2-alias.ts",
-        "src/workbench/q2-let.ts",
-        "src/workbench/q2-element.ts",
-        "src/workbench/q2-call.ts",
-        "src/workbench/q2-const-chain.ts",
-        "src/workbench/q2-apply.ts",
-        "src/workbench/q2-bind.ts",
-        "src/workbench/q2-reflect.ts"
+        {
+          "leg": "src",
+          "path": "src/workbench/q2-joined.ts",
+          "text": "import { spawn } from \"node:child_process\";\nconst bin = [\"g\", \"p\"].join(\"\");\nspawn(bin, [\"sample\"]);\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q2-env.ts",
+          "text": "import { spawn } from \"node:child_process\";\nspawn(process.env.SCORER ?? \"\", [\"sample\"]);\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q2-alias.ts",
+          "text": "import { spawnSync } from \"node:child_process\";\nconst run = spawnSync;\nrun(\"gp\", [\"sample\"]);\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q2-let.ts",
+          "text": "import { spawn } from \"node:child_process\";\nlet bin = \"gp\";\nspawn(bin, [\"sample\"]);\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q2-element.ts",
+          "text": "import * as cp from \"node:child_process\";\ncp[\"spawn\"](\"gp\", [\"sample\"]);\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q2-call.ts",
+          "text": "import * as cp from \"node:child_process\";\ncp.spawnSync.call(undefined, \"gp\", [\"sample\"]);\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q2-const-chain.ts",
+          "text": "import { spawn } from \"node:child_process\";\nconst A = \"gp\";\nconst B = A;\nspawn(B, [\"sample\"]);\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q2-apply.ts",
+          "text": "import * as cp from \"node:child_process\";\ncp.spawn.apply(undefined, [\"gp\", [\"sample\"]]);\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q2-bind.ts",
+          "text": "import * as cp from \"node:child_process\";\ncp.spawn.bind(undefined)(\"gp\", [\"sample\"]);\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q2-reflect.ts",
+          "text": "import * as cp from \"node:child_process\";\nReflect.apply(cp.spawn, undefined, [\"gp\", [\"sample\"]]);\n"
+        }
       ],
       "findings": []
     },
     "Q3": {
       "members": [
-        "src/workbench/q3-env.ts",
-        "src/workbench/q3-chain.ts",
-        "src/workbench/q3-npx.ts",
-        "src/workbench/q3-quoted.ts",
-        "src/workbench/q3-group.ts"
+        {
+          "leg": "src",
+          "path": "src/workbench/q3-env.ts",
+          "text": "import { execSync } from \"node:child_process\";\nexecSync(\"env A=1 gp sample\");\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q3-chain.ts",
+          "text": "import { execSync } from \"node:child_process\";\nexecSync(\"cd /tmp && gp sample\");\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q3-npx.ts",
+          "text": "import { spawn } from \"node:child_process\";\nspawn(\"npx\", [\"gp\", \"sample\"]);\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q3-quoted.ts",
+          "text": "import { execSync } from \"node:child_process\";\nexecSync(\"'gp' sample\");\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q3-group.ts",
+          "text": "import { execSync } from \"node:child_process\";\nexecSync(\"(gp sample)\");\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q3-shell-option.ts",
+          "text": "import { spawn } from \"node:child_process\";\nspawn(\"gp sample\", { shell: true });\n"
+        }
       ],
       "findings": []
     },
     "Q4": {
       "members": [
-        "src/workbench/q4-worker.ts",
-        "src/workbench/q4-execa.ts",
-        "test/q4-loader.test.ts"
+        {
+          "leg": "src",
+          "path": "src/workbench/q4-worker.ts",
+          "text": "import { Worker } from \"node:worker_threads\";\nnew Worker(\"./gp.js\");\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q4-execa.ts",
+          "text": "declare const execa: (file: string, args: string[]) => void;\nexeca(\"gp\", [\"sample\"]);\n"
+        },
+        {
+          "leg": "test",
+          "path": "test/q4-loader.test.ts",
+          "text": "import { createRequire } from \"node:module\";\nconst load = createRequire(import.meta.url);\nload(\"graph-policy-cli\");\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q4-require-alias.ts",
+          "text": "const load = require;\nexport const gp: unknown = load(\"gp\");\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q4-require-call.ts",
+          "text": "export const gp: unknown = require.call(undefined, \"gp\");\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q4-require-element.ts",
+          "text": "export const gp: unknown = module[\"require\"](\"gp\");\n"
+        },
+        {
+          "leg": "src",
+          "path": "src/workbench/q4-const-specifier.ts",
+          "text": "const SPEC = \"gp\";\nexport const gp: unknown = require(SPEC);\n"
+        }
       ],
       "findings": []
     },
     "Q5": {
       "members": [
-        "test/q5-guard.test.ts",
-        "test/fixtures/q5-roster.json"
+        {
+          "leg": "test",
+          "path": "test/q5-guard.test.ts",
+          "text": "const GRAPH_POLICY_NAME = \"GraphPolicyCLI\";\nexport const words = [GRAPH_POLICY_NAME, \"GraphDataIR\", \"MicroPolicy\", \"mw.training-export.v1\"];\n"
+        },
+        {
+          "leg": "test",
+          "path": "test/fixtures/q5-roster.json",
+          "text": "{ \"graphDataIR\": \"mw.training-export.v1\" }\n"
+        }
       ],
       "findings": []
     },
     "Q6": {
       "members": [
-        "src/workbench/q6-scorer.ts"
+        {
+          "leg": "src",
+          "path": "src/workbench/q6-scorer.ts",
+          "text": "export function assign(pairs: readonly { agent: string; logit: number }[]): string | undefined {\n  return [...pairs].sort((a, b) => b.logit - a.logit)[0]?.agent;\n}\n"
+        }
       ],
       "findings": []
     },
@@ -1103,13 +2136,15 @@
         "row Q, whole (H9): unseen",
         "a pin of row Q (Q2): unseen",
         "a residual member (Q2's src/workbench/q2-let.ts, H6): unseen",
+        "a residual member's text (Q2's src/workbench/q2-apply.ts as a non-launch, refusal #2 G15): unseen",
         "an S1 control (graph_data_ir, H7): unseen",
         "an S2 control (an import-equals of gp, H8): unseen",
         "an S3 control (a version probe with a second argument): unseen",
+        "a rendered-view control (BETWEEN's U1 B1): unseen",
         "a src plant past A2, B4 and the means reader (H11, H8's reading half): unseen",
         "a test plant past S3: unseen"
       ],
-      "controls": [
+      "seen": [
         "row C, whole (H10): seen",
         "a pin of row A (A3, H1): seen",
         "row S's label without ' and test' (H2): seen",
@@ -1118,8 +2153,370 @@
         "a term (stale result rejection): seen",
         "a shadow-mode run phrase (zero native verbs reached): seen",
         "the rollback path renamed: seen",
-        "the producer line moved: seen"
-      ]
+        "the producer line moved: seen",
+        "a pin of row B (B4): seen",
+        "row C's pin quote shortened: seen",
+        "a statement word out of the vocabulary (GraphDataIR): seen",
+        "the filing pin changed: seen",
+        "the producer path moved: seen",
+        "the producer sha changed (refusal #1 G7): seen",
+        "a term out of the producer line: seen",
+        "the producer line's ending changed: seen"
+      ],
+      "controls": [
+        {
+          "id": "row C, whole (H10)",
+          "gaps": [
+            "the acceptance holds three clauses, each exactly one row's label"
+          ]
+        },
+        {
+          "id": "a pin of row A (A3, H1)",
+          "gaps": [
+            "row A's pin quotes tile its label"
+          ]
+        },
+        {
+          "id": "row S's label without ' and test' (H2)",
+          "gaps": [
+            "row S's label is a slice of the statement",
+            "row S's pin quotes tile its label"
+          ]
+        },
+        {
+          "id": "a vocabulary word (MicroPolicy)",
+          "gaps": [
+            "the vocabulary is the filing grep's words, in order"
+          ]
+        },
+        {
+          "id": "a filing scope (docs)",
+          "gaps": [
+            "the filing pin's scopes are the grep's"
+          ]
+        },
+        {
+          "id": "a term (stale result rejection)",
+          "gaps": [
+            "the eight terms are the filing's list",
+            "TERMS holds the statement's count"
+          ]
+        },
+        {
+          "id": "a shadow-mode run phrase (zero native verbs reached)",
+          "gaps": [
+            "the shadow-mode run and its phrases are clause B's"
+          ]
+        },
+        {
+          "id": "the rollback path renamed",
+          "gaps": [
+            "the rollback path is clause C's"
+          ]
+        },
+        {
+          "id": "the producer line moved",
+          "gaps": [
+            "the producer line is the statement's"
+          ]
+        },
+        {
+          "id": "a pin of row B (B4)",
+          "gaps": [
+            "row B's pin quotes tile its label"
+          ]
+        },
+        {
+          "id": "row C's pin quote shortened",
+          "gaps": [
+            "row C's pin quotes tile its label"
+          ]
+        },
+        {
+          "id": "a statement word out of the vocabulary (GraphDataIR)",
+          "gaps": [
+            "the vocabulary is the filing grep's words, in order",
+            "'GraphDataIR' is a vocabulary word"
+          ]
+        },
+        {
+          "id": "the filing pin changed",
+          "gaps": [
+            "the filing pin is the grep's"
+          ]
+        },
+        {
+          "id": "the producer path moved",
+          "gaps": [
+            "the producer path is the statement's README"
+          ]
+        },
+        {
+          "id": "the producer sha changed (refusal #1 G7)",
+          "gaps": [
+            "the producer sha is the statement's pin"
+          ]
+        },
+        {
+          "id": "a term out of the producer line",
+          "gaps": [
+            "README.md:23 carries 'stale result rejection'"
+          ]
+        },
+        {
+          "id": "the producer line's ending changed",
+          "gaps": [
+            "README.md:23 ends with the filing's quote"
+          ]
+        }
+      ],
+      "rowControls": [
+        {
+          "id": "the title counts seven terms (refusal #1 G8)",
+          "gaps": [
+            "the statement counts the terms",
+            "TERMS holds the statement's count"
+          ]
+        },
+        {
+          "id": "the title names two of the words",
+          "gaps": [
+            "row S's label is a slice of the statement",
+            "the statement names three of the words"
+          ]
+        }
+      ],
+      "effects": {
+        "row Q, whole (H9)": [
+          "rows -Q [Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8] the named residual families, each member a pinned quiet row",
+          "quotes -Q1",
+          "quotes -Q2",
+          "quotes -Q3",
+          "quotes -Q4",
+          "quotes -Q5",
+          "quotes -Q6",
+          "quotes -Q7",
+          "quotes -Q8",
+          "residuals -Q1",
+          "residuals -Q2",
+          "residuals -Q3",
+          "residuals -Q4",
+          "residuals -Q5",
+          "residuals -Q6",
+          "residuals -Q7",
+          "residuals -Q8"
+        ],
+        "a pin of row Q (Q2)": [
+          "rows -Q [Q1, Q2, Q3, Q4, Q5, Q6, Q7, Q8] the named residual families, each member a pinned quiet row",
+          "rows +Q [Q1, Q3, Q4, Q5, Q6, Q7, Q8] the named residual families, each member a pinned quiet row",
+          "quotes -Q2",
+          "residuals -Q2"
+        ],
+        "a residual member (Q2's src/workbench/q2-let.ts, H6)": [
+          "residuals.Q2 -src/workbench/q2-let.ts"
+        ],
+        "a residual member's text (Q2's src/workbench/q2-apply.ts as a non-launch, refusal #2 G15)": [
+          "texts.Q2 -import * as cp from \"node:child_process\";\ncp.spawn.apply(undefined, [\"gp\", [\"sample\"]]);\n",
+          "texts.Q2 +export const apply = 1;\n"
+        ],
+        "an S1 control (graph_data_ir, H7)": [
+          "controls.S1 hits -graph_data_ir"
+        ],
+        "an S2 control (an import-equals of gp, H8)": [
+          "controls.S2 -an import-equals of gp"
+        ],
+        "an S3 control (a version probe with a second argument)": [
+          "controls.S3 -a version probe with a second argument"
+        ],
+        "a rendered-view control (BETWEEN's U1 B1)": [
+          "controls.B1 between -a level-2 heading in a block quote (U1 B1)"
+        ],
+        "a src plant past A2, B4 and the means reader (H11, H8's reading half)": [
+          "legs.src +src/workbench/zz-coordinated.ts: src/workbench/zz-coordinated.ts: names GraphDataIR; src/workbench/zz-coordinated.ts: imports gp"
+        ],
+        "a test plant past S3": [
+          "legs.test +test/zz-coordinated.test.ts: test/zz-coordinated.test.ts: launches gp"
+        ]
+      }
+    },
+    "Q8": {
+      "members": [
+        {
+          "label": "an empty comment <!--> before an HTML level-2 heading (FA1)",
+          "block": "<!--> <h2>another entry</h2>"
+        },
+        {
+          "label": "an empty comment <!---> before an HTML level-2 heading (FA2)",
+          "block": "<!---> <h2>another entry</h2>"
+        },
+        {
+          "label": "an empty comment <!--> before an HTML level-1 heading (FA5)",
+          "block": "<!--> <h1>another document</h1>"
+        },
+        {
+          "label": "an empty comment in a list item (FA10)",
+          "block": "- <!--> <h2>another entry</h2>"
+        },
+        {
+          "label": "an empty comment in a nested list item",
+          "block": "- an item\n  - <!--> <h2>another entry</h2>"
+        },
+        {
+          "label": "an empty comment in a block quote in a list item",
+          "block": "- > <!--> <h2>another entry</h2>"
+        },
+        {
+          "label": "a '<!--' in a double-quoted attribute value (FA3)",
+          "block": "<div title=\"<!--\"><h2>another entry</h2></div>"
+        },
+        {
+          "label": "a '<!--' in an attribute value, the heading on the next line (FA4)",
+          "block": "<div data-note=\"<!--\">\n<h2>another entry</h2>\n</div>"
+        },
+        {
+          "label": "a '<!--' in an attribute value in a list item (FA7)",
+          "block": "- <div title=\"<!--\"><h2>another entry</h2></div>"
+        },
+        {
+          "label": "a '<!--' in an attribute value in a block quote (FA8)",
+          "block": "> <div title=\"<!--\"><h2>another entry</h2></div>"
+        },
+        {
+          "label": "a '<!--' in a single-quoted attribute value",
+          "block": "<div title='<!--'><h2>another entry</h2></div>"
+        },
+        {
+          "label": "a '<!--' as an unquoted attribute value",
+          "block": "<div title=<!--><h2>another entry</h2></div>"
+        },
+        {
+          "label": "a '<!--' in script content (FA6)",
+          "block": "<script>const a = \"<!--\";</script><h2>another entry</h2>"
+        },
+        {
+          "label": "a '<!--' in style content",
+          "block": "<style>p::before { content: \"<!--\"; }</style><h2>another entry</h2>"
+        },
+        {
+          "label": "a '<!--' in textarea content (FA9)",
+          "block": "<textarea><!--</textarea><h2>another entry</h2>"
+        },
+        {
+          "label": "a '<!--' in title content",
+          "block": "<title><!--</title><h2>another entry</h2>"
+        },
+        {
+          "label": "a '<!--' in iframe content",
+          "block": "<iframe><!--</iframe><h2>another entry</h2>"
+        },
+        {
+          "label": "a '<!--' in noframes content",
+          "block": "<noframes><!--</noframes><h2>another entry</h2>"
+        },
+        {
+          "label": "a comment closed by '--!>'",
+          "block": "<!-- a --!> <h2>another entry</h2> <!-- b -->"
+        }
+      ],
+      "admitted": {
+        "an empty comment <!--> before an HTML level-2 heading (FA1)": [],
+        "an empty comment <!---> before an HTML level-2 heading (FA2)": [],
+        "an empty comment <!--> before an HTML level-1 heading (FA5)": [],
+        "an empty comment in a list item (FA10)": [],
+        "an empty comment in a nested list item": [],
+        "an empty comment in a block quote in a list item": [],
+        "a '<!--' in a double-quoted attribute value (FA3)": [],
+        "a '<!--' in an attribute value, the heading on the next line (FA4)": [],
+        "a '<!--' in an attribute value in a list item (FA7)": [],
+        "a '<!--' in an attribute value in a block quote (FA8)": [],
+        "a '<!--' in a single-quoted attribute value": [],
+        "a '<!--' as an unquoted attribute value": [],
+        "a '<!--' in script content (FA6)": [],
+        "a '<!--' in style content": [],
+        "a '<!--' in textarea content (FA9)": [],
+        "a '<!--' in title content": [],
+        "a '<!--' in iframe content": [],
+        "a '<!--' in noframes content": [],
+        "a comment closed by '--!>'": []
+      },
+      "twins": {
+        "an empty comment <!--> before an HTML level-2 heading (FA1)": {
+          "twin": "a closed comment before an HTML level-2 heading (FT1)",
+          "bound": true
+        },
+        "an empty comment <!---> before an HTML level-2 heading (FA2)": {
+          "twin": "a closed comment before an HTML level-2 heading (FT1)",
+          "bound": true
+        },
+        "an empty comment <!--> before an HTML level-1 heading (FA5)": {
+          "twin": "a closed comment before an HTML level-1 heading",
+          "bound": true
+        },
+        "an empty comment in a list item (FA10)": {
+          "twin": "a closed comment before an HTML level-2 heading in a list item",
+          "bound": true
+        },
+        "an empty comment in a nested list item": {
+          "twin": "a closed comment before an HTML level-2 heading in a nested list item",
+          "bound": true
+        },
+        "an empty comment in a block quote in a list item": {
+          "twin": "a closed comment before an HTML level-2 heading in a block quote in a list item",
+          "bound": true
+        },
+        "a '<!--' in a double-quoted attribute value (FA3)": {
+          "twin": "an attribute value before an HTML level-2 heading (FT2)",
+          "bound": true
+        },
+        "a '<!--' in an attribute value, the heading on the next line (FA4)": {
+          "twin": "an attribute value before an HTML level-2 heading on the next line",
+          "bound": true
+        },
+        "a '<!--' in an attribute value in a list item (FA7)": {
+          "twin": "an attribute value before an HTML level-2 heading in a list item (FT7)",
+          "bound": true
+        },
+        "a '<!--' in an attribute value in a block quote (FA8)": {
+          "twin": "an attribute value before an HTML level-2 heading in a block quote (FT8)",
+          "bound": true
+        },
+        "a '<!--' in a single-quoted attribute value": {
+          "twin": "a single-quoted attribute value before an HTML level-2 heading",
+          "bound": true
+        },
+        "a '<!--' as an unquoted attribute value": {
+          "twin": "an unquoted attribute value before an HTML level-2 heading",
+          "bound": true
+        },
+        "a '<!--' in script content (FA6)": {
+          "twin": "script content before an HTML level-2 heading (FT6)",
+          "bound": true
+        },
+        "a '<!--' in style content": {
+          "twin": "style content before an HTML level-2 heading",
+          "bound": true
+        },
+        "a '<!--' in textarea content (FA9)": {
+          "twin": "textarea content before an HTML level-2 heading",
+          "bound": true
+        },
+        "a '<!--' in title content": {
+          "twin": "title content before an HTML level-2 heading",
+          "bound": true
+        },
+        "a '<!--' in iframe content": {
+          "twin": "iframe content before an HTML level-2 heading",
+          "bound": true
+        },
+        "a '<!--' in noframes content": {
+          "twin": "noframes content before an HTML level-2 heading",
+          "bound": true
+        },
+        "a comment closed by '--!>'": {
+          "twin": "an HTML level-2 heading between two closed comments",
+          "bound": true
+        }
+      }
     }
   },
   "residuals": {
@@ -1146,12 +2543,17 @@
       "src/workbench/q3-chain.ts",
       "src/workbench/q3-npx.ts",
       "src/workbench/q3-quoted.ts",
-      "src/workbench/q3-group.ts"
+      "src/workbench/q3-group.ts",
+      "src/workbench/q3-shell-option.ts"
     ],
     "Q4": [
       "src/workbench/q4-worker.ts",
       "src/workbench/q4-execa.ts",
-      "test/q4-loader.test.ts"
+      "test/q4-loader.test.ts",
+      "src/workbench/q4-require-alias.ts",
+      "src/workbench/q4-require-call.ts",
+      "src/workbench/q4-require-element.ts",
+      "src/workbench/q4-const-specifier.ts"
     ],
     "Q5": [
       "test/q5-guard.test.ts",
@@ -1164,11 +2566,34 @@
       "row Q, whole (H9)",
       "a pin of row Q (Q2)",
       "a residual member (Q2's src/workbench/q2-let.ts, H6)",
+      "a residual member's text (Q2's src/workbench/q2-apply.ts as a non-launch, refusal #2 G15)",
       "an S1 control (graph_data_ir, H7)",
       "an S2 control (an import-equals of gp, H8)",
       "an S3 control (a version probe with a second argument)",
+      "a rendered-view control (BETWEEN's U1 B1)",
       "a src plant past A2, B4 and the means reader (H11, H8's reading half)",
       "a test plant past S3"
+    ],
+    "Q8": [
+      "an empty comment <!--> before an HTML level-2 heading (FA1)",
+      "an empty comment <!---> before an HTML level-2 heading (FA2)",
+      "an empty comment <!--> before an HTML level-1 heading (FA5)",
+      "an empty comment in a list item (FA10)",
+      "an empty comment in a nested list item",
+      "an empty comment in a block quote in a list item",
+      "a '<!--' in a double-quoted attribute value (FA3)",
+      "a '<!--' in an attribute value, the heading on the next line (FA4)",
+      "a '<!--' in an attribute value in a list item (FA7)",
+      "a '<!--' in an attribute value in a block quote (FA8)",
+      "a '<!--' in a single-quoted attribute value",
+      "a '<!--' as an unquoted attribute value",
+      "a '<!--' in script content (FA6)",
+      "a '<!--' in style content",
+      "a '<!--' in textarea content (FA9)",
+      "a '<!--' in title content",
+      "a '<!--' in iframe content",
+      "a '<!--' in noframes content",
+      "a comment closed by '--!>'"
     ]
   },
   "tests": [
@@ -1190,6 +2615,7 @@
     "Q5: R-TEST-MENTION",
     "Q6: R-LOCAL-SCORER",
     "Q7: R-COORDINATED",
+    "Q8: R-HTML-COMMENT",
     "rule 16: the rows, the residual families, the vocabulary, the terms and the allowlist are frozen at their measured shape",
     "the outside anchors: the bead's own row binds the rows, the pin quotes, the vocabulary, the scopes, the pin, the terms and the phrases; the producer block carries the terms",
     "roster: the judged rows, the quotes, the residual members and the registered tests equal test/fixtures/mw-gp-coordination-roster.json, in order and both ways; every pin reached its witness compare"

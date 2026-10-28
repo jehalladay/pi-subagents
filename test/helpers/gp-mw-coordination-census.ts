@@ -9,7 +9,11 @@
  * rendered view and matches the record's path as a whole path. wb-5esj cut #2 (its refusal #1): an entry ends at a heading
  * of level 1 or 2 at any depth, or at a block holding an HTML <h1> or <h2> start tag (U1), and opens only on a real
  * calendar date; a launcher's or a require's callee and a version probe's argument list are read through their wrappers
- * and the comma form (F1, F2).
+ * and the comma form (F1, F2). wb-5esj cut #3 (its refusal #2, the third-cut enumerate-the-resolvable form): the comment
+ * runs the heading-tag bound removes are stated exactly as the reader reads them (COMMENTS), and the admission
+ * consequence where HTML reads a comment otherwise is the named residual R-HTML-COMMENT (Q8, its members in the census);
+ * an instantiation expression's type arguments are one more wrapper (F3), a require reached as a member and an import in
+ * a type position are read (F4), and each residual member's text is part of its quiet row's witness (F2).
  */
 import { execFileSync, spawnSync } from "node:child_process";
 import { lstatSync, readdirSync } from "node:fs";
@@ -49,7 +53,7 @@ export function namedWords(text: string): string[] {
 
 // ---- the means reader: a GraphPolicyCLI or MicroPolicyCLI import, or a launch of their binaries ----
 
-/** The child_process launchers, called bare or as a member. */
+/** The child_process launchers' names, read on a callee bare or as a member of any object (a RegExp's exec too, failing closed). */
 export const LAUNCHERS: readonly string[] = ["spawn", "spawnSync", "exec", "execSync", "execFile", "execFileSync", "fork"];
 /** The launchers whose first argument is a shell line (its program is the line's first word). */
 const SHELL_LAUNCHERS = new Set(["exec", "execSync"]);
@@ -101,14 +105,23 @@ export interface Means {
 const isCommaExpression = (node: ts.Expression): node is ts.BinaryExpression => ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.CommaToken;
 
 /**
- * An expression read through its wrappers: parentheses, the as, satisfies, angle-bracket and non-null assertions, and a
- * comma expression's last operand, none of which changes the value (wb-5esj F2: "gp" as const, ("gp"), "gp" as string and
- * "gp" satisfies string are "gp"; cut #2, refusal #1 F1: (spawn), spawn!, (cp.spawn as typeof cp.spawn) and the comma
- * form (0, cp.spawn) of a CommonJS emit are the launcher they wrap).
+ * An expression read through its wrappers: parentheses, the as, satisfies, angle-bracket and non-null assertions, an
+ * instantiation expression's type arguments, and a comma expression's last operand, none of which changes the value
+ * (wb-5esj F2: "gp" as const, ("gp"), "gp" as string and "gp" satisfies string are "gp"; cut #2, refusal #1 F1: (spawn),
+ * spawn!, (cp.spawn as typeof cp.spawn) and the comma form (0, cp.spawn) of a CommonJS emit are the launcher they wrap;
+ * cut #3, refusal #2 F3: (spawn<string>) is spawn).
  */
 function unwrapped(node: ts.Expression): ts.Expression {
   let current = node;
-  while (ts.isParenthesizedExpression(current) || ts.isAsExpression(current) || ts.isSatisfiesExpression(current) || ts.isTypeAssertionExpression(current) || ts.isNonNullExpression(current) || isCommaExpression(current)) {
+  while (
+    ts.isParenthesizedExpression(current) ||
+    ts.isAsExpression(current) ||
+    ts.isSatisfiesExpression(current) ||
+    ts.isTypeAssertionExpression(current) ||
+    ts.isNonNullExpression(current) ||
+    ts.isExpressionWithTypeArguments(current) ||
+    isCommaExpression(current)
+  ) {
     current = isCommaExpression(current) ? current.right : current.expression;
   }
   return current;
@@ -145,7 +158,11 @@ function stringConsts(source: ts.SourceFile): Map<string, string> {
 const isGpSpecifier = (specifier: string): boolean => BARE_SPECIFIER.test(specifier) || namedWords(specifier).length > 0;
 const isGpProgram = (launcher: string, argument: string): boolean => PROGRAMS.includes(programOf(launcher, argument)) || namedWords(argument).length > 0;
 
-/** The GP means a source file carries, in source order: imports of a GP or MP package and launches of gp or mp. */
+/**
+ * The GP means a source file carries, in source order: imports of a GP or MP package (an import, an export-from, an
+ * import-equals, a require called bare or as a member such as module.require, an import() call, or an import in a type
+ * position such as typeof import("gp")) and launches of gp or mp.
+ */
 export function meansOf(path: string, text: string): Means[] {
   if (!CODE_EXTENSIONS.has(extname(path).toLowerCase())) return [];
   const source = ts.createSourceFile(path, text, ts.ScriptTarget.Latest, true, scriptKindOf(path));
@@ -158,10 +175,14 @@ export function meansOf(path: string, text: string): Means[] {
   const visit = (node: ts.Node): void => {
     if (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) specifier(node.moduleSpecifier);
     else if (ts.isImportEqualsDeclaration(node) && ts.isExternalModuleReference(node.moduleReference)) specifier(node.moduleReference.expression);
+    // wb-5esj cut #3 (refusal #2 F4, M11): an import in a type position names its package as a literal type.
+    else if (ts.isImportTypeNode(node) && ts.isLiteralTypeNode(node.argument) && ts.isStringLiteral(node.argument.literal)) specifier(node.argument.literal);
     else if (ts.isCallExpression(node)) {
-      // wb-5esj cut #2 (refusal #1 F1): the callee is read through its wrappers and the comma form too.
+      // wb-5esj cut #2 (refusal #1 F1): the callee is read through its wrappers and the comma form too; cut #3 (refusal #2
+      // F4, M3): a require called as a member (module.require) is a require.
       const callee = unwrapped(node.expression);
-      if (callee.kind === ts.SyntaxKind.ImportKeyword || (ts.isIdentifier(callee) && callee.text === "require")) specifier(node.arguments[0]);
+      const requires = (ts.isIdentifier(callee) && callee.text === "require") || (ts.isPropertyAccessExpression(callee) && callee.name.text === "require");
+      if (callee.kind === ts.SyntaxKind.ImportKeyword || requires) specifier(node.arguments[0]);
       const name = ts.isIdentifier(callee) ? callee.text : ts.isPropertyAccessExpression(callee) ? callee.name.text : "";
       if (LAUNCHERS.includes(name)) {
         const argument = argumentText(node.arguments[0], consts);
@@ -256,13 +277,24 @@ function shownInline(tokens: readonly Token[]): string {
   return out;
 }
 
-/** An HTML start tag of a level-1 or level-2 heading: <h1 or <h2, in any case, then whitespace, a slash or >. */
+/** The text of an HTML start tag of a level-1 or level-2 heading: <h1 or <h2, in any case, then whitespace, a slash or >. */
 const HEADING_TAG = /<h[12](?=[\s/>])/i;
-/** HTML comments, closed or running to the end of the text. */
+/**
+ * The comment runs (wb-5esj cut #3, refusal #2 U1, its cure (b): the reader's comment model, stated exactly): each run
+ * starts at a '<!--' and ends with the first '-->' wholly after those four characters, or at the end of the raw text when
+ * none follows. The text is read as text: a '<!--' starts a run wherever it stands (in an attribute value, in script,
+ * style, textarea, title, iframe or noframes content), '<!-->' and '<!--->' start runs too (their dashes never close
+ * them), and '--!>' closes nothing. Where HTML reads that '<!--' otherwise (as no comment's start, or a comment it closes
+ * sooner), a run can hide a heading tag a browser reads as a heading: the residual R-HTML-COMMENT (Q8).
+ */
 const COMMENTS = /<!--[\s\S]*?(?:-->|$)/g;
-/** Whether raw HTML holds a level-1 or level-2 heading start tag outside its comments. */
+/**
+ * Whether one raw HTML text (an HTML block token's raw text, or one inline HTML token's) holds the text of a level-1 or
+ * level-2 heading start tag once its comment runs are removed; the text is read as text, so it counts inside an attribute
+ * value, a declaration, a processing instruction, CDATA or an element a browser hides too (each fails closed).
+ */
 const holdsHeadingTag = (html: string): boolean => HEADING_TAG.test(html.replace(COMMENTS, ""));
-/** Whether inline tokens hold, at any depth, inline HTML with a level-1 or level-2 heading start tag outside its comments. */
+/** Whether inline tokens hold, at any depth, an inline HTML token whose raw text holds a heading start tag (holdsHeadingTag). */
 const inlineHoldsHeadingTag = (tokens: readonly Token[]): boolean => tokens.some(token => (token.type === "html" && holdsHeadingTag(token.raw)) || inlineHoldsHeadingTag(tokenChildren(token)));
 
 /**
@@ -287,8 +319,10 @@ type ViewStep = { readonly kind: "line"; readonly text: string } | { readonly ki
 /**
  * The rendered view's steps over block tokens (wb-5esj cut #2, refusal #1 U1: a bound at any depth). Code (fenced, an
  * unclosed fence or indented), blank space, a thematic break and a link reference definition show nothing. An HTML block
- * shows nothing, whole (text after a comment's close on its last line too), and is a bound when it holds a level-1 or
- * level-2 heading start tag outside its comments. A block quote and a list item show their blocks, at any nesting. A
+ * shows nothing, whole (text after a comment's close on its last line too), and is a bound when its raw text holds a
+ * level-1 or level-2 heading start tag once its comment runs are removed (holdsHeadingTag; cut #3: COMMENTS states the
+ * runs); no HTML state it leaves open (a comment, an element's raw text, an attribute quote) reaches the blocks after it.
+ * A block quote and a list item show their blocks, at any nesting. A
  * table row is one line, its cells joined by ' | '. A heading of level 1 or 2 is a bound at any depth, ATX or setext,
  * top-level or nested; only a top-level one holding no heading tag can open an entry (openingDate). Any other block
  * holding an inline heading tag is a bound before it, so none of its text joins the entry it ends; a block's shown text
@@ -540,6 +574,7 @@ export const QUOTES: Readonly<Record<string, string>> = {
   Q5: "R-TEST-MENTION",
   Q6: "R-LOCAL-SCORER",
   Q7: "R-COORDINATED",
+  Q8: "R-HTML-COMMENT",
 };
 
 export const ROWS: readonly Row[] = [
@@ -551,13 +586,14 @@ export const ROWS: readonly Row[] = [
   },
   { id: "C", label: "a canary without a recorded rollback path is refused by the same census", pins: ["C1"] },
   { id: "S", label: "one census pins zero GraphPolicy/GraphDataIR/mw.training-export references in src and test", pins: ["S1", "S2", "S3"] },
-  { id: "Q", label: "the named residual families, each member a pinned quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7"] },
+  { id: "Q", label: "the named residual families, each member a pinned quiet row", pins: ["Q1", "Q2", "Q3", "Q4", "Q5", "Q6", "Q7", "Q8"] },
 ];
 
 /**
  * The named residual families: what no reading here claims, each member a quiet row (the reader reports nothing for it).
  * R-COORDINATED (Q7), whose members are hollows of the judged set rather than texts, lives beside the outside anchors in the
- * census file.
+ * census file, and R-HTML-COMMENT (Q8, wb-5esj cut #3), whose members are receipt blocks, beside the rendered view's
+ * controls there.
  */
 export const RESIDUALS: Readonly<Record<string, readonly { readonly leg: Leg; readonly path: string; readonly text: string }[]>> = {
   // A vocabulary word built at run time, spelled through an escape, or split by a separator outside space, tab, dot,
@@ -583,20 +619,29 @@ export const RESIDUALS: Readonly<Record<string, readonly { readonly leg: Leg; re
     { leg: "src", path: "src/workbench/q2-bind.ts", text: 'import * as cp from "node:child_process";\ncp.spawn.bind(undefined)("gp", ["sample"]);\n' },
     { leg: "src", path: "src/workbench/q2-reflect.ts", text: 'import * as cp from "node:child_process";\nReflect.apply(cp.spawn, undefined, ["gp", ["sample"]]);\n' },
   ],
-  // gp anywhere but a shell line's bare first word: a later command, an env prefix, a quoted or grouped program word, or
-  // an argument of another program.
+  // gp anywhere but a shell line's bare first word: a later command, an env prefix, a quoted or grouped program word, an
+  // argument of another program, or (wb-5esj cut #3, refusal #2 F4's M2) a file-form launcher's argument its shell option
+  // runs as a line (the file form reads the whole argument as the program).
   Q3: [
     { leg: "src", path: "src/workbench/q3-env.ts", text: 'import { execSync } from "node:child_process";\nexecSync("env A=1 gp sample");\n' },
     { leg: "src", path: "src/workbench/q3-chain.ts", text: 'import { execSync } from "node:child_process";\nexecSync("cd /tmp && gp sample");\n' },
     { leg: "src", path: "src/workbench/q3-npx.ts", text: 'import { spawn } from "node:child_process";\nspawn("npx", ["gp", "sample"]);\n' },
     { leg: "src", path: "src/workbench/q3-quoted.ts", text: 'import { execSync } from "node:child_process";\nexecSync("\'gp\' sample");\n' },
     { leg: "src", path: "src/workbench/q3-group.ts", text: 'import { execSync } from "node:child_process";\nexecSync("(gp sample)");\n' },
+    { leg: "src", path: "src/workbench/q3-shell-option.ts", text: 'import { spawn } from "node:child_process";\nspawn("gp sample", { shell: true });\n' },
   ],
-  // A launch or a load outside node:child_process's seven launchers and the five import forms.
+  // A launch or a load the means reader does not read: outside node:child_process's seven launchers and the import forms
+  // it reads (a worker, another process library), a loader bound to a name (createRequire's, or require itself aliased),
+  // a require reached through .call or an element access, or a load whose specifier is no literal (a const; wb-5esj cut
+  // #3 adds the last four).
   Q4: [
     { leg: "src", path: "src/workbench/q4-worker.ts", text: 'import { Worker } from "node:worker_threads";\nnew Worker("./gp.js");\n' },
     { leg: "src", path: "src/workbench/q4-execa.ts", text: 'declare const execa: (file: string, args: string[]) => void;\nexeca("gp", ["sample"]);\n' },
     { leg: "test", path: "test/q4-loader.test.ts", text: 'import { createRequire } from "node:module";\nconst load = createRequire(import.meta.url);\nload("graph-policy-cli");\n' },
+    { leg: "src", path: "src/workbench/q4-require-alias.ts", text: 'const load = require;\nexport const gp: unknown = load("gp");\n' },
+    { leg: "src", path: "src/workbench/q4-require-call.ts", text: 'export const gp: unknown = require.call(undefined, "gp");\n' },
+    { leg: "src", path: "src/workbench/q4-require-element.ts", text: 'export const gp: unknown = module["require"]("gp");\n' },
+    { leg: "src", path: "src/workbench/q4-const-specifier.ts", text: 'const SPEC = "gp";\nexport const gp: unknown = require(SPEC);\n' },
   ],
   // A test file naming the vocabulary as text or as a name, importing and launching nothing of GP.
   Q5: [
