@@ -52,12 +52,17 @@
         },
         {
           "id": "T4",
-          "title": "T4 before those cases exist (freeze-and-flip): the observer suite the owed cases land in spells no epistemic word, so this census stands in its frozen form",
+          "title": "T4 before those cases exist (freeze-and-flip): the code of the observer suite the owed cases land in, read parse-aware (case titles, identifiers, strings; never a comment), spells no epistemic word, so this census stands in its frozen form",
           "quote": "before those cases exist (freeze-and-flip)",
           "witness": {
             "suite": "test/workbench-reactivefiber-observer.test.ts",
             "observerSuite": true,
-            "epistemicMentions": 0
+            "epistemicCode": [],
+            "controls": {
+              "comment": 0,
+              "title": 1,
+              "body": 1
+            }
           }
         }
       ]
@@ -216,6 +221,16 @@
             "snippetHits": 0,
             "srcSpellsHypothesis": true
           }
+        },
+        {
+          "id": "Q5",
+          "title": "Q5 R-SCENARIO-CASE: an owed uncertified-scenario case that never spells epistemic reads quiet on T4, whose reader takes the epistemic word only",
+          "quote": null,
+          "witness": {
+            "plant": "an uncertified scenario status projects partial",
+            "t4": 0,
+            "planted": 1
+          }
         }
       ]
     }
@@ -269,20 +284,24 @@
     },
     "Q4": {
       "src": 1
+    },
+    "Q5": {
+      "suite": 1
     }
   },
   "residuals": {
     "R-NESTED": "Q1",
     "R-VALUE": "Q2",
     "R-VOCABULARY": "Q3",
-    "R-SHARED-WORD": "Q4"
+    "R-SHARED-WORD": "Q4",
+    "R-SCENARIO-CASE": "Q5"
   },
   "tests": [
     "the judged set: the frozen shape, the out-of-file roster and the cases agree",
     "T1 reads the SCG-R11 fixture roster: test/fixtures/rf-result-keys.json parses through readRfResultRoster as the captured, exhaustive roster, each key list at its floor",
     "T2 fails when a captured envelope names epistemic_status (ARMED): no key of the roster's four lists spells an epistemic form, and the roster diff reds a result-level one",
     "T3 or a scenario key (ARMED): no roster key spells scenario, uncertified or speculative or is the shipped notice key, and the roster diff reds a result-level one",
-    "T4 before those cases exist (freeze-and-flip): the observer suite the owed cases land in spells no epistemic word, so this census stands in its frozen form",
+    "T4 before those cases exist (freeze-and-flip): the code of the observer suite the owed cases land in, read parse-aware (case titles, identifiers, strings; never a comment), spells no epistemic word, so this census stands in its frozen form",
     "D1 docs/workbench/09 § Reader adapters gains one census-bound sentence: it renders there exactly once and the docs09 census binds it as half RA6/f",
     "D2 that an RF prediction renders as unverified context: the sentence opens with the owner's words verbatim",
     "D3 (fold into wb-973.17 if it lands first): wb-973.17 landed first, and the sentence closes the RF bullet that carries its clauses",
@@ -293,6 +312,7 @@
     "Q2 R-VALUE: an uncertified word carried as the value of a roster key passes the roster diff unseen",
     "Q3 R-VOCABULARY: a key outside the vocabulary that carries the same meaning (belief_state, what_if_view) reads quiet on T2 and T3",
     "Q4 R-SHARED-WORD: Z1 does not take hypothesis, which src code spells for Pi's own relation kind",
+    "Q5 R-SCENARIO-CASE: an owed uncertified-scenario case that never spells epistemic reads quiet on T4, whose reader takes the epistemic word only",
     "the record: every registered test is in run mode and ran, and every pin reached its seams as the roster pins"
   ]
 }

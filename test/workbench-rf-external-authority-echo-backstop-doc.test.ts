@@ -6,18 +6,31 @@
  * argument and reads only FINISHED and ENDED; the header at :96-102 and the backstop comment at :1448-1455 describe it
  * correctly." Its cure: "reword the clause at :1369 to name FINISHED and ENDED".
  *
+ * wb-2cv7 (R694 follow-up of wb-sagm landing 588, F1 LOW LEADS): this file claimed more than it measured. The first case's title
+ * said the clause names "no hook argument" and this header said it must "name nothing vitest hands a file-level hook (a suite or a
+ * task)", but the check held the two words suite and task, so the gate's probe G2 (the clause "the backstop below takes no argument
+ * and reads FINISHED, ENDED and the file vitest hands a file-level hook.") kept the file green 3/3. Both cures the gate named
+ * apply: file joins the words the check holds, with a liveness plant that names it (G2 itself), and the title and this header name
+ * the words the check holds and no more.
+ *
  * The reading is the census's own TypeScript AST, never a copy of its text. The backstop is the census's one file-scope
  * afterAll call; what it takes is its callback's declared parameter list; what it reads is the set of the census's file-scope
  * run-time records (a const bound to an empty array literal, which the cases push into) that its callback names. The clause is
  * the one clause (split at each sentence end and semicolon) of the census suite's doc comment - the last JSDoc block before the
  * census's one file-scope describe call - that names the backstop. The clause must name every record the backstop reads and,
- * while the backstop takes no argument, name nothing vitest hands a file-level hook (a suite or a task). Two liveness controls
- * plant over the census's own bytes, at offsets its AST gives: the landed clause, which must read red here, and a parameter on
- * the backstop's parameter list, which the reading must see (so the reading of what the backstop takes is not fixed at none).
+ * while the backstop takes no argument, none of the three words HOOK_ARGUMENT_WORDS holds for what vitest hands a file-level hook:
+ * file, suite and task. Four liveness controls plant over the census's own bytes, at offsets its AST gives: the landed clause,
+ * which must read red here on both records and on file and task; G2, which names both records and must read red on file alone; a
+ * clause that names both records and the suite, which must read red on suite alone (so each word the check holds is live); and a
+ * parameter on the backstop's parameter list, which the reading must see (so the reading of what the backstop takes is not fixed
+ * at none).
  *
  * NOT CLAIMED: the census header's backstop sentences (:96-102) and the comment over the backstop (:1448-1455), which the gate
  * read as correct and this file does not read; what the clause says about anything but the backstop's reads; the clause's
- * grammar (a negated or conditional mention of a record reads as naming it); a record the backstop reaches only through a call.
+ * grammar (a negated or conditional mention of a record reads as naming it); a record the backstop reaches only through a call;
+ * any word for what vitest hands a file-level hook but the three the check holds (vitest 4 also hands an afterAll its fixture
+ * context, and a clause naming that context reads green); and, the other way, the three words in any sense read as naming it (a
+ * file-level backstop, the census suite), an over-refusal.
  */
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -33,8 +46,15 @@ const LANDED_SUITE_DOC = [
   "/** The census suite: the rows, each pin's case. Its collector is held in no binding (wb-wf9m: the census tier's judge refuses a",
   " * describe's collector that escapes into a declaration); the backstop below reads the file task vitest hands a file-level hook. */",
 ].join("\n");
-/** What vitest hands a file-level hook, by the words a clause would name it with; a backstop that takes no argument reads neither. */
-const HOOK_ARGUMENT_WORDS: readonly string[] = ["suite", "task"];
+/** The backstop clause inside LANDED_SUITE_DOC; a plant below swaps it for a clause of its own. */
+const LANDED_CLAUSE = "the backstop below reads the file task vitest hands a file-level hook.";
+/** wb-2cv7: the wb-sagm gate's probe G2, verbatim - a clause that names both records and the file vitest hands a file-level hook. */
+const FILE_CLAUSE = "the backstop below takes no argument and reads FINISHED, ENDED and the file vitest hands a file-level hook.";
+/** wb-2cv7: a clause that names both records and the suite vitest hands the hook, and no other word the check holds. */
+const SUITE_CLAUSE = "the backstop below takes no argument and reads FINISHED, ENDED and the suite vitest hands the hook.";
+/** The words the check holds for what vitest hands a file-level hook (the file's root suite, a File task), sorted; a backstop that
+ * takes no argument reads none of them. */
+const HOOK_ARGUMENT_WORDS: readonly string[] = ["file", "suite", "task"];
 
 interface BackstopReading {
   /** The backstop callback's declared parameters, as written. */
@@ -152,8 +172,14 @@ function judgeClause(reading: BackstopReading): ClauseJudgement {
 
 const censusText = (): string => readFileSync(join(ROOT, CENSUS), "utf8");
 
+/** The census text with its suite doc comment swapped for the landed one whose backstop clause reads `clause` instead. */
+function withSuiteClause(text: string, clause: string): string {
+  const [start, end] = readBackstop(text).doc;
+  return `${text.slice(0, start)}${LANDED_SUITE_DOC.replace(LANDED_CLAUSE, clause)}${text.slice(end)}`;
+}
+
 describe("wb-sagm: the rf external-authority echo census's suite doc comment says what its backstop reads", () => {
-  it("the backstop takes no argument and reads FINISHED and ENDED, and the suite doc comment's backstop clause names both and no hook argument", () => {
+  it("the backstop takes no argument and reads FINISHED and ENDED, and the suite doc comment's backstop clause names both and none of the words file, suite and task", () => {
     const reading = readBackstop(censusText());
     expect({ parameters: reading.parameters, records: reading.records }).toStrictEqual({ parameters: [], records: ["ENDED", "FINISHED"] });
     expect(judgeClause(reading), `the clause: ${reading.clause}`).toStrictEqual({ unnamed: [], hookWords: [] });
@@ -166,7 +192,19 @@ describe("wb-sagm: the rf external-authority echo census's suite doc comment say
     const planted = readBackstop(`${text.slice(0, start)}${LANDED_SUITE_DOC}${text.slice(end)}`);
     expect({ parameters: planted.parameters, records: planted.records }).toStrictEqual({ parameters: reading.parameters, records: reading.records });
     expect(planted.clause).toBe("the backstop below reads the file task vitest hands a file-level hook.");
-    expect(judgeClause(planted)).toStrictEqual({ unnamed: ["ENDED", "FINISHED"], hookWords: ["task"] });
+    expect(judgeClause(planted)).toStrictEqual({ unnamed: ["ENDED", "FINISHED"], hookWords: ["file", "task"] });
+  });
+
+  it("liveness: the wb-sagm gate's probe G2 planted over the census's own bytes reads red on the word file alone - it names both records and the file vitest hands a file-level hook", () => {
+    const planted = readBackstop(withSuiteClause(censusText(), FILE_CLAUSE));
+    expect(planted.clause).toBe(FILE_CLAUSE);
+    expect(judgeClause(planted)).toStrictEqual({ unnamed: [], hookWords: ["file"] });
+  });
+
+  it("liveness: a clause that names both records and the suite vitest hands the hook, planted over the census's own bytes, reads red on the word suite alone", () => {
+    const planted = readBackstop(withSuiteClause(censusText(), SUITE_CLAUSE));
+    expect(planted.clause).toBe(SUITE_CLAUSE);
+    expect(judgeClause(planted)).toStrictEqual({ unnamed: [], hookWords: ["suite"] });
   });
 
   it("liveness: a parameter planted on the backstop's parameter list is read as one, and the backstop's records are unchanged", () => {

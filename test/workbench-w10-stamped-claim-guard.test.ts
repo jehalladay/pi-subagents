@@ -117,7 +117,9 @@
  * TSX-ERA RECEIPT ROW (wb-693.7, RF-TSX-AND-EMBEDDING-R9: "one gated run of the R8 tier shall produce a recorded TSX-era
  * receipt: a success row ... and a runtime-absent row ..., landing as a NEW TRACEABILITY row with the feature-matrix W10 row
  * re-graded"; TRACEABILITY.md is frozen, so the receipt is receipts/wb-693.7.md under standing rule 13): exactly one rendered
- * Evidence sentence reads as beginning with TSX_KEY, and it EQUALS tsxSentence() with the slots TSX_SHAPE reads back, bound
+ * Evidence sentence reads as beginning with TSX_KEY, and it EQUALS tsxSentence() with the slots TSX_SHAPE reads back (its two
+ * engine slots, the pinned Deno and tsx_runtime distribution_version, read one release: a split is named on its own beside
+ * the slice check, wb-ojur, so the equality is falsified apart from it), bound
  * to the receipt it names: receipts/<bead>.md exists; the newest entry carrying RF-TSX-RECEIPT {json} lines (the lines the
  * R8 tier, test/workbench-native-rf-tsx-preview.test.ts, writes to stdout) carries exactly one success row and one
  * runtime-absent row and no other row; the success row's cli_version, tsx_worker_spawns (a count of at least 1) and
@@ -130,7 +132,22 @@
  * TSX residuals (named, each pinned by an accepted residual pin): an older entry's RF-TSX-RECEIPT lines are never judged
  * (T10, the newest-entry reading); the tier's unprinted assertions (ephemeral, render_id, storage_write_count) are judged by
  * the tier itself, so the receipt's prose restating them is never read (T11).
- * Spawns nothing; writes nothing; reads two docs files, the receipts directory and the R8 tier file, and imports the carrier.
+ * TSX STRUCTURE (wb-ojur, the wb-693.7 gate's F1: 11 of 23 judge mutants survived because no pin falsified the judge's
+ * structural arms): T7 gains a stray and a doubled heading clause, T9 an engine split, a reworded slice and a look-alike copy
+ * of the sentence, and TS1-TS7 refuse the arms no field, record or page site draws: the Evidence cell unreadable, the receipt
+ * missing, raw HTML in it, no RF-TSX-RECEIPT line, a line that is not one JSON object, a row outside the R9 pair, a pair row
+ * twice. T-ARMS anchors them outside the tables, in the judge's own code: it reads every diagnosis judgeTsxRow can emit with
+ * the TypeScript parser (through every function it calls, never the shared W10 view), and requires every finding of every
+ * refused pin to read as exactly one arm (or as a finding of the shared W10 view), every arm to be drawn, and the TS rows to
+ * be exactly the arms no T row draws, in the judge's order; TS-SHAPE freezes the TS rows (standing rule 16). T-ROSTER holds
+ * the T rows to the TSX receipt's claim of record ("rows T0 to T11"), so a T row removed from every literal of this file, a
+ * residual row included, still reds (the gate's F2: its X-CT6-T10 and X-CT6-T11 coordinated hollows).
+ * NOT CLAIMED (pin grain): T-ARMS anchors arms, not pins, so a pin removed from every literal of this file stays green while
+ * another pin draws each arm it draws: T1, T2 and T3 changed (beside emptied or zeroed), T7 removed or T7 doubled (one of the
+ * two), T8 swapped (beside T7 swapped), T9 doubled or T9 lookalike (one of the two), and T4 unknown, which draws none; every
+ * row keeps at least one pin.
+ * Spawns nothing; writes nothing; reads two docs files, the receipts directory, the R8 tier file and this file's own source
+ * (T-ARMS), and imports the carrier.
  */
 import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
@@ -966,9 +983,9 @@ function judgeTsxRow(page: string, readReceipt: ReadReceipt): string[] {
     else findings.push(...tsxRowFindings(receipt, name, row, shape.slots));
   }
   findings.push(...tsxRecordFindings(receipt, cmd, read.newest.record));
-  if (shape.engines[0] !== shape.engines[1] || sentence !== tsxSentence(shape.slots)) {
-    findings.push(`the TSX-era receipt sentence does not equal its slice (engine slots read ${shape.engines.join(", ")})`);
-  }
+  // Two arms (wb-ojur): an engine split is named on its own, so the equality is falsified apart from the slice check.
+  if (shape.engines[0] !== shape.engines[1]) findings.push(`the TSX-era receipt sentence's two engine slots read ${shape.engines.join(" and ")}, not one pinned Deno release`);
+  if (sentence !== tsxSentence(shape.slots)) findings.push(`the TSX-era receipt sentence does not equal its slice (engine slots read ${shape.engines.join(", ")})`);
   return findings;
 }
 
@@ -995,6 +1012,54 @@ function tierReceiptFields(source: string): string[] {
 function receiptTsxFields(markdown: string): string[] {
   const newest = tsxReceiptView(markdown, "receipt").newest;
   return (newest?.lines ?? []).flatMap((line) => (line === undefined ? [] : Object.keys(line).filter((key) => key !== "row").map((key) => `${String(line.row)}:${key}`)));
+}
+
+/** `text` with every regular-expression metacharacter escaped. */
+const quotedPattern = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+/** This file, whose TSX-era judge T-ARMS reads (the judge is the source of truth for which diagnoses a pin must draw). */
+const SELF = "test/workbench-w10-stamped-claim-guard.test.ts";
+/** The shared W10 view judgeTsxRow opens with: its arms are judged by the stamped-claim tables above, so T-ARMS never enters it. */
+const SHARED_VIEW = "w10View";
+/** T-ROSTER's source: the TSX receipt's claim of record naming this guard's rows (wb-693.7: "... rows T0 to T<n>)"). */
+const TSX_ROSTER_CLAUSE_ALL = new RegExp(`${quotedPattern(SELF)} pins it whole and binds it to this entry \\(TSX-ERA RECEIPT ROW, rows T0 to T([0-9]+)\\)`, "g");
+
+/** T-ARMS's source: every diagnosis the TSX-era judge can emit, read from `source` with the TypeScript parser, one anchored
+ * pattern per arm (its literal text kept, each substitution any text; a conditional names both branches), in the order a
+ * source-order walk of judgeTsxRow reaches them. The walk enters each function declaration the judge calls (never
+ * SHARED_VIEW); a function returning string[] contributes the literals it pushes and the literals of the arrays it returns. */
+function judgeArms(source: string): RegExp[] {
+  const file = ts.createSourceFile(SELF, source, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+  const declared = new Map<string, ts.FunctionDeclaration>();
+  for (const statement of file.statements) {
+    if (ts.isFunctionDeclaration(statement) && statement.name !== undefined) declared.set(statement.name.text, statement);
+  }
+  const patterns = (node: ts.Expression): string[] => {
+    if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) return [quotedPattern(node.text)];
+    if (ts.isTemplateExpression(node)) return [`${quotedPattern(node.head.text)}${node.templateSpans.map((span) => `[\\s\\S]*?${quotedPattern(span.literal.text)}`).join("")}`];
+    if (ts.isConditionalExpression(node)) return [...patterns(node.whenTrue), ...patterns(node.whenFalse)];
+    return [];
+  };
+  const arms: string[] = [];
+  const entered = new Set<string>();
+  const enter = (name: string): void => {
+    const declaration = declared.get(name);
+    if (declaration?.body === undefined || entered.has(name) || name === SHARED_VIEW) return;
+    entered.add(name);
+    const diagnoses = declaration.type?.getText(file) === "string[]";
+    const walk = (node: ts.Node): void => {
+      if (diagnoses && ts.isCallExpression(node) && ts.isPropertyAccessExpression(node.expression) && node.expression.name.text === "push") {
+        for (const argument of node.arguments) arms.push(...patterns(argument));
+      }
+      if (diagnoses && ts.isReturnStatement(node) && node.expression !== undefined && ts.isArrayLiteralExpression(node.expression)) {
+        for (const element of node.expression.elements) arms.push(...patterns(element));
+      }
+      if (ts.isCallExpression(node) && ts.isIdentifier(node.expression)) enter(node.expression.text);
+      ts.forEachChild(node, walk);
+    };
+    walk(declaration.body);
+  };
+  enter("judgeTsxRow");
+  return arms.map((pattern) => new RegExp(`^${pattern}$`));
 }
 
 /** Why the rendered receipts index fails to list `name`.md as rendered text; empty when it does. */
@@ -2176,7 +2241,29 @@ const RECORD_ROWS: readonly RecordRow[] = [
 const pinShape = (pin: RecordPin): string => (pin.reading === "refused" ? `${pin.op} refused: ${pin.causes.join(" | ")}` : `${pin.op} ${pin.reading}`);
 
 /** The ops a TSX pin re-authors its site with (tsxEdit() writes each one). */
-type TsxOp = "changed" | "emptied" | "zeroed" | "malformed" | "unknown" | "renamed" | "swapped" | "removed" | "dropped" | "doubled" | "older" | "prose";
+type TsxOp =
+  | "changed"
+  | "emptied"
+  | "zeroed"
+  | "malformed"
+  | "unknown"
+  | "renamed"
+  | "swapped"
+  | "removed"
+  | "dropped"
+  | "doubled"
+  | "older"
+  | "prose"
+  | "stray"
+  | "split"
+  | "reworded"
+  | "lookalike"
+  | "unreadable"
+  | "absent"
+  | "html"
+  | "unmarked"
+  | "foreign"
+  | "duplicated";
 /** A TSX pin: refused with each named diagnosis in order (and no other finding), or accepted: neutral by design (a value R9's shape admits) or a named residual. */
 type TsxPin = { op: TsxOp; reading: "refused"; causes: readonly [string, ...string[]] } | { op: TsxOp; reading: "neutral" | "residual" };
 /** One site the TSX-era binding reads (a field of a receipt row, a record site of the TSX entry, the page sentence) or a named residual. */
@@ -2247,6 +2334,8 @@ const TSX_ROWS: readonly TsxRow[] = [
     pins: [
       { op: "swapped", reading: "refused", causes: ['first in a "Run of record:" line', TSX_RUN_OF_RECORD] },
       { op: "removed", reading: "refused", causes: [`${TSX_ENTRY} names 0 runs of record in its heading`] },
+      { op: "stray", reading: "refused", causes: [`${TSX_ENTRY} has a heading that reads as naming a receipt of record outside its one`] },
+      { op: "doubled", reading: "refused", causes: [`${TSX_ENTRY} names 2 runs of record in its heading`] },
     ],
   },
   {
@@ -2265,6 +2354,9 @@ const TSX_ROWS: readonly TsxRow[] = [
     pins: [
       { op: "dropped", reading: "refused", causes: ["the rendered Evidence cell carries no TSX-era receipt sentence"] },
       { op: "doubled", reading: "refused", causes: ["2 rendered sentences read as a TSX-era receipt sentence, not exactly one"] },
+      { op: "split", reading: "refused", causes: ["two engine slots read 2.9.7 and 2.9.8, not one pinned Deno release", "does not equal its slice (engine slots read 2.9.7, 2.9.8)"] },
+      { op: "reworded", reading: "refused", causes: ["the TSX-era receipt sentence is not the committed TSX-era slice"] },
+      { op: "lookalike", reading: "refused", causes: ["2 rendered sentences read as a TSX-era receipt sentence, not exactly one"] },
     ],
   },
   {
@@ -2278,6 +2370,59 @@ const TSX_ROWS: readonly TsxRow[] = [
     site: "residual:prose",
     label: "the receipt's prose restating the tier's unprinted assertions",
     pins: [{ op: "prose", reading: "residual" }],
+  },
+];
+
+/** TSX STRUCTURE ROWS (wb-ojur, the wb-693.7 gate's F1): one per diagnosis arm of the TSX-era judge that no field, record or
+ * page site above draws, in T-ARMS's order (the order a source-order walk of judgeTsxRow reaches the arms). */
+const TSX_STRUCTURE_ROWS: readonly TsxRow[] = [
+  {
+    id: "TS1",
+    site: "page:evidence-cell",
+    label: "the W10 claim row's Evidence cell the sentence is read from",
+    pins: [
+      {
+        op: "unreadable",
+        reading: "refused",
+        causes: ["the W10 section holds 0 tables", "the W10 claim row is not inside the W10 section", "the W10 claim row's Evidence cell cannot be read, so no TSX-era receipt sentence is judged"],
+      },
+    ],
+  },
+  {
+    id: "TS2",
+    site: "receipt:file",
+    label: "the receipt file the sentence names",
+    pins: [{ op: "absent", reading: "refused", causes: ["the TSX-era receipt sentence cites receipts/wb-693.7.md but that receipt file does not exist"] }],
+  },
+  {
+    id: "TS3",
+    site: "receipt:html",
+    label: "raw HTML anywhere in the TSX receipt",
+    pins: [{ op: "html", reading: "refused", causes: ["receipts/wb-693.7.md holds raw HTML"] }],
+  },
+  {
+    id: "TS4",
+    site: "entry:marks",
+    label: "the RF-TSX-RECEIPT lines the receipt renders",
+    pins: [{ op: "unmarked", reading: "refused", causes: ["receipts/wb-693.7.md renders no RF-TSX-RECEIPT line"] }],
+  },
+  {
+    id: "TS5",
+    site: "entry:line-json",
+    label: "one RF-TSX-RECEIPT line's JSON object",
+    pins: [{ op: "malformed", reading: "refused", causes: ["an RF-TSX-RECEIPT line of its newest TSX entry is not one JSON object"] }],
+  },
+  {
+    id: "TS6",
+    site: "entry:row-name",
+    label: "an RF-TSX-RECEIPT row named outside the R9 pair",
+    pins: [{ op: "foreign", reading: "refused", causes: ['its newest TSX entry renders an RF-TSX-RECEIPT row named "partial", outside the R9 pair'] }],
+  },
+  {
+    id: "TS7",
+    site: "entry:row-count",
+    label: "the R9 pair's one line per row",
+    pins: [{ op: "duplicated", reading: "refused", causes: ["its newest TSX entry renders 2 success rows, not exactly one"] }],
   },
 ];
 
@@ -2320,8 +2465,20 @@ function runLineOf(receipt: string): readonly [number, number] {
   return [start + 1, stop + 1];
 }
 
-/** The edit one TSX pin makes: to the page, to the TSX receipt, or both. */
-function tsxEdit(row: TsxRow, op: TsxOp): { page?: (source: string) => string; receipt?: (receipt: string) => string } {
+/** The receipt with `added(line)` as its own line right after the one raw line carrying `row`'s RF-TSX-RECEIPT mark. */
+function afterTsxLine(row: (typeof TSX_ROW_NAMES)[number], added: (line: string) => string): (receipt: string) => string {
+  return (receipt) => {
+    const mark = `${TSX_MARK}"row":${JSON.stringify(row)}`;
+    const found = receipt.indexOf(mark);
+    const end = found < 0 ? -1 : receipt.indexOf("\n", found);
+    if (found < 0 || end < 0 || receipt.indexOf(mark, found + 1) >= 0) throw new Error(`mutant authoring: no one raw ${row} RF-TSX-RECEIPT line`);
+    const start = receipt.lastIndexOf("\n", found) + 1;
+    return `${receipt.slice(0, end + 1)}${added(receipt.slice(start, end))}\n${receipt.slice(end + 1)}`;
+  };
+}
+
+/** The edit one TSX pin makes: to the page, to the TSX receipt, or both; `absent` reads the named receipt as missing. */
+function tsxEdit(row: TsxRow, op: TsxOp): { page?: (source: string) => string; receipt?: (receipt: string) => string; absent?: true } {
   const record = TSX_SLOTS?.cmd ?? "";
   const clause = `(receipt of record ${record})`;
   switch (`${row.site}/${op}`) {
@@ -2349,6 +2506,10 @@ function tsxEdit(row: TsxRow, op: TsxOp): { page?: (source: string) => string; r
       return { receipt: (receipt) => replaceOnce(receipt, clause, `(receipt of record ${tsxDecoy(receipt, record)})`) };
     case "record:heading/removed":
       return { receipt: (receipt) => replaceOnce(receipt, ` ${clause}`, "") };
+    case "record:heading/stray":
+      return { receipt: (receipt) => replaceOnce(receipt, clause, `${clause} (Receipt Of Record ${record})`) };
+    case "record:heading/doubled":
+      return { receipt: (receipt) => replaceOnce(receipt, clause, `${clause} ${clause}`) };
     case "record:run-line/removed":
       return {
         receipt: (receipt) => {
@@ -2379,6 +2540,42 @@ function tsxEdit(row: TsxRow, op: TsxOp): { page?: (source: string) => string; r
             return [[span[1], span[1], ` ${site.page.text.slice(span[0], span[1])}`]];
           }),
       };
+    case "page:sentence/split":
+      return { page: (source) => inEvidence(source, "tsx_runtime distribution_version 2.9.7", "tsx_runtime distribution_version 2.9.8") };
+    case "page:sentence/reworded":
+      return { page: (source) => inEvidence(source, "2 of 2 rows passed", "1 of 2 rows passed") };
+    case "page:sentence/lookalike":
+      return {
+        page: (source) =>
+          editClaim(source, (site) => {
+            const { span } = sentenceOf(evidenceOf(site), TSX_MARKER);
+            return [[span[1], span[1], ` ${replaceOnce(site.page.text.slice(span[0], span[1]), "TSX-era", `TSX-${at(0x435)}ra`)}`]];
+          }),
+      };
+    case "page:evidence-cell/unreadable":
+      return { page: (source) => afterW10Heading(source, "## Retracted claims\n\n") };
+    case "receipt:file/absent":
+      return { absent: true };
+    case "receipt:html/html":
+      return {
+        receipt: (receipt) => {
+          if (!receipt.endsWith("\n")) throw new Error("mutant authoring: the TSX receipt does not end with a newline");
+          return `${receipt}\n<div hidden>\n- \`${TSX_MARK}"row":"success","cli_version":"9.9.9"}\`\n</div>\n`;
+        },
+      };
+    case "entry:marks/unmarked":
+      return {
+        receipt: (receipt) => {
+          if (!receipt.includes(TSX_MARK)) throw new Error("mutant authoring: the TSX receipt renders no RF-TSX-RECEIPT mark");
+          return receipt.replaceAll(TSX_MARK, "RF-TSX-ROW {");
+        },
+      };
+    case "entry:line-json/malformed":
+      return { receipt: afterTsxLine("runtime-absent", () => `- \`${TSX_MARK}"row":"success","cli_version":}\``) };
+    case "entry:row-name/foreign":
+      return { receipt: afterTsxLine("runtime-absent", () => `- \`${TSX_MARK}"row":"partial","category":"unavailable"}\``) };
+    case "entry:row-count/duplicated":
+      return { receipt: afterTsxLine("success", (line) => line) };
     case "residual:older-entry/older":
       return {
         receipt: (receipt) => {
@@ -2395,15 +2592,20 @@ function tsxEdit(row: TsxRow, op: TsxOp): { page?: (source: string) => string; r
   }
 }
 
-/** A TSX pin judged on the live page and receipt: refused with each named diagnosis, in order, and no other finding; or accepted. */
-function expectTsxPin(row: TsxRow, pin: TsxPin, label: string): void {
+/** One TSX pin's edit applied to the live page and receipt: the variant page, whether it edits anything, and the judge's findings. */
+function tsxPinRun(row: TsxRow, pin: TsxPin): { variant: string; edited: boolean; findings: string[] } {
   const edit = tsxEdit(row, pin.op);
   const source = readText(MATRIX);
   const variant = edit.page === undefined ? source : edit.page(source);
-  const reader = edit.receipt === undefined ? liveReceipt : readerWith(edit.receipt);
   const named = TSX_SLOTS?.receipt ?? "";
-  expect(variant !== source || reader(named) !== liveReceipt(named), `${label} edits neither the page nor the receipt`).toBe(true);
-  const findings = judgeTsxRow(variant, reader);
+  const reader: ReadReceipt = edit.absent === true ? (name) => (name === named ? undefined : liveReceipt(name)) : edit.receipt === undefined ? liveReceipt : readerWith(edit.receipt);
+  return { variant, edited: variant !== source || reader(named) !== liveReceipt(named), findings: judgeTsxRow(variant, reader) };
+}
+
+/** A TSX pin judged on the live page and receipt: refused with each named diagnosis, in order, and no other finding; or accepted. */
+function expectTsxPin(row: TsxRow, pin: TsxPin, label: string): void {
+  const { edited, findings } = tsxPinRun(row, pin);
+  expect(edited, `${label} edits neither the page nor the receipt`).toBe(true);
   if (pin.reading === "refused") {
     expect(findings, label).toHaveLength(pin.causes.length);
     for (const [index, cause] of pin.causes.entries()) expect(findings[index], label).toContain(cause);
@@ -2953,7 +3155,52 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
           ran++;
         }
       }
-      expect(ran).toBe(18);
+      expect(ran).toBe(23);
+    });
+
+    it("TS1-TS7 (wb-ojur): every structure pin is refused with each named diagnosis and no other finding", () => {
+      let ran = 0;
+      for (const row of TSX_STRUCTURE_ROWS) {
+        for (const pin of row.pins) {
+          expectTsxPin(row, pin, `${row.id} ${pin.op}`);
+          ran++;
+        }
+      }
+      expect(ran).toBe(7);
+    });
+
+    it("T-ARMS (outside anchor, the judge's own arms): every diagnosis the TSX-era judge can emit is drawn by a refused pin, each finding reads as one arm or the shared W10 view, and the TS rows are exactly the arms no T row draws, in the judge's order", () => {
+      const arms = judgeArms(readText(SELF));
+      expect(arms.length).toBeGreaterThan(0);
+      const drawnBy = (rows: readonly TsxRow[]): string[][] =>
+        rows.map((row) => {
+          const drawn = new Set<number>();
+          for (const pin of row.pins) {
+            if (pin.reading !== "refused") continue;
+            const { variant, findings } = tsxPinRun(row, pin);
+            const shared = w10View(variant).findings;
+            for (const finding of findings) {
+              const matched = arms.flatMap((arm, index) => (arm.test(finding) ? [index] : []));
+              expect(matched.length === 1 || (matched.length === 0 && shared.includes(finding)), `${row.id} ${pin.op} reads as ${matched.length} arms: ${finding}`).toBe(true);
+              for (const index of matched) drawn.add(index);
+            }
+          }
+          return [...drawn].sort((a, b) => a - b).map((index) => arms[index]?.source ?? "");
+        });
+      const fromT = new Set(drawnBy(TSX_ROWS).flat());
+      const fromTs = drawnBy(TSX_STRUCTURE_ROWS);
+      expect(fromTs).toEqual(arms.filter((arm) => !fromT.has(arm.source)).map((arm) => [arm.source]));
+      const drawn = new Set([...fromT, ...fromTs.flat()]);
+      expect(arms.filter((arm) => !drawn.has(arm.source)).map((arm) => arm.source)).toEqual([]);
+    });
+
+    it("T-ROSTER (outside anchor, the receipt's claim of record): the T rows are exactly T1 to the last row the TSX receipt names, so a row removed from every literal of this file still reds", () => {
+      const receipt = liveReceipt(TSX_SLOTS?.receipt ?? "") ?? "";
+      const named = [...rendered(new Lexer({ gfm: true }).lex(receipt), "\n").matchAll(TSX_ROSTER_CLAUSE_ALL)].map((match) => Number(match[1]));
+      expect(named, "the TSX receipt names this guard's rows exactly once").toHaveLength(1);
+      const last = named[0] ?? 0;
+      expect(last).toBeGreaterThan(0);
+      expect(TSX_ROWS.map((row) => row.id)).toEqual(Array.from({ length: last }, (_, index) => `T${index + 1}`));
     });
 
     it("T-ANCHOR (outside anchor): the refused TSX sites are exactly the fields the live receipt renders and the R8 tier prints, the TSX entry's record sites and the live page's one TSX-era sentence", () => {
@@ -2971,6 +3218,7 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
     it("U3 (EACH-LIVENESS) and TSX-SHAPE (standing rule 16 frozen shape): the TSX table holds exactly its named rows, each with its frozen site, label and pins", () => {
       expect(TSX_ROWS).toHaveLength(11);
       expect(TSX_ROWS.map((row) => row.id)).toEqual(["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11"]);
+      expect(TSX_ROWS.filter((row) => row.pins.length === 0).map((row) => row.id), "every TSX row keeps at least one pin").toEqual([]);
       expect(TSX_ROWS.map((row) => `${row.id} ${row.site} | ${row.label}: ${row.pins.map(tsxPinShape).join("; ")}`)).toEqual([
         'T1 success:cli_version | the success row\'s captured cli_version: changed refused: success row cli_version "0.1.846", not the sentence\'s 0.1.845; emptied refused: success row cli_version "" is not a non-empty string | success row cli_version "", not the sentence\'s 0.1.845',
         "T2 success:tsx_worker_spawns | the success row's TSX worker spawn count: zeroed refused: success row tsx_worker_spawns 0 is not a count of at least 1 | success row tsx_worker_spawns 0, not the sentence's 1; changed refused: success row tsx_worker_spawns 2, not the sentence's 1",
@@ -2978,9 +3226,9 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
         "T4 success:contract_fingerprint | the success row's tsx_runtime contract_fingerprint: malformed refused: does not have the tier's fingerprint shape; unknown neutral",
         'T5 runtime-absent:category | the runtime-absent row\'s refusal category: changed refused: runtime-absent row category "transport", not "unavailable"',
         "T6 runtime-absent:message | the runtime-absent row's refusal message: renamed refused: does not contain RF_COMPONENT_RUNTIME_ABSENT",
-        'T7 record:heading | the TSX entry heading\'s one (receipt of record cmd_*) clause: swapped refused: first in a "Run of record:" line | the run of record of the receipt entry carrying the newest RF-TSX-RECEIPT lines; removed refused: the entry carrying the newest RF-TSX-RECEIPT lines names 0 runs of record in its heading',
+        'T7 record:heading | the TSX entry heading\'s one (receipt of record cmd_*) clause: swapped refused: first in a "Run of record:" line | the run of record of the receipt entry carrying the newest RF-TSX-RECEIPT lines; removed refused: the entry carrying the newest RF-TSX-RECEIPT lines names 0 runs of record in its heading; stray refused: the entry carrying the newest RF-TSX-RECEIPT lines has a heading that reads as naming a receipt of record outside its one; doubled refused: the entry carrying the newest RF-TSX-RECEIPT lines names 2 runs of record in its heading',
         'T8 record:run-line | the TSX entry\'s Run of record line: removed refused: the entry carrying the newest RF-TSX-RECEIPT lines renders no "Run of record:" line; swapped refused: first in a "Run of record:" line',
-        "T9 page:sentence | the W10 claim row's TSX-era receipt sentence: dropped refused: the rendered Evidence cell carries no TSX-era receipt sentence; doubled refused: 2 rendered sentences read as a TSX-era receipt sentence, not exactly one",
+        "T9 page:sentence | the W10 claim row's TSX-era receipt sentence: dropped refused: the rendered Evidence cell carries no TSX-era receipt sentence; doubled refused: 2 rendered sentences read as a TSX-era receipt sentence, not exactly one; split refused: two engine slots read 2.9.7 and 2.9.8, not one pinned Deno release | does not equal its slice (engine slots read 2.9.7, 2.9.8); reworded refused: the TSX-era receipt sentence is not the committed TSX-era slice; lookalike refused: 2 rendered sentences read as a TSX-era receipt sentence, not exactly one",
         "T10 residual:older-entry | an older receipt entry's RF-TSX-RECEIPT lines (the newest-entry reading): older residual",
         "T11 residual:prose | the receipt's prose restating the tier's unprinted assertions: prose residual",
       ]);
@@ -2993,6 +3241,26 @@ describe("W10 stamped-release claim guard (wb-2j3.5, R6), read as the page rende
         "/^sha256:[0-9a-f]{64}$|^unknown$/",
         "success",
         "runtime-absent",
+      ]);
+    });
+
+    it("U3 (EACH-LIVENESS) and TS-SHAPE (standing rule 16 frozen shape): the structure table holds exactly its named rows, each with its frozen site, label and pins, and the T-ARMS and T-ROSTER constants are their frozen literal", () => {
+      expect(TSX_STRUCTURE_ROWS).toHaveLength(7);
+      expect(TSX_STRUCTURE_ROWS.map((row) => row.id)).toEqual(["TS1", "TS2", "TS3", "TS4", "TS5", "TS6", "TS7"]);
+      expect(TSX_STRUCTURE_ROWS.filter((row) => row.pins.length === 0).map((row) => row.id), "every structure row keeps at least one pin").toEqual([]);
+      expect(TSX_STRUCTURE_ROWS.map((row) => `${row.id} ${row.site} | ${row.label}: ${row.pins.map(tsxPinShape).join("; ")}`)).toEqual([
+        "TS1 page:evidence-cell | the W10 claim row's Evidence cell the sentence is read from: unreadable refused: the W10 section holds 0 tables | the W10 claim row is not inside the W10 section | the W10 claim row's Evidence cell cannot be read, so no TSX-era receipt sentence is judged",
+        "TS2 receipt:file | the receipt file the sentence names: absent refused: the TSX-era receipt sentence cites receipts/wb-693.7.md but that receipt file does not exist",
+        "TS3 receipt:html | raw HTML anywhere in the TSX receipt: html refused: receipts/wb-693.7.md holds raw HTML",
+        "TS4 entry:marks | the RF-TSX-RECEIPT lines the receipt renders: unmarked refused: receipts/wb-693.7.md renders no RF-TSX-RECEIPT line",
+        "TS5 entry:line-json | one RF-TSX-RECEIPT line's JSON object: malformed refused: an RF-TSX-RECEIPT line of its newest TSX entry is not one JSON object",
+        'TS6 entry:row-name | an RF-TSX-RECEIPT row named outside the R9 pair: foreign refused: its newest TSX entry renders an RF-TSX-RECEIPT row named "partial", outside the R9 pair',
+        "TS7 entry:row-count | the R9 pair's one line per row: duplicated refused: its newest TSX entry renders 2 success rows, not exactly one",
+      ]);
+      expect([SELF, SHARED_VIEW, TSX_ROSTER_CLAUSE_ALL.source]).toEqual([
+        "test/workbench-w10-stamped-claim-guard.test.ts",
+        "w10View",
+        "test\\/workbench-w10-stamped-claim-guard\\.test\\.ts pins it whole and binds it to this entry \\(TSX-ERA RECEIPT ROW, rows T0 to T([0-9]+)\\)",
       ]);
     });
   });

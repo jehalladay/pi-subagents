@@ -105,6 +105,10 @@ export const ANNOTATED: ReadonlyArray<readonly [string, string, readonly (readon
   ["a comment after a property's colon", 'const tool = {\n  command: // gp-decision-point: DP-05\n    "gp",\n};', [["DP-05"]]],
   ["a comment after else, above the branch that holds the literal", 'if (x) prepare();\nelse // gp-decision-point: DP-01\n  spawn("gp", []);', [["DP-01"]]],
   ["a marker after // on a JSDoc tag line, credited once (a JSDoc block is read whole, never entered)", '/**\n * @type {string} // gp-decision-point: DP-01\n */\nconst bin = "gp";', [["DP-01"]]],
+  // wb-2xd5 (wb-lx6m gate F2): the gate's G-C14 verbatim. Its marker stands before the blockless body that holds the
+  // literal, the shape of that gate's D05 control (a marker after else, before the branch that holds the literal), so
+  // the credit is the attachment rule's intent and the row is pinned here, not in MISATTRIBUTED.
+  ["a comment after a labeled for statement's header, before the blockless body that holds the literal (wb-2xd5, wb-lx6m gate G-C14)", 'label: for (;;) /* gp-decision-point: DP-01 */ spawn("gp", []);', [["DP-01"]]],
 ];
 
 export const UNANNOTATED: readonly Quiet[] = [
@@ -126,21 +130,51 @@ export const UNANNOTATED: readonly Quiet[] = [
   // statement annotates that list's own members, as one inside a nested block or object literal does.
   ["a marker inside a nested type literal of a preceding argument (wb-lx6m)", 'run(x as { /* gp-decision-point: DP-01 */ a: T }, "gp");'],
   ["a marker inside a nested class expression's body in a preceding argument (wb-lx6m)", 'run(class { /* gp-decision-point: DP-01 */ }, "gp");'],
+  // wb-2xd5 (wb-lx6m gate F1): the boundary at the rest of the member holders the judge declares (holdsMembers). A
+  // nested holder's span starts at its first token, so a nested class expression is excluded whole, its head included
+  // (gate G-B01, G-B02, G-B03, G-B07); a case or a default clause of the switch that holds the literal is a holder
+  // (G-B04, G-B06); so are a nested object literal (G-A02) and a module block. Then the unit at a holder's child: a marker
+  // above the enclosing declaration or clause does not reach a heritage clause, a case label, or an interface or enum
+  // member that holds the literal (so a judge that drops interface or enum from the holders reds UNANNOTATED-25 or -26).
+  ["a marker after the class keyword of a nested class expression in a preceding argument: a class-like holder's span starts at its first token, so its head lies inside it (wb-2xd5, wb-lx6m gate G-B01)", 'run(class /* gp-decision-point: DP-01 */ {}, "gp");'],
+  ["a marker inside a nested class expression's heritage clause in a preceding argument (wb-2xd5, wb-lx6m gate G-B02)", 'run(class extends /* gp-decision-point: DP-01 */ Base {}, "gp");'],
+  ["a marker after a nested class expression's name in a preceding argument (wb-2xd5, wb-lx6m gate G-B03)", 'run(class Named /* gp-decision-point: DP-01 */ {}, "gp");'],
+  ["a marker inside a nested class expression's type parameter list in a preceding argument (wb-2xd5, wb-lx6m gate G-B07)", 'run(class</* gp-decision-point: DP-01 */ T> {}, "gp");'],
+  ["a marker inside a case clause of the switch statement whose discriminant holds the literal: a case clause holds members (wb-2xd5, wb-lx6m gate G-B04)", 'switch (spawn("gp", [])) { case 1: /* gp-decision-point: DP-01 */ break; }'],
+  ["a marker inside a default clause of the switch statement whose discriminant holds the literal: a default clause holds members (wb-2xd5, wb-lx6m gate G-B06)", 'switch (spawn("gp", [])) { default: /* gp-decision-point: DP-01 */ break; }'],
+  ["a marker inside a nested object literal in a preceding argument (wb-2xd5, wb-lx6m gate G-A02)", 'run({ /* gp-decision-point: DP-01 */ a: 1 }, "gp");'],
+  ["a marker inside the module block of an ambient module declaration that the literal names, on the literal's line: a module block holds members (wb-2xd5)", 'declare module "gp" { /* gp-decision-point: DP-01 */ }'],
+  ["a marker above a class declaration whose heritage clause holds the literal: the unit is the heritage clause, not the class (wb-2xd5)", '// gp-decision-point: DP-01\nclass A extends mixin("gp") {}'],
+  ["a marker above a case clause whose label is the literal: the unit is the label, not the case clause (wb-2xd5)", 'switch (x) {\n  // gp-decision-point: DP-01\n  case "gp":\n    break;\n}'],
+  ["a marker above an interface declaration whose member holds the literal: the unit is the member, not the interface (wb-2xd5)", '// gp-decision-point: DP-01\ninterface Tool {\n  bin: "gp";\n}'],
+  ["a marker above an enum declaration whose member holds the literal: the unit is the member, not the enum (wb-2xd5)", '// gp-decision-point: DP-01\nenum E {\n  Bin = "gp",\n}'],
 ];
 
 /**
  * The named attribution residuals (wb-66f7, wb-1xvp.3 cut #2 gate F3), one mechanism-level family (wb-lx6m, wb-rdv6
- * gate F1 and F7): the attachment rule credits a call site with every marker in the unit that holds it - its leading
- * comments, and any comment after a token or before a node of that statement, class member or object property, up to
- * the literal's own line - unless the marker sits in a block, class body, object literal or type literal nested in the
- * unit, trails code on the line above the unit, or trails a later statement; the rule never asks which expression or
- * sub-statement the marker annotates. So a marker that annotates ANOTHER expression or sub-statement of the unit,
- * before the literal or after it on its line, is credited to the call site. Each row pins today's credited reading of
- * one measured member - RES-13..15 the wb-1xvp.3 gate's B01-B03, RES-16..18 wb-rdv6's, RES-19..43 the wb-rdv6 gate's
- * PREP LEG 2 probes verbatim (with RES-13..15, which are that corpus's B01-B03, every probe of the corpus that reads a
- * misattribution and is credited), RES-44..58 seat-found kinds - so a cut that changes the rule reds the row and
- * retires the residual in the open. The family's boundary is pinned in UNANNOTATED: a marker inside a block, class
- * body, object literal or type literal nested in the unit annotates that list's own members.
+ * gate F1 and F7; wb-2xd5, wb-lx6m gate F1-F3): the attachment rule (decisionPointsOf in ./gp-control-loop-audit.ts)
+ * credits a call site with every marker in a comment that starts at or after the full start of the UNIT that holds
+ * the literal (its leading comments included) and on or above the literal's own line, except a comment inside a member
+ * holder nested in the unit, one on the line where the unit's full start lies when that line holds text before the
+ * comment and the unit's first token is on a later line, and one past the unit's end other than the unit's own
+ * trailing comment; the rule never asks which expression or sub-statement the marker annotates. The member holders are
+ * exactly (holdsMembers) a source file, block, module block, case clause, default clause, class-like node, object
+ * literal, interface, type literal and enum; a nested holder's span runs from its first token to its end, so a nested
+ * class expression is excluded whole, its head included, while a switch's case block is no holder. The unit is the
+ * child of the literal's nearest member holder on the path to the literal: a statement, a case clause's label, a member
+ * of a class, object literal, interface, type literal or enum, or a class's decorator, type parameter or heritage
+ * clause, or an interface's type parameter or heritage clause. So a marker that annotates ANOTHER expression or
+ * sub-statement of the unit, before the literal or after it on its line, is credited to the call site. Each row pins
+ * today's credited reading of one measured member - RES-13..15 the wb-1xvp.3 gate's B01-B03, RES-16..18 wb-rdv6's,
+ * RES-19..43 the wb-rdv6 gate's PREP LEG 2 probes verbatim (with RES-13..15, which are that corpus's B01-B03, every
+ * probe of the corpus that reads a misattribution and is credited), RES-44..58 seat-found kinds, RES-59..62 the
+ * case-block region and the enum, interface and type-literal member units (wb-2xd5: the wb-lx6m gate's G-B05 and G-B08
+ * verbatim, RES-61 and RES-62 seat-found), RES-63..79 the wb-lx6m gate's PREP LEG 2 G-C probes verbatim (its G-C14 is a
+ * correct credit, pinned in ANNOTATED) - so a cut that changes the rule reds the row and retires the residual in the
+ * open. The family's boundary is pinned in UNANNOTATED: a marker inside a member holder nested in the unit annotates
+ * that holder's own members (a block, a type literal, a class expression's body or head, a case or default clause of
+ * the switch that holds the literal, an object literal, a module block), and a marker above the enclosing declaration
+ * or clause does not reach a unit that is its heritage clause, label, or interface or enum member.
  */
 export const MISATTRIBUTED: ReadonlyArray<readonly [string, string, readonly (readonly string[])[]]> = [
   ["RES-13 a marker inside an expression-bodied arrow, annotating its body, is credited to a gp literal later in the same call (gate B01)", 'run(\n  () =>\n    // gp-decision-point: DP-01\n    prepare(),\n  "gp",\n);', [["DP-01"]]],
@@ -197,6 +231,32 @@ export const MISATTRIBUTED: ReadonlyArray<readonly [string, string, readonly (re
   // wb-lx6m: seat-found members at the other two unit kinds, a class member and an object property; each read [] before wb-rdv6.
   ["RES-57 a marker inside a class property initializer's nested call is credited to a gp literal later in the same initializer (wb-lx6m)", 'class A {\n  bin = prepare( /* gp-decision-point: DP-01 */ ) || "gp";\n}', [["DP-01"]]],
   ["RES-58 a marker inside an object property value's nested call is credited to a gp literal later in the same value (wb-lx6m)", 'const tool = {\n  command: prepare( /* gp-decision-point: DP-01 */ ) ?? "gp",\n};', [["DP-01"]]],
+  // wb-2xd5 (wb-lx6m gate F1 and F3): the case-block region (a case block holds no members) and the unit kinds beyond a
+  // statement, class member and object property; each reads [["DP-01"]] today and [] under wb-rdv6's base judge 1f387bdf.
+  ["RES-59 a marker in a switch's case block before its first clause is credited to a gp literal in the switch's discriminant: a case block holds no members (wb-2xd5, wb-lx6m gate G-B05)", 'switch (spawn("gp", [])) { /* gp-decision-point: DP-01 */ case 1: break; }', [["DP-01"]]],
+  ["RES-60 a marker inside an enum member initializer's nested call is credited to a gp literal later in the same initializer: an enum member is a unit (wb-2xd5, wb-lx6m gate G-B08)", 'enum E { Bin = prepare(/* gp-decision-point: DP-01 */) + "gp" }', [["DP-01"]]],
+  ["RES-61 a marker inside an interface member's type argument list is credited to a gp literal type later in the same member: an interface member is a unit (wb-2xd5)", 'interface Tool {\n  bin: Prepare</* gp-decision-point: DP-01 */ X> | "gp";\n}', [["DP-01"]]],
+  ["RES-62 a marker inside a type-literal member's type argument list is credited to a gp literal type later in the same member: a type-literal member is a unit (wb-2xd5)", 'type Tool = {\n  bin: Prepare</* gp-decision-point: DP-01 */ X> | "gp";\n};', [["DP-01"]]],
+  // wb-2xd5 (wb-lx6m gate F2): the gate's PREP LEG 2 G-C probes verbatim, each a member the header's list did not name;
+  // RES-67, RES-69..71, RES-73, RES-74, RES-76 and RES-77 are credited under wb-rdv6's base judge 1f387bdf too, the
+  // other nine read [] under it.
+  ["RES-63 a marker after a for-of statement's of keyword, annotating its iterable, is credited to a gp literal in its blockless body (wb-2xd5, wb-lx6m gate G-C01)", 'for (const x of /* gp-decision-point: DP-01 */ xs) spawn("gp", [x]);', [["DP-01"]]],
+  ["RES-64 a marker after the = of a for statement's initializer is credited to a gp literal in its blockless body (wb-2xd5, wb-lx6m gate G-C02)", 'for (let i = /* gp-decision-point: DP-01 */ 0; i < 1; i++) spawn("gp", []);', [["DP-01"]]],
+  ["RES-65 a marker inside a while statement's condition is credited to a gp literal in its blockless body (wb-2xd5, wb-lx6m gate G-C03)", 'while (/* gp-decision-point: DP-01 */ ready()) spawn("gp", []);', [["DP-01"]]],
+  ["RES-66 a marker inside a computed property key is credited to a gp literal in the same property's value (wb-2xd5, wb-lx6m gate G-C04)", 'const tool = { [/* gp-decision-point: DP-01 */ key]: "gp" };', [["DP-01"]]],
+  ["RES-67 a marker after an optional-chaining token in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C05)", 'run(a?./* gp-decision-point: DP-01 */ b, "gp");', [["DP-01"]]],
+  ["RES-68 a marker inside a class member's decorator call, on the line above the member, is credited to a gp literal in the member's initializer (wb-2xd5, wb-lx6m gate G-C06)", 'class A {\n  @dec(/* gp-decision-point: DP-01 */)\n  bin = "gp";\n}', [["DP-01"]]],
+  ["RES-69 a marker after a binary in operator in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C07)", 'run(k in /* gp-decision-point: DP-01 */ o, "gp");', [["DP-01"]]],
+  ["RES-70 a marker between a tagged template's tag and its template in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C08)", 'run(tag/* gp-decision-point: DP-01 */`x`, "gp");', [["DP-01"]]],
+  ["RES-71 a marker after a comma operator inside a parenthesized preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C09)", 'run((a, /* gp-decision-point: DP-01 */ b), "gp");', [["DP-01"]]],
+  ["RES-72 a marker after a nested arrow's return-type colon is credited to a gp literal later in the outer call (wb-2xd5, wb-lx6m gate G-C10)", 'run((): /* gp-decision-point: DP-01 */ T => x, "gp");', [["DP-01"]]],
+  ["RES-73 a marker after a nested arrow's arrow token in a later argument, on the gp literal's own line, is credited to it (wb-2xd5, wb-lx6m gate G-C11)", 'spawn("gp", xs.map((x) => /* gp-decision-point: DP-01 */ x));', [["DP-01"]]],
+  ["RES-74 a block comment after the statement's end, annotating a later statement on the same line, is credited to a gp literal in the statement as its own trailing comment (wb-2xd5, wb-lx6m gate G-C12)", 'spawn("gp", []); /* gp-decision-point: DP-01 */ prepare();', [["DP-01"]]],
+  ["RES-75 a marker after an earlier declarator's type-annotation colon is credited to a gp literal in a later declarator of the same statement (wb-2xd5, wb-lx6m gate G-C13)", 'const a: /* gp-decision-point: DP-01 */ T = x, bin = "gp";', [["DP-01"]]],
+  ["RES-76 a marker after a non-null assertion in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C15)", 'run(x!/* gp-decision-point: DP-01 */.y, "gp");', [["DP-01"]]],
+  ["RES-77 a marker after a nullish-coalescing operator in a preceding argument is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C16)", 'run(a ?? /* gp-decision-point: DP-01 */ b, "gp");', [["DP-01"]]],
+  ["RES-78 a marker after the opening parenthesis of the call an export default statement holds, annotating a preceding argument, is credited to a gp literal later in the same call (wb-2xd5, wb-lx6m gate G-C17)", 'export default run(/* gp-decision-point: DP-01 */ x, "gp");', [["DP-01"]]],
+  ["RES-79 a marker inside a dynamic import call in a preceding argument is credited to a gp literal later in the outer call (wb-2xd5, wb-lx6m gate G-C18)", 'run(import(/* gp-decision-point: DP-01 */ "m"), "gp");', [["DP-01"]]],
 ];
 
 // ---- the synthetic gp-wired module and its audit document ----
