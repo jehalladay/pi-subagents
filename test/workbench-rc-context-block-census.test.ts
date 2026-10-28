@@ -47,8 +47,11 @@
  *    the bead store and the test tree (EXCLUDED, each prefix bound to a file the filing names that another pin reads): the exact
  *    names occur nowhere, and every tolerant spelling is the rf echo (an sdk_versions key, a member of a block holding rf's other
  *    sdk_versions members, an sdk_versions path or a component contract's sdk_contract distribution); every listed file is read
- *    (a UTF-16 page, by its byte-order mark or, unmarked, by the parity of its NUL bytes, in its byte order; any other file
- *    whose bytes are not UTF-8, media or an archive, through a lossy decode; a NUL byte never skips a file) and every
+ *    in each of its readings (readingsOf: its UTF-8 reading, through a lossy decode when its bytes are not UTF-8, media or an
+ *    archive; besides that, a UTF-16 page in its byte order, by its byte-order mark or, unmarked, when at least a quarter of
+ *    its bytes are NUL with nine in ten of them at one parity, and a page a UTF-32 byte-order mark marks, in that order; a hit
+ *    in any reading is a hit, C1-C3 and C5 read every reading - M1, M3, C2 and C3 each hold that live on a file read two
+ *    ways -, and a NUL byte never skips a file) and every
  *    censused path is read beside its text; C2 Pi types: the src modules spelling the rf CLI schema are exactly READERS, no
  *    identifier or string of theirs carries a CONTROL word, no src type member is an rf block field and no type member or
  *    declared type name pairs a context-block word with a CONTROL word; C3 UI handlers: the UI modules (every src module below
@@ -59,21 +62,28 @@
  *    C4 beads: the program's rows (the epic and the children its title counts) hold no unmarked control-model or attribution
  *    sentence in their titles and owner filings; C5 sentences: no .md page and no src file holds one.
  *  M, the instruments rows A-C read, member by member: M1 the needles, the normalization, the echo classifier, the decode (a
- *    NUL-bearing page, a page that is not UTF-8, a UTF-16 page in either byte order, marked or not) and the path reading; M2 the
- *    identifier word splitter and the CONTROL words; M3 the sentence cutter and the two sentence rules. C3's own instruments
- *    are held live in its case: the TUI loads (UI_LOAD_PROBES) and one probe module per read form the parse-aware reading
- *    names (READ_PROBES) or leaves quiet (QUIET_PROBES).
+ *    NUL-bearing page, a page that is not UTF-8, a UTF-16 page in either byte order, marked or not, a NUL-padded UTF-8 page at
+ *    either parity, read both ways, the UTF-16 floor and parity each at its bound and just under it in either byte order, and a
+ *    UTF-32 page in either byte order by its mark), the walk's keeping every reading, which the token census reads, and the path
+ *    reading; M2 the identifier word splitter and the CONTROL words; M3 the sentence cutter and the two sentence rules, over
+ *    every reading of a file. C3's own instruments
+ *    are held live in its case: the TUI loads (UI_LOAD_PROBES) and one probe module per read form and per result-expression
+ *    form the parse-aware reading names (READ_PROBES) or leaves quiet (QUIET_PROBES).
  *  R, the residuals' pinned quiet rows.
- * PARSE-AWARE READING (C3, wb-ycir F1; resultReadsOf): RF_READING reads the rf result's members spelled after "result.", so a
- * UI module also must not reach a RESULT_MEMBERS member off a result expression by any of these forms: a member read through a
- * name bound to the result, an element access keyed by a member or by a key that resolves to no constant string, a
- * destructuring (declared, assigned, a parameter of a local function a result is handed to, or a pattern nested under a
- * `result` property) naming a member, computing a key or gathering a rest, and a spread, a for-in walk or a reflective read
- * (REFLECTIVE_READS) of the result. A result expression is a result member read (`.result`, `?.result`, or an element access
- * keyed "result"), a name bound to one (an initializer or assignment, either arm of "??", "||" or "?:", a destructured
- * `result` property, an argument of a call of a function the module declares) or any name result; a bare name result is
- * read for members, keys and destructurings only, never for a spread or a reflective read, which Pi's agent and tool results
- * take.
+ * PARSE-AWARE READING (C3, wb-ycir F1, widened by wb-qnl8 F2; resultReadsOf): RF_READING reads the rf result's members
+ * spelled after "result.", so a UI module also must not reach a RESULT_MEMBERS member off a result expression by any of these
+ * forms: a member read through a name bound to the result, an element access keyed by a member or by a key that resolves to
+ * no constant string, a destructuring (declared, assigned, a parameter of a local function a result is handed to, or a pattern
+ * nested under a `result` property) naming a member, computing a key or gathering a rest, and a spread, a for-in walk, a
+ * reflective read (REFLECTIVE_READS) or a keyed read (KEYED_READS, keyed as an element access is) of the result. A result
+ * expression is a result member read (`.result`, `?.result`, or an element access keyed "result"), a name bound to one (the
+ * initializer of a declaration, a parameter or a binding element; an assignment, a logical one included; either arm of "??",
+ * "||", "&&" or "?:"; a destructured `result` property; an element of an array binding over an array literal, by position,
+ * and past the literal's first spread any later item; a
+ * for-of declaration or target over an array literal holding one; an argument of a call of a function the module declares)
+ * or any name result, with its parentheses, type assertions, satisfies clauses, non-null marks, awaits and a comma
+ * expression's left operands taken off; a bare name result is read for members, keys and destructurings only, never for a
+ * spread or a reflective read, which Pi's agent and tool results take.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal; every judged row, every pin's witness, the
  * constants, the registered test titles and each pin's assertion count are held to the out-of-file roster
  * (test/fixtures/rc-context-block-roster.json).
@@ -91,20 +101,25 @@
  * the UI entrypoints off package.json.
  * RECORDS: the last case walks this file's registered tests: each roster title once, in order, in run mode, not inverted, ran;
  * every pin's witness again; every pin reached its end with its pinned assertion count.
- * NOT CLAIMED: the placements, the control fields, the sentinels, the mutants, the result members, the read and quiet probes and
- * the sentence vocabularies are this census's reading of the filing (the producer defines no Pi slot for any of them), so a
+ * NOT CLAIMED: the placements, the control fields, the sentinels, the mutants, the result members, the reflective and keyed
+ * reads, the TUI load probes, the read and quiet probes, the decode's NUL floor and parity and the sentence vocabularies are
+ * this census's reading of the filing (the producer defines no Pi slot for any of them), so a
  * member of those literals removed from every literal of this file and the roster together is anchored by the filing only where
  * the filing names it (clause (a)'s three control words, clause (c)'s surfaces and names, the two fixture names); the rows, the
  * pins and the residual list are anchored as above, but which pin covers which words is this census's reading (COVERS); an
  * edit of the tracked bead export itself is outside every anchor (it is machine-written at each ledger hop). The parse-aware
  * reading reads one module at a time and follows a result by name only: a result value handed to another module, or held by a
  * name that no initializer, assignment, destructuring or local call binds (a callback's parameter, a value an imported
- * function returns), is not followed.
+ * function returns), is not followed, nor is one held in an object's member or a class field, returned by a local function,
+ * gathered by an array binding's rest element or walked by a for-of over anything but an array literal.
+ * It binds by name for the whole module, not by scope (wb-qnl8 F5): a name bound to a result in one function reads as bound
+ * in every other, a same-named parameter of an unrelated function included, an over-read that can only refuse.
  * RESIDUALS (named families, each with a pinned quiet row in row R): R1 R-STATUS-WORD a control word rf states as an observation
  *   status surfaces as a status word (the filing admits status words); R2 R-PRODUCER-IDENTITY a control word stated as a bounded
  *   producer identity (cli_version, an engine version) surfaces as that identity; R3 R-PROSE-NAME the document name as two words
  *   spaced, hyphenated or dotted reads as prose (rf's rendered context document, another SDK's context-document module); R4 R-COMPOSED a name assembled from literal parts; R5 R-ENCODED a JS escape or an HTML reference inside
- *   a name; R6 R-LOOKALIKE a look-alike letter NFKC keeps; R7 R-OTHER-ROWS a bead row outside the program's epic and children,
+ *   a name, or a name its page's readings do not decode (an unmarked UTF-16 page under the NUL floor, wb-qnl8 F4); R6
+ *   R-LOOKALIKE a look-alike letter NFKC keeps; R7 R-OTHER-ROWS a bead row outside the program's epic and children,
  *   or a note appended after an owner filing; R8 R-NON-PROSE a sentence in a file that is neither a .md page nor below src/;
  *   R9 R-MARKER-ANYWHERE a marker anywhere in a sentence admits it; R10 R-VOCABULARY a control named outside the CONTROL
  *   families; R11 R-PARAPHRASE a change stated without a CHANGE word; R12 R-SPLIT a model or an attribution carried across two
@@ -134,6 +149,13 @@
  * spelling them (a computed key, a destructuring, an alias and the other forms above); F2 a load of a TUI subpath makes a UI
  * module; F4 a UTF-16 page is read in its byte order, marked or not; F5 the pin and the bead id are program tokens in any
  * letter case.
+ * FOLLOW-UP wb-qnl8 (landing 505's findings): F1 every file keeps its UTF-8 reading beside any UTF-16 one, so a NUL-padded
+ * UTF-8 page the parity rule selects keeps its hits and no refusal of the landed census is lost (POSITIVE-PROTECTION, owner
+ * ruling R754); F2 logical assignments, parameter and binding-element initializers, "&&" arms, array bindings and for-of
+ * walks over array literals, the singular descriptor and comma expressions are parse-aware readings; F3 one read probe per
+ * claimed result-expression and read form, and keyed quiet rows; F4 the UTF-16 floor and parity pinned at their bounds, a
+ * UTF-32 page read by its mark, and an unmarked UTF-16 page under the floor named under R5 with its quiet row; F5 the
+ * module-wide binding disclosed.
  *
  * Display paths added: none. Test-only: the stand-in rf lives in makeScratch scratch; src, docs, the fixtures, the bead export
  * and git's file list are only read.
@@ -294,7 +316,10 @@ const RF_NAME = /reactivefiber|reactive-fiber/i;
 const RF_READING = new RegExp(`\\brf[-_][a-z]|context\\.render|nativePayloadRef|output\\.text|result\\.(?:${RESULT_MEMBERS.join("|")})`, "i");
 const RF_VOCABULARY = new RegExp(`${RF_NAME.source}|${RF_READING.source}`, "i");
 /** The calls that read every member of a value handed to them: a result expression handed to one is a reading (C3). */
-const REFLECTIVE_READS: readonly string[] = ["Object.values", "Object.entries", "Object.assign", "Object.getOwnPropertyDescriptors", "Reflect.get", "Reflect.ownKeys", "JSON.stringify", "structuredClone"];
+const REFLECTIVE_READS: readonly string[] = ["Object.values", "Object.entries", "Object.assign", "Object.getOwnPropertyDescriptors", "Reflect.ownKeys", "JSON.stringify", "structuredClone"];
+/** The calls that read the one member their second argument keys: a result expression handed to one is read as an element
+ * access keyed so is (C3; wb-qnl8 F2 adds the singular descriptor). */
+const KEYED_READS: readonly string[] = ["Reflect.get", "Object.getOwnPropertyDescriptor"];
 /** The TUI package a module loads when it renders Pi's terminal UI: every module loading it or a subpath of it is a UI module (C3). */
 const UI_PACKAGE = "@earendil-works/pi-tui";
 /** A load of the TUI package: the package itself or any subpath of it (wb-ycir F2: "<package>/dist/index.js" resolves too). */
@@ -309,8 +334,8 @@ const SURFACE_PINS: Readonly<Record<string, string>> = { "Pi type": "C2", "UI ha
 const UI_LOAD_PROBES: Readonly<Record<string, boolean>> = { [UI_PACKAGE]: true, [`${UI_PACKAGE}/dist/index.js`]: true, [`${UI_PACKAGE}-extra`]: false };
 /** A UI module's way to the rf result of a preview reading, as the probes below spell it. */
 const PROBE_RESULT = "(reading as { source: { result: Record<string, unknown> } }).source.result";
-/** C3's read forms (wb-ycir F1): each probe module reaches an rf result member without spelling "result.<member>", and the
- * parse-aware reading must name it. */
+/** C3's read forms (wb-ycir F1; wb-qnl8 F2 and F3 add one per claimed result-expression and read form): each probe module
+ * reaches an rf result member without spelling "result.<member>", and the parse-aware reading must name it. */
 const READ_PROBES: Readonly<Record<string, string>> = {
   "computed-key": `const part = "blocks";\nexport const rows = ${PROBE_RESULT}[part];\n`,
   "parameter-key": `export const rows = (key: string) => ${PROBE_RESULT}[key];\n`,
@@ -328,14 +353,47 @@ const READ_PROBES: Readonly<Record<string, string>> = {
   spread: `export const copy = { ...${PROBE_RESULT} };\n`,
   "for-in": `const envelope = ${PROBE_RESULT};\nexport const keys: string[] = [];\nfor (const key in envelope) keys.push(key);\n`,
   reflective: `export const rows = Object.values(${PROBE_RESULT});\n`,
+  // wb-qnl8 F3: one probe per claimed result-expression or read form the probes above leave unexercised.
+  "element-result": 'export const rows = (reading as { source: Record<string, { blocks: unknown }> }).source["result"].blocks;\n',
+  "assigned-name": `let envelope: Record<string, unknown> = {};\nenvelope = ${PROBE_RESULT};\nexport const rows = envelope.blocks;\n`,
+  "or-arm": `const envelope = ${PROBE_RESULT} || {};\nexport const rows = envelope.blocks;\n`,
+  "conditional-arm": `export const rows = (flag: boolean) => (flag ? ${PROBE_RESULT} : {}).blocks;\n`,
+  "non-null": `export const rows = ${PROBE_RESULT}!.blocks;\n`,
+  awaited: `export const rows = async () => (await ${PROBE_RESULT}).blocks;\n`,
+  satisfied: `export const rows = (${PROBE_RESULT} satisfies Record<string, unknown>).blocks;\n`,
+  "type-assertion": `export const rows = (<Record<string, unknown>>${PROBE_RESULT}).blocks;\n`,
+  "binding-computed": `const part = "blocks";\nexport const { [part]: rows } = ${PROBE_RESULT};\n`,
+  "parameter-pattern": `const blocksOf = ({ blocks }: Record<string, unknown>) => blocks;\nexport const rows = blocksOf(${PROBE_RESULT});\n`,
+  "nested-assigned": "let blocks: unknown;\n({ source: { result: { blocks } } } = reading as { source: { result: { blocks: unknown } } });\n",
+  "reflect-get": `export const rows = Reflect.get(${PROBE_RESULT}, "blocks");\n`,
+  // wb-qnl8 F2: the forms PREP's L2-A1 to L2-A4 and L2-A8 to L2-A10 reach a result member by.
+  "logical-assigned": `let envelope: Record<string, unknown> | undefined;\nenvelope ??= ${PROBE_RESULT};\nexport const rows = envelope.blocks;\n`,
+  "parameter-default": `export const rows = (reading: unknown, envelope = ${PROBE_RESULT}) => envelope.blocks;\n`,
+  "binding-default": `export const { envelope = ${PROBE_RESULT} } = {} as { envelope?: Record<string, unknown> };\nexport const rows = envelope.blocks;\n`,
+  "and-arm": `export const rows = (flag: boolean) => {\n  const envelope = flag && ${PROBE_RESULT};\n  return envelope && envelope.blocks;\n};\n`,
+  "array-binding": `const [, envelope] = [{}, ${PROBE_RESULT}];\nexport const rows = envelope.blocks;\n`,
+  "array-after-spread": `const [, envelope] = [...([] as unknown[]), ${PROBE_RESULT}];\nexport const rows = envelope.blocks;\n`,
+  "for-of": `export const rows: unknown[] = [];\nfor (const { blocks } of [${PROBE_RESULT}]) rows.push(blocks);\n`,
+  "for-of-name": `export const rows: unknown[] = [];\nfor (const envelope of [${PROBE_RESULT}]) rows.push(envelope.blocks);\n`,
+  descriptor: `export const rows = Object.getOwnPropertyDescriptor(${PROBE_RESULT}, "blocks");\n`,
+  comma: `export const rows = (0, ${PROBE_RESULT}).blocks;\n`,
+  // POSITIVE-PROTECTION (owner ruling R754): a comma key resolves to no constant string, so it stays the landed computed read.
+  "comma-key": `export const schema = ${PROBE_RESULT}[(0, "schema")];\n`,
+  "comma-const-key": `const part = (0, "schema");\nexport const schema = ${PROBE_RESULT}[part];\n`,
 };
-/** The forms C3's parse-aware reading leaves quiet: a constant key naming another member, and a bare name result spread, read for
- * another member or used as a string (today's Pi UI code reads agent and tool results so). */
+/** The forms C3's parse-aware reading leaves quiet: a constant key naming another member, a bare name result spread, read for
+ * another member or used as a string (today's Pi UI code reads agent and tool results so), a keyed read keyed by another member
+ * (wb-qnl8 F3) and the element of an array binding beside a result (wb-qnl8 F2). */
 const QUIET_PROBES: Readonly<Record<string, string>> = {
   "other-member": `export const schema = ${PROBE_RESULT}["schema"];\n`,
   "bare-spread": "export const copy = (result: object) => ({ ...result, usage: 1 });\n",
   "bare-other-member": "export const state = (result: { state: string }) => {\n  const { state } = result;\n  return state;\n};\n",
   "string-result": 'export const preview = (record: { result?: string }) => record.result?.trim() ?? "";\n',
+  // wb-qnl8 F3: a keyed read keyed by another member reads nothing.
+  "reflect-other-member": `export const schema = Reflect.get(${PROBE_RESULT}, "schema");\n`,
+  "descriptor-other-member": `export const schema = Object.getOwnPropertyDescriptor(${PROBE_RESULT}, "schema");\n`,
+  // wb-qnl8 F2: an array binding binds by position, so the element beside a result reads nothing.
+  "array-other-element": `const [envelope, other] = [${PROBE_RESULT}, {} as Record<string, unknown>];\nexport const rows = [envelope, other.blocks];\n`,
 };
 
 function needleNamed(id: string): string {
@@ -587,14 +645,15 @@ function normalized(text: string): string {
 }
 interface Walked {
   readonly rel: string;
-  readonly text: string;
+  /** The file's readings (readingsOf), each normalized: one for a page read only as UTF-8, more for a page also read wide. */
+  readonly readings: readonly string[];
 }
 interface Walk {
   /** Every listed name but the bead export (the paths C1 reads). */
   readonly names: readonly string[];
   readonly files: readonly Walked[];
   readonly listed: number;
-  /** The files whose bytes are not UTF-8, read through the lossy decode. */
+  /** The files whose bytes are not UTF-8, their UTF-8 reading the lossy decode's. */
   readonly lossy: readonly string[];
   readonly symlinks: readonly string[];
   readonly missing: readonly string[];
@@ -603,7 +662,8 @@ const UTF8 = new TextDecoder("utf-8", { fatal: true });
 const UTF8_LOSSY = new TextDecoder("utf-8");
 const UTF16: Readonly<Record<"utf-16le" | "utf-16be", TextDecoder>> = { "utf-16le": new TextDecoder("utf-16le"), "utf-16be": new TextDecoder("utf-16be") };
 /** The byte order of a UTF-16 page: its byte-order mark, or, unmarked, at least a quarter of its bytes NUL with nine in ten of
- * them at one parity (the high bytes of mostly ASCII text, wb-ycir F4); undefined for any other file. */
+ * them at one parity (the high bytes of mostly ASCII text, wb-ycir F4; M1 pins both bounds, wb-qnl8 F4); undefined for any other
+ * file. */
 function wideOrder(bytes: Uint8Array): "utf-16le" | "utf-16be" | undefined {
   if (bytes[0] === 0xff && bytes[1] === 0xfe) return "utf-16le";
   if (bytes[0] === 0xfe && bytes[1] === 0xff) return "utf-16be";
@@ -619,21 +679,64 @@ function wideOrder(bytes: Uint8Array): "utf-16le" | "utf-16be" | undefined {
   if (odd * 10 >= nul * 9) return "utf-16le";
   return even * 10 >= nul * 9 ? "utf-16be" : undefined;
 }
-/** A file's text: a UTF-16 page's decoding in its byte order (wideOrder), else its UTF-8 decoding, or, when its bytes are not
- * UTF-8 (media, an archive), its lossy decoding (each invalid sequence read as U+FFFD), so no file is skipped as binary; a NUL
- * byte is read like any other code point. */
-function decoded(bytes: Uint8Array): { text: string; lossy: boolean; encoding: string } {
-  const wide = wideOrder(bytes);
-  if (wide !== undefined) return { text: UTF16[wide].decode(bytes), lossy: false, encoding: wide };
-  try {
-    return { text: UTF8.decode(bytes), lossy: false, encoding: "utf-8" };
-  } catch {
-    return { text: UTF8_LOSSY.decode(bytes), lossy: true, encoding: "utf-8" };
+interface Reading {
+  readonly encoding: string;
+  /** Whether this reading went through the lossy decode (its bytes are not UTF-8). */
+  readonly lossy: boolean;
+  readonly text: string;
+}
+/** The byte order a UTF-32 byte-order mark marks (wb-qnl8 F4; FF FE 00 00 is the UTF-16LE mark too, so such a page is read both
+ * ways), or undefined. */
+function quadOrder(bytes: Uint8Array): "utf-32le" | "utf-32be" | undefined {
+  if (bytes[0] === 0xff && bytes[1] === 0xfe && bytes[2] === 0 && bytes[3] === 0) return "utf-32le";
+  if (bytes[0] === 0 && bytes[1] === 0 && bytes[2] === 0xfe && bytes[3] === 0xff) return "utf-32be";
+  return undefined;
+}
+const REPLACEMENT = String.fromCodePoint(0xfffd);
+/** A UTF-32 page's text past its mark (TextDecoder offers no UTF-32): each unit that is no Unicode scalar value, and a trailing
+ * partial unit, read as U+FFFD. */
+function quadText(bytes: Uint8Array, order: "utf-32le" | "utf-32be"): string {
+  const view = new DataView(bytes.buffer, bytes.byteOffset, bytes.byteLength);
+  const points: string[] = [];
+  for (let at = 4; at + 4 <= bytes.length; at += 4) {
+    const unit = view.getUint32(at, order === "utf-32le");
+    points.push(unit > 0x10ffff || (unit >= 0xd800 && unit <= 0xdfff) ? REPLACEMENT : String.fromCodePoint(unit));
   }
+  if (bytes.length % 4 !== 0) points.push(REPLACEMENT);
+  return points.join("");
+}
+/** A file's readings (wb-qnl8 F1): its UTF-8 reading first, through the lossy decode (each invalid sequence read as U+FFFD) when its
+ * bytes are not UTF-8 (media, an archive), so no file is skipped as binary and a NUL byte is read like any other code point; then,
+ * for a UTF-16 page (wideOrder), its decoding in that byte order, and, for a page a UTF-32 mark marks (quadOrder), its decoding in
+ * that order. A NUL-padded UTF-8 page the parity rule selects is so read both ways: no reading replaces another. */
+function readingsOf(bytes: Uint8Array): Reading[] {
+  const readings: Reading[] = [];
+  try {
+    readings.push({ encoding: "utf-8", lossy: false, text: UTF8.decode(bytes) });
+  } catch {
+    readings.push({ encoding: "utf-8", lossy: true, text: UTF8_LOSSY.decode(bytes) });
+  }
+  const wide = wideOrder(bytes);
+  if (wide !== undefined) readings.push({ encoding: wide, lossy: false, text: UTF16[wide].decode(bytes) });
+  const quad = quadOrder(bytes);
+  if (quad !== undefined) readings.push({ encoding: quad, lossy: false, text: quadText(bytes, quad) });
+  return readings;
+}
+/** One listed file as the walk reads it: every reading of its bytes (readingsOf), normalized, and whether its UTF-8 reading went
+ * through the lossy decode (M1 holds it live on a page read both ways). */
+function walkedOf(rel: string, bytes: Uint8Array): { file: Walked; lossy: boolean } {
+  const readings = readingsOf(bytes);
+  return { file: { rel, readings: readings.map(reading => normalized(reading.text)) }, lossy: readings.some(reading => reading.lossy) };
+}
+/** A text as UTF-16 code units in one byte order, behind its byte-order mark when marked (wb-ycir F4; M1 and R1 build pages so). */
+function utf16Bytes(text: string, order: "le" | "be", marked: boolean): Uint8Array {
+  const units = [...(marked ? [0xfeff] : []), ...Array.from({ length: text.length }, (_, index) => text.charCodeAt(index))];
+  return Uint8Array.from(units.flatMap(unit => (order === "le" ? [unit % 256, Math.floor(unit / 256)] : [Math.floor(unit / 256), unit % 256])));
 }
 let walkCache: Walk | undefined;
-/** Git's own file list of the checkout (tracked, and untracked but not ignored), every file read once (decoded()); the bead
- * export is read by C4 against its owner filings, so the walk leaves it out. A symlink is refused, never followed. */
+/** Git's own file list of the checkout (tracked, and untracked but not ignored), every file read once, in each of its readings
+ * (readingsOf); the bead export is read by C4 against its owner filings, so the walk leaves it out. A symlink is refused, never
+ * followed. */
 function walk(): Walk {
   if (walkCache !== undefined) return walkCache;
   const listing = spawnSync("git", ["ls-files", "-z", "--cached", "--others", "--exclude-standard"], { cwd: REPO, encoding: "utf8", maxBuffer: 64 * 1024 * 1024 });
@@ -657,9 +760,9 @@ function walk(): Walk {
       continue;
     }
     if (!stat.isFile()) continue;
-    const read = decoded(readFileSync(join(REPO, rel)));
+    const read = walkedOf(rel, readFileSync(join(REPO, rel)));
     if (read.lossy) lossy.push(rel);
-    files.push({ rel, text: normalized(read.text) });
+    files.push(read.file);
   }
   walkCache = { names: names.filter(rel => rel !== EXPORT_FILE), files, listed: names.length, lossy, symlinks, missing };
   return walkCache;
@@ -749,6 +852,11 @@ function hitsOf(rel: string, text: string): Hit[] {
     }
   }
   return hits;
+}
+
+/** Every census hit of a listed file: the hits of each of its readings (wb-qnl8 F1), so a hit in any reading is a hit. */
+function fileHits(file: Walked): Hit[] {
+  return file.readings.flatMap(text => hitsOf(file.rel, text));
 }
 
 interface Sentence {
@@ -877,6 +985,17 @@ function tallyOf(where: string, text: string, programImplied: boolean): Sentence
   return { findings, anchored, controlled, markedModels, markedAttributions, sentences: sentences.length };
 }
 
+/** Judges every sentence of each reading of a file (wb-qnl8 F1): the findings of all of them, and their anchored and controlled
+ * counts summed. */
+function fileTally(file: Walked): { findings: string[]; anchored: number; controlled: number } {
+  const tallies = file.readings.map(text => tallyOf(file.rel, text, false));
+  return {
+    findings: tallies.flatMap(tally => tally.findings),
+    anchored: tallies.reduce((total, tally) => total + tally.anchored, 0),
+    controlled: tallies.reduce((total, tally) => total + tally.controlled, 0),
+  };
+}
+
 /** The files C5 judges sentence by sentence: every .md page and every src file (R8 names the rest). */
 function sentenceJudged(rel: string): boolean {
   return rel.endsWith(".md") || rel.startsWith("src/");
@@ -896,6 +1015,14 @@ function controlWordsOf(name: string): string[] {
 }
 function sourceFile(rel: string, text = textAt(rel)): ts.SourceFile {
   return ts.createSourceFile(rel, text, ts.ScriptTarget.Latest, true, ts.ScriptKind.TS);
+}
+/** Every reading of a module, parsed (wb-qnl8 F1): a module read both ways is judged in both (C2 and C3 hold it live). */
+function parsedOf(file: Walked): ts.SourceFile[] {
+  return file.readings.map(text => sourceFile(file.rel, text));
+}
+/** Whether any reading of a file spells a pattern (wb-qnl8 F1; C3 holds it live). */
+function spells(file: Walked, pattern: RegExp): boolean {
+  return file.readings.some(text => pattern.test(text));
 }
 /** Every identifier and every string or template literal piece of a module (comments are not read). */
 function namesOf(file: ts.SourceFile): string[] {
@@ -947,16 +1074,21 @@ interface PiTypes {
  * context-block word with a CONTROL word. */
 function piTypesOf(src: readonly Walked[]): PiTypes {
   const fields = blockFields();
-  const readers = src.filter(file => file.text.includes(REACTIVE_FIBER_CLI_SCHEMA) || file.text.includes("REACTIVE_FIBER_CLI_SCHEMA")).map(file => file.rel).sort();
+  const readers = src
+    .filter(file => file.readings.some(text => text.includes(REACTIVE_FIBER_CLI_SCHEMA) || text.includes("REACTIVE_FIBER_CLI_SCHEMA")))
+    .map(file => file.rel)
+    .sort();
   const words: JsonObject = {};
   const members: string[] = [];
   const typeNames: string[] = [];
   for (const file of src) {
-    const parsed = sourceFile(file.rel, file.text);
-    if (readers.includes(file.rel)) words[file.rel] = [...new Set(namesOf(parsed).flatMap(controlWordsOf))].sort();
-    const declared = typeMembersOf(parsed);
-    members.push(...declared.filter(name => fields.includes(name)).map(name => `${file.rel} ${name}`));
-    typeNames.push(...[...declared, ...typeNamesOf(parsed)].filter(name => controlWordsOf(name).length > 0 && /block|context/i.test(name)).map(name => `${file.rel} ${name}`));
+    const parsed = parsedOf(file);
+    if (readers.includes(file.rel)) words[file.rel] = [...new Set(parsed.flatMap(namesOf).flatMap(controlWordsOf))].sort();
+    for (const reading of parsed) {
+      const declared = typeMembersOf(reading);
+      members.push(...declared.filter(name => fields.includes(name)).map(name => `${file.rel} ${name}`));
+      typeNames.push(...[...declared, ...typeNamesOf(reading)].filter(name => controlWordsOf(name).length > 0 && /block|context/i.test(name)).map(name => `${file.rel} ${name}`));
+    }
   }
   return { readers, words, members, typeNames };
 }
@@ -1000,6 +1132,13 @@ function unwrapped(node: ts.Expression): ts.Expression {
   ) {
     current = current.expression;
   }
+  return current;
+}
+/** The value a result expression stands for (wb-qnl8 F2): unwrapped, a comma expression read as its last operand. Keys keep the
+ * landed reading: a comma key resolves to no constant string (keyOf), so it stays a computed read and no landed refusal is lost. */
+function heldValue(node: ts.Expression): ts.Expression {
+  let current = unwrapped(node);
+  while (ts.isBinaryExpression(current) && current.operatorToken.kind === ts.SyntaxKind.CommaToken) current = unwrapped(current.right);
   return current;
 }
 /** Every name a module binds (a variable, a parameter or a destructured element), with the one const string all its bindings
@@ -1046,16 +1185,28 @@ function propertyKeyOf(name: ts.PropertyName, consts: ReadonlyMap<string, string
 /** How an expression holds an rf result: "bound" for a result member read (`.result`, `?.result`, or an element access keyed
  * "result") or a name bound to one, "named" for any other name result. */
 type ResultHold = "bound" | "named";
-/** C3's parse-aware reading of one module (wb-ycir F1): every read of a RESULT_MEMBERS member off a result expression, as
- * `<line> <form>`, so a UI module that reaches the rf result's blocks without spelling "result.<member>" reads as one that spells
- * it. A result expression is a result member read, a name bound to one (a declaration or assignment initializer, either arm of
- * "??", "||" or "?:", a destructured `result` property, or an argument of a call of a function the module declares, which binds
- * its parameter), or any name result; parentheses, type assertions, non-null marks and awaits are taken off. A read off one is a
+/** The operators an arm of which an expression's value may be (wb-qnl8 F2 adds "&&"). */
+const ARMS: readonly ts.SyntaxKind[] = [ts.SyntaxKind.QuestionQuestionToken, ts.SyntaxKind.BarBarToken, ts.SyntaxKind.AmpersandAmpersandToken];
+/** The assignments that bind a name to their right side: the plain one and the logical ones (wb-qnl8 F2). */
+const ASSIGNMENTS: readonly ts.SyntaxKind[] = [
+  ts.SyntaxKind.EqualsToken,
+  ts.SyntaxKind.QuestionQuestionEqualsToken,
+  ts.SyntaxKind.BarBarEqualsToken,
+  ts.SyntaxKind.AmpersandAmpersandEqualsToken,
+];
+/** C3's parse-aware reading of one module (wb-ycir F1, widened by wb-qnl8 F2): every read of a RESULT_MEMBERS member off a result
+ * expression, as `<line> <form>`, so a UI module that reaches the rf result's blocks without spelling "result.<member>" reads as
+ * one that spells it. A result expression is a result member read, a name bound to one (the initializer of a declaration, a
+ * parameter or a binding element, an assignment's right side - a logical assignment's too -, either arm of "??", "||", "&&" or
+ * "?:", a destructured `result` property, an element of an array binding over an array literal, a for-of declaration or target
+ * over an array literal holding one, or an argument of a call of a function the module declares, which binds its parameter), or
+ * any name result; parentheses, type assertions, satisfies clauses, non-null marks and awaits are taken off, and off a result
+ * expression a comma expression's left operands too (heldValue; a comma key stays a computed one). A read off one is a
  * member read of a member ("member"), an element access keyed by a member or by a key that resolves to no constant string
  * ("element"), a destructuring - a declaration, a parameter so bound, an assignment, or a pattern nested under a `result`
  * property - naming a member, computing a key that resolves to one or to none, or gathering a rest ("binding", "assigned");
  * and, off a result member read or a name bound to one (never a bare name result, which Pi's agent and tool results use), a
- * spread, a for-in walk, or a REFLECTIVE_READS call, a Reflect.get keyed as an element access is ("spread", "for-in",
+ * spread, a for-in walk, a REFLECTIVE_READS call, or a KEYED_READS call keyed as an element access is ("spread", "for-in",
  * "reflective"). */
 function resultReadsOf(file: ts.SourceFile): string[] {
   const consts = constStringsOf(file);
@@ -1073,11 +1224,10 @@ function resultReadsOf(file: ts.SourceFile): string[] {
   const bound = new Set<string>();
   const patterns = new Set<ts.ObjectBindingPattern>();
   const holdOf = (node: ts.Expression): ResultHold | undefined => {
-    const value = unwrapped(node);
+    const value = heldValue(node);
     if ((ts.isPropertyAccessExpression(value) && value.name.text === "result") || (ts.isElementAccessExpression(value) && keyOf(value.argumentExpression, consts) === "result")) return "bound";
     if (ts.isIdentifier(value)) return bound.has(value.text) ? "bound" : value.text === "result" ? "named" : undefined;
-    const either =
-      ts.isBinaryExpression(value) && (value.operatorToken.kind === ts.SyntaxKind.QuestionQuestionToken || value.operatorToken.kind === ts.SyntaxKind.BarBarToken);
+    const either = ts.isBinaryExpression(value) && ARMS.includes(value.operatorToken.kind);
     const arms = ts.isConditionalExpression(value) ? [value.whenTrue, value.whenFalse] : either ? [value.left, value.right] : [];
     const holds = arms.map(holdOf);
     return holds.includes("bound") ? "bound" : holds.includes("named") ? "named" : undefined;
@@ -1094,22 +1244,49 @@ function resultReadsOf(file: ts.SourceFile): string[] {
     bound.add(name.text);
     return true;
   };
+  /** The hold of any of some array items (wb-qnl8 F2): bound when any item is, else named when any item is a name result. */
+  const itemsHold = (items: readonly ts.Expression[]): ResultHold | undefined => {
+    const holds = items.filter(item => !ts.isSpreadElement(item)).map(holdOf);
+    return holds.includes("bound") ? "bound" : holds.includes("named") ? "named" : undefined;
+  };
+  /** Binds a name to the value it is given: an array pattern element by element over an array literal (wb-qnl8 F2), by position
+   * up to the literal's first spread and, past it, to any later item (the position is unknown there: an over-read, which can only
+   * refuse); any other name by the value's hold. */
+  const bindValue = (name: ts.BindingName, value: ts.Expression): boolean => {
+    if (!ts.isArrayBindingPattern(name)) return bind(name, holdOf(value));
+    const literal = unwrapped(value);
+    if (!ts.isArrayLiteralExpression(literal)) return false;
+    const spread = literal.elements.findIndex(item => ts.isSpreadElement(item));
+    let grown = false;
+    for (const [index, element] of name.elements.entries()) {
+      if (!ts.isBindingElement(element) || element.dotDotDotToken !== undefined) continue;
+      const item = literal.elements[index];
+      if (spread >= 0 && index >= spread) grown = bind(element.name, itemsHold(literal.elements.slice(spread))) || grown;
+      else if (item !== undefined) grown = bindValue(element.name, item) || grown;
+    }
+    return grown;
+  };
   let grew = true;
   while (grew) {
     grew = false;
     const visit = (node: ts.Node): void => {
-      if (ts.isVariableDeclaration(node) && node.initializer !== undefined) grew = bind(node.name, holdOf(node.initializer)) || grew;
-      else if (ts.isBinaryExpression(node) && node.operatorToken.kind === ts.SyntaxKind.EqualsToken && ts.isIdentifier(node.left)) grew = bind(node.left, holdOf(node.right)) || grew;
+      if ((ts.isVariableDeclaration(node) || ts.isParameter(node)) && node.initializer !== undefined) grew = bindValue(node.name, node.initializer) || grew;
+      else if (ts.isBinaryExpression(node) && ASSIGNMENTS.includes(node.operatorToken.kind) && ts.isIdentifier(node.left)) grew = bind(node.left, holdOf(node.right)) || grew;
       else if (ts.isBindingElement(node) && node.dotDotDotToken === undefined) {
         const property = node.propertyName ?? (ts.isIdentifier(node.name) ? node.name : undefined);
         if (property !== undefined && propertyKeyOf(property, consts) === "result") grew = bind(node.name, "bound") || grew;
+        if (node.initializer !== undefined) grew = bindValue(node.name, node.initializer) || grew;
+      } else if (ts.isForOfStatement(node)) {
+        const target = ts.isVariableDeclarationList(node.initializer) ? node.initializer.declarations[0]?.name : ts.isIdentifier(node.initializer) ? node.initializer : undefined;
+        const walked = unwrapped(node.expression);
+        if (target !== undefined && ts.isArrayLiteralExpression(walked)) grew = bind(target, itemsHold(walked.elements)) || grew;
       } else if (ts.isCallExpression(node)) {
         const callee = unwrapped(node.expression);
         const name = ts.isIdentifier(callee) ? callee.text : ts.isPropertyAccessExpression(callee) ? callee.name.text : undefined;
         const parameters = name === undefined ? undefined : functions.get(name);
         node.arguments.forEach((argument, index) => {
           const parameter = parameters?.[index];
-          if (parameter !== undefined) grew = bind(parameter.name, holdOf(argument)) || grew;
+          if (parameter !== undefined) grew = bindValue(parameter.name, argument) || grew;
         });
       }
       ts.forEachChild(node, visit);
@@ -1161,8 +1338,8 @@ function resultReadsOf(file: ts.SourceFile): string[] {
     } else if (ts.isCallExpression(node)) {
       const callee = node.expression.getText(file).replace(/\s+/g, "");
       const [first, second] = node.arguments;
-      if (callee === "Reflect.get") {
-        if (first !== undefined && holdOf(first) === "bound") keyed(node, second === undefined ? undefined : keyOf(second, consts), "reflective Reflect.get");
+      if (KEYED_READS.includes(callee)) {
+        if (first !== undefined && holdOf(first) === "bound") keyed(node, second === undefined ? undefined : keyOf(second, consts), `reflective ${callee}`);
       } else if (REFLECTIVE_READS.includes(callee) && node.arguments.some(argument => holdOf(argument) === "bound")) {
         note(node, `reflective ${callee}`);
       }
@@ -1693,7 +1870,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect({ symlinks, missing }, "nothing listed is a symlink or missing").toStrictEqual({ symlinks: [], missing: [] });
     const bound = Object.entries(EXCLUDED).filter(([prefix, file]) => !file.startsWith(prefix) || ![EXPORT_FILE, DRIFT_FILE, ...FIXTURES.map(fixture => fixture.file)].includes(file));
     expect(bound, "each excluded prefix holds a file the filing names that another pin reads").toStrictEqual([]);
-    const hits = censused.flatMap(file => hitsOf(file.rel, file.text));
+    const hits = censused.flatMap(fileHits);
     const findings = hits.filter(hit => hit.kind === "exact" || hit.kind === "finding").map(hit => `${hit.rel}:${hit.line} ${hit.needle} ${hit.kind}`);
     const echoes = hits.filter(hit => hit.kind.startsWith("echo:"));
     const echoKinds = [...new Set(echoes.map(hit => hit.kind.slice("echo:".length)))].sort();
@@ -1715,29 +1892,46 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(Object.values(read.words).flat(), "no identifier or string of an rf reader carries a control word").toStrictEqual([]);
     expect(read.members, "no src type member is an rf block field").toStrictEqual([]);
     expect(read.typeNames, "no src type member or declared type name pairs a context block with a control").toStrictEqual([]);
-    return { readers: [...read.readers], words: read.words, blockFields: blockFields(), members: [...read.members], typeNames: [...read.typeNames], srcFloorMet: src.length >= 100 };
+    // wb-qnl8 F1: a module read two ways is a reader by either reading and is word-read in both.
+    const probeRel = "src/workbench/probe-reader.ts";
+    const both = piTypesOf([{ rel: probeRel, readings: ["export const quiet = 1;\n", `export const schema = "${REACTIVE_FIBER_CLI_SCHEMA}";\nexport const onClick = 1;\n`] }]);
+    const everyReading = { readers: [...both.readers], words: both.words };
+    expect(everyReading, "a module read two ways is read in both").toStrictEqual({ readers: [probeRel], words: { [probeRel]: ["click"] } });
+    return {
+      readers: [...read.readers],
+      words: read.words,
+      blockFields: blockFields(),
+      members: [...read.members],
+      typeNames: [...read.typeNames],
+      srcFloorMet: src.length >= 100,
+      everyReading,
+    };
   },
   C3: async () => {
     const files = walk().files.filter(file => file.rel.startsWith("src/"));
     const declared = entrypoints();
-    const loadsOf = new Map(files.filter(file => file.rel.endsWith(".ts")).map(file => [file.rel, specifiersOf(sourceFile(file.rel, file.text))]));
+    const parsedBy = new Map(files.filter(file => file.rel.endsWith(".ts")).map(file => [file.rel, parsedOf(file)]));
+    const loadsOf = new Map([...parsedBy].map(([rel, parsed]) => [rel, parsed.flatMap(specifiersOf)]));
     const ui = files.filter(file => file.rel.endsWith(".ts") && (file.rel.startsWith("src/ui/") || declared.includes(file.rel) || (loadsOf.get(file.rel) ?? []).some(loadsUi)));
     const uiDir = ui.filter(file => file.rel.startsWith("src/ui/"));
-    const registrars = files.filter(file => /registerNativeReactiveFiberRender|registerReactiveFiberRender/.test(file.text) && file.rel !== PROVIDER_FILE).map(file => file.rel).sort();
+    const registrars = files
+      .filter(file => spells(file, /registerNativeReactiveFiberRender|registerReactiveFiberRender/) && file.rel !== PROVIDER_FILE)
+      .map(file => file.rel)
+      .sort();
     const rfModules = [...READERS, ...registrars];
     const edges = ui.flatMap(file => (loadsOf.get(file.rel) ?? []).map(specifier => resolvedOf(file.rel, specifier)).filter(target => rfModules.includes(target)).map(target => ({ from: file.rel, target })));
     // An entrypoint registers the preview through an rf registrar (a registration, never a reading); no other UI load is admitted.
     const admitted = edges.filter(edge => declared.includes(edge.from) && registrars.includes(edge.target)).map(edge => `${edge.from} -> ${edge.target}`);
     const loads = edges.map(edge => `${edge.from} -> ${edge.target}`).filter(edge => !admitted.includes(edge));
-    const vocabulary = ui.filter(file => (declared.includes(file.rel) ? RF_READING : RF_VOCABULARY).test(file.text)).map(file => file.rel);
+    const vocabulary = ui.filter(file => spells(file, declared.includes(file.rel) ? RF_READING : RF_VOCABULARY)).map(file => file.rel);
     // wb-ycir F1: an rf result member a UI module reaches without spelling it, read parse-aware; the probes keep the reading live.
-    const resultReads = ui.flatMap(file => resultReadsOf(sourceFile(file.rel, file.text)).map(read => `${file.rel}:${read}`));
+    const resultReads = ui.flatMap(file => (parsedBy.get(file.rel) ?? []).flatMap(resultReadsOf).map(read => `${file.rel}:${read}`));
     const probeReads = (probes: Readonly<Record<string, string>>): Record<string, string[]> =>
       Object.fromEntries(Object.entries(probes).map(([id, text]) => [id, resultReadsOf(sourceFile(`src/ui/${id}.ts`, text))]));
     const probes = { loads: Object.fromEntries(Object.keys(UI_LOAD_PROBES).map(specifier => [specifier, loadsUi(specifier)])), reads: probeReads(READ_PROBES), quiet: probeReads(QUIET_PROBES) };
     const registrationNames: JsonObject = {};
     for (const file of ui.filter(entry => declared.includes(entry.rel))) {
-      registrationNames[file.rel] = [...new Set(namesOf(sourceFile(file.rel, file.text)).filter(name => RF_NAME.test(name)))].sort();
+      registrationNames[file.rel] = [...new Set((parsedBy.get(file.rel) ?? []).flatMap(namesOf).filter(name => RF_NAME.test(name)))].sort();
     }
     const loaders = EVIDENCE_LOADER_ROWS.map(row => row.provider);
     expect(uiDir.length >= 8, `src/ui modules read: ${uiDir.length}`).toBe(true);
@@ -1749,7 +1943,16 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(Object.entries(probes.reads).filter(([, found]) => found.length === 0).map(([id]) => id), "every read form a probe states is read").toStrictEqual([]);
     expect(Object.entries(probes.quiet).filter(([, found]) => found.length > 0).map(([id]) => id), "the quiet forms read nothing").toStrictEqual([]);
     expect(loaders.length > 0 && !loaders.includes("reactivefiber"), "the evidence loader roster holds no reactivefiber row").toBe(true);
+    // wb-qnl8 F1: a UI module read two ways is parsed, loaded from and spelled in both.
+    const twoReadings: Walked = {
+      rel: "src/ui/probe.ts",
+      readings: ["export const quiet = 1;\n", `import "../workbench/providers/reactivefiber.js";\nexport const rows = ${PROBE_RESULT}["blocks"];\n`],
+    };
+    const twoParsed = parsedOf(twoReadings);
+    const everyReading = { loads: twoParsed.flatMap(specifiersOf), reads: twoParsed.flatMap(resultReadsOf), spells: spells(twoReadings, RF_VOCABULARY) };
+    expect(everyReading, "a UI module read two ways is read in both").toStrictEqual({ loads: ["../workbench/providers/reactivefiber.js"], reads: ["2 element blocks"], spells: true });
     return {
+      everyReading,
       rfModules,
       entrypoints: declared,
       admitted,
@@ -1791,7 +1994,7 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     let anchored = 0;
     let controlled = 0;
     for (const file of files.filter(entry => sentenceJudged(entry.rel))) {
-      const tally = tallyOf(file.rel, file.text, false);
+      const tally = fileTally(file);
       findings.push(...tally.findings);
       anchored += tally.anchored;
       controlled += tally.controlled;
@@ -1861,35 +2064,84 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     expect(screaming, "a screaming-snake document identifier in a Pi surface is a finding").toStrictEqual(["document:finding"]);
     expect(Object.values(misses).every(found => found.length === 0), "the near misses read no hit").toBe(true);
     const encode = (text: string): Uint8Array => new TextEncoder().encode(text);
-    /** A text as UTF-16 code units in one byte order, behind its byte-order mark when marked (wb-ycir F4). */
-    const wide = (text: string, order: "le" | "be", marked: boolean): Uint8Array => {
-      const units = [...(marked ? [0xfeff] : []), ...Array.from({ length: text.length }, (_, index) => text.charCodeAt(index))];
-      return Uint8Array.from(units.flatMap(unit => (order === "le" ? [unit % 256, Math.floor(unit / 256)] : [Math.floor(unit / 256), unit % 256])));
-    };
+    /** A text as UTF-32 code points in one byte order, behind its byte-order mark (wb-qnl8 F4). */
+    const quad = (text: string, order: "le" | "be"): Uint8Array =>
+      Uint8Array.from(
+        [0xfeff, ...[...text].map(char => char.codePointAt(0) ?? 0)].flatMap(point => {
+          const big = [Math.floor(point / 16777216) % 256, Math.floor(point / 65536) % 256, Math.floor(point / 256) % 256, point % 256];
+          return order === "be" ? big : big.reverse();
+        }),
+      );
+    /** A page's readings: their encodings in reading order (a lossy one so marked) and the hits of all of them together. */
     const read = (bytes: Uint8Array): JsonObject => {
-      const found = decoded(bytes);
-      return { lossy: found.lossy, encoding: found.encoding, hits: kinds(found.text) };
+      const found = readingsOf(bytes);
+      return { encodings: found.map(reading => (reading.lossy ? `${reading.encoding} lossy` : reading.encoding)), hits: [...new Set(found.flatMap(reading => kinds(reading.text)))] };
     };
     const widePage = `# probe\nsee ${SDK_NAME} here\n`;
+    /** widePage in UTF-8, padded with 200 NUL-led pairs from the given byte parity on (wb-qnl8 F1, PREP's L2-C4 and L2-C4b): the
+     * parity rule selects it as UTF-16, and its UTF-8 reading still holds the name. */
+    const padded = (parity: 0 | 1): Uint8Array => {
+      const head = encode(widePage.length % 2 === parity ? widePage : `${widePage} `);
+      return Uint8Array.from([...head, ...Array.from({ length: 200 }, () => [0, 0x41]).flat()]);
+    };
     const readings = {
       nulPage: read(encode(`# probe\n${String.fromCodePoint(0)}\nsee ${SDK_NAME} here\n`)),
       notUtf8: read(Uint8Array.from([...encode("# probe\n"), 0xff, 0, ...encode(`\nsee ${SDK_NAME} here\n`)])),
-      utf16le: read(wide(widePage, "le", true)),
-      utf16be: read(wide(widePage, "be", true)),
-      utf16leUnmarked: read(wide(widePage, "le", false)),
-      utf16beUnmarked: read(wide(widePage, "be", false)),
+      utf16le: read(utf16Bytes(widePage, "le", true)),
+      utf16be: read(utf16Bytes(widePage, "be", true)),
+      utf16leUnmarked: read(utf16Bytes(widePage, "le", false)),
+      utf16beUnmarked: read(utf16Bytes(widePage, "be", false)),
+      paddedEven: read(padded(0)),
+      paddedOdd: read(padded(1)),
+      utf32le: read(quad(widePage, "le")),
+      utf32be: read(quad(widePage, "be")),
       path: kinds(`src/workbench/${(sdkWords ?? []).join("-")}-bridge.ts`),
     };
-    expect(readings, "the decode reads a NUL-bearing page, a page that is not UTF-8 and a UTF-16 page in either byte order, marked or not, and a path reads like a text").toStrictEqual({
-      nulPage: { lossy: false, encoding: "utf-8", hits: ["sdk:exact"] },
-      notUtf8: { lossy: true, encoding: "utf-8", hits: ["sdk:exact"] },
-      utf16le: { lossy: false, encoding: "utf-16le", hits: ["sdk:exact"] },
-      utf16be: { lossy: false, encoding: "utf-16be", hits: ["sdk:exact"] },
-      utf16leUnmarked: { lossy: false, encoding: "utf-16le", hits: ["sdk:exact"] },
-      utf16beUnmarked: { lossy: false, encoding: "utf-16be", hits: ["sdk:exact"] },
+    expect(
+      readings,
+      "the decode reads a NUL-bearing page, a page that is not UTF-8, a UTF-16 page in either byte order, marked or not, a NUL-padded UTF-8 page at either parity both ways and a UTF-32 page by its mark, and a path reads like a text",
+    ).toStrictEqual({
+      nulPage: { encodings: ["utf-8"], hits: ["sdk:exact"] },
+      notUtf8: { encodings: ["utf-8 lossy"], hits: ["sdk:exact"] },
+      utf16le: { encodings: ["utf-8 lossy", "utf-16le"], hits: ["sdk:exact"] },
+      utf16be: { encodings: ["utf-8 lossy", "utf-16be"], hits: ["sdk:exact"] },
+      utf16leUnmarked: { encodings: ["utf-8", "utf-16le"], hits: ["sdk:exact"] },
+      utf16beUnmarked: { encodings: ["utf-8", "utf-16be"], hits: ["sdk:exact"] },
+      paddedEven: { encodings: ["utf-8", "utf-16be"], hits: ["sdk:exact"] },
+      paddedOdd: { encodings: ["utf-8", "utf-16le"], hits: ["sdk:exact"] },
+      utf32le: { encodings: ["utf-8 lossy", "utf-16le", "utf-32le"], hits: ["sdk:exact"] },
+      utf32be: { encodings: ["utf-8 lossy", "utf-32be"], hits: ["sdk:exact"] },
       path: ["sdk:finding"],
     });
-    return { spellings, echo, screaming, misses, readings };
+    // wb-qnl8 F4: the unmarked UTF-16 thresholds at their bounds. The SDK name padded to a multiple of nine ASCII units gives one
+    // NUL byte per unit; as many NUL-free units (U+4E2D) leave exactly a quarter of the bytes NUL, one more falls under the floor;
+    // one NUL-low unit (U+0100) per nine ASCII ones leaves exactly nine in ten NULs at one parity, one more falls under it.
+    const ascii = SDK_NAME.padEnd(Math.ceil(SDK_NAME.length / 9) * 9, " ");
+    const free = String.fromCodePoint(0x4e2d);
+    const low = String.fromCodePoint(0x0100);
+    const boundsOf = (order: "le" | "be"): JsonObject => ({
+      floorAt: read(utf16Bytes(`${ascii}${free.repeat(ascii.length)}`, order, false)),
+      floorUnder: read(utf16Bytes(`${ascii}${free.repeat(ascii.length + 1)}`, order, false)),
+      parityAt: read(utf16Bytes(`${ascii}${low.repeat(ascii.length / 9)}`, order, false)),
+      parityUnder: read(utf16Bytes(`${ascii}${low.repeat(ascii.length / 9 + 1)}`, order, false)),
+    });
+    const bounds = { le: boundsOf("le"), be: boundsOf("be") };
+    const at = (order: "le" | "be"): JsonObject => ({ encodings: ["utf-8", `utf-16${order}`], hits: ["sdk:exact"] });
+    const under: JsonObject = { encodings: ["utf-8"], hits: [] };
+    expect(bounds, "an unmarked UTF-16 page is read wide at a quarter of its bytes NUL with nine in ten of them at one parity, never under either bound").toStrictEqual({
+      le: { floorAt: at("le"), floorUnder: under, parityAt: at("le"), parityUnder: under },
+      be: { floorAt: at("be"), floorUnder: under, parityAt: at("be"), parityUnder: under },
+    });
+    // wb-qnl8 F1: the walk keeps both readings of a page read both ways, and the token census reads each of them: the padded page
+    // holds the name in its first (UTF-8) reading, the unmarked UTF-16 page only in its second.
+    const walkedAs = (bytes: Uint8Array): JsonObject => {
+      const page = walkedOf("docs/workbench/probe.md", bytes);
+      return { readings: page.file.readings.length, lossy: page.lossy, hits: fileHits(page.file).map(hit => `${hit.rel}:${hit.line} ${hit.needle} ${hit.kind}`) };
+    };
+    const walked = { padded: walkedAs(padded(0)), wide: walkedAs(utf16Bytes(widePage, "le", false)) };
+    const both: JsonObject = { readings: 2, lossy: false, hits: ["docs/workbench/probe.md:2 sdk exact"] };
+    expect(walked, "the walk keeps every reading of a page read both ways, and the token census reads each").toStrictEqual({ padded: both, wide: both });
+    return { spellings, echo, screaming, misses, readings, bounds, walked };
   },
   M2: async () => {
     const probes = [
@@ -1941,7 +2193,10 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       attributionNoChange: [],
       tagged: ["attribution"],
     });
-    return { cut: cut.map(sentence => `${sentence.line}:${sentence.text}`), families, rules };
+    // wb-qnl8 F1: the two rules read every reading of a file, so a sentence only a later reading holds is judged.
+    const everyReading = fileTally({ rel: "docs/workbench/probe.md", readings: ["A quiet page.", "Pi renders each context block as a TUI control."] }).findings;
+    expect(everyReading, "the sentence rules read every reading of a file").toStrictEqual(["docs/workbench/probe.md:1 control-model: Pi renders each context block as a TUI control."]);
+    return { cut: cut.map(sentence => `${sentence.line}:${sentence.text}`), families, rules, everyReading };
   },
   R1: async () => {
     const statusEnvelope = placed(carrier(), { id: "status", path: ["observations", "0"], seed: { status: "on_click", freshness: "captured_at_render", replayed: false } }, {});
@@ -1962,8 +2217,8 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
     // reading; the same module spelling the schema is a reader, and its control word is caught.
     const projection = "export const rfBlockControls = (reading: JsonValue): unknown => (reading as { source: { result: { blocks: unknown } } }).source.result.blocks;\n";
     const probeView = "src/workbench/probe-view.ts";
-    const outsideReaders = piTypesOf([{ rel: probeView, text: projection }]);
-    const asReader = piTypesOf([{ rel: probeView, text: `${projection}export const probeSchema = "${REACTIVE_FIBER_CLI_SCHEMA}";\n` }]);
+    const outsideReaders = piTypesOf([{ rel: probeView, readings: [projection] }]);
+    const asReader = piTypesOf([{ rel: probeView, readings: [`${projection}export const probeSchema = "${REACTIVE_FIBER_CLI_SCHEMA}";\n`] }]);
     // R20: the control fields set at each unplaced slot of the carrier: no judged variant carries one there, and every surface
     // reads the placed envelope quiet under the judge.
     const unplaced = UNPLACED.map(slot => {
@@ -1973,12 +2228,20 @@ const IMPL: Readonly<Record<string, () => Promise<JsonValue>>> = {
       const judged = variantsOf().some(entry => [...JSON.stringify(resultOf(entry.variant)[slot] ?? null).matchAll(SENTINEL)].length > 0);
       return { judged, findings: SURFACES.flatMap(surface => judge(surface, before[surface], after[surface])) };
     });
+    // R5 (wb-qnl8 F4): an unmarked UTF-16 page under the NUL floor holds the name in its UTF-16 decoding, yet the decode gives it
+    // its UTF-8 reading only, which reads quiet.
+    const underFloor = utf16Bytes(`${SDK_NAME}${String.fromCodePoint(0x4e2d).repeat(SDK_NAME.length + 1)}`, "le", false);
+    const underFloorReadings = readingsOf(underFloor);
     const residuals = {
       "R-STATUS-WORD": statusNotes.some(note => note.includes("(on_click)")) && !PLACEMENTS.some(placement => placement.path.includes("status")),
       "R-PRODUCER-IDENTITY": releaseRefs.includes("rf-cli:on_click") && !PLACEMENTS.some(placement => placement.path.includes("provenance")),
       "R-PROSE-NAME": tolerantHits(`the rf ${(documentWords ?? []).join(" ")} is text, read by the ${(documentWords ?? []).join("-")} parser of ${(documentWords ?? []).join(".")}`) === 0,
       "R-COMPOSED": tolerantHits(`const name = [${sdkTitle.map(word => `"${word}"`).join(", ")}].join("");`) === 0,
-      "R-ENCODED": tolerantHits(`${sdkTitle[0]}\\u0043omponents and ${sdkTitle[0]}&#67;omponents`) === 0,
+      "R-ENCODED":
+        tolerantHits(`${sdkTitle[0]}\\u0043omponents and ${sdkTitle[0]}&#67;omponents`) === 0 &&
+        UTF16["utf-16le"].decode(underFloor).includes(SDK_NAME) &&
+        JSON.stringify(underFloorReadings.map(reading => reading.encoding)) === JSON.stringify(["utf-8"]) &&
+        underFloorReadings.every(reading => tolerantHits(reading.text) === 0),
       "R-LOOKALIKE": tolerantHits(`R${String.fromCodePoint(0x0435)}active${sdkTitle[1]}`) === 0,
       "R-OTHER-ROWS": sentenceFindings(appendedSentence, true).length === 1 && tallyOf("appended", filingOf(`Not P0: none.\n\n${appendedSentence}`), true).findings.length === 0,
       "R-NON-PROSE": sentenceFindings(model, false).length === 1 && outside.filter(sentenceJudged).length === 0,
@@ -2027,6 +2290,7 @@ function constants(): JsonValue {
     rfReading: RF_READING.source,
     resultMembers: RESULT_MEMBERS,
     reflectiveReads: REFLECTIVE_READS,
+    keyedReads: KEYED_READS,
     readProbes: Object.keys(READ_PROBES),
     quietProbes: Object.keys(QUIET_PROBES),
     surfacePins: SURFACE_PINS,
