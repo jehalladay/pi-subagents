@@ -297,3 +297,98 @@
 | the non-claim | none | 4ced0a794ef4ce06 |
 | the inline run forms | none | 58538dd6fc496183 |
 | the non-claims through other values | none | 7df2865db04effd6 |
+
+## 2026-10-27 the typed-status echo census judged set, cut 4: every write of a task's run flags, the context's other ways in, the registration read through literal keys, destructures, spreads and fixtures, and A1's key paths through nine more nodes (wb-50dt, the wb-rgov gate's F1 and F2)
+
+- What binds here: test/workbench-rf-typed-status-echo-census.test.ts reads the two tables below through the same shared docs reader and refusals as the earlier tables (each table is the only block of its section, the section holds no HTML, the header row reads as below). A1's record of every control it reads is the cut-3 A1 table's rows followed by the first table's, in order; the file-level hook's record of every registration-mode control is the cut-3 registration table's rows followed by the second table's. Each control stands there by name, reading and the sha256/16 of its text.
+- F1, every write of a task's run flags (the lead): a task write is any write of a `mode` or `fails` member (a property or a literal element key, through the wrappers) anywhere in the module - the target of an assignment of any operator or of a for-in or for-of head, each target inside a destructuring pattern included (an array or object pattern, nested, wrapped, defaulted or rest), the operand of an increment or a decrement, or the operand of a delete. The wb-rgov gate's K3 (an array pattern), K4 (an object pattern), K5 (a for-of head) and K6 (a delete) each have a control, beside a for-in head, a nested, a defaulted, an array-rest, an object-rest, a for-of pattern and a wrapped target, an increment and a prefix decrement. A defaulted target is an assignment of its own and was already read as one.
+- F1, the context's other ways in: a rest parameter (K7) and a use of a function's or a method's own arguments object outside a nested function that has its own (K8) read as a context escape, while a nested function's own arguments object reads nothing. A task bound from a context - a destructured task key (of a parameter or of a pattern bound to a context), a task member (a property or a literal element key), an alias of either or the rest of a task pattern - carries the context back (K9): its context member (a property or a literal element key), a context key destructured from it and a name bound to either are contexts, read like any other context (a skip, a computed member, an escape).
+- F1, the registration read through literal keys, destructures, spreads and fixtures: a namespace's registrar member (K11) and hook member (K10) and a test hook are read through a literal element key too, and a namespace through the wrappers; a computed member of a namespace reds. A name bound to a namespace or to the rest of a namespace pattern is a namespace; a pattern on a namespace binds its registrar members as registrars and its hook members as hooks, and a pattern on a registrar chain binds its hook members as hooks and every other member as a chain, while a computed key in either pattern reds. A spread argument's array literal is read in place, nested spreads included (K19), and any other spread reads unread wherever it stands. An extend call on a registrar chain has its fixtures read (K30): each inline fixture function (an arrow, a function expression or a method), or a fixture tuple's first element, is a callback whose first parameter alone is the context; a plain or object-literal fixture is a static value; a fixture or a fixture set held elsewhere reads unread.
+- F1, non-claims: a task's other uses (an argument, a comparison, a value held in another value) are not followed, and nothing is bound through a nested pattern on a namespace, a registrar chain or a task; the cut-4 non-claim control reads no mode. The cut-3 non-claims stand.
+- F2, A1's key paths through nine more nodes (the ride): the key path of a nested object pattern, literal or type also runs through a function or construct type's return type (o01), the last operand of a comma (o02), a yielded value, which continues as a returned value does (o03), a value returned or yielded from a function declaration nested in a function, which continues from the function holding the declaration (o04; the strict direction: whether that value is then returned is not read), both branches of a conditional type (the o05 boundary, now in the claim), an assignment's or a logical assignment's right side, where a member target names the keys by its chain past the head (o06, o07) and any other target passes the value on, an arrow's or a function expression's return type (o08), and a tagged template's or a template literal's substitution (o09, o10). Each has a control in the first table, beside same-class siblings (a construct type, a yielded method, the conditional type's other branch, an element-key target, an assigned value, a function expression's return type). R-SPLIT-PATH gains three twins at those readings' borders, each quiet: a module-level function declaration's own name, a plain name written and a member written through a key bound elsewhere.
+- Red first, measured at trunk 717c4a0: with this cut's controls, roster witness keys and tables in place and the three readers at their landed bytes (registrationModes, passesThrough and enclosingKeys spliced back from the base into the final census), the census reads 2 failed of 26 - A1 at its cut-4 key-path assertion, all 16 key-path controls at 0, and the roster judge - and the file-level hook refuses 47 of the 52 cut-4 registration controls. The other five (the defaulted pattern write, a nested function's own arguments, a namespace rest's other member, the cut-4 run forms and non-claims) read as tabled under the landed reader too. The first red run, cut before the last nine controls were added, read the same 2 failed of 26 with 40 of its 43 registration controls refused.
+- Green, measured on the cut at trunk 717c4a0: the census reads 26 of 26, and A1 walks 116 src files, every one a module, and 0 entries that are neither a file nor a directory, reading 119963 code units with 0 hits. A differential read over the 116 src modules finds every landed code unit among the cut's, or as the tail of a longer cut key path (2 such: src/workbench/furnace-observer.ts's error.category and error.message, now also read as reading.error.category and reading.error.message through its member write `this.reading = {...}`). Over the registrations of the 467 test files, both readers read the same 806 modes, so the widened read adds no mode to any landed test file and drops none.
+- Mutants, measured on the cut at trunk 717c4a0, each applied to a throwaway copy of the census (and of its roster or this receipt where the mutant edits them) and run in batches beside a control copy that reads 26 of 26: all 72 are red. They are the CT battery's seven members; six anchoring hollows (a cut-4 registration control, or a key-path control, removed alone; either cut-4 table dropped from its record's hold; the delete reading removed together with its control; the comma reading removed together with its control and its roster witness), each failing at a cut-4 table; and 59 branch mutants, at least one per new branch, 16 for A1's key paths and 43 for the registration read.
+- CT-BATTERY v2 (measured on the cut at 717c4a0): CT1 red=2; CT1b red=2; CT2 red=1; CT3 red=2; CT4 red=2; CT5 red=2; CT6 red=1 (CT5 kills through the first entry's judged-pin table and the roster judge; CT6, which also removes the pin from the roster, kills through the judged-pin table alone, outside the census and its roster).
+- Non-claims: this cut changes no src file and no shared helper or fixture beyond this census's roster; TRACEABILITY.md is frozen and untouched; the producer vocabularies are the wb-o4h0.7 cut's reads of the installed rf, not re-read here; the residual families named here and in the earlier entries are named, not closed.
+
+### A1 control additions, wb-d8io cut 4
+
+| Group | Control | Reads | Text sha256/16 |
+| --- | --- | --- | --- |
+| widened.keyPaths | functionType | 1 | 40b74ce410a7ab7b |
+| widened.keyPaths | constructType | 1 | cd7fe24528093171 |
+| widened.keyPaths | comma | 1 | 8b1d50fd8e033dc5 |
+| widened.keyPaths | yielded | 1 | 5fcaa9baff082456 |
+| widened.keyPaths | yieldedMethod | 1 | 14d577941679d7b0 |
+| widened.keyPaths | innerDeclaration | 1 | f1ea28bfcd4bdc5f |
+| widened.keyPaths | conditionalType | 1 | f0c97ab13b84b7da |
+| widened.keyPaths | conditionalTypeElse | 1 | 089584a6de87f84a |
+| widened.keyPaths | memberAssignment | 1 | 85c5d0b96851b627 |
+| widened.keyPaths | logicalAssignment | 1 | 17c730b8dbea169a |
+| widened.keyPaths | elementAssignment | 1 | e79c842ab17cd322 |
+| widened.keyPaths | assignedValue | 1 | 9263445f0ffdb835 |
+| widened.keyPaths | returnType | 1 | 2f07f633eed32516 |
+| widened.keyPaths | functionReturnType | 1 | db02ced7f3282f0b |
+| widened.keyPaths | taggedTemplate | 1 | 7cdbf04283ea8eae |
+| widened.keyPaths | templateLiteral | 1 | 7d81fa8f5d3a081f |
+| quiet.splitPath | declaredFunction | 0 | 5ee603db7690d2ac |
+| quiet.splitPath | nameAssignment | 0 | 8e368c3bc4281b2e |
+| quiet.splitPath | keyedAssignment | 0 | b8bebbbde3d8b1aa |
+
+### Registration-mode control additions, wb-d8io cut 4
+
+| Control | Modes | Text sha256/16 |
+| --- | --- | --- |
+| an array-pattern write | task write | 52f6f2a765441131 |
+| an object-pattern write | task write | c25bf32fbd2b663a |
+| a for-of write | task write | 509fd5b2a5f074b2 |
+| a for-in write | task write | 93aa924ffbef239d |
+| a nested pattern write | task write | b719909b405d0fd0 |
+| a defaulted pattern write | task write | 6edc893047e71ee2 |
+| a rest pattern write | task write | 1487b5e922d62bf2 |
+| an object rest write | task write | 50b626889e13501b |
+| a for-of pattern write | task write | fd8b036d9e0d43ea |
+| a wrapped pattern write | task write | 1acd8dc1963cfa1a |
+| an increment | task write | eaddb6bd3febedaa |
+| a prefix decrement | task write | 9aece8908d0a20cc |
+| a delete | task write | 15e658d397f8956a |
+| a rest parameter | context escape | 0323e654d400c9a8 |
+| the arguments object | context escape | 8a9d5d7995cdafec |
+| a nested function's own arguments | none | 255bb206038172d1 |
+| a task back-reference | context skip | edcf73a4b9acde9c |
+| a context's task back-reference | context skip | 574f6e47ffdd3f18 |
+| a destructured back-reference | context skip | 8ed6513cf7e95ee6 |
+| a held back-reference | context skip | 6cf22151c38aee02 |
+| a task alias | context skip | 12879173d3907d7e |
+| a bound task key | context skip | 1ff91172a68a7a3f |
+| a task pattern's rest | context skip | 914ddd0335ac51a8 |
+| a back-reference by a literal key | context skip | 0a55b06977de08b2 |
+| a task member by a literal key | context skip | 022a81034c0d28ad |
+| a back-reference escape | context escape | e5e0f5a80fa08ccb |
+| a namespace hook by a literal key | context skip | f768059f47df30a6 |
+| a namespace registrar by literal keys | skip | b762a38a066220ba |
+| a namespace registrar by a literal key | todo | bed60eb6c315a217 |
+| a wrapped namespace | skip | 0838a7c0527e1941 |
+| a computed namespace member | computed member | 4ffaead5e299641c |
+| a namespace alias | skip | 3c4db2ab56c95a94 |
+| a destructured namespace registrar | only | 1471838ee98cb7fa |
+| a destructured namespace hook | context skip | aba70b1468661833 |
+| a namespace rest | skip | 05b95410f107d78d |
+| a namespace rest's other member | none | 4490036612606a95 |
+| a destructured chain member | skip | 1c28ef7456b7648c |
+| a destructured registrar hook | context skip | a88a433726a9c31d |
+| a computed destructure | computed member | a48f67b264933a8e |
+| a computed namespace destructure | computed member | b82e08f7a880da1b |
+| a test hook by a literal key | context skip | f0788f5a9e7cfdbf |
+| a spread argument | options skip | 54c12108adb11eea |
+| a nested spread argument | options todo | 171292b3249aac59 |
+| a held spread argument | argument unread | 0861726feae71c61 |
+| an auto fixture | context skip | 85944c31871b954b |
+| a fixture function | context skip | 851fdea85c231b3a |
+| a fixture method | context skip | 5d4ca6a971b07c12 |
+| a held fixture | argument unread | 4b79d16990de9633 |
+| held fixtures | argument unread | 67adac3ff2dff39a |
+| a fixture's rest parameter | context escape | 08cb76a80a92abed |
+| the cut-4 run forms | none | 5b52502a0728b3f1 |
+| the cut-4 non-claims | none | 24e32da32d53c419 |
