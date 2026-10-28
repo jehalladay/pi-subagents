@@ -467,3 +467,185 @@ describe('wb-752.6 Beads Work readiness reader', () => {
     expect(source.match(/beads\.work\.readiness\/v1/g)).toHaveLength(1);
   });
 });
+
+/** wb-4ap.14 (COLLECTIVE-ADAPTATION-R14), the until-then leg. The statement: "When beads B1/B2 extend the bd show --json
+ * envelope with typed attempt, producer, versioned-artifact and successor-consumer refs (BD-C02) and a read-only
+ * readiness/demand export (BD-C03), the Beads observer shall project each new dependency_type as a provenanced edge or facet
+ * from native fields only, never synthesizing ownership or a second readiness DAG; until then every unknown type stays a
+ * counted 'unmapped' entry, never an edge." Acceptance pinned here: "Today's fixtures stay toStrictEqual; the show-only
+ * beads:inspect grant is unchanged — no claim/close/mutate (beads/01-requirements.md:10@1e04c39a7 BD-C04)."
+ *
+ * MEASURED BY THE CUTTING SEAT (2026-10-28, read-only): the installed bd is 1.1.0-rc.1 (ba381a58c). Its built-in roster,
+ * WellKnownDependencyTypes() (internal/types/types.go:979-986@ba381a58c, the constants at :934-964), is the 19 literals of
+ * BD_DEPENDENCY_TYPES in source order; none is an attempt, producer, versioned-artifact or successor-consumer ref, and the
+ * program pages read "design only, not implemented" (docs/programs/collective-adaptation-2026-10-16/01-requirements.md:3).
+ * B1 may reuse that model ("Use the existing dependency and relation model if adequate", 02-architecture.md:7), so no
+ * existing type is read as lineage before a released bd says so. AffectsReadyWork() (types.go:1001-1003) is blocks,
+ * parent-child, conditional-blocks and waits-for: bd's readiness DAG. Fifteen live `bd show --json` reads of this
+ * repository's store carried no attempt, producer, artifact, successor, readiness or demand key, at the top level or on a
+ * dependency entry. The trigger has not fired, so the "On landing" leg (a measured envelope with the new types, each mapped
+ * to one typed edge or a counted facet) stays with the released bd. */
+const BD_DEPENDENCY_TYPES = [
+  'blocks',
+  'parent-child',
+  'conditional-blocks',
+  'waits-for',
+  'related',
+  'discovered-from',
+  'replies-to',
+  'relates-to',
+  'duplicates',
+  'supersedes',
+  'authored-by',
+  'assigned-to',
+  'approved-by',
+  'attests',
+  'tracks',
+  'until',
+  'caused-by',
+  'validates',
+  'delegated-from',
+] as const;
+/** The two literals the reader edges (blocks -> dependency, parent-child -> grouping); every other bd type is counted. */
+const EDGED_BD_TYPES: readonly string[] = ['blocks', 'parent-child'];
+const UNMAPPED_BD_TYPES = BD_DEPENDENCY_TYPES.filter((type) => !EDGED_BD_TYPES.includes(type));
+/** bd's own comments name these assignment, authorship, approval and delegation (types.go:950-952, :964), its readiness
+ * gates (conditional-blocks, waits-for: AffectsReadyWork) and its trigger link (caused-by, :960). */
+const OWNERSHIP_READINESS_CAUSE_TYPES = ['authored-by', 'assigned-to', 'approved-by', 'delegated-from', 'conditional-blocks', 'waits-for', 'caused-by'];
+/** A null-prototype count map, the shape the reader builds, so toStrictEqual compares prototypes too. */
+const counted = (entries: Record<string, number>): Record<string, number> => Object.assign(Object.create(null) as Record<string, number>, entries);
+const beadsProvenance = {source: 'beads', observedAt: now(), nativeConfirmationRef: confirmation};
+
+describe('wb-4ap.14 (COLLECTIVE-ADAPTATION-R14): until a released bd ships B1/B2, every type but blocks and parent-child is counted, never edged', () => {
+  it.each(UNMAPPED_BD_TYPES)('wb-4ap.14 U1: the bd type %s is counted once under its own label, kept with its raw type and mints no edge', async (type) => {
+    const reading = await read(fake(ok([issue({dependencies: [dep('wb-r14.u', type)]})])));
+    expect(reading.unmappedDependencyTypes).toStrictEqual(counted({[type]: 1}));
+    expect(reading.dependencies).toStrictEqual({offered: 1, returned: 1, truncated: false, items: [{id: 'wb-r14.u', dependencyType: type, status: 'open'}]});
+    expect(Object.hasOwn(reading.work, 'parent')).toBe(false);
+    expect(Object.hasOwn(reading, 'selfReferences')).toBe(false);
+    expect(projectBeadsWork(reading, scope).relations).toStrictEqual([]);
+  });
+
+  it('wb-4ap.14 U2: one envelope carrying all 19 bd types yields one dependency edge and one grouping edge with beads provenance and counts the other 17 once each', async () => {
+    expect(BD_DEPENDENCY_TYPES).toHaveLength(19);
+    expect(new Set(BD_DEPENDENCY_TYPES).size).toBe(19);
+    expect(UNMAPPED_BD_TYPES).toHaveLength(17);
+    const entries = BD_DEPENDENCY_TYPES.map((type, index) => dep(`wb-r14.${index}`, type));
+    const reading = await read(fake(ok([issue({dependencies: entries})])), {limits: {...limits, maxDependencies: 32}});
+    expect(reading.completeness).toBe('complete');
+    expect(reading.dependencies.items).toStrictEqual(BD_DEPENDENCY_TYPES.map((type, index) => ({id: `wb-r14.${index}`, dependencyType: type, status: 'open'})));
+    expect(reading.unmappedDependencyTypes).toStrictEqual(counted(Object.fromEntries(UNMAPPED_BD_TYPES.map((type) => [type, 1]))));
+    expect(reading.work.parent).toBe('wb-r14.1');
+    expect(projectBeadsWork(reading, scope).relations).toStrictEqual([
+      {scope, kind: 'dependency', from: nodeRef(workId), to: nodeRef('wb-r14.0'), provenance: beadsProvenance},
+      {scope, kind: 'grouping', from: nodeRef('wb-r14.1'), to: nodeRef(workId), provenance: beadsProvenance},
+    ]);
+  });
+
+  it('wb-4ap.14 U3: assignment, authorship, approval, delegation, readiness-gate and trigger types mint no ownership, causation, grouping or dependency and recompute no readiness', async () => {
+    const bare = await read(fake(ok([issue({dependencies: []})])));
+    const reading = await read(fake(ok([issue({dependencies: OWNERSHIP_READINESS_CAUSE_TYPES.map((type, index) => dep(`wb-r14.s${index}`, type))})])));
+    const {snapshot, relations} = projectBeadsWork(reading, scope);
+    expect(relations).toStrictEqual([]);
+    expect(Object.hasOwn(reading.work, 'parent')).toBe(false);
+    expect(reading.source.ownership).toBe('external');
+    expect(reading.unmappedDependencyTypes).toStrictEqual(counted(Object.fromEntries(OWNERSHIP_READINESS_CAUSE_TYPES.map((type) => [type, 1]))));
+    // The node presents bd's own status; no readiness is derived from a gate type (docs/workbench/07-native-integrations.md:35).
+    expect(snapshot).toStrictEqual(projectBeadsWork(bare, scope).snapshot);
+    expect(snapshot.node).toStrictEqual({title: 'Beads adapter', type: 'sdk-operation', statusText: 'in_progress', statusTone: 'active'});
+  });
+
+  it('wb-4ap.14 U4: BD-C02/BD-C03-shaped fields no released bd defines (attempt, producer, artifact and successor keys on the issue or an entry, a readiness or demand export) leave the reading and the projection toStrictEqual today', async () => {
+    // Illustrative keys only: bd's 02-architecture.md:7 names the handoff metadata, not its fields, and no live read carries one.
+    const handoff = {task: 'wb-752.6', attempt: 'attempt-1', producer: 'worker-a', sourceRevision: 'rev-1', artifact: 'artifact-1@1', consumer: 'worker-b', uncertainty: 'unknown'};
+    const today = await read(fake(ok([issue()])));
+    const extended = await read(
+      fake(
+        ok([
+          issue({
+            attempt_refs: [handoff.attempt],
+            producer_ref: handoff.producer,
+            artifact_refs: [handoff.artifact],
+            successor_refs: [handoff.consumer],
+            readiness: {ready: true, blocked_by: []},
+            work_demand: {unmet: 3},
+            metadata: {handoff},
+            dependencies: [{...dep('wb-g1g.2', 'blocks'), metadata: {handoff}}],
+          }),
+        ]),
+      ),
+    );
+    expect(extended).toStrictEqual(today);
+    expect(JSON.stringify(extended)).toBe(JSON.stringify(today));
+    expect(projectBeadsWork(extended, scope)).toStrictEqual(projectBeadsWork(today, scope));
+  });
+
+  it("wb-4ap.14 U5: today's fixture reads and projects toStrictEqual its frozen value", async () => {
+    const reading = await read(
+      fake({
+        ...ok([issue({parent: 'wb-752', dependencies: [dep('wb-752', 'parent-child'), dep('wb-g1g.2', 'blocks'), dep('wb-z.1', 'related'), dep('wb-y.1', 'discovered-from')]})]),
+        producerVersion: '1.1.0-rc.1',
+      }),
+    );
+    expect(reading).toStrictEqual({
+      contract: BEADS_WORK_CONTRACT,
+      source: {provider: 'beads', workId, workspaceRoot, ownership: 'external', producer: 'bd', producerVersion: '1.1.0-rc.1'},
+      capturedAt: now(),
+      observedAt: now(),
+      freshness: 'current',
+      completeness: 'complete',
+      work: {title: 'Beads adapter', status: 'in_progress', issueType: 'task', priority: 2, parent: 'wb-752', closeReasonPresent: false},
+      dependencies: {
+        offered: 4,
+        returned: 4,
+        truncated: false,
+        items: [
+          {id: 'wb-752', dependencyType: 'parent-child', status: 'open'},
+          {id: 'wb-g1g.2', dependencyType: 'blocks', status: 'open'},
+          {id: 'wb-z.1', dependencyType: 'related', status: 'open'},
+          {id: 'wb-y.1', dependencyType: 'discovered-from', status: 'open'},
+        ],
+      },
+      unmappedDependencyTypes: counted({related: 1, 'discovered-from': 1}),
+    });
+    expect(projectBeadsWork(reading, scope)).toStrictEqual({
+      snapshot: {
+        source: nodeRef(workId),
+        scope,
+        capturedAt: now(),
+        observedAt: now(),
+        coverage: 'complete',
+        sourceVersion: '1.1.0-rc.1',
+        kind: 'beads.work.snapshot',
+        node: {title: 'Beads adapter', type: 'sdk-operation', statusText: 'in_progress', statusTone: 'active'},
+      },
+      relations: [
+        {scope, kind: 'dependency', from: nodeRef(workId), to: nodeRef('wb-g1g.2'), provenance: beadsProvenance},
+        {scope, kind: 'grouping', from: nodeRef('wb-752'), to: nodeRef(workId), provenance: beadsProvenance},
+      ],
+      truncated: false,
+    });
+  });
+
+  it('wb-4ap.14 U6: the show-only seam is unchanged: a client that also offers claim, close and update sees one show and nothing else (BD-C04)', async () => {
+    const calls: string[] = [];
+    const offering: BeadsReadClient & {claim(id: string): Promise<void>; close(id: string): Promise<void>; update(id: string): Promise<void>} = {
+      async show(id) {
+        calls.push(`show:${id}`);
+        return ok([issue()]);
+      },
+      async claim(id) {
+        calls.push(`claim:${id}`);
+      },
+      async close(id) {
+        calls.push(`close:${id}`);
+      },
+      async update(id) {
+        calls.push(`update:${id}`);
+      },
+    };
+    await read(offering);
+    expect(calls).toStrictEqual([`show:${workId}`]);
+    expectTypeOf<keyof BeadsReadClient>().toEqualTypeOf<'show'>();
+  });
+});

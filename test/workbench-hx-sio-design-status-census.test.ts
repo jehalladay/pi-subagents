@@ -49,8 +49,10 @@
  *   "/" or ">") and its attributes to the first ">" outside a quoted value (tagEnd, one reading for every kind of tag - the start and the end
  *   tag of an ordinary, a block-level, each RCDATA and each raw-text element - in exactly the members row M lists for MR4: its whole
  *   transition table through every kind of tag in an HTML block and on an HTML page, and in an inline token, wherever marked's tag rule reads
- *   the tag, through the start tag of each kind but plaintext's at every cell such a tag can reach; a tag the input ends inside drops, with
- *   the rest); the
+ *   the tag - its attributes separated by any JavaScript white space, so also by U+00A0 and the rest of INLINE_SPACE, which the HTML
+ *   tokenizer reads as ordinary characters (FOLLOW-UP wb-a7w6) - through the start tag of each kind but plaintext's at every cell such a tag
+ *   can reach, a tag the census ends inside marked's token among them, and through a start tag whose name an INLINE_SPACE member runs on (so
+ *   it opens an element of no kind the census knows) under each inline kind's name; a tag the input ends inside drops, with the rest); the
  *   text of a textarea or title element (RCDATA) renders as written to its end tag, its references decoded and its comments and tags shown
  *   as text; the text of a script, style, xmp, iframe, noembed, noframes or noscript element renders as written to its end tag, and a
  *   plaintext element's to the end, references not decoded (a page shows only the xmp's and the plaintext's, so the others are an
@@ -166,7 +168,15 @@
  *    inline token the start tag of an ordinary, a block-level, each RCDATA and each raw-text element that ends, each closed by its end tag,
  *    for each text whose attributes marked's tag rule reads), each reading what that start tag's pinned outcome predicts; ordinary start
  *    tags whose attributes marked's tag rule reads, one per group of the cells an inline token reads that the table's texts leave untold
- *    there, read through every kind the same way; a tag written in each form marked's tag rule does not read (a quote or "=" starting an
+ *    there, read through every kind the same way, and one per group of the cells an inline token reaches through a JavaScript white space
+ *    the HTML tokenizer reads as an ordinary character (FOLLOW-UP wb-a7w6: U+00A0 at a separator, inlinecellao to inlinecellbl, read
+ *    through every kind the same way, a tag the census ends inside marked's token among them, so every inline-token redirection such a
+ *    tag can tell apart reds MR4 through every inline kind); each INLINE_SPACE member (the engine's \s beyond HTML white space) after "="
+ *    in an ordinary start tag (spaceclass, read through every kind the same way) and right after an inline span start tag's name, which it
+ *    runs on (runon, read by RUN_ON under every other inline kind's name, plaintext's among them, alike); a tag's name holding a double
+ *    quote, a single quote, "=", "<" and a character outside ASCII, each read whole; a carriage return in an ordinary start tag, which
+ *    EVERY_TAG reads on an HTML page on one line and on a Markdown page as a line feed; a tag written in each form marked's tag rule does
+ *    not read (a quote or "=" starting an
  *    attribute, a quote inside a name or an unquoted value, "=" inside an unquoted value, "/" before anything but ">", a name or "=" right
  *    after a quoted value, ">" or "=" right after "="), which a paragraph shows as written, one text per form; a double- and a
  *    single-quoted value holding ">", member by member, in the start tag of a block-level, each RCDATA and each raw-text element
@@ -181,13 +191,13 @@
  *    decoded and a raw-text element's kept, a plaintext element that never ends (even at a plaintext end tag), the inline tokens the
  *    standard closes early, and an inline tag), MU the UNREAD code points (each filler, controls, the markers, in a page and in code)
  *    beside the code points that stay read.
- *  R, the residuals' pinned quiet rows (R1-R11).
+ *  R, the residuals' pinned quiet rows (R1-R12).
  * ENUMERATION (cut #4; rule 19(c) engaged at refusal #3; the owner's reading of 2026-10-24: the R739 terminal enumerate-the-resolvable
  * form, the chain capped at this cut): for U1 RENDERED-TEXT DOCS TRUTH the census claims exactly its pinned set - refusal #2's members and
  * the seat's (A7: GA1-GA11, GA1r, GA2r, RV1-RV24), refusal #3's survivors, controls and over-refusal (A8), and the instrument members of
  * rows M (MR1-MR4, MU) - and nothing beyond it: every known departure of a leg from what a reader sees is a NAMED RESIDUAL with a pinned
- * quiet row (R1-R11), and NOT CLAIMED bounds the rest. An escape found outside the pinned set is a residual-list addition for the owner (a
- * FORM question), not a claim this census makes.
+ * quiet row (R1-R11, and R12 from FOLLOW-UP wb-a7w6), and NOT CLAIMED bounds the rest. An escape found outside the pinned set is a
+ * residual-list addition for the owner (a FORM question), not a claim this census makes.
  * ENUMERATION of wb-jh2f (cut #3; rule 19(c) engaged at refusal #2 through the rule 19(d) class reading): for the class refusal #1's
  *   guard names - an attribute or end-tag member that a header or note sentence claims - the census claims exactly row M's MR4 members as
  *   listed (the attribute and end-tag forms one by one, tagEnd's transition table through an ordinary start tag and through EVERY_TAG every
@@ -196,6 +206,11 @@
  *   are NOT CLAIMED forms named below, each a reading this census does not make (the tokenizer state carried from one block or inline token
  *   into the next, a script element's escape states, foreign content). An escape found outside the pinned set is a residual-list addition
  *   for the owner, not a claim this census makes.
+ * ENUMERATION of wb-a7w6 (hop 3 of the landing-418 chain, R739's terminal form): for the class gate F1 of landing 532 names - a tagEnd cell
+ *   an inline token reaches through a JavaScript white space marked's tag rule reads as a separator - the census claims exactly row M's MR4
+ *   members as listed (inlinecellao to inlinecellbl through EVERY_TAG, spaceclass and runon for each INLINE_SPACE member, RUN_ON) and
+ *   nothing beyond them: a redirection no such tag tells apart is NOT CLAIMED (below), and the inline plaintext departure is the named
+ *   residual R12. An escape found outside the pinned set is a residual-list addition for the owner, not a claim this census makes.
  * FROZEN SHAPE (standing rule 16): ROWS pins `${id}:${pins.length}` as a literal, and the judged set - every row's id, label and
  * pins, every pin's witness and the vocabularies, the rendering's tables, the frozen dossier's text and sha-256 - is held to the
  * out-of-file roster (ROSTER_FILE). A last case reads that every pin's case ran to its end. Not claimed: a single pin removed from ROWS,
@@ -215,12 +230,13 @@
  * over-read); an HTML block's text, read with its tags removed, not laid out; the HTML standard's tokenizer state carried from one block or
  * inline token into the next (an element, a comment or an attribute value that marked's block or token leaves open), each read on its own;
  * a script element's escape states (its text runs to the first "</script"); a character of tagEnd's "any other character" class beyond
- * the letters MR4's texts read it through (such as "<", "`" or a digit), which tagEnd reads like a letter but no pin holds one by one;
- * a redirection of a tagEnd cell that no tag marked's tag rule reads can tell apart, read in an inline token (marked hands an inline token
- * only a name and attributes after white space - a double-, a single- or an unquoted value - so a quote or "=" starting an attribute, "/"
- * before anything but ">" and the other forms row M pins as no inline token never reach it there: such a change is equivalent in an
- * inline token, and EVERY_TAG pins the cell through every kind of tag in an HTML block and on an HTML page); a plaintext start tag in an
- * inline token, whose element a reader's tokenizer runs past marked's token (the carried tokenizer state above);
+ * the letters and the INLINE_SPACE members MR4's texts read it through (such as "<", "`" or a digit), which tagEnd reads like a letter but
+ * no pin holds one by one; a redirection of a tagEnd cell that no tag marked's tag rule reads can tell apart in an inline token, any
+ * JavaScript white space as its separator included (FOLLOW-UP wb-a7w6, measured on this cut: 153 of the 891 inline-token cell
+ * redirections - the 82 targets that read alike in every context, which row M names, and the 71 redirections of tagEnd's carriage-return
+ * cells, which no inline token reads because marked reads a Markdown page's carriage return as a line feed, and which EVERY_TAG pins
+ * through every kind of tag on an HTML page); a start tag whose name an INLINE_SPACE member runs on, read in an HTML block, on an HTML page
+ * or as an end tag (RUN_ON reads it in an inline token only);
  * an svg or math element's content (foreign content), read as
  * HTML content, where a CDATA section is text (shown undecoded, as the raw leg reads it) and a title or style is no RCDATA or raw-text
  * element; the Unicode bidirectional algorithm beyond reversing each
@@ -249,7 +265,13 @@
  *   a not sign, then "registered;"); (b) in HTML content a reference without its ";" (a legacy name, or a numeric one) or a numeric one of more digits,
  *   which a browser decodes; (c) a reference to a line break, which cuts a rendered sentence a reader sees whole; (d) a reference in an
  *   attribute value (a title a reader sees as a tooltip), which the HTML leg reads as written; (e) a numeric reference to an UNREAD code
- *   point, which the rendered leg drops.
+ *   point, which the rendered leg drops; R12 R-INLINE-PLAINTEXT (FOLLOW-UP wb-a7w6, gate rider F4 of landing 532) a plaintext start tag in
+ *   an inline token, whose element a reader's tokenizer runs past marked's token to the end of the page while the census reads the token on
+ *   its own (the carried tokenizer state NOT CLAIMED names above), so what follows it renders as the page's own inline content and a comment
+ *   or a tag after it, which a reader sees as written, renders nothing; pinned quiet with a claim in such a comment and the qualifier in a
+ *   comment before the start tag (the raw leg reads the qualifier, the rendered leg drops the claim and the HTML leg reads no name beside
+ *   it), beside its control twin, whose claim stands outside the comment and reds in the rendered leg, so a page the census stops reading
+ *   reds the row.
  * RESPIN 1 (gate g10-gate-s73 refusal #1 of cut cb229d8e): U1 RENDERED-TEXT DOCS TRUTH cured - C1 and C2 read the dossier through the
  *   shared rendered view, so a section hidden in an HTML comment is refused (S8, S9); U2 DOCS SECTION BOUND + HEADING-UNIQUENESS +
  *   SAME-VIEW cured - C1's sections run to the next heading of level 1-3, "## Named IDs" binds once in the rendered view and its rows
@@ -307,7 +329,23 @@
  *   tags) each red MR4. Beyond the members refusal #2 measured, EVERY_TAG reads each text of an ordinary start tag in an HTML block through
  *   every other kind of tag (row M), so the transition table and each white-space place are pinned through every kind of tag in an HTML
  *   block and on an HTML page, and in an inline token through every cell a tag marked's tag rule reads can reach; the READINGS clause on a
- *   tag claims exactly these members, and NOT CLAIMED names the cells no inline token reaches.
+ *   tag claims exactly these members, and NOT CLAIMED names the cells no inline token reaches. CORRECTED at FOLLOW-UP wb-a7w6 (gate
+ *   cmd_fab798d0203b F1, landing 532): cut #3 said here and in READINGS that MR4 pins an inline token "through every cell a tag marked's tag
+ *   rule reads can reach", and in NOT CLAIMED that marked hands an inline token attributes only after white space; marked's tag rule
+ *   separates attributes with JavaScript's \s, which also matches U+00A0 and the rest of INLINE_SPACE, characters the HTML tokenizer,
+ *   HTML_MARKUP's name class and tagEnd read as ordinary ones, and the gate confirmed 263 such inline-token cell redirections at 0 failed of
+ *   46 (266 by its model). The two cut #3 delivery-note lines that rest on the same reading (CELL CLASS SPLITS: "0 observable survivors";
+ *   XS: "unobservable through any token marked's tag rule reads") are corrected append-only in the bead record.
+ * FOLLOW-UP wb-a7w6 (the R694 follow-up of landing 532, gate cmd_fab798d0203b F1-F4; hop 3 of the landing-418 chain): F1 is answered PIN,
+ *   not narrow - MR4 pins inlinecellao to inlinecellbl, which EVERY_TAG reads through every kind of tag (an inline kind's reading predicted
+ *   from the start tag's pinned outcome and the element's text marked hands over, so a tag the census ends inside marked's token is read
+ *   too), so each of the 266 redirections reds MR4 through every inline kind, the gate's 263 among them; spaceclass and runon pin each
+ *   INLINE_SPACE member, which RUN_ON holds to the engine's \s and reads under every inline kind's name; READINGS, row M, the ENUMERATION of
+ *   wb-a7w6 and NOT CLAIMED claim exactly these members. F2: EVERY_TAG's HTML-page leg reads a carriage return as itself (crpageaa to
+ *   crpageac on one line), so a family whose HTML-page leg reads the Markdown page reds MR4 (the gate's EH3). F3: MR4 reads a tag's name
+ *   holding a double quote, a single quote, "=", "<" and a character outside ASCII (namedq, namesq, nameeq, namelt, namenonascii), and runon
+ *   each INLINE_SPACE member inside a name, so HTML_MARKUP's name class is held by MR4's readings beside the roster's literal (the gate's
+ *   NM1-NM5). F4: the inline plaintext departure is the named residual R12, with its pinned quiet row.
  * SCOPE: the vocabularies are this cut's reading of the filing; the program lines are measured at the pin and not re-read here
  * (the census is hermetic), so a program change is seen only when a cut re-measures STATUS_LINES and ID_ROWS.
  *
@@ -546,8 +584,8 @@ const ROWS: readonly Row[] = [
   },
   {
     id: "R",
-    label: "the named residuals R1-R11 stay pinned quiet",
-    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11"],
+    label: "the named residuals R1-R12 stay pinned quiet",
+    pins: ["R1", "R2", "R3", "R4", "R5", "R6", "R7", "R8", "R9", "R10", "R11", "R12"],
   },
 ];
 
@@ -628,6 +666,7 @@ function constants(): unknown {
       unseen: UNSEEN.source,
       unread: UNREAD.source,
       bidi: BIDI.source,
+      inlineSpace: INLINE_SPACE,
     },
   };
 }
@@ -921,6 +960,12 @@ const HTML_MARKUP = /<!--(?:-?>|[\s\S]*?(?:--!?>|$))|<[!?][^>]*(?:>|$)|<\/(?:>|[
  * a plaintext element's text runs to the end. */
 const RCDATA: ReadonlySet<string> = new Set(["textarea", "title"]);
 const RAW_TEXT: ReadonlySet<string> = new Set(["script", "style", "xmp", "iframe", "noembed", "noframes", "noscript", "plaintext"]);
+/** The JavaScript white space the HTML standard's tokenizer reads as ordinary characters: what JavaScript's \s matches beyond HTML white space
+ * (FOLLOW-UP wb-a7w6; header, READINGS RENDERED LEG). marked's tag rule separates an inline tag's attributes with \s, so each of these does it
+ * too, while the tokenizer, HTML_MARKUP's name class and tagEnd read each as any other character. RUN_ON holds the list to the engine. */
+const INLINE_SPACE: readonly number[] = [
+  0x0b, 0xa0, 0x1680, 0x2000, 0x2001, 0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x2007, 0x2008, 0x2009, 0x200a, 0x2028, 0x2029, 0x202f, 0x205f, 0x3000, 0xfeff,
+];
 type TagState = "attributes" | "name" | "afterName" | "beforeValue" | "double" | "single" | "unquoted" | "afterQuoted" | "selfClosing";
 /** The tag state white space leaves each tag state in (the standard's: a name ends, an unquoted value ends, a quoted value or a solidus
  * gives way to the next attribute; inside a quoted value and before a value it changes nothing). */
@@ -1865,12 +1910,13 @@ interface Case {
 }
 /** A kind of tag other than an ordinary start tag (RESPIN 2 of wb-jh2f; header, row M MR4): the source an ordinary start tag's attributes and
  * the rest are put behind (`open`, in place of EVERY_TAG_OPEN) and end with (`close`, in place of EVERY_TAG_CLOSE), and the outcome the kind
- * reads, predicted from that start tag's pinned outcome (`outcome`) - never from the census's live reading. */
+ * reads, predicted from that start tag's pinned outcome (`outcome`) - never from the census's live reading; an inline kind's prediction also
+ * takes the element's text marked hands over between the start and the end tag (FOLLOW-UP wb-a7w6). */
 interface TagKind {
   readonly id: string;
   readonly open: string;
   readonly close: string;
-  readonly outcome: (pinned: readonly string[]) => string[];
+  readonly outcome: (pinned: readonly string[], element: string) => string[];
   /** An inline token's kind: the tag's name. Its text (closed by the element's end tag) is read only where marked lexes the start tag as one
    * inline HTML token opening with that name (the attributes marked's tag rule reads), and only as a Markdown page. */
   readonly inline?: string;
@@ -1886,6 +1932,15 @@ function blockSentence(sentence: string): { line: string; text: string; plain: s
   if (match === null) throw new Error(`not a pinned sentence of an HTML block: ${sentence}`);
   return { line: match[1] ?? "", text: match[2] ?? "", plain: match[3] ?? "" };
 }
+/** Pinned sentences read on line 1: a carriage return, which an HTML page reads as white space and marked as a line feed, moves no line. */
+const oneLine = (sentences: readonly string[]): string[] => sentences.map(sentence => sentence.replace(/^\d+ /u, "1 "));
+/** What an inline start tag's text shows in plain text (FOLLOW-UP wb-a7w6): marked's start-tag token is HTML, never plain, so what the census
+ * shows of that token after the tag ends (a tag the census ends inside marked's token) stays BLANK and only the element's text marked hands
+ * over is plain; null where the whole text is plain (the tag ends with marked's token). `plain` is the pinned block sentence's, all BLANK. */
+function inlinePlain(text: string, plain: string, element: string): string | null {
+  const inline = `${plain.slice(0, plain.length - element.length)}${element}`;
+  return inline === text ? null : inline;
+}
 /** The kind reads what the start tag reads: a block-level, RCDATA or raw-text start tag, whose text (or element text) is the start tag's text. */
 const sameAsStart = (pinned: readonly string[]): string[] => [...pinned];
 /** The kind is an end tag after the text "x" and breaks the sentence (a block-level element's end tag): "x", then what the start tag reads. */
@@ -1898,18 +1953,26 @@ const joinedAfterX = (pinned: readonly string[]): string[] =>
         const { text, plain } = blockSentence(sentence);
         return `1 x${text} | plain #${plain}`;
       });
-/** An inline start tag that breaks the sentence (a block-level element's): "Note", then the start tag's text as plain text (marked's), beside
- * the element's end tag. */
-const brokenAfterNote = (pinned: readonly string[]): string[] =>
+/** An inline start tag that breaks the sentence (a block-level element's): "Note", then the start tag's text, its element's text plain
+ * (marked's, inlinePlain), beside the element's end tag. */
+const brokenAfterNote = (pinned: readonly string[], element: string): string[] =>
   pinned.length === 1
     ? pinned.flatMap(sentence => {
-        const { line, text } = blockSentence(sentence);
-        return ["1 Note | html", `${line} ${text} | html`];
+        const { line, text, plain } = blockSentence(sentence);
+        const inline = inlinePlain(text, plain, element);
+        return ["1 Note | html", inline === null ? `${line} ${text} | html` : `${line} ${text} | plain ${inline} | html`];
       })
     : ["an inline tag the input ends inside is no inline token"];
-/** An inline start tag that does not break the sentence: "Note " joins the start tag's text as plain text (marked's), beside the HTML tokens. */
-const joinedAfterNote = (pinned: readonly string[]): string[] =>
-  pinned.length === 1 ? pinned.map(sentence => `1 Note ${blockSentence(sentence).text} | html`) : ["an inline tag the input ends inside is no inline token"];
+/** An inline start tag that does not break the sentence: "Note " joins the start tag's text, its element's text plain (marked's, inlinePlain),
+ * beside the HTML tokens. */
+const joinedAfterNote = (pinned: readonly string[], element: string): string[] =>
+  pinned.length === 1
+    ? pinned.map(sentence => {
+        const { text, plain } = blockSentence(sentence);
+        const inline = inlinePlain(text, plain, element);
+        return inline === null ? `1 Note ${text} | html` : `1 Note ${text} | plain Note ${inline} | html`;
+      })
+    : ["an inline tag the input ends inside is no inline token"];
 /** A plaintext start tag: its text runs to the end, so the start tag's text gains the close "</a></div>" as written. */
 const toTheEnd = (pinned: readonly string[]): string[] =>
   pinned.map(sentence => {
@@ -1920,7 +1983,7 @@ const toTheEnd = (pinned: readonly string[]): string[] =>
  * block-level start and end tag; each RCDATA element's and each raw-text element's start and end tag (an element of BLOCK_TAGS breaks the
  * sentence at its tags: textarea, title, script, style, iframe, noframes; xmp, noembed and noscript do not); a plaintext start tag; and in an
  * inline token (behind "Note "), the start tag of an ordinary (span), a block-level (p), each RCDATA and each raw-text element that ends (a plaintext
- * element an inline token opens runs, as a reader's tokenizer reads it, past marked's token: NOT CLAIMED). */
+ * element an inline token opens runs, as a reader's tokenizer reads it, past marked's token: the residual R12). */
 const EVERY_TAG: readonly TagKind[] = [
   { id: "ordinary end tag", open: "<div><b>x</b", close: EVERY_TAG_CLOSE, outcome: joinedAfterX },
   { id: "block-level start tag", open: "<div><p", close: EVERY_TAG_CLOSE, outcome: sameAsStart },
@@ -1945,13 +2008,20 @@ const EVERY_TAG: readonly TagKind[] = [
     }),
   ),
 ];
-/** Whether marked lexes `text` as one paragraph holding exactly two inline HTML tokens: a start tag opening with `<${name}` and that element's end
- * tag (which a reader's tokenizer ends the element at, as marked does). */
-function oneInlineTag(text: string, name: string): boolean {
+/** The element's text marked hands over when it lexes `text` as one paragraph holding exactly two inline HTML tokens - a start tag opening with
+ * `<${name}` and that element's end tag (which a reader's tokenizer ends the element at, as marked does) - read from the tokens between them;
+ * null where marked lexes it otherwise. */
+function oneInlineTag(text: string, name: string): string | null {
   const tokens = marked.lexer(text);
   const paragraph = tokens.length === 1 && tokens[0]?.type === "paragraph" ? tokenChildren(tokens[0]) : [];
-  const html = paragraph.filter(token => token.type === "html");
-  return html.length === 2 && (html[0]?.raw.startsWith(`<${name}`) ?? false) && html[1]?.raw === `</${name}>`;
+  const html = paragraph.flatMap((token, index) => (token.type === "html" ? [index] : []));
+  const [open, close] = html;
+  if (html.length !== 2 || open === undefined || close === undefined) return null;
+  if (!(paragraph[open]?.raw.startsWith(`<${name}`) ?? false) || paragraph[close]?.raw !== `</${name}>`) return null;
+  return paragraph
+    .slice(open + 1, close)
+    .map(token => token.raw)
+    .join("");
 }
 /** Rows M and R: each text judged by its kind (a per-text kind in `kinds`), with its expected outcome in order. */
 const CASES: readonly Case[] = [
@@ -2171,7 +2241,7 @@ const CASES: readonly Case[] = [
     pin: "MR4",
     kind: "rendered",
     everyTag: true,
-    kinds:[...Array.from({ length: 38 }, (): CaseKind => "rendered"), "html", ...Array.from({ length: 191 }, (): CaseKind => "rendered"), ...Array.from({ length: 31 }, (): CaseKind => "html"), ...Array.from({ length: 106 }, (): CaseKind => "rendered"), ...Array.from({ length: 46 }, (): CaseKind => "html")],
+    kinds:[...Array.from({ length: 38 }, (): CaseKind => "rendered"), "html", ...Array.from({ length: 191 }, (): CaseKind => "rendered"), ...Array.from({ length: 31 }, (): CaseKind => "html"), ...Array.from({ length: 106 }, (): CaseKind => "rendered"), ...Array.from({ length: 46 }, (): CaseKind => "html"), ...Array.from({ length: 32 + 2 * INLINE_SPACE.length }, (): CaseKind => "rendered")],
     texts: [
       "<!-->one HXSI-01 two.",
       "<!--->two",
@@ -2487,7 +2557,7 @@ const CASES: readonly Case[] = [
       "<div><noframes>a</noframes title='>'> noframesendsq</div>",
       '<div><noscript>a</noscript title=">"> noscriptenddq</div>',
       "<div><noscript>a</noscript title='>'> noscriptendsq</div>",
-      // RESPIN 2 of wb-jh2f (refusal #2 U1, U2): in an inline token, an ordinary, a block-level, each RCDATA and each raw-text element's start tag holding a double- and a single-quoted value with ">" (a plaintext element an inline token opens runs past it: NOT CLAIMED)
+      // RESPIN 2 of wb-jh2f (refusal #2 U1, U2): in an inline token, an ordinary, a block-level, each RCDATA and each raw-text element's start tag holding a double- and a single-quoted value with ">" (a plaintext element an inline token opens runs past it: the residual R12)
       'Note <span title=">">inlinespandq</span>',
       'Note <p title=">">inlinepdq</p>',
       "Note <span title='>'>inlinespansq</span>",
@@ -2603,6 +2673,45 @@ const CASES: readonly Case[] = [
       "<p><noframes>c</noframes title='> HXSI-01 is registered'></p>",
       '<p><noscript>c</noscript title="> HXSI-01 is registered"></p>',
       "<p><noscript>c</noscript title='> HXSI-01 is registered'></p>",
+      // FOLLOW-UP wb-a7w6 (F1, PIN): ordinary start tags whose attributes marked's tag rule reads with U+00A0 (standing for INLINE_SPACE) at a separator, one per group of the tagEnd cells an inline token reaches through it that the texts above left untold (EVERY_TAG reads each through every kind of tag, inline ones included, a tag the census ends inside marked's token among them)
+      `<div><a\nx=${cp(0xa0)} 'x \n${cp(0xa0)}"" "=x'${cp(0xa0)}${cp(0xa0)}x='"\nx /x/==\n'${cp(0xa0)}x='x\n${cp(0xa0)} >xx/\tx'${cp(0xa0)}/>inlinecellao</a></div>`,
+      `<div><a${cp(0x0c)}x=${cp(0xa0)}"  /x=//="${cp(0xa0)}x =${cp(0xa0)}'" \n=""=">'${cp(0xa0)}>inlinecellap</a></div>`,
+      `<div><a\nx${cp(0xa0)}=${cp(0xa0)}"==x=${cp(0x0c)}\n${cp(0x0c)}=${cp(0xa0)}'\t='"${cp(0xa0)}${cp(0xa0)}x=${cp(0xa0)}'${cp(0xa0)} \t=\n=">>x\txx'>inlinecellaq</a></div>`,
+      `<div><a${cp(0x0c)}x=${cp(0xa0)}" ===xx=\n/'="${cp(0xa0)}x=${cp(0xa0)} "=\n'>x"${cp(0xa0)}${cp(0xa0)}x='="='/>inlinecellar</a></div>`,
+      `<div><a\tx${cp(0xa0)}=${cp(0xa0)}"=${cp(0x0c)}= ${cp(0x0c)}${cp(0xa0)}/x /'x"\nx=${cp(0xa0)} '/${cp(0x0c)}${cp(0x0c)} =/" \t=\n"x>' x=' ""x"${cp(0x0c)}>x"=" /'${cp(0xa0)}/>inlinecellas</a></div>`,
+      `<div><a x${cp(0xa0)}=${cp(0xa0)}'=${cp(0x0c)}" ='\tx='/\nx=\t ${cp(0x0c)}>x=x '${cp(0xa0)}${cp(0xa0)}x="x'=  \t"${cp(0xa0)}>inlinecellat</a></div>`,
+      `<div><a\tx=${cp(0xa0)} 'xx ${cp(0x0c)}//\n='\nx${cp(0xa0)}=${cp(0xa0)}"    =\n" x=' "x>/=${cp(0x0c)}'/>inlinecellau</a></div>`,
+      `<div><a x =${cp(0xa0)}" ='=\t"\nx =${cp(0xa0)}'\t' x=${cp(0xa0)}" \n='== ${cp(0x0c)} >>">inlinecellav</a></div>`,
+      `<div><a\tx=${cp(0xa0)}'\n/ \t= =  ">='${cp(0xa0)}${cp(0xa0)}x=${cp(0xa0)} "//${cp(0x0c)} xx/>"/>inlinecellaw</a></div>`,
+      `<div><a\tx =${cp(0xa0)}" '${cp(0x0c)}  '=${cp(0x0c)}x\n= "${cp(0xa0)}x=">=\nx'\t"${cp(0xa0)}>inlinecellax</a></div>`,
+      `<div><a\tx=${cp(0xa0)}'${cp(0xa0)}="${cp(0xa0)}/"'\nx=${cp(0xa0)} 'x""${cp(0xa0)}" "/ //'${cp(0xa0)}${cp(0xa0)}x='="${cp(0x0c)}>'${cp(0xa0)}/>inlinecellay</a></div>`,
+      `<div><a\tx${cp(0xa0)}=${cp(0xa0)}"\t/\t/x\n/${cp(0x0c)}${cp(0xa0)}  ="${cp(0xa0)}${cp(0xa0)}x=${cp(0xa0)} "'=='==x>'\t'${cp(0xa0)}x"${cp(0xa0)}>inlinecellaz</a></div>`,
+      `<div><a x=${cp(0xa0)}" ' '/\t=${cp(0xa0)}\t x"${cp(0xa0)}x=${cp(0xa0)}'/\n=${cp(0xa0)} x\t=' x="'==\n'> =\t'"/>inlinecellba</a></div>`,
+      `<div><a${cp(0x0c)}x=${cp(0xa0)}'${cp(0x0c)}\n${cp(0xa0)}${cp(0xa0)}\t/\t=x='${cp(0xa0)}x=${cp(0xa0)} ">\t\tx"${cp(0xa0)}${cp(0xa0)}x='${cp(0x0c)}"'${cp(0xa0)}>inlinecellbb</a></div>`,
+      `<div><a${cp(0x0c)}x=${cp(0xa0)}' ${cp(0x0c)}=="x"'${cp(0xa0)}x='\t\t"\nx>/'${cp(0xa0)}>inlinecellbc</a></div>`,
+      `<div><a\nx=' x \n'${cp(0xa0)}x =${cp(0xa0)}"x\t=x"${cp(0xa0)}${cp(0xa0)}x='" x>x= ='/>inlinecellbd</a></div>`,
+      `<div><a${cp(0x0c)}x=${cp(0xa0)} '=">${cp(0xa0)}=x""${cp(0x0c)}="x${cp(0xa0)}x>'${cp(0xa0)}x=${cp(0xa0)}' xx\t>  > >="x'/>inlinecellbe</a></div>`,
+      `<div><a x${cp(0xa0)}=${cp(0xa0)}' /\n"${cp(0x0c)}="/=${cp(0xa0)}>"${cp(0xa0)}'>inlinecellbf</a></div>`,
+      `<div><a\nx=${cp(0xa0)} '${cp(0xa0)} "=${cp(0x0c)}${cp(0x0c)} '${cp(0xa0)}x=${cp(0xa0)} '\t=\t"/>x${cp(0xa0)}'${cp(0xa0)}${cp(0xa0)}x=' ${cp(0xa0)} "x\t"'${cp(0xa0)}/>inlinecellbg</a></div>`,
+      `<div><a${cp(0x0c)}x =${cp(0xa0)}'/${cp(0x0c)}==="\n =${cp(0x0c)}='${cp(0xa0)}${cp(0xa0)}x=${cp(0xa0)} '/ = ">'${cp(0xa0)}/>inlinecellbh</a></div>`,
+      `<div><a${cp(0x0c)}x=${cp(0xa0)} '${cp(0xa0)}x=' x =${cp(0xa0)}'${cp(0x0c)}\n =${cp(0x0c)}"\t${cp(0x0c)} >' x="=" >inlinecellbi</a></div>`,
+      `<div><a x=${cp(0xa0)}' y=""/x=">"'>inlinecellbj</a></div>`,
+      `<div><a${cp(0x0c)}x=${cp(0xa0)} '${cp(0x0c)}= '${cp(0xa0)}${cp(0xa0)}x='\n=' x='"=\t${cp(0x0c)}\n=>\n"'/>inlinecellbk</a></div>`,
+      `<div><a\tx${cp(0xa0)}=${cp(0xa0)}"${cp(0x0c)} /${cp(0x0c)}"${cp(0xa0)}${cp(0xa0)}x='>x'\tx=${cp(0xa0)}'""'/>inlinecellbl</a></div>`,
+      // FOLLOW-UP wb-a7w6 (F1): each INLINE_SPACE member after "=", which tagEnd reads as any other character, so a value marked quotes is an unquoted one (EVERY_TAG reads each through every kind of tag)
+      ...INLINE_SPACE.map(point => `<div><a x=${cp(point)}' y=>'>spaceclass</a></div>`),
+      // FOLLOW-UP wb-a7w6 (F1, F3): each INLINE_SPACE member right after an inline span start tag's name, which it runs on (RUN_ON reads each under every other inline kind's name)
+      ...INLINE_SPACE.map(point => `Note <span${cp(point)}x ="=>">runon</span>`),
+      // FOLLOW-UP wb-a7w6 (F3): a tag's name holding a double quote, a single quote, "=", "<" and a character outside ASCII, each read whole (HTML_MARKUP's name class)
+      '<div><a"x="y>z">namedq</a></div>',
+      "<div><a'x='y>z'>namesq</a></div>",
+      '<div><a=="y>z">nameeq</a></div>',
+      '<div><a<x="y>z">namelt</a></div>',
+      `<div><a${cp(0xe9)}x="y>z">namenonascii</a></div>`,
+      // FOLLOW-UP wb-a7w6 (F2): a carriage return in an ordinary start tag, which marked reads on a Markdown page as a line feed and an HTML page reads as itself (EVERY_TAG's HTML-page leg reads each on line 1)
+      '<div><a\rx=">">crpageaa</a></div>',
+      '<div><a x=""\r>crpageab</a></div>',
+      '<div><a x="\r>">crpageac</a></div>',
     ],
     outcome: [
       [`1 one HXSI-01 two. | plain ${"#".repeat(16)}`],
@@ -2919,7 +3028,7 @@ const CASES: readonly Case[] = [
       ["1 a | plain #", `1 noframesendsq | plain ${"#".repeat(13)}`],
       [`1 a noscriptenddq | plain ${"#".repeat(15)}`],
       [`1 a noscriptendsq | plain ${"#".repeat(15)}`],
-      // RESPIN 2 of wb-jh2f (refusal #2 U1, U2): in an inline token, an ordinary, a block-level, each RCDATA and each raw-text element's start tag holding a double- and a single-quoted value with ">" (a plaintext element an inline token opens runs past it: NOT CLAIMED)
+      // RESPIN 2 of wb-jh2f (refusal #2 U1, U2): in an inline token, an ordinary, a block-level, each RCDATA and each raw-text element's start tag holding a double- and a single-quoted value with ">" (a plaintext element an inline token opens runs past it: the residual R12)
       ["1 Note inlinespandq | html"],
       ["1 Note | html", "1 inlinepdq | html"],
       ["1 Note inlinespansq | html"],
@@ -3035,6 +3144,45 @@ const CASES: readonly Case[] = [
       ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
       ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
       ["x.html:1 HXSI: unqualified-registered", "x.html:1 HXSI: html-unqualified-registered"],
+      // FOLLOW-UP wb-a7w6 (F1, PIN): ordinary start tags whose attributes marked's tag rule reads with U+00A0 (standing for INLINE_SPACE) at a separator, one per group of the tagEnd cells an inline token reaches through it that the texts above left untold (EVERY_TAG reads each through every kind of tag, inline ones included, a tag the census ends inside marked's token among them)
+      [`6 xx/<U+0009>x'<U+00A0>/>inlinecellao | plain ${"#".repeat(21)}`],
+      [`2 '<U+00A0>>inlinecellap | plain ${"#".repeat(15)}`],
+      [`4 >x<U+0009>xx'>inlinecellaq | plain ${"#".repeat(19)}`],
+      [`3 x"<U+00A0><U+00A0>x='="='/>inlinecellar | plain ${"#".repeat(25)}`],
+      [`3 x"=" /'<U+00A0>/>inlinecellas | plain ${"#".repeat(22)}`],
+      [`2 x=x '<U+00A0><U+00A0>x="x'=  <U+0009>"<U+00A0>>inlinecellat | plain ${"#".repeat(31)}`],
+      [`4 inlinecellau | plain ${"#".repeat(12)}`],
+      [`3 >">inlinecellav | plain ${"#".repeat(15)}`],
+      [`2 "/>inlinecellaw | plain ${"#".repeat(15)}`],
+      [`3 inlinecellax | plain ${"#".repeat(12)}`],
+      [`2 inlinecellay | plain ${"#".repeat(12)}`],
+      [`2 '<U+0009>'<U+00A0>x"<U+00A0>>inlinecellaz | plain ${"#".repeat(20)}`],
+      [`3 inlinecellba | plain ${"#".repeat(12)}`],
+      [`2 inlinecellbb | plain ${"#".repeat(12)}`],
+      [`2 inlinecellbc | plain ${"#".repeat(12)}`],
+      [`3 inlinecellbd | plain ${"#".repeat(12)}`],
+      [`1 inlinecellbe | plain ${"#".repeat(12)}`],
+      [`2 inlinecellbf | plain ${"#".repeat(12)}`],
+      [`2 x<U+00A0>'<U+00A0><U+00A0>x=' <U+00A0> "x<U+0009>"'<U+00A0>/>inlinecellbg | plain ${"#".repeat(31)}`],
+      [`2 '<U+00A0>/>inlinecellbh | plain ${"#".repeat(16)}`],
+      [`2 ' x="=" >inlinecellbi | plain ${"#".repeat(21)}`],
+      [`1 inlinecellbj | plain ${"#".repeat(12)}`],
+      [`4 inlinecellbk | plain ${"#".repeat(12)}`],
+      [`1 inlinecellbl | plain ${"#".repeat(12)}`],
+      // FOLLOW-UP wb-a7w6 (F1): each INLINE_SPACE member after "=", which tagEnd reads as any other character, so a value marked quotes is an unquoted one (EVERY_TAG reads each through every kind of tag)
+      ...INLINE_SPACE.map(() => [`1 '>spaceclass | plain ${"#".repeat(12)}`]),
+      // FOLLOW-UP wb-a7w6 (F1, F3): each INLINE_SPACE member right after an inline span start tag's name, which it runs on (RUN_ON reads each under every other inline kind's name)
+      ...INLINE_SPACE.map(() => ['1 Note ">runon | plain Note ##runon | html']),
+      // FOLLOW-UP wb-a7w6 (F3): a tag's name holding a double quote, a single quote, "=", "<" and a character outside ASCII, each read whole (HTML_MARKUP's name class)
+      [`1 z">namedq | plain ${"#".repeat(9)}`],
+      [`1 z'>namesq | plain ${"#".repeat(9)}`],
+      [`1 z">nameeq | plain ${"#".repeat(9)}`],
+      [`1 z">namelt | plain ${"#".repeat(9)}`],
+      [`1 z">namenonascii | plain ${"#".repeat(15)}`],
+      // FOLLOW-UP wb-a7w6 (F2): a carriage return in an ordinary start tag, which marked reads on a Markdown page as a line feed and an HTML page reads as itself (EVERY_TAG's HTML-page leg reads each on line 1)
+      [`2 crpageaa | plain ${"#".repeat(8)}`],
+      [`2 crpageab | plain ${"#".repeat(8)}`],
+      [`2 crpageac | plain ${"#".repeat(8)}`],
     ],
   },
   {
@@ -3141,6 +3289,13 @@ const CASES: readonly Case[] = [
     ],
     outcome: [[], [], [], [], [], [], [], []],
   },
+  // FOLLOW-UP wb-a7w6 (F4): R12's quiet row - a claim in a comment after an inline plaintext start tag, which a reader sees as written, the qualifier in a comment before the start tag - beside its control twin, whose claim the rendered leg reads
+  {
+    pin: "R12",
+    kind: "md",
+    texts: ["Note <!-- DESIGN ONLY --><plaintext>HXSI-01 is <!-- registered -->", "Note <!-- DESIGN ONLY --><plaintext>HXSI-01 is registered."],
+    outcome: [[], ["x.md:1 HXSI: rendered-unqualified-registered"]],
+  },
 ];
 /** A rendered sentence as row M pins it: its line and text, then its plain text where a reader may not plainly see part of it, and "html" where
  * it holds an HTML token; each BLANK is written "#", and white space other than a space or a line break as its code point. */
@@ -3173,17 +3328,22 @@ function everyTag(entry: Case): { kinds: string[]; texts: number; readings: numb
     const attributes = start.text.slice(EVERY_TAG_OPEN.length, start.text.length - EVERY_TAG_CLOSE.length);
     for (const kind of EVERY_TAG) {
       const text = `${kind.open}${attributes}${kind.close}`;
-      if (kind.inline !== undefined && !oneInlineTag(text, kind.inline)) continue;
-      const predicted = kind.outcome(start.outcome);
+      const element = kind.inline === undefined ? "" : oneInlineTag(text, kind.inline);
+      if (element === null) continue;
+      const predicted = kind.outcome(start.outcome, element);
       const markdownPage = outcomeOf("rendered", text);
       const htmlPage = kind.inline === undefined ? renderedSentences(text, true).map(shown) : markdownPage;
+      // a carriage return (FOLLOW-UP wb-a7w6, F2), which marked reads on a Markdown page as a line feed, keeps an HTML page on line 1
+      const pagePredicted = kind.inline === undefined && attributes.includes("\r") ? oneLine(predicted) : predicted;
       readings.push(markdownPage, ...(kind.inline === undefined ? [htmlPage] : []));
-      if (JSON.stringify(markdownPage) !== JSON.stringify(predicted) || JSON.stringify(htmlPage) !== JSON.stringify(predicted))
-        departures.push(`${kind.id}: ${JSON.stringify(text)} reads ${JSON.stringify(markdownPage)} (HTML page ${JSON.stringify(htmlPage)}), predicted ${JSON.stringify(predicted)}`);
+      if (JSON.stringify(markdownPage) !== JSON.stringify(predicted) || JSON.stringify(htmlPage) !== JSON.stringify(pagePredicted))
+        departures.push(
+          `${kind.id}: ${JSON.stringify(text)} reads ${JSON.stringify(markdownPage)} (HTML page ${JSON.stringify(htmlPage)}), predicted ${JSON.stringify(predicted)} (HTML page ${JSON.stringify(pagePredicted)})`,
+        );
       if (kind.inline !== undefined || !attributes.includes("\n")) continue;
       // a line feed's carriage-return twin, read on an HTML page (marked reads a Markdown page's carriage return as a line feed): the whole text on line 1
       const carriageReturn = `${kind.open}${attributes.replaceAll("\n", "\r")}${kind.close}`;
-      const onOneLine = predicted.map(sentence => sentence.replace(/^\d+ /u, "1 "));
+      const onOneLine = oneLine(predicted);
       const crPage = renderedSentences(carriageReturn, true).map(shown);
       readings.push(crPage);
       if (JSON.stringify(crPage) !== JSON.stringify(onOneLine))
@@ -3192,6 +3352,46 @@ function everyTag(entry: Case): { kinds: string[]; texts: number; readings: numb
   }
   expect(departures, "a kind of tag reads an ordinary start tag's attributes otherwise than that start tag's pinned outcome predicts").toEqual([]);
   return { kinds: EVERY_TAG.map(kind => kind.id), texts: pinned.length, readings: readings.length, sha256: createHash("sha256").update(JSON.stringify(readings)).digest("hex") };
+}
+/** The other inline kinds' names RUN_ON reads a run-on span start tag's text under (plaintext's among them: a run-on name opens no raw text). */
+const RUN_ON_KINDS: readonly string[] = ["p", "textarea", "title", "script", "style", "xmp", "iframe", "noembed", "noframes", "noscript", "plaintext"];
+/** An MR4 text of an inline span start tag: "Note <span", the code point after its name, to "</span>". */
+const RUN_ON_TEXT = /^Note <span([\s\S])[\s\S]*<\/span>$/u;
+/** Every code point JavaScript's \s matches that is no HTML white space, read from the engine (marked's tag rule separates attributes with \s). */
+function javaScriptOnlySpace(): number[] {
+  const points: number[] = [];
+  for (let point = 0; point <= 0x10ffff; point++) {
+    const char = point >= 0xd800 && point <= 0xdfff ? "" : cp(point);
+    if (/^\s$/u.test(char) && !/^[\t\n\f\r ]$/u.test(char)) points.push(point);
+  }
+  return points;
+}
+/** MR4's RUN_ON family (FOLLOW-UP wb-a7w6, F1 and F3; header, row M MR4): each of the case's texts of an inline span start tag whose name an
+ * INLINE_SPACE member runs on - the HTML standard's tag-name state reads the member as a name character, so the tag opens an element of no kind
+ * the census knows - reads its pinned outcome under every other inline kind's name too: no break, no RCDATA, no raw text, plaintext's name
+ * among them. INLINE_SPACE is held to the engine's \s and each member is read once. The witness names the kinds and the members, counts the
+ * readings and holds the sha-256 of every reading, so a reading moved with its prediction still reds against the roster. */
+function runOn(entry: Case): { kinds: string[]; members: number[]; readings: number; sha256: string } {
+  expect(INLINE_SPACE, "INLINE_SPACE is the engine's \\s beyond HTML white space").toEqual(javaScriptOnlySpace());
+  const pinned = entry.texts.flatMap((text, index) => {
+    const member = RUN_ON_TEXT.exec(text)?.[1]?.codePointAt(0) ?? 0;
+    return (entry.kinds?.[index] ?? entry.kind) === "rendered" && INLINE_SPACE.includes(member) ? [{ text, member, outcome: entry.outcome[index] ?? [] }] : [];
+  });
+  const readings: string[][] = [];
+  const departures: string[] = [];
+  for (const start of pinned) {
+    if (oneInlineTag(start.text, "span") === null) departures.push(`span: ${JSON.stringify(start.text)} is no inline token`);
+    for (const name of RUN_ON_KINDS) {
+      const text = `Note <${name}${start.text.slice("Note <span".length, start.text.length - "</span>".length)}</${name}>`;
+      const reading = outcomeOf("rendered", text);
+      readings.push(reading);
+      if (oneInlineTag(text, name) === null || JSON.stringify(reading) !== JSON.stringify(start.outcome))
+        departures.push(`${name}: ${JSON.stringify(text)} reads ${JSON.stringify(reading)}, predicted ${JSON.stringify(start.outcome)}`);
+    }
+  }
+  expect(departures, "a start tag whose name a JavaScript white space runs on reads otherwise under another inline kind's name").toEqual([]);
+  expect(pinned.map(start => start.member)).toEqual([...INLINE_SPACE]);
+  return { kinds: [...RUN_ON_KINDS], members: pinned.map(start => start.member), readings: readings.length, sha256: sha256(JSON.stringify(readings)) };
 }
 
 const REACHED = new Set<string>();
@@ -3660,7 +3860,7 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
         const outcome = entry.texts.map((text, index) => outcomeOf(kinds[index] ?? entry.kind, text));
         expect(outcome).toStrictEqual(entry.outcome.map(expected => [...expected]));
         const witness = entry.kinds === undefined ? { kind: entry.kind, outcome } : { kind: entry.kind, kinds, outcome };
-        return entry.everyTag === true ? { ...witness, everyTag: everyTag(entry) } : witness;
+        return entry.everyTag === true ? { ...witness, everyTag: everyTag(entry), runOn: runOn(entry) } : witness;
       },
     ]),
   ),
@@ -3668,7 +3868,7 @@ const IMPL: Readonly<Record<string, () => Promise<unknown>>> = {
 
 describe("wb-x0xu.2 HX design-status census (HX-STRUCTURAL-INFORMATION-OPTIMIZATION-R2, posture)", () => {
   it("the judged set: the frozen shape, the out-of-file roster and the cases agree", () => {
-    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:8", "B:5", "C:3", "F:1", "M:16", "R:11"]);
+    expect(ROWS.map(row => `${row.id}:${row.pins.length}`)).toEqual(["A:8", "B:5", "C:3", "F:1", "M:16", "R:12"]);
     expect(ROWS.map(({ id, label, pins }) => ({ id, label, pins: [...pins] }))).toStrictEqual(ROSTER.rows.map(({ id, label, pins }) => ({ id, label, pins: pins.map(pin => pin.id) })));
     expect(Object.keys(IMPL).sort()).toEqual(ROWS.flatMap(row => row.pins).sort());
     expect(ROSTER.bead).toBe(BEAD);

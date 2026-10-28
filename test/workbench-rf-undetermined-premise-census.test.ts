@@ -22,6 +22,10 @@
  * link title holding a parenthesis, S3) and the riders (F2: a negator before lines a quote-marker run with no space between the
  * markers, G-NESTQ, or a task-list checkbox, G-TASK, opens; a flag key with a digit glued to its word, isObserved2; and a label
  * key holding an array of arrays), each below.
+ * wb-1ouh, the R694 follow-up of landing 593 (the wb-pi42 cut's gate findings; F1 leads, F2 rides): a negator before lines a quote
+ * marker glued to a list marker opens (F1: >-, >*, >+, >1., >1), >- [ ], >>-, > >- and >- before a tab, each of which marked reads as
+ * a blockquote holding a list) and the rider (F2: label lines a bare carriage return ends, which marked reads as line endings), each
+ * below.
  *
  * SOURCES (read-only: git show and git rev-parse on the local ReactiveFiberCLI checkout at RF_COMMIT, at cut time):
  * BEADS-2026-10-21.md:45 reads "UNDETERMINED claims the program should settle (3); each names the missing artifact.
@@ -116,12 +120,14 @@
  *   clause is a lone NEGATIVE_ANSWERS word (F78, F81: "synthetic: no", "synthetic = false"); or when another word is fused to
  *   it ("nonsynthetic"); or (wb-3ohq F1) when a negator stands anywhere before "synthetic" in its soft clause - the label split
  *   only at SOFT_BREAK, CLAUSE_BREAK without the line break, after every LINE_MARKER (a run of list and quote markers opening a
- *   line: a bullet -, * or +, or a number of up to nine digits with . or ), each before white space and optionally followed by
- *   a task-list checkbox, [ ], [x] or [X], before white space (wb-pi42 G-TASK: F115), and > before white space or another >
- *   (wb-pi42 G-NESTQ: F114)) is removed - so its lines read as one clause, a blank line or an array join between them too
- *   ("not\nreally\nsynthetic", G01: F105; "not\n1. synthetic", G04: F106; "not\n>> really\n>> synthetic", G-NESTQ;
- *   "not\n- [ ] really\n- [ ] synthetic", G-TASK), while a label with no negator before "synthetic" past such markers stays
- *   synthetic (N34). A negation after "synthetic" in its clause does not negate it (N19), nor does a negator in an earlier clause with a
+ *   line, at the label's start or after a line feed or a bare carriage return, which marked reads as a line ending too (wb-1ouh
+ *   F2: F119): a bullet -, * or +, or a number of up to nine digits with . or ), each before white space and optionally followed
+ *   by a task-list checkbox, [ ], [x] or [X], before white space (wb-pi42 G-TASK: F115), and > before white space, another >
+ *   (wb-pi42 G-NESTQ: F114) or such a list marker glued to it (wb-1ouh F1: F118)) is removed - so its lines read as one clause,
+ *   a blank line or an array join between them too ("not\nreally\nsynthetic", G01: F105; "not\n1. synthetic", G04: F106;
+ *   "not\n>> really\n>> synthetic", G-NESTQ; "not\n- [ ] really\n- [ ] synthetic", G-TASK; "not\n>- really\n>- synthetic",
+ *   wb-1ouh F1; "not\r- really\r- synthetic", wb-1ouh F2), while a label with no negator before "synthetic" past such markers
+ *   stays synthetic (N34, N36). A negation after "synthetic" in its clause does not negate it (N19), nor does a negator in an earlier clause with a
  *   word between it and "synthetic" across a break other than a line break (N20, N27, N28, and the aside residual R29), a list
  *   marker inside a line is no marker (N31), and a line a marker LINE_MARKER keeps opens (a letter list marker, a number past
  *   nine digits, a marker glued to its word) is the residual R30; a negator and "synthetic" in two label values of one object
@@ -143,7 +149,10 @@
  *   51e86a9) the same way: a markdown mention is refused when any of the three markup readings refuses it, LINE_MARKER removes
  *   every marker run the landed one removed and more (so its soft clauses only merge), the digit-split flag reading stands
  *   beside the landed key reading (F116's not2Observed member), and objects at any array depth only add the two verdicts that
- *   decide against synthetic.
+ *   decide against synthetic. wb-1ouh keeps every refusal of the landed census (blob adbabab) the same way: LINE_MARKER removes
+ *   every marker run the landed one removed and more - a quote marker before a list marker glued to it, and a run after a bare
+ *   carriage return - so its soft clauses only merge, and the landed refusals the wb-pi42 landing-593 verdict names stay refused
+ *   (no word between, "not\n>- synthetic": F118's landed member; a CRLF form: F119's crlf member).
  * FINDING: `<path>:<line> <claim id> <family>: <diagnoses>` per refused mention (line = the line of its first piece),
  * `<bead id> <field>:<line> <claim id> <family>: <diagnoses>` per refused mention of a program row, `<path> <JSON pointer>
  * reuse-row|reuse-count: unlabelled|labelled-observed|flagged-observed|labelled-not-synthetic` per refused fixture row,
@@ -156,7 +165,8 @@
  * and a row whose description wraps its negator onto the line before "synthetic" (P30) into the fixture; wb-3ohq two more: a
  * premise whose echo hides in a quoted attribute holding '>' (D02) into docs/workbench/07 and a row labelled
  * "not\nreally\nsynthetic" (G01) into the fixture; wb-pi42 two more: a premise whose echo hides in a destination nested four
- * levels (S1) into docs/workbench/07 and a row labelled "not\n>> really\n>> synthetic" (G-NESTQ) into the fixture.
+ * levels (S1) into docs/workbench/07 and a row labelled "not\n>> really\n>> synthetic" (G-NESTQ) into the fixture; wb-1ouh one
+ * more: a row labelled "not\n>- really\n>- synthetic" (F1) into the fixture.
  * OUTSIDE ANCHORS: the owner filing's row in the tracked export (wb-pfxo.11) states the three claim ids in order, the verdict
  * word, the audit pin 740c1a817, the C058 proposition with its line and the other two ids with theirs, and the acceptance
  * clauses verbatim, and its spellings read as mentions of their families; the epic's title counts the program's children.
@@ -180,9 +190,19 @@
  * F111, F112, F113 - and rendered by marked with neither the verdict word nor the claim id shown), the label survivors G-NESTQ
  * and G-TASK (each refused and carried by F114 or F115), and the digit-glued flag key and the label key's array of arrays (each
  * refused and carried by F116 or F117).
+ * The follow-up anchors case (wb-1ouh): the closed wb-pi42 row's landing-593 gate verdict (the F1 and F2 lines wb-1ouh's filing
+ * carries byte-identically; wb-1ouh's own row entered the export only at the landing-594 hop and is not read) names the glued
+ * label, the eight other glued markers
+ * and the landed refusal with no word between (each read out of the export, refused and carried by F118; marked renders each glued
+ * form as a blockquote holding a list of its two lines, the filed one exactly as the verdict quotes it), and the bare carriage
+ * return example with its three other markers (each refused and carried by F119; marked ends the negator's line at the carriage
+ * return); the verdict's CRLF forms read refused as the landed census reads them; and the filed marker glued to its word
+ * ("not\n>-really\n>-synthetic") reads quiet, R30's reading, with no list on the page marked renders.
  * Not claimed: a coordinated edit of this file and the roster that removes a row neither the delivered inventory, a filed
  * survivor nor that verdict names (wb-1y1p's own same-family rows F80-F83, F85, F87, F90-F93, F99-F104, N19-N27, R24-R28, and
- * wb-3ohq's F110, N28-N31, R30 and R33, and wb-pi42's N32-N35 and R34-R36, until a delivery records them).
+ * wb-3ohq's F110, N28-N31, R30 and R33, wb-pi42's N32-N35 and R34-R36, and wb-1ouh's N36, until a delivery records them), nor
+ * a coordinated edit that removes an F118 or F119 member no verdict names (F118's decoded member; F119's glued, decoded and crlf
+ * members).
  * REGISTRATION (wb-1y1p F4): the registration case, registered first, holds this file's registered tests to the roster's
  * list exactly and in order, each in run mode and not inverted (a deleted live leg or filing anchor, or a skip on the roster
  * case, reds); the roster case, registered last, holds the same list and that every other test ran before it; an afterAll
@@ -745,11 +765,13 @@ const CLAUSE_BREAK = /[.,;:!?()[\]{}<>|=\n]+|\s[-\u2010-\u2015]+\s/u;
  */
 const SOFT_BREAK = /[.,;:!?()[\]{}<>|=]+|\s[-\u2010-\u2015]+\s/u;
 /**
- * A run of list and quote markers opening a line - a bullet (-, * or +) or a number of up to nine digits with . or ), each before white
- * space and optionally followed by a task-list checkbox ([ ], [x] or [X]) before white space (wb-pi42 G-TASK), and > before white space
- * or another > (wb-pi42 G-NESTQ) - the soft clauses read past (wb-3ohq F1, G04).
+ * A run of list and quote markers opening a line, at the text's start or after a line feed or a bare carriage return (marked reads a
+ * lone carriage return as a line ending too: wb-1ouh F2) - a bullet (-, * or +) or a number of up to nine digits with . or ), each
+ * before white space and optionally followed by a task-list checkbox ([ ], [x] or [X]) before white space (wb-pi42 G-TASK), and >
+ * before white space, another > (wb-pi42 G-NESTQ) or such a list marker glued to it (wb-1ouh F1: marked reads ">- really" as a
+ * blockquote holding a list) - the soft clauses read past (wb-3ohq F1, G04).
  */
-const LINE_MARKER = /(?<=^|\n)[\t ]*(?:(?:(?:\d{1,9}[.)]|[-*+])(?=\s)[\t ]*(?:\[[ xX]\](?=\s)[\t ]*)?)|>(?=[\s>])[\t ]*)+/gu;
+const LINE_MARKER = /(?<=^|[\n\r])[\t ]*(?:(?:(?:\d{1,9}[.)]|[-*+])(?=\s)[\t ]*(?:\[[ xX]\](?=\s)[\t ]*)?)|>(?=[\s>]|(?:\d{1,9}[.)]|[-*+])\s)[\t ]*)+/gu;
 /** The plan summary's other decision counts (folded): beside one of them, a positive reuse count asserts a reuse row. */
 const OTHER_DECISIONS = ["invalidated", "nonreusable", "refreshrequired"] as const;
 type Verdict = "synthetic" | "not-synthetic" | "flagged-observed" | "observed" | "neutral";
@@ -1474,6 +1496,64 @@ const ROWS: readonly Row[] = [
     }),
     expect: ["test/fixtures/x.json #/NEST reuse-row: flagged-observed", `test/fixtures/x.json #/a reuse-row: ${NOT_SYNTHETIC}`, "test/fixtures/x.json #/b reuse-row: flagged-observed"],
   },
+  // (c), wb-1ouh (the R694 follow-up of landing 593): F1 a negator before lines a quote marker glued to a list marker opens (the filed
+  // label, the eight other markers the wb-pi42 landing-593 verdict names, then that verdict's landed refusal with no word between, kept:
+  // R754), and F2 label lines a bare carriage return ends (the four forms that verdict names, then a CRLF form the landed census refuses,
+  // kept), each read as marked reads the lines: a blockquote holding a list, or a list
+  {
+    table: "FALSIFIERS",
+    id: "F118",
+    label: "a negator before lines a quote marker glued to a list marker opens (wb-1ouh F1)",
+    files: json({
+      GLUED: { decision: "reuse", label: "not\n>- really\n>- synthetic" },
+      a: { decision: "reuse", label: "not\n>* really\n>* synthetic" },
+      b: { decision: "reuse", label: "not\n>+ really\n>+ synthetic" },
+      c: { decision: "reuse", label: "not\n>1. really\n>1. synthetic" },
+      d: { decision: "reuse", label: "not\n>1) really\n>1) synthetic" },
+      e: { decision: "reuse", label: "not\n>- [ ] really\n>- [ ] synthetic" },
+      f: { decision: "reuse", label: "not\n>>- really\n>>- synthetic" },
+      g: { decision: "reuse", label: "not\n> >- really\n> >- synthetic" },
+      h: { decision: "reuse", label: "not\n>-\treally\n>-\tsynthetic" },
+      landed: { decision: "reuse", label: "not\n>- synthetic" },
+      decoded: { decision: "reuse", note: "not&#10;&gt;- really&#10;&gt;- synthetic" },
+    }),
+    expect: [
+      `test/fixtures/x.json #/GLUED reuse-row: ${NOT_SYNTHETIC}`,
+      `test/fixtures/x.json #/a reuse-row: ${NOT_SYNTHETIC}`,
+      `test/fixtures/x.json #/b reuse-row: ${NOT_SYNTHETIC}`,
+      `test/fixtures/x.json #/c reuse-row: ${NOT_SYNTHETIC}`,
+      `test/fixtures/x.json #/d reuse-row: ${NOT_SYNTHETIC}`,
+      `test/fixtures/x.json #/e reuse-row: ${NOT_SYNTHETIC}`,
+      `test/fixtures/x.json #/f reuse-row: ${NOT_SYNTHETIC}`,
+      `test/fixtures/x.json #/g reuse-row: ${NOT_SYNTHETIC}`,
+      `test/fixtures/x.json #/h reuse-row: ${NOT_SYNTHETIC}`,
+      `test/fixtures/x.json #/landed reuse-row: ${NOT_SYNTHETIC}`,
+      `test/fixtures/x.json #/decoded reuse-row: ${NOT_SYNTHETIC}`,
+    ],
+  },
+  {
+    table: "FALSIFIERS",
+    id: "F119",
+    label: "a negator before label lines a bare carriage return ends (wb-1ouh F2)",
+    files: json({
+      CR: { decision: "reuse", label: "not\r- really\r- synthetic" },
+      a: { decision: "reuse", label: "not\r>> really\r>> synthetic" },
+      b: { decision: "reuse", label: "not\r- [ ] really\r- [ ] synthetic" },
+      c: { decision: "reuse", label: "not\r1. really\r1. synthetic" },
+      glued: { decision: "reuse", comment: "not\r>- really\r>- synthetic" },
+      decoded: { decision: "reuse", origin: "not&#13;- really&#13;- synthetic" },
+      crlf: { decision: "reuse", label: "not\r\n- really\r\n- synthetic" },
+    }),
+    expect: [
+      `test/fixtures/x.json #/CR reuse-row: ${NOT_SYNTHETIC}`,
+      `test/fixtures/x.json #/a reuse-row: ${NOT_SYNTHETIC}`,
+      `test/fixtures/x.json #/b reuse-row: ${NOT_SYNTHETIC}`,
+      `test/fixtures/x.json #/c reuse-row: ${NOT_SYNTHETIC}`,
+      `test/fixtures/x.json #/glued reuse-row: ${NOT_SYNTHETIC}`,
+      `test/fixtures/x.json #/decoded reuse-row: ${NOT_SYNTHETIC}`,
+      `test/fixtures/x.json #/crlf reuse-row: ${NOT_SYNTHETIC}`,
+    ],
+  },
   // accepted
   { table: "CONTROLS", id: "N01", label: "the echo form", files: doc("small-a-C070 (five swarms produced the October 17-18 corpus) is UNDETERMINED.\n"), expect: [] },
   {
@@ -1624,6 +1704,18 @@ const ROWS: readonly Row[] = [
       { path: "docs/y.md", text: "The rf context plan reaches a reuse row <!-- [x]( -->small-a-C058-UNDETERMINED).\n" },
       { path: "docs/z.md", text: 'The rf context plan reaches a reuse row <span title="](">small-a-C058-UNDETERMINED)</span>.\n' },
     ],
+    expect: [],
+  },
+  {
+    table: "CONTROLS",
+    id: "N36",
+    label: "past a quote marker glued to a list marker or after a bare carriage return, a label with no negator before synthetic stays synthetic",
+    files: json({
+      a: { decision: "reuse", label: ">- synthetic\n>- reviewed" },
+      b: { decision: "reuse", label: ">1. synthetic rows only" },
+      c: { decision: "reuse", note: "synthetic\r>- not observed" },
+      d: { decision: "reuse", comment: "synthetic\r- [x] not observed" },
+    }),
     expect: [],
   },
   // named residuals: quiet rows
@@ -1873,6 +1965,15 @@ function listedProbes(text: string): { readonly id: string; readonly row: Readon
 }
 /** What the renderer this repository ships (marked) shows of a markdown text: its HTML with every tag removed (wb-pi42 F1). */
 const renderedText = (markdown: string): string => marked.parse(markdown, { async: false }).replace(/<[^>]*>/g, "");
+/** The HTML the renderer this repository ships (marked) makes of a markdown text, its line breaks removed, as the wb-pi42 landing-593 verdict quotes it (wb-1ouh F1). */
+const renderedHtml = (markdown: string): string => marked.parse(markdown, { async: false }).replaceAll("\n", "");
+/** A filed text as a verdict note writes it (wb-1ouh): a written \n, \r or \t is that character. */
+const writtenText = (text: string): string => text.replaceAll("\\n", "\n").replaceAll("\\r", "\r").replaceAll("\\t", "\t");
+/** A filed marker read back into its label (wb-1ouh): the negator, then two lines the marker opens after `end`; a marker ending in white space keeps it, any other gains one space. */
+function markerLabel(marker: string, end: string): string {
+  const run = /\s$/.test(marker) ? marker : `${marker} `;
+  return `not${end}${run}really${end}${run}synthetic`;
+}
 /** Ids `<prefix>1..<prefix><count>`, zero-padded to `width`. */
 const idRange = (prefix: string, count: number, width: number): string[] => Array.from({ length: count }, (_, index) => `${prefix}${String(index + 1).padStart(width, "0")}`);
 
@@ -1995,6 +2096,8 @@ const ROWS_LITERAL: readonly string[] = [
   "FALSIFIERS:F115:test/fixtures/x.json #/TASK reuse-row: labelled-not-synthetic|test/fixtures/x.json #/a reuse-row: labelled-not-synthetic|test/fixtures/x.json #/b reuse-row: labelled-not-synthetic|test/fixtures/x.json #/c reuse-row: labelled-not-synthetic:f446382c",
   "FALSIFIERS:F116:test/fixtures/x.json #/D2/rows/0 reuse-row: flagged-observed|test/fixtures/x.json #/a/rows/0 reuse-row: flagged-observed|test/fixtures/x.json #/b/rows/0 reuse-row: flagged-observed|test/fixtures/x.json #/landed/rows/0 reuse-row: flagged-observed:9e571db6",
   "FALSIFIERS:F117:test/fixtures/x.json #/NEST reuse-row: flagged-observed|test/fixtures/x.json #/a reuse-row: labelled-not-synthetic|test/fixtures/x.json #/b reuse-row: flagged-observed:1d98187d",
+  "FALSIFIERS:F118:test/fixtures/x.json #/GLUED reuse-row: labelled-not-synthetic|test/fixtures/x.json #/a reuse-row: labelled-not-synthetic|test/fixtures/x.json #/b reuse-row: labelled-not-synthetic|test/fixtures/x.json #/c reuse-row: labelled-not-synthetic|test/fixtures/x.json #/d reuse-row: labelled-not-synthetic|test/fixtures/x.json #/e reuse-row: labelled-not-synthetic|test/fixtures/x.json #/f reuse-row: labelled-not-synthetic|test/fixtures/x.json #/g reuse-row: labelled-not-synthetic|test/fixtures/x.json #/h reuse-row: labelled-not-synthetic|test/fixtures/x.json #/landed reuse-row: labelled-not-synthetic|test/fixtures/x.json #/decoded reuse-row: labelled-not-synthetic:f71af276",
+  "FALSIFIERS:F119:test/fixtures/x.json #/CR reuse-row: labelled-not-synthetic|test/fixtures/x.json #/a reuse-row: labelled-not-synthetic|test/fixtures/x.json #/b reuse-row: labelled-not-synthetic|test/fixtures/x.json #/c reuse-row: labelled-not-synthetic|test/fixtures/x.json #/glued reuse-row: labelled-not-synthetic|test/fixtures/x.json #/decoded reuse-row: labelled-not-synthetic|test/fixtures/x.json #/crlf reuse-row: labelled-not-synthetic:8f1507f1",
   "CONTROLS:N01::986f32d9",
   "CONTROLS:N02::23555f35",
   "CONTROLS:N03::0e57baad",
@@ -2030,6 +2133,7 @@ const ROWS_LITERAL: readonly string[] = [
   "CONTROLS:N33::d635765c",
   "CONTROLS:N34::1d14c22b",
   "CONTROLS:N35::57390916",
+  "CONTROLS:N36::d4a36867",
   "RESIDUALS:R1::7a74feab",
   "RESIDUALS:R2::7c0a0e99",
   "RESIDUALS:R3::be78ac18",
@@ -2128,6 +2232,8 @@ const PLANTED_LINE_SET_LABEL = "not\nreally\nsynthetic";
 /** wb-pi42's live plants: an echo hidden in a destination nested four levels (S1, F1) and a label setting its negator before lines a quote-marker run opens (G-NESTQ, F2). */
 const PLANTED_DEEP_DESTINATION = "The rf context plan reaches a 'reuse' row ([ref](notes.md#a(b(c(d(e))))small-a-C058-UNDETERMINED)).";
 const PLANTED_QUOTE_RUN_LABEL = "not\n>> really\n>> synthetic";
+/** wb-1ouh's live plant: a label setting its negator before lines a quote marker glued to a list marker opens (F1). */
+const PLANTED_GLUED_QUOTE_LABEL = "not\n>- really\n>- synthetic";
 
 describe("rf undetermined premise census (wb-pfxo.11, RF-COMPOSITIONAL-ASSEMBLY-R12)", () => {
   // The backstop behind both harness cases (wb-1y1p F4): every test of this file ran, so a skipped harness case, or both, still reds.
@@ -2212,6 +2318,9 @@ describe("rf undetermined premise census (wb-pfxo.11, RF-COMPOSITIONAL-ASSEMBLY-
     // wb-pi42 F2: a row whose label sets its negator before lines a quote-marker run opens (G-NESTQ), planted the same way, is refused too.
     const quoteRun = { ...(JSON.parse(real?.text ?? "{}") as Record<string, unknown>), wbPi42Planted: { decision: "reuse", label: PLANTED_QUOTE_RUN_LABEL } };
     expect(scanFiles([{ path: PLANTED_FIXTURE, text: JSON.stringify(quoteRun) }])).toEqual([`${PLANTED_FIXTURE} #/wbPi42Planted reuse-row: ${NOT_SYNTHETIC}`]);
+    // wb-1ouh F1: a row whose label sets its negator before lines a quote marker glued to a list marker opens, planted the same way, is refused too.
+    const gluedQuote = { ...(JSON.parse(real?.text ?? "{}") as Record<string, unknown>), wb1ouhPlanted: { decision: "reuse", label: PLANTED_GLUED_QUOTE_LABEL } };
+    expect(scanFiles([{ path: PLANTED_FIXTURE, text: JSON.stringify(gluedQuote) }])).toEqual([`${PLANTED_FIXTURE} #/wb1ouhPlanted reuse-row: ${NOT_SYNTHETIC}`]);
   });
 
   it("live bead export (a): every program row's judged fields carry only echoes, and every export line parses", { timeout: 60_000 }, () => {
@@ -2406,6 +2515,71 @@ describe("rf undetermined premise census (wb-pfxo.11, RF-COMPOSITIONAL-ASSEMBLY-
     ]);
   });
 
+  it("follow-up anchors (wb-1ouh): the glued quote-marker and bare carriage return label forms the wb-pi42 landing-593 verdict names are refused and carried by a falsifier row, and the renderer reads their lines as that verdict says", () => {
+    const verdict = stringField(exportRow(exportLines(), THIRD_FOLLOW_UP), "notes");
+    // (9) wb-pi42's landing-593 gate verdict, read from that closed row (F1, the lead wb-1ouh's filing carries byte-identically;
+    // wb-1ouh's own row entered the export only at the landing-594 hop and is not read) names a quote marker glued to a list marker:
+    // the filed label, the eight other markers the same holds for, and the landed refusal with no word between. Each is refused and a
+    // falsifier row carries it (F118), and marked reads each glued form as a blockquote holding a list of its two lines, the filed one
+    // exactly as the verdict quotes it.
+    const filed = /misses a quote marker glued to a list marker\. ('[^']+') reads quiet/.exec(verdict)?.[1];
+    const same = /The same holds for (.+?)\. With no word between, ('[^']+') is refused by both\./.exec(verdict);
+    const quoted = /reads each form as a blockquote holding a list \('([^']+)'\)/.exec(verdict)?.[1];
+    expect([filed, same?.[1], same?.[2], quoted].map(text => text !== undefined), `the F1 forms as ${THIRD_FOLLOW_UP}'s landing-593 verdict quotes them`).toEqual([true, true, true, true]);
+    const glued = [writtenText(filed?.slice(1, -1) ?? ""), ...(same?.[1] ?? "").split(/, | and /).map(marker => markerLabel(writtenText(marker), "\n"))];
+    const landed = writtenText(same?.[2]?.slice(1, -1) ?? "");
+    expect(
+      [...glued, landed].map(label => [label, scanFiles(json({ decision: "reuse", label })), rowCarries("FALSIFIERS", { decision: "reuse", label })]),
+      `the glued forms and the landed refusal ${THIRD_FOLLOW_UP}'s landing-593 verdict names: refused, and a falsifier row carries each`,
+    ).toEqual(
+      [
+        "not\n>- really\n>- synthetic",
+        "not\n>* really\n>* synthetic",
+        "not\n>+ really\n>+ synthetic",
+        "not\n>1. really\n>1. synthetic",
+        "not\n>1) really\n>1) synthetic",
+        "not\n>- [ ] really\n>- [ ] synthetic",
+        "not\n>>- really\n>>- synthetic",
+        "not\n> >- really\n> >- synthetic",
+        "not\n>-\treally\n>-\tsynthetic",
+        "not\n>- synthetic",
+      ].map(label => [label, [`test/fixtures/x.json # reuse-row: ${NOT_SYNTHETIC}`], true]),
+    );
+    expect(renderedHtml(glued[0] ?? ""), "the filed form, rendered by marked, as the verdict quotes it").toBe(quoted);
+    expect(
+      glued.map(label => /^<p>not<\/p>(?:<blockquote>)+<([ou])l><li>(?:<input [^>]*> )?really<\/li><li>(?:<input [^>]*> )?synthetic<\/li><\/\1l>(?:<\/blockquote>)+$/.test(renderedHtml(label))),
+      "each glued form, rendered by marked: a blockquote holding a list of its two lines",
+    ).toEqual(glued.map(() => true));
+    // The boundary LINE_MARKER claims: the glued list marker stands before white space. The filed marker glued to its word opens no
+    // list (marked renders a paragraph inside the blockquote), so both markers stay and the label reads quiet - R30's reading, a
+    // marker glued to its word.
+    const wordGlued = (glued[0] ?? "").replaceAll(">- ", ">-");
+    expect([wordGlued, scanFiles(json({ decision: "reuse", label: wordGlued })), renderedHtml(wordGlued).includes("<li>")], "the filed marker glued to its word: quiet (R30), and no list on the rendered page").toEqual([
+      "not\n>-really\n>-synthetic",
+      [],
+      false,
+    ]);
+    // (10) The rider (F2): label lines a bare carriage return ends - the filed example, then the same with the three markers the verdict
+    // names - each refused and carried by a falsifier row (F119), and marked ends the negator's line at the carriage return; the CRLF
+    // forms, which the verdict counts all refused, read refused as the landed census reads them.
+    const examples = /Examples: ('[^']+') and the same with (.+?)\. The cause:/.exec(verdict);
+    const [, refusedCount, ofCount] = /CRLF forms are all refused \((\d+)\/(\d+)\)/.exec(verdict) ?? [];
+    expect([examples?.[1] !== undefined, examples?.[2] !== undefined, refusedCount !== undefined && refusedCount === ofCount], `the F2 forms as ${THIRD_FOLLOW_UP}'s landing-593 verdict quotes them`).toEqual([true, true, true]);
+    const bare = [writtenText(examples?.[1]?.slice(1, -1) ?? ""), ...(examples?.[2] ?? "").split(/, | and /).map(marker => markerLabel(writtenText(marker), "\r"))];
+    expect(
+      bare.map(label => [label, scanFiles(json({ decision: "reuse", label })), rowCarries("FALSIFIERS", { decision: "reuse", label })]),
+      `the bare carriage return forms ${THIRD_FOLLOW_UP}'s landing-593 verdict names: refused, and a falsifier row carries each`,
+    ).toEqual(["not\r- really\r- synthetic", "not\r>> really\r>> synthetic", "not\r- [ ] really\r- [ ] synthetic", "not\r1. really\r1. synthetic"].map(label => [label, [`test/fixtures/x.json # reuse-row: ${NOT_SYNTHETIC}`], true]));
+    expect(
+      bare.map(label => renderedHtml(label).startsWith("<p>not</p>")),
+      "marked ends the negator's line at each bare carriage return",
+    ).toEqual(bare.map(() => true));
+    expect(
+      bare.map(label => scanFiles(json({ decision: "reuse", label: label.replaceAll("\r", "\r\n") }))),
+      "the CRLF forms, refused as the landed census refuses them",
+    ).toEqual(bare.map(() => [`test/fixtures/x.json # reuse-row: ${NOT_SYNTHETIC}`]));
+  });
+
   for (const row of ROWS) {
     it(testName(row), { timeout: 60_000 }, () => {
       expect(readRow(row)).toEqual(row.expect);
@@ -2458,7 +2632,7 @@ describe("rf undetermined premise census (wb-pfxo.11, RF-COMPOSITIONAL-ASSEMBLY-
     expect([CLAUSE_BREAK.source, HIDDEN_MARKUP.source]).toEqual([String.raw`[.,;:!?()[\]{}<>|=\n]+|\s[-\u2010-\u2015]+\s`, String.raw`<!--[\s\S]*?(?:-->|$)|\]\((?:[^()\n]|\([^()\n]*\))*\)|<\/?[A-Za-z][A-Za-z0-9-]*(?:\s[^<>]*)?\/?>`]);
     expect([SOFT_BREAK.source, LINE_MARKER.source, RENDERED_MARKUP.source]).toEqual([
       String.raw`[.,;:!?()[\]{}<>|=]+|\s[-\u2010-\u2015]+\s`,
-      String.raw`(?<=^|\n)[\t ]*(?:(?:(?:\d{1,9}[.)]|[-*+])(?=\s)[\t ]*(?:\[[ xX]\](?=\s)[\t ]*)?)|>(?=[\s>])[\t ]*)+`,
+      String.raw`(?<=^|[\n\r])[\t ]*(?:(?:(?:\d{1,9}[.)]|[-*+])(?=\s)[\t ]*(?:\[[ xX]\](?=\s)[\t ]*)?)|>(?=[\s>]|(?:\d{1,9}[.)]|[-*+])\s)[\t ]*)+`,
       String.raw`<!--[\s\S]*?(?:-->|$)|\]\((?:\\[^\n]|[^()\\\n]|\((?:\\[^\n]|[^()\\\n]|\((?:\\[^\n]|[^()\\\n]|\((?:\\[^\n]|[^()\\\n])*\))*\))*\))*\)|<\/?[A-Za-z][A-Za-z0-9-]*(?:\s(?:"[^"]*"|'[^']*'|[^<>"'])*)?\/?>`,
     ]);
     expect([LINK_TAIL.source, TAIL_SCAN.source]).toEqual([
