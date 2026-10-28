@@ -52,13 +52,16 @@
  *      awaits each fixture cleanup unbounded), so a fixture cannot stop hosts under HOST_HOOK_TIMEOUT_MS: one that does
  *      is a finding by itself, and the family stops hosts in a hook.
  * The judged set is read from the test directory and the config, never typed here. The members importing the marked
- * twins (the two suites that drive real hosts, and the helper's own unit rows) are pinned, so a derivation that reads
+ * twins (the three suites that drive real hosts, and the helper's own unit rows) are pinned, so a derivation that reads
  * nothing, or a member that leaves the twins, reds. Every widened reading has planted kill controls beside negative
  * controls, and every named residual has planted quiet rows (a member the guard leaves quiet). What each one yields, as
  * each finding's rule and text, is held in the out-of-file roster test/fixtures/detached-timing-guard-roster.json,
  * beside this file's frozen shape. The first wb-nqbd case and the last case read that shape against the collected test
  * tree, and the last one also reads that every planted table reached its own compare (F4: a deleted case or row block
- * reds).
+ * reds). wb-g0yl (the R694 follow-up of wb-ksz landing 534: F3 leads): the importer pin row's title and this header
+ * count the real-host suites the list pins, every importer but the helper's own unit rows, so a suite that joins the
+ * list re-counts both. Not claimed: a hollow that removes that row from every literal of the shape (the row, the
+ * roster's title and the frozen-shape literal's element), which wb-g0yl measured at 0 failed.
  * NAMED RESIDUALS (not detected; each has quiet rows, F5):
  *   R-WAIT-LOOP a wait loop whose bound is not in its condition (a for-of over a fixed-length array, a counted loop
  *     that leaves through a break) or that awaits a read with no delay;
@@ -107,6 +110,10 @@ const CLOCKS = new Set(["Date.now", "performance.now"]);
 /** Where the marked twins live, as the members import them. */
 const TWINS_MODULE = "./helpers/detached-timing.js";
 const TWINS = new Set(["launchDetachedMarked", "connectDetachedMarked"]);
+/** The helper's own unit rows: the one importer of the marked twins that plants its lapses instead of driving a real host. */
+const HELPER_ROWS = "workbench-detached-timing.test.ts";
+/** wb-g0yl: the words the pin row's title and the header count the real-host suites with. */
+const COUNT_WORDS: readonly string[] = ["no", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"];
 /** wb-nqbd F1: vitest's own wait helpers (vi.waitFor, vi.waitUntil, expect.poll), read by name on any receiver or binding. */
 const WAIT_HELPERS = new Set(["waitFor", "waitUntil", "poll"]);
 /** wb-nqbd F1, F3: the timers behind two host objects, read on the object by name: AbortSignal.timeout, Atomics.wait, Atomics.waitAsync. */
@@ -620,6 +627,10 @@ function headerResiduals(text: string): string[] {
   const header = text.slice(0, text.indexOf("*/"));
   return [...new Set([...header.matchAll(/\bR-[A-Z]+(?:-[A-Z]+)*\b/g)].map(match => match[0]))];
 }
+/** wb-g0yl: the prose of the leading comment of `text`, its comment prefixes dropped and its whitespace collapsed. */
+function headerProse(text: string): string {
+  return text.slice(0, text.indexOf("*/")).replace(/^[ \t]*\/?\*+[ \t]?/gm, "").replace(/\s+/g, " ");
+}
 /** True when `callee` registers a test row: it, test, or a member or table form of either (it.each(...)). */
 function registersTest(callee: ts.Expression): boolean {
   const root = ts.isCallExpression(callee) ? callee.expression : callee;
@@ -650,7 +661,7 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
     expect(judged.length).toBe(family.length - 1);
   });
 
-  it("pins the members that import the marked twins: the two suites that drive real hosts, and the helper's own unit rows", () => {
+  it("pins the members that import the marked twins: the three suites that drive real hosts, and the helper's own unit rows", ({ task }) => {
     const importers = [...readings].filter(([, reading]) => reading.twins.length > 0).map(([name, reading]) => `${name}:${reading.twins.join("+")}`);
     expect(importers).toEqual([
       "workbench-detached-child-environ.test.ts:launchDetachedMarked",
@@ -658,6 +669,12 @@ describe("wb-maza: the detached-* family keeps its strict timing markers (owner 
       "workbench-detached-socket-base.test.ts:connectDetachedMarked+launchDetachedMarked",
       "workbench-detached-timing.test.ts:connectDetachedMarked+launchDetachedMarked",
     ]);
+    // wb-g0yl (R694 follow-up of wb-ksz landing 534, F3): this row's title and the header count the suites that drive real
+    // hosts - every importer the list pins but the helper's own unit rows - so a suite that joins the list re-counts both.
+    const hosts = importers.filter(entry => !entry.startsWith(`${HELPER_ROWS}:`)).length;
+    const counted = `the ${COUNT_WORDS[hosts] ?? String(hosts)} suites that drive real hosts`;
+    expect(task.name, "this row's title counts the real-host suites the list pins").toContain(counted);
+    expect(headerProse(SELF), "the header counts the real-host suites the list pins").toContain(counted);
   });
 
   it.each(judged)("%s: G1 drives hosts only through the marked twins, never a raw launch or connect value import", name => {

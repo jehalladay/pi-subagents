@@ -56,6 +56,15 @@
  * path string ("receipt.input_snapshot.value", G24); a whole-word field after a longer name that holds it
  * ("xinput_snapshot input_snapshot", G25) and before one (the last-occurrence twin); and the shared name inside a dotted
  * path.
+ * THE SCAN'S TEXT READINGS, EVERY BOUNDARY AND PART (wb-njkv, the landing-507 under-report probes GA4, GA5b and GA6 and the
+ * template probes GA7 and GA8): the landed pins bounded every whole word only by '/', '.', ' ', ',' and the text's ends, held
+ * each slashed identities path behind a leading '/', put a field's only bounded occurrence no later than its second, and put a
+ * field in no template middle and no template without substitutions, so a scan reading '-' as a word character (GA6), the slashed
+ * path only after a '/' (GA5b), only the first two occurrences (GA4), and no template middle (GA7) or substitution-free template
+ * (GA8) stayed green. TOUCHPOINTS now pins: both identities spellings, slashed and dotted, as the whole string and at the start,
+ * inside and at the end of a longer path; a field bounded on both sides by each printable ASCII character that is not a letter,
+ * digit, _ or $ (the hyphen among them); a field after two longer names that hold it (its third occurrence) and after sixteen;
+ * and a field in a template head, a template middle, a template tail and a template without substitutions.
  * Rule 16: the frozen-shape case pins every table's row and pin shape and the live subjects; the OUT-OF-FILE anchor
  * test/fixtures/gp-snapshot-join-roster.json (the hk9l/5jha roster pattern) carries every judged row (table, id, label, the
  * SHA-256 of each pin), every registered test title and the residual families, and the roster case judges this file against it
@@ -323,8 +332,8 @@ describe("gp snapshot-join census (wb-gxd7.3, GPC-FEEDBACK-CONTRACT-AUDIT-R3)", 
 
   it("rule 16: every judged table and the live subjects are frozen at their measured shape", () => {
     expect(ROWS.map(entry => `${entry.table}/${entry.id}:${entry.pins.length}`)).toEqual([
-      "TOUCHPOINTS/T-FIELD:12",
-      "TOUCHPOINTS/T-IDENTITIES:10",
+      "TOUCHPOINTS/T-FIELD:48",
+      "TOUCHPOINTS/T-IDENTITIES:14",
       "TOUCHPOINTS/T-PREFIX:3",
       "TOUCHPOINTS/T-SHARED:5",
       "CLEAN/C-PI-OWN:4",
