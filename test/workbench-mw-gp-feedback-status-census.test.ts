@@ -12,19 +12,21 @@
  * or feedback-status field because none exists", is row N's label; the bead is the filing's MERGE CANDIDATE into the R7
  * bead as its honesty clause, and no R7 bead or Pi R7 record exists, so the record this census judges is test-only.
  *
- * MEASURED (read-only, by the cutting seat, 2026-10-28, at trunk df37dac). Producer (the local MechanicalWorkflows
- * checkout, git show at the bead's pin 4b8b974ca72bf2ed36b99e315e45857c6181fbe8; the roster's producer block holds both
- * cited lines and their blobs, and this census never re-reads the producer): docs/programs/graph-policy-coordination-2026-10-18/README.md
- * (blob 0dbff582a14c) :15 ends "Unknown/pending feedback cannot be invented as observed reward; global team outcome alone
- * does not attribute causal benefit to each actor." and docs/programs/graph-policy-coordination-2026-10-18.md (blob
- * 01ff00d480ec) :16 ends "Feedback corrections and promotion remain outside the policy's evaluation." Pi: git's src
- * listing holds no file naming a vocabulary word (below); at the filing pin 758ec18187a5d66ba40b766caad38754b5313558 git's
- * objects hold 115 src, 410 test and 59 docs blobs and none names one. The filing's other three search words are Pi's own
- * words with other meanings: "pending" (24 src files), "causal" (5: the observed-causal relation class, causalClaim,
- * "causal gains") and "attribution" (1). The live test tree names "reward" in three landed files (a GraphPolicyCLI error
- * code and a producer quote held as census data) besides this cut's two files. docs/workbench/09 lines 69, 71 and 73-75 and
- * docs/workbench/18 line 29 (the filing's citations) are byte-identical at the filing pin and at the base, at the same
- * line numbers.
+ * MEASURED (read-only, 2026-10-28: by the cutting seat at trunk df37dac, re-measured by the respin seat at trunk 5fbe25e).
+ * Producer (the local MechanicalWorkflows checkout, git show at the bead's pin 4b8b974ca72bf2ed36b99e315e45857c6181fbe8;
+ * the roster's producer block holds both cited lines and their blobs, and this census never re-reads the producer):
+ * docs/programs/graph-policy-coordination-2026-10-18/README.md (blob 0dbff582a14c) :15 ends "Unknown/pending feedback
+ * cannot be invented as observed reward; global team outcome alone does not attribute causal benefit to each actor." and
+ * docs/programs/graph-policy-coordination-2026-10-18.md (blob 01ff00d480ec) :16 ends "Feedback corrections and promotion
+ * remain outside the policy's evaluation." Pi: git's src listing (117 paths at 5fbe25e) holds no file naming a vocabulary
+ * word (below); at the filing pin 758ec18187a5d66ba40b766caad38754b5313558 git's objects hold 115 src, 410 test and 59
+ * docs blobs and none names one. The filing's other three search words are Pi's own words with other meanings: "pending"
+ * (24 src files), "causal" (6: the observed-causal relation class, causalClaim, "causal gains" and a collective event's
+ * causal_parents) and "attribution" (1). The live test tree names "reward" in three landed files (a GraphPolicyCLI error
+ * code and a producer quote held as census data) besides this cut's two files. docs/workbench/09 lines 69, 71 and 73-75
+ * and docs/workbench/18 line 29 (the filing's citations) are byte-identical at the filing pin and at the base, at the same
+ * line numbers, and their three sections (09 "Relationships are typed and provenanced" and "Freshness and ambiguity", 18
+ * "Key risks and mitigations") render the same blocks and table cells at both.
  *
  * READINGS.
  * - THE MODEL (this file; test-only, src untouched): an episode's R7 feedback log, append-only, of five record kinds: the
@@ -35,35 +37,55 @@
  * - THE REFERENCE validator appends a record to a log or refuses it typed, {ok: false, code, record, field?}, reading in
  *   order: rewrite (the id is already in the log), operator-fact-writer (a correction or promotion not written by the
  *   operator), operator-field (a promotion field on any record, or a corrects field off a correction: a promotion is its
- *   own record), correction-unreferenced (a correction naming no record of the log), status-outside-set (a feedback-bearing
- *   record whose status is missing or outside the set, compared exactly), reward-on-unobserved (a reward or causal benefit,
- *   zero included, on pending or unknown), observed-without-outcome (observed with no verifier or receipt outcome and a
- *   reference), team-outcome-twice (a second team outcome for one episode) and team-outcome-copied (a per-actor reward or
- *   causal benefit - feedback, or a correction of a per-actor record - equal to the episode's team reward or its even share
- *   over the episode's actors, with no actor-level verifier reference). An admitted record is appended: the log returned is
- *   the input plus the record, every prior record byte-identical, and the caller's log untouched.
- * - THE CHECKS (judged by value, each over its own hand-authored cases): K-STATUS, K-REWARD, K-TEAM, K-APPEND, K-OPERATOR.
- *   A case reads "ok", the typed refusal as code or code:field, or what went wrong (a caller log mutated, an admitted log
- *   that is not the input plus the record, a refusal naming another record). MUTANTS: 29 validators, one fault each,
- *   each refused by exactly its declared checks; every check refuses one alone, and every typed refusal is some case's.
+ *   own record), reward-on-statusless (a reward or causal benefit, zero included, on a decision or a promotion: neither
+ *   kind carries a feedback status, so neither has an observed outcome to carry a value), correction-unreferenced (a
+ *   correction naming no record of the log), status-outside-set (a feedback-bearing record whose status is missing or
+ *   outside the set, compared exactly: a case variant or a padded status is outside), reward-on-unobserved (a reward or
+ *   causal benefit, zero and negative values included, on pending or unknown), observed-without-outcome (observed with no
+ *   verifier or receipt outcome carrying a non-empty reference, for either kind), team-outcome-twice (a second team outcome
+ *   for one episode, whatever the first one's status) and team-outcome-copied (a per-actor reward or causal benefit - on
+ *   feedback, or on a correction of a per-actor record, the two fields alike - equal to the episode's team reward or its
+ *   even share over the episode's actors, with no actor-level verifier reference). An admitted record is appended: the log
+ *   returned is the input plus the record, every prior record byte-identical, and the caller's log untouched.
+ * - THE CHECKS (judged by value, each over its own hand-authored cases): K-STATUS (10 cases), K-REWARD (18), K-TEAM (16),
+ *   K-APPEND (8), K-OPERATOR (9). A case reads "ok", the typed refusal as code or code:field, or what went wrong (a caller
+ *   log mutated, an admitted log that is not the input plus the record, a refusal naming another record). MUTANTS: 38
+ *   validators, one fault each, each refused by exactly its declared checks; every check refuses one alone, and every
+ *   typed refusal is some case's.
  * - THE ARMED REGISTRATIONS (SITES, empty today): a src module that names the vocabulary must register its validator
  *   there, and every check then judges it beside the reference; an unregistered naming module, a stale registration and a
  *   duplicate are findings.
  * - THE SRC READING (row N): every path git lists under src/ (tracked, plus untracked files git does not ignore), each a
  *   regular file read as text; a listed path that is not a regular file is unread, never skipped. A vocabulary word
  *   (reward and team outcome, the filing's search words Pi's src never uses; feedback status and causal benefit, the
- *   statement's R7 terms) is read case-insensitively anywhere in the path or the text, with any run of whitespace, dot,
- *   underscore, hyphen or format character (Cf) between its parts (separators and camel humps). The filing pin is read
- *   the same way from git's objects under src, test and docs.
+ *   statement's R7 terms) is read case-insensitively (the i and u flags) anywhere in the path or the text: its parts in
+ *   order, with any run, empty included, of these between them (SEPARATORS): JavaScript whitespace, the full stop, dash
+ *   punctuation (Unicode Pd: the hyphen-minus, U+2010 HYPHEN, U+2011 NON-BREAKING HYPHEN, the en and em dashes ...), the
+ *   minus sign U+2212, connector punctuation (Unicode Pc: the low line, U+FF3F FULLWIDTH LOW LINE ...) and format
+ *   characters (Unicode Cf). The filing pin is read the same way from git's objects under src, test and docs.
+ * - THE DOCS READING (rows P and C): each cited line is read in three legs. The raw leg: the line at the filing pin (git's
+ *   objects) holds the text its row needs, and the same whole line stands in the live page. The pinned-section leg: the
+ *   line's section at the filing pin, read in the shared rendered view (docsSection and sectionTables of
+ *   test/helpers/census.ts: marked's lexer, the section heading once in the rendered view at level 2 under the page's
+ *   title, the section bounded at the next level-1 or level-2 heading), carries no HTML and holds the text in exactly one
+ *   rendered unit of the line's kind - a list item (09:69), a paragraph (09:71, 09:75), the section's own heading (09:73)
+ *   or a table cell (18:29, in the Mitigation and test column of the risk "Source graph conflated with trace"). The
+ *   live-section leg: the live section renders exactly the pinned section's blocks (sectionMatches, the adoption form: no
+ *   HTML, block for block, a block's markdown included) and exactly its table cells (sectionTables' cell grid, markup
+ *   kept) - section-bounded slice equality, never an includes-anywhere check. Each line is also read under seven
+ *   live-page plants (PLANTS: dropped, edited, its text in strong emphasis, wrapped in an HTML comment, put in a code
+ *   fence, moved out of its section, kept beside a withdrawal); the live-section leg refuses all seven, and the raw leg
+ *   alone refuses only the first three.
  *
  * ROWS. A1-A4, the acceptance's four clauses; S1-S4, the statement's four clauses; P, the filing's docs/workbench/09
- * reading of the principle Pi already holds for projection data (each cited line read at the filing pin and found whole in
- * the live page); C, its docs/workbench/18 reading; N, the filing's absence sentence; Q, the residuals' pinned quiet rows.
+ * reading of the principle Pi already holds for projection data, and C, its docs/workbench/18 reading (each cited line
+ * read by THE DOCS READING); N, the filing's absence sentence; Q, the residuals' pinned quiet rows.
  * RESIDUALS (named families, each member a pinned quiet row; a reading that starts reading a member reds its row):
- * R-COMPOSED (Q1: a word split by something other than the reading's separators - an operator, a comment, a quote - or
- * escaped, spelled with a homoglyph or joined at run time), R-SHARED-WORD (Q2: the filing's search words pending, causal
- * and attribution, Pi words with other meanings), R-UNNAMED-RECORD (Q3: a module that shapes a score or feedback record
- * and names no vocabulary word: what an R7 record means without its words is outside a text reading),
+ * R-COMPOSED (Q1: a word split by something other than SEPARATORS - an operator, an optional chain, a slash, a middle dot,
+ * a comment or a comment's continuation, a quote - or escaped, spelled with a homoglyph or joined at run time),
+ * R-SHARED-WORD (Q2: the filing's search words pending, causal and attribution, Pi words with other meanings),
+ * R-UNNAMED-RECORD (Q3: a module that shapes a score or feedback record and names no vocabulary word - a score object, a
+ * Feedback interface with a status field: what an R7 record means without its words is outside a text reading),
  * R-OTHER-DERIVATION (Q4: a per-actor value derived from the team outcome by other arithmetic - a weighted share, a
  * rounded share, the team reward less another actor's - is admitted: the check reads equality with the team reward and
  * its even share only), R-TEST-MENTION (Q5: a test file naming the vocabulary as text, this cut's census and roster
@@ -72,11 +94,11 @@
  * row computes the pin partition - every pin of rows A, S, P, C and N removed that way is reported by the export's bindings,
  * row Q's pins are the quiet set - and no outside anchor reads a case, a code, a mutant or a residual member).
  * NOT CLAIMED: an R7 record in Pi or its full field list (R8 = wb-e66.3 owns the field list; this census judges the
- * honesty clause on a test-only record); who may write per-actor feedback beyond the operator facts; a reward the policy
- * path writes on its own decision; that a verifier or receipt reference resolves; docs and test text outside the filing
- * pin (the live legs read src); that a producer line reads the same past the pin; the members of R-COORDINATED (the
- * labels, the statuses, the vocabulary, the shared words, the docs lines and the producer lines are anchored outside this
- * file).
+ * honesty clause on a test-only record); who may write per-actor feedback beyond the operator facts; what a promotion's
+ * subject names (it need not be a record of the log); that a verifier or receipt reference resolves; the vocabulary in
+ * live docs or test text (the live vocabulary leg reads src; the live docs leg reads the three cited sections only); that
+ * a producer line reads the same past the pin; the members of R-COORDINATED (the labels, the statuses, the vocabulary,
+ * the shared words, the docs lines and the producer lines are anchored outside this file).
  * FROZEN SHAPE (standing rule 16): the frozen-shape case pins `${id}:${pins.length}` for ROWS and the shape of every table
  * as literals; the judged set (every row's id, label and pins, every pin's quote and witness, the cases and their
  * expectations, the mutants and their declared checks, the residual members, every registered test title) is held to the
@@ -100,6 +122,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { isDeepStrictEqual } from "node:util";
 import { afterAll, describe, expect, it } from "vitest";
+import { type DocsSection, docsSection, sectionMatches, sectionTables } from "./helpers/census.js";
 import { installScratchLeakGuard, makeScratch, removeScratch } from "./helpers/scratch.js";
 
 installScratchLeakGuard(afterAll);
@@ -169,6 +192,7 @@ const CODES: readonly string[] = [
   "rewrite",
   "operator-fact-writer",
   "operator-field",
+  "reward-on-statusless",
   "correction-unreferenced",
   "status-outside-set",
   "reward-on-unobserved",
@@ -225,7 +249,16 @@ type Fault =
   | "corrects-field-unread"
   | "untyped-refusal"
   | "refusal-unnamed"
-  | "refuse-every-record";
+  | "refuse-every-record"
+  | "negative-unobserved-admitted"
+  | "receipt-ref-unread"
+  | "trimmed-status"
+  | "twice-after-observed-only"
+  | "correction-causal-uncopied"
+  | "statusless-value-admitted"
+  | "decision-value-unread"
+  | "promotion-value-unread"
+  | "statusless-causal-unread";
 
 function validatorWith(faults: ReadonlySet<Fault>): Validator {
   const has = (fault: Fault): boolean => faults.has(fault);
@@ -235,14 +268,21 @@ function validatorWith(faults: ReadonlySet<Fault>): Validator {
     return field === undefined ? { ok: false, code, record: named } : { ok: false, code, record: named, field };
   };
   const present = (value: number | undefined): boolean => (has("zero-reward-absent") ? value !== undefined && value !== 0 : value !== undefined);
-  const statusOf = (record: FeedbackRecord): string | undefined => (record.status === undefined && has("missing-status-observed") ? "observed" : record.status);
+  /** A negative value is still a value: only the negative-unobserved-admitted fault reads it as absent on an unobserved status. */
+  const unobservedValue = (value: number | undefined): boolean => present(value) && !(has("negative-unobserved-admitted") && value !== undefined && value < 0);
+  const statusOf = (record: FeedbackRecord): string | undefined => {
+    const status = record.status === undefined && has("missing-status-observed") ? "observed" : record.status;
+    return has("trimmed-status") ? status?.trim() : status;
+  };
   const inSet = (status: string | undefined): boolean => {
     if (status === undefined) return false;
     if (has("open-status")) return status !== "";
     return STATUSES.includes(has("case-folded-status") ? status.toLowerCase() : status);
   };
   const observedBasis = (outcome: Outcome | undefined): boolean =>
-    outcome !== undefined && (has("any-outcome-kind") || outcome.kind === "verifier" || outcome.kind === "receipt") && (has("empty-ref") || outcome.ref !== "");
+    outcome !== undefined &&
+    (has("any-outcome-kind") || outcome.kind === "verifier" || outcome.kind === "receipt") &&
+    (has("empty-ref") || outcome.ref !== "" || (has("receipt-ref-unread") && outcome.kind === "receipt"));
   const actorLevelVerifier = (outcome: Outcome | undefined): boolean =>
     outcome !== undefined &&
     outcome.ref !== "" &&
@@ -257,6 +297,13 @@ function validatorWith(faults: ReadonlySet<Fault>): Validator {
       if ((record.kind === "correction" || record.kind === "promotion") && record.writer !== "operator" && !writerUnread) return refuse(record, "operator-fact-writer");
       if (record.promotion !== undefined && !has("promotion-field-unread")) return refuse(record, "operator-field", "promotion");
       if (record.corrects !== undefined && record.kind !== "correction" && !has("corrects-field-unread")) return refuse(record, "operator-field", "corrects");
+      if (record.kind === "decision" || record.kind === "promotion") {
+        const unread = has("statusless-value-admitted") || (record.kind === "decision" && has("decision-value-unread")) || (record.kind === "promotion" && has("promotion-value-unread"));
+        for (const field of VALUE_FIELDS) {
+          if (unread || (field === "causalBenefit" && has("statusless-causal-unread"))) continue;
+          if (fieldValue(record, field) !== undefined) return refuse(record, "reward-on-statusless", field);
+        }
+      }
       const corrected = record.corrects === undefined ? undefined : log.find(entry => entry.id === record.corrects);
       if (record.kind === "correction") {
         const unreferenced = record.corrects === undefined ? !has("unreferenced-correction") : corrected === undefined && !has("dangling-correction");
@@ -269,12 +316,13 @@ function validatorWith(faults: ReadonlySet<Fault>): Validator {
         if (status !== "observed" && !admittedHere) {
           for (const field of VALUE_FIELDS) {
             if (field === "causalBenefit" && has("unobserved-causal-benefit-unread")) continue;
-            if (present(fieldValue(record, field))) return refuse(record, "reward-on-unobserved", field);
+            if (unobservedValue(fieldValue(record, field))) return refuse(record, "reward-on-unobserved", field);
           }
         }
         if (status === "observed" && !has("outcome-optional") && !observedBasis(record.outcome)) return refuse(record, "observed-without-outcome");
       }
-      if (record.kind === "team-outcome" && !has("team-outcome-twice-admitted") && log.some(entry => entry.kind === "team-outcome" && entry.episode === record.episode)) {
+      const counted = (entry: FeedbackRecord): boolean => !has("twice-after-observed-only") || entry.status === "observed";
+      if (record.kind === "team-outcome" && !has("team-outcome-twice-admitted") && log.some(entry => entry.kind === "team-outcome" && entry.episode === record.episode && counted(entry))) {
         return refuse(record, "team-outcome-twice");
       }
       const actor =
@@ -282,7 +330,7 @@ function validatorWith(faults: ReadonlySet<Fault>): Validator {
       if (actor !== undefined && !has("team-copy-unread")) {
         const derived = derivedValues(log, record.episode, has("share-unread"));
         for (const field of VALUE_FIELDS) {
-          if (field === "causalBenefit" && has("causal-benefit-uncopied")) continue;
+          if (field === "causalBenefit" && (has("causal-benefit-uncopied") || (record.kind === "correction" && has("correction-causal-uncopied")))) continue;
           const value = fieldValue(record, field);
           if (value !== undefined && derived.includes(value) && !actorLevelVerifier(record.outcome)) return refuse(record, "team-outcome-copied", field);
         }
@@ -346,6 +394,7 @@ const STATUS_CASES: readonly Case[] = [
   at("s-empty", BASE, feedback("s7", { status: "" }), "status-outside-set"),
   at("s-team", [], teamOutcome("t9", "ep-9", ["b1"], { status: "final" }), "status-outside-set"),
   at("s-correction", BASE, correction("s8", { corrects: "f1", status: "corrected" }), "status-outside-set"),
+  at("s-padded", BASE, feedback("s9", { status: " observed", reward: 2, outcome: actorReceipt("a2") }), "status-outside-set"),
 ];
 const REWARD_CASES: readonly Case[] = [
   at("r-verifier", BASE, feedback("r1", { status: "observed", reward: 5, outcome: actorVerifier("a2") }), "ok"),
@@ -362,6 +411,10 @@ const REWARD_CASES: readonly Case[] = [
   at("r-empty-ref", BASE, feedback("r11", { status: "observed", reward: 5, outcome: { kind: "verifier", ref: "", level: "actor" } }), "observed-without-outcome"),
   at("r-self-report", BASE, feedback("r12", { status: "observed", reward: 5, outcome: SELF_REPORT }), "observed-without-outcome"),
   at("r-observed-bare", BASE, feedback("r13", { status: "observed" }), "observed-without-outcome"),
+  at("r-pending-negative", BASE, feedback("r14", { status: "pending", reward: -3 }), "reward-on-unobserved:reward"),
+  at("r-empty-receipt-ref", BASE, feedback("r15", { status: "observed", reward: 5, outcome: { kind: "receipt", ref: "", level: "actor" } }), "observed-without-outcome"),
+  at("r-decision-reward", BASE, decision("r16", "a2", { reward: 5 }), "reward-on-statusless:reward"),
+  at("r-promotion-causal", BASE, promotion("r17", { causalBenefit: 2 }), "reward-on-statusless:causalBenefit"),
 ];
 const TEAM_CASES: readonly Case[] = [
   at("t-once", [], teamOutcome("t2", "ep-2", ["b1", "b2"], { status: "observed", reward: 8, outcome: teamVerifier("ep-2") }), "ok"),
@@ -378,6 +431,13 @@ const TEAM_CASES: readonly Case[] = [
   at("t-correction-copy", BASE, correction("c8", { corrects: "f1", status: "observed", reward: 4, outcome: actorReceipt("a1") }), "team-outcome-copied:reward"),
   at("t-correction-team", BASE, correction("c9", { corrects: "t1", status: "observed", reward: 12, outcome: teamVerifier(EPISODE) }), "ok"),
   at("t-no-team", [D1], feedback("c10", { actor: "a1", status: "observed", reward: 12, outcome: actorReceipt("a1") }), "ok"),
+  at(
+    "t-twice-after-pending",
+    [teamOutcome("t6", "ep-6", ["e1"], { status: "pending" })],
+    teamOutcome("t7", "ep-6", ["e1"], { status: "observed", reward: 4, outcome: teamVerifier("ep-6") }),
+    "team-outcome-twice",
+  ),
+  at("t-correction-copy-causal", BASE, correction("c11", { corrects: "f1", status: "observed", causalBenefit: 4, outcome: actorReceipt("a1") }), "team-outcome-copied:causalBenefit"),
 ];
 const APPEND_CASES: readonly Case[] = [
   at("a-correct-feedback", BASE, correction("k1", { corrects: "f1", status: "observed", reward: 6, outcome: actorVerifier("a1") }), "ok"),
@@ -489,6 +549,15 @@ const MUTANTS: readonly Mutant[] = [
   mutant("M27", "untyped-refusal", ALL_CHECKS),
   mutant("M28", "refusal-unnamed", ALL_CHECKS),
   mutant("M29", "refuse-every-record", ALL_CHECKS),
+  mutant("M30", "negative-unobserved-admitted", ["K-REWARD"]),
+  mutant("M31", "receipt-ref-unread", ["K-REWARD"]),
+  mutant("M32", "trimmed-status", ["K-STATUS"]),
+  mutant("M33", "twice-after-observed-only", ["K-TEAM"]),
+  mutant("M34", "correction-causal-uncopied", ["K-TEAM"]),
+  mutant("M35", "statusless-value-admitted", ["K-REWARD"]),
+  mutant("M36", "decision-value-unread", ["K-REWARD"]),
+  mutant("M37", "promotion-value-unread", ["K-REWARD"]),
+  mutant("M38", "statusless-causal-unread", ["K-REWARD"]),
 ];
 const mutantLine = (entry: Mutant): string => `${entry.id}:${entry.fault}:${entry.refusedBy.join("+")}`;
 
@@ -526,8 +595,14 @@ const SHARED_WORDS: readonly string[] = ["pending", "causal", "attribution"];
 /** A spelling's parts: split at whitespace, dots, underscores and hyphens, then at camel humps. */
 const partsOf = (spelling: string): string[] => spelling.split(/[\s._-]+/).flatMap(word => word.match(/[A-Z]+(?![a-z])|[A-Z]?[a-z]+|\d+/g) ?? []);
 const escapeRegex = (text: string): string => text.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-/** A word's reading: its parts in order, any case, with any run of whitespace, dot, underscore, hyphen or format character between them. */
-const readerOf = (word: Word): RegExp => new RegExp(partsOf(word.spelling).map(escapeRegex).join("[\\s._\\-\\p{Cf}]*"), "iu");
+/**
+ * What may stand between a word's parts, any run of it, empty included: JavaScript whitespace, the full stop, dash
+ * punctuation (Pd: the hyphen-minus, U+2010, U+2011, the en and em dashes ...), the minus sign U+2212, connector
+ * punctuation (Pc: the low line, U+FF3F ...) and format characters (Cf).
+ */
+const SEPARATORS = "[\\s.\\p{Pd}\\u2212\\p{Pc}\\p{Cf}]*";
+/** A word's reading: its parts in order, any case, with SEPARATORS between them. */
+const readerOf = (word: Word): RegExp => new RegExp(partsOf(word.spelling).map(escapeRegex).join(SEPARATORS), "iu");
 const READERS = VOCABULARY.map(word => ({ word, reader: readerOf(word) }));
 /** The vocabulary words a text names, in vocabulary order. */
 const namedWords = (text: string): string[] => READERS.filter(({ reader }) => reader.test(text)).map(({ word }) => word.spelling);
@@ -608,6 +683,14 @@ function pinTree(root: string, treeish: string, scopes: readonly string[]): Entr
 }
 const FORMAT_CHARACTER = String.fromCodePoint(0x200b);
 const CYRILLIC_IE = String.fromCodePoint(0x435);
+const HYPHEN = String.fromCodePoint(0x2010);
+const NON_BREAKING_HYPHEN = String.fromCodePoint(0x2011);
+const EN_DASH = String.fromCodePoint(0x2013);
+const MINUS_SIGN = String.fromCodePoint(0x2212);
+const FULLWIDTH_LOW_LINE = String.fromCodePoint(0xff3f);
+const SOFT_HYPHEN = String.fromCodePoint(0xad);
+const NO_BREAK_SPACE = String.fromCodePoint(0xa0);
+const MIDDLE_DOT = String.fromCodePoint(0xb7);
 /** The reading's controls: each label with its text, read for the words it names. */
 const VOCABULARY_CONTROLS: readonly (readonly [string, string])[] = [
   ["word", "the reward of an actor"],
@@ -619,6 +702,13 @@ const VOCABULARY_CONTROLS: readonly (readonly [string, string])[] = [
   ["dotted", "feedback.status"],
   ["spaced twice", "a causal  benefit"],
   ["format characters between the parts", `causal${FORMAT_CHARACTER}benefit`],
+  ["hyphen U+2010", `team${HYPHEN}outcome`],
+  ["non-breaking hyphen U+2011", `feedback${NON_BREAKING_HYPHEN}status`],
+  ["en dash U+2013", `causal${EN_DASH}benefit`],
+  ["minus sign U+2212", `team${MINUS_SIGN}outcome`],
+  ["fullwidth low line U+FF3F", `feedback${FULLWIDTH_LOW_LINE}status`],
+  ["soft hyphen U+00AD", `causal${SOFT_HYPHEN}benefit`],
+  ["no-break space U+00A0", `team${NO_BREAK_SPACE}outcome`],
   ["every word", "reward teamOutcome feedback_status causal-benefit"],
   ["status alone", "status"],
   ["feedback alone", "feedback"],
@@ -632,18 +722,33 @@ const git = (cwd: string, args: readonly string[]): string => execFileSync("git"
 // ---- the docs, the export and the roster ----
 
 const textOf = (path: string): string => readFileSync(join(ROOT, path), "utf8");
+/** The rendered unit that carries a cited line's text in its section. */
+type Carrier = "list item" | "paragraph" | "heading" | "table cell";
 interface DocLine {
   readonly page: string;
   readonly line: number;
   readonly text: string;
+  /** The level-2 section the line renders in (the heading line :73 is that section's own heading). */
+  readonly section: string;
+  readonly carrier: Carrier;
 }
-/** The filing's docs citations: docs/workbench/09 :69, :71, :73-75 (line 74 is blank) and docs/workbench/18 :29, each with the text its row needs. */
+/** The dash in the cited pages' titles (U+2014), built from its code point so this file stays ASCII. */
+const EM_DASH = String.fromCodePoint(0x2014);
+/** Each cited page's level-1 title: its cited sections bind under it (the rendered view's parent heading path). */
+const PAGE_TITLES: Readonly<Record<string, string>> = {
+  [DOCS_09]: `09 ${EM_DASH} Observation, telemetry, provenance and derived graph`,
+  [DOCS_18]: `18 ${EM_DASH} Decisions, risks, deliberate defaults and re-evaluation triggers`,
+};
+const RELATIONSHIPS = "Relationships are typed and provenanced";
+const FRESHNESS = "Freshness and ambiguity";
+const RISKS = "Key risks and mitigations";
+/** The filing's docs citations: docs/workbench/09 :69, :71, :73-75 (line 74 is blank) and docs/workbench/18 :29, each with the text its row needs, its section and its carrier. */
 const DOCS_LINES: readonly DocLine[] = [
-  { page: DOCS_09, line: 69, text: "inferred possible relationship (hypothesis; never treated as authoritative)" },
-  { page: DOCS_09, line: 71, text: "Missing edges do not imply independence." },
-  { page: DOCS_09, line: 73, text: "## Freshness and ambiguity" },
-  { page: DOCS_09, line: 75, text: "UI shows STALE/UNKNOWN visibly." },
-  { page: DOCS_18, line: 29, text: "distinguish declared/observed/inferred" },
+  { page: DOCS_09, line: 69, text: "inferred possible relationship (hypothesis; never treated as authoritative)", section: RELATIONSHIPS, carrier: "list item" },
+  { page: DOCS_09, line: 71, text: "Missing edges do not imply independence.", section: RELATIONSHIPS, carrier: "paragraph" },
+  { page: DOCS_09, line: 73, text: `## ${FRESHNESS}`, section: FRESHNESS, carrier: "heading" },
+  { page: DOCS_09, line: 75, text: "UI shows STALE/UNKNOWN visibly.", section: FRESHNESS, carrier: "paragraph" },
+  { page: DOCS_18, line: 29, text: "distinguish declared/observed/inferred", section: RISKS, carrier: "table cell" },
 ];
 const pinPageCache = new Map<string, string>();
 function pinPage(page: string): string {
@@ -655,16 +760,131 @@ function pinPage(page: string): string {
 }
 interface DocAnchor {
   readonly line: number;
+  /** The raw leg at the pin: the pinned page's line holds the text. */
   readonly pin: boolean;
+  /** The raw leg live: the same whole line stands in the live page. */
   readonly head: boolean;
+  /** The pinned-section leg: "" when the pinned section, in the rendered view, carries no HTML and holds the text in exactly one unit of the line's carrier; else why. */
+  readonly pinSection: string;
+  /** The live-section leg: "" when the live section renders exactly the pinned section's blocks and table cells (slice equality); else why. */
+  readonly headSection: string;
 }
-/** An anchor read over a pinned page and a live page: the pinned page's line holds the text, and the same whole line stands in the live page. */
-function anchorIn(line: number, text: string, pinned: string, live: string): DocAnchor {
-  const held = pinned.split("\n")[line - 1] ?? "";
-  return { line, pin: text !== "" && held.includes(text), head: held !== "" && live.split("\n").includes(held) };
+/** A cited line's section in the shared rendered view: unique at level 2 under its page's title, bounded at the next level-1 or level-2 heading. */
+const sectionOf = (markdown: string, entry: DocLine): DocsSection => docsSection(markdown, entry.section, 2, [PAGE_TITLES[entry.page] ?? "-"]);
+/** The same section's tables as cell grids (marked's cell source, markup kept), from the one binding docsSection uses. */
+const gridsOf = (markdown: string, entry: DocLine): readonly (readonly (readonly string[])[])[] =>
+  sectionTables(markdown, entry.section, 2, [PAGE_TITLES[entry.page] ?? "-"]).grids;
+/** The rendered units of the line's section that hold its text: list items, paragraphs, any other block by kind, and a table's cells (read from its grid, never from the table's joined text). */
+function carriersOf(markdown: string, entry: DocLine): string[] {
+  const units = sectionOf(markdown, entry).blocks.flatMap((block): string[] => {
+    if (block.kind === "list") return block.items.filter(item => item.text.includes(entry.text)).map(() => "list item");
+    if (block.kind === "other") return block.type !== "table" && block.text.includes(entry.text) ? [block.type] : [];
+    return block.text.includes(entry.text) ? [block.kind] : [];
+  });
+  const cells = gridsOf(markdown, entry)
+    .flatMap(grid => grid.flat())
+    .filter(cell => cell.includes(entry.text))
+    .map(() => "table cell");
+  return [...units, ...cells];
 }
-const docLine = (page: string, line: number): DocLine => DOCS_LINES.find(entry => entry.page === page && entry.line === line) ?? { page, line, text: "" };
-const docAnchor = (page: string, line: number): DocAnchor => anchorIn(line, docLine(page, line).text, pinPage(page), textOf(page));
+/** The pinned-section leg: the section binds, carries no HTML, and its line's carrier holds the text exactly once (the heading line is the section's own heading). */
+function pinSectionWhy(pinned: string, entry: DocLine): string {
+  const section = sectionOf(pinned, entry);
+  if (!section.ok) return section.why;
+  if (section.hasHtml) return "the pinned section carries HTML";
+  if (entry.carrier === "heading") {
+    const held = pinned.split("\n")[entry.line - 1] ?? "";
+    return held === entry.text && held === `## ${entry.section}` ? "" : `line ${entry.line} is not the cited text as the section's own heading`;
+  }
+  const found = carriersOf(pinned, entry);
+  return isDeepStrictEqual(found, [entry.carrier]) ? "" : `the pinned section holds the text in ${JSON.stringify(found)}, not in exactly one ${entry.carrier}`;
+}
+/** The live-section leg: the live section renders exactly the pinned section's blocks (sectionMatches) and exactly its cell grids. */
+function headSectionWhy(pinned: string, live: string, entry: DocLine): string {
+  const held = sectionOf(pinned, entry);
+  if (!held.ok) return `the pinned section is refused: ${held.why}`;
+  const match = sectionMatches(sectionOf(live, entry), held.blocks);
+  if (!match.ok) return match.why;
+  return isDeepStrictEqual(gridsOf(live, entry), gridsOf(pinned, entry)) ? "" : "the live section's table cells differ from the pinned section's";
+}
+/** An anchor read over a pinned page and a live page, in the raw leg and both section legs. */
+function anchorIn(entry: DocLine, pinned: string, live: string): DocAnchor {
+  const held = pinned.split("\n")[entry.line - 1] ?? "";
+  return {
+    line: entry.line,
+    pin: entry.text !== "" && held.includes(entry.text),
+    head: held !== "" && live.split("\n").includes(held),
+    pinSection: pinSectionWhy(pinned, entry),
+    headSection: headSectionWhy(pinned, live, entry),
+  };
+}
+const FALLBACK_LINE: DocLine = { page: "-", line: 0, text: "", section: "-", carrier: "paragraph" };
+const docLine = (page: string, line: number): DocLine => DOCS_LINES.find(entry => entry.page === page && entry.line === line) ?? { ...FALLBACK_LINE, page, line };
+/** The live-page plants every cited line is read under. */
+type Plant = "dropped" | "edited" | "markup" | "comment" | "fence" | "moved" | "withdrawal";
+const PLANTS: readonly Plant[] = ["dropped", "edited", "markup", "comment", "fence", "moved", "withdrawal"];
+/** The live page with its cited line dropped, edited in place, its text in strong emphasis, wrapped in an HTML comment, put in a code fence, moved to a trailing section at EOF, or kept beside a withdrawal paragraph. */
+function plantedPage(live: string, held: string, entry: DocLine, plant: Plant): string {
+  const lines = live.split("\n");
+  const index = lines.indexOf(held);
+  if (index < 0) return live;
+  const before = lines.slice(0, index);
+  const after = lines.slice(index + 1);
+  const planted: Readonly<Record<Plant, readonly string[]>> = {
+    dropped: [...before, ...after],
+    edited: [...before, held.replace(entry.text, `${entry.text} (edited)`), ...after],
+    markup: [...before, held.replace(entry.text, `**${entry.text}**`), ...after],
+    comment: [...before, "<!--", held, "-->", ...after],
+    fence: [...before, "```text", held, "```", ...after],
+    moved: [...before, ...after, "", "## Moved", "", held],
+    withdrawal: [...before, held, "", "Withdrawn: the line above no longer holds.", "", ...after],
+  };
+  return planted[plant].join("\n");
+}
+/** Each plant's reading of a cited line: does the raw whole line still stand live, and does the live-section leg hold. */
+function plantReadings(entry: DocLine, pinned: string, live: string): Record<string, { readonly head: boolean; readonly section: boolean }> {
+  const held = pinned.split("\n")[entry.line - 1] ?? "";
+  return Object.fromEntries(
+    PLANTS.map(plant => {
+      const anchor = anchorIn(entry, pinned, plantedPage(live, held, entry, plant));
+      return [plant, { head: anchor.head, section: anchor.headSection === "" }];
+    }),
+  );
+}
+/** What every plant reads: the raw leg loses only a dropped, edited or marked-up line; the live-section leg refuses all seven. */
+const PLANTS_READ: Readonly<Record<Plant, { readonly head: boolean; readonly section: boolean }>> = {
+  dropped: { head: false, section: false },
+  edited: { head: false, section: false },
+  markup: { head: false, section: false },
+  comment: { head: true, section: false },
+  fence: { head: true, section: false },
+  moved: { head: true, section: false },
+  withdrawal: { head: true, section: false },
+};
+/** A carrier the line does not render in, for the pinned-section leg's control. */
+const OTHER_CARRIER: Readonly<Record<Carrier, Carrier>> = { "list item": "paragraph", paragraph: "list item", heading: "paragraph", "table cell": "paragraph" };
+/**
+ * The pin legs' controls, each expected to fail: an edited text (both pin legs), the next line (the raw leg), another
+ * carrier, an HTML comment beside the line in its pinned section, and the line duplicated in it (the pinned-section leg).
+ */
+function pinControls(entry: DocLine, pinned: string, live: string): Record<string, boolean> {
+  const held = pinned.split("\n")[entry.line - 1] ?? "";
+  const besides = (extra: readonly string[]): string =>
+    pinned
+      .split("\n")
+      .flatMap((text, index) => (index === entry.line - 1 ? [text, ...extra] : [text]))
+      .join("\n");
+  const edited = anchorIn({ ...entry, text: `${entry.text} (edited)` }, pinned, live);
+  return {
+    editedPin: edited.pin,
+    editedSection: edited.pinSection === "",
+    nextLinePin: anchorIn({ ...entry, line: entry.line + 1 }, pinned, live).pin,
+    otherCarrierSection: anchorIn({ ...entry, carrier: OTHER_CARRIER[entry.carrier] }, pinned, live).pinSection === "",
+    htmlBesideSection: pinSectionWhy(besides(["", "<!-- a note -->"]), entry) === "",
+    duplicatedSection: pinSectionWhy(besides(["", held]), entry) === "",
+  };
+}
+const PIN_CONTROLS_READ = { editedPin: false, editedSection: false, nextLinePin: false, otherCarrierSection: false, htmlBesideSection: false, duplicatedSection: false };
 interface BeadRow {
   readonly title: string;
   readonly notes: string;
@@ -798,6 +1018,10 @@ const RESIDUALS: readonly Residual[] = [
       { id: "escaped", text: 'export const field = "\\u0072eward";\n' },
       { id: "homoglyph", text: `export const field = "r${CYRILLIC_IE}ward";\n` },
       { id: "joined", text: 'export const field = ["team", "outcome"].join(" ");\n' },
+      { id: "slashed", text: 'export const path = "team/outcome";\n' },
+      { id: "middle-dot", text: `export const label = "team${MIDDLE_DOT}outcome";\n` },
+      { id: "optional-chain", text: "export const status = row.feedback?.status;\n" },
+      { id: "comment-continuation", text: "/**\n * the team\n * outcome of a run\n */\nexport const run = 1;\n" },
     ],
   },
   {
@@ -812,7 +1036,10 @@ const RESIDUALS: readonly Residual[] = [
   {
     id: "Q3",
     name: "R-UNNAMED-RECORD",
-    members: [{ id: "unnamed", text: 'export const score = { actor: "a1", state: "pending", value: 3 };\n' }],
+    members: [
+      { id: "unnamed", text: 'export const score = { actor: "a1", state: "pending", value: 3 };\n' },
+      { id: "feedback-interface", text: 'export interface Feedback {\n  readonly status: "pending";\n}\n' },
+    ],
   },
 ];
 /** Q4's members: per-actor values derived from a team outcome by other arithmetic, each admitted by the reference. */
@@ -859,11 +1086,23 @@ const statusMatrix = (fields: Fields): Record<string, string> =>
 
 const IMPL: Readonly<Record<string, () => unknown>> = {
   A1a: () => {
-    const read = readingsOf(["r-pending", "r-unknown", "r-pending-zero", "r-unknown-causal", "r-pending-receipt", "r-team-pending", "r-correction-unknown", "r-verifier", "r-receipt"]);
+    const read = readingsOf([
+      "r-pending",
+      "r-unknown",
+      "r-pending-zero",
+      "r-pending-negative",
+      "r-unknown-causal",
+      "r-pending-receipt",
+      "r-team-pending",
+      "r-correction-unknown",
+      "r-verifier",
+      "r-receipt",
+    ]);
     expect(read, "a value on an unobserved status is the typed refusal naming its field; an observed outcome's reward is appended").toEqual({
       "r-pending": "reward-on-unobserved:reward",
       "r-unknown": "reward-on-unobserved:reward",
       "r-pending-zero": "reward-on-unobserved:reward",
+      "r-pending-negative": "reward-on-unobserved:reward",
       "r-unknown-causal": "reward-on-unobserved:causalBenefit",
       "r-pending-receipt": "reward-on-unobserved:reward",
       "r-team-pending": "reward-on-unobserved:reward",
@@ -877,12 +1116,14 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     const matrix = {
       reward: statusMatrix({ reward: 2, outcome: actorReceipt("a2") }),
       zero: statusMatrix({ reward: 0, outcome: actorReceipt("a2") }),
+      negative: statusMatrix({ reward: -2, outcome: actorReceipt("a2") }),
       causalBenefit: statusMatrix({ causalBenefit: 2, outcome: actorReceipt("a2") }),
       bare: statusMatrix({ outcome: actorReceipt("a2") }),
     };
     expect(matrix, "every status of the set, with and without a value: only observed carries one").toEqual({
       reward: { observed: "ok", pending: "reward-on-unobserved:reward", unknown: "reward-on-unobserved:reward" },
       zero: { observed: "ok", pending: "reward-on-unobserved:reward", unknown: "reward-on-unobserved:reward" },
+      negative: { observed: "ok", pending: "reward-on-unobserved:reward", unknown: "reward-on-unobserved:reward" },
       causalBenefit: { observed: "ok", pending: "reward-on-unobserved:causalBenefit", unknown: "reward-on-unobserved:causalBenefit" },
       bare: { observed: "ok", pending: "ok", unknown: "ok" },
     });
@@ -917,11 +1158,12 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "team receipt": "team-outcome-copied:reward",
       "no outcome": "observed-without-outcome",
     });
-    const read = readingsOf(["t-copy-causal", "t-actor-verifier", "t-correction-copy"]);
-    expect(read, "the causal benefit and a correction of a per-actor record are held to the same reference").toEqual({
+    const read = readingsOf(["t-copy-causal", "t-actor-verifier", "t-correction-copy", "t-correction-copy-causal"]);
+    expect(read, "the causal benefit and a correction of a per-actor record, in either field, are held to the same reference").toEqual({
       "t-copy-causal": "team-outcome-copied:causalBenefit",
       "t-actor-verifier": "ok",
       "t-correction-copy": "team-outcome-copied:reward",
+      "t-correction-copy-causal": "team-outcome-copied:causalBenefit",
     });
     return { matrix, read };
   },
@@ -997,7 +1239,7 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
   S1a: () => {
     expect(STATUSES.length, "the set holds three statuses").toBe(3);
     const read = readingsOf(STATUS_CASES.map(entry => entry.id));
-    expect(read, "every status of the set is admitted; another, a missing, a case-variant or an empty status is refused on every feedback-bearing kind").toEqual({
+    expect(read, "every status of the set is admitted; another, a missing, a case-variant, a padded or an empty status is refused on every feedback-bearing kind").toEqual({
       "s-observed": "ok",
       "s-pending": "ok",
       "s-unknown": "ok",
@@ -1007,20 +1249,50 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "s-empty": "status-outside-set",
       "s-team": "status-outside-set",
       "s-correction": "status-outside-set",
+      "s-padded": "status-outside-set",
     });
     return { statuses: [...STATUSES], read };
   },
   S1b: () => {
-    const read = readingsOf(["r-verifier", "r-receipt", "r-no-outcome", "r-empty-ref", "r-self-report", "r-observed-bare"]);
-    expect(read, "observed needs a verifier or receipt outcome with a reference").toEqual({
+    const read = readingsOf([
+      "r-verifier",
+      "r-receipt",
+      "r-no-outcome",
+      "r-empty-ref",
+      "r-empty-receipt-ref",
+      "r-self-report",
+      "r-observed-bare",
+      "r-decision-reward",
+      "r-promotion-causal",
+    ]);
+    expect(read, "observed needs a verifier or receipt outcome with a reference, and a decision or a promotion, which carries no status, carries no value").toEqual({
       "r-verifier": "ok",
       "r-receipt": "ok",
       "r-no-outcome": "observed-without-outcome",
       "r-empty-ref": "observed-without-outcome",
+      "r-empty-receipt-ref": "observed-without-outcome",
       "r-self-report": "observed-without-outcome",
       "r-observed-bare": "observed-without-outcome",
+      "r-decision-reward": "reward-on-statusless:reward",
+      "r-promotion-causal": "reward-on-statusless:causalBenefit",
     });
-    return read;
+    const statusless = Object.fromEntries(
+      (["decision", "promotion"] as const).map(kind => [
+        kind,
+        Object.fromEntries(
+          VALUE_FIELDS.map(field => {
+            const fields: Fields = field === "reward" ? { reward: 0 } : { causalBenefit: 0 };
+            const record = kind === "decision" ? decision("y1", "a2", fields) : promotion("y1", fields);
+            return [field, readingOf(REFERENCE, at("y", BASE, record, ""))];
+          }),
+        ),
+      ]),
+    );
+    expect(statusless, "a value, zero included, on either statusless kind is refused naming its field").toEqual({
+      decision: { reward: "reward-on-statusless:reward", causalBenefit: "reward-on-statusless:causalBenefit" },
+      promotion: { reward: "reward-on-statusless:reward", causalBenefit: "reward-on-statusless:causalBenefit" },
+    });
+    return { read, statusless };
   },
   S2: () => {
     const readings: string[] = [];
@@ -1047,11 +1319,12 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     return readings;
   },
   S3a: () => {
-    const read = readingsOf(["t-once", "t-twice", "t-twice-pending", "t-other-episode"]);
-    expect(read, "one team outcome per episode; a second is refused whatever its status").toEqual({
+    const read = readingsOf(["t-once", "t-twice", "t-twice-pending", "t-twice-after-pending", "t-other-episode"]);
+    expect(read, "one team outcome per episode; a second is refused whatever its status or the first one's").toEqual({
       "t-once": "ok",
       "t-twice": "team-outcome-twice",
       "t-twice-pending": "team-outcome-twice",
+      "t-twice-after-pending": "team-outcome-twice",
       "t-other-episode": "ok",
     });
     const carriers = BASE.filter(record => record.kind === "team-outcome").map(record => `${record.id}:${record.episode}:${record.actors?.length ?? 0}`);
@@ -1059,7 +1332,7 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     return { read, carriers };
   },
   S3b: () => {
-    const read = readingsOf(["t-copy-reward", "t-copy-share", "t-copy-share-receipt", "t-copy-causal", "t-copy-causal-team", "t-correction-copy"]);
+    const read = readingsOf(["t-copy-reward", "t-copy-share", "t-copy-share-receipt", "t-copy-causal", "t-copy-causal-team", "t-correction-copy", "t-correction-copy-causal"]);
     expect(read, "the team reward and its share, copied into a per-actor reward or causal benefit, are refused naming the field").toEqual({
       "t-copy-reward": "team-outcome-copied:reward",
       "t-copy-share": "team-outcome-copied:reward",
@@ -1067,6 +1340,7 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       "t-copy-causal": "team-outcome-copied:causalBenefit",
       "t-copy-causal-team": "team-outcome-copied:causalBenefit",
       "t-correction-copy": "team-outcome-copied:reward",
+      "t-correction-copy-causal": "team-outcome-copied:causalBenefit",
     });
     return read;
   },
@@ -1105,47 +1379,29 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
     });
     return witness;
   },
-  P1: () => {
-    const anchor = docAnchor(DOCS_09, 69);
-    expect(anchor, "docs/workbench/09:69 holds the hypothesis line at the filing pin, whole in the live page").toEqual({ line: 69, pin: true, head: true });
-    const entry = docLine(DOCS_09, 69);
-    const pinned = pinPage(DOCS_09);
-    const live = textOf(DOCS_09);
-    const controls = {
-      lineDropped: anchorIn(
-        69,
-        entry.text,
-        pinned,
-        live
-          .split("\n")
-          .filter(line => !line.includes(entry.text))
-          .join("\n"),
-      ).head,
-      textEdited: anchorIn(69, `${entry.text} (edited)`, pinned, live).pin,
-      otherLine: anchorIn(70, entry.text, pinned, live).pin,
-    };
-    expect(controls, "the anchor reads its own line: dropped from the live page, edited, or read at another line").toEqual({ lineDropped: false, textEdited: false, otherLine: false });
-    return { anchor, controls };
-  },
-  P2: () => {
-    const anchor = docAnchor(DOCS_09, 71);
-    expect(anchor, "docs/workbench/09:71 holds the missing-edges sentence at the filing pin, whole in the live page").toEqual({ line: 71, pin: true, head: true });
-    return anchor;
-  },
+  P1: () => citedLine(DOCS_09, 69, "the hypothesis line"),
+  P2: () => citedLine(DOCS_09, 71, "the missing-edges sentence"),
   P3: () => {
-    const anchors = [docAnchor(DOCS_09, 73), docAnchor(DOCS_09, 75)];
-    expect(anchors, "docs/workbench/09:73-75 holds the freshness heading and the STALE/UNKNOWN sentence at the filing pin, whole in the live page").toEqual([
-      { line: 73, pin: true, head: true },
-      { line: 75, pin: true, head: true },
-    ]);
+    const lines = [citedLine(DOCS_09, 73, "the freshness heading"), citedLine(DOCS_09, 75, "the STALE/UNKNOWN sentence")];
     const blank = pinPage(DOCS_09).split("\n")[73] ?? null;
     expect(blank, "line 74 between them is blank").toBe("");
-    return { anchors, blank };
+    return { lines, blank };
   },
   C1: () => {
-    const anchor = docAnchor(DOCS_18, 29);
-    expect(anchor, "docs/workbench/18:29 holds the declared/observed/inferred row at the filing pin, whole in the live page").toEqual({ line: 29, pin: true, head: true });
-    return anchor;
+    const cited = citedLine(DOCS_18, 29, "the declared/observed/inferred mitigation");
+    const entry = docLine(DOCS_18, 29);
+    const grids = gridsOf(pinPage(DOCS_18), entry);
+    const grid = grids[0] ?? [];
+    const row = grid.findIndex(cells => cells.some(cell => cell.includes(entry.text)));
+    const column = grid[row]?.findIndex(cell => cell.includes(entry.text)) ?? -1;
+    const cell = { tables: grids.length, rows: grid.length, risk: grid[row]?.[0] ?? null, column: grid[0]?.[column] ?? null };
+    expect(cell, "at the filing pin the text is a cell of the section's one risk table, in the mitigation column of its risk").toEqual({
+      tables: 1,
+      rows: 14,
+      risk: "Source graph conflated with trace",
+      column: "Mitigation and test",
+    });
+    return { cited, cell };
   },
   N1: () => {
     const { entries, unread } = liveSrc();
@@ -1195,6 +1451,7 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       stale: srcFindings([], [site]),
       twice: srcFindings([plant], [site, site]),
       pathOnly: srcFindings([{ path: "src/workbench/team-outcome.ts", text: "export const split = 1;\n" }], []),
+      pathDash: srcFindings([{ path: `src/workbench/feedback${HYPHEN}status.ts`, text: "export const split = 1;\n" }], []),
       judged: refusing(judge(site.validator)),
     };
     expect(armed, "the armed registrations").toEqual({
@@ -1203,6 +1460,7 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
       stale: ["src/workbench/r7-feedback.ts: registered, names no vocabulary word (stale)"],
       twice: ["src/workbench/r7-feedback.ts: registered twice"],
       pathOnly: ["src/workbench/team-outcome.ts: names team outcome, no SITES registration"],
+      pathDash: [`src/workbench/feedback${HYPHEN}status.ts: names feedback status, no SITES registration`],
       judged: [],
     });
     const pinned = pinTree(ROOT, FILING_PIN, PIN_SCOPES);
@@ -1285,6 +1543,29 @@ const IMPL: Readonly<Record<string, () => unknown>> = {
   },
 };
 
+/** One cited line's reading for its pin: the anchor in its three legs, the pin legs' controls and the seven plants, each asserted. */
+function citedLine(page: string, line: number, what: string): unknown {
+  const entry = docLine(page, line);
+  const where = `docs/workbench/${page.slice("docs/workbench/".length, "docs/workbench/".length + 2)}:${line}`;
+  const pinned = pinPage(page);
+  const live = textOf(page);
+  const blobOf = execFileSync("git", ["hash-object", "--stdin"], { cwd: ROOT, input: live, encoding: "utf8" }).trim();
+  expect(blobOf, `${where}: the live legs read the page on disk (git's blob of the file)`).toBe(git(ROOT, ["hash-object", "--", page]));
+  const anchor = anchorIn(entry, pinned, live);
+  expect(anchor, `${where} holds ${what} at the filing pin, as one ${entry.carrier} of its section in the rendered view, and the live section renders exactly the pinned one`).toEqual({
+    line,
+    pin: true,
+    head: true,
+    pinSection: "",
+    headSection: "",
+  });
+  const controls = pinControls(entry, pinned, live);
+  expect(controls, `${where}: the pin legs read their own text, line and carrier`).toEqual(PIN_CONTROLS_READ);
+  const plants = plantReadings(entry, pinned, live);
+  expect(plants, `${where}: the live-section leg refuses every plant, the raw leg only the dropped, edited and marked-up line`).toEqual(PLANTS_READ);
+  return { anchor, controls, plants };
+}
+
 function quietText(id: string): unknown {
   const family = RESIDUALS.find(entry => entry.id === id);
   expect(family, `${id} is a residual family`).toBeDefined();
@@ -1322,6 +1603,7 @@ describe(SUITE, () => {
       "rewrite",
       "operator-fact-writer",
       "operator-field",
+      "reward-on-statusless",
       "correction-unreferenced",
       "status-outside-set",
       "reward-on-unobserved",
@@ -1330,7 +1612,7 @@ describe(SUITE, () => {
       "team-outcome-copied",
     ]);
     expect(BASE.map(record => `${record.id}:${record.kind}:${record.writer}`)).toEqual(["t1:team-outcome:host", "d1:decision:policy", "d2:decision:policy", "f1:feedback:host"]);
-    expect(CHECKS.map(check => `${check}:${CASES[check].length}`)).toEqual(["K-STATUS:9", "K-REWARD:14", "K-TEAM:14", "K-APPEND:8", "K-OPERATOR:9"]);
+    expect(CHECKS.map(check => `${check}:${CASES[check].length}`)).toEqual(["K-STATUS:10", "K-REWARD:18", "K-TEAM:16", "K-APPEND:8", "K-OPERATOR:9"]);
     expect(MUTANTS.map(mutantLine)).toEqual([
       "M01:open-status:K-STATUS",
       "M02:missing-status-observed:K-STATUS",
@@ -1361,13 +1643,36 @@ describe(SUITE, () => {
       "M27:untyped-refusal:K-STATUS+K-REWARD+K-TEAM+K-APPEND+K-OPERATOR",
       "M28:refusal-unnamed:K-STATUS+K-REWARD+K-TEAM+K-APPEND+K-OPERATOR",
       "M29:refuse-every-record:K-STATUS+K-REWARD+K-TEAM+K-APPEND+K-OPERATOR",
+      "M30:negative-unobserved-admitted:K-REWARD",
+      "M31:receipt-ref-unread:K-REWARD",
+      "M32:trimmed-status:K-STATUS",
+      "M33:twice-after-observed-only:K-TEAM",
+      "M34:correction-causal-uncopied:K-TEAM",
+      "M35:statusless-value-admitted:K-REWARD",
+      "M36:decision-value-unread:K-REWARD",
+      "M37:promotion-value-unread:K-REWARD",
+      "M38:statusless-causal-unread:K-REWARD",
     ]);
-    expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:5", "Q2:3", "Q3:1", "Q4:3", "Q5:3", "Q6:5"]);
+    expect(Object.entries(RESIDUAL_MEMBERS).map(([id, members]) => `${id}:${members.length}`)).toEqual(["Q1:9", "Q2:3", "Q3:2", "Q4:3", "Q5:3", "Q6:5"]);
     expect(RESIDUALS.map(family => `${family.id}:${family.name}`)).toEqual(["Q1:R-COMPOSED", "Q2:R-SHARED-WORD", "Q3:R-UNNAMED-RECORD"]);
     expect(VOCABULARY.map(word => `${word.id}:${word.spelling}:${word.source}`)).toEqual(["V1:reward:filing", "V2:team outcome:filing", "V3:feedback status:statement", "V4:causal benefit:statement"]);
     expect(SHARED_WORDS).toEqual(["pending", "causal", "attribution"]);
-    expect(DOCS_LINES.map(entry => `${entry.page.slice("docs/workbench/".length, "docs/workbench/".length + 2)}:${entry.line}`)).toEqual(["09:69", "09:71", "09:73", "09:75", "18:29"]);
-    expect(VOCABULARY_CONTROLS.length).toBe(16);
+    expect(DOCS_LINES.map(entry => `${entry.page.slice("docs/workbench/".length, "docs/workbench/".length + 2)}:${entry.line}:${entry.carrier}`)).toEqual([
+      "09:69:list item",
+      "09:71:paragraph",
+      "09:73:heading",
+      "09:75:paragraph",
+      "18:29:table cell",
+    ]);
+    expect(DOCS_LINES.map(entry => entry.section)).toEqual([
+      "Relationships are typed and provenanced",
+      "Relationships are typed and provenanced",
+      "Freshness and ambiguity",
+      "Freshness and ambiguity",
+      "Key risks and mitigations",
+    ]);
+    expect(PLANTS).toEqual(["dropped", "edited", "markup", "comment", "fence", "moved", "withdrawal"]);
+    expect(VOCABULARY_CONTROLS.length).toBe(23);
     expect(SITES).toEqual([]);
   });
 

@@ -136,7 +136,11 @@
    "commented",
    "escaped",
    "homoglyph",
-   "joined"
+   "joined",
+   "slashed",
+   "middle-dot",
+   "optional-chain",
+   "comment-continuation"
   ],
   "Q2": [
    "pending",
@@ -144,7 +148,8 @@
    "attribution"
   ],
   "Q3": [
-   "unnamed"
+   "unnamed",
+   "feedback-interface"
   ],
   "Q4": [
    "weighted",
@@ -174,7 +179,8 @@
    "s-case=status-outside-set",
    "s-empty=status-outside-set",
    "s-team=status-outside-set",
-   "s-correction=status-outside-set"
+   "s-correction=status-outside-set",
+   "s-padded=status-outside-set"
   ],
   "K-REWARD": [
    "r-verifier=ok",
@@ -190,7 +196,11 @@
    "r-no-outcome=observed-without-outcome",
    "r-empty-ref=observed-without-outcome",
    "r-self-report=observed-without-outcome",
-   "r-observed-bare=observed-without-outcome"
+   "r-observed-bare=observed-without-outcome",
+   "r-pending-negative=reward-on-unobserved:reward",
+   "r-empty-receipt-ref=observed-without-outcome",
+   "r-decision-reward=reward-on-statusless:reward",
+   "r-promotion-causal=reward-on-statusless:causalBenefit"
   ],
   "K-TEAM": [
    "t-once=ok",
@@ -206,7 +216,9 @@
    "t-not-derived=ok",
    "t-correction-copy=team-outcome-copied:reward",
    "t-correction-team=ok",
-   "t-no-team=ok"
+   "t-no-team=ok",
+   "t-twice-after-pending=team-outcome-twice",
+   "t-correction-copy-causal=team-outcome-copied:causalBenefit"
   ],
   "K-APPEND": [
    "a-correct-feedback=ok",
@@ -259,13 +271,23 @@
   "M26:corrects-field-unread:K-OPERATOR",
   "M27:untyped-refusal:K-STATUS+K-REWARD+K-TEAM+K-APPEND+K-OPERATOR",
   "M28:refusal-unnamed:K-STATUS+K-REWARD+K-TEAM+K-APPEND+K-OPERATOR",
-  "M29:refuse-every-record:K-STATUS+K-REWARD+K-TEAM+K-APPEND+K-OPERATOR"
+  "M29:refuse-every-record:K-STATUS+K-REWARD+K-TEAM+K-APPEND+K-OPERATOR",
+  "M30:negative-unobserved-admitted:K-REWARD",
+  "M31:receipt-ref-unread:K-REWARD",
+  "M32:trimmed-status:K-STATUS",
+  "M33:twice-after-observed-only:K-TEAM",
+  "M34:correction-causal-uncopied:K-TEAM",
+  "M35:statusless-value-admitted:K-REWARD",
+  "M36:decision-value-unread:K-REWARD",
+  "M37:promotion-value-unread:K-REWARD",
+  "M38:statusless-causal-unread:K-REWARD"
  ],
  "witnesses": {
   "A1a": {
    "r-pending": "reward-on-unobserved:reward",
    "r-unknown": "reward-on-unobserved:reward",
    "r-pending-zero": "reward-on-unobserved:reward",
+   "r-pending-negative": "reward-on-unobserved:reward",
    "r-unknown-causal": "reward-on-unobserved:causalBenefit",
    "r-pending-receipt": "reward-on-unobserved:reward",
    "r-team-pending": "reward-on-unobserved:reward",
@@ -280,6 +302,11 @@
     "unknown": "reward-on-unobserved:reward"
    },
    "zero": {
+    "observed": "ok",
+    "pending": "reward-on-unobserved:reward",
+    "unknown": "reward-on-unobserved:reward"
+   },
+   "negative": {
     "observed": "ok",
     "pending": "reward-on-unobserved:reward",
     "unknown": "reward-on-unobserved:reward"
@@ -319,7 +346,8 @@
    "read": {
     "t-copy-causal": "team-outcome-copied:causalBenefit",
     "t-actor-verifier": "ok",
-    "t-correction-copy": "team-outcome-copied:reward"
+    "t-correction-copy": "team-outcome-copied:reward",
+    "t-correction-copy-causal": "team-outcome-copied:causalBenefit"
    }
   },
   "A3a": {
@@ -394,16 +422,32 @@
     "s-case": "status-outside-set",
     "s-empty": "status-outside-set",
     "s-team": "status-outside-set",
-    "s-correction": "status-outside-set"
+    "s-correction": "status-outside-set",
+    "s-padded": "status-outside-set"
    }
   },
   "S1b": {
-   "r-verifier": "ok",
-   "r-receipt": "ok",
-   "r-no-outcome": "observed-without-outcome",
-   "r-empty-ref": "observed-without-outcome",
-   "r-self-report": "observed-without-outcome",
-   "r-observed-bare": "observed-without-outcome"
+   "read": {
+    "r-verifier": "ok",
+    "r-receipt": "ok",
+    "r-no-outcome": "observed-without-outcome",
+    "r-empty-ref": "observed-without-outcome",
+    "r-empty-receipt-ref": "observed-without-outcome",
+    "r-self-report": "observed-without-outcome",
+    "r-observed-bare": "observed-without-outcome",
+    "r-decision-reward": "reward-on-statusless:reward",
+    "r-promotion-causal": "reward-on-statusless:causalBenefit"
+   },
+   "statusless": {
+    "decision": {
+     "reward": "reward-on-statusless:reward",
+     "causalBenefit": "reward-on-statusless:causalBenefit"
+    },
+    "promotion": {
+     "reward": "reward-on-statusless:reward",
+     "causalBenefit": "reward-on-statusless:causalBenefit"
+    }
+   }
   },
   "S2": [
    "team-outcome/pending/reward/no outcome: reward-on-unobserved:reward",
@@ -436,6 +480,7 @@
     "t-once": "ok",
     "t-twice": "team-outcome-twice",
     "t-twice-pending": "team-outcome-twice",
+    "t-twice-after-pending": "team-outcome-twice",
     "t-other-episode": "ok"
    },
    "carriers": [
@@ -448,7 +493,8 @@
    "t-copy-share-receipt": "team-outcome-copied:reward",
    "t-copy-causal": "team-outcome-copied:causalBenefit",
    "t-copy-causal-team": "team-outcome-copied:causalBenefit",
-   "t-correction-copy": "team-outcome-copied:reward"
+   "t-correction-copy": "team-outcome-copied:reward",
+   "t-correction-copy-causal": "team-outcome-copied:causalBenefit"
   },
   "S4a": {
    "correction": {
@@ -472,38 +518,249 @@
    "anchor": {
     "line": 69,
     "pin": true,
-    "head": true
+    "head": true,
+    "pinSection": "",
+    "headSection": ""
    },
    "controls": {
-    "lineDropped": false,
-    "textEdited": false,
-    "otherLine": false
+    "editedPin": false,
+    "editedSection": false,
+    "nextLinePin": false,
+    "otherCarrierSection": false,
+    "htmlBesideSection": false,
+    "duplicatedSection": false
+   },
+   "plants": {
+    "dropped": {
+     "head": false,
+     "section": false
+    },
+    "edited": {
+     "head": false,
+     "section": false
+    },
+    "markup": {
+     "head": false,
+     "section": false
+    },
+    "comment": {
+     "head": true,
+     "section": false
+    },
+    "fence": {
+     "head": true,
+     "section": false
+    },
+    "moved": {
+     "head": true,
+     "section": false
+    },
+    "withdrawal": {
+     "head": true,
+     "section": false
+    }
    }
   },
   "P2": {
-   "line": 71,
-   "pin": true,
-   "head": true
+   "anchor": {
+    "line": 71,
+    "pin": true,
+    "head": true,
+    "pinSection": "",
+    "headSection": ""
+   },
+   "controls": {
+    "editedPin": false,
+    "editedSection": false,
+    "nextLinePin": false,
+    "otherCarrierSection": false,
+    "htmlBesideSection": false,
+    "duplicatedSection": false
+   },
+   "plants": {
+    "dropped": {
+     "head": false,
+     "section": false
+    },
+    "edited": {
+     "head": false,
+     "section": false
+    },
+    "markup": {
+     "head": false,
+     "section": false
+    },
+    "comment": {
+     "head": true,
+     "section": false
+    },
+    "fence": {
+     "head": true,
+     "section": false
+    },
+    "moved": {
+     "head": true,
+     "section": false
+    },
+    "withdrawal": {
+     "head": true,
+     "section": false
+    }
+   }
   },
   "P3": {
-   "anchors": [
+   "lines": [
     {
-     "line": 73,
-     "pin": true,
-     "head": true
+     "anchor": {
+      "line": 73,
+      "pin": true,
+      "head": true,
+      "pinSection": "",
+      "headSection": ""
+     },
+     "controls": {
+      "editedPin": false,
+      "editedSection": false,
+      "nextLinePin": false,
+      "otherCarrierSection": false,
+      "htmlBesideSection": false,
+      "duplicatedSection": false
+     },
+     "plants": {
+      "dropped": {
+       "head": false,
+       "section": false
+      },
+      "edited": {
+       "head": false,
+       "section": false
+      },
+      "markup": {
+       "head": false,
+       "section": false
+      },
+      "comment": {
+       "head": true,
+       "section": false
+      },
+      "fence": {
+       "head": true,
+       "section": false
+      },
+      "moved": {
+       "head": true,
+       "section": false
+      },
+      "withdrawal": {
+       "head": true,
+       "section": false
+      }
+     }
     },
     {
-     "line": 75,
-     "pin": true,
-     "head": true
+     "anchor": {
+      "line": 75,
+      "pin": true,
+      "head": true,
+      "pinSection": "",
+      "headSection": ""
+     },
+     "controls": {
+      "editedPin": false,
+      "editedSection": false,
+      "nextLinePin": false,
+      "otherCarrierSection": false,
+      "htmlBesideSection": false,
+      "duplicatedSection": false
+     },
+     "plants": {
+      "dropped": {
+       "head": false,
+       "section": false
+      },
+      "edited": {
+       "head": false,
+       "section": false
+      },
+      "markup": {
+       "head": false,
+       "section": false
+      },
+      "comment": {
+       "head": true,
+       "section": false
+      },
+      "fence": {
+       "head": true,
+       "section": false
+      },
+      "moved": {
+       "head": true,
+       "section": false
+      },
+      "withdrawal": {
+       "head": true,
+       "section": false
+      }
+     }
     }
    ],
    "blank": ""
   },
   "C1": {
-   "line": 29,
-   "pin": true,
-   "head": true
+   "cited": {
+    "anchor": {
+     "line": 29,
+     "pin": true,
+     "head": true,
+     "pinSection": "",
+     "headSection": ""
+    },
+    "controls": {
+     "editedPin": false,
+     "editedSection": false,
+     "nextLinePin": false,
+     "otherCarrierSection": false,
+     "htmlBesideSection": false,
+     "duplicatedSection": false
+    },
+    "plants": {
+     "dropped": {
+      "head": false,
+      "section": false
+     },
+     "edited": {
+      "head": false,
+      "section": false
+     },
+     "markup": {
+      "head": false,
+      "section": false
+     },
+     "comment": {
+      "head": true,
+      "section": false
+     },
+     "fence": {
+      "head": true,
+      "section": false
+     },
+     "moved": {
+      "head": true,
+      "section": false
+     },
+     "withdrawal": {
+      "head": true,
+      "section": false
+     }
+    }
+   },
+   "cell": {
+    "tables": 1,
+    "rows": 14,
+    "risk": "Source graph conflated with trace",
+    "column": "Mitigation and test"
+   }
   },
   "N1": {
    "floor": true,
@@ -539,6 +796,27 @@
     ],
     "format characters between the parts": [
      "causal benefit"
+    ],
+    "hyphen U+2010": [
+     "team outcome"
+    ],
+    "non-breaking hyphen U+2011": [
+     "feedback status"
+    ],
+    "en dash U+2013": [
+     "causal benefit"
+    ],
+    "minus sign U+2212": [
+     "team outcome"
+    ],
+    "fullwidth low line U+FF3F": [
+     "feedback status"
+    ],
+    "soft hyphen U+00AD": [
+     "causal benefit"
+    ],
+    "no-break space U+00A0": [
+     "team outcome"
     ],
     "every word": [
      "reward",
@@ -584,6 +862,9 @@
     "pathOnly": [
      "src/workbench/team-outcome.ts: names team outcome, no SITES registration"
     ],
+    "pathDash": [
+     "src/workbench/feedback\u2010status.ts: names feedback status, no SITES registration"
+    ],
     "judged": []
    },
    "counts": {
@@ -603,7 +884,11 @@
     "commented",
     "escaped",
     "homoglyph",
-    "joined"
+    "joined",
+    "slashed",
+    "middle-dot",
+    "optional-chain",
+    "comment-continuation"
    ],
    "findings": []
   },
@@ -619,7 +904,8 @@
   "Q3": {
    "name": "R-UNNAMED-RECORD",
    "members": [
-    "unnamed"
+    "unnamed",
+    "feedback-interface"
    ],
    "findings": []
   },
